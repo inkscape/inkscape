@@ -608,7 +608,7 @@ public:
     virtual DOMString getPropertyValue(const DOMString &propertyName)
         {
         std::vector<CSSStyleDeclarationEntry>::iterator iter;
-        for (iter=items.begin() ; iter!=items.end() ; iter++)
+        for (iter=items.begin() ; iter!=items.end() ; ++iter)
             {
             if (iter->name == propertyName)
                 return iter->value;
@@ -637,7 +637,7 @@ public:
                                      throw (dom::DOMException)
         {
         std::vector<CSSStyleDeclarationEntry>::iterator iter;
-        for (iter=items.begin() ; iter!=items.end() ; iter++)
+        for (iter=items.begin() ; iter!=items.end() ; ++iter)
             {
             if (iter->name == propertyName)
                 items.erase(iter);
@@ -652,7 +652,7 @@ public:
     virtual DOMString getPropertyPriority(const DOMString &propertyName)
         {
         std::vector<CSSStyleDeclarationEntry>::iterator iter;
-        for (iter=items.begin() ; iter!=items.end() ; iter++)
+        for (iter=items.begin() ; iter!=items.end() ; ++iter)
             {
             if (iter->name == propertyName)
                 return iter->prio;
@@ -669,7 +669,7 @@ public:
                              throw (dom::DOMException)
         {
         std::vector<CSSStyleDeclarationEntry>::iterator iter;
-        for (iter=items.begin() ; iter!=items.end() ; iter++)
+        for (iter=items.begin() ; iter!=items.end() ; ++iter)
             {
             if (iter->name == propertyName)
                 {

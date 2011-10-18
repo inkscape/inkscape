@@ -34,7 +34,7 @@ void Inkscape::LineSnapper::freeSnap(IntermSnapResults &isr,
     /* Get the lines that we will try to snap to */
     const LineList lines = _getSnapLines(p.getPoint());
 
-    for (LineList::const_iterator i = lines.begin(); i != lines.end(); i++) {
+    for (LineList::const_iterator i = lines.begin(); i != lines.end(); ++i) {
         Geom::Point const p1 = i->second; // point at guide/grid line
         Geom::Point const p2 = p1 + Geom::rot90(i->first); // 2nd point at guide/grid line
         // std::cout << "  line through " << i->second << " with normal " << i->first;
@@ -78,7 +78,7 @@ void Inkscape::LineSnapper::constrainedSnap(IntermSnapResults &isr,
     /* Get the lines that we will try to snap to */
     const LineList lines = _getSnapLines(pp);
 
-    for (LineList::const_iterator i = lines.begin(); i != lines.end(); i++) {
+    for (LineList::const_iterator i = lines.begin(); i != lines.end(); ++i) {
         Geom::Point const point_on_line = c.hasPoint() ? c.getPoint() : pp;
         Geom::Line gridguide_line(i->second, i->second + Geom::rot90(i->first));
 

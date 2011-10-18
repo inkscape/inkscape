@@ -638,7 +638,7 @@ void PovOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
     if (!f)
         return;
 
-    for (String::iterator iter = outbuf.begin() ; iter!=outbuf.end(); iter++)
+    for (String::iterator iter = outbuf.begin() ; iter!=outbuf.end(); ++iter)
         {
         int ch = *iter;
         fputc(ch, f);

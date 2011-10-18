@@ -436,7 +436,7 @@ Effect::readallParameters(Inkscape::XML::Node * repr)
             param->param_set_default();
         }
 
-        it++;
+        ++it;
     }
 }
 
@@ -572,7 +572,7 @@ Effect::newWidget(Gtk::Tooltips * tooltips)
             }
         }
 
-        it++;
+        ++it;
     }
 
     return dynamic_cast<Gtk::Widget *>(vbox);
@@ -604,7 +604,7 @@ Effect::getParameter(const char * key)
             return param;
         }
 
-        it++;
+        ++it;
     }
 
     return NULL;
@@ -671,7 +671,7 @@ void
 Effect::transform_multiply(Geom::Affine const& postmul, bool set)
 {
     // cycle through all parameters. Most parameters will not need transformation, but path and point params do.
-    for (std::vector<Parameter *>::iterator it = param_vector.begin(); it != param_vector.end(); it++) {
+    for (std::vector<Parameter *>::iterator it = param_vector.begin(); it != param_vector.end(); ++it) {
         Parameter * param = *it;
         param->param_transform_multiply(postmul, set);
     }

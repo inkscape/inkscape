@@ -501,7 +501,7 @@ PageSizer::find_paper_size (double w, double h) const
 
     std::map<Glib::ustring, PaperSize>::const_iterator iter;
     for (iter = _paperSizeTable.begin() ;
-         iter != _paperSizeTable.end() ; iter++) {
+         iter != _paperSizeTable.end() ; ++iter) {
         PaperSize paper = iter->second;
         SPUnit const &i_unit = sp_unit_get_by_id(paper.unit);
         double smallX = sp_units_get_pixels(paper.smaller, i_unit);
@@ -515,7 +515,7 @@ PageSizer::find_paper_size (double w, double h) const
             // We need to search paperSizeListStore explicitly for the
             // specified paper size because it is sorted in a different
             // way than paperSizeTable (which is sorted alphabetically)
-            for (p = _paperSizeListStore->children().begin(); p != _paperSizeListStore->children().end(); p++) {
+            for (p = _paperSizeListStore->children().begin(); p != _paperSizeListStore->children().end(); ++p) {
                 if ((*p)[_paperSizeListColumns.nameColumn] == paper.name) {
                     return p;
                 }

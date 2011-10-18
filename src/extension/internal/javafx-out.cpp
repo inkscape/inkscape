@@ -891,7 +891,7 @@ bool JavaFXOutput::saveDocument(SPDocument *doc, gchar const *filename_utf8)
         return false;
         }
 
-    for (String::iterator iter = outbuf.begin() ; iter!=outbuf.end(); iter++)
+    for (String::iterator iter = outbuf.begin() ; iter!=outbuf.end(); ++iter)
         {
         fputc(*iter, f);
         }

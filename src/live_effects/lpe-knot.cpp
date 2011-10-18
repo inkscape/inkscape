@@ -214,7 +214,7 @@ CrossingPoints::CrossingPoints(std::vector<Geom::Path> const &paths) : std::vect
             if (cp.j == i) cuts[cp.tj] = k;
         }
         unsigned count = 0;
-        for ( std::map < double, unsigned >::iterator m=cuts.begin(); m!=cuts.end(); m++ ){
+        for ( std::map < double, unsigned >::iterator m=cuts.begin(); m!=cuts.end(); ++m ){
             if ( (*this)[m->second].i == i && (*this)[m->second].ti == m->first ){
                 (*this)[m->second].ni = count;
             }else{

@@ -763,7 +763,7 @@ void FileOpenDialogImplGtk::createFilterMenu()
         Inkscape::Extension::db.get_input_list(extension_list);
 
         for (Inkscape::Extension::DB::InputList::iterator current_item = extension_list.begin();
-             current_item != extension_list.end(); current_item++)
+             current_item != extension_list.end(); ++current_item)
         {
             Inkscape::Extension::Input * imod = *current_item;
 
@@ -1087,7 +1087,7 @@ void FileSaveDialogImplGtk::createFileTypeMenu()
     knownExtensions.clear();
 
     for (Inkscape::Extension::DB::OutputList::iterator current_item = extension_list.begin();
-         current_item != extension_list.end(); current_item++)
+         current_item != extension_list.end(); ++current_item)
     {
         Inkscape::Extension::Output * omod = *current_item;
 
@@ -1342,7 +1342,7 @@ void FileExportDialogImpl::createFileTypeMenu()
     Inkscape::Extension::db.get_output_list(extension_list);
 
     for (Inkscape::Extension::DB::OutputList::iterator current_item = extension_list.begin();
-         current_item != extension_list.end(); current_item++)
+         current_item != extension_list.end(); ++current_item)
     {
         Inkscape::Extension::Output * omod = *current_item;
 

@@ -316,7 +316,7 @@ public:
     /**
      * Saves this image as a simple color PPM
      */
-    bool writePPM(const std::string fileName);
+    bool writePPM(const std::string &fileName);
 
 
 

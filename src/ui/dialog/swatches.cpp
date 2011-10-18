@@ -620,7 +620,7 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
 
         int i = 0;
         std::vector<SwatchPage*> swatchSets = _getSwatchSets();
-        for ( std::vector<SwatchPage*>::iterator it = swatchSets.begin(); it != swatchSets.end(); it++ ) {
+        for ( std::vector<SwatchPage*>::iterator it = swatchSets.begin(); it != swatchSets.end(); ++it) {
             SwatchPage* curr = *it;
             Gtk::RadioMenuItem* single = manage(new Gtk::RadioMenuItem(groupOne, curr->_name));
             if ( curr == first ) {
@@ -1134,7 +1134,7 @@ void SwatchesPanel::_rebuild()
     _holder->freezeUpdates();
     // TODO restore once 'clear' works _holder->addPreview(_clear);
     _holder->addPreview(_remove);
-    for ( boost::ptr_vector<ColorItem>::iterator it = curr->_colors.begin(); it != curr->_colors.end(); it++ ) {
+    for ( boost::ptr_vector<ColorItem>::iterator it = curr->_colors.begin(); it != curr->_colors.end(); ++it) {
         _holder->addPreview(&*it);
     }
     _holder->thawUpdates();

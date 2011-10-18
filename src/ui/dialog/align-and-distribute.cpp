@@ -1087,7 +1087,7 @@ AlignAndDistribute::~AlignAndDistribute()
 
     for (std::list<Action *>::iterator it = _actionList.begin();
          it != _actionList.end();
-         it ++)
+         ++it)
         delete *it;
 }
 
@@ -1245,7 +1245,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     case BIGGEST:
     {
         gdouble max = -1e18;
-        for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
+        for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); ++it) {
             Geom::OptRect b = (*it)->desktopVisualBounds();
             if (b) {
                 gdouble dim = (*b)[horizontal ? Geom::X : Geom::Y].extent();
@@ -1262,7 +1262,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     case SMALLEST:
     {
         gdouble max = 1e18;
-        for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); it++) {
+        for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); ++it) {
             Geom::OptRect b = (*it)->desktopVisualBounds();
             if (b) {
                 gdouble dim = (*b)[horizontal ? Geom::X : Geom::Y].extent();

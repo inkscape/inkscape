@@ -122,7 +122,7 @@ void SvgBuilder::_init() {
     font_factory::Default()->GetUIFamiliesAndStyles(&familyStyleMap);
     for (FamilyToStylesMap::iterator iter = familyStyleMap.begin();
          iter != familyStyleMap.end();
-         iter++) {
+         ++iter) {
         _availableFontNames.push_back(iter->first.c_str());
     }
 
@@ -1334,7 +1334,7 @@ void SvgBuilder::_flushText() {
 	}
 
         glyphs_in_a_row++;
-        i++;
+        ++i;
     }
     _container->appendChild(text_node);
     Inkscape::GC::release(text_node);

@@ -136,7 +136,7 @@ Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *d
 	Inkscape::XML::Node * defsrepr = document->doc()->getDefs()->getRepr();
 
     for(std::list<SPItem *>::iterator item = items.begin();
-            item != items.end(); item++) {
+            item != items.end(); ++item) {
         SPItem * spitem = *item;
 	Inkscape::XML::Node * node = spitem->getRepr();
 

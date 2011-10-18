@@ -176,7 +176,7 @@ bool getClosestSLS(std::list<Inkscape::SnappedLineSegment> const &list, Inkscape
 {
     bool success = false;
 
-    for (std::list<Inkscape::SnappedLineSegment>::const_iterator i = list.begin(); i != list.end(); i++) {
+    for (std::list<Inkscape::SnappedLineSegment>::const_iterator i = list.begin(); i != list.end(); ++i) {
         if ((i == list.begin()) || (*i).getSnapDistance() < result.getSnapDistance()) {
             result = *i;
             success = true;
@@ -191,10 +191,10 @@ bool getClosestIntersectionSLS(std::list<Inkscape::SnappedLineSegment> const &li
 {
     bool success = false;
 
-    for (std::list<Inkscape::SnappedLineSegment>::const_iterator i = list.begin(); i != list.end(); i++) {
+    for (std::list<Inkscape::SnappedLineSegment>::const_iterator i = list.begin(); i != list.end(); ++i) {
         std::list<Inkscape::SnappedLineSegment>::const_iterator j = i;
-        j++;
-        for (; j != list.end(); j++) {
+        ++j;
+        for (; j != list.end(); ++j) {
             Inkscape::SnappedPoint sp = (*i).intersect(*j);
             if (sp.getAtIntersection()) {
                 // if it's the first point
@@ -221,7 +221,7 @@ bool getClosestSL(std::list<Inkscape::SnappedLine> const &list, Inkscape::Snappe
 {
     bool success = false;
 
-    for (std::list<Inkscape::SnappedLine>::const_iterator i = list.begin(); i != list.end(); i++) {
+    for (std::list<Inkscape::SnappedLine>::const_iterator i = list.begin(); i != list.end(); ++i) {
         if ((i == list.begin()) || (*i).getSnapDistance() < result.getSnapDistance()) {
             result = *i;
             success = true;
@@ -236,10 +236,10 @@ bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> const &list, Inks
 {
     bool success = false;
 
-    for (std::list<Inkscape::SnappedLine>::const_iterator i = list.begin(); i != list.end(); i++) {
+    for (std::list<Inkscape::SnappedLine>::const_iterator i = list.begin(); i != list.end(); ++i) {
         std::list<Inkscape::SnappedLine>::const_iterator j = i;
-        j++;
-        for (; j != list.end(); j++) {
+        ++j;
+        for (; j != list.end(); ++j) {
             Inkscape::SnappedPoint sp = (*i).intersect(*j);
             if (sp.getAtIntersection()) {
                 // if it's the first point
@@ -266,8 +266,8 @@ bool getClosestIntersectionSL(std::list<Inkscape::SnappedLine> const &list1, std
 {
     bool success = false;
 
-    for (std::list<Inkscape::SnappedLine>::const_iterator i = list1.begin(); i != list1.end(); i++) {
-        for (std::list<Inkscape::SnappedLine>::const_iterator j = list2.begin(); j != list2.end(); j++) {
+    for (std::list<Inkscape::SnappedLine>::const_iterator i = list1.begin(); i != list1.end(); ++i) {
+        for (std::list<Inkscape::SnappedLine>::const_iterator j = list2.begin(); j != list2.end(); ++j) {
             Inkscape::SnappedPoint sp = (*i).intersect(*j);
             if (sp.getAtIntersection()) {
                 // if it's the first point

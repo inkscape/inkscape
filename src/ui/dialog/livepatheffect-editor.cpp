@@ -299,7 +299,7 @@ LivePathEffectEditor::effect_list_reload(SPLPEItem *lpeitem)
 
     PathEffectList effectlist = sp_lpe_item_get_effect_list(lpeitem);
     PathEffectList::iterator it;
-    for( it = effectlist.begin() ; it!=effectlist.end(); it++ )
+    for( it = effectlist.begin() ; it!=effectlist.end(); ++it)
     {
         if ( !(*it)->lpeobject ) {
             continue;

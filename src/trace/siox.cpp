@@ -584,7 +584,7 @@ void SioxImage::assign(const SioxImage &other)
 /**
  * Write the image to a PPM file
  */
-bool SioxImage::writePPM(const std::string fileName)
+bool SioxImage::writePPM(const std::string &fileName)
 {
 
     FILE *f = fopen(fileName.c_str(), "wb");

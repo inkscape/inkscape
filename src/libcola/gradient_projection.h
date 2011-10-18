@@ -203,7 +203,7 @@ public:
                 vars.push_back(v);
                 for(OffsetList::iterator o=ac->offsets.begin();
                         o!=ac->offsets.end();
-                        o++) {
+                        ++o) {
                     gcs.push_back(new vpsc::Constraint(v,vars[o->first],o->second,true));
                 }
             }

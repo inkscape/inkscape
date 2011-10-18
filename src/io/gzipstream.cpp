@@ -172,7 +172,7 @@ bool GzipInputStream::load()
 
     std::vector<unsigned char>::iterator iter;
     Bytef *p = srcBuf;
-    for (iter=inputBuf.begin() ; iter != inputBuf.end() ; iter++)
+    for (iter=inputBuf.begin() ; iter != inputBuf.end() ; ++iter)
         *p++ = *iter;
 
     int headerLen = 10;
@@ -390,7 +390,7 @@ void GzipOutputStream::flush()
         
     std::vector<unsigned char>::iterator iter;
     Bytef *p = srcbuf;
-    for (iter=inputBuf.begin() ; iter != inputBuf.end() ; iter++)
+    for (iter=inputBuf.begin() ; iter != inputBuf.end() ; ++iter)
         *p++ = *iter;
         
     crc = crc32(crc, (const Bytef *)srcbuf, srclen);

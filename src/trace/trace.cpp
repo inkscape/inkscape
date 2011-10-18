@@ -86,7 +86,7 @@ Tracer::getSelectedSPImage()
             items.insert(items.begin(), item);
             }
         std::vector<SPItem *>::iterator iter;
-        for (iter = items.begin() ; iter!= items.end() ; iter++)
+        for (iter = items.begin() ; iter!= items.end() ; ++iter)
             {
             SPItem *item = *iter;
             if (SP_IS_IMAGE(item))
@@ -251,7 +251,7 @@ Tracer::sioxProcessImage(SPImage *img,
 
     std::vector<Inkscape::DrawingItem *> arenaItems;
     std::vector<SPShape *>::iterator iter;
-    for (iter = sioxShapes.begin() ; iter!=sioxShapes.end() ; iter++)
+    for (iter = sioxShapes.begin() ; iter!=sioxShapes.end() ; ++iter)
         {
         SPItem *item = *iter;
         Inkscape::DrawingItem *aItem = item->get_arenaitem(desktop->dkey);
@@ -279,7 +279,7 @@ Tracer::sioxProcessImage(SPImage *img,
             //g_message("x:%f    y:%f\n", point[0], point[1]);
             bool weHaveAHit = false;
             std::vector<Inkscape::DrawingItem *>::iterator aIter;
-            for (aIter = arenaItems.begin() ; aIter!=arenaItems.end() ; aIter++)
+            for (aIter = arenaItems.begin() ; aIter!=arenaItems.end() ; ++aIter)
                 {
                 Inkscape::DrawingItem *arenaItem = *aIter;
                 if (arenaItem->pick(point, 1.0f, 1))

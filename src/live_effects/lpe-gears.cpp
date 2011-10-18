@@ -244,12 +244,13 @@ LPEGears::doEffect_path (std::vector<Geom::Path> const & path_in)
     gear->centre(gear_centre);
     gear->angle(atan2((*it).initialPoint() - gear_centre));
 
-    it++; if ( it == gearpath.end() ) return path_out;
+    ++it;
+	if ( it == gearpath.end() ) return path_out;
     gear->pitch_radius(Geom::distance(gear_centre, (*it).finalPoint()));
 
     path_out.push_back( gear->path());
 
-    for (it++ ; it != gearpath.end() ; it++) {
+    for (++it; it != gearpath.end() ; ++it) {
         // iterate through Geom::Curve in path_in
         Gear* gearnew = new Gear(gear->spawn( (*it).finalPoint() ));
         path_out.push_back( gearnew->path() );

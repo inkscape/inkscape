@@ -97,7 +97,7 @@ DocumentMetadata::~DocumentMetadata()
     Inkscape::XML::Node *repr = sp_desktop_namedview(getDesktop())->getRepr();
     repr->removeListenerByData (this);
 
-    for (RDElist::iterator it = _rdflist.begin(); it != _rdflist.end(); it++)
+    for (RDElist::iterator it = _rdflist.begin(); it != _rdflist.end(); ++it)
         delete (*it);
 }
 
@@ -199,7 +199,7 @@ void DocumentMetadata::update()
 
     //-----------------------------------------------------------meta pages
     /* update the RDF entities */
-    for (RDElist::iterator it = _rdflist.begin(); it != _rdflist.end(); it++)
+    for (RDElist::iterator it = _rdflist.begin(); it != _rdflist.end(); ++it)
         (*it)->update (SP_ACTIVE_DOCUMENT);
 
     _licensor.update (SP_ACTIVE_DOCUMENT);

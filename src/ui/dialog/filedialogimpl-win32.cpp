@@ -227,7 +227,7 @@ void FileOpenDialogImplWin32::createFilterMenu()
         int filter_count = 5;       // 5 - one for each filter type
 
         for (Inkscape::Extension::DB::InputList::iterator current_item = extension_list.begin();
-             current_item != extension_list.end(); current_item++)
+             current_item != extension_list.end(); ++current_item)
         {
             Filter filter;
 
@@ -383,7 +383,7 @@ void FileOpenDialogImplWin32::createFilterMenu()
     wchar_t *filterptr = _filter;
 
     for(list<Filter>::iterator filter_iterator = filter_list.begin();
-        filter_iterator != filter_list.end(); filter_iterator++)
+        filter_iterator != filter_list.end(); ++filter_iterator)
     {
         const Filter &filter = *filter_iterator;
 
@@ -1616,7 +1616,7 @@ void FileSaveDialogImplWin32::createFilterMenu()
     int filter_length = 1;
 
     for (Inkscape::Extension::DB::OutputList::iterator current_item = extension_list.begin();
-         current_item != extension_list.end(); current_item++)
+         current_item != extension_list.end(); ++current_item)
     {
         Inkscape::Extension::Output *omod = *current_item;
         if (omod->deactivated()) continue;
@@ -1650,7 +1650,7 @@ void FileSaveDialogImplWin32::createFilterMenu()
     wchar_t *filterptr = _filter;
 
     for(list<Filter>::iterator filter_iterator = filter_list.begin();
-        filter_iterator != filter_list.end(); filter_iterator++)
+        filter_iterator != filter_list.end(); ++filter_iterator)
     {
         const Filter &filter = *filter_iterator;
 

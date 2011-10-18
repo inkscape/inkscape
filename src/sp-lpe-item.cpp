@@ -562,7 +562,7 @@ void sp_lpe_item_down_current_path_effect(SPLPEItem *lpeitem)
     PathEffectList::iterator cur_it = find( new_list.begin(), new_list.end(), lperef );
     if (cur_it != new_list.end()) {
         PathEffectList::iterator down_it = cur_it;
-        down_it++;
+        ++down_it;
         if (down_it != new_list.end()) { // perhaps current effect is already last effect
             std::iter_swap(cur_it, down_it);
         }
@@ -583,7 +583,7 @@ void sp_lpe_item_up_current_path_effect(SPLPEItem *lpeitem)
     PathEffectList::iterator cur_it = find( new_list.begin(), new_list.end(), lperef );
     if (cur_it != new_list.end() && cur_it != new_list.begin()) {
         PathEffectList::iterator up_it = cur_it;
-        up_it--;
+        --up_it;
         std::iter_swap(cur_it, up_it);
     }
     std::string r = patheffectlist_write_svg(new_list);
@@ -601,7 +601,7 @@ bool sp_lpe_item_has_broken_path_effect(SPLPEItem *lpeitem)
 
     // go through the list; if some are unknown or invalid, return true
     PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
-    for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
+    for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); ++it)
     {
         LivePathEffectObject *lpeobj = (*it)->lpeobject;
         if (!lpeobj || !lpeobj->get_lpe())
@@ -619,7 +619,7 @@ bool sp_lpe_item_has_path_effect(SPLPEItem *lpeitem)
 
     // go through the list; if some are unknown or invalid, we are not an LPE item!
     PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
-    for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
+    for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); ++it)
     {
         LivePathEffectObject *lpeobj = (*it)->lpeobject;
         if (!lpeobj || !lpeobj->get_lpe())
@@ -761,7 +761,7 @@ Inkscape::LivePathEffect::Effect* sp_lpe_item_get_current_lpe(SPLPEItem *lpeitem
 
 bool sp_lpe_item_set_current_path_effect(SPLPEItem *lpeitem, Inkscape::LivePathEffect::LPEObjectReference* lperef)
 {
-    for (PathEffectList::iterator it = lpeitem->path_effect_list->begin(); it != lpeitem->path_effect_list->end(); it++) {
+    for (PathEffectList::iterator it = lpeitem->path_effect_list->begin(); it != lpeitem->path_effect_list->end(); ++it) {
         if ((*it)->lpeobject_repr == lperef->lpeobject_repr) {
             lpeitem->current_path_effect = (*it);  // current_path_effect should always be a pointer from the path_effect_list !
             return true;
@@ -819,7 +819,7 @@ bool sp_lpe_item_fork_path_effects_if_necessary(SPLPEItem *lpeitem, unsigned int
 
         std::vector<LivePathEffectObject const *> old_lpeobjs, new_lpeobjs;
         PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
-        for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
+        for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); ++it)
         {
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
             if (lpeobj) {

@@ -122,7 +122,7 @@ public:
                               throw (dom::DOMException)
         {
         std::vector<DOMString>::iterator iter;
-        for (iter=items.begin() ; iter!=items.end() ; iter++)
+        for (iter=items.begin() ; iter!=items.end() ; ++iter)
             {
             if (*iter == oldMedium)
                 items.erase(iter);
