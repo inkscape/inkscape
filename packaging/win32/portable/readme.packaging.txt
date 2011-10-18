@@ -3,11 +3,12 @@ REQUIREMENTS
 · Inkscape compiled (see http://wiki.inkscape.org/wiki/index.php/Win32Port)
 · NSIS Portable
   http://portableapps.com/apps/development/nsis_portable
-  (or NSIS 2.45 or later [Windows 7 support] and the TextReplace plugin)
 · PortableApps.com AppCompactor
-  http://portableapps.com/apps/utilities/appcompactor
+  http://portableapps.com/apps/utilities/portableapps.com_appcompactor
 · PortableApps.com Installer
   http://portableapps.com/apps/development/portableapps.com_installer
+· PortableApps.com Launcher
+  http://portableapps.com/apps/development/portableapps.com_launcher
 
 INSTRUCTIONS
 ============
@@ -16,8 +17,8 @@ An automated version is planned for later, but currently you'll just have to fol
 (0. Compile Inkscape)
 1.  Copy everything from the "inkscape" build directory, EXCEPT for inkscape.dbg and gdb.exe, into ./App/Inkscape
 2.  Update the version number in the "Version" section of ./App/AppInfo/appinfo.ini
-3.  Compile ./Other/Source/InkscapePortable.nsi with NSIS
 4.  Run the PortableApps.com AppCompactor on ./App/Inkscape
+3.  Run the PortableApps.com Launcher on this directory
 5.  Run the PortableApps.com Installer on this directory
 
 6.  InkscapePortable_X.XX.paf.exe will now be in packaging/win32, ready for release
