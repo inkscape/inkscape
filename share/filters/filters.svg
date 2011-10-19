@@ -51,26 +51,6 @@ sodipodi:docname="filters.svg">
 <feGaussianBlur in="result0" stdDeviation="8" result="result91" />
 <feComposite operator="in" in="SourceGraphic" in2="result91" />
 </filter>
-<filter id="f004" inkscape:label="Deep Chrome" inkscape:menu-tooltip="Chrome effect with deep shades" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
-<feComposite in2="result8" result="result6" operator="xor" in="result8" />
-<feDisplacementMap in2="result6" in="result8" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
-<feComposite in2="result4" result="result2" operator="arithmetic" in="result8" k1="3" />
-<feComposite in2="result2" result="fbSourceGraphic" in="result2" operator="in" />
-<feComposite operator="in" in2="SourceGraphic" result="result14" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" />
-<feGaussianBlur stdDeviation="10" result="result13" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite result="result12" operator="in" in2="result13" />
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-<feOffset result="result15" />
-<feMerge result="result10">
-<feMergeNode in="result15" />
-<feMergeNode in="result14" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
-</filter>
 <filter id="f005" inkscape:label="Jigsaw Piece" inkscape:menu="Bevels" inkscape:menu-tooltip="Low, sharp bevel" style="color-interpolation-filters:sRGB;">
 <feSpecularLighting in="SourceAlpha" surfaceScale="1" specularConstant="2" specularExponent="18.5">
 <feDistantLight elevation="30" azimuth="225" />
@@ -1284,38 +1264,13 @@ sodipodi:docname="filters.svg">
 <feBlend mode="darken" in="result7" result="result6" in2="result8" />
 </filter>
 <filter id="f125" x="-0.25" width="1.5" y="-0.5" height="2" inkscape:menu-tooltip="Comics shader with creamy waves transparency" inkscape:menu="Non realistic 3D shaders" inkscape:label="Comics Cream" style="color-interpolation-filters:sRGB;">
-<feFlood flood-color="rgb(158,236,254)" result="result9" flood-opacity="1" />
 <feGaussianBlur result="result8" stdDeviation="7" in="SourceGraphic" />
 <feTurbulence baseFrequency="0.04" numOctaves="1" type="turbulence" result="result7" seed="0" />
 <feComposite in2="result7" in="result8" operator="xor" result="result6" />
 <feDisplacementMap in2="result6" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="SourceGraphic" />
 <feComposite in2="SourceGraphic" in="result4" operator="arithmetic" result="result2" k1="1" />
 <feComposite in2="result2" operator="out" in="SourceGraphic" result="fbSourceGraphic" />
-<feMerge result="result10">
-<feMergeNode in="result9" />
-<feMergeNode in="fbSourceGraphic" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-</filter>
-<filter id="f126" style="color-interpolation-filters:sRGB;" inkscape:label="Dark Metal" inkscape:menu-tooltip="Non realistic dark metal shader with strong speculars" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
-<feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
-<feComposite in2="result8" result="result6" operator="xor" in="result8" />
-<feDisplacementMap in2="result6" in="result6" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
-<feComposite in2="result4" result="result2" operator="out" in="result8" />
-<feComposite in2="result2" result="fbSourceGraphic" in="result2" operator="in" />
-<feComposite operator="in" in2="SourceGraphic" result="result14" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" />
-<feGaussianBlur stdDeviation="10" result="result13" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite result="result12" operator="in" in2="result13" />
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-<feOffset result="result15" />
-<feMerge result="result10">
-<feMergeNode in="result15" />
-<feMergeNode in="result14" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
+<feComposite in2="SourceGraphic" operator="in" result="result11" in="fbSourceGraphic" />
 </filter>
 <filter id="f127" x="-0.25" y="-0.25" width="1.5" height="1.5" inkscape:menu-tooltip="Creates colorizable blotches which smoothly flow over the edges of the lines at their crossings" inkscape:menu="Protrusions" inkscape:label="Chewing Gum" style="color-interpolation-filters:sRGB;">
 <feFlood result="result4" flood-color="rgb(253,112,174)" flood-opacity="1" />
@@ -1331,26 +1286,6 @@ sodipodi:docname="filters.svg">
 <feComposite result="result9" operator="over" in2="SourceAlpha" in="result8" />
 <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result10" />
 <feBlend in="result10" mode="normal" in2="result6" />
-</filter>
-<filter id="f129" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Chrome effect with bright reflexions" inkscape:label="Chrome" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
-<feComposite in2="result8" in="result8" operator="xor" result="result6" />
-<feDisplacementMap in2="result6" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result6" />
-<feComposite in2="result4" k1="2" in="result8" operator="arithmetic" result="result2" k3="2" />
-<feComposite in2="SourceGraphic" operator="in" in="result2" result="fbSourceGraphic" />
-<feComposite operator="in" in2="SourceGraphic" result="result15" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" result="result14" />
-<feGaussianBlur stdDeviation="10" result="result13" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite result="result12" operator="in" in2="result13" in="result9" />
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-<feOffset result="result16" />
-<feMerge result="result10">
-<feMergeNode in="result16" />
-<feMergeNode in="result15" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
 </filter>
 <filter id="f130" x="-0.35" width="1.7" y="-0.35" height="1.7" inkscape:menu-tooltip="Smooth rainbow colors warped along the edges and colorizable" inkscape:menu="Textures" inkscape:label="Warped Rainbow" style="color-interpolation-filters:sRGB;">
 <feGaussianBlur result="result8" stdDeviation="5" />
@@ -2274,245 +2209,221 @@ sodipodi:docname="filters.svg">
 </feMerge>
 <feComposite in2="SourceGraphic" operator="in" result="result11" />
 </filter>
-<filter id="f217" inkscape:label="Comics Draft" inkscape:menu-tooltip="Draft painted cartoon shading with a glassy look" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
-<feComposite in2="result8" result="result6" operator="xor" in="result8" />
-<feDisplacementMap in2="result6" in="SourceGraphic" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
-<feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" />
-<feComposite in2="result2" result="fbSourceGraphic" in="result6" operator="in" />
-<feComposite operator="in" in2="SourceGraphic" result="result14" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" />
-<feGaussianBlur stdDeviation="10" result="result13" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite result="result12" operator="in" in2="result13" />
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-<feOffset dx="0" dy="0" result="result15" />
-<feMerge result="result10">
-<feMergeNode in="result15" />
-<feMergeNode in="result14" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
-</filter>
-<filter id="f218" inkscape:label="Comics Fading" inkscape:menu-tooltip="Cartoon paint style with some fading at the edges" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
-<feComposite in2="result8" result="result6" operator="xor" in="result8" />
-<feDisplacementMap in2="result6" in="SourceGraphic" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
-<feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" />
-<feComposite in2="result2" result="fbSourceGraphic" in="result8" operator="in" />
-<feComposite operator="in" in2="SourceGraphic" result="result14" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" />
-<feGaussianBlur stdDeviation="10" result="result13" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite result="result12" operator="in" in2="result13" />
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-<feOffset dx="0" dy="0" id="feOffset3365" result="result15" />
-<feMerge result="result10">
-<feMergeNode in="result15" />
-<feMergeNode in="result14" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
-</filter>
-<filter id="f219" inkscape:label="Smooth Shader" inkscape:menu-tooltip="Smooth shading with a graphite pencil grey" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
-<feComposite in2="result8" result="result6" operator="xor" in="result8" />
-<feDisplacementMap in2="result6" in="result8" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
-<feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" />
-<feComposite in2="result2" result="fbSourceGraphic" in="result8" operator="in" />
-<feComposite operator="in" result="result14" in2="SourceGraphic" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" />
-<feGaussianBlur stdDeviation="10" result="result13" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite result="result12" operator="in" in2="result13" />
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-<feOffset dx="0" dy="0" result="result15" />
-<feMerge result="result10">
-<feMergeNode in="result15" />
-<feMergeNode in="result14" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
-</filter>
-<filter id="f220" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Stylized embossed metal drawing effect" inkscape:label="Emboss Shader" style="color-interpolation-filters:sRGB;">
+<filter id="f217" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Aluminium effect with sharp brushed reflexions" inkscape:label="Aluminium" style="color-interpolation-filters:sRGB">
 <feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
-<feComposite in2="result8" in="result8" operator="xor" result="result6" />
-<feDisplacementMap in2="result6" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result8" />
-<feComposite in2="result4" k1="1" in="result4" operator="arithmetic" result="result2" />
-<feComposite in2="result8" operator="in" in="result2" result="fbSourceGraphic" />
-<feComposite result="result14" in2="fbSourceGraphic" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" />
-<feGaussianBlur stdDeviation="10.01" result="result13" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite result="result12" operator="in" in2="result13" />
-<feComposite operator="in" result="result11" in2="SourceGraphic" />
-<feOffset result="result15" />
-<feMerge result="result10">
-<feMergeNode in="result15" />
-<feMergeNode in="result14" />
-</feMerge>
-<feComposite in2="result10" operator="arithmetic" k2="1" />
+<feComposite operator="xor" in2="SourceGraphic" result="result22" />
+<feComposite k2="1" operator="arithmetic" result="result20" in2="result22" in="result22" />
+<feComposite in2="result22" in="result20" operator="over" result="result6" />
+<feOffset in="result6" result="result21" />
+<feDisplacementMap in2="result20" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result21" />
+<feComposite in2="SourceGraphic" k1="1" operator="arithmetic" result="fbSourceGraphic" k3="0.5" in="result4" />
+<feComposite in2="result4" result="result12" operator="in" in="fbSourceGraphic" />
+<feComposite in2="SourceGraphic" operator="in" result="result18" />
+<feComposite result="result19" in2="SourceGraphic" operator="in" in="result18" />
 </filter>
-<filter id="f221" inkscape:label="Smooth Shader Dark" inkscape:menu-tooltip="Dark version of non realistic smooth shading" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
-<feComposite in2="result8" result="result6" operator="xor" in="result8" />
-<feDisplacementMap in2="result6" in="result8" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
-<feComposite in2="result4" result="result9" operator="atop" />
-<feComposite in2="result9" result="fbSourceGraphic" operator="arithmetic" in="SourceGraphic" k1="2" />
-<feComposite operator="in" in2="SourceGraphic" result="result15" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" />
-<feGaussianBlur stdDeviation="10" result="result14" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result10" />
-<feComposite result="result13" operator="in" in2="result14" />
-<feComposite in2="SourceGraphic" operator="in" result="result12" />
-<feOffset dx="0" dy="0" result="result16" />
-<feMerge result="result11">
-<feMergeNode in="result16" />
-<feMergeNode in="result15" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
-</filter>
-<filter id="f222" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Comics cartoon drawing effect" inkscape:label="Comics" style="color-interpolation-filters:sRGB;">
+<filter id="f218" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Comics cartoon drawing effect" inkscape:label="Comics" style="color-interpolation-filters:sRGB">
 <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="result8" />
-<feComposite in2="result8" result="result6" operator="xor" in="result8" />
-<feDisplacementMap in2="result6" in="SourceGraphic" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
-<feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" />
-<feComposite in2="result2" result="fbSourceGraphic" in="SourceGraphic" operator="in" />
-<feComposite operator="in" in2="SourceGraphic" result="result15" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" />
-<feGaussianBlur stdDeviation="10" result="result14" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite result="result12" operator="in" in2="result14" in="result9" />
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-<feOffset result="result16" />
-<feMerge result="result10">
-<feMergeNode in="result16" />
-<feMergeNode in="result15" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
-</filter>
-<filter id="f223" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Silky close to mother of pearl shading" inkscape:label="Satin" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
-<feComposite in2="result8" in="result8" operator="xor" result="result6" />
-<feDisplacementMap in2="result6" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result6" />
-<feComposite in2="result4" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" />
-<feComposite in2="result2" operator="in" in="result8" result="fbSourceGraphic" />
-<feComposite operator="in" in2="SourceGraphic" result="result15" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" result="result13" />
-<feGaussianBlur stdDeviation="10" result="result14" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite in2="result14" result="result12" operator="in" />
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-<feOffset dx="0" dy="0" result="result16" />
-<feMerge result="result10">
-<feMergeNode in="result16" />
-<feMergeNode in="result15" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
-</filter>
-<filter id="f224" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Non realistic frosted glass imitation" inkscape:label="Frosted Glass" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
-<feComposite in2="result8" in="result8" operator="xor" result="result6" />
-<feDisplacementMap in2="result6" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result6" />
-<feComposite in2="result4" k1="2" in="SourceGraphic" operator="arithmetic" result="result2" />
-<feComposite in2="result2" operator="in" in="result6" result="fbSourceGraphic" />
-<feComposite operator="in" in2="SourceGraphic" result="result14" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" />
-<feGaussianBlur stdDeviation="10" result="result13" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite result="result12" operator="in" in2="result13" />
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-<feOffset dx="0" dy="0" result="result15" />
-<feMerge id="feMerge3992" result="result10">
-<feMergeNode in="result15" />
-<feMergeNode in="result14" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
-</filter>
-<filter id="f225" inkscape:label="Smooth Shader Contour" inkscape:menu-tooltip="Contouring version of smooth shader" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur stdDeviation="4" result="result8" in="SourceGraphic" />
-<feComposite in2="result8" result="result6" operator="xor" in="result8" />
-<feDisplacementMap in2="result6" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" in="result8" />
-<feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" />
-<feComposite in2="result2" result="fbSourceGraphic" in="result6" operator="in" />
-<feComposite operator="in" in2="SourceGraphic" result="result14" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" />
-<feGaussianBlur stdDeviation="10" result="result13" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite result="result12" operator="in" in2="result13" />
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-<feOffset dx="0" dy="0" id="feOffset3359" result="result15" />
-<feMerge result="result10">
-<feMergeNode in="result15" />
-<feMergeNode in="result14" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
-</filter>
-<filter id="f226" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Aluminium effect with sharp brushed reflexions" inkscape:label="Aluminium" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
-<feComposite in2="SourceGraphic" in="result8" operator="xor" result="result6" />
-<feDisplacementMap in2="result6" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result6" />
-<feComposite in2="result4" result="result12" operator="atop" />
-<feComposite in2="SourceGraphic" k1="1" in="result12" operator="arithmetic" result="fbSourceGraphic" />
-<feComposite operator="in" in2="SourceGraphic" result="result18" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" />
-<feGaussianBlur stdDeviation="10" result="result17" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result13" />
-<feComposite result="result16" operator="in" in2="result17" />
+<feComposite in2="result8" operator="xor" result="result19" />
+<feComposite k2="1" operator="arithmetic" result="result17" in2="result8" />
+<feComposite in2="result17" result="result6" operator="xor" in="result17" />
+<feOffset result="result18" in="SourceGraphic" />
+<feDisplacementMap in2="result17" in="result18" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
+<feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k3="1" />
+<feComposite in2="SourceGraphic" result="fbSourceGraphic" in="result2" operator="in" />
 <feComposite in2="SourceGraphic" operator="in" result="result15" />
-<feOffset result="result19" />
-<feMerge result="result14">
-<feMergeNode in="result19" />
-<feMergeNode in="result18" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
+<feComposite result="result16" in2="SourceGraphic" operator="in" in="result15" />
 </filter>
-<filter id="f227" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Fluid brushed cartoon drawing" inkscape:label="Comics Fluid" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
-<feComposite in2="result8" in="result8" operator="xor" result="result6" />
-<feDisplacementMap in2="result6" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result6" />
-<feComposite in2="result4" k1="5" in="result8" operator="arithmetic" result="result2" />
-<feComposite in2="result2" operator="in" in="result6" result="fbSourceGraphic" />
-<feComposite operator="in" in2="SourceGraphic" result="result14" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
-<feComposite in2="SourceGraphic" operator="in" />
-<feGaussianBlur stdDeviation="10" result="result13" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite result="result12" operator="in" in2="result13" />
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-<feOffset dx="0" dy="0" result="result15" />
-<feMerge result="result10">
-<feMergeNode in="result15" />
-<feMergeNode in="result14" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
-</filter>
-<filter id="f228" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Chrome effect with bright reflexions" inkscape:label="Chrome" style="color-interpolation-filters:sRGB;">
-<feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
-<feComposite in2="result8" in="result8" operator="xor" result="result6" />
-<feDisplacementMap in2="result6" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result6" />
-<feComposite in2="result4" k1="2" in="result8" operator="arithmetic" result="result2" k3="2" />
-<feComposite in2="SourceGraphic" operator="in" in="result2" result="fbSourceGraphic" />
-<feComposite operator="in" in2="SourceGraphic" result="result15" />
-<feFlood result="result1" flood-color="rgb(200,255,253)" />
+<filter id="f219" inkscape:label="Comics Draft" inkscape:menu-tooltip="Draft painted cartoon shading with a glassy look" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB">
+<feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
+<feComposite in2="result8" operator="xor" />
+<feComposite k2="1" operator="arithmetic" result="result16" in2="result8" />
+<feComposite in2="result16" result="result6" operator="xor" in="result16" />
+<feOffset result="result17" in="SourceGraphic" />
+<feDisplacementMap in2="result16" in="result17" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
+<feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k3="1" />
+<feComposite in2="result2" result="fbSourceGraphic" in="result6" operator="in" />
 <feComposite in2="SourceGraphic" operator="in" result="result14" />
-<feGaussianBlur stdDeviation="10" result="result13" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 6 -4 " result="result9" />
-<feComposite result="result12" operator="in" in2="result13" in="result9" />
-<feComposite in2="SourceGraphic" operator="in" result="result11" />
-<feOffset result="result16" />
-<feMerge result="result10">
-<feMergeNode in="result16" />
-<feMergeNode in="result15" />
-</feMerge>
-<feComposite in2="SourceGraphic" operator="arithmetic" k2="1" />
+<feComposite result="result15" in2="SourceGraphic" operator="in" in="result14" />
+</filter>
+<filter id="f220" inkscape:label="Comics Fading" inkscape:menu-tooltip="Cartoon paint style with some fading at the edges" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB">
+<feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
+<feComposite operator="xor" result="result18" in2="result8" />
+<feComposite k2="1" operator="arithmetic" result="result16" in2="result18" in="result8" />
+<feComposite in2="result16" result="result6" operator="xor" in="result16" />
+<feOffset result="result17" in="SourceGraphic" />
+<feDisplacementMap in2="result18" in="result17" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
+<feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="0" k3="1" />
+<feComposite in2="result2" result="fbSourceGraphic" in="result16" operator="in" />
+<feComposite in2="SourceGraphic" operator="in" result="result14" />
+<feComposite result="result15" in2="SourceGraphic" operator="in" in="result14" />
+</filter>
+<filter id="f221" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Satiny metal surface effect" inkscape:label="Brushed Metal" style="color-interpolation-filters:sRGB">
+<feGaussianBlur in="SourceGraphic" stdDeviation="5" result="result8" />
+<feComposite in2="result8" operator="xor" result="result19" />
+<feComposite k2="1" operator="arithmetic" result="result17" in2="result8" />
+<feComposite in2="result17" result="result6" operator="xor" in="result17" />
+<feOffset result="result18" in="result8" />
+<feDisplacementMap in2="result17" in="result18" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
+<feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="0" k3="1" />
+<feComposite in2="SourceGraphic" result="fbSourceGraphic" in="result2" operator="in" />
+<feComposite in2="SourceGraphic" operator="in" result="result15" />
+<feComposite result="result16" in2="SourceGraphic" operator="in" in="result15" />
+</filter>
+<filter id="f222" inkscape:label="Opaline" inkscape:menu-tooltip="Contouring version of smooth shader" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB">
+<feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
+<feComposite in2="result8" operator="xor" />
+<feComposite k2="1" operator="arithmetic" result="result16" in2="result8" />
+<feComposite in2="result16" result="result6" operator="xor" in="result16" />
+<feOffset result="result17" in="result16" />
+<feDisplacementMap in2="result16" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" in="result17" />
+<feComposite in2="result4" result="result2" operator="arithmetic" in="SourceGraphic" k1="1" k3="1" />
+<feComposite in2="result2" result="fbSourceGraphic" in="result6" operator="in" />
+<feComposite in2="SourceGraphic" operator="in" result="result14" />
+<feComposite result="result15" in2="SourceGraphic" operator="in" in="result14" />
+</filter>
+<filter id="f223" inkscape:label="Chrome" inkscape:menu-tooltip="Bright chrome effect" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB">
+<feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
+<feComposite in2="result8" operator="xor" />
+<feComposite k2="1" operator="arithmetic" result="result17" in2="result8" />
+<feComposite in2="result17" result="result6" operator="xor" in="result17" />
+<feOffset result="result18" in="result17" />
+<feDisplacementMap in2="result17" in="result18" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
+<feComposite in2="result4" result="fbSourceGraphic" operator="arithmetic" in="result4" k1="1" k3="1" />
+<feComposite in2="fbSourceGraphic" result="result9" operator="over" />
+<feComposite in2="SourceGraphic" operator="in" result="result15" />
+<feComposite result="result16" in2="SourceGraphic" operator="in" in="result15" />
+</filter>
+<filter id="f224" style="color-interpolation-filters:sRGB" inkscape:label="Deep Chrome" inkscape:menu-tooltip="Dark chrome effect" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
+<feComposite result="result19" operator="xor" in2="result8" />
+<feComposite in2="result8" result="result17" operator="arithmetic" k2="1" />
+<feComposite in="result17" operator="xor" result="result6" in2="result17" />
+<feOffset in="result8" result="result18" />
+<feDisplacementMap result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result18" in2="result17" />
+<feComposite k3="1" k1="1" in="SourceGraphic" operator="arithmetic" result="result2" in2="result4" />
+<feComposite operator="in" in="result2" result="fbSourceGraphic" in2="SourceGraphic" />
+<feComposite result="result15" operator="in" in2="SourceGraphic" />
+<feComposite in="result15" operator="in" in2="SourceGraphic" result="result16" />
+</filter>
+<filter id="f225" style="color-interpolation-filters:sRGB" inkscape:label="Emboss Shader" inkscape:menu-tooltip="Combination of satiny and emboss effect" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
+<feComposite result="result19" operator="xor" in2="result8" />
+<feComposite in2="result8" result="result17" operator="arithmetic" k2="1" />
+<feComposite in="result17" operator="xor" result="result6" in2="result17" />
+<feOffset in="result8" result="result18" />
+<feDisplacementMap result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result18" in2="result17" />
+<feComposite k3="0.5" k1="0.5" in="result4" operator="arithmetic" result="result2" in2="result4" />
+<feComposite operator="over" in="result2" result="fbSourceGraphic" in2="result2" />
+<feComposite result="result15" operator="in" in2="fbSourceGraphic" />
+<feComposite in="result15" operator="in" in2="result8" result="result16" />
+</filter>
+<filter id="f226" style="color-interpolation-filters:sRGB" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Chrome effect with darkened edges" inkscape:label="Sharp Metal">
+<feGaussianBlur id="feGaussianBlur929" result="result8" stdDeviation="5" in="SourceGraphic" />
+<feComposite in="result8" result="result19" in2="result8" operator="xor" />
+<feComposite k2="1" operator="arithmetic" result="result17" in2="result8" />
+<feComposite in2="result17" in="SourceGraphic" operator="atop" result="result6" />
+<feOffset result="result18" />
+<feDisplacementMap in2="result6" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result18" />
+<feComposite in2="result4" k1="1" in="result4" operator="arithmetic" result="result2" k3="1" />
+<feComposite in2="result2" operator="over" in="result2" result="fbSourceGraphic" />
+<feComposite in2="result19" operator="over" result="result15" />
+<feComposite result="result16" in2="SourceGraphic" operator="in" in="result15" />
+</filter>
+<filter id="f227" style="color-interpolation-filters:sRGB" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Draft painted cartoon shading with a glassy look" inkscape:label="Brush Draw">
+<feGaussianBlur in="SourceGraphic" result="result8" stdDeviation="5" />
+<feComposite operator="xor" in2="result8" />
+<feComposite in2="result8" result="result16" operator="arithmetic" k2="1" />
+<feComposite in="result16" operator="over" result="result6" in2="result16" />
+<feOffset in="result6" result="result17" />
+<feDisplacementMap result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result17" in2="result16" />
+<feComposite k3="1" in="result4" operator="arithmetic" result="result2" in2="result4" />
+<feComposite operator="in" in="result6" result="fbSourceGraphic" in2="result2" />
+<feComposite result="result14" operator="over" in2="fbSourceGraphic" />
+<feComposite in="result14" operator="in" in2="result2" result="result15" />
+</filter>
+<filter id="f228" style="color-interpolation-filters:sRGB" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Embossed chrome effect" inkscape:label="Chrome Emboss">
+<feGaussianBlur in="SourceGraphic" result="result8" stdDeviation="5" />
+<feComposite result="result18" operator="xor" in2="result8" />
+<feComposite in2="result18" result="result16" operator="arithmetic" k1="1" k3="0.5" />
+<feComposite in="result16" operator="xor" result="result6" in2="result8" />
+<feOffset in="result6" result="result17" />
+<feDisplacementMap result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result17" in2="result16" />
+<feComposite k3="1" in="result4" operator="arithmetic" result="result2" in2="result4" />
+<feComposite operator="in" in="result6" result="fbSourceGraphic" in2="result2" />
+<feComposite result="result14" operator="over" in2="fbSourceGraphic" />
+<feComposite in="result14" operator="in" in2="result2" result="result15" />
+</filter>
+<filter id="f229" style="color-interpolation-filters:sRGB" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Satiny and embossed contour effect" inkscape:label="Contour Emboss">
+<feGaussianBlur in="SourceGraphic" result="result8" stdDeviation="5" />
+<feComposite result="result18" operator="xor" in2="result8" in="result8" />
+<feComposite in2="result8" id="feComposite311" result="result16" operator="arithmetic" k2="0.5" k1="1" in="result18" />
+<feComposite in="result16" operator="atop" result="result6" in2="result8" />
+<feOffset in="result6" result="result17" />
+<feDisplacementMap result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result17" in2="result16" />
+<feComposite k3="1" in="result17" operator="arithmetic" result="result2" in2="result4" />
+<feComposite operator="out" in="result2" result="fbSourceGraphic" in2="result17" />
+<feComposite result="result14" operator="over" in2="fbSourceGraphic" in="fbSourceGraphic" />
+<feComposite in="result14" operator="in" in2="result17" result="result15" />
+</filter>
+<filter id="f230" style="color-interpolation-filters:sRGB" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Unrealistic reflexions with sharp edges" inkscape:label="Sharp Deco">
+<feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
+<feComposite in="SourceGraphic" result="result19" in2="result8" operator="out" />
+<feComposite k2="1" operator="arithmetic" result="result17" in2="result8" />
+<feComposite in2="result19" in="result17" operator="atop" result="result6" />
+<feOffset result="result18" />
+<feDisplacementMap in2="result6" result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result18" />
+<feComposite in2="result18" in="result4" operator="arithmetic" result="result2" k3="1" k2="1" />
+<feComposite in2="result4" operator="over" in="result2" result="fbSourceGraphic" />
+<feComposite in2="result18" operator="xor" result="result15" />
+<feComposite result="result16" in2="SourceGraphic" operator="in" in="result15" />
+</filter>
+<filter id="f231" style="color-interpolation-filters:sRGB" inkscape:label="Deep Metal" inkscape:menu-tooltip="Deep and dark metal shading" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25">
+<feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
+<feComposite result="result19" operator="xor" in2="result8" />
+<feComposite in2="result8" result="result17" operator="arithmetic" k2="1" />
+<feComposite operator="xor" result="result6" in2="result17" />
+<feOffset in="result6" result="result18" />
+<feDisplacementMap result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result18" in2="result17" />
+<feComposite k3="1" operator="arithmetic" result="result2" in2="result4" in="result4" />
+<feComposite operator="over" in="result2" result="fbSourceGraphic" in2="result2" />
+<feComposite result="result15" operator="xor" in2="SourceGraphic" in="fbSourceGraphic" />
+<feComposite in="result15" operator="in" in2="result8" result="result16" />
+</filter>
+<filter id="f232" inkscape:label="Aluminium Emboss" inkscape:menu-tooltip="Satiny aluminium effect with embossing" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB">
+<feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
+<feComposite in2="result8" operator="xor" result="result18" />
+<feComposite k3="0.5" k1="1" operator="arithmetic" result="result16" in2="result18" />
+<feComposite in2="result8" result="result6" operator="xor" in="result16" />
+<feOffset result="result17" in="result6" />
+<feDisplacementMap in2="result16" in="result17" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
+<feComposite in2="result4" result="result2" operator="arithmetic" in="result4" k3="1" />
+<feComposite in2="result2" result="fbSourceGraphic" in="result6" operator="in" />
+<feComposite in2="fbSourceGraphic" operator="xor" result="result14" />
+<feComposite result="result15" in2="result2" operator="in" in="result14" />
+</filter>
+<filter id="f233" inkscape:label="Refractive Glass" inkscape:menu-tooltip="Double reflexion through glass with some refraction" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB">
+<feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
+<feComposite in="result8" in2="result8" operator="xor" result="result18" />
+<feComposite in="result8" k1="1" k2="0.5" operator="arithmetic" result="result16" in2="result18" />
+<feComposite in2="result8" result="result6" operator="atop" in="result16" />
+<feOffset result="result17" in="result6" />
+<feDisplacementMap in2="result16" in="result17" xChannelSelector="A" yChannelSelector="A" scale="100" result="result4" />
+<feComposite in2="result4" result="result2" operator="arithmetic" in="result17" k3="1" />
+<feComposite in2="result17" result="fbSourceGraphic" in="result2" operator="out" />
+<feComposite in="fbSourceGraphic" in2="fbSourceGraphic" operator="over" result="result14" />
+<feComposite result="result15" in2="SourceGraphic" operator="in" in="result14" />
+</filter>
+<filter id="f234" style="color-interpolation-filters:sRGB" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Satiny glass effect" inkscape:label="Frosted Glass">
+<feGaussianBlur in="SourceGraphic" result="result8" stdDeviation="5" />
+<feComposite result="result18" operator="xor" in2="result8" in="SourceGraphic" />
+<feComposite in2="result18" result="result16" operator="arithmetic" k2="0.5" k1="1" in="result8" />
+<feComposite in="result16" operator="atop" result="result6" in2="result8" />
+<feOffset in="result6" result="result17" />
+<feDisplacementMap result="result4" scale="100" yChannelSelector="A" xChannelSelector="A" in="result17" in2="result16" />
+<feComposite k3="1" in="result17" operator="arithmetic" result="result2" in2="result4" />
+<feComposite operator="out" in="result2" result="fbSourceGraphic" in2="result17" />
+<feComposite result="result14" operator="over" in2="fbSourceGraphic" in="fbSourceGraphic" />
+<feComposite in="result14" operator="in" in2="SourceGraphic" result="result15" />
 </filter>
 </defs>
 </svg>
