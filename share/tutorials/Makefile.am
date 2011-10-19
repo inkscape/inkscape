@@ -130,6 +130,7 @@ tutorial_DATA = \
     tutorial-interpolate.ja.svg \
     tutorial-interpolate.nl.svg \
     tutorial-interpolate.pl.svg \
+    tutorial-interpolate.pt_BR.svg \
     tutorial-interpolate.sk.svg \
     tutorial-interpolate.sl.svg \
     tutorial-interpolate.vi.svg \
