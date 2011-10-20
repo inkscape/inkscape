@@ -398,8 +398,8 @@ lwpolyline::lwpolyline( std::vector< dxfpair > section ){
 	}
 	
 	// Now put on the last data that was found 
-	if (others.size() > 0 ){
-		sections.push_back( others );
+	if (!others.empty()){
+		sections.push_back(others);
 	}
 	
 	reset_extents();

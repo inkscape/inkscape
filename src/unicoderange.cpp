@@ -116,9 +116,9 @@ Glib::ustring UnicodeRange::attribute_string(){
 
 gunichar UnicodeRange::sample_glyph(){
 	//This could be better
-	if (unichars.size())
+	if (!unichars.empty())
 		return unichars[0];
-	if (range.size())
+	if (!range.empty())
 		return hex2int(range[0].start);
 	return (gunichar) ' ';
 }

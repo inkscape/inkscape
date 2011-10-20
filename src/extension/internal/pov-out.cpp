@@ -490,7 +490,7 @@ bool PovOutput::doTree(SPDocument *doc)
         return false;
 
     //## Let's make a union of all of the Shapes
-    if (povShapes.size()>0)
+    if (!povShapes.empty())
         {
         String id = "AllShapes";
         char *pfx = (char *)id.c_str();

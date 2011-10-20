@@ -22,7 +22,7 @@ char* pattern2dasharray(ltype info, int precision, double scaling, char* out){
 	char *out_ptr;
 	
 	
-	if (pattern.size() > 0){
+	if (!pattern.empty()){
 		strcat(out," stroke-dasharray=\"");	
 		for(int i = 0; i < pattern.size()-1;i++){
 			strcat(out,gcvt(scaling*sqrt(pow(pattern[i],2)),precision,temp) );

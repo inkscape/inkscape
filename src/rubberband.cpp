@@ -85,7 +85,7 @@ void Inkscape::Rubberband::move(Geom::Point const &p)
     // we want the points to be at most 0.5 screen pixels apart,
     // so that we don't lose anything small;
     // if they are farther apart, we interpolate more points
-    if (_points.size() > 0 && Geom::L2(next-_points.back()) > 0.5) {
+    if (!_points.empty() && Geom::L2(next-_points.back()) > 0.5) {
         Geom::Point prev = _points.back();
         int subdiv = 2 * (int) round(Geom::L2(next-prev) + 0.5);
         for (int i = 1; i <= subdiv; i ++) {

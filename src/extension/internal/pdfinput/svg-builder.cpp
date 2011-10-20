@@ -1365,7 +1365,7 @@ void SvgBuilder::addChar(GfxState *state, double x, double y,
 
     bool is_space = ( uLen == 1 && u[0] == 32 );
     // Skip beginning space
-    if ( is_space && _glyphs.size() < 1 ) {
+    if ( is_space && _glyphs.empty()) {
         Geom::Point delta(dx, dy);
          _text_position += delta;
          return;
@@ -1405,7 +1405,7 @@ void SvgBuilder::addChar(GfxState *state, double x, double y,
     }
 
     // Copy current style if it has changed since the previous glyph
-    if (_invalidated_style || _glyphs.size() == 0 ) {
+    if (_invalidated_style || _glyphs.empty()) {
         new_glyph.style_changed = true;
         int render_mode = state->getRender();
         // Set style

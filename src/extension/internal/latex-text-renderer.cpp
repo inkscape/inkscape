@@ -652,7 +652,7 @@ LaTeXTextRenderer::transform()
 void
 LaTeXTextRenderer::push_transform(Geom::Affine const &tr)
 {
-    if(_transform_stack.size()){
+    if(!_transform_stack.empty()){
         Geom::Affine tr_top = _transform_stack.top();
         _transform_stack.push(tr * tr_top);
     } else {

@@ -450,7 +450,7 @@ PrintEmfWin32::flush_fill()
 unsigned int
 PrintEmfWin32::bind(Inkscape::Extension::Print * /*mod*/, Geom::Affine const &transform, float /*opacity*/)
 {   
-    if (m_tr_stack.size()) {
+    if (!m_tr_stack.empty()) {
         Geom::Affine tr_top = m_tr_stack.top();
         m_tr_stack.push(transform * tr_top);
     } else {

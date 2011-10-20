@@ -311,7 +311,7 @@ bool JavaFXOutput::doGradient(SPGradient *grad, const String &id)
         out("    function %s(): LinearGradient {\n",  jfxid.c_str());
         out("        LinearGradient {\n");
         std::vector<SPGradientStop> stops = g->vector.stops;
-        if (stops.size() > 0)
+        if (!stops.empty())
             {
             out("            stops:\n");
             out("                [\n");
@@ -341,7 +341,7 @@ bool JavaFXOutput::doGradient(SPGradient *grad, const String &id)
         out("            focusY: %s\n",  DSTR(g->fy.value));
         out("            radius: %s\n",  DSTR(g->r.value ));
         std::vector<SPGradientStop> stops = g->vector.stops;
-        if (stops.size() > 0)
+        if (!stops.empty())
             {
             out("            stops:\n");
             out("            [\n");

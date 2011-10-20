@@ -261,7 +261,7 @@ std::vector< std::vector< dxfpair > > separate_parts( std::vector< dxfpair > sec
 		}
 	}
 	// Because putting the data on outer depends on find a GC=0 the last bit of data may be left behind so it inner has data in it put it on outer
-	if ( inner.size() > 0 ){
+	if (!inner.empty()){
 		outer.push_back( inner );
 		inner.clear();
 	}
