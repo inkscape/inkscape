@@ -330,7 +330,7 @@ LPERoughHatches::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
 
     std::vector<std::vector<Point> > snakePoints;
     snakePoints = linearSnake(transformed_pwd2_in, transformed_org);
-    if ( snakePoints.size() > 0 ){
+    if (!snakePoints.empty()){
         Piecewise<D2<SBasis> >smthSnake = smoothSnake(snakePoints);
         smthSnake = smthSnake*mat.inverse();
         if (do_bend.get_value()){

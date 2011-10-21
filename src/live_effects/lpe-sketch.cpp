@@ -272,7 +272,7 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
                     }
                 }
                 times = roots(piecelength-s1);
-                if (times.size()==0) break;//we should not be there.
+                if (times.empty()) break;//we should not be there.
                 t1 = times[0];
 
                 //pick a rdm perturbation, and collect the perturbed piece into output.

@@ -125,7 +125,7 @@ findShadowedTime(Geom::Path const &patha, std::vector<Geom::Point> const &pt_and
 
     double tmin = 0, tmax = size_nondegenerate(patha);
     double period = size_nondegenerate(patha);
-    if (times.size()>0){
+    if (!times.empty()){
         unsigned rk = upper_bound( times.begin(),  times.end(), ta ) - times.begin();
         if ( rk < times.size() ) 
             tmax = times[rk];
@@ -465,7 +465,7 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
         }
 
         //If the all component is hidden, continue.
-        if ( dom.size() == 0){
+        if (dom.empty()){
             continue;
         }
 

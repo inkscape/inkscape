@@ -83,7 +83,7 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
 
     std::vector<Geom::Path> generating_path = generator.get_pathvector();
     
-    if (generating_path.size()==0) {
+    if (generating_path.empty()) {
         return path_in;
     }
 
@@ -124,7 +124,7 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
         }
     }
 
-    if (transforms.size()==0){
+    if (transforms.empty()){
         return path_in;
     }
 
@@ -247,7 +247,7 @@ LPEVonKoch::doBeforeEffect (SPLPEItem *lpeitem)
     
     std::vector<Geom::Path> paths = ref_path.get_pathvector();
     Geom::Point A,B;
-    if (paths.size()==0||paths.front().size()==0){
+    if (paths.empty()||paths.front().size()==0){
         //FIXME: a path is used as ref instead of 2 points to work around path/point param incompatibility bug.
         //refA.param_setValue( Geom::Point(boundingbox_X.min(), boundingbox_Y.middle()) );
         //refB.param_setValue( Geom::Point(boundingbox_X.max(), boundingbox_Y.middle()) );

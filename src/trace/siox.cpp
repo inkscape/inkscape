@@ -1011,7 +1011,7 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
                     }
                 tupel.minFgDist  = minFg;
                 tupel.indexMinFg = minIndex;
-                if (fgSignature.size() == 0)
+                if (fgSignature.empty())
                     {
                     isBackground = (minBg <= clusterSize);
                     // remove next line to force behaviour of old algorithm
@@ -1414,7 +1414,7 @@ int Siox::depthFirstSearch(int startPos,
         }
 
 
-    while (pixelsToVisit.size() > 0)
+    while (!pixelsToVisit.empty())
         {
         int pos = pixelsToVisit[pixelsToVisit.size() - 1];
         pixelsToVisit.erase(pixelsToVisit.end() - 1);
@@ -1486,7 +1486,7 @@ void Siox::fillColorRegions()
         // int componentSize = 1;
         pixelsToVisit.push_back(i);
         // depth first search to fill region
-        while (pixelsToVisit.size() > 0)
+        while (!pixelsToVisit.empty())
             {
             int pos = pixelsToVisit[pixelsToVisit.size() - 1];
             pixelsToVisit.erase(pixelsToVisit.end() - 1);
