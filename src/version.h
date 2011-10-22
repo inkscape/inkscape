@@ -17,7 +17,10 @@
 namespace Inkscape {
 
 struct Version {
-	Version() {}
+	Version() {
+		major = 0;
+		minor = 0;
+	}
 	Version(unsigned mj, unsigned mn) {
 		// somebody pollutes our namespace with major() and minor()
 		// macros, so we can't use new-style initializers

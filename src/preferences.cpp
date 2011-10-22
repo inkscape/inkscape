@@ -521,6 +521,7 @@ struct _ObserverData {
 Preferences::Observer::Observer(Glib::ustring const &path) :
     observed_path(path)
 {
+    _data = NULL;
 }
 
 Preferences::Observer::~Observer()
@@ -600,6 +601,10 @@ void Preferences::addObserver(Observer &o)
             _ObserverData *priv_data = new _ObserverData;
             priv_data->_node = node;
             priv_data->_is_attr = !attr_key.empty();
+            if (o._data)
+            {
+                delete o._data;
+            }
             o._data = static_cast<void*>(priv_data);
 
             _observer_map[&o] = new PrefNodeObserver(o, attr_key);

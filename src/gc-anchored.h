@@ -63,7 +63,7 @@ protected:
 
 private:
     struct Anchor : public Managed<SCANNED, MANUAL> {
-        Anchor() : refcount(0) {}
+        Anchor() : refcount(0),base(NULL) {}
         Anchor(Anchored const *obj) : refcount(0) {
             base = Core::base(const_cast<Anchored *>(obj));
         }

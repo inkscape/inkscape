@@ -39,7 +39,7 @@ namespace Inkscape
 class Snapper
 {
 public:
-    Snapper() {}
+    //Snapper() {} //does not seem to be used somewhere
     Snapper(SnapManager *sm, ::Geom::Coord const t);
     virtual ~Snapper() {}
 
