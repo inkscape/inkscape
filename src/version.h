@@ -1,6 +1,7 @@
 /*
  * Authors:
  *   MenTaLguY <mental@rydia.net>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2003 MenTaLguY
  *
@@ -16,45 +17,54 @@
 
 namespace Inkscape {
 
-struct Version {
-	Version() {
-		major = 0;
-		minor = 0;
-	}
-	Version(unsigned mj, unsigned mn) {
-		// somebody pollutes our namespace with major() and minor()
-		// macros, so we can't use new-style initializers
-		major = mj;
-		minor = mn;
-	}
+class Version {
+public:
 
-	unsigned major;
-	unsigned minor;
+    Version() : _major(0), _minor(0) {}
 
-	bool operator>(Version const &other) const {
-		return major > other.major ||
-		       ( major == other.major && minor > other.minor );
-	}
-	bool operator==(Version const &other) const {
-		return major == other.major && minor == other.minor;
-	}
-	bool operator!=(Version const &other) const {
-		return major != other.major || minor != other.minor;
-	}
-	bool operator<(Version const &other) const {
-		return major < other.major ||
-		       ( major == other.major && minor < other.minor );
-	}
+    // Note: somebody pollutes our namespace with major() and minor()
+    Version(unsigned mj, unsigned mn) : _major(mj), _minor(mn) {}
+
+    bool operator>(Version const &other) const {
+        return _major > other._major ||
+            ( _major == other._major && _minor > other._minor );
+    }
+
+    bool operator==(Version const &other) const {
+        return _major == other._major && _minor == other._minor;
+    }
+
+    bool operator!=(Version const &other) const {
+        return _major != other._major || _minor != other._minor;
+    }
+
+    bool operator<(Version const &other) const {
+        return _major < other._major ||
+            ( _major == other._major && _minor < other._minor );
+    }
+
+    unsigned int _major;
+    unsigned int _minor;
 };
 
 }
 
-#define SP_VERSION_IS_ZERO (v) (!(v).major && !(v).minor)
+gboolean sp_version_from_string(const gchar *string, Inkscape::Version *version);
 
-gboolean sp_version_from_string (const gchar *string, Inkscape::Version *version);
-gchar *sp_version_to_string (Inkscape::Version version);
-gboolean sp_version_inside_range (Inkscape::Version version,
-                                  unsigned major_min, unsigned minor_min,
-                                  unsigned major_max, unsigned minor_max);
+gchar *sp_version_to_string(Inkscape::Version version);
 
-#endif
+gboolean sp_version_inside_range(Inkscape::Version version,
+                                 unsigned major_min, unsigned minor_min,
+                                 unsigned major_max, unsigned minor_max);
+
+#endif // SEEN_INKSCAPE_VERSION_H
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0))
+  indent-tabs-mode:nil
+  fill-column:75
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :
