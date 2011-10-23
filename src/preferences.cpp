@@ -505,23 +505,22 @@ void Preferences::mergeStyle(Glib::ustring const &pref_path, SPCSSAttr *style)
 }
 
 
-// Observer stuff
-namespace {
-
 /**
- * Structure that holds additional information for registered Observers.
+ * Class that holds additional information for registered Observers.
  */
-struct _ObserverData {
+class Preferences::_ObserverData
+{
+public:
+    _ObserverData(Inkscape::XML::Node *node, bool isAttr) : _node(node), _is_attr(isAttr) {}
+
     Inkscape::XML::Node *_node; ///< Node at which the wrapping PrefNodeObserver is registered
     bool _is_attr; ///< Whether this Observer watches a single attribute
 };
 
-} // anonymous namespace
-
 Preferences::Observer::Observer(Glib::ustring const &path) :
-    observed_path(path)
+    observed_path(path),
+    _data(0)
 {
-    _data = NULL;
 }
 
 Preferences::Observer::~Observer()
@@ -536,7 +535,7 @@ void Preferences::PrefNodeObserver::notifyAttributeChanged(XML::Node &node, GQua
     // filter out attributes we don't watch
     gchar const *attr_name = g_quark_to_string(name);
     if ( _filter.empty() || (_filter == attr_name) ) {
-        _ObserverData *d = static_cast<_ObserverData*>(Preferences::_get_pref_observer_data(_observer));
+        _ObserverData *d = Preferences::_get_pref_observer_data(_observer);
         Glib::ustring notify_path = _observer.observed_path;
 
         if (!d->_is_attr) {
@@ -598,19 +597,15 @@ void Preferences::addObserver(Observer &o)
         node = _findObserverNode(o.observed_path, node_key, attr_key, false);
         if (node) {
             // set additional data
-            _ObserverData *priv_data = new _ObserverData;
-            priv_data->_node = node;
-            priv_data->_is_attr = !attr_key.empty();
-            if (o._data)
-            {
+            if (o._data) {
                 delete o._data;
             }
-            o._data = static_cast<void*>(priv_data);
+            o._data = new _ObserverData(node, !attr_key.empty());
 
             _observer_map[&o] = new PrefNodeObserver(o, attr_key);
 
             // if we watch a single pref, we want to receive notifications only for a single node
-            if (priv_data->_is_attr) {
+            if (o._data->_is_attr) {
                 node->addObserver( *(_observer_map[&o]) );
             } else {
                 node->addSubtreeObserver( *(_observer_map[&o]) );
@@ -623,9 +618,9 @@ void Preferences::removeObserver(Observer &o)
 {
     // prevent removing an observer which was not added
     if ( _observer_map.find(&o) != _observer_map.end() ) {
-        Inkscape::XML::Node *node = static_cast<_ObserverData*>(o._data)->_node;
-        _ObserverData *priv_data = static_cast<_ObserverData*>(o._data);
-        o._data = NULL;
+        Inkscape::XML::Node *node = o._data->_node;
+        _ObserverData *priv_data = o._data;
+        o._data = 0;
 
         if (priv_data->_is_attr) {
             node->removeObserver( *(_observer_map[&o]) );
@@ -634,6 +629,7 @@ void Preferences::removeObserver(Observer &o)
         }
 
         delete priv_data;
+        priv_data = 0;
         delete _observer_map[&o];
         _observer_map.erase(&o);
     }

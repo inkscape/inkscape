@@ -53,6 +53,8 @@ public:
  * derive (e.g. GConf, flat XML file...)
  */
 class Preferences {
+    class _ObserverData;
+
 public:
     // #############################
     // ## inner class definitions ##
@@ -69,6 +71,7 @@ public:
      */
     class Observer {
         friend class Preferences;
+
     public:
 
         /**
@@ -102,7 +105,7 @@ public:
 
         Glib::ustring const observed_path; ///< Path which the observer watches
     private:
-        void *_data; ///< additional data used by the implementation while the observer is active
+        _ObserverData *_data; ///< additional data used by the implementation while the observer is active
     };
 
 
@@ -547,7 +550,7 @@ private:
 
     // privilege escalation methods for PrefNodeObserver
     static Entry const _create_pref_value(Glib::ustring const &, void const *ptr);
-    static void *_get_pref_observer_data(Observer &o) { return o._data; }
+    static _ObserverData *_get_pref_observer_data(Observer &o) { return o._data; }
 
     static Preferences *_instance;
 
