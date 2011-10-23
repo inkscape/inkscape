@@ -175,7 +175,7 @@ void Crc32::update(char *str)
 void Crc32::update(const std::vector<unsigned char> &buf)
 {
     std::vector<unsigned char>::const_iterator iter;
-    for (iter=buf.begin() ; iter!=buf.end() ; iter++)
+    for (iter=buf.begin() ; iter!=buf.end() ; ++iter)
         {
         unsigned char ch = *iter;
         update(ch);
@@ -1390,7 +1390,7 @@ bool Deflater::compress()
         while (window.size() < 32768 && iter != uncompressed.end())
             {
             window.push_back(*iter);
-            iter++;
+            ++iter;
             }
         if (window.size() >= 32768)
             putBits(0x00, 1); //0  -- more blocks
@@ -1595,7 +1595,7 @@ bool GzipFile::write()
         }
 
     std::vector<unsigned char>::iterator iter;
-    for (iter=compBuf.begin() ; iter!=compBuf.end() ; iter++)
+    for (iter=compBuf.begin() ; iter!=compBuf.end() ; ++iter)
         {
         unsigned char ch = *iter;
         putByte(ch);
@@ -1636,7 +1636,7 @@ bool GzipFile::writeFile(const std::string &fileName)
     if (!f)
         return false;
     std::vector<unsigned char>::iterator iter;
-    for (iter=fileBuf.begin() ; iter!=fileBuf.end() ; iter++)
+    for (iter=fileBuf.begin() ; iter!=fileBuf.end() ; ++iter)
         {
         unsigned char ch = *iter;
         fputc(ch, f);
@@ -2033,7 +2033,7 @@ void ZipEntry::finish()
     Crc32 c32;
     std::vector<unsigned char>::iterator iter;
     for (iter = uncompressedData.begin() ;
-           iter!= uncompressedData.end() ; iter++)
+           iter!= uncompressedData.end() ; ++iter)
         {
         unsigned char ch = *iter;
         c32.update(ch);
@@ -2044,7 +2044,7 @@ void ZipEntry::finish()
         case 0: //none
             {
             for (iter = uncompressedData.begin() ;
-               iter!= uncompressedData.end() ; iter++)
+               iter!= uncompressedData.end() ; ++iter)
                 {
                 unsigned char ch = *iter;
                 compressedData.push_back(ch);
@@ -2135,7 +2135,7 @@ ZipFile::ZipFile()
 ZipFile::~ZipFile()
 {
     std::vector<ZipEntry *>::iterator iter;
-    for (iter=entries.begin() ; iter!=entries.end() ; iter++)
+    for (iter=entries.begin() ; iter!=entries.end() ; ++iter)
         {
         ZipEntry *entry = *iter;
         delete entry;
@@ -2269,7 +2269,7 @@ bool ZipFile::putByte(unsigned char val)
 bool ZipFile::writeFileData()
 {
     std::vector<ZipEntry *>::iterator iter;
-    for (iter = entries.begin() ; iter != entries.end() ; iter++)
+    for (iter = entries.begin() ; iter != entries.end() ; ++iter)
         {
         ZipEntry *entry = *iter;
         entry->setPosition(fileBuf.size());
@@ -2299,7 +2299,7 @@ bool ZipFile::writeFileData()
         //##### DATA
         std::vector<unsigned char> &buf = entry->getCompressedData();
         std::vector<unsigned char>::iterator iter;
-        for (iter = buf.begin() ; iter != buf.end() ; iter++)
+        for (iter = buf.begin() ; iter != buf.end() ; ++iter)
             {
             unsigned char ch = (unsigned char) *iter;
             putByte(ch);
@@ -2315,7 +2315,7 @@ bool ZipFile::writeCentralDirectory()
 {
     unsigned long cdPosition = fileBuf.size();
     std::vector<ZipEntry *>::iterator iter;
-    for (iter = entries.begin() ; iter != entries.end() ; iter++)
+    for (iter = entries.begin() ; iter != entries.end() ; ++iter)
         {
         ZipEntry *entry = *iter;
         std::string fname   = entry->getFileName();
@@ -2403,7 +2403,7 @@ bool ZipFile::writeFile(const std::string &fileName)
     if (!f)
         return false;
     std::vector<unsigned char>::iterator iter;
-    for (iter=fileBuf.begin() ; iter!=fileBuf.end() ; iter++)
+    for (iter=fileBuf.begin() ; iter!=fileBuf.end() ; ++iter)
         {
         unsigned char ch = *iter;
         fputc(ch, f);

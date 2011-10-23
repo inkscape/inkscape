@@ -197,7 +197,7 @@ void GzipOutputStream::flush()
     gz.writeBuffer(buffer);
 
     std::vector<unsigned char>::iterator iter;
-    for (iter=compBuf.begin() ; iter!=compBuf.end() ; iter++)
+    for (iter=compBuf.begin() ; iter!=compBuf.end() ; ++iter)
         {
         int ch = (int) *iter;
         destination.put(ch);

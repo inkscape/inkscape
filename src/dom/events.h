@@ -510,7 +510,7 @@ public:
                                      bool useCapture)
         {
         std::vector<EventListenerEntry>::iterator iter;
-        for (iter = listeners.begin() ; iter != listeners.end() ; iter++)
+        for (iter = listeners.begin() ; iter != listeners.end() ; ++iter)
             {
             EventListenerEntry entry = *iter;
             if (entry.eventType == type &&
@@ -568,7 +568,7 @@ public:
                                        bool useCapture)
         {
         std::vector<EventListenerEntry>::iterator iter;
-        for (iter = listeners.begin() ; iter != listeners.end() ; iter++)
+        for (iter = listeners.begin() ; iter != listeners.end() ; ++iter)
             {
             EventListenerEntry entry = *iter;
             if (entry.namespaceURI == namespaceURI &&
@@ -589,7 +589,7 @@ public:
                                const DOMString &type)
         {
         std::vector<EventListenerEntry>::iterator iter;
-        for (iter = listeners.begin() ; iter != listeners.end() ; iter++)
+        for (iter = listeners.begin() ; iter != listeners.end() ; ++iter)
             {
             EventListenerEntry entry = *iter;
             if (entry.namespaceURI == namespaceURI &&
@@ -611,7 +611,7 @@ public:
                                     const DOMString &type)
         {
         std::vector<EventListenerEntry>::iterator iter;
-        for (iter = listeners.begin() ; iter != listeners.end() ; iter++)
+        for (iter = listeners.begin() ; iter != listeners.end() ; ++iter)
             {
             EventListenerEntry entry = *iter;
             if (entry.namespaceURI == namespaceURI &&

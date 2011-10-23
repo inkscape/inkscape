@@ -179,7 +179,7 @@ static DOMString toStr(const std::vector<int> &arr)
 {
     DOMString buf;
     std::vector<int>::const_iterator iter;
-    for (iter=arr.begin() ; iter!=arr.end() ; iter++)
+    for (iter=arr.begin() ; iter!=arr.end() ; ++iter)
         {
         int ch = *iter;
         if (isprint(ch))
@@ -503,13 +503,13 @@ void URI::normalize()
         else if (sequ(s, "..") && iter != segments.begin() &&
                  !sequ(*(iter-1), ".."))
             {
-            iter--; //back up, then erase two entries
+            --iter; //back up, then erase two entries
             iter = segments.erase(iter);
             iter = segments.erase(iter);
             edited = true;
             }
         else
-            iter++;
+            ++iter;
         }
 
     //## Rebuild path, if necessary
@@ -521,7 +521,7 @@ void URI::normalize()
             path.push_back('/');
             }
         std::vector< std::vector<int> >::iterator iter;
-        for (iter=segments.begin() ; iter!=segments.end() ; iter++)
+        for (iter=segments.begin() ; iter!=segments.end() ; ++iter)
             {
             if (iter != segments.begin())
                 path.push_back('/');
@@ -920,7 +920,7 @@ bool URI::parse(const DOMString &str)
 
     DOMString::const_iterator iter;
     unsigned int i=0;
-    for (iter= str.begin() ; iter!=str.end() ; iter++)
+    for (iter= str.begin() ; iter!=str.end() ; ++iter)
         {
         int ch = *iter;
         if (ch == '\\')

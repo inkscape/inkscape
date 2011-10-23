@@ -58,7 +58,7 @@ static std::string toHex(const std::vector<unsigned char> &bytes)
 {
     std::string str;
     std::vector<unsigned char>::const_iterator iter;
-    for (iter = bytes.begin() ; iter != bytes.end() ; iter++)
+    for (iter = bytes.begin() ; iter != bytes.end() ; ++iter)
        {
        unsigned char ch = *iter;
        str.push_back(hexDigits[(ch>>4) & 0x0f]);
