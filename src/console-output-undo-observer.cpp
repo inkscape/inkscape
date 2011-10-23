@@ -1,4 +1,4 @@
-/**
+/*
  * Inkscape::ConsoleOutputUndoObserver - observer for tracing calls to
  * SPDocumentUndo::undo, SPDocumentUndo::redo, SPDocumentUndo::maybe_done
  *

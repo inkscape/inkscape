@@ -1,9 +1,6 @@
-#ifndef __SP_DASH_SELECTOR_NEW_H__
-#define __SP_DASH_SELECTOR_NEW_H__
+#ifndef SEEN_SP_DASH_SELECTOR_NEW_H
+#define SEEN_SP_DASH_SELECTOR_NEW_H
 
-/** @file
- * @brief Option menu for selecting dash patterns
- */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Maximilian Albert <maximilian.albert> (gtkmm-ification)
@@ -25,6 +22,9 @@ class Adjustment;
 }
 
 // TODO: should we rather derive this from OptionMenu and add the spinbutton somehow else?
+/**
+ * Option menu for selecting dash patterns.
+ */
 class SPDashSelector : public Gtk::HBox {
 public:
     SPDashSelector();
@@ -47,7 +47,7 @@ private:
     static gchar const *const _prefs_path;
 };
 
-#endif
+#endif // SEEN_SP_DASH_SELECTOR_NEW_H
 
 /*
   Local Variables:

@@ -1,6 +1,9 @@
 /**
- * \brief Functions to automatically generate constraints for the
+ * @file
+ * Functions to automatically generate constraints for the
  * rectangular node overlap removal problem.
+ */
+/*
  *
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>

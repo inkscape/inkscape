@@ -1,7 +1,3 @@
-/**
- * Glyph selector dialog.
- */
-
 /* Authors:
  *   Jon A. Cruz
  *
@@ -40,7 +36,6 @@ class GlyphColumns;
 /**
  * A panel that displays character glyphs.
  */
-
 class GlyphsPanel : public Inkscape::UI::Widget::Panel
 {
 public:

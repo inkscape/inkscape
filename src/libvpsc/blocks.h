@@ -1,10 +1,4 @@
-/**
- * \brief A block structure defined over the variables
- *
- * A block structure defined over the variables such that each block contains
- * 1 or more variables, with the invariant that all constraints inside a block
- * are satisfied by keeping the variables fixed relative to one another
- *
+/*
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>
  *
@@ -24,13 +18,17 @@
 #include <list>
 
 namespace vpsc {
+
 class Block;
 class Variable;
 class Constraint;
+
 /**
  * A block structure defined over the variables such that each block contains
  * 1 or more variables, with the invariant that all constraints inside a block
- * are satisfied by keeping the variables fixed relative to one another
+ * are satisfied by keeping the variables fixed relative to one another.
+ *
+ * @todo check on this class being copy-n-paste duplicated.
  */
 class Blocks : public std::set<Block*>
 {

@@ -1,7 +1,3 @@
-/**
- * Glyph selector dialog.
- */
-
 /* Authors:
  *   Jon A. Cruz
  *   Abhishek Sharma

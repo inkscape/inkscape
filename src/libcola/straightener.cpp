@@ -3,8 +3,10 @@
 ** vim: ts=4 sw=4 et tw=0 wm=0
 */
 /**
- * \brief Functions to automatically generate constraints for the
+ * Functions to automatically generate constraints for the
  * rectangular node overlap removal problem.
+ */
+/*
  *
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>

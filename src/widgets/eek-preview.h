@@ -1,6 +1,3 @@
-/** @file
- * @brief EEK preview stuff
- */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -42,6 +39,11 @@
 
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
+
+/**
+ * @file
+ * Generic implementation of a object that can be shown by a preview.
+ */
 
 G_BEGIN_DECLS
 

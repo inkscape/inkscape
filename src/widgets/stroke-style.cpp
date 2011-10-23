@@ -1,7 +1,3 @@
-/**
- * @file
- * Stroke style dialog.
- */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Bryce Harrington <brycehar@bryceharrington.org>

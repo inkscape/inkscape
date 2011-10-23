@@ -1,7 +1,4 @@
-/**
- * \brief A constraint determines a minimum or exact spacing required between
- * two variables.
- *
+/*
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>
  *

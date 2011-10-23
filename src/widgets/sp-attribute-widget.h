@@ -1,5 +1,6 @@
-/** @file
- * @brief Widget that listens and modifies repr attributes
+/**
+ * @file
+ * Widget that listens and modifies repr attributes.
  */
 /* Authors:
  *  Lauris Kaplinski <lauris@kaplinski.com>

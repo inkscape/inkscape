@@ -1,9 +1,7 @@
 #ifndef SEEN_TOOLBOX_H
 #define SEEN_TOOLBOX_H
 
-/**
- * \brief Main toolbox
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
@@ -26,6 +24,9 @@ class SPEventContext;
 namespace Inkscape {
 namespace UI {
 
+/**
+ * Main toolbox source.
+ */
 class ToolboxFactory
 {
 public:

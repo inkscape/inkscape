@@ -1,7 +1,4 @@
-/**
- * Inkscape::ConsoleOutputUndoObserver - observer for tracing calls to
- * SPDocumentUndo::undo, SPDocumentUndo::redo, SPDocumentUndo::maybe_done
- *
+/*
  * Authors:
  * David Yip <yipdw@alumni.rose-hulman.edu>
  *   Abhishek Sharma
@@ -18,6 +15,11 @@
 
 namespace Inkscape {
 
+/**
+ * Inkscape::ConsoleOutputUndoObserver - observer for tracing calls to
+ * SPDocumentUndo::undo, SPDocumentUndo::redo, SPDocumentUndo::maybe_done.
+ *
+ */
 class ConsoleOutputUndoObserver : public UndoStackObserver {
 public:
     ConsoleOutputUndoObserver() : UndoStackObserver() { }

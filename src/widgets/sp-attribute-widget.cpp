@@ -1,7 +1,3 @@
-/**
- * @file
- * Widget that listens and modifies repr attributes.
- */
 /* Authors:
  *  Lauris Kaplinski <lauris@ximian.com>
  *   Abhishek Sharma

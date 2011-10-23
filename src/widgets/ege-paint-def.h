@@ -1,6 +1,3 @@
-/** @file
- * @brief EGE paint definition
- */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -49,6 +46,9 @@ namespace ege
 typedef void (*ColorCallback)( void* data );
 
 
+/**
+ * Pure data representation of a color definition.
+ */
 class PaintDef
 {
 public:

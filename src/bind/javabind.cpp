@@ -3,6 +3,16 @@
  * This is a simple mechanism to bind Inkscape to Java, and thence
  * to all of the nice things that can be layered upon that.
  *
+ * Note: We must limit Java or JVM-specific code to this file
+ * and to dobinding.cpp.  It should be hidden from javabind.h
+ * 
+ * This file is mostly about getting things up and running, and
+ * providing the basic C-to-Java hooks.
+ *   
+ * dobinding.cpp will have the rote and repetitious
+ * class-by-class binding   
+ */  
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -59,16 +69,6 @@
 #include <inkscape.h>
 #include <xml/repr.h>
 
-/**
- * Note: We must limit Java or JVM-specific code to this file
- * and to dobinding.cpp.  It should be hidden from javabind.h
- * 
- * This file is mostly about getting things up and running, and
- * providing the basic C-to-Java hooks.
- *   
- * dobinding.cpp will have the rote and repetitious
- * class-by-class binding   
- */  
 
 
 namespace Inkscape

@@ -1,6 +1,10 @@
 /**
- * \brief Functions to automatically generate constraints for the
+ * @file
+ * Functions to automatically generate constraints for the
  * rectangular node overlap removal problem.
+ */
+/* TODO replace file comment with appropriate doc comment on vpsc::Rectangle */
+/*
  *
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>

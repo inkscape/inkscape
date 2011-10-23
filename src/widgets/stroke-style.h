@@ -1,5 +1,6 @@
-/** @file
- * @brief  Stroke style dialog
+/**
+ * @file
+ * Widgets used in the stroke style dialog.
  */
 /* Author:
  *   Lauris Kaplinski <lauris@ximian.com>
@@ -19,9 +20,19 @@ class Widget;
 class Container;
 }
 
+/**
+ * Creates an instance of a paint style widget.
+ */
 Gtk::Widget *sp_stroke_style_paint_widget_new(void);
+
+/**
+ * Creates an instance of a line style widget.
+ */
 Gtk::Container *sp_stroke_style_line_widget_new(void);
 
+/**
+ * Switches a line or paint style widget to track the given desktop.
+ */
 void sp_stroke_style_widget_set_desktop(Gtk::Widget *widget, SPDesktop *desktop);
 
 #endif // SEEN_DIALOGS_STROKE_STYLE_H

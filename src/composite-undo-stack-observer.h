@@ -1,8 +1,4 @@
-/**
- * Aggregates undo stack observers for management and triggering in SPDocument
- *
- * Heavily inspired by Inkscape::XML::CompositeNodeObserver.
- *
+/*
  * Authors:
  * David Yip <yipdw@rose-hulman.edu>
  *
@@ -11,8 +7,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#ifndef __COMPOSITE_UNDO_COMMIT_OBSERVER_H__
-#define __COMPOSITE_UNDO_COMMIT_OBSERVER_H__
+#ifndef SEEN_COMPOSITE_UNDO_COMMIT_OBSERVER_H
+#define SEEN_COMPOSITE_UNDO_COMMIT_OBSERVER_H
 
 #include "gc-alloc.h"
 #include "gc-managed.h"
@@ -27,6 +23,8 @@ class Event;
 /**
  * Aggregates UndoStackObservers for management and triggering in an SPDocument's undo/redo
  * system.
+ *
+ * Heavily inspired by Inkscape::XML::CompositeNodeObserver.
  */
 class CompositeUndoStackObserver : public UndoStackObserver {
 public:
@@ -181,4 +179,4 @@ private:
 
 }
 
-#endif
+#endif // SEEN_COMPOSITE_UNDO_COMMIT_OBSERVER_H
