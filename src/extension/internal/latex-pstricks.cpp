@@ -56,8 +56,7 @@ PrintLatex::~PrintLatex (void)
 	return;
 }
 
-unsigned int
-PrintLatex::setup (Inkscape::Extension::Print *mod)
+unsigned int PrintLatex::setup(Inkscape::Extension::Print * /*mod*/)
 {
     return TRUE;
 }
@@ -146,25 +145,21 @@ PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
     return fprintf(_stream, "%s", os.str().c_str());
 }
 
-unsigned int
-PrintLatex::finish (Inkscape::Extension::Print *mod)
+unsigned int PrintLatex::finish(Inkscape::Extension::Print * /*mod*/)
 {
-    int res;
+    if (_stream) {
+        fprintf(_stream, "\\end{pspicture}\n");
 
-    if (!_stream) return 0;
+        // Flush stream to be sure.
+        fflush(_stream);
 
-    res = fprintf(_stream, "\\end{pspicture}\n");
-
-    /* Flush stream to be sure. */
-    (void) fflush(_stream);
-
-    fclose(_stream);
-    _stream = NULL;
+        fclose(_stream);
+        _stream = NULL;
+    }
     return 0;
 }
 
-unsigned int
-PrintLatex::bind(Inkscape::Extension::Print *mod, Geom::Affine const &transform, float opacity)
+unsigned int PrintLatex::bind(Inkscape::Extension::Print * /*mod*/, Geom::Affine const &transform, float /*opacity*/)
 {
     if (!m_tr_stack.empty()) {
         Geom::Affine tr_top = m_tr_stack.top();
@@ -176,27 +171,29 @@ PrintLatex::bind(Inkscape::Extension::Print *mod, Geom::Affine const &transform,
     return 1;
 }
 
-unsigned int
-PrintLatex::release(Inkscape::Extension::Print *mod)
+unsigned int PrintLatex::release(Inkscape::Extension::Print * /*mod*/)
 {
     m_tr_stack.pop();
     return 1;
 }
 
-unsigned int PrintLatex::comment (Inkscape::Extension::Print * module,
-		                  const char * comment)
+unsigned int PrintLatex::comment(Inkscape::Extension::Print * /*mod*/,
+                                 const char * comment)
 {
-    if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
+    if (!_stream) {
+        return 0; // XXX: fixme, returning -1 as unsigned.
+    }
 
     return fprintf(_stream, "%%! %s\n",comment);
 }
 
-unsigned int
-PrintLatex::fill(Inkscape::Extension::Print *mod,
-    Geom::PathVector const &pathv, Geom::Affine const &transform, SPStyle const *style,
-    Geom::OptRect const &pbox, Geom::OptRect const &dbox, Geom::OptRect const &bbox)
+unsigned int PrintLatex::fill(Inkscape::Extension::Print * /*mod*/,
+                              Geom::PathVector const &pathv, Geom::Affine const &transform, SPStyle const *style,
+                              Geom::OptRect const & /*pbox*/, Geom::OptRect const & /*dbox*/, Geom::OptRect const & /*bbox*/)
 {
-    if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
+    if (!_stream) {
+        return 0; // XXX: fixme, returning -1 as unsigned.
+    }
 
     if (style->fill.isColor()) {
         Inkscape::SVGOStringStream os;
@@ -225,12 +222,13 @@ PrintLatex::fill(Inkscape::Extension::Print *mod,
     return 0;
 }
 
-unsigned int
-PrintLatex::stroke (Inkscape::Extension::Print *mod,
-    Geom::PathVector const &pathv, Geom::Affine const &transform, SPStyle const *style,
-    Geom::OptRect const &pbox, Geom::OptRect const &dbox, Geom::OptRect const &bbox)
+unsigned int PrintLatex::stroke(Inkscape::Extension::Print * /*mod*/,
+                                Geom::PathVector const &pathv, Geom::Affine const &transform, SPStyle const *style,
+                                Geom::OptRect const & /*pbox*/, Geom::OptRect const & /*dbox*/, Geom::OptRect const & /*bbox*/)
 {
-    if (!_stream) return 0; // XXX: fixme, returning -1 as unsigned.
+    if (!_stream) {
+        return 0; // XXX: fixme, returning -1 as unsigned.
+    }
 
     if (style->stroke.isColor()) {
         Inkscape::SVGOStringStream os;

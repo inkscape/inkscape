@@ -102,13 +102,13 @@ DocumentProperties::DocumentProperties()
       _rcp_gui(_("Guide co_lor:"), _("Guideline color"), _("Color of guidelines"), "guidecolor", "guideopacity", _wr),
       _rcp_hgui(_("_Highlight color:"), _("Highlighted guideline color"), _("Color of a guideline when it is under mouse"), "guidehicolor", "guidehiopacity", _wr),
     //---------------------------------------------------------------
+      _rcb_snclp(_("Snap to clip paths"), _("When snapping to paths, then also try snapping to clip paths"), "inkscape:snap-path-clip", _wr),
+      _rcb_snmsk(_("Snap to mask paths"), _("When snapping to paths, then also try snapping to mask paths"), "inkscape:snap-path-mask", _wr),
+    //---------------------------------------------------------------
       _grids_label_crea("", Gtk::ALIGN_LEFT),
       _grids_button_new(C_("Grid", "_New"), _("Create new grid.")),
       _grids_button_remove(C_("Grid", "_Remove"), _("Remove selected grid.")),
-      _grids_label_def("", Gtk::ALIGN_LEFT),
-    //---------------------------------------------------------------
-      _rcb_snclp(_("Snap to clip paths"), _("When snapping to paths, then also try snapping to clip paths"), "inkscape:snap-path-clip", _wr),
-      _rcb_snmsk(_("Snap to mask paths"), _("When snapping to paths, then also try snapping to mask paths"), "inkscape:snap-path-mask", _wr)
+      _grids_label_def("", Gtk::ALIGN_LEFT)
 {
     _tt.enable();
     _getContents()->set_spacing (4);

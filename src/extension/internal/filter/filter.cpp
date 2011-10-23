@@ -46,22 +46,20 @@ Filter::~Filter (void) {
 	return;
 }
 
-bool
-Filter::load (Inkscape::Extension::Extension *module)
+bool Filter::load(Inkscape::Extension::Extension * /*module*/)
 {
-	return true;
+    return true;
 }
 
-Inkscape::Extension::Implementation::ImplementationDocumentCache *
-Filter::newDocCache (Inkscape::Extension::Extension * ext, Inkscape::UI::View::View * doc)
+Inkscape::Extension::Implementation::ImplementationDocumentCache *Filter::newDocCache(Inkscape::Extension::Extension * /*ext*/,
+										      Inkscape::UI::View::View * /*doc*/)
 {
-	return NULL;
+    return NULL;
 }
 
-gchar const *
-Filter::get_filter_text (Inkscape::Extension::Extension * ext)
+gchar const *Filter::get_filter_text(Inkscape::Extension::Extension * /*ext*/)
 {
-	return _filter;
+    return _filter;
 }
 
 Inkscape::XML::Document *
@@ -116,8 +114,8 @@ Filter::merge_filters( Inkscape::XML::Node * to, Inkscape::XML::Node * from,
 #define FILTER_SRC_GRAPHIC       "fbSourceGraphic"
 #define FILTER_SRC_GRAPHIC_ALPHA "fbSourceGraphicAlpha"
 
-void
-Filter::effect (Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document, Inkscape::Extension::Implementation::ImplementationDocumentCache * docCache)
+void Filter::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::View *document,
+		    Inkscape::Extension::Implementation::ImplementationDocumentCache * /*docCache*/)
 {
 	Inkscape::XML::Document *filterdoc = get_filter(module);
 	if (filterdoc == NULL) {

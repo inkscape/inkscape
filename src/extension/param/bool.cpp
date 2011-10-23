@@ -2,6 +2,7 @@
  * Copyright (C) 2005-2007 Authors:
  *   Ted Gould <ted@gould.cx>
  *   Johan Engelen <johan@shouraizou.nl> *
+ *   Jon A. Cruz <jon@joncruz.org>
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -21,8 +22,7 @@
 namespace Inkscape {
 namespace Extension {
 
-/** \brief  Use the superclass' allocator and set the \c _value */
-ParamBool::ParamBool (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
+ParamBool::ParamBool(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
         Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext),
                   _value(false), _indent(0)
 {
@@ -50,17 +50,7 @@ ParamBool::ParamBool (const gchar * name, const gchar * guitext, const gchar * d
     return;
 }
 
-/** \brief  A function to set the \c _value
-    \param  in   The value to set to
-    \param  doc  A document that should be used to set the value.
-    \param  node The node where the value may be placed
-
-    This function sets the internal value, but it also sets the value
-    in the preferences structure.  To put it in the right place, \c PREF_DIR
-    and \c pref_name() are used.
-*/
-bool
-ParamBool::set( bool in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
+bool ParamBool::set( bool in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
 {
     _value = in;
 
@@ -72,46 +62,47 @@ ParamBool::set( bool in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
     return _value;
 }
 
-/** \brief  Returns \c _value */
-bool 
-ParamBool::get (const SPDocument * doc, const Inkscape::XML::Node * node)
+bool ParamBool::get(const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) const
 {
-	return _value; 
+    return _value; 
 }
 
-/** \brief  A check button which is Param aware.  It works with the
-            parameter to change it's value as the check button changes
-            value. */
+/**
+ * A check button which is Param aware.  It works with the
+ * parameter to change it's value as the check button changes
+ * value.
+ */
 class ParamBoolCheckButton : public Gtk::CheckButton {
-private:
-    /** \brief  Param to change */
-    ParamBool * _pref;
-    SPDocument * _doc;
-    Inkscape::XML::Node * _node;
-    sigc::signal<void> * _changeSignal;
 public:
-    /** \brief  Initialize the check button
-        \param  param  Which parameter to adjust on changing the check button
-
-        This function sets the value of the checkbox to be that of the
-        parameter, and then sets up a callback to \c on_toggle.
-    */
+    /**
+     * Initialize the check button.
+     * This function sets the value of the checkbox to be that of the
+     * parameter, and then sets up a callback to \c on_toggle.
+     *
+     * @param  param  Which parameter to adjust on changing the check button
+     */
     ParamBoolCheckButton (ParamBool * param, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
             Gtk::CheckButton(), _pref(param), _doc(doc), _node(node), _changeSignal(changeSignal) {
         this->set_active(_pref->get(NULL, NULL) /**\todo fix */);
         this->signal_toggled().connect(sigc::mem_fun(this, &ParamBoolCheckButton::on_toggle));
         return;
     }
+
+    /**
+     * A function to respond to the check box changing.
+     * Adjusts the value of the preference to match that in the check box.
+     */
     void on_toggle (void);
+
+private:
+    /** Param to change. */
+    ParamBool * _pref;
+    SPDocument * _doc;
+    Inkscape::XML::Node * _node;
+    sigc::signal<void> * _changeSignal;
 };
 
-/**
-    \brief  A function to respond to the check box changing
-
-    Adjusts the value of the preference to match that in the check box.
-*/
-void
-ParamBoolCheckButton::on_toggle (void)
+void ParamBoolCheckButton::on_toggle(void)
 {
     _pref->set(this->get_active(), NULL /**\todo fix this */, NULL);
     if (_changeSignal != NULL) {
@@ -120,9 +111,7 @@ ParamBoolCheckButton::on_toggle (void)
     return;
 }
 
-/** \brief  Return 'true' or 'false' */
-void
-ParamBool::string (std::string &string)
+void ParamBool::string(std::string &string) const
 {
     if (_value) {
         string += "true";
@@ -133,13 +122,7 @@ ParamBool::string (std::string &string)
     return;
 }
 
-/**
-    \brief  Creates a bool check button for a bool parameter
-
-    Builds a hbox with a label and a check button in it.
-*/
-Gtk::Widget *
-ParamBool::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+Gtk::Widget *ParamBool::get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     if (_gui_hidden) {
         return NULL;

@@ -412,9 +412,8 @@ Parameter::string (std::list <std::string> &list)
     return;
 }
 
-/** \brief  All the code in Notebook::get_param to get the notebook content */
-Parameter *
-Parameter::get_param(const gchar * name)
+/** All the code in Notebook::get_param to get the notebook content. */
+Parameter *Parameter::get_param(const gchar * /*name*/)
 {
     return NULL;
 }
