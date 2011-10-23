@@ -1342,7 +1342,7 @@ void SvgBuilder::_flushText() {
     _glyphs.clear();
 }
 
-void SvgBuilder::beginString(GfxState *state, GooString *s) {
+void SvgBuilder::beginString(GfxState *state, GooString * /*s*/) {
     if (_need_font_update) {
         updateFont(state);
     }
@@ -1360,7 +1360,7 @@ void SvgBuilder::beginString(GfxState *state, GooString *s) {
 void SvgBuilder::addChar(GfxState *state, double x, double y,
                          double dx, double dy,
                          double originX, double originY,
-                         CharCode code, int nBytes, Unicode *u, int uLen) {
+                         CharCode /*code*/, int /*nBytes*/, Unicode *u, int uLen) {
 
 
     bool is_space = ( uLen == 1 && u[0] == 32 );
@@ -1428,7 +1428,7 @@ void SvgBuilder::addChar(GfxState *state, double x, double y,
     _glyphs.push_back(new_glyph);
 }
 
-void SvgBuilder::endString(GfxState *state) {
+void SvgBuilder::endString(GfxState * /*state*/) {
 }
 
 void SvgBuilder::beginTextObject(GfxState *state) {
@@ -1437,7 +1437,7 @@ void SvgBuilder::beginTextObject(GfxState *state) {
     _current_state = state;
 }
 
-void SvgBuilder::endTextObject(GfxState *state) {
+void SvgBuilder::endTextObject(GfxState * /*state*/) {
     _flushText();
     // TODO: clip if render_mode >= 4
     _in_text_object = false;
@@ -1692,7 +1692,7 @@ Inkscape::XML::Node *SvgBuilder::_createMask(double width, double height) {
     }
 }
 
-void SvgBuilder::addImage(GfxState *state, Stream *str, int width, int height,
+void SvgBuilder::addImage(GfxState * /*state*/, Stream *str, int width, int height,
                           GfxImageColorMap *color_map, int *mask_colors) {
 
      Inkscape::XML::Node *image_node = _createImage(str, width, height, color_map, mask_colors);
@@ -1739,7 +1739,7 @@ void SvgBuilder::addImageMask(GfxState *state, Stream *str, int width, int heigh
     Inkscape::GC::release(rect);
 }
 
-void SvgBuilder::addMaskedImage(GfxState *state, Stream *str, int width, int height,
+void SvgBuilder::addMaskedImage(GfxState * /*state*/, Stream *str, int width, int height,
                                 GfxImageColorMap *color_map,
                                 Stream *mask_str, int mask_width, int mask_height,
                                 bool invert_mask) {
@@ -1772,7 +1772,7 @@ void SvgBuilder::addMaskedImage(GfxState *state, Stream *str, int width, int hei
     }
 }
     
-void SvgBuilder::addSoftMaskedImage(GfxState *state, Stream *str, int width, int height,
+void SvgBuilder::addSoftMaskedImage(GfxState * /*state*/, Stream *str, int width, int height,
                                     GfxImageColorMap *color_map,
                                     Stream *mask_str, int mask_width, int mask_height,
                                     GfxImageColorMap *mask_color_map) {
@@ -1803,8 +1803,8 @@ void SvgBuilder::addSoftMaskedImage(GfxState *state, Stream *str, int width, int
 /**
  * \brief Starts building a new transparency group
  */
-void SvgBuilder::pushTransparencyGroup(GfxState *state, double *bbox,
-                                       GfxColorSpace *blending_color_space,
+void SvgBuilder::pushTransparencyGroup(GfxState * /*state*/, double *bbox,
+                                       GfxColorSpace * /*blending_color_space*/,
                                        bool isolated, bool knockout,
                                        bool for_softmask) {
 
@@ -1824,7 +1824,7 @@ void SvgBuilder::pushTransparencyGroup(GfxState *state, double *bbox,
     _transp_group_stack = transpGroup;
 }
 
-void SvgBuilder::popTransparencyGroup(GfxState *state) {
+void SvgBuilder::popTransparencyGroup(GfxState * /*state*/) {
     // Restore node stack
     popNode();
 }
@@ -1832,7 +1832,7 @@ void SvgBuilder::popTransparencyGroup(GfxState *state) {
 /**
  * \brief Places the current transparency group into the current container
  */
-void SvgBuilder::paintTransparencyGroup(GfxState *state, double *bbox) {
+void SvgBuilder::paintTransparencyGroup(GfxState * /*state*/, double * /*bbox*/) {
     SvgTransparencyGroup *transpGroup = _transp_group_stack;
     _container->appendChild(transpGroup->container);
     Inkscape::GC::release(transpGroup->container);
@@ -1844,8 +1844,8 @@ void SvgBuilder::paintTransparencyGroup(GfxState *state, double *bbox) {
 /**
  * \brief Creates a mask using the current transparency group as its content
  */
-void SvgBuilder::setSoftMask(GfxState *state, double *bbox, bool alpha,
-                             Function *transfer_func, GfxColor *backdrop_color) {
+void SvgBuilder::setSoftMask(GfxState * /*state*/, double * /*bbox*/, bool /*alpha*/,
+                             Function * /*transfer_func*/, GfxColor * /*backdrop_color*/) {
 
     // Create mask
     Inkscape::XML::Node *mask_node = _createMask(1.0, 1.0);
@@ -1864,7 +1864,7 @@ void SvgBuilder::setSoftMask(GfxState *state, double *bbox, bool alpha,
     delete transpGroup;
 }
 
-void SvgBuilder::clearSoftMask(GfxState *state) {
+void SvgBuilder::clearSoftMask(GfxState * /*state*/) {
     if (_state_stack.back().softmask) {
         _state_stack.back().softmask = NULL;
         popGroup();
