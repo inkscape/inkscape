@@ -1,9 +1,7 @@
-#ifndef __INKSCAPE_SCRIPT_H__
-#define __INKSCAPE_SCRIPT_H__
+#ifndef SEEN_INKSCAPE_SCRIPT_H
+#define SEEN_INKSCAPE_SCRIPT_H
 
-/**
- * Inkscape Scripting container
- *
+/*
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
  *
@@ -26,7 +24,8 @@ namespace Script
 
 
 /**
- * This class is used to run scripts, either from a file or buffer
+ * Inkscape Scripting container.
+ * This class is used to run scripts, either from a file or buffer.
  */
 class InkscapeScript
 {

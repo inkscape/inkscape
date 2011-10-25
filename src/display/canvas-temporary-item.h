@@ -1,9 +1,7 @@
 #ifndef INKSCAPE_CANVAS_TEMPORARY_ITEM_H
 #define INKSCAPE_CANVAS_TEMPORARY_ITEM_H
 
-/** \file
- * Provides a class to put a canvasitem temporarily on-canvas.
- *
+/*
  * Authors:
  *   Johan Engelen
  *
@@ -22,6 +20,9 @@ struct SPCanvasItem;
 namespace Inkscape {
 namespace Display {
 
+/**
+ * Provides a class to put a canvasitem temporarily on-canvas.
+ */
 class TemporaryItem  {
 public:
     TemporaryItem(SPCanvasItem *item, guint lifetime, bool destroy_on_deselect = false);

@@ -1,6 +1,8 @@
 /**
- * \brief graph layout functions
- *
+ * @file
+ * graph layout functions.
+ */
+/*
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>
  *

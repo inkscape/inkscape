@@ -1,7 +1,6 @@
 #ifndef SEEN_SP_PAINT_SELECTOR_H
 #define SEEN_SP_PAINT_SELECTOR_H
-
-/** \file
+/*
  * Generic paint selector widget
  *
  * Authors:
@@ -32,7 +31,9 @@ class SPStyle;
 #define SP_IS_PAINT_SELECTOR(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_PAINT_SELECTOR))
 #define SP_IS_PAINT_SELECTOR_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE ((k), SP_TYPE_PAINT_SELECTOR))
 
-/// Generic paint selector widget
+/**
+ * Generic paint selector widget.
+ */
 struct SPPaintSelector {
     GtkVBox vbox;
 

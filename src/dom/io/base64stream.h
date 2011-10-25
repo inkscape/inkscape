@@ -1,7 +1,8 @@
-#ifndef __DOM_IO_BASE64STREAM_H__
-#define __DOM_IO_BASE64STREAM_H__
+#ifndef SEEN_DOM_IO_BASE64STREAM_H
+#define SEEN_DOM_IO_BASE64STREAM_H
 
 /**
+ * @file
  * Phoebe DOM Implementation.
  *
  * Base64-enabled input and output streams
@@ -11,7 +12,8 @@
  * the implementation from the user.
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -143,4 +145,4 @@ private:
 }  //namespace org
 
 
-#endif /* __INKSCAPE_IO_BASE64STREAM_H__ */
+#endif // SEEN_DOM_IO_BASE64STREAM_H

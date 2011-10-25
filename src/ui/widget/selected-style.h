@@ -1,6 +1,4 @@
-/**
- * \brief Selected style indicator (fill, stroke, opacity)
- *
+/*
  * Authors:
  *   buliabyak@gmail.com
  *   scislac@users.sf.net
@@ -103,6 +101,9 @@ private:
     bool cr_set;
 };
 
+/**
+ * Selected style indicator (fill, stroke, opacity).
+ */
 class SelectedStyle : public Gtk::HBox
 {
 public:

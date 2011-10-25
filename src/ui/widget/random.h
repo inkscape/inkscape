@@ -1,7 +1,4 @@
-/**
- * \brief Random Scalar Widget - A labelled text box, with spin buttons and optional
- *        icon or suffix, for entering arbitrary number values and generating a random number from it.
- *
+/*
  * Authors:
  *  Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
@@ -19,6 +16,10 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * A labelled text box, with spin buttons and optional icon or suffix, for
+ * entering arbitrary number values and generating a random number from it.
+ */
 class Random : public Scalar
 {
 public:

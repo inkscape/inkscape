@@ -1,7 +1,4 @@
-/**
- * A generic interface for plugging different
- *  autotracers into Inkscape.
- *
+/*
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
  *
@@ -110,7 +107,8 @@ private:
 
 
 /**
- *
+ * A generic interface for plugging different
+ *  autotracers into Inkscape.
  */
 class TracingEngine
 {

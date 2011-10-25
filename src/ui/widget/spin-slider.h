@@ -1,6 +1,4 @@
-/**
- * \brief Groups an HScale and a SpinButton together using the same Adjustment
- *
+/*
  * Author:
  *   Nicholas Bishop <nicholasbishop@gmail.com>
  *
@@ -22,6 +20,9 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * Groups an HScale and a SpinButton together using the same Adjustment.
+ */
 class SpinSlider : public Gtk::HBox, public AttrWidget
 {
 public:
@@ -55,7 +56,11 @@ private:
     Inkscape::UI::Widget::SpinButton _spin;
 };
 
-// Contains two SpinSliders for controlling number-opt-number attributes
+/**
+ * Contains two SpinSliders for controlling number-opt-number attributes.
+ *
+ * @see SpinSlider
+ */
 class DualSpinSlider : public Gtk::HBox, public AttrWidget
 {
 public:

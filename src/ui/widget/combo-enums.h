@@ -1,6 +1,4 @@
-/**
- * \brief Simplified management of enumerations in the UI as combobox.
- *
+/*
  * Authors:
  *   Nicholas Bishop <nicholasbishop@gmail.com>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
@@ -23,6 +21,9 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * Simplified management of enumerations in the UI as combobox.
+ */
 template<typename E> class ComboBoxEnum : public Gtk::ComboBox, public AttrWidget
 {
 private:
@@ -176,6 +177,9 @@ private:
 };
 
 
+/**
+ * Simplified management of enumerations in the UI as combobox.
+ */
 template<typename E> class LabelledComboBoxEnum : public Labelled
 {
 public:

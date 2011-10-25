@@ -1,9 +1,7 @@
-#ifndef __UI_WIDGET_RULER_H__
-#define __UI_WIDGET_RULER_H__
+#ifndef SEEN_UI_WIDGET_RULER_H
+#define SEEN_UI_WIDGET_RULER_H
 
-/** \file
- * Gtkmm facade/wrapper around sp_rulers.
- *
+/*
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *
@@ -24,9 +22,12 @@ namespace Gtk {
     class Ruler;
 }
 namespace Inkscape {
-    namespace UI {
-        namespace Widget {
+namespace UI {
+namespace Widget {
 
+/**
+ * Gtkmm facade/wrapper around sp_rulers.
+ */
 class Ruler : public Gtk::EventBox
 {
 public:
@@ -52,7 +53,9 @@ private:
     Geom::Point get_event_dt();
 };
 
-/// Horizontal ruler
+/**
+ * Horizontal ruler gtkmm wrapper.
+ */
 class HRuler : public Ruler
 {
 public:
@@ -60,7 +63,9 @@ public:
     ~HRuler();
 };
 
-/// Vertical ruler
+/**
+ * Vertical ruler gtkmm wrapper.
+ */
 class VRuler : public Ruler
 {
 public:
@@ -73,7 +78,7 @@ public:
 } // namespace Inkscape
 
 
-#endif 
+#endif // SEEN_UI_WIDGET_RULER_H
 
 
 /*

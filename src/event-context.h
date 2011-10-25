@@ -1,12 +1,7 @@
 #ifndef SEEN_SP_EVENT_CONTEXT_H
 #define SEEN_SP_EVENT_CONTEXT_H
 
-/** \file
- * SPEventContext: base class for event processors
- *
- * This is per desktop object, which (its derivatives) implements
- * different actions bound to mouse events.
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
@@ -96,6 +91,9 @@ void sp_event_context_snap_delay_handler(SPEventContext *ec, gpointer const dse_
 
 /**
  * Base class for Event processors.
+ *
+ * This is per desktop object, which (its derivatives) implements
+ * different actions bound to mouse events.
  */
 struct SPEventContext : public GObject {
     void enableSelectionCue (bool enable=true);

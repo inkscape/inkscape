@@ -1,6 +1,7 @@
-#ifndef __DOMPTR_H__
-#define __DOMPTR_H__
+#ifndef SEEN_DOMPTR_H
+#define SEEN_DOMPTR_H
 /**
+ * @file
  * Phoebe DOM Implementation.
  *
  * This is a C++ approximation of the W3C DOM model, which follows
@@ -12,7 +13,8 @@
  * More thorough explanations of the various classes and their algorithms
  * can be found there.
  *     
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -325,7 +327,7 @@ template<class T, class U> Ptr<T>
 }  //namespace org
 
 
-#endif // __DOMPTR_H__
+#endif // SEEN_DOMPTR_H
 
 
 /*#########################################################################

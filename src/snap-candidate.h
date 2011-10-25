@@ -2,9 +2,10 @@
 #define SEEN_SNAP_CANDIDATE_H
 
 /**
- * \file snap-candidate.h
- * \brief some utility classes to store various kinds of snap candidates.
- *
+ * @file
+ * Some utility classes to store various kinds of snap candidates.
+ */
+/*
  * Authors:
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *

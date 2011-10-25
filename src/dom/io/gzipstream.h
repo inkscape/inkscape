@@ -1,12 +1,13 @@
-#ifndef __GZIPSTREAM_H__
-#define __GZIPSTREAM_H__
+#ifndef SEEN_GZIPSTREAM_H
+#define SEEN_GZIPSTREAM_H
 /**
  * Zlib-enabled input and output streams
  *
  * This provides a simple mechanism for reading and
  * writing Gzip files.   We use our own 'ZipTool' class
  * to accomplish this, avoiding a zlib dependency.
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -122,4 +123,4 @@ private:
 } // namespace org
 
 
-#endif /* __GZIPSTREAM_H__ */
+#endif // SEEN_GZIPSTREAM_H

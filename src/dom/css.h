@@ -1,4 +1,5 @@
 /**
+ * @file
  * Phoebe DOM Implementation.
  *
  * This is a C++ approximation of the W3C DOM model, which follows
@@ -6,7 +7,8 @@
  * which are provided for reference.  Most important is this one:
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -36,8 +38,8 @@
      
  */
 
-#ifndef __CSS_H__
-#define __CSS_H__
+#ifndef SEEN_CSS_H
+#define SEEN_CSS_H
 
 #include "dom.h"
 #include "stylesheets.h"
@@ -4663,7 +4665,7 @@ public:
 }  //namespace org
 
 
-#endif /* __CSS_H__ */
+#endif // SEEN_CSS_H
 
 /*#########################################################################
 ## E N D    O F    F I L E

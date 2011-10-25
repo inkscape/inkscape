@@ -2,9 +2,10 @@
 #define SEEN_INKSCAPE_CTRLRECT_H
 
 /**
- * \file sodipodi-ctrlrect.h
+ * @file
  * Simple non-transformed rectangle, usable for rubberband.
- *
+ */
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@ximian.com>
  *   Carl Hetherington <inkscape@carlh.net>

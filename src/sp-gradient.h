@@ -1,9 +1,6 @@
 #ifndef SEEN_SP_GRADIENT_H
 #define SEEN_SP_GRADIENT_H
-
-/** \file
- * SVG <stop> <linearGradient> and <radialGradient> implementation
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>

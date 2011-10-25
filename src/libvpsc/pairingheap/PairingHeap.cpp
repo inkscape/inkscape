@@ -1,12 +1,14 @@
 /**
- * \brief Pairing heap datastructure implementation
+ * @file
+ * Pairing heap datastructure implementation.
  *
  * Based on example code in "Data structures and Algorithm Analysis in C++"
  * by Mark Allen Weiss, used and released under the LGPL by permission
  * of the author.
  *
  * No promises about correctness.  Use at your own risk!
- *
+ */
+/*
  * Authors:
  *   Mark Allen Weiss
  *   Tim Dwyer <tgdwyer@gmail.com>

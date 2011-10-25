@@ -1,9 +1,6 @@
-#ifndef __COLOR_PREVIEW_H__
-#define __COLOR_PREVIEW_H__
-
-/** \file
- * A simple color preview widget, mainly used within a picker button.
- *
+#ifndef SEEN_COLOR_PREVIEW_H
+#define SEEN_COLOR_PREVIEW_H
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
@@ -17,9 +14,12 @@
 #include <gtkmm/eventbox.h>
 
 namespace Inkscape {
-    namespace UI {
-        namespace Widget {
+namespace UI {
+namespace Widget {
 
+/**
+ * A simple color preview widget, mainly used within a picker button.
+ */
 class ColorPreview : public Gtk::Widget {
 public:
     ColorPreview (guint32 rgba);
@@ -34,9 +34,11 @@ protected:
     guint32 _rgba;
 };
 
-}}}
+} // namespace Widget
+} // namespace UI
+} // namespace Inkscape
 
-#endif
+#endif // SEEN_COLOR_PREVIEW_H
 
 /*
   Local Variables:

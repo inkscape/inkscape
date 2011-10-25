@@ -1,9 +1,7 @@
 #ifndef SEEN_DISPLAY_CURVE_H
 #define SEEN_DISPLAY_CURVE_H
 
-/** \file
- * Wrapper around a Geom::PathVector objects.
- *
+/*
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
@@ -22,6 +20,9 @@
 
 #include <boost/optional.hpp>
 
+/**
+ * Wrapper around a Geom::PathVector objects.
+ */
 class SPCurve {
 public:
     /* Constructors */

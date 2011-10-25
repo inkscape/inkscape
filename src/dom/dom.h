@@ -1,6 +1,7 @@
-#ifndef __DOM_H__
-#define __DOM_H__
+#ifndef SEEN_DOM_H
+#define SEEN_DOM_H
 /**
+ * @file
  * Phoebe DOM Implementation.
  *
  * This is a C++ approximation of the W3C DOM model, which follows
@@ -12,7 +13,8 @@
  * More thorough explanations of the various classes and their algorithms
  * can be found there.
  *     
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -2743,7 +2745,7 @@ public:
 }  //namespace org
 
 
-#endif // __DOM_H__
+#endif // SEEN_DOM_H
 
 
 /*#########################################################################

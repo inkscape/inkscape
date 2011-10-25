@@ -1,9 +1,6 @@
 #ifndef SEEN_INKSCAPE_SELECTION_H
 #define SEEN_INKSCAPE_SELECTION_H
-
-/** \file
- * Inkscape::Selection: per-desktop selection container
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   MenTaLguY <mental@rydia.net>
@@ -43,7 +40,7 @@ class Node;
 namespace Inkscape {
 
 /**
- * @brief The set of selected SPObjects for a given desktop.
+ * The set of selected SPObjects for a given desktop.
  *
  * This class represents the set of selected SPItems for a given
  * SPDesktop.
@@ -74,49 +71,49 @@ public:
     ~Selection();
 
     /**
-     * @brief Returns the desktop the selection is bound to
+     * Returns the desktop the selection is bound to
      *
      * @return the desktop the selection is bound to
      */
     SPDesktop *desktop() { return _desktop; }
 
     /**
-     * @brief Returns active layer for selection (currentLayer or its parent)
+     * Returns active layer for selection (currentLayer or its parent).
      *
      * @return layer item the selection is bound to
      */
     SPObject *activeContext();
 
     /**
-     * @brief Add an SPObject to the set of selected objects
+     * Add an SPObject to the set of selected objects.
      *
      * @param obj the SPObject to add
      */
     void add(SPObject *obj, bool persist_selection_context = false);
 
     /**
-     * @brief Add an XML node's SPObject to the set of selected objects
+     * Add an XML node's SPObject to the set of selected objects.
      *
      * @param the xml node of the item to add
      */
     void add(XML::Node *repr) { add(_objectForXMLNode(repr)); }
 
     /**
-     * @brief Set the selection to a single specific object
+     * Set the selection to a single specific object.
      *
      * @param obj the object to select
      */
     void set(SPObject *obj, bool persist_selection_context = false);
 
     /**
-     * @brief Set the selection to an XML node's SPObject
+     * Set the selection to an XML node's SPObject.
      *
      * @param repr the xml node of the item to select
      */
     void set(XML::Node *repr) { set(_objectForXMLNode(repr)); }
 
     /**
-     * @brief Removes an item from the set of selected objects
+     * Removes an item from the set of selected objects.
      *
      * It is ok to call this method for an unselected item.
      *
@@ -125,14 +122,14 @@ public:
     void remove(SPObject *obj);
 
     /**
-     * @brief Removes an item if selected, adds otherwise
+     * Removes an item if selected, adds otherwise.
      *
      * @param item the item to unselect
      */
     void toggle(SPObject *obj);
 
     /**
-     * @brief Removes an item from the set of selected objects
+     * Removes an item from the set of selected objects.
      *
      * It is ok to call this method for an unselected item.
      *
@@ -141,27 +138,27 @@ public:
     void remove(XML::Node *repr) { remove(_objectForXMLNode(repr)); }
 
     /**
-     * @brief Selects exactly the specified objects
+     * Selects exactly the specified objects.
      *
      * @param objs the objects to select
      */
     void setList(GSList const *objs);
 
     /**
-     * @brief Adds the specified objects to selection, without deselecting first
+     * Adds the specified objects to selection, without deselecting first.
      *
      * @param objs the objects to select
      */
     void addList(GSList const *objs);
 
     /**
-     * @brief Clears the selection and selects the specified objects
+     * Clears the selection and selects the specified objects.
      *
      * @param repr a list of xml nodes for the items to select
      */
     void setReprList(GSList const *reprs);
 
-    /** \brief  Add items from an STL iterator range to the selection
+    /**  Add items from an STL iterator range to the selection.
      *  \param  from the begin iterator
      *  \param  to   the end iterator
      */
@@ -176,102 +173,106 @@ public:
     }
 
     /**
-     * @brief Unselects all selected objects.
+     * Unselects all selected objects..
      */
     void clear();
 
     /**
-     * @brief Returns true if no items are selected
+     * Returns true if no items are selected.
      */
     bool isEmpty() const { return _objs == NULL; }
 
     /**
-     * @brief Returns true if the given object is selected
+     * Returns true if the given object is selected.
      */
     bool includes(SPObject *obj) const;
 
     /**
-     * @brief Returns true if the given item is selected
+     * Returns true if the given item is selected.
      */
     bool includes(XML::Node *repr) const {
         return includes(_objectForXMLNode(repr));
     }
 
     /**
-     * @brief Returns a single selected object
+     * Returns a single selected object.
      *
      * @return NULL unless exactly one object is selected
      */
     SPObject *single();
 
     /**
-     * @brief Returns a single selected item
+     * Returns a single selected item.
      *
      * @return NULL unless exactly one object is selected
      */
     SPItem *singleItem();
 
     /**
-     * @brief Returns a single selected object's xml node
+     * Returns a single selected object's xml node.
      *
      * @return NULL unless exactly one object is selected
      */
     XML::Node *singleRepr();
 
-    /** @brief Returns the list of selected objects */
+    /** Returns the list of selected objects. */
     GSList const *list();
-    /** @brief Returns the list of selected SPItems */
+    /** Returns the list of selected SPItems. */
     GSList const *itemList();
-    /** @brief Returns a list of the xml nodes of all selected objects */
+    /** Returns a list of the xml nodes of all selected objects. */
     /// \todo only returns reprs of SPItems currently; need a separate
     ///      method for that
     GSList const *reprList();
 
-    /** @brief Returns a list of all perspectives which have a 3D box in the current selection
+    /** Returns a list of all perspectives which have a 3D box in the current selection.
        (these may also be nested in groups) */
     std::list<Persp3D *> const perspList();
 
-    /** @brief Returns a list of all 3D boxes in the current selection which are associated to @c
-       persp. If @c pers is @c NULL, return all selected boxes.
-    */
+    /**
+     * Returns a list of all 3D boxes in the current selection which are associated to @c
+     * persp. If @c pers is @c NULL, return all selected boxes.
+     */
     std::list<SPBox3D *> const box3DList(Persp3D *persp = NULL);
 
-    /** @brief Returns the number of layers in which there are selected objects */
+    /** Returns the number of layers in which there are selected objects. */
     guint numberOfLayers();
 
-    /** @brief Returns the number of parents to which the selected objects belong */
+    /** Returns the number of parents to which the selected objects belong. */
     guint numberOfParents();
 
-    /** @brief Returns the bounding rectangle of the selection */
+    /** Returns the bounding rectangle of the selection. */
     Geom::OptRect bounds(SPItem::BBoxType type) const;
     Geom::OptRect visualBounds() const;
     Geom::OptRect geometricBounds() const;
-    /** @brief Returns either the visual or geometric bounding rectangle of the selection, based on the
-     * preferences specified for the selector tool */
+
+    /**
+     * Returns either the visual or geometric bounding rectangle of the selection, based on the
+     * preferences specified for the selector tool
+     */
     Geom::OptRect preferredBounds() const;
 
     /// Returns the bounding rectangle of the selectionin document coordinates.
     Geom::OptRect documentBounds(SPItem::BBoxType type) const;
 
     /**
-     * @brief Returns the rotation/skew center of the selection
+     * Returns the rotation/skew center of the selection.
      */
     boost::optional<Geom::Point> center() const;
 
     /**
-     * @brief Gets the selection's snap points.
+     * Gets the selection's snap points.
      * @return Selection's snap points
      */
     std::vector<Inkscape::SnapCandidatePoint> getSnapPoints(SnapPreferences const *snapprefs) const;
 
     /**
-     * @brief Gets the snap points of a selection that form a convex hull.
+     * Gets the snap points of a selection that form a convex hull.
      * @return Selection's convex hull points
      */
     std::vector<Inkscape::SnapCandidatePoint> getSnapPointsConvexHull(SnapPreferences const *snapprefs) const;
 
     /**
-     * @brief Connects a slot to be notified of selection changes
+     * Connects a slot to be notified of selection changes.
      *
      * This method connects the given slot such that it will
      * be called upon any change in the set of selected objects.
@@ -285,8 +286,7 @@ public:
     }
 
     /**
-     * @brief Connects a slot to be notified of selected
-     *        object modifications
+     * Connects a slot to be notified of selected object modifications.
      *
      * This method connects the given slot such that it will
      * receive notifications whenever any selected item is
@@ -303,36 +303,36 @@ public:
     }
 
 private:
-    /** @brief no copy */
+    /** no copy. */
     Selection(Selection const &);
-    /** @brief no assign */
+    /** no assign. */
     void operator=(Selection const &);
 
-    /** @brief Issues modification notification signals */
+    /** Issues modification notification signals. */
     static gboolean _emit_modified(Selection *selection);
-    /** @brief Schedules an item modification signal to be sent */
+    /** Schedules an item modification signal to be sent. */
     void _schedule_modified(SPObject *obj, guint flags);
 
-    /** @brief Issues modified selection signal */
+    /** Issues modified selection signal. */
     void _emitModified(guint flags);
-    /** @brief Issues changed selection signal */
+    /** Issues changed selection signal. */
     void _emitChanged(bool persist_selection_context = false);
 
     void _invalidateCachedLists();
 
-    /** @brief unselect all descendants of the given item */
+    /** unselect all descendants of the given item. */
     void _removeObjectDescendants(SPObject *obj);
-    /** @brief unselect all ancestors of the given item */
+    /** unselect all ancestors of the given item. */
     void _removeObjectAncestors(SPObject *obj);
-    /** @brief clears the selection (without issuing a notification) */
+    /** clears the selection (without issuing a notification). */
     void _clear();
-    /** @brief adds an object (without issuing a notification) */
+    /** adds an object (without issuing a notification). */
     void _add(SPObject *obj);
-    /** @brief removes an object (without issuing a notification) */
+    /** removes an object (without issuing a notification). */
     void _remove(SPObject *obj);
-    /** @brief returns the SPObject corresponding to an xml node (if any) */
+    /** returns the SPObject corresponding to an xml node (if any). */
     SPObject *_objectForXMLNode(XML::Node *repr) const;
-    /** @brief Releases an active layer object that is being removed */
+    /** Releases an active layer object that is being removed. */
     void _releaseContext(SPObject *obj);
 
     mutable GSList *_objs;

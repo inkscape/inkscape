@@ -1,13 +1,14 @@
-#ifndef _SBASIS_GEOMETRIC
-#define _SBASIS_GEOMETRIC
+#ifndef SEEN_SBASIS_GEOMETRIC_
+#define SEEN_SBASIS_GEOMETRIC_
 #include <2geom/d2.h>
 #include <2geom/piecewise.h>
 #include <vector>
 
 /**
- * \file
- * \brief two-dimensional geometric operators.  
- *
+ * @file
+ * two-dimensional geometric operators.
+ */
+/*
  * Copyright 2007, JFBarraud
  * Copyright 2007, njh
  * 
@@ -104,7 +105,7 @@ std::vector<double> find_tangents(Point P, D2<SBasis> const &A);
 
 };
 
-#endif
+#endif // SEEN_SBASIS_GEOMETRIC_
 
 /*
   Local Variables:

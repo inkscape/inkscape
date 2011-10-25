@@ -1,6 +1,4 @@
-/**
- * \brief Button and CheckButton widgets
- *
+/*
  * Author:
  *   buliabyak@gmail.com
  *
@@ -20,6 +18,9 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * Button widget.
+ */
 class Button : public Gtk::Button
 {
 public:
@@ -29,6 +30,9 @@ protected:
     Gtk::Tooltips _tooltips;
 };
 
+/**
+ * CheckButton widget.
+ */
 class CheckButton : public Gtk::CheckButton
 {
 public:

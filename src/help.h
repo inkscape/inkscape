@@ -1,9 +1,6 @@
 #ifndef SEEN_HELP_H
 #define SEEN_HELP_H
-
-/**
- * Help/About window
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *
@@ -16,7 +13,11 @@
 #include <glib/gtypes.h>
 #include <gtk/gtk.h>
 
+/**
+ * Help/About window.
+ */
 void sp_help_about(void);
+
 void sp_help_open_tutorial(GtkMenuItem *menuitem, gpointer data);
 
 

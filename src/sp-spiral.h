@@ -1,9 +1,6 @@
-#ifndef __SP_SPIRAL_H__
-#define __SP_SPIRAL_H__
-
-/** \file
- * SPSpiral: <sodipodi:spiral> implementation
- *
+#ifndef SEEN_SP_SPIRAL_H
+#define SEEN_SP_SPIRAL_H
+/*
  * Authors:
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -88,4 +85,4 @@ bool sp_spiral_is_invalid   (SPSpiral const *spiral);
 
 
 
-#endif
+#endif // SEEN_SP_SPIRAL_H

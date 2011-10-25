@@ -1,7 +1,4 @@
-/**
- * \brief Scalar Widget - A labelled text box, with spin buttons and optional
- *        icon or suffix, for entering arbitrary number values.
- *
+/*
  * Authors:
  *   Carl Hetherington <inkscape@carlh.net>
  *   Derek P. Moore <derekm@hackunix.org>
@@ -21,6 +18,10 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * A labelled text box, with spin buttons and optional
+ * icon or suffix, for entering arbitrary number values.
+ */
 class Scalar : public Labelled
 {
 public:

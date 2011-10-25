@@ -1,9 +1,11 @@
 #ifndef __NR_FILTER_UTILS_H__
 #define __NR_FILTER_UTILS_H__
 
-/** \file
- * filter utils. Definition of functions needed by several filters.
- *
+/**
+ * @file
+ * Definition of functions needed by several filters.
+ */
+/*
  * Authors:
  *   Jean-Rene Reinhard <jr@komite.net>
  *

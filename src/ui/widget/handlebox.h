@@ -1,9 +1,4 @@
-/**
- * \brief HandleBox Widget - Adds a detachment handle to another widget.
- *
- * This work really doesn't amount to much more than a convenience constructor
- * for Gtk::HandleBox.  Maybe this could be contributed back to Gtkmm, as
- * Gtkmm provides several convenience constructors for other widgets as well.
+/*
  *
  * Author:
  *   Derek P. Moore <derekm@hackunix.org>
@@ -22,6 +17,13 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * Adds a detachment handle to another widget.
+ *
+ * This work really doesn't amount to much more than a convenience constructor
+ * for Gtk::HandleBox.  Maybe this could be contributed back to Gtkmm, as
+ * Gtkmm provides several convenience constructors for other widgets as well.
+ */
 class HandleBox : public Gtk::HandleBox
 {
 public:

@@ -1,10 +1,6 @@
 #ifndef SEEN_OBJECT_SNAPPER_H
 #define SEEN_OBJECT_SNAPPER_H
-
-/**
- *  \file object-snapper.h
- *  \brief Snapping things to objects.
- *
+/*
  * Authors:
  *   Carl Hetherington <inkscape@carlh.net>
  *   Diederik van Lierop <mail@diedenrezi.nl>
@@ -26,6 +22,9 @@ struct SPObject;
 namespace Inkscape
 {
 
+/**
+ * Snapping things to objects.
+ */
 class ObjectSnapper : public Snapper
 {
 

@@ -1,9 +1,6 @@
 #ifndef SEEN_HELPER_FNS_H
 #define SEEN_HELPER_FNS_H
-/** \file
- *
- * Some helper functions
- *
+/*
  * Authors:
  *   Felipe Corrêa da Silva Sanches <juca@members.fsf.org>
  *

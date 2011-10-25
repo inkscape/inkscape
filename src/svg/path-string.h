@@ -1,6 +1,4 @@
-/**
- * Inkscape::SVG::PathString - builder for SVG path strings
- *
+/*
  * Copyright 2007 MenTaLguY <mental@rydia.net>
  * Copyright 2008 Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *
@@ -25,6 +23,9 @@ namespace Inkscape {
 
 namespace SVG {
 
+/**
+ * Builder for SVG path strings.
+ */
 class PathString {
 public:
     PathString();

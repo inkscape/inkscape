@@ -1,6 +1,4 @@
-/**
- * \brief  Shapes are special paths on which boolops can be performed
- *
+/*
  * Authors:
  *      Michael G. Sloan <mgsloan@gmail.com>
  *      Nathan Hurst <njh@mail.csse.monash.edu.au>
@@ -63,6 +61,9 @@ enum {
   BOOLOP_UNION        = BOOLOP_JUST_A | BOOLOP_JUST_B | BOOLOP_BOTH
 };
 
+/**
+ * Shapes are special paths on which boolops can be performed.
+ */
 class Shape {
     Regions content;
     mutable bool fill;

@@ -1,5 +1,5 @@
-#ifndef __DOM_THREAD_H__
-#define __DOM_THREAD_H__
+#ifndef SEEN_DOM_THREAD_H
+#define SEEN_DOM_THREAD_H
 /**
  * Phoebe DOM Implementation.
  *
@@ -8,7 +8,8 @@
  * which are provided for reference.  Most important is this one:
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -29,7 +30,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-/**
+/*
  * Thread wrapper.  This provides a platform-independent thread
  * class for IO and testing.
  *
@@ -147,7 +148,7 @@ private:
 
 
 
-#endif /* __DOM_THREAD_H__ */
+#endif // SEEN_DOM_THREAD_H
 //#########################################################################
 //# E N D    O F    F I L E
 //#########################################################################

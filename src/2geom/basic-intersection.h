@@ -1,7 +1,8 @@
 /**
- * \file
- * \brief Basic intersection routines
- *
+ * @file
+ * Basic intersection routines.
+ */
+/*
  * Authors:
  *      ? <?@?.?>
  * 

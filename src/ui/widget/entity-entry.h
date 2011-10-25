@@ -1,6 +1,4 @@
-/** \file
- * \brief 
- *
+/*
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *

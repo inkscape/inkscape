@@ -1,10 +1,6 @@
 #ifndef SEEN_RUBBERBAND_H
 #define SEEN_RUBBERBAND_H
-
-/**
- * \file src/rubberband.h
- * \brief Rubberbanding selector
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Carl Hetherington <inkscape@carlh.net>
@@ -34,6 +30,9 @@ enum {
 namespace Inkscape
 {
 
+/**
+ * Rubberbanding selector.
+ */
 class Rubberband
 {
 public:

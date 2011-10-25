@@ -1,11 +1,12 @@
 /**
- * \brief Abstraction for different style widget operands
- *
+ * @file
+ * Abstraction for different style widget operands.
+ */
+/*
  * Copyright (C) 2007 MenTaLguY <mental@rydia.net>
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
-
 #ifndef SEEN_INKSCAPE_UI_WIDGET_STYLE_SUBJECT_H
 #define SEEN_INKSCAPE_UI_WIDGET_STYLE_SUBJECT_H
 
@@ -110,7 +111,7 @@ private:
 }
 }
 
-#endif
+#endif // SEEN_INKSCAPE_UI_WIDGET_STYLE_SUBJECT_H
 
 /*
   Local Variables:

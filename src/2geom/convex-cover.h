@@ -1,7 +1,8 @@
 /**
- * \file
- * \brief Dynamic convex hull structure
- *
+ * @file
+ * Dynamic convex hull structure.
+ */
+/*
  * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
  * Copyright 2006 Michael G. Sloan <mgsloan@gmail.com>
  *

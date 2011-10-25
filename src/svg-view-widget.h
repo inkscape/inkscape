@@ -1,9 +1,6 @@
 #ifndef SEEN_SP_SVG_VIEW_WIDGET_H
 #define SEEN_SP_SVG_VIEW_WIDGET_H
-
-/** \file
- * SPSVGView, SPSVGSPViewWidget: Generic SVG view and widget
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon A. Cruz <jon@joncruz.org>

@@ -1,6 +1,4 @@
-/**
- * \brief widget adjustable by dragging it to rotate away from a zero-change axis
- *
+/*
  * Authors:
  *   buliabyak@gmail.com
  *
@@ -20,6 +18,9 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * Widget adjustable by dragging it to rotate away from a zero-change axis.
+ */
 class Rotateable: public Gtk::EventBox
 {
 public:

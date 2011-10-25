@@ -1,18 +1,4 @@
-/**
- * Inkscape::EventLog
- *
- * A simple log for maintaining a history of commited, undone and redone events along with their
- * type. It implements the UndoStackObserver and should be registered with a
- * CompositeUndoStackObserver for each document. The event log is then notified on all commit, undo
- * and redo events and will store a representation of them in an internal Gtk::TreeStore.
- *
- * Consecutive events of the same type are grouped with the first event as a parent and following
- * as its children.
- *
- * If a Gtk::TreeView is connected to the event log, the TreeView's selection and its nodes
- * expanded/collapsed state will be updated as events are commited, undone and redone. Whenever
- * this happens, the event log will block the TreeView's callbacks to prevent circular updates.
- *
+/*
  * Author:
  *   Gustav Broberg <broberg@kth.se>
  *
@@ -36,9 +22,20 @@
 namespace Inkscape {
 
 /**
- *     
+ * A simple log for maintaining a history of commited, undone and redone events along with their
+ * type. It implements the UndoStackObserver and should be registered with a
+ * CompositeUndoStackObserver for each document. The event log is then notified on all commit, undo
+ * and redo events and will store a representation of them in an internal Gtk::TreeStore.
+ *
+ * Consecutive events of the same type are grouped with the first event as a parent and following
+ * as its children.
+ *
+ * If a Gtk::TreeView is connected to the event log, the TreeView's selection and its nodes
+ * expanded/collapsed state will be updated as events are commited, undone and redone. Whenever
+ * this happens, the event log will block the TreeView's callbacks to prevent circular updates.
  */
-class EventLog : public UndoStackObserver {
+class EventLog : public UndoStackObserver
+{
         
 public:
     typedef Gtk::TreeModel::iterator iterator;
@@ -50,7 +47,6 @@ public:
     /**
      * Event datatype
      */
-
     struct EventModelColumns : public Gtk::TreeModelColumnRecord
     {
         Gtk::TreeModelColumn<Event *> event;
@@ -64,20 +60,18 @@ public:
         }
     };
 
-    /**
-     * Implementation of Inkscape::UndoStackObserver methods
-     * \brief Modifies the log's entries and the view's selection when triggered
-     */
+    // Implementation of Inkscape::UndoStackObserver methods
 
+    /**
+     * Modifies the log's entries and the view's selection when triggered.
+     */
     void notifyUndoEvent(Event *log);
     void notifyRedoEvent(Event *log);
     void notifyUndoCommitEvent(Event *log);
     void notifyClearUndoEvent();
     void notifyClearRedoEvent();
 
-    /**
-     * Accessor functions
-     */
+    // Accessor functions
 
     Glib::RefPtr<Gtk::TreeModel> getEventListStore() const { return _event_list_store; }
     const EventModelColumns& getColumns() const            { return _columns; }
@@ -89,9 +83,7 @@ public:
     void blockNotifications(bool status=true)  { _notifications_blocked = status; }
     void rememberFileSave()                    { _last_saved = _curr_event; }
 
-    /* 
-     * Callback types for TreeView changes.
-     */
+    // Callback types for TreeView changes.
 
     enum CallbackTypes { 
         CALLB_SELECTION_CHANGE, 
@@ -134,9 +126,7 @@ private:
     // Map of connections used to temporary block/unblock callbacks in a TreeView
     CallbackMap *_callback_connections;
 
-    /**
-     * Helper functions
-     */
+    // Helper functions
 
     const_iterator _getUndoEvent() const; //< returns the current undoable event or NULL if none
     const_iterator _getRedoEvent() const; //< returns the current redoable event or NULL if none

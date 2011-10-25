@@ -1,9 +1,7 @@
 #ifndef SEEN_SP_COLOR_H
 #define SEEN_SP_COLOR_H
 
-/** \file
- * Colors.
- *
+/*
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>

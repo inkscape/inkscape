@@ -1,6 +1,4 @@
-/** \file
- * Inkscape::GC::soft_ptr - "soft" pointers to avoid finalization cycles
- *
+/*
  * Copyright 2006 MenTaLguY <mental@rydia.net>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,8 +19,9 @@ namespace Inkscape {
 
 namespace GC {
 
-/** @brief A class for pointers which can be automatically cleared to break
- *         finalization cycles.
+/**
+ * A class for pointers which can be automatically cleared to break
+ * finalization cycles.
  */
 template <typename T>
 class soft_ptr {

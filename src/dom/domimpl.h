@@ -1,6 +1,7 @@
-#ifndef __DOMIMPL_H__
-#define __DOMIMPL_H__
+#ifndef SEEN_DOMIMPL_H
+#define SEEN_DOMIMPL_H
 /**
+ * @file
  * Phoebe DOM Implementation.
  *
  * This is a C++ approximation of the W3C DOM model, which follows
@@ -8,7 +9,8 @@
  * which are provided for reference.  Most important is this one:
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -2015,7 +2017,7 @@ protected:
 }  //namespace org
 
 
-#endif // __DOMIMPL_H__
+#endif // SEEN_DOMIMPL_H
 
 
 /*#########################################################################

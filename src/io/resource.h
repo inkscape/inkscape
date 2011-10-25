@@ -1,6 +1,4 @@
-/** \file
- * Inkscape::IO::Resource - simple resource API
- *
+/*
  * Copyright 2006 MenTaLguY <mental@rydia.net>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,6 +19,9 @@ namespace Inkscape {
 
 namespace IO {
 
+/**
+ * simple resource API
+ */
 namespace Resource {
 
 enum Type {

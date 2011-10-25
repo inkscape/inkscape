@@ -1,10 +1,6 @@
 #ifndef SEEN_LINE_SNAPPER_H
 #define SEEN_LINE_SNAPPER_H
-
-/**
- *    \file src/line-snapper.h
- *    \brief Superclass for snappers to horizontal and vertical lines.
- *
+/*
  *    Authors:
  *      Carl Hetherington <inkscape@carlh.net>
  *      Diederik van Lierop <mail@diedenrezi.nl>
@@ -20,6 +16,10 @@ namespace Inkscape
 {
 class SnapCandidatePoint;
 
+
+/**
+ * Superclass for snappers to horizontal and vertical lines.
+ */
 class LineSnapper : public Snapper
 {
 public:

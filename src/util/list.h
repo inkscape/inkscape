@@ -1,6 +1,4 @@
-/** \file
- * Inkscape::Util::List - managed linked list
- *
+/*
  * Authors:
  *   MenTaLguY <mental@rydia.net>
  *
@@ -227,7 +225,8 @@ public:
                                          MutableList const &);
 };
 
-/** @brief Creates a (non-empty) linked list.
+/**
+ * Creates a (non-empty) linked list.
  * 
  * Creates a new linked list with a copy of the given value (\a first)
  * in its first element; the remainder of the list will be the list
@@ -241,7 +240,7 @@ public:
  * @param first the value for the first element of the list
  * @param rest the rest of the list; may be an empty list
  *
- * @returns a new list
+ * @return a new list
  *
  * @see List<>
  * @see is_empty<>
@@ -254,7 +253,8 @@ inline List<T> cons(typename Traits::Reference<T>::RValue first,
     return List<T>(first, rest);
 }
 
-/** @brief Creates a (non-empty) linked list whose tail can be exchanged
+/**
+ * Creates a (non-empty) linked list whose tail can be exchanged
  *         for another.
  *
  * Creates a new linked list, but one whose tail can be exchanged for
@@ -274,7 +274,7 @@ inline List<T> cons(typename Traits::Reference<T>::RValue first,
  * @param first the value for the first element of the list
  * @param rest the rest of the list; may be an empty list
  *
- * @returns a new list
+ * @return a new list
  */
 template <typename T>
 inline MutableList<T> cons(typename Traits::Reference<T>::RValue first,
@@ -283,19 +283,21 @@ inline MutableList<T> cons(typename Traits::Reference<T>::RValue first,
     return MutableList<T>(first, rest);
 }
 
-/** @brief Returns true if the given list is empty.
+/**
+ * Returns true if the given list is empty.
  *
  * Returns true if the given list is empty.  This is equivalent
  * to !list.
  *
  * @param list the list
  *
- * @returns true if the list is empty, false otherwise.
+ * @return true if the list is empty, false otherwise.
  */
 template <typename T>
 inline bool is_empty(List<T> const &list) { return !list._cell; }
 
-/** @brief Returns the first value in a linked list.
+/**
+ * Returns the first value in a linked list.
  *
  * Returns a reference to the first value in the list.  This
  * corresponds to the value of the first argument passed to cons().
@@ -314,14 +316,15 @@ inline bool is_empty(List<T> const &list) { return !list._cell; }
  *
  * @param list the list; cannot be empty
  *
- * @returns a reference to the first value in the list
+ * @return a reference to the first value in the list
  */
 template <typename T>
 inline typename List<T>::reference first(List<T> const &list) {
     return list._cell->value;
 }
 
-/** @brief Returns the remainder of a linked list after the first element.
+/**
+ * Returns the remainder of a linked list after the first element.
  *
  * Returns the remainder of the list after the first element (its "tail").
  *
@@ -334,14 +337,15 @@ inline typename List<T>::reference first(List<T> const &list) {
  *
  * @param list the list; cannot be empty
  *
- * @returns the remainder of the list
+ * @return the remainder of the list
  */
 template <typename T>
 inline List<T> const &rest(List<T> const &list) {
     return reinterpret_cast<List<T> const &>(list._cell->next);
 }
 
-/** @brief Returns a reference to the remainder of a linked list after
+/**
+ * Returns a reference to the remainder of a linked list after
  *         the first element.
  *
  * Returns a reference to the remainder of the list after the first
@@ -359,14 +363,15 @@ inline List<T> const &rest(List<T> const &list) {
  *
  * @param list the list; cannot be empty
  *
- * @returns a reference to the remainder of the list
+ * @return a reference to the remainder of the list
  */
 template <typename T>
 inline MutableList<T> &rest(MutableList<T> const &list) {
     return reinterpret_cast<MutableList<T> &>(list._cell->next);
 }
 
-/** @brief Sets a new tail for an existing linked list.
+/**
+ * Sets a new tail for an existing linked list.
  * 
  * Sets the tail of the given MutableList<>, corresponding to the
  * second argument of cons().
@@ -380,7 +385,7 @@ inline MutableList<T> &rest(MutableList<T> const &list) {
  * @param list the list; cannot be empty
  * @param rest the new tail; corresponds to the second argument of cons()
  *
- * @returns the new tail
+ * @return the new tail
  */
 template <typename T>
 inline MutableList<T> const &set_rest(MutableList<T> const &list,

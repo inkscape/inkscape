@@ -1,9 +1,11 @@
 #ifndef SEEN_SP_CANVAS_H
 #define SEEN_SP_CANVAS_H
 
-/** \file
+/**
+ * @file
  * SPCanvas, SPCanvasBuf.
- *
+ */
+/*
  * Authors:
  *   Federico Mena <federico@nuclecu.unam.mx>
  *   Raph Levien <raph@gimp.org>

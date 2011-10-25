@@ -1,6 +1,4 @@
-/**
- * \brief Very basic interface for classes that control attributes
- *
+/*
  * Authors:
  *   Nicholas Bishop <nicholasbishop@gmail.com>
  *   Rodrigo Kumpera <kumpera@gmail.com>
@@ -32,6 +30,9 @@ enum DefaultValueType
     T_CHARPTR
 };
 
+/**
+ * Very basic interface for classes that control attributes.
+ */
 class DefaultValueHolder
 {
     DefaultValueType type;

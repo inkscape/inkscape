@@ -1,5 +1,5 @@
-#ifndef __SMILIMPL_H__
-#define __SMILIMPL_H__
+#ifndef SEEN_SMILIMPL_H
+#define SEEN_SMILIMPL_H
 /**
  * Phoebe DOM Implementation.
  *
@@ -8,7 +8,8 @@
  * which are provided for reference.  Most important is this one:
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -757,7 +758,7 @@ public:
 }  //namespace w3c
 }  //namespace org
 
-#endif    /* __SMILIMPL_H__ */
+#endif // SEEN_SMILIMPL_H
 
 /*#########################################################################
 ## E N D    O F    F I L E

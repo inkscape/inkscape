@@ -1,9 +1,6 @@
-#ifndef __UI_WIDGET_ZOOMSTATUS_H__
-#define __UI_WIDGET_ZOOMSTATUS_H__
-
-/** \file
- * Enhanced spinbutton.
- *
+#ifndef SEEN_UI_WIDGET_ZOOMSTATUS_H
+#define SEEN_UI_WIDGET_ZOOMSTATUS_H
+/*
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *
@@ -22,6 +19,9 @@ namespace Inkscape {
     namespace UI {
         namespace Widget {
 
+/**
+ * Enhanced spinbutton.
+ */
 class ZoomStatus : public Inkscape::UI::Widget::SpinButton
 {
 public:
@@ -46,7 +46,7 @@ protected:
 } // namespace Inkscape
 
 
-#endif 
+#endif // SEEN_UI_WIDGET_ZOOMSTATUS_H
 
 
 /*

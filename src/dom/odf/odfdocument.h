@@ -1,12 +1,6 @@
-#ifndef __ODF_DOCUMENT_H__
-#define __ODF_DOCUMENT_H__
-/**
- *
- * This class contains an ODF Document.
- * Initially, we are just concerned with .odg content.xml + resources
- *
- * ---------------------------------------------------------------------
- *
+#ifndef SEEN_ODF_DOCUMENT_H
+#define SEEN_ODF_DOCUMENT_H
+/*
  * Copyright (C) 2006 Bob Jamison
  *
  * This program is free software; you can redistribute it and/or modify
@@ -103,6 +97,8 @@ private:
 
 /**
  *
+ * This class contains an ODF Document.
+ * Initially, we are just concerned with .odg content.xml + resources
  */
 class OdfDocument
 {
@@ -146,7 +142,7 @@ private:
 
 
 
-#endif /*__ODF_DOCUMENT_H__*/
+#endif // SEEN_ODF_DOCUMENT_H
 
 //########################################################################
 //# E N D    O F    F I L E

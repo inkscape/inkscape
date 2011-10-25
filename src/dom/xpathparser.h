@@ -1,7 +1,8 @@
-#ifndef __XPATHPARSER_H__
-#define __XPATHPARSER_H__
+#ifndef SEEN_XPATHPARSER_H
+#define SEEN_XPATHPARSER_H
 
 /**
+ * @file
  * Phoebe DOM Implementation.
  *
  * This is a C++ approximation of the W3C DOM model, which follows
@@ -9,7 +10,8 @@
  * which are provided for reference.  Most important is this one:
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -794,15 +796,7 @@ private:
 } // namespace dom
 } // namespace w3c
 } // namespace org
-#endif /* __XPATHPARSER_H__ */
+#endif // SEEN_XPATHPARSER_H
 //#########################################################################
 //# E N D    O F    F I L E
 //#########################################################################
-
-
-
-
-
-
-
-

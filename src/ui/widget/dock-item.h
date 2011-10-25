@@ -1,6 +1,4 @@
-/**
- * \brief A custom wrapper around gdl-dock-item
- *
+/*
  * Author:
  *   Gustav Broberg <broberg@kth.se>
  *
@@ -27,6 +25,9 @@ namespace Widget {
 
 class Dock;
 
+/**
+ * A custom wrapper around gdl-dock-item.
+ */
 class DockItem {
 
 public:

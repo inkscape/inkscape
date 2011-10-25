@@ -1,9 +1,6 @@
 #ifndef INKSCAPE_UI_VIEW_VIEW_H
 #define INKSCAPE_UI_VIEW_VIEW_H
-
-/** \file
- * Abstract base class for all SVG document views
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ralf Stephan <ralf@ark.in-berlin.de>

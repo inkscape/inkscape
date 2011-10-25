@@ -1,5 +1,5 @@
-#ifndef __ZIPTOOL_H__
-#define __ZIPTOOL_H__
+#ifndef SEEN_ZIPTOOL_H
+#define SEEN_ZIPTOOL_H
 /**
  * This is intended to be a standalone, reduced capability
  * implementation of Gzip and Zip functionality.  Its
@@ -11,7 +11,8 @@
  * one-at-a-time tasks.  What you get in return is the ability
  * to drop these files into your project and remove the dependencies
  * on ZLib and Info-Zip.  Enjoy.
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -559,7 +560,7 @@ private:
 
 
 
-#endif /* __ZIPTOOL_H__ */
+#endif // SEEN_ZIPTOOL_H
 
 
 //########################################################################

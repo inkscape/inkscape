@@ -1,10 +1,6 @@
 #ifndef SNAPENUMS_H_
 #define SNAPENUMS_H_
-
-/**
- * \file snap-enums.h
- * \brief enumerations of snap source types and snap target types
- *
+/*
  * Authors:
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *
@@ -15,6 +11,9 @@
 
 namespace Inkscape {
 
+/**
+ * enumerations of snap source types and snap target types.
+ */
 enum SnapSourceType {
     SNAPSOURCE_UNDEFINED = 0,
     //-------------------------------------------------------------------

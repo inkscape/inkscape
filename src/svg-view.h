@@ -1,9 +1,6 @@
-#ifndef __SP_SVG_VIEW_H__
-#define __SP_SVG_VIEW_H__
-
-/** \file
- * SPSVGView, SPSVGSPViewWidget: Generic SVG view and widget
- *
+#ifndef SEEN_SP_SVG_VIEW_H
+#define SEEN_SP_SVG_VIEW_H
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
@@ -61,7 +58,7 @@ private:
     virtual void onDocumentResized (double, double);
 };
 
-#endif
+#endif // SEEN_SP_SVG_VIEW_H
 
 /*
   Local Variables:

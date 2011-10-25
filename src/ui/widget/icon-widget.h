@@ -1,6 +1,4 @@
-/**
- * \brief Icon Widget - General image widget (including SVG icons)
- *
+/*
  * Author:
  *   Bryce Harrington <bryce@bryceharrington.org>
  *
@@ -19,6 +17,9 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * Icon Widget - General image widget (including SVG icons).
+ */
 class IconWidget : public Gtk::Widget
 {
 public:

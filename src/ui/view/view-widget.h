@@ -1,9 +1,7 @@
 #ifndef INKSCAPE_UI_VIEW_VIEWWIDGET_H
 #define INKSCAPE_UI_VIEW_VIEWWIDGET_H
 
-/** \file
- * A widget is the UI context for a document view.
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
@@ -17,10 +15,13 @@
 #include <gtk/gtk.h>
 
 namespace Inkscape {
-    namespace UI {
-        namespace View {
-            class View;
-        }}}
+namespace UI {
+namespace View {
+class View;
+} // namespace View
+} // namespace UI
+} // namespace Inkscape
+
 class SPViewWidget;
 class SPNamedView;
 

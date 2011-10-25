@@ -1,7 +1,4 @@
-/**
- * \brief Text Widget - A labelled text box, with optional icon or
- *                      suffix, for entering arbitrary number values.
- *
+/*
  * Authors:
  *   Carl Hetherington <inkscape@carlh.net>
  *   Maximilian Albert <maximilian.albert@gmail.com>
@@ -23,6 +20,9 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * A labelled text box, with optional icon or suffix, for entering arbitrary number values.
+ */
 class Text : public Labelled
 {
 public:

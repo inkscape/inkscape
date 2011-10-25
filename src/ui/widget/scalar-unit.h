@@ -1,8 +1,4 @@
-/**
- * \brief Scalar Unit Widget - A labelled text box, with spin buttons and
- *        optional icon or suffix, for entering the values of various unit
- *        types.
- *
+/*
  * Authors:
  *   Bryce Harrington <bryce@bryceharrington.org>
  *   Derek P. Moore <derekm@hackunix.org>
@@ -23,6 +19,10 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * A labelled text box, with spin buttons and optional icon or suffix, for
+ * entering the values of various unit types.
+ */
 class ScalarUnit : public Scalar
 {
 public:

@@ -1,7 +1,8 @@
 /**
- * \file
- * \brief Defines S-power basis function class
- *
+ * @file
+ * Defines S-power basis function class.
+ */
+/*
  *  Authors:
  *   Nathan Hurst <njh@mail.csse.monash.edu.au>
  *   Michael Sloan <mgsloan@gmail.com>

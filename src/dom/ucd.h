@@ -1,4 +1,5 @@
 /**
+ * @file
  * Phoebe DOM Implementation.
  *
  * This is a C++ approximation of the W3C DOM model, which follows
@@ -10,7 +11,8 @@
  * More thorough explanations of the various classes and their algorithms
  * can be found there.
  *     
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -31,11 +33,11 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *  
  */
-#ifndef __UCD_H__
-#define __UCD_H__
+#ifndef SEEN_UCD_H
+#define SEEN_UCD_H
 
 
-/************************************************
+/* ***********************************************
 ** Unicode character classification
 ************************************************/
 
@@ -186,7 +188,7 @@ int uni_to_upper(int ch);
 int uni_to_title(int ch);
 
 
-/************************************************
+/* ***********************************************
 ** Unicode blocks
 ************************************************/
 
@@ -328,6 +330,6 @@ typedef enum
 } UnicodeBlocks;
 
 
-#endif /* __UCD_H__ */
+#endif // SEEN_UCD_H
 
 

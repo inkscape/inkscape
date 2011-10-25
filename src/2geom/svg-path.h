@@ -1,7 +1,8 @@
 /**
- * \file
- * \brief  callback interface for SVG path data
- *
+ * @file
+ * callback interface for SVG path data.
+ */
+/*
  * Copyright 2007 MenTaLguY <mental@rydia.net>
  *
  * This library is free software; you can redistribute it and/or

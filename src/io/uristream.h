@@ -1,9 +1,11 @@
-#ifndef __INKSCAPE_IO_URISTREAM_H__
-#define __INKSCAPE_IO_URISTREAM_H__
+#ifndef SEEN_INKSCAPE_IO_URISTREAM_H
+#define SEEN_INKSCAPE_IO_URISTREAM_H
 /**
+ * @file
  * This should be the only way that we provide sources/sinks
  * to any input/output stream.
- *
+ */
+/*
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
  *
@@ -170,4 +172,4 @@ private:
 } // namespace Inkscape
 
 
-#endif /* __INKSCAPE_IO_URISTREAM_H__ */
+#endif // SEEN_INKSCAPE_IO_URISTREAM_H

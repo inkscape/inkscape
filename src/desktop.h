@@ -1,9 +1,7 @@
 #ifndef SEEN_SP_DESKTOP_H
 #define SEEN_SP_DESKTOP_H
 
-/** \file
- * SPDesktop: an editable view.
- *
+/*
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>

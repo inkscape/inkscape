@@ -1,6 +1,7 @@
-#ifndef __BUFFERSTREAM_H__
-#define __BUFFERSTREAM_H__
+#ifndef SEEN_BUFFERSTREAM_H
+#define SEEN_BUFFERSTREAM_H
 /**
+ * @file
  * Phoebe DOM Implementation.
  *
  * This is a C++ approximation of the W3C DOM model, which follows
@@ -8,7 +9,8 @@
  * which are provided for reference.  Most important is this one:
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -130,4 +132,4 @@ private:
 
 
 
-#endif /* __BUFFERSTREAM_H__ */
+#endif // SEEN_BUFFERSTREAM_H

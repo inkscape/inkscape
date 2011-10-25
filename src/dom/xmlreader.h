@@ -1,5 +1,5 @@
-#ifndef _XMLREADER_H_
-#define _XMLREADER_H_
+#ifndef SEEN_XMLREADER_H
+#define SEEN_XMLREADER_H
 
 /**
  * Phoebe DOM Implementation.
@@ -9,7 +9,8 @@
  * which are provided for reference.  Most important is this one:
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -129,4 +130,4 @@ private:
 }  //namespace w3c
 }  //namespace org
 
-#endif /*_XMLREADER_H_*/
+#endif // SEEN_XMLREADER_H

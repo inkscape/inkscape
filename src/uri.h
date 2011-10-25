@@ -1,7 +1,4 @@
-/**
- * \file
- * \brief Classes for representing and manipulating URIs as per RFC 2396.
- *
+/*
  * Authors:
  *   MenTaLguY <mental@rydia.net>
  *   Jon A. Cruz <jon@joncruz.org>
@@ -21,7 +18,9 @@
 
 namespace Inkscape {
 
-/** \brief Represents an URI as per RFC 2396. */
+/**
+ * Represents an URI as per RFC 2396.
+ */
 class URI {
 public:
     URI(URI const &uri);

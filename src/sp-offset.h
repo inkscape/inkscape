@@ -1,9 +1,6 @@
-#ifndef __SP_OFFSET_H__
-#define __SP_OFFSET_H__
-
-/** \file
- * SPOffset class.
- *
+#ifndef SEEN_SP_OFFSET_H
+#define SEEN_SP_OFFSET_H
+/*
  * Authors:
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   Lauris Kaplinski <lauris@kaplinski.com>

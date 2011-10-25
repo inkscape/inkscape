@@ -1,7 +1,4 @@
-/**
- * \brief Labelled Widget - Adds a label with optional icon or suffix to
- *        another widget.
- *
+/*
  * Authors:
  *   Carl Hetherington <inkscape@carlh.net>
  *   Derek P. Moore <derekm@hackunix.org>
@@ -23,6 +20,9 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * Adds a label with optional icon or suffix to another widget.
+ */
 class Labelled : public Gtk::HBox
 {
 public:

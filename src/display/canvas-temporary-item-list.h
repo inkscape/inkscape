@@ -1,9 +1,7 @@
 #ifndef INKSCAPE_CANVAS_TEMPORARY_ITEM_LIST_H
 #define INKSCAPE_CANVAS_TEMPORARY_ITEM_LIST_H
 
-/** \file
- * Provides a class that can contain active TemporaryItem's on a desktop
- *
+/*
  * Authors:
  *   Johan Engelen
  *
@@ -23,6 +21,9 @@ namespace Display {
 
 class TemporaryItem;
 
+/**
+ * Provides a class that can contain active TemporaryItem's on a desktop.
+ */
 class TemporaryItemList  {
 public:
     TemporaryItemList(SPDesktop *desktop);

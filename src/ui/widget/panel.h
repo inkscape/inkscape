@@ -1,6 +1,4 @@
-/**
- * \brief Generic Panel widget - A generic dockable container.
- *
+/*
  * Authors:
  *   Bryce Harrington <bryce@bryceharrington.org>
  *   Jon A. Cruz <jon@joncruz.org>
@@ -35,6 +33,9 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * A generic dockable container.
+ */
 class Panel : public Gtk::VBox {
 
 public:

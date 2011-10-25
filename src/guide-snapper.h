@@ -1,10 +1,6 @@
 #ifndef SEEN_GUIDE_SNAPPER_H
 #define SEEN_GUIDE_SNAPPER_H
-
-/**
- *  \file guide-snapper.h
- *  \brief Snapping things to guides.
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Frank Felfe <innerspace@iname.com>
@@ -22,7 +18,9 @@ struct SPNamedView;
 namespace Inkscape
 {
 
-/// Snap to guides
+/**
+ * Snap to guides.
+ */
 class GuideSnapper : public LineSnapper
 {
 public:

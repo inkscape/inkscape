@@ -1,6 +1,4 @@
-/** \file
- * Inkscape::GC::Anchored - base class for anchored GC-managed objects
- *
+/*
  * Authors:
  *   MenTaLguY <mental@rydia.net>
  * * Copyright (C) 2004 MenTaLguY

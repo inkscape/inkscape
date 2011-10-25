@@ -1,6 +1,7 @@
-#ifndef __DOMSTRING_H__
-#define __DOMSTRING_H__
+#ifndef SEEN_DOMSTRING_H
+#define SEEN_DOMSTRING_H
 /**
+ * @file
  * Phoebe DOM Implementation.
  *
  * This is a C++ approximation of the W3C DOM model, which follows
@@ -8,7 +9,8 @@
  * which are provided for reference.  Most important is this one:
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -306,7 +308,7 @@ DOMString &operator +(const char *b, DOMString &a);
 }  //namespace w3c
 }  //namespace org
 
-#endif // __DOMSTRING_H__
+#endif // SEEN_DOMSTRING_H
 //#########################################################################
 //## E N D    O F    F I L E
 //#########################################################################

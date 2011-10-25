@@ -1,7 +1,8 @@
-#ifndef __SVGTYPES_H__
-#define __SVGTYPES_H__
+#ifndef SEEN_SVGTYPES_H
+#define SEEN_SVGTYPES_H
 
 /**
+ * @file
  * Phoebe DOM Implementation.
  *
  * This is a C++ approximation of the W3C DOM model, which follows
@@ -9,7 +10,8 @@
  * which are provided for reference.  Most important is this one:
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -6895,7 +6897,7 @@ protected:
 }  //namespace w3c
 }  //namespace org
 
-#endif /* __SVGTYPES_H__ */
+#endif // SEEN_SVGTYPES_H
 /*#########################################################################
 ## E N D    O F    F I L E
 #########################################################################*/

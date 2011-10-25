@@ -1,8 +1,4 @@
-/**
- * \file
- *
- * Abstract base class for all EditWidget implementations.
- *
+/*
  * Authors:
  *     Ralf Stephan <ralf@ark.in-berlin.de>
  *     John Bintz <jcoswell@coswellproductions.org>
@@ -26,6 +22,9 @@ namespace Inkscape {
 namespace UI {
 namespace View {
 
+/**
+ * Abstract base class for all EditWidget implementations.
+ */
 struct EditWidgetInterface
 {
     EditWidgetInterface() {}

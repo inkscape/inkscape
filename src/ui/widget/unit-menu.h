@@ -1,6 +1,4 @@
-/**
- * \brief Unit Menu Widget - A drop down menu for choosing unit types.
- *
+/*
  * Author:
  *   Bryce Harrington <bryce@bryceharrington.org>
  *
@@ -21,6 +19,9 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * A drop down menu for choosing unit types.
+ */
 class UnitMenu : public ComboText
 {
 public:

@@ -1,14 +1,4 @@
-/**
- * OpenDocument <drawing> input and output
- *
- * This is an an entry in the extensions mechanism to begin to enable
- * the inputting and outputting of OpenDocument Format (ODF) files from
- * within Inkscape.  Although the initial implementations will be very lossy
- * do to the differences in the models of SVG and ODF, they will hopefully
- * improve greatly with time.
- *
- * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+/*
  * Authors:
  *   Bob Jamison
  *   Abhishek Sharma
@@ -265,6 +255,17 @@ public:
 
 
 
+/**
+ * OpenDocument <drawing> input and output
+ *
+ * This is an an entry in the extensions mechanism to begin to enable
+ * the inputting and outputting of OpenDocument Format (ODF) files from
+ * within Inkscape.  Although the initial implementations will be very lossy
+ * do to the differences in the models of SVG and ODF, they will hopefully
+ * improve greatly with time.
+ *
+ * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
+ */
 class OdfOutput : public Inkscape::Extension::Implementation::Implementation
 {
 

@@ -1,9 +1,7 @@
 #ifndef SP_OBJECT_H_SEEN
 #define SP_OBJECT_H_SEEN
 
-/** \file
- * Abstract base class for all nodes
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jon A. Cruz <jon@joncruz.org>
@@ -134,7 +132,11 @@ SPObject *sp_object_unref(SPObject *object, SPObject *owner=NULL);
 SPObject *sp_object_href(SPObject *object, gpointer owner);
 SPObject *sp_object_hunref(SPObject *object, gpointer owner);
 
-/// A refcounting tree node object.
+
+/**
+ * Abstract base class for all nodes.
+ * A refcounting tree node object.
+ */
 class SPObject : public GObject {
 public:
     enum CollectionPolicy {

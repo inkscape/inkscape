@@ -1,6 +1,4 @@
-/** \file
- * Inkscape::ObjectHierarchy - tracks a hierarchy of active SPObjects
- *
+/*
  * Authors:
  *   MenTaLguY <mental@rydia.net>
  *
@@ -36,7 +34,6 @@ namespace Inkscape {
  *
  * @see SPObject
  */
-
 class ObjectHierarchy {
 public:
     ObjectHierarchy(SPObject *top=NULL);

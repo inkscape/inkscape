@@ -2,8 +2,10 @@
 #define INKSCAPE_HELPER_GEOM_H
 
 /**
+ * @file
  * Specific geometry functions for Inkscape, not provided my lib2geom.
- *
+ */
+/*
  * Author:
  *   Johan Engelen <goejendaagh@zonnet.nl>
  *

@@ -1,9 +1,10 @@
-#ifndef __INKSCAPE_IO_XSLTSTREAM_H__
-#define __INKSCAPE_IO_XSLTSTREAM_H__
+#ifndef SEEN_INKSCAPE_IO_XSLTSTREAM_H
+#define SEEN_INKSCAPE_IO_XSLTSTREAM_H
 /**
+ * @file
  * Xslt-enabled input and output streams
- *
- *
+ */
+/*
  * Authors:
  *   Bob Jamison <ishmalius@gmail.com>
  *

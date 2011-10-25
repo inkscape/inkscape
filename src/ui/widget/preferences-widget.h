@@ -1,6 +1,8 @@
 /**
- * \brief Inkscape Preferences dialog
- *
+ * @file
+ * Widgets for Inkscape Preferences dialog.
+ */
+/*
  * Authors:
  *   Marco Scholten
  *   Bruno Dilly <bruno.dilly@gmail.com>

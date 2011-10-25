@@ -1,9 +1,7 @@
-#ifndef __UI_WIDGET_SVGCANVAS_H__
-#define __UI_WIDGET_SVGCANVAS_H__
+#ifndef SEEN_UI_WIDGET_SVGCANVAS_H
+#define SEEN_UI_WIDGET_SVGCANVAS_H
 
-/** \file
- * Gtkmm facade/wrapper around SPCanvas.
- *
+/*
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *
@@ -16,9 +14,12 @@ struct SPCanvas;
 struct SPDesktop;
 namespace Gtk { class Widget; }
 namespace Inkscape {
-    namespace UI {
-        namespace Widget {
+namespace UI {
+namespace Widget {
 
+/**
+ * Gtkmm facade/wrapper around SPCanvas.
+ */
 class SVGCanvas
 {
 public:
@@ -41,7 +42,7 @@ protected:
 } // namespace Inkscape
 
 
-#endif 
+#endif // SEEN_UI_WIDGET_SVGCANVAS_H
 
 
 /*

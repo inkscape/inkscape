@@ -1,6 +1,4 @@
-/** \file
- * \brief Widget for specifying page size; part of Document Preferences dialog.
- *
+/*
  * Author:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *
@@ -9,8 +7,8 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
-#ifndef INKSCAPE_UI_WIDGET_PAGE_SIZER__H
-#define INKSCAPE_UI_WIDGET_PAGE_SIZER__H
+#ifndef INKSCAPE_UI_WIDGET_PAGE_SIZER_H
+#define INKSCAPE_UI_WIDGET_PAGE_SIZER_H
 
 #include <gtkmm.h>
 #include <stddef.h>
@@ -238,7 +236,7 @@ protected:
 } // namespace Inkscape
 
 
-#endif /* INKSCAPE_UI_WIDGET_PAGE_SIZER__H */
+#endif // INKSCAPE_UI_WIDGET_PAGE_SIZER_H
 
 /*
   Local Variables:

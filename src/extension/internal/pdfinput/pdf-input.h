@@ -1,9 +1,7 @@
-#ifndef __EXTENSION_INTERNAL_PDFINPUT_H__
-#define __EXTENSION_INTERNAL_PDFINPUT_H__
+#ifndef SEEN_EXTENSION_INTERNAL_PDFINPUT_H
+#define SEEN_EXTENSION_INTERNAL_PDFINPUT_H
 
- /** \file
- * PDF import using libpoppler.
- *
+/*
  * Authors:
  *   miklos erdelyi
  *
@@ -50,6 +48,9 @@ namespace Widget {
 namespace Extension {
 namespace Internal {
 
+/**
+ * PDF import using libpoppler.
+ */
 class PdfImportDialog : public Gtk::Dialog
 {
 public:
@@ -125,11 +126,13 @@ public:
 
 };
 
-} } }  /* namespace Inkscape, Extension, Implementation */
+} // namespace Implementation
+} // namespace Extension
+} // namespace Inkscape
 
-#endif /* HAVE_POPPLER */
+#endif // HAVE_POPPLER
 
-#endif /* __EXTENSION_INTERNAL_PDFINPUT_H__ */
+#endif // SEEN_EXTENSION_INTERNAL_PDFINPUT_H
 
 /*
   Local Variables:

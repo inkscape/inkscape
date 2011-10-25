@@ -1,8 +1,6 @@
-#ifndef __INKSCAPE_IO_INKSCAPESTREAM_H__
-#define __INKSCAPE_IO_INKSCAPESTREAM_H__
-/**
- * Our base basic stream classes.  
- *
+#ifndef SEEN_INKSCAPE_IO_INKSCAPESTREAM_H
+#define SEEN_INKSCAPE_IO_INKSCAPESTREAM_H
+/*
  * Authors:
  *   Bob Jamison <rjamison@titan.com>
  *
@@ -667,4 +665,4 @@ void pipeStream(InputStream &source, OutputStream &dest);
 } // namespace Inkscape
 
 
-#endif /* __INKSCAPE_IO_INKSCAPESTREAM_H__ */
+#endif // SEEN_INKSCAPE_IO_INKSCAPESTREAM_H

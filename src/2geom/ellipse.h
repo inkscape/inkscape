@@ -1,7 +1,8 @@
 /**
- * \file
- * \brief  Ellipse Curve
- *
+ * @file
+ * Ellipse Curve.
+ */
+/*
  * Authors:
  *      Marco Cecchetti <mrcekets at gmail.com>
  *

@@ -1,7 +1,4 @@
-/** \file 
- *
- * \brief Helperclass for Gtk::Entry widgets
- *
+/*
  * Authors:
  *   Johan Engelen <goejendaagh@zonnet.nl>
  *
@@ -23,6 +20,9 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * Helperclass for Gtk::Entry widgets.
+ */
 class Entry : public Labelled
 {
 public:

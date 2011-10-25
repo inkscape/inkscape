@@ -1,6 +1,4 @@
-/**
- * \brief Simplified management of enumerations in the UI as combobox.
- *
+/*
  * Authors:
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *
@@ -19,6 +17,9 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * Simplified management of enumerations in the UI as combobox.
+ */
 template<typename E> class RegisteredEnum : public RegisteredWidget< LabelledComboBoxEnum<E> >
 {
 public:

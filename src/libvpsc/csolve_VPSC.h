@@ -1,6 +1,8 @@
 /**
- * \brief Bridge for C programs to access solve_VPSC (which is in C++)
- *
+ * @file
+ * Bridge for C programs to access solve_VPSC (which is in C++).
+ */
+/*
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>
  *

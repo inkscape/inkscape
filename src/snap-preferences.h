@@ -1,10 +1,7 @@
 #ifndef SNAPPREFERENCES_H_
 #define SNAPPREFERENCES_H_
 
-/**
- *  \file snap-preferences.cpp
- *  \brief Storing of snapping preferences
- *
+/*
  * Authors:
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *
@@ -19,6 +16,9 @@
 namespace Inkscape
 {
 
+/**
+ * Storing of snapping preferences.
+ */
 class SnapPreferences
 {
 public:

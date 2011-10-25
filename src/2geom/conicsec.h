@@ -1,7 +1,8 @@
 /**
- * \file
- * \brief Conic Section
- *
+ * @file
+ * Conic Section.
+ */
+/*
  * Authors:
  *      Nathan Hurst <njh@njhurst.com>
  *

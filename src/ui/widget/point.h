@@ -1,7 +1,4 @@
-/**
- * \brief Point Widget - A labelled text box, with spin buttons and optional
- *        icon or suffix, for entering arbitrary coordinate values.
- *
+/*
  * Authors:
  *   Johan Engelen <j.b.c.engelen@utwente.nl>
  *   Carl Hetherington <inkscape@carlh.net>
@@ -13,7 +10,6 @@
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
-
 #ifndef INKSCAPE_UI_WIDGET_POINT_H
 #define INKSCAPE_UI_WIDGET_POINT_H
 
@@ -27,6 +23,10 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * A labelled text box, with spin buttons and optional icon or suffix, for
+ * entering arbitrary coordinate values.
+ */
 class Point : public Labelled
 {
 public:

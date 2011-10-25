@@ -1,7 +1,4 @@
-
- /** \file
- * PDF parsing module using libpoppler's facilities
- *
+ /*
  * Derived from Gfx.h
  *
  * Copyright 1996-2003 Glyph & Cog, LLC
@@ -24,6 +21,8 @@ namespace Inkscape {
         }
     }
 }
+
+// TODO clean up and remove using:
 using Inkscape::Extension::Internal::SvgBuilder;
 
 #include "goo/gtypes.h"
@@ -145,6 +144,10 @@ private:
 #define pdfNumShadingTypes 5
 
 
+
+/**
+ * PDF parsing module using libpoppler's facilities.
+ */
 class PdfParser {
 public:
 

@@ -1,7 +1,8 @@
-#ifndef __VIEWS_LEVEL3_H__
-#define __VIEWS_LEVEL3_H__
+#ifndef SEEN_VIEWS_LEVEL3_H
+#define SEEN_VIEWS_LEVEL3_H
 
 /**
+ * @file
  * Phoebe DOM Implementation.
  *
  * This is a C++ approximation of the W3C DOM model, which follows
@@ -9,7 +10,8 @@
  * which are provided for reference.  Most important is this one:
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -30,7 +32,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-/**
+/*
  * Currently CSS is not at level 3, so we will probably not use this
  * Level 3 Views implementation.  Rather, we'll regress back to Level 2.
  * This should not affect using the rest of DOM Core 3
@@ -1958,7 +1960,7 @@ protected:
 }  //namespace org
 
 
-#endif  /* __VIEWS_LEVEL3_H__ */
+#endif // SEEN_VIEWS_LEVEL3_H
 /*#########################################################################
 ## E N D    O F    F I L E
 #########################################################################*/

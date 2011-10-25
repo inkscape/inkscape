@@ -1,5 +1,5 @@
-#ifndef __URISTREAM_H__
-#define __URISTREAM_H__
+#ifndef SEEN_URISTREAM_H
+#define SEEN_URISTREAM_H
 
 /**
  * Phoebe DOM Implementation.
@@ -9,7 +9,8 @@
  * which are provided for reference.  Most important is this one:
  *
  * http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/idl-definitions.html
- *
+ */
+/*
  * Authors:
  *   Bob Jamison
  *
@@ -203,4 +204,4 @@ private:
 #########################################################################*/
 
 
-#endif /* __URISTREAM_H__ */
+#endif // SEEN_URISTREAM_H

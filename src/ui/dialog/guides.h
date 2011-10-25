@@ -1,7 +1,4 @@
-/**
- *
- * \brief  Dialog for modifying guidelines
- *
+/*
  * Author:
  *   Andrius R. <knutux@gmail.com>
  *   Johan Engelen
@@ -40,6 +37,9 @@ namespace Widget {
 
 namespace Dialogs {
 
+/**
+ * Dialog for modifying guidelines.
+ */
 class GuidelinePropertiesDialog : public Gtk::Dialog {
 public:
     GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *desktop);

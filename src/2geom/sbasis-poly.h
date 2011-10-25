@@ -5,9 +5,10 @@
 #include <2geom/sbasis.h>
 
 /**
- * \file
- * \brief Conversion between SBasis and Poly.  Not recommended for general use due to instability.
- *
+ * @file
+ * Conversion between SBasis and Poly.  Not recommended for general use due to instability.
+ */
+/*
  * Authors:
  *      ? <?@?.?>
  * 

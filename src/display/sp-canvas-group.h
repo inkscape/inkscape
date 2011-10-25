@@ -1,9 +1,11 @@
 #ifndef SEEN_SP_CANVAS_GROUP_H
 #define SEEN_SP_CANVAS_GROUP_H
 
-/** \file
- * SPCanvasGroup
- *
+/**
+ * @file
+ * SPCanvasGroup.
+ */
+/*
  * Authors:
  *   Federico Mena <federico@nuclecu.unam.mx>
  *   Raph Levien <raph@gimp.org>

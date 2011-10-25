@@ -1,6 +1,4 @@
-/**
- * \brief Toolbox Widget - A detachable toolbar for buttons and other widgets.
- *
+/*
  * Author:
  *   Derek P. Moore <derekm@hackunix.org>
  *
@@ -22,6 +20,9 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/**
+ * A detachable toolbar for buttons and other widgets.
+ */
 class Toolbox : public HandleBox
 {
 public:
