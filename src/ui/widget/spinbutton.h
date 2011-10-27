@@ -1,6 +1,3 @@
-/**
- * \brief SpinButton widget, that allows entry of both '.' and ',' for the decimal, even when in numeric mode.
- */
 /*
  * Author:
  *   Johan B. C. Engelen
@@ -22,7 +19,8 @@ namespace Widget {
 class UnitMenu;
 
 /**
- * SpinButton widget, that allows entry of simple math expressions (also units, when linked with UnitMenu).
+ * SpinButton widget, that allows entry of simple math expressions (also units, when linked with UnitMenu),
+ * and allows entry of both '.' and ',' for the decimal, even when in numeric mode.
  *
  * Calling "set_numeric()" effectively disables the expression parsing. If no unit menu is linked, all unitlike characters are ignored.
  */
@@ -50,10 +48,35 @@ protected:
   UnitMenu *_unit_menu; /// Linked unit menu for unit conversion in entered expressions.
 
   void connect_signals();
-  int on_input(double* newvalue);
-  bool on_my_focus_in_event(GdkEventFocus* event);
-  bool on_my_key_press_event(GdkEventKey* event);
-  void undo();
+
+    /**
+     * This callback function should try to convert the entered text to a number and write it to newvalue.
+     * It calls a method to evaluate the (potential) mathematical expression.
+     *
+     * @retval false No conversion done, continue with default handler.
+     * @retval true  Conversion successful, don't call default handler. 
+     */
+    int on_input(double* newvalue);
+
+    /**
+     * When focus is obtained, save the value to enable undo later.
+     * @retval false continue with default handler.
+     * @retval true  don't call default handler. 
+     */
+    bool on_my_focus_in_event(GdkEventFocus* event);
+
+    /**
+     * Handle specific keypress events, like Ctrl+Z.
+     *
+     * @retval false continue with default handler.
+     * @retval true  don't call default handler. 
+     */
+    bool on_my_key_press_event(GdkEventKey* event);
+
+    /**
+     * Undo the editing, by resetting the value upon when the spinbutton got focus.
+     */
+    void undo();
 
   double on_focus_in_value;
 

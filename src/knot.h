@@ -149,8 +149,14 @@ struct SPKnotClass {
     gdouble (* distance) (SPKnot *knot, Geom::Point const &pos, guint state);
 };
 
+/**
+ * Registers SPKnot class and returns its type number.
+ */
 GType sp_knot_get_type();
 
+/**
+ * Return new knot object.
+ */
 SPKnot *sp_knot_new(SPDesktop *desktop, gchar const *tip = NULL);
 
 #define SP_KNOT_IS_VISIBLE(k) ((k->flags & SP_KNOT_VISIBLE) != 0)
@@ -158,24 +164,56 @@ SPKnot *sp_knot_new(SPDesktop *desktop, gchar const *tip = NULL);
 #define SP_KNOT_IS_DRAGGING(k) ((k->flags & SP_KNOT_DRAGGING) != 0)
 #define SP_KNOT_IS_GRABBED(k) ((k->flags & SP_KNOT_GRABBED) != 0)
 
+/**
+ * Show knot on its canvas.
+ */
 void sp_knot_show(SPKnot *knot);
+
+/**
+ * Hide knot on its canvas.
+ */
 void sp_knot_hide(SPKnot *knot);
 
+/**
+ * Set flag in knot, with side effects.
+ */
 void sp_knot_set_flag(SPKnot *knot, guint flag, bool set);
+
+/**
+ * Update knot's pixbuf and set its control state.
+ */
 void sp_knot_update_ctrl(SPKnot *knot);
 
+/**
+ * Request or set new position for knot.
+ */
 void sp_knot_request_position(SPKnot *knot, Geom::Point const &pos, guint state);
+
+/**
+ * Return distance of point to knot's position; unused.
+ */
 gdouble sp_knot_distance(SPKnot *knot, Geom::Point const &p, guint state);
 
+/**
+ * Update knot for dragging and tell canvas an item was grabbed.
+ */
 void sp_knot_start_dragging(SPKnot *knot, Geom::Point const &p, gint x, gint y, guint32 etime);
 
-/** Moves knot and emits "moved" signal. */
+/**
+ * Move knot to new position and emits "moved" signal.
+ */
 void sp_knot_set_position(SPKnot *knot, Geom::Point const &p, guint state);
 
-/** Moves knot without any signal. */
+/**
+ * Move knot to new position, without emitting a MOVED signal.
+ */
 void sp_knot_moveto(SPKnot *knot, Geom::Point const &p);
 
 void sp_knot_handler_request_position(GdkEvent *event, SPKnot *knot);
+
+/**
+ * Returns position of knot.
+ */
 Geom::Point sp_knot_position(SPKnot const *knot);
 
 

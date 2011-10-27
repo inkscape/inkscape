@@ -22,46 +22,6 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-/** Introducing eevl eva, the evaluator. A straightforward recursive
- * descent parser, no fuss, no new dependencies. The lexer is hand
- * coded, tedious, not extremely fast but works. It evaluates the
- * expression as it goes along, and does not create a parse tree or
- * anything, and will not optimize anything. It uses doubles for
- * precision, with the given use case, that's enough to combat any
- * rounding errors (as opposed to optimizing the evalutation).
- *
- * It relies on external unit resolving through a callback and does
- * elementary dimensionality constraint check (e.g. "2 mm + 3 px * 4
- * in" is an error, as L + L^2 is a missmatch). It uses g_strtod() for numeric
- * conversions and it's non-destructive in terms of the paramters, and
- * it's reentrant.
- *
- * EBNF:
- *
- *   expression    ::= term { ('+' | '-') term }*  |
- *                     <empty string> ;
- *
- *   term          ::= signed factor { ( '*' | '/' ) signed factor }* ;
- *
- *   signed factor ::= ( '+' | '-' )? factor ;
- *
- *   unit factor   ::= factor unit? ;
- *
- *   factor        ::= number | '(' expression ')' ;
- *
- *   number        ::= ? what g_strtod() consumes ? ;
- *
- *   unit          ::= ? what not g_strtod() consumes and not whitespace ? ;
- *
- * The code should match the EBNF rather closely (except for the
- * non-terminal unit factor, which is inlined into factor) for
- * maintainability reasons.
- *
- * It will allow 1++1 and 1+-1 (resulting in 2 and 0, respectively),
- * but I figured one might want that, and I don't think it's going to
- * throw anyone off.
- */
-
 #include "config.h"
 
 #include "util/expression-evaluator.h"

@@ -1,6 +1,4 @@
-#define __SP_COLOR_C__
-
-/** \file
+/*
  * Colors.
  *
  * Author:

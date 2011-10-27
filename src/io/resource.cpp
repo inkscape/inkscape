@@ -1,4 +1,4 @@
-/** \file
+/*
  * Inkscape::IO::Resource - simple resource API
  *
  * Copyright 2006 MenTaLguY <mental@rydia.net>

@@ -1,6 +1,4 @@
-/**
- * Find dialog.
- *
+/*
  * Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Johan Engelen <goejendaagh@zonnet.nl>

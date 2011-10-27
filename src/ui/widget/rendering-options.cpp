@@ -1,6 +1,4 @@
-/**
- * Rendering options widget.
- *
+/*
  * Author:
  *   Kees Cook <kees@outflux.net>
  *
@@ -23,16 +21,10 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-void
-RenderingOptions::_toggled()
+void RenderingOptions::_toggled()
 {
     _frame_bitmap.set_sensitive(as_bitmap());
 }
-
-/**
- *    Construct a Rendering Options widget
- *
- */
 
 RenderingOptions::RenderingOptions () :
       Gtk::VBox (),

@@ -1,6 +1,4 @@
-/**
- * Unit Menu Widget - A drop down menu for choosing unit types.
- *
+/*
  * Author:
  *   Bryce Harrington <bryce@bryceharrington.org>
  *
@@ -21,10 +19,6 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-/**
- *    Construct a UnitMenu
- *
- */
 UnitMenu::UnitMenu() : _type(UNIT_TYPE_NONE)
 {
     set_active(0);
@@ -33,14 +27,9 @@ UnitMenu::UnitMenu() : _type(UNIT_TYPE_NONE)
 UnitMenu::~UnitMenu() {
 }
 
-/** Adds the unit type to the widget.  This extracts the corresponding
-    units from the unit map matching the given type, and appends them
-    to the dropdown widget.  It causes the primary unit for the given
-    unit_type to be selected.  */
-bool
-UnitMenu::setUnitType(UnitType unit_type) 
+bool UnitMenu::setUnitType(UnitType unit_type) 
 {
-    /* Expand the unit widget with unit entries from the unit table */
+    // Expand the unit widget with unit entries from the unit table
     UnitTable::UnitMap m = _unit_table.units(unit_type);
     UnitTable::UnitMap::iterator iter = m.begin();
     while(iter != m.end()) {
@@ -54,31 +43,21 @@ UnitMenu::setUnitType(UnitType unit_type)
     return true;
 }
 
-/** Removes all unit entries, then adds the unit type to the widget.
-    This extracts the corresponding
-    units from the unit map matching the given type, and appends them
-    to the dropdown widget.  It causes the primary unit for the given
-    unit_type to be selected.  */
-bool
-UnitMenu::resetUnitType(UnitType unit_type) 
+bool UnitMenu::resetUnitType(UnitType unit_type) 
 {
     clear_text();
 
     return setUnitType(unit_type);
 }
 
-/** Adds a unit, possibly user-defined, to the menu. */
-void
-UnitMenu::addUnit(Unit const& u)
+void UnitMenu::addUnit(Unit const& u)
 {
     _unit_table.addUnit(u, false);
     append_text(u.abbr);
 }
 
-/** Returns the Unit object corresponding to the current selection
-    in the dropdown widget */
-Unit
-UnitMenu::getUnit() const {
+Unit UnitMenu::getUnit() const
+{
     if (get_active_text() == "") {
         g_assert(_type != UNIT_TYPE_NONE);
         return _unit_table.getUnit(_unit_table.primary(_type));
@@ -86,11 +65,8 @@ UnitMenu::getUnit() const {
     return _unit_table.getUnit(get_active_text());
 }
 
-/** Sets the dropdown widget to the given unit abbreviation. 
-    Returns true if the unit was selectable, false if not 
-    (i.e., if the unit was not present in the widget) */
-bool
-UnitMenu::setUnit(Glib::ustring const & unit) {
+bool UnitMenu::setUnit(Glib::ustring const & unit)
+{
     // TODO:  Determine if 'unit' is available in the dropdown.
     //        If not, return false
 
@@ -98,63 +74,41 @@ UnitMenu::setUnit(Glib::ustring const & unit) {
     return true;
 }
 
-/** Returns the abbreviated unit name of the selected unit */
-Glib::ustring
-UnitMenu::getUnitAbbr() const {
+Glib::ustring UnitMenu::getUnitAbbr() const
+{
     if (get_active_text() == "") {
         return "";
     }
     return getUnit().abbr;
 }
 
-/** Returns the UnitType of the selected unit */
-UnitType
-UnitMenu::getUnitType() const {
+UnitType UnitMenu::getUnitType() const
+{
     return getUnit().type;
 }
 
-/** Returns the unit factor for the selected unit */
-double 
-UnitMenu::getUnitFactor() const
+double  UnitMenu::getUnitFactor() const
 {
     return getUnit().factor;
 }
 
-/** Returns the recommended number of digits for displaying
- *  numbers of this unit type.  
- */
-int
-UnitMenu::getDefaultDigits() const
+int UnitMenu::getDefaultDigits() const
 {
     return getUnit().defaultDigits();
 }
 
-/** Returns the recommended step size in spin buttons
- *  displaying units of this type
- */
-double
-UnitMenu::getDefaultStep() const
+double UnitMenu::getDefaultStep() const
 { 
     int factor_digits = -1*int(log10(getUnit().factor));
     return pow(10.0, factor_digits);
 }
 
-/** Returns the recommended page size (when hitting pgup/pgdn)
- *  in spin buttons displaying units of this type
- */
-double
-UnitMenu::getDefaultPage() const
+double UnitMenu::getDefaultPage() const
 {
     return 10 * getDefaultStep();
 }
 
-/**
- *  Returns the conversion factor required to convert values
- *  of the currently selected unit into units of type
- *  new_unit_abbr.
- */
-double
-UnitMenu::getConversion(Glib::ustring const &new_unit_abbr, Glib::ustring const &old_unit_abbr) const
+double UnitMenu::getConversion(Glib::ustring const &new_unit_abbr, Glib::ustring const &old_unit_abbr) const
 {
     double old_factor = getUnit().factor;
     if (old_unit_abbr != "no_unit")
@@ -171,18 +125,13 @@ UnitMenu::getConversion(Glib::ustring const &new_unit_abbr, Glib::ustring const 
     return old_factor / new_unit.factor;
 }
 
-/** Returns true if the selected unit is not dimensionless 
- *  (false for %, true for px, pt, cm, etc) 
- */
-bool
-UnitMenu::isAbsolute() const {
+bool UnitMenu::isAbsolute() const
+{
     return getUnitType() != UNIT_TYPE_DIMENSIONLESS;
 }
 
-/** Returns true if the selected unit is radial (deg or rad)
- */
-bool
-UnitMenu::isRadial() const {
+bool UnitMenu::isRadial() const
+{
     return getUnitType() == UNIT_TYPE_RADIAL;
 }
 

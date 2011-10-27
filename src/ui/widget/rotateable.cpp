@@ -1,6 +1,4 @@
-/**
- * widget adjustable by dragging it to rotate away from a zero-change axis.
- *
+/*
  * Authors:
  *   buliabyak@gmail.com
  *

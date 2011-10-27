@@ -1,9 +1,5 @@
-/**
- * \brief A block structure defined over the variables
- *
- * A block structure defined over the variables such that each block contains
- * 1 or more variables, with the invariant that all constraints inside a block
- * are satisfied by keeping the variables fixed relative to one another
+/*
+ * A block structure defined over the variables.
  *
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>
@@ -47,10 +43,6 @@ Blocks::~Blocks(void)
 	clear();
 }
 
-/**
- * returns a list of variables with total ordering determined by the constraint 
- * DAG
- */
 list<Variable*> *Blocks::totalOrder() {
 	list<Variable*> *order = new list<Variable*>;
 	for(int i=0;i<nvs;i++) {
@@ -80,10 +72,7 @@ void Blocks::dfsVisit(Variable *v, list<Variable*> *order) {
 #endif
 	order->push_front(v);
 }
-/**
- * Processes incoming constraints, most violated to least, merging with the
- * neighbouring (left) block until no more violated constraints are found
- */
+
 void Blocks::mergeLeft(Block *r) {	
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	ofstream f(LOGFILE,ios::app);
@@ -115,9 +104,7 @@ void Blocks::mergeLeft(Block *r) {
 	f<<"merged "<<*r<<endl;
 #endif
 }	
-/**
- * Symmetrical to mergeLeft
- */
+
 void Blocks::mergeRight(Block *l) {	
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	ofstream f(LOGFILE,ios::app);
@@ -160,10 +147,7 @@ void Blocks::cleanup() {
 		}
 	}
 }
-/**
- * Splits block b across constraint c into two new blocks, l and r (c's left
- * and right sides respectively)
- */
+
 void Blocks::split(Block *b, Block *&l, Block *&r, Constraint *c) {
 	b->split(l,r,c);
 #ifdef RECTANGLE_OVERLAP_LOGGING
@@ -184,10 +168,7 @@ void Blocks::split(Block *b, Block *&l, Block *&r, Constraint *c) {
 	insert(l);
 	insert(r);
 }
-/**
- * returns the cost total squared distance of variables from their desired
- * positions
- */
+
 double Blocks::cost() {
 	double c = 0;
 	for(set<Block*>::iterator i=begin();i!=end();++i) {

@@ -24,6 +24,10 @@ namespace Widget {
 class RenderingOptions : public Gtk::VBox
 {
 public:
+
+    /**
+     * Construct a Rendering Options widget.
+     */
     RenderingOptions();
 
     bool as_bitmap();   // should we render as a bitmap?

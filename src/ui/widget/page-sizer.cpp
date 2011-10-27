@@ -1,7 +1,9 @@
-/** \file
+/**
+ * @file
  *
  * Paper-size widget and helper functions
- *
+ */
+/*
  * Authors:
  *   bulia byak <buliabyak@users.sf.net>
  *   Lauris Kaplinski <lauris@kaplinski.com>

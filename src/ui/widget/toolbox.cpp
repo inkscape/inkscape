@@ -1,6 +1,4 @@
-/**
- * Toolbox Widget - A detachable toolbar for buttons and other widgets.
- *
+/*
  * Author:
  *   Derek P. Moore <derekm@hackunix.org>
  *

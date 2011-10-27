@@ -25,17 +25,52 @@ namespace Widget {
 class Scalar : public Labelled
 {
 public:
+    /**
+     * Construct a Scalar Widget.
+     *
+     * @param label     Label.
+     * @param suffix    Suffix, placed after the widget (defaults to "").
+     * @param icon      Icon filename, placed before the label (defaults to "").
+     * @param mnemonic  Mnemonic toggle; if true, an underscore (_) in the label
+     *                  indicates the next character should be used for the
+     *                  mnemonic accelerator key (defaults to false).
+     */
     Scalar(Glib::ustring const &label,
            Glib::ustring const &tooltip,
            Glib::ustring const &suffix = "",
            Glib::ustring const &icon = "",
            bool mnemonic = true);
+
+    /**
+     * Construct a Scalar Widget.
+     *
+     * @param label     Label.
+     * @param digits    Number of decimal digits to display.
+     * @param suffix    Suffix, placed after the widget (defaults to "").
+     * @param icon      Icon filename, placed before the label (defaults to "").
+     * @param mnemonic  Mnemonic toggle; if true, an underscore (_) in the label
+     *                  indicates the next character should be used for the
+     *                  mnemonic accelerator key (defaults to false).
+     */
     Scalar(Glib::ustring const &label,
            Glib::ustring const &tooltip,
            unsigned digits,
            Glib::ustring const &suffix = "",
            Glib::ustring const &icon = "",
            bool mnemonic = true);
+
+    /**
+     * Construct a Scalar Widget.
+     *
+     * @param label     Label.
+     * @param adjust    Adjustment to use for the SpinButton.
+     * @param digits    Number of decimal digits to display (defaults to 0).
+     * @param suffix    Suffix, placed after the widget (defaults to "").
+     * @param icon      Icon filename, placed before the label (defaults to "").
+     * @param mnemonic  Mnemonic toggle; if true, an underscore (_) in the label
+     *                  indicates the next character should be used for the
+     *                  mnemonic accelerator key (defaults to true).
+     */
     Scalar(Glib::ustring const &label,
            Glib::ustring const &tooltip,
            Gtk::Adjustment &adjust,
@@ -44,26 +79,79 @@ public:
            Glib::ustring const &icon = "",
            bool mnemonic = true);
 
+    /**
+     * Fetches the precision of the spin buton.
+     */
     unsigned getDigits() const;
+
+    /**
+     * Gets the current step ingrement used by the spin button.
+     */
     double  getStep() const;
+
+    /**
+     * Gets the current page increment used by the spin button.
+     */
     double  getPage() const;
+
+    /**
+     * Gets the minimum range value allowed for the spin button.
+     */
     double  getRangeMin() const;
+
+    /**
+     * Gets the maximum range value allowed for the spin button.
+     */
     double  getRangeMax() const;
+
     bool    getSnapToTicks() const;
+
+    /**
+     * Get the value in the spin_button.
+     */
     double  getValue() const;
+
+    /**
+     * Get the value spin_button represented as an integer.
+     */
     int     getValueAsInt() const;
 
+    /**
+     * Sets the precision to be displayed by the spin button.
+     */
     void    setDigits(unsigned digits);
+
+    /**
+     * Sets the step and page increments for the spin button.
+     * @todo Remove the second parameter - deprecated
+     */
     void    setIncrements(double step, double page);
+
+    /**
+     * Sets the minimum and maximum range allowed for the spin button.
+     */
     void    setRange(double min, double max);
+
+    /**
+     * Sets the value of the spin button.
+     */
     void    setValue(double value);
 
+    /**
+     * Manually forces an update of the spin button.
+     */
     void    update();
 
+    /**
+     * Signal raised when the spin button's value changes.
+     */
     Glib::SignalProxy0<void> signal_value_changed();
 
-    bool setProgrammatically; // true if the value was set by setValue, not changed by the user; 
-                                    // if a callback checks it, it must reset it back to false
+    /**
+     * true if the value was set by setValue, not changed by the user;
+     * if a callback checks it, it must reset it back to false.
+     */
+    bool setProgrammatically;
 };
 
 } // namespace Widget

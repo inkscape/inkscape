@@ -1,4 +1,4 @@
-/**
+/*
  * Connector creation tool
  *
  * Authors:

@@ -1,4 +1,4 @@
-/**
+/*
  * Phoebe DOM Implementation.
  *
  * This is a C++ approximation of the W3C DOM model, which follows

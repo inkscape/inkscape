@@ -1,4 +1,4 @@
-/** \file
+/*
  * KnotHolderEntity definition.
  *
  * Authors:

@@ -1,6 +1,4 @@
-/**
- * Panel widget.
- *
+/*
  * Authors:
  *   Bryce Harrington <bryce@bryceharrington.org>
  *   Jon A. Cruz <jon@joncruz.org>
@@ -53,10 +51,6 @@ void Panel::prep() {
     };
     eek_preview_set_size_mappings( G_N_ELEMENTS(sizes), sizes );
 }
-
-/**
- *    Construct a Panel
- */
 
 Panel::Panel(Glib::ustring const &label, gchar const *prefs_path,
              int verb_num, Glib::ustring const &apply_label,

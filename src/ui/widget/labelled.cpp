@@ -1,7 +1,4 @@
-/**
- * Labelled Widget - Adds a label with optional icon or suffix to
- *        another widget.
- *
+/*
  * Authors:
  *   Carl Hetherington <inkscape@carlh.net>
  *   Derek P. Moore <derekm@hackunix.org>
@@ -24,18 +21,6 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-/**
- * Construct a Labelled Widget.
- *
- * \param label     Label.
- * \param widget    Widget to label; should be allocated with new, as it will
- *                  be passed to Gtk::manage().
- * \param suffix    Suffix, placed after the widget (defaults to "").
- * \param icon      Icon filename, placed before the label (defaults to "").
- * \param mnemonic  Mnemonic toggle; if true, an underscore (_) in the text
- *                  indicates the next character should be used for the
- *                  mnemonic accelerator key (defaults to true).
- */
 Labelled::Labelled(Glib::ustring const &label, Glib::ustring const &tooltip,
                    Gtk::Widget *widget,
                    Glib::ustring const &suffix,
@@ -60,9 +45,6 @@ Labelled::Labelled(Glib::ustring const &label, Glib::ustring const &tooltip,
 }
 
 
-/**
- * Allow the setting of the width of the labelled widget
- */
 void Labelled::setWidgetSizeRequest(int width, int height)
 {
     if (_widget)

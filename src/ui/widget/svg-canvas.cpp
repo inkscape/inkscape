@@ -1,6 +1,4 @@
-/** \file
- * Gtkmm facade/wrapper around SPCanvas.
- *
+/*
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *

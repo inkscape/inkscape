@@ -1,4 +1,4 @@
-/**
+/*
  * Phoebe DOM Implementation.
  *
  * Base64-enabled input and output streams

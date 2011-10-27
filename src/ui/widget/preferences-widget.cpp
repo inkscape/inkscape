@@ -1,4 +1,4 @@
-/**
+/*
  * Inkscape Preferences dialog.
  *
  * Authors:
@@ -583,10 +583,6 @@ void PrefCombo::init(Glib::ustring const &prefs_path,
     this->set_active(row);
 }
 
-/**
-    initialize a combo box
-    second form uses strings as key values
-*/
 void PrefCombo::init(Glib::ustring const &prefs_path,
                      Glib::ustring labels[], Glib::ustring values[], int num_items, Glib::ustring default_value)
 {

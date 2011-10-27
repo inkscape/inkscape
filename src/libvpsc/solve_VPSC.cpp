@@ -1,5 +1,5 @@
-/**
- * \brief Solve an instance of the "Variable Placement with Separation
+/*
+ * Solve an instance of the "Variable Placement with Separation
  * Constraints" problem.
  *
  * Authors:
@@ -59,16 +59,7 @@ void Solver::printBlocks() {
 	}
 #endif
 }
-/**
-* Produces a feasible - though not necessarily optimal - solution by
-* examining blocks in the partial order defined by the directed acyclic
-* graph of constraints. For each block (when processing left to right) we
-* maintain the invariant that all constraints to the left of the block
-* (incoming constraints) are satisfied. This is done by repeatedly merging
-* blocks into bigger blocks across violated constraints (most violated
-* first) fixing the position of variables inside blocks relative to one
-* another so that constraints internal to the block are satisfied.
-*/
+
 void Solver::satisfy() {
 	list<Variable*> *vs=bs->totalOrder();
 	for(list<Variable*>::iterator i=vs->begin();i!=vs->end();++i) {
@@ -129,12 +120,7 @@ void Solver::refine() {
 		}
 	}
 }
-/**
- * Calculate the optimal solution. After using satisfy() to produce a
- * feasible solution, refine() examines each block to see if further
- * refinement is possible by splitting the block. This is done repeatedly
- * until no further improvement is possible.
- */
+
 void Solver::solve() {
 	satisfy();
 	refine();
@@ -156,19 +142,7 @@ void IncSolver::solve() {
 #endif
 	} while(fabs(lastcost-cost)>0.0001);
 }
-/**
- * incremental version of satisfy that allows refinement after blocks are
- * moved.
- *
- *  - move blocks to new positions
- *  - repeatedly merge across most violated constraint until no more
- *    violated constraints exist
- *
- * Note: there is a special case to handle when the most violated constraint
- * is between two variables in the same block.  Then, we must split the block
- * over an active constraint between the two variables.  We choose the 
- * constraint with the most negative lagrangian multiplier. 
- */
+
 void IncSolver::satisfy() {
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	ofstream f(LOGFILE,ios::app);
@@ -270,10 +244,6 @@ void IncSolver::splitBlocks() {
 	bs->cleanup();
 }
 
-/**
- * Scan constraint list for the most violated constraint, or the first equality
- * constraint
- */
 Constraint* IncSolver::mostViolated(ConstraintList &l) {
 	double minSlack = DBL_MAX;
 	Constraint* v=NULL;

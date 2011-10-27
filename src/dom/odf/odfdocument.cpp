@@ -1,4 +1,4 @@
-/**
+/*
  *
  * This class contains an ODF Document.
  * Initially, we are just concerned with .odg content.xml + resources

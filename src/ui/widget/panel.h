@@ -41,10 +41,14 @@ class Panel : public Gtk::VBox {
 public:
     static void prep();
 
-    virtual ~Panel();
+    /**
+     * Construct a Panel.
+     */
     Panel(Glib::ustring const &label = "", gchar const *prefs_path = 0,
           int verb_num = 0, Glib::ustring const &apply_label = "",
           bool menu_desired = false);
+
+    virtual ~Panel();
 
     gchar const *getPrefsPath() const;
     void setLabel(Glib::ustring const &label);

@@ -1,5 +1,5 @@
-/** @file
- * @brief remove overlaps between a set of rectangles.
+/*
+ * remove overlaps between a set of rectangles.
  *
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>
@@ -28,18 +28,7 @@ using namespace vpsc;
 
 double Rectangle::xBorder=0;
 double Rectangle::yBorder=0;
-/**
- * Takes an array of n rectangles and moves them as little as possible
- * such that rectangles are separated by at least xBorder horizontally
- * and yBorder vertically
- *
- * Works in three passes: 
- * 1) removes some overlap horizontally
- * 2) removes remaining overlap vertically
- * 3) a last horizontal pass removes all overlap starting from original
- *    x-positions - this corrects the case where rectangles were moved 
- *    too much in the first pass.
- */
+
 void removeRectangleOverlap(unsigned n, Rectangle *rs[], double xBorder, double yBorder) {
 	try {
 	// The extra gap avoids numerical imprecision problems

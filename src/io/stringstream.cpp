@@ -1,4 +1,4 @@
-/**
+/*
  * Our base String stream classes.  We implement these to
  * be based on Glib::ustring
  *

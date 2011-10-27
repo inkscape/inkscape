@@ -1,6 +1,3 @@
-/**
- * SpinButton widget, that allows entry of both '.' and ',' for the decimal, even when in numeric mode.
- */
 /*
  * Author:
  *   Johan B. C. Engelen
@@ -32,15 +29,7 @@ SpinButton::connect_signals() {
     signal_key_press_event().connect(sigc::mem_fun(*this, &SpinButton::on_my_key_press_event));
 };
 
-/**
- * This callback function should try to convert the entered text to a number and write it to newvalue.
- * It calls a method to evaluate the (potential) mathematical expression.
- *
- * @retval false No conversion done, continue with default handler.
- * @retval true  Conversion successful, don't call default handler. 
- */
-int
-SpinButton::on_input(double* newvalue)
+int SpinButton::on_input(double* newvalue)
 {
     try {
         Inkscape::Util::GimpEevlQuantity result;
@@ -66,23 +55,13 @@ SpinButton::on_input(double* newvalue)
     return true;
 }
 
-/** When focus is obtained, save the value to enable undo later.
- * @retval false continue with default handler.
- * @retval true  don't call default handler. 
-*/
-bool
-SpinButton::on_my_focus_in_event(GdkEventFocus* /*event*/)
+bool SpinButton::on_my_focus_in_event(GdkEventFocus* /*event*/)
 {
     on_focus_in_value = get_value();
     return false; // do not consume the event
 }
 
-/** Handle specific keypress events, like Ctrl+Z
- * @retval false continue with default handler.
- * @retval true  don't call default handler. 
-*/
-bool
-SpinButton::on_my_key_press_event(GdkEventKey* event)
+bool SpinButton::on_my_key_press_event(GdkEventKey* event)
 {
     switch (get_group0_keyval (event)) {
     case GDK_Escape:
@@ -103,11 +82,7 @@ SpinButton::on_my_key_press_event(GdkEventKey* event)
     return false; // do not consume the event
 }
 
-/**
- * Undo the editing, by resetting the value upon when the spinbutton got focus.
- */
-void
-SpinButton::undo()
+void SpinButton::undo()
 {
     set_value(on_focus_in_value);
 }

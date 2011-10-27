@@ -1,4 +1,4 @@
-/** \file
+/*
  * Undo/Redo stack implementation
  *
  * Authors:

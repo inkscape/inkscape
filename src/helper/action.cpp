@@ -1,5 +1,4 @@
-/**
- * @file
+/*
  * SPAction implementation.
  *
  * Author:

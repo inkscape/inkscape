@@ -2,7 +2,7 @@
 #define SEEN_INKSCAPE_IO_XSLTSTREAM_H
 /**
  * @file
- * Xslt-enabled input and output streams
+ * Xslt-enabled input and output streams.
  */
 /*
  * Authors:

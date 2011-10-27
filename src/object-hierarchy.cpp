@@ -1,4 +1,4 @@
-/** \file
+/*
  * Object hierarchy implementation.
  *
  * Authors:
@@ -16,10 +16,6 @@
 
 namespace Inkscape {
 
-/**
- * Create new object hierarchy.
- * \param top The first entry if non-NULL.
- */
 ObjectHierarchy::ObjectHierarchy(SPObject *top) {
     if (top) {
         _addBottom(top);
@@ -30,17 +26,11 @@ ObjectHierarchy::~ObjectHierarchy() {
     _clear();
 }
 
-/**
- * Remove all entries.
- */
 void ObjectHierarchy::clear() {
     _clear();
     _changed_signal.emit(NULL, NULL);
 }
 
-/**
- * Trim or expand hierarchy on top such that object becomes top entry.
- */
 void ObjectHierarchy::setTop(SPObject *object) {
     g_return_if_fail(object != NULL);
 
@@ -62,10 +52,6 @@ void ObjectHierarchy::setTop(SPObject *object) {
     _changed_signal.emit(top(), bottom());
 }
 
-/**
- * Add hierarchy from junior's parent to senior to this
- * hierarchy's top.
- */
 void ObjectHierarchy::_addTop(SPObject *senior, SPObject *junior) {
     g_assert(junior != NULL);
     g_assert(senior != NULL);
@@ -77,19 +63,12 @@ void ObjectHierarchy::_addTop(SPObject *senior, SPObject *junior) {
     } while ( object != senior );
 }
 
-/**
- * Add object to top of hierarchy.
- * \pre object!=NULL
- */
 void ObjectHierarchy::_addTop(SPObject *object) {
     g_assert(object != NULL);
     _hierarchy.push_back(_attach(object));
     _added_signal.emit(object);
 }
 
-/**
- * Remove all objects above limit from hierarchy.
- */
 void ObjectHierarchy::_trimAbove(SPObject *limit) {
     while ( !_hierarchy.empty() && _hierarchy.back().object != limit ) {
         SPObject *object=_hierarchy.back().object;
@@ -102,9 +81,6 @@ void ObjectHierarchy::_trimAbove(SPObject *limit) {
     }
 }
 
-/**
- * Trim or expand hierarchy at bottom such that object becomes bottom entry.
- */
 void ObjectHierarchy::setBottom(SPObject *object) {
     g_return_if_fail(object != NULL);
 
@@ -137,10 +113,6 @@ void ObjectHierarchy::setBottom(SPObject *object) {
     _changed_signal.emit(top(), bottom());
 }
 
-/**
- * Remove all objects under given object.
- * \param limit If NULL, remove all.
- */
 void ObjectHierarchy::_trimBelow(SPObject *limit) {
     while ( !_hierarchy.empty() && _hierarchy.front().object != limit ) {
         SPObject *object=_hierarchy.front().object;
@@ -152,9 +124,6 @@ void ObjectHierarchy::_trimBelow(SPObject *limit) {
     }
 }
 
-/**
- * Add hierarchy from senior to junior to this hierarchy's bottom.
- */
 void ObjectHierarchy::_addBottom(SPObject *senior, SPObject *junior) {
     g_assert(junior != NULL);
     g_assert(senior != NULL);
@@ -165,10 +134,6 @@ void ObjectHierarchy::_addBottom(SPObject *senior, SPObject *junior) {
     }
 }
 
-/**
- * Add object at bottom of hierarchy.
- * \pre object!=NULL
- */
 void ObjectHierarchy::_addBottom(SPObject *object) {
     g_assert(object != NULL);
     _hierarchy.push_front(_attach(object));

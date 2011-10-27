@@ -1,4 +1,4 @@
-/** \file
+/*
  * Provides a class that can contain active TemporaryItem's on a desktop
  * When the object is deleted, it also deletes the canvasitem it contains!
  * This object should be created/managed by a TemporaryItemList.

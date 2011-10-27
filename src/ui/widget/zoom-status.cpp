@@ -1,7 +1,4 @@
-/** \file
- * Gtkmm facade/wrapper around zoom_status code that formerly lived
- * in desktop-widget.cpp
- *
+/*
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
  *   Lauris Kaplinski <lauris@kaplinski.com>

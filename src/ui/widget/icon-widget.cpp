@@ -1,6 +1,4 @@
-/**
- * Icon Widget.
- *
+/*
  * Author:
  *   Bryce Harrington <bryce@bryceharrington.org>
  *
@@ -20,14 +18,6 @@
 namespace Inkscape {
 namespace UI {
 namespace Widget {
-
-/**
- *    General purpose icon widget, supporting SVG, etc. icon loading
- *
- *    \param ...
- *
- *    An icon widget is a ...
- */
 
 IconWidget::IconWidget()
 {

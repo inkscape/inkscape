@@ -1,5 +1,4 @@
-/**
- *  @file guide-snapper.cpp
+/*
  *  Snapping things to guides.
  *
  * Authors:

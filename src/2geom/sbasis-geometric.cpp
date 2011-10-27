@@ -4,7 +4,8 @@
 //#include <2geom/solver.h>
 #include <2geom/sbasis-geometric.h>
 
-/** Geometric operators on D2<SBasis> (1D->2D).
+/*
+ * Geometric operators on D2<SBasis> (1D->2D).
  * Copyright 2007 JF Barraud
  * Copyright 2007 N Hurst
  *

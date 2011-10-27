@@ -1,5 +1,4 @@
-/**
- * \file src/rubberband.cpp
+/*
  * Rubberbanding selector.
  *
  * Author:

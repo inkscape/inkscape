@@ -1,6 +1,4 @@
-/** \file
- *
- *
+/*
  * Authors:
  *   Johan Engelen <j.b.c.engelen@utwente.nl>
  *   bulia byak <buliabyak@users.sf.net>
@@ -632,13 +630,7 @@ RegisteredVector::setValue(Geom::Point const & p, Geom::Point const & origin)
     _origin = origin;
 }
 
-/**
- * Changes the widgets text to polar coordinates. The SVG output will still be a normal carthesian vector.
- * Careful: when calling getValue(), the return value's X-coord will be the angle, Y-value will be the distance/length. 
- * After changing the coords type (polar/non-polar), the value has to be reset (setValue).
- */
-void
-RegisteredVector::setPolarCoords(bool polar_coords)
+void RegisteredVector::setPolarCoords(bool polar_coords)
 {
     _polar_coords = polar_coords;
     if (polar_coords) {

@@ -1,5 +1,4 @@
-/** \file
- *
+/*
  * Authors:
  *   bulia byak <buliabyak@users.sf.net>
  *   Bryce W. Harrington <bryce@bryceharrington.org>

@@ -1,6 +1,4 @@
-/** \file
- * Implemenmtation of a simple color preview widget
- *
+/*
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ralf Stephan <ralf@ark.in-berlin.de>

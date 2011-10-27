@@ -1,4 +1,4 @@
-/**
+/*
  * Secure Hashing Tool
  * *
  * Authors:

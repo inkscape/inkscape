@@ -1,7 +1,6 @@
 #line 1 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
-/**
- * \file
- * \brief parse SVG path specifications
+/*
+ * parse SVG path specifications.
  *
  * Copyright 2007 MenTaLguY <mental@rydia.net>
  * Copyright 2007 Aaron Spike <aaron@ekips.org>

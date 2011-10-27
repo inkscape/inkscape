@@ -1,4 +1,4 @@
-/** \file
+/*
  * Routines for resolving ID clashes when importing or pasting.
  *
  * Authors:

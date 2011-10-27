@@ -1,4 +1,4 @@
-/**
+/*
  * Zlib-enabled input and output streams
  *
  * This is a thin wrapper of libz calls, in order

@@ -1,6 +1,4 @@
-/**
- * Button and CheckButton widgets.
- *
+/*
  * Author:
  *   buliabyak@gmail.com
  *

@@ -1,7 +1,4 @@
-/**
- * Text Widget - A labelled text box, with spin buttons and optional
- *        icon or suffix, for entering arbitrary number values.
- *
+/*
  * Authors:
  *   Carl Hetherington <inkscape@carlh.net>
  *   Maximilian Albert <maximilian.albert@gmail.com>
@@ -22,16 +19,6 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-/**
- * Construct a Text Widget.
- *
- * \param label     Label.
- * \param suffix    Suffix, placed after the widget (defaults to "").
- * \param icon      Icon filename, placed before the label (defaults to "").
- * \param mnemonic  Mnemonic toggle; if true, an underscore (_) in the label
- *                  indicates the next character should be used for the
- *                  mnemonic accelerator key (defaults to false).
- */
 Text::Text(Glib::ustring const &label, Glib::ustring const &tooltip,
                Glib::ustring const &suffix,
                Glib::ustring const &icon,
@@ -41,26 +28,20 @@ Text::Text(Glib::ustring const &label, Glib::ustring const &tooltip,
 {
 }
 
-/** Get the text in the entry */
-const char *
-Text::getText() const
+const char *Text::getText() const
 {
     g_assert(_widget != NULL);
     return static_cast<Gtk::Entry*>(_widget)->get_text().c_str();
 }
 
-/** Sets the text of the text entry */
-void
-Text::setText(const char* text)
+void Text::setText(const char* text)
 {
     g_assert(_widget != NULL);
     setProgrammatically = true; // callback is supposed to reset back, if it cares
     static_cast<Gtk::Entry*>(_widget)->set_text(text); // FIXME: set correctly
 }
 
-/** Signal raised when the spin button's value changes */
-Glib::SignalProxy0<void>
-Text::signal_activate()
+Glib::SignalProxy0<void> Text::signal_activate()
 {
     return static_cast<Gtk::Entry*>(_widget)->signal_activate();
 }

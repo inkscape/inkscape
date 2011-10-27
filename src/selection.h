@@ -260,7 +260,8 @@ public:
     boost::optional<Geom::Point> center() const;
 
     /**
-     * Gets the selection's snap points.
+     * Compute the list of points in the selection that are to be considered for snapping from.
+     *
      * @return Selection's snap points
      */
     std::vector<Inkscape::SnapCandidatePoint> getSnapPoints(SnapPreferences const *snapprefs) const;

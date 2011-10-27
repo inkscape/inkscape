@@ -1,4 +1,4 @@
-/** \file
+/*
  * SPDocument manipulation
  *
  * Authors:

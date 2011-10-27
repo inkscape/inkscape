@@ -1,6 +1,4 @@
-/**
- * Groups an HScale and a SpinButton together using the same Adjustment.
- *
+/*
  * Author:
  *   Nicholas Bishop <nicholasbishop@gmail.com>
  *   Felipe C. da S. Sanches <juca@members.fsf.org>

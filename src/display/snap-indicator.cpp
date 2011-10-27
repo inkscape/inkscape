@@ -1,4 +1,4 @@
-/** \file
+/*
  * Provides a class that shows a temporary indicator on the canvas of where the snap was, and what kind of snap
  *
  * Authors:

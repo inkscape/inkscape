@@ -1,6 +1,6 @@
 #define INKSCAPE_HELPER_GEOM_CPP
 
-/**
+/*
  * Specific geometry functions for Inkscape, not provided my lib2geom.
  *
  * Author:

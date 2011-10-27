@@ -1,4 +1,4 @@
-/**
+/*
  * Base64-enabled input and output streams
  *
  * This class allows easy encoding and decoding

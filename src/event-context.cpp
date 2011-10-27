@@ -1,5 +1,4 @@
-/**
- * @file
+/*
  * Main event handling, and related helper functions.
  *
  * Authors:

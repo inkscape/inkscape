@@ -1,7 +1,4 @@
-/** \file
- *
- Implementation of tolerance slider widget.
- *
+/*
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de> 
  *   Abhishek Sharma

@@ -36,22 +36,57 @@ public:
 	double wposn;
 	Block(Variable* const v=NULL);
     virtual ~Block(void);
-	Constraint* findMinLM();
+
+    /**
+     * finds the constraint with the minimum lagrange multiplier, that is, the constraint
+     * that most wants to split
+     */
+    Constraint* findMinLM();
+
 	Constraint* findMinLMBetween(Variable* const lv, Variable* const rv);
 	Constraint* findMinInConstraint();
 	Constraint* findMinOutConstraint();
 	void deleteMinInConstraint();
 	void deleteMinOutConstraint();
 	double desiredWeightedPosition();
-	void merge(Block *b, Constraint *c, double dist);
+
+    /**
+     * Merges b into this block across c.  Can be either a
+     * right merge or a left merge
+     * @param b block to merge into this
+     * @param c constraint being merged
+     * @param distance separation required to satisfy c
+     */
+    void merge(Block *b, Constraint *c, double dist);
+
 	void merge(Block *b, Constraint *c);
 	void mergeIn(Block *b);
 	void mergeOut(Block *b);
-	void split(Block *&l, Block *&r, Constraint *c);
-	Constraint* splitBetween(Variable* vl, Variable* vr, Block* &lb, Block* &rb);
+
+    /**
+     * Creates two new blocks, l and r, and splits this block across constraint c,
+     * placing the left subtree of constraints (and associated variables) into l
+     * and the right into r.
+     */
+    void split(Block *&l, Block *&r, Constraint *c);
+
+    /**
+     * Block needs to be split because of a violated constraint between vl and vr.
+     * We need to search the active constraint tree between l and r and find the constraint
+     * with min lagrangrian multiplier and split at that point.
+     * Returns the split constraint
+     */
+    Constraint* splitBetween(Variable* vl, Variable* vr, Block* &lb, Block* &rb);
+
 	void setUpInConstraints();
 	void setUpOutConstraints();
-	double cost();
+
+    /**
+     * Computes the cost (squared euclidean distance from desired positions) of the
+     * current positions for variables in this block
+     */
+    double cost();
+
 	bool deleted;
 	long timeStamp;
 	PairingHeap<Constraint*> *in;
@@ -75,3 +110,13 @@ private:
 
 }
 #endif // SEEN_REMOVEOVERLAP_BLOCK_H
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

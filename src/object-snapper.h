@@ -32,9 +32,16 @@ public:
     ObjectSnapper(SnapManager *sm, Geom::Coord const d);
     ~ObjectSnapper();
 
+    /**
+     * @return true if this Snapper will snap at least one kind of point.
+     */
     bool ThisSnapperMightSnap() const;
 
+    /**
+     * @return Snap tolerance (desktop coordinates); depends on current zoom so that it's always the same in screen pixels.
+     */
     Geom::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
+
     bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
 
     void freeSnap(IntermSnapResults &isr,
@@ -56,6 +63,13 @@ private:
     std::vector<SnapCandidatePoint> *_points_to_snap_to;
     std::vector<SnapCandidatePath > *_paths_to_snap_to;
 
+    /**
+     * Find all items within snapping range.
+     * @param parent Pointer to the document's root, or to a clipped path or mask object.
+     * @param it List of items to ignore.
+     * @param bbox_to_snap Bounding box hulling the whole bunch of points, all from the same selection and having the same transformation.
+     * @param clip_or_mask The parent object being passed is either a clip or mask.
+     */
     void _findCandidates(SPObject* parent,
                        std::vector<SPItem const *> const *it,
                        bool const &first_point,
@@ -88,6 +102,9 @@ private:
 
     bool isUnselectedNode(Geom::Point const &point, std::vector<Inkscape::SnapCandidatePoint> const *unselected_nodes) const;
 
+    /**
+     * Returns index of first NR_END bpath in array.
+     */
     void _collectPaths(Geom::Point p,
                       Inkscape::SnapSourceType const source_type,
                       bool const &first_point) const;

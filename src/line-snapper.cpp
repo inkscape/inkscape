@@ -1,5 +1,4 @@
-/**
- * \file line-snapper.cpp
+/*
  * LineSnapper class.
  *
  * Authors:

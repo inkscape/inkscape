@@ -33,15 +33,27 @@ class SPNamedView;
 #define SP_VIEW_WIDGET_VIEW(w) (SP_VIEW_WIDGET (w)->view)
 #define SP_VIEW_WIDGET_DOCUMENT(w) (SP_VIEW_WIDGET (w)->view ? ((SPViewWidget *) (w))->view->doc : NULL)
 
-GType sp_view_widget_get_type (void);
+/**
+ * Registers the SPViewWidget class with Glib and returns its type number.
+ */
+GType sp_view_widget_get_type(void);
 
-void sp_view_widget_set_view (SPViewWidget *vw, Inkscape::UI::View::View *view);
+/**
+ * Connects widget to view's 'resized' signal and calls virtual set_view()
+ * function.
+ */
+void sp_view_widget_set_view(SPViewWidget *vw, Inkscape::UI::View::View *view);
 
-/// Allows presenting 'save changes' dialog, FALSE - continue, TRUE - cancel
-bool sp_view_widget_shutdown (SPViewWidget *vw);
+/**
+ * Allows presenting 'save changes' dialog, FALSE - continue, TRUE - cancel.
+ * Calls the virtual shutdown() function of the SPViewWidget.
+ */
+bool sp_view_widget_shutdown(SPViewWidget *vw);
 
-/// Create a new SPViewWidget (which happens to be a SPDesktopWidget). 
-SPViewWidget *sp_desktop_widget_new (SPNamedView *namedview);
+/**
+ * Create a new SPViewWidget (which happens to be a SPDesktopWidget).
+ */
+SPViewWidget *sp_desktop_widget_new(SPNamedView *namedview);
 
 /**
  * SPViewWidget is a GUI widget that contain a single View. It is also

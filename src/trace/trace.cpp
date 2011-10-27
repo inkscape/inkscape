@@ -1,4 +1,4 @@
-/**
+/*
  * A generic interface for plugging different
  *  autotracers into Inkscape.
  *
@@ -38,12 +38,7 @@
 namespace Inkscape {
 namespace Trace {
 
-/**
- * Get the selected image.  Also check for any SPItems over it, in
- * case the user wants SIOX pre-processing.
- */
-SPImage *
-Tracer::getSelectedSPImage()
+SPImage *Tracer::getSelectedSPImage()
 {
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -198,13 +193,7 @@ public:
 
 
 
-/**
- * Process a GdkPixbuf, according to which areas have been
- * obscured in the GUI.
- */
-Glib::RefPtr<Gdk::Pixbuf>
-Tracer::sioxProcessImage(SPImage *img,
-             Glib::RefPtr<Gdk::Pixbuf>origPixbuf)
+Glib::RefPtr<Gdk::Pixbuf> Tracer::sioxProcessImage(SPImage *img, Glib::RefPtr<Gdk::Pixbuf>origPixbuf)
 {
     if (!sioxEnabled)
         return origPixbuf;
@@ -334,11 +323,7 @@ Tracer::sioxProcessImage(SPImage *img,
 }
 
 
-/**
- *
- */
-Glib::RefPtr<Gdk::Pixbuf>
-Tracer::getSelectedImage()
+Glib::RefPtr<Gdk::Pixbuf> Tracer::getSelectedImage()
 {
 
 
@@ -378,18 +363,12 @@ Tracer::getSelectedImage()
 //#  T R A C E
 //#########################################################################
 
-/**
- *  Whether we want to enable SIOX subimage selection
- */
 void Tracer::enableSiox(bool enable)
 {
     sioxEnabled = enable;
 }
 
 
-/**
- *  Threaded method that does single bitmap--->path conversion
- */
 void Tracer::traceThread()
 {
     //## Remember. NEVER leave this method without setting
@@ -559,9 +538,6 @@ void Tracer::traceThread()
 
 
 
-/**
- *  Main tracing method
- */
 void Tracer::trace(TracingEngine *theEngine)
 {
     //Check if we are already running
@@ -588,9 +564,6 @@ void Tracer::trace(TracingEngine *theEngine)
 
 
 
-/**
- *  Abort the thread that is executing trace()
- */
 void Tracer::abort()
 {
 

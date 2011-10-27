@@ -1,4 +1,4 @@
-/**
+/*
  * XSL Transforming input and output classes
  *
  * Authors:

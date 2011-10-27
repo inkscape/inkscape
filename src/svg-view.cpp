@@ -1,5 +1,5 @@
-/** \file
- * Functions and callbacks for generic SVG view and widget
+/*
+ * Functions and callbacks for generic SVG view and widget.
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -21,10 +21,7 @@
 #include "svg-view.h"
 #include "sp-root.h"
 
-/**
- * Constructs new SPSVGView object and returns pointer to it.
- */
-SPSVGView::SPSVGView (SPCanvasGroup *parent)
+SPSVGView::SPSVGView(SPCanvasGroup *parent)
 {
     _hscale = 1.0;
     _vscale = 1.0;
@@ -47,11 +44,7 @@ SPSVGView::~SPSVGView()
     }
 }
 
-/**
- * Rescales SPSVGView to given proportions.
- */
-void
-SPSVGView::setScale (gdouble hscale, gdouble vscale)
+void SPSVGView::setScale(gdouble hscale, gdouble vscale)
 {
     if (!_rescale && ((hscale != _hscale) || (vscale != _vscale))) {
         _hscale = hscale;
@@ -60,12 +53,7 @@ SPSVGView::setScale (gdouble hscale, gdouble vscale)
     }
 }
 
-/**
- * Rescales SPSVGView and keeps aspect ratio.
- */
-void
-SPSVGView::setRescale
-(bool rescale, bool keepaspect, gdouble width, gdouble height)
+void SPSVGView::setRescale(bool rescale, bool keepaspect, gdouble width, gdouble height)
 {
     g_return_if_fail (!rescale || (width >= 0.0));
     g_return_if_fail (!rescale || (height >= 0.0));
@@ -78,15 +66,17 @@ SPSVGView::setRescale
     doRescale (true);
 }
 
-/**
- * Helper function that sets rescale ratio and emits resize event.
- */
-void
-SPSVGView::doRescale (bool event)
+void SPSVGView::doRescale(bool event)
 {
-    if (!doc()) return;
-    if (doc()->getWidth () < 1e-9) return;
-    if (doc()->getHeight () < 1e-9) return;
+    if (!doc()) {
+        return;
+    }
+    if (doc()->getWidth () < 1e-9) {
+        return;
+    }
+    if (doc()->getHeight () < 1e-9) {
+        return;
+    }
 
     if (_rescale) {
         _hscale = _width / doc()->getWidth ();
@@ -110,16 +100,14 @@ SPSVGView::doRescale (bool event)
     }
 }
 
-void
-SPSVGView::mouseover()
+void SPSVGView::mouseover()
 {
     GdkCursor *cursor = gdk_cursor_new(GDK_HAND2);
     gdk_window_set_cursor(GTK_WIDGET(SP_CANVAS_ITEM(_drawing)->canvas)->window, cursor);
     gdk_cursor_unref(cursor);
 }
 
-void
-SPSVGView::mouseout()
+void SPSVGView::mouseout()
 {
     gdk_window_set_cursor(GTK_WIDGET(SP_CANVAS_ITEM(_drawing)->canvas)->window, NULL);
 }
@@ -129,8 +117,7 @@ SPSVGView::mouseout()
  * Callback connected with arena_event.
  */
 /// \todo fixme.
-static gint
-arena_handler (SPCanvasArena */*arena*/, Inkscape::DrawingItem *ai, GdkEvent *event, SPSVGView *svgview)
+static gint arena_handler(SPCanvasArena */*arena*/, Inkscape::DrawingItem *ai, GdkEvent *event, SPSVGView *svgview)
 {
 	static gdouble x, y;
 	static gboolean active = FALSE;
@@ -185,11 +172,7 @@ arena_handler (SPCanvasArena */*arena*/, Inkscape::DrawingItem *ai, GdkEvent *ev
 	return TRUE;
 }
 
-/**
- * Callback connected with set_document signal.
- */
-void
-SPSVGView::setDocument (SPDocument *document)
+void SPSVGView::setDocument(SPDocument *document)
 {
     if (doc()) {
         doc()->getRoot()->invoke_hide(_dkey);
@@ -216,11 +199,7 @@ SPSVGView::setDocument (SPDocument *document)
     }
 }
 
-/**
- * Callback connected with document_resized signal.
- */
-void
-SPSVGView::onDocumentResized (gdouble width, gdouble height)
+void SPSVGView::onDocumentResized(gdouble width, gdouble height)
 {
     setScale (width, height);
     doRescale (!_rescale);

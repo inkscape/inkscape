@@ -1,5 +1,4 @@
-/**
- *  \file object-snapper.cpp
+/*
  *  Snapping things to objects.
  *
  * Authors:
@@ -58,9 +57,6 @@ Inkscape::ObjectSnapper::~ObjectSnapper()
     delete _paths_to_snap_to;
 }
 
-/**
- *  \return Snap tolerance (desktop coordinates); depends on current zoom so that it's always the same in screen pixels
- */
 Geom::Coord Inkscape::ObjectSnapper::getSnapperTolerance() const
 {
     SPDesktop const *dt = _snapmanager->getDesktop();
@@ -72,14 +68,6 @@ bool Inkscape::ObjectSnapper::getSnapperAlwaysSnap() const
 {
     return _snapmanager->snapprefs.getObjectTolerance() == 10000; //TODO: Replace this threshold of 10000 by a constant; see also tolerance-slider.cpp
 }
-
-/**
- *  Find all items within snapping range.
- *  \param parent Pointer to the document's root, or to a clipped path or mask object
- *  \param it List of items to ignore
- *  \param bbox_to_snap Bounding box hulling the whole bunch of points, all from the same selection and having the same transformation
- *  \param clip_or_mask The parent object being passed is either a clip or mask
- */
 
 void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                                               std::vector<SPItem const *> const *it,
@@ -354,10 +342,7 @@ void Inkscape::ObjectSnapper::_snapTranslatingGuide(IntermSnapResults &isr,
 }
 
 
-/**
- * Returns index of first NR_END bpath in array.
- */
-
+/// @todo investigate why Geom::Point p is passed in but ignored.
 void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
                                          SnapSourceType const source_type,
                                          bool const &first_point) const
@@ -767,9 +752,6 @@ void Inkscape::ObjectSnapper::constrainedSnap( IntermSnapResults &isr,
     }
 }
 
-/**
- *  \return true if this Snapper will snap at least one kind of point.
- */
 bool Inkscape::ObjectSnapper::ThisSnapperMightSnap() const
 {
     return true;

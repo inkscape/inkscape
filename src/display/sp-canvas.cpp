@@ -1,4 +1,4 @@
-/** \file
+/*
  * Port of GnomeCanvas for Inkscape needs
  *
  * Authors:

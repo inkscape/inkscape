@@ -1,7 +1,4 @@
-/**
- * \file
- * Classes for representing and manipulating URIs as per RFC 2396.
- *
+/*
  * Authors:
  *   MenTaLguY <mental@rydia.net>
  *   Jon A. Cruz <jon@joncruz.org>
@@ -17,19 +14,11 @@
 
 namespace Inkscape {
 
-/**
- * Copy constructor.
- */
 URI::URI(const URI &uri) {
     uri._impl->reference();
     _impl = uri._impl;
 }
 
-/**
- * Constructor from a C-style ASCII string.
- *
- * @param preformed Properly quoted C-style string to be represented.
- */
 URI::URI(gchar const *preformed) throw(BadURIException) {
     xmlURIPtr uri;
     if (!preformed) {
@@ -42,17 +31,10 @@ URI::URI(gchar const *preformed) throw(BadURIException) {
     _impl = Impl::create(uri);
 }
 
-
-/**
- * Destructor.
- */
 URI::~URI() {
     _impl->unreference();
 }
 
-/**
- * Assignment operator.
- */
 URI &URI::operator=(URI const &uri) {
 // No check for self-assignment needed, as _impl refcounting increments first.
     uri._impl->reference();
@@ -85,35 +67,15 @@ void URI::Impl::unreference() {
     }
 }
 
-/**
- * Determines if the URI represented is an 'opaque' URI.
- *
- * @return \c true if the URI is opaque, \c false if hierarchial.
- */
 bool URI::Impl::isOpaque() const {
     bool opq = !isRelative() && (getOpaque() != NULL);
     return opq;
 }
 
-/**
- * Determines if the URI represented is 'relative' as per RFC 2396.
- *
- * Relative URI references are distinguished by not begining with a
- * scheme name.
- *
- * @return \c true if the URI is relative, \c false if it is absolute.
- */
 bool URI::Impl::isRelative() const {
     return !_uri->scheme;
 }
 
-/**
- * Determines if the relative URI represented is a 'net-path' as per RFC 2396.
- *
- * A net-path is one that starts with "\\".
- *
- * @return \c true if the URI is relative and a net-path, \c false otherwise.
- */
 bool URI::Impl::isNetPath() const {
     bool isNet = false;
     if ( isRelative() )
@@ -124,13 +86,6 @@ bool URI::Impl::isNetPath() const {
     return isNet;
 }
 
-/**
- * Determines if the relative URI represented is a 'relative-path' as per RFC 2396.
- *
- * A relative-path is one that starts with no slashes.
- *
- * @return \c true if the URI is relative and a relative-path, \c false otherwise.
- */
 bool URI::Impl::isRelativePath() const {
     bool isRel = false;
     if ( isRelative() )
@@ -141,13 +96,6 @@ bool URI::Impl::isRelativePath() const {
     return isRel;
 }
 
-/**
- * Determines if the relative URI represented is a 'absolute-path' as per RFC 2396.
- *
- * An absolute-path is one that starts with a single "\".
- *
- * @return \c true if the URI is relative and an absolute-path, \c false otherwise.
- */
 bool URI::Impl::isAbsolutePath() const {
     bool isAbs = false;
     if ( isRelative() )
@@ -243,13 +191,6 @@ URI URI::from_native_filename(gchar const *path) throw(BadURIException) {
     return result;
 }
 
-/**
- * Returns a glib string version of this URI.
- *
- * The returned string must be freed with \c g_free().
- *
- * @return a glib string version of this URI.
- */
 gchar *URI::Impl::toString() const {
     xmlChar *string = xmlSaveUri(_uri);
     if (string) {

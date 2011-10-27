@@ -1,6 +1,5 @@
-
- /** \file
- * PDF parsing using libpoppler
+ /*
+ * PDF parsing using libpoppler.
  *
  * Derived from poppler's Gfx.cc
  *

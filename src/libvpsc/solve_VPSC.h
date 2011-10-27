@@ -34,8 +34,26 @@ class Blocks;
  */
 class Solver {
 public:
-	virtual void satisfy();
-	virtual void solve();
+
+    /**
+     * Produces a feasible - though not necessarily optimal - solution by
+     * examining blocks in the partial order defined by the directed acyclic
+     * graph of constraints. For each block (when processing left to right) we
+     * maintain the invariant that all constraints to the left of the block
+     * (incoming constraints) are satisfied. This is done by repeatedly merging
+     * blocks into bigger blocks across violated constraints (most violated
+     * first) fixing the position of variables inside blocks relative to one
+     * another so that constraints internal to the block are satisfied.
+     */
+    virtual void satisfy();
+
+    /**
+     * Calculate the optimal solution. After using satisfy() to produce a
+     * feasible solution, refine() examines each block to see if further
+     * refinement is possible by splitting the block. This is done repeatedly
+     * until no further improvement is possible.
+     */
+    virtual void solve();
 
 	Solver(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]);
 	virtual ~Solver();
@@ -56,16 +74,51 @@ private:
 
 class IncSolver : public Solver {
 public:
-	unsigned splitCnt;
-	void satisfy();
-	void solve();
-	void moveBlocks();
-	void splitBlocks();
-	IncSolver(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]);
+    unsigned splitCnt;
+
+    /**
+     * incremental version of satisfy that allows refinement after blocks are
+     * moved.
+     *
+     *  - move blocks to new positions
+     *  - repeatedly merge across most violated constraint until no more
+     *    violated constraints exist
+     *
+     * Note: there is a special case to handle when the most violated constraint
+     * is between two variables in the same block.  Then, we must split the block
+     * over an active constraint between the two variables.  We choose the 
+     * constraint with the most negative lagrangian multiplier. 
+     */
+    void satisfy();
+
+    void solve();
+
+    void moveBlocks();
+
+    void splitBlocks();
+
+    IncSolver(const unsigned n, Variable* const vs[], const unsigned m, Constraint *cs[]);
 private:
-	typedef std::vector<Constraint*> ConstraintList;
-	ConstraintList inactive;
-	Constraint* mostViolated(ConstraintList &l);
+
+    typedef std::vector<Constraint*> ConstraintList;
+
+    ConstraintList inactive;
+
+    /**
+     * Scan constraint list for the most violated constraint, or the first equality
+     * constraint.
+     */
+    Constraint* mostViolated(ConstraintList &l);
 };
 }
 #endif // SEEN_REMOVEOVERLAP_SOLVE_VPSC_H
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

@@ -1,8 +1,3 @@
-/** \file
- * \brief 
- *
- * This widget is part of the Document properties dialog.
- */
 /*
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
@@ -27,6 +22,10 @@ namespace Widget {
 
 class Registry;
 
+/**
+ * Implementation of tolerance slider widget.
+ * This widget is part of the Document properties dialog.
+ */
 class ToleranceSlider {
 public:
     ToleranceSlider();

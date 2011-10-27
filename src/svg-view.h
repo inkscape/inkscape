@@ -33,29 +33,50 @@ public:
     gdouble         _height;
 
 
-    SPSVGView (SPCanvasGroup* parent);
+    /**
+     * Constructs new SPSVGView object and returns pointer to it.
+     */
+    SPSVGView(SPCanvasGroup* parent);
+
     virtual ~SPSVGView();
         
-    /// Rescales SPSVGView to given proportions.
-    void setScale (gdouble hscale, gdouble vscale);
+    /**
+     * Rescales SPSVGView to given proportions.
+     */
+    void setScale(gdouble hscale, gdouble vscale);
     
-    /// Rescales SPSVGView and keeps aspect ratio.
-    void setRescale (bool rescale, bool keepaspect, gdouble width, gdouble height);
+    /**
+     * Rescales SPSVGView and keeps aspect ratio.
+     */
+    void setRescale(bool rescale, bool keepaspect, gdouble width, gdouble height);
 
-    void doRescale (bool event);
+    /**
+     * Helper function that sets rescale ratio and emits resize event.
+     */
+    void doRescale(bool event);
 
-    virtual void setDocument (SPDocument*);
+    /**
+     * Callback connected with set_document signal.
+     */
+    virtual void setDocument(SPDocument *document);
+
     virtual void mouseover();
+
     virtual void mouseout();
+
     virtual bool shutdown() { return true; }
 
 private:
-    virtual void onPositionSet (double, double) {}
-    virtual void onResized (double, double) {}
+    virtual void onPositionSet(double, double) {}
+    virtual void onResized(double, double) {}
     virtual void onRedrawRequested() {}
-    virtual void onStatusMessage (Inkscape::MessageType /*type*/, gchar const */*message*/) {}
-    virtual void onDocumentURISet (gchar const* /*uri*/) {}
-    virtual void onDocumentResized (double, double);
+    virtual void onStatusMessage(Inkscape::MessageType /*type*/, gchar const */*message*/) {}
+    virtual void onDocumentURISet(gchar const* /*uri*/) {}
+
+    /**
+     * Callback connected with document_resized signal.
+     */
+    virtual void onDocumentResized(double, double);
 };
 
 #endif // SEEN_SP_SVG_VIEW_H

@@ -26,18 +26,38 @@ namespace Widget {
 class Text : public Labelled
 {
 public:
+
+    /**
+     * Construct a Text Widget.
+     *
+     * @param label     Label.
+     * @param suffix    Suffix, placed after the widget (defaults to "").
+     * @param icon      Icon filename, placed before the label (defaults to "").
+     * @param mnemonic  Mnemonic toggle; if true, an underscore (_) in the label
+     *                  indicates the next character should be used for the
+     *                  mnemonic accelerator key (defaults to false).
+     */
     Text(Glib::ustring const &label,
 	 Glib::ustring const &tooltip,
 	 Glib::ustring const &suffix = "",
 	 Glib::ustring const &icon = "",
 	 bool mnemonic = true);
 
+    /**
+     * Get the text in the entry.
+     */
     const char* getText() const;
 
+    /**
+     * Sets the text of the text entry.
+     */
     void setText(const char* text);
 
     void update();
 
+    /**
+     * Signal raised when the spin button's value changes.
+     */
     Glib::SignalProxy0<void> signal_activate();
 
     bool setProgrammatically; // true if the value was set by setValue, not changed by the user;

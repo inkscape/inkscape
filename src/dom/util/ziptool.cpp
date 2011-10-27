@@ -1,4 +1,4 @@
-/**
+/*
  * This is intended to be a standalone, reduced capability
  * implementation of Gzip and Zip functionality.  Its
  * targeted use case is for archiving and retrieving single files

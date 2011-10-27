@@ -1,6 +1,4 @@
-/**
- * Abstraction for different style widget operands.
- *
+/*
  * Copyright (C) 2007 MenTaLguY <mental@rydia.net>
  *   Abhishek Sharma
  *

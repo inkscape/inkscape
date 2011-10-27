@@ -36,7 +36,13 @@ namespace Inkscape {
  */
 class ObjectHierarchy {
 public:
+
+    /**
+     * Create new object hierarchy.
+     * @param top The first entry if non-NULL.
+     */
     ObjectHierarchy(SPObject *top=NULL);
+
     ~ObjectHierarchy();
 
     bool contains(SPObject *object);
@@ -52,16 +58,27 @@ public:
         return _changed_signal.connect(slot);
     }
 
+    /**
+     * Remove all entries.
+     */
     void clear();
 
     SPObject *top() {
         return !_hierarchy.empty() ? _hierarchy.back().object : NULL;
     }
+
+    /**
+     * Trim or expand hierarchy on top such that object becomes top entry.
+     */
     void setTop(SPObject *object);
 
     SPObject *bottom() {
         return !_hierarchy.empty() ? _hierarchy.front().object : NULL;
     }
+
+    /**
+     * Trim or expand hierarchy at bottom such that object becomes bottom entry.
+     */
     void setBottom(SPObject *object);
 
 private:
@@ -74,23 +91,45 @@ private:
     };
 
     ObjectHierarchy(ObjectHierarchy const &); // no copy
+
     void operator=(ObjectHierarchy const &); // no assign
 
-    /// @brief adds objects in range [senior, junior) to the top
+    /**
+     * Add hierarchy from junior's parent to senior to this
+     * hierarchy's top.
+     */
     void _addTop(SPObject *senior, SPObject *junior);
-    /// @brief adds one object to the top
+
+    /**
+     * Add object to top of hierarchy.
+     * \pre object!=NULL.
+     */
     void _addTop(SPObject *object);
-    /// @brief removes all objects above the limit object
+
+    /**
+     * Remove all objects above limit from hierarchy.
+     */
     void _trimAbove(SPObject *limit);
 
-    /// @brief adds objects in range (senior, junior] to the bottom
+    /**
+     * Add hierarchy from senior to junior, in range (senior, junior], to this hierarchy's bottom.
+     */
     void _addBottom(SPObject *senior, SPObject *junior);
-    /// @brief adds one object to the bottom
+
+    /**
+     * Add object at bottom of hierarchy.
+     * \pre object!=NULL
+     */
     void _addBottom(SPObject *object);
-    /// @brief removes all objects below the limit object
+
+    /**
+     * Remove all objects under given object.
+     * @param limit If NULL, remove all.
+     */
     void _trimBelow(SPObject *limit);
 
     Record _attach(SPObject *object);
+
     void _detach(Record &record);
 
     void _clear() { _trimBelow(NULL); }

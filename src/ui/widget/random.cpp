@@ -1,10 +1,4 @@
-/**
- * Scalar Widget - A labelled text box, with spin buttons and optional
- *        icon or suffix, for entering arbitrary number values. It adds an extra
- *       number called "startseed", that is not UI edittable, but should be put in SVG.
- *      This does NOT generate a random number, but provides merely the saving of 
- *      the startseed value.
- *
+/*
  * Authors:
  *   Carl Hetherington <inkscape@carlh.net>
  *   Derek P. Moore <derekm@hackunix.org>
@@ -31,16 +25,6 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-/**
- * Construct a Random scalar Widget.
- *
- * \param label     Label.
- * \param suffix    Suffix, placed after the widget (defaults to "").
- * \param icon      Icon filename, placed before the label (defaults to "").
- * \param mnemonic  Mnemonic toggle; if true, an underscore (_) in the label
- *                  indicates the next character should be used for the
- *                  mnemonic accelerator key (defaults to false).
- */
 Random::Random(Glib::ustring const &label, Glib::ustring const &tooltip,
                Glib::ustring const &suffix,
                Glib::ustring const &icon,
@@ -51,17 +35,6 @@ Random::Random(Glib::ustring const &label, Glib::ustring const &tooltip,
     addReseedButton();
 }
 
-/**
- * Construct a  Random Scalar Widget.
- *
- * \param label     Label.
- * \param digits    Number of decimal digits to display.
- * \param suffix    Suffix, placed after the widget (defaults to "").
- * \param icon      Icon filename, placed before the label (defaults to "").
- * \param mnemonic  Mnemonic toggle; if true, an underscore (_) in the label
- *                  indicates the next character should be used for the
- *                  mnemonic accelerator key (defaults to false).
- */
 Random::Random(Glib::ustring const &label, Glib::ustring const &tooltip,
                unsigned digits,
                Glib::ustring const &suffix,
@@ -73,18 +46,6 @@ Random::Random(Glib::ustring const &label, Glib::ustring const &tooltip,
     addReseedButton();
 }
 
-/**
- * Construct a Random Scalar Widget.
- *
- * \param label     Label.
- * \param adjust    Adjustment to use for the SpinButton.
- * \param digits    Number of decimal digits to display (defaults to 0).
- * \param suffix    Suffix, placed after the widget (defaults to "").
- * \param icon      Icon filename, placed before the label (defaults to "").
- * \param mnemonic  Mnemonic toggle; if true, an underscore (_) in the label
- *                  indicates the next character should be used for the
- *                  mnemonic accelerator key (defaults to true).
- */
 Random::Random(Glib::ustring const &label, Glib::ustring const &tooltip,
                Gtk::Adjustment &adjust,
                unsigned digits,
@@ -97,23 +58,17 @@ Random::Random(Glib::ustring const &label, Glib::ustring const &tooltip,
     addReseedButton();
 }
 
-/** Gets the startseed  */
-long
-Random::getStartSeed() const
+long Random::getStartSeed() const
 {
     return startseed;
 }
 
-/** Sets the startseed number */
-void
-Random::setStartSeed(long newseed)
+void Random::setStartSeed(long newseed)
 {
     startseed = newseed;
 }
 
-/** Add reseed button to the widget */
-void
-Random::addReseedButton()
+void Random::addReseedButton()
 {
     Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "randomize", Inkscape::ICON_SIZE_BUTTON) );
     Gtk::Button * pButton = Gtk::manage(new Gtk::Button());

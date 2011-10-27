@@ -1,6 +1,5 @@
-/**
- *  \file snap-preferences.cpp
- *  Storing of snapping preferences.
+/*
+ * Storing of snapping preferences.
  *
  * Authors:
  *   Diederik van Lierop <mail@diedenrezi.nl>
@@ -97,11 +96,6 @@ bool Inkscape::SnapPreferences::getSnapModeAny() const
     return (_snap_from != 0);
 }
 
-/**
- *  Turn on/off snapping of specific point types.
- *  \param t Point type.
- *  \param s true to snap to this point type, otherwise false;
- */
 void Inkscape::SnapPreferences::setSnapFrom(Inkscape::SnapSourceType t, bool s)
 {
     if (s) {
@@ -111,30 +105,11 @@ void Inkscape::SnapPreferences::setSnapFrom(Inkscape::SnapSourceType t, bool s)
     }
 }
 
-/**
- *  \param t Point type.
- *  \return true if snapper will snap this type of point, otherwise false.
- */
 bool Inkscape::SnapPreferences::getSnapFrom(Inkscape::SnapSourceType t) const
 {
     return (_snap_from & t);
 }
-/**
- *  Map snap target to array index.
- *
- *  The status of each snap toggle (in the snap toolbar) is stored as a boolean value in an array. This method returns the position
- *  of relevant boolean in that array, for any given type of snap target. For most snap targets, the enumerated value of that targets
- *  matches the position in the array (primary snap targets). This however does not hold for snap targets which don't have their own
- *  toggle button (secondary snap targets).
- *
- *  PS:
- *  - For snap sources, just pass the corresponding snap target instead (each snap source should have a twin snap target, but not vice versa)
- *  - All parameters are passed by reference, and will be overwritten
- *
- *  @param target Stores the enumerated snap target,  which can be modified to correspond to the array index of this snap target
- *  @param always_on If true, then this snap target is always active and cannot be toggled
- *  @param group_on If true, then this snap target is in a snap group that has been enabled (e.g. bbox group, nodes/paths group, or "others" group
- */
+
 void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType &target, bool &always_on, bool &group_on) const
 {
     if (target & SNAPTARGET_BBOX_CATEGORY) {

@@ -1,8 +1,4 @@
-/**
- * @file
- *
- * Helperclass for Gtk::Entry widgets.
- *
+/*
  * Authors:
  *   Johan Engelen <goejendaagh@zonnet.nl>
  *

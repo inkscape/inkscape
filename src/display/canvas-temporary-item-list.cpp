@@ -1,4 +1,4 @@
-/** \file
+/*
  * Provides a class that can contain active TemporaryItem's on a desktop
  * Code inspired by message-stack.cpp
  *

@@ -1,4 +1,4 @@
-/** \file
+/*
  * Editable view implementation
  *
  * Authors:
@@ -21,33 +21,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-/** \class SPDesktop
- * SPDesktop is a subclass of View, implementing an editable document
- * canvas.  It is extensively used by many UI controls that need certain
- * visual representations of their own.
- *
- * SPDesktop provides a certain set of SPCanvasItems, serving as GUI
- * layers of different control objects. The one containing the whole
- * document is the drawing layer. In addition to it, there are grid,
- * guide, sketch and control layers. The sketch layer is used for
- * temporary drawing objects, before the real objects in document are
- * created. The control layer contains editing knots, rubberband and
- * similar non-document UI objects.
- *
- * Each SPDesktop is associated with a SPNamedView node of the document
- * tree.  Currently, all desktops are created from a single main named
- * view, but in the future there may be support for different ones.
- * SPNamedView serves as an in-document container for desktop-related
- * data, like grid and guideline placement, snapping options and so on.
- *
- * Associated with each SPDesktop are the two most important editing
- * related objects - SPSelection and SPEventContext.
- *
- * Sodipodi keeps track of the active desktop and invokes notification
- * signals whenever it changes. UI elements can use these to update their
- * display to the selection of the currently active editing window.
- * (Lauris Kaplinski)
- */
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -116,11 +89,6 @@ static void _reconstruction_start(SPDesktop * desktop);
 static void _reconstruction_finish(SPDesktop * desktop);
 static void _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop);
 
-/**
- * Return new desktop object.
- * \pre namedview != NULL.
- * \pre canvas != NULL.
- */
 SPDesktop::SPDesktop() :
     _dlg_mgr( 0 ),
     namedview( 0 ),

@@ -1,4 +1,4 @@
-/** \file
+/*
  * SPObject implementation.
  *
  * Authors:
@@ -12,25 +12,6 @@
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
- */
-
-/** \class SPObject
- *
- * SPObject is an abstract base class of all of the document nodes at the
- * SVG document level. Each SPObject subclass implements a certain SVG
- * element node type, or is an abstract base class for different node
- * types.  The SPObject layer is bound to the SPRepr layer, closely
- * following the SPRepr mutations via callbacks.  During creation,
- * SPObject parses and interprets all textual attributes and CSS style
- * strings of the SPRepr, and later updates the internal state whenever
- * it receives a signal about a change. The opposite is not true - there
- * are methods manipulating SPObjects directly and such changes do not
- * propagate to the SPRepr layer. This is important for implementation of
- * the undo stack, animations and other features.
- *
- * SPObjects are bound to the higher-level container SPDocument, which
- * provides document level functionality such as the undo stack,
- * dictionary and so on. Source: doc/architecture.txt
  */
 
 #include <cstring>
@@ -75,7 +56,7 @@ using std::strstr;
                           g_print("\n"); \
                         }
 #else
-# define debug(f, a...) /**/
+# define debug(f, a...) /* */
 #endif
 
 guint update_in_progress = 0; // guard against update-during-update
@@ -121,9 +102,6 @@ public:
 
 GObjectClass * SPObjectClass::static_parent_class = 0;
 
-/**
- * Registers the SPObject class with Gdk and returns its type number.
- */
 GType SPObject::sp_object_get_type()
 {
     static GType type = 0;
@@ -143,9 +121,6 @@ GType SPObject::sp_object_get_type()
     return type;
 }
 
-/**
- * Initializes the SPObject vtable.
- */
 void SPObjectClass::sp_object_class_init(SPObjectClass *klass)
 {
     GObjectClass *object_class;
@@ -168,9 +143,6 @@ void SPObjectClass::sp_object_class_init(SPObjectClass *klass)
     klass->write = SPObject::sp_object_private_write;
 }
 
-/**
- * Callback to initialize the SPObject object.
- */
 void SPObject::sp_object_init(SPObject *object)
 {
     debug("id=%x, typename=%s",object, g_type_name_from_instance((GTypeInstance*)object));
@@ -204,9 +176,6 @@ void SPObject::sp_object_init(SPObject *object)
     object->_default_label = NULL;
 }
 
-/**
- * Callback to destroy all members and connections of object and itself.
- */
 void SPObject::sp_object_finalize(GObject *object)
 {
     SPObject *spobject = (SPObject *)object;
@@ -278,13 +247,6 @@ Inkscape::XML::Node const* SPObject::getRepr() const{
 }
 
 
-/**
- * Increase reference count of object, with possible debugging.
- *
- * \param owner If non-NULL, make debug log entry.
- * \return object, NULL is error.
- * \pre object points to real object
- */
 SPObject *sp_object_ref(SPObject *object, SPObject *owner)
 {
     g_return_val_if_fail(object != NULL, NULL);
@@ -296,14 +258,6 @@ SPObject *sp_object_ref(SPObject *object, SPObject *owner)
     return object;
 }
 
-/**
- * Decrease reference count of object, with possible debugging and
- * finalization.
- *
- * \param owner If non-NULL, make debug log entry.
- * \return always NULL
- * \pre object points to real object
- */
 SPObject *sp_object_unref(SPObject *object, SPObject *owner)
 {
     g_return_val_if_fail(object != NULL, NULL);
@@ -315,16 +269,6 @@ SPObject *sp_object_unref(SPObject *object, SPObject *owner)
     return NULL;
 }
 
-/**
- * Increase weak refcount.
- *
- * Hrefcount is used for weak references, for example, to
- * determine whether any graphical element references a certain gradient
- * node.
- * \param owner Ignored.
- * \return object, NULL is error
- * \pre object points to real object
- */
 SPObject *sp_object_href(SPObject *object, gpointer /*owner*/)
 {
     g_return_val_if_fail(object != NULL, NULL);
@@ -336,15 +280,6 @@ SPObject *sp_object_href(SPObject *object, gpointer /*owner*/)
     return object;
 }
 
-/**
- * Decrease weak refcount.
- *
- * Hrefcount is used for weak references, for example, to determine whether
- * any graphical element references a certain gradient node.
- * \param owner Ignored.
- * \return always NULL
- * \pre object points to real object and hrefcount>0
- */
 SPObject *sp_object_hunref(SPObject *object, gpointer /*owner*/)
 {
     g_return_val_if_fail(object != NULL, NULL);
@@ -357,9 +292,6 @@ SPObject *sp_object_hunref(SPObject *object, gpointer /*owner*/)
     return NULL;
 }
 
-/**
- * Adds increment to _total_hrefcount of object and its parents.
- */
 void SPObject::_updateTotalHRefCount(int increment) {
     SPObject *topmost_collectable = NULL;
     for ( SPObject *iter = this ; iter ; iter = iter->parent ) {
@@ -378,9 +310,6 @@ void SPObject::_updateTotalHRefCount(int increment) {
     }
 }
 
-/**
- * True if object is non-NULL and this is some in/direct parent of object.
- */
 bool SPObject::isAncestorOf(SPObject const *object) const {
     g_return_val_if_fail(object != NULL, false);
     object = object->parent;
@@ -401,9 +330,6 @@ bool same_objects(SPObject const &a, SPObject const &b) {
 
 }
 
-/**
- * Returns youngest object being parent to this and object.
- */
 SPObject const *SPObject::nearestCommonAncestor(SPObject const *object) const {
     g_return_val_if_fail(object != NULL, NULL);
 
@@ -423,15 +349,6 @@ SPObject const *AncestorSon(SPObject const *obj, SPObject const *ancestor) {
     return result;
 }
 
-/**
- * Compares height of objects in tree.
- *
- * Works for different-parent objects, so long as they have a common ancestor.
- * \return \verbatim
- *    0    positions are equivalent
- *    1    first object's position is greater than the second
- *   -1    first object's position is less than the second   \endverbatim
- */
 int sp_object_compare_position(SPObject const *first, SPObject const *second)
 {
     int result = 0;
@@ -458,10 +375,6 @@ int sp_object_compare_position(SPObject const *first, SPObject const *second)
 }
 
 
-/**
- * Append repr as child of this object.
- * \pre this is not a cloned object
- */
 SPObject *SPObject::appendChildRepr(Inkscape::XML::Node *repr) {
     if ( !cloned ) {
         getRepr()->appendChild(repr);
@@ -497,14 +410,10 @@ GSList *SPObject::childList(bool add_ref, Action) {
 
 }
 
-/** Gets the label property for the object or a default if no label
- *  is defined.
- */
 gchar const *SPObject::label() const {
     return _label;
 }
 
-/** Returns a default label property for the object. */
 gchar const *SPObject::defaultLabel() const {
     if (_label) {
         return _label;
@@ -520,13 +429,12 @@ gchar const *SPObject::defaultLabel() const {
     }
 }
 
-/** Sets the label property for the object */
-void SPObject::setLabel(gchar const *label) {
+void SPObject::setLabel(gchar const *label)
+{
     getRepr()->setAttribute("inkscape:label", label, false);
 }
 
 
-/** Queues the object for orphan collection */
 void SPObject::requestOrphanCollection() {
     g_return_if_fail(document != NULL);
 
@@ -563,13 +471,6 @@ void SPObject::_sendDeleteSignalRecursive() {
     }
 }
 
-/**
- * Deletes the object reference, unparenting it from its parent.
- *
- * If the \a propagate parameter is set to true, it emits a delete
- * signal.  If the \a propagate_descendants parameter is true, it
- * recursively sends the delete signal to children.
- */
 void SPObject::deleteObject(bool propagate, bool propagate_descendants)
 {
     sp_object_ref(this, NULL);
@@ -591,10 +492,6 @@ void SPObject::deleteObject(bool propagate, bool propagate_descendants)
     sp_object_unref(this, NULL);
 }
 
-/**
- * Put object into object tree, under parent, and behind prev;
- * also update object's XML space.
- */
 void SPObject::attach(SPObject *object, SPObject *prev)
 {
     //g_return_if_fail(parent != NULL);
@@ -625,10 +522,8 @@ void SPObject::attach(SPObject *object, SPObject *prev)
         object->xml_space.value = this->xml_space.value;
 }
 
-/**
- * In list of object's siblings, move object behind prev.
- */
-void SPObject::reorder(SPObject *prev) {
+void SPObject::reorder(SPObject *prev)
+{
     //g_return_if_fail(object != NULL);
     //g_return_if_fail(SP_IS_OBJECT(object));
     g_return_if_fail(this->parent != NULL);
@@ -667,10 +562,8 @@ void SPObject::reorder(SPObject *prev) {
     }
 }
 
-/**
- * Remove object from parent's children, release and unref it.
- */
-void SPObject::detach(SPObject *object) {
+void SPObject::detach(SPObject *object)
+{
     //g_return_if_fail(parent != NULL);
     //g_return_if_fail(SP_IS_OBJECT(parent));
     g_return_if_fail(object != NULL);
@@ -703,9 +596,6 @@ void SPObject::detach(SPObject *object) {
     sp_object_unref(object, this);
 }
 
-/**
- * Return object's child whose node pointer equals repr.
- */
 SPObject *SPObject::get_child_by_repr(Inkscape::XML::Node *repr)
 {
     g_return_val_if_fail(repr != NULL, NULL);
@@ -724,10 +614,6 @@ SPObject *SPObject::get_child_by_repr(Inkscape::XML::Node *repr)
     return result;
 }
 
-/**
- * Callback for child_added event.
- * Invoked whenever the given mutation event happens in the XML tree.
- */
 void SPObject::sp_object_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
     GType type = sp_repr_type_lookup(child);
@@ -742,17 +628,6 @@ void SPObject::sp_object_child_added(SPObject *object, Inkscape::XML::Node *chil
     ochild->invoke_build(object->document, child, object->cloned);
 }
 
-/**
- * Removes, releases and unrefs all children of object.
- *
- * This is the opposite of build. It has to be invoked as soon as the
- * object is removed from the tree, even if it is still alive according
- * to reference count. The frontend unregisters the object from the
- * document and releases the SPRepr bindings; implementations should free
- * state data and release all child objects.  Invoking release on
- * SPRoot destroys the whole document tree.
- * \see sp_object_build()
- */
 void SPObject::sp_object_release(SPObject *object)
 {
     debug("id=%x, typename=%s", object, g_type_name_from_instance((GTypeInstance*)object));
@@ -761,14 +636,6 @@ void SPObject::sp_object_release(SPObject *object)
     }
 }
 
-/**
- * Remove object's child whose node equals repr, release and
- * unref it.
- *
- * Invoked whenever the given mutation event happens in the XML
- * tree, BEFORE removal from the XML tree happens, so grouping
- * objects can safely release the child data.
- */
 void SPObject::sp_object_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {
     debug("id=%x, typename=%s", object, g_type_name_from_instance((GTypeInstance*)object));
@@ -779,12 +646,6 @@ void SPObject::sp_object_remove_child(SPObject *object, Inkscape::XML::Node *chi
     }
 }
 
-/**
- * Move object corresponding to child after sibling object corresponding
- * to new_ref.
- * Invoked whenever the given mutation event happens in the XML tree.
- * \param old_ref Ignored
- */
 void SPObject::sp_object_order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node */*old_ref*/,
                                     Inkscape::XML::Node *new_ref)
 {
@@ -795,17 +656,6 @@ void SPObject::sp_object_order_changed(SPObject *object, Inkscape::XML::Node *ch
     ochild->_position_changed_signal.emit(ochild);
 }
 
-/**
- * Virtual build callback.
- *
- * This has to be invoked immediately after creation of an SPObject. The
- * frontend method ensures that the new object is properly attached to
- * the document and repr; implementation then will parse all of the attributes,
- * generate the children objects and so on.  Invoking build on the SPRoot
- * object results in creation of the whole document tree (this is, what
- * SPDocument does after the creation of the XML tree).
- * \see sp_object_release()
- */
 void SPObject::sp_object_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     /* Nothing specific here */
@@ -967,9 +817,6 @@ SPObject *SPObject::getPrev()
     return prev;
 }
 
-/**
- * Callback for child_added node event.
- */
 void SPObject::sp_object_repr_child_added(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, gpointer data)
 {
     SPObject *object = SP_OBJECT(data);
@@ -979,9 +826,6 @@ void SPObject::sp_object_repr_child_added(Inkscape::XML::Node */*repr*/, Inkscap
     }
 }
 
-/**
- * Callback for remove_child node event.
- */
 void SPObject::sp_object_repr_child_removed(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node *child, Inkscape::XML::Node */*ref*/, gpointer data)
 {
     SPObject *object = SP_OBJECT(data);
@@ -991,11 +835,6 @@ void SPObject::sp_object_repr_child_removed(Inkscape::XML::Node */*repr*/, Inksc
     }
 }
 
-/**
- * Callback for order_changed node event.
- *
- * \todo fixme:
- */
 void SPObject::sp_object_repr_order_changed(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node *child, Inkscape::XML::Node *old, Inkscape::XML::Node *newer, gpointer data)
 {
     SPObject *object = SP_OBJECT(data);
@@ -1005,9 +844,6 @@ void SPObject::sp_object_repr_order_changed(Inkscape::XML::Node */*repr*/, Inksc
     }
 }
 
-/**
- * Callback for set event.
- */
 void SPObject::sp_object_private_set(SPObject *object, unsigned int key, gchar const *value)
 {
     g_assert(key != SP_ATTR_INVALID);
@@ -1093,9 +929,6 @@ void SPObject::sp_object_private_set(SPObject *object, unsigned int key, gchar c
     }
 }
 
-/**
- * Call virtual set() function of object.
- */
 void SPObject::setKeyValue(unsigned int key, gchar const *value)
 {
     //g_assert(object != NULL);
@@ -1106,9 +939,6 @@ void SPObject::setKeyValue(unsigned int key, gchar const *value)
     }
 }
 
-/**
- * Read value of key attribute from XML node into object.
- */
 void SPObject::readAttr(gchar const *key)
 {
     //g_assert(object != NULL);
@@ -1127,9 +957,6 @@ void SPObject::readAttr(gchar const *key)
     }
 }
 
-/**
- * Callback for attr_changed node event.
- */
 void SPObject::sp_object_repr_attr_changed(Inkscape::XML::Node */*repr*/, gchar const *key, gchar const */*oldval*/, gchar const */*newval*/, bool is_interactive, gpointer data)
 {
     SPObject *object = SP_OBJECT(data);
@@ -1143,9 +970,6 @@ void SPObject::sp_object_repr_attr_changed(Inkscape::XML::Node */*repr*/, gchar 
     }
 }
 
-/**
- * Callback for content_changed node event.
- */
 void SPObject::sp_object_repr_content_changed(Inkscape::XML::Node */*repr*/, gchar const */*oldcontent*/, gchar const */*newcontent*/, gpointer data)
 {
     SPObject *object = SP_OBJECT(data);
@@ -1158,8 +982,7 @@ void SPObject::sp_object_repr_content_changed(Inkscape::XML::Node */*repr*/, gch
 /**
  * Return string representation of space value.
  */
-static gchar const*
-sp_xml_get_space_string(unsigned int space)
+static gchar const *sp_xml_get_space_string(unsigned int space)
 {
     switch (space) {
         case SP_XML_SPACE_DEFAULT:
@@ -1171,9 +994,6 @@ sp_xml_get_space_string(unsigned int space)
     }
 }
 
-/**
- * Callback for write event.
- */
 Inkscape::XML::Node * SPObject::sp_object_private_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
     if (!repr && (flags & SP_OBJECT_WRITE_BUILD)) {
@@ -1234,10 +1054,8 @@ Inkscape::XML::Node * SPObject::sp_object_private_write(SPObject *object, Inksca
     return repr;
 }
 
-/**
- * Update this object's XML node with flags value.
- */
-Inkscape::XML::Node * SPObject::updateRepr(unsigned int flags) {
+Inkscape::XML::Node * SPObject::updateRepr(unsigned int flags)
+{
     if ( !cloned ) {
         Inkscape::XML::Node *repr = getRepr();
         if (repr) {
@@ -1252,11 +1070,8 @@ Inkscape::XML::Node * SPObject::updateRepr(unsigned int flags) {
     }
 }
 
-/** Used both to create reprs in the original document, and to create
- *  reprs in another document (e.g. a temporary document used when
- *  saving as "Plain SVG"
- */
-Inkscape::XML::Node * SPObject::updateRepr(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, unsigned int flags) {
+Inkscape::XML::Node * SPObject::updateRepr(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, unsigned int flags)
+{
     g_assert(doc != NULL);
 
     if (cloned) {
@@ -1284,11 +1099,6 @@ Inkscape::XML::Node * SPObject::updateRepr(Inkscape::XML::Document *doc, Inkscap
 
 /* Modification */
 
-/**
- * Add \a flags to \a object's as dirtiness flags, and
- * recursively add CHILD_MODIFIED flag to
- * parent and ancestors (as far up as necessary).
- */
 void SPObject::requestDisplayUpdate(unsigned int flags)
 {
     g_return_if_fail( this->document != NULL );
@@ -1319,9 +1129,6 @@ void SPObject::requestDisplayUpdate(unsigned int flags)
     }
 }
 
-/**
- * Update views
- */
 void SPObject::updateDisplay(SPCtx *ctx, unsigned int flags)
 {
     g_return_if_fail(!(flags & ~SP_OBJECT_MODIFIED_CASCADE));
@@ -1370,11 +1177,6 @@ void SPObject::updateDisplay(SPCtx *ctx, unsigned int flags)
     update_in_progress --;
 }
 
-/**
- * Request modified always bubbles *up* the tree, as opposed to
- * request display update, which trickles down and relies on the
- * flags set during this pass...
- */
 void SPObject::requestModified(unsigned int flags)
 {
     g_return_if_fail( this->document != NULL );
@@ -1401,12 +1203,6 @@ void SPObject::requestModified(unsigned int flags)
     }
 }
 
-/**
- *  Emits the MODIFIED signal with the object's flags.
- *  The object's mflags are the original set aside during the update pass for
- *  later delivery here.  Once emitModified() is called, those flags don't
- *  need to be stored any longer.
- */
 void SPObject::emitModified(unsigned int flags)
 {
     /* only the MODIFIED_CASCADE flag is legal here */
@@ -1522,36 +1318,8 @@ gchar * SPObject::sp_object_get_unique_id(SPObject *object, gchar const *id)
     return buf;
 }
 
-/* Style */
+// Style
 
-/**
- * Returns an object style property.
- *
- * \todo
- * fixme: Use proper CSS parsing.  The current version is buggy
- * in a number of situations where key is a substring of the
- * style string other than as a property name (including
- * where key is a substring of a property name), and is also
- * buggy in its handling of inheritance for properties that
- * aren't inherited by default.  It also doesn't allow for
- * the case where the property is specified but with an invalid
- * value (in which case I believe the CSS2 error-handling
- * behaviour applies, viz. behave as if the property hadn't
- * been specified).  Also, the current code doesn't use CRSelEng
- * stuff to take a value from stylesheets.  Also, we aren't
- * setting any hooks to force an update for changes in any of
- * the inputs (i.e., in any of the elements that this function
- * queries).
- *
- * \par
- * Given that the default value for a property depends on what
- * property it is (e.g., whether to inherit or not), and given
- * the above comment about ignoring invalid values, and that the
- * repr parent isn't necessarily the right element to inherit
- * from (e.g., maybe we need to inherit from the referencing
- * <use> element instead), we should probably make the caller
- * responsible for ascending the repr tree as necessary.
- */
 gchar const * SPObject::getStyleProperty(gchar const *key, gchar const *def) const
 {
     //g_return_val_if_fail(object != NULL, NULL);
@@ -1599,9 +1367,6 @@ gchar const * SPObject::getStyleProperty(gchar const *key, gchar const *def) con
     return def;
 }
 
-/**
- * Lifts SVG version of all root objects to version.
- */
 void SPObject::_requireSVGVersion(Inkscape::Version version) {
     for ( SPObject::ParentIterator iter=this ; iter ; ++iter ) {
         SPObject *object = iter;
@@ -1614,7 +1379,7 @@ void SPObject::_requireSVGVersion(Inkscape::Version version) {
     }
 }
 
-/* Titles and descriptions */
+// Titles and descriptions
 
 /* Note:
    Titles and descriptions are stored in 'title' and 'desc' child elements
@@ -1626,58 +1391,26 @@ void SPObject::_requireSVGVersion(Inkscape::Version version) {
    element, except when deleting a title or description.
 */
 
-/**
- * Returns the title of this object, or NULL if there is none.
- * The caller must free the returned string using g_free() - see comment
- * for getTitleOrDesc() below.
- */
 gchar * SPObject::title() const
 {
     return getTitleOrDesc("svg:title");
 }
 
-/**
- * Sets the title of this object
- * A NULL first argument is interpreted as meaning that the existing title
- * (if any) should be deleted.
- * The second argument is optional - see setTitleOrDesc() below for details.
- */
 bool SPObject::setTitle(gchar const *title, bool verbatim)
 {
     return setTitleOrDesc(title, "svg:title", verbatim);
 }
 
-/**
- * Returns the description of this object, or NULL if there is none.
- * The caller must free the returned string using g_free() - see comment
- * for getTitleOrDesc() below.
- */
 gchar * SPObject::desc() const
 {
     return getTitleOrDesc("svg:desc");
 }
 
-/**
- * Sets the description of this object.
- * A NULL first argument is interpreted as meaning that the existing
- * description (if any) should be deleted.
- * The second argument is optional - see setTitleOrDesc() below for details.
- */
 bool SPObject::setDesc(gchar const *desc, bool verbatim)
 {
     return setTitleOrDesc(desc, "svg:desc", verbatim);
 }
 
-/**
- * Returns the title or description of this object, or NULL if there is none.
- *
- * The SVG spec allows 'title' and 'desc' elements to contain text marked up
- * using elements from other namespaces.  Therefore, this function cannot
- * in general just return a pointer to an existing string - it must instead
- * construct a string containing the title or description without the mark-up.
- * Consequently, the return value is a newly allocated string (or NULL), and
- * must be freed (using g_free()) by the caller.
- */
 gchar * SPObject::getTitleOrDesc(gchar const *svg_tagname) const
 {
     gchar *result = 0;
@@ -1688,23 +1421,6 @@ gchar * SPObject::getTitleOrDesc(gchar const *svg_tagname) const
     return result;
 }
 
-/**
- * Sets or deletes the title or description of this object.
- * A NULL 'value' argument causes the title or description to be deleted.
- *
- * 'verbatim' parameter:
- * If verbatim==true, then the title or description is set to exactly the
- * specified value.  If verbatim==false then two exceptions are made:
- *   (1) If the specified value is just whitespace, then the title/description
- *       is deleted.
- *   (2) If the specified value is the same as the current value except for
- *       mark-up, then the current value is left unchanged.
- * This is usually the desired behaviour, so 'verbatim' defaults to false for
- * setTitle() and setDesc().
- *
- * The return value is true if a change was made to the title/description,
- * and usually false otherwise.
- */
 bool SPObject::setTitleOrDesc(gchar const *value, gchar const *svg_tagname, bool verbatim)
 {
     if (!verbatim) {
@@ -1770,10 +1486,6 @@ bool SPObject::setTitleOrDesc(gchar const *value, gchar const *svg_tagname, bool
     return true;
 }
 
-/**
- * Find the first child of this object with a given tag name,
- * and return it.  Returns NULL if there is no matching child.
- */
 SPObject * SPObject::findFirstChild(gchar const *tagname) const
 {
     for (SPObject *child = children; child; child = child->next)
@@ -1786,11 +1498,6 @@ SPObject * SPObject::findFirstChild(gchar const *tagname) const
     return NULL;
 }
 
-/**
- * Return the full textual content of an element (typically all the
- * content except the tags).
- * Must not be used on anything except elements.
- */
 GString * SPObject::textualContent() const
 {
     GString* text = g_string_new("");

@@ -1,4 +1,4 @@
-/**
+/*
  * DepTool dependency tool
  *
  * This is a simple dependency generator coded in C++

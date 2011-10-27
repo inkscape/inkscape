@@ -1,6 +1,4 @@
-/** \file
- * View implementation
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
@@ -78,9 +76,6 @@ View::View()
     _message_changed_connection = _message_stack->connectChanged (sigc::bind (sigc::ptr_fun (&_onStatusMessage), this));
 }
 
-/**
- * Deletes and nulls all View message stacks and disconnects it from signals.
- */
 View::~View()
 {
     _close();
@@ -127,15 +122,6 @@ void View::requestRedraw()
     _redraw_requested_signal.emit();
 }
 
-/**
- * Disconnects the view from the document signals, connects the view 
- * to a new one, and emits the _document_set_signal on the view.
- *
- * This is code comon to all subclasses and called from their
- * setDocument() methods after they are done.
- * 
- * \param doc The new document to connect the view to.
- */
 void View::setDocument(SPDocument *doc) {
     g_return_if_fail(doc != NULL);
 

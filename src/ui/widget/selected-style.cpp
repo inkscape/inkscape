@@ -1,6 +1,4 @@
-/**
- * Selected style indicator (fill, stroke, opacity).
- *
+/*
  * Author:
  *   buliabyak@gmail.com
  *   Abhishek Sharma

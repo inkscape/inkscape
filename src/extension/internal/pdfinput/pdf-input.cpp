@@ -1,4 +1,4 @@
- /** \file
+/*
  * Native PDF import using libpoppler.
  *
  * Authors:

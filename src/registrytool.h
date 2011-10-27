@@ -41,14 +41,24 @@ public:
     virtual ~RegistryTool()
         {}
 
+    /**
+     * Set the string value of a key/name registry entry.
+     */ 
     bool setStringValue(const Glib::ustring &key,
                         const Glib::ustring &valueName,
                         const Glib::ustring &value);
 
+    /**
+     * Get the full path, directory, and base file name of this running executable.
+     */ 
     bool getExeInfo(Glib::ustring &fullPath,
                     Glib::ustring &path,
                     Glib::ustring &exeName);
 
+    /**
+     * Append our subdirectories to the Application Path for this
+     * application.
+     */  
     bool setPathInfo();
 
 

@@ -1,4 +1,4 @@
-/** \file
+/*
  * Inkscape - an ambitious vector drawing program
  *
  * Authors:

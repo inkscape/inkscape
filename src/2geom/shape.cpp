@@ -1,5 +1,5 @@
-/**
- * \brief  Shapes are special paths on which boolops can be performed
+/*
+ * Shapes are special paths on which boolops can be performed.
  *
  * Authors:
  *      Michael G. Sloan <mgsloan@gmail.com>

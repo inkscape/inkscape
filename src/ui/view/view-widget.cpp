@@ -1,6 +1,4 @@
-/** \file
- * SPViewWidget implementation.
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Ralf Stephan <ralf@ark.in-berlin.de>
@@ -16,7 +14,7 @@
 
 //using namespace Inkscape::UI::View;
 
-/* SPViewWidget */
+// SPViewWidget
 
 static void sp_view_widget_class_init(SPViewWidgetClass *vwc);
 static void sp_view_widget_init(SPViewWidget *widget);
@@ -24,9 +22,6 @@ static void sp_view_widget_destroy(GtkObject *object);
 
 static GtkEventBoxClass *widget_parent_class;
 
-/**
- * Registers the SPViewWidget class with Glib and returns its type number.
- */
 GType sp_view_widget_get_type(void)
 {
     static GType type = 0;
@@ -89,10 +84,6 @@ static void sp_view_widget_destroy(GtkObject *object)
     Inkscape::GC::request_early_collection();
 }
 
-/**
- * Connects widget to view's 'resized' signal and calls virtual set_view()
- * function.
- */
 void sp_view_widget_set_view(SPViewWidget *vw, Inkscape::UI::View::View *view)
 {
     g_return_if_fail(vw != NULL);
@@ -109,9 +100,6 @@ void sp_view_widget_set_view(SPViewWidget *vw, Inkscape::UI::View::View *view)
     }
 }
 
-/**
- * Calls the virtual shutdown() function of the SPViewWidget.
- */
 bool sp_view_widget_shutdown(SPViewWidget *vw)
 {
     g_return_val_if_fail(vw != NULL, TRUE);

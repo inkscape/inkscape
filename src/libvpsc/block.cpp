@@ -1,8 +1,4 @@
-/**
- * \brief A block is a group of variables that must be moved together to improve
- * the goal function without violating already active constraints.
- * The variables in a block are spanned by a tree of active constraints.
- *
+/*
  * Authors:
  *   Tim Dwyer <tgdwyer@gmail.com>
  *
@@ -95,13 +91,7 @@ void Block::merge(Block* b, Constraint* c) {
 	f<<"  merged block="<<(b->deleted?*this:*b)<<endl;
 #endif
 }
-/**
- * Merges b into this block across c.  Can be either a
- * right merge or a left merge
- * @param b block to merge into this
- * @param c constraint being merged
- * @param distance separation required to satisfy c
- */
+
 void Block::merge(Block *b, Constraint *c, double dist) {
 #ifdef RECTANGLE_OVERLAP_LOGGING
 	ofstream f(LOGFILE,ios::app);
@@ -317,10 +307,7 @@ void Block::reset_active_lm(Variable* const v, Variable* const u) {
 		}
 	}
 }
-/**
- * finds the constraint with the minimum lagrange multiplier, that is, the constraint
- * that most wants to split
- */
+
 Constraint *Block::findMinLM() {
 	Constraint *min_lm=NULL;
 	reset_active_lm(vars->front(),NULL);
@@ -363,12 +350,7 @@ bool Block::isActiveDirectedPathBetween(Variable* u, Variable *v) {
 	}
 	return false;
 }
-/**
- * Block needs to be split because of a violated constraint between vl and vr.
- * We need to search the active constraint tree between l and r and find the constraint
- * with min lagrangrian multiplier and split at that point.
- * Returns the split constraint
- */
+
 Constraint* Block::splitBetween(Variable* const vl, Variable* const vr,
 	       	Block* &lb, Block* &rb) {
 #ifdef RECTANGLE_OVERLAP_LOGGING
@@ -383,11 +365,7 @@ Constraint* Block::splitBetween(Variable* const vl, Variable* const vr,
 	deleted = true;
 	return c;
 }
-/**
- * Creates two new blocks, l and r, and splits this block across constraint c,
- * placing the left subtree of constraints (and associated variables) into l
- * and the right into r.
- */
+
 void Block::split(Block* &l, Block* &r, Constraint* c) {
 	c->active=false;
 	l=new Block();
@@ -396,10 +374,6 @@ void Block::split(Block* &l, Block* &r, Constraint* c) {
 	populateSplitBlock(r,c->right,c->left);
 }
 
-/**
- * Computes the cost (squared euclidean distance from desired positions) of the
- * current positions for variables in this block
- */
 double Block::cost() {
 	double c = 0;
 	for (Vit v=vars->begin();v!=vars->end();++v) {

@@ -1,9 +1,5 @@
-/**
+/*
  * Inkscape Registry Tool
- *
- * This simple tool is intended for allowing Inkscape to append subdirectories
- * to its path.  This will allow extensions and other files to be accesses
- * without explicit user intervention.
  *
  * Authors:
  *   Bob Jamison
@@ -52,9 +48,6 @@ KeyTableEntry keyTable[] =
 };
 
 
-/**
- * Set the string value of a key/name registry entry
- */ 
 bool RegistryTool::setStringValue(const Glib::ustring &keyNameArg,
                                   const Glib::ustring &valueName,
                                   const Glib::ustring &value)
@@ -108,9 +101,6 @@ bool RegistryTool::setStringValue(const Glib::ustring &keyNameArg,
 
 
 
-/**
- * Get the full path, directory, and base file name of this running executable
- */ 
 bool RegistryTool::getExeInfo(Glib::ustring &fullPath,
                               Glib::ustring &path,
                               Glib::ustring &exeName)
@@ -137,10 +127,6 @@ bool RegistryTool::getExeInfo(Glib::ustring &fullPath,
 
 
 
-/**
- * Append our subdirectories to the Application Path for this
- * application
- */  
 bool RegistryTool::setPathInfo()
 {
     Glib::ustring fullPath;
@@ -181,7 +167,7 @@ bool RegistryTool::setPathInfo()
 #ifdef TESTREG
 
 
-/**
+/*
  * Compile this file with
  *      g++ -DTESTREG registrytool.cpp -o registrytool
  *  to run these tests.

@@ -1,4 +1,4 @@
-/**
+/*
  * OpenDocument <drawing> input and output
  *
  * This is an an entry in the extensions mechanism to begin to enable

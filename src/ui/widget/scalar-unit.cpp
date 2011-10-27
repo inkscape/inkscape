@@ -1,17 +1,4 @@
-/**
- * Scalar Unit Widget - A labelled text box, with spin buttons and
- *        optional icon or suffix, for entering the values of various unit
- *        types.
- *
- * A ScalarUnit is a control for entering, viewing, or manipulating
- * numbers with units.  This differs from ordinary numbers like 2 or
- * 3.14 because the number portion of a scalar *only* has meaning
- * when considered with its unit type.  For instance, 12 m and 12 in
- * have very different actual values, but 1 m and 100 cm have the same
- * value.  The ScalarUnit allows us to abstract the presentation of
- * the scalar to the user from the internal representations used by
- * the program.
- *
+/*
  * Authors:
  *   Bryce Harrington <bryce@bryceharrington.org>
  *   Derek P. Moore <derekm@hackunix.org>
@@ -33,19 +20,6 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-/**
- * Construct a ScalarUnit
- *
- * \param label      Label.
- * \param unit_type  Unit type (defaults to UNIT_TYPE_LINEAR).
- * \param suffix     Suffix, placed after the widget (defaults to "").
- * \param icon       Icon filename, placed before the label (defaults to "").
- * \param unit_menu  UnitMenu drop down; if not specified, one will be created
- *                   and displayed after the widget (defaults to NULL).
- * \param mnemonic   Mnemonic toggle; if true, an underscore (_) in the label
- *                   indicates the next character should be used for the
- *                   mnemonic accelerator key (defaults to true).
- */
 ScalarUnit::ScalarUnit(Glib::ustring const &label, Glib::ustring const &tooltip,
                        UnitType unit_type,
                        Glib::ustring const &suffix,
@@ -72,18 +46,6 @@ ScalarUnit::ScalarUnit(Glib::ustring const &label, Glib::ustring const &tooltip,
     lastUnits = _unit_menu->getUnitAbbr();
 }
 
-/**
- * Construct a ScalarUnit
- *
- * \param label      Label.
- * \param tooltip    Tooltip text.
- * \param take_unitmenu  Use the unitmenu from this parameter.
- * \param suffix     Suffix, placed after the widget (defaults to "").
- * \param icon       Icon filename, placed before the label (defaults to "").
- * \param mnemonic   Mnemonic toggle; if true, an underscore (_) in the label
- *                   indicates the next character should be used for the
- *                   mnemonic accelerator key (defaults to true).
- */
 ScalarUnit::ScalarUnit(Glib::ustring const &label, Glib::ustring const &tooltip,
                        ScalarUnit &take_unitmenu,
                        Glib::ustring const &suffix,
@@ -104,12 +66,7 @@ ScalarUnit::ScalarUnit(Glib::ustring const &label, Glib::ustring const &tooltip,
 }
 
 
-/**
- * Initializes the scalar based on the settings in _unit_menu.
- * Requires that _unit_menu has already been initialized.
- */
-void
-ScalarUnit::initScalar(double min_value, double max_value)
+void ScalarUnit::initScalar(double min_value, double max_value)
 {
     g_assert(_unit_menu != NULL);
     Scalar::setDigits(_unit_menu->getDefaultDigits());
@@ -118,9 +75,8 @@ ScalarUnit::initScalar(double min_value, double max_value)
     Scalar::setRange(min_value, max_value);
 }
 
-/** Sets the unit for the ScalarUnit widget */
-bool
-ScalarUnit::setUnit(Glib::ustring const &unit) {
+bool ScalarUnit::setUnit(Glib::ustring const &unit)
+{
     g_assert(_unit_menu != NULL);
     // First set the unit
     if (!_unit_menu->setUnit(unit)) {
@@ -130,47 +86,41 @@ ScalarUnit::setUnit(Glib::ustring const &unit) {
     return true;
 }
 
-/** Adds the unit type to the ScalarUnit widget */
-void
-ScalarUnit::setUnitType(UnitType unit_type) {
+void ScalarUnit::setUnitType(UnitType unit_type)
+{
     g_assert(_unit_menu != NULL);
     _unit_menu->setUnitType(unit_type);
     lastUnits = _unit_menu->getUnitAbbr();
 }
 
-/** Resets the unit type for the ScalarUnit widget */
-void
-ScalarUnit::resetUnitType(UnitType unit_type) {
+void ScalarUnit::resetUnitType(UnitType unit_type)
+{
     g_assert(_unit_menu != NULL);
     _unit_menu->resetUnitType(unit_type);
     lastUnits = _unit_menu->getUnitAbbr();
 }
 
-/** Gets the object for the currently selected unit */
-Unit
-ScalarUnit::getUnit() const {
+Unit ScalarUnit::getUnit() const
+{
     g_assert(_unit_menu != NULL);
     return _unit_menu->getUnit();
 }
 
-/** Gets the UnitType ID for the unit */
-UnitType
-ScalarUnit::getUnitType() const {
+UnitType ScalarUnit::getUnitType() const
+{
     g_assert(_unit_menu);
     return _unit_menu->getUnitType();
 }
 
-/** Sets the number and unit system */
-void
-ScalarUnit::setValue(double number, Glib::ustring const &units) {
+void ScalarUnit::setValue(double number, Glib::ustring const &units)
+{
     g_assert(_unit_menu != NULL);
     _unit_menu->setUnit(units);
     Scalar::setValue(number);
 }
 
-/** Convert and sets the number only and keeps the current unit.  */
-void
-ScalarUnit::setValueKeepUnit(double number, Glib::ustring const &units) {
+void ScalarUnit::setValueKeepUnit(double number, Glib::ustring const &units)
+{
     g_assert(_unit_menu != NULL);
     if (units == "") {
         // set the value in the default units
@@ -181,15 +131,13 @@ ScalarUnit::setValueKeepUnit(double number, Glib::ustring const &units) {
     }
 }
 
-/** Sets the number only */
-void
-ScalarUnit::setValue(double number) {
+void ScalarUnit::setValue(double number)
+{
     Scalar::setValue(number);
 }
 
-/** Returns the value in the given unit system */
-double
-ScalarUnit::getValue(Glib::ustring const &unit_name) const {
+double ScalarUnit::getValue(Glib::ustring const &unit_name) const
+{
     g_assert(_unit_menu != NULL);
     if (unit_name == "") {
         // Return the value in the default units
@@ -200,36 +148,29 @@ ScalarUnit::getValue(Glib::ustring const &unit_name) const {
     }
 }
 
-/** Grab focus, and select the text that is in the entry field.
- */
-void
-ScalarUnit::grabFocusAndSelectEntry() {
+void ScalarUnit::grabFocusAndSelectEntry()
+{
     _widget->grab_focus();
     static_cast<SpinButton*>(_widget)->select_region(0, 20);
 }
 
 
-void
-ScalarUnit::setHundredPercent(double number)
+void ScalarUnit::setHundredPercent(double number)
 {
     _hundred_percent = number;
 }
 
-void
-ScalarUnit::setAbsoluteIsIncrement(bool value)
+void ScalarUnit::setAbsoluteIsIncrement(bool value)
 {
     _absolute_is_increment = value;
 }
 
-void
-ScalarUnit::setPercentageIsIncrement(bool value)
+void ScalarUnit::setPercentageIsIncrement(bool value)
 {
     _percentage_is_increment = value;
 }
 
-/** Convert value from % to absolute, using _hundred_percent and *_is_increment flags */
-double
-ScalarUnit::PercentageToAbsolute(double value)
+double ScalarUnit::PercentageToAbsolute(double value)
 {
     // convert from percent to absolute
     double convertedVal = 0;
@@ -243,9 +184,7 @@ ScalarUnit::PercentageToAbsolute(double value)
     return convertedVal;
 }
 
-/** Convert value from absolute to %, using _hundred_percent and *_is_increment flags */
-double
-ScalarUnit::AbsoluteToPercentage(double value)
+double ScalarUnit::AbsoluteToPercentage(double value)
 {
     double convertedVal = 0;
     // convert from absolute to percent
@@ -266,27 +205,21 @@ ScalarUnit::AbsoluteToPercentage(double value)
     return convertedVal;
 }
 
-/** Assuming the current unit is absolute, get the corresponding % value */
-double
-ScalarUnit::getAsPercentage()
+double ScalarUnit::getAsPercentage()
 {
     double convertedVal = AbsoluteToPercentage(Scalar::getValue());
     return convertedVal;
 }
 
 
-/** Assuming the current unit is absolute, set the value corresponding to a given % */
-void 
-ScalarUnit::setFromPercentage(double value)
+void  ScalarUnit::setFromPercentage(double value)
 {
     double absolute = PercentageToAbsolute(value);
     Scalar::setValue(absolute);
 }
 
 
-/** Signal handler for updating the value and suffix label when unit is changed */
-void
-ScalarUnit::on_unit_changed()
+void ScalarUnit::on_unit_changed()
 {
     g_assert(_unit_menu != NULL);
 

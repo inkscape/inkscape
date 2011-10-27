@@ -126,16 +126,71 @@ struct SPIXmlSpace {
  * Ref should return object, NULL is error, unref return always NULL
  */
 
+/**
+ * Increase reference count of object, with possible debugging.
+ *
+ * @param owner If non-NULL, make debug log entry.
+ * @return object, NULL is error.
+ * \pre object points to real object
+ * @todo need to move this to be a member of SPObject.
+ */
 SPObject *sp_object_ref(SPObject *object, SPObject *owner=NULL);
+
+/**
+ * Decrease reference count of object, with possible debugging and
+ * finalization.
+ *
+ * @param owner If non-NULL, make debug log entry.
+ * @return always NULL
+ * \pre object points to real object
+ * @todo need to move this to be a member of SPObject.
+ */
 SPObject *sp_object_unref(SPObject *object, SPObject *owner=NULL);
 
+/**
+ * Increase weak refcount.
+ *
+ * Hrefcount is used for weak references, for example, to
+ * determine whether any graphical element references a certain gradient
+ * node.
+ * @param owner Ignored.
+ * @return object, NULL is error
+ * \pre object points to real object
+ * @todo need to move this to be a member of SPObject.
+ */
 SPObject *sp_object_href(SPObject *object, gpointer owner);
+
+/**
+ * Decrease weak refcount.
+ *
+ * Hrefcount is used for weak references, for example, to determine whether
+ * any graphical element references a certain gradient node.
+ * @param owner Ignored.
+ * @return always NULL
+ * \pre object points to real object and hrefcount>0
+ * @todo need to move this to be a member of SPObject.
+ */
 SPObject *sp_object_hunref(SPObject *object, gpointer owner);
 
 
 /**
- * Abstract base class for all nodes.
- * A refcounting tree node object.
+ * SPObject is an abstract base class of all of the document nodes at the
+ * SVG document level. Each SPObject subclass implements a certain SVG
+ * element node type, or is an abstract base class for different node
+ * types.  The SPObject layer is bound to the SPRepr layer, closely
+ * following the SPRepr mutations via callbacks.  During creation,
+ * SPObject parses and interprets all textual attributes and CSS style
+ * strings of the SPRepr, and later updates the internal state whenever
+ * it receives a signal about a change. The opposite is not true - there
+ * are methods manipulating SPObjects directly and such changes do not
+ * propagate to the SPRepr layer. This is important for implementation of
+ * the undo stack, animations and other features.
+ *
+ * SPObjects are bound to the higher-level container SPDocument, which
+ * provides document level functionality such as the undo stack,
+ * dictionary and so on. Source: doc/architecture.txt
+ *
+ * @todo need to remove redundant sp_object_... prefixing on methods.
  */
 class SPObject : public GObject {
 public:
@@ -180,16 +235,18 @@ public:
 
 public:
 
-    /** @brief cleans up an SPObject, releasing its references and
-     *         requesting that references to it be released
+    /**
+     * Cleans up an SPObject, releasing its references and
+     * requesting that references to it be released
      */
     void releaseReferences();
 
-    /** @brief connects to the release request signal
+    /**
+     * Connects to the release request signal
      *
-     *  @param slot the slot to connect
+     * @param slot the slot to connect
      *
-     *  @returns the sigc::connection formed
+     * @return the sigc::connection formed
      */
     sigc::connection connectRelease(sigc::slot<void, SPObject *> slot) {
         return _release_signal.connect(slot);
@@ -230,13 +287,21 @@ public:
         g_return_val_if_fail(object != NULL, false);
         return this->parent && this->parent == object->parent;
     }
+
+    /**
+     * True if object is non-NULL and this is some in/direct parent of object.
+     */
     bool isAncestorOf(SPObject const *object) const;
 
+    /**
+     * Returns youngest object being parent to this and object.
+     */
     SPObject const *nearestCommonAncestor(SPObject const *object) const;
+
     /* A non-const version can be similarly constructed if you want one.
      * (Don't just cast away the constness, which would be ill-formed.) */
-
     SPObject *getNext() {return next;}
+
     SPObject const *getNext() const {return next;}
 
     /**
@@ -260,32 +325,62 @@ public:
      */
     GSList *childList(bool add_ref, Action action = ActionGeneral);
 
+    /**
+     * Append repr as child of this object.
+     * \pre this is not a cloned object
+     */
     SPObject *appendChildRepr(Inkscape::XML::Node *repr);
 
-    /** @brief Gets the author-visible label for this object. */
+    /**
+     * Gets the author-visible label property for the object or a default if
+     * no label is defined.
+     */
     gchar const *label() const;
-    /** @brief Returns a default label for this object. */
+
+    /**
+     * Returns a default label property for this object.
+     */
     gchar const *defaultLabel() const;
-    /** @brief Sets the author-visible label for this object.
+
+    /**
+     * Sets the author-visible label for this object.
      *
-     * Sets the author-visible label for the object.
-     *
-     * @param label the new label
+     * @param label the new label.
      */
     void setLabel(gchar const *label);
 
-    /** Retrieves the title of this object */
+    /**
+     * Returns the title of this object, or NULL if there is none.
+     * The caller must free the returned string using g_free() - see comment
+     * for getTitleOrDesc() below.
+     */
     gchar *title() const;
-    /** Sets the title of this object */
-    bool setTitle(gchar const *title, bool verbatim=false);
 
-    /** Retrieves the description of this object */
+    /**
+     * Sets the title of this object.
+     * A NULL first argument is interpreted as meaning that the existing title
+     * (if any) should be deleted.
+     * The second argument is optional - @see setTitleOrDesc() below for details.
+     */
+    bool setTitle(gchar const *title, bool verbatim = false);
+
+    /**
+     * Returns the description of this object, or NULL if there is none.
+     * The caller must free the returned string using g_free() - see comment
+     * for getTitleOrDesc() below.
+     */
     gchar *desc() const;
-    /** Sets the description of this object */
+
+    /**
+     * Sets the description of this object.
+     * A NULL first argument is interpreted as meaning that the existing
+     * description (if any) should be deleted.
+     * The second argument is optional - @see setTitleOrDesc() below for details.
+     */
     bool setDesc(gchar const *desc, bool verbatim=false);
 
-    /** @brief Set the policy under which this object will be
-     *         orphan-collected.
+    /**
+     * Set the policy under which this object will be orphan-collected.
      *
      * Orphan-collection is the process of deleting all objects which no longer have
      * hyper-references pointing to them.  The policy determines when this happens.  Many objects
@@ -302,21 +397,23 @@ public:
      *  COLLECT_ALWAYS - always collect the object as soon as its
      *                   hrefcount reaches zero
      *
-     * @returns the current collection policy in effect for this object
+     * @return the current collection policy in effect for this object
      */
     CollectionPolicy collectionPolicy() const { return _collection_policy; }
 
-    /** @brief Sets the orphan-collection policy in effect for this object.
-     *
-     * @see SPObject::collectionPolicy
+    /**
+     * Sets the orphan-collection policy in effect for this object.
      *
      * @param policy the new policy to adopt
+     *
+     * @see SPObject::collectionPolicy
      */
     void setCollectionPolicy(CollectionPolicy policy) {
         _collection_policy = policy;
     }
 
-    /** @brief Requests a later automatic call to collectOrphan().
+    /**
+     * Requests a later automatic call to collectOrphan().
      *
      * This method requests that collectOrphan() be called during the document update cycle,
      * deleting the object if it is no longer used.
@@ -327,7 +424,8 @@ public:
      */
     void requestOrphanCollection();
 
-    /** @brief Unconditionally delete the object if it is not referenced.
+    /**
+     * Unconditionally delete the object if it is not referenced.
      *
      * Unconditionally delete the object if there are no outstanding hyper-references to it.
      * Observers are not notified of the object's deletion (at the SPObject level; XML tree
@@ -341,31 +439,36 @@ public:
         }
     }
 
-    /** @brief Check if object is referenced by any other object.
+    /**
+     * Check if object is referenced by any other object.
      */
     bool isReferenced() { return ( _total_hrefcount > 0 ); }
 
-    /** @brief Deletes an object.
+    /**
+     * Deletes an object, unparenting it from its parent.
      *
      * Detaches the object's repr, and optionally sends notification that the object has been
      * deleted.
      *
-     * @param propagate notify observers that the object has been deleted?
+     * @param propagate If it is set to true, it emits a delete signal.
      *
-     * @param propagate_descendants notify observers of children that they have been deleted?
+     * @param propagate_descendants If it is is true, it recursively sends the delete signal to children.
      */
     void deleteObject(bool propagate, bool propagate_descendants);
 
-    /** @brief Deletes on object.
+    /**
+     * Deletes on object.
      *
      * @param propagate Notify observers of this object and its children that they have been
      *                  deleted?
      */
-    void deleteObject(bool propagate=true) {
+    void deleteObject(bool propagate = true)
+    {
         deleteObject(propagate, propagate);
     }
 
-    /** @brief Connects a slot to be called when an object is deleted.
+    /**
+     * Connects a slot to be called when an object is deleted.
      *
      * This connects a slot to an object's internal delete signal, which is invoked when the object
      * is deleted
@@ -384,14 +487,17 @@ public:
         return _position_changed_signal.connect(slot);
     }
 
-    /** @brief Returns the object which supercedes this one (if any).
+    /**
+     * Returns the object which supercedes this one (if any).
      *
      * This is mainly useful for ensuring we can correctly perform a series of moves or deletes,
      * even if the objects in question have been replaced in the middle of the sequence.
      */
     SPObject *successor() { return _successor; }
 
-    /** @brief Indicates that another object supercedes this one. */
+    /**
+     * Indicates that another object supercedes this one.
+     */
     void setSuccessor(SPObject *successor) {
         g_assert(successor != NULL);
         g_assert(_successor == NULL);
@@ -408,18 +514,23 @@ public:
      * essentially just flushes any changes back to the backing store (the repr layer); maybe it
      * should be called something else and made public at that point. */
 
-    /** @brief Updates the object's repr based on the object's state.
+    /**
+     * Updates the object's repr based on the object's state.
      *
      *  This method updates the the repr attached to the object to reflect the object's current
      *  state; see the three-argument version for details.
      *
-     *  @param flags object write flags that apply to this update
+     * @param flags object write flags that apply to this update
      *
-     *  @return the updated repr
+     * @return the updated repr
      */
-    Inkscape::XML::Node *updateRepr(unsigned int flags=SP_OBJECT_WRITE_EXT);
+    Inkscape::XML::Node *updateRepr(unsigned int flags = SP_OBJECT_WRITE_EXT);
 
-    /** @brief Updates the given repr based on the object's state.
+    /**
+     * Updates the given repr based on the object's state.
+     *
+     * Used both to create reprs in the original document, and to create reprs
+     * in another document (e.g. a temporary document used when saving as "Plain SVG".
      *
      *  This method updates the given repr to reflect the object's current state.  There are
      *  several flags that affect this:
@@ -434,14 +545,15 @@ public:
      *   SP_OBJECT_WRITE_ALL   - create all nodes and attributes,
      *                           even those which might be redundant
      *
-     *  @param repr the repr to update
-     *  @param flags object write flags that apply to this update
+     * @param repr the repr to update
+     * @param flags object write flags that apply to this update
      *
-     *  @return the updated repr
+     * @return the updated repr
      */
     Inkscape::XML::Node *updateRepr(Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, unsigned int flags);
 
-    /** @brief Queues an deferred update of this object's display.
+    /**
+     * Queues an deferred update of this object's display.
      *
      *  This method sets flags to indicate updates to be performed later, during the idle loop.
      *
@@ -459,11 +571,12 @@ public:
      *
      *  One of either MODIFIED or CHILD_MODIFIED is required.
      *
-     *  @param flags flags indicating what to update
+     * @param flags flags indicating what to update
      */
     void requestDisplayUpdate(unsigned int flags);
 
-    /** @brief Updates the object's display immediately
+    /**
+     * Updates the object's display immediately
      *
      *  This method is called during the idle loop by SPDocument in order to update the object's
      *  display.
@@ -473,33 +586,43 @@ public:
      *   SP_OBJECT_PARENT_MODIFIED_FLAG - the parent has been
      *                                    modified
      *
-     *  @param ctx an SPCtx which accumulates various state
+     * @param ctx an SPCtx which accumulates various state
      *             during the recursive update -- beware! some
      *             subclasses try to cast this to an SPItemCtx *
      *
-     *  @param flags flags indicating what to update (in addition
+     * @param flags flags indicating what to update (in addition
      *               to any already set flags)
      */
     void updateDisplay(SPCtx *ctx, unsigned int flags);
 
-    /** @brief Requests that a modification notification signal
-     *         be emitted later (e.g. during the idle loop)
+    /**
+     * Requests that a modification notification signal
+     * be emitted later (e.g. during the idle loop)
      *
-     *  @param flags flags indicating what has been modified
+     * Request modified always bubbles *up* the tree, as opposed to
+     * request display update, which trickles down and relies on the
+     * flags set during this pass...
+     *
+     * @param flags flags indicating what has been modified
      */
     void requestModified(unsigned int flags);
 
-    /** @brief Emits a modification notification signal
+    /**
+     *  Emits the MODIFIED signal with the object's flags.
+     *  The object's mflags are the original set aside during the update pass for
+     *  later delivery here.  Once emitModified() is called, those flags don't
+     *  need to be stored any longer.
      *
-     *  @param flags indicating what has been modified
+     * @param flags indicating what has been modified.
      */
     void emitModified(unsigned int flags);
 
-    /** @brief Connects to the modification notification signal
+    /**
+     * Connects to the modification notification signal
      *
-     *  @param slot the slot to connect
+     * @param slot the slot to connect
      *
-     *  @returns the connection formed thereby
+     * @return the connection formed thereby
      */
     sigc::connection connectModified(
       sigc::slot<void, SPObject *, unsigned int> slot
@@ -510,11 +633,18 @@ public:
     /** Sends the delete signal to all children of this object recursively */
     void _sendDeleteSignalRecursive();
 
+    /**
+     * Adds increment to _total_hrefcount of object and its parents.
+     */
     void _updateTotalHRefCount(int increment);
 
     void _requireSVGVersion(unsigned major, unsigned minor) {
         _requireSVGVersion(Inkscape::Version(major, minor));
     }
+
+    /**
+     * Lifts SVG version of all root objects to version.
+     */
     void _requireSVGVersion(Inkscape::Version version);
 
     sigc::signal<void, SPObject *> _release_signal;
@@ -530,59 +660,246 @@ public:
     // Methods below should not be used outside of the SP tree,
     // as they operate directly on the XML representation.
     // In future, they will be made protected.
+
+    /**
+     * Put object into object tree, under parent, and behind prev;
+     * also update object's XML space.
+     */
     void attach(SPObject *object, SPObject *prev);
+
+    /**
+     * In list of object's siblings, move object behind prev.
+     */
     void reorder(SPObject *prev);
+
+    /**
+     * Remove object from parent's children, release and unref it.
+     */
     void detach(SPObject *object);
+
+    /**
+     * Return object's child whose node pointer equals repr.
+     */
     SPObject *get_child_by_repr(Inkscape::XML::Node *repr);
+
     void invoke_build(SPDocument *document, Inkscape::XML::Node *repr, unsigned int cloned);
+
     long long int getIntAttribute(char const *key, long long int def);
+
     unsigned getPosition();
+
     gchar const * getAttribute(gchar const *name,SPException *ex=0) const;
+
     void appendChild(Inkscape::XML::Node *child);
+
     void addChild(Inkscape::XML::Node *child,Inkscape::XML::Node *prev=0);
+
+    /**
+     * Call virtual set() function of object.
+     */
     void setKeyValue(unsigned int key, gchar const *value);
+
     void setAttribute(gchar const *key, gchar const *value, SPException *ex=0);
+
+    /**
+     * Read value of key attribute from XML node into object.
+     */
     void readAttr(gchar const *key);
+
     gchar const *getTagName(SPException *ex) const;
+
     void removeAttribute(gchar const *key, SPException *ex=0);
+
+    /**
+     * Returns an object style property.
+     *
+     * \todo
+     * fixme: Use proper CSS parsing.  The current version is buggy
+     * in a number of situations where key is a substring of the
+     * style string other than as a property name (including
+     * where key is a substring of a property name), and is also
+     * buggy in its handling of inheritance for properties that
+     * aren't inherited by default.  It also doesn't allow for
+     * the case where the property is specified but with an invalid
+     * value (in which case I believe the CSS2 error-handling
+     * behaviour applies, viz. behave as if the property hadn't
+     * been specified).  Also, the current code doesn't use CRSelEng
+     * stuff to take a value from stylesheets.  Also, we aren't
+     * setting any hooks to force an update for changes in any of
+     * the inputs (i.e., in any of the elements that this function
+     * queries).
+     *
+     * \par
+     * Given that the default value for a property depends on what
+     * property it is (e.g., whether to inherit or not), and given
+     * the above comment about ignoring invalid values, and that the
+     * repr parent isn't necessarily the right element to inherit
+     * from (e.g., maybe we need to inherit from the referencing
+     * <use> element instead), we should probably make the caller
+     * responsible for ascending the repr tree as necessary.
+     */
     gchar const *getStyleProperty(gchar const *key, gchar const *def) const;
+
     void setCSS(SPCSSAttr *css, gchar const *attr);
+
     void changeCSS(SPCSSAttr *css, gchar const *attr);
+
     bool storeAsDouble( gchar const *key, double *val ) const;
 
 private:
     // Private member functions used in the definitions of setTitle(),
     // setDesc(), title() and desc().
+
+    /**
+     * Sets or deletes the title or description of this object.
+     * A NULL 'value' argument causes the title or description to be deleted.
+     *
+     * 'verbatim' parameter:
+     * If verbatim==true, then the title or description is set to exactly the
+     * specified value.  If verbatim==false then two exceptions are made:
+     *   (1) If the specified value is just whitespace, then the title/description
+     *       is deleted.
+     *   (2) If the specified value is the same as the current value except for
+     *       mark-up, then the current value is left unchanged.
+     * This is usually the desired behaviour, so 'verbatim' defaults to false for
+     * setTitle() and setDesc().
+     *
+     * The return value is true if a change was made to the title/description,
+     * and usually false otherwise.
+     */
     bool setTitleOrDesc(gchar const *value, gchar const *svg_tagname, bool verbatim);
+
+    /**
+     * Returns the title or description of this object, or NULL if there is none.
+     *
+     * The SVG spec allows 'title' and 'desc' elements to contain text marked up
+     * using elements from other namespaces.  Therefore, this function cannot
+     * in general just return a pointer to an existing string - it must instead
+     * construct a string containing the title or description without the mark-up.
+     * Consequently, the return value is a newly allocated string (or NULL), and
+     * must be freed (using g_free()) by the caller.
+     */
     gchar * getTitleOrDesc(gchar const *svg_tagname) const;
+
+    /**
+     * Find the first child of this object with a given tag name,
+     * and return it.  Returns NULL if there is no matching child.
+     */
     SPObject * findFirstChild(gchar const *tagname) const;
+
+    /**
+     * Return the full textual content of an element (typically all the
+     * content except the tags).
+     * Must not be used on anything except elements.
+     */
     GString * textualContent() const;
 
+    /**
+     * Callback to initialize the SPObject object.
+     */
     static void sp_object_init(SPObject *object);
+
+    /**
+     * Callback to destroy all members and connections of object and itself.
+     */
     static void sp_object_finalize(GObject *object);
 
+    /**
+     * Callback for child_added event.
+     * Invoked whenever the given mutation event happens in the XML tree.
+     */
     static void sp_object_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
+
+    /**
+     * Remove object's child whose node equals repr, release and
+     * unref it.
+     *
+     * Invoked whenever the given mutation event happens in the XML
+     * tree, BEFORE removal from the XML tree happens, so grouping
+     * objects can safely release the child data.
+     */
     static void sp_object_remove_child(SPObject *object, Inkscape::XML::Node *child);
+
+    /**
+     * Move object corresponding to child after sibling object corresponding
+     * to new_ref.
+     * Invoked whenever the given mutation event happens in the XML tree.
+     * @param old_ref Ignored
+     */
     static void sp_object_order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
 
+    /**
+     * Removes, releases and unrefs all children of object.
+     *
+     * This is the opposite of build. It has to be invoked as soon as the
+     * object is removed from the tree, even if it is still alive according
+     * to reference count. The frontend unregisters the object from the
+     * document and releases the SPRepr bindings; implementations should free
+     * state data and release all child objects.  Invoking release on
+     * SPRoot destroys the whole document tree.
+     * @see sp_object_build()
+     */
     static void sp_object_release(SPObject *object);
+
+    /**
+     * Virtual build callback.
+     *
+     * This has to be invoked immediately after creation of an SPObject. The
+     * frontend method ensures that the new object is properly attached to
+     * the document and repr; implementation then will parse all of the attributes,
+     * generate the children objects and so on.  Invoking build on the SPRoot
+     * object results in creation of the whole document tree (this is, what
+     * SPDocument does after the creation of the XML tree).
+     * @see sp_object_release()
+     */
     static void sp_object_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 
+    /**
+     * Callback for set event.
+     */
     static void sp_object_private_set(SPObject *object, unsigned int key, gchar const *value);
+
+    /**
+     * Callback for write event.
+     */
     static Inkscape::XML::Node *sp_object_private_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+
     static gchar *sp_object_get_unique_id(SPObject *object, gchar const *defid);
 
     /* Real handlers of repr signals */
 
 public:
+
+    /**
+     * Registers the SPObject class with Gdk and returns its type number.
+     */
     static GType sp_object_get_type();
+
+    /**
+     * Callback for attr_changed node event.
+     */
     static void sp_object_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gchar const *oldval, gchar const *newval, bool is_interactive, gpointer data);
 
+    /**
+     * Callback for content_changed node event.
+     */
     static void sp_object_repr_content_changed(Inkscape::XML::Node *repr, gchar const *oldcontent, gchar const *newcontent, gpointer data);
 
+    /**
+     * Callback for child_added node event.
+     */
     static void sp_object_repr_child_added(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, gpointer data);
+
+    /**
+     * Callback for remove_child node event.
+     */
     static void sp_object_repr_child_removed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, void *data);
 
+    /**
+     * Callback for order_changed node event.
+     *
+     * \todo fixme:
+     */
     static void sp_object_repr_order_changed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *old, Inkscape::XML::Node *newer, gpointer data);
 
 
@@ -617,12 +934,25 @@ public:
 
 private:
     static GObjectClass *static_parent_class;
+
+    /**
+     * Initializes the SPObject vtable.
+     */
     static void sp_object_class_init(SPObjectClass *klass);
 
     friend class SPObject;
 };
 
 
+/**
+ * Compares height of objects in tree.
+ *
+ * Works for different-parent objects, so long as they have a common ancestor.
+ * \return \verbatim
+ *    0    positions are equivalent
+ *    1    first object's position is greater than the second
+ *   -1    first object's position is less than the second   \endverbatim
+ */
 int sp_object_compare_position(SPObject const *first, SPObject const *second);
 
 

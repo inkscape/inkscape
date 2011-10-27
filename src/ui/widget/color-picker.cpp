@@ -1,7 +1,4 @@
-/**
- * @file
- * Color picker button & window.
- *
+/*
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>

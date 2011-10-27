@@ -1,4 +1,4 @@
-/**
+/*
  * Our base input/output stream classes.  These are is directly
  * inherited from iostreams, and includes any extra
  * functionality that we might need.
