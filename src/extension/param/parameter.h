@@ -83,9 +83,7 @@ public:
                               Inkscape::Extension::Extension * ext);
                   Parameter  (const gchar * name,
                               const gchar * guitext,
-                              Inkscape::Extension::Extension * ext) {
-                      Parameter(name, guitext, NULL, Parameter::SCOPE_USER, false, NULL, ext);
-                  };
+                              Inkscape::Extension::Extension * ext);
     virtual      ~Parameter  (void);
 
     bool          get_bool   (const SPDocument * doc,

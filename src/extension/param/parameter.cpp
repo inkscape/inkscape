@@ -307,11 +307,27 @@ Parameter::Parameter (const gchar * name, const gchar * guitext, const gchar * d
         _gui_tip = g_strdup(gui_tip);
     }
 
-
-    if (guitext != NULL)
+    if (guitext != NULL) {
         _text = g_strdup(guitext);
-    else
+    } else {
         _text = g_strdup(name);
+    }
+
+    return;
+}
+
+/** \brief  Oop, now that we need a parameter, we need it's name.  */
+Parameter::Parameter (const gchar * name, const gchar * guitext, Inkscape::Extension::Extension * ext) :
+    extension(ext), _name(NULL), _desc(NULL), _scope(Parameter::SCOPE_USER), _text(NULL), _gui_hidden(false), _gui_tip(NULL)
+{
+    if (name != NULL) {
+        _name = g_strdup(name);
+    }
+    if (guitext != NULL) {
+        _text = g_strdup(guitext);
+    } else {
+        _text = g_strdup(name);
+    }
 
     return;
 }
