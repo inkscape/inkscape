@@ -62,7 +62,8 @@ public:
 
 
 ParamNotebookPage::ParamNotebookPage (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext)
+    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext),
+    _tooltips(NULL)
 {
     parameters = NULL;
 
@@ -119,6 +120,7 @@ ParamNotebookPage::paramString (std::list <std::string> &list)
             in the XML file describing the extension (it's private so people
             have to use the system) :)
     \param  in_repr  The XML describing the page
+    \todo   the 'gui-hidden' attribute is read but not used!
 
     This function first grabs all of the data out of the Repr and puts
     it into local variables.  Actually, these are just pointers, and the
