@@ -206,8 +206,8 @@ void text_wrapper::DoLayout(void)
         GSList *curR = pLine->runs; // get ready to iterate over the runs of this line
         while ( curR ) {
             PangoLayoutRun *pRun = (PangoLayoutRun*)curR->data;
-            int prOffset = pRun->item->offset; // start of the run in the line
             if ( pRun ) {
+                int prOffset = pRun->item->offset; // start of the run in the line
                 // a run has uniform font/directionality/etc...
                 int o_g_l = glyph_length; // save the index of the first glyph we'll add
                 for (int i = 0; i < pRun->glyphs->num_glyphs; i++) { // add glyph sequentially, reading them from the run
