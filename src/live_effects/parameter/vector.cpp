@@ -53,9 +53,12 @@ bool
 VectorParam::param_readSVGValue(const gchar * strvalue)
 {
     gchar ** strarray = g_strsplit(strvalue, ",", 4);
+    if (!strarray) {
+        return false;
+    }
     double val[4];
     unsigned int i = 0;
-    while (strarray[i] && i < 4) {
+    while (i < 4 && strarray[i]) {
         if (sp_svg_number_read_d(strarray[i], &val[i]) != 0) {
             i++;
         } else {
