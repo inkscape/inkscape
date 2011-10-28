@@ -154,6 +154,8 @@ void DebugDialog::showInstance()
 {
     DebugDialog *debugDialog = getInstance();
     debugDialog->show();
+    // this is not a real memleak because getInstance() only creates a debug dialog once, and returns that instance for all subsequent calls
+    // cppcheck-suppress memleak
 }
 
 
