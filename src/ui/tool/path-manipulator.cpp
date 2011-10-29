@@ -1006,7 +1006,7 @@ void PathManipulator::_createControlPointsFromGeometry()
         // When we erase an element, the next one slides into position,
         // so we do not increment the iterator even though it is theoretically invalidated.
         if (i->empty()) {
-            pathv.erase(i);
+            i = pathv.erase(i);
         } else {
             ++i;
         }

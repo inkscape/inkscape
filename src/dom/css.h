@@ -639,11 +639,14 @@ public:
                                      throw (dom::DOMException)
         {
         std::vector<CSSStyleDeclarationEntry>::iterator iter;
-        for (iter=items.begin() ; iter!=items.end() ; ++iter)
-            {
-            if (iter->name == propertyName)
-                items.erase(iter);
+        for (iter=items.begin() ; iter!=items.end() ; ){
+            if (iter->name == propertyName){
+                iter = items.erase(iter);
             }
+            else{
+                ++iter;
+            }
+        }
         return propertyName;
         }
 

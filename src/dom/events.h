@@ -510,17 +510,20 @@ public:
     virtual void removeEventListener(const DOMString &type,
                                      const EventListener *listener,
                                      bool useCapture)
-        {
+    {
         std::vector<EventListenerEntry>::iterator iter;
-        for (iter = listeners.begin() ; iter != listeners.end() ; ++iter)
-            {
+        for (iter = listeners.begin() ; iter != listeners.end() ; ){
             EventListenerEntry entry = *iter;
             if (entry.eventType == type &&
                 entry.listener  == listener &&
-                useCapture && entry.useCapture)
-                listeners.erase(iter);
+                useCapture && entry.useCapture){
+                iter = listeners.erase(iter);
+            }
+            else{
+                ++iter;
             }
         }
+    }
 
     /**
      * This method allows the dispatch of events into the implementation's event 
@@ -568,18 +571,21 @@ public:
                                        const DOMString &type,
                                        const EventListener *listener,
                                        bool useCapture)
-        {
+    {
         std::vector<EventListenerEntry>::iterator iter;
-        for (iter = listeners.begin() ; iter != listeners.end() ; ++iter)
-            {
+        for (iter = listeners.begin() ; iter != listeners.end() ; ){
             EventListenerEntry entry = *iter;
             if (entry.namespaceURI == namespaceURI &&
                 entry.eventType    == type &&
                 entry.listener     == listener &&
-                useCapture && entry.useCapture)
-                listeners.erase(iter);
+                useCapture && entry.useCapture){
+                iter = listeners.erase(iter);
+            }
+            else {
+                ++iter;
             }
         }
+    }
 
     /**
      * This method allows the DOM application to know if an event listener, attached 

@@ -122,14 +122,17 @@ public:
      */
     virtual void deleteMedium(const DOMString& oldMedium)
                               throw (dom::DOMException)
-        {
+    {
         std::vector<DOMString>::iterator iter;
-        for (iter=items.begin() ; iter!=items.end() ; ++iter)
-            {
-            if (*iter == oldMedium)
-                items.erase(iter);
+        for (iter=items.begin() ; iter!=items.end() ; ){
+            if (*iter == oldMedium){
+                iter = items.erase(iter);
+            }
+            else{
+                ++iter;
             }
         }
+    }
 
     /**
      * Adds the medium newMedium to the end of the list. If the newMedium
