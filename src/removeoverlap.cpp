@@ -26,7 +26,7 @@ namespace {
 		Geom::Point midpoint;
 		Rectangle *vspc_rect;
 
-		Record() {}
+		Record() : item(0), vspc_rect(0) {}
 		Record(SPItem *i, Geom::Point m, Rectangle *r)
 		: item(i), midpoint(m), vspc_rect(r) {}
 	};

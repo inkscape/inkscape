@@ -84,6 +84,7 @@ Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p)
     _source_num = -1,
     _target = SNAPTARGET_UNDEFINED,
     _at_intersection = false;
+    _constrained_snap = false;
     _fully_constrained = false;
     _distance = Geom::infinity();
     _tolerance = 1;

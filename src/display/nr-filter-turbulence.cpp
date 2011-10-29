@@ -36,6 +36,8 @@ public:
         , _wrapw(0)
         , _wraph(0)
         , _inited(false)
+        , _seed(0)
+        , _octaves(0)
     {}
 
     void init(long seed, Geom::Rect const &tile, Geom::Point const &freq, bool stitch,
