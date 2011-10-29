@@ -166,8 +166,8 @@ sp_png_write_rgba_striped(SPDocument *doc,
     /* Set error handling.  REQUIRED if you aren't supplying your own
      * error hadnling functions in the png_create_write_struct() call.
      */
-    if (setjmp(png_ptr->jmpbuf)) {
-        /* If we get here, we had a problem reading the file */
+    if (setjmp(png_jmpbuf(png_ptr))) {
+        // If we get here, we had a problem reading the file
         fclose(fp);
         png_destroy_write_struct(&png_ptr, &info_ptr);
         return false;
