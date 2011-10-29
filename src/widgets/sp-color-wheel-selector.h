@@ -38,11 +38,11 @@ protected:
 
     gboolean _updating : 1;
     gboolean _dragging : 1;
-    GtkAdjustment* _adj; /* Channel adjustment */
+    GtkAdjustment* _adj; // Channel adjustment
     GtkWidget* _wheel;
     GtkWidget* _slider;
-    GtkWidget* _sbtn; /* Spinbutton */
-    GtkWidget* _label; /* Label */
+    GtkWidget* _sbtn; // Spinbutton
+    GtkWidget* _label; // Label
 
 private:
     // By default, disallow copy constructor and assignment operator

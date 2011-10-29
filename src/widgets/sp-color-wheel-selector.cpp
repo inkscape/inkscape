@@ -82,9 +82,9 @@ ColorWheelSelector::ColorWheelSelector( SPColorSelector* csel )
       _dragging( FALSE ),
       _adj(0),
       _wheel(0),
+      _slider(0),
       _sbtn(0),
-      _label(0),
-      _slider(0)
+      _label(0)
 {
 }
 

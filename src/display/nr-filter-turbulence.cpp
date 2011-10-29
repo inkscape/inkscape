@@ -30,14 +30,20 @@ namespace Filters{
 
 class TurbulenceGenerator {
 public:
-    TurbulenceGenerator()
-        : _wrapx(0)
-        , _wrapy(0)
-        , _wrapw(0)
-        , _wraph(0)
-        , _inited(false)
-        , _seed(0)
-        , _octaves(0)
+    TurbulenceGenerator() :
+        _tile(),
+        _baseFreq(),
+        _latticeSelector(),
+        _gradient(),
+        _seed(0),
+        _octaves(0),
+        _stitchTiles(false),
+        _wrapx(0),
+        _wrapy(0),
+        _wrapw(0),
+        _wraph(0),
+        _inited(false),
+        _fractalnoise(false)
     {}
 
     void init(long seed, Geom::Rect const &tile, Geom::Point const &freq, bool stitch,
@@ -275,11 +281,9 @@ private:
         RAND_r = 2836; // m % a
 
     // other constants
-    static int const
-        BSize = 0x100,
-        BMask = 0xff;
-    static double const
-        PerlinOffset = 4096.0;
+    static int const BSize = 0x100;
+    static int const BMask = 0xff;
+    static double const PerlinOffset = 4096.0;
 
     Geom::Rect _tile;
     Geom::Point _baseFreq;
@@ -288,7 +292,10 @@ private:
     long _seed;
     int _octaves;
     bool _stitchTiles;
-    int _wrapx, _wrapy, _wrapw, _wraph;
+    int _wrapx;
+    int _wrapy;
+    int _wrapw;
+    int _wraph;
     bool _inited;
     bool _fractalnoise;
 };
