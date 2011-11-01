@@ -248,6 +248,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     }
                 }
 
+
                 //draw control line
                 SPCanvasItem * control_line = NULL;
                 control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
@@ -357,6 +358,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 SPUnit unit = sp_unit_get_by_id(unitid);
 
                 double fontsize = prefs->getInt("/tools/measure/fontsize");
+                SPCanvasItem *canvas_tooltip;
 
                 Geom::Point previous_point;
                 if (intersections.size()>0)
@@ -371,7 +373,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                     char* measure_str = (char*) malloc(sizeof(char)*20);
                     sprintf(measure_str, "%.2f %s", lengthval, unit.abbr);
-                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc(measure_text_pos), measure_str);
+                    canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc(measure_text_pos), measure_str);
 
                     sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
                     SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
@@ -387,9 +389,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 char* angle_str = (char*) malloc(sizeof(char)*20);
                 sprintf(angle_str, "%.2f °", angle * 180/M_PI );
-                SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,0)), angle_str);
+                canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,0)), angle_str);
                 sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
-                sp_canvastext_set_rgba32 (SP_CANVASTEXT(canvas_tooltip), 0x337f33ff, 0xffffffff);
                 SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
                 SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x337f337f;
                 SP_CANVASTEXT(canvas_tooltip)->outline = false;
@@ -397,6 +398,38 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
                 free(angle_str);
+
+                /* Display measurement of total length from first until last intersection points */
+
+                if (intersections.size()>2){
+                    Geom::Point normal = Geom::rot90(Geom::unit_vector(intersections[intersections.size()-1] - intersections[0]));
+                    control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                    sp_ctrlline_set_coords(SP_CTRLLINE(control_line),  desktop->doc2dt(intersections[0]) + desktop->w2d(normal*60), desktop->doc2dt(intersections[intersections.size()-1]) + desktop->w2d(normal*60));
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+
+                    control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                    sp_ctrlline_set_coords(SP_CTRLLINE(control_line),  desktop->doc2dt(intersections[0]), desktop->doc2dt(intersections[0]) + desktop->w2d(normal*65));
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+
+                    control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                    sp_ctrlline_set_coords(SP_CTRLLINE(control_line),  desktop->doc2dt(intersections[intersections.size()-1]), desktop->doc2dt(intersections[intersections.size()-1]) + desktop->w2d(normal*65));
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+
+                    double totallengthval = (intersections[intersections.size()-1] - intersections[0]).length();
+                    sp_convert_distance(&totallengthval, &sp_unit_get_by_id(SP_UNIT_PX), &unit);
+                    char* total_str = (char*) malloc(sizeof(char)*20);
+                    sprintf(total_str, "%.2f %s", totallengthval, unit.abbr);
+
+                    canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc((intersections[0] + intersections[intersections.size()-1])/2) + desktop->w2d(normal*60), total_str);
+                    sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
+                    SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
+                    SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x33337f7f;
+                    SP_CANVASTEXT(canvas_tooltip)->outline = false;
+                    SP_CANVASTEXT(canvas_tooltip)->background = true;
+
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
+                    free(total_str);
+                }
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
             }
