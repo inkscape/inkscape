@@ -3,6 +3,7 @@
  *
  * Authors:
  *   Felipe Correa da Silva Sanches <juca@members.fsf.org>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2011 Authors
  *
@@ -44,17 +45,20 @@
 static void sp_measure_context_class_init(SPMeasureContextClass *klass);
 static void sp_measure_context_init(SPMeasureContext *measure_context);
 static void sp_measure_context_setup(SPEventContext *ec);
-static void sp_measure_context_finish (SPEventContext *ec);
+static void sp_measure_context_finish(SPEventContext *ec);
 
 static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 static gint sp_measure_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
 
 static SPEventContextClass *parent_class;
 
-static gint xp = 0, yp = 0; // where drag started
+static gint xp = 0; // where drag started
+static gint yp = 0;
 static gint tolerance = 0;
 static bool within_tolerance = false;
+
 Geom::Point start_point;
+
 std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
 
 GType sp_measure_context_get_type(void)
@@ -65,14 +69,14 @@ GType sp_measure_context_get_type(void)
         GTypeInfo info = {
             sizeof(SPMeasureContextClass),
             NULL, NULL,
-            (GClassInitFunc) sp_measure_context_class_init,
+            reinterpret_cast<GClassInitFunc>(sp_measure_context_class_init), // TODO needs two params?
             NULL, NULL,
             sizeof(SPMeasureContext),
             4,
-            (GInstanceInitFunc) sp_measure_context_init,
-            NULL,	/* value_table */
+            reinterpret_cast<GInstanceInitFunc>(sp_measure_context_init), // TODO needs two params?
+            NULL,       // value_table
         };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPMeasureContext", &info, (GTypeFlags) 0);
+        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPMeasureContext", &info, static_cast<GTypeFlags>(0));
     }
 
     return type;
@@ -80,9 +84,9 @@ GType sp_measure_context_get_type(void)
 
 static void sp_measure_context_class_init(SPMeasureContextClass *klass)
 {
-    SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
+    SPEventContextClass *event_context_class = reinterpret_cast<SPEventContextClass *>(klass);
 
-    parent_class = (SPEventContextClass*) g_type_class_peek_parent(klass);
+    parent_class = static_cast<SPEventContextClass*>(g_type_class_peek_parent(klass));
 
     event_context_class->setup = sp_measure_context_setup;
     event_context_class->finish = sp_measure_context_finish;
@@ -91,7 +95,7 @@ static void sp_measure_context_class_init(SPMeasureContextClass *klass)
     event_context_class->item_handler = sp_measure_context_item_handler;
 }
 
-static void sp_measure_context_init (SPMeasureContext *measure_context)
+static void sp_measure_context_init(SPMeasureContext *measure_context)
 {
     SPEventContext *event_context = SP_EVENT_CONTEXT(measure_context);
 
@@ -100,12 +104,11 @@ static void sp_measure_context_init (SPMeasureContext *measure_context)
     event_context->hot_y = 4;
 }
 
-static void
-sp_measure_context_finish (SPEventContext *ec)
+static void sp_measure_context_finish(SPEventContext *ec)
 {
-	SPMeasureContext *mc = SP_MEASURE_CONTEXT(ec);
-	
-	ec->enableGrDrag(false);
+    SPMeasureContext *mc = SP_MEASURE_CONTEXT(ec);
+
+    ec->enableGrDrag(false);
 
     if (mc->grabbed) {
         sp_canvas_item_ungrab(mc->grabbed, GDK_CURRENT_TIME);
@@ -115,8 +118,8 @@ sp_measure_context_finish (SPEventContext *ec)
 
 static void sp_measure_context_setup(SPEventContext *ec)
 {
-    if (((SPEventContextClass *) parent_class)->setup) {
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if (parent_class->setup) {
+        parent_class->setup(ec);
     }
 }
 
@@ -124,8 +127,8 @@ static gint sp_measure_context_item_handler(SPEventContext *event_context, SPIte
 {
     gint ret = FALSE;
 
-    if (((SPEventContextClass *) parent_class)->item_handler) {
-        ret = ((SPEventContextClass *) parent_class)->item_handler (event_context, item, event);
+    if (parent_class->item_handler) {
+        ret = parent_class->item_handler(event_context, item, event);
     }
 
     return ret;
@@ -133,10 +136,11 @@ static gint sp_measure_context_item_handler(SPEventContext *event_context, SPIte
 
 bool GeomPointSortPredicate(const Geom::Point& p1, const Geom::Point& p2)
 {
-    if (p1[Geom::Y] == p2[Geom::Y])
+    if (p1[Geom::Y] == p2[Geom::Y]) {
         return p1[Geom::X] < p2[Geom::X];
-    else
+    } else {
         return p1[Geom::Y] < p2[Geom::Y];
+    }
 }
 
 void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom::PathVector *lineseg, SPCurve *curve, std::vector<Geom::Point> *intersections)
@@ -156,7 +160,7 @@ void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom::PathVe
         if (((*m).ta > eps &&
              item == doc->getItemAtPoint(desktop->dkey, (*lineseg)[0].pointAt((*m).ta - eps), false, NULL)) ||
             ((*m).ta + eps < 1 &&
-             item == doc->getItemAtPoint(desktop->dkey, (*lineseg)[0].pointAt((*m).ta + eps), false, NULL)) ){
+             item == doc->getItemAtPoint(desktop->dkey, (*lineseg)[0].pointAt((*m).ta + eps), false, NULL)) ) {
             intersections->push_back(intersection);
         }
 #else
@@ -170,7 +174,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
-	
+
     SPMeasureContext *mc = SP_MEASURE_CONTEXT(event_context);
     gint ret = FALSE;
 
@@ -181,8 +185,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
             start_point = desktop->w2d(button_w);
             if (event->button.button == 1 && !event_context->space_panning) {
                 // save drag origin
-                xp = (gint) event->button.x;
-                yp = (gint) event->button.y;
+                xp = static_cast<gint>(event->button.x);
+                yp = static_cast<gint>(event->button.y);
                 within_tolerance = true;
 
                 ret = TRUE;
@@ -200,7 +204,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
             break;
         }
 
-	case GDK_MOTION_NOTIFY:
+        case GDK_MOTION_NOTIFY:
         {
             if (!((event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning)) {
                 if (!(event->motion.state & GDK_SHIFT_MASK)) {
@@ -217,8 +221,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 ret = TRUE;
 
                 if ( within_tolerance
-                     && ( abs( (gint) event->motion.x - xp ) < tolerance )
-                     && ( abs( (gint) event->motion.y - yp ) < tolerance ) ) {
+                     && ( abs( static_cast<gint>(event->motion.x) - xp ) < tolerance )
+                     && ( abs( static_cast<gint>(event->motion.y) - yp ) < tolerance ) ) {
                     break; // do not drag if we're within tolerance from origin
                 }
                 // Once the user has moved farther than tolerance from the original location
@@ -227,8 +231,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 within_tolerance = false;
 
                 //clear previous temporary canvas items, we'll draw new ones
-                unsigned int idx;
-                for (idx=0; idx<measure_tmp_items.size(); idx++){
+                for (size_t idx = 0; idx < measure_tmp_items.size(); ++idx) {
                     desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
                 }
                 measure_tmp_items.clear();
@@ -251,7 +254,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 //draw control line
                 SPCanvasItem * control_line = NULL;
-                control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                control_line = sp_canvas_item_new(sp_desktop_tempgroup(desktop), SP_TYPE_CTRLLINE, NULL);
                 sp_ctrlline_set_coords(SP_CTRLLINE(control_line), start_point, end_point);
                 measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
@@ -270,9 +273,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 #define NPOINTS 800
 
                 std::vector<Geom::Point> points;
-                double i;
-                for (i=0; i<NPOINTS; i++){
-                    points.push_back(desktop->d2w(start_point + (i/NPOINTS)*(end_point-start_point)));
+                for (double i = 0; i < NPOINTS; i++) {
+                    points.push_back(desktop->d2w(start_point + (i / NPOINTS) * (end_point - start_point)));
                 }
 
 // TODO: Felipe, why don't you simply iterate over all items, and test whether their bounding boxes intersect
@@ -281,34 +283,36 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 //select elements crossed by line segment:
                 GSList *items = sp_desktop_document(desktop)->getItemsAtPoints(desktop->dkey, points);
-                SPItem* item;
-                GSList *l;
                 std::vector<Geom::Point> intersections;
                 Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                 bool ignore_1st_and_last = prefs->getBool("/tools/measure/ignore_1st_and_last", true);
 
-                if (!ignore_1st_and_last){
+                if (!ignore_1st_and_last) {
                     intersections.push_back(desktop->dt2doc(start_point));
                 }
 
-                for (l = items; l != NULL; l = l->next){
-                    item = (SPItem*) (l->data);
+                // TODO switch to a different variable name. The single letter 'l' is easy to misread.
+                for (GSList *l = items; l != NULL; l = l->next) {
+                    SPItem *item = static_cast<SPItem*>(l->data);
 
                     if (SP_IS_SHAPE(item)) {
                        calculate_intersections(desktop, item, &lineseg, SP_SHAPE(item)->getCurve(), &intersections);
                     } else {
-                        if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)){
-                            Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin(); 
+                        if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
+                            Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin();
                             do {
                                 Inkscape::Text::Layout::iterator iter_next = iter;
                                 iter_next.nextGlyph(); // iter_next is one glyph ahead from iter
-                                if (iter == iter_next)
+                                if (iter == iter_next) {
                                     break;
+                                }
 
                                 // get path from iter to iter_next:
                                 SPCurve *curve = te_get_layout(item)->convertToCurves(iter, iter_next);
                                 iter = iter_next; // shift to next glyph
-                                if (!curve) continue; // error converting this glyph
+                                if (!curve) {
+                                    continue; // error converting this glyph
+                                }
                                 if (curve->is_empty()) { // whitespace glyph?
                                     curve->unref();
                                     continue;
@@ -319,27 +323,27 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                                 calculate_intersections(desktop, item, &lineseg, curve, &intersections);
 
-                                if (iter == te_get_layout(item)->end())
+                                if (iter == te_get_layout(item)->end()) {
                                     break;
-
+                                }
                             } while (true);
                         }
                     }
                 }
 
-                if (!ignore_1st_and_last){
+                if (!ignore_1st_and_last) {
                     intersections.push_back(desktop->dt2doc(end_point));
                 }
 
                 //sort intersections
-                if (intersections.size()>2){
+                if (intersections.size() > 2) {
                     std::sort(intersections.begin(), intersections.end(), GeomPointSortPredicate);
                 }
 
-                for (idx=0;idx<intersections.size(); idx++){
+                for (size_t idx = 0; idx < intersections.size(); ++idx) {
                     // Display the intersection indicator (i.e. the cross)
                     SPCanvasItem * canvasitem = NULL;
-                    canvasitem = sp_canvas_item_new(sp_desktop_tempgroup (desktop),
+                    canvasitem = sp_canvas_item_new(sp_desktop_tempgroup(desktop),
                                                     SP_TYPE_CTRL,
                                                     "anchor", GTK_ANCHOR_CENTER,
                                                     "size", 8.0,
@@ -351,31 +355,31 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                     SP_CTRL(canvasitem)->moveto(desktop->doc2dt(intersections[idx]));
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvasitem, 0));
-
                 }
 
                 SPUnitId unitid = static_cast<SPUnitId>(prefs->getInt("/tools/measure/unitid", SP_UNIT_PX));
                 SPUnit unit = sp_unit_get_by_id(unitid);
 
                 double fontsize = prefs->getInt("/tools/measure/fontsize");
-                SPCanvasItem *canvas_tooltip;
 
                 Geom::Point previous_point;
-                if (intersections.size()>0)
+                if (intersections.size() > 0) {
                     previous_point = intersections[0];
+                }
 
-                for (idx=1; idx < intersections.size(); idx++){
-                    Geom::Point measure_text_pos = (previous_point + intersections[idx])/2;
+                for (size_t idx = 1; idx < intersections.size(); ++idx) {
+                    Geom::Point measure_text_pos = (previous_point + intersections[idx]) / 2;
 //TODO: shift label a few pixels in the y coordinate
 
                     double lengthval = (intersections[idx] - previous_point).length();
                     sp_convert_distance(&lengthval, &sp_unit_get_by_id(SP_UNIT_PX), &unit);
 
-                    char* measure_str = (char*) malloc(sizeof(char)*20);
+                    // TODO cleanup memory, Glib::ustring, etc.:
+                    char* measure_str = static_cast<char*>(malloc(20));
                     sprintf(measure_str, "%.2f %s", lengthval, unit.abbr);
-                    canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc(measure_text_pos), measure_str);
+                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc(measure_text_pos), measure_str);
 
-                    sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
+                    sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
                     SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
                     SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x0000007f;
                     SP_CANVASTEXT(canvas_tooltip)->outline = false;
@@ -387,41 +391,46 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     previous_point = intersections[idx];
                 }
 
-                char* angle_str = (char*) malloc(sizeof(char)*20);
-                sprintf(angle_str, "%.2f °", angle * 180/M_PI );
-                canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,0)), angle_str);
-                sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
-                SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
-                SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x337f337f;
-                SP_CANVASTEXT(canvas_tooltip)->outline = false;
-                SP_CANVASTEXT(canvas_tooltip)->background = true;
+                {
+                    // TODO cleanup memory, Glib::ustring, etc.:
+                    char* angle_str = static_cast<char*>(malloc(20));
+                    sprintf(angle_str, "%.2f °", angle * 180/M_PI );
+                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,0)), angle_str);
+                    sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
+                    SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
+                    SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x337f337f;
+                    SP_CANVASTEXT(canvas_tooltip)->outline = false;
+                    SP_CANVASTEXT(canvas_tooltip)->background = true;
 
-                measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
-                free(angle_str);
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
+                    free(angle_str);
+                }
 
-                /* Display measurement of total length from first until last intersection points */
+                // Display measurement of total length from first until last intersection points
 
-                if (intersections.size()>2){
+                if (intersections.size() > 2) {
                     Geom::Point normal = Geom::rot90(Geom::unit_vector(intersections[intersections.size()-1] - intersections[0]));
-                    control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                    control_line = sp_canvas_item_new(sp_desktop_tempgroup(desktop), SP_TYPE_CTRLLINE, NULL);
                     sp_ctrlline_set_coords(SP_CTRLLINE(control_line),  desktop->doc2dt(intersections[0]) + desktop->w2d(normal*60), desktop->doc2dt(intersections[intersections.size()-1]) + desktop->w2d(normal*60));
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
-                    control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                    control_line = sp_canvas_item_new(sp_desktop_tempgroup(desktop), SP_TYPE_CTRLLINE, NULL);
                     sp_ctrlline_set_coords(SP_CTRLLINE(control_line),  desktop->doc2dt(intersections[0]), desktop->doc2dt(intersections[0]) + desktop->w2d(normal*65));
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
-                    control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                    control_line = sp_canvas_item_new(sp_desktop_tempgroup(desktop), SP_TYPE_CTRLLINE, NULL);
                     sp_ctrlline_set_coords(SP_CTRLLINE(control_line),  desktop->doc2dt(intersections[intersections.size()-1]), desktop->doc2dt(intersections[intersections.size()-1]) + desktop->w2d(normal*65));
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
                     double totallengthval = (intersections[intersections.size()-1] - intersections[0]).length();
                     sp_convert_distance(&totallengthval, &sp_unit_get_by_id(SP_UNIT_PX), &unit);
-                    char* total_str = (char*) malloc(sizeof(char)*20);
+
+                    // TODO cleanup memory, Glib::ustring, etc.:
+                    char* total_str = static_cast<char*>(malloc(20));
                     sprintf(total_str, "%.2f %s", totallengthval, unit.abbr);
 
-                    canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc((intersections[0] + intersections[intersections.size()-1])/2) + desktop->w2d(normal*60), total_str);
-                    sp_canvastext_set_fontsize (SP_CANVASTEXT(canvas_tooltip), fontsize);
+                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc((intersections[0] + intersections[intersections.size()-1])/2) + desktop->w2d(normal*60), total_str);
+                    sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
                     SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
                     SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x33337f7f;
                     SP_CANVASTEXT(canvas_tooltip)->outline = false;
@@ -436,13 +445,12 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
             break;
         }
 
-      	case GDK_BUTTON_RELEASE:
+        case GDK_BUTTON_RELEASE:
         {
             sp_event_context_discard_delayed_snap_event(event_context);
 
             //clear all temporary canvas items related to the measurement tool.
-            unsigned int idx;
-            for (idx=0; idx<measure_tmp_items.size(); idx++){
+            for (size_t idx = 0; idx < measure_tmp_items.size(); ++idx) {
                 desktop->remove_temporary_canvasitem(measure_tmp_items[idx]);
             }
             measure_tmp_items.clear();
@@ -451,16 +459,17 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 sp_canvas_item_ungrab(mc->grabbed, event->button.time);
                 mc->grabbed = NULL;
             }
-            xp = yp = 0;
+            xp = 0;
+            yp = 0;
             break;
         }
-	default:
+        default:
             break;
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
+        if (parent_class->root_handler) {
+            ret = parent_class->root_handler(event_context, event);
         }
     }
 
