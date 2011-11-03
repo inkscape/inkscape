@@ -377,7 +377,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     // TODO cleanup memory, Glib::ustring, etc.:
                     char* measure_str = static_cast<char*>(malloc(20));
                     sprintf(measure_str, "%.2f %s", lengthval, unit.abbr);
-                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc(measure_text_pos), measure_str);
+                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->doc2dt(measure_text_pos), measure_str);
 
                     sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
                     SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
@@ -408,18 +408,47 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 // Display measurement of total length from first until last intersection points
 
+                Geom::Point normal = desktop->w2d(Geom::unit_vector(Geom::rot90(desktop->d2w(end_point - start_point))));
+
+                control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                sp_ctrlline_set_coords(SP_CTRLLINE(control_line), start_point - normal*60, end_point - normal*60);
+                measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+
+                control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                sp_ctrlline_set_coords(SP_CTRLLINE(control_line), start_point, start_point - normal*65);
+                measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+
+                control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                sp_ctrlline_set_coords(SP_CTRLLINE(control_line), end_point, end_point - normal*65);
+                measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+
+                double totallengthval = (end_point - start_point).length();
+                sp_convert_distance(&totallengthval, &sp_unit_get_by_id(SP_UNIT_PX), &unit);
+                char* total_str = (char*) malloc(sizeof(char)*20);
+                sprintf(total_str, "%.2f %s", totallengthval, unit.abbr);
+
+                SPCanvasItem* canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, (start_point + end_point)/2 - normal*60, total_str);
+                sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
+                SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
+                SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x33337f7f;
+                SP_CANVASTEXT(canvas_tooltip)->outline = false;
+                SP_CANVASTEXT(canvas_tooltip)->background = true;
+
+                measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
+                free(total_str);
+
+
                 if (intersections.size() > 2) {
-                    Geom::Point normal = Geom::rot90(Geom::unit_vector(intersections[intersections.size()-1] - intersections[0]));
-                    control_line = sp_canvas_item_new(sp_desktop_tempgroup(desktop), SP_TYPE_CTRLLINE, NULL);
-                    sp_ctrlline_set_coords(SP_CTRLLINE(control_line),  desktop->doc2dt(intersections[0]) + desktop->w2d(normal*60), desktop->doc2dt(intersections[intersections.size()-1]) + desktop->w2d(normal*60));
+                    control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                    sp_ctrlline_set_coords(SP_CTRLLINE(control_line),  desktop->doc2dt(intersections[0]) + normal*60, desktop->doc2dt(intersections[intersections.size()-1]) + normal*60);
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
-                    control_line = sp_canvas_item_new(sp_desktop_tempgroup(desktop), SP_TYPE_CTRLLINE, NULL);
-                    sp_ctrlline_set_coords(SP_CTRLLINE(control_line),  desktop->doc2dt(intersections[0]), desktop->doc2dt(intersections[0]) + desktop->w2d(normal*65));
+                    control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                    sp_ctrlline_set_coords(SP_CTRLLINE(control_line),  desktop->doc2dt(intersections[0]), desktop->doc2dt(intersections[0]) + normal*65);
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
-                    control_line = sp_canvas_item_new(sp_desktop_tempgroup(desktop), SP_TYPE_CTRLLINE, NULL);
-                    sp_ctrlline_set_coords(SP_CTRLLINE(control_line),  desktop->doc2dt(intersections[intersections.size()-1]), desktop->doc2dt(intersections[intersections.size()-1]) + desktop->w2d(normal*65));
+                    control_line = sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL);
+                    sp_ctrlline_set_coords(SP_CTRLLINE(control_line),  desktop->doc2dt(intersections[intersections.size()-1]), desktop->doc2dt(intersections[intersections.size()-1]) + normal*65);
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
                     double totallengthval = (intersections[intersections.size()-1] - intersections[0]).length();
@@ -429,7 +458,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     char* total_str = static_cast<char*>(malloc(20));
                     sprintf(total_str, "%.2f %s", totallengthval, unit.abbr);
 
-                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->dt2doc((intersections[0] + intersections[intersections.size()-1])/2) + desktop->w2d(normal*60), total_str);
+                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, desktop->doc2dt((intersections[0] + intersections[intersections.size()-1])/2) + normal*60, total_str);
                     sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
                     SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
                     SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x33337f7f;
