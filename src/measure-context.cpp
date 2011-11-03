@@ -414,7 +414,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,-2*fontsize)), totallength_str);
                     sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
                     SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
-                    SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x337f337f;
+                    SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x3333337f;
                     SP_CANVASTEXT(canvas_tooltip)->outline = false;
                     SP_CANVASTEXT(canvas_tooltip)->background = true;
 
