@@ -93,6 +93,11 @@ public:
     virtual Geom::Point knot_get();
     virtual void knot_click(guint state);
 
+    /** Checks whether the index falls within the size of the parameter's vector */
+    bool valid_index(unsigned int index) {
+        return (_pparam->_vector.size() > index);
+    };
+
 private:
     PowerStrokePointArrayParam *_pparam;
     unsigned int _index;
@@ -107,8 +112,13 @@ PowerStrokePointArrayParamKnotHolderEntity::PowerStrokePointArrayParamKnotHolder
 void
 PowerStrokePointArrayParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
-/// @todo how about item transforms???
     using namespace Geom;
+
+    if (!valid_index(_index)) {
+        return;
+    }
+
+    /// @todo how about item transforms???
     Piecewise<D2<SBasis> > const & pwd2 = _pparam->get_pwd2();
     Piecewise<D2<SBasis> > const & n = _pparam->get_pwd2_normal();
 
@@ -123,6 +133,11 @@ Geom::Point
 PowerStrokePointArrayParamKnotHolderEntity::knot_get()
 {
     using namespace Geom;
+
+    if (!valid_index(_index)) {
+        return Geom::Point(infinity(), infinity());
+    }
+
     Piecewise<D2<SBasis> > const & pwd2 = _pparam->get_pwd2();
     Piecewise<D2<SBasis> > const & n = _pparam->get_pwd2_normal();
 
@@ -135,15 +150,22 @@ PowerStrokePointArrayParamKnotHolderEntity::knot_get()
 void
 PowerStrokePointArrayParamKnotHolderEntity::knot_click(guint state)
 {
-    g_print ("This is the %d handle associated to parameter '%s'\n", _index, _pparam->param_key.c_str());
+//g_print ("This is the %d handle associated to parameter '%s'\n", _index, _pparam->param_key.c_str());
 
     if (state & GDK_CONTROL_MASK) {
-        std::vector<Geom::Point> & vec = _pparam->_vector;
-        vec.insert(vec.begin() + _index, 1, vec.at(_index));
-        _pparam->param_set_and_write_new_value(vec);
-        g_print ("Added handle %d associated to parameter '%s'\n", _index, _pparam->param_key.c_str());
-        /// @todo  this BUGS ! the knot stuff should be reloaded when adding a new node!
-    }
+        if (state & GDK_MOD1_MASK) {
+            // delete the clicked knot
+            std::vector<Geom::Point> & vec = _pparam->_vector;
+            vec.erase(vec.begin() + _index);
+            _pparam->param_set_and_write_new_value(vec);
+        } else {
+            // add a knot
+            std::vector<Geom::Point> & vec = _pparam->_vector;
+            vec.insert(vec.begin() + _index, 1, vec.at(_index));
+            _pparam->param_set_and_write_new_value(vec);
+        }
+    } 
+
 }
 
 void
