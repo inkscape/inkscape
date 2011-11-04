@@ -631,8 +631,6 @@ add_mat_line(bandmat *m, double *v,
 	     double derivs[4], double x, double y, int j, int jj, int jinc,
 	     int nmat)
 {
-    int k;
-
     if (jj >= 0) {
 	int joff =  (j + 5 - jj + nmat) % nmat;
 	if (nmat < 6) {
@@ -644,7 +642,7 @@ add_mat_line(bandmat *m, double *v,
 	printf("add_mat_line j=%d jj=%d jinc=%d nmat=%d joff=%d\n", j, jj, jinc, nmat, joff);
 #endif
 	v[jj] += x;
-	for (k = 0; k < jinc; k++)
+	for (int k = 0; k < jinc; k++)
 	    m[jj].a[joff + k] += y * derivs[k];
     }
 }
@@ -831,9 +829,6 @@ spiro_seg_to_bpath(const double ks[4],
 	double xy[2];
 	double ch, th;
 	double scale, rot;
-	double th_even, th_odd;
-	double ul, vl;
-	double ur, vr;
 
 	integrate_spiro(ks, xy);
 	ch = hypot(xy[0], xy[1]);
@@ -841,6 +836,9 @@ spiro_seg_to_bpath(const double ks[4],
 	scale = seg_ch / ch;
 	rot = seg_th - th;
 	if (depth > 5 || bend < 1.) {
+        double ul, vl;
+        double ur, vr;
+        double th_even, th_odd;
 	    th_even = (1./384) * ks[3] + (1./8) * ks[1] + rot;
 	    th_odd = (1./48) * ks[2] + .5 * ks[0];
 	    ul = (scale * (1./3)) * cos(th_even - th_odd);
@@ -944,7 +942,6 @@ test_integ(void) {
     double ks[] = {1, 2, 3, 4};
     double xy[2];
     double xynom[2];
-    double ch, th;
     int i, j;
     int nsubdiv;
 
@@ -963,9 +960,10 @@ test_integ(void) {
 	en = get_time();
 	err = hypot(xy[0] - xynom[0], xy[1] - xynom[1]);
 	printf("%d %d %g %g\n", ORDER, n, (en - st) / n_iter, err);
+#if 0
+    double ch, th;
 	ch = hypot(xy[0], xy[1]);
 	th = atan2(xy[1], xy[0]);
-#if 0
 	printf("n = %d: integ(%g %g %g %g) = %g %g, ch = %g, th = %g\n", n,
 	       ks[0], ks[1], ks[2], ks[3], xy[0], xy[1], ch, th);
 	printf("%d: %g %g\n", n, xy[0] - xynom[0], xy[1] - xynom[1]);
@@ -988,9 +986,6 @@ print_seg(const double ks[4], double x0, double y0, double x1, double y1)
 	double xy[2];
 	double ch, th;
 	double scale, rot;
-	double th_even, th_odd;
-	double ul, vl;
-	double ur, vr;
 
 	integrate_spiro(ks, xy);
 	ch = hypot(xy[0], xy[1]);
@@ -998,6 +993,9 @@ print_seg(const double ks[4], double x0, double y0, double x1, double y1)
 	scale = seg_ch / ch;
 	rot = seg_th - th;
 	if (bend < 1.) {
+        double th_even, th_odd;
+        double ul, vl;
+        double ur, vr;
 	    th_even = (1./384) * ks[3] + (1./8) * ks[1] + rot;
 	    th_odd = (1./48) * ks[2] + .5 * ks[0];
 	    ul = (scale * (1./3)) * cos(th_even - th_odd);
