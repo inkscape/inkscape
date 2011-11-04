@@ -492,6 +492,10 @@ sp_nv_read_length(gchar const *str, guint base, gdouble *val, SPUnit const **uni
             *unit = &sp_unit_get_by_id(SP_UNIT_M);
         } else if (!strncmp(u, "in", 2)) {
             *unit = &sp_unit_get_by_id(SP_UNIT_IN);
+        } else if (!strncmp(u, "ft", 2)) {
+            *unit = &sp_unit_get_by_id(SP_UNIT_FT);
+        } else if (!strncmp(u, "pc", 2)) {
+            *unit = &sp_unit_get_by_id(SP_UNIT_PC);
         } else {
             return FALSE;
         }
