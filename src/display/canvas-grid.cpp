@@ -697,16 +697,16 @@ CanvasXYGrid::newSpecificWidget()
 
 _wr.setUpdating (true);
 
-    _rsu_ox->setDigits(4);
+    _rsu_ox->setDigits(5);
     _rsu_ox->setIncrements(0.1, 1.0);
 
-    _rsu_oy->setDigits(4);
+    _rsu_oy->setDigits(5);
     _rsu_oy->setIncrements(0.1, 1.0);
 
-    _rsu_sx->setDigits(4);
+    _rsu_sx->setDigits(5);
     _rsu_sx->setIncrements(0.1, 1.0);
 
-    _rsu_sy->setDigits(4);
+    _rsu_sy->setDigits(5);
     _rsu_sy->setIncrements(0.1, 1.0);
 
     Inkscape::UI::Widget::RegisteredCheckButton * _rcb_dotted = Gtk::manage(
