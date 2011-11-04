@@ -675,7 +675,6 @@ void ControlPointSelection::setOriginalPoints()
     }
 }
 
-
 } // namespace UI
 } // namespace Inkscape
 

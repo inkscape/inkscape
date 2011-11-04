@@ -736,7 +736,7 @@ Inkscape::SnappedPoint SnapManager::freeSnapTranslate(std::vector<Inkscape::Snap
     Inkscape::SnappedPoint result = _snapTransformed(p, pointer, false, Geom::Point(0,0), TRANSLATE, tr, Geom::Point(0,0), Geom::X, false);
 
     if (p.size() == 1) {
-        _displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
+        displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
     }
 
     return result;
@@ -750,7 +750,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapTranslate(std::vector<Inkscap
     Inkscape::SnappedPoint result = _snapTransformed(p, pointer, true, constraint, TRANSLATE, tr, Geom::Point(0,0), Geom::X, false);
 
     if (p.size() == 1) {
-        _displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
+        displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
     }
 
     return result;
@@ -765,7 +765,7 @@ Inkscape::SnappedPoint SnapManager::freeSnapScale(std::vector<Inkscape::SnapCand
     Inkscape::SnappedPoint result = _snapTransformed(p, pointer, false, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, false);
 
     if (p.size() == 1) {
-        _displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
+        displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
     }
 
     return result;
@@ -781,7 +781,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapScale(std::vector<Inkscape::S
     Inkscape::SnappedPoint result = _snapTransformed(p, pointer, true, Geom::Point(0,0), SCALE, Geom::Point(s[Geom::X], s[Geom::Y]), o, Geom::X, true);
 
     if (p.size() == 1) {
-        _displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
+        displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
     }
 
     return result;
@@ -797,7 +797,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapStretch(std::vector<Inkscape:
     Inkscape::SnappedPoint result = _snapTransformed(p, pointer, true, Geom::Point(0,0), STRETCH, Geom::Point(s, s), o, d, u);
 
     if (p.size() == 1) {
-        _displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
+        displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
     }
 
     return result;
@@ -824,7 +824,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(std::vector<Inkscape::Sn
     Inkscape::SnappedPoint result = _snapTransformed(p, pointer, true, constraint, SKEW, s, o, d, false);
 
     if (p.size() == 1) {
-        _displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
+        displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
     }
 
     return result;
@@ -844,7 +844,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapRotate(std::vector<Inkscape::
     Inkscape::SnappedPoint result = _snapTransformed(p, pointer, true, Geom::Point(0,0), ROTATE, Geom::Point(angle, angle), o, Geom::X, false);
 
     if (p.size() == 1) {
-        _displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
+        displaySnapsource(Inkscape::SnapCandidatePoint(result.getPoint(), p.at(0).getSourceType()));
     }
 
     return result;
@@ -1109,14 +1109,19 @@ Geom::Point SnapManager::_transformPoint(Inkscape::SnapCandidatePoint const &p,
     return transformed;
 }
 
-void SnapManager::_displaySnapsource(Inkscape::SnapCandidatePoint const &p) const {
-
+/**
+ * Mark the location of the snap source (not the snap target!) on the canvas by drawing a symbol.
+ *
+ * @param point_type Category of points to which the source point belongs: node, guide or bounding box
+ * @param p The transformed position of the source point, paired with an identifier of the type of the snap source.
+ */
+void SnapManager::displaySnapsource(Inkscape::SnapCandidatePoint const &p) const {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/options/snapclosestonly/value")) {
         Inkscape::SnapSourceType t = p.getSourceType();
         bool p_is_a_node = t & Inkscape::SNAPSOURCE_NODE_CATEGORY;
         bool p_is_a_bbox = t & Inkscape::SNAPSOURCE_BBOX_CATEGORY;
-        bool p_is_other = t & Inkscape::SNAPSOURCE_OTHERS_CATEGORY || t & Inkscape::SNAPSOURCE_DATUMS_CATEGORY;
+        bool p_is_other = (t & Inkscape::SNAPSOURCE_OTHERS_CATEGORY) || (t & Inkscape::SNAPSOURCE_DATUMS_CATEGORY);
 
         g_assert(_desktop != NULL);
         if (snapprefs.getSnapEnabledGlobally() && (p_is_other || (p_is_a_node && snapprefs.getSnapModeNode()) || (p_is_a_bbox && snapprefs.getSnapModeBBox()))) {
@@ -1126,34 +1131,6 @@ void SnapManager::_displaySnapsource(Inkscape::SnapCandidatePoint const &p) cons
         }
     }
 }
-
-void SnapManager::keepClosestPointOnly(std::vector<Inkscape::SnapCandidatePoint> &points, const Geom::Point &reference) const
-{
-    if (points.size() == 0) {
-        return;
-    }
-
-    if (points.size() == 1) {
-        points.front().setSourceNum(-1); // Just in case
-        return;
-    }
-
-    Inkscape::SnapCandidatePoint closest_point = Inkscape::SnapCandidatePoint(Geom::Point(Geom::infinity(), Geom::infinity()), Inkscape::SNAPSOURCE_UNDEFINED, Inkscape::SNAPTARGET_UNDEFINED);
-    Geom::Coord closest_dist = Geom::infinity();
-
-    for(std::vector<Inkscape::SnapCandidatePoint>::const_iterator i = points.begin(); i != points.end(); i++) {
-        Geom::Coord dist = Geom::L2((*i).getPoint() - reference);
-        if (i == points.begin() || dist < closest_dist) {
-            closest_point = *i;
-            closest_dist = dist;
-        }
-    }
-
-    closest_point.setSourceNum(-1);
-    points.clear();
-    points.push_back(closest_point);
-}
-
 /*
   Local Variables:
   mode:c++

@@ -84,72 +84,101 @@ ControlPoint::ColorSet center_cset = {
 } // anonymous namespace
 
 /** Base class for node transform handles to simplify implementation */
-class TransformHandle : public ControlPoint {
-public:
-    TransformHandle(TransformHandleSet &th, Gtk::AnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pb)
-        : ControlPoint(th._desktop, Geom::Point(), anchor, pb, &thandle_cset,
-            th._transform_handle_group)
-        , _th(th)
-    {
-        setVisible(false);
+TransformHandle::TransformHandle(TransformHandleSet &th, Gtk::AnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pb)
+    : ControlPoint(th._desktop, Geom::Point(), anchor, pb, &thandle_cset,
+        th._transform_handle_group)
+    , _th(th)
+{
+    setVisible(false);
+}
+
+void TransformHandle::getNextClosestPoint(bool reverse)
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/options/snapclosestonly/value", false)) {
+        if (!_all_snap_sources_sorted.empty()) {
+            if (reverse) { // Shift-tab will find a closer point
+                if (_all_snap_sources_iter == _all_snap_sources_sorted.begin()) {
+                    _all_snap_sources_iter = _all_snap_sources_sorted.end();
+                }
+                --_all_snap_sources_iter;
+            } else { // Tab will find a point further away
+                ++_all_snap_sources_iter;
+                if (_all_snap_sources_iter == _all_snap_sources_sorted.end()) {
+                    _all_snap_sources_iter = _all_snap_sources_sorted.begin();
+                }
+            }
+
+            _snap_points.clear();
+            _snap_points.push_back(*_all_snap_sources_iter);
+
+        }
     }
-protected:
-    virtual void startTransform() {}
-    virtual void endTransform() {}
-    virtual Geom::Affine computeTransform(Geom::Point const &pos, GdkEventMotion *event) = 0;
-    virtual CommitEvent getCommitEvent() = 0;
+}
 
-    Geom::Affine _last_transform;
-    Geom::Point _origin;
-    TransformHandleSet &_th;
-    std::vector<Inkscape::SnapCandidatePoint> _snap_points;
-    std::vector<Inkscape::SnapCandidatePoint> _unselected_points;
+bool TransformHandle::grabbed(GdkEventMotion *)
+{
+    _origin = position();
+    _last_transform.setIdentity();
+    startTransform();
 
-private:
-    virtual bool grabbed(GdkEventMotion *) {
-        _origin = position();
-        _last_transform.setIdentity();
-        startTransform();
+    _th._setActiveHandle(this);
+    _cset = &invisible_cset;
+    _setState(_state);
 
-        _th._setActiveHandle(this);
-        _cset = &invisible_cset;
-        _setState(_state);
+    // Collect the snap-candidates, one for each selected node. These will be stored in the _snap_points vector.
+    InkNodeTool *nt = INK_NODE_TOOL(_th._desktop->event_context);
+    ControlPointSelection *selection = nt->_selected_nodes.get();
 
-        // Collect the snap-candidates, one for each selected node. These will be stored in the _snap_points vector.
-        SnapManager &m = _th._desktop->namedview->snap_manager;
-        InkNodeTool *nt = INK_NODE_TOOL(_th._desktop->event_context);
-        ControlPointSelection *selection = nt->_selected_nodes.get();
+    selection->setOriginalPoints();
+    selection->getOriginalPoints(_snap_points);
+    selection->getUnselectedPoints(_unselected_points);
 
-        selection->setOriginalPoints();
-        selection->getOriginalPoints(_snap_points);
-        selection->getUnselectedPoints(_unselected_points);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/options/snapclosestonly/value", false)) {
+        // Find the closest snap source candidate
+        _all_snap_sources_sorted = _snap_points;
 
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        if (prefs->getBool("/options/snapclosestonly/value", false)) {
-            m.keepClosestPointOnly(_snap_points, _origin);
+        // Calculate and store the distance to the reference point for each snap candidate point
+        for(std::vector<Inkscape::SnapCandidatePoint>::iterator i = _all_snap_sources_sorted.begin(); i != _all_snap_sources_sorted.end(); ++i) {
+            (*i).setDistance(Geom::L2((*i).getPoint() - _origin));
         }
 
-        return false;
-    }
-    virtual void dragged(Geom::Point &new_pos, GdkEventMotion *event)
-    {
-        Geom::Affine t = computeTransform(new_pos, event);
-        // protect against degeneracies
-        if (t.isSingular()) return;
-        Geom::Affine incr = _last_transform.inverse() * t;
-        if (incr.isSingular()) return;
-        _th.signal_transform.emit(incr);
-        _last_transform = t;
-    }
-    virtual void ungrabbed(GdkEventButton *) {
+        // Sort them ascending, using the distance calculated above as the single criteria
+        std::sort(_all_snap_sources_sorted.begin(), _all_snap_sources_sorted.end());
+
+        // Now get the closest snap source
         _snap_points.clear();
-        _th._clearActiveHandle();
-        _cset = &thandle_cset;
-        _setState(_state);
-        endTransform();
-        _th.signal_commit.emit(getCommitEvent());
+        if (!_all_snap_sources_sorted.empty()) {
+            _all_snap_sources_iter = _all_snap_sources_sorted.begin();
+            _snap_points.push_back(_all_snap_sources_sorted.front());
+        }
     }
-};
+
+    return false;
+}
+
+void TransformHandle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
+{
+    Geom::Affine t = computeTransform(new_pos, event);
+    // protect against degeneracies
+    if (t.isSingular()) return;
+    Geom::Affine incr = _last_transform.inverse() * t;
+    if (incr.isSingular()) return;
+    _th.signal_transform.emit(incr);
+    _last_transform = t;
+}
+
+void TransformHandle::ungrabbed(GdkEventButton *)
+{
+    _snap_points.clear();
+    _th._clearActiveHandle();
+    _cset = &thandle_cset;
+    _setState(_state);
+    endTransform();
+    _th.signal_commit.emit(getCommitEvent());
+}
+
 
 class ScaleHandle : public TransformHandle {
 public:

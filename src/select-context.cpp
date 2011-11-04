@@ -398,6 +398,16 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                     seltrans->stamp();
                     ret = TRUE;
                 }
+            } else if (get_group0_keyval (&event->key) == GDK_Tab) {
+                if (sc->dragging && sc->grabbed) {
+                    seltrans->getNextClosestPoint(false);
+                    ret = TRUE;
+                }
+            } else if (get_group0_keyval (&event->key) == GDK_ISO_Left_Tab) {
+                if (sc->dragging && sc->grabbed) {
+                    seltrans->getNextClosestPoint(true);
+                    ret = TRUE;
+                }
             }
             break;
 
@@ -531,8 +541,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_MOTION_NOTIFY:
         {
-        	tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
-        	if (event->motion.state & GDK_BUTTON1_MASK && !event_context->space_panning) {
+            tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+            if ((event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning) {
                 Geom::Point const motion_pt(event->motion.x, event->motion.y);
                 Geom::Point const p(desktop->w2d(motion_pt));
 
@@ -549,7 +559,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 if (sc->button_press_ctrl || (sc->button_press_alt && !sc->button_press_shift && !selection->isEmpty())) {
                     // if it's not click and ctrl or alt was pressed (the latter with some selection
                     // but not with shift) we want to drag rather than rubberband
-                  	sc->dragging = TRUE;
+                    sc->dragging = TRUE;
                     gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, CursorSelectDragging);
 
                     sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);

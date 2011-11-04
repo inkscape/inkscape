@@ -163,6 +163,8 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _sel_modified_connection = _selection->connectModified(
         sigc::mem_fun(*this, &Inkscape::SelTrans::_selModified)
         );
+
+    _all_snap_sources_iter = _all_snap_sources_sorted.end();
 }
 
 Inkscape::SelTrans::~SelTrans()
@@ -296,13 +298,10 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     std::vector<Inkscape::SnapCandidatePoint> snap_points_hull = selection->getSnapPointsConvexHull(&m.snapprefs);
     if (_snap_points.size() > 200) {
         /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
-        An average user would rarely ever try to snap such a large number of nodes anyway, because
-        (s)he could hardly discern which node would be snapping */
-        if (prefs->getBool("/options/snapclosestonly/value", false)) {
-            m.keepClosestPointOnly(_snap_points, p);
-        } else {
-            _snap_points = snap_points_hull;
-        }
+        A typical user would rarely ever try to snap such a large number of nodes anyway, because
+        (s)he would hardly be able to discern which node would be snapping */
+        _snap_points = snap_points_hull;
+        //}
         // Unfortunately, by now we will have lost the font-baseline snappoints :-(
     }
 
@@ -321,26 +320,27 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     }
 
     _bbox_points.clear();
-    _bbox_points_for_translating.clear();
     // Collect the bounding box's corners and midpoints for each selected item
     if (m.snapprefs.getSnapModeBBox()) {
         bool c = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_CORNER);
         bool mp = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_MIDPOINT);
         bool emp = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_EDGE_MIDPOINT);
-        // Preferably we'd use the bbox of each selected item, instead of the bbox of the selection as a whole; for translations
+        // 1) Preferably we'd use the bbox of each selected item, instead of the bbox of the selection as a whole; for translations
         // this is easy to do, but when snapping the visual bbox while scaling we will have to compensate for the scaling of the
         // stroke width. (see get_scale_transform_for_stroke()). This however is currently only implemented for a single bbox.
-        // That's why we have both _bbox_points_for_translating and _bbox_points.
-        getBBoxPoints(selection->bounds(_snap_bbox_type), &_bbox_points, false, c, emp, mp);
-        if (((_items.size() > 0) && (_items.size() < 50)) || prefs->getBool("/options/snapclosestonly/value", false)) {
-            // More than 50 items will produce at least 200 bbox points, which might make Inkscape crawl
-            // (see the comment a few lines above). In that case we will use the bbox of the selection as a whole
+        // 2) More than 50 items will produce at least 200 bbox points, which might make Inkscape crawl
+        // (see the comment a few lines above). In that case we will use the bbox of the selection as a whole
+        bool c1 = (_items.size() > 0) && (_items.size() < 50);
+        bool c2 = prefs->getBool("/options/snapclosestonly/value", false);
+        if (translating && (c1 || c2)) {
+            // Get the bounding box points for each item in the selection
             for (unsigned i = 0; i < _items.size(); i++) {
                 Geom::OptRect b = _items[i]->desktopBounds(_snap_bbox_type);
-                getBBoxPoints(b, &_bbox_points_for_translating, false, c, emp, mp);
+                getBBoxPoints(b, &_bbox_points, false, c, emp, mp);
             }
         } else {
-            _bbox_points_for_translating = _bbox_points; // use the bbox points of the selection as a whole
+            // Only get the bounding box points of the selection as a whole
+            getBBoxPoints(selection->bounds(_snap_bbox_type), &_bbox_points, false, c, emp, mp);
         }
     }
 
@@ -357,54 +357,10 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     }
 
     // When snapping the node closest to the mouse pointer is absolutely preferred over the closest snap
-    // (i.e. when weight == 1), then we will not even try to snap to other points and discard those other
-    // points immediately.
+    // (i.e. when weight == 1), then we will not even try to snap to other points and disregard those other points
 
     if (prefs->getBool("/options/snapclosestonly/value", false)) {
-        if (m.snapprefs.getSnapModeNode() || m.snapprefs.getSnapModeOthers() || m.snapprefs.getSnapModeDatums()) {
-            m.keepClosestPointOnly(_snap_points, p);
-        } else {
-            _snap_points.clear(); // don't keep any point
-        }
-
-        if (m.snapprefs.getSnapModeBBox()) {
-            m.keepClosestPointOnly(_bbox_points, p);
-            m.keepClosestPointOnly(_bbox_points_for_translating, p);
-        } else {
-            _bbox_points.clear(); // don't keep any point
-            _bbox_points_for_translating.clear();
-        }
-
-        // Each of the three vectors of snappoints now contains either one snappoint or none at all.
-        if (_snap_points.size() > 1 || _bbox_points.size() > 1 || _bbox_points_for_translating.size() > 1) {
-            g_warning("Incorrect assumption encountered while finding the snap source; nothing serious, but please report to Diederik");
-        }
-
-        // Now let's reduce this to a single closest snappoint
-        Geom::Coord dsp    = _snap_points.size()                 == 1 ? Geom::L2((_snap_points.at(0)).getPoint() - p) : Geom::infinity();
-        Geom::Coord dbbp   = _bbox_points.size()                 == 1 ? Geom::L2((_bbox_points.at(0)).getPoint() - p) : Geom::infinity();
-        Geom::Coord dbbpft = _bbox_points_for_translating.size() == 1 ? Geom::L2((_bbox_points_for_translating.at(0)).getPoint() - p) : Geom::infinity();
-
-        if (translating) {
-            _bbox_points.clear();
-            if (dsp > dbbpft) {
-                _snap_points.clear();
-            } else {
-                _bbox_points_for_translating.clear();
-            }
-        } else {
-            _bbox_points_for_translating.clear();
-            if (dsp > dbbp) {
-                _snap_points.clear();
-            } else {
-                _bbox_points.clear();
-            }
-        }
-
-        if ((_snap_points.size() + _bbox_points.size() + _bbox_points_for_translating.size()) > 1) {
-            g_warning("Checking number of snap sources failed; nothing serious, but please report to Diederik");
-        }
-
+        _keepClosestPointOnly(p, translating);
     }
 
     if ((x != -1) && (y != -1)) {
@@ -1476,7 +1432,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
             // Therefore we will have to set the point through which the constraint-line runs
             // individually for each point to be snapped; this will be handled however by _snapTransformed()
             Geom::Point cvec; cvec[dim] = 1.;
-            s.push_back(m.constrainedSnapTranslate(_bbox_points_for_translating,
+            s.push_back(m.constrainedSnapTranslate(_bbox_points,
                                                      _point,
                                                      Inkscape::Snapper::SnapConstraint(cvec),
                                                      dxy));
@@ -1493,7 +1449,7 @@ void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
             g_get_current_time(&starttime); */
 
             /* Snap to things with no constraint */
-            s.push_back(m.freeSnapTranslate(_bbox_points_for_translating, _point, dxy));
+            s.push_back(m.freeSnapTranslate(_bbox_points, _point, dxy));
             s.push_back(m.freeSnapTranslate(_snap_points, _point, dxy));
 
               /*g_get_current_time(&endtime);
@@ -1641,6 +1597,72 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
     // see https://bugs.launchpad.net/inkscape/+bug/318726)
     g_warning("No geometric bounding box has been calculated; this is a bug that needs fixing!");
     return _calcAbsAffineDefault(geom_scale); // this is bogus, but we must return _something_
+}
+
+void Inkscape::SelTrans::_keepClosestPointOnly(Geom::Point const &p, bool const translating)
+{
+    SnapManager const &m = _desktop->namedview->snap_manager;
+
+    if (!(m.snapprefs.getSnapModeNode() || m.snapprefs.getSnapModeOthers() || m.snapprefs.getSnapModeDatums())) {
+        _snap_points.clear();
+    }
+
+    if (!m.snapprefs.getSnapModeBBox()) {
+        _bbox_points.clear();
+    }
+
+    _all_snap_sources_sorted = _snap_points;
+    _all_snap_sources_sorted.insert(_all_snap_sources_sorted.end(), _bbox_points.begin(), _bbox_points.end());
+
+    // Calculate and store the distance to the reference point for each snap candidate point
+    for(std::vector<Inkscape::SnapCandidatePoint>::iterator i = _all_snap_sources_sorted.begin(); i != _all_snap_sources_sorted.end(); ++i) {
+        (*i).setDistance(Geom::L2((*i).getPoint() - p));
+    }
+
+    // Sort them ascending, using the distance calculated above as the single criteria
+    std::sort(_all_snap_sources_sorted.begin(), _all_snap_sources_sorted.end());
+
+    // Now get the closest snap source
+    _snap_points.clear();
+    _bbox_points.clear();
+    if (!_all_snap_sources_sorted.empty()) {
+        _all_snap_sources_iter = _all_snap_sources_sorted.begin();
+        if (_all_snap_sources_sorted.front().getSourceType() & SNAPSOURCE_BBOX_CATEGORY) {
+            _bbox_points.push_back(_all_snap_sources_sorted.front());
+        } else {
+            _snap_points.push_back(_all_snap_sources_sorted.front());
+        }
+    }
+
+}
+
+void Inkscape::SelTrans::getNextClosestPoint(bool reverse)
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/options/snapclosestonly/value", false)) {
+        if (!_all_snap_sources_sorted.empty()) {
+            if (reverse) { // Shift-tab will find a closer point
+                if (_all_snap_sources_iter == _all_snap_sources_sorted.begin()) {
+                    _all_snap_sources_iter = _all_snap_sources_sorted.end();
+                }
+                --_all_snap_sources_iter;
+            } else { // Tab will find a point further away
+                ++_all_snap_sources_iter;
+                if (_all_snap_sources_iter == _all_snap_sources_sorted.end()) {
+                    _all_snap_sources_iter = _all_snap_sources_sorted.begin();
+                }
+            }
+
+            _snap_points.clear();
+            _bbox_points.clear();
+
+            if ((*_all_snap_sources_iter).getSourceType() & SNAPSOURCE_BBOX_CATEGORY) {
+                _bbox_points.push_back(*_all_snap_sources_iter);
+            } else {
+                _snap_points.push_back(*_all_snap_sources_iter);
+            }
+        }
+    }
 }
 
 /*

@@ -541,117 +541,117 @@ static gint sp_event_context_private_root_handler(
         // in the editing window). So we resteal them back and run our regular shortcut
         // invoker on them.
         unsigned int shortcut;
-    case GDK_Tab:
-    case GDK_ISO_Left_Tab:
-    case GDK_F1:
-        shortcut = get_group0_keyval(&event->key);
-        if (event->key.state & GDK_SHIFT_MASK)
-            shortcut |= SP_SHORTCUT_SHIFT_MASK;
-        if (event->key.state & GDK_CONTROL_MASK)
-            shortcut |= SP_SHORTCUT_CONTROL_MASK;
-        if (event->key.state & GDK_MOD1_MASK)
-            shortcut |= SP_SHORTCUT_ALT_MASK;
-        ret = sp_shortcut_invoke(shortcut, desktop);
-        break;
+        case GDK_Tab:
+        case GDK_ISO_Left_Tab:
+        case GDK_F1:
+            shortcut = get_group0_keyval(&event->key);
+            if (event->key.state & GDK_SHIFT_MASK)
+                shortcut |= SP_SHORTCUT_SHIFT_MASK;
+            if (event->key.state & GDK_CONTROL_MASK)
+                shortcut |= SP_SHORTCUT_CONTROL_MASK;
+            if (event->key.state & GDK_MOD1_MASK)
+                shortcut |= SP_SHORTCUT_ALT_MASK;
+            ret = sp_shortcut_invoke(shortcut, desktop);
+            break;
 
-    case GDK_D:
-    case GDK_d:
-        if (!MOD__SHIFT && !MOD__CTRL && !MOD__ALT) {
-            sp_toggle_dropper(desktop);
-            ret = TRUE;
+        case GDK_D:
+        case GDK_d:
+            if (!MOD__SHIFT && !MOD__CTRL && !MOD__ALT) {
+                sp_toggle_dropper(desktop);
+                ret = TRUE;
+            }
+            break;
+        case GDK_Q:
+        case GDK_q:
+            if (desktop->quick_zoomed()) {
+                ret = TRUE;
+            }
+            if (!MOD__SHIFT && !MOD__CTRL && !MOD__ALT) {
+                desktop->zoom_quick(true);
+                ret = TRUE;
+            }
+            break;
+        case GDK_W:
+        case GDK_w:
+        case GDK_F4:
+            /* Close view */
+            if (MOD__CTRL_ONLY) {
+                sp_ui_close_view(NULL);
+                ret = TRUE;
+            }
+            break;
+        case GDK_Left: // Ctrl Left
+        case GDK_KP_Left:
+        case GDK_KP_4:
+            if (MOD__CTRL_ONLY) {
+                int i = (int) floor(key_scroll * accelerate_scroll(event,
+                        acceleration, sp_desktop_canvas(desktop)));
+                gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
+                event_context->desktop->scroll_world(i, 0);
+                ret = TRUE;
+            }
+            break;
+        case GDK_Up: // Ctrl Up
+        case GDK_KP_Up:
+        case GDK_KP_8:
+            if (MOD__CTRL_ONLY) {
+                int i = (int) floor(key_scroll * accelerate_scroll(event,
+                        acceleration, sp_desktop_canvas(desktop)));
+                gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
+                event_context->desktop->scroll_world(0, i);
+                ret = TRUE;
+            }
+            break;
+        case GDK_Right: // Ctrl Right
+        case GDK_KP_Right:
+        case GDK_KP_6:
+            if (MOD__CTRL_ONLY) {
+                int i = (int) floor(key_scroll * accelerate_scroll(event,
+                        acceleration, sp_desktop_canvas(desktop)));
+                gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
+                event_context->desktop->scroll_world(-i, 0);
+                ret = TRUE;
+            }
+            break;
+        case GDK_Down: // Ctrl Down
+        case GDK_KP_Down:
+        case GDK_KP_2:
+            if (MOD__CTRL_ONLY) {
+                int i = (int) floor(key_scroll * accelerate_scroll(event,
+                        acceleration, sp_desktop_canvas(desktop)));
+                gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
+                event_context->desktop->scroll_world(0, -i);
+                ret = TRUE;
+            }
+            break;
+        case GDK_F10:
+            if (MOD__SHIFT_ONLY) {
+                sp_event_root_menu_popup(desktop, NULL, event);
+                ret = TRUE;
+            }
+            break;
+        case GDK_space:
+            if (prefs->getBool("/options/spacepans/value")) {
+                event_context->space_panning = true;
+                event_context->_message_context->set(Inkscape::INFORMATION_MESSAGE,
+                        _("<b>Space+mouse drag</b> to pan canvas"));
+                ret = TRUE;
+            } else {
+                sp_toggle_selector(desktop);
+                ret = TRUE;
+            }
+            break;
+        case GDK_z:
+        case GDK_Z:
+            if (MOD__ALT_ONLY) {
+                desktop->zoom_grab_focus();
+                ret = TRUE;
+            }
+            break;
+        default:
+            break;
+            }
         }
-        break;
-    case GDK_Q:
-    case GDK_q:
-        if (desktop->quick_zoomed()) {
-            ret = TRUE;
-        }
-        if (!MOD__SHIFT && !MOD__CTRL && !MOD__ALT) {
-            desktop->zoom_quick(true);
-            ret = TRUE;
-        }
-        break;
-    case GDK_W:
-    case GDK_w:
-    case GDK_F4:
-        /* Close view */
-        if (MOD__CTRL_ONLY) {
-            sp_ui_close_view(NULL);
-            ret = TRUE;
-        }
-        break;
-    case GDK_Left: // Ctrl Left
-    case GDK_KP_Left:
-    case GDK_KP_4:
-        if (MOD__CTRL_ONLY) {
-            int i = (int) floor(key_scroll * accelerate_scroll(event,
-                    acceleration, sp_desktop_canvas(desktop)));
-            gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
-            event_context->desktop->scroll_world(i, 0);
-            ret = TRUE;
-        }
-        break;
-    case GDK_Up: // Ctrl Up
-    case GDK_KP_Up:
-    case GDK_KP_8:
-        if (MOD__CTRL_ONLY) {
-            int i = (int) floor(key_scroll * accelerate_scroll(event,
-                    acceleration, sp_desktop_canvas(desktop)));
-            gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
-            event_context->desktop->scroll_world(0, i);
-            ret = TRUE;
-        }
-        break;
-    case GDK_Right: // Ctrl Right
-    case GDK_KP_Right:
-    case GDK_KP_6:
-        if (MOD__CTRL_ONLY) {
-            int i = (int) floor(key_scroll * accelerate_scroll(event,
-                    acceleration, sp_desktop_canvas(desktop)));
-            gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
-            event_context->desktop->scroll_world(-i, 0);
-            ret = TRUE;
-        }
-        break;
-    case GDK_Down: // Ctrl Down
-    case GDK_KP_Down:
-    case GDK_KP_2:
-        if (MOD__CTRL_ONLY) {
-            int i = (int) floor(key_scroll * accelerate_scroll(event,
-                    acceleration, sp_desktop_canvas(desktop)));
-            gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
-            event_context->desktop->scroll_world(0, -i);
-            ret = TRUE;
-        }
-        break;
-    case GDK_F10:
-        if (MOD__SHIFT_ONLY) {
-            sp_event_root_menu_popup(desktop, NULL, event);
-            ret = TRUE;
-        }
-        break;
-    case GDK_space:
-        if (prefs->getBool("/options/spacepans/value")) {
-            event_context->space_panning = true;
-            event_context->_message_context->set(Inkscape::INFORMATION_MESSAGE,
-                    _("<b>Space+mouse drag</b> to pan canvas"));
-            ret = TRUE;
-        } else {
-            sp_toggle_selector(desktop);
-            ret = TRUE;
-        }
-        break;
-    case GDK_z:
-    case GDK_Z:
-        if (MOD__ALT_ONLY) {
-            desktop->zoom_grab_focus();
-            ret = TRUE;
-        }
-        break;
-    default:
-        break;
-        }
-    }
         break;
     case GDK_KEY_RELEASE:
         switch (get_group0_keyval(&event->key)) {

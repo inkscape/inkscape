@@ -78,6 +78,32 @@ private:
     friend class RotationCenter;
 };
 
+/** Base class for node transform handles to simplify implementation */
+class TransformHandle : public ControlPoint {
+public:
+    TransformHandle(TransformHandleSet &th, Gtk::AnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pb);
+    void getNextClosestPoint(bool reverse);
+
+protected:
+    virtual void startTransform() {}
+    virtual void endTransform() {}
+    virtual Geom::Affine computeTransform(Geom::Point const &pos, GdkEventMotion *event) = 0;
+    virtual CommitEvent getCommitEvent() = 0;
+
+    Geom::Affine _last_transform;
+    Geom::Point _origin;
+    TransformHandleSet &_th;
+    std::vector<Inkscape::SnapCandidatePoint> _snap_points;
+    std::vector<Inkscape::SnapCandidatePoint> _unselected_points;
+    std::vector<Inkscape::SnapCandidatePoint> _all_snap_sources_sorted;
+    std::vector<Inkscape::SnapCandidatePoint>::iterator _all_snap_sources_iter;
+
+private:
+    virtual bool grabbed(GdkEventMotion *);
+    virtual void dragged(Geom::Point &new_pos, GdkEventMotion *event);
+    virtual void ungrabbed(GdkEventButton *);
+};
+
 } // namespace UI
 } // namespace Inkscape
 

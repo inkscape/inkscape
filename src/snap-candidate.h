@@ -71,6 +71,9 @@ public:
     inline Inkscape::SnapTargetType getTargetType() const {return _target_type;}
     inline long getSourceNum() const {return _source_num;}
     void setSourceNum(long num) {_source_num = num;}
+    void setDistance(Geom::Coord dist) {_dist = dist;}
+    Geom::Coord getDistance() { return _dist;}
+    bool operator <(const SnapCandidatePoint other) const { return _dist < other._dist; } // Needed for sorting the SnapCandidatePoints
     inline Geom::OptRect const getTargetBBox() const {return _target_bbox;}
     boost::optional<Geom::Point> const & getStartingPoint() const {return _line_starting_point;}
 
@@ -93,6 +96,9 @@ private:
     // If this is a target and it belongs to a bounding box, e.g. when the target type is
     // SNAPTARGET_BBOX_EDGE_MIDPOINT, then _target_bbox stores the relevant bounding box
     Geom::OptRect _target_bbox;
+
+    // For finding the snap candidate closest to the mouse pointer
+    Geom::Coord _dist;
 };
 
 class SnapCandidateItem
@@ -127,7 +133,5 @@ public:
     bool currently_being_edited; // true for the path that's currently being edited in the node tool (if any)
 
 };
-
 } // end of namespace Inkscape
-
 #endif /* !SEEN_SNAP_CANDIDATE_H */

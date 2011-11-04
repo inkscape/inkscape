@@ -476,7 +476,13 @@ public:
      */
     Inkscape::SnappedPoint findBestSnap(Inkscape::SnapCandidatePoint const &p, IntermSnapResults const &isr, bool constrained, bool allowOffScreen = false) const;
 
-    void keepClosestPointOnly(std::vector<Inkscape::SnapCandidatePoint> &points, const Geom::Point &reference) const;
+    /**
+     * Mark the location of the snap source (not the snap target!) on the canvas by drawing a symbol.
+     *
+     * @param point_type Category of points to which the source point belongs: node, guide or bounding box.
+     * @param p The transformed position of the source point, paired with an identifier of the type of the snap source.
+     */
+    void displaySnapsource(Inkscape::SnapCandidatePoint const &p) const;
 
 protected:
     SPNamedView const *_named_view;
@@ -543,13 +549,6 @@ private:
                                             Geom::Dim2 const dim,
                                             bool const uniform) const;
 
-    /**
-     * Mark the location of the snap source (not the snap target!) on the canvas by drawing a symbol.
-     *
-     * @param point_type Category of points to which the source point belongs: node, guide or bounding box.
-     * @param p The transformed position of the source point, paired with an identifier of the type of the snap source.
-     */
-    void _displaySnapsource(Inkscape::SnapCandidatePoint const &p) const;
 };
 
 #endif // !SEEN_SNAP_H

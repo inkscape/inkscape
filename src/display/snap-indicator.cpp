@@ -310,7 +310,7 @@ SnapIndicator::set_new_snapsource(Inkscape::SnapCandidatePoint const &p)
 {
     remove_snapsource();
 
-    g_assert(_desktop != NULL);
+    g_assert(_desktop != NULL); // If this fails, then likely setup() has not been called on the snap manager (see snap.cpp -> setup())
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool value = prefs->getBool("/options/snapindicator/value", true);

@@ -22,6 +22,7 @@
 #include "preferences.h"
 #include "ui/tool/control-point.h"
 #include "ui/tool/event-utils.h"
+#include "ui/tool/transform-handle-set.h"
 
 namespace Inkscape {
 namespace UI {
@@ -437,6 +438,32 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
     // update tips on modifier state change
     // TODO add ESC keybinding as drag cancel
     case GDK_KEY_PRESS:
+        switch (get_group0_keyval(&event->key))
+        {
+        case GDK_Tab:
+            {// Downcast from ControlPoint to TransformHandle, if possible
+             // This is an ugly hack; we should have the transform handle intercept the keystrokes itself
+            TransformHandle *th = dynamic_cast<TransformHandle*>(this);
+            if (th) {
+                th->getNextClosestPoint(false);
+                return true;
+            }
+            break;
+            }
+        case GDK_ISO_Left_Tab:
+            {// Downcast from ControlPoint to TransformHandle, if possible
+             // This is an ugly hack; we should have the transform handle intercept the keystrokes itself
+            TransformHandle *th = dynamic_cast<TransformHandle*>(this);
+            if (th) {
+                th->getNextClosestPoint(true);
+                return true;
+            }
+            break;
+            }
+        default:
+            break;
+        }
+        // Do not break here, to allow for updating tooltips and such
     case GDK_KEY_RELEASE: 
         if (mouseovered_point != this) return false;
         if (_drag_initiated) {

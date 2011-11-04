@@ -89,9 +89,11 @@ public:
     bool isGrabbed() {
         return _grabbed;
     }
-	bool centerIsVisible() {
-		return ( _chandle && SP_KNOT_IS_VISIBLE (_chandle) );
-	}
+    bool centerIsVisible() {
+        return ( _chandle && SP_KNOT_IS_VISIBLE (_chandle) );
+    }
+
+    void getNextClosestPoint(bool reverse);
 
 private:
     void _updateHandles();
@@ -103,7 +105,7 @@ private:
     Geom::Point _getGeomHandlePos(Geom::Point const &visual_handle_pos);
     Geom::Point _calcAbsAffineDefault(Geom::Scale const default_scale);
     Geom::Point _calcAbsAffineGeom(Geom::Scale const geom_scale);
-    void _display_snapsource();
+    void _keepClosestPointOnly(Geom::Point const &p, bool const translating);
 
     enum State {
         STATE_SCALE, //scale or stretch
@@ -118,9 +120,9 @@ private:
     std::vector<Geom::Point> _items_centers;
 
     std::vector<Inkscape::SnapCandidatePoint> _snap_points;
-    std::vector<Inkscape::SnapCandidatePoint> _bbox_points; // the bbox point of the selection as a whole, i.e. max. 4 corners plus optionally some midpoints
-    std::vector<Inkscape::SnapCandidatePoint> _bbox_points_for_translating; // the bbox points of each selected item, only to be used for translating
-
+    std::vector<Inkscape::SnapCandidatePoint> _bbox_points;
+    std::vector<Inkscape::SnapCandidatePoint> _all_snap_sources_sorted;
+    std::vector<Inkscape::SnapCandidatePoint>::iterator _all_snap_sources_iter;
     Inkscape::SelCue _selcue;
 
     Inkscape::Selection *_selection;
