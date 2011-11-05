@@ -360,7 +360,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     // (i.e. when weight == 1), then we will not even try to snap to other points and disregard those other points
 
     if (prefs->getBool("/options/snapclosestonly/value", false)) {
-        _keepClosestPointOnly(p, translating);
+        _keepClosestPointOnly(p);
     }
 
     if ((x != -1) && (y != -1)) {
@@ -1599,7 +1599,7 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
     return _calcAbsAffineDefault(geom_scale); // this is bogus, but we must return _something_
 }
 
-void Inkscape::SelTrans::_keepClosestPointOnly(Geom::Point const &p, bool const /*translating*/)
+void Inkscape::SelTrans::_keepClosestPointOnly(Geom::Point const &p)
 {
     SnapManager const &m = _desktop->namedview->snap_manager;
 
