@@ -29,6 +29,9 @@ public:
 
     virtual void doOnApply(SPLPEItem *lpeitem);
 
+    // methods called by path-manipulator upon edits
+    void adjustForNewPath(std::vector<Geom::Path> const & path_in);
+
 private:
     PowerStrokePointArrayParam offset_points;
     BoolParam sort_points;

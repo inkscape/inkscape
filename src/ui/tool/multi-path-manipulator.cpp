@@ -402,21 +402,21 @@ void MultiPathManipulator::joinNodes()
         invokeForAll(&PathManipulator::weldNodes, preserve_pos);
     }
 
-    _doneWithCleanup(_("Join nodes"));
+    _doneWithCleanup(_("Join nodes"), true);
 }
 
 void MultiPathManipulator::breakNodes()
 {
     if (_selection.empty()) return;
     invokeForAll(&PathManipulator::breakNodes);
-    _done(_("Break nodes"));
+    _done(_("Break nodes"), true);
 }
 
 void MultiPathManipulator::deleteNodes(bool keep_shape)
 {
     if (_selection.empty()) return;
     invokeForAll(&PathManipulator::deleteNodes, keep_shape);
-    _doneWithCleanup(_("Delete nodes"));
+    _doneWithCleanup(_("Delete nodes"), true);
 }
 
 /** Join selected endpoints to create segments. */
@@ -442,14 +442,14 @@ void MultiPathManipulator::joinSegments()
     if (joins.empty()) {
         invokeForAll(&PathManipulator::weldSegments);
     }
-    _doneWithCleanup("Join segments");
+    _doneWithCleanup("Join segments", true);
 }
 
 void MultiPathManipulator::deleteSegments()
 {
     if (_selection.empty()) return;
     invokeForAll(&PathManipulator::deleteSegments);
-    _doneWithCleanup("Delete segments");
+    _doneWithCleanup("Delete segments", true);
 }
 
 void MultiPathManipulator::alignNodes(Geom::Dim2 d)
@@ -801,17 +801,17 @@ void MultiPathManipulator::_commit(CommitEvent cps)
 }
 
 /** Commits changes to XML and adds undo stack entry. */
-void MultiPathManipulator::_done(gchar const *reason) {
-    invokeForAll(&PathManipulator::update);
+void MultiPathManipulator::_done(gchar const *reason, bool alert_LPE) {
+    invokeForAll(&PathManipulator::update, alert_LPE);
     invokeForAll(&PathManipulator::writeXML);
     DocumentUndo::done(sp_desktop_document(_desktop), SP_VERB_CONTEXT_NODE, reason);
     signal_coords_changed.emit();
 }
 
 /** Commits changes to XML, adds undo stack entry and removes empty manipulators. */
-void MultiPathManipulator::_doneWithCleanup(gchar const *reason) {
+void MultiPathManipulator::_doneWithCleanup(gchar const *reason, bool alert_LPE) {
     _changed.block();
-    _done(reason);
+    _done(reason, alert_LPE);
     cleanup();
     _changed.unblock();
 }

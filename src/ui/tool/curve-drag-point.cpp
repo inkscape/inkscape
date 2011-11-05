@@ -153,7 +153,7 @@ void CurveDragPoint::_insertNode(bool take_selection)
     }
     _pm._selection.insert(inserted.ptr());
 
-    _pm.update();
+    _pm.update(true);
     _pm._commit(_("Add node"));
 }
 

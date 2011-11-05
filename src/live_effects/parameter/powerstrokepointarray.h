@@ -43,10 +43,11 @@ public:
     virtual bool providesKnotHolderEntities() { return true; }
     virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
-    void set_pwd2(Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in) { last_pwd2 = pwd2_in; }
+    void set_pwd2(Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in, Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_normal_in);
     Geom::Piecewise<Geom::D2<Geom::SBasis> > const & get_pwd2() { return last_pwd2; }
-    void set_pwd2_normal(Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in) { last_pwd2_normal = pwd2_in; }
     Geom::Piecewise<Geom::D2<Geom::SBasis> > const & get_pwd2_normal() { return last_pwd2_normal; }
+
+    void recalculate_controlpoints_for_new_pwd2(Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
     friend class PowerStrokePointArrayParamKnotHolderEntity;
 

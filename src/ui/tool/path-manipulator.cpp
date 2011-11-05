@@ -30,7 +30,9 @@
 #include "document.h"
 #include "live_effects/effect.h"
 #include "live_effects/lpeobject.h"
+#include "live_effects/lpeobject-reference.h"
 #include "live_effects/parameter/path.h"
+#include "live_effects/lpe-powerstroke.h"
 #include "sp-path.h"
 #include "helper/geom.h"
 #include "preferences.h"
@@ -137,7 +139,7 @@ PathManipulator::PathManipulator(MultiPathManipulator &mpm, SPPath *path,
     sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(_outline), 0, SP_WIND_RULE_NONZERO);
 
     _selection.signal_update.connect(
-        sigc::mem_fun(*this, &PathManipulator::update));
+        sigc::bind(sigc::mem_fun(*this, &PathManipulator::update), false));
     _selection.signal_point_changed.connect(
         sigc::mem_fun(*this, &PathManipulator::_selectionChanged));
     _desktop->signal_zoom_changed.connect(
@@ -175,10 +177,12 @@ bool PathManipulator::empty() {
     return !_path || _subpaths.empty();
 }
 
-/** Update the display and the outline of the path. */
-void PathManipulator::update()
+/** Update the display and the outline of the path.
+ * \param alert_LPE if true, alerts an applied LPE to what the path is going to be changed to, so it can adjust its parameters for nicer user interfacing
+ */
+void PathManipulator::update(bool alert_LPE)
 {
-    _createGeometryFromControlPoints();
+    _createGeometryFromControlPoints(alert_LPE);
 }
 
 /** Store the changes to the path in XML. */
@@ -1094,8 +1098,10 @@ void PathManipulator::_createControlPointsFromGeometry()
 }
 
 /** Construct the geometric representation of nodes and handles, update the outline
- * and display */
-void PathManipulator::_createGeometryFromControlPoints()
+ * and display
+ * \param alert_LPE if true, first the LPE is warned what the new path is going to be before updating it
+ */
+void PathManipulator::_createGeometryFromControlPoints(bool alert_LPE)
 {
     Geom::PathBuilder builder;
     for (std::list<SubpathPtr>::iterator spi = _subpaths.begin(); spi != _subpaths.end(); ) {
@@ -1123,7 +1129,18 @@ void PathManipulator::_createGeometryFromControlPoints()
         ++spi;
     }
     builder.finish();
-    _spcurve->set_pathvector(builder.peek() * (_edit_transform * _i2d_transform).inverse());
+    Geom::PathVector pathv = builder.peek() * (_edit_transform * _i2d_transform).inverse();
+    _spcurve->set_pathvector(pathv);
+    if (alert_LPE) {
+        if (SP_IS_LPE_ITEM(_path) && sp_lpe_item_has_path_effect(SP_LPE_ITEM(_path))) {
+            PathEffectList effect_list = sp_lpe_item_get_effect_list(SP_LPE_ITEM(_path));
+            LivePathEffect::LPEPowerStroke *lpe_pwr = dynamic_cast<LivePathEffect::LPEPowerStroke*>( effect_list.front()->lpeobject->get_lpe() );
+            if (lpe_pwr) {
+                lpe_pwr->adjustForNewPath(pathv);
+            }
+        }
+    }
+
     if (_live_outline)
         _updateOutline();
     if (_live_objects)
@@ -1281,8 +1298,9 @@ bool PathManipulator::_nodeClicked(Node *n, GdkEventButton *event)
         }
 
         if (!empty()) { 
-            update();
+            update(true);
         }
+
         // We need to call MPM's method because it could have been our last node
         _multi_path_manipulator._doneWithCleanup(_("Delete node"));
 

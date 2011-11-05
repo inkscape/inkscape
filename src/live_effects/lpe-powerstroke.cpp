@@ -301,7 +301,7 @@ enum LineCuspType {
 static const Util::EnumData<unsigned> LineCuspTypeData[] = {
     {LINECUSP_BEVEL ,  N_("Beveled"),  "bevel"},
     {LINECUSP_ROUND ,  N_("Rounded"), "round"},
-    {LINECUSP_SHARP  , N_("Sharp"), "sharp"}
+// not yet supported    {LINECUSP_SHARP  , N_("Sharp"), "sharp"}
 };
 static const Util::EnumDataConverter<unsigned> LineCuspTypeConverter(LineCuspTypeData, sizeof(LineCuspTypeData)/sizeof(*LineCuspTypeData));
 
@@ -341,6 +341,12 @@ LPEPowerStroke::doOnApply(SPLPEItem *lpeitem)
     points.push_back( Geom::Point(0.5*size,0) );
     points.push_back( Geom::Point(size,0) );
     offset_points.param_set_and_write_new_value(points);
+}
+
+void
+LPEPowerStroke::adjustForNewPath(std::vector<Geom::Path> const & path_in)
+{
+    offset_points.recalculate_controlpoints_for_new_pwd2(path_in[0].toPwSb());
 }
 
 static bool compare_offsets (Geom::Point first, Geom::Point second)
@@ -435,10 +441,9 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
     // for now, only regard first subpath and ignore the rest
     Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_in = path_in[0].toPwSb();
 
-    offset_points.set_pwd2(pwd2_in);
     Piecewise<D2<SBasis> > der = unitVector(derivative(pwd2_in));
     Piecewise<D2<SBasis> > n = rot90(der);
-    offset_points.set_pwd2_normal(n);
+    offset_points.set_pwd2(pwd2_in, n);
 
     std::vector<Geom::Point> ts = offset_points.data();
     if (sort_points) {

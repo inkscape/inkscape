@@ -76,6 +76,42 @@ void PowerStrokePointArrayParam::param_transform_multiply(Geom::Affine const& /*
 }
 
 
+/** call this method to recalculate the controlpoints such that they stay at the same location relative to the new path. Useful after adding/deleting nodes to the path.*/
+void
+PowerStrokePointArrayParam::recalculate_controlpoints_for_new_pwd2(Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
+{
+    if (!last_pwd2.empty()) {
+        if (last_pwd2.size() > pwd2_in.size()) {
+            // Path has become shorter: rescale offsets
+            double factor = (double)pwd2_in.size() / (double)last_pwd2.size();
+            for (unsigned int i = 0; i < _vector.size(); ++i) {
+                _vector[i][Geom::X] *= factor;
+            }
+        } else if (last_pwd2.size() < pwd2_in.size()) {
+            // Path has become longer: probably node added, maintain position of knots
+            Geom::Piecewise<Geom::D2<Geom::SBasis> > normal = rot90(unitVector(derivative(pwd2_in)));
+            for (unsigned int i = 0; i < _vector.size(); ++i) {
+                Geom::Point pt = _vector[i];
+                Geom::Point position = last_pwd2.valueAt(pt[Geom::X]) + pt[Geom::Y] * last_pwd2_normal.valueAt(pt[Geom::X]);
+                
+                double t = nearest_point(position, pwd2_in);
+                double offset = dot(position - pwd2_in.valueAt(t), normal.valueAt(t));
+                _vector[i] = Geom::Point(t, offset);
+            }
+        }
+
+        write_to_SVG();
+    }
+}
+
+void
+PowerStrokePointArrayParam::set_pwd2(Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in, Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_normal_in)
+{
+    last_pwd2 = pwd2_in;
+    last_pwd2_normal = pwd2_normal_in;
+}
+
+
 void
 PowerStrokePointArrayParam::set_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color)
 {

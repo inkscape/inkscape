@@ -60,7 +60,7 @@ public:
 
     bool empty();
     void writeXML();
-    void update(); // update display, but don't commit
+    void update(bool alert_LPE = false); // update display, but don't commit
     void clear(); // remove all nodes from manipulator
     SPPath *item() { return _path; }
 
@@ -102,7 +102,7 @@ private:
     typedef boost::shared_ptr<NodeList> SubpathPtr;
 
     void _createControlPointsFromGeometry();
-    void _createGeometryFromControlPoints();
+    void _createGeometryFromControlPoints(bool alert_LPE = false);
     unsigned _deleteStretch(NodeList::iterator first, NodeList::iterator last, bool keep_shape);
     std::string _createTypeString();
     void _updateOutline();
