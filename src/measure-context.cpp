@@ -392,11 +392,10 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 }
 
                 {
-                    SPCanvasItem *canvas_tooltip;
                     // TODO cleanup memory, Glib::ustring, etc.:
                     char* angle_str = static_cast<char*>(malloc(20));
                     sprintf(angle_str, "%.2f °", angle * 180/M_PI);
-                    canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,0)), angle_str);
+                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,0)), angle_str);
                     sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
                     SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
                     SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x337f337f;
@@ -405,13 +404,14 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
                     free(angle_str);
-
+                }
+                {
                     double totallengthval = (end_point - start_point).length();
                     sp_convert_distance(&totallengthval, &sp_unit_get_by_id(SP_UNIT_PX), &unit);
 
                     char* totallength_str = static_cast<char*>(malloc(20));
                     sprintf(totallength_str, "%.2f %s", totallengthval, unit.abbr);
-                    canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,-2*fontsize)), totallength_str);
+                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,-2*fontsize)), totallength_str);
                     sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
                     SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
                     SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x3333337f;

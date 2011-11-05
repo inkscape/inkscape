@@ -1599,7 +1599,7 @@ Geom::Point Inkscape::SelTrans::_calcAbsAffineGeom(Geom::Scale const geom_scale)
     return _calcAbsAffineDefault(geom_scale); // this is bogus, but we must return _something_
 }
 
-void Inkscape::SelTrans::_keepClosestPointOnly(Geom::Point const &p, bool const translating)
+void Inkscape::SelTrans::_keepClosestPointOnly(Geom::Point const &p, bool const /*translating*/)
 {
     SnapManager const &m = _desktop->namedview->snap_manager;
 
