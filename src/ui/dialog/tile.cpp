@@ -665,7 +665,7 @@ TileDialog::TileDialog()
 
     NoOfRowsSpinner.set_digits(0);
     NoOfRowsSpinner.set_increments(1, 0);
-    NoOfRowsSpinner.set_range(1.0, 100.0);
+    NoOfRowsSpinner.set_range(1.0, 10000.0);
     NoOfRowsSpinner.set_value(PerCol);
     NoOfRowsSpinner.signal_changed().connect(sigc::mem_fun(*this, &TileDialog::on_col_spinbutton_changed));
     tips.set_tip(NoOfRowsSpinner, _("Number of rows"));
@@ -737,7 +737,7 @@ TileDialog::TileDialog()
 
     NoOfColsSpinner.set_digits(0);
     NoOfColsSpinner.set_increments(1, 0);
-    NoOfColsSpinner.set_range(1.0, 100.0);
+    NoOfColsSpinner.set_range(1.0, 10000.0);
     NoOfColsSpinner.set_value(PerRow);
     NoOfColsSpinner.signal_changed().connect(sigc::mem_fun(*this, &TileDialog::on_row_spinbutton_changed));
     tips.set_tip(NoOfColsSpinner, _("Number of columns"));
@@ -819,14 +819,14 @@ TileDialog::TileDialog()
     {
         /*#### Padding ####*/
 
-        YPadding.setDigits(1);
+        YPadding.setDigits(5);
         YPadding.setIncrements(0.2, 0);
         YPadding.setRange(-10000, 10000);
         double yPad = prefs->getDouble("/dialogs/gridtiler/YPad", 15);
         YPadding.setValue(yPad, "px");
         YPadding.signal_value_changed().connect(sigc::mem_fun(*this, &TileDialog::on_ypad_spinbutton_changed));
 
-        XPadding.setDigits(1);
+        XPadding.setDigits(5);
         XPadding.setIncrements(0.2, 0);
         XPadding.setRange(-10000, 10000);
         double xPad = prefs->getDouble("/dialogs/gridtiler/XPad", 15);
