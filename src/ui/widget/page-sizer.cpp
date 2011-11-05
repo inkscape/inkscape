@@ -241,6 +241,14 @@ PageSizer::PageSizer(Registry & _wr)
       _lockMarginUpdate(false),
       _widgetRegistry(&_wr)
 {
+    // set precision of scalar entry boxes
+    _dimensionWidth.setDigits(5);
+    _dimensionHeight.setDigits(5);
+    _marginTop.setDigits(5);
+    _marginLeft.setDigits(5);
+    _marginRight.setDigits(5);
+    _marginBottom.setDigits(5);
+
     //# Set up the Paper Size combo box
     _paperSizeListStore = Gtk::ListStore::create(_paperSizeListColumns);
     _paperSizeList.set_model(_paperSizeListStore);
