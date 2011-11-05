@@ -1517,7 +1517,8 @@ static GtkWidget * clonetiler_spinbox(const char *tip, const char *attr, double 
         }
 
         gtk_widget_set_tooltip_text (sb, tip);
-        gtk_entry_set_width_chars (GTK_ENTRY (sb), 4);
+        gtk_entry_set_width_chars (GTK_ENTRY (sb), 5);
+        gtk_spin_button_set_digits(GTK_SPIN_BUTTON(sb), 3);
         gtk_box_pack_start (GTK_BOX (hb), sb, FALSE, FALSE, SB_MARGIN);
 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -2681,7 +2682,7 @@ void clonetiler_dialog(void)
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
                     GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 0);
                     gtk_widget_set_tooltip_text (sb, _("How many rows in the tiling"));
-                    gtk_entry_set_width_chars (GTK_ENTRY (sb), 5);
+                    gtk_entry_set_width_chars (GTK_ENTRY (sb), 7);
                     gtk_box_pack_start (GTK_BOX (hb), sb, TRUE, TRUE, 0);
 
                     g_signal_connect(G_OBJECT(a), "value_changed",
@@ -2701,7 +2702,7 @@ void clonetiler_dialog(void)
                     gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
                     GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 0);
                     gtk_widget_set_tooltip_text (sb, _("How many columns in the tiling"));
-                    gtk_entry_set_width_chars (GTK_ENTRY (sb), 5);
+                    gtk_entry_set_width_chars (GTK_ENTRY (sb), 7);
                     gtk_box_pack_start (GTK_BOX (hb), sb, TRUE, TRUE, 0);
 
                     g_signal_connect(G_OBJECT(a), "value_changed",
@@ -2731,7 +2732,8 @@ void clonetiler_dialog(void)
 
                     GtkWidget *e = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0 , 2);
                     gtk_widget_set_tooltip_text (e, _("Width of the rectangle to be filled"));
-                    gtk_entry_set_width_chars (GTK_ENTRY (e), 5);
+                    gtk_entry_set_width_chars (GTK_ENTRY (e), 7);
+                    gtk_spin_button_set_digits(GTK_SPIN_BUTTON(e), 4);
                     gtk_box_pack_start (GTK_BOX (hb), e, TRUE, TRUE, 0);
                     g_signal_connect(G_OBJECT(a), "value_changed",
                                        G_CALLBACK(clonetiler_fill_width_changed), u);
@@ -2756,7 +2758,8 @@ void clonetiler_dialog(void)
 
                     GtkWidget *e = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0 , 2);
                     gtk_widget_set_tooltip_text (e, _("Height of the rectangle to be filled"));
-                    gtk_entry_set_width_chars (GTK_ENTRY (e), 5);
+                    gtk_entry_set_width_chars (GTK_ENTRY (e), 7);
+                    gtk_spin_button_set_digits(GTK_SPIN_BUTTON(e), 4);
                     gtk_box_pack_start (GTK_BOX (hb), e, TRUE, TRUE, 0);
                     g_signal_connect(G_OBJECT(a), "value_changed",
                                        G_CALLBACK(clonetiler_fill_height_changed), u);
