@@ -73,7 +73,7 @@ public:
     void setSourceNum(long num) {_source_num = num;}
     void setDistance(Geom::Coord dist) {_dist = dist;}
     Geom::Coord getDistance() { return _dist;}
-    bool operator <(const SnapCandidatePoint other) const { return _dist < other._dist; } // Needed for sorting the SnapCandidatePoints
+    bool operator <(const SnapCandidatePoint &other) const { return _dist < other._dist; } // Needed for sorting the SnapCandidatePoints
     inline Geom::OptRect const getTargetBBox() const {return _target_bbox;}
     boost::optional<Geom::Point> const & getStartingPoint() const {return _line_starting_point;}
 

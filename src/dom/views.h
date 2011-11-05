@@ -125,12 +125,14 @@ public:
 private:
 
     void assign(const AbstractView &other)
+    {
+        if (documentView != NULL)
         {
+            free(documentView); //NOTE: is free the correct method?
+        }
         documentView = other.documentView;
-		}
-
-	DocumentView *documentView;
-		
+    }
+    DocumentView *documentView;
 };
 
 
@@ -163,7 +165,7 @@ public:
     /**
      *
      */
-    DocumentView() {}
+    DocumentView() {defaultView = NULL;}
 
     /**
      *
@@ -190,10 +192,13 @@ public:
 private:
 
     void assign(const DocumentView &other)
+    {
+        if (defaultView != NULL)
         {
+            free(defaultView); //NOTE: is free the correct method?
+        }
         defaultView = other.defaultView;
-		}
-
+    }
     AbstractView *defaultView;
     		
 };

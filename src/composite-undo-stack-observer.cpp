@@ -137,16 +137,22 @@ CompositeUndoStackObserver::_unlock()
 	if (!--this->_iterating) {
 		// Remove marked observers
 		UndoObserverRecordList::iterator i = this->_active.begin();
-		for(; i != this->_active.begin(); ++i) {
+		for(; i != this->_active.begin(); ) {
 			if (i->to_remove) {
-				this->_active.erase(i);
+				i = this->_active.erase(i);
+			}
+			else{
+				++i;
 			}
 		}
 
 		i = this->_pending.begin();
-		for(; i != this->_pending.begin(); ++i) {
+		for(; i != this->_pending.begin(); ) {
 			if (i->to_remove) {
-				this->_active.erase(i);
+				i = this->_active.erase(i);
+			}
+			else {
+				++i;
 			}
 		}
 
