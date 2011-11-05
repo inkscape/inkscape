@@ -139,7 +139,7 @@ LivePathEffectEditor::LivePathEffectEditor()
 
     //Add the visibility icon column:
     Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler(
-        INKSCAPE_ICON("object-visible"), INKSCAPE_ICON("object-visible")) );
+        INKSCAPE_ICON("object-visible"), INKSCAPE_ICON("object-hidden")) );
     int visibleColNum = effectlist_view.append_column("is_visible", *eyeRenderer) - 1;
     eyeRenderer->signal_toggled().connect( sigc::mem_fun(*this, &LivePathEffectEditor::on_visibility_toggled) );
     eyeRenderer->property_activatable() = true;
