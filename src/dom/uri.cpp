@@ -144,6 +144,7 @@ void URI::init()
     scheme    = SCHEME_NONE;
     schemeStr.clear();
     port      = 0;
+    portSpecified = false;
     authority.clear();
     path.clear();
     absolute  = false;
@@ -200,18 +201,18 @@ static DOMString toStr(const std::vector<int> &arr)
 DOMString URI::toString() const
 {
     DOMString str = schemeStr;
-    if (authority.size() > 0)
+    if (!authority.empty())
         {
         str.append("//");
         str.append(toStr(authority));
         }
     str.append(toStr(path));
-    if (query.size() > 0)
+    if (!query.empty())
         {
         str.append("?");
         str.append(toStr(query));
         }
-    if (fragment.size() > 0)
+    if (!fragment.empty())
         {
         str.append("#");
         str.append(toStr(fragment));
@@ -380,11 +381,11 @@ URI URI::resolve(const URI &other) const
         return other;
 
     //## 2
-    if (other.fragment.size()  >  0 &&
-        other.path.size()      == 0 &&
-        other.scheme           == SCHEME_NONE &&
-        other.authority.size() == 0 &&
-        other.query.size()     == 0 )
+    if (!other.fragment.empty()     &&
+        other.path.empty()          &&
+        other.scheme == SCHEME_NONE &&
+        other.authority.empty()     &&
+        other.query.empty())
         {
         URI fragUri = *this;
         fragUri.fragment = other.fragment;
@@ -398,7 +399,7 @@ URI URI::resolve(const URI &other) const
     newUri.schemeStr = schemeStr;
     newUri.query     = other.query;
     newUri.fragment  = other.fragment;
-    if (other.authority.size() > 0)
+    if (!other.authority.empty())
         {
         //# 3.2
         if (absolute || other.absolute)

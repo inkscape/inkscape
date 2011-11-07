@@ -146,8 +146,8 @@ public:
     /**
      *  Append a byte vector to the hash
      */
-    virtual void append(const std::vector<unsigned char> buf)
-        {
+    virtual void append(const std::vector<unsigned char> &buf)
+        { //NOTE: function seems to be unused
         for (unsigned int i=0 ; i<buf.size() ; i++)
             update(buf[i]);
         }

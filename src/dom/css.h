@@ -390,7 +390,7 @@ public:
     /**
      *
      */
-    CSSStyleSheet() : stylesheets::StyleSheet()
+    CSSStyleSheet() : stylesheets::StyleSheet(), ownerRule(0)
         {
         }
 
@@ -1217,6 +1217,7 @@ public:
      */
     void assign(const CSSImportRule &other)
         {
+        href       = other.href;
         mediaList  = other.mediaList;
         styleSheet = other.styleSheet;
         }
