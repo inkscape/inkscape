@@ -84,6 +84,7 @@ set(live_effects_SRC
 	lpe-perp_bisector.h
 	lpe-perspective_path.h
 	lpe-powerstroke.h
+	lpe-powerstroke-interpolators.h
 	lpe-recursiveskeleton.h
 	lpe-rough-hatches.h
 	lpe-ruler.h
