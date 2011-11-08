@@ -68,6 +68,7 @@ LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     offset_points(_("Offset points"), _("Offset points"), "offset_points", &wr, this),
     sort_points(_("Sort points"), _("Sort offset points according to their time value along the curve."), "sort_points", &wr, this, true),
     interpolator_type(_("Interpolator type"), _("Determines which kind of interpolator will be used to interpolate between stroke width along the path."), "interpolator_type", InterpolatorTypeConverter, &wr, this, Geom::Interpolate::INTERP_CUBICBEZIER_JOHAN),
+    interpolator_beta(_("Smoothness"), _("Sets the smoothness for the CubicBezierJohan interpolator. 0 = linear interpolation, 1 = smooth"), "interpolator_beta", &wr, this, 0.2),
     start_linecap_type(_("Start line cap type"), _("Determines the shape of the path's start."), "start_linecap_type", LineCapTypeConverter, &wr, this, LINECAP_ROUND),
     cusp_linecap_type(_("Cusp line cap type"), _("Determines the shape of the cusps along the path."), "cusp_linecap_type", LineCuspTypeConverter, &wr, this, LINECUSP_ROUND),
     end_linecap_type(_("End line cap type"), _("Determines the shape of the path's end."), "end_linecap_type", LineCapTypeConverter, &wr, this, LINECAP_ROUND)
@@ -79,6 +80,7 @@ LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&offset_points) );
     registerParameter( dynamic_cast<Parameter *>(&sort_points) );
     registerParameter( dynamic_cast<Parameter *>(&interpolator_type) );
+    registerParameter( dynamic_cast<Parameter *>(&interpolator_beta) );
     registerParameter( dynamic_cast<Parameter *>(&start_linecap_type) );
     registerParameter( dynamic_cast<Parameter *>(&cusp_linecap_type) );
     registerParameter( dynamic_cast<Parameter *>(&end_linecap_type) );
@@ -220,6 +222,9 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
     }
     // create stroke path where points (x,y) := (t, offset)
     Geom::Interpolate::Interpolator *interpolator = Geom::Interpolate::Interpolator::create(static_cast<Geom::Interpolate::InterpolatorType>(interpolator_type.get_value()));
+    if (Geom::Interpolate::CubicBezierJohan *johan = dynamic_cast<Geom::Interpolate::CubicBezierJohan*>(interpolator)) {
+        johan->setBeta(interpolator_beta);
+    }
     Geom::Path strokepath = interpolator->interpolateToPath(ts);
     delete interpolator;
 

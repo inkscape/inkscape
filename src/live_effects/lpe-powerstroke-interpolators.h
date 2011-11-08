@@ -124,6 +124,10 @@ public:
         return fit;
     };
 
+    void setBeta(double beta) {
+        _beta = beta;
+    }
+
     double _beta;
 
 private:

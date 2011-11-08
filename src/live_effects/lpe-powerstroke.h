@@ -36,6 +36,7 @@ private:
     PowerStrokePointArrayParam offset_points;
     BoolParam sort_points;
     EnumParam<unsigned> interpolator_type;
+    ScalarParam interpolator_beta;
     EnumParam<unsigned> start_linecap_type;
     EnumParam<unsigned> cusp_linecap_type;
     EnumParam<unsigned> end_linecap_type;
