@@ -2077,7 +2077,10 @@ void UserDataHandlerImpl::handle(unsigned short /*operation*/,
 /**
  *
  */
-DOMErrorImpl::DOMErrorImpl() : message(""), severity(0), type("")
+DOMErrorImpl::DOMErrorImpl() :
+    severity(0),
+    message(),
+    type()
 {
 }
 
@@ -2183,7 +2186,13 @@ bool DOMErrorHandlerImpl::handleError(const DOMError *error)
 /**
  *
  */
-DOMLocatorImpl::DOMLocatorImpl() : byteOffset(0), columnNumber (0), uri(""), lineNumber(0), relatedNode(0), utf16Offset(0)
+DOMLocatorImpl::DOMLocatorImpl() :
+    lineNumber(0),
+    columnNumber(0),
+    byteOffset(0),
+    utf16Offset(0),
+    relatedNode(0),
+    uri()
 {
 }
 
