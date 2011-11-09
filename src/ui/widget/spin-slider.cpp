@@ -18,7 +18,7 @@ namespace UI {
 namespace Widget {
 
 SpinSlider::SpinSlider(double value, double lower, double upper, double step_inc,
-                       double climb_rate, int digits, const SPAttributeEnum a, char* tip_text)
+                       double climb_rate, int digits, const SPAttributeEnum a, const char* tip_text)
     : AttrWidget(a, value), _adjustment(value, lower, upper, step_inc),
       _scale(_adjustment), _spin(_adjustment, climb_rate, digits)
 {
