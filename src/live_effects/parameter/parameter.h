@@ -109,6 +109,8 @@ public:
     void param_set_digits(unsigned digits);
     void param_set_increments(double step, double page);
 
+    void addSlider(bool add_slider_widget) { add_slider = add_slider_widget; };
+
     virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
 
     inline operator gdouble()
@@ -123,6 +125,7 @@ protected:
     unsigned digits;
     double inc_step;
     double inc_page;
+    bool add_slider;
 
 private:
     ScalarParam(const ScalarParam&);

@@ -3,8 +3,9 @@
  *   Carl Hetherington <inkscape@carlh.net>
  *   Derek P. Moore <derekm@hackunix.org>
  *   Bryce Harrington <bryce@bryceharrington.org>
+ *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
- * Copyright (C) 2004 Carl Hetherington
+ * Copyright (C) 2004-2011 authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -16,6 +17,7 @@
 
 #include "scalar.h"
 #include "spinbutton.h"
+#include <gtkmm/scale.h>
 
 namespace Inkscape {
 namespace UI {
@@ -133,7 +135,12 @@ void Scalar::update()
     static_cast<SpinButton*>(_widget)->update();
 }
 
-
+void Scalar::addSlider()
+{
+    Gtk::HScale *scale = new Gtk::HScale( * static_cast<SpinButton*>(_widget)->get_adjustment() );
+    scale->set_draw_value(false);
+    add (*manage (scale));
+}
 
 Glib::SignalProxy0<void> Scalar::signal_value_changed()
 {

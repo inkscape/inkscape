@@ -58,7 +58,8 @@ ScalarParam::ScalarParam( const Glib::ustring& label, const Glib::ustring& tip,
       defvalue(default_value),
       digits(2),
       inc_step(0.1),
-      inc_page(1)
+      inc_page(1),
+      add_slider(false)
 {
 }
 
@@ -134,6 +135,9 @@ ScalarParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
     rsu->setIncrements(inc_step, inc_page);
     rsu->setRange(min, max);
     rsu->setProgrammatically = false;
+    if (add_slider) {
+        rsu->addSlider();
+    }
 
     rsu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change scalar parameter"));
 

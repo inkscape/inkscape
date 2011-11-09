@@ -143,6 +143,11 @@ public:
     void    update();
 
     /**
+     * Adds a slider (HScale) to the left of the spinbox.
+     */
+    void    addSlider();
+
+    /**
      * Signal raised when the spin button's value changes.
      */
     Glib::SignalProxy0<void> signal_value_changed();

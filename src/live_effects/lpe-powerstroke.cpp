@@ -77,6 +77,9 @@ LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
 
     /// @todo offset_points are initialized with empty path, is that bug-save?
 
+    interpolator_beta.addSlider(true);
+    interpolator_beta.param_set_range(0.,1.);
+
     registerParameter( dynamic_cast<Parameter *>(&offset_points) );
     registerParameter( dynamic_cast<Parameter *>(&sort_points) );
     registerParameter( dynamic_cast<Parameter *>(&interpolator_type) );
