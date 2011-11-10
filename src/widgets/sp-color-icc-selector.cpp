@@ -129,6 +129,8 @@ ColorICCSelector::ColorICCSelector( SPColorSelector* csel )
       _updating( FALSE ),
       _dragging( FALSE ),
       _fixupNeeded(0),
+      _fixupBtn(0),
+      _profileSel(0),
       _fooCount(0),
       _fooScales(0),
       _fooAdj(0),
@@ -137,6 +139,7 @@ ColorICCSelector::ColorICCSelector( SPColorSelector* csel )
       _fooLabel(0),
       _fooMap(0),
       _adj(0),
+      _slider(0),
       _sbtn(0),
       _label(0)
 #if ENABLE_LCMS

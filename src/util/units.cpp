@@ -17,7 +17,7 @@ namespace Util {
 class UnitsSAXHandler : public Inkscape::IO::FlatSaxHandler
 {
 public:
-    UnitsSAXHandler(UnitTable *table) : FlatSaxHandler(), tbl(table) {}
+    UnitsSAXHandler(UnitTable *table);
     virtual ~UnitsSAXHandler() {}
 
     virtual void _startElement(xmlChar const *name, xmlChar const **attrs);
@@ -29,6 +29,14 @@ public:
     Unit unit;
 };
 
+UnitsSAXHandler::UnitsSAXHandler(UnitTable *table) :
+    FlatSaxHandler(),
+    tbl(table),
+    primary(0),
+    skip(0),
+    unit()
+{
+}
 
 #define BUFSIZE (255)
 
@@ -70,8 +78,7 @@ UnitTable::~UnitTable() {
 }
 
 /** Add a new unit to the table */
-void
-UnitTable::addUnit(Unit const &u, bool primary) {
+void UnitTable::addUnit(Unit const &u, bool primary) {
     _unit_map[u.abbr] = new Unit(u);
     if (primary) {
 	_primary_unit[u.type] = u.abbr;
@@ -79,8 +86,7 @@ UnitTable::addUnit(Unit const &u, bool primary) {
 }
 
 /** Retrieve a given unit based on its string identifier */
-Unit
-UnitTable::getUnit(Glib::ustring const &unit_abbr) const {
+Unit UnitTable::getUnit(Glib::ustring const &unit_abbr) const {
     UnitMap::const_iterator iter = _unit_map.find(unit_abbr);
     if (iter != _unit_map.end()) {
 	return *((*iter).second);
@@ -90,8 +96,7 @@ UnitTable::getUnit(Glib::ustring const &unit_abbr) const {
 }
 
 /** Remove a unit definition from the given unit type table */
-bool 
-UnitTable::deleteUnit(Unit const &u) {
+bool UnitTable::deleteUnit(Unit const &u) {
     if (u.abbr == _primary_unit[u.type]) {
 	// Cannot delete the primary unit type since it's
 	// used for conversions
@@ -108,15 +113,13 @@ UnitTable::deleteUnit(Unit const &u) {
 }
 
 /** Returns true if the given string 'name' is a valid unit in the table */
-bool
-UnitTable::hasUnit(Glib::ustring const &unit) const {
+bool UnitTable::hasUnit(Glib::ustring const &unit) const {
     UnitMap::const_iterator iter = _unit_map.find(unit);
     return (iter != _unit_map.end());
 }
 
 /** Provides an iteratable list of items in the given unit table */
-UnitTable::UnitMap 
-UnitTable::units(UnitType type) const
+UnitTable::UnitMap UnitTable::units(UnitType type) const
 {
     UnitMap submap;
     for (UnitMap::const_iterator iter = _unit_map.begin();
@@ -130,16 +133,14 @@ UnitTable::units(UnitType type) const
 }
 
 /** Returns the default unit abbr for the given type */
-Glib::ustring
-UnitTable::primary(UnitType type) const {
+Glib::ustring UnitTable::primary(UnitType type) const {
     return _primary_unit[type];
 }
 
 /** Merges the contents of the given file into the UnitTable,
     possibly overwriting existing unit definitions.  This loads
     from a text file */
-bool
-UnitTable::loadText(Glib::ustring const &filename) {
+bool UnitTable::loadText(Glib::ustring const &filename) {
     char buf[BUFSIZE];
 
     // Open file for reading
@@ -221,8 +222,7 @@ UnitTable::loadText(Glib::ustring const &filename) {
     return true;
 }
 
-bool
-UnitTable::load(Glib::ustring const &filename) {
+bool UnitTable::load(Glib::ustring const &filename) {
     UnitsSAXHandler handler(this);
 
     int result = handler.parseFile( filename.c_str() );
@@ -237,8 +237,7 @@ UnitTable::load(Glib::ustring const &filename) {
 }
 
 /** Saves the current UnitTable to the given file. */
-bool
-UnitTable::save(Glib::ustring const &filename) {
+bool UnitTable::save(Glib::ustring const &filename) {
 
     // open file for writing
     FILE *f = fopen(filename.c_str(), "w");

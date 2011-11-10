@@ -69,7 +69,8 @@ PaintDef::PaintDef() :
     r(0),
     g(0),
     b(0),
-    editable(false)
+    editable(false),
+    _listeners()
 {
 }
 
@@ -79,7 +80,8 @@ PaintDef::PaintDef( ColorType type ) :
     r(0),
     g(0),
     b(0),
-    editable(false)
+    editable(false),
+    _listeners()
 {
     switch (type) {
         case CLEAR:
@@ -100,7 +102,8 @@ PaintDef::PaintDef( unsigned int r, unsigned int g, unsigned int b, const std::s
     r(r),
     g(g),
     b(b),
-    editable(false)
+    editable(false),
+    _listeners()
 {
 }
 
@@ -125,6 +128,7 @@ PaintDef& PaintDef::operator=( PaintDef const &other )
         b = other.b;
         descr = other.descr;
         editable = other.editable;
+        //TODO: _listeners should be assigned a value
     }
     return *this;
 }

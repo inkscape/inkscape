@@ -307,7 +307,7 @@ sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *const decl)
     // the additional benefit of respecting the numerical precission set in the SVG Output
     // preferences. We assume any numerical part comes first (if not, the whole string is copied).
     std::stringstream ss( value_unquoted );
-    double number;
+    double number = 0;
     std::string characters;
     std::string temp;
     bool number_valid = !(ss >> number).fail();
