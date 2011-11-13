@@ -57,8 +57,7 @@ LicenseItem::LicenseItem (struct rdf_license_t const* license, EntityEntry* enti
 }
 
 /// \pre it is assumed that the license URI entry is a Gtk::Entry
-void
-LicenseItem::on_toggled()
+void LicenseItem::on_toggled()
 {
     if (_wr.isUpdating()) return;
 
@@ -83,8 +82,7 @@ Licensor::~Licensor()
     if (_eentry) delete _eentry;
 }
 
-void
-Licensor::init (Gtk::Tooltips& tt, Registry& wr)
+void Licensor::init (Gtk::Tooltips& tt, Registry& wr)
 {
     /* add license-specific metadata entry areas */
     rdf_work_entity_t* entity = rdf_find_entity ( "license_uri" );
@@ -118,8 +116,7 @@ Licensor::init (Gtk::Tooltips& tt, Registry& wr)
     show_all_children();
 }
 
-void 
-Licensor::update (SPDocument *doc)
+void Licensor::update (SPDocument *doc)
 {
     /* identify the license info */
     struct rdf_license_t * license = rdf_get_license (doc);

@@ -39,9 +39,9 @@ public:
     void set_size(int x, int y);
     void redraw();
 private:
-    int x,y;
-    SvgFont* svgfont;
-    Glib::ustring text;
+    int _x,_y;
+    SvgFont* _svgfont;
+    Glib::ustring _text;
     bool on_expose_event (GdkEventExpose *event);
 };
 

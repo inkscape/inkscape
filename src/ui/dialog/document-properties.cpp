@@ -74,8 +74,7 @@ static Inkscape::XML::NodeEventVector const _repr_events = {
 };
 
 
-DocumentProperties &
-DocumentProperties::getInstance()
+DocumentProperties& DocumentProperties::getInstance()
 {
     DocumentProperties &instance = *new DocumentProperties();
     instance.init();
@@ -85,9 +84,13 @@ DocumentProperties::getInstance()
 
 DocumentProperties::DocumentProperties()
     : UI::Widget::Panel ("", "/dialogs/documentoptions", SP_VERB_DIALOG_NAMEDVIEW),
-      _page_page(1, 1, true, true), _page_guides(1, 1),
-      _page_snap(1, 1), _page_cms(1, 1), _page_scripting(1, 1),
-      _page_external_scripts(1, 1), _page_embedded_scripts(1, 1),
+      _page_page(1, 1, true, true),
+      _page_guides(1, 1),
+      _page_snap(1, 1),
+      _page_cms(1, 1),
+      _page_scripting(1, 1),
+      _page_external_scripts(1, 1),
+      _page_embedded_scripts(1, 1),
     //---------------------------------------------------------------
       _rcb_canb(_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false),
       _rcb_bord(_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false),
@@ -101,6 +104,21 @@ DocumentProperties::DocumentProperties()
       _rcb_sgui(_("Show _guides"), _("Show or hide guides"), "showguides", _wr),
       _rcp_gui(_("Guide co_lor:"), _("Guideline color"), _("Color of guidelines"), "guidecolor", "guideopacity", _wr),
       _rcp_hgui(_("_Highlight color:"), _("Highlighted guideline color"), _("Color of a guideline when it is under mouse"), "guidehicolor", "guidehiopacity", _wr),
+    //---------------------------------------------------------------
+    _rsu_sno(_("Snap _distance"), _("Snap only when _closer than:"), _("Always snap"),
+                  _("Snapping distance, in screen pixels, for snapping to objects"), _("Always snap to objects, regardless of their distance"),
+                  _("If set, objects only snap to another object when it's within the range specified below"),
+                  "objecttolerance", _wr),
+    //Options for snapping to grids
+    _rsu_sn(_("Snap d_istance"), _("Snap only when c_loser than:"), _("Always snap"),
+                  _("Snapping distance, in screen pixels, for snapping to grid"), _("Always snap to grids, regardless of the distance"),
+                  _("If set, objects only snap to a grid line when it's within the range specified below"),
+                  "gridtolerance", _wr),
+    //Options for snapping to guides
+    _rsu_gusn(_("Snap dist_ance"), _("Snap only when close_r than:"), _("Always snap"),
+                _("Snapping distance, in screen pixels, for snapping to guides"), _("Always snap to guides, regardless of the distance"),
+                _("If set, objects only snap to a guide when it's within the range specified below"),
+                "guidetolerance", _wr),
     //---------------------------------------------------------------
       _rcb_snclp(_("Snap to clip paths"), _("When snapping to paths, then also try snapping to clip paths"), "inkscape:snap-path-clip", _wr),
       _rcb_snmsk(_("Snap to mask paths"), _("When snapping to paths, then also try snapping to mask paths"), "inkscape:snap-path-mask", _wr),
@@ -138,8 +156,7 @@ DocumentProperties::DocumentProperties()
     signalDeactiveDesktop().connect(sigc::mem_fun(*this, &DocumentProperties::_handleDeactivateDesktop));
 }
 
-void
-DocumentProperties::init()
+void DocumentProperties::init()
 {
     update();
 
@@ -210,8 +227,7 @@ inline void attach_all(Gtk::Table &table, Gtk::Widget *const arr[], unsigned con
     }
 }
 
-void
-DocumentProperties::build_page()
+void DocumentProperties::build_page()
 {
     _page_page.show();
 
@@ -242,8 +258,7 @@ DocumentProperties::build_page()
     attach_all(_page_page.table(), widget_array, G_N_ELEMENTS(widget_array));
 }
 
-void
-DocumentProperties::build_guides()
+void DocumentProperties::build_guides()
 {
     _page_guides.show();
 
@@ -261,27 +276,9 @@ DocumentProperties::build_guides()
     attach_all(_page_guides.table(), widget_array, G_N_ELEMENTS(widget_array));
 }
 
-void
-DocumentProperties::build_snap()
+void DocumentProperties::build_snap()
 {
     _page_snap.show();
-
-    _rsu_sno.init (_("Snap _distance"), _("Snap only when _closer than:"), _("Always snap"),
-                  _("Snapping distance, in screen pixels, for snapping to objects"), _("Always snap to objects, regardless of their distance"),
-                  _("If set, objects only snap to another object when it's within the range specified below"),
-                  "objecttolerance", _wr);
-
-    //Options for snapping to grids
-    _rsu_sn.init (_("Snap d_istance"), _("Snap only when c_loser than:"), _("Always snap"),
-                  _("Snapping distance, in screen pixels, for snapping to grid"), _("Always snap to grids, regardless of the distance"),
-                  _("If set, objects only snap to a grid line when it's within the range specified below"),
-                  "gridtolerance", _wr);
-
-    //Options for snapping to guides
-    _rsu_gusn.init (_("Snap dist_ance"), _("Snap only when close_r than:"), _("Always snap"),
-                _("Snapping distance, in screen pixels, for snapping to guides"), _("Always snap to guides, regardless of the distance"),
-                _("If set, objects only snap to a guide when it's within the range specified below"),
-                "guidetolerance", _wr);
 
     Gtk::Label *label_o = manage (new Gtk::Label);
     label_o->set_markup (_("<b>Snap to objects</b>"));
@@ -369,8 +366,7 @@ static void sanitizeName( Glib::ustring& str )
     }
 }
 
-void
-DocumentProperties::linkSelectedProfile()
+void DocumentProperties::linkSelectedProfile()
 {
 //store this profile in the SVG document (create <color-profile> element in the XML)
     // TODO remove use of 'active' desktop
@@ -410,8 +406,7 @@ DocumentProperties::linkSelectedProfile()
     }
 }
 
-void
-DocumentProperties::populate_linked_profiles_box()
+void DocumentProperties::populate_linked_profiles_box()
 {
     _LinkedProfilesListStore->clear();
     const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "iccprofile" );
@@ -505,8 +500,7 @@ void DocumentProperties::removeSelectedProfile(){
     populate_linked_profiles_box();
 }
 
-void
-DocumentProperties::build_cms()
+void DocumentProperties::build_cms()
 {
     _page_cms.show();
 
@@ -571,8 +565,7 @@ DocumentProperties::build_cms()
 }
 #endif // ENABLE_LCMS
 
-void
-DocumentProperties::build_scripting()
+void DocumentProperties::build_scripting()
 {
     _page_scripting.show();
 
@@ -1057,8 +1050,7 @@ DocumentProperties::_createPageTabLabel(const Glib::ustring& label, const char *
 
 //--------------------------------------------------------------------
 
-void
-DocumentProperties::on_response (int id)
+void DocumentProperties::on_response (int id)
 {
     if (id == Gtk::RESPONSE_DELETE_EVENT || id == Gtk::RESPONSE_CLOSE)
     {
@@ -1072,8 +1064,7 @@ DocumentProperties::on_response (int id)
         hide();
 }
 
-void
-DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *document)
+void DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *document)
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->addListener(&_repr_events, this);
@@ -1082,8 +1073,7 @@ DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *docu
     update();
 }
 
-void
-DocumentProperties::_handleActivateDesktop(Inkscape::Application *, SPDesktop *desktop)
+void DocumentProperties::_handleActivateDesktop(Inkscape::Application *, SPDesktop *desktop)
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->addListener(&_repr_events, this);
@@ -1092,8 +1082,7 @@ DocumentProperties::_handleActivateDesktop(Inkscape::Application *, SPDesktop *d
     update();
 }
 
-void
-DocumentProperties::_handleDeactivateDesktop(Inkscape::Application *, SPDesktop *desktop)
+void DocumentProperties::_handleDeactivateDesktop(Inkscape::Application *, SPDesktop *desktop)
 {
     Inkscape::XML::Node *repr = sp_desktop_namedview(desktop)->getRepr();
     repr->removeListenerByData(this);
@@ -1101,15 +1090,13 @@ DocumentProperties::_handleDeactivateDesktop(Inkscape::Application *, SPDesktop 
     root->removeListenerByData(this);
 }
 
-static void
-on_child_added(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, Inkscape::XML::Node */*ref*/, void *data)
+static void on_child_added(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, Inkscape::XML::Node */*ref*/, void *data)
 {
     if (DocumentProperties *dialog = static_cast<DocumentProperties *>(data))
         dialog->update_gridspage();
 }
 
-static void
-on_child_removed(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, Inkscape::XML::Node */*ref*/, void *data)
+static void on_child_removed(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, Inkscape::XML::Node */*ref*/, void *data)
 {
     if (DocumentProperties *dialog = static_cast<DocumentProperties *>(data))
         dialog->update_gridspage();
@@ -1131,8 +1118,7 @@ static void on_repr_attr_changed(Inkscape::XML::Node *, gchar const *, gchar con
 # BUTTON CLICK HANDLERS    (callbacks)
 ########################################################################*/
 
-void
-DocumentProperties::onNewGrid()
+void DocumentProperties::onNewGrid()
 {
     SPDesktop *dt = getDesktop();
     Inkscape::XML::Node *repr = sp_desktop_namedview(dt)->getRepr();
@@ -1146,8 +1132,7 @@ DocumentProperties::onNewGrid()
 }
 
 
-void
-DocumentProperties::onRemoveGrid()
+void DocumentProperties::onRemoveGrid()
 {
     gint pagenum = _grids_notebook.get_current_page();
     if (pagenum == -1) // no pages

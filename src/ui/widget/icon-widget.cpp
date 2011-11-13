@@ -19,13 +19,16 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-IconWidget::IconWidget()
+IconWidget::IconWidget() :
+    _pb(0),
+    _size(0),
+    _do_bitmap_icons(false)
 {
-    _pb = NULL;
-    _size = 0;
 }
 
-IconWidget::IconWidget(int unsigned size, int unsigned scale, gchar const *name)
+IconWidget::IconWidget(int unsigned size, int unsigned scale, gchar const *name) :
+    _pb(0),
+    _do_bitmap_icons(false)
 {
     _size = std::max((int unsigned)128, std::min(size, (int unsigned)1));
 
@@ -35,7 +38,7 @@ IconWidget::IconWidget(int unsigned size, int unsigned scale, gchar const *name)
 
     if (pixels == NULL) {
         g_warning("Couldn't find matching icon for %s - has this application been installed?", name);
-        _pb = NULL;
+        //_pb = NULL;
     } else {
         /* TODO
         _pb = gdk_pixbuf_new_from_data(pixels, GDK_COLORSPACE_RGB,
@@ -45,7 +48,9 @@ IconWidget::IconWidget(int unsigned size, int unsigned scale, gchar const *name)
     }
 }
 
-IconWidget::IconWidget(int unsigned size, guchar const */*px*/)
+IconWidget::IconWidget(int unsigned size, guchar const */*px*/) :
+    _pb(0),
+    _do_bitmap_icons(false)
 {
     _size = std::max((int unsigned)128, std::min(size, (int unsigned)1));
 

@@ -40,9 +40,10 @@ namespace Widget {
 
 //====================================================
 
-ToleranceSlider::ToleranceSlider()
+ToleranceSlider::ToleranceSlider(const Glib::ustring& label1, const Glib::ustring& label2, const Glib::ustring& label3, const Glib::ustring& tip1, const Glib::ustring& tip2, const Glib::ustring& tip3, const Glib::ustring& key, Registry& wr)
 : _vbox(0)
 {
+    init(label1, label2, label3, tip1, tip2, tip3, key, wr);
 }
 
 ToleranceSlider::~ToleranceSlider()
@@ -51,8 +52,7 @@ ToleranceSlider::~ToleranceSlider()
     _scale_changed_connection.disconnect();
 }
 
-void
-ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2, const Glib::ustring& label3, const Glib::ustring& tip1, const Glib::ustring& tip2, const Glib::ustring& tip3, const Glib::ustring& key, Registry& wr)
+void ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2, const Glib::ustring& label3, const Glib::ustring& tip1, const Glib::ustring& tip2, const Glib::ustring& tip3, const Glib::ustring& key, Registry& wr)
 {
     // hbox = label + slider
     //
@@ -109,8 +109,7 @@ ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& label2,
     _vbox->show_all_children();
 }
 
-void 
-ToleranceSlider::setValue (double val)
+void ToleranceSlider::setValue (double val)
 {
     Gtk::Adjustment *adj = _hscale->get_adjustment();
 
@@ -135,21 +134,18 @@ ToleranceSlider::setValue (double val)
     _hbox->show_all();
 }
 
-void
-ToleranceSlider::setLimits (double theMin, double theMax)
+void ToleranceSlider::setLimits (double theMin, double theMax)
 {
     _hscale->set_range (theMin, theMax);
     _hscale->get_adjustment()->set_step_increment (1);
 }
 
-void
-ToleranceSlider::on_scale_changed()
+void ToleranceSlider::on_scale_changed()
 {
     update (_hscale->get_value());
 }
 
-void
-ToleranceSlider::on_toggled()
+void ToleranceSlider::on_toggled()
 {
     if (!_button2->get_active())
     {
@@ -168,8 +164,7 @@ ToleranceSlider::on_toggled()
     }
 }
 
-void
-ToleranceSlider::update (double val)
+void ToleranceSlider::update (double val)
 {
     if (_wr->isUpdating())
         return;
