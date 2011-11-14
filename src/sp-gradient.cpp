@@ -1531,7 +1531,7 @@ sp_gradient_pattern_common_setup(cairo_pattern_t *cp,
 
 static cairo_pattern_t *
 sp_radialgradient_create_pattern(SPPaintServer *ps,
-                                 cairo_t */* ct */,
+                                 cairo_t *ct,
                                  Geom::OptRect const &bbox,
                                  double opacity)
 {
@@ -1540,9 +1540,30 @@ sp_radialgradient_create_pattern(SPPaintServer *ps,
 
     gr->ensureVector();
 
+    Geom::Point focus(rg->fx.computed, rg->fy.computed);
+    Geom::Point center(rg->cx.computed, rg->cy.computed);
+    double radius = rg->r.computed;
+    double scale = 1.0;
+    double tolerance = cairo_get_tolerance(ct);
+
+    // code below suggested by Cairo devs to overcome tolerance problems
+    // more: https://bugs.freedesktop.org/show_bug.cgi?id=40918
+    Geom::Point d = focus - center;
+    if (d.length() + tolerance > radius) {
+        scale = radius / d.length();
+
+        double dx = d.x(), dy = d.y();
+        cairo_user_to_device_distance(ct, &dx, &dy);
+        if (!Geom::are_near(dx, 0, tolerance) ||
+            !Geom::are_near(dy, 0, tolerance))
+        {
+            scale *= 1.0 - 2.0 * tolerance / hypot(dx, dy);
+        }
+    }
+
     cairo_pattern_t *cp = cairo_pattern_create_radial(
-        rg->fx.computed, rg->fy.computed, 0,
-        rg->cx.computed, rg->cy.computed, rg->r.computed);
+        scale * d.x() + center.x(), scale * d.y() + center.y(), 0,
+        center.x(), center.y(), radius);
 
     sp_gradient_pattern_common_setup(cp, gr, bbox, opacity);
 
