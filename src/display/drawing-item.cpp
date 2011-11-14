@@ -158,6 +158,7 @@ DrawingItem::prependChild(DrawingItem *item)
 void
 DrawingItem::clearChildren()
 {
+    _markForRendering();
     // prevent children from referencing the parent during deletion
     // this way, children won't try to remove themselves from a list
     // from which they have already been removed by clear_and_dispose
@@ -166,6 +167,7 @@ DrawingItem::clearChildren()
         i->_child_type = CHILD_ORPHAN;
     }
     _children.clear_and_dispose(DeleteDisposer());
+    _markForUpdate(STATE_ALL, false);
 }
 
 /// Set the incremental transform for this item

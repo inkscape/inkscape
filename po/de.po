@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-10-19 13:54+0200\n"
-"PO-Revision-Date: 2011-11-08 21:42+0100\n"
+"PO-Revision-Date: 2011-11-14 10:11+0100\n"
 "Last-Translator: Uwe Schoeler <uschoeler@yahoo.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1520,18 +1520,16 @@ msgid "Darkens the edge with an inner blur and adds a flexible glow"
 msgstr "Betont die Kante mit innenliegender Unschärfe und fügt flexiblen Lichthof hinzu"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Warped Rainbow"
-msgstr "Zerlaufener Regenbogen"
+msgstr "Verzerrter Regenbogen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Smooth rainbow colors warped along the edges and colorizable"
 msgstr "Weiche Regenbogenfarben verlaufen an den Kanten zusammen, einfärbbar"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Rough and Dilate"
-msgstr "Rauh und Glänzend"
+msgstr "Rau und erweitert"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Create a turbulent contour around"
@@ -1725,9 +1723,8 @@ msgid "Riddle the surface and add bump to images"
 msgstr "Versieht Oberfläche von Bildern mit Struktur"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Wrinkled Varnish"
-msgstr "Zerknitterte Oberfläche"
+msgstr "Zerknitterter Lack"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Thick glossy and translucent paint texture with high depth"
@@ -1843,14 +1840,12 @@ msgid "Oversaturate colors which can be fluorescent in real world"
 msgstr "Farben übersättigen (erinnert an fluoreszente Farben)"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Pixellize"
-msgstr "Pixel"
+msgstr "Verpixeln"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Pixel tools"
-msgstr "Pixel"
+msgstr "Pixelwerkzeug"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Reduce or remove antialiasing around shapes"
@@ -1861,9 +1856,8 @@ msgid "Set Resolution"
 msgstr "Auflösung:"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Set filter resolution"
-msgstr "Bevorzugte Auflösung für das Exportieren:"
+msgstr "Filter-Auflösung setzen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic Diffuse Bump"
@@ -26177,9 +26171,8 @@ msgid "Lathe width:"
 msgstr "Drehbreite:"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:28
-#, fuzzy
 msgid "Move path"
-msgstr "Muster verschieben"
+msgstr "Pfad verschieben"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:44
 msgid "This function modifies path so it will be able to be cut with the rectangular cutter."
@@ -26234,9 +26227,8 @@ msgid "Prepare path for plasma or laser cuters"
 msgstr ""
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:15
-#, fuzzy
 msgid "Replace original path"
-msgstr "Ausschneidepfad entfernen"
+msgstr "Originalpfad ersetzen"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:16
 msgid "Round"
@@ -26648,7 +26640,7 @@ msgstr "Guillotine"
 
 #: ../share/extensions/guillotine.inx.h:4
 msgid "Ignore these settings and use export hints?"
-msgstr ""
+msgstr "Einstellungen ignorieren und Export-Hinweise nutzen?"
 
 #: ../share/extensions/guillotine.inx.h:5
 msgid "Image name (without extension)"
@@ -27283,9 +27275,8 @@ msgstr ""
 #: ../share/extensions/previous_glyph_layer.inx.h:1
 #: ../share/extensions/setup_typography_canvas.inx.h:6
 #: ../share/extensions/svgfont2layers.inx.h:3
-#, fuzzy
 msgid "Typography"
-msgstr "Spirograph"
+msgstr "Typografie"
 
 #: ../share/extensions/layout_nup.inx.h:1
 msgid ""
@@ -27315,9 +27306,8 @@ msgid "Cols:"
 msgstr "Spalten:"
 
 #: ../share/extensions/layout_nup.inx.h:14
-#, fuzzy
 msgid "Cutting marks"
-msgstr "Druck-Markierungen"
+msgstr "Schnittmarken"
 
 #: ../share/extensions/layout_nup.inx.h:17
 #, fuzzy
@@ -27368,9 +27358,8 @@ msgid "Padding guide"
 msgstr ""
 
 #: ../share/extensions/layout_nup.inx.h:27
-#, fuzzy
 msgid "Page dimensions"
-msgstr "Dimensionen"
+msgstr "Seitendimensionen"
 
 #: ../share/extensions/layout_nup.inx.h:28
 #, fuzzy
@@ -27618,7 +27607,7 @@ msgstr "Unicode-Zeichen einfügen"
 
 #: ../share/extensions/next_glyph_layer.inx.h:2
 msgid "View Next Glyph"
-msgstr ""
+msgstr "Zeige nächsten Glyph"
 
 #: ../share/extensions/outline2svg.inx.h:1
 msgid "ASCII Text with outline markup"
@@ -28097,9 +28086,8 @@ msgid "Z-sort faces by:"
 msgstr "Z-Sortierung der Flächen gemäß:"
 
 #: ../share/extensions/previous_glyph_layer.inx.h:2
-#, fuzzy
 msgid "View Previous Glyph"
-msgstr "Vorherige Seite:"
+msgstr "Vorherigen Glyph zeigen"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -28207,7 +28195,7 @@ msgstr "Strichcode-Typ:"
 
 #: ../share/extensions/render_barcode.inx.h:5
 msgid "Classic"
-msgstr ""
+msgstr "Klassisch"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:2
 msgid "Datamatrix"
@@ -28552,14 +28540,12 @@ msgid "Descender:"
 msgstr "Abhängigkeit:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:5
-#, fuzzy
 msgid "Em-size:"
-msgstr "Größe:"
+msgstr "Em-Größe:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:7
-#, fuzzy
 msgid "X-Height:"
-msgstr "Höhe:"
+msgstr "X-Höhe:"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
