@@ -16,7 +16,7 @@
 # include <config.h>
 #endif
 #ifdef _WIN32
-#define USE_PANGO_WIN32
+//#define USE_PANGO_WIN32 // disable for Bug 165665
 #endif
 
 #include <pango/pango.h>
