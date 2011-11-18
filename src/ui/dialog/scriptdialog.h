@@ -51,12 +51,6 @@ class ScriptDialog : public UI::Widget::Panel
      */
     virtual ~ScriptDialog() {};
 
-
-    private:
-        int _max_dialog_width;
-        int _max_dialog_height;
-
-
 }; // class ScriptDialog
 
 
