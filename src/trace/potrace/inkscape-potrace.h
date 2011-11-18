@@ -245,7 +245,7 @@ class PotraceTracingEngine : public TracingEngine
     potrace_param_t *potraceParams;
     TraceType traceType;
 
-    //## do i invert at the end?
+    //## do I invert at the end?
     bool invert;
 
     //## Color-->b&w quantization

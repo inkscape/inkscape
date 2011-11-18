@@ -1379,7 +1379,8 @@ void FilterEffectsDialog::FilterModifier::rename_filter()
 
 FilterEffectsDialog::CellRendererConnection::CellRendererConnection()
     : Glib::ObjectBase(typeid(CellRendererConnection)),
-      _primitive(*this, "primitive", 0)
+      _primitive(*this, "primitive", 0),
+      _text_width(0)
 {}
 
 Glib::PropertyProxy<void*> FilterEffectsDialog::CellRendererConnection::property_primitive()

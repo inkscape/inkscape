@@ -508,11 +508,6 @@ private:
     bool keepGoing;
 
     /**
-     * Our signature limits
-     */
-    float limits[3];
-
-    /**
      * Image width
      */
     unsigned int width;
@@ -542,6 +537,11 @@ private:
      */
     int *labelField;
 
+
+    /**
+     * Our signature limits
+     */
+    float limits[3];
 
     /**
      * Maximum distance of two lab values.
@@ -648,9 +648,6 @@ private:
      * Squared Euclidian distance of p and q.
      */
     float sqrEuclidianDist(float *p, int pSize, float *q);
-
-
-
 
 };
 

@@ -77,20 +77,23 @@ namespace Potrace {
 /**
  *
  */
-PotraceTracingEngine::PotraceTracingEngine()
+PotraceTracingEngine::PotraceTracingEngine() :
+    keepGoing(1),
+    traceType(TRACE_BRIGHTNESS),
+    invert(false),
+    quantizationNrColors(8),
+    brightnessThreshold(0.45),
+    brightnessFloor(0),
+    cannyHighThreshold(0.65),
+    multiScanNrColors(8),
+    multiScanStack(true),
+    multiScanSmooth(false),
+    multiScanRemoveBackground(false)
 {
     /* get default parameters */
     potraceParams = potrace_param_default();
     potraceParams->progress.callback = potraceStatusCallback;
     potraceParams->progress.data = (void *)this;
-
-    //##### Our defaults
-    invert    = false;
-    traceType = TRACE_BRIGHTNESS;
-    quantizationNrColors = 8;
-    brightnessThreshold  = 0.45;
-    cannyHighThreshold   = 0.65;
-
 }
 
 PotraceTracingEngine::~PotraceTracingEngine()

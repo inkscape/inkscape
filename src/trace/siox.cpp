@@ -736,19 +736,33 @@ const float Siox::CERTAIN_BACKGROUND_CONFIDENCE=0.0f;
 /**
  *  Construct a Siox engine
  */
-Siox::Siox()
+Siox::Siox() :
+    sioxObserver(0),
+    keepGoing(true),
+    width(0),
+    height(0),
+    pixelCount(0),
+    image(0),
+    cm(0),
+    labelField(0)
 {
-    sioxObserver = NULL;
     init();
 }
 
 /**
  *  Construct a Siox engine
  */
-Siox::Siox(SioxObserver *observer)
+Siox::Siox(SioxObserver *observer) :
+    sioxObserver(observer),
+    keepGoing(true),
+    width(0),
+    height(0),
+    pixelCount(0),
+    image(0),
+    cm(0),
+    labelField(0)
 {
     init();
-    sioxObserver = observer;
 }
 
 
