@@ -149,7 +149,8 @@ std::string Script::resolveInterpreterExecutable(const Glib::ustring &interpName
    of memory in the unloaded state.
 */
 Script::Script() :
-    Implementation()
+    Implementation(),
+    _canceled(false)
 {
 }
 
@@ -177,8 +178,7 @@ Script::~Script()
     string.  This means that the caller of this function can always
     free what they are given (and should do it too!).
 */
-std::string
-Script::solve_reldir(Inkscape::XML::Node *reprin) {
+std::string Script::solve_reldir(Inkscape::XML::Node *reprin) {
 
     gchar const *s = reprin->attribute("reldir");
 
@@ -361,8 +361,7 @@ void Script::unload(Inkscape::Extension::Extension */*module*/)
     \param    module  The Extension in question
 
 */
-bool
-Script::check(Inkscape::Extension::Extension *module)
+bool Script::check(Inkscape::Extension::Extension *module)
 {
     int script_count = 0;
     Inkscape::XML::Node *child_repr = sp_repr_children(module->get_repr());

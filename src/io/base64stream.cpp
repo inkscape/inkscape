@@ -51,12 +51,15 @@ static int base64decode[] =
  *
  */ 
 Base64InputStream::Base64InputStream(InputStream &sourceStream)
-                    : BasicInputStream(sourceStream)
+                    : BasicInputStream(sourceStream),
+                      outCount(0),
+                      padCount(0),
+                      done(false)
 {
-    outCount = 0;
-    padCount = 0;
-    closed   = false;
-    done     = false;
+    for (int k=0;k<3;k++)
+    {
+        outBytes[k]=0;
+    }
 }
 
 /**

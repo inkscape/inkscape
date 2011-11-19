@@ -10,7 +10,8 @@ public:
 
 public:
     explicit SPGuideConstraint() :
-        g(static_cast<SPGuide *>(0))
+        g(static_cast<SPGuide *>(0)),
+        snappoint_ix(0)
     { }
 
     explicit SPGuideConstraint(SPGuide *g, int snappoint_ix) :

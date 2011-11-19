@@ -17,8 +17,7 @@
 
 #if 0
 /* Feel free to remove this function and its calls. */
-static void
-log_set_attr(char const *const classname, unsigned int const key, char const *const value)
+static void log_set_attr(char const *const classname, unsigned int const key, char const *const value)
 {
     unsigned char const *const attr_name = sp_attribute_name(key);
     if (value) {
@@ -42,8 +41,7 @@ static void sp_animation_set(SPObject *object, unsigned int key, gchar const *va
 
 static SPObjectClass *animation_parent_class;
 
-GType
-sp_animation_get_type(void)
+GType sp_animation_get_type(void)
 {
     static GType animation_type = 0;
 
@@ -63,8 +61,7 @@ sp_animation_get_type(void)
     return animation_type;
 }
 
-static void
-sp_animation_class_init(SPAnimationClass *klass)
+static void sp_animation_class_init(SPAnimationClass *klass)
 {
     //GObjectClass *gobject_class = (GObjectClass *) klass;
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
@@ -76,14 +73,12 @@ sp_animation_class_init(SPAnimationClass *klass)
     sp_object_class->set = sp_animation_set;
 }
 
-static void
-sp_animation_init(SPAnimation */*animation*/)
+static void sp_animation_init(SPAnimation */*animation*/)
 {
 }
 
 
-static void
-sp_animation_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void sp_animation_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) animation_parent_class)->build)
         ((SPObjectClass *) animation_parent_class)->build(object, document, repr);
@@ -102,13 +97,11 @@ sp_animation_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *
     object->readAttr( "fill" );
 }
 
-static void
-sp_animation_release(SPObject */*object*/)
+static void sp_animation_release(SPObject */*object*/)
 {
 }
 
-static void
-sp_animation_set(SPObject *object, unsigned int key, gchar const *value)
+static void sp_animation_set(SPObject *object, unsigned int key, gchar const *value)
 {
     //SPAnimation *animation = SP_ANIMATION(object);
 
@@ -129,8 +122,7 @@ static void sp_ianimation_set(SPObject *object, unsigned int key, gchar const *v
 
 static SPObjectClass *ianimation_parent_class;
 
-GType
-sp_ianimation_get_type(void)
+GType sp_ianimation_get_type(void)
 {
     static GType type = 0;
 
@@ -150,8 +142,7 @@ sp_ianimation_get_type(void)
     return type;
 }
 
-static void
-sp_ianimation_class_init(SPIAnimationClass *klass)
+static void sp_ianimation_class_init(SPIAnimationClass *klass)
 {
     //GObjectClass *gobject_class = (GObjectClass *) klass;
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
@@ -163,14 +154,12 @@ sp_ianimation_class_init(SPIAnimationClass *klass)
     sp_object_class->set = sp_ianimation_set;
 }
 
-static void
-sp_ianimation_init(SPIAnimation */*animation*/)
+static void sp_ianimation_init(SPIAnimation */*animation*/)
 {
 }
 
 
-static void
-sp_ianimation_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void sp_ianimation_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) ianimation_parent_class)->build)
         ((SPObjectClass *) ianimation_parent_class)->build(object, document, repr);
@@ -186,13 +175,11 @@ sp_ianimation_build(SPObject *object, SPDocument *document, Inkscape::XML::Node 
     object->readAttr( "accumulate" );
 }
 
-static void
-sp_ianimation_release(SPObject */*object*/)
+static void sp_ianimation_release(SPObject */*object*/)
 {
 }
 
-static void
-sp_ianimation_set(SPObject *object, unsigned int key, gchar const *value)
+static void sp_ianimation_set(SPObject *object, unsigned int key, gchar const *value)
 {
     //SPIAnimation *ianimation = SP_IANIMATION(object);
 
@@ -213,8 +200,7 @@ static void sp_animate_set(SPObject *object, unsigned int key, gchar const *valu
 
 static SPIAnimationClass *animate_parent_class;
 
-GType
-sp_animate_get_type(void)
+GType sp_animate_get_type(void)
 {
     static GType type = 0;
 
@@ -234,8 +220,7 @@ sp_animate_get_type(void)
     return type;
 }
 
-static void
-sp_animate_class_init(SPAnimateClass *klass)
+static void sp_animate_class_init(SPAnimateClass *klass)
 {
     //GObjectClass *gobject_class = (GObjectClass *) klass;
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
@@ -247,26 +232,22 @@ sp_animate_class_init(SPAnimateClass *klass)
     sp_object_class->set = sp_animate_set;
 }
 
-static void
-sp_animate_init(SPAnimate */*animate*/)
+static void sp_animate_init(SPAnimate */*animate*/)
 {
 }
 
 
-static void
-sp_animate_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void sp_animate_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     if (((SPObjectClass *) animate_parent_class)->build)
         ((SPObjectClass *) animate_parent_class)->build(object, document, repr);
 }
 
-static void
-sp_animate_release(SPObject */*object*/)
+static void sp_animate_release(SPObject */*object*/)
 {
 }
 
-static void
-sp_animate_set(SPObject *object, unsigned int key, gchar const *value)
+static void sp_animate_set(SPObject *object, unsigned int key, gchar const *value)
 {
     //SPAnimate *animate = SP_ANIMATE(object);
 

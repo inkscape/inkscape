@@ -110,12 +110,16 @@ SvgBuilder::~SvgBuilder() {
 }
 
 void SvgBuilder::_init() {
-    _in_text_object = false;
-    _need_font_update = true;
-    _invalidated_style = true;
     _font_style = NULL;
     _current_font = NULL;
+    _font_specification = NULL;
+    _font_scaling = 1;
+    _need_font_update = true;
+    _in_text_object = false;
+    _invalidated_style = true;
     _current_state = NULL;
+    _width = 0;
+    _height = 0;
 
     // Fill _availableFontNames (Bug LP #179589) (code cfr. FontLister)
     FamilyToStylesMap familyStyleMap;

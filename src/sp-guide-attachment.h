@@ -10,7 +10,8 @@ public:
 
 public:
     SPGuideAttachment() :
-        item(static_cast<SPItem *>(0))
+        item(static_cast<SPItem *>(0)),
+        snappoint_ix(0)
     { }
 
     SPGuideAttachment(SPItem *i, int s) :

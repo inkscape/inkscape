@@ -76,6 +76,8 @@ static float dwDPI = 2540;
 
 
 PrintEmfWin32::PrintEmfWin32 (void):
+    _width(0),
+    _height(0),
     hdc(NULL),
     hbrush(NULL),
     hbrushOld(NULL),
@@ -105,15 +107,13 @@ PrintEmfWin32::~PrintEmfWin32 (void)
 }
 
 
-unsigned int
-PrintEmfWin32::setup (Inkscape::Extension::Print * /*mod*/)
+unsigned int PrintEmfWin32::setup (Inkscape::Extension::Print * /*mod*/)
 {
     return TRUE;
 }
 
 
-unsigned int
-PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
+unsigned int PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
 {
     gchar const *utf8_fn = mod->get_param_string("destination");
 
@@ -229,8 +229,7 @@ PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
 }
 
 
-unsigned int
-PrintEmfWin32::finish (Inkscape::Extension::Print * /*mod*/)
+unsigned int PrintEmfWin32::finish (Inkscape::Extension::Print * /*mod*/)
 {
     if (!hdc) return 0;
 
@@ -248,8 +247,7 @@ PrintEmfWin32::finish (Inkscape::Extension::Print * /*mod*/)
 }
 
 
-unsigned int
-PrintEmfWin32::comment (Inkscape::Extension::Print * /*module*/,
+unsigned int PrintEmfWin32::comment (Inkscape::Extension::Print * /*module*/,
                         const char * /*comment*/)
 {
     if (!hdc) return 0;
@@ -260,8 +258,7 @@ PrintEmfWin32::comment (Inkscape::Extension::Print * /*module*/,
 }
 
 
-int
-PrintEmfWin32::create_brush(SPStyle const *style)
+int PrintEmfWin32::create_brush(SPStyle const *style)
 {
     float rgb[3];
 
@@ -287,8 +284,7 @@ PrintEmfWin32::create_brush(SPStyle const *style)
 }
 
 
-void
-PrintEmfWin32::destroy_brush()
+void PrintEmfWin32::destroy_brush()
 {
     SelectObject( hdc, hbrushOld );
     if (hbrush)
@@ -298,8 +294,7 @@ PrintEmfWin32::destroy_brush()
 }
 
 
-void
-PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Affine &transform)
+void PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Affine &transform)
 {
     if (style) {
         float rgb[3];
@@ -422,8 +417,7 @@ PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Affine &transform)
 }
 
 
-void
-PrintEmfWin32::destroy_pen()
+void PrintEmfWin32::destroy_pen()
 {
     SelectObject( hdc, hpenOld );
     if (hpen)
@@ -432,8 +426,7 @@ PrintEmfWin32::destroy_pen()
 }
 
 
-void
-PrintEmfWin32::flush_fill()
+void PrintEmfWin32::flush_fill()
 {
     if (!fill_pathv.empty()) {
         stroke_and_fill = false;
@@ -447,8 +440,7 @@ PrintEmfWin32::flush_fill()
     }
 }
 
-unsigned int
-PrintEmfWin32::bind(Inkscape::Extension::Print * /*mod*/, Geom::Affine const &transform, float /*opacity*/)
+unsigned int PrintEmfWin32::bind(Inkscape::Extension::Print * /*mod*/, Geom::Affine const &transform, float /*opacity*/)
 {   
     if (!m_tr_stack.empty()) {
         Geom::Affine tr_top = m_tr_stack.top();
@@ -460,15 +452,13 @@ PrintEmfWin32::bind(Inkscape::Extension::Print * /*mod*/, Geom::Affine const &tr
     return 1;
 }
 
-unsigned int
-PrintEmfWin32::release(Inkscape::Extension::Print * /*mod*/)
+unsigned int PrintEmfWin32::release(Inkscape::Extension::Print * /*mod*/)
 {
     m_tr_stack.pop();
     return 1;
 }
 
-unsigned int
-PrintEmfWin32::fill(Inkscape::Extension::Print * /*mod*/,
+unsigned int PrintEmfWin32::fill(Inkscape::Extension::Print * /*mod*/,
                     Geom::PathVector const &pathv, Geom::Affine const & /*transform*/, SPStyle const *style,
                     Geom::OptRect const &/*pbox*/, Geom::OptRect const &/*dbox*/, Geom::OptRect const &/*bbox*/)
 {
@@ -496,8 +486,7 @@ PrintEmfWin32::fill(Inkscape::Extension::Print * /*mod*/,
 }
 
 
-unsigned int
-PrintEmfWin32::stroke (Inkscape::Extension::Print * /*mod*/,
+unsigned int PrintEmfWin32::stroke (Inkscape::Extension::Print * /*mod*/,
                        Geom::PathVector const &pathv, const Geom::Affine &/*transform*/, const SPStyle *style,
                        Geom::OptRect const &/*pbox*/, Geom::OptRect const &/*dbox*/, Geom::OptRect const &/*bbox*/)
 {
@@ -536,8 +525,7 @@ PrintEmfWin32::stroke (Inkscape::Extension::Print * /*mod*/,
 }
 
 
-bool
-PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom::Affine &transform)
+bool PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom::Affine &transform)
 {
     Geom::PathVector pv = pathv_to_linear_and_cubic_beziers( pathv * transform );
     
@@ -732,8 +720,7 @@ PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom::Aff
     return done;
 }
 
-unsigned int
-PrintEmfWin32::print_pathv(Geom::PathVector const &pathv, const Geom::Affine &transform)
+unsigned int PrintEmfWin32::print_pathv(Geom::PathVector const &pathv, const Geom::Affine &transform)
 {
     simple_shape = print_simple_shape(pathv, transform);
 
@@ -837,14 +824,12 @@ PrintEmfWin32::print_pathv(Geom::PathVector const &pathv, const Geom::Affine &tr
 }
 
 
-bool
-PrintEmfWin32::textToPath(Inkscape::Extension::Print * ext)
+bool PrintEmfWin32::textToPath(Inkscape::Extension::Print * ext)
 {
     return ext->get_param_bool("textToPath");
 }
 
-unsigned int
-PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char const *text, Geom::Point const &p,
+unsigned int PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char const *text, Geom::Point const &p,
                     SPStyle const *const style)
 {
     if (!hdc) return 0;
@@ -935,8 +920,7 @@ PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char const *text, Geom
     return 0;
 }
 
-void
-PrintEmfWin32::init (void)
+void PrintEmfWin32::init (void)
 {
     Inkscape::Extension::Extension * ext;
 

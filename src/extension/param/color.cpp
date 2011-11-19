@@ -40,8 +40,7 @@ ParamColor::~ParamColor(void)
 
 }
 
-guint32
-ParamColor::set( guint32 in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
+guint32 ParamColor::set( guint32 in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/ )
 {
     _value = in;
 
@@ -58,7 +57,8 @@ ParamColor::set( guint32 in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*
 
 /** \brief  Initialize the object, to do that, copy the data. */
 ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext)
+    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext),
+    _changeSignal(0)
 {
     const char * defaulthex = NULL;
     if (sp_repr_children(xml) != NULL)
@@ -77,8 +77,7 @@ ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar *
     return;
 }
 
-void
-ParamColor::string (std::string &string)
+void ParamColor::string (std::string &string)
 {
     char str[16];
     sprintf(str, "%i", _value);
@@ -86,8 +85,7 @@ ParamColor::string (std::string &string)
     return;
 }
 
-Gtk::Widget *
-ParamColor::get_widget( SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * changeSignal )
+Gtk::Widget *ParamColor::get_widget( SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * changeSignal )
 {
 	if (_gui_hidden) return NULL;
 
@@ -112,8 +110,7 @@ ParamColor::get_widget( SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, si
     return dynamic_cast<Gtk::Widget *>(hbox);
 }
 
-void
-sp_color_param_changed(SPColorSelector *csel, GObject *obj)
+void sp_color_param_changed(SPColorSelector *csel, GObject *obj)
 {
     const SPColor color = csel->base->getColor();
     float alpha = csel->base->getAlpha();

@@ -131,7 +131,7 @@ public:
 class GradientStop
 {
 public:
-    GradientStop()
+    GradientStop() : rgb(0), opacity(0)
         {}
     GradientStop(unsigned long rgbArg, double opacityArg)
         { rgb = rgbArg; opacity = opacityArg; }

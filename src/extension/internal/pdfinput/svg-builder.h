@@ -221,7 +221,8 @@ private:
     Inkscape::XML::Node *_root;  // Root node from the point of view of this SvgBuilder
     Inkscape::XML::Node *_container; // Current container (group/pattern/mask)
     Inkscape::XML::Node *_preferences;  // Preferences container node
-    double _width, _height;       // Document size in px
+    double _width;       // Document size in px
+    double _height;       // Document size in px
 };
 
 
