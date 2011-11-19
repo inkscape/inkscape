@@ -98,27 +98,26 @@ UriInputStream::UriInputStream(Inkscape::URI &source)
         scheme = SCHEME_FILE;
     else if (strncmp("data", schemestr, 4)==0)
         scheme = SCHEME_DATA;
-    //printf("in schemestr:'%s' scheme:'%d'\n", schemestr, scheme);
-    gchar *cpath = NULL;
 
+    gchar *cpath = NULL;
     switch (scheme) {
 
         case SCHEME_FILE:
             cpath = uri.toNativeFilename();
-            //printf("in cpath:'%s'\n", cpath);
             inf = fopen_utf8name(cpath, FILE_READ);
-            //inf = fopen(cpath, "rb");
-            g_free(cpath);
             if (!inf) {
                 Glib::ustring err = "UriInputStream cannot open file ";
                 err += cpath;
+                g_free(cpath);
                 throw StreamException(err);
+            }
+            else{
+                g_free(cpath);
             }
         break;
 
         case SCHEME_DATA:
             data        = (unsigned char *) uri.getPath();
-            //printf("in data:'%s'\n", data);
             dataPos     = 0;
             dataLen     = strlen((const char *)data);
         break;
@@ -131,15 +130,18 @@ UriInputStream::UriInputStream(Inkscape::URI &source)
  *
  */
 UriInputStream::UriInputStream(FILE *source, Inkscape::URI &uri)
-    throw (StreamException): inf(source),
-                             uri(uri)
+    throw (StreamException): uri(uri),
+                             inf(source),
+                             data(0),
+                             dataPos(0),
+                             dataLen(0),
+                             closed(false)
 {
     scheme = SCHEME_FILE;
     if (!inf) {
         Glib::ustring err = "UriInputStream passed NULL";
         throw StreamException(err);
     }
-    closed = false;
 }
 
 /**

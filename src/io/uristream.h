@@ -50,17 +50,14 @@ public:
     virtual int get() throw(StreamException);
 
 private:
-
-    bool closed;
-
+    Inkscape::URI &uri;
     FILE *inf;           //for file: uris
     unsigned char *data; //for data: uris
     int dataPos;         //  current read position in data field
     int dataLen;         //  length of data buffer
-
-    Inkscape::URI &uri;
-
+    bool closed;
     int scheme;
+
 
 }; // class UriInputStream
 
