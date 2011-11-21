@@ -1,3 +1,4 @@
+#!/usr/bin/env python 
 #@+leo-ver=4-thin
 #@+node:tbrown.20070622094435.1:@thin pageframe.py
 """Create n-up SVG layouts"""
