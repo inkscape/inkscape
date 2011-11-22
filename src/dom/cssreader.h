@@ -53,7 +53,11 @@ public:
     /**
      *
      */
-    CssReader()
+    CssReader() :
+            stylesheet(),
+            parsebuf(),
+            parselen(0),
+            lastPosition(0)
         {}
 
     /**
@@ -75,9 +79,10 @@ public:
 
 private:
 
+    CSSStyleSheet stylesheet;
     DOMString parsebuf;
     long parselen;
-    CSSStyleSheet stylesheet;
+    int lastPosition;
 
 
     /**
@@ -261,9 +266,6 @@ int getFunction(int p0);
  *   ;
  */
 int getHexColor(int p0);
-
-
-int lastPosition;
 
 /**
  * Get the column and row number of the given character position.

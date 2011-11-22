@@ -1612,23 +1612,34 @@ public:
     /**
      *
      */
-    CSSPrimitiveValue() : CSSValue()
+    CSSPrimitiveValue() :
+            CSSValue(),
+            primitiveType(0),
+            doubleValue(0),
+            stringValue()
         {
         }
 
     /**
      *
      */
-    CSSPrimitiveValue(const CSSPrimitiveValue &other) : CSSValue(other)
+    CSSPrimitiveValue(const CSSPrimitiveValue &other) :
+            CSSValue()
         {
+            primitiveType = other.primitiveType;
+            doubleValue   = other.doubleValue;
+            stringValue   = other.stringValue;
         }
 
     /**
      *
      */
-    CSSPrimitiveValue &operator=(const CSSPrimitiveValue &/*other*/)
+    CSSPrimitiveValue &operator=(const CSSPrimitiveValue &other)
         {
-        return *this;
+            primitiveType = other.primitiveType;
+            doubleValue   = other.doubleValue;
+            stringValue   = other.stringValue;
+            return *this;
         }
 
     /**
