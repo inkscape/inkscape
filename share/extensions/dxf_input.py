@@ -80,24 +80,26 @@ def export_LINE():
 def export_SPLINE():
     # see : http://www.mactech.com/articles/develop/issue_25/schneider.html
     # mandatory group codes : (10, 20, 40, 70) (x[], y[], knots[], flags)
-    if vals[groups['70']] and not (vals[groups['70']][0] & 3) and len(vals[groups['10']]) == len(vals[groups['20']]) and vals[groups['10']] and vals[groups['20']] and vals[groups['40']]:
+    if vals[groups['70']] and len(vals[groups['10']]) == len(vals[groups['20']]) and vals[groups['10']] and vals[groups['20']] and vals[groups['40']]:
         knots = len(vals[groups['40']])
         ctrls = len(vals[groups['10']])
         if ctrls > 3 and knots == ctrls + 4:    # cubic
             if ctrls > 4:
                 for i in range (knots - 5, 3, -1):
-                    a0 = (vals[groups['40']][i] - vals[groups['40']][i-2])/(vals[groups['40']][i+1] - vals[groups['40']][i-2])
-                    a1 = (vals[groups['40']][i] - vals[groups['40']][i-1])/(vals[groups['40']][i+2] - vals[groups['40']][i-1])
-                    vals[groups['10']].insert(i-1, (1.0 - a1)*vals[groups['10']][i-2] + a1*vals[groups['10']][i-1])
-                    vals[groups['20']].insert(i-1, (1.0 - a1)*vals[groups['20']][i-2] + a1*vals[groups['20']][i-1])
-                    vals[groups['10']][i-2] = (1.0 - a0)*vals[groups['10']][i-3] + a0*vals[groups['10']][i-2]
-                    vals[groups['20']][i-2] = (1.0 - a0)*vals[groups['20']][i-3] + a0*vals[groups['20']][i-2]
-                    vals[groups['40']].insert(i, vals[groups['40']][i])
+                    if vals[groups['40']][i] != vals[groups['40']][i-1] and vals[groups['40']][i] != vals[groups['40']][i+1]:
+                        a0 = (vals[groups['40']][i] - vals[groups['40']][i-2])/(vals[groups['40']][i+1] - vals[groups['40']][i-2])
+                        a1 = (vals[groups['40']][i] - vals[groups['40']][i-1])/(vals[groups['40']][i+2] - vals[groups['40']][i-1])
+                        vals[groups['10']].insert(i-1, (1.0 - a1)*vals[groups['10']][i-2] + a1*vals[groups['10']][i-1])
+                        vals[groups['20']].insert(i-1, (1.0 - a1)*vals[groups['20']][i-2] + a1*vals[groups['20']][i-1])
+                        vals[groups['10']][i-2] = (1.0 - a0)*vals[groups['10']][i-3] + a0*vals[groups['10']][i-2]
+                        vals[groups['20']][i-2] = (1.0 - a0)*vals[groups['20']][i-3] + a0*vals[groups['20']][i-2]
+                        vals[groups['40']].insert(i, vals[groups['40']][i])
                 knots = len(vals[groups['40']])
                 for i in range (knots - 6, 3, -2):
-                    a1 = (vals[groups['40']][i] - vals[groups['40']][i-1])/(vals[groups['40']][i+2] - vals[groups['40']][i-1])
-                    vals[groups['10']].insert(i-1, (1.0 - a1)*vals[groups['10']][i-2] + a1*vals[groups['10']][i-1])
-                    vals[groups['20']].insert(i-1, (1.0 - a1)*vals[groups['20']][i-2] + a1*vals[groups['20']][i-1])
+                    if vals[groups['40']][i] != vals[groups['40']][i+2] and vals[groups['40']][i-1] != vals[groups['40']][i+1] and vals[groups['40']][i-2] != vals[groups['40']][i]:
+                        a1 = (vals[groups['40']][i] - vals[groups['40']][i-1])/(vals[groups['40']][i+2] - vals[groups['40']][i-1])
+                        vals[groups['10']].insert(i-1, (1.0 - a1)*vals[groups['10']][i-2] + a1*vals[groups['10']][i-1])
+                        vals[groups['20']].insert(i-1, (1.0 - a1)*vals[groups['20']][i-2] + a1*vals[groups['20']][i-1])
             ctrls = len(vals[groups['10']])
             path = 'M %f,%f' % (vals[groups['10']][0], vals[groups['20']][0])
             for i in range (0, (ctrls - 1)/3):
