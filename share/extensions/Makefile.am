@@ -147,6 +147,9 @@ extensions = \
 	svgcalendar.py \
 	svg_regex.py \
 	svg_and_media_zip_output.py \
+	synfig_fileformat.py \
+	synfig_output.py \
+	synfig_prepare.py \
 	text_extract.py \
 	svg_transform.py \
 	text_uppercase.py \
@@ -323,6 +326,7 @@ modules = \
 	svg2xaml.inx \
 	svg_and_media_zip_output.inx \
 	svgcalendar.inx \
+	synfig_output.inx \
 	text_extract.inx \
 	text_uppercase.inx\
 	text_lowercase.inx \
