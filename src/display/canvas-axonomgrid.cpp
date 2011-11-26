@@ -1,5 +1,9 @@
 /*
- * Copyright (C) 2006-2008 Johan Engelen <johan@shouraizou.nl>
+ * Authors:
+ *    Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
+ *
+ * Copyright (C) 2006-2011 Authors
+ * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
  /*
@@ -12,15 +16,15 @@
  /*
   * TODO:
   * THIS FILE AND THE HEADER FILE NEED CLEANING UP. PLEASE DO NOT HESISTATE TO DO SO.
-  * For example: the line drawing code should not be here. There _must_ be a function somewhere else that can provide this functionality...
   */
+
+#include "display/canvas-axonomgrid.h"
 
 #include "2geom/line.h"
 #include "desktop.h"
 #include "canvas-grid.h"
 #include "desktop-handles.h"
 #include "display/cairo-utils.h"
-#include "display/canvas-axonomgrid.h"
 #include "display/canvas-grid.h"
 #include "display/sp-canvas-util.h"
 #include "document.h"
@@ -34,8 +38,6 @@
 #include "xml/node-event-vector.h"
 #include "round.h"
 
-#define SAFE_SETPIXEL   //undefine this when it is certain that setpixel is never called with invalid params
-
 enum Dim3 { X=0, Y, Z };
 
 #ifndef M_PI
@@ -45,9 +47,7 @@ enum Dim3 { X=0, Y, Z };
 static double deg_to_rad(double deg) { return deg*M_PI/180.0;}
 
 /**
- * This function renders a line on a particular canvas buffer,
- * using Bresenham's line drawing function.
- * http://www.cs.unc.edu/~mcmillan/comp136/Lecture6/Lines.html
+ * This function calls Cairo to render a line on a particular canvas buffer.
  * Coordinates are interpreted as SCREENcoordinates
  */
 static void
@@ -57,42 +57,6 @@ sp_caxonomgrid_drawline (SPCanvasBuf *buf, gint x0, gint y0, gint x1, gint y1, g
     cairo_line_to(buf->ct, 0.5 + x1, 0.5 + y1);
     ink_cairo_set_source_rgba32(buf->ct, rgba);
     cairo_stroke(buf->ct);
-
-#if 0
-    int dy = y1 - y0;
-    int dx = x1 - x0;
-    int stepx, stepy;
-
-    if (dy < 0) { dy = -dy;  stepy = -1; } else { stepy = 1; }
-    if (dx < 0) { dx = -dx;  stepx = -1; } else { stepx = 1; }
-    dy <<= 1;                                                  // dy is now 2*dy
-    dx <<= 1;                                                  // dx is now 2*dx
-
-    sp_caxonomgrid_setpixel(buf, x0, y0, rgba);
-    if (dx > dy) {
-        int fraction = dy - (dx >> 1);                         // same as 2*dy - dx
-        while (x0 != x1) {
-            if (fraction >= 0) {
-                y0 += stepy;
-                fraction -= dx;                                // same as fraction -= 2*dx
-            }
-            x0 += stepx;
-            fraction += dy;                                    // same as fraction -= 2*dy
-            sp_caxonomgrid_setpixel(buf, x0, y0, rgba);
-        }
-    } else {
-        int fraction = dx - (dy >> 1);
-        while (y0 != y1) {
-            if (fraction >= 0) {
-                x0 += stepx;
-                fraction -= dy;
-            }
-            y0 += stepy;
-            fraction += dx;
-            sp_caxonomgrid_setpixel(buf, x0, y0, rgba);
-        }
-    }
-#endif
 }
 
 static void
