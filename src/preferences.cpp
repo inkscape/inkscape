@@ -770,7 +770,12 @@ double Preferences::_extractDouble(Entry const &v, Glib::ustring const &requeste
     double val = _extractDouble(v);
     Glib::ustring unit = _extractUnit(v);
 
-    return val * (unit_table.getUnit(unit).factor / unit_table.getUnit(requested_unit).factor);
+    if (unit.length() == 0) {
+        // no unit specified, don't do conversion
+        return val;
+    } else {
+        return val * (unit_table.getUnit(unit).factor / unit_table.getUnit(requested_unit).factor);
+    }
 }
 
 Glib::ustring Preferences::_extractString(Entry const &v)
