@@ -6,6 +6,9 @@ ink_common_sources +=	\
 	approx-equal.h remove-last.h					\
 	arc-context.cpp arc-context.h					\
 	attributes.cpp attributes.h					\
+	attribute-rel-svg.cpp attribute-rel-svg.h			\
+	attribute-rel-css.cpp attribute-rel-css.h			\
+	attribute-rel-util.cpp attribute-rel-util.h			\
 	axis-manip.cpp axis-manip.h					\
 	bad-uri-exception.h						\
 	box3d-context.cpp box3d-context.h				\

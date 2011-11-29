@@ -33,6 +33,8 @@
 
 #include "extension/extension.h"
 
+#include "attribute-rel-util.h"
+
 #include "preferences.h"
 
 using Inkscape::IO::Writer;
@@ -256,6 +258,7 @@ int XmlSource::close()
 Document *
 sp_repr_read_file (const gchar * filename, const gchar *default_ns)
 {
+    // g_warning( "Reading file: %s", filename );
     xmlDocPtr doc = 0;
     Document * rdoc = 0;
 
@@ -444,6 +447,18 @@ sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
             }
             if ( !strcmp(default_ns, INKSCAPE_EXTENSION_URI) ) {
                 promote_to_namespace(root, INKSCAPE_EXTENSION_NS_NC);
+            }
+        }
+
+
+        // Clean unnecessary attributes and style properties from SVG documents. (Controlled by
+        // preferences.)  Note: internal Inkscape svg files will also be cleaned (filters.svg,
+        // icons.svg). How can one tell if a file is internal?
+        if ( !strcmp(root->name(), "svg:svg" ) ) {
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            bool clean = prefs->getBool("/options/svgoutput/check_on_reading");
+            if( clean ) {
+                sp_attribute_clean_tree( root );
             }
         }
     }
@@ -806,6 +821,12 @@ sp_repr_write_stream_root_element(Node *repr, Writer &out,
     using Inkscape::Util::ptr_shared;
 
     g_assert(repr != NULL);
+
+    // Clean unnecessary attributes and stype properties. (Controlled by preferences.)
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool clean = prefs->getBool("/options/svgoutput/check_on_writing");
+    if (clean) sp_attribute_clean_tree( repr );
+
     Glib::QueryQuark xml_prefix=g_quark_from_static_string("xml");
 
     NSMap ns_map;
@@ -928,7 +949,7 @@ void sp_repr_write_stream_element( Node * repr, Writer & out,
         add_whitespace = false;
     }
 
-
+    // THIS DOESN'T APPEAR TO DO ANYTHING. Can it be commented out or deleted?
     {
         GQuark const href_key = g_quark_from_static_string("xlink:href");
         GQuark const absref_key = g_quark_from_static_string("sodipodi:absref");

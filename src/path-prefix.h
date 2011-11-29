@@ -22,6 +22,7 @@ extern "C" {
 
 #ifdef ENABLE_BINRELOC
 #  define INKSCAPE_APPICONDIR     BR_DATADIR( "/pixmaps" )
+#  define INKSCAPE_ATTRRELDIR     BR_DATADIR( "/inkscape/attributes" )
 #  define INKSCAPE_BINDDIR        BR_DATADIR( "/inkscape/bind" )
 #  define INKSCAPE_EXAMPLESDIR    BR_DATADIR( "/inkscape/examples" )
 #  define INKSCAPE_EXTENSIONDIR   BR_DATADIR( "/inkscape/extensions" )
@@ -43,6 +44,7 @@ extern "C" {
 #else
 #  ifdef WIN32
 #    define INKSCAPE_APPICONDIR   WIN32_DATADIR("pixmaps")
+#    define INKSCAPE_ATTRRELDIR   WIN32_DATADIR "share\\attributes"
 #    define INKSCAPE_BINDDIR      WIN32_DATADIR("share\\bind")
 #    define INKSCAPE_EXAMPLESDIR  WIN32_DATADIR("share\\examples")
 #    define INKSCAPE_EXTENSIONDIR WIN32_DATADIR("share\\extensions")
@@ -63,6 +65,7 @@ extern "C" {
 #    define CREATE_PATTERNSDIR    WIN32_DATADIR("create\\patterns\\vector")
 #  elif defined ENABLE_OSX_APP_LOCATIONS
 #    define INKSCAPE_APPICONDIR   "Contents/Resources/pixmaps"
+#    define INKSCAPE_ATTRRELDIR   "Contents/Resources/attributes"
 #    define INKSCAPE_BINDDIR      "Contents/Resources/bind"
 #    define INKSCAPE_EXAMPLESDIR  "Contents/Resources/examples"
 #    define INKSCAPE_EXTENSIONDIR "Contents/Resources/extensions"
@@ -83,6 +86,7 @@ extern "C" {
 #    define CREATE_PATTERNSDIR   "/Library/Application Support/create/patterns/vector"
 #  else
 #    define INKSCAPE_APPICONDIR   INKSCAPE_DATADIR "/pixmaps"
+#    define INKSCAPE_ATTRRELDIR   INKSCAPE_DATADIR "/inkscape/attributes"
 #    define INKSCAPE_BINDDIR      INKSCAPE_DATADIR "/inkscape/bind"
 #    define INKSCAPE_EXAMPLESDIR  INKSCAPE_DATADIR "/inkscape/examples"
 #    define INKSCAPE_EXTENSIONDIR INKSCAPE_DATADIR "/inkscape/extensions"

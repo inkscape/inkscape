@@ -972,6 +972,7 @@ src/2geom/makefile
 doc/Makefile
 po/Makefile.in
 share/Makefile
+share/attributes/Makefile
 share/clipart/Makefile
 share/examples/Makefile
 share/extensions/Makefile

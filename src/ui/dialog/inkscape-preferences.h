@@ -358,6 +358,17 @@ protected:
     UI::Widget::PrefCheckButton   _svgoutput_allowrelativecoordinates;
     UI::Widget::PrefCheckButton   _svgoutput_forcerepeatcommands;
 
+    // Attribute Checking controls for SVG Output page:
+    UI::Widget::PrefCheckButton   _svgoutput_attrwarn;
+    UI::Widget::PrefCheckButton   _svgoutput_attrremove;
+    UI::Widget::PrefCheckButton   _svgoutput_stylepropwarn;
+    UI::Widget::PrefCheckButton   _svgoutput_stylepropremove;
+    UI::Widget::PrefCheckButton   _svgoutput_styledefaultswarn;
+    UI::Widget::PrefCheckButton   _svgoutput_styledefaultsremove;
+    UI::Widget::PrefCheckButton   _svgoutput_check_reading;
+    UI::Widget::PrefCheckButton   _svgoutput_check_editing;
+    UI::Widget::PrefCheckButton   _svgoutput_check_writing;
+
     UI::Widget::PrefEntryButtonHBox _importexport_ocal_url;
     UI::Widget::PrefEntry       _importexport_ocal_username;
     UI::Widget::PrefEntry       _importexport_ocal_password;

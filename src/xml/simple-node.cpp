@@ -1,6 +1,5 @@
-/**
- * @file
- * Garbage collected XML node implementation.
+/** @file
+ * @brief Garbage collected XML node implementation
  */
 /* Copyright 2003-2005 MenTaLguY <mental@rydia.net>
  * Copyright 2003 Nathan Hurst
@@ -17,7 +16,10 @@
 
 #include <cstring>
 #include <string>
+
 #include <glib/gstrfuncs.h>
+
+#include "preferences.h"
 
 #include "xml/node.h"
 #include "xml/simple-node.h"
@@ -28,6 +30,8 @@
 #include "debug/simple-event.h"
 #include "util/share.h"
 #include "util/format.h"
+
+#include "attribute-rel-util.h"
 
 namespace Inkscape {
 
@@ -312,6 +316,47 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
 {
     g_return_if_fail(name && *name);
 
+    // Check usefulness of attributes on elements in the svg namespace, optionally don't add them to tree.
+    Glib::ustring element = g_quark_to_string(_name);
+    //g_warning("setAttribute:  %s: %s: %s", element.c_str(), name, value);
+
+    gchar* cleaned_value = g_strdup( value );
+
+    // Only check elements in SVG name space and don't block setting attribute to NULL.
+    if( element.substr(0,4) == "svg:" && value != NULL) {
+
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        if( prefs->getBool("/options/svgoutput/check_on_editing") ) {
+
+            gchar const *id_char = attribute("id");
+            Glib::ustring id = (id_char == NULL ? "" : id_char );
+            unsigned int flags = sp_attribute_clean_get_prefs();
+            bool attr_warn   = flags & SP_ATTR_CLEAN_ATTR_WARN;
+            bool attr_remove = flags & SP_ATTR_CLEAN_ATTR_REMOVE;
+
+            // Check attributes
+            if( (attr_warn || attr_remove) && value != NULL ) {
+                bool is_useful = sp_attribute_check_attribute( element, id, name, attr_warn );
+                if( !is_useful && attr_remove ) {
+                    g_free( cleaned_value );
+                    return; // Don't add to tree.
+                }
+            }
+
+            // Check style properties -- Note: if element is not yet inserted into
+            // tree (and thus has no parent), default values will not be tested.
+            if( !strcmp( name, "style" ) && (flags >= SP_ATTR_CLEAN_STYLE_WARN) ) {
+                g_free( cleaned_value );
+                cleaned_value = sp_attribute_clean_style( this, value, flags );
+                // if( g_strcmp0( value, cleaned_value ) ) {
+                //     g_warning( "SimpleNode::setAttribute: %s", id.c_str() );
+                //     g_warning( "     original: %s", value);
+                //     g_warning( "      cleaned: %s", cleaned_value);
+                // }
+            }
+        }
+    }
+
     GQuark const key = g_quark_from_string(name);
 
     MutableList<AttributeRecord> ref;
@@ -322,14 +367,13 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
         }
         ref = existing;
     }
-
     Debug::EventTracker<> tracker;
 
     ptr_shared<char> old_value=( existing ? existing->value : ptr_shared<char>() );
 
     ptr_shared<char> new_value=ptr_shared<char>();
-    if (value) {
-        new_value = share_string(value);
+    if (cleaned_value) {
+        new_value = share_string(cleaned_value);
         tracker.set<DebugSetAttribute>(*this, key, new_value);
         if (!existing) {
             if (ref) {
@@ -355,7 +399,11 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
     if ( new_value != old_value && (!old_value || !new_value || strcmp(old_value, new_value))) {
         _document->logger()->notifyAttributeChanged(*this, key, old_value, new_value);
         _observers.notifyAttributeChanged(*this, key, old_value, new_value);
+        //g_warning( "setAttribute notified: %s: %s: %s: %s", name, element.c_str(), old_value, new_value ); 
     }
+
+    g_free( cleaned_value );
+
 }
 
 void SimpleNode::addChild(Node *generic_child, Node *generic_ref) {

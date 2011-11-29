@@ -1,4 +1,5 @@
-SUBDIRS = clipart \
+SUBDIRS = attributes \
+          clipart \
           examples \
           extensions \
           filters \

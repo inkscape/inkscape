@@ -20,8 +20,10 @@
 #include "helper/sp-marshal.h"
 #include "xml/node-event-vector.h"
 #include "attributes.h"
+#include "attribute-rel-util.h"
 #include "color-profile.h"
 #include "document.h"
+#include "preferences.h"
 #include "style.h"
 #include "sp-object-repr.h"
 #include "sp-paint-server.h"
@@ -1021,8 +1023,31 @@ Inkscape::XML::Node * SPObject::sp_object_private_write(SPObject *object, Inksca
         SPStyle const *const obj_style = object->style;
         if (obj_style) {
             gchar *s = sp_style_write_string(obj_style, SP_STYLE_FLAG_IFSET);
-            repr->setAttribute("style", ( *s ? s : NULL ));
+
+            // Check for valid attributes. This may be time consuming.
+            // It is useful, though, for debugging Inkscape code.
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            if( prefs->getBool("/options/svgoutput/check_on_editing") ) {
+
+                unsigned int flags = sp_attribute_clean_get_prefs();
+                gchar *s_cleaned = sp_attribute_clean_style( repr, s, flags ); 
+ 
+                // g_warning("SPObject::sp_object_private_write: %s", object->getId() );
+                // g_warning("                                   old: :%s:", repr->attribute("style") );
+                // g_warning("                                   new: :%s:", s );
+                // g_warning("                               cleaned: :%s:", s_cleaned );
+
+                g_free( s );
+                s = s_cleaned;
+            }
+
+            if( s == NULL || strcmp(s,"") == 0 ) {
+                repr->setAttribute("style", NULL);
+            } else {
+                repr->setAttribute("style", s);
+            }
             g_free(s);
+
         } else {
             /** \todo I'm not sure what to do in this case.  Bug #1165868
              * suggests that it can arise, but the submitter doesn't know

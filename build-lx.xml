@@ -459,6 +459,9 @@
     <copy file="README"                todir="${dist}"/>
     <copy file="TRANSLATORS"           todir="${dist}"/>
     <copy todir="${datadir}/inkscape">  
+        <fileset dir="share/attributes"> <exclude name=".*\.am"/> </fileset>
+    </copy>
+    <copy todir="${datadir}/inkscape">  
         <fileset dir="share/clipart"> <exclude name=".*\.am"/> </fileset>
     </copy>
     <copy todir="${datadir}/inkscape">  
