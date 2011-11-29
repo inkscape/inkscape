@@ -44,7 +44,7 @@ extern "C" {
 #else
 #  ifdef WIN32
 #    define INKSCAPE_APPICONDIR   WIN32_DATADIR("pixmaps")
-#    define INKSCAPE_ATTRRELDIR   WIN32_DATADIR "share\\attributes"
+#    define INKSCAPE_ATTRRELDIR   WIN32_DATADIR("share\\attributes")
 #    define INKSCAPE_BINDDIR      WIN32_DATADIR("share\\bind")
 #    define INKSCAPE_EXAMPLESDIR  WIN32_DATADIR("share\\examples")
 #    define INKSCAPE_EXTENSIONDIR WIN32_DATADIR("share\\extensions")
