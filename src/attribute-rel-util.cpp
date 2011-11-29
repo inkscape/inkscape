@@ -105,8 +105,8 @@ void sp_attribute_clean_element(Node *repr, unsigned int flags) {
     //Glib::ustring value = (const char*)iter->value;
 
     bool is_useful = sp_attribute_check_attribute( element, id, attribute, flags & SP_ATTR_CLEAN_ATTR_WARN );
-    if( !is_useful ) {
-        attributesToDelete.insert( attribute );
+    if( !is_useful && (flags & SP_ATTR_CLEAN_ATTR_REMOVE) ) {
+      attributesToDelete.insert( attribute );
     }
   }
 

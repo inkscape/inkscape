@@ -76,6 +76,10 @@ while( my $t = $p->get_token ) {
     }
 }
 
+# Adjustments
+push @{$attributes{ "in" }->{elements}}, "feMergeNode";
+
+
 # Output
 
 open( ELEMENTS, ">svgprops_new" ) or die "Couldn't open output";
