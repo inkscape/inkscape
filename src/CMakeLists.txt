@@ -8,6 +8,9 @@ set(main_SRC
 )
 
 set(sp_SRC
+	attribute-rel-css.cpp
+	attribute-rel-svg.cpp
+	attribute-rel-util.cpp
 	sp-anchor.cpp
 	# sp-animation.cpp
 	sp-clippath.cpp
@@ -78,6 +81,9 @@ set(sp_SRC
 
 	# -------
 	# Headers
+	attribute-rel-css.h
+	attribute-rel-svg.h
+	attribute-rel-util.h
 	sp-anchor.h
 	sp-animation.h
 	sp-clippath.h
