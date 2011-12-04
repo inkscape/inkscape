@@ -66,16 +66,14 @@ static const SPAttrDesc image_nohref_desc[] = {
 };
 
 
-static void
-object_released( SPObject */*object*/, GtkWidget *widget )
+static void object_released( SPObject */*object*/, GtkWidget *widget )
 {
     gtk_widget_destroy (widget);
 }
 
 
 
-static void
-window_destroyed( GtkObject *window, GtkObject */*object*/ )
+static void window_destroyed( GtkObject *window, GtkObject */*object*/ )
 {
     sigc::connection *release_connection = (sigc::connection *)g_object_get_data(G_OBJECT(window), "release_connection");
     release_connection->disconnect();
@@ -84,21 +82,20 @@ window_destroyed( GtkObject *window, GtkObject */*object*/ )
 
 
 
-static void
-sp_object_attr_show_dialog ( SPObject *object,
+static void sp_object_attr_show_dialog ( SPObject *object,
                              const SPAttrDesc *desc,
                              const gchar *tag )
 {
     const gchar **labels, **attrs;
     gint len, i;
-    gchar *title;
+    Glib::ustring title;
     GtkWidget *w, *t;
 
     len = 0;
     while (desc[len].label) len += 1;
 
-    labels = (const gchar **)alloca (len * sizeof (char *));
-    attrs = (const gchar **)alloca (len * sizeof (char *));
+    labels = (const gchar **) new gchar* [len];
+    attrs = (const gchar **) new gchar* [len];
 
     for (i = 0; i < len; i++) {
         labels[i] = desc[i].label;
@@ -106,19 +103,20 @@ sp_object_attr_show_dialog ( SPObject *object,
     }
 
     if (!strcmp (tag, "Link")) {
-        title = g_strdup_printf (_("Link Properties"));
+        title = _("Link Properties");
     } else if (!strcmp (tag, "Image")) {
-        title = g_strdup_printf (_("Image Properties"));
+        title = _("Image Properties");
     } else {
-        title = g_strdup_printf (_("%s Properties"), tag);
+        title = Glib::ustring::compose(_("%1 Properties"), tag);
     }
 
-    w = sp_window_new (title, TRUE);
-    g_free (title);
+    w = sp_window_new (title.c_str(), TRUE);
 
     t = sp_attribute_table_new (object, len, labels, attrs);
     gtk_widget_show (t);
     gtk_container_add (GTK_CONTAINER (w), t);
+    delete labels;
+    delete attrs;
 
     g_signal_connect ( G_OBJECT (w), "destroy",
                        G_CALLBACK (window_destroyed), object );
@@ -128,13 +126,11 @@ sp_object_attr_show_dialog ( SPObject *object,
     g_object_set_data(G_OBJECT(w), "release_connection", release_connection);
 
     gtk_widget_show (w);
-
 } // end of sp_object_attr_show_dialog()
 
 
 
-void
-sp_object_attributes_dialog (SPObject *object, const gchar *tag)
+void sp_object_attributes_dialog (SPObject *object, const gchar *tag)
 {
     g_return_if_fail (object != NULL);
     g_return_if_fail (SP_IS_OBJECT (object));

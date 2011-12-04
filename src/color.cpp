@@ -183,8 +183,6 @@ guint32 SPColor::toRGBA32( gdouble alpha ) const
 std::string SPColor::toString() const
 {
     CSSOStringStream css;
-
-    std::string result;
     char tmp[64] = {0};
 
     sp_svg_write_color(tmp, sizeof(tmp), toRGBA32(0x0ff));

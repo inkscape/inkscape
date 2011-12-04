@@ -60,8 +60,7 @@ GType sp_attribute_widget_get_type(void)
 
 
 
-static void
-sp_attribute_widget_class_init (SPAttributeWidgetClass *klass)
+static void sp_attribute_widget_class_init (SPAttributeWidgetClass *klass)
 {
     GtkObjectClass *object_class;
     GtkEditableClass *editable_class;
@@ -79,8 +78,7 @@ sp_attribute_widget_class_init (SPAttributeWidgetClass *klass)
 
 
 
-static void
-sp_attribute_widget_init (SPAttributeWidget *spaw)
+static void sp_attribute_widget_init (SPAttributeWidget *spaw)
 {
     spaw->blocked = FALSE;
     spaw->hasobj = FALSE;
@@ -95,8 +93,7 @@ sp_attribute_widget_init (SPAttributeWidget *spaw)
 
 
 
-static void
-sp_attribute_widget_destroy (GtkObject *object)
+static void sp_attribute_widget_destroy (GtkObject *object)
 {
 
     SPAttributeWidget *spaw;
@@ -132,8 +129,7 @@ sp_attribute_widget_destroy (GtkObject *object)
 
 
 
-static void
-sp_attribute_widget_changed (GtkEditable *editable)
+static void sp_attribute_widget_changed (GtkEditable *editable)
 {
 
     SPAttributeWidget *spaw;
@@ -164,8 +160,7 @@ sp_attribute_widget_changed (GtkEditable *editable)
 
 
 
-GtkWidget *
-sp_attribute_widget_new ( SPObject *object, const gchar *attribute )
+GtkWidget *sp_attribute_widget_new ( SPObject *object, const gchar *attribute )
 {
     SPAttributeWidget *spaw;
 
@@ -182,8 +177,7 @@ sp_attribute_widget_new ( SPObject *object, const gchar *attribute )
 
 
 
-GtkWidget *
-sp_attribute_widget_new_repr ( Inkscape::XML::Node *repr, const gchar *attribute )
+GtkWidget *sp_attribute_widget_new_repr ( Inkscape::XML::Node *repr, const gchar *attribute )
 {
     SPAttributeWidget *spaw;
 
@@ -196,8 +190,7 @@ sp_attribute_widget_new_repr ( Inkscape::XML::Node *repr, const gchar *attribute
 
 
 
-void
-sp_attribute_widget_set_object ( SPAttributeWidget *spaw,
+void sp_attribute_widget_set_object ( SPAttributeWidget *spaw,
                                  SPObject *object,
                                  const gchar *attribute )
 {
@@ -251,8 +244,7 @@ sp_attribute_widget_set_object ( SPAttributeWidget *spaw,
 
 
 
-void
-sp_attribute_widget_set_repr ( SPAttributeWidget *spaw,
+void sp_attribute_widget_set_repr ( SPAttributeWidget *spaw,
                                Inkscape::XML::Node *repr,
                                const gchar *attribute )
 {
@@ -300,8 +292,7 @@ sp_attribute_widget_set_repr ( SPAttributeWidget *spaw,
 
 
 
-static void
-sp_attribute_widget_object_modified ( SPObject */*object*/,
+static void sp_attribute_widget_object_modified ( SPObject */*object*/,
                                       guint flags,
                                       SPAttributeWidget *spaw )
 {
@@ -377,8 +368,7 @@ GType sp_attribute_table_get_type(void)
 
 
 
-static void
-sp_attribute_table_class_init (SPAttributeTableClass *klass)
+static void sp_attribute_table_class_init (SPAttributeTableClass *klass)
 {
     GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
 
@@ -390,8 +380,7 @@ sp_attribute_table_class_init (SPAttributeTableClass *klass)
 
 
 
-static void
-sp_attribute_table_init ( SPAttributeTable *spat )
+static void sp_attribute_table_init ( SPAttributeTable *spat )
 {
     spat->blocked = FALSE;
     spat->hasobj = FALSE;
@@ -405,8 +394,7 @@ sp_attribute_table_init ( SPAttributeTable *spat )
     new (&spat->release_connection) sigc::connection();
 }
 
-static void
-sp_attribute_table_destroy ( GtkObject *object )
+static void sp_attribute_table_destroy ( GtkObject *object )
 {
     SPAttributeTable *spat;
 
@@ -451,8 +439,7 @@ sp_attribute_table_destroy ( GtkObject *object )
 } // end of sp_attribute_table_destroy()
 
 
-GtkWidget *
-sp_attribute_table_new ( SPObject *object,
+GtkWidget * sp_attribute_table_new ( SPObject *object,
                          gint num_attr,
                          const gchar **labels,
                          const gchar **attributes )
@@ -473,8 +460,7 @@ sp_attribute_table_new ( SPObject *object,
 
 
 
-GtkWidget *
-sp_attribute_table_new_repr ( Inkscape::XML::Node *repr,
+GtkWidget *sp_attribute_table_new_repr ( Inkscape::XML::Node *repr,
                               gint num_attr,
                               const gchar **labels,
                               const gchar **attributes )
@@ -496,8 +482,7 @@ sp_attribute_table_new_repr ( Inkscape::XML::Node *repr,
 #define XPAD 4
 #define YPAD 0
 
-void
-sp_attribute_table_set_object ( SPAttributeTable *spat,
+void sp_attribute_table_set_object ( SPAttributeTable *spat,
                                 SPObject *object,
                                 gint num_attr,
                                 const gchar **labels,
@@ -600,8 +585,7 @@ sp_attribute_table_set_object ( SPAttributeTable *spat,
 
 
 
-void
-sp_attribute_table_set_repr ( SPAttributeTable *spat,
+void sp_attribute_table_set_repr ( SPAttributeTable *spat,
                               Inkscape::XML::Node *repr,
                               gint num_attr,
                               const gchar **labels,
@@ -697,8 +681,7 @@ sp_attribute_table_set_repr ( SPAttributeTable *spat,
 
 
 
-static void
-sp_attribute_table_object_modified ( SPObject */*object*/,
+static void sp_attribute_table_object_modified ( SPObject */*object*/,
                                      guint flags,
                                      SPAttributeTable *spat )
 {
@@ -725,16 +708,14 @@ sp_attribute_table_object_modified ( SPObject */*object*/,
 
 
 
-static void
-sp_attribute_table_object_release (SPObject */*object*/, SPAttributeTable *spat)
+static void sp_attribute_table_object_release (SPObject */*object*/, SPAttributeTable *spat)
 {
     sp_attribute_table_set_object (spat, NULL, 0, NULL, NULL);
 }
 
 
 
-static void
-sp_attribute_table_entry_changed ( GtkEditable *editable,
+static void sp_attribute_table_entry_changed ( GtkEditable *editable,
                                    SPAttributeTable *spat )
 {
     if (!spat->blocked)
