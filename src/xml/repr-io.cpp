@@ -82,6 +82,10 @@ public:
           instr(0),
           gzin(0)
     {
+        for (int k=0;k<4;k++)
+        {
+            firstFew[k]=0;
+        }
     }
     virtual ~XmlSource()
     {

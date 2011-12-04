@@ -65,14 +65,11 @@ public:
     /**
      *
      */
-    SVGReader()
-        {
-        }
-
-    /**
-     *
-     */
-    SVGReader(const SVGReader &/*other*/)
+    SVGReader() :
+            parsebuf(),
+            parselen(0),
+            lastPosition(0),
+            doc(0)
         {
         }
 

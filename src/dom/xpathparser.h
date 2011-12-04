@@ -371,9 +371,16 @@ public:
     /**
      *
      */
-    XPathParser()
+    XPathParser() :
+            debug(false),
+            parsebuf(0),
+            parselen(0),
+            position(0),
+            numberString(),
+            number(0),
+            lexicalTokens(),
+            tokens()
         {
-            debug = false;
         }
 
     /**
@@ -781,15 +788,7 @@ private:
      *  this is executable via execute()
      */
     TokenList tokens;
-
-
-
-
 };
-
-
-
-
 
 
 } // namespace xpath

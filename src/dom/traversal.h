@@ -286,7 +286,11 @@ public:
     /**
      *
      */
-    NodeIterator() {}
+    NodeIterator() :
+        whatToShow(0),
+        filter(),
+        expandEntityReferences(0)
+    {}
 
     /**
      *
@@ -485,7 +489,12 @@ public:
     /**
      *
      */
-    TreeWalker() {}
+    TreeWalker() :
+        whatToShow(0),
+        filter(),
+        expandEntityReferences(0),
+        currentNode(0)
+    {}
 
     /**
      *

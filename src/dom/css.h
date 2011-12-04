@@ -1636,6 +1636,10 @@ public:
      */
     CSSPrimitiveValue &operator=(const CSSPrimitiveValue &other)
         {
+            if(this == &other)
+            {
+                return *this;
+            }
             primitiveType = other.primitiveType;
             doubleValue   = other.doubleValue;
             stringValue   = other.stringValue;

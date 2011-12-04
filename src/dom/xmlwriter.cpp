@@ -175,7 +175,9 @@ void XmlWriter::writeFile(FILE *f, const NodePtr node)
 /**
  *
  */
-XmlWriter::XmlWriter()
+XmlWriter::XmlWriter() :
+    indent(0),
+    buf()
 {
 }
 

@@ -100,13 +100,18 @@ public:
     /**
      *
      */
-    LSParserImpl()
+    LSParserImpl() :
+            reader(),
+            filter(0)
         {}
 
     /**
      *
      */
-    LSParserImpl(const LSParserImpl &other) : LSParser(other)
+    LSParserImpl(const LSParserImpl &other) :
+            LSParser(other),
+            reader(),
+            filter(0)
         {}
 
     /**
@@ -214,9 +219,12 @@ public:
     /**
      *
      */
-    LSSerializerImpl()
+    LSSerializerImpl() :
+            outbuf(),
+            indent(0),
+            domConfig(0),
+            filter(0)
         {
-        indent = 0;
         }
 
     /**

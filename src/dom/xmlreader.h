@@ -100,30 +100,23 @@ private:
 
     int parseVersion(int pos);
     int parseDoctype(int pos);
-
     int parseCDATA  (int pos, CDATASectionPtr cdata);
     int parseComment(int pos, CommentPtr comment);
     int parseText(int pos, TextPtr text);
-
     int parseEntity(int pos, DOMString &buf);
-
     int parseAttributes(int p0, NodePtr node, bool *quickClose);
-
     int parseNode(int p0, NodePtr node, int depth);
-
-    bool       keepGoing;
-    bool       parseAsData;
-    int        pos;   //current parse position
-    int        len;   //length of parsed region
-    DOMString  parsebuf;
 
     DOMString  loadFile(const DOMString &fileName);
 
-    int        lineNr;
-    int        colNr;
-
     DocumentPtr document;
-
+    DOMString   parsebuf;
+    bool        keepGoing;
+    bool        parseAsData;
+    int         pos;   //current parse position
+    int         len;   //length of parsed region
+    int         lineNr;
+    int         colNr;
 };
 
 }  //namespace dom

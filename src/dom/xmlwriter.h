@@ -50,30 +50,19 @@ namespace dom
 class XmlWriter
 {
 public:
-
     XmlWriter();
-
     virtual ~XmlWriter();
-
-
     void write(const NodePtr node);
-
     void writeFile(FILE *f, const NodePtr node);
 
 
 protected:
-
-    int indent;
-
     void spaces();
-
     void po(const char *str, ...) G_GNUC_PRINTF(2,3);
-
     void pos(const DOMString &str);
 
+    int indent;
     DOMString buf;
-
-
 };
 
 

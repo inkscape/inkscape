@@ -950,25 +950,31 @@ XmlReader::loadFile(const DOMString &fileName)
 /**
  *
  */
-XmlReader::XmlReader()
+XmlReader::XmlReader() :
+    document(),
+    parsebuf(),
+    keepGoing(false),
+    parseAsData(false),
+    pos(0),
+    len(0),
+    lineNr(1),
+    colNr(0)
 {
-    len         = 0;
-    lineNr      = 1;
-    colNr       = 0;
-    parseAsData = false;
-    keepGoing   = false;
 }
 
 /**
  *
  */
-XmlReader::XmlReader(bool parseAsDataArg)
+XmlReader::XmlReader(bool parseAsDataArg) :
+    document(),
+    parsebuf(),
+    keepGoing(false),
+    parseAsData(parseAsDataArg),
+    pos(0),
+    len(0),
+    lineNr(1),
+    colNr(0)
 {
-    len         = 0;
-    lineNr      = 1;
-    colNr       = 0;
-    parseAsData = parseAsDataArg;
-    keepGoing   = false;
 }
 
 

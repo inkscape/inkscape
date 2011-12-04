@@ -302,7 +302,12 @@ private:
 /**
  *
  */
-Inflater::Inflater()
+Inflater::Inflater() :
+    dest(),
+    src(),
+    srcPos(0),
+    bitBuf(0),
+    bitCnt(0)
 {
 }
 
@@ -800,7 +805,7 @@ bool Inflater::inflate(std::vector<unsigned char> &destination,
 //########################################################################
 
 
-
+#define DEFLATER_BUF_SIZE 32768
 class Deflater
 {
 public:
@@ -862,13 +867,13 @@ private:
 
     bool compress();
 
+    std::vector<unsigned char> compressed;
+
     std::vector<unsigned char> uncompressed;
 
     std::vector<unsigned char> window;
 
     unsigned int windowPos;
-
-    std::vector<unsigned char> compressed;
 
     //#### Output
     unsigned int outputBitBuf;
@@ -887,9 +892,9 @@ private:
     //#### Huffman Encode
     void encodeLiteralStatic(unsigned int ch);
 
-    unsigned char windowBuf[32768];
+    unsigned char windowBuf[DEFLATER_BUF_SIZE];
     //assume 32-bit ints
-    unsigned int windowHashBuf[32768];
+    unsigned int windowHashBuf[DEFLATER_BUF_SIZE];
 };
 
 
@@ -919,11 +924,17 @@ Deflater::~Deflater()
  */
 void Deflater::reset()
 {
-    outputBitBuf = 0;
-    outputNrBits = 0;
-    window.clear();
     compressed.clear();
     uncompressed.clear();
+    window.clear();
+	windowPos = 0;
+    outputBitBuf = 0;
+    outputNrBits = 0;
+    for (int k=0; k<DEFLATER_BUF_SIZE; k++)
+    {
+        windowBuf[k]=0;
+        windowHashBuf[k]=0;
+    }
 }
 
 /**
@@ -1415,7 +1426,12 @@ bool Deflater::compress()
 /**
  * Constructor
  */
-GzipFile::GzipFile()
+GzipFile::GzipFile() :
+    data(),
+    fileName(),
+    fileBuf(),
+    fileBufPos(0),
+    compressionMethod(0)
 {
 }
 
@@ -1883,6 +1899,7 @@ ZipEntry::ZipEntry()
 {
     crc               = 0L;
     compressionMethod = 8;
+    position          = 0;
 }
 
 /**
@@ -1895,6 +1912,7 @@ ZipEntry::ZipEntry(const std::string &fileNameArg,
     compressionMethod = 8;
     fileName          = fileNameArg;
     comment           = commentArg;
+    position          = 0;
 }
 
 /**
@@ -2124,9 +2142,12 @@ unsigned long ZipEntry::getPosition()
 /**
  * Constructor
  */
-ZipFile::ZipFile()
+ZipFile::ZipFile() :
+    entries(),
+    fileBuf(),
+    fileBufPos(0),
+    comment()
 {
-
 }
 
 /**

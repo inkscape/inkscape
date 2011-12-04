@@ -110,7 +110,9 @@ void ImageData::setData(const std::vector<unsigned char> &buf)
 /**
  *
  */
-OdfDocument::OdfDocument()
+OdfDocument::OdfDocument() :
+    content(0),
+    images()
 {
 }
 

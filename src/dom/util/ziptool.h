@@ -216,8 +216,6 @@ private:
     #endif
     ;
 
-    unsigned long crc;
-
     std::vector<unsigned char> fileBuf;
     unsigned long fileBufPos;
 
