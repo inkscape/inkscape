@@ -62,7 +62,7 @@
 #include "javabind-private.h"
 #include <path-prefix.h>
 #include <prefix.h>
-#include <glib/gmessages.h>
+#include <glib.h>
 
 //For repr and document
 #include <document.h>

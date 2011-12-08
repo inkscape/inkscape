@@ -1,7 +1,7 @@
 #ifndef SVG_SVG_COLOR_H_SEEN
 #define SVG_SVG_COLOR_H_SEEN
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 class SVGICCColor;
 

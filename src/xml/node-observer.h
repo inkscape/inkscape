@@ -18,7 +18,7 @@
 #ifndef SEEN_INKSCAPE_XML_NODE_OBSERVER_H
 #define SEEN_INKSCAPE_XML_NODE_OBSERVER_H
 
-#include <glib/gquark.h>
+#include <glib.h>
 #include "util/share.h"
 
 #ifndef INK_UNUSED

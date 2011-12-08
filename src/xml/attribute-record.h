@@ -5,8 +5,7 @@
 #ifndef SEEN_XML_SP_REPR_ATTR_H
 #define SEEN_XML_SP_REPR_ATTR_H
 
-#include <glib/gquark.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 #include "gc-managed.h"
 #include "util/share.h"
 

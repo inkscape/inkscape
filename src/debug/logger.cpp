@@ -11,7 +11,7 @@
 
 #include <fstream>
 #include <vector>
-#include <glib/gmessages.h>
+#include <glib.h>
 #include "inkscape-version.h"
 #include "debug/logger.h"
 #include "debug/simple-event.h"

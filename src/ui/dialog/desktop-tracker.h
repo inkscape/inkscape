@@ -9,7 +9,7 @@
 
 #include <stddef.h>
 #include <sigc++/connection.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 
 typedef struct _GtkWidget GtkWidget;
 class SPDesktop;

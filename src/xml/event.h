@@ -18,8 +18,7 @@
 #ifndef SEEN_INKSCAPE_XML_SP_REPR_ACTION_H
 #define SEEN_INKSCAPE_XML_SP_REPR_ACTION_H
 
-#include <glib/gtypes.h>
-#include <glib/gquark.h>
+#include <glib.h>
 #include <glibmm/ustring.h>
 
 #include <iterator>

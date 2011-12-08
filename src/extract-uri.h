@@ -1,7 +1,7 @@
 #ifndef SEEN_EXTRACT_URI_H
 #define SEEN_EXTRACT_URI_H
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 gchar *extract_uri(gchar const *s, gchar const** endptr = 0);
 

@@ -15,7 +15,7 @@
 #include <string>
 #include <cmath>
 #include <cstdio>
-#include <glib/gmem.h>
+#include <glib.h>
 
 BitLigne::BitLigne(int ist,int ien,float iScale)
 {

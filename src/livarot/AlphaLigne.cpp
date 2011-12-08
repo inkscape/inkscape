@@ -12,7 +12,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <glib/gmem.h>
+#include <glib.h>
 
 AlphaLigne::AlphaLigne(int iMin,int iMax)
 {

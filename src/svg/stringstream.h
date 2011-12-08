@@ -1,7 +1,7 @@
 #ifndef INKSCAPE_STRINGSTREAM_H
 #define INKSCAPE_STRINGSTREAM_H
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <sstream>
 #include <string>
 

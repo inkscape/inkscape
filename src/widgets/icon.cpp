@@ -17,7 +17,7 @@
 #endif
 
 #include <cstring>
-#include <glib/gmem.h>
+#include <glib.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 #include <gtkmm.h>

@@ -9,7 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 #include "message-context.h"
 #include "message-stack.h"
 

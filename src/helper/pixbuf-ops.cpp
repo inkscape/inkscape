@@ -16,7 +16,6 @@
 #endif
 
 #include <glib.h>
-#include <glib/gmessages.h>
 #include <png.h>
 #include <2geom/transforms.h>
 

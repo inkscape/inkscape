@@ -9,7 +9,7 @@
  *
  */
 
-#include <glib/gmem.h>
+#include <glib.h>
 #include <cmath>
 #include <cstring>
 #include <string>

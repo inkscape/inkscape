@@ -15,7 +15,7 @@
 #include <stddef.h>
 #include <sigc++/connection.h>
 #include <sigc++/signal.h>
-#include <glib/gmessages.h>
+#include <glib.h>
 
 class SPObject;
 

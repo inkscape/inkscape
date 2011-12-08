@@ -22,7 +22,7 @@
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "display/curve.h"
-#include <glib/gmem.h>
+#include <glib.h>
 #include <glibmm/i18n.h>
 #include "sp-path.h"
 #include "sp-text.h"

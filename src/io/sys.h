@@ -15,9 +15,7 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <glib/gtypes.h>
-#include <glib/gdir.h>
-#include <glib/gfileutils.h>
+#include <glib.h>
 #include <glibmm/spawn.h>
 #include <string>
 

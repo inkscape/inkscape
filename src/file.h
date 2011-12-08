@@ -16,7 +16,7 @@
  */
 
 #include <gtkmm.h>
-#include <glib/gslist.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 
 #include "extension/system.h"

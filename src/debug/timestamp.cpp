@@ -10,8 +10,7 @@
  */
 
 
-#include <glib/gtypes.h>
-#include <glib/gmain.h>
+#include <glib.h>
 #include <glibmm/ustring.h>
 #include "debug/simple-event.h"
 

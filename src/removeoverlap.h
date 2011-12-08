@@ -13,7 +13,7 @@
 #ifndef SEEN_REMOVEOVERLAP_H
 #define SEEN_REMOVEOVERLAP_H
 
-#include <glib/gslist.h>
+#include <glib.h>
 
 void removeoverlap(GSList const *items, double xGap, double yGap);
 

@@ -12,7 +12,7 @@
  */
 
 #include <cstring>
-#include <glib/gmem.h>
+#include <glib.h>
 
 
 /** \return strlen(xml_quote_strdup(\a val)) (without doing the malloc).

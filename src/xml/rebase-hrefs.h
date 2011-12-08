@@ -1,7 +1,7 @@
 #ifndef REBASE_HREFS_H_SEEN
 #define REBASE_HREFS_H_SEEN
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include "util/list.h"
 #include "xml/attribute-record.h"
 struct SPDocument;

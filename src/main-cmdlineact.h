@@ -15,7 +15,7 @@
  * Released under GNU GPL v2.x, read the file 'COPYING' for more information
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 namespace Inkscape {
 

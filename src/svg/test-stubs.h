@@ -12,7 +12,7 @@
 #ifndef SEEN_TEST_STUBS_H
 #define SEEN_TEST_STUBS_H
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 long long int prefs_get_int_attribute(gchar const *path, gchar const *attr, long long int def);
 

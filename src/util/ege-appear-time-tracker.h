@@ -37,7 +37,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#include <glib/gtimer.h>
+#include <glib.h>
 #include <glibmm/ustring.h>
 
 typedef union _GdkEvent GdkEvent;

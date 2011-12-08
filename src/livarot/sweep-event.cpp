@@ -1,4 +1,4 @@
-#include <glib/gmem.h>
+#include <glib.h>
 #include "livarot/sweep-event-queue.h"
 #include "livarot/sweep-tree.h"
 #include "livarot/sweep-event.h"

@@ -1,7 +1,7 @@
 #ifndef __CR_LIBXML_NODE_IFACE_H__
 #define __CR_LIBXML_NODE_IFACE_H__
 
-#include <glib/gmacros.h>
+#include <glib.h>
 #include "cr-node-iface.h"
 
 G_BEGIN_DECLS

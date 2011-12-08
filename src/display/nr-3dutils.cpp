@@ -9,7 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib/gmessages.h>
+#include <glib.h>
 
 #include "display/nr-3dutils.h"
 #include <cmath>

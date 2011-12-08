@@ -1,7 +1,7 @@
 #ifndef SEEN_SP_CONN_END
 #define SEEN_SP_CONN_END
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <stddef.h>
 #include <sigc++/connection.h>
 

@@ -5,7 +5,7 @@
  * Drawing anchors. 
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <2geom/point.h>
 
 struct SPDrawContext;

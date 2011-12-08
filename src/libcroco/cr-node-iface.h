@@ -1,8 +1,7 @@
 #ifndef __CR_NODE_IFACE_H__
 #define __CR_NODE_IFACE_H__
 
-#include <glib/gmacros.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 
 G_BEGIN_DECLS
 

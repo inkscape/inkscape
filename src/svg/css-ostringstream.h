@@ -1,7 +1,7 @@
 #ifndef SVG_CSS_OSTRINGSTREAM_H_INKSCAPE
 #define SVG_CSS_OSTRINGSTREAM_H_INKSCAPE
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <sstream>
 
 namespace Inkscape {

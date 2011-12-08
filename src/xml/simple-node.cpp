@@ -17,7 +17,7 @@
 #include <cstring>
 #include <string>
 
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 
 #include "preferences.h"
 

@@ -9,7 +9,7 @@
 #ifndef SEEN_INKSCAPE_GC_ANCHORED_H
 #define SEEN_INKSCAPE_GC_ANCHORED_H
 
-#include <glib/gmessages.h>
+#include <glib.h>
 #include "gc-managed.h"
 
 namespace Inkscape {

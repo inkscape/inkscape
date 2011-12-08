@@ -17,7 +17,7 @@
  *
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include "knot-enums.h"
 #include <2geom/forward.h>
 #include "knot-holder-entity.h"

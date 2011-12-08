@@ -1,6 +1,6 @@
 #include <cstring>
 #include <string>
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 
 #include "xml/croco-node-iface.h"
 #include "xml/node.h"

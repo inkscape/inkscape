@@ -13,7 +13,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 #include "display/canvas-bpath.h"
 #include "live_effects/parameter/parameter.h"

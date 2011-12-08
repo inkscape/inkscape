@@ -10,7 +10,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib/gmessages.h>
+#include <glib.h>
 #include <cmath>
 
 #include "display/cairo-templates.h"

@@ -10,7 +10,6 @@
 #include <cstdlib>
 #include <cstring>
 #include <glib.h>
-#include <glib/gmem.h>
 #include <2geom/affine.h>
 #include "Shape.h"
 #include "livarot/sweep-event-queue.h"

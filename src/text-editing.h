@@ -13,7 +13,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <utility>   // std::pair
 #include "libnrtype/Layout-TNG.h"
 #include "text-tag-attributes.h"

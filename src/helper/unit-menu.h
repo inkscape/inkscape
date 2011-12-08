@@ -10,7 +10,7 @@
  *
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 
 struct SPUnit;

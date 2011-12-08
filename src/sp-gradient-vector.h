@@ -1,7 +1,7 @@
 #ifndef SEEN_SP_GRADIENT_VECTOR_H
 #define SEEN_SP_GRADIENT_VECTOR_H
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <vector>
 #include "color.h"
 

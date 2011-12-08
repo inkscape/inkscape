@@ -5,7 +5,7 @@
  * SPRadialGradient: SVG <radialgradient> implementtion.
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include "sp-gradient.h"
 #include "svg/svg-length.h"
 #include "sp-radial-gradient-fns.h"

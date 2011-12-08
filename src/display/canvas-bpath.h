@@ -15,7 +15,7 @@
  *
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 #include "sp-canvas-item.h"
 

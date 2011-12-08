@@ -18,7 +18,6 @@
 #endif
 
 #include <glib.h> // g_assert()
-#include <glib/ghash.h>
 #include "attributes.h"
 
 typedef struct {

@@ -6,11 +6,7 @@
 #include <errno.h>
 #include <string>
 #include <cstring>
-#include <glib/gutils.h>
-#include <glib/gmem.h>
-#include <glib/gerror.h>
-#include <glib/gconvert.h>
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 
 std::string sp_relative_path_from_path( std::string const &path, std::string const &base)
 {

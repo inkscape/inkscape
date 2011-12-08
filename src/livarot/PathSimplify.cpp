@@ -6,7 +6,7 @@
  *
  */
 
-#include <glib/gmem.h>
+#include <glib.h>
 #include <2geom/affine.h>
 #include "livarot/Path.h"
 #include "livarot/path-description.h"

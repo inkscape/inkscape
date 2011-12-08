@@ -14,7 +14,7 @@
 #ifndef SEEN_INKSCAPE_XML_SP_REPR_EVENT_VECTOR
 #define SEEN_INKSCAPE_XML_SP_REPR_EVENT_VECTOR
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 #include "xml/node.h"
 

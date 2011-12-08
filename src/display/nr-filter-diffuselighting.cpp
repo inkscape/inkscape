@@ -11,7 +11,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib/gmessages.h>
+#include <glib.h>
 
 #include "display/cairo-templates.h"
 #include "display/cairo-utils.h"

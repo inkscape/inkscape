@@ -11,7 +11,7 @@
 
 #include <vector>
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 #include <gtkmm/tooltips.h>
 

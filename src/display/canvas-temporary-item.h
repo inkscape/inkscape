@@ -13,7 +13,7 @@
 
 #include <stddef.h>
 #include <sigc++/sigc++.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 
 struct SPCanvasItem;
 

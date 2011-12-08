@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
-#include <glib/gmem.h>
+#include <glib.h>
 
 class SvgPathGeomTest : public CxxTest::TestSuite
 {

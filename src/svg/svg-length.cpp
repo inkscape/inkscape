@@ -19,7 +19,7 @@
 #include <cstring>
 #include <string>
 #include <math.h>
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 
 #include "svg.h"
 #include "stringstream.h"

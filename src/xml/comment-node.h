@@ -15,7 +15,7 @@
 #ifndef SEEN_INKSCAPE_XML_COMMENT_NODE_H
 #define SEEN_INKSCAPE_XML_COMMENT_NODE_H
 
-#include <glib/gquark.h>
+#include <glib.h>
 #include "xml/simple-node.h"
 
 namespace Inkscape {

@@ -30,7 +30,7 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <glib/gmem.h>
+#include <glib.h>
 #include <glibmm/i18n.h>
 
 #include "desktop.h"

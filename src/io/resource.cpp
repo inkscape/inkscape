@@ -17,9 +17,6 @@
 #endif
 
 #include <glib.h> // g_assert()
-#include <glib/gmessages.h>
-#include <glib/gstrfuncs.h>
-#include <glib/gfileutils.h>
 #include "path-prefix.h"
 #include "inkscape.h"
 #include "io/resource.h"

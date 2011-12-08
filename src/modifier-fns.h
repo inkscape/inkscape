@@ -12,7 +12,7 @@
  */
 
 #include <gdk/gdk.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 
 inline bool
 mod_shift(guint const state)

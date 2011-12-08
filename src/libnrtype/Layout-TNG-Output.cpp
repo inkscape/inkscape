@@ -8,7 +8,7 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-#include <glib/gmem.h>
+#include <glib.h>
 #include "Layout-TNG.h"
 #include "display/drawing-text.h"
 #include "style.h"

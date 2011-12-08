@@ -19,7 +19,7 @@
 #include <cstring>
 #include <string>
 #include <vector>
-#include <glib/gmem.h>
+#include <glib.h>
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "sp-path.h"

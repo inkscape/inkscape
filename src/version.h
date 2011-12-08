@@ -11,7 +11,7 @@
 #ifndef SEEN_INKSCAPE_VERSION_H
 #define SEEN_INKSCAPE_VERSION_H
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 #define SVG_VERSION "1.1"
 

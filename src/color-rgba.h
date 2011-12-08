@@ -10,7 +10,6 @@
 #define SEEN_COLOR_RGBA_H
 
 #include <glib.h> // g_assert()
-#include <glib/gmessages.h>
 #include "decimal-round.h"
 
 /**

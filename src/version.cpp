@@ -11,7 +11,7 @@
  */
 
 #include <stdio.h>
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 #include "version.h"
 
 gboolean sp_version_from_string(const gchar *string, Inkscape::Version *version)

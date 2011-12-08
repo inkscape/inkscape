@@ -6,7 +6,7 @@
  */
 
 #include <glib-object.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 
 namespace Inkscape {
 namespace XML {

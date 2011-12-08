@@ -32,7 +32,7 @@
 #include <2geom/transforms.h>
 #include <2geom/pathvector.h>
 
-#include <glib/gmem.h>
+#include <glib.h>
 
 #include <glibmm/i18n.h>
 #include "display/curve.h"

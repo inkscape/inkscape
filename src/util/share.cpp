@@ -10,7 +10,7 @@
  */
 
 #include "util/share.h"
-#include <glib/gmessages.h>
+#include <glib.h>
 
 namespace Inkscape {
 namespace Util {

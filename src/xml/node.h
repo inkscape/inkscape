@@ -18,7 +18,7 @@
 #ifndef SEEN_INKSCAPE_XML_NODE_H
 #define SEEN_INKSCAPE_XML_NODE_H
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include "gc-anchored.h"
 #include "util/list.h"
 

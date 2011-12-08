@@ -15,8 +15,6 @@
 #include <stdarg.h>
 #include <vector>
 #include <glib.h> // g_assert()
-#include <glib/gstrfuncs.h>
-#include <glib/gmessages.h>
 
 #include "gc-alloc.h"
 #include "debug/event.h"

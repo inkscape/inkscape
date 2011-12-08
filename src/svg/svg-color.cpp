@@ -21,12 +21,7 @@
 #include <string>
 #include <cassert>
 #include <math.h>
-#include <glib/gmem.h>
 #include <glib.h> // g_assert
-#include <glib/gmessages.h>
-#include <glib/gstrfuncs.h>
-#include <glib/ghash.h>
-#include <glib/gutils.h>
 #include <errno.h>
 
 #include "strneq.h"

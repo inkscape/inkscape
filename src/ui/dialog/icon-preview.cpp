@@ -19,7 +19,7 @@
 
 #include <boost/scoped_ptr.hpp>
 #include <gtk/gtk.h>
-#include <glib/gmem.h>
+#include <glib.h>
 #include <glibmm/i18n.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/buttonbox.h>

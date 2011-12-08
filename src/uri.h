@@ -11,7 +11,7 @@
 #ifndef INKSCAPE_URI_H
 #define INKSCAPE_URI_H
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <exception>
 #include <libxml/uri.h>
 #include "bad-uri-exception.h"

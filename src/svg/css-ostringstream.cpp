@@ -1,8 +1,7 @@
 #include "svg/css-ostringstream.h"
 #include "svg/strip-trailing-zeros.h"
 #include "preferences.h"
-#include <glib/gmessages.h>
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 
 Inkscape::CSSOStringStream::CSSOStringStream()
 {

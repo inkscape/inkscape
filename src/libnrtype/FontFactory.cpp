@@ -15,7 +15,7 @@
 #endif
 
 #include <glibmm.h>
-#include <glib/gmem.h>
+#include <glib.h>
 #include <glibmm/i18n.h> // _()
 #include <pango/pangoft2.h>
 #include "libnrtype/FontFactory.h"

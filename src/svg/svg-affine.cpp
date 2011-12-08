@@ -19,7 +19,7 @@
 #include <string>
 #include <cstdlib>
 #include <cstdio>
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 #include <2geom/transforms.h>
 #include <2geom/angle.h>
 #include "svg.h"

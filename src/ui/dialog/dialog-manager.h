@@ -14,7 +14,7 @@
 #ifndef INKSCAPE_UI_DIALOG_MANAGER_H
 #define INKSCAPE_UI_DIALOG_MANAGER_H
 
-#include <glib/gquark.h>
+#include <glib.h>
 #include "dialog.h"
 #include <map>
 

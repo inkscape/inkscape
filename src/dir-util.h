@@ -10,7 +10,7 @@
  */
 
 #include <stdlib.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 
 /** 
  * Returns a form of \a path relative to \a base if that is easy to construct (eg if \a path

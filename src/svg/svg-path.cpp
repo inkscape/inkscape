@@ -31,9 +31,6 @@
 #include <cstring>
 #include <string>
 #include <cassert>
-#include <glib/gmem.h>
-#include <glib/gmessages.h>
-#include <glib/gstrfuncs.h>
 #include <glib.h> // g_assert()
 
 #include "svg/svg.h"

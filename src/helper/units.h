@@ -15,9 +15,7 @@
  *
  */
 
-#include <glib/gmessages.h>
-#include <glib/gslist.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 #include "sp-metric.h"
 
 

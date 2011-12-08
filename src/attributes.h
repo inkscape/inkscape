@@ -13,8 +13,7 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-#include <glib/gtypes.h>
-#include <glib/gmessages.h>
+#include <glib.h>
 
 unsigned int sp_attribute_lookup(gchar const *key);
 unsigned char const *sp_attribute_name(unsigned int id);

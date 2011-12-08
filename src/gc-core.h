@@ -24,7 +24,7 @@
 #else
 # include <gc.h>
 #endif
-#include <glib/gmain.h>
+#include <glib.h>
 
 namespace Inkscape {
 namespace GC {

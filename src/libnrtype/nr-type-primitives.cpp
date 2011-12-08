@@ -14,7 +14,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <glib/gmem.h>
+#include <glib.h>
 #include "nr-type-primitives.h"
 
 /**

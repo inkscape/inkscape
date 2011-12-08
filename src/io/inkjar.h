@@ -26,8 +26,7 @@
 # endif
 #endif
 
-#include <glib/garray.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 
 namespace Inkjar {
 

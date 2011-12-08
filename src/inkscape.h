@@ -13,7 +13,7 @@
  */
 
 #include <list>
-#include <glib/gtypes.h>
+#include <glib.h>
 
 struct SPDesktop;
 struct SPDocument;

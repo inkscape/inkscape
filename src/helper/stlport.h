@@ -3,8 +3,7 @@
 
 
 #include <list>
-#include <glib/glist.h>
-#include <glib/gslist.h>
+#include <glib.h>
 
 template <typename T>
 class StlConv {

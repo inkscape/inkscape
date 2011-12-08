@@ -12,7 +12,7 @@
 # include <config.h>
 #endif
 
-#include <glib/gmem.h>
+#include <glib.h>
 #include "icon-widget.h"
 
 namespace Inkscape {

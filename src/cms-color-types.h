@@ -5,7 +5,7 @@
  * A simple abstraction to provide opaque compatibility with either lcms or lcms2.
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 
 
 typedef void * cmsHPROFILE;

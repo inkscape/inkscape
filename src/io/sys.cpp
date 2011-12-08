@@ -17,9 +17,7 @@
 
 #include <glib.h>
 #include <glib/gstdio.h>
-#include <glib/gutils.h>
 #include <glibmm/fileutils.h>
-#include <glib/gstdio.h>
 #include <glibmm/ustring.h>
 #include <gtk/gtk.h>
 

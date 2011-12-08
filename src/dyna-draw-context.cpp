@@ -38,7 +38,7 @@
 #include <2geom/pathvector.h>
 #include <2geom/bezier-utils.h>
 #include "display/curve.h"
-#include <glib/gmem.h>
+#include <glib.h>
 #include "macros.h"
 #include "document.h"
 #include "selection.h"

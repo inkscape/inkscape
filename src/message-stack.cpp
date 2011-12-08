@@ -10,7 +10,7 @@
  */
 
 #include <string.h>
-#include <glib/gstrfuncs.h>
+#include <glib.h>
 #include <cstring>
 #include <string>
 #include "message-stack.h"

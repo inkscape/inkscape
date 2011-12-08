@@ -2,7 +2,7 @@
 #define INKSCAPE_TEXT_TAG_ATTRIBUTES_H
 
 #include <vector>
-#include <glib/gtypes.h>
+#include <glib.h>
 #include "libnrtype/Layout-TNG.h"
 #include "svg/svg-length.h"
 

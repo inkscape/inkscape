@@ -16,7 +16,7 @@
 #endif
 
 #include <climits>
-#include <glib/gmem.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 #include <2geom/transforms.h>

@@ -1,7 +1,7 @@
 #ifndef INKSCAPE_SP_TEXTPATH_H
 #define INKSCAPE_SP_TEXTPATH_H
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include "svg/svg-length.h"
 #include "sp-item.h"
 #include "sp-text.h"

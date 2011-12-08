@@ -17,7 +17,7 @@
  *
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include "sp-canvas-item.h"
 #include <2geom/rect.h>
 #include <2geom/int-rect.h>

@@ -1,7 +1,7 @@
 #ifndef SEEN_SP_COLOR_SCALES_H
 #define SEEN_SP_COLOR_SCALES_H
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 
 #include <color.h>

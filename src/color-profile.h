@@ -6,7 +6,7 @@
  */
 
 #include <vector>
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <sp-object.h>
 #include <glibmm/ustring.h>
 #include "cms-color-types.h"

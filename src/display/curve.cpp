@@ -19,7 +19,7 @@
 
 #include "display/curve.h"
 
-#include <glib/gmessages.h>
+#include <glib.h>
 #include <2geom/pathvector.h>
 #include <2geom/sbasis-geometric.h>
 #include <2geom/sbasis-to-bezier.h>

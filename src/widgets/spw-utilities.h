@@ -18,7 +18,7 @@
    SPObject, that reacts to modification.
 */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <gtk/gtk.h>      /* GtkWidget */
 #include <gtkmm/widget.h>
 

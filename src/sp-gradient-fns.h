@@ -5,7 +5,7 @@
  * Macros and fn declarations related to gradients.
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <glib-object.h>
 #include <2geom/forward.h>
 #include "sp-gradient-spread.h"

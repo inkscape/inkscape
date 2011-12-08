@@ -5,7 +5,7 @@
  * tspan and textpath, based on the flowtext routines
  */
 
-#include <glib/gtypes.h>
+#include <glib.h>
 #include "sp-item.h"
 #include "text-tag-attributes.h"
 
