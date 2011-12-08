@@ -204,7 +204,7 @@ gboolean       gdl_dock_object_child_placement   (GdlDockObject    *object,
 GType gdl_dock_param_get_type (void);
 
 /* functions for setting/retrieving nick names for serializing GdlDockObject types */
-G_CONST_RETURN gchar *gdl_dock_object_nick_from_type    (GType        type);
+const gchar          *gdl_dock_object_nick_from_type    (GType        type);
 GType                 gdl_dock_object_type_from_nick    (const gchar *nick);
 GType                 gdl_dock_object_set_type_for_nick (const gchar *nick,
                                                          GType        type);
