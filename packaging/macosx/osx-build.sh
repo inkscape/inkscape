@@ -54,6 +54,7 @@ Compilation script for Inkscape on Mac OS X.
     \033[1m-p,--prefix\033[0m	specify install prefix (configure step only)
   \033[1mb,build\033[0m
     build Inkscape (run make)
+    \033[1m-j,--jobs\033[0m   Set the number of parallel execution for make
   \033[1mi,install\033[0m
     install the build products locally, inside the source
     directory (run make install)
@@ -97,6 +98,7 @@ BZRUPDATE="f"
 AUTOGEN="f"
 CONFIGURE="f"
 BUILD="f"
+NJOBS=1
 INSTALL="f"
 PACKAGE="f"
 DISTRIB="f"
@@ -131,6 +133,9 @@ do
 		UNIVERSAL="t" ;;
 	b|build)
 		BUILD="t" ;;
+	-j|--jobs)
+		NJOBS=$2
+		shift 1 ;;
 	i|install)
 		INSTALL="t" ;;
 	p|pack|package)
@@ -277,7 +282,7 @@ fi
 if [[ "$BUILD" == "t" ]]
 then
 	cd $SRCROOT
-	make
+	make -j $NJOBS
 	status=$?
 	if [[ $status -ne 0 ]]; then
 		echo -e "\nBuild failed"
