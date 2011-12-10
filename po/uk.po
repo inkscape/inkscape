@@ -3,17 +3,17 @@
 # This file is distributed under the same license as the Inkscape package.
 # Copyright (C) 2001, 2007, 2008, 2009 Free Software Foundation, Inc.
 #
+#: ../share/filters/filters.svg.h:1
 # Yuri Syrota <rasta@renome.rovno.ua>, 2000.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2007.
 # Alex <pilipchukap@rambler.ru>, 2005.
 # Yuri Chornoivan <yurchor@ukr.net>, 2007, 2008, 2009, 2010, 2011.
-#: ../share/filters/filters.svg.h:1
 msgid ""
 msgstr ""
 "Project-Id-Version: uk\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-12-02 17:28+0100\n"
-"PO-Revision-Date: 2011-10-06 17:08+0300\n"
+"PO-Revision-Date: 2011-12-10 14:54+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
 "Language: uk\n"
@@ -2338,18 +2338,16 @@ msgid "Cartoon paint style with some fading at the edges"
 msgstr "Зображення у стилі коміксу з певним затемненням на краях"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Brushed Metal"
-msgstr "Метал, вражений корозією"
+msgstr "Потертий метал"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Satiny metal surface effect"
-msgstr ""
+msgstr "Ефект шовковистої металевої поверхні"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Opaline"
-msgstr "Обрис"
+msgstr "Опал"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Contouring version of smooth shader"
@@ -2360,107 +2358,92 @@ msgid "Chrome"
 msgstr "Хромування"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Bright chrome effect"
-msgstr "Справа ліворуч"
+msgstr "Ефект яскравого хромування"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Deep Chrome"
 msgstr "Темне хромування"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Dark chrome effect"
-msgstr "Поточний ефект"
+msgstr "Ефект темного хромування"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Emboss Shader"
 msgstr "Рельєфне тонування"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Combination of satiny and emboss effect"
-msgstr "Комбінація гладкого тонування і створення барельєфа"
+msgstr "Поєднання ефектів рельєфності та шовковистості"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Sharp Metal"
-msgstr "Темний метал"
+msgstr "Гострий метал"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Chrome effect with darkened edges"
-msgstr "Ефект хромування з темними відтінками"
+msgstr "Ефект хромування з затемненими краями"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Brush Draw"
-msgstr "Пензель"
+msgstr "Малювання пензлем"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Chrome Emboss"
-msgstr "Темний барельєф"
+msgstr "Хромований барельєф"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Embossed chrome effect"
-msgstr "Вилучити ефект контуру"
+msgstr "Ефект хромованого рельєфу"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Contour Emboss"
-msgstr "Кольоровий рельєф"
+msgstr "Контурний рельєф"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Satiny and embossed contour effect"
-msgstr "Ефект рельєфу полотна для малювання"
+msgstr "Контурний ефект з шовковистістю та рельєфністю"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Sharp Deco"
-msgstr "Підвищити різкість"
+msgstr "Декоративна різкість"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Unrealistic reflexions with sharp edges"
-msgstr ""
+msgstr "Нереалістичне відбиття з чіткими краями"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Deep Metal"
-msgstr "Вигнутий метал"
+msgstr "Темний метал"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Deep and dark metal shading"
-msgstr ""
+msgstr "Глибокі і темні металеві відтінки"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Aluminium Emboss"
-msgstr "Сріблястий 1"
+msgstr "Алюмінієва рельєфність"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Satiny aluminium effect with embossing"
-msgstr ""
+msgstr "Ефект шовковистої алюмінієвої поверхні з рельєфністю"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Refractive Glass"
-msgstr "Гель A"
+msgstr "Скло з заломленням"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Double reflexion through glass with some refraction"
-msgstr ""
+msgstr "Подвійне відбиття у шарі склад з певним заломленням"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Frosted Glass"
 msgstr "Замерзле скло"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Satiny glass effect"
-msgstr "Ефект підсвіченого кольорового скла"
+msgstr "Ефект шовковистого скла"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:2
@@ -5751,14 +5734,12 @@ msgid "guide-path intersection"
 msgstr "перетин напрямних і контурів"
 
 #: ../src/display/snap-indicator.cpp:109
-#, fuzzy
 msgid "clip-path"
-msgstr "Задати контур вирізання"
+msgstr "контур-обрізання"
 
 #: ../src/display/snap-indicator.cpp:112
-#, fuzzy
 msgid "mask-path"
-msgstr "Вставити контур"
+msgstr "контур-маска"
 
 #: ../src/display/snap-indicator.cpp:115
 msgid "bounding box corner"
@@ -7690,7 +7671,6 @@ msgid "Invert channels:"
 msgstr "Інвертування каналів:"
 
 #: ../src/extension/internal/filter/color.h:908
-#, fuzzy
 msgid "No inversion"
 msgstr "Без інверсії"
 
@@ -8543,7 +8523,6 @@ msgid "Mode:"
 msgstr "Режим:"
 
 #: ../src/extension/internal/filter/transparency.h:73
-#, fuzzy
 msgid "Blend objects with background images or with themselves"
 msgstr "Змішати об’єкти з зображеннями тла або з самими об’єктами"
 
@@ -14225,7 +14204,7 @@ msgstr "Про програму"
 
 #: ../src/ui/dialog/aboutbox.cpp:90
 msgid "_Splash"
-msgstr "_Заставка"
+msgstr "_Вікно вітання"
 
 #: ../src/ui/dialog/aboutbox.cpp:94
 msgid "_Authors"
@@ -14759,22 +14738,20 @@ msgstr ""
 
 #. ---------------------------------------------------------------
 #: ../src/ui/dialog/document-properties.cpp:123
-#, fuzzy
 msgid "Snap to clip paths"
-msgstr "Прилипання до контурів"
+msgstr "Прилипання до контурів обрізання"
 
 #: ../src/ui/dialog/document-properties.cpp:123
 msgid "When snapping to paths, then also try snapping to clip paths"
-msgstr ""
+msgstr "Намагатися виконати прилипання до контурів обрізання"
 
 #: ../src/ui/dialog/document-properties.cpp:124
-#, fuzzy
 msgid "Snap to mask paths"
-msgstr "Прилипання до контурів"
+msgstr "Прилипання до контурів масок"
 
 #: ../src/ui/dialog/document-properties.cpp:124
 msgid "When snapping to paths, then also try snapping to mask paths"
-msgstr ""
+msgstr "Намагатися виконати прилипання до контурів масок"
 
 #: ../src/ui/dialog/document-properties.cpp:127
 msgctxt "Grid"
@@ -18240,55 +18217,57 @@ msgstr ""
 #. Add incorrect style properties options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1130
 msgid "Improper Attributes Actions"
-msgstr ""
+msgstr "Дії з неналежними атрибутами"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1132
 #: ../src/ui/dialog/inkscape-preferences.cpp:1140
 #: ../src/ui/dialog/inkscape-preferences.cpp:1148
-#, fuzzy
 msgid "Print warnings"
-msgstr "Позначки друку"
+msgstr "Повідомляти про помилки"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1133
 msgid ""
 "Print warning if invalid or non-useful attributes found. Database files "
 "located in inkscape_data_dir/attributes."
 msgstr ""
+"Виводити повідомлення, якщо буде виявлено некоректний або непотрібний атрибут."
+" Файли бази даних зберігаються у теці каталог_даних_inkscape/attributes."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1134
-#, fuzzy
 msgid "Remove attributes"
-msgstr "Встановити атрибут"
+msgstr "Вилучати атрибути"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1135
 msgid "Delete invalid or non-useful attributes from element tag."
-msgstr ""
+msgstr "Вилучати некоректні та непотрібні атрибути з теґів елемента."
 
 #. Add incorrect style properties options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1138
 msgid "Inappropriate Style Properties Actions"
-msgstr ""
+msgstr "Дії з неналежними властивостями стилю"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1141
 msgid ""
 "Print warning if inappropriate style properties found (i.e. 'font-family' "
 "set on a <rect>). Database files located in inkscape_data_dir/attributes."
 msgstr ""
+"Виводити попередження, якщо буде виявлено невідповідні властивості стилю "
+"(наприклад, «font-family» у <rect>). Файли бази даних зберігаються у теці "
+"каталог_даних_inkscape/attributes."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1142
 #: ../src/ui/dialog/inkscape-preferences.cpp:1150
-#, fuzzy
 msgid "Remove style properties"
-msgstr "Створити звіт про властивості цього трикутника"
+msgstr "Вилучати властивості стилю"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1143
 msgid "Delete inappropriate style properties."
-msgstr ""
+msgstr "Вилучати невідповідні властивості стилю."
 
 #. Add default or inherited style properties options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "Non-useful Style Properties Actions"
-msgstr ""
+msgstr "Дії з непотрібними властивостями стилю"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1149
 msgid ""
@@ -18297,46 +18276,51 @@ msgid ""
 "same as would be inherited). Database files located in inkscape_data_dir/"
 "attributes."
 msgstr ""
+"Попереджати щодо зайвих властивостей стилів (наприклад, якщо властивість має "
+"типове значення, а інші значення не успадковуються, або якщо значення є тим "
+"самим, яке було успадковано). Файли бази даних зберігаються у теці "
+"каталог_даних_inkscape/attributes."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1151
-#, fuzzy
 msgid "Delete redundant style properties."
-msgstr "Властивості напрямної"
+msgstr "Вилучати зайві властивості стилю."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1153
 msgid "Check Attributes and Style Properties on:"
-msgstr ""
+msgstr "Перевіряти атрибути і властивості стилів під час:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1155
-#, fuzzy
 msgid "Reading"
-msgstr "Згасання:"
+msgstr "читання"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1156
 msgid ""
 "Check attributes and style properties on reading in SVG files (including "
 "those internal to Inkscape which will slow down startup)."
 msgstr ""
+"Перевіряти атрибути і властивості стилів під час читання файлів SVG (зокрема "
+"перевіряти вбудовані файли Inkscape, що може уповільнити запуск програми)."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1157
-#, fuzzy
 msgid "Editing"
-msgstr "Підсвічування"
+msgstr "Редагування"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1158
 msgid ""
 "Check attributes and style properties while editing SVG files (may slow down "
 "Inkscape, mostly useful for debugging)."
 msgstr ""
+"Перевіряти атрибути і властивості стилів під час редагування файлів SVG (може "
+"уповільнити Inkscape, корисне для діагностики негараздів)."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1159
-#, fuzzy
 msgid "Writing"
-msgstr "Запис сценаріїв"
+msgstr "запису"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1160
 msgid "Check attributes and style properties on writing out SVG files."
 msgstr ""
+"Перевіряти атрибути і властивості стилів під час запису даних до файлів SVG."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1163
 msgid "SVG output"
