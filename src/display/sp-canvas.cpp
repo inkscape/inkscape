@@ -172,7 +172,7 @@ sp_canvas_item_new (SPCanvasGroup *parent, GType type, gchar const *first_arg_na
 
     g_return_val_if_fail (parent != NULL, NULL);
     g_return_val_if_fail (SP_IS_CANVAS_GROUP (parent), NULL);
-    g_return_val_if_fail (gtk_type_is_a (type, sp_canvas_item_get_type ()), NULL);
+    g_return_val_if_fail (g_type_is_a (type, sp_canvas_item_get_type ()), NULL);
 
     SPCanvasItem *item = SP_CANVAS_ITEM (g_object_new (type, NULL));
 
