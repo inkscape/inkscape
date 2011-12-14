@@ -1775,7 +1775,7 @@ static void setupToolboxCommon( GtkWidget *toolbox,
         GtkPositionType pos = static_cast<GtkPositionType>(GPOINTER_TO_INT(g_object_get_data( G_OBJECT(toolbox), HANDLE_POS_MARK )));
         orientation = ((pos == GTK_POS_LEFT) || (pos == GTK_POS_RIGHT)) ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
     }
-    gtk_toolbar_set_orientation(GTK_TOOLBAR(toolBar), orientation);
+    gtk_orientable_set_orientation (GTK_ORIENTABLE(toolBar), orientation);
     gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolBar), TRUE);
 
     g_object_set_data(G_OBJECT(toolBar), "desktop", NULL);
@@ -1838,7 +1838,7 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
 #endif // DUMP_DETAILS
                                     if (GTK_IS_TOOLBAR(child3)) {
                                         GtkToolbar* childBar = GTK_TOOLBAR(child3);
-                                        gtk_toolbar_set_orientation(childBar, orientation);
+                                        gtk_orientable_set_orientation(GTK_ORIENTABLE(childBar), orientation);
                                     }
                                 }
                                 g_list_free(children2);
@@ -1848,7 +1848,7 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
 
                         if (GTK_IS_TOOLBAR(child2)) {
                             GtkToolbar* childBar = GTK_TOOLBAR(child2);
-                            gtk_toolbar_set_orientation(childBar, orientation);
+                            gtk_orientable_set_orientation(GTK_ORIENTABLE(childBar), orientation);
                             if (GTK_IS_HANDLE_BOX(toolbox)) {
                                 handleBox = GTK_HANDLE_BOX(toolbox);
                             }
@@ -1867,7 +1867,7 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
                 }
             } else if (GTK_IS_TOOLBAR(child)) {
                 GtkToolbar* toolbar = GTK_TOOLBAR(child);
-                gtk_toolbar_set_orientation( toolbar, orientation );
+                gtk_orientable_set_orientation( GTK_ORIENTABLE(toolbar), orientation );
                 if (GTK_IS_HANDLE_BOX(toolbox)) {
                     handleBox = GTK_HANDLE_BOX(toolbox);
                 }
