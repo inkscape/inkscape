@@ -76,7 +76,7 @@ sp_gradient_image_class_init (SPGradientImageClass *klass)
 static void
 sp_gradient_image_init (SPGradientImage *image)
 {
-	GTK_WIDGET_SET_FLAGS (image, GTK_NO_WINDOW);
+	gtk_widget_set_has_window (GTK_WIDGET(image), FALSE);
 
 	image->gradient = NULL;
 
@@ -191,7 +191,7 @@ sp_gradient_image_gradient_modified (SPObject *, guint /*flags*/, SPGradientImag
 static void
 sp_gradient_image_update (SPGradientImage *image)
 {
-	if (GTK_WIDGET_DRAWABLE (image)) {
+	if (gtk_widget_is_drawable (GTK_WIDGET(image))) {
 		gtk_widget_queue_draw (GTK_WIDGET (image));
 	}
 }
