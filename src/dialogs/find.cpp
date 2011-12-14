@@ -447,7 +447,7 @@ toggle_alltypes (GtkToggleButton *tb, gpointer data)
 {
     GtkWidget *alltypes_pane =  GTK_WIDGET (g_object_get_data(G_OBJECT (data), "all-pane"));
     if (gtk_toggle_button_get_active (tb)) {
-        gtk_widget_hide_all (alltypes_pane);
+        gtk_widget_hide (alltypes_pane);
     } else {
         gtk_widget_show_all (alltypes_pane);
 
@@ -470,7 +470,7 @@ toggle_shapes (GtkToggleButton *tb, gpointer data)
 {
     GtkWidget *shapes_pane =  GTK_WIDGET (g_object_get_data(G_OBJECT (data), "shapes-pane"));
     if (gtk_toggle_button_get_active (tb)) {
-        gtk_widget_hide_all (shapes_pane);
+        gtk_widget_hide (shapes_pane);
     } else {
         gtk_widget_show_all (shapes_pane);
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (g_object_get_data(G_OBJECT (data), "rects")), FALSE);
@@ -596,7 +596,7 @@ sp_find_types ()
             g_object_set_data (G_OBJECT (vb), "shapes-pane", hb);
 
             gtk_box_pack_start (GTK_BOX (vb_all), hb, FALSE, FALSE, 0);
-            gtk_widget_hide_all (hb);
+            gtk_widget_hide (hb);
         }
 
         {
@@ -635,7 +635,7 @@ sp_find_types ()
 
         gtk_box_pack_start (GTK_BOX (vb), vb_all, FALSE, FALSE, 0);
         g_object_set_data (G_OBJECT (vb), "all-pane", vb_all);
-        gtk_widget_hide_all (vb_all);
+        gtk_widget_hide (vb_all);
     }
 
     return vb;

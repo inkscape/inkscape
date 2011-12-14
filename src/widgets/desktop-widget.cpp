@@ -1265,26 +1265,26 @@ void SPDesktopWidget::layoutWidgets()
 
 #ifndef GDK_WINDOWING_QUARTZ
     if (!prefs->getBool(pref_root + "menu/state", true)) {
-        gtk_widget_hide_all (dtw->menubar);
+        gtk_widget_hide (dtw->menubar);
     } else {
         gtk_widget_show_all (dtw->menubar);
     }
 #endif
 
     if (!prefs->getBool(pref_root + "commands/state", true)) {
-        gtk_widget_hide_all (dtw->commands_toolbox);
+        gtk_widget_hide (dtw->commands_toolbox);
     } else {
         gtk_widget_show_all (dtw->commands_toolbox);
     }
 
     if (!prefs->getBool(pref_root + "snaptoolbox/state", true)) {
-        gtk_widget_hide_all (dtw->snap_toolbox);
+        gtk_widget_hide (dtw->snap_toolbox);
     } else {
         gtk_widget_show_all (dtw->snap_toolbox);
     }
 
     if (!prefs->getBool(pref_root + "toppanel/state", true)) {
-        gtk_widget_hide_all (dtw->aux_toolbox);
+        gtk_widget_hide (dtw->aux_toolbox);
     } else {
         // we cannot just show_all because that will show all tools' panels;
         // this is a function from toolbox.cpp that shows only the current tool's panel
@@ -1292,27 +1292,27 @@ void SPDesktopWidget::layoutWidgets()
     }
 
     if (!prefs->getBool(pref_root + "toolbox/state", true)) {
-        gtk_widget_hide_all (dtw->tool_toolbox);
+        gtk_widget_hide (dtw->tool_toolbox);
     } else {
         gtk_widget_show_all (dtw->tool_toolbox);
     }
 
     if (!prefs->getBool(pref_root + "statusbar/state", true)) {
-        gtk_widget_hide_all (dtw->statusbar);
+        gtk_widget_hide (dtw->statusbar);
     } else {
         gtk_widget_show_all (dtw->statusbar);
     }
 
     if (!prefs->getBool(pref_root + "panels/state", true)) {
-        gtk_widget_hide_all( GTK_WIDGET(dtw->panels->gobj()) );
+        gtk_widget_hide ( GTK_WIDGET(dtw->panels->gobj()) );
     } else {
         gtk_widget_show_all( GTK_WIDGET(dtw->panels->gobj()) );
     }
 
     if (!prefs->getBool(pref_root + "scrollbars/state", true)) {
-        gtk_widget_hide_all (dtw->hscrollbar);
-        gtk_widget_hide_all (dtw->vscrollbar_box);
-        gtk_widget_hide_all( dtw->cms_adjust );
+        gtk_widget_hide (dtw->hscrollbar);
+        gtk_widget_hide (dtw->vscrollbar_box);
+        gtk_widget_hide ( dtw->cms_adjust );
     } else {
         gtk_widget_show_all (dtw->hscrollbar);
         gtk_widget_show_all (dtw->vscrollbar_box);
@@ -1320,8 +1320,8 @@ void SPDesktopWidget::layoutWidgets()
     }
 
     if (!prefs->getBool(pref_root + "rulers/state", true)) {
-        gtk_widget_hide_all (dtw->hruler);
-        gtk_widget_hide_all (dtw->vruler);
+        gtk_widget_hide (dtw->hruler);
+        gtk_widget_hide (dtw->vruler);
     } else {
         gtk_widget_show_all (dtw->hruler);
         gtk_widget_show_all (dtw->vruler);
@@ -1794,8 +1794,8 @@ sp_desktop_widget_toggle_rulers (SPDesktopWidget *dtw)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (gtk_widget_get_visible (dtw->hruler)) {
-        gtk_widget_hide_all (dtw->hruler);
-        gtk_widget_hide_all (dtw->vruler);
+        gtk_widget_hide (dtw->hruler);
+        gtk_widget_hide (dtw->vruler);
         prefs->setBool(dtw->desktop->is_fullscreen() ? "/fullscreen/rulers/state" : "/window/rulers/state", false);
     } else {
         gtk_widget_show_all (dtw->hruler);
@@ -1809,9 +1809,9 @@ sp_desktop_widget_toggle_scrollbars (SPDesktopWidget *dtw)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (gtk_widget_get_visible (dtw->hscrollbar)) {
-        gtk_widget_hide_all (dtw->hscrollbar);
-        gtk_widget_hide_all (dtw->vscrollbar_box);
-        gtk_widget_hide_all( dtw->cms_adjust );
+        gtk_widget_hide (dtw->hscrollbar);
+        gtk_widget_hide (dtw->vscrollbar_box);
+        gtk_widget_hide ( dtw->cms_adjust );
         prefs->setBool(dtw->desktop->is_fullscreen() ? "/fullscreen/scrollbars/state" : "/window/scrollbars/state", false);
     } else {
         gtk_widget_show_all (dtw->hscrollbar);
@@ -1839,7 +1839,7 @@ sp_spw_toggle_menubar (SPDesktopWidget *dtw, bool is_fullscreen)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (gtk_widget_get_visible (dtw->menubar)) {
-        gtk_widget_hide_all (dtw->menubar);
+        gtk_widget_hide (dtw->menubar);
         prefs->setBool(is_fullscreen ? "/fullscreen/menu/state" : "/window/menu/state", false);
     } else {
         gtk_widget_show_all (dtw->menubar);
