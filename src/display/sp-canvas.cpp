@@ -1073,7 +1073,7 @@ static void
 remove_idle (SPCanvas *canvas)
 {
     if (canvas->idle_id) {
-        gtk_idle_remove (canvas->idle_id);
+        g_source_remove (canvas->idle_id);
         canvas->idle_id = 0;
     }
 }
@@ -2118,7 +2118,8 @@ add_idle (SPCanvas *canvas)
     if (canvas->idle_id != 0)
         return;
 
-    canvas->idle_id = gtk_idle_add_priority (sp_canvas_update_priority, idle_handler, canvas);
+    canvas->idle_id = g_idle_add_full (sp_canvas_update_priority, idle_handler, 
+		    canvas, NULL);
 }
 
 /**
