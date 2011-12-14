@@ -45,8 +45,7 @@ static void sp_gradient_selector_destroy (GtkObject *object);
 static void sp_gradient_selector_vector_set (SPGradientVectorSelector *gvs, SPGradient *gr, SPGradientSelector *sel);
 static void sp_gradient_selector_edit_vector_clicked (GtkWidget *w, SPGradientSelector *sel);
 static void sp_gradient_selector_add_vector_clicked (GtkWidget *w, SPGradientSelector *sel);
-
-static void sp_gradient_selector_spread_activate (GtkWidget *widget, SPGradientSelector *sel);
+static void sp_gradient_selector_spread_changed (GtkComboBox *widget, SPGradientSelector *sel);
 
 static GtkVBoxClass *parent_class;
 static guint signals[LAST_SIGNAL] = {0};
@@ -158,7 +157,22 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     gtk_widget_show(hb);
     gtk_box_pack_start( GTK_BOX(sel), hb, FALSE, FALSE, 0 );
 
-    sel->spread = gtk_option_menu_new();
+// The GtkComboBoxText API only appeared in Gtk 2.24 but Inkscape supports
+// builds for Gtk >= 2.20.
+// Older versions need to use now-deprecated parts of
+// the GtkComboBox API instead.
+#if GTK_CHECK_VERSION(2,24,0)
+    sel->spread = gtk_combo_box_text_new ();
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (sel->spread), _("none"));
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (sel->spread), _("reflected"));
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (sel->spread), _("direct"));
+#else
+    sel->spread = gtk_combo_box_new_text ();
+    gtk_combo_box_append_text (GTK_COMBO_BOX (sel->spread), _("none"));
+    gtk_combo_box_append_text (GTK_COMBO_BOX (sel->spread), _("reflected"));
+    gtk_combo_box_append_text (GTK_COMBO_BOX (sel->spread), _("direct"));
+#endif
+
     sel->nonsolid.push_back(sel->spread);
     gtk_widget_show(sel->spread);
     gtk_box_pack_end( GTK_BOX(hb), sel->spread, FALSE, FALSE, 0 );
@@ -169,22 +183,8 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
                             "(spreadMethod=\"repeat\"), or repeat the gradient in alternating opposite "
                             "directions (spreadMethod=\"reflect\")"));
 
-    GtkWidget *m = gtk_menu_new();
-    GtkWidget *mi = gtk_menu_item_new_with_label(_("none"));
-    gtk_menu_shell_append(GTK_MENU_SHELL (m), mi);
-    g_object_set_data (G_OBJECT (mi), "gradientSpread", GUINT_TO_POINTER (SP_GRADIENT_SPREAD_PAD));
-    g_signal_connect (G_OBJECT (mi), "activate", G_CALLBACK (sp_gradient_selector_spread_activate), sel);
-    mi = gtk_menu_item_new_with_label (_("reflected"));
-    g_object_set_data (G_OBJECT (mi), "gradientSpread", GUINT_TO_POINTER (SP_GRADIENT_SPREAD_REFLECT));
-    g_signal_connect (G_OBJECT (mi), "activate", G_CALLBACK (sp_gradient_selector_spread_activate), sel);
-    gtk_menu_shell_append(GTK_MENU_SHELL (m), mi);
-    mi = gtk_menu_item_new_with_label (_("direct"));
-    g_object_set_data (G_OBJECT (mi), "gradientSpread", GUINT_TO_POINTER (SP_GRADIENT_SPREAD_REPEAT));
-    g_signal_connect (G_OBJECT (mi), "activate", G_CALLBACK (sp_gradient_selector_spread_activate), sel);
-    gtk_menu_shell_append(GTK_MENU_SHELL (m), mi);
-    gtk_widget_show_all (m);
-
-    gtk_option_menu_set_menu( GTK_OPTION_MENU(sel->spread), m );
+    g_signal_connect (G_OBJECT (sel->spread), "changed", 
+		    G_CALLBACK (sp_gradient_selector_spread_changed), sel);
 
     sel->spreadLbl = gtk_label_new( _("Repeat:") );
     sel->nonsolid.push_back(sel->spreadLbl);
@@ -241,8 +241,7 @@ void SPGradientSelector::setUnits(SPGradientUnits units)
 void SPGradientSelector::setSpread(SPGradientSpread spread)
 {
     gradientSpread = spread;
-
-    gtk_option_menu_set_history(GTK_OPTION_MENU(this->spread), gradientSpread);
+    gtk_combo_box_set_active (GTK_COMBO_BOX(this->spread), gradientSpread);
 }
 
 SPGradientUnits SPGradientSelector::getUnits()
@@ -368,16 +367,12 @@ sp_gradient_selector_add_vector_clicked (GtkWidget */*w*/, SPGradientSelector *s
     Inkscape::GC::release(repr);
 }
 
-
-
 static void
-sp_gradient_selector_spread_activate (GtkWidget *widget, SPGradientSelector *sel)
+sp_gradient_selector_spread_changed (GtkComboBox *widget, SPGradientSelector *sel)
 {
-    sel->gradientSpread = (SPGradientSpread)GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget), "gradientSpread"));
-
-    g_signal_emit (G_OBJECT (sel), signals[CHANGED], 0);
+	sel->gradientSpread = (SPGradientSpread) gtk_combo_box_get_active (GTK_COMBO_BOX(widget));
+	g_signal_emit (G_OBJECT (sel), signals[CHANGED], 0);
 }
-
 
 /*
   Local Variables:
