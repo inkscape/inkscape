@@ -80,6 +80,8 @@ class SplitIt(inkex.Effect):
                                 new[-1].append(sub[i])
                             i+=1
                     node.set('d',cubicsuperpath.formatPath(new))
+                    del style['stroke-dasharray']
+                    node.set('style', simplestyle.formatStyle(style))
 
 if __name__ == '__main__':
     e = SplitIt()
