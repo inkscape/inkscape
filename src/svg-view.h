@@ -14,7 +14,7 @@
 #include "ui/view/view.h"
 
 class SPCanvasGroup;
-class SPCanvasItem;
+struct SPCanvasItem;
 
 
 /**

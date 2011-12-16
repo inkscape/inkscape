@@ -16,8 +16,8 @@
 
 #include "sp-canvas-item.h"
 
-struct SPItem;
-struct SPDesktop;
+class SPItem;
+class SPDesktop;
 
 #define SP_TYPE_CANVASTEXT (sp_canvastext_get_type ())
 #define SP_CANVASTEXT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CANVASTEXT, SPCanvasText))

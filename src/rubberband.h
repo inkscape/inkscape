@@ -17,10 +17,10 @@
 
 /* fixme: do multidocument safe */
 
-class CtrlRect;
-class SPCanvasItem;
-class SPCurve;
-class SPDesktop;
+class  CtrlRect;
+struct SPCanvasItem;
+class  SPCurve;
+class  SPDesktop;
 
 enum {
     RUBBERBAND_MODE_RECT,

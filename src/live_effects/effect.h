@@ -21,13 +21,13 @@
 
 struct SPDocument;
 struct SPDesktop;
-struct SPItem;
-class SPNodeContext;
+class  SPItem;
+class  SPNodeContext;
 struct LivePathEffectObject;
-class SPLPEItem;
-class KnotHolder;
-class KnotHolderEntity;
-class SPPath;
+class  SPLPEItem;
+class  KnotHolder;
+class  KnotHolderEntity;
+class  SPPath;
 struct SPCurve;
 
 namespace Gtk {

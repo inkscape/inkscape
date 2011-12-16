@@ -17,8 +17,8 @@
 
 class ColorRGBA;
 struct SPCSSAttr;
-struct SPDesktop;
-struct SPObject;
+class  SPDesktop;
+class  SPObject;
 struct SPStyle;
 namespace Inkscape {
 namespace XML {

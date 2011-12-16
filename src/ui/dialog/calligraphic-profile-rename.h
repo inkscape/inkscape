@@ -15,7 +15,7 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/label.h>
 #include <gtkmm/table.h>
-struct SPDesktop;
+class SPDesktop;
 
 namespace Inkscape {
 namespace UI {

@@ -16,8 +16,8 @@
 #include "snap-candidate.h"
 
 struct SPNamedView;
-struct SPItem;
-struct SPObject;
+class  SPItem;
+class  SPObject;
 
 namespace Inkscape
 {

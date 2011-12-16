@@ -24,10 +24,10 @@
 #include "snapper.h"
 #include "line-snapper.h"
 
-struct SPDesktop;
+class  SPDesktop;
 struct SPNamedView;
 struct SPCanvasBuf;
-class SPDocument;
+class  SPDocument;
 
 namespace Inkscape {
 

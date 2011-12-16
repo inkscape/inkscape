@@ -27,9 +27,9 @@
 #include "sp-item.h"
 
 struct SPKnot;
-class SPDesktop;
-class SPCanvasItem;
-class SPSelTransHandle;
+class  SPDesktop;
+struct SPCanvasItem;
+class  SPSelTransHandle;
 
 namespace Inkscape
 {

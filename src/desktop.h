@@ -44,9 +44,9 @@ struct SPCanvas;
 struct SPCanvasItem;
 struct SPCanvasGroup;
 struct SPEventContext;
-struct SPItem;
+class  SPItem;
 struct SPNamedView;
-struct SPObject;
+class  SPObject;
 struct SPStyle;
 typedef struct _DocumentInterface DocumentInterface;//struct DocumentInterface;
 

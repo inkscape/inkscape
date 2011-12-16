@@ -27,7 +27,7 @@
 #include <sp-shape.h>
 
 struct SPImage;
-struct SPItem;
+class  SPItem;
 
 namespace Inkscape {
 

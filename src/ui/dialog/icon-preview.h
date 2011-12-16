@@ -26,7 +26,7 @@
 #include "ui/widget/panel.h"
 #include "desktop-tracker.h"
 
-struct SPObject;
+class SPObject;
 namespace Glib {
 class Timer;
 }

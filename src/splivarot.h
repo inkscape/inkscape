@@ -11,7 +11,7 @@
 #include <2geom/forward.h>
 #include <2geom/path.h>
 class SPCurve;
-struct SPItem;
+class SPItem;
 
 // boolean operations
 // work on the current selection

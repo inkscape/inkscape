@@ -15,8 +15,8 @@
 
 class KnotHolder;
 class SPLPEItem;
-struct SPDesktop;
-struct SPItem;
+class SPDesktop;
+class SPItem;
 
 namespace Gtk {
     class Widget;

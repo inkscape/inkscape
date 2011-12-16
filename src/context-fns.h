@@ -14,8 +14,8 @@
 #include <gdk/gdk.h>
 #include <2geom/forward.h>
 
-struct SPDesktop;
-struct SPItem;
+class  SPDesktop;
+class  SPItem;
 struct SPEventContext;
 
 const double goldenratio = 1.61803398874989484820; // golden ratio

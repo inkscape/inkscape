@@ -19,7 +19,7 @@
 #include <2geom/forward.h>
 #include "snapper.h"
 
-struct SPItem;
+class  SPItem;
 struct SPKnot;
 
 class SPDesktop;

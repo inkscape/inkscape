@@ -14,7 +14,7 @@
 #include <2geom/point.h>
 
 struct SPCanvasItem;
-struct SPDesktop;
+class  SPDesktop;
 namespace Glib {
     class ustring;
 }

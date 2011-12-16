@@ -24,12 +24,12 @@
 
 #include "knot-enums.h"
 
-struct SPItem;
 struct SPKnot;
 
 class SPDesktop;
 class SPCSSAttr;
 class SPLinearGradient;
+class SPItem;
 class SPObject;
 class SPRadialGradient;
 class SPStop;

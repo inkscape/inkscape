@@ -31,7 +31,7 @@
 
 #define SP_SHAPE_WRITE_PATH (1 << 2)
 
-struct SPDesktop;
+class SPDesktop;
 
 namespace Inkscape {
 

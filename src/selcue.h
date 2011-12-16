@@ -17,8 +17,8 @@
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 
-class SPDesktop;
-class SPCanvasItem;
+class  SPDesktop;
+struct SPCanvasItem;
 
 namespace Inkscape {
 

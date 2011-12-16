@@ -17,7 +17,7 @@
 //#include "snapped-point.h"
 #include "snap-enums.h"
 
-struct SPItem; // forward declaration
+class SPItem; // forward declaration
 
 namespace Inkscape {
 

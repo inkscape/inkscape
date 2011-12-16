@@ -16,9 +16,9 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 
-class SPDesktop;
-class SPDesktopWidget;
-class SPCanvasItem;
+class  SPDesktop;
+class  SPDesktopWidget;
+struct SPCanvasItem;
 
 /* Item handlers */
 

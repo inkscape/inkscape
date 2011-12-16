@@ -20,9 +20,9 @@
 #include "preferences.h"
 
 struct GrDrag;
-struct SPDesktop;
-struct SPItem;
-class ShapeEditor;
+class  SPDesktop;
+class  SPItem;
+class  ShapeEditor;
 struct SPEventContext;
 
 namespace Inkscape {

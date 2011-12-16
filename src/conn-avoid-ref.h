@@ -13,12 +13,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
+#include <glib/gslist.h>
 #include <stddef.h>
 #include <sigc++/connection.h>
 
-struct SPDesktop;
-struct SPItem;
+class  SPDesktop;
+class  SPItem;
 struct ConnectionPoint;
 typedef std::map<int, ConnectionPoint> IdConnectionPointMap;
 namespace Avoid { class ShapeRef; }

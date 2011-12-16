@@ -31,7 +31,7 @@ struct IntermSnapResults {
 };
 
 class SnapManager;
-struct SPItem;
+class SPItem;
 
 namespace Inkscape
 {

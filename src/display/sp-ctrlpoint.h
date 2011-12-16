@@ -14,7 +14,7 @@
 
 #include "sp-canvas-item.h"
 
-struct SPItem;
+class SPItem;
 
 #define SP_TYPE_CTRLPOINT (sp_ctrlpoint_get_type ())
 #define SP_CTRLPOINT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CTRLPOINT, SPCtrlPoint))

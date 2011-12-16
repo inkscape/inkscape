@@ -25,8 +25,7 @@ static double sp_canvas_acetate_point (SPCanvasItem *item, Geom::Point p, SPCanv
 
 static SPCanvasItemClass *parent_class;
 
-GType
-sp_canvas_acetate_get_type (void)
+GType sp_canvas_acetate_get_type (void)
 {
 	static GType acetate_type = 0;
 	if (!acetate_type) {
@@ -45,8 +44,7 @@ sp_canvas_acetate_get_type (void)
 	return acetate_type;
 }
 
-static void
-sp_canvas_acetate_class_init (SPCanvasAcetateClass *klass)
+static void sp_canvas_acetate_class_init (SPCanvasAcetateClass *klass)
 {
 	GtkObjectClass *object_class;
 	SPCanvasItemClass *item_class;
@@ -62,14 +60,12 @@ sp_canvas_acetate_class_init (SPCanvasAcetateClass *klass)
 	item_class->point = sp_canvas_acetate_point;
 }
 
-static void
-sp_canvas_acetate_init (SPCanvasAcetate */*acetate*/)
+static void sp_canvas_acetate_init (SPCanvasAcetate */*acetate*/)
 {
     /* Nothing here */
 }
 
-static void
-sp_canvas_acetate_destroy (GtkObject *object)
+static void sp_canvas_acetate_destroy (GtkObject *object)
 {
 	SPCanvasAcetate *acetate;
 
@@ -82,8 +78,7 @@ sp_canvas_acetate_destroy (GtkObject *object)
 		(* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
 
-static void
-sp_canvas_acetate_update( SPCanvasItem *item, Geom::Affine const &/*affine*/, unsigned int /*flags*/ )
+static void sp_canvas_acetate_update( SPCanvasItem *item, Geom::Affine const &/*affine*/, unsigned int /*flags*/ )
 {
     item->x1 = -G_MAXINT;
     item->y1 = -G_MAXINT;
@@ -91,8 +86,7 @@ sp_canvas_acetate_update( SPCanvasItem *item, Geom::Affine const &/*affine*/, un
     item->y2 = G_MAXINT;
 }
 
-static double
-sp_canvas_acetate_point( SPCanvasItem *item, Geom::Point /*p*/, SPCanvasItem **actual_item )
+static double sp_canvas_acetate_point( SPCanvasItem *item, Geom::Point /*p*/, SPCanvasItem **actual_item )
 {
     *actual_item = item;
 

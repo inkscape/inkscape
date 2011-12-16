@@ -24,7 +24,7 @@
 
 #include "canvas-grid.h"
 
-struct SPDesktop;
+class  SPDesktop;
 struct SPNamedView;
 
 namespace Inkscape {

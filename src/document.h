@@ -39,8 +39,8 @@ class Router;
 }
 
 struct SPDesktop;
-struct SPItem;
-struct SPObject;
+class  SPItem;
+class  SPObject;
 struct SPGroup;
 struct SPRoot;
 struct SPUnit;
