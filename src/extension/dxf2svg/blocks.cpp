@@ -39,13 +39,8 @@ void block::block_info( std::vector< dxfpair > info){
 }
 
 
-
-
-
-
 blocks::blocks(std::vector< std::vector< dxfpair > > sections){
 	// Read the main information about the entities section and then put it in the enetites class
-	int value;
 	char string[10000];
 	std::vector< dxfpair > single_line;
 	std::vector< std::vector< dxfpair > > ents;

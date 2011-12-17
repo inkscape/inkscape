@@ -690,7 +690,7 @@ CanvasAxonomGridSnapper::_getSnapLines(Geom::Point const &p) const
     {
         inters = Geom::intersection(line_x, line_z);
     }
-    catch (Geom::InfiniteSolutions e)
+    catch (Geom::InfiniteSolutions &e)
     {
         // We're probably dealing with parallel lines; this is useless!
         return s;

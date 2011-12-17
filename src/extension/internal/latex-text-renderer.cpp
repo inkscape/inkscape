@@ -266,7 +266,7 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
     SPText *textobj = SP_TEXT (item);
     SPStyle *style = item->style;
 
-    gchar *strtext = sp_te_get_string_multiline(item);
+    /*gchar *strtext = sp_te_get_string_multiline(item);
     if (!strtext) {
         return;
     }
@@ -274,7 +274,7 @@ LaTeXTextRenderer::sp_text_render(SPItem *item)
     gchar ** splitstr = g_strsplit(strtext, "\n", -1);
     gchar *str = g_strjoinv("\\\\ ", splitstr);
     g_free(strtext);
-    g_strfreev(splitstr);
+    g_strfreev(splitstr);*/
 
     // get position and alignment
     // Align vertically on the baseline of the font (retreived from the anchor point)

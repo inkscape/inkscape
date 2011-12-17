@@ -971,7 +971,7 @@ int Script::execute (const std::list<std::string> &in_command,
                                      NULL,           // STDIN
                                      &stdout_pipe,   // STDOUT
                                      &stderr_pipe);  // STDERR
-    } catch (Glib::Error e) {
+    } catch (Glib::Error &e) {
         printf("Can't Spawn!!! spawn returns: %s\n", e.what().data());
         return 0;
     }

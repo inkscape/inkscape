@@ -67,12 +67,8 @@ static void sp_canvas_acetate_init (SPCanvasAcetate */*acetate*/)
 
 static void sp_canvas_acetate_destroy (GtkObject *object)
 {
-	SPCanvasAcetate *acetate;
-
 	g_return_if_fail (object != NULL);
 	g_return_if_fail (GNOME_IS_CANVAS_ACETATE (object));
-
-	acetate = SP_CANVAS_ACETATE (object);
 
 	if (GTK_OBJECT_CLASS (parent_class)->destroy)
 		(* GTK_OBJECT_CLASS (parent_class)->destroy) (object);

@@ -24,11 +24,7 @@
 struct SPDocument;
 
 namespace Inkscape {
-namespace UI {
-namespace View {
-typedef View View;
-};
-};
+
 
 namespace Extension {
 
