@@ -20,7 +20,7 @@
 #include <glib.h>
 #include <stddef.h>
 #include <sigc++/connection.h>
-#include <vector.h>
+//#include <vector.h>
 
 namespace Inkscape {
 namespace XML {
