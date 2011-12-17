@@ -277,7 +277,7 @@ void SPAttributeTable::set_object(SPObject *object,
         
         // Fill rows
 		_attributes = attributes;
-        for (gint i = 0; i < (attributes.size()); i++) {
+        for (guint i = 0; i < (attributes.size()); i++) {
             Gtk::Label *ll;
             Gtk::Entry *ee;
             Gtk::Widget *w;
@@ -335,7 +335,7 @@ void SPAttributeTable::set_repr (Inkscape::XML::Node *repr,
         
         // Fill rows
         _attributes = attributes;
-        for (gint i = 0; i < (attributes.size()); i++) {
+        for (guint i = 0; i < (attributes.size()); i++) {
             Gtk::Label *ll;
             Gtk::Entry *ee;
             Gtk::Widget *w;
@@ -376,7 +376,7 @@ static void sp_attribute_table_object_modified ( SPObject */*object*/,
 {
     if (flags && SP_OBJECT_MODIFIED_FLAG)
     {
-        gint i;
+        guint i;
         std::vector<Glib::ustring> attributes = spat->get_attributes();
         std::vector<Gtk::Widget *> entries = spat->get_entries();
         Gtk::Entry* e;
@@ -404,7 +404,7 @@ static void sp_attribute_table_entry_changed ( Gtk::Editable *editable,
 {
     if (!spat->blocked)
     {
-        gint i;
+        guint i;
         std::vector<Glib::ustring> attributes = spat->get_attributes();
         std::vector<Gtk::Widget *> entries = spat->get_entries();
         Gtk::Entry *e;
