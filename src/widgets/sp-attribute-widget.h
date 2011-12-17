@@ -20,7 +20,6 @@
 #include <glib.h>
 #include <stddef.h>
 #include <sigc++/connection.h>
-//#include <vector.h>
 
 namespace Inkscape {
 namespace XML {
@@ -31,34 +30,6 @@ class Node;
 struct SPAttributeTable;
 struct SPAttributeTableClass;
 class  SPObject;
-
-class SPAttributeWidget : public Gtk::Entry {
-//NOTE: SPAttributeWidget does not seem to be used nowhere in Inkscape, conversion to c++ not tested
-public:
-    SPAttributeWidget ();
-    ~SPAttributeWidget ();
-    void set_object(SPObject *object, const gchar *attribute);
-    void set_repr(Inkscape::XML::Node *repr, const gchar *attribute);
-    Glib::ustring get_attribute(void) {return _attribute;};
-    void set_blocked(guint b) {blocked = b;};
-    
-    union {
-        SPObject *object;
-        Inkscape::XML::Node *repr;
-    } src;
-
-protected:
-    void on_changed (void);
-    
-private:
-    guint blocked;
-    guint hasobj;
-    Glib::ustring _attribute;
-    sigc::connection modified_connection;
-};
-
-
-/* SPAttributeTable */
 
 class SPAttributeTable : public Gtk::Widget {
 public:
