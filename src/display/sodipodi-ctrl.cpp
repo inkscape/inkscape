@@ -73,15 +73,15 @@ sp_ctrl_class_init (SPCtrlClass *klass)
 
     parent_class = (SPCanvasItemClass *)g_type_class_peek_parent (klass);
 
-    gtk_object_add_arg_type ("SPCtrl::shape", GTK_TYPE_INT, GTK_ARG_READWRITE, ARG_SHAPE);
-    gtk_object_add_arg_type ("SPCtrl::mode", GTK_TYPE_INT, GTK_ARG_READWRITE, ARG_MODE);
-    gtk_object_add_arg_type ("SPCtrl::anchor", GTK_TYPE_ANCHOR_TYPE, GTK_ARG_READWRITE, ARG_ANCHOR);
-    gtk_object_add_arg_type ("SPCtrl::size", GTK_TYPE_DOUBLE, GTK_ARG_READWRITE, ARG_SIZE);
-    gtk_object_add_arg_type ("SPCtrl::pixbuf", GTK_TYPE_POINTER, GTK_ARG_READWRITE, ARG_PIXBUF);
-    gtk_object_add_arg_type ("SPCtrl::filled", GTK_TYPE_BOOL, GTK_ARG_READWRITE, ARG_FILLED);
-    gtk_object_add_arg_type ("SPCtrl::fill_color", GTK_TYPE_INT, GTK_ARG_READWRITE, ARG_FILL_COLOR);
-    gtk_object_add_arg_type ("SPCtrl::stroked", GTK_TYPE_BOOL, GTK_ARG_READWRITE, ARG_STROKED);
-    gtk_object_add_arg_type ("SPCtrl::stroke_color", GTK_TYPE_INT, GTK_ARG_READWRITE, ARG_STROKE_COLOR);
+    gtk_object_add_arg_type ("SPCtrl::shape", G_TYPE_INT, G_PARAM_READWRITE, ARG_SHAPE);
+    gtk_object_add_arg_type ("SPCtrl::mode", G_TYPE_INT, G_PARAM_READWRITE, ARG_MODE);
+    gtk_object_add_arg_type ("SPCtrl::anchor", GTK_TYPE_ANCHOR_TYPE, G_PARAM_READWRITE, ARG_ANCHOR);
+    gtk_object_add_arg_type ("SPCtrl::size", G_TYPE_DOUBLE, G_PARAM_READWRITE, ARG_SIZE);
+    gtk_object_add_arg_type ("SPCtrl::pixbuf", G_TYPE_POINTER, G_PARAM_READWRITE, ARG_PIXBUF);
+    gtk_object_add_arg_type ("SPCtrl::filled", G_TYPE_BOOLEAN, G_PARAM_READWRITE, ARG_FILLED);
+    gtk_object_add_arg_type ("SPCtrl::fill_color", G_TYPE_INT, G_PARAM_READWRITE, ARG_FILL_COLOR);
+    gtk_object_add_arg_type ("SPCtrl::stroked", G_TYPE_BOOLEAN, G_PARAM_READWRITE, ARG_STROKED);
+    gtk_object_add_arg_type ("SPCtrl::stroke_color", G_TYPE_INT, G_PARAM_READWRITE, ARG_STROKE_COLOR);
 
     object_class->destroy = sp_ctrl_destroy;
     object_class->set_arg = sp_ctrl_set_arg;
