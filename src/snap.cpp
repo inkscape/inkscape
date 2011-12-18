@@ -1124,7 +1124,7 @@ void SnapManager::displaySnapsource(Inkscape::SnapCandidatePoint const &p) const
         bool p_is_other = (t & Inkscape::SNAPSOURCE_OTHERS_CATEGORY) || (t & Inkscape::SNAPSOURCE_DATUMS_CATEGORY);
 
         g_assert(_desktop != NULL);
-        if (snapprefs.getSnapEnabledGlobally() && (p_is_other || (p_is_a_node && snapprefs.getSnapModeNode()) || (p_is_a_bbox && snapprefs.getSnapModeBBox()))) {
+        if (snapprefs.getSnapEnabledGlobally() && (p_is_other || (p_is_a_node && snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_NODE_CATEGORY)) || (p_is_a_bbox && snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_BBOX_CATEGORY)))) {
             _desktop->snapindicator->set_new_snapsource(p);
         } else {
             _desktop->snapindicator->remove_snapsource();

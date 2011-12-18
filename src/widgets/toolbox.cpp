@@ -2134,7 +2134,7 @@ static void toggle_snap_callback(GtkToggleAction *act, gpointer data) //data poi
             dt->toggleSnapGlobal();
             break;
         case SP_ATTR_INKSCAPE_SNAP_BBOX:
-            v = nv->snap_manager.snapprefs.getSnapModeBBox();
+            v = nv->snap_manager.snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_BBOX_CATEGORY);
             sp_repr_set_boolean(repr, "inkscape:snap-bbox", !v);
             break;
         case SP_ATTR_INKSCAPE_SNAP_BBOX_EDGE:
@@ -2146,7 +2146,7 @@ static void toggle_snap_callback(GtkToggleAction *act, gpointer data) //data poi
             sp_repr_set_boolean(repr, "inkscape:bbox-nodes", !v);
             break;
         case SP_ATTR_INKSCAPE_SNAP_NODE:
-            v = nv->snap_manager.snapprefs.getSnapModeNode();
+            v = nv->snap_manager.snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_NODE_CATEGORY);
             sp_repr_set_boolean(repr, "inkscape:snap-nodes", !v);
             break;
         case SP_ATTR_INKSCAPE_SNAP_PATH:
@@ -2174,7 +2174,7 @@ static void toggle_snap_callback(GtkToggleAction *act, gpointer data) //data poi
             sp_repr_set_boolean(repr, "inkscape:snap-intersection-paths", !v);
             break;
         case SP_ATTR_INKSCAPE_SNAP_OTHERS:
-            v = nv->snap_manager.snapprefs.getSnapModeOthers();
+            v = nv->snap_manager.snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_OTHERS_CATEGORY);
             sp_repr_set_boolean(repr, "inkscape:snap-others", !v);
             break;
         case SP_ATTR_INKSCAPE_SNAP_ROTATION_CENTER:
@@ -2509,7 +2509,7 @@ void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, SPEventContext * /*ev
     bool const c1 = nv->snap_manager.snapprefs.getSnapEnabledGlobally();
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act1->gobj()), c1);
 
-    bool const c2 = nv->snap_manager.snapprefs.getSnapModeBBox();
+    bool const c2 = nv->snap_manager.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_CATEGORY);
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act2->gobj()), c2);
     gtk_action_set_sensitive(GTK_ACTION(act2->gobj()), c1);
 
@@ -2522,7 +2522,7 @@ void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, SPEventContext * /*ev
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act4c->gobj()), nv->snap_manager.snapprefs.isSnapButtonEnabled(SNAPTARGET_BBOX_MIDPOINT));
     gtk_action_set_sensitive(GTK_ACTION(act4c->gobj()), c1 && c2);
 
-    bool const c3 = nv->snap_manager.snapprefs.getSnapModeNode();
+    bool const c3 = nv->snap_manager.snapprefs.isTargetSnappable(SNAPTARGET_NODE_CATEGORY);
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act5->gobj()), c3);
     gtk_action_set_sensitive(GTK_ACTION(act5->gobj()), c1);
 
@@ -2537,7 +2537,7 @@ void ToolboxFactory::updateSnapToolbox(SPDesktop *desktop, SPEventContext * /*ev
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act9->gobj()), nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_LINE_MIDPOINT));
     gtk_action_set_sensitive(GTK_ACTION(act9->gobj()), c1 && c3);
 
-    bool const c5 = nv->snap_manager.snapprefs.getSnapModeOthers();
+    bool const c5 = nv->snap_manager.snapprefs.isTargetSnappable(SNAPTARGET_OTHERS_CATEGORY);
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act10->gobj()), c5);
     gtk_action_set_sensitive(GTK_ACTION(act10->gobj()), c1);
     gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act10b->gobj()), nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_OBJECT_MIDPOINT));

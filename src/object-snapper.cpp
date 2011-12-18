@@ -130,7 +130,7 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
                     // We'll only need to obtain the visual bounding box if the user preferences tell
                     // us to, AND if we are snapping to the bounding box itself. If we're snapping to
                     // paths only, then we can just as well use the geometric bounding box (which is faster)
-                    SPItem::BBoxType bbox_type = (!prefs_bbox && _snapmanager->snapprefs.getSnapModeBBox()) ?
+                    SPItem::BBoxType bbox_type = (!prefs_bbox && _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_BBOX_CATEGORY)) ?
                         SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX;
                     if (clip_or_mask) {
                         // Oh oh, this will get ugly. We cannot use sp_item_i2d_affine directly because we need to
@@ -368,7 +368,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
         }
 
         // Consider the page border for snapping
-        if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PAGE_BORDER) && _snapmanager->snapprefs.getSnapModeAny()) {
+        if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PAGE_BORDER) && _snapmanager->snapprefs.isAnyCategorySnappable()) {
             Geom::PathVector *border_path = _getBorderPathv();
             if (border_path != NULL) {
                 _paths_to_snap_to->push_back(SnapCandidatePath(border_path, SNAPTARGET_PAGE_BORDER, Geom::OptRect()));
@@ -687,7 +687,7 @@ void Inkscape::ObjectSnapper::freeSnap(IntermSnapResults &isr,
                                             std::vector<SPItem const *> const *it,
                                             std::vector<SnapCandidatePoint> *unselected_nodes) const
 {
-    if (_snap_enabled == false || _snapmanager->snapprefs.getSnapFrom(p.getSourceType()) == false || ThisSnapperMightSnap() == false) {
+    if (_snap_enabled == false || _snapmanager->snapprefs.isSourceSnappable(p.getSourceType()) == false || ThisSnapperMightSnap() == false) {
         return;
     }
 
@@ -728,7 +728,7 @@ void Inkscape::ObjectSnapper::constrainedSnap( IntermSnapResults &isr,
                                                   std::vector<SPItem const *> const *it,
                                                   std::vector<SnapCandidatePoint> *unselected_nodes) const
 {
-    if (_snap_enabled == false || _snapmanager->snapprefs.getSnapFrom(p.getSourceType()) == false || ThisSnapperMightSnap() == false) {
+    if (_snap_enabled == false || _snapmanager->snapprefs.isSourceSnappable(p.getSourceType()) == false || ThisSnapperMightSnap() == false) {
         return;
     }
 

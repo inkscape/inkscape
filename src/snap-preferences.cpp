@@ -24,100 +24,39 @@ Inkscape::SnapPreferences::SnapPreferences() :
     g_assert((SNAPTARGET_DATUMS_CATEGORY != 0) && !(SNAPTARGET_DATUMS_CATEGORY & (SNAPTARGET_DATUMS_CATEGORY - 1)));
     g_assert((SNAPTARGET_OTHERS_CATEGORY != 0) && !(SNAPTARGET_OTHERS_CATEGORY & (SNAPTARGET_OTHERS_CATEGORY - 1)));
 
-    setSnapFrom(SnapSourceType(SNAPSOURCE_BBOX_CATEGORY | SNAPSOURCE_NODE_CATEGORY | SNAPSOURCE_DATUMS_CATEGORY | SNAPSOURCE_OTHERS_CATEGORY), true); //Snap any point. In v0.45 and earlier, this was controlled in the preferences tab
-    for (int n = 0; n < Inkscape::SNAPTARGET_MAX_ENUM_VALUE; n++) {
+    for (int n = 0; n < SNAPTARGET_MAX_ENUM_VALUE; n++) {
         _active_snap_targets[n] = -1;
     }
 }
 
-/*
- *  The snappers have too many parameters to adjust individually. Therefore only
- *  three snapping modes are presented to the user: snapping bounding box corners (to
- *  other bounding boxes, grids or guides), and/or snapping nodes (to other nodes,
- *  paths, grids or guides), and or snapping to/from others (e.g. grids, guide, text, etc)
- *  To select either of these three modes (or all), use the
- *  methods defined below: setSnapModeBBox(), setSnapModeNode(), or setSnapModeOthers()
- *
- * */
-
-
-void Inkscape::SnapPreferences::setSnapModeBBox(bool enabled)
+bool Inkscape::SnapPreferences::isAnyDatumSnappable() const
 {
-    if (enabled) {
-        _snap_from = SnapSourceType(_snap_from | Inkscape::SNAPSOURCE_BBOX_CATEGORY);
-    } else {
-        _snap_from = SnapSourceType(_snap_from & ~Inkscape::SNAPSOURCE_BBOX_CATEGORY);
-    }
-    setTargetSnappable(SNAPTARGET_BBOX_CATEGORY, enabled);
+    return isTargetSnappable(SNAPTARGET_GUIDE, SNAPTARGET_GRID, SNAPTARGET_PAGE_BORDER);
 }
 
-bool Inkscape::SnapPreferences::getSnapModeBBox() const
+bool Inkscape::SnapPreferences::isAnyCategorySnappable() const
 {
-    return (_snap_from & Inkscape::SNAPSOURCE_BBOX_CATEGORY);
-}
-
-void Inkscape::SnapPreferences::setSnapModeNode(bool enabled)
-{
-    if (enabled) {
-        _snap_from = SnapSourceType(_snap_from | Inkscape::SNAPSOURCE_NODE_CATEGORY);
-    } else {
-        _snap_from = SnapSourceType(_snap_from & ~Inkscape::SNAPSOURCE_NODE_CATEGORY);
-    }
-    setTargetSnappable(SNAPTARGET_NODE_CATEGORY, enabled);
-}
-
-bool Inkscape::SnapPreferences::getSnapModeNode() const
-{
-    return (_snap_from & Inkscape::SNAPSOURCE_NODE_CATEGORY);
-}
-
-void Inkscape::SnapPreferences::setSnapModeOthers(bool enabled)
-{
-    if (enabled) {
-        _snap_from = SnapSourceType(_snap_from | Inkscape::SNAPSOURCE_OTHERS_CATEGORY);
-    } else {
-        _snap_from = SnapSourceType(_snap_from & ~Inkscape::SNAPSOURCE_OTHERS_CATEGORY);
-    }
-    setTargetSnappable(SNAPTARGET_OTHERS_CATEGORY, enabled);
-}
-
-bool Inkscape::SnapPreferences::getSnapModeOthers() const
-{
-    return (_snap_from & Inkscape::SNAPSOURCE_OTHERS_CATEGORY);
-}
-
-bool Inkscape::SnapPreferences::getSnapModeDatums() const
-{
-    return isTargetSnappable(Inkscape::SNAPTARGET_GUIDE);
-}
-
-bool Inkscape::SnapPreferences::getSnapModeAny() const
-{
-    return (_snap_from != 0);
-}
-
-void Inkscape::SnapPreferences::setSnapFrom(Inkscape::SnapSourceType t, bool s)
-{
-    if (s) {
-        _snap_from = SnapSourceType(_snap_from | t);
-    } else {
-        _snap_from = SnapSourceType(_snap_from & ~t);
-    }
-}
-
-bool Inkscape::SnapPreferences::getSnapFrom(Inkscape::SnapSourceType t) const
-{
-    return (_snap_from & t);
+    return isTargetSnappable(SNAPTARGET_NODE_CATEGORY, SNAPTARGET_BBOX_CATEGORY, SNAPTARGET_OTHERS_CATEGORY) || isTargetSnappable(SNAPTARGET_GUIDE, SNAPTARGET_GRID, SNAPTARGET_PAGE_BORDER);
 }
 
 void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType &target, bool &always_on, bool &group_on) const
 {
-    if (target & SNAPTARGET_BBOX_CATEGORY) {
-        group_on = getSnapModeBBox(); // Only if the group with bbox sources/targets has been enabled, then we might snap to any of the bbox targets
+    if (target == SNAPTARGET_BBOX_CATEGORY ||
+            target == SNAPTARGET_NODE_CATEGORY ||
+            target == SNAPTARGET_OTHERS_CATEGORY ||
+            target == SNAPTARGET_DATUMS_CATEGORY) {
+        // These main targets should be handled separately, because otherwise we might call isTargetSnappable()
+        // for them (to check whether the corresponding group is on) which would lead to an infinite recursive loop
+        always_on = (target == SNAPTARGET_DATUMS_CATEGORY);
+        group_on = true;
+        return;
+    }
 
+    if (target & SNAPTARGET_BBOX_CATEGORY) {
+        group_on = isTargetSnappable(SNAPTARGET_BBOX_CATEGORY); // Only if the group with bbox sources/targets has been enabled, then we might snap to any of the bbox targets
 
     } else if (target & SNAPTARGET_NODE_CATEGORY) {
-        group_on = getSnapModeNode(); // Only if the group with path/node sources/targets has been enabled, then we might snap to any of the nodes/paths
+        group_on = isTargetSnappable(SNAPTARGET_NODE_CATEGORY); // Only if the group with path/node sources/targets has been enabled, then we might snap to any of the nodes/paths
         if (target == SNAPTARGET_RECT_CORNER) {
             target = SNAPTARGET_NODE_CUSP;
         } else if (target == SNAPTARGET_ELLIPSE_QUADRANT_POINT) {
@@ -162,7 +101,7 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
     } else if (target & SNAPTARGET_OTHERS_CATEGORY) {
         // Only if the group with "other" snap sources/targets has been enabled, then we might snap to any of those targets
         // ... but this doesn't hold for the page border, grids, and guides
-        group_on = getSnapModeOthers();
+        group_on = isTargetSnappable(SNAPTARGET_OTHERS_CATEGORY);
         switch (target) {
             // Some snap targets don't have their own toggle. These targets are called "secondary targets". We will re-map
             // them to their cousin which does have a toggle, and which is called a "primary target"
@@ -279,6 +218,69 @@ bool Inkscape::SnapPreferences::isSnapButtonEnabled(Inkscape::SnapTargetType con
     }
 
     return false;
+}
+
+Inkscape::SnapTargetType Inkscape::SnapPreferences::source2target(Inkscape::SnapSourceType source) const
+{
+    switch (source)
+    {
+        case SNAPSOURCE_UNDEFINED:
+            return SNAPTARGET_UNDEFINED;
+        case SNAPSOURCE_BBOX_CATEGORY:
+            return SNAPTARGET_BBOX_CATEGORY;
+        case SNAPSOURCE_BBOX_CORNER:
+            return SNAPTARGET_BBOX_CORNER;
+        case SNAPSOURCE_BBOX_MIDPOINT:
+            return SNAPTARGET_BBOX_MIDPOINT;
+        case SNAPSOURCE_BBOX_EDGE_MIDPOINT:
+            return SNAPTARGET_BBOX_EDGE_MIDPOINT;
+        case SNAPSOURCE_NODE_CATEGORY:
+            return SNAPTARGET_NODE_CATEGORY;
+        case SNAPSOURCE_NODE_SMOOTH:
+            return SNAPTARGET_NODE_SMOOTH;
+        case SNAPSOURCE_NODE_CUSP:
+            return SNAPTARGET_NODE_CUSP;
+        case SNAPSOURCE_LINE_MIDPOINT:
+            return SNAPTARGET_LINE_MIDPOINT;
+        case SNAPSOURCE_PATH_INTERSECTION:
+            return SNAPTARGET_PATH_INTERSECTION;
+        case SNAPSOURCE_RECT_CORNER:
+            return SNAPTARGET_RECT_CORNER;
+        case SNAPSOURCE_ELLIPSE_QUADRANT_POINT:
+            return SNAPTARGET_ELLIPSE_QUADRANT_POINT;
+        case SNAPSOURCE_DATUMS_CATEGORY:
+            return SNAPTARGET_DATUMS_CATEGORY;
+        case SNAPSOURCE_GUIDE:
+            return SNAPTARGET_GUIDE;
+        case SNAPSOURCE_GUIDE_ORIGIN:
+            return SNAPTARGET_GUIDE_ORIGIN;
+        case SNAPSOURCE_OTHERS_CATEGORY:
+            return SNAPTARGET_OTHERS_CATEGORY;
+        case SNAPSOURCE_ROTATION_CENTER:
+            return SNAPTARGET_ROTATION_CENTER;
+        case SNAPSOURCE_OBJECT_MIDPOINT:
+            return SNAPTARGET_OBJECT_MIDPOINT;
+        case SNAPSOURCE_IMG_CORNER:
+            return SNAPTARGET_IMG_CORNER;
+        case SNAPSOURCE_TEXT_ANCHOR:
+            return SNAPTARGET_TEXT_ANCHOR;
+
+        case SNAPSOURCE_NODE_HANDLE:
+        case SNAPSOURCE_OTHER_HANDLE:
+        case SNAPSOURCE_CONVEX_HULL_CORNER:
+            // For these snapsources there doesn't exist an equivalent snap target
+            return SNAPTARGET_NODE_CATEGORY;
+        case SNAPSOURCE_GRID_PITCH:
+            return SNAPTARGET_GRID;
+        default:
+            g_warning("Mapping of snap source to snap target undefined");
+            return SNAPTARGET_UNDEFINED;
+    }
+}
+
+bool Inkscape::SnapPreferences::isSourceSnappable(Inkscape::SnapSourceType const source) const
+{
+    return isTargetSnappable(source2target(source));
 }
 
 

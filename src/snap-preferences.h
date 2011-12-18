@@ -31,33 +31,17 @@ public:
     bool isTargetSnappable(Inkscape::SnapTargetType const target1, Inkscape::SnapTargetType const target2, Inkscape::SnapTargetType const target3, Inkscape::SnapTargetType const target4, Inkscape::SnapTargetType const target5) const;
     bool isSnapButtonEnabled(Inkscape::SnapTargetType const target) const;
 
-    void setSnapModeBBox(bool enabled);
-    void setSnapModeNode(bool enabled);
-    void setSnapModeOthers(bool enabled);
-    bool getSnapModeBBox() const;
-    bool getSnapModeNode() const;
-    bool getSnapModeDatums() const;
-    bool getSnapModeOthers() const;
-    bool getSnapModeAny() const;
+    SnapTargetType source2target(SnapSourceType source) const;
+    bool isSourceSnappable(Inkscape::SnapSourceType const source) const;
+
+    bool isAnyDatumSnappable() const; // Needed because we cannot toggle the datum snap targets as a group
+    bool isAnyCategorySnappable() const;
 
     void setSnapEnabledGlobally(bool enabled) {_snap_enabled_globally = enabled;}
     bool getSnapEnabledGlobally() const {return _snap_enabled_globally;}
 
     void setSnapPostponedGlobally(bool postponed) {_snap_postponed_globally = postponed;}
     bool getSnapPostponedGlobally() const {return _snap_postponed_globally;}
-
-    /**
-     * Turn on/off snapping of specific point types.
-     * @param t Point type.
-     * @param s true to snap to this point type, otherwise false.
-     */
-    void setSnapFrom(Inkscape::SnapSourceType t, bool s);
-
-    /**
-     * @param t Point type.
-     * @return true if snapper will snap this type of point, otherwise false.
-     */
-    bool getSnapFrom(Inkscape::SnapSourceType t) const;
 
     bool getStrictSnapping() const {return _strict_snapping;}
 
@@ -93,8 +77,6 @@ private:
 
     bool _snap_enabled_globally; // Toggles ALL snapping
     bool _snap_postponed_globally; // Hold all snapping temporarily when the mouse is moving fast
-
-    SnapSourceType _snap_from; ///< bitmap of point types that we will snap from
 
     //If enabled, then bbox corners will only snap to bboxes,
     //and nodes will only snap to nodes and paths. We will not

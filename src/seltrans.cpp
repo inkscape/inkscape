@@ -321,7 +321,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 
     _bbox_points.clear();
     // Collect the bounding box's corners and midpoints for each selected item
-    if (m.snapprefs.getSnapModeBBox()) {
+    if (m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_CATEGORY)) {
         bool c = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_CORNER);
         bool mp = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_MIDPOINT);
         bool emp = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_EDGE_MIDPOINT);
@@ -1603,11 +1603,13 @@ void Inkscape::SelTrans::_keepClosestPointOnly(Geom::Point const &p)
 {
     SnapManager const &m = _desktop->namedview->snap_manager;
 
-    if (!(m.snapprefs.getSnapModeNode() || m.snapprefs.getSnapModeOthers() || m.snapprefs.getSnapModeDatums())) {
+    // If we're not going to snap nodes, then we might just as well get rid of their snappoints right away
+    if (!(m.snapprefs.isTargetSnappable(SNAPTARGET_NODE_CATEGORY, SNAPTARGET_OTHERS_CATEGORY) || m.snapprefs.isAnyDatumSnappable())) {
         _snap_points.clear();
     }
 
-    if (!m.snapprefs.getSnapModeBBox()) {
+    // If we're not going to snap bounding boxes, then we might just as well get rid of their snappoints right away
+    if (!m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_CATEGORY)) {
         _bbox_points.clear();
     }
 
