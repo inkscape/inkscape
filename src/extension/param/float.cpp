@@ -2,6 +2,7 @@
  * Copyright (C) 2005-2007 Authors:
  *   Ted Gould <ted@gould.cx>
  *   Johan Engelen <johan@shouraizou.nl> *
+ *   Jon A. Cruz <jon@joncruz.org>
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -23,7 +24,7 @@ namespace Inkscape {
 namespace Extension {
 
 
-/** \brief  Use the superclass' allocator and set the \c _value */
+/** Use the superclass' allocator and set the \c _value. */
 ParamFloat::ParamFloat (const gchar * name,
                         const gchar * guitext,
                         const gchar * desc,
@@ -88,17 +89,18 @@ ParamFloat::ParamFloat (const gchar * name,
     return;
 }
 
-/** \brief  A function to set the \c _value
-    \param  in   The value to set to
-    \param  doc  A document that should be used to set the value.
-    \param  node The node where the value may be placed
-
-    This function sets the internal value, but it also sets the value
-    in the preferences structure.  To put it in the right place, \c PREF_DIR
-    and \c pref_name() are used.
-*/
-float
-ParamFloat::set (float in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
+/**
+ * A function to set the \c _value.
+ *
+ * This function sets the internal value, but it also sets the value
+ * in the preferences structure.  To put it in the right place, \c PREF_DIR
+ * and \c pref_name() are used.
+ *
+ * @param  in   The value to set to.
+ * @param  doc  A document that should be used to set the value.
+ * @param  node The node where the value may be placed.
+ */
+float ParamFloat::set(float in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     _value = in;
     if (_value > _max) {
@@ -116,9 +118,7 @@ ParamFloat::set (float in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
     return _value;
 }
 
-/** \brief  Return the value as a string */
-void
-ParamFloat::string (std::string &string)
+void ParamFloat::string(std::string &string) const
 {
     char startstring[G_ASCII_DTOSTR_BUF_SIZE];
     g_ascii_dtostr(startstring, G_ASCII_DTOSTR_BUF_SIZE, _value);
@@ -126,15 +126,15 @@ ParamFloat::string (std::string &string)
     return;
 }
 
-/** \brief  A class to make an adjustment that uses Extension params */
+/** A class to make an adjustment that uses Extension params. */
 class ParamFloatAdjustment : public Gtk::Adjustment {
-    /** The parameter to adjust */
+    /** The parameter to adjust. */
     ParamFloat * _pref;
     SPDocument * _doc;
     Inkscape::XML::Node * _node;
     sigc::signal<void> * _changeSignal;
 public:
-    /** \brief  Make the adjustment using an extension and the string
+    /** Make the adjustment using an extension and the string
                 describing the parameter. */
     ParamFloatAdjustment (ParamFloat * param, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
             Gtk::Adjustment(0.0, param->min(), param->max(), 0.1, 1.0, 0), _pref(param), _doc(doc), _node(node), _changeSignal(changeSignal) {
@@ -146,14 +146,13 @@ public:
     void val_changed (void);
 }; /* class ParamFloatAdjustment */
 
-/** \brief  A function to respond to the value_changed signal from the
-            adjustment.
-
-    This function just grabs the value from the adjustment and writes
-    it to the parameter.  Very simple, but yet beautiful.
-*/
-void
-ParamFloatAdjustment::val_changed (void)
+/**
+ * A function to respond to the value_changed signal from the adjustment.
+ *
+ * This function just grabs the value from the adjustment and writes
+ * it to the parameter.  Very simple, but yet beautiful.
+ */
+void ParamFloatAdjustment::val_changed(void)
 {
     //std::cout << "Value Changed to: " << this->get_value() << std::endl;
     _pref->set(this->get_value(), _doc, _node);
@@ -164,14 +163,13 @@ ParamFloatAdjustment::val_changed (void)
 }
 
 /**
-    \brief  Creates a Float Adjustment for a float parameter
-
-    Builds a hbox with a label and a float adjustment in it.
-*/
-Gtk::Widget *
-ParamFloat::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ * Creates a Float Adjustment for a float parameter.
+ *
+ * Builds a hbox with a label and a float adjustment in it.
+ */
+Gtk::Widget * ParamFloat::get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
-	if (_gui_hidden) {
+    if (_gui_hidden) {
         return NULL;
     }
 

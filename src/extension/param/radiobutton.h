@@ -6,8 +6,9 @@
  */
 
 /*
- * Author:
+ * Authors:
  *   Johan Engelen <johan@shouraizou.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2006-2007 Johan Engelen
  *
@@ -44,10 +45,15 @@ public:
                      AppearanceMode mode);
     virtual ~ParamRadioButton(void);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
-    void string (std::string &string);
 
-    const gchar * get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
-    const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
+    // Explicitly call superclass version to avoid method being hidden.
+    virtual void string(std::list <std::string> &list) const { return Parameter::string(list); }
+
+    virtual void string(std::string &string) const;
+
+    const gchar *get(const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) const { return _value; }
+
+    const gchar *set(const gchar *in, SPDocument *doc, Inkscape::XML::Node *node);
 
 private:
     /** \brief  Internal value.  This should point to a string that has
@@ -69,3 +75,13 @@ private:
 
 #endif /* INK_EXTENSION_PARAMRADIOBUTTON_H_SEEN */
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

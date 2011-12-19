@@ -7,6 +7,7 @@
 /*
  * Author:
  *   Johan Engelen <johan@shouraizou.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2006-2007 Johan Engelen
  *
@@ -118,8 +119,6 @@ ParamComboBox::ParamComboBox (const gchar * name, const gchar * guitext, const g
     if (defaultval != NULL) {
         _value = g_strdup(defaultval);
     }
-
-    return;
 }
 
 ParamComboBox::~ParamComboBox (void)
@@ -134,21 +133,22 @@ ParamComboBox::~ParamComboBox (void)
 }
 
 
-/** \brief  A function to set the \c _value
-    \param  in   The value to set
-    \param  doc  A document that should be used to set the value.
-    \param  node The node where the value may be placed
-
-    This function sets ONLY the internal value, but it also sets the value
-    in the preferences structure.  To put it in the right place, \c PREF_DIR
-    and \c pref_name() are used.
-
-    To copy the data into _value the old memory must be free'd first.
-    It is important to note that \c g_free handles \c NULL just fine.  Then
-    the passed in value is duplicated using \c g_strdup().
-*/
-const gchar *
-ParamComboBox::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
+/**
+ * A function to set the \c _value.
+ *
+ * This function sets ONLY the internal value, but it also sets the value
+ * in the preferences structure.  To put it in the right place, \c PREF_DIR
+ *  and \c pref_name() are used.
+ *
+ * To copy the data into _value the old memory must be free'd first.
+ * It is important to note that \c g_free handles \c NULL just fine.  Then
+ * the passed in value is duplicated using \c g_strdup().
+ *
+ * @param  in   The value to set.
+ * @param  doc  A document that should be used to set the value.
+ * @param  node The node where the value may be placed.
+ */
+const gchar *ParamComboBox::set(const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     if (in == NULL) {
         return NULL; /* Can't have NULL string */
@@ -181,22 +181,15 @@ ParamComboBox::changed (void) {
 
 }
 
-
-/**
-    \brief  A function to get the value of the parameter in string form
-    \return A string with the 'value' as command line argument
-*/
-void
-ParamComboBox::string (std::string &string)
+void ParamComboBox::string(std::string &string) const
 {
     string += _value;
-    return;
 }
 
 
 
 
-/** \brief  A special category of Gtk::Entry to handle string parameteres */
+/** A special category of Gtk::Entry to handle string parameteres. */
 class ParamComboBoxEntry : public Gtk::ComboBoxText {
 private:
     ParamComboBox * _pref;
@@ -204,10 +197,11 @@ private:
     Inkscape::XML::Node * _node;
     sigc::signal<void> * _changeSignal;
 public:
-    /** \brief  Build a string preference for the given parameter
-        \param  pref  Where to get the string from, and where to put it
-                      when it changes.
-    */
+    /**
+     * Build a string preference for the given parameter.
+     * @param  pref  Where to get the string from, and where to put it
+     *                 when it changes.
+     */
     ParamComboBoxEntry (ParamComboBox * pref, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
         Gtk::ComboBoxText(), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
         this->signal_changed().connect(sigc::mem_fun(this, &ParamComboBoxEntry::changed));
@@ -215,11 +209,12 @@ public:
     void changed (void);
 };
 
-/** \brief  Respond to the text box changing
-
-    This function responds to the box changing by grabbing the value
-    from the text box and putting it in the parameter.
-*/
+/**
+ * Respond to the text box changing.
+ *
+ * This function responds to the box changing by grabbing the value
+ * from the text box and putting it in the parameter.
+ */
 void
 ParamComboBoxEntry::changed (void)
 {
@@ -231,12 +226,11 @@ ParamComboBoxEntry::changed (void)
 }
 
 /**
-    \brief  Creates a combobox widget for an enumeration parameter
-*/
-Gtk::Widget *
-ParamComboBox::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ * Creates a combobox widget for an enumeration parameter.
+ */
+Gtk::Widget *ParamComboBox::get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
-	if (_gui_hidden) {
+    if (_gui_hidden) {
         return NULL;
     }
 
@@ -270,5 +264,16 @@ ParamComboBox::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::s
 }
 
 
-}  /* namespace Extension */
-}  /* namespace Inkscape */
+}  // namespace Extension
+}  // namespace Inkscape
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

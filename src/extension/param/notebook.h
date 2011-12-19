@@ -8,6 +8,7 @@
 /*
  * Author:
  *   Johan Engelen <johan@shouraizou.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2006 Author
  *
@@ -26,12 +27,14 @@ namespace Extension {
 class Extension;
 
 
-// \brief  A class to represent a notebookparameter of an extension
+/** A class to represent a notebookparameter of an extension. */
 class ParamNotebook : public Parameter {
 private:
-    /** \brief  Internal value.  This should point to a string that has
-                been allocated in memory.  And should be free'd.
-                It is the name of the current page. */
+    /**
+     * Internal value.  This should point to a string that has
+     * been allocated in memory.  And should be free'd.
+     * It is the name of the current page.
+     */
     gchar * _value;
 
     GSList * pages; /**< A table to store the pages with parameters for this notebook.
@@ -41,7 +44,16 @@ public:
     ParamNotebook(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     virtual ~ParamNotebook(void);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
-    void string (std::list <std::string> &list);
+
+    /**
+     * A function to get the currentpage and the parameters in a string form.
+     * @return A string with the 'value' and all the parameters on all pages as command line arguments.
+     */
+    virtual void string (std::list <std::string> &list) const;
+
+    // Explicitly call superclass version to avoid method being hidden.
+    virtual void string(std::string &string) const {return Parameter::string(string);}
+
 
     Parameter * get_param (const gchar * name);
 
@@ -53,8 +65,8 @@ public:
 
 
 
-}  /* namespace Extension */
-}  /* namespace Inkscape */
+}  // namespace Extension
+}  // namespace Inkscape
 
 #endif /* INK_EXTENSION_PARAMNOTEBOOK_H_SEEN */
 

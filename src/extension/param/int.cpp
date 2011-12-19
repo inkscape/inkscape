@@ -2,6 +2,7 @@
  * Copyright (C) 2005-2007 Authors:
  *   Ted Gould <ted@gould.cx>
  *   Johan Engelen <johan@shouraizou.nl> *
+ *   Jon A. Cruz <jon@joncruz.org>
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -23,7 +24,7 @@ namespace Inkscape {
 namespace Extension {
 
 
-/** \brief  Use the superclass' allocator and set the \c _value */
+/** Use the superclass' allocator and set the \c _value. */
 ParamInt::ParamInt (const gchar * name,
                     const gchar * guitext,
                     const gchar * desc,
@@ -77,21 +78,19 @@ ParamInt::ParamInt (const gchar * name,
     if (_value < _min) {
         _value = _min;
     }
-
-    return;
 }
 
-/** \brief  A function to set the \c _value
-    \param  in   The value to set to
-    \param  doc  A document that should be used to set the value.
-    \param  node The node where the value may be placed
-
-    This function sets the internal value, but it also sets the value
-    in the preferences structure.  To put it in the right place, \c PREF_DIR
-    and \c pref_name() are used.
-*/
-int
-ParamInt::set (int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
+/**
+ * A function to set the \c _value.
+ * This function sets the internal value, but it also sets the value
+ * in the preferences structure.  To put it in the right place, \c PREF_DIR
+ * and \c pref_name() are used.
+ *
+ * @param  in   The value to set to.
+ * @param  doc  A document that should be used to set the value.
+ * @param  node The node where the value may be placed.
+ */
+int ParamInt::set(int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     _value = in;
     if (_value > _max) {
@@ -109,48 +108,45 @@ ParamInt::set (int in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
     return _value;
 }
 
-/** \brief  A class to make an adjustment that uses Extension params */
+/** A class to make an adjustment that uses Extension params. */
 class ParamIntAdjustment : public Gtk::Adjustment {
-    /** The parameter to adjust */
+    /** The parameter to adjust. */
     ParamInt * _pref;
     SPDocument * _doc;
     Inkscape::XML::Node * _node;
     sigc::signal<void> * _changeSignal;
 public:
-    /** \brief  Make the adjustment using an extension and the string
-                describing the parameter. */
+    /** Make the adjustment using an extension and the string
+        describing the parameter. */
     ParamIntAdjustment (ParamInt * param, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal) :
             Gtk::Adjustment(0.0, param->min(), param->max(), 1.0, 10.0, 0), _pref(param), _doc(doc), _node(node), _changeSignal(changeSignal) {
         this->set_value(_pref->get(NULL, NULL) /* \todo fix */);
         this->signal_value_changed().connect(sigc::mem_fun(this, &ParamIntAdjustment::val_changed));
-        return;
     };
 
     void val_changed (void);
 }; /* class ParamIntAdjustment */
 
-/** \brief  A function to respond to the value_changed signal from the
-            adjustment.
-
-    This function just grabs the value from the adjustment and writes
-    it to the parameter.  Very simple, but yet beautiful.
-*/
-void
-ParamIntAdjustment::val_changed (void)
+/**
+ * A function to respond to the value_changed signal from the adjustment.
+ *
+ * This function just grabs the value from the adjustment and writes
+ * it to the parameter.  Very simple, but yet beautiful.
+ */
+void ParamIntAdjustment::val_changed(void)
 {
     //std::cout << "Value Changed to: " << this->get_value() << std::endl;
     _pref->set((int)this->get_value(), _doc, _node);
     if (_changeSignal != NULL) {
         _changeSignal->emit();
     }
-    return;
 }
 
 /**
-    \brief  Creates a Int Adjustment for a int parameter
-
-    Builds a hbox with a label and a int adjustment in it.
-*/
+ * Creates a Int Adjustment for a int parameter.
+ *
+ * Builds a hbox with a label and a int adjustment in it.
+ */
 Gtk::Widget *
 ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
@@ -183,18 +179,15 @@ ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal
     return dynamic_cast<Gtk::Widget *>(hbox);
 }
 
-/** \brief  Return the value as a string */
-void
-ParamInt::string (std::string &string)
+void ParamInt::string(std::string &string) const
 {
     char startstring[32];
     sprintf(startstring, "%d", _value);
     string += startstring;
-    return;
 }
 
-}  /* namespace Extension */
-}  /* namespace Inkscape */
+}  // namespace Extension
+}  // namespace Inkscape
 
 /*
   Local Variables:

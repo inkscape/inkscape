@@ -44,8 +44,6 @@ namespace Extension {
 std::vector<const gchar *> Extension::search_path;
 std::ofstream Extension::error_file;
 
-Parameter * get_param (const gchar * name);
-
 /**
     \return  none
     \brief   Constructs an Extension from a Inkscape::XML::Node
@@ -381,26 +379,7 @@ Extension::deactivated (void)
     return get_state() == STATE_DEACTIVATED;
 }
 
-/**
-    \return    Parameter structure with a name of 'name'
-    \brief     This function looks through the linked list for a parameter
-               structure with the name of the passed in name
-    \param     name   The name to search for
-
-    This is an inline function that is used by all the get_param and
-    set_param functions to find a param_t in the linked list with
-    the passed in name.
-
-    This function can throw a 'param_not_exist' exception if the
-    name is not found.
-
-    The first thing that this function checks is if the list is NULL.
-    It could be NULL because there are no parameters for this extension
-    or because all of them have been checked.  If the list
-    is NULL then the 'param_not_exist' exception is thrown.
-*/
-Parameter *
-Extension::get_param (const gchar * name)
+Parameter *Extension::get_param(gchar const *name)
 {
     if (name == NULL) {
         throw Extension::param_not_exist();
@@ -427,22 +406,14 @@ g_slist_next(list)) {
     throw Extension::param_not_exist();
 }
 
-/**
-    \return   A constant pointer to the string held by the parameters.
-    \brief    Gets a parameter identified by name with the string placed
-              in value.  It isn't duplicated into the value string.
-    \param    name    The name of the parameter to get
-    \param    doc    The document to look in for document specific parameters
-    \param    node   The node to look in for a specific parameter
-
-    Look up in the parameters list, then execute the function on that
-    found parameter.
-*/
-const gchar *
-Extension::get_param_string (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
+Parameter const *Extension::get_param(const gchar * name) const
 {
-    Parameter * param;
-    param = get_param(name);
+    return const_cast<Extension *>(this)->get_param(name);
+}
+
+gchar const *Extension::get_param_string(gchar const *name, SPDocument const *doc, Inkscape::XML::Node const *node) const
+{
+    Parameter const *param = get_param(name);
     return param->get_string(doc, node);
 }
 

@@ -6,8 +6,9 @@
  */
 
 /*
- * Author:
+ * Authors:
  *   Johan Engelen <johan@shouraizou.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2006-2007 Johan Engelen
  *
@@ -40,9 +41,14 @@ public:
     ParamComboBox(const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml);
     virtual ~ParamComboBox(void);
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
-    void string (std::string &string);
 
-    const gchar * get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
+    // Explicitly call superclass version to avoid method being hidden.
+    virtual void string(std::list <std::string> &list) const { return Parameter::string(list); }
+
+    virtual void string(std::string &string) const;
+
+    gchar const *get(SPDocument const * /*doc*/, Inkscape::XML::Node const * /*node*/) const { return _value; }
+
     const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
 
     void changed (void);

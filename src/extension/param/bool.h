@@ -30,7 +30,7 @@ public:
     /**
      * Returns the current state/value.
      */
-    bool get(const SPDocument * doc, const Inkscape::XML::Node * node) const;
+    bool get(const SPDocument *doc, const Inkscape::XML::Node *node) const;
 
     /**
      * A function to set the state/value.
@@ -50,11 +50,14 @@ public:
      */
     Gtk::Widget *get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
 
+    // Explicitly call superclass version to avoid method being hidden.
+    virtual void string(std::list <std::string> &list) const { return Parameter::string(list); }
+
     /**
      * Appends 'true' or 'false'.
      * @todo investigate. Returning a value that can then be appended would probably work better/safer.
      */
-    void string(std::string &string) const;
+    virtual void string(std::string &string) const;
 
 private:
     /** Internal value. */

@@ -173,7 +173,28 @@ public:
 private:
     void             make_param       (Inkscape::XML::Node * paramrepr);
     
-     Parameter *      get_param        (const gchar * name);
+    /**
+     * This function looks through the linked list for a parameter
+     * structure with the name of the passed in name.
+     *
+     * This is an inline function that is used by all the get_param and
+     * set_param functions to find a param_t in the linked list with
+     * the passed in name.
+     *
+     * This function can throw a 'param_not_exist' exception if the
+     * name is not found.
+     *
+     * The first thing that this function checks is if the list is NULL.
+     * It could be NULL because there are no parameters for this extension
+     * or because all of them have been checked.  If the list
+     * is NULL then the 'param_not_exist' exception is thrown.
+     *
+     * @param name The name to search for.
+     * @return Parameter structure with a name of 'name'.
+     */
+     Parameter *get_param(const gchar * name);
+
+     Parameter const *get_param(const gchar * name) const;
 
 public:
     bool             get_param_bool   (const gchar * name,
@@ -188,9 +209,19 @@ public:
                                        const SPDocument *   doc = NULL,
                                        const Inkscape::XML::Node * node = NULL);
 
-    const gchar *    get_param_string (const gchar * name,
-                                       const SPDocument *   doc = NULL,
-                                       const Inkscape::XML::Node * node = NULL);
+    /**
+     * Gets a parameter identified by name with the string placed in value.
+     * It isn't duplicated into the value string. Look up in the parameters list,
+     * then execute the function on that found parameter.
+     *
+     * @param name The name of the parameter to get.
+     * @param doc The document to look in for document specific parameters.
+     * @param node The node to look in for a specific parameter.
+     * @return A constant pointer to the string held by the parameters.
+     */
+    gchar const *get_param_string(gchar const *name,
+                                  SPDocument const *doc = NULL,
+                                  Inkscape::XML::Node const *node = NULL) const;
 
     guint32          get_param_color  (const gchar * name,
                                        const SPDocument *   doc = NULL,

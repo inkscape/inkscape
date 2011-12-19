@@ -5,6 +5,7 @@
  * Copyright (C) 2005-2007 Authors:
  *   Ted Gould <ted@gould.cx>
  *   Johan Engelen <johan@shouraizou.nl> *
+ *   Jon A. Cruz <jon@joncruz.org>
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -30,15 +31,25 @@ public:
               Inkscape::Extension::Extension * ext,
               Inkscape::XML::Node * xml,
               AppearanceMode mode);
-    /** \brief  Returns \c _value */
-    int get (const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) { return _value; }
+
+    /** Returns \c _value. */
+    int get(const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) const { return _value; }
+
     int set (int in, SPDocument * doc, Inkscape::XML::Node * node);
+
     int max (void) { return _max; }
+
     int min (void) { return _min; }
+
     Gtk::Widget * get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal);
-    void string (std::string &string);
+
+    // Explicitly call superclass version to avoid method being hidden.
+    virtual void string(std::list <std::string> &list) const { return Parameter::string(list); }
+
+    virtual void string(std::string &string) const;
+
 private:
-    /** \brief  Internal value. */
+    /** Internal value. */
     int _value;
     AppearanceMode _mode;
     int _indent;

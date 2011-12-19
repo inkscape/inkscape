@@ -35,8 +35,10 @@
 
 #include "radiobutton.h"
 
-/** \brief  The root directory in the preferences database for extension
-            related parameters. */
+/**
+ * The root directory in the preferences database for extension
+ * related parameters.
+ */
 #define PREF_DIR "extensions"
 
 namespace Inkscape {
@@ -136,8 +138,6 @@ ParamRadioButton::ParamRadioButton (const gchar * name,
     if (defaultval != NULL) {
         _value = g_strdup(defaultval);  // allocate space for _value
     }
-
-    return;
 }
 
 ParamRadioButton::~ParamRadioButton (void)
@@ -152,21 +152,22 @@ ParamRadioButton::~ParamRadioButton (void)
 }
 
 
-/** \brief  A function to set the \c _value
-    \param  in   The value to set
-    \param  doc  A document that should be used to set the value.
-    \param  node The node where the value may be placed
-
-    This function sets ONLY the internal value, but it also sets the value
-    in the preferences structure.  To put it in the right place, \c PREF_DIR
-    and \c pref_name() are used.
-
-    To copy the data into _value the old memory must be free'd first.
-    It is important to note that \c g_free handles \c NULL just fine.  Then
-    the passed in value is duplicated using \c g_strdup().
-*/
-const gchar *
-ParamRadioButton::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
+/**
+ * A function to set the \c _value.
+ *
+ * This function sets ONLY the internal value, but it also sets the value
+ * in the preferences structure.  To put it in the right place, \c PREF_DIR
+ * and \c pref_name() are used.
+ *
+ * To copy the data into _value the old memory must be free'd first.
+ * It is important to note that \c g_free handles \c NULL just fine.  Then
+ * the passed in value is duplicated using \c g_strdup().
+ *
+ * @param  in   The value to set.
+ * @param  doc  A document that should be used to set the value.
+ * @param  node The node where the value may be placed.
+ */
+const gchar *ParamRadioButton::set(const gchar * in, SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/)
 {
     if (in == NULL) {
         return NULL; /* Can't have NULL string */
@@ -194,19 +195,12 @@ ParamRadioButton::set (const gchar * in, SPDocument * /*doc*/, Inkscape::XML::No
     return _value;
 }
 
-
-/**
-    \brief  A function to get the current value of the parameter in a string form
-    \return A string with the 'value' as command line argument
-*/
-void
-ParamRadioButton::string (std::string &string)
+void ParamRadioButton::string(std::string &string) const
 {
     string += _value;
-    return;
 }
 
-/** \brief  A special radiobutton class to use in ParamRadioButton */
+/** A special radiobutton class to use in ParamRadioButton. */
 class ParamRadioButtonWdg : public Gtk::RadioButton {
 private:
     ParamRadioButton * _pref;
@@ -214,9 +208,10 @@ private:
     Inkscape::XML::Node * _node;
     sigc::signal<void> * _changeSignal;
 public:
-    /** \brief  Build a string preference for the given parameter
-        \param  pref  Where to put the radiobutton's string when it is selected.
-    */
+    /**
+     * Build a string preference for the given parameter.
+     * @param  pref  Where to put the radiobutton's string when it is selected.
+     */
     ParamRadioButtonWdg ( Gtk::RadioButtonGroup& group, const Glib::ustring& label,
                           ParamRadioButton * pref, SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal ) :
         Gtk::RadioButton(group, label), _pref(pref), _doc(doc), _node(node), _changeSignal(changeSignal) {
@@ -233,13 +228,13 @@ public:
     void changed (void);
 };
 
-/** \brief  Respond to the selected radiobutton changing
-
-    This function responds to the radiobutton selection changing by grabbing the value
-    from the text box and putting it in the parameter.
-*/
-void
-ParamRadioButtonWdg::changed (void)
+/**
+ * Respond to the selected radiobutton changing.
+ *
+ * This function responds to the radiobutton selection changing by grabbing the value
+ * from the text box and putting it in the parameter.
+ */
+void ParamRadioButtonWdg::changed(void)
 {
     if (this->get_active()) {
         Glib::ustring data = this->get_label();
@@ -275,10 +270,9 @@ protected:
 };
 
 /**
-    \brief  Creates a combobox widget for an enumeration parameter
-*/
-Gtk::Widget *
-ParamRadioButton::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
+ * Creates a combobox widget for an enumeration parameter.
+ */
+Gtk::Widget * ParamRadioButton::get_widget(SPDocument * doc, Inkscape::XML::Node * node, sigc::signal<void> * changeSignal)
 {
     if (_gui_hidden) {
         return NULL;

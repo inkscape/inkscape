@@ -3,6 +3,7 @@
  *   Ted Gould <ted@gould.cx>
  *   Johan Engelen <johan@shouraizou.nl>
  *   Christopher Brown <audiere@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -73,16 +74,13 @@ ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar *
         defaulthex = paramval.data();
 
     _value = atoi(defaulthex);
-
-    return;
 }
 
-void ParamColor::string (std::string &string)
+void ParamColor::string(std::string &string) const
 {
     char str[16];
     sprintf(str, "%i", _value);
     string += str;
-    return;
 }
 
 Gtk::Widget *ParamColor::get_widget( SPDocument * /*doc*/, Inkscape::XML::Node * /*node*/, sigc::signal<void> * changeSignal )
