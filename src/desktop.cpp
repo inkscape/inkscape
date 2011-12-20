@@ -1673,17 +1673,16 @@ static void _reconstruction_finish(SPDesktop * desktop)
 /**
  * Namedview_modified callback.
  */
-static void
-_namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
+static void _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
 {
     SPNamedView *nv=SP_NAMEDVIEW(obj);
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
 
         /* Show/hide page background */
-        if (nv->pagecolor & 0xff) {
+        if (nv->pagecolor | (0xff != 0xffffffff)) {
             sp_canvas_item_show (desktop->table);
-            ((CtrlRect *) desktop->table)->setColor(0x00000000, true, nv->pagecolor);
+            ((CtrlRect *) desktop->table)->setColor(0x00000000, true, nv->pagecolor | 0xff);
             sp_canvas_item_move_to_z (desktop->table, 0);
         } else {
             sp_canvas_item_hide (desktop->table);
@@ -1722,11 +1721,10 @@ _namedview_modified (SPObject *obj, guint flags, SPDesktop *desktop)
         }
 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        if (SP_RGBA32_A_U(nv->pagecolor) < 128 ||
-            (SP_RGBA32_R_U(nv->pagecolor) +
-             SP_RGBA32_G_U(nv->pagecolor) +
-             SP_RGBA32_B_U(nv->pagecolor)) >= 384) {
-            // the background color is light or transparent, use black outline
+        if (SP_RGBA32_R_U(nv->pagecolor) +
+            SP_RGBA32_G_U(nv->pagecolor) +
+            SP_RGBA32_B_U(nv->pagecolor) >= 384) {
+            // the background color is light, use black outline
             SP_CANVAS_ARENA (desktop->drawing)->drawing.outlinecolor = prefs->getInt("/options/wireframecolors/onlight", 0xff);
         } else { // use white outline
             SP_CANVAS_ARENA (desktop->drawing)->drawing.outlinecolor = prefs->getInt("/options/wireframecolors/ondark", 0xffffffff);
@@ -1813,3 +1811,4 @@ Geom::Point SPDesktop::dt2doc(Geom::Point const &p) const
   End:
 */
 // vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
+
