@@ -476,7 +476,6 @@ CanvasAxonomGrid::Update (Geom::Affine const &affine, unsigned int /*flags*/)
     if (empspacing == 0) {
         scaled = true;
     }
-
 }
 
 void
@@ -499,7 +498,7 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
 
     // gc = gridcoordinates (the coordinates calculated from the grids origin 'grid->ow'.
     // sc = screencoordinates ( for example "buf->rect.left()" is in screencoordinates )
-    // bc = buffer patch coordinates
+    // bc = buffer patch coordinates (x=0 on left side of page, y=0 on bottom of page)
 
     // tl = topleft ; br = bottomright
     Geom::Point buf_tl_gc;
@@ -509,18 +508,15 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     buf_br_gc[Geom::X] = buf->rect.right()  - ow[Geom::X];
     buf_br_gc[Geom::Y] = buf->rect.bottom() - ow[Geom::Y];
 
-    gdouble x;
-    gdouble y;
-
     // render the three separate line groups representing the main-axes
 
     // x-axis always goes from topleft to bottomright. (0,0) - (1,1)
     gdouble const xintercept_y_bc = (buf_tl_gc[Geom::X] * tan_angle[X]) - buf_tl_gc[Geom::Y] ;
     gdouble const xstart_y_sc = ( xintercept_y_bc - floor(xintercept_y_bc/lyw)*lyw ) + buf->rect.top();
-    gint const xlinestart = round( (xstart_y_sc - buf->rect.left()*tan_angle[X] -ow[Geom::Y]) / lyw );
+    gint const xlinestart = round( (xstart_y_sc - buf_tl_gc[Geom::X]*tan_angle[X] - ow[Geom::Y]) / lyw );
     gint xlinenum = xlinestart;
     // lines starting on left side.
-    for (y = xstart_y_sc; y < buf->rect.bottom(); y += lyw, xlinenum++) {
+    for (gdouble y = xstart_y_sc; y < buf->rect.bottom(); y += lyw, xlinenum++) {
         gint const x0 = buf->rect.left();
         gint const y0 = round(y);
         gint const x1 = x0 + round( (buf->rect.bottom() - y) / tan_angle[X] );
@@ -535,7 +531,7 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     // lines starting from top side
     gdouble const xstart_x_sc = buf->rect.left() + (lxw_x - (xstart_y_sc - buf->rect.top()) / tan_angle[X]) ;
     xlinenum = xlinestart-1;
-    for (x = xstart_x_sc; x < buf->rect.right(); x += lxw_x, xlinenum--) {
+    for (gdouble x = xstart_x_sc; x < buf->rect.right(); x += lxw_x, xlinenum--) {
         gint const y0 = buf->rect.top();
         gint const y1 = buf->rect.bottom();
         gint const x0 = round(x);
@@ -552,7 +548,7 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     gdouble const ystart_x_sc = floor (buf_tl_gc[Geom::X] / spacing_ylines) * spacing_ylines + ow[Geom::X];
     gint const  ylinestart = round((ystart_x_sc - ow[Geom::X]) / spacing_ylines);
     gint ylinenum = ylinestart;
-    for (x = ystart_x_sc; x < buf->rect.right(); x += spacing_ylines, ylinenum++) {
+    for (gdouble x = ystart_x_sc; x < buf->rect.right(); x += spacing_ylines, ylinenum++) {
         gint const x0 = round(x);
 
         if (!scaled && (ylinenum % empspacing) != 0) {
@@ -565,10 +561,11 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     // z-axis always goes from bottomleft to topright. (0,1) - (1,0)
     gdouble const zintercept_y_bc = (buf_tl_gc[Geom::X] * -tan_angle[Z]) - buf_tl_gc[Geom::Y] ;
     gdouble const zstart_y_sc = ( zintercept_y_bc - floor(zintercept_y_bc/lyw)*lyw ) + buf->rect.top();
-    gint const  zlinestart = round( (zstart_y_sc + buf->rect.left()*tan_angle[Z] - ow[Geom::Y]) / lyw );
+    gint const  zlinestart = round( (zstart_y_sc + buf_tl_gc[Geom::X]*tan_angle[Z] - ow[Geom::Y]) / lyw );
     gint zlinenum = zlinestart;
     // lines starting from left side
-    for (y = zstart_y_sc; y < buf->rect.bottom(); y += lyw, zlinenum++) {
+    gdouble next_y = zstart_y_sc;
+    for (gdouble y = zstart_y_sc; y < buf->rect.bottom(); y += lyw, zlinenum++, next_y = y) {
         gint const x0 = buf->rect.left();
         gint const y0 = round(y);
         gint const x1 = x0 + round( (y - buf->rect.top() ) / tan_angle[Z] );
@@ -581,8 +578,8 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         }
     }
     // draw lines from bottom-up
-    gdouble const zstart_x_sc = buf->rect.left() + (y - buf->rect.bottom()) / tan_angle[Z] ;
-    for (x = zstart_x_sc; x < buf->rect.right(); x += lxw_z, zlinenum++) {
+    gdouble const zstart_x_sc = buf->rect.left() + (next_y - buf->rect.bottom()) / tan_angle[Z] ;
+    for (gdouble x = zstart_x_sc; x < buf->rect.right(); x += lxw_z, zlinenum++) {
         gint const y0 = buf->rect.bottom();
         gint const y1 = buf->rect.top();
         gint const x0 = round(x);
