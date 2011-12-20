@@ -70,7 +70,7 @@ except ImportError:
 	pass
 
 APP = 'scour'
-VER = '0.25'
+VER = '0.26'
 COPYRIGHT = 'Copyright Jeff Schiller, Louis Simard, 2010'
 
 NS = { 	'SVG': 		'http://www.w3.org/2000/svg', 
@@ -2125,10 +2125,13 @@ def parseListOfPoints(s):
 		# we got negative coords
 		else:
 			for j in xrange(len(negcoords)):
-				# first number could be positive
 				if j == 0:
+					# first number could be positive
 					if negcoords[0] != '':
 						nums.append(negcoords[0])
+				# but it could also be negative
+				elif len(nums) == 0:
+					nums.append('-' + negcoords[j])
 				# otherwise all other strings will be negative
 				else:
 					# unless we accidentally split a number that was in scientific notation
@@ -2554,9 +2557,9 @@ def removeComments(element) :
 		# must process the document object separately, because its
 		# documentElement's nodes have None as their parentNode
 		for subelement in element.childNodes:
-			if isinstance(element, xml.dom.minidom.Comment):
-				numCommentBytes += len(element.data)
-				element.documentElement.removeChild(subelement)
+			if isinstance(subelement, xml.dom.minidom.Comment):
+				numCommentBytes += len(subelement.data)
+				element.removeChild(subelement)
 			else:
 				removeComments(subelement)
 	elif isinstance(element, xml.dom.minidom.Comment):
