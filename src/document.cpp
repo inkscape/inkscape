@@ -662,6 +662,7 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
     if(nv) {
         Geom::Translate tr2(-rect_with_margins.min());
         nv->translateGuides(tr2);
+        nv->translateGrids(tr2);
 
         // update the viewport so the drawing appears to stay where it was
         nv->scrollAllDesktops(-tr2[0], tr2[1], false);

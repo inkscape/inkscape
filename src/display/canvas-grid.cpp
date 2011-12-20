@@ -28,6 +28,7 @@
 #include "sp-namedview.h"
 #include "sp-object.h"
 #include "svg/svg-color.h"
+#include "svg/stringstream.h"
 #include "util/mathfns.h"
 #include "xml/node-event-vector.h"
 
@@ -377,6 +378,22 @@ bool CanvasGrid::isEnabled()
     return snapper->getEnabled();
 }
 
+void CanvasGrid::setOrigin(Geom::Point const &origin_px)
+{
+    Inkscape::SVGOStringStream os_x, os_y;
+    gdouble val;
+
+    val = origin_px[Geom::X];
+    val = sp_pixels_get_units (val, *gridunit);
+    os_x << val << sp_unit_get_abbreviation(gridunit);
+    val = origin_px[Geom::Y];
+    val = sp_pixels_get_units (val, *gridunit);
+    os_y << val << sp_unit_get_abbreviation(gridunit);
+    repr->setAttribute("originx", os_x.str().c_str());
+    repr->setAttribute("originy", os_y.str().c_str());
+}
+
+
 // ##########################################################
 //   CanvasXYGrid
 
@@ -427,8 +444,9 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gridunit = sp_unit_get_by_abbreviation( prefs->getString("/options/grids/xy/units").data() );
-    if (!gridunit)
+    if (!gridunit) {
         gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
+    }
     origin[Geom::X] = sp_units_get_pixels(prefs->getDouble("/options/grids/xy/origin_x", 0.0), *gridunit);
     origin[Geom::Y] = sp_units_get_pixels(prefs->getDouble("/options/grids/xy/origin_y", 0.0), *gridunit);
     color = prefs->getInt("/options/grids/xy/color", 0x0000ff20);

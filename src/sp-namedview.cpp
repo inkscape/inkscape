@@ -1116,6 +1116,15 @@ void SPNamedView::translateGuides(Geom::Translate const &tr) {
     }
 }
 
+void SPNamedView::translateGrids(Geom::Translate const &tr) {
+    for (GSList *l = grids; l != NULL; l = l->next) {
+        Inkscape::CanvasGrid* g = reinterpret_cast<Inkscape::CanvasGrid*>(l->data);
+        if (g) {
+            g->setOrigin(g->origin * tr);
+        }
+    }
+}
+
 void SPNamedView::scrollAllDesktops(double dx, double dy, bool is_scrolling) {
         for(GSList *l = views; l; l = l->next) {
             SPDesktop *desktop = static_cast<SPDesktop *>(l->data);

@@ -86,6 +86,7 @@ public:
 
     Gtk::Widget * newWidget();
 
+    void setOrigin(Geom::Point const &origin_px); /**< writes new origin (specified in px units) to SVG */
     Geom::Point origin;     /**< Origin of the grid */
     guint32 color;        /**< Color for normal lines */
     guint32 empcolor;     /**< Color for emphasis lines */
