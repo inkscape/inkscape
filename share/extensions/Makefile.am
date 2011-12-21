@@ -44,6 +44,7 @@ extensions = \
 	cubicsuperpath.py \
 	dia2svg.sh \
 	dimension.py \
+	dm2svg.py \
 	dots.py \
 	draw_from_triangle.py \
 	dxf_input.py \
@@ -218,6 +219,7 @@ modules = \
 	color_rgbbarrel.inx\
 	color_replace.inx\
 	convert2dashes.inx\
+	dhw_input.inx \
 	dia.inx \
 	dimension.inx \
 	dots.inx \
