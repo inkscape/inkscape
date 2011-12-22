@@ -181,12 +181,15 @@ struct _GdlDockItemPrivate {
     guint      grip_size;
     
     GtkWidget *tab_label;
+    gboolean  intern_tab_label;
+    guint     notify_label;
+    guint     notify_stock_id;
 
     gint       preferred_width;
     gint       preferred_height;
 
     GdlDockPlaceholder *ph;
-
+    
     gint       start_x, start_y;
 };
 
@@ -491,8 +494,31 @@ gdl_dock_item_instance_init (GdlDockItem *item)
 
     item->_priv->preferred_width = item->_priv->preferred_height = -1;
     item->_priv->tab_label = NULL;
+    item->_priv->intern_tab_label = FALSE;
 
     item->_priv->ph = NULL;
+}
+
+static void
+on_long_name_changed (GObject* item,
+                      GParamSpec* spec,
+                      gpointer user_data)
+{
+    gchar* long_name;
+    g_object_get (item, "long-name", &long_name, NULL);
+    gtk_label_set_label (GTK_LABEL (user_data), long_name);
+    g_free(long_name);
+}
+
+static void
+on_stock_id_changed (GObject* item,
+                      GParamSpec* spec,
+                      gpointer user_data)
+{
+    gchar* stock_id;
+    g_object_get (item, "stock_id", &stock_id, NULL);
+    gtk_image_set_from_stock (GTK_IMAGE (user_data), stock_id, GTK_ICON_SIZE_MENU);
+    g_free(stock_id);
 }
 
 static GObject *
@@ -510,6 +536,11 @@ gdl_dock_item_constructor (GType                  type,
                                                NULL);
     if (g_object) {
         GdlDockItem *item = GDL_DOCK_ITEM (g_object);
+        GtkWidget *hbox;
+        GtkWidget *label;
+        GtkWidget *icon;
+        gchar* long_name;
+        gchar* stock_id;
 
         if (GDL_DOCK_ITEM_HAS_GRIP (item)) {
             item->_priv->grip_shown = TRUE;
@@ -520,6 +551,33 @@ gdl_dock_item_constructor (GType                  type,
         else {
             item->_priv->grip_shown = FALSE;
         }
+        GDL_DOCK_OBJECT_UNSET_FLAGS (item, GDL_DOCK_AUTOMATIC);
+
+        g_object_get (g_object, "long-name", &long_name, "stock-id", &stock_id, NULL);
+
+        hbox = gtk_hbox_new (FALSE, 5);    
+        label = gtk_label_new (long_name);
+        icon = gtk_image_new ();
+        if (stock_id)
+            gtk_image_set_from_stock (GTK_IMAGE (icon), stock_id, 
+                                      GTK_ICON_SIZE_MENU);
+        gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+        item->_priv->notify_label = 
+            g_signal_connect (item, "notify::long-name", G_CALLBACK (on_long_name_changed),
+                              label);
+        item->_priv->notify_stock_id = 
+            g_signal_connect (item, "notify::stock-id", G_CALLBACK (on_stock_id_changed),
+                              icon);
+        
+        gtk_widget_show_all (hbox);
+        
+        gdl_dock_item_set_tablabel (item, hbox);
+        item->_priv->intern_tab_label = TRUE;
+
+        g_free (long_name);
+        g_free (stock_id);
     }
 
     return g_object;
@@ -1743,8 +1801,7 @@ gdl_dock_item_new (const gchar         *name,
                                         "long-name", long_name,
                                         "behavior", behavior,
                                         NULL));
-    GDL_DOCK_OBJECT_UNSET_FLAGS (item, GDL_DOCK_AUTOMATIC);
-    gdl_dock_item_set_tablabel (item, gtk_label_new (long_name));
+
     return GTK_WIDGET (item);
 }
 
@@ -1774,9 +1831,6 @@ gdl_dock_item_new_with_stock (const gchar         *name,
                                         "stock-id", stock_id,
                                         "behavior", behavior,
                                         NULL));
-    GDL_DOCK_OBJECT_UNSET_FLAGS (item, GDL_DOCK_AUTOMATIC);
-    gdl_dock_item_set_tablabel (item, gtk_label_new (long_name));
-
     return GTK_WIDGET (item);
 }
 
@@ -1918,6 +1972,13 @@ gdl_dock_item_set_tablabel (GdlDockItem *item,
 {
     g_return_if_fail (item != NULL);
 
+    if (item->_priv->intern_tab_label)
+    {
+        item->_priv->intern_tab_label = FALSE;
+        g_signal_handler_disconnect (item, item->_priv->notify_label);        
+        g_signal_handler_disconnect (item, item->_priv->notify_stock_id);
+    }
+    
     if (item->_priv->tab_label) {
         /* disconnect and unref the previous tablabel */
         if (GDL_IS_DOCK_TABLABEL (item->_priv->tab_label)) {
