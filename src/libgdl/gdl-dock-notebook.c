@@ -26,7 +26,6 @@
 #include "gdl-i18n.h"
 #include "gdl-switcher.h"
 
-#include "gdl-tools.h"
 #include "gdl-dock-notebook.h"
 #include "gdl-dock-tablabel.h"
 
@@ -34,7 +33,6 @@
 /* Private prototypes */
 
 static void  gdl_dock_notebook_class_init    (GdlDockNotebookClass *klass);
-static void  gdl_dock_notebook_instance_init (GdlDockNotebook      *notebook);
 static void  gdl_dock_notebook_set_property  (GObject              *object,
                                               guint                 prop_id,
                                               const GValue         *value,
@@ -90,7 +88,7 @@ enum {
 
 /* ----- Private functions ----- */
 
-GDL_CLASS_BOILERPLATE (GdlDockNotebook, gdl_dock_notebook, GdlDockItem, GDL_TYPE_DOCK_ITEM) ;
+G_DEFINE_TYPE (GdlDockNotebook, gdl_dock_notebook, GDL_TYPE_DOCK_ITEM);
 
 static void
 gdl_dock_notebook_class_init (GdlDockNotebookClass *klass)
@@ -179,7 +177,7 @@ gdl_dock_notebook_button_cb (GtkWidget      *widget,
 }
     
 static void
-gdl_dock_notebook_instance_init (GdlDockNotebook *notebook)
+gdl_dock_notebook_init (GdlDockNotebook *notebook)
 {
     GdlDockItem *item;
 
@@ -253,7 +251,7 @@ gdl_dock_notebook_destroy (GtkObject *object)
 
     /* we need to call the virtual first, since in GdlDockDestroy our
        children dock objects are detached */
-    GDL_CALL_PARENT (GTK_OBJECT_CLASS, destroy, (object));
+    GTK_OBJECT_CLASS (gdl_dock_notebook_parent_class)->destroy (object);
 
     /* after that we can remove the GtkNotebook */
     if (item->child) {
@@ -275,7 +273,7 @@ gdl_dock_notebook_switch_page_cb (GtkNotebook     *nb,
     notebook = GDL_DOCK_NOTEBOOK (data);
 
     /* deactivate old tablabel */
-    if (nb->cur_page) {
+    if (gtk_notebook_get_current_page (nb)) {
         tablabel = gtk_notebook_get_tab_label (
             nb, gtk_notebook_get_nth_page (
                 nb, gtk_notebook_get_current_page (nb)));
@@ -327,8 +325,8 @@ gdl_dock_notebook_forall (GtkContainer *container,
 
     if (include_internals) {
         /* use GdlDockItem's forall */
-        GDL_CALL_PARENT (GTK_CONTAINER_CLASS, forall, 
-                           (container, include_internals, callback, callback_data));
+        GTK_CONTAINER_CLASS (gdl_dock_notebook_parent_class)->forall 
+            (container, include_internals, callback, callback_data);
     }
     else {
         item = GDL_DOCK_ITEM (container);
@@ -432,8 +430,7 @@ gdl_dock_notebook_dock (GdlDockObject    *object,
         }
     }
     else
-        GDL_CALL_PARENT (GDL_DOCK_OBJECT_CLASS, dock,
-                           (object, requestor, position, other_data));
+        GDL_DOCK_OBJECT_CLASS (gdl_dock_notebook_parent_class)->dock (object, requestor, position, other_data);
 }
 
 static void
@@ -447,7 +444,7 @@ gdl_dock_notebook_set_orientation (GdlDockItem    *item,
             gtk_notebook_set_tab_pos (GTK_NOTEBOOK (item->child), GTK_POS_LEFT);
     }
 
-    GDL_CALL_PARENT (GDL_DOCK_ITEM_CLASS, set_orientation, (item, orientation));
+    GDL_DOCK_ITEM_CLASS (gdl_dock_notebook_parent_class)->set_orientation (item, orientation);
 }
 
 static gboolean 
@@ -492,7 +489,7 @@ gdl_dock_notebook_present (GdlDockObject *object,
     if (i >= 0)
         gtk_notebook_set_current_page (GTK_NOTEBOOK (item->child), i);
 
-    GDL_CALL_PARENT (GDL_DOCK_OBJECT_CLASS, present, (object, child));
+    GDL_DOCK_OBJECT_CLASS (gdl_dock_notebook_parent_class)->present (object, child);
 }
 
 static gboolean 

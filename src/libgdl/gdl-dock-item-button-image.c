@@ -23,13 +23,12 @@
 #include "gdl-dock-item-button-image.h"
 
 #include <math.h>
-#include "gdl-tools.h"
 
 #define ICON_SIZE 12
 
-GDL_CLASS_BOILERPLATE (GdlDockItemButtonImage,
-                       gdl_dock_item_button_image,
-                       GtkWidget, GTK_TYPE_WIDGET);
+G_DEFINE_TYPE (GdlDockItemButtonImage,
+               gdl_dock_item_button_image,
+               GTK_TYPE_WIDGET);
                        
 static gint
 gdl_dock_item_button_image_expose (GtkWidget      *widget,
@@ -115,10 +114,10 @@ gdl_dock_item_button_image_expose (GtkWidget      *widget,
 }
 
 static void
-gdl_dock_item_button_image_instance_init (
+gdl_dock_item_button_image_init (
     GdlDockItemButtonImage *button_image)
 {
-    GTK_WIDGET_SET_FLAGS (button_image, GTK_NO_WINDOW);
+    gtk_widget_set_has_window (GTK_WIDGET (button_image), FALSE);
 }
 
 static void
@@ -139,8 +138,6 @@ gdl_dock_item_button_image_class_init (
     GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
     GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-    
-    parent_class = g_type_class_peek_parent (klass);
     
     widget_class->expose_event =
         gdl_dock_item_button_image_expose;

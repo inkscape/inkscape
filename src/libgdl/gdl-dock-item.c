@@ -37,7 +37,6 @@
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "gdl-tools.h"
 #include "gdl-dock.h"
 #include "gdl-dock-item.h"
 #include "gdl-dock-item-grip.h"
@@ -54,7 +53,6 @@
 /* ----- Private prototypes ----- */
 
 static void  gdl_dock_item_class_init    (GdlDockItemClass *class);
-static void  gdl_dock_item_instance_init (GdlDockItem *item);
 
 static GObject *gdl_dock_item_constructor (GType                  type,
                                            guint                  n_construct_properties,
@@ -200,7 +198,7 @@ struct _GdlDockItemPrivate {
 
 /* ----- Private functions ----- */
 
-GDL_CLASS_BOILERPLATE (GdlDockItem, gdl_dock_item, GdlDockObject, GDL_TYPE_DOCK_OBJECT);
+G_DEFINE_TYPE (GdlDockItem, gdl_dock_item, GDL_TYPE_DOCK_OBJECT);
 
 static void
 add_tab_bindings (GtkBindingSet    *binding_set,
@@ -475,7 +473,7 @@ gdl_dock_item_class_init (GdlDockItemClass *klass)
 }
 
 static void
-gdl_dock_item_instance_init (GdlDockItem *item)
+gdl_dock_item_init (GdlDockItem *item)
 {
     gtk_widget_set_has_window (GTK_WIDGET (item), TRUE);
     gtk_widget_set_can_focus (GTK_WIDGET (item), TRUE);
@@ -528,12 +526,9 @@ gdl_dock_item_constructor (GType                  type,
 {
     GObject *g_object;
     
-    g_object = GDL_CALL_PARENT_WITH_DEFAULT (G_OBJECT_CLASS, 
-                                               constructor, 
-                                               (type,
-                                                n_construct_properties,
-                                                construct_param),
-                                               NULL);
+    g_object = G_OBJECT_CLASS (gdl_dock_item_parent_class)-> constructor (type,
+                                                                     n_construct_properties,
+                                                                     construct_param);
     if (g_object) {
         GdlDockItem *item = GDL_DOCK_ITEM (g_object);
         GtkWidget *hbox;
@@ -705,7 +700,7 @@ gdl_dock_item_destroy (GtkObject *object)
         g_free (priv);
     }
 
-    GDL_CALL_PARENT (GTK_OBJECT_CLASS, destroy, (object));
+    GTK_OBJECT_CLASS (gdl_dock_item_parent_class)->destroy (object);
 }
 
 static void 
@@ -806,8 +801,8 @@ gdl_dock_item_set_focus_child (GtkContainer *container,
 {
     g_return_if_fail (GDL_IS_DOCK_ITEM (container));
     
-    if (GTK_CONTAINER_CLASS (parent_class)->set_focus_child) {
-        (* GTK_CONTAINER_CLASS (parent_class)->set_focus_child) (container, child);
+    if (GTK_CONTAINER_CLASS (gdl_dock_item_parent_class)->set_focus_child) {
+        (* GTK_CONTAINER_CLASS (gdl_dock_item_parent_class)->set_focus_child) (container, child);
     }
 
     gdl_dock_item_showhide_grip (GDL_DOCK_ITEM (container));
@@ -817,9 +812,11 @@ static void
 gdl_dock_item_size_request (GtkWidget      *widget,
                             GtkRequisition *requisition)
 {
+    GdlDockItem    *item;
     GtkRequisition  child_requisition;
     GtkRequisition  grip_requisition;
-    GdlDockItem    *item;
+    GtkStyle       *style;
+    guint           border_width;
 
     g_return_if_fail (GDL_IS_DOCK_ITEM (widget));
     g_return_if_fail (requisition != NULL);
@@ -863,10 +860,13 @@ gdl_dock_item_size_request (GtkWidget      *widget,
             requisition->width = 0;
     }
 
-    requisition->width += (GTK_CONTAINER (widget)->border_width + widget->style->xthickness) * 2;
-    requisition->height += (GTK_CONTAINER (widget)->border_width + widget->style->ythickness) * 2;
+    border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+    style = gtk_widget_get_style (widget);
 
-    widget->requisition = *requisition;
+    requisition->width += (border_width + style->xthickness) * 2;
+    requisition->height += (border_width + style->ythickness) * 2;
+
+    //gtk_widget_size_request (widget, requisition);    
 }
 
 static void
@@ -880,31 +880,33 @@ gdl_dock_item_size_allocate (GtkWidget     *widget,
   
     item = GDL_DOCK_ITEM (widget);
 
-    widget->allocation = *allocation;
+    gtk_widget_set_allocation (widget, allocation);
 
     /* Once size is allocated, preferred size is no longer necessary */
     item->_priv->preferred_height = -1;
     item->_priv->preferred_width = -1;
     
     if (gtk_widget_get_realized (widget))
-        gdk_window_move_resize (widget->window,
-                                widget->allocation.x,
-                                widget->allocation.y,
-                                widget->allocation.width,
-                                widget->allocation.height);
+        gdk_window_move_resize (gtk_widget_get_window (widget),
+                                allocation->x,
+                                allocation->y,
+                                allocation->width,
+                                allocation->height);
 
     if (item->child && gtk_widget_get_visible (item->child)) {
         GtkAllocation  child_allocation;
-        int            border_width;
+        GtkStyle      *style;
+        guint          border_width;
 
-        border_width = GTK_CONTAINER (widget)->border_width;
+        border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+        style = gtk_widget_get_style (widget);
 
-        child_allocation.x = border_width + widget->style->xthickness;
-        child_allocation.y = border_width + widget->style->ythickness;
+        child_allocation.x = border_width + style->xthickness;
+        child_allocation.y = border_width + style->ythickness;
         child_allocation.width = allocation->width
-            - 2 * (border_width + widget->style->xthickness);
+            - 2 * (border_width + style->xthickness);
         child_allocation.height = allocation->height
-            - 2 * (border_width + widget->style->ythickness);
+            - 2 * (border_width + style->ythickness);
         
         if (GDL_DOCK_ITEM_GRIP_SHOWN (item)) {
             GtkAllocation grip_alloc = child_allocation;
@@ -945,7 +947,7 @@ gdl_dock_item_map (GtkWidget *widget)
 
     item = GDL_DOCK_ITEM (widget);
 
-    gdk_window_show (widget->window);
+    gdk_window_show (gtk_widget_get_window (widget));
 
     if (item->child
         && gtk_widget_get_visible (item->child)
@@ -970,7 +972,7 @@ gdl_dock_item_unmap (GtkWidget *widget)
     
     item = GDL_DOCK_ITEM (widget);
 
-    gdk_window_hide (widget->window);
+    gdk_window_hide (gtk_widget_get_window (widget));
 
     if (item->_priv->grip)
         gtk_widget_unmap (item->_priv->grip);
@@ -979,9 +981,11 @@ gdl_dock_item_unmap (GtkWidget *widget)
 static void
 gdl_dock_item_realize (GtkWidget *widget)
 {
+    GdlDockItem   *item;
+    GtkAllocation  allocation;
+    GdkWindow     *window;
     GdkWindowAttr  attributes;
     gint           attributes_mask;
-    GdlDockItem   *item;
 
     g_return_if_fail (widget != NULL);
     g_return_if_fail (GDL_IS_DOCK_ITEM (widget));
@@ -991,10 +995,11 @@ gdl_dock_item_realize (GtkWidget *widget)
     gtk_widget_set_realized (widget, TRUE);
 
     /* widget window */
-    attributes.x = widget->allocation.x;
-    attributes.y = widget->allocation.y;
-    attributes.width = widget->allocation.width;
-    attributes.height = widget->allocation.height;
+    gtk_widget_get_allocation (widget, &allocation);
+    attributes.x = allocation.x;
+    attributes.y = allocation.y;
+    attributes.width = allocation.width;
+    attributes.height = allocation.height;
     attributes.window_type = GDK_WINDOW_CHILD;
     attributes.wclass = GDK_INPUT_OUTPUT;
     attributes.visual = gtk_widget_get_visual (widget);
@@ -1005,26 +1010,28 @@ gdl_dock_item_realize (GtkWidget *widget)
                              GDK_BUTTON_PRESS_MASK |
                              GDK_BUTTON_RELEASE_MASK);
     attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
-    widget->window = gdk_window_new (gtk_widget_get_parent_window (widget), 
-                                     &attributes, attributes_mask);
-    gdk_window_set_user_data (widget->window, widget);
-  
-    widget->style = gtk_style_attach (widget->style, widget->window);
-    gtk_style_set_background (widget->style, widget->window, 
+    window = gdk_window_new (gtk_widget_get_parent_window (widget),
+                             &attributes, attributes_mask);
+    gtk_widget_set_window (widget, window);
+    gdk_window_set_user_data (window, widget);
+
+    gtk_widget_style_attach (widget);
+    gtk_style_set_background (gtk_widget_get_style (widget), window,
                               gtk_widget_get_state (GTK_WIDGET (item)));
-    gdk_window_set_back_pixmap (widget->window, NULL, TRUE);
+    gdk_window_set_back_pixmap (window, NULL, TRUE);
 
     if (item->child)
-        gtk_widget_set_parent_window (item->child, widget->window);
-    
+        gtk_widget_set_parent_window (item->child, window);
+
     if (item->_priv->grip)
-        gtk_widget_set_parent_window (item->_priv->grip, widget->window);
+        gtk_widget_set_parent_window (item->_priv->grip, window);
 }
 
 static void
 gdl_dock_item_style_set (GtkWidget *widget,
                          GtkStyle  *previous_style)
 {
+    GdkWindow *window;
     (void)previous_style;
 
     g_return_if_fail (widget != NULL);
@@ -1033,10 +1040,12 @@ gdl_dock_item_style_set (GtkWidget *widget,
     if (gtk_widget_get_realized (widget) &&
             gtk_widget_get_has_window (widget))
     {
-        gtk_style_set_background (widget->style, widget->window,
-                                  widget->state);
+        window = gtk_widget_get_window (widget);
+        gtk_style_set_background (gtk_widget_get_style (widget),
+                                  window,
+                                  gtk_widget_get_state (widget));
         if (gtk_widget_is_drawable (widget))
-            gdk_window_clear (widget->window);
+            gdk_window_clear (window);
     }
 }
 
@@ -1044,8 +1053,12 @@ static void
 gdl_dock_item_paint (GtkWidget      *widget,
                      GdkEventExpose *event)
 {
-    gtk_paint_box (widget->style,
-                   widget->window,
+    GdlDockItem  *item;
+
+    item = GDL_DOCK_ITEM (widget);
+
+    gtk_paint_box (gtk_widget_get_style (widget),
+                   gtk_widget_get_window (widget),
                    gtk_widget_get_state (widget),
                    GTK_SHADOW_NONE,
                    &event->area, widget,
@@ -1061,9 +1074,11 @@ gdl_dock_item_expose (GtkWidget      *widget,
     g_return_val_if_fail (GDL_IS_DOCK_ITEM (widget), FALSE);
     g_return_val_if_fail (event != NULL, FALSE);
 
-    if (gtk_widget_is_drawable (widget) && event->window == widget->window) {
+    if (gtk_widget_is_drawable (widget) &&
+        event->window == gtk_widget_get_window (widget)) 
+    {
         gdl_dock_item_paint (widget, event);
-        GDL_CALL_PARENT_GBOOLEAN(GTK_WIDGET_CLASS, expose_event, (widget,event));
+        GTK_WIDGET_CLASS (gdl_dock_item_parent_class)->expose_event (widget,event);
     }
   
     return FALSE;
@@ -1088,10 +1103,11 @@ gdl_dock_item_button_changed (GtkWidget      *widget,
                               GdkEventButton *event)
 {
     GdlDockItem *item;
+    GtkAllocation allocation;
+    GdkCursor   *cursor;
     gboolean     locked;
     gboolean     event_handled;
     gboolean     in_handle;
-    GdkCursor   *cursor;
   
     g_return_val_if_fail (widget != NULL, FALSE);
     g_return_val_if_fail (GDL_IS_DOCK_ITEM (widget), FALSE);
@@ -1106,13 +1122,15 @@ gdl_dock_item_button_changed (GtkWidget      *widget,
 
     event_handled = FALSE;
 
+    gtk_widget_get_allocation (item->_priv->grip, &allocation);
+
     /* Check if user clicked on the drag handle. */      
     switch (item->orientation) {
     case GTK_ORIENTATION_HORIZONTAL:
-        in_handle = event->x < item->_priv->grip->allocation.width;
+        in_handle = event->x < allocation.width;
         break;
     case GTK_ORIENTATION_VERTICAL:
-        in_handle = event->y < item->_priv->grip->allocation.height;
+        in_handle = event->y < allocation.height;
         break;
     default:
         in_handle = FALSE;
@@ -1228,10 +1246,7 @@ gdl_dock_item_key_press (GtkWidget   *widget,
     if (event_handled)
         return TRUE;
     else
-        return GDL_CALL_PARENT_WITH_DEFAULT (GTK_WIDGET_CLASS,
-                                               key_press_event,
-                                               (widget, event),
-                                               FALSE);
+        return GTK_WIDGET_CLASS (gdl_dock_item_parent_class)->key_press_event (widget, event);
 }
 
 static gboolean
@@ -1240,21 +1255,21 @@ gdl_dock_item_dock_request (GdlDockObject  *object,
                             gint            y,
                             GdlDockRequest *request)
 {
-    GtkAllocation *alloc;
+    GtkAllocation  alloc;
     gint           rel_x, rel_y;
 
     /* we get (x,y) in our allocation coordinates system */
     
     /* Get item's allocation. */
-    alloc = &(GTK_WIDGET (object)->allocation);
+    gtk_widget_get_allocation (GTK_WIDGET (object), &alloc);
     
     /* Get coordinates relative to our window. */
-    rel_x = x - alloc->x;
-    rel_y = y - alloc->y;
+    rel_x = x - alloc.x;
+    rel_y = y - alloc.y;
 
     /* Location is inside. */
-    if (rel_x > 0 && rel_x < alloc->width &&
-        rel_y > 0 && rel_y < alloc->height) {
+    if (rel_x > 0 && rel_x < alloc.width &&
+        rel_y > 0 && rel_y < alloc.height) {
         float rx, ry;
         GtkRequisition my, other;
         gint divider = -1;
@@ -1264,8 +1279,8 @@ gdl_dock_item_dock_request (GdlDockObject  *object,
         gdl_dock_item_preferred_size (GDL_DOCK_ITEM (object), &my);
         
         /* Calculate location in terms of the available space (0-100%). */
-        rx = (float) rel_x / alloc->width;
-        ry = (float) rel_y / alloc->height;
+        rx = (float) rel_x / alloc.width;
+        ry = (float) rel_y / alloc.height;
 
         /* Determine dock location. */
         if (rx < SPLIT_RATIO) {
@@ -1291,8 +1306,8 @@ gdl_dock_item_dock_request (GdlDockObject  *object,
         /* Reset rectangle coordinates to entire item. */
         request->rect.x = 0;
         request->rect.y = 0;
-        request->rect.width = alloc->width;
-        request->rect.height = alloc->height;
+        request->rect.width = alloc.width;
+        request->rect.height = alloc.height;
 
         GdlDockItemBehavior behavior = GDL_DOCK_ITEM(object)->behavior;
 
@@ -1339,8 +1354,8 @@ gdl_dock_item_dock_request (GdlDockObject  *object,
 
         /* adjust returned coordinates so they are have the same
            origin as our window */
-        request->rect.x += alloc->x;
-        request->rect.y += alloc->y;
+        request->rect.x += alloc.x;
+        request->rect.y += alloc.y;
         
         /* Set possible target location and return TRUE. */            
         request->target = object;
@@ -1367,6 +1382,7 @@ gdl_dock_item_dock (GdlDockObject    *object,
 {
     GdlDockObject *new_parent = NULL;
     GdlDockObject *parent, *requestor_parent;
+    GtkAllocation  allocation;
     gboolean       add_ourselves_first = FALSE;
 
     guint	   available_space=0;
@@ -1381,8 +1397,9 @@ gdl_dock_item_dock (GdlDockObject    *object,
         gdl_dock_item_preferred_size (GDL_DOCK_ITEM (parent), &parent_req);
     else
     {
-        parent_req.height = GTK_WIDGET (parent)->allocation.height;
-        parent_req.width = GTK_WIDGET (parent)->allocation.width;
+        gtk_widget_get_allocation (GTK_WIDGET (parent), &allocation);
+        parent_req.height = allocation.height;
+        parent_req.width = allocation.width;
     }
     
     /* If preferred size is not set on the requestor (perhaps a new item),
@@ -1672,7 +1689,10 @@ gdl_dock_item_tab_button (GtkWidget      *widget,
                           GdkEventButton *event,
                           gpointer        data)
 {
-    GdlDockItem *item = GDL_DOCK_ITEM(data);
+    GdlDockItem *item;
+    GtkAllocation allocation;
+    
+    item = GDL_DOCK_ITEM(data);
 
     (void)widget;
 
@@ -1686,8 +1706,9 @@ gdl_dock_item_tab_button (GtkWidget      *widget,
            drag handle */
         switch (item->orientation) {
         case GTK_ORIENTATION_HORIZONTAL:
+            gtk_widget_get_allocation (GTK_WIDGET (data), &allocation);
             /*item->dragoff_x = item->_priv->grip_size / 2;*/
-            item->dragoff_y = GTK_WIDGET (data)->allocation.height / 2;
+            item->dragoff_y = allocation.height / 2;
             break;
         case GTK_ORIENTATION_VERTICAL:
             /*item->dragoff_x = GTK_WIDGET (data)->allocation.width / 2;*/
@@ -1934,8 +1955,8 @@ gdl_dock_item_set_orientation (GdlDockItem    *item,
                               "orientation", orientation,
                               NULL);
         };
-
-        GDL_CALL_VIRTUAL (item, GDL_DOCK_ITEM_GET_CLASS, set_orientation, (item, orientation));
+        if (GDL_DOCK_ITEM_GET_CLASS (item)->set_orientation)
+            GDL_DOCK_ITEM_GET_CLASS (item)->set_orientation (item, orientation);
         g_object_notify (G_OBJECT (item), "orientation");
     }
 }
@@ -2116,6 +2137,8 @@ gdl_dock_item_unbind (GdlDockItem *item)
 void
 gdl_dock_item_hide_item (GdlDockItem *item)
 {
+    GtkAllocation allocation;
+
     g_return_if_fail (item != NULL);
 
     if (!GDL_DOCK_OBJECT_ATTACHED (item))
@@ -2142,8 +2165,9 @@ gdl_dock_item_hide_item (GdlDockItem *item)
                           "floaty",&y,
                           NULL);
         } else {
-            item->_priv->preferred_width=GTK_WIDGET (item)->allocation.width;
-            item->_priv->preferred_height=GTK_WIDGET (item)->allocation.height;
+            gtk_widget_get_allocation (GTK_WIDGET (item), &allocation);
+            item->_priv->preferred_width = allocation.width;
+            item->_priv->preferred_height = allocation.height;
         }
         item->_priv->ph = GDL_DOCK_PLACEHOLDER (
             g_object_new (GDL_TYPE_DOCK_PLACEHOLDER,
@@ -2323,13 +2347,15 @@ void
 gdl_dock_item_preferred_size (GdlDockItem    *item,
                               GtkRequisition *req)
 {
+    GtkAllocation allocation;
+
     if (!req)
         return;
 
-    req->width = MAX (item->_priv->preferred_width,
-                      GTK_WIDGET (item)->allocation.width);
-    req->height = MAX (item->_priv->preferred_height,
-                       GTK_WIDGET (item)->allocation.height);
+    gtk_widget_get_allocation (GTK_WIDGET (item), &allocation);
+
+    req->width = MAX (item->_priv->preferred_width, allocation.width);
+    req->height = MAX (item->_priv->preferred_height, allocation.height);
 }
 
 

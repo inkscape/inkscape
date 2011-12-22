@@ -32,7 +32,6 @@
 
 #include "gdl-i18n.h"
 #include "gdl-switcher.h"
-#include "gdl-tools.h"
 #include "libgdlmarshal.h"
 #include "libgdltypebuiltins.h"
 
@@ -89,7 +88,7 @@ struct _GdlSwitcherPrivate {
     gboolean in_toggle;
 };
 
-GDL_CLASS_BOILERPLATE (GdlSwitcher, gdl_switcher, GtkNotebook, GTK_TYPE_NOTEBOOK)
+G_DEFINE_TYPE (GdlSwitcher, gdl_switcher, GTK_TYPE_NOTEBOOK)
 
 #define INTERNAL_MODE(switcher)  (switcher->priv->switcher_style == \
             GDL_SWITCHER_STYLE_TOOLBAR ? switcher->priv->toolbar_style : \
@@ -257,7 +256,7 @@ static int
 layout_buttons (GdlSwitcher *switcher)
 {
     GtkRequisition client_requisition = {0,};
-    GtkAllocation *allocation = & GTK_WIDGET (switcher)->allocation;
+    GtkAllocation allocation;
     GdlSwitcherStyle switcher_style;
     gboolean icons_only;
     int num_btns = g_slist_length (switcher->priv->buttons);
@@ -272,13 +271,14 @@ layout_buttons (GdlSwitcher *switcher)
     int i;
     int rows_count;
     int last_buttons_height;
+
+    gtk_widget_get_allocation (GTK_WIDGET (switcher), &allocation);
     
     last_buttons_height = switcher->priv->buttons_height_request;
     
-    GDL_CALL_PARENT (GTK_WIDGET_CLASS, size_request,
-                     (GTK_WIDGET (switcher), &client_requisition));
+    GTK_WIDGET_CLASS (gdl_switcher_parent_class)->size_request (GTK_WIDGET (switcher), &client_requisition);
 
-    y = allocation->y + allocation->height - V_PADDING - 1;
+    y = allocation.y + allocation.height - V_PADDING - 1;
 
     if (num_btns == 0)
         return y;
@@ -300,10 +300,10 @@ layout_buttons (GdlSwitcher *switcher)
     }
 
     /* Figure out how many rows and columns we'll use. */
-    btns_per_row = allocation->width / (max_btn_width + H_PADDING);
+    btns_per_row = allocation.width / (max_btn_width + H_PADDING);
     
     /* If all the buttons could fit in the single row, have it so */
-    if (allocation->width >= optimal_layout_width)
+    if (allocation.width >= optimal_layout_width)
     {
         btns_per_row = num_btns;
     }
@@ -380,7 +380,7 @@ layout_buttons (GdlSwitcher *switcher)
         /* Check for possible size over flow (taking into account client
          * requisition
          */
-        if (y < (allocation->y + client_requisition.height)) {
+        if (y < (allocation.y + client_requisition.height)) {
             /* We have an overflow: Insufficient allocation */
             if (last_buttons_height < switcher->priv->buttons_height_request) {
                 /* Request for a new resize */
@@ -388,11 +388,11 @@ layout_buttons (GdlSwitcher *switcher)
                 return -1;
             }
         }
-        x = H_PADDING + allocation->x;
+        x = H_PADDING + allocation.x;
         len = g_slist_length (rows[i]);
         if (switcher_style == GDL_SWITCHER_STYLE_TEXT ||
             switcher_style == GDL_SWITCHER_STYLE_BOTH)
-            extra_width = (allocation->width - (len * max_btn_width )
+            extra_width = (allocation.width - (len * max_btn_width )
                            - (len * H_PADDING)) / len;
         else
             extra_width = 0;
@@ -432,26 +432,27 @@ layout_buttons (GdlSwitcher *switcher)
 static void
 do_layout (GdlSwitcher *switcher)
 {
-    GtkAllocation *allocation = & GTK_WIDGET (switcher)->allocation;
+    GtkAllocation allocation;
     GtkAllocation child_allocation;
     int y;
 
+    gtk_widget_get_allocation (GTK_WIDGET (switcher), &allocation);
+    
     if (switcher->priv->show) {
         y = layout_buttons (switcher);
         if (y < 0) /* Layout did not happen and a resize was requested */
             return;
     }
     else
-        y = allocation->y + allocation->height;
+        y = allocation.y + allocation.height;
     
     /* Place the parent widget.  */
-    child_allocation.x = allocation->x;
-    child_allocation.y = allocation->y;
-    child_allocation.width = allocation->width;
-    child_allocation.height = y - allocation->y;
+    child_allocation.x = allocation.x;
+    child_allocation.y = allocation.y;
+    child_allocation.width = allocation.width;
+    child_allocation.height = y - allocation.y;
     
-    GDL_CALL_PARENT (GTK_WIDGET_CLASS, size_allocate,
-                     (GTK_WIDGET (switcher), &child_allocation));
+    GTK_WIDGET_CLASS (gdl_switcher_parent_class)->size_allocate (GTK_WIDGET (switcher), &child_allocation);
 }
 
 /* GtkContainer methods.  */
@@ -464,9 +465,9 @@ gdl_switcher_forall (GtkContainer *container, gboolean include_internals,
         GDL_SWITCHER (container);
     GSList *p;
     
-    GDL_CALL_PARENT (GTK_CONTAINER_CLASS, forall,
-                     (GTK_CONTAINER (switcher), include_internals,
-                      callback, callback_data));
+    GTK_CONTAINER_CLASS (gdl_switcher_parent_class)->forall (GTK_CONTAINER (switcher), 
+                                                             include_internals,
+                                                             callback, callback_data);
     if (include_internals) {
         for (p = switcher->priv->buttons; p != NULL; p = p->next) {
             GtkWidget *widget = ((Button *) p->data)->button_widget;
@@ -496,8 +497,7 @@ gdl_switcher_remove (GtkContainer *container, GtkWidget *widget)
             break;
         }
     }
-    GDL_CALL_PARENT (GTK_CONTAINER_CLASS, remove,
-                     (GTK_CONTAINER (switcher), widget));
+    GTK_CONTAINER_CLASS (gdl_switcher_parent_class)->remove (GTK_CONTAINER (switcher), widget);
 }
 
 /* GtkWidget methods.  */
@@ -509,8 +509,7 @@ gdl_switcher_size_request (GtkWidget *widget, GtkRequisition *requisition)
     GSList *p;
     gint button_height = 0;
     
-    GDL_CALL_PARENT (GTK_WIDGET_CLASS, size_request,
-                     (GTK_WIDGET (switcher), requisition));
+    GTK_WIDGET_CLASS (gdl_switcher_parent_class)->size_request (GTK_WIDGET (switcher), requisition);
 
     if (!switcher->priv->show)
         return;
@@ -537,7 +536,7 @@ gdl_switcher_size_request (GtkWidget *widget, GtkRequisition *requisition)
 static void
 gdl_switcher_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
-    widget->allocation = *allocation;
+    gtk_widget_set_allocation (widget, allocation);
     do_layout (GDL_SWITCHER (widget));
 }
 
@@ -553,8 +552,7 @@ gdl_switcher_expose (GtkWidget *widget, GdkEventExpose *event)
                                             button, event);
         }
     }
-    return GDL_CALL_PARENT_WITH_DEFAULT (GTK_WIDGET_CLASS, expose_event,
-                                         (widget, event), FALSE);
+    return GTK_WIDGET_CLASS (gdl_switcher_parent_class)->expose_event (widget, event);
 }
 
 static void
@@ -569,7 +567,7 @@ gdl_switcher_map (GtkWidget *widget)
             gtk_widget_map (button);
         }
     }
-    GDL_CALL_PARENT (GTK_WIDGET_CLASS, map, (widget));
+    GTK_WIDGET_CLASS (gdl_switcher_parent_class)->map (widget);
 }
 
 /* GObject methods.  */
@@ -629,7 +627,7 @@ gdl_switcher_dispose (GObject *object)
     g_slist_free (priv->buttons);
     priv->buttons = NULL;
 
-    GDL_CALL_PARENT (G_OBJECT_CLASS, dispose, (object));
+    G_OBJECT_CLASS (gdl_switcher_parent_class)->dispose (object);
 }
 
 static void
@@ -639,7 +637,7 @@ gdl_switcher_finalize (GObject *object)
 
     g_free (priv);
 
-    GDL_CALL_PARENT (G_OBJECT_CLASS, finalize, (object));
+    G_OBJECT_CLASS (gdl_switcher_parent_class)->finalize (object);
 }
 
 /* Signal handlers */
@@ -748,7 +746,7 @@ gdl_switcher_class_init (GdlSwitcherClass *klass)
 }
 
 static void
-gdl_switcher_instance_init (GdlSwitcher *switcher)
+gdl_switcher_init (GdlSwitcher *switcher)
 {
     GdlSwitcherPrivate *priv;
 

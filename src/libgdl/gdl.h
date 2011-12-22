@@ -22,7 +22,6 @@
 #ifndef __GDL_H__
 #define __GDL_H__
 
-#include "libgdl/gdl-tools.h"
 #include "libgdl/gdl-dock-object.h"
 #include "libgdl/gdl-dock-master.h"
 #include "libgdl/gdl-dock.h"

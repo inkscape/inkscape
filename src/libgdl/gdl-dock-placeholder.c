@@ -27,7 +27,6 @@
 
 #include "gdl-i18n.h"
 
-#include "gdl-tools.h"
 #include "gdl-dock-placeholder.h"
 #include "gdl-dock-item.h"
 #include "gdl-dock-paned.h"
@@ -40,7 +39,6 @@
 /* ----- Private prototypes ----- */
 
 static void     gdl_dock_placeholder_class_init     (GdlDockPlaceholderClass *klass);
-static void     gdl_dock_placeholder_instance_init  (GdlDockPlaceholder      *ph);
 
 static void     gdl_dock_placeholder_set_property   (GObject                 *g_object,
                                                      guint                    prop_id,
@@ -120,8 +118,7 @@ struct _GdlDockPlaceholderPrivate {
 
 /* ----- Private interface ----- */
 
-GDL_CLASS_BOILERPLATE (GdlDockPlaceholder, gdl_dock_placeholder,
-                       GdlDockObject, GDL_TYPE_DOCK_OBJECT);
+G_DEFINE_TYPE (GdlDockPlaceholder, gdl_dock_placeholder, GDL_TYPE_DOCK_OBJECT);
 
 static void 
 gdl_dock_placeholder_class_init (GdlDockPlaceholderClass *klass)
@@ -214,10 +211,9 @@ gdl_dock_placeholder_class_init (GdlDockPlaceholderClass *klass)
 }
 
 static void 
-gdl_dock_placeholder_instance_init (GdlDockPlaceholder *ph)
+gdl_dock_placeholder_init (GdlDockPlaceholder *ph)
 {
     gtk_widget_set_has_window (GTK_WIDGET (ph), FALSE);
-
     gtk_widget_set_can_focus (GTK_WIDGET (ph), FALSE);
     
     ph->_priv = g_new0 (GdlDockPlaceholderPrivate, 1);
@@ -327,7 +323,7 @@ gdl_dock_placeholder_destroy (GtkObject *object)
         ph->_priv = NULL;
     }
 
-    GDL_CALL_PARENT (GTK_OBJECT_CLASS, destroy, (object));
+    GTK_OBJECT_CLASS (gdl_dock_placeholder_parent_class)->destroy (object);
 }
 
 static void 
@@ -378,6 +374,7 @@ find_biggest_dock_item (GtkContainer *container, GtkWidget **biggest_child,
                         gint *biggest_child_area)
 {
     GList *children, *child;
+    GtkAllocation allocation;
     
     children = gtk_container_get_children (GTK_CONTAINER (container));
     child = children;
@@ -393,7 +390,8 @@ find_biggest_dock_item (GtkContainer *container, GtkWidget **biggest_child,
             child = g_list_next (child);
             continue;
         }
-        area = child_widget->allocation.width * child_widget->allocation.height;
+        gtk_widget_get_allocation (child_widget, &allocation);
+        area = allocation.width * allocation.height;
         
         if (area > *biggest_child_area) {
             *biggest_child_area = area;
@@ -409,8 +407,13 @@ attempt_to_dock_on_host (GdlDockPlaceholder *ph, GdlDockObject *host,
                          gpointer other_data)
 {
     GdlDockObject *parent;
-    gint host_width = GTK_WIDGET (host)->allocation.width;
-    gint host_height = GTK_WIDGET (host)->allocation.height;
+    GtkAllocation  allocation;
+    gint host_width;
+    gint host_height;
+
+    gtk_widget_get_allocation (GTK_WIDGET (host), &allocation);
+    host_width = allocation.width;
+    host_height = allocation.height;
     
     if (placement != GDL_DOCK_CENTER || !GDL_IS_DOCK_PANED (host)) {
         /* we simply act as a proxy for our host */

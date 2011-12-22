@@ -29,7 +29,6 @@
 #include <gtk/gtk.h>
 
 #include "gdl-dock-tablabel.h"
-#include "gdl-tools.h"
 #include "gdl-dock-item.h"
 #include "libgdlmarshal.h"
 
@@ -37,7 +36,6 @@
 /* ----- Private prototypes ----- */
 
 static void  gdl_dock_tablabel_class_init    (GdlDockTablabelClass *klass);
-static void  gdl_dock_tablabel_instance_init (GdlDockTablabel      *tablabel);
 
 static void  gdl_dock_tablabel_set_property  (GObject              *object,
                                               guint                 prop_id,
@@ -93,8 +91,7 @@ static guint dock_tablabel_signals [LAST_SIGNAL] = { 0 };
 
 /* ----- Private interface ----- */
 
-GDL_CLASS_BOILERPLATE (GdlDockTablabel, gdl_dock_tablabel,
-                       GtkBin, GTK_TYPE_BIN);
+G_DEFINE_TYPE (GdlDockTablabel, gdl_dock_tablabel, GTK_TYPE_BIN);
 
 static void
 gdl_dock_tablabel_class_init (GdlDockTablabelClass *klass)
@@ -146,7 +143,7 @@ gdl_dock_tablabel_class_init (GdlDockTablabelClass *klass)
 }
 
 static void
-gdl_dock_tablabel_instance_init (GdlDockTablabel *tablabel)
+gdl_dock_tablabel_init (GdlDockTablabel *tablabel)
 {
     GtkWidget *widget;
     GtkWidget *label_widget;
@@ -212,9 +209,9 @@ gdl_dock_tablabel_set_property (GObject      *object,
                     tablabel->drag_handle_size = 0;
                 
                 bin = GTK_BIN (tablabel);
-                if (bin->child && g_object_class_find_property (
-                    G_OBJECT_GET_CLASS (bin->child), "label"))
-                    g_object_set (bin->child, "label", long_name, NULL);
+                if (gtk_bin_get_child (bin) && g_object_class_find_property (
+                    G_OBJECT_GET_CLASS (gtk_bin_get_child (bin)), "label"))
+                    g_object_set (gtk_bin_get_child (bin), "label", long_name, NULL);
                 g_free (long_name);
             };
             break;
@@ -266,9 +263,9 @@ gdl_dock_tablabel_item_notify (GObject    *master,
         tablabel->drag_handle_size = 0;
 
     bin = GTK_BIN (tablabel);
-    if (bin->child && g_object_class_find_property (
-        G_OBJECT_GET_CLASS (bin->child), "label"))
-        g_object_set (bin->child, "label", label, NULL);
+    if (gtk_bin_get_child (bin) && g_object_class_find_property (
+        G_OBJECT_GET_CLASS (gtk_bin_get_child (bin)), "label"))
+        g_object_set (gtk_bin_get_child (bin), "label", label, NULL);
     g_free (label);
 
     gtk_widget_queue_resize (GTK_WIDGET (tablabel));
@@ -281,6 +278,7 @@ gdl_dock_tablabel_size_request (GtkWidget      *widget,
     GtkBin          *bin;
     GtkRequisition   child_req;
     GdlDockTablabel *tablabel;
+    guint            border_width;
 
     g_return_if_fail (widget != NULL);
     g_return_if_fail (GDL_IS_DOCK_TABLABEL (widget));
@@ -292,18 +290,20 @@ gdl_dock_tablabel_size_request (GtkWidget      *widget,
     requisition->width = tablabel->drag_handle_size;
     requisition->height = 0;
 
-    if (bin->child)
-        gtk_widget_size_request (bin->child, &child_req);
+    if (gtk_bin_get_child (bin))
+        gtk_widget_size_request (gtk_bin_get_child (bin), &child_req);
     else
         child_req.width = child_req.height = 0;
         
     requisition->width += child_req.width;
     requisition->height += child_req.height;
 
-    requisition->width += GTK_CONTAINER (widget)->border_width * 2;
-    requisition->height += GTK_CONTAINER (widget)->border_width * 2;
+    border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
-    widget->requisition = *requisition;
+    requisition->width += border_width * 2;
+    requisition->height += border_width * 2;
+
+    //gtk_widget_size_request (widget, requisition);    
 }
 
 static void
@@ -311,6 +311,7 @@ gdl_dock_tablabel_size_allocate (GtkWidget     *widget,
                                  GtkAllocation *allocation)
 {
     GtkBin          *bin;
+    GtkAllocation    widget_allocation;
     GdlDockTablabel *tablabel;
     gint             border_width;
 
@@ -321,9 +322,9 @@ gdl_dock_tablabel_size_allocate (GtkWidget     *widget,
     bin = GTK_BIN (widget);
     tablabel = GDL_DOCK_TABLABEL (widget);
 
-    border_width = GTK_CONTAINER (widget)->border_width;
+    border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
   
-    widget->allocation = *allocation;
+    gtk_widget_set_allocation (widget, allocation);
 
     if (gtk_widget_get_realized (widget))
         gdk_window_move_resize (tablabel->event_window, 
@@ -332,11 +333,12 @@ gdl_dock_tablabel_size_allocate (GtkWidget     *widget,
                                 allocation->width, 
                                 allocation->height);
 
-    if (bin->child && gtk_widget_get_visible (bin->child)) {
+    if (gtk_bin_get_child (bin) && gtk_widget_get_visible (gtk_bin_get_child (bin))) {
         GtkAllocation  child_allocation;
 
-        child_allocation.x = widget->allocation.x + border_width;
-        child_allocation.y = widget->allocation.y + border_width;
+        gtk_widget_get_allocation (widget, &widget_allocation);
+        child_allocation.x = widget_allocation.x + border_width;
+        child_allocation.y = widget_allocation.y + border_width;
 
         allocation->width = MAX (1, (int) allocation->width - 
                                  (int) tablabel->drag_handle_size);
@@ -347,7 +349,7 @@ gdl_dock_tablabel_size_allocate (GtkWidget     *widget,
         child_allocation.height = 
             MAX (1, (int) allocation->height - 2 * border_width);
 
-        gtk_widget_size_allocate (bin->child, &child_allocation);
+        gtk_widget_size_allocate (gtk_bin_get_child (bin), &child_allocation);
     }
 }
 
@@ -357,20 +359,22 @@ gdl_dock_tablabel_paint (GtkWidget      *widget,
 {
     GdkRectangle     dest, rect;
     GtkBin          *bin;
+    GtkAllocation    widget_allocation;
     GdlDockTablabel *tablabel;
     gint             border_width;
 
     bin = GTK_BIN (widget);
     tablabel = GDL_DOCK_TABLABEL (widget);
-    border_width = GTK_CONTAINER (widget)->border_width;
+    border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
-    rect.x = widget->allocation.x + border_width;
-    rect.y = widget->allocation.y + border_width;
+    gtk_widget_get_allocation (widget, &widget_allocation);
+    rect.x = widget_allocation.x + border_width;
+    rect.y = widget_allocation.y + border_width;
     rect.width = tablabel->drag_handle_size * HANDLE_RATIO;
-    rect.height = widget->allocation.height - 2*border_width;
+    rect.height = widget_allocation.height - 2*border_width;
 
     if (gdk_rectangle_intersect (&event->area, &rect, &dest)) {
-        gtk_paint_handle (widget->style, widget->window, 
+        gtk_paint_handle (gtk_widget_get_style (widget), gtk_widget_get_window (widget), 
                           tablabel->active ? GTK_STATE_NORMAL : GTK_STATE_ACTIVE, 
                           GTK_SHADOW_NONE,
                           &dest, widget, "dock-tablabel",
@@ -388,7 +392,7 @@ gdl_dock_tablabel_expose (GtkWidget      *widget,
     g_return_val_if_fail (event != NULL, FALSE);
 
     if (gtk_widget_get_visible (widget) && gtk_widget_get_mapped (widget)) {
-        GDL_CALL_PARENT_GBOOLEAN(GTK_WIDGET_CLASS, expose_event, (widget,event));
+        GTK_WIDGET_CLASS (gdl_dock_tablabel_parent_class)->expose_event (widget,event);
         gdl_dock_tablabel_paint (widget, event);
     };
   
@@ -400,6 +404,7 @@ gdl_dock_tablabel_button_event (GtkWidget      *widget,
                                 GdkEventButton *event)
 {
     GdlDockTablabel *tablabel;
+    GtkAllocation    widget_allocation;
     gboolean         event_handled;
   
     g_return_val_if_fail (widget != NULL, FALSE);
@@ -422,7 +427,7 @@ gdl_dock_tablabel_button_event (GtkWidget      *widget,
                 GtkBin  *bin;
 
                 bin = GTK_BIN (widget);
-                border_width = GTK_CONTAINER (widget)->border_width;
+                border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
                 rel_x = event->x - border_width;
                 rel_y = event->y - border_width;
@@ -460,8 +465,9 @@ gdl_dock_tablabel_button_event (GtkWidget      *widget,
 
         e = *event;
         e.window = gtk_widget_get_parent_window (widget);
-        e.x += widget->allocation.x;
-        e.y += widget->allocation.y;
+        gtk_widget_get_allocation (widget, &widget_allocation);
+        e.x += widget_allocation.x;
+        e.y += widget_allocation.y;
         
         gdk_event_put ((GdkEvent *) &e);
     };
@@ -474,6 +480,7 @@ gdl_dock_tablabel_motion_event (GtkWidget      *widget,
                                 GdkEventMotion *event)
 {
     GdlDockTablabel *tablabel;
+    GtkAllocation    widget_allocation;
     gboolean         event_handled;
   
     g_return_val_if_fail (widget != NULL, FALSE);
@@ -508,8 +515,9 @@ gdl_dock_tablabel_motion_event (GtkWidget      *widget,
 
         e = *event;
         e.window = gtk_widget_get_parent_window (widget);
-        e.x += widget->allocation.x;
-        e.y += widget->allocation.y;
+        gtk_widget_get_allocation (widget, &widget_allocation);
+        e.x += widget_allocation.x;
+        e.y += widget_allocation.y;
         
         gdk_event_put ((GdkEvent *) &e);
     };
@@ -522,15 +530,17 @@ gdl_dock_tablabel_realize (GtkWidget *widget)
 {
     GdlDockTablabel *tablabel;
     GdkWindowAttr attributes;
+    GtkAllocation widget_allocation;
     int attributes_mask;
     
     tablabel = GDL_DOCK_TABLABEL (widget);
     
     attributes.window_type = GDK_WINDOW_CHILD;
-    attributes.x = widget->allocation.x;
-    attributes.y = widget->allocation.y;
-    attributes.width = widget->allocation.width;
-    attributes.height = widget->allocation.height;
+    gtk_widget_get_allocation (widget, &widget_allocation);
+    attributes.x = widget_allocation.x;
+    attributes.y = widget_allocation.y;
+    attributes.width = widget_allocation.width;
+    attributes.height = widget_allocation.height;
     attributes.wclass = GDK_INPUT_ONLY;
     attributes.event_mask = gtk_widget_get_events (widget);
     attributes.event_mask |= (GDK_EXPOSURE_MASK | 
@@ -541,15 +551,16 @@ gdl_dock_tablabel_realize (GtkWidget *widget)
                               GDK_LEAVE_NOTIFY_MASK);
     attributes_mask = GDK_WA_X | GDK_WA_Y;
     
-    widget->window = gtk_widget_get_parent_window (widget);
-    g_object_ref (widget->window);
+    gtk_widget_set_window (widget, gtk_widget_get_parent_window (widget));
+    g_object_ref (gtk_widget_get_window (widget));
     
     tablabel->event_window = 
         gdk_window_new (gtk_widget_get_parent_window (widget),
                         &attributes, attributes_mask);
     gdk_window_set_user_data (tablabel->event_window, widget);
-    
-    widget->style = gtk_style_attach (widget->style, widget->window);
+   
+    gtk_widget_set_style (widget, gtk_style_attach (gtk_widget_get_style (widget),
+                                                    gtk_widget_get_window (widget)));
     
     gtk_widget_set_realized (widget, TRUE);
 }
@@ -565,15 +576,15 @@ gdl_dock_tablabel_unrealize (GtkWidget *widget)
         tablabel->event_window = NULL;
     }
     
-    GDL_CALL_PARENT (GTK_WIDGET_CLASS, unrealize, (widget));
+    GTK_WIDGET_CLASS (gdl_dock_tablabel_parent_class)->unrealize (widget);
 }
 
 static void  
 gdl_dock_tablabel_map (GtkWidget *widget)
 {
     GdlDockTablabel *tablabel = GDL_DOCK_TABLABEL (widget);
-    
-    GDL_CALL_PARENT (GTK_WIDGET_CLASS, map, (widget));
+
+    GTK_WIDGET_CLASS (gdl_dock_tablabel_parent_class)->map (widget);
     
     gdk_window_show (tablabel->event_window);
 }
@@ -585,7 +596,7 @@ gdl_dock_tablabel_unmap (GtkWidget *widget)
 
     gdk_window_hide (tablabel->event_window);
 
-    GDL_CALL_PARENT (GTK_WIDGET_CLASS, unmap, (widget));
+    GTK_WIDGET_CLASS (gdl_dock_tablabel_parent_class)->unmap (widget);
 }
 
 /* ----- Public interface ----- */
