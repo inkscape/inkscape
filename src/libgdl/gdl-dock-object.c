@@ -128,14 +128,14 @@ gdl_dock_object_class_init (GdlDockObjectClass *klass)
         g_param_spec_string ("long-name", _("Long name"),
                              _("Human readable name for the dock object"),
                              NULL,
-                             G_PARAM_READWRITE));
+                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
     g_object_class_install_property (
         g_object_class, PROP_STOCK_ID,
         g_param_spec_string ("stock-id", _("Stock Icon"),
                              _("Stock icon for the dock object"),
                              NULL,
-                             G_PARAM_READWRITE));
+                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
     g_object_class_install_property (
         g_object_class, PROP_PIXBUF_ICON,

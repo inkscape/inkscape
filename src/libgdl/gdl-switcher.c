@@ -52,7 +52,8 @@ static void gdl_switcher_add_button  (GdlSwitcher *switcher,
                                       const gchar *tooltips,
                                       const gchar *stock_id,
                                       const GdkPixbuf *pixbuf_icon,
-                                      gint switcher_id);
+                                      gint switcher_id,
+                                      GtkWidget *page);
 /* static void gdl_switcher_remove_button (GdlSwitcher *switcher, gint switcher_id); */
 static void gdl_switcher_select_page (GdlSwitcher *switcher, gint switcher_id);
 static void gdl_switcher_select_button (GdlSwitcher *switcher, gint switcher_id);
@@ -72,6 +73,7 @@ typedef struct {
     GtkWidget *icon;
     GtkWidget *arrow;
     GtkWidget *hbox;
+    GtkWidget *page;
     int id;
 } Button;
 
@@ -98,9 +100,36 @@ GDL_CLASS_BOILERPLATE (GdlSwitcher, gdl_switcher, GtkNotebook, GTK_TYPE_NOTEBOOK
 
 /* Utility functions.  */
 
+static void
+gdl_switcher_long_name_changed (GObject* object,
+                                GParamSpec* spec,
+                                gpointer user_data)
+{
+    Button* button = user_data;
+    gchar* label;
+
+    g_object_get (object, "long-name", &label, NULL);
+    gtk_label_set_text (GTK_LABEL (button->label), label);
+    g_free (label);
+}
+
+static void
+gdl_switcher_stock_id_changed (GObject* object,
+                               GParamSpec* spec,
+                               gpointer user_data)
+{
+    Button* button = user_data;
+    gchar* id;
+
+    g_object_get (object, "stock-id", &id, NULL);
+    gtk_image_set_from_stock (GTK_IMAGE(button->icon), id, GTK_ICON_SIZE_MENU);
+    g_free (id);
+}
+
+
 static Button *
 button_new (GtkWidget *button_widget, GtkWidget *label, GtkWidget *icon,
-            GtkWidget *arrow, GtkWidget *hbox, int id)
+            GtkWidget *arrow, GtkWidget *hbox, int id, GtkWidget *page)
 {
     Button *button = g_new (Button, 1);
 
@@ -110,7 +139,13 @@ button_new (GtkWidget *button_widget, GtkWidget *label, GtkWidget *icon,
     button->arrow = arrow;
     button->hbox = hbox;
     button->id = id;
+    button->page = page;
 
+    g_signal_connect (page, "notify::long-name", G_CALLBACK (gdl_switcher_long_name_changed), 
+                      button);
+    g_signal_connect (page, "notify::stock-id", G_CALLBACK (gdl_switcher_stock_id_changed), 
+                      button);
+    
     g_object_ref (button_widget);
     g_object_ref (label);
     g_object_ref (icon);
@@ -123,6 +158,13 @@ button_new (GtkWidget *button_widget, GtkWidget *label, GtkWidget *icon,
 static void
 button_free (Button *button)
 {
+    g_signal_handlers_disconnect_by_func (button->page,
+                                          gdl_switcher_long_name_changed,
+                                          button);
+    g_signal_handlers_disconnect_by_func (button->page,
+                                          gdl_switcher_stock_id_changed,
+                                          button);    
+    
     g_object_unref (button->button_widget);
     g_object_unref (button->label);
     g_object_unref (button->icon);
@@ -632,7 +674,7 @@ gdl_switcher_page_added_cb (GtkNotebook *nb, GtkWidget *page,
     switcher_id = gdl_switcher_get_page_id (page);
     
     gdl_switcher_add_button (GDL_SWITCHER (switcher), NULL, NULL, NULL, NULL,
-                             switcher_id);
+                             switcher_id, page);
     gdl_switcher_select_button (GDL_SWITCHER (switcher), switcher_id);
 }
 
@@ -742,7 +784,8 @@ gdl_switcher_new (void)
 void
 gdl_switcher_add_button (GdlSwitcher *switcher, const gchar *label,
                          const gchar *tooltips, const gchar *stock_id,
-                         const GdkPixbuf *pixbuf_icon, gint switcher_id)
+			 const GdkPixbuf *pixbuf_icon,
+                         gint switcher_id, GtkWidget* page)
 {
     GtkWidget *event_box;
     GtkWidget *button_widget;
@@ -809,7 +852,7 @@ gdl_switcher_add_button (GdlSwitcher *switcher, const gchar *label,
         g_slist_append (switcher->priv->buttons,
                         button_new (button_widget, label_widget,
                                     icon_widget,
-                                    arrow, hbox, switcher_id));
+                                    arrow, hbox, switcher_id, page));
     
     gtk_widget_set_parent (button_widget, GTK_WIDGET (switcher));
     gtk_widget_queue_resize (GTK_WIDGET (switcher));
@@ -843,6 +886,7 @@ gdl_switcher_select_button (GdlSwitcher *switcher, gint switcher_id)
     /* Select the notebook page associated with this button */
     gdl_switcher_select_page (switcher, switcher_id);
 }
+   
 
 gint
 gdl_switcher_insert_page (GdlSwitcher *switcher, GtkWidget *page,
@@ -861,12 +905,14 @@ gdl_switcher_insert_page (GdlSwitcher *switcher, GtkWidget *page,
         gtk_widget_show (tab_widget);
     }
     switcher_id = gdl_switcher_get_page_id (page);
-    gdl_switcher_add_button (switcher, label, tooltips, stock_id, pixbuf_icon, switcher_id);
+    gdl_switcher_add_button (switcher, label, tooltips, stock_id, pixbuf_icon, switcher_id, page);
+    
     ret_position = gtk_notebook_insert_page (GTK_NOTEBOOK (switcher), page,
                                              tab_widget, position);
     g_signal_handlers_unblock_by_func (switcher,
                                        gdl_switcher_page_added_cb,
                                        switcher);
+    
     return ret_position;
 }
 
