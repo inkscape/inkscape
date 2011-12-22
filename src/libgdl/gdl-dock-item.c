@@ -551,7 +551,6 @@ gdl_dock_item_constructor (GType                  type,
         else {
             item->_priv->grip_shown = FALSE;
         }
-        GDL_DOCK_OBJECT_UNSET_FLAGS (item, GDL_DOCK_AUTOMATIC);
 
         g_object_get (g_object, "long-name", &long_name, "stock-id", &stock_id, NULL);
 
@@ -1801,6 +1800,7 @@ gdl_dock_item_new (const gchar         *name,
                                         "long-name", long_name,
                                         "behavior", behavior,
                                         NULL));
+    GDL_DOCK_OBJECT_UNSET_FLAGS (item, GDL_DOCK_AUTOMATIC);
 
     return GTK_WIDGET (item);
 }
@@ -1831,6 +1831,8 @@ gdl_dock_item_new_with_stock (const gchar         *name,
                                         "stock-id", stock_id,
                                         "behavior", behavior,
                                         NULL));
+    GDL_DOCK_OBJECT_UNSET_FLAGS (item, GDL_DOCK_AUTOMATIC);
+    
     return GTK_WIDGET (item);
 }
 

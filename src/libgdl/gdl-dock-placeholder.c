@@ -221,8 +221,6 @@ gdl_dock_placeholder_instance_init (GdlDockPlaceholder *ph)
     gtk_widget_set_can_focus (GTK_WIDGET (ph), FALSE);
     
     ph->_priv = g_new0 (GdlDockPlaceholderPrivate, 1);
-
-    GDL_DOCK_OBJECT_UNSET_FLAGS (ph, GDL_DOCK_AUTOMATIC);
 }
 
 static void 
@@ -559,6 +557,7 @@ gdl_dock_placeholder_new (const gchar     *name,
                                              "next-placement", position,
                                              "host", object,
                                              NULL));
+    GDL_DOCK_OBJECT_UNSET_FLAGS (ph, GDL_DOCK_AUTOMATIC);
     
     return GTK_WIDGET (ph);
 }
