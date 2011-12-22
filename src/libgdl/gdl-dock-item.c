@@ -896,8 +896,8 @@ gdl_dock_item_map (GtkWidget *widget)
         gtk_widget_map (item->child);
 
     if (item->_priv->grip
-        && gtk_widget_get_visible (item->_priv->grip)
-        && !gtk_widget_get_mapped (item->_priv->grip))
+        && gtk_widget_get_visible (GTK_WIDGET (item->_priv->grip))
+        && !gtk_widget_get_mapped (GTK_WIDGET (item->_priv->grip)))
         gtk_widget_map (item->_priv->grip);
 }
 
@@ -954,7 +954,7 @@ gdl_dock_item_realize (GtkWidget *widget)
   
     widget->style = gtk_style_attach (widget->style, widget->window);
     gtk_style_set_background (widget->style, widget->window, 
-                              gtk_widget_get_state (GTK_WIDGET(item)));
+                              gtk_widget_get_state (GTK_WIDGET (item)));
     gdk_window_set_back_pixmap (widget->window, NULL, TRUE);
 
     if (item->child)
@@ -973,7 +973,9 @@ gdl_dock_item_style_set (GtkWidget *widget,
     g_return_if_fail (widget != NULL);
     g_return_if_fail (GDL_IS_DOCK_ITEM (widget));
 
-    if (gtk_widget_get_realized (widget) && gtk_widget_get_has_window (widget)) {
+    if (gtk_widget_get_realized (widget) &&
+            gtk_widget_get_has_window (widget))
+    {
         gtk_style_set_background (widget->style, widget->window,
                                   widget->state);
         if (gtk_widget_is_drawable (widget))
@@ -1481,7 +1483,7 @@ gdl_dock_item_dock (GdlDockObject    *object,
             gtk_container_add (GTK_CONTAINER (parent), GTK_WIDGET (new_parent));
 
         /* show automatic object */
-	if (gtk_widget_get_visible (GTK_WIDGET (object)))
+        if (gtk_widget_get_visible (GTK_WIDGET (object)))
         {
             gtk_widget_show (GTK_WIDGET (new_parent));
             GDL_DOCK_OBJECT_UNSET_FLAGS (object, GDL_DOCK_IN_REFLOW);
@@ -1803,7 +1805,7 @@ gdl_dock_item_new_with_pixbuf_icon (const gchar         *name,
 /**
  * gdl_dock_item_dock_to:
  * @item: The dock item that will be relocated to the dock position.
- * @target: The dock item that will be used as the point of reference.
+ * @target: (allow-none): The dock item that will be used as the point of reference.
  * @position: The position to dock #item, relative to #target.
  * @docking_param: This value is unused, and will be ignored.
  * 

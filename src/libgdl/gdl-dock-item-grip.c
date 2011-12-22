@@ -491,13 +491,13 @@ gdl_dock_item_grip_size_request (GtkWidget      *widget,
 
     gtk_widget_size_request (grip->_priv->close_button, &child_requisition);
     layout_height = MAX (layout_height, child_requisition.height);
-    if (GTK_WIDGET_VISIBLE (grip->_priv->close_button)) {
+    if (gtk_widget_get_visible (grip->_priv->close_button)) {
        requisition->width += child_requisition.width;
     }
     
     gtk_widget_size_request (grip->_priv->iconify_button, &child_requisition);
     layout_height = MAX (layout_height, child_requisition.height);
-    if (GTK_WIDGET_VISIBLE (grip->_priv->iconify_button)) {
+    if (gtk_widget_get_visible (grip->_priv->iconify_button)) {
         requisition->width += child_requisition.width;
     }
    
@@ -547,7 +547,7 @@ gdl_dock_item_grip_size_allocate (GtkWidget     *widget,
     child_allocation.y = container->border_width;
 
     /* Layout Close Button */
-    if (GTK_WIDGET_VISIBLE (grip->_priv->close_button)) {
+    if (gtk_widget_get_visible (grip->_priv->close_button)) {
 
         if(space_for_buttons) {
             if (gtk_widget_get_direction (widget) != GTK_TEXT_DIR_RTL)
@@ -566,7 +566,7 @@ gdl_dock_item_grip_size_allocate (GtkWidget     *widget,
     }    
 
     /* Layout Iconify Button */
-    if (GTK_WIDGET_VISIBLE (grip->_priv->iconify_button)) {
+    if (gtk_widget_get_visible (grip->_priv->iconify_button)) {
 
         if(space_for_buttons) {
             if (gtk_widget_get_direction (widget) != GTK_TEXT_DIR_RTL)
