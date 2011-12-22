@@ -189,15 +189,15 @@ gdl_dock_placeholder_class_init (GdlDockPlaceholderClass *klass)
                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 	g_object_class_install_property (
         g_object_class, PROP_FLOAT_X,
-        g_param_spec_int ("floatx", _("X-Coordinate"),
-                          	_("X-Coordinate for dock when floating"),
+        g_param_spec_int ("floatx", _("X Coordinate"),
+                          	_("X coordinate for dock when floating"),
                           	-1, G_MAXINT, -1,
                           	G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY |
                           	GDL_DOCK_PARAM_EXPORT));
 	g_object_class_install_property (
         g_object_class, PROP_FLOAT_Y,
-        g_param_spec_int ("floaty", _("Y-Coordinate"),
-                          	_("Y-Coordinate for dock when floating"),
+        g_param_spec_int ("floaty", _("Y Coordinate"),
+                          	_("Y coordinate for dock when floating"),
                           	-1, G_MAXINT, -1,
                           	G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY |
                           	GDL_DOCK_PARAM_EXPORT));
@@ -221,6 +221,8 @@ gdl_dock_placeholder_instance_init (GdlDockPlaceholder *ph)
     gtk_widget_set_can_focus (GTK_WIDGET (ph), FALSE);
     
     ph->_priv = g_new0 (GdlDockPlaceholderPrivate, 1);
+
+    GDL_DOCK_OBJECT_UNSET_FLAGS (ph, GDL_DOCK_AUTOMATIC);
 }
 
 static void 
@@ -554,22 +556,9 @@ gdl_dock_placeholder_new (const gchar     *name,
     ph = GDL_DOCK_PLACEHOLDER (g_object_new (GDL_TYPE_DOCK_PLACEHOLDER,
                                              "name", name,
                                              "sticky", sticky,
+                                             "next-placement", position,
+                                             "host", object,
                                              NULL));
-    GDL_DOCK_OBJECT_UNSET_FLAGS (ph, GDL_DOCK_AUTOMATIC);
-
-    if (object) {
-        gdl_dock_placeholder_attach (ph, object);
-        if (position == GDL_DOCK_NONE)
-            position = GDL_DOCK_CENTER;
-        g_object_set (G_OBJECT (ph), "next-placement", position, NULL);
-        if (GDL_IS_DOCK (object)) {
-            /* the top placement will be consumed by the toplevel
-               dock, so add a dummy placement */
-            g_object_set (G_OBJECT (ph), "next-placement", GDL_DOCK_CENTER, NULL);
-        }
-        /* try a recursion */
-        do_excursion (ph);
-    }
     
     return GTK_WIDGET (ph);
 }
