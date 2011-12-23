@@ -280,10 +280,11 @@ gdl_dock_item_grip_fix_iconify_button (GdlDockItemGrip *grip)
 
     GdkModifierType modifiers;
     gint x = 0, y = 0;
+    gboolean ev_ret;
 
     g_return_if_fail (gtk_widget_get_realized (iconify_button));
 
-    window = gtk_button_get_event_window (GTK_BUTTON (iconify_button));
+    window = gtk_widget_get_parent_window (iconify_button);
     event = gdk_event_new (GDK_LEAVE_NOTIFY);
 
     g_assert (GDK_IS_WINDOW (window));
@@ -301,7 +302,9 @@ gdl_dock_item_grip_fix_iconify_button (GdlDockItemGrip *grip)
     event->crossing.focus = FALSE;
     event->crossing.state = modifiers;
 
-    gtk_widget_event (iconify_button, event);
+    //GTK_BUTTON (iconify_button)->in_button = FALSE;
+    g_signal_emit_by_name (iconify_button, "leave-notify-event",
+                           event, &ev_ret, 0);
 
     gdk_event_free (event);
 }
@@ -774,7 +777,7 @@ gdl_dock_item_grip_set_label (GdlDockItemGrip *grip,
 }
 /**
  * gdl_dock_item_grip_hide_handle:
- * @item: The dock item grip to hide the handle of.
+ * @grip: The dock item grip to hide the handle of.
  * 
  * This function hides the dock item's grip widget handle hatching.
  **/

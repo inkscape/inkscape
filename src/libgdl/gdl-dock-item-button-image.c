@@ -149,7 +149,7 @@ gdl_dock_item_button_image_class_init (
 
 /**
  * gdl_dock_item_button_image_new:
- * @param image_type: Specifies what type of image the widget should
+ * @image_type: Specifies what type of image the widget should
  * display
  * 
  * Creates a new GDL dock button image object.

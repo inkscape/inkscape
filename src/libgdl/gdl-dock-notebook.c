@@ -293,7 +293,7 @@ gdl_dock_notebook_switch_page_cb (GtkNotebook     *nb,
                                "layout-changed");
 
     /* Signal that a new dock item has been selected */
-    item = GDL_DOCK_ITEM (gtk_notebook_get_nth_page (nb, page_num));
+    item = GDL_DOCK_ITEM (page);
     gdl_dock_item_notify_selected (item);
 }
 

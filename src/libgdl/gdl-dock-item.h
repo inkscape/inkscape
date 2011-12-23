@@ -42,7 +42,26 @@ G_BEGIN_DECLS
 #define GDL_IS_DOCK_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GDL_TYPE_DOCK_ITEM))
 #define GDL_DOCK_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_DOCK_ITEM, GdlDockItemClass))
 
-/* data types & structures */
+/**
+ * GdlDockItemBehavior:
+ * @GDL_DOCK_ITEM_BEH_NORMAL: Normal dock item
+ * @GDL_DOCK_ITEM_BEH_NEVER_FLOATING: item cannot be undocked
+ * @GDL_DOCK_ITEM_BEH_NEVER_VERTICAL: item cannot be docked vertically
+ * @GDL_DOCK_ITEM_BEH_NEVER_HORIZONTAL: item cannot be docked horizontally
+ * @GDL_DOCK_ITEM_BEH_LOCKED: item is locked, it cannot be moved around
+ * @GDL_DOCK_ITEM_BEH_CANT_DOCK_TOP: item cannot be docked at top
+ * @GDL_DOCK_ITEM_BEH_CANT_DOCK_BOTTOM: item cannot be docked at bottom
+ * @GDL_DOCK_ITEM_BEH_CANT_DOCK_LEFT: item cannot be docked left
+ * @GDL_DOCK_ITEM_BEH_CANT_DOCK_RIGHT: item cannot be docked right
+ * @GDL_DOCK_ITEM_BEH_CANT_DOCK_CENTER: item cannot be docked at center
+ * @GDL_DOCK_ITEM_BEH_CANT_CLOSE: item cannot be closed
+ * @GDL_DOCK_ITEM_BEH_CANT_ICONIFY: item cannot be iconified
+ * @GDL_DOCK_ITEM_BEH_NO_GRIP: item doesn't have a grip
+ *
+ * Described the behaviour of a doc item. The item can have multiple flags set.
+ *
+ **/
+
 typedef enum {
     GDL_DOCK_ITEM_BEH_NORMAL           = 0,
     GDL_DOCK_ITEM_BEH_NEVER_FLOATING   = 1 << 0,
@@ -59,12 +78,21 @@ typedef enum {
     GDL_DOCK_ITEM_BEH_NO_GRIP          = 1 << 11
 } GdlDockItemBehavior;
 
+
+/**
+ * GdlDockItemFlags:
+ * @GDL_DOCK_IN_DRAG: item is in a drag operation
+ * @GDL_DOCK_IN_PREDRAG: item is in a predrag operation
+ * @GDL_DOCK_ICONIFIED: item is iconified
+ * @GDL_DOCK_USER_ACTION: indicates the user has started an action on the dock item
+ *
+ * Status flag of a GdlDockItem. Don't use unless you derive a widget from GdlDockItem
+ *
+ **/
 typedef enum {
     GDL_DOCK_IN_DRAG             = 1 << GDL_DOCK_OBJECT_FLAGS_SHIFT,
     GDL_DOCK_IN_PREDRAG          = 1 << (GDL_DOCK_OBJECT_FLAGS_SHIFT + 1),
     GDL_DOCK_ICONIFIED           = 1 << (GDL_DOCK_OBJECT_FLAGS_SHIFT + 2),
-    /* for general use: indicates the user has started an action on
-       the dock item */
     GDL_DOCK_USER_ACTION         = 1 << (GDL_DOCK_OBJECT_FLAGS_SHIFT + 3)
 } GdlDockItemFlags;
 
@@ -105,7 +133,6 @@ struct _GdlDockItemClass {
                                    GtkOrientation  orientation);
 };
 
-/* additional macros */
 #define GDL_DOCK_ITEM_FLAGS(item)     (GDL_DOCK_OBJECT (item)->flags)
 #define GDL_DOCK_ITEM_IN_DRAG(item) \
     ((GDL_DOCK_ITEM_FLAGS (item) & GDL_DOCK_IN_DRAG) != 0)
