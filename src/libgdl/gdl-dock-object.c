@@ -695,7 +695,7 @@ gdl_dock_object_reorder (GdlDockObject    *object,
     g_return_val_if_fail (object != NULL && child != NULL, FALSE);
 
     if (GDL_DOCK_OBJECT_GET_CLASS (object)->reorder)
-            GDL_DOCK_OBJECT_GET_CLASS (object)->reorder (object, child, new_position, other_data);
+            return GDL_DOCK_OBJECT_GET_CLASS (object)->reorder (object, child, new_position, other_data);
     else
         return FALSE;
 }
@@ -748,7 +748,7 @@ gdl_dock_object_child_placement (GdlDockObject    *object,
         return FALSE;
     
     if (GDL_DOCK_OBJECT_GET_CLASS (object)->child_placement)
-        GDL_DOCK_OBJECT_GET_CLASS (object)->child_placement (object, child, placement);
+        return GDL_DOCK_OBJECT_GET_CLASS (object)->child_placement (object, child, placement);
     else
         return FALSE;
 }
