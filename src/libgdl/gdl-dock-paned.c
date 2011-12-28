@@ -165,26 +165,27 @@ gdl_dock_paned_resize_paned_ancestors (GdlDockPaned       *paned,
          return;
      }
 
-     for (widget = GTK_WIDGET (paned)->parent; widget != NULL; 
-          widget = widget->parent) {
+     for (widget = gtk_widget_get_parent (GTK_WIDGET (paned)); widget != NULL; 
+          widget = gtk_widget_get_parent (widget)) {
 
          if (GTK_IS_PANED (widget)) {
 
              GtkPaned *paned = GTK_PANED (widget);
 
-                 if (last_widget == paned->child1) {
+                 if (last_widget == gtk_paned_get_child1 (paned)) {
 
-                     if (!GDL_IS_DOCK_OBJECT(widget->parent)) {
+                     if (!GDL_IS_DOCK_OBJECT(gtk_widget_get_parent (widget))) {
                          GtkRequisition requisition;
-                         GtkAllocation allocation = paned->child1->allocation;
+                         GtkAllocation allocation;
+			 gtk_widget_get_allocation (gtk_paned_get_child1 (paned), &allocation);
 
-                         gtk_widget_size_request (paned->child1, &requisition);
+                         gtk_widget_size_request (gtk_paned_get_child1 (paned), &requisition);
 
                          gint new_height =
                              (allocation.height > requisition.height && diff > 0 ?
                               allocation.height : requisition.height) + diff;
 
-                         gtk_widget_set_size_request (paned->child1, -1, new_height);
+                         gtk_widget_set_size_request (gtk_paned_get_child1 (paned), -1, new_height);
                      }
                      
                      gtk_paned_set_position (paned, gtk_paned_get_position (paned) + diff);

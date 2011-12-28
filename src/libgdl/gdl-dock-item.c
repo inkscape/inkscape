@@ -2367,9 +2367,9 @@ gdl_dock_item_or_child_has_focus (GdlDockItem *item)
 
     g_return_val_if_fail (GDL_IS_DOCK_ITEM (item), FALSE);
 
-    for (item_child = GTK_CONTAINER (item)->focus_child;
-         item_child && GTK_IS_CONTAINER (item_child) && GTK_CONTAINER (item_child)->focus_child;
-         item_child = GTK_CONTAINER (item_child)->focus_child) ;
+    for (item_child = gtk_container_get_focus_child (GTK_CONTAINER (item));
+         item_child && GTK_IS_CONTAINER (item_child) && gtk_container_get_focus_child (GTK_CONTAINER (item_child));
+         item_child = gtk_container_get_focus_child (GTK_CONTAINER (item_child))) ;
     
     item_or_child_has_focus =
         (gtk_widget_has_focus (GTK_WIDGET (item)) || 
