@@ -168,7 +168,7 @@ gdl_dock_master_class_init (GdlDockMasterClass *klass)
         g_param_spec_enum ("expand-direction", _("Expand direction"),
                            _("Allow the master's dock items to expand their container "
                              "dock objects in the given direction"),
-                           GDL_TYPE_EXPANSION_DIRECTION,
+                           GDL_TYPE_DOCK_EXPANSION_DIRECTION,
                            GDL_DOCK_EXPANSION_DIRECTION_NONE,
                            G_PARAM_READWRITE));
 
