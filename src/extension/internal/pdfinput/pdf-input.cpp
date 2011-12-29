@@ -62,7 +62,7 @@ static const gchar * crop_setting_choices[] = {
     N_("art box")
 };
 
-PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
+PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
 {
 #ifdef HAVE_POPPLER_CAIRO
     _poppler_doc = NULL;
@@ -298,7 +298,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar *uri)
     _cairo_surface = NULL;
     _render_thumb = true;
     // Create PopplerDocument
-    gchar *doc_uri = g_filename_to_uri(uri, NULL, NULL);
+    gchar *doc_uri = g_filename_to_uri(_pdf_doc->getFileName()->getCString(),NULL,NULL);
     if (doc_uri) {
         _poppler_doc = poppler_document_new_from_file(doc_uri, NULL, NULL);
         g_free(doc_uri);
