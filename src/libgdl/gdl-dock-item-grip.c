@@ -159,7 +159,6 @@ gdl_dock_item_grip_item_notify (GObject    *master,
 {
     GdlDockItemGrip *grip;
     gboolean cursor;
-    (void)master;
     
     grip = GDL_DOCK_ITEM_GRIP (data);
 
@@ -315,7 +314,6 @@ gdl_dock_item_grip_iconify_clicked (GtkWidget       *widget,
 {
     GtkWidget *parent;
     
-    (void)widget;
     g_return_if_fail (grip->item != NULL);
 
     /* Workaround to unhighlight the iconify button. */
@@ -644,8 +642,6 @@ static void
 gdl_dock_item_grip_add (GtkContainer *container,
                         GtkWidget    *widget)
 {
-    (void)container;
-    (void)widget;
     g_warning ("gtk_container_add not implemented for GdlDockItemGrip");
 }
 
@@ -653,7 +649,6 @@ static void
 gdl_dock_item_grip_remove (GtkContainer *container,
                            GtkWidget    *widget)
 {
-    (void)widget;
     gdl_dock_item_grip_set_label (GDL_DOCK_ITEM_GRIP (container), NULL);
 }
 
@@ -683,7 +678,6 @@ gdl_dock_item_grip_forall (GtkContainer *container,
 static GType
 gdl_dock_item_grip_child_type (GtkContainer *container)
 {
-    (void)container;
     return G_TYPE_NONE;
 }
 

@@ -244,7 +244,6 @@ gdl_dock_bar_item_clicked (GtkWidget   *button,
 {
     GdlDockBar *dockbar;
     GdlDockObject *controller;
-    (void)button;
 
     g_return_if_fail (item != NULL);
     
@@ -393,7 +392,6 @@ static void
 gdl_dock_bar_layout_changed_cb (GdlDockMaster *master,
                                 GdlDockBar    *dockbar)
 {
-    (void)master;
     update_dock_items (dockbar, FALSE);
 }
 

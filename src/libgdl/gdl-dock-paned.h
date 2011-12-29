@@ -44,8 +44,6 @@ struct _GdlDockPaned {
     GdlDockItem  dock_item;
 
     gboolean     position_changed;
-    gboolean     in_drag;
-    gint         last_drag_position;
 };
 
 struct _GdlDockPanedClass {

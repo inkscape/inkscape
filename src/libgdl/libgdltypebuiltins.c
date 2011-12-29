@@ -64,26 +64,6 @@ gdl_dock_placement_get_type (void)
   return type;
 }
 
-static const GEnumValue _gdl_dock_expansion_direction_values[] = {
-  { GDL_DOCK_EXPANSION_DIRECTION_NONE, "GDL_DOCK_EXPANSION_DIRECTION_NONE", "none" },
-  { GDL_DOCK_EXPANSION_DIRECTION_UP, "GDL_DOCK_EXPANSION_DIRECTION_UP", "up" },
-  { GDL_DOCK_EXPANSION_DIRECTION_DOWN, "GDL_DOCK_EXPANSION_DIRECTION_DOWN", "down" },
-  { GDL_DOCK_EXPANSION_DIRECTION_LEFT, "GDL_DOCK_EXPANSION_DIRECTION_LEFT", "left" },
-  { GDL_DOCK_EXPANSION_DIRECTION_RIGHT, "GDL_DOCK_EXPANSION_DIRECTION_RIGHT", "right" },
-  { 0, NULL, NULL }
-};
-
-GType
-gdl_dock_expansion_direction_get_type (void)
-{
-  static GType type = 0;
-
-  if (!type)
-    type = g_enum_register_static ("GdlDockExpansionDirection", _gdl_dock_expansion_direction_values);
-
-  return type;
-}
-
 
 /* enumerations from "gdl-dock-master.h" */
 static const GEnumValue _gdl_switcher_style_values[] = {

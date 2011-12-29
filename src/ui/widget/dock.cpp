@@ -82,7 +82,6 @@ Dock::Dock(Gtk::Orientation orientation)
 
     g_object_set (GDL_DOCK_OBJECT(_gdl_dock)->master,
                   "switcher-style", gdl_switcher_style,
-                  "expand-direction", GDL_DOCK_EXPANSION_DIRECTION_DOWN,
                   NULL);
 
     GdlDockBarStyle gdl_dock_bar_style =

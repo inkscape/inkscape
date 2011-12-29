@@ -138,65 +138,6 @@ static void
 gdl_dock_paned_init (GdlDockPaned *paned)
 {
     paned->position_changed = FALSE;
-    paned->in_drag = FALSE;
-    paned->last_drag_position = -1;
-}
-
-static void
-gdl_dock_paned_resize_paned_ancestors (GdlDockPaned       *paned, 
-                                       GdlDockExpansionDirection  expansion_direction,
-                                       gint                diff)
-{
-     GtkWidget *widget, *last_widget;
-
-     g_return_if_fail (GDL_IS_DOCK_PANED (paned));
-
-     last_widget = GTK_WIDGET (paned);
-
-     /* make sure resizing only can be done in the drag direction */
-     if (expansion_direction == GDL_DOCK_EXPANSION_DIRECTION_NONE ||
-         ((expansion_direction == GDL_DOCK_EXPANSION_DIRECTION_DOWN || 
-           expansion_direction == GDL_DOCK_EXPANSION_DIRECTION_UP) && 
-          !GTK_IS_VPANED (GDL_DOCK_ITEM (paned)->child)) ||
-         ((expansion_direction == GDL_DOCK_EXPANSION_DIRECTION_LEFT || 
-           expansion_direction == GDL_DOCK_EXPANSION_DIRECTION_RIGHT) && 
-          !GTK_IS_HPANED (GDL_DOCK_ITEM (paned)->child)))
-     {         
-         return;
-     }
-
-     for (widget = gtk_widget_get_parent (GTK_WIDGET (paned)); widget != NULL; 
-          widget = gtk_widget_get_parent (widget)) {
-
-         if (GTK_IS_PANED (widget)) {
-
-             GtkPaned *paned = GTK_PANED (widget);
-
-                 if (last_widget == gtk_paned_get_child1 (paned)) {
-
-                     if (!GDL_IS_DOCK_OBJECT(gtk_widget_get_parent (widget))) {
-                         GtkRequisition requisition;
-                         GtkAllocation allocation;
-			 gtk_widget_get_allocation (gtk_paned_get_child1 (paned), &allocation);
-
-                         gtk_widget_size_request (gtk_paned_get_child1 (paned), &requisition);
-
-                         gint new_height =
-                             (allocation.height > requisition.height && diff > 0 ?
-                              allocation.height : requisition.height) + diff;
-
-                         gtk_widget_set_size_request (gtk_paned_get_child1 (paned), -1, new_height);
-                     }
-                     
-                     gtk_paned_set_position (paned, gtk_paned_get_position (paned) + diff);
-                 }
-             
-         } else if (!GDL_IS_DOCK_OBJECT (widget)) {
-             break;
-         }
-
-         last_widget = widget;
-     }
 }
 
 static void 
@@ -205,8 +146,7 @@ gdl_dock_paned_notify_cb (GObject    *g_object,
                           gpointer    user_data) 
 {
     GdlDockPaned *paned;
-    (void)g_object;
-
+    
     g_return_if_fail (user_data != NULL && GDL_IS_DOCK_PANED (user_data));
     
     /* chain the notification to the GdlDockPaned */
@@ -214,40 +154,8 @@ gdl_dock_paned_notify_cb (GObject    *g_object,
     
     paned = GDL_DOCK_PANED (user_data);
     
-    if (GDL_DOCK_ITEM_USER_ACTION (user_data) && !strcmp (pspec->name, "position")) {
-
-        GdlDockExpansionDirection expansion_direction;
-
+    if (GDL_DOCK_ITEM_USER_ACTION (user_data) && !strcmp (pspec->name, "position"))
         paned->position_changed = TRUE;
-
-        g_object_get (GDL_DOCK_OBJECT(paned)->master,
-                      "expand-direction", &expansion_direction,
-                      NULL);
-
-        switch (expansion_direction) {
-        case GDL_DOCK_EXPANSION_DIRECTION_DOWN:
-            if (paned->in_drag) {
-                gint max_position, position, diff;
-                g_object_get (GDL_DOCK_ITEM (paned)->child,
-                              "max-position", &max_position,
-                              "position", &position,
-                              NULL);
- 
-                diff = position - paned->last_drag_position;
-                paned->last_drag_position = position;
-
-                if (diff > 0 && position == max_position) {
-                    gdl_dock_paned_resize_paned_ancestors (paned, expansion_direction, diff + 1);
-                } else {
-                    gdl_dock_paned_resize_paned_ancestors (paned, expansion_direction, diff);
-                }
-                 
-            }
-            break;
-        default:
-            ;
-        }
-    }
 }
 
 static gboolean 
@@ -256,48 +164,13 @@ gdl_dock_paned_button_cb (GtkWidget      *widget,
                           gpointer        user_data)
 {
     GdlDockPaned *paned;
-    (void)widget;
     
     g_return_val_if_fail (user_data != NULL && GDL_IS_DOCK_PANED (user_data), FALSE);
     
     paned = GDL_DOCK_PANED (user_data);
     if (event->button == 1) {
-	if (event->type == GDK_BUTTON_PRESS) {
-
-            GdlDockExpansionDirection expansion_direction;
-
+        if (event->type == GDK_BUTTON_PRESS)
             GDL_DOCK_ITEM_SET_FLAGS (user_data, GDL_DOCK_USER_ACTION);
-
-            paned->in_drag = TRUE;
-
-            g_object_get (GDL_DOCK_OBJECT (paned)->master,
-                          "expand-direction", &expansion_direction,
-                          NULL);
-
-            switch (expansion_direction) {
-            case GDL_DOCK_EXPANSION_DIRECTION_DOWN:
-            {
-                gint max_position, position;
-                g_object_get (GDL_DOCK_ITEM (paned)->child,
-                              "max-position", &max_position,
-                              "position", &position,
-                              NULL);
-
-                paned->last_drag_position = position;
-                /* expand the paned's ancestors a bit if the separator is in max position
-                 * to allow dragging in all directions */
-                if (position == max_position)
-                    gdl_dock_paned_resize_paned_ancestors (paned, expansion_direction, 1);
-                break;
-            }
-            default:
-                ;
-            }
-        }
-        else if (event->type == GDK_BUTTON_RELEASE) {
-	     paned->last_drag_position = -1;
-	     paned->in_drag = FALSE;
-        }
         else {
             GDL_DOCK_ITEM_UNSET_FLAGS (user_data, GDL_DOCK_USER_ACTION);
             if (paned->position_changed) {
@@ -700,7 +573,7 @@ gdl_dock_paned_dock (GdlDockObject    *object,
                 gtk_paned_pack1 (paned, GTK_WIDGET (requestor), hresize, FALSE);
                 done = TRUE;
             } else if (!child2 && position == GDL_DOCK_BOTTOM) {
-                gtk_paned_pack2 (paned, GTK_WIDGET (requestor), TRUE, FALSE);
+                gtk_paned_pack2 (paned, GTK_WIDGET (requestor), hresize, FALSE);
                 done = TRUE;
             }
             break;
@@ -802,3 +675,4 @@ gdl_dock_paned_new (GtkOrientation orientation)
     
     return GTK_WIDGET (paned);
 }
+

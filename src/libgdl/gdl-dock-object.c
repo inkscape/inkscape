@@ -287,7 +287,6 @@ static void
 gdl_dock_object_foreach_detach (GdlDockObject *object,
                                 gpointer       user_data)
 {
-    (void)user_data;
     gdl_dock_object_detach (object, TRUE);
 }
 
@@ -454,9 +453,6 @@ gdl_dock_object_dock_unimplemented (GdlDockObject    *object,
                                     GdlDockPlacement  position,
                                     GValue           *other_data)
 {
-    (void)requestor;
-    (void)position;
-    (void)other_data;
     g_warning (_("Call to gdl_dock_object_dock in a dock object %p "
                  "(object type is %s) which hasn't implemented this method"),
                object, G_OBJECT_TYPE_NAME (object));
@@ -466,7 +462,6 @@ static void
 gdl_dock_object_real_present (GdlDockObject *object,
                               GdlDockObject *child)
 {
-    (void)child;
     gtk_widget_show (GTK_WIDGET (object));
 }
 
@@ -867,7 +862,7 @@ gdl_dock_param_get_type (void)
     static GType our_type = 0;
 
     if (our_type == 0) {
-        GTypeInfo tinfo = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        GTypeInfo tinfo = { 0, };
         our_type = g_type_register_static (G_TYPE_STRING, "GdlDockParam", &tinfo, 0);
 
         /* register known transform functions */

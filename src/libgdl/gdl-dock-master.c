@@ -82,8 +82,7 @@ enum {
     PROP_0,
     PROP_DEFAULT_TITLE,
     PROP_LOCKED,
-    PROP_SWITCHER_STYLE,
-    PROP_EXPANSION_DIRECTION
+    PROP_SWITCHER_STYLE
 };
 
 enum {
@@ -113,8 +112,6 @@ struct _GdlDockMasterPrivate {
     GHashTable     *unlocked_items;
     
     GdlSwitcherStyle switcher_style;
-
-    GdlDockExpansionDirection expansion_direction;
 };
 
 #define COMPUTE_LOCKED(master)                                          \
@@ -163,15 +160,6 @@ gdl_dock_master_class_init (GdlDockMasterClass *klass)
                            GDL_SWITCHER_STYLE_BOTH,
                            G_PARAM_READWRITE));
 
-    g_object_class_install_property (
-        g_object_class, PROP_EXPANSION_DIRECTION,
-        g_param_spec_enum ("expand-direction", _("Expand direction"),
-                           _("Allow the master's dock items to expand their container "
-                             "dock objects in the given direction"),
-                           GDL_TYPE_DOCK_EXPANSION_DIRECTION,
-                           GDL_DOCK_EXPANSION_DIRECTION_NONE,
-                           G_PARAM_READWRITE));
-
     master_signals [LAYOUT_CHANGED] = 
         g_signal_new ("layout-changed", 
                       G_TYPE_FROM_CLASS (klass),
@@ -198,7 +186,6 @@ gdl_dock_master_init (GdlDockMaster *master)
     master->_priv = g_new0 (GdlDockMasterPrivate, 1);
     master->_priv->number = 1;
     master->_priv->switcher_style = GDL_SWITCHER_STYLE_BOTH;
-    master->_priv->expansion_direction = GDL_DOCK_EXPANSION_DIRECTION_NONE;
     master->_priv->locked_items = g_hash_table_new (g_direct_hash, g_direct_equal);
     master->_priv->unlocked_items = g_hash_table_new (g_direct_hash, g_direct_equal);
 }
@@ -262,7 +249,6 @@ ht_foreach_build_slist (gpointer  key,
                         gpointer  value,
                         GSList  **slist)
 {
-    (void)key;
     *slist = g_slist_prepend (*slist, value);
 }
 
@@ -376,9 +362,6 @@ gdl_dock_master_set_property  (GObject      *object,
         case PROP_SWITCHER_STYLE:
             gdl_dock_master_set_switcher_style (master, g_value_get_enum (value));
             break;
-        case PROP_EXPANSION_DIRECTION:
-            master->_priv->expansion_direction = g_value_get_enum (value);
-            break;
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
             break;
@@ -402,9 +385,6 @@ gdl_dock_master_get_property  (GObject      *object,
             break;
         case PROP_SWITCHER_STYLE:
             g_value_set_enum (value, master->_priv->switcher_style);
-            break;
-        case PROP_EXPANSION_DIRECTION:
-            g_value_set_enum (value, master->_priv->expansion_direction);
             break;
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -597,7 +577,7 @@ gdl_dock_master_drag_motion (GdlDockItem *item,
           my_request.rect.width == request->rect.width &&
           my_request.rect.height == request->rect.height &&
           dock == master->_priv->rect_owner)) {
-        
+
         /* erase the previous rectangle */
         if (master->_priv->rect_drawn)
             gdl_dock_master_xor_rect (master);
@@ -617,7 +597,6 @@ _gdl_dock_master_foreach (gpointer key,
                           gpointer value,
                           gpointer user_data)
 {
-    (void)key;
     struct {
         GFunc    function;
         gpointer user_data;
@@ -726,11 +705,7 @@ item_dock_cb (GdlDockObject    *object,
               gpointer          user_data)
 {
     GdlDockMaster *master = user_data;
-
-    (void)object;
-    (void)position;
-    (void)other_data;
-
+    
     g_return_if_fail (requestor && GDL_IS_DOCK_OBJECT (requestor));
     g_return_if_fail (master && GDL_IS_DOCK_MASTER (master));
 
@@ -752,8 +727,6 @@ item_detach_cb (GdlDockObject *object,
 {
     GdlDockMaster *master = user_data;
     
-    (void)recursive;
-
     g_return_if_fail (object && GDL_IS_DOCK_OBJECT (object));
     g_return_if_fail (master && GDL_IS_DOCK_MASTER (master));
 
@@ -774,8 +747,6 @@ item_notify_cb (GdlDockObject *object,
     gint locked = COMPUTE_LOCKED (master);
     gboolean item_locked;
     
-    (void)pspec;
-
     g_object_get (object, "locked", &item_locked, NULL);
 
     if (item_locked) {

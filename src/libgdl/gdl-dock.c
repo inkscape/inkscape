@@ -36,6 +36,9 @@
 
 #include "libgdlmarshal.h"
 
+#ifndef __FUNCTION__
+#define __FUNCTION__ __func__
+#endif
 
 /* ----- Private prototypes ----- */
 
@@ -272,9 +275,7 @@ gdl_dock_floating_configure_event_cb (GtkWidget         *widget,
                                       gpointer           user_data)
 {
     GdlDock *dock;
-
-    (void)widget;
-
+    
     g_return_val_if_fail (user_data != NULL && GDL_IS_DOCK (user_data), TRUE);
 
     dock = GDL_DOCK (user_data);
@@ -489,10 +490,7 @@ gdl_dock_notify_cb (GObject    *object,
 {
     GdlDock *dock;
     gchar* long_name;
-
-    (void)pspec;
-    (void)user_data;
-
+    
     g_return_if_fail (object != NULL || GDL_IS_DOCK (object));
 
     g_object_get (object, "long-name", &long_name, NULL);
@@ -728,8 +726,6 @@ gdl_dock_forall (GtkContainer *container,
 {
     GdlDock *dock;
 
-    (void)include_internals;
-
     g_return_if_fail (container != NULL);
     g_return_if_fail (GDL_IS_DOCK (container));
     g_return_if_fail (callback != NULL);
@@ -743,7 +739,6 @@ gdl_dock_forall (GtkContainer *container,
 static GType
 gdl_dock_child_type (GtkContainer *container)
 {
-    (void)container;
     return GDL_TYPE_DOCK_ITEM;
 }
 
@@ -922,7 +917,7 @@ gdl_dock_dock (GdlDockObject    *object,
            GdlDock has been realized. */
         if (gtk_widget_get_realized (GTK_WIDGET (dock)))
             gtk_widget_realize (widget);
-
+        
         /* Map the widget if it's visible and the parent is visible and has 
            been mapped. This is done to make sure that the GdkWindow is 
            visible. */
@@ -1016,11 +1011,8 @@ gdl_dock_present (GdlDockObject *object,
 {
     GdlDock *dock = GDL_DOCK (object);
 
-    (void)child;
-
-    if (dock->_priv->floating) {
+    if (dock->_priv->floating)
         gtk_window_present (GTK_WINDOW (dock->_priv->window));
-    }
 }
 
 
@@ -1077,10 +1069,14 @@ gdl_dock_refine_placement (GdlDock *dock, GdlDockItem *dock_item,
     if (placement == GDL_DOCK_LEFT || placement == GDL_DOCK_RIGHT) {
         /* Check if dock_object touches center in terms of width */
         if (allocation.width/2 > object_size.width) {
-            return GDL_DOCK_TOP;
+            return GDL_DOCK_CENTER;
         }
-    } 
-
+    } else if (placement == GDL_DOCK_TOP || placement == GDL_DOCK_BOTTOM) {
+        /* Check if dock_object touches center in terms of height */
+        if (allocation.height/2 > object_size.height) {
+            return GDL_DOCK_CENTER;
+        }
+    }
     return placement;
 }
 
@@ -1096,8 +1092,6 @@ gdl_dock_select_larger_item (GdlDockItem *dock_item_1,
                              gint level /* for debugging */)
 {
     GtkRequisition size_1, size_2;
-
-    (void)level;
     
     g_return_val_if_fail (dock_item_1 != NULL, dock_item_2);
     g_return_val_if_fail (dock_item_2 != NULL, dock_item_1);
@@ -1221,7 +1215,7 @@ gdl_dock_add_item (GdlDock          *dock,
         /* Non-floating item. */
         if (dock->root) {
             GdlDockPlacement local_placement;
-            /* GtkRequisition preferred_size; */
+            GtkRequisition preferred_size;
             
             best_dock_item =
                 gdl_dock_find_best_placement_item (GDL_DOCK_ITEM (dock->root),

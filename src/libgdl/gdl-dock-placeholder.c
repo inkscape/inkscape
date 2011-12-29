@@ -331,7 +331,7 @@ gdl_dock_placeholder_add (GtkContainer *container,
                           GtkWidget    *widget)
 {
     GdlDockPlaceholder *ph;
-    GdlDockPlacement    pos = GDL_DOCK_TOP;   /* default position */
+    GdlDockPlacement    pos = GDL_DOCK_CENTER;   /* default position */
     
     g_return_if_fail (GDL_IS_DOCK_PLACEHOLDER (container));
     g_return_if_fail (GDL_IS_DOCK_ITEM (widget));
@@ -349,7 +349,6 @@ gdl_dock_placeholder_detach (GdlDockObject *object,
                              gboolean       recursive)
 {
     GdlDockPlaceholder *ph = GDL_DOCK_PLACEHOLDER (object);
-    (void)recursive;
 
     /* disconnect handlers */
     disconnect_host (ph);
@@ -364,7 +363,6 @@ gdl_dock_placeholder_detach (GdlDockObject *object,
 static void 
 gdl_dock_placeholder_reduce (GdlDockObject *object)
 {
-    (void)object;
     /* placeholders are not reduced */
     return;
 }
@@ -538,8 +536,6 @@ static void
 gdl_dock_placeholder_present (GdlDockObject *object,
                               GdlDockObject *child)
 {
-    (void)object;
-    (void)child;
     /* do nothing */
     return;
 }
@@ -570,8 +566,7 @@ gdl_dock_placeholder_weak_notify (gpointer data,
                                   GObject *old_object)
 {
     GdlDockPlaceholder *ph;
-    (void)old_object;
-
+    
     g_return_if_fail (data != NULL && GDL_IS_DOCK_PLACEHOLDER (data));
 
     ph = GDL_DOCK_PLACEHOLDER (data);
@@ -603,7 +598,6 @@ detach_cb (GdlDockObject *object,
 {
     GdlDockPlaceholder *ph;
     GdlDockObject      *new_host, *obj;
-    (void)recursive;
 
     g_return_if_fail (user_data != NULL && GDL_IS_DOCK_PLACEHOLDER (user_data));
     
@@ -733,9 +727,7 @@ dock_cb (GdlDockObject    *object,
 {
     GdlDockPlacement    pos = GDL_DOCK_NONE;
     GdlDockPlaceholder *ph;
-    (void)position;
-    (void)other_data;
-
+    
     g_return_if_fail (user_data != NULL && GDL_IS_DOCK_PLACEHOLDER (user_data));
     ph = GDL_DOCK_PLACEHOLDER (user_data);
     g_return_if_fail (ph->_priv->host == object);

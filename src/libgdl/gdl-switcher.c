@@ -318,8 +318,8 @@ layout_buttons (GdlSwitcher *switcher)
 
     rows_count = num_btns / btns_per_row;
     if (num_btns % btns_per_row != 0)
-        rows_count++;
-     
+	rows_count++;
+    
     /* Assign buttons to rows */
     rows = g_new0 (GSList *, rows_count);
 
@@ -653,9 +653,7 @@ gdl_switcher_switch_page_cb (GtkNotebook *nb, GtkWidget *page_widget,
                              gint page_num, GdlSwitcher *switcher)
 {
     gint             switcher_id;
-
-    (void)nb;
-    (void)page_num;
+    
     /* Change switcher button */
     switcher_id = gdl_switcher_get_page_id (page_widget);
     gdl_switcher_select_button (GDL_SWITCHER (switcher), switcher_id);
