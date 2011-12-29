@@ -17,12 +17,12 @@
 
 #ifdef HAVE_POPPLER
 
-#include "goo/GooString.h"
-#include "ErrorCodes.h"
-#include "GlobalParams.h"
-#include "PDFDoc.h"
-#include "Page.h"
-#include "Catalog.h"
+#include <poppler/goo/GooString.h>
+#include <poppler/ErrorCodes.h>
+#include <poppler/GlobalParams.h>
+#include <poppler/PDFDoc.h>
+#include <poppler/Page.h>
+#include <poppler/Catalog.h>
 
 #ifdef HAVE_POPPLER_CAIRO
 #include <poppler/glib/poppler.h>
