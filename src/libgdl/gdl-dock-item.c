@@ -1677,7 +1677,11 @@ gdl_dock_item_drag_end (GdlDockItem *item,
                         gboolean     cancel)
 {
     /* Release pointer & keyboard. */
-    gtk_grab_remove (gtk_grab_get_current ());
+    GtkWidget *widget = gtk_grab_get_current ();
+    if (widget == NULL) {
+        widget = GTK_WIDGET (item);
+    }
+    gtk_grab_remove (widget);
     
     g_signal_emit (item, gdl_dock_item_signals [DOCK_DRAG_END], 0, cancel);
     
