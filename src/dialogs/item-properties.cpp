@@ -153,8 +153,6 @@ SPItemDialog::SPItemDialog (void) :
 
 SPItemDialog::~SPItemDialog (void)
 {
-    //TODO: can we disconnect the "modify_selection", "change_selection", and "set_selection"
-    //      from their callbacks set in make_widget?
     if (closing)
     {
        return;
@@ -186,9 +184,9 @@ SPItemDialog::~SPItemDialog (void)
 void SPItemDialog::MakeWidget(void)
 {
 	// if (gtk_widget_get_visible (GTK_WIDGET(spw))) {
-		g_signal_connect (G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (sp_item_widget_modify_selection), this);
-		g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (sp_item_widget_change_selection), this);
-		g_signal_connect (G_OBJECT (INKSCAPE), "set_selection", G_CALLBACK (sp_item_widget_change_selection), this);
+		g_signal_connect (G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (sp_item_widget_modify_selection), wd.win);
+		g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (sp_item_widget_change_selection), wd.win);
+		g_signal_connect (G_OBJECT (INKSCAPE), "set_selection", G_CALLBACK (sp_item_widget_change_selection), wd.win);
 	// }
 
     window->add(vb);
