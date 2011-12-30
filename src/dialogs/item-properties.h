@@ -34,6 +34,7 @@ private:
     gint y;
     gint w;
     gint h;
+    std::vector<Glib::ustring> int_labels;
     
     bool blocked;
     bool closing;

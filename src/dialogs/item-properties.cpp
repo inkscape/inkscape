@@ -111,13 +111,15 @@ SPItemDialog::SPItemDialog (void) :
     attrTable(),
     CurrentItem(0)
 {
+    //intializing dialog
     gchar title[500];
     sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_DIALOG_ITEM), title);
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    
     window = Inkscape::UI::window_new (title, true);
     GtkWidget *dlg;
     dlg = (GtkWidget*)window->gobj();
+    
+    //reading dialog position from preferences
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (x == -1000 || y == -1000) {
         x = prefs->getInt(prefs_path + "x", -1000);
         y = prefs->getInt(prefs_path + "y", -1000);
@@ -126,7 +128,6 @@ SPItemDialog::SPItemDialog (void) :
         w = prefs->getInt(prefs_path + "w", 0);
         h = prefs->getInt(prefs_path + "h", 0);
     }
-
     if (w && h) {
         gtk_window_resize ((GtkWindow *) dlg, w, h);
     }
@@ -140,6 +141,7 @@ SPItemDialog::SPItemDialog (void) :
     wd.win = dlg;
     wd.stop = 0;
 
+    //set callback for the new dialog
     g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd);
     g_signal_connect ( G_OBJECT (dlg), "event", G_CALLBACK (sp_dialog_event_handler), dlg);
     // g_signal_connect ( G_OBJECT (dlg), "destroy", G_CALLBACK (sp_item_dialog_delete), dlg);
@@ -148,6 +150,18 @@ SPItemDialog::SPItemDialog (void) :
     g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);
     g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg);
 
+    //initialize labels for the table at the bottom of the dialog
+    int_labels.push_back("onclick");
+    int_labels.push_back("onmouseover");
+    int_labels.push_back("onmouseout");
+    int_labels.push_back("onmousedown");
+    int_labels.push_back("onmouseup");
+    int_labels.push_back("onmousemove");
+    int_labels.push_back("onfocusin");
+    int_labels.push_back("onfocusout");
+    int_labels.push_back("onfocusout");
+    int_labels.push_back("onload");
+    
     MakeWidget();
 }
 
@@ -365,21 +379,8 @@ void SPItemDialog::widget_setup(void)
         } else {
             TextViewDescription.get_buffer()->set_text("");
         }
-        
         FrameTextDescription.set_sensitive(TRUE);
 
-        std::vector<Glib::ustring> int_labels;
-        int_labels.push_back("onclick");
-        int_labels.push_back("onmouseover");
-        int_labels.push_back("onmouseout");
-        int_labels.push_back("onmousedown");
-        int_labels.push_back("onmouseup");
-        int_labels.push_back("onmousemove");
-        int_labels.push_back("onfocusin");
-        int_labels.push_back("onfocusout");
-        int_labels.push_back("onfocusout");
-        int_labels.push_back("onload");
-        
         attrTable.set_object(obj, int_labels, int_labels, (GtkWidget*)EInteractivity.gobj());
         attrTable.show_all();
     }
