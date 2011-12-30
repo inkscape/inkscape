@@ -65,7 +65,9 @@ private:
     Gtk::Label LabelInteractivity; //the label for interactivity
     Gtk::Expander EInteractivity; //the label for interactivity
 
-    SPAttributeTable attrTable;
+    SPAttributeTable attrTable; //the widget for showing the on... names at the bottom
+    
+    SPItem *CurrentItem; //to store the current item, for not wasting resources
     
     void MakeWidget(void);
     void label_changed(void);

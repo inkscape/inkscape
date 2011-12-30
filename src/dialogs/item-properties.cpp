@@ -108,7 +108,8 @@ SPItemDialog::SPItemDialog (void) :
     CBLock(_("L_ock"), 1),
     BSet (_("_Set"), 1),
     LabelInteractivity(_("_Interactivity"), 1),
-    attrTable()
+    attrTable(),
+    CurrentItem(0)
 {
     gchar title[500];
     sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_DIALOG_ITEM), title);
@@ -310,9 +311,17 @@ void SPItemDialog::widget_setup(void)
     } else {
         set_sensitive (true);
     }
-    blocked = true;
-
+    
     SPItem *item = selection->singleItem();
+    if (CurrentItem == item)
+    {
+        //otherwise we would end up wasting resources through the modify selection
+        //callback when moving an object (endlessly setting the labels and recreating attrTable)
+        return;
+    }
+    blocked = true;
+    
+    CurrentItem = item;
     CBLock.set_active (item->isLocked());          /* Sensitive */
     CBHide.set_active(item->isExplicitlyHidden()); /* Hidden */
     
