@@ -22,7 +22,6 @@
 #include <glibmm/i18n.h>
 
 #include "../desktop-handles.h"
-#include "dialog-events.h"
 #include "../document.h"
 #include "../helper/window.h"
 #include "../inkscape.h"
@@ -32,43 +31,137 @@
 #include "../selection.h"
 #include "../sp-item.h"
 #include "../verbs.h"
-#include "../widgets/sp-attribute-widget.h"
 #include "../widgets/sp-widget.h"
+#include "item-properties.h"
 
 using Inkscape::DocumentUndo;
 
 #define MIN_ONSCREEN_DISTANCE 50
 
-static GtkWidget *dlg = NULL;
-static SPAttributeTable* attrTable = NULL;
-static win_data wd;
+static SPItemDialog *spid = NULL;
 
-// impossible original values to make sure they are read from prefs
-static gint x = -1000, y = -1000, w = 0, h = 0;
-static Glib::ustring const prefs_path = "/dialogs/object/";
-
+static void sp_item_dialog_delete( GtkObject */*object*/, GdkEvent */*event*/, gpointer /*data*/ );
 static void sp_item_widget_modify_selection (SPWidget *spw, Inkscape::Selection *selection, guint flags, GtkWidget *itemw);
 static void sp_item_widget_change_selection (SPWidget *spw, Inkscape::Selection *selection, GtkWidget *itemw);
-static void sp_item_widget_setup (SPWidget *spw, Inkscape::Selection *selection);
-static void sp_item_widget_sensitivity_toggled (GtkWidget *widget, SPWidget *spw);
-static void sp_item_widget_hidden_toggled (GtkWidget *widget, SPWidget *spw);
-static void sp_item_widget_label_changed (GtkWidget *widget, SPWidget *spw);
 
-static void sp_item_dialog_destroy( GtkObject */*object*/, gpointer /*data*/ )
+static void sp_item_dialog_delete( GtkObject */*object*/, GdkEvent */*event*/, gpointer /*data*/ )
 {
-    if (attrTable)
+    if (spid)
     {
-        delete attrTable;
+		delete spid;
+		spid = NULL;
     }
-    sp_signal_disconnect_by_data (INKSCAPE, dlg);
-    wd.win = dlg = NULL;
-    wd.stop = 0;
 }
 
-static gboolean sp_item_dialog_delete( GtkObject */*object*/, GdkEvent */*event*/, gpointer /*data*/ )
+static void sp_item_widget_modify_selection( SPWidget */*spw*/,
+                                 Inkscape::Selection */*selection*/,
+                                 guint /*flags*/,
+                                 GtkWidget */*itemw*/ )
 {
-    gtk_window_get_position ((GtkWindow *) dlg, &x, &y);
-    gtk_window_get_size ((GtkWindow *) dlg, &w, &h);
+    if (spid)
+    {
+        spid->widget_setup();
+    }
+}
+
+static void sp_item_widget_change_selection ( SPWidget */*spw*/,
+                                  Inkscape::Selection */*selection*/,
+                                  GtkWidget */*itemw*/ )
+{
+    if (spid)
+    {
+        spid->widget_setup();
+    }
+}
+
+
+/**
+ * Create a new static instance of the items dialog.
+ */
+void sp_item_dialog(void)
+{
+    if (spid == NULL) {
+        spid = new SPItemDialog();
+    }
+}
+
+/**
+ * SPItemDialog class.
+ * A widget for showing and editing the properties of an object.
+ */
+SPItemDialog::SPItemDialog (void) :
+    prefs_path("/dialogs/object/"),
+    x(-1000),// impossible original value to make sure they are read from prefs
+    y(-1000),// impossible original value to make sure they are read from prefs
+    w(0),
+    h(0),
+    blocked (false),
+    closing (false),
+    TopTable (3, 4, false),
+    LabelID(_("_ID:"), 1),
+    LabelLabel(_("_Label:"), 1),
+    LabelTitle(_("_Title:"),1),
+    LabelDescription(_("_Description"),1),
+    HBoxCheck(FALSE, 0),
+    CheckTable(1, 2, TRUE),
+    CBHide(_("_Hide"), 1),
+    CBLock(_("L_ock"), 1),
+    BSet (_("_Set"), 1),
+    LabelInteractivity(_("_Interactivity"), 1),
+    attrTable()
+{
+    gchar title[500];
+    sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_DIALOG_ITEM), title);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    
+    window = Inkscape::UI::window_new (title, true);
+    GtkWidget *dlg;
+    dlg = (GtkWidget*)window->gobj();
+    if (x == -1000 || y == -1000) {
+        x = prefs->getInt(prefs_path + "x", -1000);
+        y = prefs->getInt(prefs_path + "y", -1000);
+    }
+    if (w ==0 || h == 0) {
+        w = prefs->getInt(prefs_path + "w", 0);
+        h = prefs->getInt(prefs_path + "h", 0);
+    }
+
+    if (w && h) {
+        gtk_window_resize ((GtkWindow *) dlg, w, h);
+    }
+    if (x >= 0 && y >= 0 && (x < (gdk_screen_width()-MIN_ONSCREEN_DISTANCE)) && (y < (gdk_screen_height()-MIN_ONSCREEN_DISTANCE))) {
+        gtk_window_move ((GtkWindow *) dlg, x, y);
+    } else {
+        gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_CENTER);
+    }
+
+    sp_transientize (dlg);
+    wd.win = dlg;
+    wd.stop = 0;
+
+    g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd);
+    g_signal_connect ( G_OBJECT (dlg), "event", G_CALLBACK (sp_dialog_event_handler), dlg);
+    // g_signal_connect ( G_OBJECT (dlg), "destroy", G_CALLBACK (sp_item_dialog_delete), dlg);
+    g_signal_connect ( G_OBJECT (dlg), "delete_event", G_CALLBACK (sp_item_dialog_delete), dlg);
+    g_signal_connect ( G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (sp_item_dialog_delete), dlg);
+    g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);
+    g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg);
+
+    MakeWidget();
+}
+
+SPItemDialog::~SPItemDialog (void)
+{
+    //TODO: can we disconnect the "modify_selection", "change_selection", and "set_selection"
+    //      from their callbacks set in make_widget?
+    if (closing)
+    {
+       return;
+    }
+    blocked = true;
+    closing = true;
+    gtk_window_get_position ((GtkWindow *) wd.win, &x, &y);
+    gtk_window_get_size ((GtkWindow *) wd.win, &w, &h);
 
     if (x<0) x=0;
     if (y<0) y=0;
@@ -79,281 +172,194 @@ static gboolean sp_item_dialog_delete( GtkObject */*object*/, GdkEvent */*event*
     prefs->setInt(prefs_path + "w", w);
     prefs->setInt(prefs_path + "h", h);
 
-    return FALSE; // which means, go ahead and destroy it
-
+    sp_signal_disconnect_by_data (INKSCAPE, wd.win);
+    if (window)
+    {
+        //should actually always  be true, but for safety check
+        delete window;
+        window = NULL;
+        wd.win = NULL;
+    }
 }
 
-/**
- * Creates new instance of item properties widget.
- */
-GtkWidget *sp_item_widget_new(void)
+void SPItemDialog::MakeWidget(void)
 {
+	// if (gtk_widget_get_visible (GTK_WIDGET(spw))) {
+		g_signal_connect (G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (sp_item_widget_modify_selection), this);
+		g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (sp_item_widget_change_selection), this);
+		g_signal_connect (G_OBJECT (INKSCAPE), "set_selection", G_CALLBACK (sp_item_widget_change_selection), this);
+	// }
 
-    GtkWidget *spw, *vb, *t, *cb, *l, *f, *tf, *pb, *int_expander, *int_label;
-    GtkTextBuffer *desc_buffer;
-
-    /* Create container widget */
-    spw = sp_widget_new_global (INKSCAPE);
-    g_signal_connect ( G_OBJECT (spw), "modify_selection",
-                         G_CALLBACK (sp_item_widget_modify_selection),
-                         spw );
-    g_signal_connect ( G_OBJECT (spw), "change_selection",
-                         G_CALLBACK (sp_item_widget_change_selection),
-                         spw );
-
-    vb = gtk_vbox_new (FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (spw), vb);
-
-    t = gtk_table_new (3, 4, FALSE);
-    gtk_container_set_border_width(GTK_CONTAINER(t), 4);
-    gtk_table_set_row_spacings (GTK_TABLE (t), 4);
-    gtk_table_set_col_spacings (GTK_TABLE (t), 4);
-    gtk_box_pack_start (GTK_BOX (vb), t, TRUE, TRUE, 0);
-
+    window->add(vb);
+    TopTable.set_border_width(4);
+    TopTable.set_row_spacings(4);
+    TopTable.set_col_spacings(4);
+    vb.pack_start (TopTable, true, true, 0);
 
     /* Create the label for the object id */
-    l = gtk_label_new_with_mnemonic (_("_ID:"));
-    gtk_misc_set_alignment (GTK_MISC (l), 1, 0.5);
-    gtk_table_attach ( GTK_TABLE (t), l, 0, 1, 0, 1,
-                       (GtkAttachOptions)( GTK_SHRINK | GTK_FILL ),
-                       (GtkAttachOptions)0, 0, 0 );
-    g_object_set_data (G_OBJECT (spw), "id_label", l);
+    LabelID.set_alignment (1, 0.5);
+    TopTable.attach (LabelID, 0, 1, 0, 1,
+                       Gtk::SHRINK | Gtk::FILL,
+                       Gtk::AttachOptions(), 0, 0 );
 
     /* Create the entry box for the object id */
-    tf = gtk_entry_new ();
-    gtk_widget_set_tooltip_text (tf, _("The id= attribute (only letters, digits, and the characters .-_: allowed)"));
-    gtk_entry_set_max_length (GTK_ENTRY (tf), 64);
-    gtk_table_attach ( GTK_TABLE (t), tf, 1, 2, 0, 1,
-                       (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
-                       (GtkAttachOptions)0, 0, 0 );
-    g_object_set_data (G_OBJECT (spw), "id", tf);
-    gtk_label_set_mnemonic_widget (GTK_LABEL(l), tf);
+    EntryID.set_tooltip_text (_("The id= attribute (only letters, digits, and the characters .-_: allowed)"));
+    EntryID.set_max_length (64);
+    TopTable.attach (EntryID, 1, 2, 0, 1,
+                       Gtk::EXPAND | Gtk::FILL,
+                       Gtk::AttachOptions(), 0, 0 );
+    LabelID.set_mnemonic_widget (EntryID);
 
     // pressing enter in the id field is the same as clicking Set:
-    g_signal_connect ( G_OBJECT (tf), "activate", G_CALLBACK (sp_item_widget_label_changed), spw);
+    EntryID.signal_activate().connect(sigc::mem_fun(this, &SPItemDialog::label_changed));
     // focus is in the id field initially:
-    gtk_widget_grab_focus (GTK_WIDGET (tf));
+    EntryID.grab_focus();
 
     /* Create the label for the object label */
-    l = gtk_label_new_with_mnemonic (_("_Label:"));
-    gtk_misc_set_alignment (GTK_MISC (l), 1, 0.5);
-    gtk_table_attach ( GTK_TABLE (t), l, 0, 1, 1, 2,
-                       (GtkAttachOptions)( GTK_SHRINK | GTK_FILL ),
-                       (GtkAttachOptions)0, 0, 0 );
-    g_object_set_data (G_OBJECT (spw), "label_label", l);
+    LabelLabel.set_alignment (1, 0.5);
+    TopTable.attach (LabelLabel, 0, 1, 1, 2,
+                       Gtk::SHRINK | Gtk::FILL,
+                       Gtk::AttachOptions(), 0, 0 );
 
     /* Create the entry box for the object label */
-    tf = gtk_entry_new ();
-    gtk_widget_set_tooltip_text (tf, _("A freeform label for the object"));
-    gtk_entry_set_max_length (GTK_ENTRY (tf), 256);
-    gtk_table_attach ( GTK_TABLE (t), tf, 1, 2, 1, 2,
-                       (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
-                       (GtkAttachOptions)0, 0, 0 );
-    g_object_set_data (G_OBJECT (spw), "label", tf);
-    gtk_label_set_mnemonic_widget (GTK_LABEL(l), tf);
+    EntryLabel.set_tooltip_text (_("A freeform label for the object"));
+    EntryLabel.set_max_length (256);
+    TopTable.attach (EntryLabel, 1, 2, 1, 2,
+                       Gtk::EXPAND | Gtk::FILL,
+                       Gtk::AttachOptions(), 0, 0 );
+    LabelLabel.set_mnemonic_widget (EntryLabel);
 
     // pressing enter in the label field is the same as clicking Set:
-    g_signal_connect ( G_OBJECT (tf), "activate", G_CALLBACK (sp_item_widget_label_changed), spw);
+    EntryLabel.signal_activate().connect(sigc::mem_fun(this, &SPItemDialog::label_changed));
 
     /* Create the label for the object title */
-    l = gtk_label_new_with_mnemonic (_("_Title:"));
-    gtk_misc_set_alignment (GTK_MISC (l), 1, 0.5);
-    gtk_table_attach ( GTK_TABLE (t), l, 0, 1, 2, 3,
-                       (GtkAttachOptions)( GTK_SHRINK | GTK_FILL ),
-                       (GtkAttachOptions)0, 0, 0 );
-    g_object_set_data (G_OBJECT (spw), "title_label", l);
+    LabelTitle.set_alignment (1, 0.5);
+    TopTable.attach (LabelTitle, 0, 1, 2, 3,
+                       Gtk::SHRINK | Gtk::FILL,
+                       Gtk::AttachOptions(), 0, 0 );
 
     /* Create the entry box for the object title */
-    tf = gtk_entry_new ();
-    gtk_widget_set_sensitive (GTK_WIDGET (tf), FALSE);
-    gtk_entry_set_max_length (GTK_ENTRY (tf), 256);
-    gtk_table_attach ( GTK_TABLE (t), tf, 1, 3, 2, 3,
-                       (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
-                       (GtkAttachOptions)0, 0, 0 );
-    g_object_set_data (G_OBJECT (spw), "title", tf);
-    gtk_label_set_mnemonic_widget (GTK_LABEL(l), tf);
+    EntryTitle.set_sensitive (FALSE);
+    EntryTitle.set_max_length (256);
+    TopTable.attach (EntryTitle, 1, 3, 2, 3,
+                       Gtk::EXPAND | Gtk::FILL,
+                       Gtk::AttachOptions(), 0, 0 );
+    LabelTitle.set_mnemonic_widget (EntryTitle);
 
     /* Create the frame for the object description */
-    l = gtk_label_new_with_mnemonic (_("_Description"));
-    f = gtk_frame_new (NULL);
-    gtk_frame_set_label_widget (GTK_FRAME (f),l);
-    gtk_table_attach ( GTK_TABLE (t), f, 0, 3, 3, 4,
-                       (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
-                       (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ), 0, 0 );
+    FrameDescription.set_label_widget (LabelDescription);
+    TopTable.attach (FrameDescription, 0, 3, 3, 4,
+                       Gtk::EXPAND | Gtk::FILL,
+                       Gtk::EXPAND | Gtk::FILL, 0, 0 );
 
     /* Create the text view box for the object description */
-    GtkWidget *textframe = gtk_frame_new(NULL);
-    gtk_container_set_border_width(GTK_CONTAINER(textframe), 4);
-    gtk_widget_set_sensitive (GTK_WIDGET (textframe), FALSE);
-    gtk_container_add (GTK_CONTAINER (f), textframe);
-    gtk_frame_set_shadow_type (GTK_FRAME (textframe), GTK_SHADOW_IN);
-    g_object_set_data(G_OBJECT(spw), "desc_frame", textframe);
+    FrameTextDescription.set_border_width(4);
+    FrameTextDescription.set_sensitive (FALSE);
+    FrameDescription.add (FrameTextDescription);
+    FrameTextDescription.set_shadow_type (Gtk::SHADOW_IN);
 
-    tf = gtk_text_view_new();
-    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(tf), GTK_WRAP_WORD);
-    desc_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tf));
-    gtk_text_buffer_set_text(desc_buffer, "", -1);
-    gtk_container_add (GTK_CONTAINER (textframe), tf);
-    g_object_set_data (G_OBJECT (spw), "desc", tf);
-    gtk_label_set_mnemonic_widget (GTK_LABEL (gtk_frame_get_label_widget (GTK_FRAME (f))), tf);
+    TextViewDescription.set_wrap_mode(Gtk::WRAP_WORD);
+    TextViewDescription.get_buffer()->set_text("");
+    FrameTextDescription.add (TextViewDescription);
+    TextViewDescription.add_mnemonic_label(LabelDescription);
 
     /* Check boxes */
-    GtkWidget *hb_cb = gtk_hbox_new (FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vb), hb_cb, FALSE, FALSE, 0);
-    t = gtk_table_new (1, 2, TRUE);
-    gtk_container_set_border_width(GTK_CONTAINER(t), 0);
-    gtk_box_pack_start (GTK_BOX (hb_cb), t, TRUE, TRUE, 10);
+    vb.pack_start (HBoxCheck, FALSE, FALSE, 0);
+    CheckTable.set_border_width(0);
+    HBoxCheck.pack_start (CheckTable, TRUE, TRUE, 10);
 
     /* Hide */
-    cb = gtk_check_button_new_with_mnemonic (_("_Hide"));
-    gtk_widget_set_tooltip_text (cb, _("Check to make the object invisible"));
-    gtk_table_attach ( GTK_TABLE (t), cb, 0, 1, 0, 1,
-                       (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
-                       (GtkAttachOptions)0, 0, 0 );
-    g_signal_connect (G_OBJECT(cb), "toggled", G_CALLBACK(sp_item_widget_hidden_toggled), spw);
-    g_object_set_data(G_OBJECT(spw), "hidden", cb);
-
-    /* Button for setting the object's id, label, title and description. */
-    pb = gtk_button_new_with_mnemonic (_("_Set"));
-    gtk_box_pack_start (GTK_BOX (hb_cb), pb, TRUE, TRUE, 10);
-    g_signal_connect ( G_OBJECT (pb), "clicked",
-                         G_CALLBACK (sp_item_widget_label_changed),
-                         spw );
+    CBHide.set_tooltip_text (_("Check to make the object invisible"));
+    CheckTable.attach (CBHide, 0, 1, 0, 1,
+                       Gtk::EXPAND | Gtk::FILL,
+                       Gtk::AttachOptions(), 0, 0 );
+    CBHide.signal_toggled().connect(sigc::mem_fun(this, &SPItemDialog::hidden_toggled));
 
     /* Lock */
     // TRANSLATORS: "Lock" is a verb here
-    cb = gtk_check_button_new_with_mnemonic (_("L_ock"));
-    gtk_widget_set_tooltip_text (cb, _("Check to make the object insensitive (not selectable by mouse)"));
-    gtk_table_attach ( GTK_TABLE (t), cb, 1, 2, 0, 1,
-                       (GtkAttachOptions)( GTK_EXPAND | GTK_FILL ),
-                       (GtkAttachOptions)0, 0, 0 );
-    g_signal_connect ( G_OBJECT (cb), "toggled",
-                         G_CALLBACK (sp_item_widget_sensitivity_toggled),
-                         spw );
-    g_object_set_data (G_OBJECT (spw), "sensitive", cb);
+    CBLock.set_tooltip_text (_("Check to make the object insensitive (not selectable by mouse)"));
+    CheckTable.attach (CBLock, 1, 2, 0, 1,
+                       Gtk::EXPAND | Gtk::FILL,
+                       Gtk::AttachOptions(), 0, 0 );
+    CBLock.signal_toggled().connect(sigc::mem_fun(this, &SPItemDialog::sensitivity_toggled));
+
+
+    /* Button for setting the object's id, label, title and description. */
+    HBoxCheck.pack_start (BSet, TRUE, TRUE, 10);
+    BSet.signal_clicked().connect(sigc::mem_fun(this, &SPItemDialog::label_changed));
 
     /* Create the frame for interactivity options */
-    int_label = gtk_label_new_with_mnemonic (_("_Interactivity"));
-    int_expander = gtk_expander_new (NULL);
-    gtk_expander_set_label_widget (GTK_EXPANDER (int_expander),int_label);
-    g_object_set_data (G_OBJECT (spw), "interactivity", int_expander);
-
-    gtk_box_pack_start (GTK_BOX (vb), int_expander, FALSE, FALSE, 0);
-
-    gtk_widget_show_all (spw);
-
-    sp_item_widget_setup (SP_WIDGET (spw), sp_desktop_selection (SP_ACTIVE_DESKTOP));
-
-    return (GtkWidget *) spw;
-
-} //end of sp_item_widget_new()
-
-
-
-static void sp_item_widget_modify_selection( SPWidget *spw,
-                                 Inkscape::Selection *selection,
-                                 guint /*flags*/,
-                                 GtkWidget */*itemw*/ )
-{
-    sp_item_widget_setup (spw, selection);
+    EInteractivity.set_label_widget (LabelInteractivity);
+    vb.pack_start (EInteractivity, FALSE, FALSE, 0);
+    window->show_all ();
+    widget_setup();
 }
 
-
-
-static void sp_item_widget_change_selection ( SPWidget *spw,
-                                  Inkscape::Selection *selection,
-                                  GtkWidget */*itemw*/ )
+void SPItemDialog::widget_setup(void)
 {
-    sp_item_widget_setup (spw, selection);
-}
-
-
-/**
- * @param selection Selection to use; should not be NULL.
- */
-static void sp_item_widget_setup( SPWidget *spw, Inkscape::Selection *selection )
-{
-    g_assert (selection != NULL);
-
-    if (g_object_get_data(G_OBJECT (spw), "blocked"))
+    if (blocked)
+    {
         return;
-
-    if (!selection->singleItem()) {
-        gtk_widget_set_sensitive (GTK_WIDGET (spw), FALSE);
-        return;
-    } else {
-        gtk_widget_set_sensitive (GTK_WIDGET (spw), TRUE);
     }
 
-    g_object_set_data (G_OBJECT (spw), "blocked", GUINT_TO_POINTER (TRUE));
+    Inkscape::Selection *selection = sp_desktop_selection (SP_ACTIVE_DESKTOP);
+
+    if (!selection->singleItem()) {
+        set_sensitive (false);
+        return;
+    } else {
+        set_sensitive (true);
+    }
+    blocked = true;
 
     SPItem *item = selection->singleItem();
-
-    /* Sensitive */
-    GtkWidget *w = GTK_WIDGET(g_object_get_data(G_OBJECT (spw), "sensitive"));
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w), item->isLocked());
-
-    /* Hidden */
-    w = GTK_WIDGET(g_object_get_data(G_OBJECT (spw), "hidden"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), item->isExplicitlyHidden());
-
+    CBLock.set_active (item->isLocked());          /* Sensitive */
+    CBHide.set_active(item->isExplicitlyHidden()); /* Hidden */
+    
     if (item->cloned) {
-
         /* ID */
-        w = GTK_WIDGET(g_object_get_data(G_OBJECT (spw), "id"));
-        gtk_entry_set_text (GTK_ENTRY (w), "");
-        gtk_widget_set_sensitive (w, FALSE);
-        w = GTK_WIDGET(g_object_get_data(G_OBJECT (spw), "id_label"));
-        gtk_label_set_text (GTK_LABEL (w), _("Ref"));
+        EntryID.set_text ("");
+        EntryID.set_sensitive (FALSE);
+        LabelID.set_text (_("Ref"));
 
         /* Label */
-        w = GTK_WIDGET(g_object_get_data(G_OBJECT (spw), "label"));
-        gtk_entry_set_text (GTK_ENTRY (w), "");
-        gtk_widget_set_sensitive (w, FALSE);
-        w = GTK_WIDGET(g_object_get_data(G_OBJECT (spw), "label_label"));
-        gtk_label_set_text (GTK_LABEL (w), _("Ref"));
+        EntryLabel.set_text ("");
+        EntryLabel.set_sensitive (FALSE);
+        LabelLabel.set_text (_("Ref"));
 
     } else {
         SPObject *obj = (SPObject*)item;
 
         /* ID */
-        w = GTK_WIDGET(g_object_get_data(G_OBJECT (spw), "id"));
-        gtk_entry_set_text (GTK_ENTRY (w), obj->getId());
-        gtk_widget_set_sensitive (w, TRUE);
-        w = GTK_WIDGET(g_object_get_data(G_OBJECT (spw), "id_label"));
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (w), _("_ID:"));
+        EntryID.set_text (obj->getId());
+        EntryID.set_sensitive (TRUE);
+        LabelID.set_markup_with_mnemonic (_("_ID:"));
 
         /* Label */
-        w = GTK_WIDGET(g_object_get_data(G_OBJECT (spw), "label"));
-        gtk_entry_set_text (GTK_ENTRY (w), obj->defaultLabel());
-        gtk_widget_set_sensitive (w, TRUE);
+        EntryLabel.set_text(obj->defaultLabel());
+        EntryLabel.set_sensitive (TRUE);
 
         /* Title */
-        w = GTK_WIDGET(g_object_get_data(G_OBJECT(spw), "title"));
         gchar *title = obj->title();
         if (title) {
-            gtk_entry_set_text(GTK_ENTRY(w), title);
+            EntryTitle.set_text(title);
             g_free(title);
         }
-        else gtk_entry_set_text(GTK_ENTRY(w), "");
-        gtk_widget_set_sensitive(w, TRUE);
+        else {
+            EntryTitle.set_text("");
+        }
+        EntryTitle.set_sensitive(TRUE);
 
         /* Description */
-        w = GTK_WIDGET(g_object_get_data(G_OBJECT(spw), "desc"));
-        GtkTextBuffer *buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(w));
         gchar *desc = obj->desc();
         if (desc) {
-            gtk_text_buffer_set_text(buf, desc, -1);
+            TextViewDescription.get_buffer()->set_text(desc);
             g_free(desc);
         } else {
-            gtk_text_buffer_set_text(buf, "", 0);
+            TextViewDescription.get_buffer()->set_text("");
         }
-        w = GTK_WIDGET(g_object_get_data(G_OBJECT(spw), "desc_frame"));
-        gtk_widget_set_sensitive(w, TRUE);
-
-        w = GTK_WIDGET(g_object_get_data(G_OBJECT(spw), "interactivity"));
-
-        GtkWidget* int_table = GTK_WIDGET(g_object_get_data(G_OBJECT(spw), "interactivity_table"));
+        
+        FrameTextDescription.set_sensitive(TRUE);
 
         std::vector<Glib::ustring> int_labels;
         int_labels.push_back("onclick");
@@ -367,177 +373,105 @@ static void sp_item_widget_setup( SPWidget *spw, Inkscape::Selection *selection 
         int_labels.push_back("onfocusout");
         int_labels.push_back("onload");
         
-        if (attrTable)
-        {
-            delete(attrTable);
-        }
-        attrTable = new SPAttributeTable (obj, int_labels, int_labels, w);
-        attrTable->show_all();
-        g_object_set_data(G_OBJECT(spw), "interactivity_table", (GtkWidget*) attrTable->gobj());
+        attrTable.set_object(obj, int_labels, int_labels, (GtkWidget*)EInteractivity.gobj());
+        attrTable.show_all();
     }
-
-    g_object_set_data (G_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
-} // end of sp_item_widget_setup()
-
-
-
-static void sp_item_widget_sensitivity_toggled (GtkWidget *widget, SPWidget *spw)
-{
-    if (g_object_get_data(G_OBJECT (spw), "blocked"))
-        return;
-
-    SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
-    g_return_if_fail (item != NULL);
-
-    g_object_set_data (G_OBJECT (spw), "blocked", GUINT_TO_POINTER (TRUE));
-
-    item->setLocked(gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
-
-    DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-		       gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))? _("Lock object") : _("Unlock object"));
-
-    g_object_set_data (G_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
+    blocked = false;
 }
 
-void sp_item_widget_hidden_toggled(GtkWidget *widget, SPWidget *spw)
+void SPItemDialog::label_changed(void)
 {
-    if (g_object_get_data(G_OBJECT (spw), "blocked"))
+    if (blocked)
+    {
         return;
-
+    }
+    
     SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
     g_return_if_fail (item != NULL);
 
-    g_object_set_data (G_OBJECT (spw), "blocked", GUINT_TO_POINTER (TRUE));
-
-    item->setExplicitlyHidden(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)));
-
-    DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-		       gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))? _("Hide object") : _("Unhide object"));
-
-    g_object_set_data (G_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
-}
-
-static void sp_item_widget_label_changed( GtkWidget */*widget*/, SPWidget *spw )
-{
-    if (g_object_get_data(G_OBJECT (spw), "blocked"))
-        return;
-
-    SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
-    g_return_if_fail (item != NULL);
-
-    g_object_set_data (G_OBJECT (spw), "blocked", GUINT_TO_POINTER (TRUE));
+    blocked = true;
 
     /* Retrieve the label widget for the object's id */
-    GtkWidget *id_entry = GTK_WIDGET(g_object_get_data(G_OBJECT (spw), "id"));
-    gchar *id = (gchar *) gtk_entry_get_text (GTK_ENTRY (id_entry));
+    gchar *id = g_strdup(EntryID.get_text().c_str());
     g_strcanon (id, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.:", '_');
-    GtkWidget *id_label = GTK_WIDGET(g_object_get_data(G_OBJECT (spw), "id_label"));
     if (!strcmp (id, item->getId())) {
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (id_label), _("_ID:"));
+        LabelID.set_markup_with_mnemonic(_("_ID:"));
     } else if (!*id || !isalnum (*id)) {
-        gtk_label_set_text (GTK_LABEL (id_label), _("Id invalid! "));
+        LabelID.set_text (_("Id invalid! "));
     } else if (SP_ACTIVE_DOCUMENT->getObjectById(id) != NULL) {
-        gtk_label_set_text (GTK_LABEL (id_label), _("Id exists! "));
+        LabelID.set_text (_("Id exists! "));
     } else {
         SPException ex;
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (id_label), _("_ID:"));
+        LabelID.set_markup_with_mnemonic(_("_ID:"));
         SP_EXCEPTION_INIT (&ex);
         item->setAttribute("id", id, &ex);
-        DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-			   _("Set object ID"));
+        DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM, _("Set object ID"));
     }
+    g_free (id);
 
     /* Retrieve the label widget for the object's label */
-    GtkWidget *label_entry = GTK_WIDGET(g_object_get_data(G_OBJECT (spw), "label"));
-    gchar *label = (gchar *)gtk_entry_get_text (GTK_ENTRY (label_entry));
-    g_assert(label != NULL);
+    Glib::ustring label = EntryLabel.get_text();
+    g_assert(!label.empty());
 
     /* Give feedback on success of setting the drawing object's label
      * using the widget's label text
      */
     SPObject *obj = (SPObject*)item;
-    if (strcmp (label, obj->defaultLabel())) {
-        obj->setLabel(label);
+    if (label.compare (obj->defaultLabel())) {
+        obj->setLabel(label.c_str());
         DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-			   _("Set object label"));
+                _("Set object label"));
     }
 
     /* Retrieve the title */
-    GtkWidget *w = GTK_WIDGET(g_object_get_data(G_OBJECT(spw), "title"));
-    gchar *title = (gchar *)gtk_entry_get_text(GTK_ENTRY (w));
-    if (obj->setTitle(title))
+    if (obj->setTitle(EntryTitle.get_text().c_str()))
         DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-			   _("Set object title"));
+                _("Set object title"));
 
     /* Retrieve the description */
-    GtkTextView *tv = GTK_TEXT_VIEW(g_object_get_data(G_OBJECT(spw), "desc"));
-    GtkTextBuffer *buf = gtk_text_view_get_buffer(tv);
-    GtkTextIter start, end;
-    gtk_text_buffer_get_bounds(buf, &start, &end);
-    gchar *desc = gtk_text_buffer_get_text(buf, &start, &end, TRUE);
-    if (obj->setDesc(desc))
+    Gtk::TextBuffer::iterator start, end;
+    TextViewDescription.get_buffer()->get_bounds(start, end);
+    Glib::ustring desc = TextViewDescription.get_buffer()->get_text(start, end, TRUE);
+    if (obj->setDesc(desc.c_str()))
         DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
-			   _("Set object description"));
-    g_free(desc);
-
-    g_object_set_data (G_OBJECT (spw), "blocked", GUINT_TO_POINTER (FALSE));
-
-} // end of sp_item_widget_label_changed()
-
-
-/**
- * Dialog.
- */
-void sp_item_dialog(void)
-{
-    if (dlg == NULL) {
-
-        gchar title[500];
-        sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_DIALOG_ITEM), title);
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        
-        Gtk::Window* window = Inkscape::UI::window_new (title, true);
-        dlg = (GtkWidget*)window->gobj();
-        if (x == -1000 || y == -1000) {
-            x = prefs->getInt(prefs_path + "x", -1000);
-            y = prefs->getInt(prefs_path + "y", -1000);
-        }
-        if (w ==0 || h == 0) {
-            w = prefs->getInt(prefs_path + "w", 0);
-            h = prefs->getInt(prefs_path + "h", 0);
-        }
-
-        if (w && h) {
-            gtk_window_resize ((GtkWindow *) dlg, w, h);
-        }
-        if (x >= 0 && y >= 0 && (x < (gdk_screen_width()-MIN_ONSCREEN_DISTANCE)) && (y < (gdk_screen_height()-MIN_ONSCREEN_DISTANCE))) {
-            gtk_window_move ((GtkWindow *) dlg, x, y);
-        } else {
-            gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_CENTER);
-        }
-
-        sp_transientize (dlg);
-        wd.win = dlg;
-        wd.stop = 0;
-
-        g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd);
-        g_signal_connect ( G_OBJECT (dlg), "event", G_CALLBACK (sp_dialog_event_handler), dlg);
-        g_signal_connect ( G_OBJECT (dlg), "destroy", G_CALLBACK (sp_item_dialog_destroy), dlg);
-        g_signal_connect ( G_OBJECT (dlg), "delete_event", G_CALLBACK (sp_item_dialog_delete), dlg);
-        g_signal_connect ( G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (sp_item_dialog_delete), dlg);
-        g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);
-        g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg);
-
-        // Dialog-specific stuff
-        GtkWidget *itemw = sp_item_widget_new ();
-        gtk_widget_show (itemw);
-        gtk_container_add (GTK_CONTAINER (dlg), itemw);
-    }
-
-    gtk_window_present ((GtkWindow *) dlg);
+                _("Set object description"));
+    
+    blocked = false;
 }
 
+void SPItemDialog::sensitivity_toggled (void)
+{
+    if (blocked)
+    {
+        return;
+    }
 
+    SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+    g_return_if_fail (item != NULL);
+
+    blocked = true;
+    item->setLocked(CBLock.get_active());
+    DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+               CBLock.get_active()? _("Lock object") : _("Unlock object"));
+    blocked = false;
+}
+
+void SPItemDialog::hidden_toggled(void)
+{
+    if (blocked)
+    {
+        return;
+    }
+
+    SPItem *item = sp_desktop_selection(SP_ACTIVE_DESKTOP)->singleItem();
+    g_return_if_fail (item != NULL);
+
+    blocked = true;
+    item->setExplicitlyHidden(CBHide.get_active());
+    DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,
+               CBHide.get_active()? _("Hide object") : _("Unhide object"));
+    blocked = false;
+}
 /*
   Local Variables:
   mode:c++

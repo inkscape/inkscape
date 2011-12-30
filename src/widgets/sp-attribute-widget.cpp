@@ -39,7 +39,7 @@ SPAttributeTable::SPAttributeTable () :
     src.object = NULL;
 }
 
-SPAttributeTable::SPAttributeTable (SPObject *object, std::vector<Glib::ustring> &labels, std::vector<Glib::ustring> &attributes, GtkWidget* parent) : 
+SPAttributeTable::SPAttributeTable (SPObject *object, std::vector<Glib::ustring> &labels, std::vector<Glib::ustring> &attributes, GtkWidget* ExpanderContainer) : 
     blocked(0),
     hasobj(0),
     table(0),
@@ -48,7 +48,7 @@ SPAttributeTable::SPAttributeTable (SPObject *object, std::vector<Glib::ustring>
     modified_connection()
 {
     src.object = NULL;
-    set_object(object, labels, attributes, parent);
+    set_object(object, labels, attributes, ExpanderContainer);
 }
 
 SPAttributeTable::~SPAttributeTable ()
@@ -62,27 +62,27 @@ void SPAttributeTable::clear(void)
     
     if (table)
     {
-    std::vector<Widget*> ch = table->get_children();
-    
-    for (int i = (ch.size())-1; i >=0 ; i--)
-    {
-        w = ch[i];
-        ch.pop_back();
-        if (w != NULL)
+        std::vector<Widget*> ch = table->get_children();
+        
+        for (int i = (ch.size())-1; i >=0 ; i--)
         {
-            try
+            w = ch[i];
+            ch.pop_back();
+            if (w != NULL)
             {
-                delete w;
-            }
-            catch(...)
-            {
+                try
+                {
+                    delete w;
+                }
+                catch(...)
+                {
+                }
             }
         }
-    }
-    ch.clear();
-    _attributes.clear();
-    _entries.clear();
-
+        ch.clear();
+        _attributes.clear();
+        _entries.clear();
+        
         delete table;
         table = NULL;
     }
@@ -102,9 +102,8 @@ void SPAttributeTable::clear(void)
 void SPAttributeTable::set_object(SPObject *object,
                             std::vector<Glib::ustring> &labels,
                             std::vector<Glib::ustring> &attributes,
-                            GtkWidget* parent)
+                            GtkWidget* ExpanderContainer)
 {
-    g_return_if_fail (parent);
     g_return_if_fail (!object || SP_IS_OBJECT (object));
     g_return_if_fail (!object || !labels.empty() || !attributes.empty());
     g_return_if_fail (labels.size() == attributes.size());
@@ -120,17 +119,19 @@ void SPAttributeTable::set_object(SPObject *object,
         modified_connection = object->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_attribute_table_object_modified), this));
 
         // Create table
-        table = Gtk::manage(new Gtk::Table (attributes.size(), 2, false));
-        gtk_container_add (GTK_CONTAINER (parent),(GtkWidget*)table->gobj());
+        table = new Gtk::Table (attributes.size(), 2, false);
+        if (!(ExpanderContainer == NULL))
+        {
+            gtk_container_add (GTK_CONTAINER (ExpanderContainer),(GtkWidget*)table->gobj());
+        }
         
         // Fill rows
-		_attributes = attributes;
+        _attributes = attributes;
+        Gtk::Label *ll;
+        Gtk::Entry *ee;
+        Gtk::Widget *w;
+        const gchar *val;
         for (guint i = 0; i < (attributes.size()); i++) {
-            Gtk::Label *ll;
-            Gtk::Entry *ee;
-            Gtk::Widget *w;
-            const gchar *val;
-
             ll = new Gtk::Label (_(labels[i].c_str()));
             w = (Gtk::Widget *) ll;
             ll->show();
@@ -162,7 +163,7 @@ void SPAttributeTable::set_object(SPObject *object,
 void SPAttributeTable::set_repr (Inkscape::XML::Node *repr,
                             std::vector<Glib::ustring> &labels,
                             std::vector<Glib::ustring> &attributes,
-                            GtkWidget* parent)
+                            GtkWidget* ExpanderContainer)
 {
     g_return_if_fail (!labels.empty() || !attributes.empty());
     g_return_if_fail (labels.size() == attributes.size());
@@ -179,16 +180,18 @@ void SPAttributeTable::set_repr (Inkscape::XML::Node *repr,
         
         // Create table
         table = new Gtk::Table (attributes.size(), 2, false);
-        gtk_container_add (GTK_CONTAINER (parent),(GtkWidget*)table->gobj());
+        if (!(ExpanderContainer == NULL))
+        {
+            gtk_container_add (GTK_CONTAINER (ExpanderContainer),(GtkWidget*)table->gobj());
+        }
         
         // Fill rows
         _attributes = attributes;
+        Gtk::Label *ll;
+        Gtk::Entry *ee;
+        Gtk::Widget *w;
+        const gchar *val;
         for (guint i = 0; i < (attributes.size()); i++) {
-            Gtk::Label *ll;
-            Gtk::Entry *ee;
-            Gtk::Widget *w;
-            const gchar *val;
-
             ll = new Gtk::Label (_(labels[i].c_str()));
             w = (Gtk::Widget *) ll;
             ll->show ();
@@ -243,7 +246,7 @@ static void sp_attribute_table_object_modified ( SPObject */*object*/,
                 }
             }
         }
-    } // end of if()
+    }
 
 } // end of sp_attribute_table_object_modified()
 
@@ -277,7 +280,7 @@ static void sp_attribute_table_entry_changed ( Gtk::Editable *editable,
             }
         }
         g_warning ("file %s: line %d: Entry signalled change, but there is no such entry", __FILE__, __LINE__);
-    } // end of if()
+    }
 
 } // end of sp_attribute_table_entry_changed()
 

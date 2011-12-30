@@ -34,10 +34,10 @@ class  SPObject;
 class SPAttributeTable : public Gtk::Widget {
 public:
     SPAttributeTable ();
-    SPAttributeTable (SPObject *object, std::vector<Glib::ustring> &labels, std::vector<Glib::ustring> &attributes, GtkWidget* parent);
+    SPAttributeTable (SPObject *object, std::vector<Glib::ustring> &labels, std::vector<Glib::ustring> &attributes, GtkWidget* ExpanderContainer);
     ~SPAttributeTable ();
-    void set_object(SPObject *object, std::vector<Glib::ustring> &labels, std::vector<Glib::ustring> &attributes, GtkWidget* parent);
-    void set_repr(Inkscape::XML::Node *repr, std::vector<Glib::ustring> &labels, std::vector<Glib::ustring> &attributes, GtkWidget* parent);
+    void set_object(SPObject *object, std::vector<Glib::ustring> &labels, std::vector<Glib::ustring> &attributes, GtkWidget* ExpanderContainer);
+    void set_repr(Inkscape::XML::Node *repr, std::vector<Glib::ustring> &labels, std::vector<Glib::ustring> &attributes, GtkWidget* ExpanderContainer);
     std::vector<Glib::ustring> get_attributes(void) {return _attributes;};
     std::vector<Gtk::Widget *> get_entries(void) {return _entries;};
     union {

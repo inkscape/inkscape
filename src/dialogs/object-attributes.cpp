@@ -95,9 +95,8 @@ static void sp_object_attr_show_dialog ( SPObject *object,
     }
     
     window = Inkscape::UI::window_new (title.c_str(), true);
-    t = new SPAttributeTable (object, labels, attrs, (GtkWidget*)window->gobj());
-    t->show();
-    window->show();
+    t = new SPAttributeTable (object, labels, attrs, NULL);
+    window->show_all();
 } // end of sp_object_attr_show_dialog()
 
 
