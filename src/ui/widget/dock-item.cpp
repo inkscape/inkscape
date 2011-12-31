@@ -119,8 +119,8 @@ DockItem::get_position(int& x, int& y)
 void
 DockItem::get_size(int& width, int& height)
 {
-    if (_window) {
-        _window->get_size(width, height);
+    if (getWindow()) {
+        getWindow()->get_size(width, height);
     } else {
         width = get_vbox()->get_width();
         height = get_vbox()->get_height();
