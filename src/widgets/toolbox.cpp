@@ -1250,6 +1250,9 @@ static void sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tb
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE));
 
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>( g_object_get_data( tbl, "tracker" ) );
+    if (!tracker) {
+        return;
+    }
     SPUnit const *unit = tracker->getActiveUnit();
 
     InkNodeTool *nt = get_node_tool();
@@ -1281,6 +1284,9 @@ static void sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, Geom::D
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data( tbl, "tracker" ));
+    if (!tracker) {
+        return;
+    }
     SPUnit const *unit = tracker->getActiveUnit();
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
