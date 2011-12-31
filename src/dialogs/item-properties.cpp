@@ -333,9 +333,8 @@ void SPItemDialog::widget_setup(void)
     }
     blocked = true;
     
-    CurrentItem = item;
-    CBLock.set_active (item->isLocked());          /* Sensitive */
-    CBHide.set_active(item->isExplicitlyHidden()); /* Hidden */
+    CBLock.set_active (item->isLocked());           /* Sensitive */
+    CBHide.set_active (item->isExplicitlyHidden()); /* Hidden */
     
     if (item->cloned) {
         /* ID */
@@ -380,10 +379,18 @@ void SPItemDialog::widget_setup(void)
             TextViewDescription.get_buffer()->set_text("");
         }
         FrameTextDescription.set_sensitive(TRUE);
-
-        attrTable.set_object(obj, int_labels, int_labels, (GtkWidget*)EInteractivity.gobj());
+        
+        if (CurrentItem == NULL)
+        {
+            attrTable.set_object(obj, int_labels, int_labels, (GtkWidget*)EInteractivity.gobj());
+        }
+        else
+        {
+            attrTable.change_object(obj);
+        }
         attrTable.show_all();
     }
+    CurrentItem = item;
     blocked = false;
 }
 

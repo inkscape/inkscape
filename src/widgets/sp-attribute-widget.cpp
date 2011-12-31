@@ -48,6 +48,7 @@ SPAttributeTable::SPAttributeTable (SPObject *object, std::vector<Glib::ustring>
     modified_connection()
 {
     src.object = NULL;
+    src.repr   = NULL;
     set_object(object, labels, attributes, ExpanderContainer);
 }
 
@@ -62,11 +63,11 @@ void SPAttributeTable::clear(void)
     
     if (table)
     {
-        std::vector<Widget*> ch = table->get_children();
-        
+        std::vector<Gtk::Widget*> ch = table->get_children();
         for (int i = (ch.size())-1; i >=0 ; i--)
         {
             w = ch[i];
+            sp_signal_disconnect_by_data (w->gobj(), this);
             ch.pop_back();
             if (w != NULL)
             {
@@ -149,7 +150,7 @@ void SPAttributeTable::set_object(SPObject *object,
                                (Gtk::EXPAND | Gtk::FILL),
                                (Gtk::EXPAND | Gtk::FILL),
                                XPAD, YPAD );
-            _entries.push_back(w);
+            _entries.push_back(ee);
             g_signal_connect ( w->gobj(), "changed",
                                G_CALLBACK (sp_attribute_table_entry_changed),
                                this );
@@ -160,7 +161,42 @@ void SPAttributeTable::set_object(SPObject *object,
     }
 }
 
-void SPAttributeTable::set_repr (Inkscape::XML::Node *repr,
+void SPAttributeTable::change_object(SPObject *object)
+{
+    g_return_if_fail (!object || SP_IS_OBJECT (object));
+    if (hasobj) {
+        if (src.object) {
+            modified_connection.disconnect();
+            src.object = NULL;
+        }
+    } else {
+        if (src.repr) {
+            src.repr = Inkscape::GC::release(src.repr);
+        }
+    }
+
+    hasobj = true;
+
+    if (object) {
+        blocked = true;
+
+        // Set up object
+        src.object = object;
+        modified_connection = object->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_attribute_table_object_modified), this));
+        Gtk::Entry *ee;
+        Gtk::Widget *w;
+        const gchar *val;
+        for (guint i = 0; i < (_attributes.size()); i++) {
+            ee = (Gtk::Entry *)_entries[i];
+            w = (Gtk::Widget *) ee;
+            val = object->getRepr()->attribute(_attributes[i].c_str());
+            ee->set_text (val ? val : (const gchar *) "");
+        }
+    }
+
+}
+
+/*void SPAttributeTable::set_repr (Inkscape::XML::Node *repr,
                             std::vector<Glib::ustring> &labels,
                             std::vector<Glib::ustring> &attributes,
                             GtkWidget* ExpanderContainer)
@@ -214,12 +250,12 @@ void SPAttributeTable::set_repr (Inkscape::XML::Node *repr,
                                G_CALLBACK (sp_attribute_table_entry_changed),
                                this );
         }
-        /* Show table */
+        // Show table
         table->show ();
         blocked = false;
     }
 }
-
+*/
 
 static void sp_attribute_table_object_modified ( SPObject */*object*/,
                                      guint flags,
@@ -229,12 +265,12 @@ static void sp_attribute_table_object_modified ( SPObject */*object*/,
     {
         guint i;
         std::vector<Glib::ustring> attributes = spat->get_attributes();
-        std::vector<Gtk::Widget *> entries = spat->get_entries();
+        std::vector<Gtk::Entry *> entries = spat->get_entries();
         Gtk::Entry* e;
         Glib::ustring text;
         for (i = 0; i < (attributes.size()); i++) {
             const gchar *val;
-            e = (Gtk::Entry*) entries[i];
+            e = entries[i];
             val = spat->src.object->getRepr()->attribute(attributes[i].c_str());
             text = e->get_text ();
             if (val || !text.empty()) {
@@ -257,10 +293,10 @@ static void sp_attribute_table_entry_changed ( Gtk::Editable *editable,
     {
         guint i;
         std::vector<Glib::ustring> attributes = spat->get_attributes();
-        std::vector<Gtk::Widget *> entries = spat->get_entries();
+        std::vector<Gtk::Entry *> entries = spat->get_entries();
         Gtk::Entry *e;
         for (i = 0; i < (attributes.size()); i++) {
-            e = (Gtk::Entry *) entries[i];
+            e = entries[i];
             if ((GtkWidget*) (editable) == (GtkWidget*) e->gobj()) {
                 spat->blocked = true;
                 Glib::ustring text = e->get_text ();
