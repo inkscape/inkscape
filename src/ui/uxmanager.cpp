@@ -1,5 +1,5 @@
 /** \file
- * Desktop widget implementation
+ * Desktop widget implementation.
  */
 /* Authors:
  *   Jon A. Cruz <jon@joncruz.org>
@@ -27,7 +27,6 @@
 #include <gdk/gdkx.h>
 #endif // GDK_WINDOWING_X11
 
-using std::map;
 using std::vector;
 
 
@@ -35,12 +34,35 @@ gchar const* KDE_WINDOW_MANAGER_NAME = "KWin";
 gchar const* UNKOWN_WINDOW_MANAGER_NAME = "unknown";
 
 
+class TrackItem
+{
+public:
+    TrackItem() : 
+        destroyConn(),
+        boxes()
+    {}
+
+    sigc::connection destroyConn;
+    std::vector<GtkWidget*> boxes;
+};
+
 static vector<SPDesktop*> desktops;
 static vector<SPDesktopWidget*> dtws;
-static map<SPDesktop*, vector<GtkWidget*> > trackedBoxes;
+static std::map<SPDesktop*, TrackItem> trackedBoxes;
 
 
 namespace {
+
+void desktopDestructHandler(SPDesktop *desktop)
+{
+    std::map<SPDesktop*, TrackItem>::iterator it = trackedBoxes.find(desktop);
+    if (it != trackedBoxes.end())
+    {
+        trackedBoxes.erase(it);
+    }
+}
+
+
 // TODO unify this later:
 static Glib::ustring getLayoutPrefPath( Inkscape::UI::View::View *view )
 {
@@ -222,13 +244,17 @@ void UXManagerImpl::delTrack( SPDesktopWidget* dtw )
 
 void UXManagerImpl::connectToDesktop( vector<GtkWidget *> const & toolboxes, SPDesktop *desktop )
 {
-    //static map<SPDesktop*, vector<GtkWidget*> > trackedBoxes;
+    TrackItem &tracker = trackedBoxes[desktop];
+    vector<GtkWidget*>& tracked = tracker.boxes;
+    if (desktop)
+    {
+        tracker.destroyConn = desktop->connectDestroy(&desktopDestructHandler);
+    }
 
     for (vector<GtkWidget*>::const_iterator it = toolboxes.begin(); it != toolboxes.end(); ++it ) {
         GtkWidget* toolbox = *it;
 
         ToolboxFactory::setToolboxDesktop( toolbox, desktop );
-        vector<GtkWidget*>& tracked = trackedBoxes[desktop];
         if (find(tracked.begin(), tracked.end(), toolbox) == tracked.end()) {
             tracked.push_back(toolbox);
         }

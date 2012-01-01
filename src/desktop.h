@@ -173,6 +173,11 @@ public:
     /// The parameter is the new zoom factor
     sigc::signal<void, double> signal_zoom_changed;
     
+    sigc::connection connectDestroy(const sigc::slot<void, SPDesktop*> &slot)
+    {
+        return _destroy_signal.connect(slot);
+    }
+
     sigc::connection connectDocumentReplaced (const sigc::slot<void,SPDesktop*,SPDocument*> & slot)
     {
         return _document_replaced_signal.connect (slot);
@@ -390,6 +395,7 @@ private:
 
     void push_current_zoom(std::list<Geom::Rect> &);
 
+    sigc::signal<void, SPDesktop*> _destroy_signal;
     sigc::signal<void,SPDesktop*,SPDocument*>     _document_replaced_signal;
     sigc::signal<void>                 _activate_signal;
     sigc::signal<void>                 _deactivate_signal;

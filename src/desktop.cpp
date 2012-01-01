@@ -318,6 +318,8 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
 
 void SPDesktop::destroy()
 {
+    _destroy_signal.emit(this);
+
     if (snapindicator) {
         delete snapindicator;
         snapindicator = NULL;
@@ -378,7 +380,9 @@ void SPDesktop::destroy()
     _guides_message_context = NULL;
 }
 
-SPDesktop::~SPDesktop() {}
+SPDesktop::~SPDesktop()
+{
+}
 
 //--------------------------------------------------------------------
 /* Public methods */

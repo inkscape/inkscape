@@ -886,6 +886,17 @@ static GtkAction* create_action_for_verb( Inkscape::Verb* verb, Inkscape::UI::Vi
     return act;
 }
 
+static std::map<SPDesktop*, Glib::RefPtr<Gtk::ActionGroup> > groups;
+
+static void desktopDestructHandler(SPDesktop *desktop)
+{
+    std::map<SPDesktop*, Glib::RefPtr<Gtk::ActionGroup> >::iterator it = groups.find(desktop);
+    if (it != groups.end())
+    {
+        groups.erase(it);
+    }
+}
+
 static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* desktop )
 {
     Inkscape::UI::View::View *view = desktop;
@@ -934,7 +945,6 @@ static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* deskto
 
     Inkscape::IconSize toolboxSize = ToolboxFactory::prefToSize("/toolbox/small");
 
-    static std::map<SPDesktop*, Glib::RefPtr<Gtk::ActionGroup> > groups;
     Glib::RefPtr<Gtk::ActionGroup> mainActions;
     if ( groups.find(desktop) != groups.end() ) {
         mainActions = groups[desktop];
@@ -943,6 +953,10 @@ static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* deskto
     if ( !mainActions ) {
         mainActions = Gtk::ActionGroup::create("main");
         groups[desktop] = mainActions;
+        if (desktop)
+        {
+            desktop->connectDestroy(&desktopDestructHandler);
+        }
     }
 
     for ( guint i = 0; i < G_N_ELEMENTS(verbsToUse); i++ ) {
