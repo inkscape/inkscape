@@ -66,6 +66,19 @@ static const SPAttrDesc image_nohref_desc[] = {
     { NULL, NULL}
 };
 
+static void object_released( SPObject */*object*/, GtkWidget *widget )
+{
+    gtk_widget_destroy (widget);
+}
+
+
+
+static void window_destroyed( GtkObject *window, GtkObject */*object*/ )
+{
+    sigc::connection *release_connection = (sigc::connection *)g_object_get_data(G_OBJECT(window), "release_connection");
+    release_connection->disconnect();
+    delete release_connection;
+}
 
 static void sp_object_attr_show_dialog ( SPObject *object,
                              const SPAttrDesc *desc,
@@ -95,8 +108,17 @@ static void sp_object_attr_show_dialog ( SPObject *object,
     }
     
     window = Inkscape::UI::window_new (title.c_str(), true);
-    t = new SPAttributeTable (object, labels, attrs, NULL);
-    window->show_all();
+    t = new SPAttributeTable (object, labels, attrs, (GtkWidget*)window->gobj());
+
+    g_signal_connect (window->gobj(), "destroy",
+                       G_CALLBACK (window_destroyed), object );
+
+    sigc::connection *release_connection = new sigc::connection();
+    *release_connection = object->connectRelease(sigc::bind<1>(sigc::ptr_fun(&object_released), (GtkWidget*)window->gobj()));
+    g_object_set_data((GObject*)window->gobj(), "release_connection", release_connection);
+
+    t->show();
+    window->show();
 } // end of sp_object_attr_show_dialog()
 
 

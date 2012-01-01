@@ -142,7 +142,7 @@ SPItemDialog::SPItemDialog (void) :
     wd.stop = 0;
 
     //set callback for the new dialog
-    g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), dlg);
+    g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd);
     g_signal_connect ( G_OBJECT (dlg), "event", G_CALLBACK (sp_dialog_event_handler), dlg);
     // g_signal_connect ( G_OBJECT (dlg), "destroy", G_CALLBACK (sp_item_dialog_delete), dlg);
     g_signal_connect ( G_OBJECT (dlg), "delete_event", G_CALLBACK (sp_item_dialog_delete), dlg);
@@ -186,6 +186,7 @@ SPItemDialog::~SPItemDialog (void)
     prefs->setInt(prefs_path + "h", h);
 
     sp_signal_disconnect_by_data (INKSCAPE, wd.win);
+    sp_signal_disconnect_by_data (INKSCAPE, &wd);
     if (window)
     {
         //should actually always  be true, but for safety check
@@ -318,10 +319,14 @@ void SPItemDialog::widget_setup(void)
     Inkscape::Selection *selection = sp_desktop_selection (SP_ACTIVE_DESKTOP);
 
     if (!selection->singleItem()) {
-        set_sensitive (false);
+        vb.set_sensitive (false);
+        CurrentItem = NULL;
+        //no selection anymore or multiple objects selected, means that we need
+        //to close the connections to the previously selected object
+        attrTable.clear();
         return;
     } else {
-        set_sensitive (true);
+        vb.set_sensitive (true);
     }
     
     SPItem *item = selection->singleItem();

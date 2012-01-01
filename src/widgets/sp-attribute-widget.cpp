@@ -22,8 +22,9 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_attribute_table_object_modified (SPObject *object, guint flags, SPAttributeTable *spaw);
 static void sp_attribute_table_entry_changed (Gtk::Editable *editable, SPAttributeTable *spat);
+static void sp_attribute_table_object_modified (SPObject *object, guint flags, SPAttributeTable *spaw);
+static void sp_attribute_table_object_release (SPObject */*object*/, SPAttributeTable *spat);
 
 #define XPAD 4
 #define YPAD 0
@@ -34,22 +35,24 @@ SPAttributeTable::SPAttributeTable () :
     table(0),
     _attributes(),
     _entries(),
-    modified_connection()
+    modified_connection(),
+    release_connection()
 {
     src.object = NULL;
 }
 
-SPAttributeTable::SPAttributeTable (SPObject *object, std::vector<Glib::ustring> &labels, std::vector<Glib::ustring> &attributes, GtkWidget* ExpanderContainer) : 
+SPAttributeTable::SPAttributeTable (SPObject *object, std::vector<Glib::ustring> &labels, std::vector<Glib::ustring> &attributes, GtkWidget* parent) : 
     blocked(0),
     hasobj(0),
     table(0),
     _attributes(),
     _entries(),
-    modified_connection()
+    modified_connection(),
+    release_connection()
 {
     src.object = NULL;
     src.repr   = NULL;
-    set_object(object, labels, attributes, ExpanderContainer);
+    set_object(object, labels, attributes, parent);
 }
 
 SPAttributeTable::~SPAttributeTable ()
@@ -91,6 +94,7 @@ void SPAttributeTable::clear(void)
     if (hasobj) {
         if (src.object) {
             modified_connection.disconnect();
+            release_connection.disconnect();
             src.object = NULL;
         }
     } else {
@@ -103,7 +107,7 @@ void SPAttributeTable::clear(void)
 void SPAttributeTable::set_object(SPObject *object,
                             std::vector<Glib::ustring> &labels,
                             std::vector<Glib::ustring> &attributes,
-                            GtkWidget* ExpanderContainer)
+                            GtkWidget* parent)
 {
     g_return_if_fail (!object || SP_IS_OBJECT (object));
     g_return_if_fail (!object || !labels.empty() || !attributes.empty());
@@ -111,19 +115,20 @@ void SPAttributeTable::set_object(SPObject *object,
 
     clear();
     hasobj = true;
+    src.object = object;
 
     if (object) {
         blocked = true;
 
         // Set up object
-        src.object = object;
         modified_connection = object->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_attribute_table_object_modified), this));
+        release_connection  = object->connectRelease (sigc::bind<1>(sigc::ptr_fun(&sp_attribute_table_object_release), this));
 
         // Create table
         table = new Gtk::Table (attributes.size(), 2, false);
-        if (!(ExpanderContainer == NULL))
+        if (!(parent == NULL))
         {
-            gtk_container_add (GTK_CONTAINER (ExpanderContainer),(GtkWidget*)table->gobj());
+            gtk_container_add (GTK_CONTAINER (parent),(GtkWidget*)table->gobj());
         }
         
         // Fill rows
@@ -167,6 +172,7 @@ void SPAttributeTable::change_object(SPObject *object)
     if (hasobj) {
         if (src.object) {
             modified_connection.disconnect();
+            release_connection.disconnect();
             src.object = NULL;
         }
     } else {
@@ -176,13 +182,14 @@ void SPAttributeTable::change_object(SPObject *object)
     }
 
     hasobj = true;
+    src.object = object;
 
     if (object) {
         blocked = true;
 
         // Set up object
-        src.object = object;
         modified_connection = object->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_attribute_table_object_modified), this));
+        release_connection  = object->connectRelease (sigc::bind<1>(sigc::ptr_fun(&sp_attribute_table_object_release), this));
         Gtk::Entry *ee;
         Gtk::Widget *w;
         const gchar *val;
@@ -199,7 +206,7 @@ void SPAttributeTable::change_object(SPObject *object)
 /*void SPAttributeTable::set_repr (Inkscape::XML::Node *repr,
                             std::vector<Glib::ustring> &labels,
                             std::vector<Glib::ustring> &attributes,
-                            GtkWidget* ExpanderContainer)
+                            GtkWidget* parent)
 {
     g_return_if_fail (!labels.empty() || !attributes.empty());
     g_return_if_fail (labels.size() == attributes.size());
@@ -216,9 +223,9 @@ void SPAttributeTable::change_object(SPObject *object)
         
         // Create table
         table = new Gtk::Table (attributes.size(), 2, false);
-        if (!(ExpanderContainer == NULL))
+        if (!(parent == NULL))
         {
-            gtk_container_add (GTK_CONTAINER (ExpanderContainer),(GtkWidget*)table->gobj());
+            gtk_container_add (GTK_CONTAINER (parent),(GtkWidget*)table->gobj());
         }
         
         // Fill rows
@@ -319,6 +326,13 @@ static void sp_attribute_table_entry_changed ( Gtk::Editable *editable,
     }
 
 } // end of sp_attribute_table_entry_changed()
+
+static void sp_attribute_table_object_release (SPObject */*object*/, SPAttributeTable *spat)
+{
+    std::vector<Glib::ustring> labels;
+    std::vector<Glib::ustring> attributes;
+    spat->set_object (NULL, labels, attributes, NULL);
+}
 
 /*
   Local Variables:
