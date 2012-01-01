@@ -395,12 +395,13 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     // TODO cleanup memory, Glib::ustring, etc.:
                     char* angle_str = static_cast<char*>(malloc(20));
                     sprintf(angle_str, "%.2f °", angle * 180/M_PI);
-                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,0)), angle_str);
+                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(3*fontsize, fontsize)), angle_str);
                     sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
                     SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
                     SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x337f337f;
                     SP_CANVASTEXT(canvas_tooltip)->outline = false;
                     SP_CANVASTEXT(canvas_tooltip)->background = true;
+                    SP_CANVASTEXT(canvas_tooltip)->anchor_position = TEXT_ANCHOR_LEFT;
 
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
                     free(angle_str);
@@ -411,12 +412,13 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                     char* totallength_str = static_cast<char*>(malloc(20));
                     sprintf(totallength_str, "%.2f %s", totallengthval, unit.abbr);
-                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(5*fontsize,-2*fontsize)), totallength_str);
+                    SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop), desktop, end_point + desktop->w2d(Geom::Point(3*fontsize, -fontsize)), totallength_str);
                     sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
                     SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
                     SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x3333337f;
                     SP_CANVASTEXT(canvas_tooltip)->outline = false;
                     SP_CANVASTEXT(canvas_tooltip)->background = true;
+                    SP_CANVASTEXT(canvas_tooltip)->anchor_position = TEXT_ANCHOR_LEFT;
 
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
                     free(totallength_str);
@@ -449,6 +451,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x33337f7f;
                     SP_CANVASTEXT(canvas_tooltip)->outline = false;
                     SP_CANVASTEXT(canvas_tooltip)->background = true;
+                    SP_CANVASTEXT(canvas_tooltip)->anchor_position = TEXT_ANCHOR_CENTER;
 
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
                     free(total_str);

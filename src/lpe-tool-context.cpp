@@ -446,10 +446,12 @@ set_pos_and_anchor(SPCanvasText *canvas_text, const Geom::Piecewise<Geom::D2<Geo
     Point pos = pwd2_reparam.valueAt(t_reparam);
     Point dir = unit_vector(derivative(pwd2_reparam).valueAt(t_reparam));
     Point n = -rot90(dir);
-    double angle = Geom::angle_between(dir, Point(1,0));
+    // double angle = Geom::angle_between(dir, Point(1,0));
 
     sp_canvastext_set_coords(canvas_text, pos + n * length);
-    sp_canvastext_set_anchor(canvas_text, std::sin(angle), -std::cos(angle));
+    // Canvastext currently no longer allows for setting a custom anchor position,
+    // This functionality was broken as of rev. #10331, and completely removed as of 2012-01-01
+    //sp_canvastext_set_anchor(canvas_text, std::sin(angle), -std::cos(angle));
 }
 
 void

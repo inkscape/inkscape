@@ -39,6 +39,7 @@ struct SPCanvasText : public SPCanvasItem {
     guint32 rgba_background;
     bool outline;
     bool background;
+    double border;
     CanvasTextAnchorPositionEnum anchor_position;
 
     SPDesktop *desktop; // the desktop to which this text is attached; needed for coordinate transforms (TODO: these should be eliminated)
@@ -47,8 +48,8 @@ struct SPCanvasText : public SPCanvasItem {
     Geom::Point s;
     Geom::Affine affine;
     double fontsize;
-    double anchor_x;
-    double anchor_y;
+    double anchor_offset_x;
+    double anchor_offset_y;
 };
 struct SPCanvasTextClass : public SPCanvasItemClass{};
 
@@ -62,7 +63,6 @@ void sp_canvastext_set_coords (SPCanvasText *ct, const Geom::Point start);
 void sp_canvastext_set_text (SPCanvasText *ct, gchar const* new_text);
 void sp_canvastext_set_number_as_text (SPCanvasText *ct, int num);
 void sp_canvastext_set_fontsize (SPCanvasText *ct, double size);
-void sp_canvastext_set_anchor (SPCanvasText *ct, double anchor_x, double anchor_y);
 
 #endif // SEEN_SP_CANVASTEXT_H
 

@@ -6,7 +6,7 @@
  *   Diederik van Lierop
  *
  * Copyright (C) Johan Engelen 2009 <j.b.c.engelen@utwente.nl>
- * Copyright (C) Diederik van Lierop 2010 <mail@diedenrezi.nl>
+ * Copyright (C) Diederik van Lierop 2010 - 2012 <mail@diedenrezi.nl>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -22,6 +22,7 @@
 #include "knot.h"
 #include "preferences.h"
 #include <glibmm/i18n.h>
+#include "tools-switch.h"
 
 namespace Inkscape {
 namespace Display {
@@ -253,15 +254,29 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
         } else {
             tooltip_str = g_strdup(source_name);
         }
-        Geom::Point tooltip_pos = p.getPoint() + _desktop->w2d(Geom::Point(15, -15));
+        double fontsize = prefs->getInt("/tools/measure/fontsize");
+
+        Geom::Point tooltip_pos = p.getPoint();
+        if (tools_isactive(_desktop, TOOLS_MEASURE)) {
+            // Make sure that the snap tooltips do not overlap the ones from the measure tool
+            tooltip_pos += _desktop->w2d(Geom::Point(0, -3*fontsize));
+        } else {
+            tooltip_pos += _desktop->w2d(Geom::Point(0, -2*fontsize));
+        }
 
         SPCanvasItem *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(_desktop), _desktop, tooltip_pos, tooltip_str);
+        sp_canvastext_set_fontsize(SP_CANVASTEXT(canvas_tooltip), fontsize);
+        SP_CANVASTEXT(canvas_tooltip)->rgba = 0xffffffff;
+        SP_CANVASTEXT(canvas_tooltip)->outline = false;
+        SP_CANVASTEXT(canvas_tooltip)->background = true;
         if (pre_snap) {
-            SP_CANVASTEXT(canvas_tooltip)->rgba = 0x7f7f7fff;
+            SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x33337f40;
+        } else {
+            SP_CANVASTEXT(canvas_tooltip)->rgba_background = 0x33337f7f;
         }
+        SP_CANVASTEXT(canvas_tooltip)->anchor_position = TEXT_ANCHOR_CENTER;
         g_free(tooltip_str);
 
-        sp_canvastext_set_anchor((SPCanvasText* )canvas_tooltip, -1, 1);
         _snaptarget_tooltip = _desktop->add_temporary_canvasitem(canvas_tooltip, timeout_val);
 
         // Display the bounding box, if we snapped to one

@@ -74,6 +74,8 @@ static void
 sp_canvastext_init (SPCanvasText *canvastext)
 {
     canvastext->anchor_position = TEXT_ANCHOR_CENTER;
+    canvastext->anchor_offset_x = 0;
+    canvastext->anchor_offset_y = 0;
     canvastext->rgba = 0x33337fff;
     canvastext->rgba_stroke = 0xffffffff;
     canvastext->rgba_background = 0x0000007f;
@@ -84,6 +86,9 @@ sp_canvastext_init (SPCanvasText *canvastext)
     canvastext->item = NULL;
     canvastext->desktop = NULL;
     canvastext->text = NULL;
+    canvastext->outline = false;
+    canvastext->background = false;
+    canvastext->border = 3; // must be a constant, and not proportional to any width, height, or fontsize to allow alignment with other text boxes
 }
 
 static void
@@ -102,10 +107,6 @@ sp_canvastext_destroy (GtkObject *object)
         (* GTK_OBJECT_CLASS (parent_class_ct)->destroy) (object);
 }
 
-// these are set in sp_canvastext_update() and then re-used in sp_canvastext_render(), which is called afterwards
-static double anchor_offset_x = 0;
-static double anchor_offset_y = 0;
-
 static void
 sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
 {
@@ -117,8 +118,8 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
     Geom::Point s = cl->s * cl->affine;
     double offsetx = s[Geom::X] - buf->rect.left();
     double offsety = s[Geom::Y] - buf->rect.top();
-    offsetx -= anchor_offset_x;
-    offsety -= anchor_offset_y;
+    offsetx -= cl->anchor_offset_x;
+    offsety -= cl->anchor_offset_y;
 
     cairo_set_font_size(buf->ct, cl->fontsize);
 
@@ -126,7 +127,7 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
         cairo_text_extents_t extents;
         cairo_text_extents(buf->ct, cl->text, &extents);
 
-        double border = extents.height*0.5;
+        double border = cl->border;
         cairo_rectangle(buf->ct, offsetx - extents.x_bearing - border,
                                  offsety + extents.y_bearing - border,
                                  extents.width + 2*border,
@@ -172,7 +173,7 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
     cairo_set_font_size(tmp_buf, cl->fontsize);
     cairo_text_extents_t extents;
     cairo_text_extents(tmp_buf, cl->text, &extents);
-    double border = extents.height;
+    double border = cl->border;
 
     item->x1 = s[Geom::X] - extents.x_bearing - 2*border;
     item->y1 = s[Geom::Y] + extents.y_bearing - 2*border;
@@ -182,36 +183,36 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
     // adjust update region according to anchor shift
     switch (cl->anchor_position){
         case TEXT_ANCHOR_LEFT:
-            anchor_offset_x = -2*border;
-            anchor_offset_y = -extents.height/2;
+            cl->anchor_offset_x = -2*border;
+            cl->anchor_offset_y = -extents.height/2;
             break;
         case TEXT_ANCHOR_RIGHT:
-            anchor_offset_x = extents.width + 2*border;
-            anchor_offset_y = -extents.height/2;
+            cl->anchor_offset_x = extents.width + 2*border;
+            cl->anchor_offset_y = -extents.height/2;
             break;
         case TEXT_ANCHOR_BOTTOM:
-            anchor_offset_x = extents.width/2;
-            anchor_offset_y = 2*border;
+            cl->anchor_offset_x = extents.width/2;
+            cl->anchor_offset_y = 2*border;
             break;
         case TEXT_ANCHOR_TOP:
-            anchor_offset_x = extents.width/2;
-            anchor_offset_y = -extents.height - 2*border;
+            cl->anchor_offset_x = extents.width/2;
+            cl->anchor_offset_y = -extents.height - 2*border;
             break;
         case TEXT_ANCHOR_ZERO:
-            anchor_offset_x = 0;
-            anchor_offset_y = 0;
+            cl->anchor_offset_x = 0;
+            cl->anchor_offset_y = 0;
             break;
         case TEXT_ANCHOR_CENTER:
         default:
-            anchor_offset_x = extents.width/2;
-            anchor_offset_y = -extents.height/2;
+            cl->anchor_offset_x = extents.width/2;
+            cl->anchor_offset_y = -extents.height/2;
             break;
     }
 
-    item->x1 -= anchor_offset_x;
-    item->x2 -= anchor_offset_x;
-    item->y1 -= anchor_offset_y;
-    item->y2 -= anchor_offset_y;
+    item->x1 -= cl->anchor_offset_x;
+    item->x2 -= cl->anchor_offset_x;
+    item->y1 -= cl->anchor_offset_y;
+    item->y2 -= cl->anchor_offset_y;
 
     sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 }
@@ -295,12 +296,12 @@ sp_canvastext_set_fontsize (SPCanvasText *ct, double size)
     ct->fontsize = size;
 }
 
-void
-sp_canvastext_set_anchor (SPCanvasText *ct, double anchor_x, double anchor_y)
-{
-    ct->anchor_x = anchor_x;
-    ct->anchor_y = anchor_y;
-}
+//void
+//sp_canvastext_set_anchor (SPCanvasText *ct, double anchor_x, double anchor_y)
+//{
+//    ct->anchor_x = anchor_x;
+//    ct->anchor_y = anchor_y;
+//}
 
 
 /*
