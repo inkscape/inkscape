@@ -624,7 +624,7 @@ sp_export_dialog (void)
             batch_box->pack_start(*Glib::wrap(be), false, false);
             gtk_widget_set_tooltip_text(be, _("Export each selected object into its own PNG file, using export hints if any (caution, overwrites without asking!)"));
             batch_box->show_all();
-            g_signal_connect(G_OBJECT(be), "toggled", GTK_SIGNAL_FUNC(batch_export_clicked), dlg);
+            g_signal_connect(G_OBJECT(be), "toggled", G_CALLBACK(batch_export_clicked), dlg);
             vb->pack_start(*batch_box);
         }
 

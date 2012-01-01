@@ -86,7 +86,7 @@ void ColorGtkselector::init()
 	_gtkThing = GTK_COLOR_SELECTION (gtksel);
 	gtk_box_pack_start (GTK_BOX (_csel), gtksel, TRUE, TRUE, 0);
 
-	_sigId = g_signal_connect( GTK_OBJECT(gtksel), "color-changed", GTK_SIGNAL_FUNC( _gtkChanged ), _csel);
+	_sigId = g_signal_connect( GTK_OBJECT(gtksel), "color-changed", G_CALLBACK( _gtkChanged ), _csel);
 }
 
 static void
