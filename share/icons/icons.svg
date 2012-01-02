@@ -1033,6 +1033,30 @@ http://www.inkscape.org/</dc:description>
 <rect y="184.5076" x="-39.506001" height="5.9682379" width="5.0068879" id="rect10585" style="color:#000000;fill:#6464ff;fill-opacity:0.39215692;fill-rule:evenodd;stroke:#0000ff;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline" />
 <path id="path10587" d="m -38,175 2,0 0,3 3,0 0,2 -3,0 0,3 -2,0 0,-3 -3,0 0,-2 3,0 0,-3 z" style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none" sodipodi:nodetypes="ccccccccccccc" />
 </g>
+<g transform="matrix(1,0,0,-1,566,421.98359)" id="node_insert_max_y">
+<rect width="16" height="16" x="-45" y="175" id="rect6085" style="color:black;fill:none;stroke:none;stroke-width:1;marker:none;display:inline" />
+<path d="m -44.5,175.48359 c 0,0 2,3.49999 7.5,3.5 5.5,1e-5 7.5,-3.5 7.5,-3.5" id="path6087" style="fill:none;stroke:#646464;stroke-width:1.00000036;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none" />
+<rect width="5.0060005" height="4.9759912" x="-39.506001" y="176.5076" id="rect6089" style="color:black;fill:#6464ff;fill-opacity:0.39215692;fill-rule:evenodd;stroke:blue;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline" />
+<path d="m -38,183 2,0 0,3 3,0 0,2 -3,0 0,3 -2,0 0,-3 -3,0 0,-2 3,0 0,-3 z" id="path6091" style="fill:black;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+</g>
+<g transform="translate(547,56)" id="node_insert_min_y">
+<rect width="16" height="16" x="-45" y="175" id="rect6115" style="color:black;fill:none;stroke:none;stroke-width:1;marker:none;display:inline" />
+<path d="m -44.5,175.48359 c 0,0 2,3.5164 7.5,3.51641 5.5,1e-5 7.5,-3.51641 7.5,-3.51641" id="path6117" style="fill:none;stroke:#646464;stroke-width:1.00000036;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none" />
+<rect width="5.0060005" height="4.9759912" x="-39.506001" y="176.5" id="rect6119" style="color:black;fill:#6464ff;fill-opacity:0.39215692;fill-rule:evenodd;stroke:blue;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline" />
+<path d="m -38,183 2,0 0,3 3,0 0,2 -3,0 0,3 -2,0 0,-3 -3,0 0,-2 3,0 0,-3 z" id="path6121" style="fill:black;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+</g>
+<g transform="matrix(0,-1,-1,0,730.99179,201.9918)" id="node_insert_min_x">
+<rect width="16" height="16" x="-45" y="175" id="rect6125" style="color:black;fill:none;stroke:none;stroke-width:1;marker:none;display:inline" />
+<path d="m -44.5,175.48359 c 0,0 1.9918,3.50819 7.4918,3.5082 5.5,1e-5 7.5082,-3.5082 7.5082,-3.5082" id="path6128" style="fill:none;stroke:#646464;stroke-width:1.00000036;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none" />
+<rect width="5.0060005" height="4.9759912" x="-39.514202" y="176.51579" id="rect6130" style="color:black;fill:#6464ff;fill-opacity:0.39215692;fill-rule:evenodd;stroke:blue;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline" />
+<path d="m -38,183 2,0 0,3 3,0 0,2 -3,0 0,3 -2,0 0,-3 -3,0 0,-2 3,0 0,-3 z" id="path6132" style="fill:black;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+</g>
+<g transform="matrix(0,1,1,0,384.00821,275.9918)" id="node_insert_max_x">
+<rect width="16" height="16" x="-45" y="175" id="rect6137" style="color:black;fill:none;stroke:none;stroke-width:1;marker:none;display:inline" />
+<path d="m -44.5,175.48359 c 0,0 2.0082,3.50819 7.5082,3.5082 5.5,1e-5 7.4918,-3.5082 7.4918,-3.5082" id="path6139" style="fill:none;stroke:#646464;stroke-width:1.00000036;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none" />
+<rect width="5.0060005" height="4.9759912" x="-39.491798" y="176.51579" id="rect6141" style="color:black;fill:#6464ff;fill-opacity:0.39215692;fill-rule:evenodd;stroke:blue;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;display:inline" />
+<path d="m -38,183 2,0 0,3 3,0 0,2 -3,0 0,3 -2,0 0,-3 -3,0 0,-2 3,0 0,-3 z" id="path6143" style="fill:black;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+</g>
 <g id="node-delete" transform="translate(566.006,-119.97584)" inkscape:label="#node_delete">
 <rect y="175" x="-45" height="16" width="16" id="rect10591" style="color:#000000;fill:none;stroke:none;stroke-width:1;marker:none;display:inline" />
 <use xlink:href="#path10583" height="1250" width="1250" transform="translate(-0.0651068,-0.0534998)" id="use15253" y="0" x="0" />

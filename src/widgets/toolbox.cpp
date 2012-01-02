@@ -286,6 +286,10 @@ static gchar const * ui_descr =
         "  <toolbar name='NodeToolbar'>"
         "    <separator />"
         "    <toolitem action='NodeInsertAction' />"
+/*        "    <toolitem action='NodeInsertActionMinX' />"
+        "    <toolitem action='NodeInsertActionMaxX' />"
+        "    <toolitem action='NodeInsertActionMinY' />"
+        "    <toolitem action='NodeInsertActionMaxY' />"  */
         "    <toolitem action='NodeDeleteAction' />"
         "    <separator />"
         "    <toolitem action='NodeJoinAction' />"
@@ -1154,6 +1158,35 @@ static void sp_node_path_edit_add(void)
     }
 }
 
+static void sp_node_path_edit_add_min_x(void)
+{
+    InkNodeTool *nt = get_node_tool();
+    if (nt) {
+        nt->_multipath->insertNodes();
+    }
+}
+static void sp_node_path_edit_add_max_x(void)
+{
+    InkNodeTool *nt = get_node_tool();
+    if (nt) {
+        nt->_multipath->insertNodes();
+    }
+}
+static void sp_node_path_edit_add_min_y(void)
+{
+    InkNodeTool *nt = get_node_tool();
+    if (nt) {
+        nt->_multipath->insertNodes();
+    }
+}
+static void sp_node_path_edit_add_max_y(void)
+{
+    InkNodeTool *nt = get_node_tool();
+    if (nt) {
+        nt->_multipath->insertNodes();
+    }
+}
+
 static void sp_node_path_edit_delete(void)
 {
     InkNodeTool *nt = get_node_tool();
@@ -1382,6 +1415,47 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                           secondarySize );
         g_object_set( inky, "short_label", _("Insert"), NULL );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_add), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+
+    {
+        InkAction* inky = ink_action_new( "NodeInsertActionMinX",
+                                          _("Insert node at min X"),
+                                          _("Insert new nodes at min X into selected segments"),
+                                          INKSCAPE_ICON("node_insert_min_x"),
+                                          secondarySize );
+        g_object_set( inky, "short_label", _("Insert min X"), NULL );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_add_min_x), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+    {
+        InkAction* inky = ink_action_new( "NodeInsertActionMaxX",
+                                          _("Insert node at max X"),
+                                          _("Insert new nodes at max X into selected segments"),
+                                          INKSCAPE_ICON("node_insert_max_x"),
+                                          secondarySize );
+        g_object_set( inky, "short_label", _("Insert max X"), NULL );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_add_max_x), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+    {
+        InkAction* inky = ink_action_new( "NodeInsertActionMinY",
+                                          _("Insert node at min Y"),
+                                          _("Insert new nodes at min Y into selected segments"),
+                                          INKSCAPE_ICON("node_insert_min_y"),
+                                          secondarySize );
+        g_object_set( inky, "short_label", _("Insert min Y"), NULL );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_add_min_y), 0 );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+    }
+    {
+        InkAction* inky = ink_action_new( "NodeInsertActionMaxY",
+                                          _("Insert node at max Y"),
+                                          _("Insert new nodes at max Y into selected segments"),
+                                          INKSCAPE_ICON("node_insert_max_y"),
+                                          secondarySize );
+        g_object_set( inky, "short_label", _("Insert max Y"), NULL );
+        g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_add_max_y), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
     }
 
