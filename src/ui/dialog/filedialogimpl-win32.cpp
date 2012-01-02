@@ -1591,9 +1591,18 @@ FileSaveDialogImplWin32::FileSaveDialogImplWin32(Gtk::Window &parent,
             // leaving a trailing backslash on the directory name leads to the infamous
             // double-directory bug on win32
             if (len != 0 && udir[len - 1] == '\\') udir.erase(len - 1);
-            myFilename = udir.substr(0, udir.find_last_of( '.' ) ); // this removes the extension, or actually, removes everything past the last dot (hopefully this is what most people want)
-            if (1 + myFilename.find("\\\\",2))                      // remove one slash if double
+
+            // Remove the extension: remove everything past the last period found past the last slash
+            size_t last_slash_index = udir.find_last_of( '\\' );
+            size_t last_period_index = udir.find_last_of( '.' );
+            if (last_period_index > last_slash_index) {
+                myFilename = udir.substr(0, last_period_index ); 
+            }
+
+            // remove one slash if double
+            if (1 + myFilename.find("\\\\",2)) {
                 myFilename.replace(myFilename.find("\\\\",2), 1, "");
+            }
         }
 }
 
