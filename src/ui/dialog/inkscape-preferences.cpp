@@ -1474,6 +1474,7 @@ void InkscapePreferences::initPageMisc()
     }
     _misc_info.set_editable(false);
     _misc_info_scroll.add(_misc_info);
+    _misc_info_scroll.set_size_request(0, 150);
     _page_misc.add_line( false, _("System info"), _misc_info_scroll, "", _("General system information"), true);
 
     this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);

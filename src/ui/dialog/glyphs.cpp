@@ -342,7 +342,7 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
     GtkWidget *fontsel = sp_font_selector_new();
     fsel = SP_FONT_SELECTOR(fontsel);
     sp_font_selector_set_font(fsel, sp_font_selector_get_font(fsel), 12.0);
-
+    gtk_widget_set_size_request (fontsel, 0, 150);
     g_signal_connect( G_OBJECT(fontsel), "font_set", G_CALLBACK(fontChangeCB), this );
 
     table->attach(*Gtk::manage(Glib::wrap(fontsel)),

@@ -545,8 +545,9 @@ InputDialogImpl::InputDialogImpl() :
 
     treeScroller.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     treeScroller.add(tree);
-    split2.pack1(testFrame);
-    split2.pack2(frame2);
+    treeScroller.set_size_request(50, 0);
+    split2.pack1(testFrame, false, false);
+    split2.pack2(frame2, true, true);
     splitter.pack1(treeScroller);
     splitter.pack2(split2);
 
@@ -697,6 +698,7 @@ InputDialogImpl::InputDialogImpl() :
     detailScroller.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     detailScroller.add(devDetails);
     frame2.add(detailScroller);
+    frame2.set_size_request(0, 60);
 
 //- 16x16/devices
 // gnome-dev-mouse-optical
