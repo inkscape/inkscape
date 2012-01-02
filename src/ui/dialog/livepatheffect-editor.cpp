@@ -95,6 +95,7 @@ LivePathEffectEditor::LivePathEffectEditor()
     scrolled_window.add(effectlist_view);
     //Only show the scrollbars when they are necessary:
     scrolled_window.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    scrolled_window.set_size_request(0, 50);
 
     effectapplication_hbox.set_spacing(4);
     effectcontrol_vbox.set_spacing(4);

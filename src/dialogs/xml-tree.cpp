@@ -630,6 +630,7 @@ void sp_xml_tree_dialog()
         gtk_box_pack_start(GTK_BOX(toolbar), sw, TRUE, TRUE, 0);
 
         attr_value =(GtkTextView *) gtk_text_view_new();
+        gtk_widget_set_size_request((GtkWidget *)attr_value, 0, 60);
         gtk_text_view_set_wrap_mode((GtkTextView *) attr_value, GTK_WRAP_CHAR);
         gtk_widget_set_tooltip_text( GTK_WIDGET(attr_value),
                                // TRANSLATORS: "Attribute" is a noun here
