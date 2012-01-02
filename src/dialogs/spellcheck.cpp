@@ -983,18 +983,33 @@ sp_spellcheck_dialog (void)
             GtkWidget *hb = gtk_hbox_new (FALSE, 0);
             sp_spellcheck_new_button (dlg, hb, _("A_dd to dictionary:"), _("Add this word to the chosen dictionary"),
                                       sp_spellcheck_add, "b_add");
-            GtkComboBox *cbox = GTK_COMBO_BOX (gtk_combo_box_new_text());
-            gtk_combo_box_append_text (cbox,  _lang);
+
+// Backward compatibility fix: The GtkComboBoxText API was introduced with 
+// GTK+ 2.24.  This check should eventually be dropped when we bump our
+// GTK dependency.
+#if GTK_CHECK_VERSION(2, 24, 0)
+	    GtkWidget *cbox = gtk_combo_box_text_new();
+            gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (cbox),  _lang);
             if (_lang2) {
-                gtk_combo_box_append_text (cbox, _lang2);
+                gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (cbox), _lang2);
+	    }
+            if (_lang3) {
+                gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (cbox), _lang3);
+            }
+#else
+            GtkWidget *cbox = gtk_combo_box_new_text();
+            gtk_combo_box_append_text (GTK_COMBO_BOX (cbox),  _lang);
+            if (_lang2) {
+                gtk_combo_box_append_text (GTK_COMBO_BOX (cbox), _lang2);
             }
             if (_lang3) {
-                gtk_combo_box_append_text (cbox, _lang3);
+                gtk_combo_box_append_text (GTK_COMBO_BOX (cbox), _lang3);
             }
-            gtk_combo_box_set_active (cbox, 0);
-            gtk_widget_show_all (GTK_WIDGET(cbox));
+#endif
+            gtk_combo_box_set_active (GTK_COMBO_BOX (cbox), 0);
+            gtk_widget_show_all (cbox);
             g_object_set_data (G_OBJECT (dlg), "addto_langs", cbox);
-            gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(cbox), TRUE, TRUE, 0);
+            gtk_box_pack_start (GTK_BOX (hb), cbox, TRUE, TRUE, 0);
             gtk_box_pack_start (GTK_BOX (vb), hb, FALSE, FALSE, 0);
         }
 
