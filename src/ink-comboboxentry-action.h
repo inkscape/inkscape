@@ -45,7 +45,7 @@ struct _Ink_ComboBoxEntry_Action {
   GtkAction parent_instance;
 
   GtkTreeModel       *model;
-  GtkComboBoxEntry   *combobox;
+  GtkComboBox        *combobox;
   GtkEntry           *entry;
   GtkEntryCompletion *entry_completion;
   GtkWidget          *indicator;
@@ -77,7 +77,7 @@ Ink_ComboBoxEntry_Action *ink_comboboxentry_action_new ( const gchar  *name,
 							 gpointer cell_data_func = NULL );
 
 GtkTreeModel     *ink_comboboxentry_action_get_model( Ink_ComboBoxEntry_Action* action );
-GtkComboBoxEntry *ink_comboboxentry_action_get_comboboxentry( Ink_ComboBoxEntry_Action* action );
+GtkComboBox      *ink_comboboxentry_action_get_comboboxentry( Ink_ComboBoxEntry_Action* action );
 
 gchar*   ink_comboboxentry_action_get_active_text( Ink_ComboBoxEntry_Action* action );
 gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* action, const gchar* text );

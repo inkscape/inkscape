@@ -39,7 +39,7 @@ static gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gc
 static gint check_comma_separated_text( Ink_ComboBoxEntry_Action* action );
 
 // Callbacks
-static void combo_box_changed_cb( GtkComboBoxEntry* widget, gpointer data );
+static void combo_box_changed_cb( GtkComboBox* widget, gpointer data );
 static void entry_activate_cb( GtkEntry* widget, gpointer data );
 static gboolean match_selected_cb( GtkEntryCompletion* widget, GtkTreeModel* model, GtkTreeIter* iter, gpointer data );
 
@@ -82,7 +82,7 @@ static void ink_comboboxentry_action_set_property (GObject *object, guint proper
     break;
 
   case PROP_COMBOBOX:
-    action->combobox = GTK_COMBO_BOX_ENTRY( g_value_get_object( value ));
+    action->combobox = GTK_COMBO_BOX (g_value_get_object (value));
     break;
 
   case PROP_ENTRY:
@@ -338,7 +338,17 @@ GtkWidget* create_tool_item( GtkAction* action )
 
     item = GTK_WIDGET( gtk_tool_item_new() );
 
-    GtkWidget* comboBoxEntry = gtk_combo_box_entry_new_with_model( ink_comboboxentry_action->model, 0 );
+    GtkWidget* comboBoxEntry;
+
+// Backward-compatibility: GtkComboBoxEntry is deprecated in GTK+ >= 2.24
+// gtk_combo_box_set_entry_text_column is unavailable in earlier versions
+#if GTK_CHECK_VERSION (2, 24, 0)
+    comboBoxEntry = gtk_combo_box_new_with_model_and_entry (ink_comboboxentry_action->model);
+    gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (comboBoxEntry), 0);
+#else 
+    comboBoxEntry = gtk_combo_box_entry_new_with_model( ink_comboboxentry_action->model, 0 );
+#endif
+
     // Name it so we can muck with it using an RC file
     gtk_widget_set_name( comboBoxEntry, combobox_name );
     g_free( combobox_name );
@@ -349,7 +359,7 @@ GtkWidget* create_tool_item( GtkAction* action )
         gtk_container_add( GTK_CONTAINER(item), align );
     }
 
-    ink_comboboxentry_action->combobox = GTK_COMBO_BOX_ENTRY(comboBoxEntry);
+    ink_comboboxentry_action->combobox = GTK_COMBO_BOX (comboBoxEntry);
 
     gtk_combo_box_set_active( GTK_COMBO_BOX( comboBoxEntry ), ink_comboboxentry_action->active );
 
@@ -434,7 +444,7 @@ GtkTreeModel *ink_comboboxentry_action_get_model( Ink_ComboBoxEntry_Action* acti
   return action->model;
 }
 
-GtkComboBoxEntry *ink_comboboxentry_action_get_comboboxentry( Ink_ComboBoxEntry_Action* action ) {
+GtkComboBox *ink_comboboxentry_action_get_comboboxentry( Ink_ComboBoxEntry_Action* action ) {
 
   return action->combobox;
 }
@@ -653,7 +663,7 @@ static gint check_comma_separated_text( Ink_ComboBoxEntry_Action* action ) {
 
 // Callbacks ---------------------------------------------------
 
-static void combo_box_changed_cb( GtkComboBoxEntry* widget, gpointer data ) {
+static void combo_box_changed_cb( GtkComboBox* widget, gpointer data ) {
 
   // Two things can happen to get here:
   //   An item is selected in the drop-down menu.
@@ -664,13 +674,14 @@ static void combo_box_changed_cb( GtkComboBoxEntry* widget, gpointer data ) {
   Ink_ComboBoxEntry_Action *act = INK_COMBOBOXENTRY_ACTION( data );
 
   // Check if item selected:
-  gint newActive = gtk_combo_box_get_active( GTK_COMBO_BOX( widget ));
+  gint newActive = gtk_combo_box_get_active(widget);
   if( newActive >= 0 ) {
 
     if( newActive != act->active ) {
       act->active = newActive;
       g_free( act->text );
-      act->text = gtk_combo_box_get_active_text( GTK_COMBO_BOX( widget ));
+      GtkWidget *entry = gtk_bin_get_child (GTK_BIN (widget));
+      act->text = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
 
       // Now let the world know
       g_signal_emit( G_OBJECT(act), signals[CHANGED], 0 );
