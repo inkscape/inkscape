@@ -770,10 +770,19 @@ GtkWidget* create_tool_item( GtkAction* action )
             GtkCellRenderer * renderer = 0;
             GtkWidget *holder = gtk_hbox_new( FALSE, 4 );
             GtkEntry *entry = 0;
-            GtkWidget *normal = (act->private_data->selectionMode == SELECTION_OPEN) ?
-                gtk_combo_box_entry_new_with_model( act->private_data->model, act->private_data->labelColumn ) :
-                gtk_combo_box_new_with_model( act->private_data->model );
+            GtkWidget *normal;
+
             if (act->private_data->selectionMode == SELECTION_OPEN) {
+
+// Backward-compatibility: GtkComboBoxEntry is deprecated in GTK+ >= 2.24
+// and gtk_combo_box_set_entry_text_column is unavailable in earlier versions.
+#if GTK_CHECK_VERSION (2, 24, 0)
+		normal = gtk_combo_box_new_with_model_and_entry (act->private_data->model);
+		gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (normal), act->private_data->labelColumn);
+#else
+                normal = gtk_combo_box_entry_new_with_model (act->private_data->model, act->private_data->labelColumn);
+#endif
+
                 GtkWidget *child = gtk_bin_get_child( GTK_BIN(normal) );
                 if (GTK_IS_ENTRY(child)) {
                     int maxUsed = scan_max_width( act->private_data->model, act->private_data->labelColumn );
@@ -793,7 +802,9 @@ GtkWidget* create_tool_item( GtkAction* action )
                     g_signal_connect( G_OBJECT(child), "activate", G_CALLBACK(combo_entry_changed_cb), act );
                     g_signal_connect( G_OBJECT(child), "focus-out-event", G_CALLBACK(combo_entry_focus_lost_cb), act );
                 }
-            } else {
+            } 
+	    else {
+                normal = gtk_combo_box_new_with_model( act->private_data->model );
                 if ( act->private_data->iconColumn >= 0 ) {
                     renderer = gtk_cell_renderer_pixbuf_new();
                     gtk_cell_layout_pack_start( GTK_CELL_LAYOUT(normal), renderer, TRUE );
@@ -873,7 +884,13 @@ void resync_active( EgeSelectOneAction* act, gint active, gboolean override )
                     }
                     if ( GTK_IS_COMBO_BOX(combodata) ) {
                         GtkComboBox* combo = GTK_COMBO_BOX(combodata);
+// Backward-compatibility: GtkComboBoxEntry is deprecated in GTK+ >= 2.24
+// gtk_combo_box_get_has_entry is unavailable in earlier versions
+#if GTK_CHECK_VERSION (2, 24, 0)
+                        if ((active == -1) && (gtk_combo_box_get_has_entry(combo))) {
+#else
                         if ((active == -1) && (GTK_IS_COMBO_BOX_ENTRY(combo))) {
+#endif
                             gtk_entry_set_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(combo))), act->private_data->activeText);
                         } else if ( gtk_combo_box_get_active(combo) != active ) {
                             gtk_combo_box_set_active( combo, active );
@@ -947,7 +964,7 @@ void resync_sensitive( EgeSelectOneAction* act )
                             gboolean valid;
                             valid = gtk_tree_model_get_iter_first( act->private_data->model, &iter );
                             gboolean sens = true;
-
+ 
                             while( valid ) {
 
                                 gchar* str = 0;
@@ -984,9 +1001,33 @@ void resync_sensitive( EgeSelectOneAction* act )
 
 void combo_changed_cb( GtkComboBox* widget, gpointer user_data )
 {
-    EgeSelectOneAction* act = EGE_SELECT_ONE_ACTION(user_data);
-    gint newActive = gtk_combo_box_get_active(widget);
-    gchar *text = gtk_combo_box_get_active_text(widget);
+    EgeSelectOneAction *act = EGE_SELECT_ONE_ACTION(user_data);
+    gchar              *text;
+    GtkComboBox        *cb = GTK_COMBO_BOX (widget);
+    gint                newActive = gtk_combo_box_get_active(widget);
+
+// Backward-compatibility: gtk_combo_box_get_active_text is deprecated in
+// GTK+ >= 2.24.  gtk_combo_box_get_has_entry is unavailable in earlier
+// versions.
+#if GTK_CHECK_VERSION (2, 24, 0)
+    if (gtk_combo_box_get_has_entry (cb)) {
+	    GtkBin   *bin = GTK_BIN (cb);
+	    GtkEntry *entry = GTK_ENTRY (gtk_bin_get_child (bin));
+
+	    text = g_strdup (gtk_entry_get_text (entry));
+    }
+    else {
+	    GtkTreeIter  iter;
+
+	    if (gtk_combo_box_get_active_iter (cb, &iter)) {
+		    GtkTreeModel *model = gtk_combo_box_get_model (cb);
+
+		    gtk_tree_model_get (model, &iter, 0, &text, -1);
+	    }
+    }
+#else
+    text = gtk_combo_box_get_active_text (cb);
+#endif
 
     if (newActive == -1) {
         /* indicates the user is entering text for a custom aka "open" value */
@@ -1132,3 +1173,14 @@ int scan_max_width( GtkTreeModel *model, gint labelColumn )
     }
     return maxUsed;
 }
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
