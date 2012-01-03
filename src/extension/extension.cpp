@@ -75,7 +75,7 @@ Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementat
 
     // printf("Extension Constructor: ");
     if (repr != NULL) {
-        Inkscape::XML::Node *child_repr = sp_repr_children(repr);
+        Inkscape::XML::Node *child_repr = repr->firstChild();
         /* TODO: Handle what happens if we don't have these two */
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
@@ -85,14 +85,14 @@ Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementat
             if (chname[0] == '_') /* Allow _ for translation of tags */
                 chname++;
             if (!strcmp(chname, "id")) {
-                gchar const *val = sp_repr_children(child_repr)->content();
+                gchar const *val = child_repr->firstChild()->content();
                 id = g_strdup (val);
             } /* id */
             if (!strcmp(chname, "name")) {
-                name = g_strdup (sp_repr_children(child_repr)->content());
+                name = g_strdup (child_repr->firstChild()->content());
             } /* name */
             if (!strcmp(chname, "help")) {
-                _help = g_strdup (sp_repr_children(child_repr)->content());
+                _help = g_strdup (child_repr->firstChild()->content());
             } /* name */
             if (!strcmp(chname, "param") || !strcmp(chname, "_param")) {
                 Parameter * param;
@@ -106,7 +106,7 @@ Extension::Extension (Inkscape::XML::Node * in_repr, Implementation::Implementat
             if (!strcmp(chname, "options")) {
                 silent = !strcmp( child_repr->attribute("silent"), "true" );
             }
-            child_repr = sp_repr_next(child_repr);
+            child_repr = child_repr->next();
         }
 
         db.register_ext (this);

@@ -75,8 +75,7 @@ static char *sp_xml_ns_auto_prefix(char const *uri);
 /**
  * Locale-independent double to string conversion
  */
-unsigned int
-sp_xml_dtoa(gchar *buf, double val, unsigned int tprec, unsigned int fprec, unsigned int padf)
+unsigned int sp_xml_dtoa(gchar *buf, double val, unsigned int tprec, unsigned int fprec, unsigned int padf)
 {
     double dival, fval, epsilon;
     int idigits, ival, i;
@@ -134,8 +133,6 @@ sp_xml_dtoa(gchar *buf, double val, unsigned int tprec, unsigned int fprec, unsi
 
 
 
-
-
 /*#####################
 # MAIN
 #####################*/
@@ -150,8 +147,7 @@ static SPXMLNs *namespaces=NULL;
  * There are the prefixes to use for the XML namespaces defined
  * in repr.h
  */
-static void
-sp_xml_ns_register_defaults()
+static void sp_xml_ns_register_defaults()
 {
     static SPXMLNs defaults[11];
 
@@ -213,8 +209,7 @@ sp_xml_ns_register_defaults()
     namespaces = &defaults[0];
 }
 
-char *
-sp_xml_ns_auto_prefix(char const *uri)
+char *sp_xml_ns_auto_prefix(char const *uri)
 {
     char const *start, *end;
     char *new_prefix;
@@ -240,8 +235,7 @@ sp_xml_ns_auto_prefix(char const *uri)
     return new_prefix;
 }
 
-gchar const *
-sp_xml_ns_uri_prefix(gchar const *uri, gchar const *suggested)
+gchar const *sp_xml_ns_uri_prefix(gchar const *uri, gchar const *suggested)
 {
     char const *prefix;
 
@@ -296,8 +290,7 @@ sp_xml_ns_uri_prefix(gchar const *uri, gchar const *suggested)
     return prefix;
 }
 
-gchar const *
-sp_xml_ns_prefix_uri(gchar const *prefix)
+gchar const *sp_xml_ns_prefix_uri(gchar const *prefix)
 {
     SPXMLNs *iter;
     char const *uri;
@@ -357,7 +350,7 @@ long long int sp_repr_get_int_attribute(Inkscape::XML::Node *repr, char const *k
 int sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second)
 {
     int p1, p2;
-    if (sp_repr_parent(first) == sp_repr_parent(second)) {
+    if (first->parent() == second->parent()) {
         /* Basic case - first and second have same parent */
         p1 = first->position();
         p2 = second->position();
@@ -377,7 +370,7 @@ int sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::No
         } else {
             Inkscape::XML::Node const *to_first = AncetreFils(first, ancestor);
             Inkscape::XML::Node const *to_second = AncetreFils(second, ancestor);
-            g_assert(sp_repr_parent(to_second) == sp_repr_parent(to_first));
+            g_assert(to_second->parent() == to_first->parent());
             p1 = to_first->position();
             p2 = to_second->position();
         }
@@ -463,8 +456,7 @@ Inkscape::XML::Node *sp_repr_lookup_name( Inkscape::XML::Node *repr, gchar const
 /**
  * Determine if the node is a 'title', 'desc' or 'metadata' element.
  */
-bool
-sp_repr_is_meta_element(const Inkscape::XML::Node *node)
+bool sp_repr_is_meta_element(const Inkscape::XML::Node *node)
 {
     if (node == NULL) return false;
     if (node->type() != Inkscape::XML::ELEMENT_NODE) return false;
@@ -482,8 +474,7 @@ sp_repr_is_meta_element(const Inkscape::XML::Node *node)
  *
  * \return TRUE if the attr was set, FALSE otherwise.
  */
-unsigned int
-sp_repr_get_boolean(Inkscape::XML::Node *repr, gchar const *key, unsigned int *val)
+unsigned int sp_repr_get_boolean(Inkscape::XML::Node *repr, gchar const *key, unsigned int *val)
 {
     gchar const *v;
 
@@ -509,8 +500,7 @@ sp_repr_get_boolean(Inkscape::XML::Node *repr, gchar const *key, unsigned int *v
     }
 }
 
-unsigned int
-sp_repr_get_int(Inkscape::XML::Node *repr, gchar const *key, int *val)
+unsigned int sp_repr_get_int(Inkscape::XML::Node *repr, gchar const *key, int *val)
 {
     gchar const *v;
 
@@ -528,8 +518,7 @@ sp_repr_get_int(Inkscape::XML::Node *repr, gchar const *key, int *val)
     return FALSE;
 }
 
-unsigned int
-sp_repr_get_double(Inkscape::XML::Node *repr, gchar const *key, double *val)
+unsigned int sp_repr_get_double(Inkscape::XML::Node *repr, gchar const *key, double *val)
 {
     gchar const *v;
 
@@ -547,8 +536,7 @@ sp_repr_get_double(Inkscape::XML::Node *repr, gchar const *key, double *val)
     return FALSE;
 }
 
-unsigned int
-sp_repr_set_boolean(Inkscape::XML::Node *repr, gchar const *key, unsigned int val)
+unsigned int sp_repr_set_boolean(Inkscape::XML::Node *repr, gchar const *key, unsigned int val)
 {
     g_return_val_if_fail(repr != NULL, FALSE);
     g_return_val_if_fail(key != NULL, FALSE);
@@ -557,8 +545,7 @@ sp_repr_set_boolean(Inkscape::XML::Node *repr, gchar const *key, unsigned int va
     return true;
 }
 
-unsigned int
-sp_repr_set_int(Inkscape::XML::Node *repr, gchar const *key, int val)
+unsigned int sp_repr_set_int(Inkscape::XML::Node *repr, gchar const *key, int val)
 {
     gchar c[32];
 
@@ -576,8 +563,7 @@ sp_repr_set_int(Inkscape::XML::Node *repr, gchar const *key, int val)
  * required for CSS properties: in particular, it never uses exponent
  * notation.
  */
-unsigned int
-sp_repr_set_css_double(Inkscape::XML::Node *repr, gchar const *key, double val)
+unsigned int sp_repr_set_css_double(Inkscape::XML::Node *repr, gchar const *key, double val)
 {
     g_return_val_if_fail(repr != NULL, FALSE);
     g_return_val_if_fail(key != NULL, FALSE);
@@ -594,8 +580,7 @@ sp_repr_set_css_double(Inkscape::XML::Node *repr, gchar const *key, double val)
  *
  * Not suitable for property attributes (fill-opacity, font-size etc.).
  */
-unsigned int
-sp_repr_set_svg_double(Inkscape::XML::Node *repr, gchar const *key, double val)
+unsigned int sp_repr_set_svg_double(Inkscape::XML::Node *repr, gchar const *key, double val)
 {
     g_return_val_if_fail(repr != NULL, FALSE);
     g_return_val_if_fail(key != NULL, FALSE);
@@ -619,8 +604,7 @@ unsigned sp_repr_set_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Po
     return true;
 }
 
-unsigned int
-sp_repr_get_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point *val)
+unsigned int sp_repr_get_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point *val)
 {
     g_return_val_if_fail(repr != NULL, FALSE);
     g_return_val_if_fail(key != NULL, FALSE);

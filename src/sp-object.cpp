@@ -484,7 +484,7 @@ void SPObject::deleteObject(bool propagate, bool propagate_descendants)
     }
 
     Inkscape::XML::Node *repr = getRepr();
-    if (repr && sp_repr_parent(repr)) {
+    if (repr && repr->parent()) {
         sp_repr_unparent(repr);
     }
 

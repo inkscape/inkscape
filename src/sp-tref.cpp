@@ -578,7 +578,7 @@ sp_tref_convert_to_tspan(SPObject *obj)
 
         if (tref && tref->stringChild) {
             Inkscape::XML::Node *tref_repr = tref->getRepr();
-            Inkscape::XML::Node *tref_parent = sp_repr_parent(tref_repr);
+            Inkscape::XML::Node *tref_parent = tref_repr->parent();
 
             SPDocument *document = tref->document;
             Inkscape::XML::Document *xml_doc = document->getReprDoc();

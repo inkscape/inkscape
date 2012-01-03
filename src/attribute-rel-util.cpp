@@ -75,7 +75,7 @@ void sp_attribute_clean_recursive(Node *repr, unsigned int flags) {
     }
   }
   
-  for(Node *child=sp_repr_children( repr ) ; child ; child = sp_repr_next( child ) ) {
+  for(Node *child=repr->firstChild() ; child ; child = child->next()) {
     sp_attribute_clean_recursive( child, flags );
   }
 }

@@ -41,33 +41,6 @@ char const *sp_xml_ns_prefix_uri(gchar const *prefix);
 
 Inkscape::XML::Document *sp_repr_document_new(gchar const *rootname);
 
-/* Tree */
-/// @deprecated Use the equivalent member function Inkscape::XML::Node::parent()
-inline Inkscape::XML::Node *sp_repr_parent(Inkscape::XML::Node const *repr) {
-    return const_cast<Inkscape::XML::Node *>(repr->parent());
-}
-
-/// @deprecated Use the equivalent member function Inkscape::XML::Node::firstChild()
-inline Inkscape::XML::Node const *sp_repr_children(Inkscape::XML::Node const *repr) {
-    return ( repr ? repr->firstChild() : NULL );
-}
-
-/// @deprecated Use the equivalent member function Inkscape::XML::Node::firstChild()
-inline Inkscape::XML::Node *sp_repr_children(Inkscape::XML::Node *repr) {
-    return ( repr ? repr->firstChild() : NULL );
-}
-
-/// @deprecated Use the equivalent member function Inkscape::XML::Node::next()
-inline Inkscape::XML::Node const *sp_repr_next(Inkscape::XML::Node const *repr) {
-    return ( repr ? repr->next() : NULL );
-}
-
-/// @deprecated Use the equivalent member function Inkscape::XML::Node::next()
-inline Inkscape::XML::Node *sp_repr_next(Inkscape::XML::Node *repr) {
-    return ( repr ? repr->next() : NULL );
-}
-
-
 /* IO */
 
 Inkscape::XML::Document *sp_repr_read_file(gchar const *filename, gchar const *default_ns);

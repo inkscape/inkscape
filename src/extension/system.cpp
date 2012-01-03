@@ -433,7 +433,7 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
         return NULL;
     }
 
-    Inkscape::XML::Node *child_repr = sp_repr_children(repr);
+    Inkscape::XML::Node *child_repr = repr->firstChild();
     while (child_repr != NULL) {
         char const *element_name = child_repr->name();
         /* printf("Child: %s\n", child_repr->name()); */
@@ -458,7 +458,7 @@ build_from_reprdoc(Inkscape::XML::Document *doc, Implementation::Implementation 
         }
 
         //Inkscape::XML::Node *old_repr = child_repr;
-        child_repr = sp_repr_next(child_repr);
+        child_repr = child_repr->next();
         //Inkscape::GC::release(old_repr);
     }
 

@@ -56,7 +56,7 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
 
     if (repr != NULL) {
 
-        for (Inkscape::XML::Node *child = sp_repr_children(repr); child != NULL; child = child->next()) {
+        for (Inkscape::XML::Node *child = repr->firstChild(); child != NULL; child = child->next()) {
             if (!strcmp(child->name(), INKSCAPE_EXTENSION_NS "effect")) {
                 if (child->attribute("needs-document") && !strcmp(child->attribute("needs-document"), "false")) {
                   no_doc = true;
@@ -64,10 +64,10 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
                 if (child->attribute("needs-live-preview") && !strcmp(child->attribute("needs-live-preview"), "false")) {
                   no_live_preview = true;
                 }
-                for (Inkscape::XML::Node *effect_child = sp_repr_children(child); effect_child != NULL; effect_child = effect_child->next()) {
+                for (Inkscape::XML::Node *effect_child = child->firstChild(); effect_child != NULL; effect_child = effect_child->next()) {
                     if (!strcmp(effect_child->name(), INKSCAPE_EXTENSION_NS "effects-menu")) {
                         // printf("Found local effects menu in %s\n", this->get_name());
-                        local_effects_menu = sp_repr_children(effect_child);
+                        local_effects_menu = effect_child->firstChild();
                         if (effect_child->attribute("hidden") && !strcmp(effect_child->attribute("hidden"), "true")) {
                             hidden = true;
                         }
@@ -75,12 +75,12 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
                     if (!strcmp(effect_child->name(), INKSCAPE_EXTENSION_NS "menu-name") ||
                             !strcmp(effect_child->name(), INKSCAPE_EXTENSION_NS "_menu-name")) {
                         // printf("Found local effects menu in %s\n", this->get_name());
-                        _verb.set_name(sp_repr_children(effect_child)->content());
+                        _verb.set_name(effect_child->firstChild()->content());
                     }
                     if (!strcmp(effect_child->name(), INKSCAPE_EXTENSION_NS "menu-tip") ||
                             !strcmp(effect_child->name(), INKSCAPE_EXTENSION_NS "_menu-tip")) {
                         // printf("Found local effects menu in %s\n", this->get_name());
-                        _verb.set_tip(sp_repr_children(effect_child)->content());
+                        _verb.set_tip(effect_child->firstChild()->content());
                     }
                 } // children of "effect"
                 break; // there can only be one effect
@@ -106,7 +106,7 @@ Effect::Effect (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
                 local_effects_menu && 
                 local_effects_menu->attribute("name") && 
                 !strcmp(local_effects_menu->attribute("name"), ("Filters"))) {
-                merge_menu(_filters_list->parent(), _filters_list, sp_repr_children(local_effects_menu), _menu_node);
+                merge_menu(_filters_list->parent(), _filters_list, local_effects_menu->firstChild(), _menu_node);
             } else if (_effects_list) {
                 merge_menu(_effects_list->parent(), _effects_list, local_effects_menu, _menu_node);
             }

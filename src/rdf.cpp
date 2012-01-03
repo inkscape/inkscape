@@ -487,7 +487,7 @@ const gchar *RDFImpl::getReprText( Inkscape::XML::Node const * repr, struct rdf_
     Inkscape::XML::Node const * temp = NULL;
     switch (entity.datatype) {
         case RDF_CONTENT:
-            temp = sp_repr_children(repr);
+            temp = repr->firstChild();
             if ( temp == NULL ) return NULL;
             
             return temp->content();
@@ -499,7 +499,7 @@ const gchar *RDFImpl::getReprText( Inkscape::XML::Node const * repr, struct rdf_
             temp = sp_repr_lookup_name ( temp, "dc:title", 1 );
             if ( temp == NULL ) return NULL;
 
-            temp = sp_repr_children(temp);
+            temp = temp->firstChild();
             if ( temp == NULL ) return NULL;
 
             return temp->content();
@@ -518,15 +518,15 @@ const gchar *RDFImpl::getReprText( Inkscape::XML::Node const * repr, struct rdf_
             temp = sp_repr_lookup_name ( repr, "rdf:Bag", 1 );
             if ( temp == NULL ) {
                 /* backwards compatible: read contents */
-                temp = sp_repr_children(repr);
+                temp = repr->firstChild();
                 if ( temp == NULL ) return NULL;
             
                 return temp->content();
             }
 
-            for ( temp = sp_repr_children(temp) ;
+            for ( temp = temp->firstChild() ;
                   temp ;
-                  temp = sp_repr_next(temp) ) {
+                  temp = temp->next() ) {
                 if (!strcmp(temp->name(),"rdf:li") &&
                     temp->firstChild()) {
                     const gchar * str = temp->firstChild()->content();
@@ -575,7 +575,7 @@ unsigned int RDFImpl::setReprText( Inkscape::XML::Node * repr,
 
     switch (entity.datatype) {
         case RDF_CONTENT:
-            temp = sp_repr_children(parent);
+            temp = parent->firstChild();
             if ( temp == NULL ) {
                 temp = xmldoc->createTextNode( text );
                 g_return_val_if_fail (temp != NULL, FALSE);
@@ -611,7 +611,7 @@ unsigned int RDFImpl::setReprText( Inkscape::XML::Node * repr,
             }
             parent = temp;
 
-            temp = sp_repr_children(parent);
+            temp = parent->firstChild();
             if ( temp == NULL ) {
                 temp = xmldoc->createTextNode( text );
                 g_return_val_if_fail (temp != NULL, FALSE);
@@ -638,7 +638,7 @@ unsigned int RDFImpl::setReprText( Inkscape::XML::Node * repr,
             temp = sp_repr_lookup_name ( parent, "rdf:Bag", 1 );
             if ( temp == NULL ) {
                 /* backward compatibility: drop the dc:subject contents */
-                while ( (temp = sp_repr_children( parent )) ) {
+                while ( (temp = parent->firstChild()) ) {
                     parent->removeChild(temp);
                 }
 
@@ -651,7 +651,7 @@ unsigned int RDFImpl::setReprText( Inkscape::XML::Node * repr,
             parent = temp;
 
             /* toss all the old list items */
-            while ( (temp = sp_repr_children( parent )) ) {
+            while ( (temp = parent->firstChild()) ) {
                 parent->removeChild(temp);
             }
 
@@ -958,9 +958,9 @@ rdf_match_license(Inkscape::XML::Node const *repr, struct rdf_license_t const *l
     }
     bool * matched = (bool*)calloc(count,sizeof(bool));
 
-    for (Inkscape::XML::Node const *current = sp_repr_children(repr);
+    for (Inkscape::XML::Node const *current = repr->firstChild();
          current;
-         current = sp_repr_next ( current ) ) {
+         current = current->next() ) {
 
         gchar const * attr = current->attribute("rdf:resource");
         if ( attr == NULL ) continue;

@@ -196,7 +196,7 @@ SPObject *create_layer(SPObject *root, SPObject *layer, LayerRelativePosition po
         root->getRepr()->appendChild(repr);
     } else {
         Inkscape::XML::Node *layer_repr = layer->getRepr();
-        sp_repr_parent(layer_repr)->addChild(repr, layer_repr);
+        layer_repr->parent()->addChild(repr, layer_repr);
         
         if ( LPOS_BELOW == position ) {
             SP_ITEM(document->getObjectByRepr(repr))->lowerOne();

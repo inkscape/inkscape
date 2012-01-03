@@ -38,8 +38,8 @@ ParamInt::ParamInt (const gchar * name,
                   _value(0), _mode(mode), _indent(0), _min(0), _max(10)
 {
     const char * defaultval = NULL;
-    if (sp_repr_children(xml) != NULL) {
-        defaultval = sp_repr_children(xml)->content();
+    if (xml->firstChild() != NULL) {
+        defaultval = xml->firstChild()->content();
     }
     if (defaultval != NULL) {
         _value = atoi(defaultval);

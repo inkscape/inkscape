@@ -44,8 +44,8 @@ ParamDescription::ParamDescription (const gchar * name,
 {
     // printf("Building Description\n");
     const char * defaultval = NULL;
-    if (sp_repr_children(xml) != NULL) {
-        defaultval = sp_repr_children(xml)->content();
+    if (xml->firstChild() != NULL) {
+        defaultval = xml->firstChild()->content();
     }
 
     if (defaultval != NULL) {

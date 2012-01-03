@@ -184,7 +184,7 @@ std::string Script::solve_reldir(Inkscape::XML::Node *reprin) {
 
     // right now the only recognized relative directory is "extensions"
     if (!s || Glib::ustring(s) != "extensions") {
-        Glib::ustring str = sp_repr_children(reprin)->content();
+        Glib::ustring str = reprin->firstChild()->content();
         return str;
     }
 
@@ -195,7 +195,7 @@ std::string Script::solve_reldir(Inkscape::XML::Node *reprin) {
 
         gchar * fname = g_build_filename(
            Inkscape::Extension::Extension::search_path[i],
-           sp_repr_children(reprin)->content(),
+           reprin->firstChild()->content(),
            NULL);
         Glib::ustring filename = fname;
         g_free(fname);
@@ -308,10 +308,10 @@ bool Script::load(Inkscape::Extension::Extension *module)
     helper_extension = "";
 
     /* This should probably check to find the executable... */
-    Inkscape::XML::Node *child_repr = sp_repr_children(module->get_repr());
+    Inkscape::XML::Node *child_repr = module->get_repr()->firstChild();
     while (child_repr != NULL) {
         if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "script")) {
-            child_repr = sp_repr_children(child_repr);
+            child_repr = child_repr->firstChild();
             while (child_repr != NULL) {
                 if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "command")) {
                     const gchar *interpretstr = child_repr->attribute("interpreter");
@@ -322,14 +322,14 @@ bool Script::load(Inkscape::Extension::Extension *module)
                     command.insert(command.end(), solve_reldir(child_repr));
                 }
                 if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "helper_extension")) {
-                    helper_extension = sp_repr_children(child_repr)->content();
+                    helper_extension = child_repr->firstChild()->content();
                 }
-                child_repr = sp_repr_next(child_repr);
+                child_repr = child_repr->next();
             }
 
             break;
         }
-        child_repr = sp_repr_next(child_repr);
+        child_repr = child_repr->next();
     }
 
     //g_return_val_if_fail(command.length() > 0, false);
@@ -364,11 +364,11 @@ void Script::unload(Inkscape::Extension::Extension */*module*/)
 bool Script::check(Inkscape::Extension::Extension *module)
 {
     int script_count = 0;
-    Inkscape::XML::Node *child_repr = sp_repr_children(module->get_repr());
+    Inkscape::XML::Node *child_repr = module->get_repr()->firstChild();
     while (child_repr != NULL) {
         if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "script")) {
             script_count++;
-            child_repr = sp_repr_children(child_repr);
+            child_repr = child_repr->firstChild();
             while (child_repr != NULL) {
                 if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "check")) {
                     std::string command_text = solve_reldir(child_repr);
@@ -384,18 +384,18 @@ bool Script::check(Inkscape::Extension::Extension *module)
                 }
 
                 if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "helper_extension")) {
-                    gchar const *helper = sp_repr_children(child_repr)->content();
+                    gchar const *helper = child_repr->firstChild()->content();
                     if (Inkscape::Extension::db.get(helper) == NULL) {
                         return false;
                     }
                 }
 
-                child_repr = sp_repr_next(child_repr);
+                child_repr = child_repr->next();
             }
 
             break;
         }
-        child_repr = sp_repr_next(child_repr);
+        child_repr = child_repr->next();
     }
 
     if (script_count == 0) {

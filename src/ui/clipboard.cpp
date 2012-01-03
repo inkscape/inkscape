@@ -357,7 +357,7 @@ const gchar *ClipboardManagerImpl::getFirstObjectID()
         return NULL;
     }
 
-    Inkscape::XML::Node *ch = sp_repr_children(root);
+    Inkscape::XML::Node *ch = root->firstChild();
     while (ch != NULL &&
            strcmp(ch->name(), "svg:g") &&
            strcmp(ch->name(), "svg:path") &&

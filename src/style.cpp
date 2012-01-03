@@ -795,10 +795,10 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
             sp_style_merge_from_parent(style, object->parent->style);
         }
     } else {
-        if (sp_repr_parent(repr)) {
+        if (repr->parent()) {
             /// \todo fixme: This is not the prettiest thing (Lauris)
             SPStyle *parent = sp_style_new(NULL);
-            sp_style_read(parent, NULL, sp_repr_parent(repr));
+            sp_style_read(parent, NULL, repr->parent());
             sp_style_merge_from_parent(style, parent);
             sp_style_unref(parent);
         }

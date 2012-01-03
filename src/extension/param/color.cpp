@@ -62,8 +62,8 @@ ParamColor::ParamColor (const gchar * name, const gchar * guitext, const gchar *
     _changeSignal(0)
 {
     const char * defaulthex = NULL;
-    if (sp_repr_children(xml) != NULL)
-        defaulthex = sp_repr_children(xml)->content();
+    if (xml->firstChild() != NULL)
+        defaulthex = xml->firstChild()->content();
 
     gchar * pref_name = this->pref_name();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();

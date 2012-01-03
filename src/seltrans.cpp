@@ -531,7 +531,7 @@ void Inkscape::SelTrans::stamp()
             // remember the position of the item
             gint pos = original_repr->position();
             // remember parent
-            Inkscape::XML::Node *parent = sp_repr_parent(original_repr);
+            Inkscape::XML::Node *parent = original_repr->parent();
 
             Inkscape::XML::Node *copy_repr = original_repr->duplicate(parent->document());
 

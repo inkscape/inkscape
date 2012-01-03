@@ -46,11 +46,11 @@ Output::Output (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
     if (repr != NULL) {
         Inkscape::XML::Node * child_repr;
 
-        child_repr = sp_repr_children(repr);
+        child_repr = repr->firstChild();
 
         while (child_repr != NULL) {
             if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "output")) {
-                child_repr = sp_repr_children(child_repr);
+                child_repr = child_repr->firstChild();
                 while (child_repr != NULL) {
                     char const * chname = child_repr->name();
 					if (!strncmp(chname, INKSCAPE_EXTENSION_NS_NC, strlen(INKSCAPE_EXTENSION_NS_NC))) {
@@ -60,33 +60,33 @@ Output::Output (Inkscape::XML::Node * in_repr, Implementation::Implementation * 
                         chname++;
                     if (!strcmp(chname, "extension")) {
                         g_free (extension);
-                        extension = g_strdup(sp_repr_children(child_repr)->content());
+                        extension = g_strdup(child_repr->firstChild()->content());
                     }
                     if (!strcmp(chname, "mimetype")) {
                         g_free (mimetype);
-                        mimetype = g_strdup(sp_repr_children(child_repr)->content());
+                        mimetype = g_strdup(child_repr->firstChild()->content());
                     }
                     if (!strcmp(chname, "filetypename")) {
                         g_free (filetypename);
-                        filetypename = g_strdup(sp_repr_children(child_repr)->content());
+                        filetypename = g_strdup(child_repr->firstChild()->content());
                     }
                     if (!strcmp(chname, "filetypetooltip")) {
                         g_free (filetypetooltip);
-                        filetypetooltip = g_strdup(sp_repr_children(child_repr)->content());
+                        filetypetooltip = g_strdup(child_repr->firstChild()->content());
                     }
                     if (!strcmp(chname, "dataloss")) {
-                        if (!strcmp(sp_repr_children(child_repr)->content(), "false")) {
+                        if (!strcmp(child_repr->firstChild()->content(), "false")) {
 							dataloss = FALSE;
 						}
 					}
 
-                    child_repr = sp_repr_next(child_repr);
+                    child_repr = child_repr->next();
                 }
 
                 break;
             }
 
-            child_repr = sp_repr_next(child_repr);
+            child_repr = child_repr->next();
         }
 
     }

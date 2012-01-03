@@ -59,7 +59,7 @@ XSLT::solve_reldir(Inkscape::XML::Node *reprin) {
     gchar const *s = reprin->attribute("reldir");
 
     if (!s) {
-        Glib::ustring str = sp_repr_children(reprin)->content();
+        Glib::ustring str = reprin->firstChild()->content();
         return str;
     }
 
@@ -73,7 +73,7 @@ XSLT::solve_reldir(Inkscape::XML::Node *reprin) {
 
             gchar * fname = g_build_filename(
                Inkscape::Extension::Extension::search_path[i],
-               sp_repr_children(reprin)->content(),
+               reprin->firstChild()->content(),
                NULL);
             Glib::ustring filename = fname;
             g_free(fname);
@@ -83,7 +83,7 @@ XSLT::solve_reldir(Inkscape::XML::Node *reprin) {
 
         }
     } else {
-        Glib::ustring str = sp_repr_children(reprin)->content();
+        Glib::ustring str = reprin->firstChild()->content();
         return str;
     }
 
@@ -106,20 +106,20 @@ XSLT::load(Inkscape::Extension::Extension *module)
 {
     if (module->loaded()) { return true; }
 
-    Inkscape::XML::Node *child_repr = sp_repr_children(module->get_repr());
+    Inkscape::XML::Node *child_repr = module->get_repr()->firstChild();
     while (child_repr != NULL) {
         if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "xslt")) {
-            child_repr = sp_repr_children(child_repr);
+            child_repr = child_repr->firstChild();
             while (child_repr != NULL) {
                 if (!strcmp(child_repr->name(), INKSCAPE_EXTENSION_NS "file")) {
                     _filename = solve_reldir(child_repr);
                 }
-                child_repr = sp_repr_next(child_repr);
+                child_repr = child_repr->next();
             }
 
             break;
         }
-        child_repr = sp_repr_next(child_repr);
+        child_repr = child_repr->next();
     }
 
     _parsedDoc = xmlParseFile(_filename.c_str());

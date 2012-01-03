@@ -71,7 +71,7 @@ ParamNotebookPage::ParamNotebookPage (const gchar * name, const gchar * guitext,
 
     // Read XML to build page
     if (xml != NULL) {
-        Inkscape::XML::Node *child_repr = sp_repr_children(xml);
+        Inkscape::XML::Node *child_repr = xml->firstChild();
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
 			if (!strncmp(chname, INKSCAPE_EXTENSION_NS_NC, strlen(INKSCAPE_EXTENSION_NS_NC))) {
@@ -84,7 +84,7 @@ ParamNotebookPage::ParamNotebookPage (const gchar * name, const gchar * guitext,
                 param = Parameter::make(child_repr, ext);
                 if (param != NULL) parameters = g_slist_append(parameters, param);
             }
-            child_repr = sp_repr_next(child_repr);
+            child_repr = child_repr->next();
         }
     }
 }
@@ -230,7 +230,7 @@ ParamNotebook::ParamNotebook (const gchar * name, const gchar * guitext, const g
 
     // Read XML tree to add pages:
     if (xml != NULL) {
-        Inkscape::XML::Node *child_repr = sp_repr_children(xml);
+        Inkscape::XML::Node *child_repr = xml->firstChild();
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
 			if (!strncmp(chname, INKSCAPE_EXTENSION_NS_NC, strlen(INKSCAPE_EXTENSION_NS_NC))) {
@@ -243,7 +243,7 @@ ParamNotebook::ParamNotebook (const gchar * name, const gchar * guitext, const g
                 page = ParamNotebookPage::makepage(child_repr, ext);
                 if (page != NULL) pages = g_slist_append(pages, page);
             }
-            child_repr = sp_repr_next(child_repr);
+            child_repr = child_repr->next();
         }
     }
 

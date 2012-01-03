@@ -71,7 +71,7 @@ Dependency::Dependency (Inkscape::XML::Node * in_repr)
         }
     }
 
-    _string = sp_repr_children(_repr)->content();
+    _string = _repr->firstChild()->content();
 
     _description = _repr->attribute("description");
     if (_description == NULL)

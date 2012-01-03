@@ -1252,7 +1252,7 @@ void LayerVerb::perform(SPAction *action, void *data)
                 // Copies everything, regardless of locks, visibility, sublayers.
                 //XML Tree being directly used here while it shouldn't be.
                 Inkscape::XML::Node *selected = dt->currentLayer()->getRepr();
-                Inkscape::XML::Node *parent = sp_repr_parent(selected);
+                Inkscape::XML::Node *parent = selected->parent();
                 Inkscape::XML::Node *dup = selected->duplicate(parent->document());
                 parent->addChild(dup, selected);
                 SPObject *new_layer = dt->currentLayer()->next;

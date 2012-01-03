@@ -71,13 +71,13 @@ ParamRadioButton::ParamRadioButton (const gchar * name,
     // Read XML tree to add enumeration items:
     // printf("Extension Constructor: ");
     if (xml != NULL) {
-        Inkscape::XML::Node *child_repr = sp_repr_children(xml);
+        Inkscape::XML::Node *child_repr = xml->firstChild();
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
             if (!strcmp(chname, INKSCAPE_EXTENSION_NS "option") || !strcmp(chname, INKSCAPE_EXTENSION_NS "_option")) {
                 Glib::ustring * newguitext = NULL;
                 Glib::ustring * newvalue = NULL;
-                const char * contents = sp_repr_children(child_repr)->content();
+                const char * contents = child_repr->firstChild()->content();
 
                 if (contents != NULL) {
                     // don't translate when 'item' but do translate when '_option'
@@ -106,7 +106,7 @@ ParamRadioButton::ParamRadioButton (const gchar * name,
                     choices = g_slist_append( choices, new optionentry(newvalue, newguitext) );
                 }
             }
-            child_repr = sp_repr_next(child_repr);
+            child_repr = child_repr->next();
         }
     }
 

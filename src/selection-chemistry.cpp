@@ -978,7 +978,7 @@ void sp_selection_lower_to_bottom(SPDesktop *desktop)
         gint minpos;
         SPObject *pp, *pc;
         Inkscape::XML::Node *repr = (Inkscape::XML::Node *) l->data;
-        pp = document->getObjectByRepr(sp_repr_parent(repr));
+        pp = document->getObjectByRepr(repr->parent());
         minpos = 0;
         g_assert(SP_IS_GROUP(pp));
         pc = pp->firstChild();
@@ -2055,7 +2055,7 @@ void sp_selection_clone(SPDesktop *desktop)
 
     while (reprs) {
         Inkscape::XML::Node *sel_repr = (Inkscape::XML::Node *) reprs->data;
-        Inkscape::XML::Node *parent = sp_repr_parent(sel_repr);
+        Inkscape::XML::Node *parent = sel_repr->parent();
 
         Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
         clone->setAttribute("x", "0", false);

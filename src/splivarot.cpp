@@ -461,7 +461,7 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
 
     // remember important aspects of the source path, to be restored
     gint pos = repr_source->position();
-    Inkscape::XML::Node *parent = sp_repr_parent(repr_source);
+    Inkscape::XML::Node *parent = repr_source->parent();
     gchar const *id = repr_source->attribute("id");
     gchar const *style = repr_source->attribute("style");
     gchar const *mask = repr_source->attribute("mask");
@@ -2072,7 +2072,7 @@ Ancetre(Inkscape::XML::Node *a, Inkscape::XML::Node *who)
         return false;
     if (who == a)
         return true;
-    return Ancetre(sp_repr_parent(a), who);
+    return Ancetre(a->parent(), who);
 }
 
 Path *

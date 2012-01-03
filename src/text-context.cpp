@@ -1726,7 +1726,7 @@ sp_text_context_forget_text(SPTextContext *tc)
         // if we were called e.g. as the result of
         // an undo or the element being removed from
         // the XML editor
-        if ( text_repr && sp_repr_parent(text_repr) ) {
+        if ( text_repr && text_repr->parent() ) {
             sp_repr_unparent(text_repr);
             SPDocumentUndo::done(sp_desktop_document(tc->desktop), SP_VERB_CONTEXT_TEXT,
                      _("Remove empty text"));

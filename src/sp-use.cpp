@@ -670,7 +670,7 @@ SPItem *sp_use_unlink(SPUse *use)
         return NULL;
     }
 
-    Inkscape::XML::Node *parent = sp_repr_parent(repr);
+    Inkscape::XML::Node *parent = repr->parent();
     SPDocument *document = use->document;
     Inkscape::XML::Document *xml_doc = document->getReprDoc();
 

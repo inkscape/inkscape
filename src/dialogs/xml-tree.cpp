@@ -895,9 +895,9 @@ void set_dt_select(Inkscape::XML::Node *repr)
     SPObject *object;
     if (repr) {
         while ( ( repr->type() != Inkscape::XML::ELEMENT_NODE )
-                && sp_repr_parent(repr) )
+                && repr->parent() )
         {
-            repr = sp_repr_parent(repr);
+            repr = repr->parent();
         } // end of while loop
 
         object = sp_desktop_document(current_desktop)->getObjectByRepr(repr);
@@ -1508,7 +1508,7 @@ void cmd_duplicate_node(GtkObject */*object*/, gpointer /*data*/)
 {
     g_assert(selected_repr != NULL);
 
-    Inkscape::XML::Node *parent = sp_repr_parent(selected_repr);
+    Inkscape::XML::Node *parent = selected_repr->parent();
     Inkscape::XML::Node *dup = selected_repr->duplicate(parent->document());
     parent->addChild(dup, selected_repr);
 
@@ -1593,7 +1593,7 @@ void cmd_raise_node(GtkObject */*object*/, gpointer /*data*/)
 {
     g_assert(selected_repr != NULL);
 
-    Inkscape::XML::Node *parent = sp_repr_parent(selected_repr);
+    Inkscape::XML::Node *parent = selected_repr->parent();
     g_return_if_fail(parent != NULL);
     g_return_if_fail(parent->firstChild() != selected_repr);
 
@@ -1619,7 +1619,7 @@ void cmd_lower_node(GtkObject */*object*/, gpointer /*data*/)
 {
     g_assert(selected_repr != NULL);
     g_return_if_fail(selected_repr->next() != NULL);
-    Inkscape::XML::Node *parent = sp_repr_parent(selected_repr);
+    Inkscape::XML::Node *parent = selected_repr->parent();
 
     parent->changeOrder(selected_repr, selected_repr->next());
 
@@ -1634,7 +1634,7 @@ void cmd_indent_node(GtkObject */*object*/, gpointer /*data*/)
 {
     Inkscape::XML::Node *repr = selected_repr;
     g_assert(repr != NULL);
-    Inkscape::XML::Node *parent = sp_repr_parent(repr);
+    Inkscape::XML::Node *parent = repr->parent();
     g_return_if_fail(parent != NULL);
     g_return_if_fail(parent->firstChild() != repr);
 
@@ -1666,9 +1666,9 @@ void cmd_unindent_node(GtkObject */*object*/, gpointer /*data*/)
 {
     Inkscape::XML::Node *repr = selected_repr;
     g_assert(repr != NULL);
-    Inkscape::XML::Node *parent = sp_repr_parent(repr);
+    Inkscape::XML::Node *parent = repr->parent();
     g_return_if_fail(parent);
-    Inkscape::XML::Node *grandparent = sp_repr_parent(parent);
+    Inkscape::XML::Node *grandparent = parent->parent();
     g_return_if_fail(grandparent);
 
     parent->removeChild(repr);

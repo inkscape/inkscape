@@ -27,8 +27,8 @@ ParamBool::ParamBool(const gchar * name, const gchar * guitext, const gchar * de
                   _value(false), _indent(0)
 {
     const char * defaultval = NULL;
-    if (sp_repr_children(xml) != NULL) {
-        defaultval = sp_repr_children(xml)->content();
+    if (xml->firstChild() != NULL) {
+        defaultval = xml->firstChild()->content();
     }
 
     if (defaultval != NULL && (!strcmp(defaultval, "true") || !strcmp(defaultval, "true") || !strcmp(defaultval, "1"))) {

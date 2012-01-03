@@ -259,8 +259,7 @@ int XmlSource::close()
  * Reads XML from a file, including WMF files, and returns the Document.
  * The default namespace can also be specified, if desired.
  */
-Document *
-sp_repr_read_file (const gchar * filename, const gchar *default_ns)
+Document *sp_repr_read_file (const gchar * filename, const gchar *default_ns)
 {
     // g_warning( "Reading file: %s", filename );
     xmlDocPtr doc = 0;
@@ -322,8 +321,7 @@ sp_repr_read_file (const gchar * filename, const gchar *default_ns)
 /**
  * Reads and parses XML from a buffer, returning it as an Document
  */
-Document *
-sp_repr_read_mem (const gchar * buffer, gint length, const gchar *default_ns)
+Document *sp_repr_read_mem (const gchar * buffer, gint length, const gchar *default_ns)
 {
     xmlDocPtr doc;
     Document * rdoc;
@@ -344,8 +342,7 @@ sp_repr_read_mem (const gchar * buffer, gint length, const gchar *default_ns)
 /**
  * Reads and parses XML from a buffer, returning it as an Document
  */
-Document *
-sp_repr_read_buf (const Glib::ustring &buf, const gchar *default_ns)
+Document *sp_repr_read_buf (const Glib::ustring &buf, const gchar *default_ns)
 {
     return sp_repr_read_mem(buf.c_str(), buf.size(), default_ns);
 }
@@ -395,7 +392,7 @@ void promote_to_namespace(Node *repr, const gchar *prefix) {
             repr->setCodeUnsafe(g_quark_from_string(svg_name));
             g_free(svg_name);
         }
-        for ( Node *child = sp_repr_children(repr) ; child ; child = sp_repr_next(child) ) {
+        for ( Node *child = repr->firstChild() ; child ; child = child->next() ) {
             promote_to_namespace(child, prefix);
         }
     }
@@ -406,8 +403,7 @@ void promote_to_namespace(Node *repr, const gchar *prefix) {
 /**
  * Reads in a XML file to create a Document
  */
-Document *
-sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
+Document *sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
 {
     if (doc == NULL) {
         return NULL;
@@ -472,8 +468,7 @@ sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
     return rdoc;
 }
 
-gint
-sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar */*default_ns*/, GHashTable *prefix_map)
+gint sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar */*default_ns*/, GHashTable *prefix_map)
 {
     const xmlChar *prefix;
     if ( ns && ns->href ) {
@@ -493,8 +488,7 @@ sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, co
     }
 }
 
-static Node *
-sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_ns, GHashTable *prefix_map)
+static Node *sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_ns, GHashTable *prefix_map)
 {
     Node *repr, *crepr;
     xmlAttrPtr prop;
@@ -564,8 +558,7 @@ sp_repr_svg_read_node (Document *xml_doc, xmlNodePtr node, const gchar *default_
 }
 
 
-static void
-sp_repr_save_writer(Document *doc, Inkscape::IO::Writer *out,
+static void sp_repr_save_writer(Document *doc, Inkscape::IO::Writer *out,
                     gchar const *default_ns,
                     gchar const *old_href_abs_base,
                     gchar const *new_href_abs_base)
@@ -583,7 +576,7 @@ sp_repr_save_writer(Document *doc, Inkscape::IO::Writer *out,
     }
 
     for (Node *repr = sp_repr_document_first_child(doc);
-         repr; repr = sp_repr_next(repr))
+         repr; repr = repr->next())
     {
         Inkscape::XML::NodeType const node_type = repr->type();
         if ( node_type == Inkscape::XML::ELEMENT_NODE ) {
@@ -600,10 +593,7 @@ sp_repr_save_writer(Document *doc, Inkscape::IO::Writer *out,
 }
 
 
-
-
-Glib::ustring
-sp_repr_save_buf(Document *doc)
+Glib::ustring sp_repr_save_buf(Document *doc)
 {   
     Inkscape::IO::StringOutputStream souts;
     Inkscape::IO::OutputStreamWriter outs(souts);
@@ -617,11 +607,7 @@ sp_repr_save_buf(Document *doc)
 }
 
 
-
-
-
-void
-sp_repr_save_stream(Document *doc, FILE *fp, gchar const *default_ns, bool compress,
+void sp_repr_save_stream(Document *doc, FILE *fp, gchar const *default_ns, bool compress,
                     gchar const *const old_href_abs_base,
                     gchar const *const new_href_abs_base)
 {
@@ -646,8 +632,7 @@ sp_repr_save_stream(Document *doc, FILE *fp, gchar const *default_ns, bool compr
  * \param for_filename The base URI [actually filename] to assume for purposes of rewriting
  *              xlink:href attributes.
  */
-bool
-sp_repr_save_rebased_file(Document *doc, gchar const *const filename, gchar const *default_ns,
+bool sp_repr_save_rebased_file(Document *doc, gchar const *const filename, gchar const *default_ns,
                           gchar const *old_base, gchar const *for_filename)
 {
     if (!filename) {
@@ -699,16 +684,14 @@ sp_repr_save_rebased_file(Document *doc, gchar const *const filename, gchar cons
 /**
  * Returns true iff file successfully saved.
  */
-bool
-sp_repr_save_file(Document *doc, gchar const *const filename, gchar const *default_ns)
+bool sp_repr_save_file(Document *doc, gchar const *const filename, gchar const *default_ns)
 {
     return sp_repr_save_rebased_file(doc, filename, default_ns, NULL, NULL);
 }
 
 
 /* (No doubt this function already exists elsewhere.) */
-static void
-repr_quote_write (Writer &out, const gchar * val)
+static void repr_quote_write (Writer &out, const gchar * val)
 {
     if (val) {
         for (; *val != '\0'; val++) {
@@ -805,8 +788,8 @@ void populate_ns_map(NSMap &ns_map, Node &repr) {
                 add_ns_map_entry(ns_map, prefix);
             }
         }
-        for ( Node *child=sp_repr_children(&repr) ;
-              child ; child = sp_repr_next(child) )
+        for ( Node *child=repr.firstChild() ;
+              child ; child = child->next() )
         {
             populate_ns_map(ns_map, *child);
         }
@@ -815,8 +798,7 @@ void populate_ns_map(NSMap &ns_map, Node &repr) {
 
 }
 
-static void
-sp_repr_write_stream_root_element(Node *repr, Writer &out,
+static void sp_repr_write_stream_root_element(Node *repr, Writer &out,
                                   bool add_whitespace, gchar const *default_ns,
                                   int inlineattrs, int indent,
                                   gchar const *const old_href_base,

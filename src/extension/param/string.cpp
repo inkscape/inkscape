@@ -78,8 +78,8 @@ ParamString::ParamString (const gchar * name, const gchar * guitext, const gchar
               _value(NULL), _indent(0)
 {
     const char * defaultval = NULL;
-    if (sp_repr_children(xml) != NULL) {
-        defaultval = sp_repr_children(xml)->content();
+    if (xml->firstChild() != NULL) {
+        defaultval = xml->firstChild()->content();
     }
 
     const char * indent = xml->attribute("indent");

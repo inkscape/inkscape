@@ -38,8 +38,8 @@ ParamFloat::ParamFloat (const gchar * name,
                   _value(0.0), _mode(mode), _indent(0), _min(0.0), _max(10.0)
 {
     const gchar * defaultval = NULL;
-    if (sp_repr_children(xml) != NULL) {
-        defaultval = sp_repr_children(xml)->content();
+    if (xml->firstChild() != NULL) {
+        defaultval = xml->firstChild()->content();
     }
     if (defaultval != NULL) {
         _value = g_ascii_strtod (defaultval,NULL);
