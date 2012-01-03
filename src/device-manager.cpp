@@ -144,7 +144,16 @@ public:
     virtual Gdk::InputMode getMode() const {return static_cast<Gdk::InputMode>(gdk_device_get_mode (device));}
     virtual bool hasCursor() const {return gdk_device_get_has_cursor (device);}
     virtual gint getNumAxes() const {return gdk_device_get_n_axes (device);}
-    virtual gint getNumKeys() const {return gdk_device_get_n_keys (device);}
+    virtual gint getNumKeys() const {
+// Backward-compatibility: The GSEAL-compliant
+// gdk_device_get_n_keys function was only introduced
+// with GTK 2.24
+#if GTK_CHECK_VERSION(2, 24, 0)
+	    return gdk_device_get_n_keys (device);
+#else
+	    return device->num_keys;
+#endif // GTK_CHECK_VERSION
+    }
     virtual Glib::ustring getLink() const {return link;}
     virtual void setLink( Glib::ustring const& link ) {this->link = link;}
     virtual gint getLiveAxes() const {return liveAxes;}
