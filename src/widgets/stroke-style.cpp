@@ -650,8 +650,6 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     Gtk::RadioButton *tb;
     Gtk::HBox *f, *hb;
 
-    Gtk::Tooltips *tt = new Gtk::Tooltips();
-
     spw_old = sp_widget_new_global(INKSCAPE);
     spw = dynamic_cast<Gtk::Container *>(manage(Glib::wrap(spw_old)));
 
@@ -682,7 +680,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     a = new Gtk::Adjustment(1.0, 0.0, 1000.0, 0.1, 10.0, 0.0);
     spw->set_data("width", a);
     sb = new Inkscape::UI::Widget::SpinButton(*a, 0.1, 3);
-    tt->set_tip(*sb, _("Stroke width"));
+    sb->set_tooltip_text(_("Stroke width"));
     sb->show();
     spw_label(t, C_("Stroke width", "_Width:"), 0, i, sb);
 
@@ -719,7 +717,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     // TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
     //  For an example, draw a triangle with a large stroke width and modify the
     //  "Join" option (in the Fill and Stroke dialog).
-    tt->set_tip(*tb, _("Miter join"));
+    tb->set_tooltip_text(_("Miter join"));
     spw->set_data("miter join", tb);
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_ICON("stroke-join-round"),
@@ -729,7 +727,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     // TRANSLATORS: Round join: joining lines with a rounded corner.
     //  For an example, draw a triangle with a large stroke width and modify the
     //  "Join" option (in the Fill and Stroke dialog).
-    tt->set_tip(*tb, _("Round join"));
+    tb->set_tooltip_text(_("Round join"));
     spw->set_data("round join", tb);
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_ICON("stroke-join-bevel"),
@@ -739,7 +737,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     // TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
     //  For an example, draw a triangle with a large stroke width and modify the
     //  "Join" option (in the Fill and Stroke dialog).
-    tt->set_tip(*tb, _("Bevel join"));
+    tb->set_tooltip_text(_("Bevel join"));
     spw->set_data("bevel join", tb);
 
     i++;
@@ -759,7 +757,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     spw->set_data("miterlimit", a);
 
     sb = new Inkscape::UI::Widget::SpinButton(*a, 0.1, 2);
-    tt->set_tip(*sb, _("Maximum length of the miter (in units of stroke width)"));
+    sb->set_tooltip_text(_("Maximum length of the miter (in units of stroke width)"));
     sb->show();
     spw_label(t, _("Miter _limit:"), 0, i, sb);
     spw->set_data("miterlimit_sb", sb);
@@ -785,7 +783,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
 
     // TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
     //  of the line; the ends of the line are square
-    tt->set_tip(*tb, _("Butt cap"));
+    tb->set_tooltip_text(_("Butt cap"));
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_ICON("stroke-cap-round"),
                                 hb, spw, "cap", "round");
@@ -793,7 +791,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
 
     // TRANSLATORS: Round cap: the line shape extends beyond the end point of the
     //  line; the ends of the line are rounded
-    tt->set_tip(*tb, _("Round cap"));
+    tb->set_tooltip_text(_("Round cap"));
 
     tb = sp_stroke_radio_button(tb, INKSCAPE_ICON("stroke-cap-square"),
                                 hb, spw, "cap", "square");
@@ -801,7 +799,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
 
     // TRANSLATORS: Square cap: the line shape extends beyond the end point of the
     //  line; the ends of the line are square
-    tt->set_tip(*tb, _("Square cap"));
+    tb->set_tooltip_text(_("Square cap"));
 
     i++;
 
@@ -831,7 +829,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     //spw_label(t, _("_Start Markers:"), 0, i);
     marker_start_menu = ink_marker_menu(spw ,"marker-start", sandbox);
     spw_label(t, _("_Start Markers:"), 0, i, marker_start_menu);
-    tt->set_tip(*marker_start_menu, _("Start Markers are drawn on the first node of a path or shape"));
+    marker_start_menu->set_tooltip_text(_("Start Markers are drawn on the first node of a path or shape"));
     marker_start_menu_connection = marker_start_menu->signal_changed().connect(
         sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
             sigc::ptr_fun(&sp_marker_select), marker_start_menu, spw, SP_MARKER_LOC_START));
@@ -843,7 +841,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     //spw_label(t, _("_Mid Markers:"), 0, i);
     marker_mid_menu = ink_marker_menu(spw ,"marker-mid", sandbox);
     spw_label(t, _("_Mid Markers:"), 0, i, marker_mid_menu);
-    tt->set_tip(*marker_mid_menu, _("Mid Markers are drawn on every node of a path or shape except the first and last nodes"));
+    marker_mid_menu->set_tooltip_text(_("Mid Markers are drawn on every node of a path or shape except the first and last nodes"));
     marker_mid_menu_connection = marker_mid_menu->signal_changed().connect(
         sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
             sigc::ptr_fun(&sp_marker_select), marker_mid_menu,spw, SP_MARKER_LOC_MID));
@@ -855,7 +853,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     //spw_label(t, _("_End Markers:"), 0, i);
     marker_end_menu = ink_marker_menu(spw ,"marker-end", sandbox);
     spw_label(t, _("_End Markers:"), 0, i, marker_end_menu);
-    tt->set_tip(*marker_end_menu, _("End Markers are drawn on the last node of a path or shape"));
+    marker_end_menu->set_tooltip_text(_("End Markers are drawn on the last node of a path or shape"));
     marker_end_menu_connection = marker_end_menu->signal_changed().connect(
         sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
             sigc::ptr_fun(&sp_marker_select), marker_end_menu, spw, SP_MARKER_LOC_END));

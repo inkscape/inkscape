@@ -584,7 +584,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
         Gtk::Widget* newBlot = btn;
 */
 
-        tips.set_tip((*newBlot), def.descr);
+        newBlot->set_tooltip_text(def.descr);
 
 /*
         newBlot->signal_clicked().connect( sigc::mem_fun(*this, &ColorItem::buttonClicked) );

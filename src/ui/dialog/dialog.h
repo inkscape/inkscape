@@ -13,8 +13,7 @@
 #ifndef INKSCAPE_DIALOG_H
 #define INKSCAPE_DIALOG_H
 
-#include <gtkmm/dialog.h>
-#include <gtkmm/tooltips.h>
+#include <gtkmm.h>
 
 #include "dock-behavior.h"
 #include "floating-behavior.h"

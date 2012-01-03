@@ -10,11 +10,7 @@
 #ifndef INKSCAPE_UI_WIDGET_TOLERANCE_SLIDER__H_
 #define INKSCAPE_UI_WIDGET_TOLERANCE_SLIDER__H_
 
-#include <gtkmm/box.h>
-#include <gtkmm/tooltips.h>
-#include <gtkmm/checkbutton.h>
-#include <gtkmm/radiobutton.h>
-#include <gtkmm/scale.h>
+#include <gtkmm.h>
 
 namespace Inkscape {
 namespace UI {

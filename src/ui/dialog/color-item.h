@@ -13,7 +13,6 @@
 #define SEEN_DIALOGS_COLOR_ITEM_H
 
 #include <boost/ptr_container/ptr_vector.hpp>
-#include <gtkmm/tooltips.h>
 
 #include "widgets/ege-paint-def.h"
 #include "ui/previewable.h"
@@ -93,7 +92,6 @@ private:
     void _linkTint( ColorItem& other, int percent );
     void _linkTone( ColorItem& other, int percent, int grayLevel );
 
-    Gtk::Tooltips tips;
     std::vector<Gtk::Widget*> _previews;
 
     bool _isFill;

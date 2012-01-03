@@ -112,8 +112,7 @@ StyleSwatch::StyleSwatch(SPCSSAttr *css, gchar const *main_tip)
       _tool_obs(NULL),
       _style_obs(NULL),
       _table(2, 6),
-      _sw_unit(NULL),
-      _tooltips ()
+      _sw_unit(NULL)
 {
     _label[SS_FILL].set_markup(_("Fill:"));
     _label[SS_STROKE].set_markup(_("Stroke:"));
@@ -161,7 +160,7 @@ StyleSwatch::StyleSwatch(SPCSSAttr *css, gchar const *main_tip)
 
     _swatch.signal_button_press_event().connect(sigc::mem_fun(*this, &StyleSwatch::on_click));
 
-    _tooltips.set_tip(_swatch, main_tip);
+    _swatch.set_tooltip_text(main_tip);
 }
 
 void StyleSwatch::setClickVerb(sp_verb_t verb_t) {
@@ -269,15 +268,15 @@ StyleSwatch::setStyle(SPStyle *query)
             if (SP_IS_LINEARGRADIENT (server)) {
                 _value[i].set_markup(_("L Gradient"));
                 place->add(_value[i]);
-                _tooltips.set_tip(*place, (i == SS_FILL)? (_("Linear gradient fill")) : (_("Linear gradient stroke")));
+                place->set_tooltip_text((i == SS_FILL)? (_("Linear gradient fill")) : (_("Linear gradient stroke")));
             } else if (SP_IS_RADIALGRADIENT (server)) {
                 _value[i].set_markup(_("R Gradient"));
                 place->add(_value[i]);
-                _tooltips.set_tip(*place, (i == SS_FILL)? (_("Radial gradient fill")) : (_("Radial gradient stroke")));
+                place->set_tooltip_text((i == SS_FILL)? (_("Radial gradient fill")) : (_("Radial gradient stroke")));
             } else if (SP_IS_PATTERN (server)) {
                 _value[i].set_markup(_("Pattern"));
                 place->add(_value[i]);
-                _tooltips.set_tip(*place, (i == SS_FILL)? (_("Pattern fill")) : (_("Pattern stroke")));
+                place->set_tooltip_text((i == SS_FILL)? (_("Pattern fill")) : (_("Pattern stroke")));
             }
 
         } else if (paint->set && paint->isColor()) {
@@ -291,17 +290,17 @@ StyleSwatch::setStyle(SPStyle *query)
             } else {
                 tip = g_strdup_printf (_("Stroke: %06x/%.3g"), color >> 8, SP_RGBA32_A_F(color));
             }
-            _tooltips.set_tip(*place, tip);
+            place->set_tooltip_text(tip);
             g_free (tip);
         } else if (paint->set && paint->isNone()) {
             _value[i].set_markup(_("<i>None</i>"));
             place->add(_value[i]);
-            _tooltips.set_tip(*place, (i == SS_FILL)? (_("No fill")) : (_("No stroke")));
+            place->set_tooltip_text((i == SS_FILL)? (_("No fill")) : (_("No stroke")));
             if (i == SS_STROKE) has_stroke = false;
         } else if (!paint->set) {
             _value[i].set_markup(_("<b>Unset</b>"));
             place->add(_value[i]);
-            _tooltips.set_tip(*place, (i == SS_FILL)? (_("Unset fill")) : (_("Unset stroke")));
+            place->set_tooltip_text((i == SS_FILL)? (_("Unset fill")) : (_("Unset stroke")));
             if (i == SS_STROKE) has_stroke = false;
         }
     }
@@ -324,11 +323,11 @@ StyleSwatch::setStyle(SPStyle *query)
             gchar *str = g_strdup_printf(_("Stroke width: %.5g%s"),
                                          w,
                                          _sw_unit? sp_unit_get_abbreviation(_sw_unit) : "px");
-            _tooltips.set_tip(_stroke_width_place, str);
+            _stroke_width_place.set_tooltip_text(str);
             g_free (str);
         }
     } else {
-        _tooltips.unset_tip(_stroke_width_place);
+        _stroke_width_place.set_tooltip_text(0);
         _stroke_width.set_markup ("");
     }
 
@@ -345,11 +344,11 @@ StyleSwatch::setStyle(SPStyle *query)
         }
         {
             gchar *str = g_strdup_printf(_("Opacity: %.3g"), op);
-            _tooltips.set_tip(_opacity_place, str);
+            _opacity_place.set_tooltip_text(str);
             g_free (str);
         }
     } else {
-        _tooltips.unset_tip(_opacity_place);
+        _opacity_place.set_tooltip_text(0);
         _opacity_value.set_markup ("");
     }
 

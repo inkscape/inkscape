@@ -67,7 +67,6 @@ DocumentMetadata::DocumentMetadata()
       _page_metadata1(1, 1), _page_metadata2(1, 1)
 {
     hide();
-    _tt.enable();
     _getContents()->set_spacing (4);
     _getContents()->pack_start(_notebook, true, true);
 
@@ -161,7 +160,7 @@ DocumentMetadata::build_metadata()
     int row = 1;
     for (entity = rdf_work_entities; entity && entity->name; entity++, row++) {
         if ( entity->editable == RDF_EDIT_GENERIC ) {
-            EntityEntry *w = EntityEntry::create (entity, _tt, _wr);
+            EntityEntry *w = EntityEntry::create (entity, _wr);
             _rdflist.push_back (w);
             Gtk::HBox *space = manage (new Gtk::HBox);
             space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
@@ -180,7 +179,7 @@ DocumentMetadata::build_metadata()
     _page_metadata2.table().attach (*llabel, 0,3, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
     /* add license selector pull-down and URI */
     ++row;
-    _licensor.init (_tt, _wr);
+    _licensor.init (_wr);
     Gtk::HBox *space = manage (new Gtk::HBox);
     space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
     _page_metadata2.table().attach (*space, 0,1, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);

@@ -10,10 +10,7 @@
 #ifndef INKSCAPE_UI_WIDGET_ENTRY__H
 #define INKSCAPE_UI_WIDGET_ENTRY__H
 
-#include <gtkmm/entry.h>
-#include <gtkmm/tooltips.h>
-#include <gtkmm/label.h>
-#include <gtkmm/box.h>
+#include <gtkmm.h>
 #include "labelled.h"
 
 namespace Inkscape {

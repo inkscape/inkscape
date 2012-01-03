@@ -17,17 +17,8 @@
 
 #include <iostream>
 #include <vector>
-#include <gtkmm/table.h>
-#include <gtkmm/comboboxtext.h>
+#include <gtkmm.h>
 #include "ui/widget/spinbutton.h"
-#include <gtkmm/tooltips.h>
-#include <gtkmm/treeview.h>
-#include <gtkmm/radiobutton.h>
-#include <gtkmm/box.h>
-#include <gtkmm/scale.h>
-#include <gtkmm/drawingarea.h>
-#include <gtkmm/frame.h>
-#include <gtkmm/filechooserbutton.h>
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <glibmm/i18n.h>

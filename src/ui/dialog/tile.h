@@ -17,7 +17,6 @@
 
 #include <gtkmm/box.h>
 #include <gtkmm/notebook.h>
-#include <gtkmm/tooltips.h>
 #include <gtkmm/button.h>
 #include <gtkmm/spinbutton.h>
 #include <gtkmm/checkbutton.h>
@@ -78,7 +77,6 @@ private:
     bool updating;
 
     Gtk::Notebook   notebook;
-    Gtk::Tooltips   tips;
 
     Gtk::VBox             TileBox;
     Gtk::Button           *TileOkButton;

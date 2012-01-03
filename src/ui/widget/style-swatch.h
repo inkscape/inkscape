@@ -77,8 +77,6 @@ private:
 
     SPUnit *_sw_unit;
 
-    Gtk::Tooltips _tooltips;
-    
 friend class ToolObserver;
 };
 

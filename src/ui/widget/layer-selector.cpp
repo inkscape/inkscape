@@ -112,7 +112,7 @@ LayerSelector::LayerSelector(SPDesktop *desktop)
 
     _visibility_toggle.set_relief(Gtk::RELIEF_NONE);
     shrink_wrap_button(_visibility_toggle);
-    _tooltips.set_tip(_visibility_toggle, _("Toggle current layer visibility"));
+    _visibility_toggle.set_tooltip_text(_("Toggle current layer visibility"));
     pack_start(_visibility_toggle, Gtk::PACK_EXPAND_PADDING);
 
     label = Gtk::manage(new AlternateIcons(Inkscape::ICON_SIZE_DECORATION,
@@ -133,10 +133,10 @@ LayerSelector::LayerSelector(SPDesktop *desktop)
 
     _lock_toggle.set_relief(Gtk::RELIEF_NONE);
     shrink_wrap_button(_lock_toggle);
-    _tooltips.set_tip(_lock_toggle, _("Lock or unlock current layer"));
+    _lock_toggle.set_tooltip_text(_("Lock or unlock current layer"));
     pack_start(_lock_toggle, Gtk::PACK_EXPAND_PADDING);
 
-    _tooltips.set_tip(_selector, _("Current layer"));
+    _selector.set_tooltip_text(_("Current layer"));
     pack_start(_selector, Gtk::PACK_EXPAND_WIDGET);
 
     _layer_model = Gtk::ListStore::create(_model_columns);

@@ -19,15 +19,8 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <gtkmm/cellrenderertext.h>
-#include <gtkmm/colorbutton.h>
-#include <gtkmm/messagedialog.h>
-#include <gtkmm/paned.h>
-#include <gtkmm/scale.h>
-#include <gtkmm/scrolledwindow.h>
+#include <gtkmm.h>
 #include "ui/widget/spinbutton.h"
-#include <gtkmm/stock.h>
-#include <gtkmm/tooltips.h>
 #include <glibmm/i18n.h>
 
 #include "desktop.h"

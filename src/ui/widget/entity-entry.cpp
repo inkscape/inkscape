@@ -37,17 +37,17 @@ namespace Widget {
 //---------------------------------------------------
 
 EntityEntry*
-EntityEntry::create (rdf_work_entity_t* ent, Gtk::Tooltips& tt, Registry& wr)
+EntityEntry::create (rdf_work_entity_t* ent, Registry& wr)
 {
     g_assert (ent);
     EntityEntry* obj = 0;
     switch (ent->format)
     {
         case RDF_FORMAT_LINE: 
-            obj = new EntityLineEntry (ent, tt, wr);
+            obj = new EntityLineEntry (ent, wr);
             break;
         case RDF_FORMAT_MULTILINE: 
-            obj = new EntityMultiLineEntry (ent, tt, wr);
+            obj = new EntityMultiLineEntry (ent, wr);
             break;
         default:
             g_warning ("An unknown RDF format was requested.");
@@ -58,9 +58,9 @@ EntityEntry::create (rdf_work_entity_t* ent, Gtk::Tooltips& tt, Registry& wr)
     return obj;
 }
 
-EntityEntry::EntityEntry (rdf_work_entity_t* ent, Gtk::Tooltips& tt, Registry& wr)
+EntityEntry::EntityEntry (rdf_work_entity_t* ent, Registry& wr)
 : _label(Glib::ustring(_(ent->title)), 1.0, 0.5), _packable(0), 
-  _entity(ent), _tt(&tt), _wr(&wr)
+  _entity(ent), _wr(&wr)
 {
 }
 
@@ -69,11 +69,11 @@ EntityEntry::~EntityEntry()
     _changed_connection.disconnect();
 }
 
-EntityLineEntry::EntityLineEntry (rdf_work_entity_t* ent, Gtk::Tooltips& tt, Registry& wr)
-: EntityEntry (ent, tt, wr)
+EntityLineEntry::EntityLineEntry (rdf_work_entity_t* ent, Registry& wr)
+: EntityEntry (ent, wr)
 {
     Gtk::Entry *e = new Gtk::Entry;
-    tt.set_tip (*e, _(ent->tip));
+    e->set_tooltip_text (_(ent->tip));
     _packable = e;
     _changed_connection = e->signal_changed().connect (sigc::mem_fun (*this, &EntityLineEntry::on_changed));
 }
@@ -109,8 +109,8 @@ EntityLineEntry::on_changed()
     _wr->setUpdating (false);
 }
 
-EntityMultiLineEntry::EntityMultiLineEntry (rdf_work_entity_t* ent, Gtk::Tooltips& tt, Registry& wr)
-: EntityEntry (ent, tt, wr)
+EntityMultiLineEntry::EntityMultiLineEntry (rdf_work_entity_t* ent, Registry& wr)
+: EntityEntry (ent, wr)
 {
     Gtk::ScrolledWindow *s = new Gtk::ScrolledWindow;
     s->set_policy (Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
@@ -120,7 +120,7 @@ EntityMultiLineEntry::EntityMultiLineEntry (rdf_work_entity_t* ent, Gtk::Tooltip
     _v.set_wrap_mode (Gtk::WRAP_WORD);
     _v.set_accepts_tab (false);
     s->add (_v);
-    tt.set_tip (_v, _(ent->tip));
+    _v.set_tooltip_text (_(ent->tip));
     _changed_connection = _v.get_buffer()->signal_changed().connect (sigc::mem_fun (*this, &EntityMultiLineEntry::on_changed));
 }
 

@@ -668,7 +668,7 @@ TileDialog::TileDialog()
     NoOfRowsSpinner.set_range(1.0, 10000.0);
     NoOfRowsSpinner.set_value(PerCol);
     NoOfRowsSpinner.signal_changed().connect(sigc::mem_fun(*this, &TileDialog::on_col_spinbutton_changed));
-    tips.set_tip(NoOfRowsSpinner, _("Number of rows"));
+    NoOfRowsSpinner.set_tooltip_text(_("Number of rows"));
     NoOfRowsBox.pack_start(NoOfRowsSpinner, false, false, MARGIN);
     gtk_size_group_add_widget(_col1, (GtkWidget *) NoOfRowsBox.gobj());
 
@@ -683,7 +683,7 @@ TileDialog::TileDialog()
 
     NoOfRowsBox.pack_start(RowHeightButton, false, false, MARGIN);
 
-    tips.set_tip(RowHeightButton, _("If not set, each row has the height of the tallest object in it"));
+    RowHeightButton.set_tooltip_text(_("If not set, each row has the height of the tallest object in it"));
     RowHeightButton.signal_toggled().connect(sigc::mem_fun(*this, &TileDialog::on_RowSize_checkbutton_changed));
 
  {
@@ -740,7 +740,7 @@ TileDialog::TileDialog()
     NoOfColsSpinner.set_range(1.0, 10000.0);
     NoOfColsSpinner.set_value(PerRow);
     NoOfColsSpinner.signal_changed().connect(sigc::mem_fun(*this, &TileDialog::on_row_spinbutton_changed));
-    tips.set_tip(NoOfColsSpinner, _("Number of columns"));
+    NoOfColsSpinner.set_tooltip_text(_("Number of columns"));
     NoOfColsBox.pack_start(NoOfColsSpinner, false, false, MARGIN);
     gtk_size_group_add_widget(_col3, (GtkWidget *) NoOfColsBox.gobj());
 
@@ -754,7 +754,7 @@ TileDialog::TileDialog()
     ColumnWidthButton.set_active(AutoColSize);
     NoOfColsBox.pack_start(ColumnWidthButton, false, false, MARGIN);
 
-    tips.set_tip(ColumnWidthButton, _("If not set, each column has the width of the widest object in it"));
+    ColumnWidthButton.set_tooltip_text(_("If not set, each column has the width of the widest object in it"));
     ColumnWidthButton.signal_toggled().connect(sigc::mem_fun(*this, &TileDialog::on_ColSize_checkbutton_changed));
 
 
@@ -853,7 +853,7 @@ TileDialog::TileDialog()
     //## The OK button
     TileOkButton = addResponseButton(C_("Rows and columns dialog","_Arrange"), GTK_RESPONSE_APPLY);
     TileOkButton->set_use_underline(true);
-    tips.set_tip((*TileOkButton), _("Arrange selected objects"));
+    TileOkButton->set_tooltip_text(_("Arrange selected objects"));
 
     show_all_children();
 }

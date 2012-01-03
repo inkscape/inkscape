@@ -11,7 +11,6 @@
 #define INKSCAPE_UI_WIDGET_ENTITY_ENTRY__H
 
 #include <gtkmm/textview.h>
-#include <gtkmm/tooltips.h>
 
 struct rdf_work_entity_t;
 class SPDocument;
@@ -28,7 +27,7 @@ class Registry;
 
 class EntityEntry {
 public:
-    static EntityEntry* create (rdf_work_entity_t* ent, Gtk::Tooltips& tt, Registry& wr);
+    static EntityEntry* create (rdf_work_entity_t* ent, Registry& wr);
     virtual ~EntityEntry() = 0;
     virtual void update (SPDocument *doc) = 0;
     virtual void on_changed() = 0;
@@ -36,16 +35,15 @@ public:
     Gtk::Widget *_packable;
 
 protected: 
-    EntityEntry (rdf_work_entity_t* ent, Gtk::Tooltips& tt, Registry& wr);
+    EntityEntry (rdf_work_entity_t* ent, Registry& wr);
     sigc::connection _changed_connection;
     rdf_work_entity_t *_entity;
-    Gtk::Tooltips *_tt;
     Registry *_wr;
 };
 
 class EntityLineEntry : public EntityEntry {
 public:
-    EntityLineEntry (rdf_work_entity_t* ent, Gtk::Tooltips& tt, Registry& wr);
+    EntityLineEntry (rdf_work_entity_t* ent, Registry& wr);
     ~EntityLineEntry();
     void update (SPDocument *doc);
 
@@ -55,7 +53,7 @@ protected:
 
 class EntityMultiLineEntry : public EntityEntry {
 public:
-    EntityMultiLineEntry (rdf_work_entity_t* ent, Gtk::Tooltips& tt, Registry& wr);
+    EntityMultiLineEntry (rdf_work_entity_t* ent, Registry& wr);
     ~EntityMultiLineEntry();
     void update (SPDocument *doc);
 

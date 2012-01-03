@@ -19,12 +19,7 @@
 #endif
 
 
-#include <gtkmm/box.h>
-#include <gtkmm/comboboxtext.h>
-#include <gtkmm/radiobutton.h>
-#include <gtkmm/radiobuttongroup.h>
-#include <gtkmm/tooltips.h>
-#include <gtkmm/label.h>
+#include <gtkmm.h>
 #include <glibmm/i18n.h>
 
 #include "xml/node.h"

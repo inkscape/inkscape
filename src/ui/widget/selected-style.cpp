@@ -132,10 +132,7 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
       _popup_pt(_sw_group),
       _popup_mm(_sw_group),
 
-      _sw_unit(NULL),
-
-      _tooltips ()
-
+      _sw_unit(NULL)
 {
     _drop[0] = _drop[1] = 0;
     _dropEnabled[0] = _dropEnabled[1] = false;
@@ -326,10 +323,10 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
     _opacity_sb.signal_value_changed().connect(sigc::mem_fun(*this, &SelectedStyle::on_opacity_changed));
 
     _fill_place.add(_na[SS_FILL]);
-    _tooltips.set_tip(_fill_place, __na[SS_FILL]);
+    _fill_place.set_tooltip_text(__na[SS_FILL]);
 
     _stroke_place.add(_na[SS_STROKE]);
-    _tooltips.set_tip(_stroke_place, __na[SS_STROKE]);
+    _stroke_place.set_tooltip_text(__na[SS_STROKE]);
 
     _stroke.pack_start(_stroke_place);
     _stroke_width_place.add(_stroke_width);
@@ -907,8 +904,8 @@ SelectedStyle::update()
         place->remove();
         flag_place->remove();
 
-        _tooltips.unset_tip(*place);
-        _tooltips.unset_tip(*flag_place);
+        place->set_tooltip_text(0);
+        flag_place->set_tooltip_text(0);
 
         _mode[i] = SS_NA;
         _paintserver_id[i].clear();
@@ -921,7 +918,7 @@ SelectedStyle::update()
         switch (result) {
         case QUERY_STYLE_NOTHING:
             place->add(_na[i]);
-            _tooltips.set_tip(*place, __na[i]);
+            place->set_tooltip_text(__na[i]);
             _mode[i] = SS_NA;
             if ( _dropEnabled[i] ) {
                 gtk_drag_dest_unset( GTK_WIDGET((i==SS_FILL) ? _fill_place.gobj():_stroke_place.gobj()) );
@@ -957,17 +954,17 @@ SelectedStyle::update()
                         SPGradient *vector = SP_GRADIENT(server)->getVector();
                         sp_gradient_image_set_gradient ((SPGradientImage *) _gradient_preview_l[i], vector);
                         place->add(_gradient_box_l[i]);
-                        _tooltips.set_tip(*place, __lgradient[i]);
+                        place->set_tooltip_text(__lgradient[i]);
                         _mode[i] = SS_LGRADIENT;
                     } else if (SP_IS_RADIALGRADIENT (server)) {
                         SPGradient *vector = SP_GRADIENT(server)->getVector();
                         sp_gradient_image_set_gradient ((SPGradientImage *) _gradient_preview_r[i], vector);
                         place->add(_gradient_box_r[i]);
-                        _tooltips.set_tip(*place, __rgradient[i]);
+                        place->set_tooltip_text(__rgradient[i]);
                         _mode[i] = SS_RGRADIENT;
                     } else if (SP_IS_PATTERN (server)) {
                         place->add(_pattern[i]);
-                        _tooltips.set_tip(*place, __pattern[i]);
+                        place->set_tooltip_text(__pattern[i]);
                         _mode[i] = SS_PATTERN;
                     }
                 } else {
@@ -983,30 +980,30 @@ SelectedStyle::update()
                 place->add(*_color_preview[i]);
                 gchar c_string[64];
                 g_snprintf (c_string, 64, "%06x/%.3g", color >> 8, SP_RGBA32_A_F(color));
-                _tooltips.set_tip(*place, __color[i] + ": " + c_string + _(", drag to adjust"));
+                place->set_tooltip_text(__color[i] + ": " + c_string + _(", drag to adjust"));
                 _mode[i] = SS_COLOR;
                 _popup_copy[i].set_sensitive(true);
 
             } else if (paint->set && paint->isNone()) {
                 place->add(_none[i]);
-                _tooltips.set_tip(*place, __none[i]);
+                place->set_tooltip_text(__none[i]);
                 _mode[i] = SS_NONE;
             } else if (!paint->set) {
                 place->add(_unset[i]);
-                _tooltips.set_tip(*place, __unset[i]);
+                place->set_tooltip_text(__unset[i]);
                 _mode[i] = SS_UNSET;
             }
             if (result == QUERY_STYLE_MULTIPLE_AVERAGED) {
                 flag_place->add(_averaged[i]);
-                _tooltips.set_tip(*flag_place, __averaged[i]);
+                flag_place->set_tooltip_text(__averaged[i]);
             } else if (result == QUERY_STYLE_MULTIPLE_SAME) {
                 flag_place->add(_multiple[i]);
-                _tooltips.set_tip(*flag_place, __multiple[i]);
+                flag_place->set_tooltip_text(__multiple[i]);
             }
             break;
         case QUERY_STYLE_MULTIPLE_DIFFERENT:
             place->add(_many[i]);
-            _tooltips.set_tip(*place, __many[i]);
+            place->set_tooltip_text(__many[i]);
             _mode[i] = SS_MANY;
             break;
         default:
@@ -1015,22 +1012,22 @@ SelectedStyle::update()
     }
 
 // Now query opacity
-    _tooltips.unset_tip(_opacity_place);
-    _tooltips.unset_tip(_opacity_sb);
+    _opacity_place.set_tooltip_text(0);
+    _opacity_sb.set_tooltip_text(0);
 
     int result = sp_desktop_query_style (_desktop, query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
 
     switch (result) {
     case QUERY_STYLE_NOTHING:
-        _tooltips.set_tip(_opacity_place, _("Nothing selected"));
-        _tooltips.set_tip(_opacity_sb, _("Nothing selected"));
+        _opacity_place.set_tooltip_text(_("Nothing selected"));
+        _opacity_sb.set_tooltip_text(_("Nothing selected"));
         _opacity_sb.set_sensitive(false);
         break;
     case QUERY_STYLE_SINGLE:
     case QUERY_STYLE_MULTIPLE_AVERAGED:
     case QUERY_STYLE_MULTIPLE_SAME:
-        _tooltips.set_tip(_opacity_place, _("Opacity (%)"));
-        _tooltips.set_tip(_opacity_sb, _("Opacity (%)"));
+        _opacity_place.set_tooltip_text(_("Opacity (%)"));
+        _opacity_sb.set_tooltip_text(_("Opacity (%)"));
         if (_opacity_blocked) break;
         _opacity_blocked = true;
         _opacity_sb.set_sensitive(true);
@@ -1069,7 +1066,7 @@ SelectedStyle::update()
                                          _sw_unit? sp_unit_get_abbreviation(_sw_unit) : "px",
                                          (result_sw == QUERY_STYLE_MULTIPLE_AVERAGED)?
                                          _(" (averaged)") : "");
-            _tooltips.set_tip(_stroke_width_place, str);
+            _stroke_width_place.set_tooltip_text(str);
             g_free (str);
         }
         break;

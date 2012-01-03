@@ -15,18 +15,7 @@
 
 #include <memory>
 
-#include <gtkmm/adjustment.h>
-#include <gtkmm/alignment.h>
-#include <gtkmm/box.h>
-#include <gtkmm/buttonbox.h>
-#include <gtkmm/comboboxtext.h>
-#include <gtkmm/drawingarea.h>
-#include <gtkmm/frame.h>
-#include <gtkmm/liststore.h>
-#include <gtkmm/menu.h>
-#include <gtkmm/notebook.h>
-#include <gtkmm/sizegroup.h>
-#include <gtkmm/treeview.h>
+#include <gtkmm.h>
 
 #include "attributes.h"
 #include "ui/widget/panel.h"

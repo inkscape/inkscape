@@ -60,7 +60,6 @@ public :
            const Glib::ustring &tiptext,
            guint row, guint column,
            Gtk::Table &parent,
-           Gtk::Tooltips &tooltips,
            AlignAndDistribute &dialog):
         _dialog(dialog),
         _id(id),
@@ -75,7 +74,7 @@ public :
 
         pButton->signal_clicked()
             .connect(sigc::mem_fun(*this, &Action::on_button_click));
-        tooltips.set_tip(*pButton, tiptext);
+        pButton->set_tooltip_text(tiptext);
         parent.attach(*pButton, column, column+1, row, row+1, Gtk::FILL, Gtk::FILL);
     }
     virtual ~Action(){}
@@ -102,7 +101,7 @@ public :
                 AlignAndDistribute &dialog,
                 guint coeffIndex):
         Action(id, tiptext, row, column,
-               dialog.align_table(), dialog.tooltips(), dialog),
+               dialog.align_table(), dialog),
         _index(coeffIndex),
         _dialog(dialog)
     {}
@@ -292,7 +291,7 @@ public :
                      double kBegin, double kEnd
         ):
         Action(id, tiptext, row, column,
-               dialog.distribute_table(), dialog.tooltips(), dialog),
+               dialog.distribute_table(), dialog),
         _dialog(dialog),
         _onInterSpace(onInterSpace),
         _orientation(orientation),
@@ -419,7 +418,7 @@ public :
                AlignAndDistribute &dialog,
                Geom::Dim2 orientation, bool distribute):
         Action(id, tiptext, 0, column,
-               dialog.nodes_table(), dialog.tooltips(), dialog),
+               dialog.nodes_table(), dialog),
         _orientation(orientation),
         _distribute(distribute)
     {}
@@ -457,7 +456,7 @@ public:
                          guint column,
                          AlignAndDistribute &dialog) :
         Action(id, tiptext, row, column + 4,
-               dialog.removeOverlap_table(), dialog.tooltips(), dialog)
+               dialog.removeOverlap_table(), dialog)
     {
         dialog.removeOverlap_table().set_col_spacings(3);
 
@@ -466,8 +465,7 @@ public:
         removeOverlapXGap.set_increments(1.0, 0);
         removeOverlapXGap.set_range(-1000.0, 1000.0);
         removeOverlapXGap.set_value(0);
-        dialog.tooltips().set_tip(removeOverlapXGap,
-                                  _("Minimum horizontal gap (in px units) between bounding boxes"));
+        removeOverlapXGap.set_tooltip_text(_("Minimum horizontal gap (in px units) between bounding boxes"));
         //TRANSLATORS: "H:" stands for horizontal gap
         removeOverlapXGapLabel.set_text_with_mnemonic(C_("Gap", "_H:"));
         removeOverlapXGapLabel.set_mnemonic_widget(removeOverlapXGap);
@@ -477,8 +475,7 @@ public:
         removeOverlapYGap.set_increments(1.0, 0);
         removeOverlapYGap.set_range(-1000.0, 1000.0);
         removeOverlapYGap.set_value(0);
-        dialog.tooltips().set_tip(removeOverlapYGap,
-                                  _("Minimum vertical gap (in px units) between bounding boxes"));
+        removeOverlapYGap.set_tooltip_text(_("Minimum vertical gap (in px units) between bounding boxes"));
         /* TRANSLATORS: Vertical gap */
         removeOverlapYGapLabel.set_text_with_mnemonic(C_("Gap", "_V:"));
         removeOverlapYGapLabel.set_mnemonic_widget(removeOverlapYGap);
@@ -522,7 +519,7 @@ public:
                          guint column,
                          AlignAndDistribute &dialog) :
         Action(id, tiptext, row, column,
-               dialog.rearrange_table(), dialog.tooltips(), dialog)
+               dialog.rearrange_table(), dialog)
     {}
 
 private :
@@ -559,7 +556,7 @@ public:
                          guint column,
                          AlignAndDistribute &dialog, SortOrder order = None) :
         Action(id, tiptext, row, column,
-               dialog.rearrange_table(), dialog.tooltips(), dialog),
+               dialog.rearrange_table(), dialog),
         sortOrder(order)
     {};
 
@@ -649,7 +646,7 @@ public :
                guint column,
                AlignAndDistribute &dialog):
         Action(id, tiptext, row, column,
-               dialog.rearrange_table(), dialog.tooltips(), dialog)
+               dialog.rearrange_table(), dialog)
     {}
 
 private :
@@ -680,7 +677,7 @@ public :
                guint column,
                AlignAndDistribute &dialog):
         Action(id, tiptext, row, column,
-               dialog.rearrange_table(), dialog.tooltips(), dialog)
+               dialog.rearrange_table(), dialog)
     {}
 
 private :
@@ -770,7 +767,7 @@ public :
                Gtk::Table &table,
                Geom::Dim2 orientation, bool distribute):
         Action(id, tiptext, row, column,
-               table, dialog.tooltips(), dialog),
+               table, dialog),
         _orientation(orientation),
         _distribute(distribute)
     {}

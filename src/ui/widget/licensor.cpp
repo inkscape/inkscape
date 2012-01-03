@@ -82,11 +82,11 @@ Licensor::~Licensor()
     if (_eentry) delete _eentry;
 }
 
-void Licensor::init (Gtk::Tooltips& tt, Registry& wr)
+void Licensor::init (Registry& wr)
 {
     /* add license-specific metadata entry areas */
     rdf_work_entity_t* entity = rdf_find_entity ( "license_uri" );
-    _eentry = EntityEntry::create (entity, tt, wr);
+    _eentry = EntityEntry::create (entity, wr);
 
     LicenseItem *i;
     wr.setUpdating (true);

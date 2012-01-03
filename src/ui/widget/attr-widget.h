@@ -14,7 +14,6 @@
 #include "attributes.h"
 #include "sp-object.h"
 #include "xml/node.h"
-#include <gtkmm/tooltips.h>
 
 namespace Inkscape {
 namespace UI {

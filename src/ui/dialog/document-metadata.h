@@ -52,7 +52,6 @@ protected:
     void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
     void _handleDeactivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
 
-    Gtk::Tooltips _tt;
     Gtk::Notebook  _notebook;
 
     UI::Widget::NotebookPage _page_metadata1;

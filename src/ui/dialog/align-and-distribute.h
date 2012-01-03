@@ -20,7 +20,6 @@
 
 #include <list>
 #include <gtkmm/frame.h>
-#include <gtkmm/tooltips.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/table.h>
 #include <gtkmm/buttonbox.h>
@@ -55,7 +54,6 @@ public:
     Gtk::Table &rearrange_table(){return _rearrangeTable;}
     Gtk::Table &removeOverlap_table(){return _removeOverlapTable;}
     Gtk::Table &nodes_table(){return _nodesTable;}
-    Gtk::Tooltips &tooltips(){return _tooltips;}
 
     std::list<SPItem *>::iterator find_master(std::list <SPItem *> &list, bool horizontal);
     void setMode(bool nodeEdit);
@@ -105,7 +103,6 @@ protected:
     Gtk::Label _selgrpLabel;
     Gtk::CheckButton _selgrp;
     Gtk::ComboBoxText _combo;
-    Gtk::Tooltips _tooltips;
 
 private:
     AlignAndDistribute(AlignAndDistribute const &d);

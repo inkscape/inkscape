@@ -259,8 +259,6 @@ protected:
 
     SPUnit *_sw_unit;
 
-    Gtk::Tooltips _tooltips;
-
     void *_drop[2];
     bool _dropEnabled[2];
 };

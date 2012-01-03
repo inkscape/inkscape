@@ -13,17 +13,7 @@
 #define SEEN_INKSCAPE_UI_WIDGET_PANEL_H
 
 #include <vector>
-#include <gtkmm/arrow.h>
-#include <gtkmm/box.h>
-#include <gtkmm/button.h>
-#include <gtkmm/buttonbox.h>
-#include <gtkmm/eventbox.h>
-#include <gtkmm/frame.h>
-#include <gtkmm/label.h>
-#include <gtkmm/menu.h>
-#include <gtkmm/optionmenu.h>
-#include <gtkmm/table.h>
-#include <gtkmm/tooltips.h>
+#include <gtkmm.h>
 
 #include "inkscape.h"
 #include "ui/previewfillable.h"

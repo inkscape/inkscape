@@ -14,10 +14,6 @@
 
 class SPDocument;
 
-namespace Gtk {
-    class Tooltips;
-}
-
 namespace Inkscape {
     namespace UI {
         namespace Widget {
@@ -34,7 +30,7 @@ class Licensor : public Gtk::VBox {
 public:
     Licensor();
     virtual ~Licensor();
-    void init (Gtk::Tooltips&, Registry&);
+    void init (Registry&);
     void update (SPDocument *doc);
 
 protected: 
