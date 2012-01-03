@@ -13,7 +13,6 @@ set(libgdl_SRC
 	gdl-dock.c
 	gdl-i18n.c
 	gdl-switcher.c
-	gdl-tools.h
 	libgdlmarshal.c
 	libgdltypebuiltins.c
 
@@ -32,7 +31,6 @@ set(libgdl_SRC
 	gdl-dock-tablabel.h
 	gdl-dock.h
 	gdl-i18n.h
-	gdl-stock-icons.h
 	gdl-switcher.h
 	gdl.h
 	libgdlmarshal.h
