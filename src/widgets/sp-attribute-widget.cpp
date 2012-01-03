@@ -1,3 +1,7 @@
+/**
+ * @file
+ * Base widget for user input of object properties.
+ */
 /* Authors:
  *  Lauris Kaplinski <lauris@ximian.com>
  *  Abhishek Sharma
@@ -8,16 +12,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtk.h>
-#include "xml/repr.h"
-#include "macros.h"
-#include "document.h"
-#include "sp-object.h"
 #include <glibmm/i18n.h>
-
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
 
+#include "sp-object.h"
+#include "xml/repr.h"
+#include "macros.h"
+#include "document.h"
 #include "sp-attribute-widget.h"
 
 using Inkscape::DocumentUndo;
@@ -29,6 +31,10 @@ static void sp_attribute_table_object_release (SPObject */*object*/, SPAttribute
 #define XPAD 4
 #define YPAD 0
 
+
+/**
+ * \brief Constructor defaulting to no content.
+ */
 SPAttributeTable::SPAttributeTable () : 
     blocked(0),
     hasobj(0),
@@ -41,8 +47,21 @@ SPAttributeTable::SPAttributeTable () :
     src.object = NULL;
 }
 
+ /**
+ * \brief Constructor referring to a specific object.
+ *
+ * This constructor initializes all data fields and creates the necessary widgets.
+ * set_object is called for this purpose.
+ * 
+ * @param object the SPObject to which this instance is referring to. It should be the object that is currently selected and whose properties are being shown by this SPAttributeTable instance.
+ * @param labels list of labels to be shown for the different attributes.
+ * @param attributes list of attributes whose value can be edited.
+ * @param parent the parent object owning the SPAttributeTable instance.
+ * 
+ * @see set_object
+ */
 SPAttributeTable::SPAttributeTable (SPObject *object, std::vector<Glib::ustring> &labels, std::vector<Glib::ustring> &attributes, GtkWidget* parent) : 
-    blocked(0),
+   blocked(0),
     hasobj(0),
     table(0),
     _attributes(),
@@ -55,11 +74,17 @@ SPAttributeTable::SPAttributeTable (SPObject *object, std::vector<Glib::ustring>
     set_object(object, labels, attributes, parent);
 }
 
+/**
+ * \brief Destructor.
+ */
 SPAttributeTable::~SPAttributeTable ()
 {
     clear();
 }
 
+/**
+ * \brief Clears data of SPAttributeTable instance, destroys all child widgets and closes connections.
+ */
 void SPAttributeTable::clear(void)
 {
     Gtk::Widget *w;
@@ -104,6 +129,18 @@ void SPAttributeTable::clear(void)
     }
 }
 
+/**
+ * \brief Sets class properties and creates child widgets
+ *
+ * set_object initializes all data fields, creates links to the
+ * SPOject item and creates the necessary widgets. For n properties
+ * n labels and n entries are created and shown in tabular format.
+ * 
+ * @param object the SPObject to which this instance is referring to. It should be the object that is currently selected and whose properties are being shown by this SPAttribuTable instance.
+ * @param labels list of labels to be shown for the different attributes.
+ * @param attributes list of attributes whose value can be edited.
+ * @param parent the parent object owning the SPAttributeTable instance.
+ */
 void SPAttributeTable::set_object(SPObject *object,
                             std::vector<Glib::ustring> &labels,
                             std::vector<Glib::ustring> &attributes,
@@ -166,6 +203,18 @@ void SPAttributeTable::set_object(SPObject *object,
     }
 }
 
+/**
+ * \brief Update values in entry boxes on change of object.
+ *
+ * change_object updates the values of the entry boxes in case the user
+ * of Inkscape selects an other object.
+ * change_object is a subset of set_object and should only be called by
+ * the parent class (holding the SPAttributeTable instance). This function
+ * should only be called when the number of properties/entries nor
+ * the labels do not change.
+ * 
+ * @param object the SPObject to which this instance is referring to. It should be the object that is currently selected and whose properties are being shown by this SPAttribuTable instance.
+ */
 void SPAttributeTable::change_object(SPObject *object)
 {
     g_return_if_fail (!object || SP_IS_OBJECT (object));
@@ -264,6 +313,17 @@ void SPAttributeTable::change_object(SPObject *object)
 }
 */
 
+/**
+ * \brief Callback for a modification of the selected object (size, color, properties, etc.).
+ *
+ * sp_attribute_table_object_modified rereads the object properties
+ * and shows the values in the entry boxes. It is a callback from a
+ * connection of the SPObject.
+ * 
+ * @param object the SPObject to which this instance is referring to.
+ * @param flags gives the applied modifications
+ * @param spat pointer to the SPAttributeTable instance.
+ */
 static void sp_attribute_table_object_modified ( SPObject */*object*/,
                                      guint flags,
                                      SPAttributeTable *spat )
@@ -293,6 +353,16 @@ static void sp_attribute_table_object_modified ( SPObject */*object*/,
 
 } // end of sp_attribute_table_object_modified()
 
+/**
+ * \brief Callback for user input in one of the entries.
+ *
+ * sp_attribute_table_entry_changed set the object property
+ * to the new value and updates history. It is a callback from
+ * the entries created by SPAttributeTable.
+ * 
+ * @param editable pointer to the entry box.
+ * @param spat pointer to the SPAttributeTable instance.
+ */
 static void sp_attribute_table_entry_changed ( Gtk::Editable *editable,
                                    SPAttributeTable *spat )
 {
@@ -327,6 +397,12 @@ static void sp_attribute_table_entry_changed ( Gtk::Editable *editable,
 
 } // end of sp_attribute_table_entry_changed()
 
+/**
+ * \brief Callback for the delection of the selected object.
+ *
+ * sp_attribute_table_object_release invalidates all data of 
+ * SPAttributeTable and disables the widget.
+ */
 static void sp_attribute_table_object_release (SPObject */*object*/, SPAttributeTable *spat)
 {
     std::vector<Glib::ustring> labels;

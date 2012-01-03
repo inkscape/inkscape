@@ -15,14 +15,21 @@
 
 #include <gtk/gtk.h>
 #include <gtkmm.h>
+#include <glibmm/i18n.h>
 #include "dialog-events.h"
-#include "../widgets/sp-attribute-widget.h"
 
-GtkWidget *sp_item_widget_new(void);
+#include "../widgets/sp-attribute-widget.h"
 
 void sp_item_dialog(void);
 
 class SPItemDialog : public Gtk::Widget {
+/**
+ * \class SPItemDialog
+ * \brief A dialog widget to show object properties.
+ *
+ * A widget to enter an ID, label, title and description for an object.
+ * In addition it allows to edit the properties of an object.
+ */
 public:
     SPItemDialog ();
     ~SPItemDialog ();

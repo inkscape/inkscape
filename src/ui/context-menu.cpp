@@ -27,8 +27,7 @@ static void sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop
 
 /* Append object-specific part to context menu */
 
-void
-sp_object_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
+void sp_object_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
 {
     GObjectClass *klass;
     klass = G_OBJECT_GET_CLASS(object);
@@ -50,7 +49,6 @@ sp_object_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
 #include "sp-image.h"
 #include "sp-text.h"
 
-#include "document.h"
 #include "desktop-handles.h"
 #include "selection.h"
 #include "selection-chemistry.h"
@@ -71,8 +69,7 @@ static void sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu);
 static void sp_shape_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu);
 static void sp_text_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu);
 
-static void
-sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop, GtkMenu *menu)
+static void sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop, GtkMenu *menu)
 {
     static GHashTable *t2m = NULL;
     void (* handler)(SPObject *object, SPDesktop *desktop, GtkMenu *menu);
@@ -98,10 +95,9 @@ static void sp_set_mask(GtkMenuItem *menuitem, SPItem *item);
 static void sp_release_mask(GtkMenuItem *menuitem, SPItem *item);
 static void sp_set_clip(GtkMenuItem *menuitem, SPItem *item);
 static void sp_release_clip(GtkMenuItem *menuitem, SPItem *item);
-/* Generate context menu item section */
 
-static void
-sp_item_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
+/* Generate context menu item section */
+static void sp_item_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 {
     SPItem *item;
     GtkWidget *w;
@@ -182,8 +178,7 @@ sp_item_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 
 }
 
-static void
-sp_item_properties(GtkMenuItem *menuitem, SPItem *item)
+static void sp_item_properties(GtkMenuItem *menuitem, SPItem *item)
 {
     SPDesktop *desktop;
 
@@ -198,8 +193,7 @@ sp_item_properties(GtkMenuItem *menuitem, SPItem *item)
 }
 
 
-static void
-sp_set_mask(GtkMenuItem *menuitem, SPItem *item)
+static void sp_set_mask(GtkMenuItem *menuitem, SPItem *item)
 {
     SPDesktop *desktop;
 
@@ -212,8 +206,7 @@ sp_set_mask(GtkMenuItem *menuitem, SPItem *item)
 }
 
 
-static void
-sp_release_mask(GtkMenuItem *menuitem, SPItem *item)
+static void sp_release_mask(GtkMenuItem *menuitem, SPItem *item)
 {
     SPDesktop *desktop;
 
@@ -226,8 +219,7 @@ sp_release_mask(GtkMenuItem *menuitem, SPItem *item)
 }
 
 
-static void
-sp_set_clip(GtkMenuItem *menuitem, SPItem *item)
+static void sp_set_clip(GtkMenuItem *menuitem, SPItem *item)
 {
     SPDesktop *desktop;
 
@@ -240,8 +232,7 @@ sp_set_clip(GtkMenuItem *menuitem, SPItem *item)
 }
 
 
-static void
-sp_release_clip(GtkMenuItem *menuitem, SPItem *item)
+static void sp_release_clip(GtkMenuItem *menuitem, SPItem *item)
 {
     SPDesktop *desktop;
 
@@ -254,8 +245,7 @@ sp_release_clip(GtkMenuItem *menuitem, SPItem *item)
 }
 
 
-static void
-sp_item_select_this(GtkMenuItem *menuitem, SPItem *item)
+static void sp_item_select_this(GtkMenuItem *menuitem, SPItem *item)
 {
     SPDesktop *desktop;
 
@@ -267,8 +257,7 @@ sp_item_select_this(GtkMenuItem *menuitem, SPItem *item)
     sp_desktop_selection(desktop)->set(item);
 }
 
-static void
-sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
+static void sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
 {
     g_assert(SP_IS_ITEM(item));
     g_assert(!SP_IS_ANCHOR(item));
@@ -303,8 +292,7 @@ sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
 
 static void sp_item_group_ungroup_activate(GtkMenuItem *menuitem, SPGroup *group);
 
-static void
-sp_group_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
+static void sp_group_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
 {
     SPItem *item=SP_ITEM(object);
     GtkWidget *w;
@@ -317,8 +305,7 @@ sp_group_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), w);
 }
 
-static void
-sp_item_group_ungroup_activate(GtkMenuItem *menuitem, SPGroup *group)
+static void sp_item_group_ungroup_activate(GtkMenuItem *menuitem, SPGroup *group)
 {
     SPDesktop *desktop;
     GSList *children;
@@ -341,8 +328,7 @@ static void sp_anchor_link_properties(GtkMenuItem *menuitem, SPAnchor *anchor);
 static void sp_anchor_link_follow(GtkMenuItem *menuitem, SPAnchor *anchor);
 static void sp_anchor_link_remove(GtkMenuItem *menuitem, SPAnchor *anchor);
 
-static void
-sp_anchor_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
+static void sp_anchor_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 {
     SPItem *item;
     GtkWidget *w;
@@ -368,14 +354,12 @@ sp_anchor_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
 }
 
-static void
-sp_anchor_link_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
+static void sp_anchor_link_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 {
     sp_object_attributes_dialog(anchor, "Link");
 }
 
-static void
-sp_anchor_link_follow(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
+static void sp_anchor_link_follow(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 {
     g_return_if_fail(anchor != NULL);
     g_return_if_fail(SP_IS_ANCHOR(anchor));
@@ -383,8 +367,7 @@ sp_anchor_link_follow(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
     /* shell out to an external browser here */
 }
 
-static void
-sp_anchor_link_remove(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
+static void sp_anchor_link_remove(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 {
     GSList *children;
 
@@ -402,8 +385,7 @@ sp_anchor_link_remove(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 static void sp_image_image_properties(GtkMenuItem *menuitem, SPAnchor *anchor);
 static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor);
 
-static void
-sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
+static void sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 {
     SPItem *item = SP_ITEM(object);
     GtkWidget *w;
@@ -427,8 +409,7 @@ sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     }
 }
 
-static void
-sp_image_image_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
+static void sp_image_image_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 {
     sp_object_attributes_dialog(anchor, "Image");
 }
@@ -503,9 +484,7 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
 }
 
 /* Fill and Stroke entry */
-
-static void
-sp_fill_settings(GtkMenuItem *menuitem, SPItem *item)
+static void sp_fill_settings(GtkMenuItem *menuitem, SPItem *item)
 {
     SPDesktop *desktop;
 
@@ -522,9 +501,7 @@ sp_fill_settings(GtkMenuItem *menuitem, SPItem *item)
 }
 
 /* SPShape */
-
-static void
-sp_shape_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
+static void sp_shape_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 {
     SPItem *item;
     GtkWidget *w;
@@ -540,9 +517,7 @@ sp_shape_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 }
 
 /* Edit Text entry */
-
-static void
-sp_text_settings(GtkMenuItem *menuitem, SPItem *item)
+static void sp_text_settings(GtkMenuItem *menuitem, SPItem *item)
 {
     SPDesktop *desktop;
 
@@ -559,9 +534,7 @@ sp_text_settings(GtkMenuItem *menuitem, SPItem *item)
 }
 
 /* Spellcheck entry */
-
-static void
-sp_spellcheck_settings(GtkMenuItem *menuitem, SPItem *item)
+static void sp_spellcheck_settings(GtkMenuItem *menuitem, SPItem *item)
 {
     SPDesktop *desktop;
 
@@ -578,9 +551,7 @@ sp_spellcheck_settings(GtkMenuItem *menuitem, SPItem *item)
 }
 
 /* SPText */
-
-static void
-sp_text_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
+static void sp_text_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 {
     SPItem *item;
     GtkWidget *w;
