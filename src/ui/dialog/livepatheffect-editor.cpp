@@ -192,7 +192,7 @@ LivePathEffectEditor::showParams(LivePathEffect::Effect& effect)
     }
 
     explain_label.set_markup("<b>" + effect.getName() + "</b>");
-    effectwidget = effect.newWidget(&tooltips);
+    effectwidget = effect.newWidget();
     if (effectwidget) {
         effectcontrol_vbox.pack_start(*effectwidget, true, true);
     }

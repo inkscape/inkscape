@@ -55,10 +55,8 @@ SPDashSelector::SPDashSelector() {
     // TODO: find something more sensible here!!
     init_dashes();
 
-    Gtk::Tooltips *tt = new Gtk::Tooltips();
-
     dash = new Gtk::OptionMenu();
-    tt->set_tip(*dash, _("Dash pattern"));
+    dash->set_tooltip_text(_("Dash pattern"));
     dash->show();
     this->pack_start(*dash, false, false, 0);
 
@@ -73,7 +71,7 @@ SPDashSelector::SPDashSelector() {
 
     offset = new Gtk::Adjustment(0.0, 0.0, 10.0, 0.1, 1.0, 0.0);
     Inkscape::UI::Widget::SpinButton *sb = new Inkscape::UI::Widget::SpinButton(*offset, 0.1, 2);
-    tt->set_tip(*sb, _("Pattern offset"));
+    sb->set_tooltip_text(_("Pattern offset"));
 
     sp_dialog_defocus_on_enter_cpp(sb);
     sb->show();

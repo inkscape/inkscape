@@ -27,8 +27,8 @@ SpinSlider::SpinSlider(double value, double lower, double upper, double step_inc
     pack_start(_scale);
     pack_start(_spin, false, false);
     if (tip_text){
-        _tt.set_tip(_scale, tip_text);
-        _tt.set_tip(_spin, tip_text);
+        _scale.set_tooltip_text(tip_text);
+        _spin.set_tooltip_text(tip_text);
     }
 
     _scale.set_draw_value(false);

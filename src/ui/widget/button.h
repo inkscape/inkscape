@@ -26,8 +26,6 @@ class Button : public Gtk::Button
 public:
     Button();
     Button(Glib::ustring const &label, Glib::ustring const &tooltip);
-protected:
-    Gtk::Tooltips _tooltips;
 };
 
 /**
@@ -38,8 +36,6 @@ class CheckButton : public Gtk::CheckButton
 public:
     CheckButton();
     CheckButton(Glib::ustring const &label, Glib::ustring const &tooltip);
-protected:
-    Gtk::Tooltips _tooltips;
 };
 
 } // namespace Widget

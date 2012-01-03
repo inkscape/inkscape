@@ -20,7 +20,6 @@ class SPItem;
 
 namespace Gtk {
     class Widget;
-    class Tooltips;
 }
 
 namespace Inkscape {
@@ -55,7 +54,7 @@ public:
     virtual void param_set_default() = 0;
 
     // This creates a new widget (newed with Gtk::manage(new ...);)
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips) = 0;
+    virtual Gtk::Widget * param_newWidget() = 0;
 
     virtual Glib::ustring * param_getTooltip() { return &param_tooltip; };
 
@@ -111,7 +110,7 @@ public:
 
     void addSlider(bool add_slider_widget) { add_slider = add_slider_widget; };
 
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
+    virtual Gtk::Widget * param_newWidget();
 
     inline operator gdouble()
         { return value; };

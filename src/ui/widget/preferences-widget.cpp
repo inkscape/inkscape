@@ -110,7 +110,7 @@ void DialogPage::add_line(bool indent, Glib::ustring const &label, Gtk::Widget &
 
     if (tip != "")
     {
-        _tooltips.set_tip (widget, tip);
+        widget.set_tooltip_text (tip);
     }
 
 }
@@ -131,7 +131,7 @@ void DialogPage::add_group_header(Glib::ustring name)
 
 void DialogPage::set_tip(Gtk::Widget& widget, Glib::ustring const &tip)
 {
-    _tooltips.set_tip (widget, tip);
+    widget.set_tooltip_text (tip);
 }
 
 void PrefCheckButton::init(Glib::ustring const &label, Glib::ustring const &prefs_path,

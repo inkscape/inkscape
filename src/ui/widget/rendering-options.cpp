@@ -40,12 +40,12 @@ RenderingOptions::RenderingOptions () :
             false)
 {
     // set up tooltips
-    _tt.set_tip (_radio_vector, Glib::ustring(
+    _radio_vector.set_tooltip_text (Glib::ustring(
                         _("Render using Cairo vector operations.  "
                         "The resulting image is usually smaller in file "
                         "size and can be arbitrarily scaled, but some "
                         "filter effects will not be correctly rendered.")));
-    _tt.set_tip (_radio_bitmap, Glib::ustring(
+    _radio_bitmap.set_tooltip_text (Glib::ustring(
                         _("Render everything as bitmap.  The resulting image "
                         "is usually larger in file size and cannot be "
                         "arbitrarily scaled without quality loss, but all "

@@ -228,7 +228,8 @@ sp_text_context_setup(SPEventContext *ec)
          * entered.
          */
         gtk_im_context_set_use_preedit(tc->imc, FALSE);
-        gtk_im_context_set_client_window(tc->imc, canvas->window);
+        gtk_im_context_set_client_window(tc->imc, 
+			gtk_widget_get_window (canvas));
 
         g_signal_connect(G_OBJECT(canvas), "focus_in_event", G_CALLBACK(sptc_focus_in), tc);
         g_signal_connect(G_OBJECT(canvas), "focus_out_event", G_CALLBACK(sptc_focus_out), tc);

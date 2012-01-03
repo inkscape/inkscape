@@ -81,11 +81,11 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
 
     SPDesktop *desktop = dtw->desktop;
 
-    gdk_window_get_pointer(GTK_WIDGET(dtw->canvas)->window, &wx, &wy, NULL);
+    gdk_window_get_pointer(gtk_widget_get_window (GTK_WIDGET(dtw->canvas)), &wx, &wy, NULL);
     Geom::Point const event_win(wx, wy);
 
     gint width, height;
-    gdk_window_get_geometry(GTK_WIDGET(dtw->canvas)->window, NULL /*x*/, NULL /*y*/, &width, &height, NULL/*depth*/);
+    gdk_window_get_geometry(gtk_widget_get_window (GTK_WIDGET(dtw->canvas)), NULL /*x*/, NULL /*y*/, &width, &height, NULL/*depth*/);
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
@@ -135,7 +135,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
 
                 guide = sp_guideline_new(desktop->guides, NULL, event_dt, normal);
                 sp_guideline_set_color(SP_GUIDELINE(guide), desktop->namedview->guidehicolor);
-                gdk_pointer_grab(widget->window, FALSE,
+                gdk_pointer_grab(gtk_widget_get_window (widget), FALSE,
                                  (GdkEventMask)(GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK ),
                                  NULL, NULL,
                                  event->button.time);
@@ -448,7 +448,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             if ((event->crossing.state & GDK_SHIFT_MASK) && (drag_type != SP_DRAG_MOVE_ORIGIN)) {
                 GdkCursor *guide_cursor;
                 guide_cursor = gdk_cursor_new (GDK_EXCHANGE);
-                gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, guide_cursor);
+                gdk_window_set_cursor(gtk_widget_get_window (GTK_WIDGET(sp_desktop_canvas(desktop))), guide_cursor);
                 gdk_cursor_unref(guide_cursor);
             }
 
@@ -461,7 +461,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
             sp_guideline_set_color(SP_GUIDELINE(item), guide->color);
 
             // restore event context's cursor
-            gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, desktop->event_context->cursor);
+            gdk_window_set_cursor(gtk_widget_get_window (GTK_WIDGET(sp_desktop_canvas(desktop))), desktop->event_context->cursor);
 
             desktop->guidesMessageContext()->clear();
             break;
@@ -483,7 +483,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     if (drag_type != SP_DRAG_MOVE_ORIGIN) {
                         GdkCursor *guide_cursor;
                         guide_cursor = gdk_cursor_new (GDK_EXCHANGE);
-                        gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, guide_cursor);
+                        gdk_window_set_cursor(gtk_widget_get_window (GTK_WIDGET(sp_desktop_canvas(desktop))), guide_cursor);
                         gdk_cursor_unref(guide_cursor);
                         ret = TRUE;
                         break;
@@ -500,7 +500,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 case GDK_Shift_R:
                     GdkCursor *guide_cursor;
                     guide_cursor = gdk_cursor_new (GDK_EXCHANGE);
-                    gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, guide_cursor);
+                    gdk_window_set_cursor(gtk_widget_get_window (GTK_WIDGET(sp_desktop_canvas(desktop))), guide_cursor);
                     gdk_cursor_unref(guide_cursor);
                     break;
                 default:
@@ -526,21 +526,21 @@ static void init_extended()
     if ( devices ) {
         for ( GList* curr = devices; curr; curr = g_list_next(curr) ) {
             GdkDevice* dev = reinterpret_cast<GdkDevice*>(curr->data);
-            if ( dev->name
-                 && (avoidName != dev->name)
-                 && (dev->source != GDK_SOURCE_MOUSE) ) {
+            if ( gdk_device_get_name (dev)
+                 && (avoidName != gdk_device_get_name (dev))
+                 && (gdk_device_get_source (dev) != GDK_SOURCE_MOUSE) ) {
 //                 g_message("Adding '%s' as [%d]", dev->name, dev->source);
 
                 // Set the initial tool for the device
-                switch ( dev->source ) {
+                switch ( gdk_device_get_source (dev)) {
                     case GDK_SOURCE_PEN:
-                        toolToUse[dev->name] = TOOLS_CALLIGRAPHIC;
+                        toolToUse[gdk_device_get_name (dev)] = TOOLS_CALLIGRAPHIC;
                         break;
                     case GDK_SOURCE_ERASER:
-                        toolToUse[dev->name] = TOOLS_ERASER;
+                        toolToUse[gdk_device_get_name (dev)] = TOOLS_ERASER;
                         break;
                     case GDK_SOURCE_CURSOR:
-                        toolToUse[dev->name] = TOOLS_SELECT;
+                        toolToUse[gdk_device_get_name (dev)] = TOOLS_SELECT;
                         break;
                     default:
                         ; // do not add
@@ -563,8 +563,8 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
         {
             GdkEventMotion* event2 = reinterpret_cast<GdkEventMotion*>(event);
             if ( event2->device ) {
-                source = event2->device->source;
-                name = event2->device->name;
+                source = gdk_device_get_source (event2->device);
+                name = gdk_device_get_name (event2->device);
             }
         }
         break;
@@ -576,8 +576,8 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
         {
             GdkEventButton* event2 = reinterpret_cast<GdkEventButton*>(event);
             if ( event2->device ) {
-                source = event2->device->source;
-                name = event2->device->name;
+                source = gdk_device_get_source (event2->device);
+                name = gdk_device_get_name (event2->device);
             }
         }
         break;
@@ -586,8 +586,8 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
         {
             GdkEventScroll* event2 = reinterpret_cast<GdkEventScroll*>(event);
             if ( event2->device ) {
-                source = event2->device->source;
-                name = event2->device->name;
+                source = gdk_device_get_source (event2->device);
+                name = gdk_device_get_name (event2->device);
             }
         }
         break;
@@ -597,8 +597,8 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
         {
             GdkEventProximity* event2 = reinterpret_cast<GdkEventProximity*>(event);
             if ( event2->device ) {
-                source = event2->device->source;
-                name = event2->device->name;
+                source = gdk_device_get_source (event2->device);
+                name = gdk_device_get_name (event2->device);
             }
         }
         break;

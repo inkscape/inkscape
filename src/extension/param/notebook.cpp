@@ -21,7 +21,6 @@
 #include <gtkmm/box.h>
 #include <gtkmm/spinbutton.h>
 #include <gtkmm/notebook.h>
-#include <gtkmm/tooltips.h>
 
 #include <glibmm/i18n.h>
 
@@ -52,7 +51,6 @@ private:
     GSList * parameters; /**< A table to store the parameters for this page.
                               This only gets created if there are parameters on this
                               page */
-    Gtk::Tooltips * _tooltips;
 
 public:
     static ParamNotebookPage * makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension::Extension * in_ext);
@@ -67,8 +65,7 @@ public:
 
 
 ParamNotebookPage::ParamNotebookPage (const gchar * name, const gchar * guitext, const gchar * desc, const Parameter::_scope_t scope, bool gui_hidden, const gchar * gui_tip, Inkscape::Extension::Extension * ext, Inkscape::XML::Node * xml) :
-    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext),
-    _tooltips(NULL)
+    Parameter(name, guitext, desc, scope, gui_hidden, gui_tip, ext)
 {
     parameters = NULL;
 
@@ -94,7 +91,6 @@ ParamNotebookPage::ParamNotebookPage (const gchar * name, const gchar * guitext,
 
 ParamNotebookPage::~ParamNotebookPage (void)
 {
-    if (_tooltips) delete _tooltips;
     //destroy parameters
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);
@@ -203,10 +199,6 @@ Gtk::Widget * ParamNotebookPage::get_widget(SPDocument * doc, Inkscape::XML::Nod
         return NULL;
     }
 
-    if (!_tooltips) {
-        _tooltips = new Gtk::Tooltips();
-    }
-
     Gtk::VBox * vbox = Gtk::manage(new Gtk::VBox);
     vbox->set_border_width(5);
 
@@ -218,7 +210,7 @@ Gtk::Widget * ParamNotebookPage::get_widget(SPDocument * doc, Inkscape::XML::Nod
 //        printf("Tip: '%s'\n", tip);
         vbox->pack_start(*widg, false, false, 2);
         if (tip != NULL) {
-            _tooltips->set_tip(*widg, Glib::ustring(tip));
+            widg->set_tooltip_text(Glib::ustring(tip));
         }
     }
 

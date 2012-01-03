@@ -56,7 +56,7 @@ RegisteredCheckButton::RegisteredCheckButton (const Glib::ustring& label, const 
 
     setProgrammatically = false;
 
-    _tt.set_tip (*this, tip);
+    set_tooltip_text (tip);
     Gtk::Label *l = new Gtk::Label (label);
     l->set_use_underline (true);
     add (*manage (l));
@@ -434,8 +434,8 @@ RegisteredRadioButtonPair::RegisteredRadioButtonPair (const Glib::ustring& label
     _rb2 = manage (new Gtk::RadioButton (group, label2, true));
     add (*_rb2);
     _rb2->set_active();
-    _tt.set_tip (*_rb1, tip1);
-    _tt.set_tip (*_rb2, tip2);
+    _rb1->set_tooltip_text(tip1);
+    _rb2->set_tooltip_text(tip2);
     _changed_connection = _rb1->signal_toggled().connect (sigc::mem_fun (*this, &RegisteredRadioButtonPair::on_value_changed));
 }
 

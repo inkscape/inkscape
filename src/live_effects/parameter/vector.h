@@ -12,8 +12,6 @@
 #include <glib.h>
 #include <2geom/point.h>
 
-#include <gtkmm/tooltips.h>
-
 #include "live_effects/parameter/parameter.h"
 
 #include "knot-holder-entity.h"
@@ -33,7 +31,7 @@ public:
                 Geom::Point default_vector = Geom::Point(1,0) );
     virtual ~VectorParam();
 
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
+    virtual Gtk::Widget * param_newWidget();
     inline const gchar *handleTip() const { return param_tooltip.c_str(); }
 
     virtual bool param_readSVGValue(const gchar * strvalue);

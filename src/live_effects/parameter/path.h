@@ -12,8 +12,6 @@
 #include <glib.h>
 #include <2geom/path.h>
 
-#include <gtkmm/tooltips.h>
-
 #include "live_effects/parameter/parameter.h"
 #include "live_effects/parameter/path-reference.h"
 #include <stddef.h>
@@ -36,7 +34,7 @@ public:
     std::vector<Geom::Path> const & get_pathvector();
     Geom::Piecewise<Geom::D2<Geom::SBasis> > const & get_pwd2();
 
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
+    virtual Gtk::Widget * param_newWidget();
 
     virtual bool param_readSVGValue(const gchar * strvalue);
     virtual gchar * param_getSVGValue() const;

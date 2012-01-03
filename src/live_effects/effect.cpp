@@ -551,7 +551,7 @@ Effect::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVector
  * This *creates* a new widget, management of deletion should be done by the caller
  */
 Gtk::Widget *
-Effect::newWidget(Gtk::Tooltips * tooltips)
+Effect::newWidget()
 {
     // use manage here, because after deletion of Effect object, others might still be pointing to this widget.
     Gtk::VBox * vbox = Gtk::manage( new Gtk::VBox() );
@@ -562,12 +562,12 @@ Effect::newWidget(Gtk::Tooltips * tooltips)
     while (it != param_vector.end()) {
         if ((*it)->widget_is_visible) {
             Parameter * param = *it;
-            Gtk::Widget * widg = param->param_newWidget(tooltips);
+            Gtk::Widget * widg = param->param_newWidget();
             Glib::ustring * tip = param->param_getTooltip();
             if (widg) {
                 vbox->pack_start(*widg, true, true, 2);
                 if (tip != NULL) {
-                    tooltips->set_tip(*widg, *tip);
+                    widg->set_tooltip_text(*tip);
                 }
             }
         }

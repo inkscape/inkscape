@@ -154,7 +154,6 @@ public:
                                 // if a callback checks it, it must reset it back to false
 
 protected:
-    Gtk::Tooltips     _tt;
     sigc::connection  _toggled_connection;
     void on_toggled();
 };
@@ -286,7 +285,6 @@ public:
                                     // if a callback checks it, it must reset it back to false
 protected:
     Gtk::RadioButton *_rb1, *_rb2;
-    Gtk::Tooltips     _tt;
     sigc::connection _changed_connection;
     void on_value_changed();
 };

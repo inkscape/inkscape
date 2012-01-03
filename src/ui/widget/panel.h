@@ -94,9 +94,6 @@ protected:
     void _addResponseButton(Gtk::Button *button, int response_id);
     Inkscape::Selection *_getSelection();
 
-    /** Tooltips object for all descendants to use */
-    Gtk::Tooltips _tooltips;
-
     Glib::ustring const _prefs_path;
 
     bool _menu_desired;

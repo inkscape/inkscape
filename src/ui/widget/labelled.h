@@ -59,7 +59,6 @@ protected:
     Gtk::Label   *_label;
     Gtk::Label   *_suffix;
     Gtk::Widget  *_icon;
-    Gtk::Tooltips _tooltips;
 };
 
 } // namespace Widget

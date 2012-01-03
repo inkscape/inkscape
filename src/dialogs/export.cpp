@@ -1022,7 +1022,7 @@ create_progress_dialog (GtkObject *base, gchar *progress_text) {
 
     gtk_progress_bar_set_orientation ( (GtkProgressBar *) prg,
                                        GTK_PROGRESS_LEFT_TO_RIGHT);
-    gtk_box_pack_start ((GtkBox *) ((GtkDialog *) dlg)->vbox,
+    gtk_box_pack_start ((GtkBox *) gtk_dialog_get_content_area((GtkDialog *) dlg),
                         prg, FALSE, FALSE, 4 );
     btn = gtk_dialog_add_button ( GTK_DIALOG (dlg),
                                   GTK_STOCK_CANCEL,
@@ -1992,7 +1992,7 @@ static float sp_export_value_get( GtkObject *base, const gchar *key )
 
     adj = (GtkAdjustment *)g_object_get_data (G_OBJECT(base), key);
 
-    return adj->value;
+    return gtk_adjustment_get_value (adj);
 }
 
 /**

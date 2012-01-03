@@ -18,19 +18,17 @@ namespace UI {
 namespace Widget {
 
 Button::Button(Glib::ustring const &label, Glib::ustring const &tooltip)
-    : _tooltips()
 {
     set_use_underline (true);
     set_label (label);
-    _tooltips.set_tip(*this, tooltip);
+    set_tooltip_text(tooltip);
 }
 
 CheckButton::CheckButton(Glib::ustring const &label, Glib::ustring const &tooltip)
-    : _tooltips()
 {
     set_use_underline (true);
     set_label (label);
-    _tooltips.set_tip(*this, tooltip);
+    set_tooltip_text(tooltip);
 }
 
 } // namespace Widget

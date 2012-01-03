@@ -84,7 +84,7 @@ VectorParam::param_getSVGValue() const
 }
 
 Gtk::Widget *
-VectorParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
+VectorParam::param_newWidget()
 {
     Inkscape::UI::Widget::RegisteredVector * pointwdg = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredVector( param_label,

@@ -128,7 +128,6 @@ DocumentProperties::DocumentProperties()
       _grids_button_remove(C_("Grid", "_Remove"), _("Remove selected grid.")),
       _grids_label_def("", Gtk::ALIGN_LEFT)
 {
-    _tt.enable();
     _getContents()->set_spacing (4);
     _getContents()->pack_start(_notebook, true, true);
 

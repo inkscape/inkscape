@@ -28,8 +28,7 @@ Labelled::Labelled(Glib::ustring const &label, Glib::ustring const &tooltip,
                    bool mnemonic)
     : _widget(widget),
       _label(new Gtk::Label(label, 1.0, 0.5, mnemonic)),
-      _suffix(new Gtk::Label(suffix, 0.0, 0.5)),
-      _tooltips()
+      _suffix(new Gtk::Label(suffix, 0.0, 0.5))
 {
     g_assert(g_utf8_validate(icon.c_str(), -1, NULL));
     if (icon != "") {
@@ -41,7 +40,7 @@ Labelled::Labelled(Glib::ustring const &label, Glib::ustring const &tooltip,
     if (mnemonic) {
         _label->set_mnemonic_widget(*_widget);
     }
-    _tooltips.set_tip(*_widget, tooltip);
+    widget->set_tooltip_text(tooltip);
 }
 
 

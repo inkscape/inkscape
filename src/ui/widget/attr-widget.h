@@ -156,9 +156,6 @@ protected:
         return 0;
     }
 
-protected:
-    Gtk::Tooltips _tt;
-
 private:
     const SPAttributeEnum _attr;
     DefaultValueHolder _default;

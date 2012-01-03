@@ -92,11 +92,6 @@ protected:
     Glib::ustring  _title;
     Glib::ustring  _apply_label;
 
-    /**
-     * Tooltips object for all descendants to use
-     */
-    Gtk::Tooltips tooltips;
-
     virtual void   _handleResponse(int response_id);
 
     virtual bool   _onDeleteEvent (GdkEventAny*);

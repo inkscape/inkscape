@@ -13,8 +13,6 @@
 
 #include <glib.h>
 
-#include <gtkmm/tooltips.h>
-
 #include "live_effects/parameter/parameter.h"
 
 #include "svg/svg.h"
@@ -46,7 +44,7 @@ public:
         return _vector;
     }
 
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * /*tooltips*/) {
+    virtual Gtk::Widget * param_newWidget() {
         return NULL;
     }
 

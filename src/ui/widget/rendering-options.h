@@ -43,9 +43,6 @@ protected:
     Gtk::Frame       _frame_bitmap;
     Scalar           _dpi; // DPI of bitmap to render
 
-    // Tooltip manager
-    Gtk::Tooltips    _tt;
-
     // callback for bitmap button
     void _toggled();
 };

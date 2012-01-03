@@ -1494,7 +1494,7 @@ static void clonetiler_value_changed(GtkAdjustment *adj, gpointer data)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     const gchar *pref = (const gchar *) data;
-    prefs->setDouble(prefs_path + pref, adj->value);
+    prefs->setDouble(prefs_path + pref, gtk_adjustment_get_value (adj));
 }
 
 static GtkWidget * clonetiler_spinbox(const char *tip, const char *attr, double lower, double upper, const gchar *suffix, bool exponent = false)
@@ -1555,7 +1555,7 @@ static void clonetiler_xy_changed(GtkAdjustment *adj, gpointer data)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     const gchar *pref = (const gchar *) data;
-    prefs->setInt(prefs_path + pref, (int) floor(adj->value + 0.5));
+    prefs->setInt(prefs_path + pref, (int) floor(gtk_adjustment_get_value (adj) + 0.5));
 }
 
 static void clonetiler_keep_bbox_toggled(GtkToggleButton *tb, gpointer /*data*/)
@@ -1706,7 +1706,7 @@ static void clonetiler_switch_to_fill(GtkToggleButton */*tb*/, GtkWidget *dlg)
 
 static void clonetiler_fill_width_changed(GtkAdjustment *adj, GtkWidget *u)
 {
-    gdouble const raw_dist = adj->value;
+    gdouble const raw_dist = gtk_adjustment_get_value (adj);
     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
     gdouble const pixels = sp_units_get_pixels (raw_dist, unit);
 

@@ -181,7 +181,10 @@ static void sp_event_context_dispose(GObject *object) {
  */
 void sp_event_context_update_cursor(SPEventContext *ec) {
     GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(ec->desktop));
-    if (w->window) {
+    if (gtk_widget_get_window (w)) {
+	
+        GtkStyle *style = gtk_widget_get_style(w);
+
         /* fixme: */
         if (ec->cursor_shape) {
             GdkDisplay *display = gdk_display_get_default();
@@ -191,9 +194,10 @@ void sp_event_context_update_cursor(SPEventContext *ec) {
                 guint32 strokeColor = sp_desktop_get_color_tool(ec->desktop, ec->tool_url, false, &strokeHasColor);
                 double fillOpacity = fillHasColor ? sp_desktop_get_opacity_tool(ec->desktop, ec->tool_url, true) : 0;
                 double strokeOpacity = strokeHasColor ? sp_desktop_get_opacity_tool(ec->desktop, ec->tool_url, false) : 0;
+
                 GdkPixbuf *pixbuf = sp_cursor_pixbuf_from_xpm(
                     ec->cursor_shape,
-                    w->style->black, w->style->white,
+                    style->black, style->white,
                     SP_RGBA32_U_COMPOSE(SP_RGBA32_R_U(fillColor),SP_RGBA32_G_U(fillColor),SP_RGBA32_B_U(fillColor),SP_COLOR_F_TO_U(fillOpacity)),
                     SP_RGBA32_U_COMPOSE(SP_RGBA32_R_U(strokeColor),SP_RGBA32_G_U(strokeColor),SP_RGBA32_B_U(strokeColor),SP_COLOR_F_TO_U(strokeOpacity))
                     );
@@ -211,14 +215,14 @@ void sp_event_context_update_cursor(SPEventContext *ec) {
                     if (ec->cursor)
                         gdk_cursor_unref(ec->cursor);
                     ec->cursor = gdk_cursor_new_from_pixmap(bitmap, mask,
-                            &w->style->black, &w->style->white, ec->hot_x,
+                            &style->black, &style->white, ec->hot_x,
                             ec->hot_y);
                     g_object_unref(bitmap);
                     g_object_unref(mask);
                 }
             }
         }
-        gdk_window_set_cursor(w->window, ec->cursor);
+        gdk_window_set_cursor(gtk_widget_get_window (w), ec->cursor);
         gdk_flush();
     }
     ec->desktop->waiting_cursor = false;

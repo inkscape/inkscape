@@ -80,7 +80,6 @@ protected:
     void _handleDeactivateDesktop(Inkscape::Application *application, SPDesktop *desktop);
 
     Inkscape::XML::SignalObserver _emb_profiles_observer, _scripts_observer;
-    Gtk::Tooltips _tt;
     Gtk::Notebook  _notebook;
 
     UI::Widget::NotebookPage   _page_page;

@@ -33,7 +33,6 @@ struct SPCurve;
 namespace Gtk {
     class Widget;
     class VBox;
-    class Tooltips;
 }
 
 namespace Inkscape {
@@ -84,7 +83,7 @@ public:
 
     virtual void doEffect (SPCurve * curve);
 
-    virtual Gtk::Widget * newWidget(Gtk::Tooltips * tooltips);
+    virtual Gtk::Widget * newWidget();
 
     /**
      * Sets all parameters to their default values and writes them to SVG.

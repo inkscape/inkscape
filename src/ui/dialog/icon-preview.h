@@ -65,8 +65,6 @@ private:
     bool pending;
     gdouble minDelay;
 
-    Gtk::Tooltips   tips;
-
     Gtk::VBox       iconBox;
     Gtk::HPaned     splitter;
 

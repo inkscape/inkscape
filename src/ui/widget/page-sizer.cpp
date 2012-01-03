@@ -369,7 +369,7 @@ PageSizer::PageSizer(Registry & _wr)
     _fitPageButtonAlign.add(_fitPageButton);
     _fitPageButton.set_use_underline();
     _fitPageButton.set_label(_("_Resize page to drawing or selection"));
-    _tips.set_tip(_fitPageButton, _("Resize the page to fit the current selection, or the entire drawing if there is no selection"));
+    _fitPageButton.set_tooltip_text(_("Resize the page to fit the current selection, or the entire drawing if there is no selection"));
 
 }
 

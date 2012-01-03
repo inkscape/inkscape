@@ -59,7 +59,6 @@ protected:
     Gtk::RadioButtonGroup _radio_button_group;
     Gtk::RadioButton  *_button1;
     Gtk::RadioButton  *_button2;
-    Gtk::Tooltips      _tt;
     Registry          *_wr;
     Glib::ustring      _key;
     sigc::connection   _scale_changed_connection;

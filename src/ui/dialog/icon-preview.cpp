@@ -189,7 +189,7 @@ IconPreviewPanel::IconPreviewPanel() :
             buttons[i]->set_icon_widget(*images[i]);
         }
 
-        tips.set_tip((*buttons[i]), label);
+        buttons[i]->set_tooltip_text(label);
 
         buttons[i]->signal_clicked().connect( sigc::bind<int>( sigc::mem_fun(*this, &IconPreviewPanel::on_button_clicked), i) );
 
@@ -234,7 +234,7 @@ IconPreviewPanel::IconPreviewPanel() :
 
     selectionButton = new Gtk::CheckButton(C_("Icon preview window", "Sele_ction"), true);//selectionButton = (Gtk::ToggleButton*) gtk_check_button_new_with_mnemonic(_("_Selection")); // , GTK_RESPONSE_APPLY
     magBox->pack_start( *selectionButton, Gtk::PACK_SHRINK );
-    tips.set_tip((*selectionButton), _("Selection only or whole document"));
+    selectionButton->set_tooltip_text(_("Selection only or whole document"));
     selectionButton->signal_clicked().connect( sigc::mem_fun(*this, &IconPreviewPanel::modeToggled) );
 
     gint val = prefs->getBool("/iconpreview/selectionOnly");

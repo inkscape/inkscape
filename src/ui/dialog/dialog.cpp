@@ -102,7 +102,6 @@ Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_pat
       _verb_num(verb_num),
       _title(),
       _apply_label(apply_label),
-      tooltips(),
       _behavior(0)
 {
     gchar title[500];

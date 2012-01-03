@@ -34,7 +34,7 @@ public:
                const Glib::ustring default_value = "");
     virtual ~TextParam() {}
 
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
+    virtual Gtk::Widget * param_newWidget();
 
     virtual bool param_readSVGValue(const gchar * strvalue);
     virtual gchar * param_getSVGValue() const;
@@ -71,7 +71,7 @@ public:
     TextParamInternal(Effect* effect) :
         TextParam("", "", "", NULL, effect) {}
 
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * /*tooltips*/) { return NULL; }
+    virtual Gtk::Widget * param_newWidget() { return NULL; }
 };
 
 } //namespace LivePathEffect

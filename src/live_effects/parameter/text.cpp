@@ -92,7 +92,7 @@ TextParam::param_getSVGValue() const
 }
 
 Gtk::Widget *
-TextParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
+TextParam::param_newWidget()
 {
     Inkscape::UI::Widget::RegisteredText *rsu = Gtk::manage(new Inkscape::UI::Widget::RegisteredText(
         param_label, param_tooltip, param_key, *param_wr, param_effect->getRepr(), param_effect->getSPDoc()));

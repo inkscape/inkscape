@@ -42,7 +42,7 @@ PowerStrokePointArrayParam::~PowerStrokePointArrayParam()
 }
 
 Gtk::Widget *
-PowerStrokePointArrayParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
+PowerStrokePointArrayParam::param_newWidget()
 {
     return NULL;
 /*

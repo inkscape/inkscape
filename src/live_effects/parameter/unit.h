@@ -32,7 +32,7 @@ public:
     void param_set_value(SPUnit const *val);
     const gchar *get_abbreviation();
 
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
+    virtual Gtk::Widget * param_newWidget();
 
     operator SPUnit const *() { return unit; }
 

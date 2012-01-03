@@ -153,14 +153,14 @@ Transformation::Transformation()
 
     resetButton = addResponseButton(Gtk::Stock::CLEAR, 0);
     if (resetButton) {
-        _tooltips.set_tip((*resetButton), _("Reset the values on the current tab to defaults"));
+        resetButton->set_tooltip_text(_("Reset the values on the current tab to defaults"));
         resetButton->set_sensitive(true);
         resetButton->signal_clicked().connect(sigc::mem_fun(*this, &Transformation::onClear));
     }
 
     applyButton = addResponseButton(Gtk::Stock::APPLY, Gtk::RESPONSE_APPLY);
     if (applyButton) {
-        _tooltips.set_tip((*applyButton), _("Apply transformation to selection"));
+        applyButton->set_tooltip_text(_("Apply transformation to selection"));
         applyButton->set_sensitive(false);
     }
 

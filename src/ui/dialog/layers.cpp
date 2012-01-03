@@ -96,7 +96,7 @@ void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned i
             }
 
             if ( action && action->tip ) {
-                _tips.set_tip( btn, action->tip );
+                btn.set_tooltip_text (action->tip);
             }
         }
     }

@@ -25,7 +25,6 @@
 #include <gtkmm/label.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/table.h>
-#include <gtkmm/tooltips.h>
 
 #include "inkscape.h"
 #include "extension/implementation/implementation.h"
@@ -638,7 +637,6 @@ Extension::error_file_close (void)
 
 /** \brief  A widget to represent the inside of an AutoGUI widget */
 class AutoGUI : public Gtk::VBox {
-    Gtk::Tooltips _tooltips;
 public:
     /** \brief  Create an AutoGUI object */
     AutoGUI (void) : Gtk::VBox() {};
@@ -654,7 +652,7 @@ public:
         if (widg == NULL) return;
         this->pack_start(*widg, false, false, 2);
         if (tooltip != NULL) {
-            _tooltips.set_tip(*widg, Glib::ustring(_(tooltip)));
+            widg->set_tooltip_text(Glib::ustring(_(tooltip)));
         }
         return;
     };

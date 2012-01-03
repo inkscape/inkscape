@@ -14,7 +14,6 @@
 
 #include <gtkmm/treeview.h>
 #include <gtkmm/treestore.h>
-#include <gtkmm/tooltips.h>
 #include <gtkmm/scale.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/box.h>
@@ -112,7 +111,6 @@ private:
     std::vector<Gtk::Widget*> _watchingNonTop;
     std::vector<Gtk::Widget*> _watchingNonBottom;
 
-    Gtk::Tooltips _tips;
     Gtk::TreeView _tree;
     Gtk::HButtonBox _buttonsRow;
     Gtk::ScrolledWindow _scroller;

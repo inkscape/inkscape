@@ -12,8 +12,6 @@
 #include <glib.h>
 #include <2geom/point.h>
 
-#include <gtkmm/tooltips.h>
-
 #include "live_effects/parameter/array.h"
 
 #include "knot-holder-entity.h"
@@ -34,7 +32,7 @@ public:
                 const gchar *handle_tip = NULL); // tip for automatically associated on-canvas handle
     virtual ~PowerStrokePointArrayParam();
 
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
+    virtual Gtk::Widget * param_newWidget();
 
     virtual void param_transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/);
 

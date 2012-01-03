@@ -79,7 +79,7 @@ void ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& la
     _hscale->set_size_request (100, -1);
     _old_val = 10;
     _hscale->set_value (_old_val);
-    _tt.set_tip (*_hscale, tip1);
+    _hscale->set_tooltip_text (tip1);
     _hbox->add (*_hscale);    
     
     
@@ -91,8 +91,8 @@ void ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& la
     _radio_button_group = _button1->get_group();
     _button2 = manage (new Gtk::RadioButton);
     _button2->set_group(_radio_button_group);    
-    _tt.set_tip (*_button1, tip2);
-    _tt.set_tip (*_button2, tip3);    
+    _button1->set_tooltip_text (tip2);
+    _button2->set_tooltip_text (tip3);    
     _button1->add (*theLabel3);
     _button1->set_alignment (0.0, 0.5);    
     _button2->add (*theLabel2);

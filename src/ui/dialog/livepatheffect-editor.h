@@ -17,7 +17,6 @@
 #include <gtkmm/label.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/frame.h>
-#include <gtkmm/tooltips.h>
 #include "ui/widget/combo-enums.h"
 #include "live_effects/effect-enum.h"
 #include <gtkmm/liststore.h>
@@ -99,7 +98,6 @@ private:
     Gtk::HBox effectapplication_hbox;
     Gtk::VBox effectcontrol_vbox;
     Gtk::VBox effectlist_vbox;
-    Gtk::Tooltips tooltips;
     ModelColumns columns;
     Gtk::ScrolledWindow scrolled_window;
     Gtk::TreeView effectlist_view;

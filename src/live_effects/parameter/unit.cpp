@@ -64,7 +64,7 @@ UnitParam::get_abbreviation()
 }
 
 Gtk::Widget *
-UnitParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
+UnitParam::param_newWidget()
 {
     Inkscape::UI::Widget::RegisteredUnitMenu* unit_menu = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredUnitMenu(param_label,

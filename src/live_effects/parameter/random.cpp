@@ -115,7 +115,7 @@ RandomParam::resetRandomizer()
 
 
 Gtk::Widget *
-RandomParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
+RandomParam::param_newWidget()
 {
     Inkscape::UI::Widget::RegisteredRandom* regrandom = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredRandom( param_label,

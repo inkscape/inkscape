@@ -36,7 +36,7 @@ ColorPicker::ColorPicker (const Glib::ustring& title, const Glib::ustring& tip,
     set_relief (Gtk::RELIEF_NONE);
     _preview.show();
     add (_preview);
-    _tt.set_tip (*this, tip);
+    set_tooltip_text (tip);
 }
 
 ColorPicker::~ColorPicker()

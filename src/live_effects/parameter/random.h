@@ -33,7 +33,7 @@ public:
     virtual gchar * param_getSVGValue() const;
     virtual void param_set_default();
 
-    virtual Gtk::Widget * param_newWidget(Gtk::Tooltips * tooltips);
+    virtual Gtk::Widget * param_newWidget();
 
     void param_set_value(gdouble val, long newseed);
     void param_make_integer(bool yes = true);

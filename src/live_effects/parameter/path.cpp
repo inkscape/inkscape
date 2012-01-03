@@ -140,13 +140,13 @@ PathParam::param_getSVGValue() const
 }
 
 Gtk::Widget *
-PathParam::param_newWidget(Gtk::Tooltips * tooltips)
+PathParam::param_newWidget()
 {
     Gtk::HBox * _widget = Gtk::manage(new Gtk::HBox());
 
     Gtk::Label* pLabel = Gtk::manage(new Gtk::Label(param_label));
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pLabel, true, true);
-    tooltips->set_tip(*pLabel, param_tooltip);
+    pLabel->set_tooltip_text(param_tooltip);
 
     Gtk::Widget*  pIcon = Gtk::manage( sp_icon_get_icon( "tool-node-editor", Inkscape::ICON_SIZE_BUTTON) );
     Gtk::Button * pButton = Gtk::manage(new Gtk::Button());
@@ -156,7 +156,7 @@ PathParam::param_newWidget(Gtk::Tooltips * tooltips)
     pButton->show();
     pButton->signal_clicked().connect(sigc::mem_fun(*this, &PathParam::on_edit_button_click));
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
-    tooltips->set_tip(*pButton, _("Edit on-canvas"));
+    pButton->set_tooltip_text(_("Edit on-canvas"));
 
     pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_COPY, Inkscape::ICON_SIZE_BUTTON) );
     pButton = Gtk::manage(new Gtk::Button());
@@ -166,7 +166,7 @@ PathParam::param_newWidget(Gtk::Tooltips * tooltips)
     pButton->show();
     pButton->signal_clicked().connect(sigc::mem_fun(*this, &PathParam::on_copy_button_click));
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
-    tooltips->set_tip(*pButton, _("Copy path"));
+    pButton->set_tooltip_text(_("Copy path"));
 
     pIcon = Gtk::manage( sp_icon_get_icon( GTK_STOCK_PASTE, Inkscape::ICON_SIZE_BUTTON) );
     pButton = Gtk::manage(new Gtk::Button());
@@ -176,7 +176,7 @@ PathParam::param_newWidget(Gtk::Tooltips * tooltips)
     pButton->show();
     pButton->signal_clicked().connect(sigc::mem_fun(*this, &PathParam::on_paste_button_click));
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
-    tooltips->set_tip(*pButton, _("Paste path"));
+    pButton->set_tooltip_text(_("Paste path"));
 
     pIcon = Gtk::manage( sp_icon_get_icon( "edit-clone", Inkscape::ICON_SIZE_BUTTON) );
     pButton = Gtk::manage(new Gtk::Button());
@@ -186,7 +186,7 @@ PathParam::param_newWidget(Gtk::Tooltips * tooltips)
     pButton->show();
     pButton->signal_clicked().connect(sigc::mem_fun(*this, &PathParam::on_link_button_click));
     static_cast<Gtk::HBox*>(_widget)->pack_start(*pButton, true, true);
-    tooltips->set_tip(*pButton, _("Link to path"));
+    pButton->set_tooltip_text(_("Link to path"));
 
     static_cast<Gtk::HBox*>(_widget)->show_all_children();
 

@@ -56,7 +56,6 @@ protected:
     virtual void on_changed (guint32);
 
     ColorPreview        _preview;
-    Gtk::Tooltips       _tt;
 
     /*const*/ Glib::ustring _title;
     sigc::signal<void,guint32> _changed_signal;
@@ -69,7 +68,6 @@ protected:
     //Inkscape::UI::Dialog::Dialog _colorSelectorDialog;
     Gtk::Dialog _colorSelectorDialog;
     SPColorSelector *_colorSelector;
-
 };
 
 }//namespace Widget

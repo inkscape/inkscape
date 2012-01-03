@@ -162,8 +162,6 @@ protected:
  
     void fire_fit_canvas_to_selection_or_drawing();
     
-    Gtk::Tooltips _tips;
-    
     //### The Paper Size selection list
     Gtk::HBox _paperSizeListBox;
     Gtk::Label _paperSizeListLabel;

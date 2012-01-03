@@ -1209,10 +1209,10 @@ sp_ui_drag_data_received(GtkWidget *widget,
             Geom::Point const button_dt(desktop->w2d(where));
             Geom::Point const button_doc(desktop->dt2doc(button_dt));
 
-            if ( data->length == 8 ) {
+            if ( gtk_selection_data_get_length (data) == 8 ) {
                 gchar colorspec[64] = {0};
                 // Careful about endian issues.
-                guint16* dataVals = (guint16*)data->data;
+                guint16* dataVals = (guint16*)gtk_selection_data_get_data (data);
                 sp_svg_write_color( colorspec, sizeof(colorspec),
                                     SP_RGBA32_U_COMPOSE(
                                         0x0ff & (dataVals[0] >> 8),
@@ -1241,7 +1241,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                 //}
 
                 if (!consumed && item) {
-                    bool fillnotstroke = (drag_context->action != GDK_ACTION_MOVE);
+                    bool fillnotstroke = (gdk_drag_context_get_actions (drag_context) != GDK_ACTION_MOVE);
                     if (fillnotstroke &&
                         (SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))) {
                         Path *livarot_path = Path_for_item(item, true, true);
@@ -1285,12 +1285,12 @@ sp_ui_drag_data_received(GtkWidget *widget,
         {
             bool worked = false;
             Glib::ustring colorspec;
-            if ( data->format == 8 ) {
+            if ( gtk_selection_data_get_format (data) == 8 ) {
                 ege::PaintDef color;
                 worked = color.fromMIMEData("application/x-oswb-color",
-                                            reinterpret_cast<char*>(data->data),
-                                            data->length,
-                                            data->format);
+                                            reinterpret_cast<char const *>(gtk_selection_data_get_data (data)),
+                                            gtk_selection_data_get_length (data),
+                                            gtk_selection_data_get_format (data));
                 if ( worked ) {
                     if ( color.getType() == ege::PaintDef::CLEAR ) {
                         colorspec = ""; // TODO check if this is sufficient
@@ -1344,7 +1344,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
                 }
 
                 if (!consumed && item) {
-                    bool fillnotstroke = (drag_context->action != GDK_ACTION_MOVE);
+                    bool fillnotstroke = (gdk_drag_context_get_actions (drag_context) != GDK_ACTION_MOVE);
                     if (fillnotstroke &&
                         (SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))) {
                         Path *livarot_path = Path_for_item(item, true, true);
@@ -1386,9 +1386,9 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
         case SVG_DATA:
         case SVG_XML_DATA: {
-            gchar *svgdata = (gchar *)data->data;
+            gchar *svgdata = (gchar *)gtk_selection_data_get_data (data);
 
-            Inkscape::XML::Document *rnewdoc = sp_repr_read_mem(svgdata, data->length, SP_SVG_NS_URI);
+            Inkscape::XML::Document *rnewdoc = sp_repr_read_mem(svgdata, gtk_selection_data_get_length (data), SP_SVG_NS_URI);
 
             if (rnewdoc == NULL) {
                 sp_ui_error_dialog(_("Could not parse SVG data"));
@@ -1435,7 +1435,7 @@ sp_ui_drag_data_received(GtkWidget *widget,
         }
 
         case URI_LIST: {
-            gchar *uri = (gchar *)data->data;
+            gchar *uri = (gchar *)gtk_selection_data_get_data (data);
             sp_ui_import_files(uri);
             break;
         }
@@ -1457,7 +1457,10 @@ sp_ui_drag_data_received(GtkWidget *widget,
             ext->set_gui(false);
 
             gchar *filename = g_build_filename( g_get_tmp_dir(), "inkscape-dnd-import", NULL );
-            g_file_set_contents(filename, reinterpret_cast<gchar const *>(data->data), data->length, NULL);
+            g_file_set_contents(filename, 
+			    reinterpret_cast<gchar const *>(gtk_selection_data_get_data (data)), 
+			    gtk_selection_data_get_length (data), 
+			    NULL);
             file_import(doc, filename, ext);
             g_free(filename);
 
@@ -1585,7 +1588,7 @@ sp_ui_overwrite_file(gchar const *filename)
 static void
 sp_ui_menu_item_set_name(GtkWidget *data, Glib::ustring const &name)
 {
-    void *child = GTK_BIN (data)->child;
+    void *child = gtk_bin_get_child (GTK_BIN (data));
     //child is either
     //- a GtkHBox, whose first child is a label displaying name if the menu
     //item has an accel key

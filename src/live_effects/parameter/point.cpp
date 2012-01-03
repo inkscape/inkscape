@@ -73,7 +73,7 @@ PointParam::param_getSVGValue() const
 }
 
 Gtk::Widget *
-PointParam::param_newWidget(Gtk::Tooltips * /*tooltips*/)
+PointParam::param_newWidget()
 {
     Inkscape::UI::Widget::RegisteredTransformedPoint * pointwdg = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredTransformedPoint( param_label,
