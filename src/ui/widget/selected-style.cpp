@@ -70,6 +70,16 @@ ss_subselection_changed( gpointer /*dragger*/, gpointer data )
     ss_selection_changed (NULL, data);
 }
 
+namespace {
+
+void clearTooltip( Gtk::Widget &widget )
+{
+    widget.set_tooltip_text("");
+    widget.set_has_tooltip(false);
+}
+
+} // namespace
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {
@@ -904,8 +914,8 @@ SelectedStyle::update()
         place->remove();
         flag_place->remove();
 
-        place->set_tooltip_text(0);
-        flag_place->set_tooltip_text(0);
+        clearTooltip(*place);
+        clearTooltip(*flag_place);
 
         _mode[i] = SS_NA;
         _paintserver_id[i].clear();
@@ -1012,8 +1022,8 @@ SelectedStyle::update()
     }
 
 // Now query opacity
-    _opacity_place.set_tooltip_text(0);
-    _opacity_sb.set_tooltip_text(0);
+    clearTooltip(_opacity_place);
+    clearTooltip(_opacity_sb);
 
     int result = sp_desktop_query_style (_desktop, query, QUERY_STYLE_PROPERTY_MASTEROPACITY);
 

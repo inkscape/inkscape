@@ -40,16 +40,16 @@ RenderingOptions::RenderingOptions () :
             false)
 {
     // set up tooltips
-    _radio_vector.set_tooltip_text (Glib::ustring(
+    _radio_vector.set_tooltip_text(
                         _("Render using Cairo vector operations.  "
                         "The resulting image is usually smaller in file "
                         "size and can be arbitrarily scaled, but some "
-                        "filter effects will not be correctly rendered.")));
-    _radio_bitmap.set_tooltip_text (Glib::ustring(
+                        "filter effects will not be correctly rendered."));
+    _radio_bitmap.set_tooltip_text(
                         _("Render everything as bitmap.  The resulting image "
                         "is usually larger in file size and cannot be "
                         "arbitrarily scaled without quality loss, but all "
-                        "objects will be rendered exactly as displayed.")));
+                        "objects will be rendered exactly as displayed."));
 
     set_border_width(2);
 

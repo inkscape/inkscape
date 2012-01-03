@@ -160,7 +160,10 @@ StyleSwatch::StyleSwatch(SPCSSAttr *css, gchar const *main_tip)
 
     _swatch.signal_button_press_event().connect(sigc::mem_fun(*this, &StyleSwatch::on_click));
 
-    _swatch.set_tooltip_text(main_tip);
+    if (main_tip)
+    {
+        _swatch.set_tooltip_text(main_tip);
+    }
 }
 
 void StyleSwatch::setClickVerb(sp_verb_t verb_t) {
@@ -327,8 +330,9 @@ StyleSwatch::setStyle(SPStyle *query)
             g_free (str);
         }
     } else {
-        _stroke_width_place.set_tooltip_text(0);
-        _stroke_width.set_markup ("");
+        _stroke_width_place.set_tooltip_text("");
+        _stroke_width.set_markup("");
+        _stroke_width.set_has_tooltip(false);
     }
 
     gdouble op = SP_SCALE24_TO_FLOAT(query->opacity.value);
@@ -348,8 +352,9 @@ StyleSwatch::setStyle(SPStyle *query)
             g_free (str);
         }
     } else {
-        _opacity_place.set_tooltip_text(0);
-        _opacity_value.set_markup ("");
+        _opacity_place.set_tooltip_text("");
+        _opacity_value.set_markup("");
+        _opacity_value.set_has_tooltip(false);
     }
 
     show_all();

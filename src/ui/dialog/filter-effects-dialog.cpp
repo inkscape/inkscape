@@ -103,7 +103,9 @@ public:
           _true_val(tv), _false_val(fv)
     {
         signal_toggled().connect(signal_attr_changed().make_slot());
-        if (tip_text) set_tooltip_text(tip_text);
+        if (tip_text) {
+            set_tooltip_text(tip_text);
+        }
     }
 
     Glib::ustring get_as_attribute() const
@@ -135,7 +137,9 @@ public:
         : Inkscape::UI::Widget::SpinButton(climb_rate, digits),
           AttrWidget(a, def)
     {
-        if (tip_text) set_tooltip_text(tip_text);
+        if (tip_text) {
+            set_tooltip_text(tip_text);
+        }
         set_range(lower, upper);
         set_increments(step_inc, 0);
 
@@ -227,8 +231,12 @@ public:
         : AttrWidget(a, def), //TO-DO: receive default num-opt-num as parameter in the constructor
           _s1(climb_rate, digits), _s2(climb_rate, digits)
     {
-        if (tt1) _s1.set_tooltip_text(tt1);
-        if (tt2) _s2.set_tooltip_text(tt2);
+        if (tt1) {
+            _s1.set_tooltip_text(tt1);
+        }
+        if (tt2) {
+            _s2.set_tooltip_text(tt2);
+        }
         _s1.set_range(lower, upper);
         _s2.set_range(lower, upper);
         _s1.set_increments(step_inc, 0);
@@ -288,7 +296,9 @@ public:
         : AttrWidget(a, def)
     {
         signal_color_set().connect(signal_attr_changed().make_slot());
-        if (tip_text) set_tooltip_text(tip_text);
+        if (tip_text) {
+            set_tooltip_text(tip_text);
+        }
 
         Gdk::Color col;
         col.set_rgb(65535, 65535, 65535);
@@ -336,7 +346,9 @@ public:
         _tree.show();
         add(_tree);
         set_shadow_type(Gtk::SHADOW_IN);
-        if (tip_text) _tree.set_tooltip_text(tip_text);
+        if (tip_text) {
+            _tree.set_tooltip_text(tip_text);
+        }
     }
 
     std::vector<double> get_values() const

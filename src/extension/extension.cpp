@@ -640,21 +640,27 @@ class AutoGUI : public Gtk::VBox {
 public:
     /** \brief  Create an AutoGUI object */
     AutoGUI (void) : Gtk::VBox() {};
-    /** \brief  Adds a widget with a tool tip into the autogui
-        \param  widg  Widget to add
-        \param  tooltip   Tooltip for the widget
-        
-        If there is no widget, nothing happens.  Otherwise it is just
-        added into the VBox.  If there is a tooltip (non-NULL) then it
-        is placed on the widget.
-    */
-    void addWidget (Gtk::Widget * widg, gchar const * tooltip) {
-        if (widg == NULL) return;
-        this->pack_start(*widg, false, false, 2);
-        if (tooltip != NULL) {
-            widg->set_tooltip_text(Glib::ustring(_(tooltip)));
+
+    /**
+     * Adds a widget with a tool tip into the autogui.
+     *
+     * If there is no widget, nothing happens.  Otherwise it is just
+     * added into the VBox.  If there is a tooltip (non-NULL) then it
+     * is placed on the widget.
+     *
+     * @param widg Widget to add.
+     * @param tooltip Tooltip for the widget.
+     */
+    void addWidget(Gtk::Widget *widg, gchar const *tooltip) {
+        if (widg) {
+            this->pack_start(*widg, false, false, 2);
+            if (tooltip) {
+                widg->set_tooltip_text(_(tooltip));
+            } else {
+                widg->set_tooltip_text("");
+                widg->set_has_tooltip(false);
+            }
         }
-        return;
     };
 };
 
