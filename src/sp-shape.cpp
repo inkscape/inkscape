@@ -515,7 +515,7 @@ Geom::OptRect SPShape::sp_shape_bbox(SPItem const *item, Geom::Affine const &tra
         // convert the stroke to a path and calculate that path's geometric bbox
         SPStyle* style = item->style;
         if (!style->stroke.isNone()) {
-            Geom::PathVector *pathv = item_outline(item);
+            Geom::PathVector *pathv = item_outline(item, false);  // disable Path::Coalesce
             if (pathv) {
                 bbox |= bounds_exact_transformed(*pathv, transform);
                 delete pathv;

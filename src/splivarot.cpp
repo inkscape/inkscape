@@ -676,7 +676,7 @@ void item_outline_add_marker( SPObject const *marker_object, Geom::Affine marker
  *  Returns a pathvector that is the outline of the stroked item, with markers.
  *  item must be SPShape or SPText.
  */
-Geom::PathVector* item_outline(SPItem const *item)
+Geom::PathVector* item_outline(SPItem const *item, bool coalesce)
 {
     Geom::PathVector *ret_pathv = NULL;
 
@@ -774,14 +774,18 @@ Geom::PathVector* item_outline(SPItem const *item)
         originaux[0] = res;
         theRes->ConvertToForme(orig, 1, originaux);
 
-        res->Coalesce(5.0);
+        if (coalesce) {
+            res->Coalesce(5.0);
+        }
 
         delete theShape;
         delete theRes;
     } else {
         orig->Outline(res, 0.5 * o_width, o_join, o_butt, 0.5 * o_miter);
 
-        orig->Coalesce(0.5 * o_width);
+        if (coalesce) {
+            orig->Coalesce(0.5 * o_width);
+        }
 
         Shape *theShape = new Shape;
         Shape *theRes = new Shape;
