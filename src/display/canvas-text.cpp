@@ -74,6 +74,8 @@ static void
 sp_canvastext_init (SPCanvasText *canvastext)
 {
     canvastext->anchor_position = TEXT_ANCHOR_CENTER;
+    canvastext->anchor_pos_x_manual = 0;
+    canvastext->anchor_pos_y_manual = 0;
     canvastext->anchor_offset_x = 0;
     canvastext->anchor_offset_y = 0;
     canvastext->rgba = 0x33337fff;
@@ -231,6 +233,10 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
             cl->anchor_offset_x = 0;
             cl->anchor_offset_y = 0;
             break;
+        case TEXT_ANCHOR_MANUAL:
+            cl->anchor_offset_x = (1 + cl->anchor_pos_x_manual) * extents.width/2;
+            cl->anchor_offset_y = -(1 + cl->anchor_pos_y_manual) * extents.height/2;
+            break;
         case TEXT_ANCHOR_CENTER:
         default:
             cl->anchor_offset_x = extents.width/2;
@@ -328,12 +334,13 @@ sp_canvastext_set_fontsize (SPCanvasText *ct, double size)
     ct->fontsize = size;
 }
 
-//void
-//sp_canvastext_set_anchor (SPCanvasText *ct, double anchor_x, double anchor_y)
-//{
-//    ct->anchor_x = anchor_x;
-//    ct->anchor_y = anchor_y;
-//}
+void
+sp_canvastext_set_anchor_manually (SPCanvasText *ct, double anchor_x, double anchor_y)
+{
+    ct->anchor_pos_x_manual = anchor_x;
+    ct->anchor_pos_y_manual = anchor_y;
+    ct->anchor_position = TEXT_ANCHOR_MANUAL;
+}
 
 
 /*

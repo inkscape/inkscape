@@ -29,7 +29,8 @@ enum CanvasTextAnchorPositionEnum {
     TEXT_ANCHOR_BOTTOM,
     TEXT_ANCHOR_LEFT,
     TEXT_ANCHOR_RIGHT,
-    TEXT_ANCHOR_ZERO
+    TEXT_ANCHOR_ZERO,
+    TEXT_ANCHOR_MANUAL
 };
 
 struct SPCanvasText : public SPCanvasItem {
@@ -46,6 +47,8 @@ struct SPCanvasText : public SPCanvasItem {
     gchar* text;
     Geom::Point s; // Is the coordinate of the anchor, which is related to the rectangle filled with the background color
     CanvasTextAnchorPositionEnum anchor_position; // The anchor position specifies where the anchor is with respect to the rectangle filled with the background color
+    double anchor_pos_x_manual;
+    double anchor_pos_y_manual;
     Geom::Affine affine;
     double fontsize;
     double anchor_offset_x;
@@ -63,6 +66,7 @@ void sp_canvastext_set_coords (SPCanvasText *ct, const Geom::Point start);
 void sp_canvastext_set_text (SPCanvasText *ct, gchar const* new_text);
 void sp_canvastext_set_number_as_text (SPCanvasText *ct, int num);
 void sp_canvastext_set_fontsize (SPCanvasText *ct, double size);
+void sp_canvastext_set_anchor_manually (SPCanvasText *ct, double anchor_x, double anchor_y);
 
 #endif // SEEN_SP_CANVASTEXT_H
 
