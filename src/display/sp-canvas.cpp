@@ -52,7 +52,7 @@ static bool const HAS_BROKEN_MOTION_HINTS =
 
 static gint const sp_canvas_update_priority = G_PRIORITY_HIGH_IDLE;
 
-#define SP_CANVAS_WINDOW(c) (((GtkWidget *) (c))->window)
+#define SP_CANVAS_WINDOW(c) (gtk_widget_get_window ((GtkWidget *) (c)))
 
 enum {
     SP_CANVAS_ITEM_VISIBLE = 1 << 7,
@@ -1152,11 +1152,13 @@ static void
 sp_canvas_realize (GtkWidget *widget)
 {
     GdkWindowAttr attributes;
+    GtkAllocation allocation;
     attributes.window_type = GDK_WINDOW_CHILD;
-    attributes.x = widget->allocation.x;
-    attributes.y = widget->allocation.y;
-    attributes.width = widget->allocation.width;
-    attributes.height = widget->allocation.height;
+    gtk_widget_get_allocation (widget, &allocation);
+    attributes.x = allocation.x;
+    attributes.y = allocation.y;
+    attributes.width = allocation.width;
+    attributes.height = allocation.height;
     attributes.wclass = GDK_INPUT_OUTPUT;
     attributes.visual = gdk_rgb_get_visual ();
     attributes.colormap = gdk_rgb_get_cmap ();
@@ -1176,14 +1178,17 @@ sp_canvas_realize (GtkWidget *widget)
                              GDK_FOCUS_CHANGE_MASK);
     gint attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
 
-    widget->window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
-    gdk_window_set_user_data (widget->window, widget);
+    GdkWindow *window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
+    gtk_widget_set_window (widget, window);
+    gdk_window_set_user_data (window, widget);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if ( prefs->getBool("/options/useextinput/value", true) )
         gtk_widget_set_events(widget, attributes.event_mask);
 
-    widget->style = gtk_style_attach (widget->style, widget->window);
+    GtkStyle *style = gtk_widget_get_style (widget);
+
+    gtk_widget_set_style (widget, gtk_style_attach (style, window));
 
     gtk_widget_set_realized (widget, TRUE);
 }
@@ -1225,9 +1230,12 @@ static void
 sp_canvas_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
     SPCanvas *canvas = SP_CANVAS (widget);
+    GtkAllocation widg_allocation;
+   
+    gtk_widget_get_allocation (widget, &widg_allocation);
 
     Geom::IntRect old_area = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
-        widget->allocation.width, widget->allocation.height);
+        widg_allocation.width, widg_allocation.height);
     Geom::IntRect new_area = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
         allocation->width, allocation->height);
 
@@ -1236,27 +1244,27 @@ sp_canvas_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
     if (SP_CANVAS_ITEM_GET_CLASS (canvas->root)->viewbox_changed)
         SP_CANVAS_ITEM_GET_CLASS (canvas->root)->viewbox_changed (canvas->root, new_area);
     
-    if (allocation->width > widget->allocation.width) {
+    if (allocation->width > widg_allocation.width) {
         sp_canvas_request_redraw (canvas,
-                                  canvas->x0 + widget->allocation.width,
+                                  canvas->x0 + widg_allocation.width,
                                   0,
                                   canvas->x0 + allocation->width,
                                   canvas->y0 + allocation->height);
     }
-    if (allocation->height > widget->allocation.height) {
+    if (allocation->height > widg_allocation.height) {
         sp_canvas_request_redraw (canvas,
                                   0,
-                                  canvas->y0 + widget->allocation.height,
+                                  canvas->y0 + widg_allocation.height,
                                   canvas->x0 + allocation->width,
                                   canvas->y0 + allocation->height);
     }
 
-    widget->allocation = *allocation;
+    gtk_widget_set_allocation (widget, allocation);
 
     if (gtk_widget_get_realized (widget)) {
-        gdk_window_move_resize (widget->window,
-                                widget->allocation.x, widget->allocation.y,
-                                widget->allocation.width, widget->allocation.height);
+        gdk_window_move_resize (gtk_widget_get_window (widget),
+                                allocation->x, allocation->y,
+                                allocation->width, allocation->height);
     }
 }
 
@@ -1627,7 +1635,7 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
     pick_current_item (canvas, (GdkEvent *) event);
     status = emit_event (canvas, (GdkEvent *) event);
     if (event->is_hint) {
-        request_motions(widget->window, event);
+        request_motions(gtk_widget_get_window (widget), event);
     }
 
     return status;

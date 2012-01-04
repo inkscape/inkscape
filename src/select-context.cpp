@@ -340,10 +340,11 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                     // if shift or ctrl was pressed, do not move objects;
                     // pass the event to root handler which will perform rubberband, shift-click, ctrl-click, ctrl-drag
                 } else {
-                    sc->dragging = TRUE;
+		    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                   
+		    sc->dragging = TRUE;
                     sc->moved = FALSE;
-
-                    gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, CursorSelectDragging);
+                    gdk_window_set_cursor(window, CursorSelectDragging);
 
                     sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
 
@@ -381,14 +382,19 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
         case GDK_ENTER_NOTIFY:
         {
             if (!desktop->isWaitingCursor() && !sc->dragging) {
-                gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, CursorSelectMouseover);
+                GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+
+                gdk_window_set_cursor(window, CursorSelectMouseover);
             }
             break;
         }
 
         case GDK_LEAVE_NOTIFY:
-            if (!desktop->isWaitingCursor() && !sc->dragging)
-                gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
+            if (!desktop->isWaitingCursor() && !sc->dragging) {
+                GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+
+                gdk_window_set_cursor(window, event_context->cursor);
+	    }
             break;
 
         case GDK_KEY_PRESS:
@@ -560,7 +566,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     // if it's not click and ctrl or alt was pressed (the latter with some selection
                     // but not with shift) we want to drag rather than rubberband
                     sc->dragging = TRUE;
-                    gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, CursorSelectDragging);
+		    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    gdk_window_set_cursor(window, CursorSelectDragging);
 
                     sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
                 }
@@ -632,7 +639,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             xp = yp = 0;
             if ((event->button.button == 1) && (sc->grabbed) && !event_context->space_panning) {
                 if (sc->dragging) {
-                    if (sc->moved) {
+                    GdkWindow* window;
+		    if (sc->moved) {
                         // item has been moved
                         seltrans->ungrab();
                         sc->moved = FALSE;
@@ -664,7 +672,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         }
                     }
                     sc->dragging = FALSE;
-                    gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, CursorSelectMouseover);
+		    window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                    gdk_window_set_cursor(window, CursorSelectMouseover);
                     sp_event_context_discard_delayed_snap_event(event_context);
                     sp_canvas_end_forced_full_redraws(desktop->canvas);
 
@@ -877,7 +886,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                                                 _("<b>Alt</b>: click to select under; scroll mouse-wheel to cycle-select; drag to move selected or select by touch"));
                     // if Alt and nonempty selection, show moving cursor ("move selected"):
                     if (alt && !selection->isEmpty() && !desktop->isWaitingCursor()) {
-                        gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, CursorSelectDragging);
+			GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                        gdk_window_set_cursor(window, CursorSelectDragging);
                     }
                     //*/
                     break;
@@ -1120,7 +1130,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             }
             // set cursor to default.
             if (!desktop->isWaitingCursor()) {
-                gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(desktop))->window, event_context->cursor);
+		GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                gdk_window_set_cursor(window, event_context->cursor);
             }
             break;
         default:

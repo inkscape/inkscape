@@ -1716,7 +1716,7 @@ static void clonetiler_fill_width_changed(GtkAdjustment *adj, GtkWidget *u)
 
 static void clonetiler_fill_height_changed(GtkAdjustment *adj, GtkWidget *u)
 {
-    gdouble const raw_dist = adj->value;
+    gdouble const raw_dist = gtk_adjustment_get_value (adj);
     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
     gdouble const pixels = sp_units_get_pixels (raw_dist, unit);
 

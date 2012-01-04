@@ -292,8 +292,8 @@ spellcheck_sensitive (const gchar *cookie, gboolean gray)
    gtk_widget_set_sensitive(l, gray);
 }
 
-static void spellcheck_enable_accept(GtkTreeSelection */*selection*/,
-                                     void */*??*/)
+static void spellcheck_enable_accept(GtkTreeSelection * /*selection*/,
+                                     void * /*??*/)
 {
     spellcheck_sensitive ("b_accept", TRUE);
 }
@@ -718,7 +718,7 @@ do_spellcheck ()
     GtkWidget *l = GTK_WIDGET(g_object_get_data(G_OBJECT (dlg), "banner"));
     gtk_label_set_markup (GTK_LABEL(l), _("<i>Checking...</i>"));
     gtk_widget_queue_draw(GTK_WIDGET(dlg));
-    gdk_window_process_updates(GTK_WIDGET(dlg)->window, TRUE);
+    gdk_window_process_updates(gtk_widget_get_window (GTK_WIDGET(dlg)), TRUE);
 
     _desktop->setWaitingCursor();
 

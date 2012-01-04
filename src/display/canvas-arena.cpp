@@ -184,7 +184,7 @@ sp_canvas_arena_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned
         DrawingItem *new_arena = arena->drawing.pick(arena->c, arena->drawing.delta, arena->sticky);
         if (new_arena != arena->active) {
             GdkEventCrossing ec;
-            ec.window = GTK_WIDGET (item->canvas)->window;
+            ec.window = gtk_widget_get_window (GTK_WIDGET (item->canvas));
             ec.send_event = TRUE;
             ec.subwindow = ec.window;
             ec.time = GDK_CURRENT_TIME;

@@ -125,7 +125,7 @@ sp_dialog_event_handler (GtkWindow *win, GdkEvent *event, gpointer data)
                         GdkEventAny event;
                         GtkWidget *widget = (GtkWidget *) win;
                         event.type = GDK_DELETE;
-                        event.window = widget->window;
+                        event.window = gtk_widget_get_window (widget);
                         event.send_event = TRUE;
                         g_object_ref (G_OBJECT (event.window));
                         gtk_main_do_event ((GdkEvent*)&event);

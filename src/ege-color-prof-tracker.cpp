@@ -434,7 +434,7 @@ void event_after_cb( GtkWidget* widget, GdkEvent* event, gpointer user_data )
 {
     if ( event->type == GDK_CONFIGURE ) {
         GdkScreen* screen = gtk_widget_get_screen(widget);
-        GdkWindow* window = widget->window;
+        GdkWindow* window = gtk_widget_get_window (widget);
         EgeColorProfTracker* tracker = (EgeColorProfTracker*)user_data;
         gint monitorNum = gdk_screen_get_monitor_at_window(screen, window);
         if ( monitorNum != tracker->private_data->_monitor ) {

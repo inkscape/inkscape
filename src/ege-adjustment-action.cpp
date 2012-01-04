@@ -569,7 +569,7 @@ void ege_adjustment_action_set_appearance( EgeAdjustmentAction* action, gchar co
 static void process_menu_action( GtkWidget* obj, gpointer data )
 {
     GtkCheckMenuItem* item = GTK_CHECK_MENU_ITEM(obj);
-    if ( item->active ) {
+    if ( gtk_check_menu_item_get_active (item)) {
         EgeAdjustmentAction* act = (EgeAdjustmentAction*)g_object_get_qdata( G_OBJECT(obj), gDataName );
         gint what = GPOINTER_TO_INT(data);
 

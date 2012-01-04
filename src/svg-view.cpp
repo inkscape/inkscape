@@ -103,13 +103,15 @@ void SPSVGView::doRescale(bool event)
 void SPSVGView::mouseover()
 {
     GdkCursor *cursor = gdk_cursor_new(GDK_HAND2);
-    gdk_window_set_cursor(GTK_WIDGET(SP_CANVAS_ITEM(_drawing)->canvas)->window, cursor);
+    GdkWindow *window = gtk_widget_get_window (GTK_WIDGET(SP_CANVAS_ITEM(_drawing)->canvas));
+    gdk_window_set_cursor(window, cursor);
     gdk_cursor_unref(cursor);
 }
 
 void SPSVGView::mouseout()
 {
-    gdk_window_set_cursor(GTK_WIDGET(SP_CANVAS_ITEM(_drawing)->canvas)->window, NULL);
+    GdkWindow *window = gtk_widget_get_window (GTK_WIDGET(SP_CANVAS_ITEM(_drawing)->canvas));
+    gdk_window_set_cursor(window, NULL);
 }
 
 //----------------------------------------------------------------

@@ -97,7 +97,7 @@ static void sp_svg_view_widget_init(SPSVGSPViewWidget *vw)
 	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 	vw->canvas = sp_canvas_new_aa ();
 	gtk_widget_pop_colormap ();
-	style = gtk_style_copy (vw->canvas->style);
+	style = gtk_style_copy (gtk_widget_get_style (vw->canvas));
 	style->bg[GTK_STATE_NORMAL] = style->white;
 	gtk_widget_set_style (vw->canvas, style);
 	gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (vw->sw), vw->canvas);
