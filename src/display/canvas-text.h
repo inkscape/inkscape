@@ -40,12 +40,12 @@ struct SPCanvasText : public SPCanvasItem {
     bool outline;
     bool background;
     double border;
-    CanvasTextAnchorPositionEnum anchor_position;
 
     SPDesktop *desktop; // the desktop to which this text is attached; needed for coordinate transforms (TODO: these should be eliminated)
 
     gchar* text;
-    Geom::Point s;
+    Geom::Point s; // Is the coordinate of the anchor, which is related to the rectangle filled with the background color
+    CanvasTextAnchorPositionEnum anchor_position; // The anchor position specifies where the anchor is with respect to the rectangle filled with the background color
     Geom::Affine affine;
     double fontsize;
     double anchor_offset_x;

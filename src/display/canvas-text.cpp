@@ -41,16 +41,16 @@ sp_canvastext_get_type (void)
     static GType type = 0;
 
     if (!type) {
-	GTypeInfo info = {
+        GTypeInfo info = {
             sizeof (SPCanvasTextClass),
-	    NULL, NULL,
+            NULL, NULL,
             (GClassInitFunc) sp_canvastext_class_init,
-	    NULL, NULL,
+            NULL, NULL,
             sizeof (SPCanvasText),
-	    0,
+            0,
             (GInstanceInitFunc) sp_canvastext_init,
-	    NULL
-	};
+            NULL
+        };
         type = g_type_register_static (SP_TYPE_CANVAS_ITEM, "SPCanvasText", &info, (GTypeFlags)0);
     }
     return type;
@@ -115,27 +115,24 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
     if (!buf->ct)
         return;
 
-    Geom::Point s = cl->s * cl->affine;
-    double offsetx = s[Geom::X] - buf->rect.left();
-    double offsety = s[Geom::Y] - buf->rect.top();
-    offsetx -= cl->anchor_offset_x;
-    offsety -= cl->anchor_offset_y;
-
     cairo_set_font_size(buf->ct, cl->fontsize);
 
     if (cl->background){
         cairo_text_extents_t extents;
         cairo_text_extents(buf->ct, cl->text, &extents);
 
-        double border = cl->border;
-        cairo_rectangle(buf->ct, offsetx - extents.x_bearing - border,
-                                 offsety + extents.y_bearing - border,
-                                 extents.width + 2*border,
-                                 extents.height + 2*border);
+        cairo_rectangle(buf->ct, item->x1 - buf->rect.left(),
+                                 item->y1 - buf->rect.top(),
+                                 item->x2 - item->x1,
+                                 item->y2 - item->y1);
 
         ink_cairo_set_source_rgba32(buf->ct, cl->rgba_background);
         cairo_fill(buf->ct);
     }
+
+    Geom::Point s = cl->s * cl->affine;
+    double offsetx = s[Geom::X] - cl->anchor_offset_x - buf->rect.left();
+    double offsety = s[Geom::Y] - cl->anchor_offset_y - buf->rect.top();
 
     cairo_move_to(buf->ct, offsetx, offsety);
     cairo_text_path(buf->ct, cl->text);
@@ -164,8 +161,10 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
     cl->affine = affine;
 
     Geom::Point s = cl->s * affine;
+    // Point s specifies the position of the anchor, which is at the bounding box of the text itself (i.e. not at the border of the filled background rectangle)
+    // The relative position of the anchor can be set using e.g. anchor_position = TEXT_ANCHOR_LEFT
 
-    // set up a temporary cairo_t to measure the text extents; it would be better to compute this in the render()
+    // Set up a temporary cairo_t to measure the text extents; it would be better to compute this in the render()
     // method but update() seems to be called before so we don't have the information available when we need it
     cairo_surface_t *tmp_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
     cairo_t* tmp_buf = cairo_create(tmp_surface);
@@ -175,28 +174,58 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
     cairo_text_extents(tmp_buf, cl->text, &extents);
     double border = cl->border;
 
-    item->x1 = s[Geom::X] - extents.x_bearing - 2*border;
-    item->y1 = s[Geom::Y] + extents.y_bearing - 2*border;
-    item->x2 = s[Geom::X] + extents.width + 2*border;
-    item->y2 = s[Geom::Y] + extents.height + 2*border;
+    item->x1 = s[Geom::X] + extents.x_bearing - border;
+    item->y1 = s[Geom::Y] + extents.y_bearing - border;
+    item->x2 = item->x1 + extents.width + 2*border;
+    item->y2 = item->y1 + extents.height + 2*border;
+
+    /* FROM: http://lists.cairographics.org/archives/cairo-bugs/2009-March/003014.html
+      - Glyph surfaces: In most font rendering systems, glyph surfaces
+        have an origin at (0,0) and a bounding box that is typically
+        represented as (x_bearing,y_bearing,width,height).  Depending on
+        which way y progresses in the system, y_bearing may typically be
+        negative (for systems similar to cairo, with origin at top left),
+        or be positive (in systems like PDF with origin at bottom left).
+        No matter which is the case, it is important to note that
+        (x_bearing,y_bearing) is the coordinates of top-left of the glyph
+        relative to the glyph origin.  That is, for example:
+
+        Scaled-glyph space:
+
+          (x_bearing,y_bearing) <-- negative numbers
+             +----------------+
+             |      .         |
+             |      .         |
+             |......(0,0) <---|-- glyph origin
+             |                |
+             |                |
+             +----------------+
+                      (width+x_bearing,height+y_bearing)
+
+        Note the similarity of the origin to the device space.  That is
+        exactly how we use the device_offset to represent scaled glyphs:
+        to use the device-space origin as the glyph origin.
+    */
 
     // adjust update region according to anchor shift
+
+
     switch (cl->anchor_position){
         case TEXT_ANCHOR_LEFT:
-            cl->anchor_offset_x = -2*border;
+            cl->anchor_offset_x = 0;
             cl->anchor_offset_y = -extents.height/2;
             break;
         case TEXT_ANCHOR_RIGHT:
-            cl->anchor_offset_x = extents.width + 2*border;
+            cl->anchor_offset_x = extents.width;
             cl->anchor_offset_y = -extents.height/2;
             break;
         case TEXT_ANCHOR_BOTTOM:
             cl->anchor_offset_x = extents.width/2;
-            cl->anchor_offset_y = 2*border;
+            cl->anchor_offset_y = 0;
             break;
         case TEXT_ANCHOR_TOP:
             cl->anchor_offset_x = extents.width/2;
-            cl->anchor_offset_y = -extents.height - 2*border;
+            cl->anchor_offset_y = -extents.height;
             break;
         case TEXT_ANCHOR_ZERO:
             cl->anchor_offset_x = 0;
@@ -209,6 +238,9 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
             break;
     }
 
+    cl->anchor_offset_x += extents.x_bearing;
+    cl->anchor_offset_y += extents.height + extents.y_bearing;
+
     item->x1 -= cl->anchor_offset_x;
     item->x2 -= cl->anchor_offset_x;
     item->y1 -= cl->anchor_offset_y;
@@ -220,6 +252,8 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
 SPCanvasItem *
 sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, gchar const *new_text)
 {
+    // Pos specifies the position of the anchor, which is at the bounding box of the text itself (i.e. not at the border of the filled background rectangle)
+    // The relative position of the anchor can be set using e.g. anchor_position = TEXT_ANCHOR_LEFT
     SPCanvasItem *item = sp_canvas_item_new(parent, SP_TYPE_CANVASTEXT, NULL);
 
     SPCanvasText *ct = SP_CANVASTEXT(item);
@@ -229,8 +263,6 @@ sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, gc
     ct->s = pos;
     g_free(ct->text);
     ct->text = g_strdup(new_text);
-
-    // TODO: anything else to do?
 
     return item;
 }
