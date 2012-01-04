@@ -438,7 +438,7 @@ bool CLIPPER_CLASS::clip (std::vector<RatQuad> & arcs)
     // if the conic does not cross any line passing through a rectangle edge or
     // it is tangent to only one edge then it is an ellipse
     if (no_crossing
-            || (crossing_points.size() == 1 && single_points.size() == 0))
+            || (crossing_points.size() == 1 && single_points.empty()))
     {
         // if the ellipse centre is inside the rectangle
         // then so it is the ellipse
@@ -477,7 +477,7 @@ bool CLIPPER_CLASS::clip (std::vector<RatQuad> & arcs)
         // in case the conic section intersects any of the four lines passing
         // through the rectangle edges but it does not cross any rectangle edge
         // then the conic is all outer of the rectangle
-        if (crossing_points.size() == 0) return false;
+        if (crossing_points.empty()) return false;
         // else we need to pair crossing points, and to find an arc inner point
         // in order to generate a RatQuad object
         pairing (paired_points, inner_points, crossing_points);

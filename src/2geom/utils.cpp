@@ -1,5 +1,4 @@
-/*
- * Various utility functions.
+/** Various utility functions.
  *
  * Copyright 2008 Marco Cecchetti <mrcekets at gmail.com>
  * Copyright 2007 Johan Engelen <goejendaagh@zonnet.nl>

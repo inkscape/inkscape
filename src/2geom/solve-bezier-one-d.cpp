@@ -71,7 +71,7 @@ find_bernstein_roots(double const *w, /* The control points  */
 
 void
 find_bernstein_roots(std::vector<double> &solutions, /* RETURN candidate t-values */
-                     Geom::Bezier const& bz, /* The control points  */
+                     Geom::Bezier const &bz, /* The control points  */
                      double left_t, double right_t)
 {
     Bernsteins B(bz.degree(), solutions);

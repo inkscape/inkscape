@@ -4,8 +4,7 @@
 //#include <2geom/solver.h>
 #include <2geom/sbasis-geometric.h>
 
-/*
- * Geometric operators on D2<SBasis> (1D->2D).
+/** Geometric operators on D2<SBasis> (1D->2D).
  * Copyright 2007 JF Barraud
  * Copyright 2007 N Hurst
  *
@@ -746,18 +745,26 @@ Geom::cubics_with_prescribed_curvature(Point const &M0,   Point const &M1,
 }
 
 
+namespace Geom {
 /**
 * \brief returns all the parameter values of A whose tangent passes through P.
 * \relates D2
 */
-std::vector<double> Geom::find_tangents(Point P, D2<SBasis> const &A) {
+std::vector<double> find_tangents(Point P, D2<SBasis> const &A) {
     SBasis crs (cross(A - P, derivative(A)));
-    crs = shift(crs*Linear(-1, 0)*Linear(-1, 0), -2); // We know that there is a double root at t=0 so we divide out t^2
-// JFB points out that this is equivalent to (t-1)^2 followed by a divide by s^2 (shift)
     return roots(crs);
 }
 
+/**
+* \brief returns all the parameter values of A whose normal passes through P.
+* \relates D2
+*/
+std::vector<double> find_normals(Point P, D2<SBasis> const &A) {
+    SBasis crs (dot(A - P, derivative(A)));
+    return roots(crs);
+}
 
+}
 //}; // namespace
 
 

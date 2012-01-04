@@ -1,4 +1,7 @@
-/*
+/**
+ * \file
+ * \brief Piecewise function class
+ *
  * Copyright 2007 Michael Sloan <mgsloan@gmail.com>
  *
  * This library is free software; you can redistribute it and/or

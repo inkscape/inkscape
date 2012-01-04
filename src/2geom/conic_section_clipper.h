@@ -1,8 +1,7 @@
 /**
- * @file
- * Conic section clipping with respect to a rectangle.
- */
-/*
+ * \file
+ * \brief Conic section clipping with respect to a rectangle
+ *
  * Authors:
  *      Marco Cecchetti <mrcekets at gmail>
  *

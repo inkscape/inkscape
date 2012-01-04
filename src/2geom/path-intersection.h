@@ -57,7 +57,7 @@ Crossings curve_sweep(Path const &a, Path const &b) {
     std::vector<Rect> bounds_a = bounds(a), bounds_b = bounds(b);
     std::vector<std::vector<unsigned> > ixs = sweep_bounds(bounds_a, bounds_b);
     for(unsigned i = 0; i < a.size(); i++) {
-        for(std::vector<unsigned>::iterator jp = ixs[i].begin(); jp != ixs[i].end(); jp++) {
+        for(std::vector<unsigned>::iterator jp = ixs[i].begin(); jp != ixs[i].end(); ++jp) {
             Crossings cc = t.crossings(a[i], b[*jp]);
             offset_crossings(cc, i, *jp);
             ret.insert(ret.end(), cc.begin(), cc.end());

@@ -1,6 +1,7 @@
 #line 1 "/opt/shared/work/programming/eclipse/eclipse_3.4/lib2geom/src/2geom/svg-path-parser.rl"
-/*
- * parse SVG path specifications.
+/**
+ * \file
+ * \brief parse SVG path specifications
  *
  * Copyright 2007 MenTaLguY <mental@rydia.net>
  * Copyright 2007 Aaron Spike <aaron@ekips.org>
@@ -45,7 +46,7 @@ namespace {
 
 class Parser {
 public:
-    Parser(SVGPathSink &sink) : _sink(sink) {}
+    Parser(SVGPathSink &sink) : _absolute(false), _sink(sink) {}
 
     void parse(char const *str) throw(SVGPathParseError);
 

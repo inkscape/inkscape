@@ -1,8 +1,7 @@
 /**
- * @file
- * Dynamic convex hull structure.
- */
-/*
+ * \file
+ * \brief Dynamic convex hull structure
+ *
  * Copyright 2006 Nathan Hurst <njh@mail.csse.monash.edu.au>
  * Copyright 2006 Michael G. Sloan <mgsloan@gmail.com>
  *
@@ -59,6 +58,7 @@ public: // XXX: should be private :)
     void find_pivot();
     void angle_sort();
     void graham_scan();
+    void andrew_scan();
     void graham();
 public:
     std::vector<Point> boundary;
@@ -100,7 +100,6 @@ public:
     /** Is the convex hull clockwise?  We use the definition of clockwise from point.h
     **/
     bool is_clockwise() const;
-    bool no_colinear_points() const;
     bool top_point_first() const;
     bool meets_invariants() const;
 
@@ -131,6 +130,16 @@ public:
     double narrowest_diameter(Point &a, Point &b, Point &c);
 
 };
+/** @brief Output operator for points.
+ * Prints out all the coordinates. */
+inline std::ostream &operator<< (std::ostream &out_file, const Geom::ConvexHull &in_cvx) {
+    out_file << "ConvexHull(";
+    for(unsigned i = 0; i < in_cvx.size(); i++) {
+        out_file << in_cvx.boundary[i] << ", ";
+    }
+    out_file << ")";
+    return out_file;
+}
 
 // do two convex hulls intersect?
 bool intersectp(ConvexHull a, ConvexHull b);
@@ -146,6 +155,9 @@ ConvexHull merge(ConvexHull a, ConvexHull b);
 
 // naive approach
 ConvexHull graham_merge(ConvexHull a, ConvexHull b);
+
+// naive approach
+ConvexHull andrew_merge(ConvexHull a, ConvexHull b);
 
 unsigned find_bottom_right(ConvexHull const &a);
 

@@ -38,6 +38,7 @@ set(2geom_SRC
 	sbasis-to-bezier.cpp
 	sbasis.cpp
 	shape.cpp
+	solve-bezier.cpp
 	solve-bezier-one-d.cpp
 	solve-bezier-parametric.cpp
 	svg-elliptical-arc.cpp

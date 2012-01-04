@@ -1,5 +1,4 @@
-/*
- * root finding for sbasis functions.
+/** root finding for sbasis functions.
  * Copyright 2006 N Hurst
  * Copyright 2007 JF Barraud
  *

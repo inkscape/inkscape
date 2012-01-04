@@ -61,6 +61,7 @@ double nearest_point( Point const& p,
     }
     if (c.isConstant()) return from;
     SBasis dd = dot(c - p, dc);
+    //std::cout << dd << std::endl;
     std::vector<double> zeros = Geom::roots(dd);
 
     double closest = from;

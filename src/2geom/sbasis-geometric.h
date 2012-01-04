@@ -1,14 +1,13 @@
-#ifndef SEEN_SBASIS_GEOMETRIC_
-#define SEEN_SBASIS_GEOMETRIC_
+#ifndef _SBASIS_GEOMETRIC
+#define _SBASIS_GEOMETRIC
 #include <2geom/d2.h>
 #include <2geom/piecewise.h>
 #include <vector>
 
 /**
- * @file
- * two-dimensional geometric operators.
- */
-/*
+ * \file
+ * \brief two-dimensional geometric operators.  
+ *
  * Copyright 2007, JFBarraud
  * Copyright 2007, njh
  * 
@@ -102,10 +101,11 @@ cubics_with_prescribed_curvature(Point const &M0,   Point const &M1,
 
 
 std::vector<double> find_tangents(Point P, D2<SBasis> const &A);
+std::vector<double> find_normals(Point P, D2<SBasis> const &A);
 
 };
 
-#endif // SEEN_SBASIS_GEOMETRIC_
+#endif
 
 /*
   Local Variables:

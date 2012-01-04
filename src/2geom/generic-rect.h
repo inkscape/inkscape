@@ -214,6 +214,22 @@ public:
 
     /// @name Modify the rectangle.
     /// @{
+    /** @brief Set the minimum X coordinate of the rectangle. */
+    void setLeft(C val) {
+        f[X].setMin(val);
+    }
+    /** @brief Set the maximum X coordinate of the rectangle. */
+    void setRight(C val) {
+        f[X].setMax(val);
+    }
+    /** @brief Set the minimum Y coordinate of the rectangle. */
+    void setTop(C val) {
+        f[Y].setMin(val);
+    }
+    /** @brief Set the maximum Y coordinate of the rectangle. */
+    void setBottom(C val) {
+        f[Y].setMax(val);
+    }
     /** @brief Set the upper left point of the rectangle. */
     void setMin(CPoint const &p) {
         f[X].setMin(p[X]);

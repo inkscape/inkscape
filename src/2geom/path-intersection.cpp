@@ -460,8 +460,8 @@ void mono_pair(Path const &A, double Al, double Ah,
 /** This returns the times when the x or y derivative is 0 in the curve. */
 std::vector<double> curve_mono_splits(Curve const &d) {
     Curve* deriv = d.derivative();
-    std::vector<double> rs = d.roots(0, X);
-    append(rs, d.roots(0, Y));
+    std::vector<double> rs = deriv->roots(0, X);
+    append(rs, deriv->roots(0, Y));
     delete deriv;
     std::sort(rs.begin(), rs.end());
     return rs;

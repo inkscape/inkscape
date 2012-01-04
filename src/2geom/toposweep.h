@@ -2,8 +2,7 @@
 /**
  * \file
  * \brief  TopoSweep - topology / graph representation of a PathVector, for boolean operations and related tasks
- */
-/*
+ *
  * Authors:
  * 		Michael Sloan <mgsloan at gmail.com>
  * 		Nathan Hurst <njhurst at njhurst.com>

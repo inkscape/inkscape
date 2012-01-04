@@ -1,8 +1,7 @@
 /**
- * @file
- * Defines S-power basis function class.
- */
-/*
+ * \file
+ * \brief Defines S-power basis function class
+ *
  *  Authors:
  *   Nathan Hurst <njh@mail.csse.monash.edu.au>
  *   Michael Sloan <mgsloan@gmail.com>
@@ -109,6 +108,9 @@ public:
     }
     SBasis(SBasis const & a) :
         d(a.d)
+    {}
+    SBasis(std::vector<Linear> const & ls) :
+        d(ls)
     {}
     SBasis(Linear const & bo) {
         push_back(bo);

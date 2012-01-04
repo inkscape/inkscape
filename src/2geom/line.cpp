@@ -464,7 +464,7 @@ boost::optional<LineSegment> clip (Line const& l, Rect const& r)
             return opt_linesegment(ls);
         }
     }
-    if (points.size() != 0)
+    if ( !points.empty() )
     {
         result.setInitial (points[0]);
         result.setFinal (points[0]);

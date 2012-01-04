@@ -1,8 +1,7 @@
 /**
- * @file
- * Various geometrical calculations.
- */
-/*
+ *  \file
+ *  \brief Various geometrical calculations
+ *
  *  Authors:
  *   Nathan Hurst <njh@mail.csse.monash.edu.au>
  *

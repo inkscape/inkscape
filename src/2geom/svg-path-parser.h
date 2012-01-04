@@ -1,8 +1,7 @@
 /**
- * @file
- * parse SVG path specifications.
- */
-/*
+ * \file
+ * \brief  parse SVG path specifications
+ *
  * Copyright 2007 MenTaLguY <mental@rydia.net>
  * Copyright 2007 Aaron Spike <aaron@ekips.org>
  *
@@ -57,13 +56,18 @@ inline std::vector<Path> parse_svg_path(char const *str) throw(SVGPathParseError
     return subpaths;
 }
 
+inline std::vector<Path> read_svgd_f(FILE * fi) throw(SVGPathParseError) {
+    char input[1024 * 10];
+    fgets(input, 1024 * 10, fi);
+    return parse_svg_path(input);
+}
+
 inline std::vector<Path> read_svgd(char const * name) throw(SVGPathParseError) {
     FILE* fi = fopen(name, "r");
     if(fi == NULL) throw(std::runtime_error("Error opening file"));
-    char input[1024 * 10];
-    fgets(input, 1024 * 10, fi);
+    std::vector<Path> out = read_svgd_f(fi);
     fclose(fi);
-    return parse_svg_path(input);
+    return out;
 }
 
 }

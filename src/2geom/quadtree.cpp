@@ -131,7 +131,7 @@ void QuadTree::insert(double x0, double y0, double x1, double y1, int shape) {
     // loop until a quad would break the box.
 
     // empty root => empty QuadTree. Create initial bounding box (0,0), (1,1)
-    if(root == 0) {
+    if(root == NULL) {
         root = new Quad;
             
         bx0 = 0;
@@ -179,7 +179,7 @@ void QuadTree::insert(double x0, double y0, double x1, double y1, int shape) {
         by1 = byy1;
     }
 
-    while(q) {
+    while(true) {
         // Find the center of the temp bounding box
         double cx = (bxx0 + bxx1)/2;
         double cy = (byy0 + byy1)/2;
@@ -225,7 +225,7 @@ void QuadTree::insert(double x0, double y0, double x1, double y1, int shape) {
         */
         assert(i < 4);
         Quad *qq = q->children[i];
-        if(qq == 0) {
+        if(qq == NULL) {
             qq = new Quad;
             q->children[i] = qq;
         }
@@ -233,6 +233,8 @@ void QuadTree::insert(double x0, double y0, double x1, double y1, int shape) {
     }
     q->data.push_back(shape);
 }
+
+
 void QuadTree::erase(Quad *q, int shape) {
     for(Quad::iterator i = q->data.begin();  i != q->data.end(); i++) {
         if(*i == shape) {
