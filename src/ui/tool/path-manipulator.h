@@ -67,6 +67,7 @@ public:
     void selectSubpaths();
     void invertSelectionInSubpaths();
 
+    void insertNodeAtExtremum(ExtremumType extremum);
     void insertNodes();
     void duplicateNodes();
     void weldNodes(NodeList::iterator preserve_pos = NodeList::iterator());

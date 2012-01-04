@@ -336,6 +336,11 @@ void MultiPathManipulator::insertNodes()
     invokeForAll(&PathManipulator::insertNodes);
     _done(_("Add nodes"));
 }
+void MultiPathManipulator::insertNodesAtExtrema(ExtremumType extremum)
+{
+    invokeForAll(&PathManipulator::insertNodeAtExtremum, extremum);
+    _done(_("Add extremum nodes"));
+}
 
 void MultiPathManipulator::duplicateNodes()
 {

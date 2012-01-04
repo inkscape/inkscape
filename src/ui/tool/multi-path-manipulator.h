@@ -51,6 +51,7 @@ public:
     void setNodeType(NodeType t);
     void setSegmentType(SegmentType t);
 
+    void insertNodesAtExtrema(ExtremumType extremum);
     void insertNodes();
     void duplicateNodes();
     void joinNodes();

@@ -268,6 +268,67 @@ void PathManipulator::insertNodes()
     }
 }
 
+static void
+add_or_replace_if_extremum(std::vector< std::pair<NodeList::iterator, double> > &vec,
+                           double & extrvalue, double testvalue, NodeList::iterator const& node, double t)
+{
+    if (testvalue > extrvalue) {
+        // replace all extreme nodes with the new one
+        vec.clear();
+        vec.push_back( std::pair<NodeList::iterator, double>( node, t ) );
+        extrvalue = testvalue;
+    } else if ( Geom::are_near(testvalue, extrvalue) ) {
+        // very rare but: extremum node at the same extreme value!!! so add it to the list
+        vec.push_back( std::pair<NodeList::iterator, double>( node, t ) );
+    }
+}
+
+/** Insert a new node at the extremum of the selected segments. */
+void PathManipulator::insertNodeAtExtremum(ExtremumType extremum)
+{
+    if (_num_selected < 2) return;
+
+    double sign    = (extremum == EXTR_MIN_X || extremum == EXTR_MIN_Y) ? -1. : 1.;
+    Geom::Dim2 dim = (extremum == EXTR_MIN_X || extremum == EXTR_MAX_X) ? Geom::X : Geom::Y;
+
+    for (SubpathList::iterator subp = _subpaths.begin(); subp != _subpaths.end(); ++subp) {
+        Geom::Coord extrvalue = - Geom::infinity();
+        std::vector< std::pair<NodeList::iterator, double> > extremum_vector;
+
+        for (NodeList::iterator first = (*subp)->begin(); first != (*subp)->end(); ++first) {
+            NodeList::iterator second = first.next();
+            if (second && first->selected() && second->selected()) {
+                add_or_replace_if_extremum(extremum_vector, extrvalue, sign * first->position()[dim], first, 0.);
+                add_or_replace_if_extremum(extremum_vector, extrvalue, sign * second->position()[dim], first, 1.);
+                if (first->front()->isDegenerate() && second->back()->isDegenerate()) {
+                    // a line segment has is extrema at the start and end, no node should be added
+                    continue;
+                } else {
+                    // build 1D cubic bezier curve
+                    Geom::Bezier temp1d(first->position()[dim], first->front()->position()[dim],
+                                        second->back()->position()[dim], second->position()[dim]);
+                    // and determine extremum
+                    Geom::Bezier deriv1d = derivative(temp1d);
+                    std::vector<double> rs = deriv1d.roots();
+                    for (std::vector<double>::iterator it = rs.begin(); it != rs.end(); ++it) {
+                        add_or_replace_if_extremum(extremum_vector, extrvalue, sign * temp1d.valueAt(*it), first, *it);
+                    }
+                }
+            }
+        }
+
+        for (unsigned i = 0; i < extremum_vector.size(); ++i) {
+            // don't insert node at the start or end of a segment, i.e. round values for extr_t
+            double t = extremum_vector[i].second;
+            if ( !Geom::are_near(t - std::floor(t+0.5),0.) )  //  std::floor(t+0.5) is another way of writing round(t)
+            {
+                _selection.insert( subdivideSegment(extremum_vector[i].first, t).ptr() );
+            }
+        }
+    }
+}
+
+
 /** Insert new nodes exactly at the positions of selected nodes while preserving shape.
  * This is equivalent to breaking, except that it doesn't split into subpaths. */
 void PathManipulator::duplicateNodes()

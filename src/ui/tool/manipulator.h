@@ -53,6 +53,14 @@ public:
         : Manipulator(d)
         , _selection(sel)
     {}
+
+    /// Type of extremum points to add in PathManipulator::insertNodeAtExtremum
+    enum ExtremumType {
+        EXTR_MIN_X = 0,
+        EXTR_MAX_X,
+        EXTR_MIN_Y,
+        EXTR_MAX_Y
+    };
 protected:
     ControlPointSelection &_selection;
 };

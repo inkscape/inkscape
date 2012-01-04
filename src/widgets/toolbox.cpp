@@ -286,10 +286,10 @@ static gchar const * ui_descr =
         "  <toolbar name='NodeToolbar'>"
         "    <separator />"
         "    <toolitem action='NodeInsertAction' />"
-/*        "    <toolitem action='NodeInsertActionMinX' />"
+        "    <toolitem action='NodeInsertActionMinX' />"
         "    <toolitem action='NodeInsertActionMaxX' />"
         "    <toolitem action='NodeInsertActionMinY' />"
-        "    <toolitem action='NodeInsertActionMaxY' />"  */
+        "    <toolitem action='NodeInsertActionMaxY' />"  
         "    <toolitem action='NodeDeleteAction' />"
         "    <separator />"
         "    <toolitem action='NodeJoinAction' />"
@@ -1162,28 +1162,28 @@ static void sp_node_path_edit_add_min_x(void)
 {
     InkNodeTool *nt = get_node_tool();
     if (nt) {
-        nt->_multipath->insertNodes();
+        nt->_multipath->insertNodesAtExtrema(Inkscape::UI::PointManipulator::EXTR_MIN_X);
     }
 }
 static void sp_node_path_edit_add_max_x(void)
 {
     InkNodeTool *nt = get_node_tool();
     if (nt) {
-        nt->_multipath->insertNodes();
+        nt->_multipath->insertNodesAtExtrema(Inkscape::UI::PointManipulator::EXTR_MAX_X);
     }
 }
 static void sp_node_path_edit_add_min_y(void)
 {
     InkNodeTool *nt = get_node_tool();
     if (nt) {
-        nt->_multipath->insertNodes();
+        nt->_multipath->insertNodesAtExtrema(Inkscape::UI::PointManipulator::EXTR_MIN_Y);
     }
 }
 static void sp_node_path_edit_add_max_y(void)
 {
     InkNodeTool *nt = get_node_tool();
     if (nt) {
-        nt->_multipath->insertNodes();
+        nt->_multipath->insertNodesAtExtrema(Inkscape::UI::PointManipulator::EXTR_MAX_Y);
     }
 }
 
