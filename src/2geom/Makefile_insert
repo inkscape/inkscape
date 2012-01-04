@@ -97,6 +97,7 @@
 	2geom/sbasis-to-bezier.h	\
 	2geom/shape.cpp	\
 	2geom/shape.h	\
+	2geom/solve-bezier.cpp	\
 	2geom/solve-bezier-one-d.cpp	\
 	2geom/solve-bezier-parametric.cpp	\
 	2geom/solver.h	\
