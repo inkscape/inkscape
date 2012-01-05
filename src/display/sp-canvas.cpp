@@ -1644,6 +1644,7 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
 static void sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect const &paint_rect, Geom::IntRect const &canvas_rect, int /*sw*/)
 {
     GtkWidget *widget = GTK_WIDGET (canvas);
+    GtkStyle  *style;
 
     // Mark the region clean
     sp_canvas_mark_rect(canvas, paint_rect, 0);
@@ -1678,7 +1679,8 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect const 
     //cairo_stroke_preserve(buf.ct);
     //cairo_clip(buf.ct);
 
-    gdk_cairo_set_source_color(buf.ct, &widget->style->bg[GTK_STATE_NORMAL]);
+    style = gtk_widget_get_style (widget);
+    gdk_cairo_set_source_color(buf.ct, &style->bg[GTK_STATE_NORMAL]);
     cairo_set_operator(buf.ct, CAIRO_OPERATOR_SOURCE);
     //cairo_rectangle(buf.ct, 0, 0, paint_rect.width(), paint_rec.height());
     cairo_paint(buf.ct);
@@ -1715,7 +1717,7 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect const 
     }
 #endif // ENABLE_LCMS
 
-    cairo_t *xct = gdk_cairo_create(widget->window);
+    cairo_t *xct = gdk_cairo_create(gtk_widget_get_window (widget));
     cairo_translate(xct, paint_rect.left() - canvas->x0, paint_rect.top() - canvas->y0);
     cairo_rectangle(xct, 0, 0, paint_rect.width(), paint_rect.height());
     cairo_clip(xct);
@@ -1864,10 +1866,13 @@ The default for now is the strips mode.
 static bool
 sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
 {
+    GtkAllocation allocation;
     g_return_val_if_fail (!canvas->need_update, false);
 
+    gtk_widget_get_allocation (GTK_WIDGET (canvas), &allocation);
+
     Geom::IntRect canvas_rect = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
-        GTK_WIDGET (canvas)->allocation.width, GTK_WIDGET (canvas)->allocation.height);
+        allocation.width, allocation.height);
     Geom::IntRect paint_rect(xx0, yy0, xx1, yy1);
 
     Geom::OptIntRect area = paint_rect & canvas_rect;
@@ -1882,7 +1887,7 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
 
     // Save the mouse location
     gint x, y;
-    gdk_window_get_pointer (GTK_WIDGET(canvas)->window, &x, &y, NULL);
+    gdk_window_get_pointer (gtk_widget_get_window (GTK_WIDGET(canvas)), &x, &y, NULL);
     setup.mouse_loc = sp_canvas_window_to_world (canvas, Geom::Point(x,y));
 
     if (canvas->rendermode != Inkscape::RENDERMODE_OUTLINE) {
@@ -2148,6 +2153,8 @@ sp_canvas_root (SPCanvas *canvas)
 void
 sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear, bool is_scrolling)
 {
+    GtkAllocation allocation;
+
     g_return_if_fail (canvas != NULL);
     g_return_if_fail (SP_IS_CANVAS (canvas));
 
@@ -2164,7 +2171,9 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear,
     canvas->x0 = ix;
     canvas->y0 = iy;
 
-    sp_canvas_resize_tiles (canvas, canvas->x0, canvas->y0, canvas->x0+canvas->widget.allocation.width, canvas->y0+canvas->widget.allocation.height);
+    gtk_widget_get_allocation (&canvas->widget, &allocation);
+
+    sp_canvas_resize_tiles (canvas, canvas->x0, canvas->y0, canvas->x0+allocation.width, canvas->y0+allocation.height);
     if (SP_CANVAS_ITEM_GET_CLASS (canvas->root)->viewbox_changed)
         SP_CANVAS_ITEM_GET_CLASS (canvas->root)->viewbox_changed (canvas->root, new_area);
 
@@ -2213,6 +2222,8 @@ sp_canvas_request_update (SPCanvas *canvas)
 void
 sp_canvas_request_redraw (SPCanvas *canvas, int x0, int y0, int x1, int y1)
 {
+    GtkAllocation allocation;
+
     g_return_if_fail (canvas != NULL);
     g_return_if_fail (SP_IS_CANVAS (canvas));
 
@@ -2220,8 +2231,10 @@ sp_canvas_request_redraw (SPCanvas *canvas, int x0, int y0, int x1, int y1)
     if ((x0 >= x1) || (y0 >= y1)) return;
 
     Geom::IntRect bbox(x0, y0, x1, y1);
+    gtk_widget_get_allocation (GTK_WIDGET (canvas), &allocation);
+
     Geom::IntRect canvas_rect = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
-        GTK_WIDGET (canvas)->allocation.width, GTK_WIDGET (canvas)->allocation.height);
+        allocation.width, allocation.height);
     
     Geom::OptIntRect clip = bbox & canvas_rect;
     if (clip) {
@@ -2281,14 +2294,18 @@ Geom::Point sp_canvas_world_to_window(SPCanvas const *canvas, Geom::Point const 
  */
 bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, Geom::Point const &world)
 {
+    GtkAllocation allocation;
+    
     g_assert( canvas != NULL );
     g_assert(SP_IS_CANVAS(canvas));
 
-    GtkWidget const &w = *GTK_WIDGET(canvas);
+    GtkWidget *w = GTK_WIDGET(canvas);
+    gtk_widget_get_allocation (w, &allocation);
+
     return ( ( canvas->x0 <= world[Geom::X] )  &&
              ( canvas->y0 <= world[Geom::Y] )  &&
-             ( world[Geom::X] < canvas->x0 + w.allocation.width )  &&
-             ( world[Geom::Y] < canvas->y0 + w.allocation.height ) );
+             ( world[Geom::X] < canvas->x0 + allocation.width )  &&
+             ( world[Geom::Y] < canvas->y0 + allocation.height ) );
 }
 
 /**
@@ -2296,9 +2313,11 @@ bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, Geom::Point const 
  */
 Geom::Rect SPCanvas::getViewbox() const
 {
-    GtkWidget const *w = GTK_WIDGET(this);
+    GtkAllocation allocation;
+
+    gtk_widget_get_allocation (GTK_WIDGET (this), &allocation);
     return Geom::Rect(Geom::Point(dx0, dy0),
-                      Geom::Point(dx0 + w->allocation.width, dy0 + w->allocation.height));
+                      Geom::Point(dx0 + allocation.width, dy0 + allocation.height));
 }
 
 /**
@@ -2306,10 +2325,12 @@ Geom::Rect SPCanvas::getViewbox() const
  */
 Geom::IntRect SPCanvas::getViewboxIntegers() const
 {
-    GtkWidget const *w = GTK_WIDGET(this);
+    GtkAllocation allocation;
+
+    gtk_widget_get_allocation (GTK_WIDGET(this), &allocation);
     Geom::IntRect ret;
     ret.setMin(Geom::IntPoint(x0, y0));
-    ret.setMax(Geom::IntPoint(x0 + w->allocation.width, y0 + w->allocation.height));
+    ret.setMax(Geom::IntPoint(x0 + allocation.width, y0 + allocation.height));
     return ret;
 }
 
