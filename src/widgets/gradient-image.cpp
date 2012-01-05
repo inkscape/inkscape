@@ -113,15 +113,17 @@ static void sp_gradient_image_size_request(GtkWidget * /*widget*/, GtkRequisitio
 static gint
 sp_gradient_image_expose (GtkWidget *widget, GdkEventExpose *event)
 {
+	GtkAllocation allocation;
 	SPGradientImage *image = SP_GRADIENT_IMAGE (widget);
 	SPGradient *gr = image->gradient;
 
-    cairo_t *ct = gdk_cairo_create(widget->window);
+    cairo_t *ct = gdk_cairo_create(gtk_widget_get_window (widget));
     
     cairo_rectangle(ct, event->area.x, event->area.y,
         event->area.width, event->area.height);
     cairo_clip(ct);
-    cairo_translate(ct, widget->allocation.x, widget->allocation.y);
+    gtk_widget_get_allocation (widget, &allocation);
+    cairo_translate(ct, allocation.x, allocation.y);
     
     cairo_pattern_t *check = ink_cairo_pattern_create_checkerboard();
     cairo_set_source(ct, check);
@@ -129,7 +131,7 @@ sp_gradient_image_expose (GtkWidget *widget, GdkEventExpose *event)
     cairo_pattern_destroy(check);
 
 	if (gr) {
-        cairo_pattern_t *p = sp_gradient_create_preview_pattern(gr, widget->allocation.width);
+        cairo_pattern_t *p = sp_gradient_create_preview_pattern(gr, allocation.width);
         cairo_set_source(ct, p);
         cairo_paint(ct);
         cairo_pattern_destroy(p);

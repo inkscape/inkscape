@@ -122,6 +122,7 @@ static void
 sp_button_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
 	GtkWidget *child;
+	GtkStyle  *style = gtk_widget_get_style (widget);
 
 	child = gtk_bin_get_child (GTK_BIN (widget));
 	if (child) {
@@ -131,8 +132,8 @@ sp_button_size_request (GtkWidget *widget, GtkRequisition *requisition)
 		requisition->height = 0;
 	}
 
-	requisition->width += 2 + 2 * MAX (2, widget->style->xthickness);
-	requisition->height += 2 + 2 * MAX (2, widget->style->ythickness);
+	requisition->width += 2 + 2 * MAX (2, style->xthickness);
+	requisition->height += 2 + 2 * MAX (2, style->ythickness);
 }
 
 static void

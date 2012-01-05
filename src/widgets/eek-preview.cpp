@@ -217,36 +217,40 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
 
     if ( gtk_widget_is_drawable( widget ) ) {
         GtkStyle* style = gtk_widget_get_style( widget );
+	GtkAllocation allocation;
 
         if ( insetX > 0 || insetY > 0 ) {
+	    gtk_widget_get_allocation (widget, &allocation);
+
             gtk_paint_flat_box( style,
-                                widget->window,
+                                gtk_widget_get_window (widget),
                                 (GtkStateType)gtk_widget_get_state(widget),
                                 GTK_SHADOW_NONE,
                                 NULL,
                                 widget,
                                 NULL,
                                 0, 0,
-                                widget->allocation.width, widget->allocation.height);
+                                allocation.width, allocation.height);
         }
 
-        GdkGC *gc = gdk_gc_new( widget->window );
+        GdkGC *gc = gdk_gc_new( gtk_widget_get_window (widget) );
         EekPreview* preview = EEK_PREVIEW(widget);
         GdkColor fg = {0, preview->_r, preview->_g, preview->_b};
 
         gdk_colormap_alloc_color( gdk_colormap_get_system(), &fg, FALSE, TRUE );
 
         gdk_gc_set_foreground( gc, &fg );
+	gtk_widget_get_allocation (widget, &allocation);
 
-        gdk_draw_rectangle( widget->window,
+        gdk_draw_rectangle( gtk_widget_get_window (widget),
                             gc,
                             TRUE,
                             insetX, insetY,
-                            widget->allocation.width - (insetX * 2), widget->allocation.height - (insetY * 2) );
+                            allocation.width - (insetX * 2), allocation.height - (insetY * 2) );
 
         if ( preview->_previewPixbuf ) {
             GtkDrawingArea* da = &(preview->drawing);
-            GdkDrawable* drawable = (GdkDrawable*) (((GtkWidget*)da)->window);
+            GdkDrawable* drawable = (GdkDrawable*) gtk_widget_get_window(GTK_WIDGET(da));
             gint w = 0;
             gint h = 0;
             gdk_drawable_get_size(drawable, &w, &h);
@@ -265,8 +269,10 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
 
 
         if ( preview->_linked ) {
+	    gtk_widget_get_allocation (widget, &allocation);
+
             /* Draw arrow */
-            GdkRectangle possible = {insetX, insetY, (widget->allocation.width - (insetX * 2)), (widget->allocation.height - (insetY * 2)) };
+            GdkRectangle possible = {insetX, insetY, (allocation.width - (insetX * 2)), (allocation.height - (insetY * 2)) };
             GdkRectangle area = {possible.x, possible.y, possible.width / 2, possible.height / 2 };
 
             /* Make it square */
@@ -284,8 +290,8 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
 
             if ( preview->_linked & PREVIEW_LINK_IN ) {
                 gtk_paint_arrow( style,
-                                 widget->window,
-                                 (GtkStateType)widget->state,
+                                 gtk_widget_get_window (widget),
+                                 gtk_widget_get_state (widget),
                                  GTK_SHADOW_ETCHED_IN,
                                  NULL, /* clip area.  &area, */
                                  widget, /* may be NULL */
@@ -304,8 +310,8 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                 }
 
                 gtk_paint_arrow( style,
-                                 widget->window,
-                                 (GtkStateType)widget->state,
+                                 gtk_widget_get_window (widget),
+                                 gtk_widget_get_state (widget),
                                  GTK_SHADOW_ETCHED_OUT,
                                  NULL, /* clip area.  &area, */
                                  widget, /* may be NULL */
@@ -324,8 +330,8 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                 }
 
                 gtk_paint_arrow( style,
-                                 widget->window,
-                                 (GtkStateType)widget->state,
+                                 gtk_widget_get_window (widget),
+                                 gtk_widget_get_state (widget),
                                  GTK_SHADOW_ETCHED_OUT,
                                  NULL, /* clip area.  &area, */
                                  widget, /* may be NULL */
@@ -346,8 +352,8 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                     otherArea.y = possible.y + (possible.height - otherArea.height) / 2;
                 }
                 gtk_paint_check( style,
-                                 widget->window,
-                                 (GtkStateType)widget->state,
+                                 gtk_widget_get_window (widget),
+                                 gtk_widget_get_state (widget),
                                  GTK_SHADOW_ETCHED_OUT,
                                  NULL,
                                  widget,
@@ -364,8 +370,8 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                     otherArea.y = possible.y + (possible.height - otherArea.height) / 2;
                 }
                 gtk_paint_diamond( style,
-                                   widget->window,
-                                   (GtkStateType)widget->state,
+                                   gtk_widget_get_window (widget),
+                                   gtk_widget_get_state (widget),
                                    GTK_SHADOW_ETCHED_OUT,
                                    NULL,
                                    widget,
@@ -377,14 +383,16 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
 
 
         if ( gtk_widget_has_focus(widget) ) {
+            gtk_widget_get_allocation (widget, &allocation);
+
             gtk_paint_focus( style,
-                             widget->window,
+                             gtk_widget_get_window (widget),
                              GTK_STATE_NORMAL,
                              NULL, /* GdkRectangle *area, */
                              widget,
                              NULL,
                              0 + 1, 0 + 1,
-                             widget->allocation.width - 2, widget->allocation.height - 2 );
+                             allocation.width - 2, allocation.height - 2 );
         }
     }
 

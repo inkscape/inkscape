@@ -181,7 +181,7 @@ spus_unit_activate(GtkWidget *widget, SPUnitSelector *us)
         /* Recalculate adjustments. */
         for (GSList *l = us->adjustments; l != NULL; l = g_slist_next(l)) {
             GtkAdjustment *adj = GTK_ADJUSTMENT(l->data);
-            gdouble val = adj->value;
+            gdouble val = gtk_adjustment_get_value (adj);
 #ifdef UNIT_SELECTOR_VERBOSE
             g_print("Old val %g ... ", val);
 #endif
@@ -189,7 +189,7 @@ spus_unit_activate(GtkWidget *widget, SPUnitSelector *us)
 #ifdef UNIT_SELECTOR_VERBOSE
             g_print("new val %g\n", val);
 #endif
-            adj->value = val;
+            gtk_adjustment_set_value (adj, val);
         }
         /* need to separate the value changing from the notification
          * or else the unit changes can break the calculations */
@@ -295,7 +295,7 @@ sp_unit_selector_set_unit(SPUnitSelector *us, SPUnit const *unit)
     /* Recalculate adjustments */
     for (GSList *l = us->adjustments; l != NULL; l = l->next) {
         GtkAdjustment *adj = GTK_ADJUSTMENT(l->data);
-        gdouble const val = sp_convert_distance_full(adj->value, *old, *unit);
+        gdouble const val = sp_convert_distance_full(gtk_adjustment_get_value (adj), *old, *unit);
         gtk_adjustment_set_value(adj, val);
     }
 }
@@ -340,10 +340,10 @@ sp_unit_selector_update_test(SPUnitSelector const *selector)
 double
 sp_unit_selector_get_value_in_pixels(SPUnitSelector const *selector, GtkAdjustment *adj)
 {
-    g_return_val_if_fail(selector != NULL, adj->value);
-    g_return_val_if_fail(SP_IS_UNIT_SELECTOR(selector), adj->value);
+    g_return_val_if_fail(selector != NULL, gtk_adjustment_get_value (adj));
+    g_return_val_if_fail(SP_IS_UNIT_SELECTOR(selector), gtk_adjustment_get_value (adj));
 
-    return sp_units_get_pixels(adj->value, *(selector->unit));
+    return sp_units_get_pixels(gtk_adjustment_get_value (adj), *(selector->unit));
 }
 
 void

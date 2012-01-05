@@ -616,19 +616,19 @@ static void sp_grad_edit_select(GtkOptionMenu *mnu, GtkWidget *tbl)
     SPStop *prev = NULL;
     prev = stop->getPrevStop();
     if (prev != NULL )  {
-        adj->lower = prev->offset;
+        gtk_adjustment_set_lower (adj, prev->offset);
     } else {
         isEndStop = true;
-        adj->lower = 0;
+        gtk_adjustment_set_lower (adj, 0);
     }
 
     SPStop *next = NULL;
     next = stop->getNextStop();
     if (next != NULL ) {
-        adj->upper = next->offset;
+        gtk_adjustment_set_upper (adj, next->offset);
     } else {
         isEndStop = true;
-        adj->upper = 1.0;
+        gtk_adjustment_set_upper (adj, 1.0);
     }
 
     //fixme: does this work on all possible input gradients?
@@ -659,7 +659,7 @@ static void offadjustmentChanged( GtkAdjustment *adjustment, GtkWidget *vb)
         if ( g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))), "stop") ) {
             SPStop *stop = SP_STOP(g_object_get_data(G_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(mnu)))), "stop"));
 
-            stop->offset = adjustment->value;
+            stop->offset = gtk_adjustment_get_value (adjustment);
             sp_repr_set_css_double(stop->getRepr(), "offset", stop->offset);
 
             DocumentUndo::maybeDone(stop->document, "gradient:stop:offset", SP_VERB_CONTEXT_GRADIENT,
@@ -949,7 +949,7 @@ GtkWidget * sp_gradient_vector_editor_new(SPGradient *gradient, SPStop *stop)
         GdkEventAny event;
         GtkWidget *widget = static_cast<GtkWidget *>(dlg);
         event.type = GDK_DELETE;
-        event.window = widget->window;
+        event.window = gtk_widget_get_window (widget);
         event.send_event = TRUE;
         g_object_ref(G_OBJECT(event.window));
         gtk_main_do_event(reinterpret_cast<GdkEvent*>(&event));
