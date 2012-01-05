@@ -675,3 +675,74 @@ static GtkWidget* ink_radio_action_create_tool_item( GtkAction* action )
 
     return item;
 }
+
+
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+/* --------------------------------------------------------------- */
+
+// ToolMenu Action is happily derived from http://www.gtkforums.com/viewtopic.php?t=4215
+
+static void ink_tool_menu_action_init (InkToolMenuAction *tma);
+static void ink_tool_menu_action_class_init (InkToolMenuActionClass *klass);
+
+GType
+ink_tool_menu_action_get_type (void)
+{
+   static GType myType = 0;
+   if (! myType)
+   {
+      static const GTypeInfo myInfo =
+      {
+         sizeof (InkToolMenuActionClass),
+         NULL, /* base_init */
+         NULL, /* base_finalize */
+         (GClassInitFunc) ink_tool_menu_action_class_init,
+         NULL, /* class_finalize */
+         NULL, /* class_data */
+         sizeof (InkToolMenuAction),
+         0, /* n_preallocs */
+         (GInstanceInitFunc) ink_tool_menu_action_init,
+         NULL
+      };
+
+        myType = g_type_register_static( INK_ACTION_TYPE, "InkToolMenuAction", &myInfo, (GTypeFlags)0 );
+    }
+
+    return myType;
+}
+
+static void
+ink_tool_menu_action_class_init (InkToolMenuActionClass *klass)
+{
+   GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
+   action_class->toolbar_item_type = GTK_TYPE_MENU_TOOL_BUTTON;
+}
+
+static void
+ink_tool_menu_action_init (InkToolMenuAction* /*tma*/)
+{
+}
+
+InkToolMenuAction *
+ink_tool_menu_action_new (const gchar *name,
+                          const gchar *label,
+                          const gchar *tooltip,
+                          const gchar *inkId,
+                          Inkscape::IconSize size )
+{
+    g_return_val_if_fail (name != NULL, NULL);
+
+    GObject* obj = (GObject*)g_object_new( INK_TOOL_MENU_ACTION_TYPE,
+                                           "name", name,
+                                           "label", label,
+                                           "tooltip", tooltip,
+                                           "iconId", inkId,
+                                           "iconSize", size,
+                                           NULL );
+
+    InkToolMenuAction* action = INK_TOOL_MENU_ACTION( obj );
+
+    return action;
+}

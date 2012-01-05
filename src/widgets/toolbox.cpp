@@ -285,11 +285,14 @@ static gchar const * ui_descr =
 
         "  <toolbar name='NodeToolbar'>"
         "    <separator />"
-        "    <toolitem action='NodeInsertAction' />"
-        "    <toolitem action='NodeInsertActionMinX' />"
-        "    <toolitem action='NodeInsertActionMaxX' />"
-        "    <toolitem action='NodeInsertActionMinY' />"
-        "    <toolitem action='NodeInsertActionMaxY' />"  
+        "    <toolitem action='NodeInsertAction'>"
+        "      <menu action='NodeInsertActionMenu'>"
+        "        <menuitem action='NodeInsertActionMinX' />"
+        "        <menuitem action='NodeInsertActionMaxX' />"
+        "        <menuitem action='NodeInsertActionMinY' />"
+        "        <menuitem action='NodeInsertActionMaxY' />"
+        "      </menu>"
+        "    </toolitem>"
         "    <toolitem action='NodeDeleteAction' />"
         "    <separator />"
         "    <toolitem action='NodeJoinAction' />"
@@ -1408,14 +1411,18 @@ static void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
     Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
 
     {
-        InkAction* inky = ink_action_new( "NodeInsertAction",
-                                          _("Insert node"),
-                                          _("Insert new nodes into selected segments"),
-                                          INKSCAPE_ICON("node-add"),
-                                          secondarySize );
-        g_object_set( inky, "short_label", _("Insert"), NULL );
+        InkToolMenuAction* inky = ink_tool_menu_action_new( "NodeInsertAction",
+                                                            _("Insert node"),
+                                                            _("Insert new nodes into selected segments"),
+                                                            INKSCAPE_ICON("node-add"),
+                                                            secondarySize );
+        g_object_set( INK_ACTION(inky), "short_label", _("Insert"), NULL );
         g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_node_path_edit_add), 0 );
         gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
+        GtkToolItem *menu_tool_button = gtk_menu_tool_button_new (NULL, NULL);
+        gtk_activatable_set_related_action (GTK_ACTIVATABLE (menu_tool_button), GTK_ACTION(inky));
+        // also create dummy menu action:
+        gtk_action_group_add_action( mainActions, gtk_action_new("NodeInsertActionMenu", NULL, NULL, NULL) );
     }
 
     {
