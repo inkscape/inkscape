@@ -182,12 +182,13 @@ public:
 #if GTK_CHECK_VERSION (2, 22, 0)
     virtual Gdk::InputMode getMode() const {return static_cast<Gdk::InputMode>(gdk_device_get_mode (device));}
     virtual gint getNumAxes() const {return gdk_device_get_n_axes (device);}
+    virtual bool hasCursor() const {return gdk_device_get_has_cursor (device);}
 #else
     virtual Gdk::InputMode getMode() const {return static_cast<Gdk::InputMode>(device->mode);}
     virtual gint getNumAxes() const {return device->num_axes;}
+    virtual bool hasCursor() const {return device->has_cursor;}
 #endif
 
-    virtual bool hasCursor() const {return gdk_device_get_has_cursor (device);}
     virtual gint getNumKeys() const {
 // Backward-compatibility: The GSEAL-compliant
 // gdk_device_get_n_keys function was only introduced
@@ -756,9 +757,9 @@ static void createFakeList() {
             fakeout[4].name = g_strdup(device->name);
             fakeout[4].source = device->source;
             fakeout[4].mode = device->mode;
+            fakeout[4].has_cursor = device->has_cursor;
             fakeout[4].num_axes = device->num_axes;
 #endif
-            fakeout[4].has_cursor = gdk_device_get_has_cursor (device);
 #if GTK_CHECK_VERSION (2, 24, 0)
             fakeout[4].num_keys = gdk_device_get_n_keys (device);
 #else
