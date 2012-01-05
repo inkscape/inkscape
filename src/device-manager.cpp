@@ -437,7 +437,7 @@ void DeviceManagerImpl::saveConfig()
 #if GTK_CHECK_VERSION (2, 22, 0)
                 tmp += getAxisToString()[static_cast<Gdk::AxisUse>(gdk_device_get_axis_use (device, i))];
 #else
-                tmp += getAxisToString()[static_cast<Gdk::AxisUse>(device->axis[i].use)];
+                tmp += getAxisToString()[static_cast<Gdk::AxisUse>(device->axes[i].use)];
 #endif
             }
             prefs->setString( path + "/axes", tmp );
