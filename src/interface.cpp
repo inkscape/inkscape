@@ -1241,7 +1241,11 @@ sp_ui_drag_data_received(GtkWidget *widget,
                 //}
 
                 if (!consumed && item) {
+#if GTK_CHECK_VERSION (2, 22, 0)
                     bool fillnotstroke = (gdk_drag_context_get_actions (drag_context) != GDK_ACTION_MOVE);
+#else
+                    bool fillnotstroke = (drag_context->action != GDK_ACTION_MOVE);
+#endif
                     if (fillnotstroke &&
                         (SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))) {
                         Path *livarot_path = Path_for_item(item, true, true);
@@ -1344,7 +1348,11 @@ sp_ui_drag_data_received(GtkWidget *widget,
                 }
 
                 if (!consumed && item) {
+#if GTK_CHECK_VERSION (2, 22, 0)
                     bool fillnotstroke = (gdk_drag_context_get_actions (drag_context) != GDK_ACTION_MOVE);
+#else
+                    bool fillnotstroke = (drag_context->action != GDK_ACTION_MOVE);
+#endif
                     if (fillnotstroke &&
                         (SP_IS_SHAPE(item) || SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))) {
                         Path *livarot_path = Path_for_item(item, true, true);
