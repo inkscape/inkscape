@@ -79,11 +79,15 @@ sp_hruler_class_init (SPHRulerClass *klass)
 static void
 sp_hruler_init (SPHRuler *hruler)
 {
-  GtkWidget *widget;
+  GtkWidget      *widget;
+  GtkRequisition  requisition;
+  GtkStyle       *style;
 
   widget = GTK_WIDGET (hruler);
-  widget->requisition.width = widget->style->xthickness * 2 + 1;
-  widget->requisition.height = widget->style->ythickness * 2 + RULER_HEIGHT;
+  gtk_widget_get_requisition (widget, &requisition);
+  style = gtk_widget_get_style (widget);
+  requisition.width = style->xthickness * 2 + 1;
+  requisition.height = style->ythickness * 2 + RULER_HEIGHT;
 }
 
 
@@ -97,17 +101,21 @@ static gint
 sp_hruler_motion_notify (GtkWidget      *widget,
 			  GdkEventMotion *event)
 {
-  GtkRuler *ruler;
+  GtkRuler      *ruler;
+  gdouble        lower, upper, max_size;
+  GtkAllocation  allocation;
   
   g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (SP_IS_HRULER (widget), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
 
   ruler = GTK_RULER (widget);
+  gtk_ruler_get_range (ruler, &lower, &upper, NULL, &max_size);
+  gtk_widget_get_allocation (widget, &allocation);
   double x = event->x; //Although event->x is double according to the docs, it only appears to return integers
-  double pos = ruler->lower + (ruler->upper - ruler->lower) * (x + UNUSED_PIXELS) / (widget->allocation.width + 2*UNUSED_PIXELS);
+  double pos = lower + (upper - lower) * (x + UNUSED_PIXELS) / (allocation.width + 2*UNUSED_PIXELS);
 
-  gtk_ruler_set_range(ruler, ruler->lower, ruler->upper, pos, ruler->max_size);
+  gtk_ruler_set_range(ruler, lower, upper, pos, max_size);
 
   return FALSE;
 }
@@ -166,11 +174,15 @@ sp_vruler_class_init (SPVRulerClass *klass)
 static void
 sp_vruler_init (SPVRuler *vruler)
 {
-  GtkWidget *widget;
+  GtkWidget      *widget;
+  GtkRequisition  requisition;
+  GtkStyle       *style;
 
   widget = GTK_WIDGET (vruler);
-  widget->requisition.width = widget->style->xthickness * 2 + RULER_WIDTH;
-  widget->requisition.height = widget->style->ythickness * 2 + 1;
+  gtk_widget_get_requisition (widget, &requisition);
+  style = gtk_widget_get_style (widget);
+  requisition.width = style->xthickness * 2 + RULER_WIDTH;
+  requisition.height = style->ythickness * 2 + 1;
 
   g_object_set(G_OBJECT(vruler), "orientation", GTK_ORIENTATION_VERTICAL, NULL);
 }
@@ -186,17 +198,21 @@ static gint
 sp_vruler_motion_notify (GtkWidget      *widget,
 			  GdkEventMotion *event)
 {
-  GtkRuler *ruler;
+  GtkRuler      *ruler;
+  gdouble        lower, upper, max_size;
+  GtkAllocation  allocation;
   
   g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (SP_IS_VRULER (widget), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
 
   ruler = GTK_RULER (widget);
+  gtk_ruler_get_range (ruler, &lower, &upper, NULL, &max_size);
+  gtk_widget_get_allocation (widget, &allocation);
   double y = event->y; //Although event->y is double according to the docs, it only appears to return integers
-  double pos = ruler->lower + (ruler->upper - ruler->lower) * (y + UNUSED_PIXELS) / (widget->allocation.height + 2*UNUSED_PIXELS);
+  double pos = lower + (upper - lower) * (y + UNUSED_PIXELS) / (allocation.height + 2*UNUSED_PIXELS);
 
-  gtk_ruler_set_range(ruler, ruler->lower, ruler->upper, pos, ruler->max_size);
+  gtk_ruler_set_range(ruler, lower, upper, pos, max_size);
 
   return FALSE;
 }
@@ -204,7 +220,8 @@ sp_vruler_motion_notify (GtkWidget      *widget,
 static void
 sp_vruler_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
-  requisition->width = widget->style->xthickness * 2 + RULER_WIDTH;
+	GtkStyle *style = gtk_widget_get_style (widget);
+  requisition->width = style->xthickness * 2 + RULER_WIDTH;
 }
 
 static void
@@ -231,6 +248,8 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
     gint text_dimension;
     gint pos;
     GtkOrientation orientation;
+    GtkStyle *style;
+    GtkAllocation allocation;
 
     g_return_if_fail (ruler != NULL);
 
@@ -239,7 +258,8 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
 
     g_object_get(G_OBJECT(ruler), "orientation", &orientation, NULL);
     widget = GTK_WIDGET (ruler);
-    gc = widget->style->fg_gc[GTK_STATE_NORMAL];
+    style = gtk_widget_get_style (widget);
+    gc = style->fg_gc[GTK_STATE_NORMAL];
 
     pango_context = gtk_widget_get_pango_context (widget);
     pango_layout = pango_layout_new (pango_context);
@@ -249,22 +269,24 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
     pango_font_description_free (fs);
 
     digit_height = (int) floor (RULER_FONT_SIZE * RULER_FONT_VERTICAL_SPACING / PANGO_SCALE + 0.5);
-    xthickness = widget->style->xthickness;
-    ythickness = widget->style->ythickness;
+    xthickness = style->xthickness;
+    ythickness = style->ythickness;
 
+    gtk_widget_get_allocation (widget, &allocation);
+    
     if (orientation == GTK_ORIENTATION_HORIZONTAL) {
-        width = widget->allocation.width; // in pixels; is apparently 2 pixels shorter than the canvas at each end
-        height = widget->allocation.height;
+        width = allocation.width; // in pixels; is apparently 2 pixels shorter than the canvas at each end
+        height = allocation.height;
     } else {
-        width = widget->allocation.height;
-        height = widget->allocation.width;
+        width = allocation.height;
+        height = allocation.width;
     }
 
-    gtk_paint_box (widget->style, ruler->backing_store,
+    gtk_paint_box (style, ruler->backing_store,
                    GTK_STATE_NORMAL, GTK_SHADOW_NONE, NULL, widget,
                    orientation == GTK_ORIENTATION_HORIZONTAL ? "hruler" : "vruler",
                    0, 0, 
-                   widget->allocation.width, widget->allocation.height);
+                   allocation.width, allocation.height);
 
     upper = ruler->upper / ruler->metric->pixels_per_unit; // upper and lower are expressed in ruler units
     lower = ruler->lower / ruler->metric->pixels_per_unit;

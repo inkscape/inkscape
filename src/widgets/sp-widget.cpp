@@ -181,12 +181,14 @@ sp_widget_hide (GtkWidget *widget)
 static gint
 sp_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 {
-	GtkBin *bin;
+	GtkBin    *bin;
+	GtkWidget *child;
 
 	bin = GTK_BIN (widget);
+	child = gtk_bin_get_child (bin);
 
-        if ( bin->child ) {
-            gtk_container_propagate_expose (GTK_CONTAINER(widget), bin->child, event);
+        if (child) {
+            gtk_container_propagate_expose (GTK_CONTAINER(widget), child, event);
         }
 	/*
 	if ((bin->child) && (!gtk_widget_get_has_window (bin->child))) {
@@ -202,17 +204,23 @@ sp_widget_expose (GtkWidget *widget, GdkEventExpose *event)
 static void
 sp_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
-	if (((GtkBin *) widget)->child)
-		gtk_widget_size_request (((GtkBin *) widget)->child, requisition);
+	GtkBin    *bin   = GTK_BIN (widget);
+	GtkWidget *child = gtk_bin_get_child (bin);
+
+	if (child)
+		gtk_widget_size_request (child, requisition);
 }
 
 static void
 sp_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
-	widget->allocation = *allocation;
+	GtkBin        *bin   = GTK_BIN (widget);
+	GtkWidget     *child = gtk_bin_get_child (bin);
 
-	if (((GtkBin *) widget)->child)
-		gtk_widget_size_allocate (((GtkBin *) widget)->child, allocation);
+	gtk_widget_set_allocation (widget, allocation);
+
+	if (child)
+		gtk_widget_size_allocate (child, allocation);
 }
 
 /* Methods */

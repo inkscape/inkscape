@@ -255,13 +255,14 @@ void ColorScales::_recalcColor( gboolean changing )
 /* Helpers for setting color value */
 gfloat ColorScales::getScaled( const GtkAdjustment *a )
 {
-    gfloat val = a->value / a->upper;
+    gfloat val = gtk_adjustment_get_value (const_cast<GtkAdjustment*>(a)) 
+	    / gtk_adjustment_get_upper (const_cast<GtkAdjustment*>(a));
     return val;
 }
 
 void ColorScales::setScaled( GtkAdjustment *a, gfloat v )
 {
-    gfloat val = v * a->upper;
+    gfloat val = v * gtk_adjustment_get_upper (a);
     gtk_adjustment_set_value( a, val );
 }
 
@@ -269,7 +270,7 @@ void ColorScales::_setRangeLimit( gdouble upper )
 {
     _rangeLimit = upper;
     for ( gint i = 0; i < static_cast<gint>(G_N_ELEMENTS(_a)); i++ ) {
-        _a[i]->upper = upper;
+        gtk_adjustment_set_upper (_a[i], upper);
         gtk_adjustment_changed( _a[i] );
     }
 }

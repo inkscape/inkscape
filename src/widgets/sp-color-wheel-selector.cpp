@@ -283,8 +283,11 @@ void ColorWheelSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorW
 {
 // TODO check this. It looks questionable:
     // if a value is entered between 0 and 1 exclusive, normalize it to (int) 0..255  or 0..100
-    if (adjustment->value > 0.0 && adjustment->value < 1.0) {
-        gtk_adjustment_set_value( adjustment, floor ((adjustment->value) * adjustment->upper + 0.5) );
+    gdouble value = gtk_adjustment_get_value (adjustment);
+    gdouble upper = gtk_adjustment_get_upper (adjustment);
+    
+    if (value > 0.0 && value < 1.0) {
+        gtk_adjustment_set_value( adjustment, floor (value * upper + 0.5) );
     }
 
     ColorWheelSelector* wheelSelector = (ColorWheelSelector*)(SP_COLOR_SELECTOR(cs)->base);

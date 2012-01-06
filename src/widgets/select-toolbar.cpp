@@ -187,20 +187,20 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     GtkAdjustment* a_h = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "height" ) );
 
     if (unit.base == SP_UNIT_ABSOLUTE || unit.base == SP_UNIT_DEVICE) {
-        x0 = sp_units_get_pixels (a_x->value, unit);
-        y0 = sp_units_get_pixels (a_y->value, unit);
-        x1 = x0 + sp_units_get_pixels (a_w->value, unit);
-        xrel = sp_units_get_pixels (a_w->value, unit) / bbox_user->dimensions()[Geom::X];
-        y1 = y0 + sp_units_get_pixels (a_h->value, unit);
-        yrel = sp_units_get_pixels (a_h->value, unit) / bbox_user->dimensions()[Geom::Y];
+        x0 = sp_units_get_pixels (gtk_adjustment_get_value (a_x), unit);
+        y0 = sp_units_get_pixels (gtk_adjustment_get_value (a_y), unit);
+        x1 = x0 + sp_units_get_pixels (gtk_adjustment_get_value (a_w), unit);
+        xrel = sp_units_get_pixels (gtk_adjustment_get_value (a_w), unit) / bbox_user->dimensions()[Geom::X];
+        y1 = y0 + sp_units_get_pixels (gtk_adjustment_get_value (a_h), unit);
+        yrel = sp_units_get_pixels (gtk_adjustment_get_value (a_h), unit) / bbox_user->dimensions()[Geom::Y];
     } else {
-        double const x0_propn = a_x->value * unit.unittobase;
+        double const x0_propn = gtk_adjustment_get_value (a_x) * unit.unittobase;
         x0 = bbox_user->min()[Geom::X] * x0_propn;
-        double const y0_propn = a_y->value * unit.unittobase;
+        double const y0_propn = gtk_adjustment_get_value (a_y) * unit.unittobase;
         y0 = y0_propn * bbox_user->min()[Geom::Y];
-        xrel = a_w->value * unit.unittobase;
+        xrel = gtk_adjustment_get_value (a_w) * unit.unittobase;
         x1 = x0 + xrel * bbox_user->dimensions()[Geom::X];
-        yrel = a_h->value * unit.unittobase;
+        yrel = gtk_adjustment_get_value (a_h) * unit.unittobase;
         y1 = y0 + yrel * bbox_user->dimensions()[Geom::Y];
     }
 
