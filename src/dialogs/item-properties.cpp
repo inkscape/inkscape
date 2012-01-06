@@ -43,7 +43,7 @@ static void sp_item_widget_modify_selection (SPWidget *spw, Inkscape::Selection 
 static void sp_item_widget_change_selection (SPWidget *spw, Inkscape::Selection *selection, GtkWidget *itemw);
 
 /**
- * \brief SPItemDialog callback for closing the dialog.
+ * SPItemDialog callback for closing the dialog.
  */
 static void sp_item_dialog_delete( GtkObject */*object*/, GdkEvent */*event*/, gpointer /*data*/ )
 {
@@ -55,7 +55,7 @@ static void sp_item_dialog_delete( GtkObject */*object*/, GdkEvent */*event*/, g
 }
 
 /**
- * \brief SPItemDialog callback for a modification of the selected object (e.g. size, color, fill, etc.).
+ * SPItemDialog callback for a modification of the selected object (e.g. size, color, fill, etc.).
  */
 static void sp_item_widget_modify_selection( SPWidget */*spw*/,
                                  Inkscape::Selection */*selection*/,
@@ -69,7 +69,7 @@ static void sp_item_widget_modify_selection( SPWidget */*spw*/,
 }
 
 /**
- * \brief SPItemDialog callback for the selection of an other object.
+ * SPItemDialog callback for the selection of an other object.
  */
 static void sp_item_widget_change_selection ( SPWidget */*spw*/,
                                   Inkscape::Selection */*selection*/,
@@ -92,10 +92,7 @@ void sp_item_dialog(void)
     }
 }
 
-/**
- * \brief Constructor.
- */
- SPItemDialog::SPItemDialog (void) :
+SPItemDialog::SPItemDialog (void) :
     prefs_path("/dialogs/object/"),
     x(-1000),// impossible original value to make sure they are read from prefs
     y(-1000),// impossible original value to make sure they are read from prefs
@@ -171,9 +168,6 @@ void sp_item_dialog(void)
     MakeWidget();
 }
 
-/**
- * \brief Destructor.
- */
 SPItemDialog::~SPItemDialog (void)
 {
     if (closing)
@@ -205,9 +199,6 @@ SPItemDialog::~SPItemDialog (void)
     }
 }
 
-/**
- * \brief Constructor auxiliary function creating the child widgets.
- */
 void SPItemDialog::MakeWidget(void)
 {
 	// if (gtk_widget_get_visible (GTK_WIDGET(spw))) {
@@ -321,9 +312,6 @@ void SPItemDialog::MakeWidget(void)
     widget_setup();
 }
 
-/**
- * \brief Updates entries and other child widgets on selection change, object modification, etc.
- */
 void SPItemDialog::widget_setup(void)
 {
     if (blocked)
@@ -414,9 +402,6 @@ void SPItemDialog::widget_setup(void)
     blocked = false;
 }
 
-/**
- * \brief Sets object properties (ID, label, title, description) on user input.
- */
 void SPItemDialog::label_changed(void)
 {
     if (blocked)
@@ -477,9 +462,6 @@ void SPItemDialog::label_changed(void)
     blocked = false;
 }
 
-/**
- * \brief Callback for checkbox Lock.
- */
 void SPItemDialog::sensitivity_toggled (void)
 {
     if (blocked)
@@ -497,9 +479,6 @@ void SPItemDialog::sensitivity_toggled (void)
     blocked = false;
 }
 
-/**
- * \brief Callback for checkbox Hide.
- */
 void SPItemDialog::hidden_toggled(void)
 {
     if (blocked)

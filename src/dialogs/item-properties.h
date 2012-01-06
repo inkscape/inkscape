@@ -22,17 +22,20 @@
 
 void sp_item_dialog(void);
 
-class SPItemDialog : public Gtk::Widget {
 /**
- * \class SPItemDialog
- * \brief A dialog widget to show object properties.
+ * A dialog widget to show object properties.
  *
  * A widget to enter an ID, label, title and description for an object.
  * In addition it allows to edit the properties of an object.
  */
+class SPItemDialog : public Gtk::Widget {
 public:
     SPItemDialog ();
     ~SPItemDialog ();
+    
+    /**
+     * Updates entries and other child widgets on selection change, object modification, etc.
+     */
     void widget_setup(void);
 
 private:
@@ -77,9 +80,24 @@ private:
     
     SPItem *CurrentItem; //to store the current item, for not wasting resources
     
+    /**
+     * Constructor auxiliary function creating the child widgets.
+     */
     void MakeWidget(void);
+    
+    /**
+     * Sets object properties (ID, label, title, description) on user input.
+     */
     void label_changed(void);
+    
+	/**
+     * Callback for checkbox Lock.
+     */
     void sensitivity_toggled (void);
+    
+	/**
+     * Callback for checkbox Hide.
+     */
     void hidden_toggled(void);
 };
 
