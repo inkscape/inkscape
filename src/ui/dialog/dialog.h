@@ -36,15 +36,33 @@ gboolean sp_retransientize_again(gpointer dlgPtr);
 void sp_dialog_shutdown(GtkObject *object, gpointer dlgPtr);
 
 /**
- * @brief Base class for Inkscape dialogs
- * This class provides certain common behaviors and styles wanted of all dialogs
- * in the application.  Fundamental parts of the dialog's behavior are controlled by
+ * Base class for Inkscape dialogs.
+ * 
+ * UI::Dialog::Dialog is a base class for all dialogs in Inkscape.  The
+ * purpose of this class is to provide a unified place for ensuring
+ * style and behavior. Specifically, this class provides functionality
+ * for saving and restoring the size and position of dialogs (through
+ * the user's preferences file).
+ *
+ * It also provides some general purpose signal handlers for things like
+ * showing and hiding all dialogs.
+ *
+ * Fundamental parts of the dialog's behavior are controlled by
  * a Dialog::Behavior subclass instance connected to the dialog.
+ *
+ * @see UI::Widget::Panel
  */
 class Dialog {
 
 public:
 
+    /**
+     * Constructor.
+     * 
+     * @param behavior_factory floating or docked
+     * @param prefs_path characteristic path to load/save dialog position
+     * @param verb_num the dialog verb
+     */
     Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_path = NULL,
            int verb_num = 0, Glib::ustring const &apply_label = "");
 
@@ -80,7 +98,14 @@ public:
     bool           _user_hidden; // when it is closed by the user, to prevent repopping on f12
     bool           _hiddenF12;
 
+    /**
+     * Load window position from preferences.
+     */
     void           read_geometry();
+    
+    /**
+     * Save window position to preferences.
+     */
     void           save_geometry();
 
     bool retransientize_suppress; // when true, do not retransientize (prevents races when switching new windows too fast)
@@ -98,6 +123,14 @@ protected:
     virtual bool   _onKeyPress(GdkEventKey *event);
 
     virtual void   _apply();
+    
+    /* Closes the dialog window.
+     *
+     * This code sends a delete_event to the dialog,
+     * instead of just destroying it, so that the
+     * dialog can do some housekeeping, such as remember
+     * its position.
+     */
     virtual void   _close();
     virtual void   _defocus();
 

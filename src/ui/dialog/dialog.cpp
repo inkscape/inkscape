@@ -39,23 +39,20 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-void
-sp_retransientize(Inkscape::Application */*inkscape*/, SPDesktop *desktop, gpointer dlgPtr)
+void sp_retransientize(Inkscape::Application */*inkscape*/, SPDesktop *desktop, gpointer dlgPtr)
 {
     Dialog *dlg = (Dialog *)dlgPtr;
     dlg->onDesktopActivated (desktop);
 }
 
-gboolean
-sp_retransientize_again(gpointer dlgPtr)
+gboolean sp_retransientize_again(gpointer dlgPtr)
 {
     Dialog *dlg = (Dialog *)dlgPtr;
     dlg->retransientize_suppress = false;
     return FALSE; // so that it is only called once
 }
 
-void
-sp_dialog_shutdown(GtkObject */*object*/, gpointer dlgPtr)
+void sp_dialog_shutdown(GtkObject */*object*/, gpointer dlgPtr)
 {
     Dialog *dlg = (Dialog *)dlgPtr;
     dlg->onShutdown();
@@ -80,17 +77,6 @@ void unhideCallback(GtkObject */*object*/, gpointer dlgPtr)
 
 
 //=====================================================================
-
-/**
- * UI::Dialog::Dialog is a base class for all dialogs in Inkscape.  The
- * purpose of this class is to provide a unified place for ensuring
- * style and behavior.  Specifically, this class provides functionality
- * for saving and restoring the size and position of dialogs (through
- * the user's preferences file).
- *
- * It also provides some general purpose signal handlers for things like
- * showing and hiding all dialogs.
- */
 
 Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_path, int verb_num,
                Glib::ustring const &apply_label)
@@ -136,29 +122,25 @@ Dialog::~Dialog()
 //---------------------------------------------------------------------
 
 
-void
-Dialog::onDesktopActivated(SPDesktop *desktop)
+void Dialog::onDesktopActivated(SPDesktop *desktop)
 {
     _behavior->onDesktopActivated(desktop);
 }
 
-void
-Dialog::onShutdown()
+void Dialog::onShutdown()
 {
     save_geometry();
     _user_hidden = true;
     _behavior->onShutdown();
 }
 
-void
-Dialog::onHideF12()
+void Dialog::onHideF12()
 {
     _hiddenF12 = true;
     _behavior->onHideF12();
 }
 
-void
-Dialog::onShowF12()
+void Dialog::onShowF12()
 {
     if (_user_hidden)
         return;
@@ -191,8 +173,7 @@ inline void Dialog::set_sensitive(bool sensitive)                { _behavior->se
 Glib::SignalProxy0<void> Dialog::signal_show() { return _behavior->signal_show(); }
 Glib::SignalProxy0<void> Dialog::signal_hide() { return _behavior->signal_hide(); }
 
-void
-Dialog::read_geometry()
+void Dialog::read_geometry()
 {
     _user_hidden = false;
 
@@ -223,8 +204,7 @@ Dialog::read_geometry()
 }
 
 
-void
-Dialog::save_geometry()
+void Dialog::save_geometry()
 {
     int y, x, w, h;
 
@@ -244,8 +224,7 @@ Dialog::save_geometry()
 
 }
 
-void
-Dialog::_handleResponse(int response_id)
+void Dialog::_handleResponse(int response_id)
 {
     switch (response_id) {
         case Gtk::RESPONSE_CLOSE: {
@@ -255,8 +234,7 @@ Dialog::_handleResponse(int response_id)
     }
 }
 
-bool
-Dialog::_onDeleteEvent(GdkEventAny */*event*/)
+bool Dialog::_onDeleteEvent(GdkEventAny */*event*/)
 {
     save_geometry();
     _user_hidden = true;
@@ -264,8 +242,7 @@ Dialog::_onDeleteEvent(GdkEventAny */*event*/)
     return false;
 }
 
-bool
-Dialog::_onEvent(GdkEvent *event)
+bool Dialog::_onEvent(GdkEvent *event)
 {
     bool ret = false;
 
@@ -298,8 +275,7 @@ Dialog::_onEvent(GdkEvent *event)
     return ret;
 }
 
-bool
-Dialog::_onKeyPress(GdkEventKey *event)
+bool Dialog::_onKeyPress(GdkEventKey *event)
 {
     unsigned int shortcut;
     shortcut = get_group0_keyval(event) |
@@ -312,22 +288,14 @@ Dialog::_onKeyPress(GdkEventKey *event)
     return sp_shortcut_invoke(shortcut, SP_ACTIVE_DESKTOP);
 }
 
-void
-Dialog::_apply()
+void Dialog::_apply()
 {
     g_warning("Apply button clicked for dialog [Dialog::_apply()]");
 }
 
-void
-Dialog::_close()
+void Dialog::_close()
 {
     GtkWidget *dlg = GTK_WIDGET(_behavior->gobj());
-
-    /* this code sends a delete_event to the dialog,
-     * instead of just destroying it, so that the
-     * dialog can do some housekeeping, such as remember
-     * its position.
-     */
 
     GdkEventAny event;
     event.type = GDK_DELETE;
@@ -343,8 +311,7 @@ Dialog::_close()
         g_object_unref(G_OBJECT(event.window));
 }
 
-void
-Dialog::_defocus()
+void Dialog::_defocus()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 

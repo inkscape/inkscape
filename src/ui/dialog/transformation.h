@@ -34,13 +34,36 @@ namespace Dialog {
 
 
 
+/**
+ * Transformation dialog.
+ * 
+ * The transformation dialog allows to modify Inkscape objects.
+ * 5 transformation operations are currently possible: move, scale,
+ * rotate, skew and matrix. 
+ */
 class Transformation : public UI::Widget::Panel
 {
 
 public:
 
     /**
-     * Create a new transform
+     * Constructor for Transformation.
+     * 
+     * This does the initialization
+     * and layout of the dialog used for transforming SVG objects.  It
+     * consists of 5 pages for the 5 operations it handles:
+     * 'Move' allows x,y translation of SVG objects
+     * 'Scale' allows linear resizing of SVG objects
+     * 'Rotate' allows rotating SVG objects by a degree
+     * 'Skew' allows skewing SVG objects
+     * 'Matrix' allows applying a generic affine transform on SVG objects,
+     *     with the user specifying the 6 degrees of freedom manually.
+     *
+     * The dialog is implemented as a Gtk::Notebook with five pages.
+     * The pages are implemented using Inkscape's NotebookPage which
+     * is used to help make sure all of Inkscape's notebooks follow
+     * the same style.  We then populate the pages with our widgets,
+     * we use the ScalarUnit class for this.
      */
     Transformation();
 
