@@ -739,10 +739,13 @@ void sp_item_gradient_reverse_vector(SPItem *item, bool fill_or_stroke)
     GSList *child_reprs = NULL;
     GSList *child_objects = NULL;
     std::vector<double> offsets;
+    double offset;
     for ( SPObject *child = vector->firstChild(); child; child = child->getNext()) {
         child_reprs = g_slist_prepend (child_reprs, child->getRepr());
         child_objects = g_slist_prepend (child_objects, child);
-        offsets.push_back(sp_repr_get_double_attribute(child->getRepr(), "offset", 0));
+        offset=0;
+        sp_repr_get_double(child->getRepr(), "offset", &offset);
+        offsets.push_back(offset);
     }
 
     GSList *child_copies = NULL;

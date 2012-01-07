@@ -15,10 +15,11 @@
  *   Maximilian Albert <maximilian.albert@gmail.com>
  *   Tavmjong Bah <tavmjong@free.fr>
  *   Abhishek Sharma
+ *   Kris De Gussem <Kris.DeGussem@gmail.com>
  *
  * Copyright (C) 2004 David Turner
  * Copyright (C) 2003 MenTaLguY
- * Copyright (C) 1999-2010 authors
+ * Copyright (C) 1999-2011 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -2720,9 +2721,10 @@ static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKlu
         if (SP_IS_STAR(item)) {
             Inkscape::XML::Node *repr = item->getRepr();
             sp_repr_set_int(repr,"sodipodi:sides",(gint)adj->value);
+            double arg1 = 0.5;
+            sp_repr_get_double(repr, "sodipodi:arg1", &arg1);
             sp_repr_set_svg_double(repr, "sodipodi:arg2",
-                                   (sp_repr_get_double_attribute(repr, "sodipodi:arg1", 0.5)
-                                    + M_PI / (gint)adj->value));
+                                   (arg1 + M_PI / (gint)adj->value));
             item->updateRepr();
             modmade = true;
         }
@@ -2762,8 +2764,10 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
         if (SP_IS_STAR(item)) {
             Inkscape::XML::Node *repr = item->getRepr();
 
-            gdouble r1 = sp_repr_get_double_attribute(repr, "sodipodi:r1", 1.0);
-            gdouble r2 = sp_repr_get_double_attribute(repr, "sodipodi:r2", 1.0);
+            gdouble r1 = 1.0;
+            gdouble r2 = 1.0;
+            sp_repr_get_double(repr, "sodipodi:r1", &r1);
+            sp_repr_get_double(repr, "sodipodi:r2", &r2);
             if (r2 < r1) {
                 sp_repr_set_svg_double(repr, "sodipodi:r2", r1*adj->value);
             } else {
@@ -2926,10 +2930,14 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
 
     if (!strcmp(name, "inkscape:randomized")) {
         adj = GTK_ADJUSTMENT( g_object_get_data(G_OBJECT(tbl), "randomized") );
-        gtk_adjustment_set_value(adj, sp_repr_get_double_attribute(repr, "inkscape:randomized", 0.0));
+        double randomized = 0.0;
+        sp_repr_get_double(repr, "inkscape:randomized", &randomized);
+        gtk_adjustment_set_value(adj, randomized);
     } else if (!strcmp(name, "inkscape:rounded")) {
         adj = GTK_ADJUSTMENT( g_object_get_data(G_OBJECT(tbl), "rounded") );
-        gtk_adjustment_set_value(adj, sp_repr_get_double_attribute(repr, "inkscape:rounded", 0.0));
+        double rounded = 0.0;
+        sp_repr_get_double(repr, "inkscape:rounded", &rounded);
+        gtk_adjustment_set_value(adj, rounded);
     } else if (!strcmp(name, "inkscape:flatsided")) {
         GtkAction* prop_action = GTK_ACTION( g_object_get_data(G_OBJECT(tbl), "prop_action") );
         char const *flatsides = repr->attribute("inkscape:flatsided");
@@ -2943,8 +2951,10 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
         }
     } else if ((!strcmp(name, "sodipodi:r1") || !strcmp(name, "sodipodi:r2")) && (!isFlatSided) ) {
         adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "proportion");
-        gdouble r1 = sp_repr_get_double_attribute(repr, "sodipodi:r1", 1.0);
-        gdouble r2 = sp_repr_get_double_attribute(repr, "sodipodi:r2", 1.0);
+        gdouble r1 = 1.0;
+        gdouble r2 = 1.0;
+        sp_repr_get_double(repr, "sodipodi:r1", &r1);
+        sp_repr_get_double(repr, "sodipodi:r2", &r2);
         if (r2 < r1) {
             gtk_adjustment_set_value(adj, r2/r1);
         } else {
@@ -4013,13 +4023,19 @@ static void spiral_tb_event_attr_changed(Inkscape::XML::Node *repr,
 
     GtkAdjustment *adj;
     adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "revolution");
-    gtk_adjustment_set_value(adj, (sp_repr_get_double_attribute(repr, "sodipodi:revolution", 3.0)));
+    double revolution = 3.0;
+    sp_repr_get_double(repr, "sodipodi:revolution", &revolution);
+    gtk_adjustment_set_value(adj, revolution);
 
     adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "expansion");
-    gtk_adjustment_set_value(adj, (sp_repr_get_double_attribute(repr, "sodipodi:expansion", 1.0)));
+    double expansion = 1.0;
+    sp_repr_get_double(repr, "sodipodi:expansion", &expansion);
+    gtk_adjustment_set_value(adj, expansion);
 
     adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "t0");
-    gtk_adjustment_set_value(adj, (sp_repr_get_double_attribute(repr, "sodipodi:t0", 0.0)));
+    double t0 = 0.0;
+    sp_repr_get_double(repr, "sodipodi:t0", &t0);
+    gtk_adjustment_set_value(adj, t0);
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));
 }
@@ -5647,8 +5663,10 @@ static void arc_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const * /
     // in turn, prevent callbacks from responding
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-    gdouble start = sp_repr_get_double_attribute(repr, "sodipodi:start", 0.0);
-    gdouble end = sp_repr_get_double_attribute(repr, "sodipodi:end", 0.0);
+    gdouble start = 0.;
+    gdouble end = 0.;
+    sp_repr_get_double(repr, "sodipodi:start", &start);
+    sp_repr_get_double(repr, "sodipodi:end", &end);
 
     GtkAdjustment *adj1,*adj2;
     adj1 = GTK_ADJUSTMENT( g_object_get_data( tbl, "start" ) );

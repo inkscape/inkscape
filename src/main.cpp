@@ -1414,10 +1414,14 @@ sp_do_export_png(SPDocument *doc)
     } else {
         // read from namedview
         Inkscape::XML::Node *nv = sp_repr_lookup_name (doc->rroot, "sodipodi:namedview");
-        if (nv && nv->attribute("pagecolor"))
+        if (nv && nv->attribute("pagecolor")){
             bgcolor = sp_svg_read_color(nv->attribute("pagecolor"), 0xffffff00);
-        if (nv && nv->attribute("inkscape:pageopacity"))
-            bgcolor |= SP_COLOR_F_TO_U(sp_repr_get_double_attribute (nv, "inkscape:pageopacity", 1.0));
+        }
+        if (nv && nv->attribute("inkscape:pageopacity")){
+            double opacity = 1.0;
+            sp_repr_get_double (nv, "inkscape:pageopacity", &opacity);
+            bgcolor |= SP_COLOR_F_TO_U(opacity);
+        }
     }
 
     if (sp_export_background_opacity) {

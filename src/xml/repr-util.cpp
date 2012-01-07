@@ -312,7 +312,7 @@ gchar const *sp_xml_ns_prefix_uri(gchar const *prefix)
     return uri;
 }
 
-double sp_repr_get_double_attribute(Inkscape::XML::Node *repr, char const *key, double def)
+/*double sp_repr_get_double_attribute(Inkscape::XML::Node *repr, char const *key, double def)
 {
     char *result;
 
@@ -324,7 +324,7 @@ double sp_repr_get_double_attribute(Inkscape::XML::Node *repr, char const *key, 
     if (result == NULL) return def;
 
     return g_ascii_strtod(result, NULL);
-}
+}*/
 
 long long int sp_repr_get_int_attribute(Inkscape::XML::Node *repr, char const *key, long long int def)
 {

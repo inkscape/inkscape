@@ -1208,7 +1208,9 @@ void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
                 bgcolor = sp_svg_read_color(nv->attribute("pagecolor"), 0xffffff00);
             }
             if (nv && nv->attribute("inkscape:pageopacity")) {
-                bgcolor |= SP_COLOR_F_TO_U(sp_repr_get_double_attribute (nv, "inkscape:pageopacity", 1.0));
+                double opacity = 1.0;
+                sp_repr_get_double(nv, "inkscape:pageopacity", &opacity);
+                bgcolor |= SP_COLOR_F_TO_U(opacity);
             }
 
             sp_export_png_file(_clipboardSPDoc, filename, area, width, height, dpi, dpi, bgcolor, NULL, NULL, true, NULL);

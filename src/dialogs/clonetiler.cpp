@@ -1147,10 +1147,10 @@ static void clonetiler_apply(GtkWidget */*widget*/, void *)
     }
 
     Geom::Point center;
-    double w;
-    double h;
-    double x0;
-    double y0;
+    double w = 0;
+    double h = 0;
+    double x0 = 0;
+    double y0 = 0;
 
     if (keepbbox &&
         obj_repr->attribute("inkscape:tile-w") &&
@@ -1160,14 +1160,16 @@ static void clonetiler_apply(GtkWidget */*widget*/, void *)
         obj_repr->attribute("inkscape:tile-cx") &&
         obj_repr->attribute("inkscape:tile-cy")) {
 
-        double cx = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-cx", 0);
-        double cy = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-cy", 0);
+        double cx = 0;
+        double cy = 0;
+        sp_repr_get_double (obj_repr, "inkscape:tile-cx", &cx);
+        sp_repr_get_double (obj_repr, "inkscape:tile-cy", &cy);
         center = Geom::Point (cx, cy);
 
-        w = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-w", 0);
-        h = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-h", 0);
-        x0 = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-x0", 0);
-        y0 = sp_repr_get_double_attribute (obj_repr, "inkscape:tile-y0", 0);
+        sp_repr_get_double (obj_repr, "inkscape:tile-w", &w);
+        sp_repr_get_double (obj_repr, "inkscape:tile-h", &h);
+        sp_repr_get_double (obj_repr, "inkscape:tile-x0", &x0);
+        sp_repr_get_double (obj_repr, "inkscape:tile-y0", &y0);
     } else {
         bool prefs_bbox = prefs->getBool("/tools/bounding_box", false);
         SPItem::BBoxType bbox_type = ( !prefs_bbox ?

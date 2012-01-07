@@ -109,8 +109,8 @@ unsigned sp_repr_set_svg_double(Inkscape::XML::Node *repr, gchar const *key, dou
 unsigned sp_repr_set_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point const & val);
 unsigned sp_repr_get_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point *val);
 
-/// \deprecated Use sp_repr_get_double to check for success
-double sp_repr_get_double_attribute(Inkscape::XML::Node *repr, gchar const *key, double def);
+// \deprecated Use sp_repr_get_double to check for success
+//double sp_repr_get_double_attribute(Inkscape::XML::Node *repr, gchar const *key, double def);
 /// \deprecated Use sp_repr_get_int to check for success
 long long int sp_repr_get_int_attribute(Inkscape::XML::Node *repr, gchar const *key, long long int def);
 

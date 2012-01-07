@@ -60,10 +60,14 @@ static void draw_page(
 
             guint32 bgcolor = 0x00000000;
             Inkscape::XML::Node *nv = sp_repr_lookup_name (junk->_doc->rroot, "sodipodi:namedview");
-            if (nv && nv->attribute("pagecolor"))
+            if (nv && nv->attribute("pagecolor")){
                 bgcolor = sp_svg_read_color(nv->attribute("pagecolor"), 0xffffff00);
-            if (nv && nv->attribute("inkscape:pageopacity"))
-                bgcolor |= SP_COLOR_F_TO_U(sp_repr_get_double_attribute (nv, "inkscape:pageopacity", 1.0));
+            }
+            if (nv && nv->attribute("inkscape:pageopacity")){
+                double opacity = 1.0;
+                sp_repr_get_double (nv, "inkscape:pageopacity", &opacity);
+                bgcolor |= SP_COLOR_F_TO_U(opacity);
+            }
 
             sp_export_png_file(junk->_doc, tmp_png.c_str(), 0.0, 0.0,
                 width, height,
@@ -83,13 +87,13 @@ static void draw_page(
             {
                 Cairo::RefPtr<Cairo::ImageSurface> png = Cairo::ImageSurface::create_from_png (tmp_png);
                 cairo_t *cr = gtk_print_context_get_cairo_context (context);
-		cairo_matrix_t m;
-		cairo_get_matrix(cr, &m);
-		cairo_scale(cr, PT_PER_IN / dpi, PT_PER_IN / dpi);
+                cairo_matrix_t m;
+                cairo_get_matrix(cr, &m);
+                cairo_scale(cr, PT_PER_IN / dpi, PT_PER_IN / dpi);
                 // FIXME: why is the origin offset??
                 cairo_set_source_surface(cr, png->cobj(), -16.0, -16.0);
-		cairo_paint(cr);
-		cairo_set_matrix(cr, &m);
+                cairo_paint(cr);
+                cairo_set_matrix(cr, &m);
             }
 
             // Clean up
@@ -152,16 +156,14 @@ static void draw_page(
 
 }
 
-static GObject*
-create_custom_widget (GtkPrintOperation */*operation*/,
+static GObject* create_custom_widget (GtkPrintOperation */*operation*/,
                       gpointer           user_data)
 {
     //printf("%s\n",__FUNCTION__);
     return G_OBJECT(user_data);
 }
 
-static void
-begin_print (GtkPrintOperation *operation,
+static void begin_print (GtkPrintOperation *operation,
              GtkPrintContext   */*context*/,
              gpointer           /*user_data*/)
 {
