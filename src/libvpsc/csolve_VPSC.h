@@ -10,14 +10,21 @@
  *
  * Released under GNU LGPL.  Read the file 'COPYING' for more information.
  */
-#ifndef _CSOLVE_VPSC_H_
-#define _CSOLVE_VPSC_H_
+#ifndef CSOLVE_VPSC_H_
+#define CSOLVE_VPSC_H_
 #ifdef __cplusplus
-class vpsc::Variable;
-class vpsc::Constraint;
-class vpsc::Solver;
-class vpsc::IncSolver;
-using namespace vpsc;
+namespace vpsc
+{
+    class Variable;
+    class Constraint;
+    class Solver;
+    class IncSolver;
+}
+/* TODO 'using' should never be in a .h file. We need a different approach here. */
+using vpsc::Variable;
+using vpsc::Constraint;
+using vpsc::Solver;
+using vpsc::IncSolver;
 extern "C" {
 #else
 typedef struct Variable Variable;
@@ -25,6 +32,7 @@ typedef struct Constraint Constraint;
 typedef struct Solver Solver;
 typedef struct IncSolver IncSolver;
 #endif
+
 Variable* newVariable(int id, double desiredPos, double weight);
 void setVariableDesiredPos(Variable *, double desiredPos);
 double getVariablePos(Variable*);
@@ -48,7 +56,7 @@ typedef struct pointf_s { double x, y; } pointf;
 typedef struct { pointf LL, UR; } boxf;
 #endif
 int genXConstraints(int n, boxf[], Variable** vs, Constraint*** cs,
-		int transitiveClosure);
+                    int transitiveClosure);
 int genYConstraints(int n, boxf[], Variable** vs, Constraint*** cs);
 
 void satisfyVPSC(Solver*);
@@ -59,4 +67,4 @@ int getSplitCnt(IncSolver *vpsc);
 #ifdef __cplusplus
 }
 #endif
-#endif /* _CSOLVE_VPSC_H_ */
+#endif /* CSOLVE_VPSC_H_ */
