@@ -104,7 +104,9 @@ static void sp_desktop_widget_realize (GtkWidget *widget);
 static gint sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw);
 
 static void sp_dtw_color_profile_event(EgeColorProfTracker *widget, SPDesktopWidget *dtw);
+#if ENABLE_LCMS
 static void cms_adjust_toggled( GtkWidget *button, gpointer data );
+#endif // ENABLE_LCMS
 static void cms_adjust_set_sensitive( SPDesktopWidget *dtw, bool enabled );
 static void sp_desktop_widget_adjustment_value_changed (GtkAdjustment *adj, SPDesktopWidget *dtw);
 
@@ -186,16 +188,20 @@ private:
     friend class SoftproofWatcher;
 };
 
-void CMSPrefWatcher::hook(EgeColorProfTracker */*tracker*/, gint screen, gint monitor, CMSPrefWatcher */*watcher*/)
-{
 #if ENABLE_LCMS
+void CMSPrefWatcher::hook(EgeColorProfTracker * /*tracker*/, gint screen, gint monitor, CMSPrefWatcher * /*watcher*/)
+{
     unsigned char* buf = 0;
     guint len = 0;
 
     ege_color_prof_tracker_get_profile_for( screen, monitor, reinterpret_cast<gpointer*>(&buf), &len );
     Glib::ustring id = Inkscape::CMSSystem::setDisplayPer( buf, len, screen, monitor );
-#endif // ENABLE_LCMS
 }
+#else
+void CMSPrefWatcher::hook(EgeColorProfTracker * /*tracker*/, gint /*screen*/, gint /*monitor*/, CMSPrefWatcher * /*watcher*/)
+{
+}
+#endif // ENABLE_LCMS
 
 /// @todo Use conditional compilation in saner places. The whole PrefWatcher
 /// object is unnecessary if ENABLE_LCMS is not defined.
@@ -790,9 +796,9 @@ sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dt
     return FALSE;
 }
 
+#if ENABLE_LCMS
 void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidget *dtw)
 {
-#if ENABLE_LCMS
     // Handle profile changes
     GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(dtw));
     gint screenNum = gdk_screen_get_number(screen);
@@ -803,12 +809,16 @@ void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidge
     dtw->requestCanvasUpdate();
     enabled = !dtw->canvas->cms_key.empty();
     cms_adjust_set_sensitive( dtw, enabled );
-#endif // ENABLE_LCMS
 }
+#else
+void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidget * /*dtw*/)
+{
+}
+#endif // ENABLE_LCMS
 
+#if ENABLE_LCMS
 void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
 {
-#if ENABLE_LCMS
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data);
 
     bool down = SP_BUTTON_IS_DOWN(dtw->cms_adjust);
@@ -823,8 +833,8 @@ void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
             dtw->setMessage (Inkscape::NORMAL_MESSAGE, _("Color-managed display is <b>disabled</b> in this window"));
         }
     }
-#endif // ENABLE_LCMS
 }
+#endif // ENABLE_LCMS
 
 void cms_adjust_set_sensitive( SPDesktopWidget *dtw, bool enabled )
 {

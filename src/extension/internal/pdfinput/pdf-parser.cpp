@@ -3,6 +3,10 @@
  *
  * Derived from poppler's Gfx.cc
  *
+ * Authors:
+ *   Jon A. Cruz <jon@joncruz.org>
+ *
+ * Copyright 2012 authors
  * Copyright 1996-2003 Glyph & Cog, LLC
  *
  */
@@ -256,11 +260,9 @@ PdfOperator PdfParser::opTab[] = {
 //------------------------------------------------------------------------
 
 PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *builderA,
-                     int pageNum, int rotate, Dict *resDict,
-                     PDFRectangle *box, PDFRectangle *cropBox) {
-
-  int i;
-
+                     int /*pageNum*/, int rotate, Dict *resDict,
+                     PDFRectangle *box, PDFRectangle *cropBox)
+{
   xref = xrefA;
   subPage = gFalse;
   printCommands = false;
@@ -282,7 +284,7 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
 
   double *ctm = state->getCTM();
   double scaledCTM[6];
-  for (i = 0; i < 6; ++i) {
+  for (int i = 0; i < 6; ++i) {
     baseMatrix[i] = ctm[i];
     scaledCTM[i] = PX_PER_PT * ctm[i];
   }
@@ -382,13 +384,13 @@ void PdfParser::parse(Object *obj, GBool topLevel) {
   parser = NULL;
 }
 
-void PdfParser::go(GBool topLevel) {
+void PdfParser::go(GBool /*topLevel*/)
+{
   Object obj;
   Object args[maxArgs];
-  int numArgs, i;
 
   // scan a sequence of objects
-  numArgs = 0;
+  int numArgs = 0;
   parser->getObj(&obj);
   while (!obj.isEOF()) {
 
@@ -396,7 +398,7 @@ void PdfParser::go(GBool topLevel) {
     if (obj.isCmd()) {
       if (printCommands) {
 	obj.print(stdout);
-	for (i = 0; i < numArgs; ++i) {
+	for (int i = 0; i < numArgs; ++i) {
 	  printf(" ");
 	  args[i].print(stdout);
 	}
@@ -408,7 +410,7 @@ void PdfParser::go(GBool topLevel) {
       execOp(&obj, args, numArgs);
 
       obj.free();
-      for (i = 0; i < numArgs; ++i)
+      for (int i = 0; i < numArgs; ++i)
 	args[i].free();
       numArgs = 0;
 
@@ -438,14 +440,14 @@ void PdfParser::go(GBool topLevel) {
     error(getPos(), const_cast<char*>("Leftover args in content stream"));
     if (printCommands) {
       printf("%d leftovers:", numArgs);
-      for (i = 0; i < numArgs; ++i) {
+      for (int i = 0; i < numArgs; ++i) {
 	printf(" ");
 	args[i].print(stdout);
       }
       printf("\n");
       fflush(stdout);
     }
-    for (i = 0; i < numArgs; ++i)
+    for (int i = 0; i < numArgs; ++i)
       args[i].free();
   }
 }
@@ -585,15 +587,19 @@ int PdfParser::getPos() {
 // graphics state operators
 //------------------------------------------------------------------------
 
-void PdfParser::opSave(Object args[], int numArgs) {
+void PdfParser::opSave(Object /*args*/[], int /*numArgs*/)
+{
   saveState();
 }
 
-void PdfParser::opRestore(Object args[], int numArgs) {
+void PdfParser::opRestore(Object /*args*/[], int /*numArgs*/)
+{
   restoreState();
 }
 
-void PdfParser::opConcat(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opConcat(Object args[], int /*numArgs*/)
+{
   state->concatCTM(args[0].getNum(), args[1].getNum(),
 		   args[2].getNum(), args[3].getNum(),
 		   args[4].getNum(), args[5].getNum());
@@ -628,20 +634,17 @@ void PdfParser::opConcat(Object args[], int numArgs) {
   fontChanged = gTrue;
 }
 
-void PdfParser::opSetDash(Object args[], int numArgs) {
-  Array *a;
-  int length;
-  Object obj;
-  double *dash;
-  int i;
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetDash(Object args[], int /*numArgs*/)
+{
+  double *dash = 0;
 
-  a = args[0].getArray();
-  length = a->getLength();
-  if (length == 0) {
-    dash = NULL;
-  } else {
+  Array *a = args[0].getArray();
+  int length = a->getLength();
+  if (length != 0) {
     dash = (double *)gmallocn(length, sizeof(double));
-    for (i = 0; i < length; ++i) {
+    for (int i = 0; i < length; ++i) {
+      Object obj;
       dash[i] = a->get(i, &obj)->getNum();
       obj.free();
     }
@@ -650,40 +653,48 @@ void PdfParser::opSetDash(Object args[], int numArgs) {
   builder->updateStyle(state);
 }
 
-void PdfParser::opSetFlat(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetFlat(Object args[], int /*numArgs*/)
+{
   state->setFlatness((int)args[0].getNum());
 }
 
-void PdfParser::opSetLineJoin(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetLineJoin(Object args[], int /*numArgs*/)
+{
   state->setLineJoin(args[0].getInt());
   builder->updateStyle(state);
 }
 
-void PdfParser::opSetLineCap(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetLineCap(Object args[], int /*numArgs*/)
+{
   state->setLineCap(args[0].getInt());
   builder->updateStyle(state);
 }
 
-void PdfParser::opSetMiterLimit(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetMiterLimit(Object args[], int /*numArgs*/)
+{
   state->setMiterLimit(args[0].getNum());
   builder->updateStyle(state);
 }
 
-void PdfParser::opSetLineWidth(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetLineWidth(Object args[], int /*numArgs*/)
+{
   state->setLineWidth(args[0].getNum());
   builder->updateStyle(state);
 }
 
-void PdfParser::opSetExtGState(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetExtGState(Object args[], int /*numArgs*/)
+{
   Object obj1, obj2, obj3, obj4, obj5;
-  GfxBlendMode mode;
-  GBool haveFillOP;
-  Function *funcs[4];
+  Function *funcs[4] = {0, 0, 0, 0};
   GfxColor backdropColor;
-  GBool haveBackdropColor;
-  GfxColorSpace *blendingColorSpace;
-  GBool alpha, isolated, knockout;
-  int i;
+  GBool haveBackdropColor = gFalse;
+  GBool alpha = gFalse;
 
   if (!res->lookupGState(args[0].getName(), &obj1)) {
     return;
@@ -701,6 +712,7 @@ void PdfParser::opSetExtGState(Object args[], int numArgs) {
 
   // transparency support: blend mode, fill/stroke opacity
   if (!obj1.dictLookup(const_cast<char*>("BM"), &obj2)->isNull()) {
+    GfxBlendMode mode = gfxBlendNormal;
     if (state->parseBlendMode(&obj2, &mode)) {
       state->setBlendMode(mode);
     } else {
@@ -718,6 +730,7 @@ void PdfParser::opSetExtGState(Object args[], int numArgs) {
   obj2.free();
 
   // fill/stroke overprint
+  GBool haveFillOP = gFalse;
   if ((haveFillOP = (obj1.dictLookup(const_cast<char*>("op"), &obj2)->isBool()))) {
     state->setFillOverprint(obj2.getBool());
   }
@@ -746,15 +759,17 @@ void PdfParser::opSetExtGState(Object args[], int numArgs) {
     funcs[0] = funcs[1] = funcs[2] = funcs[3] = NULL;
     state->setTransfer(funcs);
   } else if (obj2.isArray() && obj2.arrayGetLength() == 4) {
-    for (i = 0; i < 4; ++i) {
+    int pos = 4;
+    for (int i = 0; i < 4; ++i) {
       obj2.arrayGet(i, &obj3);
       funcs[i] = Function::parse(&obj3);
       obj3.free();
       if (!funcs[i]) {
+	pos = i;
 	break;
       }
     }
-    if (i == 4) {
+    if (pos == 4) {
       state->setTransfer(funcs);
     }
   } else if (obj2.isName() || obj2.isDict() || obj2.isStream()) {
@@ -791,10 +806,10 @@ void PdfParser::opSetExtGState(Object args[], int numArgs) {
       }
       obj3.free();
       if ((haveBackdropColor = obj2.dictLookup(const_cast<char*>("BC"), &obj3)->isArray())) {
-	for (i = 0; i < gfxColorMaxComps; ++i) {
+	for (int i = 0; i < gfxColorMaxComps; ++i) {
 	  backdropColor.c[i] = 0;
 	}
-	for (i = 0; i < obj3.arrayGetLength() && i < gfxColorMaxComps; ++i) {
+	for (int i = 0; i < obj3.arrayGetLength() && i < gfxColorMaxComps; ++i) {
 	  obj3.arrayGet(i, &obj4);
 	  if (obj4.isNum()) {
 	    backdropColor.c[i] = dblToCol(obj4.getNum());
@@ -805,8 +820,9 @@ void PdfParser::opSetExtGState(Object args[], int numArgs) {
       obj3.free();
       if (obj2.dictLookup(const_cast<char*>("G"), &obj3)->isStream()) {
 	if (obj3.streamGetDict()->lookup(const_cast<char*>("Group"), &obj4)->isDict()) {
-	  blendingColorSpace = NULL;
-	  isolated = knockout = gFalse;
+	  GfxColorSpace *blendingColorSpace = 0;
+	  GBool isolated = gFalse;
+	  GBool knockout = gFalse;
 	  if (!obj4.dictLookup(const_cast<char*>("CS"), &obj5)->isNull()) {
 #ifdef POPPLER_NEW_COLOR_SPACE_API
 	    blendingColorSpace = GfxColorSpace::parse(&obj5, NULL);
@@ -828,7 +844,7 @@ void PdfParser::opSetExtGState(Object args[], int numArgs) {
 	      blendingColorSpace->getDefaultColor(&backdropColor);
 	    } else {
 	      //~ need to get the parent or default color space (?)
-	      for (i = 0; i < gfxColorMaxComps; ++i) {
+	      for (int i = 0; i < gfxColorMaxComps; ++i) {
 		backdropColor.c[i] = 0;
 	      }
 	    }
@@ -925,14 +941,17 @@ void PdfParser::doSoftMask(Object *str, GBool alpha,
   obj1.free();
 }
 
-void PdfParser::opSetRenderingIntent(Object args[], int numArgs) {
+void PdfParser::opSetRenderingIntent(Object /*args*/[], int /*numArgs*/)
+{
 }
 
 //------------------------------------------------------------------------
 // color operators
 //------------------------------------------------------------------------
 
-void PdfParser::opSetFillGray(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetFillGray(Object args[], int /*numArgs*/)
+{
   GfxColor color;
 
   state->setFillPattern(NULL);
@@ -942,7 +961,9 @@ void PdfParser::opSetFillGray(Object args[], int numArgs) {
   builder->updateStyle(state);
 }
 
-void PdfParser::opSetStrokeGray(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetStrokeGray(Object args[], int /*numArgs*/)
+{
   GfxColor color;
 
   state->setStrokePattern(NULL);
@@ -952,7 +973,9 @@ void PdfParser::opSetStrokeGray(Object args[], int numArgs) {
   builder->updateStyle(state);
 }
 
-void PdfParser::opSetFillCMYKColor(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetFillCMYKColor(Object args[], int /*numArgs*/)
+{
   GfxColor color;
   int i;
 
@@ -965,52 +988,56 @@ void PdfParser::opSetFillCMYKColor(Object args[], int numArgs) {
   builder->updateStyle(state);
 }
 
-void PdfParser::opSetStrokeCMYKColor(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetStrokeCMYKColor(Object args[], int /*numArgs*/)
+{
   GfxColor color;
-  int i;
 
   state->setStrokePattern(NULL);
   state->setStrokeColorSpace(new GfxDeviceCMYKColorSpace());
-  for (i = 0; i < 4; ++i) {
+  for (int i = 0; i < 4; ++i) {
     color.c[i] = dblToCol(args[i].getNum());
   }
   state->setStrokeColor(&color);
   builder->updateStyle(state);
 }
 
-void PdfParser::opSetFillRGBColor(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetFillRGBColor(Object args[], int /*numArgs*/)
+{
   GfxColor color;
-  int i;
 
   state->setFillPattern(NULL);
   state->setFillColorSpace(new GfxDeviceRGBColorSpace());
-  for (i = 0; i < 3; ++i) {
+  for (int i = 0; i < 3; ++i) {
     color.c[i] = dblToCol(args[i].getNum());
   }
   state->setFillColor(&color);
   builder->updateStyle(state);
 }
 
-void PdfParser::opSetStrokeRGBColor(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetStrokeRGBColor(Object args[], int /*numArgs*/) {
   GfxColor color;
-  int i;
 
   state->setStrokePattern(NULL);
   state->setStrokeColorSpace(new GfxDeviceRGBColorSpace());
-  for (i = 0; i < 3; ++i) {
+  for (int i = 0; i < 3; ++i) {
     color.c[i] = dblToCol(args[i].getNum());
   }
   state->setStrokeColor(&color);
   builder->updateStyle(state);
 }
 
-void PdfParser::opSetFillColorSpace(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetFillColorSpace(Object args[], int /*numArgs*/)
+{
   Object obj;
-  GfxColorSpace *colorSpace;
-  GfxColor color;
 
   state->setFillPattern(NULL);
   res->lookupColorSpace(args[0].getName(), &obj);
+
+  GfxColorSpace *colorSpace = 0;
 #ifdef POPPLER_NEW_COLOR_SPACE_API
   if (obj.isNull()) {
     colorSpace = GfxColorSpace::parse(&args[0], NULL);
@@ -1026,6 +1053,7 @@ void PdfParser::opSetFillColorSpace(Object args[], int numArgs) {
 #endif
   obj.free();
   if (colorSpace) {
+  GfxColor color;
     state->setFillColorSpace(colorSpace);
     colorSpace->getDefaultColor(&color);
     state->setFillColor(&color);
@@ -1035,10 +1063,11 @@ void PdfParser::opSetFillColorSpace(Object args[], int numArgs) {
   }
 }
 
-void PdfParser::opSetStrokeColorSpace(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetStrokeColorSpace(Object args[], int /*numArgs*/)
+{
   Object obj;
-  GfxColorSpace *colorSpace;
-  GfxColor color;
+  GfxColorSpace *colorSpace = 0;
 
   state->setStrokePattern(NULL);
   res->lookupColorSpace(args[0].getName(), &obj);
@@ -1057,6 +1086,7 @@ void PdfParser::opSetStrokeColorSpace(Object args[], int numArgs) {
 #endif
   obj.free();
   if (colorSpace) {
+    GfxColor color;
     state->setStrokeColorSpace(colorSpace);
     colorSpace->getDefaultColor(&color);
     state->setStrokeColor(&color);
@@ -1205,11 +1235,15 @@ void PdfParser::opSetStrokeColorN(Object args[], int numArgs) {
 // path segment operators
 //------------------------------------------------------------------------
 
-void PdfParser::opMoveTo(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opMoveTo(Object args[], int /*numArgs*/)
+{
   state->moveTo(args[0].getNum(), args[1].getNum());
 }
 
-void PdfParser::opLineTo(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opLineTo(Object args[], int /*numArgs*/)
+{
   if (!state->isCurPt()) {
     error(getPos(), const_cast<char*>("No current point in lineto"));
     return;
@@ -1217,61 +1251,61 @@ void PdfParser::opLineTo(Object args[], int numArgs) {
   state->lineTo(args[0].getNum(), args[1].getNum());
 }
 
-void PdfParser::opCurveTo(Object args[], int numArgs) {
-  double x1, y1, x2, y2, x3, y3;
-
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opCurveTo(Object args[], int /*numArgs*/)
+{
   if (!state->isCurPt()) {
     error(getPos(), const_cast<char*>("No current point in curveto"));
     return;
   }
-  x1 = args[0].getNum();
-  y1 = args[1].getNum();
-  x2 = args[2].getNum();
-  y2 = args[3].getNum();
-  x3 = args[4].getNum();
-  y3 = args[5].getNum();
+  double x1 = args[0].getNum();
+  double y1 = args[1].getNum();
+  double x2 = args[2].getNum();
+  double y2 = args[3].getNum();
+  double x3 = args[4].getNum();
+  double y3 = args[5].getNum();
   state->curveTo(x1, y1, x2, y2, x3, y3);
 }
 
-void PdfParser::opCurveTo1(Object args[], int numArgs) {
-  double x1, y1, x2, y2, x3, y3;
-
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opCurveTo1(Object args[], int /*numArgs*/)
+{
   if (!state->isCurPt()) {
     error(getPos(), const_cast<char*>("No current point in curveto1"));
     return;
   }
-  x1 = state->getCurX();
-  y1 = state->getCurY();
-  x2 = args[0].getNum();
-  y2 = args[1].getNum();
-  x3 = args[2].getNum();
-  y3 = args[3].getNum();
+  double x1 = state->getCurX();
+  double y1 = state->getCurY();
+  double x2 = args[0].getNum();
+  double y2 = args[1].getNum();
+  double x3 = args[2].getNum();
+  double y3 = args[3].getNum();
   state->curveTo(x1, y1, x2, y2, x3, y3);
 }
 
-void PdfParser::opCurveTo2(Object args[], int numArgs) {
-  double x1, y1, x2, y2, x3, y3;
-
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opCurveTo2(Object args[], int /*numArgs*/)
+{
   if (!state->isCurPt()) {
     error(getPos(), const_cast<char*>("No current point in curveto2"));
     return;
   }
-  x1 = args[0].getNum();
-  y1 = args[1].getNum();
-  x2 = args[2].getNum();
-  y2 = args[3].getNum();
-  x3 = x2;
-  y3 = y2;
+  double x1 = args[0].getNum();
+  double y1 = args[1].getNum();
+  double x2 = args[2].getNum();
+  double y2 = args[3].getNum();
+  double x3 = x2;
+  double y3 = y2;
   state->curveTo(x1, y1, x2, y2, x3, y3);
 }
 
-void PdfParser::opRectangle(Object args[], int numArgs) {
-  double x, y, w, h;
-
-  x = args[0].getNum();
-  y = args[1].getNum();
-  w = args[2].getNum();
-  h = args[3].getNum();
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opRectangle(Object args[], int /*numArgs*/)
+{
+  double x = args[0].getNum();
+  double y = args[1].getNum();
+  double w = args[2].getNum();
+  double h = args[3].getNum();
   state->moveTo(x, y);
   state->lineTo(x + w, y);
   state->lineTo(x + w, y + h);
@@ -1279,7 +1313,8 @@ void PdfParser::opRectangle(Object args[], int numArgs) {
   state->closePath();
 }
 
-void PdfParser::opClosePath(Object args[], int numArgs) {
+void PdfParser::opClosePath(Object /*args*/[], int /*numArgs*/)
+{
   if (!state->isCurPt()) {
     error(getPos(), const_cast<char*>("No current point in closepath"));
     return;
@@ -1291,11 +1326,13 @@ void PdfParser::opClosePath(Object args[], int numArgs) {
 // path painting operators
 //------------------------------------------------------------------------
 
-void PdfParser::opEndPath(Object args[], int numArgs) {
+void PdfParser::opEndPath(Object /*args*/[], int /*numArgs*/)
+{
   doEndPath();
 }
 
-void PdfParser::opStroke(Object args[], int numArgs) {
+void PdfParser::opStroke(Object /*args*/[], int /*numArgs*/)
+{
   if (!state->isCurPt()) {
     //error(getPos(), const_cast<char*>("No path in stroke"));
     return;
@@ -1328,7 +1365,8 @@ void PdfParser::opCloseStroke(Object * /*args[]*/, int /*numArgs*/) {
   doEndPath();
 }
 
-void PdfParser::opFill(Object args[], int numArgs) {
+void PdfParser::opFill(Object /*args*/[], int /*numArgs*/)
+{
   if (!state->isCurPt()) {
     //error(getPos(), const_cast<char*>("No path in fill"));
     return;
@@ -1344,7 +1382,8 @@ void PdfParser::opFill(Object args[], int numArgs) {
   doEndPath();
 }
 
-void PdfParser::opEOFill(Object args[], int numArgs) {
+void PdfParser::opEOFill(Object /*args*/[], int /*numArgs*/)
+{
   if (!state->isCurPt()) {
     //error(getPos(), const_cast<char*>("No path in eofill"));
     return;
@@ -1360,7 +1399,8 @@ void PdfParser::opEOFill(Object args[], int numArgs) {
   doEndPath();
 }
 
-void PdfParser::opFillStroke(Object args[], int numArgs) {
+void PdfParser::opFillStroke(Object /*args*/[], int /*numArgs*/)
+{
   if (!state->isCurPt()) {
     //error(getPos(), const_cast<char*>("No path in fill/stroke"));
     return;
@@ -1373,7 +1413,8 @@ void PdfParser::opFillStroke(Object args[], int numArgs) {
   doEndPath();
 }
 
-void PdfParser::opCloseFillStroke(Object args[], int numArgs) {
+void PdfParser::opCloseFillStroke(Object /*args*/[], int /*numArgs*/)
+{
   if (!state->isCurPt()) {
     //error(getPos(), const_cast<char*>("No path in closepath/fill/stroke"));
     return;
@@ -1385,7 +1426,8 @@ void PdfParser::opCloseFillStroke(Object args[], int numArgs) {
   doEndPath();
 }
 
-void PdfParser::opEOFillStroke(Object args[], int numArgs) {
+void PdfParser::opEOFillStroke(Object /*args*/[], int /*numArgs*/)
+{
   if (!state->isCurPt()) {
     //error(getPos(), const_cast<char*>("No path in eofill/stroke"));
     return;
@@ -1396,7 +1438,8 @@ void PdfParser::opEOFillStroke(Object args[], int numArgs) {
   doEndPath();
 }
 
-void PdfParser::opCloseEOFillStroke(Object args[], int numArgs) {
+void PdfParser::opCloseEOFillStroke(Object /*args*/[], int /*numArgs*/)
+{
   if (!state->isCurPt()) {
     //error(getPos(), const_cast<char*>("No path in closepath/eofill/stroke"));
     return;
@@ -1570,8 +1613,10 @@ void PdfParser::doShadingPatternFillFallback(GfxShadingPattern *sPat,
   state->setPath(savedPath);
 }
 
-void PdfParser::opShFill(Object args[], int numArgs) {
-  GfxShading *shading;
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opShFill(Object args[], int /*numArgs*/)
+{
+  GfxShading *shading = 0;
   GfxPath *savedPath = NULL;
   double xMin, yMin, xMax, yMax;
   double gradientTransform[6];
@@ -2028,11 +2073,13 @@ void PdfParser::doEndPath() {
 // path clipping operators
 //------------------------------------------------------------------------
 
-void PdfParser::opClip(Object args[], int numArgs) {
+void PdfParser::opClip(Object /*args*/[], int /*numArgs*/)
+{
   clip = clipNormal;
 }
 
-void PdfParser::opEOClip(Object args[], int numArgs) {
+void PdfParser::opEOClip(Object /*args*/[], int /*numArgs*/)
+{
   clip = clipEO;
 }
 
@@ -2040,7 +2087,8 @@ void PdfParser::opEOClip(Object args[], int numArgs) {
 // text object operators
 //------------------------------------------------------------------------
 
-void PdfParser::opBeginText(Object args[], int numArgs) {
+void PdfParser::opBeginText(Object /*args*/[], int /*numArgs*/)
+{
   state->setTextMat(1, 0, 0, 1, 0, 0);
   state->textMoveTo(0, 0);
   builder->updateTextPosition(0.0, 0.0);
@@ -2048,7 +2096,8 @@ void PdfParser::opBeginText(Object args[], int numArgs) {
   builder->beginTextObject(state);
 }
 
-void PdfParser::opEndText(Object args[], int numArgs) {
+void PdfParser::opEndText(Object /*args*/[], int /*numArgs*/)
+{
   builder->endTextObject(state);
 }
 
@@ -2056,14 +2105,18 @@ void PdfParser::opEndText(Object args[], int numArgs) {
 // text state operators
 //------------------------------------------------------------------------
 
-void PdfParser::opSetCharSpacing(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetCharSpacing(Object args[], int /*numArgs*/)
+{
   state->setCharSpace(args[0].getNum());
 }
 
-void PdfParser::opSetFont(Object args[], int numArgs) {
-  GfxFont *font;
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetFont(Object args[], int /*numArgs*/)
+{
+  GfxFont *font = res->lookupFont(args[0].getName());
 
-  if (!(font = res->lookupFont(args[0].getName()))) {
+  if (!font) {
     // unsetting the font (drawing no text) is better than using the
     // previous one and drawing random glyphs from it
     state->setFont(NULL, args[1].getNum());
@@ -2083,24 +2136,34 @@ void PdfParser::opSetFont(Object args[], int numArgs) {
   fontChanged = gTrue;
 }
 
-void PdfParser::opSetTextLeading(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetTextLeading(Object args[], int /*numArgs*/)
+{
   state->setLeading(args[0].getNum());
 }
 
-void PdfParser::opSetTextRender(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetTextRender(Object args[], int /*numArgs*/)
+{
   state->setRender(args[0].getInt());
   builder->updateStyle(state);
 }
 
-void PdfParser::opSetTextRise(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetTextRise(Object args[], int /*numArgs*/)
+{
   state->setRise(args[0].getNum());
 }
 
-void PdfParser::opSetWordSpacing(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetWordSpacing(Object args[], int /*numArgs*/)
+{
   state->setWordSpace(args[0].getNum());
 }
 
-void PdfParser::opSetHorizScaling(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetHorizScaling(Object args[], int /*numArgs*/)
+{
   state->setHorizScaling(args[0].getNum());
   builder->updateTextMatrix(state);
   fontChanged = gTrue;
@@ -2110,7 +2173,9 @@ void PdfParser::opSetHorizScaling(Object args[], int numArgs) {
 // text positioning operators
 //------------------------------------------------------------------------
 
-void PdfParser::opTextMove(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opTextMove(Object args[], int /*numArgs*/)
+{
   double tx, ty;
 
   tx = state->getLineX() + args[0].getNum();
@@ -2119,7 +2184,9 @@ void PdfParser::opTextMove(Object args[], int numArgs) {
   builder->updateTextPosition(tx, ty);
 }
 
-void PdfParser::opTextMoveSet(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opTextMoveSet(Object args[], int /*numArgs*/)
+{
   double tx, ty;
 
   tx = state->getLineX() + args[0].getNum();
@@ -2130,7 +2197,9 @@ void PdfParser::opTextMoveSet(Object args[], int numArgs) {
   builder->updateTextPosition(tx, ty);
 }
 
-void PdfParser::opSetTextMatrix(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opSetTextMatrix(Object args[], int /*numArgs*/)
+{
   state->setTextMat(args[0].getNum(), args[1].getNum(),
 		    args[2].getNum(), args[3].getNum(),
 		    args[4].getNum(), args[5].getNum());
@@ -2140,7 +2209,8 @@ void PdfParser::opSetTextMatrix(Object args[], int numArgs) {
   fontChanged = gTrue;
 }
 
-void PdfParser::opTextNextLine(Object args[], int numArgs) {
+void PdfParser::opTextNextLine(Object /*args*/[], int /*numArgs*/)
+{
   double tx, ty;
 
   tx = state->getLineX();
@@ -2153,7 +2223,9 @@ void PdfParser::opTextNextLine(Object args[], int numArgs) {
 // text string operators
 //------------------------------------------------------------------------
 
-void PdfParser::opShowText(Object args[], int numArgs) {
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opShowText(Object args[], int /*numArgs*/)
+{
   if (!state->getFont()) {
     error(getPos(), const_cast<char*>("No font in show"));
     return;
@@ -2165,8 +2237,11 @@ void PdfParser::opShowText(Object args[], int numArgs) {
   doShowText(args[0].getString());
 }
 
-void PdfParser::opMoveShowText(Object args[], int numArgs) {
-  double tx, ty;
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opMoveShowText(Object args[], int /*numArgs*/)
+{
+  double tx = 0;
+  double ty = 0;
 
   if (!state->getFont()) {
     error(getPos(), const_cast<char*>("No font in move/show"));
@@ -2183,8 +2258,11 @@ void PdfParser::opMoveShowText(Object args[], int numArgs) {
   doShowText(args[0].getString());
 }
 
-void PdfParser::opMoveSetShowText(Object args[], int numArgs) {
-  double tx, ty;
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opMoveSetShowText(Object args[], int /*numArgs*/)
+{
+  double tx = 0;
+  double ty = 0;
 
   if (!state->getFont()) {
     error(getPos(), const_cast<char*>("No font in move/set/show"));
@@ -2203,11 +2281,12 @@ void PdfParser::opMoveSetShowText(Object args[], int numArgs) {
   doShowText(args[2].getString());
 }
 
-void PdfParser::opShowSpaceText(Object args[], int numArgs) {
-  Array *a;
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opShowSpaceText(Object args[], int /*numArgs*/)
+{
+  Array *a = 0;
   Object obj;
-  int wMode;
-  int i;
+  int wMode = 0;
 
   if (!state->getFont()) {
     error(getPos(), const_cast<char*>("No font in show/space"));
@@ -2219,7 +2298,7 @@ void PdfParser::opShowSpaceText(Object args[], int numArgs) {
   }
   wMode = state->getFont()->getWMode();
   a = args[0].getArray();
-  for (i = 0; i < a->getLength(); ++i) {
+  for (int i = 0; i < a->getLength(); ++i) {
     a->get(i, &obj);
     if (obj.isNum()) {
       // this uses the absolute value of the font size to match
@@ -2400,11 +2479,12 @@ void PdfParser::doShowText(GooString *s) {
 // XObject operators
 //------------------------------------------------------------------------
 
-void PdfParser::opXObject(Object args[], int numArgs) {
-  char *name;
+// TODO not good that numArgs is ignored but args[] is used:
+void PdfParser::opXObject(Object args[], int /*numArgs*/)
+{
   Object obj1, obj2, obj3, refObj;
 
-  name = args[0].getName();
+  char *name = args[0].getName();
   if (!res->lookupXObject(name, &obj1)) {
     return;
   }
@@ -2433,7 +2513,8 @@ void PdfParser::opXObject(Object args[], int numArgs) {
   obj1.free();
 }
 
-void PdfParser::doImage(Object *ref, Stream *str, GBool inlineImg) {
+void PdfParser::doImage(Object * /*ref*/, Stream *str, GBool inlineImg)
+{
   Dict *dict, *maskDict;
   int width, height;
   int bits, maskBits;
@@ -2956,20 +3037,18 @@ void PdfParser::doForm1(Object *str, Dict *resDict, double *matrix, double *bbox
 // in-line image operators
 //------------------------------------------------------------------------
 
-void PdfParser::opBeginImage(Object args[], int numArgs) {
-  Stream *str;
-  int c1, c2;
-
+void PdfParser::opBeginImage(Object /*args*/[], int /*numArgs*/)
+{
   // build dict/stream
-  str = buildImageStream();
+  Stream *str = buildImageStream();
 
   // display the image
   if (str) {
     doImage(NULL, str, gTrue);
   
     // skip 'EI' tag
-    c1 = str->getUndecodedStream()->getChar();
-    c2 = str->getUndecodedStream()->getChar();
+    int c1 = str->getUndecodedStream()->getChar();
+    int c2 = str->getUndecodedStream()->getChar();
     while (!(c1 == 'E' && c2 == 'I') && c2 != EOF) {
       c1 = c2;
       c2 = str->getUndecodedStream()->getChar();
@@ -3018,11 +3097,13 @@ Stream *PdfParser::buildImageStream() {
   return str;
 }
 
-void PdfParser::opImageData(Object args[], int numArgs) {
+void PdfParser::opImageData(Object /*args*/[], int /*numArgs*/)
+{
   error(getPos(), const_cast<char*>("Internal: got 'ID' operator"));
 }
 
-void PdfParser::opEndImage(Object args[], int numArgs) {
+void PdfParser::opEndImage(Object /*args*/[], int /*numArgs*/)
+{
   error(getPos(), const_cast<char*>("Internal: got 'EI' operator"));
 }
 
@@ -3030,21 +3111,25 @@ void PdfParser::opEndImage(Object args[], int numArgs) {
 // type 3 font operators
 //------------------------------------------------------------------------
 
-void PdfParser::opSetCharWidth(Object args[], int numArgs) {
+void PdfParser::opSetCharWidth(Object /*args*/[], int /*numArgs*/)
+{
 }
 
-void PdfParser::opSetCacheDevice(Object args[], int numArgs) {
+void PdfParser::opSetCacheDevice(Object /*args*/[], int /*numArgs*/)
+{
 }
 
 //------------------------------------------------------------------------
 // compatibility operators
 //------------------------------------------------------------------------
 
-void PdfParser::opBeginIgnoreUndef(Object args[], int numArgs) {
+void PdfParser::opBeginIgnoreUndef(Object /*args*/[], int /*numArgs*/)
+{
   ++ignoreUndef;
 }
 
-void PdfParser::opEndIgnoreUndef(Object args[], int numArgs) {
+void PdfParser::opEndIgnoreUndef(Object /*args*/[], int /*numArgs*/)
+{
   if (ignoreUndef > 0)
     --ignoreUndef;
 }
@@ -3069,7 +3154,8 @@ void PdfParser::opBeginMarkedContent(Object args[], int numArgs) {
   }
 }
 
-void PdfParser::opEndMarkedContent(Object args[], int numArgs) {
+void PdfParser::opEndMarkedContent(Object /*args*/[], int /*numArgs*/)
+{
   //out->endMarkedContent();
 }
 

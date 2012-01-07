@@ -20,8 +20,8 @@ namespace UI {
 namespace Widget {
 
 IconWidget::IconWidget() :
-    _pb(0),
     _size(0),
+    _pb(0),
     _do_bitmap_icons(false)
 {
 }
