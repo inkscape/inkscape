@@ -103,7 +103,7 @@ namespace Dialog {}
 /**
  * Custom widgets.
  *
- * This namespace contains custom user interface widgets used thorought
+ * This namespace contains custom user interface widgets used thorough
  * Inkscape.
  */
 namespace Widget {}
