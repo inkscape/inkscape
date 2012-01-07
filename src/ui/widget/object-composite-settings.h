@@ -2,8 +2,6 @@
 #define SEEN_UI_WIDGET_OBJECT_COMPOSITE_SETTINGS_H
 
 /*
- * A widget for controlling object compositing (filter, opacity, etc.)
- *
  * Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Gustav Broberg <broberg@kth.se>
@@ -17,18 +15,20 @@
 #include <gtkmm/alignment.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/label.h>
-#include "ui/widget/spinbutton.h"
 #include <gtkmm/scale.h>
-
 #include <glibmm/ustring.h>
 
 #include "ui/widget/filter-effect-chooser.h"
+#include "ui/widget/spinbutton.h"
 #include "ui/widget/style-subject.h"
 
 namespace Inkscape {
 namespace UI {
 namespace Widget {
 
+/*
+ * A widget for controlling object compositing (filter, opacity, etc.)
+ */
 class ObjectCompositeSettings : public Gtk::VBox {
 public:
     ObjectCompositeSettings(unsigned int verb_code, char const *history_prefix, int flags);
@@ -55,17 +55,16 @@ private:
     Gtk::VBox       _fe_vbox;
     Gtk::Alignment  _fe_alignment;
 
+    bool _blocked;
+    gulong _desktop_activated;
+    sigc::connection _subject_changed;
+    
     static void _on_desktop_activate(Inkscape::Application *application, SPDesktop *desktop, ObjectCompositeSettings *w);
     static void _on_desktop_deactivate(Inkscape::Application *application, SPDesktop *desktop, ObjectCompositeSettings *w);
     void _subjectChanged();
-    sigc::connection _subject_changed;
-
     void _blendBlurValueChanged();
     void _opacityValueChanged();
 
-    bool _blocked;
-
-    gulong _desktop_activated;
 };
 
 }
