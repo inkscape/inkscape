@@ -1326,23 +1326,11 @@ void sp_selected_path_create_updating_inset(SPDesktop *desktop)
     sp_selected_path_create_offset_object(desktop, -1, true);
 }
 
-void
-sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updating)
+void sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updating)
 {
-    Inkscape::Selection *selection;
-    Inkscape::XML::Node *repr;
-    SPItem *item;
-    SPCurve *curve;
-    gchar *style, *str;
-    float o_width, o_miter;
-    JoinType o_join;
-    ButtType o_butt;
-
-    curve = NULL;
-
-    selection = sp_desktop_selection(desktop);
-
-    item = selection->singleItem();
+    SPCurve *curve = NULL;
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    SPItem *item = selection->singleItem();
 
     if (item == NULL || ( !SP_IS_SHAPE(item) && !SP_IS_TEXT(item) ) ) {
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("Selected object is <b>not a path</b>, cannot inset/outset."));
@@ -1351,28 +1339,35 @@ sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updat
     if (SP_IS_SHAPE(item))
     {
         curve = SP_SHAPE(item)->getCurve();
-        if (curve == NULL)
+        if (curve == NULL) {
             return;
+        }
     }
     if (SP_IS_TEXT(item))
     {
         curve = SP_TEXT(item)->getNormalizedBpath();
-        if (curve == NULL)
+        if (curve == NULL) {
             return;
+        }
     }
 
     Geom::Affine const transform(item->transform);
 
     item->doWriteTransform(item->getRepr(), Geom::identity());
 
-	//XML Tree being used directly here while it shouldn't be...
-    style = g_strdup(item->getRepr()->attribute("style"));
+    //XML Tree being used directly here while it shouldn't be...
+    gchar *style = g_strdup(item->getRepr()->attribute("style"));
 
     // remember the position of the item
     gint pos = item->getRepr()->position();
+
     // remember parent
     Inkscape::XML::Node *parent = item->getRepr()->parent();
 
+    float o_width = 0;
+    JoinType o_join = join_straight;
+    ButtType o_butt = butt_straight;
+    float o_miter = 0;
     {
         SPStyle *i_style = item->style;
         int jointype = i_style->stroke_linejoin.value;
@@ -1475,12 +1470,8 @@ sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updat
     }
 
     {
-        gchar tstr[80];
-
-        tstr[79] = '\0';
-
         Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
-        repr = xml_doc->createElement("svg:path");
+        Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
         repr->setAttribute("sodipodi:type", "inkscape:offset");
         sp_repr_set_svg_double(repr, "inkscape:radius", ( expand > 0
                                                           ? o_width
@@ -1488,9 +1479,10 @@ sp_selected_path_create_offset_object(SPDesktop *desktop, int expand, bool updat
                                                           ? -o_width
                                                           : 0 ));
 
-        str = res->svg_dump_path();
+        gchar *str = res->svg_dump_path();
         repr->setAttribute("inkscape:original", str);
         g_free(str);
+        str = 0;
 
         if ( updating ) {
 
@@ -1591,9 +1583,10 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
 
         gchar *style = g_strdup(item->getRepr()->attribute("style"));
 
-        float o_width, o_miter;
-        JoinType o_join;
-        ButtType o_butt;
+        float o_width = 0;
+        float o_miter = 0;
+        JoinType o_join = join_straight;
+        ButtType o_butt = butt_straight;
 
         {
             SPStyle *i_style = item->style;
@@ -1736,11 +1729,6 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
         item->deleteObject(false);
 
         if (res->descr_cmd.size() > 1) { // if there's 0 or 1 node left, drop this path altogether
-
-            gchar tstr[80];
-
-            tstr[79] = '\0';
-
             Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
             Inkscape::XML::Node *repr = xml_doc->createElement("svg:path");
 

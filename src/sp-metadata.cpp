@@ -146,14 +146,13 @@ static void sp_metadata_release(SPObject *object)
 static void sp_metadata_set(SPObject *object, unsigned int key, const gchar *value)
 {
     debug("0x%08x %s(%u): '%s'",(unsigned int)object,
-            sp_attribute_name(key),key,value);
-    SPMetadata * metadata;
+          sp_attribute_name(key),key,value);
+    SP_METADATA(object); // ensures the object is of the proper type.
 
-    metadata = SP_METADATA (object);
-
-    /* see if any parents need this value */
-    if (((SPObjectClass *) metadata_parent_class)->set)
-        ((SPObjectClass *) metadata_parent_class)->set (object, key, value);
+    // see if any parents need this value
+    if (reinterpret_cast<SPObjectClass *>(metadata_parent_class)->set) {
+        reinterpret_cast<SPObjectClass *>(metadata_parent_class)->set(object, key, value);
+    }
 }
 
 /**

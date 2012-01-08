@@ -156,8 +156,8 @@ void SPObject::sp_object_init(SPObject *object)
     object->parent = object->next = NULL;
 
     //used XML Tree here.
-    Inkscape::XML::Node *repr = object->getRepr();
-    repr = NULL;
+    object->getRepr(); // TODO check why this call is made
+
     SPObjectImpl::setIdNull(object);
 
     object->_collection_policy = SPObject::COLLECT_WITH_PARENT;

@@ -75,7 +75,8 @@ void ink_cairo_surface_blend(cairo_surface_t *in1, cairo_surface_t *in2, cairo_s
     // It would be better to render more than 1 tile at a time.
     #if HAVE_OPENMP
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int num_threads = prefs->getIntLimited("/options/threading/numthreads", omp_get_num_procs(), 1, 256);
+    int numOfThreads = prefs->getIntLimited("/options/threading/numthreads", omp_get_num_procs(), 1, 256);
+    if (numOfThreads){} // inform compiler we are using it.
     #endif
 
     // The number of code paths here is evil.
@@ -83,14 +84,14 @@ void ink_cairo_surface_blend(cairo_surface_t *in1, cairo_surface_t *in2, cairo_s
         if (bpp2 == 4) {
             if (fast_path) {
                 #if HAVE_OPENMP
-                #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+                #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
                 #endif
                 for (int i = 0; i < limit; ++i) {
                     *(out_data + i) = blend(*(in1_data + i), *(in2_data + i));
                 }
             } else {
                 #if HAVE_OPENMP
-                #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+                #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
                 #endif
                 for (int i = 0; i < h; ++i) {
                     guint32 *in1_p = in1_data + i * stride1/4;
@@ -105,7 +106,7 @@ void ink_cairo_surface_blend(cairo_surface_t *in1, cairo_surface_t *in2, cairo_s
         } else {
             // bpp2 == 1
             #if HAVE_OPENMP
-            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
             #endif
             for (int i = 0; i < h; ++i) {
                 guint32 *in1_p = in1_data + i * stride1/4;
@@ -123,7 +124,7 @@ void ink_cairo_surface_blend(cairo_surface_t *in1, cairo_surface_t *in2, cairo_s
         if (bpp2 == 4) {
             // bpp1 == 1
             #if HAVE_OPENMP
-            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
             #endif
             for (int i = 0; i < h; ++i) {
                 guint8  *in1_p = reinterpret_cast<guint8*>(in1_data) + i * stride1;
@@ -140,7 +141,7 @@ void ink_cairo_surface_blend(cairo_surface_t *in1, cairo_surface_t *in2, cairo_s
             // bpp1 == 1 && bpp2 == 1
             if (fast_path) {
                 #if HAVE_OPENMP
-                #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+                #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
                 #endif
                 for (int i = 0; i < limit; ++i) {
                     guint8 *in1_p = reinterpret_cast<guint8*>(in1_data) + i;
@@ -153,7 +154,7 @@ void ink_cairo_surface_blend(cairo_surface_t *in1, cairo_surface_t *in2, cairo_s
                 }
             } else {
                 #if HAVE_OPENMP
-                #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+                #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
                 #endif
                 for (int i = 0; i < h; ++i) {
                     guint8 *in1_p = reinterpret_cast<guint8*>(in1_data) + i * stride1;
@@ -203,21 +204,22 @@ void ink_cairo_surface_filter(cairo_surface_t *in, cairo_surface_t *out, Filter 
 
     #if HAVE_OPENMP
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int num_threads = prefs->getIntLimited("/options/threading/numthreads", omp_get_num_procs(), 1, 256);
+    int numOfThreads = prefs->getIntLimited("/options/threading/numthreads", omp_get_num_procs(), 1, 256);
+    if (numOfThreads){} // inform compiler we are using it.
     #endif
 
     // this is provided just in case, to avoid problems with strict aliasing rules
     if (in == out) {
         if (bppin == 4) {
             #if HAVE_OPENMP
-            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
             #endif
             for (int i = 0; i < limit; ++i) {
                 *(in_data + i) = filter(*(in_data + i));
             }
         } else {
             #if HAVE_OPENMP
-            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
             #endif
             for (int i = 0; i < limit; ++i) {
                 guint8 *in_p = reinterpret_cast<guint8*>(in_data) + i;
@@ -235,14 +237,14 @@ void ink_cairo_surface_filter(cairo_surface_t *in, cairo_surface_t *out, Filter 
             // bppin == 4, bppout == 4
             if (fast_path) {
                 #if HAVE_OPENMP
-                #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+                #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
                 #endif
                 for (int i = 0; i < limit; ++i) {
                     *(out_data + i) = filter(*(in_data + i));
                 }
             } else {
                 #if HAVE_OPENMP
-                #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+                #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
                 #endif
                 for (int i = 0; i < h; ++i) {
                     guint32 *in_p = in_data + i * stridein/4;
@@ -257,7 +259,7 @@ void ink_cairo_surface_filter(cairo_surface_t *in, cairo_surface_t *out, Filter 
             // bppin == 4, bppout == 1
             // we use this path with COLORMATRIX_LUMINANCETOALPHA
             #if HAVE_OPENMP
-            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
             #endif
             for (int i = 0; i < h; ++i) {
                 guint32 *in_p = in_data + i * stridein/4;
@@ -274,7 +276,7 @@ void ink_cairo_surface_filter(cairo_surface_t *in, cairo_surface_t *out, Filter 
         // Note: there is no path for bppin == 1, bppout == 4 because it is useless
         if (fast_path) {
             #if HAVE_OPENMP
-            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
             #endif
             for (int i = 0; i < limit; ++i) {
                 guint8 *in_p = reinterpret_cast<guint8*>(in_data) + i;
@@ -285,7 +287,7 @@ void ink_cairo_surface_filter(cairo_surface_t *in, cairo_surface_t *out, Filter 
             }
         } else {
             #if HAVE_OPENMP
-            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+            #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
             #endif
             for (int i = 0; i < h; ++i) {
                 guint8 *in_p = reinterpret_cast<guint8*>(in_data) + i * stridein;
@@ -329,12 +331,13 @@ void ink_cairo_surface_synthesize(cairo_surface_t *out, cairo_rectangle_t const 
     #if HAVE_OPENMP
     int limit = w * h;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int num_threads = prefs->getIntLimited("/options/threading/numthreads", omp_get_num_procs(), 1, 256);
+    int numOfThreads = prefs->getIntLimited("/options/threading/numthreads", omp_get_num_procs(), 1, 256);
+    if (numOfThreads){} // inform compiler we are using it.
     #endif
 
     if (bppout == 4) {
         #if HAVE_OPENMP
-        #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+        #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
         #endif
         for (int i = out_area.y; i < h; ++i) {
             guint32 *out_p = reinterpret_cast<guint32*>(out_data + i * strideout);
@@ -346,7 +349,7 @@ void ink_cairo_surface_synthesize(cairo_surface_t *out, cairo_rectangle_t const 
     } else {
         // bppout == 1
         #if HAVE_OPENMP
-        #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(num_threads)
+        #pragma omp parallel for if(limit > OPENMP_THRESHOLD) num_threads(numOfThreads)
         #endif
         for (int i = out_area.y; i < h; ++i) {
             guint8 *out_p = out_data + i * strideout;

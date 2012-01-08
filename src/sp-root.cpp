@@ -78,18 +78,12 @@ sp_root_get_type(void)
  * Initializes an SPRootClass object by setting its class and parent class objects, and registering
  * function pointers (i.e.\ gobject-style virtual functions) for various operations.
  */
-static void
-sp_root_class_init(SPRootClass *klass)
+static void sp_root_class_init(SPRootClass *klass)
 {
-    GObjectClass *object_class;
-    SPObjectClass *sp_object_class;
-    SPItemClass *sp_item_class;
+    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
+    SPItemClass *sp_item_class = reinterpret_cast<SPItemClass *>(klass);
 
-    object_class = G_OBJECT_CLASS(klass);
-    sp_object_class = (SPObjectClass *) klass;
-    sp_item_class = (SPItemClass *) klass;
-
-    parent_class = (SPGroupClass *)g_type_class_ref(SP_TYPE_GROUP);
+    parent_class = reinterpret_cast<SPGroupClass *>(g_type_class_ref(SP_TYPE_GROUP));
 
     sp_object_class->build = sp_root_build;
     sp_object_class->release = sp_root_release;

@@ -6,6 +6,7 @@
  *   Mitsuru Oka <oka326@parkcity.ne.jp>
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -74,22 +75,14 @@ sp_spiral_get_type (void)
 /**
  * SPSpiral vtable initialization.
  */
-static void
-sp_spiral_class_init (SPSpiralClass *klass)
+static void sp_spiral_class_init(SPSpiralClass *klass)
 {
-    GObjectClass * gobject_class;
-    SPObjectClass * sp_object_class;
-    SPItemClass * item_class;
-    SPLPEItemClass * lpe_item_class;
-    SPShapeClass *shape_class;
+    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
+    SPItemClass *item_class = reinterpret_cast<SPItemClass *>(klass);
+    SPLPEItemClass *lpe_item_class = reinterpret_cast<SPLPEItemClass *>(klass);
+    SPShapeClass *shape_class = reinterpret_cast<SPShapeClass *>(klass);
 
-    gobject_class = (GObjectClass *) klass;
-    sp_object_class = (SPObjectClass *) klass;
-    item_class = (SPItemClass *) klass;
-    lpe_item_class = (SPLPEItemClass *) klass;
-    shape_class = (SPShapeClass *) klass;
-
-    parent_class = (SPShapeClass *)g_type_class_ref (SP_TYPE_SHAPE);
+    parent_class = reinterpret_cast<SPShapeClass *>(g_type_class_ref(SP_TYPE_SHAPE));
 
     sp_object_class->build = sp_spiral_build;
     sp_object_class->write = sp_spiral_write;
@@ -122,11 +115,11 @@ sp_spiral_init (SPSpiral * spiral)
 /**
  * Virtual build: set spiral properties from corresponding repr.
  */
-static void
-sp_spiral_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
+static void sp_spiral_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
 {
-    if (((SPObjectClass *) parent_class)->build)
-        ((SPObjectClass *) parent_class)->build (object, document, repr);
+    if (reinterpret_cast<SPObjectClass *>(parent_class)->build) {
+        reinterpret_cast<SPObjectClass *>(parent_class)->build(object, document, repr);
+    }
 
     object->readAttr( "sodipodi:cx" );
     object->readAttr( "sodipodi:cy" );
@@ -164,10 +157,10 @@ sp_spiral_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::X
     }
 
      // make sure the curve is rebuilt with all up-to-date parameters
-     sp_spiral_set_shape ((SPShape *) spiral);
+     sp_spiral_set_shape(spiral);
 
     //Duplicate the path
-    SPCurve *curve = ((SPShape *) spiral)->curve;
+    SPCurve *curve = spiral->curve;
     //Nulls might be possible if this called iteratively
     if ( !curve ) {
             //g_warning("sp_spiral_write(): No path to copy\n");
@@ -177,8 +170,9 @@ sp_spiral_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::X
     repr->setAttribute("d", d);
     g_free (d);
 
-    if (((SPObjectClass *) (parent_class))->write)
-        ((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags | SP_SHAPE_WRITE_PATH);
+    if (reinterpret_cast<SPObjectClass *>(parent_class)->write) {
+        reinterpret_cast<SPObjectClass *>(parent_class)->write(object, xml_doc, repr, flags | SP_SHAPE_WRITE_PATH);
+    }
 
     return repr;
 }
@@ -186,14 +180,9 @@ sp_spiral_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::X
 /**
  * Virtual set: change spiral object attribute.
  */
-static void
-sp_spiral_set (SPObject *object, unsigned int key, const gchar *value)
+static void sp_spiral_set(SPObject *object, unsigned int key, const gchar *value)
 {
-    SPSpiral *spiral;
-    SPShape  *shape;
-
-    spiral = SP_SPIRAL (object);
-    shape  = SP_SHAPE (object);
+    SPSpiral *spiral = SP_SPIRAL(object);
 
     /// \todo fixme: we should really collect updates
     switch (key) {
@@ -273,8 +262,9 @@ sp_spiral_set (SPObject *object, unsigned int key, const gchar *value)
         object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
     default:
-        if (((SPObjectClass *) parent_class)->set)
-            ((SPObjectClass *) parent_class)->set (object, key, value);
+        if (reinterpret_cast<SPObjectClass *>(parent_class)->set) {
+            reinterpret_cast<SPObjectClass *>(parent_class)->set(object, key, value);
+        }
         break;
     }
 }
@@ -282,19 +272,18 @@ sp_spiral_set (SPObject *object, unsigned int key, const gchar *value)
 /**
  * Virtual update callback.
  */
-static void
-sp_spiral_update (SPObject *object, SPCtx *ctx, guint flags)
+static void sp_spiral_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
-        ((SPShape *) object)->setShape ();
+        reinterpret_cast<SPShape *>(object)->setShape();
     }
 
-    if (((SPObjectClass *) parent_class)->update)
-        ((SPObjectClass *) parent_class)->update (object, ctx, flags);
+    if (reinterpret_cast<SPObjectClass *>(parent_class)->update) {
+        reinterpret_cast<SPObjectClass *>(parent_class)->update(object, ctx, flags);
+    }
 }
 
-static void
-sp_spiral_update_patheffect(SPLPEItem *lpeitem, bool write)
+static void sp_spiral_update_patheffect(SPLPEItem *lpeitem, bool write)
 {
     SPShape *shape = (SPShape *) lpeitem;
     sp_spiral_set_shape(shape);
@@ -310,14 +299,13 @@ sp_spiral_update_patheffect(SPLPEItem *lpeitem, bool write)
         }
     }
 
-    ((SPObject *)shape)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    shape->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /**
  * Return textual description of spiral.
  */
-static gchar *
-sp_spiral_description (SPItem * item)
+static gchar *sp_spiral_description(SPItem * item)
 {
     // TRANSLATORS: since turn count isn't an integer, please adjust the
     // string as needed to deal with an localized plural forms.

@@ -69,22 +69,14 @@ sp_star_get_type (void)
     return type;
 }
 
-static void
-sp_star_class_init (SPStarClass *klass)
+static void sp_star_class_init(SPStarClass *klass)
 {
-    GObjectClass * gobject_class;
-    SPObjectClass * sp_object_class;
-    SPItemClass * item_class;
-    SPLPEItemClass * lpe_item_class;
-    SPShapeClass * shape_class;
+    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
+    SPItemClass *item_class = reinterpret_cast<SPItemClass *>(klass);
+    SPLPEItemClass *lpe_item_class = reinterpret_cast<SPLPEItemClass *>(klass);
+    SPShapeClass *shape_class = reinterpret_cast<SPShapeClass *>(klass);
 
-    gobject_class = (GObjectClass *) klass;
-    sp_object_class = (SPObjectClass *) klass;
-    item_class = (SPItemClass *) klass;
-    lpe_item_class = (SPLPEItemClass *) klass;
-    shape_class = (SPShapeClass *) klass;
-
-    parent_class = (SPShapeClass *)g_type_class_ref (SP_TYPE_SHAPE);
+    parent_class = reinterpret_cast<SPShapeClass *>(g_type_class_ref(SP_TYPE_SHAPE));
 
     sp_object_class->build = sp_star_build;
     sp_object_class->write = sp_star_write;

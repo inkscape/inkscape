@@ -732,7 +732,6 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
      * interested in. */
     gchar *phrase = g_strdup(_("AaBbCcIiPpQq12369$\342\202\254\302\242?.;/()"));
 
-    Inkscape::XML::Node *repr;
     if (text)
     {
         guint items = sp_ted_get_selected_text_count ();
@@ -760,8 +759,7 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
                 gtk_text_buffer_set_text (tb, "", 0);
             }
         } // end of if (docontent)
-        repr = text->getRepr();
-
+        text->getRepr(); // was being called but result ignored. Check this.
     } else {
         gtk_widget_set_sensitive (textw, FALSE);
         gtk_widget_set_sensitive (apply, FALSE);
@@ -847,23 +845,22 @@ sp_text_edit_dialog_read_selection ( GtkWidget *dlg,
 static void
 sp_text_edit_dialog_text_changed (GtkTextBuffer *tb, GtkWidget *dlg)
 {
-    GtkWidget *textw, *preview, *apply, *def, *fontsel;
-    GtkTextIter start, end;
-    gchar *str;
-
-    if (g_object_get_data (G_OBJECT (dlg), "blocked"))
+    if (g_object_get_data (G_OBJECT (dlg), "blocked")) {
         return;
+    }
 
-    SPItem *text = sp_ted_get_selected_text_item ();
+    SPItem *text = sp_ted_get_selected_text_item();
 
-    textw = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "textw");
-    preview = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "preview");
-    apply = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "apply");
-    def = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "default");
-    fontsel = (GtkWidget*)g_object_get_data (G_OBJECT (dlg), "fontsel");
+    //GtkWidget *textw = reinterpret_cast<GtkWidget*>(g_object_get_data(G_OBJECT (dlg), "textw"));
+    GtkWidget *preview = reinterpret_cast<GtkWidget*>(g_object_get_data(G_OBJECT (dlg), "preview"));
+    GtkWidget *apply = reinterpret_cast<GtkWidget*>(g_object_get_data(G_OBJECT (dlg), "apply"));
+    GtkWidget *def = reinterpret_cast<GtkWidget*>(g_object_get_data(G_OBJECT (dlg), "default"));
+    GtkWidget *fontsel = reinterpret_cast<GtkWidget*>(g_object_get_data(G_OBJECT (dlg), "fontsel"));
 
+    GtkTextIter start;
+    GtkTextIter end;
     gtk_text_buffer_get_bounds (tb, &start, &end);
-    str = gtk_text_buffer_get_text (tb, &start, &end, TRUE);
+    gchar *str = gtk_text_buffer_get_text(tb, &start, &end, TRUE);
     font_instance *font = sp_font_selector_get_font(SP_FONT_SELECTOR(fontsel));
 
     if (font) {

@@ -1642,26 +1642,23 @@ sp_export_area_y_value_changed (GtkAdjustment *adj, GtkObject *base)
 } // end of sp_export_area_y_value_changed()
 
 /// Called when x1-x0 or area width is changed
-static void
-sp_export_area_width_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
+static void sp_export_area_width_value_changed(GtkAdjustment */*adj*/, GtkObject *base)
 {
-    float x0, x1, xdpi, width, bmwidth;
-
-    if (g_object_get_data (G_OBJECT(base), "update"))
+    if (g_object_get_data (G_OBJECT(base), "update")) {
         return;
+    }
 
-    if (sp_unit_selector_update_test ((SPUnitSelector *)g_object_get_data
-           (G_OBJECT(base), "units"))) {
+    if (sp_unit_selector_update_test(reinterpret_cast<SPUnitSelector *>(g_object_get_data(G_OBJECT(base), "units")))) {
         return;
     }
 
     g_object_set_data ( G_OBJECT (base), "update", GUINT_TO_POINTER (TRUE));
 
-    x0 = sp_export_value_get_px (base, "x0");
-    x1 = sp_export_value_get_px (base, "x1");
-    xdpi = sp_export_value_get (base, "xdpi");
-    width = sp_export_value_get_px (base, "width");
-    bmwidth = floor (width * xdpi / DPI_BASE + 0.5);
+    float x0 = sp_export_value_get_px(base, "x0");
+    float x1 = sp_export_value_get_px(base, "x1");
+    float xdpi = sp_export_value_get(base, "xdpi");
+    float width = sp_export_value_get_px(base, "width");
+    float bmwidth = floor(width * xdpi / DPI_BASE + 0.5);
 
     if (bmwidth < SP_EXPORT_MIN_SIZE) {
 
@@ -1679,27 +1676,23 @@ sp_export_area_width_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
 } // end of sp_export_area_width_value_changed()
 
 /// Called when y1-y0 or area height is changed.
-static void
-sp_export_area_height_value_changed (GtkAdjustment */*adj*/, GtkObject *base)
+static void sp_export_area_height_value_changed(GtkAdjustment */*adj*/, GtkObject *base)
 {
-
-    float y0, y1, ydpi, height, bmheight;
-
-    if (g_object_get_data (G_OBJECT(base), "update"))
+    if (g_object_get_data(G_OBJECT(base), "update")) {
         return;
+    }
 
-    if (sp_unit_selector_update_test ((SPUnitSelector *)g_object_get_data
-           (G_OBJECT(base), "units"))) {
+    if (sp_unit_selector_update_test(reinterpret_cast<SPUnitSelector *>(g_object_get_data(G_OBJECT(base), "units")))) {
         return;
     }
 
     g_object_set_data (G_OBJECT (base), "update", GUINT_TO_POINTER (TRUE));
 
-    y0 = sp_export_value_get_px (base, "y0");
-    y1 = sp_export_value_get_px (base, "y1");
-    ydpi = sp_export_value_get (base, "ydpi");
-    height = sp_export_value_get_px (base, "height");
-    bmheight = floor (height * ydpi / DPI_BASE + 0.5);
+    float y0 = sp_export_value_get_px (base, "y0");
+    float y1 = sp_export_value_get_px (base, "y1");
+    float ydpi = sp_export_value_get (base, "ydpi");
+    float height = sp_export_value_get_px (base, "height");
+    float bmheight = floor (height * ydpi / DPI_BASE + 0.5);
 
     if (bmheight < SP_EXPORT_MIN_SIZE) {
         bmheight = SP_EXPORT_MIN_SIZE;

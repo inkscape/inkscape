@@ -89,20 +89,15 @@ sp_print_document(Gtk::Window& parentWindow, SPDocument *doc)
     (void)res; // TODO handle this
 }
 
-void
-sp_print_document_to_file(SPDocument *doc, gchar const *filename)
+void sp_print_document_to_file(SPDocument *doc, gchar const *filename)
 {
-    Inkscape::Extension::Print *mod;
-    SPPrintContext context;
-    gchar const *oldconst;
-    gchar *oldoutput;
-    unsigned int ret;
-
     doc->ensureUpToDate();
 
-    mod = Inkscape::Extension::get_print(SP_MODULE_KEY_PRINT_PS);
-    oldconst = mod->get_param_string("destination");
-    oldoutput = g_strdup(oldconst);
+    Inkscape::Extension::Print *mod = Inkscape::Extension::get_print(SP_MODULE_KEY_PRINT_PS);
+    SPPrintContext context;
+    gchar const *oldconst = mod->get_param_string("destination");
+    gchar *oldoutput = g_strdup(oldconst);
+
     mod->set_param_string("destination", (gchar *)filename);
 
 /* Start */
@@ -115,9 +110,9 @@ sp_print_document_to_file(SPDocument *doc, gchar const *filename)
     mod->root = (mod->base)->invoke_show(drawing, mod->dkey, SP_ITEM_SHOW_DISPLAY);
     drawing.setRoot(mod->root);
     /* Print document */
-    ret = mod->begin(doc);
+    mod->begin(doc);
     (mod->base)->invoke_print(&context);
-    ret = mod->finish();
+    mod->finish();
     /* Release drawing items */
     (mod->base)->invoke_hide(mod->dkey);
     mod->base = NULL;
@@ -126,8 +121,6 @@ sp_print_document_to_file(SPDocument *doc, gchar const *filename)
 
     mod->set_param_string("destination", oldoutput);
     g_free(oldoutput);
-
-    return;
 }
 
 

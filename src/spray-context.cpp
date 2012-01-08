@@ -133,7 +133,6 @@ static void sp_spray_context_class_init(SPSprayContextClass *klass)
 /* Method to rotate items */
 void sp_spray_rotate_rel(Geom::Point c, SPDesktop */*desktop*/, SPItem *item, Geom::Rotate const &rotation)
 {
-    Geom::Point center = c;
     Geom::Translate const s(c);
     Geom::Affine affine = Geom::Affine(s).inverse() * Geom::Affine(rotation) * Geom::Affine(s);
     // Rotate item.

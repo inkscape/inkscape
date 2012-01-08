@@ -343,20 +343,21 @@ void sp_selected_to_lpeitems(SPDesktop *desktop)
         return;
     }
 
-    bool did = false;
-
     GSList *selected = g_slist_copy((GSList *) selection->itemList());
     GSList *to_select = NULL;
     selection->clear();
     GSList *items = g_slist_copy(selected);
 
-    did = sp_item_list_to_curves(items, &selected, &to_select, true);
+    sp_item_list_to_curves(items, &selected, &to_select, true);
 
-    g_slist_free (items);
+    g_slist_free(items);
+    items = 0;
     selection->setReprList(to_select);
     selection->addList(selected);
-    g_slist_free (to_select);
-    g_slist_free (selected);
+    g_slist_free(to_select);
+    to_select = 0;
+    g_slist_free(selected);
+    selected = 0;
 }
 
 bool

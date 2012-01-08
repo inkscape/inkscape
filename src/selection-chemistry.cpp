@@ -2792,8 +2792,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     // Run filter, if any
     if (run) {
         g_print("Running external filter: %s\n", run);
-        int retval;
-        retval = system(run);
+        system(run);
     }
 
     // Import the image back

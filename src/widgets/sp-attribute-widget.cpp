@@ -239,14 +239,9 @@ void SPAttributeTable::change_object(SPObject *object)
         // Set up object
         modified_connection = object->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_attribute_table_object_modified), this));
         release_connection  = object->connectRelease (sigc::bind<1>(sigc::ptr_fun(&sp_attribute_table_object_release), this));
-        Gtk::Entry *ee;
-        Gtk::Widget *w;
-        const gchar *val;
         for (guint i = 0; i < (_attributes.size()); i++) {
-            ee = (Gtk::Entry *)_entries[i];
-            w = (Gtk::Widget *) ee;
-            val = object->getRepr()->attribute(_attributes[i].c_str());
-            ee->set_text (val ? val : (const gchar *) "");
+            const gchar *val = object->getRepr()->attribute(_attributes[i].c_str());
+            _entries[i]->set_text(val ? val : "");
         }
     }
 

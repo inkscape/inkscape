@@ -89,13 +89,9 @@ sp_namedview_get_type()
 
 static void sp_namedview_class_init(SPNamedViewClass * klass)
 {
-    GObjectClass * gobject_class;
-    SPObjectClass * sp_object_class;
+    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
 
-    gobject_class = (GObjectClass *) klass;
-    sp_object_class = (SPObjectClass *) klass;
-
-    parent_class = (SPObjectGroupClass*) g_type_class_ref(SP_TYPE_OBJECTGROUP);
+    parent_class = reinterpret_cast<SPObjectGroupClass *>(g_type_class_ref(SP_TYPE_OBJECTGROUP));
 
     sp_object_class->build = sp_namedview_build;
     sp_object_class->release = sp_namedview_release;

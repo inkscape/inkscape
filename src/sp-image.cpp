@@ -576,15 +576,10 @@ GType sp_image_get_type(void)
 
 static void sp_image_class_init( SPImageClass * klass )
 {
-    GObjectClass * gobject_class;
-    SPObjectClass * sp_object_class;
-    SPItemClass * item_class;
+    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
+    SPItemClass *item_class = reinterpret_cast<SPItemClass *>(klass);
 
-    gobject_class = (GObjectClass *) klass;
-    sp_object_class = (SPObjectClass *) klass;
-    item_class = (SPItemClass *) klass;
-
-    parent_class = (SPItemClass*)g_type_class_ref (SPItem::getType ());
+    parent_class = reinterpret_cast<SPItemClass*>(g_type_class_ref(SPItem::getType()));
 
     sp_object_class->build = sp_image_build;
     sp_object_class->release = sp_image_release;

@@ -61,20 +61,10 @@ box3d_side_get_type (void)
     return type;
 }
 
-static void
-box3d_side_class_init (Box3DSideClass *klass)
+static void box3d_side_class_init(Box3DSideClass *klass)
 {
-    GObjectClass * gobject_class;
-    SPObjectClass * sp_object_class;
-    SPItemClass * item_class;
-    SPPathClass * path_class;
-    SPShapeClass * shape_class;
-
-    gobject_class = (GObjectClass *) klass;
-    sp_object_class = (SPObjectClass *) klass;
-    item_class = (SPItemClass *) klass;
-    path_class = (SPPathClass *) klass;
-    shape_class = (SPShapeClass *) klass;
+    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
+    SPShapeClass *shape_class = reinterpret_cast<SPShapeClass *>(klass);
 
     parent_class = (SPShapeClass *)g_type_class_ref (SP_TYPE_SHAPE);
 

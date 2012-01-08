@@ -5,6 +5,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Bryce Harrington <bryce@bryceharrington.org>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2003 Lauris Kaplinski
  *               2004-2006 Bryce Harrington
@@ -49,7 +50,7 @@ static void sp_marker_print (SPItem *item, SPPrintContext *ctx);
 
 static void sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destroyitems);
 
-static SPGroupClass *parent_class;
+static SPGroupClass *parent_class = 0;
 
 /**
  * Registers the SPMarker class with Gdk and returns its type number.
@@ -78,18 +79,12 @@ sp_marker_get_type (void)
  * Initializes a SPMarkerClass object.  Establishes the function pointers to the class'
  * member routines in the class vtable, and sets pointers to parent classes.
  */
-static void
-sp_marker_class_init (SPMarkerClass *klass)
+static void sp_marker_class_init(SPMarkerClass *klass)
 {
-	GObjectClass *object_class;
-	SPObjectClass *sp_object_class;
-	SPItemClass *sp_item_class;
+    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
+    SPItemClass *sp_item_class = reinterpret_cast<SPItemClass *>(klass);
 
-	object_class = G_OBJECT_CLASS (klass);
-	sp_object_class = (SPObjectClass *) klass;
-	sp_item_class = (SPItemClass *) klass;
-
-	parent_class = (SPGroupClass *)g_type_class_ref (SP_TYPE_GROUP);
+    parent_class = reinterpret_cast<SPGroupClass *>(g_type_class_ref(SP_TYPE_GROUP));
 
 	sp_object_class->build = sp_marker_build;
 	sp_object_class->release = sp_marker_release;
@@ -125,26 +120,20 @@ sp_marker_init (SPMarker *marker)
  *
  * \see sp_object_build()
  */
-static void
-sp_marker_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void sp_marker_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-	SPGroup *group;
-	SPMarker *marker;
+    object->readAttr( "markerUnits" );
+    object->readAttr( "refX" );
+    object->readAttr( "refY" );
+    object->readAttr( "markerWidth" );
+    object->readAttr( "markerHeight" );
+    object->readAttr( "orient" );
+    object->readAttr( "viewBox" );
+    object->readAttr( "preserveAspectRatio" );
 
-	group = (SPGroup *) object;
-	marker = (SPMarker *) object;
-
-	object->readAttr( "markerUnits" );
-	object->readAttr( "refX" );
-	object->readAttr( "refY" );
-	object->readAttr( "markerWidth" );
-	object->readAttr( "markerHeight" );
-	object->readAttr( "orient" );
-	object->readAttr( "viewBox" );
-	object->readAttr( "preserveAspectRatio" );
-
-	if (((SPObjectClass *) parent_class)->build)
-		((SPObjectClass *) parent_class)->build (object, document, repr);
+    if (reinterpret_cast<SPObjectClass *>(parent_class)->build) {
+        reinterpret_cast<SPObjectClass *>(parent_class)->build(object, document, repr);
+    }
 }
 
 /**
@@ -159,22 +148,20 @@ sp_marker_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *re
  *
  * \see sp_object_release()
  */
-static void
-sp_marker_release (SPObject *object)
+static void sp_marker_release(SPObject *object)
 {
-	SPMarker *marker;
+    SPMarker *marker = reinterpret_cast<SPMarker *>(object);
 
-	marker = (SPMarker *) object;
+    while (marker->views) {
+        // Destroy all DrawingItems etc.
+        // Parent class ::hide method
+        reinterpret_cast<SPItemClass *>(parent_class)->hide(marker, marker->views->key);
+        sp_marker_view_remove (marker, marker->views, TRUE);
+    }
 
-	while (marker->views) {
-		/* Destroy all DrawingItems etc. */
-		/* Parent class ::hide method */
-		((SPItemClass *) parent_class)->hide ((SPItem *) marker, marker->views->key);
-		sp_marker_view_remove (marker, marker->views, TRUE);
-	}
-
-	if (((SPObjectClass *) parent_class)->release)
-		((SPObjectClass *) parent_class)->release (object);
+    if (reinterpret_cast<SPObjectClass *>(parent_class)->release) {
+        reinterpret_cast<SPObjectClass *>(parent_class)->release(object);
+    }
 }
 
 /**
@@ -335,117 +322,126 @@ static void sp_marker_set(SPObject *object, unsigned int key, const gchar *value
  */
 static void sp_marker_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-	SPMarker *marker = SP_MARKER(object);
-	SPItemCtx rctx;
-        Geom::Rect vb;
-	double x, y, width, height;
+    SPMarker *marker = SP_MARKER(object);
+    SPItemCtx rctx;
 
-	/* fixme: We have to set up clip here too */
+    // fixme: We have to set up clip here too
 
-	/* Copy parent context */
-	rctx.ctx = *ctx;
-	/* Initialize tranformations */
-	rctx.i2doc = Geom::identity();
-	rctx.i2vp = Geom::identity();
-	/* Set up viewport */
-	rctx.viewport = Geom::Rect::from_xywh(0, 0, marker->markerWidth.computed, marker->markerHeight.computed);
+    // Copy parent context
+    rctx.ctx = *ctx;
 
-	/* Start with identity transform */
-	marker->c2p.setIdentity();
+    // Initialize tranformations
+    rctx.i2doc = Geom::identity();
+    rctx.i2vp = Geom::identity();
 
-	/* Viewbox is always present, either implicitly or explicitly */
+    // Set up viewport
+    rctx.viewport = Geom::Rect::from_xywh(0, 0, marker->markerWidth.computed, marker->markerHeight.computed);
+
+    // Start with identity transform
+    marker->c2p.setIdentity();
+
+    // Viewbox is always present, either implicitly or explicitly
+    Geom::Rect vb;
     if (marker->viewBox) {
         vb = *marker->viewBox;
-	} else {
+    } else {
         vb = rctx.viewport;
-	}
-	/* Now set up viewbox transformation */
-	/* Determine actual viewbox in viewport coordinates */
-	if (marker->aspect_align == SP_ASPECT_NONE) {
-		x = 0.0;
-		y = 0.0;
-		width = rctx.viewport.width();
-		height = rctx.viewport.height();
-	} else {
-		double scalex, scaley, scale;
-		/* Things are getting interesting */
+    }
+
+    // Now set up viewbox transformation
+
+    // Determine actual viewbox in viewport coordinates
+    double x = 0;
+    double y = 0;
+    double width = 0;
+    double height = 0;
+    if (marker->aspect_align == SP_ASPECT_NONE) {
+        x = 0.0;
+        y = 0.0;
+        width = rctx.viewport.width();
+        height = rctx.viewport.height();
+    } else {
+        double scalex, scaley, scale;
+        // Things are getting interesting
         scalex = rctx.viewport.width() / (vb.width());
         scaley = rctx.viewport.height() / (vb.height());
-		scale = (marker->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
+        scale = (marker->aspect_clip == SP_ASPECT_MEET) ? MIN (scalex, scaley) : MAX (scalex, scaley);
         width = (vb.width()) * scale;
         height = (vb.height()) * scale;
-		/* Now place viewbox to requested position */
-		switch (marker->aspect_align) {
-		case SP_ASPECT_XMIN_YMIN:
-			x = 0.0;
-			y = 0.0;
-			break;
-		case SP_ASPECT_XMID_YMIN:
-			x = 0.5 * (rctx.viewport.width() - width);
-			y = 0.0;
-			break;
-		case SP_ASPECT_XMAX_YMIN:
-			x = 1.0 * (rctx.viewport.width() - width);
-			y = 0.0;
-			break;
-		case SP_ASPECT_XMIN_YMID:
-			x = 0.0;
-			y = 0.5 * (rctx.viewport.height() - height);
-			break;
-		case SP_ASPECT_XMID_YMID:
-			x = 0.5 * (rctx.viewport.width() - width);
-			y = 0.5 * (rctx.viewport.height() - height);
-			break;
-		case SP_ASPECT_XMAX_YMID:
-			x = 1.0 * (rctx.viewport.width() - width);
-			y = 0.5 * (rctx.viewport.height() - height);
-			break;
-		case SP_ASPECT_XMIN_YMAX:
-			x = 0.0;
-			y = 1.0 * (rctx.viewport.height() - height);
-			break;
-		case SP_ASPECT_XMID_YMAX:
-			x = 0.5 * (rctx.viewport.width() - width);
-			y = 1.0 * (rctx.viewport.height() - height);
-			break;
-		case SP_ASPECT_XMAX_YMAX:
-			x = 1.0 * (rctx.viewport.width() - width);
-			y = 1.0 * (rctx.viewport.height() - height);
-			break;
-		default:
-			x = 0.0;
-			y = 0.0;
-			break;
-		}
-	}
 
-	// viewbox transformation and reference translation
-	marker->c2p = Geom::Translate(-marker->refX.computed, -marker->refY.computed) *
-		Geom::Scale(width / vb.width(), height / vb.height());
-
-	rctx.i2doc = marker->c2p * rctx.i2doc;
-
-	/* If viewBox is set reinitialize child viewport */
-	/* Otherwise it already correct */
-	if (marker->viewBox) {
-	    rctx.viewport = *marker->viewBox;
-            rctx.i2vp = Geom::identity();
-	}
-
-	// And invoke parent method
-	if (((SPObjectClass *) (parent_class))->update) {
-		((SPObjectClass *) (parent_class))->update (object, (SPCtx *) &rctx, flags);
+        // Now place viewbox to requested position
+        switch (marker->aspect_align) {
+            case SP_ASPECT_XMIN_YMIN:
+                x = 0.0;
+                y = 0.0;
+                break;
+            case SP_ASPECT_XMID_YMIN:
+                x = 0.5 * (rctx.viewport.width() - width);
+                y = 0.0;
+                break;
+            case SP_ASPECT_XMAX_YMIN:
+                x = 1.0 * (rctx.viewport.width() - width);
+                y = 0.0;
+                break;
+            case SP_ASPECT_XMIN_YMID:
+                x = 0.0;
+                y = 0.5 * (rctx.viewport.height() - height);
+                break;
+            case SP_ASPECT_XMID_YMID:
+                x = 0.5 * (rctx.viewport.width() - width);
+                y = 0.5 * (rctx.viewport.height() - height);
+                break;
+            case SP_ASPECT_XMAX_YMID:
+                x = 1.0 * (rctx.viewport.width() - width);
+                y = 0.5 * (rctx.viewport.height() - height);
+                break;
+            case SP_ASPECT_XMIN_YMAX:
+                x = 0.0;
+                y = 1.0 * (rctx.viewport.height() - height);
+                break;
+            case SP_ASPECT_XMID_YMAX:
+                x = 0.5 * (rctx.viewport.width() - width);
+                y = 1.0 * (rctx.viewport.height() - height);
+                break;
+            case SP_ASPECT_XMAX_YMAX:
+                x = 1.0 * (rctx.viewport.width() - width);
+                y = 1.0 * (rctx.viewport.height() - height);
+                break;
+            default:
+                x = 0.0;
+                y = 0.0;
+                break;
         }
+    }
+    // TODO fixme: all that work is done to figure out x and y, which are just ignored. Check why.
 
-        // As last step set additional transform of drawing group
-        for (SPMarkerView *v = marker->views; v != NULL; v = v->next) {
-            for (unsigned i = 0 ; i < v->items.size() ; i++) {
-                if (v->items[i]) {
-                    Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->items[i]);
-                    g->setChildTransform(marker->c2p);
-                }
+    // viewbox transformation and reference translation
+    marker->c2p = Geom::Translate(-marker->refX.computed, -marker->refY.computed) *
+        Geom::Scale(width / vb.width(), height / vb.height());
+
+    rctx.i2doc = marker->c2p * rctx.i2doc;
+
+    // If viewBox is set reinitialize child viewport
+    // Otherwise it already correct
+    if (marker->viewBox) {
+        rctx.viewport = *marker->viewBox;
+        rctx.i2vp = Geom::identity();
+    }
+
+    // And invoke parent method
+    if (((SPObjectClass *) (parent_class))->update) {
+        ((SPObjectClass *) (parent_class))->update (object, (SPCtx *) &rctx, flags);
+    }
+
+    // As last step set additional transform of drawing group
+    for (SPMarkerView *v = marker->views; v != NULL; v = v->next) {
+        for (unsigned i = 0 ; i < v->items.size() ; i++) {
+            if (v->items[i]) {
+                Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(v->items[i]);
+                g->setChildTransform(marker->c2p);
             }
         }
+    }
 }
 
 /**
