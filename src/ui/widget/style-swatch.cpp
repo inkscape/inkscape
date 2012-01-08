@@ -106,13 +106,13 @@ void StyleSwatch::ToolObserver::notify(Inkscape::Preferences::Entry const &val)
 
 StyleSwatch::StyleSwatch(SPCSSAttr *css, gchar const *main_tip)
     :
-      _desktop(0),
+      _desktop(NULL),
       _verb_t(0),
-      _css(0),
-      _tool_obs(0),
-      _style_obs(0),
+      _css(NULL),
+      _tool_obs(NULL),
+      _style_obs(NULL),
       _table(2, 6),
-      _sw_unit(0)
+      _sw_unit(NULL)
 {
     _label[SS_FILL].set_markup(_("Fill:"));
     _label[SS_STROKE].set_markup(_("Stroke:"));
