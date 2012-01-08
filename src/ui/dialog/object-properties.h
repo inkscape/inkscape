@@ -16,11 +16,13 @@
 #include <gtk/gtk.h>
 #include <gtkmm.h>
 #include <glibmm/i18n.h>
-#include "dialog-events.h"
 
+#include "ui/widget/panel.h"
 #include "../widgets/sp-attribute-widget.h"
 
-void sp_item_dialog(void);
+namespace Inkscape {
+namespace UI {
+namespace Dialog {
 
 /**
  * A dialog widget to show object properties.
@@ -28,10 +30,12 @@ void sp_item_dialog(void);
  * A widget to enter an ID, label, title and description for an object.
  * In addition it allows to edit the properties of an object.
  */
-class SPItemDialog : public Gtk::Widget {
+class ObjectProperties : public Widget::Panel {
 public:
-    SPItemDialog ();
-    ~SPItemDialog ();
+    ObjectProperties ();
+    ~ObjectProperties ();
+    
+    static ObjectProperties &getInstance() { return *new ObjectProperties(); }
     
     /**
      * Updates entries and other child widgets on selection change, object modification, etc.
@@ -39,20 +43,9 @@ public:
     void widget_setup(void);
 
 private:
-    Glib::ustring const prefs_path;
-    gint x;
-    gint y;
-    gint w;
-    gint h;
-    std::vector<Glib::ustring> int_labels;
-    
     bool blocked;
-    bool closing;
-    
-    Gtk::Window* window; // the window
-    win_data wd;
-
-    Gtk::VBox vb; //the VBox
+    SPItem *CurrentItem; //to store the current item, for not wasting resources
+    std::vector<Glib::ustring> int_labels;
     
     Gtk::Table TopTable; //the table with the object properties
     Gtk::Label LabelID; //the label for the object ID
@@ -75,10 +68,8 @@ private:
     
     Gtk::Label LabelInteractivity; //the label for interactivity
     Gtk::Expander EInteractivity; //the label for interactivity
-
     SPAttributeTable attrTable; //the widget for showing the on... names at the bottom
     
-    SPItem *CurrentItem; //to store the current item, for not wasting resources
     
     /**
      * Constructor auxiliary function creating the child widgets.
@@ -100,6 +91,10 @@ private:
      */
     void hidden_toggled(void);
 };
+
+}
+}
+}
 
 #endif
 

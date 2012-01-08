@@ -48,6 +48,7 @@ set(ui_SRC
 	dialog/layer-properties.cpp
 	dialog/layers.cpp
 	dialog/livepatheffect-editor.cpp
+	dialog/object-properties.cpp
 	dialog/memory.cpp
 	dialog/messages.cpp
 	dialog/ocaldialogs.cpp

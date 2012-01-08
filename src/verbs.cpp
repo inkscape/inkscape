@@ -40,7 +40,6 @@
 #include "desktop-handles.h"
 #include "dialogs/clonetiler.h"
 #include "dialogs/find.h"
-#include "dialogs/item-properties.h"
 #include "dialogs/spellcheck.h"
 #include "dialogs/text-edit.h"
 #include "dialogs/xml-tree.h"
@@ -78,6 +77,7 @@
 #include "ui/dialog/inkscape-preferences.h"
 #include "ui/dialog/layer-properties.h"
 #include "ui/dialog/layers.h"
+#include "ui/dialog/object-properties.h"
 #include "ui/dialog/swatches.h"
 #include "ui/icon-names.h"
 #include "ui/tool/node-tool.h"
@@ -1845,7 +1845,8 @@ void DialogVerb::perform(SPAction *action, void *data)
             clonetiler_dialog();
             break;
         case SP_VERB_DIALOG_ITEM:
-            sp_item_dialog();
+            //sp_item_dialog();
+            dt->_dlg_mgr->showDialog("ObjectProperties");
             break;
 /*#ifdef WITH_INKBOARD
         case SP_VERB_XMPP_CLIENT:

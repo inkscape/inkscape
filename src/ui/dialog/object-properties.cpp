@@ -21,85 +21,21 @@
 
 #include "../desktop-handles.h"
 #include "../document.h"
-#include "../helper/window.h"
-#include "../inkscape.h"
-#include "../interface.h"
-#include "../macros.h"
-#include "../preferences.h"
-#include "../selection.h"
-#include "../sp-item.h"
-#include "../verbs.h"
-#include "../widgets/sp-widget.h"
-#include "item-properties.h"
+#include "object-properties.h"
 
-using Inkscape::DocumentUndo;
 
-#define MIN_ONSCREEN_DISTANCE 50
+namespace Inkscape {
+namespace UI {
+namespace Dialog {
 
-static SPItemDialog *spid = NULL;
-
-static void sp_item_dialog_delete( GtkObject */*object*/, GdkEvent */*event*/, gpointer /*data*/ );
-static void sp_item_widget_modify_selection (SPWidget *spw, Inkscape::Selection *selection, guint flags, GtkWidget *itemw);
-static void sp_item_widget_change_selection (SPWidget *spw, Inkscape::Selection *selection, GtkWidget *itemw);
+void on_selection_changed(Inkscape::Application */*inkscape*/, Inkscape::Selection */*selection*/, ObjectProperties *dial);
 
 /**
- * SPItemDialog callback for closing the dialog.
+ * Create a new static instance of the object properties dialog.
  */
-static void sp_item_dialog_delete( GtkObject */*object*/, GdkEvent */*event*/, gpointer /*data*/ )
-{
-    if (spid)
-    {
-		delete spid;
-		spid = NULL;
-    }
-}
-
-/**
- * SPItemDialog callback for a modification of the selected object (e.g. size, color, fill, etc.).
- */
-static void sp_item_widget_modify_selection( SPWidget */*spw*/,
-                                 Inkscape::Selection */*selection*/,
-                                 guint /*flags*/,
-                                 GtkWidget */*itemw*/ )
-{
-    if (spid)
-    {
-        spid->widget_setup();
-    }
-}
-
-/**
- * SPItemDialog callback for the selection of an other object.
- */
-static void sp_item_widget_change_selection ( SPWidget */*spw*/,
-                                  Inkscape::Selection */*selection*/,
-                                  GtkWidget */*itemw*/ )
-{
-    if (spid)
-    {
-        spid->widget_setup();
-    }
-}
-
-
-/**
- * Create a new static instance of the items dialog.
- */
-void sp_item_dialog(void)
-{
-    if (spid == NULL) {
-        spid = new SPItemDialog();
-    }
-}
-
-SPItemDialog::SPItemDialog (void) :
-    prefs_path("/dialogs/object/"),
-    x(-1000),// impossible original value to make sure they are read from prefs
-    y(-1000),// impossible original value to make sure they are read from prefs
-    w(0),
-    h(0),
+ObjectProperties::ObjectProperties (void) :
+    UI::Widget::Panel ("", "/dialogs/object/", SP_VERB_DIALOG_ITEM),
     blocked (false),
-    closing (false),
     TopTable (3, 4, false),
     LabelID(_("_ID:"), 1),
     LabelLabel(_("_Label:"), 1),
@@ -114,45 +50,6 @@ SPItemDialog::SPItemDialog (void) :
     attrTable(),
     CurrentItem(0)
 {
-    //intializing dialog
-    gchar title[500];
-    sp_ui_dialog_title_string (Inkscape::Verb::get(SP_VERB_DIALOG_ITEM), title);
-    window = Inkscape::UI::window_new (title, true);
-    GtkWidget *dlg;
-    dlg = (GtkWidget*)window->gobj();
-    
-    //reading dialog position from preferences
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (x == -1000 || y == -1000) {
-        x = prefs->getInt(prefs_path + "x", -1000);
-        y = prefs->getInt(prefs_path + "y", -1000);
-    }
-    if (w ==0 || h == 0) {
-        w = prefs->getInt(prefs_path + "w", 0);
-        h = prefs->getInt(prefs_path + "h", 0);
-    }
-    if (w && h) {
-        gtk_window_resize ((GtkWindow *) dlg, w, h);
-    }
-    if (x >= 0 && y >= 0 && (x < (gdk_screen_width()-MIN_ONSCREEN_DISTANCE)) && (y < (gdk_screen_height()-MIN_ONSCREEN_DISTANCE))) {
-        gtk_window_move ((GtkWindow *) dlg, x, y);
-    } else {
-        gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_CENTER);
-    }
-
-    sp_transientize (dlg);
-    wd.win = dlg;
-    wd.stop = 0;
-
-    //set callback for the new dialog
-    g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (sp_transientize_callback), &wd);
-    g_signal_connect ( G_OBJECT (dlg), "event", G_CALLBACK (sp_dialog_event_handler), dlg);
-    // g_signal_connect ( G_OBJECT (dlg), "destroy", G_CALLBACK (sp_item_dialog_delete), dlg);
-    g_signal_connect ( G_OBJECT (dlg), "delete_event", G_CALLBACK (sp_item_dialog_delete), dlg);
-    g_signal_connect ( G_OBJECT (INKSCAPE), "shut_down", G_CALLBACK (sp_item_dialog_delete), dlg);
-    g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_hide", G_CALLBACK (sp_dialog_hide), dlg);
-    g_signal_connect ( G_OBJECT (INKSCAPE), "dialogs_unhide", G_CALLBACK (sp_dialog_unhide), dlg);
-
     //initialize labels for the table at the bottom of the dialog
     int_labels.push_back("onclick");
     int_labels.push_back("onmouseover");
@@ -168,50 +65,23 @@ SPItemDialog::SPItemDialog (void) :
     MakeWidget();
 }
 
-SPItemDialog::~SPItemDialog (void)
+ObjectProperties::~ObjectProperties (void)
 {
-    if (closing)
-    {
-       return;
-    }
-    blocked = true;
-    closing = true;
-    gtk_window_get_position ((GtkWindow *) wd.win, &x, &y);
-    gtk_window_get_size ((GtkWindow *) wd.win, &w, &h);
-
-    if (x<0) x=0;
-    if (y<0) y=0;
-
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setInt(prefs_path + "x", x);
-    prefs->setInt(prefs_path + "y", y);
-    prefs->setInt(prefs_path + "w", w);
-    prefs->setInt(prefs_path + "h", h);
-
-    sp_signal_disconnect_by_data (INKSCAPE, wd.win);
-    sp_signal_disconnect_by_data (INKSCAPE, &wd);
-    if (window)
-    {
-        //should actually always  be true, but for safety check
-        delete window;
-        window = NULL;
-        wd.win = NULL;
-    }
 }
 
-void SPItemDialog::MakeWidget(void)
+void ObjectProperties::MakeWidget(void)
 {
-	// if (gtk_widget_get_visible (GTK_WIDGET(spw))) {
-		g_signal_connect (G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (sp_item_widget_modify_selection), wd.win);
-		g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (sp_item_widget_change_selection), wd.win);
-		g_signal_connect (G_OBJECT (INKSCAPE), "set_selection", G_CALLBACK (sp_item_widget_change_selection), wd.win);
-	// }
-
-    window->add(vb);
+    // g_signal_connect (G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (sp_item_widget_modify_selection), wd.win);
+    // g_signal_connect (G_OBJECT (INKSCAPE), "set_selection", G_CALLBACK (sp_item_widget_change_selection), wd.win);
+    g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (on_selection_changed), this);
+    
+    Gtk::Box *contents = _getContents();
+    contents->set_spacing(0);
+    
     TopTable.set_border_width(4);
     TopTable.set_row_spacings(4);
     TopTable.set_col_spacings(4);
-    vb.pack_start (TopTable, true, true, 0);
+    contents->pack_start (TopTable, true, true, 0);
 
     /* Create the label for the object id */
     LabelID.set_alignment (1, 0.5);
@@ -228,7 +98,7 @@ void SPItemDialog::MakeWidget(void)
     LabelID.set_mnemonic_widget (EntryID);
 
     // pressing enter in the id field is the same as clicking Set:
-    EntryID.signal_activate().connect(sigc::mem_fun(this, &SPItemDialog::label_changed));
+    EntryID.signal_activate().connect(sigc::mem_fun(this, &ObjectProperties::label_changed));
     // focus is in the id field initially:
     EntryID.grab_focus();
 
@@ -247,7 +117,7 @@ void SPItemDialog::MakeWidget(void)
     LabelLabel.set_mnemonic_widget (EntryLabel);
 
     // pressing enter in the label field is the same as clicking Set:
-    EntryLabel.signal_activate().connect(sigc::mem_fun(this, &SPItemDialog::label_changed));
+    EntryLabel.signal_activate().connect(sigc::mem_fun(this, &ObjectProperties::label_changed));
 
     /* Create the label for the object title */
     LabelTitle.set_alignment (1, 0.5);
@@ -281,7 +151,7 @@ void SPItemDialog::MakeWidget(void)
     TextViewDescription.add_mnemonic_label(LabelDescription);
 
     /* Check boxes */
-    vb.pack_start (HBoxCheck, FALSE, FALSE, 0);
+    contents->pack_start (HBoxCheck, FALSE, FALSE, 0);
     CheckTable.set_border_width(0);
     HBoxCheck.pack_start (CheckTable, TRUE, TRUE, 10);
 
@@ -290,7 +160,7 @@ void SPItemDialog::MakeWidget(void)
     CheckTable.attach (CBHide, 0, 1, 0, 1,
                        Gtk::EXPAND | Gtk::FILL,
                        Gtk::AttachOptions(), 0, 0 );
-    CBHide.signal_toggled().connect(sigc::mem_fun(this, &SPItemDialog::hidden_toggled));
+    CBHide.signal_toggled().connect(sigc::mem_fun(this, &ObjectProperties::hidden_toggled));
 
     /* Lock */
     // TRANSLATORS: "Lock" is a verb here
@@ -298,21 +168,21 @@ void SPItemDialog::MakeWidget(void)
     CheckTable.attach (CBLock, 1, 2, 0, 1,
                        Gtk::EXPAND | Gtk::FILL,
                        Gtk::AttachOptions(), 0, 0 );
-    CBLock.signal_toggled().connect(sigc::mem_fun(this, &SPItemDialog::sensitivity_toggled));
+    CBLock.signal_toggled().connect(sigc::mem_fun(this, &ObjectProperties::sensitivity_toggled));
 
 
     /* Button for setting the object's id, label, title and description. */
     HBoxCheck.pack_start (BSet, TRUE, TRUE, 10);
-    BSet.signal_clicked().connect(sigc::mem_fun(this, &SPItemDialog::label_changed));
+    BSet.signal_clicked().connect(sigc::mem_fun(this, &ObjectProperties::label_changed));
 
     /* Create the frame for interactivity options */
     EInteractivity.set_label_widget (LabelInteractivity);
-    vb.pack_start (EInteractivity, FALSE, FALSE, 0);
-    window->show_all ();
+    contents->pack_start (EInteractivity, FALSE, FALSE, 0);
+    show_all ();
     widget_setup();
 }
 
-void SPItemDialog::widget_setup(void)
+void ObjectProperties::widget_setup(void)
 {
     if (blocked)
     {
@@ -320,16 +190,17 @@ void SPItemDialog::widget_setup(void)
     }
 
     Inkscape::Selection *selection = sp_desktop_selection (SP_ACTIVE_DESKTOP);
+    Gtk::Box *contents = _getContents();
 
     if (!selection->singleItem()) {
-        vb.set_sensitive (false);
+        contents->set_sensitive (false);
         CurrentItem = NULL;
         //no selection anymore or multiple objects selected, means that we need
         //to close the connections to the previously selected object
         attrTable.clear();
         return;
     } else {
-        vb.set_sensitive (true);
+        contents->set_sensitive (true);
     }
     
     SPItem *item = selection->singleItem();
@@ -402,7 +273,7 @@ void SPItemDialog::widget_setup(void)
     blocked = false;
 }
 
-void SPItemDialog::label_changed(void)
+void ObjectProperties::label_changed(void)
 {
     if (blocked)
     {
@@ -462,7 +333,7 @@ void SPItemDialog::label_changed(void)
     blocked = false;
 }
 
-void SPItemDialog::sensitivity_toggled (void)
+void ObjectProperties::sensitivity_toggled (void)
 {
     if (blocked)
     {
@@ -479,7 +350,7 @@ void SPItemDialog::sensitivity_toggled (void)
     blocked = false;
 }
 
-void SPItemDialog::hidden_toggled(void)
+void ObjectProperties::hidden_toggled(void)
 {
     if (blocked)
     {
@@ -495,6 +366,19 @@ void SPItemDialog::hidden_toggled(void)
                CBHide.get_active()? _("Hide object") : _("Unhide object"));
     blocked = false;
 }
+
+/**
+ * ObjectProperties callback for the selection of an other object.
+ */
+void on_selection_changed(Inkscape::Application */*inkscape*/, Inkscape::Selection */*selection*/, ObjectProperties *dial)
+{
+    dial->widget_setup();
+}
+
+}
+}
+}
+
 /*
   Local Variables:
   mode:c++

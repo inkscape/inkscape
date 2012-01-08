@@ -64,6 +64,8 @@ ink_common_sources +=		\
 	ui/dialog/messages.h			\
 	ui/dialog/ocaldialogs.cpp		\
 	ui/dialog/ocaldialogs.h			\
+	ui/dialog/object-properties.cpp \
+	ui/dialog/object-properties.h	\
 	ui/dialog/panel-dialog.h		\
 	ui/dialog/print.cpp			\
 	ui/dialog/print.h			\

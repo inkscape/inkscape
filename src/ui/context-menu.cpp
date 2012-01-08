@@ -52,10 +52,10 @@ void sp_object_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
 #include "desktop-handles.h"
 #include "selection.h"
 #include "selection-chemistry.h"
-#include "dialogs/item-properties.h"
 #include "dialogs/object-attributes.h"
 #include "dialogs/text-edit.h"
 #include "dialogs/spellcheck.h"
+#include "ui/dialog/object-properties.h"
 
 #include "sp-path.h"
 #include "sp-clippath.h"
@@ -189,7 +189,8 @@ static void sp_item_properties(GtkMenuItem *menuitem, SPItem *item)
 
     sp_desktop_selection(desktop)->set(item);
 
-    sp_item_dialog();
+    // sp_item_dialog();
+    desktop->_dlg_mgr->showDialog("ObjectProperties");
 }
 
 

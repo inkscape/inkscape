@@ -4,7 +4,6 @@ set(dialogs_SRC
 	dialog-events.cpp
 	export.cpp
 	find.cpp
-	item-properties.cpp
 	object-attributes.cpp
 	spellcheck.cpp
 	text-edit.cpp
