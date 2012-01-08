@@ -44,7 +44,6 @@ enum {
     PREFS_PAGE_TOOLS_SELECTOR,
     PREFS_PAGE_TOOLS_NODE,
     PREFS_PAGE_TOOLS_TWEAK,
-    PREFS_PAGE_TOOLS_SPRAY,
     PREFS_PAGE_TOOLS_ZOOM,
     PREFS_PAGE_TOOLS_MEASURE,
     PREFS_PAGE_TOOLS_SHAPES,
@@ -56,32 +55,35 @@ enum {
     PREFS_PAGE_TOOLS_PENCIL,
     PREFS_PAGE_TOOLS_PEN,
     PREFS_PAGE_TOOLS_CALLIGRAPHY,
-    PREFS_PAGE_TOOLS_PAINTBUCKET,
-    PREFS_PAGE_TOOLS_ERASER,
-    PREFS_PAGE_TOOLS_LPETOOL,
     PREFS_PAGE_TOOLS_TEXT,
+    PREFS_PAGE_TOOLS_SPRAY,
+    PREFS_PAGE_TOOLS_ERASER,
+    PREFS_PAGE_TOOLS_PAINTBUCKET,
     PREFS_PAGE_TOOLS_GRADIENT,
-    PREFS_PAGE_TOOLS_CONNECTOR,
     PREFS_PAGE_TOOLS_DROPPER,
-    PREFS_PAGE_SELECTING,
-    PREFS_PAGE_TRANSFORMS,
-    PREFS_PAGE_CLONES,
-    PREFS_PAGE_MASKS,
-    PREFS_PAGE_RENDERING,
-    PREFS_PAGE_BITMAPS,
-    PREFS_PAGE_CMS,
-    PREFS_PAGE_GRIDS,
-    PREFS_PAGE_SVGOUTPUT,
-    PREFS_PAGE_SAVE,
-    PREFS_PAGE_IMPORTEXPORT,
-    PREFS_PAGE_MOUSE,
-    PREFS_PAGE_SCROLLING,
-    PREFS_PAGE_SNAPPING,
-    PREFS_PAGE_STEPS,
+    PREFS_PAGE_TOOLS_CONNECTOR,
+    PREFS_PAGE_TOOLS_LPETOOL,
     PREFS_PAGE_UI,
-    PREFS_PAGE_WINDOWS,
-    PREFS_PAGE_SPELLCHECK,
-    PREFS_PAGE_MISC
+    PREFS_PAGE_UI_WINDOWS,
+    PREFS_PAGE_UI_GRIDS,
+    PREFS_PAGE_BEHAVIOR,
+    PREFS_PAGE_BEHAVIOR_SELECTING,
+    PREFS_PAGE_BEHAVIOR_TRANSFORMS,
+    PREFS_PAGE_BEHAVIOR_SCROLLING,
+    PREFS_PAGE_BEHAVIOR_SNAPPING,
+    PREFS_PAGE_BEHAVIOR_STEPS,
+    PREFS_PAGE_BEHAVIOR_CLONES,
+    PREFS_PAGE_BEHAVIOR_MASKS,
+    PREFS_PAGE_IO,
+    PREFS_PAGE_IO_MOUSE,
+    PREFS_PAGE_IO_SVGOUTPUT,
+    PREFS_PAGE_IO_CMS,
+    PREFS_PAGE_IO_AUTOSAVE,
+    PREFS_PAGE_IO_OPENCLIPART,
+    PREFS_PAGE_SYSTEM,
+    PREFS_PAGE_BITMAPS,
+    PREFS_PAGE_RENDERING,
+    PREFS_PAGE_SPELLCHECK
 };
 
 namespace Inkscape {
@@ -114,28 +116,11 @@ protected:
 
     Gtk::TreeModel::Path _path_tools;
     Gtk::TreeModel::Path _path_shapes;
+    Gtk::TreeModel::Path _path_ui;
+    Gtk::TreeModel::Path _path_behavior;
+    Gtk::TreeModel::Path _path_io;
 
-    UI::Widget::DialogPage _page_mouse;
-    UI::Widget::DialogPage _page_scrolling;
-    UI::Widget::DialogPage _page_snapping;
-    UI::Widget::DialogPage _page_steps;
     UI::Widget::DialogPage _page_tools;
-    UI::Widget::DialogPage _page_windows;
-    UI::Widget::DialogPage _page_clones;
-    UI::Widget::DialogPage _page_mask;
-    UI::Widget::DialogPage _page_transforms;
-    UI::Widget::DialogPage _page_rendering;
-    UI::Widget::DialogPage _page_select;
-    UI::Widget::DialogPage _page_importexport;
-    UI::Widget::DialogPage _page_cms;
-    UI::Widget::DialogPage _page_grids;
-    UI::Widget::DialogPage _page_svgoutput;
-    UI::Widget::DialogPage _page_misc;
-    UI::Widget::DialogPage _page_ui;
-    UI::Widget::DialogPage _page_save;
-    UI::Widget::DialogPage _page_bitmaps;
-    UI::Widget::DialogPage _page_spellcheck;
-
     UI::Widget::DialogPage _page_selector;
     UI::Widget::DialogPage _page_node;
     UI::Widget::DialogPage _page_tweak;
@@ -159,6 +144,31 @@ protected:
     UI::Widget::DialogPage _page_spiral;
     UI::Widget::DialogPage _page_paintbucket;
     UI::Widget::DialogPage _page_eraser;
+
+    UI::Widget::DialogPage _page_ui;
+    UI::Widget::DialogPage _page_windows;
+    UI::Widget::DialogPage _page_grids;
+
+    UI::Widget::DialogPage _page_behavior;
+    UI::Widget::DialogPage _page_select;
+    UI::Widget::DialogPage _page_transforms;
+    UI::Widget::DialogPage _page_scrolling;
+    UI::Widget::DialogPage _page_snapping;
+    UI::Widget::DialogPage _page_steps;
+    UI::Widget::DialogPage _page_clones;
+    UI::Widget::DialogPage _page_mask;
+
+    UI::Widget::DialogPage _page_io;
+    UI::Widget::DialogPage _page_mouse;
+    UI::Widget::DialogPage _page_svgoutput;
+    UI::Widget::DialogPage _page_cms;
+    UI::Widget::DialogPage _page_autosave;
+    UI::Widget::DialogPage _page_openclipart;
+
+    UI::Widget::DialogPage _page_rendering;
+    UI::Widget::DialogPage _page_system;
+    UI::Widget::DialogPage _page_bitmaps;
+    UI::Widget::DialogPage _page_spellcheck;
 
     UI::Widget::PrefSpinButton _mouse_sens;
     UI::Widget::PrefSpinButton _mouse_thres;
@@ -392,27 +402,17 @@ protected:
 
     void on_pagelist_selection_changed();
     void on_reset_open_recent_clicked();
-    void initPageMouse();
-    void initPageScrolling();
-    void initPageSnapping();
-    void initPageSteps();
+
     void initPageTools();
-    void initPageWindows();
-    void initPageClones();
-    void initPageMasks();
-    void initPageTransforms();
-    void initPageRendering();
-    void initPageSelecting();
-    void initPageImportExport();
-    void initPageCMS();
-    void initPageGrids();
-    void initPageSVGOutput();
     void initPageUI();
+    void initPageBehavior();
+    void initPageIO();
+
+    void initPageRendering();
     void initPageSpellcheck();
-    void initPageSave();
     void initPageBitmaps();
-    void initPageMisc();
-    void initPageI18n();
+    void initPageSystem();
+    void initPageI18n(); // Do we still need it?
 
     void _presentPages();
 

@@ -121,25 +121,15 @@ InkscapePreferences::InkscapePreferences()
     title_frame->set_shadow_type(Gtk::SHADOW_IN);
 
     initPageTools();
-    initPageSelecting();
-    initPageTransforms();
-    initPageClones();
-    initPageMasks();
-    initPageRendering();
-    initPageBitmaps();
-    initPageCMS();
-    initPageGrids();
-    initPageSVGOutput();
-    initPageSave();
-    initPageImportExport();
-    initPageMouse();
-    initPageScrolling();
-    initPageSnapping();
-    initPageSteps();
     initPageUI();
-    initPageWindows();
+    initPageBehavior();
+    initPageIO();
+
+    initPageSystem();
+    initPageBitmaps();
+    initPageRendering();
     initPageSpellcheck();
-    initPageMisc();
+
 
     signalPresent().connect(sigc::mem_fun(*this, &InkscapePreferences::_presentPages));
 
@@ -172,112 +162,6 @@ Gtk::TreeModel::iterator InkscapePreferences::AddPage(DialogPage& p, Glib::ustri
     row[_page_list_columns._col_id] = id;
     row[_page_list_columns._col_page] = &p;
     return iter;
-}
-
-void InkscapePreferences::initPageMouse()
-{
-    this->AddPage(_page_mouse, _("Mouse"), PREFS_PAGE_MOUSE);
-    _mouse_sens.init ( "/options/cursortolerance/value", 0.0, 30.0, 1.0, 1.0, 8.0, true, false);
-    _page_mouse.add_line( false, _("Grab sensitivity:"), _mouse_sens, _("pixels"),
-                           _("How close on the screen you need to be to an object to be able to grab it with mouse (in screen pixels)"), false);
-    _mouse_thres.init ( "/options/dragtolerance/value", 0.0, 20.0, 1.0, 1.0, 4.0, true, false);
-    _page_mouse.add_line( false, _("Click/drag threshold:"), _mouse_thres, _("pixels"),
-                           _("Maximum mouse drag (in screen pixels) which is considered a click, not a drag"), false);
-
-    _mouse_use_ext_input.init( _("Use pressure-sensitive tablet (requires restart)"), "/options/useextinput/value", true);
-    _page_mouse.add_line(true, "",_mouse_use_ext_input, "",
-                        _("Use the capabilities of a tablet or other pressure-sensitive device. Disable this only if you have problems with the tablet (you can still use it as a mouse)"));
-
-    _mouse_switch_on_ext_input.init( _("Switch tool based on tablet device (requires restart)"), "/options/switchonextinput/value", false);
-    _page_mouse.add_line(true, "",_mouse_switch_on_ext_input, "",
-                        _("Change tool as different devices are used on the tablet (pen, eraser, mouse)"));
-}
-
-void InkscapePreferences::initPageScrolling()
-{
-    this->AddPage(_page_scrolling, _("Scrolling"), PREFS_PAGE_SCROLLING);
-    _scroll_wheel.init ( "/options/wheelscroll/value", 0.0, 1000.0, 1.0, 1.0, 40.0, true, false);
-    _page_scrolling.add_line( false, _("Mouse wheel scrolls by:"), _scroll_wheel, _("pixels"),
-                           _("One mouse wheel notch scrolls by this distance in screen pixels (horizontally with Shift)"), false);
-    _page_scrolling.add_group_header( _("Ctrl+arrows"));
-    _scroll_arrow_px.init ( "/options/keyscroll/value", 0.0, 1000.0, 1.0, 1.0, 10.0, true, false);
-    _page_scrolling.add_line( true, _("Scroll by:"), _scroll_arrow_px, _("pixels"),
-                           _("Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"), false);
-    _scroll_arrow_acc.init ( "/options/scrollingacceleration/value", 0.0, 5.0, 0.01, 1.0, 0.35, false, false);
-    _page_scrolling.add_line( true, _("Acceleration:"), _scroll_arrow_acc, "",
-                           _("Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no acceleration)"), false);
-    _page_scrolling.add_group_header( _("Autoscrolling"));
-    _scroll_auto_speed.init ( "/options/autoscrollspeed/value", 0.0, 5.0, 0.01, 1.0, 0.7, false, false);
-    _page_scrolling.add_line( true, _("Speed:"), _scroll_auto_speed, "",
-                           _("How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn autoscroll off)"), false);
-    _scroll_auto_thres.init ( "/options/autoscrolldistance/value", -600.0, 600.0, 1.0, 1.0, -10.0, true, false);
-    _page_scrolling.add_line( true, _("Threshold:"), _scroll_auto_thres, _("pixels"),
-                           _("How far (in screen pixels) you need to be from the canvas edge to trigger autoscroll; positive is outside the canvas, negative is within the canvas"), false);
-    _scroll_space.init ( _("Left mouse button pans when Space is pressed"), "/options/spacepans/value", false);
-    _page_scrolling.add_line( false, "", _scroll_space, "",
-                            _("When on, pressing and holding Space and dragging with left mouse button pans canvas (as in Adobe Illustrator); when off, Space temporarily switches to Selector tool (default)"));
-    _wheel_zoom.init ( _("Mouse wheel zooms by default"), "/options/wheelzooms/value", false);
-    _page_scrolling.add_line( false, "", _wheel_zoom, "",
-                            _("When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when off, it zooms with Ctrl and scrolls without Ctrl"));
-}
-
-void InkscapePreferences::initPageSnapping()
-{
-
-    _snap_indicator.init( _("Enable snap indicator"), "/options/snapindicator/value", true);
-    _page_snapping.add_line( false, "", _snap_indicator, "",
-                             _("After snapping, a symbol is drawn at the point that has snapped"));
-
-    _snap_delay.init("/options/snapdelay/value", 0, 1000, 50, 100, 300, 0);
-    _page_snapping.add_line( false, _("Delay (in ms):"), _snap_delay, "",
-                             _("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate."), true);
-
-    _snap_closest_only.init( _("Only snap the node closest to the pointer"), "/options/snapclosestonly/value", false);
-    _page_snapping.add_line( false, "", _snap_closest_only, "",
-                             _("Only try to snap the node that is initially closest to the mouse pointer"));
-
-    _snap_weight.init("/options/snapweight/value", 0, 1, 0.1, 0.2, 0.5, 1);
-    _page_snapping.add_line( false, _("Weight factor:"), _snap_weight, "",
-                             _("When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"), true);
-
-    _snap_mouse_pointer.init( _("Snap the mouse pointer when dragging a constrained knot"), "/options/snapmousepointer/value", false);
-    _page_snapping.add_line( false, "", _snap_mouse_pointer, "",
-                             _("When dragging a knot along a constraint line, then snap the position of the mouse pointer instead of snapping the projection of the knot onto the constraint line"));
-
-    this->AddPage(_page_snapping, _("Snapping"), PREFS_PAGE_SNAPPING);
-}
-
-void InkscapePreferences::initPageSteps()
-{
-    this->AddPage(_page_steps, _("Steps"), PREFS_PAGE_STEPS);
-
-    _steps_arrow.init ( "/options/nudgedistance/value", 0.0, 1000.0, 0.01, 2.0, UNIT_TYPE_LINEAR, "px");
-    //nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
-    _page_steps.add_line( false, _("Arrow keys move by:"), _steps_arrow, "",
-                          _("Pressing an arrow key moves selected object(s) or node(s) by this distance"), false);
-    _steps_scale.init ( "/options/defaultscale/value", 0.0, 1000.0, 0.01, 2.0, UNIT_TYPE_LINEAR, "px");
-    //defaultscale is limited to 1000 in select-context.cpp: use the same limit here
-    _page_steps.add_line( false, _("> and < scale by:"), _steps_scale, "",
-                          _("Pressing > or < scales selection up or down by this increment"), false);
-    _steps_inset.init ( "/options/defaultoffsetwidth/value", 0.0, 3000.0, 0.01, 2.0, UNIT_TYPE_LINEAR, "px");
-    _page_steps.add_line( false, _("Inset/Outset by:"), _steps_inset, "",
-                          _("Inset and Outset commands displace the path by this distance"), false);
-    _steps_compass.init ( _("Compass-like display of angles"), "/options/compassangledisplay/value", true);
-    _page_steps.add_line( false, "", _steps_compass, "",
-                            _("When on, angles are displayed with 0 at north, 0 to 360 range, positive clockwise; otherwise with 0 at east, -180 to 180 range, positive counterclockwise"));
-    int const num_items = 17;
-    Glib::ustring labels[num_items] = {"90", "60", "45", "36", "30", "22.5", "18", "15", "12", "10", "7.5", "6", "3", "2", "1", "0.5", _("None")};
-    int values[num_items] = {2, 3, 4, 5, 6, 8, 10, 12, 15, 18, 24, 30, 60, 90, 180, 360, 0};
-    _steps_rot_snap.set_size_request(_sb_width);
-    _steps_rot_snap.init("/options/rotationsnapsperpi/value", labels, values, num_items, 12);
-    _page_steps.add_line( false, _("Rotation snaps every:"), _steps_rot_snap, _("degrees"),
-                           _("Rotating with Ctrl pressed snaps every that much degrees; also, pressing [ or ] rotates by this amount"), false);
-    _steps_rot_relative.init ( _("Relative snapping of guideline angles"), "/options/relativeguiderotationsnap/value", false);
-    _page_steps.add_line( false, "", _steps_rot_relative, "",
-                            _("When on, the snap angles when rotating a guideline will be relative to the original angle"));
-    _steps_zoom.init ( "/options/zoomincrement/value", 101.0, 500.0, 1.0, 1.0, 1.414213562, true, true);
-    _page_steps.add_line( false, _("Zoom in/out by:"), _steps_zoom, _("%"),
-                          _("Zoom tool click, +/- keys, and middle click zoom in and out by this multiplier"), false);
 }
 
 void InkscapePreferences::AddSelcueCheckbox(DialogPage &p, Glib::ustring const &prefs_path, bool def_value)
@@ -475,11 +359,6 @@ void InkscapePreferences::initPageTools()
     AddSelcueCheckbox(_page_tweak, "/tools/tweak", true);
     AddGradientCheckbox(_page_tweak, "/tools/tweak", false);
 
-    //Spray
-    this->AddPage(_page_spray, _("Spray"), iter_tools, PREFS_PAGE_TOOLS_SPRAY);
-    AddSelcueCheckbox(_page_spray, "/tools/spray", true);
-    AddGradientCheckbox(_page_spray, "/tools/spray", false);
-
     //Zoom
     this->AddPage(_page_zoom, _("Zoom"), iter_tools, PREFS_PAGE_TOOLS_ZOOM);
     AddSelcueCheckbox(_page_zoom, "/tools/zoom", true);
@@ -542,19 +421,6 @@ void InkscapePreferences::initPageTools()
                             _("If on, pen width is in absolute units (px) independent of zoom; otherwise pen width depends on zoom so that it looks the same at any zoom"));
     _page_calligraphy.add_line( false, "", _calligrapy_keep_selected, "",
                             _("If on, each newly created object will be selected (deselecting previous selection)"));
-    //Paint Bucket
-    this->AddPage(_page_paintbucket, _("Paint Bucket"), iter_tools, PREFS_PAGE_TOOLS_PAINTBUCKET);
-    this->AddSelcueCheckbox(_page_paintbucket, "/tools/paintbucket", false);
-    this->AddNewObjectsStyle(_page_paintbucket, "/tools/paintbucket");
-
-    //Eraser
-    this->AddPage(_page_eraser, _("Eraser"), iter_tools, PREFS_PAGE_TOOLS_ERASER);
-    this->AddNewObjectsStyle(_page_eraser, "/tools/eraser");
-
-    //LPETool
-    // commented out, because the LPETool is not finished yet.
-    //this->AddPage(_page_lpetool, _("LPE Tool"), iter_tools, PREFS_PAGE_TOOLS_LPETOOL);
-    //this->AddNewObjectsStyle(_page_lpetool, "/tools/lpetool");
 
     //Text
     this->AddPage(_page_text, _("Text"), iter_tools, PREFS_PAGE_TOOLS_TEXT);
@@ -567,604 +433,49 @@ void InkscapePreferences::initPageTools()
     }
     this->AddNewObjectsStyle(_page_text, "/tools/text");
 
+    //Spray
+    this->AddPage(_page_spray, _("Spray"), iter_tools, PREFS_PAGE_TOOLS_SPRAY);
+    AddSelcueCheckbox(_page_spray, "/tools/spray", true);
+    AddGradientCheckbox(_page_spray, "/tools/spray", false);
+
+    //Eraser
+    this->AddPage(_page_eraser, _("Eraser"), iter_tools, PREFS_PAGE_TOOLS_ERASER);
+    this->AddNewObjectsStyle(_page_eraser, "/tools/eraser");
+
+    //Paint Bucket
+    this->AddPage(_page_paintbucket, _("Paint Bucket"), iter_tools, PREFS_PAGE_TOOLS_PAINTBUCKET);
+    this->AddSelcueCheckbox(_page_paintbucket, "/tools/paintbucket", false);
+    this->AddNewObjectsStyle(_page_paintbucket, "/tools/paintbucket");
+
     //Gradient
     this->AddPage(_page_gradient, _("Gradient"), iter_tools, PREFS_PAGE_TOOLS_GRADIENT);
     this->AddSelcueCheckbox(_page_gradient, "/tools/gradient", true);
+    _misc_forkvectors.init( _("Prevent sharing of gradient definitions"), "/options/forkgradientvectors/value", true);
+    _page_gradient.add_line( false, "", _misc_forkvectors, "",
+                           _("When on, shared gradient definitions are automatically forked on change; uncheck to allow sharing of gradient definitions so that editing one object may affect other objects using the same gradient"), true);
 
+    //Dropper
+    this->AddPage(_page_dropper, _("Dropper"), iter_tools, PREFS_PAGE_TOOLS_DROPPER);
+    this->AddSelcueCheckbox(_page_dropper, "/tools/dropper", true);
+    this->AddGradientCheckbox(_page_dropper, "/tools/dropper", true);
+    
     //Connector
     this->AddPage(_page_connector, _("Connector"), iter_tools, PREFS_PAGE_TOOLS_CONNECTOR);
     this->AddSelcueCheckbox(_page_connector, "/tools/connector", true);
     _page_connector.add_line(false, "", _connector_ignore_text, "",
             _("If on, connector attachment points will not be shown for text objects"));
-    //Dropper
-    this->AddPage(_page_dropper, _("Dropper"), iter_tools, PREFS_PAGE_TOOLS_DROPPER);
-    this->AddSelcueCheckbox(_page_dropper, "/tools/dropper", true);
-    this->AddGradientCheckbox(_page_dropper, "/tools/dropper", true);
-}
 
-void InkscapePreferences::initPageWindows()
-{
-    _win_save_geom.init ( _("Save and restore window geometry for each document"), "/options/savewindowgeometry/value", 1, true, 0);
-    _win_save_geom_prefs.init ( _("Remember and use last window's geometry"), "/options/savewindowgeometry/value", 2, false, &_win_save_geom);
-    _win_save_geom_off.init ( _("Don't save window geometry"), "/options/savewindowgeometry/value", 0, false, &_win_save_geom);
-
-    _win_dockable.init ( _("Dockable"), "/options/dialogtype/value", 1, true, 0);
-    _win_floating.init ( _("Floating"), "/options/dialogtype/value", 0, false, &_win_dockable);
-
-    _win_hide_task.init ( _("Dialogs are hidden in taskbar"), "/options/dialogsskiptaskbar/value", true);
-    _win_zoom_resize.init ( _("Zoom when window is resized"), "/options/stickyzoom/value", false);
-    _win_show_close.init ( _("Show close button on dialogs"), "/dialogs/showclose", false);
-    _win_ontop_none.init ( _("None"), "/options/transientpolicy/value", 0, false, 0);
-    _win_ontop_normal.init ( _("Normal"), "/options/transientpolicy/value", 1, true, &_win_ontop_none);
-    _win_ontop_agressive.init ( _("Aggressive"), "/options/transientpolicy/value", 2, false, &_win_ontop_none);
-
-    _page_windows.add_group_header( _("Saving window geometry (size and position)"));
-    _page_windows.add_line( true, "", _win_save_geom_off, "",
-                            _("Let the window manager determine placement of all windows"));
-    _page_windows.add_line( true, "", _win_save_geom_prefs, "",
-                            _("Remember and use the last window's geometry (saves geometry to user preferences)"));
-    _page_windows.add_line( true, "", _win_save_geom, "",
-                            _("Save and restore window geometry for each document (saves geometry in the document)"));
-
-    _page_windows.add_group_header( _("Dialog behavior (requires restart)"));
-    _page_windows.add_line( true, "", _win_dockable, "",
-                            _("Dockable"));
-    _page_windows.add_line( true, "", _win_floating, "",
-                            _("Floating"));
-
-#ifndef WIN32 // non-Win32 special code to enable transient dialogs
-    _page_windows.add_group_header( _("Dialogs on top:"));
-
-    _page_windows.add_line( true, "", _win_ontop_none, "",
-                            _("Dialogs are treated as regular windows"));
-    _page_windows.add_line( true, "", _win_ontop_normal, "",
-                            _("Dialogs stay on top of document windows"));
-    _page_windows.add_line( true, "", _win_ontop_agressive, "",
-                            _("Same as Normal but may work better with some window managers"));
-#endif
-
-#if GTK_VERSION_GE(2, 12)
-    _page_windows.add_group_header( _("Dialog Transparency"));
-    _win_trans_focus.init("/dialogs/transparency/on-focus", 0.5, 1.0, 0.01, 0.1, 1.0, false, false);
-    _page_windows.add_line( true, _("Opacity when focused:"), _win_trans_focus, "", "");
-    _win_trans_blur.init("/dialogs/transparency/on-blur", 0.0, 1.0, 0.01, 0.1, 0.5, false, false);
-    _page_windows.add_line( true, _("Opacity when unfocused:"), _win_trans_blur, "", "");
-    _win_trans_time.init("/dialogs/transparency/animate-time", 0, 1000, 10, 100, 100, true, false);
-    _page_windows.add_line( true, _("Time of opacity change animation:"), _win_trans_time, "ms", "");
-#endif
-
-    _page_windows.add_group_header( _("Miscellaneous"));
-#ifndef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
-    _page_windows.add_line( false, "", _win_hide_task, "",
-                            _("Whether dialog windows are to be hidden in the window manager taskbar"));
-#endif
-    _page_windows.add_line( false, "", _win_zoom_resize, "",
-                            _("Zoom drawing when document window is resized, to keep the same area visible (this is the default which can be changed in any window using the button above the right scrollbar)"));
-    _page_windows.add_line( false, "", _win_show_close, "",
-                            _("Whether dialog windows have a close button (requires restart)"));
-    this->AddPage(_page_windows, _("Windows"), PREFS_PAGE_WINDOWS);
-}
-
-void InkscapePreferences::initPageClones()
-{
-    _clone_option_parallel.init ( _("Move in parallel"), "/options/clonecompensation/value",
-                                  SP_CLONE_COMPENSATION_PARALLEL, true, 0);
-    _clone_option_stay.init ( _("Stay unmoved"), "/options/clonecompensation/value",
-                                  SP_CLONE_COMPENSATION_UNMOVED, false, &_clone_option_parallel);
-    _clone_option_transform.init ( _("Move according to transform"), "/options/clonecompensation/value",
-                                  SP_CLONE_COMPENSATION_NONE, false, &_clone_option_parallel);
-    _clone_option_unlink.init ( _("Are unlinked"), "/options/cloneorphans/value",
-                                  SP_CLONE_ORPHANS_UNLINK, true, 0);
-    _clone_option_delete.init ( _("Are deleted"), "/options/cloneorphans/value",
-                                  SP_CLONE_ORPHANS_DELETE, false, &_clone_option_unlink);
-
-    _page_clones.add_group_header( _("Moving original: clones and linked offsets"));
-    _page_clones.add_line( true, "", _clone_option_parallel, "",
-                           _("Clones are translated by the same vector as their original"));
-    _page_clones.add_line( true, "", _clone_option_stay, "",
-                           _("Clones preserve their positions when their original is moved"));
-    _page_clones.add_line( true, "", _clone_option_transform, "",
-                           _("Each clone moves according to the value of its transform= attribute; for example, a rotated clone will move in a different direction than its original"));
-    _page_clones.add_group_header( _("Deleting original: clones"));
-    _page_clones.add_line( true, "", _clone_option_unlink, "",
-                           _("Orphaned clones are converted to regular objects"));
-    _page_clones.add_line( true, "", _clone_option_delete, "",
-                           _("Orphaned clones are deleted along with their original"));
-
-    _page_clones.add_group_header( _("Duplicating original+clones/linked offset"));
-
-    _clone_relink_on_duplicate.init ( _("Relink duplicated clones"), "/options/relinkclonesonduplicate/value", false);
-    _page_clones.add_line(true, "", _clone_relink_on_duplicate, "",
-                        _("When duplicating a selection containing both a clone and its original (possibly in groups), relink the duplicated clone to the duplicated original instead of the old original"));
-
-    //TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
-    this->AddPage(_page_clones, _("Clones"), PREFS_PAGE_CLONES);
-}
-
-void InkscapePreferences::initPageMasks()
-{
-    _mask_mask_on_top.init ( _("When applying, use the topmost selected object as clippath/mask"), "/options/maskobject/topmost", true);
-    _page_mask.add_line(true, "", _mask_mask_on_top, "",
-                        _("Uncheck this to use the bottom selected object as the clipping path or mask"));
-    _mask_mask_remove.init ( _("Remove clippath/mask object after applying"), "/options/maskobject/remove", true);
-    _page_mask.add_line(true, "", _mask_mask_remove, "",
-                        _("After applying, remove the object used as the clipping path or mask from the drawing"));
-    
-    _page_mask.add_group_header( _("Before applying"));
-    
-    _mask_grouping_none.init( _("Do not group clipped/masked objects"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_NONE, true, 0);
-    _mask_grouping_separate.init( _("Enclose every clipped/masked object in its own group"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_SEPARATE, false, &_mask_grouping_none);
-    _mask_grouping_all.init( _("Put all clipped/masked objects into one group"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_ALL, false, &_mask_grouping_none);
-    
-    _page_mask.add_line(true, "", _mask_grouping_none, "",
-                        _("Apply clippath/mask to every object"));
-    
-    _page_mask.add_line(true, "", _mask_grouping_separate, "",
-                        _("Apply clippath/mask to groups containing single object"));
-    
-    _page_mask.add_line(true, "", _mask_grouping_all, "",
-                        _("Apply clippath/mask to group containing all objects"));
-                        
-    _page_mask.add_group_header( _("After releasing"));
-    
-    _mask_ungrouping.init ( _("Ungroup automatically created groups"), "/options/maskobject/ungrouping", true);
-    _page_mask.add_line(true, "", _mask_ungrouping, "",
-                        _("Ungroup groups created when setting clip/mask"));
-    
-    this->AddPage(_page_mask, _("Clippaths and masks"), PREFS_PAGE_MASKS);
-}
-
-void InkscapePreferences::initPageTransforms()
-{
-    _trans_scale_stroke.init ( _("Scale stroke width"), "/options/transform/stroke", true);
-    _trans_scale_corner.init ( _("Scale rounded corners in rectangles"), "/options/transform/rectcorners", false);
-    _trans_gradient.init ( _("Transform gradients"), "/options/transform/gradient", true);
-    _trans_pattern.init ( _("Transform patterns"), "/options/transform/pattern", false);
-    _trans_optimized.init ( _("Optimized"), "/options/preservetransform/value", 0, true, 0);
-    _trans_preserved.init ( _("Preserved"), "/options/preservetransform/value", 1, false, &_trans_optimized);
-
-    _page_transforms.add_line( false, "", _trans_scale_stroke, "",
-                               _("When scaling objects, scale the stroke width by the same proportion"));
-    _page_transforms.add_line( false, "", _trans_scale_corner, "",
-                               _("When scaling rectangles, scale the radii of rounded corners"));
-    _page_transforms.add_line( false, "", _trans_gradient, "",
-                               _("Move gradients (in fill or stroke) along with the objects"));
-    _page_transforms.add_line( false, "", _trans_pattern, "",
-                               _("Move patterns (in fill or stroke) along with the objects"));
-    _page_transforms.add_group_header( _("Store transformation"));
-    _page_transforms.add_line( true, "", _trans_optimized, "",
-                               _("If possible, apply transformation to objects without adding a transform= attribute"));
-    _page_transforms.add_line( true, "", _trans_preserved, "",
-                               _("Always store transformation as a transform= attribute on objects"));
-
-    this->AddPage(_page_transforms, _("Transforms"), PREFS_PAGE_TRANSFORMS);
-}
-
-void InkscapePreferences::initPageRendering()
-{
-    /* show infobox */
-    _show_filters_info_box.init( _("Show filter primitives infobox"), "/options/showfiltersinfobox/value", true);
-    _page_rendering.add_line(true, "", _show_filters_info_box, "",
-                        _("Show icons and descriptions for the filter primitives available at the filter effects dialog"));
-
-    /* threaded blur */ //related comments/widgets/functions should be renamed and option should be moved elsewhere when inkscape is fully multi-threaded
-    _filter_multi_threaded.init("/options/threading/numthreads", 1.0, 8.0, 1.0, 2.0, 4.0, true, false);
-    _page_rendering.add_line( false, _("Number of Threads:"), _filter_multi_threaded, _("(requires restart)"),
-                           _("Configure number of processors/threads to use when rendering filters"), false);
-
-    // rendering cache
-    _rendering_cache_size.init("/options/renderingcache/size", 0.0, 4096.0, 1.0, 32.0, 64.0, true, false);
-    _page_rendering.add_line( false, _("Rendering cache size:"), _rendering_cache_size, C_("mebibyte (2^20 bytes) abbreviation","MiB"), _("Set the amount of memory per document which can be used to store rendered parts of the drawing for later reuse; set to zero to disable caching"), false);
-
-    /* blur quality */
-    _blur_quality_best.init ( _("Best quality (slowest)"), "/options/blurquality/value",
-                                  BLUR_QUALITY_BEST, false, 0);
-    _blur_quality_better.init ( _("Better quality (slower)"), "/options/blurquality/value",
-                                  BLUR_QUALITY_BETTER, false, &_blur_quality_best);
-    _blur_quality_normal.init ( _("Average quality"), "/options/blurquality/value",
-                                  BLUR_QUALITY_NORMAL, true, &_blur_quality_best);
-    _blur_quality_worse.init ( _("Lower quality (faster)"), "/options/blurquality/value",
-                                  BLUR_QUALITY_WORSE, false, &_blur_quality_best);
-    _blur_quality_worst.init ( _("Lowest quality (fastest)"), "/options/blurquality/value",
-                                  BLUR_QUALITY_WORST, false, &_blur_quality_best);
-
-    _page_rendering.add_group_header( _("Gaussian blur quality for display"));
-    _page_rendering.add_line( true, "", _blur_quality_best, "",
-                           _("Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"));
-    _page_rendering.add_line( true, "", _blur_quality_better, "",
-                           _("Better quality, but slower display"));
-    _page_rendering.add_line( true, "", _blur_quality_normal, "",
-                           _("Average quality, acceptable display speed"));
-    _page_rendering.add_line( true, "", _blur_quality_worse, "",
-                           _("Lower quality (some artifacts), but display is faster"));
-    _page_rendering.add_line( true, "", _blur_quality_worst, "",
-                           _("Lowest quality (considerable artifacts), but display is fastest"));
-
-    /* filter quality */
-    _filter_quality_best.init ( _("Best quality (slowest)"), "/options/filterquality/value",
-                                  Inkscape::Filters::FILTER_QUALITY_BEST, false, 0);
-    _filter_quality_better.init ( _("Better quality (slower)"), "/options/filterquality/value",
-                                  Inkscape::Filters::FILTER_QUALITY_BETTER, false, &_filter_quality_best);
-    _filter_quality_normal.init ( _("Average quality"), "/options/filterquality/value",
-                                  Inkscape::Filters::FILTER_QUALITY_NORMAL, true, &_filter_quality_best);
-    _filter_quality_worse.init ( _("Lower quality (faster)"), "/options/filterquality/value",
-                                  Inkscape::Filters::FILTER_QUALITY_WORSE, false, &_filter_quality_best);
-    _filter_quality_worst.init ( _("Lowest quality (fastest)"), "/options/filterquality/value",
-                                  Inkscape::Filters::FILTER_QUALITY_WORST, false, &_filter_quality_best);
-
-    _page_rendering.add_group_header( _("Filter effects quality for display"));
-    _page_rendering.add_line( true, "", _filter_quality_best, "",
-                           _("Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"));
-    _page_rendering.add_line( true, "", _filter_quality_better, "",
-                           _("Better quality, but slower display"));
-    _page_rendering.add_line( true, "", _filter_quality_normal, "",
-                           _("Average quality, acceptable display speed"));
-    _page_rendering.add_line( true, "", _filter_quality_worse, "",
-                           _("Lower quality (some artifacts), but display is faster"));
-    _page_rendering.add_line( true, "", _filter_quality_worst, "",
-                           _("Lowest quality (considerable artifacts), but display is fastest"));
-
-    this->AddPage(_page_rendering, _("Rendering"), PREFS_PAGE_RENDERING);
-}
-
-
-void InkscapePreferences::initPageSelecting()
-{
-    _sel_all.init ( _("Select in all layers"), "/options/kbselection/inlayer", PREFS_SELECTION_ALL, false, 0);
-    _sel_current.init ( _("Select only within current layer"), "/options/kbselection/inlayer", PREFS_SELECTION_LAYER, true, &_sel_all);
-    _sel_recursive.init ( _("Select in current layer and sublayers"), "/options/kbselection/inlayer", PREFS_SELECTION_LAYER_RECURSIVE, false, &_sel_all);
-    _sel_hidden.init ( _("Ignore hidden objects and layers"), "/options/kbselection/onlyvisible", true);
-    _sel_locked.init ( _("Ignore locked objects and layers"), "/options/kbselection/onlysensitive", true);
-    _sel_layer_deselects.init ( _("Deselect upon layer change"), "/options/selection/layerdeselect", true);
-
-    _page_select.add_group_header( _("Ctrl+A, Tab, Shift+Tab"));
-    _page_select.add_line( true, "", _sel_all, "",
-                           _("Make keyboard selection commands work on objects in all layers"));
-    _page_select.add_line( true, "", _sel_current, "",
-                           _("Make keyboard selection commands work on objects in current layer only"));
-    _page_select.add_line( true, "", _sel_recursive, "",
-                           _("Make keyboard selection commands work on objects in current layer and all its sublayers"));
-    _page_select.add_line( true, "", _sel_hidden, "",
-                           _("Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden layer)"));
-    _page_select.add_line( true, "", _sel_locked, "",
-                           _("Uncheck this to be able to select objects that are locked (either by themselves or by being in a locked layer)"));
-
-    _page_select.add_line( false, "", _sel_layer_deselects, "",
-                           _("Uncheck this to be able to keep the current objects selected when the current layer changes"));
-
-    this->AddPage(_page_select, _("Selecting"), PREFS_PAGE_SELECTING);
-}
-
-
-void InkscapePreferences::initPageImportExport()
-{
-    _importexport_export.init("/dialogs/export/defaultxdpi/value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
-    _page_importexport.add_line( false, _("Default export resolution:"), _importexport_export, _("dpi"),
-                            _("Default bitmap resolution (in dots per inch) in the Export dialog"), false);
-    _importexport_ocal_url.init("/options/ocalurl/str", true, g_strdup_printf("openclipart.org"));
-    _page_importexport.add_line( false, _("Open Clip Art Library Server Name:"), _importexport_ocal_url, "",
-        _("The server name of the Open Clip Art Library webdav server; it's used by the Import and Export to OCAL function"), true);
-    _importexport_ocal_username.init("/options/ocalusername/str", true);
-    _page_importexport.add_line( false, _("Open Clip Art Library Username:"), _importexport_ocal_username, "",
-            _("The username used to log into Open Clip Art Library"), true);
-    _importexport_ocal_password.init("/options/ocalpassword/str", false);
-    _page_importexport.add_line( false, _("Open Clip Art Library Password:"), _importexport_ocal_password, "",
-            _("The password used to log into Open Clip Art Library"), true);
-
-    this->AddPage(_page_importexport, _("Import/Export"), PREFS_PAGE_IMPORTEXPORT);
-}
-
-#if ENABLE_LCMS
-static void profileComboChanged( Gtk::ComboBoxText* combo )
-{
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int rowNum = combo->get_active_row_number();
-    if ( rowNum < 1 ) {
-        prefs->setString("/options/displayprofile/uri", "");
-    } else {
-        Glib::ustring active = combo->get_active_text();
-
-        Glib::ustring path = CMSSystem::getPathForProfile(active);
-        if ( !path.empty() ) {
-            prefs->setString("/options/displayprofile/uri", path);
-        }
-    }
-}
-
-static void proofComboChanged( Gtk::ComboBoxText* combo )
-{
-    Glib::ustring active = combo->get_active_text();
-    Glib::ustring path = CMSSystem::getPathForProfile(active);
-
-    if ( !path.empty() ) {
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setString("/options/softproof/uri", path);
-    }
-}
-
-static void gamutColorChanged( Gtk::ColorButton* btn ) {
-    Gdk::Color color = btn->get_color();
-    gushort r = color.get_red();
-    gushort g = color.get_green();
-    gushort b = color.get_blue();
-
-    gchar* tmp = g_strdup_printf("#%02x%02x%02x", (r >> 8), (g >> 8), (b >> 8) );
-
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setString("/options/softproof/gamutcolor", tmp);
-    g_free(tmp);
-}
-#endif // ENABLE_LCMS
-
-void InkscapePreferences::initPageCMS()
-{
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int const numIntents = 4;
-    /* TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm */
-    Glib::ustring intentLabels[numIntents] = {_("Perceptual"), _("Relative Colorimetric"), _("Saturation"), _("Absolute Colorimetric")};
-    int intentValues[numIntents] = {0, 1, 2, 3};
-
-#if !ENABLE_LCMS
-    Gtk::Label* lbl = new Gtk::Label(_("(Note: Color management has been disabled in this build)"));
-    _page_cms.add_line( false, "", *lbl, "", "", true);
-#endif // !ENABLE_LCMS
-
-    _page_cms.add_group_header( _("Display adjustment"));
-
-    Glib::ustring tmpStr;
-    std::vector<Glib::ustring> sources = ColorProfile::getBaseProfileDirs();
-    for ( std::vector<Glib::ustring>::const_iterator it = sources.begin(); it != sources.end(); ++it ) {
-        gchar* part = g_strdup_printf( "\n%s", it->c_str() );
-        tmpStr += part;
-        g_free(part);
-    }
-
-    gchar* profileTip = g_strdup_printf(_("The ICC profile to use to calibrate display output.\nSearched directories:%s"), tmpStr.c_str());
-    _page_cms.add_line( false, _("Display profile:"), _cms_display_profile, "",
-                        profileTip, false);
-    g_free(profileTip);
-    profileTip = 0;
-
-    _cms_from_display.init( _("Retrieve profile from display"), "/options/displayprofile/from_display", false);
-    _page_cms.add_line( false, "", _cms_from_display, "",
-#ifdef GDK_WINDOWING_X11
-                        _("Retrieve profiles from those attached to displays via XICC"), false);
-#else
-                        _("Retrieve profiles from those attached to displays"), false);
-#endif // GDK_WINDOWING_X11
-
-
-    _cms_intent.init("/options/displayprofile/intent", intentLabels, intentValues, numIntents, 0);
-    _page_cms.add_line( false, _("Display rendering intent:"), _cms_intent, "",
-                        _("The rendering intent to use to calibrate display output"), false);
-
-    _page_cms.add_group_header( _("Proofing"));
-
-    _cms_softproof.init( _("Simulate output on screen"), "/options/softproof/enable", false);
-    _page_cms.add_line( false, "", _cms_softproof, "",
-                        _("Simulates output of target device"), false);
-
-    _cms_gamutwarn.init( _("Mark out of gamut colors"), "/options/softproof/gamutwarn", false);
-    _page_cms.add_line( false, "", _cms_gamutwarn, "",
-                        _("Highlights colors that are out of gamut for the target device"), false);
-
-    Glib::ustring colorStr = prefs->getString("/options/softproof/gamutcolor");
-    Gdk::Color tmpColor( colorStr.empty() ? "#00ff00" : colorStr);
-    _cms_gamutcolor.set_color( tmpColor );
-    _page_cms.add_line( true, _("Out of gamut warning color:"), _cms_gamutcolor, "",
-                        _("Selects the color used for out of gamut warning"), false);
-
-    _page_cms.add_line( false, _("Device profile:"), _cms_proof_profile, "",
-                        _("The ICC profile to use to simulate device output"), false);
-
-    _cms_proof_intent.init("/options/softproof/intent", intentLabels, intentValues, numIntents, 0);
-    _page_cms.add_line( false, _("Device rendering intent:"), _cms_proof_intent, "",
-                        _("The rendering intent to use to calibrate device output"), false);
-
-    _cms_proof_blackpoint.init( _("Black point compensation"), "/options/softproof/bpc", false);
-    _page_cms.add_line( false, "", _cms_proof_blackpoint, "",
-                        _("Enables black point compensation"), false);
-
-    _cms_proof_preserveblack.init( _("Preserve black"), "/options/softproof/preserveblack", false);
-    _page_cms.add_line( false, "", _cms_proof_preserveblack,
-#if defined(cmsFLAGS_PRESERVEBLACK)
-                        "",
-#else
-                        _("(LittleCMS 1.15 or later required)"),
-#endif // defined(cmsFLAGS_PRESERVEBLACK)
-                        _("Preserve K channel in CMYK -> CMYK transforms"), false);
-
-#if !defined(cmsFLAGS_PRESERVEBLACK)
-    _cms_proof_preserveblack.set_sensitive( false );
-#endif // !defined(cmsFLAGS_PRESERVEBLACK)
-
-
-#if ENABLE_LCMS
-    {
-        std::vector<Glib::ustring> names = ::Inkscape::CMSSystem::getDisplayNames();
-        Glib::ustring current = prefs->getString( "/options/displayprofile/uri" );
-
-        gint index = 0;
-        _cms_display_profile.append_text(_("<none>"));
-        index++;
-        for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
-            _cms_display_profile.append_text( *it );
-            Glib::ustring path = CMSSystem::getPathForProfile(*it);
-            if ( !path.empty() && path == current ) {
-                _cms_display_profile.set_active(index);
-            }
-            index++;
-        }
-        if ( current.empty() ) {
-            _cms_display_profile.set_active(0);
-        }
-
-        names = ::Inkscape::CMSSystem::getSoftproofNames();
-        current = prefs->getString("/options/softproof/uri");
-        index = 0;
-        for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
-            _cms_proof_profile.append_text( *it );
-            Glib::ustring path = CMSSystem::getPathForProfile(*it);
-            if ( !path.empty() && path == current ) {
-                _cms_proof_profile.set_active(index);
-            }
-            index++;
-        }
-    }
-
-    _cms_gamutcolor.signal_color_set().connect( sigc::bind( sigc::ptr_fun(gamutColorChanged), &_cms_gamutcolor) );
-
-    _cms_display_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(profileComboChanged), &_cms_display_profile) );
-    _cms_proof_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(proofComboChanged), &_cms_proof_profile) );
-#else
-    // disable it, but leave it visible
-    _cms_intent.set_sensitive( false );
-    _cms_display_profile.set_sensitive( false );
-    _cms_from_display.set_sensitive( false );
-    _cms_softproof.set_sensitive( false );
-    _cms_gamutwarn.set_sensitive( false );
-    _cms_gamutcolor.set_sensitive( false );
-    _cms_proof_intent.set_sensitive( false );
-    _cms_proof_profile.set_sensitive( false );
-    _cms_proof_blackpoint.set_sensitive( false );
-    _cms_proof_preserveblack.set_sensitive( false );
-#endif // ENABLE_LCMS
-
-    this->AddPage(_page_cms, _("Color management"), PREFS_PAGE_CMS);
-}
-
-void InkscapePreferences::initPageGrids()
-{
-    _page_grids.add_group_header( _("Major grid line emphasizing"));
-
-    _grids_no_emphasize_on_zoom.init( _("Don't emphasize gridlines when zoomed out"), "/options/grids/no_emphasize_when_zoomedout", false);
-    _page_grids.add_line( false, "", _grids_no_emphasize_on_zoom, "", _("If set and zoomed out, the gridlines will be shown in normal color instead of major grid line color"), false);
-
-    _page_grids.add_group_header( _("Default grid settings"));
-
-    _page_grids.add_line( false, "", _grids_notebook, "", "", false);
-    _grids_notebook.append_page(_grids_xy,     CanvasGrid::getName( GRID_RECTANGULAR ));
-    _grids_notebook.append_page(_grids_axonom, CanvasGrid::getName( GRID_AXONOMETRIC ));
-        _grids_xy_units.init("/options/grids/xy/units");
-        _grids_xy.add_line( false, _("Grid units:"), _grids_xy_units, "", "", false);
-        _grids_xy_origin_x.init("/options/grids/xy/origin_x", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
-        _grids_xy_origin_y.init("/options/grids/xy/origin_y", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
-        _grids_xy_origin_x.set_digits(5);
-        _grids_xy_origin_y.set_digits(5);
-        _grids_xy.add_line( false, _("Origin X:"), _grids_xy_origin_x, "", _("X coordinate of grid origin"), false);
-        _grids_xy.add_line( false, _("Origin Y:"), _grids_xy_origin_y, "", _("Y coordinate of grid origin"), false);
-        _grids_xy_spacing_x.init("/options/grids/xy/spacing_x", -10000.0, 10000.0, 0.1, 1.0, 1.0, false, false);
-        _grids_xy_spacing_y.init("/options/grids/xy/spacing_y", -10000.0, 10000.0, 0.1, 1.0, 1.0, false, false);
-        _grids_xy_spacing_x.set_digits(5);
-        _grids_xy_spacing_y.set_digits(5);
-        _grids_xy.add_line( false, _("Spacing X:"), _grids_xy_spacing_x, "", _("Distance between vertical grid lines"), false);
-        _grids_xy.add_line( false, _("Spacing Y:"), _grids_xy_spacing_y, "", _("Distance between horizontal grid lines"), false);
-
-        _grids_xy_color.init(_("Grid line color:"), "/options/grids/xy/color", 0x0000ff20);
-        _grids_xy.add_line( false, _("Grid line color:"), _grids_xy_color, "", _("Color used for normal grid lines"), false);
-        _grids_xy_empcolor.init(_("Major grid line color:"), "/options/grids/xy/empcolor", 0x0000ff40);
-        _grids_xy.add_line( false, _("Major grid line color:"), _grids_xy_empcolor, "", _("Color used for major (highlighted) grid lines"), false);
-        _grids_xy_empspacing.init("/options/grids/xy/empspacing", 1.0, 1000.0, 1.0, 5.0, 5.0, true, false);
-        _grids_xy.add_line( false, _("Major grid line every:"), _grids_xy_empspacing, "", "", false);
-        _grids_xy_dotted.init( _("Show dots instead of lines"), "/options/grids/xy/dotted", false);
-        _grids_xy.add_line( false, "", _grids_xy_dotted, "", _("If set, display dots at gridpoints instead of gridlines"), false);
-
-    // CanvasAxonomGrid properties:
-        _grids_axonom_units.init("/options/grids/axonom/units");
-        _grids_axonom.add_line( false, _("Grid units:"), _grids_axonom_units, "", "", false);
-        _grids_axonom_origin_x.init("/options/grids/axonom/origin_x", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
-        _grids_axonom_origin_y.init("/options/grids/axonom/origin_y", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
-        _grids_axonom_origin_x.set_digits(5);
-        _grids_axonom_origin_y.set_digits(5);
-        _grids_axonom.add_line( false, _("Origin X:"), _grids_axonom_origin_x, "", _("X coordinate of grid origin"), false);
-        _grids_axonom.add_line( false, _("Origin Y:"), _grids_axonom_origin_y, "", _("Y coordinate of grid origin"), false);
-        _grids_axonom_spacing_y.init("/options/grids/axonom/spacing_y", -10000.0, 10000.0, 0.1, 1.0, 1.0, false, false);
-        _grids_axonom_spacing_y.set_digits(5);
-        _grids_axonom.add_line( false, _("Spacing Y:"), _grids_axonom_spacing_y, "", _("Base length of z-axis"), false);
-        _grids_axonom_angle_x.init("/options/grids/axonom/angle_x", -360.0, 360.0, 1.0, 10.0, 30.0, false, false);
-        _grids_axonom_angle_z.init("/options/grids/axonom/angle_z", -360.0, 360.0, 1.0, 10.0, 30.0, false, false);
-        _grids_axonom.add_line( false, _("Angle X:"), _grids_axonom_angle_x, "", _("Angle of x-axis"), false);
-        _grids_axonom.add_line( false, _("Angle Z:"), _grids_axonom_angle_z, "", _("Angle of z-axis"), false);
-        _grids_axonom_color.init(_("Grid line color:"), "/options/grids/axonom/color", 0x0000ff20);
-        _grids_axonom.add_line( false, _("Grid line color:"), _grids_axonom_color, "", _("Color used for normal grid lines"), false);
-        _grids_axonom_empcolor.init(_("Major grid line color:"), "/options/grids/axonom/empcolor", 0x0000ff40);
-        _grids_axonom.add_line( false, _("Major grid line color:"), _grids_axonom_empcolor, "", _("Color used for major (highlighted) grid lines"), false);
-        _grids_axonom_empspacing.init("/options/grids/axonom/empspacing", 1.0, 1000.0, 1.0, 5.0, 5.0, true, false);
-        _grids_axonom.add_line( false, _("Major grid line every:"), _grids_axonom_empspacing, "", "", false);
-
-    this->AddPage(_page_grids, _("Grids"), PREFS_PAGE_GRIDS);
-}
-
-void InkscapePreferences::initPageSVGOutput()
-{
-    _svgoutput_usenamedcolors.init( _("Use named colors"), "/options/svgoutput/usenamedcolors", false);
-    _page_svgoutput.add_line( false, "", _svgoutput_usenamedcolors, "", _("If set, write the CSS name of the color when available (e.g. 'red' or 'magenta') instead of the numeric value"), false);
-
-    _page_svgoutput.add_group_header( _("XML formatting"));
-
-    _svgoutput_inlineattrs.init( _("Inline attributes"), "/options/svgoutput/inlineattrs", false);
-    _page_svgoutput.add_line( false, "", _svgoutput_inlineattrs, "", _("Put attributes on the same line as the element tag"), false);
-
-    _svgoutput_indent.init("/options/svgoutput/indent", 0.0, 1000.0, 1.0, 2.0, 2.0, true, false);
-    _page_svgoutput.add_line( false, _("Indent, spaces:"), _svgoutput_indent, "", _("The number of spaces to use for indenting nested elements; set to 0 for no indentation"), false);
-
-    _page_svgoutput.add_group_header( _("Path data"));
-
-    _svgoutput_allowrelativecoordinates.init( _("Allow relative coordinates"), "/options/svgoutput/allowrelativecoordinates", true);
-    _page_svgoutput.add_line( false, "", _svgoutput_allowrelativecoordinates, "", _("If set, relative coordinates may be used in path data"), false);
-
-    _svgoutput_forcerepeatcommands.init( _("Force repeat commands"), "/options/svgoutput/forcerepeatcommands", false);
-    _page_svgoutput.add_line( false, "", _svgoutput_forcerepeatcommands, "", _("Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead of 'L 1,2 3,4')"), false);
-
-    _page_svgoutput.add_group_header( _("Numbers"));
-
-    _svgoutput_numericprecision.init("/options/svgoutput/numericprecision", 1.0, 16.0, 1.0, 2.0, 8.0, true, false);
-    _page_svgoutput.add_line( false, _("Numeric precision:"), _svgoutput_numericprecision, "", _("Significant figures of the values written to the SVG file"), false);
-
-    _svgoutput_minimumexponent.init("/options/svgoutput/minimumexponent", -32.0, -1, 1.0, 2.0, -8.0, true, false);
-    _page_svgoutput.add_line( false, _("Minimum exponent:"), _svgoutput_minimumexponent, "", _("The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero"), false);
-
-    /* Code to add controls for attribute checking options */
-
-    /* Add incorrect style properties options  */
-    _page_svgoutput.add_group_header( _("Improper Attributes Actions"));
-
-    _svgoutput_attrwarn.init( _("Print warnings"), "/options/svgoutput/incorrect_attributes_warn", true);
-    _page_svgoutput.add_line( false, "", _svgoutput_attrwarn, "", _("Print warning if invalid or non-useful attributes found. Database files located in inkscape_data_dir/attributes."), false);
-    _svgoutput_attrremove.init( _("Remove attributes"), "/options/svgoutput/incorrect_attributes_remove", false);
-    _page_svgoutput.add_line( false, "", _svgoutput_attrremove, "", _("Delete invalid or non-useful attributes from element tag."), false);
-
-    /* Add incorrect style properties options  */
-    _page_svgoutput.add_group_header( _("Inappropriate Style Properties Actions"));
-
-    _svgoutput_stylepropwarn.init( _("Print warnings"), "/options/svgoutput/incorrect_style_properties_warn", true);
-    _page_svgoutput.add_line( false, "", _svgoutput_stylepropwarn, "", _("Print warning if inappropriate style properties found (i.e. 'font-family' set on a <rect>). Database files located in inkscape_data_dir/attributes."), false);
-    _svgoutput_stylepropremove.init( _("Remove style properties"), "/options/svgoutput/incorrect_style_properties_remove", false);
-    _page_svgoutput.add_line( false, "", _svgoutput_stylepropremove, "", _("Delete inappropriate style properties."), false);
-
-    /* Add default or inherited style properties options  */
-    _page_svgoutput.add_group_header( _("Non-useful Style Properties Actions"));
-
-    _svgoutput_styledefaultswarn.init( _("Print warnings"), "/options/svgoutput/style_defaults_warn", true);
-    _page_svgoutput.add_line( false, "", _svgoutput_styledefaultswarn, "", _("Print warning if redundant style properties found (i.e. if a property has the default value and a different value is not inherited or if value is the same as would be inherited). Database files located in inkscape_data_dir/attributes."), false);
-    _svgoutput_styledefaultsremove.init( _("Remove style properties"), "/options/svgoutput/style_defaults_remove", false);
-    _page_svgoutput.add_line( false, "", _svgoutput_styledefaultsremove, "", _("Delete redundant style properties."), false);
-
-    _page_svgoutput.add_group_header( _("Check Attributes and Style Properties on:"));
-
-    _svgoutput_check_reading.init( _("Reading"), "/options/svgoutput/check_on_reading", false);
-    _page_svgoutput.add_line( false, "", _svgoutput_check_reading, "", _("Check attributes and style properties on reading in SVG files (including those internal to Inkscape which will slow down startup)."), false);
-    _svgoutput_check_editing.init( _("Editing"), "/options/svgoutput/check_on_editing", false);
-    _page_svgoutput.add_line( false, "", _svgoutput_check_editing, "", _("Check attributes and style properties while editing SVG files (may slow down Inkscape, mostly useful for debugging)."), false);
-    _svgoutput_check_writing.init( _("Writing"), "/options/svgoutput/check_on_writing", true);
-    _page_svgoutput.add_line( false, "", _svgoutput_check_writing, "", _("Check attributes and style properties on writing out SVG files."), false);
-
-
-    this->AddPage(_page_svgoutput, _("SVG output"), PREFS_PAGE_SVGOUTPUT);
+    //LPETool
+    // commented out, because the LPETool is not finished yet.
+    //this->AddPage(_page_lpetool, _("LPE Tool"), iter_tools, PREFS_PAGE_TOOLS_LPETOOL);
+    //this->AddNewObjectsStyle(_page_lpetool, "/tools/lpetool");
 }
 
 void InkscapePreferences::initPageUI()
 {
+    Gtk::TreeModel::iterator iter_ui = this->AddPage(_page_ui, _("Interface"), PREFS_PAGE_UI);
+    _path_ui = _page_list.get_model()->get_path(iter_ui);
+
     Glib::ustring languages[] = {_("System default"), _("Albanian (sq)"), _("Amharic (am)"), _("Arabic (ar)"), _("Armenian (hy)"),_("Azerbaijani (az)"), _("Basque (eu)"), _("Belarusian (be)"),
         _("Bulgarian (bg)"), _("Bengali (bn)"), _("Breton (br)"), _("Catalan (ca)"), _("Valencian Catalan (ca@valencia)"), _("Chinese/China (zh_CN)"),
                                  _("Chinese/Taiwan (zh_TW)"), _("Croatian (hr)"), _("Czech (cs)"),
@@ -1252,27 +563,414 @@ void InkscapePreferences::initPageUI()
     _page_ui.add_line( false, "", _ui_partialdynamic, "",
                        _("When on, will allow dynamic layout of components that are not completely finished being refactored"), true);
 
+    /* show infobox */
+    _show_filters_info_box.init( _("Show filter primitives infobox"), "/options/showfiltersinfobox/value", true);
+    _page_ui.add_line(false, "", _show_filters_info_box, "",
+                        _("Show icons and descriptions for the filter primitives available at the filter effects dialog"));
 
-    this->AddPage(_page_ui, _("Interface"), PREFS_PAGE_UI);
+    // Windows
+    _win_save_geom.init ( _("Save and restore window geometry for each document"), "/options/savewindowgeometry/value", 1, true, 0);
+    _win_save_geom_prefs.init ( _("Remember and use last window's geometry"), "/options/savewindowgeometry/value", 2, false, &_win_save_geom);
+    _win_save_geom_off.init ( _("Don't save window geometry"), "/options/savewindowgeometry/value", 0, false, &_win_save_geom);
+
+    _win_dockable.init ( _("Dockable"), "/options/dialogtype/value", 1, true, 0);
+    _win_floating.init ( _("Floating"), "/options/dialogtype/value", 0, false, &_win_dockable);
+
+    _win_hide_task.init ( _("Dialogs are hidden in taskbar"), "/options/dialogsskiptaskbar/value", true);
+    _win_zoom_resize.init ( _("Zoom when window is resized"), "/options/stickyzoom/value", false);
+    _win_show_close.init ( _("Show close button on dialogs"), "/dialogs/showclose", false);
+    _win_ontop_none.init ( _("None"), "/options/transientpolicy/value", 0, false, 0);
+    _win_ontop_normal.init ( _("Normal"), "/options/transientpolicy/value", 1, true, &_win_ontop_none);
+    _win_ontop_agressive.init ( _("Aggressive"), "/options/transientpolicy/value", 2, false, &_win_ontop_none);
+
+    _page_windows.add_group_header( _("Saving window geometry (size and position)"));
+    _page_windows.add_line( true, "", _win_save_geom_off, "",
+                            _("Let the window manager determine placement of all windows"));
+    _page_windows.add_line( true, "", _win_save_geom_prefs, "",
+                            _("Remember and use the last window's geometry (saves geometry to user preferences)"));
+    _page_windows.add_line( true, "", _win_save_geom, "",
+                            _("Save and restore window geometry for each document (saves geometry in the document)"));
+
+    _page_windows.add_group_header( _("Dialog behavior (requires restart)"));
+    _page_windows.add_line( true, "", _win_dockable, "",
+                            _("Dockable"));
+    _page_windows.add_line( true, "", _win_floating, "",
+                            _("Floating"));
+
+#ifndef WIN32 // non-Win32 special code to enable transient dialogs
+    _page_windows.add_group_header( _("Dialogs on top:"));
+
+    _page_windows.add_line( true, "", _win_ontop_none, "",
+                            _("Dialogs are treated as regular windows"));
+    _page_windows.add_line( true, "", _win_ontop_normal, "",
+                            _("Dialogs stay on top of document windows"));
+    _page_windows.add_line( true, "", _win_ontop_agressive, "",
+                            _("Same as Normal but may work better with some window managers"));
+#endif
+
+#if GTK_VERSION_GE(2, 12)
+    _page_windows.add_group_header( _("Dialog Transparency"));
+    _win_trans_focus.init("/dialogs/transparency/on-focus", 0.5, 1.0, 0.01, 0.1, 1.0, false, false);
+    _page_windows.add_line( true, _("Opacity when focused:"), _win_trans_focus, "", "");
+    _win_trans_blur.init("/dialogs/transparency/on-blur", 0.0, 1.0, 0.01, 0.1, 0.5, false, false);
+    _page_windows.add_line( true, _("Opacity when unfocused:"), _win_trans_blur, "", "");
+    _win_trans_time.init("/dialogs/transparency/animate-time", 0, 1000, 10, 100, 100, true, false);
+    _page_windows.add_line( true, _("Time of opacity change animation:"), _win_trans_time, "ms", "");
+#endif
+
+    _page_windows.add_group_header( _("Miscellaneous"));
+#ifndef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
+    _page_windows.add_line( true, "", _win_hide_task, "",
+                            _("Whether dialog windows are to be hidden in the window manager taskbar"));
+#endif
+    _page_windows.add_line( true, "", _win_zoom_resize, "",
+                            _("Zoom drawing when document window is resized, to keep the same area visible (this is the default which can be changed in any window using the button above the right scrollbar)"));
+    _page_windows.add_line( true, "", _win_show_close, "",
+                            _("Whether dialog windows have a close button (requires restart)"));
+    this->AddPage(_page_windows, _("Windows"), iter_ui, PREFS_PAGE_UI_WINDOWS);
+
+    // Grids
+    _page_grids.add_group_header( _("Major grid line emphasizing"));
+
+    _grids_no_emphasize_on_zoom.init( _("Don't emphasize gridlines when zoomed out"), "/options/grids/no_emphasize_when_zoomedout", false);
+    _page_grids.add_line( true, "", _grids_no_emphasize_on_zoom, "", _("If set and zoomed out, the gridlines will be shown in normal color instead of major grid line color"), false);
+
+    _page_grids.add_group_header( _("Default grid settings"));
+
+    _page_grids.add_line( true, "", _grids_notebook, "", "", false);
+    _grids_notebook.append_page(_grids_xy,     CanvasGrid::getName( GRID_RECTANGULAR ));
+    _grids_notebook.append_page(_grids_axonom, CanvasGrid::getName( GRID_AXONOMETRIC ));
+        _grids_xy_units.init("/options/grids/xy/units");
+        _grids_xy.add_line( false, _("Grid units:"), _grids_xy_units, "", "", false);
+        _grids_xy_origin_x.init("/options/grids/xy/origin_x", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
+        _grids_xy_origin_y.init("/options/grids/xy/origin_y", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
+        _grids_xy_origin_x.set_digits(5);
+        _grids_xy_origin_y.set_digits(5);
+        _grids_xy.add_line( false, _("Origin X:"), _grids_xy_origin_x, "", _("X coordinate of grid origin"), false);
+        _grids_xy.add_line( false, _("Origin Y:"), _grids_xy_origin_y, "", _("Y coordinate of grid origin"), false);
+        _grids_xy_spacing_x.init("/options/grids/xy/spacing_x", -10000.0, 10000.0, 0.1, 1.0, 1.0, false, false);
+        _grids_xy_spacing_y.init("/options/grids/xy/spacing_y", -10000.0, 10000.0, 0.1, 1.0, 1.0, false, false);
+        _grids_xy_spacing_x.set_digits(5);
+        _grids_xy_spacing_y.set_digits(5);
+        _grids_xy.add_line( false, _("Spacing X:"), _grids_xy_spacing_x, "", _("Distance between vertical grid lines"), false);
+        _grids_xy.add_line( false, _("Spacing Y:"), _grids_xy_spacing_y, "", _("Distance between horizontal grid lines"), false);
+
+        _grids_xy_color.init(_("Grid line color:"), "/options/grids/xy/color", 0x0000ff20);
+        _grids_xy.add_line( false, _("Grid line color:"), _grids_xy_color, "", _("Color used for normal grid lines"), false);
+        _grids_xy_empcolor.init(_("Major grid line color:"), "/options/grids/xy/empcolor", 0x0000ff40);
+        _grids_xy.add_line( false, _("Major grid line color:"), _grids_xy_empcolor, "", _("Color used for major (highlighted) grid lines"), false);
+        _grids_xy_empspacing.init("/options/grids/xy/empspacing", 1.0, 1000.0, 1.0, 5.0, 5.0, true, false);
+        _grids_xy.add_line( false, _("Major grid line every:"), _grids_xy_empspacing, "", "", false);
+        _grids_xy_dotted.init( _("Show dots instead of lines"), "/options/grids/xy/dotted", false);
+        _grids_xy.add_line( false, "", _grids_xy_dotted, "", _("If set, display dots at gridpoints instead of gridlines"), false);
+
+    // CanvasAxonomGrid properties:
+        _grids_axonom_units.init("/options/grids/axonom/units");
+        _grids_axonom.add_line( false, _("Grid units:"), _grids_axonom_units, "", "", false);
+        _grids_axonom_origin_x.init("/options/grids/axonom/origin_x", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
+        _grids_axonom_origin_y.init("/options/grids/axonom/origin_y", -10000.0, 10000.0, 0.1, 1.0, 0.0, false, false);
+        _grids_axonom_origin_x.set_digits(5);
+        _grids_axonom_origin_y.set_digits(5);
+        _grids_axonom.add_line( false, _("Origin X:"), _grids_axonom_origin_x, "", _("X coordinate of grid origin"), false);
+        _grids_axonom.add_line( false, _("Origin Y:"), _grids_axonom_origin_y, "", _("Y coordinate of grid origin"), false);
+        _grids_axonom_spacing_y.init("/options/grids/axonom/spacing_y", -10000.0, 10000.0, 0.1, 1.0, 1.0, false, false);
+        _grids_axonom_spacing_y.set_digits(5);
+        _grids_axonom.add_line( false, _("Spacing Y:"), _grids_axonom_spacing_y, "", _("Base length of z-axis"), false);
+        _grids_axonom_angle_x.init("/options/grids/axonom/angle_x", -360.0, 360.0, 1.0, 10.0, 30.0, false, false);
+        _grids_axonom_angle_z.init("/options/grids/axonom/angle_z", -360.0, 360.0, 1.0, 10.0, 30.0, false, false);
+        _grids_axonom.add_line( false, _("Angle X:"), _grids_axonom_angle_x, "", _("Angle of x-axis"), false);
+        _grids_axonom.add_line( false, _("Angle Z:"), _grids_axonom_angle_z, "", _("Angle of z-axis"), false);
+        _grids_axonom_color.init(_("Grid line color:"), "/options/grids/axonom/color", 0x0000ff20);
+        _grids_axonom.add_line( false, _("Grid line color:"), _grids_axonom_color, "", _("Color used for normal grid lines"), false);
+        _grids_axonom_empcolor.init(_("Major grid line color:"), "/options/grids/axonom/empcolor", 0x0000ff40);
+        _grids_axonom.add_line( false, _("Major grid line color:"), _grids_axonom_empcolor, "", _("Color used for major (highlighted) grid lines"), false);
+        _grids_axonom_empspacing.init("/options/grids/axonom/empspacing", 1.0, 1000.0, 1.0, 5.0, 5.0, true, false);
+        _grids_axonom.add_line( false, _("Major grid line every:"), _grids_axonom_empspacing, "", "", false);
+
+    this->AddPage(_page_grids, _("Grids"), iter_ui, PREFS_PAGE_UI_GRIDS);
 }
 
-
-void InkscapePreferences::initPageSave()
+#if ENABLE_LCMS
+static void profileComboChanged( Gtk::ComboBoxText* combo )
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int rowNum = combo->get_active_row_number();
+    if ( rowNum < 1 ) {
+        prefs->setString("/options/displayprofile/uri", "");
+    } else {
+        Glib::ustring active = combo->get_active_text();
+
+        Glib::ustring path = CMSSystem::getPathForProfile(active);
+        if ( !path.empty() ) {
+            prefs->setString("/options/displayprofile/uri", path);
+        }
+    }
+}
+
+static void proofComboChanged( Gtk::ComboBoxText* combo )
+{
+    Glib::ustring active = combo->get_active_text();
+    Glib::ustring path = CMSSystem::getPathForProfile(active);
+
+    if ( !path.empty() ) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        prefs->setString("/options/softproof/uri", path);
+    }
+}
+
+static void gamutColorChanged( Gtk::ColorButton* btn ) {
+    Gdk::Color color = btn->get_color();
+    gushort r = color.get_red();
+    gushort g = color.get_green();
+    gushort b = color.get_blue();
+
+    gchar* tmp = g_strdup_printf("#%02x%02x%02x", (r >> 8), (g >> 8), (b >> 8) );
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setString("/options/softproof/gamutcolor", tmp);
+    g_free(tmp);
+}
+#endif // ENABLE_LCMS
+
+void InkscapePreferences::initPageIO()
+{
+    Gtk::TreeModel::iterator iter_io = this->AddPage(_page_io, _("Input-output"), PREFS_PAGE_IO);
+    _path_io = _page_list.get_model()->get_path(iter_io);
+
     _save_use_current_dir.init( _("Use current directory for \"Save As ...\""), "/dialogs/save_as/use_current_dir", true);
-    _page_save.add_line( false, "", _save_use_current_dir, "",
+    _page_io.add_line( false, "", _save_use_current_dir, "",
                          _("When this option is on, the \"Save as...\" and \"Save a Copy\" dialogs will always open in the directory where the currently open document is; when it's off, each will open in the directory where you last saved a file using it"), true);
 
+    _misc_comment.init( _("Add label comments to printing output"), "/printing/debug/show-label-comments", false);
+    _page_io.add_line( false, "", _misc_comment, "",
+                           _("When on, a comment will be added to the raw print output, marking the rendered output for an object with its label"), true);
+
+    // Input devices options
+    _mouse_sens.init ( "/options/cursortolerance/value", 0.0, 30.0, 1.0, 1.0, 8.0, true, false);
+    _page_mouse.add_line( false, _("Grab sensitivity:"), _mouse_sens, _("pixels"),
+                           _("How close on the screen you need to be to an object to be able to grab it with mouse (in screen pixels)"), false);
+    _mouse_thres.init ( "/options/dragtolerance/value", 0.0, 20.0, 1.0, 1.0, 4.0, true, false);
+    _page_mouse.add_line( false, _("Click/drag threshold:"), _mouse_thres, _("pixels"),
+                           _("Maximum mouse drag (in screen pixels) which is considered a click, not a drag"), false);
+
+    _mouse_use_ext_input.init( _("Use pressure-sensitive tablet (requires restart)"), "/options/useextinput/value", true);
+    _page_mouse.add_line(false, "",_mouse_use_ext_input, "",
+                        _("Use the capabilities of a tablet or other pressure-sensitive device. Disable this only if you have problems with the tablet (you can still use it as a mouse)"));
+
+    _mouse_switch_on_ext_input.init( _("Switch tool based on tablet device (requires restart)"), "/options/switchonextinput/value", false);
+    _page_mouse.add_line(false, "",_mouse_switch_on_ext_input, "",
+                        _("Change tool as different devices are used on the tablet (pen, eraser, mouse)"));
+    this->AddPage(_page_mouse, _("Input devices"), iter_io, PREFS_PAGE_IO_MOUSE);
+
+    // SVG output options
+    _svgoutput_usenamedcolors.init( _("Use named colors"), "/options/svgoutput/usenamedcolors", false);
+    _page_svgoutput.add_line( false, "", _svgoutput_usenamedcolors, "", _("If set, write the CSS name of the color when available (e.g. 'red' or 'magenta') instead of the numeric value"), false);
+
+    _page_svgoutput.add_group_header( _("XML formatting"));
+
+    _svgoutput_inlineattrs.init( _("Inline attributes"), "/options/svgoutput/inlineattrs", false);
+    _page_svgoutput.add_line( true, "", _svgoutput_inlineattrs, "", _("Put attributes on the same line as the element tag"), false);
+
+    _svgoutput_indent.init("/options/svgoutput/indent", 0.0, 1000.0, 1.0, 2.0, 2.0, true, false);
+    _page_svgoutput.add_line( true, _("Indent, spaces:"), _svgoutput_indent, "", _("The number of spaces to use for indenting nested elements; set to 0 for no indentation"), false);
+
+    _page_svgoutput.add_group_header( _("Path data"));
+
+    _svgoutput_allowrelativecoordinates.init( _("Allow relative coordinates"), "/options/svgoutput/allowrelativecoordinates", true);
+    _page_svgoutput.add_line( true, "", _svgoutput_allowrelativecoordinates, "", _("If set, relative coordinates may be used in path data"), false);
+
+    _svgoutput_forcerepeatcommands.init( _("Force repeat commands"), "/options/svgoutput/forcerepeatcommands", false);
+    _page_svgoutput.add_line( true, "", _svgoutput_forcerepeatcommands, "", _("Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead of 'L 1,2 3,4')"), false);
+
+    _page_svgoutput.add_group_header( _("Numbers"));
+
+    _svgoutput_numericprecision.init("/options/svgoutput/numericprecision", 1.0, 16.0, 1.0, 2.0, 8.0, true, false);
+    _page_svgoutput.add_line( true, _("Numeric precision:"), _svgoutput_numericprecision, "", _("Significant figures of the values written to the SVG file"), false);
+
+    _svgoutput_minimumexponent.init("/options/svgoutput/minimumexponent", -32.0, -1, 1.0, 2.0, -8.0, true, false);
+    _page_svgoutput.add_line( true, _("Minimum exponent:"), _svgoutput_minimumexponent, "", _("The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero"), false);
+
+    /* Code to add controls for attribute checking options */
+
+    /* Add incorrect style properties options  */
+    _page_svgoutput.add_group_header( _("Improper Attributes Actions"));
+
+    _svgoutput_attrwarn.init( _("Print warnings"), "/options/svgoutput/incorrect_attributes_warn", true);
+    _page_svgoutput.add_line( true, "", _svgoutput_attrwarn, "", _("Print warning if invalid or non-useful attributes found. Database files located in inkscape_data_dir/attributes."), false);
+    _svgoutput_attrremove.init( _("Remove attributes"), "/options/svgoutput/incorrect_attributes_remove", false);
+    _page_svgoutput.add_line( true, "", _svgoutput_attrremove, "", _("Delete invalid or non-useful attributes from element tag."), false);
+
+    /* Add incorrect style properties options  */
+    _page_svgoutput.add_group_header( _("Inappropriate Style Properties Actions"));
+
+    _svgoutput_stylepropwarn.init( _("Print warnings"), "/options/svgoutput/incorrect_style_properties_warn", true);
+    _page_svgoutput.add_line( true, "", _svgoutput_stylepropwarn, "", _("Print warning if inappropriate style properties found (i.e. 'font-family' set on a <rect>). Database files located in inkscape_data_dir/attributes."), false);
+    _svgoutput_stylepropremove.init( _("Remove style properties"), "/options/svgoutput/incorrect_style_properties_remove", false);
+    _page_svgoutput.add_line( true, "", _svgoutput_stylepropremove, "", _("Delete inappropriate style properties."), false);
+
+    /* Add default or inherited style properties options  */
+    _page_svgoutput.add_group_header( _("Non-useful Style Properties Actions"));
+
+    _svgoutput_styledefaultswarn.init( _("Print warnings"), "/options/svgoutput/style_defaults_warn", true);
+    _page_svgoutput.add_line( true, "", _svgoutput_styledefaultswarn, "", _("Print warning if redundant style properties found (i.e. if a property has the default value and a different value is not inherited or if value is the same as would be inherited). Database files located in inkscape_data_dir/attributes."), false);
+    _svgoutput_styledefaultsremove.init( _("Remove style properties"), "/options/svgoutput/style_defaults_remove", false);
+    _page_svgoutput.add_line( true, "", _svgoutput_styledefaultsremove, "", _("Delete redundant style properties."), false);
+
+    _page_svgoutput.add_group_header( _("Check Attributes and Style Properties on:"));
+
+    _svgoutput_check_reading.init( _("Reading"), "/options/svgoutput/check_on_reading", false);
+    _page_svgoutput.add_line( true, "", _svgoutput_check_reading, "", _("Check attributes and style properties on reading in SVG files (including those internal to Inkscape which will slow down startup)."), false);
+    _svgoutput_check_editing.init( _("Editing"), "/options/svgoutput/check_on_editing", false);
+    _page_svgoutput.add_line( true, "", _svgoutput_check_editing, "", _("Check attributes and style properties while editing SVG files (may slow down Inkscape, mostly useful for debugging)."), false);
+    _svgoutput_check_writing.init( _("Writing"), "/options/svgoutput/check_on_writing", true);
+    _page_svgoutput.add_line( true, "", _svgoutput_check_writing, "", _("Check attributes and style properties on writing out SVG files."), false);
+
+    this->AddPage(_page_svgoutput, _("SVG output"), iter_io, PREFS_PAGE_IO_SVGOUTPUT);
+
+    // CMS options
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int const numIntents = 4;
+    /* TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm */
+    Glib::ustring intentLabels[numIntents] = {_("Perceptual"), _("Relative Colorimetric"), _("Saturation"), _("Absolute Colorimetric")};
+    int intentValues[numIntents] = {0, 1, 2, 3};
+
+#if !ENABLE_LCMS
+    Gtk::Label* lbl = new Gtk::Label(_("(Note: Color management has been disabled in this build)"));
+    _page_cms.add_line( false, "", *lbl, "", "", true);
+#endif // !ENABLE_LCMS
+
+    _page_cms.add_group_header( _("Display adjustment"));
+
+    Glib::ustring tmpStr;
+    std::vector<Glib::ustring> sources = ColorProfile::getBaseProfileDirs();
+    for ( std::vector<Glib::ustring>::const_iterator it = sources.begin(); it != sources.end(); ++it ) {
+        gchar* part = g_strdup_printf( "\n%s", it->c_str() );
+        tmpStr += part;
+        g_free(part);
+    }
+
+    gchar* profileTip = g_strdup_printf(_("The ICC profile to use to calibrate display output.\nSearched directories:%s"), tmpStr.c_str());
+    _page_cms.add_line( true, _("Display profile:"), _cms_display_profile, "",
+                        profileTip, false);
+    g_free(profileTip);
+    profileTip = 0;
+
+    _cms_from_display.init( _("Retrieve profile from display"), "/options/displayprofile/from_display", false);
+    _page_cms.add_line( true, "", _cms_from_display, "",
+#ifdef GDK_WINDOWING_X11
+                        _("Retrieve profiles from those attached to displays via XICC"), false);
+#else
+                        _("Retrieve profiles from those attached to displays"), false);
+#endif // GDK_WINDOWING_X11
+
+
+    _cms_intent.init("/options/displayprofile/intent", intentLabels, intentValues, numIntents, 0);
+    _page_cms.add_line( true, _("Display rendering intent:"), _cms_intent, "",
+                        _("The rendering intent to use to calibrate display output"), false);
+
+    _page_cms.add_group_header( _("Proofing"));
+
+    _cms_softproof.init( _("Simulate output on screen"), "/options/softproof/enable", false);
+    _page_cms.add_line( true, "", _cms_softproof, "",
+                        _("Simulates output of target device"), false);
+
+    _cms_gamutwarn.init( _("Mark out of gamut colors"), "/options/softproof/gamutwarn", false);
+    _page_cms.add_line( true, "", _cms_gamutwarn, "",
+                        _("Highlights colors that are out of gamut for the target device"), false);
+
+    Glib::ustring colorStr = prefs->getString("/options/softproof/gamutcolor");
+    Gdk::Color tmpColor( colorStr.empty() ? "#00ff00" : colorStr);
+    _cms_gamutcolor.set_color( tmpColor );
+    _page_cms.add_line( true, _("Out of gamut warning color:"), _cms_gamutcolor, "",
+                        _("Selects the color used for out of gamut warning"), false);
+
+    _page_cms.add_line( true, _("Device profile:"), _cms_proof_profile, "",
+                        _("The ICC profile to use to simulate device output"), false);
+
+    _cms_proof_intent.init("/options/softproof/intent", intentLabels, intentValues, numIntents, 0);
+    _page_cms.add_line( true, _("Device rendering intent:"), _cms_proof_intent, "",
+                        _("The rendering intent to use to calibrate device output"), false);
+
+    _cms_proof_blackpoint.init( _("Black point compensation"), "/options/softproof/bpc", false);
+    _page_cms.add_line( true, "", _cms_proof_blackpoint, "",
+                        _("Enables black point compensation"), false);
+
+    _cms_proof_preserveblack.init( _("Preserve black"), "/options/softproof/preserveblack", false);
+    _page_cms.add_line( true, "", _cms_proof_preserveblack,
+#if defined(cmsFLAGS_PRESERVEBLACK)
+                        "",
+#else
+                        _("(LittleCMS 1.15 or later required)"),
+#endif // defined(cmsFLAGS_PRESERVEBLACK)
+                        _("Preserve K channel in CMYK -> CMYK transforms"), false);
+
+#if !defined(cmsFLAGS_PRESERVEBLACK)
+    _cms_proof_preserveblack.set_sensitive( false );
+#endif // !defined(cmsFLAGS_PRESERVEBLACK)
+
+
+#if ENABLE_LCMS
+    {
+        std::vector<Glib::ustring> names = ::Inkscape::CMSSystem::getDisplayNames();
+        Glib::ustring current = prefs->getString( "/options/displayprofile/uri" );
+
+        gint index = 0;
+        _cms_display_profile.append_text(_("<none>"));
+        index++;
+        for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
+            _cms_display_profile.append_text( *it );
+            Glib::ustring path = CMSSystem::getPathForProfile(*it);
+            if ( !path.empty() && path == current ) {
+                _cms_display_profile.set_active(index);
+            }
+            index++;
+        }
+        if ( current.empty() ) {
+            _cms_display_profile.set_active(0);
+        }
+
+        names = ::Inkscape::CMSSystem::getSoftproofNames();
+        current = prefs->getString("/options/softproof/uri");
+        index = 0;
+        for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
+            _cms_proof_profile.append_text( *it );
+            Glib::ustring path = CMSSystem::getPathForProfile(*it);
+            if ( !path.empty() && path == current ) {
+                _cms_proof_profile.set_active(index);
+            }
+            index++;
+        }
+    }
+
+    _cms_gamutcolor.signal_color_set().connect( sigc::bind( sigc::ptr_fun(gamutColorChanged), &_cms_gamutcolor) );
+
+    _cms_display_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(profileComboChanged), &_cms_display_profile) );
+    _cms_proof_profile.signal_changed().connect( sigc::bind( sigc::ptr_fun(proofComboChanged), &_cms_proof_profile) );
+#else
+    // disable it, but leave it visible
+    _cms_intent.set_sensitive( false );
+    _cms_display_profile.set_sensitive( false );
+    _cms_from_display.set_sensitive( false );
+    _cms_softproof.set_sensitive( false );
+    _cms_gamutwarn.set_sensitive( false );
+    _cms_gamutcolor.set_sensitive( false );
+    _cms_proof_intent.set_sensitive( false );
+    _cms_proof_profile.set_sensitive( false );
+    _cms_proof_blackpoint.set_sensitive( false );
+    _cms_proof_preserveblack.set_sensitive( false );
+#endif // ENABLE_LCMS
+
+    this->AddPage(_page_cms, _("Color management"), iter_io, PREFS_PAGE_IO_CMS);
 
     // Autosave options
     _save_autosave_enable.init( _("Enable autosave (requires restart)"), "/options/autosave/enable", false);
-    _page_save.add_line(false, "", _save_autosave_enable, "", _("Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"), false);
+    _page_autosave.add_line(false, "", _save_autosave_enable, "", _("Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"), false);
     _save_autosave_interval.init("/options/autosave/interval", 1.0, 10800.0, 1.0, 10.0, 10.0, true, false);
-    _page_save.add_line(true, _("Interval (in minutes):"), _save_autosave_interval, "", _("Interval (in minutes) at which document will be autosaved"), false);
+    _page_autosave.add_line(false, _("Interval (in minutes):"), _save_autosave_interval, "", _("Interval (in minutes) at which document will be autosaved"), false);
     _save_autosave_path.init("/options/autosave/path", true);
-    _page_save.add_line(true, C_("Filesystem", "Path:"), _save_autosave_path, "", _("The directory where autosaves will be written"), false);
+    _page_autosave.add_line(false, C_("Filesystem", "Path:"), _save_autosave_path, "", _("The directory where autosaves will be written"), false);
     _save_autosave_max.init("/options/autosave/max", 1.0, 100.0, 1.0, 10.0, 10.0, true, false);
-    _page_save.add_line(true, _("Maximum number of autosaves:"), _save_autosave_max, "", _("Maximum number of autosaved files; use this to limit the storage space used"), false);
+    _page_autosave.add_line(false, _("Maximum number of autosaves:"), _save_autosave_max, "", _("Maximum number of autosaved files; use this to limit the storage space used"), false);
 
     /* When changing the interval or enabling/disabling the autosave function,
      * update our running configuration
@@ -1287,8 +985,285 @@ void InkscapePreferences::initPageSave()
     */
 
     // -----------
+    this->AddPage(_page_autosave, _("Autosave"), iter_io, PREFS_PAGE_IO_AUTOSAVE);
 
-    this->AddPage(_page_save, _("Save"), PREFS_PAGE_SAVE);
+    // Open Clip Art options
+    _importexport_ocal_url.init("/options/ocalurl/str", true, g_strdup_printf("openclipart.org"));
+    _page_openclipart.add_line( false, _("Open Clip Art Library Server Name:"), _importexport_ocal_url, "",
+        _("The server name of the Open Clip Art Library webdav server; it's used by the Import and Export to OCAL function"), true);
+    _importexport_ocal_username.init("/options/ocalusername/str", true);
+    _page_openclipart.add_line( false, _("Open Clip Art Library Username:"), _importexport_ocal_username, "",
+            _("The username used to log into Open Clip Art Library"), true);
+    _importexport_ocal_password.init("/options/ocalpassword/str", false);
+    _page_openclipart.add_line( false, _("Open Clip Art Library Password:"), _importexport_ocal_password, "",
+            _("The password used to log into Open Clip Art Library"), true);
+    this->AddPage(_page_openclipart, _("Open Clip Art"), iter_io, PREFS_PAGE_IO_OPENCLIPART);
+}
+
+void InkscapePreferences::initPageBehavior()
+{
+    Gtk::TreeModel::iterator iter_behavior = this->AddPage(_page_behavior, _("Behavior"), PREFS_PAGE_BEHAVIOR);
+    _path_behavior = _page_list.get_model()->get_path(iter_behavior);
+
+    _misc_simpl.init("/options/simplifythreshold/value", 0.0001, 1.0, 0.0001, 0.0010, 0.0010, false, false);
+    _page_behavior.add_line( false, _("Simplification threshold:"), _misc_simpl, "",
+                           _("How strong is the Node tool's Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
+                           
+    // Selecting options
+    _sel_all.init ( _("Select in all layers"), "/options/kbselection/inlayer", PREFS_SELECTION_ALL, false, 0);
+    _sel_current.init ( _("Select only within current layer"), "/options/kbselection/inlayer", PREFS_SELECTION_LAYER, true, &_sel_all);
+    _sel_recursive.init ( _("Select in current layer and sublayers"), "/options/kbselection/inlayer", PREFS_SELECTION_LAYER_RECURSIVE, false, &_sel_all);
+    _sel_hidden.init ( _("Ignore hidden objects and layers"), "/options/kbselection/onlyvisible", true);
+    _sel_locked.init ( _("Ignore locked objects and layers"), "/options/kbselection/onlysensitive", true);
+    _sel_layer_deselects.init ( _("Deselect upon layer change"), "/options/selection/layerdeselect", true);
+
+    _page_select.add_group_header( _("Ctrl+A, Tab, Shift+Tab"));
+    _page_select.add_line( true, "", _sel_all, "",
+                           _("Make keyboard selection commands work on objects in all layers"));
+    _page_select.add_line( true, "", _sel_current, "",
+                           _("Make keyboard selection commands work on objects in current layer only"));
+    _page_select.add_line( true, "", _sel_recursive, "",
+                           _("Make keyboard selection commands work on objects in current layer and all its sublayers"));
+    _page_select.add_line( true, "", _sel_hidden, "",
+                           _("Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden layer)"));
+    _page_select.add_line( true, "", _sel_locked, "",
+                           _("Uncheck this to be able to select objects that are locked (either by themselves or by being in a locked layer)"));
+
+    _page_select.add_line( false, "", _sel_layer_deselects, "",
+                           _("Uncheck this to be able to keep the current objects selected when the current layer changes"));
+
+    this->AddPage(_page_select, _("Selecting"), iter_behavior, PREFS_PAGE_BEHAVIOR_SELECTING);
+
+    // Transforms options
+    _trans_scale_stroke.init ( _("Scale stroke width"), "/options/transform/stroke", true);
+    _trans_scale_corner.init ( _("Scale rounded corners in rectangles"), "/options/transform/rectcorners", false);
+    _trans_gradient.init ( _("Transform gradients"), "/options/transform/gradient", true);
+    _trans_pattern.init ( _("Transform patterns"), "/options/transform/pattern", false);
+    _trans_optimized.init ( _("Optimized"), "/options/preservetransform/value", 0, true, 0);
+    _trans_preserved.init ( _("Preserved"), "/options/preservetransform/value", 1, false, &_trans_optimized);
+
+    _page_transforms.add_line( false, "", _trans_scale_stroke, "",
+                               _("When scaling objects, scale the stroke width by the same proportion"));
+    _page_transforms.add_line( false, "", _trans_scale_corner, "",
+                               _("When scaling rectangles, scale the radii of rounded corners"));
+    _page_transforms.add_line( false, "", _trans_gradient, "",
+                               _("Move gradients (in fill or stroke) along with the objects"));
+    _page_transforms.add_line( false, "", _trans_pattern, "",
+                               _("Move patterns (in fill or stroke) along with the objects"));
+    _page_transforms.add_group_header( _("Store transformation"));
+    _page_transforms.add_line( true, "", _trans_optimized, "",
+                               _("If possible, apply transformation to objects without adding a transform= attribute"));
+    _page_transforms.add_line( true, "", _trans_preserved, "",
+                               _("Always store transformation as a transform= attribute on objects"));
+
+    this->AddPage(_page_transforms, _("Transforms"), iter_behavior, PREFS_PAGE_BEHAVIOR_TRANSFORMS);
+
+    // Scrolling options
+    _scroll_wheel.init ( "/options/wheelscroll/value", 0.0, 1000.0, 1.0, 1.0, 40.0, true, false);
+    _page_scrolling.add_line( false, _("Mouse wheel scrolls by:"), _scroll_wheel, _("pixels"),
+                           _("One mouse wheel notch scrolls by this distance in screen pixels (horizontally with Shift)"), false);
+    _page_scrolling.add_group_header( _("Ctrl+arrows"));
+    _scroll_arrow_px.init ( "/options/keyscroll/value", 0.0, 1000.0, 1.0, 1.0, 10.0, true, false);
+    _page_scrolling.add_line( true, _("Scroll by:"), _scroll_arrow_px, _("pixels"),
+                           _("Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"), false);
+    _scroll_arrow_acc.init ( "/options/scrollingacceleration/value", 0.0, 5.0, 0.01, 1.0, 0.35, false, false);
+    _page_scrolling.add_line( true, _("Acceleration:"), _scroll_arrow_acc, "",
+                           _("Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no acceleration)"), false);
+    _page_scrolling.add_group_header( _("Autoscrolling"));
+    _scroll_auto_speed.init ( "/options/autoscrollspeed/value", 0.0, 5.0, 0.01, 1.0, 0.7, false, false);
+    _page_scrolling.add_line( true, _("Speed:"), _scroll_auto_speed, "",
+                           _("How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn autoscroll off)"), false);
+    _scroll_auto_thres.init ( "/options/autoscrolldistance/value", -600.0, 600.0, 1.0, 1.0, -10.0, true, false);
+    _page_scrolling.add_line( true, _("Threshold:"), _scroll_auto_thres, _("pixels"),
+                           _("How far (in screen pixels) you need to be from the canvas edge to trigger autoscroll; positive is outside the canvas, negative is within the canvas"), false);
+    _scroll_space.init ( _("Left mouse button pans when Space is pressed"), "/options/spacepans/value", false);
+    _page_scrolling.add_line( false, "", _scroll_space, "",
+                            _("When on, pressing and holding Space and dragging with left mouse button pans canvas (as in Adobe Illustrator); when off, Space temporarily switches to Selector tool (default)"));
+    _wheel_zoom.init ( _("Mouse wheel zooms by default"), "/options/wheelzooms/value", false);
+    _page_scrolling.add_line( false, "", _wheel_zoom, "",
+                            _("When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when off, it zooms with Ctrl and scrolls without Ctrl"));
+    this->AddPage(_page_scrolling, _("Scrolling"), iter_behavior, PREFS_PAGE_BEHAVIOR_SCROLLING);
+
+    // Snapping options
+    _snap_indicator.init( _("Enable snap indicator"), "/options/snapindicator/value", true);
+    _page_snapping.add_line( false, "", _snap_indicator, "",
+                             _("After snapping, a symbol is drawn at the point that has snapped"));
+
+    _snap_delay.init("/options/snapdelay/value", 0, 1000, 50, 100, 300, 0);
+    _page_snapping.add_line( false, _("Delay (in ms):"), _snap_delay, "",
+                             _("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate."), true);
+
+    _snap_closest_only.init( _("Only snap the node closest to the pointer"), "/options/snapclosestonly/value", false);
+    _page_snapping.add_line( false, "", _snap_closest_only, "",
+                             _("Only try to snap the node that is initially closest to the mouse pointer"));
+
+    _snap_weight.init("/options/snapweight/value", 0, 1, 0.1, 0.2, 0.5, 1);
+    _page_snapping.add_line( false, _("Weight factor:"), _snap_weight, "",
+                             _("When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"), true);
+
+    _snap_mouse_pointer.init( _("Snap the mouse pointer when dragging a constrained knot"), "/options/snapmousepointer/value", false);
+    _page_snapping.add_line( false, "", _snap_mouse_pointer, "",
+                             _("When dragging a knot along a constraint line, then snap the position of the mouse pointer instead of snapping the projection of the knot onto the constraint line"));
+
+    this->AddPage(_page_snapping, _("Snapping"), iter_behavior, PREFS_PAGE_BEHAVIOR_SNAPPING);
+
+    // Steps options
+    _steps_arrow.init ( "/options/nudgedistance/value", 0.0, 1000.0, 0.01, 2.0, UNIT_TYPE_LINEAR, "px");
+    //nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
+    _page_steps.add_line( false, _("Arrow keys move by:"), _steps_arrow, "",
+                          _("Pressing an arrow key moves selected object(s) or node(s) by this distance"), false);
+    _steps_scale.init ( "/options/defaultscale/value", 0.0, 1000.0, 0.01, 2.0, UNIT_TYPE_LINEAR, "px");
+    //defaultscale is limited to 1000 in select-context.cpp: use the same limit here
+    _page_steps.add_line( false, _("> and < scale by:"), _steps_scale, "",
+                          _("Pressing > or < scales selection up or down by this increment"), false);
+    _steps_inset.init ( "/options/defaultoffsetwidth/value", 0.0, 3000.0, 0.01, 2.0, UNIT_TYPE_LINEAR, "px");
+    _page_steps.add_line( false, _("Inset/Outset by:"), _steps_inset, "",
+                          _("Inset and Outset commands displace the path by this distance"), false);
+    _steps_compass.init ( _("Compass-like display of angles"), "/options/compassangledisplay/value", true);
+    _page_steps.add_line( false, "", _steps_compass, "",
+                            _("When on, angles are displayed with 0 at north, 0 to 360 range, positive clockwise; otherwise with 0 at east, -180 to 180 range, positive counterclockwise"));
+    int const num_items = 17;
+    Glib::ustring labels[num_items] = {"90", "60", "45", "36", "30", "22.5", "18", "15", "12", "10", "7.5", "6", "3", "2", "1", "0.5", _("None")};
+    int values[num_items] = {2, 3, 4, 5, 6, 8, 10, 12, 15, 18, 24, 30, 60, 90, 180, 360, 0};
+    _steps_rot_snap.set_size_request(_sb_width);
+    _steps_rot_snap.init("/options/rotationsnapsperpi/value", labels, values, num_items, 12);
+    _page_steps.add_line( false, _("Rotation snaps every:"), _steps_rot_snap, _("degrees"),
+                           _("Rotating with Ctrl pressed snaps every that much degrees; also, pressing [ or ] rotates by this amount"), false);
+    _steps_rot_relative.init ( _("Relative snapping of guideline angles"), "/options/relativeguiderotationsnap/value", false);
+    _page_steps.add_line( false, "", _steps_rot_relative, "",
+                            _("When on, the snap angles when rotating a guideline will be relative to the original angle"));
+    _steps_zoom.init ( "/options/zoomincrement/value", 101.0, 500.0, 1.0, 1.0, 1.414213562, true, true);
+    _page_steps.add_line( false, _("Zoom in/out by:"), _steps_zoom, _("%"),
+                          _("Zoom tool click, +/- keys, and middle click zoom in and out by this multiplier"), false);
+    this->AddPage(_page_steps, _("Steps"), iter_behavior, PREFS_PAGE_BEHAVIOR_STEPS);
+
+    // Clones options
+    _clone_option_parallel.init ( _("Move in parallel"), "/options/clonecompensation/value",
+                                  SP_CLONE_COMPENSATION_PARALLEL, true, 0);
+    _clone_option_stay.init ( _("Stay unmoved"), "/options/clonecompensation/value",
+                                  SP_CLONE_COMPENSATION_UNMOVED, false, &_clone_option_parallel);
+    _clone_option_transform.init ( _("Move according to transform"), "/options/clonecompensation/value",
+                                  SP_CLONE_COMPENSATION_NONE, false, &_clone_option_parallel);
+    _clone_option_unlink.init ( _("Are unlinked"), "/options/cloneorphans/value",
+                                  SP_CLONE_ORPHANS_UNLINK, true, 0);
+    _clone_option_delete.init ( _("Are deleted"), "/options/cloneorphans/value",
+                                  SP_CLONE_ORPHANS_DELETE, false, &_clone_option_unlink);
+
+    _page_clones.add_group_header( _("Moving original: clones and linked offsets"));
+    _page_clones.add_line(true, "", _clone_option_parallel, "",
+                           _("Clones are translated by the same vector as their original"));
+    _page_clones.add_line(true, "", _clone_option_stay, "",
+                           _("Clones preserve their positions when their original is moved"));
+    _page_clones.add_line(true, "", _clone_option_transform, "",
+                           _("Each clone moves according to the value of its transform= attribute; for example, a rotated clone will move in a different direction than its original"));
+    _page_clones.add_group_header( _("Deleting original: clones"));
+    _page_clones.add_line(true, "", _clone_option_unlink, "",
+                           _("Orphaned clones are converted to regular objects"));
+    _page_clones.add_line(true, "", _clone_option_delete, "",
+                           _("Orphaned clones are deleted along with their original"));
+
+    _page_clones.add_group_header( _("Duplicating original+clones/linked offset"));
+
+    _clone_relink_on_duplicate.init ( _("Relink duplicated clones"), "/options/relinkclonesonduplicate/value", false);
+    _page_clones.add_line(true, "", _clone_relink_on_duplicate, "",
+                        _("When duplicating a selection containing both a clone and its original (possibly in groups), relink the duplicated clone to the duplicated original instead of the old original"));
+
+    //TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
+    this->AddPage(_page_clones, _("Clones"), iter_behavior, PREFS_PAGE_BEHAVIOR_CLONES);
+
+    // Clip paths and masks options
+    _mask_mask_on_top.init ( _("When applying, use the topmost selected object as clippath/mask"), "/options/maskobject/topmost", true);
+    _page_mask.add_line(false, "", _mask_mask_on_top, "",
+                        _("Uncheck this to use the bottom selected object as the clipping path or mask"));
+    _mask_mask_remove.init ( _("Remove clippath/mask object after applying"), "/options/maskobject/remove", true);
+    _page_mask.add_line(false, "", _mask_mask_remove, "",
+                        _("After applying, remove the object used as the clipping path or mask from the drawing"));
+    
+    _page_mask.add_group_header( _("Before applying"));
+    
+    _mask_grouping_none.init( _("Do not group clipped/masked objects"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_NONE, true, 0);
+    _mask_grouping_separate.init( _("Enclose every clipped/masked object in its own group"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_SEPARATE, false, &_mask_grouping_none);
+    _mask_grouping_all.init( _("Put all clipped/masked objects into one group"), "/options/maskobject/grouping", PREFS_MASKOBJECT_GROUPING_ALL, false, &_mask_grouping_none);
+    
+    _page_mask.add_line(true, "", _mask_grouping_none, "",
+                        _("Apply clippath/mask to every object"));
+    
+    _page_mask.add_line(true, "", _mask_grouping_separate, "",
+                        _("Apply clippath/mask to groups containing single object"));
+    
+    _page_mask.add_line(true, "", _mask_grouping_all, "",
+                        _("Apply clippath/mask to group containing all objects"));
+                        
+    _page_mask.add_group_header( _("After releasing"));
+    
+    _mask_ungrouping.init ( _("Ungroup automatically created groups"), "/options/maskobject/ungrouping", true);
+    _page_mask.add_line(true, "", _mask_ungrouping, "",
+                        _("Ungroup groups created when setting clip/mask"));
+    
+    this->AddPage(_page_mask, _("Clippaths and masks"), iter_behavior, PREFS_PAGE_BEHAVIOR_MASKS);
+}
+
+void InkscapePreferences::initPageRendering()
+{
+
+    /* threaded blur */ //related comments/widgets/functions should be renamed and option should be moved elsewhere when inkscape is fully multi-threaded
+    _filter_multi_threaded.init("/options/threading/numthreads", 1.0, 8.0, 1.0, 2.0, 4.0, true, false);
+    _page_rendering.add_line( false, _("Number of Threads:"), _filter_multi_threaded, _("(requires restart)"),
+                           _("Configure number of processors/threads to use when rendering filters"), false);
+
+    // rendering cache
+    _rendering_cache_size.init("/options/renderingcache/size", 0.0, 4096.0, 1.0, 32.0, 64.0, true, false);
+    _page_rendering.add_line( false, _("Rendering cache size:"), _rendering_cache_size, C_("mebibyte (2^20 bytes) abbreviation","MiB"), _("Set the amount of memory per document which can be used to store rendered parts of the drawing for later reuse; set to zero to disable caching"), false);
+
+    /* blur quality */
+    _blur_quality_best.init ( _("Best quality (slowest)"), "/options/blurquality/value",
+                                  BLUR_QUALITY_BEST, false, 0);
+    _blur_quality_better.init ( _("Better quality (slower)"), "/options/blurquality/value",
+                                  BLUR_QUALITY_BETTER, false, &_blur_quality_best);
+    _blur_quality_normal.init ( _("Average quality"), "/options/blurquality/value",
+                                  BLUR_QUALITY_NORMAL, true, &_blur_quality_best);
+    _blur_quality_worse.init ( _("Lower quality (faster)"), "/options/blurquality/value",
+                                  BLUR_QUALITY_WORSE, false, &_blur_quality_best);
+    _blur_quality_worst.init ( _("Lowest quality (fastest)"), "/options/blurquality/value",
+                                  BLUR_QUALITY_WORST, false, &_blur_quality_best);
+
+    _page_rendering.add_group_header( _("Gaussian blur quality for display"));
+    _page_rendering.add_line( true, "", _blur_quality_best, "",
+                           _("Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"));
+    _page_rendering.add_line( true, "", _blur_quality_better, "",
+                           _("Better quality, but slower display"));
+    _page_rendering.add_line( true, "", _blur_quality_normal, "",
+                           _("Average quality, acceptable display speed"));
+    _page_rendering.add_line( true, "", _blur_quality_worse, "",
+                           _("Lower quality (some artifacts), but display is faster"));
+    _page_rendering.add_line( true, "", _blur_quality_worst, "",
+                           _("Lowest quality (considerable artifacts), but display is fastest"));
+
+    /* filter quality */
+    _filter_quality_best.init ( _("Best quality (slowest)"), "/options/filterquality/value",
+                                  Inkscape::Filters::FILTER_QUALITY_BEST, false, 0);
+    _filter_quality_better.init ( _("Better quality (slower)"), "/options/filterquality/value",
+                                  Inkscape::Filters::FILTER_QUALITY_BETTER, false, &_filter_quality_best);
+    _filter_quality_normal.init ( _("Average quality"), "/options/filterquality/value",
+                                  Inkscape::Filters::FILTER_QUALITY_NORMAL, true, &_filter_quality_best);
+    _filter_quality_worse.init ( _("Lower quality (faster)"), "/options/filterquality/value",
+                                  Inkscape::Filters::FILTER_QUALITY_WORSE, false, &_filter_quality_best);
+    _filter_quality_worst.init ( _("Lowest quality (fastest)"), "/options/filterquality/value",
+                                  Inkscape::Filters::FILTER_QUALITY_WORST, false, &_filter_quality_best);
+
+    _page_rendering.add_group_header( _("Filter effects quality for display"));
+    _page_rendering.add_line( true, "", _filter_quality_best, "",
+                           _("Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"));
+    _page_rendering.add_line( true, "", _filter_quality_better, "",
+                           _("Better quality, but slower display"));
+    _page_rendering.add_line( true, "", _filter_quality_normal, "",
+                           _("Average quality, acceptable display speed"));
+    _page_rendering.add_line( true, "", _filter_quality_worse, "",
+                           _("Lower quality (some artifacts), but display is faster"));
+    _page_rendering.add_line( true, "", _filter_quality_worst, "",
+                           _("Lowest quality (considerable artifacts), but display is fastest"));
+
+    this->AddPage(_page_rendering, _("Rendering"), PREFS_PAGE_RENDERING);
 }
 
 void InkscapePreferences::initPageBitmaps()
@@ -1306,6 +1281,9 @@ void InkscapePreferences::initPageBitmaps()
                            _("Automatically reload linked images when file is changed on disk"));
     _misc_bitmap_editor.init("/options/bitmapeditor/value", true);
     _page_bitmaps.add_line( false, _("Bitmap editor:"), _misc_bitmap_editor, "", "", true);
+    _importexport_export.init("/dialogs/export/defaultxdpi/value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
+    _page_bitmaps.add_line( false, _("Default export resolution:"), _importexport_export, _("dpi"),
+                            _("Default bitmap resolution (in dots per inch) in the Export dialog"), false);
     _bitmap_copy_res.init("/options/createbitmap/resolution", 1.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
     _page_bitmaps.add_line( false, _("Resolution for Create Bitmap Copy:"), _bitmap_copy_res, _("dpi"),
                             _("Resolution used by the Create Bitmap Copy command"), false);
@@ -1398,26 +1376,14 @@ static void appendList( Glib::ustring& tmp, const gchar* const*listing )
     }
 }
 
-void InkscapePreferences::initPageMisc()
+void InkscapePreferences::initPageSystem()
 {
-    _misc_comment.init( _("Add label comments to printing output"), "/printing/debug/show-label-comments", false);
-    _page_misc.add_line( false, "", _misc_comment, "",
-                           _("When on, a comment will be added to the raw print output, marking the rendered output for an object with its label"), true);
-
-    _misc_forkvectors.init( _("Prevent sharing of gradient definitions"), "/options/forkgradientvectors/value", true);
-    _page_misc.add_line( false, "", _misc_forkvectors, "",
-                           _("When on, shared gradient definitions are automatically forked on change; uncheck to allow sharing of gradient definitions so that editing one object may affect other objects using the same gradient"), true);
-
-    _misc_simpl.init("/options/simplifythreshold/value", 0.0001, 1.0, 0.0001, 0.0010, 0.0010, false, false);
-    _page_misc.add_line( false, _("Simplification threshold:"), _misc_simpl, "",
-                           _("How strong is the Node tool's Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
-
     _misc_latency_skew.init("/debug/latency/skew", 0.5, 2.0, 0.01, 0.10, 1.0, false, false);
-    _page_misc.add_line( false, _("Latency skew:"), _misc_latency_skew, _("(requires restart)"),
+    _page_system.add_line( false, _("Latency skew:"), _misc_latency_skew, _("(requires restart)"),
                            _("Factor by which the event clock is skewed from the actual time (0.9766 on some systems)"), false);
 
     _misc_namedicon_delay.init( _("Pre-render named icons"), "/options/iconrender/named_nodelay", false);
-    _page_misc.add_line( false, "", _misc_namedicon_delay, "",
+    _page_system.add_line( false, "", _misc_namedicon_delay, "",
                            _("When on, named icons will be rendered before displaying the ui. This is for working around bugs in GTK+ named icon notification"), true);
 
 
@@ -1475,9 +1441,9 @@ void InkscapePreferences::initPageMisc()
     _misc_info.set_editable(false);
     _misc_info_scroll.add(_misc_info);
     _misc_info_scroll.set_size_request(0, 150);
-    _page_misc.add_line( false, _("System info"), _misc_info_scroll, "", _("General system information"), true);
+    _page_system.add_line( false, _("System info"), _misc_info_scroll, "", _("General system information"), true);
 
-    this->AddPage(_page_misc, _("Misc"), PREFS_PAGE_MISC);
+    this->AddPage(_page_system, _("System"), PREFS_PAGE_SYSTEM);
 }
 
 bool InkscapePreferences::SetMaxDialogSize(const Gtk::TreeModel::iterator& iter)
@@ -1501,10 +1467,16 @@ bool InkscapePreferences::PresentPage(const Gtk::TreeModel::iterator& iter)
     int desired_page = prefs->getInt("/dialogs/preferences/page", 0);
     if (desired_page == row[_page_list_columns._col_id])
     {
-        if (desired_page >= PREFS_PAGE_TOOLS && desired_page <= PREFS_PAGE_TOOLS_DROPPER)
+        if (desired_page >= PREFS_PAGE_TOOLS && desired_page <= PREFS_PAGE_TOOLS_LPETOOL)
             _page_list.expand_row(_path_tools, false);
         if (desired_page >= PREFS_PAGE_TOOLS_SHAPES && desired_page <= PREFS_PAGE_TOOLS_SHAPES_SPIRAL)
             _page_list.expand_row(_path_shapes, false);
+        if (desired_page >= PREFS_PAGE_UI && desired_page <= PREFS_PAGE_UI_GRIDS)
+            _page_list.expand_row(_path_ui, false);
+        if (desired_page >= PREFS_PAGE_BEHAVIOR && desired_page <= PREFS_PAGE_BEHAVIOR_MASKS)
+            _page_list.expand_row(_path_behavior, false);
+        if (desired_page >= PREFS_PAGE_IO && desired_page <= PREFS_PAGE_IO_OPENCLIPART)
+            _page_list.expand_row(_path_io, false);
         _page_list.get_selection()->select(iter);
         return true;
     }
