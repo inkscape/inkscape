@@ -18,7 +18,7 @@
 #include <glibmm/i18n.h>
 
 #include "ui/widget/panel.h"
-#include "../widgets/sp-attribute-widget.h"
+#include "widgets/sp-attribute-widget.h"
 
 namespace Inkscape {
 namespace UI {
