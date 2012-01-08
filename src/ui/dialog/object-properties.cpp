@@ -19,8 +19,8 @@
 # include "config.h"
 #endif
 
-#include "../desktop-handles.h"
-#include "../document.h"
+#include "../../desktop-handles.h"
+#include "../../document.h"
 #include "object-properties.h"
 
 
