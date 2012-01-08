@@ -36,6 +36,7 @@ void on_selection_changed(Inkscape::Application */*inkscape*/, Inkscape::Selecti
 ObjectProperties::ObjectProperties (void) :
     UI::Widget::Panel ("", "/dialogs/object/", SP_VERB_DIALOG_ITEM),
     blocked (false),
+    CurrentItem(NULL),
     TopTable (3, 4, false),
     LabelID(_("_ID:"), 1),
     LabelLabel(_("_Label:"), 1),
@@ -47,8 +48,7 @@ ObjectProperties::ObjectProperties (void) :
     CBLock(_("L_ock"), 1),
     BSet (_("_Set"), 1),
     LabelInteractivity(_("_Interactivity"), 1),
-    attrTable(),
-    CurrentItem(0)
+    attrTable()
 {
     //initialize labels for the table at the bottom of the dialog
     int_labels.push_back("onclick");
