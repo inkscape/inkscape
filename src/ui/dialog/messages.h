@@ -58,11 +58,16 @@ public:
      */
     void releaseLogMessages();
 
+    void toggleCapture();
+
 protected:
-    Gtk::MenuBar        menuBar;
-    Gtk::Menu           fileMenu;
+    //Gtk::MenuBar        menuBar;
+    //Gtk::Menu           fileMenu;
     Gtk::ScrolledWindow textScroll;
     Gtk::TextView       messageText;
+    Gtk::HBox           buttonBox;
+    Gtk::Button         buttonClear;
+    Gtk::CheckButton    checkCapture;
 
     //Handler ID's
     guint handlerDefault;

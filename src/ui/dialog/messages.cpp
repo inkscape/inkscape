@@ -15,8 +15,6 @@
 #endif
 
 #include "messages.h"
-
-
 #include "verbs.h"
 
 namespace Inkscape {
@@ -45,11 +43,15 @@ void Messages::clear()
  * Constructor
  */
 Messages::Messages()
-    : UI::Widget::Panel("", "/dialogs/messages", SP_VERB_DIALOG_DEBUG)
+    : UI::Widget::Panel("", "/dialogs/messages", SP_VERB_DIALOG_DEBUG),
+      buttonClear(_("_Clear"), _("Clear log messages")),
+      checkCapture(_("Capture log messages"), _("Capture log messages"))
 {
     Gtk::Box *contents = _getContents();
 
-    //## Add a menu for clear()
+    /*
+     * Menu replaced with buttons
+     *
     menuBar.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_File"), fileMenu) );
     fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Clear"),
            sigc::mem_fun(*this, &Messages::clear) ) );
@@ -58,7 +60,7 @@ Messages::Messages()
     fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("Release log messages"),
            sigc::mem_fun(*this, &Messages::releaseLogMessages) ) );
     contents->pack_start(menuBar, Gtk::PACK_SHRINK);
-    
+    */
 
     //### Set up the text widget
     messageText.set_editable(false);
@@ -66,13 +68,28 @@ Messages::Messages()
     textScroll.set_policy(Gtk::POLICY_ALWAYS, Gtk::POLICY_ALWAYS);
     contents->pack_start(textScroll);
 
+    buttonBox.set_spacing(6);
+    buttonBox.pack_start(checkCapture, true, true, 6);
+    buttonBox.pack_end(buttonClear, false, false, 10);
+    contents->pack_start(buttonBox, Gtk::PACK_SHRINK);
+
     // sick of this thing shrinking too much
     set_size_request(400, 300);
     
     show_all_children();
 
     message(_("Ready."));
-    message(_("Enable log display by setting dialogs.debug 'redirect' attribute to 1 in preferences.xml"));
+
+    buttonClear.signal_clicked().connect(sigc::mem_fun(*this, &Messages::clear));
+    checkCapture.signal_clicked().connect(sigc::mem_fun(*this, &Messages::toggleCapture));
+
+    /*
+     * TODO - Setting this preference doesn't capture messages that the user can see.
+     * Inkscape creates an instance of a dialog on startup and sends messages there, but when the user
+     * opens the dialog View > Messages the DialogManager creates a new instance of this class that is not capturing messages.
+     *
+     * message(_("Enable log display by setting dialogs.debug 'redirect' attribute to 1 in preferences.xml"));
+    */
 
     handlerDefault = 0;
     handlerGlibmm  = 0;
@@ -80,6 +97,7 @@ Messages::Messages()
     handlerPangomm = 0;
     handlerGdkmm   = 0;
     handlerGtkmm   = 0;
+
 }
 
 Messages::~Messages()
@@ -112,6 +130,14 @@ static void dialogLoggingCallback(const gchar */*log_domain*/,
 
 }
 
+void Messages::toggleCapture()
+{
+    if (checkCapture.get_active()) {
+        captureLogMessages();
+    } else {
+        releaseLogMessages();
+    }
+}
 
 void Messages::captureLogMessages()
 {
@@ -146,7 +172,7 @@ void Messages::captureLogMessages()
         handlerGtkmm = g_log_set_handler("gtkmm", flags,
               dialogLoggingCallback, (gpointer)this);
     }
-    message((char*)"log capture started");
+    message(_("Log capture started."));
 }
 
 void Messages::releaseLogMessages()
@@ -175,7 +201,7 @@ void Messages::releaseLogMessages()
         g_log_remove_handler("gtkmm", handlerGtkmm);
         handlerGtkmm = 0;
     }
-    message((char*)"log capture discontinued");
+    message(_("Log capture stopped."));
 }
 
 } //namespace Dialog
