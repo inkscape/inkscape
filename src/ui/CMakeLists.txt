@@ -155,6 +155,7 @@ set(ui_SRC
 	dialog/livepatheffect-editor.h
 	dialog/memory.h
 	dialog/messages.h
+	dialog/object-properties.h
 	dialog/ocaldialogs.h
 	dialog/panel-dialog.h
 	dialog/print-colors-preview-dialog.h

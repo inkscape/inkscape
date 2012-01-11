@@ -684,7 +684,7 @@ public:
 
     void invoke_build(SPDocument *document, Inkscape::XML::Node *repr, unsigned int cloned);
 
-    long long int getIntAttribute(char const *key, long long int def);
+    int getIntAttribute(char const *key, int def);
 
     unsigned getPosition();
 

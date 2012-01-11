@@ -2962,7 +2962,9 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
         }
     } else if (!strcmp(name, "sodipodi:sides")) {
         adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "magnitude");
-        gtk_adjustment_set_value(adj, sp_repr_get_int_attribute(repr, "sodipodi:sides", 0));
+        int sides = 0;
+        sp_repr_get_int(repr, "sodipodi:sides", &sides);
+        gtk_adjustment_set_value(adj, sides);
     }
 
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(FALSE));

@@ -192,7 +192,7 @@ Box3DSide * Box3DSide::createBox3DSide(SPBox3D *box)
  * Function which return the type attribute for Box3D. 
  * Acts as a replacement for directly accessing the XML Tree directly.
  */
-long long int Box3DSide::getFaceId()
+int Box3DSide::getFaceId()
 {
 	    return this->getIntAttribute("inkscape:box3dsidetype", -1);
 }

@@ -312,34 +312,6 @@ gchar const *sp_xml_ns_prefix_uri(gchar const *prefix)
     return uri;
 }
 
-/*double sp_repr_get_double_attribute(Inkscape::XML::Node *repr, char const *key, double def)
-{
-    char *result;
-
-    g_return_val_if_fail(repr != NULL, def);
-    g_return_val_if_fail(key != NULL, def);
-
-    result = (char *) repr->attribute(key);
-
-    if (result == NULL) return def;
-
-    return g_ascii_strtod(result, NULL);
-}*/
-
-long long int sp_repr_get_int_attribute(Inkscape::XML::Node *repr, char const *key, long long int def)
-{
-    char *result;
-
-    g_return_val_if_fail(repr != NULL, def);
-    g_return_val_if_fail(key != NULL, def);
-
-    result = (char *) repr->attribute(key);
-
-    if (result == NULL) return def;
-
-    return atoll(result);
-}
-
 /** 
  *  Works for different-parent objects, so long as they have a common ancestor. Return value:
  *    0    positions are equivalent

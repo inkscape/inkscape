@@ -109,16 +109,11 @@ unsigned sp_repr_set_svg_double(Inkscape::XML::Node *repr, gchar const *key, dou
 unsigned sp_repr_set_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point const & val);
 unsigned sp_repr_get_point(Inkscape::XML::Node *repr, gchar const *key, Geom::Point *val);
 
-// \deprecated Use sp_repr_get_double to check for success
-//double sp_repr_get_double_attribute(Inkscape::XML::Node *repr, gchar const *key, double def);
-/// \deprecated Use sp_repr_get_int to check for success
-long long int sp_repr_get_int_attribute(Inkscape::XML::Node *repr, gchar const *key, long long int def);
-
 int sp_repr_compare_position(Inkscape::XML::Node const *first, Inkscape::XML::Node const *second);
 
 // Searching
 /**
- * @brief Find an element node with the given name
+ * @brief Find an element node with the given name.
  *
  * This function searches the descendants of the specified node depth-first for
  * the first XML node with the specified name.
