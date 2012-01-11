@@ -99,7 +99,8 @@ void
 LPEPowerStroke::doOnApply(SPLPEItem *lpeitem)
 {
     std::vector<Geom::Point> points;
-    Geom::Path::size_type size = SP_SHAPE(lpeitem)->curve->get_pathvector().front().size_open();
+    Geom::PathVector pathv = SP_SHAPE(lpeitem)->curve->get_pathvector();
+    Geom::Path::size_type size = pathv.empty() ? 1 : pathv.front().size_open();
     points.push_back( Geom::Point(0,0) );
     points.push_back( Geom::Point(0.5*size,0) );
     points.push_back( Geom::Point(size,0) );
@@ -109,7 +110,9 @@ LPEPowerStroke::doOnApply(SPLPEItem *lpeitem)
 void
 LPEPowerStroke::adjustForNewPath(std::vector<Geom::Path> const & path_in)
 {
-    offset_points.recalculate_controlpoints_for_new_pwd2(path_in[0].toPwSb());
+    if (!path_in.empty()) {
+        offset_points.recalculate_controlpoints_for_new_pwd2(path_in[0].toPwSb());
+    }
 }
 
 static bool compare_offsets (Geom::Point first, Geom::Point second)
@@ -197,7 +200,7 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
     using namespace Geom;
 
     std::vector<Geom::Path> path_out;
-    if (path_in.size() == 0) {
+    if (path_in.empty()) {
         return path_out;
     }
 
@@ -209,6 +212,9 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
     offset_points.set_pwd2(pwd2_in, n);
 
     std::vector<Geom::Point> ts = offset_points.data();
+    if (ts.empty()) {
+        return path_out;
+    }
     if (sort_points) {
         sort(ts.begin(), ts.end(), compare_offsets);
     }
