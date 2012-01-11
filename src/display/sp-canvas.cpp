@@ -1796,7 +1796,7 @@ sp_canvas_paint_rect_internal (PaintRectSetup const *setup, Geom::IntRect const 
         r.width = this_rect.x1 - this_rect.x0;
         r.height = this_rect.y1 - this_rect.y0;
 
-        GdkWindow *window = GTK_WIDGET(setup->canvas)->window;
+        GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(setup->canvas));
         gdk_window_begin_paint_rect(window, &r);*/
 
         sp_canvas_paint_single_buffer (setup->canvas,

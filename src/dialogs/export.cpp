@@ -1376,7 +1376,7 @@ sp_export_browse_clicked (GtkButton */*button*/, gpointer /*userdata*/)
     wcsncpy(_filename, (wchar_t*)utf16_path_string, _MAX_PATH);
     g_free(utf16_path_string);
 
-    opf.hwndOwner = (HWND)(GDK_WINDOW_HWND(GTK_WIDGET(dlg)->window));
+    opf.hwndOwner = (HWND)(GDK_WINDOW_HWND(gtk_widget_get_window(GTK_WIDGET(dlg))));
     opf.lpstrFilter = filter_string;
     opf.lpstrCustomFilter = 0;
     opf.nMaxCustFilter = 0L;
