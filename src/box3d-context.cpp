@@ -634,7 +634,7 @@ static void sp_box3d_drag(Box3DContext &bc, guint /*state*/)
         //       at this point (only after finishing the box), we must do this "manually"
         /* bc._vpdrag->updateDraggers(); */
 
-        sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
+        desktop->canvas->forceFullRedrawAfterInterruptions(5);
     }
 
     g_assert(bc.item);
@@ -677,7 +677,7 @@ static void sp_box3d_finish(Box3DContext *bc)
 
         box3d_relabel_corners(box);
 
-        sp_canvas_end_forced_full_redraws(desktop->canvas);
+        desktop->canvas->endForcedFullRedraws();
 
         sp_desktop_selection(desktop)->set(bc->item);
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_3DBOX,

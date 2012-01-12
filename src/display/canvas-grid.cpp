@@ -4,6 +4,7 @@
 /* Copyright (C) Johan Engelen 2006-2007 <johan@shouraizou.nl>
  * Copyright (C) Lauris Kaplinski 2000
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  */
 
 /* As a general comment, I am not exactly proud of how things are done.
@@ -74,7 +75,7 @@ grid_canvasitem_get_type (void)
 	    NULL
 	};
         
-	grid_canvasitem_type = g_type_register_static (sp_canvas_item_get_type (), "GridCanvasItem", &grid_canvasitem_info, (GTypeFlags)0);
+	grid_canvasitem_type = g_type_register_static(SPCanvasItem::getType(), "GridCanvasItem", &grid_canvasitem_info, GTypeFlags(0));
     }
     return grid_canvasitem_type;
 }
@@ -136,9 +137,8 @@ grid_canvasitem_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned
     if (gridcanvasitem->grid) {
         gridcanvasitem->grid->Update(affine, flags);
 
-        sp_canvas_request_redraw (item->canvas,
-                         -1000000, -1000000,
-                         1000000, 1000000);
+        item->canvas->requestRedraw(-1000000, -1000000,
+                                    1000000, 1000000);
 
         item->x1 = item->y1 = -1000000;
         item->x2 = item->y2 = 1000000;

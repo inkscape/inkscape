@@ -891,7 +891,7 @@ static void gr_knot_grabbed_handler(SPKnot */*knot*/, unsigned int /*state*/, gp
 {
     GrDragger *dragger = (GrDragger *) data;
 
-    sp_canvas_force_full_redraw_after_interruptions(dragger->parent->desktop->canvas, 5);
+    dragger->parent->desktop->canvas->forceFullRedrawAfterInterruptions(5);
 }
 
 /**
@@ -901,7 +901,7 @@ static void gr_knot_ungrabbed_handler(SPKnot *knot, unsigned int state, gpointer
 {
     GrDragger *dragger = (GrDragger *) data;
 
-    sp_canvas_end_forced_full_redraws(dragger->parent->desktop->canvas);
+    dragger->parent->desktop->canvas->endForcedFullRedraws();
 
     dragger->point_original = dragger->point = knot->pos;
 

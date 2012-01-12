@@ -439,7 +439,7 @@ static void sp_star_drag(SPStarContext *sc, Geom::Point p, guint state)
         sc->item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
         sc->item->updateRepr();
 
-        sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
+        desktop->canvas->forceFullRedrawAfterInterruptions(5);
     }
 
     /* Snap corner point with no constraints */
@@ -500,7 +500,7 @@ sp_star_finish (SPStarContext * sc)
 
         object->updateRepr(SP_OBJECT_WRITE_EXT);
 
-        sp_canvas_end_forced_full_redraws(desktop->canvas);
+        desktop->canvas->endForcedFullRedraws();
 
         sp_desktop_selection(desktop)->set(sc->item);
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_STAR,
@@ -527,7 +527,7 @@ static void sp_star_cancel(SPStarContext *sc)
     sc->yp = 0;
     sc->item_to_select = NULL;
 
-    sp_canvas_end_forced_full_redraws(desktop->canvas);
+    desktop->canvas->endForcedFullRedraws();
 
     DocumentUndo::cancel(sp_desktop_document(desktop));
 }

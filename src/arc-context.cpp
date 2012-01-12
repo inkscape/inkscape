@@ -8,6 +8,7 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <johan@shouraizou.nl>
  *   Abhishek Sharma
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2000-2006 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -425,7 +426,7 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
         ac->item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
         ac->item->updateRepr();
 
-        sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
+        desktop->canvas->forceFullRedrawAfterInterruptions(5);
     }
 
     bool ctrl_save = false;
@@ -502,7 +503,7 @@ static void sp_arc_finish(SPArcContext *ac)
 
         SP_OBJECT(ac->item)->updateRepr();
 
-        sp_canvas_end_forced_full_redraws(desktop->canvas);
+        desktop->canvas->endForcedFullRedraws();
 
         sp_desktop_selection(desktop)->set(ac->item);
 		DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_ARC,
@@ -529,7 +530,7 @@ static void sp_arc_cancel(SPArcContext *ac)
     ac->yp = 0;
     ac->item_to_select = NULL;
 
-    sp_canvas_end_forced_full_redraws(desktop->canvas);
+    desktop->canvas->endForcedFullRedraws();
 
     DocumentUndo::cancel(sp_desktop_document(desktop));
 }

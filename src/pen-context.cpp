@@ -6,6 +6,7 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2000 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -252,7 +253,7 @@ pen_cancel (SPPenContext *const pc)
     pc->_message_context->clear();
     pc->_message_context->flash(Inkscape::NORMAL_MESSAGE, _("Drawing cancelled"));
 
-    sp_canvas_end_forced_full_redraws(pc->desktop->canvas);
+    pc->desktop->canvas->endForcedFullRedraws();
 }
 
 /**
@@ -1221,7 +1222,7 @@ spdc_pen_set_initial_point(SPPenContext *const pc, Geom::Point const p)
     pc->npoints = 2;
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), NULL);
 
-    sp_canvas_force_full_redraw_after_interruptions(pc->desktop->canvas, 5);
+    pc->desktop->canvas->forceFullRedrawAfterInterruptions(5);
 }
 
 /**
@@ -1398,7 +1399,7 @@ spdc_pen_finish(SPPenContext *const pc, gboolean const closed)
     }
 
 
-    sp_canvas_end_forced_full_redraws(pc->desktop->canvas);
+    pc->desktop->canvas->endForcedFullRedraws();
 
     pen_enable_events(pc);
 }

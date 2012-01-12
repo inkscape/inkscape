@@ -10,6 +10,7 @@
  *   Federico Mena <federico@nuclecu.unam.mx>
  *   Raph Levien <raph@gimp.org>
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1998 The Free Software Foundation
  * Copyright (C) 2002 Lauris Kaplinski
@@ -38,11 +39,9 @@
 
 G_BEGIN_DECLS
 
-#define SP_TYPE_CANVAS sp_canvas_get_type()
+#define SP_TYPE_CANVAS (SPCanvas::getType())
 #define SP_CANVAS(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_CANVAS, SPCanvas))
 #define SP_IS_CANVAS(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_CANVAS))
-
-GType sp_canvas_get_type();
 
 struct SPCanvas;
 struct SPCanvasItem;
@@ -69,43 +68,91 @@ struct SPCanvasBuf {
 G_END_DECLS
 
 // SPCanvas -------------------------------------------------
+
+class SPCanvasImpl;
+
 /**
  * Port of GnomeCanvas for inkscape needs.
  */
 struct SPCanvas {
+    friend class SPCanvasImpl;
+
+    static GType getType();
+
+    /**
+     * Returns new canvas as widget.
+     */
+    static GtkWidget *createAA();
+
+    /**
+     * Returns the root group of the specified canvas.
+     */
+    SPCanvasGroup *getRoot();
+
+    /**
+     * Scrolls canvas to specific position (cx and cy are measured in screen pixels).
+     */
+    void scrollTo(double cx, double cy, unsigned int clear, bool is_scrolling = false);
+
+
+    /**
+     * Updates canvas if necessary.
+     */
+    void updateNow();
+
+    /**
+     * Forces redraw of rectangular canvas area.
+     */
+    void requestRedraw(int x1, int y1, int x2, int y2);
+
+    /**
+     * Force a full redraw after a specified number of interrupted redraws.
+     */
+    void forceFullRedrawAfterInterruptions(unsigned int count);
+
+    /**
+     * End forced full redraw requests.
+     */
+    void endForcedFullRedraws();
+
+
+    // Data members: ----------------------------------------------------------
+
     GtkWidget widget;
 
     guint idle_id;
 
     SPCanvasItem *root;
 
-    double dx0, dy0;
-    int x0, y0;
+    double dx0;
+    double dy0;
+    int x0;
+    int y0;
 
     /* Area that needs redrawing, stored as a microtile array */
-    int    tLeft,tTop,tRight,tBottom;
-    int    tileH,tileV;
+    int    tLeft, tTop, tRight, tBottom;
+    int    tileH, tileV;
     uint8_t *tiles;
 
-    /* Last known modifier state, for deferred repick when a button is down */
+    /** Last known modifier state, for deferred repick when a button is down. */
     int state;
 
-    /* The item containing the mouse pointer, or NULL if none */
+    /** The item containing the mouse pointer, or NULL if none. */
     SPCanvasItem *current_item;
 
-    /* Item that is about to become current (used to track deletions and such) */
+    /** Item that is about to become current (used to track deletions and such). */
     SPCanvasItem *new_current_item;
 
-    /* Item that holds a pointer grab, or NULL if none */
+    /** Item that holds a pointer grab, or NULL if none. */
     SPCanvasItem *grabbed_item;
 
-    /* Event mask specified when grabbing an item */
+    /** Event mask specified when grabbing an item. */
     guint grabbed_event_mask;
 
-    /* If non-NULL, the currently focused item */
+    /** If non-NULL, the currently focused item. */
     SPCanvasItem *focused_item;
 
-    /* Event on which selection of current item is based */
+    /** Event on which selection of current item is based. */
     GdkEvent pick_event;
 
     int close_enough;
@@ -117,9 +164,10 @@ struct SPCanvas {
     int forced_redraw_count;
     int forced_redraw_limit;
 
-    /* For use by internal pick_current_item() function */
+    /** For use by internal pick_current_item() function. */
     unsigned int left_grabbed_item : 1;
-    /* For use by internal pick_current_item() function */
+
+    /** For use by internal pick_current_item() function. */
     unsigned int in_repick : 1;
 
     // In most tools Inkscape only generates enter and leave events
@@ -130,7 +178,7 @@ struct SPCanvas {
     // 'true'.
     bool gen_all_enter_events;
     
-    /* For scripting, sometimes we want to delay drawing. */
+    /** For scripting, sometimes we want to delay drawing. */
     bool drawing_disabled;
 
     int rendermode;
@@ -146,17 +194,6 @@ struct SPCanvas {
     Geom::Rect getViewbox() const;
     Geom::IntRect getViewboxIntegers() const;
 };
-
-GtkWidget *sp_canvas_new_aa();
-
-SPCanvasGroup *sp_canvas_root(SPCanvas *canvas);
-
-void sp_canvas_scroll_to(SPCanvas *canvas, double cx, double cy, unsigned int clear, bool is_scrolling = false);
-void sp_canvas_update_now(SPCanvas *canvas);
-
-void sp_canvas_request_redraw(SPCanvas *canvas, int x1, int y1, int x2, int y2);
-void sp_canvas_force_full_redraw_after_interruptions(SPCanvas *canvas, unsigned int count);
-void sp_canvas_end_forced_full_redraws(SPCanvas *canvas);
 
 bool sp_canvas_world_pt_inside_window(SPCanvas const *canvas, Geom::Point const &world);
 

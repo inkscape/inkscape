@@ -1,11 +1,10 @@
-#define __SP_CANVASTEXT_C__
-
 /*
  * Canvas text
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Maximilian Albert <maximilian.albert@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2000-2002 Lauris Kaplinski
  * Copyright (C) 2008 Maximilian Albert
@@ -153,7 +152,7 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
 {
     SPCanvasText *cl = SP_CANVASTEXT (item);
 
-    sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+    item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 
     if (parent_class_ct->update)
         (* parent_class_ct->update) (item, affine, flags);
@@ -252,7 +251,7 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
     item->y1 -= cl->anchor_offset_y;
     item->y2 -= cl->anchor_offset_y;
 
-    sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+    item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 }
 
 SPCanvasItem *

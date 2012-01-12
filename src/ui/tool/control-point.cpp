@@ -4,6 +4,7 @@
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2009 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -355,7 +356,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
                 // _drag_initiated might change during the above virtual call
                 if (!_drag_initiated) {
                     // this guarantees smooth redraws while dragging
-                    sp_canvas_force_full_redraw_after_interruptions(_desktop->canvas, 5);
+                    _desktop->canvas->forceFullRedrawAfterInterruptions(5);
                     _drag_initiated = true;
                 }
             }
@@ -395,7 +396,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
             _event_grab = false;
 
             if (_drag_initiated) {
-                sp_canvas_end_forced_full_redraws(_desktop->canvas);
+                _desktop->canvas->endForcedFullRedraws();
             }
 
             if (_drag_initiated) {
@@ -426,7 +427,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
             {
                 ungrabbed(NULL);
                 if (_drag_initiated)
-                    sp_canvas_end_forced_full_redraws(_desktop->canvas);
+                    _desktop->canvas->endForcedFullRedraws();
             }
             _setState(STATE_NORMAL);
             _event_grab = false;
@@ -556,7 +557,7 @@ void ControlPoint::transferGrab(ControlPoint *prev_point, GdkEventMotion *event)
     sp_canvas_item_grab(_canvas_item, _grab_event_mask, NULL, event->time);
 
     if (!_drag_initiated) {
-        sp_canvas_force_full_redraw_after_interruptions(_desktop->canvas, 5);
+        _desktop->canvas->forceFullRedrawAfterInterruptions(5);
         _drag_initiated = true;
     }
 

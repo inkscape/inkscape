@@ -6,6 +6,7 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2000 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -558,7 +559,7 @@ pencil_cancel (SPPencilContext *const pc)
     pc->_message_context->clear();
     pc->_message_context->flash(Inkscape::NORMAL_MESSAGE, _("Drawing cancelled"));
 
-    sp_canvas_end_forced_full_redraws(pc->desktop->canvas);
+    pc->desktop->canvas->endForcedFullRedraws();
 }
 
 static gint

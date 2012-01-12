@@ -1,11 +1,10 @@
-#define __INKSCAPE_CTRLLINE_C__
-
 /*
  * Simple straight line
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 1999-2002 Lauris Kaplinski
@@ -123,7 +122,7 @@ sp_ctrlline_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int
 {
     SPCtrlLine *cl = SP_CTRLLINE (item);
 
-    sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+    item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 
     if (parent_class->update)
         (* parent_class->update) (item, affine, flags);
@@ -144,8 +143,7 @@ sp_ctrlline_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int
         item->x2 = round(MAX(s[Geom::X], e[Geom::X]) + 1);
         item->y2 = round(MAX(s[Geom::Y], e[Geom::Y]) + 1);
 
-        sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
-
+        item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
     }
 }
 
@@ -159,7 +157,7 @@ sp_ctrlline_set_rgba32 (SPCtrlLine *cl, guint32 rgba)
         SPCanvasItem *item;
         cl->rgba = rgba;
         item = SP_CANVAS_ITEM (cl);
-        sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+        item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
     }
 }
 

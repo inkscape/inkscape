@@ -3,6 +3,7 @@
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
@@ -347,11 +348,10 @@ sp_canvas_arena_request_update (SPCanvasArena *ca, DrawingItem */*item*/)
     sp_canvas_item_request_update (SP_CANVAS_ITEM (ca));
 }
 
-static void
-sp_canvas_arena_request_render (SPCanvasArena *ca, Geom::IntRect const &area)
+static void sp_canvas_arena_request_render(SPCanvasArena *ca, Geom::IntRect const &area)
 {
-    SPCanvas *canvas = SP_CANVAS_ITEM (ca)->canvas;
-    sp_canvas_request_redraw (canvas, area.left(), area.top(), area.right(), area.bottom());
+    SPCanvas *canvas = SP_CANVAS_ITEM(ca)->canvas;
+    canvas->requestRedraw(area.left(), area.top(), area.right(), area.bottom());
 }
 
 void

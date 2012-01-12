@@ -670,7 +670,7 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
 
                 sp_spray_extinput(tc, event);
 
-                sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 3);
+                desktop->canvas->forceFullRedrawAfterInterruptions(3);
                 tc->is_drawing = true;
                 tc->is_dilating = true;
                 tc->has_dilated = false;
@@ -734,7 +734,7 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
                         }
                         tc->last_push = desktop->dt2doc(scroll_dt);
                         sp_spray_extinput(tc, event);
-                        sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 3);
+                        desktop->canvas->forceFullRedrawAfterInterruptions(3);
                         tc->is_drawing = true;
                         tc->is_dilating = true;
                         tc->has_dilated = false;
@@ -762,7 +762,7 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
             Geom::Point const motion_w(event->button.x, event->button.y);
             Geom::Point const motion_dt(desktop->w2d(motion_w));
 
-            sp_canvas_end_forced_full_redraws(desktop->canvas);
+            desktop->canvas->endForcedFullRedraws();
             tc->is_drawing = false;
 
             if (tc->is_dilating && event->button.button == 1 && !event_context->space_panning) {

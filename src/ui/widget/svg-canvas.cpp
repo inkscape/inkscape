@@ -1,6 +1,7 @@
 /*
  * Authors:
  *   Ralf Stephan <ralf@ark.in-berlin.de>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2005 The Authors
  *
@@ -20,7 +21,7 @@ namespace Widget {
 
 SVGCanvas::SVGCanvas()
 {
-    void *canvas = g_object_new (sp_canvas_get_type (), NULL);
+    void *canvas = g_object_new(SPCanvas::getType(), NULL);
     _spcanvas = static_cast<SPCanvas*>(canvas);
     _widget = Glib::wrap (static_cast<GtkWidget*> (canvas));
     _dt = 0;

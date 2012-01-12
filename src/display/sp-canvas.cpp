@@ -7,6 +7,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   fred
  *   bbyak
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1998 The Free Software Foundation
  * Copyright (C) 2002-2006 authors
@@ -50,25 +51,6 @@ static bool const HAS_BROKEN_MOTION_HINTS =
 // If any part of it is dirtied, the entire tile is dirtied (its int is nonzero) and repainted.
 #define TILE_SIZE 16
 
-static gint const sp_canvas_update_priority = G_PRIORITY_HIGH_IDLE;
-
-#define SP_CANVAS_WINDOW(c) (gtk_widget_get_window ((GtkWidget *) (c)))
-
-enum {
-    SP_CANVAS_ITEM_VISIBLE = 1 << 7,
-    SP_CANVAS_ITEM_NEED_UPDATE = 1 << 8,
-    SP_CANVAS_ITEM_NEED_AFFINE = 1 << 9
-};
-
-/**
- * A group of Items.
- */
-struct SPCanvasGroup {
-    SPCanvasItem item;
-
-    GList *items, *last;
-};
-
 /**
  * The SPCanvasGroup vtable.
  */
@@ -77,63 +59,339 @@ struct SPCanvasGroupClass {
 };
 
 /**
+ * A group of Items.
+ */
+struct SPCanvasGroup {
+    static GType getType();
+
+    /**
+     * Adds an item to a canvas group.
+     */
+    void add(SPCanvasItem *item);
+
+    /**
+     * Removes an item from a canvas group.
+     */
+    void remove(SPCanvasItem *item);
+
+    /**
+     * Class initialization function for SPCanvasGroupClass.
+     */
+    static void classInit(SPCanvasGroupClass *klass);
+
+    /**
+     * Callback. Empty.
+     */
+    static void init(SPCanvasGroup *group);
+
+    /**
+     * Callback that destroys all items in group and calls group's virtual
+     * destroy() function.
+     */
+    static void destroy(GtkObject *object);
+
+    /**
+     * Update handler for canvas groups.
+     */
+    static void update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
+
+    /**
+     * Point handler for canvas groups.
+     */
+    static double point(SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
+
+    /**
+     * Renders all visible canvas group items in buf rectangle.
+     */
+    static void render(SPCanvasItem *item, SPCanvasBuf *buf);
+
+    static void viewboxChanged(SPCanvasItem *item, Geom::IntRect const &new_area);
+
+
+    // Data members: ----------------------------------------------------------
+
+    SPCanvasItem item;
+
+    GList *items;
+    GList *last;
+
+    static SPCanvasItemClass *parentClass;
+};
+
+SPCanvasItemClass *SPCanvasGroup::parentClass;
+
+GType sp_canvas_group_get_type()
+{
+    return SPCanvasGroup::getType();
+}
+
+/**
  * The SPCanvas vtable.
  */
 struct SPCanvasClass {
     GtkWidgetClass parent_class;
 };
 
-static void group_add (SPCanvasGroup *group, SPCanvasItem *item);
-static void group_remove (SPCanvasGroup *group, SPCanvasItem *item);
+namespace {
 
-/* SPCanvasItem */
+gint const UPDATE_PRIORITY = G_PRIORITY_HIGH_IDLE;
 
-enum {ITEM_EVENT, ITEM_LAST_SIGNAL};
-enum {PROP_0, PROP_VISIBLE};
+GdkWindow *getWindow(SPCanvas *canvas)
+{
+    return gtk_widget_get_window(reinterpret_cast<GtkWidget *>(canvas));
+}
+
+enum {
+    SP_CANVAS_ITEM_VISIBLE = 1 << 7,
+    SP_CANVAS_ITEM_NEED_UPDATE = 1 << 8,
+    SP_CANVAS_ITEM_NEED_AFFINE = 1 << 9
+};
+
+// SPCanvasItem
+
+enum {
+    ITEM_EVENT,
+    ITEM_LAST_SIGNAL
+};
+
+enum {
+    PROP_0,
+    PROP_VISIBLE
+};
 
 
-static void sp_canvas_request_update (SPCanvas *canvas);
-
-static void track_latency(GdkEvent const *event);
-static void sp_canvas_item_class_init (SPCanvasItemClass *klass);
-static void sp_canvas_item_init (SPCanvasItem *item);
-static void sp_canvas_item_dispose (GObject *object);
-static void sp_canvas_item_construct (SPCanvasItem *item, SPCanvasGroup *parent, gchar const *first_arg_name, va_list args);
-
-static int emit_event (SPCanvas *canvas, GdkEvent *event);
-static int pick_current_item (SPCanvas *canvas, GdkEvent *event);
-
-static guint item_signals[ITEM_LAST_SIGNAL] = { 0 };
+void trackLatency(GdkEvent const *event);
 
 /**
- * Registers the SPCanvasItem class with Glib and returns its type number.
+ * Initializes the SPCanvasItem vtable and the "event" signal.
  */
-GType
-sp_canvas_item_get_type (void)
+void sp_canvas_item_class_init(SPCanvasItemClass *klass);
+
+/**
+ * Callback for initialization of SPCanvasItem.
+ */
+void sp_canvas_item_init(SPCanvasItem *item);
+
+/**
+ * Callback that removes item from all referers and destroys it.
+ */
+void sp_canvas_item_dispose(GObject *object);
+
+/**
+ * Sets up the newly created SPCanvasItem.
+ *
+ * We make it static for encapsulation reasons since it was nowhere used.
+ */
+void sp_canvas_item_construct(SPCanvasItem *item, SPCanvasGroup *parent, gchar const *first_arg_name, va_list args);
+
+/**
+ * Convenience function to reorder items in a group's child list.
+ *
+ * This puts the specified link after the "before" link.
+ */
+void put_item_after(GList *link, GList *before);
+
+/**
+ * Helper that returns true iff item is descendant of parent.
+ */
+bool is_descendant(SPCanvasItem const *item, SPCanvasItem const *parent);
+
+guint item_signals[ITEM_LAST_SIGNAL] = { 0 };
+
+struct PaintRectSetup;
+
+} // namespace
+
+class SPCanvasImpl
+{
+public:
+
+    /**
+     * Helper that emits an event for an item in the canvas, be it the current
+     * item, grabbed item, or focused item, as appropriate.
+     */
+    static int emitEvent(SPCanvas *canvas, GdkEvent *event);
+
+    /**
+     * Helper that re-picks the current item in the canvas, based on the event's
+     * coordinates and emits enter/leave events for items as appropriate.
+     */
+    static int pickCurrentItem(SPCanvas *canvas, GdkEvent *event);
+
+    /**
+     * Class initialization function for SPCanvasClass.
+     */
+    static void classInit(SPCanvasClass *klass);
+
+    /**
+     * Callback: object initialization for SPCanvas.
+     */
+    static void init(SPCanvas *canvas);
+
+    /**
+     * Destroy handler for SPCanvas.
+     */
+    static void destroy(GtkObject *object);
+
+    /**
+     * The canvas widget's realize callback.
+     */
+    static void realize(GtkWidget *widget);
+
+    /**
+     * The canvas widget's unrealize callback.
+     */
+    static void unrealize(GtkWidget *widget);
+
+    /**
+     * The canvas widget's size request callback.
+     */
+    static void sizeRequest(GtkWidget *widget, GtkRequisition *req);
+
+    /**
+     * The canvas widget's size allocate callback.
+     */
+    static void sizeAllocate(GtkWidget *widget, GtkAllocation *allocation);
+
+    /**
+     * Button event handler for the canvas.
+     */
+    static gint button(GtkWidget *widget, GdkEventButton *event);
+
+    /**
+     * Scroll event handler for the canvas.
+     *
+     * @todo FIXME: generate motion events to re-select items.
+     */
+    static gint handleScroll(GtkWidget *widget, GdkEventScroll *event);
+
+    /**
+     * Motion event handler for the canvas.
+     */
+    static gint handleMotion(GtkWidget *widget, GdkEventMotion *event);
+
+    /**
+     * The canvas widget's expose callback.
+     */
+    static gint handleExpose(GtkWidget *widget, GdkEventExpose *event);
+
+    /**
+     * The canvas widget's keypress callback.
+     */
+    static gint handleKeyEvent(GtkWidget *widget, GdkEventKey *event);
+
+    /**
+     * Crossing event handler for the canvas.
+     */
+    static gint handleCrossing(GtkWidget *widget, GdkEventCrossing *event);
+
+    /**
+     * Focus in handler for the canvas.
+     */
+    static gint handleFocusIn(GtkWidget *widget, GdkEventFocus *event);
+
+    /**
+     * Focus out handler for the canvas.
+     */
+    static gint handleFocusOut(GtkWidget *widget, GdkEventFocus *event);
+
+    /**
+     * Helper that allocates a new tile array for the canvas, copying overlapping tiles from the old array
+     */
+    static void sp_canvas_resize_tiles(SPCanvas* canvas, int nl, int nt, int nr, int nb);
+
+    /**
+     * Helper that queues a canvas rectangle for redraw
+     */
+    static void sp_canvas_dirty_rect(SPCanvas* canvas, Geom::IntRect const &area);
+
+    /**
+     * Helper that marks specific canvas rectangle as clean (val == 0) or dirty (otherwise)
+     */
+    static void sp_canvas_mark_rect(SPCanvas* canvas, Geom::IntRect const &area, uint8_t val);
+
+    /**
+     * Helper that invokes update, paint, and repick on canvas.
+     */
+    static int do_update(SPCanvas *canvas);
+
+    static void sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect const &paint_rect, Geom::IntRect const &canvas_rect, int sw);
+
+    /**
+     * Paint the given rect, recursively subdividing the region until it is the size of a single
+     * buffer.
+     *
+     * @return true if the drawing completes
+     */
+    static int sp_canvas_paint_rect_internal(PaintRectSetup const *setup, Geom::IntRect const &this_rect);
+
+    /**
+     * Helper that draws a specific rectangular part of the canvas.
+     *
+     * @return true if the rectangle painting succeeds.
+     */
+    static bool sp_canvas_paint_rect(SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1);
+
+    /**
+     * Helper that repaints the areas in the canvas that need it.
+     *
+     * @return true if all the dirty parts have been redrawn
+     */
+    static int paint(SPCanvas *canvas);
+
+    /**
+     * Idle handler for the canvas that deals with pending updates and redraws.
+     */
+    static gint idle_handler(gpointer data);
+
+    /**
+     * Convenience function to add an idle handler to a canvas.
+     */
+    static void add_idle(SPCanvas *canvas);
+
+    /**
+     * Convenience function to remove the idle handler of a canvas.
+     */
+    static void remove_idle(SPCanvas *canvas);
+
+    /**
+     * Removes the transient state of the canvas (idle handler, grabs).
+     */
+    static void shutdown_transients(SPCanvas *canvas);
+
+    /**
+     * Update callback for canvas widget.
+     */
+    static void requestCanvasUpdate(SPCanvas *canvas);
+
+    static GtkWidgetClass *parentClass;
+};
+
+GtkWidgetClass *SPCanvasImpl::parentClass = 0;
+
+GType SPCanvasItem::getType()
 {
     static GType type = 0;
     if (!type) {
         static GTypeInfo const info = {
-            sizeof (SPCanvasItemClass),
+            sizeof(SPCanvasItemClass),
             NULL, NULL,
-            (GClassInitFunc) sp_canvas_item_class_init,
+            reinterpret_cast<GClassInitFunc>(sp_canvas_item_class_init),
             NULL, NULL,
-            sizeof (SPCanvasItem),
+            sizeof(SPCanvasItem),
             0,
-            (GInstanceInitFunc) sp_canvas_item_init,
+            reinterpret_cast<GInstanceInitFunc>(sp_canvas_item_init),
             NULL
         };
-        type = g_type_register_static (GTK_TYPE_OBJECT, "SPCanvasItem", &info, (GTypeFlags)0);
+        type = g_type_register_static(GTK_TYPE_OBJECT, "SPCanvasItem", &info, GTypeFlags(0));
     }
 
     return type;
 }
 
-/**
- * Initializes the SPCanvasItem vtable and the "event" signal.
- */
-static void
-sp_canvas_item_class_init (SPCanvasItemClass *klass)
+namespace {
+
+void sp_canvas_item_class_init(SPCanvasItemClass *klass)
 {
     GObjectClass *object_class = (GObjectClass *) klass;
 
@@ -149,11 +407,7 @@ sp_canvas_item_class_init (SPCanvasItemClass *klass)
     object_class->dispose = sp_canvas_item_dispose;
 }
 
-/**
- * Callback for initialization of SPCanvasItem.
- */
-static void
-sp_canvas_item_init (SPCanvasItem *item)
+void sp_canvas_item_init(SPCanvasItem *item)
 {
     // TODO items should not be visible on creation - this causes kludges with items
     // that should be initially invisible; examples of such items: node handles, the CtrlRect
@@ -162,17 +416,18 @@ sp_canvas_item_init (SPCanvasItem *item)
     item->xform = Geom::Affine(Geom::identity());
 }
 
+} // namespace
+
 /**
  * Constructs new SPCanvasItem on SPCanvasGroup.
  */
-SPCanvasItem *
-sp_canvas_item_new (SPCanvasGroup *parent, GType type, gchar const *first_arg_name, ...)
+SPCanvasItem *sp_canvas_item_new(SPCanvasGroup *parent, GType type, gchar const *first_arg_name, ...)
 {
     va_list args;
 
-    g_return_val_if_fail (parent != NULL, NULL);
-    g_return_val_if_fail (SP_IS_CANVAS_GROUP (parent), NULL);
-    g_return_val_if_fail (g_type_is_a (type, sp_canvas_item_get_type ()), NULL);
+    g_return_val_if_fail(parent != NULL, NULL);
+    g_return_val_if_fail(SP_IS_CANVAS_GROUP (parent), NULL);
+    g_return_val_if_fail(g_type_is_a(type, SPCanvasItem::getType()), NULL);
 
     SPCanvasItem *item = SP_CANVAS_ITEM (g_object_new (type, NULL));
 
@@ -183,13 +438,9 @@ sp_canvas_item_new (SPCanvasGroup *parent, GType type, gchar const *first_arg_na
     return item;
 }
 
-/**
- * Sets up the newly created SPCanvasItem.
- *
- * We make it static for encapsulation reasons since it was nowhere used.
- */
-static void
-sp_canvas_item_construct (SPCanvasItem *item, SPCanvasGroup *parent, gchar const *first_arg_name, va_list args)
+namespace {
+
+void sp_canvas_item_construct(SPCanvasItem *item, SPCanvasGroup *parent, gchar const *first_arg_name, va_list args)
 {
     g_return_if_fail (SP_IS_CANVAS_GROUP (parent));
     g_return_if_fail (SP_IS_CANVAS_ITEM (item));
@@ -199,16 +450,17 @@ sp_canvas_item_construct (SPCanvasItem *item, SPCanvasGroup *parent, gchar const
 
     g_object_set_valist (G_OBJECT (item), first_arg_name, args);
 
-    group_add (SP_CANVAS_GROUP (item->parent), item);
+    SP_CANVAS_GROUP(item->parent)->add(item);
 
     sp_canvas_item_request_update (item);
 }
 
+} // namespace
+
 /**
  * Helper function that requests redraw only if item's visible flag is set.
  */
-static void
-redraw_if_visible (SPCanvasItem *item)
+static void redraw_if_visible(SPCanvasItem *item)
 {
     if (item->flags & SP_CANVAS_ITEM_VISIBLE) {
         int x0 = (int)(item->x1);
@@ -217,16 +469,14 @@ redraw_if_visible (SPCanvasItem *item)
         int y1 = (int)(item->y2);
 
         if (x0 !=0 || x1 !=0 || y0 !=0 || y1 !=0) {
-            sp_canvas_request_redraw (item->canvas, (int)(item->x1), (int)(item->y1), (int)(item->x2 + 1), (int)(item->y2 + 1));
+            item->canvas->requestRedraw((int)(item->x1), (int)(item->y1), (int)(item->x2 + 1), (int)(item->y2 + 1));
         }
     }
 }
 
-/**
- * Callback that removes item from all referers and destroys it.
- */
-static void
-sp_canvas_item_dispose (GObject *object)
+namespace {
+
+void sp_canvas_item_dispose(GObject *object)
 {
     SPCanvasItem *item = SP_CANVAS_ITEM (object);
 
@@ -256,39 +506,44 @@ sp_canvas_item_dispose (GObject *object)
         gdk_pointer_ungrab (GDK_CURRENT_TIME);
     }
 
-    if (item == item->canvas->focused_item)
+    if (item == item->canvas->focused_item) {
         item->canvas->focused_item = NULL;
-
-    if (item->parent) {
-        group_remove (SP_CANVAS_GROUP (item->parent), item);
     }
 
-    G_OBJECT_CLASS (g_type_class_peek(g_type_parent(sp_canvas_item_get_type())))->dispose (object);
+    if (item->parent) {
+        SP_CANVAS_GROUP(item->parent)->remove(item);
+    }
+
+    G_OBJECT_CLASS(g_type_class_peek(g_type_parent(SPCanvasItem::getType())))->dispose(object);
 }
+
+} // namespace
 
 /**
  * Helper function to update item and its children.
  *
  * NB! affine is parent2canvas.
  */
-static void
-sp_canvas_item_invoke_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
+static void sp_canvas_item_invoke_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
-    /* Apply the child item's transform */
+    // Apply the child item's transform
     Geom::Affine child_affine = item->xform * affine;
 
-    /* apply object flags to child flags */
+    // apply object flags to child flags
     int child_flags = flags & ~SP_CANVAS_UPDATE_REQUESTED;
 
-    if (item->flags & SP_CANVAS_ITEM_NEED_UPDATE)
+    if (item->flags & SP_CANVAS_ITEM_NEED_UPDATE) {
         child_flags |= SP_CANVAS_UPDATE_REQUESTED;
+    }
 
-    if (item->flags & SP_CANVAS_ITEM_NEED_AFFINE)
+    if (item->flags & SP_CANVAS_ITEM_NEED_AFFINE) {
         child_flags |= SP_CANVAS_UPDATE_AFFINE;
+    }
 
     if (child_flags & (SP_CANVAS_UPDATE_REQUESTED | SP_CANVAS_UPDATE_AFFINE)) {
-        if (SP_CANVAS_ITEM_GET_CLASS (item)->update)
-            SP_CANVAS_ITEM_GET_CLASS (item)->update (item, child_affine, child_flags);
+        if (SP_CANVAS_ITEM_GET_CLASS (item)->update) {
+            SP_CANVAS_ITEM_GET_CLASS (item)->update(item, child_affine, child_flags);
+        }
     }
 
     GTK_OBJECT_UNSET_FLAGS (item, SP_CANVAS_ITEM_NEED_UPDATE);
@@ -302,11 +557,11 @@ sp_canvas_item_invoke_update (SPCanvasItem *item, Geom::Affine const &affine, un
  * system.  This routine applies the inverse of the item's transform,
  * maintaining the affine invariant.
  */
-static double
-sp_canvas_item_invoke_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item)
+static double sp_canvas_item_invoke_point(SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item)
 {
-    if (SP_CANVAS_ITEM_GET_CLASS (item)->point)
+    if (SP_CANVAS_ITEM_GET_CLASS(item)->point) {
         return SP_CANVAS_ITEM_GET_CLASS (item)->point (item, p, actual_item);
+    }
 
     return Geom::infinity();
 }
@@ -318,8 +573,7 @@ sp_canvas_item_invoke_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **a
  * @item: A canvas item.
  * @affine: An affine transformation matrix.
  */
-void
-sp_canvas_item_affine_absolute (SPCanvasItem *item, Geom::Affine const &affine)
+void sp_canvas_item_affine_absolute(SPCanvasItem *item, Geom::Affine const &affine)
 {
     item->xform = affine;
 
@@ -328,28 +582,27 @@ sp_canvas_item_affine_absolute (SPCanvasItem *item, Geom::Affine const &affine)
         if (item->parent != NULL) {
             sp_canvas_item_request_update (item->parent);
         } else {
-            sp_canvas_request_update (item->canvas);
+            SPCanvasImpl::requestCanvasUpdate(item->canvas);
         }
     }
 
     item->canvas->need_repick = TRUE;
 }
 
-/**
- * Convenience function to reorder items in a group's child list.
- *
- * This puts the specified link after the "before" link.
- */
-static void
-put_item_after (GList *link, GList *before)
+namespace {
+
+void put_item_after(GList *link, GList *before)
 {
-    if (link == before)
+    if (link == before) {
         return;
+    }
 
     SPCanvasGroup *parent = SP_CANVAS_GROUP (SP_CANVAS_ITEM (link->data)->parent);
 
     if (before == NULL) {
-        if (link == parent->items) return;
+        if (link == parent->items) {
+            return;
+        }
 
         link->prev->next = link->next;
 
@@ -364,15 +617,17 @@ put_item_after (GList *link, GList *before)
         link->next->prev = link;
         parent->items = link;
     } else {
-        if ((link == parent->last) && (before == parent->last->prev))
+        if ((link == parent->last) && (before == parent->last->prev)) {
             return;
+        }
 
-        if (link->next)
+        if (link->next) {
             link->next->prev = link->prev;
+        }
 
-        if (link->prev)
+        if (link->prev) {
             link->prev->next = link->next;
-        else {
+        } else {
             parent->items = link->next;
             parent->items->prev = NULL;
         }
@@ -382,32 +637,34 @@ put_item_after (GList *link, GList *before)
 
         link->prev->next = link;
 
-        if (link->next)
+        if (link->next) {
             link->next->prev = link;
-        else
+        } else {
             parent->last = link;
+        }
     }
 }
 
+} // namespace
 
 /**
  * Raises the item in its parent's stack by the specified number of positions.
  *
- * \param item A canvas item.
- * \param positions Number of steps to raise the item.
+ * @param item A canvas item.
+ * @param positions Number of steps to raise the item.
  *
  * If the number of positions is greater than the distance to the top of the
  * stack, then the item is put at the top.
  */
-void
-sp_canvas_item_raise (SPCanvasItem *item, int positions)
+void sp_canvas_item_raise(SPCanvasItem *item, int positions)
 {
     g_return_if_fail (item != NULL);
     g_return_if_fail (SP_IS_CANVAS_ITEM (item));
     g_return_if_fail (positions >= 0);
 
-    if (!item->parent || positions == 0)
+    if (!item->parent || positions == 0) {
         return;
+    }
 
     SPCanvasGroup *parent = SP_CANVAS_GROUP (item->parent);
     GList *link = g_list_find (parent->items, item);
@@ -417,8 +674,9 @@ sp_canvas_item_raise (SPCanvasItem *item, int positions)
     for (before = link; positions && before; positions--)
         before = before->next;
 
-    if (!before)
+    if (!before) {
         before = parent->last;
+    }
 
     put_item_after (link, before);
 
@@ -430,32 +688,34 @@ sp_canvas_item_raise (SPCanvasItem *item, int positions)
 /**
  * Lowers the item in its parent's stack by the specified number of positions.
  *
- * \param item A canvas item.
- * \param positions Number of steps to lower the item.
+ * @param item A canvas item.
+ * @param positions Number of steps to lower the item.
  *
  * If the number of positions is greater than the distance to the bottom of the
  * stack, then the item is put at the bottom.
- **/
-void
-sp_canvas_item_lower (SPCanvasItem *item, int positions)
+ */
+void sp_canvas_item_lower(SPCanvasItem *item, int positions)
 {
     g_return_if_fail (item != NULL);
     g_return_if_fail (SP_IS_CANVAS_ITEM (item));
     g_return_if_fail (positions >= 1);
 
-    if (!item->parent || positions == 0)
+    if (!item->parent || positions == 0) {
         return;
+    }
 
     SPCanvasGroup *parent = SP_CANVAS_GROUP (item->parent);
     GList *link = g_list_find (parent->items, item);
     g_assert (link != NULL);
 
     GList *before;
-    if (link->prev)
-        for (before = link->prev; positions && before; positions--)
+    if (link->prev) {
+        for (before = link->prev; positions && before; positions--) {
             before = before->prev;
-    else
+        }
+    } else {
         before = NULL;
+    }
 
     put_item_after (link, before);
 
@@ -463,8 +723,7 @@ sp_canvas_item_lower (SPCanvasItem *item, int positions)
     item->canvas->need_repick = TRUE;
 }
 
-bool
-sp_canvas_item_is_visible (SPCanvasItem *item)
+bool sp_canvas_item_is_visible(SPCanvasItem *item)
 {
     return item->flags & SP_CANVAS_ITEM_VISIBLE;
 }
@@ -473,14 +732,14 @@ sp_canvas_item_is_visible (SPCanvasItem *item)
 /**
  * Sets visible flag on item and requests a redraw.
  */
-void
-sp_canvas_item_show (SPCanvasItem *item)
+void sp_canvas_item_show(SPCanvasItem *item)
 {
     g_return_if_fail (item != NULL);
     g_return_if_fail (SP_IS_CANVAS_ITEM (item));
 
-    if (item->flags & SP_CANVAS_ITEM_VISIBLE)
+    if (item->flags & SP_CANVAS_ITEM_VISIBLE) {
         return;
+    }
 
     item->flags |= SP_CANVAS_ITEM_VISIBLE;
 
@@ -490,7 +749,7 @@ sp_canvas_item_show (SPCanvasItem *item)
     int y1 = (int)(item->y2);
 
     if (x0 !=0 || x1 !=0 || y0 !=0 || y1 !=0) {
-        sp_canvas_request_redraw (item->canvas, (int)(item->x1), (int)(item->y1), (int)(item->x2 + 1), (int)(item->y2 + 1));
+        item->canvas->requestRedraw((int)(item->x1), (int)(item->y1), (int)(item->x2 + 1), (int)(item->y2 + 1));
         item->canvas->need_repick = TRUE;
     }
 }
@@ -498,14 +757,14 @@ sp_canvas_item_show (SPCanvasItem *item)
 /**
  * Clears visible flag on item and requests a redraw.
  */
-void
-sp_canvas_item_hide (SPCanvasItem *item)
+void sp_canvas_item_hide(SPCanvasItem *item)
 {
     g_return_if_fail (item != NULL);
     g_return_if_fail (SP_IS_CANVAS_ITEM (item));
 
-    if (!(item->flags & SP_CANVAS_ITEM_VISIBLE))
+    if (!(item->flags & SP_CANVAS_ITEM_VISIBLE)) {
         return;
+    }
 
     item->flags &= ~SP_CANVAS_ITEM_VISIBLE;
 
@@ -515,7 +774,7 @@ sp_canvas_item_hide (SPCanvasItem *item)
     int y1 = (int)(item->y2);
 
     if (x0 !=0 || x1 !=0 || y0 !=0 || y1 !=0) {
-        sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)(item->x2 + 1), (int)(item->y2 + 1));
+        item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)(item->x2 + 1), (int)(item->y2 + 1));
         item->canvas->need_repick = TRUE;
     }
 }
@@ -525,15 +784,15 @@ sp_canvas_item_hide (SPCanvasItem *item)
  *
  * \pre !canvas->grabbed_item && item->flags & SP_CANVAS_ITEM_VISIBLE
  */
-int
-sp_canvas_item_grab (SPCanvasItem *item, guint event_mask, GdkCursor *cursor, guint32 etime)
+int sp_canvas_item_grab(SPCanvasItem *item, guint event_mask, GdkCursor *cursor, guint32 etime)
 {
     g_return_val_if_fail (item != NULL, -1);
     g_return_val_if_fail (SP_IS_CANVAS_ITEM (item), -1);
     g_return_val_if_fail (gtk_widget_get_mapped (GTK_WIDGET (item->canvas)), -1);
 
-    if (item->canvas->grabbed_item)
+    if (item->canvas->grabbed_item) {
         return -1;
+    }
 
     // This test disallows grabbing events by an invisible item, which may be useful
     // sometimes. An example is the hidden control point used for the selector component,
@@ -547,16 +806,16 @@ sp_canvas_item_grab (SPCanvasItem *item, guint event_mask, GdkCursor *cursor, gu
         event_mask &= ~GDK_POINTER_MOTION_HINT_MASK;
     }
 
-    /* fixme: Top hack (Lauris) */
-    /* fixme: If we add key masks to event mask, Gdk will abort (Lauris) */
-    /* fixme: But Canvas actualle does get key events, so all we need is routing these here */
-    gdk_pointer_grab (SP_CANVAS_WINDOW (item->canvas), FALSE,
+    // fixme: Top hack (Lauris)
+    // fixme: If we add key masks to event mask, Gdk will abort (Lauris)
+    // fixme: But Canvas actualle does get key events, so all we need is routing these here
+    gdk_pointer_grab( getWindow(item->canvas), FALSE,
                       (GdkEventMask)(event_mask & (~(GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK))),
                       NULL, cursor, etime);
 
     item->canvas->grabbed_item = item;
     item->canvas->grabbed_event_mask = event_mask;
-    item->canvas->current_item = item; /* So that events go to the grabbed item */
+    item->canvas->current_item = item; // So that events go to the grabbed item
 
     return 0;
 }
@@ -565,17 +824,17 @@ sp_canvas_item_grab (SPCanvasItem *item, guint event_mask, GdkCursor *cursor, gu
  * Ungrabs the item, which must have been grabbed in the canvas, and ungrabs the
  * mouse.
  *
- * \param item A canvas item that holds a grab.
- * \param etime The timestamp for ungrabbing the mouse.
+ * @param item A canvas item that holds a grab.
+ * @param etime The timestamp for ungrabbing the mouse.
  */
-void
-sp_canvas_item_ungrab (SPCanvasItem *item, guint32 etime)
+void sp_canvas_item_ungrab(SPCanvasItem *item, guint32 etime)
 {
     g_return_if_fail (item != NULL);
     g_return_if_fail (SP_IS_CANVAS_ITEM (item));
 
-    if (item->canvas->grabbed_item != item)
+    if (item->canvas->grabbed_item != item) {
         return;
+    }
 
     item->canvas->grabbed_item = NULL;
 
@@ -599,75 +858,41 @@ Geom::Affine sp_canvas_item_i2w_affine(SPCanvasItem const *item)
     return affine;
 }
 
-/**
- * Helper that returns true iff item is descendant of parent.
- */
-static bool is_descendant(SPCanvasItem const *item, SPCanvasItem const *parent)
+namespace {
+
+bool is_descendant(SPCanvasItem const *item, SPCanvasItem const *parent)
 {
     while (item) {
-        if (item == parent)
+        if (item == parent) {
             return true;
+        }
         item = item->parent;
     }
 
     return false;
 }
 
-/**
- * Focus canvas, and item under cursor if it is not already focussed.
- */
-void
-sp_canvas_item_grab_focus (SPCanvasItem *item)
-{
-    g_return_if_fail (item != NULL);
-    g_return_if_fail (SP_IS_CANVAS_ITEM (item));
-    g_return_if_fail (gtk_widget_get_can_focus (GTK_WIDGET (item->canvas)));
-
-    SPCanvasItem *focused_item = item->canvas->focused_item;
-
-    if (focused_item) {
-        GdkEvent ev;
-        ev.focus_change.type = GDK_FOCUS_CHANGE;
-        ev.focus_change.window = SP_CANVAS_WINDOW (item->canvas);
-        ev.focus_change.send_event = FALSE;
-        ev.focus_change.in = FALSE;
-
-        emit_event (item->canvas, &ev);
-    }
-
-    item->canvas->focused_item = item;
-    gtk_widget_grab_focus (GTK_WIDGET (item->canvas));
-
-    if (focused_item) {
-        GdkEvent ev;
-        ev.focus_change.type = GDK_FOCUS_CHANGE;
-        ev.focus_change.window = SP_CANVAS_WINDOW (item->canvas);
-        ev.focus_change.send_event = FALSE;
-        ev.focus_change.in = TRUE;
-
-        emit_event (item->canvas, &ev);
-    }
-}
+} // namespace
 
 /**
  * Requests that the canvas queue an update for the specified item.
  *
  * To be used only by item implementations.
  */
-void
-sp_canvas_item_request_update (SPCanvasItem *item)
+void sp_canvas_item_request_update(SPCanvasItem *item)
 {
-    if (item->flags & SP_CANVAS_ITEM_NEED_UPDATE)
+    if (item->flags & SP_CANVAS_ITEM_NEED_UPDATE) {
         return;
+    }
 
     item->flags |= SP_CANVAS_ITEM_NEED_UPDATE;
 
     if (item->parent != NULL) {
-        /* Recurse up the tree */
+        // Recurse up the tree
         sp_canvas_item_request_update (item->parent);
     } else {
-        /* Have reached the top of the tree, make sure the update call gets scheduled. */
-        sp_canvas_request_update (item->canvas);
+        // Have reached the top of the tree, make sure the update call gets scheduled.
+        SPCanvasImpl::requestCanvasUpdate(item->canvas);
     }
 }
 
@@ -679,23 +904,12 @@ gint sp_canvas_item_order (SPCanvasItem * item)
     return g_list_index (SP_CANVAS_GROUP (item->parent)->items, item);
 }
 
-/* SPCanvasGroup */
-
-static void sp_canvas_group_class_init (SPCanvasGroupClass *klass);
-static void sp_canvas_group_init (SPCanvasGroup *group);
-static void sp_canvas_group_destroy (GtkObject *object);
-
-static void sp_canvas_group_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
-static double sp_canvas_group_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
-static void sp_canvas_group_render (SPCanvasItem *item, SPCanvasBuf *buf);
-static void sp_canvas_group_viewbox_changed (SPCanvasItem *item, Geom::IntRect const &new_area);
-
-static SPCanvasItemClass *group_parent_class;
+// SPCanvasGroup
 
 /**
  * Registers SPCanvasGroup class with Gtk and returns its type number.
  */
-GType sp_canvas_group_get_type(void)
+GType SPCanvasGroup::getType(void)
 {
     static GType type = 0;
     if (!type) {
@@ -703,78 +917,62 @@ GType sp_canvas_group_get_type(void)
             sizeof(SPCanvasGroupClass),
             0, // base_init
             0, // base_finalize
-            (GClassInitFunc)sp_canvas_group_class_init,
+            reinterpret_cast<GClassInitFunc>(SPCanvasGroup::classInit),
             0, // class_finalize
             0, // class_data
             sizeof(SPCanvasGroup),
             0, // n_preallocs
-            (GInstanceInitFunc)sp_canvas_group_init,
+            reinterpret_cast<GInstanceInitFunc>(SPCanvasGroup::init),
             0 // value_table
         };
-        type = g_type_register_static(sp_canvas_item_get_type(), "SPCanvasGroup", &info, static_cast<GTypeFlags>(0));
+        type = g_type_register_static(SPCanvasItem::getType(), "SPCanvasGroup", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }
 
-/**
- * Class initialization function for SPCanvasGroupClass
- */
-static void
-sp_canvas_group_class_init (SPCanvasGroupClass *klass)
+void SPCanvasGroup::classInit(SPCanvasGroupClass *klass)
 {
-    GtkObjectClass *object_class = (GtkObjectClass *) klass;
-    SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
+    GtkObjectClass *object_class = reinterpret_cast<GtkObjectClass *>(klass);
+    SPCanvasItemClass *item_class = reinterpret_cast<SPCanvasItemClass *>(klass);
 
-    group_parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
+    parentClass = reinterpret_cast<SPCanvasItemClass*>(g_type_class_peek_parent(klass));
 
-    object_class->destroy = sp_canvas_group_destroy;
+    object_class->destroy = SPCanvasGroup::destroy;
 
-    item_class->update = sp_canvas_group_update;
-    item_class->render = sp_canvas_group_render;
-    item_class->point = sp_canvas_group_point;
-    item_class->viewbox_changed = sp_canvas_group_viewbox_changed;
+    item_class->update = SPCanvasGroup::update;
+    item_class->render = SPCanvasGroup::render;
+    item_class->point = SPCanvasGroup::point;
+    item_class->viewbox_changed = SPCanvasGroup::viewboxChanged;
 }
 
-/**
- * Callback. Empty.
- */
-static void
-sp_canvas_group_init (SPCanvasGroup */*group*/)
+void SPCanvasGroup::init(SPCanvasGroup * /*group*/)
 {
-    /* Nothing here */
+    // Nothing here
 }
 
-/**
- * Callback that destroys all items in group and calls group's virtual
- * destroy() function.
- */
-static void
-sp_canvas_group_destroy (GtkObject *object)
+void SPCanvasGroup::destroy(GtkObject *object)
 {
-    g_return_if_fail (object != NULL);
-    g_return_if_fail (SP_IS_CANVAS_GROUP (object));
+    g_return_if_fail(object != NULL);
+    g_return_if_fail(SP_IS_CANVAS_GROUP(object));
 
-    SPCanvasGroup const *group = SP_CANVAS_GROUP (object);
+    SPCanvasGroup const *group = SP_CANVAS_GROUP(object);
 
     GList *list = group->items;
     while (list) {
-        SPCanvasItem *child = (SPCanvasItem *)list->data;
+        SPCanvasItem *child = reinterpret_cast<SPCanvasItem *>(list->data);
         list = list->next;
 
-        gtk_object_destroy (GTK_OBJECT (child));
+        gtk_object_destroy(GTK_OBJECT(child));
     }
 
-    if (GTK_OBJECT_CLASS (group_parent_class)->destroy)
-        (* GTK_OBJECT_CLASS (group_parent_class)->destroy) (object);
+    if (GTK_OBJECT_CLASS(parentClass)->destroy) {
+        (* GTK_OBJECT_CLASS(parentClass)->destroy)(object);
+    }
 }
 
-/**
- * Update handler for canvas groups
- */
-static void
-sp_canvas_group_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
+void SPCanvasGroup::update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
-    SPCanvasGroup const *group = SP_CANVAS_GROUP (item);
+    SPCanvasGroup const *group = SP_CANVAS_GROUP(item);
     Geom::RectHull corners(Geom::Point(0, 0));
     bool empty=true;
 
@@ -806,13 +1004,9 @@ sp_canvas_group_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned
     }
 }
 
-/**
- * Point handler for canvas groups.
- */
-static double
-sp_canvas_group_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item)
+double SPCanvasGroup::point(SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item)
 {
-    SPCanvasGroup const *group = SP_CANVAS_GROUP (item);
+    SPCanvasGroup const *group = SP_CANVAS_GROUP(item);
     double const x = p[Geom::X];
     double const y = p[Geom::Y];
     int x1 = (int)(x - item->canvas->close_enough);
@@ -829,14 +1023,15 @@ sp_canvas_group_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_
         SPCanvasItem *child = (SPCanvasItem *)list->data;
 
         if ((child->x1 <= x2) && (child->y1 <= y2) && (child->x2 >= x1) && (child->y2 >= y1)) {
-            SPCanvasItem *point_item = NULL; /* cater for incomplete item implementations */
+            SPCanvasItem *point_item = NULL; // cater for incomplete item implementations
 
             int has_point;
             if ((child->flags & SP_CANVAS_ITEM_VISIBLE) && SP_CANVAS_ITEM_GET_CLASS (child)->point) {
                 dist = sp_canvas_item_invoke_point (child, p, &point_item);
                 has_point = TRUE;
-            } else
+            } else {
                 has_point = FALSE;
+            }
 
             // This metric should be improved, because in case of (partly) overlapping items we will now
             // always select the last one that has been added to the group. We could instead select the one
@@ -854,13 +1049,9 @@ sp_canvas_group_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_
     return best;
 }
 
-/**
- * Renders all visible canvas group items in buf rectangle.
- */
-static void
-sp_canvas_group_render (SPCanvasItem *item, SPCanvasBuf *buf)
+void SPCanvasGroup::render(SPCanvasItem *item, SPCanvasBuf *buf)
 {
-    SPCanvasGroup const *group = SP_CANVAS_GROUP (item);
+    SPCanvasGroup const *group = SP_CANVAS_GROUP(item);
 
     for (GList *list = group->items; list; list = list->next) {
         SPCanvasItem *child = (SPCanvasItem *)list->data;
@@ -869,110 +1060,73 @@ sp_canvas_group_render (SPCanvasItem *item, SPCanvasBuf *buf)
                 (child->y1 < buf->rect.bottom()) &&
                 (child->x2 > buf->rect.left()) &&
                 (child->y2 > buf->rect.top())) {
-                if (SP_CANVAS_ITEM_GET_CLASS (child)->render)
-                    SP_CANVAS_ITEM_GET_CLASS (child)->render (child, buf);
+                if (SP_CANVAS_ITEM_GET_CLASS(child)->render) {
+                    SP_CANVAS_ITEM_GET_CLASS(child)->render(child, buf);
+                }
             }
         }
     }
 }
 
-static void
-sp_canvas_group_viewbox_changed (SPCanvasItem *item, Geom::IntRect const &new_area)
+void SPCanvasGroup::viewboxChanged(SPCanvasItem *item, Geom::IntRect const &new_area)
 {
-    SPCanvasGroup *group = SP_CANVAS_GROUP (item);
+    SPCanvasGroup *group = SP_CANVAS_GROUP(item);
     
     for (GList *list = group->items; list; list = list->next) {
         SPCanvasItem *child = (SPCanvasItem *)list->data;
         if (child->flags & SP_CANVAS_ITEM_VISIBLE) {
-            if (SP_CANVAS_ITEM_GET_CLASS (child)->viewbox_changed)
-                SP_CANVAS_ITEM_GET_CLASS (child)->viewbox_changed (child, new_area);
+            if (SP_CANVAS_ITEM_GET_CLASS(child)->viewbox_changed) {
+                SP_CANVAS_ITEM_GET_CLASS(child)->viewbox_changed(child, new_area);
+            }
         }
     }
 }
 
-/**
- * Adds an item to a canvas group.
- */
-static void
-group_add (SPCanvasGroup *group, SPCanvasItem *item)
+void SPCanvasGroup::add(SPCanvasItem *item)
 {
-    gtk_object_ref (GTK_OBJECT (item));
-    g_object_ref_sink (item);
+    gtk_object_ref( GTK_OBJECT(item) );
+    g_object_ref_sink(item);
 
-    if (!group->items) {
-        group->items = g_list_append (group->items, item);
-        group->last = group->items;
+    if (!items) {
+        items = g_list_append(items, item);
+        last = items;
     } else {
-        group->last = g_list_append (group->last, item)->next;
+        last = g_list_append(last, item)->next;
     }
 
-    sp_canvas_item_request_update (item);
+    sp_canvas_item_request_update(item);
 }
 
-/**
- * Removes an item from a canvas group
- */
-static void
-group_remove (SPCanvasGroup *group, SPCanvasItem *item)
+void SPCanvasGroup::remove(SPCanvasItem *item)
 {
-    g_return_if_fail (group != NULL);
-    g_return_if_fail (SP_IS_CANVAS_GROUP (group));
-    g_return_if_fail (item != NULL);
+    g_return_if_fail(item != NULL);
 
-    for (GList *children = group->items; children; children = children->next) {
+    for (GList *children = items; children; children = children->next) {
         if (children->data == item) {
 
-            /* Unparent the child */
-
+            // Unparent the child
             item->parent = NULL;
-            gtk_object_unref (GTK_OBJECT (item));
+            gtk_object_unref(GTK_OBJECT(item));
 
-            /* Remove it from the list */
+            // Remove it from the list
+            if (children == last) {
+                last = children->prev;
+            }
 
-            if (children == group->last) group->last = children->prev;
-
-            group->items = g_list_remove_link (group->items, children);
-            g_list_free (children);
+            items = g_list_remove_link(items, children);
+            g_list_free(children);
             break;
         }
     }
 }
 
-/* SPCanvas */
-
-static void sp_canvas_class_init (SPCanvasClass *klass);
-static void sp_canvas_init (SPCanvas *canvas);
-static void sp_canvas_destroy (GtkObject *object);
-
-static void sp_canvas_realize (GtkWidget *widget);
-static void sp_canvas_unrealize (GtkWidget *widget);
-
-static void sp_canvas_size_request (GtkWidget *widget, GtkRequisition *req);
-static void sp_canvas_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
-
-static gint sp_canvas_button (GtkWidget *widget, GdkEventButton *event);
-static gint sp_canvas_scroll (GtkWidget *widget, GdkEventScroll *event);
-static gint sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event);
-static gint sp_canvas_expose (GtkWidget *widget, GdkEventExpose *event);
-static gint sp_canvas_key (GtkWidget *widget, GdkEventKey *event);
-static gint sp_canvas_crossing (GtkWidget *widget, GdkEventCrossing *event);
-static gint sp_canvas_focus_in (GtkWidget *widget, GdkEventFocus *event);
-static gint sp_canvas_focus_out (GtkWidget *widget, GdkEventFocus *event);
-
-static GtkWidgetClass *canvas_parent_class;
-
-static void sp_canvas_resize_tiles(SPCanvas* canvas, int nl, int nt, int nr, int nb);
-static void sp_canvas_dirty_rect(SPCanvas* canvas, Geom::IntRect const &area);
-static void sp_canvas_mark_rect(SPCanvas* canvas, Geom::IntRect const &area, uint8_t val);
-static int do_update (SPCanvas *canvas);
-
 /**
  * Registers the SPCanvas class if necessary, and returns the type ID
  * associated to it.
  *
- * \return The type ID of the SPCanvas class.
- **/
-GType sp_canvas_get_type(void)
+ * @return The type ID of the SPCanvas class.
+ */
+GType SPCanvas::getType(void)
 {
     static GType type = 0;
     if (!type) {
@@ -980,12 +1134,12 @@ GType sp_canvas_get_type(void)
             sizeof(SPCanvasClass),
             0, // base_init
             0, // base_finalize
-            (GClassInitFunc)sp_canvas_class_init,
+            (GClassInitFunc)SPCanvasImpl::classInit,
             0, // class_finalize
             0, // class_data
             sizeof(SPCanvas),
             0, // n_preallocs
-            (GInstanceInitFunc)sp_canvas_init,
+            (GInstanceInitFunc)SPCanvasImpl::init,
             0 // value_table
         };
         type = g_type_register_static(GTK_TYPE_WIDGET, "SPCanvas", &info, static_cast<GTypeFlags>(0));
@@ -993,41 +1147,33 @@ GType sp_canvas_get_type(void)
     return type;
 }
 
-/**
- * Class initialization function for SPCanvasClass.
- */
-static void
-sp_canvas_class_init (SPCanvasClass *klass)
+void SPCanvasImpl::classInit(SPCanvasClass *klass)
 {
     GtkObjectClass *object_class = (GtkObjectClass *) klass;
     GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
 
-    canvas_parent_class = (GtkWidgetClass *)g_type_class_peek_parent (klass);
+    parentClass = reinterpret_cast<GtkWidgetClass *>(g_type_class_peek_parent(klass));
 
-    object_class->destroy = sp_canvas_destroy;
+    object_class->destroy = SPCanvasImpl::destroy;
 
-    widget_class->realize = sp_canvas_realize;
-    widget_class->unrealize = sp_canvas_unrealize;
-    widget_class->size_request = sp_canvas_size_request;
-    widget_class->size_allocate = sp_canvas_size_allocate;
-    widget_class->button_press_event = sp_canvas_button;
-    widget_class->button_release_event = sp_canvas_button;
-    widget_class->motion_notify_event = sp_canvas_motion;
-    widget_class->scroll_event = sp_canvas_scroll;
-    widget_class->expose_event = sp_canvas_expose;
-    widget_class->key_press_event = sp_canvas_key;
-    widget_class->key_release_event = sp_canvas_key;
-    widget_class->enter_notify_event = sp_canvas_crossing;
-    widget_class->leave_notify_event = sp_canvas_crossing;
-    widget_class->focus_in_event = sp_canvas_focus_in;
-    widget_class->focus_out_event = sp_canvas_focus_out;
+    widget_class->realize = SPCanvasImpl::realize;
+    widget_class->unrealize = SPCanvasImpl::unrealize;
+    widget_class->size_request = SPCanvasImpl::sizeRequest;
+    widget_class->size_allocate = SPCanvasImpl::sizeAllocate;
+    widget_class->button_press_event = SPCanvasImpl::button;
+    widget_class->button_release_event = SPCanvasImpl::button;
+    widget_class->motion_notify_event = SPCanvasImpl::handleMotion;
+    widget_class->scroll_event = SPCanvasImpl::handleScroll;
+    widget_class->expose_event = SPCanvasImpl::handleExpose;
+    widget_class->key_press_event = SPCanvasImpl::handleKeyEvent;
+    widget_class->key_release_event = SPCanvasImpl::handleKeyEvent;
+    widget_class->enter_notify_event = SPCanvasImpl::handleCrossing;
+    widget_class->leave_notify_event = SPCanvasImpl::handleCrossing;
+    widget_class->focus_in_event = SPCanvasImpl::handleFocusIn;
+    widget_class->focus_out_event = SPCanvasImpl::handleFocusOut;
 }
 
-/**
- * Callback: object initialization for SPCanvas.
- */
-static void
-sp_canvas_init (SPCanvas *canvas)
+void SPCanvasImpl::init(SPCanvas *canvas)
 {
     gtk_widget_set_has_window (GTK_WIDGET (canvas), TRUE);
     gtk_widget_set_double_buffered (GTK_WIDGET (canvas), FALSE);
@@ -1037,8 +1183,8 @@ sp_canvas_init (SPCanvas *canvas)
     canvas->pick_event.crossing.x = 0;
     canvas->pick_event.crossing.y = 0;
 
-    /* Create the root item as a special case */
-    canvas->root = SP_CANVAS_ITEM (g_object_new (sp_canvas_group_get_type (), NULL));
+    // Create the root item as a special case
+    canvas->root = SP_CANVAS_ITEM(g_object_new(SPCanvasGroup::getType(), NULL));
     canvas->root->canvas = canvas;
 
     gtk_object_ref (GTK_OBJECT (canvas->root));
@@ -1066,11 +1212,7 @@ sp_canvas_init (SPCanvas *canvas)
     canvas->is_scrolling = false;
 }
 
-/**
- * Convenience function to remove the idle handler of a canvas.
- */
-static void
-remove_idle (SPCanvas *canvas)
+void SPCanvasImpl::remove_idle(SPCanvas *canvas)
 {
     if (canvas->idle_id) {
         g_source_remove (canvas->idle_id);
@@ -1078,17 +1220,13 @@ remove_idle (SPCanvas *canvas)
     }
 }
 
-/*
- * Removes the transient state of the canvas (idle handler, grabs).
- */
-static void
-shutdown_transients (SPCanvas *canvas)
+void SPCanvasImpl::shutdown_transients(SPCanvas *canvas)
 {
-    /* We turn off the need_redraw flag, since if the canvas is mapped again
-     * it will request a redraw anyways.  We do not turn off the need_update
-     * flag, though, because updates are not queued when the canvas remaps
-     * itself.
-     */
+    // We turn off the need_redraw flag, since if the canvas is mapped again
+    // it will request a redraw anyways.  We do not turn off the need_update
+    // flag, though, because updates are not queued when the canvas remaps
+    // itself.
+    //
     if (canvas->need_redraw) {
         canvas->need_redraw = FALSE;
     }
@@ -1102,31 +1240,31 @@ shutdown_transients (SPCanvas *canvas)
         gdk_pointer_ungrab (GDK_CURRENT_TIME);
     }
 
-    remove_idle (canvas);
+    remove_idle(canvas);
 }
 
-/**
- * Destroy handler for SPCanvas.
- */
-static void
-sp_canvas_destroy (GtkObject *object)
+void SPCanvasImpl::destroy(GtkObject *object)
 {
-    SPCanvas *canvas = SP_CANVAS (object);
+    SPCanvas *canvas = SP_CANVAS(object);
 
     if (canvas->root) {
         gtk_object_unref (GTK_OBJECT (canvas->root));
         canvas->root = NULL;
     }
 
-    shutdown_transients (canvas);
+    shutdown_transients(canvas);
 #if ENABLE_LCMS
     canvas->cms_key.~ustring();
 #endif
-    if (GTK_OBJECT_CLASS (canvas_parent_class)->destroy)
-        (* GTK_OBJECT_CLASS (canvas_parent_class)->destroy) (object);
+    if (GTK_OBJECT_CLASS(parentClass)->destroy) {
+        (* GTK_OBJECT_CLASS(parentClass)->destroy)(object);
+    }
 }
 
-static void track_latency(GdkEvent const *event) {
+namespace {
+
+void trackLatency(GdkEvent const *event)
+{
     GdkEventLatencyTracker &tracker = GdkEventLatencyTracker::default_tracker();
     boost::optional<double> latency = tracker.process(event);
     if (latency && *latency > 2.0) {
@@ -1134,22 +1272,15 @@ static void track_latency(GdkEvent const *event) {
     }
 }
 
-/**
- * Returns new canvas as widget.
- */
-GtkWidget *
-sp_canvas_new_aa (void)
-{
-    SPCanvas *canvas = (SPCanvas *)g_object_new (sp_canvas_get_type (), NULL);
+} // namespace
 
-    return (GtkWidget *) canvas;
+GtkWidget *SPCanvas::createAA()
+{
+    SPCanvas *canvas = reinterpret_cast<SPCanvas *>(g_object_new(SPCanvas::getType(), NULL));
+    return GTK_WIDGET(canvas);
 }
 
-/**
- * The canvas widget's realize callback.
- */
-static void
-sp_canvas_realize (GtkWidget *widget)
+void SPCanvasImpl::realize(GtkWidget *widget)
 {
     GdkWindowAttr attributes;
     GtkAllocation allocation;
@@ -1193,11 +1324,7 @@ sp_canvas_realize (GtkWidget *widget)
     gtk_widget_set_realized (widget, TRUE);
 }
 
-/**
- * The canvas widget's unrealize callback.
- */
-static void
-sp_canvas_unrealize (GtkWidget *widget)
+void SPCanvasImpl::unrealize(GtkWidget *widget)
 {
     SPCanvas *canvas = SP_CANVAS (widget);
 
@@ -1205,17 +1332,13 @@ sp_canvas_unrealize (GtkWidget *widget)
     canvas->grabbed_item = NULL;
     canvas->focused_item = NULL;
 
-    shutdown_transients (canvas);
+    shutdown_transients(canvas);
 
-    if (GTK_WIDGET_CLASS (canvas_parent_class)->unrealize)
-        (* GTK_WIDGET_CLASS (canvas_parent_class)->unrealize) (widget);
+    if (GTK_WIDGET_CLASS(parentClass)->unrealize)
+        (* GTK_WIDGET_CLASS(parentClass)->unrealize)(widget);
 }
 
-/**
- * The canvas widget's size_request callback.
- */
-static void
-sp_canvas_size_request (GtkWidget *widget, GtkRequisition *req)
+void SPCanvasImpl::sizeRequest(GtkWidget *widget, GtkRequisition *req)
 {
     static_cast<void>(SP_CANVAS (widget));
 
@@ -1223,11 +1346,7 @@ sp_canvas_size_request (GtkWidget *widget, GtkRequisition *req)
     req->height = 256;
 }
 
-/**
- * The canvas widget's size_allocate callback.
- */
-static void
-sp_canvas_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
+void SPCanvasImpl::sizeAllocate(GtkWidget *widget, GtkAllocation *allocation)
 {
     SPCanvas *canvas = SP_CANVAS (widget);
     GtkAllocation widg_allocation;
@@ -1239,24 +1358,22 @@ sp_canvas_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
     Geom::IntRect new_area = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
         allocation->width, allocation->height);
 
-    /* Schedule redraw of new region */
+    // Schedule redraw of new region
     sp_canvas_resize_tiles(canvas,canvas->x0,canvas->y0,canvas->x0+allocation->width,canvas->y0+allocation->height);
     if (SP_CANVAS_ITEM_GET_CLASS (canvas->root)->viewbox_changed)
         SP_CANVAS_ITEM_GET_CLASS (canvas->root)->viewbox_changed (canvas->root, new_area);
     
     if (allocation->width > widg_allocation.width) {
-        sp_canvas_request_redraw (canvas,
-                                  canvas->x0 + widg_allocation.width,
-                                  0,
-                                  canvas->x0 + allocation->width,
-                                  canvas->y0 + allocation->height);
+        canvas->requestRedraw(canvas->x0 + widg_allocation.width,
+                              0,
+                              canvas->x0 + allocation->width,
+                              canvas->y0 + allocation->height);
     }
     if (allocation->height > widg_allocation.height) {
-        sp_canvas_request_redraw (canvas,
-                                  0,
-                                  canvas->y0 + widg_allocation.height,
-                                  canvas->x0 + allocation->width,
-                                  canvas->y0 + allocation->height);
+        canvas->requestRedraw(0,
+                              canvas->y0 + widg_allocation.height,
+                              canvas->x0 + allocation->width,
+                              canvas->y0 + allocation->height);
     }
 
     gtk_widget_set_allocation (widget, allocation);
@@ -1268,12 +1385,7 @@ sp_canvas_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
     }
 }
 
-/**
- * Helper that emits an event for an item in the canvas, be it the current
- * item, grabbed item, or focused item, as appropriate.
- */
-static int
-emit_event (SPCanvas *canvas, GdkEvent *event)
+int SPCanvasImpl::emitEvent(SPCanvas *canvas, GdkEvent *event)
 {
     guint mask;
 
@@ -1313,9 +1425,9 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
         if (!(mask & canvas->grabbed_event_mask)) return FALSE;
     }
 
-    /* Convert to world coordinates -- we have two cases because of different
-     * offsets of the fields in the event structures.
-     */
+    // Convert to world coordinates -- we have two cases because of different
+    // offsets of the fields in the event structures.
+    //
 
     GdkEvent ev = *event;
 
@@ -1337,12 +1449,12 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
         break;
     }
 
-    /* Choose where we send the event */
+    // Choose where we send the event
 
-    /* canvas->current_item becomes NULL in some cases under Win32
-    ** (e.g. if the pointer leaves the window).  So this is a hack that
-    ** Lauris applied to SP to get around the problem.
-    */
+    // canvas->current_item becomes NULL in some cases under Win32
+    // (e.g. if the pointer leaves the window).  So this is a hack that
+    // Lauris applied to SP to get around the problem.
+    //
     SPCanvasItem* item = NULL;
     if (canvas->grabbed_item && !is_descendant (canvas->current_item, canvas->grabbed_item)) {
         item = canvas->grabbed_item;
@@ -1359,7 +1471,7 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
             // otherwise selection of nodes in the node editor by dragging a rectangle using a
             // tablet will break
             canvas->need_repick = FALSE;
-            pick_current_item (canvas, (GdkEvent *) event);
+            pickCurrentItem(canvas, reinterpret_cast<GdkEvent *>(event));
         }
         item = canvas->current_item;
     }
@@ -1371,10 +1483,9 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
         item = canvas->focused_item;
     }
 
-    /* The event is propagated up the hierarchy (for if someone connected to
-     * a group instead of a leaf event), and emission is stopped if a
-     * handler returns TRUE, just like for GtkWidget events.
-     */
+    // The event is propagated up the hierarchy (for if someone connected to
+    // a group instead of a leaf event), and emission is stopped if a
+    // handler returns TRUE, just like for GtkWidget events.
 
     gint finished = FALSE;
 
@@ -1389,12 +1500,7 @@ emit_event (SPCanvas *canvas, GdkEvent *event)
     return finished;
 }
 
-/**
- * Helper that re-picks the current item in the canvas, based on the event's
- * coordinates and emits enter/leave events for items as appropriate.
- */
-static int
-pick_current_item (SPCanvas *canvas, GdkEvent *event)
+int SPCanvasImpl::pickCurrentItem(SPCanvas *canvas, GdkEvent *event)
 {
     int button_down = 0;
     double x, y;
@@ -1415,14 +1521,14 @@ pick_current_item (SPCanvas *canvas, GdkEvent *event)
         if (!button_down) canvas->left_grabbed_item = FALSE;
     }
 
-    /* Save the event in the canvas.  This is used to synthesize enter and
-     * leave events in case the current item changes.  It is also used to
-     * re-pick the current item if the current one gets deleted.  Also,
-     * synthesize an enter event.
-     */
+    // Save the event in the canvas.  This is used to synthesize enter and
+    // leave events in case the current item changes.  It is also used to
+    // re-pick the current item if the current one gets deleted.  Also,
+    // synthesize an enter event.
+
     if (event != &canvas->pick_event) {
         if ((event->type == GDK_MOTION_NOTIFY) || (event->type == GDK_BUTTON_RELEASE)) {
-            /* these fields have the same offsets in both types of events */
+            // these fields have the same offsets in both types of events
 
             canvas->pick_event.crossing.type       = GDK_ENTER_NOTIFY;
             canvas->pick_event.crossing.window     = event->motion.window;
@@ -1435,7 +1541,7 @@ pick_current_item (SPCanvas *canvas, GdkEvent *event)
             canvas->pick_event.crossing.focus      = FALSE;
             canvas->pick_event.crossing.state      = event->motion.state;
 
-            /* these fields don't have the same offsets in both types of events */
+            // these fields don't have the same offsets in both types of events
 
             if (event->type == GDK_MOTION_NOTIFY) {
                 canvas->pick_event.crossing.x_root = event->motion.x_root;
@@ -1449,12 +1555,14 @@ pick_current_item (SPCanvas *canvas, GdkEvent *event)
         }
     }
 
-    /* Don't do anything else if this is a recursive call */
-    if (canvas->in_repick) return retval;
+    // Don't do anything else if this is a recursive call
+    if (canvas->in_repick) {
+        return retval;
+    }
 
-    /* LeaveNotify means that there is no current item, so we don't look for one */
+    // LeaveNotify means that there is no current item, so we don't look for one
     if (canvas->pick_event.type != GDK_LEAVE_NOTIFY) {
-        /* these fields don't have the same offsets in both types of events */
+        // these fields don't have the same offsets in both types of events
 
         if (canvas->pick_event.type == GDK_ENTER_NOTIFY) {
             x = canvas->pick_event.crossing.x;
@@ -1464,11 +1572,11 @@ pick_current_item (SPCanvas *canvas, GdkEvent *event)
             y = canvas->pick_event.motion.y;
         }
 
-        /* world coords */
+        // world coords
         x += canvas->x0;
         y += canvas->y0;
 
-        /* find the closest item */
+        // find the closest item
         if (canvas->root->flags & SP_CANVAS_ITEM_VISIBLE) {
             sp_canvas_item_invoke_point (canvas->root, Geom::Point(x, y), &canvas->new_current_item);
         } else {
@@ -1479,10 +1587,10 @@ pick_current_item (SPCanvas *canvas, GdkEvent *event)
     }
 
     if ((canvas->new_current_item == canvas->current_item) && !canvas->left_grabbed_item) {
-        return retval; /* current item did not change */
+        return retval; // current item did not change
     }
 
-    /* Synthesize events for old and new current items */
+    // Synthesize events for old and new current items
 
     if ((canvas->new_current_item != canvas->current_item)
         && (canvas->current_item != NULL)
@@ -1495,20 +1603,20 @@ pick_current_item (SPCanvas *canvas, GdkEvent *event)
         new_event.crossing.detail = GDK_NOTIFY_ANCESTOR;
         new_event.crossing.subwindow = NULL;
         canvas->in_repick = TRUE;
-        retval = emit_event (canvas, &new_event);
+        retval = emitEvent(canvas, &new_event);
         canvas->in_repick = FALSE;
     }
 
     if (canvas->gen_all_enter_events == false) {
         // new_current_item may have been set to NULL during the call to
-        // emit_event() above
+        // emitEvent() above
         if ((canvas->new_current_item != canvas->current_item) && button_down) {
             canvas->left_grabbed_item = TRUE;
             return retval;
         }
     }
 
-    /* Handle the rest of cases */
+    // Handle the rest of cases
 
     canvas->left_grabbed_item = FALSE;
     canvas->current_item = canvas->new_current_item;
@@ -1520,28 +1628,22 @@ pick_current_item (SPCanvas *canvas, GdkEvent *event)
         new_event.type = GDK_ENTER_NOTIFY;
         new_event.crossing.detail = GDK_NOTIFY_ANCESTOR;
         new_event.crossing.subwindow = NULL;
-        retval = emit_event (canvas, &new_event);
+        retval = emitEvent(canvas, &new_event);
     }
-
-
 
     return retval;
 }
 
-/**
- * Button event handler for the canvas.
- */
-static gint
-sp_canvas_button (GtkWidget *widget, GdkEventButton *event)
+gint SPCanvasImpl::button(GtkWidget *widget, GdkEventButton *event)
 {
     SPCanvas *canvas = SP_CANVAS (widget);
 
     int retval = FALSE;
 
-    /* dispatch normally regardless of the event's window if an item
-       has a pointer grab in effect */
+    // dispatch normally regardless of the event's window if an item
+    // has a pointer grab in effect
     if (!canvas->grabbed_item &&
-        event->window != SP_CANVAS_WINDOW (canvas))
+        event->window != getWindow(canvas))
         return retval;
 
     int mask;
@@ -1569,24 +1671,24 @@ sp_canvas_button (GtkWidget *widget, GdkEventButton *event)
     case GDK_BUTTON_PRESS:
     case GDK_2BUTTON_PRESS:
     case GDK_3BUTTON_PRESS:
-    	/* Pick the current item as if the button were not pressed, and
-         * then process the event.
-         */
+        // Pick the current item as if the button were not pressed, and
+        // then process the event.
+        //
         canvas->state = event->state;
-        pick_current_item (canvas, (GdkEvent *) event);
+        pickCurrentItem(canvas, reinterpret_cast<GdkEvent *>(event));
         canvas->state ^= mask;
-        retval = emit_event (canvas, (GdkEvent *) event);
+        retval = emitEvent(canvas, (GdkEvent *) event);
         break;
 
     case GDK_BUTTON_RELEASE:
-       	/* Process the event as if the button were pressed, then repick
-         * after the button has been released
-         */
+        // Process the event as if the button were pressed, then repick
+        // after the button has been released
+        //
         canvas->state = event->state;
-        retval = emit_event (canvas, (GdkEvent *) event);
+        retval = emitEvent(canvas, (GdkEvent *) event);
         event->state ^= mask;
         canvas->state = event->state;
-        pick_current_item (canvas, (GdkEvent *) event);
+        pickCurrentItem(canvas, reinterpret_cast<GdkEvent *>(event));
         event->state ^= mask;
 
         break;
@@ -1598,15 +1700,9 @@ sp_canvas_button (GtkWidget *widget, GdkEventButton *event)
     return retval;
 }
 
-/**
- * Scroll event handler for the canvas.
- *
- * \todo FIXME: generate motion events to re-select items.
- */
-static gint
-sp_canvas_scroll (GtkWidget *widget, GdkEventScroll *event)
+gint SPCanvasImpl::handleScroll(GtkWidget *widget, GdkEventScroll *event)
 {
-    return emit_event (SP_CANVAS (widget), (GdkEvent *) event);
+    return emitEvent(SP_CANVAS(widget), reinterpret_cast<GdkEvent *>(event));
 }
 
 static inline void request_motions(GdkWindow *w, GdkEventMotion *event) {
@@ -1614,26 +1710,23 @@ static inline void request_motions(GdkWindow *w, GdkEventMotion *event) {
     gdk_event_request_motions(event);
 }
 
-/**
- * Motion event handler for the canvas.
- */
-static int
-sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
+int SPCanvasImpl::handleMotion(GtkWidget *widget, GdkEventMotion *event)
 {
     int status;
     SPCanvas *canvas = SP_CANVAS (widget);
 
-    track_latency((GdkEvent *)event);
+    trackLatency((GdkEvent *)event);
 
-    if (event->window != SP_CANVAS_WINDOW (canvas))
+    if (event->window != getWindow(canvas)) {
         return FALSE;
+    }
 
     if (canvas->root == NULL) // canvas being deleted
         return FALSE;
 
     canvas->state = event->state;
-    pick_current_item (canvas, (GdkEvent *) event);
-    status = emit_event (canvas, (GdkEvent *) event);
+    pickCurrentItem(canvas, reinterpret_cast<GdkEvent *>(event));
+    status = emitEvent(canvas, reinterpret_cast<GdkEvent *>(event));
     if (event->is_hint) {
         request_motions(gtk_widget_get_window (widget), event);
     }
@@ -1641,7 +1734,7 @@ sp_canvas_motion (GtkWidget *widget, GdkEventMotion *event)
     return status;
 }
 
-static void sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect const &paint_rect, Geom::IntRect const &canvas_rect, int /*sw*/)
+void SPCanvasImpl::sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect const &paint_rect, Geom::IntRect const &canvas_rect, int /*sw*/)
 {
     GtkWidget *widget = GTK_WIDGET (canvas);
     GtkStyle  *style;
@@ -1664,7 +1757,8 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect const 
     cairo_rectangle(xctt, 0, 0, paint_rect.width(), paint_rect.height());
     cairo_fill(xctt);
     cairo_destroy(xctt);
-    //*/
+    //
+    */
 
     // create temporary surface
     cairo_surface_t *imgs = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, paint_rect.width(), paint_rect.height());
@@ -1733,6 +1827,8 @@ static void sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect const 
     //cairo_surface_destroy (cst);
 }
 
+namespace {
+
 struct PaintRectSetup {
     SPCanvas* canvas;
     Geom::IntRect big_rect;
@@ -1741,14 +1837,9 @@ struct PaintRectSetup {
     Geom::Point mouse_loc;
 };
 
-/**
- * Paint the given rect, recursively subdividing the region until it is the size of a single
- * buffer.
- *
- * @return true if the drawing completes
- */
-static int
-sp_canvas_paint_rect_internal (PaintRectSetup const *setup, Geom::IntRect const &this_rect)
+}// namespace
+
+int SPCanvasImpl::sp_canvas_paint_rect_internal(PaintRectSetup const *setup, Geom::IntRect const &this_rect)
 {
     GTimeVal now;
     g_get_current_time (&now);
@@ -1790,14 +1881,16 @@ sp_canvas_paint_rect_internal (PaintRectSetup const *setup, Geom::IntRect const 
 
     if (bw * bh < setup->max_pixels) {
         // We are small enough
-        /*GdkRectangle r;
+        /*
+        GdkRectangle r;
         r.x = this_rect.x0 - setup->canvas->x0;
         r.y = this_rect.y0 - setup->canvas->y0;
         r.width = this_rect.x1 - this_rect.x0;
         r.height = this_rect.y1 - this_rect.y0;
 
         GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(setup->canvas));
-        gdk_window_begin_paint_rect(window, &r);*/
+        gdk_window_begin_paint_rect(window, &r);
+        */
 
         sp_canvas_paint_single_buffer (setup->canvas,
                                        this_rect, setup->big_rect, bw);
@@ -1858,13 +1951,7 @@ The default for now is the strips mode.
 }
 
 
-/**
- * Helper that draws a specific rectangular part of the canvas.
- *
- * @return true if the rectangle painting succeeds.
- */
-static bool
-sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
+bool SPCanvasImpl::sp_canvas_paint_rect(SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
 {
     GtkAllocation allocation;
     g_return_val_if_fail (!canvas->need_update, false);
@@ -1907,119 +1994,87 @@ sp_canvas_paint_rect (SPCanvas *canvas, int xx0, int yy0, int xx1, int yy1)
     return sp_canvas_paint_rect_internal(&setup, paint_rect);
 }
 
-/**
- * Force a full redraw after a specified number of interrupted redraws
- */
-void
-sp_canvas_force_full_redraw_after_interruptions(SPCanvas *canvas, unsigned int count) {
-  g_return_if_fail(canvas != NULL);
-
-  canvas->forced_redraw_limit = count;
-  canvas->forced_redraw_count = 0;
-}
-
-/**
- * End forced full redraw requests
- */
-void
-sp_canvas_end_forced_full_redraws(SPCanvas *canvas) {
-  g_return_if_fail(canvas != NULL);
-
-  canvas->forced_redraw_limit = -1;
-}
-
-/**
- * The canvas widget's expose callback.
- */
-static gint
-sp_canvas_expose (GtkWidget *widget, GdkEventExpose *event)
+void SPCanvas::forceFullRedrawAfterInterruptions(unsigned int count)
 {
-    SPCanvas *canvas = SP_CANVAS (widget);
+    forced_redraw_limit = count;
+    forced_redraw_count = 0;
+}
+
+void SPCanvas::endForcedFullRedraws()
+{
+    forced_redraw_limit = -1;
+}
+
+gint SPCanvasImpl::handleExpose(GtkWidget *widget, GdkEventExpose *event)
+{
+    SPCanvas *canvas = SP_CANVAS(widget);
 
     if (!gtk_widget_is_drawable (widget) ||
-        (event->window != SP_CANVAS_WINDOW (canvas)))
+        (event->window != getWindow(canvas))) {
         return FALSE;
+    }
 
-    int n_rects;
-    GdkRectangle *rects;
-    gdk_region_get_rectangles (event->region, &rects, &n_rects);
+    int n_rects = 0;
+    GdkRectangle *rects = 0;
+    gdk_region_get_rectangles(event->region, &rects, &n_rects);
 
     for (int i = 0; i < n_rects; i++) {
         Geom::IntRect r = Geom::IntRect::from_xywh(
             rects[i].x + canvas->x0, rects[i].y + canvas->y0,
             rects[i].width, rects[i].height);
 
-        sp_canvas_request_redraw (canvas, r.left(), r.top(), r.right(), r.bottom());
+        canvas->requestRedraw(r.left(), r.top(), r.right(), r.bottom());
     }
 
-    if (n_rects > 0)
+    if (n_rects > 0) {
         g_free (rects);
+    }
 
     return FALSE;
 }
 
-/**
- * The canvas widget's keypress callback.
- */
-static gint
-sp_canvas_key (GtkWidget *widget, GdkEventKey *event)
+gint SPCanvasImpl::handleKeyEvent(GtkWidget *widget, GdkEventKey *event)
 {
-    return emit_event (SP_CANVAS (widget), (GdkEvent *) event);
+    return emitEvent(SP_CANVAS(widget), reinterpret_cast<GdkEvent *>(event));
 }
 
-/**
- * Crossing event handler for the canvas.
- */
-static gint
-sp_canvas_crossing (GtkWidget *widget, GdkEventCrossing *event)
+gint SPCanvasImpl::handleCrossing(GtkWidget *widget, GdkEventCrossing *event)
 {
     SPCanvas *canvas = SP_CANVAS (widget);
 
-    if (event->window != SP_CANVAS_WINDOW (canvas))
+    if (event->window != getWindow(canvas)) {
         return FALSE;
+    }
 
     canvas->state = event->state;
-    return pick_current_item (canvas, (GdkEvent *) event);
+    return pickCurrentItem(canvas, reinterpret_cast<GdkEvent *>(event));
 }
 
-/**
- * Focus in handler for the canvas.
- */
-static gint
-sp_canvas_focus_in (GtkWidget *widget, GdkEventFocus *event)
+gint SPCanvasImpl::handleFocusIn(GtkWidget *widget, GdkEventFocus *event)
 {
     gtk_widget_grab_focus (widget);
 
     SPCanvas *canvas = SP_CANVAS (widget);
 
     if (canvas->focused_item) {
-        return emit_event (canvas, (GdkEvent *) event);
+        return emitEvent(canvas, reinterpret_cast<GdkEvent *>(event));
     } else {
         return FALSE;
     }
 }
 
-/**
- * Focus out handler for the canvas.
- */
-static gint
-sp_canvas_focus_out (GtkWidget *widget, GdkEventFocus *event)
+gint SPCanvasImpl::handleFocusOut(GtkWidget *widget, GdkEventFocus *event)
 {
-    SPCanvas *canvas = SP_CANVAS (widget);
+    SPCanvas *canvas = SP_CANVAS(widget);
 
-    if (canvas->focused_item)
-        return emit_event (canvas, (GdkEvent *) event);
-    else
+    if (canvas->focused_item) {
+        return emitEvent(canvas, reinterpret_cast<GdkEvent *>(event));
+    } else {
         return FALSE;
+    }
 }
 
-/**
- * Helper that repaints the areas in the canvas that need it.
- *
- * @return true if all the dirty parts have been redrawn
- */
-static int
-paint (SPCanvas *canvas)
+int SPCanvasImpl::paint(SPCanvas *canvas)
 {
     if (canvas->need_update) {
         sp_canvas_item_invoke_update (canvas->root, Geom::identity(), 0);
@@ -2068,11 +2123,7 @@ paint (SPCanvas *canvas)
     return TRUE;
 }
 
-/**
- * Helper that invokes update, paint, and repick on canvas.
- */
-static int
-do_update (SPCanvas *canvas)
+int SPCanvasImpl::do_update(SPCanvas *canvas)
 {
     if (!canvas->root) // canvas may have already be destroyed by closing desktop during interrupted display!
         return TRUE;
@@ -2080,31 +2131,27 @@ do_update (SPCanvas *canvas)
     if (canvas->drawing_disabled)
         return TRUE;
 
-    /* Cause the update if necessary */
+    // Cause the update if necessary
     if (canvas->need_update) {
         sp_canvas_item_invoke_update (canvas->root, Geom::identity(), 0);
         canvas->need_update = FALSE;
     }
 
-    /* Paint if able to */
+    // Paint if able to
     if (gtk_widget_is_drawable ( GTK_WIDGET (canvas))) {
             return paint (canvas);
     }
 
-    /* Pick new current item */
+    // Pick new current item
     while (canvas->need_repick) {
         canvas->need_repick = FALSE;
-        pick_current_item (canvas, &canvas->pick_event);
+        pickCurrentItem(canvas, &canvas->pick_event);
     }
 
     return TRUE;
 }
 
-/**
- * Idle handler for the canvas that deals with pending updates and redraws.
- */
-static gint
-idle_handler (gpointer data)
+gint SPCanvasImpl::idle_handler(gpointer data)
 {
     GDK_THREADS_ENTER ();
 
@@ -2113,7 +2160,7 @@ idle_handler (gpointer data)
     int const ret = do_update (canvas);
 
     if (ret) {
-        /* Reset idle id */
+        // Reset idle id
         canvas->idle_id = 0;
     }
 
@@ -2122,67 +2169,48 @@ idle_handler (gpointer data)
     return !ret;
 }
 
-/**
- * Convenience function to add an idle handler to a canvas.
- */
-static void
-add_idle (SPCanvas *canvas)
+void SPCanvasImpl::add_idle(SPCanvas *canvas)
 {
-    if (canvas->idle_id != 0)
-        return;
-
-    canvas->idle_id = g_idle_add_full (sp_canvas_update_priority, idle_handler, 
-		    canvas, NULL);
+    if (canvas->idle_id == 0) {
+        canvas->idle_id = g_idle_add_full(UPDATE_PRIORITY, idle_handler, canvas, NULL);
+    }
 }
 
-/**
- * Returns the root group of the specified canvas.
- */
-SPCanvasGroup *
-sp_canvas_root (SPCanvas *canvas)
+SPCanvasGroup *SPCanvas::getRoot()
 {
-    g_return_val_if_fail (canvas != NULL, NULL);
-    g_return_val_if_fail (SP_IS_CANVAS (canvas), NULL);
-
-    return SP_CANVAS_GROUP (canvas->root);
+    return SP_CANVAS_GROUP(root);
 }
 
-/**
- * Scrolls canvas to specific position (cx and cy are measured in screen pixels)
- */
-void
-sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear, bool is_scrolling)
+void SPCanvas::scrollTo(double cx, double cy, unsigned int clear, bool is_scrolling)
 {
     GtkAllocation allocation;
 
-    g_return_if_fail (canvas != NULL);
-    g_return_if_fail (SP_IS_CANVAS (canvas));
-
     int ix = (int) round(cx); // ix and iy are the new canvas coordinates (integer screen pixels)
     int iy = (int) round(cy); // cx might be negative, so (int)(cx + 0.5) will not do!
-    int dx = ix - canvas->x0; // dx and dy specify the displacement (scroll) of the
-    int dy = iy - canvas->y0; // canvas w.r.t its previous position
+    int dx = ix - x0; // dx and dy specify the displacement (scroll) of the
+    int dy = iy - y0; // canvas w.r.t its previous position
 
-    Geom::IntRect old_area = canvas->getViewboxIntegers();
+    Geom::IntRect old_area = getViewboxIntegers();
     Geom::IntRect new_area = old_area + Geom::IntPoint(dx, dy);
     
-    canvas->dx0 = cx; // here the 'd' stands for double, not delta!
-    canvas->dy0 = cy;
-    canvas->x0 = ix;
-    canvas->y0 = iy;
+    dx0 = cx; // here the 'd' stands for double, not delta!
+    dy0 = cy;
+    x0 = ix;
+    y0 = iy;
 
-    gtk_widget_get_allocation (&canvas->widget, &allocation);
+    gtk_widget_get_allocation(&widget, &allocation);
 
-    sp_canvas_resize_tiles (canvas, canvas->x0, canvas->y0, canvas->x0+allocation.width, canvas->y0+allocation.height);
-    if (SP_CANVAS_ITEM_GET_CLASS (canvas->root)->viewbox_changed)
-        SP_CANVAS_ITEM_GET_CLASS (canvas->root)->viewbox_changed (canvas->root, new_area);
+    SPCanvasImpl::sp_canvas_resize_tiles(this, x0, y0, x0 + allocation.width, y0 + allocation.height);
+    if (SP_CANVAS_ITEM_GET_CLASS(root)->viewbox_changed) {
+        SP_CANVAS_ITEM_GET_CLASS(root)->viewbox_changed(root, new_area);
+    }
 
     if (!clear) {
         // scrolling without zoom; redraw only the newly exposed areas
         if ((dx != 0) || (dy != 0)) {
-            canvas->is_scrolling = is_scrolling;
-            if (gtk_widget_get_realized (GTK_WIDGET (canvas))) {
-                gdk_window_scroll (SP_CANVAS_WINDOW (canvas), -dx, -dy);
+            this->is_scrolling = is_scrolling;
+            if (gtk_widget_get_realized(GTK_WIDGET(this))) {
+                gdk_window_scroll(getWindow(this), -dx, -dy);
             }
         }
     } else {
@@ -2190,56 +2218,40 @@ sp_canvas_scroll_to (SPCanvas *canvas, double cx, double cy, unsigned int clear,
     }
 }
 
-/**
- * Updates canvas if necessary.
- */
-void
-sp_canvas_update_now (SPCanvas *canvas)
+void SPCanvas::updateNow()
 {
-    g_return_if_fail (canvas != NULL);
-    g_return_if_fail (SP_IS_CANVAS (canvas));
-
-    if (!(canvas->need_update ||
-          canvas->need_redraw))
-        return;
-
-    do_update (canvas);
+    if (need_update || need_redraw) {
+        SPCanvasImpl::do_update(this);
+    }
 }
 
-/**
- * Update callback for canvas widget.
- */
-static void
-sp_canvas_request_update (SPCanvas *canvas)
+void SPCanvasImpl::requestCanvasUpdate(SPCanvas *canvas)
 {
     canvas->need_update = TRUE;
-    add_idle (canvas);
+    add_idle(canvas);
 }
 
-/**
- * Forces redraw of rectangular canvas area.
- */
-void
-sp_canvas_request_redraw (SPCanvas *canvas, int x0, int y0, int x1, int y1)
+void SPCanvas::requestRedraw(int x0, int y0, int x1, int y1)
 {
     GtkAllocation allocation;
 
-    g_return_if_fail (canvas != NULL);
-    g_return_if_fail (SP_IS_CANVAS (canvas));
-
-    if (!gtk_widget_is_drawable ( GTK_WIDGET (canvas))) return;
-    if ((x0 >= x1) || (y0 >= y1)) return;
+    if (!gtk_widget_is_drawable ( GTK_WIDGET(this) )) {
+        return;
+    }
+    if ((x0 >= x1) || (y0 >= y1)) {
+        return;
+    }
 
     Geom::IntRect bbox(x0, y0, x1, y1);
-    gtk_widget_get_allocation (GTK_WIDGET (canvas), &allocation);
+    gtk_widget_get_allocation(GTK_WIDGET(this), &allocation);
 
-    Geom::IntRect canvas_rect = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
-        allocation.width, allocation.height);
+    Geom::IntRect canvas_rect = Geom::IntRect::from_xywh(x0, y0,
+                                                         allocation.width, allocation.height);
     
     Geom::OptIntRect clip = bbox & canvas_rect;
     if (clip) {
-        sp_canvas_dirty_rect(canvas, *clip);
-        add_idle (canvas);
+        SPCanvasImpl::sp_canvas_dirty_rect(this, *clip);
+        SPCanvasImpl::add_idle(this);
     }
 }
 
@@ -2344,10 +2356,7 @@ inline int sp_canvas_tile_ceil(int x)
     return ((x + (TILE_SIZE - 1)) & (~(TILE_SIZE - 1))) / TILE_SIZE;
 }
 
-/**
- * Helper that allocates a new tile array for the canvas, copying overlapping tiles from the old array
- */
-static void sp_canvas_resize_tiles(SPCanvas* canvas, int nl, int nt, int nr, int nb)
+void SPCanvasImpl::sp_canvas_resize_tiles(SPCanvas* canvas, int nl, int nt, int nr, int nb)
 {
     if ( nl >= nr || nt >= nb ) {
         if ( canvas->tiles ) g_free(canvas->tiles);
@@ -2383,19 +2392,13 @@ static void sp_canvas_resize_tiles(SPCanvas* canvas, int nl, int nt, int nr, int
     canvas->tileV=nv;
 }
 
-/*
- * Helper that queues a canvas rectangle for redraw
- */
-static void sp_canvas_dirty_rect(SPCanvas* canvas, Geom::IntRect const &area) {
+void SPCanvasImpl::sp_canvas_dirty_rect(SPCanvas* canvas, Geom::IntRect const &area) {
     canvas->need_redraw = TRUE;
 
     sp_canvas_mark_rect(canvas, area, 1);
 }
 
-/**
- * Helper that marks specific canvas rectangle as clean (val == 0) or dirty (otherwise)
- */
-void sp_canvas_mark_rect(SPCanvas* canvas, Geom::IntRect const &area, uint8_t val)
+void SPCanvasImpl::sp_canvas_mark_rect(SPCanvas* canvas, Geom::IntRect const &area, uint8_t val)
 {
     int tl=sp_canvas_tile_floor(area.left());
     int tt=sp_canvas_tile_floor(area.top());

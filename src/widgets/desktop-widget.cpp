@@ -444,7 +444,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     }
 
     /* Canvas */
-    dtw->canvas = SP_CANVAS (sp_canvas_new_aa ());
+    dtw->canvas = SP_CANVAS(SPCanvas::createAA());
 #if ENABLE_LCMS
     dtw->canvas->enable_cms_display_adj = prefs->getBool("/options/displayprofile/enable");
 #endif // ENABLE_LCMS
@@ -1617,8 +1617,8 @@ sp_desktop_widget_adjustment_value_changed (GtkAdjustment */*adj*/, SPDesktopWid
 
     dtw->update = 1;
 
-    sp_canvas_scroll_to (dtw->canvas, gtk_adjustment_get_value(dtw->hadj), 
-		    gtk_adjustment_get_value(dtw->vadj), FALSE);
+    dtw->canvas->scrollTo(gtk_adjustment_get_value(dtw->hadj), 
+                          gtk_adjustment_get_value(dtw->vadj), FALSE);
     sp_desktop_widget_update_rulers (dtw);
 
     /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */

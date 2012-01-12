@@ -1,10 +1,9 @@
-#define __SP_CANVAS_UTILS_C__
-
 /*
  * Helper stuff for SPCanvas
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2002 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
@@ -18,15 +17,14 @@
 #include "sp-canvas-item.h"
 #include "sp-canvas.h"
 
-void
-sp_canvas_update_bbox (SPCanvasItem *item, int x1, int y1, int x2, int y2)
+void sp_canvas_update_bbox(SPCanvasItem *item, int x1, int y1, int x2, int y2)
 {
-    sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+    item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
     item->x1 = x1;
     item->y1 = y1;
     item->x2 = x2;
     item->y2 = y2;
-    sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+    item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 }
 
 void

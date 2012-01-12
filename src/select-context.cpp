@@ -346,7 +346,7 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                     sc->moved = FALSE;
                     gdk_window_set_cursor(window, CursorSelectDragging);
 
-                    sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
+                    desktop->canvas->forceFullRedrawAfterInterruptions(5);
 
                     // remember the clicked item in sc->item:
                     if (sc->item) {
@@ -369,7 +369,7 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
                                         NULL, event->button.time);
                     sc->grabbed = SP_CANVAS_ITEM(desktop->drawing);
 
-                    sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
+                    desktop->canvas->forceFullRedrawAfterInterruptions(5);
 
                     ret = TRUE;
                 }
@@ -495,7 +495,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         sc->dragging = false;
                         sp_event_context_discard_delayed_snap_event(event_context);
 
-                        sp_canvas_end_forced_full_redraws(desktop->canvas);
+                        desktop->canvas->endForcedFullRedraws();
                     } else { // switch tool
                         Geom::Point const button_pt(event->button.x, event->button.y);
                         Geom::Point const p(desktop->w2d(button_pt));
@@ -569,7 +569,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 		    GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
                     gdk_window_set_cursor(window, CursorSelectDragging);
 
-                    sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
+                    desktop->canvas->forceFullRedrawAfterInterruptions(5);
                 }
 
                 if (sc->dragging) {
@@ -619,7 +619,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     } else {
                         sc->dragging = FALSE;
                         sp_event_context_discard_delayed_snap_event(event_context);
-                        sp_canvas_end_forced_full_redraws(desktop->canvas);
+                        desktop->canvas->endForcedFullRedraws();
                     }
                 } else {
                     if (Inkscape::Rubberband::get(desktop)->is_started()) {
@@ -675,7 +675,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 		    window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
                     gdk_window_set_cursor(window, CursorSelectMouseover);
                     sp_event_context_discard_delayed_snap_event(event_context);
-                    sp_canvas_end_forced_full_redraws(desktop->canvas);
+                    desktop->canvas->endForcedFullRedraws();
 
                     if (sc->item) {
                         sp_object_unref( sc->item, NULL);

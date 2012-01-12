@@ -424,7 +424,7 @@ static void sp_spiral_drag(SPSpiralContext *sc, Geom::Point const &p, guint stat
         sc->item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
         sc->item->updateRepr();
 
-        sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
+        desktop->canvas->forceFullRedrawAfterInterruptions(5);
     }
 
     SnapManager &m = desktop->namedview->snap_manager;
@@ -478,7 +478,7 @@ sp_spiral_finish(SPSpiralContext *sc)
         SP_SHAPE(spiral)->setShape();
         SP_OBJECT(spiral)->updateRepr(SP_OBJECT_WRITE_EXT);
 
-        sp_canvas_end_forced_full_redraws(desktop->canvas);
+        desktop->canvas->endForcedFullRedraws();
 
         sp_desktop_selection(desktop)->set(sc->item);
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_SPIRAL,
@@ -505,7 +505,7 @@ static void sp_spiral_cancel(SPSpiralContext *sc)
     sc->yp = 0;
     sc->item_to_select = NULL;
 
-    sp_canvas_end_forced_full_redraws(desktop->canvas);
+    desktop->canvas->endForcedFullRedraws();
 
     DocumentUndo::cancel(sp_desktop_document(desktop));
 }

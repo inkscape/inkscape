@@ -1259,7 +1259,7 @@ static void sp_flood_finish(SPFloodContext *rc)
 
         SP_OBJECT(rc->item)->updateRepr();
 
-        sp_canvas_end_forced_full_redraws(desktop->canvas);
+        desktop->canvas->endForcedFullRedraws();
 
         sp_desktop_selection(desktop)->set(rc->item);
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_PAINTBUCKET,

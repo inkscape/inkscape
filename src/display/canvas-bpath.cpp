@@ -3,6 +3,7 @@
  *
  * Authors:
  *   Lauris Kaplinski <lauris@ximian.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2001 Lauris Kaplinski and Ximian, Inc.
  *
@@ -99,15 +100,15 @@ sp_canvas_bpath_destroy (GtkObject *object)
         (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
 
-static void
-sp_canvas_bpath_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
+static void sp_canvas_bpath_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
-    SPCanvasBPath *cbp = SP_CANVAS_BPATH (item);
+    SPCanvasBPath *cbp = SP_CANVAS_BPATH(item);
 
-    sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+    item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 
-    if (((SPCanvasItemClass *) parent_class)->update)
-        ((SPCanvasItemClass *) parent_class)->update (item, affine, flags);
+    if (reinterpret_cast<SPCanvasItemClass *>(parent_class)->update) {
+        reinterpret_cast<SPCanvasItemClass *>(parent_class)->update(item, affine, flags);
+    }
 
     sp_canvas_item_reset_bounds (item);
 
@@ -128,7 +129,7 @@ sp_canvas_bpath_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned
         item->x2 = 0;
         item->y2 = 0;
     }
-    sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+    item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 }
 
 static void

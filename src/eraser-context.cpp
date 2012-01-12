@@ -512,7 +512,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
 
                 ret = TRUE;
 
-                sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 3);
+                desktop->canvas->forceFullRedrawAfterInterruptions(3);
                 dc->is_drawing = true;
             }
             break;
@@ -553,7 +553,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
         Geom::Point const motion_dt(desktop->w2d(motion_w));
 
         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), event->button.time);
-        sp_canvas_end_forced_full_redraws(desktop->canvas);
+        desktop->canvas->endForcedFullRedraws();
         dc->is_drawing = false;
 
         if (dc->dragging && event->button.button == 1 && !event_context->space_panning) {

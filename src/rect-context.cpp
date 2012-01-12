@@ -480,7 +480,7 @@ static void sp_rect_drag(SPRectContext &rc, Geom::Point const pt, guint state)
         rc.item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
         rc.item->updateRepr();
 
-        sp_canvas_force_full_redraw_after_interruptions(desktop->canvas, 5);
+        desktop->canvas->forceFullRedrawAfterInterruptions(5);
     }
 
     Geom::Rect const r = Inkscape::snap_rectangular_box(desktop, rc.item, pt, rc.center, state);
@@ -548,7 +548,7 @@ static void sp_rect_finish(SPRectContext *rc)
 
         SP_OBJECT(rc->item)->updateRepr();
 
-        sp_canvas_end_forced_full_redraws(desktop->canvas);
+        desktop->canvas->endForcedFullRedraws();
 
         sp_desktop_selection(desktop)->set(rc->item);
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_RECT,
@@ -575,7 +575,7 @@ static void sp_rect_cancel(SPRectContext *rc)
     rc->yp = 0;
     rc->item_to_select = NULL;
 
-    sp_canvas_end_forced_full_redraws(desktop->canvas);
+    desktop->canvas->endForcedFullRedraws();
 
     DocumentUndo::cancel(sp_desktop_document(desktop));
 }

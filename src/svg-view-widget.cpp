@@ -95,7 +95,7 @@ static void sp_svg_view_widget_init(SPSVGSPViewWidget *vw)
 
 	/* Canvas */
 	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
-	vw->canvas = sp_canvas_new_aa ();
+	vw->canvas = SPCanvas::createAA();
 	gtk_widget_pop_colormap ();
 	style = gtk_style_copy (gtk_widget_get_style (vw->canvas));
 	style->bg[GTK_STATE_NORMAL] = style->white;
@@ -104,7 +104,7 @@ static void sp_svg_view_widget_init(SPSVGSPViewWidget *vw)
 	gtk_widget_show (vw->canvas);
 
 	/* View */
-	parent = sp_canvas_item_new (sp_canvas_root (SP_CANVAS (vw->canvas)), SP_TYPE_CANVAS_GROUP, NULL);
+	parent = sp_canvas_item_new(SP_CANVAS(vw->canvas)->getRoot(), SP_TYPE_CANVAS_GROUP, NULL);
 	Inkscape::UI::View::View *view = Inkscape::GC::release(new SPSVGView (SP_CANVAS_GROUP (parent)));
 	sp_view_widget_set_view (SP_VIEW_WIDGET (vw), view);
 }

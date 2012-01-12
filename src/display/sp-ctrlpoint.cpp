@@ -1,10 +1,9 @@
-#define __INKSCAPE_CTRLPOINT_C__
-
 /*
  * Simple point
  *
  * Author:
  *   Maximilian Albert <maximilian.albert@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2008 Maximilian Albert
  *
@@ -109,15 +108,15 @@ sp_ctrlpoint_render (SPCanvasItem *item, SPCanvasBuf *buf)
     cairo_stroke(buf->ct);
 }
 
-static void
-sp_ctrlpoint_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
+static void sp_ctrlpoint_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
-    SPCtrlPoint *cp = SP_CTRLPOINT (item);
+    SPCtrlPoint *cp = SP_CTRLPOINT(item);
 
-    sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+    item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 
-    if (parent_class->update)
+    if (parent_class->update) {
         (* parent_class->update) (item, affine, flags);
+    }
 
     sp_canvas_item_reset_bounds (item);
 
@@ -130,9 +129,8 @@ sp_ctrlpoint_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned in
     item->x2 = pt[Geom::X] + cp->radius;
     item->y2 = pt[Geom::Y] + cp->radius;
 
-    sp_canvas_request_redraw (item->canvas,
-                              (int)item->x1 - 15, (int)item->y1 - 15,
-                              (int)item->x1 + 15, (int)item->y1 + 15);
+    item->canvas->requestRedraw((int)item->x1 - 15, (int)item->y1 - 15,
+                                (int)item->x1 + 15, (int)item->y1 + 15);
 }
 
 void
@@ -145,7 +143,7 @@ sp_ctrlpoint_set_color (SPCtrlPoint *cp, guint32 rgba)
         SPCanvasItem *item;
         cp->rgba = rgba;
         item = SP_CANVAS_ITEM (cp);
-        sp_canvas_request_redraw (item->canvas, (int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+        item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
     }
 }
 

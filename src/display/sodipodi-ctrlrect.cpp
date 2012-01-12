@@ -1,5 +1,3 @@
-#define __INKSCAPE_CTRLRECT_C__
-
 /*
  * Simple non-transformed rectangle, usable for rubberband
  *
@@ -7,6 +5,7 @@
  *   Lauris Kaplinski <lauris@ximian.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Carl Hetherington <inkscape@carlh.net>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2001 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
@@ -188,110 +187,92 @@ void CtrlRect::update(Geom::Affine const &affine, unsigned int flags)
     // FIXME: we don't process a possible change in _has_fill
     if (_has_fill) {
         if (_area_old) {
-            sp_canvas_request_redraw(canvas,
-                                 area_old[X].min() - 1, area_old[Y].min() - 1,
-                                 area_old[X].max() + _shadow_size + 1, area_old[Y].max() + _shadow_size + 1);
+            canvas->requestRedraw(area_old[X].min() - 1, area_old[Y].min() - 1,
+                                  area_old[X].max() + _shadow_size + 1, area_old[Y].max() + _shadow_size + 1);
         }
         if (_area) {
-            sp_canvas_request_redraw(canvas,
-                                 area[X].min() - 1, area[Y].min() - 1,
-                                 area[X].max() + _shadow_size + 1, area[Y].max() + _shadow_size + 1);
+            canvas->requestRedraw(area[X].min() - 1, area[Y].min() - 1,
+                                  area[X].max() + _shadow_size + 1, area[Y].max() + _shadow_size + 1);
         }
     } else { // clear box, be smart about what part of the frame to redraw
 
         /* Top */
         if (area[Y].min() != area_old[Y].min()) { // different level, redraw fully old and new
             if (area_old[X].min() != area_old[X].max())
-                sp_canvas_request_redraw(canvas,
-                                         area_old[X].min() - 1, area_old[Y].min() - 1,
-                                         area_old[X].max() + 1, area_old[Y].min() + 1);
+                canvas->requestRedraw(area_old[X].min() - 1, area_old[Y].min() - 1,
+                                      area_old[X].max() + 1, area_old[Y].min() + 1);
 
             if (area[X].min() != area[X].max())
-                sp_canvas_request_redraw(canvas,
-                                         area[X].min() - 1, area[Y].min() - 1,
-                                         area[X].max() + 1, area[Y].min() + 1);
+                canvas->requestRedraw(area[X].min() - 1, area[Y].min() - 1,
+                                      area[X].max() + 1, area[Y].min() + 1);
         } else { // same level, redraw only the ends
             if (area[X].min() != area_old[X].min()) {
-                sp_canvas_request_redraw(canvas,
-                                         MIN(area_old[X].min(),area[X].min()) - 1, area[Y].min() - 1,
-                                         MAX(area_old[X].min(),area[X].min()) + 1, area[Y].min() + 1);
+                canvas->requestRedraw(MIN(area_old[X].min(),area[X].min()) - 1, area[Y].min() - 1,
+                                      MAX(area_old[X].min(),area[X].min()) + 1, area[Y].min() + 1);
             }
             if (area[X].max() != area_old[X].max()) {
-                sp_canvas_request_redraw(canvas,
-                                         MIN(area_old[X].max(),area[X].max()) - 1, area[Y].min() - 1,
-                                         MAX(area_old[X].max(),area[X].max()) + 1, area[Y].min() + 1);
+                canvas->requestRedraw(MIN(area_old[X].max(),area[X].max()) - 1, area[Y].min() - 1,
+                                      MAX(area_old[X].max(),area[X].max()) + 1, area[Y].min() + 1);
             }
         }
 
         /* Left */
         if (area[X].min() != area_old[X].min()) { // different level, redraw fully old and new
             if (area_old[Y].min() != area_old[Y].max())
-                sp_canvas_request_redraw(canvas,
-                                         area_old[X].min() - 1, area_old[Y].min() - 1,
-                                         area_old[X].min() + 1, area_old[Y].max() + 1);
+                canvas->requestRedraw(area_old[X].min() - 1, area_old[Y].min() - 1,
+                                      area_old[X].min() + 1, area_old[Y].max() + 1);
 
             if (area[Y].min() != area[Y].max())
-                sp_canvas_request_redraw(canvas,
-                                         area[X].min() - 1, area[Y].min() - 1,
-                                         area[X].min() + 1, area[Y].max() + 1);
+                canvas->requestRedraw(area[X].min() - 1, area[Y].min() - 1,
+                                      area[X].min() + 1, area[Y].max() + 1);
         } else { // same level, redraw only the ends
             if (area[Y].min() != area_old[Y].min()) {
-                sp_canvas_request_redraw(canvas,
-                                         area[X].min() - 1, MIN(area_old[Y].min(),area[Y].min()) - 1, 
-                                         area[X].min() + 1, MAX(area_old[Y].min(),area[Y].min()) + 1);
+                canvas->requestRedraw(area[X].min() - 1, MIN(area_old[Y].min(),area[Y].min()) - 1, 
+                                      area[X].min() + 1, MAX(area_old[Y].min(),area[Y].min()) + 1);
             }
             if (area[Y].max() != area_old[Y].max()) {
-                sp_canvas_request_redraw(canvas,
-                                         area[X].min() - 1, MIN(area_old[Y].max(),area[Y].max()) - 1, 
-                                         area[X].min() + 1, MAX(area_old[Y].max(),area[Y].max()) + 1);
+                canvas->requestRedraw(area[X].min() - 1, MIN(area_old[Y].max(),area[Y].max()) - 1, 
+                                      area[X].min() + 1, MAX(area_old[Y].max(),area[Y].max()) + 1);
             }
         }
 
         /* Right */
         if (area[X].max() != area_old[X].max() || _shadow_size_old != _shadow_size) { 
             if (area_old[Y].min() != area_old[Y].max())
-                sp_canvas_request_redraw(canvas,
-                                         area_old[X].max() - 1, area_old[Y].min() - 1,
-                                         area_old[X].max() + _shadow_size + 1, area_old[Y].max() + _shadow_size + 1);
+                canvas->requestRedraw(area_old[X].max() - 1, area_old[Y].min() - 1,
+                                      area_old[X].max() + _shadow_size + 1, area_old[Y].max() + _shadow_size + 1);
 
             if (area[Y].min() != area[Y].max())
-                sp_canvas_request_redraw(canvas,
-                                         area[X].max() - 1, area[Y].min() - 1,
-                                         area[X].max() + _shadow_size + 1, area[Y].max() + _shadow_size + 1);
+                canvas->requestRedraw(area[X].max() - 1, area[Y].min() - 1,
+                                      area[X].max() + _shadow_size + 1, area[Y].max() + _shadow_size + 1);
         } else { // same level, redraw only the ends
             if (area[Y].min() != area_old[Y].min()) {
-                sp_canvas_request_redraw(canvas,
-                                         area[X].max() - 1, MIN(area_old[Y].min(),area[Y].min()) - 1, 
-                                         area[X].max() + _shadow_size + 1, MAX(area_old[Y].min(),area[Y].min()) + _shadow_size + 1);
+                canvas->requestRedraw(area[X].max() - 1, MIN(area_old[Y].min(),area[Y].min()) - 1, 
+                                      area[X].max() + _shadow_size + 1, MAX(area_old[Y].min(),area[Y].min()) + _shadow_size + 1);
             }
             if (area[Y].max() != area_old[Y].max()) {
-                sp_canvas_request_redraw(canvas,
-                                         area[X].max() - 1, MIN(area_old[Y].max(),area[Y].max()) - 1, 
-                                         area[X].max() + _shadow_size + 1, MAX(area_old[Y].max(),area[Y].max()) + _shadow_size + 1);
+                canvas->requestRedraw(area[X].max() - 1, MIN(area_old[Y].max(),area[Y].max()) - 1, 
+                                      area[X].max() + _shadow_size + 1, MAX(area_old[Y].max(),area[Y].max()) + _shadow_size + 1);
             }
         }
 
         /* Bottom */
         if (area[Y].max() != area_old[Y].max() || _shadow_size_old != _shadow_size) { 
             if (area_old[X].min() != area_old[X].max())
-                sp_canvas_request_redraw(canvas,
-                                         area_old[X].min() - 1, area_old[Y].max() - 1,
-                                         area_old[X].max() + _shadow_size + 1, area_old[Y].max() + _shadow_size + 1);
+                canvas->requestRedraw(area_old[X].min() - 1, area_old[Y].max() - 1,
+                                      area_old[X].max() + _shadow_size + 1, area_old[Y].max() + _shadow_size + 1);
 
             if (area[X].min() != area[X].max())
-                sp_canvas_request_redraw(canvas,
-                                         area[X].min() - 1, area[Y].max() - 1,
-                                         area[X].max() + _shadow_size + 1, area[Y].max() + _shadow_size + 1);
+                canvas->requestRedraw(area[X].min() - 1, area[Y].max() - 1,
+                                      area[X].max() + _shadow_size + 1, area[Y].max() + _shadow_size + 1);
         } else { // same level, redraw only the ends
             if (area[X].min() != area_old[X].min()) {
-                sp_canvas_request_redraw(canvas,
-                                         MIN(area_old[X].min(),area[X].min()) - 1, area[Y].max() - 1,
-                                         MAX(area_old[X].min(),area[X].min()) + _shadow_size + 1, area[Y].max() + _shadow_size + 1);
+                canvas->requestRedraw(MIN(area_old[X].min(),area[X].min()) - 1, area[Y].max() - 1,
+                                      MAX(area_old[X].min(),area[X].min()) + _shadow_size + 1, area[Y].max() + _shadow_size + 1);
             }
             if (area[X].max() != area_old[X].max()) {
-                sp_canvas_request_redraw(canvas,
-                                         MIN(area_old[X].max(),area[X].max()) - 1, area[Y].max() - 1,
-                                         MAX(area_old[X].max(),area[X].max()) + _shadow_size + 1, area[Y].max() + _shadow_size + 1);
+                canvas->requestRedraw(MIN(area_old[X].max(),area[X].max()) - 1, area[Y].max() - 1,
+                                      MAX(area_old[X].max(),area[X].max()) + _shadow_size + 1, area[Y].max() + _shadow_size + 1);
             }
         }
     }

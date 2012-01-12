@@ -1,5 +1,3 @@
-#define INKSCAPE_CTRL_C
-
 /*
  * SPCtrl
  *
@@ -232,7 +230,7 @@ sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int fla
     if (!ctrl->_moved) return;
 
     if (ctrl->shown) {
-        sp_canvas_request_redraw (item->canvas, ctrl->box.left(), ctrl->box.top(), ctrl->box.right() + 1, ctrl->box.bottom() + 1);
+        item->canvas->requestRedraw(ctrl->box.left(), ctrl->box.top(), ctrl->box.right() + 1, ctrl->box.bottom() + 1);
     }
 
     if (!ctrl->defined) return;

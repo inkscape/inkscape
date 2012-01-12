@@ -176,7 +176,7 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
     /* Setup Canvas */
     g_object_set_data (G_OBJECT (canvas), "SPDesktop", this);
 
-    SPCanvasGroup *root = sp_canvas_root (canvas);
+    SPCanvasGroup *root = canvas->getRoot();
 
     /* Setup adminstrative layers */
     acetate = sp_canvas_item_new (root, GNOME_TYPE_CANVAS_ACETATE, NULL);
@@ -793,8 +793,8 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
     x0 = cx - 0.5 * viewbox.dimensions()[Geom::X] / newscale;
     y1 = cy + 0.5 * viewbox.dimensions()[Geom::Y] / newscale;
 
-    /* Scroll */
-    sp_canvas_scroll_to (canvas, x0 * newscale - border, y1 * -newscale - border, clear);
+    // Scroll
+    canvas->scrollTo(x0 * newscale - border, y1 * -newscale - border, clear);
 
     /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
     sp_box3d_context_update_lines(event_context);
@@ -1115,7 +1115,7 @@ SPDesktop::scroll_world (double dx, double dy, bool is_scrolling)
 
     Geom::Rect const viewbox = canvas->getViewbox();
 
-    sp_canvas_scroll_to(canvas, viewbox.min()[Geom::X] - dx, viewbox.min()[Geom::Y] - dy, FALSE, is_scrolling);
+    canvas->scrollTo(viewbox.min()[Geom::X] - dx, viewbox.min()[Geom::Y] - dy, FALSE, is_scrolling);
 
     /*  update perspective lines if we are in the 3D box tool (so that infinite ones are shown correctly) */
     sp_box3d_context_update_lines(event_context);
@@ -1377,10 +1377,9 @@ SPDesktop::emitToolSubselectionChanged(gpointer data)
     inkscape_subselection_changed (this);
 }
 
-void
-SPDesktop::updateNow()
+void SPDesktop::updateNow()
 {
-    sp_canvas_update_now(canvas);
+    canvas->updateNow();
 }
 
 void

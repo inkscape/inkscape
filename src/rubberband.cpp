@@ -3,6 +3,7 @@
  *
  * Author:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  *
@@ -54,7 +55,7 @@ void Inkscape::Rubberband::start(SPDesktop *d, Geom::Point const &p)
     _points.push_back(_desktop->d2w(p));
     _touchpath_curve->moveto(p);
 
-    sp_canvas_force_full_redraw_after_interruptions(_desktop->canvas, 5);
+    _desktop->canvas->forceFullRedrawAfterInterruptions(5);
 }
 
 void Inkscape::Rubberband::stop()
@@ -67,8 +68,9 @@ void Inkscape::Rubberband::stop()
 
     delete_canvas_items();
 
-    if (_desktop)
-        sp_canvas_end_forced_full_redraws(_desktop->canvas);
+    if (_desktop) {
+        _desktop->canvas->endForcedFullRedraws();
+    }
 }
 
 void Inkscape::Rubberband::move(Geom::Point const &p)

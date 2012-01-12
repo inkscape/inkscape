@@ -1,5 +1,3 @@
-#define __SP_CANVAS_ACETATE_C__
-
 /*
  * Infinite invisible canvas item
  *
@@ -7,6 +5,7 @@
  *   Federico Mena <federico@nuclecu.unam.mx>
  *   Raph Levien <raph@acm.org>
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 1998-1999 The Free Software Foundation
  * Copyright (C) 2002 Lauris Kaplinski
@@ -39,7 +38,7 @@ GType sp_canvas_acetate_get_type (void)
 			(GInstanceInitFunc) sp_canvas_acetate_init,
 			NULL
 		};
-		acetate_type = g_type_register_static (sp_canvas_item_get_type (), "SPCanvasAcetate", &acetate_info, (GTypeFlags)0);
+		acetate_type = g_type_register_static(SPCanvasItem::getType(), "SPCanvasAcetate", &acetate_info, GTypeFlags(0));
 	}
 	return acetate_type;
 }
