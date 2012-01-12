@@ -76,6 +76,7 @@ protected:
     void quit_listening(void);
     void linked_delete(SPObject *deleted);
     void linked_modified(SPObject *linked_obj, guint flags);
+    virtual void linked_modified_callback(SPObject *linked_obj, guint flags);
 
     void on_edit_button_click();
     void on_copy_button_click();

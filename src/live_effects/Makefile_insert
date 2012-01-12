@@ -72,6 +72,8 @@ ink_common_sources += \
 	live_effects/lpe-powerstroke-interpolators.h	\
 	live_effects/lpe-offset.cpp	\
 	live_effects/lpe-offset.h	\
+	live_effects/lpe-clone-original.cpp	\
+	live_effects/lpe-clone-original.h	\
 	live_effects/lpe-ruler.cpp	\
 	live_effects/lpe-ruler.h	\
 	live_effects/lpe-recursiveskeleton.cpp	\

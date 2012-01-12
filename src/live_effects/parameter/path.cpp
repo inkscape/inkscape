@@ -360,8 +360,13 @@ PathParam::linked_delete(SPObject */*deleted*/)
     set_new_value (_pathvector, true);
 }
 
+void PathParam::linked_modified(SPObject *linked_obj, guint flags)
+{
+    linked_modified_callback(linked_obj, flags);
+}
+
 void
-PathParam::linked_modified(SPObject *linked_obj, guint /*flags*/)
+PathParam::linked_modified_callback(SPObject *linked_obj, guint /*flags*/)
 {
     SPCurve *curve = NULL;
     if (SP_IS_SHAPE(linked_obj)) {

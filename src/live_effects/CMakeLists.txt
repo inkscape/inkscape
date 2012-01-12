@@ -7,6 +7,7 @@ set(live_effects_SRC
 	lpe-boolops.cpp
 	lpe-circle_3pts.cpp
 	lpe-circle_with_radius.cpp
+	lpe-clone-original.cpp
 	lpe-constructgrid.cpp
 	lpe-copy_rotate.cpp
 	lpe-curvestitch.cpp
@@ -45,6 +46,7 @@ set(live_effects_SRC
 	parameter/bool.cpp
 	parameter/parameter.cpp
 	parameter/path.cpp
+	parameter/originalpath.cpp
 	parameter/path-reference.cpp
 	parameter/point.cpp
 	parameter/powerstrokepointarray.cpp

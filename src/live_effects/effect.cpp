@@ -75,6 +75,7 @@
 #include "live_effects/lpe-recursiveskeleton.h"
 #include "live_effects/lpe-extrude.h"
 #include "live_effects/lpe-powerstroke.h"
+#include "live_effects/lpe-clone-original.h"
 
 
 namespace Inkscape {
@@ -122,6 +123,7 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {RULER,                 N_("Ruler"),                   "ruler"},
 /* 0.49 ?*/
     {POWERSTROKE,           N_("[Unstable!] Power stroke"), "powerstroke"},
+    {CLONE_ORIGINAL,        N_("[Unstable!] Clone original path"), "clone_original"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
 
@@ -241,6 +243,9 @@ Effect::New(EffectType lpenr, LivePathEffectObject *lpeobj)
             break;
         case POWERSTROKE:
             neweffect = static_cast<Effect*> ( new LPEPowerStroke(lpeobj) );
+            break;
+        case CLONE_ORIGINAL:
+            neweffect = static_cast<Effect*> ( new LPECloneOriginal(lpeobj) );
             break;
         default:
             g_warning("LivePathEffect::Effect::New   called with invalid patheffect type (%d)", lpenr);
