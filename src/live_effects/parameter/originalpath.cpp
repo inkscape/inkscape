@@ -16,6 +16,10 @@
 #include "display/curve.h"
 #include "live_effects/effect.h"
 
+#include "inkscape.h"
+#include "desktop-handles.h"
+#include "selection.h"
+
 namespace Inkscape {
 
 namespace LivePathEffect {
@@ -100,8 +104,14 @@ OriginalPathParam::linked_modified_callback(SPObject *linked_obj, guint /*flags*
 void
 OriginalPathParam::on_select_original_button_click()
 {
-    /// \todo select original path
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     SPItem *original = ref.getObject();
+    if (desktop == NULL || original == NULL) {
+        return;
+    }
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    selection->clear();
+    selection->set(original);
 }
 
 } /* namespace LivePathEffect */
