@@ -6,8 +6,9 @@
  *   Johan Engelen <goejendaagh@zonnet.nl>
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
+ *   Romain de Bossoreille
  *
- * Copyright (C) 2004-2006 Authors
+ * Copyright (C) 2004-2011 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -20,6 +21,7 @@
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 #include <2geom/transforms.h>
+#include <gtkmm/adjustment.h>
 
 #include "desktop.h"
 #include "desktop-handles.h"
@@ -47,6 +49,7 @@
 #include "svg/svg.h"
 #include "ui/icon-names.h"
 #include "ui/widget/color-picker.h"
+#include "ui/widget/spinbutton.h"
 #include "unclump.h"
 #include "verbs.h"
 #include "widgets/icon.h"
@@ -1504,35 +1507,36 @@ static GtkWidget * clonetiler_spinbox(const char *tip, const char *attr, double 
     GtkWidget *hb = gtk_hbox_new(FALSE, 0);
 
     {
-        GtkObject *a;
+        Gtk::Adjustment *a;
         if (exponent) {
-            a = gtk_adjustment_new(1.0, lower, upper, 0.01, 0.05, 0);
+            a = new Gtk::Adjustment (1.0, lower, upper, 0.01, 0.05, 0);
         } else {
-            a = gtk_adjustment_new(0.0, lower, upper, 0.1, 0.5, 0);
+            a = new Gtk::Adjustment (0.0, lower, upper, 0.1, 0.5, 0);
         }
 
-        GtkWidget *sb;
+        Inkscape::UI::Widget::SpinButton *sb;
         if (exponent) {
-            sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 0.01, 2);
+            sb = new Inkscape::UI::Widget::SpinButton (*a, 0.01, 2);
         } else {
-            sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 0.1, 1);
+            sb = new Inkscape::UI::Widget::SpinButton (*a, 0.1, 1);
         }
 
-        gtk_widget_set_tooltip_text (sb, tip);
-        gtk_entry_set_width_chars (GTK_ENTRY (sb), 5);
-        gtk_spin_button_set_digits(GTK_SPIN_BUTTON(sb), 3);
-        gtk_box_pack_start (GTK_BOX (hb), sb, FALSE, FALSE, SB_MARGIN);
+        sb->set_tooltip_text (tip);
+        sb->set_width_chars (5);
+        sb->set_digits(3);
+        gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(sb->gobj()), FALSE, FALSE, SB_MARGIN);
 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         double value = prefs->getDoubleLimited(prefs_path + attr, exponent? 1.0 : 0.0, lower, upper);
-        gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
-        g_signal_connect(G_OBJECT(a), "value_changed",
+        a->set_value (value);
+        // TODO: C++ification
+        g_signal_connect(G_OBJECT(a->gobj()), "value_changed",
                            G_CALLBACK(clonetiler_value_changed), (gpointer) attr);
 
         if (exponent) {
-            g_object_set_data (G_OBJECT(sb), "oneable", GINT_TO_POINTER(TRUE));
+            sb->set_data ("oneable", GINT_TO_POINTER(TRUE));
         } else {
-            g_object_set_data (G_OBJECT(sb), "zeroable", GINT_TO_POINTER(TRUE));
+            sb->set_data ("zeroable", GINT_TO_POINTER(TRUE));
         }
     }
 
@@ -2679,15 +2683,17 @@ void clonetiler_dialog(void)
                 g_object_set_data (G_OBJECT(dlg), "rowscols", (gpointer) hb);
 
                 {
-                    GtkObject *a = gtk_adjustment_new(0.0, 1, 500, 1, 10, 0);
+                    Gtk::Adjustment *a = new Gtk::Adjustment (0.0, 1, 500, 1, 10, 0);
                     int value = prefs->getInt(prefs_path + "jmax", 2);
-                    gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
-                    GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 0);
-                    gtk_widget_set_tooltip_text (sb, _("How many rows in the tiling"));
-                    gtk_entry_set_width_chars (GTK_ENTRY (sb), 7);
-                    gtk_box_pack_start (GTK_BOX (hb), sb, TRUE, TRUE, 0);
+                    a->set_value (value);
 
-                    g_signal_connect(G_OBJECT(a), "value_changed",
+                    Inkscape::UI::Widget::SpinButton *sb = new Inkscape::UI::Widget::SpinButton (*a, 1.0, 0);
+                    sb->set_tooltip_text (_("How many rows in the tiling"));
+                    sb->set_width_chars (7);
+                    gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(sb->gobj()), TRUE, TRUE, 0);
+
+                    // TODO: C++ification
+                    g_signal_connect(G_OBJECT(a->gobj()), "value_changed",
                                        G_CALLBACK(clonetiler_xy_changed), (gpointer) "jmax");
                 }
 
@@ -2699,15 +2705,17 @@ void clonetiler_dialog(void)
                 }
 
                 {
-                    GtkObject *a = gtk_adjustment_new(0.0, 1, 500, 1, 10, 0);
+                    Gtk::Adjustment *a = new Gtk::Adjustment (0.0, 1, 500, 1, 10, 0);
                     int value = prefs->getInt(prefs_path + "imax", 2);
-                    gtk_adjustment_set_value (GTK_ADJUSTMENT (a), value);
-                    GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 0);
-                    gtk_widget_set_tooltip_text (sb, _("How many columns in the tiling"));
-                    gtk_entry_set_width_chars (GTK_ENTRY (sb), 7);
-                    gtk_box_pack_start (GTK_BOX (hb), sb, TRUE, TRUE, 0);
+                    a->set_value (value);
 
-                    g_signal_connect(G_OBJECT(a), "value_changed",
+                    Inkscape::UI::Widget::SpinButton *sb = new Inkscape::UI::Widget::SpinButton (*a, 1.0, 0);
+                    sb->set_tooltip_text (_("How many columns in the tiling"));
+                    sb->set_width_chars (7);
+                    gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(sb->gobj()), TRUE, TRUE, 0);
+
+                    // TODO: C++ification
+                    g_signal_connect(G_OBJECT(a->gobj()), "value_changed",
                                        G_CALLBACK(clonetiler_xy_changed), (gpointer) "imax");
                 }
 
@@ -2724,20 +2732,21 @@ void clonetiler_dialog(void)
 
                 {
                     // Width spinbutton
-                    GtkObject *a = gtk_adjustment_new (0.0, -1e6, 1e6, 1.0, 10.0, 0);
-                    sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a));
+                    Gtk::Adjustment *a = new Gtk::Adjustment (0.0, -1e6, 1e6, 1.0, 10.0, 0);
+                    sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a->gobj()));
 
                     double value = prefs->getDouble(prefs_path + "fillwidth", 50.0);
                     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
                     gdouble const units = sp_pixels_get_units (value, unit);
-                    gtk_adjustment_set_value (GTK_ADJUSTMENT (a), units);
+                    a->set_value (units);
 
-                    GtkWidget *e = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0 , 2);
-                    gtk_widget_set_tooltip_text (e, _("Width of the rectangle to be filled"));
-                    gtk_entry_set_width_chars (GTK_ENTRY (e), 7);
-                    gtk_spin_button_set_digits(GTK_SPIN_BUTTON(e), 4);
-                    gtk_box_pack_start (GTK_BOX (hb), e, TRUE, TRUE, 0);
-                    g_signal_connect(G_OBJECT(a), "value_changed",
+                    Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton (*a, 1.0, 2);
+                    e->set_tooltip_text (_("Width of the rectangle to be filled"));
+                    e->set_width_chars (7);
+                    e->set_digits (4);
+                    gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(e->gobj()), TRUE, TRUE, 0);
+                    // TODO: C++ification
+		    g_signal_connect(G_OBJECT(a->gobj()), "value_changed",
                                        G_CALLBACK(clonetiler_fill_width_changed), u);
                 }
                 {
@@ -2749,21 +2758,21 @@ void clonetiler_dialog(void)
 
                 {
                     // Height spinbutton
-                    GtkObject *a = gtk_adjustment_new (0.0, -1e6, 1e6, 1.0, 10.0, 0);
-                    sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a));
+                    Gtk::Adjustment *a = new Gtk::Adjustment (0.0, -1e6, 1e6, 1.0, 10.0, 0);
+                    sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a->gobj()));
 
                     double value = prefs->getDouble(prefs_path + "fillheight", 50.0);
                     SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
                     gdouble const units = sp_pixels_get_units (value, unit);
-                    gtk_adjustment_set_value (GTK_ADJUSTMENT (a), units);
+                    a->set_value (units);
 
-
-                    GtkWidget *e = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0 , 2);
-                    gtk_widget_set_tooltip_text (e, _("Height of the rectangle to be filled"));
-                    gtk_entry_set_width_chars (GTK_ENTRY (e), 7);
-                    gtk_spin_button_set_digits(GTK_SPIN_BUTTON(e), 4);
-                    gtk_box_pack_start (GTK_BOX (hb), e, TRUE, TRUE, 0);
-                    g_signal_connect(G_OBJECT(a), "value_changed",
+                    Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton (*a, 1.0, 2);
+                    e->set_tooltip_text (_("Height of the rectangle to be filled"));
+                    e->set_width_chars (7);
+                    e->set_digits (4);
+                    gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(e->gobj()), TRUE, TRUE, 0);
+                    // TODO: C++ification
+		    g_signal_connect(G_OBJECT(a->gobj()), "value_changed",
                                        G_CALLBACK(clonetiler_fill_height_changed), u);
                 }
 
