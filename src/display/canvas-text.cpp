@@ -135,7 +135,7 @@ sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf)
     double offsetx = s[Geom::X] - cl->anchor_offset_x - buf->rect.left();
     double offsety = s[Geom::Y] - cl->anchor_offset_y - buf->rect.top();
 
-    cairo_move_to(buf->ct, offsetx, offsety);
+    cairo_move_to(buf->ct, round(offsetx), round(offsety));
     cairo_text_path(buf->ct, cl->text);
 
     if (cl->outline){
