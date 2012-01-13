@@ -2081,8 +2081,9 @@ int SPCanvasImpl::paint(SPCanvas *canvas)
         canvas->need_update = FALSE;
     }
 
-    if (!canvas->need_redraw)
+    if (!canvas->need_redraw) {
         return TRUE;
+    }
 
     Gdk::Region to_paint;
 
@@ -2125,21 +2126,23 @@ int SPCanvasImpl::paint(SPCanvas *canvas)
 
 int SPCanvasImpl::do_update(SPCanvas *canvas)
 {
-    if (!canvas->root) // canvas may have already be destroyed by closing desktop during interrupted display!
+    if (!canvas->root) { // canvas may have already be destroyed by closing desktop during interrupted display!
         return TRUE;
-        
-    if (canvas->drawing_disabled)
+    }
+
+    if (canvas->drawing_disabled) {
         return TRUE;
+    }
 
     // Cause the update if necessary
     if (canvas->need_update) {
-        sp_canvas_item_invoke_update (canvas->root, Geom::identity(), 0);
+        sp_canvas_item_invoke_update(canvas->root, Geom::identity(), 0);
         canvas->need_update = FALSE;
     }
 
     // Paint if able to
-    if (gtk_widget_is_drawable ( GTK_WIDGET (canvas))) {
-            return paint (canvas);
+    if (gtk_widget_is_drawable( GTK_WIDGET(canvas) )) {
+        return paint(canvas);
     }
 
     // Pick new current item
@@ -2235,7 +2238,7 @@ void SPCanvas::requestRedraw(int x0, int y0, int x1, int y1)
 {
     GtkAllocation allocation;
 
-    if (!gtk_widget_is_drawable ( GTK_WIDGET(this) )) {
+    if (!gtk_widget_is_drawable( GTK_WIDGET(this) )) {
         return;
     }
     if ((x0 >= x1) || (y0 >= y1)) {
@@ -2245,7 +2248,7 @@ void SPCanvas::requestRedraw(int x0, int y0, int x1, int y1)
     Geom::IntRect bbox(x0, y0, x1, y1);
     gtk_widget_get_allocation(GTK_WIDGET(this), &allocation);
 
-    Geom::IntRect canvas_rect = Geom::IntRect::from_xywh(x0, y0,
+    Geom::IntRect canvas_rect = Geom::IntRect::from_xywh(this->x0, this->y0,
                                                          allocation.width, allocation.height);
     
     Geom::OptIntRect clip = bbox & canvas_rect;
