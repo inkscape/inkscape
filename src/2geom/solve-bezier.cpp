@@ -142,6 +142,10 @@ Bezier::find_bezier_roots(std::vector<double> &solutions,
     //convex_hull_marching(bz, bz, solutions, left_t, right_t);
     //return;
     
+    //A constant bezier, even if identically zero, has no roots
+    if (bz.isConstant())
+        return;
+    
     while(bz[0] == 0) {
         debug(std::cout << "deflate\n");
         bz = bz.deflate();
