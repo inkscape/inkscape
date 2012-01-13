@@ -247,9 +247,7 @@ void ClipboardManagerImpl::copy(SPDesktop *desktop)
     if (tools_isactive(desktop, TOOLS_TEXT)) {
         _discardInternalClipboard();
         Glib::ustring selected_text = sp_text_get_selected_text(desktop->event_context);
-        if (!selected_text.empty()) {
-            _clipboard->set_text(selected_text);
-        }
+        _clipboard->set_text(selected_text);
         if (_text_style) {
             sp_repr_css_attr_unref(_text_style);
             _text_style = NULL;
