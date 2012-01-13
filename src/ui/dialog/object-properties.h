@@ -1,12 +1,12 @@
-/** @file
- * \brief  Display settings dialog
+/** 
+ * @file Object properties dialog.
  */
 /* Author:
  *   Lauris Kaplinski <lauris@ximian.com>
  *   Kris De Gussem <Kris.DeGussem@gmail.com>
  *
  * Copyright (C) 2001 Ximian, Inc.
- * Copyright (C) 2011 Authors
+ * Copyright (C) 2012 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -17,6 +17,8 @@
 #include <gtkmm.h>
 #include <glibmm/i18n.h>
 
+#include "desktop.h"
+#include "ui/dialog/desktop-tracker.h"
 #include "ui/widget/panel.h"
 #include "widgets/sp-attribute-widget.h"
 
@@ -70,6 +72,11 @@ private:
     Gtk::Expander EInteractivity; //the label for interactivity
     SPAttributeTable attrTable; //the widget for showing the on... names at the bottom
     
+    SPDesktop *desktop;
+    DesktopTracker deskTrack;
+    sigc::connection desktopChangeConn;
+    sigc::connection selectChangedConn;
+    sigc::connection subselChangedConn;
     
     /**
      * Constructor auxiliary function creating the child widgets.
@@ -90,6 +97,22 @@ private:
      * Callback for checkbox Hide.
      */
     void hidden_toggled(void);
+    
+    /*
+     * On signal modified, invokes an update.
+     */
+    //void selectionModifiedCB( guint flags );
+    
+    /**
+     * Can be invoked for setting the desktop. Currently not used.
+     */
+    void setDesktop(SPDesktop *desktop);
+    
+    /**
+     * Is invoked by the desktop tracker when the desktop changes.
+     */
+    void setTargetDesktop(SPDesktop *desktop);
+
 };
 
 }

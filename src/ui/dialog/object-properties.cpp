@@ -1,6 +1,5 @@
 /**
- * @file
- * Object properties dialog.
+ * @file Object properties dialog.
  */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -9,7 +8,7 @@
  *   Abhishek Sharma
  *   Kris De Gussem <Kris.DeGussem@gmail.com>
  *
- * Copyright (C) 1999-2011 Authors
+ * Copyright (C) 1999-2012 Authors
  * Copyright (C) 2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -27,8 +26,6 @@
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
-
-void on_selection_changed(Inkscape::Application */*inkscape*/, Inkscape::Selection */*selection*/, ObjectProperties *dial);
 
 /**
  * Create a new static instance of the object properties dialog.
@@ -48,7 +45,12 @@ ObjectProperties::ObjectProperties (void) :
     CBLock(_("L_ock"), 1),
     BSet (_("_Set"), 1),
     LabelInteractivity(_("_Interactivity"), 1),
-    attrTable()
+    attrTable(),
+    desktop(NULL),
+    deskTrack(),
+    selectChangedConn(),
+    subselChangedConn()
+    // selectModifiedConn()
 {
     //initialize labels for the table at the bottom of the dialog
     int_labels.push_back("onclick");
@@ -62,19 +64,23 @@ ObjectProperties::ObjectProperties (void) :
     int_labels.push_back("onfocusout");
     int_labels.push_back("onload");
     
+    desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &ObjectProperties::setTargetDesktop) );
+    deskTrack.connect(GTK_WIDGET(gobj()));
+    
     MakeWidget();
 }
 
 ObjectProperties::~ObjectProperties (void)
 {
+    // selectModifiedConn.disconnect();
+    subselChangedConn.disconnect();
+    selectChangedConn.disconnect();
+    desktopChangeConn.disconnect();
+    deskTrack.disconnect();
 }
 
 void ObjectProperties::MakeWidget(void)
 {
-    // g_signal_connect (G_OBJECT (INKSCAPE), "modify_selection", G_CALLBACK (sp_item_widget_modify_selection), wd.win);
-    // g_signal_connect (G_OBJECT (INKSCAPE), "set_selection", G_CALLBACK (sp_item_widget_change_selection), wd.win);
-    g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (on_selection_changed), this);
-    
     Gtk::Box *contents = _getContents();
     contents->set_spacing(0);
     
@@ -184,7 +190,11 @@ void ObjectProperties::MakeWidget(void)
 
 void ObjectProperties::widget_setup(void)
 {
-    if (blocked)
+    if (blocked || !desktop)
+    {
+        return;
+    }
+    if (SP_ACTIVE_DESKTOP != desktop)
     {
         return;
     }
@@ -367,13 +377,40 @@ void ObjectProperties::hidden_toggled(void)
     blocked = false;
 }
 
-/**
- * ObjectProperties callback for the selection of an other object.
- */
-void on_selection_changed(Inkscape::Application */*inkscape*/, Inkscape::Selection */*selection*/, ObjectProperties *dial)
+void ObjectProperties::setDesktop(SPDesktop *desktop)
 {
-    dial->widget_setup();
+    Panel::setDesktop(desktop);
+    deskTrack.setBase(desktop);
 }
+
+void ObjectProperties::setTargetDesktop(SPDesktop *desktop)
+{
+    if (this->desktop != desktop) {
+        if (this->desktop) {
+            // selectModifiedConn.disconnect();
+            subselChangedConn.disconnect();
+            selectChangedConn.disconnect();
+        }
+        this->desktop = desktop;
+        if (desktop && desktop->selection) {
+            selectChangedConn = desktop->selection->connectChanged(sigc::hide(sigc::mem_fun(*this, &ObjectProperties::widget_setup)));
+            subselChangedConn = desktop->connectToolSubselectionChanged(sigc::hide(sigc::mem_fun(*this, &ObjectProperties::widget_setup)));
+
+            //// Must check flags, so can't call widget_setup() directly.
+            // selectModifiedConn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &ObjectProperties::selectionModifiedCB)));
+        }
+        widget_setup();
+    }
+}
+
+// void ObjectProperties::selectionModifiedCB( guint flags )
+// {
+    // if (flags & ( SP_OBJECT_MODIFIED_FLAG |
+                   // SP_OBJECT_PARENT_MODIFIED_FLAG |
+                   // SP_OBJECT_STYLE_MODIFIED_FLAG) ) {
+        // widget_setup();
+    // }
+// }
 
 }
 }
