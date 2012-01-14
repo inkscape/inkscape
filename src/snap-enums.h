@@ -4,7 +4,7 @@
  * Authors:
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *
- * Copyright (C) 2010 - 2011 Authors
+ * Copyright (C) 2010 - 2012 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -14,7 +14,7 @@ namespace Inkscape {
 /**
  * enumerations of snap source types and snap target types.
  */
-enum SnapSourceType {
+enum SnapSourceType { // When adding source types here, then also update Inkscape::SnapPreferences::source2target!
     SNAPSOURCE_UNDEFINED = 0,
     //-------------------------------------------------------------------
     // Bbox points can be located at the edge of the stroke (for visual bboxes); they will therefore not snap
@@ -67,6 +67,8 @@ enum SnapTargetType {
     SNAPTARGET_NODE_CUSP,
     SNAPTARGET_LINE_MIDPOINT,
     SNAPTARGET_PATH,
+    SNAPTARGET_PATH_PERPENDICULAR,
+    SNAPTARGET_PATH_TANGENTIAL,
     SNAPTARGET_PATH_INTERSECTION,
     SNAPTARGET_PATH_GUIDE_INTERSECTION,
     SNAPTARGET_PATH_CLIP,

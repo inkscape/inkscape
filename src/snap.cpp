@@ -112,14 +112,6 @@ void SnapManager::freeSnapReturnByRef(Geom::Point &p,
     s.getPointIfSnapped(p);
 }
 
-void SnapManager::freeSnapReturnByRef(Geom::Point &p,
-                                      Inkscape::SnapSourceType const source_type,
-                                      boost::optional<Geom::Point> &starting_point) const
-{
-    Inkscape::SnappedPoint const s = freeSnap(Inkscape::SnapCandidatePoint(p, source_type, starting_point), Geom::OptRect());
-    s.getPointIfSnapped(p);
-}
-
 Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapCandidatePoint const &p,
                                              Geom::OptRect const &bbox_to_snap) const
 {
@@ -397,7 +389,7 @@ Inkscape::SnappedPoint SnapManager::constrainedAngularSnap(Inkscape::SnapCandida
     return sp;
 }
 
-void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &/*guide_normal*/, SPGuideDragType drag_type) const
+void SnapManager::guideFreeSnap(Geom::Point &p, SPGuideDragType drag_type, boost::optional<Geom::Point> origin_or_vector) const
 {
     if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally() || !snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GUIDE)) {
         return;
@@ -406,6 +398,13 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point const &/*guide_norma
     Inkscape::SnapCandidatePoint candidate(p, Inkscape::SNAPSOURCE_GUIDE_ORIGIN);
     if (drag_type == SP_DRAG_ROTATE) {
         candidate = Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_GUIDE);
+        if (origin_or_vector) {
+            candidate.addOrigin(*origin_or_vector);
+        }
+    } else {
+        if (origin_or_vector) {
+            candidate.addVector(*origin_or_vector);
+        }
     }
 
     IntermSnapResults isr;

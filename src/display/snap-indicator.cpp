@@ -100,6 +100,12 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             case SNAPTARGET_PATH:
                 target_name = _("path");
                 break;
+            case SNAPTARGET_PATH_PERPENDICULAR:
+                target_name = _("path (perpendicular)");
+                break;
+            case SNAPTARGET_PATH_TANGENTIAL:
+                target_name = _("path (tangential)");
+                break;
             case SNAPTARGET_PATH_INTERSECTION:
                 target_name = _("path intersection");
                 break;

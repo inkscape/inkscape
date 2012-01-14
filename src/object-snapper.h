@@ -100,6 +100,13 @@ private:
                  SnapConstraint const &c,
                  Geom::Point const &p_proj_on_constraint) const;
 
+    void _snapPathsTangPerp(bool snap_tang,
+                            bool snap_perp,
+                            IntermSnapResults &isr,
+                            SnapCandidatePoint const &p,
+                            Geom::Curve const *curve,
+                            SPDesktop const *dt) const;
+
     bool isUnselectedNode(Geom::Point const &point, std::vector<Inkscape::SnapCandidatePoint> const *unselected_nodes) const;
 
     /**

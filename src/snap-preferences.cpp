@@ -54,9 +54,28 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
 
     if (target & SNAPTARGET_BBOX_CATEGORY) {
         group_on = isTargetSnappable(SNAPTARGET_BBOX_CATEGORY); // Only if the group with bbox sources/targets has been enabled, then we might snap to any of the bbox targets
+        return;
+    }
 
-    } else if (target & SNAPTARGET_NODE_CATEGORY) {
+    if (target & SNAPTARGET_NODE_CATEGORY) {
         group_on = isTargetSnappable(SNAPTARGET_NODE_CATEGORY); // Only if the group with path/node sources/targets has been enabled, then we might snap to any of the nodes/paths
+        switch (target) {
+            case SNAPTARGET_RECT_CORNER:
+                target = SNAPTARGET_NODE_CUSP;
+                break;
+            case SNAPTARGET_ELLIPSE_QUADRANT_POINT:
+                target = SNAPTARGET_NODE_SMOOTH;
+                break;
+            case SNAPTARGET_PATH_GUIDE_INTERSECTION:
+                target = SNAPTARGET_PATH_INTERSECTION;
+                break;
+            case SNAPTARGET_PATH_PERPENDICULAR:
+            case SNAPTARGET_PATH_TANGENTIAL:
+                target = SNAPTARGET_PATH;
+                break;
+            default:
+                break;
+        }
         if (target == SNAPTARGET_RECT_CORNER) {
             target = SNAPTARGET_NODE_CUSP;
         } else if (target == SNAPTARGET_ELLIPSE_QUADRANT_POINT) {
@@ -65,11 +84,14 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
             target = SNAPTARGET_PATH_INTERSECTION;
         }
 
-    } else if (target & SNAPTARGET_DATUMS_CATEGORY) {
+        return;
+    }
+
+    if (target & SNAPTARGET_DATUMS_CATEGORY) {
         group_on = true; // These snap targets cannot be disabled as part of a disabled group;
         switch (target) {
             // Some snap targets don't have their own toggle. These targets are called "secondary targets". We will re-map
-            // them to their cousin which does have a toggle, and which is called a "primary target"case SNAPTARGET_GRID_INTERSECTION:
+            // them to their cousin which does have a toggle, and which is called a "primary target"
             case SNAPTARGET_GRID_INTERSECTION:
                 target = SNAPTARGET_GRID;
                 break;
@@ -96,9 +118,10 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
                 g_warning("Snap-preferences warning: Undefined snap target (#%i)", target);
                 break;
         }
+        return;
+    }
 
-
-    } else if (target & SNAPTARGET_OTHERS_CATEGORY) {
+    if (target & SNAPTARGET_OTHERS_CATEGORY) {
         // Only if the group with "other" snap sources/targets has been enabled, then we might snap to any of those targets
         // ... but this doesn't hold for the page border, grids, and guides
         group_on = isTargetSnappable(SNAPTARGET_OTHERS_CATEGORY);
@@ -129,9 +152,13 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
                 break;
         }
 
+        return;
+    }
 
-    } else if (target == SNAPTARGET_UNDEFINED ) {
+    if (target == SNAPTARGET_UNDEFINED ) {
         g_warning("Snap-preferences warning: Undefined snaptarget (#%i)", target);
+    } else {
+        g_warning("Snap-preferences warning: Snaptarget not handled (#%i)", target);
     }
 }
 

@@ -9,7 +9,7 @@
  * Authors:
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *
- * Copyright (C) 2010 Authors
+ * Copyright (C) 2010 - 2012 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -32,7 +32,6 @@ public:
         _source_num(source_num),
         _target_bbox(bbox)
     {
-        _line_starting_point = boost::optional<Geom::Point>();
     };
 
     SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source, Inkscape::SnapTargetType const target)
@@ -42,7 +41,6 @@ public:
     {
         _source_num = -1;
         _target_bbox = Geom::OptRect();
-        _line_starting_point = boost::optional<Geom::Point>();
     }
 
     SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source)
@@ -52,35 +50,36 @@ public:
         _source_num(-1)
     {
         _target_bbox = Geom::OptRect();
-        _line_starting_point = boost::optional<Geom::Point>();
-    }
-
-    SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source, boost::optional<Geom::Point> starting_point)
-        : _point(point),
-        _source_type(source),
-        _target_type(Inkscape::SNAPTARGET_UNDEFINED),
-        _source_num(-1)
-    {
-        _target_bbox = Geom::OptRect();
-        _line_starting_point = starting_point;
     }
 
     inline Geom::Point const & getPoint() const {return _point;}
     inline Inkscape::SnapSourceType getSourceType() const {return _source_type;}
-    bool isSingleHandle() const {return (_source_type == SNAPSOURCE_NODE_HANDLE || _source_type == SNAPSOURCE_OTHER_HANDLE) && _source_num == -1;}
     inline Inkscape::SnapTargetType getTargetType() const {return _target_type;}
+    bool isSingleHandle() const {return (_source_type == SNAPSOURCE_NODE_HANDLE || _source_type == SNAPSOURCE_OTHER_HANDLE) && _source_num == -1;}
+
     inline long getSourceNum() const {return _source_num;}
     void setSourceNum(long num) {_source_num = num;}
+
     void setDistance(Geom::Coord dist) {_dist = dist;}
     Geom::Coord getDistance() { return _dist;}
+
+    void addOrigin(Geom::Point &pt) { _origins_and_vectors.push_back(std::make_pair(pt, false)); }
+    void addVector(Geom::Point &v) { _origins_and_vectors.push_back(std::make_pair(v, true)); }
+    std::vector<std::pair<Geom::Point, bool> > const & getOriginsAndVectors() const {return _origins_and_vectors;}
+
     bool operator <(const SnapCandidatePoint &other) const { return _dist < other._dist; } // Needed for sorting the SnapCandidatePoints
     inline Geom::OptRect const getTargetBBox() const {return _target_bbox;}
-    boost::optional<Geom::Point> const & getStartingPoint() const {return _line_starting_point;}
 
 private:
     // Coordinates of the point
     Geom::Point _point;
-    boost::optional<Geom::Point> _line_starting_point; // For perpendicular or tangential snapping we need to know the starting point of a line
+    // For perpendicular or tangential snapping of a ROTATING line we need to know its (stationary) starting point.
+    // In case of editing with the node tool, a node can be connected to two lines simultaneously, in which case we
+    // need to consider two starting points; Therefore a vector containing multiple starting points is used here. However,
+    // for perpendicular or tangential snapping of a TRANSLATING line we need to know its direction vector instead. This
+    // vector will be stored in the same way as the starting point is, i.e. as a Geom::Point. A boolean is paired to this
+    // point, which is true for vectors but false for origins
+    std::vector<std::pair<Geom::Point, bool> > _origins_and_vectors;
 
     // If this SnapCandidatePoint is a snap source, then _source_type must be defined. If it
     // is a snap target, then _target_type must be defined. If it's yet unknown whether it will

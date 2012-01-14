@@ -152,7 +152,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     // We only have a temporary guide which is not stored in our document yet.
                     // Because the guide snapper only looks in the document for guides to snap to,
                     // we don't have to worry about a guide snapping to itself here
-                    m.guideFreeSnap(event_dt, normal, SP_DRAG_MOVE_ORIGIN);
+                    m.guideFreeSnap(event_dt, SP_DRAG_MOVE_ORIGIN, Geom::rot90(normal));
                     m.unSetup();
                 }
 
@@ -175,7 +175,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     // We only have a temporary guide which is not stored in our document yet.
                     // Because the guide snapper only looks in the document for guides to snap to,
                     // we don't have to worry about a guide snapping to itself here
-                    m.guideFreeSnap(event_dt, normal, SP_DRAG_MOVE_ORIGIN);
+                    m.guideFreeSnap(event_dt, SP_DRAG_MOVE_ORIGIN, Geom::rot90(normal));
                     m.unSetup();
                 }
 
@@ -303,7 +303,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     }
                 } else if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
                     // cannot use shift here to disable snapping, because we already use it for rotating the guide
-                    m.guideFreeSnap(motion_dt, guide->normal_to_line, drag_type);
+                    Geom::Point origin = (drag_type == SP_DRAG_ROTATE) ? guide->point_on_line : Geom::rot90(guide->normal_to_line);
+                    m.guideFreeSnap(motion_dt, drag_type, origin);
                 }
                 m.unSetup();
 
@@ -376,7 +377,8 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         }
                     } else if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
                         // cannot use shift here to disable snapping, because we already use it for rotating the guide
-                        m.guideFreeSnap(event_dt, guide->normal_to_line, drag_type);
+                        Geom::Point origin = (drag_type == SP_DRAG_ROTATE) ? guide->point_on_line : Geom::rot90(guide->normal_to_line);
+                        m.guideFreeSnap(event_dt, drag_type, origin);
                     }
                     m.unSetup();
 

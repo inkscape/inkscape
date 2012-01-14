@@ -9,7 +9,7 @@
  *
  * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
  * Copyright (C) 2000-2002 Lauris Kaplinski
- * Copyright (C) 2000-2010 Authors
+ * Copyright (C) 2000-2012 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -166,7 +166,7 @@ public:
      *
      * PS:
      * 1) SnapManager::setup() must have been called before calling this method,
-     * but only once for a set of points
+     * although only once for each set of points
      * 2) Only to be used when a single source point is to be snapped; it assumes
      * that source_num = 0, which is inefficient when snapping sets our source points
      *
@@ -178,10 +178,6 @@ public:
                              Inkscape::SnapSourceType const source_type,
                              Geom::OptRect const &bbox_to_snap = Geom::OptRect()) const;
 
-    void freeSnapReturnByRef(Geom::Point &p,
-                             Inkscape::SnapSourceType const source_type,
-                             boost::optional<Geom::Point> &starting_point) const;
-
     /**
      * Try to snap a point to grids, guides or objects.
      *
@@ -191,7 +187,7 @@ public:
      * freeSnapReturnByRef(). Please read the comments of the latter for more details
      *
      * PS: SnapManager::setup() must have been called before calling this method,
-     * but only once for a set of points
+     * although only once for each set of points
      *
      * @param p Source point to be snapped.
      * @param bbox_to_snap Bounding box hulling the set of points, all from the same selection and having the same transformation.
@@ -244,7 +240,7 @@ public:
      *
      * PS:
      * 1) SnapManager::setup() must have been called before calling this method,
-     * but only once for a set of points
+     * although only once for each set of points
      * 2) Only to be used when a single source point is to be snapped; it assumes
      * that source_num = 0, which is inefficient when snapping sets our source points
 
@@ -268,7 +264,7 @@ public:
      * constrainedSnapReturnByRef(). Please read the comments of the latter for more details.
      *
      * PS: SnapManager::setup() must have been called before calling this method,
-     * but only once for a set of points
+     * although only once for each set of points
      * PS: If there's nothing to snap to or if snapping has been disabled, then this
      * method will still apply the constraint (but without snapping)
      *
@@ -308,9 +304,8 @@ public:
      * PS: SnapManager::setup() must have been called before calling this method,
      *
      * @param p Current position of the point on the guide that is to be snapped; will be overwritten by the position of the snap target if snapping has occurred.
-     * @param guide_normal Vector normal to the guide line.
      */
-    void guideFreeSnap(Geom::Point &p, Geom::Point const &guide_normal, SPGuideDragType drag_type) const;
+    void guideFreeSnap(Geom::Point &p, SPGuideDragType drag_type, boost::optional<Geom::Point> origin_or_vector = boost::optional<Geom::Point>()) const;
 
     /**
      * Wrapper method to make snapping of the guide origin a bit easier (i.e. simplifies the calling code).
@@ -318,7 +313,6 @@ public:
      * PS: SnapManager::setup() must have been called before calling this method,
      *
      * @param p Current position of the point on the guide that is to be snapped; will be overwritten by the position of the snap target if snapping has occurred.
-     * @param guide_normal Vector normal to the guide line.
      */
     void guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline) const;
 

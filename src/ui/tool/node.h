@@ -85,7 +85,7 @@ public:
     virtual ~Handle();
     inline Geom::Point relativePos();
     inline double length();
-    bool isDegenerate() { return _degenerate; }
+    bool isDegenerate() { return _degenerate; } // True if the handle is retracted, i.e. has zero length.
 
     virtual void setVisible(bool);
     virtual void move(Geom::Point const &p);
@@ -117,7 +117,7 @@ private:
     Node *_parent; // the handle's lifetime does not extend beyond that of the parent node,
     // so a naked pointer is OK and allows setting it during Node's construction
     SPCanvasItem *_handle_line;
-    bool _degenerate; // this is used often internally so it makes sense to cache this
+    bool _degenerate; // True if the handle is retracted, i.e. has zero length. This is used often internally so it makes sense to cache this
 
     static Geom::Point _saved_other_pos;
     static double _saved_length;

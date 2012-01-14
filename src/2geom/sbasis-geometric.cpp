@@ -764,6 +764,23 @@ std::vector<double> find_normals(Point P, D2<SBasis> const &A) {
     return roots(crs);
 }
 
+/**
+* \brief returns all the parameter values of A whose normal is parallel to vector V.
+* \relates D2
+*/
+std::vector<double> find_normals_by_vector(Point V, D2<SBasis> const &A) {
+    SBasis crs = dot(derivative(A), V);
+    return roots(crs);
+}
+/**
+* \brief returns all the parameter values of A whose tangent is parallel to vector V.
+* \relates D2
+*/
+std::vector<double> find_tangents_by_vector(Point V, D2<SBasis> const &A) {
+    SBasis crs = dot(derivative(A), rot90(V));
+    return roots(crs);
+}
+
 }
 //}; // namespace
 

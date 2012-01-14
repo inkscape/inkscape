@@ -176,7 +176,6 @@ void Handle::move(Geom::Point const &new_pos)
 
 void Handle::setPosition(Geom::Point const &p)
 {
-    Geom::Point old_pos = position();
     ControlPoint::setPosition(p);
     sp_ctrlline_set_coords(SP_CTRLLINE(_handle_line), _parent->position(), position());
 
@@ -1027,8 +1026,48 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         sm.setupIgnoreSelection(_desktop, true, &unselected);
     }
 
+    // Snap candidate point for free snapping; this will consider snapping tangentially
+    // and perpendicularly and therefore the origin or direction vector must be set
+    Inkscape::SnapCandidatePoint scp_free(new_pos, _snapSourceType());
+
+    boost::optional<Geom::Point> front_point, back_point;
+    Geom::Point origin = _last_drag_origin();
+    Geom::Point dummy_cp;
+    if (_front.isDegenerate()) {
+        if (_is_line_segment(this, _next())) {
+            front_point = _next()->position() - origin;
+            if (_next()->selected()) {
+                dummy_cp = _next()->position() - position();
+                scp_free.addVector(dummy_cp);
+            } else {
+                dummy_cp = _next()->position();
+                scp_free.addOrigin(dummy_cp);
+            }
+        }
+    } else {
+        front_point = _front.relativePos();
+        scp_free.addVector(*front_point);
+    }
+    if (_back.isDegenerate()) {
+        if (_is_line_segment(_prev(), this)) {
+            back_point = _prev()->position() - origin;
+            if (_prev()->selected()) {
+                dummy_cp = _prev()->position() - position();
+                scp_free.addVector(dummy_cp);
+            } else {
+                dummy_cp = _prev()->position();
+                scp_free.addOrigin(dummy_cp);
+            }
+        }
+    } else {
+        back_point = _back.relativePos();
+        scp_free.addVector(*back_point);
+    }
+
     if (held_control(*event)) {
-        Geom::Point origin = _last_drag_origin();
+        // We're about to consider a constrained snap, which is already limited to 1D
+        // Therefore tangential or perpendicular snapping will not be considered, and therefore
+        // all calls above to scp_free.addVector() and scp_free.addOrigin() can be neglected
         std::vector<Inkscape::Snapper::SnapConstraint> constraints;
         if (held_alt(*event)) {
             // with Ctrl+Alt, constrain to handle lines
@@ -1039,19 +1078,7 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
             int snaps = prefs->getIntLimited("/options/rotationsnapsperpi/value", 12, 1, 1000);
             double min_angle = M_PI / snaps;
 
-            boost::optional<Geom::Point> front_point, back_point, fperp_point, bperp_point;
-            if (_front.isDegenerate()) {
-                if (_is_line_segment(this, _next()))
-                    front_point = _next()->position() - origin;
-            } else {
-                front_point = _front.relativePos();
-            }
-            if (_back.isDegenerate()) {
-                if (_is_line_segment(_prev(), this))
-                    back_point = _prev()->position() - origin;
-            } else {
-                back_point = _back.relativePos();
-            }
+            boost::optional<Geom::Point> fperp_point, bperp_point;
             if (front_point) {
                 constraints.push_back(Inkscape::Snapper::SnapConstraint(origin, *front_point));
                 fperp_point = Geom::rot90(*front_point);
@@ -1084,7 +1111,7 @@ void Node::dragged(Geom::Point &new_pos, GdkEventMotion *event)
         }
         new_pos = sp.getPoint();
     } else if (snap) {
-        sp = sm.freeSnap(Inkscape::SnapCandidatePoint(new_pos, _snapSourceType()));
+        Inkscape::SnappedPoint sp = sm.freeSnap(scp_free);
         new_pos = sp.getPoint();
     }
 
