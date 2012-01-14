@@ -225,30 +225,13 @@ sp_vruler_size_request (GtkWidget *widget, GtkRequisition *requisition)
 }
 
 static void
-sp_ruler_common_draw_ticks (GtkRuler *ruler)
+sp_ruler_common_draw_ticks(GtkRuler *ruler)
 {
-    GtkWidget *widget;
-    GdkGC *gc;
-    PangoContext *pango_context;
-    PangoLayout *pango_layout;
-    gint i, j, tick_index;
-    gint width, height;
-    gint xthickness;
-    gint ythickness;
-    gint length, ideal_length;
-    double lower, upper;		/* Upper and lower limits, in ruler units */
-    double increment;		/* Number of pixels per unit */
-    gint scale;			/* Number of units per major unit */
-    double subd_incr;
-    double start, end, cur;
+    gint width = 0;
+    gint height = 0;
     gchar unit_str[32];
     gchar digit_str[2] = { '\0', '\0' };
-    gint digit_height;
-    //gint text_width, text_height;
-    gint text_dimension;
-    gint pos;
     GtkOrientation orientation;
-    GtkStyle *style;
     GtkAllocation allocation;
 
     g_return_if_fail (ruler != NULL);
@@ -257,20 +240,20 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
         return;
 
     g_object_get(G_OBJECT(ruler), "orientation", &orientation, NULL);
-    widget = GTK_WIDGET (ruler);
-    style = gtk_widget_get_style (widget);
-    gc = style->fg_gc[GTK_STATE_NORMAL];
+    GtkWidget *widget = GTK_WIDGET (ruler);
+    GtkStyle  *style = gtk_widget_get_style (widget);
+    GdkGC     *gc = style->fg_gc[GTK_STATE_NORMAL];
 
-    pango_context = gtk_widget_get_pango_context (widget);
-    pango_layout = pango_layout_new (pango_context);
+    PangoContext *pango_context = gtk_widget_get_pango_context (widget);
+    PangoLayout  *pango_layout = pango_layout_new (pango_context);
     PangoFontDescription *fs = pango_font_description_new ();
     pango_font_description_set_size (fs, RULER_FONT_SIZE);
     pango_layout_set_font_description (pango_layout, fs);
     pango_font_description_free (fs);
 
-    digit_height = (int) floor (RULER_FONT_SIZE * RULER_FONT_VERTICAL_SPACING / PANGO_SCALE + 0.5);
-    xthickness = style->xthickness;
-    ythickness = style->ythickness;
+    gint digit_height = (int) floor (RULER_FONT_SIZE * RULER_FONT_VERTICAL_SPACING / PANGO_SCALE + 0.5);
+    gint xthickness = style->xthickness;
+    gint ythickness = style->ythickness;
 
     gtk_widget_get_allocation (widget, &allocation);
     
@@ -288,15 +271,19 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
                    0, 0, 
                    allocation.width, allocation.height);
 
-    upper = ruler->upper / ruler->metric->pixels_per_unit; // upper and lower are expressed in ruler units
-    lower = ruler->lower / ruler->metric->pixels_per_unit;
+    gdouble ruler_upper = 0;
+    gdouble ruler_lower = 0;
+    gdouble max_size = 0;
+    gtk_ruler_get_range(ruler, &ruler_lower, &ruler_upper, NULL, &max_size);
+    gdouble upper = ruler_upper / ruler->metric->pixels_per_unit; // upper and lower are expressed in ruler units
+    gdouble lower = ruler_lower / ruler->metric->pixels_per_unit;
     /* "pixels_per_unit" should be "points_per_unit". This is the size of the unit
     * in 1/72nd's of an inch and has nothing to do with screen pixels */
 
     if ((upper - lower) == 0)
         return;
 
-    increment = (double) (width + 2*UNUSED_PIXELS) / (upper - lower); // screen pixels per ruler unit
+    double increment = (double) (width + 2*UNUSED_PIXELS) / (upper - lower); // screen pixels per ruler unit
 
     /* determine the scale
     *  For vruler, use the maximum extents of the ruler to determine the largest
@@ -307,9 +294,9 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
     *  text_width = gdk_string_width(font, unit_str), so that the result
     *  for the scale looks consistent with an accompanying vruler
     */
-    scale = (int)(ceil (ruler->max_size / ruler->metric->pixels_per_unit));
+    gint scale = (int)(ceil(max_size / ruler->metric->pixels_per_unit));
     sprintf (unit_str, "%d", scale);
-    text_dimension = strlen (unit_str) * digit_height + 1;
+    gint text_dimension = strlen (unit_str) * digit_height + 1;
 
     for (scale = 0; scale < MAXIMUM_SCALES; scale++)
         if (ruler->metric->ruler_scale[scale] * fabs(increment) > 2 * text_dimension)
@@ -319,9 +306,9 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
         scale = MAXIMUM_SCALES - 1;
 
     /* drawing starts here */
-    length = 0;
-    for (i = MAXIMUM_SUBDIVIDE - 1; i >= 0; i--) {
-        subd_incr = ruler->metric->ruler_scale[scale] / 
+    gint length = 0;
+    for (gint i = MAXIMUM_SUBDIVIDE - 1; i >= 0; i--) {
+        double subd_incr = ruler->metric->ruler_scale[scale] / 
                     ruler->metric->subdivide[i];
         if (subd_incr * fabs(increment) <= MINIMUM_INCR) 
             continue;
@@ -329,11 +316,13 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
         /* Calculate the length of the tickmarks. Make sure that
         * this length increases for each set of ticks
         */
-        ideal_length = height / (i + 1) - 1;
+        gint ideal_length = height / (i + 1) - 1;
         if (ideal_length > ++length)
             length = ideal_length;
 
-        if (lower < upper) {
+        gdouble start = 0;
+	gdouble end = 0;
+	if (lower < upper) {
             start = floor (lower / subd_incr) * subd_incr;
             end   = ceil  (upper / subd_incr) * subd_incr;
         } else {
@@ -341,15 +330,15 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
             end   = ceil  (lower / subd_incr) * subd_incr;
         }
 
-        tick_index = 0;
-        cur = start; // location (in ruler units) of the first invisible tick at the left side of the canvas 
+        gint tick_index = 0;
+        gdouble cur = start; // location (in ruler units) of the first invisible tick at the left side of the canvas 
 
         while (cur <= end) {
             // due to the typical values for cur, lower and increment, pos will often end up to
             // be e.g. 641.50000000000; rounding behaviour is not defined in such a case (see round.h)
             // and jitter will be apparent (upon redrawing some of the lines on the ruler might jump a
             // by a pixel, and jump back on the next redraw). This is suppressed by adding 1e-9 (that's only one nanopixel ;-))
-            pos = int(Inkscape::round((cur - lower) * increment + 1e-12)) - UNUSED_PIXELS;
+            gint pos = int(Inkscape::round((cur - lower) * increment + 1e-12)) - UNUSED_PIXELS;
 
             if (orientation == GTK_ORIENTATION_HORIZONTAL) {
                 gdk_draw_line (ruler->backing_store, gc,
@@ -377,7 +366,7 @@ sp_ruler_common_draw_ticks (GtkRuler *ruler)
                     gdk_draw_layout (ruler->backing_store, gc,
                                      pos + 2, 0, pango_layout);
                 } else {
-                    for (j = 0; j < (int) strlen (unit_str); j++) {
+                    for (gint j = 0; j < (int) strlen (unit_str); j++) {
                         digit_str[0] = unit_str[j];
                         pango_layout_set_text (pango_layout, digit_str, 1);
 
