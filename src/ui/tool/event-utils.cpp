@@ -76,7 +76,11 @@ unsigned combine_motion_events(SPCanvas *canvas, GdkEventMotion &event, gint mas
             event.x_root = next.x_root;
             event.y_root = next.y_root;
             if (event.axes && next.axes) {
+#if GTK_CHECK_VERSION(2,22,0)
+                memcpy(event.axes, next.axes, gdk_device_get_n_axes(event.device));
+#else
                 memcpy(event.axes, next.axes, event.device->num_axes);
+#endif
             }
         }
 

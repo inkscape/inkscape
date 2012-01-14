@@ -243,10 +243,10 @@ DockItem::present()
 
     // tabbed
     else if (getPlacement() == CENTER) {
-        int i = gtk_notebook_page_num (GTK_NOTEBOOK (_gdl_dock_item->parent),
+        int i = gtk_notebook_page_num(GTK_NOTEBOOK(gtk_widget_get_parent(_gdl_dock_item)),
                                        GTK_WIDGET (_gdl_dock_item));
         if (i >= 0)
-            gtk_notebook_set_current_page (GTK_NOTEBOOK (_gdl_dock_item->parent), i);
+            gtk_notebook_set_current_page(GTK_NOTEBOOK(gtk_widget_get_parent(_gdl_dock_item)), i);
     }
 
     // always grab focus, even if we're already present

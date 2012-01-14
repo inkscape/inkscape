@@ -484,7 +484,7 @@ void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, doubl
         {
             gchar s[8];
             g_snprintf (s, 8, "%.5g", size); // UI, so printf is ok
-            gtk_entry_set_text (GTK_ENTRY (GTK_BIN(fsel->size)->child), s);
+            gtk_entry_set_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(fsel->size))), s);
             fsel->fontsize = size;
         }
     }

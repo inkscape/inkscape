@@ -455,10 +455,10 @@ void SelectedStyle::dragDataReceived( GtkWidget */*widget*/,
         case SS_FILL:
         case SS_STROKE:
         {
-            if ( data->length == 8 ) {
+            if (gtk_selection_data_get_length(data) == 8 ) {
                 gchar c[64];
                 // Careful about endian issues.
-                guint16* dataVals = (guint16*)data->data;
+                guint16* dataVals = (guint16*)gtk_selection_data_get_data(data);
                 sp_svg_write_color( c, sizeof(c),
                                     SP_RGBA32_U_COMPOSE(
                                         0x0ff & (dataVals[0] >> 8),
@@ -1252,13 +1252,14 @@ RotateableSwatch::do_motion(double by, guint modifier) {
             sp_cursor_bitmap_and_mask_from_xpm(&bitmap, &mask, cursor_adj_h_xpm);
         }
         if ((bitmap != NULL) && (mask != NULL)) {
+            GtkStyle *style = gtk_widget_get_style(w);
             cr = gdk_cursor_new_from_pixmap(bitmap, mask,
-                                            &w->style->black,
-                                            &w->style->white,
+                                            &style->black,
+                                            &style->white,
                                             16, 16);
             g_object_unref (bitmap);
             g_object_unref (mask);
-            gdk_window_set_cursor(w->window, cr);
+            gdk_window_set_cursor(gtk_widget_get_window(w), cr);
             gdk_cursor_unref(cr);
             cr_set = true;
         }
@@ -1312,7 +1313,7 @@ RotateableSwatch::do_release(double by, guint modifier) {
 
     if (cr_set) {
         GtkWidget *w = GTK_WIDGET(gobj());
-        gdk_window_set_cursor(w->window, NULL);
+        gdk_window_set_cursor(gtk_widget_get_window(w), NULL);
         if (cr) {
            gdk_cursor_unref (cr);
            cr = NULL;
