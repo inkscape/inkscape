@@ -184,14 +184,16 @@ sp_color_slider_realize (GtkWidget *widget)
 {
 	GdkWindowAttr attributes;
 	gint attributes_mask;
+	GtkAllocation allocation;
 
+	gtk_widget_get_allocation(widget, &allocation);
 	gtk_widget_set_realized (widget, TRUE);
 
 	attributes.window_type = GDK_WINDOW_CHILD;
-	attributes.x = widget->allocation.x;
-	attributes.y = widget->allocation.y;
-	attributes.width = widget->allocation.width;
-	attributes.height = widget->allocation.height;
+	attributes.x = allocation.x;
+	attributes.y = allocation.y;
+	attributes.width = allocation.width;
+	attributes.height = allocation.height;
 	attributes.wclass = GDK_INPUT_OUTPUT;
 	attributes.visual = gdk_rgb_get_visual ();
 	attributes.colormap = gdk_rgb_get_cmap ();
@@ -204,27 +206,35 @@ sp_color_slider_realize (GtkWidget *widget)
 				  GDK_LEAVE_NOTIFY_MASK);
 	attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
 
-	widget->window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
-	gdk_window_set_user_data (widget->window, widget);
+	gtk_widget_set_window(widget, 
+			gdk_window_new(gtk_widget_get_parent_window(widget), 
+				&attributes, attributes_mask));
 
-	widget->style = gtk_style_attach (widget->style, widget->window);
+	gdk_window_set_user_data(gtk_widget_get_window(widget), widget);
+
+	gtk_widget_set_style(widget, 
+			gtk_style_attach(gtk_widget_get_style(widget), 
+				gtk_widget_get_window(widget)));
 }
 
 static void
 sp_color_slider_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
-	requisition->width = SLIDER_WIDTH + widget->style->xthickness * 2;
-	requisition->height = SLIDER_HEIGHT + widget->style->ythickness * 2;
+	GtkStyle *style = gtk_widget_get_style(widget);
+	requisition->width = SLIDER_WIDTH + style->xthickness * 2;
+	requisition->height = SLIDER_HEIGHT + style->ythickness * 2;
 }
 
 static void
 sp_color_slider_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
-	widget->allocation = *allocation;
+	gtk_widget_set_allocation(widget, allocation);
 
 	if (gtk_widget_get_realized (widget)) {
 		/* Resize GdkWindow */
-		gdk_window_move_resize (widget->window, allocation->x, allocation->y, allocation->width, allocation->height);
+		gdk_window_move_resize(gtk_widget_get_window(widget), 
+				allocation->x, allocation->y, 
+				allocation->width, allocation->height);
 	}
 }
 
@@ -250,15 +260,17 @@ sp_color_slider_button_press (GtkWidget *widget, GdkEventButton *event)
 	slider = SP_COLOR_SLIDER (widget);
 
 	if (event->button == 1) {
+		GtkAllocation allocation;
+		gtk_widget_get_allocation(widget, &allocation);
 		gint cx, cw;
-		cx = widget->style->xthickness;
-		cw = widget->allocation.width - 2 * cx;
+		cx = gtk_widget_get_style(widget)->xthickness;
+		cw = allocation.width - 2 * cx;
 		g_signal_emit (G_OBJECT (slider), slider_signals[GRABBED], 0);
 		slider->dragging = TRUE;
 		slider->oldvalue = slider->value;
 		ColorScales::setScaled( slider->adjustment, CLAMP ((gfloat) (event->x - cx) / cw, 0.0, 1.0) );
 		g_signal_emit (G_OBJECT (slider), slider_signals[DRAGGED], 0);
-		gdk_pointer_grab (widget->window, FALSE,
+		gdk_pointer_grab(gtk_widget_get_window(widget), FALSE,
 				  (GdkEventMask)(GDK_POINTER_MOTION_MASK |
 				  GDK_BUTTON_RELEASE_MASK),
 				  NULL, NULL, event->time);
@@ -293,8 +305,10 @@ sp_color_slider_motion_notify (GtkWidget *widget, GdkEventMotion *event)
 
 	if (slider->dragging) {
 		gint cx, cw;
-		cx = widget->style->xthickness;
-		cw = widget->allocation.width - 2 * cx;
+		GtkAllocation allocation;
+		gtk_widget_get_allocation(widget, &allocation);
+		cx = gtk_widget_get_style(widget)->xthickness;
+		cw = allocation.width - 2 * cx;
 		ColorScales::setScaled( slider->adjustment, CLAMP ((gfloat) (event->x - cx) / cw, 0.0, 1.0) );
 		g_signal_emit (G_OBJECT (slider), slider_signals[DRAGGED], 0);
 	}
@@ -413,10 +427,13 @@ sp_color_slider_adjustment_value_changed (GtkAdjustment *adjustment, SPColorSlid
 
 	if (slider->value != ColorScales::getScaled( adjustment )) {
 		gint cx, cy, cw, ch;
-		cx = widget->style->xthickness;
-		cy = widget->style->ythickness;
-		cw = widget->allocation.width - 2 * cx;
-		ch = widget->allocation.height - 2 * cy;
+		GtkStyle *style = gtk_widget_get_style(widget);
+		GtkAllocation allocation;
+		gtk_widget_get_allocation(widget, &allocation);
+		cx = style->xthickness;
+		cy = style->ythickness;
+		cw = allocation.width - 2 * cx;
+		ch = allocation.height - 2 * cy;
 		if ((gint) (ColorScales::getScaled( adjustment ) * cw) != (gint) (slider->value * cw)) {
 			gint ax, ay;
 			gfloat value;
@@ -445,18 +462,23 @@ sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
 	gboolean colorsOnTop = Inkscape::Preferences::get()->getBool("/options/workarounds/colorsontop", false);
 
 	widget = GTK_WIDGET (slider);
+	
+	GtkAllocation allocation;
+	gtk_widget_get_allocation(widget, &allocation);
+	GtkStyle *style = gtk_widget_get_style(widget);
+	GdkWindow *window = gtk_widget_get_window(widget);
 
 	/* Widget area */
 	warea.x = 0;
 	warea.y = 0;
-	warea.width = widget->allocation.width;
-	warea.height = widget->allocation.height;
+	warea.width = allocation.width;
+	warea.height = allocation.height;
 
 	/* Color gradient area */
-	carea.x = widget->style->xthickness;
-	carea.y = widget->style->ythickness;
-	carea.width = widget->allocation.width - 2 * carea.x;
-	carea.height = widget->allocation.height - 2 * carea.y;
+	carea.x = style->xthickness;
+	carea.y = style->ythickness;
+	carea.width = allocation.width - 2 * carea.x;
+	carea.height = allocation.height - 2 * carea.y;
 
 	/* Arrow area */
 	aarea.x = (int)(slider->value * (carea.width - 1) - ARROW_SIZE / 2 + carea.x);
@@ -473,8 +495,8 @@ sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
 
         // Draw shadow
         if (colorsOnTop) {
-            gtk_paint_shadow( widget->style, widget->window,
-                              (GtkStateType)widget->state, GTK_SHADOW_IN,
+            gtk_paint_shadow( style, window,
+                              gtk_widget_get_state(widget), GTK_SHADOW_IN,
                               area, widget, "colorslider",
                               0, 0,
                               warea.width, warea.height);
@@ -491,7 +513,7 @@ sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
 																			slider->map, s, d,
 																			slider->b0, slider->b1, slider->bmask);
 			if (b != NULL) {
-				gdk_draw_rgb_image (widget->window, widget->style->black_gc,
+				gdk_draw_rgb_image(window, style->black_gc,
 														cpaint.x, cpaint.y,
 														cpaint.width, cpaint.height,
 														GDK_RGB_DITHER_MAX,
@@ -517,7 +539,7 @@ sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
 
 				/* Draw pixelstore */
 				if (b != NULL) {
-					gdk_draw_rgb_image (widget->window, widget->style->black_gc,
+					gdk_draw_rgb_image(window, style->black_gc,
 															cpaint.x, cpaint.y,
 															wi, cpaint.height,
 															GDK_RGB_DITHER_MAX,
@@ -540,7 +562,7 @@ sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
 
 				/* Draw pixelstore */
 				if (b != NULL) {
-					gdk_draw_rgb_image (widget->window, widget->style->black_gc,
+					gdk_draw_rgb_image(window, style->black_gc,
 															MAX(cpaint.x, carea.width/2 + carea.x), cpaint.y,
 															wi, cpaint.height,
 															GDK_RGB_DITHER_MAX,
@@ -552,8 +574,8 @@ sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
 
         /* Draw shadow */
         if (!colorsOnTop) {
-            gtk_paint_shadow( widget->style, widget->window,
-                              (GtkStateType)widget->state, GTK_SHADOW_IN,
+            gtk_paint_shadow( style, window,
+                              gtk_widget_get_state(widget), GTK_SHADOW_IN,
                               area, widget, "colorslider",
                               0, 0,
                               warea.width, warea.height);
@@ -563,8 +585,8 @@ sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
 	if (gdk_rectangle_intersect (area, &aarea, &apaint)) {
 		/* Draw arrow */
 		gdk_rectangle_intersect (&carea, &apaint, &apaint);
-		gdk_gc_set_clip_rectangle (widget->style->white_gc, &apaint);
-		gdk_gc_set_clip_rectangle (widget->style->black_gc, &apaint);
+		gdk_gc_set_clip_rectangle(style->white_gc, &apaint);
+		gdk_gc_set_clip_rectangle(style->black_gc, &apaint);
 
 		x = aarea.x;
 		y1 = carea.y;
@@ -572,21 +594,21 @@ sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
 		w = aarea.width;
 		while ( w > 0 )
 		{
-			gdk_draw_line (widget->window, widget->style->white_gc, x, y1, x + w - 1, y1 );
-			gdk_draw_line (widget->window, widget->style->white_gc, x, y2, x + w - 1, y2 );
+			gdk_draw_line(window, style->white_gc, x, y1, x + w - 1, y1 );
+			gdk_draw_line(window, style->white_gc, x, y2, x + w - 1, y2 );
 			w -=2;
 			x++;
 			if ( w > 0 )
 			{
-				gdk_draw_line (widget->window, widget->style->black_gc, x, y1, x + w - 1, y1 );
-				gdk_draw_line (widget->window, widget->style->black_gc, x, y2, x + w - 1, y2 );
+				gdk_draw_line(window, style->black_gc, x, y1, x + w - 1, y1 );
+				gdk_draw_line(window, style->black_gc, x, y2, x + w - 1, y2 );
 			}
 			y1++;
 			y2--;
 		}
 
-		gdk_gc_set_clip_rectangle (widget->style->white_gc, NULL);
-		gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
+		gdk_gc_set_clip_rectangle(style->white_gc, NULL);
+		gdk_gc_set_clip_rectangle(style->black_gc, NULL);
 	}
 }
 
