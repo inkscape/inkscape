@@ -226,7 +226,7 @@ void IconImpl::sizeRequest(GtkWidget *widget, GtkRequisition *requisition)
 
 void IconImpl::sizeAllocate(GtkWidget *widget, GtkAllocation *allocation)
 {
-    widget->allocation = *allocation;
+    gtk_widget_set_allocation(widget, allocation);
 
     if (gtk_widget_is_drawable(widget)) {
         gtk_widget_queue_draw(widget);
@@ -1004,20 +1004,27 @@ void IconImpl::paint(SPIcon *icon, GdkRectangle const */*area*/)
         gtk_icon_source_set_pixbuf(source, icon->pb);
         gtk_icon_source_set_size(source, GTK_ICON_SIZE_SMALL_TOOLBAR); // note: this is boilerplate and not used
         gtk_icon_source_set_size_wildcarded(source, FALSE);
-        image = gtk_style_render_icon (widget.style, source, gtk_widget_get_direction(&widget),
-            (GtkStateType) gtk_widget_get_state(&widget), (GtkIconSize)-1, &widget, "gtk-image");
+        image = gtk_style_render_icon(gtk_widget_get_style(&widget), source, 
+			gtk_widget_get_direction(&widget),
+			(GtkStateType) gtk_widget_get_state(&widget), 
+			(GtkIconSize)-1, &widget, "gtk-image");
         gtk_icon_source_free(source);
         unref_image = true;
     }
 
     if (image) {
-        int x = floor(widget.allocation.x + ((widget.allocation.width - widget.requisition.width) * 0.5));
-        int y = floor(widget.allocation.y + ((widget.allocation.height - widget.requisition.height) * 0.5));
+        GtkAllocation allocation;
+	GtkRequisition requisition;
+	gtk_widget_get_allocation(&widget, &allocation);
+	gtk_widget_get_requisition(&widget, &requisition);
+        int x = floor(allocation.x + ((allocation.width - requisition.width) * 0.5));
+        int y = floor(allocation.y + ((allocation.height - requisition.height) * 0.5));
         int width = gdk_pixbuf_get_width(image);
         int height = gdk_pixbuf_get_height(image);
         // Limit drawing to when we actually have something. Avoids some crashes.
         if ( (width > 0) && (height > 0) ) {
-            gdk_draw_pixbuf(GDK_DRAWABLE(widget.window), widget.style->black_gc, image,
+            gdk_draw_pixbuf(GDK_DRAWABLE(gtk_widget_get_window(&widget)), 
+			    gtk_widget_get_style(&widget)->black_gc, image,
                             0, 0, x, y, width, height,
                             GDK_RGB_DITHER_NORMAL, x, y);
         }
