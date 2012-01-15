@@ -72,6 +72,7 @@ static char const menus_skeleton[] =
 "           <verb verb-id=\"EditUnlinkClone\" />\n"
 "           <verb verb-id=\"EditRelinkClone\" />\n"
 "           <verb verb-id=\"EditCloneSelectOriginal\" />\n"
+"           <verb verb-id=\"EditCloneOriginalPathLPE\" />\n"
 "       </submenu>\n"
 "       <verb verb-id=\"SelectionCreateBitmap\" />\n"
 "       <separator/>\n"

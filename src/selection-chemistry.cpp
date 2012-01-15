@@ -2271,6 +2271,63 @@ sp_select_clone_original(SPDesktop *desktop)
     }
 }
 
+/**
+* This creates a new path, applies the Original Path LPE, and has it refer to the selection.
+*/
+void sp_selection_clone_original_path_lpe(SPDesktop *desktop)
+{
+    if (desktop == NULL) {
+        return;
+    }
+
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    SPItem *item = selection->singleItem();
+    if (g_slist_length((GSList *) selection->itemList()) != 1 || !item) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>one</b> path to clone."));
+        return;
+    }
+    if ( !(SP_IS_SHAPE(item) || SP_IS_TEXT(item)) ) {
+        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select one <b>path</b> to clone."));
+        return;
+    }
+
+    Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
+    Inkscape::XML::Node *parent = item->getRepr()->parent();
+
+    // create the LPE
+    Inkscape::XML::Node *lpe_repr = xml_doc->createElement("inkscape:path-effect");
+    {
+        lpe_repr->setAttribute("effect", "clone_original");
+        gchar *href = g_strdup_printf("#%s", item->getRepr()->attribute("id"));
+        lpe_repr->setAttribute("linkedpath", href);
+        g_free(href);
+        desktop->doc()->getDefs()->getRepr()->addChild(lpe_repr, NULL); // adds to <defs> and assigns the 'id' attribute
+    }
+    const gchar * lpe_id = lpe_repr->attribute("id");
+    Inkscape::GC::release(lpe_repr);
+
+    // create the new path
+    Inkscape::XML::Node *clone = xml_doc->createElement("svg:path");
+    {
+        clone->setAttribute("d", "M 0 0", false);
+        // add the new clone to the top of the original's parent
+        parent->appendChild(clone);
+        SPObject *clone_obj = desktop->doc()->getObjectById(clone->attribute("id"));
+        if (SP_IS_LPE_ITEM(clone_obj)) {
+            gchar *href = g_strdup_printf("#%s", lpe_id);
+            sp_lpe_item_add_path_effect( SP_LPE_ITEM(clone_obj), href, false );
+            g_free(href);
+        }
+    }
+
+    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_EDIT_CLONE_ORIGINAL_PATH_LPE,
+                       _("Clone original path"));
+
+    // select the new object:
+    selection->set(clone);
+
+    Inkscape::GC::release(clone);
+}
 
 void sp_selection_to_marker(SPDesktop *desktop, bool apply)
 {

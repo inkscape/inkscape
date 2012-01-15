@@ -57,6 +57,7 @@ void sp_selection_clone(SPDesktop *desktop);
 void sp_selection_unlink(SPDesktop *desktop);
 void sp_selection_relink(SPDesktop *desktop);
 void sp_select_clone_original(SPDesktop *desktop);
+void sp_selection_clone_original_path_lpe(SPDesktop *desktop);
 
 void sp_selection_to_marker(SPDesktop *desktop, bool apply = true);
 void sp_selection_to_guides(SPDesktop *desktop);

@@ -939,6 +939,9 @@ void EditVerb::perform(SPAction *action, void *data)
         case SP_VERB_EDIT_CLONE_SELECT_ORIGINAL:
             sp_select_clone_original(dt);
             break;
+        case SP_VERB_EDIT_CLONE_ORIGINAL_PATH_LPE:
+            sp_selection_clone_original_path_lpe(dt);
+            break;
         case SP_VERB_EDIT_SELECTION_2_MARKER:
             sp_selection_to_marker(dt);
             break;
@@ -2248,6 +2251,8 @@ Verb *Verb::_base_verbs[] = {
                  N_("Relink the selected clones to the object currently on the clipboard"), NULL),
     new EditVerb(SP_VERB_EDIT_CLONE_SELECT_ORIGINAL, "EditCloneSelectOriginal", N_("Select _Original"),
                  N_("Select the object to which the selected clone is linked"), INKSCAPE_ICON("edit-select-original")),
+    new EditVerb(SP_VERB_EDIT_CLONE_ORIGINAL_PATH_LPE, "EditCloneOriginalPathLPE", N_("Clone original path (LPE)"),
+                 N_("Creates a new path, applies the Clone original LPE, and refers it to the selected path"), NULL),
     new EditVerb(SP_VERB_EDIT_SELECTION_2_MARKER, "ObjectsToMarker", N_("Objects to _Marker"),
                  N_("Convert selection to a line marker"), NULL),
     new EditVerb(SP_VERB_EDIT_SELECTION_2_GUIDES, "ObjectsToGuides", N_("Objects to Gu_ides"),
