@@ -676,7 +676,7 @@ void distance_control_points (std::vector<Point> & D,
                               std::vector<Point> const& F)
 {
     assert (B.size() > 1);
-    assert (F.size() > 0);
+    assert (!F.empty());
     const size_t n = B.size() - 1;
     const size_t m = F.size() - 1;
     const size_t r = 2 * n - 1;

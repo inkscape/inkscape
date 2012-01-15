@@ -232,7 +232,7 @@ void Bernsteins::find_bernstein_roots(Bezier bz,
         debug(std::cout << "dsolutions = " << dsolutions << std::endl);
         
         double dsplit_t = 0.5;
-        if(dsolutions.size() > 0) {
+        if(!dsolutions.empty()) {
             dsplit_t = dsolutions[0];
             split_t = left_t + (right_t - left_t)*dsplit_t;
             debug(std::cout << "split_value = " << bz(split_t) << std::endl);

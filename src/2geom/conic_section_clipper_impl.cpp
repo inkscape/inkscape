@@ -55,7 +55,7 @@ bool CLIPPER_CLASS::intersect (std::vector<Point> & crossing_points) const
 
     // rigth edge
     cs.roots (rts, R.right(), X);
-    if (rts.size() != 0)
+    if (!rts.empty())
     {
         no_crossing = false;
         DBGPRINT ("CLIP: right: rts[0] = ", rts[0])
@@ -84,7 +84,7 @@ bool CLIPPER_CLASS::intersect (std::vector<Point> & crossing_points) const
 
     // top edge
     cs.roots (rts, R.top(), Y);
-    if (rts.size() != 0)
+    if (!rts.empty())
     {
         no_crossing = false;
         DBGPRINT ("CLIP: top: rts[0] = ", rts[0])
@@ -113,7 +113,7 @@ bool CLIPPER_CLASS::intersect (std::vector<Point> & crossing_points) const
 
     // left edge
     cs.roots (rts, R.left(), X);
-    if (rts.size() != 0)
+    if (!rts.empty())
     {
         no_crossing = false;
         DBGPRINT ("CLIP: left: rts[0] = ", rts[0])
@@ -142,7 +142,7 @@ bool CLIPPER_CLASS::intersect (std::vector<Point> & crossing_points) const
 
     // bottom edge
     cs.roots (rts, R.bottom(), Y);
-    if (rts.size() != 0)
+    if (!rts.empty())
     {
         no_crossing = false;
         DBGPRINT ("CLIP: bottom: rts[0] = ", rts[0])

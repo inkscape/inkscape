@@ -349,7 +349,7 @@ Piecewise<SBasis> reciprocal(Piecewise<SBasis> const &f, double tol, int order){
  */
 Piecewise<SBasis> interpolate(std::vector<double> times, std::vector<double> values, unsigned smoothness){
     assert ( values.size() == times.size() );
-    if ( values.size() == 0 ) return Piecewise<SBasis>();
+    if ( values.empty() ) return Piecewise<SBasis>();
     if ( values.size() == 1 ) return Piecewise<SBasis>(values[0]);//what about time??
 
     SBasis sk = shift(Linear(1.),smoothness);

@@ -314,7 +314,7 @@ void Path::appendPortionTo(Path &ret, double from, double to) const {
   }
   if(from >= to) {
     const_iterator ender = end();
-    if(ender->initialPoint() == ender->finalPoint()) ender++;
+    if(ender->initialPoint() == ender->finalPoint()) ++ender;
     ret.insert(ret.end(), ++fromi, ender, STITCH_DISCONTINUOUS);
     ret.insert(ret.end(), begin(), toi, STITCH_DISCONTINUOUS);
   } else {

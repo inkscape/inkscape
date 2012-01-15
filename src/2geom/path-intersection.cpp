@@ -70,8 +70,8 @@ int winding(Path const &path, Point p) {
         //Traverse segments until it breaks away from y
         //99.9% of the time this will happen the first go
         Path::const_iterator next = iter;
-        next++;
-        for(; ; next++) {
+        ++next;
+        for(; ; ++next) {
             if(next == path.end_closed()) next = path.begin();
             Rect bnds = (next->boundsFast());
             //TODO: X considerations

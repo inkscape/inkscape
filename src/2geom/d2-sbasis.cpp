@@ -214,7 +214,7 @@ static void set_last_point(Piecewise<D2<SBasis> > &f, Point a){
 
 std::vector<Piecewise<D2<SBasis> > > fuse_nearby_ends(std::vector<Piecewise<D2<SBasis> > > const &f, double tol){
 
-    if ( f.size()==0 ) return f;
+    if ( f.empty()) return f;
     std::vector<Piecewise<D2<SBasis> > > result;
     std::vector<std::vector<unsigned> > pre_result;
     for (unsigned i=0; i<f.size(); i++){

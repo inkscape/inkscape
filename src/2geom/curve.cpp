@@ -61,7 +61,7 @@ int CurveHelpers::root_winding(Curve const &c, Point p) {
         if ( c.valueAt(t, X) > p[X] ) { // root is ray intersection
             // Get t of next:
             std::vector<double>::iterator next = ti;
-            next++;
+            ++next;
             double nt;
             if(next == ts.end()) nt = t + fudge; else nt = *next;
             

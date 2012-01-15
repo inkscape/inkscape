@@ -236,7 +236,7 @@ void QuadTree::insert(double x0, double y0, double x1, double y1, int shape) {
 
 
 void QuadTree::erase(Quad *q, int shape) {
-    for(Quad::iterator i = q->data.begin();  i != q->data.end(); i++) {
+    for(Quad::iterator i = q->data.begin();  i != q->data.end(); ++i) {
         if(*i == shape) {
             q->data.erase(i);
             if(q->data.empty()) {

@@ -342,7 +342,7 @@ static unsigned upper_level(vector<Interval> const &levels, double x ){
 
 static std::vector<Interval> fuseContiguous(std::vector<Interval> const &sets, double tol=0.){
 	std::vector<Interval> result;
-	if (sets.size() == 0 ) return result;
+	if (sets.empty() ) return result;
 	result.push_back( sets.front() );
 	for (unsigned i=1; i < sets.size(); i++ ){
 		if ( result.back().max() + tol >= sets[i].min() ){

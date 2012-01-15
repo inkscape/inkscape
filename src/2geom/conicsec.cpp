@@ -594,7 +594,7 @@ xAx xAx::operator*(double const &b) const {
     }
     Line bisector = make_bisector_line(LineSegment(A, C));
     std::vector<double> bisect_rts = this->roots(bisector);
-    if(bisect_rts.size() > 0) {
+    if(!bisect_rts.empty()) {
       int besti = -1;
       for(unsigned i =0; i < bisect_rts.size(); i++) {
 	Point p = bisector.pointAt(bisect_rts[i]);
@@ -1488,7 +1488,7 @@ Rect xAx::arc_bound (const Point & P1, const Point & Q, const Point & P2) const
  *
  *  P: the point to compute the nearest one
  */
-std::vector<Point> xAx::allNearestPoints (const Point P) const
+std::vector<Point> xAx::allNearestPoints (const Point &P) const
 {
     // TODO: manage the circle - centre case
     std::vector<Point> points;
@@ -1507,7 +1507,7 @@ std::vector<Point> xAx::allNearestPoints (const Point P) const
     std::vector<Point> crs = intersect (*this, G);
 
     //std::cout << "NEAREST POINT: crs.size = " << crs.size() << std::endl;
-    if (crs.size() == 0)  return points;
+    if (crs.empty())  return points;
 
     size_t idx = 0;
     double mindist = distanceSq (crs[0], P);
