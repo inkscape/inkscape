@@ -69,8 +69,8 @@ AppearTimeTracker::AppearTimeTracker(GTimer *timer, GtkWidget *widget, gchar con
     _hierarchyId(0)
 
 {
-    while (_topMost->parent) {
-        _topMost = _topMost->parent;
+    while (gtk_widget_get_parent(_topMost)) {
+        _topMost = gtk_widget_get_parent(_topMost);
     }
     _mapId = g_signal_connect( G_OBJECT(_topMost), "map-event", G_CALLBACK(mapCB), this );
     _realizeId = g_signal_connect( G_OBJECT(_topMost), "realize", G_CALLBACK(realizeCB), this );
@@ -112,8 +112,8 @@ void AppearTimeTracker::report(gchar const* msg)
 void AppearTimeTracker::handleHierarchyChange( GtkWidget * /*prevTop*/ )
 {
     GtkWidget *newTop = _widget;
-    while (newTop->parent) {
-        newTop = newTop->parent;
+    while (gtk_widget_get_parent(newTop)) {
+        newTop = gtk_widget_get_parent(newTop);
     }
 
     if ( newTop != _topMost ) {
