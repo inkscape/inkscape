@@ -115,8 +115,7 @@ typedef struct
  * Check a point against a list of points to see if it
  * has already occurred.
  */
-static bool
-hasPoint(std::vector<Point> &points, double x, double y)
+static bool hasPoint(std::vector<Point> &points, double x, double y)
 {
     for (unsigned int i=0; i<points.size() ; i++)
         {
@@ -133,8 +132,7 @@ hasPoint(std::vector<Point> &points, double x, double y)
  *  format into the output stream.  The Point vector is used to prevent
  *  redundant paths.  Returns number of paths processed.
  */
-static long
-writePaths(PotraceTracingEngine *engine, potrace_path_t *plist,
+static long writePaths(PotraceTracingEngine *engine, potrace_path_t *plist,
            Inkscape::SVG::PathString& data, std::vector<Point> &points)
 {
     long nodeCount = 0L;
@@ -205,11 +203,7 @@ writePaths(PotraceTracingEngine *engine, potrace_path_t *plist,
 }
 
 
-
-
-
-static GrayMap *
-filter(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
+static GrayMap *filter(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
 {
     if (!pixbuf)
         return NULL;
@@ -283,8 +277,7 @@ filter(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
 }
 
 
-static IndexedMap *
-filterIndexed(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
+static IndexedMap *filterIndexed(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
 {
     if (!pixbuf)
         return NULL;
@@ -322,7 +315,7 @@ filterIndexed(PotraceTracingEngine &engine, GdkPixbuf * pixbuf)
 
 
 
-Glib::RefPtr<Gdk::Pixbuf>
+Glib::RefPtr<Gdk::Pixbuf> 
 PotraceTracingEngine::preview(Glib::RefPtr<Gdk::Pixbuf> thePixbuf)
 {
     GdkPixbuf *pixbuf = thePixbuf->gobj();
@@ -358,9 +351,14 @@ PotraceTracingEngine::preview(Glib::RefPtr<Gdk::Pixbuf> thePixbuf)
 
 
 //*This is the core inkscape-to-potrace binding
-std::string
-PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
+std::string PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
 {
+    if (!keepGoing)
+    {
+        g_warning("aborted");
+        return "";
+    }
+
     potrace_bitmap_t *potraceBitmap = bm_new(grayMap->width, grayMap->height);
     bm_clear(potraceBitmap, 0);
 
@@ -380,12 +378,6 @@ PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
     bm_writepbm(f, bm);
     fclose(f);
     */
-
-    if (!keepGoing)
-        {
-        g_warning("aborted");
-        return "";
-        }
 
     /* trace a bitmap*/
     potrace_state_t *potraceState = potrace_trace(potraceParams,
@@ -424,8 +416,7 @@ PotraceTracingEngine::grayMapToPath(GrayMap *grayMap, long *nodeCount)
 /**
  *  This is called for a single scan
  */
-std::vector<TracingEngineResult>
-PotraceTracingEngine::traceSingle(GdkPixbuf * thePixbuf)
+std::vector<TracingEngineResult> PotraceTracingEngine::traceSingle(GdkPixbuf * thePixbuf)
 {
 
     std::vector<TracingEngineResult> results;
@@ -455,11 +446,10 @@ PotraceTracingEngine::traceSingle(GdkPixbuf * thePixbuf)
 
 
 /**
- *  This allow routines that already generate GrayMaps to skip image filtering,
+ *  This allows routines that already generate GrayMaps to skip image filtering,
  *  increasing performance.
  */
-std::vector<TracingEngineResult>
-PotraceTracingEngine::traceGrayMap(GrayMap *grayMap)
+std::vector<TracingEngineResult> PotraceTracingEngine::traceGrayMap(GrayMap *grayMap)
 {
 
     std::vector<TracingEngineResult> results;
@@ -633,14 +623,10 @@ PotraceTracingEngine::trace(Glib::RefPtr<Gdk::Pixbuf> pixbuf)
 }
 
 
-
-
-
 /**
  *  Abort the thread that is executing getPathDataFromPixbuf()
  */
-void
-PotraceTracingEngine::abort()
+void PotraceTracingEngine::abort()
 {
     //g_message("PotraceTracingEngine::abort()\n");
     keepGoing = 0;
