@@ -10,12 +10,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
-#include "sp-item.h"
 #include <uri-references.h>
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 
-class Path;
+class SPItem;
 
 namespace Inkscape {
 
