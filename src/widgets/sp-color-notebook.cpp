@@ -486,14 +486,9 @@ void ColorNotebook::_rgbaEntryChanged(GtkEntry* entry)
     if (t) {
         Glib::ustring text = t;
         bool changed = false;
-
-        // Here we deal with pasted colors with theformat '#RRGGBB' or 'RRGGBB'
-        // In those cases we keep (and so add) the current alpha value.
-        if (!text.empty()) {
+        if (!text.empty() && text[0] == '#') {
             changed = true;
-            if (text[0] == '#') {
-                text.erase(0,1);
-            }
+            text.erase(0,1);
             if (text.size() == 6) {
                 // it was a standard RGB hex
                 unsigned int alph = SP_COLOR_F_TO_U(_alpha);
