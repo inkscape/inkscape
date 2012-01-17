@@ -5,6 +5,7 @@
  *
  * Copyright (C) 2004 Bryce Harrington
  * Copyright (C) 2005 Jon A. Cruz
+ * Copyright (C) 2012 Kris De Gussem
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -16,8 +17,8 @@
 #include <gtkmm.h>
 
 #include "inkscape.h"
-#include "ui/previewfillable.h"
 #include "selection.h"
+#include "ui/previewfillable.h"
 
 namespace Inkscape {
 namespace UI {
@@ -25,6 +26,14 @@ namespace Widget {
 
 /**
  * A generic dockable container.
+ *
+ * Inkscape::UI::Widget::Panel is a base class from which dockable dialogs
+ * are created. A new dockable dialog is created by deriving a class from panel.
+ * Child widgets are private data members of Panel (no need to use pointers and
+ * new).
+ *
+ * @see UI::Dialog::DesktopTracker to handle desktop change, selection change and selected object modifications.
+ * @see UI::Dialog::DialogManager manages the dialogs within inkscape.
  */
 class Panel : public Gtk::VBox {
 
@@ -33,6 +42,10 @@ public:
 
     /**
      * Construct a Panel.
+     *
+     * @param label label for the panel of a dialog, shown at the top.
+     * @param prefs_path characteristic path to load/save dialog position.
+     * @param verb_num the dialog verb.
      */
     Panel(Glib::ustring const &label = "", gchar const *prefs_path = 0,
           int verb_num = 0, Glib::ustring const &apply_label = "",
@@ -41,6 +54,10 @@ public:
     virtual ~Panel();
 
     gchar const *getPrefsPath() const;
+    
+    /**
+     * Sets a label for the panel and displays it in the panel at the top (is not the title bar of a floating dialog).
+     */
     void setLabel(Glib::ustring const &label);
     Glib::ustring const &getLabel() const;
     int const &getVerb() const;
@@ -55,12 +72,12 @@ public:
     virtual void setDesktop(SPDesktop *desktop);
     SPDesktop *getDesktop() { return _desktop; }
 
-    /** Signal accessors */
+    /* Signal accessors */
     virtual sigc::signal<void, int> &signalResponse();
     virtual sigc::signal<void> &signalPresent();
 
-    /** Methods providing a Gtk::Dialog like interface for adding buttons that emit Gtk::RESPONSE
-     *  signals on click. */
+    /* Methods providing a Gtk::Dialog like interface for adding buttons that emit Gtk::RESPONSE
+     * signals on click. */
     Gtk::Button* addResponseButton (const Glib::ustring &button_text, int response_id);
     Gtk::Button* addResponseButton (const Gtk::StockID &stock_id, int response_id);
     void setDefaultResponse(int response_id);
@@ -71,6 +88,9 @@ public:
     virtual sigc::signal<void, Inkscape::Application *, SPDesktop *> &signalDeactiveDesktop();
 
 protected:
+    /**
+     * Returns a pointer to a Gtk::Box containing the child widgets.
+     */
     Gtk::Box *_getContents() { return &_contents; }
     void _setTargetFillable(PreviewFillable *target);
     void _regItem(Gtk::MenuItem* item, int group, int id);
@@ -80,16 +100,18 @@ protected:
 
     virtual void _handleResponse(int response_id);
 
-    /** Helper methods */
+    /* Helper methods */
     void _addResponseButton(Gtk::Button *button, int response_id);
     Inkscape::Selection *_getSelection();
 
+    /**
+     * Stores characteristic path for loading/saving the dialog position.
+     */
     Glib::ustring const _prefs_path;
-
     bool _menu_desired;
     Gtk::AnchorType _anchor;
 
-    /** Signals */
+    /* Signals */
     sigc::signal<void, int> _signal_response;
     sigc::signal<void>      _signal_present;
     sigc::signal<void, SPDesktop *, SPDocument *> _signal_document_replaced;
@@ -122,7 +144,7 @@ private:
     std::vector<Gtk::Widget *> _non_vertical;
     PreviewFillable *_fillable;
 
-    /** A map to store which widget that emits a certain response signal */
+    /* A map to store which widget that emits a certain response signal */
     typedef std::map<int, Gtk::Widget *> ResponseMap;
     ResponseMap _response_map;
 };

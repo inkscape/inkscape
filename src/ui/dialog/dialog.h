@@ -48,9 +48,10 @@ void sp_dialog_shutdown(GtkObject *object, gpointer dlgPtr);
  * showing and hiding all dialogs.
  *
  * Fundamental parts of the dialog's behavior are controlled by
- * a Dialog::Behavior subclass instance connected to the dialog.
+ * a UI::Dialog::Behavior subclass instance connected to the dialog.
  *
- * @see UI::Widget::Panel
+ * @see UI::Widget::Panel panel class from which the dialogs are actually derived from.
+ * @see UI::Dialog::DialogManager manages the dialogs within inkscape.
  */
 class Dialog {
 
@@ -59,9 +60,9 @@ public:
     /**
      * Constructor.
      * 
-     * @param behavior_factory floating or docked
-     * @param prefs_path characteristic path to load/save dialog position
-     * @param verb_num the dialog verb
+     * @param behavior_factory floating or docked.
+     * @param prefs_path characteristic path for loading/saving dialog position.
+     * @param verb_num the dialog verb.
      */
     Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_path = NULL,
            int verb_num = 0, Glib::ustring const &apply_label = "");
@@ -71,7 +72,7 @@ public:
     virtual void onDesktopActivated(SPDesktop*);
     virtual void onShutdown();
 
-    /** Hide and show dialogs */
+    /* Hide and show dialogs */
     virtual void onHideF12();
     virtual void onShowF12();
 
@@ -99,7 +100,7 @@ public:
     bool           _hiddenF12;
 
     /**
-     * Load window position from preferences.
+     * Read window position from preferences.
      */
     void           read_geometry();
     

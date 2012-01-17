@@ -333,14 +333,12 @@ void Panel::restorePanelPrefs()
     _bounceCall(PANEL_SETTING_WRAP, panel_wrap);
 }
 
-sigc::signal<void, int> &
-Panel::signalResponse()
+sigc::signal<void, int> &Panel::signalResponse()
 {
     return _signal_response;
 }
 
-sigc::signal<void> &
-Panel::signalPresent()
+sigc::signal<void> &Panel::signalPresent()
 {
     return _signal_present;
 }
@@ -487,30 +485,26 @@ void Panel::_handleAction(int /*set_id*/, int /*item_id*/)
 // for subclasses to override
 }
 
-void
-Panel::_apply()
+void Panel::_apply()
 {
     g_warning("Apply button clicked for panel [Panel::_apply()]");
 }
 
-Gtk::Button *
-Panel::addResponseButton(const Glib::ustring &button_text, int response_id)
+Gtk::Button *Panel::addResponseButton(const Glib::ustring &button_text, int response_id)
 {
     Gtk::Button *button = new Gtk::Button(button_text);
     _addResponseButton(button, response_id);
     return button;
 }
 
-Gtk::Button *
-Panel::addResponseButton(const Gtk::StockID &stock_id, int response_id)
+Gtk::Button *Panel::addResponseButton(const Gtk::StockID &stock_id, int response_id)
 {
     Gtk::Button *button = new Gtk::Button(stock_id);
     _addResponseButton(button, response_id);
     return button;
 }
 
-void
-Panel::_addResponseButton(Gtk::Button *button, int response_id)
+void Panel::_addResponseButton(Gtk::Button *button, int response_id)
 {
     // Create a button box for the response buttons if it's the first button to be added
     if (!_action_area) {
@@ -528,8 +522,7 @@ Panel::_addResponseButton(Gtk::Button *button, int response_id)
     }
 }
 
-void
-Panel::setDefaultResponse(int response_id)
+void Panel::setDefaultResponse(int response_id)
 {
     ResponseMap::iterator widget_found;
     widget_found = _response_map.find(response_id);
@@ -541,8 +534,7 @@ Panel::setDefaultResponse(int response_id)
     }
 }
 
-void
-Panel::setResponseSensitive(int response_id, bool setting)
+void Panel::setResponseSensitive(int response_id, bool setting)
 {
     if (_response_map[response_id])
         _response_map[response_id]->set_sensitive(setting);
@@ -566,8 +558,7 @@ Panel::signalDeactiveDesktop()
     return _signal_deactive_desktop;
 }
 
-void
-Panel::_handleResponse(int response_id)
+void Panel::_handleResponse(int response_id)
 {
     switch (response_id) {
         case Gtk::RESPONSE_APPLY: {
