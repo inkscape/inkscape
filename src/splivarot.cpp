@@ -2144,7 +2144,7 @@ SPCurve* curve_for_item(SPItem *item)
     SPCurve *curve = NULL;
     if (SP_IS_SHAPE(item)) {
         if (SP_IS_PATH(item)) {
-            curve = sp_path_get_curve_for_edit(SP_PATH(item));
+            curve = SP_PATH(item)->get_curve_for_edit();
         } else {
             curve = SP_SHAPE(item)->getCurve();
         }

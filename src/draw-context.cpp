@@ -451,7 +451,7 @@ spdc_attach_selection(SPDrawContext *dc, Inkscape::Selection */*sel*/)
         dc->white_item = item;
         /* Curve list */
         /* We keep it in desktop coordinates to eliminate calculation errors */
-        SPCurve *norm = sp_path_get_curve_for_edit (SP_PATH(item));
+        SPCurve *norm = SP_PATH(item)->get_curve_for_edit();
         norm->transform((dc->white_item)->i2dt_affine());
         g_return_if_fail( norm != NULL );
         dc->white_curves = g_slist_reverse(norm->split());

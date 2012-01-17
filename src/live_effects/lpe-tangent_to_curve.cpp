@@ -119,7 +119,7 @@ KnotHolderEntityAttachPt::knot_set(Geom::Point const &p, Geom::Point const &/*or
     Geom::Point const s = snap_knot_position(p);
 
     // FIXME: There must be a better way of converting the path's SPCurve* to pwd2.
-    SPCurve *curve = sp_path_get_curve_for_edit (SP_PATH(item));
+    SPCurve *curve = SP_PATH(item)->get_curve_for_edit();
     Geom::PathVector pathv = curve->get_pathvector();
     Piecewise<D2<SBasis> > pwd2;
     for (unsigned int i=0; i < pathv.size(); i++) {

@@ -1295,7 +1295,7 @@ void PathManipulator::_getGeometry()
         }
     } else {
         _spcurve->unref();
-        _spcurve = sp_path_get_curve_for_edit(_path);
+        _spcurve = _path->get_curve_for_edit();
     }
 }
 
@@ -1318,7 +1318,7 @@ void PathManipulator::_setGeometry()
     } else {
         //XML Tree being used here directly while it shouldn't be.
         if (_path->getRepr()->attribute("inkscape:original-d"))
-            sp_path_set_original_curve(_path, _spcurve, false, false);
+            _path->set_original_curve(_spcurve, false, false);
         else
             SP_SHAPE(_path)->setCurve(_spcurve, false);
     }

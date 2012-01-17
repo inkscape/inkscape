@@ -412,7 +412,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
                         // This also leads to a lag of approx. 500 msec (in my lousy test set-up).
                         bool very_complex_path = false;
                         if (SP_IS_PATH(root_item)) {
-                            very_complex_path = sp_nodes_in_path(SP_PATH(root_item)) > 500;
+                            very_complex_path = SP_PATH(root_item)->nodesInPath() > 500;
                         }
 
                         if (!very_complex_path && root_item && _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH, SNAPTARGET_PATH_INTERSECTION)) {

@@ -1065,7 +1065,7 @@ SPShape::setCurveBeforeLPE (SPCurve *curve)
 /**
  * Return duplicate of curve (if any exists) or NULL if there is no curve
  */
-SPCurve * SPShape::getCurve()
+SPCurve * SPShape::getCurve() const
 {
     if (this->curve) {
         return this->curve->copy();
@@ -1076,8 +1076,7 @@ SPCurve * SPShape::getCurve()
 /**
  * Return duplicate of curve *before* LPE (if any exists) or NULL if there is no curve
  */
-SPCurve *
-SPShape::getCurveBeforeLPE()
+SPCurve * SPShape::getCurveBeforeLPE() const
 {
     if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(this))) {
         if (this->curve_before_lpe) {

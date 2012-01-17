@@ -6,9 +6,12 @@
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   Ximian, Inc.
+ *   Johan Engelen
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
+ * Copyright (C) 1999-2012 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -16,13 +19,30 @@
 #include "sp-shape.h"
 #include "sp-conn-end-pair.h"
 
-struct SPCurve;
+class SPCurve;
 
 #define SP_TYPE_PATH (sp_path_get_type ())
 #define SP_PATH(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_PATH, SPPath))
 #define SP_IS_PATH(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_PATH))
 
-struct SPPath : public SPShape {
+/**
+ * SVG <path> implementation
+ */
+class SPPath : public SPShape {
+public:
+    gint nodesInPath() const;
+
+    // still in lowercase because the names should be clearer on whether curve, curve->copy or curve-ref is returned.
+    void     set_original_curve (SPCurve *curve, unsigned int owner, bool write);
+    SPCurve* get_original_curve () const;
+    SPCurve* get_curve_for_edit () const;
+    const SPCurve* get_curve_reference() const;
+
+public: // should be made protected
+    SPCurve* get_curve();
+    friend class SPConnEndPair;
+
+public:
     SPConnEndPair connEndPair;
 };
 
@@ -31,13 +51,6 @@ struct SPPathClass {
 };
 
 GType sp_path_get_type (void);
-gint sp_nodes_in_path(SPPath *path);
-
-void     sp_path_set_original_curve (SPPath *path, SPCurve *curve, unsigned int owner, bool write);
-SPCurve* sp_path_get_original_curve (SPPath *path);
-SPCurve* sp_path_get_curve_for_edit (SPPath *path);
-const SPCurve* sp_path_get_curve_reference (SPPath *path);
-SPCurve* sp_path_get_curve (SPPath *path); // should only be available for friends and not public!
 
 #endif // SEEN_SP_PATH_H
 

@@ -49,8 +49,8 @@ public:
 
     static GType getType (void);
     void setShape ();
-    SPCurve * getCurve ();
-    SPCurve * getCurveBeforeLPE ();
+    SPCurve * getCurve () const;
+    SPCurve * getCurveBeforeLPE () const;
     void setCurve (SPCurve *curve, unsigned int owner);
     void setCurveInsync (SPCurve *curve, unsigned int owner);
     void setCurveBeforeLPE (SPCurve *curve);

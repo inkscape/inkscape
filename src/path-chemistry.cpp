@@ -104,7 +104,7 @@ sp_selected_path_combine(SPDesktop *desktop)
             did = true;
         }
 
-        SPCurve *c = sp_path_get_curve_for_edit(SP_PATH(item));
+        SPCurve *c = SP_PATH(item)->get_curve_for_edit();
         if (first == NULL) {  // this is the topmost path
             first = item;
             parent = first->getRepr()->parent();
@@ -211,7 +211,7 @@ sp_selected_path_break_apart(SPDesktop *desktop)
 
         SPPath *path = SP_PATH(item);
 
-        SPCurve *curve = sp_path_get_curve_for_edit(path);
+        SPCurve *curve = path->get_curve_for_edit();
         if (curve == NULL) {
             continue;
         }
@@ -617,7 +617,7 @@ sp_selected_path_reverse(SPDesktop *desktop)
         did = true;
         SPPath *path = SP_PATH(i->data);
 
-        SPCurve *rcurve = sp_path_get_curve_reference(path)->create_reverse();
+        SPCurve *rcurve = path->get_curve_reference()->create_reverse();
 
         gchar *str = sp_svg_write_path(rcurve->get_pathvector());
         if ( sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path)) ) {

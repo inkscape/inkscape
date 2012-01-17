@@ -105,7 +105,7 @@ LPEInterpolate::resetDefaults(SPItem * item)
     if (!SP_IS_PATH(item))
         return;
 
-    SPCurve const *crv = sp_path_get_curve_reference(SP_PATH(item));
+    SPCurve const *crv = SP_PATH(item)->get_curve_reference();
     Geom::PathVector const &pathv = crv->get_pathvector();
     if ( (pathv.size() < 2) )
         return;

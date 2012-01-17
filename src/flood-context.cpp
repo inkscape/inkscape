@@ -511,11 +511,15 @@ static void do_trace(bitmap_coords_info bci, guchar *trace_px, SPDesktop *deskto
             pathRepr->setPosition(-1);
 
             if (union_with_selection) {
-                desktop->messageStack()->flashF(Inkscape::WARNING_MESSAGE, ngettext("Area filled, path with <b>%d</b> node created and unioned with selection.","Area filled, path with <b>%d</b> nodes created and unioned with selection.",sp_nodes_in_path(SP_PATH(reprobj))), sp_nodes_in_path(SP_PATH(reprobj)));
+                desktop->messageStack()->flashF( Inkscape::WARNING_MESSAGE,
+                    ngettext("Area filled, path with <b>%d</b> node created and unioned with selection.","Area filled, path with <b>%d</b> nodes created and unioned with selection.",
+                    SP_PATH(reprobj)->nodesInPath()), SP_PATH(reprobj)->nodesInPath() );
                 selection->add(reprobj);
                 sp_selected_path_union_skip_undo(desktop);
             } else {
-                desktop->messageStack()->flashF(Inkscape::WARNING_MESSAGE, ngettext("Area filled, path with <b>%d</b> node created.","Area filled, path with <b>%d</b> nodes created.",sp_nodes_in_path(SP_PATH(reprobj))), sp_nodes_in_path(SP_PATH(reprobj)));
+                desktop->messageStack()->flashF( Inkscape::WARNING_MESSAGE,
+                    ngettext("Area filled, path with <b>%d</b> node created.","Area filled, path with <b>%d</b> nodes created.",
+                    SP_PATH(reprobj)->nodesInPath()), SP_PATH(reprobj)->nodesInPath() );
                 selection->set(reprobj);
             }
 

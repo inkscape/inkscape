@@ -845,7 +845,7 @@ sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write)
         } else if (SP_IS_SHAPE(subitem)) {
             SPCurve * c = NULL;
             if (SP_IS_PATH(subitem)) {
-                c = sp_path_get_original_curve(SP_PATH(subitem));
+                c = SP_PATH(subitem)->get_original_curve();
             } else {
                 c = SP_SHAPE(subitem)->getCurve();
             }
