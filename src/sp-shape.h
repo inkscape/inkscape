@@ -46,7 +46,7 @@ public:
     SPObject *marker[SP_MARKER_LOC_QTY];
     sigc::connection release_connect [SP_MARKER_LOC_QTY];
     sigc::connection modified_connect [SP_MARKER_LOC_QTY];
-	
+
     static GType getType (void);
     void setShape ();
     SPCurve * getCurve ();
@@ -57,7 +57,7 @@ public:
     int hasMarkers () const;
     int numberOfMarkers (int type);
 
-protected:
+public: // temporarily public, until SPPath is properly classed, etc.
     SPCurve *curve_before_lpe;
 
 private:

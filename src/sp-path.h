@@ -23,8 +23,6 @@ struct SPCurve;
 #define SP_IS_PATH(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_PATH))
 
 struct SPPath : public SPShape {
-    SPCurve *original_curve;
-
     SPConnEndPair connEndPair;
 };
 
@@ -39,6 +37,7 @@ void     sp_path_set_original_curve (SPPath *path, SPCurve *curve, unsigned int 
 SPCurve* sp_path_get_original_curve (SPPath *path);
 SPCurve* sp_path_get_curve_for_edit (SPPath *path);
 const SPCurve* sp_path_get_curve_reference (SPPath *path);
+SPCurve* sp_path_get_curve (SPPath *path); // should only be available for friends and not public!
 
 #endif // SEEN_SP_PATH_H
 

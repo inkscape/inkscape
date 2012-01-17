@@ -980,7 +980,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
                 Geom::Affine i2d ( (cc->clickeditem)->i2dt_affine() );
                 Geom::Affine d2i = i2d.inverse();
                 SPPath *path = SP_PATH(cc->clickeditem);
-                SPCurve *curve = path->original_curve ? path->original_curve : path->curve;
+                SPCurve *curve = sp_path_get_curve(path);
                 if (cc->clickedhandle == cc->endpt_handle[0]) {
                     Geom::Point o = cc->endpt_handle[1]->pos;
                     curve->stretch_endpoints(p * d2i, o * d2i);
@@ -992,8 +992,7 @@ connector_handle_motion_notify(SPConnectorContext *const cc, GdkEventMotion cons
                 sp_conn_reroute_path_immediate(path);
 
                 // Copy this to the temporary visible path
-                cc->red_curve = path->original_curve ?
-                        path->original_curve->copy() : path->curve->copy();
+                cc->red_curve = sp_path_get_curve_for_edit(path);
                 cc->red_curve->transform(i2d);
 
                 sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
@@ -1606,7 +1605,7 @@ endpt_handler(SPKnot */*knot*/, GdkEvent *event, SPConnectorContext *cc)
                 }
 
                 // Show the red path for dragging.
-                cc->red_curve = SP_PATH(cc->clickeditem)->original_curve ? SP_PATH(cc->clickeditem)->original_curve->copy() : SP_PATH(cc->clickeditem)->curve->copy();
+                cc->red_curve = sp_path_get_curve_for_edit(SP_PATH(cc->clickeditem));
                 Geom::Affine i2d = (cc->clickeditem)->i2dt_affine();
                 cc->red_curve->transform(i2d);
                 sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(cc->red_bpath), cc->red_curve);
@@ -1765,7 +1764,7 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
 {
     g_assert( SP_IS_PATH(item) );
 
-    SPCurve *curve = SP_PATH(item)->original_curve ? SP_PATH(item)->original_curve : SP_PATH(item)->curve;
+    const SPCurve *curve = sp_path_get_curve_reference(SP_PATH(item));
     Geom::Affine i2dt = item->i2dt_affine();
 
     if (cc->active_conn == item)
@@ -1918,7 +1917,7 @@ static bool cc_item_is_shape(SPItem *item)
 bool cc_item_is_connector(SPItem *item)
 {
     if (SP_IS_PATH(item)) {
-        bool closed = SP_PATH(item)->original_curve ? SP_PATH(item)->original_curve->is_closed() : SP_PATH(item)->curve->is_closed();
+        bool closed = sp_path_get_curve_reference(SP_PATH(item))->is_closed();
         if (SP_PATH(item)->connEndPair.isAutoRoutingConn() && !closed) {
             // To be considered a connector, an object must be a non-closed 
             // path that is marked with a "inkscape:connector-type" attribute.

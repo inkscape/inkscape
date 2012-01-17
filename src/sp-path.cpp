@@ -192,8 +192,6 @@ static void
 sp_path_init(SPPath *path)
 {
     new (&path->connEndPair) SPConnEndPair(path);
-
-    path->original_curve = NULL;
 }
 
 static void
@@ -239,10 +237,6 @@ sp_path_release(SPObject *object)
     SPPath *path = SP_PATH(object);
 
     path->connEndPair.release();
-
-    if (path->original_curve) {
-        path->original_curve = path->original_curve->unref();
-    }
 
     if (((SPObjectClass *) parent_class)->release) {
         ((SPObjectClass *) parent_class)->release(object);
@@ -333,9 +327,8 @@ g_message("sp_path_write writes 'd' attribute");
     }
 
     if (flags & SP_OBJECT_WRITE_EXT) {
-        SPPath *path = (SPPath *) object;
-        if ( path->original_curve != NULL ) {
-            gchar *str = sp_svg_write_path(path->original_curve->get_pathvector());
+        if ( shape->curve_before_lpe != NULL ) {
+            gchar *str = sp_svg_write_path(shape->curve_before_lpe->get_pathvector());
             repr->setAttribute("inkscape:original-d", str);
             g_free(str);
         } else {
@@ -374,19 +367,20 @@ sp_path_update(SPObject *object, SPCtx *ctx, guint flags)
 static Geom::Affine
 sp_path_set_transform(SPItem *item, Geom::Affine const &xform)
 {
-    SPShape *shape = (SPShape *) item;
-    SPPath *path = (SPPath *) item;
+    if (!SP_IS_PATH(item)) {
+        return Geom::identity();
+    }
+    SPPath *path = SP_PATH(item);
 
-    if (!shape->curve) { // 0 nodes, nothing to transform
+    if (!path->curve) { // 0 nodes, nothing to transform
         return Geom::identity();
     }
 
     // Transform the original-d path if this is a valid LPE item, other else the (ordinary) path
-    if (path->original_curve && SP_IS_LPE_ITEM(item) && 
-                                sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(item))) {
-        path->original_curve->transform(xform);
+    if (path->curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(item))) {
+        path->curve_before_lpe->transform(xform);
     } else {
-        shape->curve->transform(xform);
+        path->curve->transform(xform);
     }
 
     // Adjust stroke
@@ -412,19 +406,17 @@ static void
 sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
 {
     SPShape * const shape = (SPShape *) lpeitem;
-    SPPath * const path = (SPPath *) lpeitem;
     Inkscape::XML::Node *repr = shape->getRepr();
 
 #ifdef PATH_VERBOSE
 g_message("sp_path_update_patheffect");
 #endif
 
-    if (path->original_curve && sp_lpe_item_has_path_effect_recursive(lpeitem)) {
-        SPCurve *curve = path->original_curve->copy();
-        /* if a path does not have an lpeitem applied, then reset the curve to the original_curve.
+    if (shape->curve_before_lpe && sp_lpe_item_has_path_effect_recursive(lpeitem)) {
+        SPCurve *curve = shape->curve_before_lpe->copy();
+        /* if a path has an lpeitem applied, then reset the curve to the curve_before_lpe.
          * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
         shape->setCurveInsync(curve, TRUE);
-        shape->setCurveBeforeLPE(path->original_curve);
 
         bool success = sp_lpe_item_perform_path_effect(SP_LPE_ITEM(shape), curve);
         if (success && write) {
@@ -467,14 +459,14 @@ g_message("sp_path_update_patheffect writes 'd' attribute");
 void
 sp_path_set_original_curve (SPPath *path, SPCurve *curve, unsigned int owner, bool write)
 {
-    if (path->original_curve) {
-        path->original_curve = path->original_curve->unref();
+    if (path->curve_before_lpe) {
+        path->curve_before_lpe = path->curve_before_lpe->unref();
     }
     if (curve) {
         if (owner) {
-            path->original_curve = curve->ref();
+            path->curve_before_lpe = curve->ref();
         } else {
-            path->original_curve = curve->copy();
+            path->curve_before_lpe = curve->copy();
         }
     }
     sp_lpe_item_update_patheffect(path, true, write);
@@ -482,42 +474,63 @@ sp_path_set_original_curve (SPPath *path, SPCurve *curve, unsigned int owner, bo
 }
 
 /**
- * Return duplicate of original_curve (if any exists) or NULL if there is no curve
+ * Return duplicate of curve_before_lpe (if any exists) or NULL if there is no curve
  */
 SPCurve *
 sp_path_get_original_curve (SPPath *path)
 {
-    if (path->original_curve) {
-        return path->original_curve->copy();
+    if (path->curve_before_lpe) {
+        return path->curve_before_lpe->copy();
     }
     return NULL;
 }
 
 /**
- * Return duplicate of edittable curve which is original_curve if it exists or
+ * Return duplicate of edittable curve which is curve_before_lpe if it exists or
  * shape->curve if not.
  */
 SPCurve*
 sp_path_get_curve_for_edit (SPPath *path)
 {
-    if (path->original_curve && SP_IS_LPE_ITEM(path) && 
-                                sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path))) {
+    if (!SP_IS_PATH(path)) {
+        return NULL;
+    }
+    if (path->curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path))) {
         return sp_path_get_original_curve(path);
     } else {
-        return ((SPShape *) path)->getCurve();
+        return path->getCurve();
     }
 }
 
 /**
- * Return a reference to original_curve if it exists or
- * shape->curve if not.
+ * Returns \c curve_before_lpe if it is not NULL and a valid LPE is applied or
+ * \c curve if not.
  */
 const SPCurve*
 sp_path_get_curve_reference (SPPath *path)
 {
-    if (path->original_curve && SP_IS_LPE_ITEM(path) && 
-                                sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path))) {
-        return path->original_curve;
+    if (!SP_IS_PATH(path)) {
+        return NULL;
+    }
+    if (path->curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path))) {
+        return path->curve_before_lpe;
+    } else {
+        return path->curve;
+    }
+}
+
+/**
+ * Returns \c curve_before_lpe if it is not NULL and a valid LPE is applied or \c curve if not.
+ * \todo should only be available to class friends!
+ */
+SPCurve*
+sp_path_get_curve (SPPath *path)
+{
+    if (!SP_IS_PATH(path)) {
+        return NULL;
+    }
+    if (path->curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(path))) {
+        return path->curve_before_lpe;
     } else {
         return path->curve;
     }
