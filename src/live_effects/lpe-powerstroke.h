@@ -32,8 +32,9 @@ public:
     // methods called by path-manipulator upon edits
     void adjustForNewPath(std::vector<Geom::Path> const & path_in);
 
-private:
     PowerStrokePointArrayParam offset_points;
+
+private:
     BoolParam sort_points;
     EnumParam<unsigned> interpolator_type;
     ScalarParam interpolator_beta;

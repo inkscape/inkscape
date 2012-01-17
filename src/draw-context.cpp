@@ -40,6 +40,7 @@
 #include "sp-path.h"
 #include "sp-namedview.h"
 #include "live_effects/lpe-patternalongpath.h"
+#include "live_effects/lpe-powerstroke.h"
 #include "style.h"
 
 using Inkscape::DocumentUndo;
@@ -284,12 +285,30 @@ spdc_paste_curve_as_freehand_shape(const SPCurve *c, SPDrawContext *dc, SPItem *
     static_cast<LPEPatternAlongPath*>(lpe)->pattern.paste_param_path(svgd);
 }
 
+static void
+spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points, SPDrawContext *dc, SPItem *item)
+{
+    using namespace Inkscape::LivePathEffect;
+
+    Effect::createAndApply(POWERSTROKE, dc->desktop->doc(), item);
+    Effect* lpe = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
+    static_cast<LPEPowerStroke*>(lpe)->offset_points.param_set_and_write_new_value(points);
+
+    // write powerstroke parameters:
+    lpe->getRepr()->setAttribute("start_linecap_type", "butt");
+    lpe->getRepr()->setAttribute("end_linecap_type", "butt");
+    lpe->getRepr()->setAttribute("cusp_linecap_type", "round");
+    lpe->getRepr()->setAttribute("sort_points", "false");
+    lpe->getRepr()->setAttribute("interpolator_type", "CubicBezierJohan");
+    lpe->getRepr()->setAttribute("interpolator_beta", "0.2");
+}
+
 /*
  * If we have an item and a waiting LPE, apply the effect to the item
  * (spiro spline mode is treated separately)
  */
 void
-spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
+spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item, SPCurve *curve)
 {
     using namespace Inkscape::LivePathEffect;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -314,15 +333,11 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
             case 1:
             {
                 // "triangle in"
-                // TODO: this is only for illustration (we create a "decrescendo"-shaped path
-                //       manually; eventually we should read the path from a separate file)
-                SPCurve *c = new SPCurve();
-                c->moveto(0,0);
-                c->lineto(0, SHAPE_HEIGHT);
-                c->lineto(SHAPE_LENGTH, SHAPE_HEIGHT/2);
-                c->closepath();
-                spdc_paste_curve_as_freehand_shape(c, dc, item);
-                c->unref();
+                guint curve_length = curve->get_segment_count();
+                std::vector<Geom::Point> points(2);
+                points[0] = Geom::Point(0., SHAPE_HEIGHT/2);
+                points[1] = Geom::Point((double)curve_length, 0.);
+                spdc_apply_powerstroke_shape(points, dc, item);
 
                 shape_applied = true;
                 break;
@@ -330,13 +345,11 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item)
             case 2:
             {
                 // "triangle out"
-                SPCurve *c = new SPCurve();
-                c->moveto(0, SHAPE_HEIGHT/2);
-                c->lineto(SHAPE_LENGTH, SHAPE_HEIGHT);
-                c->lineto(SHAPE_LENGTH, 0);
-                c->closepath();
-                spdc_paste_curve_as_freehand_shape(c, dc, item);
-                c->unref();
+                guint curve_length = curve->get_segment_count();
+                std::vector<Geom::Point> points(2);
+                points[0] = Geom::Point(0., 0.);
+                points[1] = Geom::Point((double)curve_length, SHAPE_HEIGHT/2);
+                spdc_apply_powerstroke_shape(points, dc, item);
 
                 shape_applied = true;
                 break;
@@ -682,7 +695,7 @@ spdc_flush_white(SPDrawContext *dc, SPCurve *gc)
             SPItem *item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
 
             // we finished the path; now apply any waiting LPEs or freehand shapes
-            spdc_check_for_and_apply_waiting_LPE(dc, item);
+            spdc_check_for_and_apply_waiting_LPE(dc, item, c);
 
             dc->selection->set(repr);
             Inkscape::GC::release(repr);
