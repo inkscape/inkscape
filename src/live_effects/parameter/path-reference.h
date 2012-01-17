@@ -2,29 +2,24 @@
 #define SEEN_LPE_PATH_REFERENCE_H
 
 /*
- * The reference corresponding to href of LPE PathParam.
- *
- * Copyright (C) 2008 Johan Engelen
- *   Abhishek Sharma
+ * Copyright (C) 2008-2012 Authors
+ * Authors: Johan Engelen
+ *          Abhishek Sharma
  *
  * Released under GNU GPL, read the file 'COPYING' for more information.
  */
 
 #include <uri-references.h>
-#include <stddef.h>
-#include <sigc++/sigc++.h>
 
 class SPItem;
-
 namespace Inkscape {
-
-namespace XML {
-    struct Node;
-}
+namespace XML { class Node; }
 
 namespace LivePathEffect {
 
-
+/**
+ * The reference corresponding to href of LPE PathParam.
+ */
 class PathReference : public Inkscape::URIReference {
 public:
     PathReference(SPObject *owner) : URIReference(owner) {}
