@@ -41,13 +41,15 @@ enum LineCapType {
   LINECAP_BUTT,
   LINECAP_SQUARE,
   LINECAP_ROUND,
-  LINECAP_PEAK
+  LINECAP_PEAK,
+  LINECAP_ZERO_WIDTH
 };
 static const Util::EnumData<unsigned> LineCapTypeData[] = {
-    {LINECAP_BUTT   ,  N_("Butt"),  "butt"},
-    {LINECAP_SQUARE,  N_("Square"),  "square"},
-    {LINECAP_ROUND  ,  N_("Round"), "round"},
-    {LINECAP_PEAK  , N_("Peak"), "peak"}
+    {LINECAP_BUTT,          N_("Butt"),         "butt"},
+    {LINECAP_SQUARE,        N_("Square"),       "square"},
+    {LINECAP_ROUND,         N_("Round"),        "round"},
+    {LINECAP_PEAK,          N_("Peak"),         "peak"},
+    {LINECAP_ZERO_WIDTH,    N_("Zero width"),   "zerowidth"}
 };
 static const Util::EnumDataConverter<unsigned> LineCapTypeConverter(LineCapTypeData, sizeof(LineCapTypeData)/sizeof(*LineCapTypeData));
 
@@ -211,6 +213,9 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
     Piecewise<D2<SBasis> > n = rot90(der);
     offset_points.set_pwd2(pwd2_in, n);
 
+    LineCapType end_linecap = static_cast<LineCapType>(end_linecap_type.get_value());
+    LineCapType start_linecap = static_cast<LineCapType>(start_linecap_type.get_value());
+
     std::vector<Geom::Point> ts = offset_points.data();
     if (ts.empty()) {
         return path_out;
@@ -225,9 +230,12 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
         ts.insert(ts.begin(), last_point - Point(pwd2_in.domain().extent() ,0));
         ts.push_back( first_point + Point(pwd2_in.domain().extent() ,0) );
     } else {
-        // first and last point have same distance from path as second and second to last points, respectively.
-        ts.insert(ts.begin(), Point(pwd2_in.domain().min(), ts.front()[Geom::Y]) );
-        ts.push_back( Point(pwd2_in.domain().max(), ts.back()[Geom::Y]) );
+        // add width data for first and last point on the path
+        // depending on cap type, these first and last points have width zero or take the width from the closest width point.
+        ts.insert(ts.begin(), Point( pwd2_in.domain().min(),
+                                    (start_linecap==LINECAP_ZERO_WIDTH) ? 0. : ts.front()[Geom::Y]) );
+        ts.push_back( Point( pwd2_in.domain().max(),
+                             (end_linecap==LINECAP_ZERO_WIDTH) ? 0. : ts.back()[Geom::Y]) );
     }
     // create stroke path where points (x,y) := (t, offset)
     Geom::Interpolate::Interpolator *interpolator = Geom::Interpolate::Interpolator::create(static_cast<Geom::Interpolate::InterpolatorType>(interpolator_type.get_value()));
@@ -265,9 +273,10 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
         path_out.push_back(fixed_mirrorpath);
     } else {
         // add linecaps...
-        LineCapType end_linecap = static_cast<LineCapType>(end_linecap_type.get_value());
-        LineCapType start_linecap = static_cast<LineCapType>(start_linecap_type.get_value());
         switch (end_linecap) {
+            case LINECAP_ZERO_WIDTH:
+                // do nothing
+                break;
             case LINECAP_PEAK:
             {
                 Geom::Point end_deriv = der.lastValue();
@@ -303,6 +312,9 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
         fixed_path.append(fixed_mirrorpath, Geom::Path::STITCH_DISCONTINUOUS);
 
         switch (start_linecap) {
+            case LINECAP_ZERO_WIDTH:
+                // do nothing
+                break;
             case LINECAP_PEAK:
             {
                 Geom::Point start_deriv = der.firstValue();
