@@ -8,6 +8,7 @@
  * Copyright (C) 2000 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
  * Copyright (C) 2002 Lauris Kaplinski
+ * Copyright (C) 2012 Johan Engelen
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -295,8 +296,8 @@ spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points, SPDrawCont
     static_cast<LPEPowerStroke*>(lpe)->offset_points.param_set_and_write_new_value(points);
 
     // write powerstroke parameters:
-    lpe->getRepr()->setAttribute("start_linecap_type", "butt");
-    lpe->getRepr()->setAttribute("end_linecap_type", "butt");
+    lpe->getRepr()->setAttribute("start_linecap_type", "zerowidth");
+    lpe->getRepr()->setAttribute("end_linecap_type", "zerowidth");
     lpe->getRepr()->setAttribute("cusp_linecap_type", "round");
     lpe->getRepr()->setAttribute("sort_points", "false");
     lpe->getRepr()->setAttribute("interpolator_type", "CubicBezierJohan");
@@ -334,9 +335,9 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item, SPCurve *c
             {
                 // "triangle in"
                 guint curve_length = curve->get_segment_count();
-                std::vector<Geom::Point> points(2);
+                std::vector<Geom::Point> points(1);
                 points[0] = Geom::Point(0., SHAPE_HEIGHT/2);
-                points[1] = Geom::Point((double)curve_length, 0.);
+                // points[1] = Geom::Point((double)curve_length, 0.);
                 spdc_apply_powerstroke_shape(points, dc, item);
 
                 shape_applied = true;
@@ -346,9 +347,9 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item, SPCurve *c
             {
                 // "triangle out"
                 guint curve_length = curve->get_segment_count();
-                std::vector<Geom::Point> points(2);
-                points[0] = Geom::Point(0., 0.);
-                points[1] = Geom::Point((double)curve_length, SHAPE_HEIGHT/2);
+                std::vector<Geom::Point> points(1);
+                // points[0] = Geom::Point(0., 0.);
+                points[0] = Geom::Point((double)curve_length, SHAPE_HEIGHT/2);
                 spdc_apply_powerstroke_shape(points, dc, item);
 
                 shape_applied = true;
