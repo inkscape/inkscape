@@ -146,7 +146,7 @@ sp_star_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
     }
 
     sp_star_set_shape ((SPShape *) star);
-    char *d = sp_svg_write_path (((SPShape *) star)->curve->get_pathvector());
+    char *d = sp_svg_write_path (star->_curve->get_pathvector());
     repr->setAttribute("d", d);
     g_free (d);
 
@@ -277,8 +277,8 @@ sp_star_update_patheffect(SPLPEItem *lpeitem, bool write)
 
     if (write) {
         Inkscape::XML::Node *repr = shape->getRepr();
-        if ( shape->curve != NULL ) {
-            gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
+        if ( shape->_curve != NULL ) {
+            gchar *str = sp_svg_write_path(shape->_curve->get_pathvector());
             repr->setAttribute("d", str);
             g_free(str);
         } else {

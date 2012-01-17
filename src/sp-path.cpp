@@ -126,7 +126,7 @@ sp_path_class_init(SPPathClass * klass)
 
 gint SPPath::nodesInPath() const
 {
-    return curve ? curve->nodes_in_path() : 0;
+    return _curve ? _curve->nodes_in_path() : 0;
 }
 
 static gchar *
@@ -162,14 +162,15 @@ sp_path_convert_to_guides(SPItem *item)
 {
     SPPath *path = SP_PATH(item);
 
-    SPCurve *curve = SP_SHAPE(path)->curve;
-    if (!curve) return;
+    if (!path->_curve) {
+        return;
+    }
 
     std::list<std::pair<Geom::Point, Geom::Point> > pts;
 
     Geom::Affine const i2dt(path->i2dt_affine());
 
-    Geom::PathVector const & pv = curve->get_pathvector();
+    Geom::PathVector const & pv = path->_curve->get_pathvector();
     for(Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit) {
         for(Geom::Path::const_iterator cit = pit->begin(); cit != pit->end_default(); ++cit) {
             // only add curves for straight line segments
@@ -316,8 +317,8 @@ sp_path_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
 #ifdef PATH_VERBOSE
 g_message("sp_path_write writes 'd' attribute");
 #endif
-    if ( shape->curve != NULL ) {
-        gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
+    if ( shape->_curve != NULL ) {
+        gchar *str = sp_svg_write_path(shape->_curve->get_pathvector());
         repr->setAttribute("d", str);
         g_free(str);
     } else {
@@ -325,8 +326,8 @@ g_message("sp_path_write writes 'd' attribute");
     }
 
     if (flags & SP_OBJECT_WRITE_EXT) {
-        if ( shape->curve_before_lpe != NULL ) {
-            gchar *str = sp_svg_write_path(shape->curve_before_lpe->get_pathvector());
+        if ( shape->_curve_before_lpe != NULL ) {
+            gchar *str = sp_svg_write_path(shape->_curve_before_lpe->get_pathvector());
             repr->setAttribute("inkscape:original-d", str);
             g_free(str);
         } else {
@@ -370,15 +371,15 @@ sp_path_set_transform(SPItem *item, Geom::Affine const &xform)
     }
     SPPath *path = SP_PATH(item);
 
-    if (!path->curve) { // 0 nodes, nothing to transform
+    if (!path->_curve) { // 0 nodes, nothing to transform
         return Geom::identity();
     }
 
     // Transform the original-d path if this is a valid LPE item, other else the (ordinary) path
-    if (path->curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(item))) {
-        path->curve_before_lpe->transform(xform);
+    if (path->_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(item))) {
+        path->_curve_before_lpe->transform(xform);
     } else {
-        path->curve->transform(xform);
+        path->_curve->transform(xform);
     }
 
     // Adjust stroke
@@ -410,9 +411,9 @@ sp_path_update_patheffect(SPLPEItem *lpeitem, bool write)
 g_message("sp_path_update_patheffect");
 #endif
 
-    if (shape->curve_before_lpe && sp_lpe_item_has_path_effect_recursive(lpeitem)) {
-        SPCurve *curve = shape->curve_before_lpe->copy();
-        /* if a path has an lpeitem applied, then reset the curve to the curve_before_lpe.
+    if (shape->_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(lpeitem)) {
+        SPCurve *curve = shape->_curve_before_lpe->copy();
+        /* if a path has an lpeitem applied, then reset the curve to the _curve_before_lpe.
          * This is very important for LPEs to work properly! (the bbox might be recalculated depending on the curve in shape)*/
         shape->setCurveInsync(curve, TRUE);
 
@@ -422,8 +423,8 @@ g_message("sp_path_update_patheffect");
 #ifdef PATH_VERBOSE
 g_message("sp_path_update_patheffect writes 'd' attribute");
 #endif
-            if ( shape->curve != NULL ) {
-                gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
+            if ( shape->_curve != NULL ) {
+                gchar *str = sp_svg_write_path(shape->_curve->get_pathvector());
                 repr->setAttribute("d", str);
                 g_free(str);
             } else {
@@ -456,14 +457,14 @@ g_message("sp_path_update_patheffect writes 'd' attribute");
  */
 void SPPath::set_original_curve (SPCurve *new_curve, unsigned int owner, bool write)
 {
-    if (curve_before_lpe) {
-        curve_before_lpe = curve_before_lpe->unref();
+    if (_curve_before_lpe) {
+        _curve_before_lpe = _curve_before_lpe->unref();
     }
     if (new_curve) {
         if (owner) {
-            curve_before_lpe = new_curve->ref();
+            _curve_before_lpe = new_curve->ref();
         } else {
-            curve_before_lpe = new_curve->copy();
+            _curve_before_lpe = new_curve->copy();
         }
     }
     sp_lpe_item_update_patheffect(this, true, write);
@@ -471,18 +472,18 @@ void SPPath::set_original_curve (SPCurve *new_curve, unsigned int owner, bool wr
 }
 
 /**
- * Return duplicate of curve_before_lpe (if any exists) or NULL if there is no curve
+ * Return duplicate of _curve_before_lpe (if any exists) or NULL if there is no curve
  */
 SPCurve * SPPath::get_original_curve () const
 {
-    if (curve_before_lpe) {
-        return curve_before_lpe->copy();
+    if (_curve_before_lpe) {
+        return _curve_before_lpe->copy();
     }
     return NULL;
 }
 
 /**
- * Return duplicate of edittable curve which is curve_before_lpe if it exists or
+ * Return duplicate of edittable curve which is _curve_before_lpe if it exists or
  * shape->curve if not.
  */
 SPCurve* SPPath::get_curve_for_edit () const
@@ -490,7 +491,7 @@ SPCurve* SPPath::get_curve_for_edit () const
     if (!SP_IS_PATH(this)) {
         return NULL;
     }
-    if (curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(this))) {
+    if (_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(this))) {
         return get_original_curve();
     } else {
         return getCurve();
@@ -498,7 +499,7 @@ SPCurve* SPPath::get_curve_for_edit () const
 }
 
 /**
- * Returns \c curve_before_lpe if it is not NULL and a valid LPE is applied or
+ * Returns \c _curve_before_lpe if it is not NULL and a valid LPE is applied or
  * \c curve if not.
  */
 const SPCurve* SPPath::get_curve_reference () const
@@ -506,15 +507,15 @@ const SPCurve* SPPath::get_curve_reference () const
     if (!SP_IS_PATH(this)) {
         return NULL;
     }
-    if (curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(this))) {
-        return curve_before_lpe;
+    if (_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(this))) {
+        return _curve_before_lpe;
     } else {
-        return curve;
+        return _curve;
     }
 }
 
 /**
- * Returns \c curve_before_lpe if it is not NULL and a valid LPE is applied or \c curve if not.
+ * Returns \c _curve_before_lpe if it is not NULL and a valid LPE is applied or \c curve if not.
  * \todo should only be available to class friends!
  */
 SPCurve* SPPath::get_curve ()
@@ -522,10 +523,10 @@ SPCurve* SPPath::get_curve ()
     if (!SP_IS_PATH(this)) {
         return NULL;
     }
-    if (curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(this))) {
-        return curve_before_lpe;
+    if (_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(this))) {
+        return _curve_before_lpe;
     } else {
-        return curve;
+        return _curve;
     }
 }
 

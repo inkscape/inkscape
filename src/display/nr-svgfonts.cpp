@@ -310,7 +310,7 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  */*scaled_font*/,
         //render the SVG described on this glyph's child nodes.
         for(node = node->children; node; node=node->next){
             if (SP_IS_PATH(node)){
-                pathv = ((SPShape*)node)->curve->get_pathvector();
+                pathv = ((SPShape*)node)->_curve->get_pathvector();
                 pathv = flip_coordinate_system(spfont, pathv);
                 this->render_glyph_path(cr, &pathv);
             }
@@ -320,7 +320,7 @@ SvgFont::scaled_font_render_glyph (cairo_scaled_font_t  */*scaled_font*/,
             if (SP_IS_USE(node)){
                 SPItem* item = SP_USE(node)->ref->getObject();
                 if (SP_IS_PATH(item)){
-                    pathv = ((SPShape*)item)->curve->get_pathvector();
+                    pathv = ((SPShape*)item)->_curve->get_pathvector();
                     pathv = flip_coordinate_system(spfont, pathv);
                     this->render_glyph_path(cr, &pathv);
                 }

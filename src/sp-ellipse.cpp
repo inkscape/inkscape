@@ -166,8 +166,8 @@ sp_genericellipse_update_patheffect(SPLPEItem *lpeitem, bool write)
 
     if (write) {
         Inkscape::XML::Node *repr = shape->getRepr();
-        if ( shape->curve != NULL ) {
-            gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
+        if ( shape->_curve != NULL ) {
+            gchar *str = sp_svg_write_path(shape->_curve->get_pathvector());
             repr->setAttribute("d", str);
             g_free(str);
         } else {

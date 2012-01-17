@@ -99,7 +99,7 @@ static bool try_get_intersect_point_with_item(SPPath* conn, SPItem* item,
         const bool at_start, double& intersect_pos) {
 
     // Copy the curve and apply transformations up to common ancestor.
-    SPCurve* conn_curve = conn->curve->copy();
+    SPCurve* conn_curve = conn->_curve->copy();
     conn_curve->transform(conn_transform);
 
     Geom::PathVector conn_pv = conn_curve->get_pathvector();
@@ -149,7 +149,7 @@ sp_conn_get_route_and_redraw(SPPath *const path,
 
     // Set sensible values incase there the connector ends are not
     // attached to any shapes.
-    Geom::PathVector conn_pv = path->curve->get_pathvector();
+    Geom::PathVector conn_pv = path->_curve->get_pathvector();
     double endPos[2] = { 0, conn_pv[0].size() };
 
     SPConnEnd** _connEnd = path->connEndPair.getConnEnds();
@@ -160,7 +160,7 @@ sp_conn_get_route_and_redraw(SPPath *const path,
                         (h == 0), endPos[h]);
         }
     }
-    change_endpts(path->curve, endPos);
+    change_endpts(path->_curve, endPos);
     if (updatePathRepr) {
         path->updateRepr();
         path->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);

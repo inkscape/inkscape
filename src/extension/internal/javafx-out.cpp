@@ -472,8 +472,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     }
 
     SPShape *shape = SP_SHAPE(item);
-    SPCurve *curve = shape->curve;
-    if (curve->is_empty()) {
+    if (shape->_curve->is_empty()) {
         return true;
     }
 
@@ -494,7 +493,7 @@ bool JavaFXOutput::doCurve(SPItem *item, const String &id)
     // convert the path to only lineto's and cubic curveto's:
     Geom::Scale yflip(1.0, -1.0); /// @fixme  hardcoded desktop transform!
     Geom::Affine tf = item->i2dt_affine() * yflip;
-    Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( curve->get_pathvector() * tf );
+    Geom::PathVector pathv = pathv_to_linear_and_cubic_beziers( shape->_curve->get_pathvector() * tf );
 
     //Count the NR_CURVETOs/LINETOs (including closing line segment)
     guint segmentCount = 0;
@@ -789,7 +788,7 @@ bool JavaFXOutput::doBody(SPDocument *doc, SPObject *obj)
         //### Get the Shape
         if (SP_IS_SHAPE(item)) {//Bulia's suggestion.  Allow all shapes
             SPShape *shape = SP_SHAPE(item);
-            SPCurve *curve = shape->curve;
+            SPCurve *curve = shape->_curve;
             if (!curve->is_empty()) {
                 String jfxid = sanatize(id);
                 out("               %s(),\n", jfxid.c_str());

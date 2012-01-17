@@ -821,7 +821,7 @@ Geom::PathVector* item_outline(SPItem const *item, bool coalesce)
 
             // START marker
             for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
-                if ( SPObject *marker_obj = shape->marker[i] ) {
+                if ( SPObject *marker_obj = shape->_marker[i] ) {
                     Geom::Affine const m (sp_shape_marker_get_transform_at_start(pathv.front().front()));
                     item_outline_add_marker( marker_obj, m,
                                              Geom::Scale(i_style->stroke_width.computed),
@@ -830,7 +830,7 @@ Geom::PathVector* item_outline(SPItem const *item, bool coalesce)
             }
             // MID marker
             for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
-                SPObject *midmarker_obj = shape->marker[i];
+                SPObject *midmarker_obj = shape->_marker[i];
                 if (!midmarker_obj) continue;
                 for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
                     // START position
@@ -873,7 +873,7 @@ Geom::PathVector* item_outline(SPItem const *item, bool coalesce)
             }
             // END marker
             for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
-                if ( SPObject *marker_obj = shape->marker[i] ) {
+                if ( SPObject *marker_obj = shape->_marker[i] ) {
                     /* Get reference to last curve in the path.
                      * For moveto-only path, this returns the "closing line segment". */
                     Geom::Path const &path_last = pathv.back();
@@ -1139,7 +1139,7 @@ sp_selected_path_outline(SPDesktop *desktop)
 
                 // START marker
                 for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
-                    if ( SPObject *marker_obj = shape->marker[i] ) {
+                    if ( SPObject *marker_obj = shape->_marker[i] ) {
                         Geom::Affine const m (sp_shape_marker_get_transform_at_start(pathv.front().front()));
                         sp_selected_path_outline_add_marker( marker_obj, m,
                                                              Geom::Scale(i_style->stroke_width.computed), transform,
@@ -1148,7 +1148,7 @@ sp_selected_path_outline(SPDesktop *desktop)
                 }
                 // MID marker
                 for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
-                    SPObject *midmarker_obj = shape->marker[i];
+                    SPObject *midmarker_obj = shape->_marker[i];
                     if (!midmarker_obj) continue;
                     for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
                         // START position
@@ -1191,7 +1191,7 @@ sp_selected_path_outline(SPDesktop *desktop)
                 }
                 // END marker
                 for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
-                    if ( SPObject *marker_obj = shape->marker[i] ) {
+                    if ( SPObject *marker_obj = shape->_marker[i] ) {
                         /* Get reference to last curve in the path.
                          * For moveto-only path, this returns the "closing line segment". */
                         Geom::Path const &path_last = pathv.back();

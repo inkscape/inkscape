@@ -286,7 +286,7 @@ sp_offset_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XM
     }
 
     // write that curve to "d"
-    char *d = sp_svg_write_path (((SPShape *) offset)->curve->get_pathvector());
+    char *d = sp_svg_write_path (offset->_curve->get_pathvector());
     repr->setAttribute("d", d);
     g_free (d);
 

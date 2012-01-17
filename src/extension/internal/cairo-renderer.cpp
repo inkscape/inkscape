@@ -181,7 +181,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 {
     SPShape *shape = SP_SHAPE(item);
 
-    if (!shape->curve) {
+    if (!shape->_curve) {
         return;
     }
 
@@ -189,7 +189,7 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 
     SPStyle* style = item->style;
 
-    Geom::PathVector const & pathv = shape->curve->get_pathvector();
+    Geom::PathVector const & pathv = shape->_curve->get_pathvector();
     if (pathv.empty()) {
         return;
     }
@@ -198,8 +198,8 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
 
     // START marker
     for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
-        if ( shape->marker[i] ) {
-            SPMarker* marker = SP_MARKER (shape->marker[i]);
+        if ( shape->_marker[i] ) {
+            SPMarker* marker = SP_MARKER (shape->_marker[i]);
             Geom::Affine tr;
             if (marker->orient_auto) {
                 tr = sp_shape_marker_get_transform_at_start(pathv.begin()->front());
@@ -211,8 +211,8 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     }
     // MID marker
     for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
-        if ( !shape->marker[i] ) continue;
-        SPMarker* marker = SP_MARKER (shape->marker[i]);
+        if ( !shape->_marker[i] ) continue;
+        SPMarker* marker = SP_MARKER (shape->_marker[i]);
         for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
             // START position
             if ( path_it != pathv.begin() 
@@ -263,8 +263,8 @@ static void sp_shape_render (SPItem *item, CairoRenderContext *ctx)
     }
     // END marker
     for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
-        if ( shape->marker[i] ) {
-            SPMarker* marker = SP_MARKER (shape->marker[i]);
+        if ( shape->_marker[i] ) {
+            SPMarker* marker = SP_MARKER (shape->_marker[i]);
 
             /* Get reference to last curve in the path.
              * For moveto-only path, this returns the "closing line segment". */

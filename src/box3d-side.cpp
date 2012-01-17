@@ -111,7 +111,7 @@ box3d_side_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::
     static_cast<SPShape *>(object)->setShape();
 
     /* Duplicate the path */
-    SPCurve const *curve = ((SPShape *) object)->curve;
+    SPCurve const *curve = ((SPShape *) object)->_curve;
     //Nulls might be possible if this called iteratively
     if ( !curve ) {
         return NULL;

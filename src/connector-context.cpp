@@ -1897,7 +1897,7 @@ void cc_remove_connection_point(SPConnectorContext* cc)
 static bool cc_item_is_shape(SPItem *item)
 {
     if (SP_IS_PATH(item)) {
-        SPCurve *curve = (SP_SHAPE(item))->curve;
+        const SPCurve * curve = (SP_SHAPE(item))->_curve;
         if ( curve && !(curve->is_closed()) ) {
             // Open paths are connectors.
             return false;

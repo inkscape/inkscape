@@ -117,12 +117,12 @@ void SPShapeClass::sp_shape_class_init(SPShapeClass *klass)
 void SPShape::sp_shape_init(SPShape *shape)
 {
     for ( int i = 0 ; i < SP_MARKER_LOC_QTY ; i++ ) {
-        new (&shape->release_connect[i]) sigc::connection();
-        new (&shape->modified_connect[i]) sigc::connection();
-        shape->marker[i] = NULL;
+        new (&shape->_release_connect[i]) sigc::connection();
+        new (&shape->_modified_connect[i]) sigc::connection();
+        shape->_marker[i] = NULL;
     }
-    shape->curve = NULL;
-    shape->curve_before_lpe = NULL;
+    shape->_curve = NULL;
+    shape->_curve_before_lpe = NULL;
 }
 
 void SPShape::sp_shape_finalize(GObject *object)
@@ -130,10 +130,10 @@ void SPShape::sp_shape_finalize(GObject *object)
     SPShape *shape=(SPShape *)object;
 
     for ( int i = 0 ; i < SP_MARKER_LOC_QTY ; i++ ) {
-        shape->release_connect[i].disconnect();
-        shape->release_connect[i].~connection();
-        shape->modified_connect[i].disconnect();
-        shape->modified_connect[i].~connection();
+        shape->_release_connect[i].disconnect();
+        shape->_release_connect[i].~connection();
+        shape->_modified_connect[i].disconnect();
+        shape->_modified_connect[i].~connection();
     }
 
     if (((GObjectClass *) (SPShapeClass::parent_class))->finalize) {
@@ -180,20 +180,20 @@ void SPShape::sp_shape_release(SPObject *object)
     shape = (SPShape *) object;
 
     for (i = 0; i < SP_MARKER_LOC_QTY; i++) {
-        if (shape->marker[i]) {
+        if (shape->_marker[i]) {
             for (v = item->display; v != NULL; v = v->next) {
-              sp_marker_hide ((SPMarker *) shape->marker[i], v->arenaitem->key() + i);
+              sp_marker_hide ((SPMarker *) shape->_marker[i], v->arenaitem->key() + i);
             }
-            shape->release_connect[i].disconnect();
-            shape->modified_connect[i].disconnect();
-            shape->marker[i] = sp_object_hunref (shape->marker[i], object);
+            shape->_release_connect[i].disconnect();
+            shape->_modified_connect[i].disconnect();
+            shape->_marker[i] = sp_object_hunref (shape->_marker[i], object);
         }
     }
-    if (shape->curve) {
-        shape->curve = shape->curve->unref();
+    if (shape->_curve) {
+        shape->_curve = shape->_curve->unref();
     }
-    if (shape->curve_before_lpe) {
-        shape->curve_before_lpe = shape->curve_before_lpe->unref();
+    if (shape->_curve_before_lpe) {
+        shape->_curve_before_lpe = shape->_curve_before_lpe->unref();
     }
 
     if (((SPObjectClass *) SPShapeClass::parent_class)->release) {
@@ -259,7 +259,7 @@ void SPShape::sp_shape_update(SPObject *object, SPCtx *ctx, unsigned int flags)
         for (SPItemView *v = shape->display; v != NULL; v = v->next) {
             Inkscape::DrawingShape *sh = dynamic_cast<Inkscape::DrawingShape *>(v->arenaitem);
             if (flags & SP_OBJECT_MODIFIED_FLAG) {
-                sh->setPath(shape->curve);
+                sh->setPath(shape->_curve);
             }
         }
     }
@@ -271,8 +271,8 @@ void SPShape::sp_shape_update(SPObject *object, SPCtx *ctx, unsigned int flags)
                 v->arenaitem->setKey(SPItem::display_key_new (SP_MARKER_LOC_QTY));
             }
             for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
-                if (shape->marker[i]) {
-                    sp_marker_show_dimension ((SPMarker *) shape->marker[i],
+                if (shape->_marker[i]) {
+                    sp_marker_show_dimension ((SPMarker *) shape->_marker[i],
                                               v->arenaitem->key() + i,
                                               shape->numberOfMarkers (i));
                 }
@@ -379,8 +379,8 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem 
     // position arguments to sp_marker_show_instance, basically counts the amount of markers.
     int counter[4] = {0};
 
-    if (!shape->curve) return;
-    Geom::PathVector const & pathv = shape->curve->get_pathvector();
+    if (!shape->_curve) return;
+    Geom::PathVector const & pathv = shape->_curve->get_pathvector();
     if (pathv.empty()) return;
 
     // the first vertex should get a start marker, the last an end marker, and all the others a mid marker
@@ -390,8 +390,8 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem 
     {
         Geom::Affine const m (sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
         for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START
-            if ( shape->marker[i] ) {
-                sp_marker_show_instance ((SPMarker* ) shape->marker[i], ai,
+            if ( shape->_marker[i] ) {
+                sp_marker_show_instance ((SPMarker* ) shape->_marker[i], ai,
                                          ai->key() + i, counter[i], m,
                                          style->stroke_width.computed);
                  counter[i]++;
@@ -400,7 +400,7 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem 
     }
 
     // MID marker
-    if (shape->marker[SP_MARKER_LOC_MID] || shape->marker[SP_MARKER_LOC]) {
+    if (shape->_marker[SP_MARKER_LOC_MID] || shape->_marker[SP_MARKER_LOC]) {
         for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
             // START position
             if ( path_it != pathv.begin() 
@@ -408,8 +408,8 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem 
             {
                 Geom::Affine const m (sp_shape_marker_get_transform_at_start(path_it->front()));
                 for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
-                    if ( shape->marker[i] ) {
-                        sp_marker_show_instance ((SPMarker* ) shape->marker[i], ai,
+                    if ( shape->_marker[i] ) {
+                        sp_marker_show_instance ((SPMarker* ) shape->_marker[i], ai,
                                                  ai->key() + i, counter[i], m,
                                                  style->stroke_width.computed);
                          counter[i]++;
@@ -428,8 +428,8 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem 
                      */
                     Geom::Affine const m (sp_shape_marker_get_transform(*curve_it1, *curve_it2));
                     for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
-                        if (shape->marker[i]) {
-                            sp_marker_show_instance ((SPMarker* ) shape->marker[i], ai,
+                        if (shape->_marker[i]) {
+                            sp_marker_show_instance ((SPMarker* ) shape->_marker[i], ai,
                                                      ai->key() + i, counter[i], m,
                                                      style->stroke_width.computed);
                             counter[i]++;
@@ -445,8 +445,8 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem 
                 Geom::Curve const &lastcurve = path_it->back_default();
                 Geom::Affine const m = sp_shape_marker_get_transform_at_end(lastcurve);
                 for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
-                    if (shape->marker[i]) {
-                        sp_marker_show_instance ((SPMarker* ) shape->marker[i], ai,
+                    if (shape->_marker[i]) {
+                        sp_marker_show_instance ((SPMarker* ) shape->_marker[i], ai,
                                                  ai->key() + i, counter[i], m,
                                                  style->stroke_width.computed);
                         counter[i]++;
@@ -457,7 +457,7 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem 
     }
 
     // END marker
-    if ( shape->marker[SP_MARKER_LOC_END] || shape->marker[SP_MARKER_LOC] ) {
+    if ( shape->_marker[SP_MARKER_LOC_END] || shape->_marker[SP_MARKER_LOC] ) {
         /* Get reference to last curve in the path.
          * For moveto-only path, this returns the "closing line segment". */
         Geom::Path const &path_last = pathv.back();
@@ -469,8 +469,8 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem 
         Geom::Affine const m = sp_shape_marker_get_transform_at_end(lastcurve);
 
         for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
-            if (shape->marker[i]) {
-                sp_marker_show_instance ((SPMarker* ) shape->marker[i], ai,
+            if (shape->_marker[i]) {
+                sp_marker_show_instance ((SPMarker* ) shape->_marker[i], ai,
                                          ai->key() + i, counter[i], m,
                                          style->stroke_width.computed);
                 counter[i]++;
@@ -507,8 +507,8 @@ Geom::OptRect SPShape::sp_shape_bbox(SPItem const *item, Geom::Affine const &tra
     SPShape const *shape = SP_SHAPE (item);
     Geom::OptRect bbox;
 
-    if (!shape->curve) return bbox;
-    bbox = bounds_exact_transformed(shape->curve->get_pathvector(), transform);
+    if (!shape->_curve) return bbox;
+    bbox = bounds_exact_transformed(shape->_curve->get_pathvector(), transform);
     if (!bbox) return bbox;
 
     if (bboxtype == SPItem::VISUAL_BBOX) {
@@ -522,13 +522,13 @@ Geom::OptRect SPShape::sp_shape_bbox(SPItem const *item, Geom::Affine const &tra
             }
         }
         // Union with bboxes of the markers, if any
-        if ( shape->hasMarkers()  && !shape->curve->get_pathvector().empty() ) {
+        if ( shape->hasMarkers()  && !shape->_curve->get_pathvector().empty() ) {
             /** \todo make code prettier! */
-            Geom::PathVector const & pathv = shape->curve->get_pathvector();
+            Geom::PathVector const & pathv = shape->_curve->get_pathvector();
             // START marker
             for (unsigned i = 0; i < 2; i++) { // SP_MARKER_LOC and SP_MARKER_LOC_START
-                if ( shape->marker[i] ) {
-                    SPMarker* marker = SP_MARKER (shape->marker[i]);
+                if ( shape->_marker[i] ) {
+                    SPMarker* marker = SP_MARKER (shape->_marker[i]);
                     SPItem* marker_item = sp_item_first_item_child( marker );
 
                     if (marker_item) {
@@ -551,8 +551,8 @@ Geom::OptRect SPShape::sp_shape_bbox(SPItem const *item, Geom::Affine const &tra
             }
             // MID marker
             for (unsigned i = 0; i < 3; i += 2) { // SP_MARKER_LOC and SP_MARKER_LOC_MID
-                SPMarker* marker = SP_MARKER (shape->marker[i]);
-                if ( !shape->marker[i] ) continue;
+                if ( !shape->_marker[i] ) continue;
+                SPMarker* marker = SP_MARKER (shape->_marker[i]);
                 SPItem* marker_item = sp_item_first_item_child( marker );
                 if ( !marker_item ) continue;
 
@@ -582,7 +582,7 @@ Geom::OptRect SPShape::sp_shape_bbox(SPItem const *item, Geom::Affine const &tra
                              * Loop to end_default (so including closing segment), because when a path is closed,
                              * there should be a midpoint marker between last segment and closing straight line segment */
 
-                            SPMarker* marker = SP_MARKER (shape->marker[i]);
+                            SPMarker* marker = SP_MARKER (shape->_marker[i]);
                             SPItem* marker_item = sp_item_first_item_child( marker );
 
                             if (marker_item) {
@@ -620,8 +620,8 @@ Geom::OptRect SPShape::sp_shape_bbox(SPItem const *item, Geom::Affine const &tra
             }
             // END marker
             for (unsigned i = 0; i < 4; i += 3) { // SP_MARKER_LOC and SP_MARKER_LOC_END
-                if ( shape->marker[i] ) {
-                    SPMarker* marker = SP_MARKER (shape->marker[i]);
+                if ( shape->_marker[i] ) {
+                    SPMarker* marker = SP_MARKER (shape->_marker[i]);
                     SPItem* marker_item = sp_item_first_item_child( marker );
 
                     if (marker_item) {
@@ -687,9 +687,9 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 
     SPShape *shape = SP_SHAPE(item);
 
-    if (!shape->curve) return;
+    if (!shape->_curve) return;
 
-    Geom::PathVector const & pathv = shape->curve->get_pathvector();
+    Geom::PathVector const & pathv = shape->_curve->get_pathvector();
     if (pathv.empty()) return;
 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -720,21 +720,21 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
     /** \todo make code prettier */
     // START marker
     for (int i = 0; i < 2; i++) {  // SP_MARKER_LOC and SP_MARKER_LOC_START    
-        if ( shape->marker[i] ) {
+        if ( shape->_marker[i] ) {
             Geom::Affine tr(sp_shape_marker_get_transform_at_start(pathv.begin()->front()));
-            sp_shape_print_invoke_marker_printing(shape->marker[i], tr, style, ctx);
+            sp_shape_print_invoke_marker_printing(shape->_marker[i], tr, style, ctx);
         }
     }
     // MID marker
     for (int i = 0; i < 3; i += 2) {  // SP_MARKER_LOC and SP_MARKER_LOC_MID
-        if (shape->marker[i]) {
+        if (shape->_marker[i]) {
             for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
                 // START position
                 if ( path_it != pathv.begin() 
                      && ! ((path_it == (pathv.end()-1)) && (path_it->size_default() == 0)) ) // if this is the last path and it is a moveto-only, there is no mid marker there
                 {
                     Geom::Affine tr(sp_shape_marker_get_transform_at_start(path_it->front()));
-                    sp_shape_print_invoke_marker_printing(shape->marker[i], tr, style, ctx);
+                    sp_shape_print_invoke_marker_printing(shape->_marker[i], tr, style, ctx);
                 }
                 // MID position
                 if ( path_it->size_default() > 1) {
@@ -747,7 +747,7 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
                          * there should be a midpoint marker between last segment and closing straight line segment */
                         Geom::Affine tr(sp_shape_marker_get_transform(*curve_it1, *curve_it2));
 
-                        sp_shape_print_invoke_marker_printing(shape->marker[i], tr, style, ctx);
+                        sp_shape_print_invoke_marker_printing(shape->_marker[i], tr, style, ctx);
 
                         ++curve_it1;
                         ++curve_it2;
@@ -756,13 +756,13 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
                 if ( path_it != (pathv.end()-1) && !path_it->empty()) {
                     Geom::Curve const &lastcurve = path_it->back_default();
                     Geom::Affine tr = sp_shape_marker_get_transform_at_end(lastcurve);
-                    sp_shape_print_invoke_marker_printing(shape->marker[i], tr, style, ctx);
+                    sp_shape_print_invoke_marker_printing(shape->_marker[i], tr, style, ctx);
                 }
             }
         }
     }
     // END marker
-    if ( shape->marker[SP_MARKER_LOC_END] || shape->marker[SP_MARKER_LOC]) {
+    if ( shape->_marker[SP_MARKER_LOC_END] || shape->_marker[SP_MARKER_LOC]) {
         /* Get reference to last curve in the path.
          * For moveto-only path, this returns the "closing line segment". */
         Geom::Path const &path_last = pathv.back();
@@ -775,8 +775,8 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
         Geom::Affine tr = sp_shape_marker_get_transform_at_end(lastcurve);
 
         for (int i = 0; i < 4; i += 3) {  // SP_MARKER_LOC and SP_MARKER_LOC_END
-            if (shape->marker[i]) {
-                sp_shape_print_invoke_marker_printing(shape->marker[i], tr, style, ctx);
+            if (shape->_marker[i]) {
+                sp_shape_print_invoke_marker_printing(shape->_marker[i], tr, style, ctx);
             }
         }
     }
@@ -799,7 +799,7 @@ Inkscape::DrawingItem * SPShape::sp_shape_show(SPItem *item, Inkscape::Drawing &
 
     Inkscape::DrawingShape *s = new Inkscape::DrawingShape(drawing);
     s->setStyle(object->style);
-    s->setPath(shape->curve);
+    s->setPath(shape->_curve);
 
     /* This stanza checks that an object's marker style agrees with
      * the marker objects it has allocated.  sp_shape_set_marker ensures
@@ -818,8 +818,8 @@ Inkscape::DrawingItem * SPShape::sp_shape_show(SPItem *item, Inkscape::Drawing &
         }
 
         for (int i = 0; i < SP_MARKER_LOC_QTY; i++) {
-            if (shape->marker[i]) {
-                sp_marker_show_dimension ((SPMarker *) shape->marker[i],
+            if (shape->_marker[i]) {
+                sp_marker_show_dimension ((SPMarker *) shape->_marker[i],
                                           s->key() + i,
                                           shape->numberOfMarkers (i));
             }
@@ -844,10 +844,10 @@ void SPShape::sp_shape_hide(SPItem *item, unsigned int key)
     shape = (SPShape *) item;
 
     for (i=0; i<SP_MARKER_LOC_QTY; i++) {
-      if (shape->marker[i]) {
+      if (shape->_marker[i]) {
         for (v = item->display; v != NULL; v = v->next) {
                 if (key == v->key) {
-          sp_marker_hide ((SPMarker *) shape->marker[i],
+          sp_marker_hide ((SPMarker *) shape->_marker[i],
                                     v->arenaitem->key() + i);
                 }
         }
@@ -870,11 +870,11 @@ int SPShape::hasMarkers() const
        specified, then all three should appear. */
 
     return (
-        this->curve &&
-        (this->marker[SP_MARKER_LOC] ||
-         this->marker[SP_MARKER_LOC_START] ||
-         this->marker[SP_MARKER_LOC_MID] ||
-         this->marker[SP_MARKER_LOC_END])
+        this->_curve &&
+        (this->_marker[SP_MARKER_LOC] ||
+         this->_marker[SP_MARKER_LOC_START] ||
+         this->_marker[SP_MARKER_LOC_MID] ||
+         this->_marker[SP_MARKER_LOC_END])
         );
 }
 
@@ -886,7 +886,7 @@ int SPShape::hasMarkers() const
 */
 int SPShape::numberOfMarkers(int type)
 {
-    Geom::PathVector const & pathv = this->curve->get_pathvector();
+    Geom::PathVector const & pathv = this->_curve->get_pathvector();
     if (pathv.size() == 0) {
         return 0;
     }
@@ -894,7 +894,7 @@ int SPShape::numberOfMarkers(int type)
     switch(type) {
         case SP_MARKER_LOC:
         {
-            if ( this->marker[SP_MARKER_LOC] ) {
+            if ( this->_marker[SP_MARKER_LOC] ) {
                 guint n = 0;
                 for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
                     n += path_it->size_default() + 1;
@@ -906,11 +906,11 @@ int SPShape::numberOfMarkers(int type)
         }
         case SP_MARKER_LOC_START:
             // there is only a start marker on the first path of a pathvector
-            return this->marker[SP_MARKER_LOC_START] ? 1 : 0;
+            return this->_marker[SP_MARKER_LOC_START] ? 1 : 0;
 
         case SP_MARKER_LOC_MID:
         {
-            if ( this->marker[SP_MARKER_LOC_MID] ) {
+            if ( this->_marker[SP_MARKER_LOC_MID] ) {
                 guint n = 0;
                 for(Geom::PathVector::const_iterator path_it = pathv.begin(); path_it != pathv.end(); ++path_it) {
                     n += path_it->size_default() + 1;
@@ -924,7 +924,7 @@ int SPShape::numberOfMarkers(int type)
         case SP_MARKER_LOC_END:
         {
             // there is only an end marker on the last path of a pathvector
-            return this->marker[SP_MARKER_LOC_END] ? 1 : 0;
+            return this->_marker[SP_MARKER_LOC_END] ? 1 : 0;
         }
 
         default:
@@ -946,16 +946,16 @@ sp_shape_marker_release (SPObject *marker, SPShape *shape)
     item = (SPItem *) shape;
 
     for (i = 0; i < SP_MARKER_LOC_QTY; i++) {
-        if (marker == shape->marker[i]) {
+        if (marker == shape->_marker[i]) {
             SPItemView *v;
             /* Hide marker */
             for (v = item->display; v != NULL; v = v->next) {
-              sp_marker_hide ((SPMarker *) (shape->marker[i]), v->arenaitem->key() + i);
+              sp_marker_hide ((SPMarker *) (shape->_marker[i]), v->arenaitem->key() + i);
             }
             /* Detach marker */
-            shape->release_connect[i].disconnect();
-            shape->modified_connect[i].disconnect();
-            shape->marker[i] = sp_object_hunref (shape->marker[i], item);
+            shape->_release_connect[i].disconnect();
+            shape->_modified_connect[i].disconnect();
+            shape->_marker[i] = sp_object_hunref (shape->_marker[i], item);
         }
     }
 }
@@ -988,27 +988,27 @@ sp_shape_set_marker (SPObject *object, unsigned int key, const gchar *value)
     }
 
     SPObject *mrk = sp_css_uri_reference_resolve(object->document, value);
-    if (mrk != shape->marker[key]) {
-        if (shape->marker[key]) {
+    if (mrk != shape->_marker[key]) {
+        if (shape->_marker[key]) {
             SPItemView *v;
 
             /* Detach marker */
-            shape->release_connect[key].disconnect();
-            shape->modified_connect[key].disconnect();
+            shape->_release_connect[key].disconnect();
+            shape->_modified_connect[key].disconnect();
 
             /* Hide marker */
             for (v = item->display; v != NULL; v = v->next) {
-                sp_marker_hide ((SPMarker *) (shape->marker[key]),
+                sp_marker_hide ((SPMarker *) (shape->_marker[key]),
                                 v->arenaitem->key() + key);
             }
 
             /* Unref marker */
-            shape->marker[key] = sp_object_hunref (shape->marker[key], object);
+            shape->_marker[key] = sp_object_hunref (shape->_marker[key], object);
         }
         if (SP_IS_MARKER (mrk)) {
-            shape->marker[key] = sp_object_href (mrk, object);
-            shape->release_connect[key] = mrk->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_shape_marker_release), shape));
-            shape->modified_connect[key] = mrk->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_shape_marker_modified), shape));
+            shape->_marker[key] = sp_object_href (mrk, object);
+            shape->_release_connect[key] = mrk->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_shape_marker_release), shape));
+            shape->_modified_connect[key] = mrk->connectModified(sigc::bind<2>(sigc::ptr_fun(&sp_shape_marker_modified), shape));
         }
     }
 }
@@ -1033,32 +1033,32 @@ void SPShape::setShape()
  * Any existing curve in the shape will be unreferenced first.
  * This routine also triggers a request to update the display.
  */
-void SPShape::setCurve(SPCurve *curve, unsigned int owner)
+void SPShape::setCurve(SPCurve *new_curve, unsigned int owner)
 {
-    if (this->curve) {
-        this->curve = this->curve->unref();
+    if (_curve) {
+        _curve = _curve->unref();
     }
-    if (curve) {
+    if (new_curve) {
         if (owner) {
-            this->curve = curve->ref();
+            _curve = new_curve->ref();
         } else {
-            this->curve = curve->copy();
+            _curve = new_curve->copy();
         }
     }
     this->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /**
- * Sets curve_before_lpe to refer to the curve.
+ * Sets _curve_before_lpe to refer to the curve.
  */
 void
-SPShape::setCurveBeforeLPE (SPCurve *curve)
+SPShape::setCurveBeforeLPE (SPCurve *new_curve)
 {
-    if (this->curve_before_lpe) {
-        this->curve_before_lpe = this->curve_before_lpe->unref();
+    if (_curve_before_lpe) {
+        _curve_before_lpe = _curve_before_lpe->unref();
     }
-    if (curve) {
-        this->curve_before_lpe = curve->ref();
+    if (new_curve) {
+        _curve_before_lpe = new_curve->ref();
     }
 }
 
@@ -1067,8 +1067,8 @@ SPShape::setCurveBeforeLPE (SPCurve *curve)
  */
 SPCurve * SPShape::getCurve() const
 {
-    if (this->curve) {
-        return this->curve->copy();
+    if (_curve) {
+        return _curve->copy();
     }
     return NULL;
 }
@@ -1078,13 +1078,13 @@ SPCurve * SPShape::getCurve() const
  */
 SPCurve * SPShape::getCurveBeforeLPE() const
 {
-    if (sp_lpe_item_has_path_effect(SP_LPE_ITEM(this))) {
-        if (this->curve_before_lpe) {
-            return this->curve_before_lpe->copy();
+    if (sp_lpe_item_has_path_effect(this)) {
+        if (_curve_before_lpe) {
+            return this->_curve_before_lpe->copy();
         }
     } else {
-        if (this->curve) {
-            return this->curve->copy();
+        if (_curve) {
+            return _curve->copy();
         }
     }
     return NULL;
@@ -1093,16 +1093,16 @@ SPCurve * SPShape::getCurveBeforeLPE() const
 /**
  * Same as sp_shape_set_curve but without updating the display
  */
-void SPShape::setCurveInsync(SPCurve *curve, unsigned int owner)
+void SPShape::setCurveInsync(SPCurve *new_curve, unsigned int owner)
 {
-    if (this->curve) {
-        this->curve = this->curve->unref();
+    if (_curve) {
+        _curve = _curve->unref();
     }
-    if (curve) {
+    if (new_curve) {
         if (owner) {
-            this->curve = curve->ref();
+            _curve = new_curve->ref();
         } else {
-            this->curve = curve->copy();
+            _curve = new_curve->copy();
         }
     }
 }
@@ -1116,11 +1116,11 @@ void SPShape::sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::Snap
     g_assert(SP_IS_SHAPE(item));
 
     SPShape const *shape = SP_SHAPE(item);
-    if (shape->curve == NULL) {
+    if (shape->_curve == NULL) {
         return;
     }
 
-    Geom::PathVector const &pathv = shape->curve->get_pathvector();
+    Geom::PathVector const &pathv = shape->_curve->get_pathvector();
     if (pathv.empty())
         return;
 

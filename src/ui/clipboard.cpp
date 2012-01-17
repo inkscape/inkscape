@@ -674,8 +674,8 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
     if (SP_IS_SHAPE(item)) {
         SPShape *shape = SP_SHAPE (item);
         for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
-            if (shape->marker[i]) {
-                _copyNode(shape->marker[i]->getRepr(), _doc, _defs);
+            if (shape->_marker[i]) {
+                _copyNode(shape->_marker[i]->getRepr(), _doc, _defs);
             }
         }
     }

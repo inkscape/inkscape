@@ -159,14 +159,12 @@ sp_spiral_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::X
      // make sure the curve is rebuilt with all up-to-date parameters
      sp_spiral_set_shape(spiral);
 
-    //Duplicate the path
-    SPCurve *curve = spiral->curve;
     //Nulls might be possible if this called iteratively
-    if ( !curve ) {
+    if ( !spiral->_curve ) {
             //g_warning("sp_spiral_write(): No path to copy\n");
             return NULL;
     }
-    char *d = sp_svg_write_path ( curve->get_pathvector() );
+    char *d = sp_svg_write_path ( spiral->_curve->get_pathvector() );
     repr->setAttribute("d", d);
     g_free (d);
 
@@ -290,8 +288,8 @@ static void sp_spiral_update_patheffect(SPLPEItem *lpeitem, bool write)
 
     if (write) {
         Inkscape::XML::Node *repr = shape->getRepr();
-        if ( shape->curve != NULL ) {
-            gchar *str = sp_svg_write_path(shape->curve->get_pathvector());
+        if ( shape->_curve != NULL ) {
+            gchar *str = sp_svg_write_path(shape->_curve->get_pathvector());
             repr->setAttribute("d", str);
             g_free(str);
         } else {

@@ -2,16 +2,15 @@
 #define SEEN_SP_SHAPE_H
 
 /*
- * Base class for shapes, including <path> element
- *
- * Author:
+ * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Abhishek Sharma
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Johan Engelen
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
- * Copyright (C) 2008 Johan Engelen
+ * Copyright (C) 1999-2012 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -32,21 +31,13 @@
 #define SP_SHAPE_WRITE_PATH (1 << 2)
 
 class SPDesktop;
+namespace Inkscape { class DrawingItem; }
 
-namespace Inkscape {
-
-class DrawingItem;
-
-} // namespace Inkscape
-
+/**
+ * Base class for shapes, including <path> element
+ */
 class SPShape : public SPLPEItem {
 public:
-    SPCurve *curve;
-
-    SPObject *marker[SP_MARKER_LOC_QTY];
-    sigc::connection release_connect [SP_MARKER_LOC_QTY];
-    sigc::connection modified_connect [SP_MARKER_LOC_QTY];
-
     static GType getType (void);
     void setShape ();
     SPCurve * getCurve () const;
@@ -58,7 +49,13 @@ public:
     int numberOfMarkers (int type);
 
 public: // temporarily public, until SPPath is properly classed, etc.
-    SPCurve *curve_before_lpe;
+    SPCurve *_curve_before_lpe;
+    SPCurve *_curve;
+
+public:
+    SPObject *_marker[SP_MARKER_LOC_QTY];
+    sigc::connection _release_connect [SP_MARKER_LOC_QTY];
+    sigc::connection _modified_connect [SP_MARKER_LOC_QTY];
 
 private:
     static void sp_shape_init (SPShape *shape);

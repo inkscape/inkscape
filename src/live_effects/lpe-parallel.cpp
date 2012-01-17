@@ -65,7 +65,7 @@ LPEParallel::~LPEParallel()
 void
 LPEParallel::doOnApply (SPLPEItem *lpeitem)
 {
-    SPCurve *curve = SP_SHAPE(lpeitem)->curve;
+    SPCurve const *curve = SP_SHAPE(lpeitem)->_curve;
 
     A = *(curve->first_point());
     B = *(curve->last_point());

@@ -74,7 +74,7 @@ LPECopyRotate::~LPECopyRotate()
 void
 LPECopyRotate::doOnApply(SPLPEItem *lpeitem)
 {
-    SPCurve *curve = SP_SHAPE(lpeitem)->curve;
+    SPCurve *curve = SP_SHAPE(lpeitem)->_curve;
 
     A = *(curve->first_point());
     B = *(curve->last_point());

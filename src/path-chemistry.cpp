@@ -379,7 +379,7 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
             continue;
         }
 
-        if (SP_IS_PATH(item) && !SP_SHAPE(item)->curve_before_lpe) {
+        if (SP_IS_PATH(item) && !SP_SHAPE(item)->_curve_before_lpe) {
             continue; // already a path, and no path effect
         }
 

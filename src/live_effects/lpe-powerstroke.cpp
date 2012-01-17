@@ -99,7 +99,7 @@ void
 LPEPowerStroke::doOnApply(SPLPEItem *lpeitem)
 {
     std::vector<Geom::Point> points;
-    Geom::PathVector pathv = SP_SHAPE(lpeitem)->curve->get_pathvector();
+    Geom::PathVector pathv = SP_SHAPE(lpeitem)->_curve->get_pathvector();
     Geom::Path::size_type size = pathv.empty() ? 1 : pathv.front().size_open();
     points.push_back( Geom::Point(0,0) );
     points.push_back( Geom::Point(0.5*size,0) );
