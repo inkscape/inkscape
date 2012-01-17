@@ -334,10 +334,8 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item, SPCurve *c
             case 1:
             {
                 // "triangle in"
-                guint curve_length = curve->get_segment_count();
                 std::vector<Geom::Point> points(1);
                 points[0] = Geom::Point(0., SHAPE_HEIGHT/2);
-                // points[1] = Geom::Point((double)curve_length, 0.);
                 spdc_apply_powerstroke_shape(points, dc, item);
 
                 shape_applied = true;
@@ -348,7 +346,6 @@ spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item, SPCurve *c
                 // "triangle out"
                 guint curve_length = curve->get_segment_count();
                 std::vector<Geom::Point> points(1);
-                // points[0] = Geom::Point(0., 0.);
                 points[0] = Geom::Point((double)curve_length, SHAPE_HEIGHT/2);
                 spdc_apply_powerstroke_shape(points, dc, item);
 

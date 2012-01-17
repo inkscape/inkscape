@@ -488,9 +488,6 @@ SPCurve * SPPath::get_original_curve () const
  */
 SPCurve* SPPath::get_curve_for_edit () const
 {
-    if (!SP_IS_PATH(this)) {
-        return NULL;
-    }
     if (_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(this))) {
         return get_original_curve();
     } else {
@@ -504,9 +501,6 @@ SPCurve* SPPath::get_curve_for_edit () const
  */
 const SPCurve* SPPath::get_curve_reference () const
 {
-    if (!SP_IS_PATH(this)) {
-        return NULL;
-    }
     if (_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(this))) {
         return _curve_before_lpe;
     } else {
@@ -520,9 +514,6 @@ const SPCurve* SPPath::get_curve_reference () const
  */
 SPCurve* SPPath::get_curve ()
 {
-    if (!SP_IS_PATH(this)) {
-        return NULL;
-    }
     if (_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(this))) {
         return _curve_before_lpe;
     } else {
