@@ -24,7 +24,8 @@ public:
                 Effect* effect);
     virtual ~OriginalPathParam();
 
-    bool linksToPath() { return (href != NULL); }
+    bool linksToPath() const { return (href != NULL); }
+    SPItem * getObject() const { return ref.getObject(); }
 
     virtual Gtk::Widget * param_newWidget();
     /** Disable the canvas indicators of parent class by overriding this method */

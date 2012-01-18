@@ -91,6 +91,10 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "path-chemistry.h"
 #include "ui/tool/control-point-selection.h"
 #include "ui/tool/multi-path-manipulator.h"
+#include "sp-lpe-item.h"
+#include "live_effects/effect.h"
+#include "live_effects/effect-enum.h"
+#include "live_effects/parameter/originalpath.h"
 
 #include "enums.h"
 #include "sp-item-group.h"
@@ -2226,7 +2230,17 @@ sp_select_clone_original(SPDesktop *desktop)
         original = sp_textpath_get_path_item(SP_TEXTPATH(item->firstChild()));
     } else if (SP_IS_FLOWTEXT(item)) {
         original = SP_FLOWTEXT(item)->get_frame(NULL); // first frame only
-    } else { // it's an object that we don't know what to do with
+    } else if (SP_IS_LPE_ITEM(item)) {
+        // check if the applied LPE is Clone original, if so, go to the refered path
+        Inkscape::LivePathEffect::Effect* lpe = sp_lpe_item_has_path_effect_of_type(SP_LPE_ITEM(item), Inkscape::LivePathEffect::CLONE_ORIGINAL);
+        if (lpe) {
+            Inkscape::LivePathEffect::Parameter *lpeparam = lpe->getParameter("linkedpath");
+            if (Inkscape::LivePathEffect::OriginalPathParam *pathparam = dynamic_cast<Inkscape::LivePathEffect::OriginalPathParam *>(lpeparam)) {
+                original = pathparam->getObject();
+            }
+        }
+    }
+    if (original == NULL) { // it's an object that we don't know what to do with
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, error);
         return;
     }
