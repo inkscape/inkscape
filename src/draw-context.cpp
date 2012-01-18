@@ -299,7 +299,7 @@ spdc_apply_powerstroke_shape(const std::vector<Geom::Point> & points, SPDrawCont
     lpe->getRepr()->setAttribute("start_linecap_type", "zerowidth");
     lpe->getRepr()->setAttribute("end_linecap_type", "zerowidth");
     lpe->getRepr()->setAttribute("cusp_linecap_type", "round");
-    lpe->getRepr()->setAttribute("sort_points", "false");
+    lpe->getRepr()->setAttribute("sort_points", "true");
     lpe->getRepr()->setAttribute("interpolator_type", "CubicBezierJohan");
     lpe->getRepr()->setAttribute("interpolator_beta", "0.2");
 }
