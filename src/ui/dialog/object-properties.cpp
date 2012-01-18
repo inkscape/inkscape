@@ -27,9 +27,6 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
-/**
- * Create a new static instance of the object properties dialog.
- */
 ObjectProperties::ObjectProperties (void) :
     UI::Widget::Panel ("", "/dialogs/object/", SP_VERB_DIALOG_ITEM),
     blocked (false),

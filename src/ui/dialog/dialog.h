@@ -4,6 +4,7 @@
 /* Authors:
  *   Bryce W. Harrington <bryce@bryceharrington.org>
  *   Gustav Broberg <broberg@kth.se>
+ *   Kris De Gussem <Kris.DeGussem@gmail.com>
  *
  * Copyright (C) 2004--2007 Authors
  *
@@ -52,6 +53,7 @@ void sp_dialog_shutdown(GtkObject *object, gpointer dlgPtr);
  *
  * @see UI::Widget::Panel panel class from which the dialogs are actually derived from.
  * @see UI::Dialog::DialogManager manages the dialogs within inkscape.
+ * @see UI::Dialog::PanelDialog which links Panel and Dialog together in a dockable and floatable dialog.
  */
 class Dialog {
 

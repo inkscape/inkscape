@@ -2,9 +2,9 @@
  * @brief A panel holding dialog
  */
 /* Authors:
- *   Gustav Broberg <broberg@kth.se>
+ *   C 2007 Gustav Broberg <broberg@kth.se>
+ *   C 2012 Kris De Gussem <Kris.DeGussem@gmail.com>
  *
- * Copyright (C) 2007 Authors
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
@@ -28,6 +28,12 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
+/**
+ * Auxiliary class for the link between UI::Dialog::PanelDialog and UI::Dialog::Dialog.
+ *
+ * PanelDialog handles signals emitted when a desktop changes, either changing to a
+ * different desktop or a new document.
+ */
 class PanelDialogBase {
 public:
     PanelDialogBase(UI::Widget::Panel &panel, char const */*prefs_path*/, int const /*verb_num*/,
@@ -58,10 +64,25 @@ protected:
     sigc::connection _document_replaced_connection;
 };
 
+/**
+ * Bridges UI::Widget::Panel and UI::Dialog::Dialog.
+ *
+ * Where Dialog handles window behaviour, such as closing, position, etc, and where
+ * Panel is the actual container for dialog child widgets (and from where the dialog
+ * content is made), PanelDialog links these two classes together to create a
+ * dockable and floatable dialog. The link with Dialog is made via PanelDialogBase.
+ */
 template <typename Behavior>
 class PanelDialog : public PanelDialogBase, public Inkscape::UI::Dialog::Dialog {
 
 public:
+    /**
+     * Constructor.
+     * 
+     * @param contents panel with the actual dialog content.
+     * @param prefs_path characteristic path for loading/saving dialog position.
+     * @param verb_num the dialog verb.
+     */
     PanelDialog(UI::Widget::Panel &contents, char const *prefs_path, int const verb_num,
                 Glib::ustring const &apply_label);
 
@@ -75,7 +96,7 @@ public:
 private:
     inline void _presentDialog();
 
-    PanelDialog();  // no constructor without params
+    PanelDialog();
     PanelDialog(PanelDialog<Behavior> const &d);                      // no copy
     PanelDialog<Behavior>& operator=(PanelDialog<Behavior> const &d); // no assign
 };
@@ -97,7 +118,7 @@ public:
     inline virtual void present();
 
 private:
-    PanelDialog();  // no constructor without params
+    PanelDialog();
     PanelDialog(PanelDialog<Behavior::FloatingBehavior> const &d); // no copy
     PanelDialog<Behavior::FloatingBehavior>&
     operator=(PanelDialog<Behavior::FloatingBehavior> const &d);   // no assign
@@ -105,22 +126,19 @@ private:
 
 
 
-void
-PanelDialogBase::_propagateDocumentReplaced(SPDesktop *desktop, SPDocument *document)
+void PanelDialogBase::_propagateDocumentReplaced(SPDesktop *desktop, SPDocument *document)
 {
     _panel.signalDocumentReplaced().emit(desktop, document);
 }
 
-void
-PanelDialogBase::_propagateDesktopActivated(Inkscape::Application *application, SPDesktop *desktop)
+void PanelDialogBase::_propagateDesktopActivated(Inkscape::Application *application, SPDesktop *desktop)
 {
     _document_replaced_connection =
         desktop->connectDocumentReplaced(sigc::mem_fun(*this, &PanelDialogBase::_propagateDocumentReplaced));
     _panel.signalActivateDesktop().emit(application, desktop);
 }
 
-void
-PanelDialogBase::_propagateDesktopDeactivated(Inkscape::Application *application, SPDesktop *desktop)
+void PanelDialogBase::_propagateDesktopDeactivated(Inkscape::Application *application, SPDesktop *desktop)
 {
     _document_replaced_connection.disconnect();
     _panel.signalDeactiveDesktop().emit(application, desktop);
@@ -160,23 +178,20 @@ PanelDialog<B>::PanelDialog(Widget::Panel &panel, char const *prefs_path, int co
 }
 
 template <typename B> template <typename P>
-PanelDialog<B> *
-PanelDialog<B>::create()
+PanelDialog<B> *PanelDialog<B>::create()
 {
     UI::Widget::Panel &panel = P::getInstance();
     return new PanelDialog<B>(panel, panel.getPrefsPath(), panel.getVerb(), panel.getApplyLabel());
 }
 
 template <typename B>
-void
-PanelDialog<B>::present()
+void PanelDialog<B>::present()
 {
     _panel.present();
 }
 
 template <typename B>
-void
-PanelDialog<B>::_presentDialog()
+void PanelDialog<B>::_presentDialog()
 {
     Dialog::present();
 }
@@ -211,20 +226,18 @@ PanelDialog<Behavior::FloatingBehavior>::PanelDialog(UI::Widget::Panel &panel, c
     show_all_children();
 }
 
-void
-PanelDialog<Behavior::FloatingBehavior>::present()
+void PanelDialog<Behavior::FloatingBehavior>::present()
 {
     Dialog::present();
     _panel.present();
 }
 
 /**
- * Specialize factory method for panel dialogs with floating behavior in order to make them work as
+ * Specialized factory method for panel dialogs with floating behavior in order to make them work as
  * singletons, i.e. allow them track the current active desktop.
  */
 template <typename P>
-PanelDialog<Behavior::FloatingBehavior> *
-PanelDialog<Behavior::FloatingBehavior>::create()
+PanelDialog<Behavior::FloatingBehavior> *PanelDialog<Behavior::FloatingBehavior>::create()
 {
     UI::Widget::Panel &panel = P::getInstance();
     PanelDialog<Behavior::FloatingBehavior> *instance =
