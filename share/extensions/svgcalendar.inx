@@ -9,6 +9,7 @@
             <param name="year" type="int" min="0" max="3000" _gui-text="Year (4 digits):">2011</param>
             <param name="month" type="int" min="0" max="12" _gui-text="Month (0 for all):">0</param>
             <param name="fill-empty-day-boxes" type="boolean" _gui-text="Fill empty day boxes with next month's days">true</param>
+            <param name="show-week-number" type="boolean" _gui-text="Show week number">false</param>
             <param name="start-day" type="enum" _gui-text="Week start day">
                 <_item value="sun">Sunday</_item>
                 <_item value="mon">Monday</_item>
@@ -33,12 +34,14 @@
             <param name="color-day"      type="string" _gui-text="Day color:">#000000</param>
             <param name="color-weekend"  type="string" _gui-text="Weekend day color:">#787878</param>
             <param name="color-nmd"      type="string" _gui-text="Next month day color:">#B0B0B0</param>
+            <param name="color-weeknr"   type="string" _gui-text="Week number color:">#787878</param>
         </page>
         <page name="localization" _gui-text="Localization">
             <_param name="l10n-help" type="description">You may change the names for other languages:</_param>
             <_param name="month-names"  type="string" _gui-text="Month names:" xml:space="preserve">January February March April May June July August September October November December</_param>
             <_param name="day-names"  type="string" _gui-text="Day names:" xml:space="preserve">Sun Mon Tue Wed Thu Fri Sat</_param>
             <_param name="day-names-help" type="description">The day names list must start from Sunday.</_param>
+            <_param name="weeknr-name"  type="string" _gui-text="Week number column name:" xml:space="preserve">Wk</_param>
             <param name="encoding" _gui-text="Char Encoding:" type="enum">
                 <item value="arabic">arabic</item>
                 <item value="big5-tw">big5-tw</item>
