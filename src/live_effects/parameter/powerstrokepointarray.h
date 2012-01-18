@@ -28,8 +28,7 @@ public:
                 const Glib::ustring& tip,
                 const Glib::ustring& key,
                 Inkscape::UI::Widget::Registry* wr,
-                Effect* effect,
-                const gchar *handle_tip = NULL); // tip for automatically associated on-canvas handle
+                Effect* effect);
     virtual ~PowerStrokePointArrayParam();
 
     virtual Gtk::Widget * param_newWidget();
@@ -56,7 +55,6 @@ private:
     SPKnotShapeType knot_shape;
     SPKnotModeType knot_mode;
     guint32 knot_color;
-    gchar *handle_tip;
 
     Geom::Piecewise<Geom::D2<Geom::SBasis> > last_pwd2;
     Geom::Piecewise<Geom::D2<Geom::SBasis> > last_pwd2_normal;

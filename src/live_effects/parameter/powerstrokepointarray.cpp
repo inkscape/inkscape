@@ -26,19 +26,16 @@ namespace LivePathEffect {
 
 PowerStrokePointArrayParam::PowerStrokePointArrayParam( const Glib::ustring& label, const Glib::ustring& tip,
                         const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
-                        Effect* effect, const gchar *htip)
+                        Effect* effect)
     : ArrayParam<Geom::Point>(label, tip, key, wr, effect, 0)
 {
     knot_shape = SP_KNOT_SHAPE_DIAMOND;
     knot_mode  = SP_KNOT_MODE_XOR;
     knot_color = 0xff00ff00;
-    handle_tip = g_strdup(htip);
 }
 
 PowerStrokePointArrayParam::~PowerStrokePointArrayParam()
 {
-    if (handle_tip)
-        g_free(handle_tip);
 }
 
 Gtk::Widget *
@@ -209,7 +206,9 @@ PowerStrokePointArrayParam::addKnotHolderEntities(KnotHolder *knotholder, SPDesk
 {
     for (unsigned int i = 0; i < _vector.size(); ++i) {
         PowerStrokePointArrayParamKnotHolderEntity *e = new PowerStrokePointArrayParamKnotHolderEntity(this, i);
-        e->create(desktop, item, knotholder, handle_tip, knot_shape, knot_mode, knot_color);
+        e->create(  desktop, item, knotholder,
+                    _("<b>Stroke width control point</b>: drag to alter the stroke width. <b>Ctrl+click</b> adds a control point, <b>Ctrl+Alt+click</b> deletes it."),
+                    knot_shape, knot_mode, knot_color);
         knotholder->add(e);
     }
 }
