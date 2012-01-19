@@ -9,8 +9,6 @@ ink_common_sources +=	\
 	dialogs/export.h		\
 	dialogs/find.cpp		\
 	dialogs/find.h			\
-	dialogs/object-attributes.cpp	\
-	dialogs/object-attributes.h	\
 	dialogs/spellcheck.cpp		\
 	dialogs/spellcheck.h		\
 	dialogs/text-edit.cpp		\

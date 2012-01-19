@@ -45,6 +45,7 @@
 //#include "ui/dialog/print-colors-preview-dialog.h"
 #include "util/ege-appear-time-tracker.h"
 #include "preferences.h"
+#include "ui/dialog/object-attributes.h"
 #include "ui/dialog/object-properties.h"
 
 
@@ -108,7 +109,8 @@ DialogManager::DialogManager() {
         registerFactory("LivePathEffect",      &create<LivePathEffectEditor, FloatingBehavior>);
         registerFactory("Memory",              &create<Memory,               FloatingBehavior>);
         registerFactory("Messages",            &create<Messages,             FloatingBehavior>);
-        registerFactory("ObjectProperties",    &create<ObjectProperties,         FloatingBehavior>);
+        registerFactory("ObjectAttributes",    &create<ObjectAttributes,     FloatingBehavior>);
+        registerFactory("ObjectProperties",    &create<ObjectProperties,     FloatingBehavior>);
 //        registerFactory("PrintColorsPreviewDialog",      &create<PrintColorsPreviewDialog,       FloatingBehavior>);
         registerFactory("Script",              &create<ScriptDialog,         FloatingBehavior>);
 #ifdef ENABLE_SVG_FONTS
@@ -137,7 +139,8 @@ DialogManager::DialogManager() {
         registerFactory("LivePathEffect",      &create<LivePathEffectEditor, DockBehavior>);
         registerFactory("Memory",              &create<Memory,               DockBehavior>);
         registerFactory("Messages",            &create<Messages,             DockBehavior>);
-        registerFactory("ObjectProperties",    &create<ObjectProperties,         DockBehavior>);
+        registerFactory("ObjectAttributes",    &create<ObjectAttributes,     DockBehavior>);
+        registerFactory("ObjectProperties",    &create<ObjectProperties,     DockBehavior>);
 //        registerFactory("PrintColorsPreviewDialog",      &create<PrintColorsPreviewDialog,       DockBehavior>);
         registerFactory("Script",              &create<ScriptDialog,         DockBehavior>);
 #ifdef ENABLE_SVG_FONTS

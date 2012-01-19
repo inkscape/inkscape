@@ -42,24 +42,22 @@ void sp_object_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
 /* Implementation */
 
 #include <gtk/gtk.h>
-
 #include <glibmm/i18n.h>
 
-#include "sp-anchor.h"
-#include "sp-image.h"
-#include "sp-text.h"
-
-#include "desktop-handles.h"
 #include "selection.h"
 #include "selection-chemistry.h"
-#include "dialogs/object-attributes.h"
+#include "sp-anchor.h"
+#include "sp-clippath.h"
+#include "sp-image.h"
+#include "sp-mask.h"
+#include "sp-path.h"
+#include "sp-text.h"
+#include "desktop-handles.h"
 #include "dialogs/text-edit.h"
 #include "dialogs/spellcheck.h"
+#include "ui/dialog/object-attributes.h"
 #include "ui/dialog/object-properties.h"
 
-#include "sp-path.h"
-#include "sp-clippath.h"
-#include "sp-mask.h"
 
 
 static void sp_item_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu);
@@ -284,9 +282,8 @@ static void sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
     DocumentUndo::done(object->document, SP_VERB_NONE,
                        _("Create link"));
 
-    sp_object_attributes_dialog(object, "SPAnchor");
-
     sp_desktop_selection(desktop)->set(SP_ITEM(object));
+    desktop->_dlg_mgr->showDialog("ObjectAttributes");
 }
 
 /* SPGroup */
@@ -355,9 +352,11 @@ static void sp_anchor_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
 }
 
-static void sp_anchor_link_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
+static void sp_anchor_link_properties(GtkMenuItem *menuitem, SPAnchor */*anchor*/)
 {
-    sp_object_attributes_dialog(anchor, "Link");
+    SPDesktop *desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
+    g_return_if_fail(desktop != NULL);
+    desktop->_dlg_mgr->showDialog("ObjectAttributes");
 }
 
 static void sp_anchor_link_follow(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
@@ -410,9 +409,11 @@ static void sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     }
 }
 
-static void sp_image_image_properties(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
+static void sp_image_image_properties(GtkMenuItem *menuitem, SPAnchor */*anchor*/)
 {
-    sp_object_attributes_dialog(anchor, "Image");
+    SPDesktop *desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
+    g_return_if_fail(desktop != NULL);
+    desktop->_dlg_mgr->showDialog("ObjectAttributes");
 }
 
 static gchar* getImageEditorName() {

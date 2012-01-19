@@ -4,7 +4,6 @@ set(dialogs_SRC
 	dialog-events.cpp
 	export.cpp
 	find.cpp
-	object-attributes.cpp
 	spellcheck.cpp
 	text-edit.cpp
 	xml-tree.cpp
@@ -16,8 +15,6 @@ set(dialogs_SRC
 	dialog-events.h
 	export.h
 	find.h
-	item-properties.h
-	object-attributes.h
 	spellcheck.h
 	text-edit.h
 	xml-tree.h

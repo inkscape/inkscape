@@ -19,6 +19,7 @@
  *   Abhishek Sharma
  *
  * Copyright (C) 2006 Johan Engelen <johan@shouraizou.nl>
+ * Copyright (C) 2012 Kris De Gussem <Kris.DeGussem@gmail.com>
  * Copyright (C) (date unspecified) Authors
  * This code is in public domain.
  */
@@ -1847,6 +1848,10 @@ void DialogVerb::perform(SPAction *action, void *data)
         case SP_VERB_DIALOG_CLONETILER:
             clonetiler_dialog();
             break;
+        case SP_VERB_DIALOG_ATTR:
+            //sp_item_dialog();
+            dt->_dlg_mgr->showDialog("ObjectAttributes");
+            break;
         case SP_VERB_DIALOG_ITEM:
             //sp_item_dialog();
             dt->_dlg_mgr->showDialog("ObjectProperties");
@@ -2623,6 +2628,8 @@ Verb *Verb::_base_verbs[] = {
                    N_("Show or hide all open dialogs"), INKSCAPE_ICON("show-dialogs")),
     new DialogVerb(SP_VERB_DIALOG_CLONETILER, "DialogClonetiler", N_("Create Tiled Clones..."),
                    N_("Create multiple clones of selected object, arranging them into a pattern or scattering"), INKSCAPE_ICON("dialog-tile-clones")),
+    new DialogVerb(SP_VERB_DIALOG_ATTR, "DialogObjectAttributes", N_("_Object attributes..."),
+                   N_("Edit the object attributes..."), INKSCAPE_ICON("dialog-object-attributes")),
     new DialogVerb(SP_VERB_DIALOG_ITEM, "DialogObjectProperties", N_("_Object Properties..."),
                    N_("Edit the ID, locked and visible status, and other object properties"), INKSCAPE_ICON("dialog-object-properties")),
 /*#ifdef WITH_INKBOARD
