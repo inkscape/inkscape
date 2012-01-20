@@ -61,8 +61,7 @@ unsigned int PrintLatex::setup(Inkscape::Extension::Print * /*mod*/)
     return TRUE;
 }
 
-unsigned int
-PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
+unsigned int PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
 {
     Inkscape::SVGOStringStream os;
     int res;
@@ -93,8 +92,8 @@ PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc)
         Inkscape::IO::dump_fopen_call(fn, "K");
         osf = Inkscape::IO::fopen_utf8name(fn, "w+");
         if (!osf) {
-            fprintf(stderr, "inkscape: fopen(%s): %s\n",
-                    fn, strerror(errno));
+            fprintf(stderr, "inkscape: fopen(%s): %s\n", fn, strerror(errno));
+            g_free(local_fn);
             return 0;
         }
         _stream = osf;
