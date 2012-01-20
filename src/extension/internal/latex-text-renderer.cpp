@@ -144,12 +144,10 @@ LaTeXTextRenderer::setTargetFile(gchar const *filename) {
         g_free(filename_ext);
     }
 
-    if (_stream) {
-        /* fixme: this is kinda icky */
+    /* fixme: this is kinda icky */
 #if !defined(_WIN32) && !defined(__WIN32__)
-        (void) signal(SIGPIPE, SIG_IGN);
+    (void) signal(SIGPIPE, SIG_IGN);
 #endif
-    }
 
     fprintf(_stream, "%%%% Creator: Inkscape %s, www.inkscape.org\n", PACKAGE_STRING);
     fprintf(_stream, "%%%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010\n");
