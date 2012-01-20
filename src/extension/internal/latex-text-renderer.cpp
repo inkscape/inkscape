@@ -136,8 +136,8 @@ LaTeXTextRenderer::setTargetFile(gchar const *filename) {
         Inkscape::IO::dump_fopen_call(filename_ext, "K");
         FILE *osf = Inkscape::IO::fopen_utf8name(filename_ext, "w+");
         if (!osf) {
-            fprintf(stderr, "inkscape: fopen(%s): %s\n",
-                    filename_ext, strerror(errno));
+            fprintf(stderr, "inkscape: fopen(%s): %s\n", filename_ext, strerror(errno));
+            g_free(filename_ext);
             return false;
         }
         _stream = osf;
