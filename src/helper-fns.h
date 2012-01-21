@@ -66,6 +66,7 @@ inline bool helperfns_read_bool(gchar const *value, bool default_value){
  * @param size number of elements in string
  * @return the vector of the converted numbers
  */
+/*
 inline std::vector<gdouble> helperfns_read_vector(const gchar* value, int size){
         std::vector<gdouble> v(size, (gdouble) 0);
         std::istringstream is(value);
@@ -85,7 +86,7 @@ inline std::vector<gdouble> helperfns_read_vector(const gchar* value, int size){
         };
         return v;
 }
-
+*/
 /* convert ascii representation to double
  * the function can only be used to convert numbers as given by gui elements that use localized representation
  * numbers are delimeted by space
@@ -96,7 +97,7 @@ inline std::vector<gdouble> helperfns_read_vector(const gchar* value){
         std::vector<gdouble> v;
 
         gchar const* beg = value;
-        while(isspace(*beg)) beg++;
+        while(isspace(*beg) || (*beg == ',')) beg++;
         while(*beg)
         {
             char *end;
@@ -110,7 +111,7 @@ inline std::vector<gdouble> helperfns_read_vector(const gchar* value){
             v.push_back(ret);
 
             beg = end;
-            while(isspace(*beg)) beg++;
+            while(isspace(*beg) || (*beg == ',')) beg++;
         }
         return v;
 }

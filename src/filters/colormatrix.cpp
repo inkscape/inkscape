@@ -152,7 +152,7 @@ sp_feColorMatrix_set(SPObject *object, unsigned int key, gchar const *str)
             break;
         case SP_ATTR_VALUES:
             if (str){
-                feColorMatrix->values = helperfns_read_vector(str, 20);
+                feColorMatrix->values = helperfns_read_vector(str);
                 feColorMatrix->value = helperfns_read_number(str, HELPERFNS_NO_WARNING);
                 object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             }

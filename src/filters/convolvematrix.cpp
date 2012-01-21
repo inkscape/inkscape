@@ -173,7 +173,7 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
         case SP_ATTR_KERNELMATRIX:
             if (value){
                 feConvolveMatrix->kernelMatrixIsSet = true;
-                feConvolveMatrix->kernelMatrix = helperfns_read_vector(value, (int) (feConvolveMatrix->order.getNumber() * feConvolveMatrix->order.getOptNumber()));
+                feConvolveMatrix->kernelMatrix = helperfns_read_vector(value);
                 if (! feConvolveMatrix->divisorIsSet) {
                     feConvolveMatrix->divisor = 0;
                     for (unsigned int i = 0; i< feConvolveMatrix->kernelMatrix.size(); i++)
