@@ -65,19 +65,14 @@ unsigned int PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc
 {
     Inkscape::SVGOStringStream os;
     int res;
-    FILE *osf, *osp;
-    const gchar * fn;
-
-    os.setf(std::ios::fixed);
-
-    fn = mod->get_param_string("destination");
-
-    osf = NULL;
-    osp = NULL;
-
+    FILE *osf = NULL;
+    const gchar * fn = NULL;
     gsize bytesRead = 0;
     gsize bytesWritten = 0;
     GError* error = NULL;
+
+    os.setf(std::ios::fixed);
+    fn = mod->get_param_string("destination");
     gchar* local_fn = g_filename_from_utf8( fn,
                                             -1,  &bytesRead,  &bytesWritten, &error);
     fn = local_fn;

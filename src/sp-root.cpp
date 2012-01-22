@@ -17,20 +17,19 @@
 # include "config.h"
 #endif
 
-#include <cstring>
 #include <string>
 #include <2geom/transforms.h>
 
-#include "svg/svg.h"
-#include "display/drawing-group.h"
 #include "attributes.h"
 #include "print.h"
 #include "document.h"
+#include "inkscape-version.h"
 #include "sp-defs.h"
 #include "sp-root.h"
-#include <xml/repr.h>
+#include "display/drawing-group.h"
 #include "svg/stringstream.h"
-#include "inkscape-version.h"
+#include "svg/svg.h"
+#include "xml/repr.h"
 
 class SPDesktop;
 
@@ -54,8 +53,7 @@ static SPGroupClass *parent_class;
 /**
  * Returns the type info of sp_root, including its class sizes and initialization routines.
  */
-GType
-sp_root_get_type(void)
+GType sp_root_get_type(void)
 {
     static GType type = 0;
     if (!type) {
@@ -101,8 +99,7 @@ static void sp_root_class_init(SPRootClass *klass)
 /**
  * Initializes an SPRoot object by setting its default parameter values.
  */
-static void
-sp_root_init(SPRoot *root)
+static void sp_root_init(SPRoot *root)
 {
     static Inkscape::Version const zero_version(0, 0);
 
@@ -129,8 +126,7 @@ sp_root_init(SPRoot *root)
  * It fills in data such as version, x, y, width, height, etc.
  * It then calls the object's parent class object's build function.
  */
-static void
-sp_root_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void sp_root_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     SPGroup *group = (SPGroup *) object;
     SPRoot *root = (SPRoot *) object;
@@ -170,8 +166,7 @@ sp_root_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
  * This is a destructor routine for SPRoot objects.  It de-references any \<def\> items and calls
  * the parent class destructor.
  */
-static void
-sp_root_release(SPObject *object)
+static void sp_root_release(SPObject *object)
 {
     SPRoot *root = (SPRoot *) object;
     root->defs = NULL;
@@ -183,8 +178,7 @@ sp_root_release(SPObject *object)
 /**
  * Sets the attribute given by key for SPRoot objects to the value specified by value.
  */
-static void
-sp_root_set(SPObject *object, unsigned int key, gchar const *value)
+static void sp_root_set(SPObject *object, unsigned int key, gchar const *value)
 {
     SPRoot *root = SP_ROOT(object);
 
@@ -529,8 +523,7 @@ static void sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
  * Also, if the viewport has been modified, it sets the document size to the new
  * height and width.
  */
-static void
-sp_root_modified(SPObject *object, guint flags)
+static void sp_root_modified(SPObject *object, guint flags)
 {
     SPRoot *root = SP_ROOT(object);
 
@@ -560,7 +553,9 @@ sp_root_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
     }
 
     if ( !repr->attribute("version") ) {
-        repr->setAttribute("version", sp_version_to_string(root->version.svg));
+        gchar* myversion = sp_version_to_string(root->version.svg);
+        repr->setAttribute("version", myversion);
+        g_free(myversion);
     }
 
     if (fabs(root->x.computed) > 1e-9)
@@ -612,8 +607,7 @@ sp_root_show(SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigne
 /**
  * Virtual print callback.
  */
-static void
-sp_root_print(SPItem *item, SPPrintContext *ctx)
+static void sp_root_print(SPItem *item, SPPrintContext *ctx)
 {
     SPRoot *root = SP_ROOT(item);
 
