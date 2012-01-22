@@ -4,14 +4,16 @@
  * Authors:
  *   MenTaLguY <mental@rydia.net>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Kris De Gussem <Kris.DeGussem@gmail.com>
  *
  * Copyright (C) 2003 MenTaLguY
+ * Copyright (C) 2012 Kris De Gussem
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <stdio.h>
-#include <glib.h>
+#include <sstream>
+
 #include "version.h"
 
 gboolean sp_version_from_string(const gchar *string, Inkscape::Version *version)
@@ -19,13 +21,23 @@ gboolean sp_version_from_string(const gchar *string, Inkscape::Version *version)
     if (!string) {
         return FALSE;
     }
-
-    version->_major = 0;
-    version->_minor = 0;
-
-    return sscanf((const char *)string, "%u.%u",
-                  &version->_major, &version->_minor) ||
-        sscanf((const char *)string, "%u", &version->_major);
+    
+    try
+    {
+        std::stringstream ss;
+        ss << string;
+        ss >> version->_major;
+        char tmp=0;
+        ss >> tmp;
+        ss >>version->_minor;
+        return true;
+    }
+    catch(...)
+    {
+        version->_major = 0;
+        version->_minor = 0;
+        return false;
+    }
 }
 
 gchar *sp_version_to_string(Inkscape::Version version)

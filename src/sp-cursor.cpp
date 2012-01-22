@@ -5,20 +5,21 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Kris De Gussem <Kris.DeGussem@gmail.com>
  *
  * Copyright (C) 1999-2002 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  * Copyright (C) 2010 Jasper van de Gronde
  * Copyright (C) 2010 Jon A. Cruz
+ * Copyright (C) 2012 Kris De Gussem
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <cstdio>
 #include <cstring>
-#include <string>
-#include <ctype.h>
 #include <map>
+#include <sstream>
+
 #include "color.h"
 #include "sp-cursor.h"
 
@@ -28,7 +29,12 @@ void sp_cursor_bitmap_and_mask_from_xpm(GdkBitmap **bitmap, GdkBitmap **mask, gc
     int width = 0;
     int colors = 0;
     int pix = 0;
-    sscanf(xpm[0], "%d %d %d %d", &height, &width, &colors, &pix);
+    std::stringstream ss;
+    ss << xpm[0];
+    ss >> height;
+    ss >> width;
+    ss >> colors;
+    ss >> pix;
 
     g_return_if_fail(height == 32);
     g_return_if_fail(width == 32);
@@ -127,12 +133,13 @@ GdkPixbuf *sp_cursor_pixbuf_from_xpm(gchar const *const *xpm, GdkColor const& bl
     int width = 0;
     int colors = 0;
     int pix = 0;
-    sscanf(xpm[0], "%d %d %d %d", &height, &width, &colors, &pix);
-
-    //g_return_if_fail (height == 32);
-    //g_return_if_fail (width == 32);
-    //g_return_if_fail (colors >= 3);
-
+    std::stringstream ss (std::stringstream::in | std::stringstream::out);
+    ss << xpm[0];
+    ss >> height;
+    ss >> width;
+    ss >> colors;
+    ss >> pix;
+    
     std::map<char, RGBA> colorMap;
 
     for (int i = 0; i < colors; i++) {
