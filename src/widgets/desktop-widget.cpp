@@ -894,8 +894,11 @@ SPDesktopWidget::shutdown()
                   "If you close without saving, your changes will be discarded."),
                 doc->getName());
             // fix for bug lp:168809
-	    gtk_widget_set_can_focus(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), FALSE);
+	    //gtk_widget_set_can_focus(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), FALSE);
 
+	    GtkWidget *message_area = gtk_message_dialog_get_message_area(GTK_MESSAGE_DIALOG(dialog));
+	    gtk_widget_set_can_focus(message_area, FALSE);
+	    
             GtkWidget *close_button;
             close_button = gtk_button_new_with_mnemonic(_("Close _without saving"));
             gtk_widget_show(close_button);

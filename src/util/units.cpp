@@ -3,6 +3,7 @@
 #endif
 
 #include <cmath>
+#include <cerrno>
 #include <glib.h>
 
 #include "io/simple-sax.h"
