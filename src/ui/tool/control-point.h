@@ -17,9 +17,9 @@
 #include <gdkmm.h>
 #include <gtkmm.h>
 #include <2geom/point.h>
-
 #include "util/accumulators.h"
 #include "display/sodipodi-ctrl.h"
+#include "event-context.h"
 
 class SPDesktop;
 
@@ -92,7 +92,7 @@ public:
     static Glib::ustring format_tip(char const *format, ...) G_GNUC_PRINTF(1,2);
 
     // temporarily public, until snap delay is refactored a little
-    virtual bool _eventHandler(GdkEvent *event);
+    virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event);
 
 protected:
     ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, Gtk::AnchorType anchor,

@@ -18,6 +18,7 @@
 #include <glib.h>
 #include <gdk/gdk.h>
 #include <boost/shared_ptr.hpp>
+#include "event-context.h"
 
 class SPDesktop;
 namespace Inkscape {
@@ -39,7 +40,7 @@ public:
     virtual ~Manipulator() {}
     
     /// Handle input event. Returns true if handled.
-    virtual bool event(GdkEvent *)=0;
+    virtual bool event(SPEventContext *, GdkEvent *)=0;
     SPDesktop *const _desktop;
 };
 
@@ -144,9 +145,9 @@ public:
         }
     }
     
-    virtual bool event(GdkEvent *event) {
+    virtual bool event(SPEventContext *event_context, GdkEvent *event) {
         for (typename MapType::iterator i = _mmap.begin(); i != _mmap.end(); ++i) {
-            if ((*i).second->event(event)) return true;
+            if ((*i).second->event(event_context, event)) return true;
         }
         return false;
     }

@@ -38,7 +38,7 @@ public:
 
     TransformHandleSet(SPDesktop *d, SPCanvasGroup *th_group);
     virtual ~TransformHandleSet();
-    virtual bool event(GdkEvent *);
+    virtual bool event(SPEventContext *, GdkEvent *);
 
     bool visible() { return _visible; }
     Mode mode() { return _mode; }

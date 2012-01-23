@@ -28,7 +28,7 @@ class Selector : public Manipulator {
 public:
     Selector(SPDesktop *d);
     virtual ~Selector();
-    virtual bool event(GdkEvent *);
+    virtual bool event(SPEventContext *, GdkEvent *);
     
     sigc::signal<void, Geom::Rect const &, GdkEventButton*> signal_area;
     sigc::signal<void, Geom::Point const &, GdkEventButton*> signal_point;

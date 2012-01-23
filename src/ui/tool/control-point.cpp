@@ -299,11 +299,11 @@ void ControlPoint::_setPixbuf(Glib::RefPtr<Gdk::Pixbuf> p)
 // re-routes events into the virtual function
 int ControlPoint::_event_handler(SPCanvasItem */*item*/, GdkEvent *event, ControlPoint *point)
 {
-    return point->_eventHandler(event) ? TRUE : FALSE;
+    return point->_eventHandler(point->_desktop->event_context, event) ? TRUE : FALSE;
 }
 
 // main event callback, which emits all other callbacks.
-bool ControlPoint::_eventHandler(GdkEvent *event)
+bool ControlPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
 {
     // NOTE the static variables below are shared for all points!
     // TODO handle clicks and drags from other buttons too
@@ -320,7 +320,7 @@ bool ControlPoint::_eventHandler(GdkEvent *event)
     {   
     case GDK_BUTTON_PRESS:
         next_release_doubleclick = 0;
-        if (event->button.button == 1) {
+        if (event->button.button == 1 && !event_context->space_panning) {
             // 1st mouse button click. internally, start dragging, but do not emit signals
             // or change position until drag tolerance is exceeded.
             _drag_event_origin[Geom::X] = event->button.x;

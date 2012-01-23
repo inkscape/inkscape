@@ -36,7 +36,7 @@ class MultiPathManipulator : public PointManipulator {
 public:
     MultiPathManipulator(PathSharedData &data, sigc::connection &chg);
     virtual ~MultiPathManipulator();
-    virtual bool event(GdkEvent *event);
+    virtual bool event(SPEventContext *, GdkEvent *event);
 
     bool empty() { return _mmap.empty(); }
     unsigned size() { return _mmap.empty(); }

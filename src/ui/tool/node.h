@@ -103,7 +103,7 @@ public:
 protected:
     Handle(NodeSharedData const &data, Geom::Point const &initial_pos, Node *parent);
 
-    virtual bool _eventHandler(GdkEvent *event);
+    virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event);
     virtual void dragged(Geom::Point &, GdkEventMotion *);
     virtual bool grabbed(GdkEventMotion *);
     virtual void ungrabbed(GdkEventButton *);
@@ -150,7 +150,7 @@ public:
     static NodeType parse_nodetype(char x);
     static char const *node_type_to_localized_string(NodeType type);
     // temporarily public
-    virtual bool _eventHandler(GdkEvent *event);
+    virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event);
     Inkscape::SnapCandidatePoint snapCandidatePoint();
 protected:
     virtual void dragged(Geom::Point &, GdkEventMotion *);

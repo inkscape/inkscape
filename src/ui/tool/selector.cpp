@@ -41,12 +41,12 @@ public:
         gtk_object_destroy(_rubber);
     }
     SPDesktop *desktop() { return _desktop; }
-    bool event(GdkEvent *e) {
-        return _eventHandler(e);
+    bool event(SPEventContext *ec, GdkEvent *e) {
+        return _eventHandler(ec, e);
     }
 
 protected:
-    virtual bool _eventHandler(GdkEvent *event) {
+    virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event) {
         if (event->type == GDK_KEY_PRESS && shortcut_key(event->key) == GDK_Escape &&
             sp_canvas_item_is_visible(_rubber))
         {
@@ -54,7 +54,7 @@ protected:
             sp_canvas_item_hide(_rubber);
             return true;
         }
-        return ControlPoint::_eventHandler(event);
+        return ControlPoint::_eventHandler(event_context, event);
     }
 
 private:
@@ -99,7 +99,7 @@ Selector::~Selector()
     delete _dragger;
 }
 
-bool Selector::event(GdkEvent *event)
+bool Selector::event(SPEventContext *event_context, GdkEvent *event)
 {
     // The hidden control point will capture all events after it obtains the grab,
     // but it relies on this function to initiate it. If we pass only first button
@@ -108,9 +108,9 @@ bool Selector::event(GdkEvent *event)
     case GDK_BUTTON_PRESS:
         // Do not pass button presses other than left button to the control point.
         // This way middle click and right click can be handled in SPEventContext.
-        if (event->button.button == 1) {
+        if (event->button.button == 1 && !event_context->space_panning) {
             _dragger->setPosition(_desktop->w2d(event_point(event->motion)));
-            return _dragger->event(event);
+            return _dragger->event(event_context, event);
         }
         break;
     default: break;

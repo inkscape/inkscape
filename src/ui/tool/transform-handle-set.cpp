@@ -717,7 +717,7 @@ void TransformHandleSet::setBounds(Geom::Rect const &r, bool preserve_center)
     }
 }
 
-bool TransformHandleSet::event(GdkEvent*)
+bool TransformHandleSet::event(SPEventContext *, GdkEvent*)
 {
     return false;
 }

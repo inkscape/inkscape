@@ -27,7 +27,7 @@ public:
     void setSize(double sz) { _setSize(sz); }
     void setTimeValue(double t) { _t = t; }
     void setIterator(NodeList::iterator i) { first = i; }
-    virtual bool _eventHandler(GdkEvent *event);
+    virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event);
 protected:
     virtual Glib::ustring _getTip(unsigned state);
     virtual void dragged(Geom::Point &, GdkEventMotion *);

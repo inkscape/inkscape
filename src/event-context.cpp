@@ -1319,7 +1319,7 @@ gboolean sp_event_context_snap_watchdog_callback(gpointer data) {
     case DelayedSnapEvent::CONTROL_POINT_HANDLER: {
         using Inkscape::UI::ControlPoint;
         ControlPoint *point = reinterpret_cast<ControlPoint*> (dse->getItem2());
-        point->_eventHandler(dse->getEvent());
+        point->_eventHandler(ec, dse->getEvent());
     }
         break;
     case DelayedSnapEvent::GUIDE_HANDLER: {

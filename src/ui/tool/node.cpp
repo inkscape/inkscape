@@ -225,7 +225,7 @@ char const *Handle::handle_type_to_localized_string(NodeType type)
     }
 }
 
-bool Handle::_eventHandler(GdkEvent *event)
+bool Handle::_eventHandler(SPEventContext *event_context, GdkEvent *event)
 {
     switch (event->type)
     {
@@ -251,7 +251,7 @@ bool Handle::_eventHandler(GdkEvent *event)
     default: break;
     }
 
-    return ControlPoint::_eventHandler(event);
+    return ControlPoint::_eventHandler(event_context, event);
 }
 
 bool Handle::grabbed(GdkEventMotion *)
@@ -779,7 +779,7 @@ NodeType Node::parse_nodetype(char x)
 }
 
 /** Customized event handler to catch scroll events needed for selection grow/shrink. */
-bool Node::_eventHandler(GdkEvent *event)
+bool Node::_eventHandler(SPEventContext *event_context, GdkEvent *event)
 {
     int dir = 0;
 
@@ -820,7 +820,7 @@ bool Node::_eventHandler(GdkEvent *event)
     }
     
     bail_out:
-    return ControlPoint::_eventHandler(event);
+    return ControlPoint::_eventHandler(event_context, event);
 }
 
 /** Select or deselect a node in this node's subpath based on its path distance from this node.

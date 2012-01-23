@@ -546,7 +546,7 @@ void MultiPathManipulator::updateOutlineColors()
     //}
 }
 
-bool MultiPathManipulator::event(GdkEvent *event)
+bool MultiPathManipulator::event(SPEventContext *event_context, GdkEvent *event)
 {
     _tracker.event(event);
     guint key = 0;
@@ -726,7 +726,7 @@ bool MultiPathManipulator::event(GdkEvent *event)
     case GDK_MOTION_NOTIFY:
         combine_motion_events(_desktop->canvas, event->motion, 0);
         for (MapType::iterator i = _mmap.begin(); i != _mmap.end(); ++i) {
-            if (i->second->event(event)) return true;
+            if (i->second->event(event_context, event)) return true;
         }
         break;
     default: break;

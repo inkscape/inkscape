@@ -44,14 +44,14 @@ CurveDragPoint::CurveDragPoint(PathManipulator &pm)
     setVisible(false);
 }
 
-bool CurveDragPoint::_eventHandler(GdkEvent *event)
+bool CurveDragPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
 {
     // do not process any events when the manipulator is empty
     if (_pm.empty()) {
         setVisible(false);
         return false;
     }
-    return ControlPoint::_eventHandler(event);
+    return ControlPoint::_eventHandler(event_context, event);
 }
 
 bool CurveDragPoint::grabbed(GdkEventMotion */*event*/)

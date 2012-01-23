@@ -457,9 +457,9 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
     InkNodeTool *nt = static_cast<InkNodeTool*>(event_context);
     static Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     
-    if (nt->_multipath->event(event)) return true;
-    if (nt->_selector->event(event)) return true;
-    if (nt->_selected_nodes->event(event)) return true;
+    if (nt->_multipath->event(event_context, event)) return true;
+    if (nt->_selector->event(event_context, event)) return true;
+    if (nt->_selected_nodes->event(event_context, event)) return true;
 
     switch (event->type)
     {
