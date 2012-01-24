@@ -854,7 +854,7 @@ unsigned int PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char cons
         LOGFONTW *lf = (LOGFONTW*)g_malloc(sizeof(LOGFONTW));
         g_assert(lf != NULL);
         
-        lf->lfHeight = style->font_size.computed * IN_PER_PX * dwDPI;
+        lf->lfHeight = -style->font_size.computed * IN_PER_PX * dwDPI;
         lf->lfWidth = 0;
         lf->lfEscapement = rot;
         lf->lfOrientation = rot;
