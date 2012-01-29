@@ -301,6 +301,8 @@ layout_buttons (GdlSwitcher *switcher)
 
     /* Figure out how many rows and columns we'll use. */
     btns_per_row = allocation.width / (max_btn_width + H_PADDING);
+    /* Use at least one column */
+    if (btns_per_row == 0) btns_per_row = 1;
     
     /* If all the buttons could fit in the single row, have it so */
     if (allocation.width >= optimal_layout_width)
