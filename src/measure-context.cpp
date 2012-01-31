@@ -214,7 +214,10 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     SnapManager &m = desktop->namedview->snap_manager;
                     m.setup(desktop);
 
-                    m.preSnap(Inkscape::SnapCandidatePoint(motion_dt, Inkscape::SNAPSOURCE_OTHER_HANDLE));
+                    Inkscape::SnapCandidatePoint scp(motion_dt, Inkscape::SNAPSOURCE_OTHER_HANDLE);
+                    scp.addOrigin(start_point);
+
+                    m.preSnap(scp);
                     m.unSetup();
                 }
             } else {
@@ -246,7 +249,10 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     if (!(event->motion.state & GDK_SHIFT_MASK)) {
                         SnapManager &m = desktop->namedview->snap_manager;
                         m.setup(desktop);
-                        m.freeSnapReturnByRef(end_point, Inkscape::SNAPSOURCE_OTHER_HANDLE);
+                        Inkscape::SnapCandidatePoint scp(end_point, Inkscape::SNAPSOURCE_OTHER_HANDLE);
+                        scp.addOrigin(start_point);
+                        Inkscape::SnappedPoint sp = m.freeSnap(scp);
+                        end_point = sp.getPoint();
                         m.unSetup();
                     }
                 }
