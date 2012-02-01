@@ -460,8 +460,8 @@ bool ControlPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
             fake.window = event->key.window;
             fake.send_event = event->key.send_event;
             fake.time = event->key.time;
-            fake.x = 0; // not used in handlers (and shouldn't be)
-            fake.y = 0; // not used in handlers (and shouldn't be)
+            fake.x = _drag_event_origin[Geom::X]; // these two are normally not used in handlers
+            fake.y = _drag_event_origin[Geom::Y]; // (and shouldn't be)
             fake.axes = NULL;
             fake.state = 0; // unconstrained drag
             fake.is_hint = FALSE;
