@@ -158,9 +158,10 @@ protected:
     ColorSet *_cset; ///< Colors used to represent the point
     State _state;
 
-    static int const _grab_event_mask;
     static Geom::Point const &_last_click_event_point() { return _drag_event_origin; }
     static Geom::Point const &_last_drag_origin() { return _drag_origin; }
+    static bool _is_drag_cancelled(GdkEventMotion *event);
+    static int const _grab_event_mask;
 
 private:
     ControlPoint(ControlPoint const &other);

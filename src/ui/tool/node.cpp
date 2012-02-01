@@ -351,13 +351,16 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 void Handle::ungrabbed(GdkEventButton *event)
 {
     // hide the handle if it's less than dragtolerance away from the node
-    // TODO is this actually desired?
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    int drag_tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+    // however, never do this for cancelled drag / broken grab
+    // TODO is this actually a good idea?
+    if (event) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int drag_tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
 
-    Geom::Point dist = _desktop->d2w(_parent->position()) - _desktop->d2w(position());
-    if (dist.length() <= drag_tolerance) {
-        move(_parent->position());
+        Geom::Point dist = _desktop->d2w(_parent->position()) - _desktop->d2w(position());
+        if (dist.length() <= drag_tolerance) {
+            move(_parent->position());
+        }
     }
 
     // HACK: If the handle was dragged out, call parent's ungrabbed handler,

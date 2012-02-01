@@ -21,6 +21,8 @@
 #include "event-context.h"
 #include "message-context.h"
 #include "preferences.h"
+#include "snap-preferences.h"
+#include "sp-namedview.h"
 #include "ui/tool/control-point.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/transform-handle-set.h"
@@ -440,31 +442,32 @@ bool ControlPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
         {
         case GDK_Escape: {
             // ignore Escape if this is not a drag
-            if (!_drag_initiated) return false;
+            if (!_drag_initiated) break;
 
-            // Do not process delayed snap events - we might snap to a different place than we were initially
-            delete _desktop->event_context->_delayed_snap_event;
-            _desktop->event_context->_delayed_snap_event = NULL;
+            // temporarily disable snapping - we might snap to a different place than we were initially
+            sp_event_context_discard_delayed_snap_event(_desktop->event_context);
+            SnapPreferences &snapprefs = _desktop->namedview->snap_manager.snapprefs;
+            bool snap_save = snapprefs.getSnapEnabledGlobally();
+            snapprefs.setSnapEnabledGlobally(false);
 
             Geom::Point new_pos = _drag_origin;
 
             // make a fake event for dragging
             // ASSUMPTION: dragging a point without modifiers will never prevent us from moving it
-            // to its original position
-            // TODO: pass correct values for x, y, x_root and y_root
+            //             to its original position
             GdkEventMotion fake;
             fake.type = GDK_MOTION_NOTIFY;
             fake.window = event->key.window;
             fake.send_event = event->key.send_event;
             fake.time = event->key.time;
-            fake.x = 0; // not used in handlers atm
-            fake.y = 0; // not used in handlers atm
+            fake.x = 0; // not used in handlers (and shouldn't be)
+            fake.y = 0; // not used in handlers (and shouldn't be)
             fake.axes = NULL;
             fake.state = 0; // unconstrained drag
             fake.is_hint = FALSE;
             fake.device = NULL;
-            fake.x_root = 0; // not used in handlers atm
-            fake.y_root = 0; // not used in handlers atm
+            fake.x_root = -1; // not used in handlers (and shouldn't be)
+            fake.y_root = -1; // can be used as a flag to check for cancelled drag
             
             dragged(new_pos, &fake);
 
@@ -475,6 +478,7 @@ bool ControlPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
             _drag_initiated = false;
 
             ungrabbed(NULL); // ungrabbed handlers can handle a NULL event
+            snapprefs.setSnapEnabledGlobally(snap_save);
             } return true;
         case GDK_Tab:
             {// Downcast from ControlPoint to TransformHandle, if possible
@@ -622,6 +626,11 @@ void ControlPoint::_setState(State state)
 void ControlPoint::_setColors(ColorEntry colors)
 {
     g_object_set(_canvas_item, "fill_color", colors.fill, "stroke_color", colors.stroke, NULL);
+}
+
+bool ControlPoint::_is_drag_cancelled(GdkEventMotion *event)
+{
+    return !event || event->x_root == -1;
 }
 
 // dummy implementations for handlers

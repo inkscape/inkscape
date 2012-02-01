@@ -42,6 +42,7 @@ private:
     PathManipulator &_pm;
     NodeList::iterator first;
     static bool _drags_stroke;
+    static bool _segment_was_degenerate;
     static Geom::Point _stroke_drag_origin;
 };
 

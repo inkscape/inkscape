@@ -34,6 +34,7 @@ namespace UI {
 // to be declared as a friend
 
 bool CurveDragPoint::_drags_stroke = false;
+bool CurveDragPoint::_segment_was_degenerate = false;
 
 CurveDragPoint::CurveDragPoint(PathManipulator &pm)
     : ControlPoint(pm._multi_path_manipulator._path_data.node_data.desktop, Geom::Point(),
@@ -61,6 +62,7 @@ bool CurveDragPoint::grabbed(GdkEventMotion */*event*/)
 
     // move the handles to 1/3 the length of the segment for line segments
     if (first->front()->isDegenerate() && second->back()->isDegenerate()) {
+        _segment_was_degenerate = true;
 
         // delta is a vector equal 1/3 of distance from first to second
         Geom::Point delta = (second->position() - first->position()) / 3.0;
@@ -68,13 +70,24 @@ bool CurveDragPoint::grabbed(GdkEventMotion */*event*/)
         second->back()->move(second->back()->position() - delta);
 
         _pm.update();
+    } else {
+        _segment_was_degenerate = false;
     }
     return false;
 }
 
-void CurveDragPoint::dragged(Geom::Point &new_pos, GdkEventMotion *)
+void CurveDragPoint::dragged(Geom::Point &new_pos, GdkEventMotion *event)
 {
     NodeList::iterator second = first.next();
+
+    // special cancel handling - retract handles when if the segment was degenerate
+    if (_is_drag_cancelled(event) && _segment_was_degenerate) {
+        first->front()->retract();
+        second->back()->retract();
+        _pm.update();
+        return;
+    }
+
     // Magic Bezier Drag Equations follow!
     // "weight" describes how the influence of the drag should be distributed
     // among the handles; 0 = front handle only, 1 = back handle only.
