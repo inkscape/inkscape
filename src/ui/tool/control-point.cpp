@@ -396,11 +396,8 @@ bool ControlPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
             _event_grab = false;
 
             if (_drag_initiated) {
-                _desktop->canvas->endForcedFullRedraws();
-            }
-
-            if (_drag_initiated) {
                 // it is the end of a drag
+                _desktop->canvas->endForcedFullRedraws();
                 _drag_initiated = false;
                 ungrabbed(&event->button);
                 return true;
@@ -441,6 +438,44 @@ bool ControlPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
     case GDK_KEY_PRESS:
         switch (get_group0_keyval(&event->key))
         {
+        case GDK_Escape: {
+            // ignore Escape if this is not a drag
+            if (!_drag_initiated) return false;
+
+            // Do not process delayed snap events - we might snap to a different place than we were initially
+            delete _desktop->event_context->_delayed_snap_event;
+            _desktop->event_context->_delayed_snap_event = NULL;
+
+            Geom::Point new_pos = _drag_origin;
+
+            // make a fake event for dragging
+            // ASSUMPTION: dragging a point without modifiers will never prevent us from moving it
+            // to its original position
+            // TODO: pass correct values for x, y, x_root and y_root
+            GdkEventMotion fake;
+            fake.type = GDK_MOTION_NOTIFY;
+            fake.window = event->key.window;
+            fake.send_event = event->key.send_event;
+            fake.time = event->key.time;
+            fake.x = 0; // not used in handlers atm
+            fake.y = 0; // not used in handlers atm
+            fake.axes = NULL;
+            fake.state = 0; // unconstrained drag
+            fake.is_hint = FALSE;
+            fake.device = NULL;
+            fake.x_root = 0; // not used in handlers atm
+            fake.y_root = 0; // not used in handlers atm
+            
+            dragged(new_pos, &fake);
+
+            sp_canvas_item_ungrab(_canvas_item, event->key.time);
+            _clearMouseover(); // this will also reset state to normal
+            _desktop->canvas->endForcedFullRedraws();
+            _event_grab = false;
+            _drag_initiated = false;
+
+            ungrabbed(NULL); // ungrabbed handlers can handle a NULL event
+            } return true;
         case GDK_Tab:
             {// Downcast from ControlPoint to TransformHandle, if possible
              // This is an ugly hack; we should have the transform handle intercept the keystrokes itself
