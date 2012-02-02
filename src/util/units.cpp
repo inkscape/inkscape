@@ -2,11 +2,9 @@
 # include <config.h>
 #endif
 
-#include <cerrno>
 #include <cmath>
 #include <cerrno>
 #include <glib.h>
-#include <sstream>
 
 #include "io/simple-sax.h"
 #include "util/units.h"
@@ -158,9 +156,9 @@ bool UnitTable::loadText(Glib::ustring const &filename) {
     // bypass current locale in order to make
     // sscanf read floats with '.' as a separator
     // set locate to 'C' and keep old locale
-    // char *old_locale;
-    // old_locale = g_strdup (setlocale (LC_NUMERIC, NULL));
-    // setlocale (LC_NUMERIC, "C");
+    char *old_locale;
+    old_locale = g_strdup (setlocale (LC_NUMERIC, NULL));
+    setlocale (LC_NUMERIC, "C");
 
     while (fgets(buf, BUFSIZE, f) != NULL) {
 	char name[BUFSIZE];
@@ -172,21 +170,12 @@ bool UnitTable::loadText(Glib::ustring const &filename) {
 
 	int nchars = 0;
     // locate is set to C, scanning %lf should work _everywhere_
-/*	if (sscanf(buf, "%s %s %s %s %lf %s %n", 
+	if (sscanf(buf, "%s %s %s %s %lf %s %n", 
 		   name, plural, abbr, type, &factor, 
 		   primary, &nchars) != 6) {
 	    // Skip the line - doesn't appear to be valid
 	    continue;
-	}*/
-    std::stringstream ss;
-    ss << buf;
-    ss >> name;
-    ss >> plural;
-    ss >> abbr;
-    ss >> type;
-    ss >> factor;
-    ss >> primary;
-    ss >> nchars;
+	}
 	g_assert(nchars < BUFSIZE);
 
 	char *desc = buf;
@@ -220,8 +209,8 @@ bool UnitTable::loadText(Glib::ustring const &filename) {
     }
 
     // set back the saved locale
-    // setlocale (LC_NUMERIC, old_locale);
-    // g_free (old_locale);
+    setlocale (LC_NUMERIC, old_locale);
+    g_free (old_locale);
 
     // close file
     if (fclose(f) != 0) {
