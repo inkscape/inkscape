@@ -343,7 +343,7 @@ string ftos(double val, char mode, int sigfig, int precision, int options)
     if (rhs<0) rhs = 0;
 
 #ifdef DEBUG
-    fprintf(stderr, "*** rhs is", itos(rhs).c_str());
+    fprintf(stderr, "*** rhs is %s\n", itos(rhs).c_str());
 #endif
 
     // Determine the exponent
@@ -411,7 +411,7 @@ string ftos(double val, char mode, int sigfig, int precision, int options)
     }
 
 #ifdef DEBUG
-    fprintf(stderr, "*** End of ftos with ascii = ", ascii.c_str());
+    fprintf(stderr, "*** End of ftos with ascii = %s\n", ascii.c_str());
 #endif
     /* finally, we can return */
 	g_free(p);
