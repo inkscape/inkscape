@@ -44,23 +44,15 @@ struct ltstr {
 
 struct SPFilter : public SPObject {
 
-    /** filterUnits attribute */
     SPFilterUnits filterUnits;
     guint filterUnits_set : 1;
-    /** primitiveUnits attribute */
     SPFilterUnits primitiveUnits;
     guint primitiveUnits_set : 1;
-    /** X attribute */    
     SVGLength x;
-    /** Y attribute */
     SVGLength y;
-    /** WIDTH attribute */
     SVGLength width;
-    /** HEIGHT attribute */
     SVGLength height;
-    /** FILTERRES attribute */
     NumberOptNumber filterRes;
-    /** HREF attribute */
     SPFilterReference *href;
     sigc::connection modified_connection;
 
