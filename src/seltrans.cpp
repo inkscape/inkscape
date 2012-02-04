@@ -281,12 +281,8 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
 
     // First, determine the bounding box
     _bbox = selection->bounds(_snap_bbox_type);
+    _visual_bbox = selection->visualBounds(); // Used for correctly scaling the strokewidth
     _geometric_bbox = selection->geometricBounds();
-    if (prefs->getInt("/tools/bounding_box") == 0) {
-        _visual_bbox = selection->visualBounds(); // Used for correctly scaling the strokewidth
-    } else {
-        _visual_bbox = _geometric_bbox;
-    }
 
     _point = p;
     if (_geometric_bbox) {
@@ -657,11 +653,7 @@ void Inkscape::SelTrans::_updateVolatileState()
 
     //Update the bboxes
     _bbox = selection->bounds(_snap_bbox_type);
-    if (Inkscape::Preferences::get()->getInt("/tools/bounding_box") == 0) {
-        _visual_bbox = selection->visualBounds();
-    } else {
-        _visual_bbox = selection->geometricBounds();
-    }
+    _visual_bbox = selection->visualBounds();
 
     if (!_bbox) {
         _empty = true;
