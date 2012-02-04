@@ -425,7 +425,12 @@ boost::optional<Geom::Point> Selection::center() const {
             return first->getCenter();
         }
     }
-    Geom::OptRect bbox = visualBounds();
+    Geom::OptRect bbox;
+    if (Inkscape::Preferences::get()->getInt("/tools/bounding_box") == 0) {
+        bbox = visualBounds();
+    } else{
+        bbox = geometricBounds();
+    }    
     if (bbox) {
         return bbox->midpoint();
     } else {
