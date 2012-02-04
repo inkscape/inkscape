@@ -15,33 +15,30 @@
 #endif
 
 
-#include <signal.h>
-#include <errno.h>
-
 #include <2geom/pathvector.h>
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/bezier-curve.h>
 #include <2geom/hvlinesegment.h>
+#include <errno.h>
+#include <signal.h>
+#include <unit-constants.h>
 #include "helper/geom-curves.h"
 
-#include "sp-item.h"
-
-#include "style.h"
-
-#include "latex-pstricks.h"
-
-#include <unit-constants.h>
-
-#include "extension/system.h"
 #include "extension/print.h"
-
+#include "extension/system.h"
 #include "io/sys.h"
+#include "latex-pstricks.h"
+#include "sp-item.h"
+#include "style.h"
 
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
 
-PrintLatex::PrintLatex (void): _stream(NULL)
+PrintLatex::PrintLatex (void):
+    _width(0),
+    _height(0),
+    _stream(NULL)
 {
 }
 

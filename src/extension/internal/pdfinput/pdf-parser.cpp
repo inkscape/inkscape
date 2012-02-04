@@ -318,6 +318,7 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
                      Dict *resDict, PDFRectangle *box) {
 
   int i;
+  parser = NULL;
 
   xref = xrefA;
   subPage = gTrue;
