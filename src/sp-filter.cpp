@@ -564,9 +564,14 @@ Glib::ustring sp_filter_get_new_result_name(SPFilter *filter) {
             Inkscape::XML::Node *repr = primitive_obj->getRepr();
             char const *result = repr->attribute("result");
             int index;
-            if (result && sscanf(result, "result%d", &index) == 1) {
-                if (index > largest) {
-                    largest = index;
+            if (result)
+            {
+                if (sscanf(result, "result%d", &index) == 1)
+                {
+                    if (index > largest)
+                    {
+                        largest = index;
+                    }
                 }
             }
         }

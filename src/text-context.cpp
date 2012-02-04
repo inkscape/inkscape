@@ -17,41 +17,41 @@
 # include <config.h>
 #endif
 
-#include <gdk/gdkkeysyms.h>
-#include <gtk/gtk.h>
 #include <display/sp-ctrlline.h>
 #include <display/sodipodi-ctrlrect.h>
 #include <display/sp-ctrlquadr.h>
-#include <gtkmm/clipboard.h>
-
-#include "macros.h"
-#include "sp-text.h"
-#include "sp-flowtext.h"
-#include "document.h"
-#include "sp-namedview.h"
-#include "style.h"
-#include "selection.h"
-#include "desktop.h"
-#include "desktop-style.h"
-#include "desktop-handles.h"
-#include "message-stack.h"
-#include "message-context.h"
-#include "pixmaps/cursor-text.xpm"
-#include "pixmaps/cursor-text-insert.xpm"
+#include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
+#include <gtk/gtk.h>
+#include <gtkmm/clipboard.h>
+#include <sstream>
+
+#include "context-fns.h"
+#include "desktop-handles.h"
+#include "desktop-style.h"
+#include "desktop.h"
+#include "document.h"
+#include "macros.h"
+#include "message-context.h"
+#include "message-stack.h"
 #include "object-edit.h"
-#include "xml/repr.h"
-#include "xml/node-event-vector.h"
+#include "pixmaps/cursor-text-insert.xpm"
+#include "pixmaps/cursor-text.xpm"
 #include "preferences.h"
 #include "rubberband.h"
-#include "sp-metrics.h"
-#include "context-fns.h"
-#include "verbs.h"
-#include "shape-editor.h"
 #include "selection-chemistry.h"
-#include "text-editing.h"
-
+#include "selection.h"
+#include "shape-editor.h"
+#include "sp-flowtext.h"
+#include "sp-metrics.h"
+#include "sp-namedview.h"
+#include "sp-text.h"
+#include "style.h"
 #include "text-context.h"
+#include "text-editing.h"
+#include "verbs.h"
+#include "xml/node-event-vector.h"
+#include "xml/repr.h"
 
 using Inkscape::DocumentUndo;
 
@@ -81,8 +81,7 @@ static void sptc_commit(GtkIMContext *imc, gchar *string, SPTextContext *tc);
 
 static SPEventContextClass *parent_class;
 
-GType
-sp_text_context_get_type()
+GType sp_text_context_get_type()
 {
     static GType type = 0;
     if (!type) {
@@ -101,8 +100,7 @@ sp_text_context_get_type()
     return type;
 }
 
-static void
-sp_text_context_class_init(SPTextContextClass *klass)
+static void sp_text_context_class_init(SPTextContextClass *klass)
 {
     GObjectClass *object_class=(GObjectClass *)klass;
     SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
@@ -117,8 +115,7 @@ sp_text_context_class_init(SPTextContextClass *klass)
     event_context_class->item_handler = sp_text_context_item_handler;
 }
 
-static void
-sp_text_context_init(SPTextContext *tc)
+static void sp_text_context_init(SPTextContext *tc)
 {
     SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
 
@@ -159,8 +156,7 @@ sp_text_context_init(SPTextContext *tc)
     new (&tc->style_query_connection) sigc::connection();
 }
 
-static void
-sp_text_context_dispose(GObject *obj)
+static void sp_text_context_dispose(GObject *obj)
 {
     SPTextContext *tc = SP_TEXT_CONTEXT(obj);
     SPEventContext *ec = SP_EVENT_CONTEXT(tc);
@@ -186,8 +182,7 @@ sp_text_context_dispose(GObject *obj)
     Inkscape::Rubberband::get(ec->desktop)->stop();
 }
 
-static void
-sp_text_context_setup(SPEventContext *ec)
+static void sp_text_context_setup(SPEventContext *ec)
 {
     SPTextContext *tc = SP_TEXT_CONTEXT(ec);
     SPDesktop *desktop = ec->desktop;
@@ -274,8 +269,7 @@ sp_text_context_setup(SPEventContext *ec)
     }
 }
 
-static void
-sp_text_context_finish(SPEventContext *ec)
+static void sp_text_context_finish(SPEventContext *ec)
 {
     SPTextContext *tc = SP_TEXT_CONTEXT(ec);
 
@@ -326,8 +320,7 @@ sp_text_context_finish(SPEventContext *ec)
 }
 
 
-static gint
-sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
+static gint sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event)
 {
     SPTextContext *tc = SP_TEXT_CONTEXT(event_context);
     SPDesktop *desktop = event_context->desktop;
@@ -468,8 +461,7 @@ sp_text_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEve
     return ret;
 }
 
-static void
-sp_text_context_setup_text(SPTextContext *tc)
+static void sp_text_context_setup_text(SPTextContext *tc)
 {
     SPEventContext *ec = SP_EVENT_CONTEXT(tc);
 
@@ -512,14 +504,15 @@ sp_text_context_setup_text(SPTextContext *tc)
  *
  * \pre tc.uni/tc.unipos non-empty.
  */
-static void
-insert_uni_char(SPTextContext *const tc)
+static void insert_uni_char(SPTextContext *const tc)
 {
     g_return_if_fail(tc->unipos
                      && tc->unipos < sizeof(tc->uni)
                      && tc->uni[tc->unipos] == '\0');
     unsigned int uv;
-    sscanf(tc->uni, "%x", &uv);
+    std::stringstream ss;
+    ss << tc->uni;
+    ss >> uv;
     tc->unipos = 0;
     tc->uni[tc->unipos] = '\0';
 
@@ -546,11 +539,12 @@ insert_uni_char(SPTextContext *const tc)
     }
 }
 
-static void
-hex_to_printable_utf8_buf(char const *const hex, char *utf8)
+static void hex_to_printable_utf8_buf(char const *const hex, char *utf8)
 {
     unsigned int uv;
-    sscanf(hex, "%x", &uv);
+    std::stringstream ss;
+    ss << hex;
+    ss >> uv;
     if (!g_unichar_isprint((gunichar) uv)) {
         uv = 0xfffd;
     }
@@ -558,8 +552,7 @@ hex_to_printable_utf8_buf(char const *const hex, char *utf8)
     utf8[len] = '\0';
 }
 
-static void
-show_curr_uni_char(SPTextContext *const tc)
+static void show_curr_uni_char(SPTextContext *const tc)
 {
     g_return_if_fail(tc->unipos < sizeof(tc->uni)
                      && tc->uni[tc->unipos] == '\0');
@@ -583,8 +576,7 @@ show_curr_uni_char(SPTextContext *const tc)
     }
 }
 
-static gint
-sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *const event)
+static gint sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *const event)
 {
     SPTextContext *const tc = SP_TEXT_CONTEXT(event_context);
 
@@ -1330,8 +1322,7 @@ sp_text_context_root_handler(SPEventContext *const event_context, GdkEvent *cons
 /**
  Attempts to paste system clipboard into the currently edited text, returns true on success
  */
-bool
-sp_text_paste_inline(SPEventContext *ec)
+bool sp_text_paste_inline(SPEventContext *ec)
 {
     if (!SP_IS_TEXT_CONTEXT(ec))
         return false;
@@ -1404,8 +1395,7 @@ sp_text_paste_inline(SPEventContext *ec)
  Gets the raw characters that comprise the currently selected text, converting line
  breaks into lf characters.
 */
-Glib::ustring
-sp_text_get_selected_text(SPEventContext const *ec)
+Glib::ustring sp_text_get_selected_text(SPEventContext const *ec)
 {
     if (!SP_IS_TEXT_CONTEXT(ec))
         return "";
@@ -1416,8 +1406,7 @@ sp_text_get_selected_text(SPEventContext const *ec)
     return sp_te_get_string_multiline(tc->text, tc->text_sel_start, tc->text_sel_end);
 }
 
-SPCSSAttr *
-sp_text_get_style_at_cursor(SPEventContext const *ec)
+SPCSSAttr *sp_text_get_style_at_cursor(SPEventContext const *ec)
 {
     if (!SP_IS_TEXT_CONTEXT(ec))
         return NULL;
@@ -1506,8 +1495,7 @@ sp_text_context_selection_modified(Inkscape::Selection */*selection*/, guint /*f
     sp_text_context_update_text_selection(tc);
 }
 
-static bool
-sp_text_context_style_set(SPCSSAttr const *css, SPTextContext *tc)
+static bool sp_text_context_style_set(SPCSSAttr const *css, SPTextContext *tc)
 {
     if (tc->text == NULL)
         return false;
@@ -1570,8 +1558,7 @@ sp_text_context_style_query(SPStyle *style, int property, SPTextContext *tc)
     return result;
 }
 
-static void
-sp_text_context_validate_cursor_iterators(SPTextContext *tc)
+static void sp_text_context_validate_cursor_iterators(SPTextContext *tc)
 {
     if (tc->text == NULL)
         return;
@@ -1582,8 +1569,7 @@ sp_text_context_validate_cursor_iterators(SPTextContext *tc)
     }
 }
 
-static void
-sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
+static void sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
 {
     GdkRectangle im_cursor = { 0, 0, 1, 1 };
 
@@ -1689,8 +1675,7 @@ static void sp_text_context_update_text_selection(SPTextContext *tc)
     }
 }
 
-static gint
-sp_text_context_timeout(SPTextContext *tc)
+static gint sp_text_context_timeout(SPTextContext *tc)
 {
     if (tc->show) {
         sp_canvas_item_show(tc->cursor);
@@ -1706,8 +1691,7 @@ sp_text_context_timeout(SPTextContext *tc)
     return TRUE;
 }
 
-static void
-sp_text_context_forget_text(SPTextContext *tc)
+static void sp_text_context_forget_text(SPTextContext *tc)
 {
     if (! tc->text) return;
     SPItem *ti = tc->text;
@@ -1735,22 +1719,19 @@ sp_text_context_forget_text(SPTextContext *tc)
 */
 }
 
-gint
-sptc_focus_in(GtkWidget */*widget*/, GdkEventFocus */*event*/, SPTextContext *tc)
+gint sptc_focus_in(GtkWidget */*widget*/, GdkEventFocus */*event*/, SPTextContext *tc)
 {
     gtk_im_context_focus_in(tc->imc);
     return FALSE;
 }
 
-gint
-sptc_focus_out(GtkWidget */*widget*/, GdkEventFocus */*event*/, SPTextContext *tc)
+gint sptc_focus_out(GtkWidget */*widget*/, GdkEventFocus */*event*/, SPTextContext *tc)
 {
     gtk_im_context_focus_out(tc->imc);
     return FALSE;
 }
 
-static void
-sptc_commit(GtkIMContext */*imc*/, gchar *string, SPTextContext *tc)
+static void sptc_commit(GtkIMContext */*imc*/, gchar *string, SPTextContext *tc)
 {
     if (!tc->text) {
         sp_text_context_setup_text(tc);
@@ -1765,8 +1746,7 @@ sptc_commit(GtkIMContext */*imc*/, gchar *string, SPTextContext *tc)
 		       _("Type text"));
 }
 
-void
-sp_text_context_place_cursor (SPTextContext *tc, SPObject *text, Inkscape::Text::Layout::iterator where)
+void sp_text_context_place_cursor (SPTextContext *tc, SPObject *text, Inkscape::Text::Layout::iterator where)
 {
     SP_EVENT_CONTEXT_DESKTOP (tc)->selection->set (text);
     tc->text_sel_start = tc->text_sel_end = where;
@@ -1774,8 +1754,7 @@ sp_text_context_place_cursor (SPTextContext *tc, SPObject *text, Inkscape::Text:
     sp_text_context_update_text_selection(tc);
 }
 
-void
-sp_text_context_place_cursor_at (SPTextContext *tc, SPObject *text, Geom::Point const p)
+void sp_text_context_place_cursor_at (SPTextContext *tc, SPObject *text, Geom::Point const p)
 {
     SP_EVENT_CONTEXT_DESKTOP (tc)->selection->set (text);
     sp_text_context_place_cursor (tc, text, sp_te_get_position_by_coords(tc->text, p));
