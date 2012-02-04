@@ -113,7 +113,8 @@ bool UnitTable::deleteUnit(Unit const &u) {
 }
 
 /** Returns true if the given string 'name' is a valid unit in the table */
-bool UnitTable::hasUnit(Glib::ustring const &unit) const {
+bool UnitTable::hasUnit(Glib::ustring const &unit) const
+{
     UnitMap::const_iterator iter = _unit_map.find(unit);
     return (iter != _unit_map.end());
 }
@@ -133,29 +134,34 @@ UnitTable::UnitMap UnitTable::units(UnitType type) const
 }
 
 /** Returns the default unit abbr for the given type */
-Glib::ustring UnitTable::primary(UnitType type) const {
+Glib::ustring UnitTable::primary(UnitType type) const
+{
     return _primary_unit[type];
 }
 
-/** Merges the contents of the given file into the UnitTable,
-    possibly overwriting existing unit definitions.  This loads
-    from a text file */
-bool UnitTable::loadText(Glib::ustring const &filename) {
+/** Loads units from a text file.
+    
+    loadText loads and merges the contents of the given file into the UnitTable,
+    possibly overwriting existing unit definitions.
+    
+    @param filename: file to be loaded*/
+bool UnitTable::loadText(Glib::ustring const &filename)
+{
     char buf[BUFSIZE];
 
     // Open file for reading
     FILE * f = fopen(filename.c_str(), "r");
     if (f == NULL) {
-	g_warning("Could not open units file '%s': %s\n", 
+	    g_warning("Could not open units file '%s': %s\n", 
 		filename.c_str(), strerror(errno));
         g_warning("* INKSCAPE_DATADIR is:  '%s'\n", INKSCAPE_DATADIR);
         g_warning("* INKSCAPE_UIDIR is:  '%s'\n", INKSCAPE_UIDIR);
-	return false;
+	    return false;
     }
 
     // bypass current locale in order to make
     // sscanf read floats with '.' as a separator
-    // set locate to 'C' and keep old locale
+    // set locale to 'C' and keep old locale
     char *old_locale;
     old_locale = g_strdup (setlocale (LC_NUMERIC, NULL));
     setlocale (LC_NUMERIC, "C");
@@ -169,13 +175,14 @@ bool UnitTable::loadText(Glib::ustring const &filename) {
 	char primary[BUFSIZE];
 
 	int nchars = 0;
-    // locate is set to C, scanning %lf should work _everywhere_
-	if (sscanf(buf, "%s %s %s %s %lf %s %n", 
-		   name, plural, abbr, type, &factor, 
-		   primary, &nchars) != 6) {
+    // locale is set to C, scanning %lf should work _everywhere_
+	if (sscanf(buf, "%15s %15s %15s %15s %8lf %1s %15n", 
+		   name, plural, abbr, type, &factor, primary, &nchars) != 6)
+    {
 	    // Skip the line - doesn't appear to be valid
 	    continue;
 	}
+
 	g_assert(nchars < BUFSIZE);
 
 	char *desc = buf;
