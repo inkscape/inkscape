@@ -145,7 +145,8 @@ GdkPixbuf *sp_cursor_pixbuf_from_xpm(gchar const *const *xpm, GdkColor const& bl
     for (int i = 0; i < colors; i++) {
 
         char const *p = xpm[1 + i];
-        char const ccode = *p;
+        g_assert(*p >=0);
+        guchar const ccode = (guchar) *p;
 
         p++;
         while (isspace(*p)) {
