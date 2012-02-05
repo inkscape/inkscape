@@ -114,11 +114,10 @@ to all objects in selection. If there was no previous gradient on an item, uses 
 fill/stroke setting from preferences to create new default (linear: left/right; radial: centered)
 gradient.
 */
-void
-gr_apply_gradient (Inkscape::Selection *selection, GrDrag *drag, SPGradient *gr)
+void gr_apply_gradient (Inkscape::Selection *selection, GrDrag *drag, SPGradient *gr)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    SPGradientType new_type = (SPGradientType) prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR);
+    SPGradientType new_type = static_cast<SPGradientType>(prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR));
     guint new_fill = prefs->getBool("/tools/gradient/newfillorstroke", true);
 
 
@@ -126,7 +125,7 @@ gr_apply_gradient (Inkscape::Selection *selection, GrDrag *drag, SPGradient *gr)
 
     // First try selected dragger
     if (drag && drag->selected) {
-        GrDragger *dragger = (GrDragger*) drag->selected->data;
+        GrDragger *dragger = static_cast<GrDragger*>(drag->selected->data);
         for (GSList const* i = dragger->draggables; i != NULL; i = i->next) { // for all draggables of dragger
             GrDraggable *draggable = (GrDraggable *) i->data;
             gr_apply_gradient_to_item (draggable->item, gr, new_type, new_fill, draggable->fill_or_stroke, !draggable->fill_or_stroke);
@@ -140,13 +139,12 @@ gr_apply_gradient (Inkscape::Selection *selection, GrDrag *drag, SPGradient *gr)
    }
 }
 
-void
-gr_item_activate (GtkMenuItem *menuitem, gpointer data)
+void gr_item_activate (GtkMenuItem *menuitem, gpointer data)
 {
-    SPGradient *gr = (SPGradient *) g_object_get_data (G_OBJECT (menuitem), "gradient");
+    SPGradient *gr = static_cast<SPGradient *>(g_object_get_data (G_OBJECT (menuitem), "gradient"));
     gr = sp_gradient_ensure_vector_normalized(gr);
 
-    SPDesktop *desktop = (SPDesktop *) data;
+    SPDesktop *desktop = static_cast<SPDesktop *>(data);
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
     SPEventContext *ev = sp_desktop_event_context (desktop);
 
@@ -156,8 +154,7 @@ gr_item_activate (GtkMenuItem *menuitem, gpointer data)
 		       _("Assign gradient to object"));
 }
 
-gchar *
-gr_prepare_label (SPObject *obj)
+gchar *gr_prepare_label (SPObject *obj)
 {
     const gchar *id = obj->defaultLabel();
     if (strlen(id) > 15 && (!strncmp (id, "#linearGradient", 15) || !strncmp (id, "#radialGradient", 15)))

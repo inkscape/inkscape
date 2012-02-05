@@ -250,7 +250,7 @@ sp_color_wheel_selector_new (void)
 /* Helpers for setting color value */
 
 static void preserve_icc(SPColor *color, SPColorWheelSelector *cs){
-    ColorSelector* selector = (ColorSelector*)(SP_COLOR_SELECTOR(cs)->base);
+    ColorSelector* selector = static_cast<ColorSelector*>(SP_COLOR_SELECTOR(cs)->base);
     color->icc = selector->getColor().icc ? new SVGICCColor(*selector->getColor().icc) : 0;
 }
 

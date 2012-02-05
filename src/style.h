@@ -142,8 +142,8 @@ struct SPILength {
     float computed;
 };
 
-#define SP_STYLE_FILL_SERVER(s) (((SPStyle *) (s))->getFillPaintServer())
-#define SP_STYLE_STROKE_SERVER(s) (((SPStyle *) (s))->getStrokePaintServer())
+#define SP_STYLE_FILL_SERVER(s) ((const_cast<SPStyle *> (s))->getFillPaintServer())
+#define SP_STYLE_STROKE_SERVER(s) ((const_cast<SPStyle *> (s))->getStrokePaintServer())
 
 class SVGICCColor;
 

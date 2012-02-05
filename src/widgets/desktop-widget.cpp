@@ -1451,7 +1451,7 @@ SPViewWidget *sp_desktop_widget_new( SPNamedView *namedview )
 
 SPDesktopWidget* SPDesktopWidget::createInstance(SPNamedView *namedview)
 {
-    SPDesktopWidget *dtw = (SPDesktopWidget*)g_object_new(SP_TYPE_DESKTOP_WIDGET, NULL);
+    SPDesktopWidget *dtw = static_cast<SPDesktopWidget*>(g_object_new(SP_TYPE_DESKTOP_WIDGET, NULL));
 
     dtw->dt2r = 1.0 / namedview->doc_units->unittobase;
 

@@ -97,11 +97,10 @@ void ImageIcon::init()
 
 bool ImageIcon::showSvgDocument(const SPDocument *docArg)
 {
-
     if (document)
         document->doUnref();
 
-    SPDocument *doc = (SPDocument *)docArg;
+    SPDocument *doc = const_cast<SPDocument *>(docArg);
 
     doc->doRef();
     document = doc;

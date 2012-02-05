@@ -28,7 +28,7 @@ void hideCallback(GtkObject */*object*/, gpointer dock_ptr)
 {
     g_return_if_fail( dock_ptr != NULL );
 
-    Dock *dock = (Dock *)dock_ptr;
+    Dock *dock = static_cast<Dock *>(dock_ptr);
     dock->hide();
 }
 
@@ -36,7 +36,7 @@ void unhideCallback(GtkObject */*object*/, gpointer dock_ptr)
 {
     g_return_if_fail( dock_ptr != NULL );
 
-    Dock *dock = (Dock *)dock_ptr;
+    Dock *dock = static_cast<Dock *>(dock_ptr);
     dock->show();
 }
 
@@ -105,8 +105,7 @@ Dock::~Dock()
     g_free(_gdl_dock_bar);
 }
 
-void
-Dock::addItem(DockItem& item, DockItem::Placement placement)
+void Dock::addItem(DockItem& item, DockItem::Placement placement)
 {
     _dock_items.push_back(&item);
     gdl_dock_add_item(_gdl_dock, GDL_DOCK_ITEM(item.gobj()), (GdlDockPlacement)placement);
@@ -118,14 +117,12 @@ Dock::addItem(DockItem& item, DockItem::Placement placement)
     }
 }
 
-Gtk::Widget&
-Dock::getWidget()
+Gtk::Widget &Dock::getWidget()
 {
      return *_scrolled_window;
 }
 
-Gtk::Paned *
-Dock::getParentPaned()
+Gtk::Paned *Dock::getParentPaned()
 {
     g_return_val_if_fail(_dock_box, 0);
     Gtk::Container *parent = getWidget().get_parent();
@@ -133,20 +130,17 @@ Dock::getParentPaned()
 }
 
 
-Gtk::Paned *
-Dock::getPaned()
+Gtk::Paned *Dock::getPaned()
 {
     return _paned;
 }
 
-GtkWidget *
-Dock::getGdlWidget()
+GtkWidget *Dock::getGdlWidget()
 {
     return GTK_WIDGET(_gdl_dock);
 }
 
-bool
-Dock::isEmpty() const
+bool Dock::isEmpty() const
 {
     std::list<const DockItem *>::const_iterator
         i = _dock_items.begin(),
@@ -161,8 +155,7 @@ Dock::isEmpty() const
     return true;
 }
 
-bool
-Dock::hasIconifiedItems() const
+bool Dock::hasIconifiedItems() const
 {
     std::list<const DockItem *>::const_iterator
         i = _dock_items.begin(),
@@ -177,20 +170,17 @@ Dock::hasIconifiedItems() const
     return false;
 }
 
-void
-Dock::hide()
+void Dock::hide()
 {
     getWidget().hide();
 }
 
-void
-Dock::show()
+void Dock::show()
 {
     getWidget().show();
 }
 
-void
-Dock::toggleDockable(int width, int height)
+void Dock::toggleDockable(int width, int height)
 {
     static int prev_horizontal_position, prev_vertical_position;
 
@@ -213,8 +203,7 @@ Dock::toggleDockable(int width, int height)
 
 }
 
-void
-Dock::scrollToItem(DockItem& item)
+void Dock::scrollToItem(DockItem& item)
 {
     int item_x, item_y;
     item.getWidget().translate_coordinates(getWidget(), 0, 0, item_x, item_y);
@@ -236,8 +225,7 @@ Dock::signal_layout_changed()
                                     &_signal_layout_changed_proxy);
 }
 
-void
-Dock::_onLayoutChanged()
+void Dock::_onLayoutChanged()
 {
     if (isEmpty()) {
         if (hasIconifiedItems()) {
@@ -262,7 +250,7 @@ Dock::_onPanedButtonEvent(GdkEventButton *event)
         _paned->get_child1()->set_size_request(-1, -1);
 }
 
-gboolean
+gboolean 
 Dock::_on_paned_button_event(GtkWidget */*widget*/, GdkEventButton *event, gpointer user_data)
 {
     if (Dock *dock = static_cast<Dock *>(user_data))
