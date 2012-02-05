@@ -37,7 +37,7 @@ public:
     }
 
     SPItem *getObject() const {
-        return (SPItem *)URIReference::getObject();
+        return static_cast<SPItem *>(URIReference::getObject());
     }
    
     void updateObserver();

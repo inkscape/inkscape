@@ -815,7 +815,7 @@ void ColorICCSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorICC
     g_message( "/^^^^^^^^^  %p::_adjustmentChanged()", cs );
 #endif // DEBUG_LCMS
 
-     ColorICCSelector* iccSelector = (ColorICCSelector*)(SP_COLOR_SELECTOR(cs)->base);
+     ColorICCSelector* iccSelector = static_cast<ColorICCSelector*>(SP_COLOR_SELECTOR(cs)->base);
      if (iccSelector->_updating) {
          return;
      }

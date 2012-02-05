@@ -39,8 +39,7 @@ static Inkscape::XML::Node *sp_filter_primitive_write(SPObject *object, Inkscape
 
 static SPObjectClass *filter_primitive_parent_class;
 
-GType
-sp_filter_primitive_get_type()
+GType sp_filter_primitive_get_type()
 {
     static GType filter_primitive_type = 0;
 
@@ -60,13 +59,11 @@ sp_filter_primitive_get_type()
     return filter_primitive_type;
 }
 
-static void
-sp_filter_primitive_class_init(SPFilterPrimitiveClass *klass)
+static void sp_filter_primitive_class_init(SPFilterPrimitiveClass *klass)
 {
-    //GObjectClass *gobject_class = (GObjectClass *)klass;
-    SPObjectClass *sp_object_class = (SPObjectClass *)klass;
+    SPObjectClass *sp_object_class = (SPObjectClass *)(klass);
 
-    filter_primitive_parent_class = (SPObjectClass*)g_type_class_peek_parent(klass);
+    filter_primitive_parent_class = static_cast<SPObjectClass *>(g_type_class_peek_parent(klass));
 
     sp_object_class->build = sp_filter_primitive_build;
     sp_object_class->release = sp_filter_primitive_release;
@@ -79,8 +76,7 @@ sp_filter_primitive_class_init(SPFilterPrimitiveClass *klass)
     klass->build_renderer = NULL;
 }
 
-static void
-sp_filter_primitive_init(SPFilterPrimitive *filter_primitive)
+static void sp_filter_primitive_init(SPFilterPrimitive *filter_primitive)
 {
     filter_primitive->image_in = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
     filter_primitive->image_out = Inkscape::Filters::NR_FILTER_SLOT_NOT_SET;
@@ -104,8 +100,8 @@ sp_filter_primitive_init(SPFilterPrimitive *filter_primitive)
 static void
 sp_filter_primitive_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) filter_primitive_parent_class)->build) {
-        ((SPObjectClass *) filter_primitive_parent_class)->build(object, document, repr);
+    if ((static_cast<SPObjectClass *>(filter_primitive_parent_class))->build) {
+        (static_cast<SPObjectClass *>(filter_primitive_parent_class))->build(object, document, repr);
     }
 
     object->readAttr( "in" );
@@ -119,12 +115,11 @@ sp_filter_primitive_build(SPObject *object, SPDocument *document, Inkscape::XML:
 /**
  * Drops any allocated memory.
  */
-static void
-sp_filter_primitive_release(SPObject *object)
+static void sp_filter_primitive_release(SPObject *object)
 {
     /* deal with our children and our selves here */
-    if (((SPObjectClass *) filter_primitive_parent_class)->release)
-        ((SPObjectClass *) filter_primitive_parent_class)->release(object);
+    if ((static_cast<SPObjectClass *>(filter_primitive_parent_class))->release)
+        (static_cast<SPObjectClass *>(filter_primitive_parent_class))->release(object);
 }
 
 /**

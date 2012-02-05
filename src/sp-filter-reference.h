@@ -13,7 +13,7 @@ public:
     SPFilterReference(SPDocument *doc) : URIReference(doc) {}
 
     SPFilter *getObject() const {
-        return (SPFilter *)URIReference::getObject();
+        return static_cast<SPFilter *>(URIReference::getObject());
     }
 
 protected:

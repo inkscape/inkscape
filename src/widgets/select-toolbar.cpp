@@ -106,7 +106,7 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
 static void
 sp_selection_layout_widget_modify_selection(SPWidget *spw, Inkscape::Selection *selection, guint flags, gpointer data)
 {
-    SPDesktop *desktop = (SPDesktop *) data;
+    SPDesktop *desktop = static_cast<SPDesktop *>(data);
     if ((sp_desktop_selection(desktop) == selection) // only respond to changes in our desktop
         && (flags & (SP_OBJECT_MODIFIED_FLAG        |
                      SP_OBJECT_PARENT_MODIFIED_FLAG |
@@ -119,7 +119,7 @@ sp_selection_layout_widget_modify_selection(SPWidget *spw, Inkscape::Selection *
 static void
 sp_selection_layout_widget_change_selection(SPWidget *spw, Inkscape::Selection *selection, gpointer data)
 {
-    SPDesktop *desktop = (SPDesktop *) data;
+    SPDesktop *desktop = static_cast<SPDesktop *>(data);
     if (sp_desktop_selection(desktop) == selection) { // only respond to changes in our desktop
         gboolean setActive = (selection && !selection->isEmpty());
         std::vector<GtkAction*> *contextActions = reinterpret_cast<std::vector<GtkAction*> *>(g_object_get_data(G_OBJECT(spw), "contextActions"));
@@ -330,7 +330,7 @@ static void toggle_stroke( GtkToggleAction* act, gpointer data )
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gboolean active = gtk_toggle_action_get_active(act);
     prefs->setBool("/options/transform/stroke", active);
-    SPDesktop *desktop = (SPDesktop *)data;
+    SPDesktop *desktop = static_cast<SPDesktop *>(data);
     if ( active ) {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."));
     } else {
@@ -343,7 +343,7 @@ static void toggle_corners( GtkToggleAction* act, gpointer data)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gboolean active = gtk_toggle_action_get_active(act);
     prefs->setBool("/options/transform/rectcorners", active);
-    SPDesktop *desktop = (SPDesktop *)data;
+    SPDesktop *desktop = static_cast<SPDesktop *>(data);
     if ( active ) {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Now <b>rounded rectangle corners</b> are <b>scaled</b> when rectangles are scaled."));
     } else {
@@ -356,7 +356,7 @@ static void toggle_gradient( GtkToggleAction *act, gpointer data )
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gboolean active = gtk_toggle_action_get_active(act);
     prefs->setBool("/options/transform/gradient", active);
-    SPDesktop *desktop = (SPDesktop *)data;
+    SPDesktop *desktop = static_cast<SPDesktop *>(data);
     if ( active ) {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Now <b>gradients</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."));
     } else {
@@ -369,7 +369,7 @@ static void toggle_pattern( GtkToggleAction* act, gpointer data )
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     gboolean active = gtk_toggle_action_get_active(act);
     prefs->setInt("/options/transform/pattern", active);
-    SPDesktop *desktop = (SPDesktop *)data;
+    SPDesktop *desktop = static_cast<SPDesktop *>(data);
     if ( active ) {
         desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Now <b>patterns</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."));
     } else {

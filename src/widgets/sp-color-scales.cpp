@@ -547,7 +547,7 @@ void ColorScales::_adjustmentAnyChanged( GtkAdjustment *adjustment, SPColorScale
 void ColorScales::_sliderAnyGrabbed( SPColorSlider *slider, SPColorScales *cs )
 {
     (void)slider;
-    ColorScales* scales = (ColorScales*)(SP_COLOR_SELECTOR(cs)->base);
+    ColorScales* scales = static_cast<ColorScales*>(SP_COLOR_SELECTOR(cs)->base);
 	if (!scales->_dragging) {
 		scales->_dragging = TRUE;
         scales->_grabbed();
@@ -558,7 +558,7 @@ void ColorScales::_sliderAnyGrabbed( SPColorSlider *slider, SPColorScales *cs )
 void ColorScales::_sliderAnyReleased( SPColorSlider *slider, SPColorScales *cs )
 {
     (void)slider;
-    ColorScales* scales = (ColorScales*)(SP_COLOR_SELECTOR(cs)->base);
+    ColorScales* scales = static_cast<ColorScales*>(SP_COLOR_SELECTOR(cs)->base);
 	if (scales->_dragging) {
 		scales->_dragging = FALSE;
         scales->_released();
@@ -569,14 +569,14 @@ void ColorScales::_sliderAnyReleased( SPColorSlider *slider, SPColorScales *cs )
 void ColorScales::_sliderAnyChanged( SPColorSlider *slider, SPColorScales *cs )
 {
     (void)slider;
-    ColorScales* scales = (ColorScales*)(SP_COLOR_SELECTOR(cs)->base);
+    ColorScales* scales = static_cast<ColorScales*>(SP_COLOR_SELECTOR(cs)->base);
 
     scales->_recalcColor( TRUE );
 }
 
 void ColorScales::_adjustmentChanged( SPColorScales *cs, guint channel )
 {
-	ColorScales* scales = (ColorScales*)(SP_COLOR_SELECTOR(cs)->base);
+	ColorScales* scales = static_cast<ColorScales*>(SP_COLOR_SELECTOR(cs)->base);
 	if (scales->_updating) return;
 
 	scales->_updating = TRUE;

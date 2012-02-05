@@ -290,7 +290,7 @@ void ColorWheelSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorW
         gtk_adjustment_set_value( adjustment, floor (value * upper + 0.5) );
     }
 
-    ColorWheelSelector* wheelSelector = (ColorWheelSelector*)(SP_COLOR_SELECTOR(cs)->base);
+    ColorWheelSelector* wheelSelector = static_cast<ColorWheelSelector*>(SP_COLOR_SELECTOR(cs)->base);
     if (wheelSelector->_updating) return;
 
     wheelSelector->_updating = TRUE;
@@ -304,7 +304,7 @@ void ColorWheelSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorW
 void ColorWheelSelector::_sliderGrabbed( SPColorSlider *slider, SPColorWheelSelector *cs )
 {
     (void)slider;
-    ColorWheelSelector* wheelSelector = (ColorWheelSelector*)(SP_COLOR_SELECTOR(cs)->base);
+    ColorWheelSelector* wheelSelector = static_cast<ColorWheelSelector*>(SP_COLOR_SELECTOR(cs)->base);
     if (!wheelSelector->_dragging) {
         wheelSelector->_dragging = TRUE;
         wheelSelector->_grabbed();
@@ -317,7 +317,7 @@ void ColorWheelSelector::_sliderGrabbed( SPColorSlider *slider, SPColorWheelSele
 void ColorWheelSelector::_sliderReleased( SPColorSlider *slider, SPColorWheelSelector *cs )
 {
     (void)slider;
-    ColorWheelSelector* wheelSelector = (ColorWheelSelector*)(SP_COLOR_SELECTOR(cs)->base);
+    ColorWheelSelector* wheelSelector = static_cast<ColorWheelSelector*>(SP_COLOR_SELECTOR(cs)->base);
     if (wheelSelector->_dragging) {
         wheelSelector->_dragging = FALSE;
         wheelSelector->_released();
@@ -330,7 +330,7 @@ void ColorWheelSelector::_sliderReleased( SPColorSlider *slider, SPColorWheelSel
 void ColorWheelSelector::_sliderChanged( SPColorSlider *slider, SPColorWheelSelector *cs )
 {
     (void)slider;
-    ColorWheelSelector* wheelSelector = (ColorWheelSelector*)(SP_COLOR_SELECTOR(cs)->base);
+    ColorWheelSelector* wheelSelector = static_cast<ColorWheelSelector*>(SP_COLOR_SELECTOR(cs)->base);
 
     preserve_icc(&wheelSelector->_color, cs);
     wheelSelector->_updateInternals( wheelSelector->_color, ColorScales::getScaled( wheelSelector->_adj ), wheelSelector->_dragging );

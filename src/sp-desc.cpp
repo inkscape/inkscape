@@ -22,8 +22,7 @@ static Inkscape::XML::Node *sp_desc_write(SPObject *object, Inkscape::XML::Docum
 
 static SPObjectClass *desc_parent_class;
 
-GType
-sp_desc_get_type (void)
+GType sp_desc_get_type (void)
 {
     static GType desc_type = 0;
 
@@ -43,17 +42,15 @@ sp_desc_get_type (void)
     return desc_type;
 }
 
-static void
-sp_desc_class_init(SPDescClass *klass)
+static void sp_desc_class_init(SPDescClass *klass)
 {
-    SPObjectClass *sp_object_class = (SPObjectClass *) klass;
-    desc_parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);;
+    SPObjectClass *sp_object_class = (SPObjectClass *)(klass);
+    desc_parent_class = (SPObjectClass *)(g_type_class_ref(SP_TYPE_OBJECT));
 
     sp_object_class->write = sp_desc_write;
 }
 
-static void
-sp_desc_init(SPDesc */*desc*/)
+static void sp_desc_init(SPDesc */*desc*/)
 {
 }
 
@@ -66,8 +63,8 @@ static Inkscape::XML::Node *sp_desc_write(SPObject *object, Inkscape::XML::Docum
         repr = object->getRepr()->duplicate(doc);
     }
 
-    if (((SPObjectClass *) desc_parent_class)->write) {
-        ((SPObjectClass *) desc_parent_class)->write(object, doc, repr, flags);
+    if ((static_cast<SPObjectClass *>(desc_parent_class))->write) {
+        (static_cast<SPObjectClass *>(desc_parent_class))->write(object, doc, repr, flags);
     }
 
     return repr;

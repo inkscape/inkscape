@@ -77,7 +77,7 @@ void Inkscape::SelCue::_updateItemBboxes()
 
     int bcount = 0;
     for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
-        SPItem *item = (SPItem *) l->data;
+        SPItem *item = static_cast<SPItem *>(l->data);
         SPCanvasItem* box = _item_bboxes[bcount ++];
 
         if (box) {
@@ -119,7 +119,7 @@ void Inkscape::SelCue::_newItemBboxes()
     int prefs_bbox = prefs->getBool("/tools/bounding_box");
     
     for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
-        SPItem *item = (SPItem *) l->data;
+        SPItem *item = static_cast<SPItem *>(l->data);
 
         Geom::OptRect const b = (prefs_bbox == 0) ?
             item->desktopVisualBounds() : item->desktopGeometricBounds();
@@ -172,7 +172,7 @@ void Inkscape::SelCue::_newTextBaselines()
     _text_baselines.clear();
 
     for (GSList const *l = _selection->itemList(); l != NULL; l = l->next) {
-        SPItem *item = (SPItem *) l->data;
+        SPItem *item = static_cast<SPItem *>(l->data);
 
         SPCanvasItem* baseline_point = NULL;
         if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) { // visualize baseline
