@@ -28,7 +28,7 @@ public:
     SPUseReference(SPObject *owner) : URIReference(owner) {}
 
     SPItem *getObject() const {
-        return (SPItem *)URIReference::getObject();
+        return static_cast<SPItem *>(URIReference::getObject());
     }
 
 protected:

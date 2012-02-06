@@ -167,7 +167,7 @@ void dialogLoggingFunction(const gchar */*log_domain*/,
                            const gchar *messageText,
                            gpointer user_data)
 {
-    DebugDialogImpl *dlg = (DebugDialogImpl *)user_data;
+    DebugDialogImpl *dlg = static_cast<DebugDialogImpl *>(user_data);
     dlg->message(messageText);
 }
 

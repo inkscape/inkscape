@@ -1330,29 +1330,31 @@ bool Siox::colorSignature(const std::vector<CieLab> &inputVec,
     if (length < 1) // no error. just don't do anything
         return true;
 
-    CieLab *input = (CieLab *) malloc(length * sizeof(CieLab));
+    CieLab *input = new CieLab [length];
 
     if (!input)
-        {
+    {
         error("Could not allocate buffer for signature");
         return false;
-        }
+    }
     for (unsigned int i=0 ; i < length ; i++)
+    {
         input[i] = inputVec[i];
+    }
 
     unsigned int stage1length = 0;
-    colorSignatureStage1(input, 0, length, 0,
-                   &stage1length, dims);
+    colorSignatureStage1(input, 0, length, 0, &stage1length, dims);
 
     unsigned int stage2length = 0;
-    colorSignatureStage2(input, 0, stage1length, 0,
-                  &stage2length, length * 0.001, dims);
+    colorSignatureStage2(input, 0, stage1length, 0, &stage2length, length * 0.001, dims);
 
     result.clear();
     for (unsigned int i=0 ; i < stage2length ; i++)
+    {
         result.push_back(input[i]);
+    }
 
-    free(input);
+    delete[] input;
 
     return true;
 }

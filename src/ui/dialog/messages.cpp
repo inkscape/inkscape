@@ -124,9 +124,8 @@ static void dialogLoggingCallback(const gchar */*log_domain*/,
                            const gchar *messageText,
                            gpointer user_data)
 {
-    Messages *dlg = (Messages *)user_data;
-
-    dlg->message((char *)messageText);
+    Messages *dlg = static_cast<Messages *>(user_data);
+    dlg->message(const_cast<char*>(messageText));
 
 }
 

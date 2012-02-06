@@ -41,20 +41,20 @@ namespace Dialog {
 
 void sp_retransientize(Inkscape::Application */*inkscape*/, SPDesktop *desktop, gpointer dlgPtr)
 {
-    Dialog *dlg = (Dialog *)dlgPtr;
+    Dialog *dlg = static_cast<Dialog *>(dlgPtr);
     dlg->onDesktopActivated (desktop);
 }
 
 gboolean sp_retransientize_again(gpointer dlgPtr)
 {
-    Dialog *dlg = (Dialog *)dlgPtr;
+    Dialog *dlg = static_cast<Dialog *>(dlgPtr);
     dlg->retransientize_suppress = false;
     return FALSE; // so that it is only called once
 }
 
 void sp_dialog_shutdown(GtkObject */*object*/, gpointer dlgPtr)
 {
-    Dialog *dlg = (Dialog *)dlgPtr;
+    Dialog *dlg = static_cast<Dialog *>(dlgPtr);
     dlg->onShutdown();
 }
 
@@ -63,7 +63,7 @@ void hideCallback(GtkObject */*object*/, gpointer dlgPtr)
 {
     g_return_if_fail( dlgPtr != NULL );
 
-    Dialog *dlg = (Dialog *)dlgPtr;
+    Dialog *dlg = static_cast<Dialog *>(dlgPtr);
     dlg->onHideF12();
 }
 
@@ -71,7 +71,7 @@ void unhideCallback(GtkObject */*object*/, gpointer dlgPtr)
 {
     g_return_if_fail( dlgPtr != NULL );
 
-    Dialog *dlg = (Dialog *)dlgPtr;
+    Dialog *dlg = static_cast<Dialog *>(dlgPtr);
     dlg->onShowF12();
 }
 

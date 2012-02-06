@@ -41,8 +41,7 @@
  *    0  *elem1 == *elem2
  *    >0  *elem1 goes after *elem2
  */
-int
-sp_compare_x_position(SPItem *first, SPItem *second)
+int sp_compare_x_position(SPItem *first, SPItem *second)
 {
     using Geom::X;
     using Geom::Y;
@@ -603,8 +602,7 @@ void TileDialog::updateSelection()
 
 static void updateSelectionCallback(Inkscape::Application */*inkscape*/, Inkscape::Selection */*selection*/, TileDialog *dlg)
 {
-    TileDialog *tledlg = (TileDialog *) dlg;
-    tledlg->updateSelection();
+    dlg->updateSelection();
 }
 
 

@@ -55,7 +55,7 @@ private:
 };
 
 struct SPSwitch : public SPGroup {
-    void resetChildEvaluated() { ((CSwitch *)group)->_reevaluate(); }
+    void resetChildEvaluated() { (static_cast<CSwitch *>(group))->_reevaluate(); }
 };
 
 struct SPSwitchClass : public SPGroupClass {
