@@ -8,7 +8,7 @@
 #include "inkscape-private.h"
 
 
-/// Dummy functions to keep linker happy
+// Dummy functions to keep linker happy
 #if !defined(DUMMY_MAIN_TEST_CALLS_SEEN)
 #define DUMMY_MAIN_TEST_CALLS_SEEN
 int sp_main_gui (int, char const**) { return 0; }

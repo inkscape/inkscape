@@ -102,7 +102,7 @@ static void usage();
 
 static GtkWidget *ctrlwin = NULL;
 
-/// Dummy functions to keep linker happy
+// Dummy functions to keep linker happy
 int sp_main_gui (int, char const**) { return 0; }
 int sp_main_console (int, char const**) { return 0; }
 

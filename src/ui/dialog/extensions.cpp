@@ -34,10 +34,6 @@ ExtensionsPanel &ExtensionsPanel::getInstance()
 }
 
 
-
-/**
- * Constructor
- */
 ExtensionsPanel::ExtensionsPanel() :
         _showAll(false)
 {
