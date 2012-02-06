@@ -14,7 +14,6 @@
 #include "ui/widget/panel.h"
 #include "verbs.h"
 
-#include <gtkmm.h>
 #include <gtkmm/box.h>
 
 namespace Inkscape {

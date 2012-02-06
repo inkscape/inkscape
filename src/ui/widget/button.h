@@ -10,7 +10,7 @@
 #ifndef INKSCAPE_UI_WIDGET_BUTTON_H
 #define INKSCAPE_UI_WIDGET_BUTTON_H
 
-#include <gtkmm.h>
+#include <gtkmm/checkbutton.h>
 
 namespace Inkscape {
 namespace UI {

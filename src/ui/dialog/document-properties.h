@@ -17,7 +17,10 @@
 #include <list>
 #include <stddef.h>
 #include <sigc++/sigc++.h>//
+#include <gtkmm/comboboxtext.h>
 #include <gtkmm/notebook.h>
+#include <gtkmm/optionmenu.h>
+#include <gtkmm/textview.h>
 #include <glibmm/i18n.h>
 
 #include "ui/widget/notebook-page.h"

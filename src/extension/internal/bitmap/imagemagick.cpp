@@ -13,7 +13,6 @@
 #include <gtkmm/box.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/spinbutton.h>
-#include <gtkmm.h>
 
 #include <glib/gstdio.h>
 

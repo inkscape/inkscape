@@ -21,6 +21,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>      /* GtkWidget */
 #include <gtkmm/widget.h>
+#include <gtkmm/table.h>
 
 namespace Gtk {
   class Label;

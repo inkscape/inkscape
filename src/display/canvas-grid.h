@@ -12,7 +12,6 @@
 #include <string>
 
 #include <gtkmm/box.h>
-#include <gtkmm.h>
 
 #include "sp-canvas-item.h"
 #include "xml/repr.h"

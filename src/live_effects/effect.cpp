@@ -33,7 +33,6 @@
 #include "live_effects/parameter/parameter.h"
 #include <glibmm/ustring.h>
 #include "display/curve.h"
-#include <gtkmm.h>
 
 #include <exception>
 

@@ -31,6 +31,9 @@
 //Gtk includes
 #include <glibmm/i18n.h>
 #include <glib/gstdio.h>
+#include <gtkmm/comboboxtext.h>
+#include <gtkmm/expander.h>
+#include <gtkmm/filechooserdialog.h>
 
 //Temporary ugly hack
 //Remove this after the get_filter() calls in

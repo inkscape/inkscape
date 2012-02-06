@@ -10,7 +10,6 @@
 #include "live_effects/effect.h"
 #include "svg/svg.h"
 #include "svg/stringstream.h"
-#include <gtkmm.h>
 #include "ui/widget/point.h"
 #include "widgets/icon.h"
 #include "ui/widget/registered-widget.h"

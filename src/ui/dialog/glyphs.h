@@ -7,6 +7,7 @@
 #ifndef SEEN_DIALOGS_GLYPHS_H
 #define SEEN_DIALOGS_GLYPHS_H
 
+#include <gtkmm/comboboxtext.h>
 #include <gtkmm/treemodel.h>
 #include "ui/widget/panel.h"
 #include "ui/dialog/desktop-tracker.h"

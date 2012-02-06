@@ -19,6 +19,7 @@
 
 #include "document-private.h"
 #include <gtkmm/notebook.h>
+#include <gtkmm/stock.h>
 #include <glibmm/i18n.h>
 #include <message-stack.h>
 #include "selection.h"

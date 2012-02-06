@@ -18,9 +18,8 @@
 # include "config.h"
 #endif
 
-
-#include <gtkmm.h>
 #include <glibmm/i18n.h>
+#include <gtkmm/comboboxtext.h>
 
 #include "xml/node.h"
 #include "extension/extension.h"

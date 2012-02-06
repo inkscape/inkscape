@@ -28,7 +28,6 @@
 
 #include <glibmm/i18n.h>
 #include <sigc++/functors/mem_fun.h>
-#include <gtkmm.h>
 
 #include <2geom/transforms.h>
 #include <2geom/rect.h>

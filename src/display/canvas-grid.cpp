@@ -33,6 +33,8 @@
 #include "util/mathfns.h"
 #include "xml/node-event-vector.h"
 
+#include <gtkmm/table.h>
+
 using Inkscape::DocumentUndo;
 
 namespace Inkscape {

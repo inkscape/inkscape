@@ -17,6 +17,8 @@
 #include "ui/tool/event-utils.h"
 #include "ui/tool/selector.h"
 
+#include <gdk/gdkkeysyms.h>
+
 namespace Inkscape {
 namespace UI {
 

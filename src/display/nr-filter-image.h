@@ -15,8 +15,9 @@
 #include "display/nr-filter-primitive.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
-#include <gtkmm.h>
 #include "sp-item.h"
+#include <glibmm/refptr.h>
+#include <gdkmm/pixbuf.h>
 
 namespace Inkscape {
 namespace Filters {

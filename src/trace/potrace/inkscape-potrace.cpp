@@ -17,7 +17,7 @@
 #include "inkscape-potrace.h"
 
 #include <glibmm/i18n.h>
-#include <gtkmm.h>
+#include <gtkmm/main.h>
 #include <iomanip>
 
 #include "trace/filterset.h"

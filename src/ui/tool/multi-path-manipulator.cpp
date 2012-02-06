@@ -27,6 +27,8 @@
 #include "ui/tool/path-manipulator.h"
 #include "util/unordered-containers.h"
 
+#include <gdk/gdkkeysyms.h>
+
 #ifdef USE_GNU_HASHES
 namespace __gnu_cxx {
 template<>

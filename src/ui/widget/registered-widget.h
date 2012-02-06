@@ -12,7 +12,6 @@
 #ifndef INKSCAPE_UI_WIDGET_REGISTERED_WIDGET__H_
 #define INKSCAPE_UI_WIDGET_REGISTERED_WIDGET__H_
 
-#include <gtkmm.h>
 #include <2geom/affine.h>
 #include "xml/node.h"
 #include "registry.h"

@@ -14,8 +14,9 @@
 #define __COLOR_PICKER_H__
 
 #include <stddef.h>
+#include <gtkmm/button.h>
+#include <gtkmm/dialog.h>
 #include <sigc++/sigc++.h>
-#include <gtkmm.h>
 #include "widgets/sp-color-selector.h"
 #include "ui/widget/color-preview.h"
 //#include "ui/dialog/dialog.h"

@@ -10,7 +10,6 @@
 #include "xml/repr.h"
 #include <gtkmm/box.h>
 
-#include <gtkmm.h>
 #include "ui/widget/color-picker.h"
 #include "ui/widget/scalar-unit.h"
 

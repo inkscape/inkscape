@@ -11,8 +11,10 @@
 #ifndef INKSCAPE_UI_WIDGET_RENDERING_OPTIONS_H
 #define INKSCAPE_UI_WIDGET_RENDERING_OPTIONS_H
 
-#include <gtkmm.h>
 #include "scalar.h"
+
+#include <gtkmm/frame.h>
+#include <gtkmm/radiobutton.h>
 
 namespace Inkscape {
 namespace UI {

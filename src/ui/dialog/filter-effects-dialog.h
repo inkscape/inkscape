@@ -15,14 +15,15 @@
 
 #include <memory>
 
-#include <gtkmm.h>
-
 #include "attributes.h"
 #include "ui/widget/panel.h"
 #include "sp-filter.h"
 #include "ui/widget/combo-enums.h"
 #include "ui/widget/spin-slider.h"
 #include "xml/helper-observer.h"
+
+#include <gtkmm/notebook.h>
+#include <gtkmm/sizegroup.h>
 
 namespace Inkscape {
 namespace UI {

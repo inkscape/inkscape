@@ -14,12 +14,13 @@
 #include <boost/utility.hpp>
 #include <stddef.h>
 #include <sigc++/sigc++.h>
-#include <gdkmm.h>
-#include <gtkmm.h>
 #include <2geom/point.h>
 #include "util/accumulators.h"
 #include "display/sodipodi-ctrl.h"
 #include "event-context.h"
+
+#include <gtkmm/enums.h>
+#include <gdkmm/pixbuf.h>
 
 class SPDesktop;
 

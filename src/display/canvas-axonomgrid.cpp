@@ -38,6 +38,8 @@
 #include "xml/node-event-vector.h"
 #include "round.h"
 
+#include <gtkmm/table.h>
+
 enum Dim3 { X=0, Y, Z };
 
 #ifndef M_PI

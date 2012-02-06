@@ -17,11 +17,15 @@
 
 #include <iostream>
 #include <vector>
-#include <gtkmm.h>
 #include "ui/widget/spinbutton.h"
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <glibmm/i18n.h>
+#include <gtkmm/comboboxtext.h>
+#include <gtkmm/drawingarea.h>
+#include <gtkmm/filechooserbutton.h>
+#include <gtkmm/scale.h>
+#include <gtkmm/table.h>
 
 #include "ui/widget/color-picker.h"
 #include "ui/widget/unit-menu.h"

@@ -10,7 +10,6 @@
 #ifndef INKSCAPE_UI_WIDGET_PAGE_SIZER_H
 #define INKSCAPE_UI_WIDGET_PAGE_SIZER_H
 
-#include <gtkmm.h>
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 
@@ -18,6 +17,12 @@
 #include "ui/widget/registry.h"
 #include "ui/widget/registered-widget.h"
 #include "xml/node.h"
+
+#include <gtkmm/alignment.h>
+#include <gtkmm/expander.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/scrolledwindow.h>
+#include <gtkmm/table.h>
 
 namespace Inkscape {    
 namespace UI {

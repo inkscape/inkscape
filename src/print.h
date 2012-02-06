@@ -11,10 +11,10 @@
  * This code is in public domain
  */
 
-#include <gtkmm.h>
 //#include <libnr/nr-path.h>
 #include <2geom/forward.h>
 
+#include <gtkmm/window.h>
 
 class SPDocument;
 class SPStyle;

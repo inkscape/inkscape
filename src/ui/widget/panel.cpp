@@ -18,6 +18,7 @@
 #include <glibmm/i18n.h>
 
 #include <gtkmm/dialog.h> // for Gtk::RESPONSE_*
+#include <gtkmm/menu.h>
 #include <gtkmm/stock.h>
 
 #include <gtk/gtk.h>

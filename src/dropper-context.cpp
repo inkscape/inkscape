@@ -16,7 +16,6 @@
 #endif
 
 #include <glibmm.h>
-#include <gtkmm.h>
 #include <gdk/gdk.h>
 #include <2geom/transforms.h>
 

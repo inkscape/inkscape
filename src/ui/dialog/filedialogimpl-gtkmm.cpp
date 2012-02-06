@@ -32,6 +32,8 @@
 # include <libgnomevfs/gnome-vfs.h>
 #endif
 
+#include <gtkmm/stock.h>
+
 //Routines from file.cpp
 #undef INK_DUMP_FILENAME_CONV
 

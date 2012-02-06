@@ -14,8 +14,6 @@
 
 #include <map>
 
-#include <gtkmm.h>
-
 #include "number-opt-number.h"
 #include "sp-object.h"
 #include "sp-filter-units.h"

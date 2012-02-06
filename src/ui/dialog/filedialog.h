@@ -19,7 +19,6 @@
 #include <glibmm.h>
 #include <vector>
 #include <set>
-#include <gtkmm.h>
 
 #include "extension/system.h"
 

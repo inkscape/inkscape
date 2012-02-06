@@ -24,7 +24,9 @@
 #include <errno.h>
 #include <glib.h>
 #include <glib/gstdio.h>
-#include <gtkmm.h>
+#include <gtkmm/main.h>
+#include <gtkmm/scrolledwindow.h>
+#include <gtkmm/textview.h>
 
 #include "ui/view/view.h"
 #include "desktop-handles.h"

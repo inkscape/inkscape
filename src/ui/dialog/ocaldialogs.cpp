@@ -28,6 +28,8 @@
 #include "io/sys.h"
 #include "preferences.h"
 
+#include <gtkmm/stock.h>
+
 namespace Inkscape
 {
 namespace UI

@@ -22,8 +22,6 @@
 using std::map;
 using std::pair;
 
-#include <gtkmm.h>
-
 #include "attributes.h"
 #include "document.h"
 #include "sp-filter.h"

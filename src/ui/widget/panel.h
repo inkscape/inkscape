@@ -14,11 +14,18 @@
 #define SEEN_INKSCAPE_UI_WIDGET_PANEL_H
 
 #include <vector>
-#include <gtkmm.h>
 
 #include "inkscape.h"
 #include "selection.h"
 #include "ui/previewfillable.h"
+
+#include <gtkmm/arrow.h>
+#include <gtkmm/box.h>
+#include <gtkmm/button.h>
+#include <gtkmm/buttonbox.h>
+#include <gtkmm/checkmenuitem.h>
+#include <gtkmm/eventbox.h>
+#include <gtkmm/menuitem.h>
 
 namespace Inkscape {
 namespace UI {

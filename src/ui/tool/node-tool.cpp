@@ -42,6 +42,8 @@
 #include "pixmaps/cursor-node.xpm"
 #include "pixmaps/cursor-node-d.xpm"
 
+#include <gdk/gdkkeysyms.h>
+
 /** @struct InkNodeTool
  *
  * Node tool event context.

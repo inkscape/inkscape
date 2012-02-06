@@ -21,8 +21,8 @@
 # include <string.h>
 #endif
 
-#include <gtkmm.h>
-
+#include <glibmm/refptr.h>
+#include <gdkmm/pixbuf.h>
 #include <vector>
 #include <sp-shape.h>
 

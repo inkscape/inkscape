@@ -6,9 +6,11 @@
 
 #include "live_effects/parameter/originalpath.h"
 
-#include <gtkmm.h>
 #include "widgets/icon.h"
 #include <glibmm/i18n.h>
+#include <gtkmm/box.h>
+#include <gtkmm/button.h>
+#include <gtkmm/label.h>
 
 #include "uri.h"
 #include "sp-shape.h"

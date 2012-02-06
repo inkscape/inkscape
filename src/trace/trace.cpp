@@ -19,8 +19,8 @@
 #include "desktop-handles.h"
 #include "document.h"
 #include "message-stack.h"
-#include <gtkmm.h>
 #include <glibmm/i18n.h>
+#include <gtkmm/main.h>
 #include "selection.h"
 #include "xml/repr.h"
 #include "xml/attribute-record.h"

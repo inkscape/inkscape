@@ -8,7 +8,6 @@
  */
 
 #include <gtk/gtk.h>
-#include <gtkmm.h>
 
 #include "dock-item.h"
 #include "desktop.h"
@@ -16,6 +15,9 @@
 #include "preferences.h"
 #include "ui/widget/dock.h"
 #include "widgets/icon.h"
+
+#include <gtkmm/icontheme.h>
+#include <gtkmm/stockitem.h>
 
 namespace Inkscape {
 namespace UI {

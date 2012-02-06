@@ -19,6 +19,8 @@
 #include "ui/tool/transform-handle-set.h"
 #include "ui/tool/node.h"
 
+#include <gdk/gdkkeysyms.h>
+
 namespace Inkscape {
 namespace UI {
 

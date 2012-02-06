@@ -21,6 +21,7 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/alignment.h>
 #include <gtkmm/box.h>
+#include <gtkmm/stock.h>
 
 #include "preferences.h"
 #include "ui/widget/preferences-widget.h"

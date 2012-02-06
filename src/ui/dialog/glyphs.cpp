@@ -9,6 +9,7 @@
 #include <vector>
 
 #include <glibmm/i18n.h>
+#include <gtkmm/alignment.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/iconview.h>
 #include <gtkmm/label.h>

@@ -23,6 +23,7 @@
 
 #include <gtk/gtk.h>
 #include <glib.h>
+#include <gtkmm/icontheme.h>
 
 #include "inkscape-private.h"
 #include "extension/db.h"

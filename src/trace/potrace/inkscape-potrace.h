@@ -17,7 +17,6 @@
 #ifndef __INKSCAPE_POTRACE_H__
 #define __INKSCAPE_POTRACE_H__
 
-#include <gtkmm.h>
 #include <trace/trace.h>
 #include <trace/imagemap.h>
 

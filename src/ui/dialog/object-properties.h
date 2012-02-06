@@ -14,8 +14,10 @@
 #define SEEN_DIALOGS_ITEM_PROPERTIES_H
 
 #include <gtk/gtk.h>
-#include <gtkmm.h>
 #include <glibmm/i18n.h>
+#include <gtkmm/expander.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/textview.h>
 
 #include "desktop.h"
 #include "ui/dialog/desktop-tracker.h"

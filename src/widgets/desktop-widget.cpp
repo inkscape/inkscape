@@ -25,7 +25,6 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <gtkmm.h>
 #include <2geom/rect.h>
 
 #include "box3d-context.h"

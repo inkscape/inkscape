@@ -19,7 +19,6 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <gtkmm.h>
 #include "ui/widget/spinbutton.h"
 #include <glibmm/i18n.h>
 
@@ -62,6 +61,10 @@
 
 #include "io/sys.h"
 #include <iostream>
+
+#include <gtkmm/colorbutton.h>
+#include <gtkmm/scrolledwindow.h>
+#include <gtkmm/stock.h>
 
 using namespace Inkscape::Filters;
 

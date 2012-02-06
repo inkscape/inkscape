@@ -14,7 +14,6 @@
 
 #include <glibmm.h>
 #include <vector>
-#include <gtkmm.h>
 #include "filedialogimpl-gtkmm.h"
 
 //General includes
@@ -29,6 +28,9 @@
 //Gtk includes
 #include <glibmm/i18n.h>
 #include <glib/gstdio.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/listviewtext.h>
+#include <gtkmm/scrolledwindow.h>
 
 //Temporary ugly hack
 //Remove this after the get_filter() calls in

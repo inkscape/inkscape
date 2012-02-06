@@ -20,7 +20,6 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <gtkmm.h>
 
 #include "helper/sp-marshal.h"
 #include <helper/recthull.h>

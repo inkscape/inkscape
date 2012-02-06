@@ -16,8 +16,10 @@
 #define SEEN_DIALOGS_SP_ATTRIBUTE_WIDGET_H
 
 #include <gtk/gtk.h>
-#include <gtkmm.h>
 #include <glib.h>
+#include <gtkmm/entry.h>
+#include <gtkmm/table.h>
+#include <gtkmm/widget.h>
 #include <stddef.h>
 #include <sigc++/connection.h>
 

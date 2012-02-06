@@ -27,7 +27,6 @@
 #include "document.h"
 #include "desktop-handles.h"
 #include "desktop.h"
-#include <gtkmm.h>
 #include "helper/units.h"
 #include "inkscape.h"
 #include "io/sys.h"
@@ -46,6 +45,8 @@
 #if ENABLE_LCMS
 #include "color-profile.h"
 #endif // ENABLE_LCMS
+
+#include <gtkmm/stock.h>
 
 using std::pair;
 

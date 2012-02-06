@@ -58,6 +58,8 @@
 #include "fill-style.h" // to get sp_fill_style_widget_set_desktop
 #include "fill-n-stroke-factory.h"
 
+#include <gtkmm/optionmenu.h>
+
 using Inkscape::DocumentUndo;
 
 /** Marker selection option menus */

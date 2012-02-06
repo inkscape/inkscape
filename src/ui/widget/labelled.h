@@ -11,7 +11,8 @@
 #ifndef INKSCAPE_UI_WIDGET_LABELLED_H
 #define INKSCAPE_UI_WIDGET_LABELLED_H
 
-#include <gtkmm.h>
+#include <gtkmm/box.h>
+#include <gtkmm/label.h>
 
 namespace Inkscape {
 namespace UI {

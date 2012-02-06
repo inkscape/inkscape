@@ -20,7 +20,8 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
-#include <gtkmm.h>
+#include <gtkmm/icontheme.h>
+#include <gtkmm/image.h>
 #include <gdkmm/pixbuf.h>
 #include <glibmm/fileutils.h>
 #include <2geom/transforms.h>

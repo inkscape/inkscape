@@ -21,11 +21,14 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 
-#include <gtkmm.h>
-#include <gtkmm/liststore.h>
-#include <gtkmm/treeview.h>
-#include <gtkmm/entry.h>
 #include <gtkmm/box.h>
+#include <gtkmm/comboboxtext.h>
+#include <gtkmm/drawingarea.h>
+#include <gtkmm/entry.h>
+#include <gtkmm/liststore.h>
+#include <gtkmm/scale.h>
+#include <gtkmm/scrolledwindow.h>
+#include <gtkmm/treeview.h>
 
 #include "display/nr-svgfonts.h"
 #include "attributes.h"
