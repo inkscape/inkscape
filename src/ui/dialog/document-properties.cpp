@@ -305,32 +305,16 @@ void DocumentProperties::build_snap()
  }
 
 #if ENABLE_LCMS
+/// Populates the available color profiles combo box
 void DocumentProperties::populate_available_profiles(){
-    Glib::ListHandle<Gtk::Widget*> children = _menu.get_children();
-    for ( Glib::ListHandle<Gtk::Widget*>::iterator it2 = children.begin(); it2 != children.end(); ++it2 ) {
-        _menu.remove(**it2);
-        delete(*it2);
-    }
+    _combo_avail.remove_all(); // Clear any existing items in the combo box
 
+    // Iterate through the list of profiles and add the name to the combo box.
     std::vector<std::pair<Glib::ustring, Glib::ustring> > pairs = ColorProfile::getProfileFilesWithNames();
     for ( std::vector<std::pair<Glib::ustring, Glib::ustring> >::const_iterator it = pairs.begin(); it != pairs.end(); ++it ) {
-        Glib::ustring file = it->first;
         Glib::ustring name = it->second;
-
-        Gtk::MenuItem* mi = manage(new Gtk::MenuItem());
-        mi->set_data("filepath", g_strdup(file.c_str()));
-        mi->set_data("name", g_strdup(name.c_str()));
-        Gtk::HBox *hbox = manage(new Gtk::HBox());
-        hbox->show();
-        Gtk::Label* lbl = manage(new Gtk::Label(name));
-        lbl->show();
-        hbox->pack_start(*lbl, true, true, 0);
-        mi->add(*hbox);
-        mi->show_all();
-        _menu.append(*mi);
+	_combo_avail.append(name);
     }
-
-    _menu.show_all();
 }
 
 /**
@@ -366,6 +350,7 @@ static void sanitizeName( Glib::ustring& str )
     }
 }
 
+/// Links the selected color profile in the combo box to the document
 void DocumentProperties::linkSelectedProfile()
 {
 //store this profile in the SVG document (create <color-profile> element in the XML)
@@ -374,17 +359,26 @@ void DocumentProperties::linkSelectedProfile()
     if (!desktop){
         g_warning("No active desktop");
     } else {
-        if (!_menu.get_active()){
+	// Find the index of the currently-selected row in the color profiles combobox
+	int row = _combo_avail.get_active_row_number();
+
+	if (row == -1){
             g_warning("No color profile available.");
             return;
         }
+	
+	// Read the filename and description from the list of available profiles
+	std::vector<std::pair<Glib::ustring, Glib::ustring> > pairs = ColorProfile::getProfileFilesWithNames();
+        Glib::ustring file = pairs[row].first;
+        Glib::ustring name = pairs[row].second;
+
         Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::XML::Node *cprofRepr = xml_doc->createElement("svg:color-profile");
-        gchar* tmp = static_cast<gchar*>(_menu.get_active()->get_data("name"));
+        gchar* tmp = g_strdup(name.c_str());
         Glib::ustring nameStr = tmp ? tmp : "profile"; // TODO add some auto-numbering to avoid collisions
         sanitizeName(nameStr);
         cprofRepr->setAttribute("name", nameStr.c_str());
-        cprofRepr->setAttribute("xlink:href", (gchar*) _menu.get_active()->get_data("filepath"));
+        cprofRepr->setAttribute("xlink:href", (gchar*) file.c_str());
 
         // Checks whether there is a defs element. Creates it when needed
         Inkscape::XML::Node *defsRepr = sp_repr_lookup_name(xml_doc, "svg:defs");
@@ -532,10 +526,6 @@ void DocumentProperties::build_cms()
     _page_cms.table().attach(_link_btn, 2, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
 
     populate_available_profiles();
-
-    _combo_avail.set_menu(_menu);
-    _combo_avail.set_history(0);
-    _combo_avail.show_all();
 
     //# Set up the Linked Profiles combo box
     _LinkedProfilesListStore = Gtk::ListStore::create(_LinkedProfilesListColumns);

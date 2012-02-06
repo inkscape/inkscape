@@ -19,7 +19,6 @@
 #include <sigc++/sigc++.h>//
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/notebook.h>
-#include <gtkmm/optionmenu.h>
 #include <gtkmm/textview.h>
 #include <glibmm/i18n.h>
 
@@ -117,8 +116,7 @@ protected:
     UI::Widget::RegisteredCheckButton _rcb_snclp;
     UI::Widget::RegisteredCheckButton _rcb_snmsk;
     //---------------------------------------------------------------
-    Gtk::Menu   _menu;
-    Gtk::OptionMenu   _combo_avail;
+    Gtk::ComboBoxText _combo_avail;
     Gtk::Button         _link_btn;
     class LinkedProfilesColumns : public Gtk::TreeModel::ColumnRecord
         {
