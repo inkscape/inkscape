@@ -156,7 +156,7 @@ ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal
 
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
-    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
+    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_START));
     label->show();
     hbox->pack_start(*label, true, true, _indent);
 

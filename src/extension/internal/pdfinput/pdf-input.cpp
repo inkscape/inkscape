@@ -95,7 +95,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _cropTypeCombo = Gtk::manage(new class Gtk::ComboBoxText());
     int num_crop_choices = sizeof(crop_setting_choices) / sizeof(crop_setting_choices[0]);
     for ( int i = 0 ; i < num_crop_choices ; i++ ) {
-        _cropTypeCombo->append_text(_(crop_setting_choices[i]));
+        _cropTypeCombo->append(_(crop_setting_choices[i]));
     }
     _cropTypeCombo->set_active_text(_(crop_setting_choices[0]));
     _cropTypeCombo->set_sensitive(false);
@@ -117,7 +117,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     // Text options
     _labelText = Gtk::manage(new class Gtk::Label(_("Text handling:")));
     _textHandlingCombo = Gtk::manage(new class Gtk::ComboBoxText());
-    _textHandlingCombo->append_text(_("Import text as text"));
+    _textHandlingCombo->append(_("Import text as text"));
     _textHandlingCombo->set_active_text(_("Import text as text"));
     _localFontsCheck = Gtk::manage(new class Gtk::CheckButton(_("Replace PDF fonts by closest-named installed fonts")));
 
@@ -130,11 +130,11 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     vbox1 = Gtk::manage(new class Gtk::VBox(false, 4));
     _previewArea = Gtk::manage(new class Gtk::DrawingArea());
     hbox1 = Gtk::manage(new class Gtk::HBox(false, 4));
-    cancelbutton->set_flags(Gtk::CAN_FOCUS);
-    cancelbutton->set_flags(Gtk::CAN_DEFAULT);
+    cancelbutton->set_can_focus();
+    cancelbutton->set_can_default();
     cancelbutton->set_relief(Gtk::RELIEF_NORMAL);
-    okbutton->set_flags(Gtk::CAN_FOCUS);
-    okbutton->set_flags(Gtk::CAN_DEFAULT);
+    okbutton->set_can_focus();
+    okbutton->set_can_default();
     okbutton->set_relief(Gtk::RELIEF_NORMAL);
     this->get_action_area()->property_layout_style().set_value(Gtk::BUTTONBOX_END);
     _labelSelect->set_alignment(0.5,0.5);
@@ -143,7 +143,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _labelSelect->set_line_wrap(false);
     _labelSelect->set_use_markup(false);
     _labelSelect->set_selectable(false);
-    _pageNumberSpin->set_flags(Gtk::CAN_FOCUS);
+    _pageNumberSpin->set_can_focus();
     _pageNumberSpin->set_update_policy(Gtk::UPDATE_ALWAYS);
     _pageNumberSpin->set_numeric(true);
     _pageNumberSpin->set_digits(0);
@@ -157,7 +157,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     hbox2->pack_start(*_labelSelect, Gtk::PACK_SHRINK, 4);
     hbox2->pack_start(*_pageNumberSpin, Gtk::PACK_SHRINK, 4);
     hbox2->pack_start(*_labelTotalPages, Gtk::PACK_SHRINK, 4);
-    _cropCheck->set_flags(Gtk::CAN_FOCUS);
+    _cropCheck->set_can_focus();
     _cropCheck->set_relief(Gtk::RELIEF_NORMAL);
     _cropCheck->set_mode(true);
     _cropCheck->set_active(false);
@@ -191,8 +191,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _labelPrecisionWarning->set_use_markup(true);
     _labelPrecisionWarning->set_selectable(false);
     _fallbackPrecisionSlider->set_size_request(180,-1);
-    _fallbackPrecisionSlider->set_flags(Gtk::CAN_FOCUS);
-    _fallbackPrecisionSlider->set_update_policy(Gtk::UPDATE_CONTINUOUS);
+    _fallbackPrecisionSlider->set_can_focus();
     _fallbackPrecisionSlider->set_inverted(false);
     _fallbackPrecisionSlider->set_digits(1);
     _fallbackPrecisionSlider->set_draw_value(true);
@@ -214,11 +213,11 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _labelText->set_selectable(false);
     hbox5->pack_start(*_labelText, Gtk::PACK_SHRINK, 0);
     hbox5->pack_start(*_textHandlingCombo, Gtk::PACK_SHRINK, 0);
-    _localFontsCheck->set_flags(Gtk::CAN_FOCUS);
+    _localFontsCheck->set_can_focus();
     _localFontsCheck->set_relief(Gtk::RELIEF_NORMAL);
     _localFontsCheck->set_mode(true);
     _localFontsCheck->set_active(true);
-    _embedImagesCheck->set_flags(Gtk::CAN_FOCUS);
+    _embedImagesCheck->set_can_focus();
     _embedImagesCheck->set_relief(Gtk::RELIEF_NORMAL);
     _embedImagesCheck->set_mode(true);
     _embedImagesCheck->set_active(true);

@@ -366,7 +366,7 @@ public:
 void ParamNotebookWdg::changed_page(GtkNotebookPage */*page*/,
                                     guint pagenum)
 {
-    if (is_visible()) {
+    if (get_visible()) {
         _pref->set((int)pagenum, _doc, _node);
     }
 }

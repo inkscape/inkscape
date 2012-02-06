@@ -232,7 +232,7 @@ Gtk::Widget *ParamComboBox::get_widget(SPDocument * doc, Inkscape::XML::Node * n
 
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 
-    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
+    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_START));
     label->show();
     hbox->pack_start(*label, false, false, _indent);
 
@@ -242,7 +242,7 @@ Gtk::Widget *ParamComboBox::get_widget(SPDocument * doc, Inkscape::XML::Node * n
     for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
         enumentry * entr = reinterpret_cast<enumentry *>(list->data);
         Glib::ustring text = entr->guitext;
-        combo->append_text(text);
+        combo->append(text);
         if ( _value && !entr->value.compare(_value) ) {
             settext = entr->guitext;
         }
