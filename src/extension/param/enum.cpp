@@ -245,7 +245,7 @@ Gtk::Widget *ParamComboBox::get_widget(SPDocument * doc, Inkscape::XML::Node * n
 #if WITH_GTKMM_2_24
         combo->append(text);
 #else
-        combo->append(text);
+        combo->append_text(text);
 #endif
 
         if ( _value && !entr->value.compare(_value) ) {
