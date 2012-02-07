@@ -47,6 +47,7 @@
 #include <zlib.h>
 #include <cairomm/win32_surface.h>
 #include <cairomm/context.h>
+#include <gdkmm/general.h>
 
 using namespace std;
 using namespace Glib;

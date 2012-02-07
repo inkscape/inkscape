@@ -720,6 +720,13 @@ else
 fi
 PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.24  gtk+-2.0 >= 2.20  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10  sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.10.0)
 
+dnl gtkmm provides no preprocessor macros for easily checking versions.  This check is used
+dnl to figure out if we are working with the newer 2.24 series or not.
+PKG_CHECK_MODULES(GTKMM_2_24, gtkmm-2.4 >= 2.24, with_gtkmm_2_24=yes, with_gtkmm_2_24=no)
+if test "x$with_gtkmm_2_24" = "xyes"; then
+	AC_DEFINE(WITH_GTKMM_2_24,1,[Build with Gtkmm 2.24.x])
+fi
+
 # Check for GTK+ backend target
 AC_MSG_CHECKING([for GTK+ backend target])
 gtk_backend_target=`pkg-config --variable=target gtk+-2.0`
