@@ -221,7 +221,7 @@ set(inkscape_SRC
 	guide-snapper.cpp
 	help.cpp
 	id-clash.cpp
-	ige-mac-menu.c
+	# ige-mac-menu.c
 	ink-action.cpp
 	ink-comboboxentry-action.cpp
 	inkscape.cpp
@@ -376,7 +376,7 @@ set(inkscape_SRC
 	helper-fns.h
 	icon-size.h
 	id-clash.h
-	ige-mac-menu.h
+	# ige-mac-menu.h
 	ink-action.h
 	ink-comboboxentry-action.h
 	inkscape-private.h

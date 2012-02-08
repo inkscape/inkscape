@@ -80,7 +80,6 @@ ink_common_sources +=	\
 	helper/pixbuf-ops.h						\
 	icon-size.h							\
 	id-clash.cpp id-clash.h						\
-	ige-mac-menu.h ige-mac-menu.c					\
 	ink-action.cpp							\
 	ink-action.h							\
 	ink-comboboxentry-action.cpp					\

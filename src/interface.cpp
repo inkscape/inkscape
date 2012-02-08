@@ -67,11 +67,6 @@
 #include "gradient-drag.h"
 #include "widgets/ege-paint-def.h"
 
-// Include Mac OS X menu synchronization on native OSX build
-#ifdef GDK_WINDOWING_QUARTZ
-#include "ige-mac-menu.h"
-#endif
-
 using Inkscape::DocumentUndo;
 
 /* Drag and Drop */
@@ -1014,18 +1009,8 @@ void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape
 GtkWidget *sp_ui_main_menubar(Inkscape::UI::View::View *view)
 {
     GtkWidget *mbar = gtk_menu_bar_new();
-
-#ifdef GDK_WINDOWING_QUARTZ
-    ige_mac_menu_set_menu_bar(GTK_MENU_SHELL(mbar));
-#endif
-
     sp_ui_build_dyn_menus(inkscape_get_menus(INKSCAPE), mbar, view);
-
-#ifdef GDK_WINDOWING_QUARTZ
-    return NULL;
-#else
     return mbar;
-#endif
 }
 
 static void leave_group(GtkMenuItem *, SPDesktop *desktop) {
