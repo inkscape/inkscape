@@ -67,6 +67,7 @@ set(live_effects_SRC
 	lpe-boolops.h
 	lpe-circle_3pts.h
 	lpe-circle_with_radius.h
+	lpe-clone-original.h
 	lpe-constructgrid.h
 	lpe-copy_rotate.h
 	lpe-curvestitch.h
@@ -100,12 +101,14 @@ set(live_effects_SRC
 	lpegroupbbox.h
 	lpeobject-reference.h
 	lpeobject.h
+
 	parameter/array.h
 	parameter/bool.h
 	parameter/enum.h
 	parameter/parameter.h
 	parameter/path-reference.h
 	parameter/path.h
+	parameter/originalpath.h
 	parameter/point.h
 	parameter/powerstrokepointarray.h
 	parameter/random.h
