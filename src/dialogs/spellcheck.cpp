@@ -229,7 +229,7 @@ spellcheck_text_is_valid (SPObject *root, SPItem *text)
     GSList *l = NULL;
     l = all_text_items (root, l, false, true);
     for (GSList *i = l; i; i = i->next) {
-        SPItem *item = (SPItem *) i->data;
+        SPItem *item = static_cast<SPItem *>(i->data);
         if (item == text) {
             g_slist_free (l);
             return true;
@@ -273,7 +273,7 @@ SPItem *spellcheck_get_text (SPObject *root)
     l = g_slist_sort(l, compare_text_bboxes);
 
     for (GSList *i = l; i; i = i->next) {
-        SPItem *item = (SPItem *) i->data;
+        SPItem *item = static_cast<SPItem *>(i->data);
         if (!g_slist_find (_seen_objects, item)) {
             _seen_objects = g_slist_prepend(_seen_objects, item);
             g_slist_free(l);

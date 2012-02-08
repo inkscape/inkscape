@@ -113,7 +113,7 @@ ParamRadioButton::ParamRadioButton (const gchar * name,
     // for simplicity : default to the contents of the first xml-child
     const char * defaultval = NULL;
     if (choices) {
-        defaultval = ((optionentry*) choices->data)->value->c_str();
+        defaultval = (static_cast<optionentry*> (choices->data))->value->c_str();
     }
 
     const char * indent = xml->attribute("indent");

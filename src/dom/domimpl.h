@@ -529,8 +529,8 @@ protected:
         {
             next    = NULL;
             key     = theKey;
-            data    = (DOMUserData *)theData;
-            handler = (UserDataHandler *)theHandler;
+            data    = const_cast<DOMUserData *>(theData);
+            handler = const_cast<UserDataHandler *>(theHandler);
         }
 
         virtual ~UserDataEntry()

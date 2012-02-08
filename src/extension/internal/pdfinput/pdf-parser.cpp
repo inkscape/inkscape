@@ -1480,7 +1480,7 @@ void PdfParser::doPatternFillFallback(GBool eoFill) {
   case 1:
     break;
   case 2:
-    doShadingPatternFillFallback((GfxShadingPattern *)pattern, gFalse, eoFill);
+    doShadingPatternFillFallback(static_cast<GfxShadingPattern *>(pattern), gFalse, eoFill);
     break;
   default:
     error(getPos(), const_cast<char*>("Unimplemented pattern type (%d) in fill"),
@@ -1499,7 +1499,7 @@ void PdfParser::doPatternStrokeFallback() {
   case 1:
     break;
   case 2:
-    doShadingPatternFillFallback((GfxShadingPattern *)pattern, gTrue, gFalse);
+    doShadingPatternFillFallback(static_cast<GfxShadingPattern *>(pattern), gTrue, gFalse);
     break;
   default:
     error(getPos(), const_cast<char*>("Unimplemented pattern type (%d) in stroke"),
@@ -1593,7 +1593,7 @@ void PdfParser::doShadingPatternFillFallback(GfxShadingPattern *sPat,
   // do shading type-specific operations
   switch (shading->getType()) {
   case 1:
-    doFunctionShFill((GfxFunctionShading *)shading);
+    doFunctionShFill(static_cast<GfxFunctionShading *>(shading));
     break;
   case 2:
   case 3:
@@ -1601,11 +1601,11 @@ void PdfParser::doShadingPatternFillFallback(GfxShadingPattern *sPat,
     break;
   case 4:
   case 5:
-    doGouraudTriangleShFill((GfxGouraudTriangleShading *)shading);
+    doGouraudTriangleShFill(static_cast<GfxGouraudTriangleShading *>(shading));
     break;
   case 6:
   case 7:
-    doPatchMeshShFill((GfxPatchMeshShading *)shading);
+    doPatchMeshShFill(static_cast<GfxPatchMeshShading *>(shading));
     break;
   }
 
@@ -1689,7 +1689,7 @@ void PdfParser::opShFill(Object args[], int /*numArgs*/)
   // do shading type-specific operations
   switch (shading->getType()) {
   case 1:
-    doFunctionShFill((GfxFunctionShading *)shading);
+    doFunctionShFill(static_cast<GfxFunctionShading *>(shading));
     break;
   case 2:
   case 3:
@@ -1700,11 +1700,11 @@ void PdfParser::opShFill(Object args[], int /*numArgs*/)
     break;
   case 4:
   case 5:
-    doGouraudTriangleShFill((GfxGouraudTriangleShading *)shading);
+    doGouraudTriangleShFill(static_cast<GfxGouraudTriangleShading *>(shading));
     break;
   case 6:
   case 7:
-    doPatchMeshShFill((GfxPatchMeshShading *)shading);
+    doPatchMeshShFill(static_cast<GfxPatchMeshShading *>(shading));
     break;
   }
 

@@ -148,20 +148,17 @@ void CairoRenderContext::font_data_free(gpointer data)
     }
 }
 
-CairoRenderer*
-CairoRenderContext::getRenderer(void) const
+CairoRenderer* CairoRenderContext::getRenderer(void) const
 {
     return _renderer;
 }
 
-CairoRenderState*
-CairoRenderContext::getCurrentState(void) const
+CairoRenderState* CairoRenderContext::getCurrentState(void) const
 {
     return _state;
 }
 
-CairoRenderState*
-CairoRenderContext::getParentState(void) const
+CairoRenderState* CairoRenderContext::getParentState(void) const
 {
     // if this is the root node just return it
     if (g_slist_length(_state_stack) == 1) {
@@ -171,8 +168,7 @@ CairoRenderContext::getParentState(void) const
     }
 }
 
-void
-CairoRenderContext::setStateForStyle(SPStyle const *style)
+void CairoRenderContext::setStateForStyle(SPStyle const *style)
 {
     // only opacity & overflow is stored for now
     _state->opacity = SP_SCALE24_TO_FLOAT(style->opacity.value);
@@ -195,7 +191,7 @@ CairoRenderContext::setStateForStyle(SPStyle const *style)
  * \param width     width of the surface to be created
  * \param height    height of the surface to be created
  */
-CairoRenderContext*
+CairoRenderContext* 
 CairoRenderContext::cloneMe(double width, double height) const
 {
     g_assert( _is_valid );
@@ -213,16 +209,14 @@ CairoRenderContext::cloneMe(double width, double height) const
     return new_context;
 }
 
-CairoRenderContext*
-CairoRenderContext::cloneMe(void) const
+CairoRenderContext* CairoRenderContext::cloneMe(void) const
 {
     g_assert( _is_valid );
 
     return cloneMe(_width, _height);
 }
 
-bool
-CairoRenderContext::setImageTarget(cairo_format_t format)
+bool CairoRenderContext::setImageTarget(cairo_format_t format)
 {
     // format cannot be set on an already initialized surface
     if (_is_valid)
@@ -244,8 +238,7 @@ CairoRenderContext::setImageTarget(cairo_format_t format)
     return false;
 }
 
-bool
-CairoRenderContext::setPdfTarget(gchar const *utf8_fn)
+bool CairoRenderContext::setPdfTarget(gchar const *utf8_fn)
 {
 #ifndef CAIRO_HAS_PDF_SURFACE
     return false;
@@ -327,8 +320,7 @@ CairoRenderContext::setPdfTarget(gchar const *utf8_fn)
     return true;
 }
 
-bool
-CairoRenderContext::setPsTarget(gchar const *utf8_fn)
+bool CairoRenderContext::setPsTarget(gchar const *utf8_fn)
 {
 #ifndef CAIRO_HAS_PS_SURFACE
     return false;
@@ -513,8 +505,7 @@ CairoRenderContext::getClipMode(void) const
     return _clip_mode;
 }
 
-CairoRenderState*
-CairoRenderContext::_createState(void)
+CairoRenderState* CairoRenderContext::_createState(void)
 {
     CairoRenderState *state = (CairoRenderState*)g_try_malloc(sizeof(CairoRenderState));
     g_assert( state != NULL );
@@ -531,8 +522,7 @@ CairoRenderContext::_createState(void)
     return state;
 }
 
-void
-CairoRenderContext::pushLayer(void)
+void CairoRenderContext::pushLayer(void)
 {
     g_assert( _is_valid );
 
@@ -937,8 +927,7 @@ CairoRenderContext::setTransform(Geom::Affine const &transform)
     _state->transform = transform;
 }
 
-Geom::Affine
-CairoRenderContext::getTransform() const
+Geom::Affine CairoRenderContext::getTransform() const
 {
     g_assert( _is_valid );
 
@@ -954,8 +943,7 @@ CairoRenderContext::getTransform() const
     return ret;
 }
 
-Geom::Affine
-CairoRenderContext::getParentTransform() const
+Geom::Affine CairoRenderContext::getParentTransform() const
 {
     g_assert( _is_valid );
 
@@ -963,8 +951,7 @@ CairoRenderContext::getParentTransform() const
     return parent_state->transform;
 }
 
-void
-CairoRenderContext::pushState(void)
+void CairoRenderContext::pushState(void)
 {
     g_assert( _is_valid );
 
@@ -977,8 +964,7 @@ CairoRenderContext::pushState(void)
     _state = new_state;
 }
 
-void
-CairoRenderContext::popState(void)
+void CairoRenderContext::popState(void)
 {
     g_assert( _is_valid );
 
@@ -986,7 +972,7 @@ CairoRenderContext::popState(void)
 
     g_free(_state_stack->data);
     _state_stack = g_slist_remove_link(_state_stack, _state_stack);
-    _state = (CairoRenderState*)_state_stack->data;
+    _state = static_cast<CairoRenderState*>(_state_stack->data);
 
     g_assert( g_slist_length(_state_stack) > 0 );
 }

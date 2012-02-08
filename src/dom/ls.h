@@ -378,7 +378,7 @@ public:
      *
      */
     virtual void setFilter(const LSParserFilter *val)
-        { filter = (LSParserFilter *)val; }
+        { filter = const_cast<LSParserFilter *>(val); }
 
     /**
      *
@@ -657,7 +657,7 @@ public:
      *
      */
     virtual void setFilter(const LSSerializerFilter *val)
-        { filter = (LSSerializerFilter *)val; }
+        { filter = const_cast<LSSerializerFilter *>(val); }
 
     /**
      *

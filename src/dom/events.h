@@ -465,7 +465,7 @@ private:
 	        {
 	        namespaceURI = namespaceURIArg;
 	        eventType    = eventTypeArg;
-	        listener     = (EventListener *)listenerArg;
+	        listener     = const_cast<EventListener *>(listenerArg);
 	        useCapture   = useCaptureArg;
 	        }
 	

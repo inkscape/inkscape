@@ -45,8 +45,7 @@ ColorPicker::~ColorPicker()
     _colorSelector = NULL;
 }
 
-void
-ColorPicker::setupDialog(const Glib::ustring &title)
+void ColorPicker::setupDialog(const Glib::ustring &title)
 {
     GtkWidget *dlg = GTK_WIDGET(_colorSelectorDialog.gobj());
     sp_transientize(dlg);
@@ -69,11 +68,7 @@ ColorPicker::setupDialog(const Glib::ustring &title)
 
 }
 
-
-
-
-void
-ColorPicker::setRgba32 (guint32 rgba)
+void ColorPicker::setRgba32 (guint32 rgba)
 {
     if (_in_use) return;
 
@@ -87,14 +82,12 @@ ColorPicker::setRgba32 (guint32 rgba)
     }
 }
 
-void
-ColorPicker::closeWindow()
+void ColorPicker::closeWindow()
 {
     _colorSelectorDialog.hide();
 }
 
-void
-ColorPicker::on_clicked()
+void ColorPicker::on_clicked()
 {
     if (_colorSelector)
     {
@@ -105,13 +98,11 @@ ColorPicker::on_clicked()
     _colorSelectorDialog.show();
 }
 
-void
-ColorPicker::on_changed (guint32)
+void ColorPicker::on_changed (guint32)
 {
 }
 
-void
-sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp)
+void sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp)
 {
     if (_in_use) {
         return;
@@ -124,7 +115,7 @@ sp_color_picker_color_mod(SPColorSelector *csel, GObject *cp)
     csel->base->getColorAlpha(color, alpha);
     guint32 rgba = color.toRGBA32( alpha );
 
-    ColorPicker *ptr = (ColorPicker *)(cp);
+    ColorPicker *ptr = reinterpret_cast<ColorPicker *>(cp);
 
     (ptr->_preview).setRgba32 (rgba);
 

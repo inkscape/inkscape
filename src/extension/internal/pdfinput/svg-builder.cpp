@@ -600,7 +600,7 @@ void SvgBuilder::setTransform(double const *transform) {
 bool SvgBuilder::isPatternTypeSupported(GfxPattern *pattern) {
     if ( pattern != NULL ) {
         if ( pattern->getType() == 2 ) {    // shading pattern
-            GfxShading *shading = ((GfxShadingPattern *)pattern)->getShading();
+            GfxShading *shading = (static_cast<GfxShadingPattern *>(pattern))->getShading();
             int shadingType = shading->getType();
             if ( shadingType == 2 || // axial shading
                  shadingType == 3 ) {   // radial shading
@@ -625,7 +625,7 @@ gchar *SvgBuilder::_createPattern(GfxPattern *pattern, GfxState *state, bool is_
     gchar *id = NULL;
     if ( pattern != NULL ) {
         if ( pattern->getType() == 2 ) {  // Shading pattern
-            GfxShadingPattern *shading_pattern = (GfxShadingPattern*)pattern;
+            GfxShadingPattern *shading_pattern = static_cast<GfxShadingPattern *>(pattern);
             double *ptm;
             double ittm[6];	// invert ttm
             double m[6] = {1, 0, 0, 1, 0, 0};
@@ -653,7 +653,7 @@ gchar *SvgBuilder::_createPattern(GfxPattern *pattern, GfxState *state, bool is_
                                  m,
                                  !is_stroke);
         } else if ( pattern->getType() == 1 ) {   // Tiling pattern
-            id = _createTilingPattern((GfxTilingPattern*)pattern, state, is_stroke);
+            id = _createTilingPattern(static_cast<GfxTilingPattern*>(pattern), state, is_stroke);
         }
     } else {
         return NULL;
@@ -740,7 +740,7 @@ gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix, bool for
 
     if ( shading->getType() == 2 ) {  // Axial shading
         gradient = _xml_doc->createElement("svg:linearGradient");
-        GfxAxialShading *axial_shading = (GfxAxialShading*)shading;
+        GfxAxialShading *axial_shading = static_cast<GfxAxialShading*>(shading);
         double x1, y1, x2, y2;
         axial_shading->getCoords(&x1, &y1, &x2, &y2);
         sp_repr_set_svg_double(gradient, "x1", x1);
@@ -753,7 +753,7 @@ gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix, bool for
         func = axial_shading->getFunc(0);
     } else if (shading->getType() == 3) {   // Radial shading
         gradient = _xml_doc->createElement("svg:radialGradient");
-        GfxRadialShading *radial_shading = (GfxRadialShading*)shading;
+        GfxRadialShading *radial_shading = static_cast<GfxRadialShading*>(shading);
         double x1, y1, r1, x2, y2, r2;
         radial_shading->getCoords(&x1, &y1, &r1, &x2, &y2, &r2);
         // FIXME: the inner circle's radius is ignored here
@@ -834,9 +834,9 @@ static bool svgGetShadingColorRGB(GfxShading *shading, double offset, GfxRGB *re
     GfxColorSpace *color_space = shading->getColorSpace();
     GfxColor temp;
     if ( shading->getType() == 2 ) {  // Axial shading
-        ((GfxAxialShading*)shading)->getColor(offset, &temp);
+        (static_cast<GfxAxialShading*>(shading))->getColor(offset, &temp);
     } else if ( shading->getType() == 3 ) { // Radial shading
-        ((GfxRadialShading*)shading)->getColor(offset, &temp);
+        (static_cast<GfxRadialShading*>(shading))->getColor(offset, &temp);
     } else {
         return false;
     }
@@ -860,7 +860,7 @@ bool SvgBuilder::_addGradientStops(Inkscape::XML::Node *gradient, GfxShading *sh
             _addStopToGradient(gradient, 1.0, &stop2, 1.0);
         }
     } else if ( type == 3 ) { // Stitching
-        StitchingFunction *stitchingFunc = (StitchingFunction*)func;
+        StitchingFunction *stitchingFunc = static_cast<StitchingFunction*>(func);
         double *bounds = stitchingFunc->getBounds();
         int num_funcs = stitchingFunc->getNumFuncs();
         // Add stops from all the stitched functions

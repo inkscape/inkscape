@@ -52,7 +52,7 @@ namespace util
 
 static DWORD WINAPI WinThreadFunction(LPVOID context)
 {
-    Thread *thread = (Thread *)context;
+    Thread *thread = static_cast<Thread *>(context);
     thread->execute();
     return 0;
 }
@@ -81,7 +81,7 @@ void Thread::sleep(unsigned long millis)
 
 void *PthreadThreadFunction(void *context)
 {
-    Thread *thread = (Thread *)context;
+    Thread *thread = static_cast<Thread *>(context);
     thread->execute();
     return NULL;
 }

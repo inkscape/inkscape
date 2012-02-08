@@ -487,8 +487,8 @@ void FileOpenDialogImplWin32::register_preview_wnd_class()
 UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
     HWND hdlg, UINT uiMsg, WPARAM, LPARAM lParam)
 {
-    FileOpenDialogImplWin32 *pImpl = (FileOpenDialogImplWin32*)
-        GetWindowLongPtr(hdlg, GWLP_USERDATA);
+    FileOpenDialogImplWin32 *pImpl = reinterpret_cast<FileOpenDialogImplWin32*>
+        (GetWindowLongPtr(hdlg, GWLP_USERDATA));
 
     switch(uiMsg)
     {
@@ -498,10 +498,10 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
             HINSTANCE hInstance = GetModuleHandle(NULL);
 
             // Set the pointer to the object
-            OPENFILENAMEW *ofn = (OPENFILENAMEW*)lParam;
+            OPENFILENAMEW *ofn = reinterpret_cast<OPENFILENAMEW*>(lParam);
             SetWindowLongPtr(hdlg, GWLP_USERDATA, ofn->lCustData);
             SetWindowLongPtr(hParentWnd, GWLP_USERDATA, ofn->lCustData);
-            pImpl = (FileOpenDialogImplWin32*)ofn->lCustData;
+            pImpl = reinterpret_cast<FileOpenDialogImplWin32*>(ofn->lCustData);
             
             // Make the window a bit wider
             RECT rcRect;
@@ -614,8 +614,8 @@ UINT_PTR CALLBACK FileOpenDialogImplWin32::GetOpenFileName_hookproc(
 
 LRESULT CALLBACK FileOpenDialogImplWin32::file_dialog_subclass_proc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    FileOpenDialogImplWin32 *pImpl = (FileOpenDialogImplWin32*)
-        GetWindowLongPtr(hwnd, GWLP_USERDATA);
+    FileOpenDialogImplWin32 *pImpl = reinterpret_cast<FileOpenDialogImplWin32*>
+        (GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
     LRESULT lResult = CallWindowProc(pImpl->_base_window_proc, hwnd, uMsg, wParam, lParam);
 
@@ -648,8 +648,8 @@ LRESULT CALLBACK FileOpenDialogImplWin32::preview_wnd_proc(HWND hwnd, UINT uMsg,
     const int CaptionPadding = 4;
     const int IconSize = 32;
 
-    FileOpenDialogImplWin32 *pImpl = (FileOpenDialogImplWin32*)
-        GetWindowLongPtr(hwnd, GWLP_USERDATA);
+    FileOpenDialogImplWin32 *pImpl = reinterpret_cast<FileOpenDialogImplWin32*>
+        (GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
     LRESULT lResult = 0;
 
@@ -671,9 +671,9 @@ LRESULT CALLBACK FileOpenDialogImplWin32::preview_wnd_proc(HWND hwnd, UINT uMsg,
             PAINTSTRUCT paint_struct;
             HDC dc = BeginPaint(hwnd, &paint_struct);
 
-            HFONT hCaptionFont = (HFONT)SendMessage(GetParent(hwnd),
-                    WM_GETFONT, 0, 0);
-            HFONT hOldFont = (HFONT)SelectObject(dc, hCaptionFont);
+            HFONT hCaptionFont = reinterpret_cast<HFONT>(SendMessage(GetParent(hwnd),
+                    WM_GETFONT, 0, 0));
+            HFONT hOldFont = static_cast<HFONT>(SelectObject(dc, hCaptionFont));
             SetBkMode(dc, TRANSPARENT);
 
             pImpl->_mutex->lock();
@@ -682,7 +682,7 @@ LRESULT CALLBACK FileOpenDialogImplWin32::preview_wnd_proc(HWND hwnd, UINT uMsg,
             {
                 WCHAR* noFileText=(WCHAR*)g_utf8_to_utf16(_("No file selected"),
                     -1, NULL, NULL, NULL);
-                FillRect(dc, &rcClient, (HBRUSH)(COLOR_3DFACE + 1));
+                FillRect(dc, &rcClient, reinterpret_cast<HBRUSH>(COLOR_3DFACE + 1));
                 DrawTextW(dc,  noFileText, -1, &rcClient, 
                     DT_CENTER | DT_VCENTER | DT_NOPREFIX);
                 g_free(noFileText);
@@ -729,7 +729,7 @@ LRESULT CALLBACK FileOpenDialogImplWin32::preview_wnd_proc(HWND hwnd, UINT uMsg,
             }
             else if(pImpl->_preview_file_icon != NULL)
             {
-                FillRect(dc, &rcClient, (HBRUSH)(COLOR_3DFACE + 1));
+                FillRect(dc, &rcClient, reinterpret_cast<HBRUSH>(COLOR_3DFACE + 1));
 
                 // Draw the files icon
                 const int destX = (rcClient.right - IconSize) / 2;
@@ -755,7 +755,7 @@ LRESULT CALLBACK FileOpenDialogImplWin32::preview_wnd_proc(HWND hwnd, UINT uMsg,
             else
             {
                 // Can't show anything!
-                FillRect(dc, &rcClient, (HBRUSH)(COLOR_3DFACE + 1));
+                FillRect(dc, &rcClient, reinterpret_cast<HBRUSH>(COLOR_3DFACE + 1));
             }
 
             pImpl->_mutex->unlock();
@@ -1768,8 +1768,8 @@ void FileSaveDialogImplWin32::setSelectionType( Inkscape::Extension::Extension *
 UINT_PTR CALLBACK FileSaveDialogImplWin32::GetSaveFileName_hookproc(
     HWND hdlg, UINT uiMsg, WPARAM, LPARAM lParam)
 {
-    FileSaveDialogImplWin32 *pImpl = (FileSaveDialogImplWin32*)
-        GetWindowLongPtr(hdlg, GWLP_USERDATA);
+    FileSaveDialogImplWin32 *pImpl = reinterpret_cast<FileSaveDialogImplWin32*>
+        (GetWindowLongPtr(hdlg, GWLP_USERDATA));
 
     switch(uiMsg)
     {
@@ -1803,10 +1803,10 @@ UINT_PTR CALLBACK FileSaveDialogImplWin32::GetSaveFileName_hookproc(
             HGDIOBJ dlgFont = GetStockObject(DEFAULT_GUI_FONT);
 
             // Set the pointer to the object
-            OPENFILENAMEW *ofn = (OPENFILENAMEW*)lParam;
+            OPENFILENAMEW *ofn = reinterpret_cast<OPENFILENAMEW*>(lParam);
             SetWindowLongPtr(hdlg, GWLP_USERDATA, ofn->lCustData);
             SetWindowLongPtr(hParentWnd, GWLP_USERDATA, ofn->lCustData);
-            pImpl = (FileSaveDialogImplWin32*)ofn->lCustData;
+            pImpl = reinterpret_cast<FileSaveDialogImplWin32*>(ofn->lCustData);
 
             // Create the Title label and edit control
             pImpl->_title_label = CreateWindowEx(NULL, "STATIC", "Title:",
