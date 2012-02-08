@@ -29,6 +29,7 @@ export PATH="/usr/bin:$PATH"
 
 # On Snow Leopard, use the 32-bit version of python from Universal build.
 # This is because our bundled i386 python libraries are 32-bit only.
+export VERSIONER_PYTHON_VERSION=2.6
 export VERSIONER_PYTHON_PREFER_32_BIT=yes
 
 
