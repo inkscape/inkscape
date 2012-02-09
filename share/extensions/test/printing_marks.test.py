@@ -10,9 +10,9 @@ import sys
 sys.path.append('..') # this line allows to import the extension code
 
 import unittest
-from printing-marks import *
+from printing_marks import *
 
-class Printing_MarksBasicTest(unittest.TestCase):
+class PrintingMarksBasicTest(unittest.TestCase):
 
   #def setUp(self):
 

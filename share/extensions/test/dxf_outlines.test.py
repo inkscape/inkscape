@@ -1,26 +1,32 @@
 #!/usr/bin/env python
+'''
+Unit test file for ../dxf_outlines.py
+Revision history:
+  * 2012-01-25 (jazzynico): first working version (only checks the extension
+    with the default parameters).
 
-# This is only the automatic generated test file for ../dxf_outlines.py
-# This must be filled with real tests and this commentary
-# must be cleared.
-# If you want to help, read the python unittest documentation:
-# http://docs.python.org/library/unittest.html
+--
+If you want to help, read the python unittest documentation:
+http://docs.python.org/library/unittest.html
+'''
 
 import sys
-sys.path.append('..') # this line allows to import the extension code
-
 import unittest
+
+sys.path.append('..') # this line allows to import the extension code
 from dxf_outlines import *
 
-class MyEffectBasicTest(unittest.TestCase):
+class DFXOutlineBasicTest(unittest.TestCase):
+    #def setUp(self):
 
-  #def setUp(self):
+    def test_run_without_parameters(self):
+        args = [ 'minimal-blank.svg' ]
+        e = MyEffect()
+        e.affect(args, False)
 
-  def test_run_without_parameters(self):
-    args = [ 'minimal-blank.svg' ]
-    e = MyEffect()
-    e.affect( args, False )
-    #self.assertEqual( e.something, 'some value', 'A commentary about that.' )
 
 if __name__ == '__main__':
-  unittest.main()
+    unittest.main()
+    #suite = unittest.TestLoader().loadTestsFromTestCase(DFXOutlineBasicTest)
+    #unittest.TextTestRunner(verbosity=2).run(suite)
+
