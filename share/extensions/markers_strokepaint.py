@@ -69,7 +69,7 @@ class MyEffect(inkex.Effect):
         defs = self.xpathSingle('/svg:svg//svg:defs')
         if defs == None:
             defs = inkex.etree.SubElement(self.document.getroot(),inkex.addNS('defs','svg'))
-        
+
         for id, node in self.selected.iteritems():
             mprops = ['marker','marker-start','marker-mid','marker-end']
             try:

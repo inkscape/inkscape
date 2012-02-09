@@ -96,7 +96,10 @@ def errormsg(msg):
          ...
          inkex.errormsg(_("This extension requires two selected paths."))
     """
-    sys.stderr.write((unicode(msg) + "\n").encode("UTF-8"))
+    if isinstance(msg, unicode):
+        sys.stderr.write((msg + "\n").encode("UTF-8"))
+    else:
+        sys.stderr.write((unicode(msg, "utf-8", errors='replace') + "\n").encode("UTF-8"))
 
 def check_inkbool(option, opt, value):
     if str(value).capitalize() == 'True':

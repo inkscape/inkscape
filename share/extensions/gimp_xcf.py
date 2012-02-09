@@ -1,7 +1,8 @@
 #!/usr/bin/env python 
 '''
 Copyright (C) 2006 Aaron Spike, aaron@ekips.org
-Copyright (C) 2010-2011 Nicolas Dufour, nicoduf@yahoo.fr (Windows support and various fixes)
+Copyright (C) 2010-2012 Nicolas Dufour, nicoduf@yahoo.fr
+(Windows support and various fixes)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,15 +18,31 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex
-import sys, os, tempfile, shutil
-import gettext
 
-try:
-    from subprocess import Popen, PIPE
-    bsubprocess = True
-except:
-    bsubprocess = False
+import gettext
+import os
+import shutil
+from subprocess import Popen, PIPE
+import sys
+import tempfile
+
+import inkex
+
+_ = gettext.gettext
+
+# Define extension exceptions
+class GimpXCFError(Exception): pass
+
+class GimpXCFExpectedIOError(GimpXCFError): pass
+
+class GimpXCFGimpNotInstalled(GimpXCFError):
+    def __init__(self):
+        inkex.errormsg(_('Gimp must be installed and set in your path variable.'))
+
+class GimpXCFScriptFuError(GimpXCFError):
+    def __init__(self):
+        inkex.errormsg(_('An error occured while processing the XCF file.'))
+
 
 class MyEffect(inkex.Effect):
     def __init__(self):
@@ -34,17 +51,17 @@ class MyEffect(inkex.Effect):
                                      action="store", type="string",
                                      dest="tab")
         self.OptionParser.add_option("-d", "--guides",
-                                         action="store", type="inkbool",
-                                         dest="saveGuides", default=False,
-                                         help="Save the Guides with the .XCF")
+                                     action="store", type="inkbool",
+                                     dest="saveGuides", default=False,
+                                     help="Save the Guides with the .XCF")
         self.OptionParser.add_option("-r", "--grid",
-                                         action="store", type="inkbool",
-                                         dest="saveGrid", default=False,
-                                         help="Save the Grid with the .XCF")
+                                     action="store", type="inkbool",
+                                     dest="saveGrid", default=False,
+                                     help="Save the Grid with the .XCF")
         self.OptionParser.add_option("-b", "--background",
-                                         action="store", type="inkbool",
-                                         dest="layerBackground", default=False,
-                                         help="Add background color to each layer")
+                                     action="store", type="inkbool",
+                                     dest="layerBackground", default=False,
+                                     help="Add background color to each layer")
 
     def output(self):
         pass
@@ -61,27 +78,28 @@ class MyEffect(inkex.Effect):
         pageHeight = int(inkex.unittouu(self.xpathSingle('/svg:svg/@height').split('.')[0]))
         pageWidth = int(inkex.unittouu(self.xpathSingle('/svg:svg/@width').split('.')[0]))
 
-        #create os temp dir
+        # Create os temp dir (to store exported pngs and Gimp log file)
         self.tmp_dir = tempfile.mkdtemp()
 
         # Guides
         hGuides = []
         vGuides = []
         if self.options.saveGuides:
-            guideXpath = "sodipodi:namedview/sodipodi:guide" #grab all guide tags in the namedview tag
+            # Grab all guide tags in the namedview tag
+            guideXpath = "sodipodi:namedview/sodipodi:guide"
             for guideNode in self.document.xpath(guideXpath, namespaces=inkex.NSS):
                 ori = guideNode.get('orientation')
                 if  ori == '0,1':
-                    #this is a horizontal guide
+                    # This is a horizontal guide
                     pos = int(guideNode.get('position').split(',')[1].split('.')[0])
-                    #GIMP doesn't like guides that are outside of the image
+                    # GIMP doesn't like guides that are outside of the image
                     if pos > 0 and pos < pageHeight:
-                        #the origin is at the top in GIMP land
+                        # The origin is at the top in GIMP land
                         hGuides.append(str(pageHeight - pos))
                 elif ori == '1,0':
-                    #this is a vertical guide
+                    # This is a vertical guide
                     pos = int(guideNode.get('position').split(',')[0].split('.')[0])
-                    #GIMP doesn't like guides that are outside of the image
+                    # GIMP doesn't like guides that are outside of the image
                     if pos > 0 and pos < pageWidth:
                         vGuides.append(str(pos))
 
@@ -91,12 +109,12 @@ class MyEffect(inkex.Effect):
         # Grid
         gridSpacingFunc = ''
         gridOriginFunc = '' 
-        #GIMP only allows one rectangular grid
+        # GIMP only allows one rectangular grid
         gridXpath = "sodipodi:namedview/inkscape:grid[@type='xygrid' and (not(@units) or @units='px')]"
         if (self.options.saveGrid and self.document.xpath(gridXpath, namespaces=inkex.NSS)):
             gridNode = self.xpathSingle(gridXpath)
             if gridNode != None:
-                #these attributes could be nonexistant
+                # These attributes could be nonexistant
                 spacingX = gridNode.get('spacingx')
                 if spacingX == None: spacingX = '1  '
 
@@ -121,11 +139,11 @@ class MyEffect(inkex.Effect):
             opacity += "0"
         pngs = []
         names = []
-        valid = 0
+        self.valid = 0
         path = "/svg:svg/*[name()='g' or @style][@id]"
         for node in self.document.xpath(path, namespaces=inkex.NSS):
             if len(node) > 0: # Get rid of empty layers
-                valid=1
+                self.valid = 1
                 id = node.get('id')
                 if node.get("{" + inkex.NSS["inkscape"] + "}label"):
                     name = node.get("{" + inkex.NSS["inkscape"] + "}label")
@@ -133,32 +151,32 @@ class MyEffect(inkex.Effect):
                     name = id
                 filename = os.path.join(self.tmp_dir, "%s.png" % id)
                 command = "inkscape -i \"%s\" -j %s %s -e \"%s\" %s " % (id, area, opacity, filename, svg_file)
-                if bsubprocess:
-                    p = Popen(command, shell=True, stdout=PIPE, stderr=PIPE)
-                    return_code = p.wait()
-                    f = p.stdout
-                    err = p.stderr
-                else:
-                    _,f,err = os.popen3(command,'r')
+               
+                p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+                return_code = p.wait()
+                f = p.stdout
+                err = p.stderr
+                stdin = p.stdin
                 f.read()
                 f.close()
                 err.close()
+                stdin.close()
+                
                 if os.name == 'nt':
                     filename = filename.replace("\\", "/")
                 pngs.append(filename)
                 names.append(name.encode('utf-8'))
 
-        if (valid==0):
-            inkex.errormsg(gettext.gettext('This extension requires at least one non empty layer.'))
+        if (self.valid == 0):
             self.clear_tmp()
-            sys.exit(0)
-
-        filelist = '"%s"' % '" "'.join(pngs)
-        namelist = '"%s"' % '" "'.join(names)
-        xcf = os.path.join(self.tmp_dir, "%s.xcf" % docname)
-        if os.name == 'nt':
-            xcf = xcf.replace("\\", "/")
-        script_fu = """
+            inkex.errormsg(_('This extension requires at least one non empty layer.'))
+        else:
+            filelist = '"%s"' % '" "'.join(pngs)
+            namelist = '"%s"' % '" "'.join(names)
+            xcf = os.path.join(self.tmp_dir, "%s.xcf" % docname)
+            if os.name == 'nt':
+                xcf = xcf.replace("\\", "/")
+            script_fu = """
 (tracing 1)
 (define
   (png-to-layer img png_filename layer_name)
@@ -206,27 +224,47 @@ class MyEffect(inkex.Effect):
   (gimp-image-undo-enable img)
   (gimp-file-save RUN-NONINTERACTIVE img (car (gimp-image-get-active-layer img)) "%s" "%s"))
 (gimp-quit 0)
-        """ % (filelist, namelist, hGList, vGList, gridSpacingFunc, gridOriginFunc, xcf, xcf)
+            """ % (filelist, namelist, hGList, vGList, gridSpacingFunc, gridOriginFunc, xcf, xcf)
 
-        junk = os.path.join(self.tmp_dir, 'junk_from_gimp.txt')
-        f = os.popen('gimp -i --batch-interpreter plug-in-script-fu-eval -b - > %s 2>&1' % junk,'w')
-        f.write(script_fu)
-        f.close()
-        # uncomment these lines to see the output from gimp
-        #err = open(junk, 'r')
-        #inkex.debug(err.read())
-        #err.close()
+            junk = os.path.join(self.tmp_dir, 'junk_from_gimp.txt')
+            command = 'gimp -i --batch-interpreter plug-in-script-fu-eval -b - > %s 2>&1' % junk
 
-        x = open(xcf, 'rb')
-        if os.name == 'nt':
+            p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            f = p.stdin
+            out = p.stdout
+            err = p.stderr
+            f.write(script_fu)
+            return_code = p.wait()
+            
+            if p.returncode != 0:
+                self.clear_tmp()
+                raise GimpXCFGimpNotInstalled
+
+            f.close()
+            err.close()
+            out.close()
+            # Uncomment these lines to see the output from gimp
+            #err = open(junk, 'r')
+            #inkex.debug(err.read())
+            #err.close()
+
             try:
-                import msvcrt
-                msvcrt.setmode(1, os.O_BINARY)
+                x = open(xcf, 'rb')
             except:
-                pass
-        sys.stdout.write(x.read())
-        x.close()
-        self.clear_tmp()
+                self.clear_tmp()
+                raise GimpXCFScriptFuError
+
+            if os.name == 'nt':
+                try:
+                    import msvcrt
+                    msvcrt.setmode(1, os.O_BINARY)
+                except:
+                    pass
+            try:
+                sys.stdout.write(x.read())
+            finally:
+                x.close()
+                self.clear_tmp()
 
 
 if __name__ == '__main__':

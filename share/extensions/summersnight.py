@@ -17,9 +17,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 """
-import inkex, os, simplepath, cubicsuperpath, simpletransform, voronoi2svg
-from ffgeom import *
 import gettext
+import os
+
+import cubicsuperpath
+import inkex
+import simplepath
+import simpletransform
+import voronoi2svg
+
+from ffgeom import *
+
 _ = gettext.gettext
 
 try:
@@ -30,7 +38,8 @@ except:
 
 class Project(inkex.Effect):
     def __init__(self):
-            inkex.Effect.__init__(self)
+        inkex.Effect.__init__(self)
+
     def effect(self):
         if len(self.options.ids) < 2:
             inkex.errormsg(_("This extension requires two selected paths. \nThe second path must be exactly four nodes long."))
@@ -121,6 +130,7 @@ class Project(inkex.Effect):
 
         p = intersectSegments(vert,horz)
         return [p['x'],p['y']]    
+
 
 if __name__ == '__main__':
     e = Project()

@@ -60,12 +60,22 @@ def get_matrix(u, i, j):
 class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
-        self.OptionParser.add_option("-R", "--ROBO", action="store", type="string", dest="ROBO")
-        self.OptionParser.add_option("-P", "--POLY", action="store", type="string", dest="POLY")
-        self.OptionParser.add_option("--units", action="store", type="string", dest="units")
-        self.OptionParser.add_option("--encoding", action="store", type="string", dest="char_encode", default="latin_1")
-        self.OptionParser.add_option("--tab", action="store", type="string", dest="tab")
-        self.OptionParser.add_option("--inputhelp", action="store", type="string", dest="inputhelp")
+        self.OptionParser.add_option("-R", "--ROBO", action="store",
+                                     type="string", dest="ROBO",
+                                     default=False)
+        self.OptionParser.add_option("-P", "--POLY", action="store",
+                                     type="string", dest="POLY",
+                                     default=True)
+        self.OptionParser.add_option("--units", action="store",
+                                     type="string", dest="units",
+                                     default="72./90") # Points
+        self.OptionParser.add_option("--encoding", action="store",
+                                     type="string", dest="char_encode",
+                                     default="latin_1")
+        self.OptionParser.add_option("--tab", action="store",
+                                     type="string", dest="tab")
+        self.OptionParser.add_option("--inputhelp", action="store",
+                                     type="string", dest="inputhelp")
         self.dxf = []
         self.handle = 255                       # handle for DXF ENTITY
         self.layers = ['0']

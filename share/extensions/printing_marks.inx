@@ -2,7 +2,7 @@
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
   <_name>Printing Marks</_name>
   <id>org.inkscape.printing.marks</id>
-  <dependency type="executable" location="extensions">printing-marks.py</dependency>
+  <dependency type="executable" location="extensions">printing_marks.py</dependency>
   <dependency type="executable" location="extensions">inkex.py</dependency>
 
   <param name="tab" type="notebook">
@@ -45,7 +45,7 @@
   </effect>
 
   <script>
-    <command reldir="extensions" interpreter="python">printing-marks.py</command>
+    <command reldir="extensions" interpreter="python">printing_marks.py</command>
   </script>
 
 </inkscape-extension>

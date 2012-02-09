@@ -24,8 +24,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
-import inkex, simplestyle, math
 from subprocess import Popen, PIPE, STDOUT
+import math
+
+import inkex
+import simplestyle
 
 class Printing_Marks (inkex.Effect):
 
@@ -66,7 +69,7 @@ class Printing_Marks (inkex.Effect):
                                      help="Draw Page Information?")
         self.OptionParser.add_option("--unit",
                                      action="store", type="string",
-                                     dest="unit", default=100.0,
+                                     dest="unit", default="px",
                                      help="Draw measurment")
         self.OptionParser.add_option("--crop_offset",
                                      action="store", type="float",

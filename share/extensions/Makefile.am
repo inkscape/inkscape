@@ -4,7 +4,7 @@ SUBDIRS = \
 	Barcode \
 	Poly3DObjects \
 	test \
-  ink2canvas \
+	ink2canvas \
 	xaml2svg
 
 extensiondir = $(datadir)/inkscape/extensions
@@ -116,7 +116,7 @@ extensions = \
 	pixelsnap.py \
 	plt_output.py \
 	polyhedron_3d.py \
-	printing-marks.py \
+	printing_marks.py \
 	ps2dxf.sh \
 	ps2pdf-ext.py \
 	pturtle.py \
@@ -304,7 +304,7 @@ modules = \
 	plt_input.inx \
 	plt_output.inx \
 	polyhedron_3d.inx	\
-	printing-marks.inx \
+	printing_marks.inx \
 	ps_input.inx \
 	radiusrand.inx \
 	render_barcode.inx \
