@@ -14,6 +14,7 @@ share/extensions/embedimage.py
 share/extensions/export_gimp_palette.py
 share/extensions/extractimage.py
 share/extensions/gcodetools.py
+share/extensions/gimp_xcf.py
 share/extensions/guides_creator.py
 share/extensions/inkex.py
 share/extensions/markers_strokepaint.py
@@ -454,7 +455,7 @@ share/extensions/web-transmit-att.py
 [type: gettext/xml] share/extensions/plt_output.inx
 [type: gettext/xml] share/extensions/polyhedron_3d.inx
 [type: gettext/xml] share/extensions/previous_glyph_layer.inx
-[type: gettext/xml] share/extensions/printing-marks.inx
+[type: gettext/xml] share/extensions/printing_marks.inx
 [type: gettext/xml] share/extensions/ps_input.inx
 [type: gettext/xml] share/extensions/radiusrand.inx
 [type: gettext/xml] share/extensions/render_alphabetsoup.inx
