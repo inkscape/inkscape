@@ -272,7 +272,11 @@ sp_export_dialog_area_box (GtkWidget * dlg)
 {
     Gtk::VBox* vb = new Gtk::VBox(false, 3);
 
+#if WITH_GTKMM_2_22
     Gtk::Label* lbl = new Gtk::Label(_("<big><b>Export area</b></big>"), Gtk::ALIGN_START);
+#else
+    Gtk::Label* lbl = new Gtk::Label(_("<big><b>Export area</b></big>"), Gtk::ALIGN_LEFT);
+#endif
     lbl->set_use_markup(true);
     vb->pack_start(*lbl);
 
@@ -470,7 +474,11 @@ sp_export_dialog (void)
             Gtk::VBox *size_box = new Gtk::VBox(false, 3);
             size_box->set_border_width(3);
 
+#if WITH_GTKMM_2_22
             Gtk::Label* lbl = new Gtk::Label(_("<big><b>Bitmap size</b></big>"), Gtk::ALIGN_START);
+#else
+            Gtk::Label* lbl = new Gtk::Label(_("<big><b>Bitmap size</b></big>"), Gtk::ALIGN_LEFT);
+#endif
             lbl->set_use_markup(true);
             size_box->pack_start(*lbl, false, false, 0);
             const int rows = 2;
@@ -519,7 +527,11 @@ sp_export_dialog (void)
             file_box->set_border_width(3);
 
             // true = has mnemonic
-            Gtk::Label *flabel = new Gtk::Label(_("<big><b>_Filename</b></big>"), Gtk::ALIGN_START, Gtk::ALIGN_CENTER, true);
+#if WITH_GTKMM_2_22
+	    Gtk::Label *flabel = new Gtk::Label(_("<big><b>_Filename</b></big>"), Gtk::ALIGN_START, Gtk::ALIGN_CENTER, true);
+#else
+	    Gtk::Label *flabel = new Gtk::Label(_("<big><b>_Filename</b></big>"), Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER, true);
+#endif
             flabel->set_use_markup(true);
             file_box->pack_start(*flabel, false, false, 0);
 

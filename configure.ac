@@ -727,6 +727,11 @@ if test "x$with_gtkmm_2_24" = "xyes"; then
 	AC_DEFINE(WITH_GTKMM_2_24,1,[Build with Gtkmm 2.24.x])
 fi
 
+PKG_CHECK_MODULES(GTKMM_2_22, gtkmm-2.4 >= 2.22, with_gtkmm_2_22=yes, with_gtkmm_2_22=no)
+if test "x$with_gtkmm_2_22" = "xyes"; then
+	AC_DEFINE(WITH_GTKMM_2_22,1,[Build with Gtkmm 2.22.x])
+fi
+
 # Check for GTK+ backend target
 AC_MSG_CHECKING([for GTK+ backend target])
 gtk_backend_target=`pkg-config --variable=target gtk+-2.0`

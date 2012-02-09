@@ -81,12 +81,20 @@ ParamDescription::get_widget (SPDocument * /*doc*/, Inkscape::XML::Node * /*node
     Gtk::Label * label;
     int padding = 12 + _indent;
     if (_mode == HEADER) {
+#if WITH_GTKMM_2_22
         label = Gtk::manage(new Gtk::Label(Glib::ustring("<b>") +newguitext + Glib::ustring("</b>"), Gtk::ALIGN_START));
+#else
+        label = Gtk::manage(new Gtk::Label(Glib::ustring("<b>") +newguitext + Glib::ustring("</b>"), Gtk::ALIGN_LEFT));
+#endif
         label->set_padding(0,5);
         label->set_use_markup(true);
         padding = _indent;
     } else {
+#if WITH_GTKMM_2_22
         label = Gtk::manage(new Gtk::Label(newguitext, Gtk::ALIGN_START));
+#else
+        label = Gtk::manage(new Gtk::Label(newguitext, Gtk::ALIGN_LEFT));
+#endif
     }
     label->set_line_wrap();
     label->show();
