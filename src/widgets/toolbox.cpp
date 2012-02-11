@@ -994,9 +994,11 @@ static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* deskto
 
 static void handlebox_detached(GtkHandleBox* /*handlebox*/, GtkWidget* widget, gpointer /*userData*/)
 {
+	GtkAllocation alloc;
+	gtk_widget_get_allocation(widget, &alloc);
     gtk_widget_set_size_request( widget,
-                                 widget->allocation.width,
-                                 widget->allocation.height );
+                                 alloc.width,
+                                 alloc.height );
 }
 
 static void handlebox_attached(GtkHandleBox* /*handlebox*/, GtkWidget* widget, gpointer /*userData*/)
@@ -1341,7 +1343,7 @@ static void sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, Geom::D
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         prefs->setDouble(Glib::ustring("/tools/nodes/") + (d == Geom::X ? "x" : "y"),
-            sp_units_get_pixels(adj->value, *unit));
+            sp_units_get_pixels(gtk_adjustment_get_value(adj), *unit));
     }
 
     // quit if run by the attr_changed listener
@@ -1731,7 +1733,8 @@ sp_measure_fontsize_value_changed(GtkAdjustment *adj, GObject *tbl)
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setInt(Glib::ustring("/tools/measure/fontsize"), adj->value);
+        prefs->setInt(Glib::ustring("/tools/measure/fontsize"), 
+			gtk_adjustment_get_value(adj));
     }
 }
 
@@ -2700,7 +2703,8 @@ static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKlu
         // do not remember prefs if this call is initiated by an undo change, because undoing object
         // creation sets bogus values to its attributes before it is deleted
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setInt("/tools/shapes/star/magnitude", (gint)adj->value);
+        prefs->setInt("/tools/shapes/star/magnitude", 
+			(gint)gtk_adjustment_get_value(adj));
     }
 
     // quit if run by the attr_changed listener
@@ -2719,11 +2723,12 @@ static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKlu
         SPItem *item = reinterpret_cast<SPItem*>(items->data);
         if (SP_IS_STAR(item)) {
             Inkscape::XML::Node *repr = item->getRepr();
-            sp_repr_set_int(repr,"sodipodi:sides",(gint)adj->value);
+            sp_repr_set_int(repr,"sodipodi:sides",
+			    (gint)gtk_adjustment_get_value(adj));
             double arg1 = 0.5;
             sp_repr_get_double(repr, "sodipodi:arg1", &arg1);
             sp_repr_set_svg_double(repr, "sodipodi:arg2",
-                                   (arg1 + M_PI / (gint)adj->value));
+                                   (arg1 + M_PI / (gint)gtk_adjustment_get_value(adj)));
             item->updateRepr();
             modmade = true;
         }
@@ -2741,9 +2746,10 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
     SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
-        if (!IS_NAN(adj->value)) {
+        if (!IS_NAN(gtk_adjustment_get_value(adj))) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-            prefs->setDouble("/tools/shapes/star/proportion", adj->value);
+            prefs->setDouble("/tools/shapes/star/proportion", 
+			    gtk_adjustment_get_value(adj));
         }
     }
 
@@ -2768,9 +2774,11 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
             sp_repr_get_double(repr, "sodipodi:r1", &r1);
             sp_repr_get_double(repr, "sodipodi:r2", &r2);
             if (r2 < r1) {
-                sp_repr_set_svg_double(repr, "sodipodi:r2", r1*adj->value);
+                sp_repr_set_svg_double(repr, "sodipodi:r2", 
+				r1*gtk_adjustment_get_value(adj));
             } else {
-                sp_repr_set_svg_double(repr, "sodipodi:r1", r2*adj->value);
+                sp_repr_set_svg_double(repr, "sodipodi:r1", 
+				r2*gtk_adjustment_get_value(adj));
             }
 
             item->updateRepr();
@@ -2837,7 +2845,7 @@ static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludg
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setDouble("/tools/shapes/star/rounded", (gdouble) adj->value);
+        prefs->setDouble("/tools/shapes/star/rounded", (gdouble) gtk_adjustment_get_value(adj));
     }
 
     // quit if run by the attr_changed listener
@@ -2856,7 +2864,8 @@ static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludg
         SPItem *item = reinterpret_cast<SPItem*>(items->data);
         if (SP_IS_STAR(item)) {
             Inkscape::XML::Node *repr = item->getRepr();
-            sp_repr_set_svg_double(repr, "inkscape:rounded", (gdouble) adj->value);
+            sp_repr_set_svg_double(repr, "inkscape:rounded", 
+			    (gdouble) gtk_adjustment_get_value(adj));
             item->updateRepr();
             modmade = true;
         }
@@ -2875,7 +2884,8 @@ static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKl
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setDouble("/tools/shapes/star/randomized", (gdouble) adj->value);
+        prefs->setDouble("/tools/shapes/star/randomized", 
+			(gdouble) gtk_adjustment_get_value(adj));
     }
 
     // quit if run by the attr_changed listener
@@ -2894,7 +2904,8 @@ static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKl
         SPItem *item = reinterpret_cast<SPItem *>(items->data);
         if (SP_IS_STAR(item)) {
             Inkscape::XML::Node *repr = item->getRepr();
-            sp_repr_set_svg_double(repr, "inkscape:randomized", (gdouble) adj->value);
+            sp_repr_set_svg_double(repr, "inkscape:randomized", 
+			    (gdouble) gtk_adjustment_get_value(adj));
             item->updateRepr();
             modmade = true;
         }
@@ -3232,7 +3243,7 @@ static void sp_rtb_sensitivize( GObject *tbl )
     GtkAdjustment *adj2 = GTK_ADJUSTMENT( g_object_get_data(tbl, "ry") );
     GtkAction* not_rounded = GTK_ACTION( g_object_get_data(tbl, "not_rounded") );
 
-    if (adj1->value == 0 && adj2->value == 0 && g_object_get_data(tbl, "single")) { // only for a single selected rect (for now)
+    if (gtk_adjustment_get_value(adj1) == 0 && gtk_adjustment_get_value(adj2) == 0 && g_object_get_data(tbl, "single")) { // only for a single selected rect (for now)
         gtk_action_set_sensitive( not_rounded, FALSE );
     } else {
         gtk_action_set_sensitive( not_rounded, TRUE );
@@ -3250,7 +3261,8 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setDouble(Glib::ustring("/tools/shapes/rect/") + value_name, sp_units_get_pixels(adj->value, *unit));
+        prefs->setDouble(Glib::ustring("/tools/shapes/rect/") + value_name, 
+			sp_units_get_pixels(gtk_adjustment_get_value(adj), *unit));
     }
 
     // quit if run by the attr_changed listener
@@ -3265,8 +3277,9 @@ static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     for (GSList const *items = selection->itemList(); items != NULL; items = items->next) {
         if (SP_IS_RECT(items->data)) {
-            if (adj->value != 0) {
-                setter(SP_RECT(items->data), sp_units_get_pixels(adj->value, *unit));
+            if (gtk_adjustment_get_value(adj) != 0) {
+                setter(SP_RECT(items->data), 
+				sp_units_get_pixels(gtk_adjustment_get_value(adj), *unit));
             } else {
                 SP_OBJECT(items->data)->getRepr()->setAttribute(value_name, NULL);
             }
@@ -3725,7 +3738,8 @@ static void box3d_angle_value_changed(GtkAdjustment *adj, GObject *dataKludge, P
     }
     Persp3D *persp = sel_persps.front();
 
-    persp->perspective_impl->tmat.set_infinite_direction (axis, adj->value);
+    persp->perspective_impl->tmat.set_infinite_direction (axis, 
+		    gtk_adjustment_get_value(adj));
     persp->updateRepr();
 
     // TODO: use the correct axis here, too
@@ -3926,7 +3940,8 @@ static void sp_spl_tb_value_changed(GtkAdjustment *adj, GObject *tbl, Glib::ustr
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setDouble("/tools/shapes/spiral/" + value_name, adj->value);
+        prefs->setDouble("/tools/shapes/spiral/" + value_name, 
+			gtk_adjustment_get_value(adj));
     }
 
     // quit if run by the attr_changed listener
@@ -3947,7 +3962,8 @@ static void sp_spl_tb_value_changed(GtkAdjustment *adj, GObject *tbl, Glib::ustr
         SPItem *item = reinterpret_cast<SPItem*>(items->data);
         if (SP_IS_SPIRAL(item)) {
             Inkscape::XML::Node *repr = item->getRepr();
-            sp_repr_set_svg_double( repr, namespaced_name, adj->value );
+            sp_repr_set_svg_double( repr, namespaced_name, 
+			    gtk_adjustment_get_value(adj) );
             item->updateRepr();
             modmade = true;
         }
@@ -4336,7 +4352,8 @@ static void sp_pencil_tb_tolerance_value_changed(GtkAdjustment *adj, GObject *tb
     // in turn, prevent listener from responding
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
-    prefs->setDouble("/tools/freehand/pencil/tolerance", adj->value);
+    prefs->setDouble("/tools/freehand/pencil/tolerance", 
+		    gtk_adjustment_get_value(adj));
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
@@ -4421,13 +4438,15 @@ static void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActio
 static void sp_tweak_width_value_changed( GtkAdjustment *adj, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/tweak/width", adj->value * 0.01 );
+    prefs->setDouble( "/tools/tweak/width", 
+		    gtk_adjustment_get_value(adj) * 0.01 );
 }
 
 static void sp_tweak_force_value_changed( GtkAdjustment *adj, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/tweak/force", adj->value * 0.01 );
+    prefs->setDouble( "/tools/tweak/force", 
+		    gtk_adjustment_get_value(adj) * 0.01 );
 }
 
 static void sp_tweak_pressure_state_changed( GtkToggleAction *act, gpointer /*data*/ )
@@ -4459,7 +4478,8 @@ static void sp_tweak_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 static void sp_tweak_fidelity_value_changed( GtkAdjustment *adj, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/tweak/fidelity", adj->value * 0.01 );
+    prefs->setDouble( "/tools/tweak/fidelity", 
+		    gtk_adjustment_get_value(adj) * 0.01 );
 }
 
 static void tweak_toggle_doh(GtkToggleAction *act, gpointer /*data*/) {
@@ -4752,19 +4772,22 @@ static void sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainAction
 static void sp_spray_width_value_changed( GtkAdjustment *adj, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/spray/width", adj->value );
+    prefs->setDouble( "/tools/spray/width", 
+		    gtk_adjustment_get_value(adj));
 }
 
 static void sp_spray_mean_value_changed( GtkAdjustment *adj, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/spray/mean", adj->value );
+    prefs->setDouble( "/tools/spray/mean", 
+		    gtk_adjustment_get_value(adj));
 }
 
 static void sp_spray_standard_deviation_value_changed( GtkAdjustment *adj, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/spray/standard_deviation", adj->value );
+    prefs->setDouble( "/tools/spray/standard_deviation", 
+		    gtk_adjustment_get_value(adj));
 }
 
 static void sp_spray_mode_changed( EgeSelectOneAction *act, GObject * /*tbl*/ )
@@ -4777,19 +4800,22 @@ static void sp_spray_mode_changed( EgeSelectOneAction *act, GObject * /*tbl*/ )
 static void sp_spray_population_value_changed( GtkAdjustment *adj, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/spray/population", adj->value );
+    prefs->setDouble( "/tools/spray/population", 
+		    gtk_adjustment_get_value(adj));
 }
 
 static void sp_spray_rotation_value_changed( GtkAdjustment *adj, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/spray/rotation_variation", adj->value );
+    prefs->setDouble( "/tools/spray/rotation_variation", 
+		    gtk_adjustment_get_value(adj));
 }
 
 static void sp_spray_scale_value_changed( GtkAdjustment *adj, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/spray/scale_variation", adj->value );
+    prefs->setDouble( "/tools/spray/scale_variation", 
+		    gtk_adjustment_get_value(adj));
 }
 
 
@@ -5030,56 +5056,56 @@ static void update_presets_list(GObject *tbl)
 static void sp_ddc_mass_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/calligraphic/mass", adj->value );
+    prefs->setDouble( "/tools/calligraphic/mass", gtk_adjustment_get_value(adj) );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_wiggle_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/calligraphic/wiggle", adj->value );
+    prefs->setDouble( "/tools/calligraphic/wiggle", gtk_adjustment_get_value(adj) );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_angle_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/calligraphic/angle", adj->value );
+    prefs->setDouble( "/tools/calligraphic/angle", gtk_adjustment_get_value(adj) );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_width_value_changed( GtkAdjustment *adj, GObject *tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/calligraphic/width", adj->value );
+    prefs->setDouble( "/tools/calligraphic/width", gtk_adjustment_get_value(adj) );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_velthin_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble("/tools/calligraphic/thinning", adj->value );
+    prefs->setDouble("/tools/calligraphic/thinning", gtk_adjustment_get_value(adj) );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_flatness_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/calligraphic/flatness", adj->value );
+    prefs->setDouble( "/tools/calligraphic/flatness", gtk_adjustment_get_value(adj) );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_tremor_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/calligraphic/tremor", adj->value );
+    prefs->setDouble( "/tools/calligraphic/tremor", gtk_adjustment_get_value(adj) );
     update_presets_list(tbl);
 }
 
 static void sp_ddc_cap_rounding_value_changed( GtkAdjustment *adj, GObject* tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/calligraphic/cap_rounding", adj->value );
+    prefs->setDouble( "/tools/calligraphic/cap_rounding", gtk_adjustment_get_value(adj) );
     update_presets_list(tbl);
 }
 
@@ -5517,7 +5543,7 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setDouble(Glib::ustring("/tools/shapes/arc/") + value_name, adj->value);
+        prefs->setDouble(Glib::ustring("/tools/shapes/arc/") + value_name, gtk_adjustment_get_value(adj));
     }
 
     // quit if run by the attr_changed listener
@@ -5543,9 +5569,9 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
             SPArc *arc = SP_ARC(item);
 
             if (!strcmp(value_name, "start")) {
-                ge->start = (adj->value * M_PI)/ 180;
+                ge->start = (gtk_adjustment_get_value(adj) * M_PI)/ 180;
             } else {
-                ge->end = (adj->value * M_PI)/ 180;
+                ge->end = (gtk_adjustment_get_value(adj) * M_PI)/ 180;
             }
 
             sp_genericellipse_normalize(ge);
@@ -5560,7 +5586,7 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
 
     GtkAdjustment *other = GTK_ADJUSTMENT( g_object_get_data( tbl, other_name ) );
 
-    sp_arctb_sensitivize( tbl, adj->value, other->value );
+    sp_arctb_sensitivize( tbl, gtk_adjustment_get_value(adj), gtk_adjustment_get_value(other) );
 
     if (modmade) {
         DocumentUndo::maybeDone(sp_desktop_document(desktop), value_name, SP_VERB_CONTEXT_ARC,
@@ -5675,7 +5701,7 @@ static void arc_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const * /
     adj2 = GTK_ADJUSTMENT( g_object_get_data( tbl, "end" ) );
     gtk_adjustment_set_value(adj2, mod360((end * 180)/M_PI));
 
-    sp_arctb_sensitivize( tbl, adj1->value, adj2->value );
+    sp_arctb_sensitivize( tbl, gtk_adjustment_get_value(adj1), gtk_adjustment_get_value(adj2) );
 
     char const *openstr = NULL;
     openstr = repr->attribute("sodipodi:open");
@@ -5835,7 +5861,7 @@ static void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions,
     {
         GtkAdjustment *adj1 = GTK_ADJUSTMENT( g_object_get_data( holder, "start" ) );
         GtkAdjustment *adj2 = GTK_ADJUSTMENT( g_object_get_data( holder, "end" ) );
-        sp_arctb_sensitivize( holder, adj1->value, adj2->value );
+        sp_arctb_sensitivize( holder, gtk_adjustment_get_value(adj1), gtk_adjustment_get_value(adj2) );
     }
 
 
@@ -6292,7 +6318,7 @@ static void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActi
 static void sp_erc_width_value_changed( GtkAdjustment *adj, GObject *tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble( "/tools/eraser/width", adj->value );
+    prefs->setDouble( "/tools/eraser/width", gtk_adjustment_get_value(adj) );
     update_presets_list(tbl);
 }
 
@@ -6725,7 +6751,6 @@ static void sp_text_style_changed( InkToggleAction* act, GObject *tbl )
     // Now that we have the old face, find the new face.
     Glib::ustring newFontSpec = "";
     SPCSSAttr   *css        = sp_repr_css_attr_new ();
-    gboolean nochange = true;
     gboolean active = gtk_toggle_action_get_active( GTK_TOGGLE_ACTION(act) );
 
     switch (prop)
@@ -6745,7 +6770,6 @@ static void sp_text_style_changed( InkToggleAction* act, GObject *tbl )
                     font->Unref();
                     font = NULL;
                 }
-                nochange = false;
             } else {
 
                 // Blindly set weight.
@@ -6771,7 +6795,6 @@ static void sp_text_style_changed( InkToggleAction* act, GObject *tbl )
                 } else {
                     sp_repr_css_set_property (css, "font-style", "normal");
                 }
-                nochange = false;
 
             } else {
 
@@ -7045,7 +7068,7 @@ static void sp_text_lineheight_value_changed( GtkAdjustment *adj, GObject *tbl )
     // Set css line height.
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream osfs;
-    osfs << adj->value*100 << "%";
+    osfs << gtk_adjustment_get_value(adj)*100 << "%";
     sp_repr_css_set_property (css, "line-height", osfs.str().c_str());
 
     // Apply line-height to selected objects.
@@ -7098,7 +7121,7 @@ static void sp_text_wordspacing_value_changed( GtkAdjustment *adj, GObject *tbl 
     // Set css word-spacing
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream osfs;
-    osfs << adj->value << "px"; // For now always use px
+    osfs << gtk_adjustment_get_value(adj) << "px"; // For now always use px
     sp_repr_css_set_property (css, "word-spacing", osfs.str().c_str());
 
     // Apply word-spacing to selected objects.
@@ -7137,7 +7160,7 @@ static void sp_text_letterspacing_value_changed( GtkAdjustment *adj, GObject *tb
     // Set css letter-spacing
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream osfs;
-    osfs << adj->value << "px";  // For now always use px
+    osfs << gtk_adjustment_get_value(adj) << "px";  // For now always use px
     sp_repr_css_set_property (css, "letter-spacing", osfs.str().c_str());
 
     // Apply letter-spacing to selected objects.
@@ -7178,7 +7201,7 @@ static void sp_text_dx_value_changed( GtkAdjustment *adj, GObject *tbl )
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-    gdouble new_dx = adj->value;
+    gdouble new_dx = gtk_adjustment_get_value(adj);
     bool modmade = false;
 
     if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
@@ -7212,7 +7235,7 @@ static void sp_text_dy_value_changed( GtkAdjustment *adj, GObject *tbl )
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-    gdouble new_dy = adj->value;
+    gdouble new_dy = gtk_adjustment_get_value(adj);
     bool modmade = false;
 
     if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
@@ -7247,7 +7270,7 @@ static void sp_text_rotation_value_changed( GtkAdjustment *adj, GObject *tbl )
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-    gdouble new_degrees = adj->value;
+    gdouble new_degrees = gtk_adjustment_get_value(adj);
 
     bool modmade = false;
     if( SP_IS_TEXT_CONTEXT((SP_ACTIVE_DESKTOP)->event_context) ) {
@@ -8232,7 +8255,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
     Inkscape::XML::Node *repr = desktop->namedview->getRepr();
 
     if ( !repr->attribute("inkscape:connector-spacing") &&
-            ( adj->value == defaultConnSpacing )) {
+            ( gtk_adjustment_get_value(adj) == defaultConnSpacing )) {
         // Don't need to update the repr if the attribute doesn't
         // exist and it is being set to the default value -- as will
         // happen at startup.
@@ -8247,7 +8270,7 @@ static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
     // in turn, prevent listener from responding
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE));
 
-    sp_repr_set_css_double(repr, "inkscape:connector-spacing", adj->value);
+    sp_repr_set_css_double(repr, "inkscape:connector-spacing", gtk_adjustment_get_value(adj));
     desktop->namedview->updateRepr();
     bool modmade = false;
 
@@ -8305,7 +8328,7 @@ static void sp_nooverlaps_graph_layout_toggled( GtkToggleAction* act, GtkObject 
 static void connector_length_changed(GtkAdjustment *adj, GObject* /*tbl*/)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setDouble("/tools/connector/length", adj->value);
+    prefs->setDouble("/tools/connector/length", gtk_adjustment_get_value(adj));
 }
 
 static void connector_tb_event_attr_changed(Inkscape::XML::Node *repr,
@@ -8557,7 +8580,7 @@ static void paintbucket_channels_changed(EgeSelectOneAction* act, GObject* /*tbl
 static void paintbucket_threshold_changed(GtkAdjustment *adj, GObject * /*tbl*/)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setInt("/tools/paintbucket/threshold", (gint)adj->value);
+    prefs->setInt("/tools/paintbucket/threshold", (gint)gtk_adjustment_get_value(adj));
 }
 
 static void paintbucket_autogap_changed(EgeSelectOneAction* act, GObject * /*tbl*/)
@@ -8574,7 +8597,7 @@ static void paintbucket_offset_changed(GtkAdjustment *adj, GObject *tbl)
 
     // Don't adjust the offset value because we're saving the
     // unit and it'll be correctly handled on load.
-    prefs->setDouble("/tools/paintbucket/offset", (gdouble)adj->value);
+    prefs->setDouble("/tools/paintbucket/offset", (gdouble)gtk_adjustment_get_value(adj));
     prefs->setString("/tools/paintbucket/offsetunits", sp_unit_get_abbreviation(unit));
 }
 

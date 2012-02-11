@@ -1395,7 +1395,7 @@ void SPDesktop::disableInteraction()
 void SPDesktop::setWaitingCursor()
 {
     GdkCursor *waiting = gdk_cursor_new(GDK_WATCH);
-    gdk_window_set_cursor(GTK_WIDGET(sp_desktop_canvas(this))->window, waiting);
+    gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(this))), waiting);
     gdk_cursor_unref(waiting);
     // GDK needs the flush for the cursor change to take effect
     gdk_flush();
