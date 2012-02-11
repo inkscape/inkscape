@@ -303,8 +303,13 @@ void ColorICCSelector::init()
     gtk_table_attach( GTK_TABLE (t), _fixupBtn, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD );
 
 
+#if GTK_CHECK_VERSION(2,24,0)
+    _profileSel = gtk_combo_box_text_new();
+    gtk_combo_box_text_append_text( GTK_COMBO_BOX_TEXT(_profileSel), _("<none>") );
+#else
     _profileSel = gtk_combo_box_new_text();
     gtk_combo_box_append_text( GTK_COMBO_BOX(_profileSel), _("<none>") );
+#endif
     gtk_widget_show( _profileSel );
     gtk_combo_box_set_active( GTK_COMBO_BOX(_profileSel), 0 );
     gtk_table_attach( GTK_TABLE(t), _profileSel, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD );
@@ -460,7 +465,11 @@ void ColorICCSelector::_profileSelected( GtkWidget* /*src*/, gpointer data )
 {
     ColorICCSelector* self = reinterpret_cast<ColorICCSelector*>(data);
     gint activeIndex = gtk_combo_box_get_active( GTK_COMBO_BOX(self->_profileSel) );
+#if GTK_CHECK_VERSION(2,24,0)
+    gchar* name = (activeIndex != 0) ? gtk_combo_box_text_get_active_text( GTK_COMBO_BOX_TEXT(self->_profileSel) ) : 0;
+#else
     gchar* name = (activeIndex != 0) ? gtk_combo_box_get_active_text( GTK_COMBO_BOX(self->_profileSel) ) : 0;
+#endif //GTK_CHECK_VERSION
     self->_switchToProfile( name );
     if ( name ) {
         g_free( name );
@@ -574,10 +583,18 @@ void ColorICCSelector::_profilesChanged( std::string const & name )
     GtkTreeModel* model = gtk_combo_box_get_model( combo );
     GtkTreeIter iter;
     while ( gtk_tree_model_get_iter_first( model, &iter ) ) {
+#if GTK_CHECK_VERSION(2,24,0)
+        gtk_combo_box_text_remove( GTK_COMBO_BOX_TEXT(combo), 0 );
+#else
         gtk_combo_box_remove_text( combo, 0 );
+#endif
     }
 
+#if GTK_CHECK_VERSION(2,24,0)
+    gtk_combo_box_text_append_text( GTK_COMBO_BOX_TEXT(combo), _("<none>"));
+#else
     gtk_combo_box_append_text( combo, _("<none>"));
+#endif
 
     gtk_combo_box_set_active( combo, 0 );
 
@@ -586,7 +603,11 @@ void ColorICCSelector::_profilesChanged( std::string const & name )
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
         Inkscape::ColorProfile* prof = reinterpret_cast<Inkscape::ColorProfile*>(obj);
+#if GTK_CHECK_VERSION(2,24,0)
+        gtk_combo_box_text_append_text( GTK_COMBO_BOX_TEXT(combo), prof->name );
+#else
         gtk_combo_box_append_text( combo, prof->name );
+#endif
         if ( name == prof->name ) {
             gtk_combo_box_set_active( combo, index );
         }

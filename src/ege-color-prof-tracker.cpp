@@ -51,6 +51,7 @@
 #endif /* GDK_WINDOWING_X11 */
 
 #include "ege-color-prof-tracker.h"
+#include "helper/sp-marshal.h"
 
 /*
 #define GDK_ROOT_WINDOW()             (gdk_x11_get_default_root_xwindow ())
@@ -185,7 +186,7 @@ void ege_color_prof_tracker_class_init( EgeColorProfTrackerClass* klass )
                                        G_SIGNAL_RUN_FIRST,
                                        0,
                                        NULL, NULL,
-                                       gtk_marshal_VOID__INT_INT,
+                                       sp_marshal_VOID__INT_INT,
                                        G_TYPE_NONE, 2,
                                        G_TYPE_INT,
                                        G_TYPE_INT);
@@ -195,7 +196,7 @@ void ege_color_prof_tracker_class_init( EgeColorProfTrackerClass* klass )
                                          G_SIGNAL_RUN_FIRST,
                                          0,
                                          NULL, NULL,
-                                         gtk_marshal_VOID__INT_INT,
+                                         sp_marshal_VOID__INT_INT,
                                          G_TYPE_NONE, 2,
                                          G_TYPE_INT,
                                          G_TYPE_INT);
@@ -205,7 +206,7 @@ void ege_color_prof_tracker_class_init( EgeColorProfTrackerClass* klass )
                                           G_SIGNAL_RUN_FIRST,
                                           0,
                                           NULL, NULL,
-                                          gtk_marshal_VOID__INT_INT,
+                                          sp_marshal_VOID__INT_INT,
                                           G_TYPE_NONE, 2,
                                           G_TYPE_INT,
                                           G_TYPE_INT);

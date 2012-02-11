@@ -127,7 +127,7 @@ static void sp_font_selector_class_init(SPFontSelectorClass *c)
                                            GTK_RUN_FIRST,
                                            GTK_CLASS_TYPE(object_class),
                                            GTK_SIGNAL_OFFSET(SPFontSelectorClass, font_set),
-                                           gtk_marshal_NONE__POINTER,
+                                           g_cclosure_marshal_VOID__POINTER,
                                            GTK_TYPE_NONE,
                                            1, GTK_TYPE_POINTER);
 

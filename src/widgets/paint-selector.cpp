@@ -166,42 +166,42 @@ sp_paint_selector_class_init(SPPaintSelectorClass *klass)
                                                 (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                                 G_STRUCT_OFFSET(SPPaintSelectorClass, mode_changed),
 						NULL, NULL,
-                                                gtk_marshal_NONE__UINT,
+                                                g_cclosure_marshal_VOID__UINT,
                                                 G_TYPE_NONE, 1, GTK_TYPE_UINT);
     psel_signals[GRABBED] =  g_signal_new("grabbed",
                                             G_TYPE_FROM_CLASS(object_class),
                                             (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                             G_STRUCT_OFFSET(SPPaintSelectorClass, grabbed),
 					    NULL, NULL,
-                                            gtk_marshal_NONE__NONE,
+                                            g_cclosure_marshal_VOID__VOID,
                                             G_TYPE_NONE, 0);
     psel_signals[DRAGGED] =  g_signal_new("dragged",
                                             G_TYPE_FROM_CLASS(object_class),
                                             (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                             G_STRUCT_OFFSET(SPPaintSelectorClass, dragged),
 					    NULL, NULL,
-                                            gtk_marshal_NONE__NONE,
+                                            g_cclosure_marshal_VOID__VOID,
                                             G_TYPE_NONE, 0);
     psel_signals[RELEASED] = g_signal_new("released",
                                             G_TYPE_FROM_CLASS(object_class),
                                             (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                             G_STRUCT_OFFSET(SPPaintSelectorClass, released),
 					    NULL, NULL,
-                                            gtk_marshal_NONE__NONE,
+                                            g_cclosure_marshal_VOID__VOID,
                                             G_TYPE_NONE, 0);
     psel_signals[CHANGED] =  g_signal_new("changed",
                                             G_TYPE_FROM_CLASS(object_class),
                                             (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                             G_STRUCT_OFFSET(SPPaintSelectorClass, changed),
 					    NULL, NULL,
-                                            gtk_marshal_NONE__NONE,
+                                            g_cclosure_marshal_VOID__VOID,
                                             G_TYPE_NONE, 0);
     psel_signals[FILLRULE_CHANGED] = g_signal_new("fillrule_changed",
                                                     G_TYPE_FROM_CLASS(object_class),
                                                     (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                                     G_STRUCT_OFFSET(SPPaintSelectorClass, fillrule_changed),
 						    NULL, NULL,
-                                                    gtk_marshal_NONE__UINT,
+                                                    g_cclosure_marshal_VOID__UINT,
                                                     G_TYPE_NONE, 1, GTK_TYPE_UINT);
 
     object_class->destroy = sp_paint_selector_destroy;

@@ -89,28 +89,28 @@ sp_gradient_selector_class_init (SPGradientSelectorClass *klass)
                                         (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                         G_STRUCT_OFFSET (SPGradientSelectorClass, grabbed),
 					NULL, NULL,
-                                        gtk_marshal_NONE__NONE,
+                                        g_cclosure_marshal_VOID__VOID,
                                         G_TYPE_NONE, 0);
     signals[DRAGGED] =  g_signal_new ("dragged",
                                         G_TYPE_FROM_CLASS(object_class),
                                         (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                         G_STRUCT_OFFSET (SPGradientSelectorClass, dragged),
 					NULL, NULL,
-                                        gtk_marshal_NONE__NONE,
+                                        g_cclosure_marshal_VOID__VOID,
                                         G_TYPE_NONE, 0);
     signals[RELEASED] = g_signal_new ("released",
                                         G_TYPE_FROM_CLASS(object_class),
                                         (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                         G_STRUCT_OFFSET (SPGradientSelectorClass, released),
 					NULL, NULL,
-                                        gtk_marshal_NONE__NONE,
+                                        g_cclosure_marshal_VOID__VOID,
                                         G_TYPE_NONE, 0);
     signals[CHANGED] =  g_signal_new ("changed",
                                         G_TYPE_FROM_CLASS(object_class),
                                         (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                         G_STRUCT_OFFSET (SPGradientSelectorClass, changed),
 					NULL, NULL,
-                                        gtk_marshal_NONE__NONE,
+                                        g_cclosure_marshal_VOID__VOID,
                                         G_TYPE_NONE, 0);
 
     object_class->destroy = sp_gradient_selector_destroy;

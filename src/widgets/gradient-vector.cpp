@@ -109,7 +109,7 @@ static void sp_gradient_vector_selector_class_init(SPGradientVectorSelectorClass
 					G_SIGNAL_RUN_LAST,
                                         G_STRUCT_OFFSET(SPGradientVectorSelectorClass, vector_set),
 					NULL, NULL,
-					gtk_marshal_NONE__POINTER,
+					g_cclosure_marshal_VOID__POINTER,
 					G_TYPE_NONE, 1,
 					GTK_TYPE_POINTER);
 

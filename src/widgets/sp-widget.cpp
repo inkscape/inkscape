@@ -16,6 +16,7 @@
 #include "macros.h"
 #include "../document.h"
 #include "sp-widget.h"
+#include "helper/sp-marshal.h"
 
 enum {
 	CONSTRUCT,
@@ -84,14 +85,14 @@ sp_widget_class_init (SPWidgetClass *klass)
 						    G_SIGNAL_RUN_FIRST,
 						    G_STRUCT_OFFSET (SPWidgetClass, construct),
 						    NULL, NULL,
-						    gtk_marshal_NONE__NONE,
+						    g_cclosure_marshal_VOID__VOID,
 						    G_TYPE_NONE, 0);
 	signals[CHANGE_SELECTION] = g_signal_new ("change_selection",
 						    G_TYPE_FROM_CLASS(object_class),
 						    G_SIGNAL_RUN_FIRST,
 						    G_STRUCT_OFFSET (SPWidgetClass, change_selection),
 						    NULL, NULL,
-						    gtk_marshal_NONE__POINTER,
+						    g_cclosure_marshal_VOID__POINTER,
 						    G_TYPE_NONE, 1,
 						    GTK_TYPE_POINTER);
 	signals[MODIFY_SELECTION] = g_signal_new ("modify_selection",
@@ -99,7 +100,7 @@ sp_widget_class_init (SPWidgetClass *klass)
 						    G_SIGNAL_RUN_FIRST,
 						    G_STRUCT_OFFSET (SPWidgetClass, modify_selection),
 						    NULL, NULL,
-						    gtk_marshal_NONE__POINTER_UINT,
+						    sp_marshal_VOID__POINTER_UINT,
 						    G_TYPE_NONE, 2,
 						    GTK_TYPE_POINTER, GTK_TYPE_UINT);
 	signals[SET_SELECTION] =    g_signal_new ("set_selection",
@@ -107,7 +108,7 @@ sp_widget_class_init (SPWidgetClass *klass)
 						    G_SIGNAL_RUN_FIRST,
 						    G_STRUCT_OFFSET (SPWidgetClass, set_selection),
 						    NULL, NULL,
-						    gtk_marshal_NONE__POINTER,
+						    g_cclosure_marshal_VOID__POINTER,
 						    G_TYPE_NONE, 1,
 						    GTK_TYPE_POINTER);
 

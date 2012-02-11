@@ -90,28 +90,28 @@ sp_color_slider_class_init (SPColorSliderClass *klass)
 						  (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
 						  G_STRUCT_OFFSET (SPColorSliderClass, grabbed),
 						  NULL, NULL,
-						  gtk_marshal_NONE__NONE,
+						  g_cclosure_marshal_VOID__VOID,
 						  G_TYPE_NONE, 0);
 	slider_signals[DRAGGED] = g_signal_new ("dragged",
 						  G_TYPE_FROM_CLASS(object_class),
 						  (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
 						  G_STRUCT_OFFSET (SPColorSliderClass, dragged),
 						  NULL, NULL,
-						  gtk_marshal_NONE__NONE,
+						  g_cclosure_marshal_VOID__VOID,
 						  G_TYPE_NONE, 0);
 	slider_signals[RELEASED] = g_signal_new ("released",
 						  G_TYPE_FROM_CLASS(object_class),
 						  (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
 						  G_STRUCT_OFFSET (SPColorSliderClass, released),
 						  NULL, NULL,
-						  gtk_marshal_NONE__NONE,
+						  g_cclosure_marshal_VOID__VOID,
 						  G_TYPE_NONE, 0);
 	slider_signals[CHANGED] = g_signal_new ("changed",
 						  G_TYPE_FROM_CLASS(object_class),
 						  (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
 						  G_STRUCT_OFFSET (SPColorSliderClass, changed),
 						  NULL, NULL,
-						  gtk_marshal_NONE__NONE,
+						  g_cclosure_marshal_VOID__VOID,
 						  G_TYPE_NONE, 0);
 
 	object_class->destroy = sp_color_slider_destroy;
