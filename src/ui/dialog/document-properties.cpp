@@ -124,10 +124,18 @@ DocumentProperties::DocumentProperties()
       _rcb_snclp(_("Snap to clip paths"), _("When snapping to paths, then also try snapping to clip paths"), "inkscape:snap-path-clip", _wr),
       _rcb_snmsk(_("Snap to mask paths"), _("When snapping to paths, then also try snapping to mask paths"), "inkscape:snap-path-mask", _wr),
     //---------------------------------------------------------------
+#if WITH_GTKMM_2_22
+      _grids_label_crea("", Gtk::ALIGN_START),
+#else
       _grids_label_crea("", Gtk::ALIGN_LEFT),
+#endif
       _grids_button_new(C_("Grid", "_New"), _("Create new grid.")),
       _grids_button_remove(C_("Grid", "_Remove"), _("Remove selected grid.")),
+#if WITH_GTKMM_2_22
+      _grids_label_def("", Gtk::ALIGN_START)
+#else
       _grids_label_def("", Gtk::ALIGN_LEFT)
+#endif
 {
     _getContents()->set_spacing (4);
     _getContents()->pack_start(_notebook, true, true);
@@ -506,9 +514,17 @@ void DocumentProperties::build_cms()
 {
     _page_cms.show();
 
+#if WITH_GTKMM_2_22
+    Gtk::Label *label_link= manage (new Gtk::Label("", Gtk::ALIGN_START));
+#else
     Gtk::Label *label_link= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
+#endif
     label_link->set_markup (_("<b>Linked Color Profiles:</b>"));
+#if WITH_GTKMM_2_22
+    Gtk::Label *label_avail = manage (new Gtk::Label("", Gtk::ALIGN_START));
+#else
     Gtk::Label *label_avail = manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
+#endif
     label_avail->set_markup (_("<b>Available Color Profiles:</b>"));
 
     _link_btn.set_label(_("Link Profile"));
@@ -576,7 +592,11 @@ void DocumentProperties::build_scripting()
     //# External scripts tab
     _page_external_scripts.show();
     
+#if WITH_GTKMM_2_22
+    Gtk::Label *label_external= manage (new Gtk::Label("", Gtk::ALIGN_START));
+#else
     Gtk::Label *label_external= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
+#endif
     label_external->set_markup (_("<b>External script files:</b>"));
 
     _add_btn.set_label(_("Add"));
@@ -610,7 +630,11 @@ void DocumentProperties::build_scripting()
     //# Embedded scripts tab
     _page_embedded_scripts.show();
 
+#if WITH_GTKMM_2_22
+    Gtk::Label *label_embedded= manage (new Gtk::Label("", Gtk::ALIGN_START));
+#else
     Gtk::Label *label_embedded= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
+#endif
     label_embedded->set_markup (_("<b>Embedded script files:</b>"));
 
     _new_btn.set_label(_("New"));
@@ -640,7 +664,11 @@ void DocumentProperties::build_scripting()
 // TODO restore?    _EmbeddedScriptsList.set_fixed_height_mode(true);
 
     //# Set up the Embedded Scripts content box
+#if WITH_GTKMM_2_22
+    Gtk::Label *label_embedded_content= manage (new Gtk::Label("", Gtk::ALIGN_START));
+#else
     Gtk::Label *label_embedded_content= manage (new Gtk::Label("", Gtk::ALIGN_LEFT));
+#endif
     label_embedded_content->set_markup (_("<b>Content:</b>"));
 
     label_embedded_content->set_alignment(0.0);
@@ -955,7 +983,11 @@ void DocumentProperties::build_gridspage()
     _grids_hbox_crea.pack_start(_grids_button_new, true, true);
 
     for (gint t = 0; t <= GRID_MAXTYPENR; t++) {
+#if WITH_GTKMM_2_24
+        _grids_combo_gridtype.append( CanvasGrid::getName( (GridType) t ) );
+#else
         _grids_combo_gridtype.append_text( CanvasGrid::getName( (GridType) t ) );
+#endif
     }
     _grids_combo_gridtype.set_active_text( CanvasGrid::getName(GRID_RECTANGULAR) );
 

@@ -363,14 +363,22 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
         scriptCombo = new Gtk::ComboBoxText();
         for (std::map<GUnicodeScript, Glib::ustring>::iterator it = getScriptToName().begin(); it != getScriptToName().end(); ++it)
         {
+#if WITH_GTKMM_2_24
+            scriptCombo->append(it->second);
+#else
             scriptCombo->append_text(it->second);
+#endif
         }
 
         scriptCombo->set_active_text(getScriptToName()[G_UNICODE_SCRIPT_INVALID_CODE]);
         sigc::connection conn = scriptCombo->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::rebuild));
         instanceConns.push_back(conn);
 
+#if WITH_GTKMM_2_22
+        Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_START, Gtk::ALIGN_START, 0.0, 0.0);
+#else
         Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP, 0.0, 0.0);
+#endif
         align->add(*Gtk::manage(scriptCombo));
         table->attach( *Gtk::manage(align),
                        1, 2, row, row + 1,
@@ -389,14 +397,22 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
 
         rangeCombo = new Gtk::ComboBoxText();
         for ( std::vector<NamedRange>::iterator it = getRanges().begin(); it != getRanges().end(); ++it ) {
+#if WITH_GTKMM_2_24
+            rangeCombo->append(it->second);
+#else
             rangeCombo->append_text(it->second);
+#endif
         }
 
         rangeCombo->set_active_text(getRanges()[1].second);
         sigc::connection conn = rangeCombo->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::rebuild));
         instanceConns.push_back(conn);
 
+#if WITH_GTKMM_2_22
+        Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_START, Gtk::ALIGN_START, 0.0, 0.0);
+#else
         Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP, 0.0, 0.0);
+#endif
         align->add(*Gtk::manage(rangeCombo));
         table->attach( *Gtk::manage(align),
                        1, 2, row, row + 1,

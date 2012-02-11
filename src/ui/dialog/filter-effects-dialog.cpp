@@ -482,7 +482,11 @@ public:
           _matrix(SP_ATTR_VALUES, _("This matrix determines a linear transform on color space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value.")),
           _saturation(0, 0, 1, 0.1, 0.01, 2, SP_ATTR_VALUES),
           _angle(0, 0, 360, 0.1, 0.01, 1, SP_ATTR_VALUES),
+#if WITH_GTKMM_2_22
+          _label(_("None"), Gtk::ALIGN_START),
+#else
           _label(_("None"), Gtk::ALIGN_LEFT),
+#endif
           _use_stored(false),
           _saturation_store(0),
           _angle_store(0)
@@ -922,7 +926,11 @@ private:
 
         if(label != "") {
             //lbl = Gtk::manage(new Gtk::Label(label + (label == "" ? "" : ":"), Gtk::ALIGN_LEFT)); colon now in label (LP #358921)
-            lbl = Gtk::manage(new Gtk::Label(label, Gtk::ALIGN_LEFT));
+#if WITH_GTKMM_2_22
+        	lbl = Gtk::manage(new Gtk::Label(label, Gtk::ALIGN_START));
+#else
+        	lbl = Gtk::manage(new Gtk::Label(label, Gtk::ALIGN_LEFT));
+#endif
             hb->pack_start(*lbl, false, false);
             _size_group->add_widget(*lbl);
             lbl->show();
@@ -950,7 +958,11 @@ public:
         : AttrWidget(SP_ATTR_INVALID),
           _dialog(d),
           _settings(d, _box, sigc::mem_fun(_dialog, &FilterEffectsDialog::set_child_attr_direct), LIGHT_ENDSOURCE),
+#if WITH_GTKMM_2_22
+          _light_label(_("Light Source:"), Gtk::ALIGN_START),
+#else
           _light_label(_("Light Source:"), Gtk::ALIGN_LEFT),
+#endif
           _light_source(LightSourceConverter),
           _locked(false)
     {
@@ -1053,7 +1065,11 @@ private:
 
     void update()
     {
-        _box.hide_all();
+#if WITH_GTKMM_2_24
+	    _box.hide();
+#else
+    	    _box.hide_all();
+#endif
         _box.show();
         _light_box.show_all();
 
@@ -1111,8 +1127,13 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
     if(col)
        col->add_attribute(_cell_toggle.property_active(), _columns.sel);
     _list.append_column_editable(_("_Filter"), _columns.label);
+#if WITH_GTKMM_2_24
+    ((Gtk::CellRendererText*)_list.get_column(1)->get_first_cell())->
+        signal_edited().connect(sigc::mem_fun(*this, &FilterEffectsDialog::FilterModifier::on_name_edited));
+#else
     ((Gtk::CellRendererText*)_list.get_column(1)->get_first_cell_renderer())->
         signal_edited().connect(sigc::mem_fun(*this, &FilterEffectsDialog::FilterModifier::on_name_edited));
+#endif
 
     sw->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
     sw->set_shadow_type(Gtk::SHADOW_IN);
@@ -1589,7 +1610,7 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
         get_cell_area(get_model()->get_path(row), *get_column(1), rct);
         get_visible_rect(vis);
         int vis_x, vis_y;
-        tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
+        convert_tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
 
         text_start_x = rct.get_x() + rct.get_width() - _connection_cell.get_text_width() * (FPInputConverter._length + 1) + 1;
         for(unsigned int i = 0; i < FPInputConverter._length; ++i) {
@@ -1856,7 +1877,7 @@ bool FilterEffectsDialog::PrimitiveList::on_motion_notify_event(GdkEventMotion* 
     Gdk::Rectangle vis;
     get_visible_rect(vis);
     int vis_x, vis_y;
-    tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
+    convert_tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
     const int top = vis_y + vis.get_height();
 
     // When autoscrolling during a connection drag, set the speed based on
@@ -2094,8 +2115,13 @@ FilterEffectsDialog::FilterEffectsDialog()
     : UI::Widget::Panel("", "/dialogs/filtereffects", SP_VERB_DIALOG_FILTER_EFFECTS),
       _add_primitive_type(FPConverter),
       _add_primitive(_("Add Effect:")),
-      _empty_settings(_("No effect selected"), Gtk::ALIGN_LEFT),
-      _no_filter_selected(_("No filter selected"), Gtk::ALIGN_LEFT),
+#if WITH_GTKMM_2_22
+	_empty_settings(_("No effect selected"), Gtk::ALIGN_START),
+	_no_filter_selected(_("No filter selected"), Gtk::ALIGN_START),
+#else
+  	_empty_settings(_("No effect selected"), Gtk::ALIGN_LEFT),
+	_no_filter_selected(_("No filter selected"), Gtk::ALIGN_LEFT),
+#endif
       _settings_initialized(false),
       _locked(false),
       _attr_lock(false),
@@ -2462,7 +2488,11 @@ void FilterEffectsDialog::update_filter_general_settings_view()
         }
         else {
             std::vector<Gtk::Widget*> vect = _settings_tab2.get_children();
+#if WITH_GTKMM_2_24
+            vect[0]->hide();
+#else
             vect[0]->hide_all();
+#endif
             _no_filter_selected.show();
         }
 
@@ -2480,7 +2510,12 @@ void FilterEffectsDialog::update_settings_view()
 //First Tab
 
     std::vector<Gtk::Widget*> vect1 = _settings_tab1.get_children();
-    for(unsigned int i=0; i<vect1.size(); i++) vect1[i]->hide_all();
+    for(unsigned int i=0; i<vect1.size(); i++) 
+#if WITH_GTKMM_2_24
+	    vect1[i]->hide();
+#else
+	    vect1[i]->hide_all();
+#endif
     _empty_settings.show();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -2504,7 +2539,11 @@ void FilterEffectsDialog::update_settings_view()
 //Second Tab
 
     std::vector<Gtk::Widget*> vect2 = _settings_tab2.get_children();
+#if WITH_GTKMM_2_24
+    vect2[0]->hide();
+#else
     vect2[0]->hide_all();
+#endif
     _no_filter_selected.show();
 
     SPFilter* filter = _filter_modifier.get_selected_filter();

@@ -73,14 +73,14 @@ void IconWidget::size_allocate(Gtk::Allocation const &allocation)
 {
     Gtk::Widget::size_allocate(allocation);
 
-    if (this->is_drawable()) {
+    if (this->get_is_drawable()) {
         this->queue_draw();
     }
 }
 
 int IconWidget::expose(GdkEventExpose *event)
 {
-    if (this->is_drawable()) {
+    if (this->get_is_drawable()) {
         paint(&(event->area));
     }
     return true;

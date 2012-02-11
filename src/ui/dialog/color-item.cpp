@@ -549,7 +549,11 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
     Gtk::Widget* widget = 0;
     if ( style == PREVIEW_STYLE_BLURB) {
         Gtk::Label *lbl = new Gtk::Label(def.descr);
+#if WITH_GTKMM_2_22
+        lbl->set_alignment(Gtk::ALIGN_START, Gtk::ALIGN_CENTER);
+#else
         lbl->set_alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER);
+#endif
         widget = lbl;
     } else {
 //         Glib::ustring blank("          ");

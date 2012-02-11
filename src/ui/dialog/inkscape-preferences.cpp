@@ -77,8 +77,7 @@ InkscapePreferences::InkscapePreferences()
     sb->set_width_chars(6);
     _getContents()->add(*sb);
     show_all_children();
-    Gtk::Requisition sreq;
-    sb->size_request(sreq);
+    Gtk::Requisition sreq = sb->size_request();
     _sb_width = sreq.width;
     _getContents()->remove(*sb);
     delete sb;
@@ -915,10 +914,18 @@ void InkscapePreferences::initPageIO()
         Glib::ustring current = prefs->getString( "/options/displayprofile/uri" );
 
         gint index = 0;
+#if WITH_GTKMM_2_24
+        _cms_display_profile.append(_("<none>"));
+#else
         _cms_display_profile.append_text(_("<none>"));
+#endif
         index++;
         for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
+#if WITH_GTKMM_2_24
+            _cms_display_profile.append( *it );
+#else
             _cms_display_profile.append_text( *it );
+#endif
             Glib::ustring path = CMSSystem::getPathForProfile(*it);
             if ( !path.empty() && path == current ) {
                 _cms_display_profile.set_active(index);
@@ -933,7 +940,11 @@ void InkscapePreferences::initPageIO()
         current = prefs->getString("/options/softproof/uri");
         index = 0;
         for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
+#if WITH_GTKMM_2_24
+            _cms_proof_profile.append( *it );
+#else
             _cms_proof_profile.append_text( *it );
+#endif
             Glib::ustring path = CMSSystem::getPathForProfile(*it);
             if ( !path.empty() && path == current ) {
                 _cms_proof_profile.set_active(index);
@@ -1452,8 +1463,7 @@ bool InkscapePreferences::SetMaxDialogSize(const Gtk::TreeModel::iterator& iter)
     DialogPage* page = row[_page_list_columns._col_page];
     _page_frame.add(*page);
     this->show_all_children();
-    Gtk:: Requisition sreq;
-    this->size_request(sreq);
+    Gtk:: Requisition sreq = this->size_request();
     _max_dialog_width=std::max(_max_dialog_width, sreq.width);
     _max_dialog_height=std::max(_max_dialog_height, sreq.height);
     _page_frame.remove();

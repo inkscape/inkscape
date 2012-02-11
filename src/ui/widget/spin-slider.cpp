@@ -97,11 +97,6 @@ Inkscape::UI::Widget::SpinButton& SpinSlider::get_spin_button()
     return _spin;
 }
 
-void SpinSlider::set_update_policy(const Gtk::UpdateType u)
-{
-    _scale.set_update_policy(u);
-}
-
 void SpinSlider::remove_scale()
 {
     remove(_scale);
@@ -187,12 +182,6 @@ const SpinSlider& DualSpinSlider::get_spinslider2() const
 SpinSlider& DualSpinSlider::get_spinslider2()
 {
     return _s2;
-}
-
-void DualSpinSlider::set_update_policy(const Gtk::UpdateType u)
-{
-    _s1.set_update_policy(u);
-    _s2.set_update_policy(u);
 }
 
 void DualSpinSlider::remove_scale()

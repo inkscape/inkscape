@@ -161,7 +161,7 @@ DockItem::set_size_request(int width, int height)
 void
 DockItem::size_request(Gtk::Requisition& requisition)
 {
-    getWidget().size_request(requisition);
+    requisition = getWidget().size_request();
 }
 
 void
@@ -254,7 +254,7 @@ DockItem::present()
     // always grab focus, even if we're already present
     grab_focus();
 
-    if (!isFloating() && getWidget().is_realized())
+    if (!isFloating() && getWidget().get_realized())
         _dock.scrollToItem(*this);
 }
 

@@ -108,7 +108,11 @@ AboutBox::AboutBox() : Gtk::Dialog(_("About Inkscape")) {
         g_strdup_printf("<small>Inkscape %s</small>",
               Inkscape::version_string);
     label->set_markup(label_text);
+#if WITH_GTKMM_2_22
+    label->set_alignment(Gtk::ALIGN_END, Gtk::ALIGN_CENTER);
+#else
     label->set_alignment(Gtk::ALIGN_RIGHT, Gtk::ALIGN_CENTER);
+#endif
     label->set_padding(5,0);
     g_free(label_text);
     label->set_selectable(true);

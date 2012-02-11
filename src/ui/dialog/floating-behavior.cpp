@@ -150,7 +150,7 @@ inline void FloatingBehavior::resize(int width, int height)               { _d->
 inline void FloatingBehavior::move(int x, int y)                          { _d->move(x, y); }
 inline void FloatingBehavior::set_position(Gtk::WindowPosition position)  { _d->set_position(position); }
 inline void FloatingBehavior::set_size_request(int width, int height)     { _d->set_size_request(width, height); }
-inline void FloatingBehavior::size_request(Gtk::Requisition &requisition) { _d->size_request(requisition); }
+inline void FloatingBehavior::size_request(Gtk::Requisition &requisition) {requisition = _d->size_request(); }
 inline void FloatingBehavior::get_position(int &x, int &y)                { _d->get_position(x, y); }
 inline void FloatingBehavior::get_size(int &width, int &height)           { _d->get_size(width, height); }
 inline void FloatingBehavior::set_title(Glib::ustring title)              { _d->set_title(title); }

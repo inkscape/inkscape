@@ -1103,7 +1103,11 @@ void FileSaveDialogImplGtk::createFileTypeMenu()
         knownExtensions.insert( extension.casefold() );
         fileDialogExtensionToPattern (type.pattern, extension);
         type.extension= omod;
+#if WITH_GTKMM_2_24
+        fileTypeComboBox.append(type.name);
+#else
         fileTypeComboBox.append_text(type.name);
+#endif
         fileTypes.push_back(type);
     }
 
@@ -1112,7 +1116,11 @@ void FileSaveDialogImplGtk::createFileTypeMenu()
     guessType.name = _("Guess from extension");
     guessType.pattern = "*";
     guessType.extension = NULL;
+#if WITH_GTKMM_2_24
+    fileTypeComboBox.append(guessType.name);
+#else
     fileTypeComboBox.append_text(guessType.name);
+#endif
     fileTypes.push_back(guessType);
 
 

@@ -52,10 +52,10 @@ LayerPropertiesDialog::LayerPropertiesDialog()
     // Buttons
     _close_button.set_use_stock(true);
     _close_button.set_label(Gtk::Stock::CANCEL.id);
-    _close_button.set_flags(Gtk::CAN_DEFAULT);
+    _close_button.set_can_default();
 
     _apply_button.set_use_underline(true);
-    _apply_button.set_flags(Gtk::CAN_DEFAULT);
+    _apply_button.set_can_default();
 
     _close_button.signal_clicked()
         .connect(sigc::mem_fun(*this, &LayerPropertiesDialog::_close));

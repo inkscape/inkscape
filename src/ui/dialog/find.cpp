@@ -120,7 +120,7 @@ Find::Find()
     _button_clear.signal_clicked().connect(sigc::mem_fun(*this, &Find::onClear));
     _button_find.signal_clicked().connect(sigc::mem_fun(*this, &Find::onFind));
 
-    _button_find.set_flags(Gtk::CAN_DEFAULT);
+    _button_find.set_can_default();
     // set_default (_button_find); // activatable by Enter
     _entry_text.getEntry()->grab_focus();
 

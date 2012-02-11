@@ -72,7 +72,11 @@ void DialogPage::add_line(bool indent, Glib::ustring const &label, Gtk::Widget &
     if (label != "")
     {
         Gtk::Label* label_widget;
+#if WITH_GTKMM_2_22
+        label_widget = Gtk::manage(new Gtk::Label(label , Gtk::ALIGN_START , Gtk::ALIGN_CENTER, true));
+#else
         label_widget = Gtk::manage(new Gtk::Label(label , Gtk::ALIGN_LEFT , Gtk::ALIGN_CENTER, true));
+#endif
         label_widget->set_mnemonic_widget(widget);
         if (indent)
         {
@@ -102,7 +106,11 @@ void DialogPage::add_line(bool indent, Glib::ustring const &label, Gtk::Widget &
 
     if (suffix != "")
     {
+#if WITH_GTKMM_2_22
+        Gtk::Label* suffix_widget = Gtk::manage(new Gtk::Label(suffix , Gtk::ALIGN_START , Gtk::ALIGN_CENTER, true));
+#else
         Gtk::Label* suffix_widget = Gtk::manage(new Gtk::Label(suffix , Gtk::ALIGN_LEFT , Gtk::ALIGN_CENTER, true));
+#endif
         if (expand_widget)
             this->attach(*suffix_widget, 2, 3, row, row + 1, Gtk::FILL,  Gtk::AttachOptions(), 0, 0);
         else
@@ -121,8 +129,13 @@ void DialogPage::add_group_header(Glib::ustring name)
     int row = this->property_n_rows();
     if (name != "")
     {
+#if WITH_GTKMM_2_22
+        Gtk::Label* label_widget = Gtk::manage(new Gtk::Label(Glib::ustring(/*"<span size='large'>*/"<b>") + name +
+                                               Glib::ustring("</b>"/*</span>"*/) , Gtk::ALIGN_START , Gtk::ALIGN_CENTER, true));
+#else
         Gtk::Label* label_widget = Gtk::manage(new Gtk::Label(Glib::ustring(/*"<span size='large'>*/"<b>") + name +
                                                Glib::ustring("</b>"/*</span>"*/) , Gtk::ALIGN_LEFT , Gtk::ALIGN_CENTER, true));
+#endif
         label_widget->set_use_markup(true);
         this->attach(*label_widget , 0, 4, row, row + 1, Gtk::FILL, Gtk::AttachOptions(), 0, 0);
         if (row != 1)
@@ -146,7 +159,7 @@ void PrefCheckButton::init(Glib::ustring const &label, Glib::ustring const &pref
 
 void PrefCheckButton::on_toggled()
 {
-    if (this->is_visible()) //only take action if the user toggled it
+    if (this->get_visible()) //only take action if the user toggled it
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setBool(_prefs_path, this->get_active());
@@ -198,7 +211,7 @@ void PrefRadioButton::on_toggled()
     this->changed_signal.emit(this->get_active());
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    if (this->is_visible() && this->get_active() ) //only take action if toggled by user (to active)
+    if (this->get_visible() && this->get_active() ) //only take action if toggled by user (to active)
     {
         if ( _value_type == VAL_STRING )
             prefs->setString(_prefs_path, _string_value);
@@ -242,7 +255,7 @@ void PrefSpinButton::init(Glib::ustring const &prefs_path,
 void PrefSpinButton::on_value_changed()
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (this->is_visible()) //only take action if user changed value
+    if (this->get_visible()) //only take action if user changed value
     {
         if (_is_int) {
             if (_is_percent) {
@@ -289,7 +302,7 @@ void PrefSpinUnit::init(Glib::ustring const &prefs_path,
 void PrefSpinUnit::on_my_value_changed()
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (getWidget()->is_visible()) //only take action if user changed value
+    if (getWidget()->get_visible()) //only take action if user changed value
     {
         prefs->setDoubleUnit(_prefs_path, getValue(getUnit().abbr), getUnit().abbr);
     }
@@ -421,7 +434,7 @@ ZoomCorrRuler::on_expose_event(GdkEventExpose */*event*/) {
 void
 ZoomCorrRulerSlider::on_slider_value_changed()
 {
-    if (this->is_visible() || freeze) //only take action if user changed value
+    if (this->get_visible() || freeze) //only take action if user changed value
     {
         freeze = true;
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -435,7 +448,7 @@ ZoomCorrRulerSlider::on_slider_value_changed()
 void
 ZoomCorrRulerSlider::on_spinbutton_value_changed()
 {
-    if (this->is_visible() || freeze) //only take action if user changed value
+    if (this->get_visible() || freeze) //only take action if user changed value
     {
         freeze = true;
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -457,7 +470,7 @@ ZoomCorrRulerSlider::on_unit_changed() {
     prefs->setString("/options/zoomcorrection/unit", _unit.getUnitAbbr());
     double conv = _unit.getConversion(_unit.getUnitAbbr(), "px");
     _ruler.set_unit_conversion(conv);
-    if (_ruler.is_visible()) {
+    if (_ruler.get_visible()) {
         _ruler.redraw();
     }
 }
@@ -510,7 +523,7 @@ ZoomCorrRulerSlider::init(int ruler_width, int ruler_height, double lower, doubl
 void
 PrefSlider::on_slider_value_changed()
 {
-    if (this->is_visible() || freeze) //only take action if user changed value
+    if (this->get_visible() || freeze) //only take action if user changed value
     {
         freeze = true;
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -523,7 +536,7 @@ PrefSlider::on_slider_value_changed()
 void
 PrefSlider::on_spinbutton_value_changed()
 {
-    if (this->is_visible() || freeze) //only take action if user changed value
+    if (this->get_visible() || freeze) //only take action if user changed value
     {
         freeze = true;
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -576,7 +589,11 @@ void PrefCombo::init(Glib::ustring const &prefs_path,
 
     for (int i = 0 ; i < num_items; ++i)
     {
+#if WITH_GTKMM_2_24
+        this->append(labels[i]);
+#else
         this->append_text(labels[i]);
+#endif
         _values.push_back(values[i]);
         if (value == values[i])
             row = i;
@@ -598,7 +615,11 @@ void PrefCombo::init(Glib::ustring const &prefs_path,
 
     for (int i = 0 ; i < num_items; ++i)
     {
+#if WITH_GTKMM_2_24
+        this->append(labels[i]);
+#else
         this->append_text(labels[i]);
+#endif
         _ustr_values.push_back(values[i]);
         if (value == values[i])
             row = i;
@@ -608,7 +629,7 @@ void PrefCombo::init(Glib::ustring const &prefs_path,
 
 void PrefCombo::on_changed()
 {
-    if (this->is_visible()) //only take action if user changed value
+    if (this->get_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         if(_values.size() > 0)
@@ -643,7 +664,7 @@ void PrefEntryButtonHBox::init(Glib::ustring const &prefs_path,
 
 void PrefEntryButtonHBox::onRelatedEntryChangedCallback()
 {
-    if (this->is_visible()) //only take action if user changed value
+    if (this->get_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setString(_prefs_path, relatedEntry->get_text());
@@ -652,7 +673,7 @@ void PrefEntryButtonHBox::onRelatedEntryChangedCallback()
 
 void PrefEntryButtonHBox::onRelatedButtonClickedCallback()
 {
-    if (this->is_visible()) //only take action if user changed value
+    if (this->get_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setString(_prefs_path, _default_string);
@@ -692,7 +713,7 @@ void PrefEntryFileButtonHBox::init(Glib::ustring const &prefs_path,
 
 void PrefEntryFileButtonHBox::onRelatedEntryChangedCallback()
 {
-    if (this->is_visible()) //only take action if user changed value
+    if (this->get_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setString(_prefs_path, relatedEntry->get_text());
@@ -703,7 +724,7 @@ static Inkscape::UI::Dialog::FileOpenDialog * selectPrefsFileInstance = NULL;
 
 void PrefEntryFileButtonHBox::onRelatedButtonClickedCallback()
 {
-    if (this->is_visible()) //only take action if user changed value
+    if (this->get_visible()) //only take action if user changed value
     {
         //# Get the current directory for finding files
         static Glib::ustring open_path;
@@ -818,7 +839,7 @@ void PrefEntry::init(Glib::ustring const &prefs_path, bool visibility)
 
 void PrefEntry::on_changed()
 {
-    if (this->is_visible()) //only take action if user changed value
+    if (this->get_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setString(_prefs_path, this->get_text());
@@ -836,7 +857,7 @@ void PrefColorPicker::init(Glib::ustring const &label, Glib::ustring const &pref
 
 void PrefColorPicker::on_changed (guint32 rgba)
 {
-    if (this->is_visible()) //only take action if the user toggled it
+    if (this->get_visible()) //only take action if the user toggled it
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setInt(_prefs_path, (int) rgba);
@@ -853,7 +874,7 @@ void PrefUnit::init(Glib::ustring const &prefs_path)
 
 void PrefUnit::on_changed()
 {
-    if (this->is_visible()) //only take action if user changed value
+    if (this->get_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setString(_prefs_path, getUnitAbbr());

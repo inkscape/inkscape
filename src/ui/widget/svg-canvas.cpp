@@ -35,7 +35,7 @@ void
 SVGCanvas::init (SPDesktop *dt)
 {
     _dt = dt;
-    _widget->set_flags(Gtk::CAN_FOCUS);
+    _widget->set_can_focus();
 
     // Set background to white
     Glib::RefPtr<Gtk::Style> style = _widget->get_style();

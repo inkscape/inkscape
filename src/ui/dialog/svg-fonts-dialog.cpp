@@ -155,12 +155,21 @@ void GlyphComboBox::update(SPFont* spfont){
     if (!spfont) return
 //TODO: figure out why do we need to append_text("") before clearing items properly...
 
+#if WITH_GTKMM_2_24
+    this->append(""); //Gtk is refusing to clear the combobox when I comment out this line
+    this->remove_all();
+#else
     this->append_text(""); //Gtk is refusing to clear the combobox when I comment out this line
     this->clear_items();
+#endif
 
     for(SPObject* node = spfont->children; node; node=node->next){
         if (SP_IS_GLYPH(node)){
+#if WITH_GTKMM_2_24
+            this->append(((SPGlyph*)node)->unicode);
+#else
             this->append_text(((SPGlyph*)node)->unicode);
+#endif
         }
     }
 }

@@ -46,8 +46,6 @@ public:
     const Inkscape::UI::Widget::SpinButton& get_spin_button() const;
     Inkscape::UI::Widget::SpinButton& get_spin_button();
 
-    void set_update_policy(const Gtk::UpdateType);
-
     // Change the SpinSlider into a SpinButton with AttrWidget support)
     void remove_scale();
 private:
@@ -77,8 +75,6 @@ public:
 
     const SpinSlider& get_spinslider2() const;
     SpinSlider& get_spinslider2();
-
-    void set_update_policy(const Gtk::UpdateType);
 
     void remove_scale();
 private:

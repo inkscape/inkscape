@@ -35,7 +35,8 @@ void minimum_size(GtkWidget *widget, GtkRequisition *requisition, void *) {
 
 void shrink_wrap_button(Gtk::Button &button) {
     button.set_border_width(0);
-    button.unset_flags(Gtk::CAN_FOCUS | Gtk::CAN_DEFAULT);
+    button.set_can_focus(false);
+    button.set_can_default(false);
     g_signal_connect_after(G_OBJECT(button.gobj()), "size_request",
                            G_CALLBACK(minimum_size), NULL);
 }

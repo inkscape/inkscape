@@ -84,7 +84,6 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
     _opacity_hbox.pack_start(_opacity_hscale, true, true, 4);
     _opacity_hbox.pack_start(_opacity_spin_button, false, false, 0);
     _opacity_hscale.set_draw_value(false);
-    _opacity_hscale.set_update_policy(Gtk::UPDATE_DELAYED);
     _opacity_adjustment.signal_value_changed().connect(sigc::mem_fun(*this, &ObjectCompositeSettings::_opacityValueChanged));
 	_opacity_label.set_mnemonic_widget(_opacity_hscale);
 

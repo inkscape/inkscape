@@ -523,7 +523,11 @@ void FileImportFromOCALDialog::print_xml_element_names(xmlNode * a_node)
                 if (!strcmp((const char*)cur_node->name, "title"))
                 {
                     xmlChar *title = xmlNodeGetContent(cur_node);
+#if WITH_GTKMM_2_24
+                    row_num = filesList->append((const char*)title);
+#else
                     row_num = filesList->append_text((const char*)title);
+#endif
                     xmlFree(title);
                 }
 #ifdef WITH_GNOME_VFS

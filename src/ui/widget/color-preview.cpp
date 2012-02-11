@@ -22,7 +22,7 @@ namespace Inkscape {
 ColorPreview::ColorPreview (guint32 rgba)
 {
     _rgba = rgba;
-    set_flags (Gtk::NO_WINDOW);
+    set_has_window(false);
 }
 
 void
@@ -36,14 +36,14 @@ void
 ColorPreview::on_size_allocate (Gtk::Allocation &all)
 {
     set_allocation (all);
-    if (is_drawable())
+    if (get_is_drawable())
         queue_draw();
 }
 
 bool
 ColorPreview::on_expose_event (GdkEventExpose *event)
 {
-    if (is_drawable())
+    if (get_is_drawable())
         paint (&event->area);
 
     return true;
@@ -54,7 +54,7 @@ ColorPreview::setRgba32 (guint32 rgba)
 {
     _rgba = rgba;
 
-    if (is_drawable())
+    if (get_is_drawable())
         queue_draw();
 }
 

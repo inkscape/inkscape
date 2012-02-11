@@ -23,7 +23,11 @@ namespace Widget {
 
 SimpleFilterModifier::SimpleFilterModifier(int flags)
     : _lb_blend(_("Blend mode:")),
+#if WITH_GTKMM_2_22
+      _lb_blur(_("_Blur:"), Gtk::ALIGN_START, Gtk::ALIGN_CENTER, true),
+#else
       _lb_blur(_("_Blur:"), Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER, true),
+#endif
       _blend(BlendModeConverter, SP_ATTR_INVALID, false),
       _blur(0, 0, 100, 1, 0.01, 2)
 {
@@ -48,7 +52,6 @@ SimpleFilterModifier::SimpleFilterModifier(int flags)
     _lb_blur.set_use_underline();
     _lb_blur.set_mnemonic_widget(_blur.get_scale());
     _blend.signal_changed().connect(signal_blend_blur_changed());
-    _blur.set_update_policy(Gtk::UPDATE_DELAYED);
     _blur.signal_value_changed().connect(signal_blend_blur_changed());
 }
 
