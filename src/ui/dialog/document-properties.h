@@ -18,6 +18,7 @@
 #include <stddef.h>
 #include <sigc++/sigc++.h>//
 #include <gtkmm/comboboxtext.h>
+#include <gtkmm/liststore.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/textview.h>
 #include <glibmm/i18n.h>

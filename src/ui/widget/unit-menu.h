@@ -10,7 +10,7 @@
 #ifndef INKSCAPE_UI_WIDGET_UNIT_H
 #define INKSCAPE_UI_WIDGET_UNIT_H
 
-#include "combo-text.h"
+#include <gtkmm/comboboxtext.h>
 #include "util/units.h"
 
 using namespace Inkscape::Util;
@@ -22,7 +22,7 @@ namespace Widget {
 /**
  * A drop down menu for choosing unit types.
  */
-class UnitMenu : public ComboText
+class UnitMenu : public Gtk::ComboBoxText
 {
 public:
 

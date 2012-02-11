@@ -9,8 +9,6 @@ ink_common_sources +=	\
 	ui/widget/color-preview.cpp     \
 	ui/widget/color-preview.h       \
 	ui/widget/combo-enums.h \
-	ui/widget/combo-text.cpp	\
-	ui/widget/combo-text.h		\
 	ui/widget/dock.h		\
 	ui/widget/dock.cpp		\
 	ui/widget/dock-item.h		\

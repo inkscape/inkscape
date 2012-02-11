@@ -21,6 +21,7 @@
 #include <gtkmm/alignment.h>
 #include <gtkmm/expander.h>
 #include <gtkmm/frame.h>
+#include <gtkmm/liststore.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/table.h>
 
