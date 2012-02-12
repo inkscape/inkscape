@@ -119,6 +119,7 @@ private :
 
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         bool sel_as_group = prefs->getBool("/dialogs/align/sel-as-groups");
+        int prefs_bbox = prefs->getBool("/tools/bounding_box");
 
         using Inkscape::Util::GSListConstIterator;
         std::list<SPItem *> selected;
@@ -156,7 +157,7 @@ private :
                 selected.erase(master);
             /*}*/
             //Compute the anchor point
-            Geom::OptRect b = thing->desktopVisualBounds();
+            Geom::OptRect b = !prefs_bbox ? thing->desktopVisualBounds() : thing->desktopGeometricBounds();
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -173,7 +174,8 @@ private :
 
         case AlignAndDistribute::DRAWING:
         {
-            Geom::OptRect b = sp_desktop_document(desktop)->getRoot()->desktopVisualBounds();
+            Geom::OptRect b = !prefs_bbox ? sp_desktop_document(desktop)->getRoot()->desktopVisualBounds()
+                                          : sp_desktop_document(desktop)->getRoot()->desktopGeometricBounds();
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -185,7 +187,7 @@ private :
 
         case AlignAndDistribute::SELECTION:
         {
-            Geom::OptRect b =  selection->visualBounds();
+            Geom::OptRect b = !prefs_bbox ? selection->visualBounds() : selection->geometricBounds();
             if (b) {
                 mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
                                a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
@@ -212,7 +214,7 @@ private :
         bool changed = false;
         Geom::OptRect b;
         if (sel_as_group)
-            b = selection->visualBounds();
+            b = !prefs_bbox ? selection->visualBounds() : selection->geometricBounds();
 
         //Move each item in the selected list separately
         for (std::list<SPItem *>::iterator it(selected.begin());
@@ -221,7 +223,7 @@ private :
         {
             sp_desktop_document (desktop)->ensureUpToDate();
             if (!sel_as_group)
-                b = (*it)->desktopVisualBounds();
+                b = !prefs_bbox ? (*it)->desktopVisualBounds() : (*it)->desktopGeometricBounds();
             if (b) {
                 Geom::Point const sp(a.sx0 * b->min()[Geom::X] + a.sx1 * b->max()[Geom::X],
                                      a.sy0 * b->min()[Geom::Y] + a.sy1 * b->max()[Geom::Y]);
@@ -319,13 +321,14 @@ private :
         ++second;
         if (second == selected.end()) return;
 
-
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int prefs_bbox = prefs->getBool("/tools/bounding_box");
         std::vector< BBoxSort  > sorted;
         for (std::list<SPItem *>::iterator it(selected.begin());
             it != selected.end();
             ++it)
         {
-            Geom::OptRect bbox = (*it)->desktopVisualBounds();
+            Geom::OptRect bbox = !prefs_bbox ? (*it)->desktopVisualBounds() : (*it)->desktopGeometricBounds();
             if (bbox) {
                 sorted.push_back(BBoxSort(*it, *bbox, _orientation, _kBegin, _kEnd));
             }
@@ -334,7 +337,6 @@ private :
         std::sort(sorted.begin(), sorted.end());
 
         // see comment in ActionAlign above
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
         prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
@@ -698,7 +700,9 @@ private :
         //Check 2 or more selected objects
         if (selected.size() < 2) return;
 
-        Geom::OptRect sel_bbox = selection->visualBounds();
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int prefs_bbox = prefs->getBool("/tools/bounding_box");
+        Geom::OptRect sel_bbox = !prefs_bbox ? selection->visualBounds() : selection->geometricBounds();
         if (!sel_bbox) {
             return;
         }
@@ -711,7 +715,6 @@ private :
         }
 
         // see comment in ActionAlign above
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         int saved_compensation = prefs->getInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
         prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
@@ -720,7 +723,7 @@ private :
             ++it)
         {
             sp_desktop_document (desktop)->ensureUpToDate();
-            Geom::OptRect item_box = (*it)->desktopVisualBounds();
+            Geom::OptRect item_box = !prefs_bbox ? (*it)->desktopVisualBounds() : (*it)->desktopGeometricBounds();
             if (item_box) {
                 // find new center, staying within bbox
                 double x = _dialog.randomize_bbox->min()[Geom::X] + (*item_box)[Geom::X].extent() /2 +
@@ -1248,6 +1251,8 @@ void AlignAndDistribute::addBaselineButton(const Glib::ustring &id, const Glib::
 
 std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem *> &list, bool horizontal){
     std::list<SPItem *>::iterator master = list.end();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int prefs_bbox = prefs->getBool("/tools/bounding_box");
     switch (getAlignTarget()) {
     case LAST:
         return list.begin();
@@ -1261,7 +1266,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = -1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); ++it) {
-            Geom::OptRect b = (*it)->desktopVisualBounds();
+            Geom::OptRect b = !prefs_bbox ? (*it)->desktopVisualBounds() : (*it)->desktopGeometricBounds();
             if (b) {
                 gdouble dim = (*b)[horizontal ? Geom::X : Geom::Y].extent();
                 if (dim > max) {
@@ -1278,7 +1283,7 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
     {
         gdouble max = 1e18;
         for (std::list<SPItem *>::iterator it = list.begin(); it != list.end(); ++it) {
-            Geom::OptRect b = (*it)->desktopVisualBounds();
+            Geom::OptRect b = !prefs_bbox ? (*it)->desktopVisualBounds() : (*it)->desktopGeometricBounds();
             if (b) {
                 gdouble dim = (*b)[horizontal ? Geom::X : Geom::Y].extent();
                 if (dim < max) {
