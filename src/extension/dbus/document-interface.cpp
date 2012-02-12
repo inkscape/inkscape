@@ -23,6 +23,7 @@
 #include "display/canvas-text.h" //text
 #include "display/sp-canvas.h" //text
 #include "document.h" // getReprDoc()
+#include "document-undo.h"
 #include "extension/output.h" //IO
 #include "extension/system.h" //IO
 #include "file.h" //IO
