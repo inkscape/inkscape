@@ -871,6 +871,7 @@ void Script::checkStderr (const Glib::ustring &data,
     scrollwindow->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     scrollwindow->set_shadow_type(Gtk::SHADOW_IN);
     scrollwindow->show();
+    scrollwindow->set_size_request(0, 60);
 
     vbox->pack_start(*scrollwindow, true, true, 5 /* fix these */);
 
