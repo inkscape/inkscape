@@ -15,6 +15,7 @@
 #include <gtkmm/adjustment.h>
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
+#include <gtkmm/radiobutton.h>
 #include <gtkmm/scale.h>
 
 #include "xml/repr.h"

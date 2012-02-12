@@ -11,13 +11,8 @@
 #include <cstring>
 #include <string>
 
-#include <gtkmm/box.h>
-
 #include "sp-canvas-item.h"
 #include "xml/repr.h"
-#include "ui/widget/color-picker.h"
-#include "ui/widget/scalar-unit.h"
-#include "ui/widget/registered-widget.h"
 #include "ui/widget/registry.h"
 #include "xml/node-event-vector.h"
 #include "snapper.h"
@@ -27,6 +22,10 @@ class  SPDesktop;
 struct SPNamedView;
 struct SPCanvasBuf;
 class  SPDocument;
+
+namespace Gtk {
+	class Widget;
+}
 
 namespace Inkscape {
 

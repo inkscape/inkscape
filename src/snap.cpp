@@ -35,6 +35,8 @@
 #include "event-context.h"
 #include "util/mathfns.h"
 using std::vector;
+using Inkscape::Util::round_to_upper_multiple_plus;
+using Inkscape::Util::round_to_lower_multiple_plus;
 
 SnapManager::SnapManager(SPNamedView const *v) :
     guide(this, 0),

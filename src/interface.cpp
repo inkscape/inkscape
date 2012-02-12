@@ -67,6 +67,8 @@
 #include "gradient-drag.h"
 #include "widgets/ege-paint-def.h"
 
+#include <gdk/gdkkeysyms.h>
+
 using Inkscape::DocumentUndo;
 
 /* Drag and Drop */

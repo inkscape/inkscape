@@ -10,6 +10,12 @@
 #ifndef INKSCAPE_UI_WIDGET_TOLERANCE_SLIDER__H_
 #define INKSCAPE_UI_WIDGET_TOLERANCE_SLIDER__H_
 
+#include <gtkmm/radiobuttongroup.h>
+
+namespace Gtk {
+	class RadioButton;
+}
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {

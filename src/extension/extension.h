@@ -18,10 +18,13 @@
 #include <fstream>
 #include <vector>
 #include <gtkmm/widget.h>
-#include <gtkmm/box.h>
 #include <gtkmm/table.h>
 #include <glibmm/ustring.h>
 #include "xml/repr.h"
+
+namespace Gtk {
+	class VBox;
+}
 
 /** The key that is used to identify that the I/O should be autodetected */
 #define SP_MODULE_KEY_AUTODETECT "autodetect"

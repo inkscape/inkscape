@@ -30,9 +30,12 @@
 #include "sp-object.h"
 #include "svg/svg-color.h"
 #include "svg/stringstream.h"
+#include "ui/widget/registered-widget.h"
 #include "util/mathfns.h"
 #include "xml/node-event-vector.h"
 
+#include <gtkmm/box.h>
+#include <gtkmm/label.h>
 #include <gtkmm/table.h>
 
 using Inkscape::DocumentUndo;

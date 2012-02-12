@@ -27,6 +27,7 @@
 #include "sp-object.h"
 #include "enum.h"
 #include "preferences.h"
+#include <gtkmm/box.h>
 
 namespace Inkscape {
 namespace Extension {

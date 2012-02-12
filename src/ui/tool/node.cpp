@@ -32,6 +32,7 @@
 #include "ui/tool/multi-path-manipulator.h"
 #include "ui/tool/node.h"
 #include "ui/tool/path-manipulator.h"
+#include <gdk/gdkkeysyms.h>
 
 namespace Inkscape {
 namespace UI {

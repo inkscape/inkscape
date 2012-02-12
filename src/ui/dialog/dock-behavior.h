@@ -13,17 +13,12 @@
 #ifndef INKSCAPE_UI_DIALOG_DOCK_BEHAVIOR_H
 #define INKSCAPE_UI_DIALOG_DOCK_BEHAVIOR_H
 
-#include <map>
-
-#include <gtkmm/buttonbox.h>
-#include <gtkmm/frame.h>
-#include <gtkmm/paned.h>
-
 #include "ui/widget/dock-item.h"
-
-#include "libgdl/gdl.h"
-
 #include "behavior.h"
+
+namespace Gtk {
+	class Paned;
+}
 
 namespace Inkscape {
 namespace UI {

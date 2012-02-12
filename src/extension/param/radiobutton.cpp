@@ -28,6 +28,7 @@
 #include "sp-object.h"
 
 #include "radiobutton.h"
+#include <gtkmm/box.h>
 
 /**
  * The root directory in the preferences database for extension

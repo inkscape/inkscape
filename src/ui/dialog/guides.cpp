@@ -34,6 +34,8 @@
 #include <2geom/point.h>
 #include <2geom/angle.h>
 
+#include <gtkmm/stock.h>
+
 namespace Inkscape {
 namespace UI {
 namespace Dialogs {

@@ -12,23 +12,11 @@
 #ifndef __OCAL_DIALOG_H__
 #define __OCAL_DIALOG_H__
 
-#include <glibmm.h>
-#include <vector>
-#include "filedialogimpl-gtkmm.h"
-
 //General includes
-#include <unistd.h>
-#include <sys/stat.h>
-#include <errno.h>
-#include <set>
-#include <libxml/parser.h>
 #include <libxml/tree.h>
 
-
 //Gtk includes
-#include <glibmm/i18n.h>
-#include <glib/gstdio.h>
-#include <gtkmm/frame.h>
+#include <gtkmm/dialog.h>
 #include <gtkmm/listviewtext.h>
 #include <gtkmm/scrolledwindow.h>
 
@@ -44,15 +32,7 @@
 #endif
 
 //Inkscape includes
-#include <extension/input.h>
-#include <extension/output.h>
-#include <extension/db.h>
-#include "inkscape.h"
-#include "svg-view-widget.h"
-#include "gc-core.h"
-
-//For export dialog
-#include "ui/widget/scalar-unit.h"
+#include "ui/dialog/filedialog.h"
 
 
 namespace Inkscape
@@ -61,6 +41,8 @@ namespace UI
 {   
 namespace Dialog
 {   
+
+class SVGPreview;
     
 /*#########################################################################
 ### F I L E     D I A L O G    O C A L    B A S E    C L A S S

@@ -8,12 +8,7 @@
 
 #include <display/sp-canvas.h>
 #include "xml/repr.h"
-#include <gtkmm/box.h>
 
-#include "ui/widget/color-picker.h"
-#include "ui/widget/scalar-unit.h"
-
-#include "ui/widget/registered-widget.h"
 #include "ui/widget/registry.h"
 
 #include "xml/node-event-vector.h"

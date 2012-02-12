@@ -11,13 +11,15 @@
 #ifndef INKSCAPE_UI_WIGET_DOCK_ITEM_H
 #define INKSCAPE_UI_WIGET_DOCK_ITEM_H
 
-#include <gtkmm/button.h>
-#include <gtkmm/buttonbox.h>
+#include <gtkmm/box.h>
 #include <gtkmm/frame.h>
-#include <gtkmm/paned.h>
 #include <gtkmm/window.h>
 
 #include "libgdl/gdl.h"
+
+namespace Gtk {
+	class HButtonBox;
+}
 
 namespace Inkscape {
 namespace UI {

@@ -13,13 +13,9 @@
 
 #include <gtkmm/dialog.h>
 #include <gtkmm/table.h>
-#include <gtkmm/spinbutton.h>
 #include <gtkmm/label.h>
-#include <gtkmm/stock.h>
-#include <gtkmm/adjustment.h>
 #include <gtkmm/colorbutton.h>
 #include "ui/widget/button.h"
-#include "ui/widget/spinbutton.h"
 #include "ui/widget/unit-menu.h"
 #include "ui/widget/scalar-unit.h"
 #include "ui/widget/entry.h"

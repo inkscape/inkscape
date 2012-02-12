@@ -17,6 +17,7 @@
 
 #include <glibmm.h>
 #include <gdk/gdk.h>
+#include <gdk/gdkkeysyms.h>
 #include <2geom/transforms.h>
 
 #include "macros.h"

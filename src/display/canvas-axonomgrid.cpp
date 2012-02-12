@@ -34,10 +34,13 @@
 #include "sp-namedview.h"
 #include "sp-object.h"
 #include "svg/svg-color.h"
+#include "ui/widget/registered-widget.h"
 #include "util/mathfns.h"
 #include "xml/node-event-vector.h"
 #include "round.h"
 
+#include <gtkmm/box.h>
+#include <gtkmm/label.h>
 #include <gtkmm/table.h>
 
 enum Dim3 { X=0, Y, Z };

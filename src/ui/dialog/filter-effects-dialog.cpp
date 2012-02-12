@@ -63,6 +63,7 @@
 #include <iostream>
 
 #include <gtkmm/colorbutton.h>
+#include <gtkmm/paned.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/stock.h>
 
