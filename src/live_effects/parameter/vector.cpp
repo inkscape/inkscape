@@ -15,6 +15,7 @@
 #include "ui/widget/registered-widget.h"
 #include "live_effects/effect.h"
 #include "desktop.h"
+#include "verbs.h"
 
 namespace Inkscape {
 

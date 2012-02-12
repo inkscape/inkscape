@@ -10,6 +10,8 @@
 #include "gdkpixbuf-input.h"
 #include "selection-chemistry.h"
 #include "sp-image.h"
+#include "document-undo.h"
+#include <set>
 
 namespace Inkscape {
 

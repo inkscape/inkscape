@@ -26,6 +26,7 @@
 #include "inkscape.h"
 
 #include "document.h"
+#include "document-undo.h"
 #include "desktop-handles.h"
 #include "sp-namedview.h"
 

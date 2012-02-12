@@ -27,6 +27,7 @@
 #include "dialog-manager.h"
 #include "dir-util.h"
 #include "document.h"
+#include "document-undo.h"
 #include "filter-chemistry.h"
 #include "filter-effects-dialog.h"
 #include "filter-enums.h"

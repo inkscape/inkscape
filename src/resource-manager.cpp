@@ -22,6 +22,9 @@
 #include "sp-object.h"
 #include "xml/node.h"
 #include "document-undo.h"
+#include "verbs.h"
+
+#include <set>
 
 namespace Inkscape {
 

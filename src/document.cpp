@@ -46,6 +46,7 @@
 #include "dir-util.h"
 #include "display/drawing-item.h"
 #include "document-private.h"
+#include "document-undo.h"
 #include "helper/units.h"
 #include "inkscape-private.h"
 #include "inkscape-version.h"

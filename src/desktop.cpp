@@ -32,6 +32,8 @@
 #include <2geom/transforms.h>
 #include <2geom/rect.h>
 
+#include "ui/dialog/dialog-manager.h"
+
 #include "box3d-context.h"
 #include "color.h"
 #include "desktop-events.h"
@@ -68,7 +70,6 @@
 #include "sp-item-group.h"
 #include "sp-namedview.h"
 #include "sp-root.h"
-#include "ui/dialog/dialog-manager.h"
 #include "widgets/desktop-widget.h"
 #include "xml/repr.h"
 

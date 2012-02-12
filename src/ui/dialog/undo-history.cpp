@@ -21,6 +21,7 @@
 
 
 #include "document.h"
+#include "document-undo.h"
 #include "inkscape.h"
 #include "verbs.h"
 #include "desktop-handles.h"

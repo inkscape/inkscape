@@ -31,6 +31,7 @@
 #include "svg/svg-color.h"
 #include "io/sys.h"
 
+#include <glibmm/i18n.h>
 
 
 static void draw_page(

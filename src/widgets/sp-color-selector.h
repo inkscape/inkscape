@@ -6,9 +6,6 @@
 
 #include <glib.h>
 
-
-
-
 struct SPColorSelector;
 
 class ColorSelector

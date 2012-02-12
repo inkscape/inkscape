@@ -13,9 +13,11 @@
 #include "inkscape.h"
 #include "desktop-handles.h"
 #include "document.h"
+#include "document-undo.h"
 #include "dialogs/dialog-events.h"
 
 #include "widgets/sp-color-notebook.h"
+#include "verbs.h"
 
 #include "color-picker.h"
 

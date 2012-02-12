@@ -5,6 +5,7 @@
 #include "swatch-selector.h"
 
 #include "document.h"
+#include "document-undo.h"
 #include "gradient-chemistry.h"
 #include "gradient-selector.h"
 #include "sp-color-notebook.h"

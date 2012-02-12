@@ -31,6 +31,7 @@
 #include "style.h"
 #include "desktop.h"
 #include "document.h"
+#include "document-undo.h"
 #include "message-stack.h"
 #include "selection.h"
 #include "desktop-handles.h"
@@ -38,6 +39,7 @@
 #include <2geom/pathvector.h>
 #include "selection-chemistry.h"
 #include "path-chemistry.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

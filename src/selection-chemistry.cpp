@@ -58,6 +58,7 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "xml/rebase-hrefs.h"
 #include "style.h"
 #include "document-private.h"
+#include "document-undo.h"
 #include "sp-gradient.h"
 #include "sp-gradient-reference.h"
 #include "sp-linear-gradient-fns.h"

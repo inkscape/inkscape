@@ -23,6 +23,7 @@
 #include "../desktop-handles.h"
 #include "dialog-events.h"
 #include "../document.h"
+#include "../document-undo.h"
 #include "../event-context.h"
 #include "helper/window.h"
 #include "../inkscape.h"

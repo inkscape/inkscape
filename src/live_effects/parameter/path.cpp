@@ -23,6 +23,7 @@
 #include "message-stack.h"
 #include "verbs.h"
 #include "document.h"
+#include "document-undo.h"
 
 // needed for on-canvas editting:
 #include "tools-switch.h"

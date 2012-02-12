@@ -21,6 +21,7 @@
 #include "attributes.h"
 #include "sp-glyph.h"
 #include "document.h"
+#include <cstring>
 
 static void sp_glyph_class_init(SPGlyphClass *gc);
 static void sp_glyph_init(SPGlyph *glyph);

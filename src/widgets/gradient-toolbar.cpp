@@ -29,6 +29,7 @@
 
 #include "preferences.h"
 #include "document-private.h"
+#include "document-undo.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include <glibmm/i18n.h>

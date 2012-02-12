@@ -33,6 +33,7 @@ extern "C" {
 #include "../widgets/font-selector.h"
 #include "../inkscape.h"
 #include "../document.h"
+#include "../document-undo.h"
 #include "../desktop-style.h"
 #include "../desktop-handles.h"
 #include "../selection.h"

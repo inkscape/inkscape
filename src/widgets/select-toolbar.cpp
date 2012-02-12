@@ -29,6 +29,7 @@
 #include "preferences.h"
 #include "selection-chemistry.h"
 #include "document.h"
+#include "document-undo.h"
 #include "inkscape.h"
 #include "desktop-style.h"
 #include "desktop.h"

@@ -18,6 +18,7 @@
 #ifdef ENABLE_SVG_FONTS
 
 #include "document-private.h"
+#include "document-undo.h"
 #include <gtkmm/notebook.h>
 #include <gtkmm/stock.h>
 #include <glibmm/i18n.h>

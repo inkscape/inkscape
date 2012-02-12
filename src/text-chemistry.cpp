@@ -25,6 +25,7 @@
 #include "inkscape.h"
 #include "desktop.h"
 #include "document.h"
+#include "document-undo.h"
 #include "message-stack.h"
 #include "selection.h"
 #include "style.h"
@@ -35,6 +36,7 @@
 #include "sp-flowregion.h"
 #include "sp-flowdiv.h"
 #include "sp-tspan.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

@@ -23,6 +23,7 @@
 #include "desktop-handles.h"
 #include "knot.h"
 #include "document.h"
+#include "document-undo.h"
 #include "preferences.h"
 #include "message-stack.h"
 #include "message-context.h"

@@ -23,6 +23,8 @@
 #include "shape-editor.h"
 #include "snap.h"
 #include "sp-namedview.h"
+#include "document-undo.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

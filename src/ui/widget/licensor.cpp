@@ -22,6 +22,8 @@
 #include "ui/widget/registry.h"
 #include "rdf.h"
 #include "inkscape.h"
+#include "document-undo.h"
+#include "verbs.h"
 
 #include "licensor.h"
 

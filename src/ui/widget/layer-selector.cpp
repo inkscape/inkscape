@@ -21,6 +21,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "document.h"
+#include "document-undo.h"
 #include "layer-manager.h"
 #include "sp-item.h"
 #include "ui/dialog/layer-properties.h"

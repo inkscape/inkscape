@@ -17,6 +17,7 @@
 #include "sp-xmlview-content.h"
 #include "desktop-handles.h"
 #include "document-private.h"
+#include "document-undo.h"
 #include "inkscape.h"
 
 using Inkscape::DocumentUndo;

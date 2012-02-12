@@ -26,6 +26,7 @@
 #include "xml/repr.h"
 #include "attributes.h"
 #include "document.h"
+#include "document-undo.h"
 #include "desktop-events.h"
 #include "desktop-handles.h"
 #include "event-log.h"

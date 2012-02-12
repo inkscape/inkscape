@@ -25,6 +25,8 @@
 #include "sp-font-face.h"
 #include "document.h"
 
+#include <cstring>
+
 //TODO: apparently unused. Maybe should be removed.
 class ObjectContainer
 {

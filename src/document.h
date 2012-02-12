@@ -17,7 +17,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib-object.h>
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 #include <sigc++/class_slot.h>
@@ -29,10 +28,7 @@
 #include "gc-finalized.h"
 #include "gc-anchored.h"
 #include <glibmm/ustring.h>
-#include "verbs.h"
-#include "document-undo.h"
 #include <vector>
-#include <set>
 
 namespace Avoid {
 class Router;

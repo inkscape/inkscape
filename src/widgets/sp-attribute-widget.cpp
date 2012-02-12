@@ -20,6 +20,8 @@
 #include "xml/repr.h"
 #include "macros.h"
 #include "document.h"
+#include "document-undo.h"
+#include "verbs.h"
 #include "sp-attribute-widget.h"
 
 using Inkscape::DocumentUndo;

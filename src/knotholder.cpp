@@ -15,6 +15,7 @@
 #include <glibmm/i18n.h>
 
 #include "document.h"
+#include "document-undo.h"
 #include "sp-shape.h"
 #include "knot.h"
 #include "knotholder.h"
@@ -34,6 +35,7 @@
 #include "live_effects/effect.h"
 #include "desktop.h"
 #include "display/sp-canvas.h"
+#include "verbs.h"
 
 #include "xml/repr.h" // for debugging only
 

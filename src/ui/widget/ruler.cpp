@@ -31,6 +31,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "document.h"
+#include "document-undo.h"
 #include "sp-namedview.h"
 #include "verbs.h"
 

@@ -21,6 +21,7 @@
 #include "display/guideline.h"
 #include "desktop.h"
 #include "document.h"
+#include "document-undo.h"
 #include "sp-guide.h"
 #include "sp-namedview.h"
 #include "desktop-handles.h"
@@ -30,6 +31,7 @@
 #include "dialogs/dialog-events.h"
 #include "message-context.h"
 #include "xml/repr.h"
+#include "verbs.h"
 
 #include <2geom/point.h>
 #include <2geom/angle.h>

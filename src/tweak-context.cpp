@@ -24,6 +24,7 @@
 #include <glib.h>
 #include "macros.h"
 #include "document.h"
+#include "document-undo.h"
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-events.h"
@@ -70,6 +71,7 @@
 #include "sp-item-transform.h"
 #include "filter-chemistry.h"
 #include "filters/gaussian-blur.h"
+#include "verbs.h"
 
 #include "tweak-context.h"
 

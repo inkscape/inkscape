@@ -15,7 +15,6 @@
 
 #include <cstring>
 #include <string>
-#include <string.h>
 #include "config.h"
 #include "require-config.h"   /* HAVE_GTK_WINDOW_FULLSCREEN */
 #include <glibmm/ustring.h>

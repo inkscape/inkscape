@@ -31,8 +31,6 @@
 // This has to be included prior to anything that includes setjmp.h, it croaks otherwise
 #include <png.h>
 
-#include <gtk/gtk.h>
-
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>
 #endif
@@ -114,6 +112,7 @@
 #include "ui/widget/panel.h"
 
 #include <errno.h>
+#include "verbs.h"
 
 enum {
     SP_ARG_NONE,

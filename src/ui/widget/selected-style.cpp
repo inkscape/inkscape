@@ -32,6 +32,7 @@
 #include "ui/dialog/panel-dialog.h"
 #include "xml/repr.h"
 #include "document.h"
+#include "document-undo.h"
 #include "widgets/widget-sizes.h"
 #include "widgets/spinbutton-events.h"
 #include "widgets/gradient-image.h"

@@ -20,6 +20,7 @@
 #include <2geom/transforms.h>
 
 #include "document.h"
+#include "document-undo.h"
 #include "desktop-handles.h"
 #include "transformation.h"
 #include "align-and-distribute.h"

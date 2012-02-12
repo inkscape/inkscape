@@ -35,11 +35,13 @@
 #include "desktop-handles.h"
 #include "selection.h"
 #include "document.h"
+#include "document-undo.h"
 
 #include "pixmaps/cursor-dropper.xpm"
 
 #include "dropper-context.h"
 #include "message-context.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

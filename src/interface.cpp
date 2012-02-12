@@ -66,6 +66,7 @@
 #include "event-context.h"
 #include "gradient-drag.h"
 #include "widgets/ege-paint-def.h"
+#include "document-undo.h"
 
 #include <gdk/gdkkeysyms.h>
 

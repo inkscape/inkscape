@@ -31,6 +31,7 @@
 #include "display/drawing-context.h"
 #include "display/drawing-item.h"
 #include "document.h"
+#include "document-undo.h"
 #include "filter-chemistry.h"
 #include "helper/unit-menu.h"
 #include "helper/units.h"

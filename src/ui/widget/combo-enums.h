@@ -13,9 +13,11 @@
 
 #include <gtkmm/combobox.h>
 #include <gtkmm/liststore.h>
+#include "ui/widget/labelled.h"
 #include "attr-widget.h"
 #include "util/enums.h"
-#include "ui/widget/labelled.h"
+
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace UI {

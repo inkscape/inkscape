@@ -27,6 +27,7 @@
 #include "display/canvas-bpath.h" // for SP_STROKE_LINEJOIN_*
 #include "display/drawing.h"
 #include "document-private.h"
+#include "document-undo.h"
 #include "gradient-chemistry.h"
 #include "helper/stock-items.h"
 #include "helper/unit-menu.h"

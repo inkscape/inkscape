@@ -16,6 +16,7 @@
 #include <errno.h>
 #include <map>
 #include <algorithm>
+#include <set>
 
 #include <gtk/gtk.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
@@ -28,6 +29,7 @@
 #include "desktop-style.h"
 #include "document.h"
 #include "document-private.h"
+#include "document-undo.h"
 #include "extension/db.h"
 #include "inkscape.h"
 #include "inkscape.h"

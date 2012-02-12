@@ -36,8 +36,8 @@
 #include "xml/rebase-hrefs.h"
 #include "io/sys.h"
 #include "inkscape.h"
+#include "document-undo.h"
 
-/* #include "implementation/plugin.h" */
 
 namespace Inkscape {
 namespace Extension {

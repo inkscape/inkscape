@@ -32,6 +32,7 @@
 #include "desktop-style.h"
 #include "display/sp-canvas.h"
 #include "document-private.h"
+#include "document-undo.h"
 #include "gradient-chemistry.h"
 #include "inkscape.h"
 #include "selection.h"

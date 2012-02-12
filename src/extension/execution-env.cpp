@@ -19,6 +19,7 @@
 #include "selection.h"
 #include "effect.h"
 #include "document.h"
+#include "document-undo.h"
 #include "desktop.h"
 #include "ui/view/view.h"
 #include "sp-namedview.h"

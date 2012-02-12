@@ -43,6 +43,7 @@
 
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
+#include "document-undo.h"
 
 using Inkscape::DocumentUndo;
 

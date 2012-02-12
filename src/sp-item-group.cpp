@@ -27,6 +27,7 @@
 #include "xml/repr.h"
 #include "svg/svg.h"
 #include "document.h"
+#include "document-undo.h"
 #include "style.h"
 #include "attributes.h"
 #include "sp-item-transform.h"
@@ -48,6 +49,7 @@
 #include "sp-desc.h"
 #include "sp-switch.h"
 #include "sp-defs.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

@@ -24,6 +24,7 @@
 #include "desktop-style.h"
 #include "display/cairo-utils.h"
 #include "document.h"
+#include "document-undo.h"
 #include "inkscape.h" // for SP_ACTIVE_DESKTOP
 #include "io/resource.h"
 #include "io/sys.h"
@@ -33,6 +34,7 @@
 #include "svg/svg-color.h"
 #include "xml/node.h"
 #include "xml/repr.h"
+#include "verbs.h"
 
 #include "color.h" // for SP_RGBA32_U_COMPOSE
 

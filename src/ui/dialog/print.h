@@ -11,12 +11,10 @@
 #ifndef INKSCAPE_UI_DIALOG_PRINT_H
 #define INKSCAPE_UI_DIALOG_PRINT_H
 
-#include <glibmm/i18n.h>
 #include <gtkmm/printoperation.h> // GtkMM
-#include <gtk/gtk.h> // Gtk
 
-#include "desktop.h"
-#include "sp-item.h"
+class SPItem;
+class SPDocument;
 
 #include "ui/widget/rendering-options.h"
 

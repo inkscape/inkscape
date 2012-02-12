@@ -20,6 +20,8 @@
 
 #include "../../desktop-handles.h"
 #include "../../document.h"
+#include "../../document-undo.h"
+#include "verbs.h"
 #include "object-properties.h"
 
 

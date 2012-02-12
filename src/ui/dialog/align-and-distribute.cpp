@@ -45,6 +45,7 @@
 #include "verbs.h"
 #include "widgets/icon.h"
 #include "sp-root.h"
+#include "document-undo.h"
 
 #include "align-and-distribute.h"
 

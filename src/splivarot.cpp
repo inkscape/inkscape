@@ -33,6 +33,7 @@
 #include "sp-item-group.h"
 #include "style.h"
 #include "document.h"
+#include "document-undo.h"
 #include "message-stack.h"
 #include "selection.h"
 #include "desktop-handles.h"
@@ -51,6 +52,7 @@
 #include "livarot/Shape.h"
 
 #include "splivarot.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

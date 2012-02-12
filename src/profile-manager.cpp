@@ -13,6 +13,8 @@
 #include "document.h"
 #include "color-profile.h"
 
+#include <cstring>
+
 namespace Inkscape {
 
 ProfileManager::ProfileManager(SPDocument *document) :

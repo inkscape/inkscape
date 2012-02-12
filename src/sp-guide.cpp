@@ -41,6 +41,8 @@
 #include "sp-namedview.h"
 #include <2geom/angle.h>
 #include "document.h"
+#include "document-undo.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 using std::vector;

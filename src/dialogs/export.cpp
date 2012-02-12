@@ -43,6 +43,7 @@
 #include "helper/window.h"
 #include "inkscape-private.h"
 #include "document.h"
+#include "document-undo.h"
 #include "desktop-handles.h"
 #include "sp-item.h"
 #include "selection.h"

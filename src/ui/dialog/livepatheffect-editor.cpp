@@ -24,6 +24,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "document.h"
+#include "document-undo.h"
 #include "gtkmm/widget.h"
 #include "inkscape.h"
 #include "live_effects/effect.h"

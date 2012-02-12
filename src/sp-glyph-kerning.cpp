@@ -24,6 +24,7 @@
 
 #include "document.h"
 #include <string>
+#include <cstring>
 
 static void sp_glyph_kerning_class_init(SPGlyphKerningClass *gc);
 static void sp_glyph_kerning_init(SPGlyphKerning *glyph);

@@ -21,6 +21,7 @@
 #include "desktop.h"
 #include "desktop-style.h"
 #include "document.h"
+#include "document-undo.h"
 #include "helper/action.h"
 #include "inkscape.h"
 #include "layer-fns.h"

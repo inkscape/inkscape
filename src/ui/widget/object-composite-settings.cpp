@@ -17,6 +17,7 @@
 #include "desktop-handles.h"
 #include "desktop-style.h"
 #include "document.h"
+#include "document-undo.h"
 #include "filter-chemistry.h"
 #include "inkscape.h"
 #include "selection.h"

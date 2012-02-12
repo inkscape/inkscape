@@ -39,6 +39,7 @@
 #include "display/drawing.h"
 #include "display/sp-canvas.h"
 #include "document.h"
+#include "document-undo.h"
 #include "flood-context.h"
 #include "livarot/Path.h"
 #include "livarot/Shape.h"
@@ -65,6 +66,7 @@
 #include "trace/trace.h"
 #include "xml/node-event-vector.h"
 #include "xml/repr.h"
+#include "verbs.h"
 
 #include "pixmaps/cursor-paintbucket.xpm"
 

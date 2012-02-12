@@ -27,6 +27,7 @@
 #include "display/sp-canvas.h"
 #include "sp-star.h"
 #include "document.h"
+#include "document-undo.h"
 #include "sp-namedview.h"
 #include "selection.h"
 #include "desktop-handles.h"
@@ -43,6 +44,7 @@
 #include "object-edit.h"
 #include "context-fns.h"
 #include "shape-editor.h"
+#include "verbs.h"
 
 #include "star-context.h"
 

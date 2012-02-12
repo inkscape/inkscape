@@ -25,6 +25,8 @@
 #include "rdf.h"
 #include "ui/widget/registry.h"
 #include "sp-root.h"
+#include "document-undo.h"
+#include "verbs.h"
 
 #include "entity-entry.h"
 

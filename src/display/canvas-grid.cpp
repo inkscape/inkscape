@@ -33,6 +33,7 @@
 #include "ui/widget/registered-widget.h"
 #include "util/mathfns.h"
 #include "xml/node-event-vector.h"
+#include "verbs.h"
 
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>

@@ -36,6 +36,7 @@
 #include "selection.h"
 #include "sp-root.h"
 #include "xml/repr.h"
+#include "verbs.h"
 
 #include "icon-preview.h"
 

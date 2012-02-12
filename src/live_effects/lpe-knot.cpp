@@ -24,7 +24,6 @@
 #include <2geom/d2.h>
 #include <2geom/d2-sbasis.h>
 #include <2geom/path.h>
-//#include <2geom/crossing.h>
 #include <2geom/bezier-to-sbasis.h>
 #include <2geom/basic-intersection.h>
 #include <2geom/exception.h>
@@ -32,6 +31,7 @@
 // for change crossing undo
 #include "verbs.h"
 #include "document.h"
+#include "document-undo.h"
 
 #include <exception>
 

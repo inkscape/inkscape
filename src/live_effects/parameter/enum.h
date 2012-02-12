@@ -9,10 +9,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
-
 #include "ui/widget/registered-enums.h"
-
+#include <glibmm/ustring.h>
 #include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
 #include "verbs.h"

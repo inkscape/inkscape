@@ -34,9 +34,11 @@
 #include "document.h"
 #include "desktop.h"
 #include "desktop-handles.h"
+#include "document-undo.h"
 #include "sp-namedview.h"
 #include "sp-item-group.h"
 #include "inkscape.h"
+#include "verbs.h"
 #include <glibmm/i18n.h>
 
 using Inkscape::DocumentUndo;

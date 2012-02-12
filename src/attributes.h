@@ -13,7 +13,7 @@
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-#include <glib.h>
+#include <glibmm/value.h>
 
 unsigned int sp_attribute_lookup(gchar const *key);
 unsigned char const *sp_attribute_name(unsigned int id);

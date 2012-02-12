@@ -18,8 +18,8 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include <gdk/gdkkeysyms.h>
 
+#include "live_effects/lpe-patternalongpath.h"
 #include "display/canvas-bpath.h"
 #include "xml/repr.h"
 #include "svg/svg.h"
@@ -40,9 +40,10 @@
 #include "snap.h"
 #include "sp-path.h"
 #include "sp-namedview.h"
-#include "live_effects/lpe-patternalongpath.h"
 #include "live_effects/lpe-powerstroke.h"
 #include "style.h"
+
+#include <gdk/gdkkeysyms.h>
 
 using Inkscape::DocumentUndo;
 

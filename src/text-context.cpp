@@ -31,6 +31,7 @@
 #include "desktop-style.h"
 #include "desktop.h"
 #include "document.h"
+#include "document-undo.h"
 #include "macros.h"
 #include "message-context.h"
 #include "message-stack.h"

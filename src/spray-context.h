@@ -20,8 +20,6 @@
 
 #include <2geom/point.h>
 #include "event-context.h"
-//#include "ui/widget/spray-option.h"
-#include "ui/dialog/dialog.h"
 
 #define SP_TYPE_SPRAY_CONTEXT (sp_spray_context_get_type())
 #define SP_SPRAY_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_SPRAY_CONTEXT, SPSprayContext))

@@ -62,6 +62,8 @@
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "livarot/Shape.h"
+#include "document-undo.h"
+#include "verbs.h"
 #include <2geom/math-utils.h>
 #include <2geom/pathvector.h>
 

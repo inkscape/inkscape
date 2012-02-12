@@ -50,7 +50,6 @@
 #include "extension/init.h"
 #include "extension/output.h"
 #include "extension/system.h"
-//#include "helper/sp-marshal.h"
 #include "inkscape-private.h"
 #include "io/sys.h"
 #include "message-stack.h"

@@ -42,6 +42,7 @@
 #include <glib.h>
 #include "macros.h"
 #include "document.h"
+#include "document-undo.h"
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-events.h"
@@ -64,6 +65,7 @@
 #include "display/canvas-bpath.h"
 #include "display/canvas-arena.h"
 #include "livarot/Shape.h"
+#include "verbs.h"
 
 #include "dyna-draw-context.h"
 

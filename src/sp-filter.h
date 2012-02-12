@@ -19,6 +19,8 @@
 #include "sp-filter-units.h"
 #include "svg/svg-length.h"
 
+#include <glibmm/ustring.h>
+
 #define SP_TYPE_FILTER (sp_filter_get_type())
 #define SP_FILTER(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FILTER, SPFilter))
 #define SP_FILTER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FILTER, SPFilterClass))

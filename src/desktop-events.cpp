@@ -21,6 +21,7 @@
 #include <2geom/angle.h>
 #include <glibmm/i18n.h>
 
+#include "ui/dialog/guides.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "dialogs/dialog-events.h"
@@ -29,6 +30,7 @@
 #include "display/guideline.h"
 #include "display/snap-indicator.h"
 #include "document.h"
+#include "document-undo.h"
 #include "event-context.h"
 #include "helper/action.h"
 #include "helper/unit-menu.h"
@@ -40,7 +42,7 @@
 #include "sp-metrics.h"
 #include "sp-namedview.h"
 #include "tools-switch.h"
-#include "ui/dialog/guides.h"
+#include "verbs.h"
 #include "widgets/desktop-widget.h"
 #include "xml/repr.h"
 

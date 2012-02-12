@@ -9,6 +9,7 @@
 #include "live_effects/parameter/unit.h"
 #include "live_effects/effect.h"
 #include "ui/widget/registered-widget.h"
+#include "verbs.h"
 
 namespace Inkscape {
 

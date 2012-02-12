@@ -24,6 +24,7 @@
 #include "display/sp-canvas.h"
 #include "sp-rect.h"
 #include "document.h"
+#include "document-undo.h"
 #include "sp-namedview.h"
 #include "selection.h"
 #include "selection-chemistry.h"
@@ -42,6 +43,7 @@
 #include "preferences.h"
 #include "context-fns.h"
 #include "shape-editor.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

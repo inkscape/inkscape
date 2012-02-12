@@ -42,6 +42,7 @@
 #include "display/curve.h"
 #include "document-undo.h"
 #include "sp-root.h"
+#include "verbs.h"
 
 #ifdef HAVE_ASPELL
 #include <aspell.h>

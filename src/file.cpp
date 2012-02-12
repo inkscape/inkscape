@@ -39,6 +39,7 @@
 #include "dialogs/export.h"
 #include "dir-util.h"
 #include "document-private.h"
+#include "document-undo.h"
 #include "extension/db.h"
 #include "extension/input.h"
 #include "extension/output.h"

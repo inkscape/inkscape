@@ -25,6 +25,7 @@
 
 #include "desktop.h"
 #include "document.h" // for SPDocumentUndo::done()
+#include "document-undo.h"
 #include "libnrtype/font-instance.h"
 #include "sp-flowtext.h"
 #include "sp-text.h"

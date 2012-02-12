@@ -18,6 +18,7 @@
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "document.h"
+#include "document-undo.h"
 #include "message-stack.h"
 #include <glibmm/i18n.h>
 #include <gtkmm/main.h>
@@ -28,6 +29,7 @@
 #include "sp-shape.h"
 #include "sp-image.h"
 #include <2geom/transforms.h>
+#include "verbs.h"
 
 #include "display/drawing.h"
 #include "display/drawing-shape.h"

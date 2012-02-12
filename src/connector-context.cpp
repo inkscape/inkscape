@@ -159,8 +159,6 @@
 #include "connector-context.h"
 #include "pixmaps/cursor-connector.xpm"
 #include "pixmaps/cursor-node.xpm"
-//#include "pixmaps/cursor-node-m.xpm"
-//#include "pixmaps/cursor-node-d.xpm"
 #include "xml/node-event-vector.h"
 #include "xml/repr.h"
 #include "svg/svg.h"
@@ -168,6 +166,7 @@
 #include "desktop-style.h"
 #include "desktop-handles.h"
 #include "document.h"
+#include "document-undo.h"
 #include "message-context.h"
 #include "message-stack.h"
 #include "selection.h"
@@ -191,6 +190,7 @@
 #include "sp-text.h"
 #include "sp-flowtext.h"
 #include "display/curve.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

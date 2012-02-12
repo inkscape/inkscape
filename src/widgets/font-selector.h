@@ -19,10 +19,8 @@
 struct SPFontSelector;
 
 #define SP_TYPE_FONT_SELECTOR (sp_font_selector_get_type ())
-#define SP_FONT_SELECTOR(o) (GTK_CHECK_CAST ((o), SP_TYPE_FONT_SELECTOR, SPFontSelector))
-#define SP_IS_FONT_SELECTOR(o) (GTK_CHECK_TYPE ((o), SP_TYPE_FONT_SELECTOR))
-
-#include <gtk/gtkwidget.h>
+#define SP_FONT_SELECTOR(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_FONT_SELECTOR, SPFontSelector))
+#define SP_IS_FONT_SELECTOR(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_FONT_SELECTOR))
 
 class font_instance;
 

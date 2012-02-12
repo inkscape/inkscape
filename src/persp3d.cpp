@@ -15,6 +15,7 @@
 #include "perspective-line.h"
 #include "attributes.h"
 #include "document-private.h"
+#include "document-undo.h"
 #include "vanishing-point.h"
 #include "box3d-context.h"
 #include "box3d.h"

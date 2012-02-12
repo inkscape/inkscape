@@ -12,14 +12,13 @@
 #define INKSCAPE_EXTENSION_EFFECT_H__
 
 #include <config.h>
-
 #include <glibmm/i18n.h>
-#include <gtkmm/dialog.h>
-#include <gtk/gtk.h>
 #include "verbs.h"
-
-#include "prefdialog.h"
 #include "extension.h"
+
+namespace Gtk {
+	class VBox;
+}
 
 struct SPDocument;
 
@@ -27,6 +26,7 @@ namespace Inkscape {
 
 
 namespace Extension {
+class PrefDialog;
 
 /** \brief  Effects are extensions that take a document and do something
             to it in place.  This class adds the extra functions required

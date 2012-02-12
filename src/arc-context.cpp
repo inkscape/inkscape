@@ -26,6 +26,7 @@
 #include "display/sp-canvas.h"
 #include "sp-ellipse.h"
 #include "document.h"
+#include "document-undo.h"
 #include "sp-namedview.h"
 #include "selection.h"
 #include "desktop-handles.h"

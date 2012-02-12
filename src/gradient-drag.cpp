@@ -28,6 +28,7 @@
 #include "desktop-style.h"
 #include "desktop-handles.h"
 #include "document.h"
+#include "document-undo.h"
 #include "display/sp-ctrlline.h"
 #include "display/sp-canvas-util.h"
 #include "xml/repr.h"
@@ -45,6 +46,7 @@
 #include "snap.h"
 #include "sp-namedview.h"
 #include "selection-chemistry.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

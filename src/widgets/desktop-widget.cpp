@@ -67,6 +67,8 @@
 #include "toolbox.h"
 #include "widget-sizes.h"
 
+#include "verbs.h"
+
 #if defined (SOLARIS) && (SOLARIS == 8)
 #include "round.h"
 using Inkscape::round;

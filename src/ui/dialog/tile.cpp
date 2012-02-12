@@ -29,6 +29,7 @@
 #include "desktop-handles.h"
 #include "selection.h"
 #include "document.h"
+#include "document-undo.h"
 #include "sp-item.h"
 #include "widgets/icon.h"
 #include "tile.h"

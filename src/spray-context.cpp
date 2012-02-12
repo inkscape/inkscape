@@ -31,6 +31,7 @@
 #include <glib.h>
 #include "macros.h"
 #include "document.h"
+#include "document-undo.h"
 #include "selection.h"
 #include "desktop.h"
 #include "desktop-events.h"
@@ -66,6 +67,7 @@
 #include "spray-context.h"
 #include "ui/dialog/dialog-manager.h"
 #include "helper/action.h"
+#include "verbs.h"
 
 #include <iostream>
 

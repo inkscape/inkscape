@@ -23,6 +23,7 @@
 #include "macros.h"
 #include "rubberband.h"
 #include "document.h"
+#include "document-undo.h"
 #include "selection.h"
 #include "seltrans-handles.h"
 #include "sp-cursor.h"
