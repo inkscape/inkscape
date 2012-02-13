@@ -105,9 +105,9 @@ static void sp_desktop_widget_realize (GtkWidget *widget);
 static gint sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw);
 
 static void sp_dtw_color_profile_event(EgeColorProfTracker *widget, SPDesktopWidget *dtw);
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 static void cms_adjust_toggled( GtkWidget *button, gpointer data );
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 static void cms_adjust_set_sensitive( SPDesktopWidget *dtw, bool enabled );
 static void sp_desktop_widget_adjustment_value_changed (GtkAdjustment *adj, SPDesktopWidget *dtw);
 
@@ -189,7 +189,7 @@ private:
     friend class SoftproofWatcher;
 };
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 void CMSPrefWatcher::hook(EgeColorProfTracker * /*tracker*/, gint screen, gint monitor, CMSPrefWatcher * /*watcher*/)
 {
     unsigned char* buf = 0;
@@ -202,22 +202,22 @@ void CMSPrefWatcher::hook(EgeColorProfTracker * /*tracker*/, gint screen, gint m
 void CMSPrefWatcher::hook(EgeColorProfTracker * /*tracker*/, gint /*screen*/, gint /*monitor*/, CMSPrefWatcher * /*watcher*/)
 {
 }
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 /// @todo Use conditional compilation in saner places. The whole PrefWatcher
-/// object is unnecessary if ENABLE_LCMS is not defined.
+/// object is unnecessary if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2) is not defined.
 void CMSPrefWatcher::_refreshAll()
 {
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     for ( std::list<SPDesktopWidget*>::iterator it = _widget_list.begin(); it != _widget_list.end(); ++it ) {
         (*it)->requestCanvasUpdate();
     }
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 }
 
 void CMSPrefWatcher::_setCmsSensitive(bool enabled)
 {
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     for ( std::list<SPDesktopWidget*>::iterator it = _widget_list.begin(); it != _widget_list.end(); ++it ) {
         SPDesktopWidget *dtw = *it;
         if ( gtk_widget_get_sensitive( dtw->cms_adjust ) != enabled ) {
@@ -226,7 +226,7 @@ void CMSPrefWatcher::_setCmsSensitive(bool enabled)
     }
 #else
     (void) enabled;
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 }
 
 static CMSPrefWatcher* watcher = NULL;
@@ -420,7 +420,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
                                                NULL,
                                                INKSCAPE_ICON("color-management"),
                                                tip );
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     {
         Glib::ustring current = prefs->getString("/options/displayprofile/uri");
         bool enabled = current.length() > 0;
@@ -435,7 +435,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     g_signal_connect_after( G_OBJECT(dtw->cms_adjust), "clicked", G_CALLBACK(cms_adjust_toggled), dtw );
 #else
     cms_adjust_set_sensitive(dtw, FALSE);
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     gtk_table_attach( GTK_TABLE(canvas_tbl), dtw->cms_adjust, 2, 3, 2, 3, (GtkAttachOptions)(GTK_SHRINK), (GtkAttachOptions)(GTK_SHRINK), 0, 0);
     {
         if (!watcher) {
@@ -446,9 +446,9 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
     /* Canvas */
     dtw->canvas = SP_CANVAS(SPCanvas::createAA());
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     dtw->canvas->enable_cms_display_adj = prefs->getBool("/options/displayprofile/enable");
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     gtk_widget_set_can_focus (GTK_WIDGET (dtw->canvas), TRUE);
     style = gtk_style_copy(gtk_widget_get_style(GTK_WIDGET(dtw->canvas)));
     style->bg[GTK_STATE_NORMAL] = style->white;
@@ -546,7 +546,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_box_pack_start(GTK_BOX(dtw->statusbar), GTK_WIDGET(dtw->layer_selector->gobj()), FALSE, FALSE, 1);
 
     dtw->_tracker = ege_color_prof_tracker_new(GTK_WIDGET(dtw->layer_selector->gobj()));
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     bool fromDisplay = prefs->getBool( "/options/displayprofile/from_display");
     if ( fromDisplay ) {
         Glib::ustring id = Inkscape::CMSSystem::getDisplayId( 0, 0 );
@@ -556,7 +556,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
         enabled = !dtw->canvas->cms_key.empty();
         cms_adjust_set_sensitive( dtw, enabled );
     }
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     g_signal_connect( G_OBJECT(dtw->_tracker), "changed", G_CALLBACK(sp_dtw_color_profile_event), dtw );
 
     dtw->select_status_eventbox = gtk_event_box_new ();
@@ -801,7 +801,7 @@ sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dt
     return FALSE;
 }
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidget *dtw)
 {
     // Handle profile changes
@@ -820,9 +820,9 @@ void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidge
 void sp_dtw_color_profile_event(EgeColorProfTracker */*tracker*/, SPDesktopWidget * /*dtw*/)
 {
 }
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
 {
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data);
@@ -840,7 +840,7 @@ void cms_adjust_toggled( GtkWidget */*button*/, gpointer data )
         }
     }
 }
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 void cms_adjust_set_sensitive( SPDesktopWidget *dtw, bool enabled )
 {

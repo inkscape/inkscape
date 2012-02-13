@@ -29,13 +29,13 @@
 #include "svg-color.h"
 #include "svg-icc-color.h"
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 #include "color.h"
 #include "color-profile.h"
 #include "document.h"
 #include "inkscape.h"
 #include "profile-manager.h"
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 #include "cms-system.h"
 
 using std::sprintf;
@@ -457,7 +457,7 @@ sp_svg_create_color_hash()
     return colors;
 }
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 //helper function borrowed from src/widgets/sp-color-icc-selector.cpp:
 void getThings( Inkscape::ColorProfile *prof, gchar const**& namers, gchar const**& tippies, guint const*& scalies );
 
@@ -493,7 +493,7 @@ g_message("transform to sRGB done");
         }
     }
 }
-#endif //ENABLE_LCMS
+#endif //defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 /*
  * Some discussion at http://markmail.org/message/bhfvdfptt25kgtmj

@@ -184,10 +184,10 @@ struct SPCanvas {
     int rendermode;
     int colorrendermode;
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     bool enable_cms_display_adj;
     Glib::ustring cms_key;
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
     bool is_scrolling;
 

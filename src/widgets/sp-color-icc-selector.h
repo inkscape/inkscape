@@ -37,10 +37,10 @@ protected:
     static void _profileSelected( GtkWidget* src, gpointer data );
 
     void _recalcColor( gboolean changing );
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     void _setProfile( SVGICCColor* profile );
     void _switchToProfile( gchar const* name );
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     void _updateSliders( gint ignore );
     void _profilesChanged( std::string const & name );
 
@@ -64,12 +64,12 @@ protected:
     GtkWidget* _sbtn; /* Spinbutton */
     GtkWidget* _label; /* Label */
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     std::string _profileName;
     Inkscape::ColorProfile* _prof;
     guint _profChannelCount;
     gulong _profChangedID;
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 private:
     // By default, disallow copy constructor and assignment operator

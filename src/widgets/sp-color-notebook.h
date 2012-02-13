@@ -59,9 +59,9 @@ protected:
     gulong _entryId;
     GtkWidget *_book;
     GtkWidget *_rgbal, *_rgbae; /* RGBA entry */
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     GtkWidget *_box_outofgamut, *_box_colormanaged, *_box_toomuchink;
-#endif //ENABLE_LCMS
+#endif //defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     GtkWidget *_p; /* Color preview */
     GtkWidget *_btn;
     GtkWidget *_popup;

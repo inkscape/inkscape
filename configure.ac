@@ -493,29 +493,34 @@ AC_ARG_ENABLE(lcms,
 	[enable_lcms=$enableval], [enable_lcms=yes])
 
 if test "x$enable_lcms" = "xno"; then
-	dnl Asked to ignore LittleCms
-	lcms=no
+    # Asked to ignore LittleCms
+    lcms=no
+    have_lcms2=no
 else
-        dnl Have to test LittleCms presence
-	PKG_CHECK_MODULES(LCMS, lcms >= 1.13, lcms=yes, lcms=no)
-	if test "x$lcms" != "xyes"; then
-	        dnl No lcms found
-		if test "x$enable_lcms" = "xyes"; then
-		        dnl LittleCms was explicitly asked for, so stop
-			AC_MSG_ERROR([--enable-lcms was specified, but appropriate LittleCms development packages could not be found])
-		else
-			# lcms is no, tell us for the log file
-			AC_MSG_RESULT($lcms)
-		fi
-	else
-		dnl Working lcms
-		LIBS="$LIBS $LCMS_LIBS"
-		AC_DEFINE(ENABLE_LCMS, 1, [Use LittleCms color management])
-	fi
-fi
+    # Have to test LittleCms presence
+    if test "x${platform_osx}" != "xyes"; then
+       # lcms 2.2 & 2.3 have problems on OSX
+	PKG_CHECK_MODULES(LCMS2, lcms2, have_lcms2="yes", have_lcms2="no")
+    fi
 
-AC_SUBST(LCMS_CFLAGS)
-AC_SUBST(LCMS_LIBS)
+    if test "x${have_lcms2}" = "xyes"; then
+        LIBS="$LIBS $LCMS2_LIBS"
+        AC_DEFINE(HAVE_LIBLCMS2, 1, [define to 1 if you have lcms version 2.x])
+	AC_SUBST(LCMS2_CFLAGS)
+	AC_SUBST(LCMS2_LIBS)
+    else
+        PKG_CHECK_MODULES(LCMS, lcms >= 1.13, lcms=yes, lcms=no)
+        if test "x$lcms" = "xyes"; then
+            LIBS="$LIBS $LCMS_LIBS"
+            AC_DEFINE(HAVE_LIBLCMS1, 1, [define to 1 if you have lcms version 1.x])
+	    AC_SUBST(LCMS_CFLAGS)
+	    AC_SUBST(LCMS_LIBS)
+        else
+            # No lcms found. LittleCms was explicitly asked for, so stop
+            AC_MSG_ERROR([--enable-lcms was specified, but appropriate LittleCms development packages could not be found])
+        fi
+    fi
+fi
 
 dnl ******************************
 dnl Libpoppler checking

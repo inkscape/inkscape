@@ -1,10 +1,6 @@
 #ifndef SEEN_COLOR_PROFILE_H
 #define SEEN_COLOR_PROFILE_H
 
-/** \file
- * SPColorProfile: SVG <color-profile> implementation
- */
-
 #include <vector>
 #include <glib.h>
 #include <sp-object.h>
@@ -27,12 +23,16 @@ enum {
 class ColorProfileImpl;
 
 
-/// The SPColorProfile vtable.
+/**
+ * The SPColorProfile vtable.
+ */
 struct ColorProfileClass {
     SPObjectClass parent_class;
 };
 
-/** Color Profile. */
+/**
+ * Color Profile.
+ */
 struct ColorProfile : public SPObject {
     friend cmsHPROFILE colorprofile_get_handle( SPDocument*, guint*, gchar const* );
     friend class CMSSystem;
@@ -43,7 +43,7 @@ struct ColorProfile : public SPObject {
     static std::vector<Glib::ustring> getBaseProfileDirs();
     static std::vector<Glib::ustring> getProfileFiles();
     static std::vector<std::pair<Glib::ustring, Glib::ustring> > getProfileFilesWithNames();
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     //icColorSpaceSignature getColorSpace() const;
     ColorSpaceSig getColorSpace() const;
     //icProfileClassSignature getProfileClass() const;
@@ -53,7 +53,7 @@ struct ColorProfile : public SPObject {
     cmsHTRANSFORM getTransfGamutCheck();
     bool GamutCheck(SPColor color);
 
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
     gchar* href;
     gchar* local;

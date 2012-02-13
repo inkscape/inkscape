@@ -42,9 +42,9 @@
 #include "xml/node-event-vector.h"
 #include "xml/repr.h"
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 #include "color-profile.h"
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 #include <gtkmm/stock.h>
 
@@ -151,9 +151,9 @@ DocumentProperties::DocumentProperties()
     build_guides();
     build_gridspage();
     build_snap();
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     build_cms();
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     build_scripting();
 
     _grids_button_new.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onNewGrid));
@@ -312,7 +312,7 @@ void DocumentProperties::build_snap()
     attach_all(_page_snap.table(), array, G_N_ELEMENTS(array));
  }
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 /// Populates the available color profiles combo box
 void DocumentProperties::populate_available_profiles(){
 #if WITH_GTKMM_2_24
@@ -577,7 +577,7 @@ void DocumentProperties::build_cms()
     }
     _emb_profiles_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_linked_profiles_box));
 }
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 void DocumentProperties::build_scripting()
 {
@@ -702,13 +702,13 @@ void DocumentProperties::build_scripting()
     _new_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::addEmbeddedScript));
 
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     _ExternalScriptsList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::external_scripts_list_button_release));
     external_create_popup_menu(_ExternalScriptsList, sigc::mem_fun(*this, &DocumentProperties::removeExternalScript));
 
     _EmbeddedScriptsList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::embedded_scripts_list_button_release));
     embedded_create_popup_menu(_EmbeddedScriptsList, sigc::mem_fun(*this, &DocumentProperties::removeEmbeddedScript));
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 //TODO: review this observers code:
     const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
@@ -1054,10 +1054,10 @@ void DocumentProperties::update()
 
     //------------------------------------------------Color Management page
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     populate_linked_profiles_box();
     populate_available_profiles();
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
     _wr.setUpdating (false);
 }

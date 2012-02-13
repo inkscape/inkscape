@@ -1203,10 +1203,10 @@ void SPCanvasImpl::init(SPCanvas *canvas)
     canvas->forced_redraw_count = 0;
     canvas->forced_redraw_limit = -1;
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     canvas->enable_cms_display_adj = false;
     new (&canvas->cms_key) Glib::ustring("");
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
     canvas->is_scrolling = false;
 }
@@ -1252,7 +1252,7 @@ void SPCanvasImpl::destroy(GtkObject *object)
     }
 
     shutdown_transients(canvas);
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     canvas->cms_key.~ustring();
 #endif
     if (GTK_OBJECT_CLASS(parentClass)->destroy) {
@@ -1786,7 +1786,7 @@ void SPCanvasImpl::sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect
     // output to X
     cairo_destroy(buf.ct);
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     if (canvas->enable_cms_display_adj) {
         cmsHTRANSFORM transf = 0;
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -1808,7 +1808,7 @@ void SPCanvasImpl::sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect
             cairo_surface_mark_dirty(imgs);
         }
     }
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
     cairo_t *xct = gdk_cairo_create(gtk_widget_get_window (widget));
     cairo_translate(xct, paint_rect.left() - canvas->x0, paint_rect.top() - canvas->y0);

@@ -1,15 +1,52 @@
 #ifndef SEEN_CMS_COLOR_TYPES_H
 #define SEEN_CMS_COLOR_TYPES_H
 
-/** \file
+/**
+ * @file
  * A simple abstraction to provide opaque compatibility with either lcms or lcms2.
  */
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif // HAVE_CONFIG_H
+
 #include <glib.h>
 
+#if HAVE_LIBLCMS1
+# include <icc34.h>
+#endif
 
 typedef void * cmsHPROFILE;
 typedef void * cmsHTRANSFORM;
+
+#if HAVE_LIBLCMS1
+typedef icColorSpaceSignature cmsColorSpaceSignature;
+typedef icProfileClassSignature cmsProfileClassSignature;
+
+#define cmsSigInputClass icSigInputClass
+#define cmsSigDisplayClass icSigDisplayClass
+#define cmsSigOutputClass icSigOutputClass
+#define cmsSigNamedColorClass icSigNamedColorClass
+
+#define cmsSigRgbData icSigRgbData
+
+#define cmsSigXYZData icSigXYZData
+#define cmsSigLabData icSigLabData
+#define cmsSigLuvData icSigLuvData
+#define cmsSigYCbCrData icSigYCbCrData
+#define cmsSigYxyData icSigYxyData
+#define cmsSigRgbData icSigRgbData
+#define cmsSigGrayData icSigGrayData
+#define cmsSigHsvData icSigHsvData
+#define cmsSigHlsData icSigHlsData
+#define cmsSigCmykData icSigCmykData
+#define cmsSigCmyData icSigCmyData
+
+typedef uint32_t cmsUInt32Number;
+typedef uint16_t cmsUInt16Number;
+typedef uint8_t cmsUInt8Number;
+
+#endif // HAVE_LIBLCMS1
 
 namespace Inkscape {
 
@@ -43,6 +80,7 @@ protected:
 };
 
 } // namespace Inkscape
+
 
 #endif // SEEN_CMS_COLOR_TYPES_H
 

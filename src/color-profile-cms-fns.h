@@ -1,38 +1,40 @@
 #ifndef SEEN_COLOR_PROFILE_CMS_FNS_H
 #define SEEN_COLOR_PROFILE_CMS_FNS_H
 
-#if ENABLE_LCMS
-#include <lcms.h>
-#endif // ENABLE_LCMS
+#if HAVE_LIBLCMS2
+#  include <lcms2.h>
+#elif HAVE_LIBLCMS1
+#  include <lcms.h>
+#endif // HAVE_LIBLCMS2
 
 #include "cms-color-types.h"
 
 namespace Inkscape {
 
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 // Note: these can later be adjusted to adapt for lcms2:
 
 class ColorSpaceSigWrapper : public ColorSpaceSig {
 public :
-    ColorSpaceSigWrapper( icColorSpaceSignature sig ) : ColorSpaceSig( static_cast<guint32>(sig) ) {}
+    ColorSpaceSigWrapper( cmsColorSpaceSignature sig ) : ColorSpaceSig( static_cast<guint32>(sig) ) {}
     ColorSpaceSigWrapper( ColorSpaceSig const &other ) : ColorSpaceSig( other ) {}
 
-    operator icColorSpaceSignature() const { return static_cast<icColorSpaceSignature>(value); }
+    operator cmsColorSpaceSignature() const { return static_cast<cmsColorSpaceSignature>(value); }
 };
 
 class ColorProfileClassSigWrapper : public ColorProfileClassSig {
 public :
-    ColorProfileClassSigWrapper( icProfileClassSignature sig ) : ColorProfileClassSig( static_cast<guint32>(sig) ) {}
+    ColorProfileClassSigWrapper( cmsProfileClassSignature sig ) : ColorProfileClassSig( static_cast<guint32>(sig) ) {}
     ColorProfileClassSigWrapper( ColorProfileClassSig const &other ) : ColorProfileClassSig( other ) {}
 
-    operator icProfileClassSignature() const { return static_cast<icProfileClassSignature>(value); }
+    operator cmsProfileClassSignature() const { return static_cast<cmsProfileClassSignature>(value); }
 };
 
-icColorSpaceSignature asICColorSpaceSig(ColorSpaceSig const & sig);
-icProfileClassSignature asICColorProfileClassSig(ColorProfileClassSig const & sig);
+cmsColorSpaceSignature asICColorSpaceSig(ColorSpaceSig const & sig);
+cmsProfileClassSignature asICColorProfileClassSig(ColorProfileClassSig const & sig);
 
-#endif //  ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 } // namespace Inkscape
 

@@ -52,9 +52,9 @@ struct SPImage : public SPItem {
     SPCurve *curve; // This curve is at the image's boundary for snapping
 
     gchar *href;
-#if ENABLE_LCMS
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     gchar *color_profile;
-#endif // ENABLE_LCMS
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
     GdkPixbuf *pixbuf;
     gchar *pixPath;
