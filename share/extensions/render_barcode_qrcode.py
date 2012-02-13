@@ -1036,6 +1036,9 @@ class QRCodeInkscape(inkex.Effect):
         self.OptionParser.add_option("--correctionlevel",
             action="store", type="string",
             dest="CORRECTIONLEVEL", default="0")
+        self.OptionParser.add_option("--encoding",
+            action="store", type="string",
+            dest="input_encode", default="latin_1")
         self.OptionParser.add_option("--modulesize",
             action="store", type="float",
             dest="MODULESIZE", default=10)
@@ -1050,6 +1053,7 @@ class QRCodeInkscape(inkex.Effect):
         
             #INKSCAPE GROUP TO CONTAIN EVERYTHING
             
+            so.TEXT = unicode(so.TEXT, so.input_encode)
             centre = self.view_center   #Put in in the centre of the current view
             grp_transform = 'translate' + str( centre )
             grp_name = 'QR Code: '+so.TEXT
