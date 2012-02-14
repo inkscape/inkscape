@@ -83,18 +83,12 @@ GType sp_color_notebook_get_type(void)
     return type;
 }
 
-static void
-sp_color_notebook_class_init (SPColorNotebookClass *klass)
+static void sp_color_notebook_class_init(SPColorNotebookClass *klass)
 {
-    GtkObjectClass *object_class;
-    GtkWidgetClass *widget_class;
-    SPColorSelectorClass *selector_class;
+    GtkObjectClass *object_class = reinterpret_cast<GtkObjectClass *>(klass);
+    GtkWidgetClass *widget_class = reinterpret_cast<GtkWidgetClass *>(klass);
 
-    object_class = (GtkObjectClass *) klass;
-    widget_class = (GtkWidgetClass *) klass;
-    selector_class = SP_COLOR_SELECTOR_CLASS (klass);
-
-    parent_class = SP_COLOR_SELECTOR_CLASS (g_type_class_peek_parent (klass));
+    parent_class = SP_COLOR_SELECTOR_CLASS(g_type_class_peek_parent(klass));
 
     object_class->destroy = sp_color_notebook_destroy;
 

@@ -244,7 +244,6 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
         // FIXME: fix for GTK breakage, see comment in SelectedStyle::on_opacity_changed
         sp_desktop_canvas(desktop)->forceFullRedrawAfterInterruptions(0);
 
-        gdouble strokewidth = stroke_average_width (selection->itemList());
         int transform_stroke = prefs->getBool("/options/transform/stroke", true) ? 1 : 0;
 
         Geom::Affine scaler;

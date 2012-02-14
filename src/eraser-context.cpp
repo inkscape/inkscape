@@ -395,7 +395,7 @@ sp_eraser_brush(SPEraserContext *dc)
     // get the real brush point, not the same as pointer (affected by hatch tracking and/or mass
     // drag)
     Geom::Point brush = sp_eraser_get_vpoint(dc, dc->cur);
-    Geom::Point brush_w = SP_EVENT_CONTEXT(dc)->desktop->d2w(brush); 
+    //Geom::Point brush_w = SP_EVENT_CONTEXT(dc)->desktop->d2w(brush); 
 
     double trace_thick = 1;
 

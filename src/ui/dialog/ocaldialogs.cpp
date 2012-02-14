@@ -513,9 +513,10 @@ void FileImportFromOCALDialog::searchTagEntryChangedCallback()
  */
 void FileImportFromOCALDialog::print_xml_element_names(xmlNode * a_node)
 {
-    xmlNode *cur_node = NULL;
+#ifdef WITH_GNOME_VFS
     guint row_num = 0;
-    for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
+#endif
+    for (xmlNode *cur_node = a_node; cur_node; cur_node = cur_node->next) {
         // get itens information
         if (strcmp((const char*)cur_node->name, "rss")) //avoid the root
             if (cur_node->type == XML_ELEMENT_NODE && !strcmp((const char*)cur_node->parent->name, "item"))
@@ -523,10 +524,13 @@ void FileImportFromOCALDialog::print_xml_element_names(xmlNode * a_node)
                 if (!strcmp((const char*)cur_node->name, "title"))
                 {
                     xmlChar *title = xmlNodeGetContent(cur_node);
+#ifdef WITH_GNOME_VFS
+                    row_num =
+#endif
 #if WITH_GTKMM_2_24
-                    row_num = filesList->append((const char*)title);
+                    filesList->append(reinterpret_cast<const char*>(title));
 #else
-                    row_num = filesList->append_text((const char*)title);
+                    filesList->append_text(reinterpret_cast<const char*>(title));
 #endif
                     xmlFree(title);
                 }
