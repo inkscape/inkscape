@@ -16,6 +16,10 @@
 # include <icc34.h>
 #endif
 
+#if HAVE_STDINT_H
+# include <stdint.h>
+#endif
+
 typedef void * cmsHPROFILE;
 typedef void * cmsHTRANSFORM;
 
