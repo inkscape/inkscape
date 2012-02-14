@@ -5,7 +5,7 @@
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *   And others...
  *
- * Copyright (C) 1999-2008 Authors
+ * Copyright (C) 1999-2012 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -53,6 +53,33 @@ void Inkscape::LineSnapper::freeSnap(IntermSnapResults &isr,
                 // Only relevant for guides; grids don't have an origin per line
                 // Therefore _addSnappedLinesOrigin() will only be implemented for guides
             }
+
+            // Here we will try to snap either tangentially or perpendicularly to a grid/guide line
+            // For this we need to know where the origin is located of the line that is currently being rotated,
+            std::vector<std::pair<Geom::Point, bool> > const origins_and_vectors = p.getOriginsAndVectors();
+            // Now we will iterate over all the origins and vectors and see which of these will get use a tangential or perpendicular snap
+            for (std::vector<std::pair<Geom::Point, bool> >::const_iterator it_origin_or_vector = origins_and_vectors.begin(); it_origin_or_vector != origins_and_vectors.end(); it_origin_or_vector++) {
+                if ((*it_origin_or_vector).second) { // if "second" is true then "first" is a vector, otherwise it's a point
+                    // When snapping a line with a constant vector (constant direction) to a guide or grid line,
+                    // then either all points will be perpendicular/tangential or none at all. This is not very useful
+                    continue;
+                }
+
+                //Geom::Point origin_doc = _snapmanager->getDesktop()->dt2doc((*it_origin_or_vector).first); // "first" contains a Geom::Point, denoting either a point
+                Geom::Point origin = (*it_origin_or_vector).first; // "first" contains a Geom::Point, denoting either a point
+
+                // We won't try to snap tangentially; a line being tangential to another line can be achieved by snapping both its endpoints
+                // individually to the other line. There's no need to have an explicit tangential snap here, that would be redundant
+
+                if (_snapmanager->snapprefs.getSnapPerp()) { // Find the point that leads to a perpendicular snap
+                    Geom::Point const origin_proj = Geom::projection(origin, Geom::Line(p1, p2));
+                    Geom::Coord dist = Geom::L2(origin_proj - p.getPoint());
+                    if (dist < getSnapperTolerance()) {
+                        _addSnappedLinePerpendicularly(isr, origin_proj, dist, p.getSourceType(), p.getSourceNum(), false);
+                    }
+                }
+            }
+
             // std::cout << " -> distance = " << dist;
         }
         // std::cout << std::endl;

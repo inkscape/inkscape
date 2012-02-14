@@ -88,10 +88,12 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
             // Some snap targets don't have their own toggle. These targets are called "secondary targets". We will re-map
             // them to their cousin which does have a toggle, and which is called a "primary target"
             case SNAPTARGET_GRID_INTERSECTION:
+            case SNAPTARGET_GRID_PERPENDICULAR:
                 target = SNAPTARGET_GRID;
                 break;
             case SNAPTARGET_GUIDE_INTERSECTION:
             case SNAPTARGET_GUIDE_ORIGIN:
+            case SNAPTARGET_GUIDE_PERPENDICULAR:
                 target = SNAPTARGET_GUIDE;
                 break;
             case SNAPTARGET_PAGE_CORNER:

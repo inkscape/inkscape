@@ -737,6 +737,12 @@ void CanvasAxonomGridSnapper::_addSnappedPoint(IntermSnapResults &isr, Geom::Poi
     isr.points.push_back(dummy);
 }
 
+void CanvasAxonomGridSnapper::_addSnappedLinePerpendicularly(IntermSnapResults &isr, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, bool constrained_snap) const
+{
+    SnappedPoint dummy = SnappedPoint(snapped_point, source, source_num, Inkscape::SNAPTARGET_GRID_PERPENDICULAR, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), constrained_snap, true);
+    isr.points.push_back(dummy);
+}
+
 bool CanvasAxonomGridSnapper::ThisSnapperMightSnap() const
 {
     return _snap_enabled && _snapmanager->snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GRID);

@@ -79,6 +79,11 @@ void Inkscape::GuideSnapper::_addSnappedLinesOrigin(IntermSnapResults &isr, Geom
     isr.points.push_back(dummy);
 }
 
+void Inkscape::GuideSnapper::_addSnappedLinePerpendicularly(IntermSnapResults &isr, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, bool constrained_snap) const
+{
+    SnappedPoint dummy = SnappedPoint(snapped_point, source, source_num, Inkscape::SNAPTARGET_GUIDE_PERPENDICULAR, snapped_distance, getSnapperTolerance(), getSnapperAlwaysSnap(), constrained_snap, true);
+    isr.points.push_back(dummy);
+}
 
 void Inkscape::GuideSnapper::_addSnappedPoint(IntermSnapResults &isr, Geom::Point const snapped_point, Geom::Coord const snapped_distance, SnapSourceType const &source, long source_num, bool constrained_snap) const
 {

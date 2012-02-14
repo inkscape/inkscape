@@ -79,6 +79,9 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
             case SNAPTARGET_GRID_INTERSECTION:
                 target_name = _("grid intersection");
                 break;
+            case SNAPTARGET_GRID_PERPENDICULAR:
+                target_name = _("grid line (perpendicular)");
+                break;
             case SNAPTARGET_GUIDE:
                 target_name = _("guide");
                 break;
@@ -87,6 +90,9 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
                 break;
             case SNAPTARGET_GUIDE_ORIGIN:
                 target_name = _("guide origin");
+                break;
+            case SNAPTARGET_GUIDE_PERPENDICULAR:
+                target_name = _("guide (perpendicular)");
                 break;
             case SNAPTARGET_GRID_GUIDE_INTERSECTION:
                 target_name = _("grid-guide intersection");
