@@ -282,17 +282,28 @@ protected:
     UI::Widget::PrefCheckButton _sel_layer_deselects;
 
     UI::Widget::PrefSpinButton  _importexport_export;
-    UI::Widget::PrefSpinButton  _misc_simpl;
     UI::Widget::PrefSlider      _snap_delay;
     UI::Widget::PrefSlider      _snap_weight;
-    UI::Widget::PrefSpinButton  _misc_latency_skew;
+
     UI::Widget::PrefCheckButton _misc_comment;
     UI::Widget::PrefCheckButton _misc_forkvectors;
     UI::Widget::PrefCheckButton _misc_scripts;
     UI::Widget::PrefCheckButton _misc_namedicon_delay;
-    Gtk::TextView   _misc_info;
-    Gtk::ScrolledWindow _misc_info_scroll;
 
+    // System page
+    UI::Widget::PrefSpinButton  _misc_latency_skew;
+    UI::Widget::PrefSpinButton  _misc_simpl;
+    Gtk::Entry                  _sys_user_prefs;
+    Gtk::Entry                  _sys_tmp_files;
+    Gtk::Entry                  _sys_extension_dir;
+    Gtk::Entry                  _sys_user_extension_dir;
+    Gtk::Entry                  _sys_user_config;
+    Gtk::Entry                  _sys_user_cache;
+    Gtk::Entry                  _sys_data;
+    Gtk::TextView               _sys_icon;
+    Gtk::ScrolledWindow         _sys_icon_scroll;
+    Gtk::TextView               _sys_systemdata;
+    Gtk::ScrolledWindow         _sys_systemdata_scroll;
 
     // UI page
     UI::Widget::PrefCombo       _ui_languages;

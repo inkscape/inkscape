@@ -397,6 +397,11 @@ public:
     Entry const getEntry(Glib::ustring const &pref_path);
     /*@}*/
 
+
+    Glib::ustring getPrefsFilename() {
+        return _prefs_filename;
+    }
+
     /**
      * @name Update preference values.
      * @{

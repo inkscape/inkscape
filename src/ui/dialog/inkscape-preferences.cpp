@@ -46,6 +46,7 @@
 #include "color-profile.h"
 #include "display/canvas-grid.h"
 #include "path-prefix.h"
+#include "io/resource.h"
 
 #ifdef HAVE_ASPELL
 # include <aspell.h>
@@ -1399,44 +1400,59 @@ void InkscapePreferences::initPageSystem()
 
 
     {
-        Glib::ustring tmp;
         // TRANSLATORS: following strings are paths in Inkscape preferences - Misc - System info
-        tmp += _("User config: ");
-        tmp += g_get_user_config_dir();
-        tmp += "\n";
 
-        tmp += _("User data: ");
-        tmp += g_get_user_data_dir();
-        tmp += "\n";
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-        tmp += _("User cache: ");
-        tmp += g_get_user_cache_dir();
-        tmp += "\n";
+        _page_system.add_group_header( _("System info"));
 
-        tmp += _("System config: ");
-        appendList( tmp, g_get_system_config_dirs() );
+        _sys_user_config.set_text((char const *)profile_path(""));
+        _sys_user_config.set_editable(false);
+        _page_system.add_line( false, _("User config: "), _sys_user_config, "", _("Location of users configuration"), true);
 
-        tmp += _("System data: ");
+        _sys_user_prefs.set_text(prefs->getPrefsFilename());
+        _sys_user_prefs.set_editable(false);
+        _page_system.add_line( false, _("User preferences: "), _sys_user_prefs, "", _("Location of the users preferences file"), true);
+
+        _sys_user_extension_dir.set_text((char const *)get_path(IO::Resource::USER, IO::Resource::EXTENSIONS, ""));
+        _sys_user_extension_dir.set_editable(false);
+        _page_system.add_line( false, _("User extensions: "), _sys_user_extension_dir, "", _("Location of the users extensions"), true);
+
+        _sys_user_cache.set_text(g_get_user_cache_dir());
+        _sys_user_cache.set_editable(false);
+        _page_system.add_line( false, _("User cache: "), _sys_user_cache, "", _("Location of users cache"), true);
+
+        Glib::ustring tmp_dir = prefs->getString("/options/autosave/path");
+        if (tmp_dir.empty()) {
+            tmp_dir = Glib::get_tmp_dir();
+        }
+        _sys_tmp_files.set_text(tmp_dir);
+        _sys_tmp_files.set_editable(false);
+        _page_system.add_line( false, _("Temporary files: "), _sys_tmp_files, "", _("Location of the temporary files used for autosave"), true);
+
+        _sys_data.set_text( INKSCAPE_DATADIR );
+        _sys_data.set_editable(false);
+        _page_system.add_line( false, _("Inkscape data: "), _sys_data, "", _("Location of Inkscape data"), true);
+
+        _sys_extension_dir.set_text(INKSCAPE_EXTENSIONDIR);
+        _sys_extension_dir.set_editable(false);
+        _page_system.add_line( false, _("Inkscape extensions: "), _sys_extension_dir, "", _("Location of the Inkscape extensions"), true);
+
+        Glib::ustring tmp;
         appendList( tmp, g_get_system_data_dirs() );
-
-        tmp += _("PIXMAP: ");
-        tmp += INKSCAPE_PIXMAPDIR;
-        tmp += "\n";
-
-        tmp += _("DATA: ");
-        tmp += INKSCAPE_DATADIR;
-        tmp += "\n";
-
-        tmp += _("UI: ");
-        tmp += INKSCAPE_UIDIR;
-        tmp += "\n";
+        _sys_systemdata.get_buffer()->insert(_sys_systemdata.get_buffer()->end(), tmp);
+        _sys_systemdata.set_editable(false);
+        _sys_systemdata_scroll.add(_sys_systemdata);
+        _sys_systemdata_scroll.set_size_request(0, 80);
+        _sys_systemdata_scroll.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+         _page_system.add_line( false,  _("System data: "), _sys_systemdata_scroll, "", _("Locations of system data"), true);
 
         {
+            tmp = "";
             gchar** paths = 0;
             gint count = 0;
             gtk_icon_theme_get_search_path(gtk_icon_theme_get_default(), &paths, &count);
             if (count > 0) {
-                tmp += _("Icon theme: ");
                 tmp += paths[0];
                 tmp += "\n";
                 for (int i = 1; i < count; i++) {
@@ -1447,12 +1463,13 @@ void InkscapePreferences::initPageSystem()
             }
         }
 
-        _misc_info.get_buffer()->insert(_misc_info.get_buffer()->end(), tmp);
+        _sys_icon.get_buffer()->insert(_sys_icon.get_buffer()->end(), tmp);
     }
-    _misc_info.set_editable(false);
-    _misc_info_scroll.add(_misc_info);
-    _misc_info_scroll.set_size_request(0, 150);
-    _page_system.add_line( false, _("System info"), _misc_info_scroll, "", _("General system information"), true);
+    _sys_icon.set_editable(false);
+    _sys_icon_scroll.add(_sys_icon);
+    _sys_icon_scroll.set_size_request(0, 80);
+    _sys_icon_scroll.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    _page_system.add_line( false,  _("Icon theme: "), _sys_icon_scroll, "", _("Location of icon themes"), true);
 
     this->AddPage(_page_system, _("System"), PREFS_PAGE_SYSTEM);
 }
