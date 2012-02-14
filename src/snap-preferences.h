@@ -45,6 +45,11 @@ public:
 
     bool getStrictSnapping() const {return _strict_snapping;}
 
+    bool getSnapPerp() const {return _snap_perp;}
+    bool getSnapTang() const {return _snap_tang;}
+    void setSnapPerp(bool enabled) {_snap_perp = enabled;}
+    void setSnapTang(bool enabled) {_snap_tang = enabled;}
+
     gdouble getGridTolerance() const {return _grid_tolerance;}
     gdouble getGuideTolerance() const {return _guide_tolerance;}
     gdouble getObjectTolerance() const {return _object_tolerance;}
@@ -83,6 +88,9 @@ private:
     //snap bbox corners to nodes, or nodes to bboxes.
     //(snapping to grids and guides is not affected by this)
     bool _strict_snapping;
+
+    bool _snap_perp;
+    bool _snap_tang;
 
     gdouble _grid_tolerance;
     gdouble _guide_tolerance;

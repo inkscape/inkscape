@@ -499,8 +499,8 @@ void Inkscape::ObjectSnapper::_snapPaths(IntermSnapResults &isr,
                       // continue counting
 
     bool strict_snapping = _snapmanager->snapprefs.getStrictSnapping();
-    bool snap_perp = _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH_PERPENDICULAR);
-    bool snap_tang = _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH_TANGENTIAL);
+    bool snap_perp = _snapmanager->snapprefs.getSnapPerp();
+    bool snap_tang = _snapmanager->snapprefs.getSnapTang();
 
     //dt->snapindicator->remove_debugging_points();
     for (std::vector<SnapCandidatePath >::const_iterator it_p = _paths_to_snap_to->begin(); it_p != _paths_to_snap_to->end(); it_p++) {
@@ -549,7 +549,14 @@ void Inkscape::ObjectSnapper::_snapPaths(IntermSnapResults &isr,
                         // std::cout << "  dist -> " << dist << std::endl;
                         if (dist < getSnapperTolerance()) {
                             // Add the curve we have snapped to
-                            isr.curves.push_back(SnappedCurve(sp_dt, num_path, index, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, p.getSourceType(), p.getSourceNum(), it_p->target_type, it_p->target_bbox));
+                            Geom::Point sp_tangent_dt = Geom::Point(0,0);
+                            if (p.getSourceType() == Inkscape::SNAPSOURCE_GUIDE_ORIGIN) {
+                                // We currently only use the tangent when snapping guides, so only in this case we will
+                                // actually calculate the tangent to avoid wasting CPU cycles
+                                Geom::Point sp_tangent_doc = curve->unitTangentAt(*np);
+                                sp_tangent_dt = dt->doc2dt(sp_tangent_doc) - dt->doc2dt(Geom::Point(0,0));
+                            }
+                            isr.curves.push_back(SnappedCurve(sp_dt, sp_tangent_dt, num_path, index, dist, getSnapperTolerance(), getSnapperAlwaysSnap(), false, curve, p.getSourceType(), p.getSourceNum(), it_p->target_type, it_p->target_bbox));
                             if (snap_tang || snap_perp) {
                                 // For each curve that's within snapping range, we will now also search for tangential and perpendicular snaps
                                 _snapPathsTangPerp(snap_tang, snap_perp, isr, p, curve, dt);

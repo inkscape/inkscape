@@ -123,6 +123,8 @@ DocumentProperties::DocumentProperties()
     //---------------------------------------------------------------
       _rcb_snclp(_("Snap to clip paths"), _("When snapping to paths, then also try snapping to clip paths"), "inkscape:snap-path-clip", _wr),
       _rcb_snmsk(_("Snap to mask paths"), _("When snapping to paths, then also try snapping to mask paths"), "inkscape:snap-path-mask", _wr),
+      _rcb_perp(_("Snap perpendicularly"), _("When snapping to paths or guides, then also try snapping perpendicularly"), "inkscape:snap-perpendicular", _wr),
+      _rcb_tang(_("Snap tangentially"), _("When snapping to paths or guides, then also try snapping tangentially"), "inkscape:snap-tangential", _wr),
     //---------------------------------------------------------------
 #if WITH_GTKMM_2_22
       _grids_label_crea("", Gtk::ALIGN_START),
@@ -294,6 +296,8 @@ void DocumentProperties::build_snap()
     label_gr->set_markup (_("<b>Snap to grids</b>"));
     Gtk::Label *label_gu = manage (new Gtk::Label);
     label_gu->set_markup (_("<b>Snap to guides</b>"));
+    Gtk::Label *label_m = manage (new Gtk::Label);
+    label_m->set_markup (_("<b>Miscellaneous</b>"));
 
     Gtk::Widget *const array[] =
     {
@@ -306,7 +310,11 @@ void DocumentProperties::build_snap()
         0,                  _rsu_sn._vbox,
         0,                  0,
         label_gu,           0,
-        0,                  _rsu_gusn._vbox
+        0,                  _rsu_gusn._vbox,
+        0,                  0,
+        label_m,           0,
+        0,                  &_rcb_perp,
+        0,                  &_rcb_tang
     };
 
     attach_all(_page_snap.table(), array, G_N_ELEMENTS(array));
@@ -1047,6 +1055,8 @@ void DocumentProperties::update()
     _rsu_gusn.setValue (nv->snap_manager.snapprefs.getGuideTolerance());
     _rcb_snclp.setActive (nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_PATH_CLIP));
     _rcb_snmsk.setActive (nv->snap_manager.snapprefs.isSnapButtonEnabled(Inkscape::SNAPTARGET_PATH_MASK));
+    _rcb_perp.setActive (nv->snap_manager.snapprefs.getSnapPerp());
+    _rcb_tang.setActive (nv->snap_manager.snapprefs.getSnapTang());
 
     //-----------------------------------------------------------grids page
 

@@ -304,8 +304,14 @@ public:
      * PS: SnapManager::setup() must have been called before calling this method,
      *
      * @param p Current position of the point on the guide that is to be snapped; will be overwritten by the position of the snap target if snapping has occurred.
+     * @param origin_or_vector Data used for tangential and perpendicular snapping. When rotating a guide the origin of the rotation is specified here, whereas when
+     * dragging a guide its vector is specified here
+     * @param origin If true then origin_or_vector contains an origin, other it contains a vector
+     * @param freeze_angle If true (in which case origin is false), then the vector specified in origin_or_vector will not be touched, i.e. the guide will
+     * in all circumstances keep its angle. Otherwise the vector in origin_or_vector can be updated, meaning that the guide might take on the angle of a curve that
+     * has been snapped too tangentially or perpendicularly
      */
-    void guideFreeSnap(Geom::Point &p, SPGuideDragType drag_type, boost::optional<Geom::Point> origin_or_vector = boost::optional<Geom::Point>()) const;
+    void guideFreeSnap(Geom::Point &p, Geom::Point &origin_or_vector, bool origin, bool freeze_angle) const;
 
     /**
      * Wrapper method to make snapping of the guide origin a bit easier (i.e. simplifies the calling code).
@@ -313,9 +319,9 @@ public:
      * PS: SnapManager::setup() must have been called before calling this method,
      *
      * @param p Current position of the point on the guide that is to be snapped; will be overwritten by the position of the snap target if snapping has occurred.
+     * @param guideline The guide that is currently being dragged
      */
     void guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline) const;
-
 
     /**
      * Apply a translation to a set of points and try to snap freely in 2 degrees-of-freedom.

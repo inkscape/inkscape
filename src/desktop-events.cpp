@@ -50,6 +50,7 @@ using Inkscape::DocumentUndo;
 
 static void snoop_extended(GdkEvent* event, SPDesktop *desktop);
 static void init_extended();
+void sp_dt_ruler_snap_new_guide(SPDesktop *desktop, SPCanvasItem *guide, Geom::Point &event_dt, Geom::Point &normal);
 
 /* Root item handler */
 
@@ -149,16 +150,11 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 Geom::Point event_dt(desktop->w2d(event_w));
 
                 if (!(event->motion.state & GDK_SHIFT_MASK)) {
-                    SnapManager &m = desktop->namedview->snap_manager;
-                    m.setup(desktop);
-                    // We only have a temporary guide which is not stored in our document yet.
-                    // Because the guide snapper only looks in the document for guides to snap to,
-                    // we don't have to worry about a guide snapping to itself here
-                    m.guideFreeSnap(event_dt, SP_DRAG_MOVE_ORIGIN, Geom::rot90(normal));
-                    m.unSetup();
+                    sp_dt_ruler_snap_new_guide(desktop, guide, event_dt, normal);
                 }
-
+                sp_guideline_set_normal(SP_GUIDELINE(guide), normal);
                 sp_guideline_set_position(SP_GUIDELINE(guide), event_dt);
+
                 desktop->set_coordinate_status(event_dt);
                 desktop->setPosition(event_dt);
             }
@@ -172,13 +168,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 Geom::Point event_dt(desktop->w2d(event_w));
 
                 if (!(event->button.state & GDK_SHIFT_MASK)) {
-                    SnapManager &m = desktop->namedview->snap_manager;
-                    m.setup(desktop);
-                    // We only have a temporary guide which is not stored in our document yet.
-                    // Because the guide snapper only looks in the document for guides to snap to,
-                    // we don't have to worry about a guide snapping to itself here
-                    m.guideFreeSnap(event_dt, SP_DRAG_MOVE_ORIGIN, Geom::rot90(normal));
-                    m.unSetup();
+                    sp_dt_ruler_snap_new_guide(desktop, guide, event_dt, normal);
                 }
 
                 dragging = false;
@@ -305,8 +295,11 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     }
                 } else if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
                     // cannot use shift here to disable snapping, because we already use it for rotating the guide
-                    Geom::Point origin = (drag_type == SP_DRAG_ROTATE) ? guide->point_on_line : Geom::rot90(guide->normal_to_line);
-                    m.guideFreeSnap(motion_dt, drag_type, origin);
+                    if (drag_type == SP_DRAG_ROTATE) {
+                        m.guideFreeSnap(motion_dt, guide->point_on_line, true, false);
+                    } else {
+                        m.guideFreeSnap(motion_dt, guide->normal_to_line, false, true);
+                    }
                 }
                 m.unSetup();
 
@@ -379,8 +372,11 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         }
                     } else if (!((drag_type == SP_DRAG_ROTATE) && (event->motion.state & GDK_CONTROL_MASK))) {
                         // cannot use shift here to disable snapping, because we already use it for rotating the guide
-                        Geom::Point origin = (drag_type == SP_DRAG_ROTATE) ? guide->point_on_line : Geom::rot90(guide->normal_to_line);
-                        m.guideFreeSnap(event_dt, drag_type, origin);
+                        if (drag_type == SP_DRAG_ROTATE) {
+                            m.guideFreeSnap(event_dt, guide->point_on_line, true, false);
+                        } else {
+                            m.guideFreeSnap(event_dt, guide->normal_to_line, false, true);
+                        }
                     }
                     m.unSetup();
 
@@ -658,6 +654,39 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
             lastType = source;
         }
     }
+}
+
+
+void sp_dt_ruler_snap_new_guide(SPDesktop *desktop, SPCanvasItem *guide, Geom::Point &event_dt, Geom::Point &normal)
+{
+    SnapManager &m = desktop->namedview->snap_manager;
+    m.setup(desktop);
+    // We're dragging a brand new guide, just pulled of the rulers seconds ago. When snapping to a
+    // path this guide will change it slope to become either tangential or perpendicular to that path. It's
+    // therefore not useful to try tangential or perpendicular snapping, so this will be disabled temporarily
+    bool pref_perp = m.snapprefs.getSnapPerp();
+    bool pref_tang = m.snapprefs.getSnapTang();
+    m.snapprefs.setSnapPerp(false);
+    m.snapprefs.setSnapTang(false);
+    // We only have a temporary guide which is not stored in our document yet.
+    // Because the guide snapper only looks in the document for guides to snap to,
+    // we don't have to worry about a guide snapping to itself here
+    Geom::Point normal_orig = normal;
+    m.guideFreeSnap(event_dt, normal, false, false);
+    // After snapping, both event_dt and normal have been modified accordingly; we'll take the normal (of the
+    // curve we snapped to) to set the normal the guide. And rotate it by 90 deg. if needed
+    if (pref_perp) { // Perpendicular snapping to paths is requested by the user, so let's do that
+        if (normal != normal_orig) {
+            normal = Geom::rot90(normal);
+        }
+    }
+    if (!(pref_tang || pref_perp)) { // if we don't want to snap either perpendicularly or tangentially, then
+        normal = normal_orig; // we must restore the normal to it's original state
+    }
+    // Restore the preferences
+    m.snapprefs.setSnapPerp(pref_perp);
+    m.snapprefs.setSnapTang(pref_tang);
+    m.unSetup();
 }
 
 

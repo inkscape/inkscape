@@ -116,6 +116,8 @@ protected:
     UI::Widget::ToleranceSlider       _rsu_gusn;
     UI::Widget::RegisteredCheckButton _rcb_snclp;
     UI::Widget::RegisteredCheckButton _rcb_snmsk;
+    UI::Widget::RegisteredCheckButton _rcb_perp;
+    UI::Widget::RegisteredCheckButton _rcb_tang;
     //---------------------------------------------------------------
     Gtk::ComboBoxText _combo_avail;
     Gtk::Button         _link_btn;

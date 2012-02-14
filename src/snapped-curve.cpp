@@ -12,7 +12,7 @@
 #include <2geom/crossing.h>
 #include <2geom/path-intersection.h>
 
-Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, int num_path, int num_segm, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapSourceType source, long source_num, SnapTargetType target, Geom::OptRect target_bbox)
+Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, Geom::Point const &tangent, int num_path, int num_segm, Geom::Coord const &snapped_distance, Geom::Coord const &snapped_tolerance, bool const &always_snap, bool const &fully_constrained, Geom::Curve const *curve, SnapSourceType source, long source_num, SnapTargetType target, Geom::OptRect target_bbox)
 {
     _num_path = num_path;
     _num_segm = num_segm;
@@ -24,6 +24,7 @@ Inkscape::SnappedCurve::SnappedCurve(Geom::Point const &snapped_point, int num_p
     _second_tolerance = 1;
     _second_always_snap = false;
     _point = snapped_point;
+    _tangent = tangent;
     _at_intersection = false;
     _fully_constrained = fully_constrained;
     _source = source;
@@ -44,6 +45,7 @@ Inkscape::SnappedCurve::SnappedCurve()
     _second_tolerance = 1;
     _second_always_snap = false;
     _point = Geom::Point(0,0);
+    _tangent = Geom::Point(0,0);
     _at_intersection = false;
     _fully_constrained = false;
     _source = SNAPSOURCE_UNDEFINED;

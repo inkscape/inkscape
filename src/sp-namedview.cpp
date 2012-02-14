@@ -262,6 +262,8 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     object->readAttr( "inkscape:snap-grids" );
     object->readAttr( "inkscape:snap-intersection-paths" );
     object->readAttr( "inkscape:object-paths" );
+    object->readAttr( "inkscape:snap-perpendicular" );
+    object->readAttr( "inkscape:snap-tangential" );
     object->readAttr( "inkscape:snap-path-clip" );
     object->readAttr( "inkscape:snap-path-mask" );
     object->readAttr( "inkscape:object-nodes" );
@@ -512,6 +514,14 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
     case SP_ATTR_INKSCAPE_SNAP_PATH:
             nv->snap_manager.snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_PATH, value ? sp_str_to_bool(value) : FALSE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+    case SP_ATTR_INKSCAPE_SNAP_PERP:
+            nv->snap_manager.snapprefs.setSnapPerp(value ? sp_str_to_bool(value) : FALSE);
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+    case SP_ATTR_INKSCAPE_SNAP_TANG:
+            nv->snap_manager.snapprefs.setSnapTang(value ? sp_str_to_bool(value) : FALSE);
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
     case SP_ATTR_INKSCAPE_SNAP_PATH_CLIP:

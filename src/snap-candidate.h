@@ -63,8 +63,8 @@ public:
     void setDistance(Geom::Coord dist) {_dist = dist;}
     Geom::Coord getDistance() { return _dist;}
 
-    void addOrigin(Geom::Point &pt) { _origins_and_vectors.push_back(std::make_pair(pt, false)); }
-    void addVector(Geom::Point &v) { _origins_and_vectors.push_back(std::make_pair(v, true)); }
+    void addOrigin(Geom::Point pt) { _origins_and_vectors.push_back(std::make_pair(pt, false)); }
+    void addVector(Geom::Point v) { _origins_and_vectors.push_back(std::make_pair(v, true)); }
     std::vector<std::pair<Geom::Point, bool> > const & getOriginsAndVectors() const {return _origins_and_vectors;}
 
     bool operator <(const SnapCandidatePoint &other) const { return _dist < other._dist; } // Needed for sorting the SnapCandidatePoints

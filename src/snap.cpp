@@ -10,7 +10,7 @@
  *
  * Copyright (C) 2006-2007 Johan Engelen <johan@shouraizou.nl>
  * Copyrigth (C) 2004      Nathan Hurst
- * Copyright (C) 1999-2010 Authors
+ * Copyright (C) 1999-2012 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -391,22 +391,23 @@ Inkscape::SnappedPoint SnapManager::constrainedAngularSnap(Inkscape::SnapCandida
     return sp;
 }
 
-void SnapManager::guideFreeSnap(Geom::Point &p, SPGuideDragType drag_type, boost::optional<Geom::Point> origin_or_vector) const
+void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point &origin_or_vector, bool origin, bool freeze_angle) const
 {
+    if (freeze_angle && origin) {
+        g_warning("Dear developer, when snapping guides you shouldn't ask me to freeze the guide's vector when you haven't specified one");
+        // You've supplied me with an origin instead of a vector
+    }
+
     if (!snapprefs.getSnapEnabledGlobally() || snapprefs.getSnapPostponedGlobally() || !snapprefs.isTargetSnappable(Inkscape::SNAPTARGET_GUIDE)) {
         return;
     }
 
-    Inkscape::SnapCandidatePoint candidate(p, Inkscape::SNAPSOURCE_GUIDE_ORIGIN);
-    if (drag_type == SP_DRAG_ROTATE) {
-        candidate = Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_GUIDE);
-        if (origin_or_vector) {
-            candidate.addOrigin(*origin_or_vector);
-        }
+    Inkscape::SnapCandidatePoint candidate(p, Inkscape::SNAPSOURCE_GUIDE);
+    if (origin) {
+        candidate.addOrigin(origin_or_vector);
     } else {
-        if (origin_or_vector) {
-            candidate.addVector(*origin_or_vector);
-        }
+        candidate = Inkscape::SnapCandidatePoint(p, Inkscape::SNAPSOURCE_GUIDE_ORIGIN);
+        candidate.addVector(Geom::rot90(origin_or_vector));
     }
 
     IntermSnapResults isr;
@@ -418,6 +419,13 @@ void SnapManager::guideFreeSnap(Geom::Point &p, SPGuideDragType drag_type, boost
     Inkscape::SnappedPoint const s = findBestSnap(candidate, isr, false);
 
     s.getPointIfSnapped(p);
+
+    if (!freeze_angle && s.getSnapped()) {
+        if (!Geom::are_near(s.getTangent(), Geom::Point(0,0))) { // If the tangent has been set ...
+            origin_or_vector = Geom::rot90(s.getTangent()); // then use it to update the normal of the guide
+            // PS: The tangent might not have been set if we snapped for example to a node
+        }
+    }
 }
 
 void SnapManager::guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline) const

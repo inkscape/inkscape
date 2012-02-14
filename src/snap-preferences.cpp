@@ -16,7 +16,9 @@
 Inkscape::SnapPreferences::SnapPreferences() :
     _snap_enabled_globally(true),
     _snap_postponed_globally(false),
-    _strict_snapping(true)
+    _strict_snapping(true),
+    _snap_perp(false),
+    _snap_tang(false)
 {
     // Check for powers of two; see the comments in snap-enums.h
     g_assert((SNAPTARGET_BBOX_CATEGORY != 0) && !(SNAPTARGET_BBOX_CATEGORY & (SNAPTARGET_BBOX_CATEGORY - 1)));
@@ -75,13 +77,6 @@ void Inkscape::SnapPreferences::_mapTargetToArrayIndex(Inkscape::SnapTargetType 
                 break;
             default:
                 break;
-        }
-        if (target == SNAPTARGET_RECT_CORNER) {
-            target = SNAPTARGET_NODE_CUSP;
-        } else if (target == SNAPTARGET_ELLIPSE_QUADRANT_POINT) {
-            target = SNAPTARGET_NODE_SMOOTH;
-        } else if (target == SNAPTARGET_PATH_GUIDE_INTERSECTION) {
-            target = SNAPTARGET_PATH_INTERSECTION;
         }
 
         return;

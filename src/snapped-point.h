@@ -59,6 +59,7 @@ public:
      */
     Geom::Point getPoint() const {return _point;}
     void setPoint(Geom::Point const &p) {_point = p;}
+    Geom::Point getTangent() const {return _tangent;}
 
     bool getAtIntersection() const {return _at_intersection;}
     bool getFullyConstrained() const {return _fully_constrained;}
@@ -95,6 +96,7 @@ public:
 
 protected:
     Geom::Point _point; // Location of the snapped point
+    Geom::Point _tangent; // Tangent of the curve we snapped to, at the snapped point
     SnapSourceType _source; // Describes what snapped
     long _source_num; // Sequence number of the source point that snapped, if that point is part of a set of points. (starting at zero if we might have a set of points; -1 if we only have a single point)
     SnapTargetType _target; // Describes to what we've snapped to
