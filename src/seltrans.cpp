@@ -297,7 +297,7 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     _snap_points.clear();
     _snap_points = selection->getSnapPoints(&m.snapprefs);
     std::vector<Inkscape::SnapCandidatePoint> snap_points_hull = selection->getSnapPointsConvexHull(&m.snapprefs);
-    if (_snap_points.size() > 200) {
+    if (_snap_points.size() > 200 && !(prefs->getBool("/options/snapclosestonly/value", false))) {
         /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
         A typical user would rarely ever try to snap such a large number of nodes anyway, because
         (s)he would hardly be able to discern which node would be snapping */
