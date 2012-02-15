@@ -610,7 +610,6 @@ document_interface_document_resize_to_fit_selection (DocumentInterface *object,
                                                      GError **error)
 {
     return dbus_call_verb (object, SP_VERB_FIT_CANVAS_TO_SELECTION, error);
-    return TRUE;
 }
 
 gboolean

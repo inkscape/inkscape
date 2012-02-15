@@ -363,10 +363,9 @@ PdfParser::~PdfParser() {
 
 void PdfParser::parse(Object *obj, GBool topLevel) {
   Object obj2;
-  int i;
 
   if (obj->isArray()) {
-    for (i = 0; i < obj->arrayGetLength(); ++i) {
+    for (int i = 0; i < obj->arrayGetLength(); ++i) {
       obj->arrayGet(i, &obj2);
       if (!obj2.isStream()) {
 	error(-1, const_cast<char*>("Weird page contents"));
@@ -2339,7 +2338,7 @@ void PdfParser::doShowText(GooString *s) {
 #else
   Unicode u[8];
 #endif
-  double x, y, dx, dy, curX, curY, tdx, tdy, lineX, lineY;
+  double x, y, dx, dy, tdx, tdy;
   double originX, originY, tOriginX, tOriginY;
   double oldCTM[6], newCTM[6];
   double *mat;
@@ -2347,7 +2346,7 @@ void PdfParser::doShowText(GooString *s) {
   Dict *resDict;
   Parser *oldParser;
   char *p;
-  int len, n, uLen, i;
+  int len, n, uLen;
 
   font = state->getFont();
   wMode = font->getWMode();
@@ -2357,7 +2356,7 @@ void PdfParser::doShowText(GooString *s) {
   // handle a Type 3 char
   if (font->getType() == fontType3 && 0) {//out->interpretType3Chars()) {
     mat = state->getCTM();
-    for (i = 0; i < 6; ++i) {
+    for (int i = 0; i < 6; ++i) {
       oldCTM[i] = mat[i];
     }
     mat = state->getTextMat();
@@ -2377,10 +2376,10 @@ void PdfParser::doShowText(GooString *s) {
     newCTM[0] *= state->getHorizScaling();
     newCTM[2] *= state->getHorizScaling();
     state->textTransformDelta(0, state->getRise(), &riseX, &riseY);
-    curX = state->getCurX();
-    curY = state->getCurY();
-    lineX = state->getLineX();
-    lineY = state->getLineY();
+    double curX = state->getCurX();
+    double curY = state->getCurY();
+    double lineX = state->getLineX();
+    double lineY = state->getLineY();
     oldParser = parser;
     p = s->getCString();
     len = s->getLength();
@@ -2518,7 +2517,7 @@ void PdfParser::doImage(Object * /*ref*/, Stream *str, GBool inlineImg)
 {
   Dict *dict, *maskDict;
   int width, height;
-  int bits, maskBits;
+  int bits;
   StreamColorSpaceMode csMode;
   GBool mask;
   GBool invert;
@@ -2679,78 +2678,78 @@ void PdfParser::doImage(Object * /*ref*/, Stream *str, GBool inlineImg)
     dict->lookup(const_cast<char*>("Mask"), &maskObj);
     dict->lookup(const_cast<char*>("SMask"), &smaskObj);
     if (smaskObj.isStream()) {
-      // soft mask
-      if (inlineImg) {
-	goto err1;
-      }
-      maskStr = smaskObj.getStream();
-      maskDict = smaskObj.streamGetDict();
-      maskDict->lookup(const_cast<char*>("Width"), &obj1);
-      if (obj1.isNull()) {
-	obj1.free();
-	maskDict->lookup(const_cast<char*>("W"), &obj1);
-      }
-      if (!obj1.isInt()) {
-	goto err2;
-      }
-      maskWidth = obj1.getInt();
-      obj1.free();
-      maskDict->lookup(const_cast<char*>("Height"), &obj1);
-      if (obj1.isNull()) {
-	obj1.free();
-	maskDict->lookup(const_cast<char*>("H"), &obj1);
-      }
-      if (!obj1.isInt()) {
-	goto err2;
-      }
-      maskHeight = obj1.getInt();
-      obj1.free();
-      maskDict->lookup(const_cast<char*>("BitsPerComponent"), &obj1);
-      if (obj1.isNull()) {
-	obj1.free();
-	maskDict->lookup(const_cast<char*>("BPC"), &obj1);
-      }
-      if (!obj1.isInt()) {
-	goto err2;
-      }
-      maskBits = obj1.getInt();
-      obj1.free();
-      maskDict->lookup(const_cast<char*>("ColorSpace"), &obj1);
-      if (obj1.isNull()) {
-	obj1.free();
-	maskDict->lookup(const_cast<char*>("CS"), &obj1);
-      }
-      if (obj1.isName()) {
-	res->lookupColorSpace(obj1.getName(), &obj2);
-	if (!obj2.isNull()) {
-	  obj1.free();
-	  obj1 = obj2;
-	} else {
-	  obj2.free();
-	}
-      }
+        // soft mask
+        if (inlineImg) {
+	        goto err1;
+        }
+        maskStr = smaskObj.getStream();
+        maskDict = smaskObj.streamGetDict();
+        maskDict->lookup(const_cast<char*>("Width"), &obj1);
+        if (obj1.isNull()) {
+    	    obj1.free();
+	        maskDict->lookup(const_cast<char*>("W"), &obj1);
+        }
+        if (!obj1.isInt()) {
+	        goto err2;
+        }
+        maskWidth = obj1.getInt();
+        obj1.free();
+        maskDict->lookup(const_cast<char*>("Height"), &obj1);
+        if (obj1.isNull()) {
+	        obj1.free();
+	        maskDict->lookup(const_cast<char*>("H"), &obj1);
+        }
+        if (!obj1.isInt()) {
+	        goto err2;
+        }
+        maskHeight = obj1.getInt();
+        obj1.free();
+        maskDict->lookup(const_cast<char*>("BitsPerComponent"), &obj1);
+        if (obj1.isNull()) {
+    	    obj1.free();
+	        maskDict->lookup(const_cast<char*>("BPC"), &obj1);
+        }
+        if (!obj1.isInt()) {
+	        goto err2;
+        }
+        int maskBits = obj1.getInt();
+        obj1.free();
+        maskDict->lookup(const_cast<char*>("ColorSpace"), &obj1);
+        if (obj1.isNull()) {
+	        obj1.free();
+	        maskDict->lookup(const_cast<char*>("CS"), &obj1);
+        }
+        if (obj1.isName()) {
+	        res->lookupColorSpace(obj1.getName(), &obj2);
+	        if (!obj2.isNull()) {
+	            obj1.free();
+	            obj1 = obj2;
+	        } else {
+	            obj2.free();
+	        }
+        }
 #ifdef POPPLER_NEW_COLOR_SPACE_API
-      maskColorSpace = GfxColorSpace::parse(&obj1, NULL);
+        maskColorSpace = GfxColorSpace::parse(&obj1, NULL);
 #else
-      maskColorSpace = GfxColorSpace::parse(&obj1);
+        maskColorSpace = GfxColorSpace::parse(&obj1);
 #endif
-      obj1.free();
-      if (!maskColorSpace || maskColorSpace->getMode() != csDeviceGray) {
-	goto err1;
-      }
-      maskDict->lookup(const_cast<char*>("Decode"), &obj1);
-      if (obj1.isNull()) {
-	obj1.free();
-	maskDict->lookup(const_cast<char*>("D"), &obj1);
-      }
-      maskColorMap = new GfxImageColorMap(maskBits, &obj1, maskColorSpace);
-      obj1.free();
-      if (!maskColorMap->isOk()) {
-	delete maskColorMap;
-	goto err1;
-      }
-      //~ handle the Matte entry
-      haveSoftMask = gTrue;
+        obj1.free();
+        if (!maskColorSpace || maskColorSpace->getMode() != csDeviceGray) {
+            goto err1;
+        }
+        maskDict->lookup(const_cast<char*>("Decode"), &obj1);
+        if (obj1.isNull()) {
+	        obj1.free();
+	        maskDict->lookup(const_cast<char*>("D"), &obj1);
+        }
+        maskColorMap = new GfxImageColorMap(maskBits, &obj1, maskColorSpace);
+        obj1.free();
+        if (!maskColorMap->isOk()) {
+            delete maskColorMap;
+            goto err1;
+        }
+        //~ handle the Matte entry
+        haveSoftMask = gTrue;
     } else if (maskObj.isArray()) {
       // color key mask
       for (i = 0;

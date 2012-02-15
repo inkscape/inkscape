@@ -31,7 +31,7 @@ ParamBool::ParamBool(const gchar * name, const gchar * guitext, const gchar * de
         defaultval = xml->firstChild()->content();
     }
 
-    if (defaultval != NULL && (!strcmp(defaultval, "true") || !strcmp(defaultval, "true") || !strcmp(defaultval, "1"))) {
+    if (defaultval != NULL && (!strcmp(defaultval, "true") || !strcmp(defaultval, "1"))) {
         _value = true;
     } else {
         _value = false;

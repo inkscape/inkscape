@@ -228,16 +228,16 @@ int XPathParser::getNumber(int p0, double &dresult)
 {
     int p = p0;
     if (p >= parselen)
+    {
         return p0;/*need at least x*/
-
+    }
+    
     bool isdouble = false;
-    bool negative = false;
 
     int ch = parsebuf[p];
     if (ch=='-')
         {
         p++;
-        negative = true;
         if (p >= parselen) return p0;
         }
 
@@ -1189,17 +1189,19 @@ int XPathParser::getFunctionCall(int p0, int depth)
     int p = p0;
 
     if (lexTokType(p) != FUNCTION_NAME)
+    {
         return p0;
-
+    }
+    
     DOMString name = lexTok(p).getStringValue();
 
     p++;
 
     if (lexTokType(p) != LPAREN) //this makes a function
+    {
         return p0;
+    }
     p++;
-
-    int argCount = 0;
 
     int p2 = getArgument(p, depth+1);
     if (p2 < 0)
@@ -1209,7 +1211,7 @@ int XPathParser::getFunctionCall(int p0, int depth)
         }
     if (p2 > p)
         {
-        argCount++;
+        int argCount = 1;
         p = p2;
         while (lexTokType(p) == COMMA)
             {

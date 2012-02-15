@@ -918,7 +918,6 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
     transf << "0";
     int levels = ext->get_param_int("levels") + 1;
     const gchar *effecttype =  ext->get_param_enum("type");
-    float val = 0.0;
     if (levels == 1) {
         if ((g_ascii_strcasecmp("dented", effecttype) == 0)) {
             transf << " 1 0 1";
@@ -927,7 +926,7 @@ Posterize::get_filter_text (Inkscape::Extension::Extension * ext)
         }
     } else {
         for ( int step = 1 ; step <= levels ; step++ ) {
-            val = (float) step / levels;
+            float val = (float) step / levels;
             transf << " " << val;
             if ((g_ascii_strcasecmp("dented", effecttype) == 0)) {
                 transf << " " << (val - ((float) 1 / (3 * levels))) << " " << (val + ((float) 1 / (2 * levels)));

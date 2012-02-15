@@ -18,15 +18,8 @@
 #include"entities2elements.h"
 
 
-
-
-
-
-
-
 int main(int argc,char *argv[]){
 	// Later include options for different conversions like converting as much as possible into paths
-	int ink = 1; // Assume for now there is no inkscape stuff to add extra
 	
 	if(argc > 1){
 		double scaling = 90;  // converstion from in to pt
@@ -64,13 +57,14 @@ int main(int argc,char *argv[]){
 		char units[5] = "in";
 		char tmp_char[100000];
 		char layer_string[500];
+		// int ink = 1; // Assume for now there is no inkscape stuff to add extra
 		
-		if (ink < 1){
+		/*if (ink < 1){
 			// Write a general svg header
 			std::cout << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"\n\t\"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg xmlns=\"http://www.w3.org/2000/svg\"\n\txmlns:xlink=\"http://www.w3.org/1999/xlink\">\n";
 			std::cout << "\tx=\"0.00000000\"\n\ty=\"0.00000000\"\n\twidth=\"744.09448\"\n\theight=\"-1052.3622\"" << std::endl;
 		}
-		else{
+		else{*/
 			std::cout << "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" << std::endl;
 			std::cout << "<!-- Created with dxf2svg -->" << std::endl;
 			std::cout << "<svg" << std::endl;
@@ -82,8 +76,7 @@ int main(int argc,char *argv[]){
    			std::cout << "\txmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"" << std::endl;
    			std::cout << "\txmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"" << std::endl;
    			std::cout << "\t>" << std::endl;
-
-		}
+		//}
 
 		
 		// Now write SVG elements to file

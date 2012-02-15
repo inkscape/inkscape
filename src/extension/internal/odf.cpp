@@ -569,7 +569,6 @@ void SingularValueDecomposition::calculate()
       // Main iteration loop for the singular values.
 
       int pp = p-1;
-      int iter = 0;
       //double eps = pow(2.0,-52.0);
       //double tiny = pow(2.0,-966.0);
       //let's just calculate these now
@@ -749,7 +748,6 @@ void SingularValueDecomposition::calculate()
                   }
                }
                e[p-2] = f;
-               iter = iter + 1;
             }
             break;
 
@@ -789,7 +787,6 @@ void SingularValueDecomposition::calculate()
                   }
                   k++;
                }
-               iter = 0;
                p--;
             }
             break;

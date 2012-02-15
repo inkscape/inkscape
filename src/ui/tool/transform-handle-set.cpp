@@ -547,7 +547,7 @@ protected:
     }
 
     virtual CommitEvent getCommitEvent() {
-        return _side % 2
+        return (_side % 2)
             ? COMMIT_MOUSE_SKEW_Y
             : COMMIT_MOUSE_SKEW_X;
     }

@@ -278,14 +278,10 @@ double polyline::bulge_start_angle(int point){
 	
 	double a = fabs(bulge*l/2);
 	double sb = bulge/fabs(bulge); //sign of bulge
-	double theta_p = 4*atan(bulge);	
 	double theta_c;
 	dx != 0 ? theta_c = atan(dy/dx) : theta_c = 1.57079632679489661923;  // Check to make sure that dx is not zero and will give a negative number
 	if (dx > 0)	sb *= -1; // Correct for different point ordering and bulge direction
 
-	double cx = xmid + sb*(r-a)*sin(theta_c);
-	double cy = ymid - sb*(r-a)*cos(theta_c);
-	
 	// Now calculate the angle 
 	double theta = asin(points[point].ret_x()/r);
 	if (dy < 0) theta = 6.2831853 - theta;  // The angle is greater than pi so fix this because max(asin) = pi
@@ -307,14 +303,10 @@ double polyline::bulge_end_angle(int point){
 	
 	double a = fabs(bulge*l/2);
 	double sb = bulge/fabs(bulge); //sign of bulge
-	double theta_p = 4*atan(bulge);	
 	double theta_c;
 	dx != 0 ? theta_c = atan(dy/dx) : theta_c = 1.57079632679489661923;  // Check to make sure that dx is not zero and will give a negative number
 	if (dx > 0)	sb *= -1; // Correct for different point ordering and bulge direction
 
-	double cx = xmid + sb*(r-a)*sin(theta_c);
-	double cy = ymid - sb*(r-a)*cos(theta_c);
-	
 	// Now calculate the angle 
 	double theta = asin(points[point+1].ret_x()/r);
 	if (dy < 0) theta = 6.2831853 - theta;  // The angle is greater than pi so fix this because max(asin) = pi
@@ -473,14 +465,10 @@ double lwpolyline::bulge_start_angle(int point){
 	
 	double a = fabs(bulge*l/2);
 	double sb = bulge/fabs(bulge); //sign of bulge
-	double theta_p = 4*atan(bulge);	
 	double theta_c;
 	dx != 0 ? theta_c = atan(dy/dx) : theta_c = 1.57079632679489661923;  // Check to make sure that dx is not zero and will give a negative number
 	if (dx > 0)	sb *= -1; // Correct for different point ordering and bulge direction
 
-	double cx = xmid + sb*(r-a)*sin(theta_c);
-	double cy = ymid - sb*(r-a)*cos(theta_c);
-	
 	// Now calculate the angle 
 	double theta = asin(points[point].ret_x()/r);
 	if (dy < 0) theta = 6.2831853 - theta;  // The angle is greater than pi so fix this because max(asin) = pi
@@ -502,14 +490,10 @@ double lwpolyline::bulge_end_angle(int point){
 	
 	double a = fabs(bulge*l/2);
 	double sb = bulge/fabs(bulge); //sign of bulge
-	double theta_p = 4*atan(bulge);	
 	double theta_c;
 	dx != 0 ? theta_c = atan(dy/dx) : theta_c = 1.57079632679489661923;  // Check to make sure that dx is not zero and will give a negative number
 	if (dx > 0)	sb *= -1; // Correct for different point ordering and bulge direction
 
-	double cx = xmid + sb*(r-a)*sin(theta_c);
-	double cy = ymid - sb*(r-a)*cos(theta_c);
-	
 	// Now calculate the angle 
 	double theta = asin(points[point+1].ret_x()/r);
 	if (dy < 0) theta = 6.2831853 - theta;  // The angle is greater than pi so fix this because max(asin) = pi

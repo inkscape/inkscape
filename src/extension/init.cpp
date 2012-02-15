@@ -330,18 +330,14 @@ check_extensions_internal(Extension *in_plug, gpointer in_data)
     }
 }
 
-static void
-check_extensions()
+static void check_extensions()
 {
     int count = 1;
-    bool anyfail = false;
-    // int pass = 0;
 
     Inkscape::Extension::Extension::error_file_open();
     while (count != 0) {
         count = 0;
         db.foreach(check_extensions_internal, (gpointer)&count);
-        if (count != 0) anyfail = true;
     }
     Inkscape::Extension::Extension::error_file_close();
 }

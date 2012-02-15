@@ -60,7 +60,6 @@ char* to_arc(double bulge, double r, double start_ang, double end_ang, int preci
 }
 
 // Build Coordinate
-void coord(entity *ent, int precision,char* delim, char * units, double scaling, char *out); // Pairs of coords with units will be used so often build a function
 void coord(entity *ent, int precision,char* delim, char * units, double scaling, char *out){
 	// Pairs of coords with units will be used so often build a function build a dedicated function for returning such
 	
@@ -75,7 +74,7 @@ void coord(entity *ent, int precision,char* delim, char * units, double scaling,
 }
 
 // DXF Polyline -> SVG
-void pline2svg(polyline pline, int type, int precision, char * units, double scaling, tables plot_info, char *out); // General function for the conversion of a pline to a SVG element.  Very similar functions just make accomidations for parts that may not be supported
+// General function for the conversion of a pline to a SVG element.  Very similar functions just make accomidations for parts that may not be supported
 void pline2svg(polyline pline, int type, int precision, char * units, double scaling, tables plot_info, char *out){
 	// 0 is pline2path
 	// 1 is pline2pline
@@ -83,8 +82,6 @@ void pline2svg(polyline pline, int type, int precision, char * units, double sca
 	
 	
 	char delim[2];
-	double mag_bulge = 0;
-	double prev_mag_bulge = 0;
 	
 	std::vector< vertex >::iterator vver_iter;
 	std::vector< vertex > points = pline.ret_points();
@@ -94,7 +91,7 @@ void pline2svg(polyline pline, int type, int precision, char * units, double sca
 		strcpy(delim," ");
 		strcat(out, "M ");
 		coord( &points[0], precision, delim, units, scaling, out ); 
-		prev_mag_bulge = sqrt(pow(points[0].ret_bulge(),2));  // Because the bulge value can be positive or negative calculate the magnitude
+		double prev_mag_bulge = sqrt(pow(points[0].ret_bulge(),2));  // Because the bulge value can be positive or negative calculate the magnitude
 		if ( prev_mag_bulge > pow(0.1,precision) ){
 				to_arc(pline.bulge(0), pline.bulge_r(0), pline.bulge_start_angle(0), pline.bulge_end_angle(0), precision, delim, units, scaling, out);
 		}
@@ -105,7 +102,7 @@ void pline2svg(polyline pline, int type, int precision, char * units, double sca
 			}
 			coord( &points[i], precision, delim, units, scaling, out ); 
 			// If bulge > some precsion then add bulge
-			mag_bulge = sqrt(pow(points[i].ret_bulge(),2));
+			double mag_bulge = sqrt(pow(points[i].ret_bulge(),2));
 			if ( (mag_bulge > pow(0.1,precision))  && (i < (points.size() - 1) )){
 				to_arc(pline.bulge(i), pline.bulge_r(i), pline.bulge_start_angle(i), pline.bulge_end_angle(i), precision, delim, units, scaling, out);
 			}
@@ -188,8 +185,6 @@ void lwpline2svg(lwpolyline pline, int type, int precision, char * units, double
 	
 	
 	char delim[2];
-	double mag_bulge = 0;
-	double prev_mag_bulge = 0;
 	
 	std::vector< vertex >::iterator vver_iter;
 	std::vector< vertex > points = pline.ret_points();
@@ -199,7 +194,7 @@ void lwpline2svg(lwpolyline pline, int type, int precision, char * units, double
 		strcpy(delim," ");
 		strcat(out, "M ");
 		coord( &points[0], precision, delim, NULL, scaling, out );
-		prev_mag_bulge = sqrt(pow(points[0].ret_bulge(),2));  // Because the bulge value can be positive or negative calculate the magnitude
+		double prev_mag_bulge = sqrt(pow(points[0].ret_bulge(),2));  // Because the bulge value can be positive or negative calculate the magnitude
 		if ( prev_mag_bulge > pow(0.1,precision) ){
 				to_arc(pline.bulge(0),pline.bulge_r(0), pline.bulge_start_angle(0), pline.bulge_end_angle(0), precision, delim, NULL, scaling, out);
 		}
@@ -211,7 +206,7 @@ void lwpline2svg(lwpolyline pline, int type, int precision, char * units, double
 			}
 			coord( &points[i], precision, delim, NULL , scaling, out ); 
 			// If bulge > some precsion then add bulge
-			mag_bulge = sqrt(pow(points[i].ret_bulge(),2));
+			double mag_bulge = sqrt(pow(points[i].ret_bulge(),2));
 			if ( ( mag_bulge > pow(0.1,precision) ) && (i < (points.size() - 1) )){ // Make sure the final point doesn't add a bulge on accident
 				to_arc(pline.bulge(i), pline.bulge_r(i), pline.bulge_start_angle(i), pline.bulge_end_angle(i), precision, delim, units, scaling, out);
 			}
