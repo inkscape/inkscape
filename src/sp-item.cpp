@@ -882,7 +882,7 @@ void SPItem::getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscap
     clips_and_masks.push_back(mask_ref->getObject());
 
     SPDesktop *desktop = inkscape_active_desktop();
-    for (std::list<SPObject const *>::const_iterator o = clips_and_masks.begin(); o != clips_and_masks.end(); o++) {
+    for (std::list<SPObject const *>::const_iterator o = clips_and_masks.begin(); o != clips_and_masks.end(); ++o) {
         if (*o) {
             // obj is a group object, the children are the actual clippers
             for (SPObject *child = (*o)->children ; child ; child = child->next) {
@@ -891,7 +891,7 @@ void SPItem::getSnappoints(std::vector<Inkscape::SnapCandidatePoint> &p, Inkscap
                     // Please note the recursive call here!
                     SP_ITEM(child)->getSnappoints(p_clip_or_mask, snapprefs);
                     // Take into account the transformation of the item being clipped or masked
-                    for (std::vector<Inkscape::SnapCandidatePoint>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); p_orig++) {
+                    for (std::vector<Inkscape::SnapCandidatePoint>::const_iterator p_orig = p_clip_or_mask.begin(); p_orig != p_clip_or_mask.end(); ++p_orig) {
                         // All snappoints are in desktop coordinates, but the item's transformation is
                         // in document coordinates. Hence the awkward construction below
                         Geom::Point pt = desktop->dt2doc((*p_orig).getPoint()) * i2dt_affine();
@@ -1248,7 +1248,7 @@ void SPItem::adjust_livepatheffect (Geom::Affine const &postmul, bool set)
 
             // now that all LPEs are forked_if_necessary, we can apply the transform
             PathEffectList effect_list =  sp_lpe_item_get_effect_list(lpeitem);
-            for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
+            for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); ++it)
             {
                 LivePathEffectObject *lpeobj = (*it)->lpeobject;
                 if (lpeobj && lpeobj->get_lpe()) {

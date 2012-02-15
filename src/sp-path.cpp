@@ -138,7 +138,7 @@ sp_path_description(SPItem * item)
         Glib::ustring s;
 
         PathEffectList effect_list =  sp_lpe_item_get_effect_list(SP_LPE_ITEM(item));
-        for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); it++)
+        for (PathEffectList::iterator it = effect_list.begin(); it != effect_list.end(); ++it)
         {
             LivePathEffectObject *lpeobj = (*it)->lpeobject;
             if (!lpeobj || !lpeobj->get_lpe())

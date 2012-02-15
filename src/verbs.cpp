@@ -609,7 +609,7 @@ SPAction *Verb::get_action(Inkscape::UI::View::View *view)
         } else {
             for (ActionTable::iterator cur_action = _actions->begin();
                  cur_action != _actions->end() && view != NULL;
-                 cur_action++) {
+                 ++cur_action) {
                 if (cur_action->first != NULL && cur_action->first->doc() == view->doc()) {
                     sp_action_set_sensitive(action, cur_action->second->sensitive);
                     break;
@@ -623,14 +623,13 @@ SPAction *Verb::get_action(Inkscape::UI::View::View *view)
     return action;
 }
 
-void
-Verb::sensitive(SPDocument *in_doc, bool in_sensitive)
+void Verb::sensitive(SPDocument *in_doc, bool in_sensitive)
 {
     // printf("Setting sensitivity of \"%s\" to %d\n", _name, in_sensitive);
     if (_actions != NULL) {
         for (ActionTable::iterator cur_action = _actions->begin();
              cur_action != _actions->end();
-             cur_action++) {
+             ++cur_action) {
             if (in_doc == NULL || (cur_action->first != NULL && cur_action->first->doc() == in_doc)) {
                 sp_action_set_sensitive(cur_action->second, in_sensitive ? 1 : 0);
             }
@@ -679,7 +678,7 @@ Verb::name(SPDocument *in_doc, Glib::ustring in_name)
     if (_actions != NULL) {
         for (ActionTable::iterator cur_action = _actions->begin();
              cur_action != _actions->end();
-             cur_action++) {
+             ++cur_action) {
             if (in_doc == NULL || (cur_action->first != NULL && cur_action->first->doc() == in_doc)) {
                 sp_action_set_name(cur_action->second, in_name);
             }
@@ -738,7 +737,7 @@ void Verb::delete_all_view(Inkscape::UI::View::View *view)
 
     if (!_verbs.empty()) {
         for (VerbTable::iterator thisverb = _verbs.begin();
-             thisverb != _verbs.end(); thisverb++) {
+             thisverb != _verbs.end(); ++thisverb) {
             Inkscape::Verb *verbpntr = thisverb->second;
             // std::cout << "Delete In Verb: " << verbpntr->_name << std::endl;
             verbpntr->delete_view(view);
@@ -2717,7 +2716,7 @@ Verb *Verb::_base_verbs[] = {
 void
 Verb::list (void) {
     // Go through the dynamic verb table
-    for (VerbTable::iterator iter = _verbs.begin(); iter != _verbs.end(); iter++) {
+    for (VerbTable::iterator iter = _verbs.begin(); iter != _verbs.end(); ++iter) {
         Verb * verb = iter->second;
         if (verb->get_code() == SP_VERB_INVALID ||
                 verb->get_code() == SP_VERB_NONE ||

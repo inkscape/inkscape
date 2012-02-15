@@ -151,7 +151,7 @@ void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom::PathVe
     Geom::CrossingSet cs = Geom::crossings(*lineseg, curve->get_pathvector());
 
     // Reconstruct and store the points of intersection
-    for (Geom::Crossings::const_iterator m = cs[0].begin(); m != cs[0].end(); m++) {
+    for (Geom::Crossings::const_iterator m = cs[0].begin(); m != cs[0].end(); ++m) {
 #if 0
 //TODO: consider only visible intersections
         Geom::Point intersection = (*lineseg)[0].pointAt((*m).ta);
@@ -369,7 +369,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 double fontsize = prefs->getInt("/tools/measure/fontsize");
 
                 Geom::Point previous_point;
-                if (intersections.size() > 0) {
+                if (!intersections.empty()) {
                     previous_point = intersections[0];
                 }
 

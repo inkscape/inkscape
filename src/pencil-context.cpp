@@ -386,7 +386,7 @@ pencil_handle_motion_notify(SPPencilContext *const pc, GdkEventMotion const &mev
                 }
 
                 if ( pc->npoints != 0) { // buttonpress may have happened before we entered draw context!
-                    if (pc->ps.size() == 0) {
+                    if (pc->ps.empty()) {
                         // Only in freehand mode we have to add the first point also to pc->ps (apparently)
                         // - We cannot add this point in spdc_set_startpoint, because we only need it for freehand
                         // - We cannot do this in the button press handler because at that point we don't know yet

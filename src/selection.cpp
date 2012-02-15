@@ -478,7 +478,7 @@ std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPointsConvexHull(Sna
     if (!p.empty()) {
         std::vector<Inkscape::SnapCandidatePoint>::iterator i;
         Geom::RectHull cvh((p.front()).getPoint());
-        for (i = p.begin(); i != p.end(); i++) {
+        for (i = p.begin(); i != p.end(); ++i) {
             // these are the points we get back
             cvh.add((*i).getPoint());
         }

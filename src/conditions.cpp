@@ -258,9 +258,11 @@ static bool evaluateRequiredFeatures(SPItem const */*item*/, gchar const *value)
         return true;
 
     std::vector<Glib::ustring> parts = splitByWhitespace(value);
-    if ( 0 == parts.size() )
+    if (parts.empty())
+    {
         return false;
-
+    }
+    
     for ( unsigned int i = 0 ; i < parts.size() ; i++ ) {
         if (!evaluateSingleFeature(parts[i].c_str())) {
             return false;

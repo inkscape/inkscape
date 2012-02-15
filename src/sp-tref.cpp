@@ -348,27 +348,29 @@ static gchar *
 sp_tref_description(SPItem *item)
 {
     SPTRef *tref = SP_TREF(item);
-
-    SPObject *referred = tref->getObjectReferredTo();
-
-    if (tref && tref->getObjectReferredTo()) {
-        char *child_desc;
-
-        if (SP_IS_ITEM(referred)) {
-            child_desc = SP_ITEM(referred)->description();
-        } else {
-            child_desc = g_strdup("");
+    
+    if (tref)
+    {
+        SPObject *referred = tref->getObjectReferredTo();
+        
+        if (tref->getObjectReferredTo()) {
+            char *child_desc;
+            
+            if (SP_IS_ITEM(referred)) {
+                child_desc = SP_ITEM(referred)->description();
+            } else {
+                child_desc = g_strdup("");
+            }
+            
+            char *ret = g_strdup_printf(
+                    _("<b>Cloned character data</b>%s%s"),
+                    (SP_IS_ITEM(referred) ? _(" from ") : ""),
+                    child_desc);
+            g_free(child_desc);
+            return ret;
         }
-
-        char *ret = g_strdup_printf(
-                _("<b>Cloned character data</b>%s%s"),
-                (SP_IS_ITEM(referred) ? _(" from ") : ""),
-                child_desc);
-        g_free(child_desc);
-        return ret;
-    } else {
-        return g_strdup(_("<b>Orphaned cloned character data</b>"));
     }
+    return g_strdup(_("<b>Orphaned cloned character data</b>"));
 }
 
 

@@ -79,7 +79,7 @@ struct DocumentSubset::Relations : public GC::Managed<GC::ATOMIC>,
                     // compare to the single possiblity left
                     int pos = sp_object_compare_position(*last, obj);
                     if ( pos < 0 ) {
-                        last++;
+                        ++last;
                     }
                 }
 
@@ -292,7 +292,7 @@ void DocumentSubset::Relations::remove(SPObject *obj, bool subtree) {
                         children.begin(), children.end());
 
         for ( Siblings::iterator iter=children.begin()
-            ; iter != children.end() ; iter++ )
+            ; iter != children.end() ; ++iter)
         {
             Record *child_record=get(*iter);
             g_assert( child_record != NULL );

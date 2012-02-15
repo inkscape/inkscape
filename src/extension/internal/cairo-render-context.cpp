@@ -164,7 +164,7 @@ CairoRenderState* CairoRenderContext::getParentState(void) const
     if (g_slist_length(_state_stack) == 1) {
         return _state;
     } else {
-        return (CairoRenderState *)g_slist_nth_data(_state_stack, 1);
+        return static_cast<CairoRenderState *>(g_slist_nth_data(_state_stack, 1));
     }
 }
 

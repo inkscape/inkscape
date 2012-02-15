@@ -913,15 +913,15 @@ void TextTagAttributes::transform(Geom::Affine const &matrix, double scale_x, do
             attributes.y[i] = point[Geom::Y];
         }
     }
-    for (std::vector<SVGLength>::iterator it = attributes.dx.begin() ; it != attributes.dx.end() ; it++)
+    for (std::vector<SVGLength>::iterator it = attributes.dx.begin() ; it != attributes.dx.end() ; ++it)
         *it = it->computed * scale_x;
-    for (std::vector<SVGLength>::iterator it = attributes.dy.begin() ; it != attributes.dy.end() ; it++)
+    for (std::vector<SVGLength>::iterator it = attributes.dy.begin() ; it != attributes.dy.end() ; ++it)
         *it = it->computed * scale_y;
 }
 
 double TextTagAttributes::getDx(unsigned index)
 {
-    if( attributes.dx.size() == 0 ) {
+    if( attributes.dx.empty()) {
         return 0.0;
     }
     if( index < attributes.dx.size() ) {
@@ -934,7 +934,7 @@ double TextTagAttributes::getDx(unsigned index)
 
 double TextTagAttributes::getDy(unsigned index)
 {
-    if( attributes.dy.size() == 0 ) {
+    if( attributes.dy.empty() ) {
         return 0.0;
     }
     if( index < attributes.dy.size() ) {
@@ -980,7 +980,7 @@ void TextTagAttributes::addToDxDy(unsigned index, Geom::Point const &adjust)
 
 double TextTagAttributes::getRotate(unsigned index)
 {
-    if( attributes.rotate.size() == 0 ) {
+    if( attributes.rotate.empty() ) {
         return 0.0;
     }
     if( index < attributes.rotate.size() ) {

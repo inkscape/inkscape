@@ -111,7 +111,7 @@ static void
 sp_flowregion_dispose(GObject *object)
 {
 	SPFlowregion *group=(SPFlowregion *)object;
-    for (std::vector<Shape*>::iterator it = group->computed.begin() ; it != group->computed.end() ; it++)
+    for (std::vector<Shape*>::iterator it = group->computed.begin() ; it != group->computed.end() ; ++it)
         delete *it;
     group->computed.~vector<Shape*>();
 }
@@ -182,7 +182,7 @@ static void sp_flowregion_update(SPObject *object, SPCtx *ctx, unsigned int flag
 
 void SPFlowregion::UpdateComputed(void)
 {
-    for (std::vector<Shape*>::iterator it = computed.begin() ; it != computed.end() ; it++) {
+    for (std::vector<Shape*>::iterator it = computed.begin() ; it != computed.end() ; ++it) {
         delete *it;
     }
     computed.clear();

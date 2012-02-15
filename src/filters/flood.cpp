@@ -41,8 +41,7 @@ static void sp_feFlood_build_renderer(SPFilterPrimitive *primitive, Inkscape::Fi
 
 static SPFilterPrimitiveClass *feFlood_parent_class;
 
-GType
-sp_feFlood_get_type()
+GType sp_feFlood_get_type()
 {
     static GType feFlood_type = 0;
 
@@ -62,8 +61,7 @@ sp_feFlood_get_type()
     return feFlood_type;
 }
 
-static void
-sp_feFlood_class_init(SPFeFloodClass *klass)
+static void sp_feFlood_class_init(SPFeFloodClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
@@ -78,8 +76,7 @@ sp_feFlood_class_init(SPFeFloodClass *klass)
     sp_primitive_class->build_renderer = sp_feFlood_build_renderer;
 }
 
-static void
-sp_feFlood_init(SPFeFlood *feFlood)
+static void sp_feFlood_init(SPFeFlood *feFlood)
 {
     feFlood->opacity = 1;
     feFlood->icc = NULL;
@@ -105,8 +102,7 @@ sp_feFlood_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 /**
  * Drops any allocated memory.
  */
-static void
-sp_feFlood_release(SPObject *object)
+static void sp_feFlood_release(SPObject *object)
 {
     if (((SPObjectClass *) feFlood_parent_class)->release)
         ((SPObjectClass *) feFlood_parent_class)->release(object);
@@ -156,7 +152,7 @@ sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value)
         case SP_PROP_FLOOD_OPACITY:
             if (value) {
                 read_num = g_ascii_strtod(value, &end_ptr);
-                if (*end_ptr) {
+                if (end_ptr != NULL) {
                     g_warning("Unable to convert \"%s\" to number", value);
                     read_num = 1;
                 }

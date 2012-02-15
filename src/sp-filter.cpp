@@ -543,7 +543,7 @@ gchar const *sp_filter_name_for_image(SPFilter const *filter, int const image) {
         default:
             for (map<gchar *, int, ltstr>::const_iterator i
                      = filter->_image_name->begin() ;
-                 i != filter->_image_name->end() ; i++) {
+                 i != filter->_image_name->end() ; ++i) {
                 if (i->second == image) {
                     return i->first;
                 }

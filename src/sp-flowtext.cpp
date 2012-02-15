@@ -460,7 +460,7 @@ void SPFlowtext::_buildLayoutInput(SPObject *root, Shape const *exclusion_shape,
             }
         } else if (SP_IS_FLOWREGION(child)) {
             std::vector<Shape*> const &computed = SP_FLOWREGION(child)->computed;
-            for (std::vector<Shape*>::const_iterator it = computed.begin() ; it != computed.end() ; it++) {
+            for (std::vector<Shape*>::const_iterator it = computed.begin() ; it != computed.end() ; ++it) {
                 shapes->push_back(Shape());
                 if (exclusion_shape->hasEdges()) {
                     shapes->back().Booleen(*it, const_cast<Shape*>(exclusion_shape), bool_op_diff);

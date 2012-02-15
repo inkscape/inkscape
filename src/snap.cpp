@@ -85,7 +85,7 @@ bool SnapManager::someSnapperMightSnap() const
     SnapperList const s = getSnappers();
     SnapperList::const_iterator i = s.begin();
     while (i != s.end() && (*i)->ThisSnapperMightSnap() == false) {
-        i++;
+        ++i;
     }
 
     return (i != s.end());
@@ -100,7 +100,7 @@ bool SnapManager::gridSnapperMightSnap() const
     SnapperList const s = getGridSnappers();
     SnapperList::const_iterator i = s.begin();
     while (i != s.end() && (*i)->ThisSnapperMightSnap() == false) {
-        i++;
+        ++i;
     }
 
     return (i != s.end());
@@ -124,7 +124,7 @@ Inkscape::SnappedPoint SnapManager::freeSnap(Inkscape::SnapCandidatePoint const 
     IntermSnapResults isr;
     SnapperList const snappers = getSnappers();
 
-    for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
+    for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); ++i) {
         (*i)->freeSnap(isr, p, bbox_to_snap, &_items_to_ignore, _unselected_nodes);
     }
 
@@ -249,7 +249,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnap(Inkscape::SnapCandidatePoint
 
     IntermSnapResults isr;
     SnapperList const snappers = getSnappers();
-    for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
+    for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); ++i) {
         (*i)->constrainedSnap(isr, p, bbox_to_snap, constraint, &_items_to_ignore, _unselected_nodes);
     }
 
@@ -297,7 +297,7 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool snap_mouse = prefs->getBool("/options/snapmousepointer/value", false);
 
-    for (std::vector<Inkscape::Snapper::SnapConstraint>::const_iterator c = constraints.begin(); c != constraints.end(); c++) {
+    for (std::vector<Inkscape::Snapper::SnapConstraint>::const_iterator c = constraints.begin(); c != constraints.end(); ++c) {
         // Project the mouse pointer onto the constraint; In case we don't snap then we will
         // return the projection onto the constraint, such that the constraint is always enforced
         Geom::Point pp = (*c).projection(p.getPoint());
@@ -312,10 +312,10 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
         result = freeSnap(p, bbox_to_snap);
     } else {
         // Iterate over the constraints
-        for (std::vector<Inkscape::Snapper::SnapConstraint>::const_iterator c = constraints.begin(); c != constraints.end(); c++) {
+        for (std::vector<Inkscape::Snapper::SnapConstraint>::const_iterator c = constraints.begin(); c != constraints.end(); ++c) {
             // Try to snap to the constraint
             if (!snapping_is_futile) {
-                for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
+                for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); ++i) {
                     (*i)->constrainedSnap(isr, p, bbox_to_snap, *c, &_items_to_ignore,_unselected_nodes);
                 }
             }
@@ -327,7 +327,7 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
         if (snap_mouse) {
             // If "snap_mouse" then we still have to apply the constraint, because so far we only tried a freeSnap
             Geom::Point result_closest;
-            for (std::vector<Inkscape::Snapper::SnapConstraint>::const_iterator c = constraints.begin(); c != constraints.end(); c++) {
+            for (std::vector<Inkscape::Snapper::SnapConstraint>::const_iterator c = constraints.begin(); c != constraints.end(); ++c) {
                 // Project the mouse pointer onto the constraint; In case we don't snap then we will
                 // return the projection onto the constraint, such that the constraint is always enforced
                 Geom::Point result_p = (*c).projection(result.getPoint());
@@ -342,7 +342,7 @@ Inkscape::SnappedPoint SnapManager::multipleConstrainedSnaps(Inkscape::SnapCandi
 
     // So we didn't snap, but we still need to return a point on one of the constraints
     // Find out which of the constraints yielded the closest projection of point p
-    for (std::vector<Geom::Point>::iterator pp = projections.begin(); pp != projections.end(); pp++) {
+    for (std::vector<Geom::Point>::iterator pp = projections.begin(); pp != projections.end(); ++pp) {
         if (pp != projections.begin()) {
             if (Geom::L2(*pp - p.getPoint()) < Geom::L2(no_snap.getPoint() - p.getPoint())) {
                 no_snap.setPoint(*pp);
@@ -412,7 +412,7 @@ void SnapManager::guideFreeSnap(Geom::Point &p, Geom::Point &origin_or_vector, b
 
     IntermSnapResults isr;
     SnapperList snappers = getSnappers();
-    for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
+    for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); ++i) {
         (*i)->freeSnap(isr, candidate, Geom::OptRect(), NULL, NULL);
     }
 
@@ -440,7 +440,7 @@ void SnapManager::guideConstrainedSnap(Geom::Point &p, SPGuide const &guideline)
     Inkscape::Snapper::SnapConstraint cl(guideline.point_on_line, Geom::rot90(guideline.normal_to_line));
 
     SnapperList snappers = getSnappers();
-    for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); i++) {
+    for (SnapperList::const_iterator i = snappers.begin(); i != snappers.end(); ++i) {
         (*i)->constrainedSnap(isr, candidate, Geom::OptRect(), cl, NULL, NULL);
     }
 
@@ -472,7 +472,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     Geom::Rect bbox;
 
     long source_num = 0;
-    for (std::vector<Inkscape::SnapCandidatePoint>::const_iterator i = points.begin(); i != points.end(); i++) {
+    for (std::vector<Inkscape::SnapCandidatePoint>::const_iterator i = points.begin(); i != points.end(); ++i) {
 
         /* Work out the transformed version of this point */
         Geom::Point transformed = _transformPoint(*i, transformation_type, transformation, origin, dim, uniform);
@@ -520,7 +520,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
     // std::cout << std::endl;
     bool first_free_snap = true;
 
-    for (std::vector<Inkscape::SnapCandidatePoint>::const_iterator i = points.begin(); i != points.end(); i++) {
+    for (std::vector<Inkscape::SnapCandidatePoint>::const_iterator i = points.begin(); i != points.end(); ++i) {
 
         /* Snap it */
         Inkscape::SnappedPoint snapped_point;
@@ -704,7 +704,7 @@ Inkscape::SnappedPoint SnapManager::_snapTransformed(
             }
         }
 
-        j++;
+        ++j;
     }
 
     Geom::Coord best_metric;
@@ -826,7 +826,7 @@ Inkscape::SnappedPoint SnapManager::constrainedSnapSkew(std::vector<Inkscape::Sn
     // NOT the case for example when rotating or skewing. The bounding box itself cannot possibly rotate or skew,
     // so it's corners have a different transformation. The snappers cannot handle this, therefore snapping
     // of bounding boxes is not allowed here.
-    if (p.size() > 0) {
+    if (!p.empty()) {
         g_assert(!(p.at(0).getSourceType() & Inkscape::SNAPSOURCE_BBOX_CATEGORY));
     }
 
@@ -977,7 +977,7 @@ Inkscape::SnappedPoint SnapManager::findBestSnap(Inkscape::SnapCandidatePoint co
     // now let's see which snapped point gets a thumbs up
     Inkscape::SnappedPoint bestSnappedPoint(p.getPoint());
     // std::cout << "Finding the best snap..." << std::endl;
-    for (std::list<Inkscape::SnappedPoint>::const_iterator i = sp_list.begin(); i != sp_list.end(); i++) {
+    for (std::list<Inkscape::SnappedPoint>::const_iterator i = sp_list.begin(); i != sp_list.end(); ++i) {
         // std::cout << "sp = " << (*i).getPoint() << " | source = " << (*i).getSource() << " | target = " << (*i).getTarget();
         bool onScreen = _desktop->get_display_area().contains((*i).getPoint());
         if (onScreen || allowOffScreen) { // Only snap to points which are not off the screen

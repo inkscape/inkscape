@@ -409,7 +409,7 @@ Inkscape::Text::Layout::iterator sp_te_insert_line (SPItem *item, Inkscape::Text
         
         Glib::ustring *string = &SP_STRING(split_obj)->string;
         unsigned char_index = 0;
-        for (Glib::ustring::iterator it = string->begin() ; it != split_text_iter ; it++)
+        for (Glib::ustring::iterator it = string->begin() ; it != split_text_iter ; ++it)
             char_index++;
         // we need to split the entire text tree into two
         SPString *new_string = SP_STRING(split_text_object_tree_at(split_obj, char_index));
@@ -457,7 +457,7 @@ static void insert_into_spstring(SPString *string_item, Glib::ustring::iterator 
     unsigned char_count = g_utf8_strlen(utf8, -1);
     Glib::ustring *string = &SP_STRING(string_item)->string;
 
-    for (Glib::ustring::iterator it = string->begin() ; it != iter_at ; it++)
+    for (Glib::ustring::iterator it = string->begin() ; it != iter_at ; ++it)
         char_index++;
     string->replace(iter_at, iter_at, utf8);
 
@@ -503,7 +503,9 @@ sp_te_insert(SPItem *item, Inkscape::Text::Layout::iterator const &position, gch
         }
         
         // Now the simple case can begin...
-        if (!cursor_at_start) iter_text++;
+        if (!cursor_at_start){
+            ++iter_text;
+        }
         SPString *string_item = SP_STRING(source_obj);
         insert_into_spstring(string_item, cursor_at_end ? string_item->string.end() : iter_text, utf8);
     } else {
@@ -685,10 +687,12 @@ static void erase_from_spstring(SPString *string_item, Glib::ustring::iterator i
     unsigned char_count = 0;
     Glib::ustring *string = &SP_STRING(string_item)->string;
 
-    for (Glib::ustring::iterator it = string->begin() ; it != iter_from ; it++)
+    for (Glib::ustring::iterator it = string->begin() ; it != iter_from ; ++it){
         char_index++;
-    for (Glib::ustring::iterator it = iter_from ; it != iter_to ; it++)
+    }
+    for (Glib::ustring::iterator it = iter_from ; it != iter_to ; ++it){
         char_count++;
+    }
     string->erase(iter_from, iter_to);
     string_item->getRepr()->setContent(string->c_str());
 
@@ -980,7 +984,7 @@ text_tag_attributes_at_position(SPItem *item, Inkscape::Text::Layout::iterator c
     }
     Glib::ustring *string = &SP_STRING(source_item)->string;
     *char_index = sum_sibling_text_lengths_before(source_item);
-    for (Glib::ustring::iterator it = string->begin() ; it != source_text_iter ; it++) {
+    for (Glib::ustring::iterator it = string->begin() ; it != source_text_iter ; ++it) {
         ++*char_index;
     }
 
@@ -1290,7 +1294,7 @@ doesn't have a version that takes iterators as parameters. */
 static unsigned char_index_of_iterator(Glib::ustring const &string, Glib::ustring::const_iterator text_iter)
 {
     unsigned n = 0;
-    for (Glib::ustring::const_iterator it = string.begin() ; it != string.end() && it != text_iter ; it++)
+    for (Glib::ustring::const_iterator it = string.begin() ; it != string.end() && it != text_iter ; ++it)
         n++;
     return n;
 }

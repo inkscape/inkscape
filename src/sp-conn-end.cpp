@@ -74,10 +74,10 @@ static bool try_get_intersect_point_with_item_recursive(Geom::PathVector& conn_p
     const Geom::PathVector& curve_pv = item_curve->get_pathvector();
     Geom::CrossingSet cross = crossings(conn_pv, curve_pv);
     // iterate over all Crossings
-    for (Geom::CrossingSet::const_iterator i = cross.begin(); i != cross.end(); i++) {
+    for (Geom::CrossingSet::const_iterator i = cross.begin(); i != cross.end(); ++i) {
         const Geom::Crossings& cr = *i;
 
-        for (Geom::Crossings::const_iterator i = cr.begin(); i != cr.end(); i++) {
+        for (Geom::Crossings::const_iterator i = cr.begin(); i != cr.end(); ++i) {
             const Geom::Crossing& cr_pt = *i;
             if ( intersect_pos < cr_pt.ta)
                 intersect_pos = cr_pt.ta;
