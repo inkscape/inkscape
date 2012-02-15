@@ -153,7 +153,7 @@
         #define HAVE_OPENMP                   1
 		#define HAVE_TR1_UNORDERED_SET        1
 
-        #define ENABLE_LCMS                   1
+        #define HAVE_LIBLCMS1                 1
 
         #define ENABLE_NLS                    1
         #define HAVE_BIND_TEXTDOMAIN_CODESET  1
