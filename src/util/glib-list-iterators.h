@@ -17,8 +17,7 @@
 
 #include <cstddef>
 #include <iterator>
-#include "glib/gslist.h"
-#include "glib/glist.h"
+#include <glib.h>
 
 namespace Inkscape {
 

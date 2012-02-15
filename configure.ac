@@ -54,6 +54,12 @@ if test "$GCC" = "yes"; then
   CPPFLAGS="-Wformat -Wformat-security $CPPFLAGS"
   # Enable all default warnings
   CPPFLAGS="-Wall $CPPFLAGS"
+  # Enforce including only <glib.h> (required since 2.31)
+  CPPFLAGS="-DG_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
+  # Ensure that no deprecated glibmm symbols are introduced.
+  # lp:inkscape builds cleanly with this option at r10957
+  CPPFLAGS="-DGLIBMM_DISABLE_DEPRECATED $CPPFLAGS"
+  CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
 
   # Test for -Werror=... (introduced some time post-4.0)
   # If we hit a format error -- it should be fatal.

@@ -911,7 +911,7 @@ gdl_dock_object_register_init (void)
     g_relation_insert (dock_register, "placeholder", (gpointer) GDL_TYPE_DOCK_PLACEHOLDER);
 }
 
-G_CONST_RETURN gchar *
+const gchar *
 gdl_dock_object_nick_from_type (GType type)
 {
     GTuples *tuples;
