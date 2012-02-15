@@ -26,6 +26,7 @@
 #include "display/sp-canvas-util.h"
 #include "display/cairo-utils.h"
 #include "color.h"
+#include "display/sp-canvas.h"
 
 
 static void sp_ctrlline_class_init (SPCtrlLineClass *klass);

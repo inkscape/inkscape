@@ -25,6 +25,7 @@
 #include "display/curve.h"
 #include "display/cairo-utils.h"
 #include "helper/geom.h"
+#include "display/sp-canvas.h"
 
 static void sp_canvas_bpath_class_init (SPCanvasBPathClass *klass);
 static void sp_canvas_bpath_init (SPCanvasBPath *path);

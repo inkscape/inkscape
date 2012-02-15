@@ -47,6 +47,7 @@
 #include "sp-namedview.h"
 #include "selection-chemistry.h"
 #include "verbs.h"
+#include "display/sp-canvas.h"
 
 using Inkscape::DocumentUndo;
 

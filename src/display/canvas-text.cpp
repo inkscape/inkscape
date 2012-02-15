@@ -24,6 +24,7 @@
 #include "display/cairo-utils.h"
 #include "desktop.h"
 #include "color.h"
+#include "display/sp-canvas.h"
 
 static void sp_canvastext_class_init (SPCanvasTextClass *klass);
 static void sp_canvastext_init (SPCanvasText *canvastext);

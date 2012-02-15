@@ -37,6 +37,7 @@
 #include "util/mathfns.h"
 #include "xml/node-event-vector.h"
 #include "round.h"
+#include "display/sp-canvas.h"
 
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>

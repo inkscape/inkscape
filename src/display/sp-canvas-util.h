@@ -13,7 +13,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "sp-canvas.h"
+#include <glibmm/value.h>
+
+struct SPCanvasItem;
+struct SPCanvasBuf;
+
+namespace Geom {
+	class Affine;
+}
 
 /* Miscellaneous utility & convenience functions for general canvas objects */
 

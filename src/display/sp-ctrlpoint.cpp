@@ -18,6 +18,7 @@
 #endif
 #include <color.h>
 #include "display/cairo-utils.h"
+#include "display/sp-canvas.h"
 
 
 static void sp_ctrlpoint_class_init (SPCtrlPointClass *klass);

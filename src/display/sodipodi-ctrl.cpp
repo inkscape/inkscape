@@ -10,6 +10,7 @@
 #include "sp-canvas-util.h"
 #include "sodipodi-ctrl.h"
 #include "display/cairo-utils.h"
+#include "display/sp-canvas.h"
 
 enum {
     ARG_0,

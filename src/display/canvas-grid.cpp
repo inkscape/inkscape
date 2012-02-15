@@ -13,6 +13,7 @@
  * Don't be shy to correct things.
  */
 
+#include "ui/widget/registered-widget.h"
 #include "desktop.h"
 #include "sp-canvas-util.h"
 #include "util/mathfns.h"
@@ -20,7 +21,6 @@
 #include "display/cairo-utils.h"
 #include "display/canvas-axonomgrid.h"
 #include "display/canvas-grid.h"
-#include "display/sp-canvas-util.h"
 #include "display/sp-canvas-group.h"
 #include "document.h"
 #include "helper/units.h"
@@ -30,10 +30,10 @@
 #include "sp-object.h"
 #include "svg/svg-color.h"
 #include "svg/stringstream.h"
-#include "ui/widget/registered-widget.h"
 #include "util/mathfns.h"
 #include "xml/node-event-vector.h"
 #include "verbs.h"
+#include "display/sp-canvas.h"
 
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>

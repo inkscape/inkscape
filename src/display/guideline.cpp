@@ -23,6 +23,7 @@
 #include "inkscape.h" // for inkscape_active_desktop()
 #include "desktop.h"
 #include "sp-namedview.h"
+#include "display/sp-canvas.h"
 
 static void sp_guideline_class_init(SPGuideLineClass *c);
 static void sp_guideline_init(SPGuideLine *guideline);

@@ -17,6 +17,7 @@
 #include "sodipodi-ctrlrect.h"
 #include "sp-canvas-util.h"
 #include "display/cairo-utils.h"
+#include "display/sp-canvas.h"
 
 /*
  * Currently we do not have point method, as it should always be painted
