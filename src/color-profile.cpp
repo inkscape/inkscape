@@ -819,7 +819,7 @@ std::vector<Glib::ustring> ColorProfile::getBaseProfileDirs() {
 #ifdef WIN32
     wchar_t pathBuf[MAX_PATH + 1];
     pathBuf[0] = 0;
-    cmsUInt32Number pathSize = sizeof(pathBuf);
+    DWORD pathSize = sizeof(pathBuf);
     g_assert(sizeof(wchar_t) == sizeof(gunichar2));
     if ( GetColorDirectoryW( NULL, pathBuf, &pathSize ) ) {
         gchar * utf8Path = g_utf16_to_utf8( (gunichar2*)(&pathBuf[0]), -1, NULL, NULL, NULL );
