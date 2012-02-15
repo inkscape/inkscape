@@ -44,6 +44,7 @@
 #include "context-fns.h"
 #include "shape-editor.h"
 #include "verbs.h"
+#include "display/sp-canvas-item.h"
 
 using Inkscape::DocumentUndo;
 

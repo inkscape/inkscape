@@ -8,14 +8,8 @@
 #ifndef INKSCAPE_CANVAS_GRID_H
 #define INKSCAPE_CANVAS_GRID_H
 
-#include <cstring>
-#include <string>
-
 #include "sp-canvas-item.h"
-#include "xml/repr.h"
 #include "ui/widget/registry.h"
-#include "xml/node-event-vector.h"
-#include "snapper.h"
 #include "line-snapper.h"
 
 class  SPDesktop;
@@ -28,7 +22,11 @@ namespace Gtk {
 }
 
 namespace Inkscape {
+class Snapper;
 
+namespace XML {
+class Node;
+}
 
 enum GridType {
     GRID_RECTANGULAR = 0,

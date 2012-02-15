@@ -62,6 +62,7 @@
 #include "unit-constants.h"
 #include "xml/repr.h"
 #include "xml/rebase-hrefs.h"
+#include "libcroco/cr-cascade.h"
 
 using Inkscape::DocumentUndo;
 

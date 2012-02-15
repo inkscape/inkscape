@@ -23,7 +23,6 @@
 #include "sp-object-group.h"
 #include "sp-metric.h"
 #include "snap.h"
-#include "display/canvas-grid.h"
 #include "document.h"
 
 struct SPUnit;

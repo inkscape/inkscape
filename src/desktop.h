@@ -25,8 +25,6 @@
 #include "config.h"
 #endif
 
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 
@@ -35,9 +33,7 @@
 
 #include "ui/view/view.h"
 #include "ui/view/edit-widget-interface.h"
-
 #include "display/rendermode.h"
-#include "display/snap-indicator.h"
 
 class SPCSSAttr;
 struct SPCanvas;
@@ -57,7 +53,10 @@ namespace Gtk
 
 typedef int sp_verb_t;
 
-
+struct _GdkEventAny;
+typedef struct _GdkEventAny GdkEventAny;
+struct _GdkEventWindowState;
+typedef struct _GdkEventWindowState GdkEventWindowState;
 
 namespace Inkscape {
   class Application;
@@ -70,6 +69,10 @@ namespace Inkscape {
       namespace Dialog {
           class DialogManager;
       }
+
+      namespace Widget {
+	      class Dock;
+      }
   }
   namespace Whiteboard {
       class SessionManager;
@@ -77,7 +80,7 @@ namespace Inkscape {
   namespace Display {
       class TemporaryItemList;
       class TemporaryItem;
-      //class SnapIndicator;
+      class SnapIndicator;
   }
 }
 

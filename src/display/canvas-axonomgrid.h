@@ -6,22 +6,17 @@
  *
   */
 
-#include <display/sp-canvas.h>
-#include "xml/repr.h"
-
-#include "ui/widget/registry.h"
-
-#include "xml/node-event-vector.h"
-
-#include "snapper.h"
 #include "line-snapper.h"
-
 #include "canvas-grid.h"
 
+class  SPCanvasBuf;
 class  SPDesktop;
 struct SPNamedView;
 
 namespace Inkscape {
+namespace XML {
+	class Node;
+};
 
 class CanvasAxonomGrid : public CanvasGrid {
 public:

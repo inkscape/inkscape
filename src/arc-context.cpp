@@ -46,6 +46,7 @@
 #include "event-context.h"
 
 #include "arc-context.h"
+#include "display/sp-canvas-item.h"
 
 using Inkscape::DocumentUndo;
 

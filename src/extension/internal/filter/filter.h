@@ -8,11 +8,20 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <glibmm/i18n.h>
 
 #include "extension/implementation/implementation.h"
 
 namespace Inkscape {
+
+namespace XML {
+	class Document;
+}
+
 namespace Extension {
 
 class Effect;

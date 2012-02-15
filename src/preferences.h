@@ -13,7 +13,6 @@
 #ifndef INKSCAPE_PREFSTORE_H
 #define INKSCAPE_PREFSTORE_H
 
-#include <string>
 #include <map>
 #include <vector>
 #include <climits>

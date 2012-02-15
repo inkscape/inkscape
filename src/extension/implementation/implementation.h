@@ -12,13 +12,21 @@
 #ifndef SEEN_INKSCAPE_EXTENSION_IMPLEMENTATION_H
 #define SEEN_INKSCAPE_EXTENSION_IMPLEMENTATION_H
 
-#include <gtk/gtk.h>
-#include <gdkmm/types.h>
-#include <gtkmm/widget.h>
+#include <vector>
+#include <sigc++/signal.h>
+#include <glibmm/value.h>
 
-#include "xml/node.h"
-#include <2geom/forward.h>
-#include <2geom/point.h>
+namespace Geom {
+	class Affine;
+	class OptRect;
+	class Path;
+	typedef std::vector<Path> PathVector;
+	class Point;
+}
+
+namespace Gtk {
+	class Widget;
+}
 
 class SPDocument;
 class SPStyle;
@@ -30,6 +38,10 @@ namespace View {
 class View;
 } // namespace View
 } // namespace UI
+
+namespace XML {
+	class Node;
+} // namespace XML
 
 namespace Extension {
 

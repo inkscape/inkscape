@@ -19,11 +19,8 @@
 
 #include <stddef.h>
 #include <sigc++/sigc++.h>
-#include <sigc++/class_slot.h>
-
 #include "libcroco/cr-cascade.h"
 #include <2geom/forward.h>
-
 #include "gc-managed.h"
 #include "gc-finalized.h"
 #include "gc-anchored.h"

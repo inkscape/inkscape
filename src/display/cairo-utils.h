@@ -13,11 +13,12 @@
 #define SEEN_INKSCAPE_DISPLAY_CAIRO_UTILS_H
 
 #include <glib.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <cairomm/cairomm.h>
 #include <2geom/forward.h>
 
 struct SPColor;
+struct _GdkPixbuf;
+typedef struct _GdkPixbuf GdkPixbuf;
 
 namespace Inkscape {
 

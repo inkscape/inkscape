@@ -18,8 +18,8 @@
   * THIS FILE AND THE HEADER FILE NEED CLEANING UP. PLEASE DO NOT HESISTATE TO DO SO.
   */
 
+#include "ui/widget/registered-widget.h"
 #include "display/canvas-axonomgrid.h"
-
 #include "2geom/line.h"
 #include "desktop.h"
 #include "canvas-grid.h"
@@ -34,7 +34,6 @@
 #include "sp-namedview.h"
 #include "sp-object.h"
 #include "svg/svg-color.h"
-#include "ui/widget/registered-widget.h"
 #include "util/mathfns.h"
 #include "xml/node-event-vector.h"
 #include "round.h"
