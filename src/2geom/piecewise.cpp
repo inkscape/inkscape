@@ -238,7 +238,7 @@ std::vector<Interval> level_set(Piecewise<SBasis> const &f, Interval const &leve
         	Interval domj( a, b );
         	//Interval domj( f.mapToDomain(resulti[j].min(), i ), f.mapToDomain(resulti[j].max(), i ) );
 
-        	if ( j==0 && result.size() > 0 && result.back().intersects(domj) ){
+        	if ( j==0 && !result.empty() && result.back().intersects(domj) ){
         		result.back().unionWith(domj);
         	}else{
         		result.push_back(domj);

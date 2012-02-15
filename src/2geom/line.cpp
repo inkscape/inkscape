@@ -432,7 +432,7 @@ boost::optional<LineSegment> clip (Line const& l, Rect const& r)
             points.push_back (l.pointAt (oc->tb));
         }
     }
-    catch (InfiniteSolutions e)
+    catch (InfiniteSolutions const &e)
     {
         return opt_linesegment(ls);
     }
@@ -459,7 +459,7 @@ boost::optional<LineSegment> clip (Line const& l, Rect const& r)
                 }
             }
         }
-        catch (InfiniteSolutions e)
+        catch (InfiniteSolutions const &e)
         {
             return opt_linesegment(ls);
         }
@@ -481,7 +481,7 @@ Line make_angle_bisector_line(Line const& l1, Line const& l2)
     {
         crossing = intersection(l1, l2);
     }
-    catch(InfiniteSolutions e)
+    catch(InfiniteSolutions const &e)
     {
         return l1;
     }

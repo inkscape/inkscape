@@ -28,20 +28,18 @@
  */
 
 
-#include <2geom/svg-elliptical-arc.h>
-#include <2geom/ellipse.h>
-#include <2geom/sbasis-geometric.h>
 #include <2geom/bezier-curve.h>
+#include <2geom/ellipse.h>
+#include <2geom/numeric/fitting-model.h>
+#include <2geom/numeric/fitting-tool.h>
+#include <2geom/numeric/vector.h>
 #include <2geom/poly.h>
+#include <2geom/sbasis-geometric.h>
+#include <2geom/svg-elliptical-arc.h>
 
 #include <cfloat>
 #include <limits>
 #include <memory>
-
-#include <2geom/numeric/vector.h>
-#include <2geom/numeric/fitting-tool.h>
-#include <2geom/numeric/fitting-model.h>
-
 
 
 namespace Geom
@@ -211,7 +209,7 @@ bool make_elliptical_arc::make_elliptiarc()
     {
         e.set(1, coeff[0], coeff[1], coeff[2], coeff[3], coeff[4]);
     }
-    catch(LogicalError exc)
+    catch(LogicalError const &exc)
     {
         return false;
     }
@@ -231,7 +229,7 @@ bool make_elliptical_arc::make_elliptiarc()
                 e.arc(initial_point, inner_point, final_point, false) );
             ea = *eap;
         }
-        catch(RangeError exc)
+        catch(RangeError const &exc)
         {
             return false;
         }

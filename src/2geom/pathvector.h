@@ -117,7 +117,7 @@ boost::optional<PathVectorPosition> nearestPoint(PathVector const & path_in, Poi
 std::vector<PathVectorPosition> allNearestPoints(PathVector const & path_in, Point const& _point, double *distance_squared = NULL);
 
 inline
-Point pointAt(PathVector const & path_in, PathVectorPosition const pvp) {
+Point pointAt(PathVector const & path_in, PathVectorPosition const &pvp) {
     return path_in[pvp.path_nr].pointAt(pvp.t);
 }
 

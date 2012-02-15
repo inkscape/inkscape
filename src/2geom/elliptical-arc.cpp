@@ -117,7 +117,7 @@ Rect EllipticalArc::boundsExact() const
 
     for (unsigned i = 0; i < 4; ++i) {
         if (containsAngle(extremes[i])) {
-            arc_extremes[i] = valueAtAngle(extremes[i], i >> 1 ? Y : X);
+            arc_extremes[i] = valueAtAngle(extremes[i], (i >> 1) ? Y : X);
         }
     }
 

@@ -481,7 +481,7 @@ public:
      *
      *  P: the point to compute the nearest one
      */
-    Point nearestPoint (const Point P) const
+    Point nearestPoint (const Point &P) const
     {
         std::vector<Point> points = allNearestPoints (P);
         if ( !points.empty() )

@@ -117,7 +117,7 @@ bool path_direction(Path const &p) {
     double y = p.initialPoint()[Y];
     double x = p.initialPoint()[X];
     Cmp res = cmp(p[0].finalPoint()[Y], y);
-    goto doh;
+    /*goto doh;
     for(unsigned i = 1; i < p.size(); i++) {
         Cmp final_to_ray = cmp(p[i].finalPoint()[Y], y);
         Cmp initial_to_ray = cmp(p[i].initialPoint()[Y], y);
@@ -136,7 +136,7 @@ bool path_direction(Path const &p) {
     }
     return res < 0;
     
-    doh:
+    doh:*/
         //Otherwise fallback on area
         
         Piecewise<D2<SBasis> > pw = p.toPwSb();

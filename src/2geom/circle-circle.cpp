@@ -106,8 +106,6 @@ int circle_circle_intersection(Point X0, double r0,
 void run_test(double x0, double y0, double r0,
               double x1, double y1, double r1)
 {
-  double x3, y3, x3_prime, y3_prime;
-
   printf("x0=%F, y0=%F, r0=%F, x1=%F, y1=%F, r1=%F :\n",
           x0, y0, r0, x1, y1, r1);
   Geom::Point p0, p1;

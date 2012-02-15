@@ -1415,7 +1415,7 @@ Rect xAx::arc_bound (const Point & P1, const Point & Q, const Point & P2) const
     {   // with c != 0 the setCoefficients rise an exception
         gl[0].setCoefficients (coeff(1), 2 * coeff(2), coeff(4));
     }
-    catch(Geom::LogicalError e)
+    catch(Geom::LogicalError const &e)
     {
         empty[0] = true;
     }
@@ -1424,7 +1424,7 @@ Rect xAx::arc_bound (const Point & P1, const Point & Q, const Point & P2) const
     {
         gl[1].setCoefficients (2 * coeff(0), coeff(1), coeff(3));
     }
-    catch(Geom::LogicalError e)
+    catch(Geom::LogicalError const &e)
     {
         empty[1] = true;
     }

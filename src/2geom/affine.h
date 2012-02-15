@@ -201,7 +201,7 @@ inline std::ostream &operator<< (std::ostream &out_file, const Geom::Affine &m) 
 }
 
 // Affine factories
-Affine from_basis(const Point x_basis, const Point y_basis, const Point offset=Point(0,0));
+Affine from_basis(const Point &x_basis, const Point &y_basis, const Point &offset=Point(0,0));
 Affine elliptic_quadratic_form(Affine const &m);
 
 /** Given a matrix (ignoring the translation) this returns the eigen

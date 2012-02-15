@@ -588,32 +588,6 @@ ConvexHull merge(ConvexHull a, ConvexHull b) {
         ret.boundary.push_back(chs[state][idx++]);
     }
     return ret;
-
-    /*
-    ab[-1] = 0;
-    bb[-1] = 0;
-
-    int i = -1; // XXX: i is int but refers to vector indices
-
-    if(a.boundary[0][1] > b.boundary[0][1]) goto start_b;
-    while(true) {
-        for(; ab.count(i) == 0; i++) {
-            ret.boundary.push_back(a[i]);
-            if(i >= (int)a.boundary.size()) return ret;
-        }
-        if(ab[i] == 0 && i != -1) break;
-        i = ab[i];
-        start_b:
-
-        for(; bb.count(i) == 0; i++) {
-            ret.boundary.push_back(b[i]);
-            if(i >= (int)b.boundary.size()) return ret;
-        }
-        if(bb[i] == 0 && i != -1) break;
-        i = bb[i];
-    }
-    */
-    return ret;
 }
 
 ConvexHull graham_merge(ConvexHull a, ConvexHull b) {

@@ -256,7 +256,6 @@ std::vector<Piecewise<D2<SBasis> > > fuse_nearby_ends(std::vector<Piecewise<D2<S
         result.push_back(comp);
     }
     return result;
-    return f;
 }
 
 /*

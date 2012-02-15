@@ -666,13 +666,6 @@ Geom::cubics_fitting_curvature(Point const &M0,   Point const &M1,
             lambda1.push_back( a0*c1*c1 + c0 );
         }else{
             //find lamda0 by solving a deg 4 equation d0+d1*X+...+d4*X^4=0
-            double a[5];
-            a[0] = c1+a1*c0*c0;
-            a[1] = -1;
-            a[2] = 2*a1*a0*c0;
-            a[3] = 0;
-            a[4] = a1*a0*a0;
-            //vector<double> solns=solve_poly(a,4);
             vector<double> solns=solve_lambda0(a0,a1,c0,c1,insist_on_speed_signs);
             for (unsigned i=0;i<solns.size();i++){
                 double lbda0=solns[i];

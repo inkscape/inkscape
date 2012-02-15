@@ -22,7 +22,7 @@ namespace Geom {
  \return The new Affine.
  */
 //NOTE: Inkscape's version is broken, so when including this version, you'll have to search for code with this func
-Affine from_basis(Point const x_basis, Point const y_basis, Point const offset) {
+Affine from_basis(Point const &x_basis, Point const &y_basis, Point const &offset) {
     return Affine(x_basis[X], x_basis[Y],
                   y_basis[X], y_basis[Y],
                   offset [X], offset [Y]);
