@@ -49,7 +49,7 @@ class SPObjectClass;
 #define SP_OBJECT_WRITE_EXT (1 << 1)
 #define SP_OBJECT_WRITE_ALL (1 << 2)
 
-#include <glibmm/object.h>
+#include <glib-object.h>
 #include <stddef.h>
 #include <sigc++/connection.h>
 #include <sigc++/functors/slot.h>
