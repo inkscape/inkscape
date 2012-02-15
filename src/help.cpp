@@ -16,12 +16,12 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include "path-prefix.h"
 
+#include "ui/dialog/aboutbox.h"
+#include "path-prefix.h"
 #include "help.h"
 #include "file.h"
 
-#include "ui/dialog/aboutbox.h"
 
 void
 sp_help_about (void)

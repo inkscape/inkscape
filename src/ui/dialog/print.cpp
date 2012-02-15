@@ -18,8 +18,8 @@
 #include <windows.h>
 #endif
 
-#include <gtkmm/stock.h>
 #include "print.h"
+#include <gtkmm/stock.h>
 
 #include "extension/internal/cairo-render-context.h"
 #include "extension/internal/cairo-renderer.h"

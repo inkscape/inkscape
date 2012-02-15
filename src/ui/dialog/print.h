@@ -11,12 +11,12 @@
 #ifndef INKSCAPE_UI_DIALOG_PRINT_H
 #define INKSCAPE_UI_DIALOG_PRINT_H
 
+#include "ui/widget/rendering-options.h"
 #include <gtkmm/printoperation.h> // GtkMM
 
 class SPItem;
 class SPDocument;
 
-#include "ui/widget/rendering-options.h"
 
 /*
  * gtk 2.12.0 has a bug (http://bugzilla.gnome.org/show_bug.cgi?id=482089)

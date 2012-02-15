@@ -17,8 +17,10 @@
 #endif
 
 #include <climits>
+
+#include "ui/widget/color-picker.h"
+
 #include <glib.h>
-#include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 #include <2geom/transforms.h>
 #include <gtkmm/adjustment.h>
@@ -49,13 +51,14 @@
 #include "svg/svg-color.h"
 #include "svg/svg.h"
 #include "ui/icon-names.h"
-#include "ui/widget/color-picker.h"
 #include "ui/widget/spinbutton.h"
 #include "unclump.h"
 #include "verbs.h"
 #include "widgets/icon.h"
 #include "xml/repr.h"
 #include "sp-root.h"
+
+#include <gtk/gtk.h>
 
 using Inkscape::DocumentUndo;
 

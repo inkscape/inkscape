@@ -11,9 +11,9 @@
 #ifndef INKSCAPE_UI_WIDGET_COMBO_ENUMS_H
 #define INKSCAPE_UI_WIDGET_COMBO_ENUMS_H
 
+#include "ui/widget/labelled.h"
 #include <gtkmm/combobox.h>
 #include <gtkmm/liststore.h>
-#include "ui/widget/labelled.h"
 #include "attr-widget.h"
 #include "util/enums.h"
 

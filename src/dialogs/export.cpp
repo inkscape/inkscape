@@ -22,7 +22,6 @@
 // This has to be included prior to anything that includes setjmp.h, it croaks otherwise
 #include <png.h>
 
-#include <gtk/gtk.h>
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/label.h>
@@ -70,6 +69,8 @@
 #include <commdlg.h>
 #include <gdk/gdkwin32.h>
 #endif
+
+#include <gtk/gtk.h>
 
 using Inkscape::DocumentUndo;
 

@@ -30,11 +30,11 @@
 #endif
 
 #include <cstring>
-#include <gtk/gtk.h>
+#include <string>
+
 #include <gtkmm/filechooserdialog.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/stock.h>
-#include <string>
 
 #include "bind/javabind.h"
 #include "desktop.h"
@@ -82,6 +82,8 @@
 #include "ui/dialog/swatches.h"
 #include "ui/icon-names.h"
 #include "ui/tool/node-tool.h"
+
+#include <gtk/gtk.h>
 
 using Inkscape::DocumentUndo;
 

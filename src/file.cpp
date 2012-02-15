@@ -30,10 +30,7 @@
 # include "config.h"
 #endif
 
-#include <gtk/gtk.h>
-#include <glib.h>
-#include <glibmm/i18n.h>
-
+#include "ui/dialog/ocaldialogs.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "dialogs/export.h"
@@ -62,10 +59,13 @@
 #include "selection.h"
 #include "sp-namedview.h"
 #include "style.h"
-#include "ui/dialog/ocaldialogs.h"
 #include "ui/view/view-widget.h"
 #include "uri.h"
 #include "xml/rebase-hrefs.h"
+
+#include <gtk/gtk.h>
+#include <glib.h>
+#include <glibmm/i18n.h>
 
 using Inkscape::DocumentUndo;
 

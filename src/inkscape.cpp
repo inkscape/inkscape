@@ -37,8 +37,8 @@
 #include <glib/gstdio.h>
 #include <glib.h>
 #include <glibmm/i18n.h>
-#include <gtk/gtk.h>
 #include <gtkmm/messagedialog.h>
+#include <gtk/gtk.h>
 #include <signal.h>
 #include <string>
 #include "desktop.h"

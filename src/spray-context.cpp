@@ -20,11 +20,9 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
-#include <glibmm/i18n.h>
-
 #include <numeric>
+
+#include "ui/dialog/dialog-manager.h"
 
 #include "svg/svg.h"
 
@@ -65,11 +63,14 @@
 #include "filter-chemistry.h"
 
 #include "spray-context.h"
-#include "ui/dialog/dialog-manager.h"
 #include "helper/action.h"
 #include "verbs.h"
 
 #include <iostream>
+
+#include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
+#include <glibmm/i18n.h>
 
 using Inkscape::DocumentUndo;
 using namespace std;

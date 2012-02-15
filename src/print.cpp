@@ -15,6 +15,8 @@
 # include "config.h"
 #endif
 
+#include "ui/dialog/print.h"
+#include "print.h"
 #include "display/drawing.h"
 #include "display/drawing-item.h"
 #include "inkscape.h"
@@ -22,10 +24,8 @@
 #include "sp-item.h"
 #include "extension/print.h"
 #include "extension/system.h"
-#include "print.h"
 #include "sp-root.h"
 
-#include "ui/dialog/print.h"
 
 unsigned int
 sp_print_bind(SPPrintContext *ctx, Geom::Affine const &transform, float opacity)
