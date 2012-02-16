@@ -152,9 +152,13 @@ sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value)
         case SP_PROP_FLOOD_OPACITY:
             if (value) {
                 read_num = g_ascii_strtod(value, &end_ptr);
-                if (end_ptr != NULL) {
-                    g_warning("Unable to convert \"%s\" to number", value);
-                    read_num = 1;
+                if (end_ptr != NULL)
+                {
+                    if (*end_ptr)
+                    {
+                        g_warning("Unable to convert \"%s\" to number", value);
+                        read_num = 1;
+                    }
                 }
             }
             else {
