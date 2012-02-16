@@ -7,8 +7,9 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>
  *   Abhishek Sharma
+ *   John Smith
  *
- * Copyright (C) 1999-2007 Authors
+ * Copyright (C) 1999-2012 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -102,7 +103,7 @@ TextEdit::TextEdit()
     GtkWidget *px = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("text_line_spacing") );
     layout_hbox.pack_start(*Gtk::manage(Glib::wrap(px)), false, false);
 
-/**
+/*
 This would introduce dependency on gtk version 2.24 which is currently not available in
 Trisquel GNU/Linux 4.5.1 (released on May 25th, 2011)
 This conditional and its #else block can be deleted in the future.
@@ -116,7 +117,7 @@ This conditional and its #else block can be deleted in the future.
 
     const gchar *spacings[] = {"50%", "80%", "90%", "100%", "110%", "120%", "130%", "140%", "150%", "200%", "300%", NULL};
     for (int i = 0; spacings[i]; i++) {
-/**
+/*
 This would introduce dependency on gtk version 2.24 which is currently not available in
 Trisquel GNU/Linux 4.5.1 (released on May 25th, 2011)
 This conditional and its #else block can be deleted in the future.
@@ -209,9 +210,6 @@ TextEdit::~TextEdit()
     deskTrack.disconnect();
 }
 
-/*
- * Function to style the radio buttons with tooltips and icons
- */
 void TextEdit::styleButton(Gtk::RadioButton *button, gchar const *tooltip, gchar const *icon_name, Gtk::RadioButton *group_button )
 {
     GtkWidget *icon = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, icon_name );
@@ -245,10 +243,7 @@ void TextEdit::onSelectionModified(guint flags )
 
     onReadSelection (style, content);
 }
-/**
- * Called whenever something 'changes' on canvas
- * Gets the currently selected item from the canvas and sets all the controls in this dialog to the correct state
- */
+
 void TextEdit::onReadSelection ( gboolean dostyle, gboolean docontent )
 {
     if (blocked)
@@ -496,7 +491,7 @@ SPCSSAttr *TextEdit::getTextStyle ()
         // Note that CSS 1.1 does not support line-height; we set it for consistency, but also set
         // sodipodi:linespacing for backwards compatibility; in 1.2 we use line-height for flowtext
 
-/**
+/*
 This would introduce dependency on gtk version 2.24 which is currently not available in
 Trisquel GNU/Linux 4.5.1 (released on May 25th, 2011)
 This conditional and its #else block can be deleted in the future.

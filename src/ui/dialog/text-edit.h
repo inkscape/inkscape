@@ -5,8 +5,10 @@
  *   Lauris Kaplinski <lauris@ximian.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>
+ *   John Smith
+ *   Kris De Gussem <Kris.DeGussem@gmail.com>
  *
- * Copyright (C) 1999-2007 Authors
+ * Copyright (C) 1999-2012 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -37,23 +39,46 @@ namespace UI {
 namespace Dialog {
 
 #define VB_MARGIN 4
-
+/**
+ * The TextEdit class defines the Text and font dialog.
+ * 
+ * The Text and font dialog allows you to set the font family, style and size
+ * and shows a preview of the result. The dialogs layout settings include
+ * horizontal and vertical alignment and inter line distance.
+ */
 class TextEdit : public UI::Widget::Panel {
 public:
     TextEdit();
     virtual ~TextEdit();
 
+    /**
+     * Helper function which returns a new instance of the dialog.
+     * getInstance is needed by the dialog manager (Inkscape::UI::Dialog::DialogManager).
+     */
     static TextEdit &getInstance() { return *new TextEdit(); }
 
 protected:
 
     /**
-     * Callbacks for button presses and change handlers
+     * Callback for pressing the default button.
      */
     void onSetDefault ();
+
+    /**
+     * Callback for pressing the apply button.
+     */
     void onApply ();
     void onSelectionChange ();
     void onSelectionModified (guint flags);
+    
+    /**
+     * Called whenever something 'changes' on canvas.
+     * 
+     * onReadSelection gets the currently selected item from the canvas and sets all the controls in this dialog to the correct state.
+     * 
+     * @param dostyle Indicates whether the modification of the user includes a style change.
+     * @param content Indicates whether the modification of the user includes a style change. Actually refers to the question if we do want to show the content? (Parameter currently not used)
+     */
     void onReadSelection (gboolean style, gboolean content);
     void onToggle ();
     static void onLineSpacingChange (GtkComboBox* widget, gpointer data);
@@ -61,13 +86,17 @@ protected:
     static void onFontChange (SPFontSelector *fontsel, font_instance *font, TextEdit *self);
 
     /**
-     * Functions to get the selected text off the main canvas
+     * Get the selected text off the main canvas.
      */
     SPItem *getSelectedTextItem (void);
+
+    /**
+     * Count the number of text objects in the selection on the canvas.
+     */
     unsigned getSelectedTextCount (void);
 
     /**
-     * Helper function to create markup from a font definition and display in the preview label
+     * Helper function to create markup from a font definition and display in the preview label.
      */
     void setPreviewText (font_instance *font, Glib::ustring phrase);
 
@@ -75,7 +104,14 @@ protected:
     SPCSSAttr *getTextStyle ();
 
     /**
-     * Helper function to style radio buttons with icons, tooltips
+     * Helper function to style radio buttons with icons, tooltips.
+     * 
+     * styleButton is used when creating the dialog.
+     * 
+     * @param button pointer to the button which is created
+     * @param tooltip pointer to its tooltip string
+     * @param iconname string identifying the icon to be shown
+     * @param group_button group to which the radio button belongs to
      */
     void styleButton(Gtk::RadioButton *button, gchar const *tooltip, gchar const *iconname, Gtk::RadioButton *group_button  );
 
@@ -93,7 +129,7 @@ protected:
 
 private:
 
-    /**
+    /*
      * All the dialogs widgets
      */
     Gtk::Notebook notebook;
