@@ -46,7 +46,6 @@
 #include "../desktop-handles.h"
 #include "../desktop-style.h"
 #include "../dialogs/dialog-events.h"
-#include "../dialogs/text-edit.h"
 #include "../document-private.h"
 #include "../ege-adjustment-action.h"
 #include "../ege-output-action.h"
@@ -6632,7 +6631,7 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->mergeStyle("/tools/text/style", css);
-        sp_text_edit_dialog_default_set_insensitive (); //FIXME: Replace through a verb
+        //sp_text_edit_dialog_default_set_insensitive (); //FIXME: Replace through a verb
     }
     else
     {

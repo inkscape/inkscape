@@ -79,6 +79,8 @@ ink_common_sources +=		\
 	ui/dialog/svg-fonts-dialog.h		\
 	ui/dialog/swatches.cpp			\
 	ui/dialog/swatches.h			\
+	ui/dialog/text-edit.cpp			\
+	ui/dialog/text-edit.h			\
 	ui/dialog/tile.cpp			\
 	ui/dialog/tile.h			\
 	ui/dialog/tracedialog.cpp		\

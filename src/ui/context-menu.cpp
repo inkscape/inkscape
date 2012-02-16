@@ -55,7 +55,6 @@ void sp_object_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
 #include "sp-path.h"
 #include "sp-text.h"
 #include "desktop-handles.h"
-#include "dialogs/text-edit.h"
 #include "dialogs/spellcheck.h"
 #include "ui/dialog/object-attributes.h"
 #include "ui/dialog/object-properties.h"
@@ -534,7 +533,7 @@ static void sp_text_settings(GtkMenuItem *menuitem, SPItem *item)
         sp_desktop_selection(desktop)->set(item);
     }
 
-    sp_text_edit_dialog();
+    desktop->_dlg_mgr->showDialog("TextFont");
 }
 
 /* Spellcheck entry */

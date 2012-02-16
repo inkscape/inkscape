@@ -11,7 +11,5 @@ ink_common_sources +=	\
 	dialogs/find.h			\
 	dialogs/spellcheck.cpp		\
 	dialogs/spellcheck.h		\
-	dialogs/text-edit.cpp		\
-	dialogs/text-edit.h		\
 	dialogs/xml-tree.cpp		\
 	dialogs/xml-tree.h

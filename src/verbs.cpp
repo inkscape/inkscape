@@ -42,7 +42,6 @@
 #include "dialogs/clonetiler.h"
 #include "dialogs/find.h"
 #include "dialogs/spellcheck.h"
-#include "dialogs/text-edit.h"
 #include "dialogs/xml-tree.h"
 #include "display/curve.h"
 #include "document.h"
@@ -1817,7 +1816,7 @@ void DialogVerb::perform(SPAction *action, void *data)
             dt->_dlg_mgr->showDialog("SprayOptionClass");
             break;
         case SP_VERB_DIALOG_TEXT:
-            sp_text_edit_dialog();
+            dt->_dlg_mgr->showDialog("TextFont");
             break;
         case SP_VERB_DIALOG_XML_EDITOR:
             sp_xml_tree_dialog();

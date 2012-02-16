@@ -205,6 +205,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_box_pack_start(GTK_BOX(vb), hb, FALSE, FALSE, 0);
 
         fsel->size = gtk_combo_box_entry_new_text ();
+        gtk_widget_set_tooltip_text (fsel->size, _("Font size (px)"));
         gtk_widget_set_size_request(fsel->size, 90, -1);
         g_signal_connect (G_OBJECT(fsel->size), "changed", G_CALLBACK (sp_font_selector_size_changed), fsel);
         gtk_box_pack_end (GTK_BOX(hb), fsel->size, FALSE, FALSE, 0);
