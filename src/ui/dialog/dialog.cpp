@@ -83,11 +83,12 @@ Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_pat
     : _user_hidden(false), 
       _hiddenF12(false),
       retransientize_suppress(false),
-      //
       _prefs_path(prefs_path),
       _verb_num(verb_num),
       _title(),
       _apply_label(apply_label),
+      _desktop(NULL),
+      _is_active_desktop(true),
       _behavior(0)
 {
     gchar title[500];
@@ -97,8 +98,8 @@ Dialog::Dialog(Behavior::BehaviorFactory behavior_factory, const char *prefs_pat
     }
 
     _title = title;
-
     _behavior = behavior_factory(*this);
+    _desktop = SP_ACTIVE_DESKTOP;
 
     g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop", G_CALLBACK(sp_retransientize), (void *)this);
     g_signal_connect(G_OBJECT(INKSCAPE), "dialogs_hide", G_CALLBACK(hideCallback), (void *)this);
@@ -124,13 +125,14 @@ Dialog::~Dialog()
 
 void Dialog::onDesktopActivated(SPDesktop *desktop)
 {
+    _is_active_desktop = (desktop == _desktop);
     _behavior->onDesktopActivated(desktop);
 }
 
 void Dialog::onShutdown()
 {
     save_geometry();
-    _user_hidden = true;
+    //_user_hidden = true;
     _behavior->onShutdown();
 }
 
@@ -223,6 +225,24 @@ void Dialog::save_geometry()
     prefs->setInt(_prefs_path + "/h", h);
 
 }
+
+void
+Dialog::save_status(int visible, int state, int placement)
+{
+   // Only save dialog status for dialogs on the "last document"
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop != NULL || !_is_active_desktop ) {
+        return;
+    }
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs) {
+        prefs->setInt(_prefs_path + "/visible", visible);
+        prefs->setInt(_prefs_path + "/state", state);
+        prefs->setInt(_prefs_path + "/placement", placement);
+    }
+}
+
 
 void Dialog::_handleResponse(int response_id)
 {

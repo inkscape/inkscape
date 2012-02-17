@@ -229,12 +229,14 @@ void Dock::_onLayoutChanged()
 {
     if (isEmpty()) {
         if (hasIconifiedItems()) {
+            _paned->get_child1()->set_size_request(-1, -1);
             _scrolled_window->set_size_request(_default_dock_bar_width);
         } else {
+            _paned->get_child1()->set_size_request(-1, -1);
             _scrolled_window->set_size_request(_default_empty_width);
         }
-
         getParentPaned()->set_position(INT_MAX);
+
     } else {
         // unset any forced size requests
         _paned->get_child1()->set_size_request(-1, -1);

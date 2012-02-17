@@ -722,6 +722,10 @@ sp_desktop_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
         }
         dtw->desktop->zoom_absolute(area.midpoint()[Geom::X], area.midpoint()[Geom::Y], zoom);
 
+        // TODO - Should call show_dialogs() from sp_namedview_window_from_document only.
+        // But delaying the call to here solves dock sizing issues on OS X, (see #171579)
+        dtw->desktop->show_dialogs();
+
     } else {
         if (GTK_WIDGET_CLASS (dtw_parent_class)->size_allocate) {
             GTK_WIDGET_CLASS (dtw_parent_class)->size_allocate (widget, allocation);

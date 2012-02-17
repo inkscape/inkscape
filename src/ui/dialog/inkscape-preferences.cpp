@@ -573,6 +573,9 @@ void InkscapePreferences::initPageUI()
     _win_save_geom_prefs.init ( _("Remember and use last window's geometry"), "/options/savewindowgeometry/value", 2, false, &_win_save_geom);
     _win_save_geom_off.init ( _("Don't save window geometry"), "/options/savewindowgeometry/value", 0, false, &_win_save_geom);
 
+    _win_save_dialog_pos_on.init ( _("Save and restore dialogs status"), "/options/savedialogposition/value", 1, true, 0);
+    _win_save_dialog_pos_off.init ( _("Don't save dialogs status"), "/options/savedialogposition/value", 0, false, &_win_save_dialog_pos_on);
+
     _win_dockable.init ( _("Dockable"), "/options/dialogtype/value", 1, true, 0);
     _win_floating.init ( _("Floating"), "/options/dialogtype/value", 0, false, &_win_dockable);
 
@@ -590,6 +593,12 @@ void InkscapePreferences::initPageUI()
                             _("Remember and use the last window's geometry (saves geometry to user preferences)"));
     _page_windows.add_line( true, "", _win_save_geom, "",
                             _("Save and restore window geometry for each document (saves geometry in the document)"));
+
+    _page_windows.add_group_header( _("Saving dialogs status"));
+    _page_windows.add_line( true, "", _win_save_dialog_pos_off, "",
+                            _("Don't save dialogs status"));
+    _page_windows.add_line( true, "", _win_save_dialog_pos_on, "",
+                            _("Save and restore dialogs status (the last open windows dialogs are saved when it closes)"));
 
     _page_windows.add_group_header( _("Dialog behavior (requires restart)"));
     _page_windows.add_line( true, "", _win_dockable, "",

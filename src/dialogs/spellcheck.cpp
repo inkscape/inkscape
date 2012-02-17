@@ -156,6 +156,8 @@ spellcheck_disconnect()
 
 static void sp_spellcheck_dialog_destroy(GtkObject *object, gpointer)
 {
+    _prefs->setInt(prefs_path + "visible", 0);
+
     spellcheck_clear_rects();
     spellcheck_clear_langs();
     spellcheck_disconnect();
@@ -902,6 +904,8 @@ sp_spellcheck_dialog (void)
             w = _prefs->getInt(prefs_path + "w", 0);
             h = _prefs->getInt(prefs_path + "h", 0);
         }
+
+        _prefs->setInt(prefs_path + "visible", 1);
 
         if (w && h)
             gtk_window_resize ((GtkWindow *) dlg, w, h);

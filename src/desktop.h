@@ -152,6 +152,7 @@ public:
     guint window_state;
     unsigned int interaction_disabled_counter;
     bool waiting_cursor;
+    bool showing_dialogs;
 
     /// \todo fixme: This has to be implemented in different way */
     guint guides_active : 1;
@@ -365,6 +366,10 @@ public:
     void maximize();
     void fullscreen();
     void focusMode(bool mode = true);
+    /**
+     * Reopen any dialogs that were open when inkscape last shutdown
+     */
+    void show_dialogs();
 
     Geom::Affine w2d() const; //transformation from window to desktop coordinates (used for zooming)
     Geom::Point w2d(Geom::Point const &p) const;
@@ -378,6 +383,7 @@ public:
     virtual bool shutdown();
     virtual void mouseover() {}
     virtual void mouseout() {}
+
 
     virtual bool onDeleteUI (GdkEventAny*);
     virtual bool onWindowStateEvent (GdkEventWindowState* event);

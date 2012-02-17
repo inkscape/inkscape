@@ -14,6 +14,8 @@
 #include <gtkmm/icontheme.h>
 
 #include "widgets/icon.h"
+#include "widgets/toolbox.h"
+#include "ui/icon-names.h"
 
 namespace Inkscape {
 namespace UI {
@@ -33,10 +35,17 @@ ImageToggler::ImageToggler( char const* on, char const* off) :
     int phys = sp_icon_get_phys_size((int)Inkscape::ICON_SIZE_DECORATION);
     Glib::RefPtr<Gtk::IconTheme> icon_theme = Gtk::IconTheme::get_default();
 
+    if (!icon_theme->has_icon(_pixOnName)) {
+        Inkscape::queueIconPrerender( INKSCAPE_ICON(_pixOnName.data()), Inkscape::ICON_SIZE_DECORATION );
+    }
+    if (!icon_theme->has_icon(_pixOffName)) {
+        Inkscape::queueIconPrerender( INKSCAPE_ICON(_pixOffName.data()), Inkscape::ICON_SIZE_DECORATION );
+    }
+
+
     if (icon_theme->has_icon(_pixOnName)) {
         _property_pixbuf_on = icon_theme->load_icon(_pixOnName, phys, (Gtk::IconLookupFlags)0);
     }
-
     if (icon_theme->has_icon(_pixOffName)) {
         _property_pixbuf_off = icon_theme->load_icon(_pixOffName, phys, (Gtk::IconLookupFlags)0);
     }

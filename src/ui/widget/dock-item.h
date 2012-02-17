@@ -34,10 +34,12 @@ class DockItem {
 
 public:
 
-    enum State { UNATTACHED,     // item not bound to the dock (a temporary state)
-                 FLOATING_STATE, // item not in its dock (but can be docked in other,
-                                 // e.g. floating, docks)
-                 DOCKED_STATE }; // item in its assigned dock
+    enum State { UNATTACHED,                // item not bound to the dock (a temporary state)
+                 FLOATING_STATE,            // item not in its dock (but can be docked in other,
+                                            // e.g. floating, docks)
+                 DOCKED_STATE,              // item in its assigned dock
+                 ICONIFIED_DOCKED_STATE,    // item iconified in its assigned dock from dock
+                 ICONIFIED_FLOATING_STATE}; // item iconified in its assigned dock from float
 
     enum Placement { 
         NONE     = GDL_DOCK_NONE,
@@ -50,7 +52,7 @@ public:
     };
 
     DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& long_name, 
-             const Glib::ustring& icon_name, State state);
+             const Glib::ustring& icon_name, State state, Placement placement);
 
     ~DockItem();
 
@@ -80,6 +82,7 @@ public:
 
     void hide();
     void show();
+    void iconify();
     void show_all();
 
     void present();

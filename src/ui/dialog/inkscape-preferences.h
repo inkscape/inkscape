@@ -219,6 +219,8 @@ protected:
 
     UI::Widget::PrefRadioButton _win_dockable;
     UI::Widget::PrefRadioButton _win_floating;
+    UI::Widget::PrefRadioButton _win_save_dialog_pos_on;
+    UI::Widget::PrefRadioButton _win_save_dialog_pos_off;
     UI::Widget::PrefRadioButton _win_ontop_none;
     UI::Widget::PrefRadioButton _win_ontop_normal;
     UI::Widget::PrefRadioButton _win_ontop_agressive;

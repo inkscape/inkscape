@@ -108,6 +108,7 @@ public:
      * Save window position to preferences.
      */
     void           save_geometry();
+    void           save_status(int visible, int state, int placement);
 
     bool retransientize_suppress; // when true, do not retransientize (prevents races when switching new windows too fast)
 
@@ -116,6 +117,8 @@ protected:
     int            _verb_num;
     Glib::ustring  _title;
     Glib::ustring  _apply_label;
+    SPDesktop *    _desktop;
+    bool           _is_active_desktop;
 
     virtual void   _handleResponse(int response_id);
 

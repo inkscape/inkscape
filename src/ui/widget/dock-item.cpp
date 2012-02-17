@@ -14,6 +14,7 @@
 #include "inkscape.h"
 #include "preferences.h"
 #include "ui/widget/dock.h"
+#include "ui/icon-names.h"
 #include "widgets/icon.h"
 
 #include <gtkmm/icontheme.h>
@@ -24,7 +25,7 @@ namespace UI {
 namespace Widget {
 
 DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& long_name,
-                   const Glib::ustring& icon_name, State state) :
+                   const Glib::ustring& icon_name, State state, Placement placement) :
     _dock(dock),
     _prev_state(state),
     _prev_position(0),
@@ -41,8 +42,13 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
             GDL_DOCK_ITEM_BEH_NORMAL :
             GDL_DOCK_ITEM_BEH_CANT_DOCK_CENTER);
 
+
     if (!icon_name.empty()) {
         Glib::RefPtr<Gtk::IconTheme> iconTheme = Gtk::IconTheme::get_default();
+
+        if (!iconTheme->has_icon(icon_name)) {
+            Inkscape::queueIconPrerender( INKSCAPE_ICON(icon_name.data()), Inkscape::ICON_SIZE_MENU );
+        }
         // Icon might be in the icon theme, or might be a stock item. Check the proper source:
         if ( iconTheme->has_icon(icon_name) ) {
             int width = 0;
@@ -78,9 +84,14 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
     signal_delete_event().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::DockItem::_onDeleteEvent));
     signal_realize().connect(sigc::mem_fun(*this, &Inkscape::UI::Widget::DockItem::_onRealize));
 
-    _dock.addItem(*this, (_prev_state == FLOATING_STATE ? FLOATING : TOP));
+    _dock.addItem(*this, ( _prev_state == FLOATING_STATE || _prev_state == ICONIFIED_FLOATING_STATE ) ? FLOATING : placement);
+
+    if (_prev_state == ICONIFIED_FLOATING_STATE || _prev_state == ICONIFIED_DOCKED_STATE) {
+        iconify();
+    }
 
     show_all();
+
 }
 
 DockItem::~DockItem()
@@ -198,7 +209,17 @@ DockItem::isIconified() const
 DockItem::State
 DockItem::getState() const
 {
-    return (isAttached() ? (isFloating() ? FLOATING_STATE : DOCKED_STATE) : UNATTACHED);
+    if (isIconified() && _prev_state == FLOATING_STATE) {
+        return ICONIFIED_FLOATING_STATE;
+    } else if (isIconified()) {
+        return ICONIFIED_DOCKED_STATE;
+    } else if (isFloating() && isAttached()) {
+        return FLOATING_STATE;
+    } else if (isAttached()) {
+        return DOCKED_STATE;
+    }
+
+    return UNATTACHED;
 }
 
 DockItem::State
@@ -210,10 +231,12 @@ DockItem::getPrevState() const
 DockItem::Placement
 DockItem::getPlacement() const
 {
-    GdlDockPlacement placement = (GdlDockPlacement)NONE;
-    gdl_dock_object_child_placement(gdl_dock_object_get_parent_object (GDL_DOCK_OBJECT(_gdl_dock_item)),
-                                    GDL_DOCK_OBJECT(_gdl_dock_item),
-                                    &placement);
+    GdlDockPlacement placement = (GdlDockPlacement)TOP;
+    GdlDockObject *parent = gdl_dock_object_get_parent_object (GDL_DOCK_OBJECT(_gdl_dock_item));
+    if (parent) {
+        gdl_dock_object_child_placement(parent, GDL_DOCK_OBJECT(_gdl_dock_item), &placement);
+    }
+
     return (Placement)placement;
 }
 
@@ -230,6 +253,12 @@ DockItem::show()
 }
 
 void
+DockItem::iconify()
+{
+    gdl_dock_item_iconify_item (GDL_DOCK_ITEM(_gdl_dock_item));
+}
+
+void
 DockItem::show_all()
 {
     gtk_widget_show_all(_gdl_dock_item);
@@ -239,10 +268,9 @@ void
 DockItem::present()
 {
 
-    if (isIconified() || !isAttached()) {
+    if (!isIconified() && !isAttached()) {
         show();
     }
-
     // tabbed
     else if (getPlacement() == CENTER) {
         int i = gtk_notebook_page_num(GTK_NOTEBOOK(gtk_widget_get_parent(_gdl_dock_item)),
@@ -338,6 +366,11 @@ DockItem::_onHideWindow()
 void
 DockItem::_onHide()
 {
+    if (_prev_state == ICONIFIED_DOCKED_STATE)
+        _prev_state = DOCKED_STATE;
+    else if (_prev_state == ICONIFIED_FLOATING_STATE)
+        _prev_state = FLOATING_STATE;
+
     _signal_state_changed.emit(UNATTACHED, getState());
 }
 

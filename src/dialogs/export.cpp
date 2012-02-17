@@ -156,6 +156,9 @@ static const char * selection_labels[SELECTION_NUMBER_OF] = {
 static void
 sp_export_dialog_destroy ( GtkObject */*object*/, gpointer /*data*/ )
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(prefs_path + "visible", 0);
+
     sp_signal_disconnect_by_data (INKSCAPE, dlg);
 
     wd.win = dlg = NULL;
@@ -421,6 +424,8 @@ sp_export_dialog (void)
             w = prefs->getInt(prefs_path + "w", 0);
             h = prefs->getInt(prefs_path + "h", 0);
         }
+
+        prefs->setInt(prefs_path + "visible", 1);
 
 //        if (x<0) x=0;
 //        if (y<0) y=0;

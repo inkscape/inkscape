@@ -72,6 +72,7 @@
 #include "sp-root.h"
 #include "widgets/desktop-widget.h"
 #include "xml/repr.h"
+#include "helper/action.h" //sp_action_perform
 
 // TODO those includes are only for node tool quick zoom. Remove them after fixing it.
 #include "ui/tool/node-tool.h"
@@ -117,6 +118,7 @@ SPDesktop::SPDesktop() :
     window_state(0),
     interaction_disabled_counter( 0 ),
     waiting_cursor( false ),
+    showing_dialogs ( false ),
     guides_active( false ),
     gr_item( 0 ),
     gr_point_type( 0 ),
@@ -802,7 +804,6 @@ SPDesktop::set_display_area (double x0, double y0, double x1, double y1, double 
     _widget->updateRulers();
     _widget->updateScrollbars(_d2w.descrim());
     _widget->updateZoom();
-
 
     if ( zoomChanged ) {
         signal_zoom_changed.emit(_d2w.descrim());
@@ -1770,7 +1771,79 @@ Geom::Point SPDesktop::dt2doc(Geom::Point const &p) const
     return p * dt2doc();
 }
 
+void
+SPDesktop::show_dialogs()
+{
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs == NULL) {
+        return;
+    }
+
+    int active = prefs->getInt("/options/savedialogposition/value", 1);
+    if (active == 0) {
+        // User has turned off this feature in preferences
+        return;
+    }
+
+    if (showing_dialogs) {
+        return;
+    }
+
+    showing_dialogs = TRUE;
+
+
+    /*
+     * Get each dialogs previous state from preferences and reopen on startup if needed.
+     * Map dialog 'open' verb ids to dialog last visible state preference.
+     * Would prefer to use the Dialog Manager to open, but currently it doesn't support non-dockable dialogs
+     */
+    std::map<int, Glib::ustring> mapVerbPreference;
+    std::map<int, Glib::ustring>::const_iterator iter;
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_LAYERS, "/dialogs/layers") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_FILL_STROKE, "/dialogs/fillstroke") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_EXTENSIONEDITOR, "/dialogs/extensioneditor") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_ALIGN_DISTRIBUTE, "/dialogs/align") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_METADATA, "/dialogs/documentmetadata") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_NAMEDVIEW, "/dialogs/documentoptions") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_FILTER_EFFECTS, "/dialogs/filtereffects") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_FIND, "/dialogs/find") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_GLYPHS, "/dialogs/glyphs") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_DEBUG, "/dialogs/messages") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_HELP_MEMORY, "/dialogs/memory") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_LIVE_PATH_EFFECT, "/dialogs/livepatheffect") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_UNDO_HISTORY, "/dialogs/undo-history") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_TRANSFORM, "/dialogs/transformation") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_SWATCHES, "/dialogs/swatches") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_VIEW_ICON_PREVIEW, "/dialogs/iconpreview") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_SVG_FONTS, "/dialogs/svgfonts") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_INPUT, "/dialogs/inputdevices") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_CONTEXT_SELECT_PREFS, "/dialogs/preferences") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_SELECTION_GRIDTILE, "/dialogs/gridtiler") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_SELECTION_TRACE, "/dialogs/trace") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_TEXT, "/dialogs/textandfont") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_FILE_EXPORT, "/dialogs/export") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_XML_EDITOR, "/dialogs/xml") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_FIND, "/dialogs/find") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_CLONETILER, "/dialogs/clonetiler") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_ITEM, "/dialogs/object") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_SPELLCHECK, "/dialogs/spellcheck") );
+
+    for (iter = mapVerbPreference.begin(); iter != mapVerbPreference.end(); iter++) {
+        int verbId = iter->first;
+        Glib::ustring pref = iter->second;
+        int visible = prefs->getInt(pref + "/visible", 0);
+        if (visible) {
+            Inkscape::Verb *verb = Inkscape::Verb::get(verbId);
+            if (verb) {
+                SPAction *action = verb->get_action(this);
+                if (action) {
+                    sp_action_perform(action, NULL);
+                }
+            }
+        }
+    }
+}
 /*
  * Pop event context from desktop's context stack. Never used.
  */

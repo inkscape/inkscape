@@ -74,6 +74,7 @@ private:
 
     /** Internal signal handlers */
     void _onHide();
+    void _onShow();
     bool _onDeleteEvent(GdkEventAny *event);
     void _onStateChanged(Widget::DockItem::State prev_state, Widget::DockItem::State new_state);
     bool _onKeyPress(GdkEventKey *event);

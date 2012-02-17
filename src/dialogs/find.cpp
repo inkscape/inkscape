@@ -77,6 +77,9 @@ static Glib::ustring const prefs_path = "/dialogs/find/";
 
 static void sp_find_dialog_destroy(GtkObject *object, gpointer)
 {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt(prefs_path + "visible", 0);
+
     sp_signal_disconnect_by_data (INKSCAPE, object);
     wd.win = dlg = NULL;
     wd.stop = 0;
@@ -661,6 +664,8 @@ sp_find_dialog_old (void)
             h = prefs->getInt(prefs_path + "h", 0);
         }
         
+        prefs->setInt(prefs_path + "visible", 1);
+
 //        if (x<0) x=0;
 //        if (y<0) y=0;
 

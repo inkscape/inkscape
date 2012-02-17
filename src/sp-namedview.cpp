@@ -790,6 +790,7 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
     SPNamedView *nv = desktop->namedview;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool geometry_from_file = prefs->getBool("/options/savewindowgeometry/value");
+    bool show_dialogs = TRUE;
 
     // restore window size and position stored with the document
     if (geometry_from_file) {
@@ -808,10 +809,23 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
             x = MAX(MIN_ONSCREEN_DISTANCE - nv->window_width, x);
             y = MAX(MIN_ONSCREEN_DISTANCE - nv->window_height, y);
             if (w>0 && h>0) {
+
+                #ifndef WIN32
+                gint dx, dy, dw, dh;
+                desktop->getWindowGeometry(dx, dy, dw, dh);
+                if (w != dw || h != dh) {
+                    // Don't show dialogs when window is initially resized on OSX/Linux due to gdl dock bug
+                    // This will happen on sp_desktop_widget_size_allocate
+                    show_dialogs = FALSE;
+                }
+                #endif
+
                 desktop->setWindowSize(w, h);
                 desktop->setWindowPosition(Geom::Point(x, y));
+
             }
         }
+
     }
 
     // restore zoom and view
@@ -825,6 +839,10 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
 
     // cancel any history of zooms up to this point
     desktop->zooms_past.clear();
+
+    if (show_dialogs) {
+        desktop->show_dialogs();
+    }
 }
 
 bool SPNamedView::getSnapGlobal() const
