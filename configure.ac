@@ -55,7 +55,10 @@ if test "$GCC" = "yes"; then
   # Enable all default warnings
   CPPFLAGS="-Wall $CPPFLAGS"
   # Enforce including only <glib.h> (required since 2.31)
-  CPPFLAGS="-DG_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
+  PKG_CHECK_MODULES(NEW_GLIBMM, glibmm-2.4 >= 2.28, new_glibmm=yes, new_glibmm=no)
+  if test "x$new_glibmm" = "xyes"; then
+    CPPFLAGS="-DG_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
+  fi
   # Ensure that no deprecated glibmm symbols are introduced.
   # lp:inkscape builds cleanly with this option at r10957
   CPPFLAGS="-DGLIBMM_DISABLE_DEPRECATED $CPPFLAGS"
