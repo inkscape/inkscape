@@ -54,11 +54,6 @@ if test "$GCC" = "yes"; then
   CPPFLAGS="-Wformat -Wformat-security $CPPFLAGS"
   # Enable all default warnings
   CPPFLAGS="-Wall $CPPFLAGS"
-  # Enforce including only <glib.h> (required since 2.31)
-  PKG_CHECK_MODULES(NEW_GLIBMM, glibmm-2.4 >= 2.28, new_glibmm=yes, new_glibmm=no)
-  if test "x$new_glibmm" = "xyes"; then
-    CPPFLAGS="-DG_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
-  fi
   # Ensure that no deprecated glibmm symbols are introduced.
   # lp:inkscape builds cleanly with this option at r10957
   CPPFLAGS="-DGLIBMM_DISABLE_DEPRECATED $CPPFLAGS"
@@ -734,16 +729,33 @@ else
 fi
 PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.24  gtk+-2.0 >= 2.20  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10  sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.10.0)
 
-dnl gtkmm provides no preprocessor macros for easily checking versions.  This check is used
-dnl to figure out if we are working with the newer 2.24 series or not.
-PKG_CHECK_MODULES(GTKMM_2_24, gtkmm-2.4 >= 2.24, with_gtkmm_2_24=yes, with_gtkmm_2_24=no)
-if test "x$with_gtkmm_2_24" = "xyes"; then
-	AC_DEFINE(WITH_GTKMM_2_24,1,[Build with Gtkmm 2.24.x])
-fi
+dnl ***********************************
+dnl Checks for specific series of Gtkmm
+dnl  - There are no convenient macros 
+dnl    defined in Gtkmm itself, so we 
+dnl    need to perform these checks 
+dnl    ourselves.
+dnl ***********************************
 
 PKG_CHECK_MODULES(GTKMM_2_22, gtkmm-2.4 >= 2.22, with_gtkmm_2_22=yes, with_gtkmm_2_22=no)
 if test "x$with_gtkmm_2_22" = "xyes"; then
-	AC_DEFINE(WITH_GTKMM_2_22,1,[Build with Gtkmm 2.22.x])
+	AC_DEFINE(WITH_GTKMM_2_22,1,[Build with Gtkmm 2.22.x or higher])
+fi
+
+PKG_CHECK_MODULES(GTKMM_2_24, gtkmm-2.4 >= 2.24, with_gtkmm_2_24=yes, with_gtkmm_2_24=no)
+if test "x$with_gtkmm_2_24" = "xyes"; then
+	AC_DEFINE(WITH_GTKMM_2_24,1,[Build with Gtkmm 2.24.x or higher])
+fi
+
+dnl Ideally, we want to avoid including any glib headers other than the 
+dnl top-level <glib.h>, because they are all deprecated in glib >= 2.31.
+dnl However, glibmm < 2.28 *does* include the deprecated glib headers, so we
+dnl can only define the deprecation-checking compiler flag if we're using 
+dnl glibmm versions.
+PKG_CHECK_MODULES(GTKMM_2_28, gtkmm-2.4 >= 2.28, with_gtkmm_2_28=yes, with_gtkmm_2_28=no)
+if test "x$with_gtkmm_2_28" = "xyes"; then
+	AC_DEFINE(WITH_GTKMM_2_28,1,[Build with Gtkmm 2.28.x or higher])
+	CPPFLAGS="-DG_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
 fi
 
 # Check for GTK+ backend target
