@@ -25,7 +25,7 @@
 #include "desktop-handles.h"
 #include "document.h"
 #include "selection.h"
-#include <2geom/rect-hull.h>
+#include <2geom/rect.h>
 #include "xml/repr.h"
 #include "preferences.h"
 
@@ -476,18 +476,14 @@ std::vector<Inkscape::SnapCandidatePoint> Selection::getSnapPointsConvexHull(Sna
 
     std::vector<Inkscape::SnapCandidatePoint> pHull;
     if (!p.empty()) {
-        std::vector<Inkscape::SnapCandidatePoint>::iterator i;
-        Geom::RectHull cvh((p.front()).getPoint());
-        for (i = p.begin(); i != p.end(); ++i) {
+        Geom::Rect cvh((p.front()).getPoint(), (p.front()).getPoint());
+        for (std::vector<Inkscape::SnapCandidatePoint>::iterator i = p.begin(); i != p.end(); ++i) {
             // these are the points we get back
-            cvh.add((*i).getPoint());
+            cvh.expandTo((*i).getPoint());
         }
 
-        Geom::OptRect rHull = cvh.bounds();
-        if (rHull) {
-            for ( unsigned i = 0 ; i < 4 ; ++i ) {
-                pHull.push_back(Inkscape::SnapCandidatePoint(rHull->corner(i), SNAPSOURCE_CONVEX_HULL_CORNER));
-            }
+        for ( unsigned i = 0 ; i < 4 ; ++i ) {
+            pHull.push_back(Inkscape::SnapCandidatePoint(cvh.corner(i), SNAPSOURCE_CONVEX_HULL_CORNER));
         }
     }
 

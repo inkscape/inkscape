@@ -22,7 +22,7 @@
 #include <gtk/gtk.h>
 
 #include "helper/sp-marshal.h"
-#include <2geom/rect-hull.h>
+#include <2geom/rect.h>
 #include <2geom/affine.h>
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-group.h"
@@ -972,26 +972,19 @@ void SPCanvasGroup::destroy(GtkObject *object)
 void SPCanvasGroup::update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
     SPCanvasGroup const *group = SP_CANVAS_GROUP(item);
-    Geom::RectHull corners(Geom::Point(0, 0));
-    bool empty=true;
+    Geom::OptRect bounds;
 
     for (GList *list = group->items; list; list = list->next) {
         SPCanvasItem *i = (SPCanvasItem *)list->data;
 
         sp_canvas_item_invoke_update (i, affine, flags);
 
-        if ( i->x2 > i->x1 && i->y2 > i->y1 ) {
-            if (empty) {
-                corners = Geom::RectHull(Geom::Point(i->x1, i->y1));
-                empty = false;
-            } else {
-                corners.add(Geom::Point(i->x1, i->y1));
-            }
-            corners.add(Geom::Point(i->x2, i->y2));
+        if ( (i->x2 > i->x1) && (i->y2 > i->y1) ) {
+            bounds.expandTo(Geom::Point(i->x1, i->y1));
+            bounds.expandTo(Geom::Point(i->x2, i->y2));
         }
     }
 
-    Geom::OptRect const bounds = corners.bounds();
     if (bounds) {
         item->x1 = bounds->min()[Geom::X];
         item->y1 = bounds->min()[Geom::Y];
