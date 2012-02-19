@@ -431,7 +431,7 @@ public:
      * and it will contain only the given point. */
     void expandTo(CPoint const &p) {
         if (*this) {
-            (*this).expandTo(p);
+            (*this)->expandTo(p);
         } else {
             *this = CRect(p, p);
         }
