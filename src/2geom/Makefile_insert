@@ -79,6 +79,7 @@
 	2geom/ray.h	\
 	2geom/rect.cpp	\
 	2geom/rect.h	\
+	2geom/rect-hull.h	\
 	2geom/region.cpp	\
 	2geom/region.h	\
 	2geom/sbasis-2d.cpp	\

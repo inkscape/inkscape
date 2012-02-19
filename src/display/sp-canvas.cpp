@@ -22,7 +22,7 @@
 #include <gtk/gtk.h>
 
 #include "helper/sp-marshal.h"
-#include <helper/recthull.h>
+#include <2geom/rect-hull.h>
 #include <2geom/affine.h>
 #include "display/sp-canvas.h"
 #include "display/sp-canvas-group.h"

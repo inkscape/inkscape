@@ -103,6 +103,7 @@ set(2geom_SRC
 	quadtree.h
 	ray.h
 	rect.h
+	rect-hull.h
 	region.h
 	sbasis-2d.h
 	sbasis-curve.h

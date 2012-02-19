@@ -15,7 +15,6 @@ ink_common_sources +=	\
 	helper/helper-forward.h	\
 	helper/png-write.cpp	\
 	helper/png-write.h	\
-	helper/recthull.h	\
 	helper/sp-marshal.cpp	\
 	helper/sp-marshal.h	\
 	helper/unit-menu.cpp	\

@@ -25,7 +25,7 @@
 #include "desktop-handles.h"
 #include "document.h"
 #include "selection.h"
-#include "helper/recthull.h"
+#include <2geom/rect-hull.h>
 #include "xml/repr.h"
 #include "preferences.h"
 
