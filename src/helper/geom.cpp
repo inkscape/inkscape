@@ -527,11 +527,6 @@ bool matrix_equalp(Geom::Affine const &m0, Geom::Affine const &m1, Geom::Coord c
 }
 
 } //end namespace Geom
-/*
-The following predefined objects are for reference
-and comparison.
-*/
-Geom::Affine GEOM_MATRIX_IDENTITY = Geom::identity();
 
 /*
   Local Variables:

@@ -29,12 +29,6 @@ Geom::PathVector pathv_to_linear_and_cubic_beziers( Geom::PathVector const &path
 
 void round_rectangle_outwards(Geom::Rect & rect);
 
-/*
-The following predefined objects are for reference
-and comparison.  They are defined in helper/geom.cpp
-*/
-extern Geom::Affine GEOM_MATRIX_IDENTITY;
-
 namespace Geom{
 bool transform_equalp(Geom::Affine const &m0, Geom::Affine const &m1, Geom::Coord const epsilon);
 bool translate_equalp(Geom::Affine const &m0, Geom::Affine const &m1, Geom::Coord const epsilon);
