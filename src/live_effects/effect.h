@@ -2,13 +2,10 @@
 #define INKSCAPE_LIVEPATHEFFECT_H
 
 /*
- * Inkscape::LivePathEffect
- *
-* Copyright (C) Johan Engelen 2007-2008 <j.b.c.engelen@utwente.nl>
+ * Copyright (C) Johan Engelen 2007-2012 <j.b.c.engelen@alumnus.utwente.nl>
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
-
 
 #include <map>
 #include <glibmm/ustring.h>
@@ -19,30 +16,24 @@
 
 #define  LPE_CONVERSION_TOLERANCE 0.01    // FIXME: find good solution for this.
 
-struct SPDocument;
-struct SPDesktop;
+class  SPDocument;
+class  SPDesktop;
 class  SPItem;
-class  SPNodeContext;
-struct LivePathEffectObject;
+class LivePathEffectObject;
 class  SPLPEItem;
 class  KnotHolder;
 class  KnotHolderEntity;
 class  SPPath;
-struct SPCurve;
+class  SPCurve;
 
 namespace Gtk {
     class Widget;
-    class VBox;
 }
 
 namespace Inkscape {
 
 namespace XML {
     class Node;
-}
-
-namespace NodePath {
-    class Path ;
 }
 
 namespace LivePathEffect {
@@ -139,9 +130,7 @@ protected:
 
     void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
-    //virtual std::vector<Geom::PathVector> getCanvasIndicators(SPLPEItem *lpeitem);
     virtual void addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec);
-
 
     std::vector<Parameter *> param_vector;
     std::vector<std::pair<KnotHolderEntity*, const char*> > kh_entity_vector;
