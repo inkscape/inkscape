@@ -52,6 +52,8 @@
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
 
+#include <2geom/math-utils.h>
+
 using Inkscape::CSSOStringStream;
 using std::vector;
 
@@ -3276,6 +3278,9 @@ sp_style_read_ilength(SPILength *val, gchar const *str)
         gchar *e;
         /** \todo fixme: Move this to standard place (Lauris) */
         value = g_ascii_strtod(str, &e);
+        if ( !IS_FINITE(value) ) { // fix for bug lp:935157
+            return;
+        }
         if ((gchar const *) e != str) {
             /** \todo
              * Allow the number of px per inch to vary (document preferences,
