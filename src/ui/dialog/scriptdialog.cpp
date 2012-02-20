@@ -44,27 +44,20 @@ class ScriptDialogImpl : public ScriptDialog
 {
 
     public:
-
-
-    /**
-     * Constructor
-     */
     ScriptDialogImpl();
-
-    /**
-     * Destructor
-     */
     ~ScriptDialogImpl()
         {}
 
 
     /**
-     * Clear the text
+     * Remove all text from the dialog.
      */
     void clear();
 
     /**
-     * Execute the script
+     * Execute a script in the dialog.
+     *
+     * @param lang language in which the script is programmed
      */
     void execute(Inkscape::Extension::Script::InkscapeScript::ScriptLanguage lang);
 
@@ -86,10 +79,7 @@ class ScriptDialogImpl : public ScriptDialog
 
 
     private:
-
-
     Gtk::MenuBar menuBar;
-
     Gtk::Menu   fileMenu;
 
     //## Script text
@@ -138,10 +128,6 @@ static void textViewClear(Gtk::TextView &view)
     buffer->erase(buffer->begin(), buffer->end());
 }
 
-
-/**
- * Also a public method.  Remove all text from the dialog
- */
 void ScriptDialogImpl::clear()
 {
     textViewClear(scriptText);
@@ -149,9 +135,6 @@ void ScriptDialogImpl::clear()
     textViewClear(errorText);
 }
 
-/**
- * Execute the script in the dialog
- */
 void ScriptDialogImpl::execute(Inkscape::Extension::Script::InkscapeScript::ScriptLanguage lang)
 {
     Glib::ustring script = scriptText.get_buffer()->get_text(true);
@@ -167,25 +150,16 @@ void ScriptDialogImpl::execute(Inkscape::Extension::Script::InkscapeScript::Scri
         }
 }
 
-/**
- * Execute the script in the dialog
- */
 void ScriptDialogImpl::executeJavascript()
 {
     execute(Inkscape::Extension::Script::InkscapeScript::JAVASCRIPT);
 }
 
-/**
- * Execute the script in the dialog
- */
 void ScriptDialogImpl::executePython()
 {
     execute(Inkscape::Extension::Script::InkscapeScript::PYTHON);
 }
 
-/**
- * Execute the script in the dialog
- */
 void ScriptDialogImpl::executeRuby()
 {
     execute(Inkscape::Extension::Script::InkscapeScript::RUBY);
@@ -195,9 +169,6 @@ void ScriptDialogImpl::executeRuby()
 //#########################################################################
 //## C O N S T R U C T O R    /    D E S T R U C T O R
 //#########################################################################
-/**
- * Constructor
- */
 ScriptDialogImpl::ScriptDialogImpl() :
     ScriptDialog()
 {
@@ -251,19 +222,11 @@ ScriptDialogImpl::ScriptDialogImpl() :
 
 }
 
-/**
- * Factory method.  Use this to create a new ScriptDialog
- */
 ScriptDialog &ScriptDialog::getInstance()
 {
     ScriptDialog *dialog = new ScriptDialogImpl();
     return *dialog;
 }
-
-
-
-
-
 
 } //namespace Dialogs
 } //namespace UI

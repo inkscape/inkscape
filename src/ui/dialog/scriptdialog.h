@@ -31,24 +31,16 @@ class ScriptDialog : public UI::Widget::Panel
 {
 
     public:
-
-
-    /**
-     * Constructor
-     */
     ScriptDialog() : 
      UI::Widget::Panel("", "/dialogs/script", SP_VERB_DIALOG_SCRIPT)
     {}
 
-
     /**
-     * Factory method
+     * Helper function which returns a new instance of the dialog.
+     * getInstance is needed by the dialog manager (Inkscape::UI::Dialog::DialogManager).
      */
     static ScriptDialog &getInstance();
 
-    /**
-     * Destructor
-     */
     virtual ~ScriptDialog() {};
 
 }; // class ScriptDialog

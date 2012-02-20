@@ -82,11 +82,34 @@ protected:
     void onReadSelection (gboolean style, gboolean content);
     void onToggle ();
     static void onLineSpacingChange (GtkComboBox* widget, gpointer data);
+    
+    /**
+     * Callback invoked when the user modifies the text of the selected text object.
+     *
+     * onTextChange is responsible for initiating the commands after the user
+     * modified the text in the selected object. The UI of the dialog is
+     * updated. The subfunction setPreviewText updates the preview label.
+     *
+     * @param text_buffer pointer to GtkTextBuffer with the text of the selected text object
+     * @param self pointer to the current instance of the dialog.
+     */
     static void onTextChange (GtkTextBuffer *text_buffer, TextEdit *self);
+    
+    /**
+     * Callback invoked when the user modifies the font through the dialog or the tools control bar.
+     *
+     * onFontChange updates the dialog UI. The subfunction setPreviewText updates the preview label.
+     *
+     * @param fontsel pointer to SPFontSelector (currently not used).
+     * @param font pointer to the font instance for the text to be previewed
+     * @param self pointer to the current instance of the dialog.
+     */
     static void onFontChange (SPFontSelector *fontsel, font_instance *font, TextEdit *self);
 
     /**
      * Get the selected text off the main canvas.
+     *
+     * @return SPItem pointer to the selected text object
      */
     SPItem *getSelectedTextItem (void);
 
@@ -97,6 +120,9 @@ protected:
 
     /**
      * Helper function to create markup from a font definition and display in the preview label.
+     * 
+     * @param font pointer to the font instance for the text to be previewed
+     * @param phrase text to be shown
      */
     void setPreviewText (font_instance *font, Glib::ustring phrase);
 
@@ -122,6 +148,8 @@ protected:
 
     /**
      * Is invoked by the desktop tracker when the desktop changes.
+     *
+     * @see DesktopTracker
      */
     void setTargetDesktop(SPDesktop *desktop);
 
