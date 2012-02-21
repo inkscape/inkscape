@@ -41,7 +41,6 @@
 #include "desktop-handles.h"
 #include "dialogs/clonetiler.h"
 #include "dialogs/find.h"
-#include "dialogs/spellcheck.h"
 #include "dialogs/xml-tree.h"
 #include "display/curve.h"
 #include "document.h"
@@ -79,6 +78,7 @@
 #include "ui/dialog/layers.h"
 #include "ui/dialog/object-properties.h"
 #include "ui/dialog/swatches.h"
+#include "ui/dialog/spellcheck.h"
 #include "ui/icon-names.h"
 #include "ui/tool/node-tool.h"
 
@@ -1830,7 +1830,7 @@ void DialogVerb::perform(SPAction *action, void *data)
             // not implemented yet
             break;
         case SP_VERB_DIALOG_SPELLCHECK:
-            sp_spellcheck_dialog();
+            dt->_dlg_mgr->showDialog("SpellCheck");
             break;
         case SP_VERB_DIALOG_DEBUG:
             dt->_dlg_mgr->showDialog("Messages");

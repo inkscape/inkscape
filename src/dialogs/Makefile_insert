@@ -9,7 +9,5 @@ ink_common_sources +=	\
 	dialogs/export.h		\
 	dialogs/find.cpp		\
 	dialogs/find.h			\
-	dialogs/spellcheck.cpp		\
-	dialogs/spellcheck.h		\
 	dialogs/xml-tree.cpp		\
 	dialogs/xml-tree.h

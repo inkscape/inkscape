@@ -55,10 +55,9 @@ void sp_object_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu)
 #include "sp-path.h"
 #include "sp-text.h"
 #include "desktop-handles.h"
-#include "dialogs/spellcheck.h"
 #include "ui/dialog/object-attributes.h"
 #include "ui/dialog/object-properties.h"
-
+#include "ui/dialog/spellcheck.h"
 
 
 static void sp_item_menu(SPObject *object, SPDesktop *desktop, GtkMenu *menu);
@@ -550,7 +549,7 @@ static void sp_spellcheck_settings(GtkMenuItem *menuitem, SPItem *item)
         sp_desktop_selection(desktop)->set(item);
     }
 
-    sp_spellcheck_dialog();
+    desktop->_dlg_mgr->showDialog("SpellCheck");
 }
 
 /* SPText */

@@ -48,7 +48,7 @@
 #include "ui/dialog/object-attributes.h"
 #include "ui/dialog/object-properties.h"
 #include "ui/dialog/text-edit.h"
-
+#include "ui/dialog/spellcheck.h"
 
 #ifdef ENABLE_SVG_FONTS
 #include "ui/dialog/svg-fonts-dialog.h"
@@ -124,6 +124,7 @@ DialogManager::DialogManager() {
         registerFactory("UndoHistory",         &create<UndoHistory,          FloatingBehavior>);
         registerFactory("InputDevices",        &create<InputDialog,          FloatingBehavior>);
         registerFactory("TextFont",            &create<TextEdit,             FloatingBehavior>);
+        registerFactory("SpellCheck",          &create<SpellCheck,           FloatingBehavior>);
 
     } else {
 
@@ -155,6 +156,7 @@ DialogManager::DialogManager() {
         registerFactory("UndoHistory",         &create<UndoHistory,          DockBehavior>);
         registerFactory("InputDevices",        &create<InputDialog,          DockBehavior>);
         registerFactory("TextFont",            &create<TextEdit,             DockBehavior>);
+        registerFactory("SpellCheck",          &create<SpellCheck,           DockBehavior>);
 
     }
 }
