@@ -499,7 +499,7 @@ This conditional and its #else block can be deleted in the future.
 #if GTK_CHECK_VERSION(2, 24,0)
         const gchar *sstr = gtk_combo_box_text_get_active_text ((GtkComboBoxText *) spacing_combo);
 #else
-        const gchar *sstr = gtk_entry_get_text ((GtkEntry *) (gtk_bin_get_child (GTK_BIN (combo))));
+        const gchar *sstr = gtk_entry_get_text ((GtkEntry *) (gtk_bin_get_child (GTK_BIN (spacing_combo))));
 #endif
         sp_repr_css_set_property (css, "line-height", sstr);
 
