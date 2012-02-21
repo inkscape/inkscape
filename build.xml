@@ -663,8 +663,8 @@
 	<copy todir="${dist}" file="${devlibs}/bin/libMagickCore-3.dll"/>
 	<copy todir="${dist}" file="${devlibs}/bin/libMagickWand-3.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/intl.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libintl-8.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/pthreadGC2.dll"/>
-    <copy file="${devlibs}/bin/intl.dll" tofile="${dist}/libintl-2.dll"/>
     <!-- MINGW support DLLs needed for openmp support  -->
     <copy todir="${dist}" file="${mingw_bin}/mingwm10.dll"/>
 	<copy todir="${dist}" file="${mingw_bin}/libgomp-1.dll"/>
