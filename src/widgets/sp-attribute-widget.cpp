@@ -99,12 +99,12 @@ void SPAttributeTable::clear(void)
         for (int i = (ch.size())-1; i >=0 ; i--)
         {
             w = ch[i];
-            sp_signal_disconnect_by_data (w->gobj(), this);
             ch.pop_back();
             if (w != NULL)
             {
                 try
                 {
+                    sp_signal_disconnect_by_data (w->gobj(), this);
                     delete w;
                 }
                 catch(...)

@@ -506,7 +506,7 @@ sp_style_new_from_object(SPObject *object)
     style->object = object;
     style->release_connection = object->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_style_object_release), style));
 
-    if (object && object->cloned) {
+    if (object->cloned) {
         style->cloned = true;
     }
 

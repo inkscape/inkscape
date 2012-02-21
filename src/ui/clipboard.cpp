@@ -1479,11 +1479,11 @@ void ClipboardManagerImpl::_userWarn(SPDesktop *desktop, char const *msg)
 void ClipboardManagerImpl::_inkscape_wait_for_targets(std::list<Glib::ustring> &listTargets)
 {
     //Get a newly-allocated array of atoms:
-    GdkAtom* targets = 0;
+    GdkAtom* targets = NULL;
     gint n_targets = 0;
     gboolean test = gtk_clipboard_wait_for_targets( gtk_clipboard_get(GDK_SELECTION_CLIPBOARD), &targets, &n_targets );
-    if (!test) {
-        n_targets = 0; //otherwise it will be -1.
+    if (!test || (targets == NULL)) {
+        return;
     }
 
     //Add the targets to the C++ container:
