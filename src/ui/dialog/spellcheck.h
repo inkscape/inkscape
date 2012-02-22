@@ -31,11 +31,9 @@
 #include "preferences.h"
 #include "sp-text.h"
 
-/* TODO  - What is there is no ASPELL ?? */
 #ifdef HAVE_ASPELL
 #include <aspell.h>
-#endif
-
+#endif  /* HAVE_ASPELL */
 
 namespace Inkscape {
 namespace UI {
@@ -157,9 +155,11 @@ private:
 
     SPObject *_root;
 
+#ifdef HAVE_ASPELL
     AspellSpeller *_speller;
     AspellSpeller *_speller2;
     AspellSpeller *_speller3;
+#endif  /* HAVE_ASPELL */
 
     /**
      * list of canvasitems (currently just rects) that mark misspelled things on canvas

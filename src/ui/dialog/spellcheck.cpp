@@ -50,15 +50,14 @@
 # include "config.h"
 #endif
 
+
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
+
 SpellCheck::SpellCheck (void) :
     UI::Widget::Panel ("", "/dialogs/spellcheck/", SP_VERB_DIALOG_SPELLCHECK),
-    _speller(NULL),
-    _speller2(NULL),
-    _speller3(NULL),
     _rects(NULL),
     _seen_objects(NULL),
     _text(NULL),
@@ -81,6 +80,13 @@ SpellCheck::SpellCheck (void) :
     desktop(NULL),
     deskTrack()
 {
+
+#ifdef HAVE_ASPELL
+    _speller = NULL;
+    _speller2 = NULL;
+    _speller3 = NULL;
+#endif /* HAVE_ASPELL */
+
     _prefs = Inkscape::Preferences::get();
 
     // take languages from prefs
@@ -362,6 +368,7 @@ SpellCheck::init(SPDesktop *d)
     _adds = 0;
     clearRects();
 
+#ifdef HAVE_ASPELL
     {
     AspellConfig *config = new_aspell_config();
 #ifdef WIN32
@@ -412,6 +419,7 @@ SpellCheck::init(SPDesktop *d)
     }
     _speller3 = to_aspell_speller(ret);
     }
+#endif  /* HAVE_ASPELL */
 
     _root = sp_desktop_document(desktop)->getRoot();
 
@@ -430,6 +438,7 @@ SpellCheck::init(SPDesktop *d)
 void
 SpellCheck::finished ()
 {
+#ifdef HAVE_ASPELL
     aspell_speller_save_all_word_lists(_speller);
     delete_aspell_speller(_speller);
     _speller = NULL;
@@ -443,6 +452,7 @@ SpellCheck::finished ()
         delete_aspell_speller(_speller3);
         _speller3 = NULL;
     }
+#endif  /* HAVE_ASPELL */
 
     clearRects();
     disconnect();
@@ -556,12 +566,16 @@ SpellCheck::nextWord()
         }
     }
 
+    int have = 0;
+
+#ifdef HAVE_ASPELL
     // run it by all active spellers
-    int have = aspell_speller_check(_speller, _word.c_str(), -1);
+    have = aspell_speller_check(_speller, _word.c_str(), -1);
     if (_speller2)
         have += aspell_speller_check(_speller2, _word.c_str(), -1);
     if (_speller3)
         have += aspell_speller_check(_speller3, _word.c_str(), -1);
+#endif  /* HAVE_ASPELL */
 
     if (have == 0) { // not found in any!
         _stops ++;
@@ -650,6 +664,8 @@ SpellCheck::nextWord()
                 sp_text_context_place_cursor (SP_TEXT_CONTEXT(desktop->event_context), _text, _begin_w);
         } 
 
+#ifdef HAVE_ASPELL
+
         // get suggestions
         {
             model = Gtk::ListStore::create(tree_columns);
@@ -697,6 +713,8 @@ SpellCheck::nextWord()
 
             accept_button.set_sensitive(false);  // gray it out until something is chosen
         }
+
+#endif  /* HAVE_ASPELL */
 
         return true;
 
@@ -798,11 +816,13 @@ void SpellCheck::onAccept ()
 void
 SpellCheck::onIgnore ()
 {
+#ifdef HAVE_ASPELL
     aspell_speller_add_to_session(_speller, _word.c_str(), -1);
     if (_speller2)
         aspell_speller_add_to_session(_speller2, _word.c_str(), -1);
     if (_speller3)
         aspell_speller_add_to_session(_speller3, _word.c_str(), -1);
+#endif  /* HAVE_ASPELL */
 
     deleteLastRect();
     doSpellcheck();
@@ -820,6 +840,7 @@ SpellCheck::onAdd ()
 {
     _adds++;
 
+#ifdef HAVE_ASPELL
     gint num = gtk_combo_box_get_active((GtkComboBox *)dictionary_combo);
     switch (num) {
         case 0:
@@ -836,6 +857,7 @@ SpellCheck::onAdd ()
         default:
             break;
     }
+#endif  /* HAVE_ASPELL */
 
     deleteLastRect();
     doSpellcheck();
@@ -858,6 +880,7 @@ SpellCheck::onStart ()
 }
 }
 }
+
 
 /*
   Local Variables:
