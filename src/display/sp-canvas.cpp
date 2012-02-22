@@ -271,6 +271,8 @@ public:
 
     /**
      * The canvas widget's expose callback.
+     *
+     * @todo FIXME: function allways retruns false.
      */
     static gint handleExpose(GtkWidget *widget, GdkEventExpose *event);
 
@@ -2007,22 +2009,26 @@ gint SPCanvasImpl::handleExpose(GtkWidget *widget, GdkEventExpose *event)
     }
 
     int n_rects = 0;
-    GdkRectangle *rects = 0;
+    GdkRectangle *rects = NULL;
     gdk_region_get_rectangles(event->region, &rects, &n_rects);
-
-    for (int i = 0; i < n_rects; i++) {
-        Geom::IntRect r = Geom::IntRect::from_xywh(
-            rects[i].x + canvas->x0, rects[i].y + canvas->y0,
-            rects[i].width, rects[i].height);
-
-        canvas->requestRedraw(r.left(), r.top(), r.right(), r.bottom());
+    
+    if ((rects == NULL) || (n_rects == 0))
+    {
+        return FALSE;
     }
-
-    if (n_rects > 0) {
+    else
+    {
+        for (int i = 0; i < n_rects; i++) {
+            Geom::IntRect r = Geom::IntRect::from_xywh(
+                rects[i].x + canvas->x0, rects[i].y + canvas->y0,
+                rects[i].width, rects[i].height);
+            
+            canvas->requestRedraw(r.left(), r.top(), r.right(), r.bottom());
+        }
+        
         g_free (rects);
+        return FALSE;
     }
-
-    return FALSE;
 }
 
 gint SPCanvasImpl::handleKeyEvent(GtkWidget *widget, GdkEventKey *event)

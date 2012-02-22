@@ -1158,17 +1158,15 @@ int scan_max_width( GtkTreeModel *model, gint labelColumn )
     GtkTreeIter iter;
     gboolean valid = gtk_tree_model_get_iter_first( model, &iter );
     while ( valid ) {
-        gchar* str = 0;
-        int count = 0;
-        gtk_tree_model_get( model, &iter,
-                            labelColumn, &str,
-                            -1 );
-        count = strlen(str);
-        if (count > maxUsed) {
-            maxUsed = count;
+        gchar* str = NULL;
+        gtk_tree_model_get( model, &iter, labelColumn, &str, -1 );
+        if (str != NULL){
+            int count = strlen(str);
+            if (count > maxUsed) {
+                maxUsed = count;
+            }
+            g_free(str);
         }
-        g_free( str );
-
         valid = gtk_tree_model_iter_next( model, &iter );
     }
     return maxUsed;
