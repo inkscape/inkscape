@@ -678,7 +678,7 @@ void item_outline_add_marker( SPObject const *marker_object, Geom::Affine marker
  *  Returns a pathvector that is the outline of the stroked item, with markers.
  *  item must be SPShape or SPText.
  */
-Geom::PathVector* item_outline(SPItem const *item, bool coalesce)
+Geom::PathVector* item_outline(SPItem const *item, bool bbox_only)
 {
     Geom::PathVector *ret_pathv = NULL;
 
@@ -768,40 +768,36 @@ Geom::PathVector* item_outline(SPItem const *item, bool coalesce)
                      0.5 * o_miter);
         orig->Outline(res, 0.5 * o_width, o_join, o_butt, 0.5 * o_miter);
 
-        Shape *theRes = new Shape;
+        if (!bbox_only) {
+            Shape *theRes = new Shape;
+            theRes->ConvertToShape(theShape, fill_positive);
 
-        theRes->ConvertToShape(theShape, fill_positive);
-
-        Path *originaux[1];
-        originaux[0] = res;
-        theRes->ConvertToForme(orig, 1, originaux);
-
-        if (coalesce) {
+            Path *originaux[1];
+            originaux[0] = res;
+            theRes->ConvertToForme(orig, 1, originaux);
             res->Coalesce(5.0);
+            delete theRes;
         }
-
         delete theShape;
-        delete theRes;
     } else {
         orig->Outline(res, 0.5 * o_width, o_join, o_butt, 0.5 * o_miter);
 
-        if (coalesce) {
+        if (!bbox_only) {
             orig->Coalesce(0.5 * o_width);
+            Shape *theShape = new Shape;
+            Shape *theRes = new Shape;
+
+            res->ConvertWithBackData(1.0);
+            res->Fill(theShape, 0);
+            theRes->ConvertToShape(theShape, fill_positive);
+
+            Path *originaux[1];
+            originaux[0] = res;
+            theRes->ConvertToForme(orig, 1, originaux);
+
+            delete theShape;
+            delete theRes;
         }
-
-        Shape *theShape = new Shape;
-        Shape *theRes = new Shape;
-
-        res->ConvertWithBackData(1.0);
-        res->Fill(theShape, 0);
-        theRes->ConvertToShape(theShape, fill_positive);
-
-        Path *originaux[1];
-        originaux[0] = res;
-        theRes->ConvertToForme(orig, 1, originaux);
-
-        delete theShape;
-        delete theRes;
     }
 
     if (orig->descr_cmd.size() <= 1) {
@@ -814,9 +810,9 @@ Geom::PathVector* item_outline(SPItem const *item, bool coalesce)
 
 
     if (res->descr_cmd.size() > 1) { // if there's 0 or 1 node left, drop this path altogether
-        ret_pathv = orig->MakePathVector();
+        ret_pathv = bbox_only ? res->MakePathVector() : orig->MakePathVector();
 
-        if (SP_IS_SHAPE(item) && SP_SHAPE(item)->hasMarkers ()) {
+        if (SP_IS_SHAPE(item) && SP_SHAPE(item)->hasMarkers() && !bbox_only) {
             SPShape *shape = SP_SHAPE(item);
 
             Geom::PathVector const & pathv = curve->get_pathvector();
