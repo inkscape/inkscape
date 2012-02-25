@@ -92,6 +92,13 @@ enum {
 
 static guint gdl_dock_object_signals [LAST_SIGNAL] = { 0 };
 
+struct DockRegisterItem {
+	gchar* nick;
+	gpointer type;
+};
+
+static GArray *dock_register = NULL;
+
 /* ----- Private interface ----- */
 
 G_DEFINE_TYPE (GdlDockObject, gdl_dock_object, GTK_TYPE_CONTAINER);
@@ -885,65 +892,93 @@ gdl_dock_param_get_type (void)
 
 /* -------------- nick <-> type conversion functions --------------- */
 
-static GRelation *dock_register = NULL;
-
-enum {
-    INDEX_NICK = 0,
-    INDEX_TYPE
-};
-
 static void
 gdl_dock_object_register_init (void)
 {
+    const size_t n_default = 5;
+    guint i = 0;
+    struct DockRegisterItem default_items[n_default];
+
     if (dock_register)
         return;
-    
-    /* FIXME: i don't know if GRelation is efficient */
-    dock_register = g_relation_new (2);
-    g_relation_index (dock_register, INDEX_NICK, g_str_hash, g_str_equal);
-    g_relation_index (dock_register, INDEX_TYPE, g_direct_hash, g_direct_equal);
 
+    dock_register 
+        = g_array_new (FALSE, FALSE, sizeof (struct DockRegisterItem));
+    
     /* add known types */
-    g_relation_insert (dock_register, "dock", (gpointer) GDL_TYPE_DOCK);
-    g_relation_insert (dock_register, "item", (gpointer) GDL_TYPE_DOCK_ITEM);
-    g_relation_insert (dock_register, "paned", (gpointer) GDL_TYPE_DOCK_PANED);
-    g_relation_insert (dock_register, "notebook", (gpointer) GDL_TYPE_DOCK_NOTEBOOK);
-    g_relation_insert (dock_register, "placeholder", (gpointer) GDL_TYPE_DOCK_PLACEHOLDER);
+    default_items[0].nick = "dock";
+    default_items[0].type = (gpointer) GDL_TYPE_DOCK;
+    default_items[1].nick = "item";
+    default_items[1].type = (gpointer) GDL_TYPE_DOCK_ITEM;
+    default_items[2].nick = "paned";
+    default_items[2].type = (gpointer) GDL_TYPE_DOCK_PANED;
+    default_items[3].nick = "notebook";
+    default_items[3].type = (gpointer) GDL_TYPE_DOCK_NOTEBOOK;
+    default_items[4].nick = "placeholder";
+    default_items[4].type = (gpointer) GDL_TYPE_DOCK_PLACEHOLDER;
+
+    for (i = 0; i < n_default; i++)
+        g_array_append_val (dock_register, default_items[i]);
 }
 
+/**
+ * gdl_dock_object_nick_from_type:
+ * @type: The type for which to find the nickname
+ *
+ * Finds the nickname for a given type
+ *
+ * Returns: If the object has a nickname, then it is returned.
+ *   Otherwise, the type name.
+ */
 const gchar *
 gdl_dock_object_nick_from_type (GType type)
 {
-    GTuples *tuples;
     gchar *nick = NULL;
+    guint i = 0;
     
     if (!dock_register)
         gdl_dock_object_register_init ();
 
-    if (g_relation_count (dock_register, (gpointer) type, INDEX_TYPE) > 0) {
-        tuples = g_relation_select (dock_register, (gpointer) type, INDEX_TYPE);
-        nick = (gchar *) g_tuples_index (tuples, 0, INDEX_NICK);
-        g_tuples_destroy (tuples);
+    for (i=0; i < dock_register->len; i++) {
+        struct DockRegisterItem item 
+            = g_array_index (dock_register, struct DockRegisterItem, i);
+
+	if (g_direct_equal (item.type, (gpointer) type))
+		nick = g_strdup (item.nick);
     }
     
     return nick ? nick : g_type_name (type);
 }
 
+/**
+ * gdl_dock_object_type_from_nick:
+ * @nick: The nickname for the object type
+ *
+ * Finds the object type assigned to a given nickname.
+ *
+ * Returns: If the nickname has previously been assigned, then the corresponding
+ * object type is returned.  Otherwise, %G_TYPE_NONE.
+ */
 GType
 gdl_dock_object_type_from_nick (const gchar *nick)
 {
-    GTuples *tuples;
     GType type = G_TYPE_NONE;
+    gboolean nick_is_in_register = FALSE;
+    guint i = 0;
     
     if (!dock_register)
         gdl_dock_object_register_init ();
 
-    if (g_relation_count (dock_register, (gpointer) nick, INDEX_NICK) > 0) {
-        tuples = g_relation_select (dock_register, (gpointer) nick, INDEX_NICK);
-        type = (GType) g_tuples_index (tuples, 0, INDEX_TYPE);
-        g_tuples_destroy (tuples);
+    for (i = 0; i < dock_register->len; i++) {
+        struct DockRegisterItem item 
+		= g_array_index (dock_register, struct DockRegisterItem, i);
+
+	if (!g_strcmp0 (nick, item.nick)) {
+	    nick_is_in_register = TRUE;
+	    type = (GType) item.type;
+	}
     }
-    else {
+    if (!nick_is_in_register) {
         /* try searching in the glib type system */
         type = g_type_from_name (nick);
     }
@@ -951,23 +986,41 @@ gdl_dock_object_type_from_nick (const gchar *nick)
     return type;
 }
 
+/**
+ * gdl_dock_object_set_type_for_nick:
+ * @nick: The nickname for the object type
+ * @type: The object type
+ *
+ * Assigns an object type to a given nickname.  If the nickname already exists,
+ * then it reassigns it to a new object type.
+ *
+ * Returns: If the nick was previously assigned, the old type is returned.
+ * Otherwise, %G_TYPE_NONE.
+ */
 GType
 gdl_dock_object_set_type_for_nick (const gchar *nick,
                                    GType        type)
 {
     GType old_type = G_TYPE_NONE;
+    guint i = 0;
+    struct DockRegisterItem new_item;
+    new_item.nick = g_strdup(nick);
+    new_item.type = (gpointer) type;
     
     if (!dock_register)
         gdl_dock_object_register_init ();
 
     g_return_val_if_fail (g_type_is_a (type, GDL_TYPE_DOCK_OBJECT), G_TYPE_NONE);
     
-    if (g_relation_count (dock_register, (gpointer) nick, INDEX_NICK) > 0) {
-        old_type = gdl_dock_object_type_from_nick (nick);
-        g_relation_delete (dock_register, (gpointer) nick, INDEX_NICK);
+    for (i = 0; i < dock_register->len; i++) {
+        struct DockRegisterItem item 
+            = g_array_index (dock_register, struct DockRegisterItem, i);
+
+	if (!g_strcmp0 (nick, item.nick)) {
+            old_type = (GType) item.type;
+	    g_array_insert_val (dock_register, i, new_item);
+	}
     }
-    
-    g_relation_insert (dock_register, nick, type);
 
     return old_type;
 }
