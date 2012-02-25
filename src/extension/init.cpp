@@ -15,8 +15,15 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include "path-prefix.h"
 
+#ifdef HAVE_POPPLER
+# include "internal/pdfinput/pdf-input.h"
+#endif
+#ifdef HAVE_POPPLER_GLIB
+# include "internal/pdf-input-cairo.h"
+#endif
+
+#include "path-prefix.h"
 
 #include "inkscape.h"
 #include <glibmm/ustring.h>
@@ -33,12 +40,6 @@
 # include "internal/cairo-renderer-pdf-out.h"
 # include "internal/cairo-png-out.h"
 # include "internal/cairo-ps-out.h"
-#endif
-#ifdef HAVE_POPPLER
-# include "internal/pdfinput/pdf-input.h"
-#endif
-#ifdef HAVE_POPPLER_GLIB
-# include "internal/pdf-input-cairo.h"
 #endif
 #include "internal/pov-out.h"
 #include "internal/javafx-out.h"

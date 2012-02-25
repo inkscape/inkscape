@@ -18,8 +18,9 @@
 # include "config.h"
 #endif
 
-#include <glibmm/i18n.h>
+#include <gtkmm/box.h>
 #include <gtkmm/comboboxtext.h>
+#include <glibmm/i18n.h>
 
 #include "xml/node.h"
 #include "extension/extension.h"
@@ -27,7 +28,6 @@
 #include "sp-object.h"
 #include "enum.h"
 #include "preferences.h"
-#include <gtkmm/box.h>
 
 namespace Inkscape {
 namespace Extension {
