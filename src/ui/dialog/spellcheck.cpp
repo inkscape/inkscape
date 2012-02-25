@@ -160,7 +160,7 @@ SpellCheck::SpellCheck (void) :
     actionbutton_hbox.add(stop_button);
     actionbutton_hbox.add(start_button);
 
-    /**
+    /*
      * Main dialog
      */
     Gtk::Box *contents = _getContents();
@@ -170,7 +170,7 @@ SpellCheck::SpellCheck (void) :
     contents->pack_start (action_sep, false, false, 6);
     contents->pack_start (actionbutton_hbox, false, false, 0);
 
-    /**
+    /*
      * Signal handlers
      */
     accept_button.signal_clicked().connect(sigc::mem_fun(*this, &SpellCheck::onAccept));

@@ -220,7 +220,7 @@ private:
     Glib::ustring _lang2;
     Glib::ustring _lang3;
 
-    /**
+    /*
      *  Dialogs widgets
      */
     Gtk::Label          banner_label;
