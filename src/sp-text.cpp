@@ -702,7 +702,7 @@ void TextTagAttributes::writeSingleAttribute(Inkscape::XML::Node *node, gchar co
         gchar single_value_string[32];
 
         // FIXME: this has no concept of unset values because sp_svg_length_list_read() can't read them back in
-        for (std::vector<SVGLength>::const_iterator it = attr_vector.begin() ; it != attr_vector.end() ; it++) {
+        for (std::vector<SVGLength>::const_iterator it = attr_vector.begin() ; it != attr_vector.end() ; ++it) {
             g_ascii_formatd(single_value_string, sizeof (single_value_string), "%.8g", it->computed);
             if (!string.empty()) string += ' ';
             string += single_value_string;

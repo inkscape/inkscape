@@ -39,7 +39,7 @@ class SPPatternReference : public Inkscape::URIReference {
 public:
     SPPatternReference (SPObject *obj) : URIReference(obj) {}
     SPPattern *getObject() const {
-        return (SPPattern *)URIReference::getObject();
+        return reinterpret_cast<SPPattern *>(URIReference::getObject());
     }
 
 protected:

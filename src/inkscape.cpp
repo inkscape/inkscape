@@ -986,7 +986,7 @@ inkscape_remove_desktop (SPDesktop * desktop)
     if (DESKTOP_IS_ACTIVE (desktop)) {
         g_signal_emit (G_OBJECT (inkscape), inkscape_signals[DEACTIVATE_DESKTOP], 0, desktop);
         if (inkscape->desktops->next != NULL) {
-            SPDesktop * new_desktop = (SPDesktop *) inkscape->desktops->next->data;
+            SPDesktop * new_desktop = static_cast<SPDesktop *>(inkscape->desktops->next->data);
             inkscape->desktops = g_slist_remove (inkscape->desktops, new_desktop);
             inkscape->desktops = g_slist_prepend (inkscape->desktops, new_desktop);
             g_signal_emit (G_OBJECT (inkscape), inkscape_signals[ACTIVATE_DESKTOP], 0, new_desktop);
@@ -1022,7 +1022,7 @@ inkscape_activate_desktop (SPDesktop * desktop)
 
     g_assert (g_slist_find (inkscape->desktops, desktop));
 
-    SPDesktop *current = (SPDesktop *) inkscape->desktops->data;
+    SPDesktop *current = static_cast<SPDesktop *>(inkscape->desktops->data);
 
     g_signal_emit (G_OBJECT (inkscape), inkscape_signals[DEACTIVATE_DESKTOP], 0, current);
 
@@ -1055,8 +1055,9 @@ SPDesktop *
 inkscape_find_desktop_by_dkey (unsigned int dkey)
 {
     for (GSList *r = inkscape->desktops; r; r = r->next) {
-        if (((SPDesktop *) r->data)->dkey == dkey)
-            return ((SPDesktop *) r->data);
+        if ((static_cast<SPDesktop *>(r->data))->dkey == dkey){
+            return (static_cast<SPDesktop *>(r->data));
+        }
     }
     return NULL;
 }
@@ -1070,8 +1071,9 @@ inkscape_maximum_dkey()
     unsigned int dkey = 0;
 
     for (GSList *r = inkscape->desktops; r; r = r->next) {
-        if (((SPDesktop *) r->data)->dkey > dkey)
-            dkey = ((SPDesktop *) r->data)->dkey;
+        if ((static_cast<SPDesktop *>(r->data))->dkey > dkey){
+            dkey = (static_cast<SPDesktop *>(r->data))->dkey;
+        }
     }
 
     return dkey;
@@ -1083,7 +1085,7 @@ SPDesktop *
 inkscape_next_desktop ()
 {
     SPDesktop *d = NULL;
-    unsigned int dkey_current = ((SPDesktop *) inkscape->desktops->data)->dkey;
+    unsigned int dkey_current = (static_cast<SPDesktop *>(inkscape->desktops->data))->dkey;
 
     if (dkey_current < inkscape_maximum_dkey()) {
         // find next existing
@@ -1114,7 +1116,7 @@ SPDesktop *
 inkscape_prev_desktop ()
 {
     SPDesktop *d = NULL;
-    unsigned int dkey_current = ((SPDesktop *) inkscape->desktops->data)->dkey;
+    unsigned int dkey_current = (static_cast<SPDesktop *>(inkscape->desktops->data))->dkey;
 
     if (dkey_current > 0) {
         // find prev existing
@@ -1244,7 +1246,7 @@ inkscape_active_desktop (void)
         return NULL;
     }
 
-    return (SPDesktop *) inkscape->desktops->data;
+    return static_cast<SPDesktop *>(inkscape->desktops->data);
 }
 
 SPDocument *
@@ -1263,7 +1265,7 @@ bool inkscape_is_sole_desktop_for_document(SPDesktop const &desktop) {
         return false;
     }
     for ( GSList *iter = inkscape->desktops ; iter ; iter = iter->next ) {
-        SPDesktop *other_desktop=(SPDesktop *)iter->data;
+        SPDesktop *other_desktop=static_cast<SPDesktop *>(iter->data);
         SPDocument *other_document=other_desktop->doc();
         if ( other_document == document && other_desktop != &desktop ) {
             return false;

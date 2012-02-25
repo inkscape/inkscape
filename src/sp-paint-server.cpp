@@ -61,7 +61,7 @@ static void sp_paint_server_class_init(SPPaintServerClass *psc)
 {
     psc->pattern_new = sp_paint_server_create_dummy_pattern;
 
-    parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
+    parent_class = static_cast<SPObjectClass *>(g_type_class_ref(SP_TYPE_OBJECT));
 }
 
 void SPPaintServer::init(SPPaintServer * /*ps*/)

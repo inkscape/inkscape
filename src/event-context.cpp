@@ -814,7 +814,7 @@ sp_event_context_new(GType type, SPDesktop *desktop, gchar const *pref_path,
     g_return_val_if_fail(g_type_is_a(type, SP_TYPE_EVENT_CONTEXT), NULL);
     g_return_val_if_fail(desktop != NULL, NULL);
 
-    SPEventContext * const ec = (SPEventContext*) g_object_new(type, NULL);
+    SPEventContext * const ec = static_cast<SPEventContext*>(g_object_new(type, NULL));
 
     ec->desktop = desktop;
     ec->_message_context

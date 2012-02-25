@@ -154,7 +154,7 @@ static void shapeeditor_event_attr_changed(Inkscape::XML::Node */*repr*/, gchar 
                                            bool /*is_interactive*/, gpointer data)
 {
     g_assert(data);
-    ShapeEditor *sh = ((ShapeEditor *) data);
+    ShapeEditor *sh = static_cast<ShapeEditor *>(data);
 
     sh->shapeeditor_event_attr_changed(name);
 }

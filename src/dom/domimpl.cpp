@@ -313,7 +313,7 @@ NodePtr NodeImpl::insertBefore(const NodePtr newChild,
     if (!refChild)
         return appendChild(newChild);
 
-    NodeImplPtr newChildImpl = dynamic_cast<NodeImpl *>(newChild.get());
+    NodeImplPtr newChildImpl = reinterpret_cast<NodeImpl *>(newChild.get());
     for (NodeImplPtr n = firstChild ; n.get() ; n=n->next)
         {
         if (n == refChild)
@@ -346,7 +346,7 @@ NodePtr NodeImpl::replaceChild(const NodePtr newChild,
     if (!oldChild)
         return NULL;
 
-    NodeImplPtr newChildImpl = dynamic_cast<NodeImpl *>(newChild.get());
+    NodeImplPtr newChildImpl = reinterpret_cast<NodeImpl *>(newChild.get());
     for (NodeImplPtr n = firstChild ; n.get() ; n=n->next)
         {
         if (n == oldChild)
@@ -405,7 +405,7 @@ NodePtr NodeImpl::appendChild(const NodePtr newChild)
         return NULL;
 
     NodeImplPtr newChildImpl =
-	     dynamic_cast<NodeImpl *> (newChild.get());
+	     reinterpret_cast<NodeImpl *> (newChild.get());
 
     newChildImpl->parent        = this;
     newChildImpl->ownerDocument = ownerDocument;
@@ -665,12 +665,12 @@ DOMString NodeImpl::lookupPrefix(const DOMString &theNamespaceURI)
         {
         case Node::ELEMENT_NODE:
             {
-            ElementPtr elem = (Element *)this;
+            ElementPtr elem = reinterpret_cast<Element *>(this);
             return lookupNamespacePrefix(theNamespaceURI, elem);
             }
         case Node::DOCUMENT_NODE:
             {
-            DocumentPtr doc = (Document *)this;
+            DocumentPtr doc = reinterpret_cast<Document *>(this);
             ElementPtr elem = doc->getDocumentElement();
             return elem->lookupPrefix(theNamespaceURI);
             }
@@ -681,7 +681,7 @@ DOMString NodeImpl::lookupPrefix(const DOMString &theNamespaceURI)
             return DOMString("");  // type is unknown
         case Node::ATTRIBUTE_NODE:
             {
-            AttrPtr attr = (Attr *)this;
+            AttrPtr attr = reinterpret_cast<Attr *>(this);
             ElementPtr elem = attr->getOwnerElement();
             if ( elem.get() )
                 {
@@ -735,7 +735,7 @@ bool NodeImpl::isDefaultNamespace(const DOMString &theNamespaceURI)
             }
         case DOCUMENT_NODE:
             { //just use braces for local declaration
-            DocumentPtr doc = (Document *)this;
+            DocumentPtr doc = reinterpret_cast<Document *>(this);
             ElementPtr elem = doc->getDocumentElement();
             return elem->isDefaultNamespace(theNamespaceURI);
             }
@@ -746,7 +746,7 @@ bool NodeImpl::isDefaultNamespace(const DOMString &theNamespaceURI)
             return false;
         case ATTRIBUTE_NODE:
             {//braces only for scope
-            AttrPtr attr = (Attr *)this;
+            AttrPtr attr = reinterpret_cast<Attr *>(this);
             ElementPtr ownerElement = attr->getOwnerElement();
             if ( ownerElement.get() )
                 {
@@ -824,7 +824,7 @@ DOMString NodeImpl::lookupNamespaceURI(const DOMString &thePrefix)
             }
         case DOCUMENT_NODE:
             {
-            DocumentPtr doc = (Document *)this;
+            DocumentPtr doc = reinterpret_cast<Document *>(this);
             ElementPtr elem = doc->getDocumentElement();
             return elem->lookupNamespaceURI(thePrefix);
             }
@@ -836,7 +836,7 @@ DOMString NodeImpl::lookupNamespaceURI(const DOMString &thePrefix)
 
         case ATTRIBUTE_NODE:
             {
-            ElementPtr ownerElement = ((Attr *)this)->getOwnerElement();
+            ElementPtr ownerElement = (reinterpret_cast<Attr *>(this))->getOwnerElement();
             if ( ownerElement.get() )
                 {
                 return ownerElement->lookupNamespaceURI(thePrefix);
@@ -870,7 +870,7 @@ bool NodeImpl::isEqualNode(const NodePtr nodeArg)
     if (!nodeArg)
         return false;
 
-    if (nodeArg == (NodePtr )this)
+    if (nodeArg == static_cast<NodePtr>(this))
         return true;
 
     NodePtr node = nodeArg;
@@ -913,8 +913,8 @@ DOMUserData *NodeImpl::setUserData(const DOMString &key,
         if (entry->key == key)
             {
             DOMUserData *oldData = entry->data;
-            entry->data    = (DOMUserData *)data;
-            entry->handler = (UserDataHandler *)handler;
+            entry->data    = const_cast<DOMUserData *>(data);
+            entry->handler = const_cast<UserDataHandler *>(handler);
             return oldData;
             }
         prev  = entry;
@@ -1390,7 +1390,7 @@ DOMString ElementImpl::getAttribute(const DOMString& name)
     NodePtr node = attributes.getNamedItem(name);
     if (!node || node->getNodeType() != ATTRIBUTE_NODE)
         return DOMString("");
-    AttrPtr attr = dynamic_cast<Attr *>(node.get());
+    AttrPtr attr = reinterpret_cast<Attr *>(node.get());
     return attr->getValue();
 }
 
@@ -1424,7 +1424,7 @@ AttrPtr ElementImpl::getAttributeNode(const DOMString& name)
     NodePtr node = attributes.getNamedItem(name);
     if (!node || node->getNodeType() != ATTRIBUTE_NODE)
         return NULL;
-    AttrPtr attr = dynamic_cast<Attr *>(node.get());
+    AttrPtr attr = reinterpret_cast<Attr *>(node.get());
     return attr;
 }
 
@@ -1465,7 +1465,7 @@ void ElementImpl::getElementsByTagNameRecursive(NodeList &list,
         {
         if (node->getNodeType() != Node::ELEMENT_NODE)
             continue;
-        ElementPtr childElem = dynamic_cast<Element *>(node.get());
+        ElementPtr childElem = reinterpret_cast<Element *>(node.get());
         getElementsByTagNameRecursive(list, name, childElem);
         }
 }
@@ -1490,7 +1490,7 @@ DOMString ElementImpl::getAttributeNS(const DOMString& namespaceURI,
     NodePtr node = attributes.getNamedItemNS(namespaceURI, localName);
     if (!node || node->getNodeType()!=ATTRIBUTE_NODE)
         return DOMString("");
-    AttrPtr attr = dynamic_cast<Attr *>(node.get());
+    AttrPtr attr = reinterpret_cast<Attr *>(node.get());
     return attr->getValue();
 }
 
@@ -1527,7 +1527,7 @@ void ElementImpl::removeAttributeNS(const DOMString& namespaceURI,
     NodePtr node = attributes.getNamedItemNS(namespaceURI, localName);
     if (!node || node->getNodeType() != ATTRIBUTE_NODE)
         return (Attr *)0;
-    AttrPtr attr = dynamic_cast<Attr *>(node.get());
+    AttrPtr attr = reinterpret_cast<Attr *>(node.get());
     return attr;
 }
 
@@ -1558,7 +1558,7 @@ void ElementImpl::getElementsByTagNameNSRecursive(NodeList &list,
         {
         if (node->getNodeType() != Node::ELEMENT_NODE)
             continue;
-        ElementPtr childElem = dynamic_cast<Element *>(node.get());
+        ElementPtr childElem = reinterpret_cast<Element *>(node.get());
         getElementsByTagNameNSRecursive(list, namespaceURI, tagName, childElem);
         }
 }
@@ -1700,7 +1700,7 @@ void ElementImpl::normalizeNamespaces()
         NodePtr attrNode = attrs.item(i);
         if (attrNode->getNodeType() != Node::ATTRIBUTE_NODE)
             continue;
-        AttrImplPtr attr = dynamic_cast<AttrImpl *>(attrNode.get());
+        AttrImplPtr attr = reinterpret_cast<AttrImpl *>(attrNode.get());
         DOMString attrNS     = attr->getNamespaceURI();
         DOMString attrName   = attr->getLocalName();
         DOMString attrPrefix = attr->getPrefix();
@@ -1823,7 +1823,7 @@ void ElementImpl::normalizeNamespaces()
         NodePtr attrNode = attrs.item(i);
         if (attrNode->getNodeType() != Node::ATTRIBUTE_NODE)
             continue;
-        AttrPtr attr = dynamic_cast<Attr *>(attrNode.get());
+        AttrPtr attr = reinterpret_cast<Attr *>(attrNode.get());
         DOMString attrNS     = attr->getNamespaceURI();
         DOMString attrPrefix = attr->getPrefix();
         DOMString attrValue  = attr->getNodeValue();
@@ -1915,7 +1915,7 @@ void ElementImpl::normalizeNamespaces()
         {
         if (child->getNodeType() != Node::ELEMENT_NODE)
             continue;
-        ElementImplPtr childElement = dynamic_cast<ElementImpl *>(child.get());
+        ElementImplPtr childElement = reinterpret_cast<ElementImpl *>(child.get());
         childElement->normalizeNamespaces();
         }
 
@@ -3000,7 +3000,7 @@ NodePtr DocumentImpl::renameNode(const NodePtr node,
                                const DOMString &qualifiedName)
                                throw (DOMException)
 {
-    NodeImplPtr nodeImpl = dynamic_cast<NodeImpl *> (node.get());
+    NodeImplPtr nodeImpl = reinterpret_cast<NodeImpl *> (node.get());
     nodeImpl->setNodeName(qualifiedName);
     return node;
 }
@@ -3021,7 +3021,7 @@ DocumentImpl::DocumentImpl(const DOMImplementation *domImpl,
 {
     nodeType        = DOCUMENT_NODE;
     nodeName        = "#document";
-    parent          = (DOMImplementation *)domImpl;
+    parent          = const_cast<DOMImplementation *>(domImpl);
     //documentURI     = stringCache(theNamespaceURI);
     qualifiedName   = theQualifiedName;
     if (theDoctype.get()) //only assign if not null.

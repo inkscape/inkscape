@@ -125,7 +125,7 @@ static gint arena_handler(SPCanvasArena */*arena*/, Inkscape::DrawingItem *ai, G
 	static gboolean active = FALSE;
 	SPEvent spev;
 
-	SPItem *spitem = (ai) ? (SPItem*) ai->data() : 0;
+	SPItem *spitem = (ai) ? (static_cast<SPItem*>(ai->data())) : 0;
 
 	switch (event->type) {
 	case GDK_BUTTON_PRESS:

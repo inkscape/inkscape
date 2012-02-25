@@ -489,7 +489,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_2BUTTON_PRESS:
             if (event->button.button == 1) {
                 if (!selection->isEmpty()) {
-                    SPItem *clicked_item = (SPItem *) selection->itemList()->data;
+                    SPItem *clicked_item = static_cast<SPItem *>(selection->itemList()->data);
                     if (SP_IS_GROUP(clicked_item) && !SP_IS_BOX3D(clicked_item)) { // enter group if it's not a 3D box
                         desktop->setCurrentLayer(reinterpret_cast<SPObject *>(clicked_item));
                         sp_desktop_selection(desktop)->clear();

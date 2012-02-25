@@ -76,7 +76,7 @@ GType sp_marker_get_type (void);
 class SPMarkerReference : public Inkscape::URIReference {
 	SPMarkerReference(SPObject *obj) : URIReference(obj) {}
 	SPMarker *getObject() const {
-		return (SPMarker *)URIReference::getObject();
+		return static_cast<SPMarker *>(URIReference::getObject());
 	}
 protected:
 	virtual bool _acceptObject(SPObject *obj) const {

@@ -283,7 +283,7 @@ static void sp_spiral_update(SPObject *object, SPCtx *ctx, guint flags)
 
 static void sp_spiral_update_patheffect(SPLPEItem *lpeitem, bool write)
 {
-    SPShape *shape = (SPShape *) lpeitem;
+    SPShape *shape = static_cast<SPShape *>(lpeitem);
     sp_spiral_set_shape(shape);
 
     if (write) {
@@ -497,7 +497,7 @@ sp_spiral_position_set       (SPSpiral          *spiral,
     spiral->arg        = arg;
     spiral->t0         = CLAMP(t0, 0.0, 0.999);
 
-    ((SPObject *)spiral)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject *>(spiral))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /**
@@ -510,8 +510,8 @@ static void sp_spiral_snappoints(SPItem const *item, std::vector<Inkscape::SnapC
     Inkscape::SnapPreferences local_snapprefs = *snapprefs;
     local_snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT, false);
 
-    if (((SPItemClass *) parent_class)->snappoints) {
-        ((SPItemClass *) parent_class)->snappoints (item, p, &local_snapprefs);
+    if ((reinterpret_cast<SPItemClass *>(parent_class))->snappoints) {
+        (reinterpret_cast<SPItemClass *>(parent_class))->snappoints (item, p, &local_snapprefs);
     }
 
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT)) {

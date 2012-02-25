@@ -11,7 +11,7 @@ public:
     SPGradientReference(SPObject *obj) : URIReference(obj) {}
 
     SPGradient *getObject() const {
-        return (SPGradient *)URIReference::getObject();
+        return reinterpret_cast<SPGradient *>(URIReference::getObject());
     }
 
 protected:

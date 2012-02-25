@@ -1973,7 +1973,7 @@ void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &sta
     // bug #168370 (consider parent transform and viewBox)
     // snipplet copied from desktop-style.cpp sp_desktop_apply_css_recursive(...)
     SPCSSAttr *css_set = sp_repr_css_attr_new();
-    sp_repr_css_merge(css_set, (SPCSSAttr*) css);
+    sp_repr_css_merge(css_set, const_cast<SPCSSAttr*>(css));
     {
         Geom::Affine const local(SP_ITEM(common_ancestor)->i2doc_affine());
         double const ex(local.descrim());
@@ -2032,7 +2032,7 @@ bool has_visible_text(SPObject *obj)
         hasVisible = true; // maybe we should also check that it's not all whitespace?
     } else {
         for (SPObject const *child = obj->firstChild() ; child ; child = child->getNext()) {
-            if (has_visible_text((SPObject *) child)) {
+            if (has_visible_text(const_cast<SPObject *>(child))) {
                 hasVisible = true;
                 break;
             }

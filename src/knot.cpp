@@ -221,7 +221,7 @@ static void sp_knot_init(SPKnot *knot)
  */
 static void sp_knot_dispose(GObject *object)
 {
-    SPKnot *knot = (SPKnot *) object;
+    SPKnot *knot = static_cast<SPKnot *>(object);
 
     if ((knot->flags & SP_KNOT_GRABBED) && gdk_pointer_is_grabbed ()) {
         // This happens e.g. when deleting a node in node tool while dragging it
@@ -462,7 +462,7 @@ SPKnot *sp_knot_new(SPDesktop *desktop, const gchar *tip)
 {
     g_return_val_if_fail(desktop != NULL, NULL);
 
-    SPKnot * knot = (SPKnot*) g_object_new(SP_TYPE_KNOT, 0);
+    SPKnot * knot = static_cast<SPKnot*>(g_object_new(SP_TYPE_KNOT, 0));
 
     knot->desktop = desktop;
     knot->flags = SP_KNOT_VISIBLE;

@@ -56,7 +56,7 @@ class SPMaskReference : public Inkscape::URIReference {
 public:
 	SPMaskReference(SPObject *obj) : URIReference(obj) {}
 	SPMask *getObject() const {
-		return (SPMask *)URIReference::getObject();
+		return static_cast<SPMask *>(URIReference::getObject());
 	}
 protected:
     /**

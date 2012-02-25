@@ -399,7 +399,7 @@ void Inkscape::ObjectSnapper::_collectPaths(Geom::Point /*p*/,
                     if (SP_IS_TEXT(root_item) || SP_IS_FLOWTEXT(root_item)) {
                         if (_snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_TEXT_BASELINE)) {
                             // Snap to the text baseline
-                            Text::Layout const *layout = te_get_layout((SPItem *) root_item);
+                            Text::Layout const *layout = te_get_layout(static_cast<SPItem *>(root_item));
                             if (layout != NULL && layout->outputExists()) {
                                 Geom::PathVector *pv = new Geom::PathVector();
                                 pv->push_back(layout->baseline() * root_item->i2dt_affine() * (*i).additional_affine * _snapmanager->getDesktop()->doc2dt());

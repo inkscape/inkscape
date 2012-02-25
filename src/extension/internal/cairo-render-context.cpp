@@ -507,7 +507,7 @@ CairoRenderContext::getClipMode(void) const
 
 CairoRenderState* CairoRenderContext::_createState(void)
 {
-    CairoRenderState *state = (CairoRenderState*)g_try_malloc(sizeof(CairoRenderState));
+    CairoRenderState *state = static_cast<CairoRenderState*>(g_try_malloc(sizeof(CairoRenderState)));
     g_assert( state != NULL );
 
     state->has_filtereffect = FALSE;

@@ -81,7 +81,7 @@ class SPClipPathReference : public Inkscape::URIReference {
 public:
     SPClipPathReference(SPObject *obj) : URIReference(obj) {}
     SPClipPath *getObject() const {
-        return (SPClipPath *)URIReference::getObject();
+        return static_cast<SPClipPath *>(URIReference::getObject());
     }
 
 protected:

@@ -147,7 +147,7 @@ RectKnotHolderEntityRX::knot_set(Geom::Point const &p, Geom::Point const &/*orig
 
     update_knot();
 
-    ((SPObject*)rect)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject*>(rect))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 void
@@ -205,7 +205,7 @@ RectKnotHolderEntityRY::knot_set(Geom::Point const &p, Geom::Point const &/*orig
 
     update_knot();
 
-    ((SPObject *)rect)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject *>(rect))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 void
@@ -315,7 +315,7 @@ RectKnotHolderEntityWH::set_internal(Geom::Point const &p, Geom::Point const &or
 
     sp_rect_clamp_radii(rect);
 
-    ((SPObject *)rect)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject *>(rect))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 void
@@ -416,7 +416,7 @@ RectKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &origin
 
     update_knot();
 
-    ((SPObject *)rect)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject *>(rect))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 RectKnotHolder::RectKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler) :
@@ -780,7 +780,7 @@ ArcKnotHolderEntityStart::knot_set(Geom::Point const &p, Geom::Point const &/*or
         ge->start = sp_round(ge->start, M_PI/snaps);
     }
     sp_genericellipse_normalize(ge);
-    ((SPObject *)arc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject *>(arc))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 Geom::Point
@@ -812,7 +812,7 @@ ArcKnotHolderEntityEnd::knot_set(Geom::Point const &p, Geom::Point const &/*orig
         ge->end = sp_round(ge->end, M_PI/snaps);
     }
     sp_genericellipse_normalize(ge);
-    ((SPObject *)arc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject *>(arc))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 Geom::Point
@@ -832,7 +832,7 @@ ArcKnotHolderEntityEnd::knot_click(guint state)
 
     if (state & GDK_SHIFT_MASK) {
         ge->end = ge->start = 0;
-        ((SPObject *)ge)->updateRepr();
+        (static_cast<SPObject *>(ge))->updateRepr();
     }
 }
 
@@ -850,7 +850,7 @@ ArcKnotHolderEntityRX::knot_set(Geom::Point const &p, Geom::Point const &/*origi
         ge->ry.computed = ge->rx.computed;
     }
 
-    ((SPObject *)item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject *>(item))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 Geom::Point
@@ -868,7 +868,7 @@ ArcKnotHolderEntityRX::knot_click(guint state)
 
     if (state & GDK_CONTROL_MASK) {
         ge->ry.computed = ge->rx.computed;
-        ((SPObject *)ge)->updateRepr();
+        (static_cast<SPObject *>(ge))->updateRepr();
     }
 }
 
@@ -885,7 +885,7 @@ ArcKnotHolderEntityRY::knot_set(Geom::Point const &p, Geom::Point const &/*origi
         ge->rx.computed = ge->ry.computed;
     }
 
-    ((SPObject *)item)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject *>(item))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 Geom::Point
@@ -903,7 +903,7 @@ ArcKnotHolderEntityRY::knot_click(guint state)
 
     if (state & GDK_CONTROL_MASK) {
         ge->rx.computed = ge->ry.computed;
-        ((SPObject *)ge)->updateRepr();
+        (static_cast<SPObject *>(ge))->updateRepr();
     }
 }
 
@@ -975,7 +975,7 @@ StarKnotHolderEntity1::knot_set(Geom::Point const &p, Geom::Point const &/*origi
         star->arg[0]  = arg1;
         star->arg[1] += darg1;
     }
-    ((SPObject *)star)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject *>(star))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 void
@@ -1003,7 +1003,7 @@ StarKnotHolderEntity2::knot_set(Geom::Point const &p, Geom::Point const &/*origi
             star->r[1]   = L2(d);
             star->arg[1] = atan2(d);
         }
-        ((SPObject *)star)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        (static_cast<SPObject *>(star))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     }
 }
 
@@ -1035,13 +1035,13 @@ sp_star_knot_click(SPItem *item, guint state)
 
     if (state & GDK_MOD1_MASK) {
         star->randomized = 0;
-        ((SPObject *)star)->updateRepr();
+        (static_cast<SPObject *>(star))->updateRepr();
     } else if (state & GDK_SHIFT_MASK) {
         star->rounded = 0;
-        ((SPObject *)star)->updateRepr();
+        (static_cast<SPObject *>(star))->updateRepr();
     } else if (state & GDK_CONTROL_MASK) {
         star->arg[1] = star->arg[0] + M_PI / star->sides;
-        ((SPObject *)star)->updateRepr();
+        (static_cast<SPObject *>(star))->updateRepr();
     }
 }
 
@@ -1142,7 +1142,7 @@ SpiralKnotHolderEntityInner::knot_set(Geom::Point const &p, Geom::Point const &o
         spiral->t0 = CLAMP(spiral->t0, 0.0, 0.999);
     }
 
-    ((SPObject *)spiral)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject *>(spiral))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 /*
@@ -1221,7 +1221,7 @@ SpiralKnotHolderEntityOuter::knot_set(Geom::Point const &p, Geom::Point const &/
         spiral->t0 = CLAMP(spiral->t0, 0.0, 0.999);
     }
 
-    ((SPObject *)spiral)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject *>(spiral))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 Geom::Point
@@ -1247,10 +1247,10 @@ SpiralKnotHolderEntityInner::knot_click(guint state)
 
     if (state & GDK_MOD1_MASK) {
         spiral->exp = 1;
-        ((SPObject *)spiral)->updateRepr();
+        (static_cast<SPObject *>(spiral))->updateRepr();
     } else if (state & GDK_SHIFT_MASK) {
         spiral->t0 = 0;
-        ((SPObject *)spiral)->updateRepr();
+        (static_cast<SPObject *>(spiral))->updateRepr();
     }
 }
 
@@ -1288,7 +1288,7 @@ OffsetKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &/*orig
     offset->knot = p;
     offset->knotSet = true;
 
-    ((SPObject *)offset)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+    (static_cast<SPObject *>(offset))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 }
 
 
