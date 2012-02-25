@@ -47,6 +47,7 @@
 #include "display/canvas-grid.h"
 #include "path-prefix.h"
 #include "io/resource.h"
+#include "inkscape.h"
 
 #ifdef HAVE_ASPELL
 # include <aspell.h>

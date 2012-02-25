@@ -17,6 +17,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm/textview.h>
 #include <gtkmm/button.h>
+#include <gtkmm/buttonbox.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/separator.h>

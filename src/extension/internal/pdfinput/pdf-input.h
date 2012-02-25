@@ -16,26 +16,33 @@
 
 #ifdef HAVE_POPPLER
 
+#include <gtkmm/dialog.h>
+
 #include "../../implementation/implementation.h"
 
-#include <gtkmm/dialog.h>
-#include <gtkmm/button.h>
-#include <gtkmm/buttonbox.h>
-#include <gtkmm/label.h>
-#include <gtkmm/box.h>
-#include <gtkmm/checkbutton.h>
-#include <gtkmm/comboboxtext.h>
-#include <gtkmm/drawingarea.h>
-#include <gtkmm/alignment.h>
-#include <gtkmm/frame.h>
-#include <gtkmm/scale.h>
-#include <glibmm/i18n.h>
-#include <gdk/gdk.h>
-
-#include "PDFDoc.h"
 #ifdef HAVE_POPPLER_CAIRO
-#include <poppler/glib/poppler-document.h>
+struct _PopplerDocument;
+typedef struct _PopplerDocument            PopplerDocument;
 #endif
+
+struct _GdkEventExpose;
+typedef _GdkEventExpose GdkEventExpose;
+
+class Page;
+class PDFDoc;
+
+namespace Gtk {
+  class Alignment;
+  class Button;
+  class CheckButton;
+  class ComboBoxText;
+  class DrawingArea;
+  class Frame;
+  class HBox;
+  class HScale;
+  class VBox;
+  class Label;
+}
 
 namespace Inkscape {
 

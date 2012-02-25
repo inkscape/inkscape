@@ -32,6 +32,7 @@
 #include "verbs.h"
 #include "widgets/font-selector.h"
 #include "text-editing.h"
+#include "selection.h"
 
 namespace Inkscape {
 namespace UI {

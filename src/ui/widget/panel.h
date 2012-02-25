@@ -13,22 +13,32 @@
 #ifndef SEEN_INKSCAPE_UI_WIDGET_PANEL_H
 #define SEEN_INKSCAPE_UI_WIDGET_PANEL_H
 
+#include <gtkmm/box.h>
+#include <gtkmm/arrow.h>
+#include <gtkmm/button.h>
+#include <gtkmm/eventbox.h>
+#include <gtkmm/label.h>
+
 #include <vector>
 
-#include "inkscape.h"
-#include "selection.h"
-#include "ui/previewfillable.h"
+class SPDesktop;
+class SPDocument;
 
-#include <gtkmm/arrow.h>
-#include <gtkmm/box.h>
-#include <gtkmm/button.h>
-#include <gtkmm/buttonbox.h>
-#include <gtkmm/checkmenuitem.h>
-#include <gtkmm/eventbox.h>
-#include <gtkmm/menuitem.h>
+namespace Gtk {
+	class CheckMenuItem;
+	class HButtonBox;
+	class MenuItem;
+}
 
 namespace Inkscape {
+
+struct Application;
+class Selection;
+
 namespace UI {
+
+class PreviewFillable;
+
 namespace Widget {
 
 /**

@@ -51,6 +51,7 @@
 #include "display/cairo-utils.h"
 #include "sp-gradient-reference.h"
 #include "dialog-manager.h"
+#include "selection.h"
 
 namespace Inkscape {
 namespace UI {

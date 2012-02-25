@@ -27,6 +27,7 @@
 
 #include "ui/widget/panel.h"
 #include "ui/widget/notebook-page.h"
+#include "2geom/rect.h"
 
 
 class SPItem;

@@ -34,6 +34,8 @@
 #include "widgets/font-selector.h"
 #include "ui/dialog/desktop-tracker.h"
 
+class SPItem;
+
 namespace Inkscape {
 namespace UI {
 namespace Dialog {

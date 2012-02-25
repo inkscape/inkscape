@@ -16,7 +16,6 @@
 #endif
 
 #ifdef HAVE_POPPLER
-
 #include <poppler/goo/GooString.h>
 #include <poppler/ErrorCodes.h>
 #include <poppler/GlobalParams.h>
@@ -29,6 +28,12 @@
 #include <poppler/glib/poppler-document.h>
 #include <poppler/glib/poppler-page.h>
 #endif
+
+#include <gtkmm/alignment.h>
+#include <gtkmm/comboboxtext.h>
+#include <gtkmm/drawingarea.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/scale.h>
 
 #include "pdf-input.h"
 #include "extension/system.h"
@@ -43,6 +48,7 @@
 #include "dialogs/dialog-events.h"
 #include <gtk/gtk.h>
 #include "ui/widget/spinbutton.h"
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace Extension {

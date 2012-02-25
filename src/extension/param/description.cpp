@@ -16,10 +16,8 @@
 
 #include "description.h"
 
-#include <gtkmm/adjustment.h>
 #include <gtkmm/box.h>
-#include <gtkmm/spinbutton.h>
-#include <sstream>
+#include <gtkmm/label.h>
 #include <glibmm/i18n.h>
 
 #include "xml/node.h"

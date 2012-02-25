@@ -21,6 +21,8 @@
 #include "xml/repr.h"
 #include "ui/dialog/dialog-manager.h"
 #include "ui/dialog/object-attributes.h"
+#include "inkscape.h"
+#include "selection.h"
 
 namespace Inkscape {
 namespace UI {

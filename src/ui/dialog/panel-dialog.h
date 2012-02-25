@@ -23,6 +23,7 @@
 #include "ui/dialog/floating-behavior.h"
 #include "ui/dialog/dock-behavior.h"
 #include "preferences.h"
+#include "inkscape.h"
 
 namespace Inkscape {
 namespace UI {

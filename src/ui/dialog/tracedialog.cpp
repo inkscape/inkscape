@@ -27,6 +27,7 @@
 
 #include "tracedialog.h"
 #include "trace/potrace/inkscape-potrace.h"
+#include "inkscape.h"
 
 
 namespace Inkscape {

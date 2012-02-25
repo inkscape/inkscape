@@ -114,6 +114,8 @@
 #include <errno.h>
 #include "verbs.h"
 
+#include <gdk/gdkkeysyms.h>
+
 enum {
     SP_ARG_NONE,
     SP_ARG_NOGUI,
