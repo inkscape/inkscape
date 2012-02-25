@@ -50,7 +50,7 @@ static void gdl_switcher_add_button  (GdlSwitcher *switcher,
                                       const gchar *label,
                                       const gchar *tooltips,
                                       const gchar *stock_id,
-                                      const GdkPixbuf *pixbuf_icon,
+                                      GdkPixbuf *pixbuf_icon,
                                       gint switcher_id,
                                       GtkWidget *page);
 /* static void gdl_switcher_remove_button (GdlSwitcher *switcher, gint switcher_id); */
@@ -779,10 +779,10 @@ gdl_switcher_new (void)
     return GTK_WIDGET (switcher);
 }
 
-void
+static void
 gdl_switcher_add_button (GdlSwitcher *switcher, const gchar *label,
                          const gchar *tooltips, const gchar *stock_id,
-			 const GdkPixbuf *pixbuf_icon,
+			 GdkPixbuf *pixbuf_icon,
                          gint switcher_id, GtkWidget* page)
 {
     GtkWidget *event_box;
@@ -890,7 +890,7 @@ gint
 gdl_switcher_insert_page (GdlSwitcher *switcher, GtkWidget *page,
                           GtkWidget *tab_widget, const gchar *label,
                           const gchar *tooltips, const gchar *stock_id,
-                          const GdkPixbuf *pixbuf_icon, gint position)
+                          GdkPixbuf *pixbuf_icon, gint position)
 {
     gint ret_position;
     gint switcher_id;
