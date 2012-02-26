@@ -167,13 +167,9 @@ gtk_deprecated_ruler_class_init (GtkDeprecatedRulerClass *klass)
 static void
 gtk_deprecated_ruler_init (GtkDeprecatedRuler *ruler)
 {
-  GtkWidget *widget = GTK_WIDGET (ruler);
   GtkDeprecatedRulerPrivate *priv = GTK_DEPRECATED_RULER_GET_PRIVATE (ruler);
 
   priv->orientation = GTK_ORIENTATION_HORIZONTAL;
-
-  widget->requisition.width  = widget->style->xthickness * 2 + 1;
-  widget->requisition.height = widget->style->ythickness * 2 + RULER_WIDTH;
 
   ruler->backing_store = NULL;
   ruler->xsrc = 0;
@@ -402,7 +398,9 @@ gtk_deprecated_ruler_draw_pos (GtkDeprecatedRuler *ruler)
 static void
 gtk_deprecated_ruler_realize (GtkWidget *widget)
 {
+  GtkAllocation allocation;
   GtkDeprecatedRuler *ruler;
+  GdkWindow *window;
   GdkWindowAttr attributes;
   gint attributes_mask;
 
@@ -410,11 +408,13 @@ gtk_deprecated_ruler_realize (GtkWidget *widget)
 
   gtk_widget_set_realized (widget, TRUE);
 
+  gtk_widget_get_allocation(widget, &allocation);
+
   attributes.window_type = GDK_WINDOW_CHILD;
-  attributes.x = widget->allocation.x;
-  attributes.y = widget->allocation.y;
-  attributes.width = widget->allocation.width;
-  attributes.height = widget->allocation.height;
+  attributes.x = allocation.x;
+  attributes.y = allocation.y;
+  attributes.width = allocation.width;
+  attributes.height = allocation.height;
   attributes.wclass = GDK_INPUT_OUTPUT;
   attributes.visual = gtk_widget_get_visual (widget);
   attributes.colormap = gtk_widget_get_colormap (widget);
@@ -425,11 +425,14 @@ gtk_deprecated_ruler_realize (GtkWidget *widget)
 
   attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
 
-  widget->window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
-  gdk_window_set_user_data (widget->window, ruler);
+  window = gdk_window_new(gtk_widget_get_parent_window (widget), 
+		          &attributes, attributes_mask);
+  gtk_widget_set_window(widget, window);
+  gdk_window_set_user_data(window, ruler);
 
-  widget->style = gtk_style_attach (widget->style, widget->window);
-  gtk_style_set_background (widget->style, widget->window, GTK_STATE_ACTIVE);
+  gtk_widget_style_attach(widget);
+  gtk_style_set_background(gtk_widget_get_style(widget),
+		           window, GTK_STATE_ACTIVE);
 
   gtk_deprecated_ruler_make_pixmap (ruler);
 }
@@ -453,16 +456,17 @@ gtk_deprecated_ruler_size_request (GtkWidget      *widget,
                         GtkRequisition *requisition)
 {
   GtkDeprecatedRulerPrivate *priv = GTK_DEPRECATED_RULER_GET_PRIVATE (widget);
+  GtkStyle *style = gtk_widget_get_style(widget);
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
-      requisition->width  = widget->style->xthickness * 2 + 1;
-      requisition->height = widget->style->ythickness * 2 + RULER_WIDTH;
+      requisition->width  = style->xthickness * 2 + 1;
+      requisition->height = style->ythickness * 2 + RULER_WIDTH;
     }
   else
     {
-      requisition->width  = widget->style->xthickness * 2 + RULER_WIDTH;
-      requisition->height = widget->style->ythickness * 2 + 1;
+      requisition->width  = style->xthickness * 2 + RULER_WIDTH;
+      requisition->height = style->ythickness * 2 + 1;
     }
 }
 
@@ -472,13 +476,13 @@ gtk_deprecated_ruler_size_allocate (GtkWidget     *widget,
 {
   GtkDeprecatedRuler *ruler = GTK_DEPRECATED_RULER (widget);
 
-  widget->allocation = *allocation;
+  gtk_widget_set_allocation(widget, allocation);
 
   if (gtk_widget_get_realized (widget))
     {
-      gdk_window_move_resize (widget->window,
-			      allocation->x, allocation->y,
-			      allocation->width, allocation->height);
+      gdk_window_move_resize(gtk_widget_get_window(widget),
+			     allocation->x, allocation->y,
+			     allocation->width, allocation->height);
 
       gtk_deprecated_ruler_make_pixmap (ruler);
     }
@@ -488,6 +492,7 @@ static gboolean
 gtk_deprecated_ruler_motion_notify (GtkWidget      *widget,
                          GdkEventMotion *event)
 {
+  GtkAllocation allocation;
   GtkDeprecatedRuler *ruler = GTK_DEPRECATED_RULER (widget);
   GtkDeprecatedRulerPrivate *priv = GTK_DEPRECATED_RULER_GET_PRIVATE (widget);
   gint x;
@@ -497,10 +502,12 @@ gtk_deprecated_ruler_motion_notify (GtkWidget      *widget,
   x = event->x;
   y = event->y;
 
+  gtk_widget_get_allocation(widget, &allocation);
+
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
-    ruler->position = ruler->lower + ((ruler->upper - ruler->lower) * x) / widget->allocation.width;
+    ruler->position = ruler->lower + ((ruler->upper - ruler->lower) * x) / allocation.width;
   else
-    ruler->position = ruler->lower + ((ruler->upper - ruler->lower) * y) / widget->allocation.height;
+    ruler->position = ruler->lower + ((ruler->upper - ruler->lower) * y) / allocation.height;
 
   g_object_notify (G_OBJECT (ruler), "position");
 
@@ -522,7 +529,7 @@ gtk_deprecated_ruler_expose (GtkWidget      *widget,
 
       gtk_deprecated_ruler_draw_ticks (ruler);
       
-      cr = gdk_cairo_create (widget->window);
+      cr = gdk_cairo_create(gtk_widget_get_window(widget));
       gdk_cairo_set_source_pixmap (cr, ruler->backing_store, 0, 0);
       gdk_cairo_rectangle (cr, &event->area);
       cairo_fill (cr);
@@ -537,25 +544,28 @@ gtk_deprecated_ruler_expose (GtkWidget      *widget,
 static void
 gtk_deprecated_ruler_make_pixmap (GtkDeprecatedRuler *ruler)
 {
+  GtkAllocation allocation;
   GtkWidget *widget;
   gint width;
   gint height;
 
   widget = GTK_WIDGET (ruler);
 
+  gtk_widget_get_allocation(widget, &allocation);
+
   if (ruler->backing_store)
     {
       gdk_drawable_get_size (ruler->backing_store, &width, &height);
-      if ((width == widget->allocation.width) &&
-	  (height == widget->allocation.height))
+      if ((width == allocation.width) &&
+	  (height == allocation.height))
 	return;
 
       g_object_unref (ruler->backing_store);
     }
 
-  ruler->backing_store = gdk_pixmap_new (widget->window,
-					 widget->allocation.width,
-					 widget->allocation.height,
+  ruler->backing_store = gdk_pixmap_new (gtk_widget_get_window(widget),
+					 allocation.width,
+					 allocation.height,
 					 -1);
 
   ruler->xsrc = 0;
@@ -565,8 +575,10 @@ gtk_deprecated_ruler_make_pixmap (GtkDeprecatedRuler *ruler)
 static void
 gtk_deprecated_ruler_real_draw_ticks (GtkDeprecatedRuler *ruler)
 {
+  GtkAllocation allocation;
   GtkWidget *widget = GTK_WIDGET (ruler);
   GtkDeprecatedRulerPrivate *priv = GTK_DEPRECATED_RULER_GET_PRIVATE (ruler);
+  GtkStyle *style;
   cairo_t *cr;
   gint i, j;
   gint width, height;
@@ -590,8 +602,11 @@ gtk_deprecated_ruler_real_draw_ticks (GtkDeprecatedRuler *ruler)
   if (!gtk_widget_is_drawable (widget))
     return;
 
-  xthickness = widget->style->xthickness;
-  ythickness = widget->style->ythickness;
+  style = gtk_widget_get_style(widget);
+  gtk_widget_get_allocation(widget, &allocation);
+
+  xthickness = style->xthickness;
+  ythickness = style->ythickness;
 
   layout = gtk_widget_create_pango_layout (widget, "012456789");
   pango_layout_get_extents (layout, &ink_rect, &logical_rect);
@@ -601,34 +616,34 @@ gtk_deprecated_ruler_real_draw_ticks (GtkDeprecatedRuler *ruler)
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
-      width = widget->allocation.width;
-      height = widget->allocation.height - ythickness * 2;
+      width = allocation.width;
+      height = allocation.height - ythickness * 2;
     }
   else
     {
-      width = widget->allocation.height;
-      height = widget->allocation.width - ythickness * 2;
+      width = allocation.height;
+      height = allocation.width - ythickness * 2;
     }
 
 #define DETAILE(priv) (priv->orientation == GTK_ORIENTATION_HORIZONTAL ? "hruler" : "vruler");
 
-  gtk_paint_box (widget->style, ruler->backing_store,
+  gtk_paint_box (style, ruler->backing_store,
 		 GTK_STATE_NORMAL, GTK_SHADOW_OUT,
 		 NULL, widget,
                  priv->orientation == GTK_ORIENTATION_HORIZONTAL ?
                  "hruler" : "vruler",
 		 0, 0,
-		 widget->allocation.width, widget->allocation.height);
+		 allocation.width, allocation.height);
 
   cr = gdk_cairo_create (ruler->backing_store);
-  gdk_cairo_set_source_color (cr, &widget->style->fg[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->fg[gtk_widget_get_state(widget)]);
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
       cairo_rectangle (cr,
                        xthickness,
                        height + ythickness,
-                       widget->allocation.width - 2 * xthickness,
+                       allocation.width - 2 * xthickness,
                        1);
     }
   else
@@ -637,7 +652,7 @@ gtk_deprecated_ruler_real_draw_ticks (GtkDeprecatedRuler *ruler)
                        height + xthickness,
                        ythickness,
                        1,
-                       widget->allocation.height - 2 * ythickness);
+                       allocation.height - 2 * ythickness);
     }
 
   upper = ruler->upper / ruler->metric->pixels_per_unit;
@@ -736,7 +751,7 @@ gtk_deprecated_ruler_real_draw_ticks (GtkDeprecatedRuler *ruler)
                   pango_layout_set_text (layout, unit_str, -1);
                   pango_layout_get_extents (layout, &logical_rect, NULL);
 
-                  gtk_paint_layout (widget->style,
+                  gtk_paint_layout (style,
                                     ruler->backing_store,
                                     gtk_widget_get_state (widget),
                                     FALSE,
@@ -753,7 +768,7 @@ gtk_deprecated_ruler_real_draw_ticks (GtkDeprecatedRuler *ruler)
                       pango_layout_set_text (layout, unit_str + j, 1);
                       pango_layout_get_extents (layout, NULL, &logical_rect);
 
-                      gtk_paint_layout (widget->style,
+                      gtk_paint_layout (style,
                                         ruler->backing_store,
                                         gtk_widget_get_state (widget),
                                         FALSE,
@@ -779,8 +794,10 @@ out:
 static void
 gtk_deprecated_ruler_real_draw_pos (GtkDeprecatedRuler *ruler)
 {
+  GtkAllocation allocation;
   GtkWidget *widget = GTK_WIDGET (ruler);
   GtkDeprecatedRulerPrivate *priv = GTK_DEPRECATED_RULER_GET_PRIVATE (ruler);
+  GtkStyle *style;
   gint x, y;
   gint width, height;
   gint bs_width, bs_height;
@@ -790,10 +807,13 @@ gtk_deprecated_ruler_real_draw_pos (GtkDeprecatedRuler *ruler)
 
   if (gtk_widget_is_drawable (widget))
     {
-      xthickness = widget->style->xthickness;
-      ythickness = widget->style->ythickness;
-      width = widget->allocation.width;
-      height = widget->allocation.height;
+      style = gtk_widget_get_style(widget);
+      gtk_widget_get_allocation(widget, &allocation);
+
+      xthickness = style->xthickness;
+      ythickness = style->ythickness;
+      width = allocation.width;
+      height = allocation.height;
 
       if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
         {
@@ -814,12 +834,13 @@ gtk_deprecated_ruler_real_draw_pos (GtkDeprecatedRuler *ruler)
 
       if ((bs_width > 0) && (bs_height > 0))
 	{
-	  cairo_t *cr = gdk_cairo_create (widget->window);
+	  GdkWindow *window = gtk_widget_get_window(widget);
+	  cairo_t *cr = gdk_cairo_create(window);
 
 	  /*  If a backing store exists, restore the ruler  */
 	  if (ruler->backing_store)
             {
-              cairo_t *cr = gdk_cairo_create (widget->window);
+              cairo_t *cr = gdk_cairo_create(window);
 
               gdk_cairo_set_source_pixmap (cr, ruler->backing_store, 0, 0);
               cairo_rectangle (cr, ruler->xsrc, ruler->ysrc, bs_width, bs_height);
@@ -843,7 +864,7 @@ gtk_deprecated_ruler_real_draw_pos (GtkDeprecatedRuler *ruler)
               y = ROUND ((ruler->position - ruler->lower) * increment) + (ythickness - bs_height) / 2 - 1;
             }
 
-	  gdk_cairo_set_source_color (cr, &widget->style->fg[widget->state]);
+	  gdk_cairo_set_source_color(cr, &style->fg[gtk_widget_get_state(widget)]);
 
 	  cairo_move_to (cr, x, y);
 

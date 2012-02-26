@@ -37,21 +37,21 @@ struct _GtkDeprecatedRuler
 {
   GtkWidget widget;
 
-  GdkPixmap *GSEAL (backing_store);
-  GdkGC *GSEAL (non_gr_exp_gc);		/* unused */
-  GtkDeprecatedRulerMetric *GSEAL (metric);
-  gint GSEAL (xsrc);
-  gint GSEAL (ysrc);
-  gint GSEAL (slider_size);
+  GdkPixmap *backing_store;
+  GdkGC     *non_gr_exp_gc;		/* unused */
+  GtkDeprecatedRulerMetric *metric;
+  gint xsrc;
+  gint ysrc;
+  gint slider_size;
 
   /* The upper limit of the ruler (in points) */
-  gdouble GSEAL (lower);
+  gdouble lower;
   /* The lower limit of the ruler */
-  gdouble GSEAL (upper);
+  gdouble upper;
   /* The position of the mark on the ruler */
-  gdouble GSEAL (position);
+  gdouble position;
   /* The maximum size of the ruler */
-  gdouble GSEAL (max_size);
+  gdouble max_size;
 };
 
 struct _GtkDeprecatedRulerClass
