@@ -5,8 +5,9 @@
  * Authors:
  *   ? <?@?.?>
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Johan Engelen
  * 
- * Copyright ?-2009 Authors
+ * Copyright ?-2012 Authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -171,7 +172,15 @@ void check_transforms()
     m = z * t; m = z * s; m = z * r; m = z * h; m = z * v; m = z * z;
 }
 
+Affine reflection(Point const & vector, Point const & origin) {
+    Geom::Point vec_norm = unit_vector(vector);
+    Affine mirror ( vec_norm[X]*vec_norm[X] - vec_norm[Y]*vec_norm[Y], 2 * vec_norm[X] * vec_norm[Y] ,
+                    2 * vec_norm[X] * vec_norm[Y], vec_norm[Y]*vec_norm[Y] - vec_norm[X]*vec_norm[X] ,
+                    0 ,0 );
+    return Translate(-origin) * mirror * Translate(origin);
 }
+
+} // namespace Geom
 
 /*
   Local Variables:

@@ -5,8 +5,9 @@
  * Authors:
  *   ? <?@?.?>
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Johan Engelen
  * 
- * Copyright ?-2009 Authors
+ * Copyright ?-2012 Authors
  *
  * This library is free software; you can redistribute it and/or
  * modify it either under the terms of the GNU Lesser General Public
@@ -280,7 +281,7 @@ inline bool are_near(VShear const &a, VShear const &b, Coord eps=EPSILON) {
  * The translation part is applied first, then the result is scaled from the new origin.
  * This way when the class is used to accumulate a zoom transform, trans always points
  * to the new origin in original coordinates.
- * @ingroup Transform */
+ * @ingroup Transforms */
 class Zoom
     : public TransformOperations< Zoom >
 {
@@ -337,6 +338,12 @@ inline Translate pow(Translate const &t, int n) {
     Translate ret(t[X] * n, t[Y] * n);
     return ret;
 }
+
+
+/** @brief Reflects objects about line.
+ * The line, defined by a vector along the line and a point on it, acts as a mirror.
+ */
+Affine reflection(Point const & vector, Point const & origin);
 
 //TODO: decomposition of Affine into some finite combination of the above classes
 

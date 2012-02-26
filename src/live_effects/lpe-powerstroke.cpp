@@ -24,7 +24,8 @@
 #include <2geom/svg-elliptical-arc.h>
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/svg-path.h>
-
+#include <2geom/path-intersection.h>
+#include <2geom/crossing.h>
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -56,12 +57,12 @@ static const Util::EnumDataConverter<unsigned> LineCapTypeConverter(LineCapTypeD
 enum LineCuspType {
   LINECUSP_BEVEL,
   LINECUSP_ROUND,
-  LINECUSP_SHARP
+  LINECUSP_CUSP
 };
 static const Util::EnumData<unsigned> LineCuspTypeData[] = {
-    {LINECUSP_BEVEL ,  N_("Beveled"),  "bevel"},
-    {LINECUSP_ROUND ,  N_("Rounded"), "round"},
-// not yet supported    {LINECUSP_SHARP  , N_("Sharp"), "sharp"}
+    {LINECUSP_BEVEL ,  N_("Beveled"),   "bevel"},
+    {LINECUSP_ROUND ,  N_("Rounded"),   "round"},
+    {LINECUSP_CUSP  ,  N_("Cusp"),      "cusp"},
 };
 static const Util::EnumDataConverter<unsigned> LineCuspTypeConverter(LineCuspTypeData, sizeof(LineCuspTypeData)/sizeof(*LineCuspTypeData));
 
@@ -156,6 +157,7 @@ std::vector<discontinuity_data> find_discontinuities( Geom::Piecewise<Geom::D2<G
 Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis> > const & B,
                                           std::vector<discontinuity_data> const & cusps,
                                           LineCuspType cusp_linecap,
+                                          bool forward_direction,
                                           double tol=Geom::EPSILON)
 {
 /* per definition, each discontinuity should be fixed with a cusp-ending, as defined by cusp_linecap_type
@@ -165,14 +167,16 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
         return pb.peek().front();
     }
 
-    unsigned int cusp_i = 0;
+    double sign = forward_direction ? 1. : -1.;
+
+    unsigned int cusp_i = forward_direction ? 0 : cusps.size()-1;
     Geom::Point start = B[0].at0();
     pb.moveTo(start);
     build_from_sbasis(pb, B[0], tol, false);
     for (unsigned i=1; i < B.size(); i++) {
         if (!are_near(B[i-1].at1(), B[i].at0(), tol) )
         { // discontinuity found, so fix it :-)
-            discontinuity_data const &cusp = cusps[cusp_i];
+            discontinuity_data cusp = cusps[cusp_i];
 
             switch (cusp_linecap) {
             case LINECUSP_ROUND:  // properly bugged ^_^
@@ -180,14 +184,50 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                           angle_between(cusp.der0, cusp.der1), false, cusp.width < 0,
                           B[i].at0() );
                 break;
-            case LINECUSP_SHARP: // no clue yet what to do here :)
+            case LINECUSP_CUSP: {
+                // first figure out whether we are on the outside or inside of the corner in the path
+                if ( sign*cusp.width*angle_between(cusp.der0, cusp.der1) < 0.) {
+                    // we are on the outside, do something complicated to make it look good ;)
+
+                    Geom::D2<Geom::SBasis> newcurve1 =
+                        B[i-1] * Geom::reflection(rot90(derivative(B[i-1]).at1()), B[i-1].at1());
+                    newcurve1 = reverse(newcurve1);
+                    std::vector<Geom::Point> temp;
+                    sbasis_to_bezier(temp, newcurve1, 4);
+                    Geom::CubicBezier bzr1( temp );
+
+                    Geom::D2<Geom::SBasis> newcurve2 =
+                        B[i] * Geom::reflection(rot90(derivative(B[i]).at0()), B[i].at0());
+                    newcurve2 = reverse(newcurve2);
+                    sbasis_to_bezier(temp, newcurve2, 4);
+                    Geom::CubicBezier bzr2( temp );
+
+                    Geom::Crossings cross = crossings(bzr1, bzr2);
+                    if (cross.empty()) {
+g_message("empty crossing: decide what to do...");
+                        pb.curveTo(bzr1[1], bzr1[2], bzr1[3]);
+                        pb.lineTo(bzr2[0]);
+                        pb.curveTo(bzr2[1], bzr2[2], bzr2[3]);
+                    } else {
+                        std::pair<Geom::CubicBezier, Geom::CubicBezier> sub1 = bzr1.subdivide(cross[0].ta);
+                        std::pair<Geom::CubicBezier, Geom::CubicBezier> sub2 = bzr2.subdivide(cross[0].tb);
+                        pb.curveTo(sub1.first[1], sub1.first[2], sub1.first[3]);
+                        pb.curveTo(sub2.second[1], sub2.second[2], sub2.second[3]);
+                    }
+
+                } else {
+                    // we are on the inside, do a simple bevel to connect the paths
+                    pb.lineTo(B[i].at0()); // default to bevel for too shallow cusp angles
+                }
+                break;
+            }
             case LINECUSP_BEVEL:
             default:
                 pb.lineTo(B[i].at0());
                 break;
             }
 
-            cusp_i++;
+            cusp_i += forward_direction ? 1 : -1;
         }
         build_from_sbasis(pb, B[i], tol, false);
     }
@@ -209,8 +249,8 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
     // for now, only regard first subpath and ignore the rest
     Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2_in = path_in[0].toPwSb();
 
-    Piecewise<D2<SBasis> > der = unitVector(derivative(pwd2_in));
-    Piecewise<D2<SBasis> > n = rot90(der);
+    Piecewise<D2<SBasis> > der = derivative(pwd2_in);
+    Piecewise<D2<SBasis> > n = rot90(unitVector(der));
     offset_points.set_pwd2(pwd2_in, n);
 
     LineCapType end_linecap = static_cast<LineCapType>(end_linecap_type.get_value());
@@ -263,8 +303,8 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
     Piecewise<D2<SBasis> > pwd2_out   = compose(pwd2_in,x) + y*compose(n,x);
     Piecewise<D2<SBasis> > mirrorpath = reverse(compose(pwd2_in,x) - y*compose(n,x));
 
-    Geom::Path fixed_path       = path_from_piecewise_fix_cusps( pwd2_out,   cusps, cusp_linecap, LPE_CONVERSION_TOLERANCE);
-    Geom::Path fixed_mirrorpath = path_from_piecewise_fix_cusps( mirrorpath, cusps, cusp_linecap, LPE_CONVERSION_TOLERANCE);
+    Geom::Path fixed_path       = path_from_piecewise_fix_cusps( pwd2_out,   cusps, cusp_linecap, true, LPE_CONVERSION_TOLERANCE);
+    Geom::Path fixed_mirrorpath = path_from_piecewise_fix_cusps( mirrorpath, cusps, cusp_linecap, false, LPE_CONVERSION_TOLERANCE);
 
     if (path_in[0].closed()) {
         fixed_path.close(true);
