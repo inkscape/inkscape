@@ -321,7 +321,7 @@ void Dialog::_close()
 
     GdkEventAny event;
     event.type = GDK_DELETE;
-    event.window = dlg->window;
+    event.window = gtk_widget_get_window(dlg);
     event.send_event = TRUE;
 
     if (event.window)
