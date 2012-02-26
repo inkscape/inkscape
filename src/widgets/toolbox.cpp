@@ -3082,7 +3082,9 @@ void sp_toolbox_add_label(GtkWidget *tbl, gchar const *title, bool wide)
     gtk_label_set_markup(GTK_LABEL(l), title);
     gtk_box_pack_end(GTK_BOX(boxl), l, FALSE, FALSE, 0);
     if ( GTK_IS_TOOLBAR(tbl) ) {
-        gtk_toolbar_append_widget( GTK_TOOLBAR(tbl), boxl, "", "" );
+        GtkToolItem *boxl_toolitem = gtk_tool_item_new();
+	gtk_container_add(GTK_CONTAINER(boxl_toolitem), boxl);
+        gtk_toolbar_insert(GTK_TOOLBAR(tbl), boxl_toolitem, -1);
     } else {
         gtk_box_pack_start(GTK_BOX(tbl), boxl, FALSE, FALSE, 0);
     }

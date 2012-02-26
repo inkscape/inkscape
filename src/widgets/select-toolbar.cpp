@@ -548,7 +548,9 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     if ( GTK_IS_BOX(holder) ) {
         gtk_box_pack_start(GTK_BOX(holder), spw, FALSE, FALSE, 0);
     } else if ( GTK_IS_TOOLBAR(holder) ) {
-        gtk_toolbar_append_widget( GTK_TOOLBAR(holder), spw, "Text", "priv" );
+	GtkToolItem *spw_toolitem = gtk_tool_item_new();
+	gtk_container_add(GTK_CONTAINER(spw_toolitem), spw);
+	gtk_toolbar_insert(GTK_TOOLBAR(holder), spw_toolitem, -1);
     } else {
         g_warning("Unexpected holder type");
     }

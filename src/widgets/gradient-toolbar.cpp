@@ -573,7 +573,9 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     }
 
     gtk_box_pack_start(GTK_BOX(cvbox), cbox, TRUE, FALSE, 0);
-    gtk_toolbar_append_widget( GTK_TOOLBAR(tbl), cvbox, "", "" );
+    GtkToolItem *cvbox_toolitem = gtk_tool_item_new();
+    gtk_container_add(GTK_CONTAINER(cvbox_toolitem), cvbox);
+    gtk_toolbar_insert(GTK_TOOLBAR(tbl), cvbox_toolitem, -1);
     }
 
     // TODO replace aux_toolbox_space(tbl, AUX_SPACING);
@@ -613,7 +615,9 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
     }
 
     gtk_box_pack_start(GTK_BOX(cvbox), cbox, TRUE, TRUE, 3);
-    gtk_toolbar_append_widget( GTK_TOOLBAR(tbl), cvbox, "", "" );
+    GtkToolItem *cvbox_toolitem = gtk_tool_item_new();
+    gtk_container_add(GTK_CONTAINER(cvbox_toolitem), cvbox);
+    gtk_toolbar_insert(GTK_TOOLBAR(tbl), cvbox_toolitem, -1);
     }
 
 
@@ -623,7 +627,9 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
 
     {
         GtkWidget *vectors = gr_change_widget (desktop);
-        gtk_toolbar_append_widget( GTK_TOOLBAR(tbl), vectors, "", "" );
+	GtkToolItem *vectors_toolitem = gtk_tool_item_new();
+	gtk_container_add(GTK_CONTAINER(vectors_toolitem), vectors);
+	gtk_toolbar_insert(GTK_TOOLBAR(tbl), vectors_toolitem, -1);
     }
 
     gtk_widget_show_all(tbl);
