@@ -18,6 +18,7 @@
 # include <config.h>
 #endif
 
+#include "tile.h"
 #include <gtk/gtk.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
@@ -32,7 +33,6 @@
 #include "document-undo.h"
 #include "sp-item.h"
 #include "widgets/icon.h"
-#include "tile.h"
 #include "desktop.h"
 
 /*

@@ -10,12 +10,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtk.h> //for GTK_RESPONSE* types
+#include "extensions.h"
+#include "extension/extension.h"
 #include <gtkmm/scrolledwindow.h>
 
 #include "extension/db.h"
-#include "extensions.h"
-#include "extension/extension.h"
 
 
 namespace Inkscape {

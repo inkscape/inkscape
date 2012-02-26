@@ -10,6 +10,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "live_effects/lpe-powerstroke.h"
 #include <string>
 #include <sstream>
 #include <deque>
@@ -32,7 +33,6 @@
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
 #include "live_effects/parameter/path.h"
-#include "live_effects/lpe-powerstroke.h"
 #include "sp-path.h"
 #include "helper/geom.h"
 #include "preferences.h"

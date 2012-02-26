@@ -21,6 +21,7 @@
 # include <config.h>
 #endif
 
+#include "align-and-distribute.h"
 #include <2geom/transforms.h>
 #include "ui/widget/spinbutton.h"
 #include "desktop-handles.h"
@@ -47,7 +48,7 @@
 #include "sp-root.h"
 #include "document-undo.h"
 
-#include "align-and-distribute.h"
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace UI {

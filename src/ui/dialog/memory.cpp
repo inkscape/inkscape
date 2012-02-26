@@ -14,12 +14,12 @@
 # include <config.h>
 #endif
 
+#include "ui/dialog/memory.h"
 #include <glibmm/i18n.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/treeview.h>
 
 #include "gc-core.h"
-#include "ui/dialog/memory.h"
 #include "debug/heap.h"
 #include "verbs.h"
 

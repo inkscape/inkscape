@@ -12,16 +12,16 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "spellcheck.h"
 #include "widgets/icon.h"
 #include "message-stack.h"
-
-#include <gtk/gtk.h>
 
 #include "helper/window.h"
 #include "macros.h"
 #include "inkscape.h"
 #include "document.h"
 #include "selection.h"
+#include "desktop.h"
 #include "desktop-handles.h"
 #include "tools-switch.h"
 #include "text-context.h"
@@ -40,7 +40,7 @@
 #include "document-undo.h"
 #include "sp-root.h"
 #include "verbs.h"
-#include "spellcheck.h"
+#include <glibmm/i18n.h>
 
 #ifdef WIN32
 #include <windows.h>

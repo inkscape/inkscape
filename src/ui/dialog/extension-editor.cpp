@@ -15,6 +15,7 @@
 # include <config.h>
 #endif
 
+#include "extension-editor.h"
 #include <glibmm/i18n.h>
 
 #include <gtkmm/frame.h>
@@ -22,7 +23,6 @@
 #include <gtkmm/alignment.h>
 #include <gtkmm/notebook.h>
 
-#include "extension-editor.h"
 #include "verbs.h"
 #include "preferences.h"
 #include "interface.h"

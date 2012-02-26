@@ -12,31 +12,27 @@
 #ifndef SEEN_SPELLCHECK_H
 #define SEEN_SPELLCHECK_H
 
-#include <gtk/gtk.h>
-
 #include <gtkmm/box.h>
-#include <gtkmm/textview.h>
 #include <gtkmm/button.h>
 #include <gtkmm/buttonbox.h>
-#include <gtkmm/frame.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/separator.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/treeview.h>
 
-#include <glibmm/i18n.h>
-
-#include "desktop.h"
 #include "ui/dialog/desktop-tracker.h"
 #include "ui/widget/panel.h"
-#include "preferences.h"
 #include "sp-text.h"
 
 #ifdef HAVE_ASPELL
 #include <aspell.h>
 #endif  /* HAVE_ASPELL */
 
+class SPDesktop;
+
 namespace Inkscape {
+class Preferences;
+
 namespace UI {
 namespace Dialog {
 

@@ -13,6 +13,7 @@
 # include "config.h"
 #endif
 
+#include "ui/dialog/dialog-manager.h"
 #include "context-menu.h"
 #include "../xml/repr.h"
 #include "desktop.h"
@@ -20,7 +21,6 @@
 #include "document-undo.h"
 #include "message-stack.h"
 #include "preferences.h"
-#include "ui/dialog/dialog-manager.h"
 #include "verbs.h"
 
 using Inkscape::DocumentUndo;

@@ -15,12 +15,8 @@
 
 #include "ui/widget/panel.h"
 
-#include <glibmm/i18n.h>
-
 #include <gtkmm/treestore.h>
 #include <gtkmm/treeview.h>
-#include <gtkmm/label.h>
-#include <gtkmm/frame.h>
 #include <gtkmm/scrolledwindow.h>
 
 #include "extension/extension.h"

@@ -24,8 +24,8 @@
 #include <cstring>
 #include <string>
 
-#include <gtk/gtk.h>
 
+#include "widgets/swatch-selector.h"
 #include "../sp-pattern.h"
 #include <glibmm/i18n.h>
 #include "../widgets/icon.h"
@@ -47,7 +47,6 @@
 #include "io/sys.h"
 #include "helper/stock-items.h"
 #include "ui/icon-names.h"
-#include "widgets/swatch-selector.h"
 
 #include "paint-selector.h"
 
@@ -55,6 +54,7 @@
 #include "svg/svg-icc-color.h"
 #endif // SP_PS_VERBOSE
 
+#include <gtk/gtk.h>
 
 using Inkscape::Widgets::SwatchSelector;
 

@@ -17,38 +17,22 @@
 #ifndef __FILE_DIALOGIMPL_H__
 #define __FILE_DIALOGIMPL_H__
 
-#include "filedialog.h"
-#include "extension/system.h"
+//Gtk includes
+#include <gtkmm/filechooserdialog.h>
+#include <glib/gstdio.h>
+#include <gtkmm/comboboxtext.h>
 
 //General includes
 #include <unistd.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include <libxml/parser.h>
-#include <libxml/tree.h>
+
+#include "filedialog.h"
 
 
-//Gtk includes
-#include <glibmm/i18n.h>
-#include <glib/gstdio.h>
-#include <gtkmm/comboboxtext.h>
-#include <gtkmm/expander.h>
-#include <gtkmm/filechooserdialog.h>
-
-//Temporary ugly hack
-//Remove this after the get_filter() calls in
-//show() on both classes are fixed
-#include <gtk/gtk.h>
-
-//Inkscape includes
-#include "extension/input.h"
-#include "extension/output.h"
-#include "extension/db.h"
-#include "inkscape.h"
-#include "svg-view-widget.h"
-
-//For export dialog
-#include "ui/widget/scalar-unit.h"
+namespace Gtk {
+class Expander;
+}
 
 namespace Inkscape
 {

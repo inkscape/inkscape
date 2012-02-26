@@ -18,6 +18,7 @@
 # include <config.h>
 #endif
 
+#include "document-metadata.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "inkscape.h"
@@ -27,9 +28,6 @@
 #include "verbs.h"
 #include "xml/node-event-vector.h"
 
-#include "document-metadata.h"
-
-//using std::pair;
 
 namespace Inkscape {
 namespace UI {

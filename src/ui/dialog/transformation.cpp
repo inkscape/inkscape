@@ -15,8 +15,8 @@
 # include <config.h>
 #endif
 
-#include <gtkmm/stock.h>
 #include <gtkmm/dialog.h>
+#include <gtkmm/stock.h>
 #include <2geom/transforms.h>
 
 #include "document.h"

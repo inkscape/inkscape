@@ -11,15 +11,9 @@
 #ifndef INKSCAPE_UI_DIALOG_SVG_FONTS_H
 #define INKSCAPE_UI_DIALOG_SVG_FONTS_H
 
-#include <2geom/pathvector.h>
 #include "ui/widget/panel.h"
+#include <2geom/pathvector.h>
 #include "ui/widget/spinbutton.h"
-#include "sp-font.h"
-#include "sp-font-face.h"
-#include "verbs.h"
-#include "document.h"
-#include "desktop.h"
-#include "desktop-handles.h"
 
 #include <gtkmm/box.h>
 #include <gtkmm/comboboxtext.h>
@@ -30,9 +24,12 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/treeview.h>
 
-#include "display/nr-svgfonts.h"
 #include "attributes.h"
 #include "xml/helper-observer.h"
+
+class SPGlyph;
+class SPGlyphKerning;
+class SvgFont;
 
 class SvgFontDrawingArea : Gtk::DrawingArea{
 public:

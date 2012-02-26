@@ -10,6 +10,7 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
+#include <gtkmm/dialog.h>
 #include <gtkmm/stock.h>
 #include <gtk/gtk.h>
 

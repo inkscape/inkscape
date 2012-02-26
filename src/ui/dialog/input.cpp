@@ -12,6 +12,7 @@
 #include <map>
 #include <set>
 #include <list>
+#include "ui/widget/panel.h"
 #include <glib/gprintf.h>
 #include <glibmm/i18n.h>
 #include <gtkmm/alignment.h>
@@ -36,7 +37,6 @@
 
 #include "device-manager.h"
 #include "preferences.h"
-#include "ui/widget/panel.h"
 
 #include "input.h"
 

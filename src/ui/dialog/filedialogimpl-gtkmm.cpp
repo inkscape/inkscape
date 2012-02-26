@@ -32,7 +32,14 @@
 # include <libgnomevfs/gnome-vfs.h>
 #endif
 
+#include <gtkmm/expander.h>
 #include <gtkmm/stock.h>
+#include <glibmm/i18n.h>
+#include "extension/input.h"
+#include "extension/output.h"
+#include "extension/db.h"
+#include "svg-view-widget.h"
+#include "inkscape.h"
 
 //Routines from file.cpp
 #undef INK_DUMP_FILENAME_CONV

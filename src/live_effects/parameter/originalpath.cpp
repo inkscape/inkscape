@@ -4,11 +4,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <gtkmm/box.h>
 #include "live_effects/parameter/originalpath.h"
 
 #include "widgets/icon.h"
 #include <glibmm/i18n.h>
-#include <gtkmm/box.h>
 #include <gtkmm/button.h>
 #include <gtkmm/label.h>
 

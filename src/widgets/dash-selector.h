@@ -10,7 +10,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glibmm/ustring.h>
 #include <gtkmm/box.h>
 #include <sigc++/signal.h>
 

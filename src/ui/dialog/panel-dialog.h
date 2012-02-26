@@ -15,6 +15,7 @@
 # include <config.h>
 #endif
 
+#include <gtkmm/dialog.h>
 #include <gtkmm/stock.h>
 
 #include "verbs.h"
@@ -24,6 +25,7 @@
 #include "ui/dialog/dock-behavior.h"
 #include "preferences.h"
 #include "inkscape.h"
+#include "desktop.h"
 
 namespace Inkscape {
 namespace UI {

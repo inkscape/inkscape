@@ -17,21 +17,18 @@
 # include <config.h>
 #endif
 
+#include "inkscape-preferences.h"
 #include <gtkmm/main.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/alignment.h>
 
-#include <gtk/gtk.h>
-
 #include "preferences.h"
-#include "inkscape-preferences.h"
 #include "verbs.h"
 #include "selcue.h"
 #include "unit-constants.h"
 #include <iostream>
 #include "enums.h"
-// #include "inkscape.h"
 #include "desktop-handles.h"
 #include "message-stack.h"
 #include "style.h"

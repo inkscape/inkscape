@@ -81,6 +81,7 @@
 #include "ui/dialog/spellcheck.h"
 #include "ui/icon-names.h"
 #include "ui/tool/node-tool.h"
+#include "selection.h"
 
 #include <gtk/gtk.h>
 

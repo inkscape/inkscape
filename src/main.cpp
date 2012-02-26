@@ -31,6 +31,8 @@
 // This has to be included prior to anything that includes setjmp.h, it croaks otherwise
 #include <png.h>
 
+#include "ui/widget/panel.h"
+
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>
 #endif
@@ -109,7 +111,6 @@
 
 #include "main-cmdlineact.h"
 #include "widgets/icon.h"
-#include "ui/widget/panel.h"
 
 #include <errno.h>
 #include "verbs.h"

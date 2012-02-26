@@ -12,10 +12,10 @@
 #ifndef INKSCAPE_LPE_POWERSTROKE_H
 #define INKSCAPE_LPE_POWERSTROKE_H
 
+#include "live_effects/parameter/enum.h"
 #include "live_effects/effect.h"
 #include "live_effects/parameter/bool.h"
 #include "live_effects/parameter/powerstrokepointarray.h"
-#include "live_effects/parameter/enum.h"
 
 namespace Inkscape {
 namespace LivePathEffect {

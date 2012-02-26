@@ -16,6 +16,8 @@
 # include <config.h>
 #endif
 
+#include "licensor.h"
+
 #include <gtkmm/entry.h>
 
 #include "ui/widget/entity-entry.h"
@@ -25,7 +27,6 @@
 #include "document-undo.h"
 #include "verbs.h"
 
-#include "licensor.h"
 
 namespace Inkscape {
 namespace UI {

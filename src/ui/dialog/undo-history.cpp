@@ -15,18 +15,18 @@
 #endif
 
 #include <glibmm/i18n.h>
-#include <gtk/gtk.h>
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 
-
+#include "undo-history.h"
 #include "document.h"
 #include "document-undo.h"
 #include "inkscape.h"
 #include "verbs.h"
 #include "desktop-handles.h"
 
-#include "undo-history.h"
+#include "desktop.h"
+#include <gtkmm/invisible.h>
 
 namespace Inkscape {
 namespace UI {

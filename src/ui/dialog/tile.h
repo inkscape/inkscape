@@ -17,14 +17,16 @@
 
 #include <gtkmm/box.h>
 #include <gtkmm/notebook.h>
-#include <gtkmm/button.h>
-#include <gtkmm/spinbutton.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/radiobutton.h>
 
 #include "ui/widget/panel.h"
 #include "ui/widget/spinbutton.h"
 #include "ui/widget/scalar-unit.h"
+
+namespace Gtk {
+class Button;
+}
 
 namespace Inkscape {
 namespace UI {

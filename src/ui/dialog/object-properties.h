@@ -13,16 +13,16 @@
 #ifndef SEEN_DIALOGS_ITEM_PROPERTIES_H
 #define SEEN_DIALOGS_ITEM_PROPERTIES_H
 
-#include <gtk/gtk.h>
-#include <glibmm/i18n.h>
+#include "ui/widget/panel.h"
+#include "ui/dialog/desktop-tracker.h"
+#include "widgets/sp-attribute-widget.h"
+
 #include <gtkmm/expander.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/textview.h>
 
-#include "desktop.h"
-#include "ui/dialog/desktop-tracker.h"
-#include "ui/widget/panel.h"
-#include "widgets/sp-attribute-widget.h"
+class SPDesktop;
+class SPItem;
 
 namespace Inkscape {
 namespace UI {

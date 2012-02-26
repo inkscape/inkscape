@@ -13,9 +13,12 @@
 #ifndef INKSCAPE_UI_DIALOG_FLOATING_BEHAVIOR_H
 #define INKSCAPE_UI_DIALOG_FLOATING_BEHAVIOR_H
 
-#include <gtkmm/dialog.h>
 #include <glibmm/property.h>
 #include "behavior.h"
+
+namespace Gtk {
+class Dialog;
+}
 
 namespace Inkscape {
 namespace UI {

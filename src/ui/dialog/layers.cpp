@@ -13,7 +13,7 @@
 # include <config.h>
 #endif
 
-#include <gtk/gtk.h>
+#include "layers.h"
 #include <gtkmm/widget.h>
 #include <gtkmm/icontheme.h>
 #include <glibmm/i18n.h>
@@ -37,7 +37,6 @@
 #include "xml/repr.h"
 #include "sp-root.h"
 
-#include "layers.h"
 
 //#define DUMP_LAYERS 1
 

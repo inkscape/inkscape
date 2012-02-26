@@ -13,33 +13,6 @@
 # include "config.h"
 #endif
 
-#include "xml/node-event-vector.h"
-#include "sp-object.h"
-#include "attributes.h"
-#include "message-stack.h"
-#include "desktop.h"
-#include "inkscape.h"
-#include "document.h"
-#include "document-private.h"
-#include "xml/document.h"
-#include <glibmm/i18n.h>
-#include "pen-context.h"
-#include "tools-switch.h"
-#include "message-stack.h"
-#include "desktop.h"
-#include "knotholder.h"
-#include "sp-lpe-item.h"
-#include "live_effects/lpeobject.h"
-#include "live_effects/parameter/parameter.h"
-#include <glibmm/ustring.h>
-#include "display/curve.h"
-
-#include <exception>
-
-#include <2geom/sbasis-to-bezier.h>
-#include <2geom/affine.h>
-#include <2geom/pathvector.h>
-
 // include effects:
 #include "live_effects/lpe-patternalongpath.h"
 #include "live_effects/lpe-bendpath.h"
@@ -75,6 +48,33 @@
 #include "live_effects/lpe-extrude.h"
 #include "live_effects/lpe-powerstroke.h"
 #include "live_effects/lpe-clone-original.h"
+
+#include "xml/node-event-vector.h"
+#include "sp-object.h"
+#include "attributes.h"
+#include "message-stack.h"
+#include "desktop.h"
+#include "inkscape.h"
+#include "document.h"
+#include "document-private.h"
+#include "xml/document.h"
+#include <glibmm/i18n.h>
+#include "pen-context.h"
+#include "tools-switch.h"
+#include "message-stack.h"
+#include "desktop.h"
+#include "knotholder.h"
+#include "sp-lpe-item.h"
+#include "live_effects/lpeobject.h"
+#include "live_effects/parameter/parameter.h"
+#include <glibmm/ustring.h>
+#include "display/curve.h"
+
+#include <exception>
+
+#include <2geom/sbasis-to-bezier.h>
+#include <2geom/affine.h>
+#include <2geom/pathvector.h>
 
 
 namespace Inkscape {

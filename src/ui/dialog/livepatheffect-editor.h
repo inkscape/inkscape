@@ -12,17 +12,14 @@
 #define INKSCAPE_UI_DIALOG_LIVE_PATH_EFFECT_H
 
 #include "ui/widget/panel.h"
-#include "ui/widget/button.h"
 
 #include <gtkmm/label.h>
-#include <gtkmm/comboboxtext.h>
 #include <gtkmm/frame.h>
 #include "ui/widget/combo-enums.h"
 #include "live_effects/effect-enum.h"
 #include <gtkmm/liststore.h>
 #include <gtkmm/treeview.h>
 #include <gtkmm/scrolledwindow.h>
-#include <gtkmm/buttonbox.h>
 #include <gtkmm/toolbar.h>
 
 

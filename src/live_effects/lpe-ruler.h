@@ -16,9 +16,7 @@
  */
 
 #include "live_effects/effect.h"
-#include "live_effects/parameter/text.h"
 #include "live_effects/parameter/enum.h"
-#include "live_effects/parameter/bool.h"
 #include "live_effects/parameter/unit.h"
 
 namespace Inkscape {

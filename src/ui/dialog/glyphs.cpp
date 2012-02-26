@@ -8,8 +8,11 @@
 
 #include <vector>
 
+#include "glyphs.h"
+
 #include <glibmm/i18n.h>
 #include <gtkmm/alignment.h>
+#include <gtkmm/comboboxtext.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/iconview.h>
 #include <gtkmm/label.h>
@@ -18,10 +21,6 @@
 #include <gtkmm/table.h>
 #include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/widget.h>
-
-#include <gtk/gtk.h>
-
-#include "glyphs.h"
 
 #include "desktop.h"
 #include "document.h" // for SPDocumentUndo::done()

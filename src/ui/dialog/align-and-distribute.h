@@ -15,18 +15,13 @@
 #ifndef INKSCAPE_UI_DIALOG_ALIGN_AND_DISTRIBUTE_H
 #define INKSCAPE_UI_DIALOG_ALIGN_AND_DISTRIBUTE_H
 
-#include <gtkmm/notebook.h>
-#include <glibmm/i18n.h>
-
 #include <list>
+#include "ui/widget/panel.h"
 #include <gtkmm/frame.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/table.h>
-#include <gtkmm/buttonbox.h>
 #include <gtkmm/label.h>
 
-#include "ui/widget/panel.h"
-#include "ui/widget/notebook-page.h"
 #include "2geom/rect.h"
 
 

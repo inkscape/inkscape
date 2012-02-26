@@ -21,6 +21,8 @@
 # include <config.h>
 #endif
 
+#include "page-sizer.h"
+
 #include <cmath>
 #include <string>
 #include <string.h>
@@ -33,7 +35,6 @@
 #include "helper/action.h"
 #include "helper/units.h"
 #include "inkscape.h"
-#include "page-sizer.h"
 #include "sp-namedview.h"
 #include "sp-root.h"
 #include "ui/widget/button.h"

@@ -32,7 +32,7 @@
 #include <cstring>
 #include <string>
 
-#include <gtk/gtk.h>
+#include "../libnrtype/font-lister.h"
 #include <iostream>
 #include <sstream>
 #include <glibmm/i18n.h>
@@ -62,7 +62,6 @@
 #include "../inkscape.h"
 #include "../interface.h"
 #include "../libnrtype/font-instance.h"
-#include "../libnrtype/font-lister.h"
 #include "../live_effects/effect.h"
 #include "../live_effects/lpe-angle_bisector.h"
 #include "../live_effects/lpe-line_segment.h"
@@ -109,6 +108,7 @@
 #include "ui/uxmanager.h"
 
 #include "toolbox.h"
+#include <gtk/gtk.h>
 
 //#define DEBUG_TEXT
 

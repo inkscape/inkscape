@@ -10,8 +10,6 @@
 #ifndef SEEN_DIALOGS_SWATCHES_H
 #define SEEN_DIALOGS_SWATCHES_H
 
-#include <gtkmm/textview.h>
-
 #include "ui/widget/panel.h"
 
 namespace Inkscape {

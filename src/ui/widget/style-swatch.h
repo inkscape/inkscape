@@ -13,16 +13,13 @@
 #ifndef INKSCAPE_UI_CURRENT_STYLE_H
 #define INKSCAPE_UI_CURRENT_STYLE_H
 
+#include <gtkmm/box.h>
 #include <gtkmm/table.h>
 #include <gtkmm/label.h>
-#include <gtkmm/box.h>
 #include <gtkmm/eventbox.h>
 #include <gtkmm/enums.h>
 
-#include <glibmm/i18n.h>
-
 #include "desktop.h"
-#include "verbs.h"
 #include "button.h"
 #include "preferences.h"
 

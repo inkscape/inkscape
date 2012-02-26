@@ -15,15 +15,13 @@
 #ifndef INKSCAPE_UI_DIALOG_FILL_AND_STROKE_H
 #define INKSCAPE_UI_DIALOG_FILL_AND_STROKE_H
 
-#include <gtkmm/alignment.h>
-#include <gtkmm/notebook.h>
-#include <gtkmm/scale.h>
-#include <glibmm/i18n.h>
-
 #include "ui/widget/panel.h"
 #include "ui/widget/notebook-page.h"
 #include "ui/widget/object-composite-settings.h"
 #include "ui/dialog/desktop-tracker.h"
+
+#include <gtkmm/notebook.h>
+#include "ui/widget/style-subject.h"
 
 namespace Inkscape {
 namespace UI {

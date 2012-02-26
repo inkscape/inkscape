@@ -6,12 +6,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "ui/widget/registered-widget.h"
 #include "live_effects/parameter/bool.h"
 #include "live_effects/effect.h"
 #include "svg/svg.h"
 #include "svg/stringstream.h"
 #include "widgets/icon.h"
-#include "ui/widget/registered-widget.h"
 #include "inkscape.h"
 #include "verbs.h"
 #include "helper-fns.h"

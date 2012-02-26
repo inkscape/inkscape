@@ -12,19 +12,16 @@
 #ifndef SEEN_LAYERS_PANEL_H
 #define SEEN_LAYERS_PANEL_H
 
-#include <gtkmm/treeview.h>
-#include <gtkmm/treestore.h>
-#include <gtkmm/scale.h>
-#include <gtkmm/scrolledwindow.h>
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
+#include <gtkmm/treeview.h>
+#include <gtkmm/treestore.h>
+#include <gtkmm/scrolledwindow.h>
 #include "ui/widget/spinbutton.h"
-#include <gtkmm/notebook.h>
-
-//#include "ui/previewholder.h"
 #include "ui/widget/panel.h"
 #include "ui/widget/object-composite-settings.h"
 #include "desktop-tracker.h"
+#include "ui/widget/style-subject.h"
 
 class SPObject;
 

@@ -18,13 +18,12 @@
 # include <config.h>
 #endif
 
-#include <gtk/gtk.h>
+#include "dialog-manager.h"
 #include "ui/widget/spinbutton.h"
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "dialog-manager.h"
 #include "dir-util.h"
 #include "document.h"
 #include "document-undo.h"

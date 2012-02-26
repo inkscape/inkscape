@@ -14,16 +14,14 @@
 #ifndef INKSCAPE_UI_DIALOG_DOCUMENT_PREFERENCES_H
 #define INKSCAPE_UI_DIALOG_DOCUMENT_PREFERENCES_H
 
-#include <list>
 #include <stddef.h>
 #include <sigc++/sigc++.h>//
+#include "ui/widget/notebook-page.h"
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/textview.h>
-#include <glibmm/i18n.h>
 
-#include "ui/widget/notebook-page.h"
 #include "ui/widget/page-sizer.h"
 #include "ui/widget/registered-widget.h"
 #include "ui/widget/registry.h"

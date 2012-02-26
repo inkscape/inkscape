@@ -12,8 +12,8 @@
 #ifndef __TRACEDIALOG_H__
 #define __TRACEDIALOG_H__
 
-#include "verbs.h"
 #include "ui/widget/panel.h"
+#include "verbs.h"
 
 namespace Inkscape {
 namespace UI {

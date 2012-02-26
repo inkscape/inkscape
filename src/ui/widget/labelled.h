@@ -12,7 +12,10 @@
 #define INKSCAPE_UI_WIDGET_LABELLED_H
 
 #include <gtkmm/box.h>
-#include <gtkmm/label.h>
+
+namespace Gtk {
+class Label;
+}
 
 namespace Inkscape {
 namespace UI {
@@ -50,7 +53,7 @@ public:
     Gtk::Widget const *getWidget() const;
     Gtk::Label const *getLabel() const;
 
-    void setLabelText(const Glib::ustring &str) { _label->set_text(str); };
+    void setLabelText(const Glib::ustring &str);
 
 protected:
     Gtk::Widget  *_widget;

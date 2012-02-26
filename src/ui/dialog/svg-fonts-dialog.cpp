@@ -17,6 +17,7 @@
 
 #ifdef ENABLE_SVG_FONTS
 
+#include "svg-fonts-dialog.h"
 #include "document-private.h"
 #include "document-undo.h"
 #include <gtkmm/notebook.h>
@@ -26,9 +27,11 @@
 #include "selection.h"
 #include <string.h>
 #include "svg/svg.h"
-#include "svg-fonts-dialog.h"
 #include "xml/node.h"
 #include "xml/repr.h"
+#include "sp-font-face.h"
+#include "desktop-handles.h"
+#include "display/nr-svgfonts.h"
 
 SvgFontDrawingArea::SvgFontDrawingArea():
     _x(0),

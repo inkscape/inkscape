@@ -16,6 +16,7 @@
 # include <config.h>
 #endif
 
+#include "livepatheffect-editor.h"
 #include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
 #include <gtkmm/toolbar.h>
@@ -42,7 +43,6 @@
 #include "verbs.h"
 #include "xml/node.h"
 
-#include "livepatheffect-editor.h"
 
 namespace Inkscape {
 class Application;

@@ -18,7 +18,7 @@
 #include <algorithm>
 #include <set>
 
-#include <gtk/gtk.h> //for GTK_RESPONSE* types
+#include "swatches.h"
 #include <glibmm/i18n.h>
 #include <glibmm/main.h>
 #include <gdkmm/pixbuf.h>
@@ -42,7 +42,6 @@
 #include "sp-gradient-fns.h"
 #include "sp-gradient.h"
 #include "sp-gradient-vector.h"
-#include "swatches.h"
 #include "style.h"
 #include "ui/previewholder.h"
 #include "widgets/desktop-widget.h"

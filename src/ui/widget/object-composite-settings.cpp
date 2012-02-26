@@ -12,6 +12,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "ui/widget/object-composite-settings.h"
+
 #include <glibmm/i18n.h>
 
 #include "desktop-handles.h"
@@ -28,8 +30,8 @@
 #include "xml/repr.h"
 #include "widgets/icon.h"
 #include "ui/icon-names.h"
-#include "ui/widget/object-composite-settings.h"
 #include "display/sp-canvas.h"
+#include "ui/widget/style-subject.h"
 
 namespace Inkscape {
 namespace UI {

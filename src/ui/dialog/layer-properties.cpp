@@ -13,6 +13,7 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information
  */
 
+#include "layer-properties.h"
 #include <gtkmm/stock.h>
 #include <glibmm/i18n.h>
 #include "inkscape.h"
@@ -25,8 +26,8 @@
 #include "sp-object.h"
 #include "sp-item.h"
 #include "verbs.h"
+#include "selection.h"
 
-#include "layer-properties.h"
 
 namespace Inkscape {
 namespace UI {

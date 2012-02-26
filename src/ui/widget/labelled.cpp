@@ -12,10 +12,11 @@
 # include <config.h>
 #endif
 
+#include "labelled.h"
+
 /* For getting the Gtkmmified Icon manager */
 #include "widgets/icon.h"
-
-#include "labelled.h"
+#include <gtkmm/label.h>
 
 namespace Inkscape {
 namespace UI {
@@ -64,7 +65,11 @@ Labelled::getLabel() const
     return _label;
 }
 
-
+void
+Labelled::setLabelText(const Glib::ustring &str)
+{
+    _label->set_text(str);
+}
 
 
 } // namespace Widget

@@ -9,12 +9,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "filter-effect-chooser.h"
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "document.h"
-#include "filter-effect-chooser.h"
 #include "inkscape.h"
 
 namespace Inkscape {

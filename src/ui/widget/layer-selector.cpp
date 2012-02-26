@@ -16,6 +16,8 @@
 
 #include <cstring>
 #include <string>
+
+#include "ui/dialog/layer-properties.h"
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
@@ -24,7 +26,6 @@
 #include "document-undo.h"
 #include "layer-manager.h"
 #include "sp-item.h"
-#include "ui/dialog/layer-properties.h"
 #include "ui/icon-names.h"
 #include "ui/widget/layer-selector.h"
 #include "util/filter-list.h"

@@ -17,24 +17,20 @@
 #ifndef INKSCAPE_UI_DIALOG_TEXT_EDIT_H
 #define INKSCAPE_UI_DIALOG_TEXT_EDIT_H
 
-#include <gtk/gtk.h>
-
 #include <gtkmm/box.h>
-#include <gtkmm/textview.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/button.h>
 #include <gtkmm/frame.h>
+#include <gtkmm/radiobutton.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/separator.h>
-
-#include <glibmm/i18n.h>
-
 #include "ui/widget/panel.h"
-#include "dialogs/dialog-events.h"
-#include "widgets/font-selector.h"
 #include "ui/dialog/desktop-tracker.h"
 
 class SPItem;
+class SPFontSelector;
+class font_instance;
+class SPCSSAttr;
 
 namespace Inkscape {
 namespace UI {

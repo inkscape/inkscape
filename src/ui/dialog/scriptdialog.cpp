@@ -13,13 +13,13 @@
 # include <config.h>
 #endif
 
+#include "scriptdialog.h"
 #include <glibmm/i18n.h>
 #include <gtkmm/menubar.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/textview.h>
 
-#include "scriptdialog.h"
 #include <extension/script/InkscapeScript.h>
 
 

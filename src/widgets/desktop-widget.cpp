@@ -24,12 +24,13 @@
 # include "config.h"
 #endif
 
-#include <gtk/gtk.h>
 #include <2geom/rect.h>
 
+#include "ui/dialog/dialog-manager.h"
 #include "box3d-context.h"
 #include "cms-system.h"
 #include "conn-avoid-ref.h"
+#include "desktop.h"
 #include "desktop-events.h"
 #include "desktop-handles.h"
 #include "desktop-widget.h"
@@ -49,7 +50,6 @@
 #include "sp-image.h"
 #include "sp-item.h"
 #include "sp-namedview.h"
-#include "ui/dialog/dialog-manager.h"
 #include "ui/dialog/swatches.h"
 #include "ui/icon-names.h"
 #include "ui/widget/dock.h"
@@ -68,6 +68,9 @@
 #include "widget-sizes.h"
 
 #include "verbs.h"
+#include <gtkmm/paned.h>
+
+#include <gtk/gtk.h>
 
 #if defined (SOLARIS) && (SOLARIS == 8)
 #include "round.h"

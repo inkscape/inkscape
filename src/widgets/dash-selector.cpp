@@ -19,9 +19,10 @@
 # include "config.h"
 #endif
 
+#include "dash-selector.h"
+
 #include <cstring>
 #include <string>
-#include <gtk/gtk.h>
 #include <glibmm/i18n.h>
 #include <2geom/coord.h>
 
@@ -33,8 +34,6 @@
 #include <gtkmm/adjustment.h>
 #include "ui/widget/spinbutton.h"
 
-
-#include "dash-selector.h"
 
 gchar const *const SPDashSelector::_prefs_path = "/palette/dashes";
 

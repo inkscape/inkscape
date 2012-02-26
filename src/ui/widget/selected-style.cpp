@@ -13,8 +13,6 @@
 # include <config.h>
 #endif
 
-#include <gtk/gtk.h>
-
 #include "selected-style.h"
 
 #include "widgets/spw-utilities.h"

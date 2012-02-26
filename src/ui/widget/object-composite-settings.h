@@ -20,11 +20,14 @@
 
 #include "ui/widget/filter-effect-chooser.h"
 #include "ui/widget/spinbutton.h"
-#include "ui/widget/style-subject.h"
 
 namespace Inkscape {
+class Application;
+
 namespace UI {
 namespace Widget {
+
+class StyleSubject;
 
 /*
  * A widget for controlling object compositing (filter, opacity, etc.)

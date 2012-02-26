@@ -12,8 +12,8 @@
 # include <config.h>
 #endif
 
-
 #include "text.h"
+#include <gtkmm/entry.h>
 
 namespace Inkscape {
 namespace UI {

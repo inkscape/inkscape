@@ -17,20 +17,22 @@
 # include <config.h>
 #endif
 
+#include "dialog-manager.h"
+#include <gtkmm/dialog.h>
 #include <gtkmm/stock.h>
-#include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
 #include "inkscape.h"
 #include "event-context.h"
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "dialog-manager.h"
 #include "modifier-fns.h"
 #include "shortcuts.h"
 #include "preferences.h"
 #include "interface.h"
 #include "verbs.h"
+
+#include <gtk/gtk.h>
 
 #define MIN_ONSCREEN_DISTANCE 50
 

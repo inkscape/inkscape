@@ -17,11 +17,11 @@
 # include <config.h>
 #endif
 
+#include "calligraphic-profile-rename.h"
 #include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
 
 #include "desktop.h"
-#include "calligraphic-profile-rename.h"
 
 namespace Inkscape {
 namespace UI {

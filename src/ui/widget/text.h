@@ -11,10 +11,8 @@
 #ifndef INKSCAPE_UI_WIDGET_TEXT_H
 #define INKSCAPE_UI_WIDGET_TEXT_H
 
-#include <gtkmm/adjustment.h>
-#include <gtkmm/spinbutton.h>
-
 #include "labelled.h"
+
 
 namespace Inkscape {
 namespace UI {

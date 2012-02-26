@@ -42,6 +42,8 @@
 #include "ui/tool/multi-path-manipulator.h"
 #include "ui/tool/shape-record.h"
 
+#include <gtkmm/button.h>
+#include <gtkmm/label.h>
 
 namespace Inkscape {
 

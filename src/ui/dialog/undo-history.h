@@ -11,23 +11,20 @@
 #ifndef INKSCAPE_UI_DIALOG_UNDO_HISTORY_H
 #define INKSCAPE_UI_DIALOG_UNDO_HISTORY_H
 
-#include <glibmm/refptr.h>
+#include "ui/widget/panel.h"
 #include <gtkmm/cellrendererpixbuf.h>
-#include <gtkmm/image.h>
-#include <gtkmm/invisible.h>
 #include <gtkmm/scrolledwindow.h>
-#include <gtkmm/stock.h>
 #include <gtkmm/treemodel.h>
 #include <gtkmm/treeselection.h>
 
 #include <functional>
 #include <sstream>
 
-#include "desktop.h"
 #include "event-log.h"
 
-#include "ui/widget/panel.h"
 #include "widgets/icon.h"
+
+class SPDesktop;
 
 namespace Inkscape {
 namespace UI {

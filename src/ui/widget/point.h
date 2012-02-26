@@ -13,11 +13,13 @@
 #ifndef INKSCAPE_UI_WIDGET_POINT_H
 #define INKSCAPE_UI_WIDGET_POINT_H
 
-#include <gtkmm/adjustment.h>
-#include <gtkmm/spinbutton.h>
 #include <2geom/point.h>
 #include "ui/widget/labelled.h"
 #include "ui/widget/scalar.h"
+
+namespace Gtk {
+class Adjustment;
+}
 
 namespace Inkscape {
 namespace UI {

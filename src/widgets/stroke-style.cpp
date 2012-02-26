@@ -18,8 +18,8 @@
 #define noSP_SS_VERBOSE
 
 #include <glib.h>
-#include <gtk/gtk.h>
 #include <glibmm/i18n.h>
+#include "widgets/dash-selector.h"
 
 #include "desktop-handles.h"
 #include "desktop-style.h"
@@ -47,7 +47,6 @@
 #include "svg/css-ostringstream.h"
 #include "ui/cache/svg_preview_cache.h"
 #include "ui/icon-names.h"
-#include "widgets/dash-selector.h"
 #include "widgets/icon.h"
 #include "widgets/paint-selector.h"
 #include "widgets/sp-widget.h"

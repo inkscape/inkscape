@@ -13,17 +13,15 @@
 #define INKSCAPE_DIALOG_LAYER_PROPERTIES_H
 
 #include <gtkmm/dialog.h>
-#include <gtkmm/notebook.h>
-#include <gtkmm/separator.h>
-#include <gtkmm/frame.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/label.h>
 #include <gtkmm/table.h>
 #include <gtkmm/combobox.h>
 #include <gtkmm/liststore.h>
 
-#include "selection.h"
 #include "layer-fns.h"
+
+class SPDesktop;
 
 namespace Inkscape {
 namespace UI {

@@ -7,13 +7,12 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
-#include <gtk/gtk.h>
+#include "ui/widget/dock.h"
 
 #include "dock-item.h"
 #include "desktop.h"
 #include "inkscape.h"
 #include "preferences.h"
-#include "ui/widget/dock.h"
 #include "ui/icon-names.h"
 #include "widgets/icon.h"
 

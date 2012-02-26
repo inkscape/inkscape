@@ -17,20 +17,14 @@
 
 #include <iostream>
 #include <vector>
-#include <gtkmm/base.h>
-#include <gtkmm/table.h>
+#include "ui/widget/preferences-widget.h"
 #include <gtkmm/colorbutton.h>
 #include <gtkmm/comboboxtext.h>
-#include <gtkmm/spinbutton.h>
 #include <gtkmm/treestore.h>
 #include <gtkmm/treeview.h>
-#include <gtkmm/radiobutton.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/notebook.h>
-#include "ui/widget/preferences-widget.h"
 #include <stddef.h>
-#include <sigc++/sigc++.h>
-#include <glibmm/i18n.h>
 #include <gtkmm/textview.h>
 #include <gtkmm/scrolledwindow.h>
 

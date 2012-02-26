@@ -16,16 +16,16 @@
 
 #include <cstring>
 #include <string>
-#include <gtk/gtk.h>
+
+#include <gtkmm/box.h>
+#include <gtkmm/label.h>
+#include <gtkmm/table.h>
 
 #include "selection.h"
 
 #include "helper/unit-menu.h"
 
-
-#include <gtkmm/label.h>
-#include <gtkmm/box.h>
-#include <gtkmm/table.h>
+#include <gtk/gtk.h>
 
 /**
  * Creates a label widget with the given text, at the given col, row

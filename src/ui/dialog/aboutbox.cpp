@@ -21,6 +21,7 @@
 # include <config.h>
 #endif
 
+#include "ui/dialog/aboutbox.h"
 #include <glibmm/i18n.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/scrolledwindow.h>
@@ -33,7 +34,6 @@
 #include "svg-view-widget.h"
 #include "sp-text.h"
 #include "text-editing.h"
-#include "ui/dialog/aboutbox.h"
 
 #include "inkscape-version.h"
 

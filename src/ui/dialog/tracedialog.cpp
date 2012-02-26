@@ -15,6 +15,7 @@
 # include <config.h>
 #endif
 
+#include "tracedialog.h"
 #include <gtkmm/notebook.h>
 #include <gtkmm/frame.h>
 #include "ui/widget/spinbutton.h"
@@ -25,7 +26,6 @@
 
 #include "desktop.h"
 
-#include "tracedialog.h"
 #include "trace/potrace/inkscape-potrace.h"
 #include "inkscape.h"
 

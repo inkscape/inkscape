@@ -14,8 +14,8 @@
 # include <config.h>
 #endif
 
-#include <gtkmm/widget.h>
 #include "find.h"
+#include <gtkmm/widget.h>
 #include "verbs.h"
 
 #include "message-stack.h"
@@ -51,6 +51,7 @@
 #include "sp-root.h"
 #include "xml/repr.h"
 
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace UI {

@@ -33,6 +33,8 @@
 #include "helper/action.h"
 #include "preferences.h"
 #include "inkscape.h"
+#include "verbs.h"
+#include <glibmm/i18n.h>
 
 enum {
     SS_FILL,

@@ -10,13 +10,14 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
+#include "dock.h"
 #include "inkscape.h"
 #include "preferences.h"
 #include "desktop.h"
 
-#include "dock.h"
-
 #include <gtkmm/adjustment.h>
+#include <gtkmm/paned.h>
+#include <gtkmm/scrolledwindow.h>
 
 namespace Inkscape {
 namespace UI {

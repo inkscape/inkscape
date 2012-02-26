@@ -12,12 +12,9 @@
 #ifndef INKSCAPE_UI_DIALOG_FIND_H
 #define INKSCAPE_UI_DIALOG_FIND_H
 
-#include <glibmm/i18n.h>
-
 #include "ui/widget/panel.h"
 #include "ui/widget/button.h"
 #include "ui/widget/entry.h" 
-#include <gtkmm/separator.h>
 #include <glib.h>
 
 class SPItem;

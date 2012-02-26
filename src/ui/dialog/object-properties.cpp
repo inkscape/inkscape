@@ -18,13 +18,16 @@
 # include "config.h"
 #endif
 
+#include "object-properties.h"
 #include "../../desktop-handles.h"
 #include "../../document.h"
 #include "../../document-undo.h"
 #include "verbs.h"
-#include "object-properties.h"
 #include "inkscape.h"
 #include "selection.h"
+#include "desktop.h"
+#include "sp-item.h"
+#include <glibmm/i18n.h>
 
 
 namespace Inkscape {

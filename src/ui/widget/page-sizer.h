@@ -11,12 +11,10 @@
 #define INKSCAPE_UI_WIDGET_PAGE_SIZER_H
 
 #include <stddef.h>
+#include "ui/widget/registered-widget.h"
 #include <sigc++/sigc++.h>
 
 #include "helper/units.h"
-#include "ui/widget/registry.h"
-#include "ui/widget/registered-widget.h"
-#include "xml/node.h"
 
 #include <gtkmm/alignment.h>
 #include <gtkmm/expander.h>
@@ -26,8 +24,14 @@
 #include <gtkmm/table.h>
 
 namespace Inkscape {    
+namespace XML {
+class Node;
+}
+
 namespace UI {
 namespace Widget {
+
+class Registry;
 
 /**
  * Data class used to store common paper dimensions.  Used to make

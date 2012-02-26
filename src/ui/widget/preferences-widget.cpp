@@ -18,9 +18,9 @@
 #include <windows.h>
 #endif
 
+#include <gtkmm/box.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/alignment.h>
-#include <gtkmm/box.h>
 #include <gtkmm/stock.h>
 
 #include "preferences.h"
@@ -39,6 +39,7 @@
 #include "selection-chemistry.h"
 #include "ui/dialog/filedialog.h"
 #include "xml/repr.h"
+#include <glibmm/i18n.h>
 
 using namespace Inkscape::UI::Widget;
 

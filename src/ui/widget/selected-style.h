@@ -11,9 +11,9 @@
 #ifndef INKSCAPE_UI_CURRENT_STYLE_H
 #define INKSCAPE_UI_CURRENT_STYLE_H
 
+#include <gtkmm/box.h>
 #include <gtkmm/table.h>
 #include <gtkmm/label.h>
-#include <gtkmm/box.h>
 #include <gtkmm/eventbox.h>
 #include <gtkmm/enums.h>
 #include <gtkmm/menu.h>
@@ -24,13 +24,9 @@
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 
-#include <glibmm/i18n.h>
-
-#include <desktop.h>
-
-#include "button.h"
 #include "rotateable.h"
 
+class SPDesktop;
 class SPUnit;
 
 namespace Inkscape {

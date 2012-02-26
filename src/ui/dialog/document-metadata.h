@@ -15,11 +15,8 @@
 
 #include <list>
 #include <stddef.h>
-#include <sigc++/sigc++.h>
-#include <gtkmm/notebook.h>
-#include <glibmm/i18n.h>
-
 #include "ui/widget/panel.h"
+#include <gtkmm/notebook.h>
 #include "ui/widget/licensor.h"
 #include "ui/widget/notebook-page.h"
 #include "ui/widget/registry.h"

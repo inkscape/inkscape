@@ -12,15 +12,19 @@
 #ifndef INKSCAPE_UI_WIDGET_DOCK_H
 #define INKSCAPE_UI_WIDGET_DOCK_H
 
-#include <gtkmm/scrolledwindow.h>
 #include <gtkmm/box.h>
-#include <gtkmm/paned.h>
-
 #include <list>
-
 #include "ui/widget/dock-item.h"
 
-#include "libgdl/gdl.h"
+struct _GdlDock;
+typedef _GdlDock GdlDock;
+struct _GdlDockBar;
+typedef _GdlDockBar GdlDockBar;
+
+namespace Gtk {
+class Paned;
+class ScrolledWindow;
+}
 
 namespace Inkscape {
 namespace UI {

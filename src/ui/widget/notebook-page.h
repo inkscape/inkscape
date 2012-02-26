@@ -11,7 +11,6 @@
 #define INKSCAPE_UI_WIDGET_NOTEBOOK_PAGE_H
 
 #include <gtkmm/box.h>
-#include <gtkmm/frame.h>
 #include <gtkmm/table.h>
 
 namespace Inkscape {

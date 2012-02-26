@@ -19,6 +19,7 @@
 # include "config.h"
 #endif
 
+#include "text-edit.h"
 #include <libnrtype/font-instance.h>
 #include <gtk/gtk.h>
 
@@ -33,7 +34,6 @@ extern "C" {
 #include <libnrtype/font-style-to-pos.h>
 #include <xml/repr.h>
 
-#include "text-edit.h"
 #include "macros.h"
 #include "helper/window.h"
 #include "inkscape.h"
@@ -53,6 +53,8 @@ extern "C" {
 #include "interface.h"
 #include "svg/css-ostringstream.h"
 #include "widgets/icon.h"
+#include "widgets/font-selector.h"
+#include <glibmm/i18n.h>
 
 
 namespace Inkscape {

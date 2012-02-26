@@ -22,8 +22,8 @@
 # include <config.h>
 #endif
 
-#include "display/canvas-grid.h"
 #include "document-properties.h"
+#include "display/canvas-grid.h"
 #include "document.h"
 #include "desktop-handles.h"
 #include "desktop.h"

@@ -10,6 +10,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "color-picker.h"
 #include "inkscape.h"
 #include "desktop-handles.h"
 #include "document.h"
@@ -19,7 +20,6 @@
 #include "widgets/sp-color-notebook.h"
 #include "verbs.h"
 
-#include "color-picker.h"
 
 static bool _in_use = false;
 

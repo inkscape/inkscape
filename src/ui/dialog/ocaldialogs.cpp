@@ -29,6 +29,7 @@
 #include "preferences.h"
 
 #include <gtkmm/stock.h>
+#include <glibmm/i18n.h>
 
 namespace Inkscape
 {
