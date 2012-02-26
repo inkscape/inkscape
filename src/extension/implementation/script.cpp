@@ -25,6 +25,7 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 #include <gtkmm/main.h>
+#include <gtkmm/messagedialog.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/textview.h>
 

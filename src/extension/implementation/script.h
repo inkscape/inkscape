@@ -14,7 +14,7 @@
 #define INKSCAPE_EXTENSION_IMPEMENTATION_SCRIPT_H_SEEN
 
 #include "implementation.h"
-#include <gtkmm/messagedialog.h>
+#include <gtkmm/enums.h>
 
 namespace Inkscape {
 namespace XML {
@@ -26,7 +26,6 @@ class Node;
 namespace Inkscape {
 namespace Extension {
 namespace Implementation {
-
 
 
 /**

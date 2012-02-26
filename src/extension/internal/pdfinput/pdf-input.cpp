@@ -15,6 +15,8 @@
 # include <config.h>
 #endif
 
+#include "pdf-input.h"
+
 #ifdef HAVE_POPPLER
 #include <poppler/goo/GooString.h>
 #include <poppler/ErrorCodes.h>
@@ -35,7 +37,6 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/scale.h>
 
-#include "pdf-input.h"
 #include "extension/system.h"
 #include "extension/input.h"
 #include "svg-builder.h"

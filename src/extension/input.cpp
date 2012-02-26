@@ -11,11 +11,11 @@
 # include "config.h"
 #endif
 
+#include "prefdialog.h"
 #include "implementation/implementation.h"
 #include "timer.h"
 #include "input.h"
 #include "io/sys.h"
-#include "prefdialog.h"
 
 /* Inkscape::Extension::Input */
 

@@ -10,19 +10,19 @@
 #ifndef INKSCAPE_EXTENSION_DIALOG_H__
 #define INKSCAPE_EXTENSION_DIALOG_H__
 
+#include <gtkmm/dialog.h>
 #include <glibmm/ustring.h>
 
-#include <gdkmm/types.h>
 
-#include <gtkmm/dialog.h>
-#include <gtkmm/checkbutton.h>
-#include <gtkmm/socket.h>
-
-#include "execution-env.h"
-#include "param/parameter.h"
+namespace Gtk {
+class CheckButton;
+}
 
 namespace Inkscape {
 namespace Extension {
+class Effect;
+class ExecutionEnv;
+class Parameter;
 
 /** \brief  A class to represent the preferences for an extension */
 class PrefDialog : public Gtk::Dialog {

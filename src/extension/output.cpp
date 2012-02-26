@@ -8,11 +8,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "prefdialog.h"
 #include "document.h"
 #include "implementation/implementation.h"
 #include "output.h"
 
-#include "prefdialog.h"
 
 /* Inkscape::Extension::Output */
 

@@ -7,6 +7,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "prefdialog.h"
 #include <gtkmm/stock.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/separator.h>
@@ -22,7 +23,8 @@
 #include "effect.h"
 #include "implementation/implementation.h"
 
-#include "prefdialog.h"
+#include "execution-env.h"
+#include "param/parameter.h"
 
 
 namespace Inkscape {
