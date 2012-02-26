@@ -195,7 +195,7 @@ void Layout::print(SPPrintContext *ctx,
             } while (glyph_index < _glyphs.size()
                      && _path_fitted == NULL
                      && _characters[_glyphs[glyph_index].in_character].in_span == this_span_index
-                     && fabs(char_x - _characters[_glyphs[glyph_index].in_character].x) < 1e-5);
+                     && fabs(char_x - _characters[_glyphs[glyph_index].in_character].x) < 1e-4);
             sp_print_bind(ctx, glyph_matrix, 1.0);
             sp_print_text(ctx, span_string.c_str(), g_pos, text_source->style);
             sp_print_release(ctx);
