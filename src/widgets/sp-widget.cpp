@@ -94,7 +94,7 @@ sp_widget_class_init (SPWidgetClass *klass)
 						    NULL, NULL,
 						    g_cclosure_marshal_VOID__POINTER,
 						    G_TYPE_NONE, 1,
-						    GTK_TYPE_POINTER);
+						    G_TYPE_POINTER);
 	signals[MODIFY_SELECTION] = g_signal_new ("modify_selection",
 						    G_TYPE_FROM_CLASS(object_class),
 						    G_SIGNAL_RUN_FIRST,
@@ -102,7 +102,7 @@ sp_widget_class_init (SPWidgetClass *klass)
 						    NULL, NULL,
 						    sp_marshal_VOID__POINTER_UINT,
 						    G_TYPE_NONE, 2,
-						    GTK_TYPE_POINTER, GTK_TYPE_UINT);
+						    G_TYPE_POINTER, G_TYPE_UINT);
 	signals[SET_SELECTION] =    g_signal_new ("set_selection",
 						    G_TYPE_FROM_CLASS(object_class),
 						    G_SIGNAL_RUN_FIRST,
@@ -110,7 +110,7 @@ sp_widget_class_init (SPWidgetClass *klass)
 						    NULL, NULL,
 						    g_cclosure_marshal_VOID__POINTER,
 						    G_TYPE_NONE, 1,
-						    GTK_TYPE_POINTER);
+						    G_TYPE_POINTER);
 
 	widget_class->show = sp_widget_show;
 	widget_class->hide = sp_widget_hide;

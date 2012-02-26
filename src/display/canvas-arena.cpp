@@ -107,7 +107,7 @@ sp_canvas_arena_class_init (SPCanvasArenaClass *klass)
                                            ((glong)((guint8*)&(klass->arena_event) - (guint8*)klass)),
 					   NULL, NULL,
                                            sp_marshal_INT__POINTER_POINTER,
-                                           GTK_TYPE_INT, 2, GTK_TYPE_POINTER, GTK_TYPE_POINTER);
+                                           G_TYPE_INT, 2, G_TYPE_POINTER, G_TYPE_POINTER);
 
     object_class->destroy = sp_canvas_arena_destroy;
 

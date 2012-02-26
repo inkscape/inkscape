@@ -76,28 +76,28 @@ void sp_color_selector_class_init( SPColorSelectorClass *klass )
                                             G_STRUCT_OFFSET(SPColorSelectorClass, grabbed),
 					    NULL, NULL,
 					    g_cclosure_marshal_VOID__VOID,
-                                            GTK_TYPE_NONE, 0 );
+                                            G_TYPE_NONE, 0 );
     csel_signals[DRAGGED] = g_signal_new( "dragged",
                                             G_TYPE_FROM_CLASS(object_class),
                                             (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                             G_STRUCT_OFFSET(SPColorSelectorClass, dragged),
 					    NULL, NULL,
 					    g_cclosure_marshal_VOID__VOID,
-                                            GTK_TYPE_NONE, 0 );
+                                            G_TYPE_NONE, 0 );
     csel_signals[RELEASED] = g_signal_new( "released",
                                              G_TYPE_FROM_CLASS(object_class),
                                              (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                              G_STRUCT_OFFSET(SPColorSelectorClass, released),
 					     NULL, NULL,
 					     g_cclosure_marshal_VOID__VOID,
-                                             GTK_TYPE_NONE, 0 );
+                                             G_TYPE_NONE, 0 );
     csel_signals[CHANGED] = g_signal_new( "changed",
                                             G_TYPE_FROM_CLASS(object_class),
                                             (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                             G_STRUCT_OFFSET(SPColorSelectorClass, changed),
 					    NULL, NULL,
 					    g_cclosure_marshal_VOID__VOID,
-                                            GTK_TYPE_NONE, 0 );
+                                            G_TYPE_NONE, 0 );
 
     klass->name = nameset;
     klass->submode_count = 1;

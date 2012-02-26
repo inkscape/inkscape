@@ -112,7 +112,7 @@ static void sp_gradient_vector_selector_class_init(SPGradientVectorSelectorClass
 					NULL, NULL,
 					g_cclosure_marshal_VOID__POINTER,
 					G_TYPE_NONE, 1,
-					GTK_TYPE_POINTER);
+					G_TYPE_POINTER);
 
     object_class->destroy = sp_gradient_vector_selector_destroy;
 }
