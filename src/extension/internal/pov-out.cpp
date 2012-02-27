@@ -40,6 +40,8 @@
 #include <string>
 #include <stdio.h>
 #include <stdarg.h>
+#include "document.h"
+#include "extension/extension.h"
 
 
 namespace Inkscape

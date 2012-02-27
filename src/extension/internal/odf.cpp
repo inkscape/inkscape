@@ -83,7 +83,9 @@
 #include "dom/io/stringstream.h"
 
 
+#include "document.h"
 
+#include "extension/extension.h"
 
 
 

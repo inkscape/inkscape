@@ -59,6 +59,8 @@ void spawn_async_with_pipes (const std::string& working_directory,
                              int* standard_output,
                              int* standard_error);
 
+Glib::ustring get_file_extension(Glib::ustring path);
+
 }
 }
 

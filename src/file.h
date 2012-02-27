@@ -15,13 +15,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
-#include <gtk/gtk.h>
-
-#include "extension/system.h"
+#include <glibmm/ustring.h>
+#include "ui/dialog/ocaldialogs.h"
 
 struct SPDesktop;
 struct SPDocument;
+class SPObject;
 
 namespace Inkscape {
     namespace Extension {
@@ -161,6 +160,11 @@ bool sp_file_export_dialog (Gtk::Window &parentWindow);
 /*######################
 ## I M P O R T  F R O M  O C A L
 ######################*/
+
+/**
+ * Import a document from OCAL
+ */
+void on_import_from_ocal_response(Glib::ustring filename);
 
 /**
  * Import a document from OCAL

@@ -43,6 +43,7 @@
 #include <string>
 #include <stdio.h>
 #include <stdarg.h>
+#include "extension/extension.h"
 
 
 namespace Inkscape

@@ -44,6 +44,7 @@
 #include "extension/system.h"
 
 #include "io/sys.h"
+#include "document.h"
 
 namespace Inkscape {
 namespace Extension {

@@ -37,6 +37,7 @@
 #include "sp-shape.h"
 
 #include "io/sys.h"
+#include "document.h"
 
 namespace Inkscape {
 namespace Extension {

@@ -16,6 +16,7 @@
 # include <config.h>
 #endif
 #include "svgz.h"
+#include "extension/extension.h"
 #include "extension/system.h"
 
 namespace Inkscape {

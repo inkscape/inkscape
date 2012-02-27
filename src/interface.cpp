@@ -21,7 +21,7 @@
 # include "config.h"
 #endif
 
-#include <gtk/gtk.h>
+#include "file.h"
 #include <glib.h>
 #include <gtkmm/icontheme.h>
 
@@ -35,7 +35,6 @@
 #include "shortcuts.h"
 #include "document.h"
 #include "desktop-handles.h"
-#include "file.h"
 #include "interface.h"
 #include "desktop.h"
 #include "ui/context-menu.h"
@@ -69,6 +68,7 @@
 #include "document-undo.h"
 
 #include <gdk/gdkkeysyms.h>
+#include <gtk/gtk.h>
 
 using Inkscape::DocumentUndo;
 

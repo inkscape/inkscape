@@ -38,7 +38,8 @@ pixmaps = \
 	feSpecularLighting-icon.png \
     feSpecularLighting-icon.svg \
 	feTurbulence-icon.png \
-    feTurbulence-icon.svg
+    feTurbulence-icon.svg \
+	OCAL.png
 
 icons_DATA = \
 	$(pixmaps) \

@@ -22,6 +22,7 @@
 #include "sp-root.h"
 
 
+#include "document.h"
 
 
 namespace Inkscape {

@@ -21,6 +21,7 @@
 # include "config.h"
 #endif
 
+#include "file.h"
 #include "selection-chemistry.h"
 
 // TOOD fixme: This should be moved into preference repr
@@ -70,7 +71,6 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "sp-offset.h"
 #include "sp-clippath.h"
 #include "sp-mask.h"
-#include "file.h"
 #include "helper/png-write.h"
 #include "layer-fns.h"
 #include "context-fns.h"

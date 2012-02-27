@@ -66,6 +66,7 @@
 #include "io/sys.h"
 
 #include <cairo.h>
+#include "document.h"
 
 // include support for only the compiled-in surface types
 #ifdef CAIRO_HAS_PDF_SURFACE

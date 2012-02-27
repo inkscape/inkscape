@@ -16,13 +16,13 @@
 # include <config.h>
 #endif
 
+#include "file.h"
 #include "xslt.h"
 #include "../extension.h"
 #include "../output.h"
 
 #include "xml/repr.h"
 #include "io/sys.h"
-#include "file.h"
 #include <unistd.h>
 #include <cstring>
 #include "document.h"

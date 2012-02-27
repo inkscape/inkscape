@@ -26,6 +26,7 @@
 # include "config.h"
 #endif
 
+#include "file.h"
 #include "event-context.h"
 
 #include <string.h>
@@ -46,7 +47,6 @@
 #include "widgets/desktop-widget.h"
 #include "sp-namedview.h"
 #include "selection.h"
-#include "file.h"
 #include "interface.h"
 #include "macros.h"
 #include "tools-switch.h"

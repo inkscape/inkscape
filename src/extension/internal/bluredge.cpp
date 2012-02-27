@@ -14,6 +14,7 @@
 
 #include <vector>
 #include "desktop.h"
+#include "document.h"
 #include "selection.h"
 #include "helper/action.h"
 #include "preferences.h"

@@ -21,6 +21,7 @@
 #include "display/drawing-item.h"
 #include "inkscape.h"
 #include "desktop.h"
+#include "document.h"
 #include "sp-item.h"
 #include "extension/print.h"
 #include "extension/system.h"

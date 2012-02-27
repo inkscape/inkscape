@@ -23,6 +23,7 @@
 
 // TODO: reduce header bloat if possible
 
+#include "file.h" // for file_import, used in _pasteImage
 #include <list>
 #include <algorithm>
 #include <gtkmm/clipboard.h>
@@ -70,7 +71,6 @@
 #include "live_effects/parameter/path.h"
 #include "svg/svg.h" // for sp_svg_transform_write, used in _copySelection
 #include "svg/css-ostringstream.h" // used in _parseColor
-#include "file.h" // for file_import, used in _pasteImage
 #include "text-context.h"
 #include "text-editing.h"
 #include "tools-switch.h"

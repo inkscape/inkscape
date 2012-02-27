@@ -30,6 +30,7 @@
 #include "latex-pstricks.h"
 #include "sp-item.h"
 #include "style.h"
+#include "document.h"
 
 namespace Inkscape {
 namespace Extension {

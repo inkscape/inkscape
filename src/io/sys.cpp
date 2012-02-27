@@ -355,6 +355,15 @@ gchar* Inkscape::IO::sanitizeString( gchar const * str )
     return result;
 }
 
+/* 
+ * Returns the file extension of a path/filename
+ */
+Glib::ustring Inkscape::IO::get_file_extension(Glib::ustring path)
+{
+    Glib::ustring::size_type period_location = path.find_last_of(".");
+    return path.substr(period_location);
+}
+
 /*
   Local Variables:
   mode:c++

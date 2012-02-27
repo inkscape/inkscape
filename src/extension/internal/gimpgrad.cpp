@@ -25,6 +25,8 @@
 #include "gimpgrad.h"
 #include "streq.h"
 #include "strneq.h"
+#include "document.h"
+#include "extension/extension.h"
 
 namespace Inkscape {
 namespace Extension {
