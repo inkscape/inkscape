@@ -24,6 +24,7 @@
 # connector  -  verbinding
 # directory  -  map
 # dpi - ppi (staat voor punten per duim)
+# drawing - tekening (zie ook image)
 # emboss/embossing  -  reliëf
 # eraser/eraser pen - gom
 # gradient  -  kleurverloop
@@ -34,6 +35,7 @@
 # grid  -  raster
 # glyph  -  teken
 # hue  -  tint
+# image - afbeelding (zie ook drawing)
 # lightness  -  lichtheid
 # linked offset - gekoppelde offset
 # master  -  meester  (i.v.m. docking)
@@ -66,7 +68,7 @@ msgstr ""
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
-msgstr "SVG-tekeningen (Scalable Vector Graphics) maken en bewerken"
+msgstr "SVG-afbeeldingen (Scalable Vector Graphics) maken en bewerken"
 
 #: ../inkscape.desktop.in.h:2
 msgid "Inkscape"
@@ -305,7 +307,7 @@ msgstr "Actieve laag bevat al een gereedschap! Verwijder het of selecteer een an
 
 #: ../share/extensions/gcodetools.py:6004
 msgid "Selection is empty! Will compute whole drawing."
-msgstr "Selectie is leeg! De volledige afbeelding wordt berekend."
+msgstr "Selectie is leeg! De volledige tekening wordt berekend."
 
 #: ../share/extensions/gcodetools.py:6058
 msgid ""
@@ -1236,7 +1238,7 @@ msgstr "Lens met lichte focus"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Glowing image content without blurring it"
-msgstr "Helder schijnende tekening zonder deze te vervagen"
+msgstr "Gloeiende inhoud zonder deze te vervagen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Stained Glass"
@@ -1697,7 +1699,7 @@ msgstr "Alfa-tekening, waterig"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Gives a transparent fluid drawing effect with rough line and filling"
-msgstr "Geeft een transparant vloeiend afbeeldingseffect met ruwe lijnen en vulling"
+msgstr "Geeft een transparant vloeiend tekeneffect met ruwe lijnen en vulling"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Liquid Drawing"
@@ -4538,7 +4540,7 @@ msgstr "_Hoogte:"
 
 #: ../src/dialogs/export.cpp:473
 msgid "<big><b>Bitmap size</b></big>"
-msgstr "<big><b>Bitmap-grootte</b></big>"
+msgstr "<big><b>Bitmapgrootte</b></big>"
 
 #: ../src/dialogs/export.cpp:486
 #: ../src/live_effects/lpe-bendpath.cpp:56
@@ -4601,7 +4603,7 @@ msgstr "_Exporteren"
 
 #: ../src/dialogs/export.cpp:658
 msgid "Export the bitmap file with these settings"
-msgstr "Naar een bitmap-afbeelding exporteren met deze instellingen"
+msgstr "Naar een bitmapafbeelding exporteren met deze instellingen"
 
 #: ../src/dialogs/export.cpp:684
 #, c-format
@@ -10985,7 +10987,7 @@ msgstr "Het geëxporteerde gebied is de volledige pagina"
 
 #: ../src/main.cpp:312
 msgid "Snap the bitmap export area outwards to the nearest integer values (in SVG user units)"
-msgstr "De grootte van het te exporteren bitmap-gebied naar boven afronden op een geheel getal (in SVG-eenheden)"
+msgstr "De grootte van het te exporteren bitmapgebied naar boven afronden op een geheel getal (in SVG-eenheden)"
 
 #: ../src/main.cpp:317
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
@@ -13157,11 +13159,11 @@ msgstr "Selecteer slechts één <b>afbeelding</b> om over te trekken"
 
 #: ../src/trace/trace.cpp:109
 msgid "Select one image and one or more shapes above it"
-msgstr "Selecteer een plaatje en één of meer vormen erboven"
+msgstr "Selecteer een afbeelding en één of meer vormen erboven"
 
 #: ../src/trace/trace.cpp:213
 msgid "Trace: No active desktop"
-msgstr "Overtrekken: Geen actieve desktop"
+msgstr "Overtrekken: geen actieve desktop"
 
 #: ../src/trace/trace.cpp:310
 msgid "Invalid SIOX result"
@@ -13173,7 +13175,7 @@ msgstr "Overtrekken: geen actief document"
 
 #: ../src/trace/trace.cpp:417
 msgid "Trace: Image has no bitmap data"
-msgstr "Overtrekken: afbeelding heeft geen bitmap-gegevens"
+msgstr "Overtrekken: afbeelding heeft geen bitmapgegevens"
 
 #: ../src/trace/trace.cpp:424
 msgid "Trace: Starting trace..."
@@ -14223,7 +14225,7 @@ msgstr "Alle bestanden"
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:739
 #: ../src/ui/dialog/filedialogimpl-win32.cpp:222
 msgid "All Inkscape Files"
-msgstr "Alle Inkscape-bestanden"
+msgstr "Alle Inkscapebestanden"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:749
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:750
@@ -14638,7 +14640,7 @@ msgstr "Alfa behouden"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2231
 msgid "If set, the alpha channel won't be altered by this filter primitive."
-msgstr "Indien aangevinkt, wordt het alfakanaal door dit filter niet aangepast."
+msgstr "Indien aangevinkt, wordt het alfakanaal door dit filtereffect niet aangepast."
 
 #. default: white
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2234
@@ -14756,7 +14758,7 @@ msgstr "Exponent van de lichtbronkleur; groter is \"glimmender\"."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2279
 msgid "Indicates whether the filter primitive should perform a noise or turbulence function."
-msgstr "Geeft aan of het filter een ruis- of turbulentiefunctie toepast."
+msgstr "Geeft aan of het filtereffect een ruis- of turbulentiefunctie toepast."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2280
 msgid "Base Frequency:"
@@ -14796,7 +14798,7 @@ msgstr "Het <b>feComposite</b>-filtereffect verenigt twee afbeeldingen met één
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2327
 msgid "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on the image. Common effects created using convolution matrices are blur, sharpening, embossing and edge detection. Note that while gaussian blur can be created using this filter primitive, the special gaussian blur primitive is faster and resolution-independent."
-msgstr "Met het <b>feConvolveMatrix</b>-filtereffect kan een convolutie toegepast worden op de afbeelding.  Gebruikelijke effecten die met convolutiematrices gemaakt worden zijn: vervaging, verscherping, reliëf, en randherkenning.  Merk op dat hoewel gaussiaans vervagen mogelijk is met dit filter, het speciale filtereffect hiervoor sneller en resolutie-onafhankelijk is."
+msgstr "Met het <b>feConvolveMatrix</b>-filtereffect kan een convolutie toegepast worden op de afbeelding. Gebruikelijke effecten die met convolutiematrices gemaakt worden zijn: vervaging, verscherping, reliëf, en randherkenning.  Merk op dat hoewel gaussiaans vervagen mogelijk is met dit filtereffect, het speciale filtereffect hiervoor sneller en resolutie-onafhankelijk is."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2331
 msgid "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create \"embossed\" shadings.  The input's alpha channel is used to provide depth information: higher opacity areas are raised toward the viewer and lower opacity areas recede away from the viewer."
@@ -17572,7 +17574,7 @@ msgstr "Kwaliteit gaussiaanse vervagings voor weergave"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1250
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
 msgid "Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"
-msgstr "Beste kwaliteit, maar weergave kan heel langzaam zijn bij hoge zoom (bitmap-export gebruikt altijd beste kwaliteit)"
+msgstr "Beste kwaliteit, maar weergave kan heel langzaam zijn bij hoge zoom (bitmapexport gebruikt altijd beste kwaliteit)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1252
 #: ../src/ui/dialog/inkscape-preferences.cpp:1276
@@ -17646,11 +17648,11 @@ msgstr "Standaardresolutie voor bitmaps (in punten per duim) in het 'Bitmap expo
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1306
 msgid "Resolution for Create Bitmap Copy:"
-msgstr "Resolutie voor het maken van een bitmap-kopie:"
+msgstr "Resolutie voor het maken van een bitmapkopie:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1307
 msgid "Resolution used by the Create Bitmap Copy command"
-msgstr "Resolutie gebruikt voor het commando Bitmap-kopie Aanmaken:"
+msgstr "Resolutie gebruikt voor het commando Bitmapkopie Aanmaken:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1309
 msgid "Bitmaps"
@@ -19581,7 +19583,7 @@ msgstr "Bitmap"
 
 #: ../src/ui/widget/rendering-options.cpp:34
 msgid "Bitmap options"
-msgstr "Bitmap-instellingen"
+msgstr "Bitmapinstellingen"
 
 #: ../src/ui/widget/rendering-options.cpp:36
 msgid "Preferred resolution of rendering, in dots per inch."
@@ -20214,7 +20216,7 @@ msgstr "_Importeren..."
 
 #: ../src/verbs.cpp:2201
 msgid "Import a bitmap or SVG image into this document"
-msgstr "Bitmap of SVG-bestand in het document importeren"
+msgstr "Bitmap of SVG-afbeelding in het document importeren"
 
 #: ../src/verbs.cpp:2202
 msgid "_Export Bitmap..."
@@ -20222,7 +20224,7 @@ msgstr "_Bitmap exporteren..."
 
 #: ../src/verbs.cpp:2203
 msgid "Export this document or a selection as a bitmap image"
-msgstr "Document of selectie als bitmap-afbeelding exporteren"
+msgstr "Document of selectie als bitmapafbeelding exporteren"
 
 #: ../src/verbs.cpp:2204
 msgid "Import a document from Open Clip Art Library"
@@ -25420,7 +25422,7 @@ msgstr "Eén afbeelding extraheren"
 
 #: ../share/extensions/extractimage.inx.h:5
 msgid "Path to save image:"
-msgstr "Pad om afbeelding op te slaan:"
+msgstr "Pad voor bewaren afbeelding:"
 
 #: ../share/extensions/extrude.inx.h:3
 msgid "Lines"
@@ -26577,7 +26579,7 @@ msgstr "Verticale hulplijn elke:"
 
 #: ../share/extensions/guillotine.inx.h:1
 msgid "Directory to save images to"
-msgstr "Pad om afbeeldingen op te slaan"
+msgstr "Pad voor bewaren afbeeldingen"
 
 #: ../share/extensions/guillotine.inx.h:2
 msgid "Export"
@@ -26663,7 +26665,7 @@ msgstr "http://inkscape.org/doc/keys048.html"
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
 msgid "Inkscape Manual"
-msgstr "Inkscape-handleiding"
+msgstr "Inkscapehandleiding"
 
 #: ../share/extensions/inkscape_help_relnotes.inx.h:1
 msgid "New in This Version"
@@ -28453,7 +28455,7 @@ msgstr ""
 "    * Metadata verwijderen: &lt;metadata&gt; tags verwijderen, die licentiemetadata, alternatieve versies voor niet-SVG-compatibele browsers, etc. bevatten.\n"
 "    * Opmerkingen verwijderen: &lt;!-- --&gt; tags verwijderen.\n"
 "    * Omzeilen van renderbugs: maakt iets grotere SVG-data aan, maar omzeilt een in bug de librsvg renderer, die door Eye of GNOME en andere applicaties gebruikt wordt.\n"
-"    * Viewbox activeren: stel afbeelding in op 100%/100% en introduceert een viewBox.\n"
+"    * Viewbox activeren: afbeelding op 100%/100% instellen en een viewBox introduceren.\n"
 "    * Aantal beduidende cijfers voor coördinaten: alle coördinaten worden weggeschreven met dit aantal beduidende cijfers. Bijvoorbeeld, indien 3 is opgegeven wordt de coördinaat 3.5153 weggeschreven als 3.51 en de coördinaat 471.55 als 472.\n"
 "    * XML inspringen (mooie afdruk): ofwel Geen voor geen inspringing, Spatie voor een spatie per niveau, ofwel Tab voor een tab per niveau."
 
