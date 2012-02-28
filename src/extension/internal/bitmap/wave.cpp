@@ -10,6 +10,7 @@
 #include "extension/system.h"
 
 #include "wave.h"
+#include <Magick++.h>
 
 namespace Inkscape {
 namespace Extension {

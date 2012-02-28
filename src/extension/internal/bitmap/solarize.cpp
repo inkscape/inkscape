@@ -10,6 +10,7 @@
 #include "extension/system.h"
 
 #include "solarize.h"
+#include <Magick++.h>
 
 namespace Inkscape {
 namespace Extension {

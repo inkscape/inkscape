@@ -10,7 +10,12 @@
  */
 
 #include "extension/implementation/implementation.h"
-#include <Magick++.h>
+
+class SPItem;
+
+namespace Magick {
+class Image;
+}
 
 namespace Inkscape {
 namespace Extension {

@@ -10,6 +10,7 @@
 #include "extension/system.h"
 
 #include "swirl.h"
+#include <Magick++.h>
 
 namespace Inkscape {
 namespace Extension {

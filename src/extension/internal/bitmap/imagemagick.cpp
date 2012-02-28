@@ -26,6 +26,7 @@
 #include "extension/system.h"
 
 #include "imagemagick.h"
+#include <Magick++.h>
 
 namespace Inkscape {
 namespace Extension {
