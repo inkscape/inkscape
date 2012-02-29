@@ -141,7 +141,6 @@ ParamNotebookPage::makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension:
     const char * desc;
     const char * scope_str;
     Parameter::_scope_t scope = Parameter::SCOPE_USER;
-	bool gui_hidden = false;
 	const char * gui_hide;
 	const char * gui_tip;
 
@@ -160,7 +159,6 @@ ParamNotebookPage::makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension:
 	if (gui_hide != NULL) {
 		if (strcmp(gui_hide, "1") == 0 ||
 			strcmp(gui_hide, "true") == 0) {
-			gui_hidden = true;
 		}
 		/* else stays false */
 	}

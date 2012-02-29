@@ -241,7 +241,7 @@ void ObjectProperties::widget_setup(void)
         LabelLabel.set_text (_("Ref"));
 
     } else {
-        SPObject *obj = (SPObject*)item;
+        SPObject *obj = static_cast<SPObject*>(item);
 
         /* ID */
         EntryID.set_text (obj->getId());
@@ -324,7 +324,7 @@ void ObjectProperties::label_changed(void)
     /* Give feedback on success of setting the drawing object's label
      * using the widget's label text
      */
-    SPObject *obj = (SPObject*)item;
+    SPObject *obj = static_cast<SPObject*>(item);
     if (label.compare (obj->defaultLabel())) {
         obj->setLabel(label.c_str());
         DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_DIALOG_ITEM,

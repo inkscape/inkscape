@@ -44,7 +44,7 @@ PathEffect::processPathEffects (SPDocument * doc, Inkscape::XML::Node * path)
     gchar ** patheffects = g_strsplit(patheffectlist, ";", 128);
     Inkscape::XML::Node * defs = doc->getDefs()->getRepr();
 
-    for (int i = 0; patheffects[i] != NULL && i < 128; i++) {
+    for (int i = 0; (i < 128) && (patheffects[i] != NULL); i++) {
         gchar * patheffect = patheffects[i];
 
         // This is weird, they should all be references... but anyway

@@ -64,11 +64,9 @@ LPERecursiveSkeleton::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > co
     x0 -= pattBndsX->min();
     y0 -= pattBndsY->middle();
 
-    double xspace  = 0;//spacing;
     double noffset = 0;//normal_offset;
     double toffset = 0;//tang_offset;
     if (false /*prop_units.get_value()*/){
-        xspace  *= pattBndsX->extent();
         noffset *= pattBndsY->extent();
         toffset *= pattBndsX->extent();
     }

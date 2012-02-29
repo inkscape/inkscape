@@ -219,7 +219,6 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
     if (!dynamic_cast<Output *>(omod)) {
         g_warning("Unable to find output module to handle file: %s\n", filename);
         throw Output::no_extension_found();
-        return;
     }
 
     omod->set_state(Extension::STATE_LOADED);

@@ -42,6 +42,8 @@ class PovOutput : public Inkscape::Extension::Implementation::Implementation
 
 public:
 
+    PovOutput();
+    
     /**
      * Our internal String definition
      */

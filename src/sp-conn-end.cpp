@@ -74,6 +74,8 @@ static bool try_get_intersect_point_with_item_recursive(Geom::PathVector& conn_p
     const Geom::PathVector& curve_pv = item_curve->get_pathvector();
     Geom::CrossingSet cross = crossings(conn_pv, curve_pv);
     // iterate over all Crossings
+    //TODO: check correctness of the following code: inner loop uses loop variable
+    //      with a name identical to the loop variable of the outer loop. Then rename.
     for (Geom::CrossingSet::const_iterator i = cross.begin(); i != cross.end(); ++i) {
         const Geom::Crossings& cr = *i;
 

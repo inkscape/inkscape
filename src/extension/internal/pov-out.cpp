@@ -95,6 +95,18 @@ static double effective_opacity(SPItem const *item)
 //# OUTPUT FORMATTING
 //########################################################################
 
+PovOutput::PovOutput() :
+    outbuf (),
+    nrNodes (0),
+    nrSegments (0),
+    nrShapes (0),
+    idIndex (0),
+    minx (0),
+    miny (0),
+    maxx (0),
+    maxy (0)
+{
+}
 
 /**
  * We want to control floating output format

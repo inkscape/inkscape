@@ -646,7 +646,7 @@ void TextEdit::onToggle()
 
 void TextEdit::onLineSpacingChange(GtkComboBox* widget, gpointer data)
 {
-    TextEdit *self  = (TextEdit *)data;
+    TextEdit *self  = static_cast<TextEdit *>(data);
     if (!self || self->blocked)
         return;
 
