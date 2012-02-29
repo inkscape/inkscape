@@ -431,7 +431,8 @@ DrawingItem::update(Geom::IntRect const &area, UpdateContext const &ctx, unsigne
 
 struct MaskLuminanceToAlpha {
     guint32 operator()(guint32 in) {
-        EXTRACT_ARGB32(in, a, r, g, b)
+        guint r = 0, g = 0, b = 0;
+        Display::ExtractRGB32(in, r, g, b);
         // the operation of unpremul -> luminance-to-alpha -> multiply by alpha
         // is equivalent to luminance-to-alpha on premultiplied color values
         // original computation in double: r*0.2125 + g*0.7154 + b*0.0721

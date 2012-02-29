@@ -144,7 +144,37 @@ void feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv);
 #define ASSEMBLE_ARGB32(px,a,r,g,b) \
     guint32 px = (a << 24) | (r << 16) | (g << 8) | b;
 
-#endif
+namespace Inkscape {
+
+namespace Display
+{
+
+inline void ExtractARGB32(guint32 px, guint32 &a, guint32 &r, guint32 &g, guint &b)
+{
+    a = ((px) & 0xff000000) >> 24;
+    r = ((px) & 0x00ff0000) >> 16;
+    g = ((px) & 0x0000ff00) >> 8;
+    b = ((px) & 0x000000ff);
+}
+
+inline void ExtractRGB32(guint32 px, guint32 &r, guint32 &g, guint &b)
+{
+    r = ((px) & 0x00ff0000) >> 16;
+    g = ((px) & 0x0000ff00) >> 8;
+    b = ((px) & 0x000000ff);
+}
+
+inline guint AssembleARGB32(guint32 a, guint32 r, guint32 g, guint32 b)
+{
+    return (a << 24) | (r << 16) | (g << 8) | b;
+}
+
+} // namespace Display
+
+} // namespace Inkscape
+
+#endif // SEEN_INKSCAPE_DISPLAY_CAIRO_UTILS_H
+
 /*
   Local Variables:
   mode:c++

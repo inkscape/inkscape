@@ -72,6 +72,10 @@
 
 using Inkscape::DocumentUndo;
 
+using Inkscape::Display::ExtractARGB32;
+using Inkscape::Display::ExtractRGB32;
+using Inkscape::Display::AssembleARGB32;
+
 static void sp_flood_context_class_init(SPFloodContextClass *klass);
 static void sp_flood_context_init(SPFloodContext *flood_context);
 static void sp_flood_context_dispose(GObject *object);
@@ -202,19 +206,19 @@ static void sp_flood_context_setup(SPEventContext *ec)
     }
 }
 
-inline static guint32
-compose_onto (guint32 px, guint32 bg)
+inline static guint32 compose_onto(guint32 px, guint32 bg)
 {
-    EXTRACT_ARGB32(px, ap,rp,gp,bp)
-    EXTRACT_ARGB32(bg, ab,rb,gb,bb)
-    guint32 ao,ro,bo,go;
+    guint ap = 0, rp = 0, gp = 0, bp = 0;
+    guint rb = 0, gb = 0, bb = 0;
+    ExtractARGB32(px, ap, rp, gp, bp);
+    ExtractRGB32(bg, rb, gb, bb);
 
-    ao = 255*255 - (255-ap)*(255-bp);  ao = (ao + 127) / 255;
-    ro = (255-ap)*rb + rp;             ro = (ro + 127) / 255;
-    go = (255-ap)*gb + gp;             go = (go + 127) / 255;
-    bo = (255-ap)*bb + bp;             bo = (bo + 127) / 255;
+    guint ao = 255*255 - (255-ap)*(255-bp);  ao = (ao + 127) / 255;
+    guint ro = (255-ap)*rb + rp;             ro = (ro + 127) / 255;
+    guint go = (255-ap)*gb + gp;             go = (go + 127) / 255;
+    guint bo = (255-ap)*bb + bp;             bo = (bo + 127) / 255;
 
-    ASSEMBLE_ARGB32(pxout, ao,ro,go,bo)
+    guint pxout = AssembleARGB32(ao, ro, go, bo);
     return pxout;
 }
 
@@ -279,10 +283,17 @@ static bool compare_pixels(guint32 check, guint32 orig, guint32 merged_orig_pixe
     int diff = 0;
     float hsl_check[3] = {0,0,0}, hsl_orig[3] = {0,0,0};
 
-    EXTRACT_ARGB32(check, ac,rc,gc,bc)
-    EXTRACT_ARGB32(orig, ao,ro,go,bo)
-    EXTRACT_ARGB32(dtc, ad,rd,gd,bd)
-    EXTRACT_ARGB32(merged_orig_pixel, amop,rmop,gmop,bmop)
+    guint32 ac = 0, rc = 0, gc = 0, bc = 0;
+    ExtractARGB32(check, ac, rc, gc, bc);
+
+    guint32 ao = 0, ro = 0, go = 0, bo = 0;
+    ExtractARGB32(orig, ao, ro, go, bo);
+
+    guint32 ad = 0, rd = 0, gd = 0, bd = 0;
+    ExtractARGB32(dtc, ad, rd, gd, bd);
+
+    guint32 amop = 0, rmop = 0, gmop = 0, bmop = 0;
+    ExtractARGB32(merged_orig_pixel, amop, rmop, gmop, bmop);
 
     if ((method == FLOOD_CHANNELS_H) ||
         (method == FLOOD_CHANNELS_S) ||
