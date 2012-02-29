@@ -58,6 +58,7 @@ if test "$GCC" = "yes"; then
   # lp:inkscape builds cleanly with this option at r10957
   CPPFLAGS="-DGLIBMM_DISABLE_DEPRECATED $CPPFLAGS"
   CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
+  CPPFLAGS="-DGTK_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
 
   # Test for -Werror=... (introduced some time post-4.0)
   # If we hit a format error -- it should be fatal.
@@ -752,9 +753,9 @@ dnl top-level <glib.h>, because they are all deprecated in glib >= 2.31.
 dnl However, glibmm < 2.28 *does* include the deprecated glib headers, so we
 dnl can only define the deprecation-checking compiler flag if we're using 
 dnl glibmm versions.
-PKG_CHECK_MODULES(GTKMM_2_28, gtkmm-2.4 >= 2.28, with_gtkmm_2_28=yes, with_gtkmm_2_28=no)
-if test "x$with_gtkmm_2_28" = "xyes"; then
-	AC_DEFINE(WITH_GTKMM_2_28,1,[Build with Gtkmm 2.28.x or higher])
+PKG_CHECK_MODULES(GLIBMM_2_28, glibmm-2.4 >= 2.28, with_glibmm_2_28=yes, with_glibmm_2_28=no)
+if test "x$with_glibmm_2_28" = "xyes"; then
+	AC_DEFINE(WITH_GLIBMM_2_28,1,[Build with Glibmm 2.28.x or higher])
 	CPPFLAGS="-DG_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
 fi
 
