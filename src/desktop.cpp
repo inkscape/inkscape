@@ -682,6 +682,10 @@ SPDesktop::set_coordinate_status (Geom::Point p) {
     _widget->setCoordinateStatus(p);
 }
 
+Inkscape::UI::Widget::Dock* SPDesktop::getDock() {
+	return _widget->getDock();
+}
+
 /**
  * \see SPDocument::getItemFromListAtPointBottom()
  */

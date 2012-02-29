@@ -9,9 +9,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtkmm/widget.h>
-#include <xml/node.h>
-#include <document.h>
 #include "parameter.h"
 
 namespace Inkscape {

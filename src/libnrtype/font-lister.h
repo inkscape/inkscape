@@ -14,8 +14,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtkmm.h>
-#include <glibmm.h>
+#include <gtkmm/liststore.h>
+#include <gtkmm/treemodelcolumn.h>
+#include <gtkmm/treepath.h>
+#include <glibmm/ustring.h>
 #include "nr-type-primitives.h"
 
 namespace Inkscape

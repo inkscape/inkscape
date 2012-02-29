@@ -8,12 +8,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "control-point.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "display/sodipodi-ctrlrect.h"
 #include "event-context.h"
 #include "preferences.h"
-#include "ui/tool/control-point.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/selector.h"
 

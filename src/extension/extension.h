@@ -17,13 +17,13 @@
 #include <ostream>
 #include <fstream>
 #include <vector>
-#include <gtkmm/widget.h>
-#include <gtkmm/table.h>
 #include <glibmm/ustring.h>
 #include "xml/repr.h"
 
 namespace Gtk {
+	class Table;
 	class VBox;
+	class Widget;
 }
 
 /** The key that is used to identify that the I/O should be autodetected */

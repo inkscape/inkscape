@@ -17,6 +17,7 @@
 
 #define noSP_SS_VERBOSE
 
+#include <gtkmm/table.h>
 #include <glib.h>
 #include <glibmm/i18n.h>
 #include "widgets/dash-selector.h"
@@ -59,6 +60,7 @@
 #include "fill-n-stroke-factory.h"
 
 #include <gtkmm/optionmenu.h>
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

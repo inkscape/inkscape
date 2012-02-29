@@ -105,6 +105,7 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "ui/tool/node-tool.h"
 
 #include "ui/clipboard.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 using Geom::X;

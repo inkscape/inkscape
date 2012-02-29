@@ -23,6 +23,7 @@
 #include "xml/node-event-vector.h"
 #include "desktop-handles.h"
 #include <glibmm/i18n.h>
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

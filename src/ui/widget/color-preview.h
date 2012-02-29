@@ -11,7 +11,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtkmm/eventbox.h>
+#include <gtkmm/widget.h>
 
 namespace Inkscape {
 namespace UI {

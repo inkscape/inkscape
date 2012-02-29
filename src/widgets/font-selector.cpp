@@ -20,8 +20,8 @@
 # include "config.h"
 #endif
 
-#include <libnrtype/font-instance.h>
 #include <libnrtype/font-lister.h>
+#include <libnrtype/font-instance.h>
 
 #include <2geom/transforms.h>
 

@@ -11,18 +11,19 @@
 #ifndef SEEN_UI_TOOL_CONTROL_POINT_H
 #define SEEN_UI_TOOL_CONTROL_POINT_H
 
+#include <gdkmm/pixbuf.h>
 #include <boost/utility.hpp>
 #include <stddef.h>
-#include <sigc++/sigc++.h>
+#include <sigc++/signal.h>
+#include <sigc++/trackable.h>
 #include <2geom/point.h>
 #include "util/accumulators.h"
 #include "display/sodipodi-ctrl.h"
-#include "event-context.h"
 
 #include <gtkmm/enums.h>
-#include <gdkmm/pixbuf.h>
 
 class SPDesktop;
+class SPEventContext;
 
 namespace Inkscape {
 namespace UI {

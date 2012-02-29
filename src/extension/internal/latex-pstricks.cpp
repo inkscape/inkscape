@@ -31,6 +31,7 @@
 #include "sp-item.h"
 #include "style.h"
 #include "document.h"
+#include <cstring>
 
 namespace Inkscape {
 namespace Extension {

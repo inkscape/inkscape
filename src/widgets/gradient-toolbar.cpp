@@ -16,6 +16,7 @@
 # include "config.h"
 #endif
 
+#include "verbs.h"
 #include <gtk/gtk.h>
 
 #include "macros.h"

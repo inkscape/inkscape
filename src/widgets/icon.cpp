@@ -16,11 +16,11 @@
 # include "config.h"
 #endif
 
+#include <gtkmm/icontheme.h>
 #include <cstring>
 #include <glib.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
-#include <gtkmm/icontheme.h>
 #include <gtkmm/image.h>
 #include <gdkmm/pixbuf.h>
 #include <glibmm/fileutils.h>

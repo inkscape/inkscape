@@ -19,15 +19,15 @@
 # include <config.h>
 #endif
 
+#include <gtkmm/messagedialog.h>
+#include <gtkmm/main.h>
+#include <gtkmm/scrolledwindow.h>
+#include <gtkmm/textview.h>
 #include <unistd.h>
 
 #include <errno.h>
 #include <glib.h>
 #include <glib/gstdio.h>
-#include <gtkmm/main.h>
-#include <gtkmm/messagedialog.h>
-#include <gtkmm/scrolledwindow.h>
-#include <gtkmm/textview.h>
 
 #include "ui/view/view.h"
 #include "desktop-handles.h"

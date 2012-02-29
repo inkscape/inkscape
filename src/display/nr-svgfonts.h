@@ -14,15 +14,19 @@
  */
 
 #include "cairo.h"
-#include <gtkmm/widget.h>
-#include "../sp-glyph.h"
-#include "../sp-missing-glyph.h"
-#include "../sp-font.h"
-#include "../sp-glyph-kerning.h"
-#include <sigc++/sigc++.h>
+#include <sigc++/connection.h>
 
 class SvgFont;
 struct SPFont;
+class SPGlyph;
+class SPMissingGlyph;
+
+struct _GdkEventExpose;
+typedef _GdkEventExpose GdkEventExpose;
+
+namespace Gtk {
+class Widget;
+}
 
 class UserFont{
 public:

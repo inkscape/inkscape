@@ -16,13 +16,13 @@
 # include "config.h"
 #endif
 
+#include "ui/widget/spinbutton.h"
 #include <gtk/gtk.h>
 
 #include "widgets/button.h"
 #include "widgets/spw-utilities.h"
 #include "widgets/widget-sizes.h"
 #include "widgets/spinbutton-events.h"
-#include "ui/widget/spinbutton.h"
 #include "widgets/icon.h"
 #include "widgets/sp-widget.h"
 

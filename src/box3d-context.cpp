@@ -49,6 +49,7 @@
 #include "document-private.h"
 #include "line-geometry.h"
 #include "shape-editor.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

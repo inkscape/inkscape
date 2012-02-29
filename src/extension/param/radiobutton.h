@@ -15,11 +15,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtkmm/widget.h>
-
-#include "xml/document.h"
-
 #include "parameter.h"
+
+namespace Gtk {
+class Widget;
+}
 
 namespace Inkscape {
 namespace Extension {

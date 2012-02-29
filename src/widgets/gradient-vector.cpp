@@ -24,6 +24,9 @@
 #endif
 #ifdef HAVE_STRING_H
 #endif
+#include "ui/widget/color-preview.h"
+#include "gradient-vector.h"
+#include "verbs.h"
 #include <gtk/gtk.h>
 #include "macros.h"
 #include <glibmm/i18n.h>
@@ -31,7 +34,6 @@
 #include "../inkscape.h"
 #include "../document-private.h"
 #include "../gradient-chemistry.h"
-#include "gradient-vector.h"
 #include "../helper/window.h"
 
 #include "xml/repr.h"
@@ -425,7 +427,6 @@ void SPGradientVectorSelector::setSwatched()
   ##################################################################*/
 
 #include "../widgets/sp-color-notebook.h"
-#include "ui/widget/color-preview.h"
 #include "../widgets/widget-sizes.h"
 #include "../xml/node-event-vector.h"
 #include "../svg/svg-color.h"

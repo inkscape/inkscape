@@ -18,9 +18,10 @@
 #define __INKSCAPE_POTRACE_H__
 
 #include <trace/trace.h>
-#include <trace/imagemap.h>
-
 #include "potracelib.h"
+
+struct GrayMap_def;
+typedef GrayMap_def GrayMap;
 
 namespace Inkscape {
 

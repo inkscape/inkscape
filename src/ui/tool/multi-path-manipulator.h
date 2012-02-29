@@ -13,12 +13,12 @@
 
 #include <stddef.h>
 #include <sigc++/connection.h>
-#include "ui/tool/commit-events.h"
-#include "ui/tool/manipulator.h"
-#include "ui/tool/modifier-tracker.h"
-#include "ui/tool/node.h"
-#include "ui/tool/node-types.h"
-#include "ui/tool/shape-record.h"
+#include "node.h"
+#include "commit-events.h"
+#include "manipulator.h"
+#include "modifier-tracker.h"
+#include "node-types.h"
+#include "shape-record.h"
 
 struct SPCanvasGroup;
 

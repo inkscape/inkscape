@@ -18,6 +18,7 @@
 #include "extension/extension.h"
 #include "string.h"
 #include "preferences.h"
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace Extension {

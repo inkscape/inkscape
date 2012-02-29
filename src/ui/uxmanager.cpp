@@ -13,13 +13,13 @@
 # include "config.h"
 #endif
 
+#include "widgets/desktop-widget.h"
 #include <algorithm>
 
 #include "uxmanager.h"
 #include "desktop.h"
 #include "util/ege-tags.h"
 #include "widgets/toolbox.h"
-#include "widgets/desktop-widget.h"
 #include "preferences.h"
 #include "gdkmm/screen.h"
 

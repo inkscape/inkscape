@@ -11,7 +11,6 @@
 #ifndef SEEN_UI_TOOL_SELECTABLE_CONTROL_POINT_H
 #define SEEN_UI_TOOL_SELECTABLE_CONTROL_POINT_H
 
-#include <boost/enable_shared_from_this.hpp>
 #include "ui/tool/control-point.h"
 
 namespace Inkscape {

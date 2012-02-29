@@ -19,6 +19,7 @@
 #include "document-private.h"
 #include "document-undo.h"
 #include "inkscape.h"
+#include "verbs.h"
 
 using Inkscape::DocumentUndo;
 

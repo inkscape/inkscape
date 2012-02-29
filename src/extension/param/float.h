@@ -9,12 +9,19 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtkmm/widget.h>
-#include <xml/node.h>
-#include <document.h>
 #include "parameter.h"
 
+class SPDocument;
+
+namespace Gtk {
+class Widget;
+}
+
 namespace Inkscape {
+namespace XML {
+class Node;
+}
+
 namespace Extension {
 
 class ParamFloat : public Parameter {

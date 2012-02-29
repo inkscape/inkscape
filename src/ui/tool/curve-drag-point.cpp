@@ -8,11 +8,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "ui/tool/curve-drag-point.h"
 #include <glib/gi18n.h>
 #include <2geom/bezier-curve.h>
 #include "desktop.h"
 #include "ui/tool/control-point-selection.h"
-#include "ui/tool/curve-drag-point.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/multi-path-manipulator.h"
 #include "ui/tool/path-manipulator.h"

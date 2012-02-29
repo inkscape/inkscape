@@ -21,6 +21,7 @@
 #include "config.h"
 #endif
 
+#include "trace/potrace/inkscape-potrace.h"
 #include <2geom/pathvector.h>
 #include <gdk/gdkkeysyms.h>
 #include <queue>
@@ -62,7 +63,6 @@
 #include "sp-root.h"
 #include "svg/svg.h"
 #include "trace/imagemap.h"
-#include "trace/potrace/inkscape-potrace.h"
 #include "trace/trace.h"
 #include "xml/node-event-vector.h"
 #include "xml/repr.h"

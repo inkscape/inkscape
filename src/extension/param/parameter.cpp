@@ -19,6 +19,7 @@
 # define ESCAPE_DOLLAR_COMMANDLINE
 #endif
 
+#include <cstring>
 #include <xml/node.h>
 
 #include <extension/extension.h>

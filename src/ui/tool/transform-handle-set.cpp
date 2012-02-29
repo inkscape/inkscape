@@ -10,9 +10,8 @@
 
 #include <math.h>
 #include <algorithm>
-#include <glib.h>
+#include "control-point.h"
 #include <glib/gi18n.h>
-#include <gdk/gdk.h>
 #include <2geom/transforms.h>
 #include "desktop.h"
 #include "desktop-handles.h"
@@ -22,7 +21,6 @@
 #include "snap-candidate.h"
 #include "sp-namedview.h"
 #include "ui/tool/commit-events.h"
-#include "ui/tool/control-point.h"
 #include "ui/tool/control-point-selection.h"
 #include "ui/tool/selectable-control-point.h"
 #include "ui/tool/event-utils.h"

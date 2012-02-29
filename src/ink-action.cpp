@@ -1,14 +1,11 @@
-
-
-
+#include "widgets/icon.h"
+#include "icon-size.h"
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
-#include "icon-size.h"
 #include "ink-action.h"
 
 #include "widgets/button.h"
-#include "widgets/icon.h"
 
 static void ink_action_class_init( InkActionClass* klass );
 static void ink_action_init( InkAction* action );
@@ -177,8 +174,6 @@ void ink_action_set_property( GObject* obj, guint propId, const GValue *value, G
         }
     }
 }
-
-#include <gtk/gtk.h>
 
 static GtkWidget* ink_action_create_menu_item( GtkAction* action )
 {

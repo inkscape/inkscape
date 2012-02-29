@@ -32,8 +32,8 @@
 #include <2geom/rect.h>
 
 #include "ui/view/view.h"
-#include "ui/view/edit-widget-interface.h"
 #include "display/rendermode.h"
+#include <glibmm/ustring.h>
 
 class SPCSSAttr;
 struct SPCanvas;
@@ -72,6 +72,10 @@ namespace Inkscape {
 
       namespace Widget {
 	      class Dock;
+      }
+
+      namespace View {
+	      class EditWidgetInterface;
       }
   }
   namespace Whiteboard {
@@ -264,7 +268,7 @@ public:
     Inkscape::ColorMode _display_color_mode;
     Inkscape::ColorMode getColorMode() const { return _display_color_mode; }
 
-    Inkscape::UI::Widget::Dock* getDock() { return _widget->getDock(); }
+    Inkscape::UI::Widget::Dock* getDock();
 
     void set_active (bool new_active);
 

@@ -27,7 +27,6 @@
 # include "config.h"
 #endif
 
-//#include "inkscape.h"
 #include "sp-root.h"
 #include "sp-path.h"
 #include "style.h"
@@ -40,6 +39,7 @@
 #include "display/drawing-item.h"
 #include "unit-constants.h"
 #include "clear-n_.h"
+#include "document.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

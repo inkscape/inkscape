@@ -12,15 +12,16 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "display/nr-filter-primitive.h"
-#include "display/nr-filter-slot.h"
-#include "display/nr-filter-units.h"
-#include "sp-item.h"
-#include <glibmm/refptr.h>
 #include <gdkmm/pixbuf.h>
+#include "display/nr-filter-primitive.h"
+#include <glibmm/refptr.h>
+
+class SPDocument;
+class SPItem;
 
 namespace Inkscape {
 namespace Filters {
+class FilterSlot;
 
 class FilterImage : public FilterPrimitive {
 public:

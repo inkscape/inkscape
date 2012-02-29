@@ -10,7 +10,6 @@
 #ifndef INKSCAPE_EVENT_LOG_H
 #define INKSCAPE_EVENT_LOG_H
 
-#include <gdkmm/pixbuf.h>
 #include <glibmm/refptr.h>
 #include <gtkmm/treestore.h>
 #include <gtkmm/treeselection.h>

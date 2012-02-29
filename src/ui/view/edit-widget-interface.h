@@ -13,8 +13,15 @@
 #define INKSCAPE_UI_VIEW_EDIT_WIDGET_IFACE_H
 
 #include "message.h"
-#include <gtkmm/window.h>
 #include <2geom/point.h>
+
+namespace Gtk {
+class Window;
+}
+
+namespace Glib {
+class ustring;
+}
 
 namespace Inkscape { namespace UI { namespace Widget { class Dock; } } }
 

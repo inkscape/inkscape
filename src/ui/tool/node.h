@@ -11,18 +11,15 @@
 #ifndef SEEN_UI_TOOL_NODE_H
 #define SEEN_UI_TOOL_NODE_H
 
-#include <glib.h>
 #include <iterator>
 #include <iosfwd>
 #include <stdexcept>
 #include <cstddef>
 #include <tr1/functional>
-#include <boost/utility.hpp>
+#include <boost/enable_shared_from_this.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/optional.hpp>
-#include <boost/operators.hpp>
-#include "snapped-point.h"
 #include "ui/tool/selectable-control-point.h"
+#include "snapped-point.h"
 #include "ui/tool/node-types.h"
 
 

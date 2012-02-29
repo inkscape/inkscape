@@ -24,6 +24,9 @@
 
 #include <glibmm/i18n.h>
 #include <gtkmm/box.h>
+
+#include "verbs.h"
+
 #include <gtk/gtk.h>
 
 #include "desktop.h"

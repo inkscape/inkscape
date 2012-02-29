@@ -10,10 +10,10 @@
 #include <glib.h>
 #include <map>
 #include <set>
-#include <gtk/gtk.h>
 
 #include "device-manager.h"
 #include "preferences.h"
+#include <gtk/gtk.h>
 
 #define noDEBUG_VERBOSE 1
 

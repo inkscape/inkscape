@@ -10,7 +10,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
+#include "curve-drag-point.h"
 #include <glib/gi18n.h>
 #include "desktop.h"
 #include "desktop-handles.h"
@@ -31,7 +31,6 @@
 #include "sp-text.h"
 #include "ui/tool/node-tool.h"
 #include "ui/tool/control-point-selection.h"
-#include "ui/tool/curve-drag-point.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/manipulator.h"
 #include "ui/tool/multi-path-manipulator.h"

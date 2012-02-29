@@ -5,13 +5,13 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "widgets/desktop-widget.h"
 #include <glib-object.h>
 
 #include "desktop-tracker.h"
 
 #include "inkscape.h"
 #include "desktop.h"
-#include "widgets/desktop-widget.h"
 
 namespace Inkscape {
 namespace UI {

@@ -14,15 +14,16 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
-
+#include <gtkmm/widget.h>
 #include "icon-size.h"
 
 #define SP_TYPE_ICON SPIcon::getType()
 #define SP_ICON(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_ICON, SPIcon))
 #define SP_IS_ICON(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_ICON))
 
-#include <gtk/gtk.h>
+namespace Glib {
+class ustring;
+}
 
 struct SPIconClass {
     GtkWidgetClass parent_class;
@@ -45,8 +46,6 @@ struct SPIcon {
 
 GtkWidget *sp_icon_new( Inkscape::IconSize size, const gchar *name );
 
-#include <glibmm/ustring.h>
-#include <gtkmm/widget.h>
 
 // Might return a wrapped SPIcon, or Gtk::Image
 Gtk::Widget *sp_icon_get_icon( const Glib::ustring &oid, Inkscape::IconSize size = Inkscape::ICON_SIZE_BUTTON );

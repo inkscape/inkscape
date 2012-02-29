@@ -18,6 +18,7 @@
 #include "../extension.h"
 #include "bool.h"
 #include "preferences.h"
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace Extension {

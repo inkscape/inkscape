@@ -15,6 +15,8 @@
 # include "config.h"
 #endif
 
+#include <gtkmm/entry.h>
+#include <gtkmm/window.h>
 #include <gdk/gdkkeysyms.h>
 #include "macros.h"
 #include <gtk/gtk.h>
@@ -24,10 +26,6 @@
 #include "event-context.h"
 
 #include "dialog-events.h"
-
-
-#include <gtkmm/entry.h>
-
 
 
 /**

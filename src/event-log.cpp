@@ -9,8 +9,8 @@
 
 #include <glibmm/i18n.h>
 
-#include "desktop.h"
 #include "event-log.h"
+#include "desktop.h"
 #include "inkscape.h"
 #include "util/ucompose.hpp"
 #include "document.h"

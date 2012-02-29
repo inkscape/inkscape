@@ -15,9 +15,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "widgets/icon.h"
 #include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
-#include <gtk/gtk.h>
 
 #include "desktop.h"
 #include "../desktop-handles.h"
@@ -39,7 +39,6 @@
 #include "../sp-tspan.h"
 #include "ui/icon-names.h"
 #include "../verbs.h"
-#include "widgets/icon.h"
 #include "../widgets/sp-xmlview-attr-list.h"
 #include "../widgets/sp-xmlview-content.h"
 #include "../widgets/sp-xmlview-tree.h"

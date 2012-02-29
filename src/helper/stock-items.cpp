@@ -19,8 +19,10 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include "path-prefix.h"
 
+#include <cstring>
+
+#include "path-prefix.h"
 
 #include <xml/repr.h>
 #include "sp-gradient.h"

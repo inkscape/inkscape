@@ -10,11 +10,15 @@
  * This code is in public domain
  */
 
-#include <gtk/gtk.h>
-#include <gtkmm/window.h>
+struct _GtkWidget;
+typedef _GtkWidget GtkWidget;
+
+namespace Gtk {
+class Window;
+}
 
 /*
- * This function is depreciated. Use Inkscape::UI::window_new instead.
+ * This function is deprecated. Use Inkscape::UI::window_new instead.
  */
 GtkWidget *sp_window_new (const gchar *title, unsigned int resizeable);
 

@@ -2,12 +2,12 @@
 # include <config.h>
 #endif
 
+#include <gtkmm.h>
 #include <libnrtype/font-instance.h>
 #include <libnrtype/TextWrapper.h>
 #include <libnrtype/one-glyph.h>
 
 #include <glibmm.h>
-#include <gtkmm.h>
 #include <gtkmm/treemodel.h>
 #include <gtkmm/liststore.h>
 

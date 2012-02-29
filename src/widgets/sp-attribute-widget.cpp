@@ -13,6 +13,8 @@
  */
 
 #include <glibmm/i18n.h>
+#include <gtkmm/entry.h>
+#include <gtkmm/label.h>
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
 

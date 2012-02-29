@@ -20,9 +20,9 @@
 
 #include <glibmm/i18n.h>
 
-#include "helper/units.h"
-#include "widgets/ruler.h"
 #include "ui/widget/ruler.h"
+#include "widgets/ruler.h"
+#include "helper/units.h"
 
 #include "xml/repr.h"
 #include "display/sp-canvas.h"

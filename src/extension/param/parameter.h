@@ -13,15 +13,17 @@
 #ifndef SEEN_INK_EXTENSION_PARAM_H__
 #define SEEN_INK_EXTENSION_PARAM_H__
 
-#include <gtkmm/widget.h>
-#include <glibmm/i18n.h>
+class SPDocument;
 
-#include "xml/document.h"
-#include "xml/node.h"
-#include "document.h"
-#include <color.h>
+namespace Gtk {
+class Widget;
+}
 
 namespace Inkscape {
+namespace XML {
+class Node;
+}
+
 namespace Extension {
 
 class Extension;

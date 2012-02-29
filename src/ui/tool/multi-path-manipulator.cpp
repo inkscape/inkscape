@@ -13,6 +13,7 @@
 #include <boost/shared_ptr.hpp>
 #include <glib.h>
 #include <glibmm/i18n.h>
+#include "node.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "document.h"
@@ -23,7 +24,6 @@
 #include "sp-path.h"
 #include "ui/tool/control-point-selection.h"
 #include "ui/tool/event-utils.h"
-#include "ui/tool/node.h"
 #include "ui/tool/multi-path-manipulator.h"
 #include "ui/tool/path-manipulator.h"
 #include "util/unordered-containers.h"

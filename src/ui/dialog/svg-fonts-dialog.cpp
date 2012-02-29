@@ -32,6 +32,11 @@
 #include "sp-font-face.h"
 #include "desktop-handles.h"
 #include "display/nr-svgfonts.h"
+#include "verbs.h"
+#include "sp-glyph.h"
+#include "sp-missing-glyph.h"
+#include "sp-font.h"
+#include "sp-glyph-kerning.h"
 
 SvgFontDrawingArea::SvgFontDrawingArea():
     _x(0),

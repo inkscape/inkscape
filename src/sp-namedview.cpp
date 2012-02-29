@@ -17,6 +17,7 @@
 #include "config.h"
 #include <cstring>
 #include <string>
+#include "event-log.h"
 #include <2geom/transforms.h>
 
 #include "display/canvas-grid.h"
@@ -29,7 +30,6 @@
 #include "document-undo.h"
 #include "desktop-events.h"
 #include "desktop-handles.h"
-#include "event-log.h"
 #include "sp-guide.h"
 #include "sp-item-group.h"
 #include "sp-namedview.h"
@@ -37,6 +37,7 @@
 #include "desktop.h"
 #include "conn-avoid-ref.h" // for defaultConnSpacing.
 #include "sp-root.h"
+#include <gtkmm/window.h>
 
 using Inkscape::DocumentUndo;
 

@@ -8,9 +8,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "ui/tool/selectable-control-point.h"
 #include "ui/tool/control-point-selection.h"
 #include "ui/tool/event-utils.h"
-#include "ui/tool/selectable-control-point.h"
 
 namespace Inkscape {
 namespace UI {

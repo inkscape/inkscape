@@ -28,9 +28,6 @@
 # include "config.h"
 #endif
 
-//#include <string.h>
-//#include <signal.h>
-//#include <errno.h>
 
 #include <2geom/pathvector.h>
 #include <2geom/rect.h>
@@ -38,35 +35,20 @@
 #include <2geom/hvlinesegment.h>
 #include "helper/geom.h"
 #include "helper/geom-curves.h"
-//#include "display/canvas-bpath.h"
 #include "sp-item.h"
 
-//#include "glib.h"
-//#include "gtk/gtk.h"
-
-//#include "glibmm/i18n.h"
-//#include "enums.h"
-//#include "document.h"
 #include "style.h"
-//#include "sp-paint-server.h"
 #include "inkscape-version.h"
 #include "sp-root.h"
-
-//#include "libnrtype/FontFactory.h"
-//#include "libnrtype/font-instance.h"
-//#include "libnrtype/font-style-to-pos.h"
 
 #include "emf-win32-print.h"
 
 #include "unit-constants.h"
 
-//#include "extension/extension.h"
 #include "extension/system.h"
 #include "extension/print.h"
+#include "document.h"
 
-//#include "io/sys.h"
-
-//#include "macros.h"
 
 namespace Inkscape {
 namespace Extension {

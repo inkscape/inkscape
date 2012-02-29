@@ -11,10 +11,11 @@
  * This code is in public domain
  */
 
-//#include <libnr/nr-path.h>
 #include <2geom/forward.h>
 
-#include <gtkmm/window.h>
+namespace Gtk {
+class Window;
+}
 
 class SPDocument;
 class SPStyle;

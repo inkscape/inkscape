@@ -18,6 +18,7 @@
 #include "display/drawing-item.h"
 #include "display/nr-filter.h"
 #include "display/nr-filter-image.h"
+#include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
 
 namespace Inkscape {

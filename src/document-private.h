@@ -24,7 +24,6 @@
 
 #include "composite-undo-stack-observer.h"
 
-#include "event-log.h"
 
 // XXX only for testing!
 #include "console-output-undo-observer.h"

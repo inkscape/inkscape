@@ -31,6 +31,9 @@
 
 #include <cstring>
 #include <string>
+#include <gtkmm/action.h>
+#include <gtkmm/actiongroup.h>
+#include <gtkmm/toolitem.h>
 
 #include "../libnrtype/font-lister.h"
 #include <iostream>

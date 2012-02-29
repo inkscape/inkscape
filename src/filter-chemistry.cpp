@@ -14,6 +14,7 @@
  */
 
 
+#include <cstring>
 #include "style.h"
 #include "document-private.h"
 #include "desktop-style.h"

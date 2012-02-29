@@ -9,6 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "display/nr-filter-image.h"
 #include <glib.h>
 #include <cmath>
 #include <cstring>
@@ -30,7 +31,6 @@
 #include "display/nr-filter-displacement-map.h"
 #include "display/nr-filter-flood.h"
 #include "display/nr-filter-gaussian.h"
-#include "display/nr-filter-image.h"
 #include "display/nr-filter-merge.h"
 #include "display/nr-filter-morphology.h"
 #include "display/nr-filter-offset.h"

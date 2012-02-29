@@ -31,6 +31,7 @@
 #include <gtkmm/image.h>
 #include <gtkmm/stockid.h>
 #include <gtkmm/stock.h>
+#include <gtkmm/table.h>
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs-init.h>  // gnome_vfs_initialized
 #endif

@@ -62,6 +62,8 @@
 #include "ui/view/view-widget.h"
 #include "uri.h"
 #include "xml/rebase-hrefs.h"
+#include "verbs.h"
+#include "event-log.h"
 
 #include <gtk/gtk.h>
 #include <glib.h>

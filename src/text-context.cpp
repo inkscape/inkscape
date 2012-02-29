@@ -17,13 +17,12 @@
 # include <config.h>
 #endif
 
+#include <gtkmm/clipboard.h>
 #include <display/sp-ctrlline.h>
 #include <display/sodipodi-ctrlrect.h>
 #include <display/sp-ctrlquadr.h>
 #include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
-#include <gtk/gtk.h>
-#include <gtkmm/clipboard.h>
 #include <sstream>
 
 #include "context-fns.h"
@@ -53,6 +52,7 @@
 #include "verbs.h"
 #include "xml/node-event-vector.h"
 #include "xml/repr.h"
+#include <gtk/gtk.h>
 
 using Inkscape::DocumentUndo;
 

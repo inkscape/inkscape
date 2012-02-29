@@ -20,6 +20,7 @@
 
 #ifdef HAVE_CAIRO_PDF
 
+#include "cairo-ps.h"
 #include "cairo-ps-out.h"
 #include "cairo-render-context.h"
 #include "cairo-renderer.h"

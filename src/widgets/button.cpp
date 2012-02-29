@@ -17,19 +17,12 @@
 # include "config.h"
 #endif
 
-
-#if HAVE_STRING_H
-#endif
-
-
-
-
+#include "icon.h"
 #include "shortcuts.h"
 #include "interface.h"
 
 #include <gdk/gdkkeysyms.h>
 
-#include "icon.h"
 #include "button.h"
 
 static void sp_button_class_init (SPButtonClass *klass);

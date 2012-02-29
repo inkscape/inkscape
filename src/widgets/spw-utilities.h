@@ -18,15 +18,11 @@
    SPObject, that reacts to modification.
 */
 
-#include <glib.h>
-#include <gtk/gtk.h>      /* GtkWidget */
-#include <gtkmm/widget.h>
-#include <gtkmm/table.h>
-
 namespace Gtk {
   class Label;
   class Table;
   class HBox;
+  class Widget;
 }
 
 Gtk::Label *

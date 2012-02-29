@@ -12,9 +12,7 @@
  *      ? -2004
  */
 
-#include <gtk/gtk.h>
-
-#include "sp-object.h"
+#include <gtkmm/window.h>
 #include "message.h"
 #include "ui/view/view-widget.h"
 #include "ui/view/edit-widget-interface.h"
@@ -26,7 +24,9 @@
 // forward declaration
 typedef struct _EgeColorProfTracker EgeColorProfTracker;
 struct SPCanvas;
+class SPDesktop;
 class SPDesktopWidget;
+class SPObject;
 
 
 #define SP_TYPE_DESKTOP_WIDGET SPDesktopWidget::getType()

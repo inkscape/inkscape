@@ -18,6 +18,8 @@
 #include <algorithm>
 #include <set>
 
+#include <gtkmm/radiomenuitem.h>
+
 #include "swatches.h"
 #include <glibmm/i18n.h>
 #include <glibmm/main.h>
@@ -51,6 +53,7 @@
 #include "sp-gradient-reference.h"
 #include "dialog-manager.h"
 #include "selection.h"
+#include "verbs.h"
 
 namespace Inkscape {
 namespace UI {

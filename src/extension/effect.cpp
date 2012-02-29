@@ -8,11 +8,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "prefdialog.h"
 #include "inkscape-private.h"
 #include "helper/action.h"
 #include "ui/view/view.h"
 #include "desktop-handles.h"
-#include "prefdialog.h"
 #include "selection.h"
 #include "sp-namedview.h"
 #include "desktop.h"

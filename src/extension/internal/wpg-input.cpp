@@ -48,6 +48,7 @@
 #include "extension/system.h"
 #include "extension/input.h"
 #include "document.h"
+#include <cstring>
 
 // Take a guess and fallback to 0.1.x if no configure has run
 #if !defined(WITH_LIBWPG01) && !defined(WITH_LIBWPG02)
