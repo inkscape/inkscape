@@ -224,7 +224,7 @@ GimpGrad::open (Inkscape::Extension::Input */*module*/, gchar const *filename)
                  * add some intermediate stops to convert to the linear/sRGB interpolation */
                 int type; /* enum: linear, curved, sine, sphere increasing, sphere decreasing. */
                 int color_interpolation; /* enum: rgb, hsv anticlockwise, hsv clockwise. */
-                if (sscanf(p, "%.8d %.8d", &type, &color_interpolation) != 2) {
+                if (sscanf(p, "%8d %8d", &type, &color_interpolation) != 2) {
                     continue;
                 }
             }

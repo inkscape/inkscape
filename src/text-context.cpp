@@ -512,7 +512,7 @@ static void insert_uni_char(SPTextContext *const tc)
                      && tc->uni[tc->unipos] == '\0');
     unsigned int uv;
     std::stringstream ss;
-    ss << tc->uni;
+    ss << std::hex << tc->uni;
     ss >> uv;
     tc->unipos = 0;
     tc->uni[tc->unipos] = '\0';
@@ -540,11 +540,11 @@ static void insert_uni_char(SPTextContext *const tc)
     }
 }
 
-static void hex_to_printable_utf8_buf(char const *const hex, char *utf8)
+static void hex_to_printable_utf8_buf(char const *const ehex, char *utf8)
 {
     unsigned int uv;
     std::stringstream ss;
-    ss << hex;
+    ss << std::hex << ehex;
     ss >> uv;
     if (!g_unichar_isprint((gunichar) uv)) {
         uv = 0xfffd;
