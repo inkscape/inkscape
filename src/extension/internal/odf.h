@@ -139,7 +139,7 @@ public:
         {}
     GradientStop(const GradientStop &other)
         {  assign(other); }
-    virtual GradientStop operator=(const GradientStop &other)
+    virtual GradientStop& operator=(const GradientStop &other)
         {  assign(other); return *this; }
     void assign(const GradientStop &other)
         {

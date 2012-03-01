@@ -141,7 +141,7 @@ private:
             {}
         PovShapeInfo(const PovShapeInfo &other)
             { assign(other); }
-        PovShapeInfo operator=(const PovShapeInfo &other)
+        PovShapeInfo& operator=(const PovShapeInfo &other)
             { assign(other); return *this; }
         virtual ~PovShapeInfo()
             {}

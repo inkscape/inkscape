@@ -74,9 +74,9 @@ ParamNotebookPage::ParamNotebookPage (const gchar * name, const gchar * guitext,
         Inkscape::XML::Node *child_repr = xml->firstChild();
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
-			if (!strncmp(chname, INKSCAPE_EXTENSION_NS_NC, strlen(INKSCAPE_EXTENSION_NS_NC))) {
-				chname += strlen(INKSCAPE_EXTENSION_NS);
-			}
+            if (!strncmp(chname, INKSCAPE_EXTENSION_NS_NC, strlen(INKSCAPE_EXTENSION_NS_NC))) {
+                chname += strlen(INKSCAPE_EXTENSION_NS);
+            }
             if (chname[0] == '_') // Allow _ for translation of tags
                 chname++;
             if (!strcmp(chname, "param") || !strcmp(chname, "_param")) {
@@ -141,8 +141,9 @@ ParamNotebookPage::makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension:
     const char * desc;
     const char * scope_str;
     Parameter::_scope_t scope = Parameter::SCOPE_USER;
-	const char * gui_hide;
-	const char * gui_tip;
+    bool gui_hidden = false;
+    const char * gui_hide;
+    const char * gui_tip;
 
     name = in_repr->attribute("name");
     guitext = in_repr->attribute("gui-text");
@@ -155,13 +156,14 @@ ParamNotebookPage::makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension:
     if (desc == NULL)
         desc = in_repr->attribute("_gui-description");
     scope_str = in_repr->attribute("scope");
-	gui_hide = in_repr->attribute("gui-hidden");
-	if (gui_hide != NULL) {
-		if (strcmp(gui_hide, "1") == 0 ||
-			strcmp(gui_hide, "true") == 0) {
-		}
-		/* else stays false */
-	}
+    gui_hide = in_repr->attribute("gui-hidden");
+    if (gui_hide != NULL) {
+        if (strcmp(gui_hide, "1") == 0 ||
+            strcmp(gui_hide, "true") == 0) {
+                gui_hidden = true;
+        }
+        /* else stays false */
+    }
 
     /* In this case we just don't have enough information */
     if (name == NULL) {
@@ -178,7 +180,7 @@ ParamNotebookPage::makepage (Inkscape::XML::Node * in_repr, Inkscape::Extension:
         }
     }
 
-    ParamNotebookPage * page = new ParamNotebookPage(name, guitext, desc, scope, gui_hide, gui_tip, in_ext, in_repr);
+    ParamNotebookPage * page = new ParamNotebookPage(name, guitext, desc, scope, gui_hidden, gui_tip, in_ext, in_repr);
 
     /* Note: page could equal NULL */
     return page;
@@ -231,9 +233,9 @@ ParamNotebook::ParamNotebook (const gchar * name, const gchar * guitext, const g
         Inkscape::XML::Node *child_repr = xml->firstChild();
         while (child_repr != NULL) {
             char const * chname = child_repr->name();
-			if (!strncmp(chname, INKSCAPE_EXTENSION_NS_NC, strlen(INKSCAPE_EXTENSION_NS_NC))) {
-				chname += strlen(INKSCAPE_EXTENSION_NS);
-			}
+            if (!strncmp(chname, INKSCAPE_EXTENSION_NS_NC, strlen(INKSCAPE_EXTENSION_NS_NC))) {
+                chname += strlen(INKSCAPE_EXTENSION_NS);
+            }
             if (chname[0] == '_') // Allow _ for translation of tags
                 chname++;
             if (!strcmp(chname, "page")) {
