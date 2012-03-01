@@ -1415,16 +1415,6 @@ Glib::PropertyProxy<void*> FilterEffectsDialog::CellRendererConnection::property
     return _primitive.get_proxy();
 }
 
-void FilterEffectsDialog::CellRendererConnection::set_text_width(const int w)
-{
-    _text_width = w;
-}
-
-int FilterEffectsDialog::CellRendererConnection::get_text_width() const
-{
-    return _text_width;
-}
-
 void FilterEffectsDialog::CellRendererConnection::get_size_vfunc(
     Gtk::Widget& widget, const Gdk::Rectangle* /*cell_area*/,
     int* x_offset, int* y_offset, int* width, int* height) const
@@ -1436,7 +1426,7 @@ void FilterEffectsDialog::CellRendererConnection::get_size_vfunc(
     if(y_offset)
         (*y_offset) = 0;
     if(width)
-        (*width) = size * primlist.primitive_count() + _text_width * 7;
+        (*width) = size * primlist.primitive_count() + (primlist.get_input_type_width()) * 6;
     if(height) {
         // Scale the height depending on the number of inputs, unless it's
         // the first primitive, in which case there are no connections
@@ -1467,7 +1457,7 @@ FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
     get_selection()->signal_changed().connect(sigc::mem_fun(*this, &PrimitiveList::on_primitive_selection_changed));
     signal_primitive_changed().connect(sigc::mem_fun(*this, &PrimitiveList::queue_draw));
 
-    _connection_cell.set_text_width(init_text());
+    init_text();
 
     int cols_count = append_column(_("Connections"), _connection_cell);
     Gtk::TreeViewColumn* col = get_column(cols_count - 1);
@@ -1477,7 +1467,7 @@ FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
 
 // Sets up a vertical Pango context/layout, and returns the largest
 // width needed to render the FilterPrimitiveInput labels.
-int FilterEffectsDialog::PrimitiveList::init_text()
+void FilterEffectsDialog::PrimitiveList::init_text()
 {
     // Set up a vertical context+layout
     Glib::RefPtr<Pango::Context> context = create_pango_context();
@@ -1485,16 +1475,18 @@ int FilterEffectsDialog::PrimitiveList::init_text()
     context->set_matrix(matrix);
     _vertical_layout = Pango::Layout::create(context);
 
-    int maxfont = 0;
+    // Store the maximum height and width of the an input type label
+    // for later use in drawing and measuring.
+    _input_type_height = _input_type_width = 0;
     for(unsigned int i = 0; i < FPInputConverter._length; ++i) {
         _vertical_layout->set_text(_(FPInputConverter.get_label((FilterPrimitiveInput)i).c_str()));
         int fontw, fonth;
         _vertical_layout->get_pixel_size(fontw, fonth);
-        if(fonth > maxfont)
-            maxfont = fonth;
+        if(fonth > _input_type_width)
+            _input_type_width = fonth;
+        if (fontw > _input_type_height)
+            _input_type_height = fontw;
     }
-
-    return maxfont;
 }
 
 sigc::signal<void>& FilterEffectsDialog::PrimitiveList::signal_primitive_changed()
@@ -1546,9 +1538,24 @@ void FilterEffectsDialog::PrimitiveList::update()
             get_selection()->select(_model->children().begin());
 
         columns_autosize();
+
+        int width, height;
+        get_size_request(width, height);
+        if (height == -1) {
+               // Need to account for the height of the input type text (rotated text) as well as the
+               // column headers.  Input type text height determined in init_text() by measuring longest
+               // string. Column header height determined by mapping y coordinate of visible
+               // rectangle to widget coordinates.
+                       Gdk::Rectangle vis;
+                       int vis_x, vis_y;
+               get_visible_rect(vis);
+               convert_tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
+                       set_size_request(width, _input_type_height + 2 + vis_y);
+        }
     }
     else {
         _dialog._primitive_box.set_sensitive(false);
+        set_size_request(-1, -1);
     }
 }
 
@@ -1610,16 +1617,14 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
     if(row) {
         get_cell_area(get_model()->get_path(row), *get_column(1), rct);
         get_visible_rect(vis);
-        int vis_x, vis_y;
-        convert_tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
 
-        text_start_x = rct.get_x() + rct.get_width() - _connection_cell.get_text_width() * (FPInputConverter._length + 1) + 1;
+        text_start_x = rct.get_x() + rct.get_width() - get_input_type_width() * FPInputConverter._length + 1;
         for(unsigned int i = 0; i < FPInputConverter._length; ++i) {
             _vertical_layout->set_text(_(FPInputConverter.get_label((FilterPrimitiveInput)i).c_str()));
-            const int x = text_start_x + _connection_cell.get_text_width() * (i + 1);
-            get_bin_window()->draw_rectangle(get_style()->get_bg_gc(Gtk::STATE_NORMAL), true, x, vis_y, _connection_cell.get_text_width(), vis.get_height());
-            get_bin_window()->draw_layout(get_style()->get_text_gc(Gtk::STATE_NORMAL), x + 1, vis_y, _vertical_layout);
-            get_bin_window()->draw_line(darkgc, x, vis_y, x, vis_y + vis.get_height());
+            const int x = text_start_x + get_input_type_width() * i;
+            get_bin_window()->draw_rectangle(get_style()->get_bg_gc(Gtk::STATE_NORMAL), true, x, 0, get_input_type_width(), vis.get_height());
+            get_bin_window()->draw_layout(get_style()->get_text_gc(Gtk::STATE_NORMAL), x + 1, 0, _vertical_layout);
+            get_bin_window()->draw_line(darkgc, x, 0, x, vis.get_height());
         }
     }
 
@@ -1714,8 +1719,8 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& in
     if(res == input || (use_default && is_first)) {
         // Draw straight connection to a standard input
         // Draw a lighter line for an implicit connection to a standard input
-        const int tw = _connection_cell.get_text_width();
-        gint end_x = text_start_x + tw * (src_id + 1) + (int)(tw * 0.5f) + 1;
+        const int tw = get_input_type_width();
+        gint end_x = text_start_x + tw * src_id + (int)(tw * 0.5f) + 1;
         gc = (use_default && is_first) ? lightgc : darkgc;
         get_bin_window()->draw_rectangle(gc, true, end_x-2, y1-2, 5, 5);
         get_bin_window()->draw_line(gc, x1, y1, end_x, y1);
@@ -1919,7 +1924,7 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
 
             Gdk::Rectangle rct;
             get_cell_area(path, *col, rct);
-            const int twidth = _connection_cell.get_text_width();
+            const int twidth = get_input_type_width();
             const int sources_x = rct.get_width() - twidth * FPInputConverter._length;
             if(cx > sources_x) {
                 int src = (cx - sources_x) / twidth;
@@ -2108,6 +2113,13 @@ bool FilterEffectsDialog::PrimitiveList::on_scroll_timeout()
 int FilterEffectsDialog::PrimitiveList::primitive_count() const
 {
     return _model->children().size();
+}
+
+int FilterEffectsDialog::PrimitiveList::get_input_type_width() const
+{
+       // Maximum font height calculated in initText() and stored in _input_type_width.
+       // Add 2 to font height to account for rectangle around text.
+    return _input_type_width + 2;
 }
 
 /*** FilterEffectsDialog ***/

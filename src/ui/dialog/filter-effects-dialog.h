@@ -135,8 +135,6 @@ private:
 
         static const int size = 24;
         
-        void set_text_width(const int w);
-        int get_text_width() const;
     protected:
         virtual void get_size_vfunc(Gtk::Widget& widget, const Gdk::Rectangle* cell_area,
                                     int* x_offset, int* y_offset, int* width, int* height) const;
@@ -161,6 +159,8 @@ private:
         void remove_selected();
 
         int primitive_count() const;
+        int get_input_type_width() const;
+
     protected:
         bool on_expose_signal(GdkEventExpose*);
         bool on_button_press_event(GdkEventButton*);
@@ -168,7 +168,7 @@ private:
         bool on_button_release_event(GdkEventButton*);
         void on_drag_end(const Glib::RefPtr<Gdk::DragContext>&);
     private:
-        int init_text();
+        void init_text();
 
         bool do_connection_node(const Gtk::TreeIter& row, const int input, std::vector<Gdk::Point>& points,
                                 const int ix, const int iy);
@@ -192,6 +192,8 @@ private:
         sigc::connection _scroll_connection;
         int _autoscroll;
         std::auto_ptr<Inkscape::XML::SignalObserver> _observer;
+        int _input_type_width;
+        int _input_type_height;
     };
 
     void init_settings_widgets();
