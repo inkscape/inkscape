@@ -56,6 +56,8 @@ ink_common_sources +=		\
 	ui/dialog/layer-properties.h		\
 	ui/dialog/layers.cpp			\
 	ui/dialog/layers.h			\
+	ui/dialog/livepatheffect-add.cpp	\
+	ui/dialog/livepatheffect-add.h	\
 	ui/dialog/livepatheffect-editor.cpp	\
 	ui/dialog/livepatheffect-editor.h	\
 	ui/dialog/memory.cpp			\

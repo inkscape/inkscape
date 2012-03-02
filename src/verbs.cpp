@@ -2644,7 +2644,7 @@ Verb *Verb::_base_verbs[] = {
                    N_("Query information about extensions"), NULL),
     new DialogVerb(SP_VERB_DIALOG_LAYERS, "DialogLayers", N_("Layer_s..."),
                    N_("View Layers"), INKSCAPE_ICON("dialog-layers")),
-    new DialogVerb(SP_VERB_DIALOG_LIVE_PATH_EFFECT, "DialogLivePathEffect", N_("Path E_ffect Editor..."),
+    new DialogVerb(SP_VERB_DIALOG_LIVE_PATH_EFFECT, "DialogLivePathEffect", N_("Path E_ffects ..."),
                    N_("Manage, edit, and apply path effects"), NULL),
     new DialogVerb(SP_VERB_DIALOG_FILTER_EFFECTS, "DialogFilterEffects", N_("Filter _Editor..."),
                    N_("Manage, edit, and apply SVG filters"), NULL),

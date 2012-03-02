@@ -21,6 +21,7 @@
 #include <gtkmm/treeview.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/toolbar.h>
+#include <gtkmm/buttonbox.h>
 
 
 class SPDesktop;
@@ -61,9 +62,8 @@ private:
     void effect_list_reload(SPLPEItem *lpeitem);
 
     // callback methods for buttons on grids page.
-    void onApply();
+    void onAdd();
     void onRemove();
-
     void onUp();
     void onDown();
 
@@ -85,11 +85,10 @@ private:
 
     bool lpe_list_locked;
 
-    Inkscape::UI::Widget::ComboBoxEnum<LivePathEffect::EffectType> combo_effecttype;
+    //Inkscape::UI::Widget::ComboBoxEnum<LivePathEffect::EffectType> combo_effecttype;
     
     Gtk::Widget * effectwidget;
-    Gtk::Label explain_label;
-    Gtk::Frame effectapplication_frame;
+    Gtk::Label status_label;
     Gtk::Frame effectcontrol_frame;
     Gtk::Frame effectlist_frame;
     Gtk::HBox effectapplication_hbox;
@@ -103,16 +102,11 @@ private:
 
     void on_visibility_toggled( Glib::ustring const& str );
 
-    Gtk::Toolbar toolbar;
+    Gtk::HButtonBox toolbar_hbox;
+    Gtk::ToolButton button_add;
+    Gtk::ToolButton button_remove;
     Gtk::ToolButton button_up;
     Gtk::ToolButton button_down;
-    Gtk::Button button_apply;
-    Gtk::ToolButton button_remove;
-    /*Gtk::HButtonBox button_hbox;
-    Gtk::Button	button_up;
-    Gtk::Button	button_down;
-    Gtk::Button button_apply;
-    Gtk::Button button_remove;*/
 
     SPDesktop * current_desktop;
     
