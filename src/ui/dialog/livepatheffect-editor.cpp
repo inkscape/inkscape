@@ -82,10 +82,10 @@ LivePathEffectEditor::LivePathEffectEditor()
       status_label("", Gtk::ALIGN_CENTER),
       effectcontrol_frame(""),
       effectlist_frame(_("Effect list")),
-      button_add(Gtk::Stock::ADD),
-      button_remove(Gtk::Stock::REMOVE),
-      button_up(Gtk::Stock::GO_UP),
-      button_down(Gtk::Stock::GO_DOWN),
+      button_add(),
+      button_remove(),
+      button_up(),
+      button_down(),
       current_desktop(NULL),
       current_lpeitem(NULL)
 {
@@ -107,9 +107,20 @@ LivePathEffectEditor::LivePathEffectEditor()
     effectcontrol_frame.add(effectcontrol_vbox);
 
     button_add.set_tooltip_text(_("Add path effect"));
+    button_add.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_ADD, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+    button_add.set_relief(Gtk::RELIEF_NONE);
+
     button_remove.set_tooltip_text(_("Delete current path effect"));
+    button_remove.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_REMOVE, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+    button_remove.set_relief(Gtk::RELIEF_NONE);
+
     button_up.set_tooltip_text(_("Raise the current path effect"));
+    button_up.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_GO_UP, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+    button_up.set_relief(Gtk::RELIEF_NONE);
+
     button_down.set_tooltip_text(_("Lower the current path effect"));
+    button_down.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_GO_DOWN, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+    button_down.set_relief(Gtk::RELIEF_NONE);
 
     // Add toolbar items to toolbar
     toolbar_hbox.set_layout (Gtk::BUTTONBOX_END);

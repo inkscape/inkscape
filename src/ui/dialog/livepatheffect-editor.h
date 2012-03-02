@@ -103,10 +103,10 @@ private:
     void on_visibility_toggled( Glib::ustring const& str );
 
     Gtk::HButtonBox toolbar_hbox;
-    Gtk::ToolButton button_add;
-    Gtk::ToolButton button_remove;
-    Gtk::ToolButton button_up;
-    Gtk::ToolButton button_down;
+    Gtk::Button button_add;
+    Gtk::Button button_remove;
+    Gtk::Button button_up;
+    Gtk::Button button_down;
 
     SPDesktop * current_desktop;
     

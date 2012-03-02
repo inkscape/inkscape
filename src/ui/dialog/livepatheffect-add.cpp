@@ -80,6 +80,7 @@ LivePathEffectAdd::LivePathEffectAdd() :
     /**
      * Signal handlers
      */
+    effectlist_treeview.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &LivePathEffectAdd::onButtonEvent) );
     close_button.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectAdd::onClose));
     add_button.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectAdd::onAdd));
     signal_delete_event().connect( sigc::bind_return(sigc::hide(sigc::mem_fun(*this, &LivePathEffectAdd::onClose)), true ) );
@@ -98,6 +99,14 @@ void LivePathEffectAdd::onAdd()
 void LivePathEffectAdd::onClose()
 {
     hide();
+}
+
+void LivePathEffectAdd::onButtonEvent(GdkEventButton* evt)
+{
+    // Double click on tree is same as clicking the add button
+    if (evt->type == GDK_2BUTTON_PRESS) {
+        onAdd();
+    }
 }
 
 const Util::EnumData<LivePathEffect::EffectType>*

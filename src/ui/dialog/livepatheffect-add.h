@@ -54,15 +54,21 @@ public:
     static const Util::EnumData<LivePathEffect::EffectType>* getActiveData();
 
 protected:
+
     /**
      * Close button was clicked
      */
-
     void onClose();
+
     /**
      * Add button was clicked
      */
     void onAdd();
+
+    /**
+     * Tree was clicked
+     */
+    void onButtonEvent(GdkEventButton* evt);
 
 private:
 
