@@ -101,7 +101,6 @@ LivePathEffectEditor::LivePathEffectEditor()
     effectapplication_hbox.set_spacing(4);
     effectcontrol_vbox.set_spacing(4);
 
-    effectlist_vbox.set_spacing(4);
     effectlist_vbox.pack_start(scrolled_window, Gtk::PACK_EXPAND_WIDGET);
     effectlist_vbox.pack_end(toolbar_hbox, Gtk::PACK_SHRINK);
     effectcontrol_frame.add(effectcontrol_vbox);
