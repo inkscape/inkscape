@@ -81,6 +81,7 @@ void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned i
         GtkWidget *child = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, iconName );
         gtk_widget_show( child );
         btn.add( *manage(Glib::wrap(child)) );
+        btn.set_relief(Gtk::RELIEF_NONE);
         set = true;
     }
 
@@ -636,11 +637,13 @@ LayersPanel::LayersPanel() :
     SPDesktop* targetDesktop = getDesktop();
 
     _buttonsRow.set_child_min_width( 16 );
+    _buttonsRow.set_layout (Gtk::BUTTONBOX_END);
 
     Gtk::Button* btn = manage( new Gtk::Button() );
     _styleButton( *btn, targetDesktop, SP_VERB_LAYER_NEW, GTK_STOCK_ADD, C_("Layers", "New") );
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_NEW) );
     _buttonsRow.add( *btn );
+    _buttonsRow.set_child_secondary( *btn , true);
 
     btn = manage( new Gtk::Button() );
     _styleButton( *btn, targetDesktop, SP_VERB_LAYER_TO_TOP, GTK_STOCK_GOTO_TOP, C_("Layers", "Top") );
@@ -675,6 +678,7 @@ LayersPanel::LayersPanel() :
     btn->signal_clicked().connect( sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), (int)BUTTON_DELETE) );
     _watching.push_back( btn );
     _buttonsRow.add( *btn );
+    _buttonsRow.set_child_secondary( *btn , true);
 
 
 
