@@ -280,10 +280,16 @@ bool LayersPanel::_checkForUpdated(const Gtk::TreePath &/*path*/, const Gtk::Tre
 {
     bool stopGoing = false;
     Gtk::TreeModel::Row row = *iter;
-    Glib::ustring tmp = row[_model->_colLabel];
     if ( layer == row[_model->_colObject] )
     {
-        row[_model->_colLabel] = layer->label() ? layer->label() : layer->getId();
+        /*
+         * We get notified of layer update here (from layer->setLabel()) before layer->label() is set
+         * with the correct value (sp-object bug?). So use the inkscape:label attribute instead which
+         * has the correct value (bug #168351)
+         */
+        //row[_model->_colLabel] = layer->label() ? layer->label() : layer->getId();
+        gchar const *label = layer->getAttribute("inkscape:label");
+        row[_model->_colLabel] = label ? label : layer->getId();
         row[_model->_colVisible] = SP_IS_ITEM(layer) ? !SP_ITEM(layer)->isHidden() : false;
         row[_model->_colLocked] = SP_IS_ITEM(layer) ? SP_ITEM(layer)->isLocked() : false;
 
@@ -523,7 +529,6 @@ void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& /*path*/, Gtk::T
             Glib::ustring tmp = row[_model->_colLabel];
             if ( oldLabel && oldLabel[0] && !tmp.empty() && (tmp != oldLabel) ) {
                 _desktop->layer_manager->renameLayer( obj, tmp.c_str(), FALSE );
-                row[_model->_colLabel] = obj->label();
             }
         }
     }
