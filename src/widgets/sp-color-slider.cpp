@@ -195,8 +195,8 @@ sp_color_slider_realize (GtkWidget *widget)
 	attributes.width = allocation.width;
 	attributes.height = allocation.height;
 	attributes.wclass = GDK_INPUT_OUTPUT;
-	attributes.visual = gdk_rgb_get_visual ();
-	attributes.colormap = gdk_rgb_get_cmap ();
+	attributes.visual = gdk_screen_get_system_visual(gdk_screen_get_default());
+	attributes.colormap = gdk_screen_get_system_colormap(gdk_screen_get_default());
 	attributes.event_mask = gtk_widget_get_events (widget);
 	attributes.event_mask |= (GDK_EXPOSURE_MASK |
 				  GDK_BUTTON_PRESS_MASK |

@@ -94,7 +94,8 @@ static void sp_svg_view_widget_init(SPSVGSPViewWidget *vw)
 	gtk_widget_show (vw->sw);
 
 	/* Canvas */
-	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
+	GdkColormap *cmap = gdk_screen_get_system_colormap(gdk_screen_get_default());
+	gtk_widget_push_colormap(cmap);
 	vw->canvas = SPCanvas::createAA();
 	gtk_widget_pop_colormap ();
 	style = gtk_style_copy (gtk_widget_get_style (vw->canvas));
