@@ -2,7 +2,6 @@
 set(dialogs_SRC
 	clonetiler.cpp
 	dialog-events.cpp
-	export.cpp
 	find.cpp
 	spellcheck.cpp
 	text-edit.cpp
@@ -13,7 +12,6 @@ set(dialogs_SRC
 	# Headers
 	clonetiler.h
 	dialog-events.h
-	export.h
 	find.h
 	spellcheck.h
 	text-edit.h

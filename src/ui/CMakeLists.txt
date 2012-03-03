@@ -32,6 +32,7 @@ set(ui_SRC
 	dialog/dock-behavior.cpp
 	dialog/document-metadata.cpp
 	dialog/document-properties.cpp
+	dialog/export.cpp
 	dialog/extension-editor.cpp
 	dialog/extensions.cpp
 	dialog/filedialog.cpp
@@ -137,6 +138,7 @@ set(ui_SRC
 	dialog/dock-behavior.h
 	dialog/document-metadata.h
 	dialog/document-properties.h
+	dialog/export.h
 	dialog/extension-editor.h
 	dialog/extensions.h
 	dialog/filedialog.h
