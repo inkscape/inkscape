@@ -5,8 +5,6 @@ ink_common_sources +=	\
 	dialogs/clonetiler.h		\
 	dialogs/dialog-events.cpp	\
 	dialogs/dialog-events.h		\
-	dialogs/export.cpp		\
-	dialogs/export.h		\
 	dialogs/find.cpp		\
 	dialogs/find.h			\
 	dialogs/xml-tree.cpp		\

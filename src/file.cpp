@@ -33,7 +33,6 @@
 #include "ui/dialog/ocaldialogs.h"
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "dialogs/export.h"
 #include "dir-util.h"
 #include "document-private.h"
 #include "document-undo.h"
@@ -1299,15 +1298,16 @@ sp_file_export_dialog(Gtk::Window &parentWindow)
 #else
 
 /**
+ * TODO Delete
+ * This is now a dialog called from dialog manager
  *
- */
 bool
-sp_file_export_dialog(Gtk::Window &/*parentWindow*/)
+sp_file_export_dialog(Gtk::Window &parentWindow)
 {
-    sp_export_dialog();
+    // sp_export_dialog();
     return true;
 }
-
+*/
 #endif
 
 /*######################

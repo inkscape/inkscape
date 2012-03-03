@@ -837,9 +837,9 @@ void FileVerb::perform(SPAction *action, void *data)
         case SP_VERB_FILE_IMPORT:
             sp_file_import(*parent);
             break;
-        case SP_VERB_FILE_EXPORT:
-            sp_file_export_dialog(*parent);
-            break;
+//        case SP_VERB_FILE_EXPORT:
+//            sp_file_export_dialog(*parent);
+//            break;
         case SP_VERB_FILE_IMPORT_FROM_OCAL:
             sp_file_import_from_ocal(*parent);
             break;
@@ -1867,6 +1867,9 @@ void DialogVerb::perform(SPAction *action, void *data)
         case SP_VERB_DIALOG_INPUT:
             dt->_dlg_mgr->showDialog("InputDevices");
             break;
+        case SP_VERB_DIALOG_EXPORT:
+            dt->_dlg_mgr->showDialog("Export");
+            break;
         case SP_VERB_DIALOG_EXTENSIONEDITOR:
             dt->_dlg_mgr->showDialog("ExtensionEditor");
             break;
@@ -2652,6 +2655,8 @@ Verb *Verb::_base_verbs[] = {
                    N_("Edit SVG fonts"), NULL),
     new DialogVerb(SP_VERB_DIALOG_PRINT_COLORS_PREVIEW, "DialogPrintColorsPreview", N_("Print Colors..."),
                    N_("Select which color separations to render in Print Colors Preview rendermode"), NULL),
+    new DialogVerb(SP_VERB_DIALOG_EXPORT, "DialogExport", N_("_Export Bitmap..."),
+                N_("Export this document or a selection as a bitmap image"), INKSCAPE_ICON("document-export")),
 
     // Help
     new HelpVerb(SP_VERB_HELP_ABOUT_EXTENSIONS, "HelpAboutExtensions", N_("About E_xtensions"),

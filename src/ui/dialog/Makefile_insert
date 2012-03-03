@@ -24,6 +24,8 @@ ink_common_sources +=		\
 	ui/dialog/document-metadata.h    	\
 	ui/dialog/document-properties.cpp	\
 	ui/dialog/document-properties.h		\
+	ui/dialog/export.cpp		\
+	ui/dialog/export.h		\
 	ui/dialog/extension-editor.cpp		\
 	ui/dialog/extension-editor.h		\
 	ui/dialog/extensions.cpp		\

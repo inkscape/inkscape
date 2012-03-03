@@ -929,7 +929,8 @@ static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* deskto
         SP_VERB_EDIT_REDO,
         SP_VERB_EDIT_UNDO,
         SP_VERB_EDIT_UNLINK_CLONE,
-        SP_VERB_FILE_EXPORT,
+        //SP_VERB_FILE_EXPORT,
+        SP_VERB_DIALOG_EXPORT,
         SP_VERB_FILE_IMPORT,
         SP_VERB_FILE_NEW,
         SP_VERB_FILE_OPEN,
@@ -2164,7 +2165,7 @@ void setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='FilePrint' />"
         "    <separator />"
         "    <toolitem action='FileImport' />"
-        "    <toolitem action='FileExport' />"
+        "    <toolitem action='DialogExport' />"
         "    <separator />"
         "    <toolitem action='EditUndo' />"
         "    <toolitem action='EditRedo' />"
