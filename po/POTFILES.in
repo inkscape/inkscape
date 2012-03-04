@@ -46,10 +46,10 @@ src/context-fns.cpp
 src/desktop-events.cpp
 src/desktop.cpp
 src/dialogs/clonetiler.cpp
-src/dialogs/export.cpp
+src/ui/dialog/export.cpp
 src/dialogs/find.cpp
-src/dialogs/spellcheck.cpp
-src/dialogs/text-edit.cpp
+src/ui/dialog/spellcheck.cpp
+src/ui/dialog/text-edit.cpp
 src/dialogs/xml-tree.cpp
 src/display/canvas-axonomgrid.cpp
 src/display/canvas-grid.cpp

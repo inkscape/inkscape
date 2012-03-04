@@ -41,7 +41,7 @@ class GimpXCFGimpNotInstalled(GimpXCFError):
 
 class GimpXCFScriptFuError(GimpXCFError):
     def __init__(self):
-        inkex.errormsg(_('An error occured while processing the XCF file.'))
+        inkex.errormsg(_('An error occurred while processing the XCF file.'))
 
 
 class MyEffect(inkex.Effect):
