@@ -27,6 +27,36 @@
 #include <2geom/path-intersection.h>
 #include <2geom/crossing.h>
 
+namespace Geom {
+
+
+Point unitTangentAt( D2<SBasis> const & a, Coord t, unsigned n = 3) {
+    std::vector<Point> derivs = a.valueAndDerivatives(t, n);
+    for (unsigned deriv_n = 1; deriv_n < derivs.size(); deriv_n++) {
+        Coord length = derivs[deriv_n].length();
+        if ( ! are_near(length, 0) ) {
+            // length of derivative is non-zero, so return unit vector
+            return derivs[deriv_n] / length;
+        }
+    }
+    return Point (0,0);
+}
+
+/** Find the point where two straight lines cross.
+*/
+boost::optional<Point> intersection_point( Point const & origin_a, Point const & vector_a,
+                                           Point const & origin_b, Point const & vector_b)
+{
+    Coord denom = cross(vector_b, vector_a);
+    if (!are_near(denom,0.)){
+        Coord t = (cross(origin_a,vector_b) + cross(vector_b,origin_b)) / denom;
+        return origin_a + t * vector_a;
+    }
+    return boost::none;
+}
+
+}
+
 namespace Inkscape {
 namespace LivePathEffect {
 
@@ -57,12 +87,14 @@ static const Util::EnumDataConverter<unsigned> LineCapTypeConverter(LineCapTypeD
 enum LineCuspType {
   LINECUSP_BEVEL,
   LINECUSP_ROUND,
-  LINECUSP_CUSP
+  LINECUSP_EXTRP_MITER,
+  LINECUSP_MITER
 };
 static const Util::EnumData<unsigned> LineCuspTypeData[] = {
-    {LINECUSP_BEVEL ,  N_("Beveled"),   "bevel"},
-    {LINECUSP_ROUND ,  N_("Rounded"),   "round"},
-    {LINECUSP_CUSP  ,  N_("Cusp"),      "cusp"},
+    {LINECUSP_BEVEL, N_("Beveled"),   "bevel"},
+    {LINECUSP_ROUND, N_("Rounded"),   "round"},
+    {LINECUSP_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"},
+    {LINECUSP_MITER, N_("Miter"),     "miter"},
 };
 static const Util::EnumDataConverter<unsigned> LineCuspTypeConverter(LineCuspTypeData, sizeof(LineCuspTypeData)/sizeof(*LineCuspTypeData));
 
@@ -74,6 +106,7 @@ LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     interpolator_beta(_("Smoothness"), _("Sets the smoothness for the CubicBezierJohan interpolator. 0 = linear interpolation, 1 = smooth"), "interpolator_beta", &wr, this, 0.2),
     start_linecap_type(_("Start line cap type"), _("Determines the shape of the path's start."), "start_linecap_type", LineCapTypeConverter, &wr, this, LINECAP_ROUND),
     cusp_linecap_type(_("Cusp line cap type"), _("Determines the shape of the cusps along the path."), "cusp_linecap_type", LineCuspTypeConverter, &wr, this, LINECUSP_ROUND),
+    miter_limit(_("Miter limit"), _("Maximum length of the miter (in units of stroke width)"), "miter_limit", &wr, this, 0.2),
     end_linecap_type(_("End line cap type"), _("Determines the shape of the path's end."), "end_linecap_type", LineCapTypeConverter, &wr, this, LINECAP_ROUND)
 {
     show_orig_path = true;
@@ -89,6 +122,7 @@ LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&interpolator_beta) );
     registerParameter( dynamic_cast<Parameter *>(&start_linecap_type) );
     registerParameter( dynamic_cast<Parameter *>(&cusp_linecap_type) );
+    // registerParameter( dynamic_cast<Parameter *>(&miter_limit) );
     registerParameter( dynamic_cast<Parameter *>(&end_linecap_type) );
 }
 
@@ -173,8 +207,14 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
     Geom::Point start = B[0].at0();
     pb.moveTo(start);
     build_from_sbasis(pb, B[0], tol, false);
+    unsigned prev_i = 0;
     for (unsigned i=1; i < B.size(); i++) {
-        if (!are_near(B[i-1].at1(), B[i].at0(), tol) )
+        // if segment is degenerate, skip it
+        // the degeneracy/constancy test had to be loosened (eps > 1e-5) 
+        if (B[i].isConstant(1e-4)) {
+            continue;
+        }
+        if (!are_near(B[prev_i].at1(), B[i].at0(), tol) )
         { // discontinuity found, so fix it :-)
             discontinuity_data cusp = cusps[cusp_i];
 
@@ -184,30 +224,29 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                           angle_between(cusp.der0, cusp.der1), false, cusp.width < 0,
                           B[i].at0() );
                 break;
-            case LINECUSP_CUSP: {
+            case LINECUSP_EXTRP_MITER: {
                 // first figure out whether we are on the outside or inside of the corner in the path
                 if ( sign*cusp.width*angle_between(cusp.der0, cusp.der1) < 0.) {
                     // we are on the outside, do something complicated to make it look good ;)
 
-                    Geom::D2<Geom::SBasis> newcurve1 =
-                        B[i-1] * Geom::reflection(rot90(derivative(B[i-1]).at1()), B[i-1].at1());
+                    Geom::Point der1 = unitTangentAt(B[prev_i],1);
+                    Geom::Point der2 = unitTangentAt(B[i],0);
+
+                    Geom::D2<Geom::SBasis> newcurve1 = B[prev_i] * Geom::reflection(rot90(der1), B[prev_i].at1());
                     newcurve1 = reverse(newcurve1);
                     std::vector<Geom::Point> temp;
                     sbasis_to_bezier(temp, newcurve1, 4);
                     Geom::CubicBezier bzr1( temp );
 
-                    Geom::D2<Geom::SBasis> newcurve2 =
-                        B[i] * Geom::reflection(rot90(derivative(B[i]).at0()), B[i].at0());
+                    Geom::D2<Geom::SBasis> newcurve2 = B[i] * Geom::reflection(rot90(der2), B[i].at0());
                     newcurve2 = reverse(newcurve2);
                     sbasis_to_bezier(temp, newcurve2, 4);
                     Geom::CubicBezier bzr2( temp );
 
                     Geom::Crossings cross = crossings(bzr1, bzr2);
                     if (cross.empty()) {
-g_message("empty crossing: decide what to do...");
-                        pb.curveTo(bzr1[1], bzr1[2], bzr1[3]);
-                        pb.lineTo(bzr2[0]);
-                        pb.curveTo(bzr2[1], bzr2[2], bzr2[3]);
+                        // empty crossing: decide what to do... default to bevel?
+                        pb.lineTo(B[i].at0());
                     } else {
                         std::pair<Geom::CubicBezier, Geom::CubicBezier> sub1 = bzr1.subdivide(cross[0].ta);
                         std::pair<Geom::CubicBezier, Geom::CubicBezier> sub2 = bzr2.subdivide(cross[0].tb);
@@ -215,6 +254,25 @@ g_message("empty crossing: decide what to do...");
                         pb.curveTo(sub2.second[1], sub2.second[2], sub2.second[3]);
                     }
 
+                } else {
+                    // we are on the inside, do a simple bevel to connect the paths
+                    pb.lineTo(B[i].at0()); // default to bevel for too shallow cusp angles
+                }
+                break;
+            }
+            case LINECUSP_MITER: {
+                // first figure out whether we are on the outside or inside of the corner in the path
+                if ( sign*cusp.width*angle_between(cusp.der0, cusp.der1) < 0.) {
+                    // we are on the outside, do something complicated to make it look good ;)
+
+                    Geom::Point der1 = unitTangentAt(B[prev_i],1);
+                    Geom::Point der2 = unitTangentAt(B[i],0);
+                    boost::optional<Geom::Point> p = intersection_point( B[prev_i].at1(), der1,
+                                                                         B[i].at0(), der2 );
+                    if (p) {
+                        pb.lineTo(*p);
+                    }
+                    pb.lineTo(B[i].at0());
                 } else {
                     // we are on the inside, do a simple bevel to connect the paths
                     pb.lineTo(B[i].at0()); // default to bevel for too shallow cusp angles
@@ -230,6 +288,7 @@ g_message("empty crossing: decide what to do...");
             cusp_i += forward_direction ? 1 : -1;
         }
         build_from_sbasis(pb, B[i], tol, false);
+        prev_i = i;
     }
     pb.finish();
     return pb.peek().front();
@@ -319,7 +378,7 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
                 break;
             case LINECAP_PEAK:
             {
-                Geom::Point end_deriv = der.lastValue();
+                Geom::Point end_deriv = unit_vector(der.lastValue());
                 double radius = 0.5 * distance(pwd2_out.lastValue(), mirrorpath.firstValue());
                 Geom::Point midpoint = 0.5*(pwd2_out.lastValue() + mirrorpath.firstValue()) + radius*end_deriv;
                 fixed_path.appendNew<LineSegment>(midpoint);
@@ -328,7 +387,7 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
             }
             case LINECAP_SQUARE:
             {
-                Geom::Point end_deriv = der.lastValue();
+                Geom::Point end_deriv = unit_vector(der.lastValue());
                 double radius = 0.5 * distance(pwd2_out.lastValue(), mirrorpath.firstValue());
                 fixed_path.appendNew<LineSegment>( pwd2_out.lastValue() + radius*end_deriv );
                 fixed_path.appendNew<LineSegment>( mirrorpath.firstValue() + radius*end_deriv );
@@ -357,7 +416,7 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
                 break;
             case LINECAP_PEAK:
             {
-                Geom::Point start_deriv = der.firstValue();
+                Geom::Point start_deriv = unit_vector(der.firstValue());
                 double radius = 0.5 * distance(pwd2_out.firstValue(), mirrorpath.lastValue());
                 Geom::Point midpoint = 0.5*(mirrorpath.lastValue() + pwd2_out.firstValue()) - radius*start_deriv;
                 fixed_path.appendNew<LineSegment>( midpoint );
@@ -366,7 +425,7 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
             }
             case LINECAP_SQUARE:
             {
-                Geom::Point start_deriv = der.firstValue();
+                Geom::Point start_deriv = unit_vector(der.firstValue());
                 double radius = 0.5 * distance(pwd2_out.firstValue(), mirrorpath.lastValue());
                 fixed_path.appendNew<LineSegment>( mirrorpath.lastValue() - radius*start_deriv );
                 fixed_path.appendNew<LineSegment>( pwd2_out.firstValue() - radius*start_deriv );

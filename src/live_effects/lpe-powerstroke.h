@@ -40,6 +40,7 @@ private:
     ScalarParam interpolator_beta;
     EnumParam<unsigned> start_linecap_type;
     EnumParam<unsigned> cusp_linecap_type;
+    ScalarParam miter_limit;
     EnumParam<unsigned> end_linecap_type;
 
     LPEPowerStroke(const LPEPowerStroke&);
