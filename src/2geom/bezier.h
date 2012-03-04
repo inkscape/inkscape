@@ -193,15 +193,15 @@ public:
 
     //IMPL: FragmentConcept
     typedef Coord output_type;
-    inline bool isZero() const {
+    inline bool isZero(double eps=EPSILON) const {
         for(unsigned i = 0; i <= order(); i++) {
-            if(c_[i] != 0) return false;
+            if( ! are_near(c_[i], 0., eps) ) return false;
         }
         return true;
     }
-    inline bool isConstant() const {
+    inline bool isConstant(double eps=EPSILON) const {
         for(unsigned i = 1; i <= order(); i++) {
-            if(c_[i] != c_[0]) return false;
+            if( ! are_near(c_[i], c_[0], eps) ) return false;
         }
         return true;
     }

@@ -72,13 +72,13 @@ class D2{
 
     //IMPL: FragmentConcept
     typedef Point output_type;
-    bool isZero() const {
+    bool isZero(double eps=EPSILON) const {
         boost::function_requires<FragmentConcept<T> >();
-        return f[X].isZero() && f[Y].isZero();
+        return f[X].isZero(eps) && f[Y].isZero(eps);
     }
-    bool isConstant() const {
+    bool isConstant(double eps=EPSILON) const {
         boost::function_requires<FragmentConcept<T> >();
-        return f[X].isConstant() && f[Y].isConstant();
+        return f[X].isConstant(eps) && f[Y].isConstant(eps);
     }
     bool isFinite() const {
         boost::function_requires<FragmentConcept<T> >();

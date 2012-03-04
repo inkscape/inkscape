@@ -122,18 +122,18 @@ public:
 
     //IMPL: FragmentConcept
     typedef double output_type;
-    inline bool isZero() const {
+    inline bool isZero(double eps=EPSILON) const {
         if(empty()) return true;
         for(unsigned i = 0; i < size(); i++) {
-            if(!(*this)[i].isZero()) return false;
+            if(!(*this)[i].isZero(eps)) return false;
         }
         return true;
     }
-    inline bool isConstant() const {
+    inline bool isConstant(double eps=EPSILON) const {
         if (empty()) return true;
-        if(!(*this)[0].isConstant()) return false;
+        if(!(*this)[0].isConstant(eps)) return false;
         for (unsigned i = 1; i < size(); i++) {
-            if(!(*this)[i].isZero()) return false;
+            if(!(*this)[i].isZero(eps)) return false;
         }
         return true;
     }

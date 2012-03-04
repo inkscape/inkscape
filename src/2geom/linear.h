@@ -72,8 +72,8 @@ public:
 
     //IMPL: FragmentConcept
     typedef double output_type;
-    inline bool isZero() const { return a[0] == 0 && a[1] == 0; }
-    inline bool isConstant() const { return a[0] == a[1]; }
+    inline bool isZero(double eps=EPSILON) const { return are_near(a[0], 0., eps) && are_near(a[1], 0., eps); }
+    inline bool isConstant(double eps=EPSILON) const { return are_near(a[0], a[1], eps); }
     inline bool isFinite() const { return IS_FINITE(a[0]) && IS_FINITE(a[1]); }
 
     inline double at0() const { return a[0]; }
