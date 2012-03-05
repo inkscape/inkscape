@@ -964,7 +964,7 @@ SPDesktopWidget::shutdown()
             close_button = gtk_button_new_with_mnemonic(_("Close _without saving"));
             gtk_widget_show(close_button);
             GtkWidget *save_button;
-            save_button = gtk_button_new_with_mnemonic(_("_Save as SVG"));
+            save_button = gtk_button_new_with_mnemonic(_("_Save as Inkscape SVG"));
             gtk_widget_show(save_button);
             gtk_dialog_add_action_widget(GTK_DIALOG(dialog), close_button, GTK_RESPONSE_NO);
 
