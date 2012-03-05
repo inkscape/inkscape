@@ -34,6 +34,21 @@
 #include "sp-namedview.h"
 #include "verbs.h"
 
+namespace Gtk {
+namespace Deprecated {
+void Ruler::set_range(double lower, double upper, double position, double max_size)
+{
+gtk_deprecated_ruler_set_range(gobj(), lower, upper, position, max_size); 
+}
+
+void Ruler::get_range(double& lower, double& upper, double& position, double& max_size)
+{
+gtk_deprecated_ruler_get_range(gobj(), &(lower), &(upper), &(position), &(max_size)); 
+}
+}// namespace Deprecated
+}// namespace Gtk
+
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {
