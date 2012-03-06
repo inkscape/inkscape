@@ -118,7 +118,7 @@ EntityMultiLineEntry::EntityMultiLineEntry (rdf_work_entity_t* ent, Registry& wr
     s->set_policy (Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     s->set_shadow_type (Gtk::SHADOW_IN);
     _packable = s;
-    _v.set_size_request (-1, 5);
+    _v.set_size_request (-1, 35);
     _v.set_wrap_mode (Gtk::WRAP_WORD);
     _v.set_accepts_tab (false);
     s->add (_v);
