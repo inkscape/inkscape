@@ -5,30 +5,27 @@
 # Spyros Blanas <cid_e@users.sourceforge.net>, 2006, 2011.
 # George Boukeas <boukeas@gmail.com>, 2011.
 # Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011
-#
+# Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>, 2012.
 #: ../share/filters/filters.svg.h:1
 msgid ""
 msgstr ""
 "Project-Id-Version: greek translation of inkscape-0.48\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-12-02 17:28+0100\n"
-"PO-Revision-Date: 2011-08-01 00:50+0200\n"
-"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs 32@gmail.com>\n"
-"Language-Team:  <dmtrs32@gmail.com>\n"
-"Language: \n"
+"PO-Revision-Date: 2012-03-05 17:22+0300\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>\n"
+"Language-Team: team@gnome.gr\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.0\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,1797,-1,-1\n"
-"X-Poedit-Language: Greek\n"
-"X-Poedit-Country: GREECE\n"
 
 #: ../inkscape.desktop.in.h:1
 msgid "Create and edit Scalable Vector Graphics images"
-msgstr ""
-"Δημιουργία και τροποποίηση διανυσματικών εικόνων τύπου Scalable Vector "
-"Graphics"
+msgstr "Δημιουργία και τροποποίηση κλιμακώσιμων διανυσματικών εικόνων γραφικών"
 
 #: ../inkscape.desktop.in.h:2
 msgid "Inkscape"
@@ -71,15 +68,15 @@ msgstr "Μέγεθος πλευράς 'c' (px):"
 
 #: ../share/extensions/draw_from_triangle.py:178
 msgid "Angle 'A' (radians): "
-msgstr "Γωνία 'A' σε ακτίνια"
+msgstr "Γωνία 'A' (ακτίνια):"
 
 #: ../share/extensions/draw_from_triangle.py:179
 msgid "Angle 'B' (radians): "
-msgstr "Γωνία 'B' σε ακτίνια"
+msgstr "Γωνία 'B' (ακτίνια):"
 
 #: ../share/extensions/draw_from_triangle.py:180
 msgid "Angle 'C' (radians): "
-msgstr "Γωνία 'C' σε ακτίνια"
+msgstr "Γωνία 'C' σε ακτίνια:"
 
 #: ../share/extensions/draw_from_triangle.py:181
 msgid "Semiperimeter (px): "
@@ -460,6 +457,8 @@ msgid ""
 "The 'stretch' option requires that the pattern must have non-zero width :\n"
 "Please edit the pattern width."
 msgstr ""
+"Η επιλογή 'επιμήκυνση' απαιτεί το μοτίβο να έχει μη μηδενικό πλάτος:\n"
+"Παρακαλώ επεξεργαστείτε το πλάτος μοτίβου."
 
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
@@ -607,34 +606,33 @@ msgstr "Πρέπει να επιλέξετε τουλάχιστον δύο στ�
 
 #: ../share/extensions/webslicer_export.py:57
 msgid "You must give a directory to export the slices."
-msgstr ""
+msgstr "Πρέπει να δώσετε έναν κατάλογο για εξαγωγή των φετών."
 
 #: ../share/extensions/webslicer_export.py:69
 #, python-format
 msgid "Can't create \"%s\"."
-msgstr ""
+msgstr "Αδυναμία δημιουργίας του \"%s\"."
 
 #: ../share/extensions/webslicer_export.py:70
-#, fuzzy, python-format
+#, python-format
 msgid "Error: %s"
-msgstr "Σφάλματα"
+msgstr "Σφάλμα: %s"
 
 #: ../share/extensions/webslicer_export.py:73
-#, fuzzy, python-format
+#, python-format
 msgid "The directory \"%s\" does not exists."
-msgstr "Δημιουργία καταλόγου, εάν δεν υπάρχει"
+msgstr "Ο κατάλογος \"%s\" δεν υπάρχει."
 
 #: ../share/extensions/webslicer_export.py:102
 #, python-format
 msgid "You have more than one element with \"%s\" html-id."
-msgstr ""
+msgstr "Έχετε περισσότερα από ένα στοιχεία με αναγνωριστικό html \"%s\"."
 
 #: ../share/extensions/webslicer_export.py:332
 msgid "You must install the ImageMagick to get JPG and GIF."
-msgstr ""
+msgstr "Πρέπει να εγκαταστήσετε το ImageMagick για τη λήψη JPG και GIF."
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Smart Jelly"
 msgstr "Έξυπνη πηχτή"
 
@@ -650,7 +648,6 @@ msgid "Same as Matte jelly but with more controls"
 msgstr "Το ίδιο όπως η αστιλβής πηχτή αλλά με περισσότερους ελέγχους."
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Metal Casting"
 msgstr "Μεταλλικό χυτό "
 
@@ -676,7 +673,6 @@ msgid "Edges are partly feathered out"
 msgstr "Οι ακμές απαλύνονται μερικώς προς τα έξω"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Jigsaw Piece"
 msgstr "Οδοντωτό κομμάτι"
 
@@ -685,7 +681,6 @@ msgid "Low, sharp bevel"
 msgstr "Χαμηλή, απότομη λοξότμηση "
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Rubber Stamp"
 msgstr "Σφραγίδα"
 
@@ -699,7 +694,6 @@ msgid "Random whiteouts inside"
 msgstr "Τυχαίες λευκές κηλίδες στο εσωτερικό"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Ink Bleed"
 msgstr "Διαρροή μελανιού"
 
@@ -728,7 +722,6 @@ msgid "Soft, cushion-like bevel with matte highlights"
 msgstr "Μαλακή, μαξιλαροειδής λοξότμηση με αστιλβή τονισμό"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Ridged Border"
 msgstr "Οδοντωτό περίγραμμα"
 
@@ -759,7 +752,6 @@ msgid "Fill object with sparse translucent specks"
 msgstr "Γέμισμα του αντικειμένου με ημιδιαφανείς αραιούς κόκκους"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Oil Slick"
 msgstr "Πετρελαιοκηλίδα"
 
@@ -776,7 +768,6 @@ msgid "Flake-like white splotches"
 msgstr "Χιονώδεις λευκές κηλίδες"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Leopard Fur"
 msgstr "Γούνα λεοπάρδαλης"
 
@@ -795,7 +786,7 @@ msgstr "Ζέβρα"
 #: ../share/filters/filters.svg.h:1
 msgid "Irregular vertical dark stripes (loses object's own color)"
 msgstr ""
-" Ακανόνιστες κάθετες σκούρες ραβδώσεις (απώλεια του χρώματος του "
+"Ακανόνιστες κάθετες σκούρες ραβδώσεις (απώλεια του χρώματος του "
 "αντικειμένου)"
 
 #: ../share/filters/filters.svg.h:1
@@ -813,7 +804,6 @@ msgstr "Όξυνση"
 
 #: ../share/filters/filters.svg.h:1
 #: ../src/extension/internal/filter/image.h:62
-#, fuzzy
 msgid "Image Effects"
 msgstr "Εφέ εικόνας"
 
@@ -822,7 +812,6 @@ msgid "Sharpen edges and boundaries within the object, force=0.15"
 msgstr "Οξυμένες ακμές και όρια μες το αντικείμενο, δύναμη=0,15"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Sharpen More"
 msgstr "Μεγαλύτερη όξυνση"
 
@@ -844,7 +833,7 @@ msgstr "Ελαιογραφία"
 #: ../src/extension/internal/filter/paint.h:887
 #: ../src/extension/internal/filter/paint.h:992
 msgid "Image Paint and Draw"
-msgstr ""
+msgstr "Βαφή και σχεδίαση εικόνας"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Simulate oil painting style"
@@ -889,7 +878,6 @@ msgid "Bulging, knotty, slick 3D surface"
 msgstr "Λεία τρισδιάστατη επιφάνεια ροζιασμένη με εξογκώματα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Barbed Wire"
 msgstr "Αγκαθωτό καλώδιο"
 
@@ -898,7 +886,6 @@ msgid "Gray bevelled wires with drop shadows"
 msgstr "Γκρι λοξοτμημένα καλώδια με πίπτουσες σκιές"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Swiss Cheese"
 msgstr "Ελβετικό τυρί"
 
@@ -907,9 +894,8 @@ msgid "Random inner-bevel holes"
 msgstr "Τυχαίες εσωτερικά λοξοτμημένες οπές"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Blue Cheese"
-msgstr "Μπλε τυρί"
+msgstr "Γαλάζιο τυρί"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Marble-like bluish speckles"
@@ -945,7 +931,6 @@ msgid "Random paint streaks downwards"
 msgstr "Τυχαίες χρωματικές γραμμές προς τα κάτω"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Jam Spread"
 msgstr "Κρέμα μαρμελάδας"
 
@@ -954,7 +939,6 @@ msgid "Glossy clumpy jam spread"
 msgstr "Γυαλιστερή θρομβώδης επίχριση"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Pixel Smear"
 msgstr "Μουντζούρωμα εικονοστοιχείου"
 
@@ -964,9 +948,8 @@ msgid "Van Gogh painting effect for bitmaps"
 msgstr "Εφέ βαψίματος Van Gogh για ψηφιογραφίες"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Cracked Glass"
-msgstr "Σπασμένο γυαλί"
+msgstr "Ραγισμένο γυαλί"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Under a cracked glass"
@@ -980,14 +963,13 @@ msgstr "Φλυκταινώδη ανάγλυφα"
 #: ../src/extension/internal/filter/bumps.h:142
 #: ../src/extension/internal/filter/bumps.h:365
 msgid "Bumps"
-msgstr "Ανάγλυφο"
+msgstr "Ανάγλυφα"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Flexible bubbles effect with some displacement"
 msgstr "Εφέ ευλύγιστων φυσαλίδων με κάποια μετακίνηση"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Glowing Bubble"
 msgstr "Πυρακτωμένη φυσαλίδα"
 
@@ -1013,7 +995,6 @@ msgid "Neon light effect"
 msgstr "Εφέ φωτός νέου"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Molten Metal"
 msgstr "Λιωμένο μέταλλο"
 
@@ -1022,7 +1003,6 @@ msgid "Melting parts of object together, with a glossy bevel and a glow"
 msgstr "Λιωμένα μέρη αντικειμένου με στιλπνή λοξότμηση και λάμψη"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Pressed Steel"
 msgstr "Πεπιεσμένο ατσάλι"
 
@@ -1031,7 +1011,6 @@ msgid "Pressed metal with a rolled edge"
 msgstr "Πεπιεσμένο μέταλλο με στρογγυλεμένη ακμή"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Matte Bevel"
 msgstr "Αστιλβής λοξότμηση"
 
@@ -1048,7 +1027,6 @@ msgid "Thin like a soap membrane"
 msgstr "Λεπτή σαπωνοειδής μεμβράνη"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Matte Ridge"
 msgstr "Αστιλβής ακμή"
 
@@ -1058,7 +1036,6 @@ msgid "Soft pastel ridge"
 msgstr "Αυλάκι μαλακού παστέλ"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Glowing Metal"
 msgstr "Πυρακτωμένο μέταλλο"
 
@@ -1088,7 +1065,6 @@ msgid "Illuminated translucent plastic or glass effect"
 msgstr "Φωτισμένο ημιδιαφανές πλαστικό ή γυάλινο εφέ"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Iridescent Beeswax"
 msgstr "Ιριδίζον κερί μέλισσας"
 
@@ -1098,7 +1074,6 @@ msgstr ""
 "Κέρινη δομή που κρατά τον ιριδισμό της μέσα από αλλαγές χρωματικού γεμίσματος"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Eroded Metal"
 msgstr "Διαβρωμένο μέταλλο"
 
@@ -1123,7 +1098,6 @@ msgid "Bark texture, vertical; use with deep colors"
 msgstr "Δομή φλούδας, κάθετη, χρήση με βαθιά χρώματα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Lizard Skin"
 msgstr "Δέρμα σαύρας"
 
@@ -1132,7 +1106,6 @@ msgid "Stylized reptile skin texture"
 msgstr "Υφή μορφοποιημένου δέρματος ερπετού"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Stone Wall"
 msgstr "Πετρότοιχος"
 
@@ -1141,7 +1114,6 @@ msgid "Stone wall texture to use with not too saturated colors"
 msgstr "Υφή λιθοδομής για χρήση με όχι τόσο κορεσμένα χρώματα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Silk Carpet"
 msgstr "Μεταξένιο χαλί"
 
@@ -1150,7 +1122,6 @@ msgid "Silk carpet texture, horizontal stripes"
 msgstr "Υφή μεταξένιου χαλιού, οριζόντιες ρίγες"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Refractive Gel A"
 msgstr "Διαθλώμενη γέλη Α"
 
@@ -1159,7 +1130,6 @@ msgid "Gel effect with light refraction"
 msgstr "Εφέ γέλης με διάθλαση φωτός"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Refractive Gel B"
 msgstr "Διαθλώμενη γέλη Β"
 
@@ -1168,7 +1138,6 @@ msgid "Gel effect with strong refraction"
 msgstr "Εφέ γέλης με ισχυρή διάθλαση"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Metallized Paint"
 msgstr "Μεταλλικό χρώμα"
 
@@ -1186,16 +1155,14 @@ msgid "Gel Ridge with a pearlescent look"
 msgstr "Οδοντωτή γέλη με μαργαριταρένια εμφάνιση "
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Raised Border"
-msgstr "Ανύψωση περιγράμματος"
+msgstr "Ανυψωμένο περίγραμμα"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Strongly raised border around a flat surface"
 msgstr "Ισχυρώς ανυψωμένο περίγραμμα γύρω από επίπεδη επιφάνεια"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Metallized Ridge"
 msgstr "Μεταλλική αυλάκωση"
 
@@ -1204,7 +1171,6 @@ msgid "Gel Ridge metallized at its top"
 msgstr "Οδοντωτή γέλη μεταλλική στην κορυφή της"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Fat Oil"
 msgstr "Παχύ λάδι"
 
@@ -1213,7 +1179,6 @@ msgid "Fat oil with some adjustable turbulence"
 msgstr "Παχύ λάδι με κάποια ρυθμίσιμη ανατάραξη"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Black Hole"
 msgstr "Μαύρη οπή"
 
@@ -1237,7 +1202,6 @@ msgid "Scattered cubes; adjust the Morphology primitive to vary size"
 msgstr "Διαχυμένοι κύβοι, ρύθμιση της αρχικής μορφολογίας σε ποικίλα μεγέθη"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Peel Off"
 msgstr "Ξεφλούδισμα"
 
@@ -1246,7 +1210,6 @@ msgid "Peeling painting on a wall"
 msgstr "Ξεφλούδισμα χρώματος σε τοίχο"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Gold Splatter"
 msgstr "Χρυσές πιτσιλιές"
 
@@ -1255,7 +1218,6 @@ msgid "Splattered cast metal, with golden highlights"
 msgstr "Πιτσιλωτό χυτό μέταλλο με χρυσαφί τονισμό"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Gold Paste"
 msgstr "Χρυσή πάστα"
 
@@ -1264,16 +1226,14 @@ msgid "Fat pasted cast metal, with golden highlights"
 msgstr "Παχύ χυτό κολλημένο μέταλλο με χρυσαφί τονισμό"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Crumpled Plastic"
-msgstr "Ζαρωμένο πλαστικό "
+msgstr "Ζαρωμένο πλαστικό"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Crumpled matte plastic, with melted edge"
 msgstr "Ζαρωμένο αστιλβές πλαστικό, με λιωμένο άκρο"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Enamel Jewelry"
 msgstr "Κοσμήματα σμάλτου"
 
@@ -1282,7 +1242,6 @@ msgid "Slightly cracked enameled texture"
 msgstr "Ελαφρά ζαρωμένη υφή βερνικιού"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Rough Paper"
 msgstr "Πρόχειρο χαρτί"
 
@@ -1293,7 +1252,6 @@ msgstr ""
 "αντικείμενα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Rough and Glossy"
 msgstr "Άγριο και γυαλιστερό"
 
@@ -1313,7 +1271,6 @@ msgid "Inner colorized shadow, outer black shadow"
 msgstr "Εσωτερικά χρωματισμένη σκιά, εξωτερικά μαύρη σκιά"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Air Spray"
 msgstr "Αεροψεκασμός"
 
@@ -1322,7 +1279,6 @@ msgid "Convert to small scattered particles with some thickness"
 msgstr "Μετατροπή σε μικρά σκόρπια κομμάτια με κάποιο πάχος"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Warm Inside"
 msgstr "Ζεστό εσωτερικά"
 
@@ -1331,7 +1287,6 @@ msgid "Blurred colorized contour, filled inside"
 msgstr "Θολωμένο χρωματιστό περίγραμμα, γεμισμένο εσωτερικά"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Cool Outside"
 msgstr "Δροσερό εξωτερικά"
 
@@ -1340,7 +1295,6 @@ msgid "Blurred colorized contour, empty inside"
 msgstr "Θολωμένο χρωματιστό περίγραμμα, άδειο εσωτερικά"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Electronic Microscopy"
 msgstr "Ηλεκτρονικό μικροσκόπιο"
 
@@ -1353,14 +1307,13 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:1
 msgid "Tartan"
-msgstr "Σκωτσέζικο ύφασμα (Tartan)"
+msgstr "Ταρτάν"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Checkered tartan pattern"
 msgstr "Μοτίβο καρό ταρτάν "
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Shaken Liquid"
 msgstr "Κουνημένο υγρό"
 
@@ -1369,7 +1322,6 @@ msgid "Colorizable filling with flow inside like transparency"
 msgstr "Γέμισμα που χρωματίζεται με ροή μέσα όπως η διαφάνεια"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Soft Focus Lens"
 msgstr "Φακοί μαλακής εστίασης"
 
@@ -1378,7 +1330,6 @@ msgid "Glowing image content without blurring it"
 msgstr "Περιεχόμενο πυρακτωμένης εικόνας χωρίς θόλωσή της"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Stained Glass"
 msgstr "Υαλογράφημα"
 
@@ -1387,7 +1338,6 @@ msgid "Illuminated stained glass effect"
 msgstr "Εφέ φωτισμένου υαλογραφήματος"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Dark Glass"
 msgstr "Σκούρο γυαλί"
 
@@ -1396,25 +1346,22 @@ msgid "Illuminated glass effect with light coming from beneath"
 msgstr "Εφέ φωτισμένου γυαλιού με το φως να έρχεται από κάτω"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "HSL Bumps Alpha"
-msgstr "Ανάγλυφο HSL, άλφα"
+msgstr "Άλφα ανάγλυφα HSL"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Same as HSL Bumps but with transparent highlights"
 msgstr "Ίδιο όπως τα ανάγλυφα HSL αλλά με διαφανή τονισμό"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Bubbly Bumps Alpha"
-msgstr "Φλυκταινώδη ανάγλυφα άλφα"
+msgstr "Φλυκταινώδη άλφα ανάγλυφα"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Same as Bubbly Bumps but with transparent highlights"
 msgstr "Ίδιο με τα φλυκταινώδη ανάγλυφα αλλά με διαφανή τονισμό"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Torn Edges"
 msgstr "Αποκομμένες άκρες"
 
@@ -1426,7 +1373,6 @@ msgstr ""
 "περιεχομένου τους"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Roughen Inside"
 msgstr "Εσωτερική σκλήρυνση"
 
@@ -1447,7 +1393,6 @@ msgstr ""
 "προσθέτοντας προοδευτική διαφάνεια στα άκρα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Chalk and Sponge"
 msgstr "Κιμωλία και σπόγγος"
 
@@ -1505,9 +1450,8 @@ msgstr ""
 "μαύρο"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Bubbly Bumps Matte"
-msgstr "Φλυκταινώδη ανάγλυφα, αστιλβή"
+msgstr "Φλυκταινώδη αστιλβή ανάγλυφα"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
@@ -1516,7 +1460,6 @@ msgstr ""
 "κατοπτρισμό"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Blotting Paper"
 msgstr "Στυπόχαρτο"
 
@@ -1525,9 +1468,8 @@ msgid "Inkblot on blotting paper"
 msgstr "Μελανιά σε στυπόχαρτο"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Wax Print"
-msgstr "Εκτύπωση κεριού"
+msgstr "Κηρώδης αποτύπωση"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Wax print on tissue texture"
@@ -1551,7 +1493,6 @@ msgid ""
 msgstr "Τσόχα ως υφή με χρωματιστή ανατάραξη και ελαφρά πιο σκούρα στις άκρες"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Ink Paint"
 msgstr "Χρώμα με μελάνι"
 
@@ -1560,7 +1501,6 @@ msgid "Ink paint on paper with some turbulent color shift"
 msgstr "Χρώμα μελανιού σε χαρτί με κάποια ταραγμένη χρωματική μετατόπιση"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Tinted Rainbow"
 msgstr "Απόχρωση ουράνιου τόξου"
 
@@ -1571,7 +1511,6 @@ msgstr ""
 "δυνατότητα χρωματισμού"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Melted Rainbow"
 msgstr "Λιωμένο ουράνιο τόξο"
 
@@ -1580,7 +1519,6 @@ msgid "Smooth rainbow colors slightly melted along the edges"
 msgstr "Μαλακά χρώματα ουράνιου τόξου ελαφρά ανακατεμένα κατά μήκος των ακμών"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Flex Metal"
 msgstr "Εύκαμπτο μέταλλο"
 
@@ -1590,20 +1528,16 @@ msgstr ""
 "Λαμπρό, γυαλισμένο ακανόνιστο μεταλλικό χυτό, με δυνατότητα χρωματισμού"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Wavy Tartan"
-msgstr "Κυματιστή ταρτάν (σκοτσέζικο ύφασμα)"
+msgstr "Κυματιστό ταρτάν"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Tartan pattern with a wavy displacement and bevel around the edges"
-msgstr ""
-"Μοτίβο ταρτάν (σκοτσέζικου υφάσματος) με κυματιστή μετατόπιση και λοξότμηση "
-"γύρω από τις άκρες"
+msgstr "Μοτίβο ταρτάν με κυματιστή μετατόπιση και λοξότμηση γύρω από τις άκρες"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "3D Marble"
-msgstr "Τρισδιάστατο μάρμαρο"
+msgstr "3Δ μάρμαρο"
 
 #: ../share/filters/filters.svg.h:1
 msgid "3D warped marble texture"
@@ -1611,7 +1545,7 @@ msgstr "Τρισδιάστατη αναδιπλωμένη υφή μαρμάρο�
 
 #: ../share/filters/filters.svg.h:1
 msgid "3D Wood"
-msgstr ""
+msgstr "3Δ ξύλο"
 
 #: ../share/filters/filters.svg.h:1
 msgid "3D warped, fibered wood texture"
@@ -1619,16 +1553,14 @@ msgstr "Τρισδιάστατη αναδιπλωμένη, υφή ινώδους
 
 #
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "3D Mother of Pearl"
-msgstr "Τρισδιάστατη μητέρα των μαργαριταριών"
+msgstr "3Δ μητέρα των μαργαριταριών"
 
 #: ../share/filters/filters.svg.h:1
 msgid "3D warped, iridescent pearly shell texture"
 msgstr "Τρισδιάστατη αναδιπλωμένη, ιριδίζουσα και μαργαριταρένια υφή κελύφους "
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Tiger Fur"
 msgstr "Γούνα τίγρης"
 
@@ -1705,23 +1637,20 @@ msgid "Light areas turn to black"
 msgstr "Ανοιχτόχρωμες περιοχές μετατρέπονται σε μαύρες"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Film Grain"
-msgstr "Ταινία κόκκου"
+msgstr "Κόκκος ταινίας"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Adds a small scale graininess"
 msgstr "Προσθήκη μικρής κλίμακας κόκκων"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Plaster Color"
-msgstr "Επικόλληση χρώματος"
+msgstr "Χρώμα σοβά"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Colored plaster emboss effect"
-msgstr "Εφέ συννεφιασμένης νερομπογιάς"
+msgstr "Εφέ ανάγλυφου χρωματιστού σοβά"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Velvet Bumps"
@@ -1729,10 +1658,9 @@ msgstr "Βελούδινα ανάγλυφα"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Gives Smooth Bumps velvet like"
-msgstr "Δημιουργία μαλακού ανάγλυφου όπως το βελούδο"
+msgstr "Δημιουργία μαλακών ανάγλυφων όπως το βελούδο"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Comics Cream"
 msgstr "Κρέμα κόμικς"
 
@@ -1745,7 +1673,6 @@ msgid "Comics shader with creamy waves transparency"
 msgstr "Σκιά κόμικς με κρεμώδη κύματα διαφάνειας"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Chewing Gum"
 msgstr "Τσίχλα"
 
@@ -1758,7 +1685,6 @@ msgstr ""
 "των γραμμών στις διασταυρώσεις τους"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Dark And Glow"
 msgstr "Σκότος και λάμψη"
 
@@ -1768,7 +1694,6 @@ msgstr ""
 "Σκουραίνει την άκρη με μια εσωτερική θόλωση και προσθέτει μια ευλύγιστη λάμψη"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Warped Rainbow"
 msgstr "Στρεβλωμένο ουράνιο τόξο"
 
@@ -1779,7 +1704,6 @@ msgstr ""
 "χρωματίζονται"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Rough and Dilate"
 msgstr "Σκληρό και διεσταλμένο"
 
@@ -1788,7 +1712,6 @@ msgid "Create a turbulent contour around"
 msgstr "Δημιουργία ενός ταραγμένου περιγράμματος ολόγυρα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Old Postcard"
 msgstr "Παλιά κάρτα"
 
@@ -1797,7 +1720,6 @@ msgid "Slightly posterize and draw edges like on old printed postcards"
 msgstr "Ελαφριά ποστεροποίηση και σχεδίαση άκρων όπως σε παλιά τυπωμένη κάρτα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Dots Transparency"
 msgstr "Διαφάνεια κουκκίδων"
 
@@ -1806,17 +1728,14 @@ msgid "Gives a pointillist HSL sensitive transparency"
 msgstr "Δίνει μια διαφάνεια πουαντιλιστική και ευαίσθητη σε HSL "
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Canvas Transparency"
 msgstr "Διαφάνεια καμβά"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Gives a canvas like HSL sensitive transparency."
-msgstr "Δίνει ένα καμβά όπως ευαίσθητη διαφάνεια σε HSL"
+msgstr "Δίνει ένα καμβά όπως ευαίσθητη διαφάνεια HSL."
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Smear Transparency"
 msgstr "Διαφάνεια επάλειψης"
 
@@ -1840,7 +1759,6 @@ msgstr ""
 # #-#-#-#-#  screem-el.po (screem 1.0)  #-#-#-#-#
 #
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Thick Paint"
 msgstr "Παχύ χρώμα"
 
@@ -1857,7 +1775,6 @@ msgid "Burst balloon texture crumpled and with holes"
 msgstr "Υφή ζαρωμένου και σκασμένου μπαλονιού και με τρύπες"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Embossed Leather"
 msgstr "Χαραγμένο δέρμα"
 
@@ -1866,7 +1783,7 @@ msgid ""
 "Combine a HSL edges detection bump with a leathery or woody and colorizable "
 "texture"
 msgstr ""
-"Συνδυασμός ανάγλυφου ανίχνευσης  άκρων HSL  με υφή δερμάτινη ή ξύλινη και "
+"Συνδυασμός ανάγλυφου ανίχνευσης άκρων HSL με υφή δερμάτινη ή ξύλινη και "
 "χρωματιζόμενη"
 
 #: ../share/filters/filters.svg.h:1
@@ -1924,7 +1841,6 @@ msgstr ""
 "ζαρωμένης επιφάνειας"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Rough Transparency"
 msgstr "Σκληρή διαφάνεια"
 
@@ -1943,7 +1859,6 @@ msgid "Partly opaque water color effect with bleed"
 msgstr "Εφέ μερικώς αδιαφανούς νερομπογιάς με διαρροή"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Alpha Engraving"
 msgstr "Γκραβούρα άλφα"
 
@@ -1952,7 +1867,6 @@ msgid "Gives a transparent engraving effect with rough line and filling"
 msgstr "Διαφανές εφέ γκραβούρας με σκληρή γραμμή και γέμισμα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Alpha Draw Liquid"
 msgstr "Υγρό σχέδιο άλφα"
 
@@ -1961,7 +1875,6 @@ msgid "Gives a transparent fluid drawing effect with rough line and filling"
 msgstr "Εφέ διαφανούς υγρού σχεδίου με σκληρή γραμμή και γέμισμα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Liquid Drawing"
 msgstr "Υγρό σχέδιο"
 
@@ -1970,7 +1883,6 @@ msgid "Gives a fluid and wavy expressionist drawing effect to images"
 msgstr "Εφέ υγρής και κυματιστής εξπρεσιονιστικής σχεδίασης στις εικόνες "
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Marbled Ink"
 msgstr "Μαρμαρώδες Μελάνι "
 
@@ -1981,7 +1893,6 @@ msgstr ""
 "εικόνας"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Thick Acrylic"
 msgstr "Παχύ ακρυλικό"
 
@@ -1990,7 +1901,6 @@ msgid "Thick acrylic paint texture with high texture depth"
 msgstr "Υφή παχέος ακρυλικού χρώματος με υψηλό βάθος υφής"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Alpha Engraving B"
 msgstr "Άλφα γκραβούρα Β"
 
@@ -2008,7 +1918,6 @@ msgid "Something like a water noise"
 msgstr "Κάτι σαν υδάτινος θόρυβος"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Monochrome Transparency"
 msgstr "Μονόχρωμη διαφάνεια"
 
@@ -2018,16 +1927,14 @@ msgstr "Μονόχρωμη διαφάνεια"
 #: ../src/extension/internal/filter/transparency.h:215
 #: ../src/extension/internal/filter/transparency.h:288
 #: ../src/extension/internal/filter/transparency.h:350
-#, fuzzy
 msgid "Fill and Transparency"
-msgstr "Διάλογος διαφάνειας"
+msgstr "Γέμισμα και διαφάνεια"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Convert to a colorizable transparent positive or negative"
 msgstr "Μετατροπή σε μία θετική ή αρνητική διαφάνεια που χρωματίζεται"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Saturation Map"
 msgstr "Χάρτης κορεσμού"
 
@@ -2047,7 +1954,6 @@ msgid "Riddle the surface and add bump to images"
 msgstr "Κοσκίνισμα της επιφάνειας και προσθήκη ανάγλυφου στις εικόνες"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Wrinkled Varnish"
 msgstr "Ρυτιδωμένο βερνίκι"
 
@@ -2066,9 +1972,8 @@ msgid "Canvas texture with an HSL sensitive height map"
 msgstr "Υφή καμβά με μια απεικόνιση ύψους ευαίσθητης σε HSL "
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Canvas Bumps Matte"
-msgstr "Ανάγλυφο καμβά, αστιλβές"
+msgstr "Ανάγλυφος αστιλβής καμβάς"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
@@ -2076,16 +1981,14 @@ msgstr ""
 "Το ίδιο όπως το ανάγλυφο καμβά αλλά με διάχυση φωτός αντί για κατοπτρισμό"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Canvas Bumps Alpha"
-msgstr "Ανάγλυφο καμβά άλφα"
+msgstr "Άλφα ανάγλυφα καμβά"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Same as Canvas Bumps but with transparent highlights"
 msgstr "Το ίδιο όπως το ανάγλυφο καμβά, αλλά με διαφανή τονισμό"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Bright Metal"
 msgstr "Λαμπρό μέταλλο"
 
@@ -2094,7 +1997,6 @@ msgid "Bright metallic effect for any color"
 msgstr "Εφέ λαμπρού μετάλλου  για κάθε χρώμα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Deep Colors Plastic"
 msgstr "Έντονα πλαστικά χρώματα"
 
@@ -2103,16 +2005,14 @@ msgid "Transparent plastic with deep colors"
 msgstr "Διαφανές πλαστικό με έντονα χρώματα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Melted Jelly Matte"
-msgstr "Λιωμένος ζελές, αστιλβής"
+msgstr "Λιωμένος αστιλβής ζελές"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Matte bevel with blurred edges"
 msgstr "Αστιλβής λοξότμηση με θολωμένα άκρα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Melted Jelly"
 msgstr "Λιωμένη πηχτή"
 
@@ -2121,7 +2021,6 @@ msgid "Glossy bevel with blurred edges"
 msgstr "Γυαλιστερή λοξότμηση με θολωμένα άκρα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Combined Lighting"
 msgstr "Συνδυασμός φωτισμού"
 
@@ -2140,7 +2039,6 @@ msgstr ""
 "Εφέ μεταλλικού φύλλου που συνδυάζει δύο τύπους φωτισμού με ποικίλες πτυχές"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Soft Colors"
 msgstr "Ήπια χρώματα"
 
@@ -2149,7 +2047,6 @@ msgid "Adds a colorizable edges glow inside objects and pictures"
 msgstr "Προσθέτει χρωματιζόμενες άκρες λάμψης μέσα στα αντικείμενα και εικόνες"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Relief Print"
 msgstr "Ανάγλυφη εκτύπωση"
 
@@ -2158,7 +2055,6 @@ msgid "Bumps effect with a bevel, color flood and complex lighting"
 msgstr "Εφέ ανάγλυφου με λοξότμηση, γέμισμα χρώματος και σύνθετο φωτισμό"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Growing Cells"
 msgstr "Αυξανόμενα κελιά"
 
@@ -2176,66 +2072,59 @@ msgstr ""
 "Υπερκορεσμένα χρώματα που μπορεί να είναι φθορίζοντα στον πραγματικό κόσμο"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Pixellize"
-msgstr "Εικονοστοιχείο"
+msgstr "Θόλωση"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Pixel tools"
-msgstr "Εικονοστοιχεία"
+msgstr "Εργαλεία εικονοστοιχείου"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Reduce or remove antialiasing around shapes"
-msgstr ""
+msgstr "Μείωση ή αφαίρεση εξομάλυνσης γύρω από σχήματα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Set Resolution"
-msgstr "Ανάλυση:"
+msgstr "Ορισμός ανάλυσης"
 
 #
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Set filter resolution"
-msgstr "Προκαθορισμένη ανάλυση εξαγωγής:"
+msgstr "Ορισμός ανάλυσης φίλτρου"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic Diffuse Bump"
-msgstr ""
+msgstr "Βασικό ανάγλυφο διάχυσης"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Matte emboss effect"
-msgstr "Αφαίρεση εφέ"
+msgstr "Εφέ αστιλβούς χάραξης"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic Specular Bump"
-msgstr ""
+msgstr "Βασικό ανακλαστικό ανάγλυφο"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Specular emboss effect"
-msgstr "Εκθετικός κατοπτρισμός"
+msgstr "Εφέ κατοπτρικής χάραξης"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic Two Lights Bump"
-msgstr ""
+msgstr "Βασικό ανάγλυφο δύο φώτων"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Two types of lighting emboss effect"
-msgstr ""
+msgstr "Δύο τύποι εφέ ανάγλυφου φωτισμού"
 
 # #-#-#-#-#  drgeo.master.el.po (dr-genius 0.5.5)  #-#-#-#-#
 # # FIX? canvas (see above)
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Linen Canvas"
-msgstr "Καμβάς"
+msgstr "Λινός καμβάς"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Painting canvas emboss effect"
-msgstr ""
+msgstr "Βάψιμο εφέ ανάγλυφου καμβά"
 
 # #-#-#-#-#  galeon.master.el.po (galeon 1.0)  #-#-#-#-#
 #
@@ -2261,55 +2150,48 @@ msgstr ""
 # #-#-#-#-#  libgnomeprintui.master.el.po (el)  #-#-#-#-#
 #
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Plasticine"
-msgstr "Σοβάς"
+msgstr "Πλαστελίνη"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Matte modeling paste emboss effect"
-msgstr "Επικόλληση εφέ ζωντανού μονοπατιού"
+msgstr "Αστιλβές εφέ ανάγλυφης επικόλλησης προτύπου"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Rough Canvas Painting"
-msgstr ""
+msgstr "Άγριο βάψιμο καμβά"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Paper Bump"
-msgstr ""
+msgstr "Ανάγλυφο χαρτιού"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Paper like emboss effect"
-msgstr "Επικόλληση εφέ ζωντανού μονοπατιού"
+msgstr "Χαρτί σαν εφέ χάραξης"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Jelly Bump"
-msgstr "Φλυκταινώδη ανάγλυφα"
+msgstr "Ανάγλυφο πηχτής"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Convert pictures to thick jelly"
-msgstr "Μετατροπή κειμένου σε μονοπάτια"
+msgstr "Μετατροπή εικόνων σε παχιά πηκτή"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Blend Opposites"
-msgstr "Κατάσταση ανάμειξης:"
+msgstr "Ανάμειξη αντίθετων"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Blend an image with its hue opposite"
-msgstr ""
+msgstr "Ανάμειξη μιας εικόνας με την αντίθετη της απόχρωση"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Hue to White"
-msgstr "Περιστροφή απόχρωσης"
+msgstr "Απόχρωση σε λευκό"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Fades hue progressively to white"
-msgstr ""
+msgstr "Προοδευτικό ξεθώριασμα απόχρωσης σε λευκό"
 
 #: ../share/filters/filters.svg.h:1
 #: ../src/extension/internal/bitmap/swirl.cpp:36
@@ -2317,189 +2199,170 @@ msgid "Swirl"
 msgstr "Στροβιλισμός"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid ""
 "Paint objects with a transparent turbulence which wraps around color edges"
 msgstr ""
-"Τα χρωστικά αντικείμενα με μια διάφανη ανατάραξη που γυρίζει γύρω από τις "
-"άκρες του χρώματος"
+"Αντικείμενα χρώματος με μια διάφανη ανατάραξη που γυρίζει γύρω από τις άκρες "
+"του χρώματος"
 
 #
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Pointillism"
 msgstr "Στιγμές"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Gives a turbulent pointillist HSL sensitive transparency"
-msgstr "Δίνει μια διαφάνεια πουαντιλιστική και ευαίσθητη σε HSL "
+msgstr "Δίνει μια ευαίσθητη διαφάνεια πουαντιλιστικής ανατάραξης HSL"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Silhouette Marbled"
-msgstr ""
+msgstr "Μαρμαρωμένη μορφή"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic noise transparency texture"
 msgstr "Υφή διαφάνειας βασικού θορύβου"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Fill Background"
-msgstr "Παρασκήνιο"
+msgstr "Γέμισμα παρασκηνίου"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Adds a colorizable opaque background"
-msgstr "Προσθέτει μια χρωματιστή πίπτουσα σκιά εσωτερικά"
+msgstr "Προσθέτει ένα χρωματιζόμενο αδιαφανές παρασκήνιο"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Flatten Transparency"
-msgstr "Διάλογος διαφάνειας"
+msgstr "Ισοπέδωση διαφάνειας"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Adds a white opaque background"
-msgstr ""
+msgstr "Προσθήκη ενός λευκού αδιαφανούς παρασκηνίου"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Fill Area"
 msgstr "Γέμισμα περιοχής"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Fills object bounding box with color"
-msgstr ""
+msgstr "Γέμισμα οριακού πλαισίου αντικειμένου με χρώμα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Blur Double"
-msgstr "Κατάσταση θόλωσης"
+msgstr "Διπλή θόλωση"
 
 #: ../share/filters/filters.svg.h:1
 msgid ""
 "Overlays two copies with different blur amounts and modifiable blend and "
 "composite"
 msgstr ""
+"Επικάθιση δύο αντιγράφων με διαφορετικές ποσότητες θόλωσης και τροποποιήσιμη "
+"ανάμειξη και σύνθεση"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Image Drawing Basic"
-msgstr "Νέο σχέδιο"
+msgstr "Βασικό σχέδιο εικόνας"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Enhance and redraw color edges in 1 bit black and white"
-msgstr ""
+msgstr "Βελτιστοποίηση και επανασχεδίαση άκρων χρώματος σε 1 ασπρόμαυρο δυαδικό"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Poster Draw"
-msgstr ""
+msgstr "Σχεδίαση αφίσας"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Enhance and redraw edges around posterized areas"
-msgstr ""
+msgstr "Βελτιστοποίηση και επανασχεδίαση γύρω από περιοχές αφίσας"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Cross Noise Poster"
-msgstr ""
+msgstr "Διασταυρούμενη αφίσα θορύβου"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Overlay with a small scale screen like noise"
-msgstr ""
+msgstr "Επικάλυψη με οθόνης μικρής κλίμακας όπως θόρυβος"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Cross Noise Poster B"
-msgstr ""
+msgstr "Διασταυρούμενη αφίσα θορύβου Β"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Adds a small scale screen like noise locally"
-msgstr "Προσθήκη μικρής κλίμακας κόκκων"
+msgstr "Προσθήκη μικρής κλίμακας οθόνης όπως τοπικός θόρυβος"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Poster Color Fun"
-msgstr "Επικόλληση χρώματος"
+msgstr "Αφίσα αστείου χρώματος"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Poster Rough"
-msgstr ""
+msgstr "Σκληρή αφίσα"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Adds roughness to one of the two channels of the Poster paint filter"
 msgstr ""
+"Προσθέτει σκληρότητα σε ένα από τα δύο κανάλια του φίλτρου χρώματος αφίσας"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Alpha Monochrome Cracked"
-msgstr ""
+msgstr "Ραγισμένο μονόχρωμο άλφα"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic noise fill texture; adjust color in Flood"
 msgstr "Υφή γεμίσματος βασικού θορύβου, ρύθμιση χρώματος με γέμισμα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Alpha Turbulent"
-msgstr "Ξαναβάψιμο με άλφα"
+msgstr "Ταραγμένο άλφα"
 
 #
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Colorize Turbulent"
-msgstr "Χρωματισμός"
+msgstr "Ταραγμένος χρωματισμός"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Cross Noise B"
-msgstr "Θόρυβος Poisson"
+msgstr "Διασταυρούμενος Θόρυβος Β"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Adds a small scale crossy graininess"
-msgstr "Προσθήκη μικρής κλίμακας κόκκων"
+msgstr "Προσθήκη μικρής κλίμακας διασταυρούμενων κόκκων"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Cross Noise"
-msgstr "Θόρυβος Poisson"
+msgstr "Διασταυρούμενος Θόρυβος"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Adds a small scale screen like graininess"
-msgstr "Προσθήκη μικρής κλίμακας κόκκων"
+msgstr "Προσθήκη μικρής κλίμακας οθόνης όπως κόκκοι"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Duotone Turbulent"
-msgstr ""
+msgstr "Δίτονη αναταραχή"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Light Eraser Cracked"
-msgstr "Σβήστρα φωτός"
+msgstr "Ραγισμένη σβήστρα φωτός"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Poster Turbulent"
-msgstr "Ανατάραξη"
+msgstr "Ταραγμένη αφίσα"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Tartan Smart"
-msgstr "Σκωτσέζικο ύφασμα (Tartan)"
+msgstr "Κομψό ταρτάν"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Highly configurable checkered tartan pattern"
-msgstr "Μοτίβο καρό ταρτάν "
+msgstr "Υψηλά διαμορφώσιμο καρό μοτίβο ταρτάν"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Light Contour"
-msgstr "Πηγή φωτός:"
+msgstr "Περίγραμμα φωτός"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Uses vertical specular light to draw lines"
-msgstr ""
+msgstr "Χρήση κάθετου κατοπτρικού φωτός για σχεδίαση γραμμών"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Liquid"
@@ -2515,7 +2378,7 @@ msgstr "Αλουμίνιο"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Aluminium effect with sharp brushed reflexions"
-msgstr ""
+msgstr "Εφέ αλουμινίου με απότομες ανακλάσεις πινέλου"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Comics"
@@ -2523,12 +2386,10 @@ msgstr "Κόμικς"
 
 #
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Comics cartoon drawing effect"
-msgstr "Σχεδίαση σκίτσου με υγρό πινέλο"
+msgstr "Εφέ σχεδίου σκίτσου κόμικς"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Comics Draft"
 msgstr "Σκαρίφημα κόμικς"
 
@@ -2537,7 +2398,6 @@ msgid "Draft painted cartoon shading with a glassy look"
 msgstr "Φωτοσκίαση πρόχειρα βαμμένου σκίτσου με υαλώδη εμφάνιση"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Comics Fading"
 msgstr "Ξεθώριασμα κόμικς"
 
@@ -2546,18 +2406,16 @@ msgid "Cartoon paint style with some fading at the edges"
 msgstr "Μορφοποίηση χρώματος σκίτσου με μερικό ξεθώριασμα των ακμών"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Brushed Metal"
-msgstr "Διαβρωμένο μέταλλο"
+msgstr "Βουρτσισμένο μέταλλο"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Satiny metal surface effect"
-msgstr ""
+msgstr "Εφέ γυαλιστερής μεταλλικής επιφάνειας"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Opaline"
-msgstr "Περίγραμμα"
+msgstr "Ιριδίζον"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Contouring version of smooth shader"
@@ -2568,110 +2426,93 @@ msgid "Chrome"
 msgstr "Χρώμιο"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Bright chrome effect"
-msgstr "Λαμπρό μέταλλο"
+msgstr "Εφέ λαμπρού χρωμίου"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Deep Chrome"
-msgstr "Χρώμιο"
+msgstr "Βαθύ χρώμιο"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Dark chrome effect"
-msgstr "Τρέχον εφέ"
+msgstr "Εφέ σκούρου χρωμίου"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Emboss Shader"
 msgstr "Χαραγμένη σκιά"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Combination of satiny and emboss effect"
-msgstr "Συνδυασμός ομαλής σκίασης και χάραξης"
+msgstr "Συνδυασμός γυαλιστερού και χαραγμένου εφέ"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Sharp Metal"
-msgstr "Όξυνση"
+msgstr "Οξύ μέταλλο"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Chrome effect with darkened edges"
-msgstr "Πεπιεσμένο μέταλλο με στρογγυλεμένη ακμή"
+msgstr "Εφέ χρωμίου με σκοτεινές άκρες"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Brush Draw"
-msgstr "Πινέλο"
+msgstr "Πινέλο σχεδίασης"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Chrome Emboss"
-msgstr "Σκούρο ανάγλυφο"
+msgstr "Χαραγμένο χρώμιο"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Embossed chrome effect"
-msgstr "Αφαίρεση εφέ μονοπατιού"
+msgstr "Εφέ χαραγμένου χρωμίου"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Contour Emboss"
-msgstr "Χρωματικό ανάγλυφο"
+msgstr "Χαραγμένο περίγραμμα"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Satiny and embossed contour effect"
-msgstr ""
+msgstr "Εφέ γυαλιστερού και χαραγμένου περιγράμματος"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Sharp Deco"
-msgstr "Όξυνση"
+msgstr "Οξεία διακόσμηση"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Unrealistic reflexions with sharp edges"
-msgstr ""
+msgstr "Μη πραγματικές ανακλάσεις με οξείες άκρες"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Deep Metal"
-msgstr "Εύκαμπτο μέταλλο"
+msgstr "Βαθύ μέταλλο"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Deep and dark metal shading"
-msgstr ""
+msgstr "Βαθιά και σκοτεινή μεταλλική σκίαση"
 
 # Translation of "custom" sucks!  ("kata paraggelia"???  nah!)
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Aluminium Emboss"
-msgstr "Αλουμίνιο 1"
+msgstr "Χαραγμένο αλουμίνιο"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Satiny aluminium effect with embossing"
-msgstr ""
+msgstr "Εφέ γυαλιστερού αλουμινίου με χάραξη"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Refractive Glass"
-msgstr "Διαθλώμενη γέλη Α"
+msgstr "Διαθλώμενο γυαλί"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Double reflexion through glass with some refraction"
-msgstr ""
+msgstr "Διπλή ανάκλαση μέσα από γυαλί με κάποια διάθλαση"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Frosted Glass"
-msgstr "Γυαλί με πάχνη"
+msgstr "Παγωμένο γυαλί"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Satiny glass effect"
-msgstr "Εφέ φωτισμένου υαλογραφήματος"
+msgstr "Εφέ γυαλιστερού γυαλιού"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:2
@@ -3157,7 +2998,7 @@ msgstr "τσαλακωμένο κίτρινο (#FFFACD)"
 #: ../share/palettes/palettes.h:80
 msgctxt "Palette"
 msgid "palegoldenrod (#EEE8AA)"
-msgstr "χλομό αχυροκίτρινο"
+msgstr "χλομό αχυροκίτρινο (#EEE8AA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:81
@@ -3253,7 +3094,7 @@ msgstr "πράσινο των δασών (#228B22)"
 #: ../share/palettes/palettes.h:96
 msgctxt "Palette"
 msgid "limegreen (#32CD32)"
-msgstr "σκούρο λεμονοπράσινο"
+msgstr "σκούρο λεμονοπράσινο (#32CD32)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:97
@@ -3601,7 +3442,7 @@ msgstr "βιολετί (#EE82EE)"
 #: ../share/palettes/palettes.h:154
 msgctxt "Palette"
 msgid "purple (#800080)"
-msgstr "βιολετί (μοβ)  (#800080)"
+msgstr "βιολετί (#800080)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:155
@@ -5426,7 +5267,7 @@ msgstr "Η ταυτότητα υπάρχει!"
 
 #: ../src/dialogs/item-properties.cpp:442
 msgid "Set object ID"
-msgstr "Ορισμός ταυτότητας αντικειμένου (ID)"
+msgstr "Ορισμός αναγνωριστικού αντικειμένου"
 
 #: ../src/dialogs/item-properties.cpp:457
 msgid "Set object label"
@@ -6036,19 +5877,16 @@ msgid "path intersection"
 msgstr "τομή μονοπατιού"
 
 #: ../src/display/snap-indicator.cpp:106
-#, fuzzy
 msgid "guide-path intersection"
-msgstr "τομή οδηγού"
+msgstr "τομή οδηγού-μονοπατιού"
 
 #: ../src/display/snap-indicator.cpp:109
-#, fuzzy
 msgid "clip-path"
-msgstr "Ορισμός μονοπατιού κοπής"
+msgstr "Μονοπάτι κοπής"
 
 #: ../src/display/snap-indicator.cpp:112
-#, fuzzy
 msgid "mask-path"
-msgstr "Επικόλληση μονοπατιού"
+msgstr "Μονοπάτι μάσκας"
 
 #: ../src/display/snap-indicator.cpp:115
 msgid "bounding box corner"
@@ -6197,9 +6035,8 @@ msgstr "Νέο έγγραφο %d"
 #  aliasfor
 #  category
 #: ../src/document.cpp:510
-#, fuzzy
 msgid "Memory document %1"
-msgstr "Μνήμη εγγράφου %d"
+msgstr "Έγγραφο μνήμης %1"
 
 #: ../src/document.cpp:699
 #, c-format
@@ -6401,7 +6238,7 @@ msgstr ""
 
 #: ../src/extension/extension.cpp:261
 msgid "an ID was not defined for it."
-msgstr "Ένας αριθμός ταυτότητας (ID) δεν ορίστηκε για αυτό."
+msgstr "ένα αναγνωριστικό δεν ορίστηκε για αυτό."
 
 #: ../src/extension/extension.cpp:265
 msgid "there was no name defined for it."
@@ -6455,7 +6292,7 @@ msgstr "Όνομα:"
 
 #: ../src/extension/extension.cpp:753
 msgid "ID:"
-msgstr "ID (ταυτότητα):"
+msgstr "Αναγνωριστικό:"
 
 # #-#-#-#-#  gnomeicu.master.el.po (gnomeicu 0.95.5)  #-#-#-#-#
 # # FIX? State = Politeia normally, but in Greece we have
@@ -6561,7 +6398,7 @@ msgstr "Αντιστάθμιση:"
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:49
 #: ../src/extension/internal/bitmap/wave.cpp:44
 msgid "Raster"
-msgstr "Εικονογραφία (Raster)"
+msgstr "Εικονογραφία"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:48
 msgid "Apply adaptive thresholding to selected bitmap(s)"
@@ -6723,31 +6560,27 @@ msgstr "Αύξηση ή μείωση της αντίθεσης σε ψηφιογ
 
 #: ../src/extension/internal/bitmap/crop.cpp:65
 msgid "Crop"
-msgstr ""
+msgstr "Περικοπή"
 
 #: ../src/extension/internal/bitmap/crop.cpp:67
 msgid "Top (px):"
-msgstr ""
+msgstr "Πάνω (px):"
 
 #: ../src/extension/internal/bitmap/crop.cpp:68
-#, fuzzy
 msgid "Bottom (px):"
-msgstr "Πυθμένας:"
+msgstr "Πυθμένας (px):"
 
 #: ../src/extension/internal/bitmap/crop.cpp:69
-#, fuzzy
 msgid "Left (px):"
-msgstr "Αντιστάθμιση (px):"
+msgstr "Αριστερά (px):"
 
 #: ../src/extension/internal/bitmap/crop.cpp:70
-#, fuzzy
 msgid "Right (px):"
-msgstr "Δεξιά:"
+msgstr "Δεξιά (px):"
 
 #: ../src/extension/internal/bitmap/crop.cpp:76
-#, fuzzy
 msgid "Crop selected bitmap(s)."
-msgstr "Θόλωση επιλεγμένων ψηφιογραφιών"
+msgstr "Περικοπή επιλεγμένων ψηφιογραφιών"
 
 #
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:36
@@ -6763,7 +6596,7 @@ msgstr "Ποσότητα:"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:44
 msgid "Cycle colormap(s) of selected bitmap(s)"
-msgstr "Κύκλος χρωματολογίων των επιλεγμένων ψηφιογραφιών"
+msgstr "Κύκλος πίνακα χρωμάτων των επιλεγμένων ψηφιογραφιών"
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:35
 msgid "Despeckle"
@@ -6788,8 +6621,7 @@ msgstr "Χάραξη"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:46
 msgid "Emboss selected bitmap(s); highlight edges with 3D effect"
-msgstr ""
-"Χαράξτε τις επιλεγμένες ψηφιογραφίες. Τονισμός άκρων με τρισδιάστατο εφέ"
+msgstr "Χαράξτε τις επιλεγμένες ψηφιογραφίες· Τονισμός άκρων με 3Δ εφέ"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:34
 msgid "Enhance"
@@ -6798,7 +6630,7 @@ msgstr "Βελτιστοποίηση"
 #
 #: ../src/extension/internal/bitmap/enhance.cpp:41
 msgid "Enhance selected bitmap(s); minimize noise"
-msgstr "Βελτιστοποίηση επιλεγμένων ψηφιογραφιών, ελαχιστοποίηση θορύβου"
+msgstr "Βελτιστοποίηση επιλεγμένων ψηφιογραφιών· ελαχιστοποίηση θορύβου"
 
 #: ../src/extension/internal/bitmap/equalize.cpp:34
 msgid "Equalize"
@@ -6806,7 +6638,7 @@ msgstr "Ισοστάθμιση"
 
 #: ../src/extension/internal/bitmap/equalize.cpp:41
 msgid "Equalize selected bitmap(s); histogram equalization"
-msgstr "Εξίσωση του ιστογράμματος των επιλεγμένων ψηφιογραφιών"
+msgstr "Εξίσωση επιλεγμένων ψηφιογραφιών· εξίσωση ιστογράμματος"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:37
 #: ../src/filter-enums.cpp:28
@@ -6859,7 +6691,7 @@ msgid ""
 "to the full color range"
 msgstr ""
 "Εξίσωση των επιλεγμένων ψηφιογραφιών κλιμακώνοντας τις τιμές που βρίσκονται "
-"μεταξύ των δοσμένων περιοχών σε πλήρες χρωματικό εύρος"
+"μεταξύ των δεδομένων περιοχών σε πλήρες χρωματικό εύρος"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:51
 msgid "Level (with Channel)"
@@ -6876,7 +6708,7 @@ msgid ""
 "between the given ranges to the full color range"
 msgstr ""
 "Εξίσωση των καθορισμένων καναλιών των επιλεγμένων ψηφιογραφιών κλιμακώνοντας "
-"τις τιμές που βρίσκονται μεταξύ των δοσμένων περιοχών σε πλήρες χρωματικό "
+"τις τιμές που βρίσκονται μεταξύ των δεδομένων περιοχών σε πλήρες χρωματικό "
 "εύρος"
 
 #: ../src/extension/internal/bitmap/medianFilter.cpp:36
@@ -7195,7 +7027,7 @@ msgstr "Περιοχή εξαγωγής είναι η σελίδα"
 #: ../src/extension/internal/cairo-ps-out.cpp:365
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:253
 msgid "Limit export to the object with ID:"
-msgstr "Περιορισμός εξαγωγής στα αντικείμενα με ταυτότητα (ID):"
+msgstr "Περιορισμός εξαγωγής στα αντικείμενα με αναγνωριστικό:"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:331
 #: ../share/extensions/ps_input.inx.h:2
@@ -7277,7 +7109,6 @@ msgid "Enhanced Metafile"
 msgstr "Enhanced Metafile"
 
 #: ../src/extension/internal/filter/bevels.h:53
-#, fuzzy
 msgid "Diffuse Light"
 msgstr "Διάχυση φωτός"
 
@@ -7367,7 +7198,6 @@ msgid "Basic diffuse bevel to use for building textures"
 msgstr "Λοξότμηση βασικής διάχυσης για χρήση με κατασκευαστικές υφές"
 
 #: ../src/extension/internal/filter/bevels.h:133
-#, fuzzy
 msgid "Matte Jelly"
 msgstr "Αστιλβής πηχτή"
 
@@ -7376,7 +7206,6 @@ msgid "Bulging, matte jelly covering"
 msgstr "Φουσκωμένο αστιλβές πηχτό κάλυμμα"
 
 #: ../src/extension/internal/filter/bevels.h:217
-#, fuzzy
 msgid "Specular Light"
 msgstr "Κατοπτρικό φως"
 
@@ -7395,16 +7224,14 @@ msgid "Vertical blur:"
 msgstr "Κάθετη θόλωση:"
 
 #: ../src/extension/internal/filter/blurs.h:58
-#, fuzzy
 msgid "Blur content only"
-msgstr "Περιεχόμενο θόλωσης"
+msgstr "Μόνο περιεχόμενο θόλωσης"
 
 #: ../src/extension/internal/filter/blurs.h:66
 msgid "Simple vertical and horizontal blur effect"
 msgstr "Απλό κάθετο και οριζόντιο εφέ θόλωσης"
 
 #: ../src/extension/internal/filter/blurs.h:125
-#, fuzzy
 msgid "Clean Edges"
 msgstr "Καθαρισμός ακμών"
 
@@ -7425,14 +7252,12 @@ msgstr ""
 "μετά την εφαρμογή κάποιων φίλτρων"
 
 #: ../src/extension/internal/filter/blurs.h:185
-#, fuzzy
 msgid "Cross Blur"
-msgstr "Θόλωση Gauss"
+msgstr "Σταυρωτή θόλωση"
 
 #: ../src/extension/internal/filter/blurs.h:188
-#, fuzzy
 msgid "Fading:"
-msgstr "Σκίαση"
+msgstr "Ξεθώριασμα:"
 
 # #-#-#-#-#  libgnomeui.master.el.po (el)  #-#-#-#-#
 # #-#-#-#-#  gnome-libs-el.po (gnome-libs 1.2.12)  #-#-#-#-#
@@ -7451,9 +7276,8 @@ msgstr "Σκίαση"
 #
 #: ../src/extension/internal/filter/blurs.h:191
 #: ../src/extension/internal/filter/textures.h:74
-#, fuzzy
 msgid "Blend:"
-msgstr "Ανάμειξη"
+msgstr "Ανάμειξη:"
 
 #: ../src/extension/internal/filter/blurs.h:192
 #: ../src/extension/internal/filter/blurs.h:339
@@ -7526,9 +7350,8 @@ msgid "Lighten"
 msgstr "Φωτισμός"
 
 #: ../src/extension/internal/filter/blurs.h:204
-#, fuzzy
 msgid "Combine vertical and horizontal blur"
-msgstr "Απλό κάθετο και οριζόντιο εφέ θόλωσης"
+msgstr "Συνδυασμός κάθετης και οριζόντιας θόλωσης"
 
 #: ../src/extension/internal/filter/blurs.h:260
 msgid "Feather"
@@ -7539,9 +7362,8 @@ msgid "Blurred mask on the edge without altering the contents"
 msgstr "Θολωμένη μάσκα στο άκρο χωρίς αλλαγή των περιεχομένων"
 
 #: ../src/extension/internal/filter/blurs.h:325
-#, fuzzy
 msgid "Out of Focus"
-msgstr "Εκτός φάσματος!"
+msgstr "Εκτός εστίασης"
 
 #: ../src/extension/internal/filter/blurs.h:331
 #: ../src/extension/internal/filter/distort.h:75
@@ -7576,9 +7398,8 @@ msgstr "Χρώμα υπόβαθρου"
 #: ../src/extension/internal/filter/blurs.h:337
 #: ../src/extension/internal/filter/bumps.h:129
 #: ../src/extension/internal/filter/color.h:1212
-#, fuzzy
 msgid "Blend type:"
-msgstr "Τύπος θόλωσης:"
+msgstr "Τύπος ανάμειξης:"
 
 #: ../src/extension/internal/filter/blurs.h:338
 #: ../src/extension/internal/filter/bumps.h:130
@@ -7601,41 +7422,36 @@ msgid "Normal"
 msgstr "Κανονικό"
 
 #: ../src/extension/internal/filter/blurs.h:344
-#, fuzzy
 msgid "Blend to background"
-msgstr "Απόχρωση στο παρασκήνιο"
+msgstr "Ανάμειξη στο παρασκήνιο"
 
 #: ../src/extension/internal/filter/blurs.h:354
 msgid "Blur eroded by white or transparency"
-msgstr ""
+msgstr "Διαβρωμένη θόλωση από λευκό ή διαφάνεια"
 
 #: ../src/extension/internal/filter/bumps.h:80
-#, fuzzy
 msgid "Bump"
 msgstr "Ανάγλυφο"
 
 #: ../src/extension/internal/filter/bumps.h:84
 #: ../src/extension/internal/filter/bumps.h:316
-#, fuzzy
 msgid "Image simplification:"
-msgstr "Κατάλογος εικόνων zip:"
+msgstr "Απλοποίηση εικόνων:"
 
 #: ../src/extension/internal/filter/bumps.h:85
 #: ../src/extension/internal/filter/bumps.h:317
-#, fuzzy
 msgid "Bump simplification:"
-msgstr "Απλοποίηση κατωφλίου:"
+msgstr "Απλοποίηση ανάγλυφου:"
 
 #: ../src/extension/internal/filter/bumps.h:86
 #: ../src/extension/internal/filter/bumps.h:318
 msgid "Crop:"
-msgstr ""
+msgstr "Περικοπή:"
 
 #: ../src/extension/internal/filter/bumps.h:87
 #: ../src/extension/internal/filter/bumps.h:319
-#, fuzzy
 msgid "Bump source"
-msgstr "Ανάγλυφο"
+msgstr "Πηγή ανάγλυφου"
 
 #: ../src/extension/internal/filter/bumps.h:88
 #: ../src/extension/internal/filter/bumps.h:320
@@ -7662,24 +7478,20 @@ msgid "Blue:"
 msgstr "Μπλε:"
 
 #: ../src/extension/internal/filter/bumps.h:91
-#, fuzzy
 msgid "Bump from background"
-msgstr "Απόχρωση στο παρασκήνιο"
+msgstr "Ανάγλυφο από το παρασκήνιο"
 
 #: ../src/extension/internal/filter/bumps.h:94
-#, fuzzy
 msgid "Lighting type:"
-msgstr "Τύπος γραμμής:"
+msgstr "Τύπος φωτισμού:"
 
 #: ../src/extension/internal/filter/bumps.h:95
-#, fuzzy
 msgid "Specular"
-msgstr "Κατοπτρικό φως"
+msgstr "Κατοπτρισμός"
 
 #: ../src/extension/internal/filter/bumps.h:96
-#, fuzzy
 msgid "Diffuse"
-msgstr "Διάχυση φωτός"
+msgstr "Διάχυση"
 
 #: ../src/extension/internal/filter/bumps.h:99
 #: ../src/extension/internal/filter/bumps.h:333
@@ -7699,19 +7511,16 @@ msgid "Precision:"
 msgstr "Ακρίβεια:"
 
 #: ../src/extension/internal/filter/bumps.h:103
-#, fuzzy
 msgid "Light source"
-msgstr "Πηγή φωτός:"
+msgstr "Πηγή φωτός"
 
 #: ../src/extension/internal/filter/bumps.h:104
-#, fuzzy
 msgid "Light source:"
 msgstr "Πηγή φωτός:"
 
 #: ../src/extension/internal/filter/bumps.h:105
-#, fuzzy
 msgid "Distant"
-msgstr "Παραμόρφωση"
+msgstr "Μακρινό"
 
 #: ../src/extension/internal/filter/bumps.h:106 ../src/helper/units.cpp:38
 msgid "Point"
@@ -7719,93 +7528,78 @@ msgstr "Σημείο"
 
 #: ../src/extension/internal/filter/bumps.h:107
 msgid "Spot"
-msgstr ""
+msgstr "Σημείο"
 
 #: ../src/extension/internal/filter/bumps.h:109
-#, fuzzy
 msgid "Distant light options"
-msgstr "Μακρινό φως"
+msgstr "Επιλογές μακρινού φωτός"
 
 #: ../src/extension/internal/filter/bumps.h:112
-#, fuzzy
 msgid "Point light options"
-msgstr "Σημειακό φως"
+msgstr "Επιλογές σημειακού φωτός"
 
 #: ../src/extension/internal/filter/bumps.h:113
 #: ../src/extension/internal/filter/bumps.h:117
-#, fuzzy
 msgid "X location:"
-msgstr "θέση:"
+msgstr "Θέση Χ:"
 
 #: ../src/extension/internal/filter/bumps.h:114
 #: ../src/extension/internal/filter/bumps.h:118
-#, fuzzy
 msgid "Y location:"
-msgstr "θέση:"
+msgstr "θέση Υ:"
 
 #: ../src/extension/internal/filter/bumps.h:115
 #: ../src/extension/internal/filter/bumps.h:119
-#, fuzzy
 msgid "Z location:"
-msgstr "θέση:"
+msgstr "θέση Ζ:"
 
 #: ../src/extension/internal/filter/bumps.h:116
-#, fuzzy
 msgid "Spot light options"
-msgstr "Προβολέας"
+msgstr "Επιλογές προβολέα"
 
 #: ../src/extension/internal/filter/bumps.h:120
-#, fuzzy
 msgid "X target:"
-msgstr "Στόχος:"
+msgstr "Στόχος Χ:"
 
 #: ../src/extension/internal/filter/bumps.h:121
-#, fuzzy
 msgid "Y target:"
-msgstr "Στόχος:"
+msgstr "Στόχος Υ:"
 
 #: ../src/extension/internal/filter/bumps.h:122
-#, fuzzy
 msgid "Z target:"
-msgstr "Στόχος:"
+msgstr "Στόχος Ζ:"
 
 #: ../src/extension/internal/filter/bumps.h:123
-#, fuzzy
 msgid "Specular exponent:"
-msgstr "Εκθετικός κατοπτρισμός"
+msgstr "Εκθετικός κατοπτρισμός:"
 
 #: ../src/extension/internal/filter/bumps.h:124
-#, fuzzy
 msgid "Cone angle:"
-msgstr "Γωνία κώνου"
+msgstr "Γωνία κώνου:"
 
 #: ../src/extension/internal/filter/bumps.h:127
-#, fuzzy
 msgid "Image color"
-msgstr "Επικόλληση χρώματος"
+msgstr "Χρώμα εικόνας"
 
 # #-#-#-#-#  gtkhtml.master.el.po (gtkhtml.HEAD)  #-#-#-#-#
 #
 # #-#-#-#-#  anjuta.master.el.po (anjuta.HEAD)  #-#-#-#-#
 #
 #: ../src/extension/internal/filter/bumps.h:128
-#, fuzzy
 msgid "Color bump"
-msgstr "Χρώμα 1"
+msgstr "Χρωματικό ανάγλυφο"
 
 #: ../src/extension/internal/filter/bumps.h:145
 msgid "All purposes bump filter"
-msgstr ""
+msgstr "Φίλτρο ανάγλυφου όλων των σκοπών"
 
 #: ../src/extension/internal/filter/bumps.h:312
-#, fuzzy
 msgid "Wax Bump"
-msgstr "Ανάγλυφο"
+msgstr "Ανάγλυφο κεριού"
 
 #: ../src/extension/internal/filter/bumps.h:323
-#, fuzzy
 msgid "Background:"
-msgstr "Υπόβαθ_ρο:"
+msgstr "Παρασκήνιο:"
 
 # #-#-#-#-#  orca.master.el.po (orca.HEAD)  #-#-#-#-#
 # #-#-#-#-#  gtkhtml.HEAD.el.po (el)  #-#-#-#-#
@@ -7823,49 +7617,41 @@ msgstr "Εικόνα"
 
 #
 #: ../src/extension/internal/filter/bumps.h:326
-#, fuzzy
 msgid "Blurred image"
-msgstr "Ενσωματωμένες εικόνες"
+msgstr "Θολωμένες εικόνες"
 
 #: ../src/extension/internal/filter/bumps.h:328
-#, fuzzy
 msgid "Background opacity:"
-msgstr "Άλφα παρασκηνίου"
+msgstr "Αδιαφάνεια παρασκηνίου:"
 
 #: ../src/extension/internal/filter/bumps.h:330
 #: ../src/extension/internal/filter/color.h:1040
-#, fuzzy
 msgid "Lighting"
 msgstr "Φωτισμός"
 
 #: ../src/extension/internal/filter/bumps.h:337
-#, fuzzy
 msgid "Lighting blend:"
-msgstr "Ανάμειξη σχεδίου:"
+msgstr "Ανάμειξη φωτισμού:"
 
 #: ../src/extension/internal/filter/bumps.h:344
-#, fuzzy
 msgid "Highlight blend:"
-msgstr "Χρώμα επισήμανσ_ης:"
+msgstr "Ανάμειξη επισήμανσης:"
 
 #: ../src/extension/internal/filter/bumps.h:353
-#, fuzzy
 msgid "Bump color"
-msgstr "Χρώμα θόλωσης"
+msgstr "Χρώμα ανάγλυφου"
 
 # #-#-#-#-#  galeon.master.el.po (galeon 1.0)  #-#-#-#-#
 #
 # #-#-#-#-#  balsa.master.el.po (balsa 2.0.13)  #-#-#-#-#
 #
 #: ../src/extension/internal/filter/bumps.h:354
-#, fuzzy
 msgid "Revert bump"
-msgstr "Επανα_φορά"
+msgstr "Επαναφορά ανάγλυφου"
 
 #: ../src/extension/internal/filter/bumps.h:355
-#, fuzzy
 msgid "Transparency type:"
-msgstr "Διαφανές"
+msgstr "Τύπος διαφάνειας:"
 
 #
 #: ../src/extension/internal/filter/bumps.h:356
@@ -7884,12 +7670,11 @@ msgstr "Μέσα "
 
 #: ../src/extension/internal/filter/bumps.h:368
 msgid "Turns an image to jelly"
-msgstr ""
+msgstr "Μετατρέπει μια εικόνα σε πηχτή"
 
 #: ../src/extension/internal/filter/color.h:71
-#, fuzzy
 msgid "Brilliance"
-msgstr "Κυριλλικά"
+msgstr "Γυαλάδα"
 
 #: ../src/extension/internal/filter/color.h:74
 #: ../src/extension/internal/filter/color.h:1335
@@ -7912,25 +7697,21 @@ msgid "Brightness filter"
 msgstr "Φίλτρο λαμπρότητας"
 
 #: ../src/extension/internal/filter/color.h:151
-#, fuzzy
 msgid "Channel Painting"
-msgstr "Ελαιογραφία"
+msgstr "Βαφή καναλιού"
 
 #: ../src/extension/internal/filter/color.h:159
 #: ../src/extension/internal/filter/transparency.h:135
-#, fuzzy
 msgid "Alpha:"
-msgstr "Άλφα"
+msgstr "Άλφα:"
 
 #: ../src/extension/internal/filter/color.h:173
-#, fuzzy
 msgid "Replace RGB by any color"
-msgstr "Αντικατάσταση απόχρωσης από δύο χρώματα"
+msgstr "Αντικατάσταση RGB από οποιοδήποτε χρώμα"
 
 #: ../src/extension/internal/filter/color.h:253
-#, fuzzy
 msgid "Color Shift"
-msgstr "Χρωματιστές σκιάσεις"
+msgstr "Μετατόπιση χρώματος"
 
 #: ../src/extension/internal/filter/color.h:255
 msgid "Shift (°):"
@@ -8026,14 +7807,12 @@ msgid "Gamma"
 msgstr "Γάμμα"
 
 #: ../src/extension/internal/filter/color.h:439
-#, fuzzy
 msgid "Basic component transfer structure"
-msgstr "Υφή διαφάνειας βασικού θορύβου"
+msgstr "Υφή βασικού συστατικού μεταφοράς"
 
 #: ../src/extension/internal/filter/color.h:508
-#, fuzzy
 msgid "Duochrome"
-msgstr "Χρώμιο"
+msgstr "Διχρωμία"
 
 #: ../src/extension/internal/filter/color.h:512
 msgid "Fluorescence level:"
@@ -8080,9 +7859,8 @@ msgid "Convert luminance values to a duochrome palette"
 msgstr "Μετατροπή τιμών φωτεινότητας σε διχρωμική παλέτα"
 
 #: ../src/extension/internal/filter/color.h:634
-#, fuzzy
 msgid "Extract Channel"
-msgstr "Κανάλι αδιαφάνειας"
+msgstr "Εξαγωγή καναλιού"
 
 #: ../src/extension/internal/filter/color.h:637 ../src/filter-enums.cpp:100
 #: ../src/flood-context.cpp:241 ../src/widgets/sp-color-icc-selector.cpp:231
@@ -8106,24 +7884,20 @@ msgid "Blue"
 msgstr "Μπλε"
 
 #: ../src/extension/internal/filter/color.h:641
-#, fuzzy
 msgid "Background blend mode:"
-msgstr "Χρώμα παρασκηνίου:"
+msgstr "Κατάσταση ανάμειξης παρασκηνίου:"
 
 #: ../src/extension/internal/filter/color.h:648
-#, fuzzy
 msgid "Channel to alpha"
-msgstr "Φωτεινότητα σε άλφα"
+msgstr "Κανάλι σε άλφα"
 
 #: ../src/extension/internal/filter/color.h:657
-#, fuzzy
 msgid "Extract color channel as a transparent image"
-msgstr "Εξαγωγή ειδικού καναλιού από την εικόνα"
+msgstr "Εξαγωγή χρωματικού καναλιού ως διαφανούς εικόνας"
 
 #: ../src/extension/internal/filter/color.h:740
-#, fuzzy
 msgid "Fade to Black or White"
-msgstr "Ασπρόμαυρο"
+msgstr "Ξεθώριασμα σε μαύρο ή άσπρο"
 
 #: ../src/extension/internal/filter/color.h:742
 #: ../src/extension/internal/filter/image.h:56
@@ -8134,9 +7908,8 @@ msgstr "Στάθμη:"
 
 #
 #: ../src/extension/internal/filter/color.h:743
-#, fuzzy
 msgid "Fade to:"
-msgstr "Ξεθώριασμα"
+msgstr "Ξεθώριασμα σε:"
 
 #: ../src/extension/internal/filter/color.h:744
 #: ../src/ui/widget/selected-style.cpp:235
@@ -8152,12 +7925,10 @@ msgid "White"
 msgstr "Λευκό"
 
 #: ../src/extension/internal/filter/color.h:754
-#, fuzzy
 msgid "Fade to black or white"
-msgstr "Μόνο άσπρο και μαύρο"
+msgstr "Ξεθώριασμα σε μαύρο ή άσπρο"
 
 #: ../src/extension/internal/filter/color.h:819
-#, fuzzy
 msgid "Greyscale"
 msgstr "Κλίμακα του γκρι"
 
@@ -8177,51 +7948,44 @@ msgid "Invert"
 msgstr "Αντιστροφή"
 
 #: ../src/extension/internal/filter/color.h:907
-#, fuzzy
 msgid "Invert channels:"
-msgstr "Αντιστροφή απόχρωσης"
+msgstr "Αντιστροφή καναλιών:"
 
 #: ../src/extension/internal/filter/color.h:908
-#, fuzzy
 msgid "No inversion"
-msgstr "Νέα σε αυτήν την έκδοση"
+msgstr "Χωρίς αντιστροφή"
 
 #: ../src/extension/internal/filter/color.h:909
-#, fuzzy
 msgid "Red and blue"
-msgstr "Κόκκινο κανάλι"
+msgstr "Κόκκινο και γαλάζιο"
 
 #: ../src/extension/internal/filter/color.h:910
 msgid "Red and green"
-msgstr ""
+msgstr "Κόκκινο και πράσινο"
 
 #: ../src/extension/internal/filter/color.h:911
-#, fuzzy
 msgid "Green and blue"
-msgstr "Πράσινο κανάλι"
+msgstr "Πράσινο και γαλάζιο"
 
 #: ../src/extension/internal/filter/color.h:913
-#, fuzzy
 msgid "Light transparency:"
-msgstr "Σκληρή διαφάνεια"
+msgstr "Φωτεινή διαφάνεια:"
 
 #: ../src/extension/internal/filter/color.h:914
 msgid "Invert hue"
 msgstr "Αντιστροφή απόχρωσης"
 
 #: ../src/extension/internal/filter/color.h:915
-#, fuzzy
 msgid "Invert lightness"
-msgstr "Αντιστροφή εικόνας"
+msgstr "Αντιστροφή φωτεινότητας"
 
 #: ../src/extension/internal/filter/color.h:916
-#, fuzzy
 msgid "Invert transparency"
-msgstr "Διαφάνεια επάλειψης"
+msgstr "Αντιστροφή διαφάνειας"
 
 #: ../src/extension/internal/filter/color.h:924
 msgid "Manage hue, lightness and transparency inversions"
-msgstr ""
+msgstr "Διαχείριση αντιστροφών απόχρωσης, φωτεινότητας και διαφάνειας"
 
 #: ../src/extension/internal/filter/color.h:1042
 msgid "Lights:"
@@ -8240,38 +8004,32 @@ msgid "Lightness-Contrast"
 msgstr "Φωτεινότητα-Αντίθεση"
 
 #: ../src/extension/internal/filter/color.h:1114
-#, fuzzy
 msgid "Contrast:"
-msgstr "Αντίθεση"
+msgstr "Αντίθεση:"
 
 #: ../src/extension/internal/filter/color.h:1122
-#, fuzzy
 msgid "Modify lightness and contrast separately"
-msgstr "Τροποποίηση φώτων και σκιών ξεχωριστά"
+msgstr "Τροποποίηση φωτισμού και αντίθεσης ξεχωριστά"
 
 #: ../src/extension/internal/filter/color.h:1196
 msgid "Nudge"
-msgstr ""
+msgstr "Ώθηση"
 
 #: ../src/extension/internal/filter/color.h:1200
-#, fuzzy
 msgid "Red offset"
-msgstr "Αντιστάθμιση μοτίβου"
+msgstr "Αντιστάθμιση κόκκινου"
 
 #: ../src/extension/internal/filter/color.h:1203
-#, fuzzy
 msgid "Green offset"
-msgstr "Αντιστάθμιση μοτίβου"
+msgstr "Αντιστάθμιση πράσινου"
 
 #: ../src/extension/internal/filter/color.h:1206
-#, fuzzy
 msgid "Blue offset"
-msgstr "Ορισμός τιμής:"
+msgstr "Αντιστάθμιση γαλάζιου"
 
 #: ../src/extension/internal/filter/color.h:1217
-#, fuzzy
 msgid "Blend source:"
-msgstr "Κατάσταση ανάμειξης:"
+msgstr "Πηγή ανάμειξης:"
 
 #: ../src/extension/internal/filter/color.h:1220
 #: ../src/extension/internal/filter/transparency.h:56
@@ -8282,9 +8040,8 @@ msgstr "Παρασκήνιο"
 # #-#-#-#-#  balsa.master.el.po (balsa 2.0.13)  #-#-#-#-#
 #
 #: ../src/extension/internal/filter/color.h:1222
-#, fuzzy
 msgid "Composite:"
-msgstr "Σύνθεση"
+msgstr "Σύνθεση:"
 
 #: ../src/extension/internal/filter/color.h:1223
 #: ../src/extension/internal/filter/morphology.h:173
@@ -8297,6 +8054,8 @@ msgid ""
 "Nudge separately RGB channels and blend them to different types of "
 "backgrounds"
 msgstr ""
+"Ξεχωριστή ώθηση καναλιών RGB και ανάμειξη τους σε διαφορετικούς τύπους "
+"παρασκηνίου"
 
 #: ../src/extension/internal/filter/color.h:1326
 msgid "Quadritone fantasy"
@@ -8338,14 +8097,12 @@ msgid "Enhance hue"
 msgstr "Βελτιστοποίηση απόχρωσης"
 
 #: ../src/extension/internal/filter/color.h:1506
-#, fuzzy
 msgid "Phosphorescence"
-msgstr "Παρουσία"
+msgstr "Φωσφορισμός"
 
 #: ../src/extension/internal/filter/color.h:1507
-#, fuzzy
 msgid "Colored nights"
-msgstr "Χρωματιστές σκιάσεις"
+msgstr "Χρωματιστά βράδυα"
 
 #: ../src/extension/internal/filter/color.h:1508
 msgid "Hue to background"
@@ -8380,9 +8137,8 @@ msgstr ""
 "ανάμειξη καταστάσεων και μετακίνηση απόχρωσης"
 
 #: ../src/extension/internal/filter/distort.h:67
-#, fuzzy
 msgid "Felt Feather"
-msgstr "Απάλυνση"
+msgstr "Τσόχα απάλυνσης"
 
 #: ../src/extension/internal/filter/distort.h:71
 #: ../src/extension/internal/filter/morphology.h:175
@@ -8404,7 +8160,6 @@ msgstr "Πλατιά"
 
 #: ../src/extension/internal/filter/distort.h:80
 #: ../src/extension/internal/filter/textures.h:78
-#, fuzzy
 msgid "Narrow"
 msgstr "Στενό"
 
@@ -8415,15 +8170,13 @@ msgid "No fill"
 msgstr "Χωρίς γέμισμα"
 
 #: ../src/extension/internal/filter/distort.h:83
-#, fuzzy
 msgid "Turbulence:"
-msgstr "Ανατάραξη"
+msgstr "Ανατάραξη:"
 
 #: ../src/extension/internal/filter/distort.h:84
 #: ../src/extension/internal/filter/distort.h:193
 #: ../src/extension/internal/filter/overlays.h:61
 #: ../src/extension/internal/filter/paint.h:702
-#, fuzzy
 msgid "Fractal noise"
 msgstr "Κλαστικός θόρυβος"
 
@@ -8475,9 +8228,8 @@ msgid "Intensity:"
 msgstr "Ένταση"
 
 #: ../src/extension/internal/filter/distort.h:99
-#, fuzzy
 msgid "Blur and displace edges of shapes and pictures"
-msgstr "Προσθέτει χρωματιζόμενες άκρες λάμψης μέσα στα αντικείμενα και εικόνες"
+msgstr "Θόλωση και μετατόπιση άκρων σχημάτων και εικόνων"
 
 #: ../src/extension/internal/filter/distort.h:190
 msgid "Roughen"
@@ -8510,7 +8262,6 @@ msgstr ""
 "Χωρίς όνομα καταλόγου εξωτερικού αρθρώματος. Τα φίλτρα δεν θα φορτωθούν."
 
 #: ../src/extension/internal/filter/image.h:49
-#, fuzzy
 msgid "Edge Detect"
 msgstr "Εντοπισμός άκρου"
 
@@ -8575,15 +8326,13 @@ msgstr "Εξωτερικό"
 # #-#-#-#-#  anjuta-extras.master.el.po (anjuta.HEAD)  #-#-#-#-#
 #
 #: ../src/extension/internal/filter/morphology.h:63
-#, fuzzy
 msgid "Open"
-msgstr "Άν_οιγμα..."
+msgstr "Άνοιγμα"
 
 #: ../src/extension/internal/filter/morphology.h:69
 #: ../src/extension/internal/filter/morphology.h:190
-#, fuzzy
 msgid "Antialiasing:"
-msgstr "Εξομάλυνση"
+msgstr "Εξομάλυνση:"
 
 #: ../src/extension/internal/filter/morphology.h:70
 msgid "Blur content"
@@ -8598,21 +8347,18 @@ msgid "Outline"
 msgstr "Περίγραμμα"
 
 #: ../src/extension/internal/filter/morphology.h:170
-#, fuzzy
 msgid "Fill image"
-msgstr "Γέμισμα περιοχής"
+msgstr "Γέμισμα εικόνας"
 
 #: ../src/extension/internal/filter/morphology.h:171
-#, fuzzy
 msgid "Hide image"
-msgstr "Απόκρυψη στρώσης"
+msgstr "Απόκρυψη εικόνας"
 
 # #-#-#-#-#  balsa.master.el.po (balsa 2.0.13)  #-#-#-#-#
 #
 #: ../src/extension/internal/filter/morphology.h:172
-#, fuzzy
 msgid "Composite type:"
-msgstr "Σύνθεση"
+msgstr "Σύνθετος τύπος:"
 
 #: ../src/extension/internal/filter/morphology.h:177
 #: ../src/filter-enums.cpp:75
@@ -8625,49 +8371,40 @@ msgid "Position:"
 msgstr "Θέση:"
 
 #: ../src/extension/internal/filter/morphology.h:180
-#, fuzzy
 msgid "Inside"
-msgstr "2η πλευρά:"
+msgstr "Εσωτερικά"
 
 #: ../src/extension/internal/filter/morphology.h:181
-#, fuzzy
 msgid "Outside"
-msgstr "_Επέκταση"
+msgstr "Εξωτερικά"
 
 #: ../src/extension/internal/filter/morphology.h:182
-#, fuzzy
 msgid "Overlayed"
-msgstr "Επικαλύψεις"
+msgstr "Επικαλυμένο"
 
 #: ../src/extension/internal/filter/morphology.h:184
-#, fuzzy
 msgid "Width 1:"
-msgstr "Πλάτος:"
+msgstr "Πλάτος 1:"
 
 #: ../src/extension/internal/filter/morphology.h:185
-#, fuzzy
 msgid "Dilatation 1:"
-msgstr "Διαστολή:"
+msgstr "Διαστολή 1:"
 
 #: ../src/extension/internal/filter/morphology.h:186
-#, fuzzy
 msgid "Erosion 1:"
-msgstr "Διάβρωση:"
+msgstr "Διάβρωση 1:"
 
 #: ../src/extension/internal/filter/morphology.h:187
-#, fuzzy
 msgid "Width 2:"
-msgstr "Πλάτος:"
+msgstr "Πλάτος 2:"
 
 #: ../src/extension/internal/filter/morphology.h:188
-#, fuzzy
 msgid "Dilatation 2:"
-msgstr "Διαστολή:"
+msgstr "Διαστολή 2:"
 
 #: ../src/extension/internal/filter/morphology.h:189
-#, fuzzy
 msgid "Erosion 2:"
-msgstr "Διάβρωση:"
+msgstr "Διάβρωση 2:"
 
 #: ../src/extension/internal/filter/morphology.h:191
 msgid "Smooth"
@@ -8675,21 +8412,18 @@ msgstr "Εξομάλυνση"
 
 #
 #: ../src/extension/internal/filter/morphology.h:195
-#, fuzzy
 msgid "Fill opacity:"
-msgstr "Αδιαφάνεια γεμίσματος (%):"
+msgstr "Αδιαφάνεια γεμίσματος:"
 
 #: ../src/extension/internal/filter/morphology.h:196
-#, fuzzy
 msgid "Stroke opacity:"
-msgstr "Αδιαφάνεια Πινελιάς (%):"
+msgstr "Αδιαφάνεια πινελιάς:"
 
 #: ../src/extension/internal/filter/morphology.h:206
 msgid "Adds a colorizable outline"
 msgstr "Προσθήκη χρωματιζόμενου περιγράμματος"
 
 #: ../src/extension/internal/filter/overlays.h:56
-#, fuzzy
 msgid "Noise Fill"
 msgstr "Γέμισμα με θόρυβο"
 
@@ -8731,18 +8465,16 @@ msgid "Options"
 msgstr "Επιλογές"
 
 #: ../src/extension/internal/filter/overlays.h:72
-#, fuzzy
 msgid "Noise color"
-msgstr "Νέο χρώμα"
+msgstr "Χρώμα θορύβου"
 
 #: ../src/extension/internal/filter/overlays.h:83
 msgid "Basic noise fill and transparency texture"
 msgstr "Γέμισμα βασικού θορύβου και υφή διαφάνειας "
 
 #: ../src/extension/internal/filter/paint.h:71
-#, fuzzy
 msgid "Chromolitho"
-msgstr "Χρωμόλιθος, προσαρμογή"
+msgstr "Χρωμόλιθος"
 
 #: ../src/extension/internal/filter/paint.h:75
 #: ../share/extensions/jessyInk_keyBindings.inx.h:5
@@ -8763,9 +8495,8 @@ msgid "Noise reduction:"
 msgstr "Μείωση θορύβου"
 
 #: ../src/extension/internal/filter/paint.h:91
-#, fuzzy
 msgid "Grain"
-msgstr "Κατάσταση κόκκου"
+msgstr "Κόκκος"
 
 #: ../src/extension/internal/filter/paint.h:92
 msgid "Grain mode"
@@ -8786,9 +8517,8 @@ msgid "Chromo effect with customizable edge drawing and graininess"
 msgstr "Εφέ χρώματος με προσαρμόσιμη σχεδίαση άκρης και δημιουργία κόκκων"
 
 #: ../src/extension/internal/filter/paint.h:233
-#, fuzzy
 msgid "Cross Engraving"
-msgstr "Χαρακτική"
+msgstr "Σταυρωτή χάραξη"
 
 #: ../src/extension/internal/filter/paint.h:235
 #: ../src/extension/internal/filter/paint.h:338
@@ -8822,14 +8552,12 @@ msgid "Erase:"
 msgstr "Σβήστρα:"
 
 #: ../src/extension/internal/filter/paint.h:341
-#, fuzzy
 msgid "Smoothness"
-msgstr "Εξομάλυνση:"
+msgstr "Ομαλότητα"
 
 #: ../src/extension/internal/filter/paint.h:345
-#, fuzzy
 msgid "Melt"
-msgstr "Συγχώνευση:"
+msgstr "Συγχώνευση"
 
 #: ../src/extension/internal/filter/paint.h:351
 #: ../src/extension/internal/filter/paint.h:722
@@ -8855,7 +8583,7 @@ msgstr "Μετατροπή εικόνων σε δίχρωμα σχέδια"
 
 #: ../src/extension/internal/filter/paint.h:495
 msgid "Electrize"
-msgstr ""
+msgstr "Ηλεκτρικό"
 
 #: ../src/extension/internal/filter/paint.h:497
 #: ../src/extension/internal/filter/paint.h:591
@@ -8879,23 +8607,20 @@ msgid "Electro solarization effects"
 msgstr "Εφέ ηλεκτρικού ξεθωριάσματος"
 
 #: ../src/extension/internal/filter/paint.h:585
-#, fuzzy
 msgid "Neon Draw"
-msgstr "Νέο σχέδιο"
+msgstr "Σχέδιο νέου"
 
 #: ../src/extension/internal/filter/paint.h:587
 msgid "Line type:"
 msgstr "Τύπος γραμμής:"
 
 #: ../src/extension/internal/filter/paint.h:588
-#, fuzzy
 msgid "Smoothed"
-msgstr "Εξομάλυνση"
+msgstr "Ομαλοποιημένος"
 
 #: ../src/extension/internal/filter/paint.h:589
-#, fuzzy
 msgid "Contrasted"
-msgstr "Αντίθεση"
+msgstr "Με αντίθεση"
 
 #: ../src/extension/internal/filter/paint.h:592
 msgid "Line width:"
@@ -8916,19 +8641,16 @@ msgid "Posterize and draw smooth lines around color shapes"
 msgstr "Αφίσα και σχεδίαση ομαλών γραμμών γύρω από  σχήματα χρωμάτων"
 
 #: ../src/extension/internal/filter/paint.h:697
-#, fuzzy
 msgid "Point Engraving"
-msgstr "Χαρακτική"
+msgstr "Χαρακτική σημείου"
 
 #: ../src/extension/internal/filter/paint.h:710
-#, fuzzy
 msgid "Noise blend:"
-msgstr "Ανάμειξη λάμψης:"
+msgstr "Ανάμειξη θορύβου:"
 
 #: ../src/extension/internal/filter/paint.h:718
-#, fuzzy
 msgid "Grain lightness:"
-msgstr "Λαμπρότητα:"
+msgstr "Φωτεινότητα κόκκου:"
 
 #: ../src/extension/internal/filter/paint.h:720
 #: ../src/extension/internal/filter/transparency.h:343
@@ -8936,24 +8658,20 @@ msgid "Blur:"
 msgstr "Θόλωση:"
 
 #: ../src/extension/internal/filter/paint.h:726
-#, fuzzy
 msgid "Points color"
-msgstr "Χρώμα μήνα:"
+msgstr "Χρώμα σημείων"
 
 #: ../src/extension/internal/filter/paint.h:728
-#, fuzzy
 msgid "Image on points"
-msgstr "Εικόνα στο γέμισμα"
+msgstr "Εικόνα σε σημεία"
 
 #: ../src/extension/internal/filter/paint.h:738
-#, fuzzy
 msgid "Convert image to a transparent point engraving"
-msgstr "Μετατροπή σε μία θετική ή αρνητική διαφάνεια που χρωματίζεται"
+msgstr "Μετατροπή εικόνας σε ένα διαφανές σημείο χάραξης"
 
 #: ../src/extension/internal/filter/paint.h:860
-#, fuzzy
 msgid "Poster Paint"
-msgstr "περιορισμός"
+msgstr "Βαφή αφίσας"
 
 #: ../src/extension/internal/filter/paint.h:866
 msgid "Transfer type:"
@@ -8983,12 +8701,10 @@ msgstr "Τύπος μεταφοράς:"
 # #-#-#-#-#  libgnomeprintui.master.el.po (el)  #-#-#-#-#
 #
 #: ../src/extension/internal/filter/paint.h:867
-#, fuzzy
 msgid "Poster"
-msgstr "Σοβάς"
+msgstr "Αφίσα"
 
 #: ../src/extension/internal/filter/paint.h:868
-#, fuzzy
 msgid "Painting"
 msgstr "Ελαιογραφία"
 
@@ -9017,9 +8733,8 @@ msgid "Poster and painting effects"
 msgstr "Εφέ αφίσας και βαφής"
 
 #: ../src/extension/internal/filter/paint.h:984
-#, fuzzy
 msgid "Posterize Basic"
-msgstr "Βασική αφίσα, προσαρμογή"
+msgstr "Βασική αφίσα"
 
 #: ../src/extension/internal/filter/paint.h:995
 msgid "Simple posterizing effect"
@@ -9060,12 +8775,11 @@ msgstr "Τύπος θόλωσης:"
 
 #: ../src/extension/internal/filter/shadows.h:66
 msgid "Outer cutout"
-msgstr ""
+msgstr "Εξωτερική αποκοπή"
 
 #: ../src/extension/internal/filter/shadows.h:67
-#, fuzzy
 msgid "Inner cutout"
-msgstr "Εσωτερικό περίγραμμα"
+msgstr "Εσωτερική αποκοπή"
 
 #: ../src/extension/internal/filter/shadows.h:70
 msgid "Blur color"
@@ -9081,38 +8795,32 @@ msgstr "Χρωματιστή πίπτουσα σκιά"
 
 #: ../src/extension/internal/filter/textures.h:62
 msgid "Ink Blot"
-msgstr ""
+msgstr "Μελανιά"
 
 #: ../src/extension/internal/filter/textures.h:68
-#, fuzzy
 msgid "Frequency:"
-msgstr "Βασική συχνότητα:"
+msgstr "Συχνότητα:"
 
 #: ../src/extension/internal/filter/textures.h:71
-#, fuzzy
 msgid "Horizontal inlay:"
-msgstr "Οριζόντιο σημείο:"
+msgstr "Οριζόντιο ένθεμα:"
 
 #: ../src/extension/internal/filter/textures.h:72
-#, fuzzy
 msgid "Vertical inlay:"
-msgstr "Κάθετο σημείο:"
+msgstr "Κάθετο ένθεμα:"
 
 #: ../src/extension/internal/filter/textures.h:73
-#, fuzzy
 msgid "Displacement:"
-msgstr "Μετατόπιση  Χ:"
+msgstr "Μετατόπιση:"
 
 #: ../src/extension/internal/filter/textures.h:79
-#, fuzzy
 msgid "Overlapping"
-msgstr "Παφλασμός"
+msgstr "Επικάλυψη"
 
 #
 #: ../src/extension/internal/filter/textures.h:80
-#, fuzzy
 msgid "External"
-msgstr "Εξωτερικά σενάρια"
+msgstr "Εξωτερικό"
 
 # #-#-#-#-#  gnome-games.master.el.po (gnome-games.HEAD.el)  #-#-#-#-#
 # Translation of "custom" sucks!  ("kata paraggelia"???  nah!)
@@ -9142,24 +8850,20 @@ msgid "Custom"
 msgstr "Προσαρμοσμένο"
 
 #: ../src/extension/internal/filter/textures.h:83
-#, fuzzy
 msgid "Custom stroke options"
-msgstr "Προσαρμοσμένα σημεία και επιλογές"
+msgstr "Επιλογές προσαρμοσμένης πινελιάς"
 
 #: ../src/extension/internal/filter/textures.h:84
-#, fuzzy
 msgid "k1:"
-msgstr "K1:"
+msgstr "k1:"
 
 #: ../src/extension/internal/filter/textures.h:85
-#, fuzzy
 msgid "k2:"
-msgstr "K2:"
+msgstr "k2:"
 
 #: ../src/extension/internal/filter/textures.h:86
-#, fuzzy
 msgid "k3:"
-msgstr "K3:"
+msgstr "k3:"
 
 #: ../src/extension/internal/filter/textures.h:94
 msgid "Inkblot on tissue or rough paper"
@@ -9203,28 +8907,24 @@ msgstr "Κατάσταση:"
 
 #: ../src/extension/internal/filter/transparency.h:73
 msgid "Blend objects with background images or with themselves"
-msgstr ""
+msgstr "Ανάμειξη αντικειμένων με εικόνες παρασκηνίου ή μεταξύ τους"
 
 #: ../src/extension/internal/filter/transparency.h:130
-#, fuzzy
 msgid "Channel Transparency"
-msgstr "Διάλογος διαφάνειας"
+msgstr "Διαφάνεια καναλιού"
 
 #: ../src/extension/internal/filter/transparency.h:144
-#, fuzzy
 msgid "Replace RGB with transparency"
-msgstr "Σκληρή διαφάνεια"
+msgstr "Αντικατάσταση RGB με διαφάνεια"
 
 #: ../src/extension/internal/filter/transparency.h:205
-#, fuzzy
 msgid "Light Eraser"
 msgstr "Σβήστρα φωτός"
 
 #: ../src/extension/internal/filter/transparency.h:209
 #: ../src/extension/internal/filter/transparency.h:283
-#, fuzzy
 msgid "Global opacity:"
-msgstr "Γενικό φως:"
+msgstr "Γενική αδιαφάνεια:"
 
 #: ../src/extension/internal/filter/transparency.h:218
 msgid "Make the lightest parts of the object progressively transparent"
@@ -9233,11 +8933,11 @@ msgstr ""
 
 #: ../src/extension/internal/filter/transparency.h:291
 msgid "Set opacity and strength of opacity boundaries"
-msgstr ""
+msgstr "Ορισμός αδιαφάνειας και δύναμης ορίων αδιαφάνειας"
 
 #: ../src/extension/internal/filter/transparency.h:341
 msgid "Silhouette"
-msgstr ""
+msgstr "Μορφή"
 
 #: ../src/extension/internal/filter/transparency.h:344
 msgid "Cutout"
@@ -9257,14 +8957,12 @@ msgid "Link or embed image:"
 msgstr "Συνδεμένη ή ενσωματωμένη εικόνα:"
 
 #: ../src/extension/internal/gdkpixbuf-input.cpp:153
-#, fuzzy
 msgid "Embed"
-msgstr "ενσωμάτωση"
+msgstr "Ενσωμάτωση"
 
 # #-#-#-#-#  gtkhtml.master.el.po (gtkhtml.HEAD)  #-#-#-#-#
 #
 #: ../src/extension/internal/gdkpixbuf-input.cpp:154
-#, fuzzy
 msgid "Link"
 msgstr "Σύνδεσμος"
 
@@ -11264,9 +10962,8 @@ msgstr "Χάρακας"
 
 #. 0.49 ?
 #: ../src/live_effects/effect.cpp:124
-#, fuzzy
 msgid "[Unstable!] Power stroke"
-msgstr "Δυναμική πινελιά"
+msgstr "[Ασταθές!] Δυναμική πινελιά"
 
 #: ../src/live_effects/effect.cpp:282
 msgid "Is visible?"
@@ -12521,7 +12218,7 @@ msgstr "Ταυτότητα αντικειμένου για επιλογή, ότ�
 
 #: ../src/main.cpp:452
 msgid "OBJECT-ID"
-msgstr "Ταυτότητα (ID) αντικειμένου"
+msgstr "Ταυτότητα αντικειμένου"
 
 #: ../src/main.cpp:456
 msgid "Start Inkscape in interactive shell mode."
@@ -12997,9 +12694,9 @@ msgid ""
 "rays radial (no skew); with <b>Shift</b> to round; with <b>Alt</b> to "
 "randomize"
 msgstr ""
-"Προσαρμογή της <b>εσωτερικής ακτίνας </b> του αστεριού, με <b>Ctrl</b> για "
-"ακτίνες χωρίς στρέβλωση, με <b>Shift</b> για στρογγύλεμα, <b>Alt</b> για "
-"τυχαιοποίηση"
+"Προσαρμογή της <b>εσωτερικής ακτίνας </b> του αστεριού· με <b>Ctrl</b> για "
+"διατήρηση ακτινικών ακτίνων αστεριού (χωρίς στρέβλωση)· με <b>Shift</b> για "
+"στρογγύλεμα· <b>Alt</b> για τυχαιοποίηση"
 
 #: ../src/object-edit.cpp:1263
 msgid ""
@@ -13080,7 +12777,7 @@ msgstr "<b>Χωρίς αντικείμενα</b> για μετατροπή σε 
 
 #: ../src/path-chemistry.cpp:599
 msgid "Select <b>path(s)</b> to reverse."
-msgstr "Επιλογή <b>μονοπατιού</b> για αντιστροφή."
+msgstr "Επιλογή <b>μονοπατιών</b> για αντιστροφή."
 
 #: ../src/path-chemistry.cpp:608
 msgid "Reversing paths..."
@@ -14504,8 +14201,8 @@ msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
 "with <b>Shift</b> to disable snapping"
 msgstr ""
-"<b>Μετακίνηση</b> κατά %s, %s, με <b>Ctrl</b> για περιορισμό σε οριζόντιο/"
-"κάθετο, με <b>Shift</b> για απενεργοποίηση προσκόλλησης"
+"<b>Μετακίνηση</b> κατά %s, %s, με <b>Ctrl</b> για περιορισμό σε "
+"οριζόντιο/κάθετο, με <b>Shift</b> για απενεργοποίηση προσκόλλησης"
 
 #: ../src/sp-anchor.cpp:179
 #, c-format
@@ -14559,7 +14256,7 @@ msgstr "Διαγραφή όλων των οδηγών"
 #
 #. Guide has probably been deleted and no longer has an attached namedview.
 #: ../src/sp-guide.cpp:485
-#, fuzzy, c-format
+#, c-format
 msgid "Deleted"
 msgstr "Διαγραφή"
 
@@ -15027,7 +14724,7 @@ msgstr "Αφαίρεση κειμένου από μονοπάτι"
 
 #: ../src/text-chemistry.cpp:269 ../src/text-chemistry.cpp:290
 msgid "Select <b>text(s)</b> to remove kerns from."
-msgstr "Επιλογή <b>κειμένου</b> για αφαίρεση πυκνώσεων."
+msgstr "Επιλογή <b>κειμένων</b> για αφαίρεση πυκνώσεων."
 
 #: ../src/text-chemistry.cpp:293
 msgid "Remove manual kerns"
@@ -15355,9 +15052,8 @@ msgstr "Επιλογή υποεργαλείου από τη γραμμή εργ�
 
 #: ../src/trace/potrace/inkscape-potrace.cpp:522
 #: ../src/trace/potrace/inkscape-potrace.cpp:585
-#, fuzzy
 msgid "Trace: %1.  %2 nodes"
-msgstr "Ανίχνευση: %d.  %ld κόμβοι"
+msgstr "Ανίχνευση: %1.  %2 κόμβοι"
 
 #: ../src/trace/trace.cpp:56 ../src/trace/trace.cpp:121
 #: ../src/trace/trace.cpp:129 ../src/trace/trace.cpp:222
@@ -16171,11 +15867,7 @@ msgstr "about.svg"
 #. one per line in the form of: name surname (email). Use \n for newline.
 #: ../src/ui/dialog/aboutbox.cpp:389
 msgid "translator-credits"
-msgstr ""
-"Dimitris Spingos (Δημήτρης Σπίγγος) (dmtrs32@gmail.com), 2011\n"
-"George Boukeas (boukeas@gmail.com), 2011\n"
-"Spyros Blanas (cid_e@users.sourceforge.net), 2006, 2011\n"
-"Simos Xenitellis (simos@hellug.gr), 2001"
+msgstr "Dimitris Spingos (Δημήτρης Σπίγγος) (dmtrs32@gmail.com)"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:241
 #: ../src/ui/dialog/align-and-distribute.cpp:892
@@ -16512,7 +16204,7 @@ msgstr "Άδεια χρήσης"
 
 #: ../src/ui/dialog/document-metadata.cpp:156
 msgid "<b>Dublin Core Entities</b>"
-msgstr "<b>Dublin Core Entities</b> (Μεταδεδομένα)"
+msgstr "<b>Dublin Core Entities</b>"
 
 #: ../src/ui/dialog/document-metadata.cpp:178
 msgid "<b>License</b>"
@@ -16690,22 +16382,24 @@ msgstr ""
 
 #. ---------------------------------------------------------------
 #: ../src/ui/dialog/document-properties.cpp:123
-#, fuzzy
 msgid "Snap to clip paths"
-msgstr "Προσκόλληση σε μονοπάτια"
+msgstr "Προσκόλληση σε μονοπάτια κοπής"
 
 #: ../src/ui/dialog/document-properties.cpp:123
 msgid "When snapping to paths, then also try snapping to clip paths"
 msgstr ""
+"Όταν προσκολλάται σε μονοπάτια, τότε επίσης προσπαθεί να προσκολληθεί σε "
+"μονοπάτια κοπής"
 
 #: ../src/ui/dialog/document-properties.cpp:124
-#, fuzzy
 msgid "Snap to mask paths"
-msgstr "Προσκόλληση σε μονοπάτια"
+msgstr "Προσκόλληση σε μονοπάτια μάσκας"
 
 #: ../src/ui/dialog/document-properties.cpp:124
 msgid "When snapping to paths, then also try snapping to mask paths"
 msgstr ""
+"Όταν προσκολλάται σε μονοπάτια, τότε επίσης προσπαθεί να προσκολληθεί σε "
+"μονοπάτια μάσκας"
 
 # #-#-#-#-#  galeon.master.el.po (galeon 1.0)  #-#-#-#-#
 #
@@ -19893,27 +19587,28 @@ msgid "(requires restart)"
 msgstr "(απαιτεί επανεκκίνηση)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:753
-#, fuzzy
 msgid "Configure number of processors/threads to use when rendering filters"
 msgstr ""
-"Ρύθμιση του αριθμού των επεξεργαστών/νημάτων για χρήση με την απόδοση "
-"θόλωσης Gauss"
+"Ρύθμιση του αριθμού των επεξεργαστών/νημάτων όταν χρησιμοποιούνται φίλτρα "
+"απόδοσης"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:757
-#, fuzzy
 msgid "Rendering cache size:"
-msgstr "Απόδοση"
+msgstr "Απόδοση μεγέθους κρυφής μνήμης:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:757
 msgctxt "mebibyte (2^20 bytes) abbreviation"
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:757
 msgid ""
 "Set the amount of memory per document which can be used to store rendered "
 "parts of the drawing for later reuse; set to zero to disable caching"
 msgstr ""
+"Ορισμός της ποσότητας μνήμης ανά έγγραφο που μπορεί να χρησιμοποιηθεί για να "
+"αποθηκεύσει αποδιδόμενα μέρη του σχεδίου για μεταγενέστερη επανάχρηση· "
+"μηδενισμός για απενεργοποίηση κρυφής μνήμης"
 
 #. blur quality
 #. filter quality
@@ -20415,56 +20110,58 @@ msgstr ""
 #. Add incorrect style properties options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1130
 msgid "Improper Attributes Actions"
-msgstr ""
+msgstr "Ακατάλληλες ενέργειες γνωρισμάτων"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1132
 #: ../src/ui/dialog/inkscape-preferences.cpp:1140
 #: ../src/ui/dialog/inkscape-preferences.cpp:1148
-#, fuzzy
 msgid "Print warnings"
-msgstr "Σημάδια εκτύπωσης "
+msgstr "Προειδοποιήσεις εκτύπωσης"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1133
 msgid ""
 "Print warning if invalid or non-useful attributes found. Database files "
 "located in inkscape_data_dir/attributes."
 msgstr ""
+"Προειδοποίηση εκτύπωσης εάν βρεθούν άκυρα ή μη χρήσιμα γνωρίσματα. Τα  "
+"αρχεία βάσης δεδομένων βρίσκονται στο inkscape_data_dir/attributes."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1134
-#, fuzzy
 msgid "Remove attributes"
-msgstr "Ορισμός γνωρίσματος"
+msgstr "Αφαίρεση γνωρισμάτων"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1135
 msgid "Delete invalid or non-useful attributes from element tag."
-msgstr ""
+msgstr "Διαγραφή άκυρων ή μη χρήσιμων γνωρισμάτων από ετικέτα στοιχείου."
 
 #. Add incorrect style properties options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1138
 msgid "Inappropriate Style Properties Actions"
-msgstr ""
+msgstr "Ακατάλληλες ενέργειες ιδιοτήτων τεχνοτροπίας"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1141
 msgid ""
 "Print warning if inappropriate style properties found (i.e. 'font-family' "
 "set on a <rect>). Database files located in inkscape_data_dir/attributes."
 msgstr ""
+"Εκτύπωση προειδοποίησης εάν βρεθούν ακατάλληλες ιδιότητες τεχνοτροπίας "
+"(δηλαδή ορισμός 'οικογένειας γραμματοσειράς' σε <rect>). Τα αρχεία βάσης "
+"δεδομένων βρίσκονται στο inkscape_data_dir/attributes."
 
 #
 #: ../src/ui/dialog/inkscape-preferences.cpp:1142
 #: ../src/ui/dialog/inkscape-preferences.cpp:1150
-#, fuzzy
 msgid "Remove style properties"
-msgstr "Αναφορά των ιδιοτήτων αυτού του τριγώνου"
+msgstr "Αφαίρεση ιδιοτήτων τεχνοτροπίας"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1143
 msgid "Delete inappropriate style properties."
-msgstr ""
+msgstr "Διαγραφή ακατάλληλων ιδιοτήτων τεχνοτροπίας."
 
 #. Add default or inherited style properties options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1146
 msgid "Non-useful Style Properties Actions"
-msgstr ""
+msgstr "Άχρηστες ενέργειες ιδιοτήτων ταχνοτροπίας"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1149
 msgid ""
@@ -20473,27 +20170,32 @@ msgid ""
 "same as would be inherited). Database files located in inkscape_data_dir/"
 "attributes."
 msgstr ""
+"Εκτύπωση προειδοποίησης εάν βρεθούν περιττές ιδιότητες τεχνοτροπίας (δηλαδή "
+"εάν μια ιδιότητα έχει την προεπιλεγμένη τιμή και μια διαφορετική τιμή δεν "
+"κληρονομείται ή εάν η τιμή είναι η ίδια όπως θα κληρονομείτο). Αρχεία βάσης "
+"δεδομένων τοποθετούνται στο inkscape_data_dir/attributes."
 
 #
 #: ../src/ui/dialog/inkscape-preferences.cpp:1151
-#, fuzzy
 msgid "Delete redundant style properties."
-msgstr "Ορισμός ιδιοτήτων οδηγού"
+msgstr "Διαγραφή περιττών ιδιοτήτων τεχνοτροπίας."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1153
 msgid "Check Attributes and Style Properties on:"
-msgstr ""
+msgstr "Έλεγχος γνωρισμάτων και ιδιοτήτων τεχνοτροπίας σε:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1155
-#, fuzzy
 msgid "Reading"
-msgstr "Σκίαση"
+msgstr "Ανάγνωση"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1156
 msgid ""
 "Check attributes and style properties on reading in SVG files (including "
 "those internal to Inkscape which will slow down startup)."
 msgstr ""
+"Έλεγχος γνωρισμάτων και ιδιοτήτων τεχνοτροπίας στην ανάγνωση αρχείων SVG "
+"(συμπεριλαμβανόμενων των εσωτερικών του Inkscape που θα επιβραδύνουν την "
+"έναρξη)."
 
 # #-#-#-#-#  galeon.master.el.po (galeon 1.0)  #-#-#-#-#
 #
@@ -20528,24 +20230,25 @@ msgstr ""
 # #-#-#-#-#  anjuta-extras.master.el.po (anjuta.HEAD)  #-#-#-#-#
 #
 #: ../src/ui/dialog/inkscape-preferences.cpp:1157
-#, fuzzy
 msgid "Editing"
-msgstr "_Επεξεργασία"
+msgstr "Επεξεργασία"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1158
 msgid ""
 "Check attributes and style properties while editing SVG files (may slow down "
 "Inkscape, mostly useful for debugging)."
 msgstr ""
+"Έλεγχος γνωρισμάτων και ιδιοτήτων τεχνοτροπίας κατά την επεξεργασία αρχείων "
+"SVG (μπορεί να επιβραδυνθεί το Inkscape, κυρίως χρήσιμο για αποσφαλμάτωση)."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1159
-#, fuzzy
 msgid "Writing"
-msgstr "Σενάρια"
+msgstr "Εγγραφή"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1160
 msgid "Check attributes and style properties on writing out SVG files."
 msgstr ""
+"Έλεγχος γνωρισμάτων και ιδιοτήτων τεχνοτροπίας στην εγγραφή αρχείων SVG."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1163
 msgid "SVG output"
@@ -20633,7 +20336,7 @@ msgstr "Ολλανδικά (nl)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1171
 msgid "Dzongkha (dz)"
-msgstr "Ντζόγκα (Μπουτάν) (dz)"
+msgstr "Ντζόγκα (dz)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1171
 msgid "German (de)"
@@ -20685,7 +20388,7 @@ msgstr "Γαλλικά (fr)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1174
 msgid "Irish (ga)"
-msgstr "Ιρλανδική (Γαελική) (ga)"
+msgstr "Ιρλανδική (ga)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1174
 msgid "Galician (gl)"
@@ -20761,7 +20464,7 @@ msgstr "Πορτογαλικά (pt)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1177
 msgid "Portuguese/Brazil (pt_BR)"
-msgstr "Πορτογαλικά (Βραζιλίας) (pt_BR)"
+msgstr "Πορτογαλικά/Βραζιλίας (pt_BR)"
 
 # #-#-#-#-#  gnome-terminal.master.el.po (gnome-terminal.HEAD)  #-#-#-#-#
 #
@@ -21541,7 +21244,8 @@ msgid ""
 "name is correct in Configuration->Import/Export (e.g.: openclipart.org)"
 msgstr ""
 "Αδυναμία λήψης RSS τροφοδοσίας της βιβλιοθήκης Open Clip Art. Επιβεβαίωση "
-"της ορθότητας ονόματος εξυπηρετητή στο Ρυθμίσεις->Εισαγωγή/Εξαγωγή"
+"της ορθότητας ονόματος εξυπηρετητή στο Ρυθμίσεις->Εισαγωγή/Εξαγωγή (π.χ.: "
+"openclipart.org)"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:476
 msgid "Server supplied malformed Clip Art feed"
@@ -21909,9 +21613,8 @@ msgstr "Τακτοποίηση επιλεγμένων αντικειμένων"
 #. # begin single scan
 #. brightness
 #: ../src/ui/dialog/tracedialog.cpp:407
-#, fuzzy
 msgid "_Brightness cutoff"
-msgstr "Αποκοπή λαμπρότητας"
+msgstr "Αποκοπή _λαμπρότητας"
 
 #: ../src/ui/dialog/tracedialog.cpp:412
 msgid "Trace by a given brightness level"
@@ -21922,9 +21625,8 @@ msgid "Brightness cutoff for black/white"
 msgstr "Αποκοπή λαμπρότητας για μαύρο/άσπρο"
 
 #: ../src/ui/dialog/tracedialog.cpp:422 ../src/ui/dialog/tracedialog.cpp:619
-#, fuzzy
 msgid "_Threshold:"
-msgstr "Κατώφλι:"
+msgstr "_Κατώφλι:"
 
 #: ../src/ui/dialog/tracedialog.cpp:429
 msgid "Single scan: creates a path"
@@ -21933,9 +21635,8 @@ msgstr "Απλή σάρωση: δημιουργία μονοπατιού"
 #. canny edge detection
 #. TRANSLATORS: "Canny" is the name of the inventor of this edge detection method
 #: ../src/ui/dialog/tracedialog.cpp:434
-#, fuzzy
 msgid "_Edge detection"
-msgstr "Ανίχνευση ακμής"
+msgstr "Ανίχνευση _ακμής"
 
 #: ../src/ui/dialog/tracedialog.cpp:439
 msgid "Trace with optimal edge detection by J. Canny's algorithm"
@@ -21949,18 +21650,16 @@ msgstr ""
 "άκρων)"
 
 #: ../src/ui/dialog/tracedialog.cpp:458
-#, fuzzy
 msgid "T_hreshold:"
-msgstr "Κατώφλι:"
+msgstr "Κ_ατώφλι:"
 
 #. quantization
 #. TRANSLATORS: Color Quantization: the process of reducing the number
 #. of colors in an image by selecting an optimized set of representative
 #. colors and then re-applying this reduced set to the original image.
 #: ../src/ui/dialog/tracedialog.cpp:470
-#, fuzzy
 msgid "Color _quantization"
-msgstr "Χρωματικός κβαντισμός"
+msgstr "Χρωματικός _κβαντισμός"
 
 #: ../src/ui/dialog/tracedialog.cpp:475
 msgid "Trace along the boundaries of reduced colors"
@@ -21971,15 +21670,13 @@ msgid "The number of reduced colors"
 msgstr "Ο αριθμός των μειωμένων χρωμάτων"
 
 #: ../src/ui/dialog/tracedialog.cpp:485
-#, fuzzy
 msgid "_Colors:"
-msgstr "Χρώματα:"
+msgstr "_Χρώματα:"
 
 #. swap black and white
 #: ../src/ui/dialog/tracedialog.cpp:493
-#, fuzzy
 msgid "_Invert image"
-msgstr "Αντιστροφή εικόνας"
+msgstr "_Αντιστροφή εικόνας"
 
 #: ../src/ui/dialog/tracedialog.cpp:499
 msgid "Invert black and white regions"
@@ -21988,18 +21685,16 @@ msgstr "Αντιστροφή άσπρων και μαύρων περιοχών"
 #. # end single scan
 #. # begin multiple scan
 #: ../src/ui/dialog/tracedialog.cpp:508
-#, fuzzy
 msgid "B_rightness steps"
-msgstr "Βήματα λαμπρότητας"
+msgstr "Βήματα λ_αμπρότητας"
 
 #: ../src/ui/dialog/tracedialog.cpp:513
 msgid "Trace the given number of brightness levels"
 msgstr "Ανίχνευση του δεδομένου αριθμού σταθμών λαμπρότητας"
 
 #: ../src/ui/dialog/tracedialog.cpp:520
-#, fuzzy
 msgid "Sc_ans:"
-msgstr "Σαρώσεις:"
+msgstr "Σ_αρώσεις:"
 
 #: ../src/ui/dialog/tracedialog.cpp:525
 msgid "The desired number of scans"
@@ -22008,18 +21703,16 @@ msgstr "Ο επιθυμητός αριθμός σαρώσεων"
 # #-#-#-#-#  gtkhtml.master.el.po (gtkhtml.HEAD)  #-#-#-#-#
 #
 #: ../src/ui/dialog/tracedialog.cpp:529
-#, fuzzy
 msgid "Co_lors"
-msgstr "Χ_ρώμα:"
+msgstr "Χ_ρώματα"
 
 #: ../src/ui/dialog/tracedialog.cpp:534
 msgid "Trace the given number of reduced colors"
 msgstr "Εντοπισμός του δοσμένου αριθμού ελαττωμένων χρωμάτων"
 
 #: ../src/ui/dialog/tracedialog.cpp:538
-#, fuzzy
 msgid "_Grays"
-msgstr "Γκρι"
+msgstr "_Γκρι"
 
 #: ../src/ui/dialog/tracedialog.cpp:543
 msgid "Same as Colors, but the result is converted to grayscale"
@@ -22028,9 +21721,8 @@ msgstr ""
 
 #. TRANSLATORS: "Smooth" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:548
-#, fuzzy
 msgid "S_mooth"
-msgstr "Εξομάλυνση"
+msgstr "Ε_ξομάλυνση"
 
 #: ../src/ui/dialog/tracedialog.cpp:553
 msgid "Apply Gaussian blur to the bitmap before tracing"
@@ -22038,9 +21730,8 @@ msgstr "Εφαρμογή θόλωσης Gauss στην ψηφιογραφία π
 
 #. TRANSLATORS: "Stack" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:556
-#, fuzzy
 msgid "Stac_k scans"
-msgstr "Σαρώσεις στοίβας"
+msgstr "Σαρώσεις στοί_βας"
 
 #: ../src/ui/dialog/tracedialog.cpp:560
 msgid ""
@@ -22051,9 +21742,8 @@ msgstr ""
 "(συνήθως με κενά)"
 
 #: ../src/ui/dialog/tracedialog.cpp:563
-#, fuzzy
 msgid "Remo_ve background"
-msgstr "Αφαίρεση παρασκηνίου"
+msgstr "Αφαί_ρεση παρασκηνίου"
 
 #: ../src/ui/dialog/tracedialog.cpp:569
 msgid "Remove bottom (background) layer when done"
@@ -22066,16 +21756,14 @@ msgstr "Πολλαπλές στρώσεις: δημιουργεί μία ομά�
 #. # end multiple scan
 #. ## end mode page
 #: ../src/ui/dialog/tracedialog.cpp:582
-#, fuzzy
 msgid "_Mode"
-msgstr "Κατάσταση"
+msgstr "_Κατάσταση"
 
 #. ## begin option page
 #. # potrace parameters
 #: ../src/ui/dialog/tracedialog.cpp:588
-#, fuzzy
 msgid "Suppress _speckles"
-msgstr "Κατάργηση κηλίδων"
+msgstr "Κατάργηση κ_ηλίδων"
 
 #: ../src/ui/dialog/tracedialog.cpp:591
 msgid "Ignore small spots (speckles) in the bitmap"
@@ -22088,14 +21776,12 @@ msgstr "Οι κηλίδες μέχρι αυτό τον αριθμό εικονο
 # #-#-#-#-#  nautilus.master.el.po (el)  #-#-#-#-#
 #
 #: ../src/ui/dialog/tracedialog.cpp:601
-#, fuzzy
 msgid "S_ize:"
-msgstr "Μέγεθος:"
+msgstr "Μέ_γεθος:"
 
 #: ../src/ui/dialog/tracedialog.cpp:606
-#, fuzzy
 msgid "Smooth _corners"
-msgstr "Ομαλές γωνίες"
+msgstr "Ομαλές γ_ωνίες"
 
 #: ../src/ui/dialog/tracedialog.cpp:609
 msgid "Smooth out sharp corners of the trace"
@@ -22106,9 +21792,8 @@ msgid "Increase this to smooth corners more"
 msgstr "Αύξηση του στις ομαλές γωνίες περισσότερο"
 
 #: ../src/ui/dialog/tracedialog.cpp:624
-#, fuzzy
 msgid "Optimize p_aths"
-msgstr "Βελτιστοποίηση μονοπατιών"
+msgstr "Βελτιστοποίηση μονοπ_ατιών"
 
 #: ../src/ui/dialog/tracedialog.cpp:628
 msgid "Try to optimize paths by joining adjacent Bezier curve segments"
@@ -22125,9 +21810,8 @@ msgstr ""
 "βελτιστοποίηση"
 
 #: ../src/ui/dialog/tracedialog.cpp:637
-#, fuzzy
 msgid "To_lerance:"
-msgstr "Ανοχή:"
+msgstr "Α_νοχή:"
 
 # #-#-#-#-#  balsa.master.el.po (balsa 2.0.13)  #-#-#-#-#
 #
@@ -22139,9 +21823,8 @@ msgstr "Ανοχή:"
 #
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:651
-#, fuzzy
 msgid "O_ptions"
-msgstr "Επιλογές"
+msgstr "Ε_πιλογές"
 
 #. ### credits
 #: ../src/ui/dialog/tracedialog.cpp:655
@@ -22168,9 +21851,8 @@ msgstr "Μνεία"
 #. #### begin right panel
 #. ## SIOX
 #: ../src/ui/dialog/tracedialog.cpp:672
-#, fuzzy
 msgid "SIOX _foreground selection"
-msgstr "Επιλογή προσκηνίου SIOX"
+msgstr "Επιλογή _προσκηνίου SIOX"
 
 #: ../src/ui/dialog/tracedialog.cpp:676
 msgid "Cover the area you want to select as the foreground"
@@ -22182,9 +21864,8 @@ msgstr "Κάλυψη της περιοχής που θέλετε να επιλέ
 #
 #. ## preview
 #: ../src/ui/dialog/tracedialog.cpp:681
-#, fuzzy
 msgid "_Update"
-msgstr "Ενημέρωση"
+msgstr "_Ενημέρωση"
 
 #: ../src/ui/dialog/tracedialog.cpp:688
 msgid ""
@@ -22851,8 +22532,8 @@ msgctxt "Transform handle tip"
 msgid ""
 "<b>Skew handle</b>: drag to skew (shear) selection about the opposite handle"
 msgstr ""
-"<b>Skew handle</b>: σύρσιμο για στρέβλωση της επιλογής γύρω από την απέναντι "
-"λαβή"
+"<b>Λαβή στρέβλωσης</b>: σύρσιμο για στρέβλωση της επιλογής γύρω από την "
+"απέναντι λαβή"
 
 #: ../src/ui/tool/transform-handle-set.cpp:575
 #, c-format
@@ -23156,7 +22837,7 @@ msgstr "O:"
 
 #: ../src/ui/widget/selected-style.cpp:155
 msgid "N/A"
-msgstr "N/A (Μή διαθέσιμο)"
+msgstr "Μη διαθέσιμο"
 
 #: ../src/ui/widget/selected-style.cpp:158
 #: ../src/ui/widget/selected-style.cpp:1025
@@ -23545,9 +23226,9 @@ msgid "<b>Finite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural ""
 "<b>Finite</b> vanishing point shared by <b>%d</b> boxes; drag with <b>Shift</"
 "b> to separate selected box(es)"
-msgstr[0] "<b>Πεπερασμένο</b>σημείο φυγής κοινό σε <b>%d</b>πλαίσιο"
+msgstr[0] "<b>Πεπερασμένο</b> σημείο φυγής κοινό σε <b>%d</b> πλαίσιο"
 msgstr[1] ""
-"<b>Πεπερασμένο</b>σημείο φυγής κοινό σε <b>%d</b>πλαίσια. Σύρσιμο με "
+"<b>Πεπερασμένο</b> σημείο φυγής κοινό σε <b>%d</b> πλαίσια· σύρσιμο με "
 "<b>Shift</b> για διαχωρισμό των επιλεγμένων πλαισίων"
 
 #. This won't make sense any more when infinite VPs are not shown on the canvas,
@@ -23558,10 +23239,10 @@ msgid "<b>Infinite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural ""
 "<b>Infinite</b> vanishing point shared by <b>%d</b> boxes; drag with "
 "<b>Shift</b> to separate selected box(es)"
-msgstr[0] "<b>Άπειρο</b>σημείο φυγής κοινό σε <b>%d</b>πλαίσια"
+msgstr[0] "<b>Άπειρο</b> σημείο φυγής κοινό σε <b>%d</b> πλαίσιο"
 msgstr[1] ""
-"<b>Άπειρο</b>σημείο φυγής κοινό σε <b>%d</b>πλαίσια. Σύρσιμο με <b>Shift</b> "
-"για διαχωρισμό των επιλεγμένων πλαισίων"
+"<b>Άπειρο</b> σημείο φυγής κοινό σε <b>%d</b>πλαίσια· σύρσιμο με "
+"<b>Shift</b> για διαχωρισμό των επιλεγμένων πλαισίων"
 
 #: ../src/vanishing-point.cpp:333
 #, c-format
@@ -23571,10 +23252,10 @@ msgid_plural ""
 "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box"
 "(es)"
 msgstr[0] ""
-"κοινό σε <b>%d</b> πλαίσιο. Σύρσιμο με <b>Shift</b> για διαχωρισμό "
+"κοινό σε <b>%d</b> πλαίσιο· σύρσιμο με <b>Shift</b> για διαχωρισμό "
 "επιλεγμένων πλαισίων"
 msgstr[1] ""
-"κοινό σε <b>%d</b> πλαίσια. Σύρσιμο με <b>Shift</b> για διαχωρισμό "
+"κοινό σε <b>%d</b> πλαίσια· σύρσιμο με <b>Shift</b> για διαχωρισμό "
 "επιλεγμένων πλαισίων"
 
 #: ../src/verbs.cpp:1145
@@ -26810,9 +26491,8 @@ msgid "Bounding box"
 msgstr "Οριακό πλαίσιο"
 
 #: ../src/widgets/toolbox.cpp:2279
-#, fuzzy
 msgid "Snap bounding boxes"
-msgstr "Προσκόλληση των γωνιών του οριακού πλαισίου"
+msgstr "Προσκόλληση οριακών πλαισίων"
 
 #: ../src/widgets/toolbox.cpp:2288
 msgid "Bounding box edges"
@@ -26835,23 +26515,20 @@ msgid "BBox Edge Midpoints"
 msgstr "Μέσα πλευρών περιγράμματος"
 
 #: ../src/widgets/toolbox.cpp:2306
-#, fuzzy
 msgid "Snap midpoints of bounding box edges"
-msgstr "Προσκόλληση από/σε μέσα άκρων οριακού πλαισίου"
+msgstr "Προσκόλληση ενδιάμεσων σημείων οριακού πλαισίου"
 
 #: ../src/widgets/toolbox.cpp:2316
 msgid "BBox Centers"
 msgstr "Κέντρα περιγραμμάτων"
 
 #: ../src/widgets/toolbox.cpp:2316
-#, fuzzy
 msgid "Snapping centers of bounding boxes"
-msgstr "Προσκόλληση από/σε κέντρα οριακών πλαισίων"
+msgstr "Προσκόλληση κέντρων οριακών πλαισίων"
 
 #: ../src/widgets/toolbox.cpp:2325
-#, fuzzy
 msgid "Snap nodes, paths, and handles"
-msgstr "Προσκόλληση κόμβων ή λαβών"
+msgstr "Προσκόλληση κόμβων, μονοπατιών και λαβών"
 
 #: ../src/widgets/toolbox.cpp:2333
 msgid "Snap to paths"
@@ -26871,7 +26548,7 @@ msgstr "Σε κόμβους"
 
 #: ../src/widgets/toolbox.cpp:2351
 msgid "Snap cusp nodes, incl. rectangle corners"
-msgstr ""
+msgstr "Προσκόλληση απότομων κόμβων, συμπεριλαμβανόμενων των γωνιών ορθογωνίου"
 
 #: ../src/widgets/toolbox.cpp:2360
 msgid "Smooth nodes"
@@ -26880,15 +26557,16 @@ msgstr "Ομαλοί κόμβοι"
 #: ../src/widgets/toolbox.cpp:2360
 msgid "Snap smooth nodes, incl. quadrant points of ellipses"
 msgstr ""
+"Προσκόλληση ομαλών κόμβων, συμπεριλαμβανόμενων σημείων τεταρτημορίου "
+"ελλείψεων"
 
 #: ../src/widgets/toolbox.cpp:2369
 msgid "Line Midpoints"
 msgstr "Μέσα γραμμών"
 
 #: ../src/widgets/toolbox.cpp:2369
-#, fuzzy
 msgid "Snap midpoints of line segments"
-msgstr "Προσκόλληση από/σε μέσα ευθυγράμμων τμημάτων"
+msgstr "Προσκόλληση ενδιάμεσων σημείων τμημάτων γραμμής"
 
 # #-#-#-#-#  galeon.master.el.po (galeon 1.0)  #-#-#-#-#
 #
@@ -26910,27 +26588,24 @@ msgid "Object Centers"
 msgstr "Μέσα αντικειμένων"
 
 #: ../src/widgets/toolbox.cpp:2386
-#, fuzzy
 msgid "Snap centers of objects"
-msgstr "Προσκόλληση από/σε κέντρα αντικειμένων"
+msgstr "Προσκόλληση κέντρων αντικειμένων"
 
 #: ../src/widgets/toolbox.cpp:2395
 msgid "Rotation Centers"
 msgstr "Κέντρα περιστροφής"
 
 #: ../src/widgets/toolbox.cpp:2395
-#, fuzzy
 msgid "Snap an item's rotation center"
-msgstr "Προσκόλληση από/σε κέντρα περιστροφής στοιχείου"
+msgstr "Προσκόλληση κέντρου περιστροφής στοιχείου"
 
 #: ../src/widgets/toolbox.cpp:2404
 msgid "Text baseline"
 msgstr "Γραμμή βάσης κειμένου"
 
 #: ../src/widgets/toolbox.cpp:2404
-#, fuzzy
 msgid "Snap text anchors and baselines"
-msgstr "Προσκόλληση από και σε άγκυρες κειμένων και γραμμών βάσης"
+msgstr "Προσκόλληση αγκυρών κειμένου και γραμμών βάσης"
 
 #: ../src/widgets/toolbox.cpp:2414
 msgid "Page border"
@@ -26945,9 +26620,8 @@ msgid "Snap to grids"
 msgstr "Προσκόλληση σε πλέγματα"
 
 #: ../src/widgets/toolbox.cpp:2432
-#, fuzzy
 msgid "Snap guides"
-msgstr "Προσκόλληση σε οδηγούς"
+msgstr "Προσκόλληση οδηγών"
 
 #: ../src/widgets/toolbox.cpp:2631
 msgid "Star: Change number of corners"
@@ -27554,7 +27228,7 @@ msgstr "Κατάσταση συρρίκνωσης/επέκτασης"
 
 #: ../src/widgets/toolbox.cpp:4459
 msgid "Shrink (inset) parts of paths; with Shift grow (outset)"
-msgstr "Συρρίκνωση μερών του μονοπατιού, με Shift επέκταση "
+msgstr "Συρρίκνωση μερών του μονοπατιού· με Shift επέκταση"
 
 #: ../src/widgets/toolbox.cpp:4465
 msgid "Attract/repel mode"
@@ -27928,7 +27602,7 @@ msgstr ""
 #. Fixation
 #: ../src/widgets/toolbox.cpp:5231
 msgid "(perpendicular to stroke, \"brush\")"
-msgstr "(κάθετα στην πινελιά, \"πινέλο\""
+msgstr "(κάθετα στην πινελιά, \"πινέλο\")"
 
 #: ../src/widgets/toolbox.cpp:5231
 msgid "(almost fixed, default)"
@@ -27936,7 +27610,7 @@ msgstr "(σχεδόν καθορισμένο, προεπιλεγμένο)"
 
 #: ../src/widgets/toolbox.cpp:5231
 msgid "(fixed by Angle, \"pen\")"
-msgstr "(καθορισμένο κατά γωνία, \"πένα\""
+msgstr "(καθορισμένο κατά γωνία, \"πένα\")"
 
 #: ../src/widgets/toolbox.cpp:5234
 msgid "Fixation"
@@ -28274,9 +27948,9 @@ msgid "The width of the eraser pen (relative to the visible canvas area)"
 msgstr "Το πλάτος της πένας της σβήστρας (σχετικά με την περιοχή ορατού καμβά)"
 
 #: ../src/widgets/toolbox.cpp:6469
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to find font matching: %s\n"
-msgstr "Αδυναμία εύρεσης του κόμβου ID: '%s'\n"
+msgstr "Αδυναμία εύρεσης κατάλληλης γραμματοσειράς: %s\n"
 
 #: ../src/widgets/toolbox.cpp:6503
 msgid "Text: Change font family"
@@ -29212,7 +28886,7 @@ msgstr "Τρίγωνο συμμετροδιαμέσων"
 
 #: ../share/extensions/draw_from_triangle.inx.h:33
 msgid "Symmedian Point"
-msgstr "Σημείο (τομή) συμμετροδιαμέσων"
+msgstr "Σημείο συμμετροδιαμέσων"
 
 #: ../share/extensions/draw_from_triangle.inx.h:34
 msgid "Symmedians"
@@ -29281,7 +28955,7 @@ msgstr ""
 "γωνίες κλ. Μπορείτε επίσης να σχεδιάσετε την ισογώνια και την ισοτομική "
 "συζυγή του σημείου. Προσέξτε ότι αυτό μπορεί να προκαλέσει ένα σφάλμα "
 "διαίρεσης με το μηδέν για κάποια σημεία.\n"
-"          \"  "
+"            "
 
 #: ../share/extensions/draw_from_triangle.inx.h:57
 msgid "Triangle Function"
@@ -29351,7 +29025,6 @@ msgid "Use automatic scaling to size A4"
 msgstr "Χρήση αυτόματης κλιμάκωσης σε μέγεθος Α4"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
-#, fuzzy
 msgid ""
 "- AutoCAD Release 14 DXF format.\n"
 "- The base unit parameter specifies in what unit the coordinates are output "
@@ -29365,49 +29038,49 @@ msgid ""
 "- LWPOLYLINE output is a multiply-connected polyline, disable it to use a "
 "legacy version of the LINE output."
 msgstr ""
-"- AutoCAD έκδοση 13 και νεώτερες.\n"
-"- υποθέτουμε ότι το σχέδιο svg είναι σε εικονοστοιχεία, στα 90 dpi.\n"
-"- μόνο γραμμή και στοιχεία spline υποστηρίζονται.\n"
-"- η έξοδος spline του ROBO-Master είναι μια ειδική spline αναγνώσιμη μόνο "
-"από το ROBO-Master και τους θεατές  AutoDesk, όχι από το Inkscape.\n"
-"- η έξοδος LWPOLYLINE είναι μια πολυγραμμή πολλαπλώς συνδεμένη,  "
-"απενεργοποιήστε την για να χρησιμοποιήσετε μια παλιά έκδοση της εξόδου του "
-"LINE."
+"- AutoCAD έκδοση 14, μορφής DXF.\n"
+"- Η παράμετρος βασικής μονάδας καθορίζει σε ποια μονάδα εξάγονται οι "
+"συντεταγμένες (90 εικονοστοιχεία = 1 ίντσα).\n"
+"- Υποστηριζόμενοι τύποι στοιχείων\n"
+"    - μονοπάτια (γραμμές και splines)\n"
+"    - ορθογώνια\n"
+"    - κλώνοι (η παραπομπή στο πρωτότυπο έχει χαθεί)\n"
+"- Η έξοδος ROBO-Master spline είναι μια ειδική spline αναγνώσιμη μόνο από το "
+"ROBO-Master και θεατές AutoDesk, όχι από το Inkscape.\n"
+"- Η έξοδος LWPOLYLINE είναι μια πολλαπλά συνδεμένη πολυγραμμή, "
+"απενεργοποιήστε την παλιά έκδοση εξόδου της LINE."
 
 #: ../share/extensions/dxf_outlines.inx.h:9
 msgid "Base unit"
-msgstr ""
+msgstr "Μονάδα βάσης"
 
 #: ../share/extensions/dxf_outlines.inx.h:10
 msgid "CP 1250"
-msgstr ""
+msgstr "CP 1250"
 
 #: ../share/extensions/dxf_outlines.inx.h:11
 msgid "CP 1252"
-msgstr ""
+msgstr "CP 1252"
 
 #: ../share/extensions/dxf_outlines.inx.h:12
-#, fuzzy
 msgid "Character Encoding"
-msgstr "Κωδικοποίηση χαρακτήρα:"
+msgstr "Κωδικοποίηση χαρακτήρα"
 
 #: ../share/extensions/dxf_outlines.inx.h:13
 msgid "Desktop Cutting Plotter"
 msgstr "Επιτραπέζιος κοπτικός σχεδιογράφος"
 
 #: ../share/extensions/dxf_outlines.inx.h:14
-#, fuzzy
 msgid "Desktop Cutting Plotter (AutoCAD DXF R14) (*.dxf)"
-msgstr "Επιτραπέζιος κοπτικός σχεδιογράφος (R13) (*.dxf)"
+msgstr "Επιτραπέζιος κοπτικός σχεδιογράφος (AutoCAD DXF R14) (*.dxf)"
 
 #: ../share/extensions/dxf_outlines.inx.h:16
-#, fuzzy
 msgid "Latin 1"
-msgstr "Λατινικά"
+msgstr "Λατινικά 1"
 
 #: ../share/extensions/dxf_outlines.inx.h:18
 msgid "UTF 8"
-msgstr ""
+msgstr "UTF 8"
 
 #: ../share/extensions/dxf_outlines.inx.h:27
 msgid "use LWPOLYLINE type of line output"
@@ -29739,7 +29412,7 @@ msgstr "Γωνία πίεσης (μοίρες):"
 
 #: ../share/extensions/gears.inx.h:7
 msgid "Unit of measure for both circular pitch and center diameter."
-msgstr ""
+msgstr "Μονάδα μέτρησης για κυκλικό βήμα και κεντρική διάμετρο."
 
 #: ../share/extensions/gcodetools_about.inx.h:1
 msgid "About"
@@ -29784,9 +29457,9 @@ msgstr ""
 "γωνίες χρησιμοποιώντας κόφτες κώνου. Αυτό το πρόσθετο υπολογίζει Gcode για "
 "μονοπάτια χρησιμοποιώντας κυκλική παρεμβολή ή γραμμική κίνηση όταν "
 "χρειάζεται. Μαθήματα, οδηγοί και υποστήριξη μπορεί να βρεθούν στην αγγλική "
-"υποστήριξη: http://www.cnc-club.ru/gcodetools και ρωσική υποστήριξη: http://"
-"www.cnc-club.ru/gcodetoolsru. Μνείες: Nick Drobchenko, Vladimir Kalyaev, "
-"John Brooker, Henry Nicolas. Gcodetools ver. 1.6.01"
+"υποστήριξη: http://www.cnc-club.ru/gcodetools και ρωσική υποστήριξη: "
+"http://www.cnc-club.ru/gcodetoolsru. Μνείες: Nick Drobchenko, Vladimir "
+"Kalyaev, John Brooker, Henry Nicolas. Gcodetools ver. 1.7"
 
 #: ../share/extensions/gcodetools_about.inx.h:4
 msgid ""
@@ -30224,10 +29897,10 @@ msgstr ""
 "Αυτή η συνάρτηση δημιουργεί μονοπάτι για χάραξη γραμμάτων ή οποιοδήποτε "
 "σχήμα με κοφτερές γωνίες. Cutter's shape (το σχήμα του κόφτη) ως μια "
 "συνάρτηση ακτίνας ορίζεται από το εργαλείο. Βάθος μπορεί να είναι "
-"οποιαδήποτε έκφραση Python. Π.χ.: cone....(45 μοίρες)...........: w cone...."
-"(ύψος/διάμετρο=10/3).: 10*w/3 sphere..(ακτίνα r)...........................: "
-"math.sqrt(max(0,r**2-w**2)) ellipse.(minor axis r, major 4r).....: math.sqrt"
-"(max(0,r**2-w**2))*4"
+"οποιαδήποτε έκφραση Python. Π.χ.: cone....(45 μοίρες)...........: w "
+"cone....(ύψος/διάμετρο=10/3).: 10*w/3 sphere..(ακτίνα "
+"r)...........................: math.sqrt(max(0,r**2-w**2)) ellipse.(minor "
+"axis r, major 4r).....: math.sqrt(max(0,r**2-w**2))*4"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:1
 #: ../share/extensions/gcodetools_orientation_points.inx.h:1
@@ -30283,7 +29956,7 @@ msgstr ""
 "χρησιμοποιώντας το εργαλείο κειμένου (τρίτες συντεταγμένες). Εάν δεν "
 "υπάρχουν σημεία προσανατολισμού μες την τρέχουσα στρώση, τότε παίρνονται από "
 "την ανώτερη στρώση. Μην απομαδοποιείτε τα σημεία προσανατολισμού! Μπορείτε "
-"να τα επιλέξετε χρησιμοποιώντας διπλό κλικ για να μπείτε στην ομάδα ή με  "
+"να τα επιλέξετε χρησιμοποιώντας διπλό κλικ για να μπείτε στην ομάδα ή με "
 "Ctrl+κλικ. Τώρα πιέστε εφαρμογή για να δημιουργήσετε σημεία ελέγχου "
 "(ανεξάρτητοι ορισμοί για κάθε στρώση)."
 
@@ -30509,7 +30182,7 @@ msgstr ""
 
 #: ../share/extensions/generate_voronoi.inx.h:8
 msgid "Size of Border (px):"
-msgstr "Μέγεθος περιγράμματος  (px):"
+msgstr "Μέγεθος περιγράμματος (px):"
 
 #: ../share/extensions/generate_voronoi.inx.h:9
 msgid "Voronoi Pattern"
@@ -30521,7 +30194,7 @@ msgstr "GIMP XCF"
 
 #: ../share/extensions/gimp_xcf.inx.h:2
 msgid "GIMP XCF maintaining layers (*.xcf)"
-msgstr "Διατήρηση στρώσεων GIMP XCF  (*.xcf)"
+msgstr "Διατήρηση στρώσεων GIMP XCF (*.xcf)"
 
 #: ../share/extensions/gimp_xcf.inx.h:5
 msgid "Save Background"
@@ -30565,7 +30238,7 @@ msgstr ""
 #: ../share/extensions/grid_cartesian.inx.h:1
 #: ../share/extensions/grid_isometric.inx.h:1
 msgid "Border Thickness (px):"
-msgstr "Πάχος περιγράμματος  (px):"
+msgstr "Πάχος περιγράμματος (px):"
 
 #: ../share/extensions/grid_cartesian.inx.h:2
 msgid "Cartesian Grid"
@@ -30603,7 +30276,7 @@ msgstr "Πάχος πρωτεύουσας διαίρεσης του Χ (px):"
 
 #: ../share/extensions/grid_cartesian.inx.h:9
 msgid "Major X Divisions:"
-msgstr "Πρωτεύουσες  διαιρέσεις του X:"
+msgstr "Πρωτεύουσες διαιρέσεις του X:"
 
 #: ../share/extensions/grid_cartesian.inx.h:10
 msgid "Major Y Division Spacing (px):"
@@ -30615,7 +30288,7 @@ msgstr "Πάχος κύριας διαίρεσης του Υ (px):"
 
 #: ../share/extensions/grid_cartesian.inx.h:12
 msgid "Major Y Divisions:"
-msgstr "Πρωτεύουσες  διαιρέσεις του Y:"
+msgstr "Πρωτεύουσες διαιρέσεις του Y:"
 
 #: ../share/extensions/grid_cartesian.inx.h:13
 msgid "Minor X Division Thickness (px):"
@@ -30753,7 +30426,7 @@ msgstr "Πρωτεύουσες κυκλικές διαιρέσεις:"
 #: ../share/extensions/grid_polar.inx.h:15
 msgid "Minor Angle Division End 'n' Divs. Before Centre:"
 msgstr ""
-"Τα πέρατα των  δευτερευουσών γωνιακών διαιρέσεων 'n' διαιρέσεις πριν το "
+"Τα πέρατα των δευτερευουσών γωνιακών διαιρέσεων 'n' διαιρέσεις. Πριν το "
 "κέντρο:"
 
 #: ../share/extensions/grid_polar.inx.h:16
@@ -30899,7 +30572,7 @@ msgstr "Σχεδίαση αόρατων στρώσεων"
 
 #: ../share/extensions/hpgl_output.inx.h:7
 msgid "Resolution (dpi)"
-msgstr "Ανάλυση σε dpi"
+msgstr "Ανάλυση (dpi)"
 
 #: ../share/extensions/hpgl_output.inx.h:8
 msgid "X-origin (px)"
@@ -31182,7 +30855,7 @@ msgid ""
 "presentation."
 msgstr ""
 "Δημιουργεί ένα αρχείο zip που περιέχει pdfs ή pngs όλων των διαφανειών μιας "
-"παρουσίασης  JessyInk."
+"παρουσίασης JessyInk."
 
 #: ../share/extensions/jessyInk_export.inx.h:3
 msgid "JessyInk zipped pdf or png output"
@@ -31451,7 +31124,7 @@ msgid ""
 "This extension allows you customise the mouse handler JessyInk uses. Please "
 "see code.google.com/p/jessyink for more details."
 msgstr ""
-"Αυτή η επέκταση σας επιτρέπει να προσαρμόσετε τη λαβή ποντικιού που το   "
+"Αυτή η επέκταση σας επιτρέπει να προσαρμόσετε τη λαβή ποντικιού που το "
 "JessyInk χρησιμοποιεί. Παρακαλώ, δείτε code.google.com/p/jessyink για "
 "περισσότερες λεπτομέρειες."
 
@@ -31482,9 +31155,9 @@ msgid ""
 "This extension allows you to change the transition JessyInk uses for the "
 "selected layer. Please see code.google.com/p/jessyink for more details."
 msgstr ""
-"Αυτή η επέκταση σας επιτρέπει να αλλάξετε τη μετάβαση που χρησιμοποιεί το  "
-"JessyInk για την επιλεγμένη στρώση. Παρακαλώ, δείτε code.google.com/p/"
-"jessyink για περισσότερες λεπτομέρειες."
+"Αυτή η επέκταση σας επιτρέπει να αλλάξετε τη μετάβαση που χρησιμοποιεί το "
+"JessyInk για την επιλεγμένη στρώση. Παρακαλώ, δείτε "
+"code.google.com/p/jessyink για περισσότερες λεπτομέρειες."
 
 #: ../share/extensions/jessyInk_transitions.inx.h:11
 msgid "Transition in effect"
@@ -31598,7 +31271,7 @@ msgstr "Προβολή"
 
 #: ../share/extensions/layers2svgfont.inx.h:1
 msgid "3 - Convert Glyph Layers to SVG Font"
-msgstr ""
+msgstr "3 - Μετατροπή στρώσεων γλυφής σε γραμματοσειρά SVG"
 
 #: ../share/extensions/layers2svgfont.inx.h:2
 #: ../share/extensions/new_glyph_layer.inx.h:2
@@ -31606,9 +31279,8 @@ msgstr ""
 #: ../share/extensions/previous_glyph_layer.inx.h:1
 #: ../share/extensions/setup_typography_canvas.inx.h:6
 #: ../share/extensions/svgfont2layers.inx.h:3
-#, fuzzy
 msgid "Typography"
-msgstr "Σπειρογράφημα "
+msgstr "Τυπογραφία"
 
 #: ../share/extensions/layout_nup.inx.h:1
 msgid ""
@@ -31623,10 +31295,21 @@ msgid ""
 "    * Layout padding: inner padding for each part of the layout.\n"
 "      "
 msgstr ""
+"\n"
+"Παράμετροι:\n"
+" * Μέγεθος σελίδας: πλάτος και ύψος.\n"
+" * Περιθώρια σελίδας: πρόσθετος χώρος γύρω από κάθε σελίδα.\n"
+" * Γραμμές και στήλες διάταξης.\n"
+" * Μέγεθος διάταξης: πλάτος και ύψος, αυτόματα υπολογιζόμενα εάν ένα είναι "
+"0.\n"
+" * Αυτόματος υπολογισμός μεγέθους διάταξης: μην χρησιμοποιείτε τις τιμές "
+"μεγέθους διάταξης.\n"
+" * Περιθώρια διάταξης: λευκός χώρος γύρω από κάθε μέρος της διάταξης.\n"
+" * Συμπλήρωση διάταξης: εσωτερική συμπλήρωση για κάθε μέρος της διάταξης."
 
 #: ../share/extensions/layout_nup.inx.h:11
 msgid "Auto calculate layout size"
-msgstr ""
+msgstr "Αυτόματος υπολογισμός μεγέθους διάταξης"
 
 #: ../share/extensions/layout_nup.inx.h:12
 #: ../share/extensions/printing-marks.inx.h:3
@@ -31635,29 +31318,25 @@ msgstr "Πυθμένας:"
 
 #: ../share/extensions/layout_nup.inx.h:13
 msgid "Cols:"
-msgstr ""
+msgstr "Στήλες:"
 
 #: ../share/extensions/layout_nup.inx.h:14
-#, fuzzy
 msgid "Cutting marks"
-msgstr "Διάταξη κοπής:"
+msgstr "Σημάδια κοπής:"
 
 #
 #: ../share/extensions/layout_nup.inx.h:17
-#, fuzzy
 msgid "Layout dimensions"
-msgstr "Ρύθμιση της διάταξης:"
+msgstr "Διαστάσεις διάταξης:"
 
 #: ../share/extensions/layout_nup.inx.h:18
-#, fuzzy
 msgid "Layout margins"
-msgstr "Αριστερό περιθώριο"
+msgstr "Περιθώρια διάταξης"
 
 #
 #: ../share/extensions/layout_nup.inx.h:19
-#, fuzzy
 msgid "Layout padding"
-msgstr "Ρύθμιση της διάταξης:"
+msgstr "Συμπλήρωση διάταξης"
 
 #: ../share/extensions/layout_nup.inx.h:20
 #: ../share/extensions/printing-marks.inx.h:8
@@ -31665,14 +31344,12 @@ msgid "Left:"
 msgstr "Αριστερά:"
 
 #: ../share/extensions/layout_nup.inx.h:21
-#, fuzzy
 msgid "Margin box"
-msgstr "Πλαίσιο αντικειμένου"
+msgstr "Πλαίσιο περιθωρίου"
 
 #: ../share/extensions/layout_nup.inx.h:22
-#, fuzzy
 msgid "Margin guide"
-msgstr "Μετακίνηση οδηγού"
+msgstr "Οδηγός περιθωρίου"
 
 #: ../share/extensions/layout_nup.inx.h:23
 #: ../share/extensions/printing-marks.inx.h:9
@@ -31681,31 +31358,27 @@ msgstr "Σημεία"
 
 #: ../share/extensions/layout_nup.inx.h:24
 msgid "N-up layout"
-msgstr ""
+msgstr "Διάταξη Ν-επάνω"
 
 #: ../share/extensions/layout_nup.inx.h:25
-#, fuzzy
 msgid "Padding box"
-msgstr "Οριακό πλαίσιο"
+msgstr "Πλαίσιο συμπλήρωσης"
 
 #: ../share/extensions/layout_nup.inx.h:26
 msgid "Padding guide"
-msgstr ""
+msgstr "Οδηγός συμπλήρωσης"
 
 #: ../share/extensions/layout_nup.inx.h:27
-#, fuzzy
 msgid "Page dimensions"
-msgstr "Διαστάσεις"
+msgstr "Διαστάσεις σελίδας"
 
 #: ../share/extensions/layout_nup.inx.h:28
-#, fuzzy
 msgid "Page margins"
-msgstr "Αριστερό περιθώριο"
+msgstr "Περιθώρια σελίδας"
 
 #: ../share/extensions/layout_nup.inx.h:29
-#, fuzzy
 msgid "Place holder"
-msgstr "Μαύρη οπή"
+msgstr "Κάτοχος θέσης"
 
 #: ../share/extensions/layout_nup.inx.h:31
 #: ../share/extensions/printing-marks.inx.h:16
@@ -31713,23 +31386,20 @@ msgid "Right:"
 msgstr "Δεξιά:"
 
 #: ../share/extensions/layout_nup.inx.h:32
-#, fuzzy
 msgid "Rows:"
-msgstr "Γ_ραμμές:"
+msgstr "Γραμμές:"
 
 # #-#-#-#-#  nautilus.master.el.po (el)  #-#-#-#-#
 #
 #: ../share/extensions/layout_nup.inx.h:33
-#, fuzzy
 msgid "Size X:"
-msgstr "Μέγεθος _Χ:"
+msgstr "Μέγεθος Χ:"
 
 # #-#-#-#-#  nautilus.master.el.po (el)  #-#-#-#-#
 #
 #: ../share/extensions/layout_nup.inx.h:34
-#, fuzzy
 msgid "Size Y:"
-msgstr "Μέγεθος _Υ:"
+msgstr "Μέγεθος Υ:"
 
 #: ../share/extensions/layout_nup.inx.h:35
 #: ../share/extensions/printing-marks.inx.h:20
@@ -31957,18 +31627,16 @@ msgid "Motion"
 msgstr "Κίνηση"
 
 #: ../share/extensions/new_glyph_layer.inx.h:1
-#, fuzzy
 msgid "2 - Add Glyph Layer"
-msgstr "Προσθήκη γλύφης"
+msgstr "2 - Προσθήκη στρώσης γλυφής"
 
 #: ../share/extensions/new_glyph_layer.inx.h:3
-#, fuzzy
 msgid "Unicode character:"
-msgstr "Εισαγωγή χαρακτήρα Unicode"
+msgstr "Χαρακτήρας Unicode:"
 
 #: ../share/extensions/next_glyph_layer.inx.h:2
 msgid "View Next Glyph"
-msgstr ""
+msgstr "Προβολή επόμενης γλυφής"
 
 #: ../share/extensions/outline2svg.inx.h:1
 msgid "ASCII Text with outline markup"
@@ -32165,7 +31833,7 @@ msgstr ""
 
 #: ../share/extensions/perfectboundcover.inx.h:1
 msgid "Bleed (in):"
-msgstr "Φυγή σε in:"
+msgstr "Φυγή (in):"
 
 #: ../share/extensions/perfectboundcover.inx.h:2
 msgid "Bond Weight #"
@@ -32173,7 +31841,7 @@ msgstr "Βάρος χαρτιού"
 
 #: ../share/extensions/perfectboundcover.inx.h:3
 msgid "Book Height (inches):"
-msgstr "Ύψος βιβλίου σε ίντσες:"
+msgstr "Ύψος βιβλίου (ίντσες):"
 
 #: ../share/extensions/perfectboundcover.inx.h:4
 msgid "Book Properties"
@@ -32181,7 +31849,7 @@ msgstr "Ιδιότητες βιβλίου"
 
 #: ../share/extensions/perfectboundcover.inx.h:5
 msgid "Book Width (inches):"
-msgstr "Πλάτος βιβλίου σε ίντσες:"
+msgstr "Πλάτος βιβλίου (ίντσες):"
 
 #: ../share/extensions/perfectboundcover.inx.h:6
 msgid "Caliper (inches)"
@@ -32477,9 +32145,8 @@ msgid "Z-sort faces by:"
 msgstr "Διάταξη πλευρών στον άξονα Ζ κατά:"
 
 #: ../share/extensions/previous_glyph_layer.inx.h:2
-#, fuzzy
 msgid "View Previous Glyph"
-msgstr "Προηγούμενη σελίδα:"
+msgstr "Προβολή προηγούμενης γλυφής"
 
 #: ../share/extensions/printing-marks.inx.h:1
 msgid "Bleed Margin"
@@ -32595,12 +32262,11 @@ msgstr "Τύπος ραβδωτού κώδικα:"
 
 #: ../share/extensions/render_barcode.inx.h:5
 msgid "Classic"
-msgstr ""
+msgstr "Κλασικό"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:2
-#, fuzzy
 msgid "Datamatrix"
-msgstr "Ραβδωτός κώδικας - πίνακας δεδομένων"
+msgstr "Πίνακας δεδομένων"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:4
 #: ../share/extensions/render_barcode_qrcode.inx.h:15
@@ -32641,7 +32307,7 @@ msgstr "Q (περίπου 25%)"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:12
 msgid "QR Code"
-msgstr ""
+msgstr "Κώδικας QR"
 
 #: ../share/extensions/render_barcode_qrcode.inx.h:14
 msgid "See http://www.denso-wave.com/qrcode/index-e.html for details"
@@ -32837,7 +32503,7 @@ msgstr "Βοήθεια (επιλογές)"
 
 #: ../share/extensions/scour.inx.h:8
 msgid "Ids"
-msgstr "Ταυτότητες (Ids)"
+msgstr "Αναγνωριστικά"
 
 #: ../share/extensions/scour.inx.h:9
 msgid ""
@@ -32881,9 +32547,8 @@ msgid "Keep editor data"
 msgstr "Διατήρηση δεδομένων επεξεργαστή"
 
 #: ../share/extensions/scour.inx.h:17
-#, fuzzy
 msgid "Number of significant digits for coords:"
-msgstr "Αριθμός σημαντικών ψηφίων για συντεταγμένες"
+msgstr "Αριθμός σημαντικών ψηφίων για συντεταγμένες:"
 
 #: ../share/extensions/scour.inx.h:18
 msgid "Optimized SVG (*.svg)"
@@ -32985,9 +32650,9 @@ msgstr ""
 "    * Διάσπαση ομάδων: αφαιρεί άχρηστα στοιχεία &lt;g&gt;, προβιβάζοντας τα "
 "περιεχόμενα τους μια στάθμη. Απαιτεί ορισμό \"Αφαίρεση αχρησιμοποίητων "
 "ονομάτων ταυτοτήτων για στοιχεία\".\n"
-"    * Δημιουργία ομάδων για παρόμοια γνωρίσματα: δημιουργία στοιχείων &lt;"
-"g&gt; για εκτελέσεις στοιχείων που έχουν τουλάχιστον ένα γνώρισμα κοινό (π."
-"χ. χρώμα γεμίσματος, αδιαφάνεια πινελιάς, ...).\n"
+"    * Δημιουργία ομάδων για παρόμοια γνωρίσματα: δημιουργία στοιχείων "
+"&lt;g&gt; για εκτελέσεις στοιχείων που έχουν τουλάχιστον ένα γνώρισμα κοινό "
+"(π.χ. χρώμα γεμίσματος, αδιαφάνεια πινελιάς, ...).\n"
 "    * Ενσωματωμένες εικονογραφίες: ενσωματωμένες εικόνες εικονογραφιών ως "
 "βάση64 κωδικοποιημένων δεδομένων URLs.\n"
 "    * Διατήρηση δεδομένων επεξεργαστή: μην αφαιρείτε στοιχεία και γνωρίσματα "
@@ -33003,8 +32668,7 @@ msgstr ""
 "ενός πλαισίου θέασης.\n"
 "    * Αριθμός σημαντικών ψηφίων για συντεταγμένες: όλες οι συντεταγμένες "
 "βγαίνουν με αυτό τον αριθμό σημαντικών ψηφίων. Π.χ., εάν καθοριστεί 3, οι "
-"συντεταγμένες του 3,5153 βγαίνουν ως 3,51 και η συντεταγμένη 471,55  ως "
-"472.\n"
+"συντεταγμένες του 3,5153 βγαίνουν ως 3,51 και η συντεταγμένη 471,55  ως 472.\n"
 "    * Εσοχή XML (όμορφη εκτύπωση): είτε καμία για χωρίς εσοχή, διάστημα για "
 "χρήση ενός κενού ανά στάθμη ένθεσης, ή Tab για χρήση ενός στηλοθέτη ανά "
 "στάθμη ένθεσης."
@@ -33014,40 +32678,34 @@ msgid "Work around renderer bugs"
 msgstr "Εργασία γύρω από τα σφάλματα σχεδιαστή"
 
 #: ../share/extensions/scour.inx.h:48
-#, fuzzy
 msgid "XML indentation (pretty-printing):"
-msgstr "Εσοχή XML (όμορφη εκτύπωση)"
+msgstr "Εσοχή XML (όμορφη εκτύπωση):"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:1
 msgid "1 - Setup Typography Canvas"
-msgstr ""
+msgstr "1 - Εγκατάσταση καμβά τυπογραφίας"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:2
-#, fuzzy
 msgid "Ascender:"
-msgstr "Απόδοση"
+msgstr "Ανερχόμενο:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:3
-#, fuzzy
 msgid "Caps Height:"
-msgstr "Ύψος γραμμής:"
+msgstr "Ύψος κεφαλαίων:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:4
-#, fuzzy
 msgid "Descender:"
-msgstr "Εξάρτηση:"
+msgstr "Κατερχόμενο:"
 
 # #-#-#-#-#  nautilus.master.el.po (el)  #-#-#-#-#
 #
 #: ../share/extensions/setup_typography_canvas.inx.h:5
-#, fuzzy
 msgid "Em-size:"
-msgstr "Μέγεθος:"
+msgstr "Μέγεθος Em:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:7
-#, fuzzy
 msgid "X-Height:"
-msgstr "Ύψος:"
+msgstr "Ύψος Χ:"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "Open files saved in sK1 vector graphics editor"
@@ -33379,55 +33037,46 @@ msgid "You may change the names for other languages:"
 msgstr "Μπορείτε να αλλάξετε τα ονόματα για άλλες γλώσσες:"
 
 #: ../share/extensions/svgfont2layers.inx.h:1
-#, fuzzy
 msgid "Convert SVG Font to Glyph Layers"
-msgstr "Αντιστροφή σε όλες τις στρώσεις"
+msgstr "Μετατροπή γραμματοσειράς SVG σε στρώσεις γλυφής"
 
 #: ../share/extensions/svgfont2layers.inx.h:2
 msgid "Load only the first 30 glyphs (Recommended)"
-msgstr ""
+msgstr "Φόρτωση μόνο των πρώτων 30 γλυφών (Συνιστάται)"
 
 #: ../share/extensions/text_braille.inx.h:1
 msgid "Convert to Braille"
 msgstr "Μετατροπή σε Braille"
 
 #: ../share/extensions/text_extract.inx.h:2
-#, fuzzy
 msgid "Bottom to top"
-msgstr "Από κάτω προς τα πάνω (90)"
+msgstr "Από κάτω προς τα πάνω"
 
 #: ../share/extensions/text_extract.inx.h:3
-#, fuzzy
 msgid "Extract"
-msgstr "Εξαγωγή εικόνας"
+msgstr "Εξαγωγή"
 
 #: ../share/extensions/text_extract.inx.h:4
-#, fuzzy
 msgid "Horizontal point:"
 msgstr "Οριζόντιο σημείο:"
 
 #: ../share/extensions/text_extract.inx.h:6
-#, fuzzy
 msgid "Left to right"
-msgstr "Από αριστερά προς δεξιά (0)"
+msgstr "Από αριστερά προς δεξιά"
 
 #: ../share/extensions/text_extract.inx.h:9
-#, fuzzy
 msgid "Right to left"
-msgstr "Από Δεξιά προς αριστερά (180)"
+msgstr "Από δεξιά προς αριστερά"
 
 #: ../share/extensions/text_extract.inx.h:11
-#, fuzzy
 msgid "Text direction:"
-msgstr "Κατεύθυνση σημαδιού:"
+msgstr "Κατεύθυνση κειμένου:"
 
 #: ../share/extensions/text_extract.inx.h:13
-#, fuzzy
 msgid "Top to bottom"
-msgstr "Βύθιση στον πάτο"
+msgstr "Από πάνω προς τα κάτω"
 
 #: ../share/extensions/text_extract.inx.h:14
-#, fuzzy
 msgid "Vertical point:"
 msgstr "Κάθετο σημείο:"
 
@@ -33437,9 +33086,8 @@ msgstr "Κάθετο σημείο:"
 #: ../share/extensions/text_sentencecase.inx.h:1
 #: ../share/extensions/text_titlecase.inx.h:1
 #: ../share/extensions/text_uppercase.inx.h:1
-#, fuzzy
 msgid "Change Case"
-msgstr "Αλλαγή λαβής"
+msgstr "Αλλαγή κεφαλαίων/πεζών"
 
 #: ../share/extensions/text_flipcase.inx.h:3
 msgid "fLIP cASE"
@@ -33479,15 +33127,15 @@ msgstr "ΚΕΦΑΛΑΙΑ"
 
 #: ../share/extensions/triangle.inx.h:1
 msgid "Angle a (deg):"
-msgstr "Γωνία a σε μοίρες:"
+msgstr "Γωνία a (μοίρες):"
 
 #: ../share/extensions/triangle.inx.h:2
 msgid "Angle b (deg):"
-msgstr "Γωνία b σε μοίρες:"
+msgstr "Γωνία b (μοίρες):"
 
 #: ../share/extensions/triangle.inx.h:3
 msgid "Angle c (deg):"
-msgstr "Γωνία c σε μοίρες:"
+msgstr "Γωνία c (μοίρες):"
 
 #: ../share/extensions/triangle.inx.h:4
 msgid "From Side a and Angles a, b"
@@ -33590,7 +33238,7 @@ msgstr "Τάξη γνωρισμάτων HTML:"
 #: ../share/extensions/webslicer_create_group.inx.h:3
 #: ../share/extensions/webslicer_create_rect.inx.h:18
 msgid "HTML id attribute:"
-msgstr "Ταυτότητα (id) γνωρίσματος HTML:"
+msgstr "Ταυτότητα γνωρίσματος HTML:"
 
 #: ../share/extensions/webslicer_create_group.inx.h:4
 msgid "Height unit:"
@@ -33684,9 +33332,7 @@ msgstr "DPI:"
 #. i18n. Description duplicated in a fake value attribute in order to make it translatable
 #: ../share/extensions/webslicer_create_rect.inx.h:12
 msgid "Force Dimension must be set as <width>x<height>"
-msgstr ""
-"Εξαναγκασμένη διάσταση πρέπει να οριστεί ως  <width>x<height> "
-"(<πλάτος>x<ύψος>)"
+msgstr "Εξαναγκασμένη διάσταση πρέπει να οριστεί ως <πλάτος>x<ύψος>"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:13
 msgid "Force Dimension:"
@@ -34012,7 +33658,7 @@ msgstr "Σφαίρα συρμάτινο πλέγματος "
 #: ../share/extensions/wmf_input.inx.h:1
 #: ../share/extensions/wmf_output.inx.h:1
 msgid "A popular graphics file format for clipart"
-msgstr "Μια δημοφιλής μορφή αρχείων γραφικών για αποκόμματα εικόνων (clipart)"
+msgstr "Μια δημοφιλής μορφή αρχείων γραφικών για αποκόμματα εικόνων"
 
 #: ../share/extensions/wmf_input.inx.h:2
 #: ../share/extensions/wmf_output.inx.h:2
