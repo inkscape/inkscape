@@ -26,7 +26,7 @@ else (BOEHMGC_LIBRARIES AND BOEHMGC_INCLUDE_DIRS)
       /usr/local/include
       /opt/local/include
       /sw/include
-      $ENV{DEVLIBS_PATH}//include//
+      $ENV{DEVLIBS_PATH}/include
     PATH_SUFFIXES
       gc
   )
@@ -39,6 +39,7 @@ else (BOEHMGC_LIBRARIES AND BOEHMGC_INCLUDE_DIRS)
       /usr/local/lib
       /opt/local/lib
       /sw/lib
+      $ENV{DEVLIBS_PATH}/lib
   )
 
   if (GC_LIBRARY)
