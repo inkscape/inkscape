@@ -35,7 +35,6 @@ set(helper_SRC
 	gnome-utils.h
 	pixbuf-ops.h
 	png-write.h
-	stlport.h
 	stock-items.h
 	unit-menu.h
 	unit-tracker.h

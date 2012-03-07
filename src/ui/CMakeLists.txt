@@ -71,7 +71,6 @@ set(ui_SRC
 	widget/button.cpp
 	widget/color-picker.cpp
 	widget/color-preview.cpp
-	widget/combo-text.cpp
 	widget/dock-item.cpp
 	widget/dock.cpp
 	widget/entity-entry.cpp
@@ -198,7 +197,6 @@ set(ui_SRC
 	widget/color-picker.h
 	widget/color-preview.h
 	widget/combo-enums.h
-	widget/combo-text.h
 	widget/dock-item.h
 	widget/dock.h
 	widget/entity-entry.h

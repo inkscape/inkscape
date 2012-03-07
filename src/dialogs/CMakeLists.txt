@@ -3,8 +3,6 @@ set(dialogs_SRC
 	clonetiler.cpp
 	dialog-events.cpp
 	find.cpp
-	spellcheck.cpp
-	text-edit.cpp
 	xml-tree.cpp
 
 
@@ -13,8 +11,6 @@ set(dialogs_SRC
 	clonetiler.h
 	dialog-events.h
 	find.h
-	spellcheck.h
-	text-edit.h
 	xml-tree.h
 )
 
