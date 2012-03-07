@@ -19,6 +19,7 @@
 #include "desktop.h"
 #include "document.h"
 #include "document-undo.h"
+#include "inkscape.h"
 #include "message-stack.h"
 #include "preferences.h"
 #include "verbs.h"
@@ -437,6 +438,7 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
 
     GError* errThing = 0;
     Glib::ustring cmdline = getImageEditorName();
+    Glib::ustring name;
     Glib::ustring fullname;
     
 #ifdef WIN32
@@ -448,7 +450,7 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
     if ( index < 0 ) index = cmdline.find(".com");
     if ( index >= 0 ) {
         Glib::ustring editorBin = cmdline.substr(0, index + 4).c_str();
-				Glib::ustring args = cmdline.substr(index + 4, cmdline.length()).c_str();
+        Glib::ustring args = cmdline.substr(index + 4, cmdline.length()).c_str();
         editorBin.insert(0, "'");
         editorBin.append("'");
         cmdline = editorBin;
@@ -462,20 +464,30 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
 
     if (strncmp (href,"file:",5) == 0) {
     // URI to filename conversion
-      fullname = g_filename_from_uri(href, NULL, NULL);
+      name = g_filename_from_uri(href, NULL, NULL);
     } else {
-      fullname.append(href);
+      name.append(href);
     }
-    
+
+
+    if (Glib::path_is_absolute(name)) {
+        fullname = name;
+    } else if (SP_ACTIVE_DOCUMENT->getBase()) {
+        fullname = Glib::build_filename(SP_ACTIVE_DOCUMENT->getBase(), name);
+    } else {
+        fullname = Glib::build_filename(Glib::get_current_dir(), name);
+    }
+
+
     cmdline.append(" '");
     cmdline.append(fullname.c_str());
     cmdline.append("'");
 
-    //printf("##Command line: %s\n", cmdline.c_str());
+    //g_warning("##Command line: %s\n", cmdline.c_str());
 
     g_spawn_command_line_async(cmdline.c_str(),
                   &errThing); 
- 
+
     if ( errThing ) {
         g_warning("Problem launching editor (%d). %s", errThing->code, errThing->message);
         SPDesktop *desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
