@@ -30,14 +30,16 @@ public:
         _source_type(source),
         _target_type(target),
         _source_num(source_num),
-        _target_bbox(bbox)
+        _target_bbox(bbox),
+        _dist()
     {
     };
 
     SnapCandidatePoint(Geom::Point const &point, Inkscape::SnapSourceType const source, Inkscape::SnapTargetType const target)
         : _point(point),
         _source_type(source),
-        _target_type(target)
+        _target_type(target),
+        _dist()
     {
         _source_num = -1;
         _target_bbox = Geom::OptRect();
@@ -47,7 +49,8 @@ public:
         : _point(point),
         _source_type(source),
         _target_type(Inkscape::SNAPTARGET_UNDEFINED),
-        _source_num(-1)
+        _source_num(-1),
+        _dist()
     {
         _target_bbox = Geom::OptRect();
     }

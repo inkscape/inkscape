@@ -61,12 +61,10 @@ greymap_t *gm_dup(greymap_t *gm) {
 
 /* clear the given greymap to color b. */
 void gm_clear(greymap_t *gm, int b) {
-  int i;
-
   if (b==0) {
     memset(gm->map, 0, gm->w*gm->h*sizeof(signed short int));
   } else {
-    for (i=0; i<gm->w*gm->h; i++) {
+    for (int i=0; i<gm->w*gm->h; i++) {
       gm->map[i] = b;
     }
   }    

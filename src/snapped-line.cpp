@@ -56,7 +56,7 @@ Inkscape::SnappedPoint Inkscape::SnappedLineSegment::intersect(SnappedLineSegmen
     {
         inters = Geom::intersection(getLineSegment(), line.getLineSegment());
     }
-    catch (Geom::InfiniteSolutions e)
+    catch (Geom::InfiniteSolutions &e)
     {
         // We're probably dealing with parallel lines, so they don't really cross
         inters = Geom::OptCrossing();
@@ -138,7 +138,7 @@ Inkscape::SnappedPoint Inkscape::SnappedLine::intersect(SnappedLine const &line)
     {
         inters = Geom::intersection(getLine(), line.getLine());
     }
-    catch (Geom::InfiniteSolutions e)
+    catch (Geom::InfiniteSolutions &e)
     {
         // We're probably dealing with parallel lines, so they don't really cross
         inters = Geom::OptCrossing();

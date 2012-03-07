@@ -26,10 +26,8 @@ typedef struct progress_s progress_t;
    given in the 0.0-1.0 range, which will be scaled and translated to
    the progress object's range. */
 static inline void progress_update(double d, progress_t *prog) {
-  double d_scaled;
-
   if (prog != NULL && prog->callback != NULL) {
-    d_scaled = prog->min * (1-d) + prog->max * d;
+    double d_scaled = prog->min * (1-d) + prog->max * d;
     if (d == 1.0 || d_scaled >= prog->d_prev + prog->epsilon) {
       prog->callback(prog->min * (1-d) + prog->max * d, prog->data);
       prog->d_prev = d_scaled;

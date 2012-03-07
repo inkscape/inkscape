@@ -847,8 +847,8 @@ sketch_interpolate(SPPencilContext *pc)
         }
         Geom::Piecewise<Geom::D2<Geom::SBasis> > fit_pwd2 = fit.toPwSb();
 
-        double t =0.;
         if ( pc->sketch_n > 0 ) {
+            double t =0.;
             if (average_all_sketches) {
                 // Average = (sum of all) / n
                 //         = (sum of all + new one) / n+1

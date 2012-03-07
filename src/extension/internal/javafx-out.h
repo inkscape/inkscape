@@ -38,9 +38,9 @@ namespace Internal
 class JavaFXOutput : public Inkscape::Extension::Implementation::Implementation
 {
 
-
 public:
-
+    JavaFXOutput (void);
+    
     /**
      * Our internal String definition
      */

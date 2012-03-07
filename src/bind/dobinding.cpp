@@ -110,16 +110,14 @@ static void setPointer(JNIEnv *env, jobject obj, jlong val)
 }
 
 
-static void JNICALL BaseObject_construct
-  (JNIEnv *env, jobject obj)
+static void JNICALL BaseObject_construct (JNIEnv *env, jobject obj)
 {
     setPointer(env, obj, 0L);
 }
 
-static void JNICALL BaseObject_destruct
-  (JNIEnv *env, jobject obj)
+static void JNICALL BaseObject_destruct (JNIEnv *env, jobject obj)
 {
-    BaseObject *ptr = (BaseObject *)getPointer(env, obj);
+    BaseObject *ptr = reinterpret_cast<BaseObject *>(getPointer(env, obj));
     if (ptr)
         {
         delete ptr;
@@ -154,7 +152,7 @@ static void JNICALL DOMBase_construct
 static void JNICALL DOMBase_destruct
   (JNIEnv *env, jobject obj)
 {
-    NodePtr *ptr = (NodePtr *)getPointer(env, obj);
+    NodePtr *ptr = reinterpret_cast<NodePtr *>(getPointer(env, obj));
     if (ptr)
         {
         delete ptr;

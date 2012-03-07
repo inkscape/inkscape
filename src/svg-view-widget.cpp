@@ -63,7 +63,7 @@ static void sp_svg_view_widget_class_init(SPSVGSPViewWidgetClass *klass)
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	SPViewWidgetClass *vw_class = SP_VIEW_WIDGET_CLASS (klass);
 
-	widget_parent_class = (SPViewWidgetClass *)g_type_class_peek_parent (klass);
+	widget_parent_class = static_cast<SPViewWidgetClass *>(g_type_class_peek_parent (klass));
 
 	object_class->destroy = sp_svg_view_widget_destroy;
 

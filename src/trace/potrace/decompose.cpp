@@ -21,12 +21,9 @@
 
 /* set the excess padding to 0 */
 static void bm_clearexcess(potrace_bitmap_t *bm) {
-  potrace_word mask;
-  int y;
-
   if (bm->w % BM_WORDBITS != 0) {
-    mask = BM_ALLBITS << (BM_WORDBITS - (bm->w % BM_WORDBITS));
-    for (y=0; y<bm->h; y++) {
+    potrace_word mask = BM_ALLBITS << (BM_WORDBITS - (bm->w % BM_WORDBITS));
+    for (int y=0; y<bm->h; y++) {
       *bm_index(bm, bm->w, y) &= mask;
     }
   }

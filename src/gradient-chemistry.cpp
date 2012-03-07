@@ -125,7 +125,7 @@ static SPGradient *sp_gradient_get_private_normalized(SPDocument *document, SPGr
     Inkscape::GC::release(repr);
 
     // get corresponding object
-    SPGradient *gr = (SPGradient *) document->getObjectByRepr(repr);
+    SPGradient *gr = static_cast<SPGradient *>(document->getObjectByRepr(repr));
     g_assert(gr != NULL);
     g_assert(SP_IS_GRADIENT(gr));
 
@@ -257,7 +257,7 @@ SPGradient *sp_gradient_fork_vector_if_necessary(SPGradient *gr)
 
         Inkscape::XML::Node *repr = gr->getRepr()->duplicate(xml_doc);
         doc->getDefs()->getRepr()->addChild(repr, NULL);
-        SPGradient *gr_new = (SPGradient *) doc->getObjectByRepr(repr);
+        SPGradient *gr_new = static_cast<SPGradient *>(doc->getObjectByRepr(repr));
         gr_new = sp_gradient_ensure_vector_normalized (gr_new);
         Inkscape::GC::release(repr);
         return gr_new;
@@ -518,8 +518,10 @@ SPStop *sp_get_stop_i(SPGradient *gradient, guint stop_i)
     // inkscape has created a handle for the start of gradient anyway,
     // so when it asks for stop N that corresponds to stop element N-1
     if (stop->offset != 0)
+    {
         stop_i --;
-
+    }
+    
     for (guint i = 0; i < stop_i; i++) {
         if (!stop) {
             return NULL;
@@ -766,7 +768,7 @@ void sp_item_gradient_reverse_vector(SPItem *item, bool fill_or_stroke)
         Inkscape::XML::Node *copy = (Inkscape::XML::Node *) i->data;
         vector->appendChildRepr(copy);
         sp_repr_set_svg_double (copy, "offset", 1 - *iter);
-        iter --;
+        --iter;
         Inkscape::GC::release(copy);
     }
 

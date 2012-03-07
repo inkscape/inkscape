@@ -754,7 +754,7 @@ jboolean JNICALL documentSet(JNIEnv */*env*/, jobject /*obj*/, jlong /*ptr*/, js
  */    
 void JNICALL logWrite(JNIEnv */*env*/, jobject /*obj*/, jlong ptr, jint ch)
 {
-    JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
+    JavaBinderyImpl *bind = reinterpret_cast<JavaBinderyImpl *>(ptr);
     bind->log(ch);
 }
 

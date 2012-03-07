@@ -1035,7 +1035,7 @@ void SPGradient::rebuildVector()
             SPStop *stop = SP_STOP(child);
 
             SPGradientStop gstop;
-            if (vector.stops.size() > 0) {
+            if (!vector.stops.empty()) {
                 // "Each gradient offset value is required to be equal to or greater than the
                 // previous gradient stop's offset value. If a given gradient stop's offset
                 // value is not equal to or greater than all previous offset values, then the
@@ -1059,7 +1059,7 @@ void SPGradient::rebuildVector()
     }
 
     // Normalize per section 13.2.4 of SVG 1.1.
-    if (vector.stops.size() == 0) {
+    if (vector.stops.empty()) {
         /* "If no stops are defined, then painting shall occur as if 'none' were specified as the
          * paint style."
          */

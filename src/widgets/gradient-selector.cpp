@@ -360,7 +360,7 @@ sp_gradient_selector_add_vector_clicked (GtkWidget */*w*/, SPGradientSelector *s
 
     doc->getDefs()->getRepr()->addChild(repr, NULL);
 
-    gr = (SPGradient *) doc->getObjectByRepr(repr);
+    gr = static_cast<SPGradient *>(doc->getObjectByRepr(repr));
     sp_gradient_vector_selector_set_gradient(
                                              SP_GRADIENT_VECTOR_SELECTOR (sel->vectors), doc, gr);
 

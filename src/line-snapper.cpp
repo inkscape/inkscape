@@ -58,7 +58,7 @@ void Inkscape::LineSnapper::freeSnap(IntermSnapResults &isr,
             // For this we need to know where the origin is located of the line that is currently being rotated,
             std::vector<std::pair<Geom::Point, bool> > const origins_and_vectors = p.getOriginsAndVectors();
             // Now we will iterate over all the origins and vectors and see which of these will get use a tangential or perpendicular snap
-            for (std::vector<std::pair<Geom::Point, bool> >::const_iterator it_origin_or_vector = origins_and_vectors.begin(); it_origin_or_vector != origins_and_vectors.end(); it_origin_or_vector++) {
+            for (std::vector<std::pair<Geom::Point, bool> >::const_iterator it_origin_or_vector = origins_and_vectors.begin(); it_origin_or_vector != origins_and_vectors.end(); ++it_origin_or_vector) {
                 if ((*it_origin_or_vector).second) { // if "second" is true then "first" is a vector, otherwise it's a point
                     // When snapping a line with a constant vector (constant direction) to a guide or grid line,
                     // then either all points will be perpendicular/tangential or none at all. This is not very useful
@@ -137,7 +137,7 @@ void Inkscape::LineSnapper::constrainedSnap(IntermSnapResults &isr,
             {
                 inters = Geom::intersection(constraint_line, gridguide_line);
             }
-            catch (Geom::InfiniteSolutions e)
+            catch (Geom::InfiniteSolutions &e)
             {
                 // We're probably dealing with parallel lines, so snapping doesn't make any sense here
                 continue; // jump to the next iterator in the for-loop

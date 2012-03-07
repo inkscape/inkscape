@@ -1439,7 +1439,7 @@ Dialog::FillAndStroke *get_fill_and_stroke_panel(SPDesktop *desktop)
             Dialog::FillAndStroke &fill_and_stroke =
                 dynamic_cast<Dialog::FillAndStroke &>(panel_dialog->getPanel());
             return &fill_and_stroke;
-        } catch (std::exception e) { }
+        } catch (std::exception &e) { }
     }
 
     return 0;

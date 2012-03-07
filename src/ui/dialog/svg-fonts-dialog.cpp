@@ -175,9 +175,9 @@ void GlyphComboBox::update(SPFont* spfont){
     for(SPObject* node = spfont->children; node; node=node->next){
         if (SP_IS_GLYPH(node)){
 #if WITH_GTKMM_2_24
-            this->append(((SPGlyph*)node)->unicode);
+            this->append((static_cast<SPGlyph*>(node))->unicode);
 #else
-            this->append_text(((SPGlyph*)node)->unicode);
+            this->append_text((static_cast<SPGlyph*>(node))->unicode);
 #endif
         }
     }
@@ -423,9 +423,9 @@ SvgFontsDialog::populate_glyphs_box()
     for(SPObject* node = spfont->children; node; node=node->next){
         if (SP_IS_GLYPH(node)){
             Gtk::TreeModel::Row row = *(_GlyphsListStore->append());
-            row[_GlyphsListColumns.glyph_node] = (SPGlyph*) node;
-            row[_GlyphsListColumns.glyph_name] = ((SPGlyph*) node)->glyph_name;
-            row[_GlyphsListColumns.unicode] = ((SPGlyph*) node)->unicode;
+            row[_GlyphsListColumns.glyph_node] = static_cast<SPGlyph*>(node);
+            row[_GlyphsListColumns.glyph_name] = (static_cast<SPGlyph*>(node))->glyph_name;
+            row[_GlyphsListColumns.unicode] = (static_cast<SPGlyph*>(node))->unicode;
         }
     }
 }
@@ -441,10 +441,10 @@ SvgFontsDialog::populate_kerning_pairs_box()
     for(SPObject* node = spfont->children; node; node=node->next){
         if (SP_IS_HKERN(node)){
             Gtk::TreeModel::Row row = *(_KerningPairsListStore->append());
-            row[_KerningPairsListColumns.first_glyph] = ((SPGlyphKerning*) node)->u1->attribute_string().c_str();
-            row[_KerningPairsListColumns.second_glyph] = ((SPGlyphKerning*) node)->u2->attribute_string().c_str();
-            row[_KerningPairsListColumns.kerning_value] = ((SPGlyphKerning*) node)->k;
-            row[_KerningPairsListColumns.spnode] = (SPGlyphKerning*) node;
+            row[_KerningPairsListColumns.first_glyph] = (static_cast<SPGlyphKerning*>(node))->u1->attribute_string().c_str();
+            row[_KerningPairsListColumns.second_glyph] = (static_cast<SPGlyphKerning*>(node))->u2->attribute_string().c_str();
+            row[_KerningPairsListColumns.kerning_value] = (static_cast<SPGlyphKerning*>(node))->k;
+            row[_KerningPairsListColumns.spnode] = static_cast<SPGlyphKerning*>(node);
         }
     }
 }
@@ -743,9 +743,9 @@ void SvgFontsDialog::add_kerning_pair(){
     for(SPObject* node = this->get_selected_spfont()->children; node; node=node->next){
         //TODO: It is not really correct to get only the first byte of each string.
         //TODO: We should also support vertical kerning
-        if (SP_IS_HKERN(node) && ((SPGlyphKerning*)node)->u1->contains((gchar) first_glyph.get_active_text().c_str()[0])
-            && ((SPGlyphKerning*)node)->u2->contains((gchar) second_glyph.get_active_text().c_str()[0]) ){
-            this->kerning_pair = (SPGlyphKerning*)node;
+        if (SP_IS_HKERN(node) && (static_cast<SPGlyphKerning*>(node))->u1->contains((gchar) first_glyph.get_active_text().c_str()[0])
+            && (static_cast<SPGlyphKerning*>(node))->u2->contains((gchar) second_glyph.get_active_text().c_str()[0]) ){
+            this->kerning_pair = static_cast<SPGlyphKerning*>(node);
             continue;
         }
     }

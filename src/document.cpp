@@ -866,9 +866,13 @@ SPObject *SPDocument::getObjectById(gchar const *id) const
     GQuark idq = g_quark_from_string(id);
     gpointer rv = g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq));
     if(rv != NULL)
-        return (SPObject*)rv;
+    {
+        return static_cast<SPObject*>(rv);
+    }
     else
+    {
         return NULL;
+    }
 }
 
 sigc::connection SPDocument::connectIdChanged(gchar const *id,
@@ -891,7 +895,7 @@ void SPDocument::bindObjectToRepr(Inkscape::XML::Node *repr, SPObject *object)
 SPObject *SPDocument::getObjectByRepr(Inkscape::XML::Node *repr) const
 {
     g_return_val_if_fail(repr != NULL, NULL);
-    return (SPObject*)g_hash_table_lookup(priv->reprdef, repr);
+    return static_cast<SPObject*>(g_hash_table_lookup(priv->reprdef, repr));
 }
 
 Glib::ustring SPDocument::getLanguage() const

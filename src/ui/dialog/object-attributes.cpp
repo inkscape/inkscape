@@ -79,8 +79,8 @@ ObjectAttributes::ObjectAttributes (void) :
     subselChangedConn(),
     selectModifiedConn()
 {
-	attrTable.show();
-	widget_setup();
+    attrTable.show();
+    widget_setup();
     
     desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &ObjectAttributes::setTargetDesktop) );
     deskTrack.connect(GTK_WIDGET(gobj()));
@@ -143,11 +143,11 @@ void ObjectAttributes::widget_setup (void)
         return;
     }
     
-	int len = 0;
     std::vector<Glib::ustring> labels;
     std::vector<Glib::ustring> attrs;
     if (CurrentItem != item)
     {
+        int len = 0;
         while (desc[len].label)
         {
             labels.push_back(desc[len].label);

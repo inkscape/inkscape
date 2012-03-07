@@ -199,12 +199,12 @@ IconPreviewPanel::IconPreviewPanel() :
         Gtk::Alignment *align = Gtk::manage(new Gtk::Alignment(0.5, 0.5, 0, 0));
         align->add(*buttons[i]);
 
-        int pad = 12;
         if ( !pack || ( (avail == 0) && (previous == 0) ) ) {
             verts->pack_end(*align, Gtk::PACK_SHRINK);
             previous = sizes[i];
             avail = sizes[i];
         } else {
+            int pad = 12;
             if ((avail < pad) || ((sizes[i] > avail) && (sizes[i] < previous))) {
                 horiz = 0;
             }
