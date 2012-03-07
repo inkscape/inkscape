@@ -5,3 +5,4 @@ set MINGW_BIN=%MINGW_PATH%\bin
 set PKG_CONFIG_PATH=%DEVLIBS_PATH%\lib\pkgconfig
 set GS_BIN=C:\latex\gs\gs8.61\bin
 set PATH=%DEVLIBS_PATH%\bin;%DEVLIBS_PATH%\python;%MINGW_BIN%;%PATH%;%GS_BIN%
+set CMAKE_PREFIX_PATH=%DEVLIBS_PATH%
