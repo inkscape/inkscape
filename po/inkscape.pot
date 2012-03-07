@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-03-04 21:57+0100\n"
+"POT-Creation-Date: 2012-03-07 21:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5426,16 +5426,16 @@ msgstr ""
 msgid " to "
 msgstr ""
 
-#: ../src/document.cpp:486
+#: ../src/document.cpp:487
 #, c-format
 msgid "New document %d"
 msgstr ""
 
-#: ../src/document.cpp:512
+#: ../src/document.cpp:513
 msgid "Memory document %1"
 msgstr ""
 
-#: ../src/document.cpp:702
+#: ../src/document.cpp:703
 #, c-format
 msgid "Unnamed document %d"
 msgstr ""
@@ -7766,7 +7766,7 @@ msgstr ""
 #: ../src/extension/internal/filter/paint.h:332
 #: ../src/ui/dialog/align-and-distribute.cpp:1039
 #: ../src/ui/dialog/align-and-distribute.cpp:1047
-#: ../src/widgets/desktop-widget.cpp:1743
+#: ../src/widgets/desktop-widget.cpp:1748
 msgid "Drawing"
 msgstr ""
 
@@ -8206,15 +8206,15 @@ msgstr ""
 msgid "Draw a path which is a grid"
 msgstr ""
 
-#: ../src/extension/internal/javafx-out.cpp:966
+#: ../src/extension/internal/javafx-out.cpp:979
 msgid "JavaFX Output"
 msgstr ""
 
-#: ../src/extension/internal/javafx-out.cpp:971
+#: ../src/extension/internal/javafx-out.cpp:984
 msgid "JavaFX (*.fx)"
 msgstr ""
 
-#: ../src/extension/internal/javafx-out.cpp:972
+#: ../src/extension/internal/javafx-out.cpp:985
 msgid "JavaFX Raytracer File"
 msgstr ""
 
@@ -9540,7 +9540,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:1046
 #: ../src/ui/dialog/document-properties.cpp:145
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1452
-#: ../src/widgets/desktop-widget.cpp:1739
+#: ../src/widgets/desktop-widget.cpp:1744
 #: ../share/extensions/voronoi2svg.inx.h:8
 msgid "Page"
 msgstr ""
@@ -13321,87 +13321,87 @@ msgid "Clipboard does not contain a path."
 msgstr ""
 
 #. Item dialog
-#: ../src/ui/context-menu.cpp:106 ../src/verbs.cpp:2638
+#: ../src/ui/context-menu.cpp:107 ../src/verbs.cpp:2638
 msgid "_Object Properties..."
 msgstr ""
 
 #. Select item
-#: ../src/ui/context-menu.cpp:116
+#: ../src/ui/context-menu.cpp:117
 msgid "_Select This"
 msgstr ""
 
 #. Create link
-#: ../src/ui/context-menu.cpp:126
+#: ../src/ui/context-menu.cpp:127
 msgid "_Create Link"
 msgstr ""
 
 #. Set mask
-#: ../src/ui/context-menu.cpp:133
+#: ../src/ui/context-menu.cpp:134
 msgid "Set Mask"
 msgstr ""
 
 #. Release mask
-#: ../src/ui/context-menu.cpp:144
+#: ../src/ui/context-menu.cpp:145
 msgid "Release Mask"
 msgstr ""
 
 #. Set Clip
-#: ../src/ui/context-menu.cpp:155
+#: ../src/ui/context-menu.cpp:156
 msgid "Set _Clip"
 msgstr ""
 
 #. Release Clip
-#: ../src/ui/context-menu.cpp:166
+#: ../src/ui/context-menu.cpp:167
 msgid "Release C_lip"
 msgstr ""
 
-#: ../src/ui/context-menu.cpp:283
+#: ../src/ui/context-menu.cpp:284
 msgid "Create link"
 msgstr ""
 
 #. "Ungroup"
-#: ../src/ui/context-menu.cpp:299 ../src/verbs.cpp:2308
+#: ../src/ui/context-menu.cpp:300 ../src/verbs.cpp:2308
 msgid "_Ungroup"
 msgstr ""
 
 #. Link dialog
-#: ../src/ui/context-menu.cpp:337
+#: ../src/ui/context-menu.cpp:338
 msgid "Link _Properties..."
 msgstr ""
 
 #. Select item
-#: ../src/ui/context-menu.cpp:343
+#: ../src/ui/context-menu.cpp:344
 msgid "_Follow Link"
 msgstr ""
 
 #. Reset transformations
-#: ../src/ui/context-menu.cpp:348
+#: ../src/ui/context-menu.cpp:349
 msgid "_Remove Link"
 msgstr ""
 
 #. Link dialog
-#: ../src/ui/context-menu.cpp:394
+#: ../src/ui/context-menu.cpp:395
 msgid "Image _Properties..."
 msgstr ""
 
-#: ../src/ui/context-menu.cpp:400
+#: ../src/ui/context-menu.cpp:401
 msgid "Edit Externally..."
 msgstr ""
 
 #. Item dialog
 #. Fill and Stroke dialog
-#: ../src/ui/context-menu.cpp:514 ../src/ui/context-menu.cpp:564
+#: ../src/ui/context-menu.cpp:526 ../src/ui/context-menu.cpp:576
 #: ../src/verbs.cpp:2603
 msgid "_Fill and Stroke..."
 msgstr ""
 
 #. Edit Text dialog
-#: ../src/ui/context-menu.cpp:571 ../src/verbs.cpp:2618
+#: ../src/ui/context-menu.cpp:583 ../src/verbs.cpp:2618
 msgid "_Text and Font..."
 msgstr ""
 
 #. Spellcheck dialog
-#: ../src/ui/context-menu.cpp:578 ../src/verbs.cpp:2626
+#: ../src/ui/context-menu.cpp:590 ../src/verbs.cpp:2626
 msgid "Check Spellin_g..."
 msgstr ""
 
@@ -13685,7 +13685,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:1040
 #: ../src/ui/dialog/align-and-distribute.cpp:1048
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1456
-#: ../src/widgets/desktop-widget.cpp:1747
+#: ../src/widgets/desktop-widget.cpp:1752
 #: ../share/extensions/printing_marks.inx.h:17
 msgid "Selection"
 msgstr ""
@@ -22134,45 +22134,45 @@ msgid ""
 "use selector (arrow) to move or transform them."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:665
+#: ../src/widgets/desktop-widget.cpp:670
 #, c-format
-msgid "%s: %d (outline%s) - Inkscape"
+msgid "%s%s: %d (outline%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:667
+#: ../src/widgets/desktop-widget.cpp:672
 #, c-format
-msgid "%s: %d (no filters%s) - Inkscape"
+msgid "%s%s: %d (no filters%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:669
+#: ../src/widgets/desktop-widget.cpp:674
 #, c-format
-msgid "%s: %d %s- Inkscape"
+msgid "%s%s: %d %s- Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:673
+#: ../src/widgets/desktop-widget.cpp:678
 #, c-format
-msgid "%s (outline%s) - Inkscape"
+msgid "%s%s (outline%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:675
+#: ../src/widgets/desktop-widget.cpp:680
 #, c-format
-msgid "%s (no filters%s) - Inkscape"
+msgid "%s%s (no filters%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:677
+#: ../src/widgets/desktop-widget.cpp:682
 #, c-format
-msgid "%s %s- Inkscape"
+msgid "%s%s %s- Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:844
+#: ../src/widgets/desktop-widget.cpp:849
 msgid "Color-managed display is <b>enabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:846
+#: ../src/widgets/desktop-widget.cpp:851
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:901
+#: ../src/widgets/desktop-widget.cpp:906
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -22181,11 +22181,11 @@ msgid ""
 "If you close without saving, your changes will be discarded."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:908 ../src/widgets/desktop-widget.cpp:964
+#: ../src/widgets/desktop-widget.cpp:913 ../src/widgets/desktop-widget.cpp:969
 msgid "Close _without saving"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:957
+#: ../src/widgets/desktop-widget.cpp:962
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -22194,11 +22194,11 @@ msgid ""
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:967
-msgid "_Save as SVG"
+#: ../src/widgets/desktop-widget.cpp:972
+msgid "_Save as Inkscape SVG"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1176
+#: ../src/widgets/desktop-widget.cpp:1181
 msgid "Note:"
 msgstr ""
 
