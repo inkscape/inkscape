@@ -58,8 +58,10 @@ set(ui_SRC
 	dialog/print.cpp
 	dialog/scriptdialog.cpp
 	# dialog/session-player.cpp
+	dialog/spellcheck.cpp
 	dialog/svg-fonts-dialog.cpp
 	dialog/swatches.cpp
+	dialog/text-edit.cpp
 	dialog/tile.cpp
 	dialog/tracedialog.cpp
 	dialog/transformation.cpp
@@ -164,8 +166,10 @@ set(ui_SRC
 	dialog/print-colors-preview-dialog.h
 	dialog/print.h
 	dialog/scriptdialog.h
+	dialog/spellcheck.h
 	dialog/svg-fonts-dialog.h
 	dialog/swatches.h
+	dialog/text-edit.h
 	dialog/tile.h
 	dialog/tracedialog.h
 	dialog/transformation.h
