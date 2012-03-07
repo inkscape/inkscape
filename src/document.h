@@ -190,9 +190,7 @@ public:
     bool isSeeking() const;
 
     bool isModifiedSinceSave() const { return modified_since_save; }
-    void setModifiedSinceSave(bool modified = true) {
-        modified_since_save = modified;
-    }
+    void setModifiedSinceSave(bool modified = true);
 
 private:
     SPDocument(SPDocument const &); // no copy

@@ -60,6 +60,7 @@
 #include "sp-object-repr.h"
 #include "transf_mat_3x4.h"
 #include "unit-constants.h"
+#include "widgets/desktop-widget.h"
 #include "xml/repr.h"
 #include "xml/rebase-hrefs.h"
 #include "libcroco/cr-cascade.h"
@@ -1424,6 +1425,13 @@ bool SPDocument::isSeeking() const {
     return priv->seeking;
 }
 
+void SPDocument::setModifiedSinceSave(bool modified) {
+    this->modified_since_save = modified;
+    Gtk::Window *parent = SP_ACTIVE_DESKTOP->getToplevel();
+    g_assert(parent != NULL);
+    SPDesktopWidget *dtw = (SPDesktopWidget *) parent->get_data("desktopwidget");
+    dtw->updateTitle( this->getName() );
+}
 
 /*
   Local Variables:

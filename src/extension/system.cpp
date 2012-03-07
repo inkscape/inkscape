@@ -111,10 +111,6 @@ SPDocument *open(Extension *key, gchar const *filename)
         }
     }
 
-    /* This kinda overkill as most of these are already set, but I want
-       to make sure for this release -- TJG */
-    doc->setModifiedSinceSave(false);
-
     doc->setUri(filename);
 
     return doc;

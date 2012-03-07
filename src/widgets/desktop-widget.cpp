@@ -651,6 +651,11 @@ SPDesktopWidget::updateTitle(gchar const* uri)
         gchar const *printcolorsnamecomma = ", print colors preview";
         gchar const *colormodename = "";
         gchar const *colormodenamecomma = "";
+        gchar const *modifiedname = "";
+        SPDocument *doc = this->desktop->doc();
+        if (doc->isModifiedSinceSave()) {
+            modifiedname = "*";
+        }
 
         if (this->desktop->getColorMode() == Inkscape::COLORMODE_GRAYSCALE) {
                 colormodename = grayscalename;
@@ -662,19 +667,19 @@ SPDesktopWidget::updateTitle(gchar const* uri)
 
         if (this->desktop->number > 1) {
             if (this->desktop->getMode() == Inkscape::RENDERMODE_OUTLINE) {
-                g_string_printf (name, _("%s: %d (outline%s) - Inkscape"), fname, this->desktop->number, colormodenamecomma);
+                g_string_printf (name, _("%s%s: %d (outline%s) - Inkscape"), modifiedname, fname, this->desktop->number, colormodenamecomma);
             } else if (this->desktop->getMode() == Inkscape::RENDERMODE_NO_FILTERS) {
-                g_string_printf (name, _("%s: %d (no filters%s) - Inkscape"), fname, this->desktop->number, colormodenamecomma);
+                g_string_printf (name, _("%s%s: %d (no filters%s) - Inkscape"), modifiedname, fname, this->desktop->number, colormodenamecomma);
             } else {
-                g_string_printf (name, _("%s: %d %s- Inkscape"), fname, this->desktop->number, colormodename);
+                g_string_printf (name, _("%s%s: %d %s- Inkscape"), modifiedname, fname, this->desktop->number, colormodename);
             }
         } else {
             if (this->desktop->getMode() == Inkscape::RENDERMODE_OUTLINE) {
-                g_string_printf (name, _("%s (outline%s) - Inkscape"), fname, colormodenamecomma);
+                g_string_printf (name, _("%s%s (outline%s) - Inkscape"), modifiedname, fname, colormodenamecomma);
             } else if (this->desktop->getMode() == Inkscape::RENDERMODE_NO_FILTERS) {
-                g_string_printf (name, _("%s (no filters%s) - Inkscape"), fname, colormodenamecomma);
+                g_string_printf (name, _("%s%s (no filters%s) - Inkscape"), modifiedname, fname, colormodenamecomma);
             } else {
-                g_string_printf (name, _("%s %s- Inkscape"), fname, colormodename);
+                g_string_printf (name, _("%s%s %s- Inkscape"), modifiedname, fname, colormodename);
             }
         }
         window->set_title (name->str);
