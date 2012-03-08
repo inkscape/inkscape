@@ -18,6 +18,15 @@ list(APPEND INKSCAPE_INCS
 find_package(GSL REQUIRED)
 list(APPEND INKSCAPE_INCS_SYS ${GSL_INCLUDE_DIRS})
 list(APPEND INKSCAPE_LIBS ${GSL_LIBRARIES})
+if (WIN32)
+    list(APPEND INKSCAPE_LIBS "-L$ENV{DEVLIBS_PATH}/lib")  # FIXME
+    list(APPEND INKSCAPE_LIBS "-lgobject-2.0")  # FIXME
+    list(APPEND INKSCAPE_LIBS "-lintl.dll")  # FIXME
+    list(APPEND INKSCAPE_LIBS "-lpangocairo-1.0.dll")  # FIXME
+    list(APPEND INKSCAPE_LIBS "-lpangoft2-1.0.dll")  # FIXME
+    list(APPEND INKSCAPE_LIBS "-lpangowin32-1.0.dll")  # FIXME
+    list(APPEND INKSCAPE_LIBS "-lgthread-2.0.dll")  # FIXME
+endif()
 list(APPEND INKSCAPE_LIBS "-lgslcblas")  # FIXME
 
 if(WITH_GNOME_VFS)
