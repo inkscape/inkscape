@@ -339,10 +339,10 @@ guint32 GrDrag::getColor()
 
 SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double tolerance)
 {
-    gfloat offset = 0; // type of SPStop.offset = gfloat
+    gfloat new_stop_offset = 0; // type of SPStop.offset = gfloat
     SPGradient *gradient;
     bool fill_or_stroke = true;
-    bool r1_knot = false;
+    //bool r1_knot = false;
 
     bool addknot = false;
     do {
@@ -355,6 +355,8 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
             Geom::Point nearest = ls.pointAt(offset);
             double dist_screen = Geom::distance(mouse_p, nearest);
             if ( dist_screen < tolerance ) {
+                // calculate the new stop offset
+                new_stop_offset = distance(begin, nearest) / distance(begin, end);
                 // add the knot
                 addknot = true;
                 break; // break out of the while loop: add only one knot
@@ -367,8 +369,11 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
             Geom::Point nearest = ls.pointAt(offset);
             double dist_screen = Geom::distance(mouse_p, nearest);
             if ( dist_screen < tolerance ) {
+                // calculate the new stop offset
+                new_stop_offset = distance(begin, nearest) / distance(begin, end);
+                // add the knot
                 addknot = true;
-                r1_knot = true;
+                //r1_knot = true;
                 break; // break out of the while loop: add only one knot
             }
 
@@ -378,8 +383,11 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
             nearest = ls.pointAt(offset);
             dist_screen = Geom::distance(mouse_p, nearest);
             if ( dist_screen < tolerance ) {
+                // calculate the new stop offset
+                new_stop_offset = distance(begin, nearest) / distance(begin, end);
+                // add the knot
                 addknot = true;
-                r1_knot = false;
+                //r1_knot = false;
                 break; // break out of the while loop: add only one knot
             }
         }
@@ -391,7 +399,7 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
         SPStop* prev_stop = vector->getFirstStop();
         SPStop* next_stop = prev_stop->getNextStop();
         guint i = 1;
-        while ( (next_stop) && (next_stop->offset < offset) ) {
+        while ( (next_stop) && (next_stop->offset < new_stop_offset) ) {
             prev_stop = next_stop;
             next_stop = next_stop->getNextStop();
             i++;
@@ -402,7 +410,7 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
         }
 
 
-        SPStop *newstop = sp_vector_add_stop (vector, prev_stop, next_stop, offset);
+        SPStop *newstop = sp_vector_add_stop (vector, prev_stop, next_stop, new_stop_offset);
         gradient->ensureVector();
         updateDraggers();
 
