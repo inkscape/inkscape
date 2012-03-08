@@ -278,7 +278,6 @@ static gchar const * ui_descr =
         "    <toolitem action='HeightAction' />"
         "    <toolitem action='UnitsAction' />"
         "    <separator />"
-        "    <toolitem action='transform_affect_label' />"
         "    <toolitem action='transform_stroke' />"
         "    <toolitem action='transform_corners' />"
         "    <toolitem action='transform_gradient' />"
