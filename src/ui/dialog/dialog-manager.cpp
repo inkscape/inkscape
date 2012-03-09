@@ -50,6 +50,7 @@
 #include "ui/dialog/text-edit.h"
 #include "ui/dialog/spellcheck.h"
 #include "ui/dialog/export.h"
+#include "ui/dialog/xml-tree.h"
 
 #ifdef ENABLE_SVG_FONTS
 #include "ui/dialog/svg-fonts-dialog.h"
@@ -127,6 +128,7 @@ DialogManager::DialogManager() {
         registerFactory("TextFont",            &create<TextEdit,             FloatingBehavior>);
         registerFactory("SpellCheck",          &create<SpellCheck,           FloatingBehavior>);
         registerFactory("Export",              &create<Export,               FloatingBehavior>);
+        registerFactory("XmlTree",             &create<XmlTree,              FloatingBehavior>);
 
     } else {
 
@@ -160,6 +162,7 @@ DialogManager::DialogManager() {
         registerFactory("TextFont",            &create<TextEdit,             DockBehavior>);
         registerFactory("SpellCheck",          &create<SpellCheck,           DockBehavior>);
         registerFactory("Export",              &create<Export,               DockBehavior>);
+        registerFactory("XmlTree",             &create<XmlTree,              DockBehavior>);
 
     }
 }

@@ -95,4 +95,6 @@ ink_common_sources +=		\
 	ui/dialog/transformation.h		\
 	ui/dialog/undo-history.cpp		\
 	ui/dialog/undo-history.h		\
+	ui/dialog/xml-tree.cpp		\
+	ui/dialog/xml-tree.h		\
 	$(inkboard_dialogs)

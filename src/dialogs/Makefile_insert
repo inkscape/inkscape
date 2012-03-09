@@ -6,6 +6,4 @@ ink_common_sources +=	\
 	dialogs/dialog-events.cpp	\
 	dialogs/dialog-events.h		\
 	dialogs/find.cpp		\
-	dialogs/find.h			\
-	dialogs/xml-tree.cpp		\
-	dialogs/xml-tree.h
+	dialogs/find.h
