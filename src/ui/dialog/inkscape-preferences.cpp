@@ -741,7 +741,7 @@ static void gamutColorChanged( Gtk::ColorButton* btn ) {
 
 void InkscapePreferences::initPageIO()
 {
-    Gtk::TreeModel::iterator iter_io = this->AddPage(_page_io, _("Input-output"), PREFS_PAGE_IO);
+    Gtk::TreeModel::iterator iter_io = this->AddPage(_page_io, _("Input/Output"), PREFS_PAGE_IO);
     _path_io = _page_list.get_model()->get_path(iter_io);
 
     _save_use_current_dir.init( _("Use current directory for \"Save As ...\""), "/dialogs/save_as/use_current_dir", true);
