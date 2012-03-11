@@ -48,6 +48,7 @@ set(ui_SRC
 	dialog/input.cpp
 	dialog/layer-properties.cpp
 	dialog/layers.cpp
+	dialog/livepatheffect-add.cpp
 	dialog/livepatheffect-editor.cpp
 	dialog/memory.cpp
 	dialog/messages.cpp
@@ -57,6 +58,7 @@ set(ui_SRC
 	dialog/print-colors-preview-dialog.cpp
 	dialog/print.cpp
 	dialog/scriptdialog.cpp
+	dialog/xml-tree.cpp
 	# dialog/session-player.cpp
 	dialog/spellcheck.cpp
 	dialog/svg-fonts-dialog.cpp
@@ -156,6 +158,7 @@ set(ui_SRC
 	dialog/input.h
 	dialog/layer-properties.h
 	dialog/layers.h
+	dialog/livepatheffect-add.h
 	dialog/livepatheffect-editor.h
 	dialog/memory.h
 	dialog/messages.h
@@ -174,6 +177,7 @@ set(ui_SRC
 	dialog/tracedialog.h
 	dialog/transformation.h
 	dialog/undo-history.h
+	dialog/xml-tree.h
 
 	tool/commit-events.h
 	tool/control-point-selection.h
