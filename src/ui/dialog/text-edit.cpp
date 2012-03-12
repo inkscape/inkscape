@@ -178,8 +178,7 @@ This conditional and its #else block can be deleted in the future.
 
     /* Buttons */
     setasdefault_button.set_use_underline(true);
-    apply_button.set_flags(Gtk::CAN_DEFAULT);
-    //apply_button.grab_default();
+    apply_button.set_can_default();
     button_row.pack_start(setasdefault_button, false, false, 0);
     button_row.pack_end(close_button, false, false, VB_MARGIN);
     button_row.pack_end(apply_button, false, false, VB_MARGIN);

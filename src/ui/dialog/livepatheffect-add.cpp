@@ -68,9 +68,9 @@ LivePathEffectAdd::LivePathEffectAdd() :
      * Buttons
      */
     close_button.set_use_stock(true);
-    close_button.set_flags(Gtk::CAN_DEFAULT);
+    close_button.set_can_default();
     add_button.set_use_underline(true);
-    add_button.set_flags(Gtk::CAN_DEFAULT);
+    add_button.set_can_default();
 
     Gtk::VBox *mainVBox = get_vbox();
     mainVBox->pack_start(scrolled_window, true, true);
