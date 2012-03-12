@@ -17,10 +17,9 @@
 
 #define noSP_SS_VERBOSE
 
-#include <gtkmm/table.h>
-#include <glib.h>
-#include <glibmm/i18n.h>
 #include "widgets/dash-selector.h"
+#include <gtkmm/table.h>
+#include <glibmm/i18n.h>
 
 #include "desktop-handles.h"
 #include "desktop-style.h"

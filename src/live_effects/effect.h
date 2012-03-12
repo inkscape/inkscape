@@ -7,7 +7,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <map>
 #include <glibmm/ustring.h>
 #include <2geom/forward.h>
 #include "ui/widget/registry.h"

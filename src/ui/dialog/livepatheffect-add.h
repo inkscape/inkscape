@@ -12,13 +12,9 @@
 #define INKSCAPE_DIALOG_LIVEPATHEFFECT_ADD_H
 
 #include <gtkmm/dialog.h>
-#include <gtkmm/entry.h>
-#include <gtkmm/label.h>
-#include <gtkmm/table.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/treeview.h>
 #include <gtkmm/scrolledwindow.h>
-#include "ui/widget/combo-enums.h"
 #include "live_effects/effect-enum.h"
 
 class SPDesktop;

@@ -16,6 +16,7 @@
  *
  */
 
+#include "xml-tree.h"
 #include "widgets/icon.h"
 #include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
@@ -43,7 +44,9 @@
 #include "verbs.h"
 #include "widgets/icon.h"
 
-#include "xml-tree.h"
+#include "widgets/sp-xmlview-attr-list.h"
+#include "widgets/sp-xmlview-content.h"
+#include "widgets/sp-xmlview-tree.h"
 
 namespace Inkscape {
 namespace UI {

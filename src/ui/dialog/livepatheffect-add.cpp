@@ -12,11 +12,11 @@
 # include <config.h>
 #endif
 
+#include "livepatheffect-add.h"
 #include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
 
 #include "desktop.h"
-#include "livepatheffect-add.h"
 #include "live_effects/effect-enum.h"
 
 namespace Inkscape {

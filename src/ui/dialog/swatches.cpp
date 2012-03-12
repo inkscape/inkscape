@@ -18,9 +18,9 @@
 #include <algorithm>
 #include <set>
 
+#include "swatches.h"
 #include <gtkmm/radiomenuitem.h>
 
-#include "swatches.h"
 #include <glibmm/i18n.h>
 #include <glibmm/main.h>
 #include <gdkmm/pixbuf.h>

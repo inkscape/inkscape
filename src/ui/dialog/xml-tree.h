@@ -13,28 +13,31 @@
 #ifndef SEEN_DIALOGS_XML_TREE_H
 #define SEEN_DIALOGS_XML_TREE_H
 
-#include <gtk/gtk.h>
-#include <glibmm/i18n.h>
-#include <gtkmm/expander.h>
-#include <gtkmm/frame.h>
+#include "ui/widget/panel.h"
 #include <gtkmm/entry.h>
 #include <gtkmm/textview.h>
 #include <gtkmm/toolbar.h>
 #include <gtkmm/separatortoolitem.h>
-#include <gtkmm/separator.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/paned.h>
 
-#include "desktop.h"
 #include "ui/dialog/desktop-tracker.h"
-#include "ui/widget/panel.h"
-#include "widgets/sp-attribute-widget.h"
+#include "message.h"
 
-#include "widgets/sp-xmlview-attr-list.h"
-#include "widgets/sp-xmlview-content.h"
-#include "widgets/sp-xmlview-tree.h"
+struct SPDesktop;
+struct SPObject;
+struct SPXMLViewAttrList;
+struct SPXMLViewContent;
+struct SPXMLViewTree;
 
 namespace Inkscape {
+class MessageStack;
+class MessageContext;
+
+namespace XML {
+class Node;
+}
+
 namespace UI {
 namespace Dialog {
 

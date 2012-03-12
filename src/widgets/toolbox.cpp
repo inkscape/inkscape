@@ -31,6 +31,7 @@
 
 #include <cstring>
 #include <string>
+#include "live_effects/lpe-line_segment.h"
 #include <gtkmm/action.h>
 #include <gtkmm/actiongroup.h>
 #include <gtkmm/toolitem.h>
@@ -67,7 +68,6 @@
 #include "../libnrtype/font-instance.h"
 #include "../live_effects/effect.h"
 #include "../live_effects/lpe-angle_bisector.h"
-#include "../live_effects/lpe-line_segment.h"
 #include "../lpe-tool-context.h"
 #include "../mod360.h"
 #include "../pen-context.h"

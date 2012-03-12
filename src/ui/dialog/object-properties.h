@@ -13,12 +13,12 @@
 #ifndef SEEN_DIALOGS_ITEM_PROPERTIES_H
 #define SEEN_DIALOGS_ITEM_PROPERTIES_H
 
+#include "ui/widget/panel.h"
 #include <gtkmm/entry.h>
 #include <gtkmm/expander.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/textview.h>
 
-#include "ui/widget/panel.h"
 #include "ui/dialog/desktop-tracker.h"
 #include "widgets/sp-attribute-widget.h"
 
