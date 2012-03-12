@@ -91,6 +91,10 @@ class Length(inkex.Effect):
                         action="store", type="string", 
                         dest="type", default="length",
                         help="Type of measurement")
+        self.OptionParser.add_option("--format",
+                        action="store", type="string", 
+                        dest="format", default="textonpath",
+                        help="Display Format")
         self.OptionParser.add_option("-f", "--fontsize",
                         action="store", type="int", 
                         dest="fontsize", default=20,
@@ -139,14 +143,6 @@ class Length(inkex.Effect):
         for id, node in self.selected.iteritems():
             if node.tag == inkex.addNS('path','svg'):
                 self.group = inkex.etree.SubElement(node.getparent(),inkex.addNS('text','svg'))
-                
-                # t = node.get('transform')
-                # Removed to fix LP #308183 
-                # (Measure Path text shifted when used with a copied object)
-                #if t:
-                #    self.group.set('transform', t)
-
-
                 a =[]
                 mat = simpletransform.composeParents(node, [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
                 p = cubicsuperpath.parsePath(node.get('d'))
@@ -158,10 +154,16 @@ class Length(inkex.Effect):
                     stotal = csparea(p)*factor*self.options.scale
                 # Format the length as string
                 lenstr = locale.format("%(len)25."+str(prec)+"f",{'len':round(stotal*factor*self.options.scale,prec)}).strip()
-                if self.options.type == "length":
-                    self.addTextOnPath(self.group, 0, 0, lenstr+' '+self.options.unit, id, 'start', '50%', self.options.offset)
+                if self.options.format == 'textonpath':
+                    if self.options.type == "length":
+                        self.addTextOnPath(self.group, 0, 0, lenstr+' '+self.options.unit, id, 'start', '50%', self.options.offset)
+                    else:
+                        self.addTextOnPath(self.group, 0, 0, lenstr+' '+self.options.unit+'^2', id, 'start', '0%', self.options.offset)
                 else:
-                    self.addTextOnPath(self.group, 0, 0, lenstr+' '+self.options.unit+'^2', id, 'start', '0%', self.options.offset)
+                    if self.options.type == "length":
+                        self.addTextWithTspan(self.group, p[0][0][1][0], p[0][0][1][1], lenstr+' '+self.options.unit, id, 'start', -int(self.options.format), self.options.offset + self.options.fontsize/2)
+                    else:
+                        self.addTextWithTspan(self.group, p[0][0][1][0], p[0][0][1][1], lenstr+' '+self.options.unit+'^2', id, 'start', -int(self.options.format), -self.options.offset + self.options.fontsize/2)
 
     def addTextOnPath(self, node, x, y, text, id, anchor, startOffset, dy = 0):
                 new = inkex.etree.SubElement(node,inkex.addNS('textPath','svg'))
@@ -178,6 +180,19 @@ class Length(inkex.Effect):
                 #node.set('transform','rotate(180,'+str(-x)+','+str(-y)+')')
                 node.set('x', str(x))
                 node.set('y', str(y))
+
+    def addTextWithTspan(self, node, x, y, text, id, anchor, angle, dy = 0):
+                new = inkex.etree.SubElement(node,inkex.addNS('tspan','svg'), {inkex.addNS('role','sodipodi'): 'line'})
+                s = {'text-align': 'center', 'vertical-align': 'bottom',
+                    'text-anchor': anchor, 'font-size': str(self.options.fontsize),
+                    'fill-opacity': '1.0', 'stroke': 'none',
+                    'font-weight': 'normal', 'font-style': 'normal', 'fill': '#000000'}
+                new.set('style', simplestyle.formatStyle(s))
+                new.set('dy', str(dy))
+                new.text = str(text)
+                node.set('x', str(x))
+                node.set('y', str(y))
+                node.set('transform', 'rotate(%s, %s, %s)' % (angle, x, y))
 
 if __name__ == '__main__':
     e = Length()
