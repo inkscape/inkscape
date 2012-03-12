@@ -123,13 +123,14 @@ static void sp_font_selector_class_init(SPFontSelectorClass *c)
 
     fs_parent_class = (GtkHBoxClass* )g_type_class_peek_parent (c);
 
-    fs_signals[FONT_SET] = gtk_signal_new ("font_set",
-                                           GTK_RUN_FIRST,
-                                           GTK_CLASS_TYPE(object_class),
-                                           GTK_SIGNAL_OFFSET(SPFontSelectorClass, font_set),
+    fs_signals[FONT_SET] = g_signal_new ("font_set",
+                                           G_TYPE_FROM_CLASS(object_class),
+                                           (GSignalFlags)G_SIGNAL_RUN_FIRST,
+                                           G_STRUCT_OFFSET(SPFontSelectorClass, font_set),
+					   NULL, NULL,
                                            g_cclosure_marshal_VOID__POINTER,
-                                           GTK_TYPE_NONE,
-                                           1, GTK_TYPE_POINTER);
+                                           G_TYPE_NONE,
+                                           1, G_TYPE_POINTER);
 
     object_class->destroy = sp_font_selector_destroy;
 }
