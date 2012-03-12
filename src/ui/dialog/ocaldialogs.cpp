@@ -647,8 +647,7 @@ void ImportDialog::on_list_results_selection_changed()
     if (((int) pathlist.size()) < 1) {
         return;
     }
-    posArray = pathlist[0].get_indices();
-    int row = posArray[0];
+    int row = pathlist[0][0];
     
     Glib::ustring guid = list_results->get_text(row, RESULTS_COLUMN_GUID);
     
@@ -666,8 +665,7 @@ void ImportDialog::on_button_import_clicked() {
     if (((int) pathlist.size()) < 1) {
         return;
     }
-    posArray = pathlist[0].get_indices();
-    int row = posArray[0];
+    int row = pathlist[0][0];
 
     button_import->set_sensitive(false);
     button_close->hide();
@@ -689,8 +687,7 @@ void ImportDialog::on_list_results_cursor_changed()
     if (((int) pathlist.size()) < 1) {
         return;
     }
-    posArray = pathlist[0].get_indices();
-    int row = posArray[0];
+    int row = pathlist[0][0];
 
     if (downloading_thumbnail) {
         cancellable_thumbnail->cancel();
