@@ -705,6 +705,17 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                     // artificially here, for the text object does not exist yet:
                     double cursor_height = sp_desktop_get_font_size_tool(desktop);
                     sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), p1, p1 + Geom::Point(0, cursor_height));
+                    if (tc->imc) {
+                        GdkRectangle im_cursor;
+                        Geom::Point const top_left = SP_EVENT_CONTEXT(tc)->desktop->get_display_area().corner(3);
+                        Geom::Point const cursor_size(0, cursor_height);
+                        Geom::Point const im_position = SP_EVENT_CONTEXT(tc)->desktop->d2w(p1 + cursor_size - top_left);
+                        im_cursor.x = (int) floor(im_position[Geom::X]);
+                        im_cursor.y = (int) floor(im_position[Geom::Y]);
+                        im_cursor.width = 0;
+                        im_cursor.height = (int) -floor(SP_EVENT_CONTEXT(tc)->desktop->d2w(cursor_size)[Geom::Y]);
+                        gtk_im_context_set_cursor_location(tc->imc, &im_cursor);
+                    }
                     event_context->_message_context->set(Inkscape::NORMAL_MESSAGE, _("Type text; <b>Enter</b> to start new line.")); // FIXME:: this is a copy of a string from _update_cursor below, do not desync
 
                     event_context->within_tolerance = false;
@@ -1572,8 +1583,6 @@ static void sp_text_context_validate_cursor_iterators(SPTextContext *tc)
 
 static void sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see)
 {
-    GdkRectangle im_cursor = { 0, 0, 1, 1 };
-
     // due to interruptible display, tc may already be destroyed during a display update before
     // the cursor update (can't do both atomically, alas)
     if (!tc->desktop) return;
@@ -1598,10 +1607,17 @@ static void sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see
         sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), d0, d1);
 
         /* fixme: ... need another transformation to get canvas widget coordinate space? */
-        im_cursor.x = (int) floor(d0[Geom::X]);
-        im_cursor.y = (int) floor(d0[Geom::Y]);
-        im_cursor.width = (int) floor(d1[Geom::X]) - im_cursor.x;
-        im_cursor.height = (int) floor(d1[Geom::Y]) - im_cursor.y;
+        if (tc->imc) {
+            GdkRectangle im_cursor = { 0, 0, 1, 1 };
+            Geom::Point const top_left = SP_EVENT_CONTEXT(tc)->desktop->get_display_area().corner(3);
+            Geom::Point const im_d0 = SP_EVENT_CONTEXT(tc)->desktop->d2w(d0 - top_left);
+            Geom::Point const im_d1 = SP_EVENT_CONTEXT(tc)->desktop->d2w(d1 - top_left);
+            im_cursor.x = (int) floor(im_d0[Geom::X]);
+            im_cursor.y = (int) floor(im_d1[Geom::Y]);
+            im_cursor.width = (int) floor(im_d1[Geom::X]) - im_cursor.x;
+            im_cursor.height = (int) floor(im_d0[Geom::Y]) - im_cursor.y;
+            gtk_im_context_set_cursor_location(tc->imc, &im_cursor);
+        }
 
         tc->show = TRUE;
         tc->phase = 1;
@@ -1643,9 +1659,6 @@ static void sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see
         }
     }
 
-    if (tc->imc) {
-        gtk_im_context_set_cursor_location(tc->imc, &im_cursor);
-    }
     SP_EVENT_CONTEXT(tc)->desktop->emitToolSubselectionChanged((gpointer)tc);
 }
 
