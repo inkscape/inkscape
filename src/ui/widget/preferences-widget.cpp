@@ -386,8 +386,12 @@ ZoomCorrRuler::redraw() {
     Glib::RefPtr<Gdk::Window> window = get_window();
     Cairo::RefPtr<Cairo::Context> cr = window->create_cairo_context();
 
+#if WITH_GTKMM_2_24
+    int w = window->get_width();
+#else
     int w, h;
     window->get_size(w, h);
+#endif
     _drawing_width = w - _border * 2;
 
     cr->set_source_rgb(1.0, 1.0, 1.0);
