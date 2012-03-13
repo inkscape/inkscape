@@ -43,6 +43,8 @@ private:
         prop_defValue_pair
     };
     static SPAttributeRelCSS *instance;
+    static bool foundFileProp;
+    static bool foundFileDefault;
     hashList propertiesOfElements;
 
     // Data structure to store CSS property and default value pair

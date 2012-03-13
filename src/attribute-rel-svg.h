@@ -31,6 +31,7 @@ private:
 
 private:
     static SPAttributeRelSVG *instance;
+    static bool foundFile;
     hashList attributesOfElements;
 };
 

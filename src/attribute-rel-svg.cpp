@@ -26,6 +26,7 @@
 #include "preferences.h"
 
 SPAttributeRelSVG * SPAttributeRelSVG::instance = NULL;
+bool SPAttributeRelSVG::foundFile = false;
 
 /*
  * This functions checks whether an element -> attribute pair is allowed or not
@@ -35,6 +36,9 @@ bool SPAttributeRelSVG::findIfValid(Glib::ustring attribute, Glib::ustring eleme
     if (SPAttributeRelSVG::instance == NULL) {
         SPAttributeRelSVG::instance = new SPAttributeRelSVG();
     }
+
+    // Always valid if data file not found!
+    if( !foundFile ) return true;
 
     // Strip of "svg:" from the element's name
     Glib::ustring temp = element;
@@ -75,15 +79,13 @@ SPAttributeRelSVG::SPAttributeRelSVG()
     f.open(filepath.c_str(), std::ios::in);
 
     if (!f.is_open()) {
-        // Set the default preference of attribute checking to ignore
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setInt("/options/svgoutput/incorrect_attributes", 3);
-
         // Display warning for file not open
         g_warning("Could not open the data file for XML attribute-element map construction: %s", filepath.c_str());
         f.close();
         return ;
     }
+
+    foundFile = true;
 
     while (!f.eof()){
         std::stringstream ss;

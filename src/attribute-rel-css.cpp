@@ -27,6 +27,8 @@
 #include "preferences.h"
 
 SPAttributeRelCSS * SPAttributeRelCSS::instance = NULL;
+bool SPAttributeRelCSS::foundFileProp = false;
+bool SPAttributeRelCSS::foundFileDefault = false;
 
 /*
  * This function checks whether an element -> CSS property pair 
@@ -38,6 +40,9 @@ bool SPAttributeRelCSS::findIfValid(Glib::ustring property, Glib::ustring elemen
         SPAttributeRelCSS::instance = new SPAttributeRelCSS();
     }
     
+    // Always valid if data file not found!
+    if( !foundFileProp ) return true;
+
     // Strip of "svg:" from the element's name
     Glib::ustring temp = element;
     if ( temp.find("svg:") != std::string::npos ) {
@@ -73,6 +78,9 @@ bool SPAttributeRelCSS::findIfDefault(Glib::ustring property, Glib::ustring valu
         SPAttributeRelCSS::instance = new SPAttributeRelCSS();
     }
 
+    // Always false if data file not found!
+    if( !foundFileDefault ) return false;
+
     if( instance->defaultValuesOfProps[property] == value) {
         return true;
     } else {
@@ -89,6 +97,9 @@ bool SPAttributeRelCSS::findIfInherit(Glib::ustring property)
         SPAttributeRelCSS::instance = new SPAttributeRelCSS();
     }
 
+    // Always false if data file not found!
+    if( !foundFileDefault ) return false;
+
     return instance->inheritProps[property];
 }
 
@@ -101,6 +112,9 @@ bool SPAttributeRelCSS::findIfProperty(Glib::ustring property)
         SPAttributeRelCSS::instance = new SPAttributeRelCSS();
     }
 
+    // Always true if data file not found!
+    if( !foundFileProp ) return true;
+
     return ( instance->defaultValuesOfProps.find( property )
              != instance->defaultValuesOfProps.end() );
 }
@@ -112,10 +126,8 @@ SPAttributeRelCSS::SPAttributeRelCSS()
     filepath += "/cssprops";
 
     // Try and load data from filepath
-    if (!readDataFromFileIn(filepath, SPAttributeRelCSS::prop_element_pair)) {
-        // Set default preference for CSS property checking to ignore
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setInt("/options/svgoutput/incorrect_style_properties", 3);
+    if (readDataFromFileIn(filepath, SPAttributeRelCSS::prop_element_pair)) {
+        foundFileProp = true;
     }
     
     // Read data from standard path
@@ -123,11 +135,10 @@ SPAttributeRelCSS::SPAttributeRelCSS()
     filepath += "/css_defaults";
     
     // Try and load data from filepath
-    if (!readDataFromFileIn(filepath, SPAttributeRelCSS::prop_defValue_pair)) {
-        // Set default preference for CSS defaults checking to ignore
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->setInt("/options/svgoutput/style_defaults", 3);
+    if (readDataFromFileIn(filepath, SPAttributeRelCSS::prop_defValue_pair)) {
+        foundFileDefault = true;
     }
+
 }
 
 bool SPAttributeRelCSS::readDataFromFileIn(Glib::ustring fileName, storageType type)
