@@ -153,6 +153,37 @@ sp_gradient_image_new (SPGradient *gradient)
 	return (GtkWidget *) image;
 }
 
+GdkPixbuf*
+sp_gradient_to_pixbuf (SPGradient *gr, int width, int height)
+{
+    cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+    cairo_t *ct = cairo_create(s);
+
+    cairo_pattern_t *check = ink_cairo_pattern_create_checkerboard();
+    cairo_set_source(ct, check);
+    cairo_paint(ct);
+    cairo_pattern_destroy(check);
+
+    if (gr) {
+        cairo_pattern_t *p = sp_gradient_create_preview_pattern(gr, width);
+        cairo_set_source(ct, p);
+        cairo_paint(ct);
+        cairo_pattern_destroy(p);
+    }
+
+    cairo_destroy(ct);
+    cairo_surface_flush(s);
+
+    GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( cairo_image_surface_get_data(s),
+                                               GDK_COLORSPACE_RGB, TRUE, 8,
+                                               width, height, cairo_image_surface_get_stride(s),
+                                               ink_cairo_pixbuf_cleanup, s);
+    convert_pixbuf_argb32_to_normal(pixbuf);
+
+    return pixbuf;
+}
+
+
 void
 sp_gradient_image_set_gradient (SPGradientImage *image, SPGradient *gradient)
 {

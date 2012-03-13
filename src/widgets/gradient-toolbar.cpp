@@ -141,35 +141,60 @@ void gr_apply_gradient (Inkscape::Selection *selection, GrDrag *drag, SPGradient
    }
 }
 
-void gr_item_activate (GtkMenuItem *menuitem, gpointer data)
+void gr_combo_box_changed (GtkComboBox *widget, gpointer data)
 {
-    SPGradient *gr = static_cast<SPGradient *>(g_object_get_data (G_OBJECT (menuitem), "gradient"));
-    gr = sp_gradient_ensure_vector_normalized(gr);
+    GtkTreeIter  iter;
+    if (!gtk_combo_box_get_active_iter (widget, &iter)) {
+        return;
+    }
 
-    SPDesktop *desktop = static_cast<SPDesktop *>(data);
-    Inkscape::Selection *selection = sp_desktop_selection (desktop);
-    SPEventContext *ev = sp_desktop_event_context (desktop);
+    GtkTreeModel *model = gtk_combo_box_get_model (widget);
+    SPGradient *gr = NULL;
+    gtk_tree_model_get (model, &iter, 2, &gr, -1);
 
-    gr_apply_gradient (selection, ev? ev->get_drag() : NULL, gr);
+    if (gr) {
+        gr = sp_gradient_ensure_vector_normalized(gr);
 
-    DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
-		       _("Assign gradient to object"));
+        SPDesktop *desktop = static_cast<SPDesktop *>(data);
+        Inkscape::Selection *selection = sp_desktop_selection (desktop);
+        SPEventContext *ev = sp_desktop_event_context (desktop);
+
+        gr_apply_gradient (selection, ev? ev->get_drag() : NULL, gr);
+
+        DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
+                   _("Assign gradient to object"));
+    }
+
 }
 
 gchar *gr_prepare_label (SPObject *obj)
 {
     const gchar *id = obj->defaultLabel();
     if (strlen(id) > 15 && (!strncmp (id, "#linearGradient", 15) || !strncmp (id, "#radialGradient", 15)))
-        return g_strdup_printf ("<small>#%s</small>", id+15);
-    return g_strdup_printf ("<small>%s</small>", id);
+        return g_strdup_printf ("#%s", id+15);
+    return g_strdup_printf ("%s", id);
 }
 
 GtkWidget *gr_vector_list(SPDesktop *desktop, bool selection_empty, SPGradient *gr_selected, bool gr_multi)
 {
     SPDocument *document = sp_desktop_document (desktop);
 
-    GtkWidget *om = gtk_option_menu_new ();
-    GtkWidget *m = gtk_menu_new ();
+    GtkListStore *store;
+    GtkTreeIter iter;
+    GtkCellRenderer *renderer;
+    GtkWidget *combo_box;
+
+    store = gtk_list_store_new (3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_POINTER);
+    combo_box = gtk_combo_box_new_with_model (GTK_TREE_MODEL (store));
+
+    renderer = gtk_cell_renderer_pixbuf_new ();
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), renderer, FALSE);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), renderer, "pixbuf", 0,  NULL);
+    gtk_cell_renderer_set_padding(renderer, 5, 0);
+
+    renderer = gtk_cell_renderer_text_new ();
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), renderer, TRUE);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), renderer, "text", 1, NULL);
 
     GSList *gl = NULL;
     const GSList *gradients = document->getResourceList("gradient");
@@ -186,87 +211,65 @@ GtkWidget *gr_vector_list(SPDesktop *desktop, bool selection_empty, SPGradient *
 
     if (!gl) {
         // The document has no gradients
-        GtkWidget *l = gtk_label_new("");
-        gtk_label_set_markup (GTK_LABEL(l), _("<small>No gradients</small>"));
-        GtkWidget *i = gtk_menu_item_new ();
-        gtk_container_add (GTK_CONTAINER (i), l);
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter, 0, NULL, 1, _("No gradients"), 2, NULL, -1);
+        gtk_widget_set_sensitive (combo_box, FALSE);
 
-        gtk_widget_show (i);
-        gtk_menu_shell_append(GTK_MENU_SHELL (m), i);
-        gtk_widget_set_sensitive (om, FALSE);
     } else if (selection_empty) {
         // Document has gradients, but nothing is currently selected.
-        GtkWidget *l = gtk_label_new("");
-        gtk_label_set_markup (GTK_LABEL(l), _("<small>Nothing selected</small>"));
-        GtkWidget *i = gtk_menu_item_new ();
-        gtk_container_add (GTK_CONTAINER (i), l);
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter, 0, NULL, 1, _("Nothing selected"), 2, NULL, -1);
+        gtk_widget_set_sensitive (combo_box, FALSE);
 
-        gtk_widget_show (i);
-        gtk_menu_shell_append(GTK_MENU_SHELL (m), i);
-        gtk_widget_set_sensitive (om, FALSE);
     } else {
 
         if (gr_selected == NULL) {
-            GtkWidget *l = gtk_label_new("");
-            gtk_label_set_markup (GTK_LABEL(l), _("<small>No gradients in selection</small>"));
-            GtkWidget *i = gtk_menu_item_new ();
-            gtk_container_add (GTK_CONTAINER (i), l);
 
-            gtk_widget_show (i);
-            gtk_menu_shell_append(GTK_MENU_SHELL (m), i);
+            gtk_list_store_append (store, &iter);
+            gtk_list_store_set (store, &iter, 0, NULL, 1, _("No gradient"), 2, NULL, -1);
+            gtk_widget_set_sensitive (combo_box, FALSE);
+
         }
 
         if (gr_multi) {
-            GtkWidget *l = gtk_label_new("");
-            gtk_label_set_markup (GTK_LABEL(l), _("<small>Multiple gradients</small>"));
-            GtkWidget *i = gtk_menu_item_new ();
-            gtk_container_add (GTK_CONTAINER (i), l);
 
-            gtk_widget_show (i);
-            gtk_menu_shell_append(GTK_MENU_SHELL (m), i);
+            gtk_list_store_append (store, &iter);
+            gtk_list_store_set (store, &iter, 0, NULL, 1, _("Multiple gradients"), 2, NULL, -1);
+            gtk_widget_set_sensitive (combo_box, FALSE);
+
         }
 
         while (gl) {
             SPGradient *gradient = SP_GRADIENT (gl->data);
             gl = g_slist_remove (gl, gradient);
 
-            GtkWidget *i = gtk_menu_item_new ();
-            g_object_set_data (G_OBJECT (i), "gradient", gradient);
-            g_signal_connect (G_OBJECT (i), "activate", G_CALLBACK (gr_item_activate), desktop);
-
-            GtkWidget *image = sp_gradient_image_new (gradient);
-
-            GtkWidget *hb = gtk_hbox_new (FALSE, 4);
-            GtkWidget *l = gtk_label_new ("");
             gchar *label = gr_prepare_label(gradient);
-            gtk_label_set_markup (GTK_LABEL(l), label);
+            GdkPixbuf *pixb = sp_gradient_to_pixbuf (gradient, 60, 22);
+            gtk_list_store_append (store, &iter);
+            gtk_list_store_set (store, &iter, 0, pixb, 1, label, 2, gradient, -1);
             g_free (label);
-            gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
-            gtk_box_pack_start (GTK_BOX (hb), l, TRUE, TRUE, 0);
-            gtk_box_pack_start (GTK_BOX (hb), image, FALSE, FALSE, 0);
-
-            gtk_widget_show_all (i);
-
-            gtk_container_add (GTK_CONTAINER (i), hb);
-
-            gtk_menu_shell_append(GTK_MENU_SHELL (m), i);
 
             if (gradient == gr_selected) {
                 pos = idx;
             }
             idx ++;
         }
-        gtk_widget_set_sensitive (om, TRUE);
+        gtk_widget_set_sensitive (combo_box, TRUE);
     }
 
-    gtk_option_menu_set_menu (GTK_OPTION_MENU (om), m);
     /* Select the current gradient, or the Multi/Nothing line */
-    if (gr_multi || gr_selected == NULL)
-        gtk_option_menu_set_history (GTK_OPTION_MENU (om), 0);
-    else
-        gtk_option_menu_set_history (GTK_OPTION_MENU (om), pos);
+    if (gr_multi || gr_selected == NULL) {
+        gtk_combo_box_set_active (GTK_COMBO_BOX(combo_box) , 0);
+    }
+    else {
+        gtk_combo_box_set_active (GTK_COMBO_BOX(combo_box) , pos);
+    }
 
-    return om;
+    sp_set_font_size_smaller(combo_box);
+
+    g_signal_connect (G_OBJECT (combo_box), "changed", G_CALLBACK (gr_combo_box_changed), desktop);
+
+    return combo_box;
 }
 
 
@@ -377,10 +380,10 @@ static void gr_tb_selection_changed(Inkscape::Selection * /*selection*/, gpointe
         if (selection) {
             SPEventContext *ev = sp_desktop_event_context(desktop);
 
-            GtkWidget *om = (GtkWidget *) g_object_get_data(G_OBJECT(widget), "menu");
-            if (om) {
-                gtk_widget_destroy(om);
-                om = 0;
+            GtkWidget *combo_box = (GtkWidget *) g_object_get_data(G_OBJECT(widget), "combobox");
+            if (combo_box) {
+                gtk_widget_destroy(combo_box);
+                combo_box = 0;
             }
 
             SPGradient *gr_selected = 0;
@@ -391,13 +394,13 @@ static void gr_tb_selection_changed(Inkscape::Selection * /*selection*/, gpointe
 
             gr_read_selection(selection, ev ? ev->get_drag() : 0, gr_selected, gr_multi, spr_selected, spr_multi);
 
-            om = gr_vector_list(desktop, selection->isEmpty(), gr_selected, gr_multi);
-            g_object_set_data(G_OBJECT(widget), "menu", om);
+            combo_box = gr_vector_list(desktop, selection->isEmpty(), gr_selected, gr_multi);
+            g_object_set_data(G_OBJECT(widget), "combobox", combo_box);
 
             GtkWidget *buttons = (GtkWidget *) g_object_get_data(G_OBJECT(widget), "buttons");
             gtk_widget_set_sensitive(buttons, (gr_selected && !gr_multi));
 
-            gtk_box_pack_start(GTK_BOX(widget), om, TRUE, TRUE, 0);
+            gtk_box_pack_start(GTK_BOX(widget), combo_box, TRUE, TRUE, 0);
 
             gtk_widget_show_all(widget);
         }
@@ -436,13 +439,19 @@ static void gr_disconnect_sigc (GObject */*obj*/, sigc::connection *connection) 
 static void
 gr_edit (GtkWidget */*button*/, GtkWidget *widget)
 {
-    GtkWidget *om = (GtkWidget *) g_object_get_data (G_OBJECT(widget), "menu");
+    GtkWidget *combo_box = (GtkWidget *) g_object_get_data (G_OBJECT(widget), "combobox");
 
     spinbutton_defocus(GTK_OBJECT(widget));
 
-    if (om) {
-        GtkWidget *i = gtk_menu_get_active (GTK_MENU (gtk_option_menu_get_menu (GTK_OPTION_MENU (om))));
-        SPGradient *gr = (SPGradient *) g_object_get_data (G_OBJECT(i), "gradient");
+    if (combo_box) {
+        GtkTreeIter  iter;
+        if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX(combo_box), &iter)) {
+            return;
+        }
+
+        GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX(combo_box));
+        SPGradient *gr = NULL;
+        gtk_tree_model_get (model, &iter, 2, &gr, -1);
 
         if (gr) {
             GtkWidget *dialog = sp_gradient_vector_editor_new (gr);
@@ -469,10 +478,10 @@ GtkWidget * gr_change_widget(SPDesktop *desktop)
     g_object_set_data(G_OBJECT(widget), "dtw", desktop->canvas);
     g_object_set_data (G_OBJECT (widget), "desktop", desktop);
 
-    GtkWidget *om = gr_vector_list (desktop, selection->isEmpty(), gr_selected, gr_multi);
-    g_object_set_data (G_OBJECT (widget), "menu", om);
+    GtkWidget *combo_box = gr_vector_list(desktop, selection->isEmpty(), gr_selected, gr_multi);
+    g_object_set_data(G_OBJECT(widget), "combobox", combo_box);
 
-    gtk_box_pack_start (GTK_BOX (widget), om, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), combo_box, TRUE, TRUE, 0);
 
     {
     GtkWidget *buttons = gtk_hbox_new(FALSE, 1);
@@ -628,9 +637,9 @@ sp_gradient_toolbox_new(SPDesktop *desktop)
 
     {
         GtkWidget *vectors = gr_change_widget (desktop);
-	GtkToolItem *vectors_toolitem = gtk_tool_item_new();
-	gtk_container_add(GTK_CONTAINER(vectors_toolitem), vectors);
-	gtk_toolbar_insert(GTK_TOOLBAR(tbl), vectors_toolitem, -1);
+        GtkToolItem *vectors_toolitem = gtk_tool_item_new();
+        gtk_container_add(GTK_CONTAINER(vectors_toolitem), vectors);
+        gtk_toolbar_insert(GTK_TOOLBAR(tbl), vectors_toolitem, -1);
     }
 
     gtk_widget_show_all(tbl);
