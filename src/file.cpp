@@ -1148,6 +1148,9 @@ sp_file_import(Gtk::Window &parentWindow)
         return;
     }
 
+    typedef std::vector<Glib::ustring> pathnames;
+    pathnames flist(importDialogInstance->getFilenames());
+
     // Get file name and extension type
     Glib::ustring fileName = importDialogInstance->getFilename();
     Inkscape::Extension::Extension *selection = importDialogInstance->getSelectionType();
@@ -1155,16 +1158,39 @@ sp_file_import(Gtk::Window &parentWindow)
     delete importDialogInstance;
     importDialogInstance = NULL;
 
-    if (fileName.size() > 0) {
+    //# Iterate through filenames if more than 1
+    if (flist.size() > 1)
+    {
+        for (unsigned int i = 0; i < flist.size(); i++)
+        {
+            fileName = flist[i];
+
+            Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
+            if (!newFileName.empty())
+                fileName = newFileName;
+            else
+                g_warning("ERROR CONVERTING IMPORT FILENAME TO UTF-8");
+
+#ifdef INK_DUMP_FILENAME_CONV
+            g_message("Importing File %s\n", fileName.c_str());
+#endif
+            file_import(doc, fileName, selection);
+        }
+
+        return;
+    }
+
+
+    if (!fileName.empty()) {
 
         Glib::ustring newFileName = Glib::filename_to_utf8(fileName);
 
-        if ( newFileName.size() > 0)
+        if (!newFileName.empty())
             fileName = newFileName;
         else
-            g_warning( "ERROR CONVERTING OPEN FILENAME TO UTF-8" );
+            g_warning("ERROR CONVERTING IMPORT FILENAME TO UTF-8");
 
-        import_path = Glib::path_get_dirname (fileName);
+        import_path = Glib::path_get_dirname(fileName);
         import_path.append(G_DIR_SEPARATOR_S);
         prefs->setString("/dialogs/import/path", import_path);
 
