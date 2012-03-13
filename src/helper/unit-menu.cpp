@@ -26,7 +26,9 @@
 struct SPUnitSelector {
     GtkHBox box;
 
-    GtkWidget *menu;
+    GtkWidget *combo_box;
+    GtkListStore *store;
+
 
     guint bases;
     GSList *units;
@@ -39,6 +41,8 @@ struct SPUnitSelector {
 
     GSList *adjustments;
 };
+
+enum {COMBO_COL_LABEL=0, COMBO_COL_UNIT};
 
 struct SPUnitSelectorClass {
     GtkHBoxClass parent_class;
@@ -101,10 +105,21 @@ sp_unit_selector_init(SPUnitSelector *us)
     us->abbr = FALSE;
     us->plural = TRUE;
 
-    us->menu = gtk_option_menu_new();
+    /**
+     * Create a combo_box and store with 2 columns,
+     * a label and a pointer to a SPUnit
+     */
+    us->store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_POINTER);
+    us->combo_box = gtk_combo_box_new_with_model (GTK_TREE_MODEL (us->store));
 
-    gtk_widget_show(us->menu);
-    gtk_box_pack_start(GTK_BOX(us), us->menu, TRUE, TRUE, 0);
+    GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
+    g_object_set (renderer, "scale", 0.8, "scale-set", TRUE, NULL);
+    gtk_cell_renderer_set_padding (renderer, 2, 0);
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (us->combo_box), renderer, TRUE);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (us->combo_box), renderer, "text", COMBO_COL_LABEL, NULL);
+
+    gtk_widget_show (us->combo_box);
+    gtk_box_pack_start (GTK_BOX(us), us->combo_box, TRUE, TRUE, 0);
 }
 
 static void
@@ -112,8 +127,8 @@ sp_unit_selector_finalize(GObject *object)
 {
     SPUnitSelector *selector = SP_UNIT_SELECTOR(object);
 
-    if (selector->menu) {
-        selector->menu = NULL;
+    if (selector->combo_box) {
+        selector->combo_box = NULL;
     }
 
     while (selector->adjustments) {
@@ -143,7 +158,7 @@ sp_unit_selector_new(guint bases)
 void
 sp_unit_selector_setsize(GtkWidget *us, guint w, guint h)
 {
-    gtk_widget_set_size_request(((SPUnitSelector *) us)->menu, w, h);
+    gtk_widget_set_size_request(((SPUnitSelector *) us)->combo_box, w, h);
 }
 
 SPUnit const *
@@ -155,10 +170,18 @@ sp_unit_selector_get_unit(SPUnitSelector const *us)
     return us->unit;
 }
 
+
 static void
-spus_unit_activate(GtkWidget *widget, SPUnitSelector *us)
+on_combo_box_changed (GtkComboBox *widget, SPUnitSelector *us)
 {
-    SPUnit const *unit = (SPUnit const *) g_object_get_data(G_OBJECT(widget), "unit");
+    GtkTreeIter  iter;
+    if (!gtk_combo_box_get_active_iter (widget, &iter)) {
+        return;
+    }
+
+    SPUnit const *unit = NULL;
+    gtk_tree_model_get ((GtkTreeModel *)us->store, &iter, COMBO_COL_UNIT, &unit, -1);
+
     g_return_if_fail(unit != NULL);
 
 #ifdef UNIT_SELECTOR_VERBOSE
@@ -205,18 +228,16 @@ spus_unit_activate(GtkWidget *widget, SPUnitSelector *us)
     }
 
     us->update = FALSE;
+
 }
 
 static void
 spus_rebuild_menu(SPUnitSelector *us)
 {
-    if (GTK_OPTION_MENU(us->menu)->menu) {
-        gtk_option_menu_remove_menu(GTK_OPTION_MENU(us->menu));
-    }
 
-    GtkWidget *m = gtk_menu_new();
+    gtk_list_store_clear(us->store);
 
-    gtk_widget_show(m);
+    GtkTreeIter iter;
 
     gint pos = 0;
     gint p = 0;
@@ -225,23 +246,18 @@ spus_rebuild_menu(SPUnitSelector *us)
 
         // use only abbreviations in the menu
         //        i = gtk_menu_item_new_with_label((us->abbr) ? (us->plural) ? u->abbr_plural : u->abbr : (us->plural) ? u->plural : u->name);
-        GtkWidget *i = gtk_menu_item_new_with_label( u->abbr );
+        gtk_list_store_append (us->store, &iter);
+        gtk_list_store_set (us->store, &iter, COMBO_COL_LABEL, u->abbr, COMBO_COL_UNIT, (gpointer) u, -1);
 
-        g_object_set_data(G_OBJECT(i), "unit", (gpointer) u);
-        g_signal_connect(G_OBJECT(i), "activate", G_CALLBACK(spus_unit_activate), us);
+        if (u == us->unit) {
+            pos = p;
+        }
 
-        sp_set_font_size_smaller (i);
-
-        gtk_widget_show(i);
-
-        gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
-        if (u == us->unit) pos = p;
         p += 1;
     }
 
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(us->menu), m);
-
-    gtk_option_menu_set_history(GTK_OPTION_MENU(us->menu), pos);
+    gtk_combo_box_set_active(GTK_COMBO_BOX(us->combo_box), pos);
+    g_signal_connect (G_OBJECT (us->combo_box), "changed", G_CALLBACK (on_combo_box_changed), us);
 }
 
 void
@@ -287,7 +303,7 @@ sp_unit_selector_set_unit(SPUnitSelector *us, SPUnit const *unit)
     gint const pos = g_slist_index(us->units, (gpointer) unit);
     g_return_if_fail(pos >= 0);
 
-    gtk_option_menu_set_history(GTK_OPTION_MENU(us->menu), pos);
+    gtk_combo_box_set_active(GTK_COMBO_BOX(us->combo_box), pos);
 
     SPUnit const *old = us->unit;
     us->unit = unit;
