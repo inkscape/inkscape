@@ -236,7 +236,7 @@ VIProductVersion ${VERSION_X.X.X.X}
 VIAddVersionKey ProductName Inkscape
 VIAddVersionKey Comments "Licensed under the GNU GPL"
 VIAddVersionKey CompanyName inkscape.org
-VIAddVersionKey LegalCopyright "© 2011 Inkscape"
+VIAddVersionKey LegalCopyright "© 2012 Inkscape"
 VIAddVersionKey FileDescription Inkscape
 VIAddVersionKey FileVersion ${VERSION_X.X.X.X}
 VIAddVersionKey ProductVersion ${VERSION_X.X.X.X}
@@ -537,6 +537,7 @@ SectionGroup "$(Languages)" SecLanguages ; Languages sections {{{
   !insertmacro Language Khmer             km
   !insertmacro Language Korean            ko
   !insertmacro Language Lithuanian        lt
+  !insertmacro Language Latvian           lv
   !insertmacro Language Mongolian         mn
   !insertmacro Language Macedonian        mk
   !insertmacro Language NorwegianBokmal   nb
@@ -797,6 +798,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro Parameter km             ${SecKhmer}
   !insertmacro Parameter ko             ${SecKorean}
   !insertmacro Parameter lt             ${SecLithuanian}
+  !insertmacro Parameter lv             ${SecLatvian}
   !insertmacro Parameter mk             ${SecMacedonian}
   !insertmacro Parameter mn             ${SecMongolian}
   !insertmacro Parameter nb             ${SecNorwegianBokmal}
