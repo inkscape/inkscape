@@ -59,6 +59,7 @@ if test "$GCC" = "yes"; then
   CPPFLAGS="-DGLIBMM_DISABLE_DEPRECATED $CPPFLAGS"
   CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
   CPPFLAGS="-DGTK_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
+  CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
 
   # Test for -Werror=... (introduced some time post-4.0)
   # If we hit a format error -- it should be fatal.
