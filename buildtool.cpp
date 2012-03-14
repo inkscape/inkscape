@@ -6984,7 +6984,30 @@ public:
             dname.append(dirName);
             incs.append(parent.resolve(dname));
             }
-            
+
+// First create all directories, fails if done in OpenMP parallel loop below... goes superfast anyway, so don't optimize
+        for (unsigned int fi = 0; fi < deps.size() ; ++fi)
+        {
+            DepRec dep = deps[fi];
+ 
+            //## Make paths
+            String destPath = dest;
+            if (dep.path.size()>0)
+            {
+                destPath.append("/");
+                destPath.append(dep.path);
+            }
+            //## Make sure destination directory exists
+            if (!createDirectory(destPath))
+            {
+                taskstatus("problem creating folder: %s", destPath.c_str());
+                if (f) {
+                    fclose(f);
+                }
+                return false;
+            }
+        }
+
         /**
          * Compile each of the C files that need it
          */
@@ -7015,20 +7038,6 @@ public:
                 destPath.append(dep.path);
                 srcPath.append("/");
                 srcPath.append(dep.path);
-            }
-            //## Make sure destination directory exists
-            if (!createDirectory(destPath))
-            {
-                taskstatus("problem creating folder: %s", destPath.c_str());
-                errorOccurred = true;
-#ifdef _OPENMP // figure out a way to break the loop here with OpenMP
-                continue; // terminate this for-loop
-#else
-                if (f) {
-                    fclose(f);
-                }
-                return false;
-#endif
             }
 
             //## Check whether it needs to be done
