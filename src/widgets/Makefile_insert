@@ -62,6 +62,8 @@ ink_common_sources +=	\
 	widgets/sp-xmlview-content.h	\
 	widgets/sp-xmlview-tree.cpp	\
 	widgets/sp-xmlview-tree.h	\
+	widgets/stroke-marker-selector.cpp	\
+	widgets/stroke-marker-selector.h		\
 	widgets/stroke-style.cpp	\
 	widgets/stroke-style.h		\
 	widgets/swatch-selector.cpp	\

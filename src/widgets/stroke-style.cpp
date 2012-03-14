@@ -55,27 +55,25 @@
 #include "xml/repr.h"
 
 #include "stroke-style.h"
+#include "stroke-marker-selector.h"
 #include "fill-style.h" // to get sp_fill_style_widget_set_desktop
 #include "fill-n-stroke-factory.h"
 
-#include <gtkmm/optionmenu.h>
 #include "verbs.h"
 
 using Inkscape::DocumentUndo;
 
-/** Marker selection option menus */
-static Gtk::OptionMenu * marker_start_menu = NULL;
-static Gtk::OptionMenu * marker_mid_menu = NULL;
-static Gtk::OptionMenu * marker_end_menu = NULL;
 
-sigc::connection marker_start_menu_connection;
-sigc::connection marker_mid_menu_connection;
-sigc::connection marker_end_menu_connection;
+static MarkerComboBox *start_marker_combobox = NULL;
+static MarkerComboBox *mid_marker_combobox = NULL;
+static MarkerComboBox *end_marker_combobox = NULL;
+
+sigc::connection start_marker_connection;
+sigc::connection mid_marker_connection;
+sigc::connection end_marker_connection;
 
 static SPObject *ink_extract_marker_name(gchar const *n, SPDocument *doc);
-static void      ink_markers_menu_update(Gtk::Container* spw, SPMarkerLoc const which);
-
-static Inkscape::UI::Cache::SvgPreview svg_preview_cache;
+static void      ink_markers_combo_update(Gtk::Container* spw, SPMarkerLoc const which);
 
 Gtk::Widget *sp_stroke_style_paint_widget_new(void)
 {
@@ -86,8 +84,6 @@ void sp_stroke_style_widget_set_desktop(Gtk::Widget *widget, SPDesktop *desktop)
 {
     sp_fill_style_widget_set_desktop(widget, desktop);
 }
-
-
 
 /* Line */
 
@@ -105,7 +101,7 @@ static void sp_stroke_style_miterlimit_changed(Gtk::Container *spw);
 static void sp_stroke_style_any_toggled(Gtk::ToggleButton *tb, Gtk::Container *spw);
 static void sp_stroke_style_line_dash_changed(Gtk::Container *spw);
 
-static void sp_stroke_style_update_marker_menus(Gtk::Container *spw, GSList const *objects);
+static void sp_stroke_style_update_marker_combo(Gtk::Container *spw, GSList const *objects);
 
 
 /**
@@ -145,303 +141,12 @@ sp_stroke_radio_button(Gtk::RadioButton *tb, char const *icon,
 }
 
 /**
- * Create sa copy of the marker named mname, determines its visible and renderable
- * area in menu_id's bounding box, and then renders it.  This allows us to fill in
- * preview images of each marker in the marker menu.
- */
-static Gtk::Image *
-sp_marker_prev_new(unsigned psize, gchar const *mname,
-                   SPDocument *source, SPDocument *sandbox,
-                   gchar const *menu_id, Inkscape::Drawing &drawing, unsigned /*visionkey*/)
-{
-    // Retrieve the marker named 'mname' from the source SVG document
-    SPObject const *marker = source->getObjectById(mname);
-    if (marker == NULL) {
-        return NULL;
-    }
-
-    // Create a copy repr of the marker with id="sample"
-    Inkscape::XML::Document *xml_doc = sandbox->getReprDoc();
-    Inkscape::XML::Node *mrepr = marker->getRepr()->duplicate(xml_doc);
-    mrepr->setAttribute("id", "sample");
-
-    // Replace the old sample in the sandbox by the new one
-    Inkscape::XML::Node *defsrepr = sandbox->getObjectById("defs")->getRepr();
-    SPObject *oldmarker = sandbox->getObjectById("sample");
-    if (oldmarker) {
-        oldmarker->deleteObject(false);
-    }
-    defsrepr->appendChild(mrepr);
-    Inkscape::GC::release(mrepr);
-
-// Uncomment this to get the sandbox documents saved (useful for debugging)
-    //FILE *fp = fopen (g_strconcat(menu_id, mname, ".svg", NULL), "w");
-    //sp_repr_save_stream(sandbox->getReprDoc(), fp);
-    //fclose (fp);
-
-    // object to render; note that the id is the same as that of the menu we're building
-    SPObject *object = sandbox->getObjectById(menu_id);
-    sandbox->getRoot()->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
-    sandbox->ensureUpToDate();
-
-    if (object == NULL || !SP_IS_ITEM(object)) {
-        return NULL; // sandbox broken?
-    }
-
-    SPItem *item = SP_ITEM(object);
-    // Find object's bbox in document
-    Geom::OptRect dbox = item->documentVisualBounds();
-
-    if (!dbox) {
-        return NULL;
-    }
-
-    /* Update to renderable state */
-    double sf = 0.8;
-
-    gchar *cache_name = g_strconcat(menu_id, mname, NULL);
-    Glib::ustring key = svg_preview_cache.cache_key(source->getURI(), cache_name, psize);
-    g_free (cache_name);
-    // TODO: is this correct?
-    Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::wrap(svg_preview_cache.get_preview_from_cache(key));
-
-    if (!pixbuf) {
-        pixbuf = Glib::wrap(render_pixbuf(drawing, sf, *dbox, psize));
-        svg_preview_cache.set_preview_in_cache(key, pixbuf->gobj());
-    }
-
-    // Create widget
-    Gtk::Image *pb = new Gtk::Image(pixbuf);
-
-    return pb;
-}
-
-/**
- *  Returns a list of markers in the defs of the given source document as a GSList object
- *  Returns NULL if there are no markers in the document.
- */
-GSList *
-ink_marker_list_get (SPDocument *source)
-{
-    if (source == NULL)
-        return NULL;
-
-    GSList *ml   = NULL;
-    SPDefs *defs = source->getDefs();
-    for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
-    {
-        if (SP_IS_MARKER(child)) {
-            ml = g_slist_prepend (ml, child);
-        }
-    }
-    return ml;
-}
-
-#define MARKER_ITEM_MARGIN 0
-
-/**
- * Adds previews of markers in marker_list to the given menu widget
- */
-static void
-sp_marker_menu_build (Gtk::Menu *m, GSList *marker_list, SPDocument *source, SPDocument *sandbox, gchar const *menu_id)
-{
-    // Do this here, outside of loop, to speed up preview generation:
-    Inkscape::Drawing drawing;
-    unsigned const visionkey = SPItem::display_key_new(1);
-    drawing.setRoot(sandbox->getRoot()->invoke_show(drawing, visionkey, SP_ITEM_SHOW_DISPLAY));
-
-    for (; marker_list != NULL; marker_list = marker_list->next) {
-        Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(marker_list->data)->getRepr();
-        Gtk::MenuItem *i = new Gtk::MenuItem();
-        i->show();
-
-        if (repr->attribute("inkscape:stockid")) {
-            i->set_data("stockid", (void *) "true");
-        } else {
-            i->set_data("stockid", (void *) "false");
-        }
-
-        gchar const *markid = repr->attribute("id");
-        i->set_data("marker", (void *) markid);
-
-        Gtk::HBox *hb = new Gtk::HBox(false, MARKER_ITEM_MARGIN);
-        hb->show();
-
-        // generate preview
-
-        Gtk::Image *prv = sp_marker_prev_new (22, markid, source, sandbox, menu_id, drawing, visionkey);
-        prv->show();
-        hb->pack_start(*prv, false, false, 6);
-
-        // create label
-        Gtk::Label *l = new Gtk::Label(repr->attribute("id"));
-        l->show();
-        l->set_alignment(0.0, 0.5);
-
-        hb->pack_start(*l, true, true, 0);
-
-        hb->show();
-        i->add(*hb);
-
-        m->append(*i);
-    }
-
-    sandbox->getRoot()->invoke_hide(visionkey);
-}
-
-/**
- * Pick up all markers from source, except those that are in
- * current_doc (if non-NULL), and add items to the m menu.
- */
-static void sp_marker_list_from_doc(Gtk::Menu *m, SPDocument * /*current_doc*/, SPDocument *source, SPDocument * /*markers_doc*/, SPDocument *sandbox, gchar const *menu_id)
-{
-    GSList *ml = ink_marker_list_get(source);
-    GSList *clean_ml = NULL;
-
-    for (; ml != NULL; ml = ml->next) {
-        if (!SP_IS_MARKER(ml->data))
-            continue;
-
-        // Add to the list of markers we really do wish to show
-        clean_ml = g_slist_prepend (clean_ml, ml->data);
-    }
-    sp_marker_menu_build(m, clean_ml, source, sandbox, menu_id);
-
-    g_slist_free (ml);
-    g_slist_free (clean_ml);
-}
-
-/**
- * Returns a new document containing default start, mid, and end markers.
- */
-SPDocument *
-ink_markers_preview_doc ()
-{
-gchar const *buffer = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\" xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">"
-"  <defs id=\"defs\" />"
-
-"  <g id=\"marker-start\">"
-"    <path style=\"fill:none;stroke:black;stroke-width:1.7;marker-start:url(#sample);marker-mid:none;marker-end:none\""
-"       d=\"M 12.5,13 L 25,13\" id=\"path1\" />"
-"    <rect style=\"fill:none;stroke:none\" id=\"rect2\""
-"       width=\"25\" height=\"25\" x=\"0\" y=\"0\" />"
-"  </g>"
-
-"  <g id=\"marker-mid\">"
-"    <path style=\"fill:none;stroke:black;stroke-width:1.7;marker-start:none;marker-mid:url(#sample);marker-end:none\""
-"       d=\"M 0,113 L 12.5,113 L 25,113\" id=\"path11\" />"
-"    <rect style=\"fill:none;stroke:none\" id=\"rect22\""
-"       width=\"25\" height=\"25\" x=\"0\" y=\"100\" />"
-"  </g>"
-
-"  <g id=\"marker-end\">"
-"    <path style=\"fill:none;stroke:black;stroke-width:1.7;marker-start:none;marker-mid:none;marker-end:url(#sample)\""
-"       d=\"M 0,213 L 12.5,213\" id=\"path111\" />"
-"    <rect style=\"fill:none;stroke:none\" id=\"rect222\""
-"       width=\"25\" height=\"25\" x=\"0\" y=\"200\" />"
-"  </g>"
-
-"</svg>";
-
-    return SPDocument::createNewDocFromMem (buffer, strlen(buffer), FALSE);
-}
-
-static void
-ink_marker_menu_create_menu(Gtk::Menu *m, gchar const *menu_id, SPDocument *doc, SPDocument *sandbox)
-{
-    static SPDocument *markers_doc = NULL;
-
-    // add "None"
-    Gtk::MenuItem *i = new Gtk::MenuItem();
-    i->show();
-
-    i->set_data("marker", (void *) "none");
-
-    Gtk::HBox *hb = new Gtk::HBox(false,  MARKER_ITEM_MARGIN);
-    hb->show();
-
-    Gtk::Label *l = new Gtk::Label( _("None") );
-    l->show();
-    l->set_alignment(0.0, 0.5);
-
-    hb->pack_start(*l, true, true, 0);
-
-    hb->show();
-    i->add(*hb);
-    m->append(*i);
-
-    // find and load markers.svg
-    if (markers_doc == NULL) {
-        char *markers_source = g_build_filename(INKSCAPE_MARKERSDIR, "markers.svg", NULL);
-        if (Inkscape::IO::file_test(markers_source, G_FILE_TEST_IS_REGULAR)) {
-            markers_doc = SPDocument::createNewDoc(markers_source, FALSE);
-        }
-        g_free(markers_source);
-    }
-
-    // suck in from current doc
-    sp_marker_list_from_doc(m, NULL, doc, markers_doc, sandbox, menu_id);
-
-    // add separator
-    {
-        //Gtk::Separator *i = gtk_separator_menu_item_new();
-        Gtk::SeparatorMenuItem *i = new Gtk::SeparatorMenuItem();
-        i->show();
-        m->append(*i);
-    }
-
-    // suck in from markers.svg
-    if (markers_doc) {
-        doc->ensureUpToDate();
-        sp_marker_list_from_doc(m, doc, markers_doc, NULL, sandbox, menu_id);
-    }
-
-}
-
-/**
- * Creates a menu widget to display markers from markers.svg
- */
-static Gtk::OptionMenu *
-ink_marker_menu(Gtk::Widget * /*tbl*/, gchar const *menu_id, SPDocument *sandbox)
-{
-    SPDesktop *desktop = inkscape_active_desktop();
-    SPDocument *doc = sp_desktop_document(desktop);
-    Gtk::OptionMenu *mnu = new Gtk::OptionMenu();
-
-    /* Create new menu widget */
-    Gtk::Menu *m = new Gtk::Menu();
-    m->show();
-
-    mnu->set_data("updating", (gpointer) FALSE);
-
-    if (!doc) {
-        Gtk::MenuItem *i = new Gtk::MenuItem(_("No document selected"));
-        i->show();
-        m->append(*i);
-        mnu->set_sensitive(false);
-
-    } else {
-        ink_marker_menu_create_menu(m, menu_id, doc, sandbox);
-
-        mnu->set_sensitive(true);
-    }
-
-    mnu->set_data("menu_id", const_cast<gchar *>(menu_id));
-    mnu->set_menu(*m);
-
-    /* Set history */
-    mnu->set_history(0);
-
-    return mnu;
-}
-
-/**
- * Handles when user selects one of the markers from the marker menu.
- * Defines a uri string to refer to it, then applies it to all selected
+ * Handles when user selects one of the markers from the marker combobox.
+ * Gets the marker uri string and applies it to all selected
  * items in the current desktop.
  */
 static void
-sp_marker_select(Gtk::OptionMenu *mnu, Gtk::Container *spw, SPMarkerLoc const which)
+sp_marker_select(MarkerComboBox *marker_combo, Gtk::Container *spw, SPMarkerLoc const which)
 {
     if (spw->get_data("update")) {
         return;
@@ -454,33 +159,17 @@ sp_marker_select(Gtk::OptionMenu *mnu, Gtk::Container *spw, SPMarkerLoc const wh
     }
 
     /* Get Marker */
-    if (!mnu->get_menu()->get_active()->get_data("marker"))
-    {
-        return;
-    }
-    gchar *markid = static_cast<gchar *>(mnu->get_menu()->get_active()->get_data("marker"));
-    gchar const *marker = "";
-    if (strcmp(markid, "none")) {
-       gchar *stockid = static_cast<gchar *>(mnu->get_menu()->get_active()->get_data("stockid"));
+    gchar const *marker = marker_combo->get_active_marker_uri();
 
-       gchar *markurn = markid;
-       if (!strcmp(stockid,"true")) markurn = g_strconcat("urn:inkscape:marker:",markid,NULL);
-       SPObject *mark = get_stock_item(markurn);
-       if (mark) {
-           Inkscape::XML::Node *repr = mark->getRepr();
-            marker = g_strconcat("url(#", repr->attribute("id"), ")", NULL);
-        }
-    } else {
-        marker = markid;
-    }
+
     SPCSSAttr *css = sp_repr_css_attr_new();
-    gchar const *menu_id = static_cast<gchar const *>(mnu->get_data("menu_id"));
-    sp_repr_css_set_property(css, menu_id, marker);
+    gchar const *combo_id = marker_combo->get_id();
+    sp_repr_css_set_property(css, combo_id, marker);
 
-    // Also update the marker dropdown menus, so the document's markers
-    // show up at the top of the menu
+    // Also update the marker combobox, so the document's markers
+    // show up at the top of the combobox
 //    sp_stroke_style_line_update( SP_WIDGET(spw), desktop ? sp_desktop_selection(desktop) : NULL);
-    ink_markers_menu_update(spw, which);
+    ink_markers_combo_update(spw, which);
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     GSList const *items = selection->itemList();
@@ -505,72 +194,26 @@ sp_marker_select(Gtk::OptionMenu *mnu, Gtk::Container *spw, SPMarkerLoc const wh
 
 };
 
-static unsigned int
-ink_marker_menu_get_pos(Gtk::Menu *mnu, gchar const *markname)
-{
-    if (markname == NULL)
-        markname = static_cast<gchar const *>(mnu->get_active()->get_data("marker"));
-
-    if (markname == NULL)
-        return 0;
-
-    std::vector<Gtk::Widget *> kids = mnu->get_children();
-    unsigned int i = 0;
-    for (; i < kids.size();) {
-        gchar const *mark = static_cast<gchar const *>(kids[i]->get_data("marker"));
-        if (mark && strcmp(mark, markname) == 0) {
-            break;
-        }
-        ++i;
-    }
-
-    return i;
-}
-
 static void
-ink_markers_menu_update(Gtk::Container* /*spw*/, SPMarkerLoc const which) {
-    SPDesktop  *desktop = inkscape_active_desktop();
-    SPDocument *document = sp_desktop_document(desktop);
-    SPDocument *sandbox = ink_markers_preview_doc ();
-    Gtk::Menu  *m;
-    int        pos;
+ink_markers_combo_update(Gtk::Container* /*spw*/, SPMarkerLoc const which) {
 
-    // TODO: this code can be shortened by abstracting out marker_(start|mid|end)_...
     switch (which) {
         case SP_MARKER_LOC_START:
-            marker_start_menu_connection.block();
-            pos = ink_marker_menu_get_pos(marker_start_menu->get_menu(), NULL);
-            m = new Gtk::Menu();
-            m->show();
-            ink_marker_menu_create_menu(m, "marker-start", document, sandbox);
-            marker_start_menu->remove_menu();
-            marker_start_menu->set_menu(*m);
-            marker_start_menu->set_history(pos);
-            marker_start_menu_connection.unblock();
+            start_marker_connection.block();
+            start_marker_combobox->set_active_history();
+            start_marker_connection.unblock();
             break;
 
         case SP_MARKER_LOC_MID:
-            marker_mid_menu_connection.block();
-            pos = ink_marker_menu_get_pos(marker_mid_menu->get_menu(), NULL);
-            m = new Gtk::Menu();
-            m->show();
-            ink_marker_menu_create_menu(m, "marker-mid", document, sandbox);
-            marker_mid_menu->remove_menu();
-            marker_mid_menu->set_menu(*m);
-            marker_mid_menu->set_history(pos);
-            marker_mid_menu_connection.unblock();
+            mid_marker_connection.block();
+            mid_marker_combobox->set_active_history();
+            mid_marker_connection.unblock();
             break;
 
         case SP_MARKER_LOC_END:
-            marker_end_menu_connection.block();
-            pos = ink_marker_menu_get_pos(marker_end_menu->get_menu(), NULL);
-            m = new Gtk::Menu();
-            m->show();
-            ink_marker_menu_create_menu(m, "marker-end", document, sandbox);
-            marker_end_menu->remove_menu();
-            marker_end_menu->set_menu(*m);
-            marker_end_menu->set_history(pos);
-            marker_end_menu_connection.unblock();
+            end_marker_connection.block();
+            end_marker_combobox->set_active_history();
+            end_marker_connection.unblock();
             break;
         default:
             g_assert_not_reached();
@@ -675,7 +318,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
 
 // TODO: when this is gtkmmified, use an Inkscape::UI::Widget::ScalarUnit instead of the separate
 // spinbutton and unit selector for stroke width. In sp_stroke_style_line_update, use
-// setHundredPercent to remember the aeraged width corresponding to 100%. Then the
+// setHundredPercent to remember the averaged width corresponding to 100%. Then the
 // stroke_width_set_unit will be removed (because ScalarUnit takes care of conversions itself), and
 // with it, the two remaining calls of stroke_average_width, allowing us to get rid of that
 // function in desktop-style.
@@ -822,48 +465,40 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     i++;
 
     /* Drop down marker selectors*/
-    // TODO: this code can be shortened by iterating over the possible menus!
-
-    // doing this here once, instead of for each preview, to speed things up
-    SPDocument *sandbox = ink_markers_preview_doc ();
-
     // TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
     // (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
-    //spw_label(t, _("_Start Markers:"), 0, i);
-    marker_start_menu = ink_marker_menu(spw ,"marker-start", sandbox);
-    spw_label(t, _("_Start Markers:"), 0, i, marker_start_menu);
-    marker_start_menu->set_tooltip_text(_("Start Markers are drawn on the first node of a path or shape"));
-    marker_start_menu_connection = marker_start_menu->signal_changed().connect(
-        sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
-            sigc::ptr_fun(&sp_marker_select), marker_start_menu, spw, SP_MARKER_LOC_START));
-    marker_start_menu->show();
-    t->attach(*marker_start_menu, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
-    spw->set_data("start_mark_menu", marker_start_menu);
 
+    start_marker_combobox = manage(new MarkerComboBox("marker-start"));
+    spw_label(t, _("_Start Markers:"), 0, i, start_marker_combobox);
+    start_marker_combobox->set_tooltip_text(_("Start Markers are drawn on the first node of a path or shape"));
+    start_marker_connection = start_marker_combobox->signal_changed().connect(
+            sigc::bind<MarkerComboBox *, Gtk::Container *, SPMarkerLoc>(
+                sigc::ptr_fun(&sp_marker_select), start_marker_combobox, spw, SP_MARKER_LOC_START));
+    start_marker_combobox->show();
+    t->attach(*start_marker_combobox, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
+    spw->set_data("start_marker_combobox", start_marker_combobox);
     i++;
-    //spw_label(t, _("_Mid Markers:"), 0, i);
-    marker_mid_menu = ink_marker_menu(spw ,"marker-mid", sandbox);
-    spw_label(t, _("_Mid Markers:"), 0, i, marker_mid_menu);
-    marker_mid_menu->set_tooltip_text(_("Mid Markers are drawn on every node of a path or shape except the first and last nodes"));
-    marker_mid_menu_connection = marker_mid_menu->signal_changed().connect(
-        sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
-            sigc::ptr_fun(&sp_marker_select), marker_mid_menu,spw, SP_MARKER_LOC_MID));
-    marker_mid_menu->show();
-    t->attach(*marker_mid_menu, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
-    spw->set_data("mid_mark_menu", marker_mid_menu);
 
+    mid_marker_combobox =  manage(new MarkerComboBox("marker-mid"));
+    spw_label(t, _("_Mid Markers:"), 0, i, mid_marker_combobox);
+    mid_marker_combobox->set_tooltip_text(_("Mid Markers are drawn on every node of a path or shape except the first and last nodes"));
+    mid_marker_connection = mid_marker_combobox->signal_changed().connect(
+        sigc::bind<MarkerComboBox *, Gtk::Container *, SPMarkerLoc>(
+            sigc::ptr_fun(&sp_marker_select), mid_marker_combobox, spw, SP_MARKER_LOC_MID));
+    mid_marker_combobox->show();
+    t->attach(*mid_marker_combobox, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
+    spw->set_data("mid_marker_combobox", mid_marker_combobox);
     i++;
-    //spw_label(t, _("_End Markers:"), 0, i);
-    marker_end_menu = ink_marker_menu(spw ,"marker-end", sandbox);
-    spw_label(t, _("_End Markers:"), 0, i, marker_end_menu);
-    marker_end_menu->set_tooltip_text(_("End Markers are drawn on the last node of a path or shape"));
-    marker_end_menu_connection = marker_end_menu->signal_changed().connect(
-        sigc::bind<Gtk::OptionMenu *, Gtk::Container *, SPMarkerLoc>(
-            sigc::ptr_fun(&sp_marker_select), marker_end_menu, spw, SP_MARKER_LOC_END));
-    marker_end_menu->show();
-    t->attach(*marker_end_menu, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
-    spw->set_data("end_mark_menu", marker_end_menu);
 
+    end_marker_combobox = manage(new MarkerComboBox("marker-end"));
+    spw_label(t, _("_End Markers:"), 0, i, end_marker_combobox);
+    end_marker_combobox->set_tooltip_text(_("End Markers are drawn on the last node of a path or shape"));
+    end_marker_connection = end_marker_combobox->signal_changed().connect(
+        sigc::bind<MarkerComboBox *, Gtk::Container *, SPMarkerLoc>(
+            sigc::ptr_fun(&sp_marker_select), end_marker_combobox, spw, SP_MARKER_LOC_END));
+    end_marker_combobox->show();
+    t->attach(*end_marker_combobox, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
+    spw->set_data("end_marker_combobox", end_marker_combobox);
     i++;
 
     // FIXME: we cheat and still use gtk+ signals
@@ -1090,7 +725,7 @@ sp_stroke_style_line_update(Gtk::Container *spw, Inkscape::Selection *sel)
     SPStyle * const style = object->style;
 
     /* Markers */
-    sp_stroke_style_update_marker_menus(spw, objects); // FIXME: make this desktop query too
+    sp_stroke_style_update_marker_combo(spw, objects); // FIXME: make this desktop query too
 
     /* Dash */
     sp_dash_selector_set_from_style(dsel, style); // FIXME: make this desktop query too
@@ -1270,6 +905,7 @@ static void sp_stroke_style_any_toggled(Gtk::ToggleButton *tb, Gtk::Container *s
         return;
     }
 
+
     if (tb->get_active()) {
 
         gchar const *join
@@ -1346,50 +982,18 @@ sp_stroke_style_set_cap_buttons(Gtk::Container *spw, Gtk::ToggleButton *active)
     tb->set_active(active == tb);
 }
 
-/**
- * Sets the current marker in the marker menu.
- */
-static void
-ink_marker_menu_set_current(SPObject *marker, Gtk::OptionMenu *mnu)
-{
-    mnu->set_data("update", GINT_TO_POINTER(TRUE));
-
-    Gtk::Menu *m = mnu->get_menu();
-    if (marker != NULL) {
-        bool mark_is_stock = false;
-        if (marker->getRepr()->attribute("inkscape:stockid")) {
-            mark_is_stock = true;
-        }
-
-        gchar *markname = 0;
-        if (mark_is_stock) {
-            markname = g_strdup(marker->getRepr()->attribute("inkscape:stockid"));
-        } else {
-            markname = g_strdup(marker->getRepr()->attribute("id"));
-        }
-
-        int markpos = ink_marker_menu_get_pos(m, markname);
-        mnu->set_history(markpos);
-
-        g_free (markname);
-    }
-    else {
-        mnu->set_history(0);
-    }
-    mnu->set_data("update", GINT_TO_POINTER(FALSE));
-}
 
 /**
- * Updates the marker menus to highlight the appropriate marker and scroll to
+ * Updates the marker combobox to highlight the appropriate marker and scroll to
  * that marker.
  */
 static void
-sp_stroke_style_update_marker_menus(Gtk::Container *spw, GSList const *objects)
+sp_stroke_style_update_marker_combo(Gtk::Container *spw, GSList const *objects)
 {
     struct { char const *key; int loc; } const keyloc[] = {
-        { "start_mark_menu", SP_MARKER_LOC_START },
-        { "mid_mark_menu", SP_MARKER_LOC_MID },
-        { "end_mark_menu", SP_MARKER_LOC_END }
+            { "start_marker_combobox", SP_MARKER_LOC_START },
+            { "mid_marker_combobox", SP_MARKER_LOC_MID },
+            { "end_marker_combobox", SP_MARKER_LOC_END }
     };
 
     bool all_texts = true;
@@ -1400,9 +1004,9 @@ sp_stroke_style_update_marker_menus(Gtk::Container *spw, GSList const *objects)
     }
 
     for (unsigned i = 0; i < G_N_ELEMENTS(keyloc); ++i) {
-        Gtk::OptionMenu *mnu = static_cast<Gtk::OptionMenu *>(spw->get_data(keyloc[i].key));
-        // Per SVG spec, text objects cannot have markers; disable menus if only texts are selected
-        mnu->set_sensitive(!all_texts);
+        MarkerComboBox *combo = static_cast<MarkerComboBox *>(spw->get_data(keyloc[i].key));
+        // Per SVG spec, text objects cannot have markers; disable combobox if only texts are selected
+        combo->set_sensitive(!all_texts);
     }
 
     // We show markers of the first object in the list only
@@ -1412,11 +1016,11 @@ sp_stroke_style_update_marker_menus(Gtk::Container *spw, GSList const *objects)
     for (unsigned i = 0; i < G_N_ELEMENTS(keyloc); ++i) {
         // For all three marker types,
 
-        // find the corresponding menu
-        Gtk::OptionMenu *mnu = static_cast<Gtk::OptionMenu *>(spw->get_data(keyloc[i].key));
+        // find the corresponding combobox item
+        MarkerComboBox *combo = static_cast<MarkerComboBox *>(spw->get_data(keyloc[i].key));
 
         // Quit if we're in update state
-        if (mnu->get_data("update")) {
+        if (combo->update()) {
             return;
         }
 
@@ -1425,13 +1029,14 @@ sp_stroke_style_update_marker_menus(Gtk::Container *spw, GSList const *objects)
 
             // Extract the name of the marker that the object uses
             SPObject *marker = ink_extract_marker_name(object->style->marker[keyloc[i].loc].value, object->document);
-            // Scroll the menu to that marker
-            ink_marker_menu_set_current(marker, mnu);
+            // Scroll the combobox to that marker
+            combo->set_current(marker);
 
         } else {
-            mnu->set_history(0);
+            combo->set_current(NULL);
         }
     }
+
 }
 
 
