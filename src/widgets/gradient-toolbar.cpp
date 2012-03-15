@@ -167,13 +167,7 @@ void gr_combo_box_changed (GtkComboBox *widget, gpointer data)
 
 }
 
-gchar *gr_prepare_label (SPObject *obj)
-{
-    const gchar *id = obj->defaultLabel();
-    if (strlen(id) > 15 && (!strncmp (id, "#linearGradient", 15) || !strncmp (id, "#radialGradient", 15)))
-        return g_strdup_printf ("#%s", id+15);
-    return g_strdup_printf ("%s", id);
-}
+
 
 GtkWidget *gr_vector_list(SPDesktop *desktop, bool selection_empty, SPGradient *gr_selected, bool gr_multi)
 {
@@ -244,7 +238,7 @@ GtkWidget *gr_vector_list(SPDesktop *desktop, bool selection_empty, SPGradient *
             gl = g_slist_remove (gl, gradient);
 
             gchar *label = gr_prepare_label(gradient);
-            GdkPixbuf *pixb = sp_gradient_to_pixbuf (gradient, 60, 22);
+            GdkPixbuf *pixb = sp_gradient_to_pixbuf (gradient, 64, 18);
             gtk_list_store_append (store, &iter);
             gtk_list_store_set (store, &iter, 0, pixb, 1, label, 2, gradient, -1);
             g_free (label);

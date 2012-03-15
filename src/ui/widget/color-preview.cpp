@@ -114,6 +114,54 @@ ColorPreview::paint (GdkRectangle *area)
     cairo_destroy(ct);
 }
 
+GdkPixbuf*
+ColorPreview::toPixbuf (int width, int height)
+{
+    GdkRectangle carea;
+    gint w2;
+    w2 = width / 2;
+
+    cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+    cairo_t *ct = cairo_create(s);
+
+    /* Transparent area */
+    carea.x = 0;
+    carea.y = 0;
+    carea.width = w2;
+    carea.height = height;
+
+    cairo_pattern_t *checkers = ink_cairo_pattern_create_checkerboard();
+
+    cairo_rectangle(ct, carea.x, carea.y, carea.width, carea.height);
+    cairo_set_source(ct, checkers);
+    cairo_fill_preserve(ct);
+    ink_cairo_set_source_rgba32(ct, _rgba);
+    cairo_fill(ct);
+
+    cairo_pattern_destroy(checkers);
+
+    /* Solid area */
+    carea.x = w2;
+    carea.y = 0;
+    carea.width = width - w2;
+    carea.height = height;
+
+    cairo_rectangle(ct, carea.x, carea.y, carea.width, carea.height);
+    ink_cairo_set_source_rgba32(ct, _rgba | 0xff);
+    cairo_fill(ct);
+
+    cairo_destroy(ct);
+    cairo_surface_flush(s);
+
+    GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( cairo_image_surface_get_data(s),
+                                               GDK_COLORSPACE_RGB, TRUE, 8,
+                                               width, height, cairo_image_surface_get_stride(s),
+                                               ink_cairo_pixbuf_cleanup, s);
+    convert_pixbuf_argb32_to_normal(pixbuf);
+
+    return pixbuf;
+}
+
 }}}
 
 /*

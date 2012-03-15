@@ -29,6 +29,7 @@
 #define SP_IS_GRADIENT_VECTOR_SELECTOR_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE ((k), SP_TYPE_GRADIENT_VECTOR_SELECTOR))
 
 class SPDocument;
+class SPObject;
 class SPGradient;
 class SPStop;
 
@@ -42,12 +43,15 @@ struct SPGradientVectorSelector {
     SPDocument *doc;
     SPGradient *gr;
 
-    /* Vector menu */
-    GtkWidget *menu;
+    /* ComboBox of gradient vectors */
+    GtkWidget *combo_box;
+    GtkListStore *store;
 
     sigc::connection gradient_release_connection;
     sigc::connection defs_release_connection;
     sigc::connection defs_modified_connection;
+
+    gulong combo_connection;
 
 
     void setSwatched();
@@ -71,6 +75,7 @@ SPGradient *sp_gradient_vector_selector_get_gradient (SPGradientVectorSelector *
 /* fixme: rethink this (Lauris) */
 GtkWidget *sp_gradient_vector_editor_new (SPGradient *gradient, SPStop *stop = NULL);
 
+gchar *gr_prepare_label (SPObject *obj);
 
 
 #endif // SEEN_GRADIENT_VECTOR_H

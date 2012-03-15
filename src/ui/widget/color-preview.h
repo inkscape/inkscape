@@ -24,13 +24,14 @@ class ColorPreview : public Gtk::Widget {
 public:
     ColorPreview (guint32 rgba);
     void setRgba32 (guint32 rgba);
+    GdkPixbuf* toPixbuf (int width, int height);
 
 protected:
     virtual void on_size_request (Gtk::Requisition *req);
     virtual void on_size_allocate (Gtk::Allocation &all);
     virtual bool on_expose_event (GdkEventExpose *event);
     void paint (GdkRectangle *area);
-   
+
     guint32 _rgba;
 };
 
