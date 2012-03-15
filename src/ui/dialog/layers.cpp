@@ -529,6 +529,8 @@ void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& /*path*/, Gtk::T
             Glib::ustring tmp = row[_model->_colLabel];
             if ( oldLabel && oldLabel[0] && !tmp.empty() && (tmp != oldLabel) ) {
                 _desktop->layer_manager->renameLayer( obj, tmp.c_str(), FALSE );
+                DocumentUndo::done( _desktop->doc() , SP_VERB_NONE,
+                                                    _("Renamed layer"));
             }
         }
     }
