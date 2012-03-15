@@ -267,10 +267,17 @@ sp_paint_selector_init(SPPaintSelector *psel)
     }
 
     /* Frame */
-    psel->frame = gtk_frame_new("");
+    psel->label = gtk_label_new("");
+    GtkWidget *lbbox = gtk_hbox_new(FALSE, 4);
+    gtk_widget_show(psel->label);
+    gtk_box_pack_start(GTK_BOX(lbbox), psel->label, false, false, 4);
+    gtk_box_pack_start(GTK_BOX(psel), lbbox, false, false, 4);
+
+    psel->frame = gtk_vbox_new(FALSE, 4);
     gtk_widget_show(psel->frame);
-    gtk_container_set_border_width(GTK_CONTAINER(psel->frame), 0);
+    //gtk_container_set_border_width(GTK_CONTAINER(psel->frame), 0);
     gtk_box_pack_start(GTK_BOX(psel), psel->frame, TRUE, TRUE, 0);
+
 
     /* Last used color */
     psel->color.set( 0.0, 0.0, 0.0 );
@@ -573,7 +580,7 @@ sp_paint_selector_set_mode_empty(SPPaintSelector *psel)
 
     sp_paint_selector_clear_frame(psel);
 
-    gtk_frame_set_label(GTK_FRAME(psel->frame), _("No objects"));
+    gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>No objects</b>"));
 }
 
 static void
@@ -584,7 +591,7 @@ sp_paint_selector_set_mode_multiple(SPPaintSelector *psel)
 
     sp_paint_selector_clear_frame(psel);
 
-    gtk_frame_set_label(GTK_FRAME(psel->frame), _("Multiple styles"));
+    gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Multiple styles</b>"));
 }
 
 static void
@@ -595,7 +602,7 @@ sp_paint_selector_set_mode_unset(SPPaintSelector *psel)
 
     sp_paint_selector_clear_frame(psel);
 
-    gtk_frame_set_label(GTK_FRAME(psel->frame), _("Paint is undefined"));
+    gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Paint is undefined</b>"));
 }
 
 static void
@@ -606,7 +613,8 @@ sp_paint_selector_set_mode_none(SPPaintSelector *psel)
 
     sp_paint_selector_clear_frame(psel);
 
-    gtk_frame_set_label(GTK_FRAME(psel->frame), _("No paint"));
+    gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>No paint</b>"));
+
 }
 
 /* Color paint */
@@ -663,6 +671,7 @@ static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelec
         g_signal_connect(G_OBJECT(csel), "changed", G_CALLBACK(sp_paint_selector_color_changed), psel);
         /* Pack everything to frame */
         gtk_container_add(GTK_CONTAINER(psel->frame), vb);
+
         psel->selector = vb;
 
         /* Set color */
@@ -670,7 +679,8 @@ static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelec
 
     }
 
-    gtk_frame_set_label(GTK_FRAME(psel->frame), _("Flat color"));
+    gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Flat color</b>"));
+
 #ifdef SP_PS_VERBOSE
     g_print("Color req\n");
 #endif
@@ -733,10 +743,10 @@ static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSe
     if (mode == SPPaintSelector::MODE_GRADIENT_LINEAR) {
         SP_GRADIENT_SELECTOR(gsel)->setMode(SPGradientSelector::MODE_LINEAR);
         //sp_gradient_selector_set_mode(SP_GRADIENT_SELECTOR(gsel), SP_GRADIENT_SELECTOR_MODE_LINEAR);
-        gtk_frame_set_label(GTK_FRAME(psel->frame), _("Linear gradient"));
+        gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Linear gradient</b>"));
     } else {
         SP_GRADIENT_SELECTOR(gsel)->setMode(SPGradientSelector::MODE_RADIAL);
-        gtk_frame_set_label(GTK_FRAME(psel->frame), _("Radial gradient"));
+        gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Radial gradient</b>"));
     }
 #ifdef SP_PS_VERBOSE
     g_print("Gradient req\n");
@@ -1016,7 +1026,7 @@ static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSel
         psel->selector = tbl;
         g_object_set_data(G_OBJECT(psel->selector), "pattern-selector", tbl);
 
-        gtk_frame_set_label(GTK_FRAME(psel->frame), _("Pattern fill"));
+        gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Pattern fill</b>"));
     }
 #ifdef SP_PS_VERBOSE
     g_print("Pattern req\n");
@@ -1091,7 +1101,7 @@ static void sp_paint_selector_set_mode_swatch(SPPaintSelector *psel, SPPaintSele
         psel->selector = GTK_WIDGET(swatchsel->gobj());
         g_object_set_data(G_OBJECT(psel->selector), "swatch-selector", swatchsel);
 
-        gtk_frame_set_label(GTK_FRAME(psel->frame), _("Swatch fill"));
+        gtk_label_set_markup(GTK_LABEL(psel->label), _("<b>Swatch fill</b>"));
     }
 
 #ifdef SP_PS_VERBOSE

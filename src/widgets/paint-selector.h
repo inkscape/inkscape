@@ -72,6 +72,7 @@ struct SPPaintSelector {
     GtkWidget *evenodd, *nonzero;
 
     GtkWidget *frame, *selector;
+    GtkWidget *label;
 
     SPColor color;
     float alpha;

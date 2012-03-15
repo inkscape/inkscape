@@ -22,26 +22,30 @@ namespace UI {
 namespace Widget {
 
 SimpleFilterModifier::SimpleFilterModifier(int flags)
-    : _lb_blend(_("Blend mode:")),
-#if WITH_GTKMM_2_22
-      _lb_blur(_("_Blur:"), Gtk::ALIGN_START, Gtk::ALIGN_CENTER, true),
-#else
-      _lb_blur(_("_Blur:"), Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER, true),
-#endif
+    : _hb_blur(false, 0),
+      _hb_blur_label(false, 0),
+      _lb_blend(_("Blend mode:")),
+      _lb_blur(_("_Blur:")),
       _blend(BlendModeConverter, SP_ATTR_INVALID, false),
-      _blur(0, 0, 100, 1, 0.01, 2)
+      _blur(0, 0, 100, 1, 0.01, 1)
 {
     _flags = flags;
 
     if (flags & BLEND) {
         add(_hb_blend);
-        _hb_blend.pack_start(_lb_blend, false, false);
+        _hb_blend.pack_start(_lb_blend);
         _hb_blend.pack_start(_blend);
     }
     if (flags & BLUR) {
-        add(_vb_blur);
-        _vb_blur.add(_lb_blur);
-        _vb_blur.add(_blur);
+        add(_hb_blur);
+        /*
+         * This size should match _opacity_label_box in object-composite-settings.cpp so the
+         * controls line up in Fill and Stroke dialog.
+         */
+        _hb_blur_label.set_size_request(55, 0);
+        _hb_blur_label.pack_end(_lb_blur, false, false, 0);
+        _hb_blur.pack_start(_hb_blur_label, false, false, 0);
+        _hb_blur.pack_start(_blur, true, true, 0);
     }
 
     show_all_children();
