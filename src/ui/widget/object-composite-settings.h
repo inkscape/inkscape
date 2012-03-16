@@ -45,7 +45,6 @@ private:
     Glib::ustring   _opacity_tag;
 
     Gtk::VBox       _opacity_vbox;
-    Gtk::HBox       _opacity_label_box;
     Gtk::HBox       _opacity_hbox;
     Gtk::Label      _opacity_label;
     Gtk::Adjustment _opacity_adjustment;

@@ -23,7 +23,6 @@ namespace Widget {
 
 SimpleFilterModifier::SimpleFilterModifier(int flags)
     : _hb_blur(false, 0),
-      _hb_blur_label(false, 0),
       _lb_blend(_("Blend mode:")),
       _lb_blur(_("_Blur:")),
       _blend(BlendModeConverter, SP_ATTR_INVALID, false),
@@ -39,12 +38,18 @@ SimpleFilterModifier::SimpleFilterModifier(int flags)
     if (flags & BLUR) {
         add(_hb_blur);
         /*
-         * This size should match _opacity_label_box in object-composite-settings.cpp so the
-         * controls line up in Fill and Stroke dialog.
+         * Hack to get a min size of label, but still be able to expand if needed
+         * Should match ObjectCompositeSettings::_opacity_label
          */
-        _hb_blur_label.set_size_request(55, 0);
-        _hb_blur_label.pack_end(_lb_blur, false, false, 0);
-        _hb_blur.pack_start(_hb_blur_label, false, false, 0);
+        if (_lb_blur.get_text().length() < 7) {
+            _lb_blur.set_width_chars(7);
+        }
+        #if WITH_GTKMM_2_22
+            _lb_blur.set_alignment(Gtk::ALIGN_END, Gtk::ALIGN_CENTER);
+        #else
+            _lb_blur.set_alignment(Gtk::ALIGN_RIGHT, Gtk::ALIGN_CENTER);
+        #endif
+        _hb_blur.pack_start(_lb_blur, false, false, 0);
         _hb_blur.pack_start(_blur, true, true, 0);
     }
 

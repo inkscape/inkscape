@@ -50,7 +50,6 @@ private:
     int _flags;
     Gtk::HBox _hb_blend;
     Gtk::HBox _hb_blur;
-    Gtk::HBox _hb_blur_label;
     Gtk::Label _lb_blend, _lb_blur;
     ComboBoxEnum<Inkscape::Filters::FilterBlendMode> _blend;
     SpinSlider _blur;
