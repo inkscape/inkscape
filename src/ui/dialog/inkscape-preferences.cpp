@@ -30,6 +30,7 @@
 #include <iostream>
 #include "enums.h"
 #include "desktop-handles.h"
+#include "extension/internal/gdkpixbuf-input.h"
 #include "message-stack.h"
 #include "style.h"
 #include "selection.h"
@@ -1306,6 +1307,12 @@ void InkscapePreferences::initPageBitmaps()
     _bitmap_copy_res.init("/options/createbitmap/resolution", 1.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
     _page_bitmaps.add_line( false, _("Resolution for Create Bitmap Copy:"), _bitmap_copy_res, _("dpi"),
                             _("Resolution used by the Create Bitmap Copy command"), false);
+    {
+        Glib::ustring labels[] = {_("Always embed"), _("Always link"), _("Ask")};
+        Glib::ustring values[] = {"embed", "link", "ask"};
+        _bitmap_import.init("/dialogs/import/link", labels, values, G_N_ELEMENTS(values), "ask");
+        _page_bitmaps.add_line( false, _("Bitmap import:"), _bitmap_import, "", "", false);
+    }
 
     this->AddPage(_page_bitmaps, _("Bitmaps"), PREFS_PAGE_BITMAPS);
 }

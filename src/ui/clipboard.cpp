@@ -82,6 +82,7 @@
 #include "sp-namedview.h"
 #include "snap.h"
 #include "persp3d.h"
+#include "preferences.h"
 
 /// Made up mimetype to represent Gdk::Pixbuf clipboard contents.
 #define CLIPBOARD_GDK_PIXBUF_TARGET "image/x-gdk-pixbuf"
@@ -926,16 +927,16 @@ bool ClipboardManagerImpl::_pasteImage(SPDocument *doc)
         ++i;
     }
     Inkscape::Extension::Extension *png = *i;
-    bool save = (strcmp(png->get_param_optiongroup("link"), "embed") == 0);
-    png->set_param_optiongroup("link", "embed");
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring attr = prefs->getString("/dialogs/import/link");
+    prefs->setString("/dialogs/import/link", "embed");
     png->set_gui(false);
 
     gchar *filename = g_build_filename( g_get_tmp_dir(), "inkscape-clipboard-import", NULL );
     img->save(filename, "png");
     file_import(doc, filename, png);
     g_free(filename);
-
-    png->set_param_optiongroup("link", save ? "embed" : "link");
+    prefs->setString("/dialogs/import/link", attr);
     png->set_gui(true);
 
     return true;

@@ -322,6 +322,7 @@ protected:
     UI::Widget::PrefEntryFileButtonHBox       _misc_bitmap_editor;
     UI::Widget::PrefCheckButton _misc_bitmap_autoreload;
     UI::Widget::PrefSpinButton  _bitmap_copy_res;
+    UI::Widget::PrefCombo       _bitmap_import;
 
     UI::Widget::PrefCheckButton _save_use_current_dir;
     UI::Widget::PrefCheckButton _save_autosave_enable;

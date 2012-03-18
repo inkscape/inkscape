@@ -229,6 +229,7 @@ modules = \
 	dxf_output.inx \
 	edge3d.inx \
 	embedimage.inx \
+    embedselectedimages.inx \
 	eps_input.inx \
 	eqtexsvg.inx \
 	export_gimp_palette.inx \

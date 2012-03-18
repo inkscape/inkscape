@@ -88,6 +88,19 @@ SPDocument *open(Extension *key, gchar const *filename)
         throw Input::no_extension_found();
     }
 
+    // Hide pixbuf extensions depending on user preferences.
+    //g_warning("Extension: %s", imod->get_id());
+
+    bool show = true;
+    if (strlen(imod->get_id()) > 27) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Glib::ustring attr = prefs->getString("/dialogs/import/link");
+        Glib::ustring id = Glib::ustring(imod->get_id(), 28);
+        if (strcmp(attr.c_str(), "ask") != 0 and strcmp(id.c_str(), "org.inkscape.input.gdkpixbuf") == 0) {
+            show = false;
+            imod->set_gui(false);
+        }
+    }
     imod->set_state(Extension::STATE_LOADED);
 
     if (!imod->loaded()) {
@@ -112,6 +125,9 @@ SPDocument *open(Extension *key, gchar const *filename)
     }
 
     doc->setUri(filename);
+    if (!show) {
+        imod->set_gui(true);
+    }
 
     return doc;
 }

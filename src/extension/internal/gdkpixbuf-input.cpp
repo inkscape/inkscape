@@ -8,6 +8,7 @@
 #include "extension/input.h"
 #include "extension/system.h"
 #include "gdkpixbuf-input.h"
+#include "preferences.h"
 #include "selection-chemistry.h"
 #include "sp-image.h"
 #include "document-undo.h"
@@ -33,7 +34,20 @@ static std::set<Glib::ustring> create_lossy_set()
 SPDocument *
 GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
 {
-    bool embed = (strcmp(mod->get_param_optiongroup("link"), "embed") == 0);
+    bool embed = false;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring attr = prefs->getString("/dialogs/import/link");
+    if (strcmp(attr.c_str(), "embed") == 0) {
+        embed = true;
+    } else if (strcmp(attr.c_str(), "link") == 0) {
+        embed = false;
+    } else {
+        embed = (strcmp(mod->get_param_optiongroup("link"), "embed") == 0);
+        if (mod->get_param_bool("ask")) {
+            prefs->setString("/dialogs/import/link", mod->get_param_optiongroup("link"));
+            mod->set_param_bool("ask", false);
+        }
+    }
 
     SPDocument *doc = NULL;
     GdkPixbuf *pb = Inkscape::IO::pixbuf_new_from_file( uri, NULL );
@@ -146,22 +160,24 @@ GdkpixbufInput::init(void)
             if (strcmp(extensions[i], "svg.gz") == 0) {
                 continue;
             }
-            gchar *caption = g_strdup_printf(_("%s GDK pixbuf Input"), name);
+            gchar *caption = g_strdup_printf(_("%s bitmap image import"), name);
+
             gchar *xmlString = g_strdup_printf(
                 "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-                    "<name>%s</name>\n"
-                    "<id>org.inkscape.input.gdkpixbuf.%s</id>\n"
-                    "<param name='link' type='optiongroup'  appearance='full' _gui-text='" N_("Link or embed image:") "' >\n"
-                        "<_option value='embed'>" N_("Embed") "</_option>\n"
-                        "<_option value='link'>" N_("Link") "</_option>\n"
-                    "</param>\n"
-                    "<_param name='help' type='description'>" N_("Embed results in stand-alone, larger SVG files. Link references a file outside this SVG document and all files must be moved together.") "</_param>\n"
-                    "<input>\n"
-                        "<extension>.%s</extension>\n"
-                        "<mimetype>%s</mimetype>\n"
-                        "<filetypename>%s (*.%s)</filetypename>\n"
-                        "<filetypetooltip>%s</filetypetooltip>\n"
-                    "</input>\n"
+                  "<name>%s</name>\n"
+                  "<id>org.inkscape.input.gdkpixbuf.%s</id>\n"
+                  "<param name='link' type='optiongroup' appearance='full' _gui-text='" N_("Link or embed image:") "' >\n"
+                    "<_option value='embed' >" N_("Embed") "</_option>\n"
+                    "<_option value='link' >" N_("Link") "</_option>\n"
+                  "</param>\n"
+                  "<_param name='help' type='description'>" N_("Embed results in stand-alone, larger SVG files. Link references a file outside this SVG document and all files must be moved together.") "</_param>\n"
+                  "<param name=\"ask\" _gui-description='" N_("Hide the dialog next time and always apply the same action.") "' gui-text=\"" N_("Don't ask again") "\" type=\"boolean\" >false</param>\n"
+                  "<input>\n"
+                    "<extension>.%s</extension>\n"
+                    "<mimetype>%s</mimetype>\n"
+                    "<filetypename>%s (*.%s)</filetypename>\n"
+                    "<filetypetooltip>%s</filetypetooltip>\n"
+                  "</input>\n"
                 "</inkscape-extension>",
                 caption,
                 extensions[i],

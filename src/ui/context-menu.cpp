@@ -19,6 +19,7 @@
 #include "desktop.h"
 #include "document.h"
 #include "document-undo.h"
+#include "helper/action.h" //sp_action_perform
 #include "inkscape.h"
 #include "message-stack.h"
 #include "preferences.h"
@@ -385,31 +386,55 @@ static void sp_anchor_link_remove(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 
 static void sp_image_image_properties(GtkMenuItem *menuitem, SPAnchor *anchor);
 static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor);
+static void sp_image_image_embed(GtkMenuItem *menuitem, SPItem *item);
+static void sp_image_image_extract(GtkMenuItem *menuitem, SPItem *item);
 
 static void sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 {
     SPItem *item = SP_ITEM(object);
     GtkWidget *w;
+    Inkscape::XML::Node *ir = object->getRepr();
+    const gchar *href = ir->attribute("xlink:href");
 
-    /* Link dialog */
+    /* Image properties */
     w = gtk_menu_item_new_with_mnemonic(_("Image _Properties..."));
     g_object_set_data(G_OBJECT(w), "desktop", desktop);
     g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_image_image_properties), item);
     gtk_widget_show(w);
     gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
 
+    /* Edit externally */
     w = gtk_menu_item_new_with_mnemonic(_("Edit Externally..."));
     g_object_set_data(G_OBJECT(w), "desktop", desktop);
     g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_image_image_edit), item);
     gtk_widget_show(w);
     gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
-    Inkscape::XML::Node *ir = object->getRepr();
-    const gchar *href = ir->attribute("xlink:href");
     if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
+        gtk_widget_set_sensitive( w, FALSE );
+    }
+
+    /* Embed image */
+    w = gtk_menu_item_new_with_mnemonic(C_("Context menu", "Embed Image"));
+    g_object_set_data(G_OBJECT(w), "desktop", desktop);
+    g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_image_image_embed), item);
+    gtk_widget_show(w);
+    gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
+    if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
+        gtk_widget_set_sensitive( w, FALSE );
+    }
+
+    /* Extract image */
+    w = gtk_menu_item_new_with_mnemonic(C_("Context menu", "Extract Image"));
+    g_object_set_data(G_OBJECT(w), "desktop", desktop);
+    g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_image_image_extract), item);
+    gtk_widget_show(w);
+    gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
+    if ( (!href) || ((strncmp(href, "data:", 5) != 0)) ) {
         gtk_widget_set_sensitive( w, FALSE );
     }
 }
 
+/* Image Properties entry */
 static void sp_image_image_properties(GtkMenuItem *menuitem, SPAnchor */*anchor*/)
 {
     SPDesktop *desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
@@ -430,6 +455,7 @@ static gchar* getImageEditorName() {
     return value;
 }
 
+/* Edit Externally entry */
 static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
 {
     SPObject* obj = anchor;
@@ -440,7 +466,7 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
     Glib::ustring cmdline = getImageEditorName();
     Glib::ustring name;
     Glib::ustring fullname;
-    
+
 #ifdef WIN32
     // g_spawn_command_line_sync parsing is done according to Unix shell rules,
     // not Windows command interpreter rules. Thus we need to enclose the
@@ -469,7 +495,6 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
       name.append(href);
     }
 
-
     if (Glib::path_is_absolute(name)) {
         fullname = name;
     } else if (SP_ACTIVE_DOCUMENT->getBase()) {
@@ -477,7 +502,6 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
     } else {
         fullname = Glib::build_filename(Glib::get_current_dir(), name);
     }
-
 
     cmdline.append(" '");
     cmdline.append(fullname.c_str());
@@ -494,6 +518,52 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
         desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, errThing->message);
         g_error_free(errThing);
         errThing = 0;
+    }
+}
+
+/* Embed Image entry */
+static void sp_image_image_embed(GtkMenuItem *menuitem, SPItem *item)
+{
+    SPDesktop *desktop;
+
+    g_assert(SP_IS_ITEM(item));
+
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
+    g_return_if_fail(desktop != NULL);
+
+    if (sp_desktop_selection(desktop)->isEmpty()) {
+        sp_desktop_selection(desktop)->set(item);
+    }
+
+    Inkscape::Verb *verb = Inkscape::Verb::getbyid( "org.ekips.filter.embedselectedimages" );
+    if (verb) {
+        SPAction *action = verb->get_action(desktop);
+        if (action) {
+            sp_action_perform(action, NULL);
+        }
+    }
+}
+
+/* Extract Image entry */
+static void sp_image_image_extract(GtkMenuItem *menuitem, SPItem *item)
+{
+    SPDesktop *desktop;
+
+    g_assert(SP_IS_ITEM(item));
+
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
+    g_return_if_fail(desktop != NULL);
+
+    if (sp_desktop_selection(desktop)->isEmpty()) {
+        sp_desktop_selection(desktop)->set(item);
+    }
+
+    Inkscape::Verb *verb = Inkscape::Verb::getbyid( "org.ekips.filter.extractimage" );
+    if (verb) {
+        SPAction *action = verb->get_action(desktop);
+        if (action) {
+            sp_action_perform(action, NULL);
+        }
     }
 }
 
