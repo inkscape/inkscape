@@ -1619,6 +1619,7 @@ void PdfParser::opShFill(Object args[], int /*numArgs*/)
   GfxShading *shading = 0;
   GfxPath *savedPath = NULL;
   double xMin, yMin, xMax, yMax;
+  double xTemp, yTemp;
   double gradientTransform[6];
   double *matrix = NULL;
   GBool savedState = gFalse;
@@ -1668,6 +1669,16 @@ void PdfParser::opShFill(Object args[], int /*numArgs*/)
   // clip to bbox
   if (shading->getHasBBox()) {
     shading->getBBox(&xMin, &yMin, &xMax, &yMax);
+    if (matrix != NULL) {
+        xTemp = matrix[0]*xMin + matrix[2]*yMin + matrix[4];
+        yTemp = matrix[1]*xMin + matrix[3]*yMin + matrix[5];
+        xMin = xTemp;
+        yMin = yTemp;
+        xTemp = matrix[0]*xMax + matrix[2]*yMax + matrix[4];
+        yTemp = matrix[1]*xMax + matrix[3]*yMax + matrix[5];
+        xMax = xTemp;
+        yMax = yTemp;
+    }
     state->moveTo(xMin, yMin);
     state->lineTo(xMax, yMin);
     state->lineTo(xMax, yMax);
