@@ -376,6 +376,7 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
     std::vector<const gchar *> new_ids;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool relink_clones = prefs->getBool("/options/relinkclonesonduplicate/value");
+    const bool fork_livepatheffects = prefs->getBool("/options/forklpeonduplicate/value", true);
 
     while (reprs) {
         Inkscape::XML::Node *old_repr = (Inkscape::XML::Node *) reprs->data;
@@ -389,6 +390,13 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
             SPObject *new_obj = doc->getObjectByRepr(copy);
             add_ids_recursive(old_ids, old_obj);
             add_ids_recursive(new_ids, new_obj);
+        }
+
+        if (fork_livepatheffects) {
+            SPObject *new_obj = doc->getObjectByRepr(copy);
+            if (new_obj && SP_IS_LPE_ITEM(new_obj)) {
+                sp_lpe_item_fork_path_effects_if_necessary(SP_LPE_ITEM(new_obj), 1);
+            }
         }
 
         newsel = g_slist_prepend(newsel, copy);
