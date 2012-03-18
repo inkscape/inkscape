@@ -192,14 +192,14 @@ void SPObject::sp_object_finalize(GObject *object)
         spobject->_successor = NULL;
     }
 
-    if (((GObjectClass *) (SPObjectClass::static_parent_class))->finalize) {
-        (* ((GObjectClass *) (SPObjectClass::static_parent_class))->finalize)(object);
-    }
-
     spobject->_release_signal.~signal();
     spobject->_modified_signal.~signal();
     spobject->_delete_signal.~signal();
     spobject->_position_changed_signal.~signal();
+
+    if (((GObjectClass *) (SPObjectClass::static_parent_class))->finalize) {
+        (* ((GObjectClass *) (SPObjectClass::static_parent_class))->finalize)(object);
+    }
 }
 
 namespace {
