@@ -97,7 +97,16 @@ ParamString::ParamString (const gchar * name, const gchar * guitext, const gchar
         defaultval = paramval.data();
     }
     if (defaultval != NULL) {
-        _value = g_strdup(defaultval);
+        char const * chname = xml->name();
+        if (!strcmp(chname, INKSCAPE_EXTENSION_NS "_param")) {
+            if (xml->attribute("msgctxt") != NULL) {
+                _value =  g_strdup(g_dpgettext2(NULL, xml->attribute("msgctxt"), defaultval));
+            } else {
+                _value = g_strdup(_(defaultval));
+            }
+        } else {
+            _value = g_strdup(defaultval);
+        }
     }
 
     _max_length = 0;
