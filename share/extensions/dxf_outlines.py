@@ -235,12 +235,13 @@ class MyEffect(inkex.Effect):
         # get referenced node
         refid = node.get(inkex.addNS('href','xlink'))
         refnode = self.getElementById(refid[1:])
-        if refnode.tag == inkex.addNS('g','svg'):
-            self.process_group(refnode)
-        elif refnode.tag == inkex.addNS('use', 'svg'):
-            self.process_clone(refnode)
-        else:
-            self.process_shape(refnode, self.groupmat[-1])
+        if refnode is not None:
+            if refnode.tag == inkex.addNS('g','svg'):
+                self.process_group(refnode)
+            elif refnode.tag == inkex.addNS('use', 'svg'):
+                self.process_clone(refnode)
+            else:
+                self.process_shape(refnode, self.groupmat[-1])
         # pop transform
         if trans or x or y:
             self.groupmat.pop()
