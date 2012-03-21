@@ -1600,6 +1600,12 @@ http://www.inkscape.org/</dc:description>
 <path sodipodi:nodetypes="cc" id="path8025" d="m 979,171.85 -5,5" style="fill:none;stroke:#ffffff;stroke-width:1.79999995;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
 </g>
 </g>
+<g id="layer-duplicate" transform="translate(-819.96 95.039)" inkscape:label="#duplicate_layer">
+<rect id="rect6972" height="16" width="16" y="171.96" x="964.96" fill="none"/>
+<use id="use6122" transform="translate(-0.041 2.9609)" height="1250" width="1250" xlink:href="#path4802" y="0" x="0"/>
+<use id="use6122" transform="translate(-0.041 1.961)" height="1250" width="1250" xlink:href="#path5705" y="0" x="0"/>
+</g>
+
 <g id="selection-move-to-layer-above" transform="matrix(0.997444,0,0,1,-817.4926,-59)" inkscape:label="#move_selection_above">
 <use xlink:href="#path4802" height="1250" width="1250" id="use5774" y="0" x="0" transform="translate(-0.0410002,-11.03912)" />
 <rect style="color:#000000;fill:none;stroke:none;stroke-width:1;marker:none;display:inline" id="rect9602" width="16" height="16" x="965" y="164" />

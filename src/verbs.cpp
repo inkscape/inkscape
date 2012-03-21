@@ -2399,7 +2399,7 @@ Verb *Verb::_base_verbs[] = {
     new LayerVerb(SP_VERB_LAYER_LOWER, "LayerLower", N_("_Lower Layer"),
                   N_("Lower the current layer"), INKSCAPE_ICON("layer-lower")),
     new LayerVerb(SP_VERB_LAYER_DUPLICATE, "LayerDuplicate", N_("D_uplicate Current Layer"),
-                  N_("Duplicate an existing layer"), NULL),
+                  N_("Duplicate an existing layer"), INKSCAPE_ICON("layer-duplicate")),
     new LayerVerb(SP_VERB_LAYER_DELETE, "LayerDelete", N_("_Delete Current Layer"),
                   N_("Delete the current layer"), INKSCAPE_ICON("layer-delete")),
     new LayerVerb(SP_VERB_LAYER_SOLO, "LayerSolo", N_("_Show/hide other layers"),
