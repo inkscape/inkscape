@@ -2,7 +2,7 @@
 #define __SP_XMLVIEW_ATTR_LIST_H__
 
 /*
- * Specialization of GtkCList for editing XML node attributes
+ * Specialization of GtkTreeView for editing XML node attributes
  *
  * Authors:
  *   MenTaLguY <mental@rydia.net>
@@ -18,7 +18,6 @@
 
 
 
-
 #define SP_TYPE_XMLVIEW_ATTR_LIST (sp_xmlview_attr_list_get_type ())
 #define SP_XMLVIEW_ATTR_LIST(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_XMLVIEW_ATTR_LIST, SPXMLViewAttrList))
 #define SP_IS_XMLVIEW_ATTR_LIST(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_XMLVIEW_ATTR_LIST))
@@ -26,14 +25,16 @@
 
 struct SPXMLViewAttrList
 {
-	GtkCList list;
+
+	GtkTreeView list;
+	GtkListStore *store;
 
 	Inkscape::XML::Node * repr;
 };
 
 struct SPXMLViewAttrListClass
 {
-	GtkCListClass parent_class;
+	GtkTreeViewClass parent_class;
 
 	void (* row_changed) (SPXMLViewAttrList *list, gint row);
 };
@@ -43,11 +44,8 @@ GtkWidget * sp_xmlview_attr_list_new (Inkscape::XML::Node * repr);
 
 #define SP_XMLVIEW_ATTR_LIST_GET_REPR(list) (SP_XMLVIEW_ATTR_LIST (list)->repr)
 
-#define sp_xmlview_attr_list_get_row_key(list, row) (GPOINTER_TO_INT (gtk_clist_get_row_data ((list), (row))))
-#define sp_xmlview_attr_list_find_row_from_key(list, key) (gtk_clist_find_row_from_data ((list), GINT_TO_POINTER ((key))))
-
 void sp_xmlview_attr_list_set_repr (SPXMLViewAttrList * list, Inkscape::XML::Node * repr);
-
+void sp_xmlview_attr_list_select_row_by_key(SPXMLViewAttrList * list, gchar *name);
 
 
 #endif

@@ -128,9 +128,7 @@ private:
     /**
       * Callback functions for when attribute selection changes
       */
-    static void on_attr_select_row(GtkCList *list, gint row, gint column, GdkEventButton *event, gpointer data);
-    static void on_attr_unselect_row(GtkCList *list, gint row, gint column, GdkEventButton *event, gpointer data);
-    static void on_attr_row_changed( GtkCList *list, gint row, gpointer data );
+    static void on_attr_select_row(GtkTreeSelection *selection, gpointer data);
 
     /**
       * Enable widgets based on current selections
@@ -138,11 +136,8 @@ private:
     void on_tree_select_row_enable(GtkCTreeNode *node);
     void on_tree_unselect_row_disable();
     void on_tree_unselect_row_hide();
-    void on_attr_select_row_enable();
     void on_attr_unselect_row_disable();
     void on_attr_unselect_row_clear_text();
-    void on_attr_select_row_set_value_content(gint row);
-    void on_attr_select_row_set_name_content(gint row);
 
     void onNameChanged();
     void onCreateNameChanged();

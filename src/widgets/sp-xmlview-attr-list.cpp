@@ -1,5 +1,5 @@
 /*
- * Specialization of GtkCList for the XML tree view
+ * Specialization of GtkTreeView for the XML tree view
  *
  * Authors:
  *   MenTaLguY <mental@rydia.net>
@@ -26,7 +26,7 @@ static void sp_xmlview_attr_list_destroy (GtkObject * object);
 
 static void event_attr_changed (Inkscape::XML::Node * repr, const gchar * name, const gchar * old_value, const gchar * new_value, bool is_interactive, gpointer data);
 
-static GtkCListClass * parent_class = NULL;
+static GtkTreeViewClass * parent_class = NULL;
 
 static Inkscape::XML::NodeEventVector repr_events = {
 	NULL, /* child_added */
@@ -36,35 +36,41 @@ static Inkscape::XML::NodeEventVector repr_events = {
 	NULL  /* order_changed */
 };
 
+enum {COL_NAME=0, COL_VALUE, COL_ATTR};
+
 GtkWidget *
 sp_xmlview_attr_list_new (Inkscape::XML::Node * repr)
 {
-	SPXMLViewAttrList * list;
+    SPXMLViewAttrList * attr_list;
 
-	list = (SPXMLViewAttrList*)g_object_new (SP_TYPE_XMLVIEW_ATTR_LIST, "n_columns", 2, NULL);
+    attr_list = (SPXMLViewAttrList*)g_object_new (SP_TYPE_XMLVIEW_ATTR_LIST, NULL);
 
-	gtk_clist_set_column_title (GTK_CLIST (list), 0, _("Attribute"));
-	gtk_clist_set_column_title (GTK_CLIST (list), 1, _("Value"));
-	gtk_clist_column_titles_show (GTK_CLIST (list));
+    attr_list->store = gtk_list_store_new (3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER);
+    gtk_tree_view_set_model (GTK_TREE_VIEW(attr_list), GTK_TREE_MODEL(attr_list->store));
 
-	gtk_clist_column_titles_passive (GTK_CLIST (list));
-	gtk_clist_set_column_auto_resize (GTK_CLIST (list), 0, TRUE);
-	gtk_clist_set_column_auto_resize (GTK_CLIST (list), 1, TRUE);
-	gtk_clist_set_sort_column (GTK_CLIST (list), 0);
-	gtk_clist_set_auto_sort (GTK_CLIST (list), TRUE);
+    GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
+    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(attr_list), COL_NAME, _("Attribute"), cell, "text", 0, NULL);
+    GtkTreeViewColumn *column = gtk_tree_view_get_column (GTK_TREE_VIEW(attr_list), COL_NAME);
+    gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+    gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
+    gtk_tree_sortable_set_sort_column_id ( GTK_TREE_SORTABLE(attr_list->store), COL_NAME, GTK_SORT_ASCENDING);
 
-	sp_xmlview_attr_list_set_repr (list, repr);
+    cell = gtk_cell_renderer_text_new ();
+    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(attr_list), COL_VALUE, _("Value"), cell, "text", COL_VALUE, NULL);
+    column = gtk_tree_view_get_column (GTK_TREE_VIEW(attr_list), COL_VALUE);
+    gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 
-	return (GtkWidget *) list;
+    sp_xmlview_attr_list_set_repr (attr_list, repr);
+
+    return (GtkWidget *) attr_list;
 }
 
 void
 sp_xmlview_attr_list_set_repr (SPXMLViewAttrList * list, Inkscape::XML::Node * repr)
 {
 	if ( repr == list->repr ) return;
-	gtk_clist_freeze (GTK_CLIST (list));
 	if (list->repr) {
-		gtk_clist_clear (GTK_CLIST (list));
+		gtk_list_store_clear(list->store);
 		sp_repr_remove_listener_by_data (list->repr, list);
 		Inkscape::GC::release(list->repr);
 	}
@@ -74,7 +80,6 @@ sp_xmlview_attr_list_set_repr (SPXMLViewAttrList * list, Inkscape::XML::Node * r
 		sp_repr_add_listener (repr, &repr_events, list);
 		sp_repr_synthesize_events (repr, &repr_events, list);
 	}
-	gtk_clist_thaw (GTK_CLIST (list));
 }
 
 GType sp_xmlview_attr_list_get_type(void)
@@ -94,7 +99,7 @@ GType sp_xmlview_attr_list_get_type(void)
             (GInstanceInitFunc)sp_xmlview_attr_list_init,
             0 // value_table
         };
-        type = g_type_register_static(GTK_TYPE_CLIST, "SPXMLViewAttrList", &info, static_cast<GTypeFlags>(0));
+        type = g_type_register_static(GTK_TYPE_TREE_VIEW, "SPXMLViewAttrList", &info, static_cast<GTypeFlags>(0));
     }
 
     return type;
@@ -108,7 +113,7 @@ sp_xmlview_attr_list_class_init (SPXMLViewAttrListClass * klass)
 	object_class = (GtkObjectClass *) klass;
 	object_class->destroy = sp_xmlview_attr_list_destroy;
 
-	parent_class = (GtkCListClass*)g_type_class_peek_parent (klass);
+	parent_class = (GtkTreeViewClass*)g_type_class_peek_parent (klass);
 
         g_signal_new (  "row-value-changed",
 			G_TYPE_FROM_CLASS(klass),
@@ -123,6 +128,7 @@ sp_xmlview_attr_list_class_init (SPXMLViewAttrListClass * klass)
 void
 sp_xmlview_attr_list_init (SPXMLViewAttrList * list)
 {
+    list->store = NULL;
 	list->repr = NULL;
 }
 
@@ -138,6 +144,27 @@ sp_xmlview_attr_list_destroy (GtkObject * object)
 	GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
+void sp_xmlview_attr_list_select_row_by_key(SPXMLViewAttrList * list, gchar *name)
+{
+    GtkTreeIter iter;
+    const gchar *n;
+    gboolean match = false;
+    gboolean valid = gtk_tree_model_get_iter_first( GTK_TREE_MODEL(list->store), &iter );
+    while ( valid ) {
+        gtk_tree_model_get (GTK_TREE_MODEL(list->store), &iter, COL_NAME, &n, -1);
+        if (!strcmp(n, name)) {
+            match = true;
+            break;
+        }
+        valid = gtk_tree_model_iter_next (GTK_TREE_MODEL(list->store), &iter);
+    }
+
+    if (match) {
+        GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(list));
+        gtk_tree_selection_select_iter(selection, &iter);
+    }
+}
+
 void
 event_attr_changed (Inkscape::XML::Node * /*repr*/,
                     const gchar * name,
@@ -146,43 +173,36 @@ event_attr_changed (Inkscape::XML::Node * /*repr*/,
                     bool /*is_interactive*/,
                     gpointer data)
 {
-	gint row;
+	gint row = -1;
 	SPXMLViewAttrList * list;
-	gchar new_text[128 + 4];
-	gchar *gtktext;
 
 	list = SP_XMLVIEW_ATTR_LIST (data);
 
-	gtk_clist_freeze (GTK_CLIST (list));
+    GtkTreeIter iter;
+    const gchar *n;
+    gboolean valid = gtk_tree_model_get_iter_first( GTK_TREE_MODEL(list->store), &iter );
+    gboolean match = false;
+    while ( valid ) {
+        gtk_tree_model_get (GTK_TREE_MODEL(list->store), &iter, COL_NAME, &n, -1);
+        if (!strcmp(n, name)) {
+            match = true;
+            break;
+        }
+        row++;
+        valid = gtk_tree_model_iter_next (GTK_TREE_MODEL(list->store), &iter);
+    }
 
-	if (new_value) {
-		strncpy (new_text, new_value, 128);
-		if (strlen (new_value) >= 128) {
-			strcpy (new_text + 128, "...");
-		}
-		gtktext = new_text;
-	} else {
-		gtktext = NULL;
-	}
-
-	row = gtk_clist_find_row_from_data (GTK_CLIST (list), GINT_TO_POINTER (g_quark_from_string (name)));
-	if (row != -1) {
+	if (match) {
 		if (new_value) {
-			gtk_clist_set_text (GTK_CLIST (list), row, 1, gtktext);
+			gtk_list_store_set (list->store, &iter, COL_NAME, name, COL_VALUE, new_value, COL_ATTR, GINT_TO_POINTER (g_quark_from_string (name)), -1);
 		} else {
-			gtk_clist_remove (GTK_CLIST (list), row);
+			gtk_list_store_remove  (list->store, &iter);
 		}
 	} else if (new_value != NULL) {
-		const gchar * text[2];
+	    gtk_list_store_append (list->store, &iter);
+        gtk_list_store_set (list->store, &iter, COL_NAME, name, COL_VALUE, new_value, COL_ATTR, GINT_TO_POINTER (g_quark_from_string (name)), -1);
 
-		text[0] = name;
-		text[1] = gtktext;
-
-		row = gtk_clist_append (GTK_CLIST (list), (gchar **)text);
-		gtk_clist_set_row_data (GTK_CLIST (list), row, GINT_TO_POINTER (g_quark_from_string (name)));
 	}
-
-	gtk_clist_thaw (GTK_CLIST (list));
 
 	// send a "changed" signal so widget owners will know I've updated
 	g_signal_emit_by_name(G_OBJECT (list), "row-value-changed", row );

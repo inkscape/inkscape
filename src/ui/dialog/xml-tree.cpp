@@ -190,6 +190,7 @@ XmlTree::XmlTree (void) :
 
     Gtk::ScrolledWindow *attr_scroller = new Gtk::ScrolledWindow();
     attr_scroller->set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
+    attr_scroller->set_shadow_type(Gtk::SHADOW_IN);
     attr_scroller->set_size_request(0, 60);
 
     attr_subpaned_container.pack1( *attr_scroller );
@@ -230,9 +231,9 @@ XmlTree::XmlTree (void) :
     g_signal_connect( G_OBJECT(tree), "tree_unselect_row", G_CALLBACK(on_tree_unselect_row), this);
     g_signal_connect_after( G_OBJECT(tree), "tree_move", G_CALLBACK(after_tree_move), this);
 
-    g_signal_connect( G_OBJECT(attributes), "select_row", G_CALLBACK(on_attr_select_row), this);
-    g_signal_connect( G_OBJECT(attributes), "unselect_row", G_CALLBACK(on_attr_unselect_row), this);
-    g_signal_connect( G_OBJECT(attributes), "row-value-changed", G_CALLBACK(on_attr_row_changed), this);
+    GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(attributes));
+    g_signal_connect (G_OBJECT(selection), "changed", G_CALLBACK (on_attr_select_row), this);
+
 
     xml_element_new_button.signal_clicked().connect(sigc::mem_fun(*this, &XmlTree::cmd_new_element_node));
     xml_text_new_button.signal_clicked().connect(sigc::mem_fun(*this, &XmlTree::cmd_new_text_node));
@@ -729,103 +730,38 @@ void XmlTree::on_tree_unselect_row_hide()
     text_container.hide();
 }
 
-void XmlTree::on_attr_select_row(GtkCList *list, gint row, gint column,
-                        GdkEventButton *event, gpointer data)
+void XmlTree::on_attr_select_row(GtkTreeSelection *selection, gpointer data)
 {
     XmlTree *self = (XmlTree *)data;
 
-    self->selected_attr = sp_xmlview_attr_list_get_row_key(list, row);
+    GtkTreeIter   iter;
+    GtkTreeModel *model;
+
+    if (!gtk_tree_selection_get_selected (selection, &model, &iter)) {
+/*        self->selected_attr = 0;
+        self->attr_reset_context(self->selected_attr);
+
+        self->xml_attribute_delete_button.set_sensitive(false);
+        self->on_attr_unselect_row_clear_text();*/
+        return;
+    }
+
     self->attr_value.grab_focus ();
 
+    self->xml_attribute_delete_button.set_sensitive(true);
+
+    const gchar *name;
+    const gchar *value;
+    gint attr;
+    gtk_tree_model_get (model, &iter, 0, &name, 1, &value, 2, &attr, -1);
+
+    self->attr_name.set_text(name);
+    self->attr_value.get_buffer()->set_text(value);
+    self->selected_attr = attr;
+
     self->attr_reset_context(self->selected_attr);
 
-    self->on_attr_select_row_enable();
-    self->on_attr_select_row_set_name_content(row);
-    self->on_attr_select_row_set_value_content(row);
 }
-
-
-void XmlTree::on_attr_unselect_row(GtkCList */*list*/, gint /*row*/, gint /*column*/,
-                          GdkEventButton */*event*/, gpointer data)
-{
-    XmlTree *self = (XmlTree *)data;
-
-    self->selected_attr = 0;
-    self->attr_reset_context(self->selected_attr);
-
-    self->on_attr_unselect_row_disable();
-    self->on_attr_unselect_row_clear_text();
-}
-
-
-void XmlTree::on_attr_row_changed(GtkCList *list, gint row, gpointer data)
-{
-    gint attr = sp_xmlview_attr_list_get_row_key(list, row);
-
-    XmlTree *self = (XmlTree *)data;
-    if (attr == self->selected_attr) {
-        /* if the attr changed, reselect the row in the list to sync
-           the edit box */
-
-        /*
-        // get current attr values
-        const gchar * name = g_quark_to_string (sp_xmlview_attr_list_get_row_key (list, row));
-        const gchar * value = self->selected_repr->attribute(name);
-
-        g_warning("value: '%s'",value);
-
-        // get the edit box value
-        GtkTextIter start, end;
-        gtk_text_buffer_get_bounds ( gtk_text_view_get_buffer (self->attr_value),
-                                     &start, &end );
-        gchar * text = gtk_text_buffer_get_text ( gtk_text_view_get_buffer (self->attr_value),
-                                       &start, &end, TRUE );
-        g_warning("text: '%s'",text);
-
-        // compare to edit box
-        if (strcmp(text,value)) {
-            // issue warning if they're different
-            _message_stack->flash(Inkscape::WARNING_MESSAGE,
-                                  _("Attribute changed in GUI while editing values!"));
-        }
-        g_free (text);
-
-        */
-        gtk_clist_unselect_row( GTK_CLIST(list), row, 0 );
-        gtk_clist_select_row( GTK_CLIST(list), row, 0 );
-    }
-}
-
-
-void XmlTree::on_attr_select_row_set_name_content(gint row)
-{
-    const gchar *name = g_quark_to_string(sp_xmlview_attr_list_get_row_key(GTK_CLIST(attributes), row));
-    attr_name.set_text(name);
-}
-
-
-void XmlTree::on_attr_select_row_set_value_content(gint row)
-{
-    const gchar *name = g_quark_to_string(sp_xmlview_attr_list_get_row_key(GTK_CLIST(attributes), row));
-    const gchar *value = selected_repr->attribute(name);
-    if (!value) {
-        value = "";
-    }
-    attr_value.get_buffer()->set_text(value);
-}
-
-void XmlTree::on_attr_select_row_enable()
-{
-    xml_attribute_delete_button.set_sensitive(true);
-}
-
-
-
-void XmlTree::on_attr_unselect_row_disable()
-{
-    xml_attribute_delete_button.set_sensitive(false);
-}
-
 
 void XmlTree::on_attr_unselect_row_clear_text()
 {
@@ -837,22 +773,14 @@ void XmlTree::onNameChanged()
 {
     Glib::ustring text = attr_name.get_text();
     /* TODO: need to do checking a little more rigorous than this */
-    if (!text.empty()) {
-        set_attr.set_sensitive(true);
-    } else {
-        set_attr.set_sensitive(false);
-    }
+    set_attr.set_sensitive(!text.empty());
 }
 
 void XmlTree::onCreateNameChanged()
 {
     Glib::ustring text = name_entry->get_text();
     /* TODO: need to do checking a little more rigorous than this */
-    if (!text.empty()) {
-        create_button->set_sensitive(true);
-    } else {
-        create_button->set_sensitive(false);
-    }
+    create_button->set_sensitive(!text.empty());
 }
 
 void XmlTree::on_desktop_selection_changed()
@@ -1060,11 +988,7 @@ void XmlTree::cmd_set_attr()
                        _("Change attribute"));
 
     /* TODO: actually, the row won't have been created yet.  why? */
-    gint row = sp_xmlview_attr_list_find_row_from_key(GTK_CLIST(attributes),
-                                                      g_quark_from_string(name));
-    if (row != -1) {
-        gtk_clist_select_row(GTK_CLIST(attributes), row, 0);
-    }
+    sp_xmlview_attr_list_select_row_by_key(attributes, name);
 }
 
 
