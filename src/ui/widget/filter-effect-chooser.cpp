@@ -32,18 +32,11 @@ SimpleFilterModifier::SimpleFilterModifier(int flags)
 
     if (flags & BLEND) {
         add(_hb_blend);
-        _hb_blend.pack_start(_lb_blend);
+        _hb_blend.pack_start(_lb_blend, false, false, 0);
         _hb_blend.pack_start(_blend);
     }
     if (flags & BLUR) {
         add(_hb_blur);
-        /*
-         * Hack to get a min size of label, but still be able to expand if needed
-         * Should match ObjectCompositeSettings::_opacity_label
-         */
-        if (_lb_blur.get_text().length() < 7) {
-            _lb_blur.set_width_chars(7);
-        }
         #if WITH_GTKMM_2_22
             _lb_blur.set_alignment(Gtk::ALIGN_END, Gtk::ALIGN_CENTER);
         #else

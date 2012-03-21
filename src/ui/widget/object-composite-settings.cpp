@@ -81,9 +81,6 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
 
     // Opacity
     pack_start(_opacity_vbox, false, false, 2);
-    if (_opacity_label.get_text().length() < 7) {
-        _opacity_label.set_width_chars(7);
-    }
 #if WITH_GTKMM_2_22
     _opacity_label.set_alignment(Gtk::ALIGN_END, Gtk::ALIGN_CENTER);
 #else
@@ -98,6 +95,11 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
     _opacity_hscale.set_draw_value(false);
     _opacity_adjustment.signal_value_changed().connect(sigc::mem_fun(*this, &ObjectCompositeSettings::_opacityValueChanged));
 	_opacity_label.set_mnemonic_widget(_opacity_hscale);
+
+    /* SizeGroup keeps the blur and opacity labels aligned in Fill & Stroke dlg */
+    GtkSizeGroup *labels = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+    gtk_size_group_add_widget(labels, (GtkWidget *) _opacity_label.gobj());
+    gtk_size_group_add_widget(labels, (GtkWidget *) _fe_cb.get_blur_label()->gobj());
 
     show_all_children();
 
