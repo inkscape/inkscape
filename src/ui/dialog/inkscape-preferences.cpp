@@ -578,6 +578,9 @@ void InkscapePreferences::initPageUI()
     _win_dockable.init ( _("Dockable"), "/options/dialogtype/value", 1, true, 0);
     _win_floating.init ( _("Floating"), "/options/dialogtype/value", 0, false, &_win_dockable);
 
+    _win_native.init ( _("Native open/save dialogs"), "/options/desktopintegration/value", 1, true, 0);
+    _win_gtk.init ( _("GTK open/save dialogs"), "/options/desktopintegration/value", 0, false, &_win_native);
+    
     _win_hide_task.init ( _("Dialogs are hidden in taskbar"), "/options/dialogsskiptaskbar/value", true);
     _win_zoom_resize.init ( _("Zoom when window is resized"), "/options/stickyzoom/value", false);
     _win_show_close.init ( _("Show close button on dialogs"), "/dialogs/showclose", false);
@@ -604,6 +607,13 @@ void InkscapePreferences::initPageUI()
                             _("Dockable"));
     _page_windows.add_line( true, "", _win_floating, "",
                             _("Floating"));
+#ifdef WIN32
+    _page_windows.add_group_header( _("Desktop integration"));
+    _page_windows.add_line( true, "", _win_native, "",
+                            _("Use Windows like open and save dialogs"));
+    _page_windows.add_line( true, "", _win_gtk, "",
+                            _("Use GTK open and save dialogs "));
+#endif
 
 #ifndef WIN32 // non-Win32 special code to enable transient dialogs
     _page_windows.add_group_header( _("Dialogs on top:"));
@@ -1422,19 +1432,19 @@ void InkscapePreferences::initPageSystem()
 
         _sys_user_config.set_text((char const *)profile_path(""));
         _sys_user_config.set_editable(false);
-        _page_system.add_line( false, _("User config: "), _sys_user_config, "", _("Location of users configuration"), true);
+        _page_system.add_line(true, _("User config: "), _sys_user_config, "", _("Location of users configuration"), true);
 
         _sys_user_prefs.set_text(prefs->getPrefsFilename());
         _sys_user_prefs.set_editable(false);
-        _page_system.add_line( false, _("User preferences: "), _sys_user_prefs, "", _("Location of the users preferences file"), true);
+        _page_system.add_line(true, _("User preferences: "), _sys_user_prefs, "", _("Location of the users preferences file"), true);
 
         _sys_user_extension_dir.set_text((char const *)get_path(IO::Resource::USER, IO::Resource::EXTENSIONS, ""));
         _sys_user_extension_dir.set_editable(false);
-        _page_system.add_line( false, _("User extensions: "), _sys_user_extension_dir, "", _("Location of the users extensions"), true);
+        _page_system.add_line(true, _("User extensions: "), _sys_user_extension_dir, "", _("Location of the users extensions"), true);
 
         _sys_user_cache.set_text(g_get_user_cache_dir());
         _sys_user_cache.set_editable(false);
-        _page_system.add_line( false, _("User cache: "), _sys_user_cache, "", _("Location of users cache"), true);
+        _page_system.add_line(true, _("User cache: "), _sys_user_cache, "", _("Location of users cache"), true);
 
         Glib::ustring tmp_dir = prefs->getString("/options/autosave/path");
         if (tmp_dir.empty()) {
@@ -1442,15 +1452,15 @@ void InkscapePreferences::initPageSystem()
         }
         _sys_tmp_files.set_text(tmp_dir);
         _sys_tmp_files.set_editable(false);
-        _page_system.add_line( false, _("Temporary files: "), _sys_tmp_files, "", _("Location of the temporary files used for autosave"), true);
+        _page_system.add_line(true, _("Temporary files: "), _sys_tmp_files, "", _("Location of the temporary files used for autosave"), true);
 
         _sys_data.set_text( INKSCAPE_DATADIR );
         _sys_data.set_editable(false);
-        _page_system.add_line( false, _("Inkscape data: "), _sys_data, "", _("Location of Inkscape data"), true);
+        _page_system.add_line(true, _("Inkscape data: "), _sys_data, "", _("Location of Inkscape data"), true);
 
         _sys_extension_dir.set_text(INKSCAPE_EXTENSIONDIR);
         _sys_extension_dir.set_editable(false);
-        _page_system.add_line( false, _("Inkscape extensions: "), _sys_extension_dir, "", _("Location of the Inkscape extensions"), true);
+        _page_system.add_line(true, _("Inkscape extensions: "), _sys_extension_dir, "", _("Location of the Inkscape extensions"), true);
 
         Glib::ustring tmp;
         appendList( tmp, g_get_system_data_dirs() );
@@ -1459,7 +1469,7 @@ void InkscapePreferences::initPageSystem()
         _sys_systemdata_scroll.add(_sys_systemdata);
         _sys_systemdata_scroll.set_size_request(0, 80);
         _sys_systemdata_scroll.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-         _page_system.add_line( false,  _("System data: "), _sys_systemdata_scroll, "", _("Locations of system data"), true);
+         _page_system.add_line(true,  _("System data: "), _sys_systemdata_scroll, "", _("Locations of system data"), true);
 
         {
             tmp = "";
@@ -1483,7 +1493,7 @@ void InkscapePreferences::initPageSystem()
     _sys_icon_scroll.add(_sys_icon);
     _sys_icon_scroll.set_size_request(0, 80);
     _sys_icon_scroll.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-    _page_system.add_line( false,  _("Icon theme: "), _sys_icon_scroll, "", _("Location of icon themes"), true);
+    _page_system.add_line(true,  _("Icon theme: "), _sys_icon_scroll, "", _("Location of icon themes"), true);
 
     this->AddPage(_page_system, _("System"), PREFS_PAGE_SYSTEM);
 }
@@ -1508,7 +1518,7 @@ bool InkscapePreferences::PresentPage(const Gtk::TreeModel::iterator& iter)
     int desired_page = prefs->getInt("/dialogs/preferences/page", 0);
     if (desired_page == row[_page_list_columns._col_id])
     {
-        if (desired_page >= PREFS_PAGE_TOOLS && desired_page <= PREFS_PAGE_TOOLS_LPETOOL)
+        if (desired_page >= PREFS_PAGE_TOOLS && desired_page <= PREFS_PAGE_TOOLS_CONNECTOR)
             _page_list.expand_row(_path_tools, false);
         if (desired_page >= PREFS_PAGE_TOOLS_SHAPES && desired_page <= PREFS_PAGE_TOOLS_SHAPES_SPIRAL)
             _page_list.expand_row(_path_shapes, false);

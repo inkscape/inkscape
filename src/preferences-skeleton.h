@@ -281,6 +281,9 @@ static char const preferences_skeleton[] =
 "    <group id=\"bitmapeditor\" value=\"gimp\"/>\n"
 "    <group id=\"bitmapautoreload\" value=\"1\"/>\n"
 "    <group id=\"dialogtype\" value=\"1\"/>\n"
+#ifdef WIN32
+"    <group id=\"desktopintegration\" value=\"1\"/>\n"
+#endif
 "    <group id=\"dock\" "
 "           cancenterdock=\"1\""
 "           dockbarstyle=\"2\""      // GDL_DOCK_BAR_BOTH

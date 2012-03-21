@@ -1822,7 +1822,7 @@ SPDesktop::show_dialogs()
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_VIEW_ICON_PREVIEW, "/dialogs/iconpreview") );
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_SVG_FONTS, "/dialogs/svgfonts") );
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_INPUT, "/dialogs/inputdevices") );
-    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_CONTEXT_SELECT_PREFS, "/dialogs/preferences") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_DISPLAY, "/dialogs/preferences") );
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_SELECTION_GRIDTILE, "/dialogs/gridtiler") );
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_SELECTION_TRACE, "/dialogs/trace") );
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_TEXT, "/dialogs/textandfont") );

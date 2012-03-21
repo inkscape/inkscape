@@ -22,6 +22,7 @@
 #include "gc-core.h"
 #include <dialogs/dialog-events.h>
 #include "extension/output.h"
+#include "preferences.h"
 
 namespace Inkscape
 {
@@ -86,7 +87,13 @@ FileOpenDialog *FileOpenDialog::create(Gtk::Window &parentWindow,
                                        const char *title)
 {
 #ifdef WIN32
-    FileOpenDialog *dialog = new FileOpenDialogImplWin32(parentWindow, path, fileTypes, title);
+    FileOpenDialog *dialog = NULL;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool( "/options/desktopintegration/value")) {
+        dialog = new FileOpenDialogImplWin32(parentWindow, path, fileTypes, title);
+    } else {
+        dialog = new FileOpenDialogImplGtk(parentWindow, path, fileTypes, title);
+    }
 #else
     FileOpenDialog *dialog = new FileOpenDialogImplGtk(parentWindow, path, fileTypes, title);
 #endif
@@ -115,7 +122,13 @@ FileSaveDialog *FileSaveDialog::create(Gtk::Window& parentWindow,
                                        const Inkscape::Extension::FileSaveMethod save_method)
 {
 #ifdef WIN32
-    FileSaveDialog *dialog = new FileSaveDialogImplWin32(parentWindow, path, fileTypes, title, default_key, docTitle, save_method);
+    FileSaveDialog *dialog = NULL;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool( "/options/desktopintegration/value")) {
+        dialog = new FileSaveDialogImplWin32(parentWindow, path, fileTypes, title, default_key, docTitle, save_method);
+    } else {
+        dialog = new FileSaveDialogImplGtk(parentWindow, path, fileTypes, title, default_key, docTitle, save_method);
+    }
 #else
     FileSaveDialog *dialog = new FileSaveDialogImplGtk(parentWindow, path, fileTypes, title, default_key, docTitle, save_method);
 #endif
