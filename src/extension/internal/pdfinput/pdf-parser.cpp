@@ -1672,17 +1672,23 @@ void PdfParser::opShFill(Object args[], int /*numArgs*/)
     if (matrix != NULL) {
         xTemp = matrix[0]*xMin + matrix[2]*yMin + matrix[4];
         yTemp = matrix[1]*xMin + matrix[3]*yMin + matrix[5];
-        xMin = xTemp;
-        yMin = yTemp;
+        state->moveTo(xTemp, yTemp);
+        xTemp = matrix[0]*xMax + matrix[2]*yMin + matrix[4];
+        yTemp = matrix[1]*xMax + matrix[3]*yMin + matrix[5];
+        state->lineTo(xTemp, yTemp);
         xTemp = matrix[0]*xMax + matrix[2]*yMax + matrix[4];
         yTemp = matrix[1]*xMax + matrix[3]*yMax + matrix[5];
-        xMax = xTemp;
-        yMax = yTemp;
+        state->lineTo(xTemp, yTemp);
+        xTemp = matrix[0]*xMin + matrix[2]*yMax + matrix[4];
+        yTemp = matrix[1]*xMin + matrix[3]*yMax + matrix[5];
+        state->lineTo(xTemp, yTemp);
     }
-    state->moveTo(xMin, yMin);
-    state->lineTo(xMax, yMin);
-    state->lineTo(xMax, yMax);
-    state->lineTo(xMin, yMax);
+    else {
+        state->moveTo(xMin, yMin);
+        state->lineTo(xMax, yMin);
+        state->lineTo(xMax, yMax);
+        state->lineTo(xMin, yMax);
+    }
     state->closePath();
     state->clip();
     if (savedState)
