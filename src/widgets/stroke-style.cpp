@@ -229,6 +229,10 @@ static gboolean stroke_width_set_unit(SPUnitSelector *,
                                       SPUnit const *new_units,
                                       Gtk::Container *spw)
 {
+    if (spw->get_data("update")) {
+        return FALSE;
+    }
+
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
     if (!desktop) {
