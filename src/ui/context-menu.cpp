@@ -414,23 +414,27 @@ static void sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     }
 
     /* Embed image */
-    w = gtk_menu_item_new_with_mnemonic(C_("Context menu", "Embed Image"));
-    g_object_set_data(G_OBJECT(w), "desktop", desktop);
-    g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_image_image_embed), item);
-    gtk_widget_show(w);
-    gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
-    if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
-        gtk_widget_set_sensitive( w, FALSE );
+    if (Inkscape::Verb::getbyid( "org.ekips.filter.embedselectedimages" )) {
+        w = gtk_menu_item_new_with_mnemonic(C_("Context menu", "Embed Image"));
+        g_object_set_data(G_OBJECT(w), "desktop", desktop);
+        g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_image_image_embed), item);
+        gtk_widget_show(w);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
+        if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
+            gtk_widget_set_sensitive( w, FALSE );
+        }
     }
 
     /* Extract image */
-    w = gtk_menu_item_new_with_mnemonic(C_("Context menu", "Extract Image"));
-    g_object_set_data(G_OBJECT(w), "desktop", desktop);
-    g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_image_image_extract), item);
-    gtk_widget_show(w);
-    gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
-    if ( (!href) || ((strncmp(href, "data:", 5) != 0)) ) {
-        gtk_widget_set_sensitive( w, FALSE );
+    if (Inkscape::Verb::getbyid( "org.ekips.filter.extractimage" )) {
+        w = gtk_menu_item_new_with_mnemonic(C_("Context menu", "Extract Image"));
+        g_object_set_data(G_OBJECT(w), "desktop", desktop);
+        g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_image_image_extract), item);
+        gtk_widget_show(w);
+        gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
+        if ( (!href) || ((strncmp(href, "data:", 5) != 0)) ) {
+            gtk_widget_set_sensitive( w, FALSE );
+        }
     }
 }
 
