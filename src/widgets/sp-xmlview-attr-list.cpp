@@ -54,11 +54,13 @@ sp_xmlview_attr_list_new (Inkscape::XML::Node * repr)
     gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
     gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
     gtk_tree_sortable_set_sort_column_id ( GTK_TREE_SORTABLE(attr_list->store), COL_NAME, GTK_SORT_ASCENDING);
+    gtk_cell_renderer_set_padding (cell, 2, 0);
 
     cell = gtk_cell_renderer_text_new ();
     gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(attr_list), COL_VALUE, _("Value"), cell, "text", COL_VALUE, NULL);
     column = gtk_tree_view_get_column (GTK_TREE_VIEW(attr_list), COL_VALUE);
     gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+    gtk_cell_renderer_set_padding (cell, 2, 0);
 
     sp_xmlview_attr_list_set_repr (attr_list, repr);
 
