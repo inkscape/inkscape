@@ -385,7 +385,7 @@ static void sp_anchor_link_remove(GtkMenuItem */*menuitem*/, SPAnchor *anchor)
 /* Image */
 
 static void sp_image_image_properties(GtkMenuItem *menuitem, SPAnchor *anchor);
-static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor);
+static void sp_image_image_edit(GtkMenuItem *menuitem, SPItem *item);
 static void sp_image_image_embed(GtkMenuItem *menuitem, SPItem *item);
 static void sp_image_image_extract(GtkMenuItem *menuitem, SPItem *item);
 
@@ -427,7 +427,7 @@ static void sp_image_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
 
     /* Extract image */
     if (Inkscape::Verb::getbyid( "org.ekips.filter.extractimage" )) {
-        w = gtk_menu_item_new_with_mnemonic(C_("Context menu", "Extract Image"));
+        w = gtk_menu_item_new_with_mnemonic(C_("Context menu", "Extract Image..."));
         g_object_set_data(G_OBJECT(w), "desktop", desktop);
         g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_image_image_extract), item);
         gtk_widget_show(w);
@@ -460,11 +460,20 @@ static gchar* getImageEditorName() {
 }
 
 /* Edit Externally entry */
-static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
+static void sp_image_image_edit(GtkMenuItem *menuitem, SPItem *item)
 {
-    SPObject* obj = anchor;
-    Inkscape::XML::Node *ir = obj->getRepr();
-    const gchar *href = ir->attribute("xlink:href");
+    SPDesktop *desktop = NULL;
+
+    g_assert(SP_IS_ITEM(item));
+
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
+    g_return_if_fail(desktop != NULL);
+
+    if (sp_desktop_selection(desktop)->isEmpty()) {
+        sp_desktop_selection(desktop)->set(item);
+    }
+
+    GSList const *selected = sp_desktop_selection(desktop)->itemList();
 
     GError* errThing = 0;
     Glib::ustring cmdline = getImageEditorName();
@@ -492,24 +501,29 @@ static void sp_image_image_edit(GtkMenuItem *menuitem, SPAnchor *anchor)
     }
 #endif
 
-    if (strncmp (href,"file:",5) == 0) {
-    // URI to filename conversion
-      name = g_filename_from_uri(href, NULL, NULL);
-    } else {
-      name.append(href);
-    }
+    for (GSList const *iter = selected; iter != NULL; iter = iter->next) {
+        Inkscape::XML::Node *ir = SP_ITEM(iter->data)->getRepr();
+        const gchar *href = ir->attribute("xlink:href");
+        
+        if (strncmp (href,"file:",5) == 0) {
+        // URI to filename conversion
+          name = g_filename_from_uri(href, NULL, NULL);
+        } else {
+          name.append(href);
+        }
 
-    if (Glib::path_is_absolute(name)) {
-        fullname = name;
-    } else if (SP_ACTIVE_DOCUMENT->getBase()) {
-        fullname = Glib::build_filename(SP_ACTIVE_DOCUMENT->getBase(), name);
-    } else {
-        fullname = Glib::build_filename(Glib::get_current_dir(), name);
-    }
+        if (Glib::path_is_absolute(name)) {
+            fullname = name;
+        } else if (SP_ACTIVE_DOCUMENT->getBase()) {
+            fullname = Glib::build_filename(SP_ACTIVE_DOCUMENT->getBase(), name);
+        } else {
+            fullname = Glib::build_filename(Glib::get_current_dir(), name);
+        }
 
-    cmdline.append(" '");
-    cmdline.append(fullname.c_str());
-    cmdline.append("'");
+        cmdline.append(" '");
+        cmdline.append(fullname.c_str());
+        cmdline.append("'");
+    }
 
     //g_warning("##Command line: %s\n", cmdline.c_str());
 
