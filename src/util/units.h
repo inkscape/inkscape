@@ -32,6 +32,8 @@ enum UnitType {
     UNIT_TYPE_NONE = -1
 };
 
+const char DEG[] = "°";
+
 class Unit {
  public:
     Glib::ustring  name;

@@ -724,7 +724,7 @@ void Transformation::applyPageScale(Inkscape::Selection *selection)
 
 void Transformation::applyPageRotate(Inkscape::Selection *selection)
 {
-    double angle = _scalar_rotate.getValue("deg");
+    double angle = _scalar_rotate.getValue(DEG);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/dialogs/transformation/applyseparately")) {

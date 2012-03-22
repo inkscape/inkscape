@@ -54,7 +54,7 @@ GuidelinePropertiesDialog::GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *
 }
 
 bool GuidelinePropertiesDialog::_relative_toggle_status = false; // initialize relative checkbox status for when this dialog is opened for first time
-Glib::ustring GuidelinePropertiesDialog::_angle_unit_status = "deg"; // initialize angle unit status
+Glib::ustring GuidelinePropertiesDialog::_angle_unit_status = DEG; // initialize angle unit status
 
 GuidelinePropertiesDialog::~GuidelinePropertiesDialog() {
     // save current status
@@ -87,7 +87,7 @@ void GuidelinePropertiesDialog::_modeChanged()
         _spin_button_x.setValue(0);
     } else {
         // absolute
-        _spin_angle.setValueKeepUnit(_oldangle, "deg");
+        _spin_angle.setValueKeepUnit(_oldangle, DEG);
 
         _spin_button_x.setValueKeepUnit(_oldpos[Geom::X], "px");
         _spin_button_y.setValueKeepUnit(_oldpos[Geom::Y], "px");
@@ -96,7 +96,7 @@ void GuidelinePropertiesDialog::_modeChanged()
 
 void GuidelinePropertiesDialog::_onApply()
 {
-    double deg_angle = _spin_angle.getValue("deg");
+    double deg_angle = _spin_angle.getValue(DEG);
     if (!_mode)
         deg_angle += _oldangle;
     Geom::Point normal;

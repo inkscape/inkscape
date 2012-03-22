@@ -13,7 +13,7 @@
   centimeter  centimeters  cm   LINEAR         35.43307 N   Centimeters (10 mm/cm)
   meter       meters       m    LINEAR         3543.307 N   Meters (100 cm/m)
   foot        feet         ft   LINEAR         1080     N   Feet (12 in/ft)
-  degree      degrees      deg  RADIAL         1.00     Y   Degrees
+  degree      degrees      °    RADIAL         1.00     Y   Degrees
   radian      radians      rad  RADIAL         57.296   N   Radians (57.296 deg/rad)
   font-height font-heights em   FONT_HEIGHT    1.00     Y   Font height
   x-height    x-heights    ex   FONT_HEIGHT    0.50     N   Height of letter 'x'
