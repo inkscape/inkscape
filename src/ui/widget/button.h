@@ -11,6 +11,7 @@
 #define INKSCAPE_UI_WIDGET_BUTTON_H
 
 #include <gtkmm/checkbutton.h>
+#include <gtkmm/radiobutton.h>
 
 namespace Inkscape {
 namespace UI {
@@ -34,6 +35,19 @@ class CheckButton : public Gtk::CheckButton
 public:
     CheckButton();
     CheckButton(Glib::ustring const &label, Glib::ustring const &tooltip);
+    CheckButton(Glib::ustring const &label, Glib::ustring const &tooltip, bool active);
+
+};
+
+/**
+ * RadioButton widget.
+ */
+class RadioButton : public Gtk::RadioButton
+{
+public:
+    RadioButton();
+    RadioButton(Glib::ustring const &label, Glib::ustring const &tooltip);
+
 };
 
 } // namespace Widget

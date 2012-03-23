@@ -1822,9 +1822,7 @@ void DialogVerb::perform(SPAction *action, void *data)
             dt->_dlg_mgr->showDialog("XmlTree");
             break;
         case SP_VERB_DIALOG_FIND:
-            sp_find_dialog();
-//              Please test the new find dialog if you have time:
-//            dt->_dlg_mgr->showDialog("Find");
+            dt->_dlg_mgr->showDialog("Find");
             break;
         case SP_VERB_DIALOG_FINDREPLACE:
             // not implemented yet
