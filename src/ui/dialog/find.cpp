@@ -358,7 +358,7 @@ Find::item_text_match (SPItem *item, const gchar *find, bool exact, bool casemat
                 return found;
             }
 
-            gchar* replace_text  = g_strdup(entry_replace.get_text().c_str());
+            gchar* replace_text  = g_strdup(entry_replace.getEntry()->get_text().c_str());
             gsize n = find_strcmp_pos(item_text, ufind.c_str(), exact, casematch);
             static Inkscape::Text::Layout::iterator _begin_w;
             static Inkscape::Text::Layout::iterator _end_w;
@@ -398,7 +398,7 @@ Find::item_id_match (SPItem *item, const gchar *id, bool exact, bool casematch, 
     bool found = find_strcmp(item_id, id, exact, casematch);
 
     if (found && replace) {
-        gchar * replace_text  = g_strdup(entry_replace.get_text().c_str());
+        gchar * replace_text  = g_strdup(entry_replace.getEntry()->get_text().c_str());
         Glib::ustring new_item_style = find_replace(item_id, id, replace_text , exact, casematch, true);
         if (new_item_style != item_id) {
             item->getRepr()->setAttribute("id", new_item_style.data());
@@ -424,7 +424,7 @@ Find::item_style_match (SPItem *item, const gchar *text, bool exact, bool casema
     bool found = find_strcmp(item_style, text, exact, casematch);
 
     if (found && replace) {
-        gchar * replace_text  = g_strdup(entry_replace.get_text().c_str());
+        gchar * replace_text  = g_strdup(entry_replace.getEntry()->get_text().c_str());
         Glib::ustring new_item_style = find_replace(item_style, text, replace_text , exact, casematch, true);
         if (new_item_style != item_style) {
             item->getRepr()->setAttribute("style", new_item_style.data());
@@ -478,7 +478,7 @@ bool Find::item_attrvalue_match(SPItem *item, const gchar *text, bool exact, boo
         }
 
         if (found && replace) {
-            gchar * replace_text  = g_strdup(entry_replace.get_text().c_str());
+            gchar * replace_text  = g_strdup(entry_replace.getEntry()->get_text().c_str());
             Glib::ustring new_item_style = find_replace(attr_value, text, replace_text , exact, casematch, true);
             if (new_item_style != attr_value) {
                 item->getRepr()->setAttribute(key, new_item_style.data());
@@ -519,7 +519,7 @@ bool Find::item_font_match(SPItem *item, const gchar *text, bool exact, bool cas
                 if (found) {
                     ret = true;
                     if (_action_replace) {
-                        gchar *replace_text  = g_strdup(entry_replace.get_text().c_str());
+                        gchar *replace_text  = g_strdup(entry_replace.getEntry()->get_text().c_str());
                         gchar *orig_str = g_strdup(token.c_str());
                         // Exact match fails since the "font-family:" is in the token, since the find was exact it still works with false below
                         Glib::ustring new_item_style = find_replace(orig_str, text, replace_text , false /*exact*/, casematch, true);
@@ -550,7 +550,7 @@ bool Find::item_font_match(SPItem *item, const gchar *text, bool exact, bool cas
 GSList *
 Find::filter_fields (GSList *l, bool exact, bool casematch)
 {
-    Glib::ustring tmp = entry_find.get_text();
+    Glib::ustring tmp = entry_find.getEntry()->get_text();
     if (tmp.empty()) {
         return l;
     }
@@ -778,7 +778,7 @@ Find::onFind()
 void
 Find::onReplace()
 {
-    if (entry_find.get_text().length() < 1) {
+    if (entry_find.getEntry()->get_text().length() < 1) {
         status.set_text(_("Nothing to replace"));
         return;
     }
@@ -798,17 +798,6 @@ Find::onAction()
     bool exact = check_exact_match.get_active();
     bool casematch = check_case_sensitive.get_active();
     blocked = true;
-
-    // Add find/replace text to combobox list
-    if (entry_find.get_text().length() > 0) {
-        entry_find.remove_text(entry_find.get_text());
-        entry_find.prepend_text(entry_find.get_text());
-    }
-
-    if (_action_replace && entry_replace.get_text().length() > 0) {
-        entry_replace.remove_text(entry_replace.get_text());
-        entry_replace.prepend_text(entry_replace.get_text());
-    }
 
     GSList *l = NULL;
     if (check_scope_selection.get_active()) {

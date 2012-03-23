@@ -25,14 +25,6 @@ Entry::Entry(  Glib::ustring const &label, Glib::ustring const &tooltip,
 {    
 }
 
-ComboBoxText::ComboBoxText(  Glib::ustring const &label, Glib::ustring const &tooltip,
-               Glib::ustring const &suffix,
-               Glib::ustring const &icon,
-               bool mnemonic)
-    : Labelled(label, tooltip, new Gtk::ComboBoxText(true), suffix, icon, mnemonic)
-{
-}
-
 } // namespace Widget
 } // namespace UI
 } // namespace Inkscape

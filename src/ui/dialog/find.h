@@ -198,8 +198,8 @@ private:
     /*
      * Find and replace combo box widgets
      */
-    Inkscape::UI::Widget::ComboBoxText   entry_find;
-    Inkscape::UI::Widget::ComboBoxText   entry_replace;
+    Inkscape::UI::Widget::Entry   entry_find;
+    Inkscape::UI::Widget::Entry   entry_replace;
 
     /**
      * Scope and search in widgets
