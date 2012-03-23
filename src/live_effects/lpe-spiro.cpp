@@ -46,8 +46,7 @@ LPESpiro::doEffect(SPCurve * curve)
     guint len = curve->get_segment_count() + 2;
 
     curve->reset();
-    bezctx *bc = new_bezctx_ink(curve);
-    spiro_cp *path = g_new (spiro_cp, len);
+    Spiro::spiro_cp *path = g_new (Spiro::spiro_cp, len);
     int ip = 0;
 
     for(Geom::PathVector::const_iterator path_it = original_pathv.begin(); path_it != original_pathv.end(); ++path_it) {
@@ -140,9 +139,7 @@ LPESpiro::doEffect(SPCurve * curve)
 
         // run subpath through spiro
         int sp_len = ip;
-        spiro_seg *s = run_spiro(path, sp_len);
-        spiro_to_bpath(s, sp_len, bc);
-        free(s);
+        Spiro::spiro_run(path, sp_len, *curve);
         ip = 0;
     }
 

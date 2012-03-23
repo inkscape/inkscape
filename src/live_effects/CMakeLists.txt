@@ -40,6 +40,7 @@ set(live_effects_SRC
 	lpeobject-reference.cpp
 	lpeobject.cpp
 	spiro.cpp
+	spiro-converters.cpp
 
 	parameter/array.cpp
 	parameter/bool.cpp
@@ -57,7 +58,6 @@ set(live_effects_SRC
 
 	# -------
 	# Headers
-	bezctx.h
 	effect-enum.h
 	effect.h
 	lpe-angle_bisector.h
@@ -99,6 +99,8 @@ set(live_effects_SRC
 	lpegroupbbox.h
 	lpeobject-reference.h
 	lpeobject.h
+	spiro.h
+	spiro-converters.h
 
 	parameter/array.h
 	parameter/bool.h
@@ -113,7 +115,7 @@ set(live_effects_SRC
 	parameter/text.h
 	parameter/unit.h
 	parameter/vector.h
-	spiro.h
+
 )
 
 # add_inkscape_lib(live_effects_LIB "${live_effects_SRC}")

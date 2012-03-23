@@ -16,8 +16,6 @@
 #include <2geom/bezier-utils.h>
 #include <2geom/sbasis-to-bezier.h>
 
-#include "live_effects/bezctx.h"
-#include "live_effects/bezctx_intf.h"
 #include "live_effects/spiro.h"
 
 
@@ -136,7 +134,6 @@ private:
 };
 
 
-#define SPIRO_SHOW_INFINITE_COORDINATE_CALLS
 class SpiroInterpolator : public Interpolator {
 public:
     SpiroInterpolator() {};
@@ -148,8 +145,7 @@ public:
         Coord scale_y = 100.;
 
         guint len = points.size();
-        bezctx *bc = new_bezctx_ink(&fit);
-        spiro_cp *controlpoints = g_new (spiro_cp, len);
+        Spiro::spiro_cp *controlpoints = g_new (Spiro::spiro_cp, len);
         for (unsigned int i = 0; i < len; ++i) {
             controlpoints[i].x = points[i][X];
             controlpoints[i].y = points[i][Y] / scale_y;
@@ -160,87 +156,13 @@ public:
         controlpoints[len-2].ty = 'v';
         controlpoints[len-1].ty = '}';
 
-        spiro_seg *s = run_spiro(controlpoints, len);
-        spiro_to_bpath(s, len, bc);
-        free(s);
-        free(bc);
+        Spiro::spiro_run(controlpoints, len, fit);
 
         fit *= Scale(1,scale_y);
         return fit;
     };
 
 private:
-    typedef struct {
-        bezctx base;
-        Path *path;
-        int is_open;
-    } bezctx_ink;
-
-    static void bezctx_ink_moveto(bezctx *bc, double x, double y, int /*is_open*/)
-    {
-        bezctx_ink *bi = (bezctx_ink *) bc;
-        if ( IS_FINITE(x) && IS_FINITE(y) ) {
-            bi->path->start(Point(x, y));
-        }
-    #ifdef SPIRO_SHOW_INFINITE_COORDINATE_CALLS
-        else {
-            g_message("spiro moveto not finite");
-        }
-    #endif
-    }
-
-    static void bezctx_ink_lineto(bezctx *bc, double x, double y)
-    {
-        bezctx_ink *bi = (bezctx_ink *) bc;
-        if ( IS_FINITE(x) && IS_FINITE(y) ) {
-            bi->path->appendNew<LineSegment>( Point(x, y) );
-        }
-    #ifdef SPIRO_SHOW_INFINITE_COORDINATE_CALLS
-        else {
-            g_message("spiro lineto not finite");
-        }
-    #endif
-    }
-
-    static void bezctx_ink_quadto(bezctx *bc, double xm, double ym, double x3, double y3)
-    {
-        bezctx_ink *bi = (bezctx_ink *) bc;
-
-        if ( IS_FINITE(xm) && IS_FINITE(ym) && IS_FINITE(x3) && IS_FINITE(y3) ) {
-            bi->path->appendNew<QuadraticBezier>(Point(xm, ym), Point(x3, y3));
-        }
-    #ifdef SPIRO_SHOW_INFINITE_COORDINATE_CALLS
-        else {
-            g_message("spiro quadto not finite");
-        }
-    #endif
-    }
-
-    static void bezctx_ink_curveto(bezctx *bc, double x1, double y1, double x2, double y2,
-                double x3, double y3)
-    {
-        bezctx_ink *bi = (bezctx_ink *) bc;
-        if ( IS_FINITE(x1) && IS_FINITE(y1) && IS_FINITE(x2) && IS_FINITE(y2) ) {
-            bi->path->appendNew<CubicBezier>(Point(x1, y1), Point(x2, y2), Point(x3, y3));
-        }
-    #ifdef SPIRO_SHOW_INFINITE_COORDINATE_CALLS
-        else {
-            g_message("spiro curveto not finite");
-        }
-    #endif
-    }
-
-    bezctx *
-    new_bezctx_ink(Geom::Path *path) const {
-        bezctx_ink *result = g_new(bezctx_ink, 1);
-        result->base.moveto = bezctx_ink_moveto;
-        result->base.lineto = bezctx_ink_lineto;
-        result->base.quadto = bezctx_ink_quadto;
-        result->base.curveto = bezctx_ink_curveto;
-        result->path = path;
-        return &result->base;
-    }
-
     SpiroInterpolator(const SpiroInterpolator&);
     SpiroInterpolator& operator=(const SpiroInterpolator&);
 };

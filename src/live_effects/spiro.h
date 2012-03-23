@@ -24,10 +24,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #ifndef INKSCAPE_SPIRO_H
 #define INKSCAPE_SPIRO_H
 
-#include "live_effects/bezctx.h"
-#include "live_effects/bezctx_intf.h"
+#include "live_effects/spiro-converters.h"
 
 class SPCurve;
+namespace Geom {
+    class Path;
+}
+
+namespace Spiro {
 
 typedef struct {
     double x;
@@ -35,21 +39,18 @@ typedef struct {
     char ty;
 } spiro_cp;
 
-typedef struct spiro_seg_s spiro_seg;
 
+void spiro_run(const spiro_cp *src, int src_len, SPCurve &curve);
+void spiro_run(const spiro_cp *src, int src_len, Geom::Path &path);
+
+/* the following methods are only for expert use: */
+typedef struct spiro_seg_s spiro_seg;
 spiro_seg * run_spiro(const spiro_cp *src, int n);
 void free_spiro(spiro_seg *s);
-void spiro_to_bpath(const spiro_seg *s, int n, bezctx *bc);
+void spiro_to_otherpath(const spiro_seg *s, int n, ConverterBase &bc);
 double get_knot_th(const spiro_seg *s, int i);
 
 
-typedef struct {
-    bezctx base;
-    SPCurve *curve;
-    int is_open;
-} bezctx_ink;
-
-bezctx * new_bezctx_ink(SPCurve *curve);
-
+} // namespace Spiro
 
 #endif // INKSCAPE_SPIRO_H
