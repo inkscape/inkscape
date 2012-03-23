@@ -1,6 +1,8 @@
 /*
-ppedit - A pattern plate editor for Spiro splines.
-Copyright (C) 2007 Raph Levien
+Copyright (C) 2007-2012 Authors
+
+Authors: Raph Levien
+         Johan Engelen
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,12 +22,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 */
 /* C implementation of third-order polynomial spirals. */
 
+#include "spiro.h"
+
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "bezctx_intf.h"
-#include "spiro.h"
+#include "display/curve.h"
+#include <2geom/math-utils.h>
+
+#define SPIRO_SHOW_INFINITE_COORDINATE_CALLS
+
+
+/************************************
+ * Spiro math
+ */
 
 struct spiro_seg_s {
     double x;
@@ -921,6 +933,83 @@ get_knot_th(const spiro_seg *s, int i)
 	return s[i - 1].seg_th + ends[1][0];
     }
 }
+
+
+/************************************
+ * Conversion to Inkscape's curve
+ */
+
+void bezctx_ink_moveto(bezctx *bc, double x, double y, int /*is_open*/)
+{
+    bezctx_ink *bi = (bezctx_ink *) bc;
+    if ( IS_FINITE(x) && IS_FINITE(y) ) {
+        bi->curve->moveto(x, y);
+    }
+#ifdef SPIRO_SHOW_INFINITE_COORDINATE_CALLS
+    else {
+        g_message("Spiro: moveto not finite");
+    }
+#endif
+}
+
+void bezctx_ink_lineto(bezctx *bc, double x, double y)
+{
+    bezctx_ink *bi = (bezctx_ink *) bc;
+    if ( IS_FINITE(x) && IS_FINITE(y) ) {
+        bi->curve->lineto(x, y);
+    }
+#ifdef SPIRO_SHOW_INFINITE_COORDINATE_CALLS
+    else {
+        g_message("Spiro: lineto not finite");
+    }
+#endif
+}
+
+void bezctx_ink_quadto(bezctx *bc, double xm, double ym, double x3, double y3)
+{
+    bezctx_ink *bi = (bezctx_ink *) bc;
+
+    if ( IS_FINITE(xm) && IS_FINITE(ym) && IS_FINITE(x3) && IS_FINITE(y3) ) {
+        bi->curve->quadto(xm, ym, x3, y3);
+    }
+#ifdef SPIRO_SHOW_INFINITE_COORDINATE_CALLS
+    else {
+        g_message("Spiro: quadto not finite");
+    }
+#endif
+}
+
+void bezctx_ink_curveto(bezctx *bc, double x1, double y1, double x2, double y2,
+                        double x3, double y3)
+{
+    bezctx_ink *bi = (bezctx_ink *) bc;
+    if ( IS_FINITE(x1) && IS_FINITE(y1) && IS_FINITE(x2) && IS_FINITE(y2) ) {
+        bi->curve->curveto(x1, y1, x2, y2, x3, y3);
+    }
+#ifdef SPIRO_SHOW_INFINITE_COORDINATE_CALLS
+    else {
+        g_message("Spiro: curveto not finite");
+    }
+#endif
+}
+
+bezctx * new_bezctx_ink(SPCurve *curve)
+{
+    bezctx_ink *result = g_new(bezctx_ink, 1);
+    result->base.moveto = bezctx_ink_moveto;
+    result->base.lineto = bezctx_ink_lineto;
+    result->base.quadto = bezctx_ink_quadto;
+    result->base.curveto = bezctx_ink_curveto;
+    result->base.mark_knot = NULL;
+    result->curve = curve;
+    return &result->base;
+}
+
+
+/************************************
+ * Unit_test code
+ */
+
 
 #ifdef UNIT_TEST
 #include <stdio.h>

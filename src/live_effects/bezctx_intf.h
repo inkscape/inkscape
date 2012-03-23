@@ -1,3 +1,6 @@
+#ifndef INKSCAPE_SPIRO_bezctx_intf_H
+#define INKSCAPE_SPIRO_bezctx_intf_H
+
 typedef struct _bezctx bezctx;
 
 bezctx *
@@ -18,3 +21,5 @@ bezctx_curveto(bezctx *bc, double x1, double y1, double x2, double y2,
 
 void
 bezctx_mark_knot(bezctx *bc, int knot_idx);
+
+#endif

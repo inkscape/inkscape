@@ -1,3 +1,6 @@
+#ifndef INKSCAPE_SPIRO_bezctx_H
+#define INKSCAPE_SPIRO_bezctx_H
+
 #include "bezctx_intf.h"
 
 struct _bezctx {
@@ -8,3 +11,5 @@ struct _bezctx {
 		    double x3, double y3);
     void (*mark_knot)(bezctx *bc, int knot_idx);
 };
+
+#endif
