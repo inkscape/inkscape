@@ -233,7 +233,7 @@ XmlTree::XmlTree (void) :
 
     GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(attributes));
     g_signal_connect (G_OBJECT(selection), "changed", G_CALLBACK (on_attr_select_row), this);
-
+    g_signal_connect( G_OBJECT(attributes), "row-value-changed", G_CALLBACK(on_attr_row_changed), this);
 
     xml_element_new_button.signal_clicked().connect(sigc::mem_fun(*this, &XmlTree::cmd_new_element_node));
     xml_text_new_button.signal_clicked().connect(sigc::mem_fun(*this, &XmlTree::cmd_new_text_node));
@@ -738,11 +738,12 @@ void XmlTree::on_attr_select_row(GtkTreeSelection *selection, gpointer data)
     GtkTreeModel *model;
 
     if (!gtk_tree_selection_get_selected (selection, &model, &iter)) {
-/*        self->selected_attr = 0;
+        // Nothing selected
+        self->selected_attr = 0;
         self->attr_reset_context(self->selected_attr);
 
         self->xml_attribute_delete_button.set_sensitive(false);
-        self->on_attr_unselect_row_clear_text();*/
+        self->on_attr_unselect_row_clear_text();
         return;
     }
 
@@ -761,6 +762,22 @@ void XmlTree::on_attr_select_row(GtkTreeSelection *selection, gpointer data)
 
     self->attr_reset_context(self->selected_attr);
 
+}
+
+void XmlTree::on_attr_row_changed(SPXMLViewAttrList *attributes, const gchar * name, gpointer data)
+{
+    // Reselect the selected row if the data changes to refresh the attribute and value edit boxes.
+    GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(attributes));
+    GtkTreeIter   iter;
+    GtkTreeModel *model;
+    const gchar *attr_name;
+    if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
+        gtk_tree_model_get (model, &iter, 0, &attr_name, -1);
+        if (!strcmp(name, attr_name)) {
+            gtk_tree_selection_unselect_all(selection);
+            gtk_tree_selection_select_iter(selection, &iter);
+        }
+    }
 }
 
 void XmlTree::on_attr_unselect_row_clear_text()

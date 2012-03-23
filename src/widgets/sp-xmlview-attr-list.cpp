@@ -207,6 +207,6 @@ event_attr_changed (Inkscape::XML::Node * /*repr*/,
 	}
 
 	// send a "changed" signal so widget owners will know I've updated
-	g_signal_emit_by_name(G_OBJECT (list), "row-value-changed", row );
+	g_signal_emit_by_name(G_OBJECT (list), "row-value-changed", name );
 }
 

@@ -126,9 +126,14 @@ private:
     static void after_tree_move(GtkCTree *tree, GtkCTreeNode *node, GtkCTreeNode *new_parent, GtkCTreeNode *new_sibling, gpointer data);
 
     /**
-      * Callback functions for when attribute selection changes
+      * Callback for when attribute selection changes
       */
     static void on_attr_select_row(GtkTreeSelection *selection, gpointer data);
+
+    /**
+      * Callback for when attribute list values change
+      */
+    static void on_attr_row_changed(SPXMLViewAttrList *attributes, const gchar * name, gpointer data);
 
     /**
       * Enable widgets based on current selections
