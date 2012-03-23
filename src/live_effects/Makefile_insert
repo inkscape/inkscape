@@ -51,8 +51,6 @@ ink_common_sources += \
 	live_effects/spiro.h	\
 	live_effects/spiro.cpp	\
 	live_effects/bezctx.h	\
-	live_effects/bezctx_intf.h	\
-	live_effects/bezctx.cpp	\
 	live_effects/lpe-circle_with_radius.cpp	\
 	live_effects/lpe-circle_with_radius.h	\
 	live_effects/lpe-perspective_path.cpp	\

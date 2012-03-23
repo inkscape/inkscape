@@ -28,7 +28,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #include <stdlib.h>
 #include <string.h>
 
-#include "bezctx_intf.h"
 #include "display/curve.h"
 #include <2geom/math-utils.h>
 
@@ -834,7 +833,7 @@ spiro_seg_to_bpath(const double ks[4],
 	fabs((1./48) * ks[3]);
 
     if (!bend > 1e-8) {
-	bezctx_lineto(bc, x1, y1);
+	bc->lineto(bc, x1, y1);
     } else {
 	double seg_ch = hypot(x1 - x0, y1 - y0);
 	double seg_th = atan2(y1 - y0, x1 - x0);
@@ -857,7 +856,7 @@ spiro_seg_to_bpath(const double ks[4],
 	    vl = (scale * (1./3)) * sin(th_even - th_odd);
 	    ur = (scale * (1./3)) * cos(th_even + th_odd);
 	    vr = (scale * (1./3)) * sin(th_even + th_odd);
-	    bezctx_curveto(bc, x0 + ul, y0 + vl, x1 - ur, y1 - vr, x1, y1);
+        bc->curveto(bc, x0 + ul, y0 + vl, x1 - ur, y1 - vr, x1, y1);
 	} else {
 	    /* subdivide */
 	    double ksub[4];
@@ -914,8 +913,7 @@ spiro_to_bpath(const spiro_seg *s, int n, bezctx *bc)
 	double y1 = s[i + 1].y;
 
 	if (i == 0)
-	    bezctx_moveto(bc, x0, y0, s[0].ty == '{');
-	bezctx_mark_knot(bc, i);
+	    bc->moveto(bc, x0, y0, s[0].ty == '{');
 	spiro_seg_to_bpath(s[i].ks, x0, y0, x1, y1, bc, 0);
     }
 }
@@ -1000,7 +998,6 @@ bezctx * new_bezctx_ink(SPCurve *curve)
     result->base.lineto = bezctx_ink_lineto;
     result->base.quadto = bezctx_ink_quadto;
     result->base.curveto = bezctx_ink_curveto;
-    result->base.mark_knot = NULL;
     result->curve = curve;
     return &result->base;
 }

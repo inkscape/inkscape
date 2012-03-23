@@ -1,6 +1,5 @@
 
 set(live_effects_SRC
-	bezctx.cpp
 	effect.cpp
 	lpe-angle_bisector.cpp
 	lpe-bendpath.cpp
@@ -59,7 +58,6 @@ set(live_effects_SRC
 	# -------
 	# Headers
 	bezctx.h
-	bezctx_intf.h
 	effect-enum.h
 	effect.h
 	lpe-angle_bisector.h

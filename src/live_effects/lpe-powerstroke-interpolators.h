@@ -237,7 +237,6 @@ private:
         result->base.lineto = bezctx_ink_lineto;
         result->base.quadto = bezctx_ink_quadto;
         result->base.curveto = bezctx_ink_curveto;
-        result->base.mark_knot = NULL;
         result->path = path;
         return &result->base;
     }
