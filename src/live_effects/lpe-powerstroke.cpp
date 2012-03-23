@@ -125,19 +125,19 @@ static const Util::EnumData<unsigned> LineCapTypeData[] = {
 };
 static const Util::EnumDataConverter<unsigned> LineCapTypeConverter(LineCapTypeData, sizeof(LineCapTypeData)/sizeof(*LineCapTypeData));
 
-enum LineCuspType {
-  LINECUSP_BEVEL,
-  LINECUSP_ROUND,
-  LINECUSP_EXTRP_MITER,
-  LINECUSP_MITER
+enum LineJoinType {
+  LINEJOIN_BEVEL,
+  LINEJOIN_ROUND,
+  LINEJOIN_EXTRP_MITER,
+  LINEJOIN_MITER
 };
-static const Util::EnumData<unsigned> LineCuspTypeData[] = {
-    {LINECUSP_BEVEL, N_("Beveled"),   "bevel"},
-    {LINECUSP_ROUND, N_("Rounded"),   "round"},
-    {LINECUSP_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"},
-    {LINECUSP_MITER, N_("Miter"),     "miter"},
+static const Util::EnumData<unsigned> LineJoinTypeData[] = {
+    {LINEJOIN_BEVEL, N_("Beveled"),   "bevel"},
+    {LINEJOIN_ROUND, N_("Rounded"),   "round"},
+    {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"},
+    {LINEJOIN_MITER, N_("Miter"),     "miter"},
 };
-static const Util::EnumDataConverter<unsigned> LineCuspTypeConverter(LineCuspTypeData, sizeof(LineCuspTypeData)/sizeof(*LineCuspTypeData));
+static const Util::EnumDataConverter<unsigned> LineJoinTypeConverter(LineJoinTypeData, sizeof(LineJoinTypeData)/sizeof(*LineJoinTypeData));
 
 LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
@@ -146,7 +146,7 @@ LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     interpolator_type(_("Interpolator type"), _("Determines which kind of interpolator will be used to interpolate between stroke width along the path."), "interpolator_type", InterpolatorTypeConverter, &wr, this, Geom::Interpolate::INTERP_CUBICBEZIER_JOHAN),
     interpolator_beta(_("Smoothness"), _("Sets the smoothness for the CubicBezierJohan interpolator. 0 = linear interpolation, 1 = smooth"), "interpolator_beta", &wr, this, 0.2),
     start_linecap_type(_("Start cap"), _("Determines the shape of the path's start."), "start_linecap_type", LineCapTypeConverter, &wr, this, LINECAP_ROUND),
-    cusp_linecap_type(_("Join"), _("Specifies the shape of the path's corners."), "cusp_linecap_type", LineCuspTypeConverter, &wr, this, LINECUSP_ROUND),
+    linejoin_type(_("Join"), _("Specifies the shape of the path's corners."), "linejoin_type", LineJoinTypeConverter, &wr, this, LINEJOIN_ROUND),
     miter_limit(_("Miter limit"), _("Maximum length of the miter (in units of stroke width)"), "miter_limit", &wr, this, 4.),
     end_linecap_type(_("End cap"), _("Determines the shape of the path's end."), "end_linecap_type", LineCapTypeConverter, &wr, this, LINECAP_ROUND)
 {
@@ -162,7 +162,7 @@ LPEPowerStroke::LPEPowerStroke(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&interpolator_type) );
     registerParameter( dynamic_cast<Parameter *>(&interpolator_beta) );
     registerParameter( dynamic_cast<Parameter *>(&start_linecap_type) );
-    registerParameter( dynamic_cast<Parameter *>(&cusp_linecap_type) );
+    registerParameter( dynamic_cast<Parameter *>(&linejoin_type) );
     registerParameter( dynamic_cast<Parameter *>(&miter_limit) );
     registerParameter( dynamic_cast<Parameter *>(&end_linecap_type) );
 }
@@ -204,9 +204,9 @@ static bool compare_offsets (Geom::Point first, Geom::Point second)
 
 // find discontinuities in input path
 struct discontinuity_data {
-    Geom::Point der0; // unit derivative of 'left' side of cusp
-    Geom::Point der1; // unit derivative of 'right' side of cusp
-    double width; // intended stroke width at cusp
+    Geom::Point der0; // unit derivative of 'left' side of join
+    Geom::Point der1; // unit derivative of 'right' side of join
+    double width; // intended stroke width at join
 };
 std::vector<discontinuity_data> find_discontinuities( Geom::Piecewise<Geom::D2<Geom::SBasis> > const & der,
                                                       Geom::Piecewise<Geom::SBasis> const & x,
@@ -243,12 +243,12 @@ std::vector<discontinuity_data> find_discontinuities( Geom::Piecewise<Geom::D2<G
 
 Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis> > const & B,
                                           std::vector<discontinuity_data> const & cusps,
-                                          LineCuspType cusp_linecap,
+                                          LineJoinType jointype,
                                           double miter_limit,
                                           bool forward_direction,
                                           double tol=Geom::EPSILON)
 {
-/* per definition, each discontinuity should be fixed with a cusp-ending, as defined by cusp_linecap_type
+/* per definition, each discontinuity should be fixed with a join-ending, as defined by linejoin_type
 */
     Geom::PathBuilder pb;
     if (B.size() == 0) {
@@ -272,8 +272,8 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
         { // discontinuity found, so fix it :-)
             discontinuity_data cusp = cusps[cusp_i];
 
-            switch (cusp_linecap) {
-            case LINECUSP_ROUND: {
+            switch (jointype) {
+            case LINEJOIN_ROUND: {
                 if ( sign*cusp.width*angle_between(cusp.der0, cusp.der1) < 0.) {
                     // we are on the outside: round corner
                     /* for constant width paths, the rounding is a circular arc (rx == ry),
@@ -303,7 +303,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                 }
                 break;
             }
-/*            case LINECUSP_NONE: {
+/*            case LINEJOIN_NONE: {
                 if ( sign*cusp.width*angle_between(cusp.der0, cusp.der1) < 0.) {
                     // we are on the outside
                     Geom::Point der1 = unitTangentAt(B[prev_i],1);
@@ -315,7 +315,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                     pb.lineTo(B[i].at0()); // default to bevel for too shallow cusp angles
                 }
             } */
-            case LINECUSP_EXTRP_MITER: {
+            case LINEJOIN_EXTRP_MITER: {
                 // first figure out whether we are on the outside or inside of the corner in the path
                 if ( sign*cusp.width*angle_between(cusp.der0, cusp.der1) < 0.) {
                     // we are on the outside, do something complicated to make it look good ;)
@@ -354,7 +354,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                 }
                 break;
             }
-            case LINECUSP_MITER: {
+            case LINEJOIN_MITER: {
                 // first figure out whether we are on the outside or inside of the corner in the path
                 if ( sign*cusp.width*angle_between(cusp.der0, cusp.der1) < 0.) {
                     // we are on the outside, do something complicated to make it look good ;)
@@ -379,7 +379,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                 }
                 break;
             }
-            case LINECUSP_BEVEL:
+            case LINEJOIN_BEVEL:
             default:
                 pb.lineTo(B[i].at0());
                 break;
@@ -457,13 +457,13 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
     }
 
     std::vector<discontinuity_data> cusps = find_discontinuities(der, x, y);
-    LineCuspType cusp_linecap = static_cast<LineCuspType>(cusp_linecap_type.get_value());
+    LineJoinType jointype = static_cast<LineJoinType>(linejoin_type.get_value());
 
     Piecewise<D2<SBasis> > pwd2_out   = compose(pwd2_in,x) + y*compose(n,x);
     Piecewise<D2<SBasis> > mirrorpath = reverse(compose(pwd2_in,x) - y*compose(n,x));
 
-    Geom::Path fixed_path       = path_from_piecewise_fix_cusps( pwd2_out,   cusps, cusp_linecap, miter_limit, true, LPE_CONVERSION_TOLERANCE);
-    Geom::Path fixed_mirrorpath = path_from_piecewise_fix_cusps( mirrorpath, cusps, cusp_linecap, miter_limit, false, LPE_CONVERSION_TOLERANCE);
+    Geom::Path fixed_path       = path_from_piecewise_fix_cusps( pwd2_out,   cusps, jointype, miter_limit, true, LPE_CONVERSION_TOLERANCE);
+    Geom::Path fixed_mirrorpath = path_from_piecewise_fix_cusps( mirrorpath, cusps, jointype, miter_limit, false, LPE_CONVERSION_TOLERANCE);
 
     if (path_in[0].closed()) {
         fixed_path.close(true);
