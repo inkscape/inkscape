@@ -24,7 +24,7 @@ public:
 class ConverterSPCurve : public ConverterBase {
 public:
     ConverterSPCurve(SPCurve &curve)
-        : _curve(curve), _is_open(false)
+        : _curve(curve)
     {} ;
 
     virtual void moveto(double x, double y, bool is_open);
@@ -32,10 +32,9 @@ public:
     virtual void quadto(double x1, double y1, double x2, double y2);
     virtual void curveto(double x1, double y1, double x2, double y2, double x3, double y3);
 
-    SPCurve &_curve;
-    bool _is_open;
-
 private:
+    SPCurve &_curve;
+
     ConverterSPCurve(const ConverterSPCurve&);
     ConverterSPCurve& operator=(const ConverterSPCurve&);
 };
@@ -47,7 +46,7 @@ private:
 class ConverterPath : public ConverterBase {
 public:
     ConverterPath(Geom::Path &path)
-        : _path(path), _is_open(false)
+        : _path(path)
     {} ;
 
     virtual void moveto(double x, double y, bool is_open);
@@ -55,10 +54,9 @@ public:
     virtual void quadto(double x1, double y1, double x2, double y2);
     virtual void curveto(double x1, double y1, double x2, double y2, double x3, double y3);
 
-    Geom::Path &_path;
-    bool _is_open;
-
 private:
+    Geom::Path &_path;
+
     ConverterPath(const ConverterPath&);
     ConverterPath& operator=(const ConverterPath&);
 };
