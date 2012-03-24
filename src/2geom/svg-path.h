@@ -120,6 +120,14 @@ public:
                                                  large_arc, sweep, p);
     }
 
+    void append(Path const &other, Path::Stitching stitching = Path::NO_STITCHING)
+    {
+        if (!_in_path) {
+            moveTo(other.initialPoint());
+        }
+        _path.append(other, stitching);
+    }
+
     void closePath() {
         _path.close();
         finish();
