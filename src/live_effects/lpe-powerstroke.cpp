@@ -28,6 +28,8 @@
 #include <2geom/crossing.h>
 #include <2geom/ellipse.h>
 
+#include "spiro.h"
+
 namespace Geom {
 // should all be moved to 2geom at some point
 
@@ -129,13 +131,15 @@ enum LineJoinType {
   LINEJOIN_BEVEL,
   LINEJOIN_ROUND,
   LINEJOIN_EXTRP_MITER,
-  LINEJOIN_MITER
+  LINEJOIN_MITER,
+  LINEJOIN_SPIRO
 };
 static const Util::EnumData<unsigned> LineJoinTypeData[] = {
     {LINEJOIN_BEVEL, N_("Beveled"),   "bevel"},
     {LINEJOIN_ROUND, N_("Rounded"),   "round"},
     {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"},
     {LINEJOIN_MITER, N_("Miter"),     "miter"},
+    {LINEJOIN_SPIRO, N_("Spiro"),     "spiro"},
 };
 static const Util::EnumDataConverter<unsigned> LineJoinTypeConverter(LineJoinTypeData, sizeof(LineJoinTypeData)/sizeof(*LineJoinTypeData));
 
@@ -272,9 +276,11 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
         { // discontinuity found, so fix it :-)
             discontinuity_data cusp = cusps[cusp_i];
 
+            bool on_outside = ( sign*cusp.width*angle_between(cusp.der0, cusp.der1) < 0. );
+
             switch (jointype) {
             case LINEJOIN_ROUND: {
-                if ( sign*cusp.width*angle_between(cusp.der0, cusp.der1) < 0.) {
+                if (on_outside) {
                     // we are on the outside: round corner
                     /* for constant width paths, the rounding is a circular arc (rx == ry),
                        for non-constant width paths, the rounding can be done with an ellipse but is hard and ambiguous.
@@ -304,7 +310,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                 break;
             }
 /*            case LINEJOIN_NONE: {
-                if ( sign*cusp.width*angle_between(cusp.der0, cusp.der1) < 0.) {
+                if ( on_outside ) {
                     // we are on the outside
                     Geom::Point der1 = unitTangentAt(B[prev_i],1);
                     Geom::Point point_on_path = B[prev_i].at1() - rot90(der1) * cusp.width;
@@ -316,8 +322,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                 }
             } */
             case LINEJOIN_EXTRP_MITER: {
-                // first figure out whether we are on the outside or inside of the corner in the path
-                if ( sign*cusp.width*angle_between(cusp.der0, cusp.der1) < 0.) {
+                if (on_outside) {
                     // we are on the outside, do something complicated to make it look good ;)
 
                     Geom::Point der1 = unitTangentAt(B[prev_i],1);
@@ -355,8 +360,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                 break;
             }
             case LINEJOIN_MITER: {
-                // first figure out whether we are on the outside or inside of the corner in the path
-                if ( sign*cusp.width*angle_between(cusp.der0, cusp.der1) < 0.) {
+                if (on_outside) {
                     // we are on the outside, do something complicated to make it look good ;)
 
                     Geom::Point der1 = unitTangentAt(B[prev_i],1);
@@ -373,6 +377,34 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                         }
                     }
                     pb.lineTo(B[i].at0());
+                } else {
+                    // we are on the inside, do a simple bevel to connect the paths
+                    pb.lineTo(B[i].at0()); // default to bevel for too shallow cusp angles
+                }
+                break;
+            }
+            case LINEJOIN_SPIRO: {
+                if (on_outside) {
+                    Geom::Point tang1 = unitTangentAt(B[prev_i],1);
+                    Geom::Point tang2 = unitTangentAt(B[i],0);
+
+                    Spiro::spiro_cp *controlpoints = g_new (Spiro::spiro_cp, 4);
+                    controlpoints[0].x = (B[prev_i].at1() - sign*cusp.width*tang1)[Geom::X];
+                    controlpoints[0].y = (B[prev_i].at1() - sign*cusp.width*tang1)[Geom::Y];
+                    controlpoints[0].ty = '{';
+                    controlpoints[1].x = B[prev_i].at1()[Geom::X];
+                    controlpoints[1].y = B[prev_i].at1()[Geom::Y];
+                    controlpoints[1].ty = ']';
+                    controlpoints[2].x = B[i].at0()[Geom::X];
+                    controlpoints[2].y = B[i].at0()[Geom::Y];
+                    controlpoints[2].ty = '[';
+                    controlpoints[3].x = (B[i].at0() + sign*cusp.width*tang2)[Geom::X];
+                    controlpoints[3].y = (B[i].at0() + sign*cusp.width*tang2)[Geom::Y];
+                    controlpoints[3].ty = '}';
+
+                    Geom::Path spiro;
+                    Spiro::spiro_run(controlpoints, 4, spiro);
+                    pb.append(spiro.portion(1,spiro.size_open()-1), Geom::Path::STITCH_DISCONTINUOUS);
                 } else {
                     // we are on the inside, do a simple bevel to connect the paths
                     pb.lineTo(B[i].at0()); // default to bevel for too shallow cusp angles
