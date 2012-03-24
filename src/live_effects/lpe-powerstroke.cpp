@@ -5,7 +5,7 @@
 /* Authors:
  *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
- * Copyright (C) 2010-2011 Authors
+ * Copyright (C) 2010-2012 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -388,9 +388,13 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                     Geom::Point tang1 = unitTangentAt(B[prev_i],1);
                     Geom::Point tang2 = unitTangentAt(B[i],0);
 
+                    Geom::Point direction = B[i].at0() - B[prev_i].at1();
+                    double tang1_sign = dot(direction,tang1);
+                    double tang2_sign = dot(direction,tang2);
+
                     Spiro::spiro_cp *controlpoints = g_new (Spiro::spiro_cp, 4);
-                    controlpoints[0].x = (B[prev_i].at1() - sign*cusp.width*tang1)[Geom::X];
-                    controlpoints[0].y = (B[prev_i].at1() - sign*cusp.width*tang1)[Geom::Y];
+                    controlpoints[0].x = (B[prev_i].at1() - tang1_sign*tang1)[Geom::X];
+                    controlpoints[0].y = (B[prev_i].at1() - tang1_sign*tang1)[Geom::Y];
                     controlpoints[0].ty = '{';
                     controlpoints[1].x = B[prev_i].at1()[Geom::X];
                     controlpoints[1].y = B[prev_i].at1()[Geom::Y];
@@ -398,8 +402,8 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                     controlpoints[2].x = B[i].at0()[Geom::X];
                     controlpoints[2].y = B[i].at0()[Geom::Y];
                     controlpoints[2].ty = '[';
-                    controlpoints[3].x = (B[i].at0() + sign*cusp.width*tang2)[Geom::X];
-                    controlpoints[3].y = (B[i].at0() + sign*cusp.width*tang2)[Geom::Y];
+                    controlpoints[3].x = (B[i].at0() + tang2_sign*tang2)[Geom::X];
+                    controlpoints[3].y = (B[i].at0() + tang2_sign*tang2)[Geom::Y];
                     controlpoints[3].ty = '}';
 
                     Geom::Path spiro;
