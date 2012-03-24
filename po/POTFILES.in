@@ -45,7 +45,7 @@ src/connector-context.cpp
 src/context-fns.cpp
 src/desktop-events.cpp
 src/desktop.cpp
-src/dialogs/clonetiler.cpp
+src/ui/dialog/clonetiler.cpp
 src/ui/dialog/export.cpp
 src/dialogs/find.cpp
 src/ui/dialog/spellcheck.cpp
