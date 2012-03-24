@@ -39,7 +39,6 @@
 #include "bind/javabind.h"
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "dialogs/clonetiler.h"
 #include "dialogs/find.h"
 #include "display/curve.h"
 #include "document.h"
@@ -67,6 +66,7 @@
 #include "sp-namedview.h"
 #include "text-chemistry.h"
 #include "tools-switch.h"
+#include "ui/dialog/clonetiler.h"
 #include "ui/dialog/dialog-manager.h"
 #include "ui/dialog/document-properties.h"
 #include "ui/dialog/extensions.h"
@@ -1844,7 +1844,8 @@ void DialogVerb::perform(SPAction *action, void *data)
             inkscape_dialogs_toggle();
             break;
         case SP_VERB_DIALOG_CLONETILER:
-            clonetiler_dialog();
+            //clonetiler_dialog();
+            dt->_dlg_mgr->showDialog("CloneTiler");
             break;
         case SP_VERB_DIALOG_ATTR:
             //sp_item_dialog();

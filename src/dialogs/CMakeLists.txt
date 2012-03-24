@@ -1,12 +1,10 @@
 
 set(dialogs_SRC
-	clonetiler.cpp
 	dialog-events.cpp
 	find.cpp
 
 	# -------
 	# Headers
-	clonetiler.h
 	dialog-events.h
 	find.h
 )

@@ -1,8 +1,6 @@
 ## Makefile.am fragment sourced by src/Makefile.am.
 
 ink_common_sources +=	\
-	dialogs/clonetiler.cpp		\
-	dialogs/clonetiler.h		\
 	dialogs/dialog-events.cpp	\
 	dialogs/dialog-events.h		\
 	dialogs/find.cpp		\

@@ -51,6 +51,7 @@
 #include "ui/dialog/spellcheck.h"
 #include "ui/dialog/export.h"
 #include "ui/dialog/xml-tree.h"
+#include "ui/dialog/clonetiler.h"
 
 #ifdef ENABLE_SVG_FONTS
 #include "ui/dialog/svg-fonts-dialog.h"
@@ -129,6 +130,7 @@ DialogManager::DialogManager() {
         registerFactory("SpellCheck",          &create<SpellCheck,           FloatingBehavior>);
         registerFactory("Export",              &create<Export,               FloatingBehavior>);
         registerFactory("XmlTree",             &create<XmlTree,              FloatingBehavior>);
+        registerFactory("CloneTiler",          &create<CloneTiler,           FloatingBehavior>);
 
     } else {
 
@@ -163,6 +165,7 @@ DialogManager::DialogManager() {
         registerFactory("SpellCheck",          &create<SpellCheck,           DockBehavior>);
         registerFactory("Export",              &create<Export,               DockBehavior>);
         registerFactory("XmlTree",             &create<XmlTree,              DockBehavior>);
+        registerFactory("CloneTiler",          &create<CloneTiler,           DockBehavior>);
 
     }
 }
