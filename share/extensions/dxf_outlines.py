@@ -76,6 +76,8 @@ class MyEffect(inkex.Effect):
                                      type="string", dest="tab")
         self.OptionParser.add_option("--inputhelp", action="store",
                                      type="string", dest="inputhelp")
+        self.OptionParser.add_option("--visibleLayers", action="store",
+                                     type="string", dest="visibleLayers")
         self.dxf = []
         self.handle = 255                       # handle for DXF ENTITY
         self.layers = ['0']
@@ -248,6 +250,12 @@ class MyEffect(inkex.Effect):
 
     def process_group(self, group):
         if group.get(inkex.addNS('groupmode', 'inkscape')) == 'layer':
+            style = group.get('style')
+            if style:
+                style = simplestyle.parseStyle(style)
+                if style.has_key('display'):
+                    if style['display'] == 'none' and self.options.visibleLayers == 'true':
+                        return
             layer = group.get(inkex.addNS('label', 'inkscape'))
             layer = layer.replace(' ', '_')
             if layer in self.layers:
