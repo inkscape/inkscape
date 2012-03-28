@@ -1320,6 +1320,19 @@ void LayerVerb::perform(SPAction *action, void *data)
             }
             break;
         }
+        case SP_VERB_LAYER_TOGGLE_LOCK:
+        case SP_VERB_LAYER_TOGGLE_HIDE: {
+            if ( dt->currentLayer() == dt->currentRoot() ) {
+                dt->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("No current layer."));
+            } else {
+                if ( verb == SP_VERB_LAYER_TOGGLE_HIDE ){
+                    SP_ITEM(dt->currentLayer())->setHidden(!SP_ITEM(dt->currentLayer())->isHidden());
+                } else {
+                    SP_ITEM(dt->currentLayer())->setLocked(!SP_ITEM(dt->currentLayer())->isLocked());
+                }
+
+            }
+        }
     }
 
     return;
@@ -2403,6 +2416,10 @@ Verb *Verb::_base_verbs[] = {
                   N_("Delete the current layer"), INKSCAPE_ICON("layer-delete")),
     new LayerVerb(SP_VERB_LAYER_SOLO, "LayerSolo", N_("_Show/hide other layers"),
                   N_("Solo the current layer"), NULL),
+    new LayerVerb(SP_VERB_LAYER_TOGGLE_LOCK, "LayerToggleLock", N_("_Lock/Unlock Current Layer"),
+                  N_("Toggle lock on current layer"), NULL),
+    new LayerVerb(SP_VERB_LAYER_TOGGLE_HIDE, "LayerToggleHide", N_("_Show/hide Current Layer"),
+                  N_("Toggle visibility of current layer"), NULL),
 
     // Object
     new ObjectVerb(SP_VERB_OBJECT_ROTATE_90_CW, "ObjectRotate90", N_("Rotate _90&#176; CW"),
