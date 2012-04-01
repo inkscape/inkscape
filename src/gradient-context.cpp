@@ -645,17 +645,17 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     case GDK_BUTTON_RELEASE:
         event_context->xp = event_context->yp = 0;
         if ( event->button.button == 1 && !event_context->space_panning ) {
-            if ( (event->button.state & GDK_CONTROL_MASK) && (event->button.state & GDK_MOD1_MASK ) ) {
-                bool over_line = false;
-                SPCtrlLine *line = NULL;
-                if (drag->lines) {
-                    for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
-                        line = (SPCtrlLine*) l->data;
-                        over_line = sp_gradient_context_is_over_line (rc, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
-                        if (over_line)
-                            break;
-                    }
+            bool over_line = false;
+            SPCtrlLine *line = NULL;
+            if (drag->lines) {
+                for (GSList *l = drag->lines; (l != NULL) && (!over_line); l = l->next) {
+                    line = (SPCtrlLine*) l->data;
+                    over_line = sp_gradient_context_is_over_line (rc, (SPItem*) line, Geom::Point(event->motion.x, event->motion.y));
+                    if (over_line)
+                        break;
                 }
+            }
+            if ( (event->button.state & GDK_CONTROL_MASK) && (event->button.state & GDK_MOD1_MASK ) ) {
                 if (over_line && line) {
                     sp_gradient_context_add_stop_near_point(rc, line->item, rc->mousepoint_doc, 0);
                     ret = TRUE;
@@ -682,11 +682,17 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     }
 
                 } else if (event_context->item_to_select) {
-                    // no dragging, select clicked item if any
-                    if (event->button.state & GDK_SHIFT_MASK) {
-                        selection->toggle(event_context->item_to_select);
-                    } else {
-                        selection->set(event_context->item_to_select);
+                    if (over_line && line) {
+                        // Clicked on an existing gradient line, dont change selection. This stops
+                        // possible change in selection during a double click with overlapping objects
+                    }
+                    else {
+                        // no dragging, select clicked item if any
+                        if (event->button.state & GDK_SHIFT_MASK) {
+                            selection->toggle(event_context->item_to_select);
+                        } else {
+                            selection->set(event_context->item_to_select);
+                        }
                     }
                 } else {
                     // click in an empty space; do the same as Esc
