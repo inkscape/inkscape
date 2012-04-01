@@ -493,12 +493,14 @@ sp_gradient_context_add_stop_near_point (SPGradientContext *rc, SPItem *item,  G
 
     double tolerance = (double) ec->tolerance;
 
-    ec->get_drag()->addStopNearPoint (item, mouse_p, tolerance/desktop->current_zoom());
+    SPStop *newstop = ec->get_drag()->addStopNearPoint (item, mouse_p, tolerance/desktop->current_zoom());
 
     DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
                        _("Add gradient stop"));
 
     ec->get_drag()->updateDraggers();
+    ec->get_drag()->local_change = true;
+    ec->get_drag()->selectByStop(newstop);
 }
 
 
