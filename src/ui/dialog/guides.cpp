@@ -71,7 +71,7 @@ void GuidelinePropertiesDialog::showDialog(SPGuide *guide, SPDesktop *desktop) {
 void GuidelinePropertiesDialog::_colorChanged()
 {
     const Gdk::Color c = _color.get_color();
-    char r = c.get_red()/257, g = c.get_green()/257, b = c.get_blue()/257;
+    unsigned r = c.get_red()/257, g = c.get_green()/257, b = c.get_blue()/257;
     //TODO: why 257? verify this!
     sp_guide_set_color(*_guide, r, g, b, true);
 }

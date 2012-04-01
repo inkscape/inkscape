@@ -440,7 +440,7 @@ void sp_guide_set_normal(SPGuide &guide, Geom::Point const normal_to_line, bool 
 */
 }
 
-void sp_guide_set_color(SPGuide &guide, const unsigned char r, const unsigned char g, const unsigned char b, bool const commit)
+void sp_guide_set_color(SPGuide &guide, const unsigned r, const unsigned g, const unsigned b, bool const commit)
 {
     g_assert(SP_IS_GUIDE(&guide));
     guide.color = (r << 24) | (g << 16) | (b << 8) | 0x7f;

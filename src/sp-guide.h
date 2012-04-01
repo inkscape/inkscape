@@ -65,7 +65,7 @@ void sp_guide_delete_all_guides(SPDesktop *dt);
 void sp_guide_moveto(SPGuide &guide, Geom::Point const point_on_line, bool const commit);
 void sp_guide_set_normal(SPGuide &guide, Geom::Point const normal_to_line, bool const commit);
 void sp_guide_set_label(SPGuide &guide, const char* label, bool const commit);
-void sp_guide_set_color(SPGuide &guide, const unsigned char r, const unsigned char g, const unsigned char b, bool const commit);
+void sp_guide_set_color(SPGuide &guide, const unsigned r, const unsigned g, const unsigned b, bool const commit);
 void sp_guide_remove(SPGuide *guide);
 
 char *sp_guide_description(SPGuide const *guide, const bool verbose = true);
