@@ -414,6 +414,12 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
         gradient->ensureVector();
         updateDraggers();
 
+        // so that it does not automatically update draggers in idle loop, as this would deselect
+        local_change = true;
+
+        // select the newly created stop
+        selectByStop(newstop);
+
         return newstop;
     }
 
@@ -1469,7 +1475,27 @@ void GrDrag::selectByCoords(std::vector<Geom::Point> coords)
     }
 }
 
+/**
+ * Select draggers by stop
+ */
+void GrDrag::selectByStop(SPStop *stop )
+{
+    for (GList *i = this->draggers; i != NULL; i = i->next) {
 
+        GrDragger *dragger = (GrDragger *) i->data;
+        for (GSList const* j = dragger->draggables; j != NULL; j = j->next) {
+
+            GrDraggable *d = (GrDraggable *) j->data;
+            SPGradient *gradient = sp_item_gradient(d->item, d->fill_or_stroke);
+            SPGradient *vector = sp_gradient_get_forked_vector_if_necessary(gradient, false);
+            SPStop *stop_i = sp_get_stop_i(vector, d->point_i);
+
+            if (stop_i == stop) {
+                setSelected(dragger, true, true);
+            }
+        }
+    }
+}
 /**
  * Select all stops/draggers that fall within the rect.
  */

@@ -382,6 +382,8 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
     // now actually create the new stops
     GSList *i = these_stops;
     GSList *j = next_stops;
+    GSList *new_stops = NULL;
+
     for (; i != NULL && j != NULL; i = i->next, j = j->next) {
         SPStop *this_stop = (SPStop *) i->data;
         SPStop *next_stop = (SPStop *) j->data;
@@ -389,7 +391,8 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
         SPObject *parent = this_stop->parent;
         if (SP_IS_GRADIENT (parent)) {
             doc = parent->document;
-            sp_vector_add_stop (SP_GRADIENT (parent), this_stop, next_stop, offset);
+            SPStop *new_stop = sp_vector_add_stop (SP_GRADIENT (parent), this_stop, next_stop, offset);
+            new_stops = g_slist_prepend (new_stops, new_stop);
             SP_GRADIENT(parent)->ensureVector();
         }
     }
@@ -399,12 +402,17 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
         drag->updateDraggers();
         // so that it does not automatically update draggers in idle loop, as this would deselect
         drag->local_change = true;
-        // select all the old selected and new created draggers
-        drag->selectByCoords(coords);
+
+        // select the newly created stops
+        for (GSList *s = new_stops; s != NULL; s = s->next) {
+            drag->selectByStop((SPStop *)s->data);
+        }
+
     }
 
     g_slist_free (these_stops);
     g_slist_free (next_stops);
+    g_slist_free (new_stops);
 }
 
 double sqr(double x) {return x*x;}

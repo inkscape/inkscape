@@ -134,6 +134,7 @@ public: // FIXME: make more of this private!
     void deselectAll();
     void selectAll();
     void selectByCoords(std::vector<Geom::Point> coords);
+    void selectByStop(SPStop *stop);
     void selectRect(Geom::Rect const &r);
 
     bool dropColor(SPItem *item, gchar const *c, Geom::Point p);
