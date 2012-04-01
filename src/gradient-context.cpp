@@ -345,7 +345,7 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
     return coords;
 }
 
-static void
+void
 sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
 {
     SPDocument *doc = NULL;
@@ -361,6 +361,13 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
         GrDragger *dragger = (GrDragger *) drag->selected->data;
         for (GSList const* j = dragger->draggables; j != NULL; j = j->next) {
             GrDraggable *d = (GrDraggable *) j->data;
+            if (d->point_type == POINT_RG_FOCUS) {
+                /*
+                 *  There are 2 draggables at the center (start) of a radial gradient
+                 *  To avoid creating 2 seperate stops, ignore this draggable point type
+                 */
+                continue;
+            }
             SPGradient *gradient = sp_item_gradient (d->item, d->fill_or_stroke);
             SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
             SPStop *this_stop = sp_get_stop_i (vector, d->point_i);

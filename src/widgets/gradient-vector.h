@@ -75,6 +75,8 @@ SPGradient *sp_gradient_vector_selector_get_gradient (SPGradientVectorSelector *
 /* fixme: rethink this (Lauris) */
 GtkWidget *sp_gradient_vector_editor_new (SPGradient *gradient, SPStop *stop = NULL);
 
+guint32 sp_average_color(guint32 c1, guint32 c2, gdouble p = 0.5);
+
 gchar *gr_prepare_label (SPObject *obj);
 
 

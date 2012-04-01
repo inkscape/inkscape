@@ -682,7 +682,7 @@ static void offadjustmentChanged( GtkAdjustment *adjustment, GtkWidget *vb)
     }
 }
 
-guint32 sp_average_color(guint32 c1, guint32 c2, gdouble p = 0.5)
+guint32 sp_average_color(guint32 c1, guint32 c2, gdouble p/* = 0.5*/)
 {
     guint32 r = (guint32) (SP_RGBA32_R_U(c1) * p + SP_RGBA32_R_U(c2) * (1 - p));
     guint32 g = (guint32) (SP_RGBA32_G_U(c1) * p + SP_RGBA32_G_U(c2) * (1 - p));

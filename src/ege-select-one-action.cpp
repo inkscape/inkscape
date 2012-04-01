@@ -826,6 +826,7 @@ GtkWidget* create_tool_item( GtkAction* action )
             g_signal_connect( G_OBJECT(normal), "changed", G_CALLBACK(combo_changed_cb), action );
 
             g_object_set_data( G_OBJECT(holder), "ege-combo-box", normal );
+            g_object_set_data( G_OBJECT(act), "ege-combo-box", normal );
 
             if (act->private_data->appearanceMode == APPEARANCE_COMPACT) {
                 gchar*  sss = 0;
@@ -1002,7 +1003,7 @@ void resync_sensitive( EgeSelectOneAction* act )
 void combo_changed_cb( GtkComboBox* widget, gpointer user_data )
 {
     EgeSelectOneAction *act = EGE_SELECT_ONE_ACTION(user_data);
-    gchar              *text;
+    gchar              *text = 0;
     GtkComboBox        *cb = GTK_COMBO_BOX (widget);
     gint                newActive = gtk_combo_box_get_active(widget);
 
@@ -1028,6 +1029,11 @@ void combo_changed_cb( GtkComboBox* widget, gpointer user_data )
 #else
     text = gtk_combo_box_get_active_text (cb);
 #endif
+
+    if (!text) {
+        /* User probably deleted the data in the model */
+        return;
+    }
 
     if (newActive == -1) {
         /* indicates the user is entering text for a custom aka "open" value */

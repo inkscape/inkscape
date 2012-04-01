@@ -17,6 +17,7 @@
 #include <glibmm/ustring.h>
 
 #include "icon-size.h"
+#include "../ege-adjustment-action.h"
 
 class SPDesktop;
 class SPEventContext;
@@ -39,6 +40,7 @@ public:
     static GtkWidget *createCommandsToolbox();
     static GtkWidget *createSnapToolbox();
 
+
     static Glib::ustring getToolboxName(GtkWidget* toolbox);
 
     static void updateSnapToolbox(SPDesktop *desktop, SPEventContext *eventcontext, GtkWidget *toolbox);
@@ -58,6 +60,17 @@ private:
 // TODO remove this:
 void sp_toolbox_add_label(GtkWidget *tbl, gchar const *title, bool wide = true);
 
+ EgeAdjustmentAction * create_adjustment_action( gchar const *name,
+                                                       gchar const *label, gchar const *shortLabel, gchar const *tooltip,
+                                                       Glib::ustring const &path, gdouble def,
+                                                       GtkWidget *focusTarget,
+                                                       GtkWidget *us,
+                                                       GObject *dataKludge,
+                                                       gboolean altx, gchar const *altx_mark,
+                                                       gdouble lower, gdouble upper, gdouble step, gdouble page,
+                                                       gchar const** descrLabels, gdouble const* descrValues, guint descrCount,
+                                                       void (*callback)(GtkAdjustment *, GObject *),
+                                                       gdouble climb = 0.1, guint digits = 3, double factor = 1.0 );
 
 #endif /* !SEEN_TOOLBOX_H */
 

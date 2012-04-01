@@ -53,6 +53,7 @@ GType sp_gradient_context_get_type();
 
 void sp_gradient_context_select_next (SPEventContext *event_context);
 void sp_gradient_context_select_prev (SPEventContext *event_context);
+void sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc);
 
 #endif
 

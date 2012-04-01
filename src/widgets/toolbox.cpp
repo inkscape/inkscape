@@ -243,10 +243,10 @@ static struct {
       SP_VERB_INVALID, 0, 0},
     { "SPDropperContext", "dropper_toolbox", 0, sp_dropper_toolbox_prep,         "DropperToolbar",
       SP_VERB_INVALID, 0, 0},
-    { "SPGradientContext", "gradient_toolbox", sp_gradient_toolbox_new, 0,       0,
-      SP_VERB_INVALID, 0, 0},
     { "SPConnectorContext", "connector_toolbox", 0, sp_connector_toolbox_prep,   "ConnectorToolbar",
       SP_VERB_INVALID, 0, 0},
+      { "SPGradientContext", "gradient_toolbox", 0, sp_gradient_toolbox_prep, "GradientToolbar",
+          SP_VERB_INVALID, 0, 0},
     { "SPFloodContext",  "paintbucket_toolbox",  0, sp_paintbucket_toolbox_prep, "PaintbucketToolbar",
       SP_VERB_CONTEXT_PAINTBUCKET_PREFS, "/tools/paintbucket", N_("Style of Paint Bucket fill objects")},
     { NULL, NULL, NULL, NULL, NULL, SP_VERB_INVALID, NULL, NULL }
@@ -527,6 +527,20 @@ static gchar const * ui_descr =
         "    <toolitem action='LPEToolUnitsAction' />"
         "    <separator />"
         "    <toolitem action='LPEOpenLPEDialogAction' />"
+        "  </toolbar>"
+
+        "  <toolbar name='GradientToolbar'>"
+        "    <toolitem action='GradientNewTypeAction' />"
+        "    <toolitem action='GradientNewFillStrokeAction' />"
+        "    <separator />"
+        "    <toolitem action='GradientSelectGradientAction' />"
+        "    <toolitem action='GradientEditReverseAction' />"
+        "    <toolitem action='GradientSelectRepeatAction' />"
+        "    <separator />"
+        "    <toolitem action='GradientEditStopsAction' />"
+        "    <toolitem action='GradientEditOffsetAction' />"
+        "    <toolitem action='GradientEditAddAction' />"
+        "    <toolitem action='GradientEditDeleteAction' />"
         "  </toolbar>"
 
         "  <toolbar name='DropperToolbar'>"
@@ -1082,7 +1096,7 @@ static GtkWidget* createCustomSlider( GtkAdjustment *adjustment, gdouble climbRa
     return widget;
 }
 
-static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
+EgeAdjustmentAction * create_adjustment_action( gchar const *name,
                                                        gchar const *label, gchar const *shortLabel, gchar const *tooltip,
                                                        Glib::ustring const &path, gdouble def,
                                                        GtkWidget *focusTarget,
@@ -1092,7 +1106,7 @@ static EgeAdjustmentAction * create_adjustment_action( gchar const *name,
                                                        gdouble lower, gdouble upper, gdouble step, gdouble page,
                                                        gchar const** descrLabels, gdouble const* descrValues, guint descrCount,
                                                        void (*callback)(GtkAdjustment *, GObject *),
-                                                       gdouble climb = 0.1, guint digits = 3, double factor = 1.0 )
+                                                       gdouble climb/* = 0.1*/, guint digits/* = 3*/, double factor/* = 1.0*/ )
 {
     static bool init = false;
     if ( !init ) {
@@ -3086,7 +3100,7 @@ void sp_toolbox_add_label(GtkWidget *tbl, gchar const *title, bool wide)
     gtk_box_pack_end(GTK_BOX(boxl), l, FALSE, FALSE, 0);
     if ( GTK_IS_TOOLBAR(tbl) ) {
         GtkToolItem *boxl_toolitem = gtk_tool_item_new();
-	gtk_container_add(GTK_CONTAINER(boxl_toolitem), boxl);
+        gtk_container_add(GTK_CONTAINER(boxl_toolitem), boxl);
         gtk_toolbar_insert(GTK_TOOLBAR(tbl), boxl_toolitem, -1);
     } else {
         gtk_box_pack_start(GTK_BOX(tbl), boxl, FALSE, FALSE, 0);
