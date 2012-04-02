@@ -2907,7 +2907,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
 
         // Clean up
         Inkscape::GC::release(repr);
-        gdk_pixbuf_unref(pb);
+        g_object_unref(pb);
 
         // Complete undoable transaction
         DocumentUndo::done(document, SP_VERB_SELECTION_CREATE_BITMAP,

@@ -657,7 +657,7 @@ static void sp_image_release( SPObject *object )
     }
 
     if (image->pixbuf) {
-        gdk_pixbuf_unref (image->pixbuf);
+        g_object_unref (image->pixbuf);
         image->pixbuf = NULL;
     }
 
@@ -815,7 +815,7 @@ static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
 
     if (flags & SP_IMAGE_HREF_MODIFIED_FLAG) {
         if (image->pixbuf) {
-            gdk_pixbuf_unref (image->pixbuf);
+            g_object_unref (image->pixbuf);
             image->pixbuf = NULL;
         }
         if ( image->pixPath ) {
@@ -1254,7 +1254,7 @@ static GdkPixbuf *sp_image_pixbuf_force_rgba( GdkPixbuf * pixbuf )
         result = pixbuf;
     } else {
         result = gdk_pixbuf_add_alpha(pixbuf, FALSE, 0, 0, 0);
-        gdk_pixbuf_unref(pixbuf);
+        g_object_unref(pixbuf);
     }
     return result;
 }

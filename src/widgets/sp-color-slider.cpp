@@ -171,7 +171,7 @@ sp_color_slider_destroy (GtkObject *object)
 
 	if (slider->adjustment) {
 		g_signal_handlers_disconnect_matched (G_OBJECT (slider->adjustment), G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, slider);
-		gtk_object_unref (GTK_OBJECT (slider->adjustment));
+		g_object_unref (slider->adjustment);
 		slider->adjustment = NULL;
 	}
 
@@ -343,7 +343,7 @@ void sp_color_slider_set_adjustment(SPColorSlider *slider, GtkAdjustment *adjust
 	if (slider->adjustment != adjustment) {
 		if (slider->adjustment) {
 			g_signal_handlers_disconnect_matched (G_OBJECT (slider->adjustment), G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, slider);
-			gtk_object_unref (GTK_OBJECT (slider->adjustment));
+			g_object_unref (slider->adjustment);
 		}
 
 		slider->adjustment = adjustment;

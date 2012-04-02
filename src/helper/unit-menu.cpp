@@ -132,7 +132,7 @@ sp_unit_selector_finalize(GObject *object)
     }
 
     while (selector->adjustments) {
-        gtk_object_unref(GTK_OBJECT(selector->adjustments->data));
+        g_object_unref(selector->adjustments->data);
         selector->adjustments = g_slist_remove(selector->adjustments, selector->adjustments->data);
     }
 
@@ -341,7 +341,7 @@ sp_unit_selector_remove_adjustment(SPUnitSelector *us, GtkAdjustment *adj)
     g_return_if_fail(g_slist_find(us->adjustments, adj));
 
     us->adjustments = g_slist_remove(us->adjustments, adj);
-    gtk_object_unref(GTK_OBJECT(adj));
+    g_object_unref(adj);
 }
 
 gboolean

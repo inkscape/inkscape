@@ -205,7 +205,7 @@ sp_ctrl_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
                 ctrl->pixbuf = pixbuf;
             } else {
                 ctrl->pixbuf = gdk_pixbuf_add_alpha (pixbuf, FALSE, 0, 0, 0);
-                gdk_pixbuf_unref (pixbuf);
+                g_object_unref (pixbuf);
             }
             ctrl->build = FALSE;
             break;

@@ -234,7 +234,7 @@ sp_widget_new_global (Inkscape::Application *inkscape)
 	spw = (SPWidget*)g_object_new (SP_TYPE_WIDGET, NULL);
 
 	if (!sp_widget_construct_global (spw, inkscape)) {
-		gtk_object_unref (GTK_OBJECT (spw));
+	    g_object_unref (spw);
 		return NULL;
 	}
 

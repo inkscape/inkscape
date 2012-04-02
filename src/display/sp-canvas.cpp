@@ -1100,7 +1100,7 @@ void SPCanvasGroup::remove(SPCanvasItem *item)
 
             // Unparent the child
             item->parent = NULL;
-            gtk_object_unref(GTK_OBJECT(item));
+            g_object_unref(item);
 
             // Remove it from the list
             if (children == last) {
@@ -1242,7 +1242,7 @@ void SPCanvasImpl::destroy(GtkObject *object)
     SPCanvas *canvas = SP_CANVAS(object);
 
     if (canvas->root) {
-        gtk_object_unref (GTK_OBJECT (canvas->root));
+        g_object_unref (canvas->root);
         canvas->root = NULL;
     }
 
@@ -1487,7 +1487,7 @@ int SPCanvasImpl::emitEvent(SPCanvas *canvas, GdkEvent *event)
         gtk_object_ref (GTK_OBJECT (item));
         g_signal_emit (G_OBJECT (item), item_signals[ITEM_EVENT], 0, &ev, &finished);
         SPCanvasItem *parent = item->parent;
-        gtk_object_unref (GTK_OBJECT (item));
+        g_object_unref (item);
         item = parent;
     }
 

@@ -507,7 +507,7 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
         // TODO this is stupid - we just converted to pixbuf format when generating the bitmap!
         convert_pixbuf_normal_to_argb32(pb);
         ctx->renderImage(pb, t, item->style);
-        gdk_pixbuf_unref(pb);
+        g_object_unref(pb);
         pb = 0;
     }
     g_slist_free (items);
