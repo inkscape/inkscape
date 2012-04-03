@@ -326,7 +326,7 @@ sp_unit_selector_add_adjustment(SPUnitSelector *us, GtkAdjustment *adj)
 
     g_return_if_fail(!g_slist_find(us->adjustments, adj));
 
-    gtk_object_ref(GTK_OBJECT(adj));
+    g_object_ref(adj);
     us->adjustments = g_slist_prepend(us->adjustments, adj);
 }
 

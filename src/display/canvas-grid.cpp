@@ -311,7 +311,7 @@ CanvasGrid::createCanvasItem(SPDesktop * desktop)
     item->grid = this;
     sp_canvas_item_show(SP_CANVAS_ITEM(item));
 
-    gtk_object_ref(GTK_OBJECT(item));    // since we're keeping a link to this item, we need to bump up the ref count
+    g_object_ref(item);    // since we're keeping a link to this item, we need to bump up the ref count
     canvasitems = g_slist_prepend(canvasitems, item);
 
     return item;

@@ -205,7 +205,17 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_widget_show(hb);
         gtk_box_pack_start(GTK_BOX(vb), hb, FALSE, FALSE, 0);
 
+/*
+This would introduce dependency on gtk version 2.24 which is currently not available in
+Trisquel GNU/Linux 4.5.1 (released on May 25th, 2011)
+This conditional and its #else block can be deleted in the future.
+*/
+#if GTK_CHECK_VERSION(2, 24,0)
+        fsel->size = gtk_combo_box_text_new_with_entry ();
+#else
         fsel->size = gtk_combo_box_entry_new_text ();
+#endif
+
         gtk_widget_set_tooltip_text (fsel->size, _("Font size (px)"));
         gtk_widget_set_size_request(fsel->size, 90, -1);
         g_signal_connect (G_OBJECT(fsel->size), "changed", G_CALLBACK (sp_font_selector_size_changed), fsel);
@@ -216,9 +226,13 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_box_pack_end(GTK_BOX (hb), l, FALSE, FALSE, 0);
 
         for (unsigned int n = 0; sizes[n]; ++n)
-            {
-                gtk_combo_box_append_text (GTK_COMBO_BOX(fsel->size), sizes[n]);
-            }
+        {
+#if GTK_CHECK_VERSION(2, 24,0)
+            gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT(fsel->size), sizes[n]);
+#else
+            gtk_combo_box_append_text (GTK_COMBO_BOX(fsel->size), sizes[n]);
+#endif
+        }
 
         gtk_widget_show_all (fsel->size);
 
@@ -304,7 +318,12 @@ static void sp_font_selector_style_select_row (GtkTreeSelection *selection,
 
 static void sp_font_selector_size_changed( GtkComboBox */*cbox*/, SPFontSelector *fsel )
 {
-    char *text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (fsel->size));
+    char *text = NULL;
+#if GTK_CHECK_VERSION(2, 24,0)
+    text = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (fsel->size));
+#else
+    text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (fsel->size));
+#endif
     gfloat old_size = fsel->fontsize;
 
     gchar *endptr;
@@ -375,7 +394,7 @@ static void sp_font_selector_emit_set (SPFontSelector *fsel)
             fsel->font->Unref();
         }
         fsel->font = font;
-        gtk_signal_emit(GTK_OBJECT(fsel), fs_signals[FONT_SET], fsel->font);
+        g_signal_emit(GTK_OBJECT(fsel), fs_signals[FONT_SET], 0, fsel->font);
     }
     fsel->fontsize_dirty = false;
     if (font) {

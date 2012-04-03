@@ -1078,7 +1078,7 @@ void SPCanvasGroup::viewboxChanged(SPCanvasItem *item, Geom::IntRect const &new_
 
 void SPCanvasGroup::add(SPCanvasItem *item)
 {
-    gtk_object_ref( GTK_OBJECT(item) );
+    g_object_ref(item);
     g_object_ref_sink(item);
 
     if (!items) {
@@ -1181,7 +1181,7 @@ void SPCanvasImpl::init(SPCanvas *canvas)
     canvas->root = SP_CANVAS_ITEM(g_object_new(SPCanvasGroup::getType(), NULL));
     canvas->root->canvas = canvas;
 
-    gtk_object_ref (GTK_OBJECT (canvas->root));
+    g_object_ref (canvas->root);
     g_object_ref_sink (canvas->root);
 
     canvas->need_repick = TRUE;
@@ -1484,7 +1484,7 @@ int SPCanvasImpl::emitEvent(SPCanvas *canvas, GdkEvent *event)
     gint finished = FALSE;
 
     while (item && !finished) {
-        gtk_object_ref (GTK_OBJECT (item));
+        g_object_ref (item);
         g_signal_emit (G_OBJECT (item), item_signals[ITEM_EVENT], 0, &ev, &finished);
         SPCanvasItem *parent = item->parent;
         g_object_unref (item);
