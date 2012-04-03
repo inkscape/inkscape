@@ -36,6 +36,9 @@ namespace Inkscape {
         static void selectAll(SPDesktop *desktop);
         static void selectAllInAll(SPDesktop *desktop);
         static void selectNone(SPDesktop *desktop);
+        static void selectSameFillStroke(SPDesktop *dt);
+        static void selectSameFill(SPDesktop *dt);
+        static void selectSameStroke(SPDesktop *dt);
         static void invert(SPDesktop *desktop);
         static void invertAllInAll(SPDesktop *desktop);
         static void reverse(SPDesktop *dt);
@@ -119,6 +122,9 @@ void sp_selection_item_prev (SPDesktop *desktop);
 void sp_selection_next_patheffect_param(SPDesktop * dt);
 
 void sp_selection_edit_clip_or_mask(SPDesktop * dt, bool clip);
+
+void sp_select_same_fill_stroke(SPDesktop *desktop, gboolean fill, gboolean stroke);
+GSList *sp_get_same_fill_or_stroke_items(SPItem *sel, GSList *src, gboolean fillorstroke);
 
 void scroll_to_show_item(SPDesktop *desktop, SPItem *item);
 

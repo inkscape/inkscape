@@ -25,6 +25,8 @@
 #include "preferences.h"
 #include "verbs.h"
 
+#include "selection-chemistry.h"
+
 using Inkscape::DocumentUndo;
 
 static void sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop, GtkMenu *menu);
@@ -90,6 +92,7 @@ static void sp_object_type_menu(GType type, SPObject *object, SPDesktop *desktop
 
 static void sp_item_properties(GtkMenuItem *menuitem, SPItem *item);
 static void sp_item_select_this(GtkMenuItem *menuitem, SPItem *item);
+static void sp_item_select_same_fill_stroke(GtkMenuItem *menuitem, SPItem *item);
 static void sp_item_create_link(GtkMenuItem *menuitem, SPItem *item);
 static void sp_set_mask(GtkMenuItem *menuitem, SPItem *item);
 static void sp_release_mask(GtkMenuItem *menuitem, SPItem *item);
@@ -122,6 +125,12 @@ static void sp_item_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
         g_object_set_data(G_OBJECT(w), "desktop", desktop);
         g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_item_select_this), item);
     }
+    gtk_widget_show(w);
+    gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
+    /* Select same fill and stroke */
+    w = gtk_menu_item_new_with_mnemonic(_("_Select Same Fill and Stroke"));
+    g_object_set_data(G_OBJECT(w), "desktop", desktop);
+    g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_item_select_same_fill_stroke), item);
     gtk_widget_show(w);
     gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
     /* Create link */
@@ -257,6 +266,16 @@ static void sp_item_select_this(GtkMenuItem *menuitem, SPItem *item)
 
     sp_desktop_selection(desktop)->set(item);
 }
+
+static void sp_item_select_same_fill_stroke(GtkMenuItem *menuitem, SPItem *item)
+{
+    SPDesktop *desktop;
+    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
+    g_return_if_fail(desktop != NULL);
+
+    sp_select_same_fill_stroke(desktop, true, true);
+}
+
 
 static void sp_item_create_link(GtkMenuItem *menuitem, SPItem *item)
 {

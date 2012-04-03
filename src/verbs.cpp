@@ -961,6 +961,15 @@ void EditVerb::perform(SPAction *action, void *data)
         case SP_VERB_EDIT_SELECT_ALL:
             SelectionHelper::selectAll(dt);
             break;
+        case SP_VERB_EDIT_SELECT_SAME_FILL_STROKE:
+            SelectionHelper::selectSameFillStroke(dt);
+            break;
+        case SP_VERB_EDIT_SELECT_SAME_FILL:
+            SelectionHelper::selectSameFill(dt);
+            break;
+        case SP_VERB_EDIT_SELECT_SAME_STROKE:
+            SelectionHelper::selectSameStroke(dt);
+            break;
         case SP_VERB_EDIT_INVERT:
             SelectionHelper::invert(dt);
             break;
@@ -2288,6 +2297,12 @@ Verb *Verb::_base_verbs[] = {
                  N_("Select all objects or all nodes"), GTK_STOCK_SELECT_ALL),
     new EditVerb(SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS, "EditSelectAllInAllLayers", N_("Select All in All La_yers"),
                  N_("Select all objects in all visible and unlocked layers"), INKSCAPE_ICON("edit-select-all-layers")),
+    new EditVerb(SP_VERB_EDIT_SELECT_SAME_FILL_STROKE, "EditSelectSameFillStroke", N_("S_ame Fill and Stroke"),
+                 N_("Select all objects with the same fill and stroke as the selected objects"), GTK_STOCK_SELECT_ALL),
+    new EditVerb(SP_VERB_EDIT_SELECT_SAME_FILL, "EditSelectSameFill", N_("Same _Fill"),
+                N_("Select all objects with the same fill as the selected objects"), GTK_STOCK_SELECT_ALL),
+    new EditVerb(SP_VERB_EDIT_SELECT_SAME_STROKE, "EditSelectSameStroke", N_("Same _Stroke"),
+                N_("Select all objects with the same stroke as the selected objects"), GTK_STOCK_SELECT_ALL),
     new EditVerb(SP_VERB_EDIT_INVERT, "EditInvert", N_("In_vert Selection"),
                  N_("Invert selection (unselect what is selected and select everything else)"), INKSCAPE_ICON("edit-select-invert")),
     new EditVerb(SP_VERB_EDIT_INVERT_IN_ALL_LAYERS, "EditInvertInAllLayers", N_("Invert in All Layers"),

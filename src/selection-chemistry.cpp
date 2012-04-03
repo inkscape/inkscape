@@ -151,6 +151,22 @@ void SelectionHelper::selectNone(SPDesktop *dt)
     }
 }
 
+void SelectionHelper::selectSameFillStroke(SPDesktop *dt)
+{
+    sp_select_same_fill_stroke(dt, true, true);
+}
+
+void SelectionHelper::selectSameFill(SPDesktop *dt)
+{
+    sp_select_same_fill_stroke(dt, true, false);
+}
+
+void SelectionHelper::selectSameStroke(SPDesktop *dt)
+{
+    sp_select_same_fill_stroke(dt, false, true);
+}
+
+
 void SelectionHelper::invert(SPDesktop *dt)
 {
     if (tools_isactive(dt, TOOLS_NODES)) {
@@ -1609,6 +1625,107 @@ sp_selection_rotate(Inkscape::Selection *selection, gdouble const angle_degrees)
                             SP_VERB_CONTEXT_SELECT,
                             _("Rotate"));
 }
+
+/*
+ * Selects all the visible items with the same fill and/or stroke style as the items in the current selection
+ *
+ * Params:
+ * desktop - set the selection on this desktop
+ * fill - select objects matching fill
+ * stroke - select objects matching stroke
+ */
+void sp_select_same_fill_stroke(SPDesktop *desktop, gboolean fill, gboolean stroke)
+{
+    if (!desktop) {
+        return;
+    }
+
+    if (!fill && !stroke) {
+        return;
+    }
+
+    GSList *all_list = get_all_items(NULL, desktop->currentRoot(), desktop, true, true, NULL);
+    GSList *all_matches = NULL;
+
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+
+    for (GSList const* sel_iter = selection->itemList(); sel_iter; sel_iter = sel_iter->next) {
+        SPItem *sel = SP_ITEM(sel_iter->data);
+        GSList *matches = all_list;
+        if (fill) {
+            matches = sp_get_same_fill_or_stroke_items(sel, matches, TRUE);
+        }
+        if (stroke) {
+            matches = sp_get_same_fill_or_stroke_items(sel, matches, FALSE);
+        }
+        all_matches = g_slist_concat (all_matches, matches);
+    }
+
+    selection->clear();
+    selection->setList(all_matches);
+
+    g_slist_free(all_matches);
+    g_slist_free(all_list);
+
+}
+
+/*
+ * Find all items in src list that have the same fill or stroke style as sel
+ * Return the list of matching items
+ */
+GSList *sp_get_same_fill_or_stroke_items(SPItem *sel, GSList *src, gboolean fillorstroke)
+{
+    GSList *matches = NULL;
+    gboolean match = false;
+
+    SPIPaint *sel_paint = (fillorstroke) ? &(sel->style->fill) : &(sel->style->stroke);
+
+    for (GSList *i = src; i != NULL; i = i->next) {
+        SPItem *iter = SP_ITEM(i->data);
+        SPIPaint *iter_paint = (fillorstroke) ? &(iter->style->fill) : &(iter->style->stroke);
+        match = false;
+        if (sel_paint->isColor() && iter_paint->isColor() // color == color comparision doesnt seem to work here.
+                && (sel_paint->value.color.toRGBA32(1.0) == iter_paint->value.color.toRGBA32(1.0))) {
+            match = true;
+        } else if (sel_paint->isPaintserver() && iter_paint->isPaintserver()) {
+
+            SPPaintServer *sel_server =
+                    (fillorstroke) ? sel->style->getFillPaintServer() : sel->style->getStrokePaintServer();
+            SPPaintServer *iter_server =
+                    (fillorstroke) ? iter->style->getFillPaintServer() : iter->style->getStrokePaintServer();
+
+            if ((SP_IS_LINEARGRADIENT(sel_server) || SP_IS_RADIALGRADIENT(sel_server) ||
+                    (SP_IS_GRADIENT(sel_server) && SP_GRADIENT(sel_server)->getVector()->isSwatch()))
+                    &&
+                 (SP_IS_LINEARGRADIENT(iter_server) || SP_IS_RADIALGRADIENT(iter_server) ||
+                    (SP_IS_GRADIENT(iter_server) && SP_GRADIENT(iter_server)->getVector()->isSwatch()))) {
+                SPGradient *sel_vector = SP_GRADIENT(sel_server)->getVector();
+                SPGradient *iter_vector = SP_GRADIENT(iter_server)->getVector();
+                if (sel_vector == iter_vector) {
+                    match = true;
+                }
+
+            } else if (SP_IS_PATTERN(sel_server) && SP_IS_PATTERN(iter_server)) {
+                SPPattern *sel_pat = pattern_getroot(SP_PATTERN(sel_server));
+                SPPattern *iter_pat = pattern_getroot(SP_PATTERN(iter_server));
+                if (sel_pat == iter_pat) {
+                    match = true;
+                }
+            }
+        } else if (sel_paint->isNone() && iter_paint->isNone()) {
+            match = true;
+        } else if (sel_paint->isNoneSet() && iter_paint->isNoneSet()) {
+            match = true;
+        }
+
+        if (match) {
+            matches = g_slist_prepend(matches, iter);
+        }
+    }
+
+    return matches;
+}
+
 
 // helper function:
 static
