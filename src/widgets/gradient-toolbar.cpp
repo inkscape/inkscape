@@ -16,8 +16,8 @@
 # include "config.h"
 #endif
 
+#include "ui/widget/color-preview.h"
 #include "verbs.h"
-#include <gtk/gtk.h>
 
 #include "macros.h"
 #include "widgets/button.h"
@@ -51,7 +51,6 @@
 #include "../ink-comboboxentry-action.h"
 
 #include "sp-stop.h"
-#include "ui/widget/color-preview.h"
 #include "svg/css-ostringstream.h"
 #include "svg/svg-color.h"
 #include "desktop-style.h"

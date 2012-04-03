@@ -233,28 +233,31 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                                 allocation.width, allocation.height);
         }
 
-        GdkGC *gc = gdk_gc_new( gtk_widget_get_window (widget) );
         EekPreview* preview = EEK_PREVIEW(widget);
         GdkColor fg = {0, preview->_r, preview->_g, preview->_b};
 
         gdk_colormap_alloc_color( gdk_colormap_get_system(), &fg, FALSE, TRUE );
 
-        gdk_gc_set_foreground( gc, &fg );
 	gtk_widget_get_allocation (widget, &allocation);
+	cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(widget));
 
-        gdk_draw_rectangle( gtk_widget_get_window (widget),
-                            gc,
-                            TRUE,
-                            insetX, insetY,
-                            allocation.width - (insetX * 2), allocation.height - (insetY * 2) );
+	GdkRectangle rect = {insetX, 
+		             insetY,
+			     allocation.width - (insetX * 2),
+			     allocation.height - (insetY * 2)};
+
+	gdk_cairo_set_source_color(cr, &fg);
+	gdk_cairo_rectangle(cr, &rect);
+	cairo_paint(cr);
+	cairo_destroy(cr);
 
         if ( preview->_previewPixbuf ) {
             GtkDrawingArea* da = &(preview->drawing);
-            GdkDrawable* drawable = (GdkDrawable*) gtk_widget_get_window(GTK_WIDGET(da));
-            gint w = 0;
-            gint h = 0;
-            gdk_drawable_get_size(drawable, &w, &h);
-            if ((w != preview->_scaledW) || (h != preview->_scaledH)) {
+	    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(da));
+            gint w = gdk_window_get_width(window);
+            gint h = gdk_window_get_height(window);
+            
+	    if ((w != preview->_scaledW) || (h != preview->_scaledH)) {
                 if (preview->_scaled) {
                     g_object_unref(preview->_scaled);
                 }
@@ -264,7 +267,11 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
             }
 
             GdkPixbuf* pix = (preview->_scaled) ? preview->_scaled : preview->_previewPixbuf;
-            gdk_draw_pixbuf( drawable, 0, pix, 0, 0, 0, 0, w, h, GDK_RGB_DITHER_NONE, 0, 0 );
+            GdkDrawable* drawable = (GdkDrawable*) window;
+	    cairo_t* cr2 = gdk_cairo_create(drawable);
+	    gdk_cairo_set_source_pixbuf(cr2, pix, 0, 0);
+	    cairo_paint(cr2);
+	    cairo_destroy(cr);
         }
 
 

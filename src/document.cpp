@@ -37,11 +37,11 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#include <gtk/gtk.h>
 #include <string>
 #include <cstring>
 #include <2geom/transforms.h>
 
+#include "widgets/desktop-widget.h"
 #include "desktop.h"
 #include "dir-util.h"
 #include "display/drawing-item.h"
@@ -60,7 +60,6 @@
 #include "sp-object-repr.h"
 #include "transf_mat_3x4.h"
 #include "unit-constants.h"
-#include "widgets/desktop-widget.h"
 #include "xml/repr.h"
 #include "xml/rebase-hrefs.h"
 #include "libcroco/cr-cascade.h"
