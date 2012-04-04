@@ -129,8 +129,12 @@ static void sp_item_menu(SPObject *object, SPDesktop *desktop, GtkMenu *m)
     gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
     /* Select same fill and stroke */
     w = gtk_menu_item_new_with_mnemonic(_("_Select Same Fill and Stroke"));
-    g_object_set_data(G_OBJECT(w), "desktop", desktop);
-    g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_item_select_same_fill_stroke), item);
+    if (sp_desktop_selection(desktop)->isEmpty()) {
+        gtk_widget_set_sensitive(w, FALSE);
+    } else {
+        g_object_set_data(G_OBJECT(w), "desktop", desktop);
+        g_signal_connect(G_OBJECT(w), "activate", G_CALLBACK(sp_item_select_same_fill_stroke), item);
+    }
     gtk_widget_show(w);
     gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
     /* Create link */
@@ -272,7 +276,7 @@ static void sp_item_select_same_fill_stroke(GtkMenuItem *menuitem, SPItem * /*it
     SPDesktop *desktop = static_cast<SPDesktop*>(g_object_get_data(G_OBJECT(menuitem), "desktop"));
     g_return_if_fail(desktop != NULL);
 
-    sp_select_same_fill_stroke(desktop, true, true);
+    sp_select_same_fill_stroke_style(desktop, true, true, true);
 }
 
 

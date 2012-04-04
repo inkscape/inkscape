@@ -964,11 +964,14 @@ void EditVerb::perform(SPAction *action, void *data)
         case SP_VERB_EDIT_SELECT_SAME_FILL_STROKE:
             SelectionHelper::selectSameFillStroke(dt);
             break;
-        case SP_VERB_EDIT_SELECT_SAME_FILL:
-            SelectionHelper::selectSameFill(dt);
+        case SP_VERB_EDIT_SELECT_SAME_FILL_COLOR:
+            SelectionHelper::selectSameFillColor(dt);
             break;
-        case SP_VERB_EDIT_SELECT_SAME_STROKE:
-            SelectionHelper::selectSameStroke(dt);
+        case SP_VERB_EDIT_SELECT_SAME_STROKE_COLOR:
+            SelectionHelper::selectSameStrokeColor(dt);
+            break;
+        case SP_VERB_EDIT_SELECT_SAME_STROKE_STYLE:
+            SelectionHelper::selectSameStrokeStyle(dt);
             break;
         case SP_VERB_EDIT_INVERT:
             SelectionHelper::invert(dt);
@@ -2297,12 +2300,14 @@ Verb *Verb::_base_verbs[] = {
                  N_("Select all objects or all nodes"), GTK_STOCK_SELECT_ALL),
     new EditVerb(SP_VERB_EDIT_SELECT_ALL_IN_ALL_LAYERS, "EditSelectAllInAllLayers", N_("Select All in All La_yers"),
                  N_("Select all objects in all visible and unlocked layers"), INKSCAPE_ICON("edit-select-all-layers")),
-    new EditVerb(SP_VERB_EDIT_SELECT_SAME_FILL_STROKE, "EditSelectSameFillStroke", N_("S_ame Fill and Stroke"),
+    new EditVerb(SP_VERB_EDIT_SELECT_SAME_FILL_STROKE, "EditSelectSameFillStroke", N_("Fill _and Stroke"),
                  N_("Select all objects with the same fill and stroke as the selected objects"), GTK_STOCK_SELECT_ALL),
-    new EditVerb(SP_VERB_EDIT_SELECT_SAME_FILL, "EditSelectSameFill", N_("Same _Fill"),
+    new EditVerb(SP_VERB_EDIT_SELECT_SAME_FILL_COLOR, "EditSelectSameFillColor", N_("_Fill Color"),
                 N_("Select all objects with the same fill as the selected objects"), GTK_STOCK_SELECT_ALL),
-    new EditVerb(SP_VERB_EDIT_SELECT_SAME_STROKE, "EditSelectSameStroke", N_("Same _Stroke"),
+    new EditVerb(SP_VERB_EDIT_SELECT_SAME_STROKE_COLOR, "EditSelectSameStrokeColor", N_("_Stroke Color"),
                 N_("Select all objects with the same stroke as the selected objects"), GTK_STOCK_SELECT_ALL),
+    new EditVerb(SP_VERB_EDIT_SELECT_SAME_STROKE_STYLE, "EditSelectSameStrokeStyle", N_("Stroke St_yle"),
+                N_("Select all objects with the same stroke style (width, dsh, markers) as the selected objects"), GTK_STOCK_SELECT_ALL),
     new EditVerb(SP_VERB_EDIT_INVERT, "EditInvert", N_("In_vert Selection"),
                  N_("Invert selection (unselect what is selected and select everything else)"), INKSCAPE_ICON("edit-select-invert")),
     new EditVerb(SP_VERB_EDIT_INVERT_IN_ALL_LAYERS, "EditInvertInAllLayers", N_("Invert in All Layers"),
