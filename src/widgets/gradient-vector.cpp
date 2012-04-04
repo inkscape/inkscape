@@ -596,7 +596,7 @@ static void update_stop_list( GtkWidget *vb, SPGradient *gradient, SPStop *new_s
 
 
 // user selected existing stop from list
-static void sp_grad_edit_combo_box_changed (GtkComboBox *widget, GtkWidget *tbl)
+static void sp_grad_edit_combo_box_changed (GtkComboBox * /*widget*/, GtkWidget *tbl)
 {
     SPStop *stop = get_selected_stop(tbl);
     if (!stop) {

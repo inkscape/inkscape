@@ -579,7 +579,7 @@ void ControlPointSelection::_commitHandlesTransform(CommitEvent ce)
     signal_commit.emit(ce);
 }
 
-bool ControlPointSelection::event(SPEventContext *event_context, GdkEvent *event)
+bool ControlPointSelection::event(SPEventContext * /*event_context*/, GdkEvent *event)
 {
     // implement generic event handling that should apply for all control point selections here;
     // for example, keyboard moves and transformations. This way this functionality doesn't need

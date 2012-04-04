@@ -245,7 +245,7 @@ void TextEdit::onSelectionModified(guint flags )
     onReadSelection (style, content);
 }
 
-void TextEdit::onReadSelection ( gboolean dostyle, gboolean docontent )
+void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
 {
     if (blocked)
         return;
@@ -643,7 +643,7 @@ void TextEdit::onToggle()
 }
 
 
-void TextEdit::onLineSpacingChange(GtkComboBox* widget, gpointer data)
+void TextEdit::onLineSpacingChange(GtkComboBox* /*widget*/, gpointer data)
 {
     TextEdit *self  = static_cast<TextEdit *>(data);
     if (!self || self->blocked)

@@ -658,7 +658,7 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
 }
 
 
-void sp_dt_ruler_snap_new_guide(SPDesktop *desktop, SPCanvasItem *guide, Geom::Point &event_dt, Geom::Point &normal)
+void sp_dt_ruler_snap_new_guide(SPDesktop *desktop, SPCanvasItem * /*guide*/, Geom::Point &event_dt, Geom::Point &normal)
 {
     SnapManager &m = desktop->namedview->snap_manager;
     m.setup(desktop);

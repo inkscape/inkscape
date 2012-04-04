@@ -67,9 +67,9 @@ InkscapeScript::~InkscapeScript()
  * enumerated types in ScriptLanguage above.
  */
 bool InkscapeScript::interpretScript(const Glib::ustring &script,
-                                 Glib::ustring &output,
-                                 Glib::ustring &error,
-                                 ScriptLanguage language)
+                                     Glib::ustring & /*output*/,
+                                     Glib::ustring & /*error*/,
+                                     ScriptLanguage language)
 {
     const char *langname=NULL;
     //if() instead of switch() lets us scope vars
@@ -135,9 +135,9 @@ bool InkscapeScript::interpretScript(const Glib::ustring &script,
  * enumerated types in ScriptLanguage above.
  */
 bool InkscapeScript::interpretFile(const Glib::ustring &fname,
-                                 Glib::ustring &output,
-                                 Glib::ustring &error,
-                                 ScriptLanguage language)
+                                   Glib::ustring & /*output*/,
+                                   Glib::ustring & /*error*/,
+                                   ScriptLanguage language)
 {
     const char *langname=NULL;
     //if() instead of switch() lets us scope vars

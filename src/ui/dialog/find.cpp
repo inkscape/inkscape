@@ -436,7 +436,7 @@ Find::item_style_match (SPItem *item, const gchar *text, bool exact, bool casema
     return found;
 }
 
-bool Find::item_attr_match(SPItem *item, const gchar *text, bool exact, bool casematch, bool replace/*=false*/)
+bool Find::item_attr_match(SPItem *item, const gchar *text, bool exact, bool /*casematch*/, bool replace/*=false*/)
 {
     bool found = false;
 
@@ -492,7 +492,7 @@ bool Find::item_attrvalue_match(SPItem *item, const gchar *text, bool exact, boo
 }
 
 
-bool Find::item_font_match(SPItem *item, const gchar *text, bool exact, bool casematch, bool replace/*=false*/)
+bool Find::item_font_match(SPItem *item, const gchar *text, bool exact, bool casematch, bool /*replace*/ /*=false*/)
 {
     bool ret = false;
 

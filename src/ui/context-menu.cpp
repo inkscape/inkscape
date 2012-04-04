@@ -267,10 +267,9 @@ static void sp_item_select_this(GtkMenuItem *menuitem, SPItem *item)
     sp_desktop_selection(desktop)->set(item);
 }
 
-static void sp_item_select_same_fill_stroke(GtkMenuItem *menuitem, SPItem *item)
+static void sp_item_select_same_fill_stroke(GtkMenuItem *menuitem, SPItem * /*item*/)
 {
-    SPDesktop *desktop;
-    desktop = (SPDesktop*)g_object_get_data(G_OBJECT(menuitem), "desktop");
+    SPDesktop *desktop = static_cast<SPDesktop*>(g_object_get_data(G_OBJECT(menuitem), "desktop"));
     g_return_if_fail(desktop != NULL);
 
     sp_select_same_fill_stroke(desktop, true, true);

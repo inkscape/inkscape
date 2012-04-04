@@ -509,9 +509,9 @@ void XmlTree::set_dt_select(Inkscape::XML::Node *repr)
 
 
 void XmlTree::on_tree_select_row(GtkCTree *tree,
-                        GtkCTreeNode *node,
-                        gint column,
-                        gpointer data)
+                                 GtkCTreeNode *node,
+                                 gint /*column*/,
+                                 gpointer data)
 {
     XmlTree *self = (XmlTree *)data;
 
@@ -535,9 +535,9 @@ void XmlTree::on_tree_select_row(GtkCTree *tree,
 }
 
 void XmlTree::on_tree_unselect_row(GtkCTree *tree,
-                          GtkCTreeNode *node,
-                          gint column,
-                          gpointer data)
+                                   GtkCTreeNode *node,
+                                   gint /*column*/,
+                                   gpointer data)
 {
     XmlTree *self = (XmlTree *)data;
 
@@ -764,7 +764,7 @@ void XmlTree::on_attr_select_row(GtkTreeSelection *selection, gpointer data)
 
 }
 
-void XmlTree::on_attr_row_changed(SPXMLViewAttrList *attributes, const gchar * name, gpointer data)
+void XmlTree::on_attr_row_changed(SPXMLViewAttrList *attributes, const gchar * name, gpointer /*data*/)
 {
     // Reselect the selected row if the data changes to refresh the attribute and value edit boxes.
     GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(attributes));
@@ -821,7 +821,7 @@ void XmlTree::on_document_replaced(SPDesktop *dt, SPDocument *doc)
     set_tree_document(doc);
 }
 
-void XmlTree::on_document_uri_set(gchar const */*uri*/, SPDocument *document)
+void XmlTree::on_document_uri_set(gchar const * /*uri*/, SPDocument * /*document*/)
 {
 /*
  * Seems to be no way to set the title on a docked dialog

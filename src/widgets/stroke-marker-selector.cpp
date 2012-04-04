@@ -405,7 +405,7 @@ void MarkerComboBox::prepareImageRenderer( Gtk::TreeModel::const_iterator const 
         image_renderer.property_pixbuf() = empty_image->get_pixbuf();
 }
 
-gboolean MarkerComboBox::separator_cb (GtkTreeModel *model, GtkTreeIter *iter, gpointer data) {
+gboolean MarkerComboBox::separator_cb (GtkTreeModel *model, GtkTreeIter *iter, gpointer /*data*/) {
 
     gboolean sep = FALSE;
     gtk_tree_model_get(model, iter, 5, &sep, -1);

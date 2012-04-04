@@ -428,7 +428,7 @@ void Export::set_default_filename () {
  * @param  sensitive  Whether the spin button is sensitive or not
  * @param  cb   Callback for when this spin button is changed (optional)
  */
-Gtk::Adjustment * Export::createSpinbutton( gchar const *key, float val, float min, float max,
+Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, float min, float max,
                                       float step, float page, GtkWidget *us,
                                       GtkWidget *t, int x, int y,
                                       const gchar *ll, const gchar *lr,
@@ -606,7 +606,7 @@ void Export::onSelectionChanged()
     updateCheckbuttons ();
 }
 
-void Export::onSelectioModified ( guint flags )
+void Export::onSelectioModified ( guint /*flags*/ )
 {
     switch (current_key) {
         case SELECTION_DRAWING:
@@ -784,7 +784,7 @@ void Export::onAreaToggled ()
 
 /// Called when dialog is deleted
 
-gint Export::onProgressDelete ( GtkWidget *widget, GdkEvent *event, GObject *base )
+gint Export::onProgressDelete ( GtkWidget * /*widget*/, GdkEvent * /*event*/, GObject *base )
 {
     g_object_set_data (base, "cancel", (gpointer) 1);
     return TRUE;
@@ -792,7 +792,7 @@ gint Export::onProgressDelete ( GtkWidget *widget, GdkEvent *event, GObject *bas
 
 
 /// Called when progress is cancelled
-void Export::onProgressCancel ( GtkWidget *widget, GObject *base )
+void Export::onProgressCancel ( GtkWidget * /*widget*/, GObject *base )
 {
     g_object_set_data (base, "cancel", (gpointer) 1);
 } // end of sp_export_progress_cancel()
