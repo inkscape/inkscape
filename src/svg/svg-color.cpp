@@ -24,6 +24,8 @@
 #include <glib.h> // g_assert
 #include <errno.h>
 
+#include <map>
+
 #include "strneq.h"
 #include "preferences.h"
 #include "svg-color.h"
@@ -39,11 +41,12 @@
 #include "cms-system.h"
 
 using std::sprintf;
+using std::string;
 using Inkscape::CMSSystem;
 
 struct SPSVGColor {
     unsigned long rgb;
-    char const *name;
+    const string name;
 };
 
 /*
@@ -199,18 +202,16 @@ static SPSVGColor const sp_svg_color_named[] = {
     { 0x9ACD32, "yellowgreen" }
 };
 
-static GHashTable *sp_svg_create_color_hash();
+static std::map<string, unsigned long> sp_svg_create_color_hash();
 
-guint32
-sp_svg_read_color(gchar const *str, guint32 const dfl)
+guint32 sp_svg_read_color(gchar const *str, guint32 const dfl)
 {
     return sp_svg_read_color(str, NULL, dfl);
 }
 
-static guint32
-internal_sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def)
+static guint32 internal_sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def)
 {
-    static GHashTable *colors = NULL;
+    static std::map<string, unsigned long> colors;
     guint32 val = 0;
 
     if (str == NULL) return def;
@@ -295,13 +296,13 @@ internal_sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def)
         ++s;
         if (hasp && hasd) return def;
         if (hasp) {
-            val = (guint) floor(CLAMP(r, 0.0, 100.0) * 2.559999) << 24;
-            val |= ((guint) floor(CLAMP(g, 0.0, 100.0) * 2.559999) << 16);
-            val |= ((guint) floor(CLAMP(b, 0.0, 100.0) * 2.559999) << 8);
+            val = static_cast<guint>(floor(CLAMP(r, 0.0, 100.0) * 2.559999)) << 24;
+            val |= (static_cast<guint>(floor(CLAMP(g, 0.0, 100.0) * 2.559999)) << 16);
+            val |= (static_cast<guint>(floor(CLAMP(b, 0.0, 100.0) * 2.559999)) << 8);
         } else {
-            val = (guint) CLAMP(r, 0, 255) << 24;
-            val |= ((guint) CLAMP(g, 0, 255) << 16);
-            val |= ((guint) CLAMP(b, 0, 255) << 8);
+            val = static_cast<guint>(CLAMP(r, 0, 255)) << 24;
+            val |= (static_cast<guint>(CLAMP(g, 0, 255)) << 16);
+            val |= (static_cast<guint>(CLAMP(b, 0, 255)) << 8);
         }
         if (end_ptr) {
             *end_ptr = s;
@@ -309,7 +310,7 @@ internal_sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def)
         return val;
     } else {
         gint i;
-        if (!colors) {
+        if (colors.empty()) {
             colors = sp_svg_create_color_hash();
         }
         gchar c[32];
@@ -323,10 +324,10 @@ internal_sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def)
         }
         c[31] = '\0';
 
-        gpointer const rgb_ptr = g_hash_table_lookup(colors, c);
-        if (rgb_ptr) {
-            val = *(static_cast<unsigned long *>(rgb_ptr));
-        } else {
+        if (colors.count(string(c))) {
+            val = colors[string(c)];
+        }
+        else {
             return def;
         }
         if (end_ptr) {
@@ -337,8 +338,7 @@ internal_sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def)
     return (val << 8);
 }
 
-guint32
-sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 dfl)
+guint32 sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 dfl)
 {
     /* I've been rather hurried in editing the above to add support for end_ptr, so I'm adding
      * this check wrapper. */
@@ -369,8 +369,7 @@ sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 dfl)
  * Converts an RGB colour expressed in form 0x00rrggbb to a CSS/SVG representation of that colour.
  * The result is valid even in SVG Tiny or non-SVG CSS.
  */
-static void
-rgb24_to_css(char *const buf, unsigned const rgb24)
+static void rgb24_to_css(char *const buf, unsigned const rgb24)
 {
     assert(rgb24 < (1u << 24));
 
@@ -385,22 +384,22 @@ rgb24_to_css(char *const buf, unsigned const rgb24)
     switch (rgb24) {
         /* Extracted mechanically from the table at
          * http://www.w3.org/TR/REC-html40/types.html#h-6.5 .*/
-        case 0x000000: src = "black"; break; 		
-        case 0xc0c0c0: src = "silver"; break; 		
-        case 0x808080: src = "gray"; break; 		
-        case 0xffffff: src = "white"; break; 		
-        case 0x800000: src = "maroon"; break; 		
-        case 0xff0000: src = "red"; break; 		
-        case 0x800080: src = "purple"; break; 		
-        case 0xff00ff: src = "fuchsia"; break; 		
-        case 0x008000: src = "green"; break; 
-        case 0x00ff00: src = "lime"; break;  
-        case 0x808000: src = "olive"; break; 
+        case 0x000000: src = "black"; break;
+        case 0xc0c0c0: src = "silver"; break;
+        case 0x808080: src = "gray"; break;
+        case 0xffffff: src = "white"; break;
+        case 0x800000: src = "maroon"; break;
+        case 0xff0000: src = "red"; break;
+        case 0x800080: src = "purple"; break;
+        case 0xff00ff: src = "fuchsia"; break;
+        case 0x008000: src = "green"; break;
+        case 0x00ff00: src = "lime"; break;
+        case 0x808000: src = "olive"; break;
         case 0xffff00: src = "yellow"; break;
-        case 0x000080: src = "navy"; break;  
-        case 0x0000ff: src = "blue"; break;  
-        case 0x008080: src = "teal"; break;  
-        case 0x00ffff: src = "aqua"; break;  
+        case 0x000080: src = "navy"; break;
+        case 0x0000ff: src = "blue"; break;
+        case 0x008080: src = "teal"; break;
+        case 0x00ffff: src = "aqua"; break;
 
         default: {
             if ((rgb24 & 0xf0f0f) * 0x11 == rgb24) {
@@ -429,8 +428,7 @@ rgb24_to_css(char *const buf, unsigned const rgb24)
  * \param rgba32 Colour expressed in form 0xrrggbbaa.
  * \pre buflen \>= 8.
  */
-void
-sp_svg_write_color(gchar *buf, unsigned const buflen, guint32 const rgba32)
+void sp_svg_write_color(gchar *buf, unsigned const buflen, guint32 const rgba32)
 {
     g_assert(8 <= buflen);
 
@@ -443,17 +441,14 @@ sp_svg_write_color(gchar *buf, unsigned const buflen, guint32 const rgba32)
     }
 }
 
-static GHashTable *
+static std::map<string, unsigned long>
 sp_svg_create_color_hash()
 {
-    GHashTable *colors = g_hash_table_new(g_str_hash, g_str_equal);
+    std::map<string, unsigned long> colors;
 
     for (unsigned i = 0 ; i < G_N_ELEMENTS(sp_svg_color_named) ; i++) {
-        g_hash_table_insert(colors,
-                            (gpointer)(sp_svg_color_named[i].name),
-                            (gpointer)(&sp_svg_color_named[i].rgb));
+        colors[sp_svg_color_named[i].name] = sp_svg_color_named[i].rgb;
     }
-
     return colors;
 }
 
@@ -480,7 +475,7 @@ g_message("profile name: %s", icc->colorProfile.c_str());
                     count = 4; //do we need it? Should we allow an arbitrary number of color values? Or should we limit to a maximum? (max==4?)
                 }
                 for (gint i = 0; i < count; i++){
-                    color_in[i] = (guchar) ((((gdouble)icc->colors[i])*256.0) * (gdouble)scales[i]);
+                    color_in[i] = static_cast<guchar>((((gdouble)icc->colors[i])*256.0) * (gdouble)scales[i]);
 g_message("input[%d]: %d",i, color_in[i]);
                 }
 

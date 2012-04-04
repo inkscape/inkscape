@@ -18,7 +18,7 @@
 #include <string>		// for string
 #include <cstring>
 
-using namespace std;
+using std::string;
 
 string itos(int n)
 {
