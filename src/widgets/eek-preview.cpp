@@ -254,8 +254,15 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
         if ( preview->_previewPixbuf ) {
             GtkDrawingArea* da = &(preview->drawing);
 	    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(da));
-            gint w = gdk_window_get_width(window);
-            gint h = gdk_window_get_height(window);
+            GdkDrawable* drawable = (GdkDrawable*) window;
+            gint w = 0;
+            gint h = 0;
+#if GTK_CHECK_VERSION(2,24,0)
+	    w = gdk_window_get_width(window);
+	    h = gdk_window_get_height(window);
+#else
+	    gdk_drawable_get_size(drawable, &w, &h);
+#endif
             
 	    if ((w != preview->_scaledW) || (h != preview->_scaledH)) {
                 if (preview->_scaled) {
@@ -267,7 +274,6 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
             }
 
             GdkPixbuf* pix = (preview->_scaled) ? preview->_scaled : preview->_previewPixbuf;
-            GdkDrawable* drawable = (GdkDrawable*) window;
 	    cairo_t* cr2 = gdk_cairo_create(drawable);
 	    gdk_cairo_set_source_pixbuf(cr2, pix, 0, 0);
 	    cairo_paint(cr2);
