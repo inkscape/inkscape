@@ -536,7 +536,7 @@ void SearchEntry::_on_icon_pressed(Gtk::EntryIconPosition icon_position, const G
 {
     if (icon_position == Gtk::ENTRY_ICON_SECONDARY) {
         grab_focus();
-        set_text("");
+        delete_text(0, -1);
     } else if (icon_position == Gtk::ENTRY_ICON_PRIMARY) {
         select_region(0, -1);
         grab_focus();
