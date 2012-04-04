@@ -513,13 +513,16 @@ SPStop *sp_last_stop(SPGradient *gradient)
 SPStop *sp_get_stop_i(SPGradient *gradient, guint stop_i)
 {
     SPStop *stop = gradient->getFirstStop();
+    if (!stop) {
+        return NULL;
+    }
 
     // if this is valid but weird gradient without an offset-zero stop element,
     // inkscape has created a handle for the start of gradient anyway,
     // so when it asks for stop N that corresponds to stop element N-1
     if (stop->offset != 0)
     {
-        stop_i --;
+        stop_i--;
     }
     
     for (guint i = 0; i < stop_i; i++) {
@@ -534,10 +537,10 @@ SPStop *sp_get_stop_i(SPGradient *gradient, guint stop_i)
 
 guint32 average_color(guint32 c1, guint32 c2, gdouble p)
 {
-    guint32 r = (guint32) (SP_RGBA32_R_U (c1) * (1 - p) + SP_RGBA32_R_U (c2) * p);
-    guint32 g = (guint32) (SP_RGBA32_G_U (c1) * (1 - p) + SP_RGBA32_G_U (c2) * p);
-    guint32 b = (guint32) (SP_RGBA32_B_U (c1) * (1 - p) + SP_RGBA32_B_U (c2) * p);
-    guint32 a = (guint32) (SP_RGBA32_A_U (c1) * (1 - p) + SP_RGBA32_A_U (c2) * p);
+    guint32 r = static_cast<guint32>(SP_RGBA32_R_U (c1) * (1 - p) + SP_RGBA32_R_U (c2) * p);
+    guint32 g = static_cast<guint32>(SP_RGBA32_G_U (c1) * (1 - p) + SP_RGBA32_G_U (c2) * p);
+    guint32 b = static_cast<guint32>(SP_RGBA32_B_U (c1) * (1 - p) + SP_RGBA32_B_U (c2) * p);
+    guint32 a = static_cast<guint32>(SP_RGBA32_A_U (c1) * (1 - p) + SP_RGBA32_A_U (c2) * p);
 
     return SP_RGBA32_U_COMPOSE(r, g, b, a);
 }
