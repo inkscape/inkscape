@@ -976,6 +976,16 @@ void Export::onExport ()
 
     gchar const *filename = g_strdup(filename_entry.get_text().c_str());
 
+    if (filename == NULL){
+        sp_ui_error_dialog(_("You have to enter a filename"));
+        return;
+    }
+    if(*filename == '\0') {
+        g_free (const_cast<gchar*>(filename));
+        sp_ui_error_dialog(_("You have to enter a filename"));
+        return;
+    }
+    
     float const x0 = getValuePx(x0_adj);
     float const y0 = getValuePx(y0_adj);
     float const x1 = getValuePx(x1_adj);
@@ -985,19 +995,14 @@ void Export::onExport ()
     unsigned long int const width = int(getValue(bmwidth_adj) + 0.5);
     unsigned long int const height = int(getValue(bmheight_adj) + 0.5);
 
-    if (filename == NULL || *filename == '\0') {
-        sp_ui_error_dialog(_("You have to enter a filename"));
-        return;
-    }
-
     if (!((x1 > x0) && (y1 > y0) && (width > 0) && (height > 0))) {
+        g_free (const_cast<gchar*>(filename));
         sp_ui_error_dialog (_("The chosen area to be exported is invalid"));
         return;
     }
 
     // make sure that .png is the extension of the file:
     gchar * filename_ext = filename_add_extension(filename, "png");
-    //gtk_entry_set_text(GTK_ENTRY(filename_entry), filename_ext);
     filename_entry.set_text(filename_ext);
 
     gchar *path = absolutize_path_from_document_location(doc, filename_ext);
@@ -1131,6 +1136,7 @@ void Export::onExport ()
             break;
     }
 
+    g_free (const_cast<gchar*>(filename));
     g_free (filename_ext);
     g_free (path);
 
