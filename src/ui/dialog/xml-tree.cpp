@@ -513,7 +513,7 @@ void XmlTree::on_tree_select_row(GtkCTree *tree,
                                  gint /*column*/,
                                  gpointer data)
 {
-    XmlTree *self = (XmlTree *)data;
+    XmlTree *self = static_cast<XmlTree *>(data);
 
     Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(SP_XMLVIEW_TREE(tree), node);
     g_assert(repr != NULL);
@@ -539,7 +539,7 @@ void XmlTree::on_tree_unselect_row(GtkCTree *tree,
                                    gint /*column*/,
                                    gpointer data)
 {
-    XmlTree *self = (XmlTree *)data;
+    XmlTree *self = static_cast<XmlTree *>(data);
 
     if (self->blocked) {
         return;
@@ -569,7 +569,7 @@ void XmlTree::after_tree_move(GtkCTree */*tree*/,
                      GtkCTreeNode *new_sibling,
                      gpointer data)
 {
-    XmlTree *self = (XmlTree *)data;
+    XmlTree *self = static_cast<XmlTree *>(data);
 
     if (GTK_CTREE_ROW(node)->parent  == new_parent &&
         GTK_CTREE_ROW(node)->sibling == new_sibling)
@@ -732,7 +732,7 @@ void XmlTree::on_tree_unselect_row_hide()
 
 void XmlTree::on_attr_select_row(GtkTreeSelection *selection, gpointer data)
 {
-    XmlTree *self = (XmlTree *)data;
+    XmlTree *self = static_cast<XmlTree *>(data);
 
     GtkTreeIter   iter;
     GtkTreeModel *model;
@@ -899,7 +899,7 @@ void XmlTree::cmd_new_element_node()
 
     gchar *new_name = g_strdup(name_entry->get_text().c_str());
 
-    if (selected_repr != NULL && new_name) {
+    if (new_name) {
         Inkscape::XML::Document *xml_doc = current_document->getReprDoc();
         Inkscape::XML::Node *new_repr;
         new_repr = xml_doc->createElement(new_name);

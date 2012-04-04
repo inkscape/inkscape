@@ -420,11 +420,11 @@ void _loadPaletteFile( gchar const *filename )
                                 inHeader = false;
                                 ptr = block;
                                 Glib::ustring name("");
-                                int r = 0;
-                                int g = 0;
-                                int b = 0;
                                 skipWhitespace(ptr);
                                 if ( *ptr ) {
+                                    int r = 0;
+                                    int g = 0;
+                                    int b = 0;
                                     hasErr = parseNum(ptr, r);
                                     if ( !hasErr ) {
                                         skipWhitespace(ptr);
