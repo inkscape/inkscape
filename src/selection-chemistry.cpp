@@ -1782,6 +1782,18 @@ GSList *sp_get_same_stroke_style(SPItem *sel, GSList *src, SPSelectStrokeStyleTy
         return sp_get_same_fill_or_stroke_color(sel, src, type);
     }
 
+    /*
+     * Stroke width needs to handle transformations, so call this function
+     * to get the transformed stroke width
+     */
+    GSList *objects = NULL;
+    SPStyle *sel_style_for_width = NULL;
+    if (type == SP_STROKE_STYLE_WIDTH) {
+        objects = g_slist_prepend(objects, sel);
+        sel_style_for_width = sp_style_new (SP_ACTIVE_DOCUMENT);
+        objects_query_strokewidth (objects, sel_style_for_width);
+    }
+
     for (GSList *i = src; i != NULL; i = i->next) {
         SPItem *iter = SP_ITEM(i->data);
         SPStyle *iter_style = iter->style;
@@ -1790,7 +1802,15 @@ GSList *sp_get_same_stroke_style(SPItem *sel, GSList *src, SPSelectStrokeStyleTy
         if (type == SP_STROKE_STYLE_WIDTH) {
             match = (sel_style->stroke_width.set == iter_style->stroke_width.set);
             if (sel_style->stroke_width.set && iter_style->stroke_width.set) {
-                match = (sel_style->stroke_width.computed == iter_style->stroke_width.computed);
+                GSList *objects = NULL;
+                objects = g_slist_prepend(objects, iter);
+                SPStyle *iter_style_for_width = sp_style_new (SP_ACTIVE_DOCUMENT);
+                objects_query_strokewidth (objects, iter_style_for_width);
+
+                if (sel_style_for_width) {
+                    match = (sel_style_for_width->stroke_width.computed == iter_style_for_width->stroke_width.computed);
+                }
+                g_slist_free(objects);
             }
         }
         else if (type == SP_STROKE_STYLE_DASHES ) {
@@ -1824,6 +1844,8 @@ GSList *sp_get_same_stroke_style(SPItem *sel, GSList *src, SPSelectStrokeStyleTy
             matches = g_slist_prepend(matches, iter);
         }
     }
+
+    g_slist_free(objects);
 
     return matches;
 }
