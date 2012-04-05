@@ -1018,7 +1018,7 @@ void SPGradient::rebuildVector()
 
     vector.stops.clear();
 
-    SPGradient *reffed = ref->getObject();
+    SPGradient *reffed = ref ? ref->getObject() : NULL;
     if ( !hasStops() && reffed ) {
         /* Copy vector from referenced gradient */
         vector.built = true;   // Prevent infinite recursion.
