@@ -643,6 +643,17 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
         return FALSE;
     }
 
+    if (SP_ACTIVE_DESKTOP) {
+        if (! SP_ACTIVE_DESKTOP->event_log) {
+            g_message("file_save: ->event_log == NULL. please report to bug #967416");
+        }
+        if (! SP_ACTIVE_DESKTOP->messageStack()) {
+            g_message("file_save: ->messageStack() == NULL. please report to bug #967416");
+        }
+    } else {
+        g_message("file_save: SP_ACTIVE_DESKTOP == NULL. please report to bug #967416");
+    }
+
     SP_ACTIVE_DESKTOP->event_log->rememberFileSave();
     SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Document saved."));
     return true;
