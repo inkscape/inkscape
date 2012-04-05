@@ -70,12 +70,11 @@
 #include "live_effects/lpeobject-reference.h"
 #include "live_effects/parameter/path.h"
 #include "svg/svg.h" // for sp_svg_transform_write, used in _copySelection
-#include "svg/css-ostringstream.h" // used in _parseColor
+#include "svg/css-ostringstream.h" // used in copy
 #include "text-context.h"
 #include "text-editing.h"
 #include "tools-switch.h"
 #include "path-chemistry.h"
-#include "id-clash.h"
 #include "unit-constants.h"
 #include "helper/png-write.h"
 #include "svg/svg-color.h"
@@ -129,11 +128,8 @@ private:
     void _copyTextPath(SPTextPath *);
     Inkscape::XML::Node *_copyNode(Inkscape::XML::Node *, Inkscape::XML::Document *, Inkscape::XML::Node *);
 
-    void _pasteDocument(SPDesktop *desktop, SPDocument *clipdoc, bool in_place);
-    void _pasteDefs(SPDesktop *desktop, SPDocument *clipdoc);
     bool _pasteImage(SPDocument *doc);
     bool _pasteText(SPDesktop *desktop);
-    SPCSSAttr *_parseColor(const Glib::ustring &);
     void _applyPathEffect(SPItem *, gchar const *);
     SPDocument *_retrieveClipboard(Glib::ustring = "");
 
@@ -334,7 +330,7 @@ bool ClipboardManagerImpl::paste(SPDesktop *desktop, bool in_place)
         return false;
     }
 
-    _pasteDocument(desktop, tempdoc, in_place);
+    sp_import_document(desktop, tempdoc, in_place);
     tempdoc->doUnref();
 
     return true;
@@ -410,7 +406,7 @@ bool ClipboardManagerImpl::pasteStyle(SPDesktop *desktop)
     bool pasted = false;
 
     if (clipnode) {
-        _pasteDefs(desktop, tempdoc);
+        desktop->doc()->importDefs(tempdoc);
         SPCSSAttr *style = sp_repr_css_attr(clipnode, "style");
         sp_desktop_set_style(desktop, style);
         pasted = true;
@@ -512,7 +508,7 @@ bool ClipboardManagerImpl::pastePathEffect(SPDesktop *desktop)
         if ( clipnode ) {
             gchar const *effectstack = clipnode->attribute("inkscape:path-effect");
             if ( effectstack ) {
-                _pasteDefs(desktop, tempdoc);
+                desktop->doc()->importDefs(tempdoc);
                 // make sure all selected items are converted to paths first (i.e. rectangles)
                 sp_selected_to_lpeitems(desktop);
                 for (GSList *itemptr = const_cast<GSList *>(selection->itemList()) ; itemptr ; itemptr = itemptr->next) {
@@ -803,107 +799,6 @@ Inkscape::XML::Node *ClipboardManagerImpl::_copyNode(Inkscape::XML::Node *node, 
 
 
 /**
- * Paste the contents of a document into the active desktop.
- * @param clipdoc The document to paste
- * @param in_place Whether to paste the selection where it was when copied
- * @pre @c clipdoc is not empty and items can be added to the current layer
- */
-void ClipboardManagerImpl::_pasteDocument(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
-{
-    SPDocument *target_document = sp_desktop_document(desktop);
-    Inkscape::XML::Node *root = clipdoc->getReprRoot();
-    Inkscape::XML::Node *target_parent = desktop->currentLayer()->getRepr();
-    Inkscape::XML::Document *target_xmldoc = target_document->getReprDoc();
-
-    // copy definitions
-    _pasteDefs(desktop, clipdoc);
-
-    // copy objects
-    GSList *pasted_objects = NULL;
-    for (Inkscape::XML::Node *obj = root->firstChild() ; obj ; obj = obj->next()) {
-        // Don't copy metadata, defs, named views and internal clipboard contents to the document
-        if (!strcmp(obj->name(), "svg:defs")) {
-            continue;
-        }
-        if (!strcmp(obj->name(), "svg:metadata")) {
-            continue;
-        }
-        if (!strcmp(obj->name(), "sodipodi:namedview")) {
-            continue;
-        }
-        if (!strcmp(obj->name(), "inkscape:clipboard")) {
-            continue;
-        }
-        Inkscape::XML::Node *obj_copy = _copyNode(obj, target_xmldoc, target_parent);
-        pasted_objects = g_slist_prepend(pasted_objects, (gpointer) obj_copy);
-    }
-
-    // Change the selection to the freshly pasted objects
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    selection->setReprList(pasted_objects);
-
-    // invers apply parent transform
-    Geom::Affine doc2parent = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
-    sp_selection_apply_affine(selection, desktop->dt2doc() * doc2parent * desktop->doc2dt(), true, false);
-
-    // Update (among other things) all curves in paths, for bounds() to work
-    target_document->ensureUpToDate();
-
-    // move selection either to original position (in_place) or to mouse pointer
-    Geom::OptRect sel_bbox = selection->visualBounds();
-    if (sel_bbox) {
-        // get offset of selection to original position of copied elements
-        Geom::Point pos_original;
-        Inkscape::XML::Node *clipnode = sp_repr_lookup_name(root, "inkscape:clipboard", 1);
-        if (clipnode) {
-            Geom::Point min, max;
-            sp_repr_get_point(clipnode, "min", &min);
-            sp_repr_get_point(clipnode, "max", &max);
-            pos_original = Geom::Point(min[Geom::X], max[Geom::Y]);
-        }
-        Geom::Point offset = pos_original - sel_bbox->corner(3);
-
-        if (!in_place) {
-            SnapManager &m = desktop->namedview->snap_manager;
-            m.setup(desktop);
-            sp_event_context_discard_delayed_snap_event(desktop->event_context);
-
-            // get offset from mouse pointer to bbox center, snap to grid if enabled
-            Geom::Point mouse_offset = desktop->point() - sel_bbox->midpoint();
-            offset = m.multipleOfGridPitch(mouse_offset - offset, sel_bbox->midpoint() + offset) + offset;
-            m.unSetup();
-        }
-
-        sp_selection_move_relative(selection, offset);
-    }
-
-    g_slist_free(pasted_objects);
-}
-
-
-/**
- * Paste SVG defs from the document retrieved from the clipboard into the active document.
- * @param clipdoc The document to paste.
- * @pre @c clipdoc != NULL and pasting into the active document is possible.
- */
-void ClipboardManagerImpl::_pasteDefs(SPDesktop *desktop, SPDocument *clipdoc)
-{
-    // boilerplate vars copied from _pasteDocument
-    SPDocument *target_document = sp_desktop_document(desktop);
-    Inkscape::XML::Node *root = clipdoc->getReprRoot();
-    Inkscape::XML::Node *defs = sp_repr_lookup_name(root, "svg:defs", 1);
-    Inkscape::XML::Node *target_defs = target_document->getDefs()->getRepr();
-    Inkscape::XML::Document *target_xmldoc = target_document->getReprDoc();
-
-    prevent_id_clashes(clipdoc, target_document);
-
-    for (Inkscape::XML::Node *def = defs->firstChild() ; def ; def = def->next()) {
-        _copyNode(def, target_xmldoc, target_defs);
-    }
-}
-
-
-/**
  * Retrieve a bitmap image from the clipboard and paste it into the active document.
  */
 bool ClipboardManagerImpl::_pasteImage(SPDocument *doc)
@@ -957,83 +852,13 @@ bool ClipboardManagerImpl::_pasteText(SPDesktop *desktop)
     }
 
     // try to parse the text as a color and, if successful, apply it as the current style
-    SPCSSAttr *css = _parseColor(_clipboard->wait_for_text());
+    SPCSSAttr *css = sp_repr_css_attr_parse_color_to_fill(_clipboard->wait_for_text());
     if (css) {
         sp_desktop_set_style(desktop, css);
         return true;
     }
 
     return false;
-}
-
-
-/**
- * Attempt to parse the passed string as a hexadecimal RGB or RGBA color.
- * @param text The Glib::ustring to parse
- * @return New CSS style representation if the parsing was successful, NULL otherwise
- */
-SPCSSAttr *ClipboardManagerImpl::_parseColor(const Glib::ustring &text)
-{
-// TODO reuse existing code instead of replicating here.
-    Glib::ustring::size_type len = text.bytes();
-    char *str = const_cast<char *>(text.data());
-    bool attempt_alpha = false;
-    if ( !str || ( *str == '\0' ) ) {
-        return NULL; // this is OK due to boolean short-circuit
-    }
-
-    // those conditionals guard against parsing e.g. the string "fab" as "fab000"
-    // (incomplete color) and "45fab71" as "45fab710" (incomplete alpha)
-    if ( *str == '#' ) {
-        if ( len < 7 ) {
-            return NULL;
-        }
-        if ( len >= 9 ) {
-            attempt_alpha = true;
-        }
-    } else {
-        if ( len < 6 ) {
-            return NULL;
-        }
-        if ( len >= 8 ) {
-            attempt_alpha = true;
-        }
-    }
-
-    unsigned int color = 0, alpha = 0xff;
-
-    // skip a leading #, if present
-    if ( *str == '#' ) {
-        ++str;
-    }
-
-    // try to parse first 6 digits
-    int res = sscanf(str, "%6x", &color);
-    if ( res && ( res != EOF ) ) {
-        if (attempt_alpha) {// try to parse alpha if there's enough characters
-            sscanf(str + 6, "%2x", &alpha);
-            if ( !res || res == EOF ) {
-                alpha = 0xff;
-            }
-        }
-
-        SPCSSAttr *color_css = sp_repr_css_attr_new();
-
-        // print and set properties
-        gchar color_str[16];
-        g_snprintf(color_str, 16, "#%06x", color);
-        sp_repr_css_set_property(color_css, "fill", color_str);
-
-        float opacity = static_cast<float>(alpha)/static_cast<float>(0xff);
-        if (opacity > 1.0) {
-            opacity = 1.0; // safeguard
-        }
-        Inkscape::CSSOStringStream opcss;
-        opcss << opacity;
-        sp_repr_css_set_property(color_css, "fill-opacity", opcss.str().data());
-        return color_css;
-    }
-    return NULL;
 }
 
 

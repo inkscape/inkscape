@@ -70,6 +70,7 @@ bool sp_repr_save_rebased_file(Inkscape::XML::Document *doc, gchar const *filena
 SPCSSAttr *sp_repr_css_attr_new(void);
 void sp_repr_css_attr_unref(SPCSSAttr *css);
 SPCSSAttr *sp_repr_css_attr(Inkscape::XML::Node *repr, gchar const *attr);
+SPCSSAttr *sp_repr_css_attr_parse_color_to_fill(const Glib::ustring &text);
 SPCSSAttr *sp_repr_css_attr_inherited(Inkscape::XML::Node *repr, gchar const *attr);
 
 gchar const *sp_repr_css_property(SPCSSAttr *css, gchar const *name, gchar const *defval);

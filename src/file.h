@@ -117,6 +117,8 @@ bool sp_file_save_dialog (Gtk::Window &parentWindow, SPDocument *doc, Inkscape::
 ## I M P O R T
 ######################*/
 
+void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place);
+
 /**
  * Displays a file selector dialog, to allow the
  * user to import data into the current document.

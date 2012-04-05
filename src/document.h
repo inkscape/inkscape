@@ -247,6 +247,8 @@ public:
 	
     unsigned int vacuumDocument();
 
+    void importDefs(SPDocument *source);
+
 private:
     void do_change_uri(gchar const *const filename, bool const rebase);
     void setupViewport(SPItemCtx *ctx);

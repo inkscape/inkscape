@@ -89,6 +89,77 @@ SPCSSAttr *sp_repr_css_attr(Node *repr, gchar const *attr)
     return css;
 }
 
+
+/**
+ * Attempt to parse the passed string as a hexadecimal RGB or RGBA color.
+ * @param text The Glib::ustring to parse
+ * @return New CSS style representation if the parsing was successful, NULL otherwise
+ */
+SPCSSAttr *sp_repr_css_attr_parse_color_to_fill(const Glib::ustring &text)
+{
+// TODO reuse existing code instead of replicating here.
+    Glib::ustring::size_type len = text.bytes();
+    char *str = const_cast<char *>(text.data());
+    bool attempt_alpha = false;
+    if ( !str || ( *str == '\0' ) ) {
+        return NULL; // this is OK due to boolean short-circuit
+    }
+
+    // those conditionals guard against parsing e.g. the string "fab" as "fab000"
+    // (incomplete color) and "45fab71" as "45fab710" (incomplete alpha)
+    if ( *str == '#' ) {
+        if ( len < 7 ) {
+            return NULL;
+        }
+        if ( len >= 9 ) {
+            attempt_alpha = true;
+        }
+    } else {
+        if ( len < 6 ) {
+            return NULL;
+        }
+        if ( len >= 8 ) {
+            attempt_alpha = true;
+        }
+    }
+
+    unsigned int color = 0, alpha = 0xff;
+
+    // skip a leading #, if present
+    if ( *str == '#' ) {
+        ++str;
+    }
+
+    // try to parse first 6 digits
+    int res = sscanf(str, "%6x", &color);
+    if ( res && ( res != EOF ) ) {
+        if (attempt_alpha) {// try to parse alpha if there's enough characters
+            sscanf(str + 6, "%2x", &alpha);
+            if ( !res || res == EOF ) {
+                alpha = 0xff;
+            }
+        }
+
+        SPCSSAttr *color_css = sp_repr_css_attr_new();
+
+        // print and set properties
+        gchar color_str[16];
+        g_snprintf(color_str, 16, "#%06x", color);
+        sp_repr_css_set_property(color_css, "fill", color_str);
+
+        float opacity = static_cast<float>(alpha)/static_cast<float>(0xff);
+        if (opacity > 1.0) {
+            opacity = 1.0; // safeguard
+        }
+        Inkscape::CSSOStringStream opcss;
+        opcss << opacity;
+        sp_repr_css_set_property(color_css, "fill-opacity", opcss.str().data());
+        return color_css;
+    }
+    return NULL;
+}
+
+
 /**
  * Adds an attribute to an existing SPCSAttr with the cascaded value including all parents.
  */ 

@@ -36,6 +36,7 @@
 #include "dir-util.h"
 #include "document-private.h"
 #include "document-undo.h"
+#include "event-context.h"
 #include "extension/db.h"
 #include "extension/input.h"
 #include "extension/output.h"
@@ -972,6 +973,89 @@ sp_file_save_a_copy(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
 /*######################
 ## I M P O R T
 ######################*/
+
+/**
+ * Paste the contents of a document into the active desktop.
+ * @param clipdoc The document to paste
+ * @param in_place Whether to paste the selection where it was when copied
+ * @pre @c clipdoc is not empty and items can be added to the current layer
+ */
+void sp_import_document(SPDesktop *desktop, SPDocument *clipdoc, bool in_place)
+{
+    //TODO: merge with file_import()
+
+    SPDocument *target_document = sp_desktop_document(desktop);
+    Inkscape::XML::Node *root = clipdoc->getReprRoot();
+    Inkscape::XML::Node *target_parent = desktop->currentLayer()->getRepr();
+
+    // copy definitions
+    desktop->doc()->importDefs(clipdoc);
+
+    // copy objects
+    GSList *pasted_objects = NULL;
+    for (Inkscape::XML::Node *obj = root->firstChild() ; obj ; obj = obj->next()) {
+        // Don't copy metadata, defs, named views and internal clipboard contents to the document
+        if (!strcmp(obj->name(), "svg:defs")) {
+            continue;
+        }
+        if (!strcmp(obj->name(), "svg:metadata")) {
+            continue;
+        }
+        if (!strcmp(obj->name(), "sodipodi:namedview")) {
+            continue;
+        }
+        if (!strcmp(obj->name(), "inkscape:clipboard")) {
+            continue;
+        }
+        Inkscape::XML::Node *obj_copy = obj->duplicate(target_document->getReprDoc());
+        target_parent->appendChild(obj_copy);
+        Inkscape::GC::release(obj_copy);
+
+        pasted_objects = g_slist_prepend(pasted_objects, (gpointer) obj_copy);
+    }
+
+    // Change the selection to the freshly pasted objects
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    selection->setReprList(pasted_objects);
+
+    // invers apply parent transform
+    Geom::Affine doc2parent = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
+    sp_selection_apply_affine(selection, desktop->dt2doc() * doc2parent * desktop->doc2dt(), true, false);
+
+    // Update (among other things) all curves in paths, for bounds() to work
+    target_document->ensureUpToDate();
+
+    // move selection either to original position (in_place) or to mouse pointer
+    Geom::OptRect sel_bbox = selection->visualBounds();
+    if (sel_bbox) {
+        // get offset of selection to original position of copied elements
+        Geom::Point pos_original;
+        Inkscape::XML::Node *clipnode = sp_repr_lookup_name(root, "inkscape:clipboard", 1);
+        if (clipnode) {
+            Geom::Point min, max;
+            sp_repr_get_point(clipnode, "min", &min);
+            sp_repr_get_point(clipnode, "max", &max);
+            pos_original = Geom::Point(min[Geom::X], max[Geom::Y]);
+        }
+        Geom::Point offset = pos_original - sel_bbox->corner(3);
+
+        if (!in_place) {
+            SnapManager &m = desktop->namedview->snap_manager;
+            m.setup(desktop);
+            sp_event_context_discard_delayed_snap_event(desktop->event_context);
+
+            // get offset from mouse pointer to bbox center, snap to grid if enabled
+            Geom::Point mouse_offset = desktop->point() - sel_bbox->midpoint();
+            offset = m.multipleOfGridPitch(mouse_offset - offset, sel_bbox->midpoint() + offset) + offset;
+            m.unSetup();
+        }
+
+        sp_selection_move_relative(selection, offset);
+    }
+
+    g_slist_free(pasted_objects);
+}
+
 
 /**
  *  Import a resource.  Called by sp_file_import()
