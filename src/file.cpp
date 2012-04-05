@@ -860,10 +860,11 @@ sp_file_save_dialog(Gtk::Window &parentWindow, SPDocument *doc, Inkscape::Extens
             g_warning( "Error converting save filename to UTF-8." );
 
         Inkscape::Extension::Output *omod = dynamic_cast<Inkscape::Extension::Output *>(selectionType);
-        Glib::ustring save_extension = (std::string)omod->get_extension();
-
-        if ( !hasEnding(fileName, save_extension.c_str()) ) {
-            fileName += save_extension.c_str();
+        if (omod) {
+            Glib::ustring save_extension = (std::string)omod->get_extension();
+            if ( !hasEnding(fileName, save_extension.c_str()) ) {
+                fileName += save_extension.c_str();
+            }
         }
 
         // FIXME: does the argument !is_copy really convey the correct meaning here?
