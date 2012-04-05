@@ -6,8 +6,9 @@
  *   Frank Felfe <innerspace@iname.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Kris De Gussem <Kris.DeGussem@gmail.com>
  *
- * Copyright (C) 1999-2010 authors
+ * Copyright (C) 1999-2012 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -1034,22 +1035,19 @@ static void set_event_location(SPDesktop *desktop, GdkEvent *event) {
  * Create popup menu and tell Gtk to show it.
  */
 void sp_event_root_menu_popup(SPDesktop *desktop, SPItem *item, GdkEvent *event) {
-    GtkWidget *menu;
-
     /* fixme: This is not what I want but works for now (Lauris) */
     if (event->type == GDK_KEY_PRESS) {
         item = sp_desktop_selection(desktop)->singleItem();
     }
-    menu = sp_ui_context_menu(desktop, item);
-    gtk_widget_show(menu);
+	ContextMenu* CM = new ContextMenu(desktop, item);
+	CM->show();
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
-        gtk_menu_popup(GTK_MENU(menu), NULL, NULL, 0, NULL,
-                event->button.button, event->button.time);
+        CM->popup(event->button.button, event->button.time);
         break;
     case GDK_KEY_PRESS:
-        gtk_menu_popup(GTK_MENU(menu), NULL, NULL, 0, NULL, 0, event->key.time);
+        CM->popup(0, event->key.time);
         break;
     default:
         break;

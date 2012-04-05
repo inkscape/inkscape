@@ -8,11 +8,13 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
+ *   Kris De Gussem <Kris.DeGussem@gmail.com>
  *
+ * Copyright (C) 2012 Kris De Gussem
  * Copyright (C) 2010 authors
  * Copyright (C) 1999-2005 authors
- * Copyright (C) 2001-2002 Ximian, Inc.
  * Copyright (C) 2004 David Turner
+ * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -37,7 +39,6 @@
 #include "desktop-handles.h"
 #include "interface.h"
 #include "desktop.h"
-#include "ui/context-menu.h"
 #include "selection.h"
 #include "selection-chemistry.h"
 #include "svg-view-widget.h"
@@ -66,6 +67,16 @@
 #include "gradient-drag.h"
 #include "widgets/ege-paint-def.h"
 #include "document-undo.h"
+#include "sp-anchor.h"
+#include "sp-clippath.h"
+#include "sp-image.h"
+#include "sp-item.h"
+#include "sp-mask.h"
+// #include "verbs.h"
+#include "message-stack.h"
+// #include "inkscape.h"
+#include "ui/dialog/dialog-manager.h"
+// #include "../xml/repr.h"
 
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
@@ -296,9 +307,9 @@ void sp_ui_new_view_preview()
 void
 sp_ui_close_view(GtkWidget */*widget*/)
 {
-	SPDesktop *dt = SP_ACTIVE_DESKTOP;
+    SPDesktop *dt = SP_ACTIVE_DESKTOP;
 
-	if (dt == NULL) {
+    if (dt == NULL) {
         return;
     }
 
@@ -329,14 +340,14 @@ sp_ui_close_all(void)
     /* Iterate through all the windows, destroying each in the order they
        become active */
     while (SP_ACTIVE_DESKTOP) {
-    	SPDesktop *dt = SP_ACTIVE_DESKTOP;
-    	if (dt->shutdown()) {
+        SPDesktop *dt = SP_ACTIVE_DESKTOP;
+        if (dt->shutdown()) {
             /* The user canceled the operation, so end doing the close */
             return FALSE;
         }
-    	// Shutdown can proceed; use the stored reference to the desktop here instead of the current SP_ACTIVE_DESKTOP,
-    	// because the user might have changed the focus in the meantime (see bug #381357 on Launchpad)
-    	dt->destroyWidget();
+        // Shutdown can proceed; use the stored reference to the desktop here instead of the current SP_ACTIVE_DESKTOP,
+        // because the user might have changed the focus in the meantime (see bug #381357 on Launchpad)
+        dt->destroyWidget();
     }
 
     return TRUE;
@@ -353,7 +364,7 @@ static void
 sp_ui_menu_activate(void */*object*/, SPAction *action)
 {
     if (!temporarily_block_actions) {
-    	sp_action_perform(action, NULL);
+        sp_action_perform(action, NULL);
     }
 }
 
@@ -481,8 +492,7 @@ sp_ui_dialog_title_string(Inkscape::Verb *verb, gchar *c)
  *
  */
 
-static GtkWidget *
-sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::UI::View::View *view, bool radio = false, GSList *group = NULL)
+static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::UI::View::View *view, bool radio, GSList *group)
 {
     SPAction *action;
     GtkWidget *item;
@@ -503,18 +513,18 @@ sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::
             GtkWidget *const hb = gtk_hbox_new(FALSE, 16);
             GtkWidget *const name_lbl = gtk_label_new("");
             gtk_label_set_markup_with_mnemonic(GTK_LABEL(name_lbl), action->name);
-            gtk_misc_set_alignment((GtkMisc *) name_lbl, 0.0, 0.5);
-            gtk_box_pack_start((GtkBox *) hb, name_lbl, TRUE, TRUE, 0);
+            gtk_misc_set_alignment(reinterpret_cast<GtkMisc *>(name_lbl), 0.0, 0.5);
+            gtk_box_pack_start(reinterpret_cast<GtkBox *>(hb), name_lbl, TRUE, TRUE, 0);
             GtkWidget *const accel_lbl = gtk_label_new(c);
-            gtk_misc_set_alignment((GtkMisc *) accel_lbl, 1.0, 0.5);
-            gtk_box_pack_end((GtkBox *) hb, accel_lbl, FALSE, FALSE, 0);
+            gtk_misc_set_alignment(reinterpret_cast<GtkMisc *>(accel_lbl), 1.0, 0.5);
+            gtk_box_pack_end(reinterpret_cast<GtkBox *>(hb), accel_lbl, FALSE, FALSE, 0);
             gtk_widget_show_all(hb);
             if (radio) {
                 item = gtk_radio_menu_item_new (group);
             } else {
                 item = gtk_image_menu_item_new();
             }
-            gtk_container_add((GtkContainer *) item, hb);
+            gtk_container_add(reinterpret_cast<GtkContainer *>(item), hb);
             g_free(c);
         } else {
             if (radio) {
@@ -524,8 +534,8 @@ sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::
             }
             GtkWidget *const name_lbl = gtk_label_new("");
             gtk_label_set_markup_with_mnemonic(GTK_LABEL(name_lbl), action->name);
-            gtk_misc_set_alignment((GtkMisc *) name_lbl, 0.0, 0.5);
-            gtk_container_add((GtkContainer *) item, name_lbl);
+            gtk_misc_set_alignment(reinterpret_cast<GtkMisc *>(name_lbl), 0.0, 0.5);
+            gtk_container_add(reinterpret_cast<GtkContainer *>(item), name_lbl);
         }
 
         action->signal_set_sensitive.connect(
@@ -929,8 +939,8 @@ void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape
                         gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
                     }
                     if (verb->get_code() != SP_VERB_NONE) {
-                    	SPAction *action = verb->get_action(view);
-                    	g_signal_connect( G_OBJECT(item), "expose_event", (GCallback) update_view_menu, (void *) action);
+                        SPAction *action = verb->get_action(view);
+                        g_signal_connect( G_OBJECT(item), "expose_event", (GCallback) update_view_menu, (void *) action);
                     }
                 } else {
                     sp_ui_menu_append_item_from_verb(GTK_MENU(menu), verb, view);
@@ -1016,87 +1026,6 @@ GtkWidget *sp_ui_main_menubar(Inkscape::UI::View::View *view)
     return mbar;
 }
 
-static void leave_group(GtkMenuItem *, SPDesktop *desktop) {
-    desktop->setCurrentLayer(desktop->currentLayer()->parent);
-}
-
-static void enter_group(GtkMenuItem *mi, SPDesktop *desktop) {
-    desktop->setCurrentLayer(reinterpret_cast<SPObject *>(g_object_get_data(G_OBJECT(mi), "group")));
-    sp_desktop_selection(desktop)->clear();
-}
-
-GtkWidget *
-sp_ui_context_menu(Inkscape::UI::View::View *view, SPItem *item)
-{
-    GtkWidget *m;
-    SPDesktop *dt;
-
-    dt = static_cast<SPDesktop*>(view);
-
-    m = gtk_menu_new();
-
-    /* Undo and Redo */
-    sp_ui_menu_append_item_from_verb(GTK_MENU(m), Inkscape::Verb::get(SP_VERB_EDIT_UNDO), view);
-    sp_ui_menu_append_item_from_verb(GTK_MENU(m), Inkscape::Verb::get(SP_VERB_EDIT_REDO), view);
-
-    /* Separator */
-    sp_ui_menu_append_item(GTK_MENU(m), NULL, NULL, NULL, NULL, NULL, NULL);
-
-    sp_ui_menu_append_item_from_verb(GTK_MENU(m), Inkscape::Verb::get(SP_VERB_EDIT_CUT), view);
-    sp_ui_menu_append_item_from_verb(GTK_MENU(m), Inkscape::Verb::get(SP_VERB_EDIT_COPY), view);
-    sp_ui_menu_append_item_from_verb(GTK_MENU(m), Inkscape::Verb::get(SP_VERB_EDIT_PASTE), view);
-
-    /* Separator */
-    sp_ui_menu_append_item(GTK_MENU(m), NULL, NULL, NULL, NULL, NULL, NULL);
-
-    sp_ui_menu_append_item_from_verb(GTK_MENU(m), Inkscape::Verb::get(SP_VERB_EDIT_DUPLICATE), view);
-    sp_ui_menu_append_item_from_verb(GTK_MENU(m), Inkscape::Verb::get(SP_VERB_EDIT_DELETE), view);
-
-    /* Item menu */
-    if (item) {
-        sp_ui_menu_append_item(GTK_MENU(m), NULL, NULL, NULL, NULL, NULL, NULL);
-        sp_object_menu((SPObject *) item, dt, GTK_MENU(m));
-    }
-
-    /* layer menu */
-    SPGroup *group=NULL;
-    if (item) {
-        if (SP_IS_GROUP(item)) {
-            group = SP_GROUP(item);
-        } else if ( item != dt->currentRoot() && SP_IS_GROUP(item->parent) ) {
-            group = SP_GROUP(item->parent);
-        }
-    }
-
-    if (( group && group != dt->currentLayer() ) ||
-        ( dt->currentLayer() != dt->currentRoot() && dt->currentLayer()->parent != dt->currentRoot() ) ) {
-        /* Separator */
-        sp_ui_menu_append_item(GTK_MENU(m), NULL, NULL, NULL, NULL, NULL, NULL);
-    }
-
-    if ( group && group != dt->currentLayer() ) {
-        /* TRANSLATORS: #%s is the id of the group e.g. <g id="#g7">, not a number. */
-        gchar *label=g_strdup_printf(_("Enter group #%s"), group->getId());
-        GtkWidget *w = gtk_menu_item_new_with_label(label);
-        g_free(label);
-        g_object_set_data(G_OBJECT(w), "group", group);
-        g_signal_connect(G_OBJECT(w), "activate", GCallback(enter_group), dt);
-        gtk_widget_show(w);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
-    }
-
-    if ( dt->currentLayer() != dt->currentRoot() ) {
-        if ( dt->currentLayer()->parent != dt->currentRoot() ) {
-            GtkWidget *w = gtk_menu_item_new_with_label(_("Go to parent"));
-            g_signal_connect(G_OBJECT(w), "activate", GCallback(leave_group), dt);
-            gtk_widget_show(w);
-            gtk_menu_shell_append(GTK_MENU_SHELL(m), w);
-
-        }
-    }
-
-    return m;
-}
 
 /* Drag and Drop */
 void
@@ -1455,9 +1384,9 @@ sp_ui_drag_data_received(GtkWidget *widget,
 
             gchar *filename = g_build_filename( g_get_tmp_dir(), "inkscape-dnd-import", NULL );
             g_file_set_contents(filename, 
-			    reinterpret_cast<gchar const *>(gtk_selection_data_get_data (data)), 
-			    gtk_selection_data_get_length (data), 
-			    NULL);
+                reinterpret_cast<gchar const *>(gtk_selection_data_get_data (data)), 
+                gtk_selection_data_get_length (data), 
+                NULL);
             file_import(doc, filename, ext);
             g_free(filename);
 
@@ -1628,6 +1557,659 @@ void injectRenamedIcons()
     }
 }
 
+
+void ContextMenu::EnterGroup(Gtk::MenuItem* mi)
+{
+    _desktop->setCurrentLayer(reinterpret_cast<SPObject *>(mi->get_data("group")));
+    _desktop->selection->clear();
+}
+
+void ContextMenu::LeaveGroup(void)
+{
+    _desktop->setCurrentLayer(_desktop->currentLayer()->parent);
+}
+
+ContextMenu::ContextMenu(Inkscape::UI::View::View *view, SPItem *item) :
+    _item(item),
+    separators(),
+    MIGroup(),
+    MIParent(_("Go to parent"))
+{
+// g_message("ContextMenu");
+    _object = static_cast<SPObject *>(item);
+    _desktop = static_cast<SPDesktop*>(view);
+
+    /* Undo and Redo */
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_UNDO), view);
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_REDO), view);
+
+    AddSeparator();
+
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_CUT), view);
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_COPY), view);
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_PASTE), view);
+
+    AddSeparator();
+
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_DUPLICATE), view);
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_DELETE), view);
+
+    /* Item menu */
+    if (item!=NULL) {
+        AddSeparator();
+        MakeObjectMenu();
+    }
+    
+    /* layer menu */
+    SPGroup *group=NULL;
+    if (item) {
+        if (SP_IS_GROUP(item)) {
+            group = SP_GROUP(item);
+        } else if ( item != _desktop->currentRoot() && SP_IS_GROUP(item->parent) ) {
+            group = SP_GROUP(item->parent);
+        }
+    }
+
+    if (( group && group != _desktop->currentLayer() ) ||
+        ( _desktop->currentLayer() != _desktop->currentRoot() && _desktop->currentLayer()->parent != _desktop->currentRoot() ) ) {
+        AddSeparator();
+    }
+
+    if ( group && group != _desktop->currentLayer() ) {
+        /* TRANSLATORS: #%1 is the id of the group e.g. <g id="#g7">, not a number. */
+        MIGroup.set_label (Glib::ustring::compose(_("Enter group #%1"), group->getId()));
+        MIGroup.set_data("group", group);
+        MIGroup.signal_activate().connect(sigc::bind(sigc::mem_fun(*this, &ContextMenu::EnterGroup),&MIGroup));
+        MIGroup.show();
+        append(MIGroup);
+    }
+
+    if ( _desktop->currentLayer() != _desktop->currentRoot() ) {
+        if ( _desktop->currentLayer()->parent != _desktop->currentRoot() ) {
+            MIParent.signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::LeaveGroup));
+            MIParent.show();
+            append(MIParent);
+        }
+    }
+}
+
+ContextMenu::~ContextMenu(void)
+{
+// g_message("~ContextMenu");
+}
+
+Gtk::SeparatorMenuItem* ContextMenu::AddSeparator(void)
+{
+    Gtk::SeparatorMenuItem* sep = new Gtk::SeparatorMenuItem();
+    sep->show();
+    append(*sep);
+    separators.push_back(sep);
+    return sep;
+}
+
+void ContextMenu::AppendItemFromVerb(Inkscape::Verb *verb, Inkscape::UI::View::View *view)//, bool radio, GSList *group)
+{
+    SPAction *action;
+
+    if (verb->get_code() == SP_VERB_NONE) {
+        Gtk::MenuItem *item = AddSeparator();
+        item->show();
+        append(*item);
+    } else {
+        action = verb->get_action(view);
+        if (!action)
+        {
+            return;
+        }
+        
+        Gtk::ImageMenuItem *item = NULL;
+        unsigned int shortcut = sp_shortcut_get_primary(verb);
+        if (shortcut!=GDK_VoidSymbol) {
+            gchar* c = sp_shortcut_get_label(shortcut);
+            Gtk::HBox *const hb = new Gtk::HBox (FALSE, 16);
+            Gtk::Label *const name_lbl = new Gtk::Label(action->name, true);
+            name_lbl->set_alignment(0.0, 0.5);
+            hb->pack_start(*name_lbl, TRUE, TRUE, 0);
+            Gtk::Label *const accel_lbl = new Gtk::Label(c);
+            accel_lbl->set_alignment(1.0, 0.5);
+            hb->pack_end(*accel_lbl, FALSE, FALSE, 0);
+            hb->show_all();
+            // if (radio) {
+                // item = gtk_radio_menu_item_new (group);
+            // } else {
+                item = new Gtk::ImageMenuItem();
+            // }
+            item->add(*hb);
+            g_free(c);
+        } else {
+            // if (radio) {
+                // item = gtk_radio_menu_item_new (group);
+            // } else {
+                item = new Gtk::ImageMenuItem();
+            // }
+            Gtk::Label *const name_lbl = new Gtk::Label(action->name, true);
+            name_lbl->set_alignment(0.0, 0.5);
+            item->add(*name_lbl);
+        }
+
+        action->signal_set_sensitive.connect(sigc::mem_fun(*this, &ContextMenu::set_sensitive));
+        action->signal_set_name.connect(sigc::mem_fun(*item, &ContextMenu::set_name));
+
+        if (!action->sensitive) {
+            item->set_sensitive(FALSE);
+        }
+
+        if (action->image) {
+            sp_ui_menuitem_add_icon((GtkWidget*)item->gobj(), action->image);
+        }
+        item->set_events(Gdk::KEY_PRESS_MASK);
+        item->set_data("view", (gpointer) view);
+        item->signal_activate().connect(sigc::bind(sigc::ptr_fun(sp_ui_menu_activate),item,action));
+        item->signal_select().connect(sigc::bind(sigc::ptr_fun(sp_ui_menu_select_action),item,action));
+        item->signal_deselect().connect(sigc::bind(sigc::ptr_fun(sp_ui_menu_deselect_action),item,action));
+        item->show();
+        append(*item);
+    }
+}
+
+void ContextMenu::MakeObjectMenu(void)
+{
+    GObjectClass *klass = G_OBJECT_GET_CLASS(_object); //to deduce the object's type from its class
+    GType type = G_TYPE_FROM_CLASS(klass);
+    
+    if (type | SP_TYPE_ITEM)
+    {
+        MakeItemMenu ();
+    }
+    if (type == SP_TYPE_GROUP)
+    {
+        MakeGroupMenu();
+    }
+    if (type == SP_TYPE_ANCHOR)
+    {
+        MakeAnchorMenu();
+    }
+    if (type == SP_TYPE_IMAGE)
+    {
+        MakeImageMenu();
+    }
+    if (type == SP_TYPE_SHAPE)
+    {
+        MakeShapeMenu();
+    }
+    if (type == SP_TYPE_TEXT)
+    {
+        MakeTextMenu();
+    }
+}
+
+void ContextMenu::MakeItemMenu (void)
+{
+    Gtk::MenuItem* mi;
+
+    /* Item dialog */
+    mi = new Gtk::MenuItem(_("_Object Properties..."),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ItemProperties));
+    mi->show();
+    append(*mi);
+
+    AddSeparator();
+    
+    /* Select item */
+    mi = new Gtk::MenuItem(_("_Select This"),1);
+    if (_desktop->selection->includes(_item)) {
+        mi->set_sensitive(FALSE);
+    } else {
+        mi->set_data("desktop", _desktop);
+        mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ItemSelectThis));
+    }
+    mi->show();
+    append(*mi);
+    
+    /* Select same fill and stroke */
+    mi = new Gtk::MenuItem(_("_Select Same Fill and Stroke"),1);
+    if (_desktop->selection->isEmpty()) {
+        mi->set_sensitive(FALSE);
+    } else {
+        mi->set_data("desktop", _desktop);
+        mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SelectSameFillStroke));
+    }
+    mi->set_sensitive(!SP_IS_ANCHOR(_item));
+    mi->show();
+    append(*mi);
+
+    /* Create link */
+    mi = new Gtk::MenuItem(_("_Create Link"),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ItemCreateLink));
+    mi->set_sensitive(!SP_IS_ANCHOR(_item));
+    mi->show();
+    append(*mi);
+    
+    bool ClipRefOK=false;
+    bool MaskRefOK=false;
+	if (_item){
+		if (_item->clip_ref){
+			if (_item->clip_ref->getObject()){
+				ClipRefOK=true;
+			}
+		}
+	}	
+	if (_item){
+		if (_item->mask_ref){
+			if (_item->mask_ref->getObject()){
+				MaskRefOK=true;
+			}
+		}
+	}	
+    /* Set mask */
+    mi = new Gtk::MenuItem(_("Set Mask"),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SetMask));
+    if (ClipRefOK || MaskRefOK) {
+        mi->set_sensitive(FALSE);
+    } else {
+        mi->set_sensitive(TRUE);
+    }
+    mi->show();
+    append(*mi);
+    
+    /* Release mask */
+    mi = new Gtk::MenuItem(_("Release Mask"),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ReleaseMask));
+    if (MaskRefOK) {
+        mi->set_sensitive(TRUE);
+    } else {
+        mi->set_sensitive(FALSE);
+    }
+    mi->show();
+    append(*mi);
+    
+    /* Set Clip */
+    mi = new Gtk::MenuItem(_("Set _Clip"),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SetClip));
+	if (ClipRefOK || MaskRefOK) {
+        mi->set_sensitive(FALSE);
+    } else {
+        mi->set_sensitive(TRUE);
+    }
+    mi->show();
+    append(*mi);
+    
+    /* Release Clip */
+    mi = new Gtk::MenuItem(_("Release C_lip"),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ReleaseClip));
+	if (ClipRefOK) {
+        mi->set_sensitive(TRUE);
+    } else {
+        mi->set_sensitive(FALSE);
+    }
+    mi->show();
+    append(*mi);
+}
+
+void ContextMenu::SelectSameFillStroke(void)
+{
+    sp_select_same_fill_stroke_style(_desktop, true, true, true);
+}
+
+void ContextMenu::ItemProperties(void)
+{
+    _desktop->selection->set(_item);
+    _desktop->_dlg_mgr->showDialog("ObjectProperties");
+}
+
+void ContextMenu::ItemSelectThis(void)
+{
+    _desktop->selection->set(_item);
+}
+
+void ContextMenu::ItemCreateLink(void)
+{
+    Inkscape::XML::Document *xml_doc = _desktop->doc()->getReprDoc();
+    Inkscape::XML::Node *repr = xml_doc->createElement("svg:a");
+    _item->parent->getRepr()->addChild(repr, _item->getRepr());
+    SPObject *object = _item->document->getObjectByRepr(repr);
+    g_return_if_fail(SP_IS_ANCHOR(object));
+
+    const char *id = _item->getRepr()->attribute("id");
+    Inkscape::XML::Node *child = _item->getRepr()->duplicate(xml_doc);
+    _item->deleteObject(false);
+    repr->addChild(child, NULL);
+    child->setAttribute("id", id);
+
+    Inkscape::GC::release(repr);
+    Inkscape::GC::release(child);
+
+    DocumentUndo::done(object->document, SP_VERB_NONE, _("Create link"));
+
+    _desktop->selection->set(SP_ITEM(object));
+    _desktop->_dlg_mgr->showDialog("ObjectAttributes");
+}
+
+void ContextMenu::SetMask(void)
+{
+    sp_selection_set_mask(_desktop, false, false);
+}
+
+void ContextMenu::ReleaseMask(void)
+{
+    sp_selection_unset_mask(_desktop, false);
+}
+
+
+void ContextMenu::SetClip(void)
+{
+    sp_selection_set_mask(_desktop, true, false);
+}
+
+
+void ContextMenu::ReleaseClip(void)
+{
+    sp_selection_unset_mask(_desktop, true);
+}
+
+void ContextMenu::MakeGroupMenu(void)
+{
+    /* "Ungroup" */
+    Gtk::MenuItem* mi = new Gtk::MenuItem(_("_Ungroup"),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ActivateUngroup));
+    mi->show();
+    append(*mi);
+}
+
+void ContextMenu::ActivateUngroup(void)
+{
+    GSList *children = NULL;
+
+    sp_item_group_ungroup(static_cast<SPGroup*>(_item), &children);
+    _desktop->selection->setList(children);
+    g_slist_free(children);
+}
+
+void ContextMenu::MakeAnchorMenu(void)
+{
+    Gtk::MenuItem* mi;
+    
+    /* Link dialog */
+    mi = new Gtk::MenuItem(_("Link _Properties..."),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::AnchorLinkProperties));
+    mi->show();
+    append(*mi);
+    
+    /* Select item */
+    mi = new Gtk::MenuItem(_("_Follow Link"),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::AnchorLinkFollow));
+    mi->show();
+    append(*mi);
+    
+    /* Reset transformations */
+    mi = new Gtk::MenuItem(_("_Remove Link"),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::AnchorLinkRemove));
+    mi->show();
+    append(*mi);
+}
+
+void ContextMenu::AnchorLinkProperties(void)
+{
+    _desktop->_dlg_mgr->showDialog("ObjectAttributes");
+}
+
+void ContextMenu::AnchorLinkFollow(void)
+{
+    /* shell out to an external browser here */
+}
+
+void ContextMenu::AnchorLinkRemove(void)
+{
+    GSList *children = NULL;
+    sp_item_group_ungroup(static_cast<SPAnchor*>(_item), &children);
+    g_slist_free(children);
+}
+
+void ContextMenu::MakeImageMenu (void)
+{
+    Gtk::MenuItem* mi;
+    Inkscape::XML::Node *ir = _object->getRepr();
+    const gchar *href = ir->attribute("xlink:href");
+
+    /* Image properties */
+    mi = new Gtk::MenuItem(_("Image _Properties..."),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageProperties));
+    mi->show();
+    append(*mi);
+
+    /* Edit externally */
+    mi = new Gtk::MenuItem(_("Edit Externally..."),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageEdit));
+    mi->show();
+    append(*mi);
+    if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
+        mi->set_sensitive( FALSE );
+    }
+
+    /* Embed image */
+    if (Inkscape::Verb::getbyid( "org.ekips.filter.embedselectedimages" )) {
+        mi = new Gtk::MenuItem(C_("Context menu", "Embed Image"));
+        mi->set_data("desktop", _desktop);
+        mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageEmbed));
+        mi->show();
+        append(*mi);
+        if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
+            mi->set_sensitive( FALSE );
+        }
+    }
+
+    /* Extract image */
+    if (Inkscape::Verb::getbyid( "org.ekips.filter.extractimage" )) {
+        mi = new Gtk::MenuItem(C_("Context menu", "Extract Image..."));
+        mi->set_data("desktop", _desktop);
+        mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageExtract));
+        mi->show();
+        append(*mi);
+        if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
+            mi->set_sensitive( FALSE );
+        }
+    }
+}
+
+void ContextMenu::ImageProperties(void)
+{
+    _desktop->_dlg_mgr->showDialog("ObjectAttributes");
+}
+
+Glib::ustring ContextMenu::getImageEditorName() {
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring value;
+    Glib::ustring choices = prefs->getString("/options/bitmapeditor/value");
+    if (!choices.empty()) {
+        value = choices;
+    }
+    else {
+        value = "gimp";
+    }
+    return value;
+}
+
+/* Edit Externally entry */
+void ContextMenu::ImageEdit(void)
+{
+    if (_desktop->selection->isEmpty()) {
+        _desktop->selection->set(_item);
+    }
+
+    GSList const *selected = _desktop->selection->itemList();
+
+    GError* errThing = 0;
+    Glib::ustring cmdline = getImageEditorName();
+    Glib::ustring name;
+    Glib::ustring fullname;
+
+#ifdef WIN32
+    // g_spawn_command_line_sync parsing is done according to Unix shell rules,
+    // not Windows command interpreter rules. Thus we need to enclose the
+    // executable path with single quotes.
+    int index = cmdline.find(".exe");
+    if ( index < 0 ) index = cmdline.find(".bat");
+    if ( index < 0 ) index = cmdline.find(".com");
+    if ( index >= 0 ) {
+        Glib::ustring editorBin = cmdline.substr(0, index + 4).c_str();
+        Glib::ustring args = cmdline.substr(index + 4, cmdline.length()).c_str();
+        editorBin.insert(0, "'");
+        editorBin.append("'");
+        cmdline = editorBin;
+        cmdline.append(args);
+    } else {
+        // Enclose the whole command line if no executable path can be extracted.
+        cmdline.insert(0, "'");
+        cmdline.append("'");
+    }
+#endif
+
+    for (GSList const *iter = selected; iter != NULL; iter = iter->next) {
+        Inkscape::XML::Node *ir = SP_ITEM(iter->data)->getRepr();
+        const gchar *href = ir->attribute("xlink:href");
+        
+        if (strncmp (href,"file:",5) == 0) {
+        // URI to filename conversion
+          name = g_filename_from_uri(href, NULL, NULL);
+        } else {
+          name.append(href);
+        }
+
+        if (Glib::path_is_absolute(name)) {
+            fullname = name;
+        } else if (SP_ACTIVE_DOCUMENT->getBase()) {
+            fullname = Glib::build_filename(SP_ACTIVE_DOCUMENT->getBase(), name);
+        } else {
+            fullname = Glib::build_filename(Glib::get_current_dir(), name);
+        }
+
+        cmdline.append(" '");
+        cmdline.append(fullname.c_str());
+        cmdline.append("'");
+    }
+
+    //g_warning("##Command line: %s\n", cmdline.c_str());
+
+    g_spawn_command_line_async(cmdline.c_str(), &errThing); 
+
+    if ( errThing ) {
+        g_warning("Problem launching editor (%d). %s", errThing->code, errThing->message);
+        (_desktop->messageStack())->flash(Inkscape::ERROR_MESSAGE, errThing->message);
+        g_error_free(errThing);
+        errThing = 0;
+    }
+}
+
+/* Embed Image entry */
+void ContextMenu::ImageEmbed(void)
+{
+    if (_desktop->selection->isEmpty()) {
+        _desktop->selection->set(_item);
+    }
+
+    Inkscape::Verb *verb = Inkscape::Verb::getbyid( "org.ekips.filter.embedselectedimages" );
+    if (verb) {
+        SPAction *action = verb->get_action(_desktop);
+        if (action) {
+            sp_action_perform(action, NULL);
+        }
+    }
+}
+
+/* Extract Image entry */
+void ContextMenu::ImageExtract(void)
+{
+    if (_desktop->selection->isEmpty()) {
+        _desktop->selection->set(_item);
+    }
+
+    Inkscape::Verb *verb = Inkscape::Verb::getbyid( "org.ekips.filter.extractimage" );
+    if (verb) {
+        SPAction *action = verb->get_action(_desktop);
+        if (action) {
+            sp_action_perform(action, NULL);
+        }
+    }
+}
+
+void ContextMenu::MakeShapeMenu (void)
+{
+    Gtk::MenuItem* mi;
+    
+    /* Item dialog */
+    mi = new Gtk::MenuItem(_("_Fill and Stroke..."),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::FillSettings));
+    mi->show();
+    append(*mi);
+}
+
+void ContextMenu::FillSettings(void)
+{
+    if (_desktop->selection->isEmpty()) {
+        _desktop->selection->set(_item);
+    }
+
+    _desktop->_dlg_mgr->showDialog("FillAndStroke");
+}
+
+void ContextMenu::MakeTextMenu (void)
+{
+    Gtk::MenuItem* mi;
+
+    /* Fill and Stroke dialog */
+    mi = new Gtk::MenuItem(_("_Fill and Stroke..."),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::FillSettings));
+    mi->show();
+    append(*mi);
+    
+    /* Edit Text dialog */
+    mi = new Gtk::MenuItem(_("_Text and Font..."),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::TextSettings));
+    mi->show();
+    append(*mi);
+
+    /* Spellcheck dialog */
+    mi = new Gtk::MenuItem(_("Check Spellin_g..."),1);
+    mi->set_data("desktop", _desktop);
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SpellcheckSettings));
+    mi->show();
+    append(*mi);
+}
+
+/* Edit Text entry */
+void ContextMenu::TextSettings (void)
+{
+    if (_desktop->selection->isEmpty()) {
+        _desktop->selection->set(_item);
+    }
+
+    _desktop->_dlg_mgr->showDialog("TextFont");
+}
+
+/* Spellcheck entry */
+void ContextMenu::SpellcheckSettings (void)
+{
+    if (_desktop->selection->isEmpty()) {
+        _desktop->selection->set(_item);
+    }
+
+    _desktop->_dlg_mgr->showDialog("SpellCheck");
+}
 
 /*
   Local Variables:
