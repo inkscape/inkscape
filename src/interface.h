@@ -17,11 +17,11 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gtk/gtk.h>
 #include <gtkmm/menu.h>
 
-#include "sp-item.h"
-
+class SPItem;
+class SPObject;
+class SPDesktop;
 class SPViewWidget;
 
 namespace Inkscape {

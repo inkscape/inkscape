@@ -585,30 +585,40 @@ sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
 	if (gdk_rectangle_intersect (area, &aarea, &apaint)) {
 		/* Draw arrow */
 		gdk_rectangle_intersect (&carea, &apaint, &apaint);
-		gdk_gc_set_clip_rectangle(style->white_gc, &apaint);
-		gdk_gc_set_clip_rectangle(style->black_gc, &apaint);
+		cairo_t* cr = gdk_cairo_create(window);
+		gdk_cairo_rectangle(cr, &apaint);
+		cairo_clip(cr);
 
 		x = aarea.x;
 		y1 = carea.y;
 		y2 = aarea.y + aarea.height - 1;
 		w = aarea.width;
+		cairo_set_line_width(cr, 1.0);
+
 		while ( w > 0 )
 		{
-			gdk_draw_line(window, style->white_gc, x, y1, x + w - 1, y1 );
-			gdk_draw_line(window, style->white_gc, x, y2, x + w - 1, y2 );
+			gdk_cairo_set_source_color(cr, &style->white);
+			cairo_move_to(cr, x - 0.5, y1 + 0.5);
+			cairo_line_to(cr, x + w - 1 + 0.5, y1 + 0.5);
+			cairo_move_to(cr, x - 0.5, y2 + 0.5);
+			cairo_line_to(cr, x + w - 1 + 0.5, y2 + 0.5);
+			cairo_stroke(cr);
 			w -=2;
 			x++;
 			if ( w > 0 )
 			{
-				gdk_draw_line(window, style->black_gc, x, y1, x + w - 1, y1 );
-				gdk_draw_line(window, style->black_gc, x, y2, x + w - 1, y2 );
+				gdk_cairo_set_source_color(cr, &style->black);
+				cairo_move_to(cr, x - 0.5, y1 + 0.5);
+				cairo_line_to(cr, x + w - 1 + 0.5, y1 + 0.5);
+				cairo_move_to(cr, x - 0.5, y2 + 0.5);
+				cairo_line_to(cr, x + w - 1 + 0.5, y2 + 0.5);
+				cairo_stroke(cr);
 			}
 			y1++;
 			y2--;
 		}
 
-		gdk_gc_set_clip_rectangle(style->white_gc, NULL);
-		gdk_gc_set_clip_rectangle(style->black_gc, NULL);
+		cairo_destroy(cr);
 	}
 }
 
