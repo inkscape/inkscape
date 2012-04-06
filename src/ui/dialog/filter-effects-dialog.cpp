@@ -66,6 +66,7 @@
 #include <gtkmm/paned.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/stock.h>
+#include <gdkmm/general.h>
 
 using namespace Inkscape::Filters;
 
@@ -1606,6 +1607,7 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
     Gdk::Rectangle clip(e->area.x, e->area.y, e->area.width, e->area.height);
     Glib::RefPtr<Gdk::Window> win = get_bin_window();
     Glib::RefPtr<Gdk::GC> darkgc = get_style()->get_dark_gc(Gtk::STATE_NORMAL);
+    Cairo::RefPtr<Cairo::Context> cr = get_bin_window()->create_cairo_context();
 
     SPFilterPrimitive* prim = get_selected();
     int row_count = get_model()->children().size();
@@ -1617,14 +1619,25 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
     if(row) {
         get_cell_area(get_model()->get_path(row), *get_column(1), rct);
         get_visible_rect(vis);
-
         text_start_x = rct.get_x() + rct.get_width() - get_input_type_width() * FPInputConverter._length + 1;
-        for(unsigned int i = 0; i < FPInputConverter._length; ++i) {
+        
+	for(unsigned int i = 0; i < FPInputConverter._length; ++i) {
             _vertical_layout->set_text(_(FPInputConverter.get_label((FilterPrimitiveInput)i).c_str()));
             const int x = text_start_x + get_input_type_width() * i;
-            get_bin_window()->draw_rectangle(get_style()->get_bg_gc(Gtk::STATE_NORMAL), true, x, 0, get_input_type_width(), vis.get_height());
-            get_bin_window()->draw_layout(get_style()->get_text_gc(Gtk::STATE_NORMAL), x + 1, 0, _vertical_layout);
-            get_bin_window()->draw_line(darkgc, x, 0, x, vis.get_height());
+	    cr->save();
+	    cr->rectangle(x, 0, get_input_type_width(), vis.get_height());
+	    Gdk::Cairo::set_source_color(cr, get_style()->get_bg(Gtk::STATE_NORMAL));
+	    cr->fill_preserve();
+	    Gdk::Cairo::set_source_color(cr, get_style()->get_text(Gtk::STATE_NORMAL));
+	    cr->move_to(x+get_input_type_width(), 0);
+	    cr->rotate_degrees(90);
+	    _vertical_layout->show_in_cairo_context(cr);
+	    Gdk::Cairo::set_source_color(cr, get_style()->get_dark(Gtk::STATE_NORMAL));
+	    cr->set_line_width(1.0);
+	    cr->move_to(x, 0);
+	    cr->line_to(x, vis.get_height());
+	    cr->stroke();
+	    cr->restore();
         }
     }
 
@@ -1640,10 +1653,16 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
 
         // Outline the bottom of the connection area
         const int outline_x = x + fheight * (row_count - row_index);
-        get_bin_window()->draw_line(darkgc, x, y + h, outline_x, y + h);
-
+	cr->save();
+	Gdk::Cairo::set_source_color(cr, get_style()->get_dark(Gtk::STATE_NORMAL));
+	cr->set_line_width(1.0);
+	cr->move_to(x, y + h);
+	cr->line_to(outline_x, y + h);
         // Side outline
-        get_bin_window()->draw_line(darkgc, outline_x, y - 1, outline_x, y + h);
+	cr->line_to(outline_x, y - 1);
+
+	cr->stroke();
+	cr->restore();
 
         std::vector<Gdk::Point> con_poly;
         int con_drag_y = 0;
@@ -1693,10 +1712,15 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
 
         // Draw drag connection
         if(row_prim == prim && _in_drag) {
-            get_bin_window()->draw_line(get_style()->get_black_gc(), outline_x, con_drag_y,
-                                        mx, con_drag_y);
-            get_bin_window()->draw_line(get_style()->get_black_gc(), mx, con_drag_y, mx, my);
-        }
+		cr->save();
+		Gdk::Cairo::set_source_color(cr, get_style()->get_black());
+		cr->set_line_width(1.0);
+		cr->move_to(outline_x, con_drag_y);
+		cr->line_to(mx, con_drag_y);
+		cr->line_to(mx, my);
+		cr->stroke();
+		cr->restore();
+  	}
     }
 
     return true;
@@ -1708,32 +1732,37 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& in
 {
     int src_id = 0;
     Gtk::TreeIter res = find_result(input, attr, src_id);
-    Glib::RefPtr<Gdk::GC> darkgc = get_style()->get_black_gc();
-    Glib::RefPtr<Gdk::GC> lightgc = get_style()->get_dark_gc(Gtk::STATE_NORMAL);
-    Glib::RefPtr<Gdk::GC> gc;
+    Cairo::RefPtr<Cairo::Context> cr = get_bin_window()->create_cairo_context();
 
     const bool is_first = input == get_model()->children().begin();
     const bool is_merge = SP_IS_FEMERGE((SPFilterPrimitive*)(*input)[_columns.primitive]);
     const bool use_default = !res && !is_merge;
 
+    cr->set_line_width(1);
     if(res == input || (use_default && is_first)) {
         // Draw straight connection to a standard input
         // Draw a lighter line for an implicit connection to a standard input
         const int tw = get_input_type_width();
         gint end_x = text_start_x + tw * src_id + (int)(tw * 0.5f) + 1;
-        gc = (use_default && is_first) ? lightgc : darkgc;
-        get_bin_window()->draw_rectangle(gc, true, end_x-2, y1-2, 5, 5);
-        get_bin_window()->draw_line(gc, x1, y1, end_x, y1);
+
+	if(use_default && is_first)
+		Gdk::Cairo::set_source_color(cr, get_style()->get_dark(Gtk::STATE_NORMAL));
+	else
+		Gdk::Cairo::set_source_color(cr, get_style()->get_black());
+	
+	cr->rectangle(end_x-2, y1-2, 5, 5);
+	cr->fill_preserve();
+	cr->move_to(x1, y1);
+	cr->line_to(end_x, y1);
+	cr->stroke();
     }
     else {
         // Draw an 'L'-shaped connection to another filter primitive
         // If no connection is specified, draw a light connection to the previous primitive
-        gc = use_default ? lightgc : darkgc;
-
-        if(use_default) {
-            res = input;
-            --res;
-        }
+	if(use_default) {
+		res = input;
+		--res;
+	}
 
         if(res) {
             Gdk::Rectangle rct;
@@ -1747,9 +1776,12 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& in
             const int y2 = rct.get_y() + rct.get_height();
 
             // Draw a bevelled 'L'-shaped connection
-            get_bin_window()->draw_line(get_style()->get_black_gc(), x1, y1, x2-fheight/4, y1);
-            get_bin_window()->draw_line(get_style()->get_black_gc(), x2-fheight/4, y1, x2, y1-fheight/4);
-            get_bin_window()->draw_line(get_style()->get_black_gc(), x2, y1-fheight/4, x2, y2);
+	    Gdk::Cairo::set_source_color(cr, get_style()->get_black());
+	    cr->move_to(x1, y1);
+	    cr->line_to(x2-fheight/4, y1);
+	    cr->line_to(x2, y1-fheight/4);
+	    cr->line_to(x2, y2);
+	    cr->stroke();
         }
     }
 }
