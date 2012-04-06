@@ -61,9 +61,6 @@ unsigned int sp_ui_close_all (void);
  */
 GtkWidget *sp_ui_main_menubar (Inkscape::UI::View::View *view);
 
-static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::UI::View::View *view, bool radio = false, GSList *group = NULL);
-
-
 /**
  *
  */

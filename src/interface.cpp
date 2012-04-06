@@ -492,7 +492,7 @@ sp_ui_dialog_title_string(Inkscape::Verb *verb, gchar *c)
  *
  */
 
-static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::UI::View::View *view, bool radio, GSList *group)
+static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::UI::View::View *view, bool radio = false, GSList *group = NULL)
 {
     SPAction *action;
     GtkWidget *item;
