@@ -1717,27 +1717,27 @@ void ContextMenu::MakeObjectMenu(void)
     GObjectClass *klass = G_OBJECT_GET_CLASS(_object); //to deduce the object's type from its class
     GType type = G_TYPE_FROM_CLASS(klass);
     
-    if (type | SP_TYPE_ITEM)
+    if (G_TYPE_CHECK_CLASS_TYPE(klass, SP_TYPE_ITEM))
     {
         MakeItemMenu ();
     }
-    if (type == SP_TYPE_GROUP)
+    if (G_TYPE_CHECK_CLASS_TYPE(klass, SP_TYPE_GROUP))
     {
         MakeGroupMenu();
     }
-    if (type == SP_TYPE_ANCHOR)
+    if (G_TYPE_CHECK_CLASS_TYPE(klass, SP_TYPE_ANCHOR))
     {
         MakeAnchorMenu();
     }
-    if (type == SP_TYPE_IMAGE)
+    if (G_TYPE_CHECK_CLASS_TYPE(klass, SP_TYPE_IMAGE))
     {
         MakeImageMenu();
     }
-    if (type == SP_TYPE_SHAPE)
+    if (G_TYPE_CHECK_CLASS_TYPE(klass, SP_TYPE_SHAPE))
     {
         MakeShapeMenu();
     }
-    if (type == SP_TYPE_TEXT)
+    if (G_TYPE_CHECK_CLASS_TYPE(klass, SP_TYPE_TEXT))
     {
         MakeTextMenu();
     }
