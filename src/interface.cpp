@@ -1593,6 +1593,8 @@ ContextMenu::ContextMenu(Inkscape::UI::View::View *view, SPItem *item) :
 
     AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_DUPLICATE), view);
     AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_DELETE), view);
+    
+    positionOfLastDialog = 10; // 9 in front + 1 for the separator in the next if; used to position the dialog menu entries below each other
 
     /* Item menu */
     if (item!=NULL) {
@@ -1749,10 +1751,9 @@ void ContextMenu::MakeItemMenu (void)
 
     /* Item dialog */
     mi = new Gtk::MenuItem(_("_Object Properties..."),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ItemProperties));
     mi->show();
-    append(*mi);
+    append(*mi);//insert(*mi,positionOfLastDialog++);
 
     AddSeparator();
     
@@ -1761,7 +1762,6 @@ void ContextMenu::MakeItemMenu (void)
     if (_desktop->selection->includes(_item)) {
         mi->set_sensitive(FALSE);
     } else {
-        mi->set_data("desktop", _desktop);
         mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ItemSelectThis));
     }
     mi->show();
@@ -1772,7 +1772,6 @@ void ContextMenu::MakeItemMenu (void)
     if (_desktop->selection->isEmpty()) {
         mi->set_sensitive(FALSE);
     } else {
-        mi->set_data("desktop", _desktop);
         mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SelectSameFillStroke));
     }
     mi->set_sensitive(!SP_IS_ANCHOR(_item));
@@ -1781,7 +1780,6 @@ void ContextMenu::MakeItemMenu (void)
 
     /* Create link */
     mi = new Gtk::MenuItem(_("_Create Link"),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ItemCreateLink));
     mi->set_sensitive(!SP_IS_ANCHOR(_item));
     mi->show();
@@ -1789,23 +1787,22 @@ void ContextMenu::MakeItemMenu (void)
     
     bool ClipRefOK=false;
     bool MaskRefOK=false;
-	if (_item){
-		if (_item->clip_ref){
-			if (_item->clip_ref->getObject()){
-				ClipRefOK=true;
-			}
-		}
-	}	
-	if (_item){
-		if (_item->mask_ref){
-			if (_item->mask_ref->getObject()){
-				MaskRefOK=true;
-			}
-		}
-	}	
+    if (_item){
+        if (_item->clip_ref){
+            if (_item->clip_ref->getObject()){
+                ClipRefOK=true;
+            }
+        }
+    }    
+    if (_item){
+        if (_item->mask_ref){
+            if (_item->mask_ref->getObject()){
+                MaskRefOK=true;
+            }
+        }
+    }    
     /* Set mask */
     mi = new Gtk::MenuItem(_("Set Mask"),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SetMask));
     if (ClipRefOK || MaskRefOK) {
         mi->set_sensitive(FALSE);
@@ -1817,7 +1814,6 @@ void ContextMenu::MakeItemMenu (void)
     
     /* Release mask */
     mi = new Gtk::MenuItem(_("Release Mask"),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ReleaseMask));
     if (MaskRefOK) {
         mi->set_sensitive(TRUE);
@@ -1829,9 +1825,8 @@ void ContextMenu::MakeItemMenu (void)
     
     /* Set Clip */
     mi = new Gtk::MenuItem(_("Set _Clip"),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SetClip));
-	if (ClipRefOK || MaskRefOK) {
+    if (ClipRefOK || MaskRefOK) {
         mi->set_sensitive(FALSE);
     } else {
         mi->set_sensitive(TRUE);
@@ -1841,9 +1836,8 @@ void ContextMenu::MakeItemMenu (void)
     
     /* Release Clip */
     mi = new Gtk::MenuItem(_("Release C_lip"),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ReleaseClip));
-	if (ClipRefOK) {
+    if (ClipRefOK) {
         mi->set_sensitive(TRUE);
     } else {
         mi->set_sensitive(FALSE);
@@ -1917,7 +1911,6 @@ void ContextMenu::MakeGroupMenu(void)
 {
     /* "Ungroup" */
     Gtk::MenuItem* mi = new Gtk::MenuItem(_("_Ungroup"),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ActivateUngroup));
     mi->show();
     append(*mi);
@@ -1938,21 +1931,18 @@ void ContextMenu::MakeAnchorMenu(void)
     
     /* Link dialog */
     mi = new Gtk::MenuItem(_("Link _Properties..."),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::AnchorLinkProperties));
     mi->show();
-    append(*mi);
+    insert(*mi,positionOfLastDialog++);//append(*mi);
     
     /* Select item */
     mi = new Gtk::MenuItem(_("_Follow Link"),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::AnchorLinkFollow));
     mi->show();
     append(*mi);
     
     /* Reset transformations */
     mi = new Gtk::MenuItem(_("_Remove Link"),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::AnchorLinkRemove));
     mi->show();
     append(*mi);
@@ -1983,17 +1973,15 @@ void ContextMenu::MakeImageMenu (void)
 
     /* Image properties */
     mi = new Gtk::MenuItem(_("Image _Properties..."),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageProperties));
     mi->show();
-    append(*mi);
+    insert(*mi,positionOfLastDialog++);//append(*mi);
 
     /* Edit externally */
     mi = new Gtk::MenuItem(_("Edit Externally..."),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageEdit));
     mi->show();
-    append(*mi);
+    insert(*mi,positionOfLastDialog++);//append(*mi);
     if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
         mi->set_sensitive( FALSE );
     }
@@ -2001,7 +1989,6 @@ void ContextMenu::MakeImageMenu (void)
     /* Embed image */
     if (Inkscape::Verb::getbyid( "org.ekips.filter.embedselectedimages" )) {
         mi = new Gtk::MenuItem(C_("Context menu", "Embed Image"));
-        mi->set_data("desktop", _desktop);
         mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageEmbed));
         mi->show();
         append(*mi);
@@ -2013,10 +2000,9 @@ void ContextMenu::MakeImageMenu (void)
     /* Extract image */
     if (Inkscape::Verb::getbyid( "org.ekips.filter.extractimage" )) {
         mi = new Gtk::MenuItem(C_("Context menu", "Extract Image..."));
-        mi->set_data("desktop", _desktop);
         mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageExtract));
         mi->show();
-        append(*mi);
+        insert(*mi,positionOfLastDialog++);//append(*mi);
         if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
             mi->set_sensitive( FALSE );
         }
@@ -2150,10 +2136,9 @@ void ContextMenu::MakeShapeMenu (void)
     
     /* Item dialog */
     mi = new Gtk::MenuItem(_("_Fill and Stroke..."),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::FillSettings));
     mi->show();
-    append(*mi);
+    insert(*mi,positionOfLastDialog++);//append(*mi);
 }
 
 void ContextMenu::FillSettings(void)
@@ -2171,24 +2156,21 @@ void ContextMenu::MakeTextMenu (void)
 
     /* Fill and Stroke dialog */
     mi = new Gtk::MenuItem(_("_Fill and Stroke..."),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::FillSettings));
     mi->show();
-    append(*mi);
+    insert(*mi,positionOfLastDialog++);//append(*mi);
     
     /* Edit Text dialog */
     mi = new Gtk::MenuItem(_("_Text and Font..."),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::TextSettings));
     mi->show();
-    append(*mi);
+    insert(*mi,positionOfLastDialog++);//append(*mi);
 
     /* Spellcheck dialog */
     mi = new Gtk::MenuItem(_("Check Spellin_g..."),1);
-    mi->set_data("desktop", _desktop);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SpellcheckSettings));
     mi->show();
-    append(*mi);
+    insert(*mi,positionOfLastDialog++);//append(*mi);
 }
 
 /* Edit Text entry */

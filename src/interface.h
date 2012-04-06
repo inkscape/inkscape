@@ -86,50 +86,52 @@ class ContextMenu : public Gtk::Menu
         ~ContextMenu(void);
     private:
         SPItem *_item;
-		SPObject *_object;
-		SPDesktop *_desktop;
-		
-		std::vector<Gtk::SeparatorMenuItem*> separators;
+        SPObject *_object;
+        SPDesktop *_desktop;
+        
+        int positionOfLastDialog;
+        
+        std::vector<Gtk::SeparatorMenuItem*> separators;
         Gtk::MenuItem MIGroup;
         Gtk::MenuItem MIParent;
         
         Gtk::SeparatorMenuItem* AddSeparator(void);
         void AppendItemFromVerb(Inkscape::Verb *verb, Inkscape::UI::View::View *view);
-		void MakeObjectMenu (void);
-		void MakeItemMenu   (void);
-		void MakeGroupMenu  (void);
-		void MakeAnchorMenu (void);
-		void MakeImageMenu  (void);
-		void MakeShapeMenu  (void);
-		void MakeTextMenu   (void);
-		
-		void EnterGroup(Gtk::MenuItem* mi);
-		void LeaveGroup(void);
-		void ItemProperties(void);
-		void ItemSelectThis(void);
-		void SelectSameFillStroke(void);
-		void ItemCreateLink(void);
-		void SetMask(void);
-		void ReleaseMask(void);
-		void SetClip(void);
-		void ReleaseClip(void);
-		
-		void ActivateUngroup(void);
-		
-		void AnchorLinkProperties(void);
-		void AnchorLinkFollow(void);
-		void AnchorLinkRemove(void);
-		
-		void ImageProperties(void);
-		void ImageEdit(void);
-		Glib::ustring getImageEditorName();
-		void ImageEmbed(void);
-		void ImageExtract(void);
-		
-		void FillSettings(void);
-		
-		void TextSettings(void);
-		void SpellcheckSettings(void);
+        void MakeObjectMenu (void);
+        void MakeItemMenu   (void);
+        void MakeGroupMenu  (void);
+        void MakeAnchorMenu (void);
+        void MakeImageMenu  (void);
+        void MakeShapeMenu  (void);
+        void MakeTextMenu   (void);
+        
+        void EnterGroup(Gtk::MenuItem* mi);
+        void LeaveGroup(void);
+        void ItemProperties(void);
+        void ItemSelectThis(void);
+        void SelectSameFillStroke(void);
+        void ItemCreateLink(void);
+        void SetMask(void);
+        void ReleaseMask(void);
+        void SetClip(void);
+        void ReleaseClip(void);
+        
+        void ActivateUngroup(void);
+        
+        void AnchorLinkProperties(void);
+        void AnchorLinkFollow(void);
+        void AnchorLinkRemove(void);
+        
+        void ImageProperties(void);
+        void ImageEdit(void);
+        Glib::ustring getImageEditorName();
+        void ImageEmbed(void);
+        void ImageExtract(void);
+        
+        void FillSettings(void);
+        
+        void TextSettings(void);
+        void SpellcheckSettings(void);
 };
 
 #endif // SEEN_SP_INTERFACE_H
