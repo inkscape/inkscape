@@ -51,6 +51,8 @@
 #include "ui/widget/spinbutton.h"
 #include <glibmm/i18n.h>
 
+#include <gdkmm/general.h>
+
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
@@ -513,10 +515,11 @@ bool PdfImportDialog::_onExposePreview(GdkEventExpose */*event*/) {
         if (!back_pixmap) {
             return true;
         }
-        back_pixmap->draw_pixbuf(Glib::RefPtr<Gdk::GC>(), thumb, 0, 0, 0, 0,
-                                 _thumb_width, _thumb_height,
-                                 Gdk::RGB_DITHER_NONE, 0, 0);
-        _previewArea->get_window()->set_back_pixmap(back_pixmap, false);
+
+	Cairo::RefPtr<Cairo::Context> cr = back_pixmap->create_cairo_context();
+	Gdk::Cairo::set_source_pixbuf(cr, thumb, 0, 0);
+	cr->paint();
+	_previewArea->get_window()->set_back_pixmap(back_pixmap, false);
         _previewArea->get_window()->clear();
     }
 #ifdef HAVE_POPPLER_CAIRO
@@ -525,10 +528,10 @@ bool PdfImportDialog::_onExposePreview(GdkEventExpose */*event*/) {
         copy_cairo_surface_to_pixbuf(_cairo_surface, _thumb_data, thumb->gobj());
     }
 #endif
-    _previewArea->get_window()->draw_pixbuf(Glib::RefPtr<Gdk::GC>(), thumb,
-                                            0, 0, 0, _render_thumb ? 0 : 20,
-                                            -1, -1, Gdk::RGB_DITHER_NONE, 0, 0);
 
+    Cairo::RefPtr<Cairo::Context> cr = _previewArea->get_window()->create_cairo_context();
+    Gdk::Cairo::set_source_pixbuf(cr, thumb, 0, _render_thumb ? 0 : 20);
+    cr->paint();
     return true;
 }
 
