@@ -137,6 +137,13 @@ VectorParam::set_origin_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mod
     ori_knot_color = color;
 }
 
+void
+VectorParam::set_oncanvas_color(guint32 color)
+{
+    vec_knot_color = color;
+    ori_knot_color = color;
+}
+
 class VectorParamKnotHolderEntity_Origin : public KnotHolderEntity {
 public:
     VectorParamKnotHolderEntity_Origin(VectorParam *p) : param(p) { }
