@@ -353,7 +353,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                         // check size of miter
                         Geom::Point point_on_path = B[prev_i].at1() - rot90(der1) * cusp.width;
                         Geom::Coord len = distance(bzr1.pointAt(cross[0].ta), point_on_path);
-                        if (len > cusp.width * miter_limit) {
+                        if (len > fabs(cusp.width) * miter_limit) {
                             // miter too big: default to bevel
                             pb.lineTo(B[i].at0());
                         } else {
