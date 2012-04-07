@@ -38,6 +38,7 @@ public:
     /* the knotholder entity classes must be declared friends */
     friend class CR::KnotHolderEntityStartingAngle;
     friend class CR::KnotHolderEntityRotationAngle;
+    void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
 protected:
     virtual void addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec);

@@ -23,21 +23,24 @@
 #include <2geom/path.h>
 #include <2geom/transforms.h>
 
+#include "knot-holder-entity.h"
+#include "knotholder.h"
+
 namespace Inkscape {
 namespace LivePathEffect {
 
 namespace TtC {
 
-class KnotHolderEntityAttachPt : public LPEKnotHolderEntity
-{
+class KnotHolderEntityAttachPt : public LPEKnotHolderEntity {
 public:
+    KnotHolderEntityAttachPt(LPETangentToCurve *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
     virtual Geom::Point knot_get();
 };
 
-class KnotHolderEntityLeftEnd : public LPEKnotHolderEntity
-{
+class KnotHolderEntityLeftEnd : public LPEKnotHolderEntity {
 public:
+    KnotHolderEntityLeftEnd(LPETangentToCurve *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
     virtual Geom::Point knot_get();
 };
@@ -45,6 +48,7 @@ public:
 class KnotHolderEntityRightEnd : public LPEKnotHolderEntity
 {
 public:
+    KnotHolderEntityRightEnd(LPETangentToCurve *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
     virtual Geom::Point knot_get();
 };
@@ -59,15 +63,12 @@ LPETangentToCurve::LPETangentToCurve(LivePathEffectObject *lpeobject) :
     length_right(_("Length right"), _("Specifies the right end of the tangent"), "length-right", &wr, this, 150)
 {
     show_orig_path = true;
+    _provides_knotholder_entities = true;
 
     registerParameter( dynamic_cast<Parameter *>(&angle) );
     registerParameter( dynamic_cast<Parameter *>(&t_attach) );
     registerParameter( dynamic_cast<Parameter *>(&length_left) );
     registerParameter( dynamic_cast<Parameter *>(&length_right) );
-
-    registerKnotHolderHandle(new TtC::KnotHolderEntityAttachPt(), _("Adjust the point of attachment of the tangent"));
-    registerKnotHolderHandle(new TtC::KnotHolderEntityLeftEnd(), _("Adjust the \"left\" end of the tangent"));
-    registerKnotHolderHandle(new TtC::KnotHolderEntityRightEnd(), _("Adjust the \"right\" end of the tangent"));
 }
 
 LPETangentToCurve::~LPETangentToCurve()
@@ -95,26 +96,39 @@ LPETangentToCurve::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const
     return output;
 }
 
-namespace TtC {
-
-// TODO: make this more generic
-static LPETangentToCurve *
-get_effect(SPItem *item)
-{
-    Effect *effect = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
-    if (effect->effectType() != TANGENT_TO_CURVE) {
-        g_print ("Warning: Effect is not of type LPETangentToCurve!\n");
-        return NULL;
+void
+LPETangentToCurve::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+    {
+        KnotHolderEntity *e = new TtC::KnotHolderEntityAttachPt(this);
+        e->create(  desktop, item, knotholder,
+                    _("Adjust the point of attachment of the tangent")
+                    /*optional: knot_shape, knot_mode, knot_color*/);
+        knotholder->add(e);
     }
-    return static_cast<LPETangentToCurve *>(effect);
-}
+    {
+        KnotHolderEntity *e = new TtC::KnotHolderEntityLeftEnd(this);
+        e->create(  desktop, item, knotholder,
+                    _("Adjust the \"left\" end of the tangent")
+                    /*optional: knot_shape, knot_mode, knot_color*/);
+        knotholder->add(e);
+    }
+    {
+        KnotHolderEntity *e = new TtC::KnotHolderEntityRightEnd(this);
+        e->create(  desktop, item, knotholder,
+                    _("Adjust the \"right\" end of the tangent")
+                    /*optional: knot_shape, knot_mode, knot_color*/);
+        knotholder->add(e);
+    }
+};
+
+namespace TtC {
 
 void
 KnotHolderEntityAttachPt::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
     using namespace Geom;
 
-    LPETangentToCurve* lpe = get_effect(item);
+    LPETangentToCurve* lpe = dynamic_cast<LPETangentToCurve *>(_effect);
 
     Geom::Point const s = snap_knot_position(p);
 
@@ -136,7 +150,7 @@ KnotHolderEntityAttachPt::knot_set(Geom::Point const &p, Geom::Point const &/*or
 void
 KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
-    LPETangentToCurve *lpe = get_effect(item);
+    LPETangentToCurve *lpe = dynamic_cast<LPETangentToCurve *>(_effect);
 
     Geom::Point const s = snap_knot_position(p);
 
@@ -149,7 +163,7 @@ KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*ori
 void
 KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
-    LPETangentToCurve *lpe = get_effect(item);
+    LPETangentToCurve *lpe = dynamic_cast<LPETangentToCurve *>(_effect);
     
     Geom::Point const s = snap_knot_position(p);
 
@@ -162,21 +176,21 @@ KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*or
 Geom::Point
 KnotHolderEntityAttachPt::knot_get()
 {
-    LPETangentToCurve* lpe = get_effect(item);
+    LPETangentToCurve* lpe = dynamic_cast<LPETangentToCurve *>(_effect);
     return lpe->ptA;
 }
 
 Geom::Point
 KnotHolderEntityLeftEnd::knot_get()
 {
-    LPETangentToCurve *lpe = get_effect(item);
+    LPETangentToCurve *lpe = dynamic_cast<LPETangentToCurve *>(_effect);
     return lpe->C;
 }
 
 Geom::Point
 KnotHolderEntityRightEnd::knot_get()
 {
-    LPETangentToCurve *lpe = get_effect(item);
+    LPETangentToCurve *lpe = dynamic_cast<LPETangentToCurve *>(_effect);
     return lpe->D;
 }
 

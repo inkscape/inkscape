@@ -124,15 +124,14 @@ protected:
             doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
     void registerParameter(Parameter * param);
-    void registerKnotHolderHandle(KnotHolderEntity* entity, const char* descr);
     Parameter * getNextOncanvasEditableParam();
 
-    void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
+    virtual void addKnotHolderEntities(KnotHolder * /*knotholder*/, SPDesktop * /*desktop*/, SPItem * /*item*/) {};
 
     virtual void addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec);
 
     std::vector<Parameter *> param_vector;
-    std::vector<std::pair<KnotHolderEntity*, const char*> > kh_entity_vector;
+    bool _provides_knotholder_entities;
     int oncanvasedit_it;
     BoolParam is_visible;
 

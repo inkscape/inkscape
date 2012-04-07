@@ -282,7 +282,8 @@ Effect::createAndApply(EffectType type, SPDocument *doc, SPItem *item)
 }
 
 Effect::Effect(LivePathEffectObject *lpeobject)
-    : oncanvasedit_it(0),
+    : _provides_knotholder_entities(false),
+      oncanvasedit_it(0),
       is_visible(_("Is visible?"), _("If unchecked, the effect remains applied to the object but is temporarily disabled on canvas"), "is_visible", &wr, this, true),
       show_orig_path(false),
       lpeobj(lpeobject),
@@ -468,12 +469,6 @@ Effect::registerParameter(Parameter * param)
     param_vector.push_back(param);
 }
 
-// TODO: should we provide a way to alter the handle's appearance?
-void
-Effect::registerKnotHolderHandle(KnotHolderEntity* entity, const char* descr)
-{
-    kh_entity_vector.push_back(std::make_pair(entity, descr));
-}
 
 /**
  * Add all registered LPE knotholder handles to the knotholder
@@ -488,23 +483,6 @@ Effect::addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
     // add handles provided by the effect's parameters (if any)
     for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
         (*p)->addKnotHolderEntities(knotholder, desktop, item);
-    }
-}
-
-void
-Effect::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
-    // TODO: The entities in kh_entity_vector are already instantiated during the call
-    //       to registerKnotHolderHandle(), but they are recreated here. Also, we must not
-    //       delete them when the knotholder is destroyed, whence the clumsy function
-    //       isDeletable(). If we could create entities of different classes dynamically,
-    //       this would be much nicer. How to do this?
-    std::vector<std::pair<KnotHolderEntity*, const char*> >::iterator i;
-    for (i = kh_entity_vector.begin(); i != kh_entity_vector.end(); ++i) {
-        KnotHolderEntity *entity = i->first;
-        const char *descr = i->second;
-
-        entity->create(desktop, item, knotholder, descr);
-        knotholder->add(entity);
     }
 }
 
@@ -688,8 +666,9 @@ bool
 Effect::providesKnotholder()
 {
     // does the effect actively provide any knotholder entities of its own?
-    if (kh_entity_vector.size() > 0)
+    if (_provides_knotholder_entities) {
         return true;
+    }
 
     // otherwise: are there any parameters that have knotholderentities?
     for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {

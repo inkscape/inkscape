@@ -47,6 +47,7 @@ public:
     friend class PB::KnotHolderEntityLeftEnd;
     friend class PB::KnotHolderEntityRightEnd;
     friend void PB::bisector_end_set(SPItem *item, Geom::Point const &p, bool left = true);
+    void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
 private:
     ScalarParam length_left;

@@ -25,6 +25,12 @@ struct SPKnot;
 class SPDesktop;
 class KnotHolder;
 
+namespace Inkscape {
+namespace LivePathEffect {
+    class Effect;
+}
+}
+
 typedef void (* SPKnotHolderSetFunc) (SPItem *item, Geom::Point const &p, Geom::Point const &origin, guint state);
 typedef Geom::Point (* SPKnotHolderGetFunc) (SPItem *item);
 /* fixme: Think how to make callbacks most sensitive (Lauris) */
@@ -83,6 +89,11 @@ public:
 
 // derived KnotHolderEntity class for LPEs
 class LPEKnotHolderEntity : public KnotHolderEntity {
+public:
+    LPEKnotHolderEntity(Inkscape::LivePathEffect::Effect *effect) : _effect(effect) {};
+protected:
+    Inkscape::LivePathEffect::Effect *_effect;
+private:
     virtual bool isDeletable() { return false; }
 };
 

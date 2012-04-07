@@ -2,9 +2,9 @@
  * @brief Minimal LPE effect, see lpe-skeleton.cpp.
  */
 /* Authors:
- *   Johan Engelen <j.b.c.engelen@utwente.nl>
+ *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
- * Copyright (C) 2007 Authors
+ * Copyright (C) 2007-2012 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -18,8 +18,10 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-// each knotholder handle for your LPE requires a separate class derived from KnotHolderEntity;
-// define it in lpe-skeleton.cpp and register it in the effect's constructor
+// each knotholder handle for your LPE requires a separate class derived from LPEKnotHolderEntity;
+// define it in lpe-skeleton.cpp and add code to create it in addKnotHolderEntities
+// note that the LPE parameter classes implement their own handles! So in most cases, you will
+// not have to do anything like this.
 /**
 namespace Skeleton {
   // we need a separate namespace to avoid clashes with other LPEs
@@ -37,8 +39,9 @@ public:
 //    virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
-    /* the knotholder entity classes (if any) must be declared friends */
+    /* the knotholder entity classes (if any) can be declared friends */
     //friend class Skeleton::KnotHolderEntityMyHandle;
+    //virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
 private:
     // add the parameters for your effect here:

@@ -1,22 +1,18 @@
 #ifndef INKSCAPE_LPE_ANGLE_BISECTOR_H
 #define INKSCAPE_LPE_ANGLE_BISECTOR_H
 
-/** \file
- * LPE <angle_bisector> implementation, see lpe-angle_bisector.cpp.
- */
-
 /*
  * Authors:
- *   Johan Engelen
+ *   Maximilian Albert <maximilian.albert@gmail.com>
+ *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
- * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
+ * Copyright (C) Authors 2007-2012
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
 #include "live_effects/effect.h"
 #include "live_effects/parameter/parameter.h"
-#include "live_effects/parameter/point.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -36,6 +32,7 @@ public:
 
     friend class AB::KnotHolderEntityLeftEnd;
     friend class AB::KnotHolderEntityRightEnd;
+    void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
 //private:
     ScalarParam length_left;

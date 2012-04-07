@@ -11,9 +11,9 @@
  *   :%s/skeleton/yourname/g
  */
 /* Authors:
- *   Johan Engelen <j.b.c.engelen@utwente.nl>
+ *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
- * Copyright (C) 2007 Authors
+ * Copyright (C) 2007-2012 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -22,6 +22,9 @@
 
 // You might need to include other 2geom files. You can add them here:
 #include <2geom/path.h>
+
+//#include "knot-holder-entity.h"
+//#include "knotholder.h"
 
 namespace Inkscape {
 namespace LivePathEffect {
@@ -33,12 +36,11 @@ LPESkeleton::LPESkeleton(LivePathEffectObject *lpeobject) :
 {
     /* uncomment the following line to have the original path displayed while the item is selected */
     //show_orig_path = true;
+    /* uncomment the following line to enable display of the effect-specific on-canvas handles (knotholder entities) */
+    //_provides_knotholder_entities
 
     /* register all your parameters here, so Inkscape knows which parameters this effect has: */
     registerParameter( dynamic_cast<Parameter *>(&number) );
-
-    /* register all your knotholder handles here: */
-    //registerKnotHolderHandle(new Skeleton::KnotHolderEntityAttachMyHandle(), _("help message"));
 }
 
 LPESkeleton::~LPESkeleton()
@@ -80,7 +82,7 @@ LPESkeleton::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
 }
 
 /* ########################
- *  Define the classes for your knotholder handles here
+ *  If you want to provide effect-specific on-canvas handles (knotholder entities), define them here:
  */
 
 /*
@@ -96,6 +98,17 @@ public:
 };
 
 } // namespace Skeleton
+
+void
+LPESkeleton::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+    {
+        KnotHolderEntityMyHandle *e = new KnotHolderEntityMyHandle(this);
+        e->create(  desktop, item, knotholder,
+                    _("Text describing what this handle does"),
+                    //optional: knot_shape, knot_mode, knot_color);
+        knotholder->add(e);
+    }
+};
 */
 
 /* ######################## */

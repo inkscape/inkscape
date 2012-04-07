@@ -3,9 +3,9 @@
  */
 /* Authors:
  *   Jean-Francois Barraud <jf.barraud@gmail.com>
- *   Johan Engelen <j.b.c.engelen@utwente.nl>
+ *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
- * Copyright (C) Johan Engelen 2007
+ * Copyright (C) Authors 2007-2012
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -61,6 +61,7 @@ public:
   
   /* the knotholder entity classes must be declared friends */
   friend class KnotHolderEntityCrossingSwitcher;
+  void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
 protected:
     virtual void addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec);

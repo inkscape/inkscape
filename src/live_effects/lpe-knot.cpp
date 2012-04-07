@@ -5,8 +5,9 @@
 /* Authors:
  *   Jean-Francois Barraud <jf.barraud@gmail.com>
  *   Abhishek Sharma
+ *   Johan Engelen
  *
- * Copyright (C) 2007 Authors
+ * Copyright (C) 2007-2012 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -18,6 +19,7 @@
 #include "svg/svg.h"
 #include "style.h"
 #include "knot-holder-entity.h"
+#include "knotholder.h"
 
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/sbasis.h>
@@ -38,11 +40,9 @@
 namespace Inkscape {
 namespace LivePathEffect {
 
-class KnotHolderEntityCrossingSwitcher : public LPEKnotHolderEntity
-{
+class KnotHolderEntityCrossingSwitcher : public LPEKnotHolderEntity {
 public:
-    virtual ~KnotHolderEntityCrossingSwitcher() {}
-
+    KnotHolderEntityCrossingSwitcher(LPEKnot *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
     virtual Geom::Point knot_get();
     virtual void knot_click(guint state);
@@ -357,10 +357,11 @@ LPEKnot::LPEKnot(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&switcher_size) );
     registerParameter( dynamic_cast<Parameter *>(&crossing_points_vector) );
 
-    registerKnotHolderHandle(new KnotHolderEntityCrossingSwitcher(), _("Drag to select a crossing, click to flip it"));
     crossing_points = LPEKnotNS::CrossingPoints();
     selectedCrossing = 0;
     switcher = Geom::Point(0,0);
+
+    _provides_knotholder_entities = true;
 }
 
 LPEKnot::~LPEKnot()
@@ -582,18 +583,6 @@ LPEKnot::doBeforeEffect (SPLPEItem *lpeitem)
     updateSwitcher();
 }
 
-
-static LPEKnot *
-get_effect(SPItem *item)
-{
-    Effect *effect = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
-    if (effect->effectType() != KNOT) {
-        g_print ("Warning: Effect is not of type LPEKnot!\n");
-        return NULL;
-    }
-    return static_cast<LPEKnot *>(effect);
-}
-
 void
 LPEKnot::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVector> &hp_vec)
 {
@@ -618,9 +607,21 @@ LPEKnot::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVecto
 }
 
 void
+LPEKnot::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+    {
+        KnotHolderEntity *e = new KnotHolderEntityCrossingSwitcher(this);
+        e->create(  desktop, item, knotholder,
+                    _("Drag to select a crossing, click to flip it")
+                    /*optional: knot_shape, knot_mode, knot_color*/);
+        knotholder->add(e);
+    }
+};
+
+
+void
 KnotHolderEntityCrossingSwitcher::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
 {
-    LPEKnot* lpe = get_effect(item);
+    LPEKnot* lpe = dynamic_cast<LPEKnot *>(_effect);
 
     lpe->selectedCrossing = idx_of_nearest(lpe->crossing_points,p);
     lpe->updateSwitcher();
@@ -631,14 +632,14 @@ KnotHolderEntityCrossingSwitcher::knot_set(Geom::Point const &p, Geom::Point con
 Geom::Point
 KnotHolderEntityCrossingSwitcher::knot_get()
 {
-    LPEKnot* lpe = get_effect(item);
+    LPEKnot* lpe = dynamic_cast<LPEKnot *>(_effect);
     return snap_knot_position(lpe->switcher);
 }
 
 void
 KnotHolderEntityCrossingSwitcher::knot_click(guint state)
 {
-    LPEKnot* lpe = get_effect(item);
+    LPEKnot* lpe = dynamic_cast<LPEKnot *>(_effect);
     unsigned s = lpe->selectedCrossing;
     if (s < lpe->crossing_points.size()){
         if (state & GDK_SHIFT_MASK){

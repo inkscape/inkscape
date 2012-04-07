@@ -4,9 +4,9 @@
  */
 /* Authors:
  *   Maximilian Albert <maximilian.albert@gmail.com>
- *   Johan Engelen <j.b.c.engelen@utwente.nl>
+ *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
- * Copyright (C) 2007-2008 Authors
+ * Copyright (C) 2007-2012 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -18,6 +18,7 @@
 #include "live_effects/lpe-perspective_path.h"
 #include "sp-item-group.h"
 #include "knot-holder-entity.h"
+#include "knotholder.h"
 
 #include "inkscape.h"
 
@@ -31,6 +32,7 @@ namespace PP {
 class KnotHolderEntityOffset : public LPEKnotHolderEntity
 {
 public:
+    KnotHolderEntityOffset(LPEPerspectivePath *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
     virtual Geom::Point knot_get();
 };
@@ -53,14 +55,11 @@ LPEPerspectivePath::LPEPerspectivePath(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&offsety) );
     registerParameter( dynamic_cast<Parameter *>(&uses_plane_xy) );
 
-    registerKnotHolderHandle(new PP::KnotHolderEntityOffset(), _("Adjust the origin"));
-
     concatenate_before_pwd2 = true; // don't split the path into its subpaths
+    _provides_knotholder_entities = true;
 
     Persp3D *persp = persp3d_document_first_persp(inkscape_active_document());
-
     Proj::TransfMat3x4 pmat = persp->perspective_impl->tmat;
-
     pmat.copy_tmat(tmat);
 }
 
@@ -138,26 +137,25 @@ LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > cons
     return output;
 }
 
-namespace PP {
-
-// TODO: make this more generic
-static LPEPerspectivePath *
-get_effect(SPItem *item)
-{
-    Effect *effect = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
-    if (effect->effectType() != PERSPECTIVE_PATH) {
-        g_print ("Warning: Effect is not of type LPEPerspectivePath!\n");
-        return NULL;
+void
+LPEPerspectivePath::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+    {
+        KnotHolderEntity *e = new PP::KnotHolderEntityOffset(this);
+        e->create(  desktop, item, knotholder,
+                    _("Adjust the origin")
+                    /*optional: knot_shape, knot_mode, knot_color*/);
+        knotholder->add(e);
     }
-    return static_cast<LPEPerspectivePath *>(effect);
-}
+};
+
+namespace PP {
 
 void
 KnotHolderEntityOffset::knot_set(Geom::Point const &p, Geom::Point const &origin, guint /*state*/)
 {
     using namespace Geom;
  
-    LPEPerspectivePath* lpe = get_effect(item);
+    LPEPerspectivePath* lpe = dynamic_cast<LPEPerspectivePath *>(_effect);
 
     Geom::Point const s = snap_knot_position(p);
 
@@ -171,7 +169,7 @@ KnotHolderEntityOffset::knot_set(Geom::Point const &p, Geom::Point const &origin
 Geom::Point
 KnotHolderEntityOffset::knot_get()
 {
-    LPEPerspectivePath* lpe = get_effect(item);
+    LPEPerspectivePath* lpe = dynamic_cast<LPEPerspectivePath *>(_effect);
     return lpe->orig + Geom::Point(lpe->offsetx, -lpe->offsety);
 }
 

@@ -20,55 +20,48 @@
 #include "sp-lpe-item.h"
 #include <2geom/path.h>
 
+#include "knot-holder-entity.h"
+#include "knotholder.h"
+
 namespace Inkscape {
 namespace LivePathEffect {
 namespace PB {
 
 class KnotHolderEntityEnd : public LPEKnotHolderEntity {
 public:
+    KnotHolderEntityEnd(LPEPerpBisector *effect) : LPEKnotHolderEntity(effect) {};
     void bisector_end_set(Geom::Point const &p, bool left = true);
 };
 
 class KnotHolderEntityLeftEnd : public KnotHolderEntityEnd {
 public:
+    KnotHolderEntityLeftEnd(LPEPerpBisector *effect) : KnotHolderEntityEnd(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
     virtual Geom::Point knot_get();
 };
 
 class KnotHolderEntityRightEnd : public KnotHolderEntityEnd {
 public:
+    KnotHolderEntityRightEnd(LPEPerpBisector *effect) : KnotHolderEntityEnd(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
     virtual Geom::Point knot_get();
 };
 
-// TODO: Make this more generic
-static LPEPerpBisector *
-get_effect(SPItem *item)
-{
-    Effect *effect = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
-    if (effect->effectType() != PERP_BISECTOR) {
-        g_print ("Warning: Effect is not of type LPEPerpBisector!\n");
-        return NULL;
-    }
-    return static_cast<LPEPerpBisector *>(effect);
-}
-
 Geom::Point
 KnotHolderEntityLeftEnd::knot_get() {
-    Inkscape::LivePathEffect::LPEPerpBisector *lpe = get_effect(item);
+    LPEPerpBisector *lpe = dynamic_cast<LPEPerpBisector *>(_effect);
     return Geom::Point(lpe->C);
 }
 
 Geom::Point
 KnotHolderEntityRightEnd::knot_get() {
-    Inkscape::LivePathEffect::LPEPerpBisector *lpe = get_effect(item);
+    LPEPerpBisector *lpe = dynamic_cast<LPEPerpBisector *>(_effect);
     return Geom::Point(lpe->D);
 }
 
 void
 KnotHolderEntityEnd::bisector_end_set(Geom::Point const &p, bool left) {
-    Inkscape::LivePathEffect::LPEPerpBisector *lpe =
-        dynamic_cast<Inkscape::LivePathEffect::LPEPerpBisector *> (sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item)));
+    LPEPerpBisector *lpe = dynamic_cast<LPEPerpBisector *>(_effect);
     if (!lpe) return;
 
     Geom::Point const s = snap_knot_position(p);
@@ -105,13 +98,11 @@ LPEPerpBisector::LPEPerpBisector(LivePathEffectObject *lpeobject) :
     A(0,0), B(0,0), M(0,0), C(0,0), D(0,0), perp_dir(0,0)
 {
     show_orig_path = true;
+    _provides_knotholder_entities = true;
 
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter( dynamic_cast<Parameter *>(&length_left) );
     registerParameter( dynamic_cast<Parameter *>(&length_right) );
-
-    registerKnotHolderHandle(new PB::KnotHolderEntityLeftEnd(), _("Adjust the bisector's \"left\" end"));
-    registerKnotHolderHandle(new PB::KnotHolderEntityRightEnd(), _("Adjust the bisector's \"right\" end"));
 }
 
 LPEPerpBisector::~LPEPerpBisector()
@@ -158,6 +149,24 @@ LPEPerpBisector::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &
 
     return output;
 }
+
+void
+LPEPerpBisector::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+    {
+        KnotHolderEntity *e = new PB::KnotHolderEntityLeftEnd(this);
+        e->create(  desktop, item, knotholder,
+                    _("Adjust the bisector's \"left\" end")
+                    /*optional: knot_shape, knot_mode, knot_color*/);
+        knotholder->add(e);
+    }
+    {
+        KnotHolderEntity *e = new PB::KnotHolderEntityRightEnd(this);
+        e->create(  desktop, item, knotholder,
+                    _("Adjust the bisector's \"right\" end")
+                    /*optional: knot_shape, knot_mode, knot_color*/);
+        knotholder->add(e);
+    }
+};
 
 /* ######################## */
 

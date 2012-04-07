@@ -39,6 +39,7 @@ public:
     /* the knotholder entity classes must be declared friends */
     friend class Pl::KnotHolderEntityLeftEnd;
     friend class Pl::KnotHolderEntityRightEnd;
+    void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
 private:
     PointParam offset_pt;

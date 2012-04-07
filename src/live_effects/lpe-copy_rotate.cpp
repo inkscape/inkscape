@@ -4,10 +4,10 @@
  */
 /*
  * Authors:
- *   Maximilian Albert
+ *   Maximilian Albert <maximilian.albert@gmail.com>
+ *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
- * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
- * Copyright (C) Maximilian Albert 2008 <maximilian.albert@gmail.com>
+ * Copyright (C) Authors 2007-2012
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -21,21 +21,24 @@
 #include <2geom/d2-sbasis.h>
 #include <2geom/angle.h>
 
+#include "knot-holder-entity.h"
+#include "knotholder.h"
+
 namespace Inkscape {
 namespace LivePathEffect {
 
 namespace CR {
 
-class KnotHolderEntityStartingAngle : public LPEKnotHolderEntity
-{
+class KnotHolderEntityStartingAngle : public LPEKnotHolderEntity {
 public:
+    KnotHolderEntityStartingAngle(LPECopyRotate *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
     virtual Geom::Point knot_get();
 };
 
-class KnotHolderEntityRotationAngle : public LPEKnotHolderEntity
-{
+class KnotHolderEntityRotationAngle : public LPEKnotHolderEntity {
 public:
+    KnotHolderEntityRotationAngle(LPECopyRotate *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
     virtual Geom::Point knot_get();
 };
@@ -51,6 +54,7 @@ LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
     dist_angle_handle(100)
 {
     show_orig_path = true;
+    _provides_knotholder_entities = true;
 
     // register all your parameters here, so Inkscape knows which parameters this effect has:
     registerParameter( dynamic_cast<Parameter *>(&starting_angle) );
@@ -58,12 +62,8 @@ LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
     registerParameter( dynamic_cast<Parameter *>(&num_copies) );
     registerParameter( dynamic_cast<Parameter *>(&origin) );
 
-    registerKnotHolderHandle(new CR::KnotHolderEntityStartingAngle(), _("Adjust the starting angle"));
-    registerKnotHolderHandle(new CR::KnotHolderEntityRotationAngle(), _("Adjust the rotation angle"));
-
     num_copies.param_make_integer(true);
     num_copies.param_set_range(0, 1000);
-
 }
 
 LPECopyRotate::~LPECopyRotate()
@@ -127,26 +127,32 @@ LPECopyRotate::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::Pat
     hp_vec.push_back(pathv);
 }
 
+void
+LPECopyRotate::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+    {
+        KnotHolderEntity *e = new CR::KnotHolderEntityStartingAngle(this);
+        e->create(  desktop, item, knotholder,
+                    _("Adjust the starting angle")
+                    /*optional: knot_shape, knot_mode, knot_color*/);
+        knotholder->add(e);
+    }
+    {
+        KnotHolderEntity *e = new CR::KnotHolderEntityRotationAngle(this);
+        e->create(  desktop, item, knotholder,
+                    _("Adjust the rotation angle")
+                    /*optional: knot_shape, knot_mode, knot_color*/);
+        knotholder->add(e);
+    }
+};
+
 namespace CR {
 
 using namespace Geom;
 
-// TODO: make this more generic
-static LPECopyRotate *
-get_effect(SPItem *item)
-{
-    Effect *effect = sp_lpe_item_get_current_lpe(SP_LPE_ITEM(item));
-    if (effect->effectType() != COPY_ROTATE) {
-        g_print ("Warning: Effect is not of type LPECopyRotate!\n");
-        return NULL;
-    }
-    return static_cast<LPECopyRotate *>(effect);
-}
-
 void
 KnotHolderEntityStartingAngle::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
-    LPECopyRotate* lpe = get_effect(item);
+    LPECopyRotate* lpe = dynamic_cast<LPECopyRotate *>(_effect);
 
     Geom::Point const s = snap_knot_position(p);
 
@@ -166,7 +172,7 @@ KnotHolderEntityStartingAngle::knot_set(Geom::Point const &p, Geom::Point const 
 void
 KnotHolderEntityRotationAngle::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
-    LPECopyRotate* lpe = get_effect(item);
+    LPECopyRotate* lpe = dynamic_cast<LPECopyRotate *>(_effect);
 
     Geom::Point const s = snap_knot_position(p);
 
@@ -186,18 +192,20 @@ KnotHolderEntityRotationAngle::knot_set(Geom::Point const &p, Geom::Point const 
 Geom::Point
 KnotHolderEntityStartingAngle::knot_get()
 {
-    LPECopyRotate* lpe = get_effect(item);
+    LPECopyRotate* lpe = dynamic_cast<LPECopyRotate *>(_effect);
     return snap_knot_position(lpe->start_pos);
 }
 
 Geom::Point
 KnotHolderEntityRotationAngle::knot_get()
 {
-    LPECopyRotate* lpe = get_effect(item);
+    LPECopyRotate* lpe = dynamic_cast<LPECopyRotate *>(_effect);
     return snap_knot_position(lpe->rot_pos);
 }
 
 } // namespace CR
+
+
 
 /* ######################## */
 
