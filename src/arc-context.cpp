@@ -48,6 +48,26 @@
 #include "arc-context.h"
 #include "display/sp-canvas-item.h"
 
+// Define new form of key macros if we're using an old GTK+ version
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_Alt_L 0xffe9
+#define GDK_KEY_Alt_R 0xffea
+#define GDK_KEY_Control_L 0xffe3
+#define GDK_KEY_Control_R 0xffe4
+#define GDK_KEY_Meta_L 0xffe7
+#define GDK_KEY_Meta_R 0xffe8
+#define GDK_KEY_Shift_L 0xffe1
+#define GDK_KEY_Shift_R 0xffe2
+#define GDK_KEY_Up 0xff52
+#define GDK_KEY_Down 0xff54
+#define GDK_KEY_KP_Up 0xff97
+#define GDK_KEY_KP_Down 0xff99
+#define GDK_KEY_x 0x078
+#define GDK_KEY_X 0x058
+#define GDK_KEY_Escape 0xff1b
+#define GDK_KEY_space 0x020
+#endif
+
 using Inkscape::DocumentUndo;
 
 static void sp_arc_context_class_init(SPArcContextClass *klass);
@@ -319,14 +339,14 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
             break;
         case GDK_KEY_PRESS:
             switch (get_group0_keyval (&event->key)) {
-                case GDK_Alt_L:
-                case GDK_Alt_R:
-                case GDK_Control_L:
-                case GDK_Control_R:
-                case GDK_Shift_L:
-                case GDK_Shift_R:
-                case GDK_Meta_L:  // Meta is when you press Shift+Alt (at least on my machine)
-                case GDK_Meta_R:
+                case GDK_KEY_Alt_L:
+                case GDK_KEY_Alt_R:
+                case GDK_KEY_Control_L:
+                case GDK_KEY_Control_R:
+                case GDK_KEY_Shift_L:
+                case GDK_KEY_Shift_R:
+                case GDK_KEY_Meta_L:  // Meta is when you press Shift+Alt (at least on my machine)
+                case GDK_KEY_Meta_R:
                     if (!dragging) {
                         sp_event_show_modifier_tip(event_context->defaultMessageContext(), event,
                                                    _("<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"),
@@ -334,22 +354,22 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                                                    NULL);
                     }
                     break;
-                case GDK_Up:
-                case GDK_Down:
-                case GDK_KP_Up:
-                case GDK_KP_Down:
+                case GDK_KEY_Up:
+                case GDK_KEY_Down:
+                case GDK_KEY_KP_Up:
+                case GDK_KEY_KP_Down:
                     // prevent the zoom field from activation
                     if (!MOD__CTRL_ONLY)
                         ret = TRUE;
                     break;
-                case GDK_x:
-                case GDK_X:
+                case GDK_KEY_x:
+                case GDK_KEY_X:
                     if (MOD__ALT_ONLY) {
                         desktop->setToolboxFocusTo ("altx-arc");
                         ret = TRUE;
                     }
                     break;
-                case GDK_Escape:
+                case GDK_KEY_Escape:
                     if (dragging) {
                         dragging = false;
                         sp_event_context_discard_delayed_snap_event(event_context);
@@ -358,7 +378,7 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
                         ret = TRUE;
                     }
                     break;
-                case GDK_space:
+                case GDK_KEY_space:
                     if (dragging) {
                         sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
                                               event->button.time);
@@ -378,14 +398,14 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
             break;
         case GDK_KEY_RELEASE:
             switch (event->key.keyval) {
-                case GDK_Alt_L:
-                case GDK_Alt_R:
-                case GDK_Control_L:
-                case GDK_Control_R:
-                case GDK_Shift_L:
-                case GDK_Shift_R:
-                case GDK_Meta_L:  // Meta is when you press Shift+Alt
-                case GDK_Meta_R:
+                case GDK_KEY_Alt_L:
+                case GDK_KEY_Alt_R:
+                case GDK_KEY_Control_L:
+                case GDK_KEY_Control_R:
+                case GDK_KEY_Shift_L:
+                case GDK_KEY_Shift_R:
+                case GDK_KEY_Meta_L:  // Meta is when you press Shift+Alt
+                case GDK_KEY_Meta_R:
                     event_context->defaultMessageContext()->clear();
                     break;
                 default:
