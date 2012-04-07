@@ -117,7 +117,7 @@ PowerStrokePointArrayParam::set_oncanvas_looks(SPKnotShapeType shape, SPKnotMode
     knot_color = color;
 }
 
-class PowerStrokePointArrayParamKnotHolderEntity : public LPEKnotHolderEntity {
+class PowerStrokePointArrayParamKnotHolderEntity : public KnotHolderEntity {
 public:
     PowerStrokePointArrayParamKnotHolderEntity(PowerStrokePointArrayParam *p, unsigned int index);
     virtual ~PowerStrokePointArrayParamKnotHolderEntity() {}
@@ -184,6 +184,7 @@ void
 PowerStrokePointArrayParamKnotHolderEntity::knot_click(guint state)
 {
 //g_print ("This is the %d handle associated to parameter '%s'\n", _index, _pparam->param_key.c_str());
+    bool knotarray_changed = false;
 
     if (state & GDK_CONTROL_MASK) {
         if (state & GDK_MOD1_MASK) {
@@ -199,6 +200,10 @@ PowerStrokePointArrayParamKnotHolderEntity::knot_click(guint state)
         }
     } 
 
+    if (knotarray_changed) {
+        // if knot array has been changed, the on-canvas knots must be reloaded
+        /// \todo reload knots!
+    }
 }
 
 void
