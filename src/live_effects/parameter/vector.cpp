@@ -137,7 +137,7 @@ VectorParam::set_origin_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mod
     ori_knot_color = color;
 }
 
-class VectorParamKnotHolderEntity_Origin : public LPEKnotHolderEntity {
+class VectorParamKnotHolderEntity_Origin : public KnotHolderEntity {
 public:
     VectorParamKnotHolderEntity_Origin(VectorParam *p) : param(p) { }
     virtual ~VectorParamKnotHolderEntity_Origin() {}
@@ -158,7 +158,7 @@ private:
     VectorParam *param;
 };
 
-class VectorParamKnotHolderEntity_Vector : public LPEKnotHolderEntity {
+class VectorParamKnotHolderEntity_Vector : public KnotHolderEntity {
 public:
     VectorParamKnotHolderEntity_Vector(VectorParam *p) : param(p) { }
     virtual ~VectorParamKnotHolderEntity_Vector() {}
