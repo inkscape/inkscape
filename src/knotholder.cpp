@@ -68,13 +68,7 @@ KnotHolder::~KnotHolder() {
     g_object_unref(G_OBJECT(item));
     for(std::list<KnotHolderEntity *>::iterator i = entity.begin(); i != entity.end(); ++i) {
         KnotHolderEntity* e = (*i);
-        if (e->isDeletable()) {
-            delete (*i);
-        } else {
-            // we must not delete the entity (since it's attached to an LPE parameter),
-            // but the handle should be destroyed
-            g_object_unref(e->knot);
-        }
+        delete (*i);
         (*i) = NULL;
     }
     entity.clear(); // is this necessary?

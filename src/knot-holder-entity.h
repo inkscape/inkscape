@@ -48,12 +48,6 @@ public:
                         SPKnotModeType mode = SP_KNOT_MODE_XOR,
                         guint32 color = 0xffffff00);
 
-    /* derived classes used for LPE knotholder handles use this to indicate that they
-       must not be deleted when a knotholder is destroyed */
-    // TODO: it would be nice to ditch this but then we need to dynamically create instances of different
-    //       KnotHolderEntity classes in Effect::addKnotHolderEntities. How to do this???
-    virtual bool isDeletable() { return true; }
-
     /* the get/set/click handlers are virtual functions; each handler class for a knot
        should be derived from KnotHolderEntity and override these functions */
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state) = 0;
@@ -93,8 +87,6 @@ public:
     LPEKnotHolderEntity(Inkscape::LivePathEffect::Effect *effect) : _effect(effect) {};
 protected:
     Inkscape::LivePathEffect::Effect *_effect;
-private:
-    virtual bool isDeletable() { return false; }
 };
 
 /* pattern manipulation */
