@@ -34,6 +34,9 @@
 namespace Geom {
 // should all be moved to 2geom at some point
 
+/**
+* note that -unitTangentAt(reverse(a),0.) == unitTangentAt(a,1.) but the former is more reliable (sometimes the sign is wrong for the latter)
+*/
 Point unitTangentAt( D2<SBasis> const & a, Coord t, unsigned n = 3) {
     std::vector<Point> derivs = a.valueAndDerivatives(t, n);
     for (unsigned deriv_n = 1; deriv_n < derivs.size(); deriv_n++) {
@@ -525,7 +528,7 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
                 break;
             case LINECAP_PEAK:
             {
-                Geom::Point end_deriv = unit_vector(der.lastValue());
+                Geom::Point end_deriv = -unitTangentAt( reverse(pwd2_in.segs.back()), 0.);
                 double radius = 0.5 * distance(pwd2_out.lastValue(), mirrorpath.firstValue());
                 Geom::Point midpoint = 0.5*(pwd2_out.lastValue() + mirrorpath.firstValue()) + radius*end_deriv;
                 fixed_path.appendNew<LineSegment>(midpoint);
@@ -534,7 +537,7 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
             }
             case LINECAP_SQUARE:
             {
-                Geom::Point end_deriv = unit_vector(der.lastValue());
+                Geom::Point end_deriv = -unitTangentAt( reverse(pwd2_in.segs.back()), 0.);
                 double radius = 0.5 * distance(pwd2_out.lastValue(), mirrorpath.firstValue());
                 fixed_path.appendNew<LineSegment>( pwd2_out.lastValue() + radius*end_deriv );
                 fixed_path.appendNew<LineSegment>( mirrorpath.firstValue() + radius*end_deriv );
@@ -563,7 +566,7 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
                 break;
             case LINECAP_PEAK:
             {
-                Geom::Point start_deriv = unit_vector(der.firstValue());
+                Geom::Point start_deriv = unitTangentAt( pwd2_in.segs.front(), 0.);
                 double radius = 0.5 * distance(pwd2_out.firstValue(), mirrorpath.lastValue());
                 Geom::Point midpoint = 0.5*(mirrorpath.lastValue() + pwd2_out.firstValue()) - radius*start_deriv;
                 fixed_path.appendNew<LineSegment>( midpoint );
@@ -572,7 +575,7 @@ LPEPowerStroke::doEffect_path (std::vector<Geom::Path> const & path_in)
             }
             case LINECAP_SQUARE:
             {
-                Geom::Point start_deriv = unit_vector(der.firstValue());
+                Geom::Point start_deriv = unitTangentAt( pwd2_in.segs.front(), 0.);
                 double radius = 0.5 * distance(pwd2_out.firstValue(), mirrorpath.lastValue());
                 fixed_path.appendNew<LineSegment>( mirrorpath.lastValue() - radius*start_deriv );
                 fixed_path.appendNew<LineSegment>( pwd2_out.firstValue() - radius*start_deriv );
