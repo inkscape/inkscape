@@ -14,6 +14,7 @@
 #include "live_effects/lpe-powerstroke-interpolators.h"
 
 #include "sp-shape.h"
+#include "style.h"
 #include "display/curve.h"
 
 #include <2geom/path.h>
@@ -182,11 +183,21 @@ LPEPowerStroke::doOnApply(SPLPEItem *lpeitem)
 {
     if (SP_IS_SHAPE(lpeitem)) {
         std::vector<Geom::Point> points;
-        Geom::PathVector pathv = SP_SHAPE(lpeitem)->_curve->get_pathvector();
-        Geom::Path::size_type size = pathv.empty() ? 1 : pathv.front().size_open();
-        points.push_back( Geom::Point(0,0) );
-        points.push_back( Geom::Point(0.5*size,0) );
-        points.push_back( Geom::Point(size,0) );
+        Geom::PathVector const &pathv = SP_SHAPE(lpeitem)->_curve->get_pathvector();
+        double width = (lpeitem && lpeitem->style) ? lpeitem->style->stroke_width.computed : 1.;
+        if (pathv.empty()) {
+            points.push_back( Geom::Point(0.,width) );
+            points.push_back( Geom::Point(0.5,width) );
+            points.push_back( Geom::Point(1.,width) );
+        } else {
+            Geom::Path const &path = pathv.front();
+            Geom::Path::size_type const size = path.size_default();
+            points.push_back( Geom::Point(0.,width) );
+            points.push_back( Geom::Point(0.5*size,width) );
+            if (!path.closed()) {
+                points.push_back( Geom::Point(size,width) );
+            }
+        }
         offset_points.param_set_and_write_new_value(points);
     } else {
         g_warning("LPE Powerstroke can only be applied to shapes (not groups).");
