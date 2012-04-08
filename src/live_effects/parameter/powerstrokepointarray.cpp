@@ -19,6 +19,7 @@
 
 // needed for on-canvas editting:
 #include "desktop.h"
+#include "lpeobject.h"
 
 namespace Inkscape {
 
@@ -31,7 +32,7 @@ PowerStrokePointArrayParam::PowerStrokePointArrayParam( const Glib::ustring& lab
 {
     knot_shape = SP_KNOT_SHAPE_DIAMOND;
     knot_mode  = SP_KNOT_MODE_XOR;
-    knot_color = 0xff00ff00;
+    knot_color = 0xff88ff00;
 }
 
 PowerStrokePointArrayParam::~PowerStrokePointArrayParam()
@@ -192,18 +193,20 @@ PowerStrokePointArrayParamKnotHolderEntity::knot_click(guint state)
             std::vector<Geom::Point> & vec = _pparam->_vector;
             vec.erase(vec.begin() + _index);
             _pparam->param_set_and_write_new_value(vec);
+            knotarray_changed = true;
         } else {
             // add a knot
             std::vector<Geom::Point> & vec = _pparam->_vector;
             vec.insert(vec.begin() + _index, 1, vec.at(_index));
             _pparam->param_set_and_write_new_value(vec);
+            knotarray_changed = true;
         }
     } 
 
     if (knotarray_changed) {
         // if knot array has been changed, the on-canvas knots must be reloaded
-        /// \todo reload knots!
-    }
+        /// \todo reload!
+   }
 }
 
 void
