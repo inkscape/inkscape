@@ -25,6 +25,16 @@
 
 #include "zoom-context.h"
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_Escape 0xff1b
+#define GDK_KEY_Up 0xff52
+#define GDK_KEY_Down 0xff54
+#define GDK_KEY_KP_Up 0xff97
+#define GDK_KEY_KP_Down 0xff99
+#define GDK_KEY_Shift_L 0xffe1
+#define GDK_KEY_Shift_R 0xffe2
+#endif
+
 static void sp_zoom_context_class_init(SPZoomContextClass *klass);
 static void sp_zoom_context_init(SPZoomContext *zoom_context);
 static void sp_zoom_context_setup(SPEventContext *ec);
@@ -215,22 +225,22 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
         }
         case GDK_KEY_PRESS:
             switch (get_group0_keyval (&event->key)) {
-                case GDK_Escape:
+                case GDK_KEY_Escape:
                     Inkscape::Rubberband::get(desktop)->stop();
                     xp = yp = 0;
                     escaped = true;
                     ret = TRUE;
                     break;
-                case GDK_Up:
-                case GDK_Down:
-                case GDK_KP_Up:
-                case GDK_KP_Down:
+                case GDK_KEY_Up:
+                case GDK_KEY_Down:
+                case GDK_KEY_KP_Up:
+                case GDK_KEY_KP_Down:
                     // prevent the zoom field from activation
                     if (!MOD__CTRL_ONLY)
                         ret = TRUE;
                     break;
-                case GDK_Shift_L:
-                case GDK_Shift_R:
+                case GDK_KEY_Shift_L:
+                case GDK_KEY_Shift_R:
                     event_context->cursor_shape = cursor_zoom_out_xpm;
                     sp_event_context_update_cursor(event_context);
                     break;
@@ -240,8 +250,8 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
 		break;
 	case GDK_KEY_RELEASE:
             switch (get_group0_keyval (&event->key)) {
-		case GDK_Shift_L:
-		case GDK_Shift_R:
+		case GDK_KEY_Shift_L:
+		case GDK_KEY_Shift_R:
                     event_context->cursor_shape = cursor_zoom_xpm;
                     sp_event_context_update_cursor(event_context);
                     break;

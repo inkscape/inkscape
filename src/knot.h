@@ -100,27 +100,51 @@ struct SPKnot : GObject {
     }
     inline void setCursor (GdkCursor* normal, GdkCursor* mouseover, GdkCursor* dragging) {
         if (cursor[SP_KNOT_STATE_NORMAL]) {
+#if GTK_CHECK_VERSION(3,0,0)
+            g_object_unref(cursor[SP_KNOT_STATE_NORMAL]);
+#else
             gdk_cursor_unref(cursor[SP_KNOT_STATE_NORMAL]);
+#endif
         }
         cursor[SP_KNOT_STATE_NORMAL] = normal;
         if (normal) {
+#if GTK_CHECK_VERSION(3,0,0)
+            g_object_ref(normal);
+#else
             gdk_cursor_ref(normal);
+#endif
         }
 
         if (cursor[SP_KNOT_STATE_MOUSEOVER]) {
+#if GTK_CHECK_VERSION(3,0,0)
+            g_object_unref(cursor[SP_KNOT_STATE_MOUSEOVER]);
+#else
             gdk_cursor_unref(cursor[SP_KNOT_STATE_MOUSEOVER]);
+#endif
         }
         cursor[SP_KNOT_STATE_MOUSEOVER] = mouseover;
         if (mouseover) {
+#if GTK_CHECK_VERSION(3,0,0)
+            g_object_ref(mouseover);
+#else
             gdk_cursor_ref(mouseover);
+#endif
         }
 
         if (cursor[SP_KNOT_STATE_DRAGGING]) {
+#if GTK_CHECK_VERSION(3,0,0)
+            g_object_unref(cursor[SP_KNOT_STATE_DRAGGING]);
+#else
             gdk_cursor_unref(cursor[SP_KNOT_STATE_DRAGGING]);
+#endif
         }
         cursor[SP_KNOT_STATE_DRAGGING] = dragging;
         if (dragging) {
+#if GTK_CHECK_VERSION(3,0,0)
+            g_object_ref(dragging);
+#else
             gdk_cursor_ref(dragging);
+#endif
         }
     }
 

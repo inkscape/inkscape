@@ -81,6 +81,65 @@ using Inkscape::DocumentUndo;
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_M 0x04d
+#define GDK_KEY_m 0x06d
+#define GDK_KEY_0 0x030
+#define GDK_KEY_1 0x031
+#define GDK_KEY_2 0x032
+#define GDK_KEY_3 0x033
+#define GDK_KEY_4 0x034
+#define GDK_KEY_5 0x035
+#define GDK_KEY_6 0x036
+#define GDK_KEY_7 0x037
+#define GDK_KEY_8 0x038
+#define GDK_KEY_9 0x039
+#define GDK_KEY_I 0x049
+#define GDK_KEY_i 0x069
+#define GDK_KEY_Z 0x05a
+#define GDK_KEY_z 0x07a
+#define GDK_KEY_less 0x03c
+#define GDK_KEY_comma 0x02c
+#define GDK_KEY_greater 0x03e
+#define GDK_KEY_period 0x02e
+#define GDK_KEY_bracketleft 0x05b
+#define GDK_KEY_bracketright 0x05d
+#define GDK_KEY_d 0x064
+#define GDK_KEY_D 0x044
+#define GDK_KEY_P 0x050
+#define GDK_KEY_p 0x070
+#define GDK_KEY_S 0x053
+#define GDK_KEY_s 0x073
+#define GDK_KEY_a 0x061
+#define GDK_KEY_A 0x041
+#define GDK_KEY_R 0x052
+#define GDK_KEY_r 0x072
+#define GDK_KEY_c 0x063
+#define GDK_KEY_C 0x043
+#define GDK_KEY_J 0x04a
+#define GDK_KEY_j 0x06a
+#define GDK_KEY_b 0x062
+#define GDK_KEY_B 0x042
+#define GDK_KEY_Up 0xff52
+#define GDK_KEY_Left 0xff51
+#define GDK_KEY_Right 0xff53
+#define GDK_KEY_Down 0xff54
+#define GDK_KEY_KP_Left 0xff96
+#define GDK_KEY_KP_Up 0xff97
+#define GDK_KEY_KP_Right 0xff98
+#define GDK_KEY_KP_Down 0xff99
+#define GDK_KEY_KP_Home 0xff95
+#define GDK_KEY_KP_End 0xff9c
+#define GDK_KEY_Home 0xff50
+#define GDK_KEY_End 0xff57
+#define GDK_KEY_X 0x058
+#define GDK_KEY_x 0x078
+#define GDK_KEY_Shift_L 0xffe1
+#define GDK_KEY_Shift_R 0xffe2
+#define GDK_KEY_Control_L 0xffe3
+#define GDK_KEY_Control_R 0xffe4
+#endif
+
 static void sp_tweak_context_class_init(SPTweakContextClass *klass);
 static void sp_tweak_context_init(SPTweakContext *ddc);
 static void sp_tweak_context_dispose(GObject *object);
@@ -1322,112 +1381,112 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
         case GDK_KEY_PRESS:
         {
             switch (get_group0_keyval (&event->key)) {
-                case GDK_m:
-                case GDK_M:
-                case GDK_0:
+                case GDK_KEY_m:
+                case GDK_KEY_M:
+                case GDK_KEY_0:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_MOVE, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
-                case GDK_i:
-                case GDK_I:
-                case GDK_1:
+                case GDK_KEY_i:
+                case GDK_KEY_I:
+                case GDK_KEY_1:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_MOVE_IN_OUT, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
-                case GDK_z:
-                case GDK_Z:
-                case GDK_2:
+                case GDK_KEY_z:
+                case GDK_KEY_Z:
+                case GDK_KEY_2:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_MOVE_JITTER, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
-                case GDK_less:
-                case GDK_comma:
-                case GDK_greater:
-                case GDK_period:
-                case GDK_3:
+                case GDK_KEY_less:
+                case GDK_KEY_comma:
+                case GDK_KEY_greater:
+                case GDK_KEY_period:
+                case GDK_KEY_3:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_SCALE, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
-                case GDK_bracketright:
-                case GDK_bracketleft:
-                case GDK_4:
+                case GDK_KEY_bracketright:
+                case GDK_KEY_bracketleft:
+                case GDK_KEY_4:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_ROTATE, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
-                case GDK_d:
-                case GDK_D:
-                case GDK_5:
+                case GDK_KEY_d:
+                case GDK_KEY_D:
+                case GDK_KEY_5:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_MORELESS, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
-                case GDK_p:
-                case GDK_P:
-                case GDK_6:
+                case GDK_KEY_p:
+                case GDK_KEY_P:
+                case GDK_KEY_6:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_PUSH, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
-                case GDK_s:
-                case GDK_S:
-                case GDK_7:
+                case GDK_KEY_s:
+                case GDK_KEY_S:
+                case GDK_KEY_7:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_SHRINK_GROW, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
-                case GDK_a:
-                case GDK_A:
-                case GDK_8:
+                case GDK_KEY_a:
+                case GDK_KEY_A:
+                case GDK_KEY_8:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_ATTRACT_REPEL, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
-                case GDK_r:
-                case GDK_R:
-                case GDK_9:
+                case GDK_KEY_r:
+                case GDK_KEY_R:
+                case GDK_KEY_9:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_ROUGHEN, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
-                case GDK_c:
-                case GDK_C:
+                case GDK_KEY_c:
+                case GDK_KEY_C:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_COLORPAINT, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
-                case GDK_j:
-                case GDK_J:
+                case GDK_KEY_j:
+                case GDK_KEY_J:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_COLORJITTER, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
-                case GDK_b:
-                case GDK_B:
+                case GDK_KEY_b:
+                case GDK_KEY_B:
                     if (MOD__SHIFT_ONLY) {
                         sp_tweak_switch_mode(tc, TWEAK_MODE_BLUR, MOD__SHIFT);
                         ret = TRUE;
                     }
                     break;
 
-                case GDK_Up:
-                case GDK_KP_Up:
+                case GDK_KEY_Up:
+                case GDK_KEY_KP_Up:
                     if (!MOD__CTRL_ONLY) {
                         tc->force += 0.05;
                         if (tc->force > 1.0) {
@@ -1437,8 +1496,8 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                         ret = TRUE;
                     }
                     break;
-                case GDK_Down:
-                case GDK_KP_Down:
+                case GDK_KEY_Down:
+                case GDK_KEY_KP_Down:
                     if (!MOD__CTRL_ONLY) {
                         tc->force -= 0.05;
                         if (tc->force < 0.0) {
@@ -1448,8 +1507,8 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                         ret = TRUE;
                     }
                     break;
-                case GDK_Right:
-                case GDK_KP_Right:
+                case GDK_KEY_Right:
+                case GDK_KEY_KP_Right:
                     if (!MOD__CTRL_ONLY) {
                         tc->width += 0.01;
                         if (tc->width > 1.0) {
@@ -1460,8 +1519,8 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                         ret = TRUE;
                     }
                     break;
-                case GDK_Left:
-                case GDK_KP_Left:
+                case GDK_KEY_Left:
+                case GDK_KEY_KP_Left:
                     if (!MOD__CTRL_ONLY) {
                         tc->width -= 0.01;
                         if (tc->width < 0.01) {
@@ -1472,35 +1531,35 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                         ret = TRUE;
                     }
                     break;
-                case GDK_Home:
-                case GDK_KP_Home:
+                case GDK_KEY_Home:
+                case GDK_KEY_KP_Home:
                     tc->width = 0.01;
                     desktop->setToolboxAdjustmentValue ("altx-tweak", tc->width * 100);
                     sp_tweak_update_area(tc);
                     ret = TRUE;
                     break;
-                case GDK_End:
-                case GDK_KP_End:
+                case GDK_KEY_End:
+                case GDK_KEY_KP_End:
                     tc->width = 1.0;
                     desktop->setToolboxAdjustmentValue ("altx-tweak", tc->width * 100);
                     sp_tweak_update_area(tc);
                     ret = TRUE;
                     break;
-                case GDK_x:
-                case GDK_X:
+                case GDK_KEY_x:
+                case GDK_KEY_X:
                     if (MOD__ALT_ONLY) {
                         desktop->setToolboxFocusTo ("altx-tweak");
                         ret = TRUE;
                     }
                     break;
 
-                case GDK_Shift_L:
-                case GDK_Shift_R:
+                case GDK_KEY_Shift_L:
+                case GDK_KEY_Shift_R:
                     sp_tweak_update_cursor(tc, true);
                     break;
 
-                case GDK_Control_L:
-                case GDK_Control_R:
+                case GDK_KEY_Control_L:
+                case GDK_KEY_Control_R:
                     sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_SHRINK_GROW, MOD__SHIFT);
                     break;
                 default:
@@ -1511,12 +1570,12 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
         case GDK_KEY_RELEASE: {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             switch (get_group0_keyval(&event->key)) {
-                case GDK_Shift_L:
-                case GDK_Shift_R:
+                case GDK_KEY_Shift_L:
+                case GDK_KEY_Shift_R:
                     sp_tweak_update_cursor(tc, false);
                     break;
-                case GDK_Control_L:
-                case GDK_Control_R:
+                case GDK_KEY_Control_L:
+                case GDK_KEY_Control_R:
                     sp_tweak_switch_mode (tc, prefs->getInt("/tools/tweak/mode"), MOD__SHIFT);
                     tc->_message_context->clear();
                     break;
