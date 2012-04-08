@@ -955,7 +955,7 @@ void SPPaintSelector::updatePatternList( SPPattern *pattern )
 
         GtkMenu *m = GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(mnu)));
 
-        GList *kids = GTK_MENU_SHELL(m)->children;
+        GList *kids = gtk_container_get_children(GTK_CONTAINER(m));
 
         int patpos = 0;
         int i = 0;
