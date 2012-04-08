@@ -326,6 +326,9 @@ PathParam::start_listening(SPObject * to)
     }
     linked_delete_connection = to->connectDelete(sigc::mem_fun(*this, &PathParam::linked_delete));
     linked_modified_connection = to->connectModified(sigc::mem_fun(*this, &PathParam::linked_modified));
+    if (SP_IS_ITEM(to)) {
+        linked_transformed_connection = SP_ITEM(to)->connectTransformed(sigc::mem_fun(*this, &PathParam::linked_transformed));
+    }
     linked_modified(to, SP_OBJECT_MODIFIED_FLAG); // simulate linked_modified signal, so that path data is updated
 }
 
@@ -334,6 +337,7 @@ PathParam::quit_listening(void)
 {
     linked_modified_connection.disconnect();
     linked_delete_connection.disconnect();
+    linked_transformed_connection.disconnect();
 }
 
 void
@@ -368,6 +372,11 @@ void PathParam::linked_modified(SPObject *linked_obj, guint flags)
     linked_modified_callback(linked_obj, flags);
 }
 
+void PathParam::linked_transformed(Geom::Affine const *rel_transf, SPItem *moved_item)
+{
+    linked_transformed_callback(rel_transf, moved_item);
+}
+
 void
 PathParam::linked_modified_callback(SPObject *linked_obj, guint /*flags*/)
 {
@@ -391,6 +400,7 @@ PathParam::linked_modified_callback(SPObject *linked_obj, guint /*flags*/)
     emit_changed();
     SP_OBJECT(param_effect->getLPEObj())->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
+
 
 /* CALLBACK FUNCTIONS FOR THE BUTTONS */
 void

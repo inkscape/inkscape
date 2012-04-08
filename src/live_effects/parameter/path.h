@@ -70,13 +70,16 @@ protected:
     sigc::connection ref_changed_connection;
     sigc::connection linked_delete_connection;
     sigc::connection linked_modified_connection;
+    sigc::connection linked_transformed_connection;
     void ref_changed(SPObject *old_ref, SPObject *new_ref);
     void remove_link();
     void start_listening(SPObject * to);
     void quit_listening(void);
     void linked_delete(SPObject *deleted);
     void linked_modified(SPObject *linked_obj, guint flags);
+    void linked_transformed(Geom::Affine const *rel_transf, SPItem *moved_item);
     virtual void linked_modified_callback(SPObject *linked_obj, guint flags);
+    virtual void linked_transformed_callback(Geom::Affine const * /*rel_transf*/, SPItem * /*moved_item*/) {};
 
     void on_edit_button_click();
     void on_copy_button_click();

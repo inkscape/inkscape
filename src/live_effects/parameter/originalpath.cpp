@@ -104,6 +104,14 @@ OriginalPathParam::linked_modified_callback(SPObject *linked_obj, guint /*flags*
 }
 
 void
+OriginalPathParam::linked_transformed_callback(Geom::Affine const * /*rel_transf*/, SPItem * /*moved_item*/)
+{
+/** \todo find good way to compensate for referenced path transform, like done for normal clones.
+ *        See sp-use.cpp: sp_use_move_compensate */
+}
+
+
+void
 OriginalPathParam::on_select_original_button_click()
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;

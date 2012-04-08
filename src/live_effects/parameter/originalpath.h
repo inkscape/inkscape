@@ -35,6 +35,8 @@ public:
 
 protected:
     virtual void linked_modified_callback(SPObject *linked_obj, guint flags);
+    virtual void linked_transformed_callback(Geom::Affine const *rel_transf, SPItem *moved_item);
+
     void on_select_original_button_click();
 
 private:
