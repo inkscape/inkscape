@@ -1282,16 +1282,23 @@ void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &tra
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (compensate) {
-
-        // recursively compensating for stroke scaling will not work, because it can be scaled to zero or infinite
+        // recursively compensating for stroke scaling will not always work, because it can be scaled to zero or infinite
         // from which we cannot ever recover by applying an inverse scale; therefore we temporarily block any changes
-        // to the strokewidth instead, and unblock these after the transformation
+        // to the strokewidth in such a case instead, and unblock these after the transformation
         // (as reported in https://bugs.launchpad.net/inkscape/+bug/825840/comments/4)
         if (!prefs->getBool("/options/transform/stroke", true)) {
-            freeze_stroke_width_recursive(true);
-            // This will only work if the item has a set_transform method (in this method adjust_stroke() will be called)
-            // We will still have to apply the inverse scaling to other items, not having a set_transform method
-            // such as ellipses and stars
+            double const expansion = 1. / advertized_transform.descrim();
+            if (expansion < 1e-9 || expansion > 1e9) {
+                freeze_stroke_width_recursive(true);
+                // This will only work if the item has a set_transform method (in this method adjust_stroke() will be called)
+                // We will still have to apply the inverse scaling to other items, not having a set_transform method
+                // such as ellipses and stars
+                // PS: We cannot use this freeze_stroke_width_recursive() trick in all circumstances. For example, it will
+                // break pasting objects within their group (because in such a case the transformation of the group will affect
+                // the strokewidth, and has to be compensated for. See https://bugs.launchpad.net/inkscape/+bug/959223/comments/10)
+            } else {
+                adjust_stroke_width_recursive(expansion);
+            }
         }
 
         // recursively compensate rx/ry of a rect if requested
@@ -1325,15 +1332,19 @@ void SPItem::doWriteTransform(Inkscape::XML::Node *repr, Geom::Affine const &tra
              !(!transform.isTranslation() && style && style->getFilter()) // the object does not have a filter, or the transform is translation (which is supposed to not affect filters)
         ) {
         transform_attr = ((SPItemClass *) G_OBJECT_GET_CLASS(this))->set_transform(this, transform);
-        freeze_stroke_width_recursive(false);
+        if (freeze_stroke_width) {
+            freeze_stroke_width_recursive(false);
+        }
     } else {
-        freeze_stroke_width_recursive(false);
-        if (compensate) {
-            if (!prefs->getBool("/options/transform/stroke", true)) {
-                // Recursively compensate for stroke scaling, depending on user preference
-                // (As to why we need to do this, see the comment a few lines above near the freeze_stroke_width_recursive(true) call)
-                double const expansion = 1. / advertized_transform.descrim();
-                adjust_stroke_width_recursive(expansion);
+        if (freeze_stroke_width) {
+            freeze_stroke_width_recursive(false);
+            if (compensate) {
+                if (!prefs->getBool("/options/transform/stroke", true)) {
+                    // Recursively compensate for stroke scaling, depending on user preference
+                    // (As to why we need to do this, see the comment a few lines above near the freeze_stroke_width_recursive(true) call)
+                    double const expansion = 1. / advertized_transform.descrim();
+                    adjust_stroke_width_recursive(expansion);
+                }
             }
         }
     }
