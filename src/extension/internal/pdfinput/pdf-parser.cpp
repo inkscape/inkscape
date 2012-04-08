@@ -3199,7 +3199,8 @@ void PdfParser::opMarkPoint(Object args[], int numArgs) {
 
 void PdfParser::saveState() {
   builder->saveState();
-  state = state->save();
+//  state = state->save();	// nasty hack to prevent GfxRadialShading from getting corrupted during copy operation
+  state->save();			// see LP Bug 919176 comment 8
   clipHistory = clipHistory->save();
 }
 
