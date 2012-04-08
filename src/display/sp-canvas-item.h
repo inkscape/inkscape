@@ -54,6 +54,11 @@ struct SPCanvasItem : public GtkObject {
     double x1, y1, x2, y2;
     Geom::Rect bounds;
     Geom::Affine xform;
+    
+    // Replacement for custom GtkObject flag enumeration
+    gboolean visible;
+    gboolean need_update;
+    gboolean need_affine;
 };
 
 /**

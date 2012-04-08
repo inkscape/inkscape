@@ -140,11 +140,6 @@ GdkWindow *getWindow(SPCanvas *canvas)
     return gtk_widget_get_window(reinterpret_cast<GtkWidget *>(canvas));
 }
 
-enum {
-    SP_CANVAS_ITEM_VISIBLE = 1 << 7,
-    SP_CANVAS_ITEM_NEED_UPDATE = 1 << 8,
-    SP_CANVAS_ITEM_NEED_AFFINE = 1 << 9
-};
 
 // SPCanvasItem
 
@@ -413,7 +408,7 @@ void sp_canvas_item_init(SPCanvasItem *item)
     // TODO items should not be visible on creation - this causes kludges with items
     // that should be initially invisible; examples of such items: node handles, the CtrlRect
     // used for rubberbanding, path outline, etc.
-    item->flags |= SP_CANVAS_ITEM_VISIBLE;
+    item->visible = TRUE;
     item->xform = Geom::Affine(Geom::identity());
 }
 
@@ -463,7 +458,7 @@ void sp_canvas_item_construct(SPCanvasItem *item, SPCanvasGroup *parent, gchar c
  */
 static void redraw_if_visible(SPCanvasItem *item)
 {
-    if (item->flags & SP_CANVAS_ITEM_VISIBLE) {
+    if(item->visible) {
         int x0 = (int)(item->x1);
         int x1 = (int)(item->x2);
         int y0 = (int)(item->y1);
@@ -490,7 +485,7 @@ void sp_canvas_item_dispose(GObject *object)
     } else {
         redraw_if_visible (item);
     }
-    item->flags &= ~SP_CANVAS_ITEM_VISIBLE;
+    item->visible = FALSE;
 
     if (item == item->canvas->current_item) {
         item->canvas->current_item = NULL;
@@ -533,11 +528,11 @@ static void sp_canvas_item_invoke_update(SPCanvasItem *item, Geom::Affine const 
     // apply object flags to child flags
     int child_flags = flags & ~SP_CANVAS_UPDATE_REQUESTED;
 
-    if (item->flags & SP_CANVAS_ITEM_NEED_UPDATE) {
+    if(item->need_update) {
         child_flags |= SP_CANVAS_UPDATE_REQUESTED;
     }
 
-    if (item->flags & SP_CANVAS_ITEM_NEED_AFFINE) {
+    if(item->need_affine) {
         child_flags |= SP_CANVAS_UPDATE_AFFINE;
     }
 
@@ -547,8 +542,8 @@ static void sp_canvas_item_invoke_update(SPCanvasItem *item, Geom::Affine const 
         }
     }
 
-    GTK_OBJECT_UNSET_FLAGS (item, SP_CANVAS_ITEM_NEED_UPDATE);
-    GTK_OBJECT_UNSET_FLAGS (item, SP_CANVAS_ITEM_NEED_AFFINE);
+    item->need_update = FALSE;
+    item->need_affine = FALSE;
 }
 
 /**
@@ -578,8 +573,8 @@ void sp_canvas_item_affine_absolute(SPCanvasItem *item, Geom::Affine const &affi
 {
     item->xform = affine;
 
-    if (!(item->flags & SP_CANVAS_ITEM_NEED_AFFINE)) {
-        item->flags |= SP_CANVAS_ITEM_NEED_AFFINE;
+    if (!item->need_affine) {
+        item->need_affine = TRUE;
         if (item->parent != NULL) {
             sp_canvas_item_request_update (item->parent);
         } else {
@@ -726,7 +721,7 @@ void sp_canvas_item_lower(SPCanvasItem *item, int positions)
 
 bool sp_canvas_item_is_visible(SPCanvasItem *item)
 {
-    return item->flags & SP_CANVAS_ITEM_VISIBLE;
+	return item->visible;
 }
 
 
@@ -738,11 +733,11 @@ void sp_canvas_item_show(SPCanvasItem *item)
     g_return_if_fail (item != NULL);
     g_return_if_fail (SP_IS_CANVAS_ITEM (item));
 
-    if (item->flags & SP_CANVAS_ITEM_VISIBLE) {
+    if (item->visible) {
         return;
     }
 
-    item->flags |= SP_CANVAS_ITEM_VISIBLE;
+    item->visible = TRUE;
 
     int x0 = (int)(item->x1);
     int x1 = (int)(item->x2);
@@ -763,11 +758,11 @@ void sp_canvas_item_hide(SPCanvasItem *item)
     g_return_if_fail (item != NULL);
     g_return_if_fail (SP_IS_CANVAS_ITEM (item));
 
-    if (!(item->flags & SP_CANVAS_ITEM_VISIBLE)) {
+    if (!item->visible) {
         return;
     }
 
-    item->flags &= ~SP_CANVAS_ITEM_VISIBLE;
+    item->visible = FALSE;
 
     int x0 = (int)(item->x1);
     int x1 = (int)(item->x2);
@@ -882,11 +877,11 @@ bool is_descendant(SPCanvasItem const *item, SPCanvasItem const *parent)
  */
 void sp_canvas_item_request_update(SPCanvasItem *item)
 {
-    if (item->flags & SP_CANVAS_ITEM_NEED_UPDATE) {
+    if (item->need_update) {
         return;
     }
 
-    item->flags |= SP_CANVAS_ITEM_NEED_UPDATE;
+    item->need_update = TRUE;
 
     if (item->parent != NULL) {
         // Recurse up the tree
@@ -1020,7 +1015,7 @@ double SPCanvasGroup::point(SPCanvasItem *item, Geom::Point p, SPCanvasItem **ac
             SPCanvasItem *point_item = NULL; // cater for incomplete item implementations
 
             int has_point;
-            if ((child->flags & SP_CANVAS_ITEM_VISIBLE) && SP_CANVAS_ITEM_GET_CLASS (child)->point) {
+            if (child->visible && SP_CANVAS_ITEM_GET_CLASS (child)->point) {
                 dist = sp_canvas_item_invoke_point (child, p, &point_item);
                 has_point = TRUE;
             } else {
@@ -1049,7 +1044,7 @@ void SPCanvasGroup::render(SPCanvasItem *item, SPCanvasBuf *buf)
 
     for (GList *list = group->items; list; list = list->next) {
         SPCanvasItem *child = (SPCanvasItem *)list->data;
-        if (child->flags & SP_CANVAS_ITEM_VISIBLE) {
+        if (child->visible) {
             if ((child->x1 < buf->rect.right()) &&
                 (child->y1 < buf->rect.bottom()) &&
                 (child->x2 > buf->rect.left()) &&
@@ -1068,7 +1063,7 @@ void SPCanvasGroup::viewboxChanged(SPCanvasItem *item, Geom::IntRect const &new_
     
     for (GList *list = group->items; list; list = list->next) {
         SPCanvasItem *child = (SPCanvasItem *)list->data;
-        if (child->flags & SP_CANVAS_ITEM_VISIBLE) {
+        if (child->visible) {
             if (SP_CANVAS_ITEM_GET_CLASS(child)->viewbox_changed) {
                 SP_CANVAS_ITEM_GET_CLASS(child)->viewbox_changed(child, new_area);
             }
@@ -1571,7 +1566,7 @@ int SPCanvasImpl::pickCurrentItem(SPCanvas *canvas, GdkEvent *event)
         y += canvas->y0;
 
         // find the closest item
-        if (canvas->root->flags & SP_CANVAS_ITEM_VISIBLE) {
+        if (canvas->root->visible) {
             sp_canvas_item_invoke_point (canvas->root, Geom::Point(x, y), &canvas->new_current_item);
         } else {
             canvas->new_current_item = NULL;
@@ -1774,7 +1769,7 @@ void SPCanvasImpl::sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect
     cairo_paint(buf.ct);
     cairo_set_operator(buf.ct, CAIRO_OPERATOR_OVER);
 
-    if (canvas->root->flags & SP_CANVAS_ITEM_VISIBLE) {
+    if (canvas->root->visible) {
         SP_CANVAS_ITEM_GET_CLASS (canvas->root)->render (canvas->root, &buf);
     }
 
