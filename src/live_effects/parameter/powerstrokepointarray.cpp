@@ -19,7 +19,7 @@
 
 // needed for on-canvas editting:
 #include "desktop.h"
-#include "lpeobject.h"
+#include "live_effects/lpeobject.h"
 
 namespace Inkscape {
 
