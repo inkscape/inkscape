@@ -377,7 +377,12 @@ sp_path_set_transform(SPItem *item, Geom::Affine const &xform)
 
     // Transform the original-d path if this is a valid LPE item, other else the (ordinary) path
     if (path->_curve_before_lpe && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(item))) {
-        path->_curve_before_lpe->transform(xform);
+        if (sp_lpe_item_has_path_effect_of_type(SP_LPE_ITEM(item), Inkscape::LivePathEffect::CLONE_ORIGINAL)) {
+            // if path has the CLONE_ORIGINAL LPE applied, don't write the transform to the pathdata, but write it 'unoptimized'
+            return xform;
+        } else {
+            path->_curve_before_lpe->transform(xform);
+        }
     } else {
         path->_curve->transform(xform);
     }
