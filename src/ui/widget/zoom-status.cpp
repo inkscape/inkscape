@@ -106,7 +106,7 @@ ZoomStatus::on_value_changed()
     double zoom_factor = pow(2, get_value());
     Geom::Rect const d = _dt->get_display_area();
     _dt->zoom_absolute(d.midpoint()[Geom::X], d.midpoint()[Geom::Y], zoom_factor);
-    gtk_widget_grab_focus(static_cast<GtkWidget*>((void*)_dt->canvas));   /// \todo this no love song
+    gtk_widget_grab_focus(static_cast<GtkWidget*>((void*)_dt->canvas));
     _upd_f = false;
 }
 
