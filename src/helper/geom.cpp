@@ -75,11 +75,11 @@ cubic_bbox (Geom::Coord x000, Geom::Coord y000, Geom::Coord x001, Geom::Coord y0
         if (fabs (a) < Geom::EPSILON) {
             /* s = -c / b */
             if (fabs (b) > Geom::EPSILON) {
-                double s, t, xttt;
+                double s;
                 s = -c / b;
                 if ((s > 0.0) && (s < 1.0)) {
-                    t = 1.0 - s;
-                    xttt = s * s * s * x000 + 3 * s * s * t * x001 + 3 * s * t * t * x011 + t * t * t * x111;
+                    double t = 1.0 - s;
+                    double xttt = s * s * s * x000 + 3 * s * s * t * x001 + 3 * s * t * t * x011 + t * t * t * x111;
                     bbox[0].expandTo(xttt);
                 }
             }
@@ -114,11 +114,11 @@ cubic_bbox (Geom::Coord x000, Geom::Coord y000, Geom::Coord x001, Geom::Coord y0
         if (fabs (a) < Geom::EPSILON) {
             /* s = -c / b */
             if (fabs (b) > Geom::EPSILON) {
-                double s, t, yttt;
+                double s;
                 s = -c / b;
                 if ((s > 0.0) && (s < 1.0)) {
-                    t = 1.0 - s;
-                    yttt = s * s * s * y000 + 3 * s * s * t * y001 + 3 * s * t * t * y011 + t * t * t * y111;
+                    double t = 1.0 - s;
+                    double yttt = s * s * s * y000 + 3 * s * s * t * y001 + 3 * s * t * t * y011 + t * t * t * y111;
                     bbox[1].expandTo(yttt);
                 }
             }

@@ -66,7 +66,8 @@ public:
 protected:
     SimpleDocument(SimpleDocument const &doc)
     : Node(), SimpleNode(doc), Document(), NodeObserver(),
-      _in_transaction(false) {}
+      _in_transaction(false),
+      _is_CData(false){}
 
     SimpleNode *_duplicate(Document* /*doc*/) const
     {

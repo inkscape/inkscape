@@ -74,11 +74,6 @@ namespace svg {
 
 //local definitions
 typedef dom::DOMString DOMString;
-typedef dom::DOMException DOMException;
-typedef dom::Element Element;
-typedef dom::Document Document;
-typedef dom::NodeList NodeList;
-
 
 class SVGElement;
 typedef Ptr<SVGElement> SVGElementPtr;

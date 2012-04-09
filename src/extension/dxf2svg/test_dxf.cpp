@@ -80,7 +80,7 @@ int main(){
 	ents.display_all();
 	
 	//char units[5] = "in";
-	char units[5] = "";
+	// char units[5] = "";
 	
 	cout << "\nNow for the begining of the SVG...\n\n";
 	
@@ -90,7 +90,7 @@ int main(){
 	//cout << "pline2pline\n" << pline2pline(ents.ret_plines()[0], units ) << endl;
 	//cout << "pline2path\n" << pline2path(ents.ret_plines()[0], units );
 	
-	char tmp_char[10000];
+	// char tmp_char[10000];
 	
 	cout << "\nCircle conversion\n";
 	//cout << "circle2circle\n" << circle2circle(ents.ret_circles()[0], 3, units, tmp_char) << endl;

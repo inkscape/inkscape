@@ -37,6 +37,7 @@ GzipInputStream::GzipInputStream(InputStream &sourceStream)
                       loaded(false),
                       totalIn(0),
                       totalOut(0),
+                      srcBuf(NULL),
                       outputBuf(NULL),
                       crc(0),
                       srcCrc(0),
@@ -57,11 +58,11 @@ GzipInputStream::~GzipInputStream()
     close();
     if ( srcBuf ) {
       free(srcBuf);
-      srcBuf = 0;
+      srcBuf = NULL;
     }
     if ( outputBuf ) {
         free(outputBuf);
-        outputBuf = 0;
+        outputBuf = NULL;
     }
 }
 
@@ -94,11 +95,11 @@ void GzipInputStream::close()
 
     if ( srcBuf ) {
       free(srcBuf);
-      srcBuf = 0;
+      srcBuf = NULL;
     }
     if ( outputBuf ) {
         free(outputBuf);
-        outputBuf = 0;
+        outputBuf = NULL;
     }
     closed = true;
 }
@@ -117,10 +118,9 @@ int GzipInputStream::get()
     } else {
         loaded = true;
 
-        int zerr = Z_OK;
         if ( outputBufPos >= outputBufLen ) {
             // time to read more, if we can
-            zerr = fetchMore();
+            fetchMore();
         }
 
         if ( outputBufPos < outputBufLen ) {
@@ -201,13 +201,13 @@ bool GzipInputStream::load()
     //OS
     val = (int)srcBuf[9];
 
-    int cur = 10;
 //     if ( flags & FEXTRA ) {
 //         headerLen += 2;
 //         int xlen = 
 //         TODO deal with optional header parts
 //     }
     if ( flags & FNAME ) {
+        int cur = 10;
         while ( srcBuf[cur] )
         {
             cur++;
@@ -229,10 +229,6 @@ bool GzipInputStream::load()
            | ((0x0ff & srcBuf[srcLen - 4]) <<  0);
     //printf("srcSiz:%lx/%ld\n", srcSiz, srcSiz);
     
-    if ( srcSiz <= 0 ) {
-        return false;
-    }
-
     //outputBufLen = srcSiz + srcSiz/100 + 14;
     
     unsigned char *data = srcBuf + headerLen;
