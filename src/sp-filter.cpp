@@ -564,7 +564,7 @@ Glib::ustring sp_filter_get_new_result_name(SPFilter *filter) {
             int index;
             if (result)
             {
-                if (sscanf(result, "result%d", &index) == 1)
+                if (sscanf(result, "result%5d", &index) == 1)
                 {
                     if (index > largest)
                     {
