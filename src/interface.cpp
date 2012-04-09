@@ -287,8 +287,6 @@ sp_ui_new_view()
     sp_namedview_update_layers_from_document(static_cast<SPDesktop*>(dtw->view));
 }
 
-/* TODO: not yet working */
-/* To be re-enabled (by adding to menu) once it works. */
 void sp_ui_new_view_preview()
 {
     SPDocument *document = SP_ACTIVE_DOCUMENT;
@@ -301,9 +299,6 @@ void sp_ui_new_view_preview()
     }
 }
 
-/**
- * \param widget unused
- */
 void
 sp_ui_close_view(GtkWidget */*widget*/)
 {
@@ -323,17 +318,6 @@ sp_ui_close_view(GtkWidget */*widget*/)
 }
 
 
-/**
- *  sp_ui_close_all
- *
- *  This function is called to exit the program, and iterates through all
- *  open document view windows, attempting to close each in turn.  If the
- *  view has unsaved information, the user will be prompted to save,
- *  discard, or cancel.
- *
- *  Returns FALSE if the user cancels the close_all operation, TRUE
- *  otherwise.
- */
 unsigned int
 sp_ui_close_all(void)
 {
@@ -395,10 +379,7 @@ sp_ui_menu_deselect(gpointer object)
 }
 
 /**
- * sp_ui_menuitem_add_icon
- *
  * Creates and attaches a scaled icon to the given menu item.
- *
  */
 void
 sp_ui_menuitem_add_icon( GtkWidget *item, gchar *icon_name )
@@ -416,10 +397,7 @@ sp_ui_menuitem_add_icon( GtkWidget *item, gchar *icon_name )
 } // end of sp_ui_menu_add_icon
 
 /**
- * sp_ui_menu_append_item
- *
  * Appends a UI item with specific info for Inkscape/Sodipodi.
- *
  */
 static GtkWidget *
 sp_ui_menu_append_item( GtkMenu *menu, gchar const *stock,
@@ -486,12 +464,10 @@ sp_ui_dialog_title_string(Inkscape::Verb *verb, gchar *c)
 
 
 /**
- * sp_ui_menu_append_item_from_verb
- *
  * Appends a custom menu UI from a verb.
- *
+ * 
+ * @see ContextMenu::AppendItemFromVerb for a c++ified alternative. Consider dropping sp_ui_menu_append_item_from_verb when c++ifying interface.cpp.
  */
-
 static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb *verb, Inkscape::UI::View::View *view, bool radio = false, GSList *group = NULL)
 {
     SPAction *action;
@@ -1010,15 +986,6 @@ void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape
     }
 }
 
-/**
- * Build the main tool bar.
- *
- * Currently the main tool bar is built as a dynamic XML menu using
- * \c sp_ui_build_dyn_menus.  This function builds the bar, and then
- * pass it to get items attached to it.
- *
- * @param  view  View to build the bar for
- */
 GtkWidget *sp_ui_main_menubar(Inkscape::UI::View::View *view)
 {
     GtkWidget *mbar = gtk_menu_bar_new();
@@ -1558,18 +1525,7 @@ void injectRenamedIcons()
 }
 
 
-void ContextMenu::EnterGroup(Gtk::MenuItem* mi)
-{
-    _desktop->setCurrentLayer(reinterpret_cast<SPObject *>(mi->get_data("group")));
-    _desktop->selection->clear();
-}
-
-void ContextMenu::LeaveGroup(void)
-{
-    _desktop->setCurrentLayer(_desktop->currentLayer()->parent);
-}
-
-ContextMenu::ContextMenu(Inkscape::UI::View::View *view, SPItem *item) :
+ContextMenu::ContextMenu(SPDesktop *desktop, SPItem *item) :
     _item(item),
     separators(),
     MIGroup(),
@@ -1577,22 +1533,17 @@ ContextMenu::ContextMenu(Inkscape::UI::View::View *view, SPItem *item) :
 {
 // g_message("ContextMenu");
     _object = static_cast<SPObject *>(item);
-    _desktop = static_cast<SPDesktop*>(view);
+    _desktop = desktop;
 
-    /* Undo and Redo */
-    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_UNDO), view);
-    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_REDO), view);
-
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_UNDO));
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_REDO));
     AddSeparator();
-
-    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_CUT), view);
-    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_COPY), view);
-    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_PASTE), view);
-
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_CUT));
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_COPY));
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_PASTE));
     AddSeparator();
-
-    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_DUPLICATE), view);
-    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_DELETE), view);
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_DUPLICATE));
+    AppendItemFromVerb(Inkscape::Verb::get(SP_VERB_EDIT_DELETE));
     
     positionOfLastDialog = 10; // 9 in front + 1 for the separator in the next if; used to position the dialog menu entries below each other
 
@@ -1649,10 +1600,22 @@ Gtk::SeparatorMenuItem* ContextMenu::AddSeparator(void)
     return sep;
 }
 
-void ContextMenu::AppendItemFromVerb(Inkscape::Verb *verb, Inkscape::UI::View::View *view)//, bool radio, GSList *group)
+void ContextMenu::EnterGroup(Gtk::MenuItem* mi)
+{
+    _desktop->setCurrentLayer(reinterpret_cast<SPObject *>(mi->get_data("group")));
+    _desktop->selection->clear();
+}
+
+void ContextMenu::LeaveGroup(void)
+{
+    _desktop->setCurrentLayer(_desktop->currentLayer()->parent);
+}
+
+void ContextMenu::AppendItemFromVerb(Inkscape::Verb *verb)//, SPDesktop *view)//, bool radio, GSList *group)
 {
     SPAction *action;
-
+    SPDesktop *view = _desktop;
+    
     if (verb->get_code() == SP_VERB_NONE) {
         Gtk::MenuItem *item = AddSeparator();
         item->show();
@@ -1705,7 +1668,6 @@ void ContextMenu::AppendItemFromVerb(Inkscape::Verb *verb, Inkscape::UI::View::V
             sp_ui_menuitem_add_icon((GtkWidget*)item->gobj(), action->image);
         }
         item->set_events(Gdk::KEY_PRESS_MASK);
-        item->set_data("view", (gpointer) view);
         item->signal_activate().connect(sigc::bind(sigc::ptr_fun(sp_ui_menu_activate),item,action));
         item->signal_select().connect(sigc::bind(sigc::ptr_fun(sp_ui_menu_select_action),item,action));
         item->signal_deselect().connect(sigc::bind(sigc::ptr_fun(sp_ui_menu_deselect_action),item,action));
@@ -1717,7 +1679,6 @@ void ContextMenu::AppendItemFromVerb(Inkscape::Verb *verb, Inkscape::UI::View::V
 void ContextMenu::MakeObjectMenu(void)
 {
     GObjectClass *klass = G_OBJECT_GET_CLASS(_object); //to deduce the object's type from its class
-    GType type = G_TYPE_FROM_CLASS(klass);
     
     if (G_TYPE_CHECK_CLASS_TYPE(klass, SP_TYPE_ITEM))
     {
@@ -1909,7 +1870,7 @@ void ContextMenu::ReleaseClip(void)
 
 void ContextMenu::MakeGroupMenu(void)
 {
-    /* "Ungroup" */
+    /* Ungroup */
     Gtk::MenuItem* mi = new Gtk::MenuItem(_("_Ungroup"),1);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ActivateUngroup));
     mi->show();
@@ -1933,7 +1894,7 @@ void ContextMenu::MakeAnchorMenu(void)
     mi = new Gtk::MenuItem(_("Link _Properties..."),1);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::AnchorLinkProperties));
     mi->show();
-    insert(*mi,positionOfLastDialog++);//append(*mi);
+    insert(*mi,positionOfLastDialog++);
     
     /* Select item */
     mi = new Gtk::MenuItem(_("_Follow Link"),1);
@@ -1975,13 +1936,13 @@ void ContextMenu::MakeImageMenu (void)
     mi = new Gtk::MenuItem(_("Image _Properties..."),1);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageProperties));
     mi->show();
-    insert(*mi,positionOfLastDialog++);//append(*mi);
+    insert(*mi,positionOfLastDialog++);
 
     /* Edit externally */
     mi = new Gtk::MenuItem(_("Edit Externally..."),1);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageEdit));
     mi->show();
-    insert(*mi,positionOfLastDialog++);//append(*mi);
+    insert(*mi,positionOfLastDialog++);
     if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
         mi->set_sensitive( FALSE );
     }
@@ -2002,7 +1963,7 @@ void ContextMenu::MakeImageMenu (void)
         mi = new Gtk::MenuItem(C_("Context menu", "Extract Image..."));
         mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageExtract));
         mi->show();
-        insert(*mi,positionOfLastDialog++);//append(*mi);
+        insert(*mi,positionOfLastDialog++);
         if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
             mi->set_sensitive( FALSE );
         }
@@ -2027,7 +1988,6 @@ Glib::ustring ContextMenu::getImageEditorName() {
     return value;
 }
 
-/* Edit Externally entry */
 void ContextMenu::ImageEdit(void)
 {
     if (_desktop->selection->isEmpty()) {
@@ -2098,7 +2058,6 @@ void ContextMenu::ImageEdit(void)
     }
 }
 
-/* Embed Image entry */
 void ContextMenu::ImageEmbed(void)
 {
     if (_desktop->selection->isEmpty()) {
@@ -2114,7 +2073,6 @@ void ContextMenu::ImageEmbed(void)
     }
 }
 
-/* Extract Image entry */
 void ContextMenu::ImageExtract(void)
 {
     if (_desktop->selection->isEmpty()) {
@@ -2138,7 +2096,7 @@ void ContextMenu::MakeShapeMenu (void)
     mi = new Gtk::MenuItem(_("_Fill and Stroke..."),1);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::FillSettings));
     mi->show();
-    insert(*mi,positionOfLastDialog++);//append(*mi);
+    insert(*mi,positionOfLastDialog++);
 }
 
 void ContextMenu::FillSettings(void)
@@ -2158,22 +2116,21 @@ void ContextMenu::MakeTextMenu (void)
     mi = new Gtk::MenuItem(_("_Fill and Stroke..."),1);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::FillSettings));
     mi->show();
-    insert(*mi,positionOfLastDialog++);//append(*mi);
+    insert(*mi,positionOfLastDialog++);
     
     /* Edit Text dialog */
     mi = new Gtk::MenuItem(_("_Text and Font..."),1);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::TextSettings));
     mi->show();
-    insert(*mi,positionOfLastDialog++);//append(*mi);
+    insert(*mi,positionOfLastDialog++);
 
     /* Spellcheck dialog */
     mi = new Gtk::MenuItem(_("Check Spellin_g..."),1);
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SpellcheckSettings));
     mi->show();
-    insert(*mi,positionOfLastDialog++);//append(*mi);
+    insert(*mi,positionOfLastDialog++);
 }
 
-/* Edit Text entry */
 void ContextMenu::TextSettings (void)
 {
     if (_desktop->selection->isEmpty()) {
@@ -2183,7 +2140,6 @@ void ContextMenu::TextSettings (void)
     _desktop->_dlg_mgr->showDialog("TextFont");
 }
 
-/* Spellcheck entry */
 void ContextMenu::SpellcheckSettings (void)
 {
     if (_desktop->selection->isEmpty()) {
