@@ -27,38 +27,6 @@
 
 #include <cstring>
 
-//TODO: apparently unused. Maybe should be removed.
-class ObjectContainer
-{
-
-public:
-    ObjectContainer(double def){
-        this->isset = false;
-        this->default_value = def;
-    }
-
-    double get(){
-        if (this->isset)
-            return this->obj;
-        else
-            return this->default_value;
-    }
-
-    void set(double val){
-        this->obj = val;
-        this->isset = true;
-    }
-
-    void unset(){
-        this->isset = false;
-    }
-
-private:
-    double obj;
-    double default_value;
-    bool isset;
-};
-
 static std::vector<FontFaceStyleType> sp_read_fontFaceStyleType(gchar const *value){
     std::vector<FontFaceStyleType> v;
 
