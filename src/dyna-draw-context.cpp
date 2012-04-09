@@ -81,6 +81,28 @@ using Inkscape::DocumentUndo;
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_Up 0xff52
+#define GDK_KEY_KP_Up 0xff97
+#define GDK_KEY_Down 0xff54
+#define GDK_KEY_KP_Down 0xff99
+#define GDK_KEY_Left 0xff51
+#define GDK_KEY_KP_Left 0xff96
+#define GDK_KEY_Right 0xff53
+#define GDK_KEY_KP_Right 0xff98
+#define GDK_KEY_Home 0xff50
+#define GDK_KEY_KP_Home 0xff95
+#define GDK_KEY_End 0xff57
+#define GDK_KEY_KP_End 0xff9c
+#define GDK_KEY_x 0x078
+#define GDK_KEY_X 0x058
+#define GDK_KEY_z 0x07a
+#define GDK_KEY_Z 0x05a
+#define GDK_KEY_Escape 0xff1b
+#define GDK_KEY_Control_L 0xffe3
+#define GDK_KEY_Control_R 0xffe4
+#endif
+
 static void sp_dyna_draw_context_class_init(SPDynaDrawContextClass *klass);
 static void sp_dyna_draw_context_init(SPDynaDrawContext *ddc);
 static void sp_dyna_draw_context_dispose(GObject *object);
@@ -878,8 +900,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
     case GDK_KEY_PRESS:
         switch (get_group0_keyval (&event->key)) {
-        case GDK_Up:
-        case GDK_KP_Up:
+        case GDK_KEY_Up:
+        case GDK_KEY_KP_Up:
             if (!MOD__CTRL_ONLY) {
                 dc->angle += 5.0;
                 if (dc->angle > 90.0)
@@ -888,8 +910,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 ret = TRUE;
             }
             break;
-        case GDK_Down:
-        case GDK_KP_Down:
+        case GDK_KEY_Down:
+        case GDK_KEY_KP_Down:
             if (!MOD__CTRL_ONLY) {
                 dc->angle -= 5.0;
                 if (dc->angle < -90.0)
@@ -898,8 +920,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 ret = TRUE;
             }
             break;
-        case GDK_Right:
-        case GDK_KP_Right:
+        case GDK_KEY_Right:
+        case GDK_KEY_KP_Right:
             if (!MOD__CTRL_ONLY) {
                 dc->width += 0.01;
                 if (dc->width > 1.0)
@@ -908,8 +930,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 ret = TRUE;
             }
             break;
-        case GDK_Left:
-        case GDK_KP_Left:
+        case GDK_KEY_Left:
+        case GDK_KEY_KP_Left:
             if (!MOD__CTRL_ONLY) {
                 dc->width -= 0.01;
                 if (dc->width < 0.01)
@@ -918,34 +940,34 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
                 ret = TRUE;
             }
             break;
-        case GDK_Home:
-        case GDK_KP_Home:
+        case GDK_KEY_Home:
+        case GDK_KEY_KP_Home:
             dc->width = 0.01;
             sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100);
             ret = TRUE;
             break;
-        case GDK_End:
-        case GDK_KP_End:
+        case GDK_KEY_End:
+        case GDK_KEY_KP_End:
             dc->width = 1.0;
             sp_ddc_update_toolbox (desktop, "altx-calligraphy", dc->width * 100);
             ret = TRUE;
             break;
-        case GDK_x:
-        case GDK_X:
+        case GDK_KEY_x:
+        case GDK_KEY_X:
             if (MOD__ALT_ONLY) {
                 desktop->setToolboxFocusTo ("altx-calligraphy");
                 ret = TRUE;
             }
             break;
-        case GDK_Escape:
+        case GDK_KEY_Escape:
             if (dc->is_drawing) {
                 // if drawing, cancel, otherwise pass it up for deselecting
                 calligraphic_cancel (dc);
                 ret = TRUE;
             }
             break;
-        case GDK_z:
-        case GDK_Z:
+        case GDK_KEY_z:
+        case GDK_KEY_Z:
             if (MOD__CTRL_ONLY && dc->is_drawing) {
                 // if drawing, cancel, otherwise pass it up for undo
                 calligraphic_cancel (dc);
@@ -959,8 +981,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
     case GDK_KEY_RELEASE:
         switch (get_group0_keyval(&event->key)) {
-            case GDK_Control_L:
-            case GDK_Control_R:
+            case GDK_KEY_Control_L:
+            case GDK_KEY_Control_R:
                 dc->_message_context->clear();
                 dc->hatch_spacing = 0;
                 dc->hatch_spacing_step = 0;

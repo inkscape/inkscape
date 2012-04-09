@@ -44,6 +44,14 @@
 #include "message-context.h"
 #include "verbs.h"
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_Up 0xff52
+#define GDK_KEY_Down 0xff54
+#define GDK_KEY_KP_Up 0xff97
+#define GDK_KEY_KP_Down 0xff99
+#define GDK_KEY_Escape 0xff1b
+#endif
+
 using Inkscape::DocumentUndo;
 
 static void sp_dropper_context_class_init(SPDropperContextClass *klass);
@@ -328,16 +336,16 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
             break;
 	case GDK_KEY_PRESS:
             switch (get_group0_keyval(&event->key)) {
-		case GDK_Up:
-		case GDK_Down:
-		case GDK_KP_Up:
-		case GDK_KP_Down:
+		case GDK_KEY_Up:
+		case GDK_KEY_Down:
+		case GDK_KEY_KP_Up:
+		case GDK_KEY_KP_Down:
                     // prevent the zoom field from activation
                     if (!MOD__CTRL_ONLY) {
                         ret = TRUE;
                     }
                     break;
-		case GDK_Escape:
+		case GDK_KEY_Escape:
                     sp_desktop_selection(desktop)->clear();
 		default:
                     break;

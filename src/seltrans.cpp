@@ -47,6 +47,10 @@
 #include <2geom/angle.h>
 #include "display/snap-indicator.h"
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_space 0x020
+#endif
+
 using Inkscape::DocumentUndo;
 
 static void sp_remove_handles(SPKnot *knot[], gint num);
@@ -65,7 +69,7 @@ static gboolean sp_seltrans_handle_event(SPKnot *knot, GdkEvent *event, gpointer
         case GDK_MOTION_NOTIFY:
             break;
         case GDK_KEY_PRESS:
-            if (get_group0_keyval (&event->key) == GDK_space) {
+            if (get_group0_keyval (&event->key) == GDK_KEY_space) {
                 /* stamping mode: both mode(show content and outline) operation with knot */
                 if (!SP_KNOT_IS_GRABBED(knot)) {
                     return FALSE;

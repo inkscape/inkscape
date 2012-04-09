@@ -36,6 +36,10 @@ using Inkscape::DocumentUndo;
 			 GDK_POINTER_MOTION_HINT_MASK | \
 			 GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK)
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_Escape 0xff1b
+#endif
+
 static bool nograb = false;
 
 static bool grabbed = FALSE;
@@ -411,7 +415,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             break;
     case GDK_KEY_PRESS: // keybindings for knot
             switch (get_group0_keyval(&event->key)) {
-                case GDK_Escape:
+                case GDK_KEY_Escape:
                             sp_knot_set_flag(knot, SP_KNOT_GRABBED, FALSE);
                             if (!nograb) {
                                 sp_canvas_item_ungrab(knot->item, event->button.time);
