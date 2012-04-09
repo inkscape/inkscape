@@ -815,7 +815,12 @@ static GtkWidget* create_tool_item( GtkAction* action )
     if ( IS_EGE_ADJUSTMENT_ACTION(action) ) {
         EgeAdjustmentAction* act = EGE_ADJUSTMENT_ACTION( action );
         GtkWidget* spinbutton = 0;
+#if GTK_CHECK_VERSION(3,0,0)
+	GtkWidget* hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+	gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
         GtkWidget* hb = gtk_hbox_new( FALSE, 5 );
+#endif
         GValue value;
         memset( &value, 0, sizeof(value) );
         g_value_init( &value, G_TYPE_STRING );
