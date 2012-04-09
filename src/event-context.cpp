@@ -158,7 +158,11 @@ static void sp_event_context_dispose(GObject *object) {
     }
 
     if (ec->cursor != NULL) {
+#if GTK_CHECK_VERSION(3,0,0)
+        g_object_unref(ec->cursor);
+#else
         gdk_cursor_unref(ec->cursor);
+#endif
         ec->cursor = NULL;
     }
 
@@ -204,7 +208,11 @@ void sp_event_context_update_cursor(SPEventContext *ec) {
                     );
                 if (pixbuf != NULL) {
                     if (ec->cursor)
+#if GTK_CHECK_VERSION(3,0,0)
+                        g_object_unref(ec->cursor);
+#else
                         gdk_cursor_unref(ec->cursor);
+#endif
                     ec->cursor = gdk_cursor_new_from_pixbuf(display, pixbuf, ec->hot_x, ec->hot_y);
                     g_object_unref(pixbuf);
                 }
@@ -214,7 +222,11 @@ void sp_event_context_update_cursor(SPEventContext *ec) {
                 sp_cursor_bitmap_and_mask_from_xpm(&bitmap, &mask, ec->cursor_shape);
                 if ((bitmap != NULL) && (mask != NULL)) {
                     if (ec->cursor)
+#if GTK_CHECK_VERSION(3,0,0)
+                        g_object_unref(ec->cursor);
+#else
                         gdk_cursor_unref(ec->cursor);
+#endif
                     ec->cursor = gdk_cursor_new_from_pixmap(bitmap, mask,
                             &style->black, &style->white, ec->hot_x,
                             ec->hot_y);

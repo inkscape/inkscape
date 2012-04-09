@@ -245,7 +245,11 @@ static void sp_knot_dispose(GObject *object)
 
     for (gint i = 0; i < SP_KNOT_VISIBLE_STATES; i++) {
         if (knot->cursor[i]) {
+#if GTK_CHECK_VERSION(3,0,0)
+            g_object_unref(knot->cursor[i]);
+#else
             gdk_cursor_unref(knot->cursor[i]);
+#endif
             knot->cursor[i] = NULL;
         }
     }

@@ -413,11 +413,19 @@ sp_svgview_waiting_cursor(struct SPSlideShow *ss)
 {
     GdkCursor *waiting = gdk_cursor_new(GDK_WATCH);
     gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(ss->window)), waiting);
+#if GTK_CHECK_VERSION(3,0,0)
+    g_object_unref(waiting);
+#else
     gdk_cursor_unref(waiting);
+#endif
     if (ctrlwin) {
         GdkCursor *waiting = gdk_cursor_new(GDK_WATCH);
         gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(ctrlwin)), waiting);
+#if GTK_CHECK_VERSION(3,0,0)
+        g_object_unref(waiting);
+#else
         gdk_cursor_unref(waiting);
+#endif
     }
     while(gtk_events_pending())
        gtk_main_iteration();

@@ -229,11 +229,19 @@ sp_select_context_dispose(GObject *object)
     sc->_describer = NULL;
 
     if (CursorSelectDragging) {
+#if GTK_CHECK_VERSION(3,0,0)
+        g_object_unref(CursorSelectDragging);
+#else
         gdk_cursor_unref (CursorSelectDragging);
+#endif
         CursorSelectDragging = NULL;
     }
     if (CursorSelectMouseover) {
+#if GTK_CHECK_VERSION(3,0,0)
+        g_object_unref(CursorSelectMouseover);
+#else
         gdk_cursor_unref (CursorSelectMouseover);
+#endif
         CursorSelectMouseover = NULL;
     }
 

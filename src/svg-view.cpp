@@ -105,7 +105,11 @@ void SPSVGView::mouseover()
     GdkCursor *cursor = gdk_cursor_new(GDK_HAND2);
     GdkWindow *window = gtk_widget_get_window (GTK_WIDGET(SP_CANVAS_ITEM(_drawing)->canvas));
     gdk_window_set_cursor(window, cursor);
+#if GTK_CHECK_VERSION(3,0,0)
+    g_object_unref(cursor);
+#else
     gdk_cursor_unref(cursor);
+#endif
 }
 
 void SPSVGView::mouseout()
