@@ -253,7 +253,14 @@ Geom::Point
 SPDesktopWidget::window_get_pointer()
 {
     gint x,y;
-    gdk_window_get_pointer(gtk_widget_get_window(GTK_WIDGET(canvas)), &x, &y, NULL);
+    GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(canvas));
+
+#if GTK_CHECK_VERSION(3,0,0)
+    GdkDisplay *display = gdk_window_get_display(window);
+    gdk_window_get_device_position(window, display->core_pointer, &x, &y, NULL);
+#else
+    gdk_window_get_pointer(window, &x, &y, NULL);
+#endif
     return Geom::Point(x,y);
 }
 

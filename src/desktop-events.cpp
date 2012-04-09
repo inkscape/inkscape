@@ -84,12 +84,18 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     int wx, wy;
 
     SPDesktop *desktop = dtw->desktop;
+    GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(dtw->canvas));
 
-    gdk_window_get_pointer(gtk_widget_get_window (GTK_WIDGET(dtw->canvas)), &wx, &wy, NULL);
+#if GTK_CHECK_VERSION(3,0,0)
+    GdkDisplay *display = gdk_window_get_display(window);
+    gdk_window_get_device_position(window, display->core_pointer, &wx, &wy, NULL);
+#else
+    gdk_window_get_pointer(window, &wx, &wy, NULL);
+#endif
     Geom::Point const event_win(wx, wy);
 
     gint width, height;
-    gdk_window_get_geometry(gtk_widget_get_window (GTK_WIDGET(dtw->canvas)), NULL /*x*/, NULL /*y*/, &width, &height, NULL/*depth*/);
+    gdk_window_get_geometry(window, NULL /*x*/, NULL /*y*/, &width, &height, NULL/*depth*/);
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
