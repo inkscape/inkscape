@@ -289,7 +289,6 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
     gl = g_slist_reverse(gl);
 
     gint pos = 0;
-    gint idx = 0;
 
     if (!gvs->doc) {
         gtk_list_store_append (gvs->store, &iter);
@@ -307,6 +306,7 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
         gtk_widget_set_sensitive (gvs->combo_box, FALSE);
 
     } else {
+        gint idx = 0;
         while (gl) {
             SPGradient *gr;
             gr = SP_GRADIENT(gl->data);
@@ -457,7 +457,7 @@ static gboolean blocked = FALSE;
 static void grad_edit_dia_stop_added_or_removed(Inkscape::XML::Node */*repr*/, Inkscape::XML::Node */*child*/, Inkscape::XML::Node */*ref*/, gpointer data)
 {
     GtkWidget *vb = GTK_WIDGET(data);
-    SPGradient *gradient = (SPGradient *)g_object_get_data(G_OBJECT(vb), "gradient");
+    SPGradient *gradient = static_cast<SPGradient *>(g_object_get_data(G_OBJECT(vb), "gradient"));
     update_stop_list(vb, gradient, NULL);
 }
 
@@ -996,14 +996,14 @@ static void sp_gradient_vector_widget_load_gradient(GtkWidget *widget, SPGradien
 
     SPGradient *old;
 
-    old = (SPGradient*)g_object_get_data(G_OBJECT(widget), "gradient");
+    old = static_cast<SPGradient*>(g_object_get_data(G_OBJECT(widget), "gradient"));
 
     if (old != gradient) {
         sigc::connection *release_connection;
         sigc::connection *modified_connection;
 
-        release_connection = (sigc::connection *)g_object_get_data(G_OBJECT(widget), "gradient_release_connection");
-        modified_connection = (sigc::connection *)g_object_get_data(G_OBJECT(widget), "gradient_modified_connection");
+        release_connection = static_cast<sigc::connection *>(g_object_get_data(G_OBJECT(widget), "gradient_release_connection"));
+        modified_connection = static_cast<sigc::connection *>(g_object_get_data(G_OBJECT(widget), "gradient_modified_connection"));
 
         if (old) {
             g_assert( release_connection != NULL );

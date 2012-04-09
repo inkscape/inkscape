@@ -175,7 +175,6 @@ gboolean gr_vector_list(GtkWidget *combo_box, SPDesktop *desktop, bool selection
     gl = g_slist_reverse (gl);
 
     guint pos = 0;
-    guint idx = 0;
 
     if (!gl) {
         // The document has no gradients
@@ -205,6 +204,7 @@ gboolean gr_vector_list(GtkWidget *combo_box, SPDesktop *desktop, bool selection
             sensitive = FALSE;
         }
 
+        guint idx = 0;
         while (gl) {
             SPGradient *gradient = SP_GRADIENT (gl->data);
             gl = g_slist_remove (gl, gradient);

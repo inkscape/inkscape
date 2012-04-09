@@ -177,14 +177,21 @@ const gchar * MarkerComboBox::get_active_marker_uri()
 
     gchar const *marker = "";
     if (strcmp(markid, "none")) {
-       bool stockid = get_active()->get_value(marker_columns.isstock);
+        bool stockid = get_active()->get_value(marker_columns.isstock);
 
-       gchar *markurn = g_strdup(markid);
-       if (stockid) markurn = g_strconcat("urn:inkscape:marker:",markid,NULL);
-       SPObject *mark = get_stock_item(markurn);
-       g_free(markurn);
-       if (mark) {
-           Inkscape::XML::Node *repr = mark->getRepr();
+        gchar *markurn;
+        if (stockid)
+        {
+            markurn = g_strconcat("urn:inkscape:marker:",markid,NULL);
+        }
+        else
+        {
+            markurn = g_strdup(markid);
+        }
+        SPObject *mark = get_stock_item(markurn);
+        g_free(markurn);
+        if (mark) {
+            Inkscape::XML::Node *repr = mark->getRepr();
             marker = g_strconcat("url(#", repr->attribute("id"), ")", NULL);
         }
     } else {
@@ -211,7 +218,7 @@ void MarkerComboBox::set_selected(const gchar *name) {
         iter != marker_store->children().end(); ++iter) {
             Gtk::TreeModel::Row row = (*iter);
             if (row[marker_columns.marker] &&
-            		!strcmp(row[marker_columns.marker], name)) {
+                    !strcmp(row[marker_columns.marker], name)) {
                 set_active(iter);
                 if (strcmp(name, "none"))
                     set_history(row);
@@ -373,15 +380,13 @@ MarkerComboBox::create_marker_image(unsigned psize, gchar const *mname,
     }
 
     /* Update to renderable state */
-    double sf = 0.8;
-
     gchar *cache_name = g_strconcat(combo_id, mname, NULL);
     Glib::ustring key = svg_preview_cache.cache_key(source->getURI(), cache_name, psize);
     g_free (cache_name);
     Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::wrap(svg_preview_cache.get_preview_from_cache(key));
 
     if (!pixbuf) {
-        pixbuf = Glib::wrap(render_pixbuf(drawing, sf, *dbox, psize));
+        pixbuf = Glib::wrap(render_pixbuf(drawing, 0.8, *dbox, psize));
         svg_preview_cache.set_preview_in_cache(key, pixbuf->gobj());
     }
 
