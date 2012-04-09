@@ -194,7 +194,7 @@
         #define ENABLE_SVG_FONTS              1
 
         /* Do we want experimental, unsupported, unguaranteed, etc., LivePathEffects enabled? */
-        //#define LPE_ENABLE_TEST_EFFECTS    1
+        #define LPE_ENABLE_TEST_EFFECTS    1
 
         #define HAVE_ASPELL                   1
 
@@ -352,6 +352,7 @@
             -DHAVE_SSL
             -DRELAYTOOL_SSL="static const int libssl_is_present=1; static int __attribute__((unused)) libssl_symbol_is_present(char *s){ return 1; }" <!-- inkboard -->
             -DPOPPLER_NEW_GFXFONT <!-- poppler changed the api for 0.8.3 -->
+            <!-- -DGSEAL_ENABLE <!-- GTK+3 migration -->
         </defines>
         <includes>
             -I${devlibs}/include
