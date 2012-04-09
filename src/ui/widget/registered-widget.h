@@ -30,6 +30,8 @@
 #include "desktop-handles.h"
 #include "sp-namedview.h"
 
+#include <gtkmm/checkbutton.h>
+
 class SPUnit;
 class SPDocument;
 
