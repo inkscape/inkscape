@@ -239,7 +239,7 @@ std::vector<discontinuity_data> find_discontinuities( Geom::Piecewise<Geom::D2<G
             data.der0 = der[i-1].at1();
             data.der1 = der[i].at0();
             if ( Geom::are_near(data.der0.length(), 0) ) {
-                data.der0 = unitTangentAt(der[i-1], 1, 2);
+                data.der0 = -unitTangentAt(reverse(der[i-1]),0.,2); // == unitTangentAt(der[i-1], 1, 2);
             }
             if ( Geom::are_near(data.der1.length(), 0) ) {
                 data.der1 = unitTangentAt(der[i], 0, 2);
@@ -304,7 +304,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                        A 2Geom method was created to do exactly this :)
                        */
 
-                    Geom::Point tang1 = unitTangentAt(B[prev_i],1);
+                    Geom::Point tang1 = -unitTangentAt(reverse(B[prev_i]),0.); // = unitTangentAt(B[prev_i],1);
                     Geom::Point tang2 = unitTangentAt(B[i],0);
                     boost::optional<Geom::Point> O = intersection_point( B[prev_i].at1(), tang1,
                                                                               B[i].at0(), tang2 );
@@ -326,7 +326,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
 /*            case LINEJOIN_NONE: {
                 if ( on_outside ) {
                     // we are on the outside
-                    Geom::Point der1 = unitTangentAt(B[prev_i],1);
+                    Geom::Point der1 = -unitTangentAt(reverse(B[prev_i]),0.); // = unitTangentAt(B[prev_i],1);
                     Geom::Point point_on_path = B[prev_i].at1() - rot90(der1) * cusp.width;
                     pb.lineTo(point_on_path);
                     pb.lineTo(B[i].at0());
@@ -339,7 +339,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                 if (on_outside) {
                     // we are on the outside, do something complicated to make it look good ;)
 
-                    Geom::Point der1 = unitTangentAt(B[prev_i],1);
+                    Geom::Point der1 = -unitTangentAt(reverse(B[prev_i]),0.); // = unitTangentAt(B[prev_i],1);
                     Geom::Point der2 = unitTangentAt(B[i],0);
 
                     Geom::D2<Geom::SBasis> newcurve1 = B[prev_i] * Geom::reflection(rot90(der1), B[prev_i].at1());
@@ -377,7 +377,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                 if (on_outside) {
                     // we are on the outside, do something complicated to make it look good ;)
 
-                    Geom::Point der1 = unitTangentAt(B[prev_i],1);
+                    Geom::Point der1 = -unitTangentAt(reverse(B[prev_i]),0.); // = unitTangentAt(B[prev_i],1);
                     Geom::Point der2 = unitTangentAt(B[i],0);
                     boost::optional<Geom::Point> p = intersection_point( B[prev_i].at1(), der1,
                                                                          B[i].at0(), der2 );
@@ -399,7 +399,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
             }
             case LINEJOIN_SPIRO: {
                 if (on_outside) {
-                    Geom::Point tang1 = unitTangentAt(B[prev_i],1);
+                    Geom::Point tang1 = -unitTangentAt(reverse(B[prev_i]),0.); // = unitTangentAt(B[prev_i],1);
                     Geom::Point tang2 = unitTangentAt(B[i],0);
 
                     Geom::Point direction = B[i].at0() - B[prev_i].at1();
