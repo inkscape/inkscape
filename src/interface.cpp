@@ -486,7 +486,12 @@ static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb
         shortcut = sp_shortcut_get_primary(verb);
         if (shortcut!=GDK_VoidSymbol) {
             gchar* c = sp_shortcut_get_label(shortcut);
+#if GTK_CHECK_VERSION(3,0,0)
+            GtkWidget *const hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 16);
+	    gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
             GtkWidget *const hb = gtk_hbox_new(FALSE, 16);
+#endif
             GtkWidget *const name_lbl = gtk_label_new("");
             gtk_label_set_markup_with_mnemonic(GTK_LABEL(name_lbl), action->name);
             gtk_misc_set_alignment(reinterpret_cast<GtkMisc *>(name_lbl), 0.0, 0.5);
@@ -670,7 +675,12 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
     if (verb && shortcut!=GDK_VoidSymbol) {
         gchar* c = sp_shortcut_get_label(shortcut);
 
+#if GTK_CHECK_VERSION(3,0,0)
+	GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 16);
+	gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
         GtkWidget *hb = gtk_hbox_new(FALSE, 16);
+#endif
 
         {
             GtkWidget *l = gtk_label_new_with_mnemonic(action ? action->name : label);

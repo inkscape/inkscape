@@ -825,7 +825,12 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     g_signal_connect(G_OBJECT(combo_box), "changed", G_CALLBACK(sp_grad_edit_combo_box_changed), vb);
 
     /* Add and Remove buttons */
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
+    gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
     GtkWidget *hb = gtk_hbox_new(FALSE, 1);
+#endif
     // TRANSLATORS: "Stop" means: a "phase" of a gradient
     GtkWidget *b = gtk_button_new_with_label(_("Add stop"));
     gtk_widget_show(b);
@@ -842,7 +847,12 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     gtk_box_pack_start(GTK_BOX(vb),hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
 
     /*  Offset Slider and stuff   */
+#if GTK_CHECK_VERSION(3,0,0)
+    hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
     hb = gtk_hbox_new(FALSE, 0);
+#endif
 
     /* Label */
     GtkWidget *l = gtk_label_new(_("Offset:"));

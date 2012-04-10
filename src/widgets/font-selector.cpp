@@ -201,7 +201,12 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(fsel->style_treeview));
         g_signal_connect (G_OBJECT(selection), "changed", G_CALLBACK (sp_font_selector_style_select_row), fsel);
 
+#if GTK_CHECK_VERSION(3,0,0)
+	GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
+	gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
         GtkWidget *hb = gtk_hbox_new(FALSE, 4);
+#endif
         gtk_widget_show(hb);
         gtk_box_pack_start(GTK_BOX(vb), hb, FALSE, FALSE, 0);
 

@@ -3091,7 +3091,12 @@ static void sp_stb_defaults( GtkWidget * /*widget*/, GObject *dataKludge )
 // public:
 void sp_toolbox_add_label(GtkWidget *tbl, gchar const *title, bool wide)
 {
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidget *boxl = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_set_homogeneous(GTK_BOX(boxl), FALSE);
+#else
     GtkWidget *boxl = gtk_hbox_new(FALSE, 0);
+#endif
     if (wide) {
         gtk_widget_set_size_request(boxl, MODE_LABEL_WIDTH, -1);
     }

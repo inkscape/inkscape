@@ -418,7 +418,12 @@ sp_find_dialog_reset (GObject *, GObject *dlg)
 void
 sp_find_new_searchfield (GtkWidget *dlg, GtkWidget *vb, const gchar *label, const gchar *id, const gchar *tip)
 {
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
     GtkWidget *hb = gtk_hbox_new (FALSE, 0);
+#endif
     GtkWidget *l = gtk_label_new_with_mnemonic (label);
     gtk_widget_set_size_request (l, FIND_LABELWIDTH, -1);
     gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
@@ -491,7 +496,12 @@ sp_find_types_checkbox (GtkWidget *w, const gchar *data, gboolean active,
                         const gchar *label,
                         void (*toggled)(GtkToggleButton *, gpointer))
 {
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
     GtkWidget *hb = gtk_hbox_new (FALSE, 0);
+#endif
     gtk_widget_show (hb);
 
     {
@@ -514,7 +524,12 @@ sp_find_types_checkbox_indented (GtkWidget *w, const gchar *data, gboolean activ
                                  const gchar *label,
                                  void (*toggled)(GtkToggleButton *, gpointer), guint indent)
 {
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
     GtkWidget *hb = gtk_hbox_new (FALSE, 0);
+#endif
     gtk_widget_show (hb);
 
     { // empty label for indent
@@ -538,7 +553,12 @@ sp_find_types ()
     gtk_widget_show (vb);
 
     {
+#if GTK_CHECK_VERSION(3,0,0)
+	GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+	gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
         GtkWidget *hb = gtk_hbox_new (FALSE, 0);
+#endif
         gtk_widget_show (hb);
 
         {
@@ -566,7 +586,12 @@ sp_find_types ()
 
 
         {
+#if GTK_CHECK_VERSION(3,0,0)
+            GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+            gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
             GtkWidget *hb = gtk_hbox_new (FALSE, 0);
+#endif
             gtk_widget_show (hb);
 
             { // empty label for alignment
@@ -751,7 +776,12 @@ sp_find_dialog_old (void)
         }
 
         {
+#if GTK_CHECK_VERSION(3,0,0)
+            GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+            gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
             GtkWidget *hb = gtk_hbox_new (FALSE, 0);
+#endif
             gtk_widget_show (hb);
             gtk_box_pack_start (GTK_BOX (vb), hb, FALSE, FALSE, 0);
 

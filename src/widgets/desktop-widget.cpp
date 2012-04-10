@@ -335,7 +335,12 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_add( GTK_CONTAINER(dtw), GTK_WIDGET(dtw->vbox) );
 
+#if GTK_CHECK_VERSION(3,0,0)
+    dtw->statusbar = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_set_homogeneous(GTK_BOX(dtw->statusbar), FALSE);
+#else
     dtw->statusbar = gtk_hbox_new (FALSE, 0);
+#endif
     //gtk_widget_set_usize (dtw->statusbar, -1, BOTTOM_BAR_HEIGHT);
     gtk_box_pack_end (GTK_BOX (dtw->vbox), dtw->statusbar, FALSE, TRUE, 0);
 
@@ -347,7 +352,12 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
         gtk_box_pack_end( GTK_BOX( dtw->vbox ), GTK_WIDGET(dtw->panels->gobj()), FALSE, TRUE, 0 );
     }
 
+#if GTK_CHECK_VERSION(3,0,0)
+    dtw->hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_set_homogeneous(GTK_BOX(dtw->hbox), FALSE);
+#else
     dtw->hbox = gtk_hbox_new(FALSE, 0);
+#endif
     gtk_box_pack_end( GTK_BOX (dtw->vbox), dtw->hbox, TRUE, TRUE, 0 );
     gtk_widget_show(dtw->hbox);
 
@@ -580,7 +590,13 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_label_set_markup (GTK_LABEL (dtw->select_status), _("<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."));
     // space label 2 pixels from left edge
     gtk_container_add (GTK_CONTAINER (dtw->select_status_eventbox), dtw->select_status);
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_box_pack_start(GTK_BOX(dtw->statusbar), 
+                       gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0), 
+                       FALSE, FALSE, 2);
+#else
     gtk_box_pack_start (GTK_BOX (dtw->statusbar), gtk_hbox_new(FALSE, 0), FALSE, FALSE, 2);
+#endif
     gtk_box_pack_start (GTK_BOX (dtw->statusbar), dtw->select_status_eventbox, TRUE, TRUE, 0);
 
     gtk_widget_show_all (dtw->vbox);

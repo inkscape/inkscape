@@ -133,7 +133,12 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     g_signal_connect (G_OBJECT (sel->vectors), "vector_set", G_CALLBACK (sp_gradient_selector_vector_set), sel);
 
     /* Create box for buttons */
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
     GtkWidget *hb = gtk_hbox_new( FALSE, 0 );
+#endif
     sel->nonsolid.push_back(hb);
     gtk_box_pack_start( GTK_BOX(sel), hb, FALSE, FALSE, 0 );
 
@@ -152,7 +157,12 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     gtk_widget_show_all(hb);
 
     /* Spread selector */
+#if GTK_CHECK_VERSION(3,0,0)
+    hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
+#else
     hb = gtk_hbox_new( FALSE, 0 );
+#endif
     sel->nonsolid.push_back(hb);
     gtk_widget_show(hb);
     gtk_box_pack_start( GTK_BOX(sel), hb, FALSE, FALSE, 0 );

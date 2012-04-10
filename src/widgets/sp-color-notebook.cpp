@@ -323,7 +323,12 @@ void ColorNotebook::init()
 
     row++;
 
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidget *rgbabox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_set_homogeneous(GTK_BOX(rgbabox), FALSE);
+#else
     GtkWidget *rgbabox = gtk_hbox_new (FALSE, 0);
+#endif
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     /* Create color management icons */
