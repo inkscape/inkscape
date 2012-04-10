@@ -792,7 +792,12 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
 
     g_return_val_if_fail(!gradient || SP_IS_GRADIENT(gradient), NULL);
 
+#if GTK_CHECK_VERSION(3,0,0)
+    vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, PAD);
+    gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
+#else
     vb = gtk_vbox_new(FALSE, PAD);
+#endif
     g_signal_connect(G_OBJECT(vb), "destroy", G_CALLBACK(sp_gradient_vector_widget_destroy), NULL);
 
     w = sp_gradient_image_new(gradient);
@@ -873,7 +878,11 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
     gtk_adjustment_set_value(Offset_adj, stop->offset);
 
     /* Slider */
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidget *slider = gtk_scale_new(GTK_ORIENTATION_HORIZONTAL, Offset_adj);
+#else
     GtkWidget *slider = gtk_hscale_new(Offset_adj);
+#endif
     gtk_scale_set_draw_value( GTK_SCALE(slider), FALSE );
     gtk_widget_show(slider);
     gtk_box_pack_start(GTK_BOX(hb),slider, TRUE, TRUE, AUX_BETWEEN_BUTTON_GROUPS);
