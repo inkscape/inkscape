@@ -1,9 +1,3 @@
-#include <2geom/sbasis-geometric.h>
-#include <2geom/sbasis.h>
-#include <2geom/sbasis-math.h>
-//#include <2geom/solver.h>
-#include <2geom/sbasis-geometric.h>
-
 /** Geometric operators on D2<SBasis> (1D->2D).
  * Copyright 2007 JF Barraud
  * Copyright 2007 N Hurst
@@ -20,6 +14,12 @@
  *  osculating circle center?
  *  
  **/
+
+#include <2geom/sbasis-geometric.h>
+#include <2geom/sbasis.h>
+#include <2geom/sbasis-math.h>
+//#include <2geom/solver.h>
+#include <2geom/sbasis-geometric.h>
 
 //namespace Geom{
 using namespace Geom;
@@ -409,6 +409,9 @@ Geom::arc_length_parametrization(D2<SBasis> const &M,
     Piecewise<SBasis> s = arcLengthSb(Piecewise<D2<SBasis> >(M),tol);
     for (unsigned i=0; i < s.size();i++){
         double t0=s.cuts[i],t1=s.cuts[i+1];
+        if ( are_near(s(t0),s(t1)) ) {
+            continue;
+        }
         D2<SBasis> sub_M = compose(M,Linear(t0,t1));
         D2<SBasis> sub_u;
         for (unsigned dim=0;dim<2;dim++){
