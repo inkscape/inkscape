@@ -396,44 +396,6 @@ sp_ui_menuitem_add_icon( GtkWidget *item, gchar *icon_name )
     gtk_image_menu_item_set_image((GtkImageMenuItem *) item, icon);
 } // end of sp_ui_menu_add_icon
 
-/**
- * Appends a UI item with specific info for Inkscape/Sodipodi.
- */
-static GtkWidget *
-sp_ui_menu_append_item( GtkMenu *menu, gchar const *stock,
-                        gchar const *label, gchar const *tip, Inkscape::UI::View::View *view, GCallback callback,
-                        gpointer data, gboolean with_mnemonic = TRUE )
-{
-    GtkWidget *item;
-
-    if (stock) {
-        item = gtk_image_menu_item_new_from_stock(stock, NULL);
-    } else if (label) {
-        item = (with_mnemonic)
-            ? gtk_image_menu_item_new_with_mnemonic(label) :
-            gtk_image_menu_item_new_with_label(label);
-    } else {
-        item = gtk_separator_menu_item_new();
-    }
-
-    gtk_widget_show(item);
-
-    if (callback) {
-        g_signal_connect(G_OBJECT(item), "activate", callback, data);
-    }
-
-    if (tip && view) {
-        g_object_set_data(G_OBJECT(item), "view", (gpointer) view);
-        g_signal_connect( G_OBJECT(item), "select", G_CALLBACK(sp_ui_menu_select), (gpointer) tip );
-        g_signal_connect( G_OBJECT(item), "deselect", G_CALLBACK(sp_ui_menu_deselect), NULL);
-    }
-
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-
-    return item;
-
-} // end of sp_ui_menu_append_item()
-
 void
 sp_ui_dialog_title_string(Inkscape::Verb *verb, gchar *c)
 {

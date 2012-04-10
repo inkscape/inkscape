@@ -66,8 +66,8 @@ KnotHolder::KnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFun
 
 KnotHolder::~KnotHolder() {
     g_object_unref(G_OBJECT(item));
-    for(std::list<KnotHolderEntity *>::iterator i = entity.begin(); i != entity.end(); ++i) {
-        KnotHolderEntity* e = (*i);
+    for (std::list<KnotHolderEntity *>::iterator i = entity.begin(); i != entity.end(); ++i)
+    {
         delete (*i);
         (*i) = NULL;
     }
