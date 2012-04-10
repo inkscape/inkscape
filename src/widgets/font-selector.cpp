@@ -176,7 +176,12 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_widget_show(f);
         gtk_box_pack_start(GTK_BOX (fsel), f, TRUE, TRUE, 0);
 
+#if GTK_CHECK_VERSION(3,0,0)
+        GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+        gtk_box_new(GTK_BOX(vb), FALSE);
+#else
         GtkWidget *vb = gtk_vbox_new(FALSE, 4);
+#endif
         gtk_widget_show(vb);
         gtk_container_set_border_width(GTK_CONTAINER (vb), 4);
         gtk_container_add(GTK_CONTAINER(f), vb);

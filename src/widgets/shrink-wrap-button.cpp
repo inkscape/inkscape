@@ -21,7 +21,11 @@ void minimum_size(GtkWidget *widget, GtkRequisition *requisition, void *) {
     GtkWidget *child(gtk_bin_get_child(GTK_BIN(widget)));
 
     if (child) {
+#if GTK_CHECK_VERSION(3,0,0)
+        gtk_widget_get_preferred_size(child, requisition, NULL);
+#else
         gtk_widget_size_request(child, requisition);
+#endif
     } else {
         requisition->width = 0;
         requisition->height = 0;

@@ -332,7 +332,12 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->_interaction_disabled_counter = 0;
 
     /* Main table */
+#if GTK_CHECK_VERSION(3,0,0)
+    dtw->vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_box_new(GTK_BOX(dtw->vbox), FALSE);
+#else
     dtw->vbox = gtk_vbox_new (FALSE, 0);
+#endif
     gtk_container_add( GTK_CONTAINER(dtw), GTK_WIDGET(dtw->vbox) );
 
 #if GTK_CHECK_VERSION(3,0,0)
@@ -412,7 +417,12 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_table_attach (GTK_TABLE (canvas_tbl), dtw->hscrollbar, 1, 2, 2, 3, (GtkAttachOptions)(GTK_FILL), (GtkAttachOptions)(GTK_SHRINK), 0, 0);
 
     /* Vertical scrollbar and the sticky zoom button */
+#if GTK_CHECK_VERSION(3,0,0)
+    dtw->vscrollbar_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_box_new(GTK_BOX(dtw->vscrollbar_box), FALSE);
+#else
     dtw->vscrollbar_box = gtk_vbox_new (FALSE, 0);
+#endif
     dtw->sticky_zoom = sp_button_new_from_data ( Inkscape::ICON_SIZE_DECORATION,
                                                  SP_BUTTON_TYPE_TOGGLE,
                                                  NULL,

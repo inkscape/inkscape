@@ -93,7 +93,12 @@ CloneTiler::CloneTiler (void) :
 
         dlg = GTK_WIDGET(gobj());
 
+#if GTK_CHECK_VERSION(3,0,0)
+        GtkWidget *mainbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+        gtk_box_new(GTK_BOX(mainbox), FALSE);
+#else
         GtkWidget *mainbox = gtk_vbox_new(FALSE, 4);
+#endif
         gtk_container_set_border_width (GTK_CONTAINER (mainbox), 6);
 
         contents->pack_start (*Gtk::manage(Glib::wrap(mainbox)), true, true, 0);
@@ -796,7 +801,12 @@ CloneTiler::CloneTiler (void) :
         }
 
         {
+#if GTK_CHECK_VERSION(3,0,0)
+            GtkWidget *vvb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+            gtk_box_new(GTK_BOX(vvb), FALSE);
+#else
             GtkWidget *vvb = gtk_vbox_new (FALSE, 0);
+#endif
             gtk_box_pack_start (GTK_BOX (vb), vvb, FALSE, FALSE, 0);
             g_object_set_data (G_OBJECT(dlg), "dotrace", (gpointer) vvb);
 
@@ -2574,7 +2584,12 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
 GtkWidget * CloneTiler::clonetiler_new_tab(GtkWidget *nb, const gchar *label)
 {
     GtkWidget *l = gtk_label_new_with_mnemonic (label);
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, VB_MARGIN);
+    gtk_box_new(GTK_BOX(vb), FALSE);
+#else
     GtkWidget *vb = gtk_vbox_new (FALSE, VB_MARGIN);
+#endif
     gtk_container_set_border_width (GTK_CONTAINER (vb), VB_MARGIN);
     gtk_notebook_append_page (GTK_NOTEBOOK (nb), vb, l);
     return vb;

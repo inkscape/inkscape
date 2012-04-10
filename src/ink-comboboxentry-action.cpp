@@ -378,7 +378,11 @@ GtkWidget* create_tool_item( GtkAction* action )
     // Optionally widen the combobox width... which widens the drop-down list in list mode.
     if( ink_comboboxentry_action->extra_width > 0 ) {
       GtkRequisition req;
+#if GTK_CHECK_VERSION(3,0,0)
+      gtk_widget_get_preferred_size(GTK_WIDGET(ink_comboboxentry_action->combobox), &req, NULL);
+#else
       gtk_widget_size_request( GTK_WIDGET( ink_comboboxentry_action->combobox ), &req );
+#endif
       gtk_widget_set_size_request( GTK_WIDGET( ink_comboboxentry_action->combobox ),
 				   req.width + ink_comboboxentry_action->extra_width, -1 );
     }
@@ -527,7 +531,11 @@ void ink_comboboxentry_action_set_extra_width( Ink_ComboBoxEntry_Action* action,
   // Widget may not have been created....
   if( action->combobox ) {
     GtkRequisition req;
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_get_preferred_size(GTK_WIDGET(action->combobox), &req, NULL);
+#else
     gtk_widget_size_request( GTK_WIDGET( action->combobox ), &req );
+#endif
     gtk_widget_set_size_request( GTK_WIDGET( action->combobox ), req.width + action->extra_width, -1 );
   }
 }

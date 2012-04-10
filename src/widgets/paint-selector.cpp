@@ -288,7 +288,12 @@ sp_paint_selector_init(SPPaintSelector *psel)
     gtk_box_pack_start(GTK_BOX(lbbox), psel->label, false, false, 4);
     gtk_box_pack_start(GTK_BOX(psel), lbbox, false, false, 4);
 
+#if GTK_CHECK_VERSION(3,0,0)
+    psel->frame = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+    gtk_box_new(GTK_BOX(psel->frame), FALSE);
+#else
     psel->frame = gtk_vbox_new(FALSE, 4);
+#endif
     gtk_widget_show(psel->frame);
     //gtk_container_set_border_width(GTK_CONTAINER(psel->frame), 0);
     gtk_box_pack_start(GTK_BOX(psel), psel->frame, TRUE, TRUE, 0);
@@ -672,7 +677,12 @@ static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelec
         sp_paint_selector_clear_frame(psel);
         /* Create new color selector */
         /* Create vbox */
+#if GTK_CHECK_VERSION(3,0,0)
+	GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+	gtk_box_new(GTK_BOX(vb), FALSE);
+#else
         GtkWidget *vb = gtk_vbox_new(FALSE, 4);
+#endif
         gtk_widget_show(vb);
 
         /* Color selector */
@@ -1013,7 +1023,12 @@ static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSel
         sp_paint_selector_clear_frame(psel);
 
         /* Create vbox */
+#if GTK_CHECK_VERSION(3,0,0)
+	tbl = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+	gtk_box_new(GTK_BOX(tbl), FALSE);
+#else
         tbl = gtk_vbox_new(FALSE, 4);
+#endif
         gtk_widget_show(tbl);
 
         {
