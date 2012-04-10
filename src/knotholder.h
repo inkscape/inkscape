@@ -27,6 +27,9 @@ namespace Inkscape {
 namespace XML {
 class Node;
 }
+namespace LivePathEffect {
+class PowerStrokePointArrayParamKnotHolderEntity;
+}
 }
 
 class KnotHolder {
@@ -50,6 +53,7 @@ public:
     bool knot_mouseover();
 
     friend class ShapeEditor;
+    friend class Inkscape::LivePathEffect::PowerStrokePointArrayParamKnotHolderEntity;
 
 protected:
     SPDesktop *desktop;
