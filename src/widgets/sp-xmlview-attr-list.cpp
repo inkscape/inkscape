@@ -117,14 +117,14 @@ sp_xmlview_attr_list_class_init (SPXMLViewAttrListClass * klass)
 
 	parent_class = (GtkTreeViewClass*)g_type_class_peek_parent (klass);
 
-        g_signal_new (  "row-value-changed",
-			G_TYPE_FROM_CLASS(klass),
-			G_SIGNAL_RUN_FIRST,
-			G_STRUCT_OFFSET (SPXMLViewAttrListClass, row_changed),
-			NULL, NULL,
-			g_cclosure_marshal_VOID__UINT,
-			G_TYPE_NONE, 1,
-			G_TYPE_UINT);
+    g_signal_new (  "row-value-changed",
+        G_TYPE_FROM_CLASS(klass),
+        G_SIGNAL_RUN_FIRST,
+        G_STRUCT_OFFSET (SPXMLViewAttrListClass, row_changed),
+        NULL, NULL,
+        g_cclosure_marshal_VOID__STRING,
+        G_TYPE_NONE, 1,
+        G_TYPE_STRING);
 }
 
 void
