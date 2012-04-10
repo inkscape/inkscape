@@ -74,7 +74,7 @@ sp_ctrl_class_init (SPCtrlClass *klass)
 
     gtk_object_add_arg_type ("SPCtrl::shape", G_TYPE_INT, G_PARAM_READWRITE, ARG_SHAPE);
     gtk_object_add_arg_type ("SPCtrl::mode", G_TYPE_INT, G_PARAM_READWRITE, ARG_MODE);
-    gtk_object_add_arg_type ("SPCtrl::anchor", GTK_TYPE_ANCHOR_TYPE, G_PARAM_READWRITE, ARG_ANCHOR);
+    gtk_object_add_arg_type ("SPCtrl::anchor", G_TYPE_INT, G_PARAM_READWRITE, ARG_ANCHOR);
     gtk_object_add_arg_type ("SPCtrl::size", G_TYPE_DOUBLE, G_PARAM_READWRITE, ARG_SIZE);
     gtk_object_add_arg_type ("SPCtrl::pixbuf", G_TYPE_POINTER, G_PARAM_READWRITE, ARG_PIXBUF);
     gtk_object_add_arg_type ("SPCtrl::filled", G_TYPE_BOOLEAN, G_PARAM_READWRITE, ARG_FILLED);
@@ -95,7 +95,7 @@ sp_ctrl_init (SPCtrl *ctrl)
 {
     ctrl->shape = SP_CTRL_SHAPE_SQUARE;
     ctrl->mode = SP_CTRL_MODE_COLOR;
-    ctrl->anchor = GTK_ANCHOR_CENTER;
+    ctrl->anchor = SP_ANCHOR_CENTER;
     ctrl->span = 3;
     ctrl->defined = TRUE;
     ctrl->shown = FALSE;
@@ -161,7 +161,7 @@ sp_ctrl_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
             break;
 
         case ARG_ANCHOR:
-            ctrl->anchor = (GtkAnchorType)(GTK_VALUE_INT (*arg));
+            ctrl->anchor = (SPAnchorType)(GTK_VALUE_INT (*arg));
             ctrl->build = FALSE;
             sp_canvas_item_request_update (item);
             break;
@@ -240,39 +240,39 @@ sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int fla
     y = (gint) ((affine[5] > 0) ? (affine[5] + 0.5) : (affine[5] - 0.5)) - ctrl->span;
 
     switch (ctrl->anchor) {
-        case GTK_ANCHOR_N:
-        case GTK_ANCHOR_CENTER:
-        case GTK_ANCHOR_S:
+        case SP_ANCHOR_N:
+        case SP_ANCHOR_CENTER:
+        case SP_ANCHOR_S:
             break;
 
-        case GTK_ANCHOR_NW:
-        case GTK_ANCHOR_W:
-        case GTK_ANCHOR_SW:
+        case SP_ANCHOR_NW:
+        case SP_ANCHOR_W:
+        case SP_ANCHOR_SW:
             x += ctrl->span;
             break;
 
-        case GTK_ANCHOR_NE:
-        case GTK_ANCHOR_E:
-        case GTK_ANCHOR_SE:
+        case SP_ANCHOR_NE:
+        case SP_ANCHOR_E:
+        case SP_ANCHOR_SE:
             x -= (ctrl->span + 1);
             break;
     }
 
     switch (ctrl->anchor) {
-        case GTK_ANCHOR_W:
-        case GTK_ANCHOR_CENTER:
-        case GTK_ANCHOR_E:
+        case SP_ANCHOR_W:
+        case SP_ANCHOR_CENTER:
+        case SP_ANCHOR_E:
             break;
 
-        case GTK_ANCHOR_NW:
-        case GTK_ANCHOR_N:
-        case GTK_ANCHOR_NE:
+        case SP_ANCHOR_NW:
+        case SP_ANCHOR_N:
+        case SP_ANCHOR_NE:
             y += ctrl->span;
             break;
 
-        case GTK_ANCHOR_SW:
-        case GTK_ANCHOR_S:
-        case GTK_ANCHOR_SE:
+        case SP_ANCHOR_SW:
+        case SP_ANCHOR_S:
+        case SP_ANCHOR_SE:
             y -= (ctrl->span + 1);
             break;
     }

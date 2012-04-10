@@ -15,6 +15,7 @@
 
 #include "previewable.h"
 #include "../widgets/eek-preview.h"
+#include "enums.h"
 
 namespace Inkscape {
 namespace UI {
@@ -28,7 +29,7 @@ public:
     virtual void freezeUpdates() = 0;
     virtual void thawUpdates() = 0;
     virtual void setStyle( ::PreviewSize size, ViewType type, guint ratio) = 0;
-    virtual void setOrientation( Gtk::AnchorType how ) = 0;
+    virtual void setOrientation(SPAnchorType how) = 0;
     virtual ::PreviewSize getPreviewSize() const = 0;
     virtual ViewType getPreviewType() const = 0;
     virtual guint getPreviewRatio() const = 0;

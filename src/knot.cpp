@@ -193,7 +193,7 @@ static void sp_knot_init(SPKnot *knot)
     knot->size = 8;
     knot->pos = Geom::Point(0, 0);
     knot->grabbed_rel_pos = Geom::Point(0, 0);
-    knot->anchor = GTK_ANCHOR_CENTER;
+    knot->anchor = SP_ANCHOR_CENTER;
     knot->shape = SP_KNOT_SHAPE_SQUARE;
     knot->mode = SP_KNOT_MODE_XOR;
     knot->tip = NULL;
@@ -480,7 +480,7 @@ SPKnot *sp_knot_new(SPDesktop *desktop, const gchar *tip)
 
     knot->item = sp_canvas_item_new(sp_desktop_controls (desktop),
                                     SP_TYPE_CTRL,
-                                    "anchor", GTK_ANCHOR_CENTER,
+                                    "anchor", SP_ANCHOR_CENTER,
                                     "size", 8.0,
                                     "filled", TRUE,
                                     "fill_color", 0xffffff00,

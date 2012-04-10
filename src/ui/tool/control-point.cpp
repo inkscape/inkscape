@@ -132,7 +132,7 @@ ControlPoint::ColorSet invisible_cset = {
  * @param group The canvas group the point's canvas item should be created in
  */
 ControlPoint::ControlPoint(SPDesktop *d, Geom::Point const &initial_pos,
-        Gtk::AnchorType anchor, SPCtrlShapeType shape,
+        SPAnchorType anchor, SPCtrlShapeType shape,
         unsigned int size, ColorSet *cset, SPCanvasGroup *group)
     : _desktop (d)
     , _canvas_item (NULL)
@@ -142,7 +142,7 @@ ControlPoint::ControlPoint(SPDesktop *d, Geom::Point const &initial_pos,
 {
     _canvas_item = sp_canvas_item_new(
         group ? group : sp_desktop_controls (_desktop), SP_TYPE_CTRL,
-        "anchor", (GtkAnchorType) anchor, "size", (gdouble) size, "shape", shape,
+        "anchor", (SPAnchorType) anchor, "size", (gdouble) size, "shape", shape,
         "filled", TRUE, "fill_color", _cset->normal.fill,
         "stroked", TRUE, "stroke_color", _cset->normal.stroke,
         "mode", SP_CTRL_MODE_XOR, NULL);
@@ -160,7 +160,7 @@ ControlPoint::ControlPoint(SPDesktop *d, Geom::Point const &initial_pos,
  * @param group The canvas group the point's canvas item should be created in
  */
 ControlPoint::ControlPoint(SPDesktop *d, Geom::Point const &initial_pos,
-        Gtk::AnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pixbuf,
+        SPAnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pixbuf,
         ColorSet *cset, SPCanvasGroup *group)
     : _desktop (d)
     , _canvas_item (NULL)
@@ -169,7 +169,7 @@ ControlPoint::ControlPoint(SPDesktop *d, Geom::Point const &initial_pos,
 {
     _canvas_item = sp_canvas_item_new(
         group ? group : sp_desktop_controls(_desktop), SP_TYPE_CTRL,
-        "anchor", (GtkAnchorType) anchor, "size", (gdouble) pixbuf->get_width(),
+        "anchor", (SPAnchorType) anchor, "size", (gdouble) pixbuf->get_width(),
         "shape", SP_CTRL_SHAPE_BITMAP, "pixbuf", pixbuf->gobj(),
         "filled", TRUE, "fill_color", _cset->normal.fill,
         "stroked", TRUE, "stroke_color", _cset->normal.stroke,
@@ -262,9 +262,9 @@ SPCtrlShapeType ControlPoint::_shape() const
     return ret;
 }
 
-GtkAnchorType ControlPoint::_anchor() const
+SPAnchorType ControlPoint::_anchor() const
 {
-    GtkAnchorType ret;
+    SPAnchorType ret;
     g_object_get(_canvas_item, "anchor", &ret, NULL);
     return ret;
 }
@@ -288,7 +288,7 @@ void ControlPoint::_setShape(SPCtrlShapeType shape)
     g_object_set(_canvas_item, "shape", shape, NULL);
 }
 
-void ControlPoint::_setAnchor(GtkAnchorType anchor)
+void ControlPoint::_setAnchor(SPAnchorType anchor)
 {
     g_object_set(_canvas_item, "anchor", anchor, NULL);
 }

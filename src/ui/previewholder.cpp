@@ -34,7 +34,7 @@ PreviewHolder::PreviewHolder() :
     _insides(0),
     _prefCols(0),
     _updatesFrozen(false),
-    _anchor(Gtk::ANCHOR_CENTER),
+    _anchor(SP_ANCHOR_CENTER),
     _baseSize(PREVIEW_SIZE_SMALL),
     _ratio(100),
     _view(VIEW_TYPE_LIST),
@@ -63,7 +63,7 @@ void PreviewHolder::clear()
     items.clear();
     _prefCols = 0;
     // Kludge to restore scrollbars
-    if ( !_wrap && (_view != VIEW_TYPE_LIST) && (_anchor == Gtk::ANCHOR_NORTH || _anchor == Gtk::ANCHOR_SOUTH) ) {
+    if ( !_wrap && (_view != VIEW_TYPE_LIST) && (_anchor == SP_ANCHOR_NORTH || _anchor == SP_ANCHOR_SOUTH) ) {
         dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_NEVER );
     }
     rebuildUI();
@@ -136,29 +136,29 @@ void PreviewHolder::setStyle( ::PreviewSize size, ViewType view, guint ratio )
         _view = view;
         _ratio = ratio;
         // Kludge to restore scrollbars
-        if ( !_wrap && (_view != VIEW_TYPE_LIST) && (_anchor == Gtk::ANCHOR_NORTH || _anchor == Gtk::ANCHOR_SOUTH) ) {
+        if ( !_wrap && (_view != VIEW_TYPE_LIST) && (_anchor == SP_ANCHOR_NORTH || _anchor == SP_ANCHOR_SOUTH) ) {
             dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_NEVER );
         }
         rebuildUI();
     }
 }
 
-void PreviewHolder::setOrientation( Gtk::AnchorType how )
+void PreviewHolder::setOrientation(SPAnchorType how)
 {
     if ( _anchor != how )
     {
         _anchor = how;
         switch ( _anchor )
         {
-            case Gtk::ANCHOR_NORTH:
-            case Gtk::ANCHOR_SOUTH:
+            case SP_ANCHOR_NORTH:
+            case SP_ANCHOR_SOUTH:
             {
                 dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, _wrap ? Gtk::POLICY_AUTOMATIC : Gtk::POLICY_NEVER );
             }
             break;
 
-            case Gtk::ANCHOR_EAST:
-            case Gtk::ANCHOR_WEST:
+            case SP_ANCHOR_EAST:
+            case SP_ANCHOR_WEST:
             {
                 dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC );
             }
@@ -179,8 +179,8 @@ void PreviewHolder::setWrap( bool b )
         _wrap = b;
         switch ( _anchor )
         {
-            case Gtk::ANCHOR_NORTH:
-            case Gtk::ANCHOR_SOUTH:
+            case SP_ANCHOR_NORTH:
+            case SP_ANCHOR_SOUTH:
             {
                 dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->set_policy( Gtk::POLICY_AUTOMATIC, _wrap ? Gtk::POLICY_AUTOMATIC : Gtk::POLICY_NEVER );
             }
@@ -206,7 +206,7 @@ void PreviewHolder::on_size_allocate( Gtk::Allocation& allocation )
 //     g_message("            anchor:%d", _anchor);
     Gtk::VBox::on_size_allocate( allocation );
 
-    if ( _insides && !_wrap && (_view != VIEW_TYPE_LIST) && (_anchor == Gtk::ANCHOR_NORTH || _anchor == Gtk::ANCHOR_SOUTH) ) {
+    if ( _insides && !_wrap && (_view != VIEW_TYPE_LIST) && (_anchor == SP_ANCHOR_NORTH || _anchor == SP_ANCHOR_SOUTH) ) {
         Gtk::Requisition req = _insides->size_request();
         gint delta = allocation.get_width() - req.width;
 
@@ -232,7 +232,7 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
     width = itemCount;
     height = 1;
 
-    if ( _anchor == Gtk::ANCHOR_SOUTH || _anchor == Gtk::ANCHOR_NORTH ) {
+    if ( _anchor == SP_ANCHOR_SOUTH || _anchor == SP_ANCHOR_NORTH ) {
         Gtk::Requisition req = _scroller->size_request();
         int currW = _scroller->get_width();
         if ( currW > req.width ) {

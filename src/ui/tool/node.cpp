@@ -81,7 +81,7 @@ double Handle::_saved_length = 0.0;
 bool Handle::_drag_out = false;
 
 Handle::Handle(NodeSharedData const &data, Geom::Point const &initial_pos, Node *parent)
-    : ControlPoint(data.desktop, initial_pos, Gtk::ANCHOR_CENTER, SP_CTRL_SHAPE_CIRCLE, 7.0,
+    : ControlPoint(data.desktop, initial_pos, SP_ANCHOR_CENTER, SP_CTRL_SHAPE_CIRCLE, 7.0,
         &handle_colors, data.handle_group)
     , _parent(parent)
     , _degenerate(true)
@@ -473,7 +473,7 @@ Glib::ustring Handle::_getDragTip(GdkEventMotion */*event*/)
  * The method move() keeps node type invariants during translations.
  */
 Node::Node(NodeSharedData const &data, Geom::Point const &initial_pos)
-    : SelectableControlPoint(data.desktop, initial_pos, Gtk::ANCHOR_CENTER,
+    : SelectableControlPoint(data.desktop, initial_pos, SP_ANCHOR_CENTER,
         SP_CTRL_SHAPE_DIAMOND, 9.0, *data.selection, &node_colors, data.node_group)
     , _front(data, initial_pos, this)
     , _back(data, initial_pos, this)

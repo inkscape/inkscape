@@ -23,6 +23,7 @@
 #include "preferences.h"
 #include <glibmm/i18n.h>
 #include "tools-switch.h"
+#include "enums.h"
 
 namespace Inkscape {
 namespace Display {
@@ -245,7 +246,7 @@ SnapIndicator::set_new_snaptarget(Inkscape::SnappedPoint const &p, bool pre_snap
         SPCanvasItem * canvasitem = NULL;
         canvasitem = sp_canvas_item_new(sp_desktop_tempgroup (_desktop),
                                         SP_TYPE_CTRL,
-                                        "anchor", GTK_ANCHOR_CENTER,
+                                        "anchor", SP_ANCHOR_CENTER,
                                         "size", 10.0,
                                         "stroked", TRUE,
                                         "stroke_color", pre_snap ? 0x7f7f7fff : 0xff0000ff,
@@ -345,7 +346,7 @@ SnapIndicator::set_new_snapsource(Inkscape::SnapCandidatePoint const &p)
     if (value) {
         SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (_desktop),
                                                         SP_TYPE_CTRL,
-                                                        "anchor", GTK_ANCHOR_CENTER,
+                                                        "anchor", SP_ANCHOR_CENTER,
                                                         "size", 6.0,
                                                         "stroked", TRUE,
                                                         "stroke_color", 0xff0000ff,
@@ -364,7 +365,7 @@ SnapIndicator::set_new_debugging_point(Geom::Point const &p)
     g_assert(_desktop != NULL);
     SPCanvasItem * canvasitem = sp_canvas_item_new( sp_desktop_tempgroup (_desktop),
                                                     SP_TYPE_CTRL,
-                                                    "anchor", GTK_ANCHOR_CENTER,
+                                                    "anchor", SP_ANCHOR_CENTER,
                                                     "size", 10.0,
                                                     "fill_color", 0x00ff00ff,
                                                     "stroked", FALSE,

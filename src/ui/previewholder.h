@@ -18,6 +18,7 @@
 #include <gtkmm/table.h>
 #include "previewfillable.h"
 #include "../widgets/eek-preview.h"
+#include "enums.h"
 
 namespace Inkscape {
 namespace UI {
@@ -33,7 +34,7 @@ public:
     virtual void freezeUpdates();
     virtual void thawUpdates();
     virtual void setStyle( ::PreviewSize size, ViewType view, guint ratio );
-    virtual void setOrientation( Gtk::AnchorType how );
+    virtual void setOrientation(SPAnchorType how);
     virtual int getColumnPref() const { return _prefCols; }
     virtual void setColumnPref( int cols );
     virtual ::PreviewSize getPreviewSize() const { return _baseSize; }
@@ -56,7 +57,7 @@ private:
     Gtk::Table *_insides;
     int _prefCols;
     bool _updatesFrozen;
-    Gtk::AnchorType _anchor;
+    SPAnchorType _anchor;
     ::PreviewSize _baseSize;
     guint _ratio;
     ViewType _view;

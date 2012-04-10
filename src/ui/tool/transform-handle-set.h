@@ -16,6 +16,7 @@
 #include <2geom/forward.h>
 #include "ui/tool/commit-events.h"
 #include "ui/tool/manipulator.h"
+#include "enums.h"
 
 class SPDesktop;
 class CtrlRect;
@@ -81,7 +82,7 @@ private:
 /** Base class for node transform handles to simplify implementation */
 class TransformHandle : public ControlPoint {
 public:
-    TransformHandle(TransformHandleSet &th, Gtk::AnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pb);
+    TransformHandle(TransformHandleSet &th, SPAnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pb);
     void getNextClosestPoint(bool reverse);
 
 protected:

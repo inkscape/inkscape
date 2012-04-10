@@ -18,7 +18,7 @@
 #include <gtkmm/button.h>
 #include <gtkmm/eventbox.h>
 #include <gtkmm/label.h>
-
+#include "enums.h"
 #include <vector>
 
 class SPDesktop;
@@ -80,7 +80,7 @@ public:
     int const &getVerb() const;
     Glib::ustring const &getApplyLabel() const;
 
-    virtual void setOrientation(Gtk::AnchorType how);
+    virtual void setOrientation(SPAnchorType how);
 
     virtual void present();  //< request to be present
 
@@ -126,7 +126,7 @@ protected:
      */
     Glib::ustring const _prefs_path;
     bool _menu_desired;
-    Gtk::AnchorType _anchor;
+    SPAnchorType _anchor;
 
     /* Signals */
     sigc::signal<void, int> _signal_response;

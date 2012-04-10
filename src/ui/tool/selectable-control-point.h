@@ -35,11 +35,11 @@ public:
     }
 protected:
     SelectableControlPoint(SPDesktop *d, Geom::Point const &initial_pos,
-        Gtk::AnchorType anchor, SPCtrlShapeType shape,
+        SPAnchorType anchor, SPCtrlShapeType shape,
         unsigned int size, ControlPointSelection &sel, ColorSet *cset = 0,
         SPCanvasGroup *group = 0);
     SelectableControlPoint(SPDesktop *d, Geom::Point const &initial_pos,
-        Gtk::AnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pixbuf,
+        SPAnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pixbuf,
         ControlPointSelection &sel, ColorSet *cset = 0, SPCanvasGroup *group = 0);
 
     virtual void _setState(State state);

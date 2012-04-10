@@ -348,7 +348,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
         using Inkscape::UI::Dialogs::SwatchesPanel;
 
         dtw->panels = new SwatchesPanel("/embedded/swatches");
-        dtw->panels->setOrientation( Gtk::ANCHOR_SOUTH );
+        dtw->panels->setOrientation(SP_ANCHOR_SOUTH);
         gtk_box_pack_end( GTK_BOX( dtw->vbox ), GTK_WIDGET(dtw->panels->gobj()), FALSE, TRUE, 0 );
     }
 

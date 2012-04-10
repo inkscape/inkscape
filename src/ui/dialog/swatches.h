@@ -11,6 +11,7 @@
 #define SEEN_DIALOGS_SWATCHES_H
 
 #include "ui/widget/panel.h"
+#include "enums.h"
 
 namespace Inkscape {
 namespace UI {
@@ -34,7 +35,7 @@ public:
 
     static SwatchesPanel& getInstance();
 
-    virtual void setOrientation( Gtk::AnchorType how );
+    virtual void setOrientation(SPAnchorType how);
 
     virtual void setDesktop( SPDesktop* desktop );
     virtual SPDesktop* getDesktop() {return _currentDesktop;}

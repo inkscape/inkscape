@@ -7,9 +7,9 @@
  *
  */
 
-#include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include "sp-canvas-item.h"
+#include "enums.h"
 
 
 #define SP_TYPE_CTRL            (sp_ctrl_get_type ())
@@ -36,7 +36,7 @@ typedef enum {
 struct SPCtrl : public SPCanvasItem {
     SPCtrlShapeType shape;
     SPCtrlModeType mode;
-    GtkAnchorType anchor;
+    SPAnchorType anchor;
     gint span;
     guint defined : 1;
     guint shown   : 1;

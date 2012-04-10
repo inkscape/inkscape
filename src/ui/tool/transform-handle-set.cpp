@@ -38,20 +38,20 @@ namespace Inkscape {
 namespace UI {
 
 namespace {
-Gtk::AnchorType corner_to_anchor(unsigned c) {
+SPAnchorType corner_to_anchor(unsigned c) {
     switch (c % 4) {
-    case 0: return Gtk::ANCHOR_NE;
-    case 1: return Gtk::ANCHOR_NW;
-    case 2: return Gtk::ANCHOR_SW;
-    default: return Gtk::ANCHOR_SE;
+    case 0: return SP_ANCHOR_NE;
+    case 1: return SP_ANCHOR_NW;
+    case 2: return SP_ANCHOR_SW;
+    default: return SP_ANCHOR_SE;
     }
 }
-Gtk::AnchorType side_to_anchor(unsigned s) {
+SPAnchorType side_to_anchor(unsigned s) {
     switch (s % 4) {
-    case 0: return Gtk::ANCHOR_N;
-    case 1: return Gtk::ANCHOR_W;
-    case 2: return Gtk::ANCHOR_S;
-    default: return Gtk::ANCHOR_E;
+    case 0: return SP_ANCHOR_N;
+    case 1: return SP_ANCHOR_W;
+    case 2: return SP_ANCHOR_S;
+    default: return SP_ANCHOR_E;
     }
 }
 
@@ -82,7 +82,7 @@ ControlPoint::ColorSet center_cset = {
 } // anonymous namespace
 
 /** Base class for node transform handles to simplify implementation */
-TransformHandle::TransformHandle(TransformHandleSet &th, Gtk::AnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pb)
+TransformHandle::TransformHandle(TransformHandleSet &th, SPAnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pb)
     : ControlPoint(th._desktop, Geom::Point(), anchor, pb, &thandle_cset,
         th._transform_handle_group)
     , _th(th)
@@ -180,7 +180,7 @@ void TransformHandle::ungrabbed(GdkEventButton *)
 
 class ScaleHandle : public TransformHandle {
 public:
-    ScaleHandle(TransformHandleSet &th, Gtk::AnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pb)
+    ScaleHandle(TransformHandleSet &th, SPAnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pb)
         : TransformHandle(th, anchor, pb)
     {}
 protected:
@@ -603,7 +603,7 @@ double SkewHandle::_last_angle = 0;
 class RotationCenter : public ControlPoint {
 public:
     RotationCenter(TransformHandleSet &th)
-        : ControlPoint(th._desktop, Geom::Point(), Gtk::ANCHOR_CENTER, _get_pixbuf(),
+        : ControlPoint(th._desktop, Geom::Point(), SP_ANCHOR_CENTER, _get_pixbuf(),
             &center_cset, th._transform_handle_group)
         , _th(th)
     {

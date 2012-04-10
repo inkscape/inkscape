@@ -620,7 +620,7 @@ cc_select_handle(SPKnot* knot)
 {
     knot->setShape(SP_KNOT_SHAPE_SQUARE);
     knot->setSize(10);
-    knot->setAnchor(GTK_ANCHOR_CENTER);
+    knot->setAnchor(SP_ANCHOR_CENTER);
     knot->setFill(0x0000ffff, 0x0000ffff, 0x0000ffff);
     sp_knot_update_ctrl(knot);
 }
@@ -630,7 +630,7 @@ cc_deselect_handle(SPKnot* knot)
 {
     knot->setShape(SP_KNOT_SHAPE_SQUARE);
     knot->setSize(8);
-    knot->setAnchor(GTK_ANCHOR_CENTER);
+    knot->setAnchor(SP_ANCHOR_CENTER);
     knot->setFill(0xffffff00, 0xff0000ff, 0xff0000ff);
     sp_knot_update_ctrl(knot);
 }
@@ -1637,7 +1637,7 @@ static void cc_active_shape_add_knot(SPDesktop* desktop, SPItem* item, Connectio
 
         knot->setShape(SP_KNOT_SHAPE_SQUARE);
         knot->setSize(8);
-        knot->setAnchor(GTK_ANCHOR_CENTER);
+        knot->setAnchor(SP_ANCHOR_CENTER);
         knot->setFill(0xffffff00, 0xff0000ff, 0xff0000ff);
         sp_knot_update_ctrl(knot);
 
@@ -1821,7 +1821,7 @@ cc_set_active_conn(SPConnectorContext *cc, SPItem *item)
 
             knot->setShape(SP_KNOT_SHAPE_SQUARE);
             knot->setSize(7);
-            knot->setAnchor(GTK_ANCHOR_CENTER);
+            knot->setAnchor(SP_ANCHOR_CENTER);
             knot->setFill(0xffffff00, 0xff0000ff, 0xff0000ff);
             knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
             sp_knot_update_ctrl(knot);

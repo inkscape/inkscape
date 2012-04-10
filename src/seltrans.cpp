@@ -129,7 +129,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
 
     _norm = sp_canvas_item_new(sp_desktop_controls(desktop),
                                SP_TYPE_CTRL,
-                               "anchor", GTK_ANCHOR_CENTER,
+                               "anchor", SP_ANCHOR_CENTER,
                                "mode", SP_CTRL_MODE_COLOR,
                                "shape", SP_CTRL_SHAPE_BITMAP,
                                "size", 13.0,
@@ -142,7 +142,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
 
     _grip = sp_canvas_item_new(sp_desktop_controls(desktop),
                                SP_TYPE_CTRL,
-                               "anchor", GTK_ANCHOR_CENTER,
+                               "anchor", SP_ANCHOR_CENTER,
                                "mode", SP_CTRL_MODE_XOR,
                                "shape", SP_CTRL_SHAPE_CROSS,
                                "size", 7.0,
@@ -754,7 +754,7 @@ static void sp_sel_trans_handle_click(SPKnot *knot, guint state, gpointer data)
 void Inkscape::SelTrans::handleClick(SPKnot */*knot*/, guint state, SPSelTransHandle const &handle)
 {
     switch (handle.anchor) {
-        case GTK_ANCHOR_CENTER:
+        case SP_ANCHOR_CENTER:
             if (state & GDK_SHIFT_MASK) {
                 // Unset the  center position for all selected items
                 for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
@@ -776,7 +776,7 @@ void Inkscape::SelTrans::handleClick(SPKnot */*knot*/, guint state, SPSelTransHa
 void Inkscape::SelTrans::handleGrab(SPKnot *knot, guint /*state*/, SPSelTransHandle const &handle)
 {
     switch (handle.anchor) {
-        case GTK_ANCHOR_CENTER:
+        case SP_ANCHOR_CENTER:
             g_object_set(G_OBJECT(_grip),
                          "shape", SP_CTRL_SHAPE_BITMAP,
                          "size", 13.0,

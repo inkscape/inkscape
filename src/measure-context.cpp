@@ -40,6 +40,7 @@
 #include <2geom/angle.h>
 #include "snap.h"
 #include "sp-namedview.h"
+#include "enums.h"
 
 
 static void sp_measure_context_class_init(SPMeasureContextClass *klass);
@@ -351,7 +352,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     SPCanvasItem * canvasitem = NULL;
                     canvasitem = sp_canvas_item_new(sp_desktop_tempgroup(desktop),
                                                     SP_TYPE_CTRL,
-                                                    "anchor", GTK_ANCHOR_CENTER,
+                                                    "anchor", SP_ANCHOR_CENTER,
                                                     "size", 8.0,
                                                     "stroked", TRUE,
                                                     "stroke_color", 0xff0000ff,

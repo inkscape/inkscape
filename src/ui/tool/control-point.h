@@ -19,8 +19,7 @@
 #include <2geom/point.h>
 #include "util/accumulators.h"
 #include "display/sodipodi-ctrl.h"
-
-#include <gtkmm/enums.h>
+#include "enums.h"
 
 class SPDesktop;
 class SPEventContext;
@@ -97,9 +96,9 @@ public:
     virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event);
 
 protected:
-    ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, Gtk::AnchorType anchor,
+    ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
         SPCtrlShapeType shape, unsigned int size, ColorSet *cset = 0, SPCanvasGroup *group = 0);
-    ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, Gtk::AnchorType anchor,
+    ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
         Glib::RefPtr<Gdk::Pixbuf> pixbuf, ColorSet *cset = 0, SPCanvasGroup *group = 0);
 
     /// @name Handle control point events in subclasses
@@ -142,12 +141,12 @@ protected:
 
     unsigned int _size() const;
     SPCtrlShapeType _shape() const;
-    GtkAnchorType _anchor() const;
+    SPAnchorType _anchor() const;
     Glib::RefPtr<Gdk::Pixbuf> _pixbuf();
 
     void _setSize(unsigned int size);
     void _setShape(SPCtrlShapeType shape);
-    void _setAnchor(GtkAnchorType anchor);
+    void _setAnchor(SPAnchorType anchor);
     void _setPixbuf(Glib::RefPtr<Gdk::Pixbuf>);
     /// @}
 

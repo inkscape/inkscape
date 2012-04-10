@@ -15,6 +15,7 @@
 #include "display/sodipodi-ctrl.h"
 #include <2geom/forward.h>
 #include <gdk/gdk.h>
+#include "enums.h"
 
 namespace Inkscape
 {
@@ -43,7 +44,7 @@ void sp_sel_trans_rotate(Inkscape::SelTrans *seltrans, SPSelTransHandle const &h
 void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
 
 struct SPSelTransHandle {
-	GtkAnchorType anchor;
+	SPAnchorType anchor;
 	GdkCursorType cursor;
 	guint control;
 	void (* action) (Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);

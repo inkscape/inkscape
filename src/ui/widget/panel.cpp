@@ -88,7 +88,7 @@ void Panel::_popper(GdkEventButton* event)
 void Panel::_init()
 {
     Glib::ustring tmp("<");
-    _anchor = Gtk::ANCHOR_CENTER;
+    _anchor = SP_ANCHOR_CENTER;
 
     guint panel_size = 0, panel_mode = 0, panel_ratio = 100;
     bool panel_wrap = 0;
@@ -269,13 +269,13 @@ void Panel::setLabel(Glib::ustring const &label)
     _tab_title.set_label(_label);
 }
 
-void Panel::setOrientation(Gtk::AnchorType how)
+void Panel::setOrientation(SPAnchorType how)
 {
     if (_anchor != how) {
         _anchor = how;
         switch (_anchor) {
-            case Gtk::ANCHOR_NORTH:
-            case Gtk::ANCHOR_SOUTH:
+            case SP_ANCHOR_NORTH:
+            case SP_ANCHOR_SOUTH:
             {
                 if (_menu_desired) {
                     _menu_popper.reference();

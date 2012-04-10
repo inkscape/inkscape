@@ -38,7 +38,7 @@ bool CurveDragPoint::_segment_was_degenerate = false;
 
 CurveDragPoint::CurveDragPoint(PathManipulator &pm)
     : ControlPoint(pm._multi_path_manipulator._path_data.node_data.desktop, Geom::Point(),
-        Gtk::ANCHOR_CENTER, SP_CTRL_SHAPE_CIRCLE, 1.0, &invisible_cset,
+        SP_ANCHOR_CENTER, SP_CTRL_SHAPE_CIRCLE, 1.0, &invisible_cset,
         pm._multi_path_manipulator._path_data.dragpoint_group)
     , _pm(pm)
 {
