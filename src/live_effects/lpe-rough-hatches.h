@@ -15,7 +15,6 @@
  */
 
 #include "live_effects/effect.h"
-#include "live_effects/parameter/point.h"
 #include "live_effects/parameter/parameter.h"
 #include "live_effects/parameter/bool.h"
 #include "live_effects/parameter/random.h"
@@ -64,7 +63,6 @@ private:
   ScalarParam stroke_width_bot;
   ScalarParam front_thickness, back_thickness;
 
-  //PointParam  bender;
   VectorParam direction;
   VectorParam bender;
 
