@@ -253,9 +253,9 @@ SBasis multiply(SBasis const &a, SBasis const &b) {
 The added term is almost free
 */
 SBasis multiply_add(SBasis const &a, SBasis const &b, SBasis c) {
-    c.resize(a.size() + b.size(), Linear(0,0));
     if(a.isZero() || b.isZero())
         return c;
+    c.resize(a.size() + b.size(), Linear(0,0));
     for(unsigned j = 0; j < b.size(); j++) {
         for(unsigned i = j; i < a.size()+j; i++) {
             double tri = b[j].tri()*a[i-j].tri();
