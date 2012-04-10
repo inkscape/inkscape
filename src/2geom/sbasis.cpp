@@ -225,10 +225,9 @@ SBasis multiply(SBasis const &a, SBasis const &b) {
     // c = {a0*b0 - shift(1, a.Tri*b.Tri), a1*b1 - shift(1, a.Tri*b.Tri)}
 
     // shift(1, a.Tri*b.Tri)
-    SBasis c;
+    SBasis c(a.size() + b.size(), Linear(0,0));
     if(a.isZero() || b.isZero())
         return c;
-    c.resize(a.size() + b.size(), Linear(0,0));
     for(unsigned j = 0; j < b.size(); j++) {
         for(unsigned i = j; i < a.size()+j; i++) {
             double tri = b[j].tri()*a[i-j].tri();
@@ -254,9 +253,9 @@ SBasis multiply(SBasis const &a, SBasis const &b) {
 The added term is almost free
 */
 SBasis multiply_add(SBasis const &a, SBasis const &b, SBasis c) {
+    c.resize(a.size() + b.size(), Linear(0,0));
     if(a.isZero() || b.isZero())
         return c;
-    c.resize(a.size() + b.size(), Linear(0,0));
     for(unsigned j = 0; j < b.size(); j++) {
         for(unsigned i = j; i < a.size()+j; i++) {
             double tri = b[j].tri()*a[i-j].tri();
@@ -280,7 +279,7 @@ SBasis multiply_add(SBasis const &a, SBasis const &b, SBasis c) {
 
 */
 SBasis multiply(SBasis const &a, SBasis const &b) {
-    SBasis c;
+    SBasis c(a.size() + b.size(), Linear(0,0));
     if(a.isZero() || b.isZero())
         return c;
     return multiply_add(a, b, c);
@@ -607,7 +606,7 @@ TODO: compute order according to tol?
 TODO: requires g(0)=0 & g(1)=1 atm... adaptation to other cases should be obvious!
 */
 SBasis compose_inverse(SBasis const &f, SBasis const &g, unsigned order, double zero){
-    SBasis result(order, Linear()); //result
+    SBasis result(order, Linear(0.)); //result
     SBasis r=f; //remainder
     SBasis Pk=Linear(1)-g,Qk=g,sg=Pk*Qk;
     Pk.truncate(order);
@@ -616,7 +615,10 @@ SBasis compose_inverse(SBasis const &f, SBasis const &g, unsigned order, double 
     Qk.resize(order,Linear(0.));
     r.resize(order,Linear(0.));
 
-    int vs= valuation(sg,zero);
+    int vs = valuation(sg,zero);
+    if (vs == 0) { // to prevent infinite loop
+        return result;
+    }
 
     for (unsigned k=0; k<order; k+=vs){
         double p10 = Pk.at(k)[0];// we have to solve the linear system:
