@@ -948,7 +948,7 @@ void FileOpenDialogImplWin32::free_preview()
         DestroyIcon(_preview_file_icon);
     _preview_file_icon = NULL;
 
-    _preview_bitmap_image.clear();
+    _preview_bitmap_image.reset();
     _preview_emf_image = false;
     _mutex->unlock();
 }
