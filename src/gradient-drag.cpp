@@ -1012,7 +1012,7 @@ static void gr_knot_clicked_handler(SPKnot */*knot*/, guint state, gpointer data
 }
 
 /**
- * Called when a dragger knot is doubleclicked; opens gradient editor with the stop from the first draggable.
+ * Called when a dragger knot is doubleclicked;
  */
 static void gr_knot_doubleclicked_handler(SPKnot */*knot*/, guint /*state*/, gpointer data)
 {
@@ -1023,8 +1023,11 @@ static void gr_knot_doubleclicked_handler(SPKnot */*knot*/, guint /*state*/, gpo
     if (dragger->draggables == NULL)
         return;
 
-    GrDraggable *draggable = (GrDraggable *) dragger->draggables->data;
-    sp_item_gradient_edit_stop (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
+    /*
+     *  2012/4 - Do nothing (gradient editor to be disabled)
+     */
+    //GrDraggable *draggable = (GrDraggable *) dragger->draggables->data;
+    //sp_item_gradient_edit_stop (draggable->item, draggable->point_type, draggable->point_i, draggable->fill_or_stroke);
 }
 
 /**
