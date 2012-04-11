@@ -130,21 +130,6 @@ static JavaFXOutput::String dstr(double d)
 
 
 /**
- * Format a double as an integer
- */
-static JavaFXOutput::String istr(double d)
-{
-    char dbuf[G_ASCII_DTOSTR_BUF_SIZE+1];
-    g_ascii_formatd(dbuf, G_ASCII_DTOSTR_BUF_SIZE,
-                  "%.0f", (gdouble)d);
-    JavaFXOutput::String s = dbuf;
-    return s;
-}
-
-#define ISTR(d) (istr(d).c_str())
-
-
-/**
  * Format an rgba() string
  */
 static JavaFXOutput::String rgba(guint32 rgba)
