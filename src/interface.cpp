@@ -1924,7 +1924,7 @@ void ContextMenu::MakeImageMenu (void)
         mi = new Gtk::MenuItem(C_("Context menu", "Embed Image"));
         mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageEmbed));
         mi->show();
-        append(*mi);
+        insert(*mi,positionOfLastDialog++);
         if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
             mi->set_sensitive( FALSE );
         }
@@ -1936,7 +1936,7 @@ void ContextMenu::MakeImageMenu (void)
         mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageExtract));
         mi->show();
         insert(*mi,positionOfLastDialog++);
-        if ( (!href) || ((strncmp(href, "data:", 5) == 0)) ) {
+        if ( (!href) || ((strncmp(href, "data:", 5) != 0)) ) {
             mi->set_sensitive( FALSE );
         }
     }
