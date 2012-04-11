@@ -490,7 +490,17 @@ void sp_edit_clear_all(SPDesktop *dt)
                        _("Delete all"));
 }
 
-GSList *get_all_items(GSList *list, SPObject *from, SPDesktop *desktop, bool onlyvisible, bool onlysensitive, GSList const *exclude)
+/*
+ * Return a list of SPItems that are the children of 'list'
+ *
+ * list - source list of items to search in
+ * desktop - desktop associated with the source list
+ * exclude - list of items to exclude from result
+ * onlyvisible - TRUE includes only items visible on canvas
+ * onlysensitive - TRUE includes only non-locked items
+ * ingroups - TRUE to recursively get grouped items children
+ */
+GSList *get_all_items(GSList *list, SPObject *from, SPDesktop *desktop, bool onlyvisible, bool onlysensitive, bool ingroups, GSList const *exclude)
 {
     for ( SPObject *child = from->firstChild() ; child; child = child->getNext() ) {
         if (SP_IS_ITEM(child) &&
@@ -503,8 +513,8 @@ GSList *get_all_items(GSList *list, SPObject *from, SPDesktop *desktop, bool onl
             list = g_slist_prepend(list, SP_ITEM(child));
         }
 
-        if (SP_IS_ITEM(child) && desktop->isLayer(SP_ITEM(child))) {
-            list = get_all_items(list, child, desktop, onlyvisible, onlysensitive, exclude);
+        if (ingroups || (SP_IS_ITEM(child) && desktop->isLayer(SP_ITEM(child)))) {
+            list = get_all_items(list, child, desktop, onlyvisible, onlysensitive, ingroups, exclude);
         }
     }
 
@@ -561,11 +571,11 @@ void sp_edit_select_all_full(SPDesktop *dt, bool force_all_layers, bool invert)
             break;
         }
         case PREFS_SELECTION_LAYER_RECURSIVE: {
-            items = get_all_items(NULL, dt->currentLayer(), dt, onlyvisible, onlysensitive, exclude);
+            items = get_all_items(NULL, dt->currentLayer(), dt, onlyvisible, onlysensitive, FALSE, exclude);
             break;
         }
         default: {
-        items = get_all_items(NULL, dt->currentRoot(), dt, onlyvisible, onlysensitive, exclude);
+        items = get_all_items(NULL, dt->currentRoot(), dt, onlyvisible, onlysensitive, FALSE, exclude);
             break;
     }
     }
@@ -1648,7 +1658,12 @@ void sp_select_same_fill_stroke_style(SPDesktop *desktop, gboolean fill, gboolea
         return;
     }
 
-    GSList *all_list = get_all_items(NULL, desktop->currentRoot(), desktop, true, true, NULL);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool onlyvisible = prefs->getBool("/options/kbselection/onlyvisible", true);
+    bool onlysensitive = prefs->getBool("/options/kbselection/onlysensitive", true);
+    bool ingroups = TRUE;
+
+    GSList *all_list = get_all_items(NULL, desktop->currentRoot(), desktop, onlyvisible, onlysensitive, ingroups, NULL);
     GSList *all_matches = NULL;
 
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
@@ -1673,8 +1688,12 @@ void sp_select_same_fill_stroke_style(SPDesktop *desktop, gboolean fill, gboolea
     selection->clear();
     selection->setList(all_matches);
 
-    g_slist_free(all_matches);
-    g_slist_free(all_list);
+    if (all_matches) {
+        g_slist_free(all_matches);
+    }
+    if (all_list) {
+        g_slist_free(all_list);
+    }
 
 }
 
@@ -1691,7 +1710,12 @@ void sp_select_same_stroke_style(SPDesktop *desktop)
         return;
     }
 
-    GSList *all_list = get_all_items(NULL, desktop->currentRoot(), desktop, true, true, NULL);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool onlyvisible = prefs->getBool("/options/kbselection/onlyvisible", true);
+    bool onlysensitive = prefs->getBool("/options/kbselection/onlysensitive", true);
+    bool ingroups = TRUE;
+
+    GSList *all_list = get_all_items(NULL, desktop->currentRoot(), desktop, onlyvisible, onlysensitive, ingroups, NULL);
     GSList *matches = all_list;
 
     Inkscape::Selection *selection = sp_desktop_selection (desktop);
@@ -1706,8 +1730,12 @@ void sp_select_same_stroke_style(SPDesktop *desktop)
     selection->clear();
     selection->setList(matches);
 
-    g_slist_free(matches);
-    g_slist_free(all_list);
+    if (matches) {
+        g_slist_free(matches);
+    }
+    if (all_list) {
+        g_slist_free(all_list);
+    }
 }
 
 /*
