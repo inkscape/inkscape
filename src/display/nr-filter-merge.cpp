@@ -74,7 +74,7 @@ double FilterMerge::complexity(Geom::Affine const &)
 
 bool FilterMerge::uses_background()
 {
-    for (int i = 0; i < _input_image.size(); ++i) {
+    for (unsigned int i = 0; i < _input_image.size(); ++i) {
         int input = _input_image[i];
         if (input == NR_FILTER_BACKGROUNDIMAGE || input == NR_FILTER_BACKGROUNDALPHA) {
             return true;
