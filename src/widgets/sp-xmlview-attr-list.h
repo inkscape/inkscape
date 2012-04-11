@@ -45,7 +45,9 @@ GtkWidget * sp_xmlview_attr_list_new (Inkscape::XML::Node * repr);
 #define SP_XMLVIEW_ATTR_LIST_GET_REPR(list) (SP_XMLVIEW_ATTR_LIST (list)->repr)
 
 void sp_xmlview_attr_list_set_repr (SPXMLViewAttrList * list, Inkscape::XML::Node * repr);
-void sp_xmlview_attr_list_select_row_by_key(SPXMLViewAttrList * list, gchar *name);
+void sp_xmlview_attr_list_select_row_by_key(SPXMLViewAttrList * list, const gchar *name);
 
+/* Attribute list store columns */
+enum {ATTR_COL_NAME=0, ATTR_COL_ATTR=1, ATTR_COL_VALUE=2, ATTR_N_COLS=3 };
 
 #endif

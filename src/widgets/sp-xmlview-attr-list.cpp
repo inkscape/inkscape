@@ -36,8 +36,6 @@ static Inkscape::XML::NodeEventVector repr_events = {
 	NULL  /* order_changed */
 };
 
-enum {COL_NAME=0, COL_VALUE, COL_ATTR};
-
 GtkWidget *
 sp_xmlview_attr_list_new (Inkscape::XML::Node * repr)
 {
@@ -45,20 +43,24 @@ sp_xmlview_attr_list_new (Inkscape::XML::Node * repr)
 
     attr_list = (SPXMLViewAttrList*)g_object_new (SP_TYPE_XMLVIEW_ATTR_LIST, NULL);
 
-    attr_list->store = gtk_list_store_new (3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER);
+    attr_list->store = gtk_list_store_new (ATTR_N_COLS, G_TYPE_STRING, G_TYPE_UINT, G_TYPE_STRING );
     gtk_tree_view_set_model (GTK_TREE_VIEW(attr_list), GTK_TREE_MODEL(attr_list->store));
 
+    // Attribute name column
+    int colpos = 0;
     GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
-    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(attr_list), COL_NAME, _("Attribute"), cell, "text", 0, NULL);
-    GtkTreeViewColumn *column = gtk_tree_view_get_column (GTK_TREE_VIEW(attr_list), COL_NAME);
+    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(attr_list), colpos, _("Name"), cell, "text", ATTR_COL_NAME, NULL);
+    GtkTreeViewColumn *column = gtk_tree_view_get_column (GTK_TREE_VIEW(attr_list), colpos);
     gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
-    gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
-    gtk_tree_sortable_set_sort_column_id ( GTK_TREE_SORTABLE(attr_list->store), COL_NAME, GTK_SORT_ASCENDING);
+    gtk_tree_view_column_set_sort_column_id (column, colpos);
+    gtk_tree_sortable_set_sort_column_id ( GTK_TREE_SORTABLE(attr_list->store), ATTR_COL_NAME, GTK_SORT_ASCENDING);
     gtk_cell_renderer_set_padding (cell, 2, 0);
 
+    // Attribute value column
+    colpos = 1;
     cell = gtk_cell_renderer_text_new ();
-    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(attr_list), COL_VALUE, _("Value"), cell, "text", COL_VALUE, NULL);
-    column = gtk_tree_view_get_column (GTK_TREE_VIEW(attr_list), COL_VALUE);
+    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(attr_list), colpos, _("Value"), cell, "text", ATTR_COL_VALUE, NULL);
+    column = gtk_tree_view_get_column (GTK_TREE_VIEW(attr_list), colpos);
     gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
     gtk_cell_renderer_set_padding (cell, 2, 0);
 
@@ -141,24 +143,28 @@ sp_xmlview_attr_list_destroy (GtkObject * object)
 
 	list = SP_XMLVIEW_ATTR_LIST (object);
 
+	g_object_unref(list->store);
 	sp_xmlview_attr_list_set_repr (list, NULL);
 
 	GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-void sp_xmlview_attr_list_select_row_by_key(SPXMLViewAttrList * list, gchar *name)
+void sp_xmlview_attr_list_select_row_by_key(SPXMLViewAttrList * list, const gchar *name)
 {
     GtkTreeIter iter;
-    const gchar *n;
     gboolean match = false;
     gboolean valid = gtk_tree_model_get_iter_first( GTK_TREE_MODEL(list->store), &iter );
     while ( valid ) {
-        gtk_tree_model_get (GTK_TREE_MODEL(list->store), &iter, COL_NAME, &n, -1);
+        gchar *n = 0;
+        gtk_tree_model_get (GTK_TREE_MODEL(list->store), &iter, ATTR_COL_NAME, &n, -1);
         if (!strcmp(n, name)) {
             match = true;
             break;
         }
         valid = gtk_tree_model_iter_next (GTK_TREE_MODEL(list->store), &iter);
+        if (n) {
+            g_free(n);
+        }
     }
 
     if (match) {
@@ -181,29 +187,31 @@ event_attr_changed (Inkscape::XML::Node * /*repr*/,
 	list = SP_XMLVIEW_ATTR_LIST (data);
 
     GtkTreeIter iter;
-    const gchar *n;
     gboolean valid = gtk_tree_model_get_iter_first( GTK_TREE_MODEL(list->store), &iter );
     gboolean match = false;
     while ( valid ) {
-        gtk_tree_model_get (GTK_TREE_MODEL(list->store), &iter, COL_NAME, &n, -1);
+        gchar *n = 0;
+        gtk_tree_model_get (GTK_TREE_MODEL(list->store), &iter, ATTR_COL_NAME, &n, -1);
         if (!strcmp(n, name)) {
             match = true;
             break;
         }
         row++;
         valid = gtk_tree_model_iter_next (GTK_TREE_MODEL(list->store), &iter);
+        if (n) {
+            g_free(n);
+        }
     }
 
 	if (match) {
 		if (new_value) {
-			gtk_list_store_set (list->store, &iter, COL_NAME, name, COL_VALUE, new_value, COL_ATTR, GINT_TO_POINTER (g_quark_from_string (name)), -1);
+			gtk_list_store_set (list->store, &iter, ATTR_COL_NAME, name, ATTR_COL_VALUE, new_value, ATTR_COL_ATTR, g_quark_from_string (name), -1);
 		} else {
 			gtk_list_store_remove  (list->store, &iter);
 		}
 	} else if (new_value != NULL) {
 	    gtk_list_store_append (list->store, &iter);
-        gtk_list_store_set (list->store, &iter, COL_NAME, name, COL_VALUE, new_value, COL_ATTR, GINT_TO_POINTER (g_quark_from_string (name)), -1);
-
+        gtk_list_store_set (list->store, &iter, ATTR_COL_NAME, name, ATTR_COL_VALUE, new_value, ATTR_COL_ATTR, g_quark_from_string (name), -1);
 	}
 
 	// send a "changed" signal so widget owners will know I've updated

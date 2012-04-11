@@ -65,7 +65,6 @@ XmlTree::XmlTree (void) :
     attributes (NULL),
     content (NULL),
     attr_name (),
-    attr_value (),
     status (""),
     tree_toolbar(),
     xml_element_new_button ( _("New element node")),
@@ -747,21 +746,27 @@ void XmlTree::on_attr_select_row(GtkTreeSelection *selection, gpointer data)
         return;
     }
 
-    self->attr_value.grab_focus ();
-
-    self->xml_attribute_delete_button.set_sensitive(true);
-
-    const gchar *name;
-    const gchar *value;
-    gint attr;
-    gtk_tree_model_get (model, &iter, 0, &name, 1, &value, 2, &attr, -1);
+    gchar *name = 0;
+    gchar *value = 0;
+    guint attr = 0;
+    gtk_tree_model_get (model, &iter, ATTR_COL_NAME, &name, ATTR_COL_VALUE, &value, ATTR_COL_ATTR, &attr, -1);
 
     self->attr_name.set_text(name);
     self->attr_value.get_buffer()->set_text(value);
-    self->selected_attr = attr;
 
+    self->attr_value.grab_focus ();
+    self->xml_attribute_delete_button.set_sensitive(true);
+
+    self->selected_attr = attr;
     self->attr_reset_context(self->selected_attr);
 
+    if (name) {
+        g_free(name);
+    }
+
+    if (value) {
+        g_free(value);
+    }
 }
 
 void XmlTree::on_attr_row_changed(SPXMLViewAttrList *attributes, const gchar * name, gpointer /*data*/)
@@ -770,13 +775,20 @@ void XmlTree::on_attr_row_changed(SPXMLViewAttrList *attributes, const gchar * n
     GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(attributes));
     GtkTreeIter   iter;
     GtkTreeModel *model;
-    const gchar *attr_name;
+    gchar *attr_name = 0;
     if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
         gtk_tree_model_get (model, &iter, 0, &attr_name, -1);
-        if (!strcmp(name, attr_name)) {
-            gtk_tree_selection_unselect_all(selection);
-            gtk_tree_selection_select_iter(selection, &iter);
+        if (gtk_list_store_iter_is_valid(GTK_LIST_STORE(model), &iter) ) {
+            if (!strcmp(name, attr_name)) {
+                gtk_tree_selection_unselect_all(selection);
+                gtk_tree_selection_select_iter(selection, &iter);
+            }
         }
+    }
+
+    if (attr_name) {
+        g_free(attr_name);
+        attr_name = 0;
     }
 }
 
