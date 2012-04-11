@@ -352,7 +352,14 @@
             -DHAVE_SSL
             -DRELAYTOOL_SSL="static const int libssl_is_present=1; static int __attribute__((unused)) libssl_symbol_is_present(char *s){ return 1; }" <!-- inkboard -->
             -DPOPPLER_NEW_GFXFONT <!-- poppler changed the api for 0.8.3 -->
-            <!-- -DGSEAL_ENABLE <!-- GTK+3 migration -->
+            <!-- GTK+3 migration -->
+            -DGLIBMM_DISABLE_DEPRECATED
+            <!---DG_DISABLE_DEPRECATED
+            -DGTK_DISABLE_SINGLE_INCLUDES
+            -DGTKMM_DISABLE_DEPRECATED
+            -DGTK_DISABLE_DEPRECATED
+            -DGDKMM_DISABLE_DEPRECATED
+            <!-- -DGSEAL_ENABLE -->
         </defines>
         <includes>
             -I${devlibs}/include
