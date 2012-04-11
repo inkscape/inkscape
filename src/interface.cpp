@@ -794,9 +794,9 @@ sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
 void addTaskMenuItems(GtkMenu *menu, Inkscape::UI::View::View *view)
 {
     gchar const* data[] = {
-        _("Default"), _("Default interface setup"),
-        _("Custom"), _("Set the custom task"),
-        _("Wide"), _("Setup for widescreen work"),
+        C_("Interface setup", "Default"), _("Default interface setup"),
+        C_("Interface setup", "Custom"), _("Set the custom task"),
+        C_("Interface setup", "Wide"), _("Setup for widescreen work"),
         0, 0
     };
 

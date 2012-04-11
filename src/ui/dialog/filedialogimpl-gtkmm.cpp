@@ -1457,7 +1457,7 @@ FileExportDialogImpl::FileExportDialogImpl( Gtk::Window& parentWindow,
     selectionButton.set_group(scopeGroup);
     scopeBox.pack_start(selectionButton);
 
-    customButton.set_label(_("Custom"));
+    customButton.set_label(C_("Export dialog", "Custom"));
     customButton.set_group(scopeGroup);
     scopeBox.pack_start(customButton);
 
