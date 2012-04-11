@@ -83,7 +83,7 @@ private:
     /**
      * Is the selected tree node editable
      */
-    gboolean xml_tree_node_mutable(GtkCTreeNode *node);
+    gboolean xml_tree_node_mutable(GtkTreeIter *node);
 
     /**
      * Callback to close the add dialog on Escape key
@@ -113,17 +113,12 @@ private:
     /**
       * Callback for a node in the tree being selected
       */
-    static void on_tree_select_row(GtkCTree *tree, GtkCTreeNode *node, gint column, gpointer data);
-
-    /**
-      * Callback when no node in the tree is selected
-      */
-    static void on_tree_unselect_row(GtkCTree *tree, GtkCTreeNode *node, gint column, gpointer data);
+    static void on_tree_select_row(GtkTreeSelection *selection, gpointer data);
 
     /**
       * Callback when a node is moved in the tree
       */
-    static void after_tree_move(GtkCTree *tree, GtkCTreeNode *node, GtkCTreeNode *new_parent, GtkCTreeNode *new_sibling, gpointer data);
+    static void after_tree_move(SPXMLViewTree *attributes, gpointer value, gpointer data);
 
     /**
       * Callback for when attribute selection changes
@@ -138,7 +133,7 @@ private:
     /**
       * Enable widgets based on current selections
       */
-    void on_tree_select_row_enable(GtkCTreeNode *node);
+    void on_tree_select_row_enable(GtkTreeIter *node);
     void on_tree_unselect_row_disable();
     void on_tree_unselect_row_hide();
     void on_attr_unselect_row_disable();

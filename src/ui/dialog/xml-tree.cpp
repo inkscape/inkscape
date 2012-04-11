@@ -166,6 +166,7 @@ XmlTree::XmlTree (void) :
 
     Gtk::ScrolledWindow *tree_scroller = new Gtk::ScrolledWindow();
     tree_scroller->set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
+    tree_scroller->set_shadow_type(Gtk::SHADOW_IN);
     tree_scroller->add(*Gtk::manage(Glib::wrap(GTK_WIDGET(tree))));
 
     left_box.pack_start(*tree_scroller);
@@ -226,11 +227,11 @@ XmlTree::XmlTree (void) :
     text_container.add(*Gtk::manage(Glib::wrap(GTK_WIDGET(content))));
 
     /* Signal handlers */
-    g_signal_connect( G_OBJECT(tree), "tree_select_row", G_CALLBACK(on_tree_select_row), this );
-    g_signal_connect( G_OBJECT(tree), "tree_unselect_row", G_CALLBACK(on_tree_unselect_row), this);
+    GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(tree));
+    g_signal_connect (G_OBJECT(selection), "changed", G_CALLBACK (on_tree_select_row), this);
     g_signal_connect_after( G_OBJECT(tree), "tree_move", G_CALLBACK(after_tree_move), this);
 
-    GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(attributes));
+    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(attributes));
     g_signal_connect (G_OBJECT(selection), "changed", G_CALLBACK (on_attr_select_row), this);
     g_signal_connect( G_OBJECT(attributes), "row-value-changed", G_CALLBACK(on_attr_row_changed), this);
 
@@ -286,8 +287,6 @@ XmlTree::~XmlTree (void)
     Inkscape::GC::release(_message_stack);
     _message_stack = NULL;
     _message_changed_connection.~connection();
-
-    //status = "";
 }
 
 void XmlTree::setDesktop(SPDesktop *desktop)
@@ -393,16 +392,12 @@ void XmlTree::set_tree_repr(Inkscape::XML::Node *repr)
         return;
     }
 
-    gtk_clist_freeze(GTK_CLIST(tree));
-
     sp_xmlview_tree_set_repr(tree, repr);
     if (repr) {
         set_tree_select(get_dt_select());
     } else {
         set_tree_select(NULL);
     }
-
-    gtk_clist_thaw(GTK_CLIST(tree));
 
     propagate_tree_select(selected_repr);
 
@@ -418,26 +413,29 @@ void XmlTree::set_tree_select(Inkscape::XML::Node *repr)
 
     selected_repr = repr;
     if (repr) {
-        GtkCTreeNode *node;
+        GtkTreeIter node;
 
         Inkscape::GC::anchor(selected_repr);
 
-        node = sp_xmlview_tree_get_repr_node(SP_XMLVIEW_TREE(tree), repr);
-        if (node) {
-            GtkCTreeNode *parent;
+        if (sp_xmlview_tree_get_repr_node(SP_XMLVIEW_TREE(tree), repr, &node)) {
 
-            gtk_ctree_select(GTK_CTREE(tree), node);
+            GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tree));
+            gtk_tree_selection_unselect_all (selection);
 
-            parent = GTK_CTREE_ROW(node)->parent;
-            while (parent) {
-                gtk_ctree_expand(GTK_CTREE(tree), parent);
-                parent = GTK_CTREE_ROW(parent)->parent;
-            }
+            GtkTreePath* path = gtk_tree_model_get_path(GTK_TREE_MODEL(tree->store), &node);
+            gtk_tree_view_expand_to_path (GTK_TREE_VIEW(tree), path);
+            gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(tree), path, NULL, TRUE, 0.66, 0.0);
+            gtk_tree_path_free(path);
 
-            gtk_ctree_node_moveto(GTK_CTREE(tree), node, 0, 0.66, 0.0);
+            gtk_tree_selection_select_iter(selection, &node);
+
+        } else {
+            g_message("XmlTree::set_tree_select : Couldnt find repr node");
         }
     } else {
-        gtk_clist_unselect_all(GTK_CLIST(tree));
+        GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tree));
+        gtk_tree_selection_unselect_all (selection);
+
         on_tree_unselect_row_disable();
         on_tree_unselect_row_hide();
     }
@@ -507,20 +505,37 @@ void XmlTree::set_dt_select(Inkscape::XML::Node *repr)
 } // end of set_dt_select()
 
 
-void XmlTree::on_tree_select_row(GtkCTree *tree,
+/*void XmlTree::on_tree_select_row(GtkCTree *tree,
                                  GtkCTreeNode *node,
-                                 gint /*column*/,
-                                 gpointer data)
+                                 gint column,
+                                 gpointer data)*/
+void XmlTree::on_tree_select_row(GtkTreeSelection *selection, gpointer data)
 {
     XmlTree *self = static_cast<XmlTree *>(data);
 
-    Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(SP_XMLVIEW_TREE(tree), node);
-    g_assert(repr != NULL);
+    GtkTreeIter   iter;
+    GtkTreeModel *model;
 
     if (self->selected_repr) {
         Inkscape::GC::release(self->selected_repr);
         self->selected_repr = NULL;
     }
+
+
+    if (!gtk_tree_selection_get_selected (selection, &model, &iter)) {
+        // Nothing selected, update widgets
+        self->propagate_tree_select(NULL);
+        self->set_dt_select(NULL);
+        self->on_tree_unselect_row_disable();
+        self->on_tree_unselect_row_hide();
+        self->on_attr_unselect_row_clear_text();
+        return;
+    }
+
+    Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(GTK_TREE_VIEW(self->tree), &iter);
+    g_assert(repr != NULL);
+
+
     self->selected_repr = repr;
     Inkscape::GC::anchor(self->selected_repr);
 
@@ -530,54 +545,30 @@ void XmlTree::on_tree_select_row(GtkCTree *tree,
 
     self->tree_reset_context();
 
-    self->on_tree_select_row_enable(node);
-}
-
-void XmlTree::on_tree_unselect_row(GtkCTree *tree,
-                                   GtkCTreeNode *node,
-                                   gint /*column*/,
-                                   gpointer data)
-{
-    XmlTree *self = static_cast<XmlTree *>(data);
-
-    if (self->blocked) {
-        return;
-    }
-
-
-    Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(SP_XMLVIEW_TREE(tree), node);
-    self->propagate_tree_select(NULL);
-    self->set_dt_select(NULL);
-
-    if (self->selected_repr && (self->selected_repr == repr)) {
-        Inkscape::GC::release(self->selected_repr);
-        self->selected_repr = NULL;
-        self->selected_attr = 0;
-    }
-
-    self->on_tree_unselect_row_disable();
-    self->on_tree_unselect_row_hide();
-    self->on_attr_unselect_row_clear_text();
+    self->on_tree_select_row_enable(&iter);
 }
 
 
+void XmlTree::after_tree_move(SPXMLViewTree *attributes, gpointer value, gpointer data)
 
-void XmlTree::after_tree_move(GtkCTree */*tree*/,
-                     GtkCTreeNode *node,
-                     GtkCTreeNode *new_parent,
-                     GtkCTreeNode *new_sibling,
-                     gpointer data)
 {
     XmlTree *self = static_cast<XmlTree *>(data);
+    guint val = GPOINTER_TO_UINT(value);
 
-    if (GTK_CTREE_ROW(node)->parent  == new_parent &&
-        GTK_CTREE_ROW(node)->sibling == new_sibling)
-    {
+    if (val) {
         DocumentUndo::done(self->current_document, SP_VERB_DIALOG_XML_EDITOR,
-                           _("Drag XML subtree"));
+                                   _("Drag XML subtree"));
     } else {
-        DocumentUndo::cancel(self->current_document);
+        //DocumentUndo::cancel(self->current_document);
+        /*
+         * There was a problem with drag & drop,
+         * data is probably not synchronized, so reload the tree
+         */
+        SPDocument *document = self->current_document;
+        self->set_tree_document(NULL);
+        self->set_tree_document(document);
     }
+
 }
 
 void XmlTree::_set_status_message(Inkscape::MessageType /*type*/, const gchar *message, GtkWidget *widget)
@@ -587,13 +578,13 @@ void XmlTree::_set_status_message(Inkscape::MessageType /*type*/, const gchar *m
     }
 }
 
-void XmlTree::on_tree_select_row_enable(GtkCTreeNode *node)
+void XmlTree::on_tree_select_row_enable(GtkTreeIter *node)
 {
     if (!node) {
         return;
     }
 
-    Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(SP_XMLVIEW_TREE(tree), node);
+    Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(GTK_TREE_VIEW(tree), node);
     Inkscape::XML::Node *parent=repr->parent();
 
     //on_tree_select_row_enable_if_mutable
@@ -612,11 +603,10 @@ void XmlTree::on_tree_select_row_enable(GtkCTreeNode *node)
 
     //on_tree_select_row_enable_if_has_grandparent
     {
-        GtkCTreeNode *parent = GTK_CTREE_ROW(node)->parent;
-
-        if (parent) {
-            GtkCTreeNode *grandparent = GTK_CTREE_ROW(parent)->parent;
-            if (grandparent) {
+        GtkTreeIter parent;
+        if (gtk_tree_model_iter_parent(GTK_TREE_MODEL(tree->store), &parent, node)) {
+            GtkTreeIter grandparent;
+            if (gtk_tree_model_iter_parent(GTK_TREE_MODEL(tree->store), &grandparent, &parent)) {
                 unindent_node_button.set_sensitive(true);
             } else {
                 unindent_node_button.set_sensitive(false);
@@ -682,20 +672,23 @@ void XmlTree::on_tree_select_row_enable(GtkCTreeNode *node)
 }
 
 
-gboolean XmlTree::xml_tree_node_mutable(GtkCTreeNode *node)
+gboolean XmlTree::xml_tree_node_mutable(GtkTreeIter *node)
 {
     // top-level is immutable, obviously
-    if (!GTK_CTREE_ROW(node)->parent) {
+    GtkTreeIter parent;
+    if (!gtk_tree_model_iter_parent(GTK_TREE_MODEL(tree->store), &parent, node)) {
         return false;
     }
 
+
     // if not in base level (where namedview, defs, etc go), we're mutable
-    if (GTK_CTREE_ROW(GTK_CTREE_ROW(node)->parent)->parent) {
+    GtkTreeIter child;
+    if (gtk_tree_model_iter_parent(GTK_TREE_MODEL(tree->store), &child, &parent)) {
         return true;
     }
 
     Inkscape::XML::Node *repr;
-    repr = sp_xmlview_tree_node_get_repr(SP_XMLVIEW_TREE(tree), node);
+    repr = sp_xmlview_tree_node_get_repr(GTK_TREE_VIEW(tree), node);
     g_assert(repr);
 
     // don't let "defs" or "namedview" disappear
@@ -958,10 +951,13 @@ void XmlTree::cmd_duplicate_node()
     DocumentUndo::done(current_document, SP_VERB_DIALOG_XML_EDITOR,
                        _("Duplicate node"));
 
-    GtkCTreeNode *node = sp_xmlview_tree_get_repr_node(SP_XMLVIEW_TREE(tree), dup);
+    GtkTreeIter node;
 
-    if (node) {
-        gtk_ctree_select(GTK_CTREE(tree), node);
+    if (sp_xmlview_tree_get_repr_node(SP_XMLVIEW_TREE(tree), dup, &node)) {
+        GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tree));
+        gtk_tree_selection_select_iter(selection, &node);
+    } else {
+
     }
 }
 
