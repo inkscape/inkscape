@@ -354,10 +354,10 @@
             -DPOPPLER_NEW_GFXFONT <!-- poppler changed the api for 0.8.3 -->
             <!-- GTK+3 migration -->
             -DGLIBMM_DISABLE_DEPRECATED
-            <!---DG_DISABLE_DEPRECATED
+            -DG_DISABLE_DEPRECATED
             -DGTK_DISABLE_SINGLE_INCLUDES
-            -DGTKMM_DISABLE_DEPRECATED
-            -DGTK_DISABLE_DEPRECATED
+            <!-- -DGTKMM_DISABLE_DEPRECATED -->
+            <!-- -DGTK_DISABLE_DEPRECATED  -->
             -DGDKMM_DISABLE_DEPRECATED
             <!-- -DGSEAL_ENABLE -->
         </defines>
