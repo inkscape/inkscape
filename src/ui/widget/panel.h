@@ -20,6 +20,7 @@
 #include <gtkmm/label.h>
 #include "enums.h"
 #include <vector>
+#include <map>
 
 class SPDesktop;
 class SPDocument;

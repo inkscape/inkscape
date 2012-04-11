@@ -102,7 +102,11 @@ private:
 
     void on_visibility_toggled( Glib::ustring const& str );
 
+#if WITH_GTKMM_3_0
+    Gtk::ButtonBox toolbar_hbox;
+#else
     Gtk::HButtonBox toolbar_hbox;
+#endif
     Gtk::Button button_add;
     Gtk::Button button_remove;
     Gtk::Button button_up;

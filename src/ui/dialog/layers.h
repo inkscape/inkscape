@@ -109,7 +109,11 @@ private:
     std::vector<Gtk::Widget*> _watchingNonBottom;
 
     Gtk::TreeView _tree;
+#if WITH_GTKMM_3_0
+    Gtk::ButtonBox _buttonsRow;
+#else
     Gtk::HButtonBox _buttonsRow;
+#endif
     Gtk::ScrolledWindow _scroller;
     Gtk::Menu _popupMenu;
     Inkscape::UI::Widget::SpinButton _spinBtn;

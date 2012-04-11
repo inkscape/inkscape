@@ -129,7 +129,12 @@ Gtk::Widget *ParamBool::get_widget(SPDocument * doc, Inkscape::XML::Node * node,
         return NULL;
     }
 
+#if WITH_GTKMM_3_0
+    Gtk::Box * hbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL, 4));
+    hbox->set_homogeneous(false);
+#else
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
+#endif
 
 #if WITH_GTKMM_2_22
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_START));

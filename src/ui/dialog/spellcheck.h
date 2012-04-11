@@ -221,7 +221,11 @@ private:
      *  Dialogs widgets
      */
     Gtk::Label          banner_label;
+#if WITH_GTKMM_3_0
+    Gtk::ButtonBox      banner_hbox;
+#else
     Gtk::HButtonBox     banner_hbox;
+#endif
     Gtk::ScrolledWindow scrolled_window;
     Gtk::TreeView       tree_view;
     Glib::RefPtr<Gtk::ListStore> model;
