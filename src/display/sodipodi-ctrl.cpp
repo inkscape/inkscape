@@ -29,13 +29,12 @@ enum {
 static void sp_ctrl_class_init (SPCtrlClass *klass);
 static void sp_ctrl_init (SPCtrl *ctrl);
 static void sp_ctrl_destroy (GtkObject *object);
-static void sp_ctrl_set_arg (GtkObject *object, GtkArg *arg, guint arg_id);
-
+static void sp_ctrl_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
+static void sp_ctrl_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
 static void sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_ctrl_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
 static double sp_ctrl_point (SPCanvasItem *item, Geom::Point p, SPCanvasItem **actual_item);
-
 
 static SPCanvasItemClass *parent_class;
 
@@ -66,30 +65,181 @@ sp_ctrl_class_init (SPCtrlClass *klass)
 {
     GtkObjectClass *object_class;
     SPCanvasItemClass *item_class;
+    GObjectClass *g_object_class;
 
     object_class = (GtkObjectClass *) klass;
     item_class = (SPCanvasItemClass *) klass;
+    g_object_class = (GObjectClass *) klass;
 
     parent_class = (SPCanvasItemClass *)g_type_class_peek_parent (klass);
 
-    gtk_object_add_arg_type ("SPCtrl::shape", G_TYPE_INT, G_PARAM_READWRITE, ARG_SHAPE);
-    gtk_object_add_arg_type ("SPCtrl::mode", G_TYPE_INT, G_PARAM_READWRITE, ARG_MODE);
-    gtk_object_add_arg_type ("SPCtrl::anchor", G_TYPE_INT, G_PARAM_READWRITE, ARG_ANCHOR);
-    gtk_object_add_arg_type ("SPCtrl::size", G_TYPE_DOUBLE, G_PARAM_READWRITE, ARG_SIZE);
-    gtk_object_add_arg_type ("SPCtrl::pixbuf", G_TYPE_POINTER, G_PARAM_READWRITE, ARG_PIXBUF);
-    gtk_object_add_arg_type ("SPCtrl::filled", G_TYPE_BOOLEAN, G_PARAM_READWRITE, ARG_FILLED);
-    gtk_object_add_arg_type ("SPCtrl::fill_color", G_TYPE_INT, G_PARAM_READWRITE, ARG_FILL_COLOR);
-    gtk_object_add_arg_type ("SPCtrl::stroked", G_TYPE_BOOLEAN, G_PARAM_READWRITE, ARG_STROKED);
-    gtk_object_add_arg_type ("SPCtrl::stroke_color", G_TYPE_INT, G_PARAM_READWRITE, ARG_STROKE_COLOR);
-
+    g_object_class->set_property = sp_ctrl_set_property;
+    g_object_class->get_property = sp_ctrl_get_property;
     object_class->destroy = sp_ctrl_destroy;
-    object_class->set_arg = sp_ctrl_set_arg;
+
+    g_object_class_install_property (g_object_class,
+            ARG_SHAPE, g_param_spec_int ("shape", "shape", "Shape", 0, G_MAXINT, SP_CTRL_SHAPE_SQUARE, (GParamFlags) G_PARAM_READWRITE));
+    g_object_class_install_property (g_object_class,
+            ARG_MODE, g_param_spec_int ("mode", "mode", "Mode", 0, G_MAXINT, SP_CTRL_MODE_COLOR, (GParamFlags) G_PARAM_READWRITE));
+    g_object_class_install_property (g_object_class,
+            ARG_ANCHOR, g_param_spec_int ("anchor", "anchor", "Anchor", 0, G_MAXINT, SP_ANCHOR_CENTER, (GParamFlags) G_PARAM_READWRITE));
+    g_object_class_install_property (g_object_class,
+            ARG_SIZE, g_param_spec_double ("size", "size", "Size", 0.0, G_MAXDOUBLE, 8.0, (GParamFlags) G_PARAM_READWRITE));
+    g_object_class_install_property (g_object_class,
+            ARG_PIXBUF, g_param_spec_pointer ("pixbuf", "pixbuf", "Pixbuf", (GParamFlags) G_PARAM_READWRITE));
+    g_object_class_install_property (g_object_class,
+            ARG_FILLED, g_param_spec_boolean ("filled", "filled", "Filled", TRUE, (GParamFlags) G_PARAM_READWRITE));
+    g_object_class_install_property (g_object_class,
+            ARG_FILL_COLOR, g_param_spec_int ("fill_color", "fill_color", "Fill Color", G_MININT, G_MAXINT, 0x000000ff, (GParamFlags) G_PARAM_READWRITE));
+    g_object_class_install_property (g_object_class,
+            ARG_STROKED, g_param_spec_boolean ("stroked", "stroked", "Stroked", FALSE, (GParamFlags) G_PARAM_READWRITE));
+    g_object_class_install_property (g_object_class,
+            ARG_STROKE_COLOR, g_param_spec_int ("stroke_color", "stroke_color", "Stroke Color", G_MININT, G_MAXINT, 0x000000ff, (GParamFlags) G_PARAM_READWRITE));
 
     item_class->update = sp_ctrl_update;
     item_class->render = sp_ctrl_render;
     item_class->point = sp_ctrl_point;
 }
 
+static void
+sp_ctrl_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
+{
+
+    SPCanvasItem *item;
+    SPCtrl *ctrl;
+    GdkPixbuf * pixbuf = NULL;
+
+    item = SP_CANVAS_ITEM (object);
+    ctrl = SP_CTRL (object);
+
+    switch (prop_id) {
+        case ARG_SHAPE: {
+            ctrl->shape = (SPCtrlShapeType) g_value_get_int(value);
+            ctrl->build = FALSE;
+            sp_canvas_item_request_update(item);
+            }
+            break;
+
+        case ARG_MODE: {
+            ctrl->mode = (SPCtrlModeType) g_value_get_int(value);
+            ctrl->build = FALSE;
+            sp_canvas_item_request_update(item);
+            }
+            break;
+
+        case ARG_ANCHOR: {
+            ctrl->anchor = (SPAnchorType) g_value_get_int(value);
+            ctrl->build = FALSE;
+            sp_canvas_item_request_update(item);
+            }
+            break;
+
+        case ARG_SIZE: {
+            ctrl->span = (gint)((g_value_get_double(value) - 1.0) / 2.0 + 0.5);
+            ctrl->defined = (ctrl->span > 0);
+            ctrl->build = FALSE;
+            sp_canvas_item_request_update(item);
+            }
+            break;
+
+        case ARG_FILLED: {
+            ctrl->filled = g_value_get_boolean(value);
+            ctrl->build = FALSE;
+            sp_canvas_item_request_update(item);
+            }
+            break;
+
+        case ARG_FILL_COLOR: {
+            guint32 fill = g_value_get_int(value);
+            ctrl->fill_color = fill;
+            ctrl->build = FALSE;
+            sp_canvas_item_request_update(item);
+            }
+            break;
+
+        case ARG_STROKED: {
+            ctrl->stroked = g_value_get_boolean(value);
+            ctrl->build = FALSE;
+            sp_canvas_item_request_update(item);
+            }
+            break;
+
+        case ARG_STROKE_COLOR: {
+            guint32 stroke = g_value_get_int(value);
+            ctrl->stroke_color = stroke;
+            ctrl->build = FALSE;
+            sp_canvas_item_request_update(item);
+            }
+            break;
+
+        case ARG_PIXBUF: {
+            pixbuf = (GdkPixbuf*) g_value_get_pointer(value);
+            if (gdk_pixbuf_get_has_alpha(pixbuf)) {
+                ctrl->pixbuf = pixbuf;
+            } else {
+                ctrl->pixbuf = gdk_pixbuf_add_alpha(pixbuf, FALSE, 0, 0, 0);
+                g_object_unref(pixbuf);
+            }
+            ctrl->build = FALSE;
+            }
+            break;
+
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+            break;
+    }
+}
+
+static void
+sp_ctrl_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
+{
+    SPCtrl *ctrl;
+    ctrl = SP_CTRL (object);
+
+    switch (prop_id) {
+
+        case ARG_SHAPE:
+            g_value_set_int(value, ctrl->shape);
+            break;
+
+        case ARG_MODE:
+            g_value_set_int(value, ctrl->mode);
+            break;
+
+        case ARG_ANCHOR:
+            g_value_set_int(value, ctrl->anchor);
+            break;
+
+        case ARG_SIZE:
+            g_value_set_double(value, ctrl->span);
+            break;
+
+        case ARG_FILLED:
+            g_value_set_boolean(value, ctrl->filled);
+            break;
+
+        case ARG_FILL_COLOR:
+        	g_value_set_int(value, ctrl->fill_color);
+            break;
+
+        case ARG_STROKED:
+            g_value_set_boolean(value, ctrl->stroked);
+            break;
+
+        case ARG_STROKE_COLOR:
+            g_value_set_int(value, ctrl->stroke_color);
+            break;
+
+        case ARG_PIXBUF:
+            g_value_set_pointer(value, ctrl->pixbuf);
+            break;
+
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+            break;
+    }
+
+}
 static void
 sp_ctrl_init (SPCtrl *ctrl)
 {
@@ -135,84 +285,6 @@ sp_ctrl_destroy (GtkObject *object)
 
     if (GTK_OBJECT_CLASS (parent_class)->destroy)
         (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
-}
-
-static void
-sp_ctrl_set_arg (GtkObject *object, GtkArg *arg, guint arg_id)
-{
-    SPCanvasItem *item;
-    SPCtrl *ctrl;
-    GdkPixbuf * pixbuf = NULL;
-
-    item = SP_CANVAS_ITEM (object);
-    ctrl = SP_CTRL (object);
-
-    switch (arg_id) {
-        case ARG_SHAPE:
-            ctrl->shape = (SPCtrlShapeType)(GTK_VALUE_INT (*arg));
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update (item);
-            break;
-
-        case ARG_MODE:
-            ctrl->mode = (SPCtrlModeType)(GTK_VALUE_INT (*arg));
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update (item);
-            break;
-
-        case ARG_ANCHOR:
-            ctrl->anchor = (SPAnchorType)(GTK_VALUE_INT (*arg));
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update (item);
-            break;
-
-        case ARG_SIZE:
-            ctrl->span = (gint) ((GTK_VALUE_DOUBLE (*arg) - 1.0) / 2.0 + 0.5);
-            ctrl->defined = (ctrl->span > 0);
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update (item);
-            break;
-
-        case ARG_FILLED:
-            ctrl->filled = GTK_VALUE_BOOL (*arg);
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update (item);
-            break;
-
-        case ARG_FILL_COLOR: {
-            guint32 fill = GTK_VALUE_INT (*arg);
-            ctrl->fill_color = fill;
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update (item);
-            } break;
-
-        case ARG_STROKED:
-            ctrl->stroked = GTK_VALUE_BOOL (*arg);
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update (item);
-            break;
-
-        case ARG_STROKE_COLOR: {
-            guint32 stroke = GTK_VALUE_INT (*arg);
-            ctrl->stroke_color = stroke;
-            ctrl->build = FALSE;
-            sp_canvas_item_request_update (item);
-            } break;
-
-        case ARG_PIXBUF:
-            pixbuf  = (GdkPixbuf*)(GTK_VALUE_POINTER (*arg));
-            if (gdk_pixbuf_get_has_alpha (pixbuf)) {
-                ctrl->pixbuf = pixbuf;
-            } else {
-                ctrl->pixbuf = gdk_pixbuf_add_alpha (pixbuf, FALSE, 0, 0, 0);
-                g_object_unref (pixbuf);
-            }
-            ctrl->build = FALSE;
-            break;
-
-        default:
-            break;
-    }
 }
 
 static void
