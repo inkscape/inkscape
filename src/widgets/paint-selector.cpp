@@ -167,7 +167,7 @@ sp_paint_selector_class_init(SPPaintSelectorClass *klass)
                                                 G_STRUCT_OFFSET(SPPaintSelectorClass, mode_changed),
 						NULL, NULL,
                                                 g_cclosure_marshal_VOID__UINT,
-                                                G_TYPE_NONE, 1, GTK_TYPE_UINT);
+                                                G_TYPE_NONE, 1, G_TYPE_UINT);
     psel_signals[GRABBED] =  g_signal_new("grabbed",
                                             G_TYPE_FROM_CLASS(object_class),
                                             (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
@@ -202,7 +202,7 @@ sp_paint_selector_class_init(SPPaintSelectorClass *klass)
                                                     G_STRUCT_OFFSET(SPPaintSelectorClass, fillrule_changed),
 						    NULL, NULL,
                                                     g_cclosure_marshal_VOID__UINT,
-                                                    G_TYPE_NONE, 1, GTK_TYPE_UINT);
+                                                    G_TYPE_NONE, 1, G_TYPE_UINT);
 
     object_class->destroy = sp_paint_selector_destroy;
 }
