@@ -234,16 +234,14 @@ add_node (SPXMLViewTree * tree, GtkTreeIter *parent, GtkTreeIter *before, Inksca
 	return rowref;
 }
 
-NodeData *
-node_data_new (SPXMLViewTree * tree, GtkTreeIter * node, GtkTreeRowReference  *rowref, Inkscape::XML::Node * repr)
+NodeData *node_data_new(SPXMLViewTree * tree, GtkTreeIter * /*node*/, GtkTreeRowReference  *rowref, Inkscape::XML::Node *repr)
 {
-	NodeData * data;
-	data = g_new (NodeData, 1);
-	data->tree = tree;
-	data->rowref = rowref;
-	data->repr = repr;
-	Inkscape::GC::anchor(repr);
-	return data;
+    NodeData *data = g_new(NodeData, 1);
+    data->tree = tree;
+    data->rowref = rowref;
+    data->repr = repr;
+    Inkscape::GC::anchor(repr);
+    return data;
 }
 
 void
@@ -395,12 +393,11 @@ pi_content_changed(Inkscape::XML::Node *repr, const gchar * /*old_content*/, con
 /*
  * Save the source path on drag start, will need it in on_row_changed() when moving a row
  */
-void
-on_drag_data_received(GtkWidget *wgt, GdkDragContext *context, int x, int y,
-                        GtkSelectionData *seldata, guint info, guint time,
-                        gpointer userdata)
+void on_drag_data_received(GtkWidget * /*wgt*/, GdkDragContext * /*context*/, int /*x*/, int /*y*/,
+			   GtkSelectionData * /*seldata*/, guint /*info*/, guint /*time*/,
+			   gpointer userdata)
 {
-    SPXMLViewTree * tree = (SPXMLViewTree *) userdata;
+    SPXMLViewTree *tree = static_cast<SPXMLViewTree *>(userdata);
     if (!tree) {
         return;
     }
@@ -409,7 +406,7 @@ on_drag_data_received(GtkWidget *wgt, GdkDragContext *context, int x, int y,
        return;
     }
 
-    GtkTreeModel *model;
+    GtkTreeModel *model = 0;
     GtkTreeIter iter;
     GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tree));
     if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
@@ -693,10 +690,9 @@ sp_xmlview_tree_get_repr_node (SPXMLViewTree * tree, Inkscape::XML::Node * repr,
     return FALSE;
 }
 
-gboolean
-foreach_func (GtkTreeModel *model, GtkTreePath  *path, GtkTreeIter  *iter, gpointer user_data)
+gboolean foreach_func(GtkTreeModel *model, GtkTreePath * /*path*/, GtkTreeIter *iter, gpointer user_data)
 {
-    NodeData *anode = (NodeData *)user_data;
+    NodeData *anode = static_cast<NodeData *>(user_data);
     Inkscape::XML::Node *iter_repr;
     gtk_tree_model_get (model, iter, STORE_REPR_COL, &iter_repr, -1);
     if (anode->repr == iter_repr) {
@@ -712,13 +708,12 @@ foreach_func (GtkTreeModel *model, GtkTreePath  *path, GtkTreeIter  *iter, gpoin
  * Callback function for string searches in the tree
  * Return a match on any substring
  */
-gboolean search_equal_func (GtkTreeModel *model, gint column, const gchar *key, GtkTreeIter *iter, gpointer search_data)
+gboolean search_equal_func(GtkTreeModel *model, gint /*column*/, const gchar *key, GtkTreeIter *iter, gpointer /*search_data*/)
 {
-    gboolean match = FALSE;
-    gchar *text;
-    gtk_tree_model_get (model, iter, STORE_TEXT_COL, &text, -1);
+    gchar *text = 0;
+    gtk_tree_model_get(model, iter, STORE_TEXT_COL, &text, -1);
 
-    match = (strstr(text, key) != NULL);
+    gboolean match = (strstr(text, key) != NULL);
 
     g_free(text);
 

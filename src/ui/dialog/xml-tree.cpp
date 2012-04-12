@@ -549,8 +549,7 @@ void XmlTree::on_tree_select_row(GtkTreeSelection *selection, gpointer data)
 }
 
 
-void XmlTree::after_tree_move(SPXMLViewTree *attributes, gpointer value, gpointer data)
-
+void XmlTree::after_tree_move(SPXMLViewTree * /*attributes*/, gpointer value, gpointer data)
 {
     XmlTree *self = static_cast<XmlTree *>(data);
     guint val = GPOINTER_TO_UINT(value);
@@ -568,7 +567,6 @@ void XmlTree::after_tree_move(SPXMLViewTree *attributes, gpointer value, gpointe
         self->set_tree_document(NULL);
         self->set_tree_document(document);
     }
-
 }
 
 void XmlTree::_set_status_message(Inkscape::MessageType /*type*/, const gchar *message, GtkWidget *widget)
