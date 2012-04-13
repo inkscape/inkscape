@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-11 21:30+0200\n"
+"POT-Creation-Date: 2012-04-13 16:27+0200\n"
 "PO-Revision-Date: 2011-09-26 14:08+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -229,6 +229,8 @@ msgid ""
 "Document has no layers! Add at least one layer using layers panel (Ctrl+Shift"
 "+L)"
 msgstr ""
+"V dokumente nie sú žiadne vrstvy! Pridajte aspoň jednu pomocou pana vrstiev "
+"(Ctrl+Shift+L)"
 
 #: ../share/extensions/gcodetools.py:4290
 msgid ""
@@ -309,7 +311,7 @@ msgstr "Vyberte <b>najmenej 1 cestu</b> na vykonanie booleovského zjednotenia."
 
 #: ../share/extensions/gcodetools.py:5515
 msgid "Unknown unit selected. mm assumed"
-msgstr ""
+msgstr "Vybratá neznáma jednotka, predpokladám že to sú mm."
 
 #: ../share/extensions/gcodetools.py:5536
 #, fuzzy, python-format
@@ -455,7 +457,7 @@ msgstr ""
 msgid ""
 "The 'stretch' option requires that the pattern must have non-zero width :\n"
 "Please edit the pattern width."
-msgstr ""
+msgstr "Možnosť „natiahnuť“ vyžaduje nenulovú hrúbku vzorky."
 
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
@@ -598,7 +600,7 @@ msgstr "Musíte vybrať aspoň dva prvky."
 
 #: ../share/extensions/webslicer_export.py:57
 msgid "You must give a directory to export the slices."
-msgstr ""
+msgstr "Musíte poskytnúť priečinok na export výrezov."
 
 #: ../share/extensions/webslicer_export.py:69
 #, fuzzy, python-format
@@ -624,7 +626,7 @@ msgstr ""
 
 #: ../share/extensions/webslicer_export.py:332
 msgid "You must install the ImageMagick to get JPG and GIF."
-msgstr ""
+msgstr "Na podporu JPG a GIF potrebujete nainštalovaný ImageMagick."
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -1578,7 +1580,7 @@ msgstr "3D deformovaná textúra mramoru"
 
 #: ../share/filters/filters.svg.h:1
 msgid "3D Wood"
-msgstr ""
+msgstr "3D drevo"
 
 #: ../share/filters/filters.svg.h:1
 msgid "3D warped, fibered wood texture"
@@ -2102,7 +2104,7 @@ msgstr "body"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Reduce or remove antialiasing around shapes"
-msgstr ""
+msgstr "Znížiť alebo vypnúť prekladanie okolo tvarov."
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2116,7 +2118,7 @@ msgstr "Štandardné rozlíšenie pre export:"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic Diffuse Bump"
-msgstr ""
+msgstr "Základný difúzny reliéf"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2162,11 +2164,11 @@ msgstr "Vložiť efekt živej cesty"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Rough Canvas Painting"
-msgstr ""
+msgstr "Hrubá maľba na plátno"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Paper Bump"
-msgstr ""
+msgstr "Papierový reliéf"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2190,7 +2192,7 @@ msgstr "_Režim zmiešania:"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Blend an image with its hue opposite"
-msgstr ""
+msgstr "Zmieša obrázok a jeho odtieňový opak."
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2199,7 +2201,7 @@ msgstr "Otočiť odtieň"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Fades hue progressively to white"
-msgstr ""
+msgstr "Postupne mení odtieň do biela"
 
 #: ../share/filters/filters.svg.h:1
 #: ../src/extension/internal/bitmap/swirl.cpp:37
@@ -2259,7 +2261,7 @@ msgstr "Jednoduchá farba:"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Fills object bounding box with color"
-msgstr ""
+msgstr "Vyplní ohraničenie objektu farbou"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2271,10 +2273,12 @@ msgid ""
 "Overlays two copies with different blur amounts and modifiable blend and "
 "composite"
 msgstr ""
+"Preloží dve kópie s rôznymi rozostreniami a nastaveteľným zložením a "
+"premiešaním."
 
 #: ../share/filters/filters.svg.h:1
 msgid "Image Drawing Basic"
-msgstr ""
+msgstr "Omaľovánky"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2283,11 +2287,11 @@ msgstr "Iba čierna a biela"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Poster Draw"
-msgstr ""
+msgstr "Posterová kresba"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Enhance and redraw edges around posterized areas"
-msgstr ""
+msgstr "Zvýrazni a prekresli okraje okolo posterizovaných oblastí"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Cross Noise Poster"
@@ -2313,11 +2317,11 @@ msgstr "Vložiť farbu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Poster Rough"
-msgstr ""
+msgstr "Hrubá posterizácia"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Adds roughness to one of the two channels of the Poster paint filter"
-msgstr ""
+msgstr "Pridá hrubosť do jedného z dvoch kanálov fitra „obmedzenie“"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2360,7 +2364,7 @@ msgstr "Pridáva zrnitosť v malej miere"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Duotone Turbulent"
-msgstr ""
+msgstr "Dvojtónové turbulencie"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2389,7 +2393,7 @@ msgstr "Zdroj svetla:"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Uses vertical specular light to draw lines"
-msgstr ""
+msgstr "Použije vertikálne odrazené svetlo na kresbu čiar"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Liquid"
@@ -2405,7 +2409,7 @@ msgstr "Hliník"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Aluminium effect with sharp brushed reflexions"
-msgstr ""
+msgstr "Efekt odrazu od brúseného hliníka"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Comics"
@@ -2441,7 +2445,7 @@ msgstr "Erodovaný kov"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Satiny metal surface effect"
-msgstr ""
+msgstr "Efekt zamatovo brúseného kovu"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2513,7 +2517,7 @@ msgstr "Reliéf farieb"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Satiny and embossed contour effect"
-msgstr ""
+msgstr "Efekt vyrazeného a brúseného kovu."
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2522,7 +2526,7 @@ msgstr "Zaostriť"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Unrealistic reflexions with sharp edges"
-msgstr ""
+msgstr "Nerealistické odrazy s ostými okrajmi"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2531,7 +2535,7 @@ msgstr "Roztavený kov"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Deep and dark metal shading"
-msgstr ""
+msgstr "Hlboké a tmavé kovové tieňovanie"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2540,7 +2544,7 @@ msgstr "Hliník 1"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Satiny aluminium effect with embossing"
-msgstr ""
+msgstr "Jemne brúsený hliník s vyrazeným vzorom"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2549,7 +2553,7 @@ msgstr "Refraktívny gél A"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Double reflexion through glass with some refraction"
-msgstr ""
+msgstr "Dvojitý odraz a lom cez sklo"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2841,103 +2845,103 @@ msgstr "sneh (#FFFAFA)"
 #: ../share/palettes/palettes.h:46
 msgctxt "Palette"
 msgid "mistyrose (#FFE4E1)"
-msgstr ""
+msgstr "zahmlená ružová (#FFE4E1)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:47
 msgctxt "Palette"
 msgid "salmon (#FA8072)"
-msgstr ""
+msgstr "lososová (#FA8072)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:48
 msgctxt "Palette"
 msgid "tomato (#FF6347)"
-msgstr ""
+msgstr "paradajková (#FF6347)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:49
 msgctxt "Palette"
 msgid "darksalmon (#E9967A)"
-msgstr ""
+msgstr "tmavolososová (#E9967A)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:50
 msgctxt "Palette"
 msgid "coral (#FF7F50)"
-msgstr ""
+msgstr "korál (#FF7F50)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:51
 msgctxt "Palette"
 msgid "orangered (#FF4500)"
-msgstr ""
+msgstr "oranžovočervená (#FF4500)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:52
 msgctxt "Palette"
 msgid "lightsalmon (#FFA07A)"
-msgstr ""
+msgstr "bledolososová (#FFA07A)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:53
 msgctxt "Palette"
 msgid "sienna (#A0522D)"
-msgstr ""
+msgstr "siena (#A0522D)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:54
 msgctxt "Palette"
 msgid "seashell (#FFF5EE)"
-msgstr ""
+msgstr "morská mušla (#FFF5EE)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:55
 msgctxt "Palette"
 msgid "chocolate (#D2691E)"
-msgstr ""
+msgstr "čokoládová (#D2691E)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:56
 msgctxt "Palette"
 msgid "saddlebrown (#8B4513)"
-msgstr ""
+msgstr "kožená hnedá (#8B4513)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:57
 msgctxt "Palette"
 msgid "sandybrown (#F4A460)"
-msgstr ""
+msgstr "pieskovohnedá (#F4A460)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:58
 msgctxt "Palette"
 msgid "peachpuff (#FFDAB9)"
-msgstr ""
+msgstr "broskyňová (#FFDAB9)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:59
 msgctxt "Palette"
 msgid "peru (#CD853F)"
-msgstr ""
+msgstr "peru (#CD853F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:60
 msgctxt "Palette"
 msgid "linen (#FAF0E6)"
-msgstr ""
+msgstr "plátno (#FAF0E6)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:61
 msgctxt "Palette"
 msgid "bisque (#FFE4C4)"
-msgstr ""
+msgstr "čistý porcelán"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:62
 msgctxt "Palette"
 msgid "darkorange (#FF8C00)"
-msgstr ""
+msgstr "tmavooranžová"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:63
@@ -2949,25 +2953,25 @@ msgstr ""
 #: ../share/palettes/palettes.h:64
 msgctxt "Palette"
 msgid "tan (#D2B48C)"
-msgstr ""
+msgstr "žltohnedá (#D2B48C)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:65
 msgctxt "Palette"
 msgid "antiquewhite (#FAEBD7)"
-msgstr ""
+msgstr "stará biela (#FAEBD7)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:66
 msgctxt "Palette"
 msgid "navajowhite (#FFDEAD)"
-msgstr ""
+msgstr "biela Navajo (#FFDEAD)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:67
 msgctxt "Palette"
 msgid "blanchedalmond (#FFEBCD)"
-msgstr ""
+msgstr "mandľová biela (#FFEBCD)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:68
@@ -2979,13 +2983,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:69
 msgctxt "Palette"
 msgid "moccasin (#FFE4B5)"
-msgstr ""
+msgstr "mokasínová"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:70
 msgctxt "Palette"
 msgid "orange (#FFA500)"
-msgstr ""
+msgstr "oranžová"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:71
@@ -3027,13 +3031,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:77
 msgctxt "Palette"
 msgid "gold (#FFD700)"
-msgstr ""
+msgstr "zlatá (#FFD700)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:78
 msgctxt "Palette"
 msgid "khaki (#F0E68C)"
-msgstr ""
+msgstr "kaki (#F0E68C)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:79
@@ -3051,13 +3055,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:81
 msgctxt "Palette"
 msgid "darkkhaki (#BDB76B)"
-msgstr ""
+msgstr "tmavá kaki (#BDB76B)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:82
 msgctxt "Palette"
 msgid "beige (#F5F5DC)"
-msgstr ""
+msgstr "béžová (#F5F5DC)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:83
@@ -3069,25 +3073,25 @@ msgstr ""
 #: ../share/palettes/palettes.h:84
 msgctxt "Palette"
 msgid "olive (#808000)"
-msgstr ""
+msgstr "olivová (#808000)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:85
 msgctxt "Palette"
 msgid "yellow (#FFFF00)"
-msgstr ""
+msgstr "žltá (#FFFF00)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:86
 msgctxt "Palette"
 msgid "lightyellow (#FFFFE0)"
-msgstr ""
+msgstr "bledožltá (#FFFFE0)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:87
 msgctxt "Palette"
 msgid "ivory (#FFFFF0)"
-msgstr ""
+msgstr "slonovinová (#FFFFF0)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:88
@@ -3099,19 +3103,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:89
 msgctxt "Palette"
 msgid "yellowgreen (#9ACD32)"
-msgstr ""
+msgstr "žltozelená (#9ACD32)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:90
 msgctxt "Palette"
 msgid "darkolivegreen (#556B2F)"
-msgstr ""
+msgstr "tmavoolivová (#556B2F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:91
 msgctxt "Palette"
 msgid "greenyellow (#ADFF2F)"
-msgstr ""
+msgstr "zelenožltá (#ADFF2F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:92
@@ -3123,31 +3127,31 @@ msgstr ""
 #: ../share/palettes/palettes.h:93
 msgctxt "Palette"
 msgid "lawngreen (#7CFC00)"
-msgstr ""
+msgstr "trávovozelená (#7CFC00)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:94
 msgctxt "Palette"
 msgid "darkseagreen (#8FBC8F)"
-msgstr ""
+msgstr "morská tmavozelená (#8FBC8F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:95
 msgctxt "Palette"
 msgid "forestgreen (#228B22)"
-msgstr ""
+msgstr "lesná zelená (#228B22)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:96
 msgctxt "Palette"
 msgid "limegreen (#32CD32)"
-msgstr ""
+msgstr "citrónovozelená (#32CD32)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:97
 msgctxt "Palette"
 msgid "lightgreen (#90EE90)"
-msgstr ""
+msgstr "bledozelená (#90EE90)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:98
@@ -3159,19 +3163,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:99
 msgctxt "Palette"
 msgid "darkgreen (#006400)"
-msgstr ""
+msgstr "tmavozelená (#006400)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:100
 msgctxt "Palette"
 msgid "green (#008000)"
-msgstr ""
+msgstr "zelená (#008000)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:101
 msgctxt "Palette"
 msgid "lime (#00FF00)"
-msgstr ""
+msgstr "limetková (#00FF00)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:102
@@ -3183,7 +3187,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:103
 msgctxt "Palette"
 msgid "seagreen (#2E8B57)"
-msgstr ""
+msgstr "morská zelená (#2E8B57)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:104
@@ -3201,7 +3205,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:106
 msgctxt "Palette"
 msgid "mintcream (#F5FFFA)"
-msgstr ""
+msgstr "mätová zmrzlina (#F5FFFA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:107
@@ -3219,19 +3223,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:109
 msgctxt "Palette"
 msgid "aquamarine (#7FFFD4)"
-msgstr ""
+msgstr "akvamarínová (#7FFFD4)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:110
 msgctxt "Palette"
 msgid "turquoise (#40E0D0)"
-msgstr ""
+msgstr "tyrkysová (#40E0D0)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:111
 msgctxt "Palette"
 msgid "lightseagreen (#20B2AA)"
-msgstr ""
+msgstr "morská bledozelená (#20B2AA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:112
@@ -3249,13 +3253,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:114
 msgctxt "Palette"
 msgid "paleturquoise (#AFEEEE)"
-msgstr ""
+msgstr "bledotyrkysová (#AFEEEE)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:115
 msgctxt "Palette"
 msgid "teal (#008080)"
-msgstr ""
+msgstr "modrozelená (#008080)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:116
@@ -3279,13 +3283,13 @@ msgstr ""
 #: ../share/palettes/palettes.h:119
 msgctxt "Palette"
 msgid "azure (#F0FFFF)"
-msgstr ""
+msgstr "azúrová (#F0FFFF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:120
 msgctxt "Palette"
 msgid "darkturquoise (#00CED1)"
-msgstr ""
+msgstr "tmavotyrkysová (#00CED1)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:121
@@ -3303,7 +3307,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:123
 msgctxt "Palette"
 msgid "lightblue (#ADD8E6)"
-msgstr ""
+msgstr "bledomodrá (#ADD8E6)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:124
@@ -3327,7 +3331,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:127
 msgctxt "Palette"
 msgid "steelblue (#4682B4)"
-msgstr ""
+msgstr "oceľovomodrá (#4682B4)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:128
@@ -3381,19 +3385,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:136
 msgctxt "Palette"
 msgid "lavender (#E6E6FA)"
-msgstr ""
+msgstr "levanduľová (#E6E6FA)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:137
 msgctxt "Palette"
 msgid "navy (#000080)"
-msgstr ""
+msgstr "námorná modrá (#000080)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:138
 msgctxt "Palette"
 msgid "darkblue (#00008B)"
-msgstr ""
+msgstr "tmavomodrá (#00008B)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:139
@@ -3405,7 +3409,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:140
 msgctxt "Palette"
 msgid "blue (#0000FF)"
-msgstr ""
+msgstr "modrá (#0000FF)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:141
@@ -3447,7 +3451,7 @@ msgstr ""
 #: ../share/palettes/palettes.h:147
 msgctxt "Palette"
 msgid "indigo (#4B0082)"
-msgstr ""
+msgstr "indigová (#4B0082)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:148
@@ -3477,19 +3481,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:152
 msgctxt "Palette"
 msgid "plum (#DDA0DD)"
-msgstr ""
+msgstr "slivková (#DDA0DD)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:153
 msgctxt "Palette"
 msgid "violet (#EE82EE)"
-msgstr ""
+msgstr "fialová (#EE82EE)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:154
 msgctxt "Palette"
 msgid "purple (#800080)"
-msgstr ""
+msgstr "purpurová (#800080)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:155
@@ -3543,19 +3547,19 @@ msgstr ""
 #: ../share/palettes/palettes.h:163
 msgctxt "Palette"
 msgid "crimson (#DC143C)"
-msgstr ""
+msgstr "karmínová (#DC143C)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:164
 msgctxt "Palette"
 msgid "pink (#FFC0CB)"
-msgstr ""
+msgstr "ružová (#FFC0CB)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:165
 msgctxt "Palette"
 msgid "lightpink (#FFB6C1)"
-msgstr ""
+msgstr "bledoružová (#FFB6C1)"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:166
@@ -3615,7 +3619,7 @@ msgstr "Oranžová 3"
 #: ../share/palettes/palettes.h:175
 msgctxt "Palette"
 msgid "Sky Blue 1"
-msgstr ""
+msgstr "blankytná 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:176
@@ -3633,37 +3637,37 @@ msgstr ""
 #: ../share/palettes/palettes.h:178
 msgctxt "Palette"
 msgid "Plum 1"
-msgstr ""
+msgstr "Slivková 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:179
 msgctxt "Palette"
 msgid "Plum 2"
-msgstr ""
+msgstr "Slivková 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:180
 msgctxt "Palette"
 msgid "Plum 3"
-msgstr ""
+msgstr "Slivková 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:181
 msgctxt "Palette"
 msgid "Chocolate 1"
-msgstr ""
+msgstr "Čokoládová 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:182
 msgctxt "Palette"
 msgid "Chocolate 2"
-msgstr ""
+msgstr "Čokoládová 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:183
 msgctxt "Palette"
 msgid "Chocolate 3"
-msgstr ""
+msgstr "Čokoládová 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:184
@@ -5304,12 +5308,12 @@ msgid "nodeAsInXMLdialogTooltip|Delete node"
 msgstr "Zmazať uzol"
 
 #: ../src/ui/dialog/xml-tree.cpp:73 ../src/ui/dialog/xml-tree.cpp:131
-#: ../src/ui/dialog/xml-tree.cpp:952
+#: ../src/ui/dialog/xml-tree.cpp:950
 msgid "Duplicate node"
 msgstr "Duplikovať uzol"
 
 #: ../src/ui/dialog/xml-tree.cpp:79 ../src/ui/dialog/xml-tree.cpp:184
-#: ../src/ui/dialog/xml-tree.cpp:989
+#: ../src/ui/dialog/xml-tree.cpp:987
 msgid "Delete attribute"
 msgstr "Zmazať atribút"
 
@@ -5322,22 +5326,22 @@ msgid "Drag to reorder nodes"
 msgstr "Ťahaním preusporiadate uzly"
 
 #: ../src/ui/dialog/xml-tree.cpp:145 ../src/ui/dialog/xml-tree.cpp:146
-#: ../src/ui/dialog/xml-tree.cpp:1110
+#: ../src/ui/dialog/xml-tree.cpp:1108
 msgid "Unindent node"
 msgstr "Neodsadiť uzol"
 
 #: ../src/ui/dialog/xml-tree.cpp:150 ../src/ui/dialog/xml-tree.cpp:151
-#: ../src/ui/dialog/xml-tree.cpp:1088
+#: ../src/ui/dialog/xml-tree.cpp:1086
 msgid "Indent node"
 msgstr "Odsadí uzol"
 
 #: ../src/ui/dialog/xml-tree.cpp:155 ../src/ui/dialog/xml-tree.cpp:156
-#: ../src/ui/dialog/xml-tree.cpp:1039
+#: ../src/ui/dialog/xml-tree.cpp:1037
 msgid "Raise node"
 msgstr "Zvýši uzol"
 
 #: ../src/ui/dialog/xml-tree.cpp:160 ../src/ui/dialog/xml-tree.cpp:161
-#: ../src/ui/dialog/xml-tree.cpp:1057
+#: ../src/ui/dialog/xml-tree.cpp:1055
 msgid "Lower node"
 msgstr "Zníži uzol"
 
@@ -5366,35 +5370,35 @@ msgstr ""
 "Zvolený atribút <b>%s</b>. Stlačte <b>Ctrl+Enter</b> po ukončení pre "
 "potvrdenie zmien."
 
-#: ../src/ui/dialog/xml-tree.cpp:560
+#: ../src/ui/dialog/xml-tree.cpp:559
 msgid "Drag XML subtree"
 msgstr "Ťahať podstrom XML"
 
-#: ../src/ui/dialog/xml-tree.cpp:859
+#: ../src/ui/dialog/xml-tree.cpp:857
 msgid "New element node..."
 msgstr "Nový uzol elementu..."
 
-#: ../src/ui/dialog/xml-tree.cpp:881
+#: ../src/ui/dialog/xml-tree.cpp:879
 msgid "Cancel"
 msgstr "Zrušiť"
 
-#: ../src/ui/dialog/xml-tree.cpp:887
+#: ../src/ui/dialog/xml-tree.cpp:885
 msgid "Create"
 msgstr "Vytvoriť"
 
-#: ../src/ui/dialog/xml-tree.cpp:918
+#: ../src/ui/dialog/xml-tree.cpp:916
 msgid "Create new element node"
 msgstr "Vytvorí nový uzol elementu"
 
-#: ../src/ui/dialog/xml-tree.cpp:934
+#: ../src/ui/dialog/xml-tree.cpp:932
 msgid "Create new text node"
 msgstr "Vytvorí nový textový uzol"
 
-#: ../src/ui/dialog/xml-tree.cpp:970
+#: ../src/ui/dialog/xml-tree.cpp:968
 msgid "nodeAsInXMLinHistoryDialog|Delete node"
 msgstr "Zmazať uzol"
 
-#: ../src/ui/dialog/xml-tree.cpp:1013
+#: ../src/ui/dialog/xml-tree.cpp:1011
 msgid "Change attribute"
 msgstr "Zmeniť atribút"
 
@@ -5682,7 +5686,7 @@ msgstr "roh"
 
 #: ../src/display/snap-indicator.cpp:163
 msgid "text anchor"
-msgstr ""
+msgstr "ukotvenie textu"
 
 #: ../src/display/snap-indicator.cpp:166
 msgid "text baseline"
@@ -6295,7 +6299,7 @@ msgstr "Zvýšiť alebo znížiť kontrast v bitmape"
 
 #: ../src/extension/internal/bitmap/crop.cpp:66
 msgid "Crop"
-msgstr ""
+msgstr "Orezať"
 
 #: ../src/extension/internal/bitmap/crop.cpp:68
 msgid "Top (px):"
@@ -7164,7 +7168,7 @@ msgstr "Prah zjednodušenia"
 #: ../src/extension/internal/filter/bumps.h:86
 #: ../src/extension/internal/filter/bumps.h:318
 msgid "Crop:"
-msgstr ""
+msgstr "Orezanie"
 
 #: ../src/extension/internal/filter/bumps.h:87
 #: ../src/extension/internal/filter/bumps.h:319
@@ -7402,11 +7406,11 @@ msgstr "Dnu"
 
 #: ../src/extension/internal/filter/bumps.h:368
 msgid "Turns an image to jelly"
-msgstr ""
+msgstr "Premení obrázok na želé"
 
 #: ../src/extension/internal/filter/color.h:71
 msgid "Brilliance"
-msgstr ""
+msgstr "Briliantový lesk"
 
 #: ../src/extension/internal/filter/color.h:74
 #: ../src/extension/internal/filter/color.h:1335
@@ -7472,12 +7476,12 @@ msgstr "Dvojtón"
 #: ../src/extension/internal/filter/color.h:323
 #: ../src/extension/internal/filter/color.h:1330
 msgid "Blend 1:"
-msgstr ""
+msgstr "Zmiešanie 1:"
 
 #: ../src/extension/internal/filter/color.h:330
 #: ../src/extension/internal/filter/color.h:1336
 msgid "Blend 2:"
-msgstr ""
+msgstr "Zmiešanie 2:"
 
 #: ../src/extension/internal/filter/color.h:349
 msgid "Blend image or object with a flood color"
@@ -7697,7 +7701,7 @@ msgstr "Rozmazaná priesvitnosť"
 
 #: ../src/extension/internal/filter/color.h:924
 msgid "Manage hue, lightness and transparency inversions"
-msgstr ""
+msgstr "Nastaviť inverzie odtieňu, jasu a priesvitnosti"
 
 #: ../src/extension/internal/filter/color.h:1042
 msgid "Lights:"
@@ -7901,8 +7905,6 @@ msgid "Narrow"
 msgstr "úzky"
 
 #: ../src/extension/internal/filter/distort.h:81
-#: ../src/ui/widget/selected-style.cpp:170
-#: ../src/ui/widget/style-swatch.cpp:303
 msgid "No fill"
 msgstr "bez výplne"
 
@@ -8005,7 +8007,7 @@ msgstr "Detekcia hrán"
 
 #: ../src/extension/internal/filter/image.h:51
 msgid "Detect:"
-msgstr ""
+msgstr "Detekcia:"
 
 # TODO: check
 #: ../src/extension/internal/filter/image.h:52
@@ -8044,7 +8046,7 @@ msgstr "Vnútorná žiara"
 #: ../src/extension/internal/filter/morphology.h:62
 #: ../src/extension/internal/filter/shadows.h:64
 msgid "Outer"
-msgstr ""
+msgstr "Vonkajšia žiara"
 
 #: ../src/extension/internal/filter/morphology.h:63
 #, fuzzy
@@ -8616,7 +8618,7 @@ msgstr "Režim:"
 
 #: ../src/extension/internal/filter/transparency.h:73
 msgid "Blend objects with background images or with themselves"
-msgstr ""
+msgstr "Zmiešať objekty s pozadím alebo s nimi samými."
 
 #: ../src/extension/internal/filter/transparency.h:130
 #, fuzzy
@@ -8645,11 +8647,11 @@ msgstr "Najľahšie časti objektu postupne spriehľadniť"
 
 #: ../src/extension/internal/filter/transparency.h:291
 msgid "Set opacity and strength of opacity boundaries"
-msgstr ""
+msgstr "Nastaviť priehľadnosť a silu hraníc priehľadnosti"
 
 #: ../src/extension/internal/filter/transparency.h:341
 msgid "Silhouette"
-msgstr ""
+msgstr "Silueta"
 
 #: ../src/extension/internal/filter/transparency.h:344
 msgid "Cutout"
@@ -9041,7 +9043,7 @@ msgstr "default.sk.svg"
 
 #: ../src/file.cpp:270
 msgid "Broken links have been changed to point to existing files."
-msgstr ""
+msgstr "Nefunkčné odkazy boli nasmerované na existujúce súbory."
 
 #: ../src/file.cpp:278 ../src/file.cpp:1192
 #, c-format
@@ -14142,6 +14144,8 @@ msgstr "Cestu doladíte tlačením tak, že ju vyberiete a ťaháte ponad ňu my
 msgid ""
 "<b>Drag</b>, <b>click</b> or <b>scroll</b> to spray the selected objects."
 msgstr ""
+"<b>Ťahajte</b>, <b>kliknite</b> alebo <b>skrolujte</b> na sprejovanie na "
+"vybrané objekty."
 
 #: ../src/tools-switch.cpp:151
 msgid ""
@@ -14229,7 +14233,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:217
 msgid "<b>Drag</b> to measure the dimensions of objects."
-msgstr ""
+msgstr "<b>Potiahnite</b> na odmeranie rozmerov objektu."
 
 #: ../src/tools-switch.cpp:229
 msgid "<b>Click and drag</b> between shapes to create a connector."
@@ -17479,7 +17483,8 @@ msgstr "Lupa"
 
 #. Measure
 #: ../src/ui/dialog/inkscape-preferences.cpp:366 ../src/verbs.cpp:2513
-#: ../share/extensions/measure.inx.h:23
+#, fuzzy
+msgctxt "Measurement tool"
 msgid "Measure"
 msgstr "Mierka"
 
@@ -21638,11 +21643,22 @@ msgstr "Nič nebolo vybrané"
 
 #: ../src/ui/widget/selected-style.cpp:167
 #: ../src/ui/widget/style-swatch.cpp:301
+#, fuzzy
+msgctxt "Fill and stroke"
 msgid "<i>None</i>"
 msgstr "<i>žiadna</i>"
 
 #: ../src/ui/widget/selected-style.cpp:170
 #: ../src/ui/widget/style-swatch.cpp:303
+#, fuzzy
+msgctxt "Fill and stroke"
+msgid "No fill"
+msgstr "bez výplne"
+
+#: ../src/ui/widget/selected-style.cpp:170
+#: ../src/ui/widget/style-swatch.cpp:303
+#, fuzzy
+msgctxt "Fill and stroke"
 msgid "No stroke"
 msgstr "bez ťahu"
 
@@ -27709,15 +27725,15 @@ msgstr ""
 
 #: ../share/extensions/dxf_outlines.inx.h:10
 msgid "Base unit"
-msgstr ""
+msgstr "Základná jednotka"
 
 #: ../share/extensions/dxf_outlines.inx.h:11
 msgid "CP 1250"
-msgstr ""
+msgstr "CP 1250"
 
 #: ../share/extensions/dxf_outlines.inx.h:12
 msgid "CP 1252"
-msgstr ""
+msgstr "CP 1252"
 
 #: ../share/extensions/dxf_outlines.inx.h:13
 msgid "Character Encoding"
@@ -27739,7 +27755,7 @@ msgstr "Satén"
 
 #: ../share/extensions/dxf_outlines.inx.h:19
 msgid "UTF 8"
-msgstr ""
+msgstr "UTF 8"
 
 #: ../share/extensions/dxf_outlines.inx.h:23
 #, fuzzy
@@ -28054,7 +28070,7 @@ msgstr "Kruhový rozostup (px):"
 
 #: ../share/extensions/gears.inx.h:2
 msgid "Diameter of center hole (0 for none):"
-msgstr ""
+msgstr "Priemer diery v strede"
 
 #: ../share/extensions/gears.inx.h:3
 msgid "Gear"
@@ -28071,11 +28087,11 @@ msgstr "Uhol tlaku:"
 
 #: ../share/extensions/gears.inx.h:7
 msgid "Unit of measure for both circular pitch and center diameter."
-msgstr ""
+msgstr "Jednotky priemeru aj kruhového rozostupu."
 
 #: ../share/extensions/gcodetools_about.inx.h:1
 msgid "About"
-msgstr ""
+msgstr "O"
 
 #: ../share/extensions/gcodetools_about.inx.h:2
 #: ../share/extensions/gcodetools_area.inx.h:24
@@ -28394,7 +28410,7 @@ msgstr "Nastavenia"
 #: ../share/extensions/gcodetools_lathe.inx.h:39
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:29
 msgid "Round all values to 4 digits"
-msgstr ""
+msgstr "Zaokrúhiť všetky hodnoty na 4 cifry."
 
 #: ../share/extensions/gcodetools_area.inx.h:42
 #: ../share/extensions/gcodetools_engraving.inx.h:26
@@ -30263,6 +30279,10 @@ msgstr "Dĺžka"
 msgid "Length Unit:"
 msgstr "Jednotka dĺžky:"
 
+#: ../share/extensions/measure.inx.h:23
+msgid "Measure"
+msgstr "Mierka"
+
 #: ../share/extensions/measure.inx.h:24
 msgid "Measure Path"
 msgstr "Zmerať cestu"
@@ -31294,15 +31314,15 @@ msgstr ""
 
 #: ../share/extensions/scour.inx.h:47
 msgid "Work around renderer bugs"
-msgstr ""
+msgstr "Obchádzať chyby vykreslovania"
 
 #: ../share/extensions/scour.inx.h:48
 msgid "XML indentation (pretty-printing):"
-msgstr ""
+msgstr "XML odsadzovanie:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:1
 msgid "1 - Setup Typography Canvas"
-msgstr ""
+msgstr "1 - nastavenie typografického plátna"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:2
 #, fuzzy
@@ -31652,7 +31672,7 @@ msgstr "Invertovať vo všetkých vrstvách"
 
 #: ../share/extensions/svgfont2layers.inx.h:2
 msgid "Load only the first 30 glyphs (Recommended)"
-msgstr ""
+msgstr "Načítať len prvých 30 symbolov (Odporúčané)"
 
 #: ../share/extensions/text_braille.inx.h:1
 msgid "Convert to Braille"
@@ -31821,13 +31841,15 @@ msgstr "Odmietnuť pozvanie"
 
 #: ../share/extensions/voronoi2svg.inx.h:7
 msgid "Options for Voronoi diagram"
-msgstr ""
+msgstr "Možnosti pre Voronoi diagram"
 
 #: ../share/extensions/voronoi2svg.inx.h:9
 msgid ""
 "Select a set of objects. Their centroids will be used as the sites of the "
 "Voronoi diagram. Text objects are not handled."
 msgstr ""
+"Vybrať množinu objektov. Ich ťažiská budú použité ako základné body Voronoi "
+"diagramu. Text je ignorovaný."
 
 #: ../share/extensions/voronoi2svg.inx.h:10
 #, fuzzy
@@ -31836,7 +31858,7 @@ msgstr "Zobraziť limitné ohraničenie"
 
 #: ../share/extensions/voronoi2svg.inx.h:11
 msgid "Type of diagram:"
-msgstr ""
+msgstr "Typ diagramu:"
 
 #: ../share/extensions/voronoi2svg.inx.h:12
 #, fuzzy
