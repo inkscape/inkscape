@@ -643,9 +643,11 @@ SBasis compose_inverse(SBasis const &f, SBasis const &g, unsigned order, double 
 
         Pk=Pk*sg;
         Qk=Qk*sg;
-        Pk.truncate(order);
-        Qk.truncate(order);
-        r.truncate(order);
+
+        Pk.resize(order,Linear(0.)); // truncates if too high order, expands with zeros if too low
+        Qk.resize(order,Linear(0.));
+        r.resize(order,Linear(0.));
+
     }
     result.normalize();
     return result;
