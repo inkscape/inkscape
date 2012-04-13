@@ -974,14 +974,9 @@ void Export::onExport ()
 
     } else {
 
-    gchar const *filename = g_strdup(filename_entry.get_text().c_str());
+    Glib::ustring filename = filename_entry.get_text();
 
-    if (filename == NULL){
-        sp_ui_error_dialog(_("You have to enter a filename"));
-        return;
-    }
-    if(*filename == '\0') {
-        g_free (const_cast<gchar*>(filename));
+    if (filename.empty()){
         sp_ui_error_dialog(_("You have to enter a filename"));
         return;
     }
@@ -996,13 +991,12 @@ void Export::onExport ()
     unsigned long int const height = int(getValue(bmheight_adj) + 0.5);
 
     if (!((x1 > x0) && (y1 > y0) && (width > 0) && (height > 0))) {
-        g_free (const_cast<gchar*>(filename));
         sp_ui_error_dialog (_("The chosen area to be exported is invalid"));
         return;
     }
 
     // make sure that .png is the extension of the file:
-    gchar * filename_ext = filename_add_extension(filename, "png");
+    gchar * filename_ext = filename_add_extension(filename.c_str(), "png");
     filename_entry.set_text(filename_ext);
 
     gchar *path = absolutize_path_from_document_location(doc, filename_ext);
@@ -1099,7 +1093,7 @@ void Export::onExport ()
             for(; reprlst != NULL; reprlst = reprlst->next) {
                 Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
                 const gchar * temp_string;
-                gchar *dir = g_path_get_dirname(filename);
+                gchar *dir = g_path_get_dirname(filename.c_str());
                 gchar *docdir = g_path_get_dirname(SP_ACTIVE_DOCUMENT->getURI());
 
                 if (repr->attribute("id") == NULL ||
@@ -1136,7 +1130,6 @@ void Export::onExport ()
             break;
     }
 
-    g_free (const_cast<gchar*>(filename));
     g_free (filename_ext);
     g_free (path);
 
