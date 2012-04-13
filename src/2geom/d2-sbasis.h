@@ -83,6 +83,11 @@ std::vector<Piecewise<D2<SBasis> > > fuse_nearby_ends(std::vector<Piecewise<D2<S
 
 std::vector<Geom::Piecewise<Geom::D2<Geom::SBasis> > > split_at_discontinuities (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwsbin, double tol = .0001);
 
+/**
+* note that -unitTangentAt(reverse(a),0.) == unitTangentAt(a,1.) but the former is more reliable (sometimes the sign is wrong for the latter)
+*/
+Point unitTangentAt(D2<SBasis> const & a, Coord t, unsigned n = 3);
+
 class CoordIterator
 : public std::iterator<std::input_iterator_tag, SBasis const>
 {

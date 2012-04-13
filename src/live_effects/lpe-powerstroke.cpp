@@ -34,21 +34,6 @@
 namespace Geom {
 // should all be moved to 2geom at some point
 
-/**
-* note that -unitTangentAt(reverse(a),0.) == unitTangentAt(a,1.) but the former is more reliable (sometimes the sign is wrong for the latter)
-*/
-Point unitTangentAt( D2<SBasis> const & a, Coord t, unsigned n = 3) {
-    std::vector<Point> derivs = a.valueAndDerivatives(t, n);
-    for (unsigned deriv_n = 1; deriv_n < derivs.size(); deriv_n++) {
-        Coord length = derivs[deriv_n].length();
-        if ( ! are_near(length, 0) ) {
-            // length of derivative is non-zero, so return unit vector
-            return derivs[deriv_n] / length;
-        }
-    }
-    return Point (0,0);
-}
-
 /** Find the point where two straight lines cross.
 */
 boost::optional<Point> intersection_point( Point const & origin_a, Point const & vector_a,

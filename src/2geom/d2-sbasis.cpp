@@ -185,6 +185,19 @@ split_at_discontinuities (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwsbi
     return ret;
 }
 
+Point unitTangentAt(D2<SBasis> const & a, Coord t, unsigned n)
+{
+    std::vector<Point> derivs = a.valueAndDerivatives(t, n);
+    for (unsigned deriv_n = 1; deriv_n < derivs.size(); deriv_n++) {
+        Coord length = derivs[deriv_n].length();
+        if ( ! are_near(length, 0) ) {
+            // length of derivative is non-zero, so return unit vector
+            return derivs[deriv_n] / length;
+        }
+    }
+    return Point (0,0);
+}
+
 static void set_first_point(Piecewise<D2<SBasis> > &f, Point a){
     if ( f.empty() ){
         f.concat(Piecewise<D2<SBasis> >(D2<SBasis>(Linear(a[X]),Linear(a[Y]))));
