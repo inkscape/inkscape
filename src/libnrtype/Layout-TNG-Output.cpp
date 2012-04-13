@@ -426,15 +426,20 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
             Geom::Point tangent;
             const_cast<Path&>(path).PointAndTangentAt(point_otp[0].piece, point_otp[0].t, point, tangent);
             _empty_cursor_shape.position = point;
-            _empty_cursor_shape.rotation = atan2(tangent[Geom::Y], tangent[Geom::X]);
+            if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
+                _empty_cursor_shape.rotation = atan2(-tangent[Geom::X], tangent[Geom::Y]);
+            } else {
+                _empty_cursor_shape.rotation = atan2(tangent[Geom::Y], tangent[Geom::X]);
+            }
         }
     }
 
     for (unsigned char_index = 0 ; char_index < _characters.size() ; ) {
-        int next_cluster_glyph_index;
+        unsigned current_cluster_glyph_index, next_cluster_glyph_index;
         unsigned next_cluster_char_index;
-        double character_advance;
         Span const &span = _characters[char_index].span(this);
+
+        current_cluster_glyph_index = _characters[char_index].in_glyph;
 
         for (next_cluster_char_index = char_index + 1 ; next_cluster_char_index < _characters.size() ; next_cluster_char_index++) {
             if (_characters[next_cluster_char_index].in_glyph != -1 && _characters[next_cluster_char_index].char_attributes.is_cursor_position)
@@ -443,17 +448,15 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
 
         if (next_cluster_char_index == _characters.size()) {
             next_cluster_glyph_index = _glyphs.size();
-            character_advance = 0.0;   // arbitrary because we're not going to advance
         } else {
             next_cluster_glyph_index = _characters[next_cluster_char_index].in_glyph;
-            character_advance =   (_glyphs[next_cluster_glyph_index].x + _glyphs[next_cluster_glyph_index].chunk(this).left_x)
-                - (_glyphs[_characters[char_index].in_glyph].x + span.chunk(this).left_x);
         }
 
         double start_offset = offset + span.x_start + _characters[char_index].x;
         double cluster_width = 0.0;
-        for (int glyph_index = _characters[char_index].in_glyph ; glyph_index < next_cluster_glyph_index ; glyph_index++)
+        for (int glyph_index = current_cluster_glyph_index ; glyph_index < next_cluster_glyph_index ; glyph_index++)
             cluster_width += _glyphs[glyph_index].width;
+        // TODO block progression?
         if (span.direction == RIGHT_TO_LEFT)
             start_offset -= cluster_width;
         double end_offset = start_offset + cluster_width;
@@ -499,15 +502,23 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
                 }
             }
 
-            double rotation = atan2(tangent[1], tangent[0]);
-            for (int glyph_index = _characters[char_index].in_glyph ; glyph_index < next_cluster_glyph_index ; glyph_index++) {
-                double tangent_shift = -cluster_width * 0.5 + _glyphs[glyph_index].x - (_characters[char_index].x + span.x_start);
-                double normal_shift = _glyphs[glyph_index].y;
-                if (span.direction == RIGHT_TO_LEFT)
-                    tangent_shift += cluster_width;
-                _glyphs[glyph_index].x = midpoint[0] - span.chunk(this).left_x + tangent[0] * tangent_shift - tangent[1] * normal_shift;
-                _glyphs[glyph_index].y = midpoint[1] - _lines.front().baseline_y + tangent[1] * tangent_shift + tangent[0] * normal_shift;
-                _glyphs[glyph_index].rotation += rotation;
+            if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
+                double rotation = atan2(-tangent[Geom::X], tangent[Geom::Y]);
+                for (int glyph_index = current_cluster_glyph_index; glyph_index < next_cluster_glyph_index ; glyph_index++) {
+                    _glyphs[glyph_index].x = midpoint[Geom::Y] - tangent[Geom::X] * _glyphs[glyph_index].y - span.chunk(this).left_x;
+                    _glyphs[glyph_index].y = midpoint[Geom::X] + tangent[Geom::Y] * _glyphs[glyph_index].y - _lines.front().baseline_y;
+                   _glyphs[glyph_index].rotation += rotation;
+                }
+            } else {
+                double rotation = atan2(tangent[Geom::Y], tangent[Geom::X]);
+                for (int glyph_index = current_cluster_glyph_index; glyph_index < next_cluster_glyph_index ; glyph_index++) {
+                    double tangent_shift = -cluster_width * 0.5 + _glyphs[glyph_index].x - (_characters[char_index].x + span.x_start);
+                    if (span.direction == RIGHT_TO_LEFT)
+                        tangent_shift += cluster_width;
+                    _glyphs[glyph_index].x = midpoint[Geom::X] + tangent[Geom::X] * tangent_shift - tangent[Geom::Y] * _glyphs[glyph_index].y - span.chunk(this).left_x;
+                    _glyphs[glyph_index].y = midpoint[Geom::Y] + tangent[Geom::Y] * tangent_shift + tangent[Geom::X] * _glyphs[glyph_index].y - _lines.front().baseline_y;
+                    _glyphs[glyph_index].rotation += rotation;
+                }
             }
             _input_truncated = false;
         } else {  // outside the bounds of the path: hide the glyphs

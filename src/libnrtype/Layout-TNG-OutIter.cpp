@@ -446,6 +446,8 @@ void Layout::queryCursorShape(iterator const &it, Geom::Point &position, double 
             } else {
                 span = &_spans[_characters[it._char_index].in_span];
                 x = _chunks[span->in_chunk].left_x + span->x_start + _characters[it._char_index].x - _chunks[0].left_x;
+                if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM))
+                	x -= span->line_height.descent;
                 if (it._char_index != 0)
                     span = &_spans[_characters[it._char_index - 1].in_span];
             }
@@ -454,7 +456,7 @@ void Layout::queryCursorShape(iterator const &it, Geom::Point &position, double 
             if (x_on_path < 0.0) x_on_path = 0.0;
 
             int unused = 0;
-                // as far as I know these functions are const, they're just not marked as such
+            // as far as I know these functions are const, they're just not marked as such
             Path::cut_position *path_parameter_list = const_cast<Path*>(_path_fitted)->CurvilignToPosition(1, &x_on_path, unused);
             Path::cut_position path_parameter;
             if (path_parameter_list != NULL && path_parameter_list[0].piece >= 0)
@@ -472,9 +474,15 @@ void Layout::queryCursorShape(iterator const &it, Geom::Point &position, double 
                 point += x * tangent;
             if (x > path_length )
                 point += (x - path_length) * tangent;
-            rotation = atan2(tangent);
-            position[Geom::X] = point[Geom::X] - tangent[Geom::Y] * span->baseline_shift;
-            position[Geom::Y] = point[Geom::Y] + tangent[Geom::X] * span->baseline_shift;
+            if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
+                rotation = atan2(-tangent[Geom::X], tangent[Geom::Y]);
+                position[Geom::X] = point[Geom::Y] - tangent[Geom::X] * span->baseline_shift;
+                position[Geom::Y] = point[Geom::X] + tangent[Geom::Y] * span->baseline_shift;
+            } else {
+                rotation = atan2(tangent);
+                position[Geom::X] = point[Geom::X] - tangent[Geom::Y] * span->baseline_shift;
+                position[Geom::Y] = point[Geom::Y] + tangent[Geom::X] * span->baseline_shift;
+            }
         } else {
             // text is not on a path
             if (it._char_index >= _characters.size()) {
