@@ -298,9 +298,9 @@ StyleSwatch::setStyle(SPStyle *query)
             place->set_tooltip_text(tip);
             g_free (tip);
         } else if (paint->set && paint->isNone()) {
-            _value[i].set_markup(_("<i>None</i>"));
+            _value[i].set_markup(C_("Fill and stroke", "<i>None</i>"));
             place->add(_value[i]);
-            place->set_tooltip_text((i == SS_FILL)? (_("No fill")) : (_("No stroke")));
+            place->set_tooltip_text((i == SS_FILL)? (C_("Fill and stroke", "No fill")) : (C_("Fill and stroke", "No stroke")));
             if (i == SS_STROKE) has_stroke = false;
         } else if (!paint->set) {
             _value[i].set_markup(_("<b>Unset</b>"));

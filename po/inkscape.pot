@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-11 21:30+0200\n"
+"POT-Creation-Date: 2012-04-13 16:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4974,12 +4974,12 @@ msgid "nodeAsInXMLdialogTooltip|Delete node"
 msgstr ""
 
 #: ../src/ui/dialog/xml-tree.cpp:73 ../src/ui/dialog/xml-tree.cpp:131
-#: ../src/ui/dialog/xml-tree.cpp:952
+#: ../src/ui/dialog/xml-tree.cpp:950
 msgid "Duplicate node"
 msgstr ""
 
 #: ../src/ui/dialog/xml-tree.cpp:79 ../src/ui/dialog/xml-tree.cpp:184
-#: ../src/ui/dialog/xml-tree.cpp:989
+#: ../src/ui/dialog/xml-tree.cpp:987
 msgid "Delete attribute"
 msgstr ""
 
@@ -4992,22 +4992,22 @@ msgid "Drag to reorder nodes"
 msgstr ""
 
 #: ../src/ui/dialog/xml-tree.cpp:145 ../src/ui/dialog/xml-tree.cpp:146
-#: ../src/ui/dialog/xml-tree.cpp:1110
+#: ../src/ui/dialog/xml-tree.cpp:1108
 msgid "Unindent node"
 msgstr ""
 
 #: ../src/ui/dialog/xml-tree.cpp:150 ../src/ui/dialog/xml-tree.cpp:151
-#: ../src/ui/dialog/xml-tree.cpp:1088
+#: ../src/ui/dialog/xml-tree.cpp:1086
 msgid "Indent node"
 msgstr ""
 
 #: ../src/ui/dialog/xml-tree.cpp:155 ../src/ui/dialog/xml-tree.cpp:156
-#: ../src/ui/dialog/xml-tree.cpp:1039
+#: ../src/ui/dialog/xml-tree.cpp:1037
 msgid "Raise node"
 msgstr ""
 
 #: ../src/ui/dialog/xml-tree.cpp:160 ../src/ui/dialog/xml-tree.cpp:161
-#: ../src/ui/dialog/xml-tree.cpp:1057
+#: ../src/ui/dialog/xml-tree.cpp:1055
 msgid "Lower node"
 msgstr ""
 
@@ -5034,35 +5034,35 @@ msgid ""
 "commit changes."
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:560
+#: ../src/ui/dialog/xml-tree.cpp:559
 msgid "Drag XML subtree"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:859
+#: ../src/ui/dialog/xml-tree.cpp:857
 msgid "New element node..."
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:881
+#: ../src/ui/dialog/xml-tree.cpp:879
 msgid "Cancel"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:887
+#: ../src/ui/dialog/xml-tree.cpp:885
 msgid "Create"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:918
+#: ../src/ui/dialog/xml-tree.cpp:916
 msgid "Create new element node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:934
+#: ../src/ui/dialog/xml-tree.cpp:932
 msgid "Create new text node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:970
+#: ../src/ui/dialog/xml-tree.cpp:968
 msgid "nodeAsInXMLinHistoryDialog|Delete node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:1013
+#: ../src/ui/dialog/xml-tree.cpp:1011
 msgid "Change attribute"
 msgstr ""
 
@@ -7428,8 +7428,6 @@ msgid "Narrow"
 msgstr ""
 
 #: ../src/extension/internal/filter/distort.h:81
-#: ../src/ui/widget/selected-style.cpp:170
-#: ../src/ui/widget/style-swatch.cpp:303
 msgid "No fill"
 msgstr ""
 
@@ -16250,7 +16248,7 @@ msgstr ""
 
 #. Measure
 #: ../src/ui/dialog/inkscape-preferences.cpp:366 ../src/verbs.cpp:2513
-#: ../share/extensions/measure.inx.h:23
+msgctxt "Measurement tool"
 msgid "Measure"
 msgstr ""
 
@@ -20087,11 +20085,19 @@ msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:167
 #: ../src/ui/widget/style-swatch.cpp:301
+msgctxt "Fill and stroke"
 msgid "<i>None</i>"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:170
 #: ../src/ui/widget/style-swatch.cpp:303
+msgctxt "Fill and stroke"
+msgid "No fill"
+msgstr ""
+
+#: ../src/ui/widget/selected-style.cpp:170
+#: ../src/ui/widget/style-swatch.cpp:303
+msgctxt "Fill and stroke"
 msgid "No stroke"
 msgstr ""
 
@@ -28176,6 +28182,10 @@ msgstr ""
 #. <param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>
 #: ../share/extensions/measure.inx.h:22
 msgid "Length Unit:"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:23
+msgid "Measure"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:24

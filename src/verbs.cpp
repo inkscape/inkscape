@@ -2510,7 +2510,7 @@ Verb *Verb::_base_verbs[] = {
                     N_("Create and edit gradients"), INKSCAPE_ICON("color-gradient")),
     new ContextVerb(SP_VERB_CONTEXT_ZOOM, "ToolZoom", N_("Zoom"),
                     N_("Zoom in or out"), INKSCAPE_ICON("zoom")),
-    new ContextVerb(SP_VERB_CONTEXT_MEASURE, "ToolMeasure", N_("Measure"),
+    new ContextVerb(SP_VERB_CONTEXT_MEASURE, "ToolMeasure", NC_("Measurement tool", "Measure"),
                     N_("Measurement tool"), INKSCAPE_ICON("tool-measure")),
     new ContextVerb(SP_VERB_CONTEXT_DROPPER, "ToolDropper", N_("Dropper"),
                     N_("Pick colors from image"), INKSCAPE_ICON("color-picker")),
