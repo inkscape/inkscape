@@ -2,18 +2,18 @@
 # Copyright (C) 2002-2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Inkscape package.
 # Zdenko Podobný <zdpo@mailbox.sk>, 2003, 2004.
-# Ivan Masár <helix84@centrum.sk>, 2007, 2008, 2009, 2010, 2011.
+# Ján Pulmann <jan.pulmann@gmail.com>, 2012.
+# Ivan Masár <helix84@centrum.sk>, 2007, 2008, 2009, 2010, 2011, 2012.
 #
 # Slovak terminology used in Inkscape:
 # http://wiki.inkscape.org/wiki/index.php/InkscapeTerminology/sk
 #
-#: ../share/filters/filters.svg.h:1
 msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-04-13 16:27+0200\n"
-"PO-Revision-Date: 2011-09-26 14:08+0100\n"
+"PO-Revision-Date: 2012-04-14 01:23+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "Language: sk\n"
@@ -229,8 +229,8 @@ msgid ""
 "Document has no layers! Add at least one layer using layers panel (Ctrl+Shift"
 "+L)"
 msgstr ""
-"V dokumente nie sú žiadne vrstvy! Pridajte aspoň jednu pomocou pana vrstiev "
-"(Ctrl+Shift+L)"
+"V dokumente nie sú žiadne vrstvy! Pridajte aspoň jednu pomocou panelu "
+"vrstiev (Ctrl+Shift+L)"
 
 #: ../share/extensions/gcodetools.py:4290
 msgid ""
@@ -251,8 +251,8 @@ msgstr ""
 #, python-format
 msgid "Warning! Tool has parameter that default tool has not ( '%s': '%s' )."
 msgstr ""
-"Upozornenie! Nástroj má parameter, ktorý predvolený nástroj nemá ( „%s“: "
-"„%s“ )."
+"Upozornenie! Nástroj má parameter, ktorý predvolený nástroj nemá ( „%s“: „%"
+"s“ )."
 
 #: ../share/extensions/gcodetools.py:4384
 #, python-format
@@ -311,7 +311,7 @@ msgstr "Vyberte <b>najmenej 1 cestu</b> na vykonanie booleovského zjednotenia."
 
 #: ../share/extensions/gcodetools.py:5515
 msgid "Unknown unit selected. mm assumed"
-msgstr "Vybratá neznáma jednotka, predpokladám že to sú mm."
+msgstr "Vybraná neznáma jednotka. predpokladajú sa mm."
 
 #: ../share/extensions/gcodetools.py:5536
 #, fuzzy, python-format
@@ -457,7 +457,9 @@ msgstr ""
 msgid ""
 "The 'stretch' option requires that the pattern must have non-zero width :\n"
 "Please edit the pattern width."
-msgstr "Možnosť „natiahnuť“ vyžaduje nenulovú hrúbku vzorky."
+msgstr ""
+"Možnosť „natiahnuť“ vyžaduje nenulovú hrúbku vzorky :\n"
+"Prosím, upravte šírku vzorky."
 
 #: ../share/extensions/pathmodifier.py:229
 #, python-format
@@ -626,7 +628,7 @@ msgstr ""
 
 #: ../share/extensions/webslicer_export.py:332
 msgid "You must install the ImageMagick to get JPG and GIF."
-msgstr "Na podporu JPG a GIF potrebujete nainštalovaný ImageMagick."
+msgstr "Na podporu JPG a GIF potrebujete mať nainštalovaný ImageMagick."
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2192,7 +2194,7 @@ msgstr "_Režim zmiešania:"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Blend an image with its hue opposite"
-msgstr "Zmieša obrázok a jeho odtieňový opak."
+msgstr "Zmieša obrázok a jeho odtieňový opak"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2273,10 +2275,11 @@ msgid ""
 "Overlays two copies with different blur amounts and modifiable blend and "
 "composite"
 msgstr ""
-"Preloží dve kópie s rôznymi rozostreniami a nastaveteľným zložením a "
-"premiešaním."
+"Preloží dve kópie s rôznymi rozostreniami a nastaveteľným premiešaním a "
+"zložením"
 
 #: ../share/filters/filters.svg.h:1
+#, fuzzy
 msgid "Image Drawing Basic"
 msgstr "Omaľovánky"
 
@@ -2291,7 +2294,7 @@ msgstr "Posterová kresba"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Enhance and redraw edges around posterized areas"
-msgstr "Zvýrazni a prekresli okraje okolo posterizovaných oblastí"
+msgstr "Zvýrazniť a prekresliť okraje okolo posterizovaných oblastí"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Cross Noise Poster"
@@ -2321,7 +2324,7 @@ msgstr "Hrubá posterizácia"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Adds roughness to one of the two channels of the Poster paint filter"
-msgstr "Pridá hrubosť do jedného z dvoch kanálov fitra „obmedzenie“"
+msgstr "Pridá hrubosť do jedného z dvoch kanálov fitra „Posterová maľba“"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2517,7 +2520,7 @@ msgstr "Reliéf farieb"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Satiny and embossed contour effect"
-msgstr "Efekt vyrazeného a brúseného kovu."
+msgstr "Efekt vyrazeného a brúseného kovu"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2526,7 +2529,7 @@ msgstr "Zaostriť"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Unrealistic reflexions with sharp edges"
-msgstr "Nerealistické odrazy s ostými okrajmi"
+msgstr "Nerealistické odrazy s ostrými okrajmi"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -2869,7 +2872,7 @@ msgstr "tmavolososová (#E9967A)"
 #: ../share/palettes/palettes.h:50
 msgctxt "Palette"
 msgid "coral (#FF7F50)"
-msgstr "korál (#FF7F50)"
+msgstr "koral (#FF7F50)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:51
@@ -2887,13 +2890,13 @@ msgstr "bledolososová (#FFA07A)"
 #: ../share/palettes/palettes.h:53
 msgctxt "Palette"
 msgid "sienna (#A0522D)"
-msgstr "siena (#A0522D)"
+msgstr "Siena (#A0522D)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:54
 msgctxt "Palette"
 msgid "seashell (#FFF5EE)"
-msgstr "morská mušla (#FFF5EE)"
+msgstr "morská mušľa (#FFF5EE)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:55
@@ -2923,7 +2926,7 @@ msgstr "broskyňová (#FFDAB9)"
 #: ../share/palettes/palettes.h:59
 msgctxt "Palette"
 msgid "peru (#CD853F)"
-msgstr "peru (#CD853F)"
+msgstr "Peru (#CD853F)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:60
@@ -2959,7 +2962,7 @@ msgstr "žltohnedá (#D2B48C)"
 #: ../share/palettes/palettes.h:65
 msgctxt "Palette"
 msgid "antiquewhite (#FAEBD7)"
-msgstr "stará biela (#FAEBD7)"
+msgstr "staroveká biela (#FAEBD7)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:66
@@ -3391,7 +3394,7 @@ msgstr "levanduľová (#E6E6FA)"
 #: ../share/palettes/palettes.h:137
 msgctxt "Palette"
 msgid "navy (#000080)"
-msgstr "námorná modrá (#000080)"
+msgstr "námornícka modrá (#000080)"
 
 #. Palette: ./svg.gpl
 #: ../share/palettes/palettes.h:138
@@ -3565,19 +3568,19 @@ msgstr "bledoružová (#FFB6C1)"
 #: ../share/palettes/palettes.h:166
 msgctxt "Palette"
 msgid "Butter 1"
-msgstr "Maslo 1"
+msgstr "Maslová 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:167
 msgctxt "Palette"
 msgid "Butter 2"
-msgstr "Maslo 2"
+msgstr "Maslová 2"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:168
 msgctxt "Palette"
 msgid "Butter 3"
-msgstr "maslo 3"
+msgstr "Maslová 3"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:169
@@ -3619,7 +3622,7 @@ msgstr "Oranžová 3"
 #: ../share/palettes/palettes.h:175
 msgctxt "Palette"
 msgid "Sky Blue 1"
-msgstr "blankytná 1"
+msgstr "Belasá 1"
 
 #. Palette: ./Tango-Palette.gpl
 #: ../share/palettes/palettes.h:176
@@ -7168,7 +7171,7 @@ msgstr "Prah zjednodušenia"
 #: ../src/extension/internal/filter/bumps.h:86
 #: ../src/extension/internal/filter/bumps.h:318
 msgid "Crop:"
-msgstr "Orezanie"
+msgstr "Orezanie:"
 
 #: ../src/extension/internal/filter/bumps.h:87
 #: ../src/extension/internal/filter/bumps.h:319
@@ -7701,7 +7704,7 @@ msgstr "Rozmazaná priesvitnosť"
 
 #: ../src/extension/internal/filter/color.h:924
 msgid "Manage hue, lightness and transparency inversions"
-msgstr "Nastaviť inverzie odtieňu, jasu a priesvitnosti"
+msgstr "Nastaviť inverzie odtieňa, jasu a priesvitnosti"
 
 #: ../src/extension/internal/filter/color.h:1042
 msgid "Lights:"
@@ -8007,7 +8010,7 @@ msgstr "Detekcia hrán"
 
 #: ../src/extension/internal/filter/image.h:51
 msgid "Detect:"
-msgstr "Detekcia:"
+msgstr "Detegovať:"
 
 # TODO: check
 #: ../src/extension/internal/filter/image.h:52
@@ -8422,9 +8425,8 @@ msgid "Convert image to a transparent point engraving"
 msgstr "Previesť na zafarbiteľný priesvitný pozitív alebo negatív"
 
 #: ../src/extension/internal/filter/paint.h:860
-#, fuzzy
 msgid "Poster Paint"
-msgstr "obmedzenie"
+msgstr "Posterová maľba"
 
 #: ../src/extension/internal/filter/paint.h:866
 #, fuzzy
@@ -8618,7 +8620,7 @@ msgstr "Režim:"
 
 #: ../src/extension/internal/filter/transparency.h:73
 msgid "Blend objects with background images or with themselves"
-msgstr "Zmiešať objekty s pozadím alebo s nimi samými."
+msgstr "Zmiešať objekty s pozadím alebo s nimi samými"
 
 #: ../src/extension/internal/filter/transparency.h:130
 #, fuzzy
@@ -14144,8 +14146,8 @@ msgstr "Cestu doladíte tlačením tak, že ju vyberiete a ťaháte ponad ňu my
 msgid ""
 "<b>Drag</b>, <b>click</b> or <b>scroll</b> to spray the selected objects."
 msgstr ""
-"<b>Ťahajte</b>, <b>kliknite</b> alebo <b>skrolujte</b> na sprejovanie na "
-"vybrané objekty."
+"<b>Ťahaním</b>, <b>kliknutím</b> alebo <b>posunutím</b> nasprejujete vybrané "
+"objekty."
 
 #: ../src/tools-switch.cpp:151
 msgid ""
@@ -14233,7 +14235,7 @@ msgstr ""
 
 #: ../src/tools-switch.cpp:217
 msgid "<b>Drag</b> to measure the dimensions of objects."
-msgstr "<b>Potiahnite</b> na odmeranie rozmerov objektu."
+msgstr "<b>Potiahnutím</b> odmeráte rozmery objektu."
 
 #: ../src/tools-switch.cpp:229
 msgid "<b>Click and drag</b> between shapes to create a connector."
@@ -24171,8 +24173,8 @@ msgid ""
 "\n"
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Súbor „%s“ bol uložený vo formáte "
-"(%s), ktorý môže spôsobiť stratu dát!</span>\n"
+"<span weight=\"bold\" size=\"larger\">Súbor „%s“ bol uložený vo formáte (%"
+"s), ktorý môže spôsobiť stratu dát!</span>\n"
 "\n"
 "Chcete uložiť tento súbor ako Inkscape SVG?"
 
@@ -28070,7 +28072,7 @@ msgstr "Kruhový rozostup (px):"
 
 #: ../share/extensions/gears.inx.h:2
 msgid "Diameter of center hole (0 for none):"
-msgstr "Priemer diery v strede"
+msgstr "Priemer diery v strede (0 znamená žiadna):"
 
 #: ../share/extensions/gears.inx.h:3
 msgid "Gear"
@@ -28091,7 +28093,7 @@ msgstr "Jednotky priemeru aj kruhového rozostupu."
 
 #: ../share/extensions/gcodetools_about.inx.h:1
 msgid "About"
-msgstr "O"
+msgstr "O aplikácii"
 
 #: ../share/extensions/gcodetools_about.inx.h:2
 #: ../share/extensions/gcodetools_area.inx.h:24
@@ -28410,7 +28412,7 @@ msgstr "Nastavenia"
 #: ../share/extensions/gcodetools_lathe.inx.h:39
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:29
 msgid "Round all values to 4 digits"
-msgstr "Zaokrúhiť všetky hodnoty na 4 cifry."
+msgstr "Zaokrúhiť všetky hodnoty na 4 cifry"
 
 #: ../share/extensions/gcodetools_area.inx.h:42
 #: ../share/extensions/gcodetools_engraving.inx.h:26
@@ -31314,11 +31316,11 @@ msgstr ""
 
 #: ../share/extensions/scour.inx.h:47
 msgid "Work around renderer bugs"
-msgstr "Obchádzať chyby vykreslovania"
+msgstr "Obchádzať chyby vykresľovania"
 
 #: ../share/extensions/scour.inx.h:48
 msgid "XML indentation (pretty-printing):"
-msgstr "XML odsadzovanie:"
+msgstr "Odsadzovanie XML (čitateľné formátovanie):"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:1
 msgid "1 - Setup Typography Canvas"
@@ -31672,7 +31674,7 @@ msgstr "Invertovať vo všetkých vrstvách"
 
 #: ../share/extensions/svgfont2layers.inx.h:2
 msgid "Load only the first 30 glyphs (Recommended)"
-msgstr "Načítať len prvých 30 symbolov (Odporúčané)"
+msgstr "Načítať len prvých 30 symbolov (odporúča sa)"
 
 #: ../share/extensions/text_braille.inx.h:1
 msgid "Convert to Braille"
@@ -31841,15 +31843,15 @@ msgstr "Odmietnuť pozvanie"
 
 #: ../share/extensions/voronoi2svg.inx.h:7
 msgid "Options for Voronoi diagram"
-msgstr "Možnosti pre Voronoi diagram"
+msgstr "Možnosti pre Voronoiov diagram"
 
 #: ../share/extensions/voronoi2svg.inx.h:9
 msgid ""
 "Select a set of objects. Their centroids will be used as the sites of the "
 "Voronoi diagram. Text objects are not handled."
 msgstr ""
-"Vybrať množinu objektov. Ich ťažiská budú použité ako základné body Voronoi "
-"diagramu. Text je ignorovaný."
+"Vyberte množinu objektov. Ich ťažiská sa použijú ako základné body "
+"Voronoiovho diagramu. Textové objekty sa ignorujú."
 
 #: ../share/extensions/voronoi2svg.inx.h:10
 #, fuzzy
@@ -33899,8 +33901,8 @@ msgstr "Vstup XAML"
 #~ "\n"
 #~ "Do you want to save this file as an Inkscape SVG?"
 #~ msgstr ""
-#~ "<span weight=\"bold\" size=\"larger\">Súbor „%s“ bol uložený vo formáte "
-#~ "(%s), ktorý môže spôsobiť stratu dát!</span>\n"
+#~ "<span weight=\"bold\" size=\"larger\">Súbor „%s“ bol uložený vo formáte (%"
+#~ "s), ktorý môže spôsobiť stratu dát!</span>\n"
 #~ "\n"
 #~ "Chcete uložiť tento súbor ako Inkscape SVG?"
 
@@ -34508,8 +34510,8 @@ msgstr "Vstup XAML"
 
 #~ msgid "Synchronizing with chatroom <b>%1@%2</b> using the handle <b>%3</b>"
 #~ msgstr ""
-#~ "Synchronizácia s diskusnou miestnosťou <b>%1@%2</b> pomocou prezývky <b>"
-#~ "%3</b>"
+#~ "Synchronizácia s diskusnou miestnosťou <b>%1@%2</b> pomocou prezývky <b>%"
+#~ "3</b>"
 
 #~ msgid "_User's Jabber ID:"
 #~ msgstr "_Jabber ID používateľa:"
@@ -34671,20 +34673,20 @@ msgstr "Vstup XAML"
 #~ msgstr[2] "<b>%i</b> zo <b>%i</b> uzlov zvolených; %s. %s."
 
 #~ msgid ""
-#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. "
-#~ "%s."
+#~ "<b>%i</b> of <b>%i</b> node selected in <b>%i</b> of <b>%i</b> subpaths. %"
+#~ "s."
 #~ msgid_plural ""
 #~ "<b>%i</b> of <b>%i</b> nodes selected in <b>%i</b> of <b>%i</b> subpaths. "
 #~ "%s."
 #~ msgstr[0] ""
-#~ "<b>%i</b> z <b>%i</b> uzlov vybraných v <b>%i</b> z <b>%i</b> podciest. "
-#~ "%s."
+#~ "<b>%i</b> z <b>%i</b> uzlov vybraných v <b>%i</b> z <b>%i</b> podciest. %"
+#~ "s."
 #~ msgstr[1] ""
-#~ "<b>%i</b> z <b>%i</b> uzlov vybraných v <b>%i</b> z <b>%i</b> podciest. "
-#~ "%s."
+#~ "<b>%i</b> z <b>%i</b> uzlov vybraných v <b>%i</b> z <b>%i</b> podciest. %"
+#~ "s."
 #~ msgstr[2] ""
-#~ "<b>%i</b> z <b>%i</b> uzlov vybraných v <b>%i</b> z <b>%i</b> podciest. "
-#~ "%s."
+#~ "<b>%i</b> z <b>%i</b> uzlov vybraných v <b>%i</b> z <b>%i</b> podciest. %"
+#~ "s."
 
 #~ msgid "The selection has no applied clip path."
 #~ msgstr "Na výber nie je použitá žiadna orezávacia cesta."
