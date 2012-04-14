@@ -8,8 +8,9 @@
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
+ *   Kris De Gussem <Kris.DeGussem@gmail.com>
  *
- * Copyright (C) 1999-2007 Authors
+ * Copyright (C) 1999-2007, 2012 Authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -822,8 +823,7 @@ unsigned int Export::onProgressCallback (float value, void *data)
 
 } // end of sp_export_progress_callback()
 
-GtkWidget * Export::create_progress_dialog (gchar *progress_text) {
-
+GtkWidget * Export::create_progress_dialog (Glib::ustring progress_text) {
     GtkWidget *dlg, *prg, *btn; /* progressbar dlg widgets */
 
     dlg = gtk_dialog_new ();
@@ -836,7 +836,7 @@ GtkWidget * Export::create_progress_dialog (gchar *progress_text) {
     gtk_window_set_resizable (GTK_WINDOW (dlg), FALSE);
     g_object_set_data ((GObject *) base, "progress", prg);
 
-    gtk_progress_bar_set_text ((GtkProgressBar *) prg, progress_text);
+    gtk_progress_bar_set_text ((GtkProgressBar *) prg, progress_text.c_str());
 
     gtk_progress_bar_set_orientation ( (GtkProgressBar *) prg,
                                        GTK_PROGRESS_LEFT_TO_RIGHT);
@@ -857,26 +857,26 @@ GtkWidget * Export::create_progress_dialog (gchar *progress_text) {
 }
 
 // FIXME: Some lib function should be available to do this ...
-gchar * Export::filename_add_extension (const gchar *filename, const gchar *extension)
+Glib::ustring Export::filename_add_extension (Glib::ustring filename, Glib::ustring extension)
 {
-  const gchar *dot;
-
-  dot = strrchr (filename, '.');
-  if ( !dot )
-    return g_strconcat (filename, ".", extension, NULL);
-  {
-    if (dot[1] == '\0')
-      return g_strconcat (filename, extension, NULL);
+    Glib::ustring::size_type dot;
+    
+    dot = filename.find_last_of(".");
+    if ( !dot )
+    {
+        return filename = filename + "." + extension;
+    }
     else
     {
-      if (g_ascii_strcasecmp (dot + 1, extension) == 0)
-        return g_strdup (filename);
-      else
-      {
-        return g_strconcat (filename, ".", extension, NULL);
-      }
+        if (dot==filename.find_last_of(Glib::ustring::compose(".", extension)))
+        {
+            return filename;
+        }
+        else
+        {
+          return filename = filename + "." + extension;
+        }
     }
-  }
 }
 
 gchar *Export::absolutize_path_from_document_location (SPDocument *doc, const gchar *filename)
@@ -908,24 +908,22 @@ void Export::onExport ()
     if (batch_export.get_active ()) {
         // Batch export of selected objects
 
-        gint num = g_slist_length((GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
+        gint num = g_slist_length(const_cast<GSList *>(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList()));
         gint n = 0;
 
         if (num < 1)
             return;
 
-        gchar *progress_text = g_strdup_printf (_("Exporting %d files"), num);
-        GtkWidget *prog_dlg = create_progress_dialog (progress_text);
-        g_free (progress_text);
+        GtkWidget *prog_dlg = create_progress_dialog (Glib::ustring::compose(_("Exporting %1 files"),num));
 
-        for (GSList *i = (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList();
+        for (GSList *i = const_cast<GSList *>(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
              i != NULL;
              i = i->next) {
             SPItem *item = reinterpret_cast<SPItem *>(i->data);
 
             // retrieve export filename hint
             const gchar *filename = item->getRepr()->attribute("inkscape:export-filename");
-            gchar *path = 0;
+            gchar *path = NULL;
             if (!filename) {
                 path = create_filepath_from_id(item->getId(), NULL);
             } else {
@@ -953,7 +951,7 @@ void Export::onExport ()
                                              *area, width, height, dpi, dpi,
                                              nv->pagecolor,
                                              NULL, NULL, TRUE,  // overwrite without asking
-                                             hide ? (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList() : NULL
+                                             hide ? const_cast<GSList *>(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList()) : NULL
                             )) {
                         gchar * error;
                         gchar * safeFile = Inkscape::IO::sanitizeString(path);
@@ -996,10 +994,9 @@ void Export::onExport ()
     }
 
     // make sure that .png is the extension of the file:
-    gchar * filename_ext = filename_add_extension(filename.c_str(), "png");
+    Glib::ustring const filename_ext = filename_add_extension(filename, "png");
     filename_entry.set_text(filename_ext);
-
-    gchar *path = absolutize_path_from_document_location(doc, filename_ext);
+    gchar *path = absolutize_path_from_document_location(doc, filename_ext.c_str());
 
     gchar *dirname = g_path_get_dirname(path);
     if ( dirname == NULL
@@ -1018,18 +1015,16 @@ void Export::onExport ()
     g_free(dirname);
 
     gchar *fn = g_path_get_basename (path);
-    gchar *progress_text = g_strdup_printf (_("Exporting %s (%lu x %lu)"), fn, width, height);
+    GtkWidget *prog_dlg = create_progress_dialog (Glib::ustring::compose(_("Exporting %1 (%2 x %3)"), fn, width, height));
     g_free (fn);
 
-    GtkWidget *prog_dlg = create_progress_dialog (progress_text);
-    g_free (progress_text);
 
     /* Do export */
     if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), path,
                              Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1)), width, height, xdpi, ydpi,
                              nv->pagecolor,
                              onProgressCallback, prog_dlg, FALSE,
-                             hide ? (GSList *) sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList() : NULL
+                             hide ? const_cast<GSList *>(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList()) : NULL
             )) {
         gchar * error;
         gchar * safeFile = Inkscape::IO::sanitizeString(path);
@@ -1042,11 +1037,12 @@ void Export::onExport ()
     /* Reset the filename so that it can be changed again by changing
        selections and all that */
     g_free(original_name);
-    original_name = g_strdup(filename_ext);
+    original_name = const_cast<gchar*>(filename_ext.c_str());
     filename_modified = false;
 
     gtk_widget_destroy (prog_dlg);
     //g_object_set_data (G_OBJECT (base), "cancel", (gpointer) 0);
+
 
     /* Setup the values in the document */
     switch (current_key) {
@@ -1060,8 +1056,8 @@ void Export::onExport ()
             DocumentUndo::setUndoSensitive(doc, false);
 
             gchar const *temp_string = repr->attribute("inkscape:export-filename");
-            if (temp_string == NULL || strcmp(temp_string, filename_ext)) {
-                repr->setAttribute("inkscape:export-filename", filename_ext);
+            if (temp_string == NULL || (filename_ext != temp_string)) {
+                repr->setAttribute("inkscape:export-filename", filename_ext.c_str());
                 modified = true;
             }
             temp_string = repr->attribute("inkscape:export-xdpi");
@@ -1091,18 +1087,22 @@ void Export::onExport ()
             reprlst = sp_desktop_selection(SP_ACTIVE_DESKTOP)->reprList();
 
             for(; reprlst != NULL; reprlst = reprlst->next) {
-                Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
+                Inkscape::XML::Node * repr = static_cast<Inkscape::XML::Node *>(reprlst->data);
                 const gchar * temp_string;
-                gchar *dir = g_path_get_dirname(filename.c_str());
-                gchar *docdir = g_path_get_dirname(SP_ACTIVE_DOCUMENT->getURI());
-
+                Glib::ustring dir = Glib::path_get_dirname(filename.c_str());
+                const gchar* docURI=SP_ACTIVE_DOCUMENT->getURI();
+                Glib::ustring docdir;
+                if (docURI)
+                {
+                    docdir = Glib::path_get_dirname(docURI);
+                }
                 if (repr->attribute("id") == NULL ||
-                        !(g_strrstr(filename_ext, repr->attribute("id")) != NULL &&
-                          ( !SP_ACTIVE_DOCUMENT->getURI() ||
-                            strcmp(dir, docdir) == 0))) {
+                        !(filename_ext.find_last_of(repr->attribute("id")) &&
+                          ( !docURI ||
+                            (dir == docdir)))) {
                     temp_string = repr->attribute("inkscape:export-filename");
-                    if (temp_string == NULL || strcmp(temp_string, filename_ext)) {
-                        repr->setAttribute("inkscape:export-filename", filename_ext);
+                    if (temp_string == NULL || (filename_ext != temp_string)) {
+                        repr->setAttribute("inkscape:export-filename", filename_ext.c_str());
                         modified = true;
                     }
                 }
@@ -1116,8 +1116,6 @@ void Export::onExport ()
                     sp_repr_set_svg_double(repr, "inkscape:export-ydpi", ydpi);
                     modified = true;
                 }
-                g_free(dir);
-                g_free(docdir);
             }
             DocumentUndo::setUndoSensitive(doc, saved);
 
@@ -1129,10 +1127,7 @@ void Export::onExport ()
         default:
             break;
     }
-
-    g_free (filename_ext);
     g_free (path);
-
     }
 
 } // end of sp_export_export_clicked()
@@ -1799,10 +1794,8 @@ void Export::onFilenameModified()
 {
     if (strcmp(original_name, filename_entry.get_text().c_str())==0) {
         filename_modified = false;
-//        g_message("Modified: FALSE\n");
     } else {
         filename_modified = true;
-//        g_message("Modified: TRUE\n");
     }
 
     return;

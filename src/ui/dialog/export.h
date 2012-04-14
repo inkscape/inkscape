@@ -190,7 +190,7 @@ private:
     /**
      * Progress dialog callbacks
      */
-    GtkWidget * create_progress_dialog (gchar *progress_text);
+    GtkWidget * create_progress_dialog (Glib::ustring progress_text);
     static unsigned int onProgressCallback (float value, void *data);
     static void onProgressCancel ( GtkWidget *widget, GObject *base );
     static gint onProgressDelete ( GtkWidget *widget, GdkEvent *event, GObject *base );
@@ -200,7 +200,7 @@ private:
      */
     void set_default_filename ();
     gchar* create_filepath_from_id (const gchar *id, const gchar *file_entry_text);
-    gchar *filename_add_extension (const gchar *filename, const gchar *extension);
+    Glib::ustring filename_add_extension (Glib::ustring filename, Glib::ustring extension);
     gchar *absolutize_path_from_document_location (SPDocument *doc, const gchar *filename);
 
     /*
