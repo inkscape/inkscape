@@ -15,7 +15,11 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/window.h>
 
+#if WITH_EXT_GDL
+#include <gdl/gdl.h>
+#else
 #include "libgdl/gdl.h"
+#endif
 
 namespace Gtk {
 	class HButtonBox;

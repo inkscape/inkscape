@@ -731,7 +731,38 @@ if test $cc_vers_major -gt 3; then
 else
   min_sigc_version=2.0.11
 fi
-PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.24  gtk+-2.0 >= 2.20  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10  sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.10.0)
+
+dnl *********************************
+dnl   Allow experimental GTK+3 build
+dnl *********************************
+AC_ARG_ENABLE(gtk3-experimental,
+	AC_HELP_STRING([--enable-gtk3-experimental], [enable compilation with GTK+3 (EXPERIMENTAL!)]),
+	[enable_gtk3=$enableval], [enable_gtk3=no])
+
+with_ext_gdl="no"
+if test "x$enable_gtk3" = "xyes"; then
+	PKG_CHECK_MODULES(INKSCAPE, gtkmm-3.0  glib-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10  sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4, with_gtkmm_3_0=yes, with_gtkmm_3_0=no)
+
+	if test "x$with_gtkmm_3_0" = "xyes"; then
+		AC_MSG_RESULT([Using EXPERIMENTAL Gtkmm 3 build])
+		AC_DEFINE(WITH_GTKMM_3_0,1,[Build with Gtkmm 3.0.x or higher])
+	fi
+
+	dnl ****************************
+	dnl Use external gdl if possible
+	dnl ****************************
+	PKG_CHECK_MODULES(GDL, gdl-3.0 > 3.3.4, with_ext_gdl=yes, with_ext_gdl=no)
+	if test "x$with_ext_gdl" = "xyes"; then
+		AC_MSG_RESULT([Using external GDL])
+		AC_DEFINE(WITH_EXT_GDL,1,[Build with external GDL])
+	fi
+else
+	PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.24  gtk+-2.0 >= 2.20  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10  sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.10.0)
+fi
+
+AC_SUBST(GDL_LIBS)
+AC_SUBST(GDL_CFLAGS)
+AM_CONDITIONAL(WITH_EXT_GDL, test "x$with_ext_gdl" = "xyes")
 
 dnl ***********************************
 dnl Checks for specific series of Gtkmm

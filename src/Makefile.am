@@ -19,12 +19,18 @@ bin_PROGRAMS = inkscape inkview
 #if WITH_INKBOARD
 #libpedro = pedro/libpedro.a
 #endif
+
+if !WITH_EXT_GDL
+internal_GDL = libgdl/libgdl.a
+endif
+
+
 noinst_LIBRARIES =	\
 	libinkscape.a		\
 	dom/libdom.a		\
 	libcroco/libcroco.a	\
 	libavoid/libavoid.a	\
-	libgdl/libgdl.a		\
+	$(internal_GDL)		\
 	libcola/libcola.a	\
 	libvpsc/libvpsc.a	\
 	livarot/libvarot.a	\
@@ -46,6 +52,7 @@ all_libs =			\
 	$(INKBOARD_LIBS)	\
 	$(LIBWPG_LIBS)		\
 	$(DBUS_LIBS)		\
+	$(GDL_LIBS)             \
 	$(IMAGEMAGICK_LIBS)
 
 # Add sources common for Inkscape and Inkview to this variable.
@@ -68,6 +75,7 @@ INCLUDES =	\
 	$(INKBOARD_CFLAGS) \
 	$(LIBWPG_CFLAGS) \
 	$(DBUS_CFLAGS) \
+	$(GDL_CFLAGS)  \
 	$(XFT_CFLAGS)	\
 	$(LCMS_CFLAGS)	\
 	$(POPPLER_CFLAGS)	\
