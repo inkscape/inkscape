@@ -19,11 +19,15 @@
 #include "ui/widget/panel.h"
 #include <gtkmm/frame.h>
 #include <gtkmm/comboboxtext.h>
-#include <gtkmm/table.h>
 #include <gtkmm/label.h>
-
 #include "2geom/rect.h"
 
+#if WITH_GTKMM_3_0
+#include <gtkmm/checkbutton.h>
+#include <gtkmm/grid.h>
+#else
+#include <gtkmm/table.h>
+#endif
 
 class SPItem;
 
@@ -45,11 +49,19 @@ public:
 
     AlignTarget getAlignTarget() const;
 
+#if WITH_GTKMM_3_0
+    Gtk::Grid &align_table(){return _alignTable;}
+    Gtk::Grid &distribute_table(){return _distributeTable;}
+    Gtk::Grid &rearrange_table(){return _rearrangeTable;}
+    Gtk::Grid &removeOverlap_table(){return _removeOverlapTable;}
+    Gtk::Grid &nodes_table(){return _nodesTable;}
+#else
     Gtk::Table &align_table(){return _alignTable;}
     Gtk::Table &distribute_table(){return _distributeTable;}
     Gtk::Table &rearrange_table(){return _rearrangeTable;}
     Gtk::Table &removeOverlap_table(){return _removeOverlapTable;}
     Gtk::Table &nodes_table(){return _nodesTable;}
+#endif
 
     std::list<SPItem *>::iterator find_master(std::list <SPItem *> &list, bool horizontal);
     void setMode(bool nodeEdit);
@@ -86,12 +98,21 @@ protected:
                         guint row, guint col);
     void addRandomizeButton(const Glib::ustring &id, const Glib::ustring tiptext, 
                         guint row, guint col);
+#if WITH_GTKMM_3_0
+    void addBaselineButton(const Glib::ustring &id, const Glib::ustring tiptext,
+                           guint row, guint col, Gtk::Grid &table, Geom::Dim2 orientation, bool distribute);
+#else
     void addBaselineButton(const Glib::ustring &id, const Glib::ustring tiptext,
                            guint row, guint col, Gtk::Table &table, Geom::Dim2 orientation, bool distribute);
+#endif
 
     std::list<Action *> _actionList;
     Gtk::Frame _alignFrame, _distributeFrame, _rearrangeFrame, _removeOverlapFrame, _nodesFrame;
+#if WITH_GTKMM_3_0
+    Gtk::Grid _alignTable, _distributeTable, _rearrangeTable, _removeOverlapTable, _nodesTable;
+#else
     Gtk::Table _alignTable, _distributeTable, _rearrangeTable, _removeOverlapTable, _nodesTable;
+#endif
     Gtk::HBox _anchorBox;
     Gtk::HBox _selgrpBox;
     Gtk::VBox _alignBox;
