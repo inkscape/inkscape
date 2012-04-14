@@ -170,7 +170,7 @@ private:
      * Inkscape selection change callback
      */
     void onSelectionChanged ();
-    void onSelectioModified (guint flags);
+    void onSelectionModified (guint flags);
 
     /**
      * Filename modified callback

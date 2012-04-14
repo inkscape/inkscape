@@ -351,7 +351,7 @@ void Export::setTargetDesktop(SPDesktop *desktop)
             subselChangedConn = desktop->connectToolSubselectionChanged(sigc::hide(sigc::mem_fun(*this, &Export::onSelectionChanged)));
 
             //// Must check flags, so can't call widget_setup() directly.
-            selectModifiedConn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &Export::onSelectioModified)));
+            selectModifiedConn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &Export::onSelectionModified)));
         }
         //widget_setup();
     }
@@ -607,7 +607,7 @@ void Export::onSelectionChanged()
     updateCheckbuttons ();
 }
 
-void Export::onSelectioModified ( guint /*flags*/ )
+void Export::onSelectionModified ( guint /*flags*/ )
 {
     switch (current_key) {
         case SELECTION_DRAWING:
