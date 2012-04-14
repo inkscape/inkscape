@@ -59,9 +59,6 @@ if test "$GCC" = "yes"; then
   CPPFLAGS="-DGLIBMM_DISABLE_DEPRECATED $CPPFLAGS"
   CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
   CPPFLAGS="-DGTK_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
-  CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
-  CPPFLAGS="-DGTK_DISABLE_DEPRECATED $CPPFLAGS"
-  CPPFLAGS="-DGDKMM_DISABLE_DEPRECATED $CPPFLAGS"
 
   # Test for -Werror=... (introduced some time post-4.0)
   # If we hit a format error -- it should be fatal.
@@ -758,6 +755,13 @@ if test "x$enable_gtk3" = "xyes"; then
 	fi
 else
 	PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.24  gtk+-2.0 >= 2.20  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10  sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.10.0)
+	
+	# Disable deprecated symbols to make GTK+ 3 migration easier.
+	# This should also be applied to GTK+ 3 builds too,
+	# once the migration is complete.
+	CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
+	CPPFLAGS="-DGTK_DISABLE_DEPRECATED $CPPFLAGS"
+	CPPFLAGS="-DGDKMM_DISABLE_DEPRECATED $CPPFLAGS"
 fi
 
 AC_SUBST(GDL_LIBS)
