@@ -15,6 +15,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "file.h" //IO
 #include "document-interface.h"
 #include <string.h>
 #include <dbus/dbus-glib.h>
@@ -38,8 +39,6 @@
 #include "sp-object.h"
 #include "sp-root.h"
 #include "style.h" //style_write
-
-#include "file.h" //IO
 
 #include "extension/system.h" //IO
 
