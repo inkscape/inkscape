@@ -48,6 +48,10 @@ public:
     virtual void quadTo(Point c, Point p) = 0;
     virtual void arcTo(double rx, double ry, double angle,
                        bool large_arc, bool sweep, Point p) = 0;
+
+    /** Undo the last lineTo, curveTo, etc. call. */
+    virtual void backspace() = 0;
+
     virtual void closePath() = 0;
     virtual void finish() = 0;
     virtual ~SVGPathSink() {}
@@ -118,6 +122,13 @@ public:
         }
         _path.template appendNew<SVGEllipticalArc>(rx, ry, angle,
                                                  large_arc, sweep, p);
+    }
+
+    void backspace()
+    {
+        if (_in_path && _path.size() > 0) {
+            _path.erase_last(Path::STITCH_DISCONTINUOUS);
+        }
     }
 
     void append(Path const &other, Path::Stitching stitching = Path::NO_STITCHING)
