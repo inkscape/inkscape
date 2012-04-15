@@ -127,7 +127,7 @@ public:
     void backspace()
     {
         if (_in_path && _path.size() > 0) {
-            _path.erase_last(Path::STITCH_DISCONTINUOUS);
+            _path.erase_last();
         }
     }
 
