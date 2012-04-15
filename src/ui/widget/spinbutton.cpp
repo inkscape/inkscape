@@ -17,6 +17,12 @@
 #include "util/expression-evaluator.h"
 #include "event-context.h"
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_Escape 0xff1b
+#define GDK_KEY_z 0x07a
+#define GDK_KEY_Z 0x05a
+#endif
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {
@@ -64,12 +70,12 @@ bool SpinButton::on_my_focus_in_event(GdkEventFocus* /*event*/)
 bool SpinButton::on_my_key_press_event(GdkEventKey* event)
 {
     switch (get_group0_keyval (event)) {
-    case GDK_Escape:
+    case GDK_KEY_Escape:
         undo();
         return true; // I consumed the event
         break;
-    case GDK_z:
-    case GDK_Z:
+    case GDK_KEY_z:
+    case GDK_KEY_Z:
         if (event->state & GDK_CONTROL_MASK) {
             undo();
             return true; // I consumed the event

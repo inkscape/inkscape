@@ -117,6 +117,11 @@
 
 #include <gdk/gdkkeysyms.h>
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_Alt_L 0xffe9
+#define GDK_KEY_Alt_R 0xffea
+#endif
+
 enum {
     SP_ARG_NONE,
     SP_ARG_NOGUI,
@@ -889,8 +894,8 @@ snooper(GdkEvent *event, gpointer /*data*/) {
             break;
         case GDK_KEY_PRESS:
             keyval = get_group0_keyval(&event->key);
-            if (keyval == GDK_Alt_L) altL_pressed = TRUE;
-            if (keyval == GDK_Alt_R) altR_pressed = TRUE;
+            if (keyval == GDK_KEY_Alt_L) altL_pressed = TRUE;
+            if (keyval == GDK_KEY_Alt_R) altR_pressed = TRUE;
             alt_pressed = alt_pressed || altL_pressed || altR_pressed;
             alt_pressed = alt_pressed || (event->button.state & GDK_MOD1_MASK);
             if (alt_pressed)
@@ -900,8 +905,8 @@ snooper(GdkEvent *event, gpointer /*data*/) {
             break;
         case GDK_KEY_RELEASE:
             keyval = get_group0_keyval(&event->key);
-            if (keyval == GDK_Alt_L) altL_pressed = FALSE;
-            if (keyval == GDK_Alt_R) altR_pressed = FALSE;
+            if (keyval == GDK_KEY_Alt_L) altL_pressed = FALSE;
+            if (keyval == GDK_KEY_Alt_R) altR_pressed = FALSE;
             if (!altL_pressed && !altR_pressed)
                 alt_pressed = FALSE;
             break;

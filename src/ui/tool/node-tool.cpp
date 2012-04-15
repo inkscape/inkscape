@@ -43,6 +43,14 @@
 
 #include <gdk/gdkkeysyms.h>
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_Escape 0xff1b
+#define GDK_KEY_a 0x061
+#define GDK_KEY_A 0x041
+#define GDK_KEY_h 0x068
+#define GDK_KEY_H 0x048
+#endif
+
 /** @struct InkNodeTool
  *
  * Node tool event context.
@@ -503,7 +511,7 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
     case GDK_KEY_PRESS:
         switch (get_group0_keyval(&event->key))
         {
-        case GDK_Escape: // deselect everything
+        case GDK_KEY_Escape: // deselect everything
             if (nt->_selected_nodes->empty()) {
                 selection->clear();
             } else {
@@ -511,8 +519,8 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
             }
             ink_node_tool_update_tip(nt, event);
             return TRUE;
-        case GDK_a:
-        case GDK_A:
+        case GDK_KEY_a:
+        case GDK_KEY_A:
             if (held_control(event->key) && held_alt(event->key)) {
                 nt->_selected_nodes->selectAll();
                 // Ctrl+A is handled in selection-chemistry.cpp via verb
@@ -520,8 +528,8 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
                 return TRUE;
             }
             break;
-        case GDK_h:
-        case GDK_H:
+        case GDK_KEY_h:
+        case GDK_KEY_H:
             if (held_only_control(event->key)) {
                 Inkscape::Preferences *prefs = Inkscape::Preferences::get();
                 prefs->setBool("/tools/nodes/show_handles", !nt->show_handles);

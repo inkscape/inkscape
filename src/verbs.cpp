@@ -84,6 +84,11 @@
 
 #include <gtk/gtk.h>
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_KP_Add 0xffab
+#define GDK_KEY_KP_Subtract 0xffad
+#endif
+
 using Inkscape::DocumentUndo;
 
 //#ifdef WITH_INKBOARD
@@ -1656,7 +1661,7 @@ void ZoomVerb::perform(SPAction *action, void *data)
         case SP_VERB_ZOOM_IN:
         {
             gint mul = 1 + gobble_key_events(
-                 GDK_KP_Add, 0); // with any mask
+                 GDK_KEY_KP_Add, 0); // with any mask
             // While drawing with the pen/pencil tool, zoom towards the end of the unfinished path
             if (tools_isactive(dt, TOOLS_FREEHAND_PENCIL) || tools_isactive(dt, TOOLS_FREEHAND_PEN)) {
                 SPCurve *rc = SP_DRAW_CONTEXT(ec)->red_curve;
@@ -1674,7 +1679,7 @@ void ZoomVerb::perform(SPAction *action, void *data)
         case SP_VERB_ZOOM_OUT:
         {
             gint mul = 1 + gobble_key_events(
-                 GDK_KP_Subtract, 0); // with any mask
+                 GDK_KEY_KP_Subtract, 0); // with any mask
             // While drawing with the pen/pencil tool, zoom away from the end of the unfinished path
             if (tools_isactive(dt, TOOLS_FREEHAND_PENCIL) || tools_isactive(dt, TOOLS_FREEHAND_PEN)) {
                 SPCurve *rc = SP_DRAW_CONTEXT(ec)->red_curve;

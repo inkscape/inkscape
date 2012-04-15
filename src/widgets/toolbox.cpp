@@ -113,6 +113,10 @@
 #include "toolbox.h"
 #include <gtk/gtk.h>
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_VoidSymbol 0xffffff
+#endif
+
 //#define DEBUG_TEXT
 
 using Inkscape::UnitTracker;
@@ -860,7 +864,7 @@ GtkWidget * sp_toolbox_button_new_from_verb_with_doubleclick(GtkWidget *t, Inksc
 
 
     unsigned int shortcut = sp_shortcut_get_primary(verb);
-    if (shortcut != GDK_VoidSymbol) {
+    if (shortcut != GDK_KEY_VoidSymbol) {
         gchar *key = sp_shortcut_get_label(shortcut);
         gchar *tip = g_strdup_printf ("%s (%s)", action->tip, key);
         if ( t ) {

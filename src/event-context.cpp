@@ -64,6 +64,93 @@
 #include "sp-guide.h"
 #include "color.h"
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_Up 0xff52
+#define GDK_KEY_KP_Up 0xff97
+#define GDK_KEY_Down 0xff54
+#define GDK_KEY_KP_Down 0xff99
+#define GDK_KEY_Left 0xff51
+#define GDK_KEY_KP_Left 0xff96
+#define GDK_KEY_Right 0xff53
+#define GDK_KEY_KP_Right 0xff98
+#define GDK_KEY_Page_Up 0xff55
+#define GDK_KEY_KP_Page_Up 0xff9a
+#define GDK_KEY_Page_Down 0xff56
+#define GDK_KEY_KP_Page_Down 0xff9b
+#define GDK_KEY_Home 0xff50
+#define GDK_KEY_KP_Home 0xff95
+#define GDK_KEY_End 0xff57
+#define GDK_KEY_KP_End 0xff9c
+#define GDK_KEY_a 0x061
+#define GDK_KEY_A 0x041
+#define GDK_KEY_d 0x064
+#define GDK_KEY_D 0x044
+#define GDK_KEY_g 0x067
+#define GDK_KEY_G 0x047
+#define GDK_KEY_l 0x06c
+#define GDK_KEY_L 0x04c
+#define GDK_KEY_q 0x071
+#define GDK_KEY_Q 0x051
+#define GDK_KEY_r 0x072
+#define GDK_KEY_R 0x052
+#define GDK_KEY_s 0x073
+#define GDK_KEY_S 0x053
+#define GDK_KEY_u 0x075
+#define GDK_KEY_U 0x055
+#define GDK_KEY_w 0x077
+#define GDK_KEY_W 0x057
+#define GDK_KEY_x 0x078
+#define GDK_KEY_X 0x058
+#define GDK_KEY_z 0x07a
+#define GDK_KEY_Z 0x05a
+#define GDK_KEY_Escape 0xff1b
+#define GDK_KEY_Control_L 0xffe3
+#define GDK_KEY_Control_R 0xffe4
+#define GDK_KEY_Alt_L 0xffe9
+#define GDK_KEY_Alt_R 0xffea
+#define GDK_KEY_Shift_L 0xffe1
+#define GDK_KEY_Shift_R 0xffe2
+#define GDK_KEY_Meta_L 0xffe7
+#define GDK_KEY_Meta_R 0xffe8
+#define GDK_KEY_KP_0 0xffb0
+#define GDK_KEY_KP_1 0xffb1
+#define GDK_KEY_KP_2 0xffb2
+#define GDK_KEY_KP_3 0xffb3
+#define GDK_KEY_KP_4 0xffb4
+#define GDK_KEY_KP_5 0xffb5
+#define GDK_KEY_KP_6 0xffb6
+#define GDK_KEY_KP_7 0xffb7
+#define GDK_KEY_KP_8 0xffb8
+#define GDK_KEY_KP_9 0xffb9
+#define GDK_KEY_F1 0xffbe
+#define GDK_KEY_F2 0xffbf
+#define GDK_KEY_F3 0xffc0
+#define GDK_KEY_F4 0xffc1
+#define GDK_KEY_F5 0xffc2
+#define GDK_KEY_F6 0xffc3
+#define GDK_KEY_F7 0xffc4
+#define GDK_KEY_F8 0xffc5
+#define GDK_KEY_F9 0xffc6
+#define GDK_KEY_F10 0xffc7
+#define GDK_KEY_F11 0xffc8
+#define GDK_KEY_Insert 0xff63
+#define GDK_KEY_KP_Insert 0xff9e
+#define GDK_KEY_Delete 0xffff
+#define GDK_KEY_KP_Delete 0xff9f
+#define GDK_KEY_BackSpace 0xff08
+#define GDK_KEY_Return 0xff0d
+#define GDK_KEY_KP_Enter 0xff8d
+#define GDK_KEY_space 0x020
+#define GDK_KEY_Tab 0xff09
+#define GDK_KEY_ISO_Left_Tab 0xfe20
+#define GDK_KEY_bracketleft 0x05b
+#define GDK_KEY_bracketright 0x05d
+#define GDK_KEY_less 0x03c
+#define GDK_KEY_greater 0x03e
+#define GDK_KEY_comma 0x02c
+#define GDK_KEY_period 0x02e
+#endif
+
 static void sp_event_context_class_init(SPEventContextClass *klass);
 static void sp_event_context_init(SPEventContext *event_context);
 static void sp_event_context_dispose(GObject *object);
@@ -558,9 +645,9 @@ static gint sp_event_context_private_root_handler(
         // in the editing window). So we resteal them back and run our regular shortcut
         // invoker on them.
         unsigned int shortcut;
-        case GDK_Tab:
-        case GDK_ISO_Left_Tab:
-        case GDK_F1:
+        case GDK_KEY_Tab:
+        case GDK_KEY_ISO_Left_Tab:
+        case GDK_KEY_F1:
             shortcut = get_group0_keyval(&event->key);
             if (event->key.state & GDK_SHIFT_MASK)
                 shortcut |= SP_SHORTCUT_SHIFT_MASK;
@@ -571,15 +658,15 @@ static gint sp_event_context_private_root_handler(
             ret = sp_shortcut_invoke(shortcut, desktop);
             break;
 
-        case GDK_D:
-        case GDK_d:
+        case GDK_KEY_D:
+        case GDK_KEY_d:
             if (!MOD__SHIFT && !MOD__CTRL && !MOD__ALT) {
                 sp_toggle_dropper(desktop);
                 ret = TRUE;
             }
             break;
-        case GDK_Q:
-        case GDK_q:
+        case GDK_KEY_Q:
+        case GDK_KEY_q:
             if (desktop->quick_zoomed()) {
                 ret = TRUE;
             }
@@ -588,18 +675,18 @@ static gint sp_event_context_private_root_handler(
                 ret = TRUE;
             }
             break;
-        case GDK_W:
-        case GDK_w:
-        case GDK_F4:
+        case GDK_KEY_W:
+        case GDK_KEY_w:
+        case GDK_KEY_F4:
             /* Close view */
             if (MOD__CTRL_ONLY) {
                 sp_ui_close_view(NULL);
                 ret = TRUE;
             }
             break;
-        case GDK_Left: // Ctrl Left
-        case GDK_KP_Left:
-        case GDK_KP_4:
+        case GDK_KEY_Left: // Ctrl Left
+        case GDK_KEY_KP_Left:
+        case GDK_KEY_KP_4:
             if (MOD__CTRL_ONLY) {
                 int i = (int) floor(key_scroll * accelerate_scroll(event,
                         acceleration, sp_desktop_canvas(desktop)));
@@ -608,9 +695,9 @@ static gint sp_event_context_private_root_handler(
                 ret = TRUE;
             }
             break;
-        case GDK_Up: // Ctrl Up
-        case GDK_KP_Up:
-        case GDK_KP_8:
+        case GDK_KEY_Up: // Ctrl Up
+        case GDK_KEY_KP_Up:
+        case GDK_KEY_KP_8:
             if (MOD__CTRL_ONLY) {
                 int i = (int) floor(key_scroll * accelerate_scroll(event,
                         acceleration, sp_desktop_canvas(desktop)));
@@ -619,9 +706,9 @@ static gint sp_event_context_private_root_handler(
                 ret = TRUE;
             }
             break;
-        case GDK_Right: // Ctrl Right
-        case GDK_KP_Right:
-        case GDK_KP_6:
+        case GDK_KEY_Right: // Ctrl Right
+        case GDK_KEY_KP_Right:
+        case GDK_KEY_KP_6:
             if (MOD__CTRL_ONLY) {
                 int i = (int) floor(key_scroll * accelerate_scroll(event,
                         acceleration, sp_desktop_canvas(desktop)));
@@ -630,9 +717,9 @@ static gint sp_event_context_private_root_handler(
                 ret = TRUE;
             }
             break;
-        case GDK_Down: // Ctrl Down
-        case GDK_KP_Down:
-        case GDK_KP_2:
+        case GDK_KEY_Down: // Ctrl Down
+        case GDK_KEY_KP_Down:
+        case GDK_KEY_KP_2:
             if (MOD__CTRL_ONLY) {
                 int i = (int) floor(key_scroll * accelerate_scroll(event,
                         acceleration, sp_desktop_canvas(desktop)));
@@ -641,13 +728,13 @@ static gint sp_event_context_private_root_handler(
                 ret = TRUE;
             }
             break;
-        case GDK_F10:
+        case GDK_KEY_F10:
             if (MOD__SHIFT_ONLY) {
                 sp_event_root_menu_popup(desktop, NULL, event);
                 ret = TRUE;
             }
             break;
-        case GDK_space:
+        case GDK_KEY_space:
             if (prefs->getBool("/options/spacepans/value")) {
                 event_context->space_panning = true;
                 event_context->_message_context->set(Inkscape::INFORMATION_MESSAGE,
@@ -658,8 +745,8 @@ static gint sp_event_context_private_root_handler(
                 ret = TRUE;
             }
             break;
-        case GDK_z:
-        case GDK_Z:
+        case GDK_KEY_z:
+        case GDK_KEY_Z:
             if (MOD__ALT_ONLY) {
                 desktop->zoom_grab_focus();
                 ret = TRUE;
@@ -672,7 +759,7 @@ static gint sp_event_context_private_root_handler(
         break;
     case GDK_KEY_RELEASE:
         switch (get_group0_keyval(&event->key)) {
-        case GDK_space:
+        case GDK_KEY_space:
             if (event_context->space_panning) {
                 event_context->space_panning = false;
                 event_context->_message_context->clear();
@@ -685,8 +772,8 @@ static gint sp_event_context_private_root_handler(
                 ret = TRUE;
             }
             break;
-        case GDK_Q:
-        case GDK_q:
+        case GDK_KEY_Q:
+        case GDK_KEY_q:
             if (desktop->quick_zoomed()) {
                 desktop->zoom_quick(false);
                 ret = TRUE;
@@ -1074,12 +1161,12 @@ void sp_event_show_modifier_tip(Inkscape::MessageContext *message_context,
         gchar const *alt_tip) {
     guint keyval = get_group0_keyval(&event->key);
 
-    bool ctrl = ctrl_tip && (MOD__CTRL || (keyval == GDK_Control_L) || (keyval
-            == GDK_Control_R));
-    bool shift = shift_tip && (MOD__SHIFT || (keyval == GDK_Shift_L) || (keyval
-            == GDK_Shift_R));
-    bool alt = alt_tip && (MOD__ALT || (keyval == GDK_Alt_L) || (keyval
-            == GDK_Alt_R) || (keyval == GDK_Meta_L) || (keyval == GDK_Meta_R));
+    bool ctrl = ctrl_tip && (MOD__CTRL || (keyval == GDK_KEY_Control_L) || (keyval
+            == GDK_KEY_Control_R));
+    bool shift = shift_tip && (MOD__SHIFT || (keyval == GDK_KEY_Shift_L) || (keyval
+            == GDK_KEY_Shift_R));
+    bool alt = alt_tip && (MOD__ALT || (keyval == GDK_KEY_Alt_L) || (keyval
+            == GDK_KEY_Alt_R) || (keyval == GDK_KEY_Meta_L) || (keyval == GDK_KEY_Meta_R));
 
     gchar *tip = g_strdup_printf("%s%s%s%s%s", (ctrl ? ctrl_tip : ""), (ctrl
             && (shift || alt) ? "; " : ""), (shift ? shift_tip : ""), ((ctrl

@@ -48,6 +48,11 @@
 #include "widgets/sp-xmlview-content.h"
 #include "widgets/sp-xmlview-tree.h"
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_Escape 0xff1b
+#define GDK_KEY_Return 0xff0d
+#endif
+
 namespace Inkscape {
 namespace UI {
 namespace Dialog {
@@ -334,7 +339,7 @@ bool XmlTree::sp_xml_tree_key_press(GdkEventKey *event)
 
     /* fixme: if you need to add more xml-tree-specific callbacks, you should probably upgrade
      * the sp_shortcut mechanism to take into account windows. */
-    if (shortcut == (SP_SHORTCUT_CONTROL_MASK | GDK_Return)) {
+    if (shortcut == (SP_SHORTCUT_CONTROL_MASK | GDK_KEY_Return)) {
         cmd_set_attr();
         return true;
     }
@@ -839,7 +844,7 @@ void XmlTree::on_document_uri_set(gchar const * /*uri*/, SPDocument * /*document
 gboolean XmlTree::quit_on_esc (GtkWidget *w, GdkEventKey *event, GObject */*tbl*/)
 {
     switch (get_group0_keyval (event)) {
-        case GDK_Escape: // defocus
+        case GDK_KEY_Escape: // defocus
             gtk_widget_destroy(w);
             return TRUE;
     }

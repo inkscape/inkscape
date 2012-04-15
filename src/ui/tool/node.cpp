@@ -33,6 +33,15 @@
 #include "ui/tool/path-manipulator.h"
 #include <gdk/gdkkeysyms.h>
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_s 0x073
+#define GDK_KEY_S 0x053
+#define GDK_KEY_Page_Up 0xff55
+#define GDK_KEY_KP_Page_Up 0xff9a
+#define GDK_KEY_Page_Down 0xff56
+#define GDK_KEY_KP_Page_Down 0xff9b
+#endif
+
 namespace Inkscape {
 namespace UI {
 
@@ -232,8 +241,8 @@ bool Handle::_eventHandler(SPEventContext *event_context, GdkEvent *event)
     case GDK_KEY_PRESS:
         switch (shortcut_key(event->key))
         {
-        case GDK_s:
-        case GDK_S:
+        case GDK_KEY_s:
+        case GDK_KEY_S:
             if (held_only_shift(event->key) && _parent->_type == NODE_CUSP) {
                 // when Shift+S is pressed when hovering over a handle belonging to a cusp node,
                 // hold this handle in place; otherwise process normally
@@ -803,10 +812,10 @@ bool Node::_eventHandler(SPEventContext *event_context, GdkEvent *event)
     case GDK_KEY_PRESS:
         switch (shortcut_key(event->key))
         {
-        case GDK_Page_Up:
+        case GDK_KEY_Page_Up:
             dir = 1;
             break;
-        case GDK_Page_Down:
+        case GDK_KEY_Page_Down:
             dir = -1;
             break;
         default: goto bail_out;

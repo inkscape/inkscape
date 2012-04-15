@@ -24,6 +24,10 @@ class SPObject;
 class SPDesktop;
 class SPViewWidget;
 
+namespace Gtk {
+class SeparatorMenuItem;
+}
+
 namespace Inkscape {
 
 class Verb;

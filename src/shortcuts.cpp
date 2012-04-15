@@ -39,6 +39,10 @@
 #include "xml/node-iterators.h"
 #include "xml/repr.h"
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_VoidSymbol 0xffffff
+#endif
+
 using namespace Inkscape;
 
 static void sp_shortcut_set(unsigned int const shortcut, Inkscape::Verb *const verb, bool const is_primary);
@@ -127,7 +131,7 @@ static void read_shortcuts_file(char const *filename) {
         }
 
         guint keyval=gdk_keyval_from_name(keyval_name);
-        if (keyval == GDK_VoidSymbol || keyval == 0) {
+        if (keyval == GDK_KEY_VoidSymbol || keyval == 0) {
             g_warning("Unknown keyval %s for %s", keyval_name, verb_name);
             continue;
         }
@@ -202,7 +206,7 @@ sp_shortcut_get_verb(unsigned int shortcut)
 
 unsigned int sp_shortcut_get_primary(Inkscape::Verb *verb)
 {
-    unsigned int result = GDK_VoidSymbol;
+    unsigned int result = GDK_KEY_VoidSymbol;
     if (!primary_shortcuts) {
         sp_shortcut_init();
     }
@@ -225,7 +229,7 @@ gchar *sp_shortcut_get_label(unsigned int shortcut)
      * gtk_label_set_text_with_mnemonic(lbl, str).
      */
     gchar *result = 0;
-    if (shortcut != GDK_VoidSymbol) {
+    if (shortcut != GDK_KEY_VoidSymbol) {
         result = gtk_accelerator_get_label(
             shortcut & (~SP_SHORTCUT_MODIFIER_MASK), static_cast<GdkModifierType>(
                 ((shortcut & SP_SHORTCUT_SHIFT_MASK) ? GDK_SHIFT_MASK : 0) |

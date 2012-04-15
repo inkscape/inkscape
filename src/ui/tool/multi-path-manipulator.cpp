@@ -31,6 +31,115 @@
 
 #include <gdk/gdkkeysyms.h>
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_VoidSymbol 0xffffff
+#define GDK_KEY_Up 0xff52
+#define GDK_KEY_KP_Up 0xff97
+#define GDK_KEY_Down 0xff54
+#define GDK_KEY_KP_Down 0xff99
+#define GDK_KEY_Left 0xff51
+#define GDK_KEY_KP_Left 0xff96
+#define GDK_KEY_Right 0xff53
+#define GDK_KEY_KP_Right 0xff98
+#define GDK_KEY_Page_Up 0xff55
+#define GDK_KEY_KP_Page_Up 0xff9a
+#define GDK_KEY_Page_Down 0xff56
+#define GDK_KEY_KP_Page_Down 0xff9b
+#define GDK_KEY_Home 0xff50
+#define GDK_KEY_KP_Home 0xff95
+#define GDK_KEY_End 0xff57
+#define GDK_KEY_KP_End 0xff9c
+#define GDK_KEY_a 0x061
+#define GDK_KEY_A 0x041
+#define GDK_KEY_b 0x062
+#define GDK_KEY_B 0x042
+#define GDK_KEY_c 0x063
+#define GDK_KEY_C 0x043
+#define GDK_KEY_d 0x064
+#define GDK_KEY_D 0x044
+#define GDK_KEY_g 0x067
+#define GDK_KEY_G 0x047
+#define GDK_KEY_h 0x068
+#define GDK_KEY_H 0x048
+#define GDK_KEY_i 0x069
+#define GDK_KEY_I 0x049
+#define GDK_KEY_j 0x06a
+#define GDK_KEY_J 0x04a
+#define GDK_KEY_k 0x06b
+#define GDK_KEY_K 0x04b
+#define GDK_KEY_l 0x06c
+#define GDK_KEY_L 0x04c
+#define GDK_KEY_q 0x071
+#define GDK_KEY_Q 0x051
+#define GDK_KEY_r 0x072
+#define GDK_KEY_R 0x052
+#define GDK_KEY_s 0x073
+#define GDK_KEY_S 0x053
+#define GDK_KEY_u 0x075
+#define GDK_KEY_U 0x055
+#define GDK_KEY_v 0x076
+#define GDK_KEY_V 0x056
+#define GDK_KEY_w 0x077
+#define GDK_KEY_W 0x057
+#define GDK_KEY_x 0x078
+#define GDK_KEY_X 0x058
+#define GDK_KEY_y 0x079
+#define GDK_KEY_Y 0x059
+#define GDK_KEY_z 0x07a
+#define GDK_KEY_Z 0x05a
+#define GDK_KEY_Escape 0xff1b
+#define GDK_KEY_Control_L 0xffe3
+#define GDK_KEY_Control_R 0xffe4
+#define GDK_KEY_Alt_L 0xffe9
+#define GDK_KEY_Alt_R 0xffea
+#define GDK_KEY_Shift_L 0xffe1
+#define GDK_KEY_Shift_R 0xffe2
+#define GDK_KEY_Meta_L 0xffe7
+#define GDK_KEY_Meta_R 0xffe8
+#define GDK_KEY_KP_0 0xffb0
+#define GDK_KEY_KP_1 0xffb1
+#define GDK_KEY_KP_2 0xffb2
+#define GDK_KEY_KP_3 0xffb3
+#define GDK_KEY_KP_4 0xffb4
+#define GDK_KEY_KP_5 0xffb5
+#define GDK_KEY_KP_6 0xffb6
+#define GDK_KEY_KP_7 0xffb7
+#define GDK_KEY_KP_8 0xffb8
+#define GDK_KEY_KP_9 0xffb9
+#define GDK_KEY_F1 0xffbe
+#define GDK_KEY_F2 0xffbf
+#define GDK_KEY_F3 0xffc0
+#define GDK_KEY_F4 0xffc1
+#define GDK_KEY_F5 0xffc2
+#define GDK_KEY_F6 0xffc3
+#define GDK_KEY_F7 0xffc4
+#define GDK_KEY_F8 0xffc5
+#define GDK_KEY_F9 0xffc6
+#define GDK_KEY_F10 0xffc7
+#define GDK_KEY_F11 0xffc8
+#define GDK_KEY_Insert 0xff63
+#define GDK_KEY_KP_Insert 0xff9e
+#define GDK_KEY_Delete 0xffff
+#define GDK_KEY_KP_Delete 0xff9f
+#define GDK_KEY_BackSpace 0xff08
+#define GDK_KEY_Return 0xff0d
+#define GDK_KEY_KP_Enter 0xff8d
+#define GDK_KEY_space 0x020
+#define GDK_KEY_KP_Space 0xff80
+#define GDK_KEY_Tab 0xff09
+#define GDK_KEY_ISO_Left_Tab 0xfe20
+#define GDK_KEY_bracketleft 0x05b
+#define GDK_KEY_bracketright 0x05d
+#define GDK_KEY_braceleft 0x07b
+#define GDK_KEY_braceright 0x07d
+#define GDK_KEY_less 0x03c
+#define GDK_KEY_greater 0x03e
+#define GDK_KEY_comma 0x02c
+#define GDK_KEY_period 0x02e
+#define GDK_KEY_KP_Add 0xffab
+#define GDK_KEY_KP_Subtract 0xffad
+#endif
+
 #ifdef USE_GNU_HASHES
 namespace __gnu_cxx {
 template<>
@@ -581,21 +690,21 @@ bool MultiPathManipulator::event(SPEventContext *event_context, GdkEvent *event)
             switch (key) {
             // single handle functions
             // rotation
-            case GDK_bracketleft:
-            case GDK_braceleft:
+            case GDK_KEY_bracketleft:
+            case GDK_KEY_braceleft:
                 pm.rotateHandle(n, which, 1, one_pixel);
                 break;
-            case GDK_bracketright:
-            case GDK_braceright:
+            case GDK_KEY_bracketright:
+            case GDK_KEY_braceright:
                 pm.rotateHandle(n, which, -1, one_pixel);
                 break;
             // adjust length
-            case GDK_period:
-            case GDK_greater:
+            case GDK_KEY_period:
+            case GDK_KEY_greater:
                 pm.scaleHandle(n, which, 1, one_pixel);
                 break;
-            case GDK_comma:
-            case GDK_less:
+            case GDK_KEY_comma:
+            case GDK_KEY_less:
                 pm.scaleHandle(n, which, -1, one_pixel);
                 break;
             default:
@@ -611,13 +720,13 @@ bool MultiPathManipulator::event(SPEventContext *event_context, GdkEvent *event)
     switch (event->type) {
     case GDK_KEY_PRESS:
         switch (key) {
-        case GDK_Insert:
-        case GDK_KP_Insert:
+        case GDK_KEY_Insert:
+        case GDK_KEY_KP_Insert:
             // Insert - insert nodes in the middle of selected segments
             insertNodes();
             return true;
-        case GDK_i:
-        case GDK_I:
+        case GDK_KEY_i:
+        case GDK_KEY_I:
             if (held_only_shift(event->key)) {
                 // Shift+I - insert nodes (alternate keybinding for Mac keyboards
                 //           that don't have the Insert key)
@@ -625,14 +734,14 @@ bool MultiPathManipulator::event(SPEventContext *event_context, GdkEvent *event)
                 return true;
             }
             break;
-        case GDK_d:
-        case GDK_D:
+        case GDK_KEY_d:
+        case GDK_KEY_D:
             if (held_only_shift(event->key)) {
                 duplicateNodes();
                 return true;
             }
-        case GDK_j:
-        case GDK_J:
+        case GDK_KEY_j:
+        case GDK_KEY_J:
             if (held_only_shift(event->key)) {
                 // Shift+J - join nodes
                 joinNodes();
@@ -644,17 +753,17 @@ bool MultiPathManipulator::event(SPEventContext *event_context, GdkEvent *event)
                 return true;
             }
             break;
-        case GDK_b:
-        case GDK_B:
+        case GDK_KEY_b:
+        case GDK_KEY_B:
             if (held_only_shift(event->key)) {
                 // Shift+B - break nodes
                 breakNodes();
                 return true;
             }
             break;
-        case GDK_Delete:
-        case GDK_KP_Delete:
-        case GDK_BackSpace:
+        case GDK_KEY_Delete:
+        case GDK_KEY_KP_Delete:
+        case GDK_KEY_BackSpace:
             if (held_shift(event->key)) break;
             if (held_alt(event->key)) {
                 // Alt+Delete - delete segments
@@ -669,55 +778,55 @@ bool MultiPathManipulator::event(SPEventContext *event_context, GdkEvent *event)
                 deleteNodes(del_preserves_shape ^ held_control(event->key));
             }
             return true;
-        case GDK_c:
-        case GDK_C:
+        case GDK_KEY_c:
+        case GDK_KEY_C:
             if (held_only_shift(event->key)) {
                 // Shift+C - make nodes cusp
                 setNodeType(NODE_CUSP);
                 return true;
             }
             break;
-        case GDK_s:
-        case GDK_S:
+        case GDK_KEY_s:
+        case GDK_KEY_S:
             if (held_only_shift(event->key)) {
                 // Shift+S - make nodes smooth
                 setNodeType(NODE_SMOOTH);
                 return true;
             }
             break;
-        case GDK_a:
-        case GDK_A:
+        case GDK_KEY_a:
+        case GDK_KEY_A:
             if (held_only_shift(event->key)) {
                 // Shift+A - make nodes auto-smooth
                 setNodeType(NODE_AUTO);
                 return true;
             }
             break;
-        case GDK_y:
-        case GDK_Y:
+        case GDK_KEY_y:
+        case GDK_KEY_Y:
             if (held_only_shift(event->key)) {
                 // Shift+Y - make nodes symmetric
                 setNodeType(NODE_SYMMETRIC);
                 return true;
             }
             break;
-        case GDK_r:
-        case GDK_R:
+        case GDK_KEY_r:
+        case GDK_KEY_R:
             if (held_only_shift(event->key)) {
                 // Shift+R - reverse subpaths
                 reverseSubpaths();
                 return true;
             }
             break;
-        case GDK_l:
-        case GDK_L:
+        case GDK_KEY_l:
+        case GDK_KEY_L:
             if (held_only_shift(event->key)) {
                 // Shift+L - make segments linear
                 setSegmentType(SEGMENT_STRAIGHT);
                 return true;
             }
-        case GDK_u:
-        case GDK_U:
+        case GDK_KEY_u:
+        case GDK_KEY_U:
             if (held_only_shift(event->key)) {
                 // Shift+L - make segments curves
                 setSegmentType(SEGMENT_CUBIC_BEZIER);

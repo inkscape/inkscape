@@ -673,10 +673,10 @@ pencil_handle_key_release(SPPencilContext *const pc, guint const keyval, guint c
 {
     gint ret = FALSE;
     switch (keyval) {
-        case GDK_Alt_L:
-        case GDK_Alt_R:
-        case GDK_Meta_L:
-        case GDK_Meta_R:
+        case GDK_KEY_Alt_L:
+        case GDK_KEY_Alt_R:
+        case GDK_KEY_Meta_L:
+        case GDK_KEY_Meta_R:
             if (pc->state == SP_PENCIL_CONTEXT_SKETCH) {
                 spdc_concat_colors_and_flush(pc, FALSE);
                 pc->sketch_n = 0;

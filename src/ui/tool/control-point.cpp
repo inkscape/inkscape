@@ -27,6 +27,12 @@
 #include "ui/tool/event-utils.h"
 #include "ui/tool/transform-handle-set.h"
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#define GDK_KEY_Escape 0xff1b
+#define GDK_KEY_Tab 0xff09
+#define GDK_KEY_ISO_Left_Tab 0xfe20
+#endif
+
 namespace Inkscape {
 namespace UI {
 
@@ -440,7 +446,7 @@ bool ControlPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
     case GDK_KEY_PRESS:
         switch (get_group0_keyval(&event->key))
         {
-        case GDK_Escape: {
+        case GDK_KEY_Escape: {
             // ignore Escape if this is not a drag
             if (!_drag_initiated) break;
 
@@ -480,7 +486,7 @@ bool ControlPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
             ungrabbed(NULL); // ungrabbed handlers can handle a NULL event
             snapprefs.setSnapEnabledGlobally(snap_save);
             } return true;
-        case GDK_Tab:
+        case GDK_KEY_Tab:
             {// Downcast from ControlPoint to TransformHandle, if possible
              // This is an ugly hack; we should have the transform handle intercept the keystrokes itself
             TransformHandle *th = dynamic_cast<TransformHandle*>(this);
@@ -490,7 +496,7 @@ bool ControlPoint::_eventHandler(SPEventContext *event_context, GdkEvent *event)
             }
             break;
             }
-        case GDK_ISO_Left_Tab:
+        case GDK_KEY_ISO_Left_Tab:
             {// Downcast from ControlPoint to TransformHandle, if possible
              // This is an ugly hack; we should have the transform handle intercept the keystrokes itself
             TransformHandle *th = dynamic_cast<TransformHandle*>(this);
