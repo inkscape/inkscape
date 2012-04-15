@@ -238,10 +238,10 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
             Geom::Point discontinuity_vec = B[i].at0() - B[prev_i].at1();
             bool on_outside = ( dot(tang1, discontinuity_vec) >= 0. );
 
-            switch (jointype) {
-            case LINEJOIN_ROUND: {
-                if (on_outside) {
-                    // we are on the outside: round corner
+            if (on_outside) {
+                // we are on the outside: add some type of join!
+                switch (jointype) {
+                case LINEJOIN_ROUND: {
                     /* for constant width paths, the rounding is a circular arc (rx == ry),
                        for non-constant width paths, the rounding can be done with an ellipse but is hard and ambiguous.
                        The elliptical arc should go through the discontinuity's start and end points (of course!)
@@ -261,27 +261,10 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                     Geom::Ellipse ellipse = find_ellipse(B[prev_i].at1(), B[i].at0(), *O);
                     pb.arcTo( ellipse.ray(Geom::X), ellipse.ray(Geom::Y), ellipse.rot_angle(),
                               false, width < 0, B[i].at0() );
-                } else {
-                    // we are on the inside, do a simple bevel to connect the paths
-                    pb.lineTo(B[i].at0()); // default to bevel for too shallow cusp angles
-                }
-                break;
-            }
-/*            case LINEJOIN_NONE: {
-                if ( on_outside ) {
-                    // we are on the outside
-                    Geom::Point point_on_path = B[prev_i].at1() - rot90(tang1) * width;
-                    pb.lineTo(point_on_path);
-                    pb.lineTo(B[i].at0());
-                } else {
-                    // we are on the inside, do a simple bevel to connect the paths
-                    pb.lineTo(B[i].at0()); // default to bevel for too shallow cusp angles
-                }
-            } */
-            case LINEJOIN_EXTRP_MITER: {
-                if (on_outside) {
-                    // we are on the outside, do something complicated to make it look good ;)
 
+                    break;
+                }
+                case LINEJOIN_EXTRP_MITER: {
                     Geom::D2<Geom::SBasis> newcurve1 = B[prev_i] * Geom::reflection(rot90(tang1), B[prev_i].at1());
                     Geom::CubicBezier bzr1 = sbasis_to_cubicbezier( reverse(newcurve1) );
 
@@ -306,17 +289,9 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                             pb.curveTo(sub2.second[1], sub2.second[2], sub2.second[3]);
                         }
                     }
-
-                } else {
-                    // we are on the inside, do a simple bevel to connect the paths
-                    pb.lineTo(B[i].at0()); // default to bevel for too shallow cusp angles
+                    break;
                 }
-                break;
-            }
-            case LINEJOIN_MITER: {
-                if (on_outside) {
-                    // we are on the outside, do something complicated to make it look good ;)
-
+                case LINEJOIN_MITER: {
                     boost::optional<Geom::Point> p = intersection_point( B[prev_i].at1(), tang1,
                                                                          B[i].at0(), tang2 );
                     if (p) {
@@ -329,14 +304,9 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                         }
                     }
                     pb.lineTo(B[i].at0());
-                } else {
-                    // we are on the inside, do a simple bevel to connect the paths
-                    pb.lineTo(B[i].at0()); // default to bevel for too shallow cusp angles
+                    break;
                 }
-                break;
-            }
-            case LINEJOIN_SPIRO: {
-                if (on_outside) {
+                case LINEJOIN_SPIRO: {
                     Geom::Point direction = B[i].at0() - B[prev_i].at1();
                     double tang1_sign = dot(direction,tang1);
                     double tang2_sign = dot(direction,tang2);
@@ -358,19 +328,39 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                     Geom::Path spiro;
                     Spiro::spiro_run(controlpoints, 4, spiro);
                     pb.append(spiro.portion(1,spiro.size_open()-1), Geom::Path::STITCH_DISCONTINUOUS);
-                } else {
-                    // we are on the inside, do a simple bevel to connect the paths
-                    pb.lineTo(B[i].at0()); // default to bevel for too shallow cusp angles
+                    break;
                 }
-                break;
+                case LINEJOIN_BEVEL:
+                default:
+                    pb.lineTo(B[i].at0());
+                    break;
+                }
+
+                build_from_sbasis(pb, B[i], tol, false);
+
+            } else {
+                // we are on inside of corner!
+                Geom::Path bzr1 = path_from_sbasis( B[prev_i], tol );
+                Geom::Path bzr2 = path_from_sbasis( B[i], tol );
+                Geom::Crossings cross = crossings(bzr1, bzr2);
+                if (cross.empty()) {
+                    // empty crossing: default to bevel
+                    pb.lineTo(B[i].at0());
+                    pb.append(bzr2, Geom::Path::STITCH_DISCONTINUOUS);
+                } else {
+                    // :-) quick hack:
+                    for (unsigned i=0; i < bzr1.size_open(); ++i) {
+                        pb.backspace();
+                    }
+
+                    pb.append( bzr1.portion(0, cross[0].ta), Geom::Path::STITCH_DISCONTINUOUS );
+                    pb.append( bzr2.portion(cross[0].tb, bzr2.size_open()), Geom::Path::STITCH_DISCONTINUOUS );
+                }
             }
-            case LINEJOIN_BEVEL:
-            default:
-                pb.lineTo(B[i].at0());
-                break;
-            }
+        } else {
+            build_from_sbasis(pb, B[i], tol, false);
         }
-        build_from_sbasis(pb, B[i], tol, false);
+
         prev_i = i;
     }
     pb.finish();
