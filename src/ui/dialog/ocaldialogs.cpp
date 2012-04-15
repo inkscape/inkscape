@@ -1075,12 +1075,14 @@ void ImportDialog::update_label_no_search_results()
 {
     Glib::ustring keywords = Glib::Markup::escape_text(entry_search->get_text());
     Gdk::Color grey = entry_search->get_style()->get_text_aa(entry_search->get_state());
-    
+    Glib::ustring msg_one = Glib::ustring::compose(
+        _("No clipart named <b>%1</b> was found."),
+        keywords);
+    Glib::ustring msg_two = _("Please make sure all keywords are spelled correctly,"
+                              " or try again with different keywords.");
     Glib::ustring markup = Glib::ustring::compose(
-        "<span size=\"large\">%1 <b>%2</b> %3</span>\n<span color=\"%4\">%5</span>",
-        _("No clipart named"), keywords, _("was found."), grey.to_string(),
-        _("Please make sure all keywords are spelled correctly, or try again with different keywords."));
-    
+        "<span size=\"large\">%1</span>\n<span color=\"%2\">%3</span>",
+        msg_one, grey.to_string(), msg_two);
     label_not_found->set_markup(markup);
 }
 
