@@ -862,30 +862,29 @@ bool SvgBuilder::_addGradientStops(Inkscape::XML::Node *gradient, GfxShading *sh
     } else if ( type == 3 ) { // Stitching
         StitchingFunction *stitchingFunc = static_cast<StitchingFunction*>(func);
         double *bounds = stitchingFunc->getBounds();
+        double *encode = stitchingFunc->getEncode();
         int num_funcs = stitchingFunc->getNumFuncs();
+
         // Add stops from all the stitched functions
+        GfxRGB prev_color, color;
+        svgGetShadingColorRGB(shading, bounds[0], &prev_color);
+        _addStopToGradient(gradient, bounds[0], &prev_color, 1.0);
         for ( int i = 0 ; i < num_funcs ; i++ ) {
-            GfxRGB color;
-            svgGetShadingColorRGB(shading, bounds[i], &color);
-            bool is_continuation = false;
-            if ( i > 0 ) {  // Compare to previous stop
-                GfxRGB prev_color;
-                svgGetShadingColorRGB(shading, bounds[i-1], &prev_color);
-                if ( abs(color.r - prev_color.r) < INT_EPSILON &&
-                     abs(color.g - prev_color.g) < INT_EPSILON &&
-                     abs(color.b - prev_color.b) < INT_EPSILON ) {
-                    is_continuation = true;
+            svgGetShadingColorRGB(shading, bounds[i + 1], &color);
+            // Add stops
+            if (stitchingFunc->getFunc(i)->getType() == 2) {    // process exponential fxn
+                double expE = (static_cast<ExponentialFunction*>(stitchingFunc->getFunc(i)))->getE();
+                if (expE > 1.0) {
+                    expE = (bounds[i + 1] - bounds[i])/expE;    // approximate exponential as a single straight line at x=1
+                    if (encode[2*i] == 0) {    // normal sequence
+                        _addStopToGradient(gradient, bounds[i + 1] - expE, &prev_color, 1.0);
+                    } else {                   // reflected sequence
+                        _addStopToGradient(gradient, bounds[i] + expE, &color, 1.0);
+                    }
                 }
             }
-            // Add stops
-            if ( !is_continuation ) {
-                _addStopToGradient(gradient, bounds[i], &color, 1.0);
-            }
-            if ( is_continuation || ( i == num_funcs - 1 ) ) {
-                GfxRGB next_color;
-                svgGetShadingColorRGB(shading, bounds[i+1], &next_color);
-                _addStopToGradient(gradient, bounds[i+1], &next_color, 1.0);
-            }
+            _addStopToGradient(gradient, bounds[i + 1], &color, 1.0);
+            prev_color = color;
         }
     } else { // Unsupported function type
         return false;
