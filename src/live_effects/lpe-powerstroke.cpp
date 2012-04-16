@@ -209,7 +209,7 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                                           Geom::Piecewise<Geom::SBasis> const & y, // width path
                                           LineJoinType jointype,
                                           double miter_limit,
-                                          bool forward_direction,
+                                          bool /*forward_direction*/,
                                           double tol=Geom::EPSILON)
 {
 /* per definition, each discontinuity should be fixed with a join-ending, as defined by linejoin_type

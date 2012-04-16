@@ -435,17 +435,17 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
     }
 
     for (unsigned char_index = 0 ; char_index < _characters.size() ; ) {
-        unsigned current_cluster_glyph_index, next_cluster_glyph_index;
-        unsigned next_cluster_char_index;
         Span const &span = _characters[char_index].span(this);
 
-        current_cluster_glyph_index = _characters[char_index].in_glyph;
-
+        size_t next_cluster_char_index = 0; // TODO refactor to not bump via for loops
         for (next_cluster_char_index = char_index + 1 ; next_cluster_char_index < _characters.size() ; next_cluster_char_index++) {
             if (_characters[next_cluster_char_index].in_glyph != -1 && _characters[next_cluster_char_index].char_attributes.is_cursor_position)
+            {
                 break;
+            }
         }
 
+        size_t next_cluster_glyph_index = 0;
         if (next_cluster_char_index == _characters.size()) {
             next_cluster_glyph_index = _glyphs.size();
         } else {
@@ -454,11 +454,16 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
 
         double start_offset = offset + span.x_start + _characters[char_index].x;
         double cluster_width = 0.0;
-        for (int glyph_index = current_cluster_glyph_index ; glyph_index < next_cluster_glyph_index ; glyph_index++)
+        size_t const current_cluster_glyph_index = _characters[char_index].in_glyph;
+        for (size_t glyph_index = current_cluster_glyph_index ; glyph_index < next_cluster_glyph_index ; glyph_index++)
+        {
             cluster_width += _glyphs[glyph_index].width;
+        }
         // TODO block progression?
         if (span.direction == RIGHT_TO_LEFT)
+        {
             start_offset -= cluster_width;
+        }
         double end_offset = start_offset + cluster_width;
 
         int unused = 0;
@@ -504,17 +509,19 @@ void Layout::fitToPathAlign(SVGLength const &startOffset, Path const &path)
 
             if (_directions_are_orthogonal(_blockProgression(), TOP_TO_BOTTOM)) {
                 double rotation = atan2(-tangent[Geom::X], tangent[Geom::Y]);
-                for (int glyph_index = current_cluster_glyph_index; glyph_index < next_cluster_glyph_index ; glyph_index++) {
+                for (size_t glyph_index = current_cluster_glyph_index; glyph_index < next_cluster_glyph_index ; glyph_index++) {
                     _glyphs[glyph_index].x = midpoint[Geom::Y] - tangent[Geom::X] * _glyphs[glyph_index].y - span.chunk(this).left_x;
                     _glyphs[glyph_index].y = midpoint[Geom::X] + tangent[Geom::Y] * _glyphs[glyph_index].y - _lines.front().baseline_y;
                    _glyphs[glyph_index].rotation += rotation;
                 }
             } else {
                 double rotation = atan2(tangent[Geom::Y], tangent[Geom::X]);
-                for (int glyph_index = current_cluster_glyph_index; glyph_index < next_cluster_glyph_index ; glyph_index++) {
+                for (size_t glyph_index = current_cluster_glyph_index; glyph_index < next_cluster_glyph_index ; glyph_index++) {
                     double tangent_shift = -cluster_width * 0.5 + _glyphs[glyph_index].x - (_characters[char_index].x + span.x_start);
                     if (span.direction == RIGHT_TO_LEFT)
+                    {
                         tangent_shift += cluster_width;
+                    }
                     _glyphs[glyph_index].x = midpoint[Geom::X] + tangent[Geom::X] * tangent_shift - tangent[Geom::Y] * _glyphs[glyph_index].y - span.chunk(this).left_x;
                     _glyphs[glyph_index].y = midpoint[Geom::Y] + tangent[Geom::Y] * tangent_shift + tangent[Geom::X] * _glyphs[glyph_index].y - _lines.front().baseline_y;
                     _glyphs[glyph_index].rotation += rotation;
