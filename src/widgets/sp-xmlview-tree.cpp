@@ -298,7 +298,9 @@ element_attr_changed (Inkscape::XML::Node * repr, const gchar * key, const gchar
 
 	GtkTreeIter iter;
 	tree_ref_to_iter(data->tree, &iter,  data->rowref);
-	gtk_tree_store_set (GTK_TREE_STORE(data->tree->store), &iter, STORE_TEXT_COL, label, -1);
+	if (gtk_tree_store_iter_is_valid(GTK_TREE_STORE(data->tree->store), &iter)){
+	    gtk_tree_store_set (GTK_TREE_STORE(data->tree->store), &iter, STORE_TEXT_COL, label, -1);
+	}
 	g_free (label);
 }
 
@@ -545,7 +547,9 @@ GtkTreeRowReference  *tree_iter_to_ref (SPXMLViewTree * tree, GtkTreeIter* iter)
 void tree_ref_to_iter (SPXMLViewTree * tree, GtkTreeIter* iter, GtkTreeRowReference  *ref)
 {
     GtkTreePath* path = gtk_tree_row_reference_get_path(ref);
-    gtk_tree_model_get_iter(GTK_TREE_MODEL(tree->store), iter, path);
+    if (path) {
+        gtk_tree_model_get_iter(GTK_TREE_MODEL(tree->store), iter, path);
+    }
 }
 
 /*
