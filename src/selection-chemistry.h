@@ -142,8 +142,8 @@ void scroll_to_show_item(SPDesktop *desktop, SPItem *item);
 void sp_undo (SPDesktop *desktop, SPDocument *doc);
 void sp_redo (SPDesktop *desktop, SPDocument *doc);
 
-void sp_selection_get_export_hints (Inkscape::Selection *selection, const char **filename, float *xdpi, float *ydpi);
-void sp_document_get_export_hints (SPDocument * doc, const char **filename, float *xdpi, float *ydpi);
+void sp_selection_get_export_hints (Inkscape::Selection *selection, Glib::ustring &filename, float *xdpi, float *ydpi);
+void sp_document_get_export_hints (SPDocument * doc, Glib::ustring &filename, float *xdpi, float *ydpi);
 
 void sp_selection_create_bitmap_copy (SPDesktop *desktop);
 

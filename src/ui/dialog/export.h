@@ -199,9 +199,9 @@ private:
      * Utlitiy filename and path functions
      */
     void set_default_filename ();
-    gchar* create_filepath_from_id (const gchar *id, const gchar *file_entry_text);
+    Glib::ustring create_filepath_from_id (Glib::ustring id, const Glib::ustring &file_entry_text);
     Glib::ustring filename_add_extension (Glib::ustring filename, Glib::ustring extension);
-    gchar *absolutize_path_from_document_location (SPDocument *doc, const gchar *filename);
+    Glib::ustring absolutize_path_from_document_location (SPDocument *doc, const Glib::ustring &filename);
 
     /*
      * Currently selected export area type
@@ -210,8 +210,8 @@ private:
     /*
      * Original name for the export object
      */
-    gchar * original_name;
-    gchar * doc_export_name;
+    Glib::ustring original_name;
+    Glib::ustring doc_export_name;
     /*
      * Was the Original name modified
      */

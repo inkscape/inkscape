@@ -10,8 +10,9 @@
  *   Jon A. Cruz <jon@joncruz.org>
  *   Martin Sucha <martin.sucha-inkscape@jts-sro.sk>
  *   Abhishek Sharma
+ *   Kris De Gussem <Kris.DeGussem@gmail.com>
  *
- * Copyright (C) 1999-2010 authors
+ * Copyright (C) 1999-2010,2012 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -2924,8 +2925,7 @@ void sp_selection_untile(SPDesktop *desktop)
     }
 }
 
-void
-sp_selection_get_export_hints(Inkscape::Selection *selection, char const **filename, float *xdpi, float *ydpi)
+void sp_selection_get_export_hints(Inkscape::Selection *selection, Glib::ustring &filename, float *xdpi, float *ydpi)
 {
     if (selection->isEmpty()) {
         return;
@@ -2945,13 +2945,17 @@ sp_selection_get_export_hints(Inkscape::Selection *selection, char const **filen
         Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
 
         if (filename_search) {
-            *filename = repr->attribute("inkscape:export-filename");
-            if (*filename != NULL)
+            const gchar* tmp = repr->attribute("inkscape:export-filename");
+            if (tmp){
+                filename = tmp;
                 filename_search = FALSE;
+            }
+            else{
+                filename.clear();
+            }
         }
 
         if (xdpi_search) {
-            dpi_string = NULL;
             dpi_string = repr->attribute("inkscape:export-xdpi");
             if (dpi_string != NULL) {
                 *xdpi = atof(dpi_string);
@@ -2960,7 +2964,6 @@ sp_selection_get_export_hints(Inkscape::Selection *selection, char const **filen
         }
 
         if (ydpi_search) {
-            dpi_string = NULL;
             dpi_string = repr->attribute("inkscape:export-ydpi");
             if (dpi_string != NULL) {
                 *ydpi = atof(dpi_string);
@@ -2970,12 +2973,19 @@ sp_selection_get_export_hints(Inkscape::Selection *selection, char const **filen
     }
 }
 
-void sp_document_get_export_hints(SPDocument *doc, char const **filename, float *xdpi, float *ydpi)
+void sp_document_get_export_hints(SPDocument *doc, Glib::ustring &filename, float *xdpi, float *ydpi)
 {
     Inkscape::XML::Node * repr = doc->getReprRoot();
 
-    *filename = repr->attribute("inkscape:export-filename");
-
+    const gchar* tmp = repr->attribute("inkscape:export-filename");
+    if(tmp)
+    {
+        filename = tmp;
+    }
+    else
+    {
+        filename.clear();
+    }
     gchar const *dpi_string = repr->attribute("inkscape:export-xdpi");
     if (dpi_string != NULL) {
         *xdpi = atof(dpi_string);
@@ -3069,14 +3079,14 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
         res = PX_PER_IN * prefs_min / MIN(bbox->width(), bbox->height());
     } else {
         float hint_xdpi = 0, hint_ydpi = 0;
-        char const *hint_filename;
+        Glib::ustring hint_filename;
         // take resolution hint from the selected objects
-        sp_selection_get_export_hints(selection, &hint_filename, &hint_xdpi, &hint_ydpi);
+        sp_selection_get_export_hints(selection, hint_filename, &hint_xdpi, &hint_ydpi);
         if (hint_xdpi != 0) {
             res = hint_xdpi;
         } else {
             // take resolution hint from the document
-            sp_document_get_export_hints(document, &hint_filename, &hint_xdpi, &hint_ydpi);
+            sp_document_get_export_hints(document, hint_filename, &hint_xdpi, &hint_ydpi);
             if (hint_xdpi != 0) {
                 res = hint_xdpi;
             } else {
