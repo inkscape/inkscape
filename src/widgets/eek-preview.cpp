@@ -177,6 +177,20 @@ static void eek_preview_size_request( GtkWidget* widget, GtkRequisition* req )
     req->height = height;
 }
 
+static void eek_preview_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+{
+	GtkRequisition requisition;
+	eek_preview_size_request(widget, &requisition);
+	*minimal_width = *natural_width = requisition.width;
+}
+
+static void eek_preview_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	GtkRequisition requisition;
+	eek_preview_size_request(widget, &requisition);
+	*minimal_height = *natural_height = requisition.height;
+}
+
 enum {
   CLICKED_SIGNAL,
   ALTCLICKED_SIGNAL,
@@ -578,7 +592,12 @@ static void eek_preview_class_init( EekPreviewClass *klass )
     /*widgetClass->unmap = ;*/
     /*widgetClass->realize = ;*/
     /*widgetClass->unrealize = ;*/
+#if GTK_CHECK_VERSION(3,0,0)
+    widgetClass->get_preferred_width = eek_preview_get_preferred_width;
+    widgetClass->get_preferred_height = eek_preview_get_preferred_height;
+#else
     widgetClass->size_request = eek_preview_size_request;
+#endif
     /*widgetClass->size_allocate = ;*/
     /*widgetClass->state_changed = ;*/
     /*widgetClass->style_set = ;*/

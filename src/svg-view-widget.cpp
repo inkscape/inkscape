@@ -29,6 +29,14 @@ static void sp_svg_view_widget_destroy (GtkObject *object);
 static void sp_svg_view_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 static void sp_svg_view_widget_size_request (GtkWidget *widget, GtkRequisition *req);
 
+static void sp_svg_view_widget_get_preferred_width(GtkWidget *widget, 
+                                                   gint *minimal_width,
+						   gint *natural_width);
+
+static void sp_svg_view_widget_get_preferred_height(GtkWidget *widget, 
+                                                    gint *minimal_height,
+						    gint *natural_height);
+
 static void sp_svg_view_widget_view_resized (SPViewWidget *vw, Inkscape::UI::View::View *view, gdouble width, gdouble height);
 
 static SPViewWidgetClass *widget_parent_class;
@@ -68,7 +76,12 @@ static void sp_svg_view_widget_class_init(SPSVGSPViewWidgetClass *klass)
 	object_class->destroy = sp_svg_view_widget_destroy;
 
 	widget_class->size_allocate = sp_svg_view_widget_size_allocate;
+#if GTK_CHECK_VERSION(3,0,0)
+	widget_class->get_preferred_width = sp_svg_view_widget_get_preferred_width;
+	widget_class->get_preferred_height = sp_svg_view_widget_get_preferred_height;
+#else
 	widget_class->size_request = sp_svg_view_widget_size_request;
+#endif
 
 	vw_class->view_resized = sp_svg_view_widget_view_resized;
 }
@@ -162,6 +175,20 @@ static void sp_svg_view_widget_size_request(GtkWidget *widget, GtkRequisition *r
 		}
 		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (vw->sw), hpol, vpol);
 	}
+}
+
+static void sp_svg_view_widget_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+{
+	GtkRequisition requisition;
+	sp_svg_view_widget_size_request(widget, &requisition);
+	*minimal_width = *natural_width = requisition.width;
+}
+
+static void sp_svg_view_widget_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	GtkRequisition requisition;
+	sp_svg_view_widget_size_request(widget, &requisition);
+	*minimal_height = *natural_height = requisition.height;
 }
 
 /**

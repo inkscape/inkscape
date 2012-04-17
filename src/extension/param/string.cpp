@@ -10,6 +10,7 @@
 # include "config.h"
 #endif
 
+#include <glibmm/value.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/box.h>
 #include <gtkmm/spinbutton.h>

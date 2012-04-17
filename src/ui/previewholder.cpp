@@ -207,7 +207,12 @@ void PreviewHolder::on_size_allocate( Gtk::Allocation& allocation )
     Gtk::VBox::on_size_allocate( allocation );
 
     if ( _insides && !_wrap && (_view != VIEW_TYPE_LIST) && (_anchor == SP_ANCHOR_NORTH || _anchor == SP_ANCHOR_SOUTH) ) {
-        Gtk::Requisition req = _insides->size_request();
+	Gtk::Requisition req;
+#if WITH_GTKMM_3_0
+	_insides->get_preferred_size(&req, NULL);
+#else
+        req = _insides->size_request();
+#endif
         gint delta = allocation.get_width() - req.width;
 
         if ( (delta > 4) && req.height < allocation.get_height() ) {
@@ -233,7 +238,12 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
     height = 1;
 
     if ( _anchor == SP_ANCHOR_SOUTH || _anchor == SP_ANCHOR_NORTH ) {
-        Gtk::Requisition req = _scroller->size_request();
+        Gtk::Requisition req;
+#if WITH_GTKMM_3_0
+	_scroller->get_preferred_size(&req, NULL);
+#else
+       	req = _scroller->size_request();
+#endif
         int currW = _scroller->get_width();
         if ( currW > req.width ) {
             req.width = currW;
@@ -241,13 +251,23 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
 
         Gtk::HScrollbar* hs = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_hscrollbar();
         if ( hs ) {
-            Gtk::Requisition scrollReq = hs->size_request();
+            Gtk::Requisition scrollReq;
+#if WITH_GTKMM_3_0
+	    hs->get_preferred_size(&req, NULL);
+#else
+	    req = hs->size_request();
+#endif
 
             // the +8 is a temporary hack
             req.height -= scrollReq.height + 8;
         }
 
-        Gtk::Requisition req2 = const_cast<Gtk::Widget*>(thing)->size_request();
+        Gtk::Requisition req2;
+#if WITH_GTKMM_3_0
+	const_cast<Gtk::Widget*>(thing)->get_preferred_size(&req, NULL);
+#else
+       	req = const_cast<Gtk::Widget*>(thing)->size_request();
+#endif
 
         int h2 = ((req2.height > 0) && (req.height > req2.height)) ? (req.height / req2.height) : 1;
         int w2 = ((req2.width > 0) && (req.width > req2.width)) ? (req.width / req2.width) : 1;

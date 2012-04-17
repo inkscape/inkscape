@@ -61,6 +61,15 @@ struct IconImpl {
     static void clear(SPIcon *icon);
 
     static void sizeRequest(GtkWidget *widget, GtkRequisition *requisition);
+    
+    static void getPreferredWidth(GtkWidget *widget, 
+		    gint *minimal_width,
+		    gint *natural_width);
+
+    static void getPreferredHeight(GtkWidget *widget, 
+		    gint *minimal_height,
+		    gint *natural_height);
+
     static void sizeAllocate(GtkWidget *widget, GtkAllocation *allocation);
     static int expose(GtkWidget *widget, GdkEventExpose *event);
 
@@ -172,7 +181,12 @@ void IconImpl::classInit(SPIconClass *klass)
 
     object_class->dispose = IconImpl::dispose;
 
+#if GTK_CHECK_VERSION(3,0,0)
+    widget_class->get_preferred_width = IconImpl::getPreferredWidth;
+    widget_class->get_preferred_height = IconImpl::getPreferredHeight;
+#else
     widget_class->size_request = IconImpl::sizeRequest;
+#endif
     widget_class->size_allocate = IconImpl::sizeAllocate;
     widget_class->expose_event = IconImpl::expose;
     widget_class->screen_changed = IconImpl::screenChanged;
@@ -223,6 +237,20 @@ void IconImpl::sizeRequest(GtkWidget *widget, GtkRequisition *requisition)
                        : getPhysSize(icon->lsize) );
     requisition->width = size;
     requisition->height = size;
+}
+
+void IconImpl::getPreferredWidth(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+{
+	GtkRequisition requisition;
+	sizeRequest(widget, &requisition);
+	*minimal_width = *natural_width = requisition.width;
+}
+
+void IconImpl::getPreferredHeight(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	GtkRequisition requisition;
+	sizeRequest(widget, &requisition);
+	*minimal_height = *natural_height = requisition.height;
 }
 
 void IconImpl::sizeAllocate(GtkWidget *widget, GtkAllocation *allocation)

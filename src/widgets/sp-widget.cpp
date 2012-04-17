@@ -35,6 +35,15 @@ static void sp_widget_show (GtkWidget *widget);
 static void sp_widget_hide (GtkWidget *widget);
 static gint sp_widget_expose (GtkWidget *widget, GdkEventExpose *event);
 static void sp_widget_size_request (GtkWidget *widget, GtkRequisition *requisition);
+
+static void sp_widget_get_preferred_width(GtkWidget *widget, 
+                                                   gint *minimal_width,
+						   gint *natural_width);
+
+static void sp_widget_get_preferred_height(GtkWidget *widget, 
+                                                    gint *minimal_height,
+						    gint *natural_height);
+
 static void sp_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 
 static void sp_widget_modify_selection (Inkscape::Application *inkscape, Inkscape::Selection *selection, guint flags, SPWidget *spw);
@@ -115,7 +124,12 @@ sp_widget_class_init (SPWidgetClass *klass)
 	widget_class->show = sp_widget_show;
 	widget_class->hide = sp_widget_hide;
 	widget_class->expose_event = sp_widget_expose;
+#if GTK_CHECK_VERSION(3,0,0)
+	widget_class->get_preferred_width = sp_widget_get_preferred_width;
+	widget_class->get_preferred_height = sp_widget_get_preferred_height;
+#else
 	widget_class->size_request = sp_widget_size_request;
+#endif
 	widget_class->size_allocate = sp_widget_size_allocate;
 }
 
@@ -210,6 +224,20 @@ sp_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 
 	if (child)
 		gtk_widget_size_request (child, requisition);
+}
+
+static void sp_widget_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+{
+	GtkRequisition requisition;
+	sp_widget_size_request(widget, &requisition);
+	*minimal_width = *natural_width = requisition.width;
+}
+
+static void sp_widget_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	GtkRequisition requisition;
+	sp_widget_size_request(widget, &requisition);
+	*minimal_height = *natural_height = requisition.height;
 }
 
 static void

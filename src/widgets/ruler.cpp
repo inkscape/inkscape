@@ -61,6 +61,15 @@ static void     gtk_deprecated_ruler_realize         (GtkWidget      *widget);
 static void     gtk_deprecated_ruler_unrealize       (GtkWidget      *widget);
 static void     gtk_deprecated_ruler_size_request    (GtkWidget      *widget,
                                                       GtkRequisition *requisition);
+
+static void     gtk_deprecated_ruler_get_preferred_width(GtkWidget *widget, 
+                                                         gint *minimal_width,
+							 gint *natural_width);
+
+static void     gtk_deprecated_ruler_get_preferred_height(GtkWidget *widget, 
+                                                    gint *minimal_height,
+						    gint *natural_height);
+
 static void     gtk_deprecated_ruler_size_allocate   (GtkWidget      *widget,
                                                       GtkAllocation  *allocation);
 static gboolean gtk_deprecated_ruler_motion_notify   (GtkWidget      *widget,
@@ -96,7 +105,12 @@ gtk_deprecated_ruler_class_init (GtkDeprecatedRulerClass *klass)
 
   widget_class->realize = gtk_deprecated_ruler_realize;
   widget_class->unrealize = gtk_deprecated_ruler_unrealize;
+#if GTK_CHECK_VERSION(3,0,0)
+  widget_class->get_preferred_width = gtk_deprecated_ruler_get_preferred_width;
+  widget_class->get_preferred_height = gtk_deprecated_ruler_get_preferred_height;
+#else
   widget_class->size_request = gtk_deprecated_ruler_size_request;
+#endif
   widget_class->size_allocate = gtk_deprecated_ruler_size_allocate;
   widget_class->motion_notify_event = gtk_deprecated_ruler_motion_notify;
   widget_class->expose_event = gtk_deprecated_ruler_expose;
@@ -468,6 +482,20 @@ gtk_deprecated_ruler_size_request (GtkWidget      *widget,
       requisition->width  = style->xthickness * 2 + RULER_WIDTH;
       requisition->height = style->ythickness * 2 + 1;
     }
+}
+
+static void gtk_deprecated_ruler_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+{
+	GtkRequisition requisition;
+	gtk_deprecated_ruler_size_request(widget, &requisition);
+	*minimal_width = *natural_width = requisition.width;
+}
+
+static void gtk_deprecated_ruler_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	GtkRequisition requisition;
+	gtk_deprecated_ruler_size_request(widget, &requisition);
+	*minimal_height = *natural_height = requisition.height;
 }
 
 static void
@@ -995,6 +1023,14 @@ static gint sp_vruler_motion_notify (GtkWidget      *widget,
 				      GdkEventMotion *event);
 static void sp_vruler_size_request (GtkWidget *widget, GtkRequisition *requisition);
 
+static void sp_vruler_get_preferred_width(GtkWidget *widget, 
+                                          gint *minimal_width,
+					  gint *natural_width);
+
+static void sp_vruler_get_preferred_height(GtkWidget *widget, 
+                                           gint *minimal_height,
+					   gint *natural_height);
+
 static GtkWidgetClass *vruler_parent_class;
 
 GType
@@ -1033,7 +1069,13 @@ sp_vruler_class_init (SPVRulerClass *klass)
   ruler_class = (GtkDeprecatedRulerClass*) klass;
 
   widget_class->motion_notify_event = sp_vruler_motion_notify;
+
+#if GTK_CHECK_VERSION(3,0,0)
+  widget_class->get_preferred_width = sp_vruler_get_preferred_width;
+  widget_class->get_preferred_height = sp_vruler_get_preferred_height;
+#else
   widget_class->size_request = sp_vruler_size_request;
+#endif
 
   ruler_class->draw_ticks = sp_ruler_common_draw_ticks;
 }
@@ -1089,6 +1131,20 @@ sp_vruler_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
 	GtkStyle *style = gtk_widget_get_style (widget);
   requisition->width = style->xthickness * 2 + RULER_WIDTH;
+}
+
+static void sp_vruler_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+{
+	GtkRequisition requisition;
+	sp_vruler_size_request(widget, &requisition);
+	*minimal_width = *natural_width = requisition.width;
+}
+
+static void sp_vruler_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	GtkRequisition requisition;
+	sp_vruler_size_request(widget, &requisition);
+	*minimal_height = *natural_height = requisition.height;
 }
 
 static void
