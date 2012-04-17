@@ -25,6 +25,7 @@
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/stock.h>
+#include "ui/widget/frame.h"
 
 #include "desktop.h"
 #include "desktop-handles.h"
@@ -160,7 +161,7 @@ IconPreviewPanel::IconPreviewPanel() :
 
     Gtk::VBox* magBox = new Gtk::VBox();
 
-    Gtk::Frame *magFrame = Gtk::manage(new Gtk::Frame(_("Magnified:")));
+    UI::Widget::Frame *magFrame = Gtk::manage(new UI::Widget::Frame(_("Magnified:")));
     magFrame->add( magnified );
 
     magBox->pack_start( *magFrame, Gtk::PACK_EXPAND_WIDGET );
@@ -229,7 +230,7 @@ IconPreviewPanel::IconPreviewPanel() :
 
     iconBox.pack_start(splitter);
     splitter.pack1( *magBox, true, true );
-    Gtk::Frame *actuals = Gtk::manage(new Gtk::Frame(_("Actual Size:")));
+    UI::Widget::Frame *actuals = Gtk::manage(new UI::Widget::Frame (_("Actual Size:")));
     actuals->add(*verts);
     splitter.pack2( *actuals, false, false );
 

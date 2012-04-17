@@ -19,6 +19,8 @@ ink_common_sources +=	\
 	ui/widget/entry.h        \
 	ui/widget/filter-effect-chooser.h \
 	ui/widget/filter-effect-chooser.cpp \
+	ui/widget/frame.cpp      \
+	ui/widget/frame.h        \
 	ui/widget/handlebox.cpp		\
 	ui/widget/handlebox.h		\
 	ui/widget/icon-widget.cpp	\

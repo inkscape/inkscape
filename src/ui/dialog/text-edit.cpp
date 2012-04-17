@@ -64,7 +64,7 @@ namespace Dialog {
 TextEdit::TextEdit()
     : UI::Widget::Panel("", "/dialogs/textandfont", SP_VERB_DIALOG_TEXT),
       font_label(_("_Font"), true),
-      layout_frame(_("Layout")),
+      layout_frame(),
       text_label(_("_Text"), true),
       setasdefault_button(_("Set as _default")),
       close_button(Gtk::Stock::CLOSE),
@@ -134,6 +134,7 @@ This conditional and its #else block can be deleted in the future.
     gtk_widget_set_tooltip_text (px, _("Spacing between lines (percent of font size)"));
     gtk_widget_set_tooltip_text (spacing_combo, _("Spacing between lines (percent of font size)"));
     layout_hbox.pack_start(*Gtk::manage(Glib::wrap(spacing_combo)), false, false);
+    layout_frame.set_padding(4,4,4,4);
     layout_frame.add(layout_hbox);
 
     /* Font preview */

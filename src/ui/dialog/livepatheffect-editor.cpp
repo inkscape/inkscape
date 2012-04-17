@@ -84,7 +84,6 @@ LivePathEffectEditor::LivePathEffectEditor()
       effectwidget(NULL),
       status_label("", Gtk::ALIGN_CENTER),
       effectcontrol_frame(""),
-      effectlist_frame(_("Effect list")),
       button_add(),
       button_remove(),
       button_up(),

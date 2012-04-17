@@ -13,6 +13,8 @@
 #include <set>
 #include <list>
 #include "ui/widget/panel.h"
+#include "ui/widget/frame.h"
+
 #include <glib/gprintf.h>
 #include <glibmm/i18n.h>
 #include <gtkmm/alignment.h>
@@ -426,8 +428,8 @@ private:
     Glib::RefPtr<Gtk::TreeStore> store;
     Gtk::TreeIter tabletIter;
     Gtk::TreeView tree;
-    Gtk::Frame frame2;
-    Gtk::Frame testFrame;
+    Inkscape::UI::Widget::Frame detailFrame;
+    Inkscape::UI::Widget::Frame testFrame;
     Gtk::ScrolledWindow treeScroller;
     Gtk::ScrolledWindow detailScroller;
     Gtk::HPaned splitter;
@@ -527,7 +529,7 @@ InputDialogImpl::InputDialogImpl() :
     store(Gtk::TreeStore::create(getCols())),
     tabletIter(),
     tree(store),
-    frame2(),
+    detailFrame(),
     testFrame(_("Test Area")),
     treeScroller(),
     detailScroller(),
@@ -544,10 +546,11 @@ InputDialogImpl::InputDialogImpl() :
 
 
     treeScroller.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    treeScroller.set_shadow_type(Gtk::SHADOW_IN);
     treeScroller.add(tree);
     treeScroller.set_size_request(50, 0);
     split2.pack1(testFrame, false, false);
-    split2.pack2(frame2, true, true);
+    split2.pack2(detailFrame, true, true);
     splitter.pack1(treeScroller);
     splitter.pack2(split2);
 
@@ -591,7 +594,7 @@ InputDialogImpl::InputDialogImpl() :
 
     int rowNum = 0;
 
-    Gtk::Label* lbl = Gtk::manage(new Gtk::Label(_("Name:")));
+/*    Gtk::Label* lbl = Gtk::manage(new Gtk::Label(_("Name:")));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
@@ -599,9 +602,9 @@ InputDialogImpl::InputDialogImpl() :
                       ::Gtk::SHRINK,
                       ::Gtk::SHRINK);
 
-    rowNum++;
+    rowNum++;*/
 
-    lbl = Gtk::manage(new Gtk::Label(_("Link:")));
+    Gtk::Label *lbl = Gtk::manage(new Gtk::Label(_("Link:")));
     devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
@@ -700,9 +703,11 @@ InputDialogImpl::InputDialogImpl() :
 
     devDetails.set_sensitive(false);
     detailScroller.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    detailScroller.set_shadow_type(Gtk::SHADOW_NONE);
+    detailScroller.set_border_width (0);
     detailScroller.add(devDetails);
-    frame2.add(detailScroller);
-    frame2.set_size_request(0, 60);
+    detailFrame.add(detailScroller);
+    detailFrame.set_size_request(0, 60);
 
 //- 16x16/devices
 // gnome-dev-mouse-optical
@@ -1307,6 +1312,7 @@ void InputDialogImpl::resyncToSelection() {
 
             clear = false;
             devName.set_label(row[getCols().description]);
+            detailFrame.set_label(row[getCols().description]);
             setupValueAndCombo( dev->getNumAxes(), dev->getNumAxes(), devAxesCount, axesCombo);
             setupValueAndCombo( dev->getNumKeys(), dev->getNumKeys(), devKeyCount, buttonCombo);
         }
@@ -1314,6 +1320,7 @@ void InputDialogImpl::resyncToSelection() {
 
     devDetails.set_sensitive(!clear);
     if (clear) {
+        detailFrame.set_label("");
         devName.set_label("");
         devAxesCount.set_label("");
         devKeyCount.set_label("");

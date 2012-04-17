@@ -16,6 +16,7 @@
 #include <gtkmm/label.h>
 #include <gtkmm/frame.h>
 #include "ui/widget/combo-enums.h"
+#include "ui/widget/frame.h"
 #include "live_effects/effect-enum.h"
 #include <gtkmm/liststore.h>
 #include <gtkmm/treeview.h>
@@ -89,8 +90,7 @@ private:
     
     Gtk::Widget * effectwidget;
     Gtk::Label status_label;
-    Gtk::Frame effectcontrol_frame;
-    Gtk::Frame effectlist_frame;
+    UI::Widget::Frame effectcontrol_frame;
     Gtk::HBox effectapplication_hbox;
     Gtk::VBox effectcontrol_vbox;
     Gtk::VBox effectlist_vbox;

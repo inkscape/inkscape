@@ -25,6 +25,7 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/separator.h>
 #include "ui/widget/panel.h"
+#include "ui/widget/frame.h"
 #include "ui/dialog/desktop-tracker.h"
 
 class SPItem;
@@ -165,7 +166,7 @@ private:
     Gtk::HBox fontsel_hbox;
     SPFontSelector *fsel;
 
-    Gtk::Frame layout_frame;
+    Gtk::Alignment layout_frame;
     Gtk::HBox layout_hbox;
     Gtk::RadioButton align_left;
     Gtk::RadioButton align_center;

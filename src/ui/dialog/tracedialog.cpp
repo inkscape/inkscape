@@ -19,6 +19,7 @@
 #include <gtkmm/notebook.h>
 #include <gtkmm/frame.h>
 #include "ui/widget/spinbutton.h"
+#include "ui/widget/frame.h"
 #include <gtkmm/stock.h>
 
 #include <gtk/gtk.h> //for GTK_RESPONSE* types
@@ -105,14 +106,14 @@ class TraceDialogImpl : public TraceDialog
 
     //# Single scan mode
     //brightness
-    Gtk::Frame            modeBrightnessFrame;
+    UI::Widget::Frame     modeBrightnessFrame;
     Gtk::VBox             modeBrightnessVBox;
     Gtk::HBox             modeBrightnessBox;
     Gtk::RadioButton      modeBrightnessRadioButton;
     Gtk::Label            modeBrightnessSpinnerLabel;
     Inkscape::UI::Widget::SpinButton modeBrightnessSpinner;
     //edge detection
-    Gtk::Frame            modeCannyFrame;
+    UI::Widget::Frame     modeCannyFrame;
     Gtk::HBox             modeCannyBox;
     Gtk::VBox             modeCannyVBox;
     Gtk::RadioButton      modeCannyRadioButton;
@@ -122,7 +123,7 @@ class TraceDialogImpl : public TraceDialog
     Gtk::Label            modeCannyHiSpinnerLabel;
     Inkscape::UI::Widget::SpinButton       modeCannyHiSpinner;
     //quantization
-    Gtk::Frame            modeQuantFrame;
+    UI::Widget::Frame     modeQuantFrame;
     Gtk::HBox             modeQuantBox;
     Gtk::VBox             modeQuantVBox;
     Gtk::RadioButton      modeQuantRadioButton;
@@ -133,7 +134,7 @@ class TraceDialogImpl : public TraceDialog
     Gtk::HBox             modeInvertBox;
 
     //# Multiple path scanning mode
-    Gtk::Frame            modeMultiScanFrame;
+    UI::Widget::Frame     modeMultiScanFrame;
     Gtk::VBox             modeMultiScanVBox;
     //brightness
     Gtk::HBox             modeMultiScanHBox1;
@@ -158,7 +159,7 @@ class TraceDialogImpl : public TraceDialog
 
     // potrace parameters
 
-    Gtk::Frame            optionsFrame;
+    UI::Widget::Frame     optionsFrame;
     Gtk::VBox             optionsVBox;
     Gtk::HBox             optionsSpecklesBox;
     Gtk::CheckButton      optionsSpecklesButton;
@@ -190,7 +191,7 @@ class TraceDialogImpl : public TraceDialog
 
     //#### Preview
 
-    Gtk::Frame            previewFrame;
+    UI::Widget::Frame     previewFrame;
     Gtk::VBox             previewVBox;
     Gtk::Button           previewButton;
     Gtk::Image            previewImage;

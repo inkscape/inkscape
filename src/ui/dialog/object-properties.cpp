@@ -43,6 +43,7 @@ ObjectProperties::ObjectProperties (void) :
     LabelLabel(_("_Label:"), 1),
     LabelTitle(_("_Title:"),1),
     LabelDescription(_("_Description"),1),
+    FrameDescription("", FALSE),
     HBoxCheck(FALSE, 0),
     CheckTable(1, 2, TRUE),
     CBHide(_("_Hide"), 1),
@@ -145,6 +146,8 @@ void ObjectProperties::MakeWidget(void)
 
     /* Create the frame for the object description */
     FrameDescription.set_label_widget (LabelDescription);
+    FrameDescription.set_padding (4,0,0,0);
+
     TopTable.attach (FrameDescription, 0, 3, 3, 4,
                        Gtk::EXPAND | Gtk::FILL,
                        Gtk::EXPAND | Gtk::FILL, 0, 0 );

@@ -17,6 +17,7 @@
 
 #include <list>
 #include "ui/widget/panel.h"
+#include "ui/widget/frame.h"
 #include <gtkmm/frame.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/label.h>
@@ -107,7 +108,7 @@ protected:
 #endif
 
     std::list<Action *> _actionList;
-    Gtk::Frame _alignFrame, _distributeFrame, _rearrangeFrame, _removeOverlapFrame, _nodesFrame;
+    UI::Widget::Frame _alignFrame, _distributeFrame, _rearrangeFrame, _removeOverlapFrame, _nodesFrame;
 #if WITH_GTKMM_3_0
     Gtk::Grid _alignTable, _distributeTable, _rearrangeTable, _removeOverlapTable, _nodesTable;
 #else

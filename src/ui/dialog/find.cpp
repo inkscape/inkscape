@@ -72,9 +72,9 @@ Find::Find()
       check_scope_selection(_("S_election"), _("Limit search to the current selection")),
       check_searchin_text(_("Te_xt"), _("Search in text objects")),
       check_searchin_property(_("_Properties"), _("Search in object properties, styles, attributes and IDs")),
+      vbox_searchin(0, false),
       frame_searchin(_("Search in")),
       frame_scope(_("Scope")),
-
 
       check_case_sensitive(_("Case sensiti_ve"), _("Match upper/lower case"), false),
       check_exact_match(_("E_xact match"), _("Match whole objects only"), false),
@@ -120,8 +120,8 @@ Find::Find()
 
     Gtk::RadioButtonGroup grp_searchin = check_searchin_text.get_group();
     check_searchin_property.set_group(grp_searchin);
-    vbox_searchin.pack_start(check_searchin_text, true, true);
-    vbox_searchin.pack_start(check_searchin_property, true, true);
+    vbox_searchin.pack_start(check_searchin_text, false, false);
+    vbox_searchin.pack_start(check_searchin_property, false, false);
     frame_searchin.add(vbox_searchin);
 
     Gtk::RadioButtonGroup grp_scope = check_scope_all.get_group();

@@ -14,6 +14,7 @@
 #define SEEN_DIALOGS_ITEM_PROPERTIES_H
 
 #include "ui/widget/panel.h"
+#include "ui/widget/frame.h"
 #include <gtkmm/entry.h>
 #include <gtkmm/expander.h>
 #include <gtkmm/frame.h>
@@ -61,8 +62,8 @@ private:
     Gtk::Entry EntryTitle; //the entry for the object title
     
     Gtk::Label LabelDescription; //the label for the object description
-    Gtk::Frame FrameDescription; //the frame for the object description
-    Gtk::Frame FrameTextDescription; //the frame for the text of the object description
+    UI::Widget::Frame FrameDescription; //the frame for the object description
+    Gtk::Frame  FrameTextDescription; //the frame for the text of the object description
     Gtk::TextView TextViewDescription; //the text view object showing the object description
     
     Gtk::HBox HBoxCheck; // the HBox for the check boxes

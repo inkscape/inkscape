@@ -15,6 +15,7 @@
 #include "ui/widget/panel.h"
 #include "ui/widget/button.h"
 #include "ui/widget/entry.h" 
+#include "ui/widget/frame.h"
 #include <glib.h>
 #include <gtkmm.h>
 
@@ -198,78 +199,78 @@ private:
     /*
      * Find and replace combo box widgets
      */
-    Inkscape::UI::Widget::Entry   entry_find;
-    Inkscape::UI::Widget::Entry   entry_replace;
+    UI::Widget::Entry   entry_find;
+    UI::Widget::Entry   entry_replace;
 
     /**
      * Scope and search in widgets
      */
-    Inkscape::UI::Widget::RadioButton    check_scope_all;
-    Inkscape::UI::Widget::RadioButton    check_scope_layer;
-    Inkscape::UI::Widget::RadioButton    check_scope_selection;
-    Inkscape::UI::Widget::RadioButton    check_searchin_text;
-    Inkscape::UI::Widget::RadioButton    check_searchin_property;
+    UI::Widget::RadioButton    check_scope_all;
+    UI::Widget::RadioButton    check_scope_layer;
+    UI::Widget::RadioButton    check_scope_selection;
+    UI::Widget::RadioButton    check_searchin_text;
+    UI::Widget::RadioButton    check_searchin_property;
     Gtk::HBox hbox_searchin;
     Gtk::VBox vbox_scope;
     Gtk::VBox vbox_searchin;
-    Gtk::Frame frame_searchin;
-    Gtk::Frame frame_scope;
+    UI::Widget::Frame frame_searchin;
+    UI::Widget::Frame frame_scope;
 
     /**
      * General option widgets
      */
-    Inkscape::UI::Widget::CheckButton    check_case_sensitive;
-    Inkscape::UI::Widget::CheckButton    check_exact_match;
-    Inkscape::UI::Widget::CheckButton    check_include_hidden;
-    Inkscape::UI::Widget::CheckButton    check_include_locked;
+    UI::Widget::CheckButton    check_case_sensitive;
+    UI::Widget::CheckButton    check_exact_match;
+    UI::Widget::CheckButton    check_include_hidden;
+    UI::Widget::CheckButton    check_include_locked;
     Gtk::VBox vbox_options1;
     Gtk::VBox vbox_options2;
     Gtk::HBox hbox_options;
     Gtk::VBox vbox_expander;
     Gtk::Expander  expander_options;
-    Gtk::Frame frame_options;
+    UI::Widget::Frame frame_options;
 
     /**
      * Property type widgets
      */
-    Inkscape::UI::Widget::CheckButton    check_ids;
-    Inkscape::UI::Widget::CheckButton    check_attributename;
-    Inkscape::UI::Widget::CheckButton    check_attributevalue;
-    Inkscape::UI::Widget::CheckButton    check_style;
-    Inkscape::UI::Widget::CheckButton    check_font;
+    UI::Widget::CheckButton    check_ids;
+    UI::Widget::CheckButton    check_attributename;
+    UI::Widget::CheckButton    check_attributevalue;
+    UI::Widget::CheckButton    check_style;
+    UI::Widget::CheckButton    check_font;
     Gtk::VBox vbox_properties;
     Gtk::HBox hbox_properties1;
     Gtk::HBox hbox_properties2;
-    Gtk::Frame frame_properties;
+    UI::Widget::Frame frame_properties;
 
     /**
      * A vector of all the properties widgets for easy processing
      */
-    std::vector<Inkscape::UI::Widget::CheckButton *> checkProperties;
+    std::vector<UI::Widget::CheckButton *> checkProperties;
 
     /**
      * Object type widgets
      */
-    Inkscape::UI::Widget::CheckButton    check_alltypes;
-    Inkscape::UI::Widget::CheckButton    check_rects;
-    Inkscape::UI::Widget::CheckButton    check_ellipses;
-    Inkscape::UI::Widget::CheckButton    check_stars;
-    Inkscape::UI::Widget::CheckButton    check_spirals;
-    Inkscape::UI::Widget::CheckButton    check_paths;
-    Inkscape::UI::Widget::CheckButton    check_texts;
-    Inkscape::UI::Widget::CheckButton    check_groups;
-    Inkscape::UI::Widget::CheckButton    check_clones;
-    Inkscape::UI::Widget::CheckButton    check_images;
-    Inkscape::UI::Widget::CheckButton    check_offsets;
+    UI::Widget::CheckButton    check_alltypes;
+    UI::Widget::CheckButton    check_rects;
+    UI::Widget::CheckButton    check_ellipses;
+    UI::Widget::CheckButton    check_stars;
+    UI::Widget::CheckButton    check_spirals;
+    UI::Widget::CheckButton    check_paths;
+    UI::Widget::CheckButton    check_texts;
+    UI::Widget::CheckButton    check_groups;
+    UI::Widget::CheckButton    check_clones;
+    UI::Widget::CheckButton    check_images;
+    UI::Widget::CheckButton    check_offsets;
     Gtk::VBox vbox_types1;
     Gtk::VBox vbox_types2;
     Gtk::HBox hbox_types;
-    Gtk::Frame frame_types;
+    UI::Widget::Frame frame_types;
 
     /**
      * A vector of all the check option widgets for easy processing
      */
-    std::vector<Inkscape::UI::Widget::CheckButton *> checkTypes;
+    std::vector<UI::Widget::CheckButton *> checkTypes;
 
     //Gtk::HBox hbox_text;
 
@@ -277,8 +278,8 @@ private:
      * Action Buttons and status
      */
     Gtk::Label status;
-    Inkscape::UI::Widget::Button button_find;
-    Inkscape::UI::Widget::Button button_replace;
+    UI::Widget::Button button_find;
+    UI::Widget::Button button_replace;
     Gtk::HButtonBox box_buttons;
     Gtk::HBox hboxbutton_row;
 
