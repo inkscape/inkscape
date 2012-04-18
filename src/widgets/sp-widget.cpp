@@ -36,6 +36,7 @@ static void sp_widget_hide (GtkWidget *widget);
 static gint sp_widget_expose (GtkWidget *widget, GdkEventExpose *event);
 static void sp_widget_size_request (GtkWidget *widget, GtkRequisition *requisition);
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void sp_widget_get_preferred_width(GtkWidget *widget, 
                                                    gint *minimal_width,
 						   gint *natural_width);
@@ -43,6 +44,7 @@ static void sp_widget_get_preferred_width(GtkWidget *widget,
 static void sp_widget_get_preferred_height(GtkWidget *widget, 
                                                     gint *minimal_height,
 						    gint *natural_height);
+#endif
 
 static void sp_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 
@@ -226,6 +228,7 @@ sp_widget_size_request (GtkWidget *widget, GtkRequisition *requisition)
 		gtk_widget_size_request (child, requisition);
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void sp_widget_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	GtkRequisition requisition;
@@ -239,6 +242,7 @@ static void sp_widget_get_preferred_height(GtkWidget *widget, gint *minimal_heig
 	sp_widget_size_request(widget, &requisition);
 	*minimal_height = *natural_height = requisition.height;
 }
+#endif
 
 static void
 sp_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)

@@ -62,6 +62,7 @@ static void     gtk_deprecated_ruler_unrealize       (GtkWidget      *widget);
 static void     gtk_deprecated_ruler_size_request    (GtkWidget      *widget,
                                                       GtkRequisition *requisition);
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void     gtk_deprecated_ruler_get_preferred_width(GtkWidget *widget, 
                                                          gint *minimal_width,
 							 gint *natural_width);
@@ -69,6 +70,7 @@ static void     gtk_deprecated_ruler_get_preferred_width(GtkWidget *widget,
 static void     gtk_deprecated_ruler_get_preferred_height(GtkWidget *widget, 
                                                     gint *minimal_height,
 						    gint *natural_height);
+#endif
 
 static void     gtk_deprecated_ruler_size_allocate   (GtkWidget      *widget,
                                                       GtkAllocation  *allocation);
@@ -373,16 +375,15 @@ gtk_deprecated_ruler_set_metric (GtkDeprecatedRuler      *ruler,
  *
  * Return value: the units currently used for @ruler
  **/
-GtkMetricType
-gtk_deprecated_ruler_get_metric (GtkDeprecatedRuler *ruler)
+GtkMetricType gtk_deprecated_ruler_get_metric (GtkDeprecatedRuler *ruler)
 {
-  gint i;
+  g_return_val_if_fail(GTK_DEPRECATED_IS_RULER(ruler), static_cast<GtkMetricType>(0));
 
-  g_return_val_if_fail (GTK_DEPRECATED_IS_RULER (ruler), static_cast<GtkMetricType>(0));
-
-  for (i = 0; i < G_N_ELEMENTS (ruler_metrics); i++)
-    if (ruler->metric == &ruler_metrics[i])
+  for (size_t i = 0; i < G_N_ELEMENTS(ruler_metrics); i++) {
+    if (ruler->metric == &ruler_metrics[i]) {
       return static_cast<GtkMetricType>(i);
+    }
+  }
 
   g_assert_not_reached ();
 
@@ -484,6 +485,7 @@ gtk_deprecated_ruler_size_request (GtkWidget      *widget,
     }
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void gtk_deprecated_ruler_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	GtkRequisition requisition;
@@ -497,6 +499,7 @@ static void gtk_deprecated_ruler_get_preferred_height(GtkWidget *widget, gint *m
 	gtk_deprecated_ruler_size_request(widget, &requisition);
 	*minimal_height = *natural_height = requisition.height;
 }
+#endif
 
 static void
 gtk_deprecated_ruler_size_allocate (GtkWidget     *widget,
@@ -1023,6 +1026,7 @@ static gint sp_vruler_motion_notify (GtkWidget      *widget,
 				      GdkEventMotion *event);
 static void sp_vruler_size_request (GtkWidget *widget, GtkRequisition *requisition);
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void sp_vruler_get_preferred_width(GtkWidget *widget, 
                                           gint *minimal_width,
 					  gint *natural_width);
@@ -1030,6 +1034,7 @@ static void sp_vruler_get_preferred_width(GtkWidget *widget,
 static void sp_vruler_get_preferred_height(GtkWidget *widget, 
                                            gint *minimal_height,
 					   gint *natural_height);
+#endif
 
 static GtkWidgetClass *vruler_parent_class;
 
@@ -1133,6 +1138,7 @@ sp_vruler_size_request (GtkWidget *widget, GtkRequisition *requisition)
   requisition->width = style->xthickness * 2 + RULER_WIDTH;
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void sp_vruler_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	GtkRequisition requisition;
@@ -1146,6 +1152,7 @@ static void sp_vruler_get_preferred_height(GtkWidget *widget, gint *minimal_heig
 	sp_vruler_size_request(widget, &requisition);
 	*minimal_height = *natural_height = requisition.height;
 }
+#endif
 
 static void
 sp_ruler_common_draw_ticks(GtkDeprecatedRuler *ruler)

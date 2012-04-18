@@ -33,6 +33,7 @@ static void sp_color_slider_destroy (GtkObject *object);
 static void sp_color_slider_realize (GtkWidget *widget);
 static void sp_color_slider_size_request (GtkWidget *widget, GtkRequisition *requisition);
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void sp_color_slider_get_preferred_width(GtkWidget *widget, 
                                                    gint *minimal_width,
 						   gint *natural_width);
@@ -40,6 +41,7 @@ static void sp_color_slider_get_preferred_width(GtkWidget *widget,
 static void sp_color_slider_get_preferred_height(GtkWidget *widget, 
                                                     gint *minimal_height,
 						    gint *natural_height);
+#endif
 
 static void sp_color_slider_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 /*  static void sp_color_slider_draw (GtkWidget *widget, GdkRectangle *area); */
@@ -239,6 +241,7 @@ sp_color_slider_size_request (GtkWidget *widget, GtkRequisition *requisition)
 	requisition->height = SLIDER_HEIGHT + style->ythickness * 2;
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void sp_color_slider_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	GtkRequisition requisition;
@@ -252,6 +255,7 @@ static void sp_color_slider_get_preferred_height(GtkWidget *widget, gint *minima
 	sp_color_slider_size_request(widget, &requisition);
 	*minimal_height = *natural_height = requisition.height;
 }
+#endif
 
 static void
 sp_color_slider_size_allocate (GtkWidget *widget, GtkAllocation *allocation)

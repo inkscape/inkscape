@@ -29,6 +29,7 @@ static void sp_svg_view_widget_destroy (GtkObject *object);
 static void sp_svg_view_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 static void sp_svg_view_widget_size_request (GtkWidget *widget, GtkRequisition *req);
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void sp_svg_view_widget_get_preferred_width(GtkWidget *widget, 
                                                    gint *minimal_width,
 						   gint *natural_width);
@@ -36,6 +37,7 @@ static void sp_svg_view_widget_get_preferred_width(GtkWidget *widget,
 static void sp_svg_view_widget_get_preferred_height(GtkWidget *widget, 
                                                     gint *minimal_height,
 						    gint *natural_height);
+#endif
 
 static void sp_svg_view_widget_view_resized (SPViewWidget *vw, Inkscape::UI::View::View *view, gdouble width, gdouble height);
 
@@ -177,6 +179,7 @@ static void sp_svg_view_widget_size_request(GtkWidget *widget, GtkRequisition *r
 	}
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void sp_svg_view_widget_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	GtkRequisition requisition;
@@ -190,6 +193,7 @@ static void sp_svg_view_widget_get_preferred_height(GtkWidget *widget, gint *min
 	sp_svg_view_widget_size_request(widget, &requisition);
 	*minimal_height = *natural_height = requisition.height;
 }
+#endif
 
 /**
  * Callback connected with size_allocate signal.

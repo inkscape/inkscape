@@ -29,6 +29,7 @@ static void sp_gradient_image_destroy (GtkObject *object);
 
 static void sp_gradient_image_size_request (GtkWidget *widget, GtkRequisition *requisition);
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void sp_gradient_image_get_preferred_width(GtkWidget *widget, 
                                                    gint *minimal_width,
 						   gint *natural_width);
@@ -36,6 +37,7 @@ static void sp_gradient_image_get_preferred_width(GtkWidget *widget,
 static void sp_gradient_image_get_preferred_height(GtkWidget *widget, 
                                                     gint *minimal_height,
 						    gint *natural_height);
+#endif
 
 static gint sp_gradient_image_expose (GtkWidget *widget, GdkEventExpose *event);
 
@@ -124,6 +126,7 @@ static void sp_gradient_image_size_request(GtkWidget * /*widget*/, GtkRequisitio
     requisition->height = 12;
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void sp_gradient_image_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	GtkRequisition requisition;
@@ -137,6 +140,7 @@ static void sp_gradient_image_get_preferred_height(GtkWidget *widget, gint *mini
 	sp_gradient_image_size_request(widget, &requisition);
 	*minimal_height = *natural_height = requisition.height;
 }
+#endif
 
 static gint
 sp_gradient_image_expose (GtkWidget *widget, GdkEventExpose *event)

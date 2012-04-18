@@ -177,6 +177,7 @@ static void eek_preview_size_request( GtkWidget* widget, GtkRequisition* req )
     req->height = height;
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void eek_preview_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	GtkRequisition requisition;
@@ -190,6 +191,7 @@ static void eek_preview_get_preferred_height(GtkWidget *widget, gint *minimal_he
 	eek_preview_size_request(widget, &requisition);
 	*minimal_height = *natural_height = requisition.height;
 }
+#endif
 
 enum {
   CLICKED_SIGNAL,

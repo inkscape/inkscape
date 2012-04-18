@@ -31,6 +31,7 @@ static void sp_button_destroy (GtkObject *object);
 
 static void sp_button_size_request (GtkWidget *widget, GtkRequisition *requisition);
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void sp_button_get_preferred_width(GtkWidget *widget, 
                                           gint *minimal_width,
 					  gint *natural_width);
@@ -38,6 +39,7 @@ static void sp_button_get_preferred_width(GtkWidget *widget,
 static void sp_button_get_preferred_height(GtkWidget *widget, 
                                            gint *minimal_height,
 					   gint *natural_height);
+#endif
 
 static void sp_button_clicked (GtkButton *button);
 static void sp_button_perform_action (SPButton *button, gpointer data);
@@ -143,6 +145,7 @@ sp_button_size_request (GtkWidget *widget, GtkRequisition *requisition)
 	requisition->height += 2 + 2 * MAX (2, style->ythickness);
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
 static void sp_button_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	GtkRequisition requisition;
@@ -156,6 +159,7 @@ static void sp_button_get_preferred_height(GtkWidget *widget, gint *minimal_heig
 	sp_button_size_request(widget, &requisition);
 	*minimal_height = *natural_height = requisition.height;
 }
+#endif
 
 static void
 sp_button_clicked (GtkButton *button)
