@@ -49,6 +49,7 @@
 #include "dialogs/dialog-events.h"
 #include <gtk/gtk.h>
 #include "ui/widget/spinbutton.h"
+#include "ui/widget/frame.h"
 #include <glibmm/i18n.h>
 
 #include <gdkmm/general.h>
@@ -116,9 +117,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
 
     hbox3 = Gtk::manage(new class Gtk::HBox(false, 4));
     vbox2 = Gtk::manage(new class Gtk::VBox(false, 4));
-    alignment3 = Gtk::manage(new class Gtk::Alignment(0.5, 0.5, 1, 1));
-    _labelPageSettings = Gtk::manage(new class Gtk::Label(_("Page settings")));
-    _pageSettingsFrame = Gtk::manage(new class Gtk::Frame());
+    _pageSettingsFrame = Gtk::manage(new class Inkscape::UI::Widget::Frame(_("Page settings")));
     _labelPrecision = Gtk::manage(new class Gtk::Label(_("Precision of approximating gradient meshes:")));
     _labelPrecisionWarning = Gtk::manage(new class Gtk::Label(_("<b>Note</b>: setting the precision too high may result in a large SVG file and slow performance.")));
 
@@ -142,9 +141,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     hbox5 = Gtk::manage(new class Gtk::HBox(false, 4));
     _embedImagesCheck = Gtk::manage(new class Gtk::CheckButton(_("Embed images")));
     vbox3 = Gtk::manage(new class Gtk::VBox(false, 4));
-    alignment4 = Gtk::manage(new class Gtk::Alignment(0.5, 0.5, 1, 1));
-    _labelImportSettings = Gtk::manage(new class Gtk::Label(_("Import settings")));
-    _importSettingsFrame = Gtk::manage(new class Gtk::Frame());
+    _importSettingsFrame = Gtk::manage(new class Inkscape::UI::Widget::Frame(_("Import settings")));
     vbox1 = Gtk::manage(new class Gtk::VBox(false, 4));
     _previewArea = Gtk::manage(new class Gtk::DrawingArea());
     hbox1 = Gtk::manage(new class Gtk::HBox(false, 4));
@@ -184,18 +181,8 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     hbox3->pack_start(*_cropTypeCombo, Gtk::PACK_SHRINK, 0);
     vbox2->pack_start(*hbox2);
     vbox2->pack_start(*hbox3);
-    alignment3->add(*vbox2);
-    _labelPageSettings->set_alignment(0.5,0.5);
-    _labelPageSettings->set_padding(4,0);
-    _labelPageSettings->set_justify(Gtk::JUSTIFY_LEFT);
-    _labelPageSettings->set_line_wrap(false);
-    _labelPageSettings->set_use_markup(true);
-    _labelPageSettings->set_selectable(false);
+    _pageSettingsFrame->add(*vbox2);
     _pageSettingsFrame->set_border_width(4);
-    _pageSettingsFrame->set_shadow_type(Gtk::SHADOW_ETCHED_IN);
-    _pageSettingsFrame->set_label_align(0,0.5);
-    _pageSettingsFrame->add(*alignment3);
-    _pageSettingsFrame->set_label_widget(*_labelPageSettings);
     _labelPrecision->set_alignment(0,0.5);
     _labelPrecision->set_padding(4,0);
     _labelPrecision->set_justify(Gtk::JUSTIFY_LEFT);
@@ -245,18 +232,8 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     vbox3->pack_start(*hbox5, Gtk::PACK_SHRINK, 4);
     vbox3->pack_start(*_localFontsCheck, Gtk::PACK_SHRINK, 0);
     vbox3->pack_start(*_embedImagesCheck, Gtk::PACK_SHRINK, 0);
-    alignment4->add(*vbox3);
-    _labelImportSettings->set_alignment(0.5,0.5);
-    _labelImportSettings->set_padding(4,0);
-    _labelImportSettings->set_justify(Gtk::JUSTIFY_LEFT);
-    _labelImportSettings->set_line_wrap(false);
-    _labelImportSettings->set_use_markup(true);
-    _labelImportSettings->set_selectable(false);
+    _importSettingsFrame->add(*vbox3);
     _importSettingsFrame->set_border_width(4);
-    _importSettingsFrame->set_shadow_type(Gtk::SHADOW_ETCHED_IN);
-    _importSettingsFrame->set_label_align(0,0.5);
-    _importSettingsFrame->add(*alignment4);
-    _importSettingsFrame->set_label_widget(*_labelImportSettings);
     vbox1->pack_start(*_pageSettingsFrame, Gtk::PACK_EXPAND_PADDING, 0);
     vbox1->pack_start(*_importSettingsFrame, Gtk::PACK_EXPAND_PADDING, 0);
     hbox1->pack_start(*vbox1);
@@ -283,8 +260,6 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _cropTypeCombo->show();
     hbox3->show();
     vbox2->show();
-    alignment3->show();
-    _labelPageSettings->show();
     _pageSettingsFrame->show();
     _labelPrecision->show();
     _labelPrecisionWarning->show();
@@ -297,8 +272,6 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     _localFontsCheck->show();
     _embedImagesCheck->show();
     vbox3->show();
-    alignment4->show();
-    _labelImportSettings->show();
     _importSettingsFrame->show();
     vbox1->show();
     _previewArea->show();

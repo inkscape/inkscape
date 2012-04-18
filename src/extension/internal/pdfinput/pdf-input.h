@@ -49,6 +49,7 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
   class SpinButton;
+  class Frame;
 }
 }
 
@@ -87,9 +88,7 @@ private:
     class Gtk::ComboBoxText * _cropTypeCombo;
     class Gtk::HBox * hbox3;
     class Gtk::VBox * vbox2;
-    class Gtk::Alignment * alignment3;
-    class Gtk::Label * _labelPageSettings;
-    class Gtk::Frame * _pageSettingsFrame;
+    class Inkscape::UI::Widget::Frame * _pageSettingsFrame;
     class Gtk::Label * _labelPrecision;
     class Gtk::Label * _labelPrecisionWarning;
     class Gtk::HScale * _fallbackPrecisionSlider;
@@ -102,9 +101,7 @@ private:
     class Gtk::CheckButton * _localFontsCheck;
     class Gtk::CheckButton * _embedImagesCheck;
     class Gtk::VBox * vbox3;
-    class Gtk::Alignment * alignment4;
-    class Gtk::Label * _labelImportSettings;
-    class Gtk::Frame * _importSettingsFrame;
+    class Inkscape::UI::Widget::Frame * _importSettingsFrame;
     class Gtk::VBox * vbox1;
     class Gtk::DrawingArea * _previewArea;
     class Gtk::HBox * hbox1;
