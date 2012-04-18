@@ -326,22 +326,17 @@ PrintLatex::textToPath(Inkscape::Extension::Print * ext)
 
 #include "clear-n_.h"
 
-void
-PrintLatex::init (void)
+void PrintLatex::init(void)
 {
-	Inkscape::Extension::Extension * ext;
-	
-	/* SVG in */
-    ext = Inkscape::Extension::build_from_mem(
-		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-			"<name>" N_("LaTeX Print") "</name>\n"
-			"<id>" SP_MODULE_KEY_PRINT_LATEX "</id>\n"
-        		"<param name=\"destination\" type=\"string\"></param>\n"
-                        "<param name=\"textToPath\" type=\"boolean\">true</param>\n"
-			"<print/>\n"
-		"</inkscape-extension>", new PrintLatex());
-
-	return;
+    /* SVG in */
+    Inkscape::Extension::build_from_mem(
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+        "<name>" N_("LaTeX Print") "</name>\n"
+        "<id>" SP_MODULE_KEY_PRINT_LATEX "</id>\n"
+        "<param name=\"destination\" type=\"string\"></param>\n"
+        "<param name=\"textToPath\" type=\"boolean\">true</param>\n"
+        "<print/>\n"
+        "</inkscape-extension>", new PrintLatex());
 }
 
 }  /* namespace Internal */

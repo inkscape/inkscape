@@ -54,7 +54,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
     static std::set<Glib::ustring> lossy = create_lossy_set();
 
     if (pb) {         /* We are readable */
-        bool is_lossy;
+        // TODO revisit: bool is_lossy;
         Glib::ustring mime_type, ext;
         Glib::ustring u = uri;
         std::size_t dotpos = u.rfind('.');
@@ -64,10 +64,10 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
 
         // HACK: replace with something better based on GIO
         if (!ext.empty() && lossy.find(ext) != lossy.end()) {
-            is_lossy = true;
+            // TODO revisit: is_lossy = true;
             mime_type = "image/jpeg";
         } else {
-            is_lossy = false;
+            // TODO revisit: is_lossy = false;
             mime_type = "image/png";
         }
 

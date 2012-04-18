@@ -440,8 +440,8 @@ LPERoughHatches::smoothSnake(std::vector<std::vector<Point> > const &linearSnake
     for (unsigned comp=0; comp<linearSnake.size(); comp++){
         if (linearSnake[comp].size()>=2){
             Point last_pt = linearSnake[comp][0];
-            Point last_top = linearSnake[comp][0];
-            Point last_bot = linearSnake[comp][0];
+            //Point last_top = linearSnake[comp][0];
+            //Point last_bot = linearSnake[comp][0];
             Point last_hdle = linearSnake[comp][0];
             Point last_top_hdle = linearSnake[comp][0];
             Point last_bot_hdle = linearSnake[comp][0];
@@ -482,8 +482,8 @@ LPERoughHatches::smoothSnake(std::vector<std::vector<Point> > const &linearSnake
 
                 if ( fat_output.get_value() ){
                     //double scaled_width = double((is_top ? stroke_width_top : stroke_width_bot))/(pt1[X]-pt0[X]);
-                    double scaled_width = 1./(pt1[X]-pt0[X]);
-                    Point hdle_offset = (pt1-pt0)*scaled_width;
+                    //double scaled_width = 1./(pt1[X]-pt0[X]);
+                    //Point hdle_offset = (pt1-pt0)*scaled_width;
                     Point inside = new_pt;
                     Point inside_hdle_in;
                     Point inside_hdle_out;

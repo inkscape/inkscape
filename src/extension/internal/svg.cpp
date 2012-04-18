@@ -83,10 +83,8 @@ void pruneExtendedAttributes( Inkscape::XML::Node *repr )
 void
 Svg::init(void)
 {
-    Inkscape::Extension::Extension * ext;
-
     /* SVG in */
-    ext = Inkscape::Extension::build_from_mem(
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("SVG Input") "</name>\n"
             "<id>" SP_MODULE_KEY_INPUT_SVG "</id>\n"
@@ -100,7 +98,7 @@ Svg::init(void)
         "</inkscape-extension>", new Svg());
 
     /* SVG out Inkscape */
-    ext = Inkscape::Extension::build_from_mem(
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("SVG Output Inkscape") "</name>\n"
             "<id>" SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE "</id>\n"
@@ -114,7 +112,7 @@ Svg::init(void)
         "</inkscape-extension>", new Svg());
 
     /* SVG out */
-    ext = Inkscape::Extension::build_from_mem(
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("SVG Output") "</name>\n"
             "<id>" SP_MODULE_KEY_OUTPUT_SVG "</id>\n"

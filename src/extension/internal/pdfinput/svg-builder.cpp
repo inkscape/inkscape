@@ -910,10 +910,10 @@ void SvgBuilder::updateStyle(GfxState *state) {
     that a space in sp may be removed or replaced by some other tokens
     specified in the code. (Bug LP #179589)
 */
-static int MatchingChars(std::string s1, std::string sp)
+static size_t MatchingChars(std::string s1, std::string sp)
 {
-    unsigned int is = 0;
-    unsigned int ip = 0;
+    size_t is = 0;
+    size_t ip = 0;
 
     while(is < s1.length() && ip < sp.length()) {
         if (s1[is] == sp[ip]) {
@@ -927,7 +927,7 @@ static int MatchingChars(std::string s1, std::string sp)
             break;
         }
     }
-    return(ip);
+    return ip;
 }
 
 /*
@@ -944,12 +944,12 @@ std::string SvgBuilder::_BestMatchingFont(std::string PDFname)
         std::string fontname = _availableFontNames[i];
         
         // At least the first word of the font name should match.
-        guint minMatch = fontname.find(" ");
+        size_t minMatch = fontname.find(" ");
         if (minMatch == std::string::npos) {
            minMatch = fontname.length();
         }
         
-        int Match = MatchingChars(PDFname, fontname);
+        size_t Match = MatchingChars(PDFname, fontname);
         if (Match >= minMatch) {
             double relMatch = (float)Match / (fontname.length() + PDFname.length());
             if (relMatch > bestMatch) {

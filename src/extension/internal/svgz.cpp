@@ -40,10 +40,8 @@ namespace Internal {
 void
 Svgz::init(void)
 {
-    Inkscape::Extension::Extension * ext;
-
     /* SVGZ in */
-    ext = Inkscape::Extension::build_from_mem(
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("SVGZ Input") "</name>\n"
             "<id>" SP_MODULE_KEY_INPUT_SVGZ "</id>\n"
@@ -57,8 +55,8 @@ Svgz::init(void)
             "</input>\n"
         "</inkscape-extension>", new Svgz());
 
-	/* SVGZ out Inkscape */
-    ext = Inkscape::Extension::build_from_mem(
+    /* SVGZ out Inkscape */
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("SVGZ Output") "</name>\n"
             "<id>" SP_MODULE_KEY_OUTPUT_SVGZ_INKSCAPE "</id>\n"
@@ -71,8 +69,8 @@ Svgz::init(void)
             "</output>\n"
         "</inkscape-extension>", new Svgz());
 
-	/* SVGZ out */
-    ext = Inkscape::Extension::build_from_mem(
+    /* SVGZ out */
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("SVGZ Output") "</name>\n"
             "<id>" SP_MODULE_KEY_OUTPUT_SVGZ "</id>\n"

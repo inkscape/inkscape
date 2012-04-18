@@ -584,15 +584,13 @@ Shape::MakeTweak (int mode, Shape *a, double power, JoinType join, double miter,
       enB = a->CyclePrevAt (a->getEdge(i).en, i);
     }
     
-    Geom::Point stD, seD, enD;
-    double stL, seL, enL;
-    stD = a->getEdge(stB).dx;
-    seD = a->getEdge(i).dx;
-    enD = a->getEdge(enB).dx;
+    Geom::Point stD = a->getEdge(stB).dx;
+    Geom::Point seD = a->getEdge(i).dx;
+    Geom::Point enD = a->getEdge(enB).dx;
 
-    stL = sqrt (dot(stD,stD));
-    seL = sqrt (dot(seD,seD));
-    enL = sqrt (dot(enD,enD));
+    double stL = sqrt (dot(stD,stD));
+    double seL = sqrt (dot(seD,seD));
+    //double enL = sqrt (dot(enD,enD));
     MiscNormalize (stD);
     MiscNormalize (enD);
     MiscNormalize (seD);
@@ -778,15 +776,13 @@ Shape::MakeOffset (Shape * a, double dec, JoinType join, double miter, bool do_p
       enB = a->CycleNextAt (a->getEdge(i).en, i);
     }
     
-    Geom::Point stD, seD, enD;
-    double stL, seL, enL;
-    stD = a->getEdge(stB).dx;
-    seD = a->getEdge(i).dx;
-    enD = a->getEdge(enB).dx;
+    Geom::Point stD = a->getEdge(stB).dx;
+    Geom::Point seD = a->getEdge(i).dx;
+    Geom::Point enD = a->getEdge(enB).dx;
 
-    stL = sqrt (dot(stD,stD));
-    seL = sqrt (dot(seD,seD));
-    enL = sqrt (dot(enD,enD));
+    double stL = sqrt (dot(stD,stD));
+    double seL = sqrt (dot(seD,seD));
+    //double enL = sqrt (dot(enD,enD));
     MiscNormalize (stD);
     MiscNormalize (enD);
     MiscNormalize (seD);

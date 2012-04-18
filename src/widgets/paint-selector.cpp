@@ -445,9 +445,9 @@ void SPPaintSelector::setColorAlpha(SPColor const &color, float alpha)
 {
     g_return_if_fail( ( 0.0 <= alpha ) && ( alpha <= 1.0 ) );
     SPColorSelector *csel = 0;
+/*
     guint32 rgba = 0;
 
-/*
     if ( sp_color_get_colorspace_type(color) == SP_COLORSPACE_TYPE_CMYK )
     {
 #ifdef SP_PS_VERBOSE
@@ -465,7 +465,7 @@ void SPPaintSelector::setColorAlpha(SPColor const &color, float alpha)
     }
 
     csel = reinterpret_cast<SPColorSelector*>(g_object_get_data(G_OBJECT(selector), "color-selector"));
-    rgba = color.toRGBA32( alpha );
+    //rgba = color.toRGBA32( alpha );
     csel->base->setColorAlpha( color, alpha );
 }
 

@@ -49,8 +49,6 @@ bool LatexOutput::check(Inkscape::Extension::Extension * /*module*/)
 void LatexOutput::save(Inkscape::Extension::Output * /*mod2*/, SPDocument *doc, gchar const *filename)
 {
     SPPrintContext context;
-    unsigned int ret = 0;
-
     doc->ensureUpToDate();
 
     Inkscape::Extension::Print *mod = Inkscape::Extension::get_print(SP_MODULE_KEY_PRINT_LATEX);
@@ -58,28 +56,26 @@ void LatexOutput::save(Inkscape::Extension::Output * /*mod2*/, SPDocument *doc, 
     gchar * oldoutput = g_strdup(oldconst);
     mod->set_param_string("destination", filename);
 
-    /* Start */
+    // Start
     context.module = mod;
-    /* fixme: This has to go into module constructor somehow */
+    // fixme: This has to go into module constructor somehow
     mod->base = doc->getRoot();
     Inkscape::Drawing drawing;
-    mod->dkey = SPItem::display_key_new (1);
-    mod->root = (mod->base)->invoke_show (drawing, mod->dkey, SP_ITEM_SHOW_DISPLAY);
+    mod->dkey = SPItem::display_key_new(1);
+    mod->root = (mod->base)->invoke_show(drawing, mod->dkey, SP_ITEM_SHOW_DISPLAY);
     drawing.setRoot(mod->root);
-    /* Print document */
-    ret = mod->begin (doc);
-    (mod->base)->invoke_print (&context);
-    ret = mod->finish ();
-    /* Release things */
-    (mod->base)->invoke_hide (mod->dkey);
+    // Print document
+    mod->begin(doc);
+    (mod->base)->invoke_print(&context);
+    mod->finish();
+    // Release things
+    (mod->base)->invoke_hide(mod->dkey);
     mod->base = NULL;
     mod->root = NULL; // should have been deleted by invoke_hide
-    /* end */
+    // end
 
     mod->set_param_string("destination", oldoutput);
     g_free(oldoutput);
-
-    return;
 }
 
 #include "clear-n_.h"

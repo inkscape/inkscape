@@ -94,7 +94,8 @@ findShadowedTime(Geom::Path const &patha, std::vector<Geom::Point> const &pt_and
     using namespace Geom;
     Point T = unit_vector(pt_and_dir[1]);
     Point N = T.cw();
-    Point A = pt_and_dir[0]-3*width*T, B = A+6*width*T;
+    //Point A = pt_and_dir[0] - 3 * width * T;
+    //Point B = A+6*width*T;
 
     Affine mat = from_basis( T, N, pt_and_dir[0] );
     mat = mat.inverse();

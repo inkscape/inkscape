@@ -631,9 +631,7 @@ static cairo_status_t
 
 void
 PdfInputCairo::init(void) {
-    Inkscape::Extension::Extension * ext;
-
-    ext = Inkscape::Extension::build_from_mem(
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>PDF Input</name>\n"
             "<id>org.inkscape.input.cairo-pdf</id>\n"

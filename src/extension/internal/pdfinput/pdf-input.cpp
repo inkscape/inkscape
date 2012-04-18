@@ -735,12 +735,9 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
 
 #include "../clear-n_.h"
 
-void
-PdfInput::init(void) {
-    Inkscape::Extension::Extension * ext;
-
+void PdfInput::init(void) {
     /* PDF in */
-    ext = Inkscape::Extension::build_from_mem(
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("PDF Input") "</name>\n"
             "<id>org.inkscape.input.pdf</id>\n"
@@ -753,7 +750,7 @@ PdfInput::init(void) {
         "</inkscape-extension>", new PdfInput());
 
     /* AI in */
-    ext = Inkscape::Extension::build_from_mem(
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("AI Input") "</name>\n"
             "<id>org.inkscape.input.ai</id>\n"
