@@ -50,6 +50,13 @@ class PrintEmfWin32 : public Inkscape::Extension::Implementation::Implementation
 
     unsigned int print_pathv (Geom::PathVector const &pathv, const Geom::Affine &transform);
     bool print_simple_shape (Geom::PathVector const &pathv, const Geom::Affine &transform);
+    unsigned int image(Inkscape::Extension::Print * /* module */, /** not used */
+        unsigned char *px, /** array of pixel values, Gdk::Pixbuf bitmap format */
+        unsigned int w, /** width of bitmap */
+        unsigned int h, /** height of bitmap */
+        unsigned int rs, /** row stride (normally w*4) */
+        Geom::Affine const &tf_ignore, /** WRONG affine transform, use the one from m_tr_stack */
+        SPStyle const *style); /** provides indirect link to image object */
 
 public:
     PrintEmfWin32 (void);
@@ -80,7 +87,6 @@ public:
     bool textToPath (Inkscape::Extension::Print * ext);
 
     static void init (void);
-
 protected:
     int create_brush(SPStyle const *style);
 

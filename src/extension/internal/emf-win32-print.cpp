@@ -543,7 +543,7 @@ bool PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom
 
     /**
      * For all Subpaths in the <path>
-     */	     
+     */
     for (Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit)
     {
         using Geom::X;
@@ -553,7 +553,7 @@ bool PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom
 
         p0[X] = (p0[X] * IN_PER_PX * dwDPI);
         p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
-                
+        
         LONG const x0 = (LONG) round(p0[X]);
         LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
 
@@ -715,7 +715,7 @@ unsigned int PrintEmfWin32::print_pathv(Geom::PathVector const &pathv, const Geo
 
     /**
      * For all Subpaths in the <path>
-     */	     
+     */
     for (Geom::PathVector::const_iterator pit = pv.begin(); pit != pv.end(); ++pit)
     {
         using Geom::X;
@@ -725,7 +725,7 @@ unsigned int PrintEmfWin32::print_pathv(Geom::PathVector const &pathv, const Geo
 
         p0[X] = (p0[X] * IN_PER_PX * dwDPI);
         p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
-                
+        
         LONG const x0 = (LONG) round(p0[X]);
         LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
 
@@ -818,7 +818,7 @@ unsigned int PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char cons
 
     HFONT hfont = NULL;
     Geom::Affine tf = m_tr_stack.top();
-    double rot = 1800.0*std::atan2(tf[1], tf[0])/M_PI;	// 0.1 degree rotation
+    double rot = 1800.0*std::atan2(tf[1], tf[0])/M_PI;    // 0.1 degree rotation
     
 #ifdef USE_PANGO_WIN32
 /*
@@ -920,6 +920,17 @@ void PrintEmfWin32::init (void)
     return;
 }
 
+unsigned int PrintEmfWin32::image(Inkscape::Extension::Print * /* module */, /** not used */
+    unsigned char *px, /** array of pixel values, Gdk::Pixbuf bitmap format */
+    unsigned int /*w*/, /** width of bitmap */
+    unsigned int /*h*/, /** height of bitmap */
+    unsigned int /*rs*/, /** row stride (normally w*4) */
+    Geom::Affine const & /*tf_ignore*/, /** WRONG affine transform, use the one from m_tr_stack */
+    SPStyle const * /*style*/) /** provides indirect link to image object */
+{
+    free(px);
+    return 0;
+}
 
 }  /* namespace Internal */
 }  /* namespace Extension */
