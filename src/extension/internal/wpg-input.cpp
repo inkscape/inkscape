@@ -115,11 +115,8 @@ SPDocument *WpgInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * u
 
 #include "clear-n_.h"
 
-void
-WpgInput::init(void) {
-    Inkscape::Extension::Extension * ext;
-
-    ext = Inkscape::Extension::build_from_mem(
+void WpgInput::init(void) {
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("WPG Input") "</name>\n"
             "<id>org.inkscape.input.wpg</id>\n"

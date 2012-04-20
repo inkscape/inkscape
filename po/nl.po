@@ -21941,7 +21941,7 @@ msgid ""
 "defs&gt; of the document"
 msgstr ""
 "Ongebruikte definities (zoals kleurverlopen of hulplijnen) uit het &lt;"
-"defs&gt-onderdeel van het bestand verwijderen"
+"defs&gt;-onderdeel van het bestand verwijderen"
 
 #: ../src/verbs.cpp:2227
 msgid "_Import..."

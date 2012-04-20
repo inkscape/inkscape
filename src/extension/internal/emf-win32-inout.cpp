@@ -2457,10 +2457,8 @@ EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
 void
 EmfWin32::init (void)
 {
-    Inkscape::Extension::Extension * ext;
-
     /* EMF in */
-    ext = Inkscape::Extension::build_from_mem(
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("EMF Input") "</name>\n"
             "<id>org.inkscape.input.emf.win32</id>\n"
@@ -2474,7 +2472,7 @@ EmfWin32::init (void)
         "</inkscape-extension>", new EmfWin32());
 
     /* WMF in */
-    ext = Inkscape::Extension::build_from_mem(
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("WMF Input") "</name>\n"
             "<id>org.inkscape.input.wmf.win32</id>\n"
@@ -2488,7 +2486,7 @@ EmfWin32::init (void)
         "</inkscape-extension>", new EmfWin32());
 
     /* EMF out */
-    ext = Inkscape::Extension::build_from_mem(
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
             "<name>" N_("EMF Output") "</name>\n"
             "<id>org.inkscape.output.emf.win32</id>\n"
