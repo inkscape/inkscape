@@ -904,10 +904,8 @@ unsigned int PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char cons
 
 void PrintEmfWin32::init (void)
 {
-    Inkscape::Extension::Extension * ext;
-
     /* EMF print */
-    ext = Inkscape::Extension::build_from_mem(
+    Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
         "<name>Enhanced Metafile Print</name>\n"
         "<id>org.inkscape.print.emf.win32</id>\n"
