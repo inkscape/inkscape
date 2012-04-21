@@ -96,10 +96,28 @@ private:
      */
     void setValue (Gtk::Adjustment *adj, double val);
     void setValuePx (Gtk::Adjustment *adj, double val);
-    float getValue    ( Gtk::Adjustment *adj );
-    float getValuePx ( Gtk::Adjustment *adj );
-    /*
-     * Helper function to create, style and pack spinbuttons
+    float getValue (Gtk::Adjustment *adj);
+    float getValuePx (Gtk::Adjustment *adj);
+    
+    /**
+     * Helper function to create, style and pack spinbuttons for the export dialog.
+     *
+     * Creates a new spin button for the export dialog.
+     * @param  key  The name of the spin button
+     * @param  val  A default value for the spin button
+     * @param  min  Minimum value for the spin button
+     * @param  max  Maximum value for the spin button
+     * @param  step The step size for the spin button
+     * @param  page Size of the page increment
+     * @param  us   Unit selector that effects this spin button
+     * @param  t    Table to put the spin button in
+     * @param  x    X location in the table \c t to start with
+     * @param  y    Y location in the table \c t to start with
+     * @param  ll   Text to put on the left side of the spin button (optional)
+     * @param  lr   Text to put on the right side of the spin button (optional)
+     * @param  digits  Number of digits to display after the decimal
+     * @param  sensitive  Whether the spin button is sensitive or not
+     * @param  cb   Callback for when this spin button is changed (optional)
      */
     Gtk::Adjustment * createSpinbutton( gchar const *key, float val, float min, float max,
                                           float step, float page, GtkWidget *us,
@@ -188,15 +206,33 @@ private:
     void setTargetDesktop(SPDesktop *desktop);
 
     /**
-     * Progress dialog callbacks
+     * Creates progress dialog for batch exporting.
+     * 
+     * @param progress_text Text to be shown in the progress bar
      */
-    GtkWidget * create_progress_dialog (Glib::ustring progress_text);
-    static unsigned int onProgressCallback (float value, void *data);
-    static void onProgressCancel ( GtkWidget *widget, GObject *base );
-    static gint onProgressDelete ( GtkWidget *widget, GdkEvent *event, GObject *base );
+    Gtk::Dialog * create_progress_dialog (Glib::ustring progress_text);
+    /**
+     * Callback to be used in for loop to update the progress bar.
+     * 
+     * @param value number between 0 and 1 indicating the fraction of progress (0.17 = 17 % progress)
+     * @param dlg void pointer to the Gtk::Dialog progress dialog
+     */
+    static unsigned int onProgressCallback (float value, void *dlg);
+    /**
+     * Callback for pressing the cancel button.
+     * 
+     * Currently only stops updating the progress and does not actually stop exporting.
+     * 
+     * @todo stop exporting on pressing the cancel button
+     */
+    void onProgressCancel ();
+    /**
+     * Callback invoked on closing the progress dialog.
+     */
+    bool onProgressDelete (GdkEventAny *event);
 
     /*
-     * Utlitiy filename and path functions
+     * Utility filename and path functions
      */
     void set_default_filename ();
     Glib::ustring create_filepath_from_id (Glib::ustring id, const Glib::ustring &file_entry_text);
@@ -272,6 +308,8 @@ private:
     Gtk::Button export_button;
     Gtk::Label export_label;
     Gtk::Image export_image;
+
+    Gtk::Dialog *prog_dlg;
 
     Inkscape::Preferences *prefs;
     SPDesktop *desktop;

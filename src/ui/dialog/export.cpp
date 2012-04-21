@@ -116,6 +116,7 @@ Export::Export (void) :
     button_box(Gtk::BUTTONBOX_END),
     export_label(_("_Export"), 1),
     export_image(Gtk::StockID(Gtk::Stock::APPLY), Gtk::ICON_SIZE_BUTTON),
+    prog_dlg(NULL),
     prefs(NULL),
     desktop(NULL),
     deskTrack(),
@@ -349,7 +350,6 @@ void Export::setTargetDesktop(SPDesktop *desktop)
             //// Must check flags, so can't call widget_setup() directly.
             selectModifiedConn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &Export::onSelectionModified)));
         }
-        //widget_setup();
     }
 }
 
@@ -407,24 +407,6 @@ void Export::set_default_filename () {
 
 }
 
-/**
- * Creates a new spin button for the export dialog.
- * @param  key  The name of the spin button
- * @param  val  A default value for the spin button
- * @param  min  Minimum value for the spin button
- * @param  max  Maximum value for the spin button
- * @param  step The step size for the spin button
- * @param  page Size of the page increment
- * @param  us   Unit selector that effects this spin button
- * @param  t    Table to put the spin button in
- * @param  x    X location in the table \c t to start with
- * @param  y    Y location in the table \c t to start with
- * @param  ll   Text to put on the left side of the spin button (optional)
- * @param  lr   Text to put on the right side of the spin button (optional)
- * @param  digits  Number of digits to display after the decimal
- * @param  sensitive  Whether the spin button is sensitive or not
- * @param  cb   Callback for when this spin button is changed (optional)
- */
 Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, float min, float max,
                                       float step, float page, GtkWidget *us,
                                       GtkWidget *t, int x, int y,
@@ -538,8 +520,7 @@ void Export::updateCheckbuttons ()
     }
 }
 
-inline void
-Export::findDefaultSelection()
+inline void Export::findDefaultSelection()
 {
     selection_type key = SELECTION_NUMBER_OF;
 
@@ -773,75 +754,58 @@ void Export::onAreaToggled ()
 } // end of sp_export_area_toggled()
 
 /// Called when dialog is deleted
-
-gint Export::onProgressDelete ( GtkWidget * /*widget*/, GdkEvent * /*event*/, GObject *base )
+bool Export::onProgressDelete (GdkEventAny *event)
 {
-    g_object_set_data (base, "cancel", (gpointer) 1);
+    g_object_set_data (G_OBJECT(prog_dlg->gobj()), "cancel", (gpointer) 1);
     return TRUE;
 } // end of sp_export_progress_delete()
 
 
 /// Called when progress is cancelled
-void Export::onProgressCancel ( GtkWidget * /*widget*/, GObject *base )
+void Export::onProgressCancel ()
 {
-    g_object_set_data (base, "cancel", (gpointer) 1);
+    g_object_set_data (G_OBJECT(prog_dlg->gobj()), "cancel", (gpointer) 1);
 } // end of sp_export_progress_cancel()
 
 
 /// Called for every progress iteration
-unsigned int Export::onProgressCallback (float value, void *data)
+unsigned int Export::onProgressCallback (float value, void *dlg)
 {
-    GtkWidget *prg;
-    int evtcount;
-
-    if (g_object_get_data ((GObject *) data, "cancel"))
+    Gtk::Dialog *dlg2 = reinterpret_cast<Gtk::Dialog*>(dlg);
+    if (dlg2->get_data("cancel")){
         return FALSE;
+    }
 
-    prg = (GtkWidget *) g_object_get_data ((GObject *) data, "progress");
-    gtk_progress_bar_set_fraction ((GtkProgressBar *) prg, value);
+    Gtk::ProgressBar *prg = (Gtk::ProgressBar *) dlg2->get_data ("progress");
+    prg->set_fraction(value);
 
-    evtcount = 0;
+    int evtcount = 0;
     while ((evtcount < 16) && gdk_events_pending ()) {
             gtk_main_iteration_do (FALSE);
             evtcount += 1;
     }
 
     gtk_main_iteration_do (FALSE);
-
     return TRUE;
-
 } // end of sp_export_progress_callback()
 
-GtkWidget * Export::create_progress_dialog (Glib::ustring progress_text) {
-    GtkWidget *dlg, *prg, *btn; /* progressbar dlg widgets */
+Gtk::Dialog * Export::create_progress_dialog (Glib::ustring progress_text) {
+    Gtk::Dialog *dlg = new Gtk::Dialog(_("Export in progress"), TRUE);
+	
+    Gtk::ProgressBar *prg = new Gtk::ProgressBar ();
+    prg->set_text(progress_text);
+    prg->set_orientation(Gtk::PROGRESS_LEFT_TO_RIGHT);
+    dlg->set_data ("progress", prg);
+    Gtk::Box* CA = dlg->get_vbox();
+    //Gtk::Box* CA = dlg->get_content_area(); // hmmm, compile error when using the preferred function get_content_area
+    CA->pack_start(*prg, FALSE, FALSE, 4);
 
-    dlg = gtk_dialog_new ();
+    Gtk::Button* btn = dlg->add_button (Gtk::Stock::CANCEL,Gtk::RESPONSE_CANCEL );
 
-    GtkObject *base  = GTK_OBJECT(dlg);
+    btn->signal_clicked().connect( sigc::mem_fun(*this, &Export::onProgressCancel) );
+    dlg->signal_delete_event().connect( sigc::mem_fun(*this, &Export::onProgressDelete) );
 
-    gtk_window_set_title (GTK_WINDOW (dlg), _("Export in progress"));
-    prg = gtk_progress_bar_new ();
-    //sp_transientize (dlg);
-    gtk_window_set_resizable (GTK_WINDOW (dlg), FALSE);
-    g_object_set_data ((GObject *) base, "progress", prg);
-
-    gtk_progress_bar_set_text ((GtkProgressBar *) prg, progress_text.c_str());
-
-    gtk_progress_bar_set_orientation ( (GtkProgressBar *) prg,
-                                       GTK_PROGRESS_LEFT_TO_RIGHT);
-    gtk_box_pack_start ((GtkBox *) gtk_dialog_get_content_area((GtkDialog *) dlg),
-                        prg, FALSE, FALSE, 4 );
-    btn = gtk_dialog_add_button ( GTK_DIALOG (dlg),
-                                  GTK_STOCK_CANCEL,
-                                  GTK_RESPONSE_CANCEL );
-
-    g_signal_connect ( (GObject *) dlg, "delete_event",
-                       (GCallback) onProgressDelete, base);
-    g_signal_connect ( (GObject *) btn, "clicked",
-                       (GCallback) onProgressCancel, base);
-    gtk_window_set_modal ((GtkWindow *) dlg, TRUE);
-    gtk_widget_show_all (dlg);
-
+    dlg->show_all ();
     return dlg;
 }
 
@@ -902,7 +866,7 @@ void Export::onExport ()
         if (num < 1)
             return;
 
-        GtkWidget *prog_dlg = create_progress_dialog (Glib::ustring::compose(_("Exporting %1 files"),num));
+        prog_dlg = create_progress_dialog (Glib::ustring::compose(_("Exporting %1 files"),num));
 
         for (GSList *i = const_cast<GSList *>(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
              i != NULL;
@@ -955,8 +919,8 @@ void Export::onExport ()
             onProgressCallback((float)n/num, prog_dlg);
         }
 
-        gtk_widget_destroy (prog_dlg);
-        //g_object_set_data (G_OBJECT (base), "cancel", (gpointer) 0);
+        delete prog_dlg;
+        prog_dlg = NULL;
 
     } else {
         Glib::ustring filename = filename_entry.get_text();
@@ -999,14 +963,14 @@ void Export::onExport ()
         }
 
         Glib::ustring fn = path_get_basename (path);
-        GtkWidget *prog_dlg = create_progress_dialog (Glib::ustring::compose(_("Exporting %1 (%2 x %3)"), fn, width, height));
 
+        prog_dlg = create_progress_dialog (Glib::ustring::compose(_("Exporting %1 (%2 x %3)"), fn, width, height));
 
         /* Do export */
         if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), path.c_str(),
                                  Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1)), width, height, xdpi, ydpi,
                                  nv->pagecolor,
-                                 onProgressCallback, prog_dlg, FALSE,
+                                 onProgressCallback, (void*)prog_dlg, FALSE,
                                  hide ? const_cast<GSList *>(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList()) : NULL
                 )) {
             gchar * error;
@@ -1022,7 +986,8 @@ void Export::onExport ()
         original_name = filename_ext;
         filename_modified = false;
 
-        gtk_widget_destroy (prog_dlg);
+        delete prog_dlg;
+		prog_dlg = NULL;
 
         /* Setup the values in the document */
         switch (current_key) {
