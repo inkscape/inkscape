@@ -774,19 +774,10 @@ std::vector<Glib::ustring> ColorProfile::getBaseProfileDirs() {
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     std::vector<Glib::ustring> sources;
 
-    gchar* base = profile_path("XXX");
-    {
-        gchar* base2 = g_path_get_dirname(base);
-        g_free(base);
-        base = base2;
-        base2 = g_path_get_dirname(base);
-        g_free(base);
-        base = base2;
-    }
-
     // first try user's local dir
-    sources.push_back( g_build_filename(g_get_user_data_dir(), "color", "icc", NULL) );
-
+    gchar* path = g_build_filename(g_get_user_data_dir(), "color", "icc", NULL);
+    sources.push_back(path);
+    g_free(path);
 
     const gchar* const * dataDirs = g_get_system_data_dirs();
     for ( int i = 0; dataDirs[i]; i++ ) {

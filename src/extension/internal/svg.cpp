@@ -230,8 +230,6 @@ Svg::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filena
     g_return_if_fail(doc != NULL);
     g_return_if_fail(filename != NULL);
 
-    gchar *save_path = g_path_get_dirname(filename);
-
     bool const exportExtensions = ( !mod->get_id()
       || !strcmp (mod->get_id(), SP_MODULE_KEY_OUTPUT_SVG_INKSCAPE)
       || !strcmp (mod->get_id(), SP_MODULE_KEY_OUTPUT_SVGZ_INKSCAPE));
@@ -256,8 +254,6 @@ Svg::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filena
     if (!exportExtensions) {
         Inkscape::GC::release(rdoc);
     }
-
-    g_free(save_path);
 
     return;
 }
