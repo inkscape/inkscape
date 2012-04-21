@@ -264,9 +264,9 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
 
         Gtk::Requisition req2;
 #if WITH_GTKMM_3_0
-	const_cast<Gtk::Widget*>(thing)->get_preferred_size(&req, NULL);
+	const_cast<Gtk::Widget*>(thing)->get_preferred_size(&req2, NULL);
 #else
-       	req = const_cast<Gtk::Widget*>(thing)->size_request();
+       	req2 = const_cast<Gtk::Widget*>(thing)->size_request();
 #endif
 
         int h2 = ((req2.height > 0) && (req.height > req2.height)) ? (req.height / req2.height) : 1;
