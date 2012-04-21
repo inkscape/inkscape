@@ -220,10 +220,6 @@ private:
     static unsigned int onProgressCallback (float value, void *dlg);
     /**
      * Callback for pressing the cancel button.
-     * 
-     * Currently only stops updating the progress and does not actually stop exporting.
-     * 
-     * @todo stop exporting on pressing the cancel button
      */
     void onProgressCancel ();
     /**
@@ -310,6 +306,7 @@ private:
     Gtk::Image export_image;
 
     Gtk::Dialog *prog_dlg;
+    bool interrupted; // indicates whether export needs to be interrupted (read: user pressed cancel in the progress dialog)
 
     Inkscape::Preferences *prefs;
     SPDesktop *desktop;

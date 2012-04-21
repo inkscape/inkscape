@@ -117,6 +117,7 @@ Export::Export (void) :
     export_label(_("_Export"), 1),
     export_image(Gtk::StockID(Gtk::Stock::APPLY), Gtk::ICON_SIZE_BUTTON),
     prog_dlg(NULL),
+    interrupted(false),
     prefs(NULL),
     desktop(NULL),
     deskTrack(),
@@ -756,7 +757,7 @@ void Export::onAreaToggled ()
 /// Called when dialog is deleted
 bool Export::onProgressDelete (GdkEventAny *event)
 {
-    g_object_set_data (G_OBJECT(prog_dlg->gobj()), "cancel", (gpointer) 1);
+    interrupted = true;
     return TRUE;
 } // end of sp_export_progress_delete()
 
@@ -764,7 +765,7 @@ bool Export::onProgressDelete (GdkEventAny *event)
 /// Called when progress is cancelled
 void Export::onProgressCancel ()
 {
-    g_object_set_data (G_OBJECT(prog_dlg->gobj()), "cancel", (gpointer) 1);
+    interrupted = true;
 } // end of sp_export_progress_cancel()
 
 
@@ -791,7 +792,7 @@ unsigned int Export::onProgressCallback (float value, void *dlg)
 
 Gtk::Dialog * Export::create_progress_dialog (Glib::ustring progress_text) {
     Gtk::Dialog *dlg = new Gtk::Dialog(_("Export in progress"), TRUE);
-	
+    
     Gtk::ProgressBar *prg = new Gtk::ProgressBar ();
     prg->set_text(progress_text);
     prg->set_orientation(Gtk::PROGRESS_LEFT_TO_RIGHT);
@@ -869,8 +870,11 @@ void Export::onExport ()
         prog_dlg = create_progress_dialog (Glib::ustring::compose(_("Exporting %1 files"),num));
 
         for (GSList *i = const_cast<GSList *>(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
-             i != NULL;
-             i = i->next) {
+                i != NULL;
+                i = i->next) {
+            if (interrupted){
+                break;
+            }
             SPItem *item = reinterpret_cast<SPItem *>(i->data);
 
             // retrieve export filename hint
@@ -921,6 +925,7 @@ void Export::onExport ()
 
         delete prog_dlg;
         prog_dlg = NULL;
+        interrupted = false;
 
     } else {
         Glib::ustring filename = filename_entry.get_text();
@@ -987,7 +992,8 @@ void Export::onExport ()
         filename_modified = false;
 
         delete prog_dlg;
-		prog_dlg = NULL;
+        prog_dlg = NULL;
+        interrupted = false;
 
         /* Setup the values in the document */
         switch (current_key) {
