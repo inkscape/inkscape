@@ -12,6 +12,7 @@
 #endif
 
 #include <gtkmm/radioaction.h>
+#include <gtkmm/orientable.h>
 #include <gtk/gtk.h>
 #include "ui/widget/toolbox.h"
 #include "path-prefix.h"
@@ -97,7 +98,9 @@ Toolbox::init_actions()
 void
 Toolbox::init_orientation(Gtk::Orientation const &orientation)
 {
-    static_cast<Gtk::Toolbar*>(_widget)->set_orientation(orientation);
+    gtk_orientable_set_orientation(GTK_ORIENTABLE(static_cast<Gtk::Toolbar*>(_widget)->gobj()), 
+		    GtkOrientation(orientation));
+
     if (orientation == Gtk::ORIENTATION_VERTICAL) {
         set_handle_position(Gtk::POS_TOP);
     }
@@ -226,7 +229,8 @@ Toolbox::on_change_orient_horiz()
 {
     Glib::RefPtr<Gtk::RadioAction> action = Glib::RefPtr<Gtk::RadioAction>::cast_static(_detach_grp->get_action("OrientHoriz"));
     if (action->get_active()) {
-        static_cast<Gtk::Toolbar*>(_widget)->set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+        gtk_orientable_set_orientation(GTK_ORIENTABLE(static_cast<Gtk::Toolbar*>(_widget)->gobj()),
+			GTK_ORIENTATION_HORIZONTAL);
     }
 }
 
@@ -235,7 +239,8 @@ Toolbox::on_change_orient_vert()
 {
     Glib::RefPtr<Gtk::RadioAction> action = Glib::RefPtr<Gtk::RadioAction>::cast_static(_detach_grp->get_action("OrientVert"));
     if (action->get_active()) {
-        static_cast<Gtk::Toolbar*>(_widget)->set_orientation(Gtk::ORIENTATION_VERTICAL);
+        gtk_orientable_set_orientation(GTK_ORIENTABLE(static_cast<Gtk::Toolbar*>(_widget)->gobj()),
+			GTK_ORIENTATION_VERTICAL);
     }
 }
 
