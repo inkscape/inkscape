@@ -121,8 +121,8 @@ private:
      */
     Gtk::Adjustment * createSpinbutton( gchar const *key, float val, float min, float max,
                                           float step, float page, GtkWidget *us,
-                                          GtkWidget *t, int x, int y,
-                                          const gchar *ll, const gchar *lr,
+                                          Gtk::Table *t, int x, int y,
+                                          const Glib::ustring ll, const Glib::ustring lr,
                                           int digits, unsigned int sensitive,
                                           void (Export::*cb)() );
     /**

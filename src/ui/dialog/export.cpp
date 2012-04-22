@@ -166,27 +166,27 @@ Export::Export (void) :
         t->set_col_spacings (4);
 
         x0_adj = createSpinbutton ( "x0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, unit_selector->gobj(),
-                                   GTK_WIDGET(t->gobj()), 0, 0, _("_x0:"), NULL, EXPORT_COORD_PRECISION, 1,
+                                   t, 0, 0, _("_x0:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaX0Change);
 
         x1_adj = createSpinbutton ( "x1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, unit_selector->gobj(),
-                                   GTK_WIDGET(t->gobj()), 2, 0, _("x_1:"), NULL, EXPORT_COORD_PRECISION, 1,
+                                   t, 2, 0, _("x_1:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaX1Change);
 
         width_adj = createSpinbutton ( "width", 0.0, 0.0, PNG_UINT_31_MAX, 0.1, 1.0,
-                                   unit_selector->gobj(), GTK_WIDGET(t->gobj()), 4, 0, _("Wid_th:"), NULL, EXPORT_COORD_PRECISION, 1,
+                                   unit_selector->gobj(), t, 4, 0, _("Wid_th:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaWidthChange);
 
         y0_adj = createSpinbutton ( "y0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, unit_selector->gobj(),
-                                   GTK_WIDGET(t->gobj()), 0, 1, _("_y0:"), NULL, EXPORT_COORD_PRECISION, 1,
+                                   t, 0, 1, _("_y0:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaY0Change);
 
         y1_adj = createSpinbutton ( "y1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, unit_selector->gobj(),
-                                   GTK_WIDGET(t->gobj()), 2, 1, _("y_1:"), NULL, EXPORT_COORD_PRECISION, 1,
+                                   t, 2, 1, _("y_1:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaY1Change);
 
         height_adj = createSpinbutton ( "height", 0.0, 0.0, PNG_UINT_31_MAX, 0.1, 1.0,
-                                   unit_selector->gobj(), GTK_WIDGET(t->gobj()), 4, 1, _("Hei_ght:"), NULL, EXPORT_COORD_PRECISION, 1,
+                                   unit_selector->gobj(), t, 4, 1, _("Hei_ght:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaHeightChange);
 
         area_box.pack_start(togglebox, false, false, 3);
@@ -215,18 +215,18 @@ Export::Export (void) :
         size_box.pack_start(*t);
 
         bmwidth_adj = createSpinbutton ( "bmwidth", 16.0, 1.0, 1000000.0, 1.0, 10.0,
-                                   NULL, GTK_WIDGET(t->gobj()), 0, 0,
+                                   NULL, t, 0, 0,
                                    _("_Width:"), _("pixels at"), 0, 1,
                                    &Export::onBitmapWidthChange);
 
         xdpi_adj = createSpinbutton ( "xdpi",
                                    prefs->getDouble("/dialogs/export/defaultxdpi/value", DPI_BASE),
-                                   0.01, 100000.0, 0.1, 1.0, NULL, GTK_WIDGET(t->gobj()), 3, 0,
-                                   NULL, _("dp_i"), 2, 1,
+                                   0.01, 100000.0, 0.1, 1.0, NULL, t, 3, 0,
+                                   "", _("dp_i"), 2, 1,
                                    &Export::onExportXdpiChange);
 
         bmheight_adj = createSpinbutton ( "bmheight", 16.0, 1.0, 1000000.0, 1.0, 10.0,
-                                   NULL, GTK_WIDGET(t->gobj()), 0, 1,
+                                   NULL, t, 0, 1,
                                    _("_Height:"), _("pixels at"), 0, 1,
                                    &Export::onBitmapHeightChange);
 
@@ -234,8 +234,8 @@ Export::Export (void) :
          *  There's no way to set ydpi currently, so we use the defaultxdpi value here, too...
          */
         ydpi_adj = createSpinbutton ( "ydpi", prefs->getDouble("/dialogs/export/defaultxdpi/value", DPI_BASE),
-                                   0.01, 100000.0, 0.1, 1.0, NULL, GTK_WIDGET(t->gobj()), 3, 1,
-                                   NULL, _("dpi"), 2, 0, NULL );
+                                   0.01, 100000.0, 0.1, 1.0, NULL, t, 3, 1,
+                                   "", _("dpi"), 2, 0, NULL );
 
         singleexport_box.pack_start(size_box);
     }
@@ -410,52 +410,42 @@ void Export::set_default_filename () {
 
 Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, float min, float max,
                                       float step, float page, GtkWidget *us,
-                                      GtkWidget *t, int x, int y,
-                                      const gchar *ll, const gchar *lr,
+                                      Gtk::Table *t, int x, int y,
+                                      const Glib::ustring ll, const Glib::ustring lr,
                                       int digits, unsigned int sensitive,
                                       void (Export::*cb)() )
 {
     Gtk::Adjustment *adj = new Gtk::Adjustment  ( val, min, max, step, page, 0 );
-
     if (us) {
-        sp_unit_selector_add_adjustment ( SP_UNIT_SELECTOR (us),
-                                          GTK_ADJUSTMENT (adj->gobj()) );
+        sp_unit_selector_add_adjustment ( SP_UNIT_SELECTOR (us), GTK_ADJUSTMENT (adj->gobj()) );
     }
 
     int pos = 0;
+    Gtk::Label *l = NULL;
 
-    GtkWidget *l = NULL;
-
-    if (ll) {
-
-        l = gtk_label_new_with_mnemonic ((const gchar *)ll);
-        gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
-        gtk_table_attach ( GTK_TABLE (t), l, x + pos, x + pos + 1, y, y + 1,
-                           (GtkAttachOptions)0, (GtkAttachOptions)0, 0, 0 );
-        gtk_widget_set_sensitive (l, sensitive);
-        pos += 1;
-
+    if (!ll.empty()) {
+        l = new Gtk::Label(ll,true);
+        l->set_alignment (1.0, 0.5);
+        t->attach (*l, x + pos, x + pos + 1, y, y + 1, Gtk::EXPAND, Gtk::EXPAND, 0, 0 );
+        l->set_sensitive(sensitive);
+        pos++;
     }
 
-    GtkWidget *sb = gtk_spin_button_new (GTK_ADJUSTMENT (adj->gobj()), 1.0, digits);
-    gtk_table_attach ( GTK_TABLE (t), sb, x + pos, x + pos + 1, y, y + 1,
-                       (GtkAttachOptions)0, (GtkAttachOptions)0, 0, 0 );
-    gtk_widget_set_size_request (sb, 80, -1);
-    gtk_widget_set_sensitive (sb, sensitive);
-    pos += 1;
+    Gtk::SpinButton *sb = new Gtk::SpinButton(*adj, 1.0, digits);
+    t->attach (*sb, x + pos, x + pos + 1, y, y + 1, Gtk::EXPAND, Gtk::EXPAND, 0, 0 );
+    sb->set_size_request (80, -1);
+    sb->set_sensitive (sensitive);
+    pos++;
 
-    if (ll) { gtk_label_set_mnemonic_widget (GTK_LABEL(l), sb); }
+    if (!ll.empty()) { l->set_mnemonic_widget(*sb);}
 
-    if (lr) {
-
-        l = gtk_label_new_with_mnemonic ((const gchar *)lr);
-        gtk_misc_set_alignment (GTK_MISC (l), 0.0, 0.5);
-        gtk_table_attach ( GTK_TABLE (t), l, x + pos, x + pos + 1, y, y + 1,
-                           (GtkAttachOptions)0, (GtkAttachOptions)0, 0, 0 );
-        gtk_widget_set_sensitive (l, sensitive);
-        pos += 1;
-
-        gtk_label_set_mnemonic_widget (GTK_LABEL(l), sb);
+    if (!lr.empty()) {
+        l = new Gtk::Label(lr,true);
+        l->set_alignment (0.0, 0.5);
+        t->attach (*l, x + pos, x + pos + 1, y, y + 1, Gtk::EXPAND, Gtk::EXPAND, 0, 0 );
+        l->set_sensitive (sensitive);
+        pos++;
+        l->set_mnemonic_widget (*sb);
     }
 
     if (cb) {
@@ -755,7 +745,7 @@ void Export::onAreaToggled ()
 } // end of sp_export_area_toggled()
 
 /// Called when dialog is deleted
-bool Export::onProgressDelete (GdkEventAny *event)
+bool Export::onProgressDelete (GdkEventAny * /*event*/)
 {
     interrupted = true;
     return TRUE;
