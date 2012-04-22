@@ -625,7 +625,7 @@ void sp_repr_save_stream(Document *doc, FILE *fp, gchar const *default_ns, bool 
 
 
 /**
- * Returns true iff file successfully saved.
+ * Returns true if file successfully saved.
  *
  * \param filename The actual file to do I/O to, which might be a temp file.
  *
@@ -652,27 +652,23 @@ bool sp_repr_save_rebased_file(Document *doc, gchar const *const filename, gchar
         return false;
     }
 
-    std::string old_href_abs_base;
-    gchar *new_href_abs_base = NULL;
+    Glib::ustring old_href_abs_base;
+    Glib::ustring new_href_abs_base;
     if (for_filename) {
         old_href_abs_base = calc_abs_doc_base(old_base);
-        if (g_path_is_absolute(for_filename)) {
-            new_href_abs_base = g_path_get_dirname(for_filename);
+        if (Glib::path_is_absolute(for_filename)) {
+            new_href_abs_base = Glib::path_get_dirname(for_filename);
         } else {
-            gchar *const cwd = g_get_current_dir();
-            gchar *const for_abs_filename = g_build_filename(cwd, for_filename, NULL);
-            g_free(cwd);
-            new_href_abs_base = g_path_get_dirname(for_abs_filename);
-            g_free(for_abs_filename);
+            Glib::ustring const cwd = Glib::get_current_dir();
+            Glib::ustring const for_abs_filename = Glib::build_filename(cwd, for_filename);
+            new_href_abs_base = Glib::path_get_dirname(for_abs_filename);
         }
 
         /* effic: Once we're confident that we never need (or never want) to resort
          * to using sodipodi:absref instead of the xlink:href value,
          * then we should do `if streq() { free them and set both to NULL; }'. */
     }
-    sp_repr_save_stream(doc, file, default_ns, compress, old_href_abs_base.c_str(), new_href_abs_base);
-
-    g_free(new_href_abs_base);
+    sp_repr_save_stream(doc, file, default_ns, compress, old_href_abs_base.c_str(), new_href_abs_base.c_str());
 
     if (fclose (file) != 0) {
         return false;

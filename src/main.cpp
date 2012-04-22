@@ -1253,10 +1253,9 @@ do_query_all_recurse (SPObject *o)
 }
 
 
-static void
-sp_do_export_png(SPDocument *doc)
+static void sp_do_export_png(SPDocument *doc)
 {
-    const gchar *filename = NULL;
+    Glib::ustring filename;
     bool filename_from_hint = false;
     gdouble dpi = 0.0;
 
@@ -1356,7 +1355,7 @@ sp_do_export_png(SPDocument *doc)
     }
 
     // set filename and dpi from options, if not yet set from the hints
-    if (!filename) {
+    if (filename.empty()) {
         if (!sp_export_png) {
             g_warning ("No export filename given and no filename hint. Nothing exported.");
             return;
@@ -1447,36 +1446,34 @@ sp_do_export_png(SPDocument *doc)
         }
     }
 
-    gchar *path = 0;
+    Glib::ustring path;
     if (filename_from_hint) {
         //Make relative paths go from the document location, if possible:
-        if (!g_path_is_absolute(filename) && doc->getURI()) {
-            gchar *dirname = g_path_get_dirname(doc->getURI());
-            if (dirname) {
-                path = g_build_filename(dirname, filename, NULL);
-                g_free(dirname);
+        if (!Glib::path_is_absolute(filename) && doc->getURI()) {
+            Glib::ustring dirname = Glib::path_get_dirname(doc->getURI());
+            if (!dirname.empty()) {
+                path = Glib::build_filename(dirname, filename);
             }
         }
-        if (!path) {
-            path = g_strdup(filename);
+        if (path.empty()) {
+            path = filename;
         }
     } else {
-        path = g_strdup(filename);
+        path = filename;
     }
 
     g_print("Background RRGGBBAA: %08x\n", bgcolor);
 
     g_print("Area %g:%g:%g:%g exported to %lu x %lu pixels (%g dpi)\n", area[Geom::X][0], area[Geom::Y][0], area[Geom::X][1], area[Geom::Y][1], width, height, dpi);
 
-    g_print("Bitmap saved as: %s\n", filename);
+    g_print("Bitmap saved as: %s\n", filename.c_str());
 
     if ((width >= 1) && (height >= 1) && (width <= PNG_UINT_31_MAX) && (height <= PNG_UINT_31_MAX)) {
-        sp_export_png_file(doc, path, area, width, height, dpi, dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL);
+        sp_export_png_file(doc, path.c_str(), area, width, height, dpi, dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL);
     } else {
         g_warning("Calculated bitmap dimensions %lu %lu are out of range (1 - %lu). Nothing exported.", width, height, (unsigned long int)PNG_UINT_31_MAX);
     }
 
-    g_free (path);
     g_slist_free (items);
 }
 
