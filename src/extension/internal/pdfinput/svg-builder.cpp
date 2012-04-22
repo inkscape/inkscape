@@ -57,6 +57,7 @@ namespace Internal {
 #define TRACE(_args) IFTRACE(g_print _args)
 
 static double ttm[6] = {1, 0, 0, 1, 0, 0};	// temporary transform matrix
+static bool ttm_is_set = false;             // flag to forbid setting ttm
 
 /**
  * \struct SvgTransparencyGroup
@@ -214,7 +215,11 @@ Inkscape::XML::Node *SvgBuilder::pushGroup() {
             setAsLayer(_docname);
         }
     }
-
+    if (_container->parent()->attribute("inkscape:groupmode") != NULL) {
+        ttm[0] = ttm[3] = 1.0;    // clear ttm if parent is a layer
+        ttm[1] = ttm[2] = ttm[4] = ttm[5] = 0.0;
+        ttm_is_set = false;
+    }
     return _container;
 }
 
@@ -567,17 +572,14 @@ bool SvgBuilder::getTransform(double *transform) {
 void SvgBuilder::setTransform(double c0, double c1, double c2, double c3,
                               double c4, double c5) {
     // do not remember the group which is a layer
-    if (_container->attribute("inkscape:groupmode") != NULL) {
-        ttm[0] = ttm[3] = 1.0;
-        ttm[1] = ttm[2] = ttm[4] = ttm[5] = 0.0;
-    }
-    else {
+    if ((_container->attribute("inkscape:groupmode") == NULL) && !ttm_is_set) {
         ttm[0] = c0;
         ttm[1] = c1;
         ttm[2] = c2;
         ttm[3] = c3;
         ttm[4] = c4;
         ttm[5] = c5;
+        ttm_is_set = true;
     }
 
     // Avoid transforming a group with an already set clip-path
