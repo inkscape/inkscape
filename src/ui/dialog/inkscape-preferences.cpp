@@ -1498,7 +1498,7 @@ void InkscapePreferences::initPageSystem()
     _sys_icon_scroll.add(_sys_icon);
     _sys_icon_scroll.set_size_request(0, 80);
     _sys_icon_scroll.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-    _page_system.add_line(true,  _("Icon theme: "), _sys_icon_scroll, "", _("Location of icon themes"), true);
+    _page_system.add_line(true,  _("Icon theme: "), _sys_icon_scroll, "", _("Locations of icon themes"), true);
 
     this->AddPage(_page_system, _("System"), PREFS_PAGE_SYSTEM);
 }
