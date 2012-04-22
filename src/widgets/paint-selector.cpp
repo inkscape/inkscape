@@ -572,21 +572,6 @@ sp_paint_selector_clear_frame(SPPaintSelector *psel)
 
     if (psel->selector) {
 
-        /* before we destroy the frame contents, we must detach
-         * the patternmenu so that Gtk doesn't gtk_widget_destroy
-         * all the children of the menu.  (We also have a g_object_ref
-         * count set on it too so that the gtk_container_remove doesn't
-         * end up destroying it.
-         */
-        GtkWidget *patterns = (GtkWidget *)g_object_get_data(G_OBJECT(psel), "patternmenu");
-        if (patterns != NULL) {
-            GtkWidget * parent = gtk_widget_get_parent( GTK_WIDGET(patterns));
-            if ( parent != NULL ) {
-                g_assert( GTK_IS_CONTAINER(parent) );
-                gtk_container_remove( GTK_CONTAINER(parent), patterns );
-            }
-        }
-
         gtk_widget_destroy(psel->selector);
         psel->selector = NULL;
     }
@@ -829,53 +814,42 @@ ink_pattern_list_get (SPDocument *source)
  * Adds menu items for pattern list - derived from marker code, left hb etc in to make addition of previews easier at some point.
  */
 static void
-sp_pattern_menu_build (GtkWidget *m, GSList *pattern_list, SPDocument */*source*/)
+sp_pattern_menu_build (GtkWidget *combo, GSList *pattern_list, SPDocument */*source*/)
 {
+    GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(combo)));
+    GtkTreeIter iter;
 
     for (; pattern_list != NULL; pattern_list = pattern_list->next) {
-        Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(pattern_list->data)->getRepr();
-                GtkWidget *i = gtk_menu_item_new();
-                gtk_widget_show(i);
 
-        if (repr->attribute("inkscape:stockid"))
-            g_object_set_data (G_OBJECT(i), "stockid", (void *) "true");
-        else
-            g_object_set_data (G_OBJECT(i), "stockid", (void *) "false");
+        Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(pattern_list->data)->getRepr();
+
+        // label for combobox
+        gchar const *label;
+        if (repr->attribute("inkscape:stockid")) {
+            label = _(repr->attribute("inkscape:stockid"));
+        } else {
+            label = _(repr->attribute("id"));
+        }
 
         gchar const *patid = repr->attribute("id");
-        g_object_set_data (G_OBJECT(i), "pattern", (void *) patid);
 
-#if GTK_CHECK_VERSION(3,0,0)
-                GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
-                gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-#else
-                GtkWidget *hb = gtk_hbox_new(FALSE, 4);
-#endif
-                gtk_widget_show(hb);
-
-        // create label
-                GtkWidget *l;
-                if (repr->attribute("inkscape:stockid"))
-                    l = gtk_label_new(_(repr->attribute("inkscape:stockid")));
-                else
-                    l = gtk_label_new(_(repr->attribute("id")));
-                gtk_widget_show(l);
-                gtk_misc_set_alignment(GTK_MISC(l), 0.0, 0.5);
-
-                gtk_box_pack_start(GTK_BOX(hb), l, TRUE, TRUE, 0);
-
-                gtk_widget_show(hb);
-                gtk_container_add(GTK_CONTAINER(i), hb);
-
-                gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
-            }
+        bool stockid = false;
+        if (repr->attribute("inkscape:stockid")) {
+            stockid = true;
         }
+
+        gtk_list_store_append(store, &iter);
+        gtk_list_store_set(store, &iter,
+                COMBO_COL_LABEL, label, COMBO_COL_PATTERN, (void *) patid, COMBO_COL_STOCK, stockid, COMBO_COL_SEP, FALSE, -1);
+
+    }
+}
 
 /**
  * Pick up all patterns from source, except those that are in
  * current_doc (if non-NULL), and add items to the pattern menu.
  */
-static void sp_pattern_list_from_doc(GtkWidget *m, SPDocument * /*current_doc*/, SPDocument *source, SPDocument * /*pattern_doc*/)
+static void sp_pattern_list_from_doc(GtkWidget *combo, SPDocument * /*current_doc*/, SPDocument *source, SPDocument * /*pattern_doc*/)
 {
     GSList *pl = ink_pattern_list_get(source);
     GSList *clean_pl = NULL;
@@ -889,17 +863,15 @@ static void sp_pattern_list_from_doc(GtkWidget *m, SPDocument * /*current_doc*/,
         clean_pl = g_slist_prepend (clean_pl, pl->data);
     }
 
-    sp_pattern_menu_build (m, clean_pl, source);
+    sp_pattern_menu_build (combo, clean_pl, source);
 
     g_slist_free (pl);
     g_slist_free (clean_pl);
 }
 
 
-
-
 static void
-ink_pattern_menu_populate_menu(GtkWidget *m, SPDocument *doc)
+ink_pattern_menu_populate_menu(GtkWidget *combo, SPDocument *doc)
 {
     static SPDocument *patterns_doc = NULL;
 
@@ -913,51 +885,60 @@ ink_pattern_menu_populate_menu(GtkWidget *m, SPDocument *doc)
     }
 
     // suck in from current doc
-    sp_pattern_list_from_doc ( m, NULL, doc, patterns_doc );
+    sp_pattern_list_from_doc ( combo, NULL, doc, patterns_doc );
 
     // add separator
     {
-        GtkWidget *i = gtk_separator_menu_item_new();
         gchar const *patid = "";
-        g_object_set_data (G_OBJECT(i), "pattern", (void *) patid);
-        gtk_widget_show(i);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
+        GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(combo)));
+        GtkTreeIter iter;
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set(store, &iter,
+                COMBO_COL_LABEL, "", COMBO_COL_PATTERN, (void *) patid, COMBO_COL_STOCK, false, COMBO_COL_SEP, true, -1);
     }
 
     // suck in from patterns.svg
     if (patterns_doc) {
         doc->ensureUpToDate();
-        sp_pattern_list_from_doc ( m, doc, patterns_doc, NULL );
+        sp_pattern_list_from_doc ( combo, doc, patterns_doc, NULL );
     }
 
 }
 
 
 static GtkWidget*
-ink_pattern_menu(GtkWidget *mnu)
+ink_pattern_menu(GtkWidget *combo)
 {
-   /* Create new menu widget */
-    GtkWidget *m = gtk_menu_new();
-    gtk_widget_show(m);
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
 
+    GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(combo)));
+    GtkTreeIter iter;
+
     if (!doc) {
-        GtkWidget *i;
-        i = gtk_menu_item_new_with_label(_("No document selected"));
-        gtk_widget_show(i);
-        gtk_menu_shell_append(GTK_MENU_SHELL(m), i);
-        gtk_widget_set_sensitive(mnu, FALSE);
+
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter,
+                COMBO_COL_LABEL, _("No document selected"), COMBO_COL_PATTERN, NULL, COMBO_COL_STOCK, false, COMBO_COL_SEP, false, -1);
+        gtk_widget_set_sensitive(combo, FALSE);
+
     } else {
 
-       ink_pattern_menu_populate_menu(m, doc);
-        gtk_widget_set_sensitive(mnu, TRUE);
+        ink_pattern_menu_populate_menu(combo, doc);
+        gtk_widget_set_sensitive(combo, TRUE);
 
     }
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(mnu), m);
 
-    /* Set history */
-    gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), 0);
-    return mnu;
+    // Select the first item that is not a seperator
+    if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL(store), &iter)) {
+        gtk_combo_box_set_active_iter(GTK_COMBO_BOX(combo), &iter);
+        gboolean sep = false;
+        gtk_tree_model_get(GTK_TREE_MODEL(store), &iter, COMBO_COL_SEP, &sep, -1);
+        if (sep) {
+            gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 1);
+        }
+    }
+
+    return combo;
 }
 
 
@@ -967,43 +948,41 @@ void SPPaintSelector::updatePatternList( SPPattern *pattern )
     if (update) {
         return;
     }
-    GtkWidget *mnu = GTK_WIDGET(g_object_get_data(G_OBJECT(this), "patternmenu"));
-    g_assert( mnu != NULL );
+    GtkWidget *combo = GTK_WIDGET(g_object_get_data(G_OBJECT(this), "patternmenu"));
+    g_assert( combo != NULL );
 
     /* Clear existing menu if any */
-    gtk_option_menu_remove_menu(GTK_OPTION_MENU(mnu));
+    GtkTreeModel *store = gtk_combo_box_get_model(GTK_COMBO_BOX(combo));
+    gtk_list_store_clear(GTK_LIST_STORE(store));
 
-    ink_pattern_menu(mnu);
+    ink_pattern_menu(combo);
 
     /* Set history */
 
-    if (pattern && !g_object_get_data(G_OBJECT(mnu), "update")) {
+    if (pattern && !g_object_get_data(G_OBJECT(combo), "update")) {
 
-        g_object_set_data(G_OBJECT(mnu), "update", GINT_TO_POINTER(TRUE));
-
+        g_object_set_data(G_OBJECT(combo), "update", GINT_TO_POINTER(TRUE));
         gchar const *patname = pattern->getRepr()->attribute("id");
 
-        GtkMenu *m = GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(mnu)));
-
-        GList *kids = gtk_container_get_children(GTK_CONTAINER(m));
-
-        int patpos = 0;
-        int i = 0;
-
-        for (; kids != NULL; kids = kids->next) {
-
-            gchar *men_pat = (gchar *) g_object_get_data(G_OBJECT(kids->data), "pattern");
-            if ( strcmp(men_pat, patname) == 0 ) {
-                patpos = i;
-            }
-            i++;
+        // Find this pattern and set it active in the combo_box
+        GtkTreeIter iter ;
+        gchar *patid = NULL;
+        bool valid = gtk_tree_model_get_iter_first (store, &iter);
+        if (!valid) {
+            return;
+        }
+        gtk_tree_model_get (store, &iter, COMBO_COL_PATTERN, &patid, -1);
+        while (valid && strcmp(patid, patname)  != 0) {
+            valid = gtk_tree_model_iter_next (store, &iter);
+            gtk_tree_model_get (store, &iter, COMBO_COL_PATTERN, &patid, -1);
         }
 
+        if (valid) {
+            gtk_combo_box_set_active_iter(GTK_COMBO_BOX(combo), &iter);
+        }
 
-        gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), patpos);
-        g_object_set_data(G_OBJECT(mnu), "update", GINT_TO_POINTER(FALSE));
+        g_object_set_data(G_OBJECT(combo), "update", GINT_TO_POINTER(FALSE));
     }
-    //gtk_option_menu_set_history(GTK_OPTION_MENU(mnu), 0);
 }
 
 static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSelector::Mode mode)
@@ -1039,15 +1018,29 @@ static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSel
             GtkWidget *hb = gtk_hbox_new(FALSE, 1);
 #endif
 
-            GtkWidget *mnu = gtk_option_menu_new();
-            ink_pattern_menu(mnu);
-            g_signal_connect(G_OBJECT(mnu), "changed", G_CALLBACK(sp_psel_pattern_change), psel);
-            g_signal_connect(G_OBJECT(mnu), "destroy", G_CALLBACK(sp_psel_pattern_destroy), psel);
-            g_object_set_data(G_OBJECT(psel), "patternmenu", mnu);
-            g_object_ref( G_OBJECT(mnu));
+            /**
+             * Create a combo_box and store with 4 columns,
+             * The label, a pointer to the pattern, is stockid or not, is a separator or not.
+             */
+            GtkListStore *store = gtk_list_store_new (4, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_BOOLEAN, G_TYPE_BOOLEAN);
+            GtkWidget *combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (store));
+            gtk_combo_box_set_row_separator_func(GTK_COMBO_BOX(combo), SPPaintSelector::isSeparator, NULL, NULL);
 
-            gtk_container_add(GTK_CONTAINER(hb), mnu);
+            GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
+            gtk_cell_renderer_set_padding (renderer, 2, 0);
+            gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), renderer, TRUE);
+            gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo), renderer, "text", COMBO_COL_LABEL, NULL);
+
+            ink_pattern_menu(combo);
+            g_signal_connect(G_OBJECT(combo), "changed", G_CALLBACK(sp_psel_pattern_change), psel);
+            g_signal_connect(G_OBJECT(combo), "destroy", G_CALLBACK(sp_psel_pattern_destroy), psel);
+            g_object_set_data(G_OBJECT(psel), "patternmenu", combo);
+            g_object_ref( G_OBJECT(combo));
+
+            gtk_container_add(GTK_CONTAINER(hb), combo);
             gtk_box_pack_start(GTK_BOX(tbl), hb, FALSE, FALSE, AUX_BETWEEN_BUTTON_GROUPS);
+
+            g_object_unref( G_OBJECT(store));
         }
 
         {
@@ -1078,37 +1071,51 @@ static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSel
 #endif
 }
 
+gboolean SPPaintSelector::isSeparator (GtkTreeModel *model, GtkTreeIter *iter, gpointer /*data*/) {
+
+    gboolean sep = FALSE;
+    gtk_tree_model_get(model, iter, COMBO_COL_SEP, &sep, -1);
+    return sep;
+}
+
 SPPattern *SPPaintSelector::getPattern()
 {
     SPPattern *pat = 0;
     g_return_val_if_fail((mode == MODE_PATTERN) , NULL);
 
-    GtkWidget *patmnu = (GtkWidget *) g_object_get_data(G_OBJECT(this), "patternmenu");
+    GtkWidget *combo = (GtkWidget *) g_object_get_data(G_OBJECT(this), "patternmenu");
+
     /* no pattern menu if we were just selected */
-    if ( patmnu == NULL ) return NULL;
-
-    GtkMenu *m = GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(patmnu)));
-
-    /* Get Pattern */
-    if (!g_object_get_data(G_OBJECT(gtk_menu_get_active(m)), "pattern"))
-    {
+    if ( combo == NULL ) {
         return NULL;
     }
-    gchar *patid = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(m)),
-                                               "pattern");
-    //gchar *pattern = "";
+
+    /* Get the selected pattern */
+    GtkTreeIter  iter;
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX(combo), &iter)) {
+        return NULL;
+    }
+
+    gchar *patid = NULL;
+    bool stockid = FALSE;
+    GtkTreeModel *store = gtk_combo_box_get_model(GTK_COMBO_BOX(combo));
+    gtk_tree_model_get (store, &iter, COMBO_COL_PATTERN, &patid, COMBO_COL_STOCK, &stockid, -1);
+    if (patid == NULL) {
+        return NULL;
+    }
+
     if (strcmp(patid, "none")){
 
-        gchar *stockid = (gchar *) g_object_get_data(G_OBJECT(gtk_menu_get_active(m)),
-                                                     "stockid");
         gchar *paturn = patid;
-        if (!strcmp(stockid,"true")) paturn = g_strconcat("urn:inkscape:pattern:",patid,NULL);
+        if (stockid)  {
+            paturn = g_strconcat("urn:inkscape:pattern:",patid,NULL);
+        }
         SPObject *pat_obj = get_stock_item(paturn);
         if (pat_obj) {
             pat = SP_PATTERN(pat_obj);
         }
     } else {
-        pat = pattern_getroot(SP_PATTERN(g_object_get_data(G_OBJECT(gtk_menu_get_active(m)), "pattern")));
+        pat = pattern_getroot(SP_PATTERN(patid));
     }
 
     if (pat && !SP_IS_PATTERN(pat)) {

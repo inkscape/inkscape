@@ -77,6 +77,7 @@ struct SPPaintSelector {
     SPColor color;
     float alpha;
 
+
     static Mode getModeForStyle(SPStyle const & style, FillOrStroke kind);
 
     void setMode( Mode mode );
@@ -97,9 +98,14 @@ struct SPPaintSelector {
     SPPattern * getPattern();
     void updatePatternList( SPPattern *pat );
 
+    static gboolean isSeparator (GtkTreeModel *model, GtkTreeIter *iter, gpointer data);
+
     // TODO move this elsewhere:
     void setFlatColor( SPDesktop *desktop, const gchar *color_property, const gchar *opacity_property );
 };
+
+enum {COMBO_COL_LABEL=0, COMBO_COL_PATTERN=1, COMBO_COL_STOCK=2, COMBO_COL_SEP=3};
+
 
 /// The SPPaintSelector vtable
 struct SPPaintSelectorClass {
