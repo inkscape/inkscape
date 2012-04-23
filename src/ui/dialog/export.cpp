@@ -456,8 +456,8 @@ Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, fl
 } // end of createSpinbutton()
 
 
-Glib::ustring Export::create_filepath_from_id (Glib::ustring id, const Glib::ustring &file_entry_text) {
-
+Glib::ustring Export::create_filepath_from_id (Glib::ustring id, const Glib::ustring &file_entry_text)
+{
     if (id.empty())
     {    /* This should never happen */
         id = "bitmap";
@@ -573,6 +573,7 @@ void Export::onSelectionChanged()
 
 void Export::onSelectionModified ( guint /*flags*/ )
 {
+    Inkscape::Selection * Sel;
     switch (current_key) {
         case SELECTION_DRAWING:
             if ( SP_ACTIVE_DESKTOP ) {
@@ -588,12 +589,16 @@ void Export::onSelectionModified ( guint /*flags*/ )
             }
             break;
         case SELECTION_SELECTION:
-            if ((sp_desktop_selection(SP_ACTIVE_DESKTOP))->isEmpty() == false) {
-                Geom::OptRect bbox = (sp_desktop_selection (SP_ACTIVE_DESKTOP))->visualBounds();
-                setArea ( bbox->left(),
+            Sel = sp_desktop_selection(SP_ACTIVE_DESKTOP);
+            if (Sel->isEmpty() == false) {
+                Geom::OptRect bbox = Sel->visualBounds();
+                if (bbox)
+                {
+                    setArea ( bbox->left(),
                                           bbox->top(),
                                           bbox->right(),
                                           bbox->bottom());
+                }
             }
             break;
         default:
@@ -787,8 +792,11 @@ Gtk::Dialog * Export::create_progress_dialog (Glib::ustring progress_text) {
     prg->set_text(progress_text);
     prg->set_orientation(Gtk::PROGRESS_LEFT_TO_RIGHT);
     dlg->set_data ("progress", prg);
+#if GTK_CHECK_VERSION(3,0,0)
+    Gtk::Box* CA = dlg->get_content_area();
+#else
     Gtk::Box* CA = dlg->get_vbox();
-    //Gtk::Box* CA = dlg->get_content_area(); // hmmm, compile error when using the preferred function get_content_area
+#endif
     CA->pack_start(*prg, FALSE, FALSE, 4);
 
     Gtk::Button* btn = dlg->add_button (Gtk::Stock::CANCEL,Gtk::RESPONSE_CANCEL );
