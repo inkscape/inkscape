@@ -1741,7 +1741,7 @@ sp_dtw_zoom_value_changed (GtkSpinButton *spin, gpointer data)
     desktop->zoom_absolute (d.midpoint()[Geom::X], d.midpoint()[Geom::Y], zoom_factor);
     g_signal_handler_unblock (spin, dtw->zoom_update);
 
-    spinbutton_defocus (GTK_OBJECT (spin));
+    spinbutton_defocus (GTK_WIDGET(spin));
 }
 
 static void

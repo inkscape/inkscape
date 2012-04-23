@@ -15,7 +15,7 @@
 gboolean spinbutton_focus_in (GtkWidget *w, GdkEventKey *event, gpointer data);
 void spinbutton_undo (GtkWidget *w);
 gboolean spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data);
-void spinbutton_defocus (GtkObject *container);
+void spinbutton_defocus (GtkWidget *container);
 
 /*
   Local Variables:

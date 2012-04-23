@@ -834,7 +834,7 @@ void PrefPusher::notify(Inkscape::Preferences::Entry const &newVal)
     }
 }
 
-static void delete_prefspusher(GtkObject * /*obj*/, PrefPusher *watcher )
+static void delete_prefspusher(GObject * /*obj*/, PrefPusher *watcher )
 {
     delete watcher;
 }
@@ -4045,7 +4045,7 @@ static void sp_spl_tb_t0_value_changed(GtkAdjustment *adj, GObject *tbl)
     sp_spl_tb_value_changed(adj, tbl, "t0");
 }
 
-static void sp_spl_tb_defaults(GtkWidget * /*widget*/, GtkObject *obj)
+static void sp_spl_tb_defaults(GtkWidget * /*widget*/, GObject *obj)
 {
     GtkWidget *tbl = GTK_WIDGET(obj);
 
@@ -4056,19 +4056,19 @@ static void sp_spl_tb_defaults(GtkWidget * /*widget*/, GtkObject *obj)
     gdouble exp = 1.0;
     gdouble t0 = 0.0;
 
-    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(obj), "revolution");
+    adj = (GtkAdjustment*)g_object_get_data(obj, "revolution");
     gtk_adjustment_set_value(adj, rev);
     gtk_adjustment_value_changed(adj);
 
-    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(obj), "expansion");
+    adj = (GtkAdjustment*)g_object_get_data(obj, "expansion");
     gtk_adjustment_set_value(adj, exp);
     gtk_adjustment_value_changed(adj);
 
-    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(obj), "t0");
+    adj = (GtkAdjustment*)g_object_get_data(obj, "t0");
     gtk_adjustment_set_value(adj, t0);
     gtk_adjustment_value_changed(adj);
 
-    spinbutton_defocus(GTK_OBJECT(tbl));
+    spinbutton_defocus(tbl);
 }
 
 
@@ -4378,7 +4378,7 @@ static void sp_pen_toolbox_prep(SPDesktop * /*desktop*/, GtkActionGroup* mainAct
 }
 
 
-static void sp_pencil_tb_defaults(GtkWidget * /*widget*/, GtkObject *obj)
+static void sp_pencil_tb_defaults(GtkWidget * /*widget*/, GObject *obj)
 {
     GtkWidget *tbl = GTK_WIDGET(obj);
 
@@ -4387,11 +4387,11 @@ static void sp_pencil_tb_defaults(GtkWidget * /*widget*/, GtkObject *obj)
     // fixme: make settable
     gdouble tolerance = 4;
 
-    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(obj), "tolerance");
+    adj = (GtkAdjustment*)g_object_get_data(obj, "tolerance");
     gtk_adjustment_set_value(adj, tolerance);
     gtk_adjustment_value_changed(adj);
 
-    spinbutton_defocus(GTK_OBJECT(tbl));
+    spinbutton_defocus(tbl);
 }
 
 static void sp_pencil_tb_tolerance_value_changed(GtkAdjustment *adj, GObject *tbl)
@@ -5724,7 +5724,7 @@ static void sp_arctb_defaults(GtkWidget *, GObject *obj)
     gtk_adjustment_set_value(adj, 0.0);
     gtk_adjustment_value_changed(adj);
 
-    spinbutton_defocus( GTK_OBJECT(obj) );
+    spinbutton_defocus(GTK_WIDGET(obj));
 }
 
 static void arc_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const * /*name*/,
@@ -5945,14 +5945,14 @@ static void toggle_dropper_pick_alpha( GtkToggleAction* act, gpointer tbl )
         }
     }
 
-    spinbutton_defocus(GTK_OBJECT(tbl));
+    spinbutton_defocus(GTK_WIDGET(tbl));
 }
 
 static void toggle_dropper_set_alpha( GtkToggleAction* act, gpointer tbl )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool( "/tools/dropper/setalpha", gtk_toggle_action_get_active( act ) );
-    spinbutton_defocus(GTK_OBJECT(tbl));
+    spinbutton_defocus(GTK_WIDGET(tbl));
 }
 
 
@@ -8176,7 +8176,7 @@ static void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 //##      Connector      ##
 //#########################
 
-static void sp_connector_mode_toggled( GtkToggleAction* act, GtkObject * /*tbl*/ )
+static void sp_connector_mode_toggled( GtkToggleAction* act, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("/tools/connector/mode",
@@ -8361,14 +8361,14 @@ static void sp_connector_graph_layout(void)
     DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_DIALOG_ALIGN_DISTRIBUTE, _("Arrange connector network"));
 }
 
-static void sp_directed_graph_layout_toggled( GtkToggleAction* act, GtkObject * /*tbl*/ )
+static void sp_directed_graph_layout_toggled( GtkToggleAction* act, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("/tools/connector/directedlayout",
                 gtk_toggle_action_get_active( act ));
 }
 
-static void sp_nooverlaps_graph_layout_toggled( GtkToggleAction* act, GtkObject * /*tbl*/ )
+static void sp_nooverlaps_graph_layout_toggled( GtkToggleAction* act, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool("/tools/connector/avoidoverlaplayout",
@@ -8397,7 +8397,7 @@ static void connector_tb_event_attr_changed(Inkscape::XML::Node *repr,
         gtk_adjustment_set_value(adj, spacing);
         gtk_adjustment_value_changed(adj);
 
-        spinbutton_defocus(GTK_OBJECT(tbl));
+        spinbutton_defocus(tbl);
     }
 }
 

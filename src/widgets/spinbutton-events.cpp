@@ -48,7 +48,7 @@ spinbutton_undo (GtkWidget *w)
 }
 
 void
-spinbutton_defocus (GtkObject *container)
+spinbutton_defocus (GtkWidget *container)
 {
 	// defocus spinbuttons by moving focus to the canvas, unless "stay" is on
 	gboolean stay = GPOINTER_TO_INT(g_object_get_data(G_OBJECT (container), "stay"));
@@ -71,12 +71,12 @@ spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 	switch (get_group0_keyval (event)) {
 	case GDK_Escape: // defocus
 		spinbutton_undo (w);
-		spinbutton_defocus (GTK_OBJECT (spw));
+		spinbutton_defocus(GTK_WIDGET(spw));
 		return TRUE; // I consumed the event
 		break;
 	case GDK_Return: // defocus
 	case GDK_KP_Enter:
-		spinbutton_defocus (GTK_OBJECT (spw));
+		spinbutton_defocus (GTK_WIDGET(spw));
 		return TRUE; // I consumed the event
 		break;
 	case GDK_Tab:

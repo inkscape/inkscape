@@ -1157,7 +1157,7 @@ void SelectedStyle::on_opacity_changed () {
                             _("Change opacity"));
     // resume interruptibility
     sp_desktop_canvas(_desktop)->endForcedFullRedraws();
-    spinbutton_defocus(GTK_OBJECT(_opacity_sb.gobj()));
+    spinbutton_defocus(GTK_WIDGET(_opacity_sb.gobj()));
     _opacity_blocked = false;
 }
 
