@@ -879,9 +879,11 @@ void SearchResultList::populate_from_xml(xmlNode * a_node)
     guint row_num = 0;
     
     for (xmlNode *cur_node = a_node; cur_node; cur_node = cur_node->next) {
+
         // Get items information
         if (strcmp((const char*)cur_node->name, "rss")) // Avoid the root
-            if (cur_node->type == XML_ELEMENT_NODE && !strcmp((const char*)cur_node->parent->name, "item"))
+            if (cur_node->type == XML_ELEMENT_NODE &&
+                    (cur_node->parent->name && !strcmp((const char*)cur_node->parent->name, "item")))
             {
                 if (!strcmp((const char*)cur_node->name, "title"))
                 {
@@ -1055,7 +1057,7 @@ void ImportDialog::on_xml_file_read(const Glib::RefPtr<Gio::AsyncResult>& result
     list_results->populate_from_xml(root_element);
 
     // Populate the MARKUP column with the title & description of the clipart
-    for (guint i = 0; i <= list_results->size() - 1; i++) {
+    for (guint i = 0; i < list_results->size(); i++) {
         Glib::ustring title = list_results->get_text(i, RESULTS_COLUMN_TITLE);
         Glib::ustring description = list_results->get_text(i, RESULTS_COLUMN_DESCRIPTION);
         char* markup = g_markup_printf_escaped("<b>%s</b>\n<span size=\"small\">%s</span>",
