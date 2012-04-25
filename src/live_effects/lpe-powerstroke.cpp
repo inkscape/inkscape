@@ -353,8 +353,8 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                 Geom::Path bzr1 = path_from_sbasis( B[prev_i], tol );
                 Geom::Path bzr2 = path_from_sbasis( B[i], tol );
                 Geom::Crossings cross = crossings(bzr1, bzr2);
-                if (cross.empty()) {
-                    // empty crossing: default to bevel
+                if (cross.size() != 1) {
+                    // empty crossing or too many crossings: default to bevel
                     pb.lineTo(B[i].at0());
                     pb.append(bzr2, Geom::Path::STITCH_DISCONTINUOUS);
                 } else {
