@@ -833,14 +833,14 @@ sp_pattern_menu_build (GtkWidget *combo, GSList *pattern_list, SPDocument */*sou
 
         gchar const *patid = repr->attribute("id");
 
-        bool stockid = false;
+        gboolean stockid = false;
         if (repr->attribute("inkscape:stockid")) {
             stockid = true;
         }
 
         gtk_list_store_append(store, &iter);
         gtk_list_store_set(store, &iter,
-                COMBO_COL_LABEL, label, COMBO_COL_PATTERN, (void *) patid, COMBO_COL_STOCK, stockid, COMBO_COL_SEP, FALSE, -1);
+                COMBO_COL_LABEL, label, COMBO_COL_STOCK, stockid, COMBO_COL_PATTERN, patid, COMBO_COL_SEP, FALSE, -1);
 
     }
 }
@@ -889,12 +889,11 @@ ink_pattern_menu_populate_menu(GtkWidget *combo, SPDocument *doc)
 
     // add separator
     {
-        gchar const *patid = "";
         GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(combo)));
         GtkTreeIter iter;
         gtk_list_store_append (store, &iter);
         gtk_list_store_set(store, &iter,
-                COMBO_COL_LABEL, "", COMBO_COL_PATTERN, (void *) patid, COMBO_COL_STOCK, false, COMBO_COL_SEP, true, -1);
+                COMBO_COL_LABEL, "", COMBO_COL_STOCK, false, COMBO_COL_PATTERN, "", COMBO_COL_SEP, true, -1);
     }
 
     // suck in from patterns.svg
@@ -918,7 +917,7 @@ ink_pattern_menu(GtkWidget *combo)
 
         gtk_list_store_append (store, &iter);
         gtk_list_store_set (store, &iter,
-                COMBO_COL_LABEL, _("No document selected"), COMBO_COL_PATTERN, NULL, COMBO_COL_STOCK, false, COMBO_COL_SEP, false, -1);
+                COMBO_COL_LABEL, _("No document selected"), COMBO_COL_STOCK, false, COMBO_COL_PATTERN, "", COMBO_COL_SEP, false, -1);
         gtk_widget_set_sensitive(combo, FALSE);
 
     } else {
@@ -930,12 +929,12 @@ ink_pattern_menu(GtkWidget *combo)
 
     // Select the first item that is not a seperator
     if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL(store), &iter)) {
-        gtk_combo_box_set_active_iter(GTK_COMBO_BOX(combo), &iter);
         gboolean sep = false;
         gtk_tree_model_get(GTK_TREE_MODEL(store), &iter, COMBO_COL_SEP, &sep, -1);
         if (sep) {
-            gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 1);
+            gtk_tree_model_iter_next(GTK_TREE_MODEL(store), &iter);
         }
+        gtk_combo_box_set_active_iter(GTK_COMBO_BOX(combo), &iter);
     }
 
     return combo;
@@ -1022,7 +1021,7 @@ static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSel
              * Create a combo_box and store with 4 columns,
              * The label, a pointer to the pattern, is stockid or not, is a separator or not.
              */
-            GtkListStore *store = gtk_list_store_new (4, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_BOOLEAN, G_TYPE_BOOLEAN);
+            GtkListStore *store = gtk_list_store_new (COMBO_N_COLS, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_BOOLEAN);
             GtkWidget *combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (store));
             gtk_combo_box_set_row_separator_func(GTK_COMBO_BOX(combo), SPPaintSelector::isSeparator, NULL, NULL);
 
@@ -1090,23 +1089,26 @@ SPPattern *SPPaintSelector::getPattern()
         return NULL;
     }
 
+    GtkTreeModel *store = gtk_combo_box_get_model(GTK_COMBO_BOX(combo));
+
     /* Get the selected pattern */
     GtkTreeIter  iter;
-    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX(combo), &iter)) {
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX(combo), &iter) ||
+            !gtk_list_store_iter_is_valid(GTK_LIST_STORE(store), &iter)) {
         return NULL;
     }
 
     gchar *patid = NULL;
-    bool stockid = FALSE;
-    GtkTreeModel *store = gtk_combo_box_get_model(GTK_COMBO_BOX(combo));
-    gtk_tree_model_get (store, &iter, COMBO_COL_PATTERN, &patid, COMBO_COL_STOCK, &stockid, -1);
+    gboolean stockid = FALSE;
+    gchar *label = NULL;
+    gtk_tree_model_get (store, &iter, COMBO_COL_LABEL, &label, COMBO_COL_STOCK, &stockid, COMBO_COL_PATTERN, &patid,  -1);
     if (patid == NULL) {
         return NULL;
     }
 
     if (strcmp(patid, "none")){
 
-        gchar *paturn = patid;
+        gchar *paturn = g_strdup(patid);
         if (stockid)  {
             paturn = g_strconcat("urn:inkscape:pattern:",patid,NULL);
         }

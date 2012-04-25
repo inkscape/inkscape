@@ -104,7 +104,7 @@ struct SPPaintSelector {
     void setFlatColor( SPDesktop *desktop, const gchar *color_property, const gchar *opacity_property );
 };
 
-enum {COMBO_COL_LABEL=0, COMBO_COL_PATTERN=1, COMBO_COL_STOCK=2, COMBO_COL_SEP=3};
+enum {COMBO_COL_LABEL=0, COMBO_COL_STOCK=1, COMBO_COL_PATTERN=2, COMBO_COL_SEP=3, COMBO_N_COLS=4};
 
 
 /// The SPPaintSelector vtable
