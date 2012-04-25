@@ -10312,6 +10312,7 @@ static void usage(int argc, char **argv)
     printf("  -file <file>           use given buildfile\n");
     printf("  -f <file>                 ''\n");
     printf("  -D<property>=<value>   use value for given property\n");
+    printf("  -j [N]                 build using N threads or infinite number of threads if no argument\n");
 }
 
 
