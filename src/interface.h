@@ -123,7 +123,6 @@ class ContextMenu : public Gtk::Menu
         Gtk::MenuItem MIGroup; //menu entry to enter a group
         Gtk::MenuItem MIParent; //menu entry to leave a group
         
-        void on_hide();
         /**
          * auxiliary function that adds a separator line in the context menu
          */

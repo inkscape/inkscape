@@ -1651,11 +1651,6 @@ ContextMenu::~ContextMenu(void)
 {
 }
 
-void ContextMenu::on_hide()
-{
-    delete this;
-}
-
 Gtk::SeparatorMenuItem* ContextMenu::AddSeparator(void)
 {
     Gtk::SeparatorMenuItem* sep = manage(new Gtk::SeparatorMenuItem());
