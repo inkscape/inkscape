@@ -636,6 +636,20 @@ gr_remove_stop (GtkWidget */*button*/, GtkWidget *vb)
 }
 
 static void
+gr_linked_changed (GtkToggleAction *act, gpointer data)
+{
+    gboolean active = gtk_toggle_action_get_active( act );
+    if ( active ) {
+        g_object_set( G_OBJECT(act), "iconId", INKSCAPE_ICON("object-locked"), NULL );
+    } else {
+        g_object_set( G_OBJECT(act), "iconId", INKSCAPE_ICON("object-unlocked"), NULL );
+    }
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/options/forkgradientvectors/value", !active);
+}
+
+static void
 gr_reverse (GtkWidget */*button*/, gpointer data)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(data);
@@ -1262,6 +1276,22 @@ void sp_gradient_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, 
         gtk_action_set_sensitive( GTK_ACTION(inky), FALSE );
         g_object_set_data( holder, "gradient_stops_reverse_action", inky );
 
+    }
+
+    // Gradients Linked toggle
+    {
+        InkToggleAction* itact = ink_toggle_action_new( "GradientEditLinkAction",
+                                                        _("Link gradients"),
+                                                        _("Link gradients to change all related gradients"),
+                                                        INKSCAPE_ICON("object-unlocked"),
+                                                        secondarySize );
+        g_object_set( itact, "short_label", "Lock", NULL );
+        g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(gr_linked_changed), desktop) ;
+        gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
+
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        bool linkedmode = prefs->getBool("/options/forkgradientvectors/value", true);
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(itact), !linkedmode );
     }
 
     Inkscape::Selection *selection = sp_desktop_selection (desktop);

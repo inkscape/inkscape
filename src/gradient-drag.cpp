@@ -1615,6 +1615,7 @@ void GrDrag::addDragger(GrDraggable *draggable)
  */
 void GrDrag::addDraggersRadial(SPRadialGradient *rg, SPItem *item, bool fill_or_stroke)
 {
+    rg->ensureVector();
     addDragger (new GrDraggable (item, POINT_RG_CENTER, 0, fill_or_stroke));
     guint num = rg->vector.stops.size();
     if (num > 2) {
@@ -1637,6 +1638,7 @@ void GrDrag::addDraggersRadial(SPRadialGradient *rg, SPItem *item, bool fill_or_
  */
 void GrDrag::addDraggersLinear(SPLinearGradient *lg, SPItem *item, bool fill_or_stroke)
 {
+    lg->ensureVector();
     addDragger (new GrDraggable (item, POINT_LG_BEGIN, 0, fill_or_stroke));
     guint num = lg->vector.stops.size();
     if (num > 2) {

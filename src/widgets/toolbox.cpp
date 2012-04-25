@@ -538,6 +538,7 @@ static gchar const * ui_descr =
         "    <toolitem action='GradientNewFillStrokeAction' />"
         "    <separator />"
         "    <toolitem action='GradientSelectGradientAction' />"
+        "    <toolitem action='GradientEditLinkAction' />"
         "    <toolitem action='GradientEditReverseAction' />"
         "    <toolitem action='GradientSelectRepeatAction' />"
         "    <separator />"
