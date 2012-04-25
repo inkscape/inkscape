@@ -258,7 +258,17 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                        break;
                     }
 
-                    Geom::Ellipse ellipse = find_ellipse(B[prev_i].at1(), B[i].at0(), *O);
+                    Geom::Ellipse ellipse;
+                    try {
+                        ellipse = find_ellipse(B[prev_i].at1(), B[i].at0(), *O);
+                    }
+                    catch (Geom::LogicalError &e) {
+                        // 2geom did not find a fitting ellipse, this happens for weird thick paths :)
+                        // do bevel, and break
+                         pb.lineTo(B[i].at0());
+                         break;
+                    }
+
                     pb.arcTo( ellipse.ray(Geom::X), ellipse.ray(Geom::Y), ellipse.rot_angle(),
                               false, width < 0, B[i].at0() );
 
