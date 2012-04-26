@@ -783,10 +783,13 @@ Piecewise<T> compose(Piecewise<T> const &f, SBasis const &g){
         double t0=(*cut).first;
         double t1=(*next).first;
 
-        SBasis sub_g=compose(g, Linear(t0,t1));
-        sub_g=compose(Linear(-f.cuts[idx]/(f.cuts[idx+1]-f.cuts[idx]),
-                             (1-f.cuts[idx])/(f.cuts[idx+1]-f.cuts[idx])),sub_g);
-        result.push(compose(f[idx],sub_g),t1);
+        if (!are_near(t0,t1,EPSILON*EPSILON)) { // prevent adding cuts that are extremely close together and that may cause trouble with rounding e.g. when reversing the path
+            SBasis sub_g=compose(g, Linear(t0,t1));
+            sub_g=compose(Linear(-f.cuts[idx]/(f.cuts[idx+1]-f.cuts[idx]),
+                                 (1-f.cuts[idx])/(f.cuts[idx+1]-f.cuts[idx])),sub_g);
+            result.push(compose(f[idx],sub_g),t1);
+        }
+
         cut++;
         next++;
     }
