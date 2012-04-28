@@ -61,8 +61,8 @@ void sp_transientize_callback    ( Inkscape::Application *inkscape,
 
 void on_dialog_hide (GtkWidget *w);
 void on_dialog_unhide (GtkWidget *w);
-gboolean sp_dialog_hide (GtkObject *object, gpointer data);
-gboolean sp_dialog_unhide (GtkObject *object, gpointer data);
+gboolean sp_dialog_hide (GObject *object, gpointer data);
+gboolean sp_dialog_unhide (GObject *object, gpointer data);
 
 #endif
 

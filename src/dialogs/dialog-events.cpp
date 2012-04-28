@@ -315,7 +315,7 @@ void on_dialog_unhide (GtkWidget *w)
 }
 
 gboolean
-sp_dialog_hide (GtkObject */*object*/, gpointer data)
+sp_dialog_hide(GObject * /*object*/, gpointer data)
 {
     GtkWidget *dlg = (GtkWidget *) data;
 
@@ -328,7 +328,7 @@ sp_dialog_hide (GtkObject */*object*/, gpointer data)
 
 
 gboolean
-sp_dialog_unhide (GtkObject */*object*/, gpointer data)
+sp_dialog_unhide(GObject * /*object*/, gpointer data)
 {
     GtkWidget *dlg = (GtkWidget *) data;
 
