@@ -56,7 +56,7 @@ ErrorFileNotice::ErrorFileNotice (void) :
     g_free(ext_error_file);
     set_message(dialog_text, true);
 
-    Gtk::VBox * vbox = get_vbox();
+    Gtk::Box * vbox = get_vbox();
 
     /* This is some filler text, needs to change before relase */
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();

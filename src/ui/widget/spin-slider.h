@@ -13,6 +13,7 @@
 #include <gtkmm/adjustment.h>
 #include <gtkmm/box.h>
 #include <gtkmm/scale.h>
+#include <gtkmm/togglebutton.h>
 #include "spinbutton.h"
 #include "attr-widget.h"
 

@@ -72,7 +72,7 @@ LivePathEffectAdd::LivePathEffectAdd() :
     add_button.set_use_underline(true);
     add_button.set_can_default();
 
-    Gtk::VBox *mainVBox = get_vbox();
+    Gtk::Box *mainVBox = get_vbox();
     mainVBox->pack_start(scrolled_window, true, true);
     add_action_widget(close_button, Gtk::RESPONSE_CLOSE);
     add_action_widget(add_button, Gtk::RESPONSE_APPLY);

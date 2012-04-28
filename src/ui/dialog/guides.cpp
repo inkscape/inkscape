@@ -166,7 +166,7 @@ void GuidelinePropertiesDialog::_setup() {
     add_button(Gtk::Stock::DELETE, -12);
     add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);
 
-    Gtk::VBox *mainVBox = get_vbox();
+    Gtk::Box *mainVBox = get_vbox();
 
     _layout_table.set_spacings(4);
     _layout_table.resize (3, 4);

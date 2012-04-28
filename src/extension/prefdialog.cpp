@@ -95,7 +95,7 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
         hbox->show();
         this->get_vbox()->pack_start(*hbox, true, true, 6);
 
-        Gtk::HBox * hbox = dynamic_cast<Gtk::HBox *>(_button_preview);
+        Gtk::Box * hbox = dynamic_cast<Gtk::Box *>(_button_preview);
         if (hbox != NULL) {
             Gtk::Widget * back = hbox->children().back().get_widget();
             Gtk::CheckButton * cb = dynamic_cast<Gtk::CheckButton *>(back);

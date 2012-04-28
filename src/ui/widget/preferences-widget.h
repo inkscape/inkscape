@@ -21,6 +21,8 @@
 #include "ui/widget/spinbutton.h"
 #include <stddef.h>
 #include <sigc++/sigc++.h>
+#include <gtkmm/checkbutton.h>
+#include <gtkmm/radiobutton.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/scale.h>

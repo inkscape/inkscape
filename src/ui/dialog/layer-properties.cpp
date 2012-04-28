@@ -36,7 +36,7 @@ namespace Dialogs {
 LayerPropertiesDialog::LayerPropertiesDialog()
 : _strategy(NULL), _desktop(NULL), _layer(NULL), _position_visible(false)
 {
-    Gtk::VBox *mainVBox = get_vbox();
+    Gtk::Box *mainVBox = get_vbox();
 
     _layout_table.set_spacings(4);
     _layout_table.resize (1, 2);

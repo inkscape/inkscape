@@ -36,7 +36,7 @@ public:
     operator Gtk::Widget &();
     GtkWidget *gobj();
     void present();
-    Gtk::VBox *get_vbox();
+    Gtk::Box *get_vbox();
     void show();
     void hide();
     void show_all_children();

@@ -154,7 +154,7 @@ PanelDialog<B>::PanelDialog(Widget::Panel &panel, char const *prefs_path, int co
     PanelDialogBase(panel, prefs_path, verb_num, apply_label),
     Dialog(&B::create, prefs_path, verb_num, apply_label)
 {
-    Gtk::VBox *vbox = get_vbox();
+    Gtk::Box *vbox = get_vbox();
     _panel.signalResponse().connect(sigc::mem_fun(*this, &PanelDialog::_handleResponse));
     _panel.signalPresent().connect(sigc::mem_fun(*this, &PanelDialog::_presentDialog));
 
@@ -204,7 +204,7 @@ PanelDialog<Behavior::FloatingBehavior>::PanelDialog(UI::Widget::Panel &panel, c
     PanelDialogBase(panel, prefs_path, verb_num, apply_label),
     Dialog(&Behavior::FloatingBehavior::create, prefs_path, verb_num, apply_label)
 {
-    Gtk::VBox *vbox = get_vbox();
+    Gtk::Box *vbox = get_vbox();
     _panel.signalResponse().connect(sigc::mem_fun(*this, &PanelDialog::_handleResponse));
 
     vbox->pack_start(_panel, true, true, 0);

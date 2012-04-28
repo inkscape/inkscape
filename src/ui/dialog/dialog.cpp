@@ -160,7 +160,7 @@ void Dialog::onShowF12()
 inline Dialog::operator Gtk::Widget &()                          { return *_behavior; }
 inline GtkWidget *Dialog::gobj()                                 { return _behavior->gobj(); }
 inline void Dialog::present()                                    { _behavior->present(); }
-inline Gtk::VBox *Dialog::get_vbox()                             {  return _behavior->get_vbox(); }
+inline Gtk::Box *Dialog::get_vbox()                             {  return _behavior->get_vbox(); }
 inline void Dialog::hide()                                       { _behavior->hide(); }
 inline void Dialog::show()                                       { _behavior->show(); }
 inline void Dialog::show_all_children()                          { _behavior->show_all_children(); }

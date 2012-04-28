@@ -10,6 +10,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glibmm/property.h>
 #include <gtkmm/cellrendererpixbuf.h>
 #include <gtkmm/widget.h>
 

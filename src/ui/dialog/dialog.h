@@ -79,7 +79,7 @@ public:
     virtual operator Gtk::Widget &();
     virtual GtkWidget *gobj();
     virtual void present();
-    virtual Gtk::VBox *get_vbox();
+    virtual Gtk::Box *get_vbox();
     virtual void show();
     virtual void hide();
     virtual void show_all_children();

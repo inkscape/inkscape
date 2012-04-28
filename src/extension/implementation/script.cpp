@@ -851,7 +851,7 @@ void Script::checkStderr (const Glib::ustring &data,
     GtkWidget *dlg = GTK_WIDGET(warning.gobj());
     sp_transientize(dlg);
 
-    Gtk::VBox * vbox = warning.get_vbox();
+    Gtk::Box * vbox = warning.get_vbox();
 
     /* Gtk::TextView * textview = new Gtk::TextView(Gtk::TextBuffer::create()); */
     Gtk::TextView * textview = new Gtk::TextView();

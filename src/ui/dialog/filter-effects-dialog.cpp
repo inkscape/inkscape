@@ -62,6 +62,7 @@
 #include "io/sys.h"
 #include <iostream>
 
+#include <gtkmm/checkbutton.h>
 #include <gtkmm/colorbutton.h>
 #include <gtkmm/paned.h>
 #include <gtkmm/scrolledwindow.h>

@@ -16,6 +16,7 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/treemodel.h>
 #include <gtkmm/treeselection.h>
+#include <glibmm/property.h>
 
 #include <functional>
 #include <sstream>

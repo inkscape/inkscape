@@ -208,8 +208,9 @@ void PreviewHolder::on_size_allocate( Gtk::Allocation& allocation )
 
     if ( _insides && !_wrap && (_view != VIEW_TYPE_LIST) && (_anchor == SP_ANCHOR_NORTH || _anchor == SP_ANCHOR_SOUTH) ) {
 	Gtk::Requisition req;
-#if WITH_GTKMM_3_0
-	_insides->get_preferred_size(&req, NULL);
+#if GTK_CHECK_VERSION(3,0,0)
+	Gtk::Requisition req_natural;
+	_insides->get_preferred_size(req, req_natural);
 #else
         req = _insides->size_request();
 #endif
@@ -239,8 +240,9 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
 
     if ( _anchor == SP_ANCHOR_SOUTH || _anchor == SP_ANCHOR_NORTH ) {
         Gtk::Requisition req;
-#if WITH_GTKMM_3_0
-	_scroller->get_preferred_size(&req, NULL);
+#if GTK_CHECK_VERSION(3,0,0)
+	Gtk::Requisition req_natural;
+	_scroller->get_preferred_size(req, req_natural);
 #else
        	req = _scroller->size_request();
 #endif
@@ -249,11 +251,17 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
             req.width = currW;
         }
 
+#if GTK_CHECK_VERSION(3,0,0)
+        Gtk::Scrollbar* hs = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_hscrollbar();
+#else
         Gtk::HScrollbar* hs = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_hscrollbar();
+#endif
+
         if ( hs ) {
             Gtk::Requisition scrollReq;
-#if WITH_GTKMM_3_0
-	    hs->get_preferred_size(&scrollReq, NULL);
+#if GTK_CHECK_VERSION(3,0,0)
+            Gtk::Requisition scrollReq_natural;
+	    hs->get_preferred_size(scrollReq, scrollReq_natural);
 #else
 	    scrollReq = hs->size_request();
 #endif
@@ -263,8 +271,9 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
         }
 
         Gtk::Requisition req2;
-#if WITH_GTKMM_3_0
-	const_cast<Gtk::Widget*>(thing)->get_preferred_size(&req2, NULL);
+#if GTK_CHECK_VERSION(3,0,0)
+        Gtk::Requisition req2_natural;
+	const_cast<Gtk::Widget*>(thing)->get_preferred_size(req2, req2_natural);
 #else
        	req2 = const_cast<Gtk::Widget*>(thing)->size_request();
 #endif

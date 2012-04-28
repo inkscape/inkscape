@@ -21,6 +21,7 @@
 #include <gtkmm/filechooserdialog.h>
 #include <glib/gstdio.h>
 #include <gtkmm/comboboxtext.h>
+#include <gtkmm/checkbutton.h>
 
 //General includes
 #include <unistd.h>

@@ -19,6 +19,8 @@
 #include <gtkmm/menu.h>
 #include <gtkmm/menuitem.h>
 #include <gtkmm/adjustment.h>
+#include <gtkmm/radiobuttongroup.h>
+#include <gtkmm/radiomenuitem.h>
 #include "ui/widget/spinbutton.h"
 
 #include <stddef.h>

@@ -45,7 +45,7 @@ public:
     virtual operator Gtk::Widget&() =0;
     virtual GtkWidget *gobj() =0;
     virtual void present() =0;
-    virtual Gtk::VBox *get_vbox() =0;
+    virtual Gtk::Box *get_vbox() =0;
     virtual void show() =0;
     virtual void hide() =0;
     virtual void show_all_children() =0;

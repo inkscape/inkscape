@@ -18,6 +18,7 @@
 #define noSP_SS_VERBOSE
 
 #include "widgets/dash-selector.h"
+#include <gtkmm/radiobutton.h>
 #include <gtkmm/table.h>
 #include <glibmm/i18n.h>
 

@@ -69,7 +69,7 @@ DebugDialogImpl::DebugDialogImpl()
     set_title(_("Messages"));
     set_size_request(300, 400);
 
-    Gtk::VBox *mainVBox = get_vbox();
+    Gtk::Box *mainVBox = get_vbox();
 
     //## Add a menu for clear()
     menuBar.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_File"), fileMenu) );

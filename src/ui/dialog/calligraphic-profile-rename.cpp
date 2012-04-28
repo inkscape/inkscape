@@ -30,7 +30,7 @@ namespace Dialog {
 CalligraphicProfileRename::CalligraphicProfileRename() :
     _applied(false)
 {
-    Gtk::VBox *mainVBox = get_vbox();
+    Gtk::Box *mainVBox = get_vbox();
     _layout_table.set_spacings(4);
     _layout_table.resize (1, 2);
 

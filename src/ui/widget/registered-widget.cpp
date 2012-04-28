@@ -18,6 +18,7 @@
 #endif
 
 #include "registered-widget.h"
+#include <gtkmm/radiobutton.h>
 
 #include "ui/widget/color-picker.h"
 #include "ui/widget/registry.h"
