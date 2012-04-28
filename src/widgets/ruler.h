@@ -81,9 +81,6 @@ struct _GtkDeprecatedRulerMetric
 
 
 GType           gtk_deprecated_ruler_get_type   (void) G_GNUC_CONST;
-void            gtk_deprecated_ruler_set_metric (GtkDeprecatedRuler       *ruler,
-                                                 GtkMetricType   metric);
-GtkMetricType   gtk_deprecated_ruler_get_metric (GtkDeprecatedRuler       *ruler);
 void            gtk_deprecated_ruler_set_range  (GtkDeprecatedRuler       *ruler,
                                                  gdouble         lower,
                                                  gdouble         upper,
@@ -99,11 +96,8 @@ void            gtk_deprecated_ruler_draw_ticks (GtkDeprecatedRuler       *ruler
 void            gtk_deprecated_ruler_draw_pos   (GtkDeprecatedRuler       *ruler);
 
 
-
-
-
-
-void sp_ruler_set_metric (GtkDeprecatedRuler * ruler, SPMetric  metric);
+void     sp_ruler_set_metric (GtkDeprecatedRuler * ruler, SPMetric  metric);
+SPMetric sp_ruler_get_metric (GtkDeprecatedRuler *ruler);
 
 
 #define SP_HRULER(obj)          G_TYPE_CHECK_INSTANCE_CAST (obj, sp_hruler_get_type (), SPHRuler)

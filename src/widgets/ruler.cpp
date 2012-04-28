@@ -83,14 +83,22 @@ static void     gtk_deprecated_ruler_real_draw_ticks (GtkDeprecatedRuler       *
 static void     gtk_deprecated_ruler_real_draw_pos   (GtkDeprecatedRuler       *ruler);
 
 
-static const GtkDeprecatedRulerMetric ruler_metrics[] =
-{
-  { "Pixel", "Pi", 1.0, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  { "Inches", "In", 72.0, { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 }, { 1, 2, 4, 8, 16 }},
-  { "Centimeters", "Cn", 28.35, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-};
 #define GTK_DEPRECATED_RULER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GTK_DEPRECATED_TYPE_RULER, GtkDeprecatedRulerPrivate))
 
+// Note: const casts are due to GtkDeprecatedRuler being const-broken and not scheduled for any more fixes.
+/// Ruler metrics.
+static GtkDeprecatedRulerMetric const sp_ruler_metrics[] = {
+  // NOTE: the order of records in this struct must correspond to the SPMetric enum.
+  {const_cast<gchar*>("NONE"),          const_cast<gchar*>(""),   1,         { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {const_cast<gchar*>("millimeters"),   const_cast<gchar*>("mm"), PX_PER_MM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {const_cast<gchar*>("centimeters"),   const_cast<gchar*>("cm"), PX_PER_CM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {const_cast<gchar*>("inches"),        const_cast<gchar*>("in"), PX_PER_IN, { 1, 2, 4,  8, 16, 32,  64, 128, 256,  512 }, { 1, 2,  4,  8,  16 }},
+  {const_cast<gchar*>("feet"),          const_cast<gchar*>("ft"), PX_PER_FT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {const_cast<gchar*>("points"),        const_cast<gchar*>("pt"), PX_PER_PT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {const_cast<gchar*>("picas"),         const_cast<gchar*>("pc"), PX_PER_PC, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {const_cast<gchar*>("pixels"),        const_cast<gchar*>("px"), PX_PER_PX, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {const_cast<gchar*>("meters"),        const_cast<gchar*>("m"),  PX_PER_M,  { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+};
 
 G_DEFINE_TYPE_WITH_CODE (GtkDeprecatedRuler, gtk_deprecated_ruler, GTK_TYPE_WIDGET,
                          G_IMPLEMENT_INTERFACE (GTK_TYPE_ORIENTABLE,
@@ -167,14 +175,16 @@ gtk_deprecated_ruler_class_init (GtkDeprecatedRulerClass *klass)
    * GtkDeprecatedRuler:metric:
    *
    * The metric used for the ruler.
+   *
+   * TODO: This should probably use g_param_spec_enum
    */
   g_object_class_install_property (gobject_class,
                                    PROP_METRIC,
-                                   g_param_spec_enum ("metric",
+                                   g_param_spec_uint("metric",
 						      _("Metric"),
 						      _("The metric used for the ruler"),
-						      GTK_TYPE_METRIC_TYPE, 
-						      GTK_PIXELS,
+						      0, 8,
+						      SP_PX,
 						      static_cast<GParamFlags>(GTK_PARAM_READWRITE)));  
 
   g_type_class_add_private (gobject_class, sizeof (GtkDeprecatedRulerPrivate));
@@ -196,7 +206,7 @@ gtk_deprecated_ruler_init (GtkDeprecatedRuler *ruler)
   ruler->position = 0;
   ruler->max_size = 0;
 
-  gtk_deprecated_ruler_set_metric (ruler, GTK_PIXELS);
+  sp_ruler_set_metric(ruler, SP_PX);
 }
 
 
@@ -310,7 +320,7 @@ gtk_deprecated_ruler_set_property (GObject      *object,
 			   ruler->position,  g_value_get_double (value));
       break;
     case PROP_METRIC:
-      gtk_deprecated_ruler_set_metric (ruler, static_cast<GtkMetricType>(g_value_get_enum (value)));
+      sp_ruler_set_metric(ruler, static_cast<SPMetric>(g_value_get_enum (value)));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -345,7 +355,7 @@ gtk_deprecated_ruler_get_property (GObject      *object,
       g_value_set_double (value, ruler->max_size);
       break;
     case PROP_METRIC:
-      g_value_set_enum (value, gtk_deprecated_ruler_get_metric (ruler));
+      g_value_set_enum(value, sp_ruler_get_metric(ruler));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -353,41 +363,28 @@ gtk_deprecated_ruler_get_property (GObject      *object,
     }
 }
 
-void
-gtk_deprecated_ruler_set_metric (GtkDeprecatedRuler      *ruler,
-		      GtkMetricType  metric)
-{
-  g_return_if_fail (GTK_DEPRECATED_IS_RULER (ruler));
-
-  ruler->metric = (GtkDeprecatedRulerMetric *) &ruler_metrics[metric];
-
-  if (gtk_widget_is_drawable (GTK_WIDGET (ruler)))
-    gtk_widget_queue_draw (GTK_WIDGET (ruler));
-
-  g_object_notify (G_OBJECT (ruler), "metric");
-}
 
 /**
- * gtk_deprecated_ruler_get_metric:
+ * sp_ruler_get_metric:
  * @ruler: a #GtkDeprecatedRuler
  *
- * Gets the units used for a #GtkDeprecatedRuler. See gtk_deprecated_ruler_set_metric().
+ * Gets the units used for a #GtkDeprecatedRuler. See sp_ruler_set_metric().
  *
  * Return value: the units currently used for @ruler
  **/
-GtkMetricType gtk_deprecated_ruler_get_metric (GtkDeprecatedRuler *ruler)
+SPMetric sp_ruler_get_metric(GtkDeprecatedRuler *ruler)
 {
-  g_return_val_if_fail(GTK_DEPRECATED_IS_RULER(ruler), static_cast<GtkMetricType>(0));
+  g_return_val_if_fail(GTK_DEPRECATED_IS_RULER(ruler), static_cast<SPMetric>(0));
 
-  for (size_t i = 0; i < G_N_ELEMENTS(ruler_metrics); i++) {
-    if (ruler->metric == &ruler_metrics[i]) {
-      return static_cast<GtkMetricType>(i);
+  for (size_t i = 0; i < G_N_ELEMENTS(sp_ruler_metrics); i++) {
+    if (ruler->metric == &sp_ruler_metrics[i]) {
+      return static_cast<SPMetric>(i);
     }
   }
 
   g_assert_not_reached ();
 
-  return static_cast<GtkMetricType>(0);
+  return static_cast<SPMetric>(0);
 }
 
 
@@ -1317,27 +1314,11 @@ sp_ruler_common_draw_ticks(GtkDeprecatedRuler *ruler)
     }
 }
 
-// Note: const casts are due to GtkDeprecatedRuler being const-broken and not scheduled for any more fixes.
-/// Ruler metrics.
-static GtkDeprecatedRulerMetric const sp_ruler_metrics[] = {
-  // NOTE: the order of records in this struct must correspond to the SPMetric enum.
-  {const_cast<gchar*>("NONE"),          const_cast<gchar*>(""),   1,         { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {const_cast<gchar*>("millimeters"),   const_cast<gchar*>("mm"), PX_PER_MM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {const_cast<gchar*>("centimeters"),   const_cast<gchar*>("cm"), PX_PER_CM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {const_cast<gchar*>("inches"),        const_cast<gchar*>("in"), PX_PER_IN, { 1, 2, 4,  8, 16, 32,  64, 128, 256,  512 }, { 1, 2,  4,  8,  16 }},
-  {const_cast<gchar*>("feet"),          const_cast<gchar*>("ft"), PX_PER_FT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {const_cast<gchar*>("points"),        const_cast<gchar*>("pt"), PX_PER_PT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {const_cast<gchar*>("picas"),         const_cast<gchar*>("pc"), PX_PER_PC, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {const_cast<gchar*>("pixels"),        const_cast<gchar*>("px"), PX_PER_PX, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  {const_cast<gchar*>("meters"),        const_cast<gchar*>("m"),  PX_PER_M,  { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-};
 
-void
-sp_ruler_set_metric (GtkDeprecatedRuler *ruler,
-		     SPMetric  metric)
+void sp_ruler_set_metric(GtkDeprecatedRuler *ruler, SPMetric metric)
 {
-  g_return_if_fail (ruler != NULL);
-  g_return_if_fail (GTK_DEPRECATED_IS_RULER (ruler));
+  g_return_if_fail(ruler != NULL);
+  g_return_if_fail(GTK_DEPRECATED_IS_RULER (ruler));
   g_return_if_fail((unsigned) metric < G_N_ELEMENTS(sp_ruler_metrics));
 
   if (metric == 0) 
@@ -1345,6 +1326,8 @@ sp_ruler_set_metric (GtkDeprecatedRuler *ruler,
 
   ruler->metric = const_cast<GtkDeprecatedRulerMetric *>(&sp_ruler_metrics[metric]);
 
-  if (gtk_widget_is_drawable (GTK_WIDGET (ruler)))
-    gtk_widget_queue_draw (GTK_WIDGET (ruler));
+  if (gtk_widget_is_drawable(GTK_WIDGET(ruler)))
+    gtk_widget_queue_draw(GTK_WIDGET(ruler));
+
+  g_object_notify(G_OBJECT(ruler), "metric");
 }
