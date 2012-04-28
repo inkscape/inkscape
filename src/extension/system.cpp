@@ -68,17 +68,14 @@ static Extension *build_from_reprdoc(Inkscape::XML::Document *doc, Implementatio
  */
 SPDocument *open(Extension *key, gchar const *filename)
 {
-    Input *imod = NULL;
-    int relpath;
-    gchar * curdir;
-
     // Convert to absolute pathname to tolerate chdir().
-    relpath = *filename != '/';
+    bool relpath = (filename[0] != '/');
 #ifdef WIN32
-    relpath &= *filename != '\\' && !(isalpha(*filename) && filename[1] == ':');
+    relpath &= (filename[0] != '\\') && !(isalpha(filename[0]) && (filename[1] == ':'));
 #endif
 
     if (relpath) {
+        gchar * curdir = NULL;
 #ifndef WIN32
         curdir = getcwd(NULL, 0);
 #else
@@ -88,7 +85,9 @@ SPDocument *open(Extension *key, gchar const *filename)
         filename = g_build_filename(curdir, filename, NULL);
         free(curdir);
     }
-    
+
+    Input *imod = NULL;
+
     if (key == NULL) {
         gpointer parray[2];
         parray[0] = (gpointer)filename;
