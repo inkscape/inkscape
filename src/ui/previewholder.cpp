@@ -253,9 +253,9 @@ void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& 
         if ( hs ) {
             Gtk::Requisition scrollReq;
 #if WITH_GTKMM_3_0
-	    hs->get_preferred_size(&req, NULL);
+	    hs->get_preferred_size(&scrollReq, NULL);
 #else
-	    req = hs->size_request();
+	    scrollReq = hs->size_request();
 #endif
 
             // the +8 is a temporary hack
