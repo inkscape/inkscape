@@ -269,6 +269,15 @@ Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis>
                          break;
                     }
 
+                    // check if ellipse.ray is within 'sane' range.
+                    if ( ( fabs(ellipse.ray(Geom::X)) > 1e6 ) ||
+                         ( fabs(ellipse.ray(Geom::Y)) > 1e6 ) )
+                    {
+                        // do bevel, and break
+                         pb.lineTo(B[i].at0());
+                         break;
+                    }
+
                     pb.arcTo( ellipse.ray(Geom::X), ellipse.ray(Geom::Y), ellipse.rot_angle(),
                               false, width < 0, B[i].at0() );
 
