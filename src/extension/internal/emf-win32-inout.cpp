@@ -1757,8 +1757,14 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             dbg_str << "<!-- EMR_PAINTRGN -->\n";
             break;
         case EMR_EXTSELECTCLIPRGN:
+        {
             dbg_str << "<!-- EMR_EXTSELECTCLIPRGN -->\n";
+
+            PEMREXTSELECTCLIPRGN pEmr = (PEMREXTSELECTCLIPRGN) lpEMFR;
+            if (pEmr->iMode == RGN_COPY)
+                clipset = false;
             break;
+        }
         case EMR_BITBLT:
         {
             dbg_str << "<!-- EMR_BITBLT -->\n";
