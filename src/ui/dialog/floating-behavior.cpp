@@ -32,13 +32,11 @@ namespace Behavior {
 FloatingBehavior::FloatingBehavior(Dialog &dialog) :
     Behavior(dialog),
     _d (new Gtk::Dialog(_dialog._title))
-#if GTK_VERSION_GE(2, 12)
     ,_dialog_active(_d->property_is_active())
     ,_steps(0)
     ,_trans_focus(Inkscape::Preferences::get()->getDoubleLimited("/dialogs/transparency/on-focus", 0.95, 0.0, 1.0))
     ,_trans_blur(Inkscape::Preferences::get()->getDoubleLimited("/dialogs/transparency/on-blur", 0.50, 0.0, 1.0))
     ,_trans_time(Inkscape::Preferences::get()->getIntLimited("/dialogs/transparency/animate-time", 100, 0, 5000))
-#endif
 {
     hide();
 
@@ -47,14 +45,11 @@ FloatingBehavior::FloatingBehavior(Dialog &dialog) :
     sp_transientize(GTK_WIDGET(_d->gobj()));
     _dialog.retransientize_suppress = false;
 
-#if GTK_VERSION_GE(2, 12)
     _focus_event();
     _dialog_active.signal_changed().connect(sigc::mem_fun(this, &FloatingBehavior::_focus_event));
-#endif
 
 }
 
-#if GTK_VERSION_GE(2, 12)
 /**
  * A function called when the window gets focus.
  *
@@ -124,8 +119,6 @@ bool FloatingBehavior::_trans_timer (void) {
     _steps--;
     return true;
 }
-
-#endif
 
 FloatingBehavior::~FloatingBehavior()
 {
