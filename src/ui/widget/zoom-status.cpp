@@ -23,7 +23,11 @@ namespace UI {
 namespace Widget {
 
 ZoomStatus::ZoomStatus()
+#if WITH_GTKMM_3_0
+    : _adj(Gtk::Adjustment::create(0.0, -1.0, 1.0, 0.1, 0.1))
+#else
     : _adj(0.0, -1.0, 1.0, 0.1, 0.1)
+#endif
 {
     _dt = 0;
     _upd_f = false;
@@ -43,11 +47,19 @@ ZoomStatus::init(SPDesktop *dt)
 {
     _dt = dt;
     property_digits() = 4;
+#if WITH_GTKMM_3_0
+    _adj->set_value(0.0);
+    _adj->set_lower(log(SP_DESKTOP_ZOOM_MIN)/log(2.0));
+    _adj->set_upper(log(SP_DESKTOP_ZOOM_MAX)/log(2.0));
+    _adj->set_step_increment(0.1);
+    _adj->set_page_increment(0.1);
+#else
     _adj.set_value(0.0);
     _adj.set_lower(log(SP_DESKTOP_ZOOM_MIN)/log(2.0));
     _adj.set_upper(log(SP_DESKTOP_ZOOM_MAX)/log(2.0));
     _adj.set_step_increment(0.1);
     _adj.set_page_increment(0.1);
+#endif
     set_adjustment(_adj);
 }
 

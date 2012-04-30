@@ -9,6 +9,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <gtkmm/adjustment.h>
 #include "ui/widget/spinbutton.h"
 
@@ -32,7 +36,11 @@ public:
     void update();
 
 protected:
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> _adj;
+#else
     Gtk::Adjustment _adj;
+#endif
     SPDesktop *_dt;
     bool _upd_f;
 

@@ -61,9 +61,17 @@ SPDashSelector::SPDashSelector()
 
     this->pack_start(dash_combo, false, false, 0);
 
+#if WITH_GTKMM_3_0
+    offset = Gtk::Adjustment::create(0.0, 0.0, 10.0, 0.1, 1.0, 0.0);
+#else
     offset = new Gtk::Adjustment(0.0, 0.0, 10.0, 0.1, 1.0, 0.0);
+#endif
     offset->signal_value_changed().connect(sigc::mem_fun(*this, &SPDashSelector::offset_value_changed));
+#if WITH_GTKMM_3_0
+    Inkscape::UI::Widget::SpinButton *sb = new Inkscape::UI::Widget::SpinButton(offset, 0.1, 2);
+#else
     Inkscape::UI::Widget::SpinButton *sb = new Inkscape::UI::Widget::SpinButton(*offset, 0.1, 2);
+#endif
     sb->set_tooltip_text(_("Pattern offset"));
     sp_dialog_defocus_on_enter_cpp(sb);
     sb->show();
@@ -84,7 +92,9 @@ SPDashSelector::SPDashSelector()
 SPDashSelector::~SPDashSelector() {
     // FIXME: for some reason this doesn't get called; does the call to manage() in
     // sp_stroke_style_line_widget_new() not processed correctly?
+#if !WITH_GTKMM_3_0
     delete offset;
+#endif
 }
 
 void SPDashSelector::prepareImageRenderer( Gtk::TreeModel::const_iterator const &row ) {

@@ -82,7 +82,11 @@ private:
     class Gtk::Label * _labelPrecision;
     class Gtk::Label * _labelPrecisionWarning;
     class Gtk::HScale * _fallbackPrecisionSlider;
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> _fallbackPrecisionSlider_adj;
+#else
     class Gtk::Adjustment *_fallbackPrecisionSlider_adj;
+#endif
     class Gtk::Label * _labelPrecisionComment;
     class Gtk::HBox * hbox6;
     class Gtk::Label * _labelText;

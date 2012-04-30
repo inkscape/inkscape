@@ -63,7 +63,11 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
   _opacity_tag(Glib::ustring(history_prefix) + ":opacity"),
   _opacity_vbox(false, 0),
   _opacity_label(_("Opacity:")),
+#if WITH_GTKMM_3_0
+  _opacity_adjustment(Gtk::Adjustment::create(100.0, 0.0, 100.0, 1.0, 1.0, 0.0)),
+#else
   _opacity_adjustment(100.0, 0.0, 100.0, 1.0, 1.0, 0.0),
+#endif
   _opacity_hscale(_opacity_adjustment),
   _opacity_spin_button(_opacity_adjustment, 0.01, 1),
   _fe_cb(flags),
@@ -93,8 +97,13 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
     _opacity_hbox.pack_start(_opacity_hscale, true, true, 0);
     _opacity_hbox.pack_start(_opacity_spin_button, false, false, 0);
     _opacity_hscale.set_draw_value(false);
+#if WITH_GTKMM_3_0
+    _opacity_adjustment->signal_value_changed().connect(sigc::mem_fun(*this, &ObjectCompositeSettings::_opacityValueChanged));
+	_opacity_label.set_mnemonic_widget(_opacity_hscale);
+#else
     _opacity_adjustment.signal_value_changed().connect(sigc::mem_fun(*this, &ObjectCompositeSettings::_opacityValueChanged));
 	_opacity_label.set_mnemonic_widget(_opacity_hscale);
+#endif
 
     /* SizeGroup keeps the blur and opacity labels aligned in Fill & Stroke dlg */
     GtkSizeGroup *labels = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
@@ -216,7 +225,11 @@ ObjectCompositeSettings::_opacityValueChanged()
     SPCSSAttr *css = sp_repr_css_attr_new ();
 
     Inkscape::CSSOStringStream os;
+#if WITH_GTKMM_3_0
+    os << CLAMP (_opacity_adjustment->get_value() / 100, 0.0, 1.0);
+#else
     os << CLAMP (_opacity_adjustment.get_value() / 100, 0.0, 1.0);
+#endif
     sp_repr_css_set_property (css, "opacity", os.str().c_str());
 
     _subject->setCSS(css);
@@ -259,7 +272,11 @@ ObjectCompositeSettings::_subjectChanged() {
         case QUERY_STYLE_MULTIPLE_AVERAGED: // TODO: treat this slightly differently
         case QUERY_STYLE_MULTIPLE_SAME:
             _opacity_hbox.set_sensitive(true);
+#if WITH_GTKMM_3_0
+            _opacity_adjustment->set_value(100 * SP_SCALE24_TO_FLOAT(query->opacity.value));
+#else
             _opacity_adjustment.set_value(100 * SP_SCALE24_TO_FLOAT(query->opacity.value));
+#endif
             break;
     }
 

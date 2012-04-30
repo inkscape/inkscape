@@ -408,14 +408,27 @@ void Export::set_default_filename () {
 
 }
 
+#if WITH_GTKMM_3_0
+Glib::RefPtr<Gtk::Adjustment> Export::createSpinbutton( gchar const * /*key*/, float val, float min, float max,
+                                      float step, float page, GtkWidget *us,
+                                      Gtk::Table *t, int x, int y,
+                                      const Glib::ustring ll, const Glib::ustring lr,
+                                      int digits, unsigned int sensitive,
+                                      void (Export::*cb)() )
+#else
 Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, float min, float max,
                                       float step, float page, GtkWidget *us,
                                       Gtk::Table *t, int x, int y,
                                       const Glib::ustring ll, const Glib::ustring lr,
                                       int digits, unsigned int sensitive,
                                       void (Export::*cb)() )
+#endif
 {
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> adj = Gtk::Adjustment::create(val, min, max, step, page, 0);
+#else
     Gtk::Adjustment *adj = new Gtk::Adjustment  ( val, min, max, step, page, 0 );
+#endif
     if (us) {
         sp_unit_selector_add_adjustment ( SP_UNIT_SELECTOR (us), GTK_ADJUSTMENT (adj->gobj()) );
     }
@@ -431,7 +444,11 @@ Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, fl
         pos++;
     }
 
+#if WITH_GTKMM_3_0
+    Gtk::SpinButton *sb = new Gtk::SpinButton(adj, 1.0, digits);
+#else
     Gtk::SpinButton *sb = new Gtk::SpinButton(*adj, 1.0, digits);
+#endif
     t->attach (*sb, x + pos, x + pos + 1, y, y + 1, Gtk::EXPAND, Gtk::EXPAND, 0, 0 );
     sb->set_size_request (80, -1);
     sb->set_sensitive (sensitive);
@@ -1288,7 +1305,11 @@ void Export::detectSize() {
 } /* sp_export_detect_size */
 
 /// Called when area x0 value is changed
+#if WITH_GTKMM_3_0
+void Export::areaXChange(Glib::RefPtr<Gtk::Adjustment>& adj)
+#else
 void Export::areaXChange (Gtk::Adjustment *adj)
+#endif
 {
     float x0, x1, xdpi, width;
 
@@ -1331,7 +1352,11 @@ void Export::areaXChange (Gtk::Adjustment *adj)
 } // end of sp_export_area_x_value_changed()
 
 /// Called when area y0 value is changed.
+#if WITH_GTKMM_3_0
+void Export::areaYChange(Glib::RefPtr<Gtk::Adjustment>& adj)
+#else
 void Export::areaYChange (Gtk::Adjustment *adj)
+#endif
 {
     float y0, y1, ydpi, height;
 
@@ -1662,7 +1687,11 @@ void Export::setArea( double x0, double y0, double x1, double y1 )
  * @param  adj   The adjustment widget
  * @param  val   What value to set it to.
  */
+#if WITH_GTKMM_3_0
+void Export::setValue(Glib::RefPtr<Gtk::Adjustment>& adj, double val )
+#else
 void Export::setValue(  Gtk::Adjustment *adj, double val )
+#endif
 {
     if (adj) {
         adj->set_value(val);
@@ -1680,7 +1709,11 @@ void Export::setValue(  Gtk::Adjustment *adj, double val )
  * @param  adj   The adjustment widget
  * @param  val   What the value should be in points.
  */
+#if WITH_GTKMM_3_0
+void Export::setValuePx(Glib::RefPtr<Gtk::Adjustment>& adj, double val)
+#else
 void Export::setValuePx( Gtk::Adjustment *adj, double val)
+#endif
 {
     const SPUnit *unit = sp_unit_selector_get_unit ((SPUnitSelector *)unit_selector->gobj() );
 
@@ -1699,7 +1732,11 @@ void Export::setValuePx( Gtk::Adjustment *adj, double val)
  *
  * @return The value in the specified adjustment.
  */
+#if WITH_GTKMM_3_0
+float Export::getValue(Glib::RefPtr<Gtk::Adjustment>& adj)
+#else
 float Export::getValue(  Gtk::Adjustment *adj )
+#endif
 {
     if (!adj) {
         g_message("sp_export_value_get : adj is NULL");
@@ -1721,7 +1758,11 @@ float Export::getValue(  Gtk::Adjustment *adj )
  *
  * @return The value in the adjustment in points.
  */
+#if WITH_GTKMM_3_0
+float Export::getValuePx(Glib::RefPtr<Gtk::Adjustment>& adj)
+#else
 float Export::getValuePx(  Gtk::Adjustment *adj )
+#endif
 {
     float value = getValue( adj);
     const SPUnit *unit = sp_unit_selector_get_unit ((SPUnitSelector *)unit_selector->gobj());

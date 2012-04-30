@@ -113,7 +113,11 @@ void ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& la
 
 void ToleranceSlider::setValue (double val)
 {
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> adj = _hscale->get_adjustment();
+#else
     Gtk::Adjustment *adj = _hscale->get_adjustment();
+#endif
 
     adj->set_lower (1.0);
     adj->set_upper (51.0);

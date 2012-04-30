@@ -95,7 +95,7 @@ CloneTiler::CloneTiler (void) :
 
 #if GTK_CHECK_VERSION(3,0,0)
         GtkWidget *mainbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
-        gtk_box_new(GTK_BOX(mainbox), FALSE);
+        gtk_box_set_homogeneous(GTK_BOX(mainbox), FALSE);
 #else
         GtkWidget *mainbox = gtk_vbox_new(FALSE, 4);
 #endif
@@ -803,7 +803,7 @@ CloneTiler::CloneTiler (void) :
         {
 #if GTK_CHECK_VERSION(3,0,0)
             GtkWidget *vvb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-            gtk_box_new(GTK_BOX(vvb), FALSE);
+            gtk_box_set_homogeneous(GTK_BOX(vvb), FALSE);
 #else
             GtkWidget *vvb = gtk_vbox_new (FALSE, 0);
 #endif
@@ -1003,11 +1003,19 @@ CloneTiler::CloneTiler (void) :
                 g_object_set_data (G_OBJECT(dlg), "rowscols", (gpointer) hb);
 
                 {
+#if WITH_GTKMM_3_0
+                    Glib::RefPtr<Gtk::Adjustment>a = Gtk::Adjustment::create(0.0, 1, 500, 1, 10, 0);
+#else
                     Gtk::Adjustment *a = new Gtk::Adjustment (0.0, 1, 500, 1, 10, 0);
+#endif
                     int value = prefs->getInt(prefs_path + "jmax", 2);
                     a->set_value (value);
 
+#if WITH_GTKMM_3_0
+                    Inkscape::UI::Widget::SpinButton *sb = new Inkscape::UI::Widget::SpinButton(a, 1.0, 0);
+#else
                     Inkscape::UI::Widget::SpinButton *sb = new Inkscape::UI::Widget::SpinButton (*a, 1.0, 0);
+#endif
                     sb->set_tooltip_text (_("How many rows in the tiling"));
                     sb->set_width_chars (7);
                     gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(sb->gobj()), TRUE, TRUE, 0);
@@ -1025,11 +1033,19 @@ CloneTiler::CloneTiler (void) :
                 }
 
                 {
+#if WITH_GTKMM_3_0
+                    Glib::RefPtr<Gtk::Adjustment> a = Gtk::Adjustment::create(0.0, 1, 500, 1, 10, 0);
+#else
                     Gtk::Adjustment *a = new Gtk::Adjustment (0.0, 1, 500, 1, 10, 0);
+#endif
                     int value = prefs->getInt(prefs_path + "imax", 2);
                     a->set_value (value);
 
+#if WITH_GTKMM_3_0
+                    Inkscape::UI::Widget::SpinButton *sb = new Inkscape::UI::Widget::SpinButton(a, 1.0, 0);
+#else
                     Inkscape::UI::Widget::SpinButton *sb = new Inkscape::UI::Widget::SpinButton (*a, 1.0, 0);
+#endif
                     sb->set_tooltip_text (_("How many columns in the tiling"));
                     sb->set_width_chars (7);
                     gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(sb->gobj()), TRUE, TRUE, 0);
@@ -1057,7 +1073,11 @@ CloneTiler::CloneTiler (void) :
 
                 {
                     // Width spinbutton
+#if WITH_GTKMM_3_0
+                    Glib::RefPtr<Gtk::Adjustment> a = Gtk::Adjustment::create(0.0, -1e6, 1e6, 1.0, 10.0, 0);
+#else
                     Gtk::Adjustment *a = new Gtk::Adjustment (0.0, -1e6, 1e6, 1.0, 10.0, 0);
+#endif
                     sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a->gobj()));
 
                     double value = prefs->getDouble(prefs_path + "fillwidth", 50.0);
@@ -1065,7 +1085,11 @@ CloneTiler::CloneTiler (void) :
                     gdouble const units = sp_pixels_get_units (value, unit);
                     a->set_value (units);
 
+#if WITH_GTKMM_3_0
+                    Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton(a, 1.0, 2);
+#else
                     Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton (*a, 1.0, 2);
+#endif
                     e->set_tooltip_text (_("Width of the rectangle to be filled"));
                     e->set_width_chars (7);
                     e->set_digits (4);
@@ -1083,7 +1107,11 @@ CloneTiler::CloneTiler (void) :
 
                 {
                     // Height spinbutton
+#if WITH_GTKMM_3_0
+                    Glib::RefPtr<Gtk::Adjustment> a = Gtk::Adjustment::create(0.0, -1e6, 1e6, 1.0, 10.0, 0);
+#else
                     Gtk::Adjustment *a = new Gtk::Adjustment (0.0, -1e6, 1e6, 1.0, 10.0, 0);
+#endif
                     sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a->gobj()));
 
                     double value = prefs->getDouble(prefs_path + "fillheight", 50.0);
@@ -1091,7 +1119,11 @@ CloneTiler::CloneTiler (void) :
                     gdouble const units = sp_pixels_get_units (value, unit);
                     a->set_value (units);
 
+#if WITH_GTKMM_3_0
+                    Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton(a, 1.0, 2);
+#else
                     Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton (*a, 1.0, 2);
+#endif
                     e->set_tooltip_text (_("Height of the rectangle to be filled"));
                     e->set_width_chars (7);
                     e->set_digits (4);
@@ -2586,7 +2618,7 @@ GtkWidget * CloneTiler::clonetiler_new_tab(GtkWidget *nb, const gchar *label)
     GtkWidget *l = gtk_label_new_with_mnemonic (label);
 #if GTK_CHECK_VERSION(3,0,0)
     GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, VB_MARGIN);
-    gtk_box_new(GTK_BOX(vb), FALSE);
+    gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
 #else
     GtkWidget *vb = gtk_vbox_new (FALSE, VB_MARGIN);
 #endif
@@ -2644,19 +2676,36 @@ GtkWidget * CloneTiler::clonetiler_spinbox(const char *tip, const char *attr, do
 #endif
 
     {
+#if WITH_GTKMM_3_0
+        Glib::RefPtr<Gtk::Adjustment> a;
+        if (exponent) {
+            a = Gtk::Adjustment::create(1.0, lower, upper, 0.01, 0.05, 0);
+        } else {
+            a = Gtk::Adjustment::create(0.0, lower, upper, 0.1, 0.5, 0);
+        }
+#else
         Gtk::Adjustment *a;
         if (exponent) {
             a = new Gtk::Adjustment (1.0, lower, upper, 0.01, 0.05, 0);
         } else {
             a = new Gtk::Adjustment (0.0, lower, upper, 0.1, 0.5, 0);
         }
+#endif
 
         Inkscape::UI::Widget::SpinButton *sb;
+#if WITH_GTKMM_3_0
+        if (exponent) {
+            sb = new Inkscape::UI::Widget::SpinButton(a, 0.01, 2);
+        } else {
+            sb = new Inkscape::UI::Widget::SpinButton(a, 0.1, 1);
+	}
+#else
         if (exponent) {
             sb = new Inkscape::UI::Widget::SpinButton (*a, 0.01, 2);
         } else {
             sb = new Inkscape::UI::Widget::SpinButton (*a, 0.1, 1);
         }
+#endif
 
         sb->set_tooltip_text (tip);
         sb->set_width_chars (5);
@@ -2717,7 +2766,7 @@ void CloneTiler::clonetiler_pick_to(GtkToggleButton *tb, gpointer data)
 
 void CloneTiler::clonetiler_reset_recursive(GtkWidget *w)
 {
-    if (w && GTK_IS_OBJECT(w)) {
+    if (w && G_IS_OBJECT(w)) {
         {
             int r = GPOINTER_TO_INT (g_object_get_data(G_OBJECT(w), "zeroable"));
             if (r && GTK_IS_SPIN_BUTTON(w)) { // spinbutton

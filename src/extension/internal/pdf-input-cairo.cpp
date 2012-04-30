@@ -71,8 +71,13 @@ PdfImportCairoDialog::PdfImportCairoDialog(PopplerDocument *doc)
 
     // Page number
     int num_pages = poppler_document_get_n_pages(_poppler_doc);
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> _pageNumberSpin_adj( Gtk::Adjustment::create(1, 1, num_pages, 1, 10, 0) );
+    _pageNumberSpin = Gtk::manage(new class Inkscape::UI::Widget::SpinButton(_pageNumberSpin_adj, 1, 1));
+#else
     Gtk::Adjustment *_pageNumberSpin_adj = Gtk::manage(new class Gtk::Adjustment(1, 1, num_pages, 1, 10, 0));
     _pageNumberSpin = Gtk::manage(new class Inkscape::UI::Widget::SpinButton(*_pageNumberSpin_adj, 1, 1));
+#endif
     _labelTotalPages = Gtk::manage(new class Gtk::Label());
     hbox2 = Gtk::manage(new class Gtk::HBox(false, 0));
     // Disable the page selector when there's only one page
@@ -105,8 +110,13 @@ PdfImportCairoDialog::PdfImportCairoDialog(PopplerDocument *doc)
     _labelPrecision = Gtk::manage(new class Gtk::Label(_("Precision of approximating gradient meshes:")));
     _labelPrecisionWarning = Gtk::manage(new class Gtk::Label(_("<b>Note</b>: setting the precision too high may result in a large SVG file and slow performance.")));
 
+#if WITH_GTKMM_3_0
+    _fallbackPrecisionSlider_adj = Gtk::Adjustment::create(2, 1, 256, 1, 10, 10);
+    _fallbackPrecisionSlider = Gtk::manage(new Gtk::HScale(_fallbackPrecisionSlider_adj));
+#else
     _fallbackPrecisionSlider_adj = Gtk::manage(new class Gtk::Adjustment(2, 1, 256, 1, 10, 10));
     _fallbackPrecisionSlider = Gtk::manage(new class Gtk::HScale(*_fallbackPrecisionSlider_adj));
+#endif
     _fallbackPrecisionSlider->set_value(2.0);
     _labelPrecisionComment = Gtk::manage(new class Gtk::Label(_("rough")));
     hbox6 = Gtk::manage(new class Gtk::HBox(false, 4));

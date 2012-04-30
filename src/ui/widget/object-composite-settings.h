@@ -47,7 +47,11 @@ private:
     Gtk::VBox       _opacity_vbox;
     Gtk::HBox       _opacity_hbox;
     Gtk::Label      _opacity_label;
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> _opacity_adjustment;
+#else
     Gtk::Adjustment _opacity_adjustment;
+#endif
     Gtk::HScale     _opacity_hscale;
     Inkscape::UI::Widget::SpinButton _opacity_spin_button;
 

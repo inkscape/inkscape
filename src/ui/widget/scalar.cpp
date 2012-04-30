@@ -43,7 +43,11 @@ Scalar::Scalar(Glib::ustring const &label, Glib::ustring const &tooltip,
 }
 
 Scalar::Scalar(Glib::ustring const &label, Glib::ustring const &tooltip,
+#if WITH_GTKMM_3_0
+               Glib::RefPtr<Gtk::Adjustment> &adjust,
+#else
                Gtk::Adjustment &adjust,
+#endif
                unsigned digits,
                Glib::ustring const &suffix,
                Glib::ustring const &icon,
@@ -137,7 +141,11 @@ void Scalar::update()
 
 void Scalar::addSlider()
 {
+#if WITH_GTKMM_3_0
+    Gtk::HScale *scale = new Gtk::HScale(static_cast<SpinButton*>(_widget)->get_adjustment());
+#else
     Gtk::HScale *scale = new Gtk::HScale( * static_cast<SpinButton*>(_widget)->get_adjustment() );
+#endif
     scale->set_draw_value(false);
     add (*manage (scale));
 }

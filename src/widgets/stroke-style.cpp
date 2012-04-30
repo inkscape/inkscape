@@ -296,7 +296,6 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     GtkWidget *us_old, *spw_old;
     Gtk::Container *spw;
     Gtk::Table *t;
-    Gtk::Adjustment *a;
     Inkscape::UI::Widget::SpinButton *sb;
     Gtk::RadioButton *tb;
     Gtk::HBox *f, *hb;
@@ -328,9 +327,15 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
 // with it, the two remaining calls of stroke_average_width, allowing us to get rid of that
 // function in desktop-style.
 
-    a = new Gtk::Adjustment(1.0, 0.0, 1000.0, 0.1, 10.0, 0.0);
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> a = Gtk::Adjustment::create(1.0, 0.0, 1000.0, 0.1, 10.0, 0.0);
+    spw->set_data("width", &a);
+    sb = new Inkscape::UI::Widget::SpinButton(a, 0.1, 3);
+#else
+    Gtk::Adjustment *a = new Gtk::Adjustment(1.0, 0.0, 1000.0, 0.1, 10.0, 0.0);
     spw->set_data("width", a);
     sb = new Inkscape::UI::Widget::SpinButton(*a, 0.1, 3);
+#endif
     sb->set_tooltip_text(_("Stroke width"));
     sb->show();
     spw_label(t, C_("Stroke width", "_Width:"), 0, i, sb);
@@ -404,10 +409,16 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
 
     hb = spw_hbox(t, 3, 1, i);
 
+#if WITH_GTKMM_3_0
+    a = Gtk::Adjustment::create(4.0, 0.0, 100.0, 0.1, 10.0, 0.0);
+    spw->set_data("miterlimit", &a);
+    sb = new Inkscape::UI::Widget::SpinButton(a, 0.1, 2);
+#else
     a = new Gtk::Adjustment(4.0, 0.0, 100.0, 0.1, 10.0, 0.0);
     spw->set_data("miterlimit", a);
-
     sb = new Inkscape::UI::Widget::SpinButton(*a, 0.1, 2);
+#endif
+
     sb->set_tooltip_text(_("Maximum length of the miter (in units of stroke width)"));
     sb->show();
     spw_label(t, _("Miter _limit:"), 0, i, sb);

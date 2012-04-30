@@ -2126,16 +2126,27 @@ void FilterEffectsDialog::PrimitiveList::on_drag_end(const Glib::RefPtr<Gdk::Dra
 bool FilterEffectsDialog::PrimitiveList::on_scroll_timeout()
 {
     if(_autoscroll) {
-        Gtk::Adjustment& a = *dynamic_cast<Gtk::ScrolledWindow*>(get_parent())->get_vadjustment();
-        double v;
+#if WITH_GTKMM_3_0
+        Glib::RefPtr<Gtk::Adjustment> a = dynamic_cast<Gtk::ScrolledWindow*>(get_parent())->get_vadjustment();
+        double v = a->get_value() + _autoscroll;
+        
+	if(v < 0)
+            v = 0;
+        if(v > a->get_upper() - a->get_page_size())
+            v = a->get_upper() - a->get_page_size();
 
-        v = a.get_value() + _autoscroll;
-        if(v < 0)
+        a->set_value(v);
+#else
+        Gtk::Adjustment& a = *dynamic_cast<Gtk::ScrolledWindow*>(get_parent())->get_vadjustment();
+        double v = a.get_value() + _autoscroll;
+        
+	if(v < 0)
             v = 0;
         if(v > a.get_upper() - a.get_page_size())
             v = a.get_upper() - a.get_page_size();
 
         a.set_value(v);
+#endif
 
         queue_draw();
     }

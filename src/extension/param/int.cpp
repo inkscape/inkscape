@@ -165,17 +165,30 @@ ParamInt::get_widget (SPDocument * doc, Inkscape::XML::Node * node, sigc::signal
     label->show();
     hbox->pack_start(*label, true, true, _indent);
 
+#if WITH_GTKMM_3_0
+    ParamIntAdjustment * pia = new ParamIntAdjustment(this, doc, node, changeSignal);
+    Glib::RefPtr<Gtk::Adjustment> fadjust(pia);
+#else
     ParamIntAdjustment * fadjust = Gtk::manage(new ParamIntAdjustment(this, doc, node, changeSignal));
+#endif
 
     if (_mode == FULL) {
+#if WITH_GTKMM_3_0
+        Gtk::HScale * scale = Gtk::manage(new Gtk::HScale(fadjust));
+#else
         Gtk::HScale * scale = Gtk::manage(new Gtk::HScale(*fadjust));
+#endif
         scale->set_draw_value(false);
         scale->set_size_request(200, -1);
         scale->show();
         hbox->pack_start(*scale, false, false);
     }
-    
+   
+#if WITH_GTKMM_3_0 
+    Inkscape::UI::Widget::SpinButton * spin = Gtk::manage(new Inkscape::UI::Widget::SpinButton(fadjust, 1.0, 0));
+#else
     Inkscape::UI::Widget::SpinButton * spin = Gtk::manage(new Inkscape::UI::Widget::SpinButton(*fadjust, 1.0, 0));
+#endif
     spin->show();
     hbox->pack_start(*spin, false, false);
 

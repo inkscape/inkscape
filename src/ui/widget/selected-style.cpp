@@ -14,6 +14,7 @@
 #endif
 
 #include "selected-style.h"
+#include <gtkmm/separatormenuitem.h>
 
 #include "widgets/spw-utilities.h"
 #include "ui/widget/color-preview.h"
@@ -129,7 +130,11 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
       _stroke_flag_place (),
 
       _opacity_place (),
+#if WITH_GTKMM_3_0
+      _opacity_adjustment(Gtk::Adjustment::create(100, 0.0, 100, 1.0, 10.0)),
+#else
       _opacity_adjustment (100, 0.0, 100, 1.0, 10.0),
+#endif
       _opacity_sb (0.02, 0),
 
       _stroke (),
@@ -1041,7 +1046,11 @@ SelectedStyle::update()
         if (_opacity_blocked) break;
         _opacity_blocked = true;
         _opacity_sb.set_sensitive(true);
+#if WITH_GTKMM_3_0
+        _opacity_adjustment->set_value(SP_SCALE24_TO_FLOAT(query->opacity.value) * 100);
+#else
         _opacity_adjustment.set_value(SP_SCALE24_TO_FLOAT(query->opacity.value) * 100);
+#endif
         _opacity_blocked = false;
         break;
     }
@@ -1141,7 +1150,11 @@ void SelectedStyle::on_opacity_changed () {
     _opacity_blocked = true;
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream os;
+#if WITH_GTKMM_3_0
+    os << CLAMP ((_opacity_adjustment->get_value() / 100), 0.0, 1.0);
+#else
     os << CLAMP ((_opacity_adjustment.get_value() / 100), 0.0, 1.0);
+#endif
     sp_repr_css_set_property (css, "opacity", os.str().c_str());
     // FIXME: workaround for GTK breakage: display interruptibility sometimes results in GTK
     // sending multiple value-changed events. As if when Inkscape interrupts redraw for main loop

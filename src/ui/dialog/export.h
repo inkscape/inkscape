@@ -94,10 +94,17 @@ private:
     /*
      * Getter/setter style functions for the spinbuttons
      */
+#if WITH_GTKMM_3_0
+    void setValue(Glib::RefPtr<Gtk::Adjustment>& adj, double val);
+    void setValuePx(Glib::RefPtr<Gtk::Adjustment>& adj, double val);
+    float getValue(Glib::RefPtr<Gtk::Adjustment>& adj);
+    float getValuePx(Glib::RefPtr<Gtk::Adjustment>& adj);
+#else
     void setValue (Gtk::Adjustment *adj, double val);
     void setValuePx (Gtk::Adjustment *adj, double val);
     float getValue (Gtk::Adjustment *adj);
     float getValuePx (Gtk::Adjustment *adj);
+#endif
     
     /**
      * Helper function to create, style and pack spinbuttons for the export dialog.
@@ -119,12 +126,22 @@ private:
      * @param  sensitive  Whether the spin button is sensitive or not
      * @param  cb   Callback for when this spin button is changed (optional)
      */
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> createSpinbutton( gchar const *key, float val, float min, float max,
+                                          float step, float page, GtkWidget *us,
+                                          Gtk::Table *t, int x, int y,
+                                          const Glib::ustring ll, const Glib::ustring lr,
+                                          int digits, unsigned int sensitive,
+                                          void (Export::*cb)() );
+#else
     Gtk::Adjustment * createSpinbutton( gchar const *key, float val, float min, float max,
                                           float step, float page, GtkWidget *us,
                                           Gtk::Table *t, int x, int y,
                                           const Glib::ustring ll, const Glib::ustring lr,
                                           int digits, unsigned int sensitive,
                                           void (Export::*cb)() );
+#endif
+    
     /**
      * One of the area select radio buttons was pressed
      */
@@ -145,14 +162,22 @@ private:
      */
     void onAreaX0Change() {areaXChange(x0_adj);} ;
     void onAreaX1Change() {areaXChange(x1_adj);} ;
+#if WITH_GTKMM_3_0
+    void areaXChange(Glib::RefPtr<Gtk::Adjustment>& adj);
+#else
     void areaXChange ( Gtk::Adjustment *adj);
+#endif
 
     /**
      * Area Y value changed callback
      */
     void onAreaY0Change() {areaYChange(y0_adj);} ;
     void onAreaY1Change() {areaYChange(y1_adj);} ;
+#if WITH_GTKMM_3_0
+    void areaYChange(Glib::RefPtr<Gtk::Adjustment>& adj);
+#else
     void areaYChange ( Gtk::Adjustment *adj);
+#endif
 
     /**
      * Area width value changed callback
@@ -261,6 +286,21 @@ private:
     Gtk::VBox area_box;
     Gtk::VBox singleexport_box;
 
+#if WITH_GTKMM_3_0
+    /* Custom size widgets */
+    Glib::RefPtr<Gtk::Adjustment> x0_adj;
+    Glib::RefPtr<Gtk::Adjustment> x1_adj;
+    Glib::RefPtr<Gtk::Adjustment> y0_adj;
+    Glib::RefPtr<Gtk::Adjustment> y1_adj;
+    Glib::RefPtr<Gtk::Adjustment> width_adj;
+    Glib::RefPtr<Gtk::Adjustment> height_adj;
+
+    /* Bitmap size widgets */
+    Glib::RefPtr<Gtk::Adjustment> bmwidth_adj;
+    Glib::RefPtr<Gtk::Adjustment> bmheight_adj;
+    Glib::RefPtr<Gtk::Adjustment> xdpi_adj;
+    Glib::RefPtr<Gtk::Adjustment> ydpi_adj;
+#else
     /* Custom size widgets */
     Gtk::Adjustment *x0_adj;
     Gtk::Adjustment *x1_adj;
@@ -274,6 +314,7 @@ private:
     Gtk::Adjustment *bmheight_adj;
     Gtk::Adjustment *xdpi_adj;
     Gtk::Adjustment *ydpi_adj;
+#endif
 
     Gtk::VBox size_box;
     Gtk::Label* bm_label;

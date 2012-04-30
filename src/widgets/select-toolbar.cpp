@@ -270,7 +270,12 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
 
 static GtkWidget* createCustomSlider( GtkAdjustment *adjustment, gdouble climbRate, guint digits )
 {
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> adj = Glib::wrap(adjustment, true);
+    Inkscape::UI::Widget::SpinButton *inkSpinner = new Inkscape::UI::Widget::SpinButton(adj, climbRate, digits);
+#else
     Inkscape::UI::Widget::SpinButton *inkSpinner = new Inkscape::UI::Widget::SpinButton(*Glib::wrap(adjustment, true), climbRate, digits);
+#endif
     inkSpinner = Gtk::manage( inkSpinner );
     GtkWidget *widget = GTK_WIDGET( inkSpinner->gobj() );
     return widget;
