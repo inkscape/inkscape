@@ -625,7 +625,6 @@ void InkscapePreferences::initPageUI()
                             _("Same as Normal but may work better with some window managers"));
 #endif
 
-#if GTK_VERSION_GE(2, 12)
     _page_windows.add_group_header( _("Dialog Transparency"));
     _win_trans_focus.init("/dialogs/transparency/on-focus", 0.5, 1.0, 0.01, 0.1, 1.0, false, false);
     _page_windows.add_line( true, _("Opacity when focused:"), _win_trans_focus, "", "");
@@ -633,7 +632,6 @@ void InkscapePreferences::initPageUI()
     _page_windows.add_line( true, _("Opacity when unfocused:"), _win_trans_blur, "", "");
     _win_trans_time.init("/dialogs/transparency/animate-time", 0, 1000, 10, 100, 100, true, false);
     _page_windows.add_line( true, _("Time of opacity change animation:"), _win_trans_time, "ms", "");
-#endif
 
     _page_windows.add_group_header( _("Miscellaneous"));
 #ifndef WIN32 // FIXME: Temporary Win32 special code to enable transient dialogs
