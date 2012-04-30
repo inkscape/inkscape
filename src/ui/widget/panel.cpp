@@ -22,6 +22,7 @@
 #include <gtkmm/stock.h>
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/radiomenuitem.h>
+#include <gtkmm/separatormenuitem.h>
 
 #include <gtk/gtk.h>
 

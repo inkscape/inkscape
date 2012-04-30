@@ -41,7 +41,6 @@ FloatingBehavior::FloatingBehavior(Dialog &dialog) :
 #endif
 {
     hide();
-    _d->set_has_separator(false);
 
     signal_delete_event().connect(sigc::mem_fun(_dialog, &Inkscape::UI::Dialog::Dialog::_onDeleteEvent));
 

@@ -26,6 +26,7 @@
 #include "inkscape.h"
 #include "document-undo.h"
 #include "verbs.h"
+#include <gtkmm/radiobutton.h>
 
 
 namespace Inkscape {

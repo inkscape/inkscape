@@ -555,7 +555,7 @@ sp_find_types ()
 {
 #if GTK_CHECK_VERSION(3,0,0)
     GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
-    gtk_box_new(GTK_BOX(vb), FALSE);
+    gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
 #else
     GtkWidget *vb = gtk_vbox_new (FALSE, 4);
 #endif
@@ -587,7 +587,7 @@ sp_find_types ()
     {
 #if GTK_CHECK_VERSION(3,0,0)
         GtkWidget *vb_all = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-        gtk_box_new(GTK_BOX(vb_all), FALSE);
+        gtk_box_set_homogeneous(GTK_BOX(vb_all), FALSE);
 #else
         GtkWidget *vb_all = gtk_vbox_new (FALSE, 0);
 #endif
@@ -735,7 +735,7 @@ sp_find_dialog_old (void)
         /* Toplevel vbox */
 #if GTK_CHECK_VERSION(3,0,0)
         GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-        gtk_box_new(GTK_BOX(vb), FALSE);
+        gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
 #else
         GtkWidget *vb = gtk_vbox_new (FALSE, 0);
 #endif
@@ -753,7 +753,11 @@ sp_find_dialog_old (void)
         gtk_box_pack_start (GTK_BOX (vb), types, FALSE, FALSE, 0);
 
         {
+#if GTK_CHECK_VERSION(3,0,0)
+            GtkWidget *w = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+#else
             GtkWidget *w = gtk_hseparator_new ();
+#endif
             gtk_widget_show (w);
             gtk_box_pack_start (GTK_BOX (vb), w, FALSE, FALSE, 3);
 

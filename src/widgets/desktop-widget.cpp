@@ -525,7 +525,14 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->selected_style = new Inkscape::UI::Widget::SelectedStyle(true);
     GtkHBox *ss_ = dtw->selected_style->gobj();
     gtk_box_pack_start (GTK_BOX (dtw->statusbar), GTK_WIDGET(ss_), FALSE, FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (dtw->statusbar), gtk_vseparator_new(), FALSE, FALSE, 0);
+
+    gtk_box_pack_start(GTK_BOX(dtw->statusbar), 
+#if GTK_CHECK_VERSION(3,0,0)
+		    gtk_separator_new(GTK_ORIENTATION_VERTICAL), 
+#else
+		    gtk_vseparator_new(), 
+#endif
+		    FALSE, FALSE, 0);
 
     // connect scrollbar signals
     g_signal_connect (G_OBJECT (dtw->hadj), "value-changed", G_CALLBACK (sp_desktop_widget_adjustment_value_changed), dtw);
@@ -554,7 +561,13 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->coord_status = gtk_table_new (5, 2, FALSE);
     gtk_table_set_row_spacings(GTK_TABLE(dtw->coord_status), 0);
     gtk_table_set_col_spacings(GTK_TABLE(dtw->coord_status), 2);
-    gtk_table_attach(GTK_TABLE(dtw->coord_status), gtk_vseparator_new(), 0,1, 0,2, GTK_FILL, GTK_FILL, 0, 0);
+    gtk_table_attach(GTK_TABLE(dtw->coord_status), 
+#if GTK_CHECK_VERSION(3,0,0)
+		    gtk_separator_new(GTK_ORIENTATION_VERTICAL), 
+#else
+		    gtk_vseparator_new(), 
+#endif
+		    0,1, 0,2, GTK_FILL, GTK_FILL, 0, 0);
     eventbox = gtk_event_box_new ();
     gtk_container_add (GTK_CONTAINER (eventbox), dtw->coord_status);
     gtk_widget_set_tooltip_text (eventbox, _("Cursor coordinates"));

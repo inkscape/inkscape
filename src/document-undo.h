@@ -1,7 +1,7 @@
 #ifndef SEEN_SP_DOCUMENT_UNDO_H
 #define SEEN_SP_DOCUMENT_UNDO_H
 
-typedef struct _GtkObject GtkObject;
+typedef struct _GObject GObject;
 
 class SPDesktop;
 
@@ -37,7 +37,7 @@ public:
 
     static void maybeDone(SPDocument *document, const gchar *keyconst, unsigned int event_type, Glib::ustring const &event_description);
 
-    static void resetKey(Inkscape::Application *inkscape, SPDesktop *desktop, GtkObject *base);
+    static void resetKey(Inkscape::Application *inkscape, SPDesktop *desktop, GObject *base);
 
     static void cancel(SPDocument *document);
 

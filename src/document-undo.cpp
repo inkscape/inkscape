@@ -112,7 +112,7 @@ void Inkscape::DocumentUndo::done(SPDocument *doc, const unsigned int event_type
     maybeDone(doc, NULL, event_type, event_description);
 }
 
-void Inkscape::DocumentUndo::resetKey( Inkscape::Application * /*inkscape*/, SPDesktop * /*desktop*/, GtkObject *base )
+void Inkscape::DocumentUndo::resetKey( Inkscape::Application * /*inkscape*/, SPDesktop * /*desktop*/, GObject *base )
 {
     SPDocument *doc = reinterpret_cast<SPDocument *>(base);
     doc->actionkey.clear();

@@ -22,6 +22,7 @@
 #include <gtkmm/liststore.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/table.h>
+#include <gtkmm/radiobutton.h>
 
 namespace Inkscape {    
 namespace XML {

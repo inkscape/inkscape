@@ -257,7 +257,6 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     this->property_window_position().set_value(Gtk::WIN_POS_NONE);
     this->set_resizable(true);
     this->property_destroy_with_parent().set_value(false);
-    this->set_has_separator(true);
     this->add_action_widget(*cancelbutton, -6);
     this->add_action_widget(*okbutton, -5);
     cancelbutton->show();

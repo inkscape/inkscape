@@ -178,7 +178,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
 
 #if GTK_CHECK_VERSION(3,0,0)
         GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
-        gtk_box_new(GTK_BOX(vb), FALSE);
+        gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
 #else
         GtkWidget *vb = gtk_vbox_new(FALSE, 4);
 #endif
