@@ -181,14 +181,12 @@ Dependency::check (void) const
                         /* Not sure whether this is UTF8 happy, but it would seem
                            like it considering that I'm searching (and finding)
                            the ':' character */
-                        if (path != local_path && path != NULL) {
+                        if (path != NULL) {
                             path[0] = '\0';
                             path++;
-                        } else {
-                            path = NULL;
                         }
 
-                        if (local_path == '\0') {
+                        if (*local_path == '\0') {
                             final_name = g_strdup(_string);
                         } else {
                             final_name = g_build_filename(local_path, _string, NULL);
