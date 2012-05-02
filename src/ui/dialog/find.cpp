@@ -104,7 +104,7 @@ Find::Find()
 
       check_images(_("Images"), _("Search images"), false),
       check_offsets(_("Offsets"), _("Search offset objects"), false),
-      frame_types(_("Object Types")),
+      frame_types(_("Object types")),
 
       status(""),
       button_find(_("_Find"), _("Select all objects matching the selection criteria")),
@@ -844,7 +844,7 @@ Find::onAction()
         }
 
     } else {
-        status.set_text(_("Not found"));
+        status.set_text(_("Nothing found"));
         if (!check_scope_selection.get_active()) {
             Inkscape::Selection *selection = sp_desktop_selection (desktop);
             selection->clear();
@@ -870,7 +870,7 @@ Find::onToggleCheck ()
     }
 
     if (!objectok) {
-        status.set_text(_("Select an object"));
+        status.set_text(_("Select an object type"));
     }
 
 
