@@ -5,6 +5,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Johan Engelen
  *   Maximilian Albert <maximilian.albert@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2000-2002 Lauris Kaplinski
  * Copyright (C) 2007 Johan Engelen
@@ -24,6 +25,9 @@
 #include "desktop.h"
 #include "sp-namedview.h"
 #include "display/sp-canvas.h"
+#include "ui/control-manager.h"
+
+using Inkscape::ControlManager;
 
 static void sp_guideline_class_init(SPGuideLineClass *c);
 static void sp_guideline_init(SPGuideLine *guideline);
@@ -228,7 +232,8 @@ static double sp_guideline_point(SPCanvasItem *item, Geom::Point p, SPCanvasItem
 SPCanvasItem *sp_guideline_new(SPCanvasGroup *parent, char* label, Geom::Point point_on_line, Geom::Point normal)
 {
     SPCanvasItem *item = sp_canvas_item_new(parent, SP_TYPE_GUIDELINE, NULL);
-    SPCanvasItem *origin = sp_canvas_item_new(parent, SP_TYPE_CTRLPOINT, NULL);
+    SPCanvasItem *origin = ControlManager::getManager().createControl(parent, Inkscape::CTRL_TYPE_ORIGIN);
+    ControlManager::getManager().track(origin);
 
     SPGuideLine *gl = SP_GUIDELINE(item);
     SPCtrlPoint *cp = SP_CTRLPOINT(origin);

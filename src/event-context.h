@@ -89,11 +89,19 @@ private:
 
 void sp_event_context_snap_delay_handler(SPEventContext *ec, gpointer const dse_item, gpointer const dse_item2, GdkEventMotion *event, DelayedSnapEvent::DelayedSnapEventOrigin origin);
 
+
 /**
  * Base class for Event processors.
  *
  * This is per desktop object, which (its derivatives) implements
  * different actions bound to mouse events.
+ *
+ * SPEventContext is an abstract base class of all tools. As the name
+ * indicates, event context implementations process UI events (mouse
+ * movements and keypresses) and take actions (like creating or modifying
+ * objects).  There is one event context implementation for each tool,
+ * plus few abstract base classes. Writing a new tool involves
+ * subclassing SPEventContext.
  */
 struct SPEventContext : public GObject {
     void enableSelectionCue (bool enable=true);

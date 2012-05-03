@@ -405,31 +405,30 @@ void sp_canvas_item_class_init(SPCanvasItemClass *klass)
 
 void sp_canvas_item_init(SPCanvasItem *item)
 {
+    item->xform = Geom::Affine(Geom::identity());
+    item->ctrlType = Inkscape::CTRL_TYPE_UNKNOWN;
+
     // TODO items should not be visible on creation - this causes kludges with items
     // that should be initially invisible; examples of such items: node handles, the CtrlRect
     // used for rubberbanding, path outline, etc.
     item->visible = TRUE;
-    item->xform = Geom::Affine(Geom::identity());
 }
 
 } // namespace
 
-/**
- * Constructs new SPCanvasItem on SPCanvasGroup.
- */
 SPCanvasItem *sp_canvas_item_new(SPCanvasGroup *parent, GType type, gchar const *first_arg_name, ...)
 {
     va_list args;
 
     g_return_val_if_fail(parent != NULL, NULL);
-    g_return_val_if_fail(SP_IS_CANVAS_GROUP (parent), NULL);
+    g_return_val_if_fail(SP_IS_CANVAS_GROUP(parent), NULL);
     g_return_val_if_fail(g_type_is_a(type, SPCanvasItem::getType()), NULL);
 
-    SPCanvasItem *item = SP_CANVAS_ITEM (g_object_new (type, NULL));
+    SPCanvasItem *item = SP_CANVAS_ITEM(g_object_new(type, NULL));
 
-    va_start (args, first_arg_name);
-    sp_canvas_item_construct (item, parent, first_arg_name, args);
-    va_end (args);
+    va_start(args, first_arg_name);
+    sp_canvas_item_construct(item, parent, first_arg_name, args);
+    va_end(args);
 
     return item;
 }
@@ -438,17 +437,17 @@ namespace {
 
 void sp_canvas_item_construct(SPCanvasItem *item, SPCanvasGroup *parent, gchar const *first_arg_name, va_list args)
 {
-    g_return_if_fail (SP_IS_CANVAS_GROUP (parent));
-    g_return_if_fail (SP_IS_CANVAS_ITEM (item));
+    g_return_if_fail(SP_IS_CANVAS_GROUP(parent));
+    g_return_if_fail(SP_IS_CANVAS_ITEM(item));
 
-    item->parent = SP_CANVAS_ITEM (parent);
+    item->parent = SP_CANVAS_ITEM(parent);
     item->canvas = item->parent->canvas;
 
-    g_object_set_valist (G_OBJECT (item), first_arg_name, args);
+    g_object_set_valist(G_OBJECT(item), first_arg_name, args);
 
     SP_CANVAS_GROUP(item->parent)->add(item);
 
-    sp_canvas_item_request_update (item);
+    sp_canvas_item_request_update(item);
 }
 
 } // namespace
@@ -458,7 +457,7 @@ void sp_canvas_item_construct(SPCanvasItem *item, SPCanvasGroup *parent, gchar c
  */
 static void redraw_if_visible(SPCanvasItem *item)
 {
-    if(item->visible) {
+    if (item->visible) {
         int x0 = (int)(item->x1);
         int x1 = (int)(item->x2);
         int y0 = (int)(item->y1);
@@ -528,11 +527,11 @@ static void sp_canvas_item_invoke_update(SPCanvasItem *item, Geom::Affine const 
     // apply object flags to child flags
     int child_flags = flags & ~SP_CANVAS_UPDATE_REQUESTED;
 
-    if(item->need_update) {
+    if (item->need_update) {
         child_flags |= SP_CANVAS_UPDATE_REQUESTED;
     }
 
-    if(item->need_affine) {
+    if (item->need_affine) {
         child_flags |= SP_CANVAS_UPDATE_AFFINE;
     }
 

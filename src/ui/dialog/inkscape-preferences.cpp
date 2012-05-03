@@ -520,21 +520,22 @@ void InkscapePreferences::initPageUI()
     _page_ui.add_line( false, _("Language (requires restart):"), _ui_languages, "",
                               _("Set the language for menus and number formats"), false);
 
-     Glib::ustring sizeLabels[] = {_("Large"), _("Small"), _("Smaller")};
-    int sizeValues[] = {0, 1, 2};
+    {
+        Glib::ustring sizeLabels[] = {_("Large"), _("Small"), _("Smaller")};
+        int sizeValues[] = {0, 1, 2};
 
-    _misc_small_tools.init( "/toolbox/tools/small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
-    _page_ui.add_line( false, _("Toolbox icon size:"), _misc_small_tools, "",
-                              _("Set the size for the tool icons (requires restart)"), false);
+        _misc_small_tools.init( "/toolbox/tools/small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
+        _page_ui.add_line( false, _("Toolbox icon size:"), _misc_small_tools, "",
+                           _("Set the size for the tool icons (requires restart)"), false);
 
-    _misc_small_toolbar.init( "/toolbox/small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
-    _page_ui.add_line( false, _("Control bar icon size:"), _misc_small_toolbar, "",
-                              _("Set the size for the icons in tools' control bars to use (requires restart)"), false);
+        _misc_small_toolbar.init( "/toolbox/small", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 0 );
+        _page_ui.add_line( false, _("Control bar icon size:"), _misc_small_toolbar, "",
+                           _("Set the size for the icons in tools' control bars to use (requires restart)"), false);
 
-    _misc_small_secondary.init( "/toolbox/secondary", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 1 );
-    _page_ui.add_line( false, _("Secondary toolbar icon size:"), _misc_small_secondary, "",
-                              _("Set the size for the icons in secondary toolbars to use (requires restart)"), false);
-
+        _misc_small_secondary.init( "/toolbox/secondary", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), 1 );
+        _page_ui.add_line( false, _("Secondary toolbar icon size:"), _misc_small_secondary, "",
+                           _("Set the size for the icons in secondary toolbars to use (requires restart)"), false);
+    }
 
     _ui_colorsliders_top.init( _("Work-around color sliders not drawing"), "/options/workarounds/colorsontop", false);
     _page_ui.add_line( false, "", _ui_colorsliders_top, "",
@@ -767,6 +768,10 @@ void InkscapePreferences::initPageIO()
     _mouse_thres.init ( "/options/dragtolerance/value", 0.0, 20.0, 1.0, 1.0, 4.0, true, false);
     _page_mouse.add_line( false, _("Click/drag threshold:"), _mouse_thres, _("pixels"),
                            _("Maximum mouse drag (in screen pixels) which is considered a click, not a drag"), false);
+
+    _mouse_grabsize.init("/options/grabsize/value", 1, 7, 1, 2, 3, 0);
+    _page_mouse.add_line(false, _("Handle size"), _mouse_grabsize, "",
+                         _("Set the relative size of node handles."), true);
 
     _mouse_use_ext_input.init( _("Use pressure-sensitive tablet (requires restart)"), "/options/useextinput/value", true);
     _page_mouse.add_line(false, "",_mouse_use_ext_input, "",

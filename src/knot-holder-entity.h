@@ -18,6 +18,7 @@
 #include "knot.h"
 #include <2geom/forward.h>
 #include "snapper.h"
+#include "display/sp-canvas-item.h"
 
 class  SPItem;
 struct SPKnot;
@@ -28,8 +29,8 @@ class KnotHolder;
 namespace Inkscape {
 namespace LivePathEffect {
     class Effect;
-}
-}
+} // namespace LivePathEffect
+} // namespace Inkscape
 
 typedef void (* SPKnotHolderSetFunc) (SPItem *item, Geom::Point const &p, Geom::Point const &origin, guint state);
 typedef Geom::Point (* SPKnotHolderGetFunc) (SPItem *item);
@@ -43,11 +44,14 @@ class KnotHolderEntity {
 public:
     KnotHolderEntity() {}
     virtual ~KnotHolderEntity();
-    virtual void create(SPDesktop *desktop, SPItem *item, KnotHolder *parent, const gchar *tip = "",
+
+    virtual void create(SPDesktop *desktop, SPItem *item, KnotHolder *parent,
+                        Inkscape::ControlType type = Inkscape::CTRL_TYPE_UNKNOWN,
+                        const gchar *tip = "",
                         SPKnotShapeType shape = SP_KNOT_SHAPE_DIAMOND,
                         SPKnotModeType mode = SP_KNOT_MODE_XOR,
                         guint32 color = 0xffffff00);
-
+ 
     /* the get/set/click handlers are virtual functions; each handler class for a knot
        should be derived from KnotHolderEntity and override these functions */
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state) = 0;

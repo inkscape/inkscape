@@ -34,7 +34,6 @@ class PowerStrokePointArrayParamKnotHolderEntity;
 
 class KnotHolder {
 public:
-    KnotHolder() {} // do nothing in the default constructor
     KnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler);
     virtual ~KnotHolder();
 
@@ -56,16 +55,24 @@ public:
     friend class Inkscape::LivePathEffect::PowerStrokePointArrayParamKnotHolderEntity;
 
 protected:
+
+    void updateControlSizes();
+
     SPDesktop *desktop;
     SPItem *item; // TODO: Remove this and keep the actual item (e.g., SPRect etc.) in the item-specific knotholders
     Inkscape::XML::Node *repr; ///< repr of the item, for setting and releasing listeners.
     std::list<KnotHolderEntity *> entity;
+
+    sigc::connection sizeUpdatedConn;
 
     SPKnotHolderReleasedFunc released;
 
     gboolean local_change; ///< if true, no need to recreate knotholder if repr was changed.
 
     bool dragging;
+
+private:
+    KnotHolder(); // declared but not defined
 };
 
 /**

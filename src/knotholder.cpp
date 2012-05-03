@@ -35,33 +35,36 @@
 #include "live_effects/effect.h"
 #include "desktop.h"
 #include "display/sp-canvas.h"
+#include "display/sp-canvas-item.h"
 #include "verbs.h"
+#include "ui/control-manager.h"
 
 #include "xml/repr.h" // for debugging only
 
+using Inkscape::ControlManager;
 using Inkscape::DocumentUndo;
 
 class SPDesktop;
 
-KnotHolder::KnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler)
+KnotHolder::KnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler) :
+    desktop(desktop),
+    item(item),
+    //XML Tree being used directly for item->getRepr() while it shouldn't be...
+    repr(item ? item->getRepr() : 0),
+    entity(),
+    sizeUpdatedConn(),
+    released(relhandler),
+    local_change(FALSE),
+    dragging(false)
 {
-    //XML Tree being used directly here while it shouldn't be...
-    Inkscape::XML::Node *repr = item->getRepr();
 
     if (!desktop || !item || !SP_IS_ITEM(item)) {
         g_print ("Error! Throw an exception, please!\n");
     }
 
-    this->desktop = desktop;
-    this->item = item;
     g_object_ref(G_OBJECT(item)); // TODO: is this still needed after C++-ification?
 
-    this->released = relhandler;
-
-    this->repr = repr;
-    this->local_change = FALSE;
-
-    this->dragging = false;
+    sizeUpdatedConn = ControlManager::getManager().connectCtrlSizeChanged(sigc::mem_fun(*this, &KnotHolder::updateControlSizes));
 }
 
 KnotHolder::~KnotHolder() {
@@ -72,16 +75,22 @@ KnotHolder::~KnotHolder() {
         (*i) = NULL;
     }
     entity.clear(); // is this necessary?
+    sizeUpdatedConn.disconnect();
 }
 
-/**
- * \param p In desktop coordinates.
- */
-
-void
-KnotHolder::update_knots()
+void KnotHolder::updateControlSizes()
 {
-    for(std::list<KnotHolderEntity *>::iterator i = entity.begin(); i != entity.end(); ++i) {
+    ControlManager &mgr = ControlManager::getManager();
+
+    for (std::list<KnotHolderEntity *>::iterator it = entity.begin(); it != entity.end(); ++it) {
+        KnotHolderEntity *e = *it;
+        mgr.updateItem(e->knot->item);
+    }
+}
+
+void KnotHolder::update_knots()
+{
+    for (std::list<KnotHolderEntity *>::iterator i = entity.begin(); i != entity.end(); ++i) {
         KnotHolderEntity *e = *i;
         e->update_knot();
     }
@@ -106,7 +115,7 @@ void
 KnotHolder::knot_clicked_handler(SPKnot *knot, guint state)
 {
     KnotHolder *knot_holder = this;
-    SPItem *saved_item = this->item; 
+    SPItem *saved_item = this->item;
 
     for(std::list<KnotHolderEntity *>::iterator i = knot_holder->entity.begin(); i != knot_holder->entity.end(); ++i) {
         KnotHolderEntity *e = *i;
@@ -227,14 +236,14 @@ KnotHolder::knot_ungrabbed_handler(SPKnot */*knot*/)
     }
 }
 
-void
-KnotHolder::add(KnotHolderEntity *e)
+void KnotHolder::add(KnotHolderEntity *e)
 {
+    g_message("Adding a knot at %p", e);
     entity.push_back(e);
+    updateControlSizes();
 }
 
-void
-KnotHolder::add_pattern_knotholder()
+void KnotHolder::add_pattern_knotholder()
 {
     if ((item->style->fill.isPaintserver())
         && SP_IS_PATTERN(item->style->getFillPaintServer()))
@@ -242,20 +251,24 @@ KnotHolder::add_pattern_knotholder()
         PatternKnotHolderEntityXY *entity_xy = new PatternKnotHolderEntityXY();
         PatternKnotHolderEntityAngle *entity_angle = new PatternKnotHolderEntityAngle();
         PatternKnotHolderEntityScale *entity_scale = new PatternKnotHolderEntityScale();
-        entity_xy->create(desktop, item, this,
+        entity_xy->create(desktop, item, this, Inkscape::CTRL_TYPE_POINT,
                           // TRANSLATORS: This refers to the pattern that's inside the object
                           _("<b>Move</b> the pattern fill inside the object"),
                           SP_KNOT_SHAPE_CROSS);
-        entity_scale->create(desktop, item, this,
+
+        entity_scale->create(desktop, item, this, Inkscape::CTRL_TYPE_SIZER,
                              _("<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"),
                              SP_KNOT_SHAPE_SQUARE, SP_KNOT_MODE_XOR);
-        entity_angle->create(desktop, item, this,
+
+        entity_angle->create(desktop, item, this, Inkscape::CTRL_TYPE_ROTATE,
                              _("<b>Rotate</b> the pattern fill; with <b>Ctrl</b> to snap angle"),
                              SP_KNOT_SHAPE_CIRCLE, SP_KNOT_MODE_XOR);
+
         entity.push_back(entity_xy);
         entity.push_back(entity_angle);
         entity.push_back(entity_scale);
     }
+    updateControlSizes();
 }
 
 /*

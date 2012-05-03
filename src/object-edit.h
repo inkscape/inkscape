@@ -1,5 +1,5 @@
-#ifndef __SP_OBJECT_EDIT_H__
-#define __SP_OBJECT_EDIT_H__
+#ifndef OBJECT_EDIT_H_SEEN
+#define OBJECT_EDIT_H_SEEN
 
 /*
  * Node editing extension to objects
@@ -7,13 +7,19 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Mitsuru Oka
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Licensed under GNU GPL
  */
 
 #include "knotholder.h"
 
-KnotHolder *sp_item_knot_holder (SPItem *item, SPDesktop *desktop);
+namespace Inkscape
+{
+
+KnotHolder *createKnotHolder(SPItem *item, SPDesktop *desktop);
+
+}
 
 class RectKnotHolder : public KnotHolder {
 public:
@@ -63,7 +69,7 @@ public:
     virtual ~MiscKnotHolder() {};
 };
 
-#endif
+#endif // OBJECT_EDIT_H_SEEN
 
 /*
   Local Variables:

@@ -166,6 +166,7 @@ protected:
 
     UI::Widget::PrefSpinButton _mouse_sens;
     UI::Widget::PrefSpinButton _mouse_thres;
+    UI::Widget::PrefSlider      _mouse_grabsize;
     UI::Widget::PrefCheckButton _mouse_use_ext_input;
     UI::Widget::PrefCheckButton _mouse_switch_on_ext_input;
 

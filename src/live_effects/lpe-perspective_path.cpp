@@ -137,15 +137,11 @@ LPEPerspectivePath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > cons
     return output;
 }
 
-void
-LPEPerspectivePath::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
-    {
-        KnotHolderEntity *e = new PP::KnotHolderEntityOffset(this);
-        e->create(  desktop, item, knotholder,
-                    _("Adjust the origin")
-                    /*optional: knot_shape, knot_mode, knot_color*/);
-        knotholder->add(e);
-    }
+void LPEPerspectivePath::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+    KnotHolderEntity *e = new PP::KnotHolderEntityOffset(this);
+    e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
+               _("Adjust the origin") );
+    knotholder->add(e);
 };
 
 namespace PP {

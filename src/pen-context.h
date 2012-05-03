@@ -47,7 +47,10 @@ struct SPPenContext : public SPDrawContext {
     Inkscape::LivePathEffect::Effect *waiting_LPE; // if NULL, waiting_LPE_type in SPDrawContext is taken into account
     SPLPEItem *waiting_item;
 
-    SPCanvasItem *c0, *c1, *cl0, *cl1;
+    SPCanvasItem *c0;
+    SPCanvasItem *c1;
+    SPCanvasItem *cl0;
+    SPCanvasItem *cl1;
     
     unsigned int events_disabled : 1;
 };

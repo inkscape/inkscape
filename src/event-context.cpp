@@ -14,15 +14,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-/** \class SPEventContext
- * SPEventContext is an abstract base class of all tools. As the name
- * indicates, event context implementations process UI events (mouse
- * movements and keypresses) and take actions (like creating or modifying
- * objects).  There is one event context implementation for each tool,
- * plus few abstract base classes. Writing a new tool involves
- * subclassing SPEventContext.
- */
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif

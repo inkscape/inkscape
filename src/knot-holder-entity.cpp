@@ -29,9 +29,9 @@
 
 int KnotHolderEntity::counter = 0;
 
-void
-KnotHolderEntity::create(SPDesktop *desktop, SPItem *item, KnotHolder *parent, const gchar *tip,
-                         SPKnotShapeType shape, SPKnotModeType mode, guint32 color)
+void KnotHolderEntity::create(SPDesktop *desktop, SPItem *item, KnotHolder *parent, Inkscape::ControlType type,
+                              const gchar *tip,
+                              SPKnotShapeType shape, SPKnotModeType mode, guint32 color)
 {
     knot = sp_knot_new(desktop, tip);
 
@@ -41,11 +41,14 @@ KnotHolderEntity::create(SPDesktop *desktop, SPItem *item, KnotHolder *parent, c
 
     my_counter = KnotHolderEntity::counter++;
 
-    g_object_set(G_OBJECT (knot->item), "shape", shape, NULL);
-    g_object_set(G_OBJECT (knot->item), "mode", mode, NULL);
+    g_object_set(G_OBJECT(knot->item), "shape", shape, NULL);
+    g_object_set(G_OBJECT(knot->item), "mode", mode, NULL);
+
+    // TODO base more appearance from this type instead of passing in arbitrary values.
+    knot->item->ctrlType = type;
 
     knot->fill [SP_KNOT_STATE_NORMAL] = color;
-    g_object_set (G_OBJECT (knot->item), "fill_color", color, NULL);
+    g_object_set (G_OBJECT(knot->item), "fill_color", color, NULL);
 
     update_knot();
     sp_knot_show(knot);

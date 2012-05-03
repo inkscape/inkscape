@@ -100,23 +100,20 @@ void
 LPETangentToCurve::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
     {
         KnotHolderEntity *e = new TtC::KnotHolderEntityAttachPt(this);
-        e->create(  desktop, item, knotholder,
-                    _("Adjust the point of attachment of the tangent")
-                    /*optional: knot_shape, knot_mode, knot_color*/);
+        e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
+                   _("Adjust the point of attachment of the tangent") );
         knotholder->add(e);
     }
     {
         KnotHolderEntity *e = new TtC::KnotHolderEntityLeftEnd(this);
-        e->create(  desktop, item, knotholder,
-                    _("Adjust the \"left\" end of the tangent")
-                    /*optional: knot_shape, knot_mode, knot_color*/);
+        e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
+                    _("Adjust the \"left\" end of the tangent") );
         knotholder->add(e);
     }
     {
         KnotHolderEntity *e = new TtC::KnotHolderEntityRightEnd(this);
-        e->create(  desktop, item, knotholder,
-                    _("Adjust the \"right\" end of the tangent")
-                    /*optional: knot_shape, knot_mode, knot_color*/);
+        e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
+                   _("Adjust the \"right\" end of the tangent") );
         knotholder->add(e);
     }
 };

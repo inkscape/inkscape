@@ -191,11 +191,11 @@ void
 VectorParam::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
 {
     VectorParamKnotHolderEntity_Origin *origin_e = new VectorParamKnotHolderEntity_Origin(this);
-    origin_e->create(desktop, item, knotholder, handleTip(), ori_knot_shape, ori_knot_mode, ori_knot_color);
+    origin_e->create(desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN, handleTip(), ori_knot_shape, ori_knot_mode, ori_knot_color);
     knotholder->add(origin_e);
 
     VectorParamKnotHolderEntity_Vector *vector_e = new VectorParamKnotHolderEntity_Vector(this);
-    vector_e->create(desktop, item, knotholder, handleTip(), vec_knot_shape, vec_knot_mode, vec_knot_color);
+    vector_e->create(desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN, handleTip(), vec_knot_shape, vec_knot_mode, vec_knot_color);
     knotholder->add(vector_e);
 }
 

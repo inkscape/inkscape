@@ -20,6 +20,9 @@
 #include "lpe-tool-context.h"
 #include "display/sodipodi-ctrl.h"
 #include "display/curve.h"
+#include "ui/control-manager.h"
+
+using Inkscape::ControlManager;
 
 #define FILL_COLOR_NORMAL 0xffffff7f
 #define FILL_COLOR_MOUSEOVER 0xff0000ff
@@ -44,15 +47,11 @@ SPDrawAnchor *sp_draw_anchor_new(SPDrawContext *dc, SPCurve *curve, gboolean sta
     a->start = start;
     a->active = FALSE;
     a->dp = delta;
-    a->ctrl = sp_canvas_item_new(sp_desktop_controls(dt), SP_TYPE_CTRL,
-                                 "size", 6.0,
-                                 "filled", 1,
-                                 "fill_color", FILL_COLOR_NORMAL,
-                                 "stroked", 1,
-                                 "stroke_color", 0x000000ff,
-                                 NULL);
+    a->ctrl = ControlManager::getManager().createControl(sp_desktop_controls(dt), Inkscape::CTRL_TYPE_ANCHOR);
 
     SP_CTRL(a->ctrl)->moveto(delta);
+
+    ControlManager::getManager().track(a->ctrl);
 
     return a;
 }

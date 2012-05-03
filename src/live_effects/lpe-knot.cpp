@@ -607,15 +607,12 @@ LPEKnot::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVecto
     hp_vec.push_back(pathv);
 }
 
-void
-LPEKnot::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
-    {
-        KnotHolderEntity *e = new KnotHolderEntityCrossingSwitcher(this);
-        e->create(  desktop, item, knotholder,
-                    _("Drag to select a crossing, click to flip it")
-                    /*optional: knot_shape, knot_mode, knot_color*/);
-        knotholder->add(e);
-    }
+void LPEKnot::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
+{
+    KnotHolderEntity *e = new KnotHolderEntityCrossingSwitcher(this);
+    e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
+               _("Drag to select a crossing, click to flip it") );
+    knotholder->add(e);
 };
 
 

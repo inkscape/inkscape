@@ -243,6 +243,7 @@ static char const preferences_skeleton[] =
 "    <group id=\"rotationsnapsperpi\" value=\"12\"/>\n"
 "    <group id=\"cursortolerance\" value=\"8.0\"/>\n"
 "    <group id=\"dragtolerance\" value=\"4.0\"/>\n"
+"    <group id=\"grabsize\" value=\"3\"/>\n"
 "    <group\n"
 "       id=\"displayprofile\"\n"
 "       enable=\"0\"\n"

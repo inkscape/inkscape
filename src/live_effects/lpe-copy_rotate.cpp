@@ -127,20 +127,17 @@ LPECopyRotate::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::Pat
     hp_vec.push_back(pathv);
 }
 
-void
-LPECopyRotate::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
+void LPECopyRotate::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
     {
         KnotHolderEntity *e = new CR::KnotHolderEntityStartingAngle(this);
-        e->create(  desktop, item, knotholder,
-                    _("Adjust the starting angle")
-                    /*optional: knot_shape, knot_mode, knot_color*/);
+        e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
+                   _("Adjust the starting angle") );
         knotholder->add(e);
     }
     {
         KnotHolderEntity *e = new CR::KnotHolderEntityRotationAngle(this);
-        e->create(  desktop, item, knotholder,
-                    _("Adjust the rotation angle")
-                    /*optional: knot_shape, knot_mode, knot_color*/);
+        e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
+                   _("Adjust the rotation angle") );
         knotholder->add(e);
     }
 };

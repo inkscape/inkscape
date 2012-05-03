@@ -1,6 +1,7 @@
 
 set(ui_SRC
 	clipboard.cpp
+	control-manager.cpp
 	previewholder.cpp
 	uxmanager.cpp
 
@@ -121,6 +122,7 @@ set(ui_SRC
 	# -------
 	# Headers
 	clipboard.h
+	control-manager.h
 	icon-names.h
 	previewable.h
 	previewfillable.h

@@ -222,22 +222,21 @@ PowerStrokePointArrayParamKnotHolderEntity::knot_click(guint state)
             };
             // add knot to knotholder
             PowerStrokePointArrayParamKnotHolderEntity *e = new PowerStrokePointArrayParamKnotHolderEntity(_pparam, _index+1);
-            e->create(  this->desktop, this->item, parent_holder,
-                        _("<b>Stroke width control point</b>: drag to alter the stroke width. <b>Ctrl+click</b> adds a control point, <b>Ctrl+Alt+click</b> deletes it."),
+            e->create( this->desktop, this->item, parent_holder, Inkscape::CTRL_TYPE_UNKNOWN,
+                       _("<b>Stroke width control point</b>: drag to alter the stroke width. <b>Ctrl+click</b> adds a control point, <b>Ctrl+Alt+click</b> deletes it."),
                         _pparam->knot_shape, _pparam->knot_mode, _pparam->knot_color);
             parent_holder->add(e);
         }
     } 
 }
 
-void
-PowerStrokePointArrayParam::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
+void PowerStrokePointArrayParam::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item)
 {
     for (unsigned int i = 0; i < _vector.size(); ++i) {
         PowerStrokePointArrayParamKnotHolderEntity *e = new PowerStrokePointArrayParamKnotHolderEntity(this, i);
-        e->create(  desktop, item, knotholder,
-                    _("<b>Stroke width control point</b>: drag to alter the stroke width. <b>Ctrl+click</b> adds a control point, <b>Ctrl+Alt+click</b> deletes it."),
-                    knot_shape, knot_mode, knot_color);
+        e->create( desktop, item, knotholder, Inkscape::CTRL_TYPE_UNKNOWN,
+                   _("<b>Stroke width control point</b>: drag to alter the stroke width. <b>Ctrl+click</b> adds a control point, <b>Ctrl+Alt+click</b> deletes it."),
+                   knot_shape, knot_mode, knot_color);
         knotholder->add(e);
     }
 }

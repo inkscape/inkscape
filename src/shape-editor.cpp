@@ -33,6 +33,8 @@
 
 #include "shape-editor.h"
 
+using Inkscape::createKnotHolder;
+
 ShapeEditor::ShapeEditor(SPDesktop *dt) {
     this->desktop = dt;
     this->knotholder = NULL;
@@ -184,7 +186,7 @@ void ShapeEditor::set_item(SPItem *item, SubType type, bool keep_knotholder) {
             case SH_KNOTHOLDER:
                 if (!this->knotholder) {
                     // only recreate knotholder if none is present
-                    this->knotholder = sp_item_knot_holder(item, desktop);
+                    this->knotholder = createKnotHolder(item, desktop);
                 }
                 if (this->knotholder) {
                     this->knotholder->update_knots();

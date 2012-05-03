@@ -41,6 +41,23 @@ typedef struct _SPCanvasItemClass SPCanvasItemClass;
 #define SP_IS_CANVAS_ITEM(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_CANVAS_ITEM))
 #define SP_CANVAS_ITEM_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), SP_TYPE_CANVAS_ITEM, SPCanvasItemClass))
 
+namespace Inkscape
+{
+
+// Rough initial set. Most likely needs refinement.
+enum ControlType {
+    CTRL_TYPE_UNKNOWN,
+    CTRL_TYPE_ADJ_HANDLE,
+    CTRL_TYPE_ANCHOR,
+    CTRL_TYPE_POINT,
+    CTRL_TYPE_ROTATE,
+    CTRL_TYPE_SIZER,
+    CTRL_TYPE_SHAPER,
+    CTRL_TYPE_ORIGIN
+};
+
+} // namespace Inkscape
+
 /**
  * An SPCanvasItem refers to a SPCanvas and to its parent item; it has
  * four coordinates, a bounding rectangle, and a transformation matrix.
@@ -51,10 +68,15 @@ struct SPCanvasItem : public GtkObject {
     SPCanvas *canvas;
     SPCanvasItem *parent;
 
-    double x1, y1, x2, y2;
+    double x1;
+    double y1;
+    double x2;
+    double y2;
     Geom::Rect bounds;
     Geom::Affine xform;
-    
+
+    Inkscape::ControlType ctrlType;
+
     // Replacement for custom GtkObject flag enumeration
     gboolean visible;
     gboolean need_update;
@@ -74,6 +96,9 @@ struct _SPCanvasItemClass : public GtkObjectClass {
     void (* viewbox_changed) (SPCanvasItem *item, Geom::IntRect const &new_area);
 };
 
+/**
+ * Constructs new SPCanvasItem on SPCanvasGroup.
+ */
 SPCanvasItem *sp_canvas_item_new(SPCanvasGroup *parent, GType type, const gchar *first_arg_name, ...);
 
 G_END_DECLS
