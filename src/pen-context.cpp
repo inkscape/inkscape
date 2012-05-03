@@ -228,10 +228,6 @@ static void sp_pen_context_setup(SPEventContext *ec)
     sp_canvas_item_hide(pc->cl0);
     sp_canvas_item_hide(pc->cl1);
 
-    if (pc->green_anchor) {
-        ControlManager::getManager().updateItem(pc->green_anchor->ctrl);
-    }
-
     sp_event_context_read(ec, "mode");
 
     pc->anchor_statusbar = false;
@@ -511,9 +507,6 @@ static gint pen_handle_button_press(SPPenContext *const pc, GdkEventButton const
                                 p = event_dt;
                                 spdc_endpoint_snap(pc, p, bevent.state);
                                 pc->green_anchor = sp_draw_anchor_new(pc, pc->green_curve, TRUE, p);
-                                {
-                                    ControlManager::getManager().updateItem(pc->green_anchor->ctrl);
-                                }
                             }
                             spdc_pen_set_initial_point(pc, p);
                         } else {
