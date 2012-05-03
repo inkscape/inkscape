@@ -738,10 +738,12 @@ void Script::effect(Inkscape::Extension::Effect *module,
         SPNamedView *nv = (SPNamedView *) obj;    
         
         //Check if it has a default layer set up
-        if ( nv != NULL and nv->default_layer_id != 0 ) {
-            SPDocument *document = desktop->doc();
-            //If so, get that layer
-            layer = document->getObjectById(g_quark_to_string(nv->default_layer_id));
+        if ( nv != NULL){
+            if( nv->default_layer_id != 0 ) {
+                SPDocument *document = desktop->doc();
+                //If so, get that layer
+                layer = document->getObjectById(g_quark_to_string(nv->default_layer_id));
+            }
         }
 
         sp_namedview_update_layers_from_document(desktop);
