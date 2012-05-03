@@ -82,25 +82,7 @@ using Inkscape::DocumentUndo;
 #define DYNA_MIN_WIDTH 1.0e-6
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_Up 0xff52
-#define GDK_KEY_KP_Up 0xff97
-#define GDK_KEY_Down 0xff54
-#define GDK_KEY_KP_Down 0xff99
-#define GDK_KEY_Left 0xff51
-#define GDK_KEY_KP_Left 0xff96
-#define GDK_KEY_Right 0xff53
-#define GDK_KEY_KP_Right 0xff98
-#define GDK_KEY_Home 0xff50
-#define GDK_KEY_KP_Home 0xff95
-#define GDK_KEY_End 0xff57
-#define GDK_KEY_KP_End 0xff9c
-#define GDK_KEY_x 0x078
-#define GDK_KEY_X 0x058
-#define GDK_KEY_z 0x07a
-#define GDK_KEY_Z 0x05a
-#define GDK_KEY_Escape 0xff1b
-#define GDK_KEY_Control_L 0xffe3
-#define GDK_KEY_Control_R 0xffe4
+#include "compat-key-syms.h"
 #endif
 
 static void sp_dyna_draw_context_class_init(SPDynaDrawContextClass *klass);

@@ -50,22 +50,7 @@
 
 // Define new form of key macros if we're using an old GTK+ version
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_Alt_L 0xffe9
-#define GDK_KEY_Alt_R 0xffea
-#define GDK_KEY_Control_L 0xffe3
-#define GDK_KEY_Control_R 0xffe4
-#define GDK_KEY_Meta_L 0xffe7
-#define GDK_KEY_Meta_R 0xffe8
-#define GDK_KEY_Shift_L 0xffe1
-#define GDK_KEY_Shift_R 0xffe2
-#define GDK_KEY_Up 0xff52
-#define GDK_KEY_Down 0xff54
-#define GDK_KEY_KP_Up 0xff97
-#define GDK_KEY_KP_Down 0xff99
-#define GDK_KEY_x 0x078
-#define GDK_KEY_X 0x058
-#define GDK_KEY_Escape 0xff1b
-#define GDK_KEY_space 0x020
+#include "compat-key-syms.h"
 #endif
 
 using Inkscape::DocumentUndo;

@@ -114,7 +114,7 @@
 #include <gtk/gtk.h>
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_VoidSymbol 0xffffff
+#include "compat-key-syms.h"
 #endif
 
 //#define DEBUG_TEXT

@@ -85,8 +85,7 @@
 #include <gtk/gtk.h>
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_KP_Add 0xffab
-#define GDK_KEY_KP_Subtract 0xffad
+#include "compat-key-syms.h"
 #endif
 
 using Inkscape::DocumentUndo;

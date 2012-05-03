@@ -28,9 +28,7 @@
 #include "ui/tool/transform-handle-set.h"
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_Escape 0xff1b
-#define GDK_KEY_Tab 0xff09
-#define GDK_KEY_ISO_Left_Tab 0xfe20
+#include "compat-key-syms.h"
 #endif
 
 namespace Inkscape {

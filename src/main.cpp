@@ -118,8 +118,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_Alt_L 0xffe9
-#define GDK_KEY_Alt_R 0xffea
+#include "compat-key-syms.h"
 #endif
 
 enum {

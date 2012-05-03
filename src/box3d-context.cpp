@@ -52,28 +52,7 @@
 #include "verbs.h"
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_Up 0xff52
-#define GDK_KEY_Down 0xff54
-#define GDK_KEY_KP_Up 0xff97
-#define GDK_KEY_KP_Down 0xff99
-#define GDK_KEY_bracketright 0x05d
-#define GDK_KEY_bracketleft 0x05b
-#define GDK_KEY_parenright 0x029
-#define GDK_KEY_parenleft 0x028
-#define GDK_KEY_braceright 0x07d
-#define GDK_KEY_braceleft 0x07b
-#define GDK_KEY_G 0x047
-#define GDK_KEY_g 0x067
-#define GDK_KEY_p 0x070
-#define GDK_KEY_P 0x050
-#define GDK_KEY_X 0x058
-#define GDK_KEY_x 0x078
-#define GDK_KEY_y 0x079
-#define GDK_KEY_Y 0x059
-#define GDK_KEY_Z 0x05a
-#define GDK_KEY_z 0x07a
-#define GDK_KEY_Escape 0xff1b
-#define GDK_KEY_space 0x020
+#include "compat-key-syms.h"
 #endif
 
 using Inkscape::DocumentUndo;

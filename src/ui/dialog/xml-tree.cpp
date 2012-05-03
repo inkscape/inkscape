@@ -49,8 +49,7 @@
 #include "widgets/sp-xmlview-tree.h"
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_Escape 0xff1b
-#define GDK_KEY_Return 0xff0d
+#include "compat-key-syms.h"
 #endif
 
 namespace Inkscape {

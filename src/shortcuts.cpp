@@ -1,5 +1,3 @@
-#define __SP_SHORTCUTS_C__
-
 /** \file
  * Keyboard shortcut processing.
  */
@@ -40,7 +38,7 @@
 #include "xml/repr.h"
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_VoidSymbol 0xffffff
+#include "compat-key-syms.h"
 #endif
 
 using namespace Inkscape;

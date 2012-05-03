@@ -18,9 +18,7 @@
 #include "event-context.h"
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_Escape 0xff1b
-#define GDK_KEY_z 0x07a
-#define GDK_KEY_Z 0x05a
+#include "compat-key-syms.h"
 #endif
 
 namespace Inkscape {

@@ -44,11 +44,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_Escape 0xff1b
-#define GDK_KEY_a 0x061
-#define GDK_KEY_A 0x041
-#define GDK_KEY_h 0x068
-#define GDK_KEY_H 0x048
+#include "compat-key-syms.h"
 #endif
 
 /** @struct InkNodeTool

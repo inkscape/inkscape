@@ -37,7 +37,7 @@ using Inkscape::DocumentUndo;
 			 GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK)
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_Escape 0xff1b
+#include "compat-key-syms.h"
 #endif
 
 static bool nograb = false;

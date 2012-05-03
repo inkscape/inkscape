@@ -82,62 +82,7 @@ using Inkscape::DocumentUndo;
 #define DYNA_MIN_WIDTH 1.0e-6
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_M 0x04d
-#define GDK_KEY_m 0x06d
-#define GDK_KEY_0 0x030
-#define GDK_KEY_1 0x031
-#define GDK_KEY_2 0x032
-#define GDK_KEY_3 0x033
-#define GDK_KEY_4 0x034
-#define GDK_KEY_5 0x035
-#define GDK_KEY_6 0x036
-#define GDK_KEY_7 0x037
-#define GDK_KEY_8 0x038
-#define GDK_KEY_9 0x039
-#define GDK_KEY_I 0x049
-#define GDK_KEY_i 0x069
-#define GDK_KEY_Z 0x05a
-#define GDK_KEY_z 0x07a
-#define GDK_KEY_less 0x03c
-#define GDK_KEY_comma 0x02c
-#define GDK_KEY_greater 0x03e
-#define GDK_KEY_period 0x02e
-#define GDK_KEY_bracketleft 0x05b
-#define GDK_KEY_bracketright 0x05d
-#define GDK_KEY_d 0x064
-#define GDK_KEY_D 0x044
-#define GDK_KEY_P 0x050
-#define GDK_KEY_p 0x070
-#define GDK_KEY_S 0x053
-#define GDK_KEY_s 0x073
-#define GDK_KEY_a 0x061
-#define GDK_KEY_A 0x041
-#define GDK_KEY_R 0x052
-#define GDK_KEY_r 0x072
-#define GDK_KEY_c 0x063
-#define GDK_KEY_C 0x043
-#define GDK_KEY_J 0x04a
-#define GDK_KEY_j 0x06a
-#define GDK_KEY_b 0x062
-#define GDK_KEY_B 0x042
-#define GDK_KEY_Up 0xff52
-#define GDK_KEY_Left 0xff51
-#define GDK_KEY_Right 0xff53
-#define GDK_KEY_Down 0xff54
-#define GDK_KEY_KP_Left 0xff96
-#define GDK_KEY_KP_Up 0xff97
-#define GDK_KEY_KP_Right 0xff98
-#define GDK_KEY_KP_Down 0xff99
-#define GDK_KEY_KP_Home 0xff95
-#define GDK_KEY_KP_End 0xff9c
-#define GDK_KEY_Home 0xff50
-#define GDK_KEY_End 0xff57
-#define GDK_KEY_X 0x058
-#define GDK_KEY_x 0x078
-#define GDK_KEY_Shift_L 0xffe1
-#define GDK_KEY_Shift_R 0xffe2
-#define GDK_KEY_Control_L 0xffe3
-#define GDK_KEY_Control_R 0xffe4
+#include "compat-key-syms.h"
 #endif
 
 static void sp_tweak_context_class_init(SPTweakContextClass *klass);

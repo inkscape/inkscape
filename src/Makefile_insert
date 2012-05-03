@@ -22,6 +22,7 @@ ink_common_sources +=	\
 	color-profile-cms-fns.h						\
 	color-rgba.h							\
 	common-context.cpp common-context.h				\
+	compat-key-syms.h						\
 	composite-undo-stack-observer.cpp				\
 	composite-undo-stack-observer.h					\
 	conditions.cpp conditions.h					\

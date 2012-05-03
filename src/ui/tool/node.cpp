@@ -34,12 +34,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_s 0x073
-#define GDK_KEY_S 0x053
-#define GDK_KEY_Page_Up 0xff55
-#define GDK_KEY_KP_Page_Up 0xff9a
-#define GDK_KEY_Page_Down 0xff56
-#define GDK_KEY_KP_Page_Down 0xff9b
+#include "compat-key-syms.h"
 #endif
 
 namespace Inkscape {

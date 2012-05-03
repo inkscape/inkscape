@@ -26,13 +26,7 @@
 #include "zoom-context.h"
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_Escape 0xff1b
-#define GDK_KEY_Up 0xff52
-#define GDK_KEY_Down 0xff54
-#define GDK_KEY_KP_Up 0xff97
-#define GDK_KEY_KP_Down 0xff99
-#define GDK_KEY_Shift_L 0xffe1
-#define GDK_KEY_Shift_R 0xffe2
+#include "compat-key-syms.h"
 #endif
 
 static void sp_zoom_context_class_init(SPZoomContextClass *klass);

@@ -48,7 +48,7 @@
 #include "display/snap-indicator.h"
 
 #if !GTK_CHECK_VERSION(2,22,0)
-#define GDK_KEY_space 0x020
+#include "compat-key-syms.h"
 #endif
 
 using Inkscape::DocumentUndo;
