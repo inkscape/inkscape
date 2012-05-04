@@ -218,10 +218,10 @@ static void sp_pen_context_setup(SPEventContext *ec)
     pc->c1 = ControlManager::getManager().createControl(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), Inkscape::CTRL_TYPE_ADJ_HANDLE);
     ControlManager::getManager().track(pc->c1);
 
-    pc->cl0 = sp_canvas_item_new(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRLLINE, NULL);
-    sp_ctrlline_set_rgba32(SP_CTRLLINE(pc->cl0), 0x0000007f);
-    pc->cl1 = sp_canvas_item_new(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRLLINE, NULL);
-    sp_ctrlline_set_rgba32(SP_CTRLLINE(pc->cl1), 0x0000007f);
+    pc->cl0 = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRLLINE, NULL));
+    pc->cl0->setRgba32(0x0000007f);
+    pc->cl1 = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRLLINE, NULL));
+    pc->cl1->setRgba32(0x0000007f);
 
     sp_canvas_item_hide(pc->c0);
     sp_canvas_item_hide(pc->c1);
@@ -892,12 +892,12 @@ void pen_redraw_all (SPPenContext *const pc)
     // handles
     if (pc->p[0] != pc->p[1]) {
         SP_CTRL(pc->c1)->moveto(pc->p[1]);
-        sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl1), pc->p[0], pc->p[1]);
-        sp_canvas_item_show (pc->c1);
-        sp_canvas_item_show (pc->cl1);
+        pc->cl1->setCoords(pc->p[0], pc->p[1]);
+        sp_canvas_item_show(pc->c1);
+        sp_canvas_item_show(pc->cl1);
     } else {
-        sp_canvas_item_hide (pc->c1);
-        sp_canvas_item_hide (pc->cl1);
+        sp_canvas_item_hide(pc->c1);
+        sp_canvas_item_hide(pc->cl1);
     }
 
     Geom::Curve const * last_seg = pc->green_curve->last_segment();
@@ -908,12 +908,12 @@ void pen_redraw_all (SPPenContext *const pc)
         {
             Geom::Point p2 = (*cubic)[2];
             SP_CTRL(pc->c0)->moveto(p2);
-            sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl0), p2, pc->p[0]);
-            sp_canvas_item_show (pc->c0);
-            sp_canvas_item_show (pc->cl0);
+            pc->cl0->setCoords(p2, pc->p[0]);
+            sp_canvas_item_show(pc->c0);
+            sp_canvas_item_show(pc->cl0);
         } else {
-            sp_canvas_item_hide (pc->c0);
-            sp_canvas_item_hide (pc->cl0);
+            sp_canvas_item_hide(pc->c0);
+            sp_canvas_item_hide(pc->cl0);
         }
     }
 }
@@ -1285,7 +1285,7 @@ static void spdc_pen_set_ctrl(SPPenContext *const pc, Geom::Point const p, guint
         sp_canvas_item_hide(pc->c0);
         sp_canvas_item_hide(pc->cl0);
         SP_CTRL(pc->c1)->moveto(pc->p[1]);
-        sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl1), pc->p[0], pc->p[1]);
+        pc->cl1->setCoords(pc->p[0], pc->p[1]);
 
         spdc_pen_set_angle_distance_status_message(pc, p, 0, _("<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle"));
     } else if ( pc->npoints == 5 ) {
@@ -1304,9 +1304,9 @@ static void spdc_pen_set_ctrl(SPPenContext *const pc, Geom::Point const p, guint
             sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), pc->red_curve);
         }
         SP_CTRL(pc->c0)->moveto(pc->p[2]);
-        sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl0), pc->p[3], pc->p[2]);
+        pc->cl0 ->setCoords(pc->p[3], pc->p[2]);
         SP_CTRL(pc->c1)->moveto(pc->p[4]);
-        sp_ctrlline_set_coords(SP_CTRLLINE(pc->cl1), pc->p[3], pc->p[4]);
+        pc->cl1->setCoords(pc->p[3], pc->p[4]);
 
         gchar *message = is_symm ?
             _("<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only") :

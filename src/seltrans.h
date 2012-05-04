@@ -29,6 +29,7 @@
 struct SPKnot;
 class  SPDesktop;
 struct SPCanvasItem;
+struct SPCtrlLine;
 class  SPSelTransHandle;
 
 namespace Inkscape
@@ -167,7 +168,7 @@ private:
     SPKnot *_chandle;
     SPCanvasItem *_norm;
     SPCanvasItem *_grip;
-    SPCanvasItem *_l[4];
+    SPCtrlLine *_l[4];
     guint _sel_changed_id;
     guint _sel_modified_id;
     GSList *_stamp_cache;

@@ -4,6 +4,7 @@
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2009 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -91,20 +92,23 @@ Handle::Handle(NodeSharedData const &data, Geom::Point const &initial_pos, Node 
     , _degenerate(true)
 {
     _cset = &handle_colors;
-    _handle_line = sp_canvas_item_new(data.handle_line_group, SP_TYPE_CTRLLINE, NULL);
+    _handle_line = SP_CTRLLINE(sp_canvas_item_new(data.handle_line_group, SP_TYPE_CTRLLINE, NULL));
     setVisible(false);
 }
 Handle::~Handle()
 {
     //sp_canvas_item_hide(_handle_line);
-    gtk_object_destroy(GTK_OBJECT(_handle_line));
+    gtk_object_destroy(_handle_line);
 }
 
 void Handle::setVisible(bool v)
 {
     ControlPoint::setVisible(v);
-    if (v) sp_canvas_item_show(_handle_line);
-    else sp_canvas_item_hide(_handle_line);
+    if (v) {
+        sp_canvas_item_show(_handle_line);
+    } else {
+        sp_canvas_item_hide(_handle_line);
+    }
 }
 
 void Handle::move(Geom::Point const &new_pos)
@@ -181,7 +185,7 @@ void Handle::move(Geom::Point const &new_pos)
 void Handle::setPosition(Geom::Point const &p)
 {
     ControlPoint::setPosition(p);
-    sp_ctrlline_set_coords(SP_CTRLLINE(_handle_line), _parent->position(), position());
+    _handle_line->setCoords(_parent->position(), position());
 
     // update degeneration info and visibility
     if (Geom::are_near(position(), _parent->position()))

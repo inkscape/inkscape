@@ -211,11 +211,10 @@ void create_canvas_point(Geom::Point const &pos, double size, guint32 rgba)
 void create_canvas_line(Geom::Point const &p1, Geom::Point const &p2, guint32 rgba)
 {
     SPDesktop *desktop = inkscape_active_desktop();
-    SPCanvasItem *line = sp_canvas_item_new(sp_desktop_controls(desktop),
-                                                            SP_TYPE_CTRLLINE, NULL);
-    sp_ctrlline_set_coords(SP_CTRLLINE(line), p1, p2);
-    sp_ctrlline_set_rgba32 (SP_CTRLLINE(line), rgba);
-    sp_canvas_item_show (line);
+    SPCtrlLine *line = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLLINE, NULL));
+    line->setCoords(p1, p2);
+    line->setRgba32(rgba);
+    sp_canvas_item_show(line);
 }
 
 } // namespace Box3D 

@@ -453,17 +453,16 @@ bool GrDrag::dropColor(SPItem */*item*/, gchar const *c, Geom::Point p)
 
     // now see if we're over line and create a new stop
     bool over_line = false;
-    SPCtrlLine *line = NULL;
     if (lines) {
         for (GSList *l = lines; (l != NULL) && (!over_line); l = l->next) {
-            line = (SPCtrlLine*) l->data;
+            SPCtrlLine *line = (SPCtrlLine*) l->data;
             Geom::LineSegment ls(line->s, line->e);
             Geom::Point nearest = ls.pointAt(ls.nearestPoint(p));
-            double dist_screen = Geom::L2 (p - nearest) * desktop->current_zoom();
+            double dist_screen = Geom::L2(p - nearest) * desktop->current_zoom();
             if (line->item && dist_screen < 5) {
-                SPStop *stop = addStopNearPoint (line->item, p, 5/desktop->current_zoom());
+                SPStop *stop = addStopNearPoint(line->item, p, 5/desktop->current_zoom());
                 if (stop) {
-                    SPCSSAttr *css = sp_repr_css_attr_new ();
+                    SPCSSAttr *css = sp_repr_css_attr_new();
                     sp_repr_css_set_property( css, "stop-color", stopIsNull ? 0 : toUse.c_str() );
                     sp_repr_css_set_property( css, "stop-opacity", "1" );
                     sp_repr_css_change(stop->getRepr(), css, "style");
@@ -1576,15 +1575,16 @@ void GrDrag::setDeselected(GrDragger *dragger)
  */
 void GrDrag::addLine(SPItem *item, Geom::Point p1, Geom::Point p2, guint32 rgba)
 {
-    SPCanvasItem *line = sp_canvas_item_new(sp_desktop_controls(this->desktop),
-                                                            SP_TYPE_CTRLLINE, NULL);
+    SPCtrlLine *line = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(this->desktop), SP_TYPE_CTRLLINE, NULL));
+
     sp_canvas_item_move_to_z(line, 0);
-    SP_CTRLLINE(line)->item = item;
-    sp_ctrlline_set_coords(SP_CTRLLINE(line), p1, p2);
-    if (rgba != GR_LINE_COLOR_FILL) // fill is the default, so don't set color for it to speed up redraw
-        sp_ctrlline_set_rgba32 (SP_CTRLLINE(line), rgba);
-    sp_canvas_item_show (line);
-    this->lines = g_slist_append (this->lines, line);
+    line->item = item;
+    line->setCoords(p1, p2);
+    if (rgba != GR_LINE_COLOR_FILL) { // fill is the default, so don't set color for it to speed up redraw
+        line->setRgba32(rgba);
+    }
+    sp_canvas_item_show(line);
+    this->lines = g_slist_append(this->lines, line);
 }
 
 /**

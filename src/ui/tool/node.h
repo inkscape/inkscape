@@ -22,6 +22,7 @@
 #include "snapped-point.h"
 #include "ui/tool/node-types.h"
 
+struct SPCtrlLine;
 
 namespace Inkscape {
 namespace UI {
@@ -113,7 +114,7 @@ private:
     inline PathManipulator &_pm();
     Node *_parent; // the handle's lifetime does not extend beyond that of the parent node,
     // so a naked pointer is OK and allows setting it during Node's construction
-    SPCanvasItem *_handle_line;
+    SPCtrlLine *_handle_line;
     bool _degenerate; // True if the handle is retracted, i.e. has zero length. This is used often internally so it makes sense to cache this
 
     static Geom::Point _saved_other_pos;

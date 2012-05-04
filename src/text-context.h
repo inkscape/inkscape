@@ -29,6 +29,7 @@
 #define SP_IS_TEXT_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_TEXT_CONTEXT))
 #define SP_IS_TEXT_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_TEXT_CONTEXT))
 
+struct SPCtrlLine;
 class SPTextContext;
 class SPTextContextClass;
 
@@ -53,7 +54,7 @@ struct SPTextContext : public SPEventContext {
     bool unimode;
     guint unipos;
 
-    SPCanvasItem *cursor;
+    SPCtrlLine *cursor;
     SPCanvasItem *indicator;
     SPCanvasItem *frame; // hiliting the first frame of flowtext; FIXME: make this a list to accommodate arbitrarily many chained shapes
     std::vector<SPCanvasItem*> text_selection_quads;

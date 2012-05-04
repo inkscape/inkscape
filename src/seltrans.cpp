@@ -157,7 +157,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     sp_canvas_item_hide(_norm);
 
     for (int i = 0; i < 4; i++) {
-        _l[i] = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLLINE, NULL);
+        _l[i] = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLLINE, NULL));
         sp_canvas_item_hide(_l[i]);
     }
 
@@ -202,7 +202,7 @@ Inkscape::SelTrans::~SelTrans()
     }
     for (int i = 0; i < 4; i++) {
         if (_l[i]) {
-            gtk_object_destroy(GTK_OBJECT(_l[i]));
+            gtk_object_destroy(_l[i]);
             _l[i] = NULL;
         }
     }
@@ -404,7 +404,7 @@ void Inkscape::SelTrans::transform(Geom::Affine const &rel_affine, Geom::Point c
                 p[i] = _bbox->corner(i) * affine;
             }
             for (unsigned i = 0 ; i < 4 ; i++) {
-                sp_ctrlline_set_coords(SP_CTRLLINE(_l[i]), p[i], p[(i+1)%4]);
+                _l[i]->setCoords(p[i], p[(i+1)%4]);
             }
         }
     }

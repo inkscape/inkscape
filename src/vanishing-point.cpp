@@ -766,17 +766,17 @@ VPDrag::swap_perspectives_of_VPs(Persp3D *persp2, Persp3D *persp1)
 }
 
 /**
-Create a line from p1 to p2 and add it to the lines list
+ * Create a line from p1 to p2 and add it to the lines list.
  */
-void
-VPDrag::addLine (Geom::Point p1, Geom::Point p2, guint32 rgba)
+void VPDrag::addLine(Geom::Point p1, Geom::Point p2, guint32 rgba)
 {
-    SPCanvasItem *line = sp_canvas_item_new(sp_desktop_controls(inkscape_active_desktop()), SP_TYPE_CTRLLINE, NULL);
-    sp_ctrlline_set_coords(SP_CTRLLINE(line), p1, p2);
-    if (rgba != VP_LINE_COLOR_FILL) // fill is the default, so don't set color for it to speed up redraw
-        sp_ctrlline_set_rgba32 (SP_CTRLLINE(line), rgba);
-    sp_canvas_item_show (line);
-    this->lines = g_slist_append (this->lines, line);
+    SPCtrlLine *line = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(inkscape_active_desktop()), SP_TYPE_CTRLLINE, NULL));
+    line->setCoords(p1, p2);
+    if (rgba != VP_LINE_COLOR_FILL) { // fill is the default, so don't set color for it to speed up redraw
+        line->setRgba32(rgba);
+    }
+    sp_canvas_item_show(line);
+    this->lines = g_slist_append(this->lines, line);
 }
 
 } // namespace Box3D

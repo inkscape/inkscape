@@ -28,82 +28,82 @@
 #include "color.h"
 #include "display/sp-canvas.h"
 
+namespace {
 
-static void sp_ctrlline_class_init (SPCtrlLineClass *klass);
-static void sp_ctrlline_init (SPCtrlLine *ctrlline);
-static void sp_ctrlline_destroy (GtkObject *object);
+void sp_ctrlline_class_init(SPCtrlLineClass *klass, gpointer data);
+void sp_ctrlline_init(SPCtrlLine *ctrlline, gpointer g_class);
+void sp_ctrlline_destroy(GtkObject *object);
 
-static void sp_ctrlline_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
-static void sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf);
+void sp_ctrlline_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
+void sp_ctrlline_render(SPCanvasItem *item, SPCanvasBuf *buf);
 
-static SPCanvasItemClass *parent_class;
+SPCanvasItemClass *parent_class = 0;
 
-GType
-sp_ctrlline_get_type (void)
+} // namespace
+
+GType SPCtrlLine::getType()
 {
     static GType type = 0;
     if (!type) {
         GTypeInfo info = {
             sizeof(SPCtrlLineClass),
             NULL, NULL,
-            (GClassInitFunc) sp_ctrlline_class_init,
+            reinterpret_cast<GClassInitFunc>(sp_ctrlline_class_init),
             NULL, NULL,
             sizeof(SPCtrlLine),
             0,
-            (GInstanceInitFunc) sp_ctrlline_init,
+            reinterpret_cast<GInstanceInitFunc>(sp_ctrlline_init),
             NULL
         };
-        type = g_type_register_static(SP_TYPE_CANVAS_ITEM, "SPCtrlLine", &info, (GTypeFlags)0);
+        type = g_type_register_static(SP_TYPE_CANVAS_ITEM, "SPCtrlLine", &info, static_cast<GTypeFlags>(0));
     }
     return type;
 }
 
-static void
-sp_ctrlline_class_init (SPCtrlLineClass *klass)
+namespace {
+
+void sp_ctrlline_class_init(SPCtrlLineClass *klass, gpointer /*data*/)
 {
-    GtkObjectClass *object_class = (GtkObjectClass *) klass;
-    SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
+    parent_class = reinterpret_cast<SPCanvasItemClass*>(g_type_class_peek_parent(klass));
 
-    parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
+    klass->destroy = sp_ctrlline_destroy;
 
-    object_class->destroy = sp_ctrlline_destroy;
-
-    item_class->update = sp_ctrlline_update;
-    item_class->render = sp_ctrlline_render;
+    klass->update = sp_ctrlline_update;
+    klass->render = sp_ctrlline_render;
 }
 
-static void
-sp_ctrlline_init (SPCtrlLine *ctrlline)
+void sp_ctrlline_init(SPCtrlLine *ctrlline, gpointer /*g_class*/)
 {
     ctrlline->rgba = 0x0000ff7f;
     ctrlline->s[Geom::X] = ctrlline->s[Geom::Y] = ctrlline->e[Geom::X] = ctrlline->e[Geom::Y] = 0.0;
     ctrlline->item=NULL;
 }
 
-static void
-sp_ctrlline_destroy (GtkObject *object)
+void sp_ctrlline_destroy(GtkObject *object)
 {
-    g_return_if_fail (object != NULL);
-    g_return_if_fail (SP_IS_CTRLLINE (object));
+    g_return_if_fail(object != NULL);
+    g_return_if_fail(SP_IS_CTRLLINE(object));
 
-    SPCtrlLine *ctrlline = SP_CTRLLINE (object);
+    SPCtrlLine *ctrlline = SP_CTRLLINE(object);
 
-    ctrlline->item=NULL;
+    ctrlline->item = NULL;
 
-    if (GTK_OBJECT_CLASS (parent_class)->destroy)
-        (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    if (GTK_OBJECT_CLASS (parent_class)->destroy) {
+        (* GTK_OBJECT_CLASS (parent_class)->destroy)(object);
+    }
 }
 
-static void
-sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf)
+void sp_ctrlline_render(SPCanvasItem *item, SPCanvasBuf *buf)
 {
-    SPCtrlLine *cl = SP_CTRLLINE (item);
+    SPCtrlLine *cl = SP_CTRLLINE(item);
 
-    if (!buf->ct)
+    if (!buf->ct) {
         return;
+    }
 
-    if (cl->s == cl->e)
+    if (cl->s == cl->e) {
         return;
+    }
 
     ink_cairo_set_source_rgba32(buf->ct, cl->rgba);
     cairo_set_line_width(buf->ct, 1);
@@ -118,17 +118,17 @@ sp_ctrlline_render (SPCanvasItem *item, SPCanvasBuf *buf)
     cairo_stroke(buf->ct);
 }
 
-static void
-sp_ctrlline_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
+void sp_ctrlline_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
 {
-    SPCtrlLine *cl = SP_CTRLLINE (item);
+    SPCtrlLine *cl = SP_CTRLLINE(item);
 
-    item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+    item->canvas->requestRedraw(item->x1, item->y1, item->x2, item->y2);
 
-    if (parent_class->update)
-        (* parent_class->update) (item, affine, flags);
+    if (parent_class->update) {
+        (* parent_class->update)(item, affine, flags);
+    }
 
-    sp_canvas_item_reset_bounds (item);
+    sp_canvas_item_reset_bounds(item);
 
     cl->affine = affine;
 
@@ -144,46 +144,37 @@ sp_ctrlline_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int
         item->x2 = round(MAX(s[Geom::X], e[Geom::X]) + 1);
         item->y2 = round(MAX(s[Geom::Y], e[Geom::Y]) + 1);
 
-        item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+        item->canvas->requestRedraw(item->x1, item->y1, item->x2, item->y2);
     }
 }
 
-void
-sp_ctrlline_set_rgba32 (SPCtrlLine *cl, guint32 rgba)
-{
-    g_return_if_fail (cl != NULL);
-    g_return_if_fail (SP_IS_CTRLLINE (cl));
+} // namespace
 
-    if (rgba != cl->rgba) {
-        SPCanvasItem *item;
-        cl->rgba = rgba;
-        item = SP_CANVAS_ITEM (cl);
-        item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
+void SPCtrlLine::setRgba32(guint32 rgba)
+{
+    if (rgba != this->rgba) {
+        this->rgba = rgba;
+        canvas->requestRedraw(x1, y1, x2, y2);
     }
 }
 
 #define EPSILON 1e-6
 #define DIFFER(a,b) (fabs ((a) - (b)) > EPSILON)
 
-void
-sp_ctrlline_set_coords (SPCtrlLine *cl, gdouble x0, gdouble y0, gdouble x1, gdouble y1)
+void SPCtrlLine::setCoords(gdouble x0, gdouble y0, gdouble x1, gdouble y1)
 {
-    g_return_if_fail (cl != NULL);
-    g_return_if_fail (SP_IS_CTRLLINE (cl));
-
-    if (DIFFER (x0, cl->s[Geom::X]) || DIFFER (y0, cl->s[Geom::Y]) || DIFFER (x1, cl->e[Geom::X]) || DIFFER (y1, cl->e[Geom::Y])) {
-        cl->s[Geom::X] = x0;
-        cl->s[Geom::Y] = y0;
-        cl->e[Geom::X] = x1;
-        cl->e[Geom::Y] = y1;
-        sp_canvas_item_request_update (SP_CANVAS_ITEM (cl));
+    if (DIFFER(x0, s[Geom::X]) || DIFFER(y0, s[Geom::Y]) || DIFFER(x1, e[Geom::X]) || DIFFER(y1, e[Geom::Y])) {
+        s[Geom::X] = x0;
+        s[Geom::Y] = y0;
+        e[Geom::X] = x1;
+        e[Geom::Y] = y1;
+        sp_canvas_item_request_update(this);
     }
 }
 
-void
-sp_ctrlline_set_coords (SPCtrlLine *cl, const Geom::Point start, const Geom::Point end)
+void SPCtrlLine::setCoords(Geom::Point const &start, Geom::Point const &end)
 {
-    sp_ctrlline_set_coords(cl, start[0], start[1], end[0], end[1]);
+    setCoords(start[0], start[1], end[0], end[1]);
 }
 
 /*

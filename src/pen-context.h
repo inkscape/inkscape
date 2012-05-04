@@ -26,6 +26,8 @@ enum {
     SP_PEN_CONTEXT_MODE_DRAG
 };
 
+struct SPCtrlLine;
+
 /**
  * SPPenContext: a context for pen tool events.
  */
@@ -49,8 +51,9 @@ struct SPPenContext : public SPDrawContext {
 
     SPCanvasItem *c0;
     SPCanvasItem *c1;
-    SPCanvasItem *cl0;
-    SPCanvasItem *cl1;
+
+    SPCtrlLine *cl0;
+    SPCtrlLine *cl1;
     
     unsigned int events_disabled : 1;
 };

@@ -200,9 +200,9 @@ static void sp_text_context_setup(SPEventContext *ec)
         timeout /= 2;
     }
 
-    tc->cursor = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLLINE, NULL);
-    sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), 100, 0, 100, 100);
-    sp_ctrlline_set_rgba32(SP_CTRLLINE(tc->cursor), 0x000000ff);
+    tc->cursor = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLLINE, NULL));
+    tc->cursor->setCoords(100, 0, 100, 100);
+    tc->cursor->setRgba32(0x000000ff);
     sp_canvas_item_hide(tc->cursor);
 
     tc->indicator = sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLRECT, NULL);
@@ -302,7 +302,7 @@ static void sp_text_context_finish(SPEventContext *ec)
     }
 
     if (tc->cursor) {
-        gtk_object_destroy(GTK_OBJECT(tc->cursor));
+        gtk_object_destroy(tc->cursor);
         tc->cursor = NULL;
     }
 
@@ -708,7 +708,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                     // Cursor height is defined by the new text object's font size; it needs to be set
                     // artificially here, for the text object does not exist yet:
                     double cursor_height = sp_desktop_get_font_size_tool(desktop);
-                    sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), p1, p1 + Geom::Point(0, cursor_height));
+                    tc->cursor->setCoords(p1, p1 + Geom::Point(0, cursor_height));
                     if (tc->imc) {
                         GdkRectangle im_cursor;
                         Geom::Point const top_left = SP_EVENT_CONTEXT(tc)->desktop->get_display_area().corner(3);
@@ -1608,7 +1608,7 @@ static void sp_text_context_update_cursor(SPTextContext *tc,  bool scroll_to_see
         }
 
         sp_canvas_item_show(tc->cursor);
-        sp_ctrlline_set_coords(SP_CTRLLINE(tc->cursor), d0, d1);
+        tc->cursor->setCoords(d0, d1);
 
         /* fixme: ... need another transformation to get canvas widget coordinate space? */
         if (tc->imc) {
@@ -1699,10 +1699,10 @@ static gint sp_text_context_timeout(SPTextContext *tc)
         sp_canvas_item_show(tc->cursor);
         if (tc->phase) {
             tc->phase = 0;
-            sp_ctrlline_set_rgba32(SP_CTRLLINE(tc->cursor), 0x000000ff);
+            tc->cursor->setRgba32(0x000000ff);
         } else {
             tc->phase = 1;
-            sp_ctrlline_set_rgba32(SP_CTRLLINE(tc->cursor), 0xffffffff);
+            tc->cursor->setRgba32(0xffffffff);
         }
     }
 
