@@ -168,7 +168,7 @@ struct SPIPaint {
 
     bool isNone() const {return !currentcolor && !colorSet && !isPaintserver();} // TODO refine
     bool isColor() const {return colorSet && !isPaintserver();}
-    bool isPaintserver() const {return value.href && value.href->getObject();}
+    bool isPaintserver() const {return (value.href) ? value.href->getObject():0;}
 
     void clear();
 
@@ -404,17 +404,17 @@ struct SPStyle {
     sigc::connection fill_ps_modified_connection;
     sigc::connection stroke_ps_modified_connection;
 
-    SPObject *getFilter() { return (filter.href) ? filter.href->getObject() : 0; }
-    SPObject const *getFilter() const { return (filter.href) ? filter.href->getObject() : 0; }
-    gchar const *getFilterURI() const { return (filter.href) ? filter.href->getURI()->toString() : 0; }
+    SPObject *getFilter() { return (filter.href) ? filter.href->getObject() : NULL; }
+    SPObject const *getFilter() const { return (filter.href) ? filter.href->getObject() : NULL; }
+    gchar const *getFilterURI() const { return (filter.href) ? filter.href->getURI()->toString() : NULL; }
 
-    SPPaintServer *getFillPaintServer() { return (fill.value.href) ? fill.value.href->getObject() : 0; }
-    SPPaintServer const *getFillPaintServer() const { return (fill.value.href) ? fill.value.href->getObject() : 0; }
-    gchar const *getFillURI() const { return (fill.value.href) ? fill.value.href->getURI()->toString() : 0; }
+    SPPaintServer *getFillPaintServer() { return (fill.value.href) ? fill.value.href->getObject() : NULL; }
+    SPPaintServer const *getFillPaintServer() const { return (fill.value.href) ? fill.value.href->getObject() : NULL; }
+    gchar const *getFillURI() const { return (fill.value.href) ? fill.value.href->getURI()->toString() : NULL; }
 
-    SPPaintServer *getStrokePaintServer() { return (stroke.value.href) ? stroke.value.href->getObject() : 0; }
-    SPPaintServer const *getStrokePaintServer() const { return (stroke.value.href) ? stroke.value.href->getObject() : 0; }
-    gchar const  *getStrokeURI() const { return (stroke.value.href) ? stroke.value.href->getURI()->toString() : 0; }
+    SPPaintServer *getStrokePaintServer() { return (stroke.value.href) ? stroke.value.href->getObject() : NULL; }
+    SPPaintServer const *getStrokePaintServer() const { return (stroke.value.href) ? stroke.value.href->getObject() : NULL; }
+    gchar const  *getStrokeURI() const { return (stroke.value.href) ? stroke.value.href->getURI()->toString() : NULL; }
 };
 
 SPStyle *sp_style_new(SPDocument *document);

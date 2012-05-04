@@ -698,20 +698,25 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
         _copyTextPath(SP_TEXTPATH(item->firstChild()));
     }
     // Copy clipping objects
-    if (item->clip_ref->getObject()) {
-        _copyNode(item->clip_ref->getObject()->getRepr(), _doc, _defs);
+    if (item->clip_ref){
+        if (item->clip_ref->getObject()) {
+            _copyNode(item->clip_ref->getObject()->getRepr(), _doc, _defs);
+        }
     }
     // Copy mask objects
-    if (item->mask_ref->getObject()) {
-        SPObject *mask = item->mask_ref->getObject();
-        _copyNode(mask->getRepr(), _doc, _defs);
-        // recurse into the mask for its gradients etc.
-        for (SPObject *o = mask->children ; o != NULL ; o = o->next) {
-            if (SP_IS_ITEM(o)) {
-                _copyUsedDefs(SP_ITEM(o));
+    if (item->mask_ref){
+        if (item->mask_ref->getObject()) {
+            SPObject *mask = item->mask_ref->getObject();
+            _copyNode(mask->getRepr(), _doc, _defs);
+            // recurse into the mask for its gradients etc.
+            for (SPObject *o = mask->children ; o != NULL ; o = o->next) {
+                if (SP_IS_ITEM(o)) {
+                    _copyUsedDefs(SP_ITEM(o));
+                }
             }
         }
     }
+    
     // Copy filters
     if (style->getFilter()) {
         SPObject *filter = style->getFilter();
@@ -737,7 +742,12 @@ void ClipboardManagerImpl::_copyGradient(SPGradient *gradient)
     while (gradient) {
         // climb up the refs, copying each one in the chain
         _copyNode(gradient->getRepr(), _doc, _defs);
-        gradient = gradient->ref->getObject();
+        if (gradient->ref){
+            gradient = gradient->ref->getObject();
+        }
+        else {
+            gradient = NULL;
+        }
     }
 }
 
@@ -758,7 +768,12 @@ void ClipboardManagerImpl::_copyPattern(SPPattern *pattern)
             }
             _copyUsedDefs(SP_ITEM(child));
         }
-        pattern = pattern->ref->getObject();
+        if (pattern->ref){
+            pattern = pattern->ref->getObject();
+        }
+        else{
+            pattern = NULL;
+        }
     }
 }
 

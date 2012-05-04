@@ -77,10 +77,12 @@ SPGradient *sp_gradient_ensure_vector_normalized(SPGradient *gr)
     }
 
     /* If gr hrefs some other gradient, remove the href */
-    if (gr->ref->getObject()) {
-        // We are hrefing someone, so require flattening
-        gr->updateRepr(SP_OBJECT_WRITE_EXT | SP_OBJECT_WRITE_ALL);
-        sp_gradient_repr_set_link(gr->getRepr(), NULL);
+    if (gr->ref){
+        if (gr->ref->getObject()) {
+            // We are hrefing someone, so require flattening
+            gr->updateRepr(SP_OBJECT_WRITE_EXT | SP_OBJECT_WRITE_ALL);
+            sp_gradient_repr_set_link(gr->getRepr(), NULL);
+        }
     }
 
     /* Everything is OK, set state flag */

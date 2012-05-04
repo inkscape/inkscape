@@ -741,10 +741,14 @@ SPItem *sp_use_unlink(SPUse *use)
     return item;
 }
 
-SPItem *
-sp_use_get_original(SPUse *use)
+SPItem *sp_use_get_original(SPUse *use)
 {
-    SPItem *ref = use->ref->getObject();
+    SPItem *ref = NULL;
+    if (use){
+        if (use->ref){
+            ref = use->ref->getObject();
+        }
+    }
     return ref;
 }
 

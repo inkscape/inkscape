@@ -8,10 +8,12 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Abhishek Sharma
  *   Tavmjong Bah <tavmjong@free.fr>
+ *   Kris De Gussem <Kris.DeGussem@gmail.com>
  *
  * Copyright (C) 2001-2002 Lauris Kaplinski
  * Copyright (C) 2001 Ximian, Inc.
  * Copyright (C) 2005 Monash University
+ * Copyright (C) 2012 Kris De Gussem
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -1169,7 +1171,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
              */
             g_warning("attribute 'clip-path' given as CSS");
 
-			//XML Tree being directly used here.
+            //XML Tree being directly used here.
             style->object->getRepr()->setAttribute("clip-path", val);
             break;
         case SP_PROP_CLIP_RULE:
@@ -1182,8 +1184,8 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
              * See comment for SP_PROP_CLIP_PATH
              */
             g_warning("attribute 'mask' given as CSS");
-			
-			//XML Tree being directly used here.
+            
+            //XML Tree being directly used here.
             style->object->getRepr()->setAttribute("mask", val);
             break;
         case SP_PROP_OPACITY:
@@ -2407,8 +2409,11 @@ sp_style_set_ipaint_to_uri(SPStyle *style, SPIPaint *paint, const Inkscape::URI 
         paint->value.href->changedSignal().connect(sigc::bind(sigc::ptr_fun((paint == &style->fill)? sp_style_fill_paint_server_ref_changed : sp_style_stroke_paint_server_ref_changed), style));
     }
 
-    if (paint->value.href && paint->value.href->getObject())
-        paint->value.href->detach();
+    if (paint->value.href){
+        if (paint->value.href->getObject()){
+            paint->value.href->detach();
+        }
+    }
 
     if (paint->value.href) {
         try {
@@ -2486,21 +2491,29 @@ sp_style_merge_ifilter(SPStyle *style, SPIFilter const *parent)
     style->filter.set = parent->set;
     style->filter.inherit = parent->inherit;
 
-    if (style->filter.href && style->filter.href->getObject())
-       style->filter.href->detach();
-
-    // it may be that this style has not yet created its SPFilterReference
-    if (!style->filter.href && style->object && style->object->document) {
-            style->filter.href = new SPFilterReference(style->object->document);
-            style->filter.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
+    if (style->filter.href){
+        if (style->filter.href->getObject()){
+            style->filter.href->detach();
+        }
+    }
+    else{
+        // it may be that this style has not yet created its SPFilterReference
+        if (style->object){
+            if (style->object->document) {
+                style->filter.href = new SPFilterReference(style->object->document);
+                style->filter.href->changedSignal().connect(sigc::bind(sigc::ptr_fun(sp_style_filter_ref_changed), style));
+            }
+        }
     }
 
-    if (style->filter.href && parent->href && parent->href->getObject()) {
-        try {
-            style->filter.href->attach(*parent->href->getURI());
-        } catch (Inkscape::BadURIException &e) {
-            g_warning("%s", e.what());
-            style->filter.href->detach();
+    if (style->filter.href && parent->href){
+        if (parent->href->getObject()) {
+            try {
+                style->filter.href->attach(*parent->href->getURI());
+            } catch (Inkscape::BadURIException &e) {
+                g_warning("%s", e.what());
+                style->filter.href->detach();
+            }
         }
     }
 }
@@ -3595,13 +3608,19 @@ sp_style_read_ifilter(gchar const *str, SPStyle * style, SPDocument *document)
     if (streq(str, "inherit")) {
         f->set = TRUE;
         f->inherit = TRUE;
-        if (f->href && f->href->getObject())
-            f->href->detach();
+        if (f->href){
+            if (f->href->getObject()){
+                f->href->detach();
+            }
+        }
     } else if(streq(str, "none")) {
         f->set = TRUE;
         f->inherit = FALSE;
-        if (f->href && f->href->getObject())
-           f->href->detach();
+        if (f->href){
+            if (f->href->getObject()){
+                f->href->detach();
+            }
+        }
     } else if (strneq(str, "url", 3)) {
         char *uri = extract_uri(str);
         if(uri == NULL || uri[0] == '\0') {
@@ -3612,8 +3631,11 @@ sp_style_read_ifilter(gchar const *str, SPStyle * style, SPDocument *document)
         }
         f->set = TRUE;
         f->inherit = FALSE;
-        if (f->href && f->href->getObject())
-            f->href->detach();
+        if (f->href){
+            if (f->href->getObject()){
+                f->href->detach();
+            }
+        }
 
         // it may be that this style has not yet created its SPFilterReference;
         // now that we have a document, we can create it here
@@ -3634,8 +3656,11 @@ sp_style_read_ifilter(gchar const *str, SPStyle * style, SPDocument *document)
         /* We shouldn't reach this if SVG input is well-formed */
         f->set = FALSE;
         f->inherit = FALSE;
-        if (f->href && f->href->getObject())
-            f->href->detach();
+        if (f->href){
+            if (f->href->getObject()){
+                f->href->detach();
+            }
+        }
     }
 }
 
@@ -4258,9 +4283,10 @@ void SPIPaint::clear()
     colorSet = false;
     noneSet = false;
     value.color.set( 0 );
-    if ( value.href && value.href->getObject() )
-    {
-        value.href->detach();
+    if (value.href){
+        if (value.href->getObject()){
+            value.href->detach();
+        }
     }
 }
 
@@ -4271,8 +4297,11 @@ void SPIPaint::clear()
 static void
 sp_style_filter_clear(SPStyle *style)
 {
-    if (style->filter.href && style->filter.href->getObject())
-        style->filter.href->detach();
+    if (style->filter.href){
+        if (style->filter.href->getObject()){
+            style->filter.href->detach();
+        }
+    }
 }
 
 
