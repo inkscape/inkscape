@@ -818,7 +818,7 @@ void InkscapePreferences::initPageIO()
     _svgoutput_attrwarn.init( _("Print warnings"), "/options/svgoutput/incorrect_attributes_warn", true);
     _page_svgoutput.add_line( true, "", _svgoutput_attrwarn, "", _("Print warning if invalid or non-useful attributes found. Database files located in inkscape_data_dir/attributes."), false);
     _svgoutput_attrremove.init( _("Remove attributes"), "/options/svgoutput/incorrect_attributes_remove", false);
-    _page_svgoutput.add_line( true, "", _svgoutput_attrremove, "", _("Delete invalid or non-useful attributes from element tag."), false);
+    _page_svgoutput.add_line( true, "", _svgoutput_attrremove, "", _("Delete invalid or non-useful attributes from element tag"), false);
 
     /* Add incorrect style properties options  */
     _page_svgoutput.add_group_header( _("Inappropriate Style Properties Actions"));
@@ -826,7 +826,7 @@ void InkscapePreferences::initPageIO()
     _svgoutput_stylepropwarn.init( _("Print warnings"), "/options/svgoutput/incorrect_style_properties_warn", true);
     _page_svgoutput.add_line( true, "", _svgoutput_stylepropwarn, "", _("Print warning if inappropriate style properties found (i.e. 'font-family' set on a <rect>). Database files located in inkscape_data_dir/attributes."), false);
     _svgoutput_stylepropremove.init( _("Remove style properties"), "/options/svgoutput/incorrect_style_properties_remove", false);
-    _page_svgoutput.add_line( true, "", _svgoutput_stylepropremove, "", _("Delete inappropriate style properties."), false);
+    _page_svgoutput.add_line( true, "", _svgoutput_stylepropremove, "", _("Delete inappropriate style properties"), false);
 
     /* Add default or inherited style properties options  */
     _page_svgoutput.add_group_header( _("Non-useful Style Properties Actions"));
@@ -834,16 +834,16 @@ void InkscapePreferences::initPageIO()
     _svgoutput_styledefaultswarn.init( _("Print warnings"), "/options/svgoutput/style_defaults_warn", true);
     _page_svgoutput.add_line( true, "", _svgoutput_styledefaultswarn, "", _("Print warning if redundant style properties found (i.e. if a property has the default value and a different value is not inherited or if value is the same as would be inherited). Database files located in inkscape_data_dir/attributes."), false);
     _svgoutput_styledefaultsremove.init( _("Remove style properties"), "/options/svgoutput/style_defaults_remove", false);
-    _page_svgoutput.add_line( true, "", _svgoutput_styledefaultsremove, "", _("Delete redundant style properties."), false);
+    _page_svgoutput.add_line( true, "", _svgoutput_styledefaultsremove, "", _("Delete redundant style properties"), false);
 
-    _page_svgoutput.add_group_header( _("Check Attributes and Style Properties on:"));
+    _page_svgoutput.add_group_header( _("Check Attributes and Style Properties on"));
 
     _svgoutput_check_reading.init( _("Reading"), "/options/svgoutput/check_on_reading", false);
-    _page_svgoutput.add_line( true, "", _svgoutput_check_reading, "", _("Check attributes and style properties on reading in SVG files (including those internal to Inkscape which will slow down startup)."), false);
+    _page_svgoutput.add_line( true, "", _svgoutput_check_reading, "", _("Check attributes and style properties on reading in SVG files (including those internal to Inkscape which will slow down startup)"), false);
     _svgoutput_check_editing.init( _("Editing"), "/options/svgoutput/check_on_editing", false);
-    _page_svgoutput.add_line( true, "", _svgoutput_check_editing, "", _("Check attributes and style properties while editing SVG files (may slow down Inkscape, mostly useful for debugging)."), false);
+    _page_svgoutput.add_line( true, "", _svgoutput_check_editing, "", _("Check attributes and style properties while editing SVG files (may slow down Inkscape, mostly useful for debugging)"), false);
     _svgoutput_check_writing.init( _("Writing"), "/options/svgoutput/check_on_writing", true);
-    _page_svgoutput.add_line( true, "", _svgoutput_check_writing, "", _("Check attributes and style properties on writing out SVG files."), false);
+    _page_svgoutput.add_line( true, "", _svgoutput_check_writing, "", _("Check attributes and style properties on writing out SVG files"), false);
 
     this->AddPage(_page_svgoutput, _("SVG output"), iter_io, PREFS_PAGE_IO_SVGOUTPUT);
 
