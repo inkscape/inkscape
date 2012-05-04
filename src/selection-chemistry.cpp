@@ -260,8 +260,8 @@ void sp_selection_copy_one(Inkscape::XML::Node *repr, Geom::Affine full_t, GSLis
 void sp_selection_copy_impl(GSList const *items, GSList **clip, Inkscape::XML::Document* xml_doc)
 {
     // Sort items:
-    GSList *sorted_items = g_slist_copy((GSList *) items);
-    sorted_items = g_slist_sort((GSList *) sorted_items, (GCompareFunc) sp_object_compare_position);
+    GSList *sorted_items = g_slist_copy(const_cast<GSList *>(items));
+    sorted_items = g_slist_sort(static_cast<GSList *>(sorted_items), (GCompareFunc) sp_object_compare_position);
 
     // Copy item reprs:
     for (GSList *i = (GSList *) sorted_items; i != NULL; i = i->next) {
@@ -269,7 +269,7 @@ void sp_selection_copy_impl(GSList const *items, GSList **clip, Inkscape::XML::D
     }
 
     *clip = g_slist_reverse(*clip);
-    g_slist_free((GSList *) sorted_items);
+    g_slist_free(static_cast<GSList *>(sorted_items));
 }
 
 GSList *sp_selection_paste_impl(SPDocument *doc, SPObject *parent, GSList **clip)
@@ -279,7 +279,7 @@ GSList *sp_selection_paste_impl(SPDocument *doc, SPObject *parent, GSList **clip
     GSList *copied = NULL;
     // add objects to document
     for (GSList *l = *clip; l != NULL; l = l->next) {
-        Inkscape::XML::Node *repr = (Inkscape::XML::Node *) l->data;
+        Inkscape::XML::Node *repr = static_cast<Inkscape::XML::Node *>(l->data);
         Inkscape::XML::Node *copy = repr->duplicate(xml_doc);
 
         // premultiply the item transform by the accumulated parent transform in the paste layer
@@ -340,7 +340,7 @@ void sp_selection_delete(SPDesktop *desktop)
     GSList const *selected = g_slist_copy(const_cast<GSList *>(selection->itemList()));
     selection->clear();
     sp_selection_delete_impl(selected);
-    g_slist_free((GSList *) selected);
+    g_slist_free(const_cast<GSList *>(selected));
 
     /* a tool may have set up private information in it's selection context
      * that depends on desktop items.  I think the only sane way to deal with
@@ -383,7 +383,7 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
         return;
     }
 
-    GSList *reprs = g_slist_copy((GSList *) selection->reprList());
+    GSList *reprs = g_slist_copy(const_cast<GSList *>(selection->reprList()));
 
     selection->clear();
 
@@ -400,7 +400,7 @@ void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone)
     const bool fork_livepatheffects = prefs->getBool("/options/forklpeonduplicate/value", true);
 
     while (reprs) {
-        Inkscape::XML::Node *old_repr = (Inkscape::XML::Node *) reprs->data;
+        Inkscape::XML::Node *old_repr = static_cast<Inkscape::XML::Node *>(reprs->data);
         Inkscape::XML::Node *parent = old_repr->parent();
         Inkscape::XML::Node *copy = old_repr->duplicate(xml_doc);
 
@@ -508,7 +508,7 @@ GSList *get_all_items(GSList *list, SPObject *from, SPDesktop *desktop, bool onl
             !desktop->isLayer(SP_ITEM(child)) &&
             (!onlysensitive || !SP_ITEM(child)->isLocked()) &&
             (!onlyvisible || !desktop->itemIsHidden(SP_ITEM(child))) &&
-            (!exclude || !g_slist_find((GSList *) exclude, child))
+            (!exclude || !g_slist_find(const_cast<GSList *>(exclude), child))
             )
         {
             list = g_slist_prepend(list, SP_ITEM(child));
@@ -560,7 +560,7 @@ void sp_edit_select_all_full(SPDesktop *dt, bool force_all_layers, bool invert)
             if (item && (!onlysensitive || !item->isLocked())) {
                 if (!onlyvisible || !dt->itemIsHidden(item)) {
                     if (!dt->isLayer(item)) {
-                        if (!invert || !g_slist_find((GSList *) exclude, item)) {
+                        if (!invert || !g_slist_find(const_cast<GSList *>(exclude), item)) {
                             items = g_slist_prepend(items, item); // leave it in the list
                         }
                     }
@@ -613,11 +613,11 @@ void sp_selection_group_impl(GSList *p, Inkscape::XML::Node *group, Inkscape::XM
     p = g_slist_sort(p, (GCompareFunc) sp_repr_compare_position);
 
     // Remember the position and parent of the topmost object.
-    gint topmost = ((Inkscape::XML::Node *) g_slist_last(p)->data)->position();
-    Inkscape::XML::Node *topmost_parent = ((Inkscape::XML::Node *) g_slist_last(p)->data)->parent();
+    gint topmost = (static_cast<Inkscape::XML::Node *>(g_slist_last(p)->data))->position();
+    Inkscape::XML::Node *topmost_parent = (static_cast<Inkscape::XML::Node *>(g_slist_last(p)->data))->parent();
 
     while (p) {
-        Inkscape::XML::Node *current = (Inkscape::XML::Node *) p->data;
+        Inkscape::XML::Node *current = static_cast<Inkscape::XML::Node *>(p->data);
 
         if (current->parent() == topmost_parent) {
             Inkscape::XML::Node *spnew = current->duplicate(xml_doc);
@@ -650,7 +650,7 @@ void sp_selection_group_impl(GSList *p, Inkscape::XML::Node *group, Inkscape::XM
             if (temp_clip) g_slist_free(temp_clip);
             if (copied) { // if success,
                 // take pasted object (now in topmost_parent)
-                Inkscape::XML::Node *in_topmost = (Inkscape::XML::Node *) copied->data;
+                Inkscape::XML::Node *in_topmost = static_cast<Inkscape::XML::Node *>(copied->data);
                 // make a copy
                 Inkscape::XML::Node *spnew = in_topmost->duplicate(xml_doc);
                 // remove pasted
@@ -688,9 +688,9 @@ void sp_selection_group(SPDesktop *desktop)
         return;
     }
 
-    GSList const *l = (GSList *) selection->reprList();
+    GSList const *l = const_cast<GSList *>(selection->reprList());
 
-    GSList *p = g_slist_copy((GSList *) l);
+    GSList *p = g_slist_copy(const_cast<GSList *>(l));
 
     selection->clear();
 
@@ -717,7 +717,7 @@ void sp_selection_ungroup(SPDesktop *desktop)
         return;
     }
 
-    GSList *items = g_slist_copy((GSList *) selection->itemList());
+    GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
     selection->clear();
 
     // Get a copy of current selection.
@@ -727,7 +727,7 @@ void sp_selection_ungroup(SPDesktop *desktop)
          i != NULL;
          i = i->next)
     {
-        SPItem *group = (SPItem *) i->data;
+        SPItem *group = static_cast<SPItem *>(i->data);
 
         // when ungrouping cloned groups with their originals, some objects that were selected may no more exist due to unlinking
         if (!SP_IS_OBJECT(group)) {
@@ -821,7 +821,7 @@ enclose_items(GSList const *items)
 
     Geom::OptRect r;
     for (GSList const *i = items; i; i = i->next) {
-        r.unionWith(((SPItem *) i->data)->desktopVisualBounds());
+        r.unionWith(static_cast<SPItem *>(i->data)->desktopVisualBounds());
     }
     return r;
 }
@@ -844,7 +844,7 @@ sp_selection_raise(SPDesktop *desktop)
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
-    GSList const *items = (GSList *) selection->itemList();
+    GSList const *items = const_cast<GSList *>(selection->itemList());
     if (!items) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to raise."));
         return;
@@ -859,7 +859,7 @@ sp_selection_raise(SPDesktop *desktop)
     Inkscape::XML::Node *grepr = const_cast<Inkscape::XML::Node *>(group->getRepr());
 
     /* Construct reverse-ordered list of selected children. */
-    GSList *rev = g_slist_copy((GSList *) items);
+    GSList *rev = g_slist_copy(const_cast<GSList *>(items));
     rev = g_slist_sort(rev, (GCompareFunc) sp_item_repr_compare_position);
 
     // Determine the common bbox of the selected items.
@@ -876,7 +876,7 @@ sp_selection_raise(SPDesktop *desktop)
                     Geom::OptRect newref_bbox = SP_ITEM(newref)->desktopVisualBounds();
                     if ( newref_bbox && selected->intersects(*newref_bbox) ) {
                         // AND if it's not one of our selected objects,
-                        if (!g_slist_find((GSList *) items, newref)) {
+                        if (!g_slist_find(const_cast<GSList *>(items), newref)) {
                             // move the selected object after that sibling
                             grepr->changeOrder(child->getRepr(), newref->getRepr());
                         }
@@ -908,7 +908,7 @@ void sp_selection_raise_to_top(SPDesktop *desktop)
         return;
     }
 
-    GSList const *items = (GSList *) selection->itemList();
+    GSList const *items = const_cast<GSList *>(selection->itemList());
 
     SPGroup const *group = sp_item_list_common_parent_group(items);
     if (!group) {
@@ -916,11 +916,11 @@ void sp_selection_raise_to_top(SPDesktop *desktop)
         return;
     }
 
-    GSList *rl = g_slist_copy((GSList *) selection->reprList());
+    GSList *rl = g_slist_copy(const_cast<GSList *>(selection->reprList()));
     rl = g_slist_sort(rl, (GCompareFunc) sp_repr_compare_position);
 
     for (GSList *l = rl; l != NULL; l = l->next) {
-        Inkscape::XML::Node *repr = (Inkscape::XML::Node *) l->data;
+        Inkscape::XML::Node *repr = static_cast<Inkscape::XML::Node *>(l->data);
         repr->setPosition(-1);
     }
 
@@ -930,15 +930,14 @@ void sp_selection_raise_to_top(SPDesktop *desktop)
                        _("Raise to top"));
 }
 
-void
-sp_selection_lower(SPDesktop *desktop)
+void sp_selection_lower(SPDesktop *desktop)
 {
     if (desktop == NULL)
         return;
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
-    GSList const *items = (GSList *) selection->itemList();
+    GSList const *items = const_cast<GSList *>(selection->itemList());
     if (!items) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to lower."));
         return;
@@ -956,7 +955,7 @@ sp_selection_lower(SPDesktop *desktop)
     Geom::OptRect selected = enclose_items(items);
 
     /* Construct direct-ordered list of selected children. */
-    GSList *rev = g_slist_copy((GSList *) items);
+    GSList *rev = g_slist_copy(const_cast<GSList *>(items));
     rev = g_slist_sort(rev, (GCompareFunc) sp_item_repr_compare_position);
     rev = g_slist_reverse(rev);
 
@@ -971,7 +970,7 @@ sp_selection_lower(SPDesktop *desktop)
                     Geom::OptRect ref_bbox = SP_ITEM(newref)->desktopVisualBounds();
                     if ( ref_bbox && selected->intersects(*ref_bbox) ) {
                         // AND if it's not one of our selected objects,
-                        if (!g_slist_find((GSList *) items, newref)) {
+                        if (!g_slist_find(const_cast<GSList *>(items), newref)) {
                             // move the selected object before that sibling
                             SPObject *put_after = prev_sibling(newref);
                             if (put_after)
@@ -1006,7 +1005,7 @@ void sp_selection_lower_to_bottom(SPDesktop *desktop)
         return;
     }
 
-    GSList const *items = (GSList *) selection->itemList();
+    GSList const *items = const_cast<GSList *>(selection->itemList());
 
     SPGroup const *group = sp_item_list_common_parent_group(items);
     if (!group) {
@@ -1015,14 +1014,14 @@ void sp_selection_lower_to_bottom(SPDesktop *desktop)
     }
 
     GSList *rl;
-    rl = g_slist_copy((GSList *) selection->reprList());
+    rl = g_slist_copy(const_cast<GSList *>(selection->reprList()));
     rl = g_slist_sort(rl, (GCompareFunc) sp_repr_compare_position);
     rl = g_slist_reverse(rl);
 
     for (GSList *l = rl; l != NULL; l = l->next) {
         gint minpos;
         SPObject *pp, *pc;
-        Inkscape::XML::Node *repr = (Inkscape::XML::Node *) l->data;
+        Inkscape::XML::Node *repr = static_cast<Inkscape::XML::Node *>(l->data);
         pp = document->getObjectByRepr(repr->parent());
         minpos = 0;
         g_assert(SP_IS_GROUP(pp));
@@ -1217,7 +1216,7 @@ void sp_selection_to_next_layer(SPDesktop *dt, bool suppressDone)
         return;
     }
 
-    GSList const *items = g_slist_copy((GSList *) selection->itemList());
+    GSList const *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
 
     bool no_more = false; // Set to true, if no more layers above
     SPObject *next=Inkscape::next_layer(dt->currentRoot(), dt->currentLayer());
@@ -1249,7 +1248,7 @@ void sp_selection_to_next_layer(SPDesktop *dt, bool suppressDone)
         dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("No more layers above."));
     }
 
-    g_slist_free((GSList *) items);
+    g_slist_free(const_cast<GSList *>(items));
 }
 
 void sp_selection_to_prev_layer(SPDesktop *dt, bool suppressDone)
@@ -1262,7 +1261,7 @@ void sp_selection_to_prev_layer(SPDesktop *dt, bool suppressDone)
         return;
     }
 
-    GSList const *items = g_slist_copy((GSList *) selection->itemList());
+    GSList const *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
 
     bool no_more = false; // Set to true, if no more layers below
     SPObject *next=Inkscape::previous_layer(dt->currentRoot(), dt->currentLayer());
@@ -1294,7 +1293,7 @@ void sp_selection_to_prev_layer(SPDesktop *dt, bool suppressDone)
         dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("No more layers below."));
     }
 
-    g_slist_free((GSList *) items);
+    g_slist_free(const_cast<GSList *>(items));
 }
 
 bool
@@ -1507,7 +1506,7 @@ void sp_selection_remove_transform(SPDesktop *desktop)
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
-    GSList const *l = (GSList *) selection->reprList();
+    GSList const *l = const_cast<GSList *>(selection->reprList());
     while (l != NULL) {
         ((Inkscape::XML::Node*)l->data)->setAttribute("transform", NULL, false);
         l = l->next;
@@ -2327,7 +2326,7 @@ void sp_selection_clone(SPDesktop *desktop)
         return;
     }
 
-    GSList *reprs = g_slist_copy((GSList *) selection->reprList());
+    GSList *reprs = g_slist_copy(const_cast<GSList *>(selection->reprList()));
 
     selection->clear();
 
@@ -2337,7 +2336,7 @@ void sp_selection_clone(SPDesktop *desktop)
     GSList *newsel = NULL;
 
     while (reprs) {
-        Inkscape::XML::Node *sel_repr = (Inkscape::XML::Node *) reprs->data;
+        Inkscape::XML::Node *sel_repr = static_cast<Inkscape::XML::Node *>(reprs->data);
         Inkscape::XML::Node *parent = sel_repr->parent();
 
         Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
@@ -2387,11 +2386,11 @@ sp_selection_relink(SPDesktop *desktop)
 
     // Get a copy of current selection.
     bool relinked = false;
-    for (GSList *items = (GSList *) selection->itemList();
+    for (GSList *items = const_cast<GSList *>(selection->itemList());
          items != NULL;
          items = items->next)
     {
-        SPItem *item = (SPItem *) items->data;
+        SPItem *item = static_cast<SPItem *>(items->data);
 
         if (!SP_IS_USE(item))
             continue;
@@ -2428,11 +2427,11 @@ sp_selection_unlink(SPDesktop *desktop)
     // Get a copy of current selection.
     GSList *new_select = NULL;
     bool unlinked = false;
-    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
+    for (GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
          items != NULL;
          items = items->next)
     {
-        SPItem *item = (SPItem *) items->data;
+        SPItem *item = static_cast<SPItem *>(items->data);
 
         if (SP_IS_TEXT(item)) {
             SPObject *tspan = sp_tref_convert_to_tspan(item);
@@ -2495,7 +2494,7 @@ sp_select_clone_original(SPDesktop *desktop)
     gchar const *error = _("Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> to go to its source. Select a <b>text on path</b> to go to the path. Select a <b>flowed text</b> to go to its frame.");
 
     // Check if other than two objects are selected
-    if (g_slist_length((GSList *) selection->itemList()) != 1 || !item) {
+    if (g_slist_length(const_cast<GSList *>(selection->itemList())) != 1 || !item) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, error);
         return;
     }
@@ -2575,7 +2574,7 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop)
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     SPItem *item = selection->singleItem();
-    if (g_slist_length((GSList *) selection->itemList()) != 1 || !item) {
+    if (g_slist_length(const_cast<GSList *>(selection->itemList())) != 1 || !item) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>one</b> path to clone."));
         return;
     }
@@ -2651,7 +2650,7 @@ void sp_selection_to_marker(SPDesktop *desktop, bool apply)
     move_p[Geom::Y] = -move_p[Geom::Y];
     Geom::Affine move = Geom::Affine(Geom::Translate(move_p));
 
-    GSList *items = g_slist_copy((GSList *) selection->itemList());
+    GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
 
     items = g_slist_sort(items, (GCompareFunc) sp_object_compare_position);
 
@@ -2728,7 +2727,7 @@ void sp_selection_to_guides(SPDesktop *desktop)
     SPDocument *doc = sp_desktop_document(desktop);
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     // we need to copy the list because it gets reset when objects are deleted
-    GSList *items = g_slist_copy((GSList *) selection->itemList());
+    GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
 
     if (!items) {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to convert to guides."));
@@ -2775,7 +2774,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
     move_p[Geom::Y] = -move_p[Geom::Y];
     Geom::Affine move = Geom::Affine(Geom::Translate(move_p));
 
-    GSList *items = g_slist_copy((GSList *) selection->itemList());
+    GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
 
     items = g_slist_sort(items, (GCompareFunc) sp_object_compare_position);
 
@@ -2837,7 +2836,7 @@ sp_selection_tile(SPDesktop *desktop, bool apply)
         // restore parent and position
         parent->getRepr()->appendChild(rect);
         rect->setPosition(pos > 0 ? pos : 0);
-        SPItem *rectangle = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(rect);
+        SPItem *rectangle = static_cast<SPItem *>(sp_desktop_document(desktop)->getObjectByRepr(rect));
 
         Inkscape::GC::release(rect);
 
@@ -2872,11 +2871,11 @@ void sp_selection_untile(SPDesktop *desktop)
 
     bool did = false;
 
-    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
+    for (GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
          items != NULL;
          items = items->next) {
 
-        SPItem *item = (SPItem *) items->data;
+        SPItem *item = static_cast<SPItem *>(items->data);
 
         SPStyle *style = item->style;
 
@@ -2942,7 +2941,7 @@ void sp_selection_get_export_hints(Inkscape::Selection *selection, Glib::ustring
             ydpi_search;
         reprlst = reprlst->next) {
         gchar const *dpi_string;
-        Inkscape::XML::Node * repr = (Inkscape::XML::Node *)reprlst->data;
+        Inkscape::XML::Node * repr = static_cast<Inkscape::XML::Node *>(reprlst->data);
 
         if (filename_search) {
             const gchar* tmp = repr->attribute("inkscape:export-filename");
@@ -3028,7 +3027,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     }
 
     // List of the items to show; all others will be hidden
-    GSList *items = g_slist_copy((GSList *) selection->itemList());
+    GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
 
     // Sort items so that the topmost comes last
     items = g_slist_sort(items, (GCompareFunc) sp_item_repr_compare_position);
@@ -3238,7 +3237,7 @@ void sp_selection_set_mask(SPDesktop *desktop, bool apply_clip_path, bool apply_
 
     doc->ensureUpToDate();
 
-    GSList *items = g_slist_copy((GSList *) selection->itemList());
+    GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
 
     items = g_slist_sort(items, (GCompareFunc) sp_object_compare_position);
 
@@ -3434,7 +3433,7 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
     gchar const *attributeName = apply_clip_path ? "clip-path" : "mask";
     std::map<SPObject*,SPItem*> referenced_objects;
 
-    GSList *items = g_slist_copy((GSList *) selection->itemList());
+    GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
     selection->clear();
 
     GSList *items_to_ungroup = NULL;
@@ -3499,13 +3498,13 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
 
         // Iterate through all clipped paths / masks
         for (GSList *i = items_to_move; NULL != i; i = i->next) {
-            Inkscape::XML::Node *repr = (Inkscape::XML::Node *)i->data;
+            Inkscape::XML::Node *repr = static_cast<Inkscape::XML::Node *>(i->data);
 
             // insert into parent, restore pos
             parent->appendChild(repr);
             repr->setPosition((pos + 1) > 0 ? (pos + 1) : 0);
 
-            SPItem *mask_item = (SPItem *) sp_desktop_document(desktop)->getObjectByRepr(repr);
+            SPItem *mask_item = static_cast<SPItem *>(sp_desktop_document(desktop)->getObjectByRepr(repr));
             items_to_select = g_slist_prepend(items_to_select, mask_item);
 
             // transform mask, so it is moved the same spot where mask was applied

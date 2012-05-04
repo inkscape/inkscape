@@ -486,7 +486,7 @@ sp_item_group_ungroup (SPGroup *group, GSList **children, bool do_done)
         repr->setPosition(pos > 0 ? pos : 0);
 
         // fill in the children list if non-null
-        SPItem *item = (SPItem *) doc->getObjectByRepr(repr);
+        SPItem *item = static_cast<SPItem *>(doc->getObjectByRepr(repr));
 
         item->doWriteTransform(repr, item->transform, NULL, false);
 
