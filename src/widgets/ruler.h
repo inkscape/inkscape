@@ -26,9 +26,10 @@
 #define GTK_DEPRECATED_RULER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_DEPRECATED_TYPE_RULER, GtkDeprecatedRulerClass))
 
 
-typedef struct _GtkDeprecatedRuler        GtkDeprecatedRuler;
-typedef struct _GtkDeprecatedRulerClass   GtkDeprecatedRulerClass;
-typedef struct _GtkDeprecatedRulerMetric  GtkDeprecatedRulerMetric;
+typedef struct _GtkDeprecatedRuler         GtkDeprecatedRuler;
+typedef struct _GtkDeprecatedRulerPrivate  GtkDeprecatedRulerPrivate;
+typedef struct _GtkDeprecatedRulerClass    GtkDeprecatedRulerClass;
+typedef struct _GtkDeprecatedRulerMetric   GtkDeprecatedRulerMetric;
 
 /* All distances below are in 1/72nd's of an inch. (According to
  * Adobe that's a point, but points are really 1/72.27 in.)
@@ -37,21 +38,8 @@ struct _GtkDeprecatedRuler
 {
   GtkWidget widget;
 
-  GdkPixmap *backing_store;
-  GdkGC     *non_gr_exp_gc;		/* unused */
-  GtkDeprecatedRulerMetric *metric;
-  gint xsrc;
-  gint ysrc;
-  gint slider_size;
-
-  /* The upper limit of the ruler (in points) */
-  gdouble lower;
-  /* The lower limit of the ruler */
-  gdouble upper;
-  /* The position of the mark on the ruler */
-  gdouble position;
-  /* The maximum size of the ruler */
-  gdouble max_size;
+  /*< private >*/
+  GtkDeprecatedRulerPrivate *priv;
 };
 
 struct _GtkDeprecatedRulerClass
@@ -96,8 +84,8 @@ void            gtk_deprecated_ruler_draw_ticks (GtkDeprecatedRuler       *ruler
 void            gtk_deprecated_ruler_draw_pos   (GtkDeprecatedRuler       *ruler);
 
 
-void     sp_ruler_set_metric (GtkDeprecatedRuler * ruler, SPMetric  metric);
-SPMetric sp_ruler_get_metric (GtkDeprecatedRuler *ruler);
+void     sp_ruler_set_metric(GtkDeprecatedRuler *ruler, SPMetric  metric);
+SPMetric sp_ruler_get_metric(GtkDeprecatedRuler *ruler);
 
 
 #define SP_HRULER(obj)          G_TYPE_CHECK_INSTANCE_CAST (obj, sp_hruler_get_type (), SPHRuler)
