@@ -36,7 +36,7 @@ struct _SPRulerPrivate
 {
   GtkOrientation orientation;
   SPRulerMetric *metric;
-  
+
   GdkPixmap *backing_store;
   
   gint slider_size;
@@ -517,11 +517,14 @@ static void sp_ruler_get_preferred_height(GtkWidget *widget, gint *minimal_heigh
 }
 #endif
 
-static void
-sp_ruler_size_allocate (GtkWidget     *widget,
-			 GtkAllocation *allocation)
+static void sp_ruler_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
-  SPRuler *ruler = SP_RULER (widget);
+  SPRuler *ruler = SP_RULER(widget);
+  GtkAllocation old_allocation;
+  gtk_widget_get_allocation(widget, &old_allocation);
+
+  gboolean resized = (old_allocation.width != allocation->width ||
+		      old_allocation.height != allocation->height);
 
   gtk_widget_set_allocation(widget, allocation);
 
@@ -531,7 +534,8 @@ sp_ruler_size_allocate (GtkWidget     *widget,
 			     allocation->x, allocation->y,
 			     allocation->width, allocation->height);
 
-      sp_ruler_make_pixmap (ruler);
+      if(resized)
+        sp_ruler_make_pixmap (ruler);
     }
 }
 
@@ -559,33 +563,21 @@ sp_ruler_expose (GtkWidget      *widget,
   return FALSE;
 }
 
-static void
-sp_ruler_make_pixmap (SPRuler *ruler)
+static void sp_ruler_make_pixmap(SPRuler *ruler)
 {
   SPRulerPrivate *priv = ruler->priv;
+  GtkWidget *widget = GTK_WIDGET(ruler);
+
   GtkAllocation allocation;
-  GtkWidget *widget;
-  gint width;
-  gint height;
-
-  widget = GTK_WIDGET (ruler);
-
   gtk_widget_get_allocation(widget, &allocation);
 
   if (priv->backing_store)
-    {
-      gdk_drawable_get_size (priv->backing_store, &width, &height);
-      if ((width == allocation.width) &&
-	  (height == allocation.height))
-	return;
+      g_object_unref(priv->backing_store);
 
-      g_object_unref (priv->backing_store);
-    }
-
-  priv->backing_store = gdk_pixmap_new (gtk_widget_get_window(widget),
-					 allocation.width,
-					 allocation.height,
-					 -1);
+  priv->backing_store = gdk_pixmap_new(gtk_widget_get_window(widget),
+				       allocation.width,
+				       allocation.height,
+				       -1);
 
   priv->xsrc = 0;
   priv->ysrc = 0;
