@@ -984,6 +984,7 @@ void Export::onExport ()
 
         Glib::ustring fn = path_get_basename (path);
 
+        /* TRANSLATORS: %1 will be the filename, %2 the width, and %3 the height of the image */
         prog_dlg = create_progress_dialog (Glib::ustring::compose(_("Exporting %1 (%2 x %3)"), fn, width, height));
 
         /* Do export */

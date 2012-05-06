@@ -10,7 +10,7 @@
             <param name="month" type="int" min="0" max="12" _gui-text="Month (0 for all):">0</param>
             <param name="fill-empty-day-boxes" type="boolean" _gui-text="Fill empty day boxes with next month's days">true</param>
             <param name="show-week-number" type="boolean" _gui-text="Show week number">false</param>
-            <param name="start-day" type="enum" _gui-text="Week start day">
+            <param name="start-day" type="enum" _gui-text="Week start day:">
                 <_item value="sun">Sunday</_item>
                 <_item value="mon">Monday</_item>
             </param>
