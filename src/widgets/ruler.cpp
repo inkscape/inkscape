@@ -90,8 +90,13 @@ static void     sp_ruler_size_allocate   (GtkWidget      *widget,
                                                       GtkAllocation  *allocation);
 static gboolean sp_ruler_motion_notify               (GtkWidget      *widget,
                                                       GdkEventMotion *event);
+#if GTK_CHECK_VERSION(3,0,0)
+static gboolean sp_ruler_draw            (GtkWidget      *widget,
+		                          cairo_t        *cr);
+#else
 static gboolean sp_ruler_expose          (GtkWidget      *widget,
-                                                      GdkEventExpose *event);
+                                          GdkEventExpose *event);
+#endif
 static void     sp_ruler_make_pixmap     (SPRuler *ruler);
 static void     sp_ruler_draw_ticks      (SPRuler *ruler);
 static void     sp_ruler_real_draw_ticks (SPRuler *ruler,
@@ -134,12 +139,13 @@ sp_ruler_class_init (SPRulerClass *klass)
 #if GTK_CHECK_VERSION(3,0,0)
   widget_class->get_preferred_width = sp_ruler_get_preferred_width;
   widget_class->get_preferred_height = sp_ruler_get_preferred_height;
+  widget_class->draw = sp_ruler_draw;
 #else
   widget_class->size_request = sp_ruler_size_request;
+  widget_class->expose_event = sp_ruler_expose;
 #endif
   widget_class->size_allocate = sp_ruler_size_allocate;
   widget_class->motion_notify_event = sp_ruler_motion_notify;
-  widget_class->expose_event = sp_ruler_expose;
 
   klass->draw_ticks = sp_ruler_real_draw_ticks;
   klass->draw_pos = sp_ruler_real_draw_pos;
@@ -564,27 +570,33 @@ static void sp_ruler_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
     }
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
+static gboolean sp_ruler_draw(GtkWidget *widget,
+		              cairo_t *cr)
+#else
 static gboolean sp_ruler_expose(GtkWidget *widget,
                                 GdkEventExpose *event)
-{
-  if (gtk_widget_is_drawable (widget))
-    {
-      SPRuler *ruler = SP_RULER (widget);
-      SPRulerPrivate *priv = ruler->priv;
-      cairo_t *cr = gdk_cairo_create(gtk_widget_get_window(widget));
-#if GTK_CHECK_VERSION(3,0,0)
-      cairo_set_source_surface(cr, priv->backing_store, 0, 0);
-#else
-      gdk_cairo_set_source_pixmap(cr, priv->backing_store, 0, 0);
 #endif
-      gdk_cairo_region(cr, event->region);
-      cairo_fill (cr);
+{
+  SPRuler *ruler = SP_RULER (widget);
+  SPRulerPrivate *priv = ruler->priv;
 
-      if (SP_RULER_GET_CLASS(ruler)->draw_pos)
-	      SP_RULER_GET_CLASS(ruler)->draw_pos(ruler, cr);
+#if GTK_CHECK_VERSION(3,0,0)
+  cairo_set_source_surface(cr, priv->backing_store, 0, 0);
+  cairo_paint(cr);
+#else
+  cairo_t *cr = gdk_cairo_create(gtk_widget_get_window(widget));
+  gdk_cairo_set_source_pixmap(cr, priv->backing_store, 0, 0);
+  gdk_cairo_region(cr, event->region);
+  cairo_fill(cr);
+#endif
 
-      cairo_destroy (cr);
-    }
+  if (SP_RULER_GET_CLASS(ruler)->draw_pos)
+    SP_RULER_GET_CLASS(ruler)->draw_pos(ruler, cr);
+
+#if !GTK_CHECK_VERSION(3,0,0)
+  cairo_destroy (cr);
+#endif
 
   return FALSE;
 }
