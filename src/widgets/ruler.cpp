@@ -746,7 +746,6 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
     g_object_get(G_OBJECT(ruler), "orientation", &orientation, NULL);
     GtkWidget *widget = GTK_WIDGET (ruler);
     GtkStyle  *style = gtk_widget_get_style (widget);
-    GdkGC     *gc = style->fg_gc[GTK_STATE_NORMAL];
 
     PangoContext *pango_context = gtk_widget_get_pango_context (widget);
     PangoLayout  *pango_layout = pango_layout_new (pango_context);
@@ -775,12 +774,8 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
                    0, 0, 
                    allocation.width, allocation.height);
 
-    gdouble ruler_upper = 0;
-    gdouble ruler_lower = 0;
-    gdouble max_size = 0;
-    sp_ruler_get_range(ruler, &ruler_lower, &ruler_upper, NULL, &max_size);
-    gdouble upper = ruler_upper / priv->metric->pixels_per_unit; // upper and lower are expressed in ruler units
-    gdouble lower = ruler_lower / priv->metric->pixels_per_unit;
+    gdouble upper = priv->upper / priv->metric->pixels_per_unit; // upper and lower are expressed in ruler units
+    gdouble lower = priv->lower / priv->metric->pixels_per_unit;
     /* "pixels_per_unit" should be "points_per_unit". This is the size of the unit
     * in 1/72nd's of an inch and has nothing to do with screen pixels */
 
@@ -798,7 +793,7 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
     *  text_width = gdk_string_width(font, unit_str), so that the result
     *  for the scale looks consistent with an accompanying vruler
     */
-    gint scale = (int)(ceil(max_size / priv->metric->pixels_per_unit));
+    gint scale = (int)(ceil(priv->max_size / priv->metric->pixels_per_unit));
     sprintf (unit_str, "%d", scale);
     gint text_dimension = strlen (unit_str) * digit_height + 1;
 
@@ -836,6 +831,8 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
 
         gint tick_index = 0;
         gdouble cur = start; // location (in ruler units) of the first invisible tick at the left side of the canvas 
+	cairo_t *cr = gdk_cairo_create(priv->backing_store);
+	cairo_set_line_width(cr, 1.0);
 
         while (cur <= end) {
             // due to the typical values for cur, lower and increment, pos will often end up to
@@ -845,13 +842,11 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
             gint pos = int(Inkscape::round((cur - lower) * increment + 1e-12)) - UNUSED_PIXELS;
 
             if (orientation == GTK_ORIENTATION_HORIZONTAL) {
-                gdk_draw_line (priv->backing_store, gc,
-                               pos, height + ythickness, 
-                               pos, height - length + ythickness);
+                cairo_move_to(cr, pos+0.5, height + ythickness);
+		cairo_line_to(cr, pos+0.5, height - length + ythickness);
             } else {
-                gdk_draw_line (priv->backing_store, gc,
-                               height + xthickness - length, pos,
-                               height + xthickness, pos);
+                cairo_move_to(cr, height + xthickness - length, pos+0.5);
+		cairo_line_to(cr, height + xthickness, pos+0.5);
             }
 
             /* draw label */
@@ -867,19 +862,17 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
 
                 if (orientation == GTK_ORIENTATION_HORIZONTAL) {
                     pango_layout_set_text (pango_layout, unit_str, -1);
-                    gdk_draw_layout (priv->backing_store, gc,
-                                     pos + 2, 0, pango_layout);
+		    cairo_move_to(cr, pos+2, 0);
+		    pango_cairo_show_layout(cr, pango_layout);
                 } else {
                     for (gint j = 0; j < (int) strlen (unit_str); j++) {
                         digit_str[0] = unit_str[j];
                         pango_layout_set_text (pango_layout, digit_str, 1);
-
-                        gdk_draw_layout (priv->backing_store, gc,
-                                         xthickness + 1, 
-                                         pos + digit_height * (j) + 1,
-                                         pango_layout); 
+			cairo_move_to(cr, xthickness + 1, pos + digit_height * (j) + 1);
+			pango_cairo_show_layout(cr, pango_layout);
                     }
                 }
+		
             }
             /* Calculate cur from start rather than incrementing by subd_incr
             * in each iteration. This is to avoid propagation of floating point 
@@ -887,7 +880,10 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
             */
             ++tick_index;
             cur = start + tick_index * subd_incr;
+	    cairo_stroke(cr);
         }
+
+	cairo_destroy(cr);
     }
 }
 
