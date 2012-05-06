@@ -93,7 +93,8 @@ static gboolean sp_ruler_motion_notify               (GtkWidget      *widget,
 static gboolean sp_ruler_expose          (GtkWidget      *widget,
                                                       GdkEventExpose *event);
 static void     sp_ruler_make_pixmap     (SPRuler *ruler);
-static void     sp_ruler_real_draw_ticks             (SPRuler *ruler);
+static void     sp_ruler_real_draw_ticks (SPRuler *ruler,
+		                          cairo_t *cr);
 static void     sp_ruler_real_draw_pos   (SPRuler *ruler);
 
 
@@ -411,13 +412,21 @@ SPMetric sp_ruler_get_metric(SPRuler *ruler)
 }
 
 
-void
-sp_ruler_draw_ticks (SPRuler *ruler)
+void sp_ruler_draw_ticks(SPRuler *ruler)
 {
-  g_return_if_fail (SP_IS_RULER (ruler));
+  g_return_if_fail(SP_IS_RULER(ruler));
+  SPRulerPrivate *priv = ruler->priv;
 
-  if (SP_RULER_GET_CLASS (ruler)->draw_ticks)
-    SP_RULER_GET_CLASS (ruler)->draw_ticks (ruler);
+#if GTK_CHECK_VERSION(3,0,0)
+  cairo_t *cr = cairo_create(priv->backing_store);
+#else
+  cairo_t *cr = gdk_cairo_create(priv->backing_store);
+#endif
+
+  if (SP_RULER_GET_CLASS(ruler)->draw_ticks)
+    SP_RULER_GET_CLASS(ruler)->draw_ticks(ruler, cr);
+
+  cairo_destroy(cr);
 }
 
 void
@@ -738,7 +747,7 @@ static gboolean sp_ruler_motion_notify(GtkWidget      *widget,
   return FALSE;
 }
 
-static void sp_ruler_real_draw_ticks(SPRuler *ruler)
+static void sp_ruler_real_draw_ticks(SPRuler *ruler, cairo_t *cr)
 {
     SPRulerPrivate *priv = ruler->priv;
     gint width = 0;
@@ -749,9 +758,6 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
     GtkAllocation allocation;
 
     g_return_if_fail (ruler != NULL);
-
-    if (!gtk_widget_is_drawable (GTK_WIDGET (ruler)))
-        return;
 
     g_object_get(G_OBJECT(ruler), "orientation", &orientation, NULL);
     GtkWidget *widget = GTK_WIDGET (ruler);
@@ -779,7 +785,6 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
     }
     
 #if GTK_CHECK_VERSION(3,0,0)
-    cairo_t *cr = cairo_create(priv->backing_store);
     gtk_paint_box(style, cr,
                   GTK_STATE_NORMAL, GTK_SHADOW_NONE, 
 		  widget,
@@ -787,7 +792,6 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
                   0, 0, 
                   allocation.width, allocation.height);
 #else
-    cairo_t *cr = gdk_cairo_create(priv->backing_store);
     gtk_paint_box(style, priv->backing_store,
                   GTK_STATE_NORMAL, GTK_SHADOW_NONE, NULL, widget,
                   orientation == GTK_ORIENTATION_HORIZONTAL ? "hruler" : "vruler",
@@ -904,7 +908,6 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
 	    cairo_stroke(cr);
         }
     }
-    cairo_destroy(cr);
 }
 
 

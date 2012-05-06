@@ -46,7 +46,8 @@ struct _SPRulerClass
 {
   GtkWidgetClass parent_class;
 
-  void (* draw_ticks) (SPRuler *ruler);
+  void (* draw_ticks) (SPRuler *ruler,
+		       cairo_t *cr);
   void (* draw_pos)   (SPRuler *ruler);
 };
 
