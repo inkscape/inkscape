@@ -19,10 +19,7 @@ namespace Glib {
     class ustring;
 }
 
-typedef struct _GtkDeprecatedRuler GtkDeprecatedRuler;
-typedef struct _GtkDeprecatedVRuler GtkDeprecatedVRuler;
-typedef struct _GtkDeprecatedHRuler GtkDeprecatedHRuler;
-
+typedef struct _SPRuler SPRuler;
 
 // This is an import of the now-deprecated Gtk::Ruler API.
 namespace Gtk {
@@ -40,14 +37,14 @@ public:
 
 protected:
   explicit Ruler(const Glib::ConstructParams& construct_params);
-  explicit Ruler(GtkDeprecatedRuler* castitem);
+  explicit Ruler(SPRuler* castitem);
 
 public:
   ///Provides access to the underlying C GtkObject.
-  GtkDeprecatedRuler*       gobj()       { return reinterpret_cast<GtkDeprecatedRuler*>(gobject_); }
+  SPRuler*       gobj()       { return reinterpret_cast<SPRuler*>(gobject_); }
 
   ///Provides access to the underlying C GtkObject.
-  const GtkDeprecatedRuler* gobj() const { return reinterpret_cast<GtkDeprecatedRuler*>(gobject_); }
+  const SPRuler* gobj() const { return reinterpret_cast<SPRuler*>(gobject_); }
 
 protected:
   Ruler();
@@ -82,10 +79,10 @@ class VRuler : public Ruler
 
 public:
   ///Provides access to the underlying C GtkObject.
-  GtkDeprecatedVRuler*       gobj()       { return reinterpret_cast<GtkDeprecatedVRuler*>(gobject_); }
+  SPRuler*       gobj()       { return reinterpret_cast<SPRuler*>(gobject_); }
 
   ///Provides access to the underlying C GtkObject.
-  const GtkDeprecatedVRuler* gobj() const { return reinterpret_cast<GtkDeprecatedVRuler*>(gobject_); }
+  const SPRuler* gobj() const { return reinterpret_cast<SPRuler*>(gobject_); }
 
 public:
   VRuler();
@@ -99,10 +96,10 @@ class HRuler : public Ruler
 
 public:
   ///Provides access to the underlying C GtkObject.
-  GtkDeprecatedHRuler*       gobj()       { return reinterpret_cast<GtkDeprecatedHRuler*>(gobject_); }
+  SPRuler*       gobj()       { return reinterpret_cast<SPRuler*>(gobject_); }
 
   ///Provides access to the underlying C GtkObject.
-  const GtkDeprecatedHRuler* gobj() const { return reinterpret_cast<GtkDeprecatedHRuler*>(gobject_); }
+  const SPRuler* gobj() const { return reinterpret_cast<SPRuler*>(gobject_); }
   
 public:
   HRuler();

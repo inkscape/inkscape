@@ -38,12 +38,12 @@ namespace Gtk {
 namespace Deprecated {
 void Ruler::set_range(double lower, double upper, double position, double max_size)
 {
-gtk_deprecated_ruler_set_range(gobj(), lower, upper, position, max_size); 
+sp_ruler_set_range(gobj(), lower, upper, position, max_size); 
 }
 
 void Ruler::get_range(double& lower, double& upper, double& position, double& max_size)
 {
-gtk_deprecated_ruler_get_range(gobj(), &(lower), &(upper), &(position), &(max_size)); 
+sp_ruler_get_range(gobj(), &(lower), &(upper), &(position), &(max_size)); 
 }
 }// namespace Deprecated
 }// namespace Gtk
@@ -60,7 +60,7 @@ Ruler::init(SPDesktop *dt, Gtk::Widget &w)
     _canvas_widget = &w;
     _dragging = false;
     _guide = 0;
-    sp_ruler_set_metric(GTK_DEPRECATED_RULER(_r->gobj()), SP_PT);
+    sp_ruler_set_metric(SP_RULER(_r->gobj()), SP_PT);
     _r->set_range(-500, 500, 0, 1000);
 }
 
@@ -81,7 +81,7 @@ void
 Ruler::update_metric()
 {
     if (!_dt) return;
-    sp_ruler_set_metric(GTK_DEPRECATED_RULER(_r->gobj()), _dt->namedview->getDefaultMetric());
+    sp_ruler_set_metric(SP_RULER(_r->gobj()), _dt->namedview->getDefaultMetric());
 }
 
 /// Returns text to be used for tooltip for ruler.
@@ -182,7 +182,7 @@ Ruler::on_button_release_event(GdkEventButton *evb)
 HRuler::HRuler()
 {
     _dt = 0;
-    _r = static_cast<Gtk::Deprecated::HRuler*>(Glib::wrap(static_cast<GtkWidget*> (sp_hruler_new())));
+    _r = static_cast<Gtk::Deprecated::HRuler*>(Glib::wrap(static_cast<GtkWidget*> (sp_ruler_new(GTK_ORIENTATION_HORIZONTAL))));
     add(*_r);
     _horiz_f = true;
 }
@@ -195,7 +195,7 @@ HRuler::~HRuler()
 VRuler::VRuler()
 {
     _dt = 0;
-    _r = static_cast<Gtk::Deprecated::VRuler*>(Glib::wrap(static_cast<GtkWidget*> (sp_vruler_new())));
+    _r = static_cast<Gtk::Deprecated::VRuler*>(Glib::wrap(static_cast<GtkWidget*> (sp_ruler_new(GTK_ORIENTATION_VERTICAL))));
     add(*_r);
     _horiz_f = false;
 }

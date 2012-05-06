@@ -387,9 +387,9 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
     /* Horizontal ruler */
     eventbox = gtk_event_box_new ();
-    dtw->hruler = sp_hruler_new ();
+    dtw->hruler = sp_ruler_new(GTK_ORIENTATION_HORIZONTAL);
     dtw->hruler_box = eventbox;
-    sp_ruler_set_metric (GTK_DEPRECATED_RULER (dtw->hruler), SP_PT);
+    sp_ruler_set_metric(SP_RULER(dtw->hruler), SP_PT);
     gtk_widget_set_tooltip_text (dtw->hruler_box, gettext(sp_unit_get_plural (&sp_unit_get_by_id(SP_UNIT_PT))));
     gtk_container_add (GTK_CONTAINER (eventbox), dtw->hruler);
     gtk_table_attach (GTK_TABLE (canvas_tbl), eventbox, 1, 2, 0, 1, (GtkAttachOptions)(GTK_FILL), (GtkAttachOptions)(GTK_FILL), 
@@ -400,9 +400,9 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
     /* Vertical ruler */
     eventbox = gtk_event_box_new ();
-    dtw->vruler = sp_vruler_new ();
+    dtw->vruler = sp_ruler_new(GTK_ORIENTATION_VERTICAL);
     dtw->vruler_box = eventbox;
-    sp_ruler_set_metric (GTK_DEPRECATED_RULER (dtw->vruler), SP_PT);
+    sp_ruler_set_metric (SP_RULER (dtw->vruler), SP_PT);
     gtk_widget_set_tooltip_text (dtw->vruler_box, gettext(sp_unit_get_plural (&sp_unit_get_by_id(SP_UNIT_PT))));
     gtk_container_add (GTK_CONTAINER (eventbox), GTK_WIDGET (dtw->vruler));
     gtk_table_attach (GTK_TABLE (canvas_tbl), eventbox, 0, 1, 1, 2, (GtkAttachOptions)(GTK_FILL), (GtkAttachOptions)(GTK_FILL), 0, 
@@ -1569,10 +1569,10 @@ SPDesktopWidget::viewSetPosition (Geom::Point p)
     Geom::Point const origin = ( p - ruler_origin );
     gdouble hlower, hupper, hmax_range;
     gdouble vlower, vupper, vmax_range;
-    gtk_deprecated_ruler_get_range(GTK_DEPRECATED_RULER(hruler), &hlower, &hupper, NULL, &hmax_range);
-    gtk_deprecated_ruler_set_range(GTK_DEPRECATED_RULER(hruler), hlower, hupper, origin[Geom::X], hmax_range);
-    gtk_deprecated_ruler_get_range(GTK_DEPRECATED_RULER(vruler), &vlower, &vupper, NULL, &vmax_range);
-    gtk_deprecated_ruler_set_range(GTK_DEPRECATED_RULER(vruler), vlower, vupper, origin[Geom::Y], vmax_range);
+    sp_ruler_get_range(SP_RULER(hruler), &hlower, &hupper, NULL, &hmax_range);
+    sp_ruler_set_range(SP_RULER(hruler), hlower, hupper, origin[Geom::X], hmax_range);
+    sp_ruler_get_range(SP_RULER(vruler), &vlower, &vupper, NULL, &vmax_range);
+    sp_ruler_set_range(SP_RULER(vruler), vlower, vupper, origin[Geom::Y], vmax_range);
 }
 
 void
@@ -1596,8 +1596,8 @@ sp_desktop_widget_update_hruler (SPDesktopWidget *dtw)
     double const scale = dtw->desktop->current_zoom();
     double s = viewbox.min()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
     double e = viewbox.max()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
-    gtk_deprecated_ruler_get_range(GTK_DEPRECATED_RULER(dtw->hruler), NULL, NULL, &position, NULL);
-    gtk_deprecated_ruler_set_range(GTK_DEPRECATED_RULER(dtw->hruler), s,  e, position, (e - s));
+    sp_ruler_get_range(SP_RULER(dtw->hruler), NULL, NULL, &position, NULL);
+    sp_ruler_set_range(SP_RULER(dtw->hruler), s,  e, position, (e - s));
 }
 
 void
@@ -1614,8 +1614,8 @@ sp_desktop_widget_update_vruler (SPDesktopWidget *dtw)
     double const scale = dtw->desktop->current_zoom();
     double s = viewbox.min()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
     double e = viewbox.max()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
-    gtk_deprecated_ruler_get_range(GTK_DEPRECATED_RULER(dtw->vruler), NULL, NULL, &position, NULL);
-    gtk_deprecated_ruler_set_range(GTK_DEPRECATED_RULER(dtw->vruler), s, e, position, (e - s));
+    sp_ruler_get_range(SP_RULER(dtw->vruler), NULL, NULL, &position, NULL);
+    sp_ruler_set_range(SP_RULER(dtw->vruler), s, e, position, (e - s));
 }
 
 
@@ -1627,8 +1627,8 @@ void SPDesktopWidget::namedviewModified(SPObject *obj, guint flags)
         this->dt2r = 1.0 / nv->doc_units->unittobase;
         this->ruler_origin = Geom::Point(0,0); //nv->gridorigin;   Why was the grid origin used here?
 
-        sp_ruler_set_metric(GTK_DEPRECATED_RULER (this->vruler), nv->getDefaultMetric());
-        sp_ruler_set_metric(GTK_DEPRECATED_RULER (this->hruler), nv->getDefaultMetric());
+        sp_ruler_set_metric(SP_RULER (this->vruler), nv->getDefaultMetric());
+        sp_ruler_set_metric(SP_RULER (this->hruler), nv->getDefaultMetric());
 
         /* This loops through all the grandchildren of aux toolbox,
          * and for each that it finds, it performs an sp_search_by_data_recursive(),
