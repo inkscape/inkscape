@@ -553,7 +553,7 @@ sp_ruler_expose (GtkWidget      *widget,
       
       cr = gdk_cairo_create(gtk_widget_get_window(widget));
       gdk_cairo_set_source_pixmap (cr, priv->backing_store, 0, 0);
-      gdk_cairo_rectangle (cr, &event->area);
+      gdk_cairo_region(cr, event->region);
       cairo_fill (cr);
       cairo_destroy (cr);
       
