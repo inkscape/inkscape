@@ -93,6 +93,7 @@ static gboolean sp_ruler_motion_notify               (GtkWidget      *widget,
 static gboolean sp_ruler_expose          (GtkWidget      *widget,
                                                       GdkEventExpose *event);
 static void     sp_ruler_make_pixmap     (SPRuler *ruler);
+static void     sp_ruler_draw_ticks      (SPRuler *ruler);
 static void     sp_ruler_real_draw_ticks (SPRuler *ruler,
 		                          cairo_t *cr);
 static void     sp_ruler_real_draw_pos   (SPRuler *ruler);
@@ -230,6 +231,26 @@ sp_ruler_init (SPRuler *ruler)
 
 
 /**
+ * sp_ruler_invalidate_ticks:
+ * @ruler: the ruler to invalidate
+ *
+ * For performance reasons, #SPRuler keeps a backbuffer containing the
+ * prerendered contents of the ticks. To cause a repaint of this buffer,
+ * call this function instead of gtk_widget_queue_draw().
+ **/
+static void sp_ruler_invalidate_ticks(SPRuler *ruler)
+{
+	g_return_if_fail(SP_IS_RULER(ruler));
+
+	if(ruler->priv->backing_store == NULL)
+		return;
+
+	sp_ruler_draw_ticks(ruler);
+	gtk_widget_queue_draw(GTK_WIDGET(ruler));
+}
+
+
+/**
  * sp_ruler_set_range:
  * @ruler: the gtkdeprecatedruler
  * @lower: the lower limit of the ruler
@@ -274,8 +295,7 @@ sp_ruler_set_range (SPRuler *ruler,
     }
   g_object_thaw_notify (G_OBJECT (ruler));
 
-  if (gtk_widget_is_drawable (GTK_WIDGET (ruler)))
-    gtk_widget_queue_draw (GTK_WIDGET (ruler));
+  sp_ruler_invalidate_ticks(ruler);
 }
 
 /**
@@ -412,7 +432,7 @@ SPMetric sp_ruler_get_metric(SPRuler *ruler)
 }
 
 
-void sp_ruler_draw_ticks(SPRuler *ruler)
+static void sp_ruler_draw_ticks(SPRuler *ruler)
 {
   g_return_if_fail(SP_IS_RULER(ruler));
   SPRulerPrivate *priv = ruler->priv;
@@ -429,8 +449,7 @@ void sp_ruler_draw_ticks(SPRuler *ruler)
   cairo_destroy(cr);
 }
 
-void
-sp_ruler_draw_pos (SPRuler *ruler)
+static void sp_ruler_draw_pos(SPRuler *ruler)
 {
   g_return_if_fail (SP_IS_RULER (ruler));
 
@@ -554,19 +573,14 @@ static void sp_ruler_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
     }
 }
 
-static gboolean
-sp_ruler_expose (GtkWidget      *widget,
-		  GdkEventExpose *event)
+static gboolean sp_ruler_expose(GtkWidget *widget,
+                                GdkEventExpose *event)
 {
   if (gtk_widget_is_drawable (widget))
     {
       SPRuler *ruler = SP_RULER (widget);
       SPRulerPrivate *priv = ruler->priv;
-      cairo_t *cr;
-
-      sp_ruler_draw_ticks (ruler);
-      
-      cr = gdk_cairo_create(gtk_widget_get_window(widget));
+      cairo_t *cr = gdk_cairo_create(gtk_widget_get_window(widget));
 #if GTK_CHECK_VERSION(3,0,0)
       cairo_set_source_surface(cr, priv->backing_store, 0, 0);
 #else
@@ -609,6 +623,8 @@ static void sp_ruler_make_pixmap(SPRuler *ruler)
 
   priv->xsrc = 0;
   priv->ysrc = 0;
+
+  sp_ruler_draw_ticks(ruler);
 }
 
 
@@ -740,10 +756,8 @@ static gboolean sp_ruler_motion_notify(GtkWidget      *widget,
 
   g_object_notify(G_OBJECT(ruler), "position");
 
-  /*  Make sure the ruler has been allocated already  */
-  if (priv->backing_store != NULL)
-    sp_ruler_draw_pos(ruler);
-  
+  gtk_widget_queue_draw(widget);
+
   return FALSE;
 }
 
@@ -923,8 +937,7 @@ void sp_ruler_set_metric(SPRuler *ruler, SPMetric metric)
 
   priv->metric = const_cast<SPRulerMetric *>(&sp_ruler_metrics[metric]);
 
-  if (gtk_widget_is_drawable(GTK_WIDGET(ruler)))
-    gtk_widget_queue_draw(GTK_WIDGET(ruler));
-
   g_object_notify(G_OBJECT(ruler), "metric");
+
+  sp_ruler_invalidate_ticks(ruler);
 }

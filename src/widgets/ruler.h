@@ -75,11 +75,6 @@ void            sp_ruler_get_range  (SPRuler        *ruler,
                                      gdouble        *upper,
                                      gdouble        *position,
                                      gdouble        *max_size);
-
-void            sp_ruler_draw_ticks (SPRuler        *ruler);
-void            sp_ruler_draw_pos   (SPRuler        *ruler);
-
-
 void     sp_ruler_set_metric(SPRuler *ruler, SPMetric  metric);
 SPMetric sp_ruler_get_metric(SPRuler *ruler);
 
