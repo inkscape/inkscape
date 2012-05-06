@@ -75,7 +75,7 @@ ColorPreview::paint (GdkRectangle *area)
         return;
 
     GtkWidget *widget = GTK_WIDGET(this->gobj());
-    cairo_t *ct = gdk_cairo_create(widget->window);
+    cairo_t *ct = gdk_cairo_create(gtk_widget_get_window(widget));
 
     /* Transparent area */
 

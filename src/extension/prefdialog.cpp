@@ -41,7 +41,11 @@ namespace Extension {
     them.  It also places the passed in widgets into the dialog.
 */
 PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls, Effect * effect) :
+#if WITH_GTKMM_3_0
+    Gtk::Dialog::Dialog(_(name.c_str()), true),
+#else
     Gtk::Dialog::Dialog(_(name.c_str()), true, true),
+#endif
     _help(help),
     _name(name),
     _button_ok(NULL),
@@ -97,7 +101,11 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
 
         Gtk::Box * hbox = dynamic_cast<Gtk::Box *>(_button_preview);
         if (hbox != NULL) {
+#if WITH_GTKMM_3_0
+            Gtk::Widget * back = hbox->get_children().back();
+#else
             Gtk::Widget * back = hbox->children().back().get_widget();
+#endif
             Gtk::CheckButton * cb = dynamic_cast<Gtk::CheckButton *>(back);
             _checkbox_preview = cb;
         }
