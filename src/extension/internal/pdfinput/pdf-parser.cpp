@@ -3198,9 +3198,22 @@ void PdfParser::opMarkPoint(Object args[], int numArgs) {
 //------------------------------------------------------------------------
 
 void PdfParser::saveState() {
+  bool is_radial = false;
+
+  GfxPattern *pattern = state->getFillPattern();
+  if (pattern != NULL)
+    if (pattern->getType() == 2 ) {
+        GfxShadingPattern *shading_pattern = static_cast<GfxShadingPattern *>(pattern);
+        GfxShading *shading = shading_pattern->getShading();
+        if (shading->getType() == 3)
+          is_radial = true;
+    }
+
   builder->saveState();
-//  state = state->save();	// nasty hack to prevent GfxRadialShading from getting corrupted during copy operation
-  state->save();			// see LP Bug 919176 comment 8
+  if (is_radial)
+    state->save();          // nasty hack to prevent GfxRadialShading from getting corrupted during copy operation
+  else
+    state = state->save();  // see LP Bug 919176 comment 8
   clipHistory = clipHistory->save();
 }
 
