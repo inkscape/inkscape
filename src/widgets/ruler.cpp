@@ -651,8 +651,6 @@ static void sp_ruler_real_draw_pos(SPRuler *ruler)
 	  /*  If a backing store exists, restore the ruler  */
 	  if (priv->backing_store)
             {
-              cairo_t *cr = gdk_cairo_create(window);
-
 #if GTK_CHECK_VERSION(3,0,0)
 	      cairo_set_source_surface(cr, priv->backing_store, 0, 0);
 #else
@@ -660,8 +658,6 @@ static void sp_ruler_real_draw_pos(SPRuler *ruler)
 #endif
               cairo_rectangle (cr, priv->xsrc, priv->ysrc, bs_width, bs_height);
               cairo_fill (cr);
-
-              cairo_destroy (cr);
             }
 
           if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
