@@ -48,7 +48,8 @@ struct _SPRulerClass
 
   void (* draw_ticks) (SPRuler *ruler,
 		       cairo_t *cr);
-  void (* draw_pos)   (SPRuler *ruler);
+  void (* draw_pos)   (SPRuler *ruler,
+		       cairo_t *cr);
 };
 
 struct _SPRulerMetric
