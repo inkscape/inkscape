@@ -37,7 +37,11 @@ struct _SPRulerPrivate
   GtkOrientation orientation;
   SPRulerMetric *metric;
 
+#if GTK_CHECK_VERSION(3,0,0)
+  cairo_surface_t *backing_store;
+#else
   GdkPixmap *backing_store;
+#endif
   
   gint slider_size;
   gint xsrc;
@@ -468,15 +472,18 @@ sp_ruler_realize (GtkWidget *widget)
   sp_ruler_make_pixmap (ruler);
 }
 
-static void
-sp_ruler_unrealize (GtkWidget *widget)
+static void sp_ruler_unrealize(GtkWidget *widget)
 {
   SPRuler *ruler = SP_RULER (widget);
   SPRulerPrivate *priv = ruler->priv;
 
   if (priv->backing_store)
     {
-      g_object_unref (priv->backing_store);
+#if GTK_CHECK_VERSION(3,0,0)
+      cairo_surface_destroy(priv->backing_store);
+#else
+      g_object_unref(priv->backing_store);
+#endif
       priv->backing_store = NULL;
     }
 
@@ -552,7 +559,11 @@ sp_ruler_expose (GtkWidget      *widget,
       sp_ruler_draw_ticks (ruler);
       
       cr = gdk_cairo_create(gtk_widget_get_window(widget));
+#if GTK_CHECK_VERSION(3,0,0)
+      cairo_set_source_surface(cr, priv->backing_store, 0, 0);
+#else
       gdk_cairo_set_source_pixmap (cr, priv->backing_store, 0, 0);
+#endif
       gdk_cairo_region(cr, event->region);
       cairo_fill (cr);
       cairo_destroy (cr);
@@ -572,20 +583,28 @@ static void sp_ruler_make_pixmap(SPRuler *ruler)
   gtk_widget_get_allocation(widget, &allocation);
 
   if (priv->backing_store)
+#if GTK_CHECK_VERSION(3,0,0)
+      cairo_surface_destroy(priv->backing_store);
+
+  priv->backing_store = gdk_window_create_similar_surface(gtk_widget_get_window(widget),
+		                                          CAIRO_CONTENT_COLOR,
+							  allocation.width,
+							  allocation.height);
+#else
       g_object_unref(priv->backing_store);
 
   priv->backing_store = gdk_pixmap_new(gtk_widget_get_window(widget),
 				       allocation.width,
 				       allocation.height,
 				       -1);
+#endif
 
   priv->xsrc = 0;
   priv->ysrc = 0;
 }
 
 
-static void
-sp_ruler_real_draw_pos (SPRuler *ruler)
+static void sp_ruler_real_draw_pos(SPRuler *ruler)
 {
   GtkAllocation allocation;
   GtkWidget *widget = GTK_WIDGET (ruler);
@@ -635,7 +654,11 @@ sp_ruler_real_draw_pos (SPRuler *ruler)
             {
               cairo_t *cr = gdk_cairo_create(window);
 
-              gdk_cairo_set_source_pixmap (cr, priv->backing_store, 0, 0);
+#if GTK_CHECK_VERSION(3,0,0)
+	      cairo_set_source_surface(cr, priv->backing_store, 0, 0);
+#else
+              gdk_cairo_set_source_pixmap(cr, priv->backing_store, 0, 0);
+#endif
               cairo_rectangle (cr, priv->xsrc, priv->ysrc, bs_width, bs_height);
               cairo_fill (cr);
 
@@ -759,12 +782,25 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
         width = allocation.height;
         height = allocation.width;
     }
-
-    gtk_paint_box (style, priv->backing_store,
-                   GTK_STATE_NORMAL, GTK_SHADOW_NONE, NULL, widget,
-                   orientation == GTK_ORIENTATION_HORIZONTAL ? "hruler" : "vruler",
-                   0, 0, 
-                   allocation.width, allocation.height);
+    
+#if GTK_CHECK_VERSION(3,0,0)
+    cairo_t *cr = cairo_create(priv->backing_store);
+    gtk_paint_box(style, cr,
+                  GTK_STATE_NORMAL, GTK_SHADOW_NONE, 
+		  widget,
+                  orientation == GTK_ORIENTATION_HORIZONTAL ? "hruler" : "vruler",
+                  0, 0, 
+                  allocation.width, allocation.height);
+#else
+    cairo_t *cr = gdk_cairo_create(priv->backing_store);
+    gtk_paint_box(style, priv->backing_store,
+                  GTK_STATE_NORMAL, GTK_SHADOW_NONE, NULL, widget,
+                  orientation == GTK_ORIENTATION_HORIZONTAL ? "hruler" : "vruler",
+                  0, 0, 
+                  allocation.width, allocation.height);
+#endif
+    
+    cairo_set_line_width(cr, 1.0);
 
     gdouble upper = priv->upper / priv->metric->pixels_per_unit; // upper and lower are expressed in ruler units
     gdouble lower = priv->lower / priv->metric->pixels_per_unit;
@@ -823,8 +859,6 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
 
         gint tick_index = 0;
         gdouble cur = start; // location (in ruler units) of the first invisible tick at the left side of the canvas 
-	cairo_t *cr = gdk_cairo_create(priv->backing_store);
-	cairo_set_line_width(cr, 1.0);
 
         while (cur <= end) {
             // due to the typical values for cur, lower and increment, pos will often end up to
@@ -874,9 +908,8 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler)
             cur = start + tick_index * subd_incr;
 	    cairo_stroke(cr);
         }
-
-	cairo_destroy(cr);
     }
+    cairo_destroy(cr);
 }
 
 
