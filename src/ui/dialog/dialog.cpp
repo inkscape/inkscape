@@ -34,6 +34,10 @@
 
 #include <gtk/gtk.h>
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#include "compat-key-syms.h"
+#endif
+
 #define MIN_ONSCREEN_DISTANCE 50
 
 
@@ -271,14 +275,14 @@ bool Dialog::_onEvent(GdkEvent *event)
     switch (event->type) {
         case GDK_KEY_PRESS: {
             switch (get_group0_keyval (&event->key)) {
-                case GDK_Escape: {
+                case GDK_KEY_Escape: {
                     _defocus();
                     ret = true;
                     break;
                 }
-                case GDK_F4:
-                case GDK_w:
-                case GDK_W: {
+                case GDK_KEY_F4:
+                case GDK_KEY_w:
+                case GDK_KEY_W: {
                     if (mod_ctrl_only(event->key.state)) {
                         _close();
                         ret = true;
