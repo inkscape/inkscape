@@ -827,11 +827,11 @@ Find::onAction()
                                         count, all, exact? _("exact") : _("partial"));
         if (_action_replace){
             // TRANSLATORS: "%1" is replaced with the number of matches
-            status.set_text(Glib::ustring::compose(_("%1 objects replaced"), count));
+            status.set_text(Glib::ustring::compose(ngettext("%1 object replaced","%1 objects replaced",count), count));
         }
         else {
             // TRANSLATORS: "%1" is replaced with the number of matches
-            status.set_text(Glib::ustring::compose(_("%1 objects found"), count));
+            status.set_text(Glib::ustring::compose(ngettext("%1 object found","%1 objects found",count), count));
         }
 
         Inkscape::Selection *selection = sp_desktop_selection (desktop);
