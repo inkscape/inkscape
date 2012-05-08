@@ -1105,16 +1105,10 @@ Geom::Point getGradientCoords(SPItem *item, GrPointType point_type, guint point_
 }
 
 
-/**
- * Sets item fill or stroke to the gradient of the specified type with given vector, creating
- * new private gradient, if needed.
- * gr has to be a normalized vector.
- */
-
-SPGradient *sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType type, bool is_fill)
+SPGradient *sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType type, Inkscape::PaintTarget fill_or_stroke)
 {
 #ifdef SP_GR_VERBOSE
-    g_message("sp_item_set_gradient(%p, %p, %d, %d)", item, gr, type, is_fill);
+    g_message("sp_item_set_gradient(%p, %p, %d, %d)", item, gr, type, fill_or_stroke);
 #endif
     g_return_val_if_fail(item != NULL, NULL);
     g_return_val_if_fail(SP_IS_ITEM(item), NULL);
@@ -1126,8 +1120,9 @@ SPGradient *sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType ty
     g_assert(style != NULL);
 
     SPPaintServer *ps = NULL;
-    if (is_fill? style->fill.isPaintserver() : style->stroke.isPaintserver())
-        ps = is_fill? SP_STYLE_FILL_SERVER(style) : SP_STYLE_STROKE_SERVER(style);
+    if ((fill_or_stroke == Inkscape::FOR_FILL) ? style->fill.isPaintserver() : style->stroke.isPaintserver()) {
+        ps = (fill_or_stroke == Inkscape::FOR_FILL) ? SP_STYLE_FILL_SERVER(style) : SP_STYLE_STROKE_SERVER(style);
+    }
 
     if (ps
         && ( (type == SP_GRADIENT_TYPE_LINEAR && SP_IS_LINEARGRADIENT(ps)) ||
@@ -1165,7 +1160,7 @@ SPGradient *sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType ty
 
                 /* We have to change object style here; recursive because this is used from
                  * fill&stroke and must work for groups etc. */
-                sp_style_set_property_url(item, is_fill? "fill" : "stroke", normalized, true);
+                sp_style_set_property_url(item, (fill_or_stroke == Inkscape::FOR_FILL) ? "fill" : "stroke", normalized, true);
             }
             item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
             return normalized;
@@ -1175,7 +1170,7 @@ SPGradient *sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType ty
         /* Current fill style is not a gradient or wrong type, so construct everything */
         SPGradient *constructed = sp_gradient_get_private_normalized(item->document, gr, type);
         constructed = sp_gradient_reset_to_userspace(constructed, item);
-        sp_style_set_property_url(item, ( is_fill ? "fill" : "stroke" ), constructed, true);
+        sp_style_set_property_url(item, ( (fill_or_stroke == Inkscape::FOR_FILL) ? "fill" : "stroke" ), constructed, true);
         item->requestDisplayUpdate(( SP_OBJECT_MODIFIED_FLAG |
                                      SP_OBJECT_STYLE_MODIFIED_FLAG ));
         return constructed;
@@ -1257,34 +1252,28 @@ SPGradient *sp_document_default_gradient_vector( SPDocument *document, SPColor c
     return gr;
 }
 
-/**
-Return the preferred vector for \a o, made from (in order of preference) its current vector,
-current fill or stroke color, or from desktop style if \a o is NULL or doesn't have style.
-*/
 SPGradient *sp_gradient_vector_for_object( SPDocument *const doc, SPDesktop *const desktop,
-                                           SPObject *const o, bool const is_fill, bool singleStop )
+                                           SPObject *const o, Inkscape::PaintTarget const fill_or_stroke, bool singleStop )
 {
     SPColor color;
     if ( (o == NULL) || (o->style == NULL) ) {
-        color = sp_desktop_get_color(desktop, is_fill);
+        color = sp_desktop_get_color(desktop, (fill_or_stroke == Inkscape::FOR_FILL));
     } else {
         // take the color of the object
         SPStyle const &style = *(o->style);
-        SPIPaint const &paint = ( is_fill
-                                  ? style.fill
-                                  : style.stroke );
+        SPIPaint const &paint = ( (fill_or_stroke == Inkscape::FOR_FILL) ? style.fill : style.stroke );
         if (paint.isPaintserver()) {
-            SPObject *server = is_fill? o->style->getFillPaintServer() : o->style->getStrokePaintServer();
+            SPObject *server = (fill_or_stroke == Inkscape::FOR_FILL) ? o->style->getFillPaintServer() : o->style->getStrokePaintServer();
             if ( SP_IS_GRADIENT(server) ) {
                 return SP_GRADIENT(server)->getVector(true);
             } else {
-                color = sp_desktop_get_color(desktop, is_fill);
+                color = sp_desktop_get_color(desktop, (fill_or_stroke == Inkscape::FOR_FILL));
             }
         } else if (paint.isColor()) {
             color = paint.value.color;
         } else {
             // if o doesn't use flat color, then take current color of the desktop.
-            color = sp_desktop_get_color(desktop, is_fill);
+            color = sp_desktop_get_color(desktop, (fill_or_stroke == Inkscape::FOR_FILL));
         }
     }
 

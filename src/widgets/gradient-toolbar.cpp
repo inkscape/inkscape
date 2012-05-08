@@ -61,7 +61,7 @@
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
 
-void gr_apply_gradient_to_item( SPItem *item, SPGradient *gr, SPGradientType new_type, guint new_fill, bool do_fill, bool do_stroke );
+void gr_apply_gradient_to_item( SPItem *item, SPGradient *gr, SPGradientType initialType, Inkscape::PaintTarget initialMode, Inkscape::PaintTarget mode );
 void gr_apply_gradient(Inkscape::Selection *selection, GrDrag *drag, SPGradient *gr);
 gboolean gr_vector_list(GtkWidget *combo_box, SPDesktop *desktop, bool selection_empty, SPGradient *gr_selected, bool gr_multi);
 void gr_get_dt_selected_gradient(Inkscape::Selection *selection, SPGradient *&gr_selected);
@@ -84,36 +84,23 @@ static gboolean blocked = FALSE;
 //##       Gradient     ##
 //########################
 
-void gr_apply_gradient_to_item( SPItem *item, SPGradient *gr, SPGradientType new_type, guint new_fill, bool do_fill, bool do_stroke )
+void gr_apply_gradient_to_item( SPItem *item, SPGradient *gr, SPGradientType initialType, Inkscape::PaintTarget initialMode, Inkscape::PaintTarget mode )
 {
     SPStyle *style = item->style;
-
-    if (do_fill) {
-        if (style && (style->fill.isPaintserver()) &&
-            SP_IS_GRADIENT( item->style->getFillPaintServer() )) {
-            SPPaintServer *server = item->style->getFillPaintServer();
-            if ( SP_IS_LINEARGRADIENT(server) ) {
-                sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_LINEAR, true);
-            } else if ( SP_IS_RADIALGRADIENT(server) ) {
-                sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_RADIAL, true);
-            }
-        } else if (new_fill) {
-            sp_item_set_gradient(item, gr, new_type, true);
+    bool isFill = (mode == Inkscape::FOR_FILL);
+    if (style
+        && (isFill ? style->fill.isPaintserver() : style->stroke.isPaintserver())
+        && SP_IS_GRADIENT(isFill ? style->getFillPaintServer() : style->getStrokePaintServer()) ) {
+        SPPaintServer *server = isFill ? style->getFillPaintServer() : style->getStrokePaintServer();
+        if ( SP_IS_LINEARGRADIENT(server) ) {
+            sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_LINEAR, mode);
+        } else if ( SP_IS_RADIALGRADIENT(server) ) {
+            sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_RADIAL, mode);
         }
     }
-
-    if (do_stroke) {
-        if (style && (style->stroke.isPaintserver()) &&
-            SP_IS_GRADIENT( item->style->getStrokePaintServer() )) {
-            SPPaintServer *server = item->style->getStrokePaintServer();
-            if ( SP_IS_LINEARGRADIENT(server) ) {
-                sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_LINEAR, false);
-            } else if ( SP_IS_RADIALGRADIENT(server) ) {
-                sp_item_set_gradient(item, gr, SP_GRADIENT_TYPE_RADIAL, false);
-            }
-        } else if (!new_fill) {
-            sp_item_set_gradient(item, gr, new_type, false);
-        }
+    else if (initialMode == mode)
+    {
+        sp_item_set_gradient(item, gr, initialType, mode);
     }
 }
 
@@ -126,8 +113,8 @@ gradient.
 void gr_apply_gradient(Inkscape::Selection *selection, GrDrag *drag, SPGradient *gr)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    SPGradientType new_type = static_cast<SPGradientType>(prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR));
-    Inkscape::PaintTarget new_fill = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
+    SPGradientType initialType = static_cast<SPGradientType>(prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR));
+    Inkscape::PaintTarget initialMode = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
 
     // GRADIENTFIXME: make this work for multiple selected draggers.
 
@@ -136,14 +123,14 @@ void gr_apply_gradient(Inkscape::Selection *selection, GrDrag *drag, SPGradient 
         GrDragger *dragger = static_cast<GrDragger*>(drag->selected->data);
         for (GSList const* i = dragger->draggables; i != NULL; i = i->next) { // for all draggables of dragger
             GrDraggable *draggable = (GrDraggable *) i->data;
-            gr_apply_gradient_to_item(draggable->item, gr, new_type, new_fill, draggable->fill_or_stroke, !draggable->fill_or_stroke);
+            gr_apply_gradient_to_item(draggable->item, gr, initialType, initialMode, draggable->fill_or_stroke);
         }
         return;
     }
 
    // If no drag or no dragger selected, act on selection
    for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
-       gr_apply_gradient_to_item(SP_ITEM(i->data), gr, new_type, new_fill, new_fill, !new_fill);
+       gr_apply_gradient_to_item(SP_ITEM(i->data), gr, initialType, initialMode, initialMode);
    }
 }
 
@@ -958,8 +945,8 @@ static void gr_new_type_changed( EgeSelectOneAction *act, GObject * /*tbl*/ )
 static void gr_new_fillstroke_changed( EgeSelectOneAction *act, GObject * /*tbl*/ )
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool fillmode = ege_select_one_action_get_active( act ) == 0;
-    prefs->setInt("/tools/gradient/newfillorstroke", fillmode); // 1 for fill, 0 for stroke
+    Inkscape::PaintTarget fsmode = (ege_select_one_action_get_active( act ) == 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
+    prefs->setInt("/tools/gradient/newfillorstroke", (fsmode == Inkscape::FOR_FILL) ? 1 : 0);
 }
 
 /*
@@ -1140,10 +1127,9 @@ void sp_gradient_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, 
         ege_select_one_action_set_icon_column( act, 2 );
         ege_select_one_action_set_tooltip_column( act, 1  );
 
-        /// @todo Convert to boolean?
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        bool fillstrokemode = !prefs->getBool("/tools/gradient/newfillorstroke", true);
-        ege_select_one_action_set_active( act, fillstrokemode );
+        Inkscape::PaintTarget fsmode = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
+        ege_select_one_action_set_active( act, (fsmode == Inkscape::FOR_FILL) ? 0 : 1 );
         g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(gr_new_fillstroke_changed), holder );
     }
 

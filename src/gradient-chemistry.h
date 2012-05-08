@@ -22,29 +22,32 @@
 
 class SPItem;
 
-/*
+/**
  * Either normalizes given gradient to vector, or returns fresh normalized
- * vector - in latter case, original gradient is flattened and stops cleared
+ * vector - in latter case, original gradient is flattened and stops cleared.
  * No transrefing - i.e. caller shouldn't hold reference to original and
  * does not get one to new automatically (doc holds ref of every object anyways)
  */
+SPGradient *sp_gradient_ensure_vector_normalized(SPGradient *gradient);
 
-SPGradient *sp_gradient_ensure_vector_normalized (SPGradient *gradient);
-
-
-/*
- * Sets item fill/stroke to lineargradient with given vector, creating
- * new private gradient, if needed
- * gr has to be normalized vector
+ 
+/**
+ * Sets item fill or stroke to the gradient of the specified type with given vector, creating
+ * new private gradient, if needed.
+ * gr has to be a normalized vector.
  */
-
-SPGradient *sp_item_set_gradient (SPItem *item, SPGradient *gr, SPGradientType type, bool is_fill);
+SPGradient *sp_item_set_gradient(SPItem *item, SPGradient *gr, SPGradientType type, Inkscape::PaintTarget fill_or_stroke);
 
 /*
  * Get default normalized gradient vector of document, create if there is none
  */
 SPGradient *sp_document_default_gradient_vector( SPDocument *document, SPColor const &color, bool singleStop );
-SPGradient *sp_gradient_vector_for_object( SPDocument *doc, SPDesktop *desktop, SPObject *o, bool is_fill, bool singleStop = false );
+
+/**
+ * Return the preferred vector for \a o, made from (in order of preference) its current vector,
+ * current fill or stroke color, or from desktop style if \a o is NULL or doesn't have style.
+ */
+SPGradient *sp_gradient_vector_for_object( SPDocument *doc, SPDesktop *desktop, SPObject *o, Inkscape::PaintTarget fill_or_stroke, bool singleStop = false );
 
 void sp_object_ensure_fill_gradient_normalized (SPObject *object);
 void sp_object_ensure_stroke_gradient_normalized (SPObject *object);

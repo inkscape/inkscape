@@ -548,11 +548,11 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
                     SPItem *item = SP_ITEM(i->data);
                     SPGradientType new_type = (SPGradientType) prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR);
-                    Inkscape::PaintTarget new_fill = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
+                    Inkscape::PaintTarget fsmode = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
 
-                    SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop, item, new_fill);
+                    SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop, item, fsmode);
 
-                    SPGradient *priv = sp_item_set_gradient(item, vector, new_type, new_fill);
+                    SPGradient *priv = sp_item_set_gradient(item, vector, new_type, fsmode);
                     sp_gradient_reset_to_userspace(priv, item);
                 }
 

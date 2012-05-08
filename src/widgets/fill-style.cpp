@@ -566,15 +566,19 @@ void FillNStroke::updateFromPaint()
                         }
 
                         if (!vector) {
-                            SPGradient *gr = sp_gradient_vector_for_object( document, desktop, reinterpret_cast<SPObject*>(i->data), kind == FILL, createSwatch );
+                            SPGradient *gr = sp_gradient_vector_for_object( document,
+                                                                            desktop,
+                                                                            reinterpret_cast<SPObject*>(i->data),
+                                                                            (kind == FILL) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE,
+                                                                            createSwatch );
                             if ( gr && createSwatch ) {
                                 gr->setSwatch();
                             }
                             sp_item_set_gradient(SP_ITEM(i->data),
                                                  gr,
-                                                 gradient_type, kind == FILL);
+                                                 gradient_type, (kind == FILL) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE);
                         } else {
-                            sp_item_set_gradient(SP_ITEM(i->data), vector, gradient_type, kind == FILL);
+                            sp_item_set_gradient(SP_ITEM(i->data), vector, gradient_type, (kind == FILL) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE);
                         }
                     }
                 } else {
@@ -587,7 +591,7 @@ void FillNStroke::updateFromPaint()
                             sp_repr_css_change_recursive(reinterpret_cast<SPObject*>(i->data)->getRepr(), css, "style");
                         }
 
-                        SPGradient *gr = sp_item_set_gradient(SP_ITEM(i->data), vector, gradient_type, kind == FILL);
+                        SPGradient *gr = sp_item_set_gradient(SP_ITEM(i->data), vector, gradient_type, (kind == FILL) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE);
                         psel->pushAttrsToGradient( gr );
                     }
                 }
