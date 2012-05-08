@@ -52,6 +52,7 @@
 
 static void eek_preview_class_init( EekPreviewClass *klass );
 static void eek_preview_init( EekPreview *preview );
+static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr);
 
 static GtkWidgetClass* parent_class = 0;
 
@@ -202,60 +203,55 @@ enum {
 
 static guint eek_preview_signals[LAST_SIGNAL] = { 0 };
 
-
-gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
+#if !GTK_CHECK_VERSION(3,0,0)
+static gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* /* event */ )
 {
-/*     g_message("Exposed!!!   %s", gtk_widget_has_focus(widget) ? "XXX" : "---" ); */
-    gint insetX = 0;
-    gint insetY = 0;
+    gboolean result = FALSE;
 
-    (void)event;
-/*
-    gint lower = widget->allocation.width;
-    lower = (widget->allocation.height < lower) ? widget->allocation.height : lower;
-    if ( lower > 16 ) {
-        insetX++;
-        if ( lower > 18 ) {
-            insetX++;
-            if ( lower > 22 ) {
-                insetX++;
-                if ( lower > 24 ) {
-                    insetX++;
-                    if ( lower > 32 ) {
-                        insetX++;
-                    }
-                }
-            }
-        }
-        insetY = insetX;
+    if (gtk_widget_is_drawable(widget)) {
+	GdkWindow* window = gtk_widget_get_window(widget);
+	cairo_t* cr = gdk_cairo_create(window);
+	result = eek_preview_draw(widget, cr);
+	cairo_destroy(cr);
     }
-*/
 
-    if ( gtk_widget_is_drawable( widget ) ) {
-        GtkStyle* style = gtk_widget_get_style( widget );
+    return result;
+}
+#endif
+
+static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
+{
+        GtkStyle* style = gtk_widget_get_style(widget);
+	GdkWindow* window = gtk_widget_get_window(widget);
 	GtkAllocation allocation;
-
-        if ( insetX > 0 || insetY > 0 ) {
-	    gtk_widget_get_allocation (widget, &allocation);
-
-            gtk_paint_flat_box( style,
-                                gtk_widget_get_window (widget),
-                                (GtkStateType)gtk_widget_get_state(widget),
-                                GTK_SHADOW_NONE,
-                                NULL,
-                                widget,
-                                NULL,
-                                0, 0,
-                                allocation.width, allocation.height);
-        }
-
+	gtk_widget_get_allocation (widget, &allocation);
         EekPreview* preview = EEK_PREVIEW(widget);
         GdkColor fg = {0, preview->_r, preview->_g, preview->_b};
+	gint insetX = 0;
+	gint insetY = 0;
 
-        gdk_colormap_alloc_color( gdk_colormap_get_system(), &fg, FALSE, TRUE );
-
-	gtk_widget_get_allocation (widget, &allocation);
-	cairo_t* cr = gdk_cairo_create(gtk_widget_get_window(widget));
+#if GTK_CHECK_VERSION(3,0,0)
+	gtk_paint_flat_box( style,
+			    cr,
+                            (GtkStateType)gtk_widget_get_state(widget),
+                            GTK_SHADOW_NONE,
+                            widget,
+                            NULL,
+                            0, 0,
+                            allocation.width, allocation.height);
+#else
+        gtk_paint_flat_box( style,
+                            window,
+                            (GtkStateType)gtk_widget_get_state(widget),
+                            GTK_SHADOW_NONE,
+                            NULL,
+                            widget,
+                            NULL,
+                            0, 0,
+                            allocation.width, allocation.height);
+        
+	gdk_colormap_alloc_color( gdk_colormap_get_system(), &fg, FALSE, TRUE );
+#endif
 
 	GdkRectangle rect = {insetX, 
 		             insetY,
@@ -265,19 +261,19 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
 	gdk_cairo_set_source_color(cr, &fg);
 	gdk_cairo_rectangle(cr, &rect);
 	cairo_paint(cr);
-	cairo_destroy(cr);
 
         if ( preview->_previewPixbuf ) {
             GtkDrawingArea* da = &(preview->drawing);
-	    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(da));
-            GdkDrawable* drawable = (GdkDrawable*) window;
+	    GdkWindow* da_window = gtk_widget_get_window(GTK_WIDGET(da));
+	    cairo_t* cr2 = gdk_cairo_create(da_window);
+
+#if GTK_CHECK_VERSION(2,24,0)
+	    gint w = gdk_window_get_width(da_window);
+	    gint h = gdk_window_get_height(da_window);
+#else
             gint w = 0;
             gint h = 0;
-#if GTK_CHECK_VERSION(2,24,0)
-	    w = gdk_window_get_width(window);
-	    h = gdk_window_get_height(window);
-#else
-	    gdk_drawable_get_size(drawable, &w, &h);
+	    gdk_drawable_get_size(da_window, &w, &h);
 #endif
             
 	    if ((w != preview->_scaledW) || (h != preview->_scaledH)) {
@@ -290,16 +286,12 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
             }
 
             GdkPixbuf* pix = (preview->_scaled) ? preview->_scaled : preview->_previewPixbuf;
-	    cairo_t* cr2 = gdk_cairo_create(drawable);
 	    gdk_cairo_set_source_pixbuf(cr2, pix, 0, 0);
 	    cairo_paint(cr2);
-	    cairo_destroy(cr);
+	    cairo_destroy(cr2);
         }
 
-
         if ( preview->_linked ) {
-	    gtk_widget_get_allocation (widget, &allocation);
-
             /* Draw arrow */
             GdkRectangle possible = {insetX, insetY, (allocation.width - (insetX * 2)), (allocation.height - (insetY * 2)) };
             GdkRectangle area = {possible.x, possible.y, possible.width / 2, possible.height / 2 };
@@ -318,8 +310,21 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
 
 
             if ( preview->_linked & PREVIEW_LINK_IN ) {
+#if GTK_CHECK_VERSION(3,0,0)
                 gtk_paint_arrow( style,
-                                 gtk_widget_get_window (widget),
+                                 cr,
+                                 gtk_widget_get_state (widget),
+                                 GTK_SHADOW_ETCHED_IN,
+                                 widget, /* may be NULL */
+                                 NULL, /* detail */
+                                 GTK_ARROW_DOWN,
+                                 FALSE,
+                                 area.x, area.y,
+                                 area.width, area.height
+                                 );
+#else
+                gtk_paint_arrow( style,
+                                 window,
                                  gtk_widget_get_state (widget),
                                  GTK_SHADOW_ETCHED_IN,
                                  NULL, /* clip area.  &area, */
@@ -330,6 +335,7 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                                  area.x, area.y,
                                  area.width, area.height
                                  );
+#endif
             }
 
             if ( preview->_linked & PREVIEW_LINK_OUT ) {
@@ -338,8 +344,21 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                     otherArea.y = possible.y + (possible.height - otherArea.height);
                 }
 
+#if GTK_CHECK_VERSION(3,0,0)
                 gtk_paint_arrow( style,
-                                 gtk_widget_get_window (widget),
+                                 cr,
+                                 gtk_widget_get_state (widget),
+                                 GTK_SHADOW_ETCHED_OUT,
+                                 widget, /* may be NULL */
+                                 NULL, /* detail */
+                                 GTK_ARROW_DOWN,
+                                 FALSE,
+                                 otherArea.x, otherArea.y,
+                                 otherArea.width, otherArea.height
+			       );
+#else
+                gtk_paint_arrow( style,
+                                 window,
                                  gtk_widget_get_state (widget),
                                  GTK_SHADOW_ETCHED_OUT,
                                  NULL, /* clip area.  &area, */
@@ -350,6 +369,7 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                                  otherArea.x, otherArea.y,
                                  otherArea.width, otherArea.height
                                  );
+#endif
             }
 
             if ( preview->_linked & PREVIEW_LINK_OTHER ) {
@@ -358,8 +378,21 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                     otherArea.y = possible.y + (possible.height - otherArea.height) / 2;
                 }
 
+#if GTK_CHECK_VERSION(3,0,0)
                 gtk_paint_arrow( style,
-                                 gtk_widget_get_window (widget),
+                                 cr,
+                                 gtk_widget_get_state (widget),
+                                 GTK_SHADOW_ETCHED_OUT,
+                                 widget, /* may be NULL */
+                                 NULL, /* detail */
+                                 GTK_ARROW_LEFT,
+                                 FALSE,
+                                 otherArea.x, otherArea.y,
+                                 otherArea.width, otherArea.height
+			       );
+#else
+                gtk_paint_arrow( style,
+                                 window,
                                  gtk_widget_get_state (widget),
                                  GTK_SHADOW_ETCHED_OUT,
                                  NULL, /* clip area.  &area, */
@@ -370,6 +403,7 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                                  otherArea.x, otherArea.y,
                                  otherArea.width, otherArea.height
                                  );
+#endif
             }
 
 
@@ -380,8 +414,18 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                 if ( otherArea.height < possible.height ) {
                     otherArea.y = possible.y + (possible.height - otherArea.height) / 2;
                 }
+#if GTK_CHECK_VERSION(3,0,0)
                 gtk_paint_check( style,
-                                 gtk_widget_get_window (widget),
+                                 cr,
+                                 gtk_widget_get_state (widget),
+                                 GTK_SHADOW_ETCHED_OUT,
+                                 widget,
+                                 NULL,
+                                 otherArea.x, otherArea.y,
+                                 otherArea.width, otherArea.height );
+#else
+                gtk_paint_check( style,
+                                 window,
                                  gtk_widget_get_state (widget),
                                  GTK_SHADOW_ETCHED_OUT,
                                  NULL,
@@ -389,6 +433,7 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                                  NULL,
                                  otherArea.x, otherArea.y,
                                  otherArea.width, otherArea.height );
+#endif
             }
 
             if ( preview->_linked & PREVIEW_STROKE ) {
@@ -398,8 +443,18 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                 if ( otherArea.height < possible.height ) {
                     otherArea.y = possible.y + (possible.height - otherArea.height) / 2;
                 }
+#if GTK_CHECK_VERSION(3,0,0)
                 gtk_paint_diamond( style,
-                                   gtk_widget_get_window (widget),
+                                   cr,
+                                   gtk_widget_get_state (widget),
+                                   GTK_SHADOW_ETCHED_OUT,
+                                   widget,
+                                   NULL,
+                                   otherArea.x, otherArea.y,
+                                   otherArea.width, otherArea.height );
+#else
+                gtk_paint_diamond( style,
+                                   window,
                                    gtk_widget_get_state (widget),
                                    GTK_SHADOW_ETCHED_OUT,
                                    NULL,
@@ -407,6 +462,7 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
                                    NULL,
                                    otherArea.x, otherArea.y,
                                    otherArea.width, otherArea.height );
+#endif
             }
         }
 
@@ -414,17 +470,25 @@ gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* event )
         if ( gtk_widget_has_focus(widget) ) {
             gtk_widget_get_allocation (widget, &allocation);
 
+#if GTK_CHECK_VERSION(3,0,0)
             gtk_paint_focus( style,
-                             gtk_widget_get_window (widget),
+                             cr,
+                             GTK_STATE_NORMAL,
+                             widget,
+                             NULL,
+                             0 + 1, 0 + 1,
+                             allocation.width - 2, allocation.height - 2 );
+#else
+            gtk_paint_focus( style,
+                             window,
                              GTK_STATE_NORMAL,
                              NULL, /* GdkRectangle *area, */
                              widget,
                              NULL,
                              0 + 1, 0 + 1,
                              allocation.width - 2, allocation.height - 2 );
+#endif
         }
-    }
-
 
     return FALSE;
 }
@@ -597,8 +661,10 @@ static void eek_preview_class_init( EekPreviewClass *klass )
 #if GTK_CHECK_VERSION(3,0,0)
     widgetClass->get_preferred_width = eek_preview_get_preferred_width;
     widgetClass->get_preferred_height = eek_preview_get_preferred_height;
+    widgetClass->draw = eek_preview_draw;
 #else
     widgetClass->size_request = eek_preview_size_request;
+    widgetClass->expose_event = eek_preview_expose_event;
 #endif
     /*widgetClass->size_allocate = ;*/
     /*widgetClass->state_changed = ;*/
@@ -609,7 +675,6 @@ static void eek_preview_class_init( EekPreviewClass *klass )
     widgetClass->button_release_event = eek_preview_button_release_cb;
     /*widgetClass->delete_event = ;*/
     /*widgetClass->destroy_event = ;*/
-    widgetClass->expose_event = eek_preview_expose_event;
 /*     widgetClass->key_press_event = eek_preview_key_press_event; */
 /*     widgetClass->key_release_event = eek_preview_key_release_event; */
     widgetClass->enter_notify_event = eek_preview_enter_cb;
@@ -778,19 +843,25 @@ static void eek_preview_init( EekPreview *preview )
         color.red = 0xffff;
         color.green = 0;
         color.blue = 0xffff;
+#if !GTK_CHECK_VERSION(3,0,0)
         gdk_colormap_alloc_color( gdk_colormap_get_system(), &color, FALSE, TRUE );
+#endif
         gtk_widget_modify_bg(widg, GTK_STATE_ACTIVE, &color);
 
         color.red = 0;
         color.green = 0xffff;
         color.blue = 0;
+#if !GTK_CHECK_VERSION(3,0,0)
         gdk_colormap_alloc_color( gdk_colormap_get_system(), &color, FALSE, TRUE );
+#endif
         gtk_widget_modify_bg(widg, GTK_STATE_SELECTED, &color);
 
         color.red = 0xffff;
         color.green = 0;
         color.blue = 0;
+#if !GTK_CHECK_VERSION(3,0,0)
         gdk_colormap_alloc_color( gdk_colormap_get_system(), &color, FALSE, TRUE );
+#endif
         gtk_widget_modify_bg( widg, GTK_STATE_PRELIGHT, &color );
     }
 }
