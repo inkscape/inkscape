@@ -1,6 +1,24 @@
 
 set(widgets_SRC
 	button.cpp
+	  arc-toolbar.cpp
+	  box3d-toolbar.cpp
+	  calligraphy-toolbar.cpp
+	  connector-toolbar.cpp
+	  dropper-toolbar.cpp
+	  erasor-toolbar.cpp
+	  lpe-toolbar.cpp
+	  measure-toolbar.cpp
+	  node-toolbar.cpp
+	  paintbucket-toolbar.cpp
+	  pencil-toolbar.cpp
+	  rect-toolbar.cpp
+	  spiral-toolbar.cpp
+	  spray-toolbar.cpp
+	  star-toolbar.cpp
+	  text-toolbar.cpp
+	  tweak-toolbar.cpp
+	  zoom-toolbar.cpp		
 	dash-selector.cpp
 	desktop-widget.cpp
 	eek-preview.cpp
@@ -39,6 +57,24 @@ set(widgets_SRC
 	# -------
 	# Headers
 	button.h
+	  arc-toolbar.h
+	  box3d-toolbar.h
+	  calligraphy-toolbar.h
+	  connector-toolbar.h
+	  dropper-toolbar.h
+	  erasor-toolbar.h
+	  lpe-toolbar.h
+	  measure-toolbar.h
+	  node-toolbar.h
+	  paintbucket-toolbar.h
+	  pencil-toolbar.h
+	  rect-toolbar.h
+	  spiral-toolbar.h
+	  spray-toolbar.h
+	  star-toolbar.h
+	  text-toolbar.h
+	  tweak-toolbar.h
+	  zoom-toolbar.h	
 	dash-selector.h
 	desktop-widget.h
 	eek-preview.h
