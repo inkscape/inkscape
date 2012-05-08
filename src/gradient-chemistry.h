@@ -61,23 +61,39 @@ SPStop* sp_get_stop_i(SPGradient *gradient, guint i);
 guint sp_number_of_stops(SPGradient const *gradient);
 guint sp_number_of_stops_before_stop(SPGradient const *gradient, SPStop *target);
 
-guint32 average_color (guint32 c1, guint32 c2, gdouble p = 0.5);
+guint32 average_color(guint32 c1, guint32 c2, gdouble p = 0.5);
 
-SPStop *sp_vector_add_stop (SPGradient *vector, SPStop* prev_stop, SPStop* next_stop, gfloat offset);
+SPStop *sp_vector_add_stop(SPGradient *vector, SPStop* prev_stop, SPStop* next_stop, gfloat offset);
 
-void sp_gradient_transform_multiply (SPGradient *gradient, Geom::Affine postmul, bool set);
+void sp_gradient_transform_multiply(SPGradient *gradient, Geom::Affine postmul, bool set);
 
-SPGradient * sp_item_gradient (SPItem *item, bool fill_or_stroke);
-void sp_item_gradient_set_coords (SPItem *item, guint point_type, guint point_i, Geom::Point p_desk, bool fill_or_stroke, bool write_repr, bool scale);
-Geom::Point sp_item_gradient_get_coords (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
-SPGradient *sp_item_gradient_get_vector (SPItem *item, bool fill_or_stroke);
-SPGradientSpread sp_item_gradient_get_spread (SPItem *item, bool fill_or_stroke);
+
+/**
+ * Fetches either the fill or the stroke gradient from the given item.
+ *
+ * @param fill_or_stroke the gradient type (fill/stroke) to get.
+ * @return the specified gradient if set, null otherwise.
+ */
+SPGradient *getGradient(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
+
+
+void sp_item_gradient_set_coords(SPItem *item, GrPointType point_type, guint point_i, Geom::Point p_desk, Inkscape::PaintTarget fill_or_stroke, bool write_repr, bool scale);
+
+/**
+ * Returns the position of point point_type of the gradient applied to item (either fill_or_stroke),
+ * in desktop coordinates.
+*/
+Geom::Point getGradientCoords(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke);
+
+SPGradient *sp_item_gradient_get_vector(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
+SPGradientSpread sp_item_gradient_get_spread(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 
 struct SPCSSAttr;
-void sp_item_gradient_stop_set_style (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, SPCSSAttr *stop);
-guint32 sp_item_gradient_stop_query_style (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
-void sp_item_gradient_edit_stop (SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
-void sp_item_gradient_reverse_vector (SPItem *item, bool fill_or_stroke);
+
+void sp_item_gradient_stop_set_style(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke, SPCSSAttr *stop);
+guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke);
+void sp_item_gradient_edit_stop(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke);
+void sp_item_gradient_reverse_vector(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 
 #endif // SEEN_SP_GRADIENT_CHEMISTRY_H
 

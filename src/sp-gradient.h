@@ -14,6 +14,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <vector>
 #include <gdk/gdk.h>
 #include <glibmm/ustring.h>
 #include <2geom/affine.h>
@@ -34,20 +35,20 @@ class SPStop;
 #define SP_IS_GRADIENT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_GRADIENT))
 #define SP_IS_GRADIENT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_GRADIENT))
 
-typedef enum {
+enum SPGradientType {
     SP_GRADIENT_TYPE_UNKNOWN,
     SP_GRADIENT_TYPE_LINEAR,
     SP_GRADIENT_TYPE_RADIAL
-} SPGradientType;
+};
 
-typedef enum {
+enum SPGradientState {
     SP_GRADIENT_STATE_UNKNOWN,
     SP_GRADIENT_STATE_VECTOR,
     SP_GRADIENT_STATE_PRIVATE
-} SPGradientState;
+};
 
-typedef enum {
-    POINT_LG_BEGIN =0, //start enum at 0 (for indexing into gr_knot_shapes array for example)
+enum GrPointType {
+    POINT_LG_BEGIN = 0, //start enum at 0 (for indexing into gr_knot_shapes array for example)
     POINT_LG_END,
     POINT_LG_MID,
     POINT_RG_CENTER,
@@ -59,7 +60,22 @@ typedef enum {
     // insert new point types here.
 
     POINT_G_INVALID
-} GrPointType;
+};
+
+namespace Inkscape {
+
+enum PaintTarget {
+    FOR_FILL,
+    FOR_STROKE
+};
+
+/**
+ * Convenience function to access a common vector of all enum values.
+ */
+std::vector<PaintTarget> const &allPaintTargets();
+
+} // namespace Inkscape
+
 
 /**
  * Gradient

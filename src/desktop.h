@@ -35,6 +35,8 @@
 #include "display/rendermode.h"
 #include <glibmm/ustring.h>
 
+#include "sp-gradient.h" // TODO refactor enums out to their own .h file
+
 class SPCSSAttr;
 struct SPCanvas;
 struct SPCanvasItem;
@@ -164,9 +166,9 @@ public:
     // storage for selected dragger used by GrDrag as it's
     // created and deleted by tools
     SPItem *gr_item;
-    guint  gr_point_type;
+    GrPointType  gr_point_type;
     guint  gr_point_i;
-    bool   gr_fill_or_stroke;
+    Inkscape::PaintTarget gr_fill_or_stroke;
 
 
     Inkscape::ObjectHierarchy *_layer_hierarchy;

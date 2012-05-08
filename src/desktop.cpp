@@ -121,9 +121,9 @@ SPDesktop::SPDesktop() :
     showing_dialogs ( false ),
     guides_active( false ),
     gr_item( 0 ),
-    gr_point_type( 0 ),
+    gr_point_type( POINT_LG_BEGIN ),
     gr_point_i( 0 ),
-    gr_fill_or_stroke( true ),
+    gr_fill_or_stroke( Inkscape::FOR_FILL ),
     _layer_hierarchy( 0 ),
     _reconstruction_old_layer_id(), // an id attribute is not allowed to be the empty string
     _display_mode(Inkscape::RENDERMODE_NORMAL),

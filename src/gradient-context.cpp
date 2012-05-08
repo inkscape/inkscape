@@ -284,7 +284,7 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
             GrDraggable *d = (GrDraggable *) j->data;
 
             // find the gradient
-            SPGradient *gradient = sp_item_gradient (d->item, d->fill_or_stroke);
+            SPGradient *gradient = getGradient(d->item, d->fill_or_stroke);
             SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
 
             // these draggable types cannot have a next draggabe to insert a stop between them
@@ -300,7 +300,7 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
             SPStop *next_stop = this_stop->getNextStop();
             SPStop *last_stop = sp_last_stop (vector);
 
-            gint fs = d->fill_or_stroke;
+            Inkscape::PaintTarget fs = d->fill_or_stroke;
             SPItem *item = d->item;
             gint type = d->point_type;
             gint p_i = d->point_i;
@@ -312,23 +312,26 @@ sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSLi
                 // (complex because it may have different types, and because in radial,
                 // more than one dragger may correspond to a stop, so we must distinguish)
                 if (type == POINT_LG_BEGIN || type == POINT_LG_MID) {
-                    if (next_stop == last_stop)
-                        dnext = drag->getDraggerFor (item, POINT_LG_END, p_i+1, fs);
-                    else
-                        dnext = drag->getDraggerFor (item, POINT_LG_MID, p_i+1, fs);
+                    if (next_stop == last_stop) {
+                        dnext = drag->getDraggerFor(item, POINT_LG_END, p_i+1, fs);
+                    } else {
+                        dnext = drag->getDraggerFor(item, POINT_LG_MID, p_i+1, fs);
+                    }
                 } else { // radial
                     if (type == POINT_RG_CENTER || type == POINT_RG_MID1) {
-                        if (next_stop == last_stop)
-                            dnext = drag->getDraggerFor (item, POINT_RG_R1, p_i+1, fs);
-                        else
-                            dnext = drag->getDraggerFor (item, POINT_RG_MID1, p_i+1, fs);
+                        if (next_stop == last_stop) {
+                            dnext = drag->getDraggerFor(item, POINT_RG_R1, p_i+1, fs);
+                        } else {
+                            dnext = drag->getDraggerFor(item, POINT_RG_MID1, p_i+1, fs);
+                        }
                     }
                     if ((type == POINT_RG_MID2) ||
                         (type == POINT_RG_CENTER && dnext && !dnext->isSelected())) {
-                        if (next_stop == last_stop)
-                            dnext = drag->getDraggerFor (item, POINT_RG_R2, p_i+1, fs);
-                        else
-                            dnext = drag->getDraggerFor (item, POINT_RG_MID2, p_i+1, fs);
+                        if (next_stop == last_stop) {
+                            dnext = drag->getDraggerFor(item, POINT_RG_R2, p_i+1, fs);
+                        } else {
+                            dnext = drag->getDraggerFor(item, POINT_RG_MID2, p_i+1, fs);
+                        }
                     }
                 }
 
@@ -372,7 +375,7 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
                  */
                 continue;
             }
-            SPGradient *gradient = sp_item_gradient (d->item, d->fill_or_stroke);
+            SPGradient *gradient = getGradient(d->item, d->fill_or_stroke);
             SPGradient *vector = sp_gradient_get_forked_vector_if_necessary (gradient, false);
             SPStop *this_stop = sp_get_stop_i (vector, d->point_i);
             SPStop *next_stop = this_stop->getNextStop();
@@ -545,7 +548,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
                     SPItem *item = SP_ITEM(i->data);
                     SPGradientType new_type = (SPGradientType) prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR);
-                    guint new_fill = prefs->getInt("/tools/gradient/newfillorstroke", 1);
+                    Inkscape::PaintTarget new_fill = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
 
                     SPGradient *vector = sp_gradient_vector_for_object(sp_desktop_document(desktop), desktop, item, new_fill);
 
@@ -841,8 +844,8 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     drag->selected_reverse_vector();
                 } else { // If no drag or no dragger selected, act on selection (both fill and stroke gradients)
                     for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
-                        sp_item_gradient_reverse_vector (SP_ITEM(i->data), true);
-                        sp_item_gradient_reverse_vector (SP_ITEM(i->data), false);
+                        sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_FILL);
+                        sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_STROKE);
                     }
                 }
                 // we did an undoable action
@@ -910,7 +913,7 @@ static void sp_gradient_drag(SPGradientContext &rc, Geom::Point const pt, guint 
     if (!selection->isEmpty()) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         int type = prefs->getInt("/tools/gradient/newgradient", 1);
-        int fill_or_stroke = prefs->getInt("/tools/gradient/newfillorstroke", 1);
+        Inkscape::PaintTarget fill_or_stroke = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
 
         SPGradient *vector;
         if (ec->item_to_select) {

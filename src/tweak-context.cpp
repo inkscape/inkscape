@@ -801,12 +801,11 @@ tweak_profile (double dist, double radius)
     }
 }
 
-void
-tweak_colors_in_gradient (SPItem *item, bool fill_or_stroke,
-                          guint32 const rgb_goal, Geom::Point p_w, double radius, double force, guint mode,
-                          bool do_h, bool do_s, bool do_l, bool /*do_o*/)
+void tweak_colors_in_gradient(SPItem *item, Inkscape::PaintTarget fill_or_stroke,
+                              guint32 const rgb_goal, Geom::Point p_w, double radius, double force, guint mode,
+                              bool do_h, bool do_s, bool do_l, bool /*do_o*/)
 {
-    SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
+    SPGradient *gradient = getGradient(item, fill_or_stroke);
 
     if (!gradient || !SP_IS_GRADIENT(gradient)) {
         return;
@@ -1028,7 +1027,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
 
             if (do_fill) {
                 if (style->fill.isPaintserver()) {
-                    tweak_colors_in_gradient (item, true, fill_goal, p, radius, this_force, mode, do_h, do_s, do_l, do_o);
+                    tweak_colors_in_gradient(item, Inkscape::FOR_FILL, fill_goal, p, radius, this_force, mode, do_h, do_s, do_l, do_o);
                     did = true;
                 } else if (style->fill.isColor()) {
                     tweak_color (mode, style->fill.value.color.v.c, fill_goal, this_force, do_h, do_s, do_l);
@@ -1038,7 +1037,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
             }
             if (do_stroke) {
                 if (style->stroke.isPaintserver()) {
-                    tweak_colors_in_gradient (item, false, stroke_goal, p, radius, this_force, mode, do_h, do_s, do_l, do_o);
+                    tweak_colors_in_gradient(item, Inkscape::FOR_STROKE, stroke_goal, p, radius, this_force, mode, do_h, do_s, do_l, do_o);
                     did = true;
                 } else if (style->stroke.isColor()) {
                     tweak_color (mode, style->stroke.value.color.v.c, stroke_goal, this_force, do_h, do_s, do_l);

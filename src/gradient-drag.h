@@ -7,7 +7,9 @@
  * Authors:
  *   bulia byak <bulia@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
+ * Copyright (C) 2012 Authors
  * Copyright (C) 2007 Johan Engelen
  * Copyright (C) 2005 Authors
  *
@@ -23,6 +25,7 @@
 #include <2geom/point.h>
 
 #include "knot-enums.h"
+#include "sp-gradient.h" // TODO refactor enums to external .h file
 
 struct SPKnot;
 
@@ -44,13 +47,13 @@ which has the gradient, whether it's fill or stroke, the point type (from the
 GrPointType enum), and the point number (needed if more than 2 stops are present).
 */
 struct GrDraggable {
-    GrDraggable(SPItem *item, guint point_type, guint point_i, bool fill_or_stroke);
+    GrDraggable(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke);
     virtual ~GrDraggable();
 
     SPItem *item;
-    gint point_type;
+    GrPointType point_type;
     gint point_i;  // the stop number of this point ( = 0 POINT_LG_BEGIN and POINT_RG_CENTER)
-    bool fill_or_stroke;
+    Inkscape::PaintTarget fill_or_stroke;
 
     SPObject *getServer();
 
@@ -95,19 +98,19 @@ struct GrDragger {
     void deselect();
     bool isSelected();
 
-    void moveThisToDraggable (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke, bool write_repr);
-    void moveOtherToDraggable (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke, bool write_repr);
+    void moveThisToDraggable(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke, bool write_repr);
+    void moveOtherToDraggable(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke, bool write_repr);
     void updateMidstopDependencies (GrDraggable *draggable, bool write_repr);
     void updateDependencies (bool write_repr);
 
-    bool mayMerge (GrDragger *other);
-    bool mayMerge (GrDraggable *da2);
+    bool mayMerge(GrDragger *other);
+    bool mayMerge(GrDraggable *da2);
 
-    bool isA (gint point_type);
-    bool isA (SPItem *item, gint point_type, bool fill_or_stroke);
-    bool isA (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke);
+    bool isA(GrPointType point_type);
+    bool isA(SPItem *item, GrPointType point_type, Inkscape::PaintTarget fill_or_stroke);
+    bool isA(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke);
 
-    void fireDraggables (bool write_repr, bool scale_radial = false, bool merging_focus = false);
+    void fireDraggables(bool write_repr, bool scale_radial = false, bool merging_focus = false);
 };
 
 /**
@@ -147,10 +150,10 @@ public: // FIXME: make more of this private!
 
     bool keep_selection;
 
-    GrDragger *getDraggerFor (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke);
+    GrDragger *getDraggerFor(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke);
 
-    void grabKnot (GrDragger *dragger, gint x, gint y, guint32 etime);
-    void grabKnot (SPItem *item, gint point_type, gint point_i, bool fill_or_stroke, gint x, gint y, guint32 etime);
+    void grabKnot(GrDragger *dragger, gint x, gint y, guint32 etime);
+    void grabKnot(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke, gint x, gint y, guint32 etime);
 
     bool local_change;
 
@@ -185,8 +188,8 @@ private:
 
     void addDragger (GrDraggable *draggable);
 
-    void addDraggersRadial (SPRadialGradient *rg, SPItem *item, bool fill_or_stroke);
-    void addDraggersLinear (SPLinearGradient *lg, SPItem *item, bool fill_or_stroke);
+    void addDraggersRadial (SPRadialGradient *rg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
+    void addDraggersLinear (SPLinearGradient *lg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 
     bool styleSet( const SPCSSAttr *css );
 
@@ -201,3 +204,13 @@ private:
 };
 
 #endif // SEEN_GRADIENT_DRAG_H
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

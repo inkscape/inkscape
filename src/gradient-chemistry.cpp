@@ -40,6 +40,24 @@
 
 #define noSP_GR_VERBOSE
 
+
+namespace {
+
+Inkscape::PaintTarget paintTargetItems[] = {Inkscape::FOR_FILL, Inkscape::FOR_STROKE};
+
+std::vector<Inkscape::PaintTarget> vectorOfPaintTargets(paintTargetItems, paintTargetItems + (sizeof(paintTargetItems) / sizeof(paintTargetItems[0])));
+
+} // namespace
+
+namespace Inkscape {
+
+std::vector<PaintTarget> const &allPaintTargets()
+{
+    return vectorOfPaintTargets;
+}
+
+} // namespace Inkscape
+
 // Terminology:
 //
 // "vector" is a gradient that has stops but not position coords. It can be referenced by one or
@@ -479,25 +497,29 @@ void sp_gradient_transform_multiply(SPGradient *gradient, Geom::Affine postmul, 
     g_free(c);
 }
 
-SPGradient *sp_item_gradient(SPItem *item, bool fill_or_stroke)
+SPGradient *getGradient(SPItem *item, Inkscape::PaintTarget fill_or_stroke)
 {
     SPStyle *style = item->style;
     SPGradient *gradient = 0;
 
-    if (fill_or_stroke) {
-        if (style && (style->fill.isPaintserver())) {
-            SPPaintServer *server = item->style->getFillPaintServer();
-            if ( SP_IS_GRADIENT(server) ) {
-                gradient = SP_GRADIENT(server);
+    switch (fill_or_stroke)
+    {
+        case Inkscape::FOR_FILL:
+            if (style && (style->fill.isPaintserver())) {
+                SPPaintServer *server = item->style->getFillPaintServer();
+                if ( SP_IS_GRADIENT(server) ) {
+                    gradient = SP_GRADIENT(server);
+                }
             }
-        }
-    } else {
-        if (style && (style->stroke.isPaintserver())) {
-            SPPaintServer *server = item->style->getStrokePaintServer();
-            if ( SP_IS_GRADIENT(server) ) {
-                gradient = SP_GRADIENT(server);
+            break;
+        case Inkscape::FOR_STROKE:
+            if (style && (style->stroke.isPaintserver())) {
+                SPPaintServer *server = item->style->getStrokePaintServer();
+                if ( SP_IS_GRADIENT(server) ) {
+                    gradient = SP_GRADIENT(server);
+                }
             }
-        }
+            break;
     }
 
    return gradient;
@@ -574,12 +596,13 @@ SPStop *sp_vector_add_stop(SPGradient *vector, SPStop* prev_stop, SPStop* next_s
     return newstop;
 }
 
-void sp_item_gradient_edit_stop(SPItem *item, guint point_type, guint point_i, bool fill_or_stroke)
+void sp_item_gradient_edit_stop(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke)
 {
-    SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
+    SPGradient *gradient = getGradient(item, fill_or_stroke);
 
-    if (!gradient || !SP_IS_GRADIENT(gradient))
+    if (!gradient || !SP_IS_GRADIENT(gradient)) {
         return;
+    }
 
     SPGradient *vector = gradient->getVector();
     switch (point_type) {
@@ -614,9 +637,9 @@ void sp_item_gradient_edit_stop(SPItem *item, guint point_type, guint point_i, b
     }
 }
 
-guint32 sp_item_gradient_stop_query_style(SPItem *item, guint point_type, guint point_i, bool fill_or_stroke)
+guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke)
 {
-    SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
+    SPGradient *gradient = getGradient(item, fill_or_stroke);
 
     if (!gradient || !SP_IS_GRADIENT(gradient))
         return 0;
@@ -666,12 +689,12 @@ guint32 sp_item_gradient_stop_query_style(SPItem *item, guint point_type, guint 
     return 0;
 }
 
-void sp_item_gradient_stop_set_style(SPItem *item, guint point_type, guint point_i, bool fill_or_stroke, SPCSSAttr *stop)
+void sp_item_gradient_stop_set_style(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke, SPCSSAttr *stop)
 {
 #ifdef SP_GR_VERBOSE
     g_message("sp_item_gradient_stop_set_style(%p, %d, %d, %d, %p)", item, point_type, point_i, fill_or_stroke, stop);
 #endif
-    SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
+    SPGradient *gradient = getGradient(item, fill_or_stroke);
 
     if (!gradient || !SP_IS_GRADIENT(gradient))
         return;
@@ -725,12 +748,12 @@ void sp_item_gradient_stop_set_style(SPItem *item, guint point_type, guint point
     }
 }
 
-void sp_item_gradient_reverse_vector(SPItem *item, bool fill_or_stroke)
+void sp_item_gradient_reverse_vector(SPItem *item, Inkscape::PaintTarget fill_or_stroke)
 {
 #ifdef SP_GR_VERBOSE
     g_message("sp_item_gradient_reverse_vector(%p, %d)", item, fill_or_stroke);
 #endif
-    SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
+    SPGradient *gradient = getGradient(item, fill_or_stroke);
     if (!gradient || !SP_IS_GRADIENT(gradient))
         return;
 
@@ -787,17 +810,17 @@ void sp_item_gradient_reverse_vector(SPItem *item, bool fill_or_stroke)
 Set the position of point point_type of the gradient applied to item (either fill_or_stroke) to
 p_w (in desktop coordinates). Write_repr if you want the change to become permanent.
 */
-void sp_item_gradient_set_coords(SPItem *item, guint point_type, guint point_i, Geom::Point p_w, bool fill_or_stroke, bool write_repr, bool scale)
+void sp_item_gradient_set_coords(SPItem *item, GrPointType point_type, guint point_i, Geom::Point p_w, Inkscape::PaintTarget fill_or_stroke, bool write_repr, bool scale)
 {
 #ifdef SP_GR_VERBOSE
-    g_message("sp_item_gradient_set_coords(%p, %d, %d, ...)", item, point_type, point_i );
+    g_message("sp_item_gradient_set_coords(%p, %d, %d, (%f, %f), ...)", item, point_type, point_i, p_w[Geom::X], p_w[Geom::Y] );
 #endif
-    SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
+    SPGradient *gradient = getGradient(item, fill_or_stroke);
 
     if (!gradient || !SP_IS_GRADIENT(gradient))
         return;
 
-    gradient = sp_gradient_convert_to_userspace (gradient, item, fill_or_stroke? "fill" : "stroke");
+    gradient = sp_gradient_convert_to_userspace(gradient, item, (fill_or_stroke == Inkscape::FOR_FILL) ? "fill" : "stroke");
 
     Geom::Affine i2d (item->i2dt_affine ());
     Geom::Point p = p_w * i2d.inverse();
@@ -988,9 +1011,9 @@ void sp_item_gradient_set_coords(SPItem *item, guint point_type, guint point_i, 
     }
 }
 
-SPGradient *sp_item_gradient_get_vector(SPItem *item, bool fill_or_stroke)
+SPGradient *sp_item_gradient_get_vector(SPItem *item, Inkscape::PaintTarget fill_or_stroke)
 {
-    SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
+    SPGradient *gradient = getGradient(item, fill_or_stroke);
 
     if (gradient) {
         return gradient->getVector();
@@ -998,10 +1021,10 @@ SPGradient *sp_item_gradient_get_vector(SPItem *item, bool fill_or_stroke)
     return NULL;
 }
 
-SPGradientSpread sp_item_gradient_get_spread(SPItem *item, bool fill_or_stroke)
+SPGradientSpread sp_item_gradient_get_spread(SPItem *item, Inkscape::PaintTarget fill_or_stroke)
 {
     SPGradientSpread spread = SP_GRADIENT_SPREAD_PAD;
-    SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
+    SPGradient *gradient = getGradient(item, fill_or_stroke);
 
     if (gradient) {
         spread = gradient->fetchSpread();
@@ -1010,17 +1033,12 @@ SPGradientSpread sp_item_gradient_get_spread(SPItem *item, bool fill_or_stroke)
 }
 
 
-/**
-Returns the position of point point_type of the gradient applied to item (either fill_or_stroke),
-in desktop coordinates.
-*/
-
-Geom::Point sp_item_gradient_get_coords(SPItem *item, guint point_type, guint point_i, bool fill_or_stroke)
+Geom::Point getGradientCoords(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke)
 {
 #ifdef SP_GR_VERBOSE
-    g_message("sp_item_gradient_get_coords(%p, %d, %d, %d)", item, point_type, point_i, fill_or_stroke);
+    g_message("getGradientCoords(%p, %d, %d, %d)", item, point_type, point_i, fill_or_stroke);
 #endif
-    SPGradient *gradient = sp_item_gradient (item, fill_or_stroke);
+    SPGradient *gradient = getGradient(item, fill_or_stroke);
 
     Geom::Point p (0, 0);
 

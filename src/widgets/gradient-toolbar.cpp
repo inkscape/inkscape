@@ -127,7 +127,7 @@ void gr_apply_gradient(Inkscape::Selection *selection, GrDrag *drag, SPGradient 
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     SPGradientType new_type = static_cast<SPGradientType>(prefs->getInt("/tools/gradient/newgradient", SP_GRADIENT_TYPE_LINEAR));
-    guint new_fill = prefs->getBool("/tools/gradient/newfillorstroke", true);
+    Inkscape::PaintTarget new_fill = (prefs->getInt("/tools/gradient/newfillorstroke", 1) != 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
 
     // GRADIENTFIXME: make this work for multiple selected draggers.
 
@@ -661,8 +661,8 @@ static void gr_reverse(GtkWidget * /*button*/, gpointer data)
         drag->selected_reverse_vector();
     } else { // If no drag or no dragger selected, act on selection (both fill and stroke gradients)
         for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
-            sp_item_gradient_reverse_vector(SP_ITEM(i->data), true);
-            sp_item_gradient_reverse_vector(SP_ITEM(i->data), false);
+            sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_FILL);
+            sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_STROKE);
         }
     }
     // we did an undoable action
@@ -959,7 +959,7 @@ static void gr_new_fillstroke_changed( EgeSelectOneAction *act, GObject * /*tbl*
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool fillmode = ege_select_one_action_get_active( act ) == 0;
-    prefs->setBool("/tools/gradient/newfillorstroke", fillmode);
+    prefs->setInt("/tools/gradient/newfillorstroke", fillmode); // 1 for fill, 0 for stroke
 }
 
 /*
