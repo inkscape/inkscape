@@ -48,16 +48,18 @@
 #include "selection-chemistry.h"
 #include "verbs.h"
 #include "display/sp-canvas.h"
+#include "ui/control-manager.h"
 
+using Inkscape::ControlManager;
+using Inkscape::CtrlLineType;
 using Inkscape::DocumentUndo;
 using Inkscape::allPaintTargets;
+using Inkscape::CTLINE_PRIMARY;
+using Inkscape::CTLINE_SECONDARY;
 
 #define GR_KNOT_COLOR_NORMAL 0xffffff00
 #define GR_KNOT_COLOR_MOUSEOVER 0xff000000
 #define GR_KNOT_COLOR_SELECTED 0x0000ff00
-
-#define GR_LINE_COLOR_FILL 0x0000ff7f
-#define GR_LINE_COLOR_STROKE 0x9999007f
 
 // screen pixels between knots when they snap:
 #define SNAP_DIST 5
@@ -1575,14 +1577,13 @@ void GrDrag::setDeselected(GrDragger *dragger)
 /**
  * Create a line from p1 to p2 and add it to the lines list.
  */
-void GrDrag::addLine(SPItem *item, Geom::Point p1, Geom::Point p2, guint32 rgba)
+void GrDrag::addLine(SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::PaintTarget fill_or_stroke)
 {
-    SPCtrlLine *line = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(this->desktop), SP_TYPE_CTRLLINE, NULL));
+    CtrlLineType type = (fill_or_stroke == Inkscape::FOR_FILL) ? CTLINE_PRIMARY : CTLINE_SECONDARY;
+    SPCtrlLine *line = ControlManager::getManager().createControlLine(sp_desktop_controls(this->desktop), p1, p2, type);
 
     sp_canvas_item_move_to_z(line, 0);
     line->item = item;
-    line->setCoords(p1, p2);
-    line->setRgba32(rgba);
     sp_canvas_item_show(line);
     this->lines = g_slist_append(this->lines, line);
 }
@@ -1757,11 +1758,11 @@ void GrDrag::updateLines()
             if ( server && server->isSolid() ) {
                 // Suppress "gradientness" of solid paint
             } else if ( SP_IS_LINEARGRADIENT(server) ) {
-                this->addLine(item, getGradientCoords(item, POINT_LG_BEGIN, 0, Inkscape::FOR_FILL), getGradientCoords(item, POINT_LG_END, 0, Inkscape::FOR_FILL), GR_LINE_COLOR_FILL);
+                addLine(item, getGradientCoords(item, POINT_LG_BEGIN, 0, Inkscape::FOR_FILL), getGradientCoords(item, POINT_LG_END, 0, Inkscape::FOR_FILL), Inkscape::FOR_FILL);
             } else if ( SP_IS_RADIALGRADIENT(server) ) {
                 Geom::Point center = getGradientCoords(item, POINT_RG_CENTER, 0, Inkscape::FOR_FILL);
-                this->addLine(item, center, getGradientCoords(item, POINT_RG_R1, 0, Inkscape::FOR_FILL), GR_LINE_COLOR_FILL);
-                this->addLine(item, center, getGradientCoords(item, POINT_RG_R2, 0, Inkscape::FOR_FILL), GR_LINE_COLOR_FILL);
+                addLine(item, center, getGradientCoords(item, POINT_RG_R1, 0, Inkscape::FOR_FILL), Inkscape::FOR_FILL);
+                addLine(item, center, getGradientCoords(item, POINT_RG_R2, 0, Inkscape::FOR_FILL), Inkscape::FOR_FILL);
             }
         }
 
@@ -1770,11 +1771,11 @@ void GrDrag::updateLines()
             if ( server && server->isSolid() ) {
                 // Suppress "gradientness" of solid paint
             } else if ( SP_IS_LINEARGRADIENT(server) ) {
-                addLine(item, getGradientCoords(item, POINT_LG_BEGIN, 0, Inkscape::FOR_STROKE), getGradientCoords(item, POINT_LG_END, 0, Inkscape::FOR_STROKE), GR_LINE_COLOR_STROKE);
+                addLine(item, getGradientCoords(item, POINT_LG_BEGIN, 0, Inkscape::FOR_STROKE), getGradientCoords(item, POINT_LG_END, 0, Inkscape::FOR_STROKE), Inkscape::FOR_STROKE);
             } else if ( SP_IS_RADIALGRADIENT(server) ) {
                 Geom::Point center = getGradientCoords(item, POINT_RG_CENTER, 0, Inkscape::FOR_STROKE);
-                addLine(item, center, getGradientCoords(item, POINT_RG_R1, 0, Inkscape::FOR_STROKE), GR_LINE_COLOR_STROKE);
-                addLine(item, center, getGradientCoords(item, POINT_RG_R2, 0, Inkscape::FOR_STROKE), GR_LINE_COLOR_STROKE);
+                addLine(item, center, getGradientCoords(item, POINT_RG_R1, 0, Inkscape::FOR_STROKE), Inkscape::FOR_STROKE);
+                addLine(item, center, getGradientCoords(item, POINT_RG_R2, 0, Inkscape::FOR_STROKE), Inkscape::FOR_STROKE);
             }
         }
     }

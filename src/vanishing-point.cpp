@@ -17,26 +17,29 @@
 #include "vanishing-point.h"
 #include "desktop-handles.h"
 #include "desktop.h"
+#include "display/sp-canvas-item.h"
 #include "event-context.h"
 #include "xml/repr.h"
 #include "perspective-line.h"
 #include "shape-editor.h"
 #include "snap.h"
 #include "sp-namedview.h"
+#include "ui/control-manager.h"
 #include "document-undo.h"
 #include "verbs.h"
 
+using Inkscape::CTLINE_PRIMARY;
+using Inkscape::CTLINE_SECONDARY;
+using Inkscape::CTLINE_TERTIARY;
+using Inkscape::CTRL_TYPE_ANCHOR;
+using Inkscape::ControlManager;
+using Inkscape::CtrlLineType;
 using Inkscape::DocumentUndo;
 
 namespace Box3D {
 
 #define VP_KNOT_COLOR_NORMAL 0xffffff00
 #define VP_KNOT_COLOR_SELECTED 0x0000ff00
-
-#define VP_LINE_COLOR_FILL 0x0000ff7f
-#define VP_LINE_COLOR_STROKE_X 0xff00007f
-#define VP_LINE_COLOR_STROKE_Y 0x0000ff7f
-#define VP_LINE_COLOR_STROKE_Z 0xffff007f
 
 // screen pixels between knots when they snap:
 #define SNAP_DIST 5
@@ -273,11 +276,13 @@ VPDragger::VPDragger(VPDrag *parent, Geom::Point p, VanishingPoint &vp)
 
     if (vp.is_finite()) {
         // create the knot
-        this->knot = sp_knot_new (inkscape_active_desktop(), NULL);
+        this->knot = sp_knot_new(inkscape_active_desktop(), NULL);
         this->knot->setMode(SP_KNOT_MODE_XOR);
         this->knot->setFill(VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL, VP_KNOT_COLOR_NORMAL);
         this->knot->setStroke(0x000000ff, 0x000000ff, 0x000000ff);
         sp_knot_update_ctrl(this->knot);
+        knot->item->ctrlType = CTRL_TYPE_ANCHOR;
+        ControlManager::getManager().track(knot->item);
 
         // move knot to the given point
         sp_knot_set_position (this->knot, this->point, SP_KNOT_STATE_NORMAL);
@@ -659,16 +664,22 @@ VPDrag::updateBoxDisplays ()
 /**
  * Depending on the value of all_lines, draw the front and/or rear perspective lines starting from the given corners.
  */
-void
-VPDrag::drawLinesForFace (const SPBox3D *box, Proj::Axis axis) //, guint corner1, guint corner2, guint corner3, guint corner4)
+void VPDrag::drawLinesForFace(const SPBox3D *box, Proj::Axis axis) //, guint corner1, guint corner2, guint corner3, guint corner4)
 {
-    guint color;
+    CtrlLineType type = CTLINE_PRIMARY;
     switch (axis) {
         // TODO: Make color selectable by user
-        case Proj::X: color = VP_LINE_COLOR_STROKE_X; break;
-        case Proj::Y: color = VP_LINE_COLOR_STROKE_Y; break;
-        case Proj::Z: color = VP_LINE_COLOR_STROKE_Z; break;
-        default: g_assert_not_reached();
+        case Proj::X:
+            type = CTLINE_SECONDARY;
+            break;
+        case Proj::Y:
+            type = CTLINE_PRIMARY;
+            break;
+        case Proj::Z:
+            type = CTLINE_TERTIARY;
+            break;
+        default:
+            g_assert_not_reached();
     }
 
     Geom::Point corner1, corner2, corner3, corner4;
@@ -681,13 +692,13 @@ VPDrag::drawLinesForFace (const SPBox3D *box, Proj::Axis axis) //, guint corner1
         Geom::Point pt = vp.affine();
         if (this->front_or_rear_lines & 0x1) {
             // draw 'front' perspective lines
-            this->addLine (corner1, pt, color);
-            this->addLine (corner2, pt, color);
+            this->addLine(corner1, pt, type);
+            this->addLine(corner2, pt, type);
         }
         if (this->front_or_rear_lines & 0x2) {
             // draw 'rear' perspective lines
-            this->addLine (corner3, pt, color);
-            this->addLine (corner4, pt, color);
+            this->addLine(corner3, pt, type);
+            this->addLine(corner4, pt, type);
         }
     } else {
         // draw perspective lines for infinite VPs
@@ -712,13 +723,13 @@ VPDrag::drawLinesForFace (const SPBox3D *box, Proj::Axis axis) //, guint corner1
         }
         if (this->front_or_rear_lines & 0x1) {
             // draw 'front' perspective lines
-            this->addLine (corner1, *pt1, color);
-            this->addLine (corner2, *pt2, color);
+            this->addLine(corner1, *pt1, type);
+            this->addLine(corner2, *pt2, type);
         }
         if (this->front_or_rear_lines & 0x2) {
             // draw 'rear' perspective lines
-            this->addLine (corner3, *pt3, color);
-            this->addLine (corner4, *pt4, color);
+            this->addLine(corner3, *pt3, type);
+            this->addLine(corner4, *pt4, type);
         }
     }
 }
@@ -765,16 +776,9 @@ VPDrag::swap_perspectives_of_VPs(Persp3D *persp2, Persp3D *persp1)
     }
 }
 
-/**
- * Create a line from p1 to p2 and add it to the lines list.
- */
-void VPDrag::addLine(Geom::Point p1, Geom::Point p2, guint32 rgba)
+void VPDrag::addLine(Geom::Point const &p1, Geom::Point const &p2, Inkscape::CtrlLineType type)
 {
-    SPCtrlLine *line = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(inkscape_active_desktop()), SP_TYPE_CTRLLINE, NULL));
-    line->setCoords(p1, p2);
-    if (rgba != VP_LINE_COLOR_FILL) { // fill is the default, so don't set color for it to speed up redraw
-        line->setRgba32(rgba);
-    }
+    SPCtrlLine *line = ControlManager::getManager().createControlLine(sp_desktop_controls(inkscape_active_desktop()), p1, p2, type);
     sp_canvas_item_show(line);
     this->lines = g_slist_append(this->lines, line);
 }

@@ -46,11 +46,13 @@
 #include "mod360.h"
 #include <2geom/angle.h>
 #include "display/snap-indicator.h"
+#include "ui/control-manager.h"
 
 #if !GTK_CHECK_VERSION(2,22,0)
 #include "compat-key-syms.h"
 #endif
 
+using Inkscape::ControlManager;
 using Inkscape::DocumentUndo;
 
 static void sp_remove_handles(SPKnot *knot[], gint num);
@@ -157,7 +159,7 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     sp_canvas_item_hide(_norm);
 
     for (int i = 0; i < 4; i++) {
-        _l[i] = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLLINE, NULL));
+        _l[i] = ControlManager::getManager().createControlLine(sp_desktop_controls(desktop));
         sp_canvas_item_hide(_l[i]);
     }
 

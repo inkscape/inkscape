@@ -41,7 +41,9 @@
 #include "snap.h"
 #include "sp-namedview.h"
 #include "enums.h"
+#include "ui/control-manager.h"
 
+using Inkscape::ControlManager;
 
 static void sp_measure_context_class_init(SPMeasureContextClass *klass);
 static void sp_measure_context_init(SPMeasureContext *measure_context);
@@ -260,8 +262,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
 
                 //draw control line
-                SPCtrlLine *control_line = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_tempgroup(desktop), SP_TYPE_CTRLLINE, NULL));
-                control_line->setCoords(start_point, end_point);
+                SPCtrlLine *control_line = ControlManager::getManager().createControlLine(sp_desktop_tempgroup(desktop), start_point, end_point);
                 measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
                 Geom::PathVector lineseg;
@@ -432,16 +433,20 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 Geom::Point normal = desktop->w2d(Geom::unit_vector(Geom::rot90(desktop->d2w(end_point - start_point))));
                 if (intersections.size() > 2) {
-                    control_line = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL));
-                    control_line->setCoords(desktop->doc2dt(intersections[0]) + normal*60, desktop->doc2dt(intersections[intersections.size()-1]) + normal*60);
+                    ControlManager &mgr = ControlManager::getManager();
+                    control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                                                         desktop->doc2dt(intersections[0]) + normal * 60,
+                                                         desktop->doc2dt(intersections[intersections.size() - 1]) + normal * 60);
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
-                    control_line = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL));
-                    control_line->setCoords(desktop->doc2dt(intersections[0]), desktop->doc2dt(intersections[0]) + normal*65);
+                    control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                                                         desktop->doc2dt(intersections[0]),
+                                                         desktop->doc2dt(intersections[0]) + normal * 65);
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
-                    control_line = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_tempgroup (desktop), SP_TYPE_CTRLLINE, NULL));
-                    control_line->setCoords(desktop->doc2dt(intersections[intersections.size()-1]), desktop->doc2dt(intersections[intersections.size()-1]) + normal*65);
+                    control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                                                         desktop->doc2dt(intersections[intersections.size() - 1]),
+                                                         desktop->doc2dt(intersections[intersections.size() - 1]) + normal * 65);
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
                     double totallengthval = (intersections[intersections.size()-1] - intersections[0]).length();

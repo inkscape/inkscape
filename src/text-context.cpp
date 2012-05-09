@@ -49,6 +49,7 @@
 #include "style.h"
 #include "text-context.h"
 #include "text-editing.h"
+#include "ui/control-manager.h"
 #include "verbs.h"
 #include "xml/node-event-vector.h"
 #include "xml/repr.h"
@@ -58,6 +59,7 @@
 #include "compat-key-syms.h"
 #endif
 
+using Inkscape::ControlManager;
 using Inkscape::DocumentUndo;
 
 static void sp_text_context_class_init(SPTextContextClass *klass);
@@ -200,8 +202,7 @@ static void sp_text_context_setup(SPEventContext *ec)
         timeout /= 2;
     }
 
-    tc->cursor = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLLINE, NULL));
-    tc->cursor->setCoords(100, 0, 100, 100);
+    tc->cursor = ControlManager::getManager().createControlLine(sp_desktop_controls(desktop), Geom::Point(100, 0), Geom::Point(100, 100));
     tc->cursor->setRgba32(0x000000ff);
     sp_canvas_item_hide(tc->cursor);
 

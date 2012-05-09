@@ -211,17 +211,18 @@ static void sp_pen_context_setup(SPEventContext *ec)
         ((SPEventContextClass *) pen_parent_class)->setup(ec);
     }
 
+    ControlManager &mgr = ControlManager::getManager();
+
     // Pen indicators
-    pc->c0 = ControlManager::getManager().createControl(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), Inkscape::CTRL_TYPE_ADJ_HANDLE);
-    ControlManager::getManager().track(pc->c0);
+    pc->c0 = mgr.createControl(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), Inkscape::CTRL_TYPE_ADJ_HANDLE);
+    mgr.track(pc->c0);
 
-    pc->c1 = ControlManager::getManager().createControl(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), Inkscape::CTRL_TYPE_ADJ_HANDLE);
-    ControlManager::getManager().track(pc->c1);
+    pc->c1 = mgr.createControl(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), Inkscape::CTRL_TYPE_ADJ_HANDLE);
+    mgr.track(pc->c1);
 
-    pc->cl0 = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRLLINE, NULL));
-    pc->cl0->setRgba32(0x0000007f);
-    pc->cl1 = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)), SP_TYPE_CTRLLINE, NULL));
-    pc->cl1->setRgba32(0x0000007f);
+    pc->cl0 = mgr.createControlLine(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)));
+    pc->cl1 = mgr.createControlLine(sp_desktop_controls(SP_EVENT_CONTEXT_DESKTOP(ec)));
+
 
     sp_canvas_item_hide(pc->c0);
     sp_canvas_item_hide(pc->c1);

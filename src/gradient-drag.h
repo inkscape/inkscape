@@ -57,9 +57,9 @@ struct GrDraggable {
 
     SPObject *getServer();
 
-    bool mayMerge (GrDraggable *da2);
+    bool mayMerge(GrDraggable *da2);
 
-    inline int equals (GrDraggable *other) {
+    inline int equals(GrDraggable *other) {
         return ((item == other->item) && (point_type == other->point_type) && (point_i == other->point_i) && (fill_or_stroke == other->fill_or_stroke));
     }
 };
@@ -72,7 +72,7 @@ be moved when the knot moves. Normally there's one draggable in the list, but th
 be more when draggers are snapped together.
 */
 struct GrDragger {
-    GrDragger (GrDrag *parent, Geom::Point p, GrDraggable *draggable);
+    GrDragger(GrDrag *parent, Geom::Point p, GrDraggable *draggable);
     virtual ~GrDragger();
 
     GrDrag *parent;
@@ -100,8 +100,8 @@ struct GrDragger {
 
     void moveThisToDraggable(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke, bool write_repr);
     void moveOtherToDraggable(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke, bool write_repr);
-    void updateMidstopDependencies (GrDraggable *draggable, bool write_repr);
-    void updateDependencies (bool write_repr);
+    void updateMidstopDependencies(GrDraggable *draggable, bool write_repr);
+    void updateDependencies(bool write_repr);
 
     bool mayMerge(GrDragger *other);
     bool mayMerge(GrDraggable *da2);
@@ -132,8 +132,8 @@ public: // FIXME: make more of this private!
 
     // especially the selection must be private, fix gradient-context to remove direct access to it
     GList *selected; // list of GrDragger*
-    void setSelected (GrDragger *dragger, bool add_to_selection = false, bool override = true);
-    void setDeselected (GrDragger *dragger);
+    void setSelected(GrDragger *dragger, bool add_to_selection = false, bool override = true);
+    void setDeselected(GrDragger *dragger);
     void deselectAll();
     void selectAll();
     void selectByCoords(std::vector<Geom::Point> coords);
@@ -142,9 +142,9 @@ public: // FIXME: make more of this private!
 
     bool dropColor(SPItem *item, gchar const *c, Geom::Point p);
 
-    SPStop *addStopNearPoint (SPItem *item, Geom::Point mouse_p, double tolerance);
+    SPStop *addStopNearPoint(SPItem *item, Geom::Point mouse_p, double tolerance);
 
-    void deleteSelected (bool just_one = false);
+    void deleteSelected(bool just_one = false);
 
     guint32 getColor();
 
@@ -166,30 +166,30 @@ public: // FIXME: make more of this private!
     GList *draggers;
     GSList *lines;
 
-    void updateDraggers ();
-    void updateLines ();
-    void updateLevels ();
+    void updateDraggers();
+    void updateLines();
+    void updateLevels();
 
     bool mouseOver();
 
-    void selected_move_nowrite (double x, double y, bool scale_radial);
-    void selected_move (double x, double y, bool write_repr = true, bool scale_radial = false);
-    void selected_move_screen (double x, double y);
+    void selected_move_nowrite(double x, double y, bool scale_radial);
+    void selected_move(double x, double y, bool write_repr = true, bool scale_radial = false);
+    void selected_move_screen(double x, double y);
 
-    GrDragger *select_next ();
-    GrDragger *select_prev ();
+    GrDragger *select_next();
+    GrDragger *select_prev();
 
-    void selected_reverse_vector ();
+    void selected_reverse_vector();
 
 private:
     void deselect_all();
 
-    void addLine (SPItem *item, Geom::Point p1, Geom::Point p2, guint32 rgba);
+    void addLine(SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::PaintTarget fill_or_stroke);
 
-    void addDragger (GrDraggable *draggable);
+    void addDragger(GrDraggable *draggable);
 
-    void addDraggersRadial (SPRadialGradient *rg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
-    void addDraggersLinear (SPLinearGradient *lg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
+    void addDraggersRadial(SPRadialGradient *rg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
+    void addDraggersLinear(SPLinearGradient *lg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 
     bool styleSet( const SPCSSAttr *css );
 

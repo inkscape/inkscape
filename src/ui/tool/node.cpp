@@ -28,6 +28,7 @@
 #include "snap-preferences.h"
 #include "sp-metrics.h"
 #include "sp-namedview.h"
+#include "ui/control-manager.h"
 #include "ui/tool/control-point-selection.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/node.h"
@@ -92,9 +93,10 @@ Handle::Handle(NodeSharedData const &data, Geom::Point const &initial_pos, Node 
     , _degenerate(true)
 {
     _cset = &handle_colors;
-    _handle_line = SP_CTRLLINE(sp_canvas_item_new(data.handle_line_group, SP_TYPE_CTRLLINE, NULL));
+    _handle_line = ControlManager::getManager().createControlLine(data.handle_line_group);
     setVisible(false);
 }
+
 Handle::~Handle()
 {
     //sp_canvas_item_hide(_handle_line);

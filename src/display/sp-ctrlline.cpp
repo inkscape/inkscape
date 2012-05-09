@@ -105,15 +105,25 @@ void sp_ctrlline_render(SPCanvasItem *item, SPCanvasBuf *buf)
         return;
     }
 
+    Geom::Point s = cl->s * cl->affine;
+    Geom::Point e = cl->e * cl->affine;
+
+    ink_cairo_set_source_rgba32(buf->ct, 0xffffffbf);
+    cairo_set_line_width(buf->ct, 2);
+    cairo_new_path(buf->ct);
+
+    cairo_move_to(buf->ct, s[Geom::X] - buf->rect.left(), s[Geom::Y] - buf->rect.top());
+    cairo_line_to(buf->ct, e[Geom::X] - buf->rect.left(), e[Geom::Y] - buf->rect.top());
+
+    cairo_stroke(buf->ct);
+
+
     ink_cairo_set_source_rgba32(buf->ct, cl->rgba);
     cairo_set_line_width(buf->ct, 1);
     cairo_new_path(buf->ct);
 
-    Geom::Point s = cl->s * cl->affine;
-    Geom::Point e = cl->e * cl->affine;
-
-    cairo_move_to (buf->ct, s[Geom::X] - buf->rect.left(), s[Geom::Y] - buf->rect.top());
-    cairo_line_to (buf->ct, e[Geom::X] - buf->rect.left(), e[Geom::Y] - buf->rect.top());
+    cairo_move_to(buf->ct, s[Geom::X] - buf->rect.left(), s[Geom::Y] - buf->rect.top());
+    cairo_line_to(buf->ct, e[Geom::X] - buf->rect.left(), e[Geom::Y] - buf->rect.top());
 
     cairo_stroke(buf->ct);
 }

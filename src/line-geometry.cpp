@@ -1,5 +1,3 @@
-#define __LINE_GEOMETRY_C__
-
 /*
  * Routines for dealing with lines (intersections, etc.)
  *
@@ -18,6 +16,9 @@
 #include "desktop-handles.h"
 #include "display/sp-canvas.h"
 #include "display/sodipodi-ctrl.h"
+#include "ui/control-manager.h"
+
+using Inkscape::ControlManager;
 
 namespace Box3D {
 
@@ -211,8 +212,7 @@ void create_canvas_point(Geom::Point const &pos, double size, guint32 rgba)
 void create_canvas_line(Geom::Point const &p1, Geom::Point const &p2, guint32 rgba)
 {
     SPDesktop *desktop = inkscape_active_desktop();
-    SPCtrlLine *line = SP_CTRLLINE(sp_canvas_item_new(sp_desktop_controls(desktop), SP_TYPE_CTRLLINE, NULL));
-    line->setCoords(p1, p2);
+    SPCtrlLine *line = ControlManager::getManager().createControlLine(sp_desktop_controls(desktop), p1, p2);
     line->setRgba32(rgba);
     sp_canvas_item_show(line);
 }

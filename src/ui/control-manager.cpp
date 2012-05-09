@@ -16,6 +16,7 @@
 #include <glib-object.h>
 
 #include "display/sodipodi-ctrl.h" // for SP_TYPE_CTRL
+#include "display/sp-ctrlline.h"
 #include "display/sp-ctrlpoint.h"
 #include "preferences.h"
 
@@ -27,6 +28,11 @@ std::map<Inkscape::ControlType, std::vector<int> > sizeTable;
 
 #define FILL_COLOR_NORMAL 0xffffff7f
 #define FILL_COLOR_MOUSEOVER 0xff0000ff
+
+// Default color for line:
+#define LINE_COLOR_PRIMARY 0x0000ff7f
+#define LINE_COLOR_SECONDARY 0xff00007f
+#define LINE_COLOR_TERTIARY 0xffff007f
 
 namespace Inkscape {
 
@@ -229,6 +235,27 @@ SPCanvasItem *ControlManager::createControl(SPCanvasGroup *parent, ControlType t
         item->ctrlType = type;
     }
     return item;
+}
+
+SPCtrlLine *ControlManager::createControlLine(SPCanvasGroup *parent, CtrlLineType type)
+{
+    SPCtrlLine *line = SP_CTRLLINE(sp_canvas_item_new(parent, SP_TYPE_CTRLLINE, NULL));
+    if (line) {
+        line->ctrlType = CTRL_TYPE_LINE;
+
+        line->setRgba32((type == CTLINE_PRIMARY) ? LINE_COLOR_PRIMARY :
+                        (type == CTLINE_SECONDARY) ? LINE_COLOR_SECONDARY : LINE_COLOR_TERTIARY);
+    }
+    return line;
+}
+
+SPCtrlLine *ControlManager::createControlLine(SPCanvasGroup *parent, Geom::Point const &p1, Geom::Point const &p2, CtrlLineType type)
+{
+    SPCtrlLine *line = createControlLine(parent, type);
+    if (line) {
+        line->setCoords(p1, p2);
+    }
+    return line;
 }
 
 void ControlManager::track(SPCanvasItem *item)

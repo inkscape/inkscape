@@ -16,16 +16,25 @@
 
 #include "display/sp-canvas-item.h"
 
-struct SPCanvasItem;
 struct SPCanvasGroup;
+struct SPCanvasItem;
+struct SPCtrlLine;
 
 namespace Inkscape {
+
+enum CtrlLineType {
+    CTLINE_PRIMARY,
+    CTLINE_SECONDARY,
+    CTLINE_TERTIARY,
+};
+
 
 class ControlManagerImpl;
 
 class ControlManager
 {
 public:
+
     static ControlManager &getManager();
 
     ~ControlManager();
@@ -33,6 +42,10 @@ public:
     sigc::connection connectCtrlSizeChanged(const sigc::slot<void> &slot);
 
     SPCanvasItem *createControl(SPCanvasGroup *parent, ControlType type);
+
+    SPCtrlLine *createControlLine(SPCanvasGroup *parent, CtrlLineType type = CTLINE_PRIMARY);
+
+    SPCtrlLine *createControlLine(SPCanvasGroup *parent, Geom::Point const &p1, Geom::Point const &p2, CtrlLineType type = CTLINE_PRIMARY);
 
     void track(SPCanvasItem *item);
 

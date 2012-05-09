@@ -21,6 +21,7 @@
 #include "persp3d.h"
 #include "box3d.h"
 #include "persp3d-reference.h"
+#include "ui/control-manager.h" // TODO break enums out separately
 
 class SPBox3D;
 
@@ -199,7 +200,10 @@ public:
 private:
     //void deselect_all();
 
-    void addLine (Geom::Point p1, Geom::Point p2, guint32 rgba);
+    /**
+     * Create a line from p1 to p2 and add it to the lines list.
+     */
+    void addLine(Geom::Point const &p1, Geom::Point const &p2, Inkscape::CtrlLineType type);
 
     Inkscape::Selection *selection;
     sigc::connection sel_changed_connection;

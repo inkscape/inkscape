@@ -53,7 +53,8 @@ enum ControlType {
     CTRL_TYPE_ROTATE,
     CTRL_TYPE_SIZER,
     CTRL_TYPE_SHAPER,
-    CTRL_TYPE_ORIGIN
+    CTRL_TYPE_ORIGIN,
+    CTRL_TYPE_LINE
 };
 
 } // namespace Inkscape
