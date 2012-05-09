@@ -71,9 +71,11 @@ struct IconImpl {
 		    gint *natural_height);
 
     static void sizeAllocate(GtkWidget *widget, GtkAllocation *allocation);
-    static int expose(GtkWidget *widget, GdkEventExpose *event);
+    static gboolean draw(GtkWidget *widget, cairo_t *cr);
 
-    static void paint(SPIcon *icon, GdkRectangle const *area);
+#if !GTK_CHECK_VERSION(3,0,0)
+    static gboolean expose(GtkWidget *widget, GdkEventExpose *event);
+#endif
 
     static void screenChanged( GtkWidget *widget, GdkScreen *previous_screen );
     static void styleSet( GtkWidget *widget, GtkStyle *previous_style );
@@ -184,11 +186,12 @@ void IconImpl::classInit(SPIconClass *klass)
 #if GTK_CHECK_VERSION(3,0,0)
     widget_class->get_preferred_width = IconImpl::getPreferredWidth;
     widget_class->get_preferred_height = IconImpl::getPreferredHeight;
+    widget_class->draw = IconImpl::draw;
 #else
     widget_class->size_request = IconImpl::sizeRequest;
+    widget_class->expose_event = IconImpl::expose;
 #endif
     widget_class->size_allocate = IconImpl::sizeAllocate;
-    widget_class->expose_event = IconImpl::expose;
     widget_class->screen_changed = IconImpl::screenChanged;
     widget_class->style_set = IconImpl::styleSet;
 }
@@ -262,19 +265,67 @@ void IconImpl::sizeAllocate(GtkWidget *widget, GtkAllocation *allocation)
     }
 }
 
-int IconImpl::expose(GtkWidget *widget, GdkEventExpose *event)
+gboolean IconImpl::draw(GtkWidget *widget, cairo_t* cr)
 {
-    if ( gtk_widget_is_drawable(widget) ) {
-        SPIcon *icon = SP_ICON(widget);
-        if ( !icon->pb ) {
-            fetchPixbuf( icon );
-        }
+    SPIcon *icon = SP_ICON(widget);
+    if ( !icon->pb ) {
+        fetchPixbuf( icon );
+    }
+    
+    GdkPixbuf *image = icon->pb;
+    bool unref_image = false;
 
-        paint(icon, &event->area);
+    /* copied from the expose function of GtkImage */
+    if (gtk_widget_get_state (GTK_WIDGET(icon)) != GTK_STATE_NORMAL && image) {
+        GtkIconSource *source = gtk_icon_source_new();
+        gtk_icon_source_set_pixbuf(source, icon->pb);
+        gtk_icon_source_set_size(source, GTK_ICON_SIZE_SMALL_TOOLBAR); // note: this is boilerplate and not used
+        gtk_icon_source_set_size_wildcarded(source, FALSE);
+        image = gtk_style_render_icon(gtk_widget_get_style(widget), source, 
+			gtk_widget_get_direction(widget),
+			(GtkStateType) gtk_widget_get_state(widget), 
+			(GtkIconSize)-1, widget, "gtk-image");
+        gtk_icon_source_free(source);
+        unref_image = true;
     }
 
+    if (image) {
+        GtkAllocation allocation;
+	GtkRequisition requisition;
+	gtk_widget_get_allocation(widget, &allocation);
+	gtk_widget_get_requisition(widget, &requisition);
+        int x = floor(allocation.x + ((allocation.width - requisition.width) * 0.5));
+        int y = floor(allocation.y + ((allocation.height - requisition.height) * 0.5));
+        int width = gdk_pixbuf_get_width(image);
+        int height = gdk_pixbuf_get_height(image);
+        // Limit drawing to when we actually have something. Avoids some crashes.
+        if ( (width > 0) && (height > 0) ) {
+		gdk_cairo_set_source_pixbuf(cr, image, x, y);
+		cairo_paint(cr);
+        }
+    }
+
+    if (unref_image) {
+        g_object_unref(G_OBJECT(image));
+    }
+    
     return TRUE;
 }
+
+#if !GTK_CHECK_VERSION(3,0,0)
+gboolean IconImpl::expose(GtkWidget *widget, GdkEventExpose *event)
+{
+    gboolean result = TRUE;
+
+    if (gtk_widget_is_drawable(widget)) {
+	cairo_t * cr = gdk_cairo_create(gtk_widget_get_window(widget));
+        result = draw(widget, cr);
+	cairo_destroy(cr);
+    }
+
+    return result;
+}
+#endif
 
 // PUBLIC CALL:
 void sp_icon_fetch_pixbuf( SPIcon *icon )
@@ -1021,48 +1072,7 @@ int IconImpl::getPhysSize(int size)
     return vals[size];
 }
 
-void IconImpl::paint(SPIcon *icon, GdkRectangle const */*area*/)
-{
-    GtkWidget &widget = *GTK_WIDGET(icon);
-    GdkPixbuf *image = icon->pb;
-    bool unref_image = false;
 
-    /* copied from the expose function of GtkImage */
-    if (gtk_widget_get_state (GTK_WIDGET(icon)) != GTK_STATE_NORMAL && image) {
-        GtkIconSource *source = gtk_icon_source_new();
-        gtk_icon_source_set_pixbuf(source, icon->pb);
-        gtk_icon_source_set_size(source, GTK_ICON_SIZE_SMALL_TOOLBAR); // note: this is boilerplate and not used
-        gtk_icon_source_set_size_wildcarded(source, FALSE);
-        image = gtk_style_render_icon(gtk_widget_get_style(&widget), source, 
-			gtk_widget_get_direction(&widget),
-			(GtkStateType) gtk_widget_get_state(&widget), 
-			(GtkIconSize)-1, &widget, "gtk-image");
-        gtk_icon_source_free(source);
-        unref_image = true;
-    }
-
-    if (image) {
-        GtkAllocation allocation;
-	GtkRequisition requisition;
-	gtk_widget_get_allocation(&widget, &allocation);
-	gtk_widget_get_requisition(&widget, &requisition);
-        int x = floor(allocation.x + ((allocation.width - requisition.width) * 0.5));
-        int y = floor(allocation.y + ((allocation.height - requisition.height) * 0.5));
-        int width = gdk_pixbuf_get_width(image);
-        int height = gdk_pixbuf_get_height(image);
-        // Limit drawing to when we actually have something. Avoids some crashes.
-        if ( (width > 0) && (height > 0) ) {
-            gdk_draw_pixbuf(GDK_DRAWABLE(gtk_widget_get_window(&widget)), 
-			    gtk_widget_get_style(&widget)->black_gc, image,
-                            0, 0, x, y, width, height,
-                            GDK_RGB_DITHER_NORMAL, x, y);
-        }
-    }
-
-    if (unref_image) {
-        g_object_unref(G_OBJECT(image));
-    }
-}
 
 GdkPixbuf *IconImpl::loadPixmap(gchar const *name, unsigned /*lsize*/, unsigned psize)
 {
