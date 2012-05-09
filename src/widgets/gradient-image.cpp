@@ -25,11 +25,10 @@
 
 static void sp_gradient_image_class_init (SPGradientImageClass *klass);
 static void sp_gradient_image_init (SPGradientImage *image);
-static void sp_gradient_image_destroy (GtkObject *object);
-
 static void sp_gradient_image_size_request (GtkWidget *widget, GtkRequisition *requisition);
 
 #if GTK_CHECK_VERSION(3,0,0)
+static void sp_gradient_image_destroy(GtkWidget *object);
 static void sp_gradient_image_get_preferred_width(GtkWidget *widget, 
                                                    gint *minimal_width,
 						   gint *natural_width);
@@ -37,18 +36,19 @@ static void sp_gradient_image_get_preferred_width(GtkWidget *widget,
 static void sp_gradient_image_get_preferred_height(GtkWidget *widget, 
                                                     gint *minimal_height,
 						    gint *natural_height);
+#else
+static void sp_gradient_image_destroy(GtkObject *object);
+static gboolean sp_gradient_image_expose(GtkWidget *widget, GdkEventExpose *event);
 #endif
 
-static gint sp_gradient_image_expose (GtkWidget *widget, GdkEventExpose *event);
-
+static gboolean sp_gradient_image_draw(GtkWidget *widget, cairo_t *cr);
 static void sp_gradient_image_gradient_release (SPObject *, SPGradientImage *im);
 static void sp_gradient_image_gradient_modified (SPObject *, guint flags, SPGradientImage *im);
 static void sp_gradient_image_update (SPGradientImage *img);
 
 static GtkWidgetClass *parent_class;
 
-GType
-sp_gradient_image_get_type (void)
+GType sp_gradient_image_get_type(void)
 {
 	static GType type = 0;
 	if (!type) {
@@ -67,26 +67,25 @@ sp_gradient_image_get_type (void)
 	return type;
 }
 
-static void
-sp_gradient_image_class_init (SPGradientImageClass *klass)
+static void sp_gradient_image_class_init(SPGradientImageClass *klass)
 {
-	GtkObjectClass *object_class;
-	GtkWidgetClass *widget_class;
-
-	object_class = (GtkObjectClass *) klass;
-	widget_class = (GtkWidgetClass *) klass;
-
+	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
 	parent_class = (GtkWidgetClass*)g_type_class_peek_parent (klass);
 
-	object_class->destroy = sp_gradient_image_destroy;
-
 #if GTK_CHECK_VERSION(3,0,0)
+//	GObjectClass *object_class = G_OBJECT_CLASS(klass); 
+
 	widget_class->get_preferred_width = sp_gradient_image_get_preferred_width;
 	widget_class->get_preferred_height = sp_gradient_image_get_preferred_height;
+	widget_class->draw = sp_gradient_image_draw;
+	widget_class->destroy = sp_gradient_image_destroy;
 #else
+	GtkObjectClass *object_class = (GtkObjectClass *) klass;
+
+	object_class->destroy = sp_gradient_image_destroy;
 	widget_class->size_request = sp_gradient_image_size_request;
-#endif
 	widget_class->expose_event = sp_gradient_image_expose;
+#endif
 }
 
 static void
@@ -100,12 +99,13 @@ sp_gradient_image_init (SPGradientImage *image)
 	new (&image->modified_connection) sigc::connection();
 }
 
-static void
-sp_gradient_image_destroy (GtkObject *object)
+#if GTK_CHECK_VERSION(3,0,0)
+static void sp_gradient_image_destroy(GtkWidget *object)
+#else
+static void sp_gradient_image_destroy(GtkObject *object)
+#endif
 {
-	SPGradientImage *image;
-
-	image = SP_GRADIENT_IMAGE (object);
+	SPGradientImage *image = SP_GRADIENT_IMAGE (object);
 
 	if (image->gradient) {
 		image->release_connection.disconnect();
@@ -116,8 +116,13 @@ sp_gradient_image_destroy (GtkObject *object)
 	image->release_connection.~connection();
 	image->modified_connection.~connection();
 
+#if GTK_CHECK_VERSION(3,0,0)
+	if (parent_class->destroy)
+		(* (parent_class)->destroy) (object);
+#else
 	if (((GtkObjectClass *) (parent_class))->destroy)
 		(* ((GtkObjectClass *) (parent_class))->destroy) (object);
+#endif
 }
 
 static void sp_gradient_image_size_request(GtkWidget * /*widget*/, GtkRequisition *requisition)
@@ -142,20 +147,32 @@ static void sp_gradient_image_get_preferred_height(GtkWidget *widget, gint *mini
 }
 #endif
 
-static gint
-sp_gradient_image_expose (GtkWidget *widget, GdkEventExpose *event)
+#if !GTK_CHECK_VERSION(3,0,0)
+static gboolean sp_gradient_image_expose(GtkWidget *widget, GdkEventExpose *event)
 {
-	GtkAllocation allocation;
-	SPGradientImage *image = SP_GRADIENT_IMAGE (widget);
-	SPGradient *gr = image->gradient;
+	gboolean result = TRUE;
+	if(gtk_widget_is_drawable(widget)) {
+		cairo_t *ct = gdk_cairo_create(gtk_widget_get_window (widget));
+		cairo_rectangle(ct, event->area.x, event->area.y,
+				event->area.width, event->area.height);
+		cairo_clip(ct);
+		GtkAllocation allocation;
+		gtk_widget_get_allocation(widget, &allocation);
+		cairo_translate(ct, allocation.x, allocation.y);
+		result = sp_gradient_image_draw(widget, ct);
+		cairo_destroy(ct);
+	}
 
-    cairo_t *ct = gdk_cairo_create(gtk_widget_get_window (widget));
-    
-    cairo_rectangle(ct, event->area.x, event->area.y,
-        event->area.width, event->area.height);
-    cairo_clip(ct);
-    gtk_widget_get_allocation (widget, &allocation);
-    cairo_translate(ct, allocation.x, allocation.y);
+	return result;
+}
+#endif
+
+static gboolean sp_gradient_image_draw(GtkWidget *widget, cairo_t *ct)
+{
+    SPGradientImage *image = SP_GRADIENT_IMAGE(widget);
+    SPGradient *gr = image->gradient;
+    GtkAllocation allocation;
+    gtk_widget_get_allocation(widget, &allocation);
     
     cairo_pattern_t *check = ink_cairo_pattern_create_checkerboard();
     cairo_set_source(ct, check);
@@ -168,7 +185,6 @@ sp_gradient_image_expose (GtkWidget *widget, GdkEventExpose *event)
         cairo_paint(ct);
         cairo_pattern_destroy(p);
     }
-    cairo_destroy(ct);
     
     return TRUE;
 }
