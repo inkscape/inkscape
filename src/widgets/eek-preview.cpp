@@ -263,9 +263,9 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
 	cairo_paint(cr);
 
         if ( preview->_previewPixbuf ) {
-            GtkDrawingArea* da = &(preview->drawing);
-	    GdkWindow* da_window = gtk_widget_get_window(GTK_WIDGET(da));
-	    cairo_t* cr2 = gdk_cairo_create(da_window);
+            GtkDrawingArea *da = &(preview->drawing);
+	    GdkWindow *da_window = gtk_widget_get_window(GTK_WIDGET(da));
+	    cairo_t *cr = gdk_cairo_create(da_window);
 
 #if GTK_CHECK_VERSION(2,24,0)
 	    gint w = gdk_window_get_width(da_window);
@@ -285,10 +285,10 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
                 preview->_scaledH = h;
             }
 
-            GdkPixbuf* pix = (preview->_scaled) ? preview->_scaled : preview->_previewPixbuf;
-	    gdk_cairo_set_source_pixbuf(cr2, pix, 0, 0);
-	    cairo_paint(cr2);
-	    cairo_destroy(cr2);
+            GdkPixbuf *pix = (preview->_scaled) ? preview->_scaled : preview->_previewPixbuf;
+	    gdk_cairo_set_source_pixbuf(cr, pix, 0, 0);
+	    cairo_paint(cr);
+	    cairo_destroy(cr);
         }
 
         if ( preview->_linked ) {
