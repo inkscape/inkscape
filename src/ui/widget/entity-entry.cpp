@@ -26,6 +26,7 @@
 #include "ui/widget/registry.h"
 #include "sp-root.h"
 #include "document-undo.h"
+#include "document-private.h"
 #include "verbs.h"
 
 #include "entity-entry.h"
@@ -105,8 +106,9 @@ EntityLineEntry::on_changed()
     SPDocument *doc = SP_ACTIVE_DOCUMENT;
     Glib::ustring text = static_cast<Gtk::Entry*>(_packable)->get_text();
     if (rdf_set_work_entity (doc, _entity, text.c_str())) {
-        DocumentUndo::done(doc, SP_VERB_NONE, 
-                           /* TODO: annotate */ "entity-entry.cpp:101");
+        if (doc->priv->sensitive) {
+            DocumentUndo::done(doc, SP_VERB_NONE, "Document metadata updated");
+        }
     }
     _wr->setUpdating (false);
 }
@@ -155,7 +157,7 @@ EntityMultiLineEntry::on_changed()
     Gtk::TextView *tv = static_cast<Gtk::TextView*>(s->get_child());
     Glib::ustring text = tv->get_buffer()->get_text();
     if (rdf_set_work_entity (doc, _entity, text.c_str())) {
-        DocumentUndo::done(doc, SP_VERB_NONE, 
+        DocumentUndo::done(doc, SP_VERB_NONE,
                             /* TODO: annotate */ "entity-entry.cpp:146");
     }
     _wr->setUpdating (false);
