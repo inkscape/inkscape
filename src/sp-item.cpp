@@ -967,6 +967,19 @@ gchar *SPItem::description()
 }
 
 /**
+ * Returns 1 if the item is filtered, 0 otherwise.  Used with groups/lists to determine how many, or if any, are filtered
+ *
+ */
+int SPItem::ifilt()
+{
+    int retval=0;
+    if (((SPItemClass *) G_OBJECT_GET_CLASS(this))->description) {
+        if ( style && style->filter.href && style->filter.href->getObject() ) { retval=1; }
+    }
+    return retval;
+}
+
+/**
  * Allocates unique integer keys.
  * \param numkeys Number of keys required.
  * \return First allocated key; hence if the returned key is n

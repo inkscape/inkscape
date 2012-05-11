@@ -192,6 +192,7 @@ public:
 
     unsigned pos_in_parent();
     gchar *description();
+    int ifilt();
     void invoke_print(SPPrintContext *ctx);
     static unsigned int display_key_new(unsigned int numkeys);
     Inkscape::DrawingItem *invoke_show(Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);

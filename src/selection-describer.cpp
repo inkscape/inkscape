@@ -91,6 +91,18 @@ GSList *collect_terms (GSList *items)
     return r;
 }
 
+// Returns the number of filtered items in the list
+int count_filtered (GSList *items)
+{
+    int count=0;
+    SPItem *item=NULL;
+    for (GSList *i = items; i != NULL; i = i->next) {
+        item = SP_ITEM(i->data);
+        count += item->ifilt();
+    }
+    return count;
+}
+
 
 namespace Inkscape {
 
@@ -231,10 +243,23 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             }
             g_slist_free (terms);
 
-            _context.setF(Inkscape::NORMAL_MESSAGE, _("%s%s. %s."), objects_str, in_phrase, _when_selected);
 
+            // indicate all, some, or none filtered
+            const gchar *filt_str =NULL;
+            int n_filt = count_filtered ((GSList *)items);  //all filtered
+            if(n_filt){
+                filt_str = g_strdup_printf (ngettext("; <i>%d filtered object</i> ",
+                                                     "; <i>%d filtered objects</i> ", n_filt), n_filt);
+            }
+            else {
+                filt_str = g_strdup_printf ("");
+            }
+
+            _context.setF(Inkscape::NORMAL_MESSAGE, _("%s%s%s. %s."), objects_str, filt_str, in_phrase, _when_selected);
             if (objects_str)
                 g_free ((gchar *) objects_str);
+            if (filt_str)
+                g_free ((gchar *) filt_str);
         }
 
         g_free(in_phrase);

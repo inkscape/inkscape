@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-05-04 15:54+0200\n"
+"POT-Creation-Date: 2012-05-11 14:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3624,7 +3624,7 @@ msgid "Defines the direction and magnitude of the extrusion"
 msgstr ""
 
 #: ../src/sp-flowtext.cpp:365 ../src/sp-text.cpp:423
-#: ../src/text-context.cpp:1635
+#: ../src/text-context.cpp:1636
 msgid " [truncated]"
 msgstr ""
 
@@ -3728,11 +3728,11 @@ msgstr ""
 msgid "Select <b>at least one non-connector object</b>."
 msgstr ""
 
-#: ../src/connector-context.cpp:1971 ../src/widgets/toolbox.cpp:8477
+#: ../src/connector-context.cpp:1971
 msgid "Make connectors avoid selected objects"
 msgstr ""
 
-#: ../src/connector-context.cpp:1972 ../src/widgets/toolbox.cpp:8487
+#: ../src/connector-context.cpp:1972
 msgid "Make connectors ignore selected objects"
 msgstr ""
 
@@ -4209,7 +4209,7 @@ msgstr ""
 #: ../src/ui/dialog/clonetiler.cpp:834 ../src/ui/dialog/clonetiler.cpp:975
 #: ../src/extension/internal/bitmap/opacity.cpp:38
 #: ../src/extension/internal/filter/transparency.h:279
-#: ../src/widgets/toolbox.cpp:4775 ../share/extensions/interp_att_g.inx.h:14
+#: ../share/extensions/interp_att_g.inx.h:14
 msgid "Opacity"
 msgstr ""
 
@@ -4443,7 +4443,7 @@ msgstr ""
 msgid "Delete tiled clones"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2193 ../src/selection-chemistry.cpp:2326
+#: ../src/ui/dialog/clonetiler.cpp:2193 ../src/selection-chemistry.cpp:2325
 msgid "Select an <b>object</b> to clone."
 msgstr ""
 
@@ -4473,8 +4473,7 @@ msgstr ""
 msgid "<small>Randomize:</small>"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:108 ../src/widgets/toolbox.cpp:1823
-#: ../src/widgets/toolbox.cpp:1831 ../share/extensions/gears.inx.h:8
+#: ../src/ui/dialog/export.cpp:108 ../share/extensions/gears.inx.h:8
 msgid "Units:"
 msgstr ""
 
@@ -4584,7 +4583,7 @@ msgstr ""
 msgid "Exporting %1 files"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:930 ../src/ui/dialog/export.cpp:998
+#: ../src/ui/dialog/export.cpp:930 ../src/ui/dialog/export.cpp:999
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr ""
@@ -4602,11 +4601,12 @@ msgstr ""
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:987
+#. TRANSLATORS: %1 will be the filename, %2 the width, and %3 the height of the image
+#: ../src/ui/dialog/export.cpp:988
 msgid "Exporting %1 (%2 x %3)"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1107 ../src/ui/dialog/export.cpp:1141
+#: ../src/ui/dialog/export.cpp:1108 ../src/ui/dialog/export.cpp:1142
 msgid "Select a filename for exporting"
 msgstr ""
 
@@ -4689,7 +4689,7 @@ msgid "Search paths, lines, polylines"
 msgstr ""
 
 #: ../src/dialogs/find.cpp:647 ../src/ui/dialog/find.cpp:98
-#: ../src/widgets/toolbox.cpp:2487
+#: ../src/widgets/toolbox.cpp:1748
 msgid "Paths"
 msgstr ""
 
@@ -4916,31 +4916,28 @@ msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr ""
 
 #. Align buttons
-#: ../src/ui/dialog/text-edit.cpp:93 ../src/widgets/toolbox.cpp:7874
-#: ../src/widgets/toolbox.cpp:7875
+#: ../src/ui/dialog/text-edit.cpp:93
 msgid "Align left"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:94 ../src/widgets/toolbox.cpp:7882
-#: ../src/widgets/toolbox.cpp:7883
+#: ../src/ui/dialog/text-edit.cpp:94
 msgid "Align center"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:95 ../src/widgets/toolbox.cpp:7890
-#: ../src/widgets/toolbox.cpp:7891
+#: ../src/ui/dialog/text-edit.cpp:95
 msgid "Align right"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:96 ../src/widgets/toolbox.cpp:7899
+#: ../src/ui/dialog/text-edit.cpp:96
 msgid "Justify (only flowed text)"
 msgstr ""
 
 #. Direction buttons
-#: ../src/ui/dialog/text-edit.cpp:100 ../src/widgets/toolbox.cpp:7934
+#: ../src/ui/dialog/text-edit.cpp:100
 msgid "Horizontal text"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:101 ../src/widgets/toolbox.cpp:7941
+#: ../src/ui/dialog/text-edit.cpp:101
 msgid "Vertical text"
 msgstr ""
 
@@ -4948,7 +4945,7 @@ msgstr ""
 msgid "Spacing between lines (percent of font size)"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:566 ../src/text-context.cpp:1523
+#: ../src/ui/dialog/text-edit.cpp:566 ../src/text-context.cpp:1524
 msgid "Set text style"
 msgstr ""
 
@@ -5092,7 +5089,6 @@ msgstr ""
 
 #: ../src/display/canvas-axonomgrid.cpp:337
 #: ../src/ui/dialog/inkscape-preferences.cpp:697
-#: ../src/widgets/toolbox.cpp:3870
 msgid "Angle X:"
 msgstr ""
 
@@ -5103,7 +5099,6 @@ msgstr ""
 
 #: ../src/display/canvas-axonomgrid.cpp:339
 #: ../src/ui/dialog/inkscape-preferences.cpp:698
-#: ../src/widgets/toolbox.cpp:3949
 msgid "Angle Z:"
 msgstr ""
 
@@ -5354,11 +5349,11 @@ msgstr ""
 msgid "Bounding box side midpoint"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:194 ../src/ui/tool/node.cpp:1277
+#: ../src/display/snap-indicator.cpp:194 ../src/ui/tool/node.cpp:1279
 msgid "Smooth node"
 msgstr ""
 
-#: ../src/display/snap-indicator.cpp:197 ../src/ui/tool/node.cpp:1276
+#: ../src/display/snap-indicator.cpp:197 ../src/ui/tool/node.cpp:1278
 msgid "Cusp node"
 msgstr ""
 
@@ -5681,9 +5676,8 @@ msgstr ""
 #: ../src/extension/internal/bluredge.cpp:137
 #: ../src/extension/internal/filter/morphology.h:65
 #: ../src/ui/dialog/object-attributes.cpp:58
-#: ../src/ui/dialog/object-attributes.cpp:66 ../src/widgets/toolbox.cpp:4569
-#: ../src/widgets/toolbox.cpp:4889 ../src/widgets/toolbox.cpp:5384
-#: ../src/widgets/toolbox.cpp:6448 ../share/extensions/foldablebox.inx.h:9
+#: ../src/ui/dialog/object-attributes.cpp:66
+#: ../share/extensions/foldablebox.inx.h:9
 msgid "Width:"
 msgstr ""
 
@@ -5702,7 +5696,7 @@ msgstr ""
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:43
 #: ../src/extension/internal/filter/color.h:1044
 #: ../src/extension/internal/filter/paint.h:357
-#: ../src/widgets/gradient-toolbar.cpp:1219
+#: ../src/widgets/gradient-toolbar.cpp:1205
 #: ../src/widgets/gradient-vector.cpp:863
 #: ../share/extensions/printing_marks.inx.h:10
 msgid "Offset:"
@@ -5946,7 +5940,6 @@ msgstr ""
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:39
 #: ../src/extension/internal/bitmap/spread.cpp:39
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:45
-#: ../src/widgets/toolbox.cpp:4981
 msgid "Amount:"
 msgstr ""
 
@@ -6124,7 +6117,6 @@ msgstr ""
 #: ../src/extension/internal/filter/blurs.h:333
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2330
 #: ../src/ui/widget/object-composite-settings.cpp:65
-#: ../src/widgets/toolbox.cpp:5978
 msgid "Opacity:"
 msgstr ""
 
@@ -6234,7 +6226,6 @@ msgstr ""
 #: ../src/extension/internal/bitmap/threshold.cpp:40
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:46
 #: ../src/ui/dialog/inkscape-preferences.cpp:1112
-#: ../src/widgets/toolbox.cpp:8718
 msgid "Threshold:"
 msgstr ""
 
@@ -7269,7 +7260,7 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:1207
 #: ../src/ui/dialog/object-attributes.cpp:56
 #: ../src/ui/dialog/object-attributes.cpp:64 ../src/ui/dialog/tile.cpp:618
-#: ../src/widgets/desktop-widget.cpp:574 ../src/widgets/toolbox.cpp:1707
+#: ../src/widgets/desktop-widget.cpp:574
 msgid "X:"
 msgstr ""
 
@@ -7278,7 +7269,7 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:1208
 #: ../src/ui/dialog/object-attributes.cpp:57
 #: ../src/ui/dialog/object-attributes.cpp:65 ../src/ui/dialog/tile.cpp:619
-#: ../src/widgets/desktop-widget.cpp:577 ../src/widgets/toolbox.cpp:1725
+#: ../src/widgets/desktop-widget.cpp:577
 msgid "Y:"
 msgstr ""
 
@@ -7743,7 +7734,6 @@ msgid "Clean-up:"
 msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:239
-#: ../src/widgets/toolbox.cpp:8545
 msgid "Length:"
 msgstr ""
 
@@ -8049,8 +8039,6 @@ msgstr ""
 
 #: ../src/extension/internal/filter/transparency.h:59
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2280
-#: ../src/widgets/toolbox.cpp:4313 ../src/widgets/toolbox.cpp:4695
-#: ../src/widgets/toolbox.cpp:4959 ../src/widgets/toolbox.cpp:6426
 #: ../share/extensions/extrude.inx.h:4 ../share/extensions/triangle.inx.h:9
 msgid "Mode:"
 msgstr ""
@@ -8192,7 +8180,7 @@ msgstr ""
 #: ../src/extension/internal/grid.cpp:212
 #: ../src/ui/dialog/document-properties.cpp:147
 #: ../src/ui/dialog/inkscape-preferences.cpp:706
-#: ../src/widgets/toolbox.cpp:2577
+#: ../src/widgets/toolbox.cpp:1838
 msgid "Grids"
 msgstr ""
 
@@ -8454,11 +8442,11 @@ msgstr ""
 msgid "Vector graphics format used by Corel WordPerfect"
 msgstr ""
 
-#: ../src/extension/prefdialog.cpp:238
+#: ../src/extension/prefdialog.cpp:246
 msgid "Live preview"
 msgstr ""
 
-#: ../src/extension/prefdialog.cpp:238
+#: ../src/extension/prefdialog.cpp:246
 msgid "Is the effect previewed live on canvas?"
 msgstr ""
 
@@ -8574,7 +8562,7 @@ msgstr ""
 msgid "Saving document..."
 msgstr ""
 
-#: ../src/file.cpp:1189 ../src/ui/dialog/ocaldialogs.cpp:1126
+#: ../src/file.cpp:1189 ../src/ui/dialog/ocaldialogs.cpp:1121
 msgid "Import"
 msgstr ""
 
@@ -8619,7 +8607,7 @@ msgid "Merge"
 msgstr ""
 
 #: ../src/filter-enums.cpp:32 ../src/live_effects/effect.cpp:98
-#: ../src/widgets/gradient-toolbar.cpp:1219
+#: ../src/widgets/gradient-toolbar.cpp:1205
 msgid "Offset"
 msgstr ""
 
@@ -8702,7 +8690,6 @@ msgstr ""
 #: ../src/ui/dialog/input.cpp:613 ../src/ui/dialog/input.cpp:615
 #: ../src/ui/dialog/input.cpp:617 ../src/ui/dialog/input.cpp:1286
 #: ../src/ui/dialog/input.cpp:1289 ../src/verbs.cpp:2211
-#: ../src/widgets/toolbox.cpp:4341
 #: ../share/extensions/gcodetools_area.inx.h:32
 #: ../share/extensions/gcodetools_dxf_points.inx.h:15
 #: ../share/extensions/gcodetools_engraving.inx.h:19
@@ -8750,7 +8737,7 @@ msgstr ""
 #: ../src/flood-context.cpp:254 ../src/widgets/sp-color-icc-selector.cpp:233
 #: ../src/widgets/sp-color-icc-selector.cpp:234
 #: ../src/widgets/sp-color-scales.cpp:430
-#: ../src/widgets/sp-color-scales.cpp:431 ../src/widgets/toolbox.cpp:4727
+#: ../src/widgets/sp-color-scales.cpp:431
 #: ../share/extensions/color_randomize.inx.h:4
 msgid "Hue"
 msgstr ""
@@ -8759,14 +8746,14 @@ msgstr ""
 #: ../src/widgets/sp-color-icc-selector.cpp:233
 #: ../src/widgets/sp-color-icc-selector.cpp:234
 #: ../src/widgets/sp-color-scales.cpp:433
-#: ../src/widgets/sp-color-scales.cpp:434 ../src/widgets/toolbox.cpp:4743
+#: ../src/widgets/sp-color-scales.cpp:434
 #: ../share/extensions/color_randomize.inx.h:8
 msgid "Saturation"
 msgstr ""
 
 #: ../src/flood-context.cpp:256 ../src/widgets/sp-color-icc-selector.cpp:234
 #: ../src/widgets/sp-color-scales.cpp:436
-#: ../src/widgets/sp-color-scales.cpp:437 ../src/widgets/toolbox.cpp:4759
+#: ../src/widgets/sp-color-scales.cpp:437
 #: ../share/extensions/color_randomize.inx.h:5
 msgid "Lightness"
 msgstr ""
@@ -8833,35 +8820,35 @@ msgstr ""
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
 msgstr ""
 
-#: ../src/gradient-context.cpp:137 ../src/gradient-drag.cpp:81
+#: ../src/gradient-context.cpp:137 ../src/gradient-drag.cpp:84
 msgid "Linear gradient <b>start</b>"
 msgstr ""
 
 #. POINT_LG_BEGIN
-#: ../src/gradient-context.cpp:138 ../src/gradient-drag.cpp:82
+#: ../src/gradient-context.cpp:138 ../src/gradient-drag.cpp:85
 msgid "Linear gradient <b>end</b>"
 msgstr ""
 
-#: ../src/gradient-context.cpp:139 ../src/gradient-drag.cpp:83
+#: ../src/gradient-context.cpp:139 ../src/gradient-drag.cpp:86
 msgid "Linear gradient <b>mid stop</b>"
 msgstr ""
 
-#: ../src/gradient-context.cpp:140 ../src/gradient-drag.cpp:84
+#: ../src/gradient-context.cpp:140 ../src/gradient-drag.cpp:87
 msgid "Radial gradient <b>center</b>"
 msgstr ""
 
 #: ../src/gradient-context.cpp:141 ../src/gradient-context.cpp:142
-#: ../src/gradient-drag.cpp:85 ../src/gradient-drag.cpp:86
+#: ../src/gradient-drag.cpp:88 ../src/gradient-drag.cpp:89
 msgid "Radial gradient <b>radius</b>"
 msgstr ""
 
-#: ../src/gradient-context.cpp:143 ../src/gradient-drag.cpp:87
+#: ../src/gradient-context.cpp:143 ../src/gradient-drag.cpp:90
 msgid "Radial gradient <b>focus</b>"
 msgstr ""
 
 #. POINT_RG_FOCUS
 #: ../src/gradient-context.cpp:144 ../src/gradient-context.cpp:145
-#: ../src/gradient-drag.cpp:88 ../src/gradient-drag.cpp:89
+#: ../src/gradient-drag.cpp:91 ../src/gradient-drag.cpp:92
 msgid "Radial gradient <b>mid stop</b>"
 msgstr ""
 
@@ -8915,84 +8902,84 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gradient-context.cpp:405 ../src/gradient-context.cpp:503
+#: ../src/gradient-context.cpp:408 ../src/gradient-context.cpp:506
 #: ../src/ui/dialog/swatches.cpp:187 ../src/widgets/gradient-vector.cpp:751
 msgid "Add gradient stop"
 msgstr ""
 
-#: ../src/gradient-context.cpp:478
+#: ../src/gradient-context.cpp:481
 msgid "Simplify gradient"
 msgstr ""
 
-#: ../src/gradient-context.cpp:557
+#: ../src/gradient-context.cpp:560
 msgid "Create default gradient"
 msgstr ""
 
-#: ../src/gradient-context.cpp:614
+#: ../src/gradient-context.cpp:617
 msgid "<b>Draw around</b> handles to select them"
 msgstr ""
 
-#: ../src/gradient-context.cpp:729
+#: ../src/gradient-context.cpp:732
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr ""
 
-#: ../src/gradient-context.cpp:730
+#: ../src/gradient-context.cpp:733
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr ""
 
-#: ../src/gradient-context.cpp:850 ../src/widgets/gradient-toolbar.cpp:670
+#: ../src/gradient-context.cpp:853 ../src/widgets/gradient-toolbar.cpp:657
 msgid "Invert gradient"
 msgstr ""
 
-#: ../src/gradient-context.cpp:967
+#: ../src/gradient-context.cpp:970
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gradient-context.cpp:971
+#: ../src/gradient-context.cpp:974
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr ""
 
-#: ../src/gradient-drag.cpp:644
+#: ../src/gradient-drag.cpp:646
 msgid "Merge gradient handles"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:947
+#: ../src/gradient-drag.cpp:949
 msgid "Move gradient handle"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:999 ../src/widgets/gradient-vector.cpp:784
+#: ../src/gradient-drag.cpp:1001 ../src/widgets/gradient-vector.cpp:784
 msgid "Delete gradient stop"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1157
+#: ../src/gradient-drag.cpp:1159
 #, c-format
 msgid ""
 "%s %d for: %s%s; drag with <b>Ctrl</b> to snap offset; click with <b>Ctrl"
 "+Alt</b> to delete stop"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1161 ../src/gradient-drag.cpp:1168
+#: ../src/gradient-drag.cpp:1163 ../src/gradient-drag.cpp:1170
 msgid " (stroke)"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1165
+#: ../src/gradient-drag.cpp:1167
 #, c-format
 msgid ""
 "%s for: %s%s; drag with <b>Ctrl</b> to snap angle, with <b>Ctrl+Alt</b> to "
 "preserve angle, with <b>Ctrl+Shift</b> to scale around center"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1173
+#: ../src/gradient-drag.cpp:1175
 #, c-format
 msgid ""
 "Radial gradient <b>center</b> and <b>focus</b>; drag with <b>Shift</b> to "
 "separate focus"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1176
+#: ../src/gradient-drag.cpp:1178
 #, c-format
 msgid ""
 "Gradient point shared by <b>%d</b> gradient; drag with <b>Shift</b> to "
@@ -9003,15 +8990,15 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gradient-drag.cpp:1872
+#: ../src/gradient-drag.cpp:1873
 msgid "Move gradient handle(s)"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:1908
+#: ../src/gradient-drag.cpp:1909
 msgid "Move gradient mid stop(s)"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:2192
+#: ../src/gradient-drag.cpp:2193
 msgid "Delete gradient stop(s)"
 msgstr ""
 
@@ -9021,8 +9008,6 @@ msgstr ""
 
 #. Add the units menu.
 #: ../src/helper/units.cpp:37 ../src/widgets/select-toolbar.cpp:537
-#: ../src/widgets/toolbox.cpp:1739 ../src/widgets/toolbox.cpp:3599
-#: ../src/widgets/toolbox.cpp:6338 ../src/widgets/toolbox.cpp:8737
 msgid "Units"
 msgstr ""
 
@@ -9515,8 +9500,7 @@ msgstr ""
 msgid "Dockitem which 'owns' this grip"
 msgstr ""
 
-#. Name
-#: ../src/libgdl/gdl-dock-item.c:309 ../src/widgets/toolbox.cpp:7946
+#: ../src/libgdl/gdl-dock-item.c:309
 #: ../share/extensions/gcodetools_graffiti.inx.h:25
 #: ../share/extensions/gcodetools_orientation_points.inx.h:6
 msgid "Orientation"
@@ -9761,8 +9745,7 @@ msgid ""
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:167 ../src/libgdl/gdl-dock.c:191
-#: ../src/widgets/toolbox.cpp:3538 ../src/widgets/toolbox.cpp:4569
-#: ../src/widgets/toolbox.cpp:4889 ../share/extensions/interp_att_g.inx.h:28
+#: ../share/extensions/interp_att_g.inx.h:28
 msgid "Width"
 msgstr ""
 
@@ -9771,7 +9754,7 @@ msgid "Width for the widget when it's attached to the placeholder"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-placeholder.c:175 ../src/libgdl/gdl-dock.c:199
-#: ../src/widgets/toolbox.cpp:3555 ../share/extensions/interp_att_g.inx.h:7
+#: ../share/extensions/interp_att_g.inx.h:7
 msgid "Height"
 msgstr ""
 
@@ -10580,11 +10563,11 @@ msgstr ""
 msgid "Both"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:35 ../src/widgets/toolbox.cpp:5845
+#: ../src/live_effects/lpe-ruler.cpp:35
 msgid "Start"
 msgstr ""
 
-#: ../src/live_effects/lpe-ruler.cpp:36 ../src/widgets/toolbox.cpp:5858
+#: ../src/live_effects/lpe-ruler.cpp:36
 msgid "End"
 msgstr ""
 
@@ -11399,67 +11382,67 @@ msgstr ""
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr ""
 
-#: ../src/pen-context.cpp:253 ../src/pencil-context.cpp:565
+#: ../src/pen-context.cpp:254 ../src/pencil-context.cpp:565
 msgid "Drawing cancelled"
 msgstr ""
 
-#: ../src/pen-context.cpp:491 ../src/pencil-context.cpp:290
+#: ../src/pen-context.cpp:492 ../src/pencil-context.cpp:290
 msgid "Continuing selected path"
 msgstr ""
 
-#: ../src/pen-context.cpp:501 ../src/pencil-context.cpp:298
+#: ../src/pen-context.cpp:502 ../src/pencil-context.cpp:298
 msgid "Creating new path"
 msgstr ""
 
-#: ../src/pen-context.cpp:503 ../src/pencil-context.cpp:301
+#: ../src/pen-context.cpp:504 ../src/pencil-context.cpp:301
 msgid "Appending to selected path"
 msgstr ""
 
-#: ../src/pen-context.cpp:663
+#: ../src/pen-context.cpp:664
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr ""
 
-#: ../src/pen-context.cpp:673
+#: ../src/pen-context.cpp:674
 msgid ""
 "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr ""
 
-#: ../src/pen-context.cpp:1272
+#: ../src/pen-context.cpp:1273
 #, c-format
 msgid ""
 "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
 
-#: ../src/pen-context.cpp:1273
+#: ../src/pen-context.cpp:1274
 #, c-format
 msgid ""
 "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to "
 "snap angle, <b>Enter</b> to finish the path"
 msgstr ""
 
-#: ../src/pen-context.cpp:1290
+#: ../src/pen-context.cpp:1291
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle"
 msgstr ""
 
-#: ../src/pen-context.cpp:1312
+#: ../src/pen-context.cpp:1313
 #, c-format
 msgid ""
 "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</"
 "b> to snap angle, with <b>Shift</b> to move this handle only"
 msgstr ""
 
-#: ../src/pen-context.cpp:1313
+#: ../src/pen-context.cpp:1314
 #, c-format
 msgid ""
 "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap "
 "angle, with <b>Shift</b> to move this handle only"
 msgstr ""
 
-#: ../src/pen-context.cpp:1359
+#: ../src/pen-context.cpp:1360
 msgid "Drawing finished"
 msgstr ""
 
@@ -11844,12 +11827,11 @@ msgstr ""
 msgid "<b>Nothing</b> was deleted."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:354 ../src/text-context.cpp:1035
+#: ../src/selection-chemistry.cpp:354 ../src/text-context.cpp:1036
 #: ../src/ui/dialog/swatches.cpp:209 ../src/ui/dialog/swatches.cpp:272
+#: ../src/widgets/gradient-toolbar.cpp:1226
 #: ../src/widgets/gradient-toolbar.cpp:1240
 #: ../src/widgets/gradient-toolbar.cpp:1254
-#: ../src/widgets/gradient-toolbar.cpp:1268 ../src/widgets/toolbox.cpp:1527
-#: ../src/widgets/toolbox.cpp:6413
 msgid "Delete"
 msgstr ""
 
@@ -11886,7 +11868,7 @@ msgid "Select <b>object(s)</b> to raise."
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:855 ../src/selection-chemistry.cpp:915
-#: ../src/selection-chemistry.cpp:949 ../src/selection-chemistry.cpp:1013
+#: ../src/selection-chemistry.cpp:948 ../src/selection-chemistry.cpp:1012
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
@@ -11905,301 +11887,301 @@ msgstr ""
 msgid "Raise to top"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:943
+#: ../src/selection-chemistry.cpp:942
 msgid "Select <b>object(s)</b> to lower."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:993
+#: ../src/selection-chemistry.cpp:992
 msgid "Lower"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1005
+#: ../src/selection-chemistry.cpp:1004
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1040
+#: ../src/selection-chemistry.cpp:1039
 msgid "Lower to bottom"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1047
+#: ../src/selection-chemistry.cpp:1046
 msgid "Nothing to undo."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1055
+#: ../src/selection-chemistry.cpp:1054
 msgid "Nothing to redo."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1116
+#: ../src/selection-chemistry.cpp:1115
 msgid "Paste"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1124
+#: ../src/selection-chemistry.cpp:1123
 msgid "Paste style"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1134
+#: ../src/selection-chemistry.cpp:1133
 msgid "Paste live path effect"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1155
+#: ../src/selection-chemistry.cpp:1154
 msgid "Select <b>object(s)</b> to remove live path effects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1167
+#: ../src/selection-chemistry.cpp:1166
 msgid "Remove live path effect"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1178
+#: ../src/selection-chemistry.cpp:1177
 msgid "Select <b>object(s)</b> to remove filters from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1188
+#: ../src/selection-chemistry.cpp:1187
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1382
 msgid "Remove filter"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1197
+#: ../src/selection-chemistry.cpp:1196
 msgid "Paste size"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1206
+#: ../src/selection-chemistry.cpp:1205
 msgid "Paste size separately"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1216
+#: ../src/selection-chemistry.cpp:1215
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1242
+#: ../src/selection-chemistry.cpp:1241
 msgid "Raise to next layer"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1249
+#: ../src/selection-chemistry.cpp:1248
 msgid "No more layers above."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1261
+#: ../src/selection-chemistry.cpp:1260
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1287
+#: ../src/selection-chemistry.cpp:1286
 msgid "Lower to previous layer"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1294
+#: ../src/selection-chemistry.cpp:1293
 msgid "No more layers below."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1517
+#: ../src/selection-chemistry.cpp:1516
 msgid "Remove transform"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1620
+#: ../src/selection-chemistry.cpp:1619
 msgid "Rotate 90&#176; CCW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1620
+#: ../src/selection-chemistry.cpp:1619
 msgid "Rotate 90&#176; CW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1641 ../src/seltrans.cpp:480
+#: ../src/selection-chemistry.cpp:1640 ../src/seltrans.cpp:482
 #: ../src/ui/dialog/transformation.cpp:743
 msgid "Rotate"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1926
+#: ../src/selection-chemistry.cpp:1925
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1956 ../src/seltrans.cpp:477
+#: ../src/selection-chemistry.cpp:1955 ../src/seltrans.cpp:479
 #: ../src/ui/dialog/transformation.cpp:722
 #: ../share/extensions/interp_att_g.inx.h:19
 msgid "Scale"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1981
+#: ../src/selection-chemistry.cpp:1980
 msgid "Scale by whole factor"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1996
+#: ../src/selection-chemistry.cpp:1995
 msgid "Move vertically"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1999
+#: ../src/selection-chemistry.cpp:1998
 msgid "Move horizontally"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2002 ../src/selection-chemistry.cpp:2028
-#: ../src/seltrans.cpp:474 ../src/ui/dialog/transformation.cpp:661
+#: ../src/selection-chemistry.cpp:2001 ../src/selection-chemistry.cpp:2027
+#: ../src/seltrans.cpp:476 ../src/ui/dialog/transformation.cpp:661
 msgid "Move"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2022
+#: ../src/selection-chemistry.cpp:2021
 msgid "Move vertically by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2025
+#: ../src/selection-chemistry.cpp:2024
 msgid "Move horizontally by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2157
+#: ../src/selection-chemistry.cpp:2156
 msgid "The selection has no applied path effect."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2360
+#: ../src/selection-chemistry.cpp:2359
 msgctxt "Action"
 msgid "Clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2376
+#: ../src/selection-chemistry.cpp:2375
 msgid "Select <b>clones</b> to relink."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2383
+#: ../src/selection-chemistry.cpp:2382
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2407
+#: ../src/selection-chemistry.cpp:2406
 msgid "<b>No clones to relink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2410
+#: ../src/selection-chemistry.cpp:2409
 msgid "Relink clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2424
+#: ../src/selection-chemistry.cpp:2423
 msgid "Select <b>clones</b> to unlink."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2478
+#: ../src/selection-chemistry.cpp:2477
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2482
+#: ../src/selection-chemistry.cpp:2481
 msgid "Unlink clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2495
+#: ../src/selection-chemistry.cpp:2494
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
 "a <b>flowed text</b> to go to its frame."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2528
+#: ../src/selection-chemistry.cpp:2527
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2534
+#: ../src/selection-chemistry.cpp:2533
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2579
+#: ../src/selection-chemistry.cpp:2578
 msgid "Select <b>one</b> path to clone."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2583
+#: ../src/selection-chemistry.cpp:2582
 msgid "Select one <b>path</b> to clone."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2617
+#: ../src/selection-chemistry.cpp:2616
 msgid "Clone original path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2638
+#: ../src/selection-chemistry.cpp:2637
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2706
+#: ../src/selection-chemistry.cpp:2705
 msgid "Objects to marker"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2734
+#: ../src/selection-chemistry.cpp:2733
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2746
+#: ../src/selection-chemistry.cpp:2745
 msgid "Objects to guides"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2763
+#: ../src/selection-chemistry.cpp:2762
 msgid "Select <b>object(s)</b> to convert to pattern."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2851
+#: ../src/selection-chemistry.cpp:2850
 msgid "Objects to pattern"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2867
+#: ../src/selection-chemistry.cpp:2866
 msgid "Select an <b>object with pattern fill</b> to extract objects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2920
+#: ../src/selection-chemistry.cpp:2919
 msgid "<b>No pattern fills</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2923
+#: ../src/selection-chemistry.cpp:2922
 msgid "Pattern to objects"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3014
+#: ../src/selection-chemistry.cpp:3013
 msgid "Select <b>object(s)</b> to make a bitmap copy."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3018
+#: ../src/selection-chemistry.cpp:3017
 msgid "Rendering bitmap..."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3192
+#: ../src/selection-chemistry.cpp:3191
 msgid "Create bitmap"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3224
+#: ../src/selection-chemistry.cpp:3223
 msgid "Select <b>object(s)</b> to create clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3227
+#: ../src/selection-chemistry.cpp:3226
 msgid "Select mask object and <b>object(s)</b> to apply clippath or mask to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3408
+#: ../src/selection-chemistry.cpp:3407
 msgid "Set clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3410
+#: ../src/selection-chemistry.cpp:3409
 msgid "Set mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3425
+#: ../src/selection-chemistry.cpp:3424
 msgid "Select <b>object(s)</b> to remove clippath or mask from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3536
+#: ../src/selection-chemistry.cpp:3535
 msgid "Release clipping path"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3538
+#: ../src/selection-chemistry.cpp:3537
 msgid "Release mask"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3557
+#: ../src/selection-chemistry.cpp:3556
 msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr ""
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3577 ../src/verbs.cpp:2736
+#: ../src/selection-chemistry.cpp:3576 ../src/verbs.cpp:2736
 msgid "Fit Page to Selection"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3606 ../src/verbs.cpp:2738
+#: ../src/selection-chemistry.cpp:3605 ../src/verbs.cpp:2738
 msgid "Fit Page to Drawing"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3627 ../src/verbs.cpp:2740
+#: ../src/selection-chemistry.cpp:3626 ../src/verbs.cpp:2740
 msgid "Fit Page to Selection or Drawing"
 msgstr ""
 
@@ -12216,7 +12198,6 @@ msgstr ""
 #. Ellipse
 #: ../src/selection-describer.cpp:48 ../src/selection-describer.cpp:73
 #: ../src/ui/dialog/inkscape-preferences.cpp:388 ../src/verbs.cpp:2499
-#: ../src/widgets/toolbox.cpp:4344
 msgid "Ellipse"
 msgstr ""
 
@@ -12232,7 +12213,7 @@ msgstr ""
 msgid "Path"
 msgstr ""
 
-#: ../src/selection-describer.cpp:60 ../src/widgets/toolbox.cpp:3174
+#: ../src/selection-describer.cpp:60
 msgid "Polygon"
 msgstr ""
 
@@ -12290,67 +12271,66 @@ msgstr ""
 #. Star
 #: ../src/selection-describer.cpp:79
 #: ../src/ui/dialog/inkscape-preferences.cpp:392 ../src/verbs.cpp:2501
-#: ../src/widgets/toolbox.cpp:3181
 msgid "Star"
 msgstr ""
 
-#: ../src/selection-describer.cpp:137
+#: ../src/selection-describer.cpp:149
 msgid "root"
 msgstr ""
 
-#: ../src/selection-describer.cpp:149
+#: ../src/selection-describer.cpp:161
 #, c-format
 msgid "layer <b>%s</b>"
 msgstr ""
 
-#: ../src/selection-describer.cpp:151
+#: ../src/selection-describer.cpp:163
 #, c-format
 msgid "layer <b><i>%s</i></b>"
 msgstr ""
 
-#: ../src/selection-describer.cpp:160
+#: ../src/selection-describer.cpp:172
 #, c-format
 msgid "<i>%s</i>"
 msgstr ""
 
-#: ../src/selection-describer.cpp:169
+#: ../src/selection-describer.cpp:181
 #, c-format
 msgid " in %s"
 msgstr ""
 
-#: ../src/selection-describer.cpp:171
+#: ../src/selection-describer.cpp:183
 #, c-format
 msgid " in group %s (%s)"
 msgstr ""
 
-#: ../src/selection-describer.cpp:173
+#: ../src/selection-describer.cpp:185
 #, c-format
 msgid " in <b>%i</b> parents (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/selection-describer.cpp:176
+#: ../src/selection-describer.cpp:188
 #, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/selection-describer.cpp:186
+#: ../src/selection-describer.cpp:198
 msgid "Use <b>Shift+D</b> to look up original"
 msgstr ""
 
-#: ../src/selection-describer.cpp:190
+#: ../src/selection-describer.cpp:202
 msgid "Use <b>Shift+D</b> to look up path"
 msgstr ""
 
-#: ../src/selection-describer.cpp:194
+#: ../src/selection-describer.cpp:206
 msgid "Use <b>Shift+D</b> to look up frame"
 msgstr ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:209 ../src/spray-context.cpp:231
+#: ../src/selection-describer.cpp:221 ../src/spray-context.cpp:231
 #: ../src/tweak-context.cpp:208
 #, c-format
 msgid "<b>%i</b> object selected"
@@ -12359,7 +12339,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:214
+#: ../src/selection-describer.cpp:226
 #, c-format
 msgid "<b>%i</b> object of type <b>%s</b>"
 msgid_plural "<b>%i</b> objects of type <b>%s</b>"
@@ -12367,7 +12347,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:219
+#: ../src/selection-describer.cpp:231
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>"
@@ -12375,7 +12355,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:224
+#: ../src/selection-describer.cpp:236
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
@@ -12383,89 +12363,96 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:229
+#: ../src/selection-describer.cpp:241
 #, c-format
 msgid "<b>%i</b> object of <b>%i</b> types"
 msgid_plural "<b>%i</b> objects of <b>%i</b> types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/selection-describer.cpp:234
+#: ../src/selection-describer.cpp:251
 #, c-format
-msgid "%s%s. %s."
+msgid "; <i>%d filtered object</i> "
+msgid_plural "; <i>%d filtered objects</i> "
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/selection-describer.cpp:258
+#, c-format
+msgid "%s%s%s. %s."
 msgstr ""
 
-#: ../src/seltrans.cpp:483 ../src/ui/dialog/transformation.cpp:801
+#: ../src/seltrans.cpp:485 ../src/ui/dialog/transformation.cpp:801
 msgid "Skew"
 msgstr ""
 
-#: ../src/seltrans.cpp:495
+#: ../src/seltrans.cpp:497
 msgid "Set center"
 msgstr ""
 
-#: ../src/seltrans.cpp:570
+#: ../src/seltrans.cpp:572
 msgid "Stamp"
 msgstr ""
 
-#: ../src/seltrans.cpp:599
+#: ../src/seltrans.cpp:601
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
 msgstr ""
 
-#: ../src/seltrans.cpp:600
+#: ../src/seltrans.cpp:602
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
 msgstr ""
 
-#: ../src/seltrans.cpp:604
+#: ../src/seltrans.cpp:606
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
 msgstr ""
 
-#: ../src/seltrans.cpp:605
+#: ../src/seltrans.cpp:607
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 msgstr ""
 
-#: ../src/seltrans.cpp:618
+#: ../src/seltrans.cpp:620
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
 msgstr ""
 
-#: ../src/seltrans.cpp:768
+#: ../src/seltrans.cpp:770
 msgid "Reset center"
 msgstr ""
 
-#: ../src/seltrans.cpp:1005 ../src/seltrans.cpp:1102
+#: ../src/seltrans.cpp:1007 ../src/seltrans.cpp:1104
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1216
+#: ../src/seltrans.cpp:1218
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1291
+#: ../src/seltrans.cpp:1293
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/seltrans.cpp:1326
+#: ../src/seltrans.cpp:1328
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr ""
 
-#: ../src/seltrans.cpp:1502
+#: ../src/seltrans.cpp:1504
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -12568,26 +12555,26 @@ msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/sp-item.cpp:925
+#: ../src/sp-item.cpp:929
 msgid "Object"
 msgstr ""
 
-#: ../src/sp-item.cpp:938
+#: ../src/sp-item.cpp:942
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:943
+#: ../src/sp-item.cpp:947
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:951
+#: ../src/sp-item.cpp:955
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:953
+#: ../src/sp-item.cpp:957
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr ""
@@ -12875,11 +12862,11 @@ msgstr ""
 msgid "<b>Nothing selected!</b> Select objects to spray."
 msgstr ""
 
-#: ../src/spray-context.cpp:786 ../src/widgets/toolbox.cpp:4939
+#: ../src/spray-context.cpp:786
 msgid "Spray with copies"
 msgstr ""
 
-#: ../src/spray-context.cpp:790 ../src/widgets/toolbox.cpp:4946
+#: ../src/spray-context.cpp:790
 msgid "Spray with clones"
 msgstr ""
 
@@ -12985,146 +12972,146 @@ msgstr ""
 msgid "<b>No flowed text(s)</b> to convert in the selection."
 msgstr ""
 
-#: ../src/text-context.cpp:447
+#: ../src/text-context.cpp:448
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
 msgstr ""
 
-#: ../src/text-context.cpp:449
+#: ../src/text-context.cpp:450
 msgid ""
 "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
 msgstr ""
 
-#: ../src/text-context.cpp:503
+#: ../src/text-context.cpp:504
 msgid "Create text"
 msgstr ""
 
-#: ../src/text-context.cpp:528
+#: ../src/text-context.cpp:529
 msgid "Non-printable character"
 msgstr ""
 
-#: ../src/text-context.cpp:543
+#: ../src/text-context.cpp:544
 msgid "Insert Unicode character"
 msgstr ""
 
-#: ../src/text-context.cpp:578
+#: ../src/text-context.cpp:579
 #, c-format
 msgid "Unicode (<b>Enter</b> to finish): %s: %s"
 msgstr ""
 
-#: ../src/text-context.cpp:580 ../src/text-context.cpp:889
+#: ../src/text-context.cpp:581 ../src/text-context.cpp:890
 msgid "Unicode (<b>Enter</b> to finish): "
 msgstr ""
 
-#: ../src/text-context.cpp:666
+#: ../src/text-context.cpp:667
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr ""
 
-#: ../src/text-context.cpp:723
+#: ../src/text-context.cpp:724
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr ""
 
-#: ../src/text-context.cpp:734
+#: ../src/text-context.cpp:735
 msgid "Flowed text is created."
 msgstr ""
 
-#: ../src/text-context.cpp:736
+#: ../src/text-context.cpp:737
 msgid "Create flowed text"
 msgstr ""
 
-#: ../src/text-context.cpp:738
+#: ../src/text-context.cpp:739
 msgid ""
 "The frame is <b>too small</b> for the current font size. Flowed text not "
 "created."
 msgstr ""
 
-#: ../src/text-context.cpp:874
+#: ../src/text-context.cpp:875
 msgid "No-break space"
 msgstr ""
 
-#: ../src/text-context.cpp:876
+#: ../src/text-context.cpp:877
 msgid "Insert no-break space"
 msgstr ""
 
-#: ../src/text-context.cpp:913
+#: ../src/text-context.cpp:914
 msgid "Make bold"
 msgstr ""
 
-#: ../src/text-context.cpp:931
+#: ../src/text-context.cpp:932
 msgid "Make italic"
 msgstr ""
 
-#: ../src/text-context.cpp:970
+#: ../src/text-context.cpp:971
 msgid "New line"
 msgstr ""
 
-#: ../src/text-context.cpp:1004
+#: ../src/text-context.cpp:1005
 msgid "Backspace"
 msgstr ""
 
-#: ../src/text-context.cpp:1052
+#: ../src/text-context.cpp:1053
 msgid "Kern to the left"
 msgstr ""
 
-#: ../src/text-context.cpp:1077
+#: ../src/text-context.cpp:1078
 msgid "Kern to the right"
 msgstr ""
 
-#: ../src/text-context.cpp:1102
+#: ../src/text-context.cpp:1103
 msgid "Kern up"
 msgstr ""
 
-#: ../src/text-context.cpp:1127
+#: ../src/text-context.cpp:1128
 msgid "Kern down"
 msgstr ""
 
-#: ../src/text-context.cpp:1203
+#: ../src/text-context.cpp:1204
 msgid "Rotate counterclockwise"
 msgstr ""
 
-#: ../src/text-context.cpp:1224
+#: ../src/text-context.cpp:1225
 msgid "Rotate clockwise"
 msgstr ""
 
-#: ../src/text-context.cpp:1241
+#: ../src/text-context.cpp:1242
 msgid "Contract line spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1248
+#: ../src/text-context.cpp:1249
 msgid "Contract letter spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1266
+#: ../src/text-context.cpp:1267
 msgid "Expand line spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1273
+#: ../src/text-context.cpp:1274
 msgid "Expand letter spacing"
 msgstr ""
 
-#: ../src/text-context.cpp:1401
+#: ../src/text-context.cpp:1402
 msgid "Paste text"
 msgstr ""
 
-#: ../src/text-context.cpp:1652
+#: ../src/text-context.cpp:1653
 #, c-format
 msgid ""
 "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new "
 "paragraph."
 msgstr ""
 
-#: ../src/text-context.cpp:1654
+#: ../src/text-context.cpp:1655
 #, c-format
 msgid "Type or edit text (%d characters%s); <b>Enter</b> to start new line."
 msgstr ""
 
-#: ../src/text-context.cpp:1662 ../src/tools-switch.cpp:199
+#: ../src/text-context.cpp:1663 ../src/tools-switch.cpp:199
 msgid ""
 "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; "
 "then type."
 msgstr ""
 
-#: ../src/text-context.cpp:1764
+#: ../src/text-context.cpp:1765
 msgid "Type text"
 msgstr ""
 
@@ -13341,59 +13328,59 @@ msgid ""
 "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:1238
+#: ../src/tweak-context.cpp:1237
 msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr ""
 
-#: ../src/tweak-context.cpp:1272
+#: ../src/tweak-context.cpp:1271
 msgid "Move tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1276
+#: ../src/tweak-context.cpp:1275
 msgid "Move in/out tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1280
+#: ../src/tweak-context.cpp:1279
 msgid "Move jitter tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1284
+#: ../src/tweak-context.cpp:1283
 msgid "Scale tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1288
+#: ../src/tweak-context.cpp:1287
 msgid "Rotate tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1292
+#: ../src/tweak-context.cpp:1291
 msgid "Duplicate/delete tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1296
+#: ../src/tweak-context.cpp:1295
 msgid "Push path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1300
+#: ../src/tweak-context.cpp:1299
 msgid "Shrink/grow path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1304
+#: ../src/tweak-context.cpp:1303
 msgid "Attract/repel path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1308
+#: ../src/tweak-context.cpp:1307
 msgid "Roughen path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1312
+#: ../src/tweak-context.cpp:1311
 msgid "Color paint tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1316
+#: ../src/tweak-context.cpp:1315
 msgid "Color jitter tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1320
+#: ../src/tweak-context.cpp:1319
 msgid "Blur tweak"
 msgstr ""
 
@@ -13512,12 +13499,10 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:538
 #: ../src/ui/dialog/align-and-distribute.cpp:925
-#: ../src/widgets/toolbox.cpp:8574
 msgid "Remove overlaps"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:569
-#: ../src/widgets/toolbox.cpp:8367
 msgid "Arrange connector network"
 msgstr ""
 
@@ -13546,7 +13531,7 @@ msgid "Rearrange"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:926
-#: ../src/widgets/toolbox.cpp:2479
+#: ../src/widgets/toolbox.cpp:1740
 msgid "Nodes"
 msgstr ""
 
@@ -13647,7 +13632,6 @@ msgid "Distribute baselines of texts vertically"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1025
-#: ../src/widgets/toolbox.cpp:8536
 msgid "Nicely arrange selected connector network"
 msgstr ""
 
@@ -14003,7 +13987,7 @@ msgid "Remove selected grid."
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:146
-#: ../src/widgets/toolbox.cpp:2586
+#: ../src/widgets/toolbox.cpp:1847
 msgid "Guides"
 msgstr ""
 
@@ -15101,13 +15085,17 @@ msgstr ""
 
 #. TRANSLATORS: "%1" is replaced with the number of matches
 #: ../src/ui/dialog/find.cpp:830
-msgid "%1 objects replaced"
-msgstr ""
+msgid "%1 object replaced"
+msgid_plural "%1 objects replaced"
+msgstr[0] ""
+msgstr[1] ""
 
 #. TRANSLATORS: "%1" is replaced with the number of matches
 #: ../src/ui/dialog/find.cpp:834
-msgid "%1 objects found"
-msgstr ""
+msgid "%1 object found"
+msgid_plural "%1 objects found"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../src/ui/dialog/find.cpp:843
 msgid "Text Replace"
@@ -17134,7 +17122,7 @@ msgid "Remove attributes"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:821
-msgid "Delete invalid or non-useful attributes from element tag."
+msgid "Delete invalid or non-useful attributes from element tag"
 msgstr ""
 
 #. Add incorrect style properties options
@@ -17154,7 +17142,7 @@ msgid "Remove style properties"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:829
-msgid "Delete inappropriate style properties."
+msgid "Delete inappropriate style properties"
 msgstr ""
 
 #. Add default or inherited style properties options
@@ -17171,11 +17159,11 @@ msgid ""
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:837
-msgid "Delete redundant style properties."
+msgid "Delete redundant style properties"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:839
-msgid "Check Attributes and Style Properties on:"
+msgid "Check Attributes and Style Properties on"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:841
@@ -17185,7 +17173,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:842
 msgid ""
 "Check attributes and style properties on reading in SVG files (including "
-"those internal to Inkscape which will slow down startup)."
+"those internal to Inkscape which will slow down startup)"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:843
@@ -17195,7 +17183,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:844
 msgid ""
 "Check attributes and style properties while editing SVG files (may slow down "
-"Inkscape, mostly useful for debugging)."
+"Inkscape, mostly useful for debugging)"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:845
@@ -17203,7 +17191,7 @@ msgid "Writing"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:846
-msgid "Check attributes and style properties on writing out SVG files."
+msgid "Check attributes and style properties on writing out SVG files"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:848
@@ -18651,29 +18639,29 @@ msgstr ""
 msgid "Searching clipart..."
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:1012 ../src/ui/dialog/ocaldialogs.cpp:1033
+#: ../src/ui/dialog/ocaldialogs.cpp:1028
 msgid "Could not connect to the Open Clip Art Library"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:1052
+#: ../src/ui/dialog/ocaldialogs.cpp:1047
 msgid "Could not parse search results"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:1086
+#: ../src/ui/dialog/ocaldialogs.cpp:1081
 msgid "No clipart named <b>%1</b> was found."
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:1088
+#: ../src/ui/dialog/ocaldialogs.cpp:1083
 msgid ""
 "Please make sure all keywords are spelled correctly, or try again with "
 "different keywords."
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:1119
+#: ../src/ui/dialog/ocaldialogs.cpp:1114
 msgid "Search"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:1125
+#: ../src/ui/dialog/ocaldialogs.cpp:1120
 msgid "Close"
 msgstr ""
 
@@ -19401,7 +19389,7 @@ msgstr ""
 msgid "Retract handles"
 msgstr ""
 
-#: ../src/ui/tool/multi-path-manipulator.cpp:328 ../src/ui/tool/node.cpp:253
+#: ../src/ui/tool/multi-path-manipulator.cpp:328 ../src/ui/tool/node.cpp:255
 msgid "Change node type"
 msgstr ""
 
@@ -19426,12 +19414,10 @@ msgid "Duplicate nodes"
 msgstr ""
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:418
-#: ../src/widgets/toolbox.cpp:1534
 msgid "Join nodes"
 msgstr ""
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:425
-#: ../src/widgets/toolbox.cpp:1545
 msgid "Break nodes"
 msgstr ""
 
@@ -19540,33 +19526,33 @@ msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:228
+#: ../src/ui/tool/node.cpp:230
 msgid "Cusp node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:229
+#: ../src/ui/tool/node.cpp:231
 msgid "Smooth node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:230
+#: ../src/ui/tool/node.cpp:232
 msgid "Symmetric node handle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:231
+#: ../src/ui/tool/node.cpp:233
 msgid "Auto-smooth node handle"
-msgstr ""
-
-#: ../src/ui/tool/node.cpp:407
-msgctxt "Path handle tip"
-msgid "more: Shift, Ctrl, Alt"
 msgstr ""
 
 #: ../src/ui/tool/node.cpp:409
 msgctxt "Path handle tip"
+msgid "more: Shift, Ctrl, Alt"
+msgstr ""
+
+#: ../src/ui/tool/node.cpp:411
+msgctxt "Path handle tip"
 msgid "more: Ctrl, Alt"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:415
+#: ../src/ui/tool/node.cpp:417
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -19574,24 +19560,24 @@ msgid ""
 "increments while rotating both handles"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:420
+#: ../src/ui/tool/node.cpp:422
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
 "<b>Ctrl+Alt</b>: preserve length and snap rotation angle to %g° increments"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:426
+#: ../src/ui/tool/node.cpp:428
 msgctxt "Path handle tip"
 msgid "<b>Shift+Alt</b>: preserve handle length and rotate both handles"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:429
+#: ../src/ui/tool/node.cpp:431
 msgctxt "Path handle tip"
 msgid "<b>Alt</b>: preserve handle length while dragging"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:436
+#: ../src/ui/tool/node.cpp:438
 #, c-format
 msgctxt "Path handle tip"
 msgid ""
@@ -19599,67 +19585,67 @@ msgid ""
 "handles"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:440
+#: ../src/ui/tool/node.cpp:442
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Ctrl</b>: snap rotation angle to %g° increments, click to retract"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:445
+#: ../src/ui/tool/node.cpp:447
 msgctxt "Path hande tip"
 msgid "<b>Shift</b>: rotate both handles by the same angle"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:452
+#: ../src/ui/tool/node.cpp:454
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>Auto node handle</b>: drag to convert to smooth node (%s)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:455
+#: ../src/ui/tool/node.cpp:457
 #, c-format
 msgctxt "Path handle tip"
 msgid "<b>%s</b>: drag to shape the segment (%s)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:471
+#: ../src/ui/tool/node.cpp:473
 #, c-format
 msgctxt "Path handle tip"
 msgid "Move handle by %s, %s; angle %.2f°, length %s"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1230
+#: ../src/ui/tool/node.cpp:1232
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: drag out a handle, click to toggle selection"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1232
+#: ../src/ui/tool/node.cpp:1234
 msgctxt "Path node tip"
 msgid "<b>Shift</b>: click to toggle selection"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1237
+#: ../src/ui/tool/node.cpp:1239
 msgctxt "Path node tip"
 msgid "<b>Ctrl+Alt</b>: move along handle lines, click to delete node"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1240
+#: ../src/ui/tool/node.cpp:1242
 msgctxt "Path node tip"
 msgid "<b>Ctrl</b>: move along axes, click to change node type"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1244
+#: ../src/ui/tool/node.cpp:1246
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1252
+#: ../src/ui/tool/node.cpp:1254
 #, c-format
 msgctxt "Path node tip"
 msgid "<b>%s</b>: drag to shape the path (more: Shift, Ctrl, Alt)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1255
+#: ../src/ui/tool/node.cpp:1257
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -19667,7 +19653,7 @@ msgid ""
 "(more: Shift, Ctrl, Alt)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1258
+#: ../src/ui/tool/node.cpp:1260
 #, c-format
 msgctxt "Path node tip"
 msgid ""
@@ -19675,17 +19661,17 @@ msgid ""
 "Shift, Ctrl, Alt)"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1266
+#: ../src/ui/tool/node.cpp:1268
 #, c-format
 msgctxt "Path node tip"
 msgid "Move node by %s, %s"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1278
+#: ../src/ui/tool/node.cpp:1280
 msgid "Symmetric node"
 msgstr ""
 
-#: ../src/ui/tool/node.cpp:1279
+#: ../src/ui/tool/node.cpp:1281
 msgid "Auto-smooth node"
 msgstr ""
 
@@ -19698,7 +19684,7 @@ msgid "Rotate handle"
 msgstr ""
 
 #. We need to call MPM's method because it could have been our last node
-#: ../src/ui/tool/path-manipulator.cpp:1366 ../src/widgets/toolbox.cpp:1523
+#: ../src/ui/tool/path-manipulator.cpp:1366
 msgid "Delete node"
 msgstr ""
 
@@ -19846,11 +19832,11 @@ msgstr ""
 msgid "(root)"
 msgstr ""
 
-#: ../src/ui/widget/licensor.cpp:39
+#: ../src/ui/widget/licensor.cpp:40
 msgid "Proprietary"
 msgstr ""
 
-#: ../src/ui/widget/licensor.cpp:42
+#: ../src/ui/widget/licensor.cpp:43
 msgid "MetadataLicence|Other"
 msgstr ""
 
@@ -20077,7 +20063,7 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:170
 #: ../src/ui/widget/selected-style.cpp:1037
 #: ../src/ui/widget/selected-style.cpp:1038
-#: ../src/widgets/gradient-toolbar.cpp:188
+#: ../src/widgets/gradient-toolbar.cpp:175
 msgid "Nothing selected"
 msgstr ""
 
@@ -20163,14 +20149,14 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:210
 #: ../src/ui/widget/selected-style.cpp:268
 #: ../src/ui/widget/selected-style.cpp:510
-#: ../src/ui/widget/style-swatch.cpp:308 ../src/widgets/fill-style.cpp:688
+#: ../src/ui/widget/style-swatch.cpp:308 ../src/widgets/fill-style.cpp:692
 msgid "Unset fill"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:210
 #: ../src/ui/widget/selected-style.cpp:268
 #: ../src/ui/widget/selected-style.cpp:526
-#: ../src/ui/widget/style-swatch.cpp:308 ../src/widgets/fill-style.cpp:688
+#: ../src/ui/widget/style-swatch.cpp:308 ../src/widgets/fill-style.cpp:692
 msgid "Unset stroke"
 msgstr ""
 
@@ -20426,19 +20412,19 @@ msgstr ""
 msgid "Opacity: %.3g"
 msgstr ""
 
-#: ../src/vanishing-point.cpp:128
+#: ../src/vanishing-point.cpp:131
 msgid "Split vanishing points"
 msgstr ""
 
-#: ../src/vanishing-point.cpp:173
+#: ../src/vanishing-point.cpp:176
 msgid "Merge vanishing points"
 msgstr ""
 
-#: ../src/vanishing-point.cpp:239
+#: ../src/vanishing-point.cpp:242
 msgid "3D box: Move vanishing point"
 msgstr ""
 
-#: ../src/vanishing-point.cpp:320
+#: ../src/vanishing-point.cpp:325
 #, c-format
 msgid "<b>Finite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural ""
@@ -20449,7 +20435,7 @@ msgstr[1] ""
 
 #. This won't make sense any more when infinite VPs are not shown on the canvas,
 #. but currently we update the status message anyway
-#: ../src/vanishing-point.cpp:327
+#: ../src/vanishing-point.cpp:332
 #, c-format
 msgid "<b>Infinite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural ""
@@ -20458,7 +20444,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/vanishing-point.cpp:335
+#: ../src/vanishing-point.cpp:340
 #, c-format
 msgid ""
 "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
@@ -21551,7 +21537,7 @@ msgid "Remove clipping path from selection"
 msgstr ""
 
 #. Tools
-#: ../src/verbs.cpp:2487 ../src/widgets/gradient-toolbar.cpp:1159
+#: ../src/verbs.cpp:2487 ../src/widgets/gradient-toolbar.cpp:1145
 msgid "Select"
 msgstr ""
 
@@ -22524,7 +22510,7 @@ msgstr ""
 #: ../src/widgets/ege-paint-def.cpp:67 ../src/widgets/ege-paint-def.cpp:91
 #: ../src/widgets/gradient-selector.cpp:176
 #: ../src/widgets/gradient-selector.cpp:181
-#: ../src/widgets/gradient-toolbar.cpp:1175
+#: ../src/widgets/gradient-toolbar.cpp:1161
 msgid "none"
 msgstr ""
 
@@ -22544,19 +22530,19 @@ msgstr ""
 msgid "Set stroke color"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:601
+#: ../src/widgets/fill-style.cpp:605
 msgid "Set gradient on fill"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:601
+#: ../src/widgets/fill-style.cpp:605
 msgid "Set gradient on stroke"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:661
+#: ../src/widgets/fill-style.cpp:665
 msgid "Set pattern on fill"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:662
+#: ../src/widgets/fill-style.cpp:666
 msgid "Set pattern on stroke"
 msgstr ""
 
@@ -22571,7 +22557,7 @@ msgctxt "Font selector"
 msgid "Style"
 msgstr ""
 
-#: ../src/widgets/font-selector.cpp:229 ../src/widgets/toolbox.cpp:7805
+#: ../src/widgets/font-selector.cpp:229
 msgid "Font size (px)"
 msgstr ""
 
@@ -22581,19 +22567,19 @@ msgstr ""
 
 #: ../src/widgets/gradient-selector.cpp:177
 #: ../src/widgets/gradient-selector.cpp:182
-#: ../src/widgets/gradient-toolbar.cpp:1178
+#: ../src/widgets/gradient-toolbar.cpp:1164
 msgid "reflected"
 msgstr ""
 
 #: ../src/widgets/gradient-selector.cpp:178
 #: ../src/widgets/gradient-selector.cpp:183
-#: ../src/widgets/gradient-toolbar.cpp:1181
+#: ../src/widgets/gradient-toolbar.cpp:1167
 msgid "direct"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
 #: ../src/widgets/gradient-selector.cpp:191
-#: ../src/widgets/gradient-toolbar.cpp:1185
+#: ../src/widgets/gradient-toolbar.cpp:1171
 msgid ""
 "Whether to fill with flat color beyond the ends of the gradient vector "
 "(spreadMethod=\"pad\"), or repeat the gradient in the same direction "
@@ -22602,132 +22588,132 @@ msgid ""
 msgstr ""
 
 #: ../src/widgets/gradient-selector.cpp:199
-#: ../src/widgets/gradient-toolbar.cpp:1190
+#: ../src/widgets/gradient-toolbar.cpp:1176
 msgid "Repeat:"
 msgstr ""
 
+#: ../src/widgets/gradient-toolbar.cpp:169
 #: ../src/widgets/gradient-toolbar.cpp:182
-#: ../src/widgets/gradient-toolbar.cpp:195
-#: ../src/widgets/gradient-toolbar.cpp:822
-#: ../src/widgets/gradient-toolbar.cpp:1157
-#: ../src/widgets/gradient-toolbar.cpp:1204
+#: ../src/widgets/gradient-toolbar.cpp:809
+#: ../src/widgets/gradient-toolbar.cpp:1143
+#: ../src/widgets/gradient-toolbar.cpp:1190
 msgid "No gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:201
+#: ../src/widgets/gradient-toolbar.cpp:188
 msgid "Multiple gradients"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:742
+#: ../src/widgets/gradient-toolbar.cpp:729
 msgid "Multiple stops"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:840
+#: ../src/widgets/gradient-toolbar.cpp:827
 #: ../src/widgets/gradient-vector.cpp:566
 msgid "No stops in gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:992
+#: ../src/widgets/gradient-toolbar.cpp:979
 msgid "Assign gradient to object"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1014
+#: ../src/widgets/gradient-toolbar.cpp:1001
 msgid "Set gradient repeat"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1052
+#: ../src/widgets/gradient-toolbar.cpp:1039
 #: ../src/widgets/gradient-vector.cpp:677
 msgid "Change gradient stop offset"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1096
+#: ../src/widgets/gradient-toolbar.cpp:1083
 msgid "linear"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1096
+#: ../src/widgets/gradient-toolbar.cpp:1083
 msgid "Create linear gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1100
+#: ../src/widgets/gradient-toolbar.cpp:1087
 msgid "radial"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1100
+#: ../src/widgets/gradient-toolbar.cpp:1087
 msgid "Create radial (elliptic or circular) gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1103
+#: ../src/widgets/gradient-toolbar.cpp:1090
 msgid "New:"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1126
+#: ../src/widgets/gradient-toolbar.cpp:1113
 msgid "fill"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1126
+#: ../src/widgets/gradient-toolbar.cpp:1113
 msgid "Create gradient in the fill"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1130
+#: ../src/widgets/gradient-toolbar.cpp:1117
 msgid "stroke"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1130
+#: ../src/widgets/gradient-toolbar.cpp:1117
 msgid "Create gradient in the stroke"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1133
+#: ../src/widgets/gradient-toolbar.cpp:1120
 msgid "on:"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1160
+#: ../src/widgets/gradient-toolbar.cpp:1146
 msgid "Select:"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1183
+#: ../src/widgets/gradient-toolbar.cpp:1169
 msgid "Repeat"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1206
+#: ../src/widgets/gradient-toolbar.cpp:1192
 msgid "Stops"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1206
+#: ../src/widgets/gradient-toolbar.cpp:1192
 msgid "Select a stop for the current gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1207
+#: ../src/widgets/gradient-toolbar.cpp:1193
 msgid "Edit:"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1219
+#: ../src/widgets/gradient-toolbar.cpp:1205
 msgid "Offset of selected stop"
+msgstr ""
+
+#: ../src/widgets/gradient-toolbar.cpp:1222
+#: ../src/widgets/gradient-toolbar.cpp:1223
+msgid "Insert new stop"
 msgstr ""
 
 #: ../src/widgets/gradient-toolbar.cpp:1236
 #: ../src/widgets/gradient-toolbar.cpp:1237
-msgid "Insert new stop"
-msgstr ""
-
-#: ../src/widgets/gradient-toolbar.cpp:1250
-#: ../src/widgets/gradient-toolbar.cpp:1251
 #: ../src/widgets/gradient-vector.cpp:845
 msgid "Delete stop"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1264
+#: ../src/widgets/gradient-toolbar.cpp:1250
 msgid "Reverse"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1265
+#: ../src/widgets/gradient-toolbar.cpp:1251
 msgid "Reverse the direction of the gradient"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1279
+#: ../src/widgets/gradient-toolbar.cpp:1265
 msgid "Link gradients"
 msgstr ""
 
-#: ../src/widgets/gradient-toolbar.cpp:1280
+#: ../src/widgets/gradient-toolbar.cpp:1266
 msgid "Link gradients to change all related gradients"
 msgstr ""
 
@@ -23251,2038 +23237,176 @@ msgstr ""
 msgid "Change swatch color"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:219
+#: ../src/widgets/toolbox.cpp:179
 msgid "Color/opacity used for color tweaking"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:227
+#: ../src/widgets/toolbox.cpp:187
 msgid "Style of new stars"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:229
+#: ../src/widgets/toolbox.cpp:189
 msgid "Style of new rectangles"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:231
+#: ../src/widgets/toolbox.cpp:191
 msgid "Style of new 3D boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:233
+#: ../src/widgets/toolbox.cpp:193
 msgid "Style of new ellipses"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:235
+#: ../src/widgets/toolbox.cpp:195
 msgid "Style of new spirals"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:237
+#: ../src/widgets/toolbox.cpp:197
 msgid "Style of new paths created by Pencil"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:239
+#: ../src/widgets/toolbox.cpp:199
 msgid "Style of new paths created by Pen"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:241
+#: ../src/widgets/toolbox.cpp:201
 msgid "Style of new calligraphic strokes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:243 ../src/widgets/toolbox.cpp:245
+#: ../src/widgets/toolbox.cpp:203 ../src/widgets/toolbox.cpp:205
 msgid "TBD"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:255
+#: ../src/widgets/toolbox.cpp:215
 msgid "Style of Paint Bucket fill objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1467
-msgid "Insert node"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1468
-msgid "Insert new nodes into selected segments"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1471
-msgid "Insert"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1482
-msgid "Insert node at min X"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1483
-msgid "Insert new nodes at min X into selected segments"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1486
-msgid "Insert min X"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1492
-msgid "Insert node at max X"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1493
-msgid "Insert new nodes at max X into selected segments"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1496
-msgid "Insert max X"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1502
-msgid "Insert node at min Y"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1503
-msgid "Insert new nodes at min Y into selected segments"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1506
-msgid "Insert min Y"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1512
-msgid "Insert node at max Y"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1513
-msgid "Insert new nodes at max Y into selected segments"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1516
-msgid "Insert max Y"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1524
-msgid "Delete selected nodes"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1535
-msgid "Join selected nodes"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1538
-msgid "Join"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1546
-msgid "Break path at selected nodes"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1556
-msgid "Join with segment"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1557
-msgid "Join selected endnodes with a new segment"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1566
-msgid "Delete segment"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1567
-msgid "Delete segment between two non-endpoint nodes"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1576
-msgid "Node Cusp"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1577
-msgid "Make selected nodes corner"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1586
-msgid "Node Smooth"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1587
-msgid "Make selected nodes smooth"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1596
-msgid "Node Symmetric"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1597
-msgid "Make selected nodes symmetric"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1606
-msgid "Node Auto"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1607
-msgid "Make selected nodes auto-smooth"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1616
-msgid "Node Line"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1617
-msgid "Make selected segments lines"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1626
-msgid "Node Curve"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1627
-msgid "Make selected segments curves"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1636
-msgid "Show Transform Handles"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1637
-msgid "Show transformation handles for selected nodes"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1647
-msgid "Show Handles"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1648
-msgid "Show Bezier handles of selected nodes"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1658
-msgid "Show Outline"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1659
-msgid "Show path outline (without path effects)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1681
-msgid "Edit clipping paths"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1682
-msgid "Show clipping path(s) of selected object(s)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1692
-msgid "Edit masks"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1693
-msgid "Show mask(s) of selected object(s)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1707
-msgid "X coordinate:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1707
-msgid "X coordinate of selected node(s)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1725
-msgid "Y coordinate:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1725
-msgid "Y coordinate of selected node(s)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1810 ../src/widgets/toolbox.cpp:7804
-msgid "Font Size"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1810
-msgid "Font Size:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1811
-msgid "The font size to be used in the measurement labels"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:1823 ../src/widgets/toolbox.cpp:1831
-msgid "The units to be used for the measurements"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:2433
+#: ../src/widgets/toolbox.cpp:1694
 msgid "Bounding box"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2433
+#: ../src/widgets/toolbox.cpp:1694
 msgid "Snap bounding boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2442
+#: ../src/widgets/toolbox.cpp:1703
 msgid "Bounding box edges"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2442
+#: ../src/widgets/toolbox.cpp:1703
 msgid "Snap to edges of a bounding box"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2451
+#: ../src/widgets/toolbox.cpp:1712
 msgid "Bounding box corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2451
+#: ../src/widgets/toolbox.cpp:1712
 msgid "Snap bounding box corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2460
+#: ../src/widgets/toolbox.cpp:1721
 msgid "BBox Edge Midpoints"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2460
+#: ../src/widgets/toolbox.cpp:1721
 msgid "Snap midpoints of bounding box edges"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2470
+#: ../src/widgets/toolbox.cpp:1731
 msgid "BBox Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2470
+#: ../src/widgets/toolbox.cpp:1731
 msgid "Snapping centers of bounding boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2479
+#: ../src/widgets/toolbox.cpp:1740
 msgid "Snap nodes, paths, and handles"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2487
+#: ../src/widgets/toolbox.cpp:1748
 msgid "Snap to paths"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2496
+#: ../src/widgets/toolbox.cpp:1757
 msgid "Path intersections"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2496
+#: ../src/widgets/toolbox.cpp:1757
 msgid "Snap to path intersections"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2505
+#: ../src/widgets/toolbox.cpp:1766
 msgid "To nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2505
+#: ../src/widgets/toolbox.cpp:1766
 msgid "Snap cusp nodes, incl. rectangle corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2514
+#: ../src/widgets/toolbox.cpp:1775
 msgid "Smooth nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2514
+#: ../src/widgets/toolbox.cpp:1775
 msgid "Snap smooth nodes, incl. quadrant points of ellipses"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2523
+#: ../src/widgets/toolbox.cpp:1784
 msgid "Line Midpoints"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2523
+#: ../src/widgets/toolbox.cpp:1784
 msgid "Snap midpoints of line segments"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2532
+#: ../src/widgets/toolbox.cpp:1793
 msgid "Others"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2532
+#: ../src/widgets/toolbox.cpp:1793
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2540
+#: ../src/widgets/toolbox.cpp:1801
 msgid "Object Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2540
+#: ../src/widgets/toolbox.cpp:1801
 msgid "Snap centers of objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2549
+#: ../src/widgets/toolbox.cpp:1810
 msgid "Rotation Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2549
+#: ../src/widgets/toolbox.cpp:1810
 msgid "Snap an item's rotation center"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2558
+#: ../src/widgets/toolbox.cpp:1819
 msgid "Text baseline"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2558
+#: ../src/widgets/toolbox.cpp:1819
 msgid "Snap text anchors and baselines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2568
+#: ../src/widgets/toolbox.cpp:1829
 msgid "Page border"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2568
+#: ../src/widgets/toolbox.cpp:1829
 msgid "Snap to the page border"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2577
+#: ../src/widgets/toolbox.cpp:1838
 msgid "Snap to grids"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:2586
+#: ../src/widgets/toolbox.cpp:1847
 msgid "Snap guides"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:2788
-msgid "Star: Change number of corners"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:2841
-msgid "Star: Change spoke ratio"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:2886
-msgid "Make polygon"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:2886
-msgid "Make star"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:2925
-msgid "Star: Change rounding"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:2965
-msgid "Star: Change randomization"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3069 ../src/widgets/toolbox.cpp:3156
-#: ../src/widgets/toolbox.cpp:3482 ../src/widgets/toolbox.cpp:3520
-#: ../src/widgets/toolbox.cpp:4147 ../src/widgets/toolbox.cpp:4171
-#: ../src/widgets/toolbox.cpp:5807 ../src/widgets/toolbox.cpp:5836
-msgid "<b>New:</b>"
-msgstr ""
-
-#. FIXME: implement averaging of all parameters for multiple selected
-#. gtk_label_set_markup(GTK_LABEL(l), _("<b>Average:</b>"));
-#: ../src/widgets/toolbox.cpp:3071 ../src/widgets/toolbox.cpp:3490
-#: ../src/widgets/toolbox.cpp:3508 ../src/widgets/toolbox.cpp:4149
-#: ../src/widgets/toolbox.cpp:4160 ../src/widgets/toolbox.cpp:5810
-#: ../src/widgets/toolbox.cpp:5821
-msgid "<b>Change:</b>"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3175
-msgid "Regular polygon (with one handle) instead of a star"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3182
-msgid "Star instead of a regular polygon (with one handle)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3203
-msgid "triangle/tri-star"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3203
-msgid "square/quad-star"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3203
-msgid "pentagon/five-pointed star"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3203
-msgid "hexagon/six-pointed star"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3206
-msgid "Corners"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3206
-msgid "Corners:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3206
-msgid "Number of corners of a polygon or star"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3219
-msgid "thin-ray star"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3219
-msgid "pentagram"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3219
-msgid "hexagram"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3219
-msgid "heptagram"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3219
-msgid "octagram"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3219
-msgid "regular polygon"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3222
-msgid "Spoke ratio"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3222
-msgid "Spoke ratio:"
-msgstr ""
-
-#. TRANSLATORS: Tip radius of a star is the distance from the center to the farthest handle.
-#. Base radius is the same for the closest handle.
-#: ../src/widgets/toolbox.cpp:3225
-msgid "Base radius to tip radius ratio"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3243
-msgid "stretched"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3243
-msgid "twisted"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3243
-msgid "slightly pinched"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3243
-msgid "NOT rounded"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3243
-msgid "slightly rounded"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3243
-msgid "visibly rounded"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3243
-msgid "well rounded"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3243
-msgid "amply rounded"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3243 ../src/widgets/toolbox.cpp:3258
-msgid "blown up"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3246
-msgid "Rounded"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3246
-msgid "Rounded:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3246
-msgid "How much rounded are the corners (0 for sharp)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3258
-msgid "NOT randomized"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3258
-msgid "slightly irregular"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3258
-msgid "visibly randomized"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3258
-msgid "strongly randomized"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3261
-msgid "Randomized"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3261
-msgid "Randomized:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3261
-msgid "Scatter randomly the corners and angles"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3276 ../src/widgets/toolbox.cpp:4222
-#: ../src/widgets/toolbox.cpp:4478 ../src/widgets/toolbox.cpp:8783
-msgid "Defaults"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3277 ../src/widgets/toolbox.cpp:4223
-msgid ""
-"Reset shape parameters to defaults (use Inkscape Preferences > Tools to "
-"change defaults)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3351
-msgid "Change rectangle"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3538
-msgid "W:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3538
-msgid "Width of rectangle"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3555
-msgid "H:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3555
-msgid "Height of rectangle"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3569 ../src/widgets/toolbox.cpp:3584
-msgid "not rounded"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3572
-msgid "Horizontal radius"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3572
-msgid "Rx:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3572
-msgid "Horizontal radius of rounded corners"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3587
-msgid "Vertical radius"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3587
-msgid "Ry:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3587
-msgid "Vertical radius of rounded corners"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3606
-msgid "Not rounded"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3607
-msgid "Make corners sharp"
-msgstr ""
-
-#. TODO: use the correct axis here, too
-#: ../src/widgets/toolbox.cpp:3803
-msgid "3D Box: Change perspective (angle of infinite axis)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3870
-msgid "Angle in X direction"
-msgstr ""
-
-#. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:3872
-msgid "Angle of PLs in X direction"
-msgstr ""
-
-#. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:3894
-msgid "State of VP in X direction"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3895
-msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3910
-msgid "Angle in Y direction"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3910
-msgid "Angle Y:"
-msgstr ""
-
-#. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:3912
-msgid "Angle of PLs in Y direction"
-msgstr ""
-
-#. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:3933
-msgid "State of VP in Y direction"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3934
-msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3949
-msgid "Angle in Z direction"
-msgstr ""
-
-#. Translators: PL is short for 'perspective line'
-#: ../src/widgets/toolbox.cpp:3951
-msgid "Angle of PLs in Z direction"
-msgstr ""
-
-#. Translators: VP is short for 'vanishing point'
-#: ../src/widgets/toolbox.cpp:3972
-msgid "State of VP in Z direction"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:3973
-msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4033
-msgid "Change spiral"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4179
-msgid "just a curve"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4179
-msgid "one full revolution"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4182
-msgid "Number of turns"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4182
-msgid "Turns:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4182
-msgid "Number of revolutions"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4193
-msgid "circle"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4193
-msgid "edge is much denser"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4193
-msgid "edge is denser"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4193
-msgid "even"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4193
-msgid "center is denser"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4193
-msgid "center is much denser"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4196
-msgid "Divergence"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4196
-msgid "Divergence:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4196
-msgid "How much denser/sparser are outer revolutions; 1 = uniform"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4207
-msgid "starts from center"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4207
-msgid "starts mid-way"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4207
-msgid "starts near edge"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4210
-msgid "Inner radius"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4210
-msgid "Inner radius:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4210
-msgid "Radius of the innermost revolution (relative to the spiral size)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4282
-msgid "Bezier"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4283
-msgid "Create regular Bezier path"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4289
-msgid "Spiro"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4290
-msgid "Create Spiro path"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4297
-msgid "Zigzag"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4298
-msgid "Create a sequence of straight line segments"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4304
-msgid "Paraxial"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4305
-msgid "Create a sequence of paraxial line segments"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4313
-msgid "Mode of new lines drawn by this tool"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4342
-msgid "Triangle in"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4343
-msgid "Triangle out"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4345
-msgid "From clipboard"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4370 ../src/widgets/toolbox.cpp:4371
-msgid "Shape:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4370
-msgid "Shape of new paths drawn by this tool"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4455
-msgid "(many nodes, rough)"
-msgstr ""
-
-#. Mean
-#. Rotation
-#. Scale
-#: ../src/widgets/toolbox.cpp:4455 ../src/widgets/toolbox.cpp:4566
-#: ../src/widgets/toolbox.cpp:4583 ../src/widgets/toolbox.cpp:4791
-#: ../src/widgets/toolbox.cpp:4886 ../src/widgets/toolbox.cpp:4902
-#: ../src/widgets/toolbox.cpp:4918 ../src/widgets/toolbox.cpp:4978
-#: ../src/widgets/toolbox.cpp:5008 ../src/widgets/toolbox.cpp:5026
-#: ../src/widgets/toolbox.cpp:5381 ../src/widgets/toolbox.cpp:5414
-#: ../src/widgets/toolbox.cpp:6445
-msgid "(default)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4455
-msgid "(few nodes, smooth)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4458
-msgid "Smoothing:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4458
-msgid "Smoothing: "
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4459
-msgid "How much smoothing (simplifying) is applied to the line"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4479
-msgid ""
-"Reset pencil parameters to defaults (use Inkscape Preferences > Tools to "
-"change defaults)"
-msgstr ""
-
-#. Width
-#: ../src/widgets/toolbox.cpp:4566
-msgid "(pinch tweak)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4566
-msgid "(broad tweak)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4569
-msgid "The width of the tweak area (relative to the visible canvas area)"
-msgstr ""
-
-#. Force
-#: ../src/widgets/toolbox.cpp:4583
-msgid "(minimum force)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4583
-msgid "(maximum force)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4586
-msgid "Force"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4586
-msgid "Force:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4586
-msgid "The force of the tweak action"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4604
-msgid "Move mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4605
-msgid "Move objects in any direction"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4611
-msgid "Move in/out mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4612
-msgid "Move objects towards cursor; with Shift from cursor"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4618
-msgid "Move jitter mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4619
-msgid "Move objects in random directions"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4625
-msgid "Scale mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4626
-msgid "Shrink objects, with Shift enlarge"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4632
-msgid "Rotate mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4633
-msgid "Rotate objects, with Shift counterclockwise"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4639
-msgid "Duplicate/delete mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4640
-msgid "Duplicate objects, with Shift delete"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4646
-msgid "Push mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4647
-msgid "Push parts of paths in any direction"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4653
-msgid "Shrink/grow mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4654
-msgid "Shrink (inset) parts of paths; with Shift grow (outset)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4660
-msgid "Attract/repel mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4661
-msgid "Attract parts of paths towards cursor; with Shift from cursor"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4667
-msgid "Roughen mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4668
-msgid "Roughen parts of paths"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4674
-msgid "Color paint mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4675
-msgid "Paint the tool's color upon selected objects"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4681
-msgid "Color jitter mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4682
-msgid "Jitter the colors of selected objects"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4688
-msgid "Blur mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4689
-msgid "Blur selected objects more; with Shift, blur less"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4694 ../src/widgets/toolbox.cpp:4958
-msgid "Mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4716
-msgid "Channels:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4728
-msgid "In color mode, act on objects' hue"
-msgstr ""
-
-#. TRANSLATORS:  "H" here stands for hue
-#: ../src/widgets/toolbox.cpp:4732
-msgid "H"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4744
-msgid "In color mode, act on objects' saturation"
-msgstr ""
-
-#. TRANSLATORS: "S" here stands for Saturation
-#: ../src/widgets/toolbox.cpp:4748
-msgid "S"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4760
-msgid "In color mode, act on objects' lightness"
-msgstr ""
-
-#. TRANSLATORS: "L" here stands for Lightness
-#: ../src/widgets/toolbox.cpp:4764
-msgid "L"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4776
-msgid "In color mode, act on objects' opacity"
-msgstr ""
-
-#. TRANSLATORS: "O" here stands for Opacity
-#: ../src/widgets/toolbox.cpp:4780
-msgid "O"
-msgstr ""
-
-#. Fidelity
-#: ../src/widgets/toolbox.cpp:4791
-msgid "(rough, simplified)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4791
-msgid "(fine, but many nodes)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4794
-msgid "Fidelity"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4794
-msgid "Fidelity:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4795
-msgid ""
-"Low fidelity simplifies paths; high fidelity preserves path features but may "
-"generate a lot of new nodes"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4813 ../src/widgets/toolbox.cpp:4997
-#: ../src/widgets/toolbox.cpp:5532
-msgid "Pressure"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4814
-msgid "Use the pressure of the input device to alter the force of tweak action"
-msgstr ""
-
-#. Width
-#: ../src/widgets/toolbox.cpp:4886
-msgid "(narrow spray)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4886
-msgid "(broad spray)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4889
-msgid "The width of the spray area (relative to the visible canvas area)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4902
-msgid "(maximum mean)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4905
-msgid "Focus"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4905
-msgid "Focus:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4905
-msgid "0 to spray a spot; increase to enlarge the ring radius"
-msgstr ""
-
-#. Standard_deviation
-#: ../src/widgets/toolbox.cpp:4918
-msgid "(minimum scatter)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4918
-msgid "(maximum scatter)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4921
-msgctxt "Spray tool"
-msgid "Scatter"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4921
-msgctxt "Spray tool"
-msgid "Scatter:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4921
-msgid "Increase to scatter sprayed objects"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4940
-msgid "Spray copies of the initial selection"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4947
-msgid "Spray clones of the initial selection"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4953
-msgid "Spray single path"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4954
-msgid "Spray objects in a single path"
-msgstr ""
-
-#. Population
-#: ../src/widgets/toolbox.cpp:4978
-msgid "(low population)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4978
-msgid "(high population)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4981
-msgid "Amount"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4982
-msgid "Adjusts the number of items sprayed per click"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:4998
-msgid ""
-"Use the pressure of the input device to alter the amount of sprayed objects"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5008
-msgid "(high rotation variation)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5011
-msgid "Rotation"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5011
-msgid "Rotation:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5013
-#, no-c-format
-msgid ""
-"Variation of the rotation of the sprayed objects; 0% for the same rotation "
-"than the original object"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5026
-msgid "(high scale variation)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5029
-msgctxt "Spray tool"
-msgid "Scale"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5029
-msgctxt "Spray tool"
-msgid "Scale:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5031
-#, no-c-format
-msgid ""
-"Variation in the scale of the sprayed objects; 0% for the same scale than "
-"the original object"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5205
-msgid "No preset"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5223
-msgid "Save..."
-msgstr ""
-
-#. Width
-#: ../src/widgets/toolbox.cpp:5381 ../src/widgets/toolbox.cpp:6445
-msgid "(hairline)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5381 ../src/widgets/toolbox.cpp:6445
-msgid "(broad stroke)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5384 ../src/widgets/toolbox.cpp:6448
-msgid "Pen Width"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5385
-msgid "The width of the calligraphic pen (relative to the visible canvas area)"
-msgstr ""
-
-#. Thinning
-#: ../src/widgets/toolbox.cpp:5398
-msgid "(speed blows up stroke)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5398
-msgid "(slight widening)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5398
-msgid "(constant width)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5398
-msgid "(slight thinning, default)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5398
-msgid "(speed deflates stroke)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5401
-msgid "Stroke Thinning"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5401
-msgid "Thinning:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5402
-msgid ""
-"How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 "
-"makes them broader, 0 makes width independent of velocity)"
-msgstr ""
-
-#. Angle
-#: ../src/widgets/toolbox.cpp:5414
-msgid "(left edge up)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5414
-msgid "(horizontal)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5414
-msgid "(right edge up)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5417
-msgid "Pen Angle"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5417 ../share/extensions/motion.inx.h:1
-#: ../share/extensions/restack.inx.h:1
-msgid "Angle:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5418
-msgid ""
-"The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if "
-"fixation = 0)"
-msgstr ""
-
-#. Fixation
-#: ../src/widgets/toolbox.cpp:5432
-msgid "(perpendicular to stroke, \"brush\")"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5432
-msgid "(almost fixed, default)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5432
-msgid "(fixed by Angle, \"pen\")"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5435
-msgid "Fixation"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5435
-msgid "Fixation:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5436
-msgid ""
-"Angle behavior (0 = nib always perpendicular to stroke direction, 100 = "
-"fixed angle)"
-msgstr ""
-
-#. Cap Rounding
-#: ../src/widgets/toolbox.cpp:5448
-msgid "(blunt caps, default)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5448
-msgid "(slightly bulging)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5448
-msgid "(approximately round)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5448
-msgid "(long protruding caps)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5452
-msgid "Cap rounding"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5452
-msgid "Caps:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5453
-msgid ""
-"Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = "
-"round caps)"
-msgstr ""
-
-#. Tremor
-#: ../src/widgets/toolbox.cpp:5465
-msgid "(smooth line)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5465
-msgid "(slight tremor)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5465
-msgid "(noticeable tremor)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5465
-msgid "(maximum tremor)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5468
-msgid "Stroke Tremor"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5468
-msgid "Tremor:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5469
-msgid "Increase to make strokes rugged and trembling"
-msgstr ""
-
-#. Wiggle
-#: ../src/widgets/toolbox.cpp:5483
-msgid "(no wiggle)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5483
-msgid "(slight deviation)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5483
-msgid "(wild waves and curls)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5486
-msgid "Pen Wiggle"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5486
-msgid "Wiggle:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5487
-msgid "Increase to make the pen waver and wiggle"
-msgstr ""
-
-#. Mass
-#: ../src/widgets/toolbox.cpp:5500
-msgid "(no inertia)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5500
-msgid "(slight smoothing, default)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5500
-msgid "(noticeable lagging)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5500
-msgid "(maximum inertia)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5503
-msgid "Pen Mass"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5503
-msgid "Mass:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5504
-msgid "Increase to make the pen drag behind, as if slowed by inertia"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5519
-msgid "Trace Background"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5520
-msgid ""
-"Trace the lightness of the background by the width of the pen (white - "
-"minimum width, black - maximum width)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5533
-msgid "Use the pressure of the input device to alter the width of the pen"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5545
-msgid "Tilt"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5546
-msgid "Use the tilt of the input device to alter the angle of the pen's nib"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5561
-msgid "Choose a preset"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5650
-msgid "Arc: Change start/end"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5716
-msgid "Arc: Change open/closed"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5845
-msgid "Start:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5846
-msgid "The angle (in degrees) from the horizontal to the arc's start point"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5858
-msgid "End:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5859
-msgid "The angle (in degrees) from the horizontal to the arc's end point"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5875
-msgid "Closed arc"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5876
-msgid "Switch to segment (closed shape with two radii)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5882
-msgid "Open Arc"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5883
-msgid "Switch to arc (unclosed shape)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5906
-msgid "Make whole"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5907
-msgid "Make the shape a whole ellipse, not arc or segment"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5985
-msgid "Pick opacity"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5986
-msgid ""
-"Pick both the color and the alpha (transparency) under cursor; otherwise, "
-"pick only the visible color premultiplied by alpha"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5989
-msgid "Pick"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5998
-msgid "Assign opacity"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:5999
-msgid ""
-"If alpha was picked, assign it to selection as fill or stroke transparency"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6002
-msgid "Assign"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6187
-msgid "Closed"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6189
-msgid "Open start"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6191
-msgid "Open end"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6193
-msgid "Open both"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6252
-msgid "All inactive"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6253
-msgid "No geometric tool is active"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6286
-msgid "Show limiting bounding box"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6287
-msgid "Show bounding box (used to cut infinite lines)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6298
-msgid "Get limiting bounding box from selection"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6299
-msgid ""
-"Set limiting bounding box (used to cut infinite lines) to the bounding box "
-"of current selection"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6311
-msgid "Choose a line segment type"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6327
-msgid "Display measuring info"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6328
-msgid "Display measuring info for selected items"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6348
-msgid "Open LPE dialog"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6349
-msgid "Open LPE dialog (to adapt parameters numerically)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6414
-msgid "Delete objects touched by the eraser"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6420
-msgid "Cut"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6421
-msgid "Cut out from objects"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6449
-msgid "The width of the eraser pen (relative to the visible canvas area)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6672
-#, c-format
-msgid "Failed to find font matching: %s\n"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6706
-msgid "Text: Change font family"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6763
-msgid "Text: Change font size"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6883
-msgid "Text: Change font style"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:6962
-msgid "Text: Change superscript or subscript"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7107
-msgid "Text: Change alignment"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7150
-msgid "Text: Change line-height"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7199
-msgid "Text: Change word-spacing"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7241
-msgid "Text: Change letter-spacing"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7282
-msgid "Text: Change dx (kern)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7316
-msgid "Text: Change dy"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7351
-msgid "Text: Change rotate"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7399
-msgid "Text: Change orientation"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7764
-msgid "Font Family"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7765
-msgid "Select Font Family (Alt-X to access)"
-msgstr ""
-
-#. Entry width
-#. Extra list width
-#. Cell layout
-#. Enable entry completion
-#: ../src/widgets/toolbox.cpp:7772
-msgid "Font not found on system"
-msgstr ""
-
-#. Name
-#: ../src/widgets/toolbox.cpp:7817
-msgid "Toggle Bold"
-msgstr ""
-
-#. Label
-#: ../src/widgets/toolbox.cpp:7818
-msgid "Toggle bold or normal weight"
-msgstr ""
-
-#. Name
-#: ../src/widgets/toolbox.cpp:7830
-msgid "Toggle Italic/Oblique"
-msgstr ""
-
-#. Label
-#: ../src/widgets/toolbox.cpp:7831
-msgid "Toggle italic/oblique style"
-msgstr ""
-
-#. Name
-#: ../src/widgets/toolbox.cpp:7843
-msgid "Toggle Superscript"
-msgstr ""
-
-#. Label
-#: ../src/widgets/toolbox.cpp:7844
-msgid "Toggle superscript"
-msgstr ""
-
-#. Name
-#: ../src/widgets/toolbox.cpp:7856
-msgid "Toggle Subscript"
-msgstr ""
-
-#. Label
-#: ../src/widgets/toolbox.cpp:7857
-msgid "Toggle subscript"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7898
-msgid "Justify"
-msgstr ""
-
-#. Name
-#: ../src/widgets/toolbox.cpp:7905
-msgid "Alignment"
-msgstr ""
-
-#. Label
-#: ../src/widgets/toolbox.cpp:7906
-msgid "Text alignment"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7933
-msgid "Horizontal"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7940
-msgid "Vertical"
-msgstr ""
-
-#. Label
-#: ../src/widgets/toolbox.cpp:7947
-msgid "Text orientation"
-msgstr ""
-
-#. Drop down menu
-#: ../src/widgets/toolbox.cpp:7970
-msgid "Smaller spacing"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7970 ../src/widgets/toolbox.cpp:8001
-#: ../src/widgets/toolbox.cpp:8032
-msgctxt "Text tool"
-msgid "Normal"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:7970
-msgid "Larger spacing"
-msgstr ""
-
-#. name
-#: ../src/widgets/toolbox.cpp:7975
-msgid "Line Height"
-msgstr ""
-
-#. label
-#: ../src/widgets/toolbox.cpp:7976
-msgid "Line:"
-msgstr ""
-
-#. short label
-#: ../src/widgets/toolbox.cpp:7977
-msgid "Spacing between lines (times font size)"
-msgstr ""
-
-#. Drop down menu
-#: ../src/widgets/toolbox.cpp:8001 ../src/widgets/toolbox.cpp:8032
-msgid "Negative spacing"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8001 ../src/widgets/toolbox.cpp:8032
-msgid "Positive spacing"
-msgstr ""
-
-#. name
-#: ../src/widgets/toolbox.cpp:8006
-msgid "Word spacing"
-msgstr ""
-
-#. label
-#: ../src/widgets/toolbox.cpp:8007
-msgid "Word:"
-msgstr ""
-
-#. short label
-#: ../src/widgets/toolbox.cpp:8008
-msgid "Spacing between words (px)"
-msgstr ""
-
-#. name
-#: ../src/widgets/toolbox.cpp:8037
-msgid "Letter spacing"
-msgstr ""
-
-#. label
-#: ../src/widgets/toolbox.cpp:8038
-msgid "Letter:"
-msgstr ""
-
-#. short label
-#: ../src/widgets/toolbox.cpp:8039
-msgid "Spacing between letters (px)"
-msgstr ""
-
-#. name
-#: ../src/widgets/toolbox.cpp:8068
-msgid "Kerning"
-msgstr ""
-
-#. label
-#: ../src/widgets/toolbox.cpp:8069
-msgid "Kern:"
-msgstr ""
-
-#. short label
-#: ../src/widgets/toolbox.cpp:8070
-msgid "Horizontal kerning (px)"
-msgstr ""
-
-#. name
-#: ../src/widgets/toolbox.cpp:8099
-msgid "Vertical Shift"
-msgstr ""
-
-#. label
-#: ../src/widgets/toolbox.cpp:8100
-msgid "Vert:"
-msgstr ""
-
-#. short label
-#: ../src/widgets/toolbox.cpp:8101
-msgid "Vertical shift (px)"
-msgstr ""
-
-#. name
-#: ../src/widgets/toolbox.cpp:8130
-msgid "Letter rotation"
-msgstr ""
-
-#. label
-#: ../src/widgets/toolbox.cpp:8131
-msgid "Rot:"
-msgstr ""
-
-#. short label
-#: ../src/widgets/toolbox.cpp:8132
-msgid "Character rotation (degrees)"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8247
-msgid "Set connector type: orthogonal"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8247
-msgid "Set connector type: polyline"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8296
-msgid "Change connector curvature"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8347
-msgid "Change connector spacing"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8461
-msgid "EditMode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8462
-msgid "Switch between connection point editing and connector drawing mode"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8476
-msgid "Avoid"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8486
-msgid "Ignore"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8497
-msgid "Orthogonal"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8498
-msgid "Make connector orthogonal or polyline"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8512
-msgid "Connector Curvature"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8512
-msgid "Curvature:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8513
-msgid "The amount of connectors curvature"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8523
-msgid "Connector Spacing"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8523
-msgid "Spacing:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8524
-msgid "The amount of space left around objects by auto-routing connectors"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8535
-msgid "Graph"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8545
-msgid "Connector Length"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8546
-msgid "Ideal length for connectors when layout is applied"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8558
-msgid "Downwards"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8559
-msgid "Make connectors with end-markers (arrows) point downwards"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8575
-msgid "Do not allow overlapping shapes"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8590
-msgid "New connection point"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8591
-msgid "Add a new connection point to the currently selected item"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8602
-msgid "Remove connection point"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8603
-msgid "Remove the currently selected connection point"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8705
-msgid "Fill by"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8706
-msgid "Fill by:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8718
-msgid "Fill Threshold"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8719
-msgid ""
-"The maximum allowed difference between the clicked pixel and the neighboring "
-"pixels to be counted in the fill"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8745
-msgid "Grow/shrink by"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8745
-msgid "Grow/shrink by:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8746
-msgid ""
-"The amount to grow (positive) or shrink (negative) the created fill path"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8771
-msgid "Close gaps"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8772
-msgid "Close gaps:"
-msgstr ""
-
-#: ../src/widgets/toolbox.cpp:8784
-msgid ""
-"Reset paint bucket parameters to defaults (use Inkscape Preferences > Tools "
-"to change defaults)"
 msgstr ""
 
 #: ../share/extensions/interp_att_g.py:161
@@ -28245,6 +26369,10 @@ msgctxt "measure extension"
 msgid "Area"
 msgstr ""
 
+#: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1
+msgid "Angle:"
+msgstr ""
+
 #: ../share/extensions/motion.inx.h:3
 msgid "Magnitude:"
 msgstr ""
@@ -29492,7 +27620,7 @@ msgid "Week number column name:"
 msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:31
-msgid "Week start day"
+msgid "Week start day:"
 msgstr ""
 
 #: ../share/extensions/svgcalendar.inx.h:32
