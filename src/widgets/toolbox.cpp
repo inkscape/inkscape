@@ -1499,8 +1499,8 @@ void setup_commands_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "    <toolitem action='DialogXMLEditor' />"
         "    <toolitem action='DialogAlignDistribute' />"
         "    <separator />"
-        "    <toolitem action='DialogPreferences' />"
         "    <toolitem action='DialogDocumentProperties' />"
+        "    <toolitem action='DialogPreferences' />"
         "  </toolbar>"
         "</ui>";
 

@@ -2633,7 +2633,7 @@ Verb *Verb::_base_verbs[] = {
                  N_("Zoom to fit selection in window"), INKSCAPE_ICON("zoom-fit-selection")),
 
     // Dialogs
-    new DialogVerb(SP_VERB_DIALOG_DISPLAY, "DialogPreferences", N_("In_kscape Preferences..."),
+    new DialogVerb(SP_VERB_DIALOG_DISPLAY, "DialogPreferences", N_("P_references..."),
                    N_("Edit global Inkscape preferences"), GTK_STOCK_PREFERENCES ),
     new DialogVerb(SP_VERB_DIALOG_NAMEDVIEW, "DialogDocumentProperties", N_("_Document Properties..."),
                    N_("Edit properties of this document (to be saved with the document)"), GTK_STOCK_PROPERTIES ),
