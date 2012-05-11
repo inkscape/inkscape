@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-05-11 14:59+0200\n"
+"POT-Creation-Date: 2012-05-11 16:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6801,7 +6801,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/bumps.h:100
 #: ../src/extension/internal/filter/bumps.h:334
-#: ../share/extensions/measure.inx.h:27
+#: ../share/extensions/measure.inx.h:10
 msgid "Precision:"
 msgstr ""
 
@@ -11138,19 +11138,19 @@ msgid "_New"
 msgstr ""
 
 #. "       <verb verb-id=\"FileExportToOCAL\" />\n"
-#: ../src/menus-skeleton.h:45 ../src/verbs.cpp:2475 ../src/verbs.cpp:2481
+#: ../src/menus-skeleton.h:44 ../src/verbs.cpp:2475 ../src/verbs.cpp:2481
 msgid "_Edit"
 msgstr ""
 
-#: ../src/menus-skeleton.h:55 ../src/verbs.cpp:2259
+#: ../src/menus-skeleton.h:54 ../src/verbs.cpp:2259
 msgid "Paste Si_ze"
 msgstr ""
 
-#: ../src/menus-skeleton.h:67
+#: ../src/menus-skeleton.h:66
 msgid "Clo_ne"
 msgstr ""
 
-#: ../src/menus-skeleton.h:81
+#: ../src/menus-skeleton.h:80
 msgid "Selec_t Same"
 msgstr ""
 
@@ -14176,8 +14176,7 @@ msgstr ""
 #: ../share/extensions/jessyInk_view.inx.h:3
 #: ../share/extensions/layout_nup.inx.h:15
 #: ../share/extensions/lindenmayer.inx.h:23
-#: ../share/extensions/lorem_ipsum.inx.h:1
-#: ../share/extensions/measure.inx.h:19
+#: ../share/extensions/lorem_ipsum.inx.h:1 ../share/extensions/measure.inx.h:3
 #: ../share/extensions/pathalongpath.inx.h:5
 #: ../share/extensions/pathscatter.inx.h:6
 #: ../share/extensions/radiusrand.inx.h:1 ../share/extensions/split.inx.h:1
@@ -22036,7 +22035,7 @@ msgstr ""
 
 #. Dialogs
 #: ../src/verbs.cpp:2636
-msgid "In_kscape Preferences..."
+msgid "P_references..."
 msgstr ""
 
 #: ../src/verbs.cpp:2637
@@ -23716,7 +23715,7 @@ msgid "Visual"
 msgstr ""
 
 #: ../share/extensions/dimension.inx.h:5 ../share/extensions/dots.inx.h:13
-#: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:38
+#: ../share/extensions/handles.inx.h:2 ../share/extensions/measure.inx.h:21
 msgid "Visualize Path"
 msgstr ""
 
@@ -26241,111 +26240,46 @@ msgid "solid"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:1
-msgid "Angle 0"
+msgid "Angle [with Fixed Angle option only] (°):"
 msgstr ""
 
 #: ../share/extensions/measure.inx.h:2
-msgid "Angle 120"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:3
-msgid "Angle 135"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:4
-msgid "Angle 150"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:5
-msgid "Angle 180"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:6
-msgid "Angle 210"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:7
-msgid "Angle 225"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:8
-msgid "Angle 240"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:9
-msgid "Angle 270"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:10
-msgid "Angle 30"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:11
-msgid "Angle 300"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:12
-msgid "Angle 315"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:13
-msgid "Angle 330"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:14
-msgid "Angle 45"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:15
-msgid "Angle 60"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:16
-msgid "Angle 90"
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:17
-msgid "Display Format: "
-msgstr ""
-
-#: ../share/extensions/measure.inx.h:18
 msgid "Font size (px):"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:20
+#: ../share/extensions/measure.inx.h:4
 msgid "Length"
 msgstr ""
 
-#. <param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>
-#: ../share/extensions/measure.inx.h:22
+#: ../share/extensions/measure.inx.h:5
 msgid "Length Unit:"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:23
+#: ../share/extensions/measure.inx.h:6
 msgid "Measure"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:24
+#: ../share/extensions/measure.inx.h:7
 msgid "Measure Path"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:25
+#: ../share/extensions/measure.inx.h:8
 msgid "Measurement Type: "
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:26
+#: ../share/extensions/measure.inx.h:9
 msgid "Offset (px):"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:28
+#: ../share/extensions/measure.inx.h:11
 msgid "Scale Factor (Drawing:Real Length) = 1:"
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:29
-msgid "Text On Path"
+#: ../share/extensions/measure.inx.h:12
+msgid "Text Orientation: "
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:31
+#: ../share/extensions/measure.inx.h:14
 #, no-c-format
 msgid ""
 "This effect measures the length, or area, of the selected paths and adds it "
@@ -26364,9 +26298,19 @@ msgid ""
 "0.03%."
 msgstr ""
 
-#: ../share/extensions/measure.inx.h:39
+#: ../share/extensions/measure.inx.h:22
 msgctxt "measure extension"
 msgid "Area"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:23
+msgctxt "measure extension"
+msgid "Fixed Angle"
+msgstr ""
+
+#: ../share/extensions/measure.inx.h:24
+msgctxt "measure extension"
+msgid "Text On Path"
 msgstr ""
 
 #: ../share/extensions/motion.inx.h:1 ../share/extensions/restack.inx.h:1

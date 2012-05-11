@@ -94,7 +94,11 @@ class Length(inkex.Effect):
         self.OptionParser.add_option("--format",
                         action="store", type="string", 
                         dest="format", default="textonpath",
-                        help="Display Format")
+                        help="Text Orientation")
+        self.OptionParser.add_option("--angle",
+                        action="store", type="float", 
+                        dest="angle", default=0,
+                        help="Angle")             
         self.OptionParser.add_option("-f", "--fontsize",
                         action="store", type="int", 
                         dest="fontsize", default=20,
@@ -161,9 +165,9 @@ class Length(inkex.Effect):
                         self.addTextOnPath(self.group, 0, 0, lenstr+' '+self.options.unit+'^2', id, 'start', '0%', self.options.offset)
                 else:
                     if self.options.type == "length":
-                        self.addTextWithTspan(self.group, p[0][0][1][0], p[0][0][1][1], lenstr+' '+self.options.unit, id, 'start', -int(self.options.format), self.options.offset + self.options.fontsize/2)
+                        self.addTextWithTspan(self.group, p[0][0][1][0], p[0][0][1][1], lenstr+' '+self.options.unit, id, 'start', -int(self.options.angle), self.options.offset + self.options.fontsize/2)
                     else:
-                        self.addTextWithTspan(self.group, p[0][0][1][0], p[0][0][1][1], lenstr+' '+self.options.unit+'^2', id, 'start', -int(self.options.format), -self.options.offset + self.options.fontsize/2)
+                        self.addTextWithTspan(self.group, p[0][0][1][0], p[0][0][1][1], lenstr+' '+self.options.unit+'^2', id, 'start', -int(self.options.angle), -self.options.offset + self.options.fontsize/2)
 
     def addTextOnPath(self, node, x, y, text, id, anchor, startOffset, dy = 0):
                 new = inkex.etree.SubElement(node,inkex.addNS('textPath','svg'))

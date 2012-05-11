@@ -10,31 +10,15 @@
 				<_item value="length">Length</_item>
 				<_item msgctxt="measure extension" value="area">Area</_item>
 			</param>
-			<param name="format" type="enum" _gui-text="Display Format: ">
-				<_item value="textonpath">Text On Path</_item>
-				<_item value="0">Angle  0</_item>
-				<_item value="30">Angle 30</_item>
-				<_item value="45">Angle 45</_item>
-				<_item value="60">Angle 60</_item>
-				<_item value="90">Angle 90</_item>
-				<_item value="120">Angle 120</_item>
-				<_item value="135">Angle 135</_item>
-				<_item value="150">Angle 150</_item>
-				<_item value="180">Angle 180</_item>
-				<_item value="210">Angle 210</_item>
-				<_item value="225">Angle 225</_item>
-				<_item value="240">Angle 240</_item>
-				<_item value="270">Angle 270</_item>
-				<_item value="300">Angle 300</_item>
-				<_item value="315">Angle 315</_item>
-				<_item value="330">Angle 330</_item>
+			<param name="format" type="enum" _gui-text="Text Orientation: ">
+				<_item msgctxt="measure extension" value="textonpath">Text On Path</_item>
+				<_item msgctxt="measure extension" value="angle">Fixed Angle</_item>
 			</param>
+			<param name="angle" type="float" min="-360" max="360" _gui-text="Angle [with Fixed Angle option only] (°):">0</param>
 			<param name="fontsize" type="int" min="1" max="1000" _gui-text="Font size (px):">12</param>
 			<param name="offset" type="float" min="-10000" max="10000" _gui-text="Offset (px):">-6</param>
 			<param name="precision" type="int" min="0" max="25" _gui-text="Precision:">2</param>
 			<param name="scale" type="float" min="1e-8" max="1e10" _gui-text="Scale Factor (Drawing:Real Length) = 1:">1</param>
-			<!--<param name="orient" type="boolean" _gui-text="Keep text orientation upright">true</param>-->
-			<!--<param name="unit" type="string" _gui-text="Unit {km|m|cm|mm|in|px|pt}">mm</param>-->
 			<param name="unit" type="enum" _gui-text="Length Unit:">
 				<item value="px">px</item>
 				<item value="pt">pt</item>
