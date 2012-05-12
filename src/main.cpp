@@ -994,8 +994,9 @@ sp_main_gui(int argc, char const **argv)
 /**
  * Process file list
  */
-void sp_process_file_list(GSList *fl)
+int sp_process_file_list(GSList *fl)
 {
+    int retVal = 0;
     while (fl) {
         const gchar *filename = (gchar *)fl->data;
 
@@ -1019,6 +1020,7 @@ void sp_process_file_list(GSList *fl)
         }
         if (doc == NULL) {
             g_warning("Specified document %s cannot be opened (does not exist or not a valid SVG file)", filename);
+            retVal++;
         } else {
             if (sp_vacuum_defs) {
                 doc->vacuumDocument();
@@ -1068,6 +1070,7 @@ void sp_process_file_list(GSList *fl)
         }
         fl = g_slist_remove(fl, fl->data);
     }
+    return retVal;
 }
 
 /**
@@ -1123,7 +1126,9 @@ int sp_main_shell(char const* command_name)
                         poptSetOtherOptionHelp(ctx, _("[OPTIONS...] [FILE...]\n\nAvailable options:"));
                         if ( ctx ) {
                             GSList *fl = sp_process_args(ctx);
-                            sp_process_file_list(fl);
+                            if (sp_process_file_list(fl)) {
+                                retval = -1;
+                            }
                             poptFreeContext(ctx);
                         } else {
                             retval = 1; // not sure why. But this was the previous return value
@@ -1132,6 +1137,7 @@ int sp_main_shell(char const* command_name)
                         g_strfreev(argv);
                     } else {
                         g_warning("Cannot parse commandline: %s", useme);
+                        retval = -1;
                     }
                 }
             }
@@ -1168,10 +1174,13 @@ int sp_main_console(int argc, char const **argv)
     inkscape_application_init(argv[0], false);
 
     if (sp_shell) {
-        sp_main_shell(argv[0]); // Run as interactive shell
-        exit(0);
+        int retVal = sp_main_shell(argv[0]); // Run as interactive shell
+        exit((retVal < 0) ? 1 : 0);
     } else {
-        sp_process_file_list(fl); // Normal command line invokation
+        int retVal = sp_process_file_list(fl); // Normal command line invokation
+        if (retVal){
+            exit(1);
+        }
     }
 
     return 0;
