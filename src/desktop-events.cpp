@@ -113,15 +113,17 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 normal_bl_to_tr.normalize();
                 normal_tr_to_bl.normalize();
                 Inkscape::CanvasGrid * grid = sp_namedview_get_first_enabled_grid(desktop->namedview);
-                if ( grid && grid->getGridType() == Inkscape::GRID_AXONOMETRIC ) {
-                    Inkscape::CanvasAxonomGrid *axonomgrid = dynamic_cast<Inkscape::CanvasAxonomGrid *>(grid);
-                    if (event->button.state & GDK_CONTROL_MASK) {
-                        // guidelines normal to gridlines
-                        normal_bl_to_tr = Geom::Point::polar(-axonomgrid->angle_rad[0], 1.0);
-                        normal_tr_to_bl = Geom::Point::polar(axonomgrid->angle_rad[2], 1.0);
-                    } else {
-                        normal_bl_to_tr = rot90(Geom::Point::polar(axonomgrid->angle_rad[2], 1.0));
-                        normal_tr_to_bl = rot90(Geom::Point::polar(-axonomgrid->angle_rad[0], 1.0));
+                if (grid){
+                    if (grid->getGridType() == Inkscape::GRID_AXONOMETRIC ) {
+                        Inkscape::CanvasAxonomGrid *axonomgrid = dynamic_cast<Inkscape::CanvasAxonomGrid *>(grid);
+                        if (event->button.state & GDK_CONTROL_MASK) {
+                            // guidelines normal to gridlines
+                            normal_bl_to_tr = Geom::Point::polar(-axonomgrid->angle_rad[0], 1.0);
+                            normal_tr_to_bl = Geom::Point::polar(axonomgrid->angle_rad[2], 1.0);
+                        } else {
+                            normal_bl_to_tr = rot90(Geom::Point::polar(axonomgrid->angle_rad[2], 1.0));
+                            normal_tr_to_bl = rot90(Geom::Point::polar(-axonomgrid->angle_rad[0], 1.0));
+                        }
                     }
                 }
                 if (horiz) {
@@ -456,7 +458,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 guide_cursor = gdk_cursor_new (GDK_EXCHANGE);
                 gdk_window_set_cursor(gtk_widget_get_window (GTK_WIDGET(sp_desktop_canvas(desktop))), guide_cursor);
 #if GTK_CHECK_VERSION(3,0,0)
-		g_object_unref(guide_cursor);
+        g_object_unref(guide_cursor);
 #else
                 gdk_cursor_unref(guide_cursor);
 #endif
@@ -495,7 +497,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                         guide_cursor = gdk_cursor_new (GDK_EXCHANGE);
                         gdk_window_set_cursor(gtk_widget_get_window (GTK_WIDGET(sp_desktop_canvas(desktop))), guide_cursor);
 #if GTK_CHECK_VERSION(3,0,0)
-			g_object_unref(guide_cursor);
+            g_object_unref(guide_cursor);
 #else
                         gdk_cursor_unref(guide_cursor);
 #endif
@@ -516,7 +518,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     guide_cursor = gdk_cursor_new (GDK_EXCHANGE);
                     gdk_window_set_cursor(gtk_widget_get_window (GTK_WIDGET(sp_desktop_canvas(desktop))), guide_cursor);
 #if GTK_CHECK_VERSION(3,0,0)
-		    g_object_unref(guide_cursor);
+            g_object_unref(guide_cursor);
 #else
                     gdk_cursor_unref(guide_cursor);
 #endif

@@ -261,8 +261,13 @@ gchar const *sp_xml_ns_uri_prefix(gchar const *uri, gchar const *suggested)
             GQuark const prefix_key=g_quark_from_string(suggested);
 
             SPXMLNs *found=namespaces;
-            while ( found && found->prefix != prefix_key ) {
-                found = found->next;
+            while (found) {
+                if (found->prefix != prefix_key) {
+                    found = found->next;
+                }
+                else {
+                    break;
+                }
             }
 
             if (found) { // prefix already used?

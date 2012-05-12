@@ -447,7 +447,7 @@ sp_color_icc_selector_new (void)
 {
     SPColorICCSelector *csel;
 
-    csel = (SPColorICCSelector*)g_object_new (SP_TYPE_COLOR_ICC_SELECTOR, NULL);
+    csel = static_cast<SPColorICCSelector*>(g_object_new (SP_TYPE_COLOR_ICC_SELECTOR, NULL));
 
     return GTK_WIDGET (csel);
 }
@@ -653,30 +653,32 @@ void ColorICCSelector::_colorChanged()
     _fixupNeeded = 0;
     gtk_widget_set_sensitive( _fixupBtn, FALSE );
 
-    if ( _prof && _prof->getTransfToSRGB8() ) {
-        cmsUInt16Number tmp[4];
-        for ( guint i = 0; i < _profChannelCount; i++ ) {
-            gdouble val = 0.0;
-            if ( _color.icc->colors.size() > i ) {
-                if ( _fooScales[i] == 256 ) {
-                    val = (_color.icc->colors[i] + 128.0) / static_cast<gdouble>(_fooScales[i]);
-                } else {
-                    val = _color.icc->colors[i] / static_cast<gdouble>(_fooScales[i]);
+    if (_prof) {
+        if (_prof->getTransfToSRGB8() ) {
+            cmsUInt16Number tmp[4];
+            for ( guint i = 0; i < _profChannelCount; i++ ) {
+                gdouble val = 0.0;
+                if ( _color.icc->colors.size() > i ) {
+                    if ( _fooScales[i] == 256 ) {
+                        val = (_color.icc->colors[i] + 128.0) / static_cast<gdouble>(_fooScales[i]);
+                    } else {
+                        val = _color.icc->colors[i] / static_cast<gdouble>(_fooScales[i]);
+                    }
                 }
+                tmp[i] = val * 0x0ffff;
             }
-            tmp[i] = val * 0x0ffff;
-        }
-        guchar post[4] = {0,0,0,0};
-        cmsHTRANSFORM trans = _prof->getTransfToSRGB8();
-        if ( trans ) {
-            cmsDoTransform( trans, tmp, post, 1 );
-            guint32 other = SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255 );
-            if ( other != _color.toRGBA32(255) ) {
-                _fixupNeeded = other;
-                gtk_widget_set_sensitive( _fixupBtn, TRUE );
+            guchar post[4] = {0,0,0,0};
+            cmsHTRANSFORM trans = _prof->getTransfToSRGB8();
+            if ( trans ) {
+                cmsDoTransform( trans, tmp, post, 1 );
+                guint32 other = SP_RGBA32_U_COMPOSE(post[0], post[1], post[2], 255 );
+                if ( other != _color.toRGBA32(255) ) {
+                    _fixupNeeded = other;
+                    gtk_widget_set_sensitive( _fixupBtn, TRUE );
 #ifdef DEBUG_LCMS
-                g_message("Color needs to change 0x%06x to 0x%06x", _color.toRGBA32(255) >> 8, other >> 8 );
+                    g_message("Color needs to change 0x%06x to 0x%06x", _color.toRGBA32(255) >> 8, other >> 8 );
 #endif // DEBUG_LCMS
+                }
             }
         }
     }
@@ -790,30 +792,32 @@ void ColorICCSelector::_updateSliders( gint ignore )
             gtk_adjustment_set_value( _fooAdj[i], val );
         }
 
-        if ( _prof && _prof->getTransfToSRGB8() ) {
-            for ( guint i = 0; i < _profChannelCount; i++ ) {
-                if ( static_cast<gint>(i) != ignore ) {
-                    cmsUInt16Number* scratch = getScratch();
-                    cmsUInt16Number filler[4] = {0, 0, 0, 0};
-                    for ( guint j = 0; j < _profChannelCount; j++ ) {
-                        filler[j] = 0x0ffff * ColorScales::getScaled( _fooAdj[j] );
-                    }
-
-                    cmsUInt16Number* p = scratch;
-                    for ( guint x = 0; x < 1024; x++ ) {
+        if ( _prof) {
+            if (_prof->getTransfToSRGB8() ) {
+                for ( guint i = 0; i < _profChannelCount; i++ ) {
+                    if ( static_cast<gint>(i) != ignore ) {
+                        cmsUInt16Number* scratch = getScratch();
+                        cmsUInt16Number filler[4] = {0, 0, 0, 0};
                         for ( guint j = 0; j < _profChannelCount; j++ ) {
-                            if ( j == i ) {
-                                *p++ = x * 0x0ffff / 1024;
-                            } else {
-                                *p++ = filler[j];
+                            filler[j] = 0x0ffff * ColorScales::getScaled( _fooAdj[j] );
+                        }
+                        
+                        cmsUInt16Number* p = scratch;
+                        for ( guint x = 0; x < 1024; x++ ) {
+                            for ( guint j = 0; j < _profChannelCount; j++ ) {
+                                if ( j == i ) {
+                                    *p++ = x * 0x0ffff / 1024;
+                                } else {
+                                    *p++ = filler[j];
+                                }
                             }
                         }
-                    }
-
-                    cmsHTRANSFORM trans = _prof->getTransfToSRGB8();
-                    if ( trans ) {
-                        cmsDoTransform( trans, scratch, _fooMap[i], 1024 );
-                        sp_color_slider_set_map( SP_COLOR_SLIDER(_fooSlider[i]), _fooMap[i] );
+                        
+                        cmsHTRANSFORM trans = _prof->getTransfToSRGB8();
+                        if ( trans ) {
+                            cmsDoTransform( trans, scratch, _fooMap[i], 1024 );
+                            sp_color_slider_set_map( SP_COLOR_SLIDER(_fooSlider[i]), _fooMap[i] );
+                        }
                     }
                 }
             }

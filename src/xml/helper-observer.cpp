@@ -13,10 +13,16 @@ void SignalObserver::set(SPObject* o)
 {
   // XML Tree being used direcly in this function in the following code
   //   while it shouldn't be
-    if(_oldsel && _oldsel->getRepr())
-        _oldsel->getRepr()->removeObserver(*this);
-    if(o && o->getRepr())
-        o->getRepr()->addObserver(*this);
+    if(_oldsel) {
+        if (_oldsel->getRepr()) {
+            _oldsel->getRepr()->removeObserver(*this);
+        }
+    }
+    if(o) {
+        if (o->getRepr()) {
+            o->getRepr()->addObserver(*this);
+        }
+    }
     _oldsel = o;
 }
 

@@ -109,13 +109,13 @@ static void sp_gradient_vector_selector_class_init(SPGradientVectorSelectorClass
     parent_class = static_cast<GtkVBoxClass*>(g_type_class_peek_parent(klass));
 
     signals[VECTOR_SET] = g_signal_new( "vector_set",
-		                        G_TYPE_FROM_CLASS(object_class),
-					G_SIGNAL_RUN_LAST,
+                                G_TYPE_FROM_CLASS(object_class),
+                    G_SIGNAL_RUN_LAST,
                                         G_STRUCT_OFFSET(SPGradientVectorSelectorClass, vector_set),
-					NULL, NULL,
-					g_cclosure_marshal_VOID__POINTER,
-					G_TYPE_NONE, 1,
-					G_TYPE_POINTER);
+                    NULL, NULL,
+                    g_cclosure_marshal_VOID__POINTER,
+                    G_TYPE_NONE, 1,
+                    G_TYPE_POINTER);
 
     object_class->destroy = sp_gradient_vector_selector_destroy;
 }
@@ -605,7 +605,7 @@ static void sp_grad_edit_combo_box_changed (GtkComboBox * /*widget*/, GtkWidget 
 
     blocked = TRUE;
 
-    SPColorSelector *csel = (SPColorSelector*)g_object_get_data(G_OBJECT(tbl), "cselector");
+    SPColorSelector *csel = static_cast<SPColorSelector*>(g_object_get_data(G_OBJECT(tbl), "cselector"));
     // set its color, from the stored array
     csel->base->setColorAlpha( stop->getEffectiveColor(), stop->opacity );
     GtkWidget *offspin = GTK_WIDGET(g_object_get_data(G_OBJECT(tbl), "offspn"));
@@ -1137,10 +1137,10 @@ static void sp_gradient_vector_widget_destroy(GtkObject *object, gpointer /*data
         release_connection->disconnect();
         modified_connection->disconnect();
         sp_signal_disconnect_by_data(gradient, object);
-    }
 
-    if (gradient && gradient->getRepr()) {
-        sp_repr_remove_listener_by_data(gradient->getRepr(), object);
+        if (gradient->getRepr()) {
+            sp_repr_remove_listener_by_data(gradient->getRepr(), object);
+        }
     }
 }
 

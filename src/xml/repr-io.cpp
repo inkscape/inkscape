@@ -471,13 +471,19 @@ Document *sp_repr_do_read (xmlDocPtr doc, const gchar *default_ns)
 gint sp_repr_qualified_name (gchar *p, gint len, xmlNsPtr ns, const xmlChar *name, const gchar */*default_ns*/, GHashTable *prefix_map)
 {
     const xmlChar *prefix;
-    if ( ns && ns->href ) {
-        prefix = reinterpret_cast<const xmlChar*>( sp_xml_ns_uri_prefix(reinterpret_cast<const gchar*>(ns->href),
-                                                                        reinterpret_cast<const char*>(ns->prefix)) );
-        void* p0 = reinterpret_cast<gpointer>(const_cast<xmlChar *>(prefix));
-        void* p1 = reinterpret_cast<gpointer>(const_cast<xmlChar *>(ns->href));
-        g_hash_table_insert( prefix_map, p0, p1 );
-    } else {
+    if (ns){
+        if (ns->href ) {
+            prefix = reinterpret_cast<const xmlChar*>( sp_xml_ns_uri_prefix(reinterpret_cast<const gchar*>(ns->href),
+                                                                            reinterpret_cast<const char*>(ns->prefix)) );
+            void* p0 = reinterpret_cast<gpointer>(const_cast<xmlChar *>(prefix));
+            void* p1 = reinterpret_cast<gpointer>(const_cast<xmlChar *>(ns->href));
+            g_hash_table_insert( prefix_map, p0, p1 );
+        }
+        else {
+            prefix = NULL;
+        }
+    }
+    else {
         prefix = NULL;
     }
 
@@ -600,10 +606,10 @@ Glib::ustring sp_repr_save_buf(Document *doc)
 
     sp_repr_save_writer(doc, &outs, SP_INKSCAPE_NS_URI, 0, 0);
 
-	outs.close();
-	Glib::ustring buf = souts.getString();
+    outs.close();
+    Glib::ustring buf = souts.getString();
 
-	return buf;
+    return buf;
 }
 
 

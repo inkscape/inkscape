@@ -118,7 +118,7 @@ void FilterImage::render_cairo(FilterSlot &slot)
             /* TODO: If feImageHref is absolute, then use that (preferably handling the
              * case that it's not a file URI).  Otherwise, go up the tree looking
              * for an xml:base attribute, and use that as the base URI for resolving
-             * the relative feImageHref URI.  Otherwise, if document && document->base,
+             * the relative feImageHref URI.  Otherwise, if document->base is valid,
              * then use that as the base URI.  Otherwise, use feImageHref directly
              * (i.e. interpreting it as relative to our current working directory).
              * (See http://www.w3.org/TR/xmlbase/#resolution .) */

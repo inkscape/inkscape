@@ -277,7 +277,13 @@ struct vector_data_matches {
     
     bool operator()(NodeObserver const &observer) {
         VectorNodeObserver const *vo=dynamic_cast<VectorNodeObserver const *>(&observer);
-        return vo && vo->data == data;
+        bool OK = false;
+        if (vo) {
+            if (vo && vo->data == data) {
+                OK = true;
+            }
+        }
+        return OK;
     }
 };
 

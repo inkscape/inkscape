@@ -263,26 +263,27 @@ void ege_color_prof_tracker_get_profile( EgeColorProfTracker const * tracker, gp
 {
     gpointer dataPos = 0;
     guint dataLen = 0;
-    if ( tracker && tracker->private_data->_target ) {
-        GdkScreen* screen = gtk_widget_get_screen(tracker->private_data->_target);
-        GSList* curr = tracked_screens;
-        while ( curr ) {
-            ScreenTrack* screenTrack = (ScreenTrack*)curr->data;
-            if ( screenTrack->screen == screen ) {
-                if ( tracker->private_data->_monitor >= 0 && tracker->private_data->_monitor < (gint)screenTrack->profiles->len ) {
-                    GByteArray* gba = (GByteArray*)g_ptr_array_index( screenTrack->profiles, tracker->private_data->_monitor );
-                    if ( gba ) {
-                        dataPos = gba->data;
-                        dataLen = gba->len;
+    if (tracker) {
+        if (tracker->private_data->_target ) {
+            GdkScreen* screen = gtk_widget_get_screen(tracker->private_data->_target);
+            GSList* curr = tracked_screens;
+            while ( curr ) {
+                ScreenTrack* screenTrack = static_cast<ScreenTrack*>(curr->data);
+                if ( screenTrack->screen == screen ) {
+                    if ( tracker->private_data->_monitor >= 0 && tracker->private_data->_monitor < (static_cast<gint>(screenTrack->profiles->len))) {
+                        GByteArray* gba = static_cast<GByteArray*>(g_ptr_array_index(screenTrack->profiles, tracker->private_data->_monitor));
+                        if ( gba ) {
+                            dataPos = gba->data;
+                            dataLen = gba->len;
+                        }
+                    } else {
+                        g_warning("No profile data tracked for the specified item.");
                     }
-                } else {
-                    g_warning("No profile data tracked for the specified item.");
+                    break;
                 }
-                break;
+                curr = g_slist_next(curr);
             }
-            curr = g_slist_next(curr);
         }
-
     }
     if ( ptr ) {
         *ptr = dataPos;
