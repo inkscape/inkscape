@@ -53,12 +53,11 @@ DrawingGlyphs::setGlyph(font_instance *font, int glyph, Geom::Affine const &tran
 unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext const &ctx, unsigned /*flags*/, unsigned /*reset*/)
 {
     DrawingText *ggroup = dynamic_cast<DrawingText *>(_parent);
-    if (!ggroup) throw InvalidItemException();
+    if (!ggroup) {
+        throw InvalidItemException();
+    }
 
-    if (!_font || !ggroup->_style) return STATE_ALL;
-    if (ggroup->_nrstyle.fill.type == NRStyle::PAINT_NONE &&
-        ggroup->_nrstyle.stroke.type == NRStyle::PAINT_NONE)
-    {
+    if (!_font || !ggroup->_style) {
         return STATE_ALL;
     }
 
@@ -66,10 +65,12 @@ unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext
     _bbox = Geom::IntRect();
 
     Geom::OptRect b = bounds_exact_transformed(*_font->PathVector(_glyph), ctx.ctm);
-    if (b && ggroup->_nrstyle.stroke.type != NRStyle::PAINT_NONE) {
+    if (b && (ggroup->_nrstyle.stroke.type != NRStyle::PAINT_NONE)) {
         float width, scale;
         scale = ctx.ctm.descrim();
-        if (_transform) scale /= _transform->descrim(); // FIXME temporary hack
+        if (_transform) {
+            scale /= _transform->descrim(); // FIXME temporary hack
+        }
         width = MAX(0.125, ggroup->_nrstyle.stroke_width * scale);
         if ( fabs(ggroup->_nrstyle.stroke_width * scale) > 0.01 ) { // FIXME: this is always true
             b->expandBy(0.5 * width);
@@ -95,7 +96,15 @@ unsigned DrawingGlyphs::_updateItem(Geom::IntRect const &/*area*/, UpdateContext
 DrawingItem *
 DrawingGlyphs::_pickItem(Geom::Point const &p, double delta, unsigned /*flags*/)
 {
-    if (!_font || !_bbox) return NULL;
+    DrawingText *ggroup = dynamic_cast<DrawingText *>(_parent);
+    if (!ggroup) {
+        throw InvalidItemException();
+    }
+    bool invisible = (ggroup->_nrstyle.fill.type == NRStyle::PAINT_NONE) &&
+        (ggroup->_nrstyle.stroke.type == NRStyle::PAINT_NONE);
+    if (!_font || !_bbox || (!_drawing.outline() && invisible) ) {
+        return NULL;
+    }
 
     // With text we take a simple approach: pick if the point is in a characher bbox
     Geom::Rect expanded(_pick_bbox);
@@ -123,7 +132,9 @@ DrawingText::clear()
 void
 DrawingText::addComponent(font_instance *font, int glyph, Geom::Affine const &trans)
 {
-    if (!font || !font->PathVector(glyph)) return;
+    if (!font || !font->PathVector(glyph)) {
+        return;
+    }
 
     _markForRendering();
     DrawingGlyphs *ng = new DrawingGlyphs(_drawing);
@@ -214,7 +225,9 @@ void DrawingText::_clipItem(DrawingContext &ct, Geom::IntRect const &/*area*/)
 
     for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
         DrawingGlyphs *g = dynamic_cast<DrawingGlyphs *>(&*i);
-        if (!g) throw InvalidItemException();
+        if (!g) {
+            throw InvalidItemException();
+        }
 
         Inkscape::DrawingContext::Save save(ct);
         ct.transform(g->_ctm);
@@ -227,7 +240,9 @@ DrawingItem *
 DrawingText::_pickItem(Geom::Point const &p, double delta, unsigned flags)
 {
     DrawingItem *picked = DrawingGroup::_pickItem(p, delta, flags);
-    if (picked) return this;
+    if (picked) {
+        return this;
+    }
     return NULL;
 }
 
