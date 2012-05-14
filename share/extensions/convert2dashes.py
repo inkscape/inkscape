@@ -22,6 +22,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
 import inkex, cubicsuperpath, bezmisc, simplestyle
+import gettext
+_ = gettext.gettext
 
 def tpoint((x1,y1), (x2,y2), t = 0.5):
     return [x1+t*(x2-x1),y1+t*(y2-y1)]
@@ -82,6 +84,10 @@ class SplitIt(inkex.Effect):
                     node.set('d',cubicsuperpath.formatPath(new))
                     del style['stroke-dasharray']
                     node.set('style', simplestyle.formatStyle(style))
+                    if node.get(inkex.addNS('type','sodipodi')):
+                        del node.attrib[inkex.addNS('type', 'sodipodi')]
+            else:
+                inkex.errormsg(_("The selected object is not a path.\nTry using the procedure Path->Object to Path."))
 
 if __name__ == '__main__':
     e = SplitIt()
