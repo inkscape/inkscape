@@ -728,7 +728,7 @@ exclude-result-prefixes="rdf xlink xs exsl libxslt">
         <xsl:choose>
           <xsl:when test="@xlink:href">
             <xsl:variable name="reference_id" select="@xlink:href" />
-            <xsl:apply-templates mode="forward" select="//*[name(.) = 'radialGradient' and $reference_id = concat('#', @id)]/*" />
+            <xsl:apply-templates mode="forward" select="//*[name(.) = 'linearGradient' and $reference_id = concat('#', @id)]/*" />
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates mode="forward" />
