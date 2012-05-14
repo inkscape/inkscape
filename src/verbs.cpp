@@ -2311,7 +2311,7 @@ Verb *Verb::_base_verbs[] = {
     new EditVerb(SP_VERB_EDIT_SELECT_SAME_STROKE_COLOR, "EditSelectSameStrokeColor", N_("_Stroke Color"),
                 N_("Select all objects with the same stroke as the selected objects"), GTK_STOCK_SELECT_ALL),
     new EditVerb(SP_VERB_EDIT_SELECT_SAME_STROKE_STYLE, "EditSelectSameStrokeStyle", N_("Stroke St_yle"),
-                N_("Select all objects with the same stroke style (width, dsh, markers) as the selected objects"), GTK_STOCK_SELECT_ALL),
+                N_("Select all objects with the same stroke style (width, dash, markers) as the selected objects"), GTK_STOCK_SELECT_ALL),
     new EditVerb(SP_VERB_EDIT_INVERT, "EditInvert", N_("In_vert Selection"),
                  N_("Invert selection (unselect what is selected and select everything else)"), INKSCAPE_ICON("edit-select-invert")),
     new EditVerb(SP_VERB_EDIT_INVERT_IN_ALL_LAYERS, "EditInvertInAllLayers", N_("Invert in All Layers"),

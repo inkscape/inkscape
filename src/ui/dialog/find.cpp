@@ -827,7 +827,7 @@ Find::onAction()
                                         count, all, exact? _("exact") : _("partial"));
         if (_action_replace){
             // TRANSLATORS: "%1" is replaced with the number of matches
-            status.set_text(Glib::ustring::compose(ngettext("%1 object replaced","%1 objects replaced",count), count));
+            status.set_text(Glib::ustring::compose(ngettext("%1 match replaced","%1 matches replaced",count), count));
         }
         else {
             // TRANSLATORS: "%1" is replaced with the number of matches
