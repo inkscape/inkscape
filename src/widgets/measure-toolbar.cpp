@@ -29,7 +29,7 @@
 #endif
 
 #include "toolbox.h"
-#include "zoom-toolbar.h"
+#include "measure-toolbar.h"
 
 #include "../desktop.h"
 #include "../desktop-handles.h"
