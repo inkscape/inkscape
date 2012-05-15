@@ -255,7 +255,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
                 filt_str = g_strdup_printf ("");
             }
 
-            _context.setF(Inkscape::NORMAL_MESSAGE, _("%s%s%s. %s."), objects_str, filt_str, in_phrase, _when_selected);
+            _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s%s. %s.", objects_str, filt_str, in_phrase, _when_selected);
             if (objects_str)
                 g_free ((gchar *) objects_str);
             if (filt_str)
