@@ -835,9 +835,10 @@ static gboolean update_stop_list( GtkWidget *stop_combo, SPGradient *gradient, S
                 Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(sl->data)->getRepr();
                 Inkscape::UI::Widget::ColorPreview *cpv = Gtk::manage(new Inkscape::UI::Widget::ColorPreview(sp_stop_get_rgba32(stop)));
                 GdkPixbuf *pb = cpv->toPixbuf(32, 16);
+                const gchar *label = gr_ellipse_text(repr->attribute("id"), 25);
 
                 gtk_list_store_append(store, &iter);
-                gtk_list_store_set(store, &iter, 0, repr->attribute("id"), 1, pb, 2, stop, -1);
+                gtk_list_store_set(store, &iter, 0, label, 1, pb, 2, stop, -1);
                 sensitive = FALSE;
             }
         }

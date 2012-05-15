@@ -78,7 +78,7 @@ GtkWidget *sp_gradient_vector_editor_new (SPGradient *gradient, SPStop *stop = N
 guint32 sp_average_color(guint32 c1, guint32 c2, gdouble p = 0.5);
 
 gchar *gr_prepare_label (SPObject *obj);
-
+gchar *gr_ellipse_text (gchar const *src, guint maxlen);
 
 #endif // SEEN_GRADIENT_VECTOR_H
 

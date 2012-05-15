@@ -265,8 +265,22 @@ gchar *gr_prepare_label (SPObject *obj)
 {
     const gchar *id = obj->defaultLabel();
     if (strlen(id) > 15 && (!strncmp (id, "#linearGradient", 15) || !strncmp (id, "#radialGradient", 15)))
-        return g_strdup_printf ("#%s", id+15);
-    return g_strdup_printf ("%s", id);
+        return gr_ellipse_text (g_strdup_printf ("#%s", id+15), 35);
+    return gr_ellipse_text (id, 35);
+}
+
+/*
+ * Ellipse text if longer than maxlen, "30% start text + ... + ~70% end text"
+ * Text should be > length 8 or just return the original text
+ */
+gchar *gr_ellipse_text (gchar const *src, guint maxlen)
+{
+    guint start = (guint) maxlen / 3;
+    if (strlen(src) > maxlen && maxlen > 8)
+         return g_strdup_printf ("%s...%s", g_strndup(src, start), src+strlen(src)-(maxlen-start-3));
+
+    return g_strdup (src);
+
 }
 
 static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
