@@ -142,7 +142,7 @@ void ColorScales::init()
 
 	t = gtk_table_new (5, 3, FALSE);
 	gtk_widget_show (t);
-	gtk_box_pack_start (GTK_BOX (_csel), t, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (_csel), t, TRUE, TRUE, 4);
 
 	/* Create components */
 	for (i = 0; i < static_cast< gint > (G_N_ELEMENTS(_a)) ; i++) {
