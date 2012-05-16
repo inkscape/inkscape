@@ -73,9 +73,7 @@ static gint x = -1000, y = -1000, w = 0, h = 0;
 static Glib::ustring const prefs_path = "/dialogs/find/";
 
 
-
-
-static void sp_find_dialog_destroy(GtkObject *object, gpointer)
+static void sp_find_dialog_destroy(GObject *object, gpointer)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt(prefs_path + "visible", 0);
@@ -87,7 +85,7 @@ static void sp_find_dialog_destroy(GtkObject *object, gpointer)
 
 
 
-static gboolean sp_find_dialog_delete(GtkObject *, GdkEvent *, gpointer /*data*/)
+static gboolean sp_find_dialog_delete(GObject *, GdkEvent *, gpointer /*data*/)
 {
     gtk_window_get_position (GTK_WINDOW (dlg), &x, &y);
     gtk_window_get_size (GTK_WINDOW (dlg), &w, &h);
