@@ -138,7 +138,7 @@ static gboolean handleLeaveNotify( GtkWidget* /*widget*/, GdkEventCrossing* /*ev
     return FALSE;
 }
 
-static void dieDieDie( GtkObject *obj, gpointer user_data )
+static void dieDieDie( GObject *obj, gpointer user_data )
 {
     g_message("die die die %p  %p", obj, user_data );
 }
