@@ -32,7 +32,7 @@ enum {
 
 static void sp_canvas_arena_class_init(SPCanvasArenaClass *klass);
 static void sp_canvas_arena_init(SPCanvasArena *group);
-static void sp_canvas_arena_destroy(GtkObject *object);
+static void sp_canvas_arena_dispose(GObject *object);
 
 static void sp_canvas_arena_item_deleted(SPCanvasArena *arena, Inkscape::DrawingItem *item);
 static void sp_canvas_arena_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
@@ -93,11 +93,8 @@ sp_canvas_arena_get_type (void)
 static void
 sp_canvas_arena_class_init (SPCanvasArenaClass *klass)
 {
-    GtkObjectClass *object_class;
-    SPCanvasItemClass *item_class;
-
-    object_class = (GtkObjectClass *) klass;
-    item_class = (SPCanvasItemClass *) klass;
+    GObjectClass *object_class = (GObjectClass *) klass;
+    SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
 
     parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
@@ -109,8 +106,7 @@ sp_canvas_arena_class_init (SPCanvasArenaClass *klass)
                                            sp_marshal_INT__POINTER_POINTER,
                                            G_TYPE_INT, 2, G_TYPE_POINTER, G_TYPE_POINTER);
 
-    object_class->destroy = sp_canvas_arena_destroy;
-
+    object_class->dispose = sp_canvas_arena_dispose;
     item_class->update = sp_canvas_arena_update;
     item_class->render = sp_canvas_arena_render;
     item_class->point = sp_canvas_arena_point;
@@ -147,16 +143,15 @@ sp_canvas_arena_init (SPCanvasArena *arena)
     arena->active = NULL;
 }
 
-static void
-sp_canvas_arena_destroy (GtkObject *object)
+static void sp_canvas_arena_dispose(GObject *object)
 {
     SPCanvasArena *arena = SP_CANVAS_ARENA (object);
 
     delete arena->observer;
     arena->drawing.~Drawing();
 
-    if (GTK_OBJECT_CLASS (parent_class)->destroy)
-        (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    if (G_OBJECT_CLASS(parent_class)->dispose)
+        (* G_OBJECT_CLASS(parent_class)->dispose) (object);
 }
 
 static void

@@ -29,7 +29,7 @@
 
 static void sp_canvas_bpath_class_init (SPCanvasBPathClass *klass);
 static void sp_canvas_bpath_init (SPCanvasBPath *path);
-static void sp_canvas_bpath_destroy (GtkObject *object);
+static void sp_canvas_bpath_dispose(GObject *object);
 
 static void sp_canvas_bpath_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_canvas_bpath_render (SPCanvasItem *item, SPCanvasBuf *buf);
@@ -57,19 +57,14 @@ sp_canvas_bpath_get_type (void)
     return type;
 }
 
-static void
-sp_canvas_bpath_class_init (SPCanvasBPathClass *klass)
+static void sp_canvas_bpath_class_init(SPCanvasBPathClass *klass)
 {
-    GtkObjectClass *object_class;
-    SPCanvasItemClass *item_class;
-
-    object_class = GTK_OBJECT_CLASS (klass);
-    item_class = (SPCanvasItemClass *) klass;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
 
     parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
-    object_class->destroy = sp_canvas_bpath_destroy;
-
+    object_class->dispose = sp_canvas_bpath_dispose;
     item_class->update = sp_canvas_bpath_update;
     item_class->render = sp_canvas_bpath_render;
     item_class->point = sp_canvas_bpath_point;
@@ -88,8 +83,7 @@ sp_canvas_bpath_init (SPCanvasBPath * bpath)
     bpath->stroke_miterlimit = 11.0;
 }
 
-static void
-sp_canvas_bpath_destroy (GtkObject *object)
+static void sp_canvas_bpath_dispose(GObject *object)
 {
     SPCanvasBPath *cbp = SP_CANVAS_BPATH (object);
 
@@ -97,8 +91,8 @@ sp_canvas_bpath_destroy (GtkObject *object)
         cbp->curve = cbp->curve->unref();
     }
 
-    if (GTK_OBJECT_CLASS (parent_class)->destroy)
-        (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    if (G_OBJECT_CLASS (parent_class)->dispose)
+        (* G_OBJECT_CLASS (parent_class)->dispose) (object);
 }
 
 static void sp_canvas_bpath_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags)
