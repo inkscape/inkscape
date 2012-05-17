@@ -166,6 +166,8 @@ public:
 
     void showHandles(bool v);
 
+    void updateHandles();
+
 
     /**
      * Pick the best type for this node, based on the position of its handles.

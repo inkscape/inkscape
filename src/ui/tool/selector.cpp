@@ -35,7 +35,7 @@ class SelectorPoint : public ControlPoint {
 public:
     SelectorPoint(SPDesktop *d, SPCanvasGroup *group, Selector *s) :
         ControlPoint(d, Geom::Point(0,0), SP_ANCHOR_CENTER,
-                     SP_CTRL_SHAPE_SQUARE, 1,
+                     CTRL_TYPE_INVISIPOINT,
                      invisible_cset, group),
         _selector(s),
         _cancel(false)

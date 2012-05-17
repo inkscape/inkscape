@@ -915,6 +915,15 @@ void PathManipulator::setLiveObjects(bool set)
     _live_objects = set;
 }
 
+void PathManipulator::updateHandles()
+{
+    for (SubpathList::iterator i = _subpaths.begin(); i != _subpaths.end(); ++i) {
+        for (NodeList::iterator j = (*i)->begin(); j != (*i)->end(); ++j) {
+            j->updateHandles();
+        }
+    }
+}
+
 void PathManipulator::setControlsTransform(Geom::Affine const &tnew)
 {
     Geom::Affine delta = _i2d_transform.inverse() * _edit_transform.inverse() * tnew * _i2d_transform;

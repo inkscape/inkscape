@@ -86,6 +86,7 @@ public:
     void showPathDirection(bool show);
     void setLiveOutline(bool set);
     void setLiveObjects(bool set);
+    void updateHandles();
     void setControlsTransform(Geom::Affine const &);
     void hideDragPoint();
     MultiPathManipulator &mpm() { return _multi_path_manipulator; }

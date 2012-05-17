@@ -236,6 +236,10 @@ protected:
                  Glib::RefPtr<Gdk::Pixbuf> pixbuf,
                  ColorSet const &cset = _default_color_set, SPCanvasGroup *group = 0);
 
+    ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
+                 ControlType type,
+                 ColorSet const &cset = _default_color_set, SPCanvasGroup *group = 0);
+
     /// @name Handle control point events in subclasses
     /// @{
     /**
@@ -291,6 +295,8 @@ protected:
      * or clicked.
      */
     virtual void _setState(State state);
+
+    void _handleControlStyling();
 
     void _setColors(ColorEntry c);
 

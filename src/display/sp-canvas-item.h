@@ -27,6 +27,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <2geom/rect.h>
+#include "ui/control-types.h"
 
 G_BEGIN_DECLS
 
@@ -40,24 +41,6 @@ typedef struct _SPCanvasItemClass SPCanvasItemClass;
 #define SP_CANVAS_ITEM(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_CANVAS_ITEM, SPCanvasItem))
 #define SP_IS_CANVAS_ITEM(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_CANVAS_ITEM))
 #define SP_CANVAS_ITEM_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), SP_TYPE_CANVAS_ITEM, SPCanvasItemClass))
-
-namespace Inkscape
-{
-
-// Rough initial set. Most likely needs refinement.
-enum ControlType {
-    CTRL_TYPE_UNKNOWN,
-    CTRL_TYPE_ADJ_HANDLE,
-    CTRL_TYPE_ANCHOR,
-    CTRL_TYPE_POINT,
-    CTRL_TYPE_ROTATE,
-    CTRL_TYPE_SIZER,
-    CTRL_TYPE_SHAPER,
-    CTRL_TYPE_ORIGIN,
-    CTRL_TYPE_LINE
-};
-
-} // namespace Inkscape
 
 /**
  * An SPCanvasItem refers to a SPCanvas and to its parent item; it has

@@ -29,6 +29,7 @@
 #include "sp-object-group.h"
 #include "sp-path.h"
 #include "sp-text.h"
+#include "ui/control-manager.h"
 #include "ui/tool/node-tool.h"
 #include "ui/tool/control-point-selection.h"
 #include "ui/tool/event-utils.h"
@@ -104,7 +105,10 @@
  *   tools to be defined in extensions or shared library plugins.
  */
 
+using Inkscape::ControlManager;
+
 namespace {
+
 SPCanvasGroup *create_control_group(SPDesktop *d);
 void ink_node_tool_class_init(InkNodeToolClass *klass);
 void ink_node_tool_init(InkNodeTool *node_context);
@@ -120,6 +124,9 @@ void ink_node_tool_selection_changed(InkNodeTool *nt, Inkscape::Selection *sel);
 void ink_node_tool_select_area(InkNodeTool *nt, Geom::Rect const &, GdkEventButton *);
 void ink_node_tool_select_point(InkNodeTool *nt, Geom::Point const &, GdkEventButton *);
 void ink_node_tool_mouseover_changed(InkNodeTool *nt, Inkscape::UI::ControlPoint *p);
+
+void handleControlUiStyleChange(InkNodeTool *nt);
+
 } // anonymous namespace
 
 GType ink_node_tool_get_type()
@@ -178,6 +185,7 @@ void ink_node_tool_init(InkNodeTool *nt)
     new (&nt->_selection_changed_connection) sigc::connection();
     new (&nt->_selection_modified_connection) sigc::connection();
     new (&nt->_mouseover_changed_connection) sigc::connection();
+    new (&nt->_sizeUpdatedConn) sigc::connection();
     //new (&nt->_mgroup) Inkscape::UI::ManipulatorGroup(nt->desktop);
     new (&nt->_selected_nodes) CSelPtr();
     new (&nt->_multipath) MultiPathPtr();
@@ -195,6 +203,7 @@ void ink_node_tool_dispose(GObject *object)
     nt->_selection_changed_connection.disconnect();
     nt->_selection_modified_connection.disconnect();
     nt->_mouseover_changed_connection.disconnect();
+    nt->_sizeUpdatedConn.disconnect();
     nt->_multipath.~MultiPathPtr();
     nt->_selected_nodes.~CSelPtr();
     nt->_selector.~SelectorPtr();
@@ -212,6 +221,7 @@ void ink_node_tool_dispose(GObject *object)
     nt->_selection_changed_connection.~connection();
     nt->_selection_modified_connection.~connection();
     nt->_mouseover_changed_connection.~connection();
+    nt->_sizeUpdatedConn.~connection();
 
     if (nt->_node_message_context) {
         delete nt->_node_message_context;
@@ -264,6 +274,8 @@ void ink_node_tool_setup(SPEventContext *ec)
             sigc::bind<0>(
                 sigc::ptr_fun(&ink_node_tool_mouseover_changed),
                 nt));
+
+    nt->_sizeUpdatedConn = ControlManager::getManager().connectCtrlSizeChanged(sigc::bind(sigc::ptr_fun(&handleControlUiStyleChange), nt));
     
     nt->_selected_nodes.reset(
         new Inkscape::UI::ControlPointSelection(nt->desktop, nt->_transform_handle_group));
@@ -679,6 +691,11 @@ void ink_node_tool_mouseover_changed(InkNodeTool *nt, Inkscape::UI::ControlPoint
         sp_event_context_update_cursor(nt);
         nt->cursor_drag = false;
     }
+}
+
+void handleControlUiStyleChange(InkNodeTool *nt)
+{
+    nt->_multipath->updateHandles();
 }
 
 } // anonymous namespace

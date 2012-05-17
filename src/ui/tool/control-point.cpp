@@ -19,6 +19,7 @@
 #include "preferences.h"
 #include "snap-preferences.h"
 #include "sp-namedview.h"
+#include "ui/control-manager.h"
 #include "ui/tool/control-point.h"
 #include "ui/tool/event-utils.h"
 #include "ui/tool/transform-handle-set.h"
@@ -102,6 +103,25 @@ ControlPoint::ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAncho
         "filled", TRUE, "fill_color", _cset.normal.fill,
         "stroked", TRUE, "stroke_color", _cset.normal.stroke,
         "mode", SP_CTRL_MODE_XOR, NULL);
+    _commonInit();
+}
+
+ControlPoint::ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
+                           ControlType type,
+                           ColorSet const &cset, SPCanvasGroup *group) :
+    _desktop(d),
+    _canvas_item(NULL),
+    _cset(cset),
+    _state(STATE_NORMAL),
+    _position(initial_pos),
+    _lurking(false)
+{
+    _canvas_item = ControlManager::getManager().createControl(group ? group : sp_desktop_controls(_desktop), type);
+    g_object_set(_canvas_item,
+                 "anchor", anchor,
+                 "filled", TRUE, "fill_color", _cset.normal.fill,
+                 "stroked", TRUE, "stroke_color", _cset.normal.stroke,
+                 "mode", SP_CTRL_MODE_XOR, NULL);
     _commonInit();
 }
 
@@ -526,6 +546,13 @@ void ControlPoint::_setState(State state)
     };
     _setColors(current);
     _state = state;
+}
+
+void ControlPoint::_handleControlStyling()
+{
+    if (_canvas_item->ctrlType != CTRL_TYPE_UNKNOWN) {
+        ControlManager::getManager().updateItem(_canvas_item);
+    }
 }
 
 void ControlPoint::_setColors(ColorEntry colors)

@@ -14,11 +14,18 @@
 #include <memory>
 #include <sigc++/sigc++.h>
 
-#include "display/sp-canvas-item.h"
+#include "ui/control-types.h"
 
 struct SPCanvasGroup;
 struct SPCanvasItem;
 struct SPCtrlLine;
+
+namespace Geom
+{
+
+class Point;
+
+} // namespace Geom
 
 namespace Inkscape {
 

@@ -16,6 +16,7 @@
 #include <glib-object.h>
 
 #include "display/sodipodi-ctrl.h" // for SP_TYPE_CTRL
+#include "display/sp-canvas-item.h"
 #include "display/sp-ctrlline.h"
 #include "display/sp-ctrlpoint.h"
 #include "preferences.h"
@@ -42,6 +43,8 @@ public:
     ControlManagerImpl();
 
     ~ControlManagerImpl() {}
+
+    SPCanvasItem *createControl(SPCanvasGroup *parent, ControlType type);
 
     void setControlSize(int size, bool force = false);
 
@@ -98,7 +101,7 @@ ControlManagerImpl::ControlManagerImpl() :
         _sizeTable[CTRL_TYPE_ANCHOR] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
     }
     {
-        int sizes[] = {2, 3, 4, 7, 8, 9, 10};
+        int sizes[] = {2, 4, 7, 8, 9, 10, 12};
         _sizeTable[CTRL_TYPE_ADJ_HANDLE] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
     }
     {
@@ -111,6 +114,10 @@ ControlManagerImpl::ControlManagerImpl() :
     {
         int sizes[] = {2, 3, 4, 7, 8, 9, 10};
         _sizeTable[CTRL_TYPE_ORIGIN] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
+    }
+    {
+        int sizes[] = {1, 1, 1, 1, 1, 1, 1};
+        _sizeTable[CTRL_TYPE_INVISIPOINT] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
     }
 }
 
@@ -131,6 +138,52 @@ void ControlManagerImpl::setControlSize(int size, bool force)
 
         _sizeChangedSignal.emit();
     }
+}
+
+SPCanvasItem *ControlManagerImpl::createControl(SPCanvasGroup *parent, ControlType type)
+{
+    SPCanvasItem *item = 0;
+    double targetSize = _sizeTable[type][_size - 1];
+    switch (type)
+    {
+        case CTRL_TYPE_ADJ_HANDLE:
+            item = sp_canvas_item_new(parent, SP_TYPE_CTRL,
+                                      "shape", SP_CTRL_SHAPE_CIRCLE,
+                                      "size", targetSize,
+                                      "filled", 0,
+                                      "fill_color", 0xff00007f,
+                                      "stroked", 1,
+                                      "stroke_color", 0x0000ff7f,
+                                      NULL);
+            break;
+        case CTRL_TYPE_ANCHOR:
+            item = sp_canvas_item_new(parent, SP_TYPE_CTRL,
+                                      "size", targetSize,
+                                      "filled", 1,
+                                      "fill_color", FILL_COLOR_NORMAL,
+                                      "stroked", 1,
+                                      "stroke_color", 0x000000ff,
+                                      NULL);
+            break;
+        case CTRL_TYPE_ORIGIN:
+            item = sp_canvas_item_new(parent, SP_TYPE_CTRLPOINT,
+                                      "size", targetSize,
+                                      NULL);
+            break;
+        case CTRL_TYPE_INVISIPOINT:
+            item = sp_canvas_item_new(parent, SP_TYPE_CTRL,
+                                      "shape", SP_CTRL_SHAPE_SQUARE,
+                                      "size", targetSize,
+                                      NULL);
+            break;
+        case CTRL_TYPE_UNKNOWN:
+        default:
+            item = sp_canvas_item_new(parent, SP_TYPE_CTRL, NULL);
+    }
+    if (item) {
+        item->ctrlType = type;
+    }
+    return item;
 }
 
 void ControlManagerImpl::track(SPCanvasItem *item)
@@ -202,39 +255,7 @@ ControlManager &ControlManager::getManager()
 
 SPCanvasItem *ControlManager::createControl(SPCanvasGroup *parent, ControlType type)
 {
-    SPCanvasItem *item = 0;
-    switch (type)
-    {
-        case CTRL_TYPE_ADJ_HANDLE:
-            item = sp_canvas_item_new(parent, SP_TYPE_CTRL,
-                                      "shape", SP_CTRL_SHAPE_CIRCLE,
-                                      "size", 4.0,
-                                      "filled", 0,
-                                      "fill_color", 0xff00007f,
-                                      "stroked", 1,
-                                      "stroke_color", 0x0000ff7f,
-                                      NULL);
-            break;
-        case CTRL_TYPE_ANCHOR:
-            item = sp_canvas_item_new(parent, SP_TYPE_CTRL,
-                                      "size", 6.0,
-                                      "filled", 1,
-                                      "fill_color", FILL_COLOR_NORMAL,
-                                      "stroked", 1,
-                                      "stroke_color", 0x000000ff,
-                                      NULL);
-            break;
-        case CTRL_TYPE_ORIGIN:
-            item = sp_canvas_item_new(parent, SP_TYPE_CTRLPOINT, NULL);
-            break;
-        case CTRL_TYPE_UNKNOWN:
-        default:
-            item = sp_canvas_item_new(parent, SP_TYPE_CTRL, NULL);
-    }
-    if (item) {
-        item->ctrlType = type;
-    }
-    return item;
+    return _impl->createControl(parent, type);
 }
 
 SPCtrlLine *ControlManager::createControlLine(SPCanvasGroup *parent, CtrlLineType type)

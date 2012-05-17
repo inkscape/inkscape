@@ -554,6 +554,11 @@ void MultiPathManipulator::updateOutlineColors()
     //}
 }
 
+void MultiPathManipulator::updateHandles()
+{
+    invokeForAll(&PathManipulator::updateHandles);
+}
+
 bool MultiPathManipulator::event(SPEventContext *event_context, GdkEvent *event)
 {
     _tracker.event(event);

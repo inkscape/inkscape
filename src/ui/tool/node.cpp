@@ -83,7 +83,7 @@ bool Handle::_drag_out = false;
 
 Handle::Handle(NodeSharedData const &data, Geom::Point const &initial_pos, Node *parent) :
     ControlPoint(data.desktop, initial_pos, SP_ANCHOR_CENTER,
-                 SP_CTRL_SHAPE_CIRCLE, 7.0,
+                 CTRL_TYPE_ADJ_HANDLE,
                  _handle_colors, data.handle_group),
     _parent(parent),
     _handle_line(ControlManager::getManager().createControlLine(data.handle_line_group)),
@@ -627,9 +627,22 @@ void Node::_updateAutoHandles()
 void Node::showHandles(bool v)
 {
     _handles_shown = v;
-    if (!_front.isDegenerate()) _front.setVisible(v);
-    if (!_back.isDegenerate()) _back.setVisible(v);
+    if (!_front.isDegenerate()) {
+        _front.setVisible(v);
+    }
+    if (!_back.isDegenerate()) {
+        _back.setVisible(v);
+    }
 }
+
+void Node::updateHandles()
+{
+    _handleControlStyling();
+
+    _front._handleControlStyling();
+    _back._handleControlStyling();
+}
+
 
 void Node::setType(NodeType type, bool update_handles)
 {
@@ -954,28 +967,36 @@ void Node::_setState(State state)
 {
     // change node size to match type and selection state
     switch (_type) {
-    case NODE_AUTO:
-    case NODE_CUSP:
-        if (selected()) _setSize(11);
-        else _setSize(9);
-        break;
-    default:
-        if(selected()) _setSize(9);
-        else _setSize(7);
-        break;
+        case NODE_AUTO:
+        case NODE_CUSP:
+            if (selected()) {
+                _setSize(11);
+            } else {
+                _setSize(9);
+            }
+            break;
+        default:
+            if (selected()) {
+                _setSize(9);
+            } else {
+                _setSize(7);
+            }
+            break;
     }
     SelectableControlPoint::_setState(state);
 }
 
 bool Node::grabbed(GdkEventMotion *event)
 {
-    if (SelectableControlPoint::grabbed(event))
+    if (SelectableControlPoint::grabbed(event)) {
         return true;
+    }
 
     // Dragging out handles with Shift + drag on a node.
-    if (!held_shift(*event)) return false;
+    if (!held_shift(*event)) {
+        return false;
+    }
 
-    Handle *h;
     Geom::Point evp = event_point(*event);
     Geom::Point rel_evp = evp - _last_click_event_point();
 
@@ -996,8 +1017,11 @@ bool Node::grabbed(GdkEventMotion *event)
         angle_prev = fabs(Geom::angle_between(rel_evp, prev_relpos));
         has_degenerate = true;
     }
-    if (!has_degenerate) return false;
-    h = angle_next < angle_prev ? &_front : &_back;
+    if (!has_degenerate) {
+        return false;
+    }
+
+    Handle *h = angle_next < angle_prev ? &_front : &_back;
 
     h->setPosition(_desktop->w2d(evp));
     h->setVisible(true);
@@ -1283,11 +1307,16 @@ bool Node::_is_line_segment(Node *first, Node *second)
 SPCtrlShapeType Node::_node_type_to_shape(NodeType type)
 {
     switch(type) {
-    case NODE_CUSP: return SP_CTRL_SHAPE_DIAMOND;
-    case NODE_SMOOTH: return SP_CTRL_SHAPE_SQUARE;
-    case NODE_AUTO: return SP_CTRL_SHAPE_CIRCLE;
-    case NODE_SYMMETRIC: return SP_CTRL_SHAPE_SQUARE;
-    default: return SP_CTRL_SHAPE_DIAMOND;
+        case NODE_CUSP:
+            return SP_CTRL_SHAPE_DIAMOND;
+        case NODE_SMOOTH:
+            return SP_CTRL_SHAPE_SQUARE;
+        case NODE_AUTO:
+            return SP_CTRL_SHAPE_CIRCLE;
+        case NODE_SYMMETRIC:
+            return SP_CTRL_SHAPE_SQUARE;
+        default:
+            return SP_CTRL_SHAPE_DIAMOND;
     }
 }
 

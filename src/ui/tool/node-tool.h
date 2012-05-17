@@ -52,6 +52,7 @@ struct InkNodeTool : public SPEventContext
     sigc::connection _selection_changed_connection;
     sigc::connection _mouseover_changed_connection;
     sigc::connection _selection_modified_connection;
+    sigc::connection _sizeUpdatedConn;
     Inkscape::MessageContext *_node_message_context;
     SPItem *flashed_item;
     Inkscape::Display::TemporaryItem *flash_tempitem;
