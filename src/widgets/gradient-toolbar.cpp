@@ -194,11 +194,10 @@ gboolean gr_vector_list(GtkWidget *combo_box, SPDesktop *desktop, bool selection
             SPGradient *gradient = SP_GRADIENT(gl->data);
             gl = g_slist_remove(gl, gradient);
 
-            gchar *label = gr_prepare_label(gradient);
+            Glib::ustring label = gr_prepare_label(gradient);
             GdkPixbuf *pixb = sp_gradient_to_pixbuf(gradient, 64, 16);
             gtk_list_store_append(store, &iter);
-            gtk_list_store_set(store, &iter, 0, label, 1, pixb, 2, gradient, -1);
-            g_free(label);
+            gtk_list_store_set(store, &iter, 0, label.c_str(), 1, pixb, 2, gradient, -1);
 
             if (gradient == gr_selected) {
                 pos = idx;
@@ -835,10 +834,10 @@ static gboolean update_stop_list( GtkWidget *stop_combo, SPGradient *gradient, S
                 Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(sl->data)->getRepr();
                 Inkscape::UI::Widget::ColorPreview *cpv = Gtk::manage(new Inkscape::UI::Widget::ColorPreview(sp_stop_get_rgba32(stop)));
                 GdkPixbuf *pb = cpv->toPixbuf(32, 16);
-                const gchar *label = gr_ellipse_text(repr->attribute("id"), 25);
+                Glib::ustring label = gr_ellipsize_text(repr->attribute("id"), 25);
 
                 gtk_list_store_append(store, &iter);
-                gtk_list_store_set(store, &iter, 0, label, 1, pb, 2, stop, -1);
+                gtk_list_store_set(store, &iter, 0, label.c_str(), 1, pb, 2, stop, -1);
                 sensitive = FALSE;
             }
         }

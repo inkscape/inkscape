@@ -261,26 +261,26 @@ SPGradient *sp_gradient_vector_selector_get_gradient(SPGradientVectorSelector *g
     return gvs->gr;
 }
 
-gchar *gr_prepare_label (SPObject *obj)
+Glib::ustring gr_prepare_label (SPObject *obj)
 {
     const gchar *id = obj->defaultLabel();
     if (strlen(id) > 15 && (!strncmp (id, "#linearGradient", 15) || !strncmp (id, "#radialGradient", 15)))
-        return gr_ellipse_text (g_strdup_printf ("#%s", id+15), 35);
-    return gr_ellipse_text (id, 35);
+        return gr_ellipsize_text (g_strdup_printf ("#%s", id+15), 35);
+    return gr_ellipsize_text (id, 35);
 }
 
 /*
  * Ellipse text if longer than maxlen, "30% start text + ... + ~70% end text"
  * Text should be > length 8 or just return the original text
  */
-gchar *gr_ellipse_text (gchar const *src, guint maxlen)
+Glib::ustring gr_ellipsize_text(Glib::ustring const &src, size_t maxlen)
 {
-    guint start = (guint) maxlen / 3;
-    if (strlen(src) > maxlen && maxlen > 8)
-         return g_strdup_printf ("%s...%s", g_strndup(src, start), src+strlen(src)-(maxlen-start-3));
-
-    return g_strdup (src);
-
+    if (src.length() > maxlen && maxlen > 8) {
+        size_t p1 = (size_t) maxlen / 3;
+        size_t p2 = (size_t) src.length() - (maxlen-p1-3);  // 3 ellipses
+        return src.substr(0, p1) + "..." + src.substr(p2);
+    }
+    return src;
 }
 
 static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
@@ -330,11 +330,10 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
             /* Gradient destroy */
             /* Gradient name change */
 
-            gchar *label = gr_prepare_label(gr);
+            Glib::ustring label = gr_prepare_label(gr);
             GdkPixbuf *pixb = sp_gradient_to_pixbuf (gr, 64, 18);
             gtk_list_store_append (gvs->store, &iter);
-            gtk_list_store_set (gvs->store, &iter, 0, pixb, 1, label, 2, gr, -1);
-            g_free (label);
+            gtk_list_store_set (gvs->store, &iter, 0, pixb, 1, label.c_str(), 2, gr, -1);
 
             if (gr == gvs->gr) {
                 pos = idx;
