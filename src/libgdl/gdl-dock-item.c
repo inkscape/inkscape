@@ -1074,6 +1074,9 @@ gdl_dock_item_paint (GtkWidget      *widget,
                    &event->area, widget,
                    "dockitem",
                    0, 0, -1, -1);
+
+    if (GTK_IS_WIDGET(item->_priv->grip))
+      gtk_widget_queue_draw (GTK_WIDGET(item->_priv->grip));
 }
 
 static gint

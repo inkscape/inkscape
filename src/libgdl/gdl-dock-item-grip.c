@@ -148,6 +148,15 @@ gdl_dock_item_grip_expose (GtkWidget      *widget,
         }
         
     }
+  
+   if (gdl_dock_item_or_child_has_focus(grip->item)) { 
+	   
+      gtk_paint_focus (gtk_widget_get_style (widget),
+                       gtk_widget_get_window (widget),
+                       gtk_widget_get_state (widget),
+                       &event->area, widget,
+                       NULL, 0, 0, -1, -1);
+   }
 
     return GTK_WIDGET_CLASS (gdl_dock_item_grip_parent_class)->expose_event (widget, event);
 }
