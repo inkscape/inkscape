@@ -1,8 +1,6 @@
-/** @file
- * Control point that is dragged during path drag
- */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2009 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -21,26 +19,15 @@
 namespace Inkscape {
 namespace UI {
 
-/**
- * @class CurveDragPoint
- * An invisible point used to drag curves. This point is used by PathManipulator to allow editing
- * of path segments by dragging them. It is defined in a separate file so that the node tool
- * can check if the mouseovered control point is a curve drag point and update the cursor
- * accordingly, without the need to drag in the full PathManipulator header.
- */
-
-// This point should be invisible to the user - use the invisible_cset from control-point.h
-// TODO make some methods from path-manipulator.cpp public so that this point doesn't have
-// to be declared as a friend
 
 bool CurveDragPoint::_drags_stroke = false;
 bool CurveDragPoint::_segment_was_degenerate = false;
 
-CurveDragPoint::CurveDragPoint(PathManipulator &pm)
-    : ControlPoint(pm._multi_path_manipulator._path_data.node_data.desktop, Geom::Point(),
-        SP_ANCHOR_CENTER, SP_CTRL_SHAPE_CIRCLE, 1.0, &invisible_cset,
-        pm._multi_path_manipulator._path_data.dragpoint_group)
-    , _pm(pm)
+CurveDragPoint::CurveDragPoint(PathManipulator &pm) :
+    ControlPoint(pm._multi_path_manipulator._path_data.node_data.desktop, Geom::Point(), SP_ANCHOR_CENTER,
+                 SP_CTRL_SHAPE_CIRCLE, 1.0,
+                 invisible_cset, pm._multi_path_manipulator._path_data.dragpoint_group),
+      _pm(pm)
 {
     setVisible(false);
 }
@@ -170,7 +157,7 @@ void CurveDragPoint::_insertNode(bool take_selection)
     _pm._commit(_("Add node"));
 }
 
-Glib::ustring CurveDragPoint::_getTip(unsigned state)
+Glib::ustring CurveDragPoint::_getTip(unsigned state) const
 {
     if (_pm.empty()) return "";
     if (!first || !first.next()) return "";

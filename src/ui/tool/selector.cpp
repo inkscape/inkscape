@@ -3,6 +3,7 @@
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2009 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -32,21 +33,25 @@ namespace UI {
  * is pressed, it grabs events and handles drags and clicks in the usual way. */
 class SelectorPoint : public ControlPoint {
 public:
-    SelectorPoint(SPDesktop *d, SPCanvasGroup *group, Selector *s)
-        : ControlPoint(d, Geom::Point(0,0), SP_ANCHOR_CENTER, SP_CTRL_SHAPE_SQUARE,
-            1, &invisible_cset, group)
-        , _selector(s)
-        , _cancel(false)
+    SelectorPoint(SPDesktop *d, SPCanvasGroup *group, Selector *s) :
+        ControlPoint(d, Geom::Point(0,0), SP_ANCHOR_CENTER,
+                     SP_CTRL_SHAPE_SQUARE, 1,
+                     invisible_cset, group),
+        _selector(s),
+        _cancel(false)
     {
         setVisible(false);
         _rubber = static_cast<CtrlRect*>(sp_canvas_item_new(sp_desktop_controls(_desktop),
         SP_TYPE_CTRLRECT, NULL));
         sp_canvas_item_hide(_rubber);
     }
+
     ~SelectorPoint() {
         gtk_object_destroy(_rubber);
     }
+
     SPDesktop *desktop() { return _desktop; }
+
     bool event(SPEventContext *ec, GdkEvent *e) {
         return _eventHandler(ec, e);
     }
@@ -70,22 +75,26 @@ private:
         sp_canvas_item_show(_rubber);
         return false;
     }
+
     virtual void dragged(Geom::Point &new_pos, GdkEventMotion *) {
         if (_cancel) return;
         Geom::Rect sel(_start, new_pos);
         _rubber->setRectangle(sel);
     }
+
     virtual void ungrabbed(GdkEventButton *event) {
         if (_cancel) return;
         sp_canvas_item_hide(_rubber);
         Geom::Rect sel(_start, position());
         _selector->signal_area.emit(sel, event);
     }
+
     virtual bool clicked(GdkEventButton *event) {
         if (event->button != 1) return false;
         _selector->signal_point.emit(position(), event);
         return true;
     }
+
     CtrlRect *_rubber;
     Selector *_selector;
     Geom::Point _start;

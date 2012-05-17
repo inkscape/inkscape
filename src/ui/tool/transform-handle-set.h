@@ -3,6 +3,7 @@
  */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2009 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -23,7 +24,6 @@ class CtrlRect;
 namespace Inkscape {
 namespace UI {
 
-//class TransformHandle;
 class RotateHandle;
 class SkewHandle;
 class ScaleCornerHandle;
@@ -32,6 +32,7 @@ class RotationCenter;
 
 class TransformHandleSet : public Manipulator {
 public:
+
     enum Mode {
         MODE_SCALE,
         MODE_ROTATE_SKEW
@@ -41,23 +42,37 @@ public:
     virtual ~TransformHandleSet();
     virtual bool event(SPEventContext *, GdkEvent *);
 
-    bool visible() { return _visible; }
-    Mode mode() { return _mode; }
-    Geom::Rect bounds();
+    bool visible() const { return _visible; }
+    Mode mode() const { return _mode; }
+    Geom::Rect bounds() const;
     void setVisible(bool v);
-    void setMode(Mode);
+
+    /** Sets the mode of transform handles (scale or rotate). */
+    void setMode(Mode m);
+
     void setBounds(Geom::Rect const &, bool preserve_center = false);
 
     bool transforming() { return _in_transform; }
+
+    ControlPoint const &rotationCenter() const;
     ControlPoint &rotationCenter();
 
     sigc::signal<void, Geom::Affine const &> signal_transform;
     sigc::signal<void, CommitEvent> signal_commit;
+
 private:
+
     void _emitTransform(Geom::Affine const &);
     void _setActiveHandle(ControlPoint *h);
     void _clearActiveHandle();
+
+    /** Update the visibility of transformation handles according to settings and the dimensions
+     * of the bounding box. It hides the handles that would have no effect or lead to
+     * discontinuities. Additionally, side handles for which there is no space are not shown.
+     */
     void _updateVisibility(bool v);
+
+    // TODO unions must GO AWAY:
     union {
         ControlPoint *_handles[17];
         struct {
@@ -68,6 +83,7 @@ private:
             RotationCenter *_center;
         };
     };
+
     ControlPoint *_active;
     SPCanvasGroup *_transform_handle_group;
     CtrlRect *_trans_outline;
@@ -79,8 +95,9 @@ private:
     friend class RotationCenter;
 };
 
-/** Base class for node transform handles to simplify implementation */
-class TransformHandle : public ControlPoint {
+/** Base class for node transform handles to simplify implementation. */
+class TransformHandle : public ControlPoint
+{
 public:
     TransformHandle(TransformHandleSet &th, SPAnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pb);
     void getNextClosestPoint(bool reverse);
@@ -103,6 +120,8 @@ private:
     virtual bool grabbed(GdkEventMotion *);
     virtual void dragged(Geom::Point &new_pos, GdkEventMotion *event);
     virtual void ungrabbed(GdkEventButton *);
+
+    static ColorSet thandle_cset;
 };
 
 } // namespace UI

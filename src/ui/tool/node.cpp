@@ -1,7 +1,3 @@
-/**
- * @file
- * Editable node - implementation.
- */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
  *   Jon A. Cruz <jon@joncruz.org>
@@ -42,18 +38,21 @@
 namespace Inkscape {
 namespace UI {
 
-static SelectableControlPoint::ColorSet node_colors = {
-    {
-        {0xbfbfbf00, 0x000000ff}, // normal fill, stroke
-        {0xff000000, 0x000000ff}, // mouseover fill, stroke
-        {0xff000000, 0x000000ff}  // clicked fill, stroke
-    },
+ControlPoint::ColorSet Node::node_colors = {
+    {0xbfbfbf00, 0x000000ff}, // normal fill, stroke
+    {0xff000000, 0x000000ff}, // mouseover fill, stroke
+    {0xff000000, 0x000000ff}, // clicked fill, stroke
+    //
     {0x0000ffff, 0x000000ff}, // normal fill, stroke when selected
     {0xff000000, 0x000000ff}, // mouseover fill, stroke when selected
     {0xff000000, 0x000000ff}  // clicked fill, stroke when selected
 };
 
-static ControlPoint::ColorSet handle_colors = {
+ControlPoint::ColorSet Handle::_handle_colors = {
+    {0xffffffff, 0x000000ff}, // normal fill, stroke
+    {0xff000000, 0x000000ff}, // mouseover fill, stroke
+    {0xff000000, 0x000000ff}, // clicked fill, stroke
+    //
     {0xffffffff, 0x000000ff}, // normal fill, stroke
     {0xff000000, 0x000000ff}, // mouseover fill, stroke
     {0xff000000, 0x000000ff}  // clicked fill, stroke
@@ -76,24 +75,20 @@ static Geom::Point direction(Geom::Point const &first, Geom::Point const &second
     return Geom::unit_vector(second - first);
 }
 
-/**
- * Control point of a cubic Bezier curve in a path.
- *
- * Handle keeps the node type invariant only for the opposite handle of the same node.
- * Keeping the invariant on node moves is left to the %Node class.
- */
 Geom::Point Handle::_saved_other_pos(0, 0);
+
 double Handle::_saved_length = 0.0;
+
 bool Handle::_drag_out = false;
 
-Handle::Handle(NodeSharedData const &data, Geom::Point const &initial_pos, Node *parent)
-    : ControlPoint(data.desktop, initial_pos, SP_ANCHOR_CENTER, SP_CTRL_SHAPE_CIRCLE, 7.0,
-        &handle_colors, data.handle_group)
-    , _parent(parent)
-    , _degenerate(true)
+Handle::Handle(NodeSharedData const &data, Geom::Point const &initial_pos, Node *parent) :
+    ControlPoint(data.desktop, initial_pos, SP_ANCHOR_CENTER,
+                 SP_CTRL_SHAPE_CIRCLE, 7.0,
+                 _handle_colors, data.handle_group),
+    _parent(parent),
+    _handle_line(ControlManager::getManager().createControlLine(data.handle_line_group)),
+    _degenerate(true)
 {
-    _cset = &handle_colors;
-    _handle_line = ControlManager::getManager().createControlLine(data.handle_line_group);
     setVisible(false);
 }
 
@@ -389,10 +384,18 @@ bool Handle::clicked(GdkEventButton *event)
     return true;
 }
 
+Handle const *Handle::other() const
+{
+    return const_cast<Handle *>(this)->other();
+}
+
 Handle *Handle::other()
 {
-    if (this == &_parent->_front) return &_parent->_back;
-    return &_parent->_front;
+    if (this == &_parent->_front) {
+        return &_parent->_back;
+    } else {
+        return &_parent->_front;
+    }
 }
 
 static double snap_increment_degrees() {
@@ -401,7 +404,7 @@ static double snap_increment_degrees() {
     return 180.0 / snaps;
 }
 
-Glib::ustring Handle::_getTip(unsigned state)
+Glib::ustring Handle::_getTip(unsigned state) const
 {
     char const *more;
     bool can_shift_rotate = _parent->type() == NODE_CUSP && !other()->isDegenerate();
@@ -459,7 +462,7 @@ Glib::ustring Handle::_getTip(unsigned state)
     }
 }
 
-Glib::ustring Handle::_getDragTip(GdkEventMotion */*event*/)
+Glib::ustring Handle::_getDragTip(GdkEventMotion */*event*/) const
 {
     Geom::Point dist = position() - _last_drag_origin();
     // report angle in mathematical convention
@@ -477,34 +480,48 @@ Glib::ustring Handle::_getDragTip(GdkEventMotion */*event*/)
     return ret;
 }
 
-/**
- * Curve endpoint in an editable path.
- *
- * The method move() keeps node type invariants during translations.
- */
-Node::Node(NodeSharedData const &data, Geom::Point const &initial_pos)
-    : SelectableControlPoint(data.desktop, initial_pos, SP_ANCHOR_CENTER,
-        SP_CTRL_SHAPE_DIAMOND, 9.0, *data.selection, &node_colors, data.node_group)
-    , _front(data, initial_pos, this)
-    , _back(data, initial_pos, this)
-    , _type(NODE_CUSP)
-    , _handles_shown(false)
+Node::Node(NodeSharedData const &data, Geom::Point const &initial_pos) :
+    SelectableControlPoint(data.desktop, initial_pos, SP_ANCHOR_CENTER,
+                           SP_CTRL_SHAPE_DIAMOND, 9.0,
+                           *data.selection,
+                           node_colors, data.node_group),
+    _front(data, initial_pos, this),
+    _back(data, initial_pos, this),
+    _type(NODE_CUSP),
+    _handles_shown(false)
 {
     // NOTE we do not set type here, because the handles are still degenerate
+}
+
+Node const *Node::_next() const
+{
+    return const_cast<Node*>(this)->_next();
 }
 
 // NOTE: not using iterators won't make this much quicker because iterators can be 100% inlined.
 Node *Node::_next()
 {
     NodeList::iterator n = NodeList::get_iterator(this).next();
-    if (n) return n.ptr();
-    return NULL;
+    if (n) {
+        return n.ptr();
+    } else {
+        return NULL;
+    }
 }
+
+Node const *Node::_prev() const
+{
+    return const_cast<Node *>(this)->_prev();
+}
+
 Node *Node::_prev()
 {
     NodeList::iterator p = NodeList::get_iterator(this).prev();
-    if (p) return p.ptr();
-    return NULL;
+    if (p) {
+        return p.ptr();
+    } else {
+        return NULL;
+    }
 }
 
 void Node::move(Geom::Point const &new_pos)
@@ -533,7 +550,7 @@ void Node::transform(Geom::Affine const &m)
     _fixNeighbors(old_pos, position());
 }
 
-Geom::Rect Node::bounds()
+Geom::Rect Node::bounds() const
 {
     Geom::Rect b(position(), position());
     b.expandTo(_front.position());
@@ -614,13 +631,6 @@ void Node::showHandles(bool v)
     if (!_back.isDegenerate()) _back.setVisible(v);
 }
 
-/** Sets the node type and optionally restores the invariants associated with the given type.
- * @param type The type to set
- * @param update_handles Whether to restore invariants associated with the given type.
- *                       Passing false is useful e.g. wen initially creating the path,
- *                       and when making cusp nodes during some node algorithms.
- *                       Pass true when used in response to an UI node type button.
- */
 void Node::setType(NodeType type, bool update_handles)
 {
     if (type == NODE_PICK_BEST) {
@@ -717,8 +727,6 @@ void Node::setType(NodeType type, bool update_handles)
     updateState();
 }
 
-/** Pick the best type for this node, based on the position of its handles.
- * This is what assigns types to nodes created using the pen tool. */
 void Node::pickBestType()
 {
     _type = NODE_CUSP;
@@ -768,13 +776,11 @@ void Node::pickBestType()
     updateState();
 }
 
-bool Node::isEndNode()
+bool Node::isEndNode() const
 {
     return !_prev() || !_next();
 }
 
-/** Move the node to the bottom of its canvas group. Useful for node break, to ensure that
- * the selected nodes are above the unselected ones. */
 void Node::sink()
 {
     sp_canvas_item_move_to_z(_canvas_item, 0);
@@ -791,7 +797,6 @@ NodeType Node::parse_nodetype(char x)
     }
 }
 
-/** Customized event handler to catch scroll events needed for selection grow/shrink. */
 bool Node::_eventHandler(SPEventContext *event_context, GdkEvent *event)
 {
     int dir = 0;
@@ -836,8 +841,6 @@ bool Node::_eventHandler(SPEventContext *event_context, GdkEvent *event)
     return ControlPoint::_eventHandler(event_context, event);
 }
 
-/** Select or deselect a node in this node's subpath based on its path distance from this node.
- * @param dir If negative, shrink selection by one node; if positive, grow by one node */
 void Node::_linearGrow(int dir)
 {
     // Interestingly, we do not need any help from PathManipulator when doing linear grow.
@@ -1140,13 +1143,13 @@ bool Node::clicked(GdkEventButton *event)
     return SelectableControlPoint::clicked(event);
 }
 
-Inkscape::SnapSourceType Node::_snapSourceType()
+Inkscape::SnapSourceType Node::_snapSourceType() const
 {
     if (_type == NODE_SMOOTH || _type == NODE_AUTO)
         return SNAPSOURCE_NODE_SMOOTH;
     return SNAPSOURCE_NODE_CUSP;
 }
-Inkscape::SnapTargetType Node::_snapTargetType()
+Inkscape::SnapTargetType Node::_snapTargetType() const
 {
     if (_type == NODE_SMOOTH || _type == NODE_AUTO)
         return SNAPTARGET_NODE_SMOOTH;
@@ -1158,10 +1161,6 @@ Inkscape::SnapCandidatePoint Node::snapCandidatePoint()
     return SnapCandidatePoint(position(), _snapSourceType(), _snapTargetType());
 }
 
-/**
- * Gets the handle that faces the given adjacent node.
- * Will abort with error if the given node is not adjacent.
- */
 Handle *Node::handleToward(Node *to)
 {
     if (_next() == to) {
@@ -1173,10 +1172,6 @@ Handle *Node::handleToward(Node *to)
     g_error("Node::handleToward(): second node is not adjacent!");
 }
 
-/**
- * Gets the node in the direction of the given handle.
- * Will abort with error if the handle doesn't belong to this node.
- */
 Node *Node::nodeToward(Handle *dir)
 {
     if (front() == dir) {
@@ -1188,10 +1183,6 @@ Node *Node::nodeToward(Handle *dir)
     g_error("Node::nodeToward(): handle is not a child of this node!");
 }
 
-/**
- * Gets the handle that goes in the direction opposite to the given adjacent node.
- * Will abort with error if the given node is not adjacent.
- */
 Handle *Node::handleAwayFrom(Node *to)
 {
     if (_next() == to) {
@@ -1203,10 +1194,6 @@ Handle *Node::handleAwayFrom(Node *to)
     g_error("Node::handleAwayFrom(): second node is not adjacent!");
 }
 
-/**
- * Gets the node in the direction opposite to the given handle.
- * Will abort with error if the handle doesn't belong to this node.
- */
 Node *Node::nodeAwayFrom(Handle *h)
 {
     if (front() == h) {
@@ -1218,7 +1205,7 @@ Node *Node::nodeAwayFrom(Handle *h)
     g_error("Node::nodeAwayFrom(): handle is not a child of this node!");
 }
 
-Glib::ustring Node::_getTip(unsigned state)
+Glib::ustring Node::_getTip(unsigned state) const
 {
     if (state_held_shift(state)) {
         bool can_drag_out = (_next() && _front.isDegenerate()) || (_prev() && _back.isDegenerate());
@@ -1260,7 +1247,7 @@ Glib::ustring Node::_getTip(unsigned state)
         "<b>%s</b>: drag to shape the path, click to select only this node (more: Shift, Ctrl, Alt)"), nodetype);
 }
 
-Glib::ustring Node::_getDragTip(GdkEventMotion */*event*/)
+Glib::ustring Node::_getDragTip(GdkEventMotion */*event*/) const
 {
     Geom::Point dist = position() - _last_drag_origin();
     GString *x = SP_PX_TO_METRIC_STRING(dist[Geom::X], _desktop->namedview->getDefaultMetric());
@@ -1283,7 +1270,6 @@ char const *Node::node_type_to_localized_string(NodeType type)
     }
 }
 
-/** Determine whether two nodes are joined by a linear segment. */
 bool Node::_is_line_segment(Node *first, Node *second)
 {
     if (!first || !second) return false;
@@ -1306,13 +1292,6 @@ SPCtrlShapeType Node::_node_type_to_shape(NodeType type)
 }
 
 
-/**
- * An editable list of nodes representing a subpath.
- *
- * It can optionally be cyclic to represent a closed path.
- * The list has iterators that act like plain node iterators, but can also be used
- * to obtain shared pointers to nodes.
- */
 NodeList::NodeList(SubpathList &splist)
     : _list(splist)
     , _closed(false)
@@ -1344,8 +1323,6 @@ bool NodeList::closed()
     return _closed;
 }
 
-/** A subpath is degenerate if it has no segments - either one node in an open path
- * or no nodes in a closed path */
 bool NodeList::degenerate()
 {
     return closed() ? empty() : ++begin() == end();
@@ -1362,10 +1339,9 @@ NodeList::iterator NodeList::before(double t, double *fracpart)
     return ret;
 }
 
-// insert a node before i
-NodeList::iterator NodeList::insert(iterator i, Node *x)
+NodeList::iterator NodeList::insert(iterator pos, Node *x)
 {
-    ListNode *ins = i._node;
+    ListNode *ins = pos._node;
     x->ln_next = ins;
     x->ln_prev = ins->ln_prev;
     ins->ln_prev->ln_next = x;
@@ -1470,11 +1446,6 @@ NodeList &NodeList::get(iterator const &i) {
     return *(i._node->ln_list);
 }
 
-
-/**
- * @class SubpathList
- * Editable path composed of one or more subpaths.
- */
 
 } // namespace UI
 } // namespace Inkscape

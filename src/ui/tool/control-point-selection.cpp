@@ -268,7 +268,9 @@ void ControlPointSelection::toggleTransformHandlesMode()
 {
     if (_handles->mode() == TransformHandleSet::MODE_SCALE) {
         _handles->setMode(TransformHandleSet::MODE_ROTATE_SKEW);
-        if (size() == 1) _handles->rotationCenter().setVisible(false);
+        if (size() == 1) {
+            _handles->rotationCenter().setVisible(false);
+        }
     } else {
         _handles->setMode(TransformHandleSet::MODE_SCALE);
     }
@@ -383,8 +385,9 @@ void ControlPointSelection::_pointChanged(SelectableControlPoint *p, bool select
 {
     _updateBounds();
     _updateTransformHandles(false);
-    if (_bounds)
+    if (_bounds) {
         _handles->rotationCenter().move(_bounds->midpoint());
+    }
 
     signal_point_changed.emit(p, selected);
 }

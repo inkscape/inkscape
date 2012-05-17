@@ -1,8 +1,6 @@
-/** @file
- * Desktop-bound selectable control object
- */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2009 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -18,40 +16,45 @@ namespace UI {
 
 class ControlPointSelection;
 
+/**
+ * Desktop-bound selectable control object.
+ */
 class SelectableControlPoint : public ControlPoint {
 public:
-    struct ColorSet {
-        ControlPoint::ColorSet cpset;
-        ColorEntry selected_normal;
-        ColorEntry selected_mouseover;
-        ColorEntry selected_clicked;
-    };
 
     ~SelectableControlPoint();
     bool selected() const;
-    void updateState() const { const_cast<SelectableControlPoint*>(this)->_setState(_state); }
-    virtual Geom::Rect bounds() {
+    void updateState() { _setState(_state); }
+    virtual Geom::Rect bounds() const {
         return Geom::Rect(position(), position());
     }
+
 protected:
-    SelectableControlPoint(SPDesktop *d, Geom::Point const &initial_pos,
-        SPAnchorType anchor, SPCtrlShapeType shape,
-        unsigned int size, ControlPointSelection &sel, ColorSet *cset = 0,
-        SPCanvasGroup *group = 0);
-    SelectableControlPoint(SPDesktop *d, Geom::Point const &initial_pos,
-        SPAnchorType anchor, Glib::RefPtr<Gdk::Pixbuf> pixbuf,
-        ControlPointSelection &sel, ColorSet *cset = 0, SPCanvasGroup *group = 0);
+
+    SelectableControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
+                           SPCtrlShapeType shape, unsigned int size,
+                           ControlPointSelection &sel,
+                           ColorSet const &cset = _default_scp_color_set, SPCanvasGroup *group = 0);
+
+    SelectableControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
+                           Glib::RefPtr<Gdk::Pixbuf> pixbuf,
+                           ControlPointSelection &sel,
+                           ColorSet const &cset = _default_scp_color_set, SPCanvasGroup *group = 0);
 
     virtual void _setState(State state);
 
-    virtual void dragged(Geom::Point &, GdkEventMotion *);
-    virtual bool grabbed(GdkEventMotion *);
-    virtual void ungrabbed(GdkEventButton *);
-    virtual bool clicked(GdkEventButton *);
+    virtual void dragged(Geom::Point &new_pos, GdkEventMotion *event);
+    virtual bool grabbed(GdkEventMotion *event);
+    virtual void ungrabbed(GdkEventButton *event);
+    virtual bool clicked(GdkEventButton *event);
 
     ControlPointSelection &_selection;
+
 private:
+
     void _takeSelection();
+
+    static ColorSet _default_scp_color_set;
 };
 
 } // namespace UI

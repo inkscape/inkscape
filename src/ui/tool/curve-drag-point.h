@@ -1,8 +1,6 @@
-/** @file
- * Control point that is dragged during path drag
- */
 /* Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Jon A. Cruz <jon@joncruz.org>
  *
  * Copyright (C) 2009 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -21,15 +19,27 @@ namespace UI {
 class PathManipulator;
 struct PathSharedData;
 
+// This point should be invisible to the user - use the invisible_cset from control-point.h
+// TODO make some methods from path-manipulator.cpp public so that this point doesn't have
+// to be declared as a friend
+/**
+ * An invisible point used to drag curves. This point is used by PathManipulator to allow editing
+ * of path segments by dragging them. It is defined in a separate file so that the node tool
+ * can check if the mouseovered control point is a curve drag point and update the cursor
+ * accordingly, without the need to drag in the full PathManipulator header.
+ */
 class CurveDragPoint : public ControlPoint {
 public:
+
     CurveDragPoint(PathManipulator &pm);
     void setSize(double sz) { _setSize(sz); }
     void setTimeValue(double t) { _t = t; }
     void setIterator(NodeList::iterator i) { first = i; }
     virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event);
+
 protected:
-    virtual Glib::ustring _getTip(unsigned state);
+
+    virtual Glib::ustring _getTip(unsigned state) const;
     virtual void dragged(Geom::Point &, GdkEventMotion *);
     virtual bool grabbed(GdkEventMotion *);
     virtual void ungrabbed(GdkEventButton *);
@@ -37,10 +47,13 @@ protected:
     virtual bool doubleclicked(GdkEventButton *);
 
 private:
+
     void _insertNode(bool take_selection);
+
     double _t;
     PathManipulator &_pm;
     NodeList::iterator first;
+
     static bool _drags_stroke;
     static bool _segment_was_degenerate;
     static Geom::Point _stroke_drag_origin;
