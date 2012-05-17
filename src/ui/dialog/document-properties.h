@@ -27,12 +27,21 @@
 #include "ui/widget/registry.h"
 #include "ui/widget/tolerance-slider.h"
 #include "ui/widget/panel.h"
+#include "ui/widget/licensor.h"
 
 #include "xml/helper-observer.h"
 
 namespace Inkscape {
+    namespace XML {
+        class Node;
+    }
     namespace UI {
+        namespace Widget {
+            class EntityEntry;
+        }
         namespace Dialog {
+
+typedef std::list<UI::Widget::EntityEntry*> RDElist;
 
 class DocumentProperties : public UI::Widget::Panel {
 public:
@@ -52,6 +61,7 @@ protected:
     void  build_cms();
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     void  build_scripting();
+    void  build_metadata();
     void  init();
 
     virtual void  on_response (int);
@@ -92,6 +102,9 @@ protected:
     Gtk::Notebook _scripting_notebook;
     UI::Widget::NotebookPage _page_external_scripts;
     UI::Widget::NotebookPage _page_embedded_scripts;
+
+    UI::Widget::NotebookPage   _page_metadata1;
+    UI::Widget::NotebookPage   _page_metadata2;
 
     Gtk::VBox      _grids_vbox;
 
@@ -174,6 +187,9 @@ protected:
     Gtk::Label      _grids_label_def;
     Gtk::HBox       _grids_space;
     //---------------------------------------------------------------
+
+    RDElist _rdflist;
+    UI::Widget::Licensor _licensor;
 
     Gtk::HBox& _createPageTabLabel(const Glib::ustring& label, const char *label_image);
 

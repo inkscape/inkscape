@@ -42,6 +42,9 @@
 #include "xml/node-event-vector.h"
 #include "xml/repr.h"
 
+#include "rdf.h"
+#include "ui/widget/entity-entry.h"
+
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 #include "color-profile.h"
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -92,6 +95,8 @@ DocumentProperties::DocumentProperties()
       _page_scripting(1, 1),
       _page_external_scripts(1, 1),
       _page_embedded_scripts(1, 1),
+      _page_metadata1(1, 1),
+      _page_metadata2(1, 1),
     //---------------------------------------------------------------
       _rcb_canb(_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false),
       _rcb_bord(_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false),
@@ -146,8 +151,10 @@ DocumentProperties::DocumentProperties()
     _notebook.append_page(_page_guides,    _("Guides"));
     _notebook.append_page(_grids_vbox,     _("Grids"));
     _notebook.append_page(_page_snap,      _("Snap"));
-    _notebook.append_page(_page_cms, _("Color Management"));
+    _notebook.append_page(_page_cms, _("Color"));
     _notebook.append_page(_page_scripting, _("Scripting"));
+    _notebook.append_page(_page_metadata1, _("Metadata"));
+    _notebook.append_page(_page_metadata2, _("License"));
 
     build_page();
     build_guides();
@@ -157,6 +164,7 @@ DocumentProperties::DocumentProperties()
     build_cms();
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     build_scripting();
+    build_metadata();
 
     _grids_button_new.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onNewGrid));
     _grids_button_remove.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onRemoveGrid));
@@ -185,6 +193,9 @@ DocumentProperties::~DocumentProperties()
     repr->removeListenerByData (this);
     Inkscape::XML::Node *root = sp_desktop_document(getDesktop())->getRoot()->getRepr();
     root->removeListenerByData (this);
+
+    for (RDElist::iterator it = _rdflist.begin(); it != _rdflist.end(); ++it)
+        delete (*it);
 }
 
 //========================================================================
@@ -726,6 +737,46 @@ void DocumentProperties::build_scripting()
     _scripts_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_script_lists));
 }
 
+void DocumentProperties::build_metadata()
+{
+    using Inkscape::UI::Widget::EntityEntry;
+
+    _page_metadata1.show();
+
+    Gtk::Label *label = manage (new Gtk::Label);
+    label->set_markup (_("<b>Dublin Core Entities</b>"));
+    label->set_alignment (0.0);
+    _page_metadata1.table().attach (*label, 0,3,0,1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+     /* add generic metadata entry areas */
+    struct rdf_work_entity_t * entity;
+    int row = 1;
+    for (entity = rdf_work_entities; entity && entity->name; entity++, row++) {
+        if ( entity->editable == RDF_EDIT_GENERIC ) {
+            EntityEntry *w = EntityEntry::create (entity, _wr);
+            _rdflist.push_back (w);
+            Gtk::HBox *space = manage (new Gtk::HBox);
+            space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
+            _page_metadata1.table().attach (*space, 0,1, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+            _page_metadata1.table().attach (w->_label, 1,2, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+            _page_metadata1.table().attach (*w->_packable, 2,3, row, row+1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+        }
+    }
+
+    _page_metadata2.show();
+
+    row = 0;
+    Gtk::Label *llabel = manage (new Gtk::Label);
+    llabel->set_markup (_("<b>License</b>"));
+    llabel->set_alignment (0.0);
+    _page_metadata2.table().attach (*llabel, 0,3, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+    /* add license selector pull-down and URI */
+    ++row;
+    _licensor.init (_wr);
+    Gtk::HBox *space = manage (new Gtk::HBox);
+    space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
+    _page_metadata2.table().attach (*space, 0,1, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+    _page_metadata2.table().attach (_licensor, 1,3, row, row+1, Gtk::EXPAND|Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+}
 
 void DocumentProperties::addExternalScript(){
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -1068,6 +1119,14 @@ void DocumentProperties::update()
     populate_linked_profiles_box();
     populate_available_profiles();
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+
+    //-----------------------------------------------------------meta pages
+    /* update the RDF entities */
+    for (RDElist::iterator it = _rdflist.begin(); it != _rdflist.end(); ++it)
+        (*it)->update (SP_ACTIVE_DOCUMENT);
+
+    _licensor.update (SP_ACTIVE_DOCUMENT);
+
 
     _wr.setUpdating (false);
 }
