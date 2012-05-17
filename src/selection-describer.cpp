@@ -212,7 +212,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         } else { // multiple items
             int object_count = g_slist_length((GSList *)items);
 
-            const gchar *objects_str = NULL;
+            gchar *objects_str = NULL;
             GSList *terms = collect_terms ((GSList *)items);
             int n_terms = g_slist_length(terms);
             if (n_terms == 0) {
@@ -245,21 +245,24 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
 
 
             // indicate all, some, or none filtered
-            const gchar *filt_str =NULL;
-            int n_filt = count_filtered ((GSList *)items);  //all filtered
-            if(n_filt){
-                filt_str = g_strdup_printf (ngettext("; <i>%d filtered object</i> ",
+            gchar *filt_str = NULL;
+            int n_filt = count_filtered((GSList *)items);  //all filtered
+            if (n_filt) {
+                filt_str = g_strdup_printf(ngettext("; <i>%d filtered object</i> ",
                                                      "; <i>%d filtered objects</i> ", n_filt), n_filt);
-            }
-            else {
-                filt_str = g_strdup_printf ("");
+            } else {
+                filt_str = g_strdup_printf("%s", "");
             }
 
             _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s%s. %s.", objects_str, filt_str, in_phrase, _when_selected);
-            if (objects_str)
-                g_free ((gchar *) objects_str);
-            if (filt_str)
-                g_free ((gchar *) filt_str);
+            if (objects_str) {
+                g_free(objects_str);
+                objects_str = 0;
+            }
+            if (filt_str) {
+                g_free(filt_str);
+                objects_str = 0;
+            }
         }
 
         g_free(in_phrase);
