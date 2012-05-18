@@ -32,10 +32,10 @@ G_BEGIN_DECLS
 
 static void sp_color_scales_class_init (SPColorScalesClass *klass);
 static void sp_color_scales_init (SPColorScales *cs);
-static void sp_color_scales_destroy (GtkObject *object);
+static void sp_color_scales_dispose(GObject *object);
 
 static void sp_color_scales_show_all (GtkWidget *widget);
-static void sp_color_scales_hide_all (GtkWidget *widget);
+static void sp_color_scales_hide(GtkWidget *widget);
 
 static const gchar *sp_color_scales_hue_map (void);
 
@@ -78,11 +78,10 @@ static void
 sp_color_scales_class_init (SPColorScalesClass *klass)
 {
 	static const gchar* nameset[] = {N_("RGB"), N_("HSL"), N_("CMYK"), 0};
-	GtkObjectClass *object_class;
+	GObjectClass *object_class = (GObjectClass *) klass;
 	GtkWidgetClass *widget_class;
 	SPColorSelectorClass *selector_class;
 
-	object_class = (GtkObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 	selector_class = SP_COLOR_SELECTOR_CLASS (klass);
 
@@ -91,10 +90,10 @@ sp_color_scales_class_init (SPColorScalesClass *klass)
 	selector_class->name = nameset;
 	selector_class->submode_count = 3;
 
-	object_class->destroy = sp_color_scales_destroy;
+	object_class->dispose = sp_color_scales_dispose;
 
 	widget_class->show_all = sp_color_scales_show_all;
-	widget_class->hide_all = sp_color_scales_hide_all;
+	widget_class->hide = sp_color_scales_hide;
 }
 
 ColorScales::ColorScales( SPColorSelector* csel )
@@ -182,11 +181,10 @@ void ColorScales::init()
 	setMode(SP_COLOR_SCALES_MODE_RGB);
 }
 
-static void
-sp_color_scales_destroy (GtkObject *object)
+static void sp_color_scales_dispose(GObject *object)
 {
-	if (((GtkObjectClass *) (parent_class))->destroy)
-		(* ((GtkObjectClass *) (parent_class))->destroy) (object);
+	if (((GObjectClass *) (parent_class))->dispose)
+		(* ((GObjectClass *) (parent_class))->dispose) (object);
 }
 
 static void
@@ -195,10 +193,9 @@ sp_color_scales_show_all (GtkWidget *widget)
 	gtk_widget_show (widget);
 }
 
-static void
-sp_color_scales_hide_all (GtkWidget *widget)
+static void sp_color_scales_hide(GtkWidget *widget)
 {
-	gtk_widget_hide (widget);
+	gtk_widget_hide(widget);
 }
 
 GtkWidget *

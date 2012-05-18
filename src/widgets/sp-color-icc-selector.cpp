@@ -61,10 +61,10 @@ G_BEGIN_DECLS
 
 static void sp_color_icc_selector_class_init (SPColorICCSelectorClass *klass);
 static void sp_color_icc_selector_init (SPColorICCSelector *cs);
-static void sp_color_icc_selector_destroy (GtkObject *object);
+static void sp_color_icc_selector_dispose(GObject *object);
 
 static void sp_color_icc_selector_show_all (GtkWidget *widget);
-static void sp_color_icc_selector_hide_all (GtkWidget *widget);
+static void sp_color_icc_selector_hide(GtkWidget *widget);
 
 
 G_END_DECLS
@@ -100,15 +100,13 @@ sp_color_icc_selector_get_type (void)
     return type;
 }
 
-static void
-sp_color_icc_selector_class_init (SPColorICCSelectorClass *klass)
+static void sp_color_icc_selector_class_init(SPColorICCSelectorClass *klass)
 {
     static const gchar* nameset[] = {N_("CMS"), 0};
-    GtkObjectClass *object_class;
+    GObjectClass *object_class = (GObjectClass *) klass;
     GtkWidgetClass *widget_class;
     SPColorSelectorClass *selector_class;
 
-    object_class = (GtkObjectClass *) klass;
     widget_class = (GtkWidgetClass *) klass;
     selector_class = SP_COLOR_SELECTOR_CLASS (klass);
 
@@ -117,10 +115,10 @@ sp_color_icc_selector_class_init (SPColorICCSelectorClass *klass)
     selector_class->name = nameset;
     selector_class->submode_count = 1;
 
-    object_class->destroy = sp_color_icc_selector_destroy;
+    object_class->dispose = sp_color_icc_selector_dispose;
 
     widget_class->show_all = sp_color_icc_selector_show_all;
-    widget_class->hide_all = sp_color_icc_selector_hide_all;
+    widget_class->hide = sp_color_icc_selector_hide;
 }
 
 
@@ -423,11 +421,10 @@ void ColorICCSelector::init()
                         G_CALLBACK (_sliderChanged), _csel);
 }
 
-static void
-sp_color_icc_selector_destroy (GtkObject *object)
+static void sp_color_icc_selector_dispose(GObject *object)
 {
-    if (((GtkObjectClass *) (parent_class))->destroy)
-        (* ((GtkObjectClass *) (parent_class))->destroy) (object);
+    if (((GObjectClass *) (parent_class))->dispose)
+        (* ((GObjectClass *) (parent_class))->dispose)(object);
 }
 
 static void
@@ -436,10 +433,9 @@ sp_color_icc_selector_show_all (GtkWidget *widget)
     gtk_widget_show (widget);
 }
 
-static void
-sp_color_icc_selector_hide_all (GtkWidget *widget)
+static void sp_color_icc_selector_hide(GtkWidget *widget)
 {
-    gtk_widget_hide (widget);
+    gtk_widget_hide(widget);
 }
 
 GtkWidget *

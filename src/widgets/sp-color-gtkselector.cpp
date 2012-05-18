@@ -10,7 +10,7 @@ static void sp_color_gtkselector_init (SPColorGtkselector *csel);
 static void sp_color_gtkselector_dispose(GObject *object);
 
 static void sp_color_gtkselector_show_all (GtkWidget *widget);
-static void sp_color_gtkselector_hide_all (GtkWidget *widget);
+static void sp_color_gtkselector_hide(GtkWidget *widget);
 
 
 static SPColorSelectorClass *parent_class;
@@ -63,7 +63,7 @@ sp_color_gtkselector_class_init (SPColorGtkselectorClass *klass)
 	object_class->dispose = sp_color_gtkselector_dispose;
 
 	widget_class->show_all = sp_color_gtkselector_show_all;
-	widget_class->hide_all = sp_color_gtkselector_hide_all;
+	widget_class->hide = sp_color_gtkselector_hide;
 }
 
 void sp_color_gtkselector_init (SPColorGtkselector *csel)
@@ -98,10 +98,9 @@ sp_color_gtkselector_show_all (GtkWidget *widget)
 	gtk_widget_show (widget);
 }
 
-static void
-sp_color_gtkselector_hide_all (GtkWidget *widget)
+static void sp_color_gtkselector_hide(GtkWidget *widget)
 {
-	gtk_widget_hide (widget);
+	gtk_widget_hide(widget);
 }
 
 GtkWidget *

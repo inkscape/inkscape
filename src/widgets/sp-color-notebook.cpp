@@ -52,10 +52,10 @@ struct SPColorNotebookTracker {
 
 static void sp_color_notebook_class_init (SPColorNotebookClass *klass);
 static void sp_color_notebook_init (SPColorNotebook *colorbook);
-static void sp_color_notebook_destroy (GtkObject *object);
+static void sp_color_notebook_dispose(GObject *object);
 
 static void sp_color_notebook_show_all (GtkWidget *widget);
-static void sp_color_notebook_hide_all (GtkWidget *widget);
+static void sp_color_notebook_hide(GtkWidget *widget);
 
 static SPColorSelectorClass *parent_class;
 
@@ -85,15 +85,15 @@ GType sp_color_notebook_get_type(void)
 
 static void sp_color_notebook_class_init(SPColorNotebookClass *klass)
 {
-    GtkObjectClass *object_class = reinterpret_cast<GtkObjectClass *>(klass);
+    GObjectClass *object_class = reinterpret_cast<GObjectClass *>(klass);
     GtkWidgetClass *widget_class = reinterpret_cast<GtkWidgetClass *>(klass);
 
     parent_class = SP_COLOR_SELECTOR_CLASS(g_type_class_peek_parent(klass));
 
-    object_class->destroy = sp_color_notebook_destroy;
+    object_class->dispose = sp_color_notebook_dispose;
 
     widget_class->show_all = sp_color_notebook_show_all;
-    widget_class->hide_all = sp_color_notebook_hide_all;
+    widget_class->hide = sp_color_notebook_hide;
 }
 
 static void
@@ -390,11 +390,10 @@ void ColorNotebook::init()
     _entryId = g_signal_connect (G_OBJECT (_rgbae), "changed", G_CALLBACK (ColorNotebook::_rgbaEntryChangedHook), _csel);
 }
 
-static void
-sp_color_notebook_destroy (GtkObject *object)
+static void sp_color_notebook_dispose(GObject *object)
 {
-    if (((GtkObjectClass *) (parent_class))->destroy)
-        (* ((GtkObjectClass *) (parent_class))->destroy) (object);
+    if (((GObjectClass *) (parent_class))->dispose)
+        (* ((GObjectClass *) (parent_class))->dispose) (object);
 }
 
 ColorNotebook::~ColorNotebook()
@@ -421,10 +420,9 @@ sp_color_notebook_show_all (GtkWidget *widget)
     gtk_widget_show (widget);
 }
 
-static void
-sp_color_notebook_hide_all (GtkWidget *widget)
+static void sp_color_notebook_hide(GtkWidget *widget)
 {
-    gtk_widget_hide (widget);
+    gtk_widget_hide(widget);
 }
 
 GtkWidget *

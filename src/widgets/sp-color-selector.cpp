@@ -24,10 +24,10 @@ enum {
 
 static void sp_color_selector_class_init( SPColorSelectorClass *klass );
 static void sp_color_selector_init( SPColorSelector *csel );
-static void sp_color_selector_destroy( GtkObject *object );
+static void sp_color_selector_dispose(GObject *object);
 
 static void sp_color_selector_show_all( GtkWidget *widget );
-static void sp_color_selector_hide_all( GtkWidget *widget );
+static void sp_color_selector_hide( GtkWidget *widget );
 
 static GtkVBoxClass *parent_class;
 static guint csel_signals[LAST_SIGNAL] = {0};
@@ -62,10 +62,8 @@ GType sp_color_selector_get_type( void )
 void sp_color_selector_class_init( SPColorSelectorClass *klass )
 {
     static const gchar* nameset[] = {N_("Unnamed"), 0};
-    GtkObjectClass *object_class;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
     GtkWidgetClass *widget_class;
-
-    object_class = GTK_OBJECT_CLASS(klass);
     widget_class = GTK_WIDGET_CLASS(klass);
 
     parent_class = GTK_VBOX_CLASS( g_type_class_peek_parent(klass) );
@@ -102,10 +100,10 @@ void sp_color_selector_class_init( SPColorSelectorClass *klass )
     klass->name = nameset;
     klass->submode_count = 1;
 
-    object_class->destroy = sp_color_selector_destroy;
+    object_class->dispose = sp_color_selector_dispose;
 
     widget_class->show_all = sp_color_selector_show_all;
-    widget_class->hide_all = sp_color_selector_hide_all;
+    widget_class->hide = sp_color_selector_hide;
 
 }
 
@@ -118,7 +116,7 @@ void sp_color_selector_init( SPColorSelector *csel )
 /*   g_signal_connect(G_OBJECT(csel->rgbae), "changed", G_CALLBACK(sp_color_selector_rgba_entry_changed), csel); */
 }
 
-void sp_color_selector_destroy( GtkObject *object )
+void sp_color_selector_dispose(GObject *object)
 {
     SPColorSelector *csel = SP_COLOR_SELECTOR( object );
     if ( csel->base )
@@ -127,8 +125,8 @@ void sp_color_selector_destroy( GtkObject *object )
             csel->base = 0;
         }
 
-    if ( (GTK_OBJECT_CLASS(parent_class))->destroy ) {
-        (* (GTK_OBJECT_CLASS(parent_class))->destroy)(object);
+    if ( (G_OBJECT_CLASS(parent_class))->dispose ) {
+        (* (G_OBJECT_CLASS(parent_class))->dispose)(object);
     }
 }
 
@@ -137,7 +135,7 @@ void sp_color_selector_show_all( GtkWidget *widget )
     gtk_widget_show( widget );
 }
 
-void sp_color_selector_hide_all( GtkWidget *widget )
+void sp_color_selector_hide(GtkWidget *widget)
 {
     gtk_widget_hide( widget );
 }

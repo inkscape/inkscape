@@ -31,8 +31,10 @@ void minimum_size(GtkWidget *widget, GtkRequisition *requisition, void *) {
         requisition->height = 0;
     }
 
-    requisition->width += 2 + 2 * std::max(2, widget->style->xthickness);
-    requisition->height += 2 + 2 * std::max(2, widget->style->ythickness);
+    GtkStyle* style = gtk_widget_get_style(widget);
+
+    requisition->width += 2 + 2 * std::max(2, style->xthickness);
+    requisition->height += 2 + 2 * std::max(2, style->ythickness);
 }
 
 }

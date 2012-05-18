@@ -28,7 +28,7 @@ enum {
 
 static void sp_color_slider_class_init (SPColorSliderClass *klass);
 static void sp_color_slider_init (SPColorSlider *slider);
-static void sp_color_slider_destroy (GtkObject *object);
+static void sp_color_slider_dispose(GObject *object);
 
 static void sp_color_slider_realize (GtkWidget *widget);
 static void sp_color_slider_size_request (GtkWidget *widget, GtkRequisition *requisition);
@@ -85,13 +85,11 @@ sp_color_slider_get_type (void)
 	return type;
 }
 
-static void
-sp_color_slider_class_init (SPColorSliderClass *klass)
+static void sp_color_slider_class_init(SPColorSliderClass *klass)
 {
-	GtkObjectClass *object_class;
+	GObjectClass *object_class = (GObjectClass *) klass;
 	GtkWidgetClass *widget_class;
 
-	object_class = (GtkObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 
 	parent_class = (GtkWidgetClass*)g_type_class_peek_parent (klass);
@@ -125,7 +123,7 @@ sp_color_slider_class_init (SPColorSliderClass *klass)
 						  g_cclosure_marshal_VOID__VOID,
 						  G_TYPE_NONE, 0);
 
-	object_class->destroy = sp_color_slider_destroy;
+	object_class->dispose = sp_color_slider_dispose;
 
 	widget_class->realize = sp_color_slider_realize;
 #if GTK_CHECK_VERSION(3,0,0)
@@ -178,12 +176,9 @@ sp_color_slider_init (SPColorSlider *slider)
 	slider->map = NULL;
 }
 
-static void
-sp_color_slider_destroy (GtkObject *object)
+static void sp_color_slider_dispose(GObject *object)
 {
-	SPColorSlider *slider;
-
-	slider = SP_COLOR_SLIDER (object);
+	SPColorSlider *slider = SP_COLOR_SLIDER (object);
 
 	if (slider->adjustment) {
 		g_signal_handlers_disconnect_matched (G_OBJECT (slider->adjustment), G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, slider);
@@ -191,8 +186,8 @@ sp_color_slider_destroy (GtkObject *object)
 		slider->adjustment = NULL;
 	}
 
-	if (((GtkObjectClass *) (parent_class))->destroy)
-		(* ((GtkObjectClass *) (parent_class))->destroy) (object);
+	if (((GObjectClass *) (parent_class))->dispose)
+		(* ((GObjectClass *) (parent_class))->dispose) (object);
 }
 
 static void
