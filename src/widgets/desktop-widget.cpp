@@ -100,7 +100,7 @@ enum {
 /* SPDesktopWidget */
 
 static void sp_desktop_widget_class_init (SPDesktopWidgetClass *klass);
-static void sp_desktop_widget_destroy (GtkObject *object);
+static void sp_desktop_widget_dispose(GObject *object);
 
 static void sp_desktop_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 static void sp_desktop_widget_realize (GtkWidget *widget);
@@ -300,10 +300,10 @@ sp_desktop_widget_class_init (SPDesktopWidgetClass *klass)
 {
     dtw_parent_class = (SPViewWidgetClass*)g_type_class_peek_parent (klass);
 
-    GtkObjectClass *object_class = (GtkObjectClass *) klass;
+    GObjectClass *object_class = (GObjectClass *) klass;
     GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
 
-    object_class->destroy = sp_desktop_widget_destroy;
+    object_class->dispose = sp_desktop_widget_dispose;
 
     widget_class->size_allocate = sp_desktop_widget_size_allocate;
     widget_class->realize = sp_desktop_widget_realize;
@@ -650,8 +650,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 /**
  * Called before SPDesktopWidget destruction.
  */
-static void
-sp_desktop_widget_destroy (GtkObject *object)
+static void sp_desktop_widget_dispose(GObject *object)
 {
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET (object);
 
@@ -678,8 +677,8 @@ sp_desktop_widget_destroy (GtkObject *object)
 
     dtw->modified_connection.~connection();
 
-    if (GTK_OBJECT_CLASS (dtw_parent_class)->destroy) {
-        (* GTK_OBJECT_CLASS (dtw_parent_class)->destroy) (object);
+    if (G_OBJECT_CLASS (dtw_parent_class)->dispose) {
+        (* G_OBJECT_CLASS (dtw_parent_class)->dispose) (object);
     }
 }
 

@@ -7,7 +7,7 @@
 
 static void sp_color_gtkselector_class_init (SPColorGtkselectorClass *klass);
 static void sp_color_gtkselector_init (SPColorGtkselector *csel);
-static void sp_color_gtkselector_destroy (GtkObject *object);
+static void sp_color_gtkselector_dispose(GObject *object);
 
 static void sp_color_gtkselector_show_all (GtkWidget *widget);
 static void sp_color_gtkselector_hide_all (GtkWidget *widget);
@@ -48,11 +48,10 @@ static void
 sp_color_gtkselector_class_init (SPColorGtkselectorClass *klass)
 {
 	static const gchar* nameset[] = {N_("System"), 0};
-	GtkObjectClass *object_class;
+	GObjectClass *object_class = (GObjectClass *) klass;
 	GtkWidgetClass *widget_class;
 	SPColorSelectorClass *selector_class;
 
-	object_class = (GtkObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 	selector_class = SP_COLOR_SELECTOR_CLASS (klass);
 
@@ -61,7 +60,7 @@ sp_color_gtkselector_class_init (SPColorGtkselectorClass *klass)
 	selector_class->name = nameset;
 	selector_class->submode_count = 1;
 
-	object_class->destroy = sp_color_gtkselector_destroy;
+	object_class->dispose = sp_color_gtkselector_dispose;
 
 	widget_class->show_all = sp_color_gtkselector_show_all;
 	widget_class->hide_all = sp_color_gtkselector_hide_all;
@@ -79,21 +78,18 @@ void sp_color_gtkselector_init (SPColorGtkselector *csel)
 
 void ColorGtkselector::init()
 {
-	GtkWidget *gtksel;
-
-	gtksel = gtk_color_selection_new();
+	GtkWidget *gtksel = gtk_color_selection_new();
 	gtk_widget_show (gtksel);
 	_gtkThing = GTK_COLOR_SELECTION (gtksel);
 	gtk_box_pack_start (GTK_BOX (_csel), gtksel, TRUE, TRUE, 0);
 
-	_sigId = g_signal_connect( GTK_OBJECT(gtksel), "color-changed", G_CALLBACK( _gtkChanged ), _csel);
+	_sigId = g_signal_connect(gtksel, "color-changed", G_CALLBACK( _gtkChanged ), _csel);
 }
 
-static void
-sp_color_gtkselector_destroy (GtkObject *object)
+static void sp_color_gtkselector_dispose(GObject *object)
 {
-	if (((GtkObjectClass *) (parent_class))->destroy)
-		(* ((GtkObjectClass *) (parent_class))->destroy) (object);
+	if (((GObjectClass *) (parent_class))->dispose)
+		(* ((GObjectClass *) (parent_class))->dispose) (object);
 }
 
 static void

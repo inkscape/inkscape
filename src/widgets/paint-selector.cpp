@@ -70,7 +70,7 @@ enum {
 
 static void sp_paint_selector_class_init(SPPaintSelectorClass *klass);
 static void sp_paint_selector_init(SPPaintSelector *slider);
-static void sp_paint_selector_destroy(GtkObject *object);
+static void sp_paint_selector_dispose(GObject *object);
 
 static GtkWidget *sp_paint_selector_style_button_add(SPPaintSelector *psel, gchar const *px, SPPaintSelector::Mode mode, gchar const *tip);
 static void sp_paint_selector_style_button_toggled(GtkToggleButton *tb, SPPaintSelector *psel);
@@ -157,7 +157,7 @@ GType sp_paint_selector_get_type(void)
 static void
 sp_paint_selector_class_init(SPPaintSelectorClass *klass)
 {
-    GtkObjectClass *object_class = (GtkObjectClass *) klass;
+    GObjectClass *object_class = (GObjectClass *) klass;
 
     parent_class = (GtkVBoxClass*)g_type_class_peek_parent(klass);
 
@@ -204,7 +204,7 @@ sp_paint_selector_class_init(SPPaintSelectorClass *klass)
                                                     g_cclosure_marshal_VOID__UINT,
                                                     G_TYPE_NONE, 1, G_TYPE_UINT);
 
-    object_class->destroy = sp_paint_selector_destroy;
+    object_class->dispose = sp_paint_selector_dispose;
 }
 
 #define XPAD 4
@@ -304,16 +304,15 @@ sp_paint_selector_init(SPPaintSelector *psel)
     psel->alpha = 1.0;
 }
 
-static void
-sp_paint_selector_destroy(GtkObject *object)
+static void sp_paint_selector_dispose(GObject *object)
 {
     SPPaintSelector *psel = SP_PAINT_SELECTOR(object);
 
     // clean up our long-living pattern menu
     g_object_set_data(G_OBJECT(psel),"patternmenu",NULL);
 
-    if (((GtkObjectClass *) parent_class)->destroy)
-        (* ((GtkObjectClass *) parent_class)->destroy)(object);
+    if (((GObjectClass *) parent_class)->dispose)
+        (* ((GObjectClass *) parent_class)->dispose)(object);
 }
 
 static GtkWidget *sp_paint_selector_style_button_add(SPPaintSelector *psel,
