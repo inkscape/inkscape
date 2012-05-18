@@ -39,7 +39,7 @@ enum {
 
 static void sp_gradient_selector_class_init (SPGradientSelectorClass *klass);
 static void sp_gradient_selector_init (SPGradientSelector *selector);
-static void sp_gradient_selector_destroy (GtkObject *object);
+static void sp_gradient_selector_dispose(GObject *object);
 
 /* Signal handlers */
 static void sp_gradient_selector_vector_set (SPGradientVectorSelector *gvs, SPGradient *gr, SPGradientSelector *sel);
@@ -75,12 +75,9 @@ GType sp_gradient_selector_get_type(void)
     return type;
 }
 
-static void
-sp_gradient_selector_class_init (SPGradientSelectorClass *klass)
+static void sp_gradient_selector_class_init(SPGradientSelectorClass *klass)
 {
-    GtkObjectClass *object_class;
-
-    object_class = (GtkObjectClass *) klass;
+    GObjectClass *object_class = (GObjectClass *) klass;
 
     parent_class = (GtkVBoxClass*)g_type_class_peek_parent (klass);
 
@@ -113,7 +110,7 @@ sp_gradient_selector_class_init (SPGradientSelectorClass *klass)
                                         g_cclosure_marshal_VOID__VOID,
                                         G_TYPE_NONE, 0);
 
-    object_class->destroy = sp_gradient_selector_destroy;
+    object_class->dispose = sp_gradient_selector_dispose;
 }
 
 static void sp_gradient_selector_init(SPGradientSelector *sel)
@@ -202,7 +199,7 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     gtk_box_pack_end( GTK_BOX(hb), sel->spreadLbl, FALSE, FALSE, 4 );
 }
 
-static void sp_gradient_selector_destroy(GtkObject *object)
+static void sp_gradient_selector_dispose(GObject *object)
 {
     SPGradientSelector *sel = SP_GRADIENT_SELECTOR( object );
 
@@ -212,8 +209,8 @@ static void sp_gradient_selector_destroy(GtkObject *object)
         sel->nonsolid.~vector<GtkWidget*>();
     }
 
-    if (((GtkObjectClass *) (parent_class))->destroy) {
-        (* ((GtkObjectClass *) (parent_class))->destroy) (object);
+    if (((GObjectClass *) (parent_class))->dispose) {
+        (* ((GObjectClass *) (parent_class))->dispose) (object);
     }
 }
 

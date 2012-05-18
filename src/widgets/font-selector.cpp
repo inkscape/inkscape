@@ -71,7 +71,7 @@ enum {
 
 static void sp_font_selector_class_init         (SPFontSelectorClass    *c);
 static void sp_font_selector_init               (SPFontSelector         *fsel);
-static void sp_font_selector_destroy            (GtkObject              *object);
+static void sp_font_selector_dispose            (GObject              *object);
 
 static void sp_font_selector_family_select_row  (GtkTreeSelection       *selection,
                                                  SPFontSelector         *fsel);
@@ -119,7 +119,7 @@ GType sp_font_selector_get_type()
 
 static void sp_font_selector_class_init(SPFontSelectorClass *c)
 {
-    GtkObjectClass *object_class = (GtkObjectClass *) c;
+    GObjectClass *object_class = (GObjectClass *) c;
 
     fs_parent_class = (GtkHBoxClass* )g_type_class_peek_parent (c);
 
@@ -132,7 +132,7 @@ static void sp_font_selector_class_init(SPFontSelectorClass *c)
                                            G_TYPE_NONE,
                                            1, G_TYPE_POINTER);
 
-    object_class->destroy = sp_font_selector_destroy;
+    object_class->dispose = sp_font_selector_dispose;
 }
 
 static void sp_font_selector_init(SPFontSelector *fsel)
@@ -253,7 +253,7 @@ This conditional and its #else block can be deleted in the future.
         fsel->font = NULL;
 }
 
-static void sp_font_selector_destroy(GtkObject *object)
+static void sp_font_selector_dispose(GObject *object)
 {
     SPFontSelector *fsel = SP_FONT_SELECTOR (object);
 
@@ -272,8 +272,8 @@ static void sp_font_selector_destroy(GtkObject *object)
         fsel->styles.length = 0;
     }
 
-    if (GTK_OBJECT_CLASS(fs_parent_class)->destroy) {
-        GTK_OBJECT_CLASS(fs_parent_class)->destroy(object);
+    if (G_OBJECT_CLASS(fs_parent_class)->dispose) {
+        G_OBJECT_CLASS(fs_parent_class)->dispose(object);
     }
 }
 
@@ -404,7 +404,7 @@ static void sp_font_selector_emit_set (SPFontSelector *fsel)
             fsel->font->Unref();
         }
         fsel->font = font;
-        g_signal_emit(GTK_OBJECT(fsel), fs_signals[FONT_SET], 0, fsel->font);
+        g_signal_emit(fsel, fs_signals[FONT_SET], 0, fsel->font);
     }
     fsel->fontsize_dirty = false;
     if (font) {

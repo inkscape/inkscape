@@ -94,7 +94,11 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     Geom::Point const event_win(wx, wy);
 
     gint width, height;
+#if GTK_CHECK_VERSION(3,0,0)
+    gdk_window_get_geometry(window, NULL /*x*/, NULL /*y*/, &width, &height);
+#else
     gdk_window_get_geometry(window, NULL /*x*/, NULL /*y*/, &width, &height, NULL/*depth*/);
+#endif
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
