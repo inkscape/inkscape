@@ -36,6 +36,7 @@
 #include "sp-root.h"
 #include "ui/cache/svg_preview_cache.h"
 #include "helper/stock-items.h"
+#include "gradient-vector.h"
 
 #include <gtkmm/adjustment.h>
 #include "ui/widget/spinbutton.h"
@@ -314,7 +315,7 @@ void MarkerComboBox::add_markers (GSList *marker_list, SPDocument *source)
         prv->show();
 
         Gtk::TreeModel::Row row = *(marker_store->append());
-        row[marker_columns.label] = g_strdup(markid);
+        row[marker_columns.label] = gr_ellipsize_text(markid, 20);
         row[marker_columns.marker] = g_strdup(markid);
         row[marker_columns.isstock] = isstock;
         row[marker_columns.image] = prv;
