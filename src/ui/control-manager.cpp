@@ -167,7 +167,6 @@ SPCanvasItem *ControlManagerImpl::createControl(SPCanvasGroup *parent, ControlTy
             break;
         case CTRL_TYPE_ORIGIN:
             item = sp_canvas_item_new(parent, SP_TYPE_CTRLPOINT,
-                                      "size", targetSize,
                                       NULL);
             break;
         case CTRL_TYPE_INVISIPOINT:
