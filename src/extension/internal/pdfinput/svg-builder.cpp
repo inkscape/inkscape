@@ -64,7 +64,7 @@ static bool ttm_is_set = false;             // flag to forbid setting ttm
  * \brief Holds information about a PDF transparency group
  */
 struct SvgTransparencyGroup {
-    double bbox[6];
+    double bbox[6]; // TODO should this be 4?
     Inkscape::XML::Node *container;
 
     bool isolated;
@@ -1818,7 +1818,9 @@ void SvgBuilder::pushTransparencyGroup(GfxState * /*state*/, double *bbox,
 
     // Setup new transparency group
     SvgTransparencyGroup *transpGroup = new SvgTransparencyGroup;
-    memcpy(&transpGroup->bbox, bbox, sizeof(bbox));
+    for (size_t i = 0; i < 4; i++) {
+        transpGroup->bbox[i] = bbox[i];        
+    }
     transpGroup->isolated = isolated;
     transpGroup->knockout = knockout;
     transpGroup->for_softmask = for_softmask;
