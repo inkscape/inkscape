@@ -25,9 +25,13 @@
 
 #include "button.h"
 
+#if !GTK_CHECK_VERSION(2,22,0)
+#include "compat-key-syms.h"
+#endif
+
 static void sp_button_class_init (SPButtonClass *klass);
 static void sp_button_init (SPButton *button);
-static void sp_button_destroy (GtkObject *object);
+static void sp_button_dispose(GObject *object);
 
 static void sp_button_size_request (GtkWidget *widget, GtkRequisition *requisition);
 
@@ -76,13 +80,13 @@ GType sp_button_get_type(void)
 static void
 sp_button_class_init (SPButtonClass *klass)
 {
-	GtkObjectClass *object_class=(GtkObjectClass *)klass;
+	GObjectClass *object_class=(GObjectClass *)klass;
 	GtkWidgetClass *widget_class=(GtkWidgetClass *)klass;
 	GtkButtonClass *button_class=(GtkButtonClass *)klass;
 
 	parent_class = (GtkToggleButtonClass *)g_type_class_peek_parent (klass);
 
-	object_class->destroy = sp_button_destroy;
+	object_class->dispose = sp_button_dispose;
 #if GTK_CHECK_VERSION(3,0,0)
 	widget_class->get_preferred_width = sp_button_get_preferred_width;
 	widget_class->get_preferred_height = sp_button_get_preferred_height;
@@ -109,8 +113,7 @@ sp_button_init (SPButton *button)
 	g_signal_connect_after (G_OBJECT (button), "event", G_CALLBACK (sp_button_process_event), NULL);
 }
 
-static void
-sp_button_destroy (GtkObject *object)
+static void sp_button_dispose(GObject *object)
 {
 	SPButton *button = SP_BUTTON (object);
 
@@ -124,7 +127,7 @@ sp_button_destroy (GtkObject *object)
     button->c_set_active.~connection();
     button->c_set_sensitive.~connection();
 
-	((GtkObjectClass *) (parent_class))->destroy (object);
+	((GObjectClass *) (parent_class))->dispose(object);
 }
 
 static void
@@ -291,7 +294,7 @@ static void sp_button_set_composed_tooltip(GtkWidget *widget, SPAction *action)
 {
     if (action) {
         unsigned int shortcut = sp_shortcut_get_primary (action->verb);
-        if (shortcut != GDK_VoidSymbol) {
+        if (shortcut != GDK_KEY_VoidSymbol) {
             // there's both action and shortcut
 
             gchar *key = sp_shortcut_get_label(shortcut);
