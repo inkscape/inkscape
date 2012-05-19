@@ -24,7 +24,7 @@
 
 static void sp_svg_view_widget_class_init (SPSVGSPViewWidgetClass *klass);
 static void sp_svg_view_widget_init (SPSVGSPViewWidget *widget);
-static void sp_svg_view_widget_dispose(GObject *object);
+static void sp_svg_view_widget_destroy (GtkObject *object);
 
 static void sp_svg_view_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 static void sp_svg_view_widget_size_request (GtkWidget *widget, GtkRequisition *req);
@@ -69,13 +69,13 @@ GType sp_svg_view_widget_get_type(void)
  */
 static void sp_svg_view_widget_class_init(SPSVGSPViewWidgetClass *klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	SPViewWidgetClass *vw_class = SP_VIEW_WIDGET_CLASS (klass);
 
 	widget_parent_class = static_cast<SPViewWidgetClass *>(g_type_class_peek_parent (klass));
 
-	object_class->dispose = sp_svg_view_widget_dispose;
+	object_class->destroy = sp_svg_view_widget_destroy;
 
 	widget_class->size_allocate = sp_svg_view_widget_size_allocate;
 #if GTK_CHECK_VERSION(3,0,0)
@@ -128,14 +128,15 @@ static void sp_svg_view_widget_init(SPSVGSPViewWidget *vw)
 /*
  * Destructor callback for SPSVGSPViewWidget objects.
  */
-static void sp_svg_view_widget_dispose(GObject *object)
+static void
+sp_svg_view_widget_destroy (GtkObject *object)
 {
 	SPSVGSPViewWidget *vw = SP_SVG_VIEW_WIDGET (object);
 
 	vw->canvas = NULL;
 
-	if (((GObjectClass *) (widget_parent_class))->dispose) {
-		(* ((GObjectClass *) (widget_parent_class))->dispose) (object);
+	if (((GtkObjectClass *) (widget_parent_class))->destroy) {
+		(* ((GtkObjectClass *) (widget_parent_class))->destroy) (object);
         }
 }
 

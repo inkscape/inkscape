@@ -57,7 +57,7 @@ static gchar const *const grid_svgname[] = {
 // Grid CanvasItem
 static void grid_canvasitem_class_init (GridCanvasItemClass *klass);
 static void grid_canvasitem_init (GridCanvasItem *grid);
-static void grid_canvasitem_dispose(GObject *object);
+static void grid_canvasitem_destroy (GtkObject *object);
 
 static void grid_canvasitem_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void grid_canvasitem_render (SPCanvasItem *item, SPCanvasBuf *buf);
@@ -89,12 +89,15 @@ grid_canvasitem_get_type (void)
 static void
 grid_canvasitem_class_init (GridCanvasItemClass *klass)
 {
-    GObjectClass *object_class = (GObjectClass *) klass;
-    SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
+    GtkObjectClass *object_class;
+    SPCanvasItemClass *item_class;
+
+    object_class = (GtkObjectClass *) klass;
+    item_class = (SPCanvasItemClass *) klass;
 
     parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
-    object_class->dispose = grid_canvasitem_dispose;
+    object_class->destroy = grid_canvasitem_destroy;
 
     item_class->update = grid_canvasitem_update;
     item_class->render = grid_canvasitem_render;
@@ -106,13 +109,14 @@ grid_canvasitem_init (GridCanvasItem *griditem)
     griditem->grid = NULL;
 }
 
-static void grid_canvasitem_dispose(GObject *object)
+static void
+grid_canvasitem_destroy (GtkObject *object)
 {
     g_return_if_fail (object != NULL);
     g_return_if_fail (INKSCAPE_IS_GRID_CANVASITEM (object));
 
-    if (G_OBJECT_CLASS (parent_class)->dispose)
-        (* G_OBJECT_CLASS (parent_class)->dispose) (object);
+    if (GTK_OBJECT_CLASS (parent_class)->destroy)
+        (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
 
 /**
@@ -180,7 +184,7 @@ CanvasGrid::~CanvasGrid()
     }
 
     while (canvasitems) {
-        g_object_unref(G_OBJECT(canvasitems->data));
+        gtk_object_destroy(GTK_OBJECT(canvasitems->data));
         canvasitems = g_slist_remove(canvasitems, canvasitems->data);
     }
 }

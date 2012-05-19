@@ -28,7 +28,7 @@ enum {
 
 static void sp_ctrl_class_init (SPCtrlClass *klass);
 static void sp_ctrl_init (SPCtrl *ctrl);
-static void sp_ctrl_dispose(GObject *object);
+static void sp_ctrl_destroy (GtkObject *object);
 static void sp_ctrl_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
 static void sp_ctrl_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
 static void sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
@@ -63,14 +63,19 @@ sp_ctrl_get_type (void)
 static void
 sp_ctrl_class_init (SPCtrlClass *klass)
 {
-    SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
-    GObjectClass *g_object_class = (GObjectClass *) klass;
+    GtkObjectClass *object_class;
+    SPCanvasItemClass *item_class;
+    GObjectClass *g_object_class;
+
+    object_class = (GtkObjectClass *) klass;
+    item_class = (SPCanvasItemClass *) klass;
+    g_object_class = (GObjectClass *) klass;
 
     parent_class = (SPCanvasItemClass *)g_type_class_peek_parent (klass);
 
     g_object_class->set_property = sp_ctrl_set_property;
     g_object_class->get_property = sp_ctrl_get_property;
-    g_object_class->dispose = sp_ctrl_dispose;
+    object_class->destroy = sp_ctrl_destroy;
 
     g_object_class_install_property (g_object_class,
             ARG_SHAPE, g_param_spec_int ("shape", "shape", "Shape", 0, G_MAXINT, SP_CTRL_SHAPE_SQUARE, (GParamFlags) G_PARAM_READWRITE));
@@ -263,7 +268,8 @@ sp_ctrl_init (SPCtrl *ctrl)
     ctrl->_point = Geom::Point(0,0);
 }
 
-static void sp_ctrl_dispose(GObject *object)
+static void
+sp_ctrl_destroy (GtkObject *object)
 {
     SPCtrl *ctrl;
 
@@ -277,8 +283,8 @@ static void sp_ctrl_dispose(GObject *object)
         ctrl->cache = NULL;
     }
 
-    if (G_OBJECT_CLASS(parent_class)->dispose)
-        (* G_OBJECT_CLASS(parent_class)->dispose) (object);
+    if (GTK_OBJECT_CLASS (parent_class)->destroy)
+        (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
 
 static void
