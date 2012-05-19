@@ -29,11 +29,10 @@ enum {
 static void sp_widget_class_init (SPWidgetClass *klass);
 static void sp_widget_init (SPWidget *widget);
 
-static void sp_widget_destroy (GtkObject *object);
+static void sp_widget_dispose(GObject *object);
 
 static void sp_widget_show (GtkWidget *widget);
 static void sp_widget_hide (GtkWidget *widget);
-static gint sp_widget_expose (GtkWidget *widget, GdkEventExpose *event);
 static void sp_widget_size_request (GtkWidget *widget, GtkRequisition *requisition);
 
 #if GTK_CHECK_VERSION(3,0,0)
@@ -44,6 +43,10 @@ static void sp_widget_get_preferred_width(GtkWidget *widget,
 static void sp_widget_get_preferred_height(GtkWidget *widget, 
                                                     gint *minimal_height,
 						    gint *natural_height);
+
+static gboolean sp_widget_draw(GtkWidget *widget, cairo_t *cr);
+#else
+static gboolean sp_widget_expose(GtkWidget *widget, GdkEventExpose *event);
 #endif
 
 static void sp_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
@@ -78,18 +81,16 @@ sp_widget_get_type (void)
 	return type;
 }
 
-static void
-sp_widget_class_init (SPWidgetClass *klass)
+static void sp_widget_class_init(SPWidgetClass *klass)
 {
-	GtkObjectClass *object_class;
+	GObjectClass *object_class = (GObjectClass *) klass;
 	GtkWidgetClass *widget_class;
 
-	object_class = (GtkObjectClass *) klass;
 	widget_class = (GtkWidgetClass *) klass;
 
 	parent_class = (GtkBinClass*)g_type_class_peek_parent (klass);
 
-	object_class->destroy = sp_widget_destroy;
+	object_class->dispose = sp_widget_dispose;
 
 	signals[CONSTRUCT] =        g_signal_new ("construct",
 						    G_TYPE_FROM_CLASS(object_class),
@@ -125,12 +126,13 @@ sp_widget_class_init (SPWidgetClass *klass)
 
 	widget_class->show = sp_widget_show;
 	widget_class->hide = sp_widget_hide;
-	widget_class->expose_event = sp_widget_expose;
 #if GTK_CHECK_VERSION(3,0,0)
 	widget_class->get_preferred_width = sp_widget_get_preferred_width;
 	widget_class->get_preferred_height = sp_widget_get_preferred_height;
+	widget_class->draw = sp_widget_draw;
 #else
 	widget_class->size_request = sp_widget_size_request;
+	widget_class->expose_event = sp_widget_expose;
 #endif
 	widget_class->size_allocate = sp_widget_size_allocate;
 }
@@ -141,8 +143,7 @@ sp_widget_init (SPWidget *spw)
 	spw->inkscape = NULL;
 }
 
-static void
-sp_widget_destroy (GtkObject *object)
+static void sp_widget_dispose(GObject *object)
 {
 	SPWidget *spw;
 
@@ -157,8 +158,8 @@ sp_widget_destroy (GtkObject *object)
 		spw->inkscape = NULL;
 	}
 
-	if (((GtkObjectClass *) parent_class)->destroy)
-		(* ((GtkObjectClass *) parent_class)->destroy) (object);
+	if (((GObjectClass *) parent_class)->dispose)
+		(* ((GObjectClass *) parent_class)->dispose) (object);
 }
 
 static void
@@ -195,25 +196,22 @@ sp_widget_hide (GtkWidget *widget)
 		(* ((GtkWidgetClass *) parent_class)->hide) (widget);
 }
 
-static gint
-sp_widget_expose (GtkWidget *widget, GdkEventExpose *event)
+#if GTK_CHECK_VERSION(3,0,0)
+static gboolean sp_widget_draw(GtkWidget *widget, cairo_t *cr)
+#else
+static gboolean sp_widget_expose(GtkWidget *widget, GdkEventExpose *event)
+#endif
 {
-	GtkBin    *bin;
-	GtkWidget *child;
-
-	bin = GTK_BIN (widget);
-	child = gtk_bin_get_child (bin);
+	GtkBin    *bin = GTK_BIN (widget);
+	GtkWidget *child = gtk_bin_get_child (bin);
 
         if (child) {
-            gtk_container_propagate_expose (GTK_CONTAINER(widget), child, event);
+#if GTK_CHECK_VERSION(3,0,0)
+            gtk_container_propagate_draw(GTK_CONTAINER(widget), child, cr);
+#else
+            gtk_container_propagate_expose(GTK_CONTAINER(widget), child, event);
+#endif
         }
-	/*
-	if ((bin->child) && (!gtk_widget_get_has_window (bin->child))) {
-		GdkEventExpose ce;
-		ce = *event;
-		gtk_widget_event (bin->child, (GdkEvent *) &ce);
-	}
-	*/
 
 	return FALSE;
 }
