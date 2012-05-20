@@ -270,15 +270,15 @@ Glib::ustring gr_prepare_label (SPObject *obj)
 }
 
 /*
- * Ellipse text if longer than maxlen, "30% start text + ... + ~70% end text"
+ * Ellipse text if longer than maxlen, "50% start text + ... + ~50% end text"
  * Text should be > length 8 or just return the original text
  */
 Glib::ustring gr_ellipsize_text(Glib::ustring const &src, size_t maxlen)
 {
     if (src.length() > maxlen && maxlen > 8) {
-        size_t p1 = (size_t) maxlen / 3;
-        size_t p2 = (size_t) src.length() - (maxlen-p1-3);  // 3 ellipses
-        return src.substr(0, p1) + "..." + src.substr(p2);
+        size_t p1 = (size_t) maxlen / 2;
+        size_t p2 = (size_t) src.length() - (maxlen - p1 - 1);
+        return src.substr(0, p1) + "…" + src.substr(p2);
     }
     return src;
 }
