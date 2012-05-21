@@ -10,6 +10,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <glibmm/property.h>
 #include <gtkmm/cellrendererpixbuf.h>
 #include <gtkmm/widget.h>
@@ -37,13 +41,20 @@ protected:
                                  Gdk::Rectangle const *cell_area,
                                  int *x_offset, int *y_offset, int *width, int *height ) const;
 
-
+#if WITH_GTKMM_3_0
+    virtual void render_vfunc( const Cairo::RefPtr<Cairo::Context>& cr,
+                               Gtk::Widget& widget,
+                               const Gdk::Rectangle& background_area,
+                               const Gdk::Rectangle& cell_area,
+                               Gtk::CellRendererState flags );
+#else
     virtual void render_vfunc( const Glib::RefPtr<Gdk::Drawable>& window,
                                Gtk::Widget& widget,
                                const Gdk::Rectangle& background_area,
                                const Gdk::Rectangle& cell_area,
                                const Gdk::Rectangle& expose_area,
                                Gtk::CellRendererState flags );
+#endif
 
     virtual bool activate_vfunc(GdkEvent *event,
                                 Gtk::Widget &widget,

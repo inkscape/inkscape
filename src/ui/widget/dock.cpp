@@ -25,7 +25,7 @@ namespace Widget {
 
 namespace {
 
-void hideCallback(GtkObject */*object*/, gpointer dock_ptr)
+void hideCallback(GObject * /*object*/, gpointer dock_ptr)
 {
     g_return_if_fail( dock_ptr != NULL );
 
@@ -33,7 +33,7 @@ void hideCallback(GtkObject */*object*/, gpointer dock_ptr)
     dock->hide();
 }
 
-void unhideCallback(GtkObject */*object*/, gpointer dock_ptr)
+void unhideCallback(GObject * /*object*/, gpointer dock_ptr)
 {
     g_return_if_fail( dock_ptr != NULL );
 

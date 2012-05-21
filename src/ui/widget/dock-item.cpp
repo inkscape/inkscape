@@ -58,7 +58,11 @@ DockItem::DockItem(Dock& dock, const Glib::ustring& name, const Glib::ustring& l
             Gtk::StockItem item;
             Gtk::StockID stockId(icon_name);
             if ( Gtk::StockItem::lookup(stockId, item) ) {
+#if WITH_GTKMM_3_0
+                _icon_pixbuf = _dock.getWidget().render_icon_pixbuf( stockId, Gtk::ICON_SIZE_MENU );
+#else
                 _icon_pixbuf = _dock.getWidget().render_icon( stockId, Gtk::ICON_SIZE_MENU );
+#endif
             }
         }
     }
