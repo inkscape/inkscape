@@ -220,6 +220,10 @@ void ColorNotebook::init()
     _book = gtk_notebook_new ();
     gtk_widget_show (_book);
 
+    // Dont show the notebook tabs, use radiobuttons instead
+    gtk_notebook_set_show_border (GTK_NOTEBOOK (_book), false);
+    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (_book), false);
+
     selector_types = g_type_children (SP_TYPE_COLOR_SELECTOR, &selector_type_count);
 
     for ( i = 0; i < selector_type_count; i++ )
@@ -252,6 +256,10 @@ void ColorNotebook::init()
         }
     }
 
+    _buttonbox = gtk_hbox_new (TRUE, 2);
+    gtk_widget_show (_buttonbox);
+    _buttons = new GtkWidget *[_trackerList->len];
+
     for ( i = 0; i < _trackerList->len; i++ )
     {
         SPColorNotebookTracker *entry =
@@ -267,14 +275,21 @@ void ColorNotebook::init()
 
     gtk_box_pack_start (GTK_BOX (_csel), table, TRUE, TRUE, 0);
 
-    gtk_table_attach (GTK_TABLE (table), _book, 0, 2, row, row + 1,
+    sp_set_font_size_smaller (_buttonbox);
+    gtk_table_attach (GTK_TABLE (table), _buttonbox, 0, 2, row, row + 1,
                       static_cast<GtkAttachOptions>(GTK_EXPAND|GTK_FILL),
                       static_cast<GtkAttachOptions>(GTK_EXPAND|GTK_FILL),
                       XPAD, YPAD);
+    row++;
+
+    gtk_table_attach (GTK_TABLE (table), _book, 0, 2, row, row + 1,
+                      static_cast<GtkAttachOptions>(GTK_EXPAND|GTK_FILL),
+                      static_cast<GtkAttachOptions>(GTK_EXPAND|GTK_FILL),
+                      XPAD*2, YPAD);
 
     // restore the last active page
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gtk_notebook_set_current_page (GTK_NOTEBOOK (_book), prefs->getInt("/colorselector/page", 0));
+    _setCurrentPage(prefs->getInt("/colorselector/page", 0));
 
     {
         gboolean found = FALSE;
@@ -412,6 +427,13 @@ ColorNotebook::~ColorNotebook()
             _switchId = 0;
         }
     }
+
+    if ( _buttons )
+    {
+        delete [] _buttons;
+        _buttons = 0;
+    }
+
 }
 
 static void
@@ -572,6 +594,27 @@ void ColorNotebook::_updateRgbaEntry( const SPColor& color, gfloat alpha )
     }
 }
 
+void ColorNotebook::_setCurrentPage(int i)
+{
+    gtk_notebook_set_current_page (GTK_NOTEBOOK (_book), i);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(_buttons[i]), TRUE);
+}
+
+void ColorNotebook::_buttonClicked(GtkWidget *widget,  SPColorNotebook *colorbook)
+{
+    ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
+
+    if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(widget))) {
+        return;
+    }
+
+    for(gint i = 0; i < gtk_notebook_get_n_pages (GTK_NOTEBOOK (nb->_book)); i++) {
+        if (nb->_buttons[i] == widget) {
+            gtk_notebook_set_current_page (GTK_NOTEBOOK (nb->_book), i);
+        }
+    }
+}
+
 void ColorNotebook::_entryGrabbed (SPColorSelector *, SPColorNotebook *colorbook)
 {
     ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
@@ -646,7 +689,19 @@ GtkWidget* ColorNotebook::addPage(GType page_type, guint submode)
         const gchar* str = _(SP_COLOR_SELECTOR_GET_CLASS (csel)->name[index]);
 //         g_message( "Hitting up for tab for '%s'", str );
         tab_label = gtk_label_new(_(str));
-        gtk_notebook_append_page( GTK_NOTEBOOK (_book), page, tab_label );
+        gint pageNum = gtk_notebook_append_page( GTK_NOTEBOOK (_book), page, tab_label );
+
+        // Add a button for each page
+        _buttons[pageNum] = gtk_radio_button_new_with_label(NULL, _(str));
+        gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(_buttons[pageNum]), FALSE);
+        if (pageNum > 0) {
+            GSList *group =  gtk_radio_button_get_group (GTK_RADIO_BUTTON(_buttons[0]));
+            gtk_radio_button_set_group (GTK_RADIO_BUTTON(_buttons[pageNum]), group);
+        }
+        gtk_widget_show (_buttons[pageNum]);
+        gtk_box_pack_start (GTK_BOX (_buttonbox), _buttons[pageNum], TRUE, TRUE, 0);
+
+        g_signal_connect (G_OBJECT (_buttons[pageNum]), "clicked", G_CALLBACK (_buttonClicked), _csel);
         g_signal_connect (G_OBJECT (page), "grabbed", G_CALLBACK (_entryGrabbed), _csel);
         g_signal_connect (G_OBJECT (page), "dragged", G_CALLBACK (_entryDragged), _csel);
         g_signal_connect (G_OBJECT (page), "released", G_CALLBACK (_entryReleased), _csel);

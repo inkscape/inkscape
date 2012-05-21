@@ -25,6 +25,7 @@ SimpleFilterModifier::SimpleFilterModifier(int flags)
     : _hb_blur(false, 0),
       _lb_blend(_("Blend mode:")),
       _lb_blur(_("_Blur:")),
+      _lb_blur_unit(_("%")),
       _blend(BlendModeConverter, SP_ATTR_INVALID, false),
       _blur(0, 0, 100, 1, 0.01, 1)
 {
@@ -44,6 +45,7 @@ SimpleFilterModifier::SimpleFilterModifier(int flags)
         #endif
         _hb_blur.pack_start(_lb_blur, false, false, 0);
         _hb_blur.pack_start(_blur, true, true, 0);
+        _hb_blur.pack_start(_lb_blur_unit, false, false, 3);
     }
 
     show_all_children();

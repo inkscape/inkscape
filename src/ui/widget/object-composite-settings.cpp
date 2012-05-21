@@ -63,6 +63,7 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
   _opacity_tag(Glib::ustring(history_prefix) + ":opacity"),
   _opacity_vbox(false, 0),
   _opacity_label(_("Opacity:")),
+  _opacity_label_unit(_("%")),
 #if WITH_GTKMM_3_0
   _opacity_adjustment(Gtk::Adjustment::create(100.0, 0.0, 100.0, 1.0, 1.0, 0.0)),
 #else
@@ -96,6 +97,7 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
     _opacity_vbox.pack_start(_opacity_hbox, false, false, 0);
     _opacity_hbox.pack_start(_opacity_hscale, true, true, 0);
     _opacity_hbox.pack_start(_opacity_spin_button, false, false, 0);
+    _opacity_hbox.pack_start(_opacity_label_unit, false, false, 3);
     _opacity_hscale.set_draw_value(false);
 #if WITH_GTKMM_3_0
     _opacity_adjustment->signal_value_changed().connect(sigc::mem_fun(*this, &ObjectCompositeSettings::_opacityValueChanged));

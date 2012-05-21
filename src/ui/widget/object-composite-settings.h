@@ -47,6 +47,7 @@ private:
     Gtk::VBox       _opacity_vbox;
     Gtk::HBox       _opacity_hbox;
     Gtk::Label      _opacity_label;
+    Gtk::Label      _opacity_label_unit;
 #if WITH_GTKMM_3_0
     Glib::RefPtr<Gtk::Adjustment> _opacity_adjustment;
 #else

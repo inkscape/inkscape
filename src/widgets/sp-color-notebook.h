@@ -46,11 +46,13 @@ protected:
     static void _entryReleased( SPColorSelector *csel, SPColorNotebook *colorbook );
     static void _entryChanged( SPColorSelector *csel, SPColorNotebook *colorbook );
     static void _entryModified( SPColorSelector *csel, SPColorNotebook *colorbook );
+    static void _buttonClicked(GtkWidget *widget,  SPColorNotebook *colorbook);
 
     virtual void _colorChanged();
 
     void _rgbaEntryChanged( GtkEntry* entry );
     void _updateRgbaEntry( const SPColor& color, gfloat alpha );
+    void _setCurrentPage(int i);
 
     gboolean _updating : 1;
     gboolean _updatingrgba : 1;
@@ -58,6 +60,8 @@ protected:
     gulong _switchId;
     gulong _entryId;
     GtkWidget *_book;
+    GtkWidget *_buttonbox;
+    GtkWidget **_buttons;
     GtkWidget *_rgbal, *_rgbae; /* RGBA entry */
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     GtkWidget *_box_outofgamut, *_box_colormanaged, *_box_toomuchink;

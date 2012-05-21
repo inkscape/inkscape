@@ -51,7 +51,7 @@ FillAndStroke::FillAndStroke()
       desktopChangeConn()
 {
     Gtk::Box *contents = _getContents();
-    contents->set_spacing(0);
+    contents->set_spacing(2);
 
     contents->pack_start(_notebook, true, true);
 

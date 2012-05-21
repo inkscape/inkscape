@@ -280,7 +280,7 @@ void ColorICCSelector::init()
 
     t = gtk_table_new (5, 3, FALSE);
     gtk_widget_show (t);
-    gtk_box_pack_start (GTK_BOX (_csel), t, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (_csel), t, TRUE, TRUE, 4);
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     //guint partCount = _cmsChannelsOf( icSigRgbData );
