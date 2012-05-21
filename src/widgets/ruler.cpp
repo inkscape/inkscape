@@ -795,6 +795,7 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler, cairo_t *cr)
 #endif
     
     cairo_set_line_width(cr, 1.0);
+    gdk_cairo_set_source_color(cr, &style->fg[gtk_widget_get_state(widget)]);
 
     gdouble upper = priv->upper / priv->metric->pixels_per_unit; // upper and lower are expressed in ruler units
     gdouble lower = priv->lower / priv->metric->pixels_per_unit;
