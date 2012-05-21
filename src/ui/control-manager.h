@@ -58,6 +58,17 @@ public:
 
     void updateItem(SPCanvasItem *item);
 
+    bool setControlType(SPCanvasItem *item, ControlType type);
+
+    bool isActive(SPCanvasItem *item) const;
+    void setActive(SPCanvasItem *item, bool active);
+
+    bool isPrelight(SPCanvasItem *item) const;
+    void setPrelight(SPCanvasItem *item, bool prelight);
+
+    bool isSelected(SPCanvasItem *item) const;
+    void setSelected(SPCanvasItem *item, bool selected);
+
 private:
     ControlManager();
 

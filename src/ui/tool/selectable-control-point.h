@@ -32,7 +32,7 @@ public:
 protected:
 
     SelectableControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
-                           SPCtrlShapeType shape, unsigned int size,
+                           Inkscape::ControlType type,
                            ControlPointSelection &sel,
                            ColorSet const &cset = _default_scp_color_set, SPCanvasGroup *group = 0);
 

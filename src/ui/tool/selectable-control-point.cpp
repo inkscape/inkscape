@@ -24,10 +24,10 @@ ControlPoint::ColorSet SelectableControlPoint::_default_scp_color_set = {
 };
 
 SelectableControlPoint::SelectableControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
-                                               SPCtrlShapeType shape, unsigned int size,
+                                               Inkscape::ControlType type,
                                                ControlPointSelection &sel,
                                                ColorSet const &cset, SPCanvasGroup *group) :
-    ControlPoint(d, initial_pos, anchor, shape, size, cset, group),
+    ControlPoint(d, initial_pos, anchor, type, cset, group),
     _selection(sel)
 {
     _selection.allPoints().insert(this);
@@ -37,7 +37,7 @@ SelectableControlPoint::SelectableControlPoint(SPDesktop *d, Geom::Point const &
                                                Glib::RefPtr<Gdk::Pixbuf> pixbuf,
                                                ControlPointSelection &sel,
                                                ColorSet const &cset, SPCanvasGroup *group) :
-    ControlPoint (d, initial_pos, anchor, pixbuf, cset, group),
+    ControlPoint(d, initial_pos, anchor, pixbuf, cset, group),
     _selection (sel)
 {
     _selection.allPoints().insert(this);

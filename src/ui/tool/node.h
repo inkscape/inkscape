@@ -251,7 +251,6 @@ private:
     Inkscape::SnapSourceType _snapSourceType() const;
     Inkscape::SnapTargetType _snapTargetType() const;
     inline PathManipulator &_pm();
-    static SPCtrlShapeType _node_type_to_shape(NodeType type);
 
     /** Determine whether two nodes are joined by a linear segment. */
     static bool _is_line_segment(Node *first, Node *second);

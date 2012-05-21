@@ -35,6 +35,31 @@
 #include "compat-key-syms.h"
 #endif
 
+namespace {
+
+Inkscape::ControlType nodeTypeToCtrlType(Inkscape::UI::NodeType type)
+{
+    Inkscape::ControlType result = Inkscape::CTRL_TYPE_NODE_CUSP;
+    switch(type) {
+        case Inkscape::UI::NODE_SMOOTH:
+            result = Inkscape::CTRL_TYPE_NODE_SMOOTH;
+            break;
+        case Inkscape::UI::NODE_AUTO:
+            result = Inkscape::CTRL_TYPE_NODE_AUTO;
+            break;
+        case Inkscape::UI::NODE_SYMMETRIC:
+            result = Inkscape::CTRL_TYPE_NODE_SYMETRICAL;
+            break;
+        case Inkscape::UI::NODE_CUSP:
+        default:
+            result = Inkscape::CTRL_TYPE_NODE_CUSP;
+            break;
+    }
+    return result;
+}
+
+} // namespace
+
 namespace Inkscape {
 namespace UI {
 
@@ -482,7 +507,7 @@ Glib::ustring Handle::_getDragTip(GdkEventMotion */*event*/) const
 
 Node::Node(NodeSharedData const &data, Geom::Point const &initial_pos) :
     SelectableControlPoint(data.desktop, initial_pos, SP_ANCHOR_CENTER,
-                           SP_CTRL_SHAPE_DIAMOND, 9.0,
+                           CTRL_TYPE_NODE_CUSP,
                            *data.selection,
                            node_colors, data.node_group),
     _front(data, initial_pos, this),
@@ -736,7 +761,7 @@ void Node::setType(NodeType type, bool update_handles)
         }
     }
     _type = type;
-    _setShape(_node_type_to_shape(type));
+    _setControlType(nodeTypeToCtrlType(_type));
     updateState();
 }
 
@@ -785,7 +810,7 @@ void Node::pickBestType()
             }
         }
     } while (false);
-    _setShape(_node_type_to_shape(_type));
+    _setControlType(nodeTypeToCtrlType(_type));
     updateState();
 }
 
@@ -966,21 +991,20 @@ void Node::_linearGrow(int dir)
 void Node::_setState(State state)
 {
     // change node size to match type and selection state
-    switch (_type) {
-        case NODE_AUTO:
-        case NODE_CUSP:
-            if (selected()) {
-                _setSize(11);
-            } else {
-                _setSize(9);
-            }
+    ControlManager &mgr = ControlManager::getManager();
+    mgr.setSelected(_canvas_item, selected());
+    switch (state) {
+        case STATE_NORMAL:
+            mgr.setActive(_canvas_item, false);
+            mgr.setPrelight(_canvas_item, false);
             break;
-        default:
-            if (selected()) {
-                _setSize(9);
-            } else {
-                _setSize(7);
-            }
+        case STATE_MOUSEOVER:
+            mgr.setActive(_canvas_item, false);
+            mgr.setPrelight(_canvas_item, true);
+            break;
+        case STATE_CLICKED:
+            mgr.setActive(_canvas_item, true);
+            mgr.setPrelight(_canvas_item, false);
             break;
     }
     SelectableControlPoint::_setState(state);
@@ -1303,23 +1327,6 @@ bool Node::_is_line_segment(Node *first, Node *second)
         return second->_front.isDegenerate() && first->_back.isDegenerate();
     return false;
 }
-
-SPCtrlShapeType Node::_node_type_to_shape(NodeType type)
-{
-    switch(type) {
-        case NODE_CUSP:
-            return SP_CTRL_SHAPE_DIAMOND;
-        case NODE_SMOOTH:
-            return SP_CTRL_SHAPE_SQUARE;
-        case NODE_AUTO:
-            return SP_CTRL_SHAPE_CIRCLE;
-        case NODE_SYMMETRIC:
-            return SP_CTRL_SHAPE_SQUARE;
-        default:
-            return SP_CTRL_SHAPE_DIAMOND;
-    }
-}
-
 
 NodeList::NodeList(SubpathList &splist)
     : _list(splist)

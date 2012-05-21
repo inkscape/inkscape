@@ -68,25 +68,6 @@ ControlPoint::ColorSet ControlPoint::invisible_cset = {
 };
 
 ControlPoint::ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
-                           SPCtrlShapeType shape, unsigned int size,
-                           ColorSet const &cset, SPCanvasGroup *group) :
-    _desktop(d),
-    _canvas_item(NULL),
-    _cset(cset),
-    _state(STATE_NORMAL),
-    _position(initial_pos),
-    _lurking(false)
-{
-    _canvas_item = sp_canvas_item_new(
-        group ? group : sp_desktop_controls (_desktop), SP_TYPE_CTRL,
-        "anchor", (SPAnchorType) anchor, "size", (gdouble) size, "shape", shape,
-        "filled", TRUE, "fill_color", _cset.normal.fill,
-        "stroked", TRUE, "stroke_color", _cset.normal.stroke,
-        "mode", SP_CTRL_MODE_XOR, NULL);
-    _commonInit();
-}
-
-ControlPoint::ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
                            Glib::RefPtr<Gdk::Pixbuf> pixbuf,
                            ColorSet const &cset, SPCanvasGroup *group) :
     _desktop(d),
@@ -216,9 +197,9 @@ void ControlPoint::_setSize(unsigned int size)
     g_object_set(_canvas_item, "size", (gdouble) size, NULL);
 }
 
-void ControlPoint::_setShape(SPCtrlShapeType shape)
+bool ControlPoint::_setControlType(Inkscape::ControlType type)
 {
-    g_object_set(_canvas_item, "shape", shape, NULL);
+    return ControlManager::getManager().setControlType(_canvas_item, type);
 }
 
 void ControlPoint::_setAnchor(SPAnchorType anchor)

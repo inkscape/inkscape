@@ -12,6 +12,8 @@
 #include "control-manager.h"
 
 #include <algorithm>
+#include <set>
+
 #include <glib.h>
 #include <glib-object.h>
 
@@ -21,9 +23,46 @@
 #include "display/sp-ctrlpoint.h"
 #include "preferences.h"
 
+using Inkscape::ControlFlags;
+
 namespace {
 
 std::map<Inkscape::ControlType, std::vector<int> > sizeTable;
+
+// Note: The following operator overloads are local to this file at the moment to discourage flag manipulation elsewhere.
+
+ControlFlags operator |(ControlFlags lhs, ControlFlags rhs)
+{
+    return static_cast<ControlFlags>(static_cast<int>(lhs) | static_cast<int>(rhs));
+}
+
+ControlFlags& operator |=(ControlFlags &lhs, ControlFlags rhs)
+{
+    lhs = lhs | rhs;
+    return lhs;
+}
+
+ControlFlags operator &(ControlFlags lhs, ControlFlags rhs)
+{
+    return static_cast<ControlFlags>(static_cast<int>(lhs) & static_cast<int>(rhs));
+}
+
+ControlFlags& operator &=(ControlFlags &lhs, ControlFlags rhs)
+{
+    lhs = lhs & rhs;
+    return lhs;
+}
+
+ControlFlags operator ^(ControlFlags lhs, ControlFlags rhs)
+{
+    return static_cast<ControlFlags>(static_cast<int>(lhs) ^ static_cast<int>(rhs));
+}
+
+ControlFlags& operator ^=(ControlFlags &lhs, ControlFlags rhs)
+{
+    lhs = lhs ^ rhs;
+    return lhs;
+}
 
 } // namespace
 
@@ -40,7 +79,7 @@ namespace Inkscape {
 class ControlManagerImpl
 {
 public:
-    ControlManagerImpl();
+    ControlManagerImpl(ControlManager &manager);
 
     ~ControlManagerImpl() {}
 
@@ -53,6 +92,10 @@ public:
     sigc::connection connectCtrlSizeChanged(const sigc::slot<void> &slot);
 
     void updateItem(SPCanvasItem *item);
+
+    bool setControlType(SPCanvasItem *item, ControlType type);
+
+    void setSelected(SPCanvasItem *item, bool selected);
 
 private:
     static void thingFinalized(gpointer data, GObject *wasObj);
@@ -73,14 +116,20 @@ private:
         ControlManagerImpl &_mgr;
     };
 
+
+    ControlManager &_manager;
     sigc::signal<void> _sizeChangedSignal;
     PrefListener _prefHook;
     int _size;
     std::vector<SPCanvasItem *> _itemList;
     std::map<Inkscape::ControlType, std::vector<int> > _sizeTable;
+    std::map<Inkscape::ControlType, GType> _typeTable;
+    std::map<Inkscape::ControlType, SPCtrlShapeType> _ctrlToShape;
+    std::set<Inkscape::ControlType> _sizeChangers;
 };
 
-ControlManagerImpl::ControlManagerImpl() :
+ControlManagerImpl::ControlManagerImpl(ControlManager &manager) :
+    _manager(manager),
     _sizeChangedSignal(),
     _prefHook(*this),
     _size(3),
@@ -91,6 +140,39 @@ ControlManagerImpl::ControlManagerImpl() :
     prefs->addObserver(_prefHook);
 
     _size = prefs->getIntLimited("/options/grabsize/value", 3, 1, 7);
+
+    _typeTable[CTRL_TYPE_UNKNOWN] = SP_TYPE_CTRL;
+    _typeTable[CTRL_TYPE_ADJ_HANDLE] = SP_TYPE_CTRL;
+    _typeTable[CTRL_TYPE_ANCHOR] = SP_TYPE_CTRL;
+    _typeTable[CTRL_TYPE_INVISIPOINT] = SP_TYPE_CTRL;
+    _typeTable[CTRL_TYPE_NODE_AUTO] = SP_TYPE_CTRL;
+    _typeTable[CTRL_TYPE_NODE_CUSP] = SP_TYPE_CTRL;
+    _typeTable[CTRL_TYPE_NODE_SMOOTH] = SP_TYPE_CTRL;
+    _typeTable[CTRL_TYPE_NODE_SYMETRICAL] = SP_TYPE_CTRL;
+
+    _typeTable[CTRL_TYPE_ORIGIN] = SP_TYPE_CTRLPOINT;
+
+    _typeTable[CTRL_TYPE_LINE] = SP_TYPE_CTRLLINE;
+
+
+    // -------
+    _ctrlToShape[CTRL_TYPE_UNKNOWN] = SP_CTRL_SHAPE_DIAMOND;
+    _ctrlToShape[CTRL_TYPE_NODE_CUSP] = SP_CTRL_SHAPE_DIAMOND;
+    _ctrlToShape[CTRL_TYPE_NODE_SMOOTH] = SP_CTRL_SHAPE_SQUARE;
+    _ctrlToShape[CTRL_TYPE_NODE_AUTO] = SP_CTRL_SHAPE_CIRCLE;
+    _ctrlToShape[CTRL_TYPE_NODE_SYMETRICAL] = SP_CTRL_SHAPE_SQUARE;
+
+    _ctrlToShape[CTRL_TYPE_ADJ_HANDLE] = SP_CTRL_SHAPE_CIRCLE;
+    _ctrlToShape[CTRL_TYPE_INVISIPOINT] = SP_CTRL_SHAPE_SQUARE;
+
+    // -------
+
+    _sizeChangers.insert(CTRL_TYPE_NODE_AUTO);
+    _sizeChangers.insert(CTRL_TYPE_NODE_CUSP);
+    _sizeChangers.insert(CTRL_TYPE_NODE_SMOOTH);
+    _sizeChangers.insert(CTRL_TYPE_NODE_SYMETRICAL);
+
+    // -------
 
     {
         int sizes[] = {8, 8, 8, 8, 8, 8, 8};
@@ -114,6 +196,16 @@ ControlManagerImpl::ControlManagerImpl() :
     {
         int sizes[] = {2, 3, 4, 7, 8, 9, 10};
         _sizeTable[CTRL_TYPE_ORIGIN] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
+    }
+    {
+        int sizes[] = {5, 7, 9, 10, 11, 12, 13};
+        _sizeTable[CTRL_TYPE_NODE_AUTO] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
+        _sizeTable[CTRL_TYPE_NODE_CUSP] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
+    }
+    {
+        int sizes[] = {3, 5, 7, 8, 9, 10, 11};
+        _sizeTable[CTRL_TYPE_NODE_SMOOTH] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
+        _sizeTable[CTRL_TYPE_NODE_SYMETRICAL] = std::vector<int>(sizes, sizes + (sizeof(sizes) / sizeof(sizes[0])));
     }
     {
         int sizes[] = {1, 1, 1, 1, 1, 1, 1};
@@ -165,6 +257,18 @@ SPCanvasItem *ControlManagerImpl::createControl(SPCanvasGroup *parent, ControlTy
                                       "stroke_color", 0x000000ff,
                                       NULL);
             break;
+        case CTRL_TYPE_NODE_AUTO:
+        case CTRL_TYPE_NODE_CUSP:
+        case CTRL_TYPE_NODE_SMOOTH:
+        case CTRL_TYPE_NODE_SYMETRICAL:
+        {
+            SPCtrlShapeType shape = _ctrlToShape[_ctrlToShape.count(type) ? type : CTRL_TYPE_UNKNOWN];
+            item = sp_canvas_item_new(parent, SP_TYPE_CTRL,
+                                      "shape", shape,
+                                      "size", targetSize,
+                                      NULL);
+            break;
+        }
         case CTRL_TYPE_ORIGIN:
             item = sp_canvas_item_new(parent, SP_TYPE_CTRLPOINT,
                                       NULL);
@@ -203,12 +307,53 @@ void ControlManagerImpl::updateItem(SPCanvasItem *item)
 {
     if (item) {
         double target = _sizeTable[item->ctrlType][_size - 1];
+
         if ((item->ctrlType == CTRL_TYPE_ORIGIN) && SP_IS_CTRLPOINT(item)) {
             sp_ctrlpoint_set_radius(SP_CTRLPOINT(item), target / 2.0);
         } else {
+            if (_sizeChangers.count(item->ctrlType) && _manager.isSelected(item)) {
+                target += 2;
+            }
             sp_canvas_item_set(item, "size", target, NULL);
         }
         sp_canvas_item_request_update(item);
+    }
+}
+
+bool ControlManagerImpl::setControlType(SPCanvasItem *item, ControlType type)
+{
+    bool accepted = false;
+    if (item && (item->ctrlType == type)) {
+        // nothing to do
+        accepted = true;
+    } else if (item) {
+        if (_ctrlToShape.count(type) && (_typeTable[type] == _typeTable[item->ctrlType])) { // compatible?
+            double targetSize = _sizeTable[type][_size - 1];
+            if (_manager.isSelected(item) && _sizeChangers.count(item->ctrlType)) {
+                targetSize += 2.0;
+            }
+            SPCtrlShapeType targetShape = _ctrlToShape[type];
+            g_object_set(item, "shape", targetShape, "size", targetSize, NULL);
+            item->ctrlType = type;
+            accepted = true;
+        }
+    }
+
+    return accepted;
+}
+
+
+void ControlManagerImpl::setSelected(SPCanvasItem *item, bool selected)
+{
+    if (_manager.isSelected(item) != selected) {
+        item->ctrlFlags ^= CTRL_FLAG_SELECTED; // toggle, since we know it is different
+
+        // TODO refresh colors
+        double targetSize = _sizeTable[item->ctrlType][_size - 1];
+        if (selected && _sizeChangers.count(item->ctrlType)) {
+            targetSize += 2.0;
+        }
+        g_object_set(item, "size", targetSize, NULL);
     }
 }
 
@@ -236,7 +381,7 @@ void ControlManagerImpl::thingFinalized(GObject *wasObj)
 // ----------------------------------------------------
 
 ControlManager::ControlManager() :
-    _impl(new ControlManagerImpl())
+    _impl(new ControlManagerImpl(*this))
 {
 }
 
@@ -291,6 +436,47 @@ sigc::connection ControlManager::connectCtrlSizeChanged(const sigc::slot<void> &
 void ControlManager::updateItem(SPCanvasItem *item)
 {
     return _impl->updateItem(item);
+}
+
+bool ControlManager::setControlType(SPCanvasItem *item, ControlType type)
+{
+    return _impl->setControlType(item, type);
+}
+
+bool ControlManager::isActive(SPCanvasItem *item) const
+{
+    return (item->ctrlFlags & CTRL_FLAG_ACTIVE) != 0;
+}
+
+void ControlManager::setActive(SPCanvasItem *item, bool active)
+{
+    if (isActive(item) != active) {
+        item->ctrlFlags ^= CTRL_FLAG_ACTIVE; // toggle, since we know it is different
+        // TODO refresh size/colors
+    }
+}
+
+bool ControlManager::isPrelight(SPCanvasItem *item) const
+{
+    return (item->ctrlFlags & CTRL_FLAG_PRELIGHT) != 0;
+}
+
+void ControlManager::setPrelight(SPCanvasItem *item, bool prelight)
+{
+    if (isPrelight(item) != prelight) {
+        item->ctrlFlags ^= CTRL_FLAG_PRELIGHT; // toggle, since we know it is different
+        // TODO refresh size/colors
+    }
+}
+
+bool ControlManager::isSelected(SPCanvasItem *item) const
+{
+    return (item->ctrlFlags & CTRL_FLAG_SELECTED) != 0;
+}
+
+void ControlManager::setSelected(SPCanvasItem *item, bool selected)
+{
+    _impl->setSelected(item, selected);
 }
 
 } // namespace Inkscape

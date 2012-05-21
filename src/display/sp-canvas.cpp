@@ -410,6 +410,7 @@ void sp_canvas_item_init(SPCanvasItem *item)
 {
     item->xform = Geom::Affine(Geom::identity());
     item->ctrlType = Inkscape::CTRL_TYPE_UNKNOWN;
+    item->ctrlFlags = Inkscape::CTRL_FLAG_NORMAL;
 
     // TODO items should not be visible on creation - this causes kludges with items
     // that should be initially invisible; examples of such items: node handles, the CtrlRect

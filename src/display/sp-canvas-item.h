@@ -60,6 +60,7 @@ struct SPCanvasItem : public GtkObject {
     Geom::Affine xform;
 
     Inkscape::ControlType ctrlType;
+    Inkscape::ControlFlags ctrlFlags;
 
     // Replacement for custom GtkObject flag enumeration
     gboolean visible;

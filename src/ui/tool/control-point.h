@@ -16,6 +16,8 @@
 #include <sigc++/signal.h>
 #include <sigc++/trackable.h>
 #include <2geom/point.h>
+
+#include "ui/control-types.h"
 #include "util/accumulators.h"
 #include "display/sodipodi-ctrl.h"
 #include "enums.h"
@@ -213,13 +215,12 @@ protected:
      * @param d Desktop for this control
      * @param initial_pos Initial position of the control point in desktop coordinates
      * @param anchor Where is the control point rendered relative to its desktop coordinates
-     * @param shape Shape of the control point: square, diamond, circle...
-     * @param size Pixel size of the visual representation
+     * @param type Logical type of the control point.
      * @param cset Colors of the point
      * @param group The canvas group the point's canvas item should be created in
      */
     ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
-                 SPCtrlShapeType shape, unsigned int size,
+                 ControlType type,
                  ColorSet const &cset = _default_color_set, SPCanvasGroup *group = 0);
 
     /**
@@ -234,10 +235,6 @@ protected:
      */
     ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
                  Glib::RefPtr<Gdk::Pixbuf> pixbuf,
-                 ColorSet const &cset = _default_color_set, SPCanvasGroup *group = 0);
-
-    ControlPoint(SPDesktop *d, Geom::Point const &initial_pos, SPAnchorType anchor,
-                 ControlType type,
                  ColorSet const &cset = _default_color_set, SPCanvasGroup *group = 0);
 
     /// @name Handle control point events in subclasses
@@ -310,7 +307,7 @@ protected:
 
     void _setSize(unsigned int size);
 
-    void _setShape(SPCtrlShapeType shape);
+    bool _setControlType(Inkscape::ControlType type);
 
     void _setAnchor(SPAnchorType anchor);
 

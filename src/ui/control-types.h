@@ -28,7 +28,21 @@ enum ControlType {
     CTRL_TYPE_SHAPER,
     CTRL_TYPE_ORIGIN,
     CTRL_TYPE_LINE,
+    CTRL_TYPE_NODE_AUTO,
+    CTRL_TYPE_NODE_CUSP,
+    CTRL_TYPE_NODE_SMOOTH,
+    CTRL_TYPE_NODE_SYMETRICAL,
     CTRL_TYPE_INVISIPOINT
+};
+
+/**
+ * Flags for internal representation/tracking.
+ */
+enum ControlFlags {
+    CTRL_FLAG_NORMAL = 0,
+    CTRL_FLAG_ACTIVE = 1 << 0,
+    CTRL_FLAG_PRELIGHT = 1 << 1,
+    CTRL_FLAG_SELECTED = 1 << 2,
 };
 
 } // namespace Inkscape
