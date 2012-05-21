@@ -20,6 +20,7 @@
 #include "display/sodipodi-ctrl.h" // for SP_TYPE_CTRL
 #include "display/sp-canvas-item.h"
 #include "display/sp-ctrlline.h"
+#include "display/sp-ctrlcurve.h"
 #include "display/sp-ctrlpoint.h"
 #include "preferences.h"
 
@@ -419,6 +420,19 @@ SPCtrlLine *ControlManager::createControlLine(SPCanvasGroup *parent, Geom::Point
     SPCtrlLine *line = createControlLine(parent, type);
     if (line) {
         line->setCoords(p1, p2);
+    }
+    return line;
+}
+
+SPCtrlCurve *ControlManager::createControlCurve(SPCanvasGroup *parent, Geom::Point const &p0, Geom::Point const &p1, Geom::Point const &p2, Geom::Point const &p3, CtrlLineType type)
+{
+    SPCtrlCurve *line = SP_CTRLCURVE(sp_canvas_item_new(parent, SP_TYPE_CTRLCURVE, NULL));
+    if (line) {
+        line->ctrlType = CTRL_TYPE_LINE;
+
+        line->setRgba32((type == CTLINE_PRIMARY) ? LINE_COLOR_PRIMARY :
+                        (type == CTLINE_SECONDARY) ? LINE_COLOR_SECONDARY : LINE_COLOR_TERTIARY);
+        line->setCoords(p0, p1, p2, p3);
     }
     return line;
 }

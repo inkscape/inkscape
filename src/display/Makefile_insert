@@ -109,6 +109,8 @@ ink_common_sources += \
 	display/sp-canvas.h	\
 	display/sp-canvas-util.cpp	\
 	display/sp-canvas-util.h	\
+	display/sp-ctrlcurve.cpp	\
+	display/sp-ctrlcurve.h \
 	display/sp-ctrlline.cpp	\
 	display/sp-ctrlline.h \
 	display/sp-ctrlpoint.cpp	\

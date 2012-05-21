@@ -19,6 +19,7 @@
 struct SPCanvasGroup;
 struct SPCanvasItem;
 struct SPCtrlLine;
+struct SPCtrlCurve;
 
 namespace Geom
 {
@@ -53,6 +54,8 @@ public:
     SPCtrlLine *createControlLine(SPCanvasGroup *parent, CtrlLineType type = CTLINE_PRIMARY);
 
     SPCtrlLine *createControlLine(SPCanvasGroup *parent, Geom::Point const &p1, Geom::Point const &p2, CtrlLineType type = CTLINE_PRIMARY);
+
+    SPCtrlCurve *createControlCurve(SPCanvasGroup *parent, Geom::Point const &p0, Geom::Point const &p1, Geom::Point const &p2, Geom::Point const &p3, CtrlLineType type = CTLINE_PRIMARY);
 
     void track(SPCanvasItem *item);
 
