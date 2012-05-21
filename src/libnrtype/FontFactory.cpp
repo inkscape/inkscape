@@ -929,9 +929,9 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
                 res = NULL;
                 if ( canFail ) {
                     char *tc = pango_font_description_to_string(descr);
-                    PANGO_DEBUG("falling back from %s to Sans because InstallFace failed\n",tc);
+                    PANGO_DEBUG("falling back from %s to 'sans-serif' because InstallFace failed\n",tc);
                     g_free(tc);
-                    pango_font_description_set_family(descr,"Sans");
+                    pango_font_description_set_family(descr,"sans-serif");
                     res = Face(descr,false);
                 }
             } else {
@@ -942,9 +942,9 @@ font_instance *font_factory::Face(PangoFontDescription *descr, bool canFail)
         } else {
             // no match
             if ( canFail ) {
-                PANGO_DEBUG("falling back to Sans\n");
+                PANGO_DEBUG("falling back to 'sans-serif'\n");
                 descr = pango_font_description_new();
-                pango_font_description_set_family(descr,"Sans");
+                pango_font_description_set_family(descr,"sans-serif");
                 res = Face(descr,false);
                 pango_font_description_free(descr);
             }

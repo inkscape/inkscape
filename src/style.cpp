@@ -3100,9 +3100,9 @@ sp_text_style_new()
     ts->refcount = 1;
     sp_text_style_clear(ts);
 
-    ts->font_specification.value = g_strdup("Sans");
-    ts->font.value = g_strdup("Sans");
-    ts->font_family.value = g_strdup("Sans");
+    ts->font_specification.value = g_strdup("sans-serif");
+    ts->font.value = g_strdup("sans-serif");
+    ts->font_family.value = g_strdup("sans-serif");
 
     return ts;
 }

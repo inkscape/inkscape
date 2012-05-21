@@ -291,7 +291,7 @@ PangoFontDescription *Layout::InputStreamTextSource::styleGetFontDescription() c
     // pango, so it's not the limiting factor
     Glib::ustring family;
     if (style->text->font_family.value == NULL) {
-        family = "Sans";
+        family = "sans-serif";
     } else {
         gchar **families = g_strsplit(style->text->font_family.value, ",", -1);
         if (families) {
