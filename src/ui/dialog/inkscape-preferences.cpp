@@ -77,7 +77,13 @@ InkscapePreferences::InkscapePreferences()
     sb->set_width_chars(6);
     _getContents()->add(*sb);
     show_all_children();
-    Gtk::Requisition sreq = sb->size_request();
+    Gtk::Requisition sreq;
+#if WITH_GTKMM_3_0
+    Gtk::Requisition sreq_natural;
+    sb->get_preferred_size(sreq_natural, sreq);
+#else
+    sreq = sb->size_request();
+#endif
     _sb_width = sreq.width;
     _getContents()->remove(*sb);
     delete sb;
@@ -1446,7 +1452,7 @@ void InkscapePreferences::initPageSystem()
         _sys_user_prefs.set_editable(false);
         _page_system.add_line(true, _("User preferences: "), _sys_user_prefs, "", _("Location of the users preferences file"), true);
 
-        _sys_user_extension_dir.set_text((char const *)get_path(IO::Resource::USER, IO::Resource::EXTENSIONS, ""));
+        _sys_user_extension_dir.set_text((char const *)IO::Resource::get_path(IO::Resource::USER, IO::Resource::EXTENSIONS, ""));
         _sys_user_extension_dir.set_editable(false);
         _page_system.add_line(true, _("User extensions: "), _sys_user_extension_dir, "", _("Location of the users extensions"), true);
 
@@ -1512,7 +1518,13 @@ bool InkscapePreferences::SetMaxDialogSize(const Gtk::TreeModel::iterator& iter)
     DialogPage* page = row[_page_list_columns._col_page];
     _page_frame.add(*page);
     this->show_all_children();
-    Gtk:: Requisition sreq = this->size_request();
+    Gtk::Requisition sreq;
+#if WITH_GTKMM_3_0
+    Gtk::Requisition sreq_natural;
+    this->get_preferred_size(sreq_natural, sreq);
+#else
+    sreq = this->size_request();
+#endif
     _max_dialog_width=std::max(_max_dialog_width, sreq.width);
     _max_dialog_height=std::max(_max_dialog_height, sreq.height);
     _page_frame.remove();
