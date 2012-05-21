@@ -307,22 +307,46 @@ LoadingBox::LoadingBox() : Gtk::EventBox()
     set_visible_window(false);
     draw_spinner = false;
     spinner_step = 0;
+
+#if WITH_GTKMM_3_0
+    signal_draw().connect(sigc::mem_fun(*this, &LoadingBox::_on_draw), false);
+#else
     signal_expose_event().connect(sigc::mem_fun(*this, &LoadingBox::_on_expose_event), false);
+#endif
 }
 
+#if !WITH_GTKMM_3_0
 bool LoadingBox::_on_expose_event(GdkEventExpose* /*event*/)
 {
     Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
 
+    return _on_draw(cr);
+}
+#endif
+
+bool LoadingBox::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
+{
     // Draw shadow
     int x = get_allocation().get_x();
     int y = get_allocation().get_y();
     int width = get_allocation().get_width();
     int height = get_allocation().get_height();
 
+#if WITH_GTKMM_3_0
+    // FIXME: Should use Gtk::StyleContext::render_frame instead
+    GtkWidget* widget = GTK_WIDGET(gobj());
+    gtk_paint_shadow(gtk_widget_get_style(widget),
+		     cr->cobj(),
+                     gtk_widget_get_state(widget),
+		     GTK_SHADOW_IN,
+		     widget,
+		     "viewport",
+		     x, y, width, height);
+#else
     get_style()->paint_shadow(get_window(), get_state(), Gtk::SHADOW_IN,
         Gdk::Rectangle(x, y, width, height),
         *this, Glib::ustring("viewport"), x, y, width, height);
+#endif
 
     if (draw_spinner) {
         int spinner_size = 16;
@@ -330,10 +354,19 @@ bool LoadingBox::_on_expose_event(GdkEventExpose* /*event*/)
         int spinner_y = y + (height - spinner_size) / 2;
 
         // FIXME: Gtk::Style::paint_spinner not yet in gtkmm
+	// In Gtkmm 3.0, Gtk::StyleContext::render_activity should
+	// be used instead.
+#if WITH_GTKMM_3_0
+        gtk_paint_spinner(gtk_widget_get_style(GTK_WIDGET(gobj())),
+            cr->cobj(),
+            gtk_widget_get_state(GTK_WIDGET(gobj())), GTK_WIDGET(gobj()),
+            NULL, spinner_step, spinner_x, spinner_y, spinner_size, spinner_size);
+#else
         gtk_paint_spinner(gtk_widget_get_style(GTK_WIDGET(gobj())),
             gtk_widget_get_window(GTK_WIDGET(gobj())),
             gtk_widget_get_state(GTK_WIDGET(gobj())), NULL, GTK_WIDGET(gobj()),
             NULL, spinner_step, spinner_x, spinner_y, spinner_size, spinner_size);
+#endif
     }
 
     return false;
@@ -403,7 +436,11 @@ PreviewWidget::PreviewWidget() : Gtk::VBox(false, 12)
     box_loading->set_size_request(90, 90);
     set_border_width(12);
 
+#if WITH_GTKMM_3_0
+    signal_draw().connect(sigc::mem_fun(*this, &PreviewWidget::_on_draw), false);
+#else 
     signal_expose_event().connect(sigc::mem_fun(*this, &PreviewWidget::_on_expose_event), false);
+#endif
 
     clear();
 }
@@ -447,15 +484,23 @@ void PreviewWidget::clear()
     image->hide();
 }
 
+#if !WITH_GTKMM_3_0
 bool PreviewWidget::_on_expose_event(GdkEventExpose* /*event*/)
 {
     Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
 
+    return _on_draw(cr);
+}
+#endif
+
+bool PreviewWidget::_on_draw(Cairo::RefPtr<Cairo::Context>& cr)
+{
     // Draw background
     int x = get_allocation().get_x();
     int y = get_allocation().get_y();
     int width = get_allocation().get_width();
     int height = get_allocation().get_height();
+
     Gdk::Color background_fill = get_style()->get_base(get_state());
 
     cr->rectangle(x, y, width, height);

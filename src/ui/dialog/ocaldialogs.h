@@ -272,7 +272,12 @@ private:
     unsigned int spinner_step;
     sigc::connection timeout;
     bool draw_spinner;
+
+#if !WITH_GTKMM_3_0
     bool _on_expose_event(GdkEventExpose* event);
+#endif
+
+    bool _on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
     bool on_timeout();
 };
 
@@ -286,7 +291,6 @@ public:
     void hide_box_loading();
     void set_image(std::string path);
     void clear();
-    bool _on_expose_event(GdkEventExpose* event);
 
 private:
     LoadingBox* box_loading;
@@ -295,6 +299,12 @@ private:
     WrapLabel* label_title;
     WrapLabel* label_description;
     WrapLabel* label_time;
+    
+#if !WITH_GTKMM_3_0
+    bool _on_expose_event(GdkEventExpose* event);
+#endif
+
+    bool _on_draw(Cairo::RefPtr<Cairo::Context>& cr);
 };
 
 /**
