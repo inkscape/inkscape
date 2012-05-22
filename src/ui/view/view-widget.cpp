@@ -18,7 +18,7 @@
 
 static void sp_view_widget_class_init(SPViewWidgetClass *vwc);
 static void sp_view_widget_init(SPViewWidget *widget);
-static void sp_view_widget_destroy(GtkObject *object);
+static void sp_view_widget_dispose(GObject *object);
 
 static GtkEventBoxClass *widget_parent_class;
 
@@ -47,11 +47,11 @@ GType sp_view_widget_get_type(void)
  */
 static void sp_view_widget_class_init(SPViewWidgetClass *vwc)
 {
-    GtkObjectClass *object_class = GTK_OBJECT_CLASS(vwc);
+    GObjectClass *object_class = G_OBJECT_CLASS(vwc);
 
     widget_parent_class = (GtkEventBoxClass*) g_type_class_peek_parent(vwc);
     
-    object_class->destroy = sp_view_widget_destroy;
+    object_class->dispose = sp_view_widget_dispose;
 }
 
 /**
@@ -67,7 +67,7 @@ static void sp_view_widget_init(SPViewWidget *vw)
  *
  * Apparently, this gets only called when a desktop is closed, but then twice!
  */
-static void sp_view_widget_destroy(GtkObject *object)
+static void sp_view_widget_dispose(GObject *object)
 {
     SPViewWidget *vw = SP_VIEW_WIDGET(object);
 
@@ -77,8 +77,8 @@ static void sp_view_widget_destroy(GtkObject *object)
         vw->view = NULL;
     }
 
-    if (((GtkObjectClass *) (widget_parent_class))->destroy) {
-        (* ((GtkObjectClass *) (widget_parent_class))->destroy)(object);
+    if (((GObjectClass *) (widget_parent_class))->dispose) {
+        (* ((GObjectClass *) (widget_parent_class))->dispose)(object);
     }
 
     Inkscape::GC::request_early_collection();
