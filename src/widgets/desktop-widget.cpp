@@ -255,12 +255,7 @@ SPDesktopWidget::window_get_pointer()
     gint x,y;
     GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(canvas));
 
-#if GTK_CHECK_VERSION(3,0,0)
-    GdkDisplay *display = gdk_window_get_display(window);
-    gdk_window_get_device_position(window, display->core_pointer, &x, &y, NULL);
-#else
     gdk_window_get_pointer(window, &x, &y, NULL);
-#endif
     return Geom::Point(x,y);
 }
 
@@ -539,7 +534,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     g_signal_connect (G_OBJECT (dtw->vadj), "value-changed", G_CALLBACK (sp_desktop_widget_adjustment_value_changed), dtw);
 
     GtkWidget *statusbar_tail=gtk_statusbar_new();
-    gtk_statusbar_set_has_resize_grip(GTK_STATUSBAR(statusbar_tail), TRUE);
     gtk_box_pack_end (GTK_BOX (dtw->statusbar), statusbar_tail, FALSE, FALSE, 0);
 
     // zoom status spinbutton
