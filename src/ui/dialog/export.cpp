@@ -807,7 +807,6 @@ Gtk::Dialog * Export::create_progress_dialog (Glib::ustring progress_text) {
     
     Gtk::ProgressBar *prg = new Gtk::ProgressBar ();
     prg->set_text(progress_text);
-    prg->set_orientation(Gtk::PROGRESS_LEFT_TO_RIGHT);
     dlg->set_data ("progress", prg);
 #if GTK_CHECK_VERSION(3,0,0)
     Gtk::Box* CA = dlg->get_content_area();
