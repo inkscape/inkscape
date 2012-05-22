@@ -167,8 +167,12 @@ protected:
 
     virtual void _apply();
     void presentPage(PageType page);
-    void onSwitchPage(GtkNotebookPage *page,
-                    guint pagenum);
+
+#if WITH_GTKMM_3_0
+    void onSwitchPage(Gtk::Widget *page, guint pagenum);
+#else
+    void onSwitchPage(GtkNotebookPage *page, guint pagenum);
+#endif
 
     /**
      * Callbacks for when a user changes values on the panels

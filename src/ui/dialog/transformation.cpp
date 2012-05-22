@@ -431,8 +431,11 @@ void Transformation::updateSelection(PageType page, Inkscape::Selection *selecti
                          selection && !selection->isEmpty());
 }
 
-void Transformation::onSwitchPage(GtkNotebookPage */*page*/,
-                                   guint pagenum)
+#if WITH_GTKMM_3_0
+void Transformation::onSwitchPage(Gtk::Widget * /*page*/, guint pagenum)
+#else
+void Transformation::onSwitchPage(GtkNotebookPage * /*page*/, guint pagenum)
+#endif
 {
     updateSelection((PageType)pagenum, sp_desktop_selection(getDesktop()));
 }
