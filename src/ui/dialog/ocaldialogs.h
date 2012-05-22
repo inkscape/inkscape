@@ -13,6 +13,8 @@
 #ifndef __OCAL_DIALOG_H__
 #define __OCAL_DIALOG_H__
 
+#include <cairomm/refptr.h>
+
 //Gtk includes
 #include <gtkmm/box.h>
 #include <gtkmm/eventbox.h>
@@ -304,7 +306,7 @@ private:
     bool _on_expose_event(GdkEventExpose* event);
 #endif
 
-    bool _on_draw(Cairo::RefPtr<Cairo::Context>& cr);
+    bool _on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
 };
 
 /**
@@ -347,7 +349,10 @@ class LogoArea : public Gtk::EventBox
 public:
     LogoArea();
 private:
+#if !WITH_GTKMM_3_0
     bool _on_expose_event(GdkEventExpose* event);
+#endif
+    bool _on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
     bool draw_logo;
     Cairo::RefPtr<Cairo::ImageSurface> logo_mask;
 };
@@ -360,7 +365,10 @@ class BaseBox : public Gtk::EventBox
 public:
     BaseBox();
 private:
+#if !WITH_GTKMM_3_0
     bool _on_expose_event(GdkEventExpose* event);
+#endif
+    bool _on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
 };
 
 enum {

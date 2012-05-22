@@ -493,7 +493,7 @@ bool PreviewWidget::_on_expose_event(GdkEventExpose* /*event*/)
 }
 #endif
 
-bool PreviewWidget::_on_draw(Cairo::RefPtr<Cairo::Context>& cr)
+bool PreviewWidget::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
     // Draw background
     int x = get_allocation().get_x();
@@ -501,7 +501,14 @@ bool PreviewWidget::_on_draw(Cairo::RefPtr<Cairo::Context>& cr)
     int width = get_allocation().get_width();
     int height = get_allocation().get_height();
 
+#if WITH_GTKMM_3_0
+    // FIXME: Should use Gtk::StyleContext instead
+    GtkWidget *widget = GTK_WIDGET(gobj());
+    GtkStyle *style = gtk_widget_get_style(widget);
+    Gdk::Color background_fill = Glib::wrap(&(style->base[gtk_widget_get_state(widget)]));
+#else
     Gdk::Color background_fill = get_style()->get_base(get_state());
+#endif
 
     cr->rectangle(x, y, width, height);
     Gdk::Cairo::set_source_color(cr, background_fill);
@@ -599,28 +606,58 @@ void SearchEntry::_on_changed()
 
 BaseBox::BaseBox() : Gtk::EventBox()
 {
+#if WITH_GTKMM_3_0
+    signal_draw().connect(sigc::mem_fun(*this, &BaseBox::_on_draw), false);
+#else
     signal_expose_event().connect(sigc::mem_fun(*this, &BaseBox::_on_expose_event), false);
+#endif
     set_visible_window(false);
 }
 
+#if !WITH_GTKMM_3_0
 bool BaseBox::_on_expose_event(GdkEventExpose* /*event*/)
 {
     Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
 
+    return _on_draw(cr);
+}
+#endif
+
+bool BaseBox::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
+{
     // Draw background and shadow
     int x = get_allocation().get_x();
     int y = get_allocation().get_y();
     int width = get_allocation().get_width();
     int height = get_allocation().get_height();
+
+#if WITH_GTKMM_3_0
+    // FIXME: Should use Gtk::StyleContext instead
+    GtkWidget *widget = GTK_WIDGET(gobj());
+    GtkStyle *style = gtk_widget_get_style(widget);
+    Gdk::Color background_fill = Glib::wrap(&(style->base[gtk_widget_get_state(widget)]));
+#else
     Gdk::Color background_fill = get_style()->get_base(get_state());
+#endif
 
     cr->rectangle(x, y, width, height);
     Gdk::Cairo::set_source_color(cr, background_fill);
     cr->fill();
 
+#if WITH_GTKMM_3_0
+    // FIXME: Should use Gtk::StyleContext::render_frame instead
+    gtk_paint_shadow(style,
+                     cr->cobj(),
+		     gtk_widget_get_state(widget),
+		     GTK_SHADOW_IN,
+		     widget,
+		     "viewport",
+		     x, y, width, height);
+#else
     get_style()->paint_shadow(get_window(), get_state(), Gtk::SHADOW_IN,
         Gdk::Rectangle(x, y, width, height),
         *this, Glib::ustring("viewport"), x, y, width, height);
+#endif
 
     return false;
 }
@@ -636,11 +673,25 @@ LogoArea::LogoArea() : Gtk::EventBox()
         logo_mask = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, 1,1);
         draw_logo = false;
     }
+
+#if WITH_GTKMM_3_0
+    signal_draw().connect(sigc::mem_fun(*this, &LogoArea::_on_draw));
+#else
     signal_expose_event().connect(sigc::mem_fun(*this, &LogoArea::_on_expose_event));
+#endif
     set_visible_window(false);
 }
 
+#if !WITH_GTKMM_3_0
 bool LogoArea::_on_expose_event(GdkEventExpose* /*event*/)
+{
+        Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
+
+	return _on_draw(cr);
+}
+#endif
+
+bool LogoArea::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
     if (draw_logo) {
         int x = get_allocation().get_x();
@@ -650,11 +701,16 @@ bool LogoArea::_on_expose_event(GdkEventExpose* /*event*/)
         int x_logo = x + (width - 220) / 2;
         int y_logo = y + (height - 76) / 2;
         
-        Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
-        
         // Draw logo, we mask [read fill] it with the mid colour from the
         // user's GTK theme
+#if WITH_GTKMM_3_0
+        // FIXME: Should use Gtk::StyleContext instead
+        GtkWidget *widget = GTK_WIDGET(gobj());
+        GtkStyle *style = gtk_widget_get_style(widget);
+        Gdk::Color logo_fill = Glib::wrap(&(style->mid[gtk_widget_get_state(widget)]));
+#else
         Gdk::Color logo_fill = get_style()->get_mid(get_state());
+#endif
 
         Gdk::Cairo::set_source_color(cr, logo_fill);
         cr->mask(logo_mask, x_logo, y_logo);
@@ -1121,7 +1177,16 @@ void ImportDialog::on_xml_file_read(const Glib::RefPtr<Gio::AsyncResult>& result
 void ImportDialog::update_label_no_search_results()
 {
     Glib::ustring keywords = Glib::Markup::escape_text(entry_search->get_text());
+
+#if WITH_GTKMM_3_0
+    // FIXME: Should use Gtk::StyleContext instead
+    GtkWidget *widget = GTK_WIDGET(entry_search->gobj());
+    GtkStyle *style = gtk_widget_get_style(widget);
+    Gdk::Color grey = Glib::wrap(&(style->text_aa[gtk_widget_get_state(widget)]));
+#else
     Gdk::Color grey = entry_search->get_style()->get_text_aa(entry_search->get_state());
+#endif
+
     Glib::ustring msg_one = Glib::ustring::compose(
         _("No clipart named <b>%1</b> was found."),
         keywords);
