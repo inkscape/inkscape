@@ -10,7 +10,7 @@
 #include <glib/gi18n.h>
 
 #ifdef DEBUG_LCMS
-#include <gtk.h>
+#include <gtk/gtk.h>
 #endif // DEBUG_LCMS
 
 #include <cstring>
@@ -588,7 +588,7 @@ cmsHTRANSFORM ColorProfile::getTransfToSRGB8()
 {
     if ( !impl->_transf && impl->_profHandle ) {
         int intent = getLcmsIntent(rendering_intent);
-        impl->_transf = cmsCreateTransform( impl->_profHandle, ColorProfileImpl::_getInputFormat(impl->_profileSpace), ColorProfileImpl::getSRGBProfile(), TYPE_BGRA_8, intent, 0 );
+        impl->_transf = cmsCreateTransform( impl->_profHandle, ColorProfileImpl::_getInputFormat(impl->_profileSpace), ColorProfileImpl::getSRGBProfile(), TYPE_RGBA_8, intent, 0 );
     }
     return impl->_transf;
 }
@@ -597,7 +597,7 @@ cmsHTRANSFORM ColorProfile::getTransfFromSRGB8()
 {
     if ( !impl->_revTransf && impl->_profHandle ) {
         int intent = getLcmsIntent(rendering_intent);
-        impl->_revTransf = cmsCreateTransform( ColorProfileImpl::getSRGBProfile(), TYPE_BGRA_8, impl->_profHandle, ColorProfileImpl::_getInputFormat(impl->_profileSpace), intent, 0 );
+        impl->_revTransf = cmsCreateTransform( ColorProfileImpl::getSRGBProfile(), TYPE_RGBA_8, impl->_profHandle, ColorProfileImpl::_getInputFormat(impl->_profileSpace), intent, 0 );
     }
     return impl->_revTransf;
 }
