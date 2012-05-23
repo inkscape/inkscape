@@ -290,6 +290,8 @@ enum SPAttributeEnum {
     /* SPRadialGradient */
     SP_ATTR_FX,
     SP_ATTR_FY,
+    /* SPMeshPatch */
+    SP_ATTR_TENSOR,
     /* SPPattern */
     SP_ATTR_PATTERNUNITS,
     SP_ATTR_PATTERNCONTENTUNITS,
@@ -454,6 +456,7 @@ enum SPAttributeEnum {
     /* Gradient */
     SP_PROP_STOP_COLOR,
     SP_PROP_STOP_OPACITY,
+    SP_PROP_STOP_PATH,
     /* Interactivity */
     SP_PROP_POINTER_EVENTS,
     /* Paint */

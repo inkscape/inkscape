@@ -1509,6 +1509,9 @@ void ContextVerb::perform(SPAction *action, void *data)
         case SP_VERB_CONTEXT_GRADIENT:
             tools_switch(dt, TOOLS_GRADIENT);
             break;
+        case SP_VERB_CONTEXT_MESH:
+            tools_switch(dt, TOOLS_MESH);
+            break;
         case SP_VERB_CONTEXT_ZOOM:
             tools_switch(dt, TOOLS_ZOOM);
             break;
@@ -1584,6 +1587,10 @@ void ContextVerb::perform(SPAction *action, void *data)
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
         case SP_VERB_CONTEXT_GRADIENT_PREFS:
+            prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_GRADIENT);
+            dt->_dlg_mgr->showDialog("InkscapePreferences");
+            break;
+        case SP_VERB_CONTEXT_MESH_PREFS:
             prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_GRADIENT);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
@@ -2512,6 +2519,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Create and edit text objects"), INKSCAPE_ICON("draw-text")),
     new ContextVerb(SP_VERB_CONTEXT_GRADIENT, "ToolGradient", N_("Gradient"),
                     N_("Create and edit gradients"), INKSCAPE_ICON("color-gradient")),
+    new ContextVerb(SP_VERB_CONTEXT_MESH, "ToolMesh", N_("Mesh"),
+                    N_("Create and edit meshes"), INKSCAPE_ICON("mesh-gradient")),
     new ContextVerb(SP_VERB_CONTEXT_ZOOM, "ToolZoom", N_("Zoom"),
                     N_("Zoom in or out"), INKSCAPE_ICON("zoom")),
     new ContextVerb(SP_VERB_CONTEXT_MEASURE, "ToolMeasure", NC_("Measurement tool", "Measure"),
@@ -2557,6 +2566,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Open Preferences for the Text tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_GRADIENT_PREFS, "GradientPrefs", N_("Gradient Preferences"),
                     N_("Open Preferences for the Gradient tool"), NULL),
+    new ContextVerb(SP_VERB_CONTEXT_MESH_PREFS, "Mesh_Prefs", N_("Mesh Preferences"),
+                    N_("Open Preferences for the Mesh tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_ZOOM_PREFS, "ZoomPrefs", N_("Zoom Preferences"),
                     N_("Open Preferences for the Zoom tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_MEASURE_PREFS, "MeasurePrefs", N_("Measure Preferences"),

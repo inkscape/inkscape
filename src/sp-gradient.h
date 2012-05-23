@@ -22,6 +22,7 @@
 #include "sp-gradient-spread.h"
 #include "sp-gradient-units.h"
 #include "sp-gradient-vector.h"
+#include "sp-mesh-array.h"
 
 #include <stddef.h>
 #include <sigc++/connection.h>
@@ -38,7 +39,14 @@ class SPStop;
 enum SPGradientType {
     SP_GRADIENT_TYPE_UNKNOWN,
     SP_GRADIENT_TYPE_LINEAR,
-    SP_GRADIENT_TYPE_RADIAL
+    SP_GRADIENT_TYPE_RADIAL,
+    SP_GRADIENT_TYPE_MESH
+};
+
+enum SPGradientMeshType {
+    SP_GRADIENT_MESH_TYPE_UNKNOWN,
+    SP_GRADIENT_MESH_TYPE_NORMAL,
+    SP_GRADIENT_MESH_TYPE_CONICAL
 };
 
 enum SPGradientState {
@@ -57,6 +65,9 @@ enum GrPointType {
     POINT_RG_FOCUS,
     POINT_RG_MID1,
     POINT_RG_MID2,
+    POINT_MG_CORNER,
+    POINT_MG_HANDLE,
+    POINT_MG_TENSOR,
     // insert new point types here.
 
     POINT_G_INVALID
@@ -108,7 +119,13 @@ private:
 
     /** Gradient stops */
     guint has_stops : 1;
+
+    /** Gradient patches */
+    guint has_patches : 1;
+
 public:
+
+    /** Linear and Radial Gradients */
 
     /** Composed vector */
     SPGradientVector vector;
@@ -121,6 +138,15 @@ public:
     int getStopCount() const;
 
 
+    /** Mesh Gradients **************/
+
+    /** Composed array (for mesh gradients) */
+    SPMeshNodeArray array;
+
+    bool hasPatches() const;
+
+
+    /** All Gradients **************/
     bool isUnitsSet() const;
     SPGradientUnits getUnits() const;
     void setUnits(SPGradientUnits units);
@@ -143,6 +169,9 @@ public:
     /** Forces vector to be built, if not present (i.e. changed) */
     void ensureVector();
 
+    /** Forces array (mesh) to be built, if not present (i.e. changed) */
+    void ensureArray();
+
     /** Ensures that color array is populated */
     void ensureColors();
 
@@ -158,11 +187,13 @@ public:
 
 private:
     bool invalidateVector();
+    bool invalidateArray();
     void rebuildVector();
+    void rebuildArray();
 
     friend class SPGradientImpl;
-    friend class SPLGPainter;
-    friend class SPRGPainter;
+//    friend class SPLGPainter;
+//    friend class SPRGPainter;
 };
 
 /**

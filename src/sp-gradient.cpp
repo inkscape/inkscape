@@ -1,5 +1,6 @@
 /** \file
- * SPGradient, SPStop, SPLinearGradient, SPRadialGradient.
+ * SPGradient, SPStop, SPLinearGradient, SPRadialGradient,
+ * SPMeshGradient, SPMeshRow, SPMeshPatch
  */
 /*
  * Authors:
@@ -8,11 +9,13 @@
  *   Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
+ *   Tavmjong Bah <tavmjong@free.fr>
  *
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
  * Copyright (C) 2004 David Turner
  * Copyright (C) 2009 Jasper van de Gronde
+ * Copyright (C) 2011 Tavmjong Bah
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  *
@@ -24,6 +27,8 @@
 #include <string>
 
 #include <2geom/transforms.h>
+
+#include <cairo.h>
 
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
@@ -39,6 +44,9 @@
 #include "sp-gradient-reference.h"
 #include "sp-linear-gradient.h"
 #include "sp-radial-gradient.h"
+#include "sp-mesh-gradient.h"
+#include "sp-mesh-row.h"
+#include "sp-mesh-patch.h"
 #include "sp-stop.h"
 #include "streq.h"
 #include "uri.h"
@@ -49,9 +57,10 @@
 #define SP_MACROS_SILENT
 #include "macros.h"
 
-/// Has to be power of 2
-#define NCOLORS NR_GRADIENT_VECTOR_LENGTH
+/// Has to be power of 2   Seems to be unused.
+//#define NCOLORS NR_GRADIENT_VECTOR_LENGTH
 
+// SPStop
 static void sp_stop_class_init(SPStopClass *klass);
 static void sp_stop_init(SPStop *stop);
 
@@ -60,6 +69,29 @@ static void sp_stop_set(SPObject *object, unsigned key, gchar const *value);
 static Inkscape::XML::Node *sp_stop_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static SPObjectClass *stop_parent_class;
+
+
+// SPMeshRow
+static void sp_meshrow_class_init(SPMeshRowClass *klass);
+static void sp_meshrow_init(SPMeshRow *meshrow);
+
+static void sp_meshrow_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_meshrow_set(SPObject *object, unsigned key, gchar const *value);
+static Inkscape::XML::Node *sp_meshrow_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+
+static SPObjectClass *meshrow_parent_class;
+
+
+// SPMeshPatch
+static void sp_meshpatch_class_init(SPMeshPatchClass *klass);
+static void sp_meshpatch_init(SPMeshPatch *meshpatch);
+
+static void sp_meshpatch_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+static void sp_meshpatch_set(SPObject *object, unsigned key, gchar const *value);
+static Inkscape::XML::Node *sp_meshpatch_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+
+static SPObjectClass *meshpatch_parent_class;
+
 
 class SPGradientImpl
 {
@@ -145,6 +177,7 @@ static void sp_stop_build(SPObject *object, SPDocument *document, Inkscape::XML:
     object->readAttr( "stop-color" );
     object->readAttr( "stop-opacity" );
     object->readAttr( "style" );
+    object->readAttr( "path" ); // For mesh
 }
 
 /**
@@ -210,6 +243,18 @@ sp_stop_set(SPObject *object, unsigned key, gchar const *value)
             object->requestModified(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
             break;
         }
+        case SP_PROP_STOP_PATH: {
+            if (value) {
+                stop->path_string = new Glib::ustring( value );
+                //Geom::PathVector pv = sp_svg_read_pathv(value);
+                //SPCurve *curve = new SPCurve(pv);
+                //if( curve ) {
+                    // std::cout << "Got Curve" << std::endl;
+                    //curve->unref();
+                //}
+            }
+            break;
+        }
         default: {
             if (((SPObjectClass *) stop_parent_class)->set)
                 (* ((SPObjectClass *) stop_parent_class)->set)(object, key, value);
@@ -263,6 +308,11 @@ sp_stop_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
 bool SPGradient::hasStops() const
 {
     return has_stops;
+}
+
+bool SPGradient::hasPatches() const
+{
+    return has_patches;
 }
 
 bool SPGradient::isUnitsSet() const
@@ -321,6 +371,198 @@ sp_stop_get_rgba32(SPStop const *const stop)
 }
 
 /*
+ * Mesh Row
+ */
+
+/**
+ * Registers SPMeshRow class and returns its type.
+ */
+GType
+sp_meshrow_get_type()
+{
+    static GType type = 0;
+    if (!type) {
+        GTypeInfo info = {
+            sizeof(SPMeshRowClass),
+            NULL, NULL,
+            (GClassInitFunc) sp_meshrow_class_init,
+            NULL, NULL,
+            sizeof(SPMeshRow),
+            16,
+            (GInstanceInitFunc) sp_meshrow_init,
+            NULL,   /* value_table */
+        };
+        type = g_type_register_static(SP_TYPE_OBJECT, "SPMeshRow", &info, (GTypeFlags)0);
+    }
+    return type;
+}
+
+/**
+ * Callback to initialize SPMeshRow vtable.
+ */
+static void sp_meshrow_class_init(SPMeshRowClass *klass)
+{
+    SPObjectClass *sp_object_class = (SPObjectClass *) klass;
+
+    meshrow_parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
+
+    sp_object_class->build = sp_meshrow_build;
+    sp_object_class->set = sp_meshrow_set;
+    sp_object_class->write = sp_meshrow_write;
+}
+
+/**
+ * Callback to initialize SPMeshRow object.
+ */
+static void
+sp_meshrow_init(SPMeshRow *meshrow)
+{
+    // Do nothing
+}
+
+/**
+ * Virtual build: set meshrow attributes from its associated XML node.
+ */
+static void sp_meshrow_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+{
+    if (((SPObjectClass *) meshrow_parent_class)->build)
+        (* ((SPObjectClass *) meshrow_parent_class)->build)(object, document, repr);
+
+    // No attributes
+}
+
+/**
+ * Virtual set: set attribute to value.
+ */
+static void
+sp_meshrow_set(SPObject *object, unsigned key, gchar const *value)
+{
+    // Do nothing
+}
+
+/**
+ * Virtual write: write object attributes to repr.
+ */
+static Inkscape::XML::Node *
+sp_meshrow_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+{
+    //SPMeshRow *meshrow = SP_MESHROW(object);
+
+    if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
+        repr = xml_doc->createElement("svg:meshRow");
+    }
+
+    if (((SPObjectClass *) meshrow_parent_class)->write) {
+        (* ((SPObjectClass *) meshrow_parent_class)->write)(object, xml_doc, repr, flags);
+    }
+
+    return repr;
+}
+
+/*
+ * Mesh Patch
+ */
+
+/**
+ * Registers SPMeshPatch class and returns its type.
+ */
+GType
+sp_meshpatch_get_type()
+{
+    static GType type = 0;
+    if (!type) {
+        GTypeInfo info = {
+            sizeof(SPMeshPatchClass),
+            NULL, NULL,
+            (GClassInitFunc) sp_meshpatch_class_init,
+            NULL, NULL,
+            sizeof(SPMeshPatch),
+            16,
+            (GInstanceInitFunc) sp_meshpatch_init,
+            NULL,   /* value_table */
+        };
+        type = g_type_register_static(SP_TYPE_OBJECT, "SPMeshPatch", &info, (GTypeFlags)0);
+    }
+    return type;
+}
+
+/**
+ * Callback to initialize SPMeshPatch vtable.
+ */
+static void sp_meshpatch_class_init(SPMeshPatchClass *klass)
+{
+    SPObjectClass *sp_object_class = (SPObjectClass *) klass;
+
+    meshpatch_parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
+
+    sp_object_class->build = sp_meshpatch_build;
+    sp_object_class->set = sp_meshpatch_set;
+    sp_object_class->write = sp_meshpatch_write;
+}
+
+/**
+ * Callback to initialize SPMeshPatch object.
+ */
+static void
+sp_meshpatch_init(SPMeshPatch *meshpatch)
+{
+    // Do nothing
+}
+
+/**
+ * Virtual build: set meshpatch attributes from its associated XML node.
+ */
+static void sp_meshpatch_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+{
+    if (((SPObjectClass *) meshpatch_parent_class)->build)
+        (* ((SPObjectClass *) meshpatch_parent_class)->build)(object, document, repr);
+
+    object->readAttr( "tensor" );
+}
+
+/**
+ * Virtual set: set attribute to value.
+ */
+static void
+sp_meshpatch_set(SPObject *object, unsigned key, gchar const *value)
+{
+    SPMeshPatch *patch = SP_MESHPATCH(object);
+
+    switch (key) {
+        case SP_ATTR_TENSOR: {
+            if (value) {
+                patch->tensor_string = new Glib::ustring( value );
+                // std::cout << "sp_meshpatch_set: Tensor string: " << patch->tensor_string->c_str() << std::endl;
+            }
+            break;
+        }
+        default: {
+            // Do nothing
+        }
+    }
+}
+
+/**
+ * Virtual write: write object attributes to repr.
+ */
+static Inkscape::XML::Node *
+sp_meshpatch_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+{
+    //SPMeshPatch *meshpatch = SP_MESHPATCH(object);
+
+    if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
+        repr = xml_doc->createElement("svg:meshPatch");
+    }
+
+    if (((SPObjectClass *) meshpatch_parent_class)->write) {
+        (* ((SPObjectClass *) meshpatch_parent_class)->write)(object, xml_doc, repr, flags);
+    }
+
+    return repr;
+}
+
+
+/*
  * Gradient
  */
 
@@ -333,6 +575,7 @@ GType SPGradient::getType()
 {
     static GType gradient_type = 0;
     if (!gradient_type) {
+
         GTypeInfo gradient_info = {
             sizeof(SPGradientClass),
             NULL, NULL,
@@ -647,11 +890,19 @@ void SPGradientImpl::modified(SPObject *object, guint flags)
     SPGradient *gr = SP_GRADIENT(object);
 
     if (flags & SP_OBJECT_CHILD_MODIFIED_FLAG) {
-        gr->invalidateVector();
+        if( gr->get_type() != SP_GRADIENT_TYPE_MESH ) {
+            gr->invalidateVector();
+        } else {
+            gr->invalidateArray();
+        }
     }
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
-        gr->ensureVector();
+        if( gr->get_type() != SP_GRADIENT_TYPE_MESH ) {
+            gr->ensureVector();
+        } else {
+            gr->ensureArray();
+        }
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
@@ -784,6 +1035,19 @@ void SPGradient::ensureVector()
 {
     if ( !vector.built ) {
         rebuildVector();
+    }
+}
+
+/**
+ * Forces the array to be built, if not present (i.e., changed).
+ *
+ * \pre SP_IS_GRADIENT(gradient).
+ */
+void SPGradient::ensureArray()
+{
+    //std::cout << "SPGradient::ensureArray()" << std::endl;
+    if ( !array.built ) {
+        rebuildArray();
     }
 }
 
@@ -1004,6 +1268,20 @@ bool SPGradient::invalidateVector()
     return ret;
 }
 
+/** Return true if change made. */
+bool SPGradient::invalidateArray()
+{
+    bool ret = false;
+
+    if (array.built) {
+        array.built = false;
+        array.clear();
+        ret = true;
+    }
+
+    return ret;
+}
+
 /** Creates normalized color vector */
 void SPGradient::rebuildVector()
 {
@@ -1100,6 +1378,46 @@ void SPGradient::rebuildVector()
     }
 
     vector.built = true;
+}
+
+/** Creates normalized color mesh patch array */
+void SPGradient::rebuildArray()
+{
+    // std::cout << "SPGradient::rebuildArray()" << std::endl;
+
+    if( !SP_IS_MESHGRADIENT(this) ) {
+        g_warning( "SPGradient::rebuildArray() called for non-mesh gradient" );
+        return;
+    }
+
+    array.read( SP_MESHGRADIENT( this ) );
+
+    has_patches = false;
+    for ( SPObject *ro = firstChild() ; ro ; ro = ro->getNext() ) {
+        if (SP_IS_MESHROW(ro)) {
+            has_patches = true;
+            // std::cout << "  Has Patches" << std::endl;
+            break;
+        }
+    }
+
+    // MESH_FIXME: TO PROPERLY COPY
+    SPGradient *reffed = ref->getObject();
+    if ( !hasPatches() && reffed ) {
+        std::cout << "SPGradient::rebuildArray(): reffed array    NOT IMPLEMENTED!!!" << std::endl;
+        /* Copy array from referenced gradient */
+        array.built = true;   // Prevent infinite recursion.
+        reffed->ensureArray();
+        // if (!reffed->array.nodes.empty()) {
+        //     array.built = reffed->array.built;
+        //     for( uint i = 0; i < reffed->array.nodes.size(); ++i ) {
+        //         array.nodes[i].assign(reffed->array.nodes[i].begin(), reffed->array.nodes[i].end());
+
+        //         // FILL ME
+        //     }
+        //     return;
+        // }
+    }
 }
 
 Geom::Affine
@@ -1489,6 +1807,161 @@ sp_radialgradient_set_position(SPRadialGradient *rg,
     rg->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
 
+/*
+ * Mesh Gradient
+ */
+
+//#define MESH_DEBUG
+
+static void sp_meshgradient_class_init(SPMeshGradientClass *klass);
+static void sp_meshgradient_init(SPMeshGradient *mg);
+
+static void sp_meshgradient_build(SPObject *object,
+                                    SPDocument *document,
+                                    Inkscape::XML::Node *repr);
+static void sp_meshgradient_set(SPObject *object, unsigned key, gchar const *value);
+static Inkscape::XML::Node *sp_meshgradient_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr,
+                                                    guint flags);
+static cairo_pattern_t *sp_meshgradient_create_pattern(SPPaintServer *ps, cairo_t *ct, Geom::OptRect const &bbox, double opacity);
+
+static SPGradientClass *mg_parent_class;
+
+/**
+ * Register SPMeshGradient class and return its type.
+ */
+GType
+sp_meshgradient_get_type()
+{
+    static GType type = 0;
+    if (!type) {
+        GTypeInfo info = {
+            sizeof(SPMeshGradientClass),
+            NULL, NULL,
+            (GClassInitFunc) sp_meshgradient_class_init,
+            NULL, NULL,
+            sizeof(SPMeshGradient),
+            16,
+            (GInstanceInitFunc) sp_meshgradient_init,
+            NULL,   /* value_table */
+        };
+        type = g_type_register_static(SP_TYPE_GRADIENT, "SPMeshGradient", &info, (GTypeFlags)0);
+    }
+    return type;
+}
+
+/**
+ * SPMeshGradient vtable initialization.
+ */
+static void sp_meshgradient_class_init(SPMeshGradientClass *klass)
+{
+#ifdef MESH_DEBUG
+    std::cout << "sp_meshgradient_class_init()" << std::endl;
+#endif
+    SPObjectClass *sp_object_class = (SPObjectClass *) klass;
+    SPPaintServerClass *ps_class = (SPPaintServerClass *) klass;
+
+    mg_parent_class = (SPGradientClass*)g_type_class_ref(SP_TYPE_GRADIENT);
+
+    sp_object_class->build = sp_meshgradient_build;
+    sp_object_class->set = sp_meshgradient_set;
+    sp_object_class->write = sp_meshgradient_write;
+
+    ps_class->pattern_new = sp_meshgradient_create_pattern;
+}
+
+/**
+ * Callback for SPMeshGradient object initialization.
+ */
+static void
+sp_meshgradient_init(SPMeshGradient *mg)
+{
+    // Start coordinate of mesh
+    mg->x.unset(SVGLength::NONE, 0.0, 0.0);
+    mg->y.unset(SVGLength::NONE, 0.0, 0.0);
+}
+
+/**
+ * Set mesh gradient attributes from associated repr.
+ */
+static void
+sp_meshgradient_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+{
+    if (((SPObjectClass *) mg_parent_class)->build)
+        (* ((SPObjectClass *) mg_parent_class)->build)(object, document, repr);
+
+    // Start coordinate of mesh
+    object->readAttr( "x" );
+    object->readAttr( "y" );
+}
+
+/**
+ * Set mesh gradient attribute.
+ */
+static void
+sp_meshgradient_set(SPObject *object, unsigned key, gchar const *value)
+{
+    SPMeshGradient *mg = SP_MESHGRADIENT(object);
+
+    switch (key) {
+        case SP_ATTR_X:
+            if (!mg->x.read(value)) {
+                mg->x.unset(SVGLength::NONE, 0.0, 0.0);
+            }
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        case SP_ATTR_Y:
+            if (!mg->y.read(value)) {
+                mg->y.unset(SVGLength::NONE, 0.0, 0.0);
+            }
+            object->requestModified(SP_OBJECT_MODIFIED_FLAG);
+            break;
+        default:
+            if (((SPObjectClass *) mg_parent_class)->set)
+                ((SPObjectClass *) mg_parent_class)->set(object, key, value);
+            break;
+    }
+}
+
+/**
+ * Write mesh gradient attributes to associated repr.
+ */
+static Inkscape::XML::Node *
+sp_meshgradient_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+{
+
+#ifdef MESH_DEBUG
+    std::cout << "sp_meshgradient_write() ***************************" << std::endl;
+#endif
+    SPMeshGradient *mg = SP_MESHGRADIENT(object);
+
+    if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
+        repr = xml_doc->createElement("svg:meshGradient");
+    }
+
+    if ((flags & SP_OBJECT_WRITE_ALL) || mg->x._set) sp_repr_set_svg_double(repr, "x", mg->x.computed);
+    if ((flags & SP_OBJECT_WRITE_ALL) || mg->y._set) sp_repr_set_svg_double(repr, "y", mg->y.computed);
+
+    if (((SPObjectClass *) mg_parent_class)->write)
+        (* ((SPObjectClass *) mg_parent_class)->write)(object, xml_doc, repr, flags);
+
+    return repr;
+}
+
+/**
+ * Directly set properties of mesh gradient and request modified.
+ */
+void
+sp_meshgradient_set_position(SPMeshGradient *mg, gdouble x, gdouble y)
+{
+    g_return_if_fail(mg != NULL);
+    g_return_if_fail(SP_IS_MESHGRADIENT(mg));
+
+    mg->x.set(SVGLength::NONE, x, x);
+    mg->y.set(SVGLength::NONE, y, y);
+
+    mg->requestModified(SP_OBJECT_MODIFIED_FLAG);
+}
+
 /* CAIRO RENDERING STUFF */
 
 static void
@@ -1571,6 +2044,126 @@ sp_radialgradient_create_pattern(SPPaintServer *ps,
 }
 
 static cairo_pattern_t *
+sp_meshgradient_create_pattern(SPPaintServer *ps,
+                               cairo_t */* ct */,
+                               Geom::OptRect const &bbox,
+                               double opacity)
+{
+
+    using Geom::X;
+    using Geom::Y;
+
+#ifdef MESH_DEBUG
+    std::cout << "sp_meshgradient_create_pattern: (" << bbox->x0 << "," <<  bbox->y0 << ") (" <<  bbox->x1 << "," << bbox->y1 << ")  " << opacity << std::endl;
+#endif
+    //SPMeshGradient *mg = SP_MESHGRADIENT(ps);
+    SPGradient *gr = SP_GRADIENT(ps);
+
+    gr->ensureArray();
+
+    SPMeshNodeArray* array = &(gr->array);
+
+    cairo_pattern_t *cp = NULL;
+
+#if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 11, 4)
+
+    cp = cairo_pattern_create_mesh();
+
+    for( uint i = 0; i < array->patch_rows(); ++i ) {
+        for( uint j = 0; j < array->patch_columns(); ++j ) {
+
+            SPMeshPatchI patch( &(array->nodes), i, j );
+
+            cairo_mesh_pattern_begin_patch( cp );
+            cairo_mesh_pattern_move_to( cp, patch.getPoint( 0, 0 )[X], patch.getPoint( 0, 0 )[Y] ); 
+
+            for( uint k = 0; k < 4; ++k ) {
+#ifdef DEBUG_MESH
+                std::cout << i << " " << j << " "
+                          << patch.getPathType( k ) << "  (";
+                for( int p = 0; p < 4; ++p ) {
+                    std::cout << patch.getPoint( k, p );
+                }
+                std::cout << ") "
+                          << patch.getColor( k ).toString() << std::endl;
+#endif
+
+                switch ( patch.getPathType( k ) ) {
+                    case 'l':
+                    case 'L':
+                    case 'z':
+                    case 'Z':
+                        cairo_mesh_pattern_line_to( cp,
+                                                    patch.getPoint( k, 3 )[X],
+                                                    patch.getPoint( k, 3 )[Y] );
+                        break;
+                    case 'c':
+                    case 'C':
+                    {
+                        std::vector< Geom::Point > pts = patch.getPointsForSide( k );
+                        cairo_mesh_pattern_curve_to( cp,
+                                                     pts[1][X], pts[1][Y],
+                                                     pts[2][X], pts[2][Y],
+                                                     pts[3][X], pts[3][Y] );
+                        break;
+                    }
+                    default:
+                        // Shouldn't happen
+                        std::cout << "sp_meshgradient_create_pattern: path error" << std::endl;
+                }
+
+                if( patch.tensorIsSet(k) ) {
+                    // Tensor point defined relative to corner.
+                    Geom::Point t = patch.getTensorPoint(k);
+                    cairo_mesh_pattern_set_control_point( cp, k, t[X], t[Y] );
+                    //std::cout << "  sp_meshgradient_create_pattern: tensor " << k
+                    //          << " set to " << t << "." << std::endl;
+                } else {
+                    // Geom::Point t = patch.coonsTensorPoint(k);
+                    //std::cout << "  sp_meshgradient_create_pattern: tensor " << k
+                    //          << " calculated as " << t << "." <<std::endl;
+                }
+
+                cairo_mesh_pattern_set_corner_color_rgba(
+                    cp, k,
+                    patch.getColor( k ).v.c[0], 
+                    patch.getColor( k ).v.c[1], 
+                    patch.getColor( k ).v.c[2], 
+                    patch.getOpacity( k ) * opacity );
+            }
+
+            cairo_mesh_pattern_end_patch( cp );
+        }
+    }
+
+    // set pattern matrix
+    Geom::Affine gs2user = gr->gradientTransform;
+    if (gr->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX) {
+        Geom::Affine bbox2user(bbox->width(), 0, 0, bbox->height(), bbox->left(), bbox->top());
+        gs2user *= bbox2user;
+    }
+    ink_cairo_pattern_set_matrix(cp, gs2user.inverse());
+
+#else
+    static bool shown = false;
+    if( !shown ) {
+        std::cout << "sp_meshgradient_create_pattern: needs cairo >= 1.11.4, using "
+                  << cairo_version_string() << std::endl;
+        shown = true;
+    }
+#endif
+
+/*
+    cairo_pattern_t *cp = cairo_pattern_create_radial(
+        rg->fx.computed, rg->fy.computed, 0,
+        rg->cx.computed, rg->cy.computed, rg->r.computed);
+    sp_gradient_pattern_common_setup(cp, gr, bbox, opacity);
+*/
+
+    return cp;
+}
+
+static cairo_pattern_t *
 sp_lineargradient_create_pattern(SPPaintServer *ps,
                                  cairo_t */* ct */,
                                  Geom::OptRect const &bbox,
@@ -1593,18 +2186,29 @@ sp_lineargradient_create_pattern(SPPaintServer *ps,
 cairo_pattern_t *
 sp_gradient_create_preview_pattern(SPGradient *gr, double width)
 {
-    gr->ensureVector();
+    cairo_pattern_t *pat = NULL;
 
-    cairo_pattern_t *pat = cairo_pattern_create_linear(0, 0, width, 0);
+    if( gr->get_type() != SP_GRADIENT_TYPE_MESH ) { 
 
-    for (std::vector<SPGradientStop>::iterator i = gr->vector.stops.begin();
-         i != gr->vector.stops.end(); ++i)
-    {
-        cairo_pattern_add_color_stop_rgba(pat, i->offset,
-            i->color.v.c[0], i->color.v.c[1], i->color.v.c[2], i->opacity);
+        gr->ensureVector();
+
+        pat = cairo_pattern_create_linear(0, 0, width, 0);
+
+        for (std::vector<SPGradientStop>::iterator i = gr->vector.stops.begin();
+             i != gr->vector.stops.end(); ++i)
+        {
+            cairo_pattern_add_color_stop_rgba(pat, i->offset,
+              i->color.v.c[0], i->color.v.c[1], i->color.v.c[2], i->opacity);
+        }
     }
 
     return pat;
+}
+
+void
+sp_meshgradient_repr_write(SPMeshGradient *mg)
+{
+    mg->array.write( mg );
 }
 
 /*

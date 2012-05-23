@@ -1,5 +1,3 @@
-#define __INKSCAPE_CTRLCURVE_C__
-
 /*
  * Simple bezier curve used for Mesh Gradients
  *

@@ -17,4 +17,4 @@ struct SPDesktop;
 
 void sp_gradient_toolbox_prep(SPDesktop * /*desktop*/, GtkActionGroup* mainActions, GObject* holder);
 
-#endif /* !SEEN_SELECT_TOOLBAR_H */
+#endif /* !SEEN_GRADIENT_TOOLBAR_H */

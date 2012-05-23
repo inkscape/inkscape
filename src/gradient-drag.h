@@ -8,6 +8,7 @@
  *   bulia byak <bulia@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Tavmjong Bah <tavmjong@free.fr>
  *
  * Copyright (C) 2012 Authors
  * Copyright (C) 2007 Johan Engelen
@@ -26,12 +27,14 @@
 
 #include "knot-enums.h"
 #include "sp-gradient.h" // TODO refactor enums to external .h file
+#include "sp-mesh-array.h"
 
 struct SPKnot;
 
 class SPDesktop;
 class SPCSSAttr;
 class SPLinearGradient;
+class SPMeshGradient;
 class SPItem;
 class SPObject;
 class SPRadialGradient;
@@ -98,10 +101,14 @@ struct GrDragger {
     void deselect();
     bool isSelected();
 
+    /* Given one GrDraggable, these all update other draggables belonging to same GrDragger */
     void moveThisToDraggable(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke, bool write_repr);
     void moveOtherToDraggable(SPItem *item, GrPointType point_type, gint point_i, Inkscape::PaintTarget fill_or_stroke, bool write_repr);
     void updateMidstopDependencies(GrDraggable *draggable, bool write_repr);
     void updateDependencies(bool write_repr);
+
+    /* Update handles/tensors when mesh corner moved */
+    void updateHandles( Geom::Point pc_old,  MeshNodeOperation op );
 
     bool mayMerge(GrDragger *other);
     bool mayMerge(GrDraggable *da2);
@@ -184,12 +191,14 @@ public: // FIXME: make more of this private!
 private:
     void deselect_all();
 
-    void addLine(SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::PaintTarget fill_or_stroke);
+    void addLine( SPItem *item, Geom::Point p1, Geom::Point p2, Inkscape::PaintTarget fill_or_stroke);
+    void addCurve(SPItem *item, Geom::Point p0, Geom::Point p1, Geom::Point p2, Geom::Point p3, Inkscape::PaintTarget fill_or_stroke);
 
     void addDragger(GrDraggable *draggable);
 
     void addDraggersRadial(SPRadialGradient *rg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
     void addDraggersLinear(SPLinearGradient *lg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
+    void addDraggersMesh(  SPMeshGradient   *mg, SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 
     bool styleSet( const SPCSSAttr *css );
 

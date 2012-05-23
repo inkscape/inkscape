@@ -42,6 +42,8 @@ ink_common_sources +=	\
 	widgets/lpe-toolbar.h	   \
 	widgets/measure-toolbar.cpp	\
 	widgets/measure-toolbar.h	\
+	widgets/mesh-toolbar.cpp	\
+	widgets/mesh-toolbar.h		\
 	widgets/node-toolbar.cpp	\
 	widgets/node-toolbar.h	\
 	widgets/paint-selector.cpp	\

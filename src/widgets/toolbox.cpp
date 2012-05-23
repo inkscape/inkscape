@@ -76,6 +76,7 @@
 #include "erasor-toolbar.h"
 #include "gradient-toolbar.h"
 #include "lpe-toolbar.h"
+#include "mesh-toolbar.h"
 #include "measure-toolbar.h"
 #include "node-toolbar.h"
 #include "rect-toolbar.h"
@@ -157,6 +158,7 @@ static struct {
     { "SPTextContext",     "text_tool",      SP_VERB_CONTEXT_TEXT, SP_VERB_CONTEXT_TEXT_PREFS },
     { "SPConnectorContext","connector_tool", SP_VERB_CONTEXT_CONNECTOR, SP_VERB_CONTEXT_CONNECTOR_PREFS },
     { "SPGradientContext", "gradient_tool",  SP_VERB_CONTEXT_GRADIENT, SP_VERB_CONTEXT_GRADIENT_PREFS },
+    { "SPMeshContext",     "mesh_tool",      SP_VERB_CONTEXT_MESH, SP_VERB_CONTEXT_MESH_PREFS },
     { "SPDropperContext",  "dropper_tool",   SP_VERB_CONTEXT_DROPPER, SP_VERB_CONTEXT_DROPPER_PREFS },
     { NULL, NULL, 0, 0 }
 };
@@ -209,8 +211,10 @@ static struct {
       SP_VERB_INVALID, 0, 0},
     { "SPConnectorContext", "connector_toolbox", 0, sp_connector_toolbox_prep,   "ConnectorToolbar",
       SP_VERB_INVALID, 0, 0},
-      { "SPGradientContext", "gradient_toolbox", 0, sp_gradient_toolbox_prep, "GradientToolbar",
-          SP_VERB_INVALID, 0, 0},
+    { "SPGradientContext", "gradient_toolbox", 0, sp_gradient_toolbox_prep, "GradientToolbar",
+      SP_VERB_INVALID, 0, 0},
+    { "SPMeshContext", "mesh_toolbox", 0, sp_mesh_toolbox_prep, "MeshToolbar",
+      SP_VERB_INVALID, 0, 0},
     { "SPFloodContext",  "paintbucket_toolbox",  0, sp_paintbucket_toolbox_prep, "PaintbucketToolbar",
       SP_VERB_CONTEXT_PAINTBUCKET_PREFS, "/tools/paintbucket", N_("Style of Paint Bucket fill objects")},
     { NULL, NULL, NULL, NULL, NULL, SP_VERB_INVALID, NULL, NULL }
@@ -504,6 +508,18 @@ static gchar const * ui_descr =
         "    <toolitem action='GradientEditOffsetAction' />"
         "    <toolitem action='GradientEditAddAction' />"
         "    <toolitem action='GradientEditDeleteAction' />"
+        "  </toolbar>"
+
+        "  <toolbar name='MeshToolbar'>"
+        "    <toolitem action='MeshNewTypeAction' />"
+        "    <toolitem action='MeshNewFillStrokeAction' />"
+        "    <toolitem action='MeshRowAction' />"
+        "    <toolitem action='MeshColumnAction' />"
+        "    <separator />"
+//        "    <toolitem action='MeshEditFillAction' />"
+//        "    <toolitem action='MeshEditStrokeAction' />"
+//        "    <toolitem action='MeshShowHandlesAction' />"
+        "    <separator />"
         "  </toolbar>"
 
         "  <toolbar name='DropperToolbar'>"
@@ -1330,6 +1346,9 @@ void setup_tool_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
         "   <!-- Fill -->"
         "    <toolitem action='ToolPaintBucket' />"
         "    <toolitem action='ToolGradient' />"
+#ifdef WITH_MESH
+        "    <toolitem action='ToolMesh' />"
+#endif
         "    <toolitem action='ToolDropper' />"
 
         "    <toolitem action='ToolConnector' />"

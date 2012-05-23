@@ -120,6 +120,7 @@ static char const preferences_skeleton[] =
 "    <eventcontext id=\"tweak\" selcue=\"0\" gradientdrag=\"0\" show_handles=\"0\" width=\"0.2\" force=\"0.2\" fidelity=\"0.5\" usepressure=\"1\" style=\"fill:red;stroke:none;\" usecurrent=\"0\"/>\n"
 "    <eventcontext id=\"spray\" selcue=\"1\" gradientdrag=\"0\" usepressure=\"1\" width=\"15\" population=\"70\" mode=\"1\" rotation_variation=\"0\" scale_variation=\"0\" standard_deviation=\"70\" mean=\"0\"/>\n"
 "    <eventcontext id=\"gradient\" selcue=\"1\"/>\n"
+"    <eventcontext id=\"mesh\" selcue=\"1\"/>\n"
 "    <eventcontext id=\"zoom\" selcue=\"1\" gradientdrag=\"0\"/>\n"
 "    <eventcontext id=\"dropper\" selcue=\"1\" gradientdrag=\"1\" pick=\"1\" setalpha=\"1\"/>\n"
 "    <eventcontext id=\"select\" selcue=\"1\" gradientdrag=\"0\"/>\n"

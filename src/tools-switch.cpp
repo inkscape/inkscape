@@ -49,6 +49,7 @@
 #include "sp-text.h"
 #include "sp-flowtext.h"
 #include "gradient-context.h"
+#include "mesh-context.h"
 #include "zoom-context.h"
 #include "measure-context.h"
 #include "dropper-context.h"
@@ -75,6 +76,7 @@ static char const *const tool_names[] = {
     "/tools/calligraphic",
     "/tools/text",
     "/tools/gradient",
+    "/tools/mesh",
     "/tools/zoom",
     "/tools/measure",
     "/tools/dropper",
@@ -204,7 +206,14 @@ tools_switch(SPDesktop *dt, int num)
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
             dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, <b>drag handles</b> to adjust gradients."));
             break;
+        case TOOLS_MESH:
+            dt->set_event_context(SP_TYPE_MESH_CONTEXT, tool_names[num]);
+            dt->activate_guides(false);
+            inkscape_eventcontext_set(sp_desktop_event_context(dt));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> or <b>double click</b> to create a mesh on selected objects, <b>drag handles</b> to adjust meshes."));
+            break;
         case TOOLS_ZOOM:
+            std::cout << "tools-switch.cpp: TOOLS_ZOOM" << std::endl;
             dt->set_event_context(SP_TYPE_ZOOM_CONTEXT, tool_names[num]);
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));

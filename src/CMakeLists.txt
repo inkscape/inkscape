@@ -43,6 +43,9 @@ set(sp_SRC
 	sp-line.cpp
 	sp-lpe-item.cpp
 	sp-mask.cpp
+	sp-mesh-array.cpp
+	sp-mesh-patch.cpp
+	sp-mesh-row.cpp
 	sp-metadata.cpp
 	sp-metrics.cpp
 	sp-missing-glyph.cpp
@@ -127,6 +130,13 @@ set(sp_SRC
 	sp-lpe-item.h
 	sp-marker-loc.h
 	sp-mask.h
+	sp-mesh-array.h
+	sp-mesh-gradient-fns.h
+	sp-mesh-gradient.h
+	sp-mesh-patch-fns.h
+	sp-mesh-patch.h
+	sp-mesh-row-fns.h
+	sp-mesh-row.h
 	sp-metadata.h
 	sp-metric.h
 	sp-metrics.h
@@ -239,6 +249,7 @@ set(inkscape_SRC
 	marker.cpp
 	measure-context.cpp
 	media.cpp
+	mesh-context.cpp
 	message-context.cpp
 	message-stack.cpp
 	mod360.cpp
@@ -402,6 +413,7 @@ set(inkscape_SRC
 	media.h
 	memeq.h
 	menus-skeleton.h
+	mesh-context.h
 	message-context.h
 	message-stack.h
 	message.h

@@ -9,6 +9,7 @@ set(widgets_SRC
 	  erasor-toolbar.cpp
 	  lpe-toolbar.cpp
 	  measure-toolbar.cpp
+	  mesh-toolbar.cpp
 	  node-toolbar.cpp
 	  paintbucket-toolbar.cpp
 	  pencil-toolbar.cpp
@@ -65,6 +66,7 @@ set(widgets_SRC
 	  erasor-toolbar.h
 	  lpe-toolbar.h
 	  measure-toolbar.h
+	  mesh-toolbar.h
 	  node-toolbar.h
 	  paintbucket-toolbar.h
 	  pencil-toolbar.h

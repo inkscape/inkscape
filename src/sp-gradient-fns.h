@@ -12,12 +12,15 @@
 #include "sp-gradient-units.h"
 
 class SPGradient;
+class SPMeshGradient;
 
 SPGradientSpread sp_gradient_get_spread (SPGradient *gradient);
 
 /* Gradient repr methods */
 void sp_gradient_repr_write_vector(SPGradient *gr);
 void sp_gradient_repr_clear_vector(SPGradient *gr);
+
+void sp_meshgradient_repr_write(SPMeshGradient *mg);
 
 cairo_pattern_t *sp_gradient_create_preview_pattern(SPGradient *gradient, double width);
 

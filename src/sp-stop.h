@@ -43,6 +43,8 @@ struct SPStop : public SPObject {
     /// \todo fixme: Implement SPSVGNumber or something similar.
     gfloat opacity;
 
+    Glib::ustring * path_string;
+    //SPCurve path;
 
     static SPColor readStopColor( Glib::ustring const &styleStr, guint32 dfl = 0 );
 
@@ -50,6 +52,7 @@ struct SPStop : public SPObject {
     SPStop* getPrevStop();
 
     SPColor getEffectiveColor() const;
+
 };
 
 /// The SPStop vtable.

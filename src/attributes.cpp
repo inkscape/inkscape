@@ -289,6 +289,8 @@ static SPStyleProp const props[] = {
     /* SPRadialGradient */
     {SP_ATTR_FX, "fx"},
     {SP_ATTR_FY, "fy"},
+    /* SPMeshPatch */
+    {SP_ATTR_TENSOR, "tensor"},
     /* SPPattern */
     {SP_ATTR_PATTERNUNITS, "patternUnits"},
     {SP_ATTR_PATTERNCONTENTUNITS, "patternContentUnits"},
@@ -453,6 +455,7 @@ static SPStyleProp const props[] = {
     /* Gradient */
     {SP_PROP_STOP_COLOR, "stop-color"},
     {SP_PROP_STOP_OPACITY, "stop-opacity"},
+    {SP_PROP_STOP_PATH, "path"},
     /* Interactivity */
     {SP_PROP_POINTER_EVENTS, "pointer-events"},
     /* Paint */

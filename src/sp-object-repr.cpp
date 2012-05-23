@@ -17,6 +17,9 @@
 #include "sp-root.h"
 #include "sp-image.h"
 #include "sp-linear-gradient-fns.h"
+#include "sp-mesh-gradient-fns.h"
+#include "sp-mesh-row-fns.h"
+#include "sp-mesh-patch-fns.h"
 #include "sp-path.h"
 #include "sp-radial-gradient-fns.h"
 #include "sp-rect.h"
@@ -186,6 +189,9 @@ populate_dtables()
         { "svg:linearGradient", SP_TYPE_LINEARGRADIENT },
         { "svg:marker", SP_TYPE_MARKER },
         { "svg:mask", SP_TYPE_MASK },
+        { "svg:meshGradient", SP_TYPE_MESHGRADIENT },
+        { "svg:meshRow", SP_TYPE_MESHROW },
+        { "svg:meshPatch", SP_TYPE_MESHPATCH },
         { "svg:metadata", SP_TYPE_METADATA },
         { "svg:path", SP_TYPE_PATH },
         { "svg:pattern", SP_TYPE_PATTERN },
