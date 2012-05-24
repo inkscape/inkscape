@@ -346,6 +346,8 @@ private:
     Gtk::HBox hide_box;
     Inkscape::UI::Widget::CheckButton    hide_export;
 
+    Inkscape::UI::Widget::CheckButton closeWhenDone;
+
     /* Export Button widgets */
     Gtk::HButtonBox button_box;
     Gtk::Button export_button;

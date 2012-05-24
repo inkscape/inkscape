@@ -63,6 +63,8 @@
 
 #include "helper/png-write.h"
 
+#include "libgdl/gdl-dock-item.h"
+
 // required to set status message after export
 #include "desktop.h"
 #include "message-stack.h"
@@ -141,6 +143,7 @@ Export::Export (void) :
     batch_export(_("B_atch export all selected objects"), _("Export each selected object into its own PNG file, using export hints if any (caution, overwrites without asking!)")),
     hide_box(false, 5),
     hide_export(_("Hide a_ll except selected"), _("In the exported image, hide all objects except those that are selected")),
+    closeWhenDone(_("Close this dialog when complete"), _("Once the export completes, close this dialog")),
     button_box(Gtk::BUTTONBOX_END),
     export_label(_("_Export"), 1),
     export_image(Gtk::StockID(Gtk::Stock::APPLY), Gtk::ICON_SIZE_BUTTON),
@@ -310,6 +313,9 @@ Export::Export (void) :
     hide_export.set_sensitive(true);
     hide_box.pack_start(hide_export, false, false);
 
+    Gtk::HBox *closeWhenBox = Gtk::manage(new Gtk::HBox(false, 5));
+    closeWhenBox->pack_start(closeWhenDone, Gtk::PACK_SHRINK);
+
     /* Export Button row */
     button_box.set_border_width(3);
     Gtk::HBox* export_image_label = new Gtk::HBox(false, 3);
@@ -327,6 +333,7 @@ Export::Export (void) :
     contents->pack_start(singleexport_box);
     contents->pack_start(batch_box);
     contents->pack_start(hide_box);
+    contents->pack_start(*closeWhenBox);
     contents->pack_end(button_box, Gtk::PACK_SHRINK);
     contents->pack_end(_prog, Gtk::PACK_EXPAND_WIDGET);
 
@@ -925,6 +932,8 @@ void Export::onExport ()
     SPNamedView *nv = sp_desktop_namedview(desktop);
     SPDocument *doc = sp_desktop_document (desktop);
 
+    bool exportSuccessful = false;
+
     bool hide = hide_export.get_active ();
     if (batch_export.get_active ()) {
         // Batch export of selected objects
@@ -1015,6 +1024,7 @@ void Export::onExport ()
         delete prog_dlg;
         prog_dlg = NULL;
         interrupted = false;
+        exportSuccessful = (export_count > 0);
     } else {
         Glib::ustring filename = filename_entry.get_text();
 
@@ -1084,6 +1094,7 @@ void Export::onExport ()
             g_free(safeFile);
             g_free(error);
         } else if (status == EXPORT_OK) {
+            exportSuccessful = true;
             gchar *safeFile = Inkscape::IO::sanitizeString(path.c_str());
 
             desktop->messageStack()->flashF(Inkscape::INFORMATION_MESSAGE, _("Drawing exported to <b>%s</b>."), safeFile);
@@ -1188,6 +1199,17 @@ void Export::onExport ()
         }
     }
 
+    if (exportSuccessful && closeWhenDone.get_active()) {
+        for ( Gtk::Container *parent = get_parent(); parent; parent = parent->get_parent()) {
+            if ( GDL_IS_DOCK_ITEM(parent->gobj()) ) {
+                GdlDockItem *item = GDL_DOCK_ITEM(parent->gobj());
+                if (item) {
+                    gdl_dock_item_hide_item(item);
+                }
+                break;
+            }
+        }
+    }
 } // end of sp_export_export_clicked()
 
 /// Called when Browse button is clicked
