@@ -660,7 +660,10 @@ GrDrag::GrDrag(SPDesktop *desktop) :
     updateLevels();
 
     if (desktop->gr_item) {
-        setSelected(getDraggerFor(desktop->gr_item, desktop->gr_point_type, desktop->gr_point_i, desktop->gr_fill_or_stroke));
+        GrDragger *dragger = getDraggerFor(desktop->gr_item, desktop->gr_point_type, desktop->gr_point_i, desktop->gr_fill_or_stroke);
+        if (dragger) {
+            setSelected(dragger);
+        }
     }
 }
 
