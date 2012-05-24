@@ -6,6 +6,7 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Peter Bostrom
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
  *   Kris De Gussem <Kris.DeGussem@gmail.com>
@@ -66,6 +67,10 @@
 
 #include "helper/png-write.h"
 
+// required to set status message after export
+#include "desktop.h"
+#include "message-stack.h"
+
 #ifdef WIN32
 #include <windows.h>
 #include <commdlg.h>
@@ -86,6 +91,33 @@
 #include "verbs.h"
 #include "export.h"
 
+namespace {
+
+class MessageCleaner
+{
+public:
+    MessageCleaner(Inkscape::MessageId messageId, SPDesktop *desktop) :
+        _desktop(desktop),
+        _messageId(messageId)
+    {
+    }
+
+    ~MessageCleaner()
+    {
+        if (_messageId && _desktop) {
+            _desktop->messageStack()->cancel(_messageId);
+        }
+    }
+
+private:
+    MessageCleaner(MessageCleaner const &other);
+    MessageCleaner &operator=(MessageCleaner const &other);
+
+    SPDesktop *_desktop;
+    Inkscape::MessageId _messageId;
+};
+
+} // namespace
 
 namespace Inkscape {
 namespace UI {
@@ -804,7 +836,7 @@ unsigned int Export::onProgressCallback (float value, void *dlg)
 
 Gtk::Dialog * Export::create_progress_dialog (Glib::ustring progress_text) {
     Gtk::Dialog *dlg = new Gtk::Dialog(_("Export in progress"), TRUE);
-    
+
     Gtk::ProgressBar *prg = new Gtk::ProgressBar ();
     prg->set_text(progress_text);
     dlg->set_data ("progress", prg);
@@ -828,7 +860,7 @@ Gtk::Dialog * Export::create_progress_dialog (Glib::ustring progress_text) {
 Glib::ustring Export::filename_add_extension (Glib::ustring filename, Glib::ustring extension)
 {
     Glib::ustring::size_type dot;
-    
+
     dot = filename.find_last_of(".");
     if ( !dot )
     {
@@ -866,24 +898,29 @@ Glib::ustring Export::absolutize_path_from_document_location (SPDocument *doc, c
 /// Called when export button is clicked
 void Export::onExport ()
 {
-    if (!SP_ACTIVE_DESKTOP) return;
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (!desktop) return;
 
-    SPNamedView *nv = sp_desktop_namedview(SP_ACTIVE_DESKTOP);
-    SPDocument *doc = sp_desktop_document (SP_ACTIVE_DESKTOP);
+    SPNamedView *nv = sp_desktop_namedview(desktop);
+    SPDocument *doc = sp_desktop_document (desktop);
 
     bool hide = hide_export.get_active ();
     if (batch_export.get_active ()) {
         // Batch export of selected objects
 
-        gint num = g_slist_length(const_cast<GSList *>(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList()));
+        gint num = g_slist_length(const_cast<GSList *>(sp_desktop_selection(desktop)->itemList()));
         gint n = 0;
 
-        if (num < 1)
+        if (num < 1) {
+            desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("No items selected."));
             return;
+        }
 
-        prog_dlg = create_progress_dialog (Glib::ustring::compose(_("Exporting %1 files"),num));
+        prog_dlg = create_progress_dialog(Glib::ustring::compose(_("Exporting %1 files"), num));
 
-        for (GSList *i = const_cast<GSList *>(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList());
+        gint export_count = 0;
+
+        for (GSList *i = const_cast<GSList *>(sp_desktop_selection(desktop)->itemList());
                 i != NULL;
                 i = i->next) {
             if (interrupted){
@@ -917,38 +954,52 @@ void Export::onExport ()
                 gint height = (gint) (area->height() * dpi / PX_PER_IN + 0.5);
 
                 if (width > 1 && height > 1) {
-                    /* Do export */
+                    // Do export
+                    gchar * safeFile = Inkscape::IO::sanitizeString(path.c_str());
+                    MessageCleaner msgCleanup(desktop->messageStack()->pushF(Inkscape::IMMEDIATE_MESSAGE,
+                                                                             _("Exporting file <b>%s</b>..."), safeFile), desktop);
+                    MessageCleaner msgFlashCleanup(desktop->messageStack()->flashF(Inkscape::IMMEDIATE_MESSAGE,
+                                                                                   _("Exporting file <b>%s</b>..."), safeFile), desktop);
+
                     if (!sp_export_png_file (doc, path.c_str(),
                                              *area, width, height, dpi, dpi,
                                              nv->pagecolor,
                                              NULL, NULL, TRUE,  // overwrite without asking
-                                             hide ? const_cast<GSList *>(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList()) : NULL
+                                             hide ? const_cast<GSList *>(sp_desktop_selection(desktop)->itemList()) : NULL
                             )) {
-                        gchar * error;
-                        gchar * safeFile = Inkscape::IO::sanitizeString(path.c_str());
-                        error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
+                        gchar * error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
+
+                        desktop->messageStack()->flashF(Inkscape::ERROR_MESSAGE,
+                                                        _("Could not export to filename <b>%s</b>."), safeFile);
+
                         sp_ui_error_dialog(error);
-                        g_free(safeFile);
                         g_free(error);
+                    } else {
+                        ++export_count; // one more item exported successfully
                     }
+                    g_free(safeFile);
                 }
             }
+
             n++;
             onProgressCallback((float)n/num, prog_dlg);
         }
 
+        desktop->messageStack()->flashF(Inkscape::INFORMATION_MESSAGE,
+                                        _("Successfully exported <b>%d</b> files from <b>%d</b> selected items."), export_count, num);
+
         delete prog_dlg;
         prog_dlg = NULL;
         interrupted = false;
-
     } else {
         Glib::ustring filename = filename_entry.get_text();
 
         if (filename.empty()){
+            desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("You have to enter a filename."));
             sp_ui_error_dialog(_("You have to enter a filename"));
             return;
         }
-        
+
         float const x0 = getValuePx(x0_adj);
         float const y0 = getValuePx(y0_adj);
         float const x1 = getValuePx(x1_adj);
@@ -959,7 +1010,8 @@ void Export::onExport ()
         unsigned long int const height = int(getValue(bmheight_adj) + 0.5);
 
         if (!((x1 > x0) && (y1 > y0) && (width > 0) && (height > 0))) {
-            sp_ui_error_dialog (_("The chosen area to be exported is invalid"));
+            desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("The chosen area to be exported is invalid."));
+            sp_ui_error_dialog(_("The chosen area to be exported is invalid"));
             return;
         }
 
@@ -975,7 +1027,10 @@ void Export::onExport ()
             gchar *safeDir = Inkscape::IO::sanitizeString(dirname.c_str());
             gchar *error = g_strdup_printf(_("Directory %s does not exist or is not a directory.\n"),
                                            safeDir);
+
+            desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, error);
             sp_ui_error_dialog(error);
+
             g_free(safeDir);
             g_free(error);
             return;
@@ -987,18 +1042,29 @@ void Export::onExport ()
         prog_dlg = create_progress_dialog (Glib::ustring::compose(_("Exporting %1 (%2 x %3)"), fn, width, height));
 
         /* Do export */
-        if (!sp_export_png_file (sp_desktop_document (SP_ACTIVE_DESKTOP), path.c_str(),
-                                 Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1)), width, height, xdpi, ydpi,
-                                 nv->pagecolor,
-                                 onProgressCallback, (void*)prog_dlg, FALSE,
-                                 hide ? const_cast<GSList *>(sp_desktop_selection(SP_ACTIVE_DESKTOP)->itemList()) : NULL
-                )) {
-            gchar * error;
+        ExportResult status = sp_export_png_file(sp_desktop_document(desktop), path.c_str(),
+                                                 Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1)), width, height, xdpi, ydpi,
+                                                 nv->pagecolor,
+                                                 onProgressCallback, (void*)prog_dlg, FALSE,
+                                                 hide ? const_cast<GSList *>(sp_desktop_selection(desktop)->itemList()) : NULL
+            );
+        if (status == EXPORT_ERROR) {
             gchar * safeFile = Inkscape::IO::sanitizeString(path.c_str());
-            error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
+            gchar * error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
+
+            desktop->messageStack()->flash(Inkscape::ERROR_MESSAGE, error);
             sp_ui_error_dialog(error);
+
             g_free(safeFile);
             g_free(error);
+        } else if (status == EXPORT_OK) {
+            gchar *safeFile = Inkscape::IO::sanitizeString(path.c_str());
+
+            desktop->messageStack()->flashF(Inkscape::INFORMATION_MESSAGE, _("Drawing exported to <b>%s</b>."), safeFile);
+
+            g_free(safeFile);
+        } else {
+            desktop->messageStack()->flash(Inkscape::INFORMATION_MESSAGE, _("Export aborted."));
         }
 
         /* Reset the filename so that it can be changed again by changing
@@ -1050,7 +1116,7 @@ void Export::onExport ()
 
                 bool saved = DocumentUndo::getUndoSensitive(doc);
                 DocumentUndo::setUndoSensitive(doc, false);
-                reprlst = sp_desktop_selection(SP_ACTIVE_DESKTOP)->reprList();
+                reprlst = sp_desktop_selection(desktop)->reprList();
 
                 for(; reprlst != NULL; reprlst = reprlst->next) {
                     Inkscape::XML::Node * repr = static_cast<Inkscape::XML::Node *>(reprlst->data);
@@ -1234,7 +1300,7 @@ void Export::detectSize() {
     static const selection_type test_order[SELECTION_NUMBER_OF] = {SELECTION_SELECTION, SELECTION_DRAWING, SELECTION_PAGE, SELECTION_CUSTOM};
     selection_type this_test[SELECTION_NUMBER_OF + 1];
     selection_type key = SELECTION_NUMBER_OF;
-    
+
     Geom::Point x(getValuePx(x0_adj),
                   getValuePx(y0_adj));
     Geom::Point y(getValuePx(x1_adj),

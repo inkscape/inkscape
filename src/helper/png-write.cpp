@@ -4,6 +4,7 @@
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   Whoever wrote this example in libpng documentation
+ *   Peter Bostrom
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
  *
@@ -379,43 +380,36 @@ static void hide_other_items_recursively(SPObject *o, GSList *list, unsigned dke
 }
 
 
-/**
- * Export the given document as a Portable Network Graphics (PNG) file.
- *
- * \return true if succeeded (or if no action was taken), false if an error occurred.
- */
-bool sp_export_png_file (SPDocument *doc, gchar const *filename,
-                   double x0, double y0, double x1, double y1,
-                   unsigned long int width, unsigned long int height, double xdpi, double ydpi,
-                   unsigned long bgcolor,
-                   unsigned int (*status) (float, void *),
-                   void *data, bool force_overwrite,
-                   GSList *items_only)
+ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
+                                double x0, double y0, double x1, double y1,
+                                unsigned long int width, unsigned long int height, double xdpi, double ydpi,
+                                unsigned long bgcolor,
+                                unsigned int (*status) (float, void *),
+                                void *data, bool force_overwrite,
+                                GSList *items_only)
 {
     return sp_export_png_file(doc, filename, Geom::Rect(Geom::Point(x0,y0),Geom::Point(x1,y1)),
                               width, height, xdpi, ydpi, bgcolor, status, data, force_overwrite, items_only);
 }
-bool
-sp_export_png_file(SPDocument *doc, gchar const *filename,
-                   Geom::Rect const &area,
-                   unsigned long width, unsigned long height, double xdpi, double ydpi,
-                   unsigned long bgcolor,
-                   unsigned (*status)(float, void *),
-                   void *data, bool force_overwrite,
-                   GSList *items_only)
+
+ExportResult sp_export_png_file(SPDocument *doc, gchar const *filename,
+                                Geom::Rect const &area,
+                                unsigned long width, unsigned long height, double xdpi, double ydpi,
+                                unsigned long bgcolor,
+                                unsigned (*status)(float, void *),
+                                void *data, bool force_overwrite,
+                                GSList *items_only)
 {
-    g_return_val_if_fail(doc != NULL, false);
-    g_return_val_if_fail(filename != NULL, false);
-    g_return_val_if_fail(width >= 1, false);
-    g_return_val_if_fail(height >= 1, false);
-    g_return_val_if_fail(!area.hasZeroArea(), false);
+    g_return_val_if_fail(doc != NULL, EXPORT_ERROR);
+    g_return_val_if_fail(filename != NULL, EXPORT_ERROR);
+    g_return_val_if_fail(width >= 1, EXPORT_ERROR);
+    g_return_val_if_fail(height >= 1, EXPORT_ERROR);
+    g_return_val_if_fail(!area.hasZeroArea(), EXPORT_ERROR);
+
 
     if (!force_overwrite && !sp_ui_overwrite_file(filename)) {
-        /* Remark: We return true so as not to invoke an error dialog in case export is cancelled
-           by the user; currently this is safe because the callers only act when false is returned.
-           If this changes in the future we need better distinction of return types (e.g., use int)
-        */
-        return true;
+        // aborted overwrite
+	return EXPORT_ABORTED;
     }
 
     doc->ensureUpToDate();
@@ -482,7 +476,7 @@ sp_export_png_file(SPDocument *doc, gchar const *filename,
     // Hide items, this releases arenaitem
     doc->getRoot()->invoke_hide(dkey);
 
-    return write_status;
+    return write_status ? EXPORT_OK : EXPORT_ERROR;
 }
 
 
