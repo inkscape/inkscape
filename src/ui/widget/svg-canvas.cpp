@@ -38,10 +38,22 @@ SVGCanvas::init (SPDesktop *dt)
     _widget->set_can_focus();
 
     // Set background to white
+#if WITH_GTKMM_3_0
+    // TODO: Use Gtk::StyleContext instead
+    GtkWidget *c_widget = _widget->gobj();
+    GtkStyle *style = gtk_widget_get_style(c_widget);
+    style->bg[GTK_STATE_NORMAL] = style->white;
+    gtk_widget_set_style(c_widget, style);
+#else
     Glib::RefPtr<Gtk::Style> style = _widget->get_style();
     style->set_bg(Gtk::STATE_NORMAL, style->get_white());
     _widget->set_style(style);
+    
+    // extension_events stuff is handled internally in GTK+ 3
+    // TODO: Needs testing
     _widget->set_extension_events(Gdk::EXTENSION_EVENTS_ALL);
+#endif
+    
     _widget->signal_event().connect(sigc::mem_fun(*this, &SVGCanvas::onEvent));
 }
 
