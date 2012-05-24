@@ -692,7 +692,12 @@ InputDialogImpl::InputDialogImpl() :
 //                                          gint              mask,
 //                                          GdkExtensionMode  mode);
 
+
+    // TODO: Extension event stuff has been removed from public API in GTK+ 3
+    // Need to check that this hasn't broken anything
+#if !GTK_CHECK_VERSION(3,0,0)
     gtk_widget_set_extension_events( GTK_WIDGET(testDetector.gobj()), GDK_EXTENSION_EVENTS_ALL );
+#endif
     testDetector.add_events(Gdk::POINTER_MOTION_MASK|Gdk::KEY_PRESS_MASK|Gdk::KEY_RELEASE_MASK |Gdk::PROXIMITY_IN_MASK|Gdk::PROXIMITY_OUT_MASK|Gdk::SCROLL_MASK);
 
     devDetails.attach(keyEntry, 0, 2, rowNum, rowNum + 1,
