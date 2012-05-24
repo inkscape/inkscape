@@ -213,10 +213,10 @@ mesh_selection_changed (Inkscape::Selection *, gpointer data)
 
     //             SPMeshGradient *mg = SP_MESHGRADIENT(server);
 
-    //             uint rows    = 0;//mg->array.patches.size();
-    //             for ( uint i = 0; i < rows; ++i ) {
-    //                 uint columns = 0;//mg->array.patches[0].size();
-    //                 for ( uint j = 0; j < columns; ++j ) {
+    //             guint rows    = 0;//mg->array.patches.size();
+    //             for ( guint i = 0; i < rows; ++i ) {
+    //                 guint columns = 0;//mg->array.patches[0].size();
+    //                 for ( guint j = 0; j < columns; ++j ) {
     //                 }
     //             }
     //         }
@@ -225,7 +225,7 @@ mesh_selection_changed (Inkscape::Selection *, gpointer data)
     // }
 
     // GList* dragger_ptr = drag->draggers;  // Points to GrDragger class (group of GrDraggable)
-    // uint count = 0;
+    // guint count = 0;
     // while( dragger_ptr ) {
 
     //     std::cout << "mesh_selection_changed: dragger: " << ++count << std::endl;
@@ -381,7 +381,7 @@ sp_mesh_context_corner_operation (SPMeshContext *rc, MeshCornerOperation operati
     SPDocument *doc = NULL;
     GrDrag *drag = rc->_grdrag;
 
-    std::map<SPMeshGradient*, std::vector<uint> > points;
+    std::map<SPMeshGradient*, std::vector<guint> > points;
     std::map<SPMeshGradient*, SPItem*> items;
  
     // Get list of selected draggers for each mesh.
@@ -405,10 +405,10 @@ sp_mesh_context_corner_operation (SPMeshContext *rc, MeshCornerOperation operati
     }
 
     // Loop over meshes.
-    for( std::map<SPMeshGradient*, std::vector<uint> >::const_iterator iter = points.begin(); iter != points.end(); ++iter) {
+    for( std::map<SPMeshGradient*, std::vector<guint> >::const_iterator iter = points.begin(); iter != points.end(); ++iter) {
         SPMeshGradient *mg = SP_MESHGRADIENT( iter->first );
         if( iter->second.size() > 0 ) {
-            uint noperation = 0;
+            guint noperation = 0;
             switch (operation) {
 
                 case MG_CORNER_SIDE_TOGGLE:

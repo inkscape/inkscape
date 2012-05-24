@@ -89,10 +89,10 @@ public:
     opacity = 0.0;
   }
   NodeType node_type;
-  uint     node_edge;
+  guint     node_edge;
   bool set;
   Geom::Point p;
-  uint draggable;  // index of on-screen node
+  guint draggable;  // index of on-screen node
   gchar path_type;
   SPColor color;
   gdouble opacity;
@@ -110,21 +110,21 @@ private:
 
 public:
   SPMeshPatchI( std::vector<std::vector< SPMeshNode* > > *n, int r, int c );
-  Geom::Point getPoint( uint side, uint point );
-  std::vector< Geom::Point > getPointsForSide( uint i );
-  void        setPoint( uint side, uint point, Geom::Point p, bool set = true );
-  gchar getPathType( uint i );
-  void  setPathType( uint, gchar t );
-  Geom::Point getTensorPoint( uint i );
-  void        setTensorPoint( uint i, Geom::Point p );
+  Geom::Point getPoint( guint side, guint point );
+  std::vector< Geom::Point > getPointsForSide( guint i );
+  void        setPoint( guint side, guint point, Geom::Point p, bool set = true );
+  gchar getPathType( guint i );
+  void  setPathType( guint, gchar t );
+  Geom::Point getTensorPoint( guint i );
+  void        setTensorPoint( guint i, Geom::Point p );
   bool tensorIsSet();
-  bool tensorIsSet( uint i );
-  Geom::Point coonsTensorPoint( uint i );
+  bool tensorIsSet( guint i );
+  Geom::Point coonsTensorPoint( guint i );
   void    updateNodes();
-  SPColor getColor( uint i );
-  void    setColor( uint i, SPColor c );
-  gdouble getOpacity( uint i );
-  void    setOpacity( uint i, gdouble o );
+  SPColor getColor( guint i );
+  void    setColor( guint i, SPColor c );
+  gdouble getOpacity( guint i );
+  void    setOpacity( guint i, gdouble o );
 };
 
 struct SPMeshGradient;
@@ -160,26 +160,26 @@ public:
   void print();
 
   // Get size of patch
-  uint patch_rows();
-  uint patch_columns();
+  guint patch_rows();
+  guint patch_columns();
 
-  SPMeshNode * node( uint i, uint j ) { return nodes[i][j]; }
+  SPMeshNode * node( guint i, guint j ) { return nodes[i][j]; }
 
   // Operations on corners
-  bool adjacent_corners( uint i, uint j, SPMeshNode* n[4] );
-  uint side_toggle( std::vector< uint > );
-  uint side_arc( std::vector< uint > );
-  uint tensor_toggle( std::vector< uint > );
-  uint color_smooth( std::vector< uint > );
-  uint color_pick( std::vector< uint >, SPItem* );
+  bool adjacent_corners( guint i, guint j, SPMeshNode* n[4] );
+  guint side_toggle( std::vector< guint > );
+  guint side_arc( std::vector< guint > );
+  guint tensor_toggle( std::vector< guint > );
+  guint color_smooth( std::vector< guint > );
+  guint color_pick( std::vector< guint >, SPItem* );
 
   // Update other nodes in response to a node move.
-  void update_handles( uint corner, std::vector< uint > selected_corners, Geom::Point old_p, MeshNodeOperation op );
+  void update_handles( guint corner, std::vector< guint > selected_corners, Geom::Point old_p, MeshNodeOperation op );
 
-  void split_row( uint i, uint n );
-  void split_column( uint j, uint n );
-  void split_row( uint i, double coord );
-  void split_column( uint j, double coord );
+  void split_row( guint i, guint n );
+  void split_column( guint j, guint n );
+  void split_row( guint i, double coord );
+  void split_column( guint j, double coord );
 };
 
 #endif /* !SEEN_SP_MESH_ARRAY_H */

@@ -423,12 +423,12 @@ SPStop *GrDrag::addStopNearPoint(SPItem *item, Geom::Point mouse_p, double toler
             SPMeshGradient *mg = SP_MESHGRADIENT(gradient);
             Geom::Affine transform = Geom::Affine(mg->gradientTransform)*(Geom::Affine)item->i2dt_affine();
 
-            uint rows    = mg->array.patch_rows();
-            uint columns = mg->array.patch_columns();
+            guint rows    = mg->array.patch_rows();
+            guint columns = mg->array.patch_columns();
 
             double closest = 1e10;
-            for( uint i = 0; i < rows; ++i ) {
-                for( uint j = 0; j < columns; ++j ) {
+            for( guint i = 0; i < rows; ++i ) {
+                for( guint j = 0; j < columns; ++j ) {
 
                     SPMeshPatchI patch( &(mg->array.nodes), i, j );
                     Geom::Point p[4];
@@ -1327,7 +1327,7 @@ GrDragger::updateHandles ( Geom::Point pc_old,  MeshNodeOperation op )
     GrDrag *drag = this->parent;
 
     // We need a list of selected corners per mesh if scaling.
-    std::map<SPGradient*, std::vector<uint> > selected_corners;
+    std::map<SPGradient*, std::vector<guint> > selected_corners;
     bool scale = false;
     if( scale == true ) {
 
@@ -1351,7 +1351,7 @@ GrDragger::updateHandles ( Geom::Point pc_old,  MeshNodeOperation op )
     // Now we do the handle moves.
 
     // Loop over all draggables in moved corner
-    std::map<SPGradient*, std::vector<uint> > dragger_corners;
+    std::map<SPGradient*, std::vector<guint> > dragger_corners;
     for ( GSList *j = draggables; j != NULL; j = j->next ) {
         GrDraggable *draggable = (GrDraggable *) j->data;
 
@@ -1378,7 +1378,7 @@ GrDragger::updateHandles ( Geom::Point pc_old,  MeshNodeOperation op )
         mg->array.update_handles( point_i, selected_corners[ gradient ], pcg_old, op );
 
         // Move on-screen knots
-        for( uint i = 0; i < mg->array.handles.size(); ++i ) {
+        for( guint i = 0; i < mg->array.handles.size(); ++i ) {
              GrDragger *handle = drag->getDraggerFor( item, POINT_MG_HANDLE, i, fill_or_stroke ); 
             SPKnot *knot = handle->knot;
             Geom::Point pk = getGradientCoords( item, POINT_MG_HANDLE, i, fill_or_stroke );
@@ -1386,7 +1386,7 @@ GrDragger::updateHandles ( Geom::Point pc_old,  MeshNodeOperation op )
 
         }
 
-        for( uint i = 0; i < mg->array.tensors.size(); ++i ) {
+        for( guint i = 0; i < mg->array.tensors.size(); ++i ) {
 
             GrDragger *handle = drag->getDraggerFor( item, POINT_MG_TENSOR, i, fill_or_stroke ); 
             SPKnot *knot = handle->knot;
@@ -1968,16 +1968,16 @@ void GrDrag::addDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::PaintTa
         return;
     }
 
-    uint icorner = 0;
-    uint ihandle = 0;
-    uint itensor = 0;
+    guint icorner = 0;
+    guint ihandle = 0;
+    guint itensor = 0;
     mg->array.corners.clear();
     mg->array.handles.clear();
     mg->array.tensors.clear();
 
 
-    for( uint i = 0; i < nodes.size(); ++i ) {
-        for( uint j = 0; j < nodes[i].size(); ++j ) {
+    for( guint i = 0; i < nodes.size(); ++i ) {
+        for( guint j = 0; j < nodes[i].size(); ++j ) {
 
             // std::cout << " Draggers: " << i << " " << j << " " << nodes[i][j]->node_type << std::endl;
 
@@ -2153,10 +2153,10 @@ void GrDrag::updateLines()
 
                 SPMeshGradient *mg = SP_MESHGRADIENT(server);
 
-                uint rows    = mg->array.patch_rows();
-                uint columns = mg->array.patch_columns();
-                for ( uint i = 0; i < rows; ++i ) {
-                    for ( uint j = 0; j < columns; ++j ) {
+                guint rows    = mg->array.patch_rows();
+                guint columns = mg->array.patch_columns();
+                for ( guint i = 0; i < rows; ++i ) {
+                    for ( guint j = 0; j < columns; ++j ) {
 
                         std::vector<Geom::Point> h;
 
@@ -2164,7 +2164,7 @@ void GrDrag::updateLines()
 
                         // Top line
                         h = patch.getPointsForSide( 0 );
-                        for( uint p = 0; p < 4; ++p ) {
+                        for( guint p = 0; p < 4; ++p ) {
                             h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                         }
                         addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
@@ -2172,7 +2172,7 @@ void GrDrag::updateLines()
                         // Right line
                         if( j == columns - 1 ) {
                             h = patch.getPointsForSide( 1 );
-                            for( uint p = 0; p < 4; ++p ) {
+                            for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
                             addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
@@ -2181,7 +2181,7 @@ void GrDrag::updateLines()
                         // Bottom line
                         if( i == rows    - 1 ) {
                             h = patch.getPointsForSide( 2 );
-                            for( uint p = 0; p < 4; ++p ) {
+                            for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
                             addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
@@ -2189,7 +2189,7 @@ void GrDrag::updateLines()
 
                         // Left line
                         h = patch.getPointsForSide( 3 );
-                        for( uint p = 0; p < 4; ++p ) {
+                        for( guint p = 0; p < 4; ++p ) {
                             h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                         }
                         addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
@@ -2213,10 +2213,10 @@ void GrDrag::updateLines()
                 // MESH FIXME: TURN ROUTINE INTO FUNCTION AND CALL FOR BOTH FILL AND STROKE.
                 SPMeshGradient *mg = SP_MESHGRADIENT(server);
 
-                uint rows    = mg->array.patch_rows();
-                uint columns = mg->array.patch_columns();
-                for ( uint i = 0; i < rows; ++i ) {
-                    for ( uint j = 0; j < columns; ++j ) {
+                guint rows    = mg->array.patch_rows();
+                guint columns = mg->array.patch_columns();
+                for ( guint i = 0; i < rows; ++i ) {
+                    for ( guint j = 0; j < columns; ++j ) {
 
                         std::vector<Geom::Point> h;
 
@@ -2224,7 +2224,7 @@ void GrDrag::updateLines()
 
                         // Top line
                         h = patch.getPointsForSide( 0 );
-                        for( uint p = 0; p < 4; ++p ) {
+                        for( guint p = 0; p < 4; ++p ) {
                             h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                         }
                         addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
@@ -2232,7 +2232,7 @@ void GrDrag::updateLines()
                         // Right line
                         if( j == columns - 1 ) {
                             h = patch.getPointsForSide( 1 );
-                            for( uint p = 0; p < 4; ++p ) {
+                            for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
                             addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
@@ -2241,7 +2241,7 @@ void GrDrag::updateLines()
                         // Bottom line
                         if( i == rows    - 1 ) {
                             h = patch.getPointsForSide( 2 );
-                            for( uint p = 0; p < 4; ++p ) {
+                            for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
                             addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
@@ -2249,7 +2249,7 @@ void GrDrag::updateLines()
 
                         // Left line
                         h = patch.getPointsForSide( 3 );
-                        for( uint p = 0; p < 4; ++p ) {
+                        for( guint p = 0; p < 4; ++p ) {
                             h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                         }
                         addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );

@@ -84,7 +84,7 @@ SPMeshPatchI::SPMeshPatchI( std::vector<std::vector< SPMeshNode* > > * n, int r,
     row = r*3; // Convert from patch array to node array
     col = c*3;
 
-    uint i = 0;
+    guint i = 0;
     if( row != 0 ) i = 1;
     for( ; i < 4; ++i ) {
         if( nodes->size() < row+i+1 ) {
@@ -92,7 +92,7 @@ SPMeshPatchI::SPMeshPatchI( std::vector<std::vector< SPMeshNode* > > * n, int r,
             nodes->push_back( row );
         }
 
-        uint j = 0;
+        guint j = 0;
         if( col != 0 ) j = 1;
         for( ; j < 4; ++j ) {
             if( (*nodes)[row+i].size() < col+j+1 ){
@@ -110,7 +110,7 @@ SPMeshPatchI::SPMeshPatchI( std::vector<std::vector< SPMeshNode* > > * n, int r,
 /**
    Returns point for side in proper order for patch
 */
-Geom::Point SPMeshPatchI::getPoint( uint s, uint pt ) {
+Geom::Point SPMeshPatchI::getPoint( guint s, guint pt ) {
 
     assert( s < 4 );
     assert( pt < 4 );
@@ -137,7 +137,7 @@ Geom::Point SPMeshPatchI::getPoint( uint s, uint pt ) {
 /**
    Returns vector of points for a side in proper order for a patch (clockwise order).
 */
-std::vector< Geom::Point > SPMeshPatchI::getPointsForSide( uint i ) {
+std::vector< Geom::Point > SPMeshPatchI::getPointsForSide( guint i ) {
 
     assert( i < 4 );
 
@@ -153,7 +153,7 @@ std::vector< Geom::Point > SPMeshPatchI::getPointsForSide( uint i ) {
 /**
    Set point for side in proper order for patch
 */
-void SPMeshPatchI::setPoint( uint s, uint pt, Geom::Point p, bool set ) {
+void SPMeshPatchI::setPoint( guint s, guint pt, Geom::Point p, bool set ) {
 
     assert( s < 4 );
     assert( pt < 4 );
@@ -196,7 +196,7 @@ void SPMeshPatchI::setPoint( uint s, uint pt, Geom::Point p, bool set ) {
 /**
    Get path type for side (stored in handle nodes).
 */
-gchar SPMeshPatchI::getPathType( uint s ) {
+gchar SPMeshPatchI::getPathType( guint s ) {
 
     assert( s < 4 );
 
@@ -223,7 +223,7 @@ gchar SPMeshPatchI::getPathType( uint s ) {
 /**
    Set path type for side (stored in handle nodes).
 */
-void SPMeshPatchI::setPathType( uint s, gchar t ) {
+void SPMeshPatchI::setPathType( guint s, gchar t ) {
 
     assert( s < 4 );
 
@@ -251,7 +251,7 @@ void SPMeshPatchI::setPathType( uint s, gchar t ) {
 /**
    Set tensor control point for "corner" i.
  */
-void SPMeshPatchI::setTensorPoint( uint i, Geom::Point p ) {
+void SPMeshPatchI::setTensorPoint( guint i, Geom::Point p ) {
 
     assert( i < 4 );
     switch ( i ) {
@@ -282,7 +282,7 @@ void SPMeshPatchI::setTensorPoint( uint i, Geom::Point p ) {
    Return if any tensor control point is set.
  */
 bool SPMeshPatchI::tensorIsSet() {
-    for( uint i = 0; i < 4; ++i ) {
+    for( guint i = 0; i < 4; ++i ) {
         if( tensorIsSet( i ) ) {
             return true;
         }
@@ -293,7 +293,7 @@ bool SPMeshPatchI::tensorIsSet() {
 /**
    Return if tensor control point for "corner" i is set.
  */
-bool SPMeshPatchI::tensorIsSet( uint i ) {
+bool SPMeshPatchI::tensorIsSet( guint i ) {
 
     assert( i < 4 );
 
@@ -319,11 +319,11 @@ bool SPMeshPatchI::tensorIsSet( uint i ) {
    Return tensor control point for "corner" i.
    If not sest, returns calculated (Coons) point.
  */
-Geom::Point SPMeshPatchI::getTensorPoint( uint k ) {
+Geom::Point SPMeshPatchI::getTensorPoint( guint k ) {
 
     assert( k < 4 );
 
-    uint i, j;
+    guint i, j;
     
 
     switch ( k ) {
@@ -356,7 +356,7 @@ Geom::Point SPMeshPatchI::getTensorPoint( uint k ) {
    Formulas defined in PDF spec.
    Equivalent to 1/3 of side length from corner for square patch.
  */
-Geom::Point SPMeshPatchI::coonsTensorPoint( uint i ) {
+Geom::Point SPMeshPatchI::coonsTensorPoint( guint i ) {
 
     Geom::Point t;
     Geom::Point p[4][4]; // Points in PDF notation
@@ -422,8 +422,8 @@ void SPMeshPatchI::updateNodes() {
 
     // std::cout << "SPMeshPatchI::updateNodes: " << row << "," << col << std::endl;
     // Handles first (tensors require update handles).
-    for( uint i = 0; i < 4; ++i ) {
-        for( uint j = 0; j < 4; ++j ) {
+    for( guint i = 0; i < 4; ++i ) {
+        for( guint j = 0; j < 4; ++j ) {
             if( (*nodes)[ row + i ][ col + j ]->set == false ) {
 
                 if( (*nodes)[ row + i ][ col + j ]->node_type == MG_NODE_TYPE_HANDLE ) {
@@ -452,13 +452,13 @@ void SPMeshPatchI::updateNodes() {
     }
 
     // Update tensor nodes
-    for( uint i = 1; i < 3; ++i ) {
-        for( uint j = 1; j < 3; ++j ) {
+    for( guint i = 1; i < 3; ++i ) {
+        for( guint j = 1; j < 3; ++j ) {
             if( (*nodes)[ row + i ][ col + j ]->set == false ) {
 
                 (*nodes)[ row + i ][ col + j ]->node_type = MG_NODE_TYPE_TENSOR;
 
-                uint t = 0;
+                guint t = 0;
                 if( i == 1 && j == 2 ) t = 1;
                 if( i == 2 && j == 2 ) t = 2;
                 if( i == 2 && j == 1 ) t = 3;
@@ -473,7 +473,7 @@ void SPMeshPatchI::updateNodes() {
 /**
    Return color for corner of patch.
 */
-SPColor SPMeshPatchI::getColor( uint i ) {
+SPColor SPMeshPatchI::getColor( guint i ) {
 
     assert( i < 4 );
 
@@ -501,7 +501,7 @@ SPColor SPMeshPatchI::getColor( uint i ) {
 /**
    Set color for corner of patch.
 */
-void SPMeshPatchI::setColor( uint i, SPColor color ) {
+void SPMeshPatchI::setColor( guint i, SPColor color ) {
 
     assert( i < 4 );
 
@@ -524,7 +524,7 @@ void SPMeshPatchI::setColor( uint i, SPColor color ) {
 /**
    Return opacity for corner of patch.
 */
-gdouble SPMeshPatchI::getOpacity( uint i ) {
+gdouble SPMeshPatchI::getOpacity( guint i ) {
 
     assert( i < 4 );
 
@@ -551,7 +551,7 @@ gdouble SPMeshPatchI::getOpacity( uint i ) {
 /**
    Set opacity for corner of patch.
 */
-void SPMeshPatchI::setOpacity( uint i, gdouble opacity ) {
+void SPMeshPatchI::setOpacity( guint i, gdouble opacity ) {
 
     assert( i < 4 );
 
@@ -589,13 +589,13 @@ void SPMeshNodeArray::read( SPMeshGradient *mg_in ) {
     Geom::Point current_p( mg->x.computed, mg->y.computed );
     // std::cout << "SPMeshNodeArray::read: p: " << current_p << std::endl;
 
-    uint max_column = 0;
-    uint irow = 0; // Corresponds to top of patch being read in.
+    guint max_column = 0;
+    guint irow = 0; // Corresponds to top of patch being read in.
     for ( SPObject *ro = mg->firstChild() ; ro ; ro = ro->getNext() ) {
 
         if (SP_IS_MESHROW(ro)) {
 
-            uint icolumn = 0; // Corresponds to left of patch being read in.
+            guint icolumn = 0; // Corresponds to left of patch being read in.
             for ( SPObject *po = ro->firstChild() ; po ; po = po->getNext() ) {
 
                 if (SP_IS_MESHPATCH(po)) {
@@ -651,7 +651,7 @@ void SPMeshNodeArray::read( SPMeshGradient *mg_in ) {
 
                             gdouble x, y;
                             Geom::Point p, dp;
-                            uint max;
+                            guint max;
                             switch ( path_type ) {
                                 case 'l':
                                     if( !closed ) {
@@ -695,7 +695,7 @@ void SPMeshNodeArray::read( SPMeshGradient *mg_in ) {
                                 case 'c':
                                     max = 4;
                                     if( closed ) max = 3;
-                                    for( uint i = 1; i < max; ++i ) {
+                                    for( guint i = 1; i < max; ++i ) {
                                         os >> x >> y;
                                         if( !os.fail() ) {
                                             p = Geom::Point( x, y );
@@ -709,7 +709,7 @@ void SPMeshNodeArray::read( SPMeshGradient *mg_in ) {
                                 case 'C':
                                     max = 4;
                                     if( closed ) max = 3;
-                                    for( uint i = 1; i < max; ++i ) {
+                                    for( guint i = 1; i < max; ++i ) {
                                         os >> x >> y;
                                         if( !os.fail() ) {
                                             p = Geom::Point( x, y );
@@ -749,7 +749,7 @@ void SPMeshNodeArray::read( SPMeshGradient *mg_in ) {
                         // std::cout << "    tensor_string: " << tensor_string << std::endl;
 
                         std::stringstream os( tensor_string );
-                        for( uint i = 0; i < 4; ++i ) {
+                        for( guint i = 0; i < 4; ++i ) {
                             double x = 0.0;
                             double y = 0.0;
                             os >> x >> y;
@@ -771,13 +771,13 @@ void SPMeshNodeArray::read( SPMeshGradient *mg_in ) {
     }
 
     // Insure we have a true array.
-    for( uint i = 0; i < nodes.size(); ++i ) {
+    for( guint i = 0; i < nodes.size(); ++i ) {
         nodes[ i ].resize( max_column * 3 + 1 );
     }
 
     // Set node edge.
-    for( uint i = 0; i < nodes.size(); ++i ) {
-        for( uint j = 0; j < nodes[i].size(); ++j ) {
+    for( guint i = 0; i < nodes.size(); ++i ) {
+        for( guint j = 0; j < nodes[i].size(); ++j ) {
             nodes[i][j]->node_edge = MG_NODE_EDGE_NONE;
             if( i == 0 )                    nodes[i][j]->node_edge |= MG_NODE_EDGE_TOP;
             if( i == nodes.size() - 1 )     nodes[i][j]->node_edge |= MG_NODE_EDGE_BOTTOM;
@@ -844,15 +844,15 @@ void SPMeshNodeArray::write( SPMeshGradient *mg ) {
     Geom::Point current_p2( mg->x.computed, mg->y.computed );
 
     Inkscape::XML::Document *xml_doc = mesh->document();
-    uint rows = array->patch_rows();
-    for( uint i = 0; i < rows; ++i ) {
+    guint rows = array->patch_rows();
+    for( guint i = 0; i < rows; ++i ) {
 
         // Write row
         Inkscape::XML::Node *row = xml_doc->createElement("svg:meshRow");
         mesh->appendChild( row );  // No attributes
 
-        uint columns = array->patch_columns();
-        for( uint j = 0; j < columns; ++j ) {
+        guint columns = array->patch_columns();
+        for( guint j = 0; j < columns; ++j ) {
 
             // Write patch
             Inkscape::XML::Node *patch = xml_doc->createElement("svg:meshPatch");
@@ -864,7 +864,7 @@ void SPMeshNodeArray::write( SPMeshGradient *mg ) {
 
                 std::stringstream is;
 
-                for( uint k = 0; k < 4; ++k ) {
+                for( guint k = 0; k < 4; ++k ) {
                     Geom::Point p = patchi.getTensorPoint( k ) - patchi.getPoint( k, 0 );
                     is << p[X] << "," << p[Y];
                     if( k < 3 ) is << " ";
@@ -877,7 +877,7 @@ void SPMeshNodeArray::write( SPMeshGradient *mg ) {
             row->appendChild( patch );
 
             // Write sides
-            for( uint k = 0; k < 4; ++k ) {
+            for( guint k = 0; k < 4; ++k ) {
 
                 // Only first row has top stop
                 if( k == 0 && i != 0 ) continue;
@@ -1033,8 +1033,8 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
  
     // Get preferences
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    uint prows = prefs->getInt("/tools/mesh/mesh_rows", 1);
-    uint pcols = prefs->getInt("/tools/mesh/mesh_cols", 1);
+    guint prows = prefs->getInt("/tools/mesh/mesh_rows", 1);
+    guint pcols = prefs->getInt("/tools/mesh/mesh_cols", 1);
 
     SPGradientMeshType mesh_type =
         (SPGradientMeshType) prefs->getInt("/tools/mesh/mesh_type", SP_GRADIENT_MESH_TYPE_NORMAL);
@@ -1078,7 +1078,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
         sp_repr_set_svg_double( repr, "x", center[Geom::X] + rx * cos(start) );
         sp_repr_set_svg_double( repr, "y", center[Geom::Y] + ry * sin(start) );
 
-        uint sections = pcols;
+        guint sections = pcols;
 
         // If less sections, arc approximation error too great. (Check!)
         if( sections < 4 ) sections = 4;
@@ -1091,7 +1091,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
         gdouble leny = ry * kappa;
 
         gdouble s = start;
-        for( uint i = 0; i < sections; ++i ) {
+        for( guint i = 0; i < sections; ++i ) {
 
             SPMeshPatchI patch( &nodes, 0, i );
 
@@ -1114,7 +1114,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
             patch.setPoint( 2, 0, center );
             patch.setPoint( 3, 0, center );
 
-            for( uint k = 0; k < 4; ++k ) {
+            for( guint k = 0; k < 4; ++k ) {
                 patch.setPathType( k, 'l' );
                 patch.setColor( k, color );
                 patch.setOpacity( k, 1.0 );
@@ -1152,7 +1152,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
             gdouble leny = ry * 4*tan(M_PI_2/4)/3;
 
             SPMeshPatchI patch( &nodes, 0, 0 );
-            for( uint i = 0; i < 4; ++i ) {
+            for( guint i = 0; i < 4; ++i ) {
 
                 gdouble x0 = center[Geom::X] + rx * cos(s);
                 gdouble y0 = center[Geom::Y] + ry * sin(s);
@@ -1192,7 +1192,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
             // (It should be easy to handle the rounded/randomized cases by making
             //  the appropriate star class function public.)
             SPStar* star = SP_STAR( item );
-            uint sides =  star->sides;
+            guint sides =  star->sides;
 
             // std::cout << "We've got ourselves an star! Sides: " << sides << std::endl;
 
@@ -1201,20 +1201,20 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
             sp_repr_set_svg_double( repr, "x", p0[Geom::X] );
             sp_repr_set_svg_double( repr, "y", p0[Geom::Y] );
 
-            for( uint i = 0; i < sides; ++i ) {
+            for( guint i = 0; i < sides; ++i ) {
 
                 if( star->flatsided ) {
 
                     SPMeshPatchI patch( &nodes, 0, i );
 
                     patch.setPoint( 0, 0, sp_star_get_xy( star, SP_STAR_POINT_KNOT1, i ) );
-                    uint ii = i+1;
+                    guint ii = i+1;
                     if( ii == sides ) ii = 0;
                     patch.setPoint( 1, 0, sp_star_get_xy( star, SP_STAR_POINT_KNOT1, ii ) );
                     patch.setPoint( 2, 0, star->center );
                     patch.setPoint( 3, 0, star->center );
 
-                    for( uint s = 0; s < 4; ++s ) {
+                    for( guint s = 0; s < 4; ++s ) {
                         patch.setPathType( s, 'l' );
                         patch.setColor( s, color );
                         patch.setOpacity( s, 1.0 );
@@ -1232,7 +1232,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
                     patch0.setPoint( 2, 0, star->center );
                     patch0.setPoint( 3, 0, star->center );
 
-                    uint ii = i+1;
+                    guint ii = i+1;
                     if( ii == sides ) ii = 0;
 
                     SPMeshPatchI patch1( &nodes, 0, 2*i+1 );
@@ -1242,7 +1242,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
                     patch1.setPoint( 2, 0, star->center );
                     patch1.setPoint( 3, 0, star->center );
 
-                    for( uint s = 0; s < 4; ++s ) {
+                    for( guint s = 0; s < 4; ++s ) {
                         patch0.setPathType( s, 'l' );
                         patch0.setColor( s, color );
                         patch0.setOpacity( s, 1.0 );
@@ -1272,17 +1272,17 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
             sp_repr_set_svg_double(repr, "y", bbox->min()[Geom::Y]);
 
             // Get node array size
-            uint nrows = prows * 3 + 1;
-            uint ncols = pcols * 3 + 1;
+            guint nrows = prows * 3 + 1;
+            guint ncols = pcols * 3 + 1;
 
             gdouble dx = width  / (gdouble)(ncols-1.0);
             gdouble dy = height / (gdouble)(nrows-1.0);
 
             Geom::Point p0( mg->x.computed, mg->y.computed );
 
-            for( uint i = 0; i < nrows; ++i ) {
+            for( guint i = 0; i < nrows; ++i ) {
                 std::vector< SPMeshNode* > row;
-                for( uint j = 0; j < ncols; ++j ) {
+                for( guint j = 0; j < ncols; ++j ) {
                     SPMeshNode* node = new SPMeshNode;
                     node->p = p0 + Geom::Point( j * dx, i * dy );
 
@@ -1344,13 +1344,13 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
 */
 void SPMeshNodeArray::clear() {
 
-    for( uint i = 0; i < nodes.size(); ++i ) {
-        for( uint j = 0; j < nodes[i].size(); ++j ) {
+    for( guint i = 0; i < nodes.size(); ++i ) {
+        for( guint j = 0; j < nodes[i].size(); ++j ) {
             if( nodes[i][j] ) {
                 delete nodes[i][j];
             }
         }
-        for( uint i = 0; i < nodes.size(); ++i ) {
+        for( guint i = 0; i < nodes.size(); ++i ) {
             nodes[i].clear();
         }
         nodes.clear();
@@ -1362,9 +1362,9 @@ void SPMeshNodeArray::clear() {
    Print mesh gradient (for debugging).
 */
 void SPMeshNodeArray::print() {
-    for( uint i = 0; i < nodes.size(); ++i ) {
+    for( guint i = 0; i < nodes.size(); ++i ) {
         std::cout << "New node row:" << std::endl;
-        for( uint j = 0; j < nodes[i].size(); ++j ) {
+        for( guint j = 0; j < nodes[i].size(); ++j ) {
             if( nodes[i][j] ) {
                 std::cout.width(4);
                 std::cout << "  Node: " << i << "," << j << ":  "
@@ -1385,7 +1385,7 @@ void SPMeshNodeArray::print() {
 /**
    Number of patch rows.
 */
-uint SPMeshNodeArray::patch_rows() {
+guint SPMeshNodeArray::patch_rows() {
 
     return nodes.size()/3;
 }
@@ -1393,7 +1393,7 @@ uint SPMeshNodeArray::patch_rows() {
 /**
    Number of patch columns.
 */
-uint SPMeshNodeArray::patch_columns() {
+guint SPMeshNodeArray::patch_columns() {
 
     return nodes[0].size()/3;
 }
@@ -1405,7 +1405,7 @@ uint SPMeshNodeArray::patch_columns() {
      true if corners adjacent.
      n[] is array of nodes in top/bottom or left/right order.
 */
-bool SPMeshNodeArray::adjacent_corners( uint i, uint j, SPMeshNode* n[4] ) {
+bool SPMeshNodeArray::adjacent_corners( guint i, guint j, SPMeshNode* n[4] ) {
 
     // This works as all corners have indices and they
     // are numbered in order by row and column (and
@@ -1413,23 +1413,23 @@ bool SPMeshNodeArray::adjacent_corners( uint i, uint j, SPMeshNode* n[4] ) {
 
     bool adjacent = false;
 
-    uint c1 = i;
-    uint c2 = j;
+    guint c1 = i;
+    guint c2 = j;
     if( j < i ) {
         c1 = j;
         c2 = i;
     }
 
     // Number of corners in a row of patches.
-    uint ncorners = patch_columns() + 1;
+    guint ncorners = patch_columns() + 1;
 
-    uint crow1 = c1 / ncorners;
-    uint crow2 = c2 / ncorners;
-    uint ccol1 = c1 % ncorners;
-    uint ccol2 = c2 % ncorners;
+    guint crow1 = c1 / ncorners;
+    guint crow2 = c2 / ncorners;
+    guint ccol1 = c1 % ncorners;
+    guint ccol2 = c2 % ncorners;
 
-    uint nrow  = crow1 * 3;
-    uint ncol  = ccol1 * 3;
+    guint nrow  = crow1 * 3;
+    guint ncol  = ccol1 * 3;
 
     // std::cout << "  i: " << i
     //           << "  j: " << j
@@ -1447,7 +1447,7 @@ bool SPMeshNodeArray::adjacent_corners( uint i, uint j, SPMeshNode* n[4] ) {
     // Check for horizontal neighbors
     if ( crow1 == crow2 && (ccol2 - ccol1) == 1 ) {
         adjacent = true;
-        for( uint k = 0; k < 4; ++k ) {
+        for( guint k = 0; k < 4; ++k ) {
             n[k] = nodes[nrow][ncol+k];
         }
     }
@@ -1455,7 +1455,7 @@ bool SPMeshNodeArray::adjacent_corners( uint i, uint j, SPMeshNode* n[4] ) {
     // Check for vertical neighbors
     if ( ccol1 == ccol2 && (crow2 - crow1) == 1 ) {
         adjacent = true;
-        for( uint k = 0; k < 4; ++k ) {
+        for( guint k = 0; k < 4; ++k ) {
             n[k] = nodes[nrow+k][ncol];
         }
     }
@@ -1467,14 +1467,14 @@ bool SPMeshNodeArray::adjacent_corners( uint i, uint j, SPMeshNode* n[4] ) {
    Toggle sides between lineto and curve to if both corners selected.
    Input is a list of selected corner draggable indices.
 */
-uint SPMeshNodeArray::side_toggle( std::vector<uint> corners ) {
+guint SPMeshNodeArray::side_toggle( std::vector<guint> corners ) {
 
-    uint toggled = 0;
+    guint toggled = 0;
 
     if( corners.size() < 2 ) return 0;
 
-    for( uint i = 0; i < corners.size()-1; ++i ) {
-        for( uint j = i+1; j < corners.size(); ++j ) {
+    for( guint i = 0; i < corners.size()-1; ++i ) {
+        for( guint j = i+1; j < corners.size(); ++j ) {
 
             SPMeshNode* n[4];
             if( adjacent_corners( corners[i], corners[j], n ) ) {
@@ -1542,13 +1542,13 @@ uint SPMeshNodeArray::side_toggle( std::vector<uint> corners ) {
  * parallel to the other node's handle direction. This is the section of an ellipse that
  * corresponds to a quarter of a circle squished and then skewed.
  */
-uint SPMeshNodeArray::side_arc( std::vector<uint> corners ) {
+guint SPMeshNodeArray::side_arc( std::vector<guint> corners ) {
 
     if( corners.size() < 2 ) return 0;
 
-    uint arced = 0;
-    for( uint i = 0; i < corners.size()-1; ++i ) {
-        for( uint j = i+1; j < corners.size(); ++j ) {
+    guint arced = 0;
+    for( guint i = 0; i < corners.size()-1; ++i ) {
+        for( guint j = i+1; j < corners.size(); ++j ) {
 
             SPMeshNode* n[4];
             if( adjacent_corners( corners[i], corners[j], n ) ) {
@@ -1605,23 +1605,23 @@ uint SPMeshNodeArray::side_arc( std::vector<uint> corners ) {
    Toggle sides between lineto and curve to if both corners selected.
    Input is a list of selected corner draggable indices.
 */
-uint SPMeshNodeArray::tensor_toggle( std::vector<uint> corners ) {
+guint SPMeshNodeArray::tensor_toggle( std::vector<guint> corners ) {
 
     // std::cout << "SPMeshNodeArray::tensor_toggle" << std::endl;
 
     if( corners.size() < 4 ) return 0;
 
-    uint toggled = 0;
+    guint toggled = 0;
 
     // Number of corners in a row of patches.
-    uint ncorners = patch_columns() + 1;
+    guint ncorners = patch_columns() + 1;
 
-    for( uint i = 0; i < corners.size()-3; ++i ) {
-        for( uint j = i+1; j < corners.size()-2; ++j ) {
-            for( uint k = j+1; k < corners.size()-1; ++k ) {
-                for( uint l = k+1; l < corners.size(); ++l ) {
+    for( guint i = 0; i < corners.size()-3; ++i ) {
+        for( guint j = i+1; j < corners.size()-2; ++j ) {
+            for( guint k = j+1; k < corners.size()-1; ++k ) {
+                for( guint l = k+1; l < corners.size(); ++l ) {
 
-                    uint c[4];
+                    guint c[4];
                     c[0] = corners[i];
                     c[1] = corners[j];
                     c[2] = corners[k];
@@ -1636,12 +1636,12 @@ uint SPMeshNodeArray::tensor_toggle( std::vector<uint> corners ) {
                         c[0] % ncorners < ncorners - 1 ) {
 
                         // Patch
-                        uint prow = c[0] / ncorners;
-                        uint pcol = c[0] % ncorners;
+                        guint prow = c[0] / ncorners;
+                        guint pcol = c[0] % ncorners;
 
                         // Upper left node of patch
-                        uint irow = prow * 3;
-                        uint jcol = pcol * 3;
+                        guint irow = prow * 3;
+                        guint jcol = pcol * 3;
 
                         // std::cout << "tensor::toggle: "
                         //           << c[0] << ", "
@@ -1687,30 +1687,30 @@ uint SPMeshNodeArray::tensor_toggle( std::vector<uint> corners ) {
    Atempts to smooth color transitions across corners.
    Input is a list of selected corner draggable indices.
 */
-uint SPMeshNodeArray::color_smooth( std::vector<uint> corners ) {
+guint SPMeshNodeArray::color_smooth( std::vector<guint> corners ) {
 
     // std::cout << "SPMeshNodeArray::color_smooth" << std::endl;
 
-    uint smoothed = 0;
+    guint smoothed = 0;
 
     // Number of corners in a row of patches.
-    uint ncorners = patch_columns() + 1;
+    guint ncorners = patch_columns() + 1;
 
     // Number of node rows and columns
-    uint ncols = patch_columns() * 3 + 1;
-    uint nrows = patch_rows() * 3 + 1;
+    guint ncols = patch_columns() * 3 + 1;
+    guint nrows = patch_rows() * 3 + 1;
 
-    for( uint i = 0; i < corners.size(); ++i ) {
+    for( guint i = 0; i < corners.size(); ++i ) {
 
-        uint corner = corners[i];
+        guint corner = corners[i];
         // std::cout << "SPMeshNodeArray::color_smooth: " << i << " " << corner << std::endl;
 
         // Node row & col
-        uint nrow = (corner / ncorners) * 3;
-        uint ncol = (corner % ncorners) * 3;
+        guint nrow = (corner / ncorners) * 3;
+        guint ncol = (corner % ncorners) * 3;
 
         SPMeshNode* n[7];
-        for( uint s = 0; s < 2; ++s ) {
+        for( guint s = 0; s < 2; ++s ) {
 
             bool smooth = false;
 
@@ -1719,7 +1719,7 @@ uint SPMeshNodeArray::color_smooth( std::vector<uint> corners ) {
 
                 // Horizontal
                 if( ncol > 2 && ncol+3 < ncols) {
-                    for( uint j = 0; j < 7; ++j ) {
+                    for( guint j = 0; j < 7; ++j ) {
                         n[j] = nodes[ nrow ][ ncol - 3 + j ];
                     }
                     smooth = true;
@@ -1729,7 +1729,7 @@ uint SPMeshNodeArray::color_smooth( std::vector<uint> corners ) {
 
                 // Vertical
                 if( nrow > 2 && nrow+3 < nrows) {
-                    for( uint j = 0; j < 7; ++j ) {
+                    for( guint j = 0; j < 7; ++j ) {
                         n[j] = nodes[ nrow - 3 + j ][ ncol ];
                     }
                     smooth = true;
@@ -1753,14 +1753,14 @@ uint SPMeshNodeArray::color_smooth( std::vector<uint> corners ) {
                 
                 // Distance nodes from selected corner
                 Geom::Point d[7];
-                for( uint k = 0; k < 7; ++k ) {
+                for( guint k = 0; k < 7; ++k ) {
                     d[k]= n[k]->p - n[3]->p;
                     // std::cout << " d[" << k << "]: " << d[k].length() << std::endl;
                 }
 
                 double sdm = -1.0; // Slope Diff Max
-                uint cdm = 0; // Color Diff Max  (Which color has the maximum difference in slopes)
-                for( uint c = 0; c < 3; ++c ) {
+                guint cdm = 0; // Color Diff Max  (Which color has the maximum difference in slopes)
+                for( guint c = 0; c < 3; ++c ) {
                     if( d[2].length() != 0.0 ) {
                         slope[0][c] = (color3.v.c[c] - color0.v.c[c]) / d[2].length();
                     } 
@@ -1832,11 +1832,11 @@ uint SPMeshNodeArray::color_smooth( std::vector<uint> corners ) {
 /**
    Pick color from background for selected corners.
 */
-uint SPMeshNodeArray::color_pick( std::vector<uint> icorners, SPItem* item ) {
+guint SPMeshNodeArray::color_pick( std::vector<guint> icorners, SPItem* item ) {
 
     // std::cout << "SPMeshNodeArray::color_pick" << std::endl;
 
-    uint picked = 0;
+    guint picked = 0;
 
     // Code inspired from clone tracing
 
@@ -1876,9 +1876,9 @@ uint SPMeshNodeArray::color_pick( std::vector<uint> icorners, SPItem* item ) {
     // }
 
     // Do picking
-    for( uint i = 0; i < icorners.size(); ++i ) {
+    for( guint i = 0; i < icorners.size(); ++i ) {
 
-        uint corner = icorners[i];
+        guint corner = icorners[i];
 
         SPMeshNode* n = corners[ corner ];
 
@@ -1889,12 +1889,12 @@ uint SPMeshNodeArray::color_pick( std::vector<uint> icorners, SPItem* item ) {
         // std::cout << " p: " << p << std::endl;
 
         // If on edge, move inward
-        uint cols = patch_columns()+1;
-        uint rows = patch_rows()+1;
-        uint col = corner % cols;
-        uint row = corner / cols;
-        uint ncol  = col * 3;
-        uint nrow  = row * 3;
+        guint cols = patch_columns()+1;
+        guint rows = patch_rows()+1;
+        guint col = corner % cols;
+        guint row = corner / cols;
+        guint ncol  = col * 3;
+        guint nrow  = row * 3;
 
         double size = 3.0;
 
@@ -1958,7 +1958,7 @@ uint SPMeshNodeArray::color_pick( std::vector<uint> icorners, SPItem* item ) {
    selected: list of all corners selected (draggable indices).
    op: how other corners should be moved.
 */
-void SPMeshNodeArray::update_handles( uint corner, std::vector< uint > selected, Geom::Point p_old, MeshNodeOperation op ) {
+void SPMeshNodeArray::update_handles( guint corner, std::vector< guint > selected, Geom::Point p_old, MeshNodeOperation op ) {
 
     assert( drag_valid );
 
@@ -1968,19 +1968,19 @@ void SPMeshNodeArray::update_handles( uint corner, std::vector< uint > selected,
     //           << std::endl;
 
     // Find number of patch rows and columns
-    uint mrow = patch_rows();
-    uint mcol = patch_columns();
+    guint mrow = patch_rows();
+    guint mcol = patch_columns();
 
     // Number of corners in a row of patches.
-    uint ncorners = mcol + 1;
+    guint ncorners = mcol + 1;
 
     // Find corner row/column
-    uint crow = corner / ncorners;
-    uint ccol = corner % ncorners;
+    guint crow = corner / ncorners;
+    guint ccol = corner % ncorners;
 
     // Find node row/column
-    uint nrow  = crow * 3;
-    uint ncol  = ccol * 3;
+    guint nrow  = crow * 3;
+    guint ncol  = ccol * 3;
 
     // std::cout << "  mrow: " << mrow
     //           << "  mcol: " << mcol
@@ -2104,7 +2104,7 @@ void SPMeshNodeArray::update_handles( uint corner, std::vector< uint > selected,
     // }                        
 
     // // We have four patches to adjust...
-    // for ( uint k = 0; k < 4;  ++k ) {
+    // for ( guint k = 0; k < 4;  ++k ) {
 
     //     bool do_scale_x = do_scale;
     //     bool do_scale_y = do_scale;
@@ -2121,8 +2121,8 @@ void SPMeshNodeArray::update_handles( uint corner, std::vector< uint > selected,
     //                 do_scale_x = do_scale_xp;
     //                 do_scale_y = do_scale_yp;
 
-    //                 for( uint i = 0; i < 4; ++i ) {
-    //                     for( uint j = 0; j< 4; ++j ) {
+    //                 for( guint i = 0; i < 4; ++i ) {
+    //                     for( guint j = 0; j< 4; ++j ) {
     //                         pnodes[i][j] = mg->array.nodes[nrow+i][nrow+j];
     //                     }
     //                 }
@@ -2136,8 +2136,8 @@ void SPMeshNodeArray::update_handles( uint corner, std::vector< uint > selected,
     //                 do_scale_y = do_scale_xn;
     //                 do_scale_x = do_scale_yp;
 
-    //                 for( uint i = 0; i < 4; ++i ) {
-    //                     for( uint j = 0; j< 4; ++j ) {
+    //                 for( guint i = 0; i < 4; ++i ) {
+    //                     for( guint j = 0; j< 4; ++j ) {
     //                         pnodes[j][i] = mg->array.nodes[nrow+i][nrow-j];
     //                     }
     //                 }
@@ -2151,8 +2151,8 @@ void SPMeshNodeArray::update_handles( uint corner, std::vector< uint > selected,
     //                 do_scale_x = do_scale_xn;
     //                 do_scale_y = do_scale_yn;
 
-    //                 for( uint i = 0; i < 4; ++i ) {
-    //                     for( uint j = 0; j< 4; ++j ) {
+    //                 for( guint i = 0; i < 4; ++i ) {
+    //                     for( guint j = 0; j< 4; ++j ) {
     //                         pnodes[i][j] = mg->array.nodes[nrow-i][nrow-j];
     //                     }
     //                 }
@@ -2166,8 +2166,8 @@ void SPMeshNodeArray::update_handles( uint corner, std::vector< uint > selected,
     //                 do_scale_y = do_scale_xp;
     //                 do_scale_x = do_scale_yn;
 
-    //                 for( uint i = 0; i < 4; ++i ) {
-    //                     for( uint j = 0; j< 4; ++j ) {
+    //                 for( guint i = 0; i < 4; ++i ) {
+    //                     for( guint j = 0; j< 4; ++j ) {
     //                         pnodes[j][i] = mg->array.nodes[nrow-i][nrow+j];
     //                     }
     //                 }
@@ -2242,7 +2242,7 @@ guint32 average_color(guint32 c1, guint32 c2, gdouble p);
 /**
    Split a row into n equal parts.
 */
-void SPMeshNodeArray::split_row( uint row, uint n ) {
+void SPMeshNodeArray::split_row( guint row, guint n ) {
 
     double nn = n;
     if( n > 1 ) split_row( row, (nn-1)/nn );
@@ -2252,7 +2252,7 @@ void SPMeshNodeArray::split_row( uint row, uint n ) {
 /**
    Split a column into n equal parts.
 */
-void SPMeshNodeArray::split_column( uint col, uint n ) {
+void SPMeshNodeArray::split_column( guint col, guint n ) {
 
     double nn = n;
     if( n > 1 ) split_column( col, (nn-1)/nn );
@@ -2262,7 +2262,7 @@ void SPMeshNodeArray::split_column( uint col, uint n ) {
 /**
    Split a row into two rows at coord (fraction of row height).
 */
-void SPMeshNodeArray::split_row( uint row, double coord ) {
+void SPMeshNodeArray::split_row( guint row, double coord ) {
 
     // std::cout << "Splitting row: " << row << " at " << coord << std::endl;
     // print();
@@ -2274,29 +2274,29 @@ void SPMeshNodeArray::split_row( uint row, double coord ) {
     // First step is to ensure that handle and tensor points are up-to-date if they are not set.
     // (We can't do this on the fly as we overwrite the necessary points to do the calculation
     //  during the update.)
-    for( uint j = 0; j < patch_columns(); ++ j ) {
+    for( guint j = 0; j < patch_columns(); ++ j ) {
         SPMeshPatchI patch( &nodes, row, j );
         patch.updateNodes();
     }
 
     // Add three new rows of empty nodes
-    for( uint i = 0; i < 3; ++i ) {
+    for( guint i = 0; i < 3; ++i ) {
         std::vector< SPMeshNode* > new_row;
-        for( uint j = 0; j < nodes[0].size(); ++j ) {
+        for( guint j = 0; j < nodes[0].size(); ++j ) {
             SPMeshNode* new_node = new SPMeshNode;
             new_row.push_back( new_node );
         }
         nodes.insert( nodes.begin()+3*(row+1), new_row );
     }
 
-    uint i = 3 * row; // Convert from patch row to node row
-    for( uint j = 0; j < nodes[i].size(); ++j ) {
+    guint i = 3 * row; // Convert from patch row to node row
+    for( guint j = 0; j < nodes[i].size(); ++j ) {
 
         // std::cout << "Splitting row: column: " << j << std::endl;
 
         Geom::Point p[4];
-        for( uint k = 0; k < 4; ++k ) {
-            uint n = k;
+        for( guint k = 0; k < 4; ++k ) {
+            guint n = k;
             if( k == 3 ) n = 6; // Bottom patch row has been shifted by new rows
             p[k] = nodes[i+n][j]->p;
             // std::cout << p[k] << std::endl;
@@ -2308,7 +2308,7 @@ void SPMeshNodeArray::split_row( uint row, double coord ) {
             b.subdivide( coord );
 
         // Update points
-        for( uint n = 0; n < 4; ++n ) {
+        for( guint n = 0; n < 4; ++n ) {
             nodes[i+n  ][j]->p = b_new.first[n];
             nodes[i+n+3][j]->p = b_new.second[n];
             // std::cout << b_new.first[n] << "  " << b_new.second[n] << std::endl;
@@ -2385,7 +2385,7 @@ void SPMeshNodeArray::split_row( uint row, double coord ) {
 /**
    Split a column into two columns at coord (fraction of column width).
 */
-void SPMeshNodeArray::split_column( uint col, double coord ) {
+void SPMeshNodeArray::split_column( guint col, double coord ) {
 
     // std::cout << "Splitting column: " << col << " at " << coord << std::endl;
     // print();
@@ -2397,18 +2397,18 @@ void SPMeshNodeArray::split_column( uint col, double coord ) {
     // First step is to ensure that handle and tensor points are up-to-date if they are not set.
     // (We can't do this on the fly as we overwrite the necessary points to do the calculation
     //  during the update.)
-    for( uint i = 0; i < patch_rows(); ++ i ) {
+    for( guint i = 0; i < patch_rows(); ++ i ) {
         SPMeshPatchI patch( &nodes, i, col );
         patch.updateNodes();
     }
 
-    uint j = 3 * col; // Convert from patch column to node column
-    for( uint i = 0; i < nodes.size(); ++i ) {
+    guint j = 3 * col; // Convert from patch column to node column
+    for( guint i = 0; i < nodes.size(); ++i ) {
 
         // std::cout << "Splitting column: row: " << i << std::endl;
 
         Geom::Point p[4];
-        for( uint k = 0; k < 4; ++k ) {
+        for( guint k = 0; k < 4; ++k ) {
             p[k] = nodes[i][j+k]->p;
         }
 
@@ -2418,13 +2418,13 @@ void SPMeshNodeArray::split_column( uint col, double coord ) {
             b.subdivide( coord );
 
         // Add three new nodes
-        for( uint n = 0; n < 3; ++n ) {
+        for( guint n = 0; n < 3; ++n ) {
             SPMeshNode* new_node = new SPMeshNode;
             nodes[i].insert( nodes[i].begin()+j+3, new_node );
         }
 
         // Update points
-        for( uint n = 0; n < 4; ++n ) {
+        for( guint n = 0; n < 4; ++n ) {
             nodes[i][j+n]->p = b_new.first[n];
             nodes[i][j+n+3]->p = b_new.second[n];
         }
