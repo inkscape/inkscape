@@ -1,6 +1,3 @@
-/** @file
- * @brief export to bitmap dialog
- */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
@@ -78,6 +75,7 @@ private:
      *
      */
     void setImageX();
+
     /**
      * A function to set the ydpi.
      *
@@ -236,6 +234,7 @@ private:
      * @param progress_text Text to be shown in the progress bar
      */
     Gtk::Dialog * create_progress_dialog (Glib::ustring progress_text);
+
     /**
      * Callback to be used in for loop to update the progress bar.
      * 
@@ -243,14 +242,21 @@ private:
      * @param dlg void pointer to the Gtk::Dialog progress dialog
      */
     static unsigned int onProgressCallback (float value, void *dlg);
+
     /**
      * Callback for pressing the cancel button.
      */
     void onProgressCancel ();
+
     /**
      * Callback invoked on closing the progress dialog.
      */
     bool onProgressDelete (GdkEventAny *event);
+
+    /**
+     * Handles state changes as exporting starts or stops.
+     */
+    void setExporting(bool exporting, Glib::ustring const &text = "");
 
     /*
      * Utility filename and path functions
@@ -345,6 +351,8 @@ private:
     Gtk::Button export_button;
     Gtk::Label export_label;
     Gtk::Image export_image;
+
+    Gtk::ProgressBar _prog;
 
     Gtk::Dialog *prog_dlg;
     bool interrupted; // indicates whether export needs to be interrupted (read: user pressed cancel in the progress dialog)

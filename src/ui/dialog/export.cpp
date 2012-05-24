@@ -1,7 +1,3 @@
-/**
- * @file
- * PNG export dialog.
- */
 /* Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
@@ -148,6 +144,7 @@ Export::Export (void) :
     button_box(Gtk::BUTTONBOX_END),
     export_label(_("_Export"), 1),
     export_image(Gtk::StockID(Gtk::Stock::APPLY), Gtk::ICON_SIZE_BUTTON),
+    _prog(),
     prog_dlg(NULL),
     interrupted(false),
     prefs(NULL),
@@ -321,7 +318,7 @@ Export::Export (void) :
 
     export_button.add(*export_image_label);
     export_button.set_tooltip_text (_("Export the bitmap file with these settings"));
-    button_box.pack_end(export_button, false, false, 0);
+    button_box.pack_end(export_button, Gtk::PACK_SHRINK);
 
 
     /* Main dialog */
@@ -330,7 +327,8 @@ Export::Export (void) :
     contents->pack_start(singleexport_box);
     contents->pack_start(batch_box);
     contents->pack_start(hide_box);
-    contents->pack_end(button_box, false, false, 0);
+    contents->pack_end(button_box, Gtk::PACK_SHRINK);
+    contents->pack_end(_prog, Gtk::PACK_EXPAND_WIDGET);
 
     /* Signal handlers */
     filename_entry.signal_changed().connect( sigc::mem_fun(*this, &Export::onFilenameModified) );
@@ -344,6 +342,7 @@ Export::Export (void) :
     deskTrack.connect(GTK_WIDGET(gobj()));
 
     show_all_children();
+    setExporting(false);
 
     findDefaultSelection();
     onAreaToggled();
@@ -817,22 +816,44 @@ void Export::onProgressCancel ()
 unsigned int Export::onProgressCallback (float value, void *dlg)
 {
     Gtk::Dialog *dlg2 = reinterpret_cast<Gtk::Dialog*>(dlg);
-    if (dlg2->get_data("cancel")){
+    if (dlg2->get_data("cancel")) {
         return FALSE;
     }
 
-    Gtk::ProgressBar *prg = (Gtk::ProgressBar *) dlg2->get_data ("progress");
+    Gtk::ProgressBar *prg = reinterpret_cast<Gtk::ProgressBar *>(dlg2->get_data("progress"));
     prg->set_fraction(value);
 
+    Export *self = reinterpret_cast<Export *>(dlg2->get_data("exportPanel"));
+    if (self) {
+        self->_prog.set_fraction(value);
+    }
+
     int evtcount = 0;
-    while ((evtcount < 16) && gdk_events_pending ()) {
-            gtk_main_iteration_do (FALSE);
+    while ((evtcount < 16) && gdk_events_pending()) {
+            gtk_main_iteration_do(FALSE);
             evtcount += 1;
     }
 
-    gtk_main_iteration_do (FALSE);
+    gtk_main_iteration_do(FALSE);
     return TRUE;
 } // end of sp_export_progress_callback()
+
+void Export::setExporting(bool exporting, Glib::ustring const &text)
+{
+    if (exporting) {
+        _prog.set_text(text);
+        _prog.set_fraction(0.0);
+        _prog.set_sensitive(true);
+
+        export_button.set_sensitive(false);
+    } else {
+        _prog.set_text("");
+        _prog.set_fraction(0.0);
+        _prog.set_sensitive(false);
+
+        export_button.set_sensitive(true);
+    }
+}
 
 Gtk::Dialog * Export::create_progress_dialog (Glib::ustring progress_text) {
     Gtk::Dialog *dlg = new Gtk::Dialog(_("Export in progress"), TRUE);
@@ -917,6 +938,8 @@ void Export::onExport ()
         }
 
         prog_dlg = create_progress_dialog(Glib::ustring::compose(_("Exporting %1 files"), num));
+        prog_dlg->set_data("exportPanel", this);
+        setExporting(true, Glib::ustring::compose(_("Exporting %1 files"), num));
 
         gint export_count = 0;
 
@@ -988,6 +1011,7 @@ void Export::onExport ()
         desktop->messageStack()->flashF(Inkscape::INFORMATION_MESSAGE,
                                         _("Successfully exported <b>%d</b> files from <b>%d</b> selected items."), export_count, num);
 
+        setExporting(false);
         delete prog_dlg;
         prog_dlg = NULL;
         interrupted = false;
@@ -1040,6 +1064,8 @@ void Export::onExport ()
 
         /* TRANSLATORS: %1 will be the filename, %2 the width, and %3 the height of the image */
         prog_dlg = create_progress_dialog (Glib::ustring::compose(_("Exporting %1 (%2 x %3)"), fn, width, height));
+        prog_dlg->set_data("exportPanel", this);
+        setExporting(true, Glib::ustring::compose(_("Exporting %1 (%2 x %3)"), fn, width, height));
 
         /* Do export */
         ExportResult status = sp_export_png_file(sp_desktop_document(desktop), path.c_str(),
@@ -1072,6 +1098,7 @@ void Export::onExport ()
         original_name = filename_ext;
         filename_modified = false;
 
+        setExporting(false);
         delete prog_dlg;
         prog_dlg = NULL;
         interrupted = false;
