@@ -241,7 +241,7 @@ private:
      * @param value number between 0 and 1 indicating the fraction of progress (0.17 = 17 % progress)
      * @param dlg void pointer to the Gtk::Dialog progress dialog
      */
-    static unsigned int onProgressCallback (float value, void *dlg);
+    static unsigned int onProgressCallback(float value, void *dlg);
 
     /**
      * Callback for pressing the cancel button.

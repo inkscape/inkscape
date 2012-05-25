@@ -820,11 +820,20 @@ void Export::onProgressCancel ()
 
 
 /// Called for every progress iteration
-unsigned int Export::onProgressCallback (float value, void *dlg)
+unsigned int Export::onProgressCallback(float value, void *dlg)
 {
     Gtk::Dialog *dlg2 = reinterpret_cast<Gtk::Dialog*>(dlg);
     if (dlg2->get_data("cancel")) {
         return FALSE;
+    }
+
+    gint current = GPOINTER_TO_INT(dlg2->get_data("current"));
+    gint total = GPOINTER_TO_INT(dlg2->get_data("total"));
+    if (total > 0) {
+        double completed = current;
+        completed /= static_cast<double>(total);
+
+        value = completed + (value / static_cast<double>(total));
     }
 
     Gtk::ProgressBar *prg = reinterpret_cast<Gtk::ProgressBar *>(dlg2->get_data("progress"));
@@ -952,13 +961,12 @@ void Export::onExport ()
 
         gint export_count = 0;
 
-        for (GSList *i = const_cast<GSList *>(sp_desktop_selection(desktop)->itemList());
-                i != NULL;
-                i = i->next) {
-            if (interrupted){
-                break;
-            }
+        for (GSList *i = const_cast<GSList *>(sp_desktop_selection(desktop)->itemList()); i && !interrupted; i = i->next) {
             SPItem *item = reinterpret_cast<SPItem *>(i->data);
+
+            prog_dlg->set_data("current", GINT_TO_POINTER(n));
+            prog_dlg->set_data("total", GINT_TO_POINTER(num));
+            onProgressCallback(0.0, prog_dlg);
 
             // retrieve export filename hint
             const gchar *filename = item->getRepr()->attribute("inkscape:export-filename");
@@ -996,7 +1004,8 @@ void Export::onExport ()
                     if (!sp_export_png_file (doc, path.c_str(),
                                              *area, width, height, dpi, dpi,
                                              nv->pagecolor,
-                                             NULL, NULL, TRUE,  // overwrite without asking
+                                             onProgressCallback, (void*)prog_dlg,
+                                             TRUE,  // overwrite without asking
                                              hide ? const_cast<GSList *>(sp_desktop_selection(desktop)->itemList()) : NULL
                             )) {
                         gchar * error = g_strdup_printf(_("Could not export to filename %s.\n"), safeFile);
@@ -1014,7 +1023,6 @@ void Export::onExport ()
             }
 
             n++;
-            onProgressCallback((float)n/num, prog_dlg);
         }
 
         desktop->messageStack()->flashF(Inkscape::INFORMATION_MESSAGE,
@@ -1077,11 +1085,15 @@ void Export::onExport ()
         prog_dlg->set_data("exportPanel", this);
         setExporting(true, Glib::ustring::compose(_("Exporting %1 (%2 x %3)"), fn, width, height));
 
+        prog_dlg->set_data("current", GINT_TO_POINTER(0));
+        prog_dlg->set_data("total", GINT_TO_POINTER(0));
+
         /* Do export */
         ExportResult status = sp_export_png_file(sp_desktop_document(desktop), path.c_str(),
                                                  Geom::Rect(Geom::Point(x0, y0), Geom::Point(x1, y1)), width, height, xdpi, ydpi,
                                                  nv->pagecolor,
-                                                 onProgressCallback, (void*)prog_dlg, FALSE,
+                                                 onProgressCallback, (void*)prog_dlg,
+                                                 FALSE,
                                                  hide ? const_cast<GSList *>(sp_desktop_selection(desktop)->itemList()) : NULL
             );
         if (status == EXPORT_ERROR) {
