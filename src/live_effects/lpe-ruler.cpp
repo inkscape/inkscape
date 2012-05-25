@@ -152,10 +152,10 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
             t_cuts.push_back(roots[v][0]);
     }
     //draw the marks
-    for (unsigned i=0; i<t_cuts.size(); i++){
+    for (size_t i = 0; i < t_cuts.size(); i++) {
         Point A = pwd2_in(t_cuts[i]);
         Point n = rot90(unit_vector(speed(t_cuts[i])))*sign;
-        if ((i % mminterval) == i_shift) {
+        if (static_cast<int>(i % mminterval) == i_shift) {
             output.concat (ruler_mark(A, n, MARK_MAJOR));
         } else {
             output.concat (ruler_mark(A, n, MARK_MINOR));

@@ -76,7 +76,7 @@ static gboolean blocked = FALSE;
 /*
  * Core function, setup all the widgets whenever something changes on the desktop
  */
-static void ms_tb_selection_changed(Inkscape::Selection * /*selection*/, gpointer data)
+static void ms_tb_selection_changed(Inkscape::Selection * /*selection*/, gpointer /*data*/)
 {
     // DOES NOTHING AT MOMENT
 
@@ -116,9 +116,9 @@ static void ms_drag_selection_changed(gpointer /*dragger*/, gpointer data)
 
 }
 
-static void ms_defs_release(SPObject * defs, GtkWidget *widget)
+static void ms_defs_release(SPObject * /*defs*/, GtkWidget *widget)
 {
-    ms_tb_selection_changed(NULL, (gpointer) widget);
+    ms_tb_selection_changed(NULL, widget);
 }
 
 static void ms_defs_modified(SPObject * /*defs*/, guint /*flags*/, GtkWidget *widget)
@@ -150,8 +150,8 @@ static void ms_new_fillstroke_changed( EgeSelectOneAction *act, GObject * /*tbl*
     prefs->setInt("/tools/gradient/newfillorstroke", (fsmode == Inkscape::FOR_FILL) ? 1 : 0);
 }
 
-static void ms_row_changed (GtkAdjustment *adj, GObject *tbl ) {
-
+static void ms_row_changed(GtkAdjustment *adj, GObject * /*tbl*/ )
+{
     if (blocked) {
         return;
     }
@@ -167,8 +167,8 @@ static void ms_row_changed (GtkAdjustment *adj, GObject *tbl ) {
     blocked = FALSE;
 }
 
-static void ms_col_changed (GtkAdjustment *adj, GObject *tbl ) {
-
+static void ms_col_changed(GtkAdjustment *adj, GObject * /*tbl*/ )
+{
     if (blocked) {
         return;
     }
@@ -182,13 +182,6 @@ static void ms_col_changed (GtkAdjustment *adj, GObject *tbl ) {
     prefs->setInt("/tools/mesh/mesh_cols", cols);
 
     blocked = FALSE;
-}
-
-static void ms_edit_fillstroke_changed( EgeSelectOneAction *act, GObject * /*tbl*/ )
-{
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Inkscape::PaintTarget fsmode = (ege_select_one_action_get_active( act ) == 0) ? Inkscape::FOR_FILL : Inkscape::FOR_STROKE;
-    prefs->setInt("/tools/gradient/editfillorstroke", (fsmode == Inkscape::FOR_FILL) ? 1 : 0);
 }
 
 /**

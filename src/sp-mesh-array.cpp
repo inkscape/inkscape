@@ -1958,8 +1958,8 @@ guint SPMeshNodeArray::color_pick( std::vector<guint> icorners, SPItem* item ) {
    selected: list of all corners selected (draggable indices).
    op: how other corners should be moved.
 */
-void SPMeshNodeArray::update_handles( guint corner, std::vector< guint > selected, Geom::Point p_old, MeshNodeOperation op ) {
-
+void SPMeshNodeArray::update_handles( guint corner, std::vector< guint > /*selected*/, Geom::Point p_old, MeshNodeOperation /*op*/ )
+{
     assert( drag_valid );
 
     // std::cout << "SPMeshNodeArray::update_handles: "
@@ -2230,9 +2230,6 @@ void SPMeshNodeArray::update_handles( guint corner, std::vector< guint > selecte
 
 
     //         Geom::Point dsx1 = pnodes[0][1]->p - 
-
-
-
 }
 
 

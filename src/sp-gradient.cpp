@@ -414,8 +414,7 @@ static void sp_meshrow_class_init(SPMeshRowClass *klass)
 /**
  * Callback to initialize SPMeshRow object.
  */
-static void
-sp_meshrow_init(SPMeshRow *meshrow)
+static void sp_meshrow_init(SPMeshRow * /*meshrow*/)
 {
     // Do nothing
 }
@@ -434,8 +433,7 @@ static void sp_meshrow_build(SPObject *object, SPDocument *document, Inkscape::X
 /**
  * Virtual set: set attribute to value.
  */
-static void
-sp_meshrow_set(SPObject *object, unsigned key, gchar const *value)
+static void sp_meshrow_set(SPObject * /*object*/, unsigned /*key*/, gchar const * /*value*/)
 {
     // Do nothing
 }
@@ -503,8 +501,7 @@ static void sp_meshpatch_class_init(SPMeshPatchClass *klass)
 /**
  * Callback to initialize SPMeshPatch object.
  */
-static void
-sp_meshpatch_init(SPMeshPatch *meshpatch)
+static void sp_meshpatch_init(SPMeshPatch * /*meshpatch*/)
 {
     // Do nothing
 }
@@ -2043,13 +2040,17 @@ sp_radialgradient_create_pattern(SPPaintServer *ps,
     return cp;
 }
 
-static cairo_pattern_t *
-sp_meshgradient_create_pattern(SPPaintServer *ps,
-                               cairo_t */* ct */,
-                               Geom::OptRect const &bbox,
-                               double opacity)
+static cairo_pattern_t *sp_meshgradient_create_pattern(SPPaintServer *ps,
+                                                       cairo_t * /* ct */,
+#if defined(MESH_DEBUG) || (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 11, 4))
+                                                       Geom::OptRect const &bbox,
+                                                       double opacity
+#else
+                                                       Geom::OptRect const & /*bbox*/,
+                                                       double /*opacity*/
+#endif
+    )
 {
-
     using Geom::X;
     using Geom::Y;
 
@@ -2061,11 +2062,10 @@ sp_meshgradient_create_pattern(SPPaintServer *ps,
 
     gr->ensureArray();
 
-    SPMeshNodeArray* array = &(gr->array);
-
     cairo_pattern_t *cp = NULL;
 
 #if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 11, 4)
+    SPMeshNodeArray* array = &(gr->array);
 
     cp = cairo_pattern_create_mesh();
 

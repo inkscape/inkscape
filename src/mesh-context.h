@@ -1,5 +1,5 @@
-#ifndef __SP_MESH_CONTEXT_H__
-#define __SP_MESH_CONTEXT_H__
+#ifndef SEEN_SP_MESH_CONTEXT_H
+#define SEEN_SP_MESH_CONTEXT_H
 
 /*
  * Mesh drawing and editing tool
@@ -50,13 +50,13 @@ struct SPMeshContextClass {
     SPEventContextClass parent_class;
 };
 
-/* Standard Gtk function */
+// Standard Gtk function
 GType sp_mesh_context_get_type();
 
-void sp_mesh_context_select_next (SPEventContext *event_context);
-void sp_mesh_context_select_prev (SPEventContext *event_context);
-static void sp_mesh_context_split_near_point (SPMeshContext *rc, SPItem *item,  Geom::Point mouse_p, guint32 /*etime*/);
-#endif
+void sp_mesh_context_select_next(SPEventContext *event_context);
+void sp_mesh_context_select_prev(SPEventContext *event_context);
+
+#endif // SEEN_SP_MESH_CONTEXT_H
 
 
 /*

@@ -344,8 +344,7 @@ sp_mesh_context_is_over_line (SPMeshContext *rc, SPItem *item, Geom::Point event
 /**
 Split row/column near the mouse point.
 */
-static void
-sp_mesh_context_split_near_point (SPMeshContext *rc, SPItem *item,  Geom::Point mouse_p, guint32 /*etime*/)
+static void sp_mesh_context_split_near_point(SPMeshContext *rc, SPItem *item,  Geom::Point mouse_p, guint32 /*etime*/)
 {
 
 #ifdef DEBUG_MESH
@@ -962,7 +961,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 }
 
 
-static void sp_mesh_drag(SPMeshContext &rc, Geom::Point const pt, guint /*state*/, guint32 etime)
+static void sp_mesh_drag(SPMeshContext &rc, Geom::Point const /*pt*/, guint /*state*/, guint32 /*etime*/)
 {
 
     SPDesktop *desktop = SP_EVENT_CONTEXT(&rc)->desktop;
