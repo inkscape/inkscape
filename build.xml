@@ -31,7 +31,7 @@
 ## P R O J E C T   :   I N K S C A P E
 ########################################################################
 -->
-<project name="Inkscape" default="dist-all" basedir=".">
+<project name="Inkscape" default="dist-inkscape" basedir=".">
     <description>
         Build file for the Inkscape SVG editor.  This file
         was written for GTK-2.10 on Win32, but it should work
@@ -344,6 +344,7 @@
             -O2
             -mms-bitfields
             -fopenmp
+            -march=native
         </flags>
         <defines>
             -DVERSION=\"${version}\"
@@ -451,7 +452,6 @@
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
-           -mwindows
            -mthreads
        </flags>
        <fileset dir="${build}">
@@ -524,7 +524,6 @@
               stripcommand="${archutil}strip"
               objcopycommand="${archutil}objcopy">
        <flags>
-           -mwindows
            -mthreads
        </flags>
        <fileset dir="${build}">

@@ -717,6 +717,9 @@ guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, 
 
         switch (point_type) {
             case POINT_MG_CORNER: {
+                if (point_i >= mg->array.corners.size()) {
+                    return 0;
+                }
                 SPMeshNode const* cornerpoint = mg->array.corners[ point_i ];
 
                 if (cornerpoint) {
