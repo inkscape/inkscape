@@ -660,8 +660,9 @@ guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, 
 {
     SPGradient *gradient = getGradient(item, fill_or_stroke);
 
-    if (!gradient || !SP_IS_GRADIENT(gradient))
+    if (!gradient || !SP_IS_GRADIENT(gradient)) {
         return 0;
+    }
 
     if (SP_IS_LINEARGRADIENT(gradient) || SP_IS_RADIALGRADIENT(gradient) ) {
 
@@ -709,17 +710,22 @@ guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, 
                 break;
         }
         return 0;
-    } else {
+    } else if (SP_IS_MESHGRADIENT(gradient)) {
 
         // Mesh gradient
         SPMeshGradient *mg = SP_MESHGRADIENT(gradient);
 
         switch (point_type) {
             case POINT_MG_CORNER: {
+                SPMeshNode const* cornerpoint = mg->array.corners[ point_i ];
 
-                SPColor color  = mg->array.corners[ point_i ]->color;
-                double opacity = mg->array.corners[ point_i ]->opacity;
-                return  color.toRGBA32( opacity );
+                if (cornerpoint) {
+                    SPColor color  = cornerpoint->color;
+                    double opacity = cornerpoint->opacity;
+                    return  color.toRGBA32( opacity );
+                } else {
+                    return 0;
+                }
                 break;
             }
 
@@ -735,6 +741,8 @@ guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, 
         }
         return 0;
     }
+
+    return 0;
 }
 
 void sp_item_gradient_stop_set_style(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke, SPCSSAttr *stop)
