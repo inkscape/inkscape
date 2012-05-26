@@ -458,7 +458,7 @@ private:
     void setupValueAndCombo( gint reported, gint actual, Gtk::Label& label, Gtk::ComboBoxText& combo );
     void updateTestButtons( Glib::ustring const& key, gint hotButton );
     void updateTestAxes( Glib::ustring const& key, GdkDevice* dev );
-    void mapAxesValues( Glib::ustring const& key, guint numAxes, gdouble const * axes, GdkDevice* dev);
+    void mapAxesValues( Glib::ustring const& key, gdouble const * axes, GdkDevice* dev);
     Glib::ustring getKeyFor( GdkDevice* device );
     bool eventSnoop(GdkEvent* event);
     void linkComboChanged();
@@ -1440,8 +1440,14 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
     }
 }
 
-void InputDialogImpl::mapAxesValues( Glib::ustring const& key, guint numAxes, gdouble const * axes, GdkDevice* dev )
+void InputDialogImpl::mapAxesValues( Glib::ustring const& key, gdouble const * axes, GdkDevice* dev )
 {
+#if GTK_CHECK_VERSION(2,22,0)
+    guint numAxes = gdk_device_get_n_axes(dev);
+#else
+    guint numAxes = dev->num_axes;
+#endif
+
     static gdouble epsilon = 0.0001;
     if ( (numAxes > 0) && axes) {
         for ( guint axisNum = 0; axisNum < numAxes; axisNum++ ) {
@@ -1492,7 +1498,16 @@ void InputDialogImpl::mapAxesValues( Glib::ustring const& key, guint numAxes, gd
 Glib::ustring InputDialogImpl::getKeyFor( GdkDevice* device )
 {
     Glib::ustring key;
-    switch ( device->source ) {
+
+#if GTK_CHECK_VERSION(2,22,0)
+    GdkInputSource source = gdk_device_get_source(device);
+    const gchar *name = gdk_device_get_name(device);
+#else
+    GdkInputSource source = device->source;
+    const gchar *name = device->name;
+#endif
+
+    switch ( source ) {
         case GDK_SOURCE_MOUSE:
             key = "M:";
             break;
@@ -1508,7 +1523,7 @@ Glib::ustring InputDialogImpl::getKeyFor( GdkDevice* device )
         default:
             key = "?:";
     }
-    key += device->name;
+    key += name;
 
     return key;
 }
@@ -1541,10 +1556,15 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
             GdkEventButton* btnEvt = reinterpret_cast<GdkEventButton*>(event);
             if ( btnEvt->device ) {
                 key = getKeyFor(btnEvt->device);
+#if GTK_CHECK_VERSION(2,22,0)
+		source = gdk_device_get_source(btnEvt->device);
+		devName = gdk_device_get_name(btnEvt->device);
+#else
                 source = btnEvt->device->source;
                 devName = btnEvt->device->name;
+#endif
+                mapAxesValues(key, btnEvt->axes, btnEvt->device);
 
-                mapAxesValues(key, btnEvt->device->num_axes, btnEvt->axes, btnEvt->device);
                 if ( buttonMap[key].find(btnEvt->button) == buttonMap[key].end() ) {
 //                     g_message("New button found for %s = %d", key.c_str(), btnEvt->button);
                     buttonMap[key].insert(btnEvt->button);
@@ -1570,9 +1590,14 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
             GdkEventMotion* btnMtn = reinterpret_cast<GdkEventMotion*>(event);
             if ( btnMtn->device ) {
                 key = getKeyFor(btnMtn->device);
+#if GTK_CHECK_VERSION(2,22,0)
+		source = gdk_device_get_source(btnMtn->device);
+		devName = gdk_device_get_name(btnMtn->device);
+#else
                 source = btnMtn->device->source;
                 devName = btnMtn->device->name;
-                mapAxesValues(key, btnMtn->device->num_axes, btnMtn->axes, btnMtn->device);
+#endif
+                mapAxesValues(key, btnMtn->axes, btnMtn->device);
             }
             gchar* name = gtk_accelerator_name(0, static_cast<GdkModifierType>(btnMtn->state));
             keyVal.set_label(name);
