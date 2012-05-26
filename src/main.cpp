@@ -121,6 +121,11 @@
 #include "compat-key-syms.h"
 #endif
 
+#include "path-chemistry.h"
+#include "sp-text.h"
+#include "sp-flowtext.h"
+#include "text-editing.h"
+
 enum {
     SP_ARG_NONE,
     SP_ARG_NOGUI,
@@ -1036,6 +1041,29 @@ int sp_process_file_list(GSList *fl)
                 sp_do_export_png(doc);
             }
             if (sp_export_svg) {
+                if (sp_export_text_to_path) {
+                    GSList *items = NULL;
+                    SPRoot *root = doc->getRoot();
+                    for ( SPObject *iter = root->firstChild(); iter ; iter = iter->getNext()) {
+                        SPItem* item = (SPItem*) iter;
+                        if (! (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item) || SP_IS_GROUP(item))) {
+                            continue;
+                        }
+
+                        te_update_layout_now_recursive(item);
+                        items = g_slist_append(items, item);
+                    }
+
+                    GSList *selected = NULL;
+                    GSList *to_select = NULL;
+
+                    sp_item_list_to_curves(items, &selected, &to_select);
+
+                    g_slist_free (items);
+                    g_slist_free (selected);
+                    g_slist_free (to_select);
+                }
+
                 Inkscape::XML::Document *rdoc;
                 Inkscape::XML::Node *repr;
                 rdoc = sp_repr_document_new("svg:svg");

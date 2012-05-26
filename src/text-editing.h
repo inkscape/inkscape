@@ -28,6 +28,8 @@ typedef std::pair<Inkscape::Text::Layout::iterator, Inkscape::Text::Layout::iter
 
 Inkscape::Text::Layout const * te_get_layout (SPItem const *item);
 
+void te_update_layout_now_recursive(SPItem *item);
+
 /** Returns true if there are no visible characters on the canvas. */
 bool sp_te_output_is_empty(SPItem const *item);
 

@@ -34,6 +34,7 @@
 #include "sp-flowtext.h"
 #include "sp-flowdiv.h"
 #include "sp-flowregion.h"
+#include "sp-item-group.h"
 #include "sp-tref.h"
 #include "sp-tspan.h"
 
@@ -56,6 +57,22 @@ Inkscape::Text::Layout const * te_get_layout (SPItem const *item)
 static void te_update_layout_now (SPItem *item)
 {
     if (SP_IS_TEXT(item))
+        SP_TEXT(item)->rebuildLayout();
+    else if (SP_IS_FLOWTEXT (item))
+        SP_FLOWTEXT(item)->rebuildLayout();
+    item->updateRepr();
+}
+
+void te_update_layout_now_recursive(SPItem *item)
+{
+    if (SP_IS_GROUP(item)) {
+        GSList *item_list = sp_item_group_item_list(SP_GROUP(item));
+        for(GSList* elem = item_list; elem; elem = elem->next) {
+            SPItem* list_item = (SPItem*) elem->data;
+            te_update_layout_now_recursive(list_item);
+        }
+        g_slist_free(item_list);
+    } else if (SP_IS_TEXT(item))
         SP_TEXT(item)->rebuildLayout();
     else if (SP_IS_FLOWTEXT (item))
         SP_FLOWTEXT(item)->rebuildLayout();
