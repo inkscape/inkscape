@@ -60,6 +60,10 @@ if test "$GCC" = "yes"; then
   CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
   CPPFLAGS="-DGTK_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
 
+  # Ensure that private GTK+ fields are not accessible. This is the case for
+  # GTK+ 3, so it is important to avoid using them in GTK+ 2.
+  CPPFLAGS="-DGSEAL_ENABLE $CPPFLAGS"
+
   # Test for -Werror=... (introduced some time post-4.0)
   # If we hit a format error -- it should be fatal.
   AC_MSG_CHECKING([compiler support for -Werror=format-security])
