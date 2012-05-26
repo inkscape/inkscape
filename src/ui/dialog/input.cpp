@@ -1404,10 +1404,16 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
                     testAxes[i].set(getPix(PIX_AXIS_OFF));
                     axesValues[i].set_sensitive(true);
                     if ( dev && (i < static_cast<gint>(G_N_ELEMENTS(axesValues)) ) ) {
-                        if ( (dev->axes[i].max - dev->axes[i].min) > epsilon ) {
+
+                       // FIXME: Device axis ranges are inaccessible in GTK+ 3 and
+		       // are deprecated in GTK+ 2. Progress-bar ranges are disabled
+		       // until we find an alternative solution
+		     
+                       //   if ( (dev->axes[i].max - dev->axes[i].min) > epsilon ) {
                             axesValues[i].set_sensitive(true);
-                            axesValues[i].set_fraction( (axesMap[key][i].second- dev->axes[i].min) / (dev->axes[i].max - dev->axes[i].min) );
-                        }
+                       //       axesValues[i].set_fraction( (axesMap[key][i].second- dev->axes[i].min) / (dev->axes[i].max - dev->axes[i].min) );
+                       //   }
+                        
                         gchar* str = g_strdup_printf("%f", axesMap[key][i].second);
                         axesValues[i].set_text(str);
                         g_free(str);
@@ -1417,10 +1423,16 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
                     testAxes[i].set(getPix(PIX_AXIS_ON));
                     axesValues[i].set_sensitive(true);
                     if ( dev && (i < static_cast<gint>(G_N_ELEMENTS(axesValues)) ) ) {
-                        if ( (dev->axes[i].max - dev->axes[i].min) > epsilon ) {
+                       
+                       // FIXME: Device axis ranges are inaccessible in GTK+ 3 and
+		       // are deprecated in GTK+ 2. Progress-bar ranges are disabled
+		       // until we find an alternative solution
+                       
+		       // if ( (dev->axes[i].max - dev->axes[i].min) > epsilon ) {
                             axesValues[i].set_sensitive(true);
-                            axesValues[i].set_fraction( (axesMap[key][i].second- dev->axes[i].min) / (dev->axes[i].max - dev->axes[i].min) );
-                        }
+                       //     axesValues[i].set_fraction( (axesMap[key][i].second- dev->axes[i].min) / (dev->axes[i].max - dev->axes[i].min) );
+                       // }
+
                         gchar* str = g_strdup_printf("%f", axesMap[key][i].second);
                         axesValues[i].set_text(str);
                         g_free(str);
