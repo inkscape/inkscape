@@ -960,7 +960,14 @@ SPDesktopWidget::shutdown()
                   "If you close without saving, your changes will be discarded."),
                 doc->getName());
             // fix for bug lp:168809
-	    gtk_widget_set_can_focus(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), FALSE);
+#if GTK_CHECK_VERSION(2,22,0)
+	    GtkWidget *ma = gtk_message_dialog_get_message_area(GTK_MESSAGE_DIALOG(dialog));
+	    GList *ma_labels = gtk_container_get_children(GTK_CONTAINER(ma));
+	    GtkWidget *label = GTK_WIDGET(g_list_first(ma_labels)->data);
+#else
+	    GtkWidget *label = GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label);
+#endif
+	    gtk_widget_set_can_focus(label, FALSE);
 
             GtkWidget *close_button;
             close_button = gtk_button_new_with_mnemonic(_("Close _without saving"));
@@ -1016,13 +1023,20 @@ SPDesktopWidget::shutdown()
                   "Do you want to save this file as Inkscape SVG?"),
                 doc->getName() ? doc->getName() : "Unnamed");
             // fix for bug lp:168809
-            gtk_widget_set_can_focus(GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label), FALSE);
+#if GTK_CHECK_VERSION(2,22,0)
+	    GtkWidget *ma = gtk_message_dialog_get_message_area(GTK_MESSAGE_DIALOG(dialog));
+	    GList *ma_labels = gtk_container_get_children(GTK_CONTAINER(ma));
+	    GtkWidget *label = GTK_WIDGET(g_list_first(ma_labels)->data);
+#else
+	    GtkWidget *label = GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label);
+#endif
+	    gtk_widget_set_can_focus(label, FALSE);
 
             GtkWidget *close_button;
             close_button = gtk_button_new_with_mnemonic(_("Close _without saving"));
             gtk_widget_show(close_button);
-            GtkWidget *save_button;
-            save_button = gtk_button_new_with_mnemonic(_("_Save as Inkscape SVG"));
+            GtkWidget *save_button = gtk_button_new_with_mnemonic(_("_Save as Inkscape SVG"));
+	    gtk_widget_set_can_default(save_button, TRUE);
             gtk_widget_show(save_button);
             gtk_dialog_add_action_widget(GTK_DIALOG(dialog), close_button, GTK_RESPONSE_NO);
 
