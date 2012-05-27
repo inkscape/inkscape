@@ -1253,30 +1253,27 @@ RotateableSwatch::do_motion(double by, guint modifier) {
 
     if (!cr_set && modifier != 3) {
         GtkWidget *w = GTK_WIDGET(gobj());
+        GdkPixbuf *pixbuf = NULL;
 
-        GdkBitmap *bitmap = NULL;
-        GdkBitmap *mask = NULL;
         if (modifier == 2) { // saturation
-            sp_cursor_bitmap_and_mask_from_xpm(&bitmap, &mask, cursor_adj_s_xpm);
+            pixbuf = gdk_pixbuf_new_from_xpm_data((const gchar **)cursor_adj_s_xpm);
         } else if (modifier == 1) { // lightness
-            sp_cursor_bitmap_and_mask_from_xpm(&bitmap, &mask, cursor_adj_l_xpm);
+            pixbuf = gdk_pixbuf_new_from_xpm_data((const gchar **)cursor_adj_l_xpm);
         } else { // hue
-            sp_cursor_bitmap_and_mask_from_xpm(&bitmap, &mask, cursor_adj_h_xpm);
+            pixbuf = gdk_pixbuf_new_from_xpm_data((const gchar **)cursor_adj_h_xpm);
         }
-        if ((bitmap != NULL) && (mask != NULL)) {
-            GtkStyle *style = gtk_widget_get_style(w);
-            cr = gdk_cursor_new_from_pixmap(bitmap, mask,
-                                            &style->black,
-                                            &style->white,
-                                            16, 16);
-            g_object_unref (bitmap);
-            g_object_unref (mask);
+
+	if (pixbuf != NULL) {
+	    cr = gdk_cursor_new_from_pixbuf(gdk_display_get_default(), pixbuf, 16, 16);
+
+            g_object_unref(pixbuf);	    
             gdk_window_set_cursor(gtk_widget_get_window(w), cr);
 #if GTK_CHECK_VERSION(3,0,0)
 	    g_object_unref(cr);
 #else
             gdk_cursor_unref(cr);
 #endif
+	    cr = NULL;
             cr_set = true;
         }
     }
