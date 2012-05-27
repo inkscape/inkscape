@@ -50,6 +50,7 @@
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 #include <gtkmm/stock.h>
+#include <gtkmm/imagemenuitem.h>
 
 using std::pair;
 
