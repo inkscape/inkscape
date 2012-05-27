@@ -261,10 +261,6 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 }
 
 
-                //draw control line
-                SPCtrlLine *control_line = ControlManager::getManager().createControlLine(sp_desktop_tempgroup(desktop), start_point, end_point);
-                measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
-
                 Geom::PathVector lineseg;
                 Geom::Path p;
                 p.start(desktop->dt2doc(start_point));
@@ -347,23 +343,6 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     std::sort(intersections.begin(), intersections.end(), GeomPointSortPredicate);
                 }
 
-                for (size_t idx = 0; idx < intersections.size(); ++idx) {
-                    // Display the intersection indicator (i.e. the cross)
-                    SPCanvasItem * canvasitem = NULL;
-                    canvasitem = sp_canvas_item_new(sp_desktop_tempgroup(desktop),
-                                                    SP_TYPE_CTRL,
-                                                    "anchor", SP_ANCHOR_CENTER,
-                                                    "size", 8.0,
-                                                    "stroked", TRUE,
-                                                    "stroke_color", 0xff0000ff,
-                                                    "mode", SP_KNOT_MODE_XOR,
-                                                    "shape", SP_KNOT_SHAPE_CROSS,
-                                                    NULL );
-
-                    SP_CTRL(canvasitem)->moveto(desktop->doc2dt(intersections[idx]));
-                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvasitem, 0));
-                }
-
                 SPUnitId unitid = static_cast<SPUnitId>(prefs->getInt("/tools/measure/unitid", SP_UNIT_PX));
                 SPUnit unit = sp_unit_get_by_id(unitid);
 
@@ -413,6 +392,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
                     free(angle_str);
                 }
+
                 {
                     double totallengthval = (end_point - start_point).length();
                     sp_convert_distance(&totallengthval, &sp_unit_get_by_id(SP_UNIT_PX), &unit);
@@ -431,24 +411,10 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     free(totallength_str);
                 }
 
+                // Normal will be used for lines and text
                 Geom::Point normal = desktop->w2d(Geom::unit_vector(Geom::rot90(desktop->d2w(end_point - start_point))));
+
                 if (intersections.size() > 2) {
-                    ControlManager &mgr = ControlManager::getManager();
-                    control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
-                                                         desktop->doc2dt(intersections[0]) + normal * 60,
-                                                         desktop->doc2dt(intersections[intersections.size() - 1]) + normal * 60);
-                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
-
-                    control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
-                                                         desktop->doc2dt(intersections[0]),
-                                                         desktop->doc2dt(intersections[0]) + normal * 65);
-                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
-
-                    control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
-                                                         desktop->doc2dt(intersections[intersections.size() - 1]),
-                                                         desktop->doc2dt(intersections[intersections.size() - 1]) + normal * 65);
-                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
-
                     double totallengthval = (intersections[intersections.size()-1] - intersections[0]).length();
                     sp_convert_distance(&totallengthval, &sp_unit_get_by_id(SP_UNIT_PX), &unit);
 
@@ -466,6 +432,52 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
                     free(total_str);
+                }
+
+                // Now that text has been added, we can add lines and controls so that they go underneath
+
+                for (size_t idx = 0; idx < intersections.size(); ++idx) {
+                    // Display the intersection indicator (i.e. the cross)
+                    SPCanvasItem * canvasitem = NULL;
+                    canvasitem = sp_canvas_item_new(sp_desktop_tempgroup(desktop),
+                                                    SP_TYPE_CTRL,
+                                                    "anchor", SP_ANCHOR_CENTER,
+                                                    "size", 8.0,
+                                                    "stroked", TRUE,
+                                                    "stroke_color", 0xff0000ff,
+                                                    "mode", SP_KNOT_MODE_XOR,
+                                                    "shape", SP_KNOT_SHAPE_CROSS,
+                                                    NULL );
+
+                    SP_CTRL(canvasitem)->moveto(desktop->doc2dt(intersections[idx]));
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvasitem, 0));
+                }
+
+                // Since adding goes to the bottom, do all lines last.
+
+                if (intersections.size() > 2) {
+                    ControlManager &mgr = ControlManager::getManager();
+                    SPCtrlLine *control_line = 0;
+                    control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                                                         desktop->doc2dt(intersections[0]) + normal * 60,
+                                                         desktop->doc2dt(intersections[intersections.size() - 1]) + normal * 60);
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+
+                    control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                                                         desktop->doc2dt(intersections[0]),
+                                                         desktop->doc2dt(intersections[0]) + normal * 65);
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+
+                    control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                                                         desktop->doc2dt(intersections[intersections.size() - 1]),
+                                                         desktop->doc2dt(intersections[intersections.size() - 1]) + normal * 65);
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+                }
+
+                // draw main control line
+                {
+                    SPCtrlLine *control_line = ControlManager::getManager().createControlLine(sp_desktop_tempgroup(desktop), start_point, end_point);
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
                 }
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
