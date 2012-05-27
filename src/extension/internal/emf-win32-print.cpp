@@ -374,13 +374,7 @@ void PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Affine &transfo
 
         if (linejoin == PS_JOIN_MITER) {
             float oldmiterlimit;
-            float miterlimit = style->stroke_miterlimit.value;
-
-            miterlimit = miterlimit * 10.0 / 4.0;
-            if (miterlimit < 1)
-                miterlimit = 10.0;
-
-            miterlimit = miterlimit * IN_PER_PX * dwDPI;
+            float miterlimit = style->stroke_miterlimit.value; //ratio, not a pt size
 
             SetMiterLimit(
                 hdc,

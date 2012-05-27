@@ -1654,11 +1654,12 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
 
             PEMRSETMITERLIMIT pEmr = (PEMRSETMITERLIMIT) lpEMFR;
 
-            float miterlimit = pEmr->eMiterLimit;
-            miterlimit = miterlimit * 4.0 / 10.0;
-            d->dc[d->level].style.stroke_miterlimit.value = pix_to_size_point( d, miterlimit );
-            if (d->dc[d->level].style.stroke_miterlimit.value < 1)
-                d->dc[d->level].style.stroke_miterlimit.value = 4.0;
+            //BUG in SetMiterLimit() on mingw, possibly in underlying Windows(at least on XP?)
+            //The function takes a float but saves a 32 bit int in the EMR_SETMITERLIMIT record.
+            float miterlimit = *((int32_t *) &(pEmr->eMiterLimit));
+            d->dc[d->level].style.stroke_miterlimit.value = miterlimit; //ratio, not a pt size
+            if (d->dc[d->level].style.stroke_miterlimit.value < 1.0)
+                d->dc[d->level].style.stroke_miterlimit.value = 1.0;
             break;
         }
         case EMR_BEGINPATH:
