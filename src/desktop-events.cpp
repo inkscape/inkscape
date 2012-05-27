@@ -546,7 +546,15 @@ static GdkInputSource lastType = GDK_SOURCE_MOUSE;
 static void init_extended()
 {
     std::string avoidName = "pad";
+
+#if GTK_CHECK_VERSION(3,0,0)
+    GdkDisplay *display = gdk_display_get_default();
+    GdkDeviceManager *dm = gdk_display_get_device_manager(display);
+    GList* devices = gdk_device_manager_list_devices(dm, GDK_DEVICE_TYPE_SLAVE);	
+#else
     GList* devices = gdk_devices_list();
+#endif
+    
     if ( devices ) {
         for ( GList* curr = devices; curr; curr = g_list_next(curr) ) {
             GdkDevice* dev = reinterpret_cast<GdkDevice*>(curr->data);
@@ -581,6 +589,10 @@ static void init_extended()
             }
         }
     }
+
+#if GTK_CHECK_VERSION(3,0,0)
+    g_list_free(devices);
+#endif
 }
 
 
