@@ -26,9 +26,9 @@ struct GdkDeviceFake {
 	GdkInputMode    mode;
 	gboolean        has_cursor;
 	gint            num_axes;
-	GdkDeviceAxis  *axes;
+//	GdkDeviceAxis  *axes;
 	gint            num_keys;
-	GdkDeviceKey   *keys;
+//	GdkDeviceKey   *keys;
 };
 
 
@@ -346,7 +346,13 @@ DeviceManagerImpl::DeviceManagerImpl() :
     DeviceManager(),
     devices()
 {
+#if GTK_CHECK_VERSION(3,0,0)
+    GdkDisplay *display = gdk_display_get_default();
+    GdkDeviceManager *dm = gdk_display_get_device_manager(display);
+    GList* devList = gdk_device_manager_list_devices(dm, GDK_DEVICE_TYPE_SLAVE);
+#else
     GList* devList = gdk_devices_list();
+#endif
 
     if ( !fakeList ) {
         createFakeList();
@@ -368,6 +374,10 @@ DeviceManagerImpl::DeviceManagerImpl() :
             devices.push_back(Glib::RefPtr<InputDeviceImpl>(device));
         }
     }
+
+#if GTK_CHECK_VERSION(3,0,0)
+    g_list_free(devList);
+#endif
 }
 
 void DeviceManagerImpl::loadConfig()
@@ -655,7 +665,10 @@ DeviceManager& DeviceManager::getManager() {
 
 
 
-
+/* FIXME: Device Axis and Key details are inaccessible in GTK+ 3
+ *        and are deprecated in GTK+ 2. Perhaps there is a way of specifying
+ *        this in underlying API?
+ *
 GdkDeviceAxis padAxes[] = {{GDK_AXIS_X, 0.0, 0.0},
                            {GDK_AXIS_Y, 0.0, 0.0},
                            {GDK_AXIS_PRESSURE, 0.0, 1.0},
@@ -695,6 +708,7 @@ GdkDeviceKey stylusKeys[] = {{0, (GdkModifierType)0}, {0, (GdkModifierType)0}, {
 
 GdkDeviceAxis coreAxes[] = {{GDK_AXIS_X, 0.0, 0.0},
                             {GDK_AXIS_Y, 0.0, 0.0}};
+*/
 
 static void createFakeList() {
     if ( !fakeList ) {
@@ -703,39 +717,46 @@ static void createFakeList() {
         fakeout[0].mode = GDK_MODE_SCREEN;
         fakeout[0].has_cursor = TRUE;
         fakeout[0].num_axes = 6;
-        fakeout[0].axes = padAxes;
+//        fakeout[0].axes = padAxes;
         fakeout[0].num_keys = 8;
-        fakeout[0].keys = padKeys;
+//        fakeout[0].keys = padKeys;
 
         fakeout[1].name = g_strdup("eraser");
         fakeout[1].source = GDK_SOURCE_ERASER;
         fakeout[1].mode = GDK_MODE_SCREEN;
         fakeout[1].has_cursor = TRUE;
         fakeout[1].num_axes = 6;
-        fakeout[1].axes = eraserAxes;
+//        fakeout[1].axes = eraserAxes;
         fakeout[1].num_keys = 7;
-        fakeout[1].keys = eraserKeys;
+//        fakeout[1].keys = eraserKeys;
 
         fakeout[2].name = g_strdup("cursor");
         fakeout[2].source = GDK_SOURCE_CURSOR;
         fakeout[2].mode = GDK_MODE_SCREEN;
         fakeout[2].has_cursor = TRUE;
         fakeout[2].num_axes = 6;
-        fakeout[2].axes = cursorAxes;
+//        fakeout[2].axes = cursorAxes;
         fakeout[2].num_keys = 7;
-        fakeout[2].keys = cursorKeys;
+//        fakeout[2].keys = cursorKeys;
 
         fakeout[3].name = g_strdup("stylus");
         fakeout[3].source = GDK_SOURCE_PEN;
         fakeout[3].mode = GDK_MODE_SCREEN;
         fakeout[3].has_cursor = TRUE;
         fakeout[3].num_axes = 6;
-        fakeout[3].axes = stylusAxes;
+//        fakeout[3].axes = stylusAxes;
         fakeout[3].num_keys = 7;
-        fakeout[3].keys = stylusKeys;
+//        fakeout[3].keys = stylusKeys;
 
 // try to find the first *real* core pointer
+#if GTK_CHECK_VERSION(3,0,0)
+        GdkDisplay *display = gdk_display_get_default();
+        GdkDeviceManager *dm = gdk_display_get_device_manager(display);
+        GList* devList = gdk_device_manager_list_devices(dm, GDK_DEVICE_TYPE_SLAVE);	
+#else
         GList* devList = gdk_devices_list();
+#endif
+
 #if GTK_CHECK_VERSION (2, 22, 0)
         while ( devList && devList->data && (gdk_device_get_source ((GdkDevice*)devList->data) != GDK_SOURCE_MOUSE)) {
 #else
@@ -771,15 +792,20 @@ static void createFakeList() {
             fakeout[4].mode = GDK_MODE_SCREEN;
             fakeout[4].has_cursor = TRUE;
             fakeout[4].num_axes = 2;
-            fakeout[4].axes = coreAxes;
+//            fakeout[4].axes = coreAxes;
             fakeout[4].num_keys = 0;
-            fakeout[4].keys = NULL;
+//            fakeout[4].keys = NULL;
         }
 
         for ( guint pos = 0; pos < G_N_ELEMENTS(fakeout); pos++) {
             fakeList = g_list_append(fakeList, &(fakeout[pos]));
         }
+        
+#if GTK_CHECK_VERSION(3,0,0)
+        g_list_free(devList);
+#endif
     }
+
 }
 
 
