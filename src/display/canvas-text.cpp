@@ -255,8 +255,7 @@ sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned i
     item->canvas->requestRedraw((int)item->x1, (int)item->y1, (int)item->x2, (int)item->y2);
 }
 
-SPCanvasItem *
-sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, gchar const *new_text)
+SPCanvasText *sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, gchar const *new_text)
 {
     // Pos specifies the position of the anchor, which is at the bounding box of the text itself (i.e. not at the border of the filled background rectangle)
     // The relative position of the anchor can be set using e.g. anchor_position = TEXT_ANCHOR_LEFT
@@ -270,7 +269,7 @@ sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, gc
     g_free(ct->text);
     ct->text = g_strdup(new_text);
 
-    return item;
+    return ct;
 }
 
 

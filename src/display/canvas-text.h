@@ -58,7 +58,7 @@ struct SPCanvasTextClass : public SPCanvasItemClass{};
 
 GType sp_canvastext_get_type (void);
 
-SPCanvasItem *sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, gchar const *text);
+SPCanvasText *sp_canvastext_new(SPCanvasGroup *parent, SPDesktop *desktop, Geom::Point pos, gchar const *text);
 
 void sp_canvastext_set_rgba32 (SPCanvasText *ct, guint32 rgba, guint32 rgba_stroke);
 void sp_canvastext_set_coords (SPCanvasText *ct, gdouble x0, gdouble y0);
