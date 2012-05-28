@@ -125,11 +125,23 @@ Ruler::on_button_press_event(GdkEventButton *evb)
         sp_repr_set_boolean(repr, "inkscape:guide-bbox", TRUE);
         _guide = sp_guideline_new(_dt->guides, NULL, event_dt, _horiz_f ? Geom::Point(0.,1.) : Geom::Point(1.,0.));
         sp_guideline_set_color(SP_GUIDELINE(_guide), _dt->namedview->guidehicolor);
+
+#if WITH_GTKMM_3_0
+	Glib::RefPtr<Gdk::Device> device = Glib::wrap(gdk_event_get_device((GdkEvent*)evb));
+	device->grab(get_window(),
+                     Gdk::OWNERSHIP_NONE, // TODO: Check that this is correct
+		     false,
+                     Gdk::BUTTON_RELEASE_MASK |
+                     Gdk::POINTER_MOTION_MASK |
+                     Gdk::POINTER_MOTION_HINT_MASK,
+		     evb->time);
+#else
         (void) get_window()->pointer_grab(false,
                         Gdk::BUTTON_RELEASE_MASK |
                         Gdk::POINTER_MOTION_MASK |
                         Gdk::POINTER_MOTION_HINT_MASK,
                         evb->time);
+#endif
     }
     return false;
 }
@@ -157,7 +169,14 @@ Ruler::on_button_release_event(GdkEventButton *evb)
     Geom::Point const &event_dt = get_event_dt();
 
     if (_dragging && evb->button == 1) {
+
+#if WITH_GTKMM_3_0
+	Glib::RefPtr<Gdk::Device> device = Glib::wrap(gdk_event_get_device((GdkEvent*)evb));
+	device->ungrab(evb->time);
+#else
         Gdk::Window::pointer_ungrab(evb->time);
+#endif
+
         gtk_object_destroy(GTK_OBJECT(_guide));
         _guide = 0;
         _dragging = false;
