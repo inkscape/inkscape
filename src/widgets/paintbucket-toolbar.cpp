@@ -29,6 +29,7 @@
 #endif
 
 
+#include "ui/widget/spinbutton.h"
 #include "toolbox.h"
 #include "paintbucket-toolbar.h"
 
@@ -47,7 +48,6 @@
 #include "../ink-comboboxentry-action.h"
 #include "../widgets/button.h"
 #include "../widgets/spinbutton-events.h"
-#include "ui/widget/spinbutton.h"
 #include "../widgets/spw-utilities.h"
 #include "../widgets/widget-sizes.h"
 #include "../xml/node-event-vector.h"

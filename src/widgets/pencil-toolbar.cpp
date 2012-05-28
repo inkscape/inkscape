@@ -28,6 +28,7 @@
 # include "config.h"
 #endif
 
+#include "ui/widget/spinbutton.h"
 #include "toolbox.h"
 #include "pencil-toolbar.h"
 
@@ -53,7 +54,6 @@
 
 #include "../widgets/button.h"
 #include "../widgets/spinbutton-events.h"
-#include "ui/widget/spinbutton.h"
 #include "../widgets/spw-utilities.h"
 #include "../widgets/widget-sizes.h"
 //#include "../xml/attribute-record.h"
