@@ -766,7 +766,14 @@ else
 	CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
 	CPPFLAGS="-DGTK_DISABLE_DEPRECATED $CPPFLAGS"
 	CPPFLAGS="-DGDKMM_DISABLE_DEPRECATED $CPPFLAGS"
-	CPPFLAGS="-DGDK_DISABLE_DEPRECATED $CPPFLAGS"
+
+	# FIXME: This is disabled because our internal
+	# copy of GDL still uses deprecated GTK+ 2 symbols.
+	# 
+	# This shouldn't be a big problem for GTK+ 3 builds because 
+	# we can build against external GDL >= 3.3.4 rather than using
+	# the deprecated internal code
+#	CPPFLAGS="-DGDK_DISABLE_DEPRECATED $CPPFLAGS"
 fi
 
 AC_SUBST(GDL_LIBS)
