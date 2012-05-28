@@ -44,6 +44,7 @@
 #include "ui/control-manager.h"
 
 using Inkscape::ControlManager;
+using Inkscape::CTLINE_SECONDARY;
 
 static void sp_measure_context_class_init(SPMeasureContextClass *klass);
 static void sp_measure_context_init(SPMeasureContext *measure_context);
@@ -63,6 +64,13 @@ static bool within_tolerance = false;
 Geom::Point start_point;
 
 std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
+
+namespace
+{
+
+gint const DIMENSION_OFFSET = 45;
+
+} // namespace
 
 GType sp_measure_context_get_type(void)
 {
@@ -348,27 +356,20 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 double fontsize = prefs->getInt("/tools/measure/fontsize");
 
-                Geom::Point previous_point;
-                if (!intersections.empty()) {
-                    previous_point = intersections[0];
-                }
-
-
                 // Normal will be used for lines and text
                 Geom::Point normal = desktop->w2d(Geom::unit_vector(Geom::rot90(desktop->d2w(end_point - start_point))));
 
                 for (size_t idx = 1; idx < intersections.size(); ++idx) {
-                    Geom::Point measure_text_pos = (previous_point + intersections[idx]) / 2;
-//TODO: shift label a few pixels in the y coordinate
+                    Geom::Point measure_text_pos = (intersections[idx - 1] + intersections[idx]) / 2;
 
-                    double lengthval = (intersections[idx] - previous_point).length();
+                    double lengthval = (intersections[idx] - intersections[idx - 1]).length();
                     sp_convert_distance(&lengthval, &sp_unit_get_by_id(SP_UNIT_PX), &unit);
 
                     // TODO cleanup memory, Glib::ustring, etc.:
                     gchar *measure_str = g_strdup_printf("%.2f %s", lengthval, unit.abbr);
                     SPCanvasText *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop),
                                                                      desktop,
-                                                                     desktop->doc2dt(measure_text_pos),
+                                                                     desktop->doc2dt(measure_text_pos) - (normal * DIMENSION_OFFSET),
                                                                      measure_str);
                     sp_canvastext_set_fontsize(canvas_tooltip, fontsize);
                     canvas_tooltip->rgba = 0xffffffff;
@@ -379,7 +380,6 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
                     g_free(measure_str);
-                    previous_point = intersections[idx];
                 }
 
                 {
@@ -463,6 +463,12 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 // Since adding goes to the bottom, do all lines last.
 
+                // draw main control line
+                {
+                    SPCtrlLine *control_line = ControlManager::getManager().createControlLine(sp_desktop_tempgroup(desktop), start_point, end_point);
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+                }
+
                 if (intersections.size() > 2) {
                     ControlManager &mgr = ControlManager::getManager();
                     SPCtrlLine *control_line = 0;
@@ -482,10 +488,18 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
                 }
 
-                // draw main control line
+                // call-out lines
                 {
-                    SPCtrlLine *control_line = ControlManager::getManager().createControlLine(sp_desktop_tempgroup(desktop), start_point, end_point);
-                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+                    for (size_t idx = 1; idx < intersections.size(); ++idx) {
+                        Geom::Point measure_text_pos = (intersections[idx - 1] + intersections[idx]) / 2;
+
+                        ControlManager &mgr = ControlManager::getManager();
+                        SPCtrlLine *control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                                                                         desktop->doc2dt(measure_text_pos),
+                                                                         desktop->doc2dt(measure_text_pos) - (normal * DIMENSION_OFFSET),
+                                                                         CTLINE_SECONDARY);
+                        measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+                    }
                 }
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
