@@ -175,6 +175,27 @@ ScriptDialogImpl::ScriptDialogImpl() :
     Gtk::Box *contents = _getContents();
 
     //## Add a menu for clear()
+#if WITH_GTKMM_3_0
+    Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("File")));
+    item->set_submenu(fileMenu);
+    menuBar.append(*item);
+
+    item = Gtk::manage(new Gtk::MenuItem(_("_Clear")));
+    item->signal_activate().connect(sigc::mem_fun(*this, &ScriptDialogImpl::clear));
+    fileMenu.append(*item);
+    
+    item = Gtk::manage(new Gtk::MenuItem(_("_Execute Javascript")));
+    item->signal_activate().connect(sigc::mem_fun(*this, &ScriptDialogImpl::executeJavascript));
+    fileMenu.append(*item);
+    
+    item = Gtk::manage(new Gtk::MenuItem(_("_Execute Python")));
+    item->signal_activate().connect(sigc::mem_fun(*this, &ScriptDialogImpl::executePython));
+    fileMenu.append(*item);
+    
+    item = Gtk::manage(new Gtk::MenuItem(_("_Execute Ruby")));
+    item->signal_activate().connect(sigc::mem_fun(*this, &ScriptDialogImpl::executeRuby));
+    fileMenu.append(*item);
+#else
     menuBar.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_File"), fileMenu) );
     fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Clear"),
            sigc::mem_fun(*this, &ScriptDialogImpl::clear) ) );
@@ -184,6 +205,8 @@ ScriptDialogImpl::ScriptDialogImpl() :
            sigc::mem_fun(*this, &ScriptDialogImpl::executePython) ) );
     fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Execute Ruby"),
            sigc::mem_fun(*this, &ScriptDialogImpl::executeRuby) ) );
+#endif
+    
     contents->pack_start(menuBar, Gtk::PACK_SHRINK);
 
     //### Set up the script field
