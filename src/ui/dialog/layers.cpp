@@ -16,6 +16,12 @@
 #include "layers.h"
 #include <gtkmm/widget.h>
 #include <gtkmm/icontheme.h>
+
+#if WITH_GTKMM_3_0
+#include <gtkmm/imagemenuitem.h>
+#include <gtkmm/separatormenuitem.h>
+#endif
+
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
@@ -142,7 +148,20 @@ Gtk::MenuItem& LayersPanel::_addPopupItem( SPDesktop *desktop, unsigned int code
     }
 
 
+#if WITH_GTKMM_3_0
+    Gtk::MenuItem* item = 0;
 
+    if (wrapped) {
+        item = Gtk::manage(new Gtk::ImageMenuItem(*wrapped, label));
+    } else {
+	item = Gtk::manage(new Gtk::MenuItem(label));
+    }
+
+    item->signal_activate().connect(sigc::bind(sigc::mem_fun(*this, &LayersPanel::_takeAction), id));
+    _popupMenu.append(*item);
+
+    return *item;
+#else
     Gtk::Menu::MenuList& menulist = _popupMenu.items();
 
     if ( wrapped ) {
@@ -150,7 +169,9 @@ Gtk::MenuItem& LayersPanel::_addPopupItem( SPDesktop *desktop, unsigned int code
     } else {
         menulist.push_back( Gtk::Menu_Helpers::MenuElem( label, sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), id)) );
     }
+    
     return menulist.back();
+#endif
 }
 
 void LayersPanel::_fireAction( unsigned int code )
@@ -649,7 +670,12 @@ LayersPanel::LayersPanel() :
 
     SPDesktop* targetDesktop = getDesktop();
 
+#if !WITH_GTKMM_3_0
+    // TODO: This has been removed from Gtkmm 3.0. Check that everything still 
+    // looks OK!
     _buttonsRow.set_child_min_width( 16 );
+#endif
+
     _buttonsRow.set_layout (Gtk::BUTTONBOX_END);
 
     Gtk::Button* btn = manage( new Gtk::Button() );
@@ -703,7 +729,12 @@ LayersPanel::LayersPanel() :
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_NEW, 0, "New", (int)BUTTON_NEW ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_SOLO, 0, "Solo", (int)BUTTON_SOLO ) );
 
-         _popupMenu.items().push_back( Gtk::Menu_Helpers::SeparatorElem() );
+#if WITH_GTKMM_3_0
+	Gtk::MenuItem* item = Gtk::manage(new Gtk::SeparatorMenuItem());
+        _popupMenu.append(*item);
+#else
+        _popupMenu.items().push_back( Gtk::Menu_Helpers::SeparatorElem() );
+#endif
 
         _watchingNonTop.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RAISE, GTK_STOCK_GO_UP, "Up", (int)BUTTON_UP ) );
         _watchingNonBottom.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOWER, GTK_STOCK_GO_DOWN, "Down", (int)BUTTON_DOWN ) );
