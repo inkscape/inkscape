@@ -19,6 +19,7 @@
 #endif
 
 #include "dialog-manager.h"
+#include <gtkmm/imagemenuitem.h>
 #include "ui/widget/spinbutton.h"
 #include <glibmm/i18n.h>
 
@@ -1103,8 +1104,12 @@ Glib::RefPtr<Gtk::Menu> create_popup_menu(Gtk::Widget& parent, sigc::slot<void> 
 {
     Glib::RefPtr<Gtk::Menu> menu(new Gtk::Menu);
 
-    menu->items().push_back(Gtk::Menu_Helpers::MenuElem(_("_Duplicate"), dup));
-    Gtk::MenuItem* mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
+    Gtk::MenuItem* mi = Gtk::manage(new Gtk::MenuItem(_("_Duplicate"),true));
+    mi->signal_activate().connect(dup);
+    mi->show();
+    menu->append(*mi);
+    
+    mi = Gtk::manage(new Gtk::ImageMenuItem(Gtk::Stock::REMOVE));
     menu->append(*mi);
     mi->signal_activate().connect(rem);
     mi->show();
@@ -1147,8 +1152,11 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
         sigc::mem_fun(*this, &FilterModifier::filter_list_button_release));
     _menu = create_popup_menu(*this, sigc::mem_fun(*this, &FilterModifier::duplicate_filter),
                               sigc::mem_fun(*this, &FilterModifier::remove_filter));
-    _menu->items().push_back(Gtk::Menu_Helpers::MenuElem(
-                                 _("R_ename"), sigc::mem_fun(*this, &FilterModifier::rename_filter)));
+    
+    Gtk::MenuItem *item = Gtk::manage(new Gtk::MenuItem(_("R_ename"), true));
+    item->signal_activate().connect(sigc::mem_fun(*this, &FilterModifier::rename_filter));    
+    item->show();
+    _menu->append(*item);
     _menu->accelerate(*this);
 
     _list.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &FilterModifier::on_filter_selection_changed));

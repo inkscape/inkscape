@@ -175,37 +175,25 @@ ScriptDialogImpl::ScriptDialogImpl() :
     Gtk::Box *contents = _getContents();
 
     //## Add a menu for clear()
-#if WITH_GTKMM_3_0
-    Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("File")));
+    Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("File"), true));
     item->set_submenu(fileMenu);
     menuBar.append(*item);
 
-    item = Gtk::manage(new Gtk::MenuItem(_("_Clear")));
+    item = Gtk::manage(new Gtk::MenuItem(_("_Clear"), true));
     item->signal_activate().connect(sigc::mem_fun(*this, &ScriptDialogImpl::clear));
     fileMenu.append(*item);
     
-    item = Gtk::manage(new Gtk::MenuItem(_("_Execute Javascript")));
+    item = Gtk::manage(new Gtk::MenuItem(_("_Execute Javascript"), true));
     item->signal_activate().connect(sigc::mem_fun(*this, &ScriptDialogImpl::executeJavascript));
     fileMenu.append(*item);
     
-    item = Gtk::manage(new Gtk::MenuItem(_("_Execute Python")));
+    item = Gtk::manage(new Gtk::MenuItem(_("_Execute Python"), true));
     item->signal_activate().connect(sigc::mem_fun(*this, &ScriptDialogImpl::executePython));
     fileMenu.append(*item);
     
-    item = Gtk::manage(new Gtk::MenuItem(_("_Execute Ruby")));
+    item = Gtk::manage(new Gtk::MenuItem(_("_Execute Ruby"), true));
     item->signal_activate().connect(sigc::mem_fun(*this, &ScriptDialogImpl::executeRuby));
     fileMenu.append(*item);
-#else
-    menuBar.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_File"), fileMenu) );
-    fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Clear"),
-           sigc::mem_fun(*this, &ScriptDialogImpl::clear) ) );
-    fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Execute Javascript"),
-           sigc::mem_fun(*this, &ScriptDialogImpl::executeJavascript) ) );
-    fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Execute Python"),
-           sigc::mem_fun(*this, &ScriptDialogImpl::executePython) ) );
-    fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Execute Ruby"),
-           sigc::mem_fun(*this, &ScriptDialogImpl::executeRuby) ) );
-#endif
     
     contents->pack_start(menuBar, Gtk::PACK_SHRINK);
 

@@ -72,12 +72,11 @@ DebugDialogImpl::DebugDialogImpl()
     Gtk::Box *mainVBox = get_vbox();
 
     //## Add a menu for clear()
-#if WITH_GTKMM_3_0
-    Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("_File")));
+    Gtk::MenuItem* item = Gtk::manage(new Gtk::MenuItem(_("_File"), true));
     item->set_submenu(fileMenu);
     menuBar.append(*item);
 
-    item = Gtk::manage(new Gtk::MenuItem(_("_Clear")));
+    item = Gtk::manage(new Gtk::MenuItem(_("_Clear"), true));
     item->signal_activate().connect(sigc::mem_fun(*this, &DebugDialogImpl::clear));
     fileMenu.append(*item);
 
@@ -88,15 +87,6 @@ DebugDialogImpl::DebugDialogImpl()
     item = Gtk::manage(new Gtk::MenuItem(_("Release log messages")));
     item->signal_activate().connect(sigc::mem_fun(*this, &DebugDialogImpl::releaseLogMessages));
     fileMenu.append(*item);
-#else
-    menuBar.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_File"), fileMenu) );
-    fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("_Clear"),
-           sigc::mem_fun(*this, &DebugDialogImpl::clear) ) );
-    fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("Capture log messages"),
-           sigc::mem_fun(*this, &DebugDialogImpl::captureLogMessages) ) );
-    fileMenu.items().push_back( Gtk::Menu_Helpers::MenuElem(_("Release log messages"),
-           sigc::mem_fun(*this, &DebugDialogImpl::releaseLogMessages) ) );
-#endif
 
     mainVBox->pack_start(menuBar, Gtk::PACK_SHRINK);
     

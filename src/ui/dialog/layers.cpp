@@ -16,11 +16,8 @@
 #include "layers.h"
 #include <gtkmm/widget.h>
 #include <gtkmm/icontheme.h>
-
-#if WITH_GTKMM_3_0
 #include <gtkmm/imagemenuitem.h>
 #include <gtkmm/separatormenuitem.h>
-#endif
 
 #include <glibmm/i18n.h>
 
@@ -148,30 +145,18 @@ Gtk::MenuItem& LayersPanel::_addPopupItem( SPDesktop *desktop, unsigned int code
     }
 
 
-#if WITH_GTKMM_3_0
     Gtk::MenuItem* item = 0;
 
     if (wrapped) {
-        item = Gtk::manage(new Gtk::ImageMenuItem(*wrapped, label));
+        item = Gtk::manage(new Gtk::ImageMenuItem(*wrapped, label, true));
     } else {
-	item = Gtk::manage(new Gtk::MenuItem(label));
+	item = Gtk::manage(new Gtk::MenuItem(label, true));
     }
 
     item->signal_activate().connect(sigc::bind(sigc::mem_fun(*this, &LayersPanel::_takeAction), id));
     _popupMenu.append(*item);
 
     return *item;
-#else
-    Gtk::Menu::MenuList& menulist = _popupMenu.items();
-
-    if ( wrapped ) {
-        menulist.push_back( Gtk::Menu_Helpers::ImageMenuElem( label, *wrapped, sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), id)) );
-    } else {
-        menulist.push_back( Gtk::Menu_Helpers::MenuElem( label, sigc::bind( sigc::mem_fun(*this, &LayersPanel::_takeAction), id)) );
-    }
-    
-    return menulist.back();
-#endif
 }
 
 void LayersPanel::_fireAction( unsigned int code )
@@ -729,12 +714,8 @@ LayersPanel::LayersPanel() :
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_NEW, 0, "New", (int)BUTTON_NEW ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_SOLO, 0, "Solo", (int)BUTTON_SOLO ) );
 
-#if WITH_GTKMM_3_0
 	Gtk::MenuItem* item = Gtk::manage(new Gtk::SeparatorMenuItem());
         _popupMenu.append(*item);
-#else
-        _popupMenu.items().push_back( Gtk::Menu_Helpers::SeparatorElem() );
-#endif
 
         _watchingNonTop.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RAISE, GTK_STOCK_GO_UP, "Up", (int)BUTTON_UP ) );
         _watchingNonBottom.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOWER, GTK_STOCK_GO_DOWN, "Down", (int)BUTTON_DOWN ) );
