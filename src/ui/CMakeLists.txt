@@ -83,7 +83,6 @@ set(ui_SRC
 	widget/frame.cpp
 	widget/filter-effect-chooser.cpp
 	widget/handlebox.cpp
-	widget/icon-widget.cpp
 	widget/imageicon.cpp
 	widget/imagetoggler.cpp
 	widget/labelled.cpp
@@ -215,7 +214,6 @@ set(ui_SRC
 	widget/frame.h
 	widget/filter-effect-chooser.h
 	widget/handlebox.h
-	widget/icon-widget.h
 	widget/imageicon.h
 	widget/imagetoggler.h
 	widget/labelled.h

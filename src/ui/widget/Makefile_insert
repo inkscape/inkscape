@@ -23,8 +23,6 @@ ink_common_sources +=	\
 	ui/widget/frame.h        \
 	ui/widget/handlebox.cpp		\
 	ui/widget/handlebox.h		\
-	ui/widget/icon-widget.cpp	\
-	ui/widget/icon-widget.h		\
 	ui/widget/imageicon.cpp		\
 	ui/widget/imageicon.h		\
 	ui/widget/imagetoggler.cpp		\
