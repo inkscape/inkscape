@@ -15,6 +15,7 @@
 
 #include "layer-properties.h"
 #include <gtkmm/stock.h>
+#include <glibmm/main.h>
 #include <glibmm/i18n.h>
 #include "inkscape.h"
 #include "desktop.h"
