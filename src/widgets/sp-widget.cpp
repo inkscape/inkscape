@@ -258,7 +258,7 @@ void SPWidgetImpl::sizeRequest(GtkWidget *widget, GtkRequisition *requisition)
 }
 
 #if GTK_CHECK_VERSION(3,0,0)
-static void SPWidgetImpl::getPreferredWidth(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+void SPWidgetImpl::getPreferredWidth(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
     GtkRequisition requisition;
     sizeRequest(widget, &requisition);
@@ -266,7 +266,7 @@ static void SPWidgetImpl::getPreferredWidth(GtkWidget *widget, gint *minimal_wid
     *natural_width = requisition.width;
 }
 
-static void SPWidgetImpl::getPreferredHeight(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+void SPWidgetImpl::getPreferredHeight(GtkWidget *widget, gint *minimal_height, gint *natural_height)
 {
     GtkRequisition requisition;
     sizeRequest(widget, &requisition);
