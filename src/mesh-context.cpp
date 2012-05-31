@@ -881,40 +881,40 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         // Mesh Operations --------------------------------------------
 
-        case GDK_b:  // Toggle mesh side between lineto and curveto.
-        case GDK_B: 
+        case GDK_KEY_b:  // Toggle mesh side between lineto and curveto.
+        case GDK_KEY_B: 
             if (MOD__ALT && drag->isNonEmpty() && drag->hasSelection()) {
                 sp_mesh_context_corner_operation ( rc, MG_CORNER_SIDE_TOGGLE );
                 ret = TRUE;
             }
             break;
 
-        case GDK_c:  // Convert mesh side from generic Bezier to Bezier approximating arc,
-        case GDK_C:  // preserving handle direction.
+        case GDK_KEY_c:  // Convert mesh side from generic Bezier to Bezier approximating arc,
+        case GDK_KEY_C:  // preserving handle direction.
             if (MOD__ALT && drag->isNonEmpty() && drag->hasSelection()) {
                 sp_mesh_context_corner_operation ( rc, MG_CORNER_SIDE_ARC );
                 ret = TRUE;
             }
             break;
 
-        case GDK_g:  // Toggle mesh tensor points on/off
-        case GDK_G: 
+        case GDK_KEY_g:  // Toggle mesh tensor points on/off
+        case GDK_KEY_G: 
             if (MOD__ALT && drag->isNonEmpty() && drag->hasSelection()) {
                 sp_mesh_context_corner_operation ( rc, MG_CORNER_TENSOR_TOGGLE );
                 ret = TRUE;
             }
             break;
 
-        case GDK_j:  // Smooth corner color
-        case GDK_J:
+        case GDK_KEY_j:  // Smooth corner color
+        case GDK_KEY_J:
             if (MOD__ALT && drag->isNonEmpty() && drag->hasSelection()) {
                 sp_mesh_context_corner_operation ( rc, MG_CORNER_COLOR_SMOOTH );
                 ret = TRUE;
             }
             break;
 
-        case GDK_k:  // Pick corner color
-        case GDK_K:
+        case GDK_KEY_k:  // Pick corner color
+        case GDK_KEY_K:
             if (MOD__ALT && drag->isNonEmpty() && drag->hasSelection()) {
                 sp_mesh_context_corner_operation ( rc, MG_CORNER_COLOR_PICK );
                 ret = TRUE;
