@@ -65,13 +65,6 @@ Geom::Point start_point;
 
 std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
 
-namespace
-{
-
-gint const DIMENSION_OFFSET = 45;
-
-} // namespace
-
 GType sp_measure_context_get_type(void)
 {
     static GType type = 0;
@@ -92,6 +85,75 @@ GType sp_measure_context_get_type(void)
 
     return type;
 }
+
+namespace
+{
+
+gint const DIMENSION_OFFSET = 35;
+
+/**
+ * Simple class to use for removing label overlap.
+ */
+class LabelPlacement {
+public:
+
+    double lengthVal;
+    double offset;
+    Geom::Point start;
+    Geom::Point end;
+};
+
+bool SortLabelPlacement(LabelPlacement const &first, LabelPlacement const &second)
+{
+    if (first.end[Geom::Y] == second.end[Geom::Y]) {
+        return first.end[Geom::X] < second.end[Geom::X];
+    } else {
+        return first.end[Geom::Y] < second.end[Geom::Y];
+    }
+}
+
+void repositionOverlappingLabels(std::vector<LabelPlacement> &placements, SPDesktop *desktop, Geom::Point const &normal, double fontsize)
+{
+    std::sort(placements.begin(), placements.end(), SortLabelPlacement);
+
+    double border = 3;
+    Geom::Rect box;
+    {
+        Geom::Point tmp(fontsize * 8 + (border * 2), fontsize + (border * 2));
+        tmp = desktop->w2d(tmp);
+        box = Geom::Rect(-tmp[Geom::X] / 2, -tmp[Geom::Y] / 2, tmp[Geom::X] / 2, tmp[Geom::Y] / 2);
+    }
+
+    // Using index since vector may be re-ordered as we go.
+    // Starting at one, since the first item can't overlap itself
+    for (size_t i = 1; i < placements.size(); i++) {
+        LabelPlacement &place = placements[i];
+
+        bool changed = false;
+        do {
+            Geom::Rect current(box + place.end);
+
+            changed = false;
+            bool overlaps = false;
+            for (size_t j = i; (j > 0) && !overlaps; --j) {
+                LabelPlacement &otherPlace = placements[j - 1];
+                Geom::Rect target(box + otherPlace.end);
+                if (current.intersects(target)) {
+                    overlaps = true;
+                }
+            }
+            if (overlaps) {
+                place.offset += (fontsize + border);
+                place.end = place.start - desktop->w2d(normal * place.offset);
+                changed = true;
+            }
+        } while (changed);
+
+        std::sort(placements.begin(), placements.begin() + i + 1, SortLabelPlacement);
+    }
+}
+
+} // namespace
 
 static void sp_measure_context_class_init(SPMeasureContextClass *klass)
 {
@@ -154,28 +216,28 @@ bool GeomPointSortPredicate(const Geom::Point& p1, const Geom::Point& p2)
     }
 }
 
-void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom::PathVector *lineseg, SPCurve *curve, std::vector<Geom::Point> *intersections)
+void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom::PathVector const &lineseg, SPCurve *curve, std::vector<Geom::Point> &intersections)
 {
     curve->transform(item->i2doc_affine());
 
     // Find all intersections of the control-line with this shape
-    Geom::CrossingSet cs = Geom::crossings(*lineseg, curve->get_pathvector());
+    Geom::CrossingSet cs = Geom::crossings(lineseg, curve->get_pathvector());
 
     // Reconstruct and store the points of intersection
     for (Geom::Crossings::const_iterator m = cs[0].begin(); m != cs[0].end(); ++m) {
 #if 0
 //TODO: consider only visible intersections
-        Geom::Point intersection = (*lineseg)[0].pointAt((*m).ta);
+        Geom::Point intersection = lineseg[0].pointAt((*m).ta);
         double eps = 0.0001;
         SPDocument* doc = sp_desktop_document(desktop);
         if (((*m).ta > eps &&
-             item == doc->getItemAtPoint(desktop->dkey, (*lineseg)[0].pointAt((*m).ta - eps), false, NULL)) ||
+             item == doc->getItemAtPoint(desktop->dkey, lineseg[0].pointAt((*m).ta - eps), false, NULL)) ||
             ((*m).ta + eps < 1 &&
-             item == doc->getItemAtPoint(desktop->dkey, (*lineseg)[0].pointAt((*m).ta + eps), false, NULL)) ) {
-            intersections->push_back(intersection);
+             item == doc->getItemAtPoint(desktop->dkey, lineseg[0].pointAt((*m).ta + eps), false, NULL)) ) {
+            intersections.push_back(intersection);
         }
 #else
-        intersections->push_back((*lineseg)[0].pointAt((*m).ta));
+        intersections.push_back(lineseg[0].pointAt((*m).ta));
 #endif
     }
 }
@@ -302,12 +364,14 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     intersections.push_back(desktop->dt2doc(start_point));
                 }
 
+                std::vector<LabelPlacement> placements;
+
                 // TODO switch to a different variable name. The single letter 'l' is easy to misread.
                 for (GSList *l = items; l != NULL; l = l->next) {
                     SPItem *item = static_cast<SPItem*>(l->data);
 
                     if (SP_IS_SHAPE(item)) {
-                       calculate_intersections(desktop, item, &lineseg, SP_SHAPE(item)->getCurve(), &intersections);
+                       calculate_intersections(desktop, item, lineseg, SP_SHAPE(item)->getCurve(), intersections);
                     } else {
                         if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) {
                             Inkscape::Text::Layout::iterator iter = te_get_layout(item)->begin();
@@ -332,7 +396,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                                 curve->transform(item->i2doc_affine());
                                 Geom::PathVector pathv = curve->get_pathvector();
 
-                                calculate_intersections(desktop, item, &lineseg, curve, &intersections);
+                                calculate_intersections(desktop, item, lineseg, curve, intersections);
 
                                 if (iter == te_get_layout(item)->end()) {
                                     break;
@@ -357,19 +421,32 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 double fontsize = prefs->getInt("/tools/measure/fontsize");
 
                 // Normal will be used for lines and text
-                Geom::Point normal = desktop->w2d(Geom::unit_vector(Geom::rot90(desktop->d2w(end_point - start_point))));
+                Geom::Point windowNormal = Geom::unit_vector(Geom::rot90(desktop->d2w(end_point - start_point)));
+                Geom::Point normal = desktop->w2d(windowNormal);
 
                 for (size_t idx = 1; idx < intersections.size(); ++idx) {
-                    Geom::Point measure_text_pos = (intersections[idx - 1] + intersections[idx]) / 2;
+                    LabelPlacement placement;
+                    placement.lengthVal = (intersections[idx] - intersections[idx - 1]).length();
+                    sp_convert_distance(&placement.lengthVal, &sp_unit_get_by_id(SP_UNIT_PX), &unit);
+                    placement.offset = DIMENSION_OFFSET;
+                    placement.start = desktop->doc2dt( (intersections[idx - 1] + intersections[idx]) / 2 );
+                    placement.end = placement.start - (normal * placement.offset);
 
-                    double lengthval = (intersections[idx] - intersections[idx - 1]).length();
-                    sp_convert_distance(&lengthval, &sp_unit_get_by_id(SP_UNIT_PX), &unit);
+                    placements.push_back(placement);
+                }
+
+                // Adjust positions
+                repositionOverlappingLabels(placements, desktop, windowNormal, fontsize);
+
+                for (std::vector<LabelPlacement>::iterator it = placements.begin(); it != placements.end(); ++it)
+                {
+                    LabelPlacement &place = *it;
 
                     // TODO cleanup memory, Glib::ustring, etc.:
-                    gchar *measure_str = g_strdup_printf("%.2f %s", lengthval, unit.abbr);
+                    gchar *measure_str = g_strdup_printf("%.2f %s", place.lengthVal, unit.abbr);
                     SPCanvasText *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop),
                                                                      desktop,
-                                                                     desktop->doc2dt(measure_text_pos) - (normal * DIMENSION_OFFSET),
+                                                                     place.end,
                                                                      measure_str);
                     sp_canvastext_set_fontsize(canvas_tooltip, fontsize);
                     canvas_tooltip->rgba = 0xffffffff;
@@ -489,6 +566,18 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 }
 
                 // call-out lines
+                for (std::vector<LabelPlacement>::iterator it = placements.begin(); it != placements.end(); ++it)
+                {
+                    LabelPlacement &place = *it;
+
+                    ControlManager &mgr = ControlManager::getManager();
+                    SPCtrlLine *control_line = mgr.createControlLine(sp_desktop_tempgroup(desktop),
+                                                                     place.start,
+                                                                     place.end,
+                                                                     CTLINE_SECONDARY);
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+                }
+
                 {
                     for (size_t idx = 1; idx < intersections.size(); ++idx) {
                         Geom::Point measure_text_pos = (intersections[idx - 1] + intersections[idx]) / 2;
