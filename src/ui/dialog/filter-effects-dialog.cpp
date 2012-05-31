@@ -1354,8 +1354,9 @@ void FilterEffectsDialog::FilterModifier::filter_list_button_release(GdkEventBut
 {
     if((event->type == GDK_BUTTON_RELEASE) && (event->button == 3)) {
         const bool sensitive = get_selected_filter() != NULL;
-        _menu->items()[0].set_sensitive(sensitive);
-        _menu->items()[1].set_sensitive(sensitive);
+	std::vector<Gtk::Widget*> items = _menu->get_children();
+	items[0]->set_sensitive(sensitive);
+        items[1]->set_sensitive(sensitive);
         _menu->popup(event->button, event->time);
     }
 }
@@ -2046,8 +2047,9 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
 
     if((e->type == GDK_BUTTON_RELEASE) && (e->button == 3)) {
         const bool sensitive = get_selected() != NULL;
-        _primitive_menu->items()[0].set_sensitive(sensitive);
-        _primitive_menu->items()[1].set_sensitive(sensitive);
+	std::vector<Gtk::Widget*> items = _primitive_menu->get_children();
+        items[0]->set_sensitive(sensitive);
+        items[1]->set_sensitive(sensitive);
         _primitive_menu->popup(e->button, e->time);
 
         return true;
