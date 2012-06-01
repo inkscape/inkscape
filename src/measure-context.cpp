@@ -462,16 +462,29 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 {
                     // TODO cleanup memory, Glib::ustring, etc.:
                     gchar *angle_str = g_strdup_printf("%.2f °", angle * 180/M_PI);
+
+                    CanvasTextAnchorPositionEnum anchor = TEXT_ANCHOR_LEFT;
+                    Geom::Point where = end_point;
+                    if (desktop->d2w(end_point - start_point).length() > 30) {
+                        Geom::Affine adjust = Geom::Affine(Geom::Translate(-start_point))
+                            * Geom::Affine(Geom::Rotate(-angle / 2))
+                            * Geom::Affine(Geom::Translate(start_point));
+                        where *= adjust;
+                        anchor = TEXT_ANCHOR_CENTER;
+                    } else {
+                        where += desktop->w2d(Geom::Point(3*fontsize, fontsize));
+                    }
+
                     SPCanvasText *canvas_tooltip = sp_canvastext_new(sp_desktop_tempgroup(desktop),
                                                                      desktop,
-                                                                     end_point + desktop->w2d(Geom::Point(3*fontsize, fontsize)),
+                                                                     where,
                                                                      angle_str);
                     sp_canvastext_set_fontsize(canvas_tooltip, fontsize);
                     canvas_tooltip->rgba = 0xffffffff;
                     canvas_tooltip->rgba_background = 0x337f337f;
                     canvas_tooltip->outline = false;
                     canvas_tooltip->background = true;
-                    canvas_tooltip->anchor_position = TEXT_ANCHOR_LEFT;
+                    canvas_tooltip->anchor_position = anchor;
 
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvas_tooltip, 0));
                     g_free(angle_str);
