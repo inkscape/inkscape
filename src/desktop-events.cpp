@@ -82,10 +82,12 @@ int sp_desktop_root_handler(SPCanvasItem */*item*/, GdkEvent *event, SPDesktop *
 
 static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dtw, bool horiz)
 {
-    static bool dragging = false;
+    static bool clicked = false;
+    static bool dragged = false;
     static SPCanvasItem *guide = NULL;
     static Geom::Point normal;
     int wx, wy;
+    static gint xp = 0, yp = 0; // where drag started
 
     SPDesktop *desktop = dtw->desktop;
     GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(dtw->canvas));
@@ -103,13 +105,14 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     switch (event->type) {
     case GDK_BUTTON_PRESS:
             if (event->button.button == 1) {
-                dragging = true;
+                clicked = true;
+                dragged = false;
+                // save click origin
+                xp = (gint) event->button.x;
+                yp = (gint) event->button.y;
 
                 Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 Geom::Point const event_dt(desktop->w2d(event_w));
-
-                // explicitly show guidelines; if I draw a guide, I want them on
-                desktop->namedview->setGuides(true);
 
                 // calculate the normal of the guidelines when dragged from the edges of rulers.
                 Geom::Point normal_bl_to_tr(-1.,1.); //bottomleft to topright
@@ -157,9 +160,23 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
             }
             break;
     case GDK_MOTION_NOTIFY:
-            if (dragging) {
+            if (clicked) {
                 Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 Geom::Point event_dt(desktop->w2d(event_w));
+
+                Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+                gint tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
+                if ( ( abs( (gint) event->motion.x - xp ) < tolerance )
+                        && ( abs( (gint) event->motion.y - yp ) < tolerance ) ) {
+                    break;
+                }
+
+                dragged = true;
+
+                // explicitly show guidelines; if I draw a guide, I want them on
+                if ((horiz ? wy : wx) >= 0) {
+                    desktop->namedview->setGuides(true);
+                }
 
                 if (!(event->motion.state & GDK_SHIFT_MASK)) {
                     sp_dt_ruler_snap_new_guide(desktop, guide, event_dt, normal);
@@ -172,7 +189,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
             }
             break;
     case GDK_BUTTON_RELEASE:
-            if (dragging && event->button.button == 1) {
+            if (clicked && event->button.button == 1) {
                 sp_event_context_discard_delayed_snap_event(desktop->event_context);
 
                 gdk_pointer_ungrab(event->button.time);
@@ -182,8 +199,6 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 if (!(event->button.state & GDK_SHIFT_MASK)) {
                     sp_dt_ruler_snap_new_guide(desktop, guide, event_dt, normal);
                 }
-
-                dragging = false;
 
                 gtk_object_destroy(GTK_OBJECT(guide));
                 guide = NULL;
@@ -198,6 +213,15 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                                      _("Create guide"));
                 }
                 desktop->set_coordinate_status(event_dt);
+
+                if (!dragged) {
+                    // Ruler click (without drag) toggle the guide visibility on and off
+                    Inkscape::XML::Node *repr = desktop->namedview->getRepr();
+                    sp_namedview_toggle_guides(sp_desktop_document(desktop), repr);
+                }
+
+                clicked = false;
+                dragged = false;
             }
     default:
             break;
