@@ -542,8 +542,43 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 // draw main control line
                 {
-                    SPCtrlLine *control_line = ControlManager::getManager().createControlLine(sp_desktop_tempgroup(desktop), start_point, end_point);
+                    SPCtrlLine *control_line = ControlManager::getManager().createControlLine(sp_desktop_tempgroup(desktop),
+                                                                                              start_point,
+                                                                                              end_point);
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+
+                    if ((end_point[Geom::X] != start_point[Geom::X]) && (end_point[Geom::Y] != start_point[Geom::Y])) {
+                        Geom::Point anchorEnd = start_point;
+                        double length = std::abs((end_point - start_point).length());
+                        anchorEnd[Geom::X] += length;
+
+                        SPCtrlLine *control_line = ControlManager::getManager().createControlLine(sp_desktop_tempgroup(desktop),
+                                                                                                  start_point,
+                                                                                                  anchorEnd,
+                                                                                                  CTLINE_SECONDARY);
+                        measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
+
+                        // from Riskus
+                        double xc = start_point[Geom::X];
+                        double yc = start_point[Geom::Y];
+                        double ax = anchorEnd[Geom::X] - xc;
+                        double ay = anchorEnd[Geom::Y] - yc;
+                        double bx = end_point[Geom::X] - xc;
+                        double by = end_point[Geom::Y] - yc;
+                        double q1 = (ax * ax) + (ay * ay);
+                        double q2 = q1 + (ax * bx) + (ay * by);
+
+                        double k2 = (4.0 / 3.0) * (std::sqrt(2 * q1 * q2) - q2) / ((ax * by) - (ay * bx));
+                        
+                        Geom::Point p0 = anchorEnd;
+                        Geom::Point p1(xc + ax - (k2 * ay),
+                                       yc + ay  + (k2 * ax));
+                        Geom::Point p2(xc + bx + (k2 * by),
+                                       yc + by - (k2 * bx));
+                        Geom::Point p3 = end_point;
+                        SPCtrlCurve *curve = ControlManager::getManager().createControlCurve(sp_desktop_tempgroup(desktop), p0, p1, p2, p3, CTLINE_SECONDARY);
+                        measure_tmp_items.push_back(desktop->add_temporary_canvasitem(SP_CANVAS_ITEM(curve), 0, true));
+                    }
                 }
 
                 if (intersections.size() > 2) {
