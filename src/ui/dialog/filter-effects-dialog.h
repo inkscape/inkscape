@@ -170,11 +170,17 @@ private:
     private:
         void init_text();
 
-        bool do_connection_node(const Gtk::TreeIter& row, const int input, std::vector<Gdk::Point>& points,
+	void draw_connection_node(const Cairo::RefPtr<Cairo::Context>& cr,
+                                  const std::vector<Gdk::Point>& points,
+				  const bool fill);
+
+	bool do_connection_node(const Gtk::TreeIter& row, const int input, std::vector<Gdk::Point>& points,
                                 const int ix, const int iy);
+
         const Gtk::TreeIter find_result(const Gtk::TreeIter& start, const int attr, int& src_id);
         int find_index(const Gtk::TreeIter& target);
-        void draw_connection(const Gtk::TreeIter&, const int attr, const int text_start_x,
+        void draw_connection(const Cairo::RefPtr<Cairo::Context>& cr,
+                             const Gtk::TreeIter&, const int attr, const int text_start_x,
                              const int x1, const int y1, const int row_count);
         void sanitize_connections(const Gtk::TreeIter& prim_iter);
         void on_primitive_selection_changed();

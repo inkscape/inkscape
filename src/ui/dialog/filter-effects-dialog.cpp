@@ -1614,10 +1614,9 @@ void FilterEffectsDialog::PrimitiveList::remove_selected()
 
 bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
 {
-    Gdk::Rectangle clip(e->area.x, e->area.y, e->area.width, e->area.height);
     Glib::RefPtr<Gdk::Window> win = get_bin_window();
-    Glib::RefPtr<Gdk::GC> darkgc = get_style()->get_dark_gc(Gtk::STATE_NORMAL);
-    Cairo::RefPtr<Cairo::Context> cr = get_bin_window()->create_cairo_context();
+    Cairo::RefPtr<Cairo::Context> cr = win->create_cairo_context();
+    cr->set_line_width(1.0);
 
     SPFilterPrimitive* prim = get_selected();
     int row_count = get_model()->children().size();
@@ -1643,7 +1642,6 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
 	    cr->rotate_degrees(90);
 	    _vertical_layout->show_in_cairo_context(cr);
 	    Gdk::Cairo::set_source_color(cr, get_style()->get_dark(Gtk::STATE_NORMAL));
-	    cr->set_line_width(1.0);
 	    cr->move_to(x, 0);
 	    cr->line_to(x, vis.get_height());
 	    cr->stroke();
@@ -1659,13 +1657,12 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
         // Check mouse state
         int mx, my;
         Gdk::ModifierType mask;
-        get_bin_window()->get_pointer(mx, my, mask);
+        win->get_pointer(mx, my, mask);
 
         // Outline the bottom of the connection area
         const int outline_x = x + fheight * (row_count - row_index);
 	cr->save();
 	Gdk::Cairo::set_source_color(cr, get_style()->get_dark(Gtk::STATE_NORMAL));
-	cr->set_line_width(1.0);
 	cr->move_to(x, y + h);
 	cr->line_to(outline_x, y + h);
         // Side outline
@@ -1683,40 +1680,62 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
         if(SP_IS_FEMERGE(row_prim)) {
             for(int i = 0; i < inputs; ++i) {
                 inside = do_connection_node(row, i, con_poly, mx, my);
-                get_bin_window()->draw_polygon(inside && mask & GDK_BUTTON1_MASK ?
-                                               darkgc : get_style()->get_dark_gc(Gtk::STATE_ACTIVE),
-                                               inside, con_poly);
+
+		cr->save();
+
+		Gdk::Cairo::set_source_color(cr, inside && mask & GDK_BUTTON1_MASK ?
+                                               get_style()->get_dark(Gtk::STATE_NORMAL) : 
+					       get_style()->get_dark(Gtk::STATE_ACTIVE));
+
+		draw_connection_node(cr, con_poly, inside);
+
+		cr->restore();
 
                 if(_in_drag == (i + 1))
                     con_drag_y = con_poly[2].get_y();
 
                 if(_in_drag != (i + 1) || row_prim != prim)
-                    draw_connection(row, i, text_start_x, outline_x, con_poly[2].get_y(), row_count);
+                    draw_connection(cr, row, i, text_start_x, outline_x, con_poly[2].get_y(), row_count);
             }
         }
         else {
             // Draw "in" shape
             inside = do_connection_node(row, 0, con_poly, mx, my);
             con_drag_y = con_poly[2].get_y();
-            get_bin_window()->draw_polygon(inside && mask & GDK_BUTTON1_MASK ?
-                                           darkgc : get_style()->get_dark_gc(Gtk::STATE_ACTIVE),
-                                           inside, con_poly);
+            
+	    cr->save();
+
+            Gdk::Cairo::set_source_color(cr, inside && mask & GDK_BUTTON1_MASK ?
+                                         get_style()->get_dark(Gtk::STATE_NORMAL) : 
+					 get_style()->get_dark(Gtk::STATE_ACTIVE));
+
+            draw_connection_node(cr, con_poly, inside);
+
+	    cr->restore();
 
             // Draw "in" connection
             if(_in_drag != 1 || row_prim != prim)
-                draw_connection(row, SP_ATTR_IN, text_start_x, outline_x, con_poly[2].get_y(), row_count);
+                draw_connection(cr, row, SP_ATTR_IN, text_start_x, outline_x, con_poly[2].get_y(), row_count);
 
             if(inputs == 2) {
                 // Draw "in2" shape
                 inside = do_connection_node(row, 1, con_poly, mx, my);
                 if(_in_drag == 2)
                     con_drag_y = con_poly[2].get_y();
-                get_bin_window()->draw_polygon(inside && mask & GDK_BUTTON1_MASK ?
-                                               darkgc : get_style()->get_dark_gc(Gtk::STATE_ACTIVE),
-                                               inside, con_poly);
+		
+		cr->save();
+
+		Gdk::Cairo::set_source_color(cr, inside && mask & GDK_BUTTON1_MASK ?
+                                             get_style()->get_dark(Gtk::STATE_NORMAL) : 
+                                             get_style()->get_dark(Gtk::STATE_ACTIVE));
+
+                draw_connection_node(cr, con_poly, inside);
+  
+                cr->restore();
+
                 // Draw "in2" connection
                 if(_in_drag != 2 || row_prim != prim)
-                    draw_connection(row, SP_ATTR_IN2, text_start_x, outline_x, con_poly[2].get_y(), row_count);
+                    draw_connection(cr, row, SP_ATTR_IN2, text_start_x, outline_x, con_poly[2].get_y(), row_count);
             }
         }
 
@@ -1724,7 +1743,6 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
         if(row_prim == prim && _in_drag) {
 		cr->save();
 		Gdk::Cairo::set_source_color(cr, get_style()->get_black());
-		cr->set_line_width(1.0);
 		cr->move_to(outline_x, con_drag_y);
 		cr->line_to(mx, con_drag_y);
 		cr->line_to(mx, my);
@@ -1736,19 +1754,19 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
     return true;
 }
 
-void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& input, const int attr,
+void FilterEffectsDialog::PrimitiveList::draw_connection(const Cairo::RefPtr<Cairo::Context>& cr,
+                                                         const Gtk::TreeIter& input, const int attr,
                                                          const int text_start_x, const int x1, const int y1,
                                                          const int row_count)
 {
+    cr->save();
     int src_id = 0;
     Gtk::TreeIter res = find_result(input, attr, src_id);
-    Cairo::RefPtr<Cairo::Context> cr = get_bin_window()->create_cairo_context();
 
     const bool is_first = input == get_model()->children().begin();
     const bool is_merge = SP_IS_FEMERGE((SPFilterPrimitive*)(*input)[_columns.primitive]);
     const bool use_default = !res && !is_merge;
 
-    cr->set_line_width(1);
     if(res == input || (use_default && is_first)) {
         // Draw straight connection to a standard input
         // Draw a lighter line for an implicit connection to a standard input
@@ -1794,6 +1812,25 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Gtk::TreeIter& in
 	    cr->stroke();
         }
     }
+    cr->restore();
+}
+
+// Draw the triangular outline of the connection node, and fill it
+// if desired
+void FilterEffectsDialog::PrimitiveList::draw_connection_node(const Cairo::RefPtr<Cairo::Context>& cr,
+                                                              const std::vector<Gdk::Point>& points,
+                                                              const bool fill)
+{
+    cr->save();
+    cr->move_to(points[0].get_x()+0.5, points[0].get_y()+0.5);
+    cr->line_to(points[1].get_x()+0.5, points[1].get_y()+0.5);
+    cr->line_to(points[2].get_x()+0.5, points[2].get_y()+0.5);
+    cr->line_to(points[0].get_x()+0.5, points[0].get_y()+0.5);
+
+    if(fill) cr->fill();
+    else cr->stroke();
+
+    cr->restore();
 }
 
 // Creates a triangle outline of the connection node and returns true if (x,y) is inside the node
