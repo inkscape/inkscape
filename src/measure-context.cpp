@@ -536,16 +536,15 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
 
                 for (size_t idx = 0; idx < intersections.size(); ++idx) {
                     // Display the intersection indicator (i.e. the cross)
-                    SPCanvasItem * canvasitem = NULL;
-                    canvasitem = sp_canvas_item_new(sp_desktop_tempgroup(desktop),
-                                                    SP_TYPE_CTRL,
-                                                    "anchor", SP_ANCHOR_CENTER,
-                                                    "size", 8.0,
-                                                    "stroked", TRUE,
-                                                    "stroke_color", 0xff0000ff,
-                                                    "mode", SP_KNOT_MODE_XOR,
-                                                    "shape", SP_KNOT_SHAPE_CROSS,
-                                                    NULL );
+                    SPCanvasItem * canvasitem = sp_canvas_item_new(sp_desktop_tempgroup(desktop),
+                                                                   SP_TYPE_CTRL,
+                                                                   "anchor", SP_ANCHOR_CENTER,
+                                                                   "size", 8.0,
+                                                                   "stroked", TRUE,
+                                                                   "stroke_color", 0xff0000ff,
+                                                                   "mode", SP_KNOT_MODE_XOR,
+                                                                   "shape", SP_KNOT_SHAPE_CROSS,
+                                                                   NULL );
 
                     SP_CTRL(canvasitem)->moveto(desktop->doc2dt(intersections[idx]));
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvasitem, 0));
@@ -637,6 +636,22 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                                                                          CTLINE_SECONDARY);
                         measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
                     }
+                }
+
+                // Initial point
+                {
+                    SPCanvasItem * canvasitem = sp_canvas_item_new(sp_desktop_tempgroup(desktop),
+                                                                   SP_TYPE_CTRL,
+                                                                   "anchor", SP_ANCHOR_CENTER,
+                                                                   "size", 8.0,
+                                                                   "stroked", TRUE,
+                                                                   "stroke_color", 0xff0000ff,
+                                                                   "mode", SP_KNOT_MODE_XOR,
+                                                                   "shape", SP_KNOT_SHAPE_CROSS,
+                                                                   NULL );
+
+                    SP_CTRL(canvasitem)->moveto(start_point);
+                    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvasitem, 0));
                 }
 
                 gobble_motion_events(GDK_BUTTON1_MASK);
