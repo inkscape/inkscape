@@ -1452,10 +1452,15 @@ FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
       _in_drag(0),
       _observer(new Inkscape::XML::SignalObserver)
 {
+#if WITH_GTKMM_3_0
+    d.signal_draw().connect(sigc::mem_fun(*this, &PrimitiveList::on_draw));
+    signal_draw().connect(sigc::mem_fun(*this, &PrimitiveList::on_draw));
+#else
     d.signal_expose_event().connect(sigc::mem_fun(*this, &PrimitiveList::on_expose_signal));
+    signal_expose_event().connect(sigc::mem_fun(*this, &PrimitiveList::on_expose_signal));
+#endif
 
     add_events(Gdk::POINTER_MOTION_MASK | Gdk::BUTTON_PRESS_MASK | Gdk::BUTTON_RELEASE_MASK);
-    signal_expose_event().connect(sigc::mem_fun(*this, &PrimitiveList::on_expose_signal));
 
     _model = Gtk::ListStore::create(_columns);
 
@@ -1612,10 +1617,17 @@ void FilterEffectsDialog::PrimitiveList::remove_selected()
     }
 }
 
+#if !WITH_GTKMM_3_0
 bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
 {
     Glib::RefPtr<Gdk::Window> win = get_bin_window();
     Cairo::RefPtr<Cairo::Context> cr = win->create_cairo_context();
+    return on_draw(cr);
+}
+#endif
+
+bool FilterEffectsDialog::PrimitiveList::on_draw(const Cairo::RefPtr<Cairo::Context> &cr)
+{
     cr->set_line_width(1.0);
 
     SPFilterPrimitive* prim = get_selected();
@@ -1657,7 +1669,7 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
         // Check mouse state
         int mx, my;
         Gdk::ModifierType mask;
-        win->get_pointer(mx, my, mask);
+        get_bin_window()->get_pointer(mx, my, mask);
 
         // Outline the bottom of the connection area
         const int outline_x = x + fheight * (row_count - row_index);

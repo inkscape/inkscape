@@ -162,7 +162,12 @@ private:
         int get_input_type_width() const;
 
     protected:
+        bool on_draw(const Cairo::RefPtr<Cairo::Context> &cr);
+
+#if !WITH_GTKMM_3_0
         bool on_expose_signal(GdkEventExpose*);
+#endif
+
         bool on_button_press_event(GdkEventButton*);
         bool on_motion_notify_event(GdkEventMotion*);
         bool on_button_release_event(GdkEventButton*);
