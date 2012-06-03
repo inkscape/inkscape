@@ -1618,7 +1618,7 @@ void FilterEffectsDialog::PrimitiveList::remove_selected()
 }
 
 #if !WITH_GTKMM_3_0
-bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* e)
+bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose* /*e*/)
 {
     Glib::RefPtr<Gdk::Window> win = get_bin_window();
     Cairo::RefPtr<Cairo::Context> cr = win->create_cairo_context();
