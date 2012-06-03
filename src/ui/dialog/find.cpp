@@ -333,8 +333,7 @@ bool Find::find_strcmp(const gchar *str, const gchar *find, bool exact, bool cas
     return (std::string::npos != find_strcmp_pos(str, find, exact, casematch));
 }
 
-bool
-Find::item_text_match (SPItem *item, const gchar *find, bool exact, bool casematch, bool replace/*=false*/)
+bool Find::item_text_match (SPItem *item, const gchar *find, bool exact, bool casematch, bool replace/*=false*/)
 {
     if (item->getRepr() == NULL) {
         return false;
@@ -379,8 +378,7 @@ Find::item_text_match (SPItem *item, const gchar *find, bool exact, bool casemat
 }
 
 
-bool
-Find::item_id_match (SPItem *item, const gchar *id, bool exact, bool casematch, bool replace/*=false*/)
+bool Find::item_id_match (SPItem *item, const gchar *id, bool exact, bool casematch, bool replace/*=false*/)
 {
     if (item->getRepr() == NULL) {
         return false;
@@ -409,8 +407,7 @@ Find::item_id_match (SPItem *item, const gchar *id, bool exact, bool casematch, 
     return found;
 }
 
-bool
-Find::item_style_match (SPItem *item, const gchar *text, bool exact, bool casematch, bool replace/*=false*/)
+bool Find::item_style_match (SPItem *item, const gchar *text, bool exact, bool casematch, bool replace/*=false*/)
 {
     if (item->getRepr() == NULL) {
         return false;
@@ -547,8 +544,7 @@ bool Find::item_font_match(SPItem *item, const gchar *text, bool exact, bool cas
 }
 
 
-GSList *
-Find::filter_fields (GSList *l, bool exact, bool casematch)
+GSList *Find::filter_fields (GSList *l, bool exact, bool casematch)
 {
     Glib::ustring tmp = entry_find.getEntry()->get_text();
     if (tmp.empty()) {
@@ -657,8 +653,7 @@ Find::filter_fields (GSList *l, bool exact, bool casematch)
 }
 
 
-bool
-Find::item_type_match (SPItem *item)
+bool Find::item_type_match (SPItem *item)
 {
     bool all  =check_alltypes.get_active();
 
@@ -696,8 +691,7 @@ Find::item_type_match (SPItem *item)
     return false;
 }
 
-GSList *
-Find::filter_types (GSList *l)
+GSList *Find::filter_types (GSList *l)
 {
     GSList *n = NULL;
     for (GSList *i = l; i != NULL; i = i->next) {
@@ -709,16 +703,14 @@ Find::filter_types (GSList *l)
 }
 
 
-GSList *
-Find::filter_list (GSList *l, bool exact, bool casematch)
+GSList *Find::filter_list (GSList *l, bool exact, bool casematch)
 {
     l = filter_types (l);
     l = filter_fields (l, exact, casematch);
     return l;
 }
 
-GSList *
-Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
+GSList *Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
 {
     if (SP_IS_DEFS(r)) {
         return l; // we're not interested in items in defs
@@ -740,8 +732,7 @@ Find::all_items (SPObject *r, GSList *l, bool hidden, bool locked)
     return l;
 }
 
-GSList *
-Find::all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor, bool hidden, bool locked)
+GSList *Find::all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor, bool hidden, bool locked)
 {
     for (GSList *i = (GSList *) s->itemList(); i != NULL; i = i->next) {
         if (SP_IS_ITEM (i->data) && !reinterpret_cast<SPItem *>(i->data)->cloned && !desktop->isLayer(SP_ITEM(i->data))) {
@@ -765,8 +756,7 @@ Find::all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor
 # BUTTON CLICK HANDLERS    (callbacks)
 ########################################################################*/
 
-void
-Find::onFind()
+void Find::onFind()
 {
     _action_replace = false;
     onAction();
@@ -775,8 +765,7 @@ Find::onFind()
     entry_find.getEntry()->grab_focus();
 }
 
-void
-Find::onReplace()
+void Find::onReplace()
 {
     if (entry_find.getEntry()->get_text().length() < 1) {
         status.set_text(_("Nothing to replace"));
@@ -789,8 +778,7 @@ Find::onReplace()
     entry_find.getEntry()->grab_focus();
 }
 
-void
-Find::onAction()
+void Find::onAction()
 {
 
     bool hidden = check_include_hidden.get_active();
@@ -832,6 +820,8 @@ Find::onAction()
         else {
             // TRANSLATORS: "%1" is replaced with the number of matches
             status.set_text(Glib::ustring::compose(ngettext("%1 object found","%1 objects found",count), count));
+            bool attributenameyok = !check_attributename.get_active();
+            button_replace.set_sensitive(attributenameyok);
         }
 
         Inkscape::Selection *selection = sp_desktop_selection (desktop);
@@ -840,7 +830,7 @@ Find::onAction()
         scroll_to_show_item (desktop, SP_ITEM(n->data));
 
         if (_action_replace) {
-            DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, _("Text Replace"));
+            DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT, _("Replace text or property"));
         }
 
     } else {
@@ -854,8 +844,8 @@ Find::onAction()
     blocked = false;
 
 }
-void
-Find::onToggleCheck ()
+
+void Find::onToggleCheck ()
 {
     bool objectok = false;
     status.set_text("");
@@ -892,15 +882,14 @@ Find::onToggleCheck ()
     }
 
     // Can't replace attribute names
-    bool attributenameyok = !check_attributename.get_active();
+    // bool attributenameyok = !check_attributename.get_active();
 
     button_find.set_sensitive(objectok && propertyok);
-    button_replace.set_sensitive(objectok && propertyok && attributenameyok);
-
+    // button_replace.set_sensitive(objectok && propertyok && attributenameyok);
+    button_replace.set_sensitive(false);
 }
 
-void
-Find::onToggleAlltypes ()
+void Find::onToggleAlltypes ()
 {
      bool all  =check_alltypes.get_active();
      for(size_t i = 0; i < checkTypes.size(); i++) {
@@ -910,30 +899,26 @@ Find::onToggleAlltypes ()
      onToggleCheck();
 }
 
-void
-Find::onSearchinText ()
+void Find::onSearchinText ()
 {
     searchinToggle(false);
     onToggleCheck();
 }
 
-void
-Find::onSearchinProperty ()
+void Find::onSearchinProperty ()
 {
     searchinToggle(true);
     onToggleCheck();
 }
 
-void
-Find::searchinToggle(bool on)
+void Find::searchinToggle(bool on)
 {
     for(size_t i = 0; i < checkProperties.size(); i++) {
         checkProperties[i]->set_sensitive(on);
     }
 }
 
-void
-Find::onExpander ()
+void Find::onExpander ()
 {
     if (!expander_options.get_expanded())
         squeeze_window();
@@ -943,8 +928,7 @@ Find::onExpander ()
 # UTILITY
 ########################################################################*/
 
-void
-Find::squeeze_window()
+void Find::squeeze_window()
 {
     // TODO: resize dialog window when the expander is closed
     // set_size_request(-1, -1);
