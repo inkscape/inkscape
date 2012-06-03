@@ -465,15 +465,15 @@ void Path::SubContractOutline(int off, int num_pd,
 		{
 			PathDescrLineTo* nData = dynamic_cast<PathDescrLineTo*>(descr_cmd[curD]);
 			nextX = nData->p;
-			// test de nullité du segment
-			if (IsNulCurve (descr_cmd, curD, curX))
-			{
-				curP++;
-				continue;
-			}
 			// et on avance
 			TangentOnSegAt (0.0, curX, *nData, stPos, stTgt, stTle);
 			TangentOnSegAt (1.0, curX, *nData, enPos, enTgt, enTle);
+			// test de nullité du segment
+			if (IsNulCurve (descr_cmd, curD, curX))
+			{
+				stTgt = dest->descr_cmd.size() ? Geom::Point(1, 0) : Geom::Point(-1, 0); // reverse direction
+				enTgt = stTgt;
+			}
 			stNor=stTgt.cw();
 			enNor=enTgt.cw();
 
