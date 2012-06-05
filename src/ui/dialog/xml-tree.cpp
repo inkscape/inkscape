@@ -450,7 +450,7 @@ void XmlTree::set_tree_select(Inkscape::XML::Node *repr)
 
 void XmlTree::propagate_tree_select(Inkscape::XML::Node *repr)
 {
-    if (repr && repr->type() == Inkscape::XML::ELEMENT_NODE) {
+    if (repr && (repr->type() == Inkscape::XML::ELEMENT_NODE)) {
         sp_xmlview_attr_list_set_repr(attributes, repr);
     } else {
         sp_xmlview_attr_list_set_repr(attributes, NULL);
@@ -631,7 +631,7 @@ void XmlTree::on_tree_select_row_enable(GtkTreeIter *node)
                   prev && prev->next() != repr ;
                   prev = prev->next() ){};
 
-            if (prev && prev->type() == Inkscape::XML::ELEMENT_NODE) {
+            if (prev && (prev->type() == Inkscape::XML::ELEMENT_NODE)) {
                 indentable = TRUE;
             }
         }
@@ -650,7 +650,7 @@ void XmlTree::on_tree_select_row_enable(GtkTreeIter *node)
 
     //on_tree_select_row_enable_if_not_last_child
     {
-        if ( parent && parent->parent() && repr->next() ) {
+        if ( parent && (parent->parent() && repr->next())) {
             lower_node_button.set_sensitive(true);
         } else {
             lower_node_button.set_sensitive(false);
@@ -1030,7 +1030,7 @@ void XmlTree::cmd_raise_node()
 
     Inkscape::XML::Node *ref = NULL;
     Inkscape::XML::Node *before = parent->firstChild();
-    while (before && before->next() != selected_repr) {
+    while (before && (before->next() != selected_repr)) {
         ref = before;
         before = before->next();
     }
@@ -1072,7 +1072,7 @@ void XmlTree::cmd_indent_node()
     g_return_if_fail(parent->firstChild() != repr);
 
     Inkscape::XML::Node* prev = parent->firstChild();
-    while (prev && prev->next() != repr) {
+    while (prev && (prev->next() != repr)) {
         prev = prev->next();
     }
     g_return_if_fail(prev != NULL);

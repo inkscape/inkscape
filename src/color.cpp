@@ -61,6 +61,10 @@ SPColor::~SPColor()
 
 SPColor& SPColor::operator= (SPColor const& other)
 {
+    if (this == &other){
+        return *this;
+    }
+    
     SVGICCColor* tmp_icc = other.icc ? new SVGICCColor(*other.icc) : 0;
 
     v.c[0] = other.v.c[0];

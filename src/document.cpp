@@ -103,7 +103,8 @@ SPDocument::SPDocument() :
     router(new Avoid::Router(Avoid::PolyLineRouting|Avoid::OrthogonalRouting)),
     _collection_queue(0),
     oldSignalsConnected(false),
-    current_persp3d(0)
+    current_persp3d(NULL),
+    current_persp3d_impl(NULL)
 {
     // Penalise libavoid for choosing paths with needless extra segments.
     // This results in much better looking orthogonal connector paths.
@@ -223,8 +224,7 @@ SPDefs *SPDocument::getDefs()
     return root->defs;
 }
 
-Persp3D *
-SPDocument::getCurrentPersp3D() {
+Persp3D *SPDocument::getCurrentPersp3D() {
     // Check if current_persp3d is still valid
     std::vector<Persp3D*> plist;
     getPerspectivesInDefs(plist);
@@ -239,13 +239,11 @@ SPDocument::getCurrentPersp3D() {
     return current_persp3d;
 }
 
-Persp3DImpl *
-SPDocument::getCurrentPersp3DImpl() {
+Persp3DImpl *SPDocument::getCurrentPersp3DImpl() {
     return current_persp3d_impl;
 }
 
-void
-SPDocument::setCurrentPersp3D(Persp3D * const persp) {
+void SPDocument::setCurrentPersp3D(Persp3D * const persp) {
     current_persp3d = persp;
     //current_persp3d_impl = persp->perspective_impl;
 }

@@ -78,7 +78,7 @@ ColorProfile* ProfileManager::find(gchar const* name)
         for ( unsigned int index = 0; index < howMany; index++ ) {
             SPObject *obj = nthChildOf(NULL, index);
             ColorProfile* prof = reinterpret_cast<ColorProfile*>(obj);
-            if ( prof && prof->name && !strcmp(name, prof->name) ) {
+            if (prof && (prof->name && !strcmp(name, prof->name))) {
                 match = prof;
                 break;
             }
