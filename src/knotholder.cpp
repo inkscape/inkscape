@@ -19,6 +19,7 @@
 #include "sp-shape.h"
 #include "knot.h"
 #include "knotholder.h"
+#include "knot-holder-entity.h"
 #include "rect-context.h"
 #include "sp-rect.h"
 #include "arc-context.h"

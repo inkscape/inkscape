@@ -25,7 +25,6 @@
 #include "document.h"
 #include "document-undo.h"
 #include "selection.h"
-#include "seltrans-handles.h"
 #include "sp-cursor.h"
 #include "pixmaps/cursor-select-m.xpm"
 #include "pixmaps/cursor-select-d.xpm"
@@ -47,6 +46,7 @@
 #include "seltrans.h"
 #include "box3d.h"
 #include "display/sp-canvas.h"
+#include "display/sp-canvas-item.h"
 #include "display/drawing-item.h"
 
 #if !GTK_CHECK_VERSION(2,22,0)

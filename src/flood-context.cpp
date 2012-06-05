@@ -47,7 +47,6 @@
 #include "macros.h"
 #include "message-context.h"
 #include "message-stack.h"
-#include "object-edit.h"
 #include "preferences.h"
 #include "rubberband.h"
 #include "selection.h"

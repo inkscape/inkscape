@@ -45,7 +45,6 @@
 #include "preferences.h"
 #include "message-context.h"
 #include "gradient-drag.h"
-#include "object-edit.h"
 #include "attributes.h"
 #include "rubberband.h"
 #include "selcue.h"

@@ -14,9 +14,8 @@
 
 #include <boost/optional.hpp>
 #include "glib.h"
-#include "display/sp-ctrlline.h"
 #include "axis-manip.h" // FIXME: This is only for Box3D::epsilon; move that to a better location
-
+#include "2geom/point.h"
 #include "document.h"
 #include "ui/view/view.h"
 

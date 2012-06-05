@@ -34,7 +34,6 @@
 #include "macros.h"
 #include "message-context.h"
 #include "message-stack.h"
-#include "object-edit.h"
 #include "pixmaps/cursor-text-insert.xpm"
 #include "pixmaps/cursor-text.xpm"
 #include "preferences.h"

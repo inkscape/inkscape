@@ -41,7 +41,6 @@
 #include "preferences.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
-#include "object-edit.h"
 #include "context-fns.h"
 #include "shape-editor.h"
 #include "verbs.h"

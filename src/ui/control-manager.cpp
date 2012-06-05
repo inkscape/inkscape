@@ -315,7 +315,7 @@ void ControlManagerImpl::updateItem(SPCanvasItem *item)
             if (_sizeChangers.count(item->ctrlType) && _manager.isSelected(item)) {
                 target += 2;
             }
-            sp_canvas_item_set(item, "size", target, NULL);
+            g_object_set(item, "size", target, NULL);
         }
         sp_canvas_item_request_update(item);
     }

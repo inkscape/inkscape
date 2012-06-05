@@ -35,7 +35,6 @@
 #include "sp-metrics.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
-#include "object-edit.h"
 #include "preferences.h"
 #include "message-context.h"
 #include "desktop.h"

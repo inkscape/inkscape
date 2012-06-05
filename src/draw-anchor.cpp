@@ -82,14 +82,14 @@ SPDrawAnchor *sp_draw_anchor_test(SPDrawAnchor *anchor, Geom::Point w, gboolean 
 
     if ( activate && ( Geom::LInfty( w - dt->d2w(anchor->dp) ) <= (ctrl->box.width() / 2.0) ) ) {
         if (!anchor->active) {
-            sp_canvas_item_set((GtkObject *) anchor->ctrl, "fill_color", FILL_COLOR_MOUSEOVER, NULL);
+            g_object_set(anchor->ctrl, "fill_color", FILL_COLOR_MOUSEOVER, NULL);
             anchor->active = TRUE;
         }
         return anchor;
     }
 
     if (anchor->active) {
-        sp_canvas_item_set((GtkObject *) anchor->ctrl, "fill_color", FILL_COLOR_NORMAL, NULL);
+        g_object_set(anchor->ctrl, "fill_color", FILL_COLOR_NORMAL, NULL);
         anchor->active = FALSE;
     }
     return NULL;

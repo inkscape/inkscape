@@ -20,8 +20,8 @@
 #include <glib.h>
 #include "knot-enums.h"
 #include <2geom/forward.h>
-#include "knot-holder-entity.h"
 #include <list>
+#include <sigc++/connection.h>
 
 namespace Inkscape {
 namespace XML {
@@ -31,6 +31,14 @@ namespace LivePathEffect {
 class PowerStrokePointArrayParamKnotHolderEntity;
 }
 }
+
+class KnotHolderEntity;
+class SPItem;
+class SPDesktop;
+class SPKnot;
+
+/* fixme: Think how to make callbacks most sensitive (Lauris) */
+typedef void (* SPKnotHolderReleasedFunc) (SPItem *item);
 
 class KnotHolder {
 public:

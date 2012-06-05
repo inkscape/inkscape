@@ -15,6 +15,7 @@
 #include "desktop-style.h"
 #include "desktop-handles.h"
 #include "display/sp-canvas.h"
+#include "display/sp-ctrlline.h"
 #include "display/sodipodi-ctrl.h"
 #include "ui/control-manager.h"
 

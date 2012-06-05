@@ -34,8 +34,6 @@ namespace LivePathEffect {
 
 typedef void (* SPKnotHolderSetFunc) (SPItem *item, Geom::Point const &p, Geom::Point const &origin, guint state);
 typedef Geom::Point (* SPKnotHolderGetFunc) (SPItem *item);
-/* fixme: Think how to make callbacks most sensitive (Lauris) */
-typedef void (* SPKnotHolderReleasedFunc) (SPItem *item);
 
 /**
  * KnotHolderEntity definition.

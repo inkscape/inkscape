@@ -29,6 +29,7 @@
 #include "desktop-handles.h"
 #include "snap.h"
 #include "display/curve.h"
+#include "display/sp-canvas-item.h"
 #include "desktop.h"
 #include "message-context.h"
 #include "pixmaps/cursor-3dbox.xpm"
@@ -36,7 +37,6 @@
 #include "box3d-context.h"
 #include "sp-metrics.h"
 #include <glibmm/i18n.h>
-#include "object-edit.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
 #include "preferences.h"

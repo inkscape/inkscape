@@ -17,7 +17,6 @@
 
 
 #include "sp-item.h"
-#include "display/sp-canvas-item.h"
 #include "sp-rect.h"
 #include "box3d.h"
 #include "sp-ellipse.h"
@@ -37,6 +36,7 @@
 #include "object-edit.h"
 #include "xml/repr.h"
 #include <2geom/math-utils.h>
+#include "knot-holder-entity.h"
 
 #define sp_round(v,m) (((v) < 0.0) ? ((ceil((v) / (m) - 0.5)) * (m)) : ((floor((v) / (m) + 0.5)) * (m)))
 

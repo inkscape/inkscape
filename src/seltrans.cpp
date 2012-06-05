@@ -41,6 +41,7 @@
 #include "verbs.h"
 #include <glibmm/i18n.h>
 #include "display/sp-ctrlline.h"
+#include "display/sodipodi-ctrl.h"
 #include "preferences.h"
 #include "xml/repr.h"
 #include "mod360.h"

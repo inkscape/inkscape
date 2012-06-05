@@ -37,7 +37,6 @@
 #include "rect-context.h"
 #include "sp-metrics.h"
 #include <glibmm/i18n.h>
-#include "object-edit.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
 #include "preferences.h"

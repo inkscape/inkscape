@@ -25,7 +25,6 @@
 #include <2geom/affine.h>
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/curves.h>
-#include "../display/canvas-bpath.h"
 #include "helper/geom-curves.h"
 #include "helper/geom.h"
 

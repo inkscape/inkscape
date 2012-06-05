@@ -18,6 +18,7 @@
 #include "desktop-handles.h"
 #include "desktop.h"
 #include "display/sp-canvas-item.h"
+#include "display/sp-ctrlline.h"
 #include "event-context.h"
 #include "xml/repr.h"
 #include "perspective-line.h"

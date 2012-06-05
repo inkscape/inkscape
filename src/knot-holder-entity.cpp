@@ -15,6 +15,7 @@
  * Released under GNU GPL
  */
 
+#include "knot-holder-entity.h"
 #include "knotholder.h"
 #include "sp-item.h"
 #include "style.h"
