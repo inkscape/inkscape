@@ -12,6 +12,7 @@
 
 
 #include <gdk/gdkkeysyms.h>
+#include <boost/none_t.hpp>
 #include "helper/units.h"
 #include "macros.h"
 #include "display/curve.h"
@@ -62,6 +63,8 @@ static gint tolerance = 0;
 static bool within_tolerance = false;
 
 Geom::Point start_point;
+boost::optional<Geom::Point> explicitBase;
+boost::optional<Geom::Point> lastEnd;
 
 std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
 
@@ -158,20 +161,21 @@ void repositionOverlappingLabels(std::vector<LabelPlacement> &placements, SPDesk
  *
  * @param desktop the desktop that is being used.
  * @param angle the angle to be displaying.
+ * @param baseAngle the angle of the initial baseline.
  * @param startPoint the point that is the vertex of the selected angle.
  * @param endPoint the point that is the end the user is manipulating for measurement.
  * @param fontsize the size to display the text label at.
  */
-Geom::Point calcAngleDisplayAnchor(SPDesktop *desktop, double angle,
+Geom::Point calcAngleDisplayAnchor(SPDesktop *desktop, double angle, double baseAngle,
                                    Geom::Point const &startPoint, Geom::Point const &endPoint,
                                    double fontsize)
 {
     // Time for the trick work of figuring out where things should go, and how.
-    Geom::Point where = endPoint;
-    Geom::Affine adjust = Geom::Affine(Geom::Translate(-startPoint))
-        * Geom::Affine(Geom::Rotate(-angle / 2))
-        * Geom::Affine(Geom::Translate(startPoint));
-    where *= adjust;
+    double lengthVal = (endPoint - startPoint).length();
+    double effective = baseAngle + (angle / 2);
+    Geom::Point where(lengthVal, 0);
+    where *= Geom::Affine(Geom::Rotate(effective)) * Geom::Affine(Geom::Translate(startPoint));
+
     // We now have the ideal position, but need to see if it will fit/work.
 
     Geom::Rect visibleArea = desktop->get_display_area();
@@ -354,6 +358,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
         case GDK_BUTTON_PRESS:
         {
             Geom::Point const button_w(event->button.x, event->button.y);
+            explicitBase = boost::none;
+            lastEnd = boost::none;
             start_point = desktop->w2d(button_w);
             if (event->button.button == 1 && !event_context->space_panning) {
                 // save drag origin
@@ -373,6 +379,16 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                                 GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
                                 NULL, event->button.time);
             mc->grabbed = SP_CANVAS_ITEM(desktop->acetate);
+            break;
+        }
+
+        case GDK_KEY_PRESS:
+        {
+            if ((event->key.keyval == GDK_KEY_Shift_L) || (event->key.keyval == GDK_KEY_Shift_R)) {
+                if (lastEnd) {
+                    explicitBase = lastEnd;
+                }
+            }
             break;
         }
 
@@ -439,6 +455,20 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                 double deltax = end_point[Geom::X] - start_point[Geom::X];
                 double deltay = end_point[Geom::Y] - start_point[Geom::Y];
                 double angle = atan2(deltay, deltax);
+                double baseAngle = 0;
+
+                if (explicitBase) {
+                    double deltax2 = explicitBase.get()[Geom::X] - start_point[Geom::X];
+                    double deltay2 = explicitBase.get()[Geom::Y] - start_point[Geom::Y];
+
+                    baseAngle = atan2(deltay2, deltax2);
+                    angle -= baseAngle;
+                    if (angle < -M_PI) {
+                        angle += 2 * M_PI;
+                    } else if (angle > M_PI) {
+                        angle -= 2 * M_PI;
+                    }
+                }
 
 //TODO: calculate NPOINTS
 //800 seems to be a good value for 800x600 resolution
@@ -558,7 +588,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     g_free(measure_str);
                 }
 
-                Geom::Point angleDisplayPt = calcAngleDisplayAnchor(desktop, angle,
+                Geom::Point angleDisplayPt = calcAngleDisplayAnchor(desktop, angle, baseAngle,
                                                                     start_point, end_point,
                                                                     fontsize);
 
@@ -651,9 +681,14 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
                     if ((end_point[Geom::X] != start_point[Geom::X]) && (end_point[Geom::Y] != start_point[Geom::Y])) {
-                        Geom::Point anchorEnd = start_point;
                         double length = std::abs((end_point - start_point).length());
+                        Geom::Point anchorEnd = start_point;
                         anchorEnd[Geom::X] += length;
+                        if (explicitBase) {
+                            anchorEnd *= (Geom::Affine(Geom::Translate(-start_point))
+                                          * Geom::Affine(Geom::Rotate(baseAngle))
+                                          * Geom::Affine(Geom::Translate(start_point)));
+                        }
 
                         SPCtrlLine *control_line = ControlManager::getManager().createControlLine(sp_desktop_tempgroup(desktop),
                                                                                                   start_point,
@@ -726,6 +761,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                     measure_tmp_items.push_back(desktop->add_temporary_canvasitem(canvasitem, 0));
                 }
 
+                lastEnd = end_point; // track in case we get a anchoring key-press later
+
                 gobble_motion_events(GDK_BUTTON1_MASK);
             }
             break;
@@ -734,6 +771,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
         case GDK_BUTTON_RELEASE:
         {
             sp_event_context_discard_delayed_snap_event(event_context);
+            explicitBase = boost::none;
+            lastEnd = boost::none;
 
             //clear all temporary canvas items related to the measurement tool.
             for (size_t idx = 0; idx < measure_tmp_items.size(); ++idx) {
