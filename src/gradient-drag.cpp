@@ -1954,7 +1954,8 @@ void GrDrag::addDraggersMesh(SPMeshGradient *mg, SPItem *item, Inkscape::PaintTa
     std::vector< std::vector< SPMeshNode* > > nodes = mg->array.nodes;
 
     // Show/hide mesh on fill/stroke. This doesn't work at the moment... and prevents node color updating.
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    
+    //Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool edit_fill    = true; //abs(prefs->getBool("/tools/mesh/edit_fill",    true));
     bool edit_stroke  = true; //abs(prefs->getBool("/tools/mesh/edit_stroke",  true));
     bool show_handles = true; //abs(prefs->getBool("/tools/mesh/show_handles", true));
