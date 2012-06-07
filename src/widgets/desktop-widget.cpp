@@ -964,10 +964,11 @@ SPDesktopWidget::shutdown()
 	    GtkWidget *ma = gtk_message_dialog_get_message_area(GTK_MESSAGE_DIALOG(dialog));
 	    GList *ma_labels = gtk_container_get_children(GTK_CONTAINER(ma));
 	    GtkWidget *label = GTK_WIDGET(g_list_first(ma_labels)->data);
-#else
-	    GtkWidget *label = GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label);
-#endif
 	    gtk_widget_set_can_focus(label, FALSE);
+#elif !defined(GSEAL_ENABLE)
+	    GtkWidget *label = GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label);
+	    gtk_widget_set_can_focus(label, FALSE);
+#endif
 
             GtkWidget *close_button;
             close_button = gtk_button_new_with_mnemonic(_("Close _without saving"));
@@ -1027,10 +1028,11 @@ SPDesktopWidget::shutdown()
 	    GtkWidget *ma = gtk_message_dialog_get_message_area(GTK_MESSAGE_DIALOG(dialog));
 	    GList *ma_labels = gtk_container_get_children(GTK_CONTAINER(ma));
 	    GtkWidget *label = GTK_WIDGET(g_list_first(ma_labels)->data);
-#else
-	    GtkWidget *label = GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label);
-#endif
 	    gtk_widget_set_can_focus(label, FALSE);
+#elif !defined(GSEAL_ENABLE)
+	    GtkWidget *label = GTK_WIDGET(GTK_MESSAGE_DIALOG(dialog)->label);
+	    gtk_widget_set_can_focus(label, FALSE);
+#endif
 
             GtkWidget *close_button;
             close_button = gtk_button_new_with_mnemonic(_("Close _without saving"));
