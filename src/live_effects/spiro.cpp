@@ -850,7 +850,7 @@ spiro_seg_to_otherpath(const double ks[4],
     double bend = fabs(ks[0]) + fabs(.5 * ks[1]) + fabs(.125 * ks[2]) +
 	fabs((1./48) * ks[3]);
 
-    if (!bend > 1e-8) {
+    if (!(bend > 1e-8)) {
         bc.lineto(x1, y1);
     } else {
 	double seg_ch = hypot(x1 - x0, y1 - y0);
