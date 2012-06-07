@@ -211,9 +211,11 @@ public:
      SVDMatrix transpose()
          {
          SVDMatrix result(cols, rows);
-         for (unsigned int i=0 ; i<rows ; i++)
-             for (unsigned int j=0 ; j<cols ; j++)
+         for (unsigned int i=0 ; i<rows ; i++){
+             for (unsigned int j=0 ; j<cols ; j++){
                  result(j, i) = d[i*cols + j];
+             }
+         }
          return result;
          }
 
@@ -239,9 +241,11 @@ private:
         rows = other.rows;
         cols = other.cols;
         size = other.size;
+        badval = other.badval;
         d = new double[size];
-        for (unsigned int i=0 ; i<size ; i++)
+        for (unsigned int i=0 ; i<size ; i++){
             d[i] = other.d[i];
+            }
         }
 
     double badval;

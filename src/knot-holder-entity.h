@@ -40,7 +40,13 @@ typedef Geom::Point (* SPKnotHolderGetFunc) (SPItem *item);
  */
 class KnotHolderEntity {
 public:
-    KnotHolderEntity() {}
+    KnotHolderEntity():
+        knot(NULL),
+        item(NULL),
+        desktop(NULL),
+        parent_holder(NULL),
+        my_counter(0)
+        {}
     virtual ~KnotHolderEntity();
 
     virtual void create(SPDesktop *desktop, SPItem *item, KnotHolder *parent,
