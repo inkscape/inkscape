@@ -104,6 +104,8 @@ def export_SPLINE():
             path = 'M %f,%f' % (vals[groups['10']][0], vals[groups['20']][0])
             for i in range (0, (ctrls - 1)/3):
                 path += ' C %f,%f %f,%f %f,%f' % (vals[groups['10']][3*i + 1], vals[groups['20']][3*i + 1], vals[groups['10']][3*i + 2], vals[groups['20']][3*i + 2], vals[groups['10']][3*i + 3], vals[groups['20']][3*i + 3])
+            if vals[groups['70']][0] & 1:       # closed path
+                path += ' z'
             attribs = {'d': path, 'style': style}
             inkex.etree.SubElement(layer, 'path', attribs)
         if ctrls == 3 and knots == 6:           # quadratic
