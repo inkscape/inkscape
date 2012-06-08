@@ -181,6 +181,12 @@ Geom::Point calcAngleDisplayAnchor(SPDesktop *desktop, double angle, double base
     Geom::Point where(lengthVal, 0);
     where *= Geom::Affine(Geom::Rotate(effective)) * Geom::Affine(Geom::Translate(startPoint));
 
+    // When the angle is tight, the label would end up under the cursor and/or lines. Bump it
+    double scaledFontsize = std::abs(fontsize * desktop->w2d(Geom::Point(0, 1.0))[Geom::Y]);
+    if (std::abs((where - endPoint).length()) < scaledFontsize) {
+        where[Geom::Y] += scaledFontsize * 2;
+    }
+
     // We now have the ideal position, but need to see if it will fit/work.
 
     Geom::Rect visibleArea = desktop->get_display_area();
