@@ -192,29 +192,11 @@ Geom::Point calcAngleDisplayAnchor(SPDesktop *desktop, double angle, double base
                              visibleArea.min()[Geom::Y] + textBox[Geom::Y],
                              visibleArea.max()[Geom::X] - textBox[Geom::X],
                              visibleArea.max()[Geom::Y] - textBox[Geom::Y]);
-    std::vector<Geom::LineSegment> edges;
-    edges.push_back(Geom::LineSegment(Geom::Point(visibleArea.max()[Geom::X], visibleArea.min()[Geom::Y]),
-                                      visibleArea.max())); // right
-    edges.push_back(Geom::LineSegment(Geom::Point(visibleArea.min()[Geom::X], visibleArea.max()[Geom::Y]),
-                                      visibleArea.max())); // bottom
-    edges.push_back(Geom::LineSegment(visibleArea.min(),
-                                      Geom::Point(visibleArea.max()[Geom::X], visibleArea.min()[Geom::Y]))); // top
-    edges.push_back(Geom::LineSegment(visibleArea.min(),
-                                      Geom::Point(visibleArea.min()[Geom::X], visibleArea.max()[Geom::Y]))); // left
 
-    Geom::LineSegment dispLine(start_point, where);
-
-    for (std::vector<Geom::LineSegment>::iterator it = edges.begin(); it != edges.end(); ++it) {
-        try {
-            Geom::OptCrossing inters = Geom::intersection(dispLine, *it);
-            if (inters) {
-                where = dispLine.pointAt(inters->ta);
-                break;
-            }
-        } catch (Geom::InfiniteSolutions const & /*e*/) {
-            // don't fail.
-        }
-    }
+    where[Geom::X] = std::min(where[Geom::X], visibleArea.max()[Geom::X]);
+    where[Geom::X] = std::max(where[Geom::X], visibleArea.min()[Geom::X]);
+    where[Geom::Y] = std::min(where[Geom::Y], visibleArea.max()[Geom::Y]);
+    where[Geom::Y] = std::max(where[Geom::Y], visibleArea.min()[Geom::Y]);
 
     return where;
 }
@@ -224,41 +206,49 @@ Geom::Point calcAngleDisplayAnchor(SPDesktop *desktop, double angle, double base
  *
  * @param desktop the desktop that is being used.
  * @param center the center point for the arc.
- * @param end the point that ends in the center of the arc segment.
+ * @param end the point that ends at the edge of the arc segment.
+ * @param anchor the anchor point for displaying the text label.
  * @param angle the angle of the arc segment to draw.
  */
-void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom::Point const &end, double angle)
+void createAngleDisplayCurve(SPDesktop *desktop, Geom::Point const &center, Geom::Point const &end, Geom::Point const &anchor, double angle)
 {
-    // Given that we have a point on the arc's center and the angle of the arc, we need to get the two endpoints. 
+    // Given that we have a point on the arc's edge and the angle of the arc, we need to get the two endpoints.
 
-    // arc start
-    Geom::Point p1 = end * (Geom::Affine(Geom::Translate(-center))
-                            * Geom::Affine(Geom::Rotate(-angle / 2))
-                            * Geom::Affine(Geom::Translate(center)));
-    // arc end
-    Geom::Point p4 = end * (Geom::Affine(Geom::Translate(-center))
-                            * Geom::Affine(Geom::Rotate(angle / 2))
-                            * Geom::Affine(Geom::Translate(center)));
+    double textLen = std::abs((anchor - center).length());
+    double sideLen = std::abs((end - center).length());
+    if (sideLen > 0.0) {
+        double factor = std::min(1.0, textLen / sideLen);
+    
+        // arc start
+        Geom::Point p1 = end * (Geom::Affine(Geom::Translate(-center))
+                                * Geom::Affine(Geom::Scale(factor))
+                                * Geom::Affine(Geom::Translate(center)));
 
-    // from Riskus
-    double xc = center[Geom::X];
-    double yc = center[Geom::Y];
-    double ax = p1[Geom::X] - xc;
-    double ay = p1[Geom::Y] - yc;
-    double bx = p4[Geom::X] - xc;
-    double by = p4[Geom::Y] - yc;
-    double q1 = (ax * ax) + (ay * ay);
-    double q2 = q1 + (ax * bx) + (ay * by);
+        // arc end
+        Geom::Point p4 = p1 * (Geom::Affine(Geom::Translate(-center))
+                               * Geom::Affine(Geom::Rotate(-angle))
+                               * Geom::Affine(Geom::Translate(center)));
 
-    double k2 = (4.0 / 3.0) * (std::sqrt(2 * q1 * q2) - q2) / ((ax * by) - (ay * bx));
+        // from Riskus
+        double xc = center[Geom::X];
+        double yc = center[Geom::Y];
+        double ax = p1[Geom::X] - xc;
+        double ay = p1[Geom::Y] - yc;
+        double bx = p4[Geom::X] - xc;
+        double by = p4[Geom::Y] - yc;
+        double q1 = (ax * ax) + (ay * ay);
+        double q2 = q1 + (ax * bx) + (ay * by);
 
-    Geom::Point p2(xc + ax - (k2 * ay),
-                   yc + ay  + (k2 * ax));
-    Geom::Point p3(xc + bx + (k2 * by),
-                   yc + by - (k2 * bx));
-    SPCtrlCurve *curve = ControlManager::getManager().createControlCurve(sp_desktop_tempgroup(desktop), p1, p2, p3, p4, CTLINE_SECONDARY);
+        double k2 = (4.0 / 3.0) * (std::sqrt(2 * q1 * q2) - q2) / ((ax * by) - (ay * bx));
 
-    measure_tmp_items.push_back(desktop->add_temporary_canvasitem(SP_CANVAS_ITEM(curve), 0, true));
+        Geom::Point p2(xc + ax - (k2 * ay),
+                       yc + ay  + (k2 * ax));
+        Geom::Point p3(xc + bx + (k2 * by),
+                       yc + by - (k2 * bx));
+        SPCtrlCurve *curve = ControlManager::getManager().createControlCurve(sp_desktop_tempgroup(desktop), p1, p2, p3, p4, CTLINE_SECONDARY);
+
+        measure_tmp_items.push_back(desktop->add_temporary_canvasitem(SP_CANVAS_ITEM(curve), 0, true));
+    }
 }
 
 } // namespace
@@ -701,7 +691,7 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                                                                                                   CTLINE_SECONDARY);
                         measure_tmp_items.push_back(desktop->add_temporary_canvasitem(control_line, 0));
 
-                        createAngleDisplayCurve(desktop, start_point, angleDisplayPt, angle);
+                        createAngleDisplayCurve(desktop, start_point, end_point, angleDisplayPt, angle);
                     }
                 }
 
