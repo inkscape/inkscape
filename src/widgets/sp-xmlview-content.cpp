@@ -25,7 +25,12 @@ using Inkscape::DocumentUndo;
 
 static void sp_xmlview_content_class_init (SPXMLViewContentClass * klass);
 static void sp_xmlview_content_init (SPXMLViewContent * text);
-static void sp_xmlview_content_destroy (GtkObject * object);
+
+#if GTK_CHECK_VERSION(3,0,0)
+static void sp_xmlview_content_destroy(GtkWidget * object);
+#else
+static void sp_xmlview_content_destroy(GtkObject * object);
+#endif
 
 void sp_xmlview_content_changed (GtkTextBuffer *tb, SPXMLViewContent *text);
 
@@ -103,16 +108,17 @@ GType sp_xmlview_content_get_type(void)
     return type;
 }
 
-void
-sp_xmlview_content_class_init (SPXMLViewContentClass * klass)
+void sp_xmlview_content_class_init(SPXMLViewContentClass * klass)
 {
-    GtkObjectClass * object_class;
-
-    object_class = (GtkObjectClass *) klass;
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidgetClass * widget_class = (GtkWidgetClass *) klass;
+    widget_class->destroy = sp_xmlview_content_destroy;
+#else
+    GtkObjectClass * object_class = (GtkObjectClass *) klass;
+    object_class->destroy = sp_xmlview_content_destroy;
+#endif
 
     parent_class = (GtkTextViewClass*)g_type_class_peek_parent (klass);
-
-    object_class->destroy = sp_xmlview_content_destroy;
 }
 
 void
@@ -122,16 +128,21 @@ sp_xmlview_content_init (SPXMLViewContent *text)
     text->blocked = FALSE;
 }
 
-void
-sp_xmlview_content_destroy (GtkObject * object)
+#if GTK_CHECK_VERSION(3,0,0)
+void sp_xmlview_content_destroy(GtkWidget * object)
+#else
+void sp_xmlview_content_destroy(GtkObject * object)
+#endif
 {
-    SPXMLViewContent * text;
-
-    text = SP_XMLVIEW_CONTENT (object);
+    SPXMLViewContent * text = SP_XMLVIEW_CONTENT (object);
 
     sp_xmlview_content_set_repr (text, NULL);
 
+#if GTK_CHECK_VERSION(3,0,0)
+    GTK_WIDGET_CLASS (parent_class)->destroy (object);
+#else
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
+#endif
 }
 
 void

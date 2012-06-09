@@ -168,22 +168,19 @@ spw_unit_selector(GtkWidget * dialog, GtkWidget * table,
 		  const gchar * label_text, gchar * key, int row,
 		GtkWidget * us, GCallback cb, bool can_be_negative)
 {
-  GtkWidget * sb;
-  GtkObject * a;
-
   g_assert(dialog != NULL);
   g_assert(table  != NULL);
   g_assert(us     != NULL);
 
   spw_label_old(table, label_text, 0, row);
 
-  a = gtk_adjustment_new (0.0, can_be_negative?-1e6:0, 1e6, 1.0, 10.0, 10.0);
+  GtkAdjustment * a = gtk_adjustment_new (0.0, can_be_negative?-1e6:0, 1e6, 1.0, 10.0, 10.0);
   g_assert(a != NULL);
   g_object_set_data (G_OBJECT (a), "key", key);
   g_object_set_data (G_OBJECT (a), "unit_selector", us);
   g_object_set_data (G_OBJECT (dialog), key, a);
   sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (us), GTK_ADJUSTMENT (a));
-  sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 4);
+  GtkWidget * sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 4);
   g_assert(sb != NULL);
   gtk_widget_show (sb);
   gtk_table_attach (GTK_TABLE (table), sb, 1, 2, row, row+1,
@@ -231,7 +228,7 @@ gpointer sp_search_by_data_recursive(GtkWidget *w, gpointer key)
 {
 	gpointer r = NULL;
 
-	if (w && GTK_IS_OBJECT(w)) {
+	if (w && G_IS_OBJECT(w)) {
 		r = g_object_get_data(G_OBJECT(w), (gchar *) key);
 	}
 	if (r) return r;
@@ -255,7 +252,7 @@ GtkWidget *sp_search_by_value_recursive(GtkWidget *w, gchar *key, gchar *value)
 	gchar *r = NULL;
 	GtkWidget *child;
 
-	if (w && GTK_IS_OBJECT(w)) {
+	if (w && G_IS_OBJECT(w)) {
 		r = (gchar *) g_object_get_data(G_OBJECT(w), key);
 	}
 	if (r && !strcmp (r, value)) return w;

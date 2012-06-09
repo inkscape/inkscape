@@ -27,7 +27,12 @@ enum { STORE_TEXT_COL = 0, STORE_DATA_COL, STORE_REPR_COL, STORE_N_COLS };
 
 static void sp_xmlview_tree_class_init (SPXMLViewTreeClass * klass);
 static void sp_xmlview_tree_init (SPXMLViewTree * tree);
-static void sp_xmlview_tree_destroy (GtkObject * object);
+
+#if GTK_CHECK_VERSION(3,0,0)
+static void sp_xmlview_tree_destroy(GtkWidget * object);
+#else
+static void sp_xmlview_tree_destroy(GtkObject * object);
+#endif
 
 static NodeData * node_data_new (SPXMLViewTree * tree, GtkTreeIter * node, GtkTreeRowReference  *rowref, Inkscape::XML::Node * repr);
 static void node_data_free (gpointer data);
@@ -143,13 +148,17 @@ sp_xmlview_tree_get_type (void)
 	return type;
 }
 
-void
-sp_xmlview_tree_class_init (SPXMLViewTreeClass * klass)
+void sp_xmlview_tree_class_init(SPXMLViewTreeClass * klass)
 {
-	GtkObjectClass * object_class;
-
-	object_class = (GtkObjectClass *) klass;
-	parent_class = (GtkTreeViewClass *) g_type_class_peek_parent (klass);
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidgetClass * widget_class = (GtkWidgetClass *) klass;
+    widget_class->destroy = sp_xmlview_tree_destroy;
+#else
+    GtkObjectClass * object_class = (GtkObjectClass *) klass;
+    object_class->destroy = sp_xmlview_tree_destroy;
+#endif
+    
+    parent_class = (GtkTreeViewClass *) g_type_class_peek_parent (klass);
 
     // Signal for when a tree drag and drop has completed
     g_signal_new (  "tree_move",
@@ -160,8 +169,6 @@ sp_xmlview_tree_class_init (SPXMLViewTreeClass * klass)
         g_cclosure_marshal_VOID__UINT,
         G_TYPE_NONE, 1,
         G_TYPE_UINT);
-
-	object_class->destroy = sp_xmlview_tree_destroy;
 }
 
 void
@@ -172,16 +179,22 @@ sp_xmlview_tree_init (SPXMLViewTree * tree)
 	tree->dndactive = FALSE;
 }
 
-void
-sp_xmlview_tree_destroy (GtkObject * object)
-{
-	SPXMLViewTree * tree;
 
-	tree = SP_XMLVIEW_TREE (object);
+#if GTK_CHECK_VERSION(3,0,0)
+void sp_xmlview_tree_destroy(GtkWidget * object)
+#else
+void sp_xmlview_tree_destroy(GtkObject * object)
+#endif
+{
+	SPXMLViewTree * tree = SP_XMLVIEW_TREE (object);
 
 	sp_xmlview_tree_set_repr (tree, NULL);
 
-	GTK_OBJECT_CLASS (parent_class)->destroy (object);
+#if GTK_CHECK_VERSION(3,0,0)
+	GTK_WIDGET_CLASS(parent_class)->destroy (object);
+#else
+	GTK_OBJECT_CLASS(parent_class)->destroy (object);
+#endif
 }
 
 /*
