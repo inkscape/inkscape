@@ -174,7 +174,12 @@ spw_unit_selector(GtkWidget * dialog, GtkWidget * table,
 
   spw_label_old(table, label_text, 0, row);
 
-  GtkAdjustment * a = gtk_adjustment_new (0.0, can_be_negative?-1e6:0, 1e6, 1.0, 10.0, 10.0);
+#if GTK_CHECK_VERSION(3,0,0)
+  GtkAdjustment * a = gtk_adjustment_new(0.0, can_be_negative?-1e6:0, 1e6, 1.0, 10.0, 10.0);
+#else
+  GtkObject * a = gtk_adjustment_new(0.0, can_be_negative?-1e6:0, 1e6, 1.0, 10.0, 10.0);
+#endif
+
   g_assert(a != NULL);
   g_object_set_data (G_OBJECT (a), "key", key);
   g_object_set_data (G_OBJECT (a), "unit_selector", us);
