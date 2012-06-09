@@ -147,9 +147,20 @@ static void sp_svg_view_widget_size_request(GtkWidget *widget, GtkRequisition *r
 	SPSVGSPViewWidget *vw = SP_SVG_VIEW_WIDGET (widget);
 	Inkscape::UI::View::View *v = SP_VIEW_WIDGET_VIEW (widget);
 
+#if GTK_CHECK_VERSION(3,0,0)
+	if (((GtkWidgetClass *) (widget_parent_class))->get_preferred_width && ((GtkWidgetClass *) (widget_parent_class))->get_preferred_width) {
+		gint width_min, height_min, width_nat, height_nat;
+
+		(* ((GtkWidgetClass *) (widget_parent_class))->get_preferred_width) (widget, &width_min, &width_nat);
+		(* ((GtkWidgetClass *) (widget_parent_class))->get_preferred_height) (widget, &height_min, &height_nat);
+		req->width=width_min;
+		req->height=height_min;
+        }
+#else
 	if (((GtkWidgetClass *) (widget_parent_class))->size_request) {
 		(* ((GtkWidgetClass *) (widget_parent_class))->size_request) (widget, req);
         }
+#endif
 
 	if (v->doc()) {
 		SPSVGView *svgv;

@@ -224,14 +224,14 @@ void PreviewHolder::on_size_allocate( Gtk::Allocation& allocation )
     }
 }
 
-void PreviewHolder::on_size_request( Gtk::Requisition* requisition )
-{
+//void PreviewHolder::on_size_request( Gtk::Requisition* requisition )
+//{
 //     g_message( "on_size_request(%d, %d)", requisition->width, requisition->height );
-    Gtk::VBox::on_size_request( requisition );
+//    Gtk::VBox::on_size_request( requisition );
 //     g_message( "   super       (%d, %d)", requisition->width, requisition->height );
 //     g_message("            anchor:%d", _anchor);
 //     g_message("             items:%d", (int)items.size());
-}
+//}
 
 void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& width, int& height )
 {

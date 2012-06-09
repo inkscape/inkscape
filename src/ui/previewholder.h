@@ -45,7 +45,7 @@ public:
 
 protected:
     virtual void on_size_allocate( Gtk::Allocation& allocation );
-    virtual void on_size_request( Gtk::Requisition* requisition );
+//    virtual void on_size_request( Gtk::Requisition* requisition );
 
 
 private:

@@ -256,7 +256,12 @@ public:
     /**
      * The canvas widget's size request callback.
      */
+#if GTK_CHECK_VERSION(3,0,0)
+    static void getPreferredWidth(GtkWidget *widget, gint *min_w, gint *nat_w);
+    static void getPreferredHeight(GtkWidget *widget, gint *min_h, gint *nat_h);
+#else
     static void sizeRequest(GtkWidget *widget, GtkRequisition *req);
+#endif
 
     /**
      * The canvas widget's size allocate callback.
@@ -1224,7 +1229,14 @@ void SPCanvasImpl::classInit(SPCanvasClass *klass)
 
     widget_class->realize = SPCanvasImpl::realize;
     widget_class->unrealize = SPCanvasImpl::unrealize;
+
+#if GTK_CHECK_VERSION(3,0,0)
+    widget_class->get_preferred_width = SPCanvasImpl::getPreferredWidth;
+    widget_class->get_preferred_height = SPCanvasImpl::getPreferredHeight;
+#else
     widget_class->size_request = SPCanvasImpl::sizeRequest;
+#endif
+
     widget_class->size_allocate = SPCanvasImpl::sizeAllocate;
     widget_class->button_press_event = SPCanvasImpl::button;
     widget_class->button_release_event = SPCanvasImpl::button;
@@ -1404,6 +1416,22 @@ void SPCanvasImpl::unrealize(GtkWidget *widget)
         (* GTK_WIDGET_CLASS(parentClass)->unrealize)(widget);
 }
 
+
+#if GTK_CHECK_VERSION(3,0,0)
+void SPCanvasImpl::getPreferredWidth(GtkWidget *widget, gint *minimum_width, gint *natural_width)
+{
+    static_cast<void>(SP_CANVAS (widget));
+    *minimum_width = 256;
+    *natural_width = 256;
+}
+
+void SPCanvasImpl::getPreferredHeight(GtkWidget *widget, gint *minimum_height, gint *natural_height)
+{
+    static_cast<void>(SP_CANVAS (widget));
+    *minimum_height = 256;
+    *natural_height = 256;
+}
+#else
 void SPCanvasImpl::sizeRequest(GtkWidget *widget, GtkRequisition *req)
 {
     static_cast<void>(SP_CANVAS (widget));
@@ -1411,6 +1439,8 @@ void SPCanvasImpl::sizeRequest(GtkWidget *widget, GtkRequisition *req)
     req->width = 256;
     req->height = 256;
 }
+#endif
+
 
 void SPCanvasImpl::sizeAllocate(GtkWidget *widget, GtkAllocation *allocation)
 {
