@@ -41,14 +41,14 @@ static void sp_color_slider_get_preferred_width(GtkWidget *widget,
 static void sp_color_slider_get_preferred_height(GtkWidget *widget, 
                                                     gint *minimal_height,
 						    gint *natural_height);
+#else
+static gboolean sp_color_slider_expose(GtkWidget *widget, GdkEventExpose *event);
 #endif
 
 static void sp_color_slider_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
-/*  static void sp_color_slider_draw (GtkWidget *widget, GdkRectangle *area); */
-/*  static void sp_color_slider_draw_focus (GtkWidget *widget); */
-/*  static void sp_color_slider_draw_default (GtkWidget *widget); */
 
-static gint sp_color_slider_expose (GtkWidget *widget, GdkEventExpose *event);
+static gboolean sp_color_slider_draw(GtkWidget *widget, cairo_t *cr);
+
 static gint sp_color_slider_button_press (GtkWidget *widget, GdkEventButton *event);
 static gint sp_color_slider_button_release (GtkWidget *widget, GdkEventButton *event);
 static gint sp_color_slider_motion_notify (GtkWidget *widget, GdkEventMotion *event);
@@ -56,7 +56,6 @@ static gint sp_color_slider_motion_notify (GtkWidget *widget, GdkEventMotion *ev
 static void sp_color_slider_adjustment_changed (GtkAdjustment *adjustment, SPColorSlider *slider);
 static void sp_color_slider_adjustment_value_changed (GtkAdjustment *adjustment, SPColorSlider *slider);
 
-static void sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area);
 static const guchar *sp_color_slider_render_gradient (gint x0, gint y0, gint width, gint height,
 						      gint c[], gint dc[], guint b0, guint b1, guint mask);
 static const guchar *sp_color_slider_render_map (gint x0, gint y0, gint width, gint height,
@@ -129,15 +128,15 @@ static void sp_color_slider_class_init(SPColorSliderClass *klass)
 #if GTK_CHECK_VERSION(3,0,0)
 	widget_class->get_preferred_width = sp_color_slider_get_preferred_width;
 	widget_class->get_preferred_height = sp_color_slider_get_preferred_height;
+  	widget_class->draw = sp_color_slider_draw; 
 #else
 	widget_class->size_request = sp_color_slider_size_request;
+	widget_class->expose_event = sp_color_slider_expose;
 #endif
 	widget_class->size_allocate = sp_color_slider_size_allocate;
-/*  	widget_class->draw = sp_color_slider_draw; */
 /*  	widget_class->draw_focus = sp_color_slider_draw_focus; */
 /*  	widget_class->draw_default = sp_color_slider_draw_default; */
 
-	widget_class->expose_event = sp_color_slider_expose;
 	widget_class->button_press_event = sp_color_slider_button_press;
 	widget_class->button_release_event = sp_color_slider_button_release;
 	widget_class->motion_notify_event = sp_color_slider_motion_notify;
@@ -207,7 +206,11 @@ sp_color_slider_realize (GtkWidget *widget)
 	attributes.height = allocation.height;
 	attributes.wclass = GDK_INPUT_OUTPUT;
 	attributes.visual = gdk_screen_get_system_visual(gdk_screen_get_default());
+
+#if !GTK_CHECK_VERSION(3,0,0)
 	attributes.colormap = gdk_screen_get_system_colormap(gdk_screen_get_default());
+#endif
+
 	attributes.event_mask = gtk_widget_get_events (widget);
 	attributes.event_mask |= (GDK_EXPOSURE_MASK |
 				  GDK_BUTTON_PRESS_MASK |
@@ -215,7 +218,11 @@ sp_color_slider_realize (GtkWidget *widget)
 				  GDK_POINTER_MOTION_MASK |
 				  GDK_ENTER_NOTIFY_MASK |
 				  GDK_LEAVE_NOTIFY_MASK);
+#if GTK_CHECK_VERSION(3,0,0)
+	attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL;
+#else
 	attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+#endif
 
 	gtk_widget_set_window(widget, 
 			gdk_window_new(gtk_widget_get_parent_window(widget), 
@@ -265,19 +272,21 @@ sp_color_slider_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	}
 }
 
-static gint
-sp_color_slider_expose (GtkWidget *widget, GdkEventExpose *event)
+#if !GTK_CHECK_VERSION(3,0,0)
+static gboolean sp_color_slider_expose(GtkWidget *widget, GdkEventExpose * /*event*/)
 {
-	SPColorSlider *slider;
+	gboolean result = FALSE;
 
-	slider = SP_COLOR_SLIDER (widget);
-
-	if (gtk_widget_is_drawable (widget)) {
-		sp_color_slider_paint (slider, &event->area);
+	if (gtk_widget_is_drawable(widget)) {
+		GdkWindow *window = gtk_widget_get_window(widget);
+		cairo_t *cr = gdk_cairo_create(window);
+		result = sp_color_slider_draw(widget, cr);
+		cairo_destroy(cr);
 	}
 
-	return FALSE;
+	return result;
 }
+#endif
 
 static gint
 sp_color_slider_button_press (GtkWidget *widget, GdkEventButton *event)
@@ -478,191 +487,158 @@ sp_color_slider_adjustment_value_changed (GtkAdjustment *adjustment, SPColorSlid
 	}
 }
 
-static void
-sp_color_slider_paint (SPColorSlider *slider, GdkRectangle *area)
+static gboolean sp_color_slider_draw(GtkWidget *widget, cairo_t *cr)
 {
-	GtkWidget *widget;
-	GdkRectangle warea, carea, aarea;
-	GdkRectangle wpaint, cpaint, apaint;
-	const guchar *b;
-	gint w, x, y1, y2;
+	GdkWindow *window = gtk_widget_get_window(widget);
+	SPColorSlider *slider = SP_COLOR_SLIDER(widget);
+	
 	gboolean colorsOnTop = Inkscape::Preferences::get()->getBool("/options/workarounds/colorsontop", false);
-
-	widget = GTK_WIDGET (slider);
 	
 	GtkAllocation allocation;
 	gtk_widget_get_allocation(widget, &allocation);
+	
 	GtkStyle *style = gtk_widget_get_style(widget);
-	GdkWindow *window = gtk_widget_get_window(widget);
 
-	/* Widget area */
-	warea.x = 0;
-	warea.y = 0;
-	warea.width = allocation.width;
-	warea.height = allocation.height;
+        // Draw shadow
+        if (colorsOnTop) {
+#if GTK_CHECK_VERSION(3,0,0)
+            gtk_paint_shadow( style, cr,
+                              gtk_widget_get_state(widget), GTK_SHADOW_IN,
+                              widget, "colorslider",
+                              0, 0,
+                              allocation.width, allocation.height);
+#else
+            gtk_paint_shadow( style, window,
+                              gtk_widget_get_state(widget), GTK_SHADOW_IN,
+                              NULL, widget, "colorslider",
+                              0, 0,
+                              allocation.width, allocation.height);
+#endif
+        }
 
-	/* Color gradient area */
+	/* Paintable part of color gradient area */
+	GdkRectangle carea;
 	carea.x = style->xthickness;
 	carea.y = style->ythickness;
 	carea.width = allocation.width - 2 * carea.x;
 	carea.height = allocation.height - 2 * carea.y;
 
-	/* Arrow area */
-	aarea.x = (int)(slider->value * (carea.width - 1) - ARROW_SIZE / 2 + carea.x);
-	aarea.width = ARROW_SIZE;
-	aarea.y = carea.y;
-	aarea.height = carea.height;
+	if (slider->map) {
+		/* Render map pixelstore */
+		gint d = (1024 << 16) / carea.width;
+		gint s = 0;
 
-	/* Actual paintable area */
-	if (!gdk_rectangle_intersect (area, &warea, &wpaint)) {
-	  return;
-	}
+		const guchar *b = sp_color_slider_render_map(0, 0, carea.width, carea.height,
+                                                             slider->map, s, d,
+                                                             slider->b0, slider->b1, slider->bmask);
 
-	b = NULL;
+		if (b != NULL && carea.width > 0) {
+			GdkPixbuf *pb = gdk_pixbuf_new_from_data (b, GDK_COLORSPACE_RGB,
+					0, 8, carea.width, carea.height, carea.width * 3, NULL, NULL);
 
-        // Draw shadow
-        if (colorsOnTop) {
-            gtk_paint_shadow( style, window,
-                              gtk_widget_get_state(widget), GTK_SHADOW_IN,
-                              area, widget, "colorslider",
-                              0, 0,
-                              warea.width, warea.height);
-        }
+			gdk_cairo_set_source_pixbuf(cr, pb,  carea.x, carea.y);
+			cairo_paint(cr);
+			g_object_unref(pb);
+		}
 
-	/* Paintable part of color gradient area */
-	if (gdk_rectangle_intersect (area, &carea, &cpaint)) {
-		if (slider->map) {
-			gint s, d;
-			/* Render map pixelstore */
-			d = (1024 << 16) / carea.width;
-			s = (cpaint.x - carea.x) * d;
-			b = sp_color_slider_render_map (cpaint.x - carea.x, cpaint.y - carea.y, cpaint.width, cpaint.height,
-																			slider->map, s, d,
-																			slider->b0, slider->b1, slider->bmask);
-			if (b != NULL && cpaint.width > 0) {
+	} else {
+		gint c[4], dc[4];
 
-                    GdkPixbuf *pb = gdk_pixbuf_new_from_data (b, GDK_COLORSPACE_RGB,
-                            0, 8, cpaint.width, cpaint.height, cpaint.width * 3, NULL, NULL);
+		/* Render gradient */
 
-                    cairo_t *ct = gdk_cairo_create(window);
-                    gdk_cairo_set_source_pixbuf (ct, pb,  cpaint.x, cpaint.y);
-                    cairo_paint(ct);
-                    cairo_destroy(ct);
-
-                    g_object_unref(pb);
-
+		// part 1: from c0 to cm
+		if (carea.width > 0) {
+			for (gint i = 0; i < 4; i++) {
+				c[i] = slider->c0[i] << 16;
+				dc[i] = ((slider->cm[i] << 16) - c[i]) / (carea.width/2);
 			}
+			guint wi = carea.width/2;
+			const guchar *b = sp_color_slider_render_gradient(0, 0, wi, carea.height,
+                                                                          c, dc, slider->b0, slider->b1, slider->bmask);
 
-		} else {
-			gint c[4], dc[4];
-			gint i;
-			/* Render gradient */
+			/* Draw pixelstore 1 */
+			if (b != NULL && wi > 0) {
+				GdkPixbuf *pb = gdk_pixbuf_new_from_data (b, GDK_COLORSPACE_RGB,
+						0, 8, wi, carea.height, wi * 3, NULL, NULL);
 
-			// part 1: from c0 to cm
-			if ((cpaint.x - carea.x) <= carea.width/2) {
-				for (i = 0; i < 4; i++) {
-					c[i] = slider->c0[i] << 16;
-					dc[i] = ((slider->cm[i] << 16) - c[i]) / (carea.width/2);
-					c[i] += (cpaint.x - carea.x) * dc[i];
-				}
-				guint wi = MIN(cpaint.x - carea.x + cpaint.width, carea.width/2) - (cpaint.x - carea.x);
-				b = sp_color_slider_render_gradient (cpaint.x - carea.x, cpaint.y - carea.y, wi, cpaint.height,
-													 c, dc,
-													 slider->b0, slider->b1, slider->bmask);
-
-				/* Draw pixelstore 1 */
-				if (b != NULL && wi > 0) {
-
-                    GdkPixbuf *pb = gdk_pixbuf_new_from_data (b, GDK_COLORSPACE_RGB,
-                        0, 8, wi, cpaint.height, wi * 3, NULL, NULL);
-
-                    cairo_t *ct = gdk_cairo_create(window);
-                    gdk_cairo_set_source_pixbuf (ct, pb, cpaint.x, cpaint.y);
-                    cairo_paint(ct);
-                    cairo_destroy(ct);
-
-                    g_object_unref(pb);
-				}
+				gdk_cairo_set_source_pixbuf(cr, pb, carea.x, carea.y);
+				cairo_paint(cr);
+				g_object_unref(pb);
 			}
+		}
 
-			// part 2: from cm to c1
-			if ((cpaint.x - carea.x + cpaint.width) > carea.width/2) {
-				for (i = 0; i < 4; i++) {
-					c[i] = slider->cm[i] << 16;
-					dc[i] = ((slider->c1[i] << 16) - c[i]) / (carea.width/2);
-					if ((cpaint.x - carea.x) > carea.width/2)
-						c[i] += (cpaint.x - carea.x - carea.width/2) * dc[i];
-				}
-				guint wi = cpaint.width - MAX(0, (carea.width/2 - (cpaint.x - carea.x)));
-				b = sp_color_slider_render_gradient (MAX(cpaint.x - carea.x, carea.width/2), cpaint.y - carea.y, wi, cpaint.height,
-												 c, dc,
-												 slider->b0, slider->b1, slider->bmask);
+		// part 2: from cm to c1
+ 		if (carea.width > 0) {
+			for (gint i = 0; i < 4; i++) {
+				c[i] = slider->cm[i] << 16;
+				dc[i] = ((slider->c1[i] << 16) - c[i]) / (carea.width/2);
+			}
+			guint wi = carea.width/2;
+			const guchar *b = sp_color_slider_render_gradient(carea.width/2, 0, wi, carea.height,
+					                                  c, dc,
+                                                                          slider->b0, slider->b1, slider->bmask);
 
-				/* Draw pixelstore 2 */
-				if (b != NULL && wi > 0) {
+			/* Draw pixelstore 2 */
+			if (b != NULL && wi > 0) {
+				GdkPixbuf *pb = gdk_pixbuf_new_from_data (b, GDK_COLORSPACE_RGB,
+						0, 8, wi, carea.height, wi * 3, NULL, NULL);
 
-					GdkPixbuf *pb = gdk_pixbuf_new_from_data (b, GDK_COLORSPACE_RGB,
-				            0, 8, wi, cpaint.height, wi * 3, NULL, NULL);
+				gdk_cairo_set_source_pixbuf(cr, pb, carea.width/2 + carea.x, carea.y);
+				cairo_paint(cr);
 
-                    cairo_t *ct = gdk_cairo_create(window);
-                    gdk_cairo_set_source_pixbuf (ct, pb, MAX(cpaint.x, carea.width/2 + carea.x), cpaint.y);
-                    cairo_paint(ct);
-                    cairo_destroy(ct);
-
-                    g_object_unref(pb);
-				}
+				g_object_unref(pb);
 			}
 		}
 	}
 
-	    /* Draw shadow */
+        /* Draw shadow */
         if (!colorsOnTop) {
+#if GTK_CHECK_VERSION(3,0,0)
+            gtk_paint_shadow( style, cr,
+                              gtk_widget_get_state(widget), GTK_SHADOW_IN,
+                              widget, "colorslider",
+                              0, 0,
+                              allocation.width, allocation.height);
+#else
             gtk_paint_shadow( style, window,
                               gtk_widget_get_state(widget), GTK_SHADOW_IN,
-                              area, widget, "colorslider",
+                              NULL, widget, "colorslider",
                               0, 0,
-                              warea.width, warea.height);
+                              allocation.width, allocation.height);
+#endif
         }
 
+	/* Draw arrow */
+	gint x = (int)(slider->value * (carea.width - 1) - ARROW_SIZE / 2 + carea.x);
+	gint y1 = carea.y;
+	gint y2 = carea.y + carea.height - 1;
+	gint w = ARROW_SIZE;
+	cairo_set_line_width(cr, 1.0);
 
-	if (gdk_rectangle_intersect (area, &aarea, &apaint)) {
-		/* Draw arrow */
-		gdk_rectangle_intersect (&carea, &apaint, &apaint);
-		cairo_t* cr = gdk_cairo_create(window);
-		gdk_cairo_rectangle(cr, &apaint);
-		cairo_clip(cr);
-
-		x = aarea.x;
-		y1 = carea.y;
-		y2 = aarea.y + aarea.height - 1;
-		w = aarea.width;
-		cairo_set_line_width(cr, 1.0);
-
-		while ( w > 0 )
+	while ( w > 0 )
+	{
+		gdk_cairo_set_source_color(cr, &style->white);
+		cairo_move_to(cr, x - 0.5, y1 + 0.5);
+		cairo_line_to(cr, x + w - 1 + 0.5, y1 + 0.5);
+		cairo_move_to(cr, x - 0.5, y2 + 0.5);
+		cairo_line_to(cr, x + w - 1 + 0.5, y2 + 0.5);
+		cairo_stroke(cr);
+		w -=2;
+		x++;
+		if ( w > 0 )
 		{
-			gdk_cairo_set_source_color(cr, &style->white);
+			gdk_cairo_set_source_color(cr, &style->black);
 			cairo_move_to(cr, x - 0.5, y1 + 0.5);
 			cairo_line_to(cr, x + w - 1 + 0.5, y1 + 0.5);
 			cairo_move_to(cr, x - 0.5, y2 + 0.5);
 			cairo_line_to(cr, x + w - 1 + 0.5, y2 + 0.5);
 			cairo_stroke(cr);
-			w -=2;
-			x++;
-			if ( w > 0 )
-			{
-				gdk_cairo_set_source_color(cr, &style->black);
-				cairo_move_to(cr, x - 0.5, y1 + 0.5);
-				cairo_line_to(cr, x + w - 1 + 0.5, y1 + 0.5);
-				cairo_move_to(cr, x - 0.5, y2 + 0.5);
-				cairo_line_to(cr, x + w - 1 + 0.5, y2 + 0.5);
-				cairo_stroke(cr);
-			}
-			y1++;
-			y2--;
 		}
-
-		cairo_destroy(cr);
+		y1++;
+		y2--;
 	}
+
+	return FALSE;
 }
 
 /* Colors are << 16 */
