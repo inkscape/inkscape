@@ -1222,7 +1222,13 @@ void ClipboardManagerImpl::_setClipboardTargets()
 {
     Inkscape::Extension::DB::OutputList outlist;
     Inkscape::Extension::db.get_output_list(outlist);
+
+#if WITH_GTKMM_3_0
+    std::vector<Gtk::TargetEntry> target_list;
+#else
     std::list<Gtk::TargetEntry> target_list;
+#endif
+
     bool plaintextSet = false;
     for (Inkscape::Extension::DB::OutputList::const_iterator out = outlist.begin() ; out != outlist.end() ; ++out) {
         if ( !(*out)->deactivated() ) {
