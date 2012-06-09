@@ -56,7 +56,12 @@ enum {
 
 static void sp_gradient_vector_selector_class_init(SPGradientVectorSelectorClass *klass);
 static void sp_gradient_vector_selector_init(SPGradientVectorSelector *gvs);
+
+#if GTK_CHECK_VERSION(3,0,0)
+static void sp_gradient_vector_selector_destroy(GtkWidget *object);
+#else
 static void sp_gradient_vector_selector_destroy(GtkObject *object);
+#endif
 
 static void sp_gvs_gradient_release(SPObject *obj, SPGradientVectorSelector *gvs);
 static void sp_gvs_defs_release(SPObject *defs, SPGradientVectorSelector *gvs);
@@ -102,22 +107,25 @@ GType sp_gradient_vector_selector_get_type(void)
 
 static void sp_gradient_vector_selector_class_init(SPGradientVectorSelectorClass *klass)
 {
-    GtkObjectClass *object_class;
-
-    object_class = GTK_OBJECT_CLASS(klass);
-
+    GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     parent_class = static_cast<GtkVBoxClass*>(g_type_class_peek_parent(klass));
 
     signals[VECTOR_SET] = g_signal_new( "vector_set",
-                                G_TYPE_FROM_CLASS(object_class),
-                    G_SIGNAL_RUN_LAST,
+                                        G_TYPE_FROM_CLASS(gobject_class),
+                                        G_SIGNAL_RUN_LAST,
                                         G_STRUCT_OFFSET(SPGradientVectorSelectorClass, vector_set),
-                    NULL, NULL,
-                    g_cclosure_marshal_VOID__POINTER,
-                    G_TYPE_NONE, 1,
-                    G_TYPE_POINTER);
+                                        NULL, NULL,
+                                        g_cclosure_marshal_VOID__POINTER,
+                                        G_TYPE_NONE, 1,
+                                        G_TYPE_POINTER);
 
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
+    widget_class->destroy = sp_gradient_vector_selector_destroy;
+#else
+    GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
     object_class->destroy = sp_gradient_vector_selector_destroy;
+#endif
 }
 
 static void sp_gradient_vector_selector_init(SPGradientVectorSelector *gvs)
@@ -152,7 +160,11 @@ static void sp_gradient_vector_selector_init(SPGradientVectorSelector *gvs)
 
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
+static void sp_gradient_vector_selector_destroy(GtkWidget *object)
+#else
 static void sp_gradient_vector_selector_destroy(GtkObject *object)
+#endif
 {
     SPGradientVectorSelector *gvs = SP_GRADIENT_VECTOR_SELECTOR(object);
 
@@ -171,9 +183,15 @@ static void sp_gradient_vector_selector_destroy(GtkObject *object)
     gvs->defs_release_connection.~connection();
     gvs->defs_modified_connection.~connection();
 
+#if GTK_CHECK_VERSION(3,0,0)
+    if ((reinterpret_cast<GtkWidgetClass *>(parent_class))->destroy) {
+        (* (reinterpret_cast<GtkWidgetClass *>(parent_class))->destroy) (object);
+    }
+#else
     if ((reinterpret_cast<GtkObjectClass *>(parent_class))->destroy) {
         (* (reinterpret_cast<GtkObjectClass *>(parent_class))->destroy) (object);
     }
+#endif
 }
 
 GtkWidget *sp_gradient_vector_selector_new(SPDocument *doc, SPGradient *gr)
@@ -456,13 +474,19 @@ static GtkWidget *sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *st
 
 static void sp_gradient_vector_widget_load_gradient(GtkWidget *widget, SPGradient *gradient);
 static gint sp_gradient_vector_dialog_delete(GtkWidget *widget, GdkEvent *event, GtkWidget *dialog);
-static void sp_gradient_vector_dialog_destroy(GtkObject *object, gpointer data);
 
+#if GTK_CHECK_VERSION(3,0,0)
+static void sp_gradient_vector_dialog_destroy(GtkWidget *object, gpointer data);
+static void sp_gradient_vector_widget_destroy(GtkWidget *object, gpointer data);
+#else
+static void sp_gradient_vector_dialog_destroy(GtkObject *object, gpointer data);
 static void sp_gradient_vector_widget_destroy(GtkObject *object, gpointer data);
+#endif
+
 static void sp_gradient_vector_gradient_release(SPObject *obj, GtkWidget *widget);
 static void sp_gradient_vector_gradient_modified(SPObject *obj, guint flags, GtkWidget *widget);
-static void sp_gradient_vector_color_dragged(SPColorSelector *csel, GtkObject *object);
-static void sp_gradient_vector_color_changed(SPColorSelector *csel, GtkObject *object);
+static void sp_gradient_vector_color_dragged(SPColorSelector *csel, GObject *object);
+static void sp_gradient_vector_color_changed(SPColorSelector *csel, GObject *object);
 static void update_stop_list( GtkWidget *vb, SPGradient *gradient, SPStop *new_stop);
 
 static gboolean blocked = FALSE;
@@ -1107,7 +1131,11 @@ static void sp_gradient_vector_widget_load_gradient(GtkWidget *widget, SPGradien
     blocked = FALSE;
 }
 
-static void sp_gradient_vector_dialog_destroy(GtkObject */*object*/, gpointer /*data*/)
+#if GTK_CHECK_VERSION(3,0,0)
+static void sp_gradient_vector_dialog_destroy(GtkWidget * /*object*/, gpointer /*data*/)
+#else
+static void sp_gradient_vector_dialog_destroy(GtkObject * /*object*/, gpointer /*data*/)
+#endif
 {
     sp_signal_disconnect_by_data(INKSCAPE, dlg);
     wd.win = dlg = NULL;
@@ -1136,8 +1164,11 @@ static gboolean sp_gradient_vector_dialog_delete(GtkWidget */*widget*/, GdkEvent
 }
 
 /* Widget destroy handler */
-
+#if GTK_CHECK_VERSION(3,0,0)
+static void sp_gradient_vector_widget_destroy(GtkWidget *object, gpointer /*data*/)
+#else
 static void sp_gradient_vector_widget_destroy(GtkObject *object, gpointer /*data*/)
+#endif
 {
     SPObject *gradient = reinterpret_cast<SPObject*>(g_object_get_data(G_OBJECT(object), "gradient"));
 
@@ -1172,7 +1203,7 @@ static void sp_gradient_vector_gradient_modified(SPObject *object, guint /*flags
     }
 }
 
-static void sp_gradient_vector_color_dragged(SPColorSelector *csel, GtkObject *object)
+static void sp_gradient_vector_color_dragged(SPColorSelector *csel, GObject *object)
 {
     SPGradient *gradient, *ngr;
 
@@ -1206,7 +1237,7 @@ static void sp_gradient_vector_color_dragged(SPColorSelector *csel, GtkObject *o
     blocked = FALSE;
 }
 
-static void sp_gradient_vector_color_changed(SPColorSelector *csel, GtkObject *object)
+static void sp_gradient_vector_color_changed(SPColorSelector *csel, GObject *object)
 {
     if (blocked) {
         return;
