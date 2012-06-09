@@ -115,7 +115,7 @@ ControlPoint::~ControlPoint()
 
     g_signal_handler_disconnect(G_OBJECT(_canvas_item), _event_handler_connection);
     //sp_canvas_item_hide(_canvas_item);
-    gtk_object_destroy(_canvas_item);
+    sp_canvas_item_destroy(_canvas_item);
 }
 
 void ControlPoint::_commonInit()

@@ -32,7 +32,7 @@ enum {
 
 static void sp_canvas_arena_class_init(SPCanvasArenaClass *klass);
 static void sp_canvas_arena_init(SPCanvasArena *group);
-static void sp_canvas_arena_destroy(GtkObject *object);
+static void sp_canvas_arena_destroy(SPCanvasItem *object);
 
 static void sp_canvas_arena_item_deleted(SPCanvasArena *arena, Inkscape::DrawingItem *item);
 static void sp_canvas_arena_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
@@ -93,24 +93,19 @@ sp_canvas_arena_get_type (void)
 static void
 sp_canvas_arena_class_init (SPCanvasArenaClass *klass)
 {
-    GtkObjectClass *object_class;
-    SPCanvasItemClass *item_class;
-
-    object_class = (GtkObjectClass *) klass;
-    item_class = (SPCanvasItemClass *) klass;
+    SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
 
     parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
     signals[ARENA_EVENT] = g_signal_new ("arena_event",
-                                           G_TYPE_FROM_CLASS(object_class),
+                                           G_TYPE_FROM_CLASS(item_class),
                                            G_SIGNAL_RUN_LAST,
                                            ((glong)((guint8*)&(klass->arena_event) - (guint8*)klass)),
 					   NULL, NULL,
                                            sp_marshal_INT__POINTER_POINTER,
                                            G_TYPE_INT, 2, G_TYPE_POINTER, G_TYPE_POINTER);
 
-    object_class->destroy = sp_canvas_arena_destroy;
-
+    item_class->destroy = sp_canvas_arena_destroy;
     item_class->update = sp_canvas_arena_update;
     item_class->render = sp_canvas_arena_render;
     item_class->point = sp_canvas_arena_point;
@@ -147,16 +142,15 @@ sp_canvas_arena_init (SPCanvasArena *arena)
     arena->active = NULL;
 }
 
-static void
-sp_canvas_arena_destroy (GtkObject *object)
+static void sp_canvas_arena_destroy(SPCanvasItem *object)
 {
-    SPCanvasArena *arena = SP_CANVAS_ARENA (object);
+    SPCanvasArena *arena = SP_CANVAS_ARENA(object);
 
     delete arena->observer;
     arena->drawing.~Drawing();
 
-    if (GTK_OBJECT_CLASS (parent_class)->destroy)
-        (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS(parent_class)->destroy)
+        (* SP_CANVAS_ITEM_CLASS(parent_class)->destroy) (object);
 }
 
 static void

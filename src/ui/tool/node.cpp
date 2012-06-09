@@ -120,7 +120,7 @@ Handle::Handle(NodeSharedData const &data, Geom::Point const &initial_pos, Node 
 Handle::~Handle()
 {
     //sp_canvas_item_hide(_handle_line);
-    gtk_object_destroy(_handle_line);
+    sp_canvas_item_destroy(_handle_line);
 }
 
 void Handle::setVisible(bool v)

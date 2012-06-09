@@ -143,7 +143,7 @@ static void sp_dropper_context_finish(SPEventContext *ec)
     }
 
     if (dc->area) {
-        gtk_object_destroy(GTK_OBJECT(dc->area));
+        sp_canvas_item_destroy(dc->area);
         dc->area = NULL;
     }
 }

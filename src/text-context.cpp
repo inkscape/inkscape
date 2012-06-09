@@ -302,24 +302,24 @@ static void sp_text_context_finish(SPEventContext *ec)
     }
 
     if (tc->cursor) {
-        gtk_object_destroy(tc->cursor);
+        sp_canvas_item_destroy(tc->cursor);
         tc->cursor = NULL;
     }
 
     if (tc->indicator) {
-        gtk_object_destroy(GTK_OBJECT(tc->indicator));
+        sp_canvas_item_destroy(tc->indicator);
         tc->indicator = NULL;
     }
 
     if (tc->frame) {
-        gtk_object_destroy(GTK_OBJECT(tc->frame));
+        sp_canvas_item_destroy(tc->frame);
         tc->frame = NULL;
     }
 
     for (std::vector<SPCanvasItem*>::iterator it = tc->text_selection_quads.begin() ;
          it != tc->text_selection_quads.end() ; ++it) {
         sp_canvas_item_hide(*it);
-        gtk_object_destroy(*it);
+        sp_canvas_item_destroy(*it);
     }
     tc->text_selection_quads.clear();
 }
@@ -1674,7 +1674,7 @@ static void sp_text_context_update_text_selection(SPTextContext *tc)
 
     for (std::vector<SPCanvasItem*>::iterator it = tc->text_selection_quads.begin() ; it != tc->text_selection_quads.end() ; it++) {
         sp_canvas_item_hide(*it);
-        gtk_object_destroy(*it);
+        sp_canvas_item_destroy(*it);
     }
     tc->text_selection_quads.clear();
 

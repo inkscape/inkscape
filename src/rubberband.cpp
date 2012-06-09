@@ -32,14 +32,14 @@ Inkscape::Rubberband::Rubberband(SPDesktop *dt)
 void Inkscape::Rubberband::delete_canvas_items()
 {
     if (_rect) {
-        GtkObject *temp = _rect;
+        SPCanvasItem *temp = _rect;
         _rect = NULL;
-        gtk_object_destroy(temp);
+        sp_canvas_item_destroy(temp);
     }
     if (_touchpath) {
-        GtkObject *temp = _touchpath;
+        SPCanvasItem *temp = _touchpath;
         _touchpath = NULL;
-        gtk_object_destroy(temp);
+        sp_canvas_item_destroy(temp);
     }
 }
 

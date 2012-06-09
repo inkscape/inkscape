@@ -537,7 +537,7 @@ void spdc_concat_colors_and_flush(SPDrawContext *dc, gboolean forceclosed)
     // Green
     dc->green_curve = new SPCurve();
     while (dc->green_bpaths) {
-        gtk_object_destroy(GTK_OBJECT(dc->green_bpaths->data));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(dc->green_bpaths->data));
         dc->green_bpaths = g_slist_remove(dc->green_bpaths, dc->green_bpaths->data);
     }
 
@@ -732,7 +732,7 @@ static void spdc_free_colors(SPDrawContext *dc)
 {
     // Red
     if (dc->red_bpath) {
-        gtk_object_destroy(GTK_OBJECT(dc->red_bpath));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(dc->red_bpath));
         dc->red_bpath = NULL;
     }
     if (dc->red_curve) {
@@ -741,7 +741,7 @@ static void spdc_free_colors(SPDrawContext *dc)
 
     // Blue
     if (dc->blue_bpath) {
-        gtk_object_destroy(GTK_OBJECT(dc->blue_bpath));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(dc->blue_bpath));
         dc->blue_bpath = NULL;
     }
     if (dc->blue_curve) {
@@ -750,7 +750,7 @@ static void spdc_free_colors(SPDrawContext *dc)
 
     // Green
     while (dc->green_bpaths) {
-        gtk_object_destroy(GTK_OBJECT(dc->green_bpaths->data));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(dc->green_bpaths->data));
         dc->green_bpaths = g_slist_remove(dc->green_bpaths, dc->green_bpaths->data);
     }
     if (dc->green_curve) {

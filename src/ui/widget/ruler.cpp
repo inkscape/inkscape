@@ -177,7 +177,7 @@ Ruler::on_button_release_event(GdkEventButton *evb)
         Gdk::Window::pointer_ungrab(evb->time);
 #endif
 
-        gtk_object_destroy(GTK_OBJECT(_guide));
+        sp_canvas_item_destroy(_guide);
         _guide = 0;
         _dragging = false;
 

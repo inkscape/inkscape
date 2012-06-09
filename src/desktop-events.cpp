@@ -200,7 +200,7 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                     sp_dt_ruler_snap_new_guide(desktop, guide, event_dt, normal);
                 }
 
-                gtk_object_destroy(GTK_OBJECT(guide));
+                sp_canvas_item_destroy(guide);
                 guide = NULL;
                 if ((horiz ? wy : wx) >= 0) {
                     Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();

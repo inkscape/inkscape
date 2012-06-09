@@ -196,16 +196,16 @@ Inkscape::SelTrans::~SelTrans()
     }
 
     if (_norm) {
-        gtk_object_destroy(GTK_OBJECT(_norm));
+        sp_canvas_item_destroy(_norm);
         _norm = NULL;
     }
     if (_grip) {
-        gtk_object_destroy(GTK_OBJECT(_grip));
+        sp_canvas_item_destroy(_grip);
         _grip = NULL;
     }
     for (int i = 0; i < 4; i++) {
         if (_l[i]) {
-            gtk_object_destroy(_l[i]);
+            sp_canvas_item_destroy(_l[i]);
             _l[i] = NULL;
         }
     }

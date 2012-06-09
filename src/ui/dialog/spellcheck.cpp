@@ -220,7 +220,7 @@ void SpellCheck::clearRects()
 {
     for (GSList *it = _rects; it; it = it->next) {
         sp_canvas_item_hide((SPCanvasItem*) it->data);
-        gtk_object_destroy((SPCanvasItem*) it->data);
+        sp_canvas_item_destroy((SPCanvasItem*) it->data);
     }
     g_slist_free(_rects);
     _rects = NULL;
@@ -729,7 +729,7 @@ SpellCheck::deleteLastRect ()
 {
     if (_rects) {
         sp_canvas_item_hide(SP_CANVAS_ITEM(_rects->data));
-        gtk_object_destroy(GTK_OBJECT(_rects->data));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(_rects->data));
         _rects = _rects->next; // pop latest-prepended rect
     }
 }

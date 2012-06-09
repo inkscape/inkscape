@@ -523,7 +523,7 @@ VPDrag::~VPDrag()
     this->draggers = NULL;
 
     for (GSList const *i = this->lines; i != NULL; i = i->next) {
-        gtk_object_destroy( GTK_OBJECT (i->data));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(i->data));
     }
     g_slist_free (this->lines);
     this->lines = NULL;
@@ -597,7 +597,7 @@ VPDrag::updateLines ()
 {
     // delete old lines
     for (GSList const *i = this->lines; i != NULL; i = i->next) {
-        gtk_object_destroy( GTK_OBJECT (i->data));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(i->data));
     }
     g_slist_free (this->lines);
     this->lines = NULL;

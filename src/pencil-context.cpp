@@ -553,7 +553,7 @@ pencil_cancel (SPPencilContext *const pc)
     pc->red_curve->reset();
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->red_bpath), NULL);
     while (pc->green_bpaths) {
-        gtk_object_destroy(GTK_OBJECT(pc->green_bpaths->data));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(pc->green_bpaths->data));
         pc->green_bpaths = g_slist_remove(pc->green_bpaths, pc->green_bpaths->data);
     }
     pc->green_curve->reset();

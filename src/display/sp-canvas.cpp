@@ -90,7 +90,7 @@ struct SPCanvasGroup {
      * Callback that destroys all items in group and calls group's virtual
      * destroy() function.
      */
-    static void destroy(GtkObject *object);
+    static void destroy(SPCanvasItem *object);
 
     /**
      * Update handler for canvas groups.
@@ -159,6 +159,14 @@ enum {
 
 void trackLatency(GdkEvent const *event);
 
+enum {
+  DESTROY,
+  LAST_SIGNAL
+};
+
+void sp_canvas_item_base_class_init(SPCanvasItemClass *klass);
+void sp_canvas_item_base_class_finalize(SPCanvasItemClass *klass);
+
 /**
  * Initializes the SPCanvasItem vtable and the "event" signal.
  */
@@ -167,12 +175,17 @@ void sp_canvas_item_class_init(SPCanvasItemClass *klass);
 /**
  * Callback for initialization of SPCanvasItem.
  */
-void sp_canvas_item_init(SPCanvasItem *item);
+void sp_canvas_item_init(SPCanvasItem *item, SPCanvasItemClass *klass);
 
 /**
  * Callback that removes item from all referers and destroys it.
  */
-void sp_canvas_item_dispose(GObject *object);
+void sp_canvas_item_dispose(GObject           *object);
+void sp_canvas_item_finalize(GObject          *object);
+void sp_canvas_item_real_destroy(SPCanvasItem *object);
+
+static gpointer    parent_class = NULL;
+static guint       object_signals[LAST_SIGNAL] = { 0 };
 
 /**
  * Sets up the newly created SPCanvasItem.
@@ -228,7 +241,7 @@ public:
     /**
      * Destroy handler for SPCanvas.
      */
-    static void destroy(GtkObject *object);
+    static void dispose(GObject *object);
 
     /**
      * The canvas widget's realize callback.
@@ -370,29 +383,43 @@ GtkWidgetClass *SPCanvasImpl::parentClass = 0;
 
 GType SPCanvasItem::getType()
 {
-    static GType type = 0;
-    if (!type) {
-        static GTypeInfo const info = {
+    static GType object_type = 0;
+
+    if (!object_type) {
+        static GTypeInfo const object_info = {
             sizeof(SPCanvasItemClass),
-            NULL, NULL,
+	    reinterpret_cast<GBaseInitFunc>(sp_canvas_item_base_class_init),
+	    reinterpret_cast<GBaseFinalizeFunc>(sp_canvas_item_base_class_finalize),
             reinterpret_cast<GClassInitFunc>(sp_canvas_item_class_init),
-            NULL, NULL,
+            NULL, // class_finalize
+	    NULL, // class_data
             sizeof(SPCanvasItem),
-            0,
+            16, // n_preallocs
             reinterpret_cast<GInstanceInitFunc>(sp_canvas_item_init),
-            NULL
+            NULL // value_table
         };
-        type = g_type_register_static(GTK_TYPE_OBJECT, "SPCanvasItem", &info, GTypeFlags(0));
+
+        object_type = g_type_register_static(G_TYPE_INITIALLY_UNOWNED, 
+                                             "SPCanvasItem", &object_info, GTypeFlags(0));
     }
 
-    return type;
+    return object_type;
 }
 
 namespace {
 
+void sp_canvas_item_base_class_init(SPCanvasItemClass *klass)
+{
+}
+
+void sp_canvas_item_base_class_finalize(SPCanvasItemClass *klass)
+{
+}
+
 void sp_canvas_item_class_init(SPCanvasItemClass *klass)
 {
-    GObjectClass *object_class = (GObjectClass *) klass;
+    GObjectClass *gobject_class = (GObjectClass *) klass;
+    parent_class = g_type_class_ref (G_TYPE_OBJECT);
 
     item_signals[ITEM_EVENT] = g_signal_new ("event",
                                              G_TYPE_FROM_CLASS (klass),
@@ -403,10 +430,21 @@ void sp_canvas_item_class_init(SPCanvasItemClass *klass)
                                              G_TYPE_BOOLEAN, 1,
                                              GDK_TYPE_EVENT);
 
-    object_class->dispose = sp_canvas_item_dispose;
+    gobject_class->dispose = sp_canvas_item_dispose;
+    gobject_class->finalize = sp_canvas_item_finalize;
+    klass->destroy = sp_canvas_item_real_destroy;
+  
+    object_signals[DESTROY] =
+      g_signal_new ("destroy",
+                    G_TYPE_FROM_CLASS (gobject_class),
+                    (GSignalFlags)(G_SIGNAL_RUN_CLEANUP | G_SIGNAL_NO_RECURSE | G_SIGNAL_NO_HOOKS),
+		    G_STRUCT_OFFSET (SPCanvasItemClass, destroy),
+		    NULL, NULL,
+		    g_cclosure_marshal_VOID__VOID,
+		    G_TYPE_NONE, 0);
 }
 
-void sp_canvas_item_init(SPCanvasItem *item)
+void sp_canvas_item_init(SPCanvasItem *item, SPCanvasItemClass *klass)
 {
     item->xform = Geom::Affine(Geom::identity());
     item->ctrlType = Inkscape::CTRL_TYPE_UNKNOWN;
@@ -416,6 +454,7 @@ void sp_canvas_item_init(SPCanvasItem *item)
     // that should be initially invisible; examples of such items: node handles, the CtrlRect
     // used for rubberbanding, path outline, etc.
     item->visible = TRUE;
+    item->in_destruction = false;
 }
 
 } // namespace
@@ -473,49 +512,86 @@ static void redraw_if_visible(SPCanvasItem *item)
     }
 }
 
-namespace {
+void sp_canvas_item_destroy(SPCanvasItem *item)
+{
+  g_return_if_fail(SP_IS_CANVAS_ITEM(item));
+  
+  if (!item->in_destruction)
+    g_object_run_dispose(G_OBJECT(item));
+}
 
+namespace {
 void sp_canvas_item_dispose(GObject *object)
 {
     SPCanvasItem *item = SP_CANVAS_ITEM (object);
 
-    // Hack: if this is a ctrlrect, move it to 0,0;
-    // this redraws only the stroke of the rect to be deleted,
-    // avoiding redraw of the entire area
-    if (SP_IS_CTRLRECT(item)) {
-        SP_CTRLRECT(object)->setRectangle(Geom::Rect(Geom::Point(0,0),Geom::Point(0,0)));
-        SP_CTRLRECT(object)->update(item->xform, 0);
-    } else {
-        redraw_if_visible (item);
-    }
-    item->visible = FALSE;
+    /* guard against reinvocations during
+     * destruction with the in_destruction flag.
+     */
+    if (!item->in_destruction)
+    {
+      item->in_destruction=true;
 
-    if (item == item->canvas->current_item) {
-        item->canvas->current_item = NULL;
-        item->canvas->need_repick = TRUE;
+      // Hack: if this is a ctrlrect, move it to 0,0;
+      // this redraws only the stroke of the rect to be deleted,
+      // avoiding redraw of the entire area
+      if (SP_IS_CTRLRECT(item)) {
+          SP_CTRLRECT(object)->setRectangle(Geom::Rect(Geom::Point(0,0),Geom::Point(0,0)));
+          SP_CTRLRECT(object)->update(item->xform, 0);
+      } else {
+          redraw_if_visible (item);
+      }
+      item->visible = FALSE;
+  
+      if (item == item->canvas->current_item) {
+          item->canvas->current_item = NULL;
+          item->canvas->need_repick = TRUE;
+      }
+  
+      if (item == item->canvas->new_current_item) {
+          item->canvas->new_current_item = NULL;
+          item->canvas->need_repick = TRUE;
+      }
+
+      if (item == item->canvas->grabbed_item) {
+          item->canvas->grabbed_item = NULL;
+          gdk_pointer_ungrab (GDK_CURRENT_TIME);
+      }
+
+      if (item == item->canvas->focused_item) {
+          item->canvas->focused_item = NULL;
+      }
+ 
+      if (item->parent) {
+          SP_CANVAS_GROUP(item->parent)->remove(item);
+      }
+      
+      g_signal_emit (object, object_signals[DESTROY], 0);
+      item->in_destruction = false;
     }
 
-    if (item == item->canvas->new_current_item) {
-        item->canvas->new_current_item = NULL;
-        item->canvas->need_repick = TRUE;
-    }
-
-    if (item == item->canvas->grabbed_item) {
-        item->canvas->grabbed_item = NULL;
-        gdk_pointer_ungrab (GDK_CURRENT_TIME);
-    }
-
-    if (item == item->canvas->focused_item) {
-        item->canvas->focused_item = NULL;
-    }
-
-    if (item->parent) {
-        SP_CANVAS_GROUP(item->parent)->remove(item);
-    }
-
-    G_OBJECT_CLASS(g_type_class_peek(g_type_parent(SPCanvasItem::getType())))->dispose(object);
+    G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
+void sp_canvas_item_real_destroy(SPCanvasItem *object)
+{
+  g_signal_handlers_destroy(object);
+}
+	
+void sp_canvas_item_finalize(GObject *gobject)
+{
+  SPCanvasItem *object = SP_CANVAS_ITEM(gobject);
+
+  if (g_object_is_floating (object))
+    {
+      g_warning ("A floating object was finalized. This means that someone\n"
+		 "called g_object_unref() on an object that had only a floating\n"
+		 "reference; the initial floating reference is not owned by anyone\n"
+		 "and must be removed with g_object_ref_sink().");
+    }
+  
+  G_OBJECT_CLASS (parent_class)->finalize (gobject);
+}
 } // namespace
 
 /**
@@ -931,13 +1007,11 @@ GType SPCanvasGroup::getType(void)
 
 void SPCanvasGroup::classInit(SPCanvasGroupClass *klass)
 {
-    GtkObjectClass *object_class = reinterpret_cast<GtkObjectClass *>(klass);
     SPCanvasItemClass *item_class = reinterpret_cast<SPCanvasItemClass *>(klass);
 
     parentClass = reinterpret_cast<SPCanvasItemClass*>(g_type_class_peek_parent(klass));
 
-    object_class->destroy = SPCanvasGroup::destroy;
-
+    item_class->destroy = SPCanvasGroup::destroy;
     item_class->update = SPCanvasGroup::update;
     item_class->render = SPCanvasGroup::render;
     item_class->point = SPCanvasGroup::point;
@@ -949,7 +1023,7 @@ void SPCanvasGroup::init(SPCanvasGroup * /*group*/)
     // Nothing here
 }
 
-void SPCanvasGroup::destroy(GtkObject *object)
+void SPCanvasGroup::destroy(SPCanvasItem *object)
 {
     g_return_if_fail(object != NULL);
     g_return_if_fail(SP_IS_CANVAS_GROUP(object));
@@ -961,11 +1035,11 @@ void SPCanvasGroup::destroy(GtkObject *object)
         SPCanvasItem *child = reinterpret_cast<SPCanvasItem *>(list->data);
         list = list->next;
 
-        gtk_object_destroy(GTK_OBJECT(child));
+        sp_canvas_item_destroy(child);
     }
 
-    if (GTK_OBJECT_CLASS(parentClass)->destroy) {
-        (* GTK_OBJECT_CLASS(parentClass)->destroy)(object);
+    if (SP_CANVAS_ITEM_CLASS(parentClass)->destroy) {
+        (* SP_CANVAS_ITEM_CLASS(parentClass)->destroy)(object);
     }
 }
 
@@ -1141,12 +1215,12 @@ GType SPCanvas::getType(void)
 
 void SPCanvasImpl::classInit(SPCanvasClass *klass)
 {
-    GtkObjectClass *object_class = (GtkObjectClass *) klass;
+    GObjectClass *object_class = (GObjectClass *) klass;
     GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
 
     parentClass = reinterpret_cast<GtkWidgetClass *>(g_type_class_peek_parent(klass));
 
-    object_class->destroy = SPCanvasImpl::destroy;
+    object_class->dispose = SPCanvasImpl::dispose;
 
     widget_class->realize = SPCanvasImpl::realize;
     widget_class->unrealize = SPCanvasImpl::unrealize;
@@ -1235,7 +1309,7 @@ void SPCanvasImpl::shutdown_transients(SPCanvas *canvas)
     remove_idle(canvas);
 }
 
-void SPCanvasImpl::destroy(GtkObject *object)
+void SPCanvasImpl::dispose(GObject *object)
 {
     SPCanvas *canvas = SP_CANVAS(object);
 
@@ -1248,8 +1322,8 @@ void SPCanvasImpl::destroy(GtkObject *object)
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     canvas->cms_key.~ustring();
 #endif
-    if (GTK_OBJECT_CLASS(parentClass)->destroy) {
-        (* GTK_OBJECT_CLASS(parentClass)->destroy)(object);
+    if (G_OBJECT_CLASS(parentClass)->dispose) {
+        (* G_OBJECT_CLASS(parentClass)->dispose)(object);
     }
 }
 

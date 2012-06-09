@@ -169,19 +169,19 @@ static void sp_pen_context_dispose(GObject *object)
     SPPenContext *pc = SP_PEN_CONTEXT(object);
 
     if (pc->c0) {
-        gtk_object_destroy(GTK_OBJECT(pc->c0));
+        sp_canvas_item_destroy(pc->c0);
         pc->c0 = NULL;
     }
     if (pc->c1) {
-        gtk_object_destroy(GTK_OBJECT(pc->c1));
+        sp_canvas_item_destroy(pc->c1);
         pc->c1 = NULL;
     }
     if (pc->cl0) {
-        gtk_object_destroy(GTK_OBJECT(pc->cl0));
+        sp_canvas_item_destroy(pc->cl0);
         pc->cl0 = NULL;
     }
     if (pc->cl1) {
-        gtk_object_destroy(GTK_OBJECT(pc->cl1));
+        sp_canvas_item_destroy(pc->cl1);
         pc->cl1 = NULL;
     }
 
@@ -871,7 +871,7 @@ void pen_redraw_all (SPPenContext *const pc)
     if (pc->green_bpaths) {
         // remove old piecewise green canvasitems
         while (pc->green_bpaths) {
-            gtk_object_destroy(GTK_OBJECT(pc->green_bpaths->data));
+            sp_canvas_item_destroy(SP_CANVAS_ITEM(pc->green_bpaths->data));
             pc->green_bpaths = g_slist_remove(pc->green_bpaths, pc->green_bpaths->data);
         }
         // one canvas bpath for all of green_curve
@@ -1135,7 +1135,7 @@ static gint pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
                 // Destroy topmost green bpath
                 if (pc->green_bpaths) {
                     if (pc->green_bpaths->data)
-                        gtk_object_destroy(GTK_OBJECT(pc->green_bpaths->data));
+                        sp_canvas_item_destroy(SP_CANVAS_ITEM(pc->green_bpaths->data));
                     pc->green_bpaths = g_slist_remove(pc->green_bpaths, pc->green_bpaths->data);
                 }
                 // Get last segment
@@ -1182,7 +1182,7 @@ static void spdc_reset_colors(SPPenContext *pc)
     sp_canvas_bpath_set_bpath(SP_CANVAS_BPATH(pc->blue_bpath), NULL);
     // Green
     while (pc->green_bpaths) {
-        gtk_object_destroy(GTK_OBJECT(pc->green_bpaths->data));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(pc->green_bpaths->data));
         pc->green_bpaths = g_slist_remove(pc->green_bpaths, pc->green_bpaths->data);
     }
     pc->green_curve->reset();

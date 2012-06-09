@@ -181,7 +181,7 @@ sp_dyna_draw_context_dispose(GObject *object)
     SPDynaDrawContext *ddc = SP_DYNA_DRAW_CONTEXT(object);
 
     if (ddc->hatch_area) {
-        gtk_object_destroy(GTK_OBJECT(ddc->hatch_area));
+        sp_canvas_item_destroy(ddc->hatch_area);
         ddc->hatch_area = NULL;
     }
 
@@ -519,7 +519,7 @@ calligraphic_cancel(SPDynaDrawContext *dc)
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
             /* Remove all temporary line segments */
             while (dc->segments) {
-                gtk_object_destroy(GTK_OBJECT(dc->segments->data));
+                sp_canvas_item_destroy(SP_CANVAS_ITEM(dc->segments->data));
                 dc->segments = g_slist_remove(dc->segments, dc->segments->data);
             }
             /* reset accumulated curve */
@@ -836,7 +836,7 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
 
             /* Remove all temporary line segments */
             while (dc->segments) {
-                gtk_object_destroy(GTK_OBJECT(dc->segments->data));
+                sp_canvas_item_destroy(SP_CANVAS_ITEM(dc->segments->data));
                 dc->segments = g_slist_remove(dc->segments, dc->segments->data);
             }
 

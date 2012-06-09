@@ -65,7 +65,7 @@ SPDrawAnchor *sp_draw_anchor_destroy(SPDrawAnchor *anchor)
         anchor->curve->unref();
     }
     if (anchor->ctrl) {
-        gtk_object_destroy(GTK_OBJECT(anchor->ctrl));
+        sp_canvas_item_destroy(anchor->ctrl);
     }
     g_free(anchor);
     return NULL;

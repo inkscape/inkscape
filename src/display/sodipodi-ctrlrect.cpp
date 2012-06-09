@@ -28,7 +28,7 @@
 
 static void sp_ctrlrect_class_init(SPCtrlRectClass *c);
 static void sp_ctrlrect_init(CtrlRect *ctrlrect);
-static void sp_ctrlrect_destroy(GtkObject *object);
+static void sp_ctrlrect_destroy(SPCanvasItem *object);
 
 static void sp_ctrlrect_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_ctrlrect_render(SPCanvasItem *item, SPCanvasBuf *buf);
@@ -61,13 +61,11 @@ GType sp_ctrlrect_get_type()
 
 static void sp_ctrlrect_class_init(SPCtrlRectClass *c)
 {
-    GtkObjectClass *object_class = (GtkObjectClass *) c;
     SPCanvasItemClass *item_class = (SPCanvasItemClass *) c;
 
     parent_class = (SPCanvasItemClass*) g_type_class_peek_parent(c);
 
-    object_class->destroy = sp_ctrlrect_destroy;
-
+    item_class->destroy = sp_ctrlrect_destroy;
     item_class->update = sp_ctrlrect_update;
     item_class->render = sp_ctrlrect_render;
 }
@@ -77,10 +75,10 @@ static void sp_ctrlrect_init(CtrlRect *cr)
     cr->init();
 }
 
-static void sp_ctrlrect_destroy(GtkObject *object)
+static void sp_ctrlrect_destroy(SPCanvasItem *object)
 {
-    if (GTK_OBJECT_CLASS(parent_class)->destroy) {
-        (* GTK_OBJECT_CLASS(parent_class)->destroy)(object);
+    if (SP_CANVAS_ITEM_CLASS(parent_class)->destroy) {
+        (* SP_CANVAS_ITEM_CLASS(parent_class)->destroy)(object);
     }
 }
 

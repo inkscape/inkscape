@@ -31,7 +31,7 @@ struct SPCtrlQuadrClass : public SPCanvasItemClass{};
 
 static void sp_ctrlquadr_class_init (SPCtrlQuadrClass *klass);
 static void sp_ctrlquadr_init (SPCtrlQuadr *ctrlquadr);
-static void sp_ctrlquadr_destroy (GtkObject *object);
+static void sp_ctrlquadr_destroy(SPCanvasItem *object);
 
 static void sp_ctrlquadr_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_ctrlquadr_render (SPCanvasItem *item, SPCanvasBuf *buf);
@@ -61,13 +61,11 @@ sp_ctrlquadr_get_type (void)
 static void
 sp_ctrlquadr_class_init (SPCtrlQuadrClass *klass)
 {
-    GtkObjectClass *object_class = (GtkObjectClass *) klass;
     SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
 
     parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
-    object_class->destroy = sp_ctrlquadr_destroy;
-
+    item_class->destroy = sp_ctrlquadr_destroy;
     item_class->update = sp_ctrlquadr_update;
     item_class->render = sp_ctrlquadr_render;
 }
@@ -82,14 +80,13 @@ sp_ctrlquadr_init (SPCtrlQuadr *ctrlquadr)
     ctrlquadr->p4 = Geom::Point(0, 0);
 }
 
-static void
-sp_ctrlquadr_destroy (GtkObject *object)
+static void sp_ctrlquadr_destroy(SPCanvasItem *object)
 {
     g_return_if_fail (object != NULL);
     g_return_if_fail (SP_IS_CTRLQUADR (object));
 
-    if (GTK_OBJECT_CLASS (parent_class)->destroy)
-        (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS(parent_class)->destroy)
+        (* SP_CANVAS_ITEM_CLASS(parent_class)->destroy) (object);
 }
 
 static void

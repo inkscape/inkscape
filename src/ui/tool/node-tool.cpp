@@ -158,7 +158,7 @@ SPCanvasGroup *create_control_group(SPDesktop *d)
 
 void destroy_group(SPCanvasGroup *g)
 {
-    gtk_object_destroy(GTK_OBJECT(g));
+    sp_canvas_item_destroy(SP_CANVAS_ITEM(g));
 }
 
 void ink_node_tool_class_init(InkNodeToolClass *klass)

@@ -47,7 +47,7 @@ public:
     }
 
     ~SelectorPoint() {
-        gtk_object_destroy(_rubber);
+        sp_canvas_item_destroy(_rubber);
     }
 
     SPDesktop *desktop() { return _desktop; }

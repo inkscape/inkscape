@@ -462,7 +462,7 @@ eraser_cancel(SPEraserContext *dc)
     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), 0);
             /* Remove all temporary line segments */
             while (dc->segments) {
-                gtk_object_destroy(GTK_OBJECT(dc->segments->data));
+                sp_canvas_item_destroy(SP_CANVAS_ITEM(dc->segments->data));
                 dc->segments = g_slist_remove(dc->segments, dc->segments->data);
             }
             /* reset accumulated curve */
@@ -569,7 +569,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
 
             /* Remove all temporary line segments */
             while (dc->segments) {
-                gtk_object_destroy(GTK_OBJECT(dc->segments->data));
+                sp_canvas_item_destroy(SP_CANVAS_ITEM(dc->segments->data));
                 dc->segments = g_slist_remove(dc->segments, dc->segments->data);
             }
 

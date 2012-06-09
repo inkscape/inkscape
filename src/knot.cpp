@@ -239,7 +239,7 @@ static void sp_knot_dispose(GObject *object)
         }
 
     if (knot->item) {
-        gtk_object_destroy (GTK_OBJECT (knot->item));
+        sp_canvas_item_destroy(knot->item);
         knot->item = NULL;
     }
 

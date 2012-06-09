@@ -28,7 +28,7 @@
 
 static void sp_canvastext_class_init (SPCanvasTextClass *klass);
 static void sp_canvastext_init (SPCanvasText *canvastext);
-static void sp_canvastext_destroy (GtkObject *object);
+static void sp_canvastext_destroy(SPCanvasItem *object);
 
 static void sp_canvastext_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_canvastext_render (SPCanvasItem *item, SPCanvasBuf *buf);
@@ -56,16 +56,13 @@ sp_canvastext_get_type (void)
     return type;
 }
 
-static void
-sp_canvastext_class_init (SPCanvasTextClass *klass)
+static void sp_canvastext_class_init(SPCanvasTextClass *klass)
 {
-    GtkObjectClass *object_class = (GtkObjectClass *) klass;
     SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
 
     parent_class_ct = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
-    object_class->destroy = sp_canvastext_destroy;
-
+    item_class->destroy = sp_canvastext_destroy;
     item_class->update = sp_canvastext_update;
     item_class->render = sp_canvastext_render;
 }
@@ -93,8 +90,7 @@ sp_canvastext_init (SPCanvasText *canvastext)
     canvastext->border = 3; // must be a constant, and not proportional to any width, height, or fontsize to allow alignment with other text boxes
 }
 
-static void
-sp_canvastext_destroy (GtkObject *object)
+static void sp_canvastext_destroy(SPCanvasItem *object)
 {
     g_return_if_fail (object != NULL);
     g_return_if_fail (SP_IS_CANVASTEXT (object));
@@ -105,8 +101,8 @@ sp_canvastext_destroy (GtkObject *object)
     canvastext->text = NULL;
     canvastext->item = NULL;
 
-    if (GTK_OBJECT_CLASS (parent_class_ct)->destroy)
-        (* GTK_OBJECT_CLASS (parent_class_ct)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS(parent_class_ct)->destroy)
+        (* SP_CANVAS_ITEM_CLASS(parent_class_ct)->destroy) (object);
 }
 
 static void

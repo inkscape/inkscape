@@ -169,7 +169,7 @@ sp_tweak_context_dispose(GObject *object)
     tc->style_set_connection.~connection();
 
     if (tc->dilate_area) {
-        gtk_object_destroy(GTK_OBJECT(tc->dilate_area));
+        sp_canvas_item_destroy(tc->dilate_area);
         tc->dilate_area = NULL;
     }
 

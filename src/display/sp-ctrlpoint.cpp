@@ -23,7 +23,7 @@
 
 static void sp_ctrlpoint_class_init (SPCtrlPointClass *klass);
 static void sp_ctrlpoint_init (SPCtrlPoint *ctrlpoint);
-static void sp_ctrlpoint_destroy (GtkObject *object);
+static void sp_ctrlpoint_destroy(SPCanvasItem *object);
 
 static void sp_ctrlpoint_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_ctrlpoint_render (SPCanvasItem *item, SPCanvasBuf *buf);
@@ -50,16 +50,13 @@ sp_ctrlpoint_get_type (void)
     return type;
 }
 
-static void
-sp_ctrlpoint_class_init (SPCtrlPointClass *klass)
+static void sp_ctrlpoint_class_init(SPCtrlPointClass *klass)
 {
-    GtkObjectClass *object_class = (GtkObjectClass *) klass;
     SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
 
     parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
-    object_class->destroy = sp_ctrlpoint_destroy;
-
+    item_class->destroy = sp_ctrlpoint_destroy;
     item_class->update = sp_ctrlpoint_update;
     item_class->render = sp_ctrlpoint_render;
 }
@@ -73,8 +70,7 @@ sp_ctrlpoint_init (SPCtrlPoint *ctrlpoint)
     ctrlpoint->radius = 2;
 }
 
-static void
-sp_ctrlpoint_destroy (GtkObject *object)
+static void sp_ctrlpoint_destroy(SPCanvasItem *object)
 {
     g_return_if_fail (object != NULL);
     g_return_if_fail (SP_IS_CTRLPOINT (object));
@@ -83,8 +79,8 @@ sp_ctrlpoint_destroy (GtkObject *object)
 
     ctrlpoint->item=NULL;
 
-    if (GTK_OBJECT_CLASS (parent_class)->destroy)
-        (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS(parent_class)->destroy)
+        (* SP_CANVAS_ITEM_CLASS(parent_class)->destroy) (object);
 }
 
 static void

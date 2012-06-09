@@ -8,6 +8,7 @@
 #include "message-context.h"
 #include "streq.h"
 #include "preferences.h"
+#include "display/sp-canvas-item.h"
 
 #define MIN_PRESSURE      0.0
 #define MAX_PRESSURE      1.0
@@ -116,7 +117,7 @@ static void sp_common_context_dispose(GObject *object)
     }
 
     while (ctx->segments) {
-        gtk_object_destroy(GTK_OBJECT(ctx->segments->data));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(ctx->segments->data));
         ctx->segments = g_slist_remove(ctx->segments, ctx->segments->data);
     }
 
@@ -134,7 +135,7 @@ static void sp_common_context_dispose(GObject *object)
     }
 
     if (ctx->currentshape) {
-        gtk_object_destroy(GTK_OBJECT(ctx->currentshape));
+        sp_canvas_item_destroy(ctx->currentshape);
         ctx->currentshape = 0;
     }
 

@@ -25,7 +25,7 @@ namespace {
 
 static void sp_ctrlcurve_class_init(SPCtrlCurveClass *klass, gpointer data);
 static void sp_ctrlcurve_init(SPCtrlCurve *ctrlcurve, gpointer g_class);
-static void sp_ctrlcurve_destroy(GtkObject *object);
+static void sp_ctrlcurve_destroy(SPCanvasItem *object);
 
 static void sp_ctrlcurve_update(SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void sp_ctrlcurve_render(SPCanvasItem *item, SPCanvasBuf *buf);
@@ -74,7 +74,7 @@ sp_ctrlcurve_init(SPCtrlCurve *ctrlcurve, gpointer /*g_class*/)
 }
 
 static void
-sp_ctrlcurve_destroy(GtkObject *object)
+sp_ctrlcurve_destroy(SPCanvasItem *object)
 {
     g_return_if_fail (object != NULL);
     g_return_if_fail (SP_IS_CTRLCURVE (object));
@@ -83,8 +83,8 @@ sp_ctrlcurve_destroy(GtkObject *object)
 
     ctrlcurve->item=NULL;
 
-    if (GTK_OBJECT_CLASS (parent_class)->destroy)
-        (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS (parent_class)->destroy)
+        (* SP_CANVAS_ITEM_CLASS (parent_class)->destroy) (object);
 }
 
 static void

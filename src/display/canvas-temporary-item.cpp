@@ -17,6 +17,7 @@
 #include "display/canvas-temporary-item.h"
 
 #include <gtk/gtk.h>
+#include "display/sp-canvas-item.h"
 
 namespace Inkscape {
 namespace Display {
@@ -48,7 +49,7 @@ TemporaryItem::~TemporaryItem()
 
     if (canvasitem) {
         // destroying the item automatically hides it
-        gtk_object_destroy (GTK_OBJECT (canvasitem));
+        sp_canvas_item_destroy(canvasitem);
         canvasitem = NULL;
     }
 }

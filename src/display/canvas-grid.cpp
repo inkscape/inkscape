@@ -57,8 +57,7 @@ static gchar const *const grid_svgname[] = {
 // Grid CanvasItem
 static void grid_canvasitem_class_init (GridCanvasItemClass *klass);
 static void grid_canvasitem_init (GridCanvasItem *grid);
-static void grid_canvasitem_destroy (GtkObject *object);
-
+static void grid_canvasitem_destroy(SPCanvasItem *object);
 static void grid_canvasitem_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int flags);
 static void grid_canvasitem_render (SPCanvasItem *item, SPCanvasBuf *buf);
 
@@ -86,19 +85,13 @@ grid_canvasitem_get_type (void)
     return grid_canvasitem_type;
 }
 
-static void
-grid_canvasitem_class_init (GridCanvasItemClass *klass)
+static void grid_canvasitem_class_init(GridCanvasItemClass *klass)
 {
-    GtkObjectClass *object_class;
-    SPCanvasItemClass *item_class;
-
-    object_class = (GtkObjectClass *) klass;
-    item_class = (SPCanvasItemClass *) klass;
+    SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
 
     parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
 
-    object_class->destroy = grid_canvasitem_destroy;
-
+    item_class->destroy = grid_canvasitem_destroy;
     item_class->update = grid_canvasitem_update;
     item_class->render = grid_canvasitem_render;
 }
@@ -109,14 +102,13 @@ grid_canvasitem_init (GridCanvasItem *griditem)
     griditem->grid = NULL;
 }
 
-static void
-grid_canvasitem_destroy (GtkObject *object)
+static void grid_canvasitem_destroy(SPCanvasItem *object)
 {
     g_return_if_fail (object != NULL);
     g_return_if_fail (INKSCAPE_IS_GRID_CANVASITEM (object));
 
-    if (GTK_OBJECT_CLASS (parent_class)->destroy)
-        (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+    if (SP_CANVAS_ITEM_CLASS(parent_class)->destroy)
+        (* SP_CANVAS_ITEM_CLASS(parent_class)->destroy) (object);
 }
 
 /**
@@ -184,7 +176,7 @@ CanvasGrid::~CanvasGrid()
     }
 
     while (canvasitems) {
-        gtk_object_destroy(GTK_OBJECT(canvasitems->data));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(canvasitems->data));
         canvasitems = g_slist_remove(canvasitems, canvasitems->data);
     }
 }

@@ -152,7 +152,7 @@ PathManipulator::~PathManipulator()
 {
     delete _dragpoint;
     delete _observer;
-    gtk_object_destroy(_outline);
+    sp_canvas_item_destroy(_outline);
     _spcurve->unref();
     clear();
 }

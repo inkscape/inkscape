@@ -569,7 +569,7 @@ void ink_comboboxentry_action_popup_disable( Ink_ComboBoxEntry_Action* action ) 
   action->popup = false;
 
   if( action->entry_completion ) {
-    gtk_object_destroy( GTK_OBJECT( action->entry_completion ) );
+    gtk_widget_destroy(GTK_WIDGET(action->entry_completion));
     action->entry_completion = 0;
   }
 }

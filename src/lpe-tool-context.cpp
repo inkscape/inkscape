@@ -124,7 +124,7 @@ sp_lpetool_context_dispose(GObject *object)
     delete lc->shape_editor;
 
     if (lc->canvas_bbox) {
-        gtk_object_destroy(GTK_OBJECT(lc->canvas_bbox));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(lc->canvas_bbox));
         lc->canvas_bbox = NULL;
     }
 
@@ -412,7 +412,7 @@ void
 lpetool_context_reset_limiting_bbox(SPLPEToolContext *lc)
 {
     if (lc->canvas_bbox) {
-        gtk_object_destroy(GTK_OBJECT(lc->canvas_bbox));
+        sp_canvas_item_destroy(lc->canvas_bbox);
         lc->canvas_bbox = NULL;
     }
 
@@ -497,7 +497,7 @@ lpetool_delete_measuring_items(SPLPEToolContext *lc)
 {
     std::map<SPPath *, SPCanvasItem*>::iterator i;
     for (i = lc->measuring_items->begin(); i != lc->measuring_items->end(); ++i) {
-        gtk_object_destroy(GTK_OBJECT(i->second));
+        sp_canvas_item_destroy(i->second);
     }
     lc->measuring_items->clear();
 }
