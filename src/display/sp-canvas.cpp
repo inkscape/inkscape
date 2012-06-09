@@ -1369,8 +1369,12 @@ void SPCanvasImpl::realize(GtkWidget *widget)
     attributes.width = allocation.width;
     attributes.height = allocation.height;
     attributes.wclass = GDK_INPUT_OUTPUT;
-    attributes.visual = gdk_rgb_get_visual ();
-    attributes.colormap = gdk_rgb_get_cmap ();
+    attributes.visual = gdk_visual_get_system();
+
+#if !GTK_CHECK_VERSION(3,0,0)
+    attributes.colormap = gdk_colormap_get_system();
+#endif
+
     attributes.event_mask = (gtk_widget_get_events (widget) |
                              GDK_EXPOSURE_MASK |
                              GDK_BUTTON_PRESS_MASK |
@@ -1385,7 +1389,12 @@ void SPCanvasImpl::realize(GtkWidget *widget)
                              GDK_ENTER_NOTIFY_MASK |
                              GDK_LEAVE_NOTIFY_MASK |
                              GDK_FOCUS_CHANGE_MASK);
+
+#if GTK_CHECK_VERSION(3,0,0)
+    gint attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL;
+#else
     gint attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+#endif
 
     GdkWindow *window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
     gtk_widget_set_window (widget, window);

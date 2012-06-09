@@ -109,10 +109,17 @@ static void sp_svg_view_widget_init(SPSVGSPViewWidget *vw)
 	gtk_widget_show (vw->sw);
 
 	/* Canvas */
-	GdkColormap *cmap = gdk_screen_get_system_colormap(gdk_screen_get_default());
+#if !GTK_CHECK_VERSION(3,0,0)
+	GdkColormap *cmap = gdk_colormap_get_system();
 	gtk_widget_push_colormap(cmap);
+#endif
+
 	vw->canvas = SPCanvas::createAA();
+
+#if !GTK_CHECK_VERSION(3,0,0)
 	gtk_widget_pop_colormap ();
+#endif
+
 	style = gtk_style_copy (gtk_widget_get_style (vw->canvas));
 	style->bg[GTK_STATE_NORMAL] = style->white;
 	gtk_widget_set_style (vw->canvas, style);
