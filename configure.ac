@@ -401,12 +401,6 @@ else
 fi
 AM_CONDITIONAL(INKJAR, test "$with_ij" = "yes")
 
-ink_spell_pkg=
-if pkg-config --exists gtkspell-2.0; then
-	ink_spell_pkg=gtkspell-2.0
-	AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
-fi
-
 dnl ******************************
 dnl PERL checking
 dnl ******************************
@@ -742,6 +736,13 @@ AC_ARG_ENABLE(gtk3-experimental,
 
 with_ext_gdl="no"
 if test "x$enable_gtk3" = "xyes"; then
+
+	ink_spell_pkg=
+	if pkg-config --exists gtkspell-3.0; then
+		ink_spell_pkg=gtkspell-3.0
+		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
+	fi
+
 	PKG_CHECK_MODULES(INKSCAPE, gtkmm-3.0  glib-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10  sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4, with_gtkmm_3_0=yes, with_gtkmm_3_0=no)
 
 	if test "x$with_gtkmm_3_0" = "xyes"; then
@@ -758,6 +759,13 @@ if test "x$enable_gtk3" = "xyes"; then
 		AC_DEFINE(WITH_EXT_GDL,1,[Build with external GDL])
 	fi
 else
+
+	ink_spell_pkg=
+	if pkg-config --exists gtkspell-2.0; then
+		ink_spell_pkg=gtkspell-2.0
+		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
+	fi
+
 	PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.24  gtk+-2.0 >= 2.20  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10  sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.10.0)
 	
 	# Disable deprecated symbols to make GTK+ 3 migration easier.
