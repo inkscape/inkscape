@@ -290,7 +290,11 @@ public:
      *
      * @todo FIXME: function allways retruns false.
      */
+#if GTK_CHECK_VERSION(3,0,0)
+    static gboolean handleDraw(GtkWidget *widget, cairo_t *cr);
+#else
     static gint handleExpose(GtkWidget *widget, GdkEventExpose *event);
+#endif
 
     /**
      * The canvas widget's keypress callback.
@@ -1233,8 +1237,10 @@ void SPCanvasImpl::classInit(SPCanvasClass *klass)
 #if GTK_CHECK_VERSION(3,0,0)
     widget_class->get_preferred_width = SPCanvasImpl::getPreferredWidth;
     widget_class->get_preferred_height = SPCanvasImpl::getPreferredHeight;
+    widget_class->draw = SPCanvasImpl::handleDraw;
 #else
     widget_class->size_request = SPCanvasImpl::sizeRequest;
+    widget_class->expose_event = SPCanvasImpl::handleExpose;
 #endif
 
     widget_class->size_allocate = SPCanvasImpl::sizeAllocate;
@@ -1242,7 +1248,6 @@ void SPCanvasImpl::classInit(SPCanvasClass *klass)
     widget_class->button_release_event = SPCanvasImpl::button;
     widget_class->motion_notify_event = SPCanvasImpl::handleMotion;
     widget_class->scroll_event = SPCanvasImpl::handleScroll;
-    widget_class->expose_event = SPCanvasImpl::handleExpose;
     widget_class->key_press_event = SPCanvasImpl::handleKeyEvent;
     widget_class->key_release_event = SPCanvasImpl::handleKeyEvent;
     widget_class->enter_notify_event = SPCanvasImpl::handleCrossing;
@@ -2110,6 +2115,23 @@ void SPCanvas::endForcedFullRedraws()
     forced_redraw_limit = -1;
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
+
+//TODO: This could probably be done much more efficiently
+gboolean SPCanvasImpl::handleDraw(GtkWidget *widget, cairo_t *cr) {
+	SPCanvas *canvas = SP_CANVAS(widget);
+	gint width = gtk_widget_get_allocated_width(widget);
+	gint height = gtk_widget_get_allocated_height(widget);
+
+	Geom::IntRect r = Geom::IntRect::from_xywh(
+                canvas->x0, canvas->y0,
+                width, height);
+
+	canvas->requestRedraw(r.left(), r.top(), r.right(), r.bottom());
+
+	return FALSE;
+}
+#else
 gint SPCanvasImpl::handleExpose(GtkWidget *widget, GdkEventExpose *event)
 {
     SPCanvas *canvas = SP_CANVAS(widget);
@@ -2157,6 +2179,8 @@ gint SPCanvasImpl::handleExpose(GtkWidget *widget, GdkEventExpose *event)
         return FALSE;
     }
 }
+#endif
+
 
 gint SPCanvasImpl::handleKeyEvent(GtkWidget *widget, GdkEventKey *event)
 {
