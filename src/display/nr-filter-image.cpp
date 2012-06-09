@@ -20,6 +20,7 @@
 #include "display/nr-filter-image.h"
 #include "display/nr-filter-slot.h"
 #include "display/nr-filter-units.h"
+#include <glibmm/fileutils.h>
 
 namespace Inkscape {
 namespace Filters {
