@@ -426,7 +426,7 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
 
     GlyphColumns *columns = getColumns();
 
-    iconView = new Gtk::IconView(store);
+    iconView = new Gtk::IconView(static_cast<Glib::RefPtr<Gtk::TreeModel> >(store));
     iconView->set_text_column(columns->name);
     //iconView->set_columns(16);
 
@@ -553,7 +553,13 @@ void GlyphsPanel::insertText()
         if (entry->get_text_length() > 0) {
             glyphs = entry->get_text();
         } else {
+
+#if WITH_GTKMM_3_0
+            std::vector<Gtk::TreePath> itemArray = iconView->get_selected_items();
+#else
             Gtk::IconView::ArrayHandle_TreePaths itemArray = iconView->get_selected_items();
+#endif
+
             if (!itemArray.empty()) {
                 Gtk::TreeModel::Path const & path = *itemArray.begin();
                 Gtk::ListStore::iterator row = store->get_iter(path);
@@ -597,7 +603,12 @@ void GlyphsPanel::glyphActivated(Gtk::TreeModel::Path const & path)
 
 void GlyphsPanel::glyphSelectionChanged()
 {
+#if WITH_GTKMM_3_0
+    std::vector<Gtk::TreePath> itemArray = iconView->get_selected_items();
+#else
     Gtk::IconView::ArrayHandle_TreePaths itemArray = iconView->get_selected_items();
+#endif
+
     if (itemArray.empty()) {
         label->set_text("      ");
     } else {
