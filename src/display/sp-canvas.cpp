@@ -2201,28 +2201,30 @@ int SPCanvasImpl::paint(SPCanvas *canvas)
         return TRUE;
     }
 
-    Gdk::Region to_paint;
+    Cairo::RefPtr<Cairo::Region> to_paint = Cairo::Region::create();
 
     for (int j=canvas->tTop; j<canvas->tBottom; j++) {
         for (int i=canvas->tLeft; i<canvas->tRight; i++) {
             int tile_index = (i - canvas->tLeft) + (j - canvas->tTop)*canvas->tileH;
 
             if ( canvas->tiles[tile_index] ) { // if this tile is dirtied (nonzero)
-                to_paint.union_with_rect(Gdk::Rectangle(i*TILE_SIZE, j*TILE_SIZE,
-                                   TILE_SIZE, TILE_SIZE));
+                Cairo::RectangleInt rect = {i*TILE_SIZE, j*TILE_SIZE,
+                                   TILE_SIZE, TILE_SIZE};
+                to_paint->do_union(rect);
             }
 
         }
     }
 
-    if (!to_paint.empty()) {
-        Glib::ArrayHandle<Gdk::Rectangle> rect = to_paint.get_rectangles();
-        typedef Glib::ArrayHandle<Gdk::Rectangle>::const_iterator Iter;
-        for (Iter i=rect.begin(); i != rect.end(); ++i) {
-            int x0 = (*i).get_x();
-            int y0 = (*i).get_y();
-            int x1 = x0 + (*i).get_width();
-            int y1 = y0 + (*i).get_height();
+    int n_rect = to_paint->get_num_rectangles();
+
+    if (n_rect > 0) {
+        for (int i=0; i < n_rect; i++) {
+            Cairo::RectangleInt rect = to_paint->get_rectangle(i);
+            int x0 = rect.x;
+            int y0 = rect.y;
+            int x1 = x0 + rect.width;
+            int y1 = y0 + rect.height;
             if (!sp_canvas_paint_rect(canvas, x0, y0, x1, y1)) {
                 // Aborted
                 return FALSE;
