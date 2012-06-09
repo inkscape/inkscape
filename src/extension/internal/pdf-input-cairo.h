@@ -63,7 +63,11 @@ private:
     void _setPreviewPage(int page);
 
     // Signal handlers
+#if !WITH_GTKMM_3_0
     bool _onExposePreview(GdkEventExpose *event);
+#endif
+
+    bool _onDraw(const Cairo::RefPtr<Cairo::Context>& cr);
     void _onPageNumberChanged();
     void _onToggleCropping();
     void _onPrecisionChanged();

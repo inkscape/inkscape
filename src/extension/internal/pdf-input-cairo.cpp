@@ -271,7 +271,11 @@ PdfImportCairoDialog::PdfImportCairoDialog(PopplerDocument *doc)
     hbox1->show();
 
     // Connect signals
+#if WITH_GTKMM_3_0
+    _previewArea->signal_draw().connect(sigc::mem_fun(*this, &PdfImportCairoDialog::_onDraw));
+#else
     _previewArea->signal_expose_event().connect(sigc::mem_fun(*this, &PdfImportCairoDialog::_onExposePreview));
+#endif
     _pageNumberSpin_adj->signal_value_changed().connect(sigc::mem_fun(*this, &PdfImportCairoDialog::_onPageNumberChanged));
     _cropCheck->signal_toggled().connect(sigc::mem_fun(*this, &PdfImportCairoDialog::_onToggleCropping));
     _fallbackPrecisionSlider_adj->signal_value_changed().connect(sigc::mem_fun(*this, &PdfImportCairoDialog::_onPrecisionChanged));
@@ -438,8 +442,15 @@ static void copy_cairo_surface_to_pixbuf (cairo_surface_t *surface,
 /**
  * \brief Updates the preview area with the previously rendered thumbnail
  */
-bool PdfImportCairoDialog::_onExposePreview(GdkEventExpose */*event*/) {
+#if !WITH_GTKMM_3_0
+bool PdfImportCairoDialog::_onExposePreview(GdkEventExpose * /*event*/) {
+    Cairo::RefPtr<Cairo::Context> cr = _previewArea->get_window()->create_cairo_context();
+    return _onDraw(cr);
+}
+#endif
 
+
+bool PdfImportCairoDialog::_onDraw(const Cairo::RefPtr<Cairo::Context>& cr) {	
     // Check if we have a thumbnail at all
     if (!_thumb_data) {
         return true;
@@ -461,24 +472,14 @@ bool PdfImportCairoDialog::_onExposePreview(GdkEventExpose */*event*/) {
     // Set background to white
     if (_render_thumb) {
         thumb->fill(0xffffffff);
-        Glib::RefPtr<Gdk::Pixmap> back_pixmap = Gdk::Pixmap::create(
-                _previewArea->get_window(), _thumb_width, _thumb_height, -1);
-        if (!back_pixmap) {
-            return true;
-        }
-
-	Cairo::RefPtr<Cairo::Context> cr = back_pixmap->create_cairo_context();
 	Gdk::Cairo::set_source_pixbuf(cr, thumb, 0, 0);
 	cr->paint();
-        _previewArea->get_window()->set_back_pixmap(back_pixmap, false);
-        _previewArea->get_window()->clear();
     }
 
     // Copy the thumbnail image from the Cairo surface
     if (_render_thumb) {
         copy_cairo_surface_to_pixbuf(_cairo_surface, _thumb_data, thumb->gobj());
     }
-    Cairo::RefPtr<Cairo::Context> cr = _previewArea->get_window()->create_cairo_context();
     Gdk::Cairo::set_source_pixbuf(cr, thumb, 0, _render_thumb ? 0 : 20);
     cr->paint();
 
