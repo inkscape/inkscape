@@ -55,7 +55,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-05-11 16:03+0200\n"
-"PO-Revision-Date: 2012-05-22 21:51+0100\n"
+"PO-Revision-Date: 2012-06-10 11:03+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
@@ -350,11 +350,11 @@ msgstr "Snijgereedschap is niet gedefinieerd! Een standaard gereedschap werd aut
 
 #: ../share/extensions/gimp_xcf.py:40
 msgid "Gimp must be installed and set in your path variable."
-msgstr ""
+msgstr "Gimp moet geïnstalleerd zijn en in de padvariabele staan."
 
 #: ../share/extensions/gimp_xcf.py:44
 msgid "An error occurred while processing the XCF file."
-msgstr ""
+msgstr "Er trad een fout bij bij het verwerken van het XCF-bestand."
 
 #: ../share/extensions/gimp_xcf.py:172
 msgid "This extension requires at least one non empty layer."
@@ -381,7 +381,7 @@ msgstr "Geen overeenkomend knooppunt voor de expressie: %s"
 #: ../share/extensions/markers_strokepaint.py:78
 #, python-format
 msgid "No style attribute found for id: %s"
-msgstr "Geen stijl-attribuut gevonden voor id: %s"
+msgstr "Geen stijlattribuut gevonden voor id: %s"
 
 #: ../share/extensions/markers_strokepaint.py:132
 #, python-format
@@ -1531,11 +1531,11 @@ msgstr "Een kleine korrel toevoegen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Plaster Color"
-msgstr ""
+msgstr "Gekleurde gips"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Colored plaster emboss effect"
-msgstr ""
+msgstr "Reliëf van gekleurde gips"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Velvet Bumps"
@@ -1909,27 +1909,27 @@ msgstr "Filterresolutie instellen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic Diffuse Bump"
-msgstr ""
+msgstr "Basis mat reliëf"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Matte emboss effect"
-msgstr ""
+msgstr "Mat reliëf"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic Specular Bump"
-msgstr ""
+msgstr "Basis spiegelend reliëf"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Specular emboss effect"
-msgstr ""
+msgstr "Spiegelend reliëf"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic Two Lights Bump"
-msgstr ""
+msgstr "Basis 2-lichten reliëf"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Two types of lighting emboss effect"
-msgstr ""
+msgstr "Reliëf met 2 types licht"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Linen Canvas"
@@ -1949,19 +1949,19 @@ msgstr "Embossingeffect op matte plasticine"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Rough Canvas Painting"
-msgstr ""
+msgstr "Ruw canvas"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Paper Bump"
-msgstr ""
+msgstr "Papierreliëf"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Paper like emboss effect"
-msgstr ""
+msgstr "Papierachtig embossingeffect"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Jelly Bump"
-msgstr ""
+msgstr "Geleireliëf"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Convert pictures to thick jelly"
@@ -2138,7 +2138,7 @@ msgstr "Heel aanpasbaar geruit kiltpatroon"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Light Contour"
-msgstr ""
+msgstr "Lichte contouren"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Uses vertical specular light to draw lines"
@@ -4887,7 +4887,7 @@ msgstr "_Negeren"
 
 #: ../src/ui/dialog/spellcheck.cpp:76
 msgid "A_dd"
-msgstr ""
+msgstr "Toe_voegen"
 
 #: ../src/ui/dialog/spellcheck.cpp:78
 msgid "_Stop"
@@ -5330,7 +5330,7 @@ msgstr "pad (loodrecht)"
 
 #: ../src/display/snap-indicator.cpp:114
 msgid "path (tangential)"
-msgstr ""
+msgstr "pad (tangentieel)"
 
 #: ../src/display/snap-indicator.cpp:117
 msgid "path intersection"
@@ -6965,7 +6965,7 @@ msgstr "Afbeelding"
 
 #: ../src/extension/internal/filter/bumps.h:326
 msgid "Blurred image"
-msgstr ""
+msgstr "Vervaagde afbeelding"
 
 #: ../src/extension/internal/filter/bumps.h:328
 msgid "Background opacity:"
@@ -7012,7 +7012,7 @@ msgstr "In"
 
 #: ../src/extension/internal/filter/bumps.h:368
 msgid "Turns an image to jelly"
-msgstr ""
+msgstr "Maakt een afbeelding wasachtig"
 
 #: ../src/extension/internal/filter/color.h:71
 msgid "Brilliance"
@@ -7123,7 +7123,7 @@ msgstr "Gamma"
 
 #: ../src/extension/internal/filter/color.h:439
 msgid "Basic component transfer structure"
-msgstr ""
+msgstr "Transfereren van componentstructuur"
 
 #: ../src/extension/internal/filter/color.h:508
 msgid "Duochrome"
@@ -7297,7 +7297,7 @@ msgstr "Transparantie inverteren"
 
 #: ../src/extension/internal/filter/color.h:924
 msgid "Manage hue, lightness and transparency inversions"
-msgstr ""
+msgstr "Tint-, lichtheid- en transparantie-inversie toepassen"
 
 #: ../src/extension/internal/filter/color.h:1042
 msgid "Lights:"
@@ -7805,7 +7805,7 @@ msgstr "Chroomeffect met aanpasbare rand en korrel"
 
 #: ../src/extension/internal/filter/paint.h:233
 msgid "Cross Engraving"
-msgstr ""
+msgstr "Kruisgravure"
 
 #: ../src/extension/internal/filter/paint.h:235
 #: ../src/extension/internal/filter/paint.h:338
@@ -10096,7 +10096,7 @@ msgstr "Liniaal"
 #. 0.49 ?
 #: ../src/live_effects/effect.cpp:124
 msgid "[Unstable!] Power stroke"
-msgstr ""
+msgstr "[Onstabiel!] Power stroke"
 
 #: ../src/live_effects/effect.cpp:125
 msgid "[Unstable!] Clone original path"
@@ -14924,7 +14924,7 @@ msgstr "Identiek"
 
 #: ../src/ui/dialog/find.cpp:80
 msgid "Match whole objects only"
-msgstr ""
+msgstr "Slechts identieke objecten"
 
 #: ../src/ui/dialog/find.cpp:82
 msgid "Include loc_ked"
@@ -18257,7 +18257,7 @@ msgstr "Padeffect aanmaken en toepassen"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:453
 msgid "Create and apply Clone original path effect"
-msgstr ""
+msgstr "Maken en toepassen van het padeffect Origineel pad klonen"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:473
 msgid "Remove path effect"
@@ -18314,7 +18314,7 @@ msgstr "Herberekenen"
 
 #: ../src/ui/dialog/messages.cpp:47
 msgid "Clear log messages"
-msgstr ""
+msgstr "Log leegmaken"
 
 #: ../src/ui/dialog/messages.cpp:81
 msgid "Ready."
@@ -18322,11 +18322,11 @@ msgstr "Klaar."
 
 #: ../src/ui/dialog/messages.cpp:174
 msgid "Log capture started."
-msgstr ""
+msgstr "Log aanleggen begonnen."
 
 #: ../src/ui/dialog/messages.cpp:203
 msgid "Log capture stopped."
-msgstr ""
+msgstr "Log aanleggen gestopt."
 
 #: ../src/ui/dialog/object-attributes.cpp:37
 msgid "Href:"
@@ -18452,7 +18452,7 @@ msgstr "Object weergeven"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:624
 msgid "Clipart found"
-msgstr ""
+msgstr "Clipart gevonden"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:673
 msgid "Downloading image..."
@@ -18488,11 +18488,11 @@ msgstr "Kon zoekresultaten niet verwerken"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:1081
 msgid "No clipart named <b>%1</b> was found."
-msgstr ""
+msgstr "Geen clipart et de naam <b>%1</b> gevonden."
 
 #: ../src/ui/dialog/ocaldialogs.cpp:1083
 msgid "Please make sure all keywords are spelled correctly, or try again with different keywords."
-msgstr ""
+msgstr "Zorg dat alle sleutelwoorden correct gespeld zijn of probeer opnieuw met verschillende sleutelwoorden."
 
 #: ../src/ui/dialog/ocaldialogs.cpp:1114
 msgid "Search"
@@ -21207,9 +21207,8 @@ msgid "_Lock/Unlock Current Layer"
 msgstr "Huidige laag vergrendelen of ontgrendelen"
 
 #: ../src/verbs.cpp:2444
-#, fuzzy
 msgid "Toggle lock on current layer"
-msgstr "Alleen de huidige laag tonen"
+msgstr "Vergrendeling huidige laag aanpassen"
 
 #: ../src/verbs.cpp:2445
 #, fuzzy
@@ -21217,9 +21216,8 @@ msgid "_Show/hide Current Layer"
 msgstr "_Toon/verberg andere lagen"
 
 #: ../src/verbs.cpp:2446
-#, fuzzy
 msgid "Toggle visibility of current layer"
-msgstr "Alleen de huidige laag tonen"
+msgstr "Zichtbaarheid huidige laag aanpassen"
 
 #. Object
 #: ../src/verbs.cpp:2449
@@ -22225,34 +22223,34 @@ msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects
 msgstr "<b>Welkom bij Inkscape!</b> Gebruik vorm- of tekengereedschappen om objecten te maken, gebruik aanwijsgereedschap om ze te verplaatsen of te vervormen."
 
 #: ../src/widgets/desktop-widget.cpp:724
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: %d (outline%s) - Inkscape"
-msgstr "%s: %d (contour%s) - Inkscape"
+msgstr "%s%s: %d (contour%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:726
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: %d (no filters%s) - Inkscape"
-msgstr "%s: %d (geen filters%s) - Inkscape"
+msgstr "%s%s: %d (geen filters%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:728
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: %d %s- Inkscape"
-msgstr "%s: %d %s- Inkscape"
+msgstr "%s%s: %d %s- Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:732
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s (outline%s) - Inkscape"
-msgstr "%s (contour%s) - Inkscape"
+msgstr "%s%s (contour%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:734
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s (no filters%s) - Inkscape"
-msgstr "%s (geen filters%s) - Inkscape"
+msgstr "%s%s (geen filters%s) - Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:736
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s %s- Inkscape"
-msgstr "%s %s- Inkscape"
+msgstr "%s%s %s- Inkscape"
 
 #: ../src/widgets/desktop-widget.cpp:903
 msgid "Color-managed display is <b>enabled</b> in this window"
@@ -22290,13 +22288,12 @@ msgstr ""
 "Wilt u dit bestand opslaan in het Inkscape SVG-formaat?"
 
 #: ../src/widgets/desktop-widget.cpp:1026
-#, fuzzy
 msgid "_Save as Inkscape SVG"
-msgstr "Op_slaan als SVG"
+msgstr "Op_slaan als Inkscape SVG"
 
 #: ../src/widgets/desktop-widget.cpp:1235
 msgid "Note:"
-msgstr ""
+msgstr "Nota:"
 
 #: ../src/widgets/ege-paint-def.cpp:67
 #: ../src/widgets/ege-paint-def.cpp:91
@@ -22428,7 +22425,7 @@ msgstr "Lineair kleurverloop maken"
 
 #: ../src/widgets/gradient-toolbar.cpp:1087
 msgid "radial"
-msgstr ""
+msgstr "radiaal"
 
 #: ../src/widgets/gradient-toolbar.cpp:1087
 msgid "Create radial (elliptic or circular) gradient"
@@ -22436,7 +22433,7 @@ msgstr "Radiaal kleurverloop (eliptisch of cirkelvormig) maken"
 
 #: ../src/widgets/gradient-toolbar.cpp:1090
 msgid "New:"
-msgstr ""
+msgstr "Nieuw:"
 
 #: ../src/widgets/gradient-toolbar.cpp:1113
 #, fuzzy
@@ -22607,12 +22604,11 @@ msgstr "<b>Vulling is niet gedefinieerd</b>"
 
 #: ../src/widgets/paint-selector.cpp:621
 msgid "<b>No paint</b>"
-msgstr ""
+msgstr "<b>Geen opvulling</b>"
 
 #: ../src/widgets/paint-selector.cpp:692
-#, fuzzy
 msgid "<b>Flat color</b>"
-msgstr "Egale kleur"
+msgstr "<b>Egale kleur</b>"
 
 #. sp_gradient_selector_set_mode(SP_GRADIENT_SELECTOR(gsel), SP_GRADIENT_SELECTOR_MODE_LINEAR);
 #: ../src/widgets/paint-selector.cpp:756
@@ -22628,14 +22624,12 @@ msgid "Use the <b>Node tool</b> to adjust position, scale, and rotation of the p
 msgstr "Gebruik het <b>knooppunten-gereedschap</b> om positie, schaal en rotatie van het patroon aan te passen. Gebruik <b>Object &gt; Patroon &gt; Objecten naar patroon</b> om een nieuw patroon te maken uit de selectie."
 
 #: ../src/widgets/paint-selector.cpp:1066
-#, fuzzy
 msgid "<b>Pattern fill</b>"
-msgstr "Patroonvulling"
+msgstr "<b>Patroonvulling</b>"
 
 #: ../src/widgets/paint-selector.cpp:1158
-#, fuzzy
 msgid "<b>Swatch fill</b>"
-msgstr "Vullingspalet"
+msgstr "<b>Vulling uit palet</b>"
 
 #: ../src/widgets/select-toolbar.cpp:262
 msgid "Transform by toolbar"
@@ -22756,7 +22750,7 @@ msgstr "Attribuut instellen"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:106
 msgid "CMS"
-msgstr "Kleurbeheersysteem"
+msgstr "KBS"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:217
 #: ../src/widgets/sp-color-scales.cpp:403
@@ -23155,7 +23149,7 @@ msgstr "Middens van lijnsegmenten kleven"
 
 #: ../src/widgets/toolbox.cpp:1793
 msgid "Others"
-msgstr ""
+msgstr "Andere"
 
 #: ../src/widgets/toolbox.cpp:1793
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
@@ -23797,7 +23791,6 @@ msgid "Use automatic scaling to size A4"
 msgstr "Automatisch schalen tot A4-grootte"
 
 #: ../share/extensions/dxf_outlines.inx.h:1
-#, fuzzy
 msgid ""
 "- AutoCAD Release 14 DXF format.\n"
 "- The base unit parameter specifies in what unit the coordinates are output (90 px = 1 in).\n"
@@ -23816,7 +23809,7 @@ msgstr ""
 "    - rechthoeken\n"
 "    - klonen (de link met het origineel gaat verloren)\n"
 "- ROBO-Master spline uitvoer is een gespecialiseerde spline die alleen leesbaar is door ROBO-Master en Autodesk viewers, niet door Inkscape.\n"
-"- LWPOLYLINE uitvoer is een meervoudig verbonden veellijn, schakel dit uit voor verouderde lijnuitvoer."
+"- LWPOLYLINE uitvoer is een meervoudig verbonden veellijn, schakel dit uit voor verouderde lijnuitvoer.- Je kan kiezen om alle of alleen zichtbare lagen te exporteren"
 
 #: ../share/extensions/dxf_outlines.inx.h:10
 msgid "Base unit"
@@ -23853,9 +23846,8 @@ msgstr "UTF 8"
 # De volgende zes strings beschrijven wat enkele toetsen doen.
 # Een kleine letter maakt duidelijker dat ze een voortzetting zijn.
 #: ../share/extensions/dxf_outlines.inx.h:23
-#, fuzzy
 msgid "keep only visible layers"
-msgstr "Onzichtbare lagen tonen"
+msgstr "alleen zichtbare lagen weerhouden"
 
 #: ../share/extensions/dxf_outlines.inx.h:29
 msgid "use LWPOLYLINE type of line output"
@@ -23934,9 +23926,8 @@ msgid "LaTeX"
 msgstr "LaTeX"
 
 #: ../share/extensions/eqtexsvg.inx.h:3
-#, fuzzy
 msgid "LaTeX input: "
-msgstr "LaTeX print"
+msgstr "LaTeX invoer: "
 
 #: ../share/extensions/export_gimp_palette.inx.h:1
 msgid "Export as GIMP Palette"
@@ -24959,11 +24950,11 @@ msgstr "Onderonderverdelingen per hulpmarkering:"
 
 #: ../share/extensions/grid_isometric.inx.h:10
 msgid "X Divisions [x2]:"
-msgstr ""
+msgstr "X-onderverdelingen [x2]:"
 
 #: ../share/extensions/grid_isometric.inx.h:11
 msgid "Y Divisions [x2] [> 1/2 X Div]:"
-msgstr ""
+msgstr "Y-onderverdelingen [x2] [> 1/2 X-deel]:"
 
 #: ../share/extensions/grid_polar.inx.h:1
 msgid "Angle Divisions at Centre:"
@@ -25097,7 +25088,7 @@ msgstr "Gulden snede"
 
 #: ../share/extensions/guides_creator.inx.h:13
 msgid "Guides creator"
-msgstr "Hulplijnengenerator"
+msgstr "Hulplijngenerator"
 
 #: ../share/extensions/guides_creator.inx.h:14
 msgid "Horizontal guide each:"
@@ -26063,15 +26054,14 @@ msgstr "Afstand (px):"
 
 #: ../share/extensions/measure.inx.h:11
 msgid "Scale Factor (Drawing:Real Length) = 1:"
-msgstr "Schaalfactor (tekening:werkelijkheid) =   1 :"
+msgstr "Schaalfactor (tekening:werkelijkheid) = 1:"
 
 #: ../share/extensions/measure.inx.h:12
-#, fuzzy
 msgid "Text Orientation: "
-msgstr "Tekstoriëntatie"
+msgstr "Tekstoriëntatie: "
 
 #: ../share/extensions/measure.inx.h:14
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "This effect measures the length, or area, of the selected paths and adds it as a text object with the selected units.\n"
 "            \n"
@@ -26081,8 +26071,9 @@ msgid ""
 "  * The Scale factor can be used to make measurements in scaled drawings. For example, if 1 cm in the drawing equals 2.5 m in the real world, Scale must be set to 250.\n"
 "  * When calculating area, the result should be precise for polygons and Bezier curves. If a circle is used, the area may be too high by as much as 0.03%."
 msgstr ""
-"Dit effect meet de lengte of oppervlak van het geselecteerde pad en voegt het met de gekozen eenheid als een tekst-op-pad-object toe.\n"
+"Dit effect meet de lengte of oppervlak van het geselecteerde pad en voegt het toe als tekstobject.\n"
 "            \n"
+"  * Weergave kan als tekst-op-pad of alleenstaande tekst in een specifieke hoek.\n"
 "  * Het aantal significante cijfers kan ingesteld worden met het Precisieveld.\n"
 "  * Het Afstandsveld bepaalt de afstand van de tekst tot het pad.\n"
 "  * De Schaalfactor kan gebruikt worden voor metingen bij tekeningen op schaal. Als bijvoorbeeld 1 cm in de tekening 2,5 m in werkelijkheid is, dan moet de schaal op 250 ingesteld worden.\n"
@@ -26094,16 +26085,14 @@ msgid "Area"
 msgstr "Oppervlakte"
 
 #: ../share/extensions/measure.inx.h:23
-#, fuzzy
 msgctxt "measure extension"
 msgid "Fixed Angle"
-msgstr "Pen hoek"
+msgstr "Vaste hoek"
 
 #: ../share/extensions/measure.inx.h:24
-#, fuzzy
 msgctxt "measure extension"
 msgid "Text On Path"
-msgstr "Op pad _plaatsen"
+msgstr "Tekst op pad"
 
 #: ../share/extensions/motion.inx.h:1
 #: ../share/extensions/restack.inx.h:1
@@ -27962,54 +27951,6 @@ msgstr "XAML-invoer"
 #~ msgid "Insert new nodes into selected segments"
 #~ msgstr "Nieuwe knooppunten invoegen in geselecteerde segmenten"
 #~ msgid "Insert"
-#~ msgstr "Invoegen"
-
-#, fuzzy
-#~ msgid "Insert node at min X"
-#~ msgstr "Knooppunt invoegen"
-
-#, fuzzy
-#~ msgid "Insert new nodes at min X into selected segments"
-#~ msgstr "Nieuwe knooppunten invoegen in geselecteerde segmenten"
-
-#, fuzzy
-#~ msgid "Insert min X"
-#~ msgstr "Knooppunt invoegen"
-
-#, fuzzy
-#~ msgid "Insert node at max X"
-#~ msgstr "Knooppunt invoegen"
-
-#, fuzzy
-#~ msgid "Insert new nodes at max X into selected segments"
-#~ msgstr "Nieuwe knooppunten invoegen in geselecteerde segmenten"
-
-#, fuzzy
-#~ msgid "Insert max X"
-#~ msgstr "Invoegen"
-
-#, fuzzy
-#~ msgid "Insert node at min Y"
-#~ msgstr "Knooppunt invoegen"
-
-#, fuzzy
-#~ msgid "Insert new nodes at min Y into selected segments"
-#~ msgstr "Nieuwe knooppunten invoegen in geselecteerde segmenten"
-
-#, fuzzy
-#~ msgid "Insert min Y"
-#~ msgstr "Knooppunt invoegen"
-
-#, fuzzy
-#~ msgid "Insert node at max Y"
-#~ msgstr "Knooppunt invoegen"
-
-#, fuzzy
-#~ msgid "Insert new nodes at max Y into selected segments"
-#~ msgstr "Nieuwe knooppunten invoegen in geselecteerde segmenten"
-
-#, fuzzy
-#~ msgid "Insert max Y"
 #~ msgstr "Invoegen"
 #~ msgid "Delete selected nodes"
 #~ msgstr "Geselecteerde knooppunten verwijderen"
