@@ -19,9 +19,7 @@
 # include <config.h>
 #endif
 
-#if !WITH_GTKMM_3_0
-#include <gdkmm/region.h>
-#endif
+#include <cairomm/region.h>
 
 #include "helper/sp-marshal.h"
 #include <2geom/rect.h>
