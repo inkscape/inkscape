@@ -165,42 +165,42 @@ sp_paint_selector_class_init(SPPaintSelectorClass *klass)
                                                 G_TYPE_FROM_CLASS(object_class),
                                                 (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                                 G_STRUCT_OFFSET(SPPaintSelectorClass, mode_changed),
-						NULL, NULL,
+                                                NULL, NULL,
                                                 g_cclosure_marshal_VOID__UINT,
                                                 G_TYPE_NONE, 1, G_TYPE_UINT);
     psel_signals[GRABBED] =  g_signal_new("grabbed",
                                             G_TYPE_FROM_CLASS(object_class),
                                             (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                             G_STRUCT_OFFSET(SPPaintSelectorClass, grabbed),
-					    NULL, NULL,
+                                            NULL, NULL,
                                             g_cclosure_marshal_VOID__VOID,
                                             G_TYPE_NONE, 0);
     psel_signals[DRAGGED] =  g_signal_new("dragged",
                                             G_TYPE_FROM_CLASS(object_class),
                                             (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                             G_STRUCT_OFFSET(SPPaintSelectorClass, dragged),
-					    NULL, NULL,
+                                            NULL, NULL,
                                             g_cclosure_marshal_VOID__VOID,
                                             G_TYPE_NONE, 0);
     psel_signals[RELEASED] = g_signal_new("released",
                                             G_TYPE_FROM_CLASS(object_class),
                                             (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                             G_STRUCT_OFFSET(SPPaintSelectorClass, released),
-					    NULL, NULL,
+                                            NULL, NULL,
                                             g_cclosure_marshal_VOID__VOID,
                                             G_TYPE_NONE, 0);
     psel_signals[CHANGED] =  g_signal_new("changed",
                                             G_TYPE_FROM_CLASS(object_class),
                                             (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                             G_STRUCT_OFFSET(SPPaintSelectorClass, changed),
-					    NULL, NULL,
+                                            NULL, NULL,
                                             g_cclosure_marshal_VOID__VOID,
                                             G_TYPE_NONE, 0);
     psel_signals[FILLRULE_CHANGED] = g_signal_new("fillrule_changed",
                                                     G_TYPE_FROM_CLASS(object_class),
                                                     (GSignalFlags)(G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE),
                                                     G_STRUCT_OFFSET(SPPaintSelectorClass, fillrule_changed),
-						    NULL, NULL,
+                                                    NULL, NULL,
                                                     g_cclosure_marshal_VOID__UINT,
                                                     G_TYPE_NONE, 1, G_TYPE_UINT);
 
@@ -245,8 +245,8 @@ sp_paint_selector_init(SPPaintSelector *psel)
     /* Fillrule */
     {
 #if GTK_CHECK_VERSION(3,0,0)
-	psel->fillrulebox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-	gtk_box_set_homogeneous(GTK_BOX(psel->fillrulebox), FALSE);
+    psel->fillrulebox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_set_homogeneous(GTK_BOX(psel->fillrulebox), FALSE);
 #else
         psel->fillrulebox = gtk_hbox_new(FALSE, 0);
 #endif
@@ -662,8 +662,8 @@ static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelec
         /* Create new color selector */
         /* Create vbox */
 #if GTK_CHECK_VERSION(3,0,0)
-	GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
-	gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
+    GtkWidget *vb = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+    gtk_box_set_homogeneous(GTK_BOX(vb), FALSE);
 #else
         GtkWidget *vb = gtk_vbox_new(FALSE, 4);
 #endif
@@ -1001,8 +1001,8 @@ static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSel
 
         /* Create vbox */
 #if GTK_CHECK_VERSION(3,0,0)
-	tbl = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
-	gtk_box_set_homogeneous(GTK_BOX(tbl), FALSE);
+    tbl = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+    gtk_box_set_homogeneous(GTK_BOX(tbl), FALSE);
 #else
         tbl = gtk_vbox_new(FALSE, 4);
 #endif
@@ -1107,14 +1107,18 @@ SPPattern *SPPaintSelector::getPattern()
 
     if (strcmp(patid, "none")){
 
-        gchar *paturn = g_strdup(patid);
-        if (stockid)  {
+        gchar *paturn;
+        if (stockid) {
             paturn = g_strconcat("urn:inkscape:pattern:",patid,NULL);
+        }
+        else {
+            paturn = g_strdup(patid);
         }
         SPObject *pat_obj = get_stock_item(paturn);
         if (pat_obj) {
             pat = SP_PATTERN(pat_obj);
         }
+        g_free(paturn);
     } else {
         pat = pattern_getroot(SP_PATTERN(patid));
     }
