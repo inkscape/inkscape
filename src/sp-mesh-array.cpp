@@ -1026,7 +1026,7 @@ void SPMeshNodeArray::create( SPMeshGradient *mg, SPItem *item, Geom::OptRect bb
 
     // We get called twice when a new mesh is created...WHY?
     //  return if we've already constructed the mesh.
-    if( nodes.size() != 0 ) return;
+    if( !nodes.empty() ) return;
 
     // Get default color
     SPColor color = default_color( item );
@@ -2339,7 +2339,7 @@ void SPMeshNodeArray::split_row( guint row, double coord ) {
         } else {
             // We are splitting a middle
 
-            bool  set = nodes[i+1][j]->set || nodes[i+1][j]->set; 
+            bool set = nodes[i+1][j]->set;// || nodes[i+1][j]->set;  //TODO: bug here? was same on left and right hand side of ||
             nodes[i+4][j]->set = set;
             nodes[i+5][j]->set = set;
             nodes[i+4][j]->node_type = MG_NODE_TYPE_TENSOR;

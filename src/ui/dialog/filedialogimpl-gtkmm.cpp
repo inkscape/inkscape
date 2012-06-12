@@ -946,7 +946,7 @@ std::vector<Glib::ustring>FileOpenDialogImplGtk::getFilenames()
     std::vector<Glib::ustring> result;
 
     for (std::vector<std::string>::iterator it = result_tmp.begin();
-		    it != result_tmp.end(); it++)
+		    it != result_tmp.end(); ++it)
 	    result.push_back(*it);
 
 #else

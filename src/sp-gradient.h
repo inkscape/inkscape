@@ -94,14 +94,7 @@ std::vector<PaintTarget> const &allPaintTargets();
  * Implement spread, stops list
  * \todo fixme: Implement more here (Lauris)
  */
-struct SPGradient : public SPPaintServer {
-
-    /** Reference (href) */
-    SPGradientReference *ref;
-
-    /** State in Inkscape gradient system */
-    guint state : 2;
-
+class SPGradient : public SPPaintServer {
 private:
     /** gradientUnits attribute */
     SPGradientUnits units;
@@ -124,7 +117,19 @@ private:
     guint has_patches : 1;
 
 public:
+    SPGradient() :
+        units(),
+        spread(),
+        ref(NULL),
+        vector()
+        {}
+    
+    /** Reference (href) */
+    SPGradientReference *ref;
 
+    /** State in Inkscape gradient system */
+    guint state : 2;
+    
     /** Linear and Radial Gradients */
 
     /** Composed vector */

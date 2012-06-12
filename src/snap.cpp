@@ -46,6 +46,7 @@ SnapManager::SnapManager(SPNamedView const *v) :
     _rotation_center_source_items(NULL),
     _guide_to_ignore(NULL),
     _desktop(NULL),
+    _snapindicator(true),
     _unselected_nodes(NULL)
 {
 }

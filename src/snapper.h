@@ -75,14 +75,14 @@ public:
 
     public:
         // Constructs a direction constraint, e.g. horizontal or vertical but without a specified point
-        SnapConstraint(Geom::Point const &d) : _direction(d), _type(DIRECTION) {}
+        SnapConstraint(Geom::Point const &d) : _point(), _direction(d), _radius(0), _type(DIRECTION) {}
         // Constructs a linear constraint
-        SnapConstraint(Geom::Point const &p, Geom::Point const &d) : _point(p), _direction(d), _type(LINE) {}
-        SnapConstraint(Geom::Line const &l) : _point(l.origin()), _direction(l.versor()), _type(LINE) {}
+        SnapConstraint(Geom::Point const &p, Geom::Point const &d) : _point(p), _direction(d), _radius(0), _type(LINE) {}
+        SnapConstraint(Geom::Line const &l) : _point(l.origin()), _direction(l.versor()), _radius(0), _type(LINE) {}
         // Constructs a circular constraint
         SnapConstraint(Geom::Point const &p, Geom::Point const &d, Geom::Coord const &r) : _point(p), _direction(d), _radius(r), _type(CIRCLE) {}
         // Undefined, or empty constraint
-        SnapConstraint() : _type(UNDEFINED) {}
+        SnapConstraint() : _point(), _direction(), _radius(0), _type(UNDEFINED) {}
 
         bool hasPoint() const {return _type != DIRECTION && _type != UNDEFINED;}
 
