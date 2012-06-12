@@ -121,6 +121,7 @@ public:
         units(),
         spread(),
         ref(NULL),
+        state(2),
         vector()
         {}
     
@@ -128,7 +129,7 @@ public:
     SPGradientReference *ref;
 
     /** State in Inkscape gradient system */
-    guint state : 2;
+    guint state;
     
     /** Linear and Radial Gradients */
 
