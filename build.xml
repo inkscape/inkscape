@@ -359,7 +359,7 @@
             <!-- -DGTKMM_DISABLE_DEPRECATED -->
             <!-- -DGTK_DISABLE_DEPRECATED  -->
             -DGDKMM_DISABLE_DEPRECATED
-            <!-- -DGSEAL_ENABLE -->
+            -DGSEAL_ENABLE
         </defines>
         <includes>
             -I${devlibs}/include
