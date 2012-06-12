@@ -536,7 +536,7 @@ void XmlTree::on_tree_select_row(GtkTreeSelection *selection, gpointer data)
         return;
     }
 
-    Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(GTK_TREE_VIEW(self->tree), &iter);
+    Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(model, &iter);
     g_assert(repr != NULL);
 
 
@@ -586,7 +586,7 @@ void XmlTree::on_tree_select_row_enable(GtkTreeIter *node)
         return;
     }
 
-    Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(GTK_TREE_VIEW(tree), node);
+    Inkscape::XML::Node *repr = sp_xmlview_tree_node_get_repr(GTK_TREE_MODEL(tree->store), node);
     Inkscape::XML::Node *parent=repr->parent();
 
     //on_tree_select_row_enable_if_mutable
@@ -690,7 +690,7 @@ gboolean XmlTree::xml_tree_node_mutable(GtkTreeIter *node)
     }
 
     Inkscape::XML::Node *repr;
-    repr = sp_xmlview_tree_node_get_repr(GTK_TREE_VIEW(tree), node);
+    repr = sp_xmlview_tree_node_get_repr(GTK_TREE_MODEL(tree->store), node);
     g_assert(repr);
 
     // don't let "defs" or "namedview" disappear
@@ -958,8 +958,6 @@ void XmlTree::cmd_duplicate_node()
     if (sp_xmlview_tree_get_repr_node(SP_XMLVIEW_TREE(tree), dup, &node)) {
         GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tree));
         gtk_tree_selection_select_iter(selection, &node);
-    } else {
-
     }
 }
 

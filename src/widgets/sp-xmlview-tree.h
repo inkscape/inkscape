@@ -48,7 +48,7 @@ GtkWidget * sp_xmlview_tree_new (Inkscape::XML::Node * repr, void * factory, voi
 
 void sp_xmlview_tree_set_repr (SPXMLViewTree * tree, Inkscape::XML::Node * repr);
 
-Inkscape::XML::Node * sp_xmlview_tree_node_get_repr (GtkTreeView * tree, GtkTreeIter * node);
+Inkscape::XML::Node * sp_xmlview_tree_node_get_repr (GtkTreeModel *model, GtkTreeIter * node);
 gboolean sp_xmlview_tree_get_repr_node (SPXMLViewTree * tree, Inkscape::XML::Node * repr, GtkTreeIter *node);
 
 
