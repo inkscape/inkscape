@@ -666,7 +666,17 @@ sp_xmlview_tree_set_repr (SPXMLViewTree * tree, Inkscape::XML::Node * repr)
 {
     if ( tree->repr == repr ) return;
     if (tree->repr) {
-        gtk_tree_store_clear(tree->store);
+        /*
+         *  Would like to simple call gtk_tree_store_clear here,
+         *  but it is extremely slow on large data sets.
+         *  Instead just unref the old and create a new store.
+         */
+        //gtk_tree_store_clear(tree->store);
+        gtk_tree_view_set_model(GTK_TREE_VIEW(tree), NULL);
+        g_object_unref(tree->store);
+        tree->store = gtk_tree_store_new (STORE_N_COLS, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_POINTER);
+        gtk_tree_view_set_model (GTK_TREE_VIEW(tree), GTK_TREE_MODEL(tree->store));
+
         Inkscape::GC::release(tree->repr);
     }
     tree->repr = repr;
