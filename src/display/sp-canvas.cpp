@@ -415,11 +415,11 @@ GType SPCanvasItem::getType()
 
 namespace {
 
-void sp_canvas_item_base_class_init(SPCanvasItemClass *klass)
+void sp_canvas_item_base_class_init(SPCanvasItemClass * /*klass*/)
 {
 }
 
-void sp_canvas_item_base_class_finalize(SPCanvasItemClass *klass)
+void sp_canvas_item_base_class_finalize(SPCanvasItemClass * /*klass*/)
 {
 }
 
@@ -451,7 +451,7 @@ void sp_canvas_item_class_init(SPCanvasItemClass *klass)
 		    G_TYPE_NONE, 0);
 }
 
-void sp_canvas_item_init(SPCanvasItem *item, SPCanvasItemClass *klass)
+void sp_canvas_item_init(SPCanvasItem *item, SPCanvasItemClass * /*klass*/)
 {
     item->xform = Geom::Affine(Geom::identity());
     item->ctrlType = Inkscape::CTRL_TYPE_UNKNOWN;
