@@ -255,7 +255,15 @@ SPDesktopWidget::window_get_pointer()
     gint x,y;
     GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(canvas));
 
+#if GTK_CHECK_VERSION(3,0,0)
+    GdkDisplay *display = gdk_window_get_display(window);
+    GdkDeviceManager *dm = gdk_display_get_device_manager(display);
+    GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+    gdk_window_get_device_position(window, device, &x, &y, NULL);
+#else
     gdk_window_get_pointer(window, &x, &y, NULL);
+#endif
+
     return Geom::Point(x,y);
 }
 
@@ -314,7 +322,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     GtkWidget *canvas_tbl;
 
     GtkWidget *eventbox;
-    GtkStyle *style;
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
@@ -483,9 +490,17 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->canvas->enable_cms_display_adj = prefs->getBool("/options/displayprofile/enable");
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     gtk_widget_set_can_focus (GTK_WIDGET (dtw->canvas), TRUE);
-    style = gtk_style_copy(gtk_widget_get_style(GTK_WIDGET(dtw->canvas)));
+
+#if GTK_CHECK_VERSION(3,0,0)
+    GdkRGBA white = {1,1,1,1};
+    gtk_widget_override_background_color(GTK_WIDGET(dtw->canvas),
+                                         GTK_STATE_FLAG_NORMAL,
+					 &white);
+#else
+    GtkStyle *style = gtk_style_copy(gtk_widget_get_style(GTK_WIDGET(dtw->canvas)));
     style->bg[GTK_STATE_NORMAL] = style->white;
     gtk_widget_set_style (GTK_WIDGET (dtw->canvas), style);
+#endif
 
     // TODO: Extension event stuff has been removed from public API in GTK+ 3
     // Need to check that this hasn't broken anything
