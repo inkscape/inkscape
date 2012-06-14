@@ -612,9 +612,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
     dtw->select_status_eventbox = gtk_event_box_new ();
     dtw->select_status = gtk_label_new (NULL);
-#if GTK_MAJOR_VERSION == 2 && GTK_MINOR_VERSION >= 6
     gtk_label_set_ellipsize (GTK_LABEL(dtw->select_status), PANGO_ELLIPSIZE_END);
-#endif
     gtk_misc_set_alignment (GTK_MISC (dtw->select_status), 0.0, 0.5);
     gtk_widget_set_size_request (dtw->select_status, 1, -1);
     // display the initial welcome message in the statusbar
