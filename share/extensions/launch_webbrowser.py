@@ -1,6 +1,10 @@
 #!/usr/bin/env python
-import webbrowser, threading
+import gettext
+import webbrowser
+import threading
 from optparse import OptionParser
+
+_ = gettext.gettext
 
 class VisitWebSiteWithoutLockingInkscape(threading.Thread):
     def __init__(self):
@@ -12,7 +16,7 @@ class VisitWebSiteWithoutLockingInkscape(threading.Thread):
         (self.options, args) = parser.parse_args()
 
     def run(self):
-        webbrowser.open(self.options.url)
+        webbrowser.open(_(self.options.url))
 
 vwswli = VisitWebSiteWithoutLockingInkscape()
 vwswli.start()
