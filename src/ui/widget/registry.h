@@ -9,10 +9,6 @@
 #ifndef INKSCAPE_UI_WIDGET_REGISTRY__H
 #define INKSCAPE_UI_WIDGET_REGISTRY__H
 
-#include <map>
-#include <glibmm/i18n.h>
-#include <glibmm/ustring.h>
-
 namespace Gtk {
     class Object;
 }

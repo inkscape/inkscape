@@ -11,6 +11,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glibmm/i18n.h>
+
 #include "live_effects/lpe-interpolate.h"
 
 #include <2geom/path.h>

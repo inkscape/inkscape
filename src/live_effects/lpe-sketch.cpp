@@ -13,6 +13,8 @@
 
 #include "live_effects/lpe-sketch.h"
 
+#include <glibmm/i18n.h>
+
 // You might need to include other 2geom files. You can add them here:
 #include <2geom/path.h>
 #include <2geom/sbasis.h>

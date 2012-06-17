@@ -18,6 +18,8 @@
   * THIS FILE AND THE HEADER FILE NEED CLEANING UP. PLEASE DO NOT HESISTATE TO DO SO.
   */
 
+#include <glibmm/i18n.h>
+
 #include "ui/widget/registered-widget.h"
 #include "display/canvas-axonomgrid.h"
 #include "2geom/line.h"

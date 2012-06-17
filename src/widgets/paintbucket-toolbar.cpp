@@ -29,6 +29,8 @@
 #endif
 
 
+#include <glibmm/i18n.h>
+
 #include "ui/widget/spinbutton.h"
 #include "toolbox.h"
 #include "paintbucket-toolbar.h"

@@ -21,6 +21,7 @@
 #include <2geom/sbasis-geometric.h>
 #include <gdk/gdkkeysyms.h>
 
+#include <glibmm/i18n.h>
 #include "macros.h"
 #include "pixmaps/cursor-crosshairs.xpm"
 #include <gtk/gtk.h>

@@ -11,6 +11,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glibmm/i18n.h>
+
 #include "persp3d.h"
 //#include "transf_mat_3x4.h"
 #include "document.h"

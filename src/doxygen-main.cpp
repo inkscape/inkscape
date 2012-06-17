@@ -306,7 +306,7 @@ namespace XML {}
  * [\ref interface.cpp, \ref memeq.h] [\ref main.cpp, \ref winmain.cpp]
  * [\ref menus-skeleton.h, \ref preferences-skeleton.h]
  * [\ref select-toolbar.cpp] [\ref shortcuts.cpp]
- * [\ref sp-cursor.cpp] [\ref text-edit.cpp] [\ref toolbox.cpp, \ref ui/widget/toolbox.cpp]
+ * [\ref sp-cursor.cpp] [\ref text-edit.cpp] [\ref toolbox.cpp]
  * Inkscape::Verb [\ref verbs.h]
  *
  */

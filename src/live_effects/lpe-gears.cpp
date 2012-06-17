@@ -11,6 +11,9 @@
 #include "live_effects/lpe-gears.h"
 
 #include <vector>
+
+#include <glibmm/i18n.h>
+
 #include <2geom/d2.h>
 #include <2geom/sbasis.h>
 #include <2geom/bezier-to-sbasis.h>

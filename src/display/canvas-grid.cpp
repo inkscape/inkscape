@@ -13,6 +13,8 @@
  * Don't be shy to correct things.
  */
 
+#include <glibmm/i18n.h>
+
 #include "ui/widget/registered-widget.h"
 #include "desktop.h"
 #include "sp-canvas-util.h"

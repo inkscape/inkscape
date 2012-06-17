@@ -17,6 +17,8 @@
 # include <config.h>
 #endif
 
+#include <glibmm/i18n.h>
+
 #include "inkscape-preferences.h"
 #include <gtkmm/main.h>
 #include <gtkmm/frame.h>

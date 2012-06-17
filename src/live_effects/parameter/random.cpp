@@ -6,6 +6,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glibmm/i18n.h>
+
 #include "live_effects/parameter/random.h"
 #include "live_effects/effect.h"
 #include "svg/svg.h"

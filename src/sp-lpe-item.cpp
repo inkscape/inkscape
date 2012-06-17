@@ -16,6 +16,8 @@
 # include "config.h"
 #endif
 
+#include <glibmm/i18n.h>
+
 #include "live_effects/effect.h"
 #include "live_effects/lpe-path_length.h"
 #include "live_effects/lpeobject.h"

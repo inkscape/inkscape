@@ -13,6 +13,8 @@
 
 #include "live_effects/lpe-extrude.h"
 
+#include <glibmm/i18n.h>
+
 #include <2geom/path.h>
 #include <2geom/piecewise.h>
 #include <2geom/transforms.h>

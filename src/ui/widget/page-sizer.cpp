@@ -27,6 +27,9 @@
 #include <string>
 #include <string.h>
 #include <vector>
+
+#include <glibmm/i18n.h>
+
 #include <2geom/transforms.h>
 
 #include "desktop-handles.h"

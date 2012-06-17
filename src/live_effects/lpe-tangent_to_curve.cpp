@@ -14,6 +14,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glibmm/i18n.h>
+
 #include "live_effects/lpe-tangent_to_curve.h"
 // FIXME: The following are only needed to convert the path's SPCurve* to pwd2.
 //        There must be a more convenient way to achieve this.

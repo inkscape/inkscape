@@ -7,6 +7,9 @@
  */
 
 #include <cstdio>
+
+#include <glibmm/i18n.h>
+
 #include "live_effects/lpe-vonkoch.h"
 #include <2geom/transforms.h>
 

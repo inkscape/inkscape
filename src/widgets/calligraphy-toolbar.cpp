@@ -29,6 +29,8 @@
 #endif
 
 
+#include <glibmm/i18n.h>
+
 #include "../ui/dialog/calligraphic-profile-rename.h"
 
 #include "toolbox.h"

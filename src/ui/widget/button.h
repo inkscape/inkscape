@@ -19,6 +19,7 @@ namespace Widget {
 
 /**
  * Button widget.
+ * @deprecated - no need for an explicit subclass... just perhaps a helper function.
  */
 class Button : public Gtk::Button
 {
@@ -29,6 +30,7 @@ public:
 
 /**
  * CheckButton widget.
+ * @deprecated - no need for an explicit subclass... just perhaps a helper function.
  */
 class CheckButton : public Gtk::CheckButton
 {
@@ -41,6 +43,7 @@ public:
 
 /**
  * RadioButton widget.
+ * @deprecated - no need for an explicit subclass... just perhaps a helper function.
  */
 class RadioButton : public Gtk::RadioButton
 {

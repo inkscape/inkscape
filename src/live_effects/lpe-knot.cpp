@@ -21,6 +21,8 @@
 #include "knot-holder-entity.h"
 #include "knotholder.h"
 
+#include <glibmm/i18n.h>
+
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/sbasis.h>
 #include <2geom/d2.h>
