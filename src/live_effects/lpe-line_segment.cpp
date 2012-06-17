@@ -1,5 +1,3 @@
-#define INKSCAPE_LPE_LINE_SEGMENT_CPP
-
 /** \file
  * LPE <line_segment> implementation
  */

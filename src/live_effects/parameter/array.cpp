@@ -1,5 +1,3 @@
-#define INKSCAPE_LIVEPATHEFFECT_PARAMETER_ARRAY_CPP
-
 /*
  * Copyright (C) Johan Engelen 2008 <j.b.c.engelen@utwente.nl>
  *

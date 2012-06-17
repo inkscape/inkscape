@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_DYNASTROKE_CPP
 /** \file
  * LPE <dynastroke> implementation
  */

@@ -1,5 +1,3 @@
-#define INKSCAPE_LPE_BENDPATH_CPP
-
 /*
  * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
  * Copyright (C) Steren Giannini 2008 <steren.giannini@gmail.com>

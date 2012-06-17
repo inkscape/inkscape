@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_ROUGH_HATCHES_CPP
 /** \file
  * LPE Curve Stitching implementation, used as an example for a base starting class
  * when implementing new LivePathEffects.

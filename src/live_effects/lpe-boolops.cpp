@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_BOOLOPS_CPP
 /** \file
  * LPE boolops implementation
  */

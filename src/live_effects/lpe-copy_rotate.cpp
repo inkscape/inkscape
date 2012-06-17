@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_COPY_ROTATE_CPP
 /** \file
  * LPE <copy_rotate> implementation
  */

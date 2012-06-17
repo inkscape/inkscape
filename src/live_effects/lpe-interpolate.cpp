@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_INTERPOLATE_CPP
 /** \file
  * LPE interpolate implementation
  */

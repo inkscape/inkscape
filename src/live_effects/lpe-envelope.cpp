@@ -1,5 +1,3 @@
-#define INKSCAPE_LPE_ENVELOPE_CPP
-
 /*
  * Copyright (C) Steren Giannini 2008 <steren.giannini@gmail.com>
  *

@@ -1,5 +1,3 @@
-#define INKSCAPE_LPE_PATTERN_ALONG_PATH_CPP
-
 /*
  * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
  *

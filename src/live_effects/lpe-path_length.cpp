@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_PATH_LENGTH_CPP
 /** \file
  * LPE <path_length> implementation.
  */

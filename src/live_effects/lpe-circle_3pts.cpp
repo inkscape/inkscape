@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_CIRCLE_3PTS_CPP
 /** \file
  * LPE "Circle through 3 points" implementation
  */

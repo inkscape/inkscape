@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_PERP_BISECTOR_CPP
 /** \file
  * LPE <perp_bisector> implementation.
  */

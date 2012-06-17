@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_TEXT_LABEL_CPP
 /** \file
  * LPE <text_label> implementation
  */

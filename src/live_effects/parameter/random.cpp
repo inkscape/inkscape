@@ -1,5 +1,3 @@
-#define INKSCAPE_LIVEPATHEFFECT_PARAMETER_RANDOM_CPP
-
 /*
  * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
  *

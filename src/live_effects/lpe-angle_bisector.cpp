@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_ANGLE_BISECTOR_CPP
 /*
  * Authors:
  *   Maximilian Albert <maximilian.albert@gmail.com>

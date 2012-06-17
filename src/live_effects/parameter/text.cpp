@@ -1,5 +1,3 @@
-#define INKSCAPE_LIVEPATHEFFECT_PARAMETER_TEXT_CPP
-
 /*
  * Copyright (C) Maximilian Albert 2008 <maximilian.albert@gmail.com>
  *

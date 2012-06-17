@@ -1,5 +1,3 @@
-#define INKSCAPE_LPE_DOEFFECT_STACK_CPP
-
 /*
  * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
  * Copyright 2006 Michael G. Sloan <mgsloan@gmail.com>

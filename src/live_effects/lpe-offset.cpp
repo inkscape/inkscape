@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_OFFSET_CPP
 /** \file
  * LPE <offset> implementation
  */

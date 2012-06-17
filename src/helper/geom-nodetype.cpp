@@ -1,5 +1,3 @@
-#define INKSCAPE_HELPER_GEOM_NODETYPE_CPP
-
 /*
  * Specific nodetype geometry functions for Inkscape, not provided my lib2geom.
  *

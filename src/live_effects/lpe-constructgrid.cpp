@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_CONSTRUCTGRID_CPP
 /** \file
  * LPE Construct Grid implementation
  */

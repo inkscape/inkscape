@@ -1,5 +1,3 @@
-#define INKSCAPE_LPE_VONKOCH_CPP
-
 /*
  * Copyright (C) JF Barraud 2007 <jf.barraud@gmail.com>
  *

@@ -1,5 +1,3 @@
-#define INKSCAPE_LPE_RULER_CPP
-
 /** \file
  * LPE <ruler> implementation, see lpe-ruler.cpp.
  */

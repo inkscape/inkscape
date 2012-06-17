@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_TANGENT_TO_CURVE_CPP
 /** \file
  * Implementation of tangent-to-curve LPE.
  */

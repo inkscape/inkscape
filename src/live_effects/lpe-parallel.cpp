@@ -1,4 +1,3 @@
-#define INKSCAPE_LPE_PARALLEL_CPP
 /** \file
  * LPE <parallel> implementation
  */

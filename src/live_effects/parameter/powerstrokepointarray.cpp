@@ -1,5 +1,3 @@
-#define INKSCAPE_LIVEPATHEFFECT_POWERSTROKE_POINT_ARRAY_CPP
-
 /*
  * Copyright (C) Johan Engelen 2007 <j.b.c.engelen@utwente.nl>
  *
