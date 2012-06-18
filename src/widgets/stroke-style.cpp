@@ -253,15 +253,24 @@ static gboolean stroke_width_set_unit(SPUnitSelector *,
         /* Absolute to percentage */
         spw->set_data ("update", GUINT_TO_POINTER (TRUE));
 
+#if WITH_GTKMM_3_0
+        Glib::RefPtr<Gtk::Adjustment> *a = static_cast<Glib::RefPtr<Gtk::Adjustment> *>(spw->get_data("width"));
+        float w = sp_units_get_pixels( (*a)->get_value(), *old);
+#else
         Gtk::Adjustment *a = static_cast<Gtk::Adjustment *>(spw->get_data("width"));
-        float w = sp_units_get_pixels (a->get_value(), *old);
+        float w = sp_units_get_pixels(a->get_value(), *old);
+#endif
 
         gdouble average = stroke_average_width (objects);
 
         if (average == Geom::infinity() || average == 0)
             return FALSE;
 
-        a->set_value (100.0 * w / average);
+#if WITH_GTKMM_3_0
+        (*a)->set_value(100.0 * w / average);
+#else
+        a->set_value(100.0 * w / average);
+#endif
 
         spw->set_data ("update", GUINT_TO_POINTER (FALSE));
         return TRUE;
@@ -272,11 +281,19 @@ static gboolean stroke_width_set_unit(SPUnitSelector *,
         /* Percentage to absolute */
         spw->set_data ("update", GUINT_TO_POINTER (TRUE));
 
-        Gtk::Adjustment *a = static_cast<Gtk::Adjustment *>(spw->get_data ("width"));
+#if WITH_GTKMM_3_0
+        Glib::RefPtr<Gtk::Adjustment> *a = static_cast<Glib::RefPtr<Gtk::Adjustment> *>(spw->get_data("width"));
+#else
+        Gtk::Adjustment *a = static_cast<Gtk::Adjustment *>(spw->get_data("width"));
+#endif
 
         gdouble average = stroke_average_width (objects);
 
+#if WITH_GTKMM_3_0
+        (*a)->set_value (sp_pixels_get_units (0.01 * (*a)->get_value() * average, *new_units));
+#else
         a->set_value (sp_pixels_get_units (0.01 * a->get_value() * average, *new_units));
+#endif
 
         spw->set_data ("update", GUINT_TO_POINTER (FALSE));
         return TRUE;
@@ -291,23 +308,18 @@ static gboolean stroke_width_set_unit(SPUnitSelector *,
  */
 Gtk::Container *sp_stroke_style_line_widget_new(void)
 {
-    Gtk::Widget *us;
-    SPDashSelector *ds;
-    GtkWidget *us_old, *spw_old;
-    Gtk::Container *spw;
-    Gtk::Table *t;
     Inkscape::UI::Widget::SpinButton *sb;
     Gtk::RadioButton *tb;
-    Gtk::HBox *f, *hb;
+    Gtk::HBox *hb;
 
-    spw_old = sp_widget_new_global(INKSCAPE);
-    spw = dynamic_cast<Gtk::Container *>(manage(Glib::wrap(spw_old)));
+    GtkWidget *spw_old = sp_widget_new_global(INKSCAPE);
+    Gtk::Container *spw = dynamic_cast<Gtk::Container *>(manage(Glib::wrap(spw_old)));
 
-    f = new Gtk::HBox(false, 0);
+    Gtk::HBox *f = new Gtk::HBox(false, 0);
     f->show();
     spw->add(*f);
 
-    t = new Gtk::Table(3, 6, false);
+    Gtk::Table *t = new Gtk::Table(3, 6, false);
     t->show();
     t->set_border_width(4);
     t->set_row_spacings(4);
@@ -328,9 +340,9 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
 // function in desktop-style.
 
 #if WITH_GTKMM_3_0
-    Glib::RefPtr<Gtk::Adjustment> a = Gtk::Adjustment::create(1.0, 0.0, 1000.0, 0.1, 10.0, 0.0);
-    spw->set_data("width", &a);
-    sb = new Inkscape::UI::Widget::SpinButton(a, 0.1, 3);
+    Glib::RefPtr<Gtk::Adjustment> *a = new Glib::RefPtr<Gtk::Adjustment>(Gtk::Adjustment::create(1.0, 0.0, 1000.0, 0.1, 10.0, 0.0));
+    spw->set_data("width", a);
+    sb = new Inkscape::UI::Widget::SpinButton(*a, 0.1, 3);
 #else
     Gtk::Adjustment *a = new Gtk::Adjustment(1.0, 0.0, 1000.0, 0.1, 10.0, 0.0);
     spw->set_data("width", a);
@@ -343,19 +355,29 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     sp_dialog_defocus_on_enter_cpp(sb);
 
     hb->pack_start(*sb, false, false, 0);
-    us_old = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
-    us = manage(Glib::wrap(us_old));
+    GtkWidget *us_old = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
+    Gtk::Widget *us = manage(Glib::wrap(us_old));
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop)
         sp_unit_selector_set_unit (SP_UNIT_SELECTOR(us_old), sp_desktop_namedview(desktop)->doc_units);
     sp_unit_selector_add_unit(SP_UNIT_SELECTOR(us_old), &sp_unit_get_by_id(SP_UNIT_PERCENT), 0);
     g_signal_connect ( G_OBJECT (us_old), "set_unit", G_CALLBACK (stroke_width_set_unit), spw );
     us->show();
+
+#if WITH_GTKMM_3_0
+    sp_unit_selector_add_adjustment( SP_UNIT_SELECTOR(us_old), GTK_ADJUSTMENT((*a)->gobj()) );
+#else
     sp_unit_selector_add_adjustment( SP_UNIT_SELECTOR(us_old), GTK_ADJUSTMENT(a->gobj()) );
+#endif
+
     hb->pack_start(*us, FALSE, FALSE, 0);
     spw->set_data("units", us_old);
 
+#if WITH_GTKMM_3_0
+    (*a)->signal_value_changed().connect(sigc::bind(sigc::ptr_fun(&sp_stroke_style_width_changed), spw));
+#else
     a->signal_value_changed().connect(sigc::bind(sigc::ptr_fun(&sp_stroke_style_width_changed), spw));
+#endif
     i++;
 
     /* Join type */
@@ -410,9 +432,9 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
     hb = spw_hbox(t, 3, 1, i);
 
 #if WITH_GTKMM_3_0
-    a = Gtk::Adjustment::create(4.0, 0.0, 100.0, 0.1, 10.0, 0.0);
-    spw->set_data("miterlimit", &a);
-    sb = new Inkscape::UI::Widget::SpinButton(a, 0.1, 2);
+    a = new Glib::RefPtr<Gtk::Adjustment>(Gtk::Adjustment::create(4.0, 0.0, 100.0, 0.1, 10.0, 0.0));
+    spw->set_data("miterlimit", a);
+    sb = new Inkscape::UI::Widget::SpinButton(*a, 0.1, 2);
 #else
     a = new Gtk::Adjustment(4.0, 0.0, 100.0, 0.1, 10.0, 0.0);
     spw->set_data("miterlimit", a);
@@ -427,7 +449,11 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
 
     hb->pack_start(*sb, false, false, 0);
 
+#if WITH_GTKMM_3_0
+    (*a)->signal_value_changed().connect(sigc::bind(sigc::ptr_fun(&sp_stroke_style_miterlimit_changed), spw));
+#else
     a->signal_value_changed().connect(sigc::bind(sigc::ptr_fun(&sp_stroke_style_miterlimit_changed), spw));
+#endif
     i++;
 
     /* Cap type */
@@ -472,7 +498,7 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
                                             //   implement a set_mnemonic_source function in the
                                             //   SPDashSelector class, so that we do not have to
                                             //   expose any of the underlying widgets?
-    ds = manage(new SPDashSelector);
+    SPDashSelector *ds = manage(new SPDashSelector);
 
     ds->show();
     t->attach(*ds, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
@@ -646,8 +672,15 @@ sp_stroke_style_line_update(Gtk::Container *spw, Inkscape::Selection *sel)
     FillOrStroke kind = GPOINTER_TO_INT(spw->get_data("kind")) ? FILL : STROKE;
 
     Gtk::Table *sset = static_cast<Gtk::Table *>(spw->get_data("stroke"));
+
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> *width = static_cast<Glib::RefPtr<Gtk::Adjustment> *>(spw->get_data("width"));
+    Glib::RefPtr<Gtk::Adjustment> *ml = static_cast<Glib::RefPtr<Gtk::Adjustment> *>(spw->get_data("miterlimit"));
+#else
     Gtk::Adjustment *width = static_cast<Gtk::Adjustment *>(spw->get_data("width"));
     Gtk::Adjustment *ml = static_cast<Gtk::Adjustment *>(spw->get_data("miterlimit"));
+#endif
+
     SPUnitSelector *us = SP_UNIT_SELECTOR(spw->get_data("units"));
     SPDashSelector *dsel = static_cast<SPDashSelector *>(spw->get_data("dash"));
 
@@ -685,9 +718,17 @@ sp_stroke_style_line_update(Gtk::Container *spw, Inkscape::Selection *sel)
 
         if (unit->base == SP_UNIT_ABSOLUTE || unit->base == SP_UNIT_DEVICE) {
             double avgwidth = sp_pixels_get_units (query->stroke_width.computed, *unit);
+#if WITH_GTKMM_3_0
+            (*width)->set_value(avgwidth);
+#else
             width->set_value(avgwidth);
+#endif
         } else {
+#if WITH_GTKMM_3_0
+            (*width)->set_value(100);
+#else
             width->set_value(100);
+#endif
         }
 
         // if none of the selected objects has a stroke, than quite some controls should be disabled
@@ -717,7 +758,11 @@ sp_stroke_style_line_update(Gtk::Container *spw, Inkscape::Selection *sel)
     }
 
     if (result_ml != QUERY_STYLE_NOTHING)
+#if WITH_GTKMM_3_0
+        (*ml)->set_value(query->stroke_miterlimit.value); // TODO: reflect averagedness?
+#else
         ml->set_value(query->stroke_miterlimit.value); // TODO: reflect averagedness?
+#endif
 
     if (result_join != QUERY_STYLE_MULTIPLE_DIFFERENT) {
         sp_jointype_set(spw, query->stroke_linejoin.value);
@@ -790,10 +835,16 @@ sp_stroke_style_scale_line(Gtk::Container *spw)
 
     spw->set_data("update", GINT_TO_POINTER(TRUE));
 
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> *wadj = static_cast<Glib::RefPtr<Gtk::Adjustment> *>(spw->get_data("width"));
+    Glib::RefPtr<Gtk::Adjustment> *ml = static_cast<Glib::RefPtr<Gtk::Adjustment> *>(spw->get_data("miterlimit"));
+#else
     Gtk::Adjustment *wadj = static_cast<Gtk::Adjustment *>(spw->get_data("width"));
+    Gtk::Adjustment *ml = static_cast<Gtk::Adjustment *>(spw->get_data("miterlimit"));
+#endif
+    
     SPUnitSelector *us = SP_UNIT_SELECTOR(spw->get_data("units"));
     SPDashSelector *dsel = static_cast<SPDashSelector *>(spw->get_data("dash"));
-    Gtk::Adjustment *ml = static_cast<Gtk::Adjustment *>(spw->get_data("miterlimit"));
 
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     SPDocument *document = sp_desktop_document (desktop);
@@ -805,9 +856,13 @@ sp_stroke_style_scale_line(Gtk::Container *spw)
     SPCSSAttr *css = sp_repr_css_attr_new();
 
     if (items) {
-
+#if WITH_GTKMM_3_0
+        double width_typed = (*wadj)->get_value();
+        double const miterlimit = (*ml)->get_value();
+#else
         double width_typed = wadj->get_value();
         double const miterlimit = ml->get_value();
+#endif
 
         SPUnit const *const unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(us));
 
@@ -847,7 +902,11 @@ sp_stroke_style_scale_line(Gtk::Container *spw)
 
         if (unit->base != SP_UNIT_ABSOLUTE && unit->base != SP_UNIT_DEVICE) {
             // reset to 100 percent
+#if WITH_GTKMM_3_0
+            (*wadj)->set_value(100.0);
+#else
             wadj->set_value(100.0);
+#endif
         }
 
     }
