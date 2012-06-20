@@ -294,7 +294,6 @@ src/ui/widget/panel.cpp
 src/ui/widget/preferences-widget.cpp
 src/ui/widget/random.cpp
 src/ui/widget/rendering-options.cpp
-src/ui/widget/ruler.cpp
 src/ui/widget/selected-style.cpp
 src/ui/widget/spin-slider.cpp
 src/ui/widget/style-swatch.cpp
