@@ -2233,7 +2233,7 @@ Verb *Verb::_base_verbs[] = {
     new FileVerb(SP_VERB_FILE_PRINT, "FilePrint", N_("_Print..."), N_("Print document"),
                  GTK_STOCK_PRINT ),
     // TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
-    new FileVerb(SP_VERB_FILE_VACUUM, "FileVacuum", N_("Vac_uum Defs"), N_("Remove unused definitions (such as gradients or clipping paths) from the &lt;defs&gt; of the document"),
+    new FileVerb(SP_VERB_FILE_VACUUM, "FileVacuum", N_("Clean _up document"), N_("Remove unused definitions (such as gradients or clipping paths) from the &lt;defs&gt; of the document"),
                  INKSCAPE_ICON("document-cleanup") ),
     new FileVerb(SP_VERB_FILE_IMPORT, "FileImport", N_("_Import..."),
                  N_("Import a bitmap or SVG image into this document"), INKSCAPE_ICON("document-import")),
