@@ -506,6 +506,7 @@ SectionGroup "$(Languages)" SecLanguages ; Languages sections {{{
   !insertmacro Language Byelorussian      be
   !insertmacro Language Bulgarian         bg
   !insertmacro Language Bengali           bn
+  !insertmacro Language BengaliBangladesh bn_BD
   !insertmacro Language Breton            br
   !insertmacro Language Catalan           ca
   !insertmacro Language CatalanValencia   ca@valencia
@@ -767,6 +768,7 @@ Function .onInit ; initialise the installer {{{2
   !insertmacro Parameter be             ${SecByelorussian}
   !insertmacro Parameter bg             ${SecBulgarian}
   !insertmacro Parameter bn             ${SecBengali}
+  !insertmacro Parameter bn_BD          ${SecBengaliBangladesh}
   !insertmacro Parameter br             ${SecBreton}
   !insertmacro Parameter ca             ${SecCatalan}
   !insertmacro Parameter ca@valencia    ${SecCatalanValencia}
