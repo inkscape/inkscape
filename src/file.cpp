@@ -570,7 +570,7 @@ void sp_file_vacuum()
     unsigned int diff = doc->vacuumDocument();
 
     DocumentUndo::done(doc, SP_VERB_FILE_VACUUM,
-                       _("Vacuum &lt;defs&gt;"));
+                       _("Clean up document"));
 
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
     if (diff > 0) {
