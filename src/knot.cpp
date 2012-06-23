@@ -227,10 +227,21 @@ static void sp_knot_dispose(GObject *object)
 {
     SPKnot *knot = static_cast<SPKnot *>(object);
 
+#if GTK_CHECK_VERSION(3,0,0)
+    GdkDisplay *display = gdk_display_get_default();
+    GdkDeviceManager *dm = gdk_display_get_device_manager(display);
+    GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+    
+    if ((knot->flags & SP_KNOT_GRABBED) && gdk_display_device_is_grabbed(display, device)) {
+        // This happens e.g. when deleting a node in node tool while dragging it
+        gdk_device_ungrab(device, GDK_CURRENT_TIME);
+    }
+#else
     if ((knot->flags & SP_KNOT_GRABBED) && gdk_pointer_is_grabbed ()) {
         // This happens e.g. when deleting a node in node tool while dragging it
         gdk_pointer_ungrab (GDK_CURRENT_TIME);
     }
+#endif
 
     if (knot->_event_handler_id > 0)
         {

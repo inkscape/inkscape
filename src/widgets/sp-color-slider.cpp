@@ -306,10 +306,21 @@ sp_color_slider_button_press (GtkWidget *widget, GdkEventButton *event)
 		slider->oldvalue = slider->value;
 		ColorScales::setScaled( slider->adjustment, CLAMP ((gfloat) (event->x - cx) / cw, 0.0, 1.0) );
 		g_signal_emit (G_OBJECT (slider), slider_signals[DRAGGED], 0);
+
+#if GTK_CHECK_VERSION(3,0,0)
+		gdk_device_grab(gdk_event_get_device((GdkEvent*)event),
+				gtk_widget_get_window(widget), 
+				GDK_OWNERSHIP_NONE,
+				FALSE,
+				(GdkEventMask)(GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK),
+				NULL,
+				event->time);
+#else		
 		gdk_pointer_grab(gtk_widget_get_window(widget), FALSE,
 				  (GdkEventMask)(GDK_POINTER_MOTION_MASK |
 				  GDK_BUTTON_RELEASE_MASK),
 				  NULL, NULL, event->time);
+#endif
 	}
 
 	return FALSE;
@@ -323,7 +334,14 @@ sp_color_slider_button_release (GtkWidget *widget, GdkEventButton *event)
 	slider = SP_COLOR_SLIDER (widget);
 
 	if (event->button == 1) {
+
+#if GTK_CHECK_VERSION(3,0,0)
+		gdk_device_ungrab(gdk_event_get_device((GdkEvent *)event),
+                                  gdk_event_get_time((GdkEvent *)event));
+#else
 		gdk_pointer_ungrab (event->time);
+#endif
+
 		slider->dragging = FALSE;
 		g_signal_emit (G_OBJECT (slider), slider_signals[RELEASED], 0);
 		if (slider->value != slider->oldvalue) g_signal_emit (G_OBJECT (slider), slider_signals[CHANGED], 0);

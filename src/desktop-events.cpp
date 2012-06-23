@@ -92,15 +92,18 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
     SPDesktop *desktop = dtw->desktop;
     GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(dtw->canvas));
 
-    gdk_window_get_pointer(window, &wx, &wy, NULL);
-    Geom::Point const event_win(wx, wy);
-
     gint width, height;
+
 #if GTK_CHECK_VERSION(3,0,0)
+    GdkDevice *device = gdk_event_get_device(event);
+    gdk_window_get_device_position(window, device, &wx, &wy, NULL);
     gdk_window_get_geometry(window, NULL /*x*/, NULL /*y*/, &width, &height);
 #else
+    gdk_window_get_pointer(window, &wx, &wy, NULL);
     gdk_window_get_geometry(window, NULL /*x*/, NULL /*y*/, &width, &height, NULL/*depth*/);
 #endif
+    
+    Geom::Point const event_win(wx, wy);
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
@@ -153,10 +156,21 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
 
                 guide = sp_guideline_new(desktop->guides, NULL, event_dt, normal);
                 sp_guideline_set_color(SP_GUIDELINE(guide), desktop->namedview->guidehicolor);
+
+#if GTK_CHECK_VERSION(3,0,0)
+                gdk_device_grab(device,
+                                gtk_widget_get_window(widget), 
+                                GDK_OWNERSHIP_NONE,
+                                FALSE,
+                                (GdkEventMask)(GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK ),
+                                NULL,
+                                event->button.time);
+#else
                 gdk_pointer_grab(gtk_widget_get_window (widget), FALSE,
                                  (GdkEventMask)(GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK ),
                                  NULL, NULL,
                                  event->button.time);
+#endif
             }
             break;
     case GDK_MOTION_NOTIFY:
@@ -192,7 +206,12 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
             if (clicked && event->button.button == 1) {
                 sp_event_context_discard_delayed_snap_event(desktop->event_context);
 
+#if GTK_CHECK_VERSION(3,0,0)
+                gdk_device_ungrab(device, event->button.time);
+#else
                 gdk_pointer_ungrab(event->button.time);
+#endif
+
                 Geom::Point const event_w(sp_canvas_window_to_world(dtw->canvas, event_win));
                 Geom::Point event_dt(desktop->w2d(event_w));
 

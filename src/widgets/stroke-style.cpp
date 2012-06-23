@@ -341,13 +341,12 @@ Gtk::Container *sp_stroke_style_line_widget_new(void)
 
 #if WITH_GTKMM_3_0
     Glib::RefPtr<Gtk::Adjustment> *a = new Glib::RefPtr<Gtk::Adjustment>(Gtk::Adjustment::create(1.0, 0.0, 1000.0, 0.1, 10.0, 0.0));
-    spw->set_data("width", a);
-    sb = new Inkscape::UI::Widget::SpinButton(*a, 0.1, 3);
 #else
     Gtk::Adjustment *a = new Gtk::Adjustment(1.0, 0.0, 1000.0, 0.1, 10.0, 0.0);
+#endif
+
     spw->set_data("width", a);
     sb = new Inkscape::UI::Widget::SpinButton(*a, 0.1, 3);
-#endif
     sb->set_tooltip_text(_("Stroke width"));
     sb->show();
     spw_label(t, C_("Stroke width", "_Width:"), 0, i, sb);

@@ -562,7 +562,14 @@ void sp_canvas_item_dispose(GObject *object)
 
       if (item == item->canvas->grabbed_item) {
           item->canvas->grabbed_item = NULL;
+
+#if GTK_CHECK_VERSION(3,0,0)
+          GdkDeviceManager *dm = gdk_display_get_device_manager(gdk_display_get_default());
+          GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+          gdk_device_ungrab(device, GDK_CURRENT_TIME);
+#else
           gdk_pointer_ungrab (GDK_CURRENT_TIME);
+#endif
       }
 
       if (item == item->canvas->focused_item) {
@@ -891,9 +898,21 @@ int sp_canvas_item_grab(SPCanvasItem *item, guint event_mask, GdkCursor *cursor,
     // fixme: Top hack (Lauris)
     // fixme: If we add key masks to event mask, Gdk will abort (Lauris)
     // fixme: But Canvas actualle does get key events, so all we need is routing these here
+#if GTK_CHECK_VERSION(3,0,0)
+    GdkDeviceManager *dm = gdk_display_get_device_manager(gdk_display_get_default());
+    GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+    gdk_device_grab(device, 
+                    getWindow(item->canvas),
+                    GDK_OWNERSHIP_NONE,
+                    FALSE,
+                    (GdkEventMask)(event_mask & (~(GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK))),
+                    cursor,
+                    etime);
+#else
     gdk_pointer_grab( getWindow(item->canvas), FALSE,
                       (GdkEventMask)(event_mask & (~(GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK))),
                       NULL, cursor, etime);
+#endif
 
     item->canvas->grabbed_item = item;
     item->canvas->grabbed_event_mask = event_mask;
@@ -920,7 +939,13 @@ void sp_canvas_item_ungrab(SPCanvasItem *item, guint32 etime)
 
     item->canvas->grabbed_item = NULL;
 
+#if GTK_CHECK_VERSION(3,0,0)
+    GdkDeviceManager *dm = gdk_display_get_device_manager(gdk_display_get_default());
+    GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+    gdk_device_ungrab(device, etime);
+#else
     gdk_pointer_ungrab (etime);
+#endif
 }
 
 /**
@@ -1318,7 +1343,13 @@ void SPCanvasImpl::shutdown_transients(SPCanvas *canvas)
 
     if (canvas->grabbed_item) {
         canvas->grabbed_item = NULL;
+#if GTK_CHECK_VERSION(3,0,0)
+        GdkDeviceManager *dm = gdk_display_get_device_manager(gdk_display_get_default());
+        GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+        gdk_device_ungrab(device, GDK_CURRENT_TIME);
+#else
         gdk_pointer_ungrab (GDK_CURRENT_TIME);
+#endif
     }
 
     remove_idle(canvas);
@@ -1814,7 +1845,13 @@ gint SPCanvasImpl::handleScroll(GtkWidget *widget, GdkEventScroll *event)
 }
 
 static inline void request_motions(GdkWindow *w, GdkEventMotion *event) {
+#if GTK_CHECK_VERSION(3,0,0)
+    gdk_window_get_device_position(w,
+                                   gdk_event_get_device((GdkEvent *)(event)),
+                                   NULL, NULL, NULL);
+#else
     gdk_window_get_pointer(w, NULL, NULL, NULL);
+#endif
     gdk_event_request_motions(event);
 }
 
@@ -2082,7 +2119,18 @@ bool SPCanvasImpl::sp_canvas_paint_rect(SPCanvas *canvas, int xx0, int yy0, int 
 
     // Save the mouse location
     gint x, y;
+
+#if GTK_CHECK_VERSION(3,0,0)
+    GdkDeviceManager *dm = gdk_display_get_device_manager(gdk_display_get_default());
+    GdkDevice *device = gdk_device_manager_get_client_pointer(dm);
+
+    gdk_window_get_device_position(gtk_widget_get_window(GTK_WIDGET(canvas)), 
+                                   device,
+                                   &x, &y, NULL);
+#else
     gdk_window_get_pointer (gtk_widget_get_window (GTK_WIDGET(canvas)), &x, &y, NULL);
+#endif
+
     setup.mouse_loc = sp_canvas_window_to_world (canvas, Geom::Point(x,y));
 
     if (canvas->rendermode != Inkscape::RENDERMODE_OUTLINE) {
