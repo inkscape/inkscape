@@ -659,7 +659,12 @@ GtkWidget* create_tool_item( GtkAction* action )
         item = GTK_WIDGET( gtk_tool_item_new() );
 
         if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
+#if GTK_CHECK_VERSION(3,0,0)
+            GtkWidget* holder = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+            gtk_box_set_homogeneous(GTK_BOX(holder), FALSE);
+#else
             GtkWidget* holder = gtk_hbox_new( FALSE, 0 );
+#endif
 
             GtkRadioAction* ract = 0;
             GtkWidget* sub = 0;
@@ -768,7 +773,14 @@ GtkWidget* create_tool_item( GtkAction* action )
             gtk_container_add( GTK_CONTAINER(item), holder );
         } else {
             GtkCellRenderer * renderer = 0;
+
+#if GTK_CHECK_VERSION(3,0,0)
+            GtkWidget* holder = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
+            gtk_box_set_homogeneous(GTK_BOX(holder), FALSE);
+#else
             GtkWidget *holder = gtk_hbox_new( FALSE, 4 );
+#endif
+
             GtkEntry *entry = 0;
             GtkWidget *normal;
 

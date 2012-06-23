@@ -866,16 +866,32 @@ void XmlTree::cmd_new_element_node()
     g_signal_connect(G_OBJECT(new_window), "destroy", gtk_main_quit, NULL);
     g_signal_connect(G_OBJECT(new_window), "key-press-event", G_CALLBACK(quit_on_esc), new_window);
 
+#if GTK_CHECK_VERSION(3,0,0)
+    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+    gtk_box_set_homogeneous(GTK_BOX(vbox), FALSE);
+#else
     vbox = gtk_vbox_new(FALSE, 4);
+#endif
+
     gtk_container_add(GTK_CONTAINER(new_window), vbox);
 
     name_entry = new Gtk::Entry();
     gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(name_entry->gobj()), FALSE, TRUE, 0);
 
+#if GTK_CHECK_VERSION(3,0,0)
+    sep = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+#else
     sep = gtk_hseparator_new();
+#endif
+
     gtk_box_pack_start(GTK_BOX(vbox), sep, FALSE, TRUE, 0);
 
+#if GTK_CHECK_VERSION(3,0,0)
+    bbox = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+#else
     bbox = gtk_hbutton_box_new();
+#endif
+
     gtk_container_set_border_width(GTK_CONTAINER(bbox), 4);
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, TRUE, 0);

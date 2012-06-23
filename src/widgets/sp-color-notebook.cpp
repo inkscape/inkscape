@@ -256,7 +256,13 @@ void ColorNotebook::init()
         }
     }
 
+#if GTK_CHECK_VERSION(3,0,0)
+    _buttonbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+    gtk_box_set_homogeneous(GTK_BOX(_buttonbox), TRUE);
+#else
     _buttonbox = gtk_hbox_new (TRUE, 2);
+#endif
+
     gtk_widget_show (_buttonbox);
     _buttons = new GtkWidget *[_trackerList->len];
 
