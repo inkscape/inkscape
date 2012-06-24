@@ -489,9 +489,14 @@ static void sp_ruler_realize(GtkWidget *widget)
   gtk_widget_set_window(widget, window);
   gdk_window_set_user_data(window, ruler);
 
+#if GTK_CHECK_VERSION(3,0,0)
+  gtk_style_context_set_background(gtk_widget_get_style_context(widget),
+                                   window);
+#else
   gtk_widget_style_attach(widget);
   gtk_style_set_background(gtk_widget_get_style(widget),
 		           window, GTK_STATE_ACTIVE);
+#endif
 
   sp_ruler_make_pixmap (ruler);
 }
@@ -756,7 +761,6 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler, cairo_t *cr)
 
     g_object_get(G_OBJECT(ruler), "orientation", &orientation, NULL);
     GtkWidget *widget = GTK_WIDGET (ruler);
-    GtkStyle  *style = gtk_widget_get_style (widget);
 
     PangoContext *pango_context = gtk_widget_get_pango_context (widget);
     PangoLayout  *pango_layout = pango_layout_new (pango_context);
@@ -766,8 +770,19 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler, cairo_t *cr)
     pango_font_description_free (fs);
 
     gint digit_height = (int) floor (RULER_FONT_SIZE * RULER_FONT_VERTICAL_SPACING / PANGO_SCALE + 0.5);
+    
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkStyleContext *context = gtk_widget_get_style_context(widget);
+    GtkStateFlags state = gtk_widget_get_state_flags(widget);
+    GtkBorder padding;
+    gtk_style_context_get_padding(context, state, &padding);
+    gint xthickness = padding.left;
+    gint ythickness = padding.top;
+#else
+    GtkStyle  *style = gtk_widget_get_style(widget);
     gint xthickness = style->xthickness;
     gint ythickness = style->ythickness;
+#endif
 
     gtk_widget_get_allocation (widget, &allocation);
     
@@ -780,12 +795,15 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler, cairo_t *cr)
     }
     
 #if GTK_CHECK_VERSION(3,0,0)
-    gtk_paint_box(style, cr,
-                  GTK_STATE_NORMAL, GTK_SHADOW_NONE, 
-		  widget,
-                  orientation == GTK_ORIENTATION_HORIZONTAL ? "hruler" : "vruler",
-                  0, 0, 
-                  allocation.width, allocation.height);
+    gtk_render_frame(context, 
+                     cr,
+		     0, 0, 
+		     allocation.width, allocation.height);
+    
+    gtk_render_background(context, 
+                          cr,
+			  0, 0, 
+			  allocation.width, allocation.height);
 #else
     gtk_paint_box(style, priv->backing_store,
                   GTK_STATE_NORMAL, GTK_SHADOW_NONE, NULL, widget,
@@ -795,7 +813,16 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler, cairo_t *cr)
 #endif
     
     cairo_set_line_width(cr, 1.0);
+
+#if GTK_CHECK_VERSION(3,0,0)
+    GdkRGBA color;
+    gtk_style_context_get_color(context,
+                                gtk_widget_get_state_flags(widget),
+                                &color);
+    gdk_cairo_set_source_rgba(cr, &color);
+#else
     gdk_cairo_set_source_color(cr, &style->fg[gtk_widget_get_state(widget)]);
+#endif
 
     gdouble upper = priv->upper / priv->metric->pixels_per_unit; // upper and lower are expressed in ruler units
     gdouble lower = priv->lower / priv->metric->pixels_per_unit;

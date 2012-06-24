@@ -230,9 +230,12 @@ sp_color_slider_realize (GtkWidget *widget)
 
 	gdk_window_set_user_data(gtk_widget_get_window(widget), widget);
 
+#if !GTK_CHECK_VERSION(3,0,0)
+	// This doesn't do anything in GTK+ 3
 	gtk_widget_set_style(widget, 
-			gtk_style_attach(gtk_widget_get_style(widget), 
-				gtk_widget_get_window(widget)));
+                             gtk_style_attach(gtk_widget_get_style(widget), 
+                             gtk_widget_get_window(widget)));
+#endif
 }
 
 static void
@@ -507,7 +510,6 @@ sp_color_slider_adjustment_value_changed (GtkAdjustment *adjustment, SPColorSlid
 
 static gboolean sp_color_slider_draw(GtkWidget *widget, cairo_t *cr)
 {
-	GdkWindow *window = gtk_widget_get_window(widget);
 	SPColorSlider *slider = SP_COLOR_SLIDER(widget);
 	
 	gboolean colorsOnTop = Inkscape::Preferences::get()->getBool("/options/workarounds/colorsontop", false);
@@ -515,16 +517,20 @@ static gboolean sp_color_slider_draw(GtkWidget *widget, cairo_t *cr)
 	GtkAllocation allocation;
 	gtk_widget_get_allocation(widget, &allocation);
 	
+#if GTK_CHECK_VERSION(3,0,0)
+	GtkStyleContext *context = gtk_widget_get_style_context(widget);
+#else
+	GdkWindow *window = gtk_widget_get_window(widget);
 	GtkStyle *style = gtk_widget_get_style(widget);
+#endif
 
         // Draw shadow
         if (colorsOnTop) {
 #if GTK_CHECK_VERSION(3,0,0)
-            gtk_paint_shadow( style, cr,
-                              gtk_widget_get_state(widget), GTK_SHADOW_IN,
-                              widget, "colorslider",
-                              0, 0,
-                              allocation.width, allocation.height);
+            gtk_render_frame(context,
+                             cr,
+			     0, 0,
+			     allocation.width, allocation.height);
 #else
             gtk_paint_shadow( style, window,
                               gtk_widget_get_state(widget), GTK_SHADOW_IN,
@@ -536,8 +542,21 @@ static gboolean sp_color_slider_draw(GtkWidget *widget, cairo_t *cr)
 
 	/* Paintable part of color gradient area */
 	GdkRectangle carea;
+
+#if GTK_CHECK_VERSION(3,0,0)
+	GtkBorder padding;
+	
+	gtk_style_context_get_padding(context,
+                                      gtk_widget_get_state_flags(widget),
+                                      &padding);
+
+	carea.x = padding.left;
+	carea.y = padding.top;
+#else
 	carea.x = style->xthickness;
 	carea.y = style->ythickness;
+#endif
+
 	carea.width = allocation.width - 2 * carea.x;
 	carea.height = allocation.height - 2 * carea.y;
 
@@ -554,7 +573,7 @@ static gboolean sp_color_slider_draw(GtkWidget *widget, cairo_t *cr)
 			GdkPixbuf *pb = gdk_pixbuf_new_from_data (b, GDK_COLORSPACE_RGB,
 					0, 8, carea.width, carea.height, carea.width * 3, NULL, NULL);
 
-			gdk_cairo_set_source_pixbuf(cr, pb,  carea.x, carea.y);
+			gdk_cairo_set_source_pixbuf(cr, pb, carea.x, carea.y);
 			cairo_paint(cr);
 			g_object_unref(pb);
 		}
@@ -612,11 +631,10 @@ static gboolean sp_color_slider_draw(GtkWidget *widget, cairo_t *cr)
         /* Draw shadow */
         if (!colorsOnTop) {
 #if GTK_CHECK_VERSION(3,0,0)
-            gtk_paint_shadow( style, cr,
-                              gtk_widget_get_state(widget), GTK_SHADOW_IN,
-                              widget, "colorslider",
-                              0, 0,
-                              allocation.width, allocation.height);
+            gtk_render_frame(context,
+			     cr,
+			     0, 0,
+			     allocation.width, allocation.height);
 #else
             gtk_paint_shadow( style, window,
                               gtk_widget_get_state(widget), GTK_SHADOW_IN,
@@ -633,9 +651,13 @@ static gboolean sp_color_slider_draw(GtkWidget *widget, cairo_t *cr)
 	gint w = ARROW_SIZE;
 	cairo_set_line_width(cr, 1.0);
 
+	GdkColor white, black;
+	gdk_color_parse("#fff", &white);
+	gdk_color_parse("#000", &black);
+
 	while ( w > 0 )
 	{
-		gdk_cairo_set_source_color(cr, &style->white);
+		gdk_cairo_set_source_color(cr, &white);
 		cairo_move_to(cr, x - 0.5, y1 + 0.5);
 		cairo_line_to(cr, x + w - 1 + 0.5, y1 + 0.5);
 		cairo_move_to(cr, x - 0.5, y2 + 0.5);
@@ -645,7 +667,7 @@ static gboolean sp_color_slider_draw(GtkWidget *widget, cairo_t *cr)
 		x++;
 		if ( w > 0 )
 		{
-			gdk_cairo_set_source_color(cr, &style->black);
+			gdk_cairo_set_source_color(cr, &black);
 			cairo_move_to(cr, x - 0.5, y1 + 0.5);
 			cairo_line_to(cr, x + w - 1 + 0.5, y1 + 0.5);
 			cairo_move_to(cr, x - 0.5, y2 + 0.5);

@@ -1438,9 +1438,11 @@ void SPCanvasImpl::realize(GtkWidget *widget)
     if ( prefs->getBool("/options/useextinput/value", true) )
         gtk_widget_set_events(widget, attributes.event_mask);
 
+#if !GTK_CHECK_VERSION(3,0,0)
+    // This does nothing in GTK+ 3
     GtkStyle *style = gtk_widget_get_style (widget);
-
     gtk_widget_set_style (widget, gtk_style_attach (style, window));
+#endif
 
     gtk_widget_set_realized (widget, TRUE);
 }
@@ -1492,8 +1494,9 @@ void SPCanvasImpl::sizeAllocate(GtkWidget *widget, GtkAllocation *allocation)
    
     gtk_widget_get_allocation (widget, &widg_allocation);
 
-    Geom::IntRect old_area = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
-        widg_allocation.width, widg_allocation.height);
+//    Geom::IntRect old_area = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
+//        widg_allocation.width, widg_allocation.height);
+
     Geom::IntRect new_area = Geom::IntRect::from_xywh(canvas->x0, canvas->y0,
         allocation->width, allocation->height);
 
@@ -1882,7 +1885,6 @@ int SPCanvasImpl::handleMotion(GtkWidget *widget, GdkEventMotion *event)
 void SPCanvasImpl::sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect const &paint_rect, Geom::IntRect const &canvas_rect, int /*sw*/)
 {
     GtkWidget *widget = GTK_WIDGET (canvas);
-    GtkStyle  *style;
 
     // Mark the region clean
     sp_canvas_mark_rect(canvas, paint_rect, 0);
@@ -1918,8 +1920,18 @@ void SPCanvasImpl::sp_canvas_paint_single_buffer(SPCanvas *canvas, Geom::IntRect
     //cairo_stroke_preserve(buf.ct);
     //cairo_clip(buf.ct);
 
-    style = gtk_widget_get_style (widget);
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkStyleContext *context = gtk_widget_get_style_context(widget);
+    GdkRGBA color;
+    gtk_style_context_get_background_color(context,
+                                           gtk_widget_get_state_flags(widget),
+                                           &color);
+    gdk_cairo_set_source_rgba(buf.ct, &color);
+#else
+    GtkStyle *style = gtk_widget_get_style (widget);
     gdk_cairo_set_source_color(buf.ct, &style->bg[GTK_STATE_NORMAL]);
+#endif
+
     cairo_set_operator(buf.ct, CAIRO_OPERATOR_SOURCE);
     //cairo_rectangle(buf.ct, 0, 0, paint_rect.width(), paint_rec.height());
     cairo_paint(buf.ct);

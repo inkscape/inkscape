@@ -37,6 +37,9 @@
 # include "config.h"
 #endif
 
+#include <algorithm>
+using std::min;
+
 #include <gtk/gtk.h>
 #include "eek-preview.h"
 
@@ -222,7 +225,6 @@ static gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* /* 
 static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
 {
         GtkStyle* style = gtk_widget_get_style(widget);
-	GdkWindow* window = gtk_widget_get_window(widget);
 	GtkAllocation allocation;
 	gtk_widget_get_allocation (widget, &allocation);
         EekPreview* preview = EEK_PREVIEW(widget);
@@ -231,15 +233,20 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
 	gint insetY = 0;
 
 #if GTK_CHECK_VERSION(3,0,0)
-	gtk_paint_flat_box( style,
-			    cr,
-                            (GtkStateType)gtk_widget_get_state(widget),
-                            GTK_SHADOW_NONE,
-                            widget,
-                            NULL,
-                            0, 0,
-                            allocation.width, allocation.height);
+        GtkStyleContext *context = gtk_widget_get_style_context(widget);
+	
+        gtk_render_frame(context,
+                         cr,
+                         0, 0,
+                         allocation.width, allocation.height);
+	
+        gtk_render_background(context,
+                              cr,
+                              0, 0,
+                              allocation.width, allocation.height);
 #else
+	GdkWindow* window = gtk_widget_get_window(widget);
+        
         gtk_paint_flat_box( style,
                             window,
                             (GtkStateType)gtk_widget_get_state(widget),
@@ -311,17 +318,12 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
 
             if ( preview->_linked & PREVIEW_LINK_IN ) {
 #if GTK_CHECK_VERSION(3,0,0)
-                gtk_paint_arrow( style,
+                gtk_render_arrow(context,
                                  cr,
-                                 gtk_widget_get_state (widget),
-                                 GTK_SHADOW_ETCHED_IN,
-                                 widget, /* may be NULL */
-                                 NULL, /* detail */
-                                 GTK_ARROW_DOWN,
-                                 FALSE,
+                                 G_PI, // Down-pointing arrow
                                  area.x, area.y,
-                                 area.width, area.height
-                                 );
+                                 min(area.width, area.height)
+                                );
 #else
                 gtk_paint_arrow( style,
                                  window,
@@ -345,17 +347,12 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
                 }
 
 #if GTK_CHECK_VERSION(3,0,0)
-                gtk_paint_arrow( style,
+                gtk_render_arrow(context,
                                  cr,
-                                 gtk_widget_get_state (widget),
-                                 GTK_SHADOW_ETCHED_OUT,
-                                 widget, /* may be NULL */
-                                 NULL, /* detail */
-                                 GTK_ARROW_DOWN,
-                                 FALSE,
+                                 G_PI, // Down-pointing arrow
                                  otherArea.x, otherArea.y,
-                                 otherArea.width, otherArea.height
-			       );
+                                 min(otherArea.width, otherArea.height)
+			        );
 #else
                 gtk_paint_arrow( style,
                                  window,
@@ -379,16 +376,11 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
                 }
 
 #if GTK_CHECK_VERSION(3,0,0)
-                gtk_paint_arrow( style,
+                gtk_render_arrow(context,
                                  cr,
-                                 gtk_widget_get_state (widget),
-                                 GTK_SHADOW_ETCHED_OUT,
-                                 widget, /* may be NULL */
-                                 NULL, /* detail */
-                                 GTK_ARROW_LEFT,
-                                 FALSE,
+                                 1.5*G_PI, // Left-pointing arrow
                                  otherArea.x, otherArea.y,
-                                 otherArea.width, otherArea.height
+                                 min(otherArea.width, otherArea.height)
 			       );
 #else
                 gtk_paint_arrow( style,
@@ -415,12 +407,8 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
                     otherArea.y = possible.y + (possible.height - otherArea.height) / 2;
                 }
 #if GTK_CHECK_VERSION(3,0,0)
-                gtk_paint_check( style,
+                gtk_render_check(context,
                                  cr,
-                                 gtk_widget_get_state (widget),
-                                 GTK_SHADOW_ETCHED_OUT,
-                                 widget,
-                                 NULL,
                                  otherArea.x, otherArea.y,
                                  otherArea.width, otherArea.height );
 #else
@@ -471,11 +459,8 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
             gtk_widget_get_allocation (widget, &allocation);
 
 #if GTK_CHECK_VERSION(3,0,0)
-            gtk_paint_focus( style,
+            gtk_render_focus(context,
                              cr,
-                             GTK_STATE_NORMAL,
-                             widget,
-                             NULL,
                              0 + 1, 0 + 1,
                              allocation.width - 2, allocation.height - 2 );
 #else

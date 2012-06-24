@@ -281,10 +281,18 @@ gboolean IconImpl::draw(GtkWidget *widget, cairo_t* cr)
         gtk_icon_source_set_pixbuf(source, icon->pb);
         gtk_icon_source_set_size(source, GTK_ICON_SIZE_SMALL_TOOLBAR); // note: this is boilerplate and not used
         gtk_icon_source_set_size_wildcarded(source, FALSE);
+
+#if GTK_CHECK_VERSION(3,0,0)
+        image = gtk_render_icon_pixbuf(gtk_widget_get_style_context(widget), 
+                                       source, 
+                                       (GtkIconSize)-1);
+#else
         image = gtk_style_render_icon(gtk_widget_get_style(widget), source, 
 			gtk_widget_get_direction(widget),
 			(GtkStateType) gtk_widget_get_state(widget), 
 			(GtkIconSize)-1, widget, "gtk-image");
+#endif
+
         gtk_icon_source_free(source);
         unref_image = true;
     }
