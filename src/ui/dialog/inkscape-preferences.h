@@ -346,7 +346,8 @@ protected:
     UI::Widget::PrefCheckButton     _cms_proof_preserveblack;
 
     Gtk::Notebook       _grids_notebook;
-    UI::Widget::PrefCheckButton     _grids_no_emphasize_on_zoom;
+    UI::Widget::PrefRadioButton     _grids_no_emphasize_on_zoom;
+    UI::Widget::PrefRadioButton     _grids_emphasize_on_zoom;
     UI::Widget::DialogPage          _grids_xy;
     UI::Widget::DialogPage          _grids_axonom;
     // CanvasXYGrid properties:

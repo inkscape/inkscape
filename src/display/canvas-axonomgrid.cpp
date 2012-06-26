@@ -342,7 +342,7 @@ _wr.setUpdating (true);
 
     Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gcol = Gtk::manage(
         new Inkscape::UI::Widget::RegisteredColorPicker(
-            _("Grid line _color:"), _("Grid line color"), _("Color of grid lines"),
+            _("Minor grid line _color:"), _("Minor grid line color"), _("Color of the minor grid lines"),
             "color", "opacity", _wr, repr, doc));
 
     Inkscape::UI::Widget::RegisteredColorPicker *_rcp_gmcol = Gtk::manage(

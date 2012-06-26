@@ -654,10 +654,12 @@ void InkscapePreferences::initPageUI()
     this->AddPage(_page_windows, _("Windows"), iter_ui, PREFS_PAGE_UI_WINDOWS);
 
     // Grids
-    _page_grids.add_group_header( _("Major grid line emphasizing"));
+    _page_grids.add_group_header( _("Line color when zooming out"));
 
-    _grids_no_emphasize_on_zoom.init( _("Don't emphasize gridlines when zoomed out"), "/options/grids/no_emphasize_when_zoomedout", false);
-    _page_grids.add_line( true, "", _grids_no_emphasize_on_zoom, "", _("If set and zoomed out, the gridlines will be shown in normal color instead of major grid line color"), false);
+    _grids_no_emphasize_on_zoom.init( _("Minor grid line color"), "/options/grids/no_emphasize_when_zoomedout", 1, true, 0);
+    _page_grids.add_line( true, "", _grids_no_emphasize_on_zoom, "", _("The gridlines will be shown in minor grid line color"), false);
+    _grids_emphasize_on_zoom.init( _("Major grid line color"), "/options/grids/no_emphasize_when_zoomedout", 0, false, &_grids_no_emphasize_on_zoom);
+    _page_grids.add_line( true, "", _grids_emphasize_on_zoom, "", _("The gridlines will be shown in major grid line color"), false);
 
     _page_grids.add_group_header( _("Default grid settings"));
 
@@ -679,8 +681,8 @@ void InkscapePreferences::initPageUI()
         _grids_xy.add_line( false, _("Spacing X:"), _grids_xy_spacing_x, "", _("Distance between vertical grid lines"), false);
         _grids_xy.add_line( false, _("Spacing Y:"), _grids_xy_spacing_y, "", _("Distance between horizontal grid lines"), false);
 
-        _grids_xy_color.init(_("Grid line color:"), "/options/grids/xy/color", 0x0000ff20);
-        _grids_xy.add_line( false, _("Grid line color:"), _grids_xy_color, "", _("Color used for normal grid lines"), false);
+        _grids_xy_color.init(_("Minor grid line color:"), "/options/grids/xy/color", 0x0000ff20);
+        _grids_xy.add_line( false, _("Minor grid line color:"), _grids_xy_color, "", _("Color used for normal grid lines"), false);
         _grids_xy_empcolor.init(_("Major grid line color:"), "/options/grids/xy/empcolor", 0x0000ff40);
         _grids_xy.add_line( false, _("Major grid line color:"), _grids_xy_empcolor, "", _("Color used for major (highlighted) grid lines"), false);
         _grids_xy_empspacing.init("/options/grids/xy/empspacing", 1.0, 1000.0, 1.0, 5.0, 5.0, true, false);
@@ -704,8 +706,8 @@ void InkscapePreferences::initPageUI()
         _grids_axonom_angle_z.init("/options/grids/axonom/angle_z", -360.0, 360.0, 1.0, 10.0, 30.0, false, false);
         _grids_axonom.add_line( false, _("Angle X:"), _grids_axonom_angle_x, "", _("Angle of x-axis"), false);
         _grids_axonom.add_line( false, _("Angle Z:"), _grids_axonom_angle_z, "", _("Angle of z-axis"), false);
-        _grids_axonom_color.init(_("Grid line color:"), "/options/grids/axonom/color", 0x0000ff20);
-        _grids_axonom.add_line( false, _("Grid line color:"), _grids_axonom_color, "", _("Color used for normal grid lines"), false);
+        _grids_axonom_color.init(_("Minor grid line color:"), "/options/grids/axonom/color", 0x0000ff20);
+        _grids_axonom.add_line( false, _("Minor grid line color:"), _grids_axonom_color, "", _("Color used for normal grid lines"), false);
         _grids_axonom_empcolor.init(_("Major grid line color:"), "/options/grids/axonom/empcolor", 0x0000ff40);
         _grids_axonom.add_line( false, _("Major grid line color:"), _grids_axonom_empcolor, "", _("Color used for major (highlighted) grid lines"), false);
         _grids_axonom_empspacing.init("/options/grids/axonom/empspacing", 1.0, 1000.0, 1.0, 5.0, 5.0, true, false);
