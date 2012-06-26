@@ -182,7 +182,7 @@ void SwatchSelector::setVector(SPDocument */*doc*/, SPGradient *vector)
         _csel->base->setColor( color );
         gtk_widget_show_all( GTK_WIDGET(_csel) );
     } else {
-        gtk_widget_hide( GTK_WIDGET(_csel) );
+        //gtk_widget_hide( GTK_WIDGET(_csel) );
     }
 
 /*

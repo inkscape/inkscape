@@ -16,11 +16,13 @@
  */
 
 #include <glib.h>
+#include <gtkmm/liststore.h>
 
 #include <stddef.h>
 #include <sigc++/connection.h>
 
 #include <gtk/gtk.h>
+#include "gradient-selector.h"
 
 #define SP_TYPE_GRADIENT_VECTOR_SELECTOR (sp_gradient_vector_selector_get_type ())
 #define SP_GRADIENT_VECTOR_SELECTOR(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_GRADIENT_VECTOR_SELECTOR, SPGradientVectorSelector))
@@ -43,16 +45,14 @@ struct SPGradientVectorSelector {
     SPDocument *doc;
     SPGradient *gr;
 
-    /* ComboBox of gradient vectors */
-    GtkWidget *combo_box;
-    GtkListStore *store;
+    /* Gradient vectors store */
+    Glib::RefPtr<Gtk::ListStore> store;
+    SPGradientSelector::ModelColumns *columns;
 
     sigc::connection gradient_release_connection;
     sigc::connection defs_release_connection;
     sigc::connection defs_modified_connection;
-
-    gulong combo_connection;
-
+    sigc::connection tree_select_connection;
 
     void setSwatched();
 };

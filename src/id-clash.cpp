@@ -273,6 +273,53 @@ prevent_id_clashes(SPDocument *imported_doc, SPDocument *current_doc)
 }
 
 /*
+ * Change the id of a SPObject to new_name
+ * If there is an id clash then rename to something similar
+ */
+void rename_id(SPObject *elem, Glib::ustring const &new_name)
+{
+    gchar *id = g_strdup(new_name.c_str());
+    g_strcanon (id, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.:", '_');
+    if (!*id || !isalnum (*id)) {
+        g_message("Invalid Id, will not change.");
+        return;
+    }
+
+    SPDocument *current_doc = elem->document;
+    refmap_type *refmap = new refmap_type;
+    id_changelist_type id_changes;
+    find_references(current_doc->getRoot(), refmap);
+
+    std::string old_id(elem->getId());
+    std::string new_id(id);
+    if (id && current_doc->getObjectById(id)) {
+        // Choose a new ID.
+        // To try to preserve any meaningfulness that the original ID
+        // may have had, the new ID is the old ID followed by a hyphen
+        // and one or more digits.
+        new_id += '-';
+        for (;;) {
+            new_id += "0123456789"[std::rand() % 10];
+            const char *str = new_id.c_str();
+            if (current_doc->getObjectById(str) == NULL)
+                break;
+        }
+    }
+
+    // Change to the new ID
+    elem->getRepr()->setAttribute("id", new_id.c_str());
+    // Make a note of this change, if we need to fix up refs to it
+    if (refmap->find(old_id) != refmap->end()) {
+        id_changes.push_back(id_changeitem_type(elem, old_id));
+    }
+
+    fix_up_refs(refmap, id_changes);
+
+    g_free (id);
+    delete refmap;
+}
+
+/*
   Local Variables:
   mode:c++
   c-file-style:"stroustrup"

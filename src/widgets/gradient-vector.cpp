@@ -30,11 +30,13 @@
 #include <gtk/gtk.h>
 #include "macros.h"
 #include <glibmm/i18n.h>
+#include <set>
 #include "../widgets/gradient-image.h"
 #include "../inkscape.h"
 #include "../document-private.h"
 #include "../gradient-chemistry.h"
 #include "../helper/window.h"
+#include "io/resource.h"
 
 #include "xml/repr.h"
 
@@ -42,6 +44,12 @@
 #include "../preferences.h"
 #include "svg/css-ostringstream.h"
 #include "sp-stop.h"
+#include "selection-chemistry.h"
+#include "style.h"
+#include "sp-linear-gradient.h"
+#include "sp-radial-gradient.h"
+#include "desktop.h"
+#include "layer-manager.h"
 
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
@@ -68,8 +76,9 @@ static void sp_gvs_defs_release(SPObject *defs, SPGradientVectorSelector *gvs);
 static void sp_gvs_defs_modified(SPObject *defs, guint flags, SPGradientVectorSelector *gvs);
 
 static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs);
-static void gr_combo_box_changed (GtkComboBox *widget, SPGradientVectorSelector *gvs);
 static SPStop *get_selected_stop( GtkWidget *vb);
+void gr_get_usage_counts(SPDocument *doc, std::map<SPGradient *, gint> *mapUsageCount );
+unsigned long sp_gradient_to_hhssll(SPGradient *gr);
 
 static GtkVBoxClass *parent_class;
 static guint signals[LAST_SIGNAL] = {0};
@@ -141,22 +150,9 @@ static void sp_gradient_vector_selector_init(SPGradientVectorSelector *gvs)
     new (&gvs->defs_release_connection) sigc::connection();
     new (&gvs->defs_modified_connection) sigc::connection();
 
-    gvs->store = gtk_list_store_new (3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_POINTER);
-    gvs->combo_box = gtk_combo_box_new_with_model (GTK_TREE_MODEL (gvs->store));
-    gvs->combo_connection = g_signal_connect (G_OBJECT (gvs->combo_box), "changed", G_CALLBACK (gr_combo_box_changed), gvs);
-
-    GtkCellRenderer *renderer = gtk_cell_renderer_pixbuf_new ();
-    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (gvs->combo_box), renderer, FALSE);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (gvs->combo_box), renderer, "pixbuf", 0,  NULL);
-    gtk_cell_renderer_set_padding(renderer, 5, 0);
-
-    renderer = gtk_cell_renderer_text_new ();
-    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (gvs->combo_box), renderer, TRUE);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (gvs->combo_box), renderer, "text", 1, NULL);
-    gtk_cell_renderer_set_padding(renderer, 0, 0);
-
-    gtk_widget_show(gvs->combo_box);
-    gtk_box_pack_start(GTK_BOX(gvs), gvs->combo_box, TRUE, TRUE, 0);
+    gvs->columns = new SPGradientSelector::ModelColumns();
+    gvs->store = Gtk::ListStore::create(*gvs->columns);
+    new (&gvs->tree_select_connection) sigc::connection();
 
 }
 
@@ -170,6 +166,7 @@ static void sp_gradient_vector_selector_destroy(GtkObject *object)
 
     if (gvs->gr) {
         gvs->gradient_release_connection.disconnect();
+        gvs->tree_select_connection.disconnect();
         gvs->gr = NULL;
     }
 
@@ -182,6 +179,7 @@ static void sp_gradient_vector_selector_destroy(GtkObject *object)
     gvs->gradient_release_connection.~connection();
     gvs->defs_release_connection.~connection();
     gvs->defs_modified_connection.~connection();
+    gvs->tree_select_connection.~connection();
 
 #if GTK_CHECK_VERSION(3,0,0)
     if ((reinterpret_cast<GtkWidgetClass *>(parent_class))->destroy) {
@@ -281,9 +279,13 @@ SPGradient *sp_gradient_vector_selector_get_gradient(SPGradientVectorSelector *g
 
 Glib::ustring gr_prepare_label (SPObject *obj)
 {
-    const gchar *id = obj->defaultLabel();
-    if (strlen(id) > 15 && (!strncmp (id, "#linearGradient", 15) || !strncmp (id, "#radialGradient", 15)))
-        return gr_ellipsize_text (g_strdup_printf ("#%s", id+15), 35);
+    const gchar *id = obj->label() ? obj->label() : obj->getId();
+    if (!id) {
+        id = obj->getRepr()->name();
+    }
+
+    if (strlen(id) > 14 && (!strncmp (id, "linearGradient", 14) || !strncmp (id, "radialGradient", 14)))
+        return gr_ellipsize_text (g_strdup_printf ("%s", id+14), 35);
     return gr_ellipsize_text (id, 35);
 }
 
@@ -303,9 +305,11 @@ Glib::ustring gr_ellipsize_text(Glib::ustring const &src, size_t maxlen)
 
 static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
 {
+
+    gvs->tree_select_connection.block();
+
     /* Clear old list, if there is any */
-    gtk_list_store_clear(gvs->store);
-    GtkTreeIter iter;
+    gvs->store->clear();
 
     /* Pick up all gradients with vectors */
     GSList *gl = NULL;
@@ -320,102 +324,124 @@ static void sp_gvs_rebuild_gui_full(SPGradientVectorSelector *gvs)
     }
     gl = g_slist_reverse(gl);
 
-    gint pos = 0;
+    /* Get usage count of all the gradients */
+    std::map<SPGradient *, gint> usageCount;
+    gr_get_usage_counts(gvs->doc, &usageCount);
 
     if (!gvs->doc) {
-        gtk_list_store_append (gvs->store, &iter);
-        gtk_list_store_set (gvs->store, &iter, 0, NULL, 1, _("No document selected"), 2, NULL, -1);
-        gtk_widget_set_sensitive (gvs->combo_box, FALSE);
+        Gtk::TreeModel::Row row = *(gvs->store->append());
+        row[gvs->columns->name] = _("No document selected");
 
     } else if (!gl) {
-        gtk_list_store_append (gvs->store, &iter);
-        gtk_list_store_set (gvs->store, &iter, 0, NULL, 1, _("No gradients in document"), 2, NULL, -1);
-        gtk_widget_set_sensitive (gvs->combo_box, FALSE);
+        Gtk::TreeModel::Row row = *(gvs->store->append());
+        row[gvs->columns->name] = _("No gradients in document");
 
     } else if (!gvs->gr) {
-        gtk_list_store_append (gvs->store, &iter);
-        gtk_list_store_set (gvs->store, &iter, 0, NULL, 1, _("No gradient selected"), 2, NULL, -1);
-        gtk_widget_set_sensitive (gvs->combo_box, FALSE);
+        Gtk::TreeModel::Row row = *(gvs->store->append());
+        row[gvs->columns->name] =  _("No gradient selected");
 
     } else {
-        gint idx = 0;
         while (gl) {
             SPGradient *gr;
             gr = SP_GRADIENT(gl->data);
             gl = g_slist_remove(gl, gr);
 
-            /* We have to know: */
-            /* Gradient destroy */
-            /* Gradient name change */
-
-            Glib::ustring label = gr_prepare_label(gr);
+            unsigned long hhssll = sp_gradient_to_hhssll(gr);
             GdkPixbuf *pixb = sp_gradient_to_pixbuf (gr, 64, 18);
-            gtk_list_store_append (gvs->store, &iter);
-            gtk_list_store_set (gvs->store, &iter, 0, pixb, 1, label.c_str(), 2, gr, -1);
+            Glib::ustring label = gr_prepare_label(gr);
 
-            if (gr == gvs->gr) {
-                pos = idx;
-            }
-            idx += 1;
+            Gtk::TreeModel::Row row = *(gvs->store->append());
+            row[gvs->columns->name] = label.c_str();
+            row[gvs->columns->color] = hhssll;
+            row[gvs->columns->refcount] = usageCount[gr];
+            row[gvs->columns->data] = gr;
+            row[gvs->columns->pixbuf] = Glib::wrap(pixb);
+
         }
-        gtk_widget_set_sensitive (gvs->combo_box, TRUE);
     }
 
-    /* Block signal to prevent recursive loop */
-    g_signal_handler_block(G_OBJECT (gvs->combo_box), gvs->combo_connection);
+    gvs->tree_select_connection.unblock();
 
-    /* Set selected */
-    gtk_combo_box_set_active (GTK_COMBO_BOX(gvs->combo_box) , pos);
-
-    g_signal_handler_unblock(G_OBJECT (gvs->combo_box), gvs->combo_connection);
 }
 
-static void gr_combo_box_changed (GtkComboBox *widget, SPGradientVectorSelector *gvs)
+/*
+ *  Return a "HHSSLL" version of the first stop color so we can sort by it
+ */
+unsigned long sp_gradient_to_hhssll(SPGradient *gr)
 {
-    GtkTreeIter  iter;
-    if (!gtk_combo_box_get_active_iter (widget, &iter)) {
-        return;
+    SPStop *stop = gr->getFirstStop();
+    unsigned long rgba = sp_stop_get_rgba32(stop);
+    float hsl[3];
+    sp_color_rgb_to_hsl_floatv (hsl, SP_RGBA32_R_F(rgba), SP_RGBA32_G_F(rgba), SP_RGBA32_B_F(rgba));
+
+    return ((int)(hsl[0]*100 * 10000)) + ((int)(hsl[1]*100 * 100)) + ((int)(hsl[2]*100 * 1));
+}
+
+GSList *get_all_doc_items(GSList *list, SPObject *from, bool onlyvisible, bool onlysensitive, bool ingroups, GSList const *exclude)
+{
+    for ( SPObject *child = from->firstChild() ; child; child = child->getNext() ) {
+        if (SP_IS_ITEM(child)) {
+            list = g_slist_prepend(list, SP_ITEM(child));
+        }
+
+        if (ingroups || SP_IS_ITEM(child)) {
+            list = get_all_doc_items(list, child, onlyvisible, onlysensitive, ingroups, exclude);
+        }
     }
 
-    SPGradient *gr = NULL;
-    gtk_tree_model_get (GTK_TREE_MODEL(gvs->store), &iter, 2, &gr, -1);
+    return list;
+}
 
-    if (gr) {
+/*
+ * Return a SPItem's gradient
+ */
+static SPGradient * gr_item_get_gradient(SPItem *item, gboolean fillorstroke)
+{
+    SPIPaint *item_paint = (fillorstroke) ? &(item->style->fill) : &(item->style->stroke);
+    if (item_paint->isPaintserver()) {
 
-        SPGradient *norm = sp_gradient_ensure_vector_normalized(gr);
-        if (norm != gr) {
-            //g_print("SPGradientVectorSelector: become %s after normalization\n", norm->getId());
-            /* But be careful that we do not have gradient saved anywhere else */
-            //g_object_set_data(G_OBJECT(mi), "gradient", norm);
-            gtk_list_store_set (gvs->store, &iter, 2, norm, -1);
+        SPPaintServer *item_server = (fillorstroke) ?
+                item->style->getFillPaintServer() : item->style->getStrokePaintServer();
+
+        if (SP_IS_LINEARGRADIENT(item_server) || SP_IS_RADIALGRADIENT(item_server) ||
+                (SP_IS_GRADIENT(item_server) && SP_GRADIENT(item_server)->getVector()->isSwatch()))  {
+
+            return SP_GRADIENT(item_server)->getVector();
         }
+    }
 
-        /* fixme: Really we would want to use _set_vector */
-        /* Detach old */
-        if (gvs->gr) {
-            gvs->gradient_release_connection.disconnect();
-            gvs->gr = NULL;
+    return NULL;
+}
+
+/*
+ * Map each gradient to its usage count for both fill and stroke styles
+ */
+void gr_get_usage_counts(SPDocument *doc, std::map<SPGradient *, gint> *mapUsageCount )
+{
+    if (!doc)
+        return;
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool onlyvisible = prefs->getBool("/options/kbselection/onlyvisible", true);
+    bool onlysensitive = prefs->getBool("/options/kbselection/onlysensitive", true);
+    bool ingroups = TRUE;
+
+    GSList *all_list = get_all_doc_items(NULL, doc->getRoot(), onlyvisible, onlysensitive, ingroups, NULL);
+
+    for (GSList *i = all_list; i != NULL; i = i->next) {
+        SPItem *item = SP_ITEM(i->data);
+        SPGradient *gr = NULL;
+        gr = gr_item_get_gradient(item, true); // fill
+        if (gr) {
+            mapUsageCount->count(gr) > 0 ? (*mapUsageCount)[gr] += 1 : (*mapUsageCount)[gr] = 1;
         }
-        /* Attach new */
-        if (norm) {
-            gvs->gradient_release_connection = norm->connectRelease(sigc::bind<1>(sigc::ptr_fun(&sp_gvs_gradient_release), gvs));
-            gvs->gr = norm;
+        gr = gr_item_get_gradient(item, false); // stroke
+        if (gr) {
+            mapUsageCount->count(gr) > 0 ? (*mapUsageCount)[gr] += 1 : (*mapUsageCount)[gr] = 1;
         }
-
-        g_signal_emit(G_OBJECT(gvs), signals[VECTOR_SET], 0, norm);
-
-        if (norm != gr) {
-            /* We do extra undo push here */
-            /* If handler has already done it, it is just NOP */
-            // FIXME: looks like this is never a valid undo step, consider removing this
-            DocumentUndo::done(norm->document, SP_VERB_CONTEXT_GRADIENT,
-                               /* TODO: annotate */ "gradient-vector.cpp:350");
-        }
-
-
-
     }
 }
+
 static void sp_gvs_gradient_release(SPObject */*obj*/, SPGradientVectorSelector *gvs)
 {
     /* Disconnect gradient */
@@ -448,7 +474,6 @@ static void sp_gvs_defs_release(SPObject */*defs*/, SPGradientVectorSelector *gv
 static void sp_gvs_defs_modified(SPObject */*defs*/, guint /*flags*/, SPGradientVectorSelector *gvs)
 {
     /* fixme: We probably have to check some flags here (Lauris) */
-
     sp_gvs_rebuild_gui_full(gvs);
 }
 
