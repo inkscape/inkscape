@@ -1004,9 +1004,7 @@ void SvgBuilder::updateFont(GfxState *state) {
     _font_style = sp_repr_css_attr_new();
     GfxFont *font = state->getFont();
     // Store original name
-    if (font->getOrigName()) {
-        _font_specification = font->getOrigName()->getCString();
-    } else if (font->getName()) {
+    if (font->getName()) {
         _font_specification = font->getName()->getCString();
     } else {
         _font_specification = (char*) "Arial";

@@ -578,6 +578,12 @@ if test "x$popplernew" = "xyes"; then
 	AC_DEFINE(POPPLER_NEW_GFXFONT, 1, [Use GfxFont from Poppler >= 0.8.3])
 fi
 
+PKG_CHECK_MODULES(POPPLER_NEWERRORAPI, poppler >= 0.20.0, popplernewerror=yes, popplernewerror=no)
+if test "x$popplernewerror" = "xyes"; then
+	AC_DEFINE(POPPLER_NEW_ERRORAPI, 1, [Use new error API from Poppler >= 0.20.0])
+fi
+
+
 ink_svd_CPPFLAGS=$CPPFLAGS
 ink_svd_LIBS=$LIBS
 CPPFLAGS="$CPPFLAGS $POPPLER_CFLAGS"
