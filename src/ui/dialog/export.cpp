@@ -193,7 +193,7 @@ Export::Export (void) :
             selectiontype_buttons[i]->signal_clicked().connect(sigc::mem_fun(*this, &Export::onAreaToggled));
         }
 
-        Gtk::Table* t = new Gtk::Table(2, 6, false);
+        Gtk::Table* t = new Gtk::Table(3, 4, false);
         t->set_row_spacings (4);
         t->set_col_spacings (4);
 
@@ -202,15 +202,15 @@ Export::Export (void) :
                                    &Export::onAreaX0Change);
 
         x1_adj = createSpinbutton ( "x1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, unit_selector->gobj(),
-                                   t, 2, 0, _("x_1:"), "", EXPORT_COORD_PRECISION, 1,
+                                   t, 0, 1, _("x_1:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaX1Change);
 
         width_adj = createSpinbutton ( "width", 0.0, 0.0, PNG_UINT_31_MAX, 0.1, 1.0,
-                                   unit_selector->gobj(), t, 4, 0, _("Wid_th:"), "", EXPORT_COORD_PRECISION, 1,
+                                   unit_selector->gobj(), t, 0, 2, _("Wid_th:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaWidthChange);
 
         y0_adj = createSpinbutton ( "y0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, unit_selector->gobj(),
-                                   t, 0, 1, _("_y0:"), "", EXPORT_COORD_PRECISION, 1,
+                                   t, 2, 0, _("_y0:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaY0Change);
 
         y1_adj = createSpinbutton ( "y1", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, unit_selector->gobj(),
@@ -218,7 +218,7 @@ Export::Export (void) :
                                    &Export::onAreaY1Change);
 
         height_adj = createSpinbutton ( "height", 0.0, 0.0, PNG_UINT_31_MAX, 0.1, 1.0,
-                                   unit_selector->gobj(), t, 4, 1, _("Hei_ght:"), "", EXPORT_COORD_PRECISION, 1,
+                                   unit_selector->gobj(), t, 2, 2, _("Hei_ght:"), "", EXPORT_COORD_PRECISION, 1,
                                    &Export::onAreaHeightChange);
 
         area_box.pack_start(togglebox, false, false, 3);
@@ -488,7 +488,7 @@ Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, fl
     Gtk::SpinButton *sb = new Gtk::SpinButton(*adj, 1.0, digits);
 #endif
     t->attach (*sb, x + pos, x + pos + 1, y, y + 1, Gtk::EXPAND, Gtk::EXPAND, 0, 0 );
-    sb->set_size_request (80, -1);
+    sb->set_width_chars(7);
     sb->set_sensitive (sensitive);
     pos++;
 
