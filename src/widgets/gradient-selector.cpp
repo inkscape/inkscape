@@ -444,7 +444,7 @@ static void
 sp_gradient_selector_edit_vector_clicked (GtkWidget */*w*/, SPGradientSelector *sel)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    if (prefs->getBool("/dialogs/gradienteditor/showlegacy", true)) {
+    if (prefs->getBool("/dialogs/gradienteditor/showlegacy", false)) {
         // Legacy gradient dialog
         GtkWidget *dialog;
         dialog = sp_gradient_vector_editor_new (SP_GRADIENT_VECTOR_SELECTOR (sel->vectors)->gr);
