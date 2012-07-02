@@ -736,7 +736,8 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             lpEMFR->iType!=EMR_POLYLINETO && lpEMFR->iType!=EMR_POLYLINETO16 &&
             lpEMFR->iType!=EMR_LINETO && lpEMFR->iType!=EMR_ARCTO &&
             lpEMFR->iType!=EMR_SETBKCOLOR && lpEMFR->iType!=EMR_SETROP2 &&
-            lpEMFR->iType!=EMR_SETBKMODE && lpEMFR->iType!=EMR_BEGINPATH)
+            lpEMFR->iType!=EMR_SETBKMODE && lpEMFR->iType!=EMR_SELECTOBJECT &&
+            lpEMFR->iType!=EMR_BEGINPATH)
         {
             *(d->outsvg) += "    <path ";
             output_style(d, EMR_STROKEPATH);
