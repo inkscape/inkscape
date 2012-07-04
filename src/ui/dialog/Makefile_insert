@@ -44,6 +44,8 @@ ink_common_sources +=		\
 	ui/dialog/filter-effects-dialog.h	\
 	ui/dialog/find.cpp			\
 	ui/dialog/find.h			\
+	ui/dialog/font-substitution.cpp			\
+	ui/dialog/font-substitution.h			\
 	ui/dialog/floating-behavior.cpp		\
 	ui/dialog/floating-behavior.h		\
 	ui/dialog/glyphs.cpp			\

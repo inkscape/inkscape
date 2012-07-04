@@ -283,6 +283,7 @@ protected:
     UI::Widget::PrefSpinButton  _importexport_export;
     UI::Widget::PrefSlider      _snap_delay;
     UI::Widget::PrefSlider      _snap_weight;
+    UI::Widget::PrefCheckButton _font_dialog;
 
     UI::Widget::PrefCheckButton _misc_comment;
     UI::Widget::PrefCheckButton _misc_forkvectors;

@@ -433,10 +433,15 @@ void InkscapePreferences::initPageTools()
     this->AddSelcueCheckbox(_page_text, "/tools/text", true);
     this->AddGradientCheckbox(_page_text, "/tools/text", true);
     {
-    PrefCheckButton* cb = Gtk::manage( new PrefCheckButton);
-    cb->init ( _("Show font samples in the drop-down list"), "/tools/text/show_sample_in_list", 1);
-    _page_text.add_line( false, "", *cb, "", _("Show font samples alongside font names in the drop-down list in Text bar"));
+        PrefCheckButton* cb = Gtk::manage( new PrefCheckButton);
+        cb->init ( _("Show font samples in the drop-down list"), "/tools/text/show_sample_in_list", 1);
+        _page_text.add_line( false, "", *cb, "", _("Show font samples alongside font names in the drop-down list in Text bar"));
+
+        _font_dialog.init ( _("Show font substitution warning dialog"), "/options/font/substitutedlg", false);
+        _page_text.add_line( false, "", _font_dialog, "", _("Show font substitution warning dialog when requested fonts are not available on the system"));
     }
+
+
     this->AddNewObjectsStyle(_page_text, "/tools/text");
 
     //Spray
@@ -1053,7 +1058,7 @@ void InkscapePreferences::initPageBehavior()
     _misc_simpl.init("/options/simplifythreshold/value", 0.0001, 1.0, 0.0001, 0.0010, 0.0010, false, false);
     _page_behavior.add_line( false, _("Simplification threshold:"), _misc_simpl, "",
                            _("How strong is the Node tool's Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
-                           
+
     // Selecting options
     _sel_all.init ( _("Select in all layers"), "/options/kbselection/inlayer", PREFS_SELECTION_ALL, false, 0);
     _sel_current.init ( _("Select only within current layer"), "/options/kbselection/inlayer", PREFS_SELECTION_LAYER, true, &_sel_all);

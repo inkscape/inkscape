@@ -340,6 +340,18 @@ static char const *weight_to_text(PangoWeight w)
     return "???";
 }
 
+Glib::ustring Layout::getFontFamily(unsigned span_index) const
+{
+    if (span_index < 0 || span_index >= _spans.size())
+        return "";
+
+    if (_spans[span_index].font) {
+        return pango_font_description_get_family(_spans[span_index].font->descr);
+    }
+
+    return "";
+}
+
 Glib::ustring Layout::dumpAsText() const
 {
     Glib::ustring result;

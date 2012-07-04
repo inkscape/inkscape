@@ -64,6 +64,7 @@
 #include "xml/rebase-hrefs.h"
 #include "verbs.h"
 #include "event-log.h"
+#include "ui/dialog/font-substitution.h"
 
 #include <gtk/gtk.h>
 #include <glib.h>
@@ -270,6 +271,9 @@ bool sp_file_open(const Glib::ustring &uri,
                 Glib::ustring msg = _("Broken links have been changed to point to existing files.");
                 desktop->showInfoDialog(msg);
             }
+
+            // Check for font substitutions
+            Inkscape::UI::Dialog::FontSubstitution::getInstance().checkFontSubstitutions(doc);
         }
 
         return TRUE;

@@ -353,6 +353,9 @@ public:
     void showGlyphs(CairoRenderContext *ctx) const;
 #endif
 
+    /** Returns the font family of the indexed span */
+    Glib::ustring getFontFamily(unsigned span_index) const;
+
     /** debug and unit test method. Creates a textual representation of the
     contents of this object. The output is designed to be both human-readable
     and comprehensible when diffed with a known-good dump. */
