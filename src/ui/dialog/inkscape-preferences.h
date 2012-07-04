@@ -287,6 +287,7 @@ protected:
 
     UI::Widget::PrefCheckButton _misc_comment;
     UI::Widget::PrefCheckButton _misc_forkvectors;
+    UI::Widget::PrefCheckButton _misc_gradienteditor;
     UI::Widget::PrefCheckButton _misc_scripts;
     UI::Widget::PrefCheckButton _misc_namedicon_delay;
 

@@ -464,6 +464,9 @@ void InkscapePreferences::initPageTools()
     _misc_forkvectors.init( _("Prevent sharing of gradient definitions"), "/options/forkgradientvectors/value", true);
     _page_gradient.add_line( false, "", _misc_forkvectors, "",
                            _("When on, shared gradient definitions are automatically forked on change; uncheck to allow sharing of gradient definitions so that editing one object may affect other objects using the same gradient"), true);
+    _misc_gradienteditor.init( _("Use legacy Gradient Editor"), "/dialogs/gradienteditor/showlegacy", false);
+    _page_gradient.add_line( false, "", _misc_gradienteditor, "",
+                           _("When on, the Gradient Edit button in the Fill & Stroke dialog will show the legacy Gradient Editor dialog, when off the Gradient Tool will be used"), true);
 
     //Dropper
     this->AddPage(_page_dropper, _("Dropper"), iter_tools, PREFS_PAGE_TOOLS_DROPPER);
