@@ -17,6 +17,9 @@
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/textview.h>
 #include <gtkmm/scrolledwindow.h>
+#if WITH_GTKMM_3_0
+#include <gtkmm/checkbutton.h>
+#endif
 #include <glibmm/i18n.h>
 #include <glib.h>
 #include <gtk/gtk.h>
