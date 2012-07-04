@@ -101,9 +101,9 @@ FontSubstitution::show(Glib::ustring out, GSList *l)
    cbWarning->show();
 
 #if GTK_CHECK_VERSION(3,0,0)
-   Gtk::VBox * box = warning.get_content_area();
+   Gtk::Box * box = warning.get_content_area();
 #else
-   Gtk::VBox * box = warning.get_vbox();
+   Gtk::Box * box = warning.get_vbox();
 #endif
    box->set_spacing(2);
    box->pack_start(*scrollwindow, true, true, 4);
