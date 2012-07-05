@@ -200,17 +200,6 @@ struct _GdlDockItemPrivate {
 
 G_DEFINE_TYPE (GdlDockItem, gdl_dock_item, GDL_TYPE_DOCK_OBJECT);
 
-/* Inkscape-specific: Define new key macros if they are unavailable */
-#if !GTK_CHECK_VERSION (2, 22, 0)
-#define GDK_KEY_Tab 0xff09
-#define GDK_KEY_KP_Tab 0xff89
-#define GDK_KEY_Left 0xff51
-#define GDK_KEY_KP_Left 0xff96
-#define GDK_KEY_Up 0xff52
-#define GDK_KEY_Right 0xff53
-#define GDK_KEY_Down 0xff54
-#endif
-
 static void
 add_tab_bindings (GtkBindingSet    *binding_set,
 		  GdkModifierType   modifiers,

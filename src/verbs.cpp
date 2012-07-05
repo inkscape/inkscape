@@ -84,10 +84,6 @@
 
 #include <gtk/gtk.h>
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 using Inkscape::DocumentUndo;
 
 //#ifdef WITH_INKBOARD

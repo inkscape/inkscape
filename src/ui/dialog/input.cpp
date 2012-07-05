@@ -964,11 +964,7 @@ InputDialogImpl::ConfPanel::ConfPanel() :
     pack_start(useExt, Gtk::PACK_SHRINK);
 
     save.signal_clicked().connect(sigc::mem_fun(*this, &InputDialogImpl::ConfPanel::saveSettings));
-#if WITH_GTKMM_2_22
     Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_END, Gtk::ALIGN_START, 0, 0);
-#else
-    Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_RIGHT, Gtk::ALIGN_TOP, 0, 0);
-#endif
     align->add(save);
     pack_start(*Gtk::manage(align), Gtk::PACK_SHRINK);
 }
@@ -1454,11 +1450,7 @@ void InputDialogImpl::updateTestAxes( Glib::ustring const& key, GdkDevice* dev )
 
 void InputDialogImpl::mapAxesValues( Glib::ustring const& key, gdouble const * axes, GdkDevice* dev )
 {
-#if GTK_CHECK_VERSION(2,22,0)
     guint numAxes = gdk_device_get_n_axes(dev);
-#else
-    guint numAxes = dev->num_axes;
-#endif
 
     static gdouble epsilon = 0.0001;
     if ( (numAxes > 0) && axes) {
@@ -1511,13 +1503,8 @@ Glib::ustring InputDialogImpl::getKeyFor( GdkDevice* device )
 {
     Glib::ustring key;
 
-#if GTK_CHECK_VERSION(2,22,0)
     GdkInputSource source = gdk_device_get_source(device);
     const gchar *name = gdk_device_get_name(device);
-#else
-    GdkInputSource source = device->source;
-    const gchar *name = device->name;
-#endif
 
     switch ( source ) {
         case GDK_SOURCE_MOUSE:
@@ -1568,13 +1555,8 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
             GdkEventButton* btnEvt = reinterpret_cast<GdkEventButton*>(event);
             if ( btnEvt->device ) {
                 key = getKeyFor(btnEvt->device);
-#if GTK_CHECK_VERSION(2,22,0)
 		source = gdk_device_get_source(btnEvt->device);
 		devName = gdk_device_get_name(btnEvt->device);
-#else
-                source = btnEvt->device->source;
-                devName = btnEvt->device->name;
-#endif
                 mapAxesValues(key, btnEvt->axes, btnEvt->device);
 
                 if ( buttonMap[key].find(btnEvt->button) == buttonMap[key].end() ) {
@@ -1602,13 +1584,8 @@ bool InputDialogImpl::eventSnoop(GdkEvent* event)
             GdkEventMotion* btnMtn = reinterpret_cast<GdkEventMotion*>(event);
             if ( btnMtn->device ) {
                 key = getKeyFor(btnMtn->device);
-#if GTK_CHECK_VERSION(2,22,0)
 		source = gdk_device_get_source(btnMtn->device);
 		devName = gdk_device_get_name(btnMtn->device);
-#else
-                source = btnMtn->device->source;
-                devName = btnMtn->device->name;
-#endif
                 mapAxesValues(key, btnMtn->axes, btnMtn->device);
             }
             gchar* name = gtk_accelerator_name(0, static_cast<GdkModifierType>(btnMtn->state));

@@ -14,10 +14,6 @@
 #include "ui/tool/modifier-tracker.h"
 #include <gtk/gtk.h>
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 namespace Inkscape {
 namespace UI {
 

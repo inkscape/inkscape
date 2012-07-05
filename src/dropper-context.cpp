@@ -44,10 +44,6 @@
 #include "message-context.h"
 #include "verbs.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 using Inkscape::DocumentUndo;
 
 static void sp_dropper_context_class_init(SPDropperContextClass *klass);

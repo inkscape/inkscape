@@ -31,10 +31,6 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 #ifdef USE_GNU_HASHES
 namespace __gnu_cxx {
 template<>

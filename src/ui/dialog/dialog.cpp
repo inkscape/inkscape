@@ -34,10 +34,6 @@
 
 #include <gtk/gtk.h>
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 #define MIN_ONSCREEN_DISTANCE 50
 
 

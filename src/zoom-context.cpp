@@ -25,10 +25,6 @@
 
 #include "zoom-context.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 static void sp_zoom_context_class_init(SPZoomContextClass *klass);
 static void sp_zoom_context_init(SPZoomContext *zoom_context);
 static void sp_zoom_context_setup(SPEventContext *ec);

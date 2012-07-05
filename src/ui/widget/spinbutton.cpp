@@ -17,10 +17,6 @@
 #include "util/expression-evaluator.h"
 #include "event-context.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 namespace Inkscape {
 namespace UI {
 namespace Widget {

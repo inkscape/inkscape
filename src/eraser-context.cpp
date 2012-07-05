@@ -83,10 +83,6 @@ using Inkscape::DocumentUndo;
 #define DRAG_DEFAULT 1.0
 #define DRAG_MAX 1.0
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 
 static void sp_eraser_context_class_init(SPEraserContextClass *klass);
 static void sp_eraser_context_init(SPEraserContext *erc);

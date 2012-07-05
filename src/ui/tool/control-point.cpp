@@ -24,10 +24,6 @@
 #include "ui/tool/event-utils.h"
 #include "ui/tool/transform-handle-set.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 namespace Inkscape {
 namespace UI {
 

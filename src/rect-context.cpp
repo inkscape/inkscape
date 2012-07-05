@@ -45,10 +45,6 @@
 #include "verbs.h"
 #include "display/sp-canvas-item.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 using Inkscape::DocumentUndo;
 
 //static const double goldenratio = 1.61803398874989484820; // golden ratio

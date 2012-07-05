@@ -374,12 +374,7 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
         scriptCombo->set_active_text(getScriptToName()[G_UNICODE_SCRIPT_INVALID_CODE]);
         sigc::connection conn = scriptCombo->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::rebuild));
         instanceConns.push_back(conn);
-
-#if WITH_GTKMM_2_22
         Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_START, Gtk::ALIGN_START, 0.0, 0.0);
-#else
-        Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP, 0.0, 0.0);
-#endif
         align->add(*Gtk::manage(scriptCombo));
         table->attach( *Gtk::manage(align),
                        1, 2, row, row + 1,
@@ -408,12 +403,7 @@ GlyphsPanel::GlyphsPanel(gchar const *prefsPath) :
         rangeCombo->set_active_text(getRanges()[1].second);
         sigc::connection conn = rangeCombo->signal_changed().connect(sigc::mem_fun(*this, &GlyphsPanel::rebuild));
         instanceConns.push_back(conn);
-
-#if WITH_GTKMM_2_22
         Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_START, Gtk::ALIGN_START, 0.0, 0.0);
-#else
-        Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP, 0.0, 0.0);
-#endif
         align->add(*Gtk::manage(rangeCombo));
         table->attach( *Gtk::manage(align),
                        1, 2, row, row + 1,

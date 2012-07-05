@@ -73,11 +73,7 @@ void DialogPage::add_line(bool indent, Glib::ustring const &label, Gtk::Widget &
     if (label != "")
     {
         Gtk::Label* label_widget;
-#if WITH_GTKMM_2_22
         label_widget = Gtk::manage(new Gtk::Label(label , Gtk::ALIGN_START , Gtk::ALIGN_CENTER, true));
-#else
-        label_widget = Gtk::manage(new Gtk::Label(label , Gtk::ALIGN_LEFT , Gtk::ALIGN_CENTER, true));
-#endif
         label_widget->set_mnemonic_widget(widget);
         if (indent)
         {
@@ -107,11 +103,7 @@ void DialogPage::add_line(bool indent, Glib::ustring const &label, Gtk::Widget &
 
     if (suffix != "")
     {
-#if WITH_GTKMM_2_22
         Gtk::Label* suffix_widget = Gtk::manage(new Gtk::Label(suffix , Gtk::ALIGN_START , Gtk::ALIGN_CENTER, true));
-#else
-        Gtk::Label* suffix_widget = Gtk::manage(new Gtk::Label(suffix , Gtk::ALIGN_LEFT , Gtk::ALIGN_CENTER, true));
-#endif
         if (expand_widget)
             this->attach(*suffix_widget, 2, 3, row, row + 1, Gtk::FILL,  Gtk::AttachOptions(), 0, 0);
         else
@@ -130,13 +122,9 @@ void DialogPage::add_group_header(Glib::ustring name)
     int row = this->property_n_rows();
     if (name != "")
     {
-#if WITH_GTKMM_2_22
         Gtk::Label* label_widget = Gtk::manage(new Gtk::Label(Glib::ustring(/*"<span size='large'>*/"<b>") + name +
                                                Glib::ustring("</b>"/*</span>"*/) , Gtk::ALIGN_START , Gtk::ALIGN_CENTER, true));
-#else
-        Gtk::Label* label_widget = Gtk::manage(new Gtk::Label(Glib::ustring(/*"<span size='large'>*/"<b>") + name +
-                                               Glib::ustring("</b>"/*</span>"*/) , Gtk::ALIGN_LEFT , Gtk::ALIGN_CENTER, true));
-#endif
+        
         label_widget->set_use_markup(true);
         this->attach(*label_widget , 0, 4, row, row + 1, Gtk::FILL, Gtk::AttachOptions(), 0, 0);
         if (row != 1)

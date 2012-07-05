@@ -49,10 +49,6 @@
 #include "display/sp-canvas-item.h"
 #include "display/drawing-item.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 using Inkscape::DocumentUndo;
 
 

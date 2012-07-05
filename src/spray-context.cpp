@@ -72,10 +72,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <glibmm/i18n.h>
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 using Inkscape::DocumentUndo;
 using namespace std;
 

@@ -36,10 +36,6 @@ using Inkscape::DocumentUndo;
 			 GDK_POINTER_MOTION_HINT_MASK | \
 			 GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK)
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 static bool nograb = false;
 
 static bool grabbed = FALSE;

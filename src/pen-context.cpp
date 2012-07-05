@@ -45,10 +45,6 @@
 #include "tools-switch.h"
 #include "ui/control-manager.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 using Inkscape::ControlManager;
 
 

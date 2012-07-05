@@ -86,12 +86,7 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
 
     // Opacity
     pack_start(_opacity_vbox, false, false, 2);
-#if WITH_GTKMM_2_22
     _opacity_label.set_alignment(Gtk::ALIGN_END, Gtk::ALIGN_CENTER);
-#else
-    _opacity_label.set_alignment(Gtk::ALIGN_RIGHT, Gtk::ALIGN_CENTER);
-#endif
-
     _opacity_hbox.pack_start(_opacity_label, false, false, 3);
     //_opacity_vbox.pack_start(_opacity_label_box, false, false, 0);
     _opacity_vbox.pack_start(_opacity_hbox, false, false, 0);

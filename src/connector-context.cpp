@@ -194,10 +194,6 @@
 
 using Inkscape::DocumentUndo;
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 static void sp_connector_context_class_init(SPConnectorContextClass *klass);
 static void sp_connector_context_init(SPConnectorContext *conn_context);
 static void sp_connector_context_dispose(GObject *object);

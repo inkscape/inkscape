@@ -21,10 +21,6 @@
 #include "sp-widget.h"
 #include "widget-sizes.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 gboolean
 spinbutton_focus_in (GtkWidget *w, GdkEventKey */*event*/, gpointer /*data*/)
 {

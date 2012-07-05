@@ -37,10 +37,6 @@
 #include "xml/node-iterators.h"
 #include "xml/repr.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 using namespace Inkscape;
 
 static void sp_shortcut_set(unsigned int const shortcut, Inkscape::Verb *const verb, bool const is_primary);

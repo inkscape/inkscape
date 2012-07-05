@@ -38,11 +38,7 @@ SimpleFilterModifier::SimpleFilterModifier(int flags)
     }
     if (flags & BLUR) {
         add(_hb_blur);
-        #if WITH_GTKMM_2_22
-            _lb_blur.set_alignment(Gtk::ALIGN_END, Gtk::ALIGN_CENTER);
-        #else
-            _lb_blur.set_alignment(Gtk::ALIGN_RIGHT, Gtk::ALIGN_CENTER);
-        #endif
+        _lb_blur.set_alignment(Gtk::ALIGN_END, Gtk::ALIGN_CENTER);
         _hb_blur.pack_start(_lb_blur, false, false, 0);
         _hb_blur.pack_start(_blur, true, true, 0);
         _hb_blur.pack_start(_lb_blur_unit, false, false, 3);

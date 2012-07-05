@@ -47,11 +47,6 @@
 #include "arc-context.h"
 #include "display/sp-canvas-item.h"
 
-// Define new form of key macros if we're using an old GTK+ version
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 using Inkscape::DocumentUndo;
 
 static void sp_arc_context_class_init(SPArcContextClass *klass);

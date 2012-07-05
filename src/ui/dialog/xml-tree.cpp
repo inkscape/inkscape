@@ -48,10 +48,6 @@
 #include "widgets/sp-xmlview-content.h"
 #include "widgets/sp-xmlview-tree.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 namespace Inkscape {
 namespace UI {
 namespace Dialog {

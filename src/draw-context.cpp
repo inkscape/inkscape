@@ -47,10 +47,6 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 using Inkscape::DocumentUndo;
 
 static void sp_draw_context_class_init(SPDrawContextClass *klass);

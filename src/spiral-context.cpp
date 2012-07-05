@@ -44,10 +44,6 @@
 #include "verbs.h"
 #include "display/sp-canvas-item.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 using Inkscape::DocumentUndo;
 
 static void sp_spiral_context_class_init(SPSpiralContextClass * klass);

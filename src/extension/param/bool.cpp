@@ -137,11 +137,7 @@ Gtk::Widget *ParamBool::get_widget(SPDocument * doc, Inkscape::XML::Node * node,
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
 #endif
 
-#if WITH_GTKMM_2_22
     Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_START));
-#else
-    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_LEFT));
-#endif
     label->show();
     hbox->pack_end(*label, true, true);
 

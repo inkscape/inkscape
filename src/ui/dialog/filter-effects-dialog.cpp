@@ -486,11 +486,7 @@ public:
           _matrix(SP_ATTR_VALUES, _("This matrix determines a linear transform on color space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value.")),
           _saturation(0, 0, 1, 0.1, 0.01, 2, SP_ATTR_VALUES),
           _angle(0, 0, 360, 0.1, 0.01, 1, SP_ATTR_VALUES),
-#if WITH_GTKMM_2_22
           _label(_("None"), Gtk::ALIGN_START),
-#else
-          _label(_("None"), Gtk::ALIGN_LEFT),
-#endif
           _use_stored(false),
           _saturation_store(0),
           _angle_store(0)
@@ -930,11 +926,7 @@ private:
 
         if(label != "") {
             //lbl = Gtk::manage(new Gtk::Label(label + (label == "" ? "" : ":"), Gtk::ALIGN_LEFT)); colon now in label (LP #358921)
-#if WITH_GTKMM_2_22
-        	lbl = Gtk::manage(new Gtk::Label(label, Gtk::ALIGN_START));
-#else
-        	lbl = Gtk::manage(new Gtk::Label(label, Gtk::ALIGN_LEFT));
-#endif
+            lbl = Gtk::manage(new Gtk::Label(label, Gtk::ALIGN_START));
             hb->pack_start(*lbl, false, false);
             _size_group->add_widget(*lbl);
             lbl->show();
@@ -962,11 +954,7 @@ public:
         : AttrWidget(SP_ATTR_INVALID),
           _dialog(d),
           _settings(d, _box, sigc::mem_fun(_dialog, &FilterEffectsDialog::set_child_attr_direct), LIGHT_ENDSOURCE),
-#if WITH_GTKMM_2_22
           _light_label(_("Light Source:"), Gtk::ALIGN_START),
-#else
-          _light_label(_("Light Source:"), Gtk::ALIGN_LEFT),
-#endif
           _light_source(LightSourceConverter),
           _locked(false)
     {
@@ -2241,13 +2229,8 @@ FilterEffectsDialog::FilterEffectsDialog()
     : UI::Widget::Panel("", "/dialogs/filtereffects", SP_VERB_DIALOG_FILTER_EFFECTS),
       _add_primitive_type(FPConverter),
       _add_primitive(_("Add Effect:")),
-#if WITH_GTKMM_2_22
-	_empty_settings(_("No effect selected"), Gtk::ALIGN_START),
-	_no_filter_selected(_("No filter selected"), Gtk::ALIGN_START),
-#else
-  	_empty_settings(_("No effect selected"), Gtk::ALIGN_LEFT),
-	_no_filter_selected(_("No filter selected"), Gtk::ALIGN_LEFT),
-#endif
+      _empty_settings(_("No effect selected"), Gtk::ALIGN_START),
+      _no_filter_selected(_("No filter selected"), Gtk::ALIGN_START),
       _settings_initialized(false),
       _locked(false),
       _attr_lock(false),

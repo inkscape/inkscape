@@ -54,10 +54,6 @@
 #include "sp-guide.h"
 #include "color.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 static void sp_event_context_class_init(SPEventContextClass *klass);
 static void sp_event_context_init(SPEventContext *event_context);
 static void sp_event_context_dispose(GObject *object);

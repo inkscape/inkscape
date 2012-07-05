@@ -275,10 +275,6 @@ gdl_dock_item_grip_close_clicked (GtkWidget       *widget,
     gdl_dock_item_hide_item (grip->item);
 }
 
-#if !GTK_CHECK_VERSION (2, 22, 0)
-#  define gtk_button_get_event_window(button) button->event_window
-#endif // Gtk+ >= 2.22
-
 static void
 gdl_dock_item_grip_fix_iconify_button (GdlDockItemGrip *grip)
 {

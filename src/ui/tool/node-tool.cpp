@@ -44,10 +44,6 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 /** @struct InkNodeTool
  *
  * Node tool event context.

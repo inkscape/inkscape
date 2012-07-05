@@ -27,10 +27,6 @@
 
 #include "dialog-events.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 
 /**
  * Remove focus from window to whoever it is transient for.

@@ -163,12 +163,7 @@ Export::Export (void) :
 
     /* Export area frame */
     {
-
-    #if WITH_GTKMM_2_22
         Gtk::Label* lbl = new Gtk::Label(_("<big><b>Export area</b></big>"), Gtk::ALIGN_START);
-    #else
-        Gtk::Label* lbl = new Gtk::Label(_("<big><b>Export area</b></big>"), Gtk::ALIGN_LEFT);
-    #endif
         lbl->set_use_markup(true);
         area_box.pack_start(*lbl);
 
@@ -233,12 +228,7 @@ Export::Export (void) :
     /* Bitmap size frame */
     {
         size_box.set_border_width(3);
-
-#if WITH_GTKMM_2_22
         bm_label = new Gtk::Label(_("<big><b>Bitmap size</b></big>"), Gtk::ALIGN_START);
-#else
-        bm_label = new Gtk::Label(_("<big><b>Bitmap size</b></big>"), Gtk::ALIGN_LEFT);
-#endif
         bm_label->set_use_markup(true);
         size_box.pack_start(*bm_label, false, false, 0);
         Gtk::Table *t = new Gtk::Table(2, 5, false);
@@ -275,12 +265,7 @@ Export::Export (void) :
     /* File entry */
     {
         file_box.set_border_width(3);
-
-#if WITH_GTKMM_2_22
         flabel = new Gtk::Label(_("<big><b>_Filename</b></big>"), Gtk::ALIGN_START, Gtk::ALIGN_CENTER, true);
-#else
-        flabel = new Gtk::Label(_("<big><b>_Filename</b></big>"), Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER, true);
-#endif
         flabel->set_use_markup(true);
         file_box.pack_start(*flabel, false, false, 0);
 

@@ -81,10 +81,6 @@ using Inkscape::DocumentUndo;
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 static void sp_dyna_draw_context_class_init(SPDynaDrawContextClass *klass);
 static void sp_dyna_draw_context_init(SPDynaDrawContext *ddc);
 static void sp_dyna_draw_context_dispose(GObject *object);

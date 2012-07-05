@@ -25,10 +25,6 @@
 
 #include "button.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 static void sp_button_class_init (SPButtonClass *klass);
 static void sp_button_init (SPButton *button);
 static void sp_button_dispose(GObject *object);

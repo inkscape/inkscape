@@ -48,10 +48,6 @@
 #include "document-undo.h"
 #include "verbs.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 using Inkscape::DocumentUndo;
 
 static void sp_gradient_context_class_init(SPGradientContextClass *klass);

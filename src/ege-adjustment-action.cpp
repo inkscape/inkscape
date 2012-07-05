@@ -48,10 +48,6 @@
 #include "icon-size.h"
 #include "ege-adjustment-action.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 
 static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass );
 static void ege_adjustment_action_init( EgeAdjustmentAction* action );

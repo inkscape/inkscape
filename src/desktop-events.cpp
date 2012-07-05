@@ -47,10 +47,6 @@
 #include "widgets/desktop-widget.h"
 #include "xml/repr.h"
 
-#if !GTK_CHECK_VERSION(2,22,0)
-#include "compat-key-syms.h"
-#endif
-
 using Inkscape::DocumentUndo;
 
 static void snoop_extended(GdkEvent* event, SPDesktop *desktop);
@@ -601,13 +597,9 @@ static void init_extended()
     if ( devices ) {
         for ( GList* curr = devices; curr; curr = g_list_next(curr) ) {
             GdkDevice* dev = reinterpret_cast<GdkDevice*>(curr->data);
-#if GTK_CHECK_VERSION(2, 22, 0)
             gchar const *devName = gdk_device_get_name(dev);
             GdkInputSource devSrc = gdk_device_get_source(dev);
-#else
-            gchar const *devName = dev->name;
-            GdkInputSource devSrc = dev->source;
-#endif
+            
             if ( devName
                  && (avoidName != devName)
                  && (devSrc != GDK_SOURCE_MOUSE) ) {
@@ -649,13 +641,8 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
         {
             GdkEventMotion* event2 = reinterpret_cast<GdkEventMotion*>(event);
             if ( event2->device ) {
-#if GTK_CHECK_VERSION(2, 22, 0)
                 source = gdk_device_get_source(event2->device);
                 name = gdk_device_get_name(event2->device);
-#else
-                source = event2->device->source;
-                name = event2->device->name;
-#endif
             }
         }
         break;
@@ -667,13 +654,8 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
         {
             GdkEventButton* event2 = reinterpret_cast<GdkEventButton*>(event);
             if ( event2->device ) {
-#if GTK_CHECK_VERSION(2, 22, 0)
                 source = gdk_device_get_source(event2->device);
                 name = gdk_device_get_name(event2->device);
-#else
-                source = event2->device->source;
-                name = event2->device->name;
-#endif
             }
         }
         break;
@@ -682,13 +664,8 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
         {
             GdkEventScroll* event2 = reinterpret_cast<GdkEventScroll*>(event);
             if ( event2->device ) {
-#if GTK_CHECK_VERSION(2, 22, 0)
                 source = gdk_device_get_source(event2->device);
                 name = gdk_device_get_name(event2->device);
-#else
-                source = event2->device->source;
-                name = event2->device->name;
-#endif
             }
         }
         break;
@@ -698,13 +675,8 @@ void snoop_extended(GdkEvent* event, SPDesktop *desktop)
         {
             GdkEventProximity* event2 = reinterpret_cast<GdkEventProximity*>(event);
             if ( event2->device ) {
-#if GTK_CHECK_VERSION(2, 22, 0)
                 source = gdk_device_get_source(event2->device);
                 name = gdk_device_get_name(event2->device);
-#else
-                source = event2->device->source;
-                name = event2->device->source;
-#endif
             }
         }
         break;
