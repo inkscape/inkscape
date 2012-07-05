@@ -524,6 +524,9 @@ override) the bindings in the main default.xml.
   <bind key="l" modifiers="Ctrl,Shift" action="DialogLayers" display="true" />
   <bind key="L" modifiers="Ctrl,Shift" action="DialogLayers" />  
 
+  <bind action="LayerToggleHide" />  
+  <bind action="LayerToggleLock" />  
+
 <!-- Dialogs -->
 
   <bind key="x" modifiers="Ctrl,Shift" action="DialogXMLEditor" display="true" />
