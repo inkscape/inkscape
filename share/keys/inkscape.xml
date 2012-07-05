@@ -64,8 +64,8 @@ override) the bindings in the main default.xml.
   <bind key="i" modifiers="Ctrl" action="FileImport" display="true" />
   <bind key="I" modifiers="Ctrl" action="FileImport" />
 
-  <bind key="e" modifiers="Ctrl,Shift" action="FileExport" display="true" />
-  <bind key="E" modifiers="Ctrl,Shift" action="FileExport" />
+  <bind key="e" modifiers="Ctrl,Shift" action="DialogExport" display="true" />
+  <bind key="E" modifiers="Ctrl,Shift" action="DialogExport" />
 
   <bind action="FileVacuum" />
 
