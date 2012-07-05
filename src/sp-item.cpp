@@ -368,6 +368,52 @@ void SPItem::lowerToBottom() {
     }
 }
 
+/*
+ * Move this SPItem into or after another SPItem in the doc
+ * \param  target - the SPItem to move into or after
+ * \param  intoafter - move to after the target (false), move inside (sublayer) of the target (true)
+ */
+void SPItem::moveTo(SPItem *target, gboolean intoafter) {
+
+    Inkscape::XML::Node *target_ref = ( target ? target->getRepr() : NULL );
+    Inkscape::XML::Node *our_ref = getRepr();
+    gboolean first = FALSE;
+
+    if (target_ref == our_ref) {
+        // Move to ourself ignore
+        return;
+    }
+
+    if (!target_ref) {
+        // Assume move to the "first" in the top node, find the top node
+        target_ref = our_ref;
+        while (target_ref->parent() != target_ref->root()) {
+            target_ref = target_ref->parent();
+        }
+        first = TRUE;
+    }
+
+    if (intoafter) {
+        // Move this inside of the target at the end
+        our_ref->parent()->removeChild(our_ref);
+        target_ref->addChild(our_ref, NULL);
+    } else if (target_ref->parent() != our_ref->parent()) {
+        // Change in parent, need to remove and add
+        our_ref->parent()->removeChild(our_ref);
+        target_ref->parent()->addChild(our_ref, target_ref);
+    } else if (!first) {
+        // Same parent, just move
+        our_ref->parent()->changeOrder(our_ref, target_ref);
+    }
+
+    if (first) {
+        // If "first" ensure it appears after the defs etc
+        lowerToBottom();
+        return;
+    }
+}
+
+
 void SPItem::sp_item_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     object->readAttr( "style" );

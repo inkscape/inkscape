@@ -174,6 +174,7 @@ public:
     void lowerOne();
     void raiseToTop();
     void lowerToBottom();
+    void moveTo(SPItem *target, gboolean intoafter);
 
     sigc::connection connectTransformed(sigc::slot<void, Geom::Affine const *, SPItem *> slot)  {
         return _transformed_signal.connect(slot);

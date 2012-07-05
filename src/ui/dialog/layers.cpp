@@ -66,7 +66,8 @@ enum {
     BUTTON_DOWN,
     BUTTON_DUPLICATE,
     BUTTON_DELETE,
-    BUTTON_SOLO
+    BUTTON_SOLO,
+    DRAGNDROP
 };
 
 class LayersPanel::InternalUIBounce
@@ -195,7 +196,7 @@ bool LayersPanel::_executeAction()
     // Make sure selected layer hasn't changed since the action was triggered
     if ( _pending
          && (
-             (_pending->_actionCode == BUTTON_NEW)
+             (_pending->_actionCode == BUTTON_NEW || _pending->_actionCode == DRAGNDROP)
              || !( (_desktop && _desktop->currentLayer())
                    && (_desktop->currentLayer() != _pending->_target)
                  )
@@ -248,6 +249,11 @@ bool LayersPanel::_executeAction()
             case BUTTON_SOLO:
             {
                 _fireAction( SP_VERB_LAYER_SOLO );
+            }
+            break;
+            case DRAGNDROP:
+            {
+                _doTreeMove( );
             }
             break;
         }
@@ -503,9 +509,10 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
 
 void LayersPanel::_handleButtonEvent(GdkEventButton* evt)
 {
+    static unsigned doubleclick = 0;
+
     // TODO - fix to a better is-popup function
     if ( (evt->type == GDK_BUTTON_PRESS) && (evt->button == 3) ) {
-
 
         {
             Gtk::TreeModel::Path path;
@@ -523,21 +530,131 @@ void LayersPanel::_handleButtonEvent(GdkEventButton* evt)
         }
 
     }
+
+    if ( (evt->type == GDK_2BUTTON_PRESS) && (evt->button == 1) ) {
+        doubleclick = 1;
+    }
+
+    if ( evt->type == GDK_BUTTON_RELEASE && doubleclick) {
+        doubleclick = 0;
+        Gtk::TreeModel::Path path;
+        Gtk::TreeViewColumn* col = 0;
+        int x = static_cast<int>(evt->x);
+        int y = static_cast<int>(evt->y);
+        int x2 = 0;
+        int y2 = 0;
+        if ( _tree.get_path_at_pos( x, y, path, col, x2, y2 ) && col == _name_column) {
+            // Double click on the Layer name, enable editing
+            _text_renderer->property_editable() = true;
+            _tree.set_cursor (path, *_name_column, true);
+            grab_focus();
+        }
+    }
+
+}
+
+/*
+ * Drap and drop within the tree
+ * Save the drag source and drop target SPObjects and if its a drag between layers or into (sublayer) a layer
+ */
+bool LayersPanel::_handleDragDrop(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, guint time)
+{
+    int cell_x = 0, cell_y = 0;
+    Gtk::TreeModel::Path target_path;
+    Gtk::TreeView::Column *target_column;
+    SPObject *selected = _selectedLayer();
+
+    _dnd_into = false;
+    _dnd_target = NULL;
+    _dnd_source = ( selected && SP_IS_ITEM(selected) ) ? SP_ITEM(selected) : 0;
+
+    if (_tree.get_path_at_pos (x, y, target_path, target_column, cell_x, cell_y)) {
+        // Are we before, inside or after the drop layer
+        Gdk::Rectangle rect;
+        _tree.get_background_area (target_path, *target_column, rect);
+        int cell_height = rect.get_height();
+        _dnd_into = (cell_y > (int)(cell_height * 1/3) && cell_y <= (int)(cell_height * 2/3));
+        if (cell_y > (int)(cell_height * 2/3)) {
+            Gtk::TreeModel::Path next_path = target_path;
+            next_path.next();
+            if (_store->iter_is_valid(_store->get_iter(next_path))) {
+                target_path = next_path;
+            } else {
+                // Dragging to the "end"
+                Gtk::TreeModel::Path up_path = target_path;
+                up_path.up();
+                if (_store->iter_is_valid(_store->get_iter(up_path))) {
+                    // Drop into parent
+                    target_path = up_path;
+                    _dnd_into = true;
+                } else {
+                    // Drop into the top level
+                    _dnd_target = NULL;
+                }
+            }
+        }
+        Gtk::TreeModel::iterator iter = _store->get_iter(target_path);
+        if (_store->iter_is_valid(iter)) {
+            Gtk::TreeModel::Row row = *iter;
+            SPObject *obj = row[_model->_colObject];
+            _dnd_target = ( obj && SP_IS_ITEM(obj) ) ? SP_ITEM(obj) : 0;
+        }
+    }
+
+    _takeAction(DRAGNDROP);
+
+    return false;
+}
+
+/*
+ * Move a layer in response to a drag & drop action
+ */
+void LayersPanel::_doTreeMove( )
+{
+    if (_dnd_source ) {
+        _dnd_source->moveTo(_dnd_target, _dnd_into);
+        _selectLayer(_dnd_source);
+        _dnd_source = NULL;
+        DocumentUndo::done( _desktop->doc() , SP_VERB_NONE,
+                                            _("Moved layer"));
+
+    }
+}
+
+
+void LayersPanel::_handleEdited(const Glib::ustring& path, const Glib::ustring& new_text)
+{
+    Gtk::TreeModel::iterator iter = _tree.get_model()->get_iter(path);
+    Gtk::TreeModel::Row row = *iter;
+
+    _renameLayer(row, new_text);
+    _text_renderer->property_editable() = false;
+}
+
+void LayersPanel::_handleEditingCancelled()
+{
+    _text_renderer->property_editable() = false;
 }
 
 void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& /*path*/, Gtk::TreeModel::iterator const& iter )
 {
     Gtk::TreeModel::Row row = *iter;
+    Glib::ustring label = row[_model->_colLabel];
+    _renameLayer(row, label);
+}
+
+void LayersPanel::_renameLayer(Gtk::TreeModel::Row row, const Glib::ustring& name)
+{
     if ( row && _desktop && _desktop->layer_manager) {
         SPObject* obj = row[_model->_colObject];
         if ( obj ) {
             gchar const* oldLabel = obj->label();
-            Glib::ustring tmp = row[_model->_colLabel];
-            if ( oldLabel && oldLabel[0] && !tmp.empty() && (tmp != oldLabel) ) {
-                _desktop->layer_manager->renameLayer( obj, tmp.c_str(), FALSE );
+            if ( oldLabel && oldLabel[0] && !name.empty() && (name != oldLabel) ) {
+                _desktop->layer_manager->renameLayer( obj, name.c_str(), FALSE );
                 DocumentUndo::done( _desktop->doc() , SP_VERB_NONE,
                                                     _("Renamed layer"));
             }
+
         }
     }
 }
@@ -594,6 +711,8 @@ LayersPanel::LayersPanel() :
 
     _tree.set_model( _store );
     _tree.set_headers_visible(false);
+    _tree.set_reorderable(true);
+    _tree.enable_model_drag_dest (Gdk::ACTION_MOVE);
 
     Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler(
         INKSCAPE_ICON("object-visible"), INKSCAPE_ICON("object-hidden")) );
@@ -606,6 +725,7 @@ LayersPanel::LayersPanel() :
         col->add_attribute( eyeRenderer->property_active(), _model->_colVisible );
     }
 
+
     Inkscape::UI::Widget::ImageToggler * renderer = manage( new Inkscape::UI::Widget::ImageToggler(
         INKSCAPE_ICON("object-locked"), INKSCAPE_ICON("object-unlocked")) );
     int lockedColNum = _tree.append_column("lock", *renderer) - 1;
@@ -617,7 +737,10 @@ LayersPanel::LayersPanel() :
         col->add_attribute( renderer->property_active(), _model->_colLocked );
     }
 
-    int nameColNum = _tree.append_column_editable("Name", _model->_colLabel) - 1;
+    _text_renderer = manage(new Gtk::CellRendererText());
+    int nameColNum = _tree.append_column("Name", *_text_renderer) - 1;
+    _name_column = _tree.get_column(nameColNum);
+    _name_column->add_attribute(_text_renderer->property_text(), _model->_colLabel);
 
     _tree.set_expander_column( *_tree.get_column(nameColNum) );
 
@@ -626,8 +749,15 @@ LayersPanel::LayersPanel() :
     _selectedConnection = _tree.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &LayersPanel::_pushTreeSelectionToCurrent) );
     _tree.get_selection()->set_select_function( sigc::mem_fun(*this, &LayersPanel::_rowSelectFunction) );
 
+    _tree.signal_drag_drop().connect( sigc::mem_fun(*this, &LayersPanel::_handleDragDrop), false);
     _tree.get_model()->signal_row_changed().connect( sigc::mem_fun(*this, &LayersPanel::_handleRowChange) );
+
+
+    _text_renderer->signal_edited().connect( sigc::mem_fun(*this, &LayersPanel::_handleEdited) );
+    _text_renderer->signal_editing_canceled().connect( sigc::mem_fun(*this, &LayersPanel::_handleEditingCancelled) );
+
     _tree.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &LayersPanel::_handleButtonEvent) );
+    _tree.signal_button_release_event().connect_notify( sigc::mem_fun(*this, &LayersPanel::_handleButtonEvent) );
 
     _scroller.add( _tree );
     _scroller.set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
