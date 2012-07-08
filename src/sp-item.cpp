@@ -406,7 +406,7 @@ void SPItem::moveTo(SPItem *target, gboolean intoafter) {
         our_ref->parent()->changeOrder(our_ref, target_ref);
     }
 
-    if (first) {
+    if (first && parent) {
         // If "first" ensure it appears after the defs etc
         lowerToBottom();
         return;
