@@ -209,16 +209,34 @@ GSList * FontSubstitution::getFontReplacedItems(SPDocument* doc, Glib::ustring *
     std::map<SPItem *, Glib::ustring>::const_iterator mapIter;
     for (mapIter = mapFontStyles.begin(); mapIter != mapFontStyles.end(); mapIter++) {
         SPItem *item = mapIter->first;
-        Glib::ustring font = mapIter->second;
-        std::set<Glib::ustring>::const_iterator found = setFontSpans.find(font);
-        if (found == setFontSpans.end()) {
-            Glib::ustring subName = getSubstituteFontName(font);
-            if (font != Glib::ustring("sans-serif") && font != Glib::ustring("Sans")) {
-                Glib::ustring err = Glib::ustring::compose(
-                        "Font '%1' substituted with '%2'", font.c_str(), subName.c_str());
-                setErrors.insert(err);
-                outList = g_slist_prepend (outList, item);
+        Glib::ustring fonts = mapIter->second;
+
+        // CSS font fallbacks can have more that one font listed, split the font list
+        std::vector<Glib::ustring> vFonts = Glib::Regex::split_simple("," , fonts);
+        bool fontFound = false;
+        for(size_t i=0; i<vFonts.size(); i++) {
+            Glib::ustring font = vFonts[i];
+            // trim whitespace
+            size_t startpos = font.find_first_not_of(" \n\r\t");
+            size_t endpos = font.find_last_not_of(" \n\r\t");
+            if(( std::string::npos == startpos ) || ( std::string::npos == endpos)) {
+                continue; // empty font name
             }
+            font = font.substr( startpos, endpos-startpos+1 );
+            std::set<Glib::ustring>::const_iterator iter = setFontSpans.find(font);
+            if (iter != setFontSpans.end() ||
+                    font == Glib::ustring("sans-serif") ||
+                    font == Glib::ustring("Sans")) {
+                fontFound = true;
+                break;
+            }
+        }
+        if (fontFound == false) {
+            Glib::ustring subName = getSubstituteFontName(fonts);
+            Glib::ustring err = Glib::ustring::compose(
+                    "Font '%1' substituted with '%2'", fonts.c_str(), subName.c_str());
+            setErrors.insert(err);
+            outList = g_slist_prepend (outList, item);
         }
     }
 
