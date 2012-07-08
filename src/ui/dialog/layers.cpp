@@ -39,7 +39,7 @@
 #include "widgets/icon.h"
 #include "xml/repr.h"
 #include "sp-root.h"
-
+#include "event-context.h"
 
 //#define DUMP_LAYERS 1
 
@@ -507,40 +507,61 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
     }
 }
 
-void LayersPanel::_handleButtonEvent(GdkEventButton* evt)
+bool LayersPanel::_handleKeyEvent(GdkEventKey *event)
+{
+
+    switch (get_group0_keyval(event)) {
+        case GDK_KEY_Return:
+        case GDK_KEY_KP_Enter:
+        case GDK_KEY_F2: {
+            Gtk::TreeModel::iterator iter = _tree.get_selection()->get_selected();
+            if (iter && !_text_renderer->property_editable()) {
+                Gtk::TreeModel::Path *path = new Gtk::TreeModel::Path(iter);
+                // Edit the layer label
+                _text_renderer->property_editable() = true;
+                _tree.set_cursor(*path, *_name_column, true);
+                grab_focus();
+                return true;
+            }
+        }
+        break;
+    }
+    return false;
+}
+void LayersPanel::_handleButtonEvent(GdkEventButton* event)
 {
     static unsigned doubleclick = 0;
 
     // TODO - fix to a better is-popup function
-    if ( (evt->type == GDK_BUTTON_PRESS) && (evt->button == 3) ) {
+    if ( (event->type == GDK_BUTTON_PRESS) && (event->button == 3) ) {
 
         {
             Gtk::TreeModel::Path path;
             Gtk::TreeViewColumn* col = 0;
-            int x = static_cast<int>(evt->x);
-            int y = static_cast<int>(evt->y);
+            int x = static_cast<int>(event->x);
+            int y = static_cast<int>(event->y);
             int x2 = 0;
             int y2 = 0;
             if ( _tree.get_path_at_pos( x, y,
                                         path, col,
                                         x2, y2 ) ) {
                 _checkTreeSelection();
-                _popupMenu.popup(evt->button, evt->time);
+                _popupMenu.popup(event->button, event->time);
             }
         }
 
     }
 
-    if ( (evt->type == GDK_2BUTTON_PRESS) && (evt->button == 1) ) {
+    if ( (event->type == GDK_2BUTTON_PRESS) && (event->button == 1) ) {
         doubleclick = 1;
     }
 
-    if ( evt->type == GDK_BUTTON_RELEASE && doubleclick) {
+    if ( event->type == GDK_BUTTON_RELEASE && doubleclick) {
         doubleclick = 0;
         Gtk::TreeModel::Path path;
         Gtk::TreeViewColumn* col = 0;
-        int x = static_cast<int>(evt->x);
-        int y = static_cast<int>(evt->y);
+        int x = static_cast<int>(event->x);
+        int y = static_cast<int>(event->y);
         int x2 = 0;
         int y2 = 0;
         if ( _tree.get_path_at_pos( x, y, path, col, x2, y2 ) && col == _name_column) {
@@ -758,6 +779,7 @@ LayersPanel::LayersPanel() :
 
     _tree.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &LayersPanel::_handleButtonEvent) );
     _tree.signal_button_release_event().connect_notify( sigc::mem_fun(*this, &LayersPanel::_handleButtonEvent) );
+    _tree.signal_key_press_event().connect( sigc::mem_fun(*this, &LayersPanel::_handleKeyEvent), false );
 
     _scroller.add( _tree );
     _scroller.set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
