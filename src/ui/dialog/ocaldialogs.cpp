@@ -1108,7 +1108,12 @@ void ImportDialog::on_entry_search_activated()
 
     // Open the RSS feed
     Glib::RefPtr<Gio::File> xml_file = Gio::File::create_for_uri(xml_uri);
-    
+#ifdef WIN32
+    if (!xml_file->query_exists()) {
+        widget_status->set_error(_("Could not connect to the Open Clip Art Library"));
+        return;
+    }
+#endif
     xml_file->load_contents_async(
         sigc::bind<Glib::RefPtr<Gio::File> , Glib::ustring>(
             sigc::mem_fun(*this, &ImportDialog::on_xml_file_read),
