@@ -233,7 +233,7 @@ This conditional and its #else block can be deleted in the future.
 
         GtkWidget *l = gtk_label_new(_("Font size:"));
         gtk_widget_show_all (l);
-        gtk_box_pack_end(GTK_BOX (hb), l, FALSE, FALSE, 0);
+        gtk_box_pack_end(GTK_BOX (hb), l, TRUE, TRUE, 0);
 
         for (unsigned int n = 0; sizes[n]; ++n)
         {
