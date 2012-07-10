@@ -64,8 +64,10 @@ spinbutton_defocus (GtkWidget *container)
 gboolean
 spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 {
-	SPWidget *spw = (SPWidget *) data;
-	gdouble v;
+    SPWidget *spw = (SPWidget *) data;
+    gdouble v;
+    gdouble step;
+    gdouble page;
 
 	switch (get_group0_keyval (event)) {
 	case GDK_KEY_Escape: // defocus
@@ -92,7 +94,8 @@ spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 	case GDK_KEY_KP_Up:
 		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
 		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON (w));
-		v += SPIN_STEP;
+	    gtk_spin_button_get_increments(GTK_SPIN_BUTTON (w), &step, &page);
+		v += step;
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), v);
 		return TRUE; // I consumed the event
 		break;
@@ -100,7 +103,8 @@ spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 	case GDK_KEY_KP_Down:
 		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
 		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON (w));
-		v -= SPIN_STEP;
+	    gtk_spin_button_get_increments(GTK_SPIN_BUTTON (w), &step, &page);
+		v -= step;
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), v);
 		return TRUE; // I consumed the event
 		break;
@@ -108,7 +112,8 @@ spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 	case GDK_KEY_KP_Page_Up:
 		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
 		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON (w));
-		v += SPIN_PAGE_STEP;
+	    gtk_spin_button_get_increments(GTK_SPIN_BUTTON (w), &step, &page);
+		v += page;
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), v);
 		return TRUE; // I consumed the event
 		break;
@@ -116,7 +121,8 @@ spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
 	case GDK_KEY_KP_Page_Down:
 		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
 		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON (w));
-		v -= SPIN_PAGE_STEP;
+	    gtk_spin_button_get_increments(GTK_SPIN_BUTTON (w), &step, &page);
+		v -= page;
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), v);
 		return TRUE; // I consumed the event
 		break;
