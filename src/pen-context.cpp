@@ -978,7 +978,6 @@ static gint pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
 
         case GDK_KEY_Left: // move last point left
         case GDK_KEY_KP_Left:
-        case GDK_KEY_KP_4:
             if (!MOD__CTRL) { // not ctrl
                 if (MOD__ALT) { // alt
                     if (MOD__SHIFT) pen_lastpoint_move_screen(pc, -10, 0); // shift
@@ -993,7 +992,6 @@ static gint pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
             break;
         case GDK_KEY_Up: // move last point up
         case GDK_KEY_KP_Up:
-        case GDK_KEY_KP_8:
             if (!MOD__CTRL) { // not ctrl
                 if (MOD__ALT) { // alt
                     if (MOD__SHIFT) pen_lastpoint_move_screen(pc, 0, 10); // shift
@@ -1008,7 +1006,6 @@ static gint pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
             break;
         case GDK_KEY_Right: // move last point right
         case GDK_KEY_KP_Right:
-        case GDK_KEY_KP_6:
             if (!MOD__CTRL) { // not ctrl
                 if (MOD__ALT) { // alt
                     if (MOD__SHIFT) pen_lastpoint_move_screen(pc, 10, 0); // shift
@@ -1023,7 +1020,6 @@ static gint pen_handle_key_press(SPPenContext *const pc, GdkEvent *event)
             break;
         case GDK_KEY_Down: // move last point down
         case GDK_KEY_KP_Down:
-        case GDK_KEY_KP_2:
             if (!MOD__CTRL) { // not ctrl
                 if (MOD__ALT) { // alt
                     if (MOD__SHIFT) pen_lastpoint_move_screen(pc, 0, -10); // shift

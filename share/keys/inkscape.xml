@@ -230,7 +230,9 @@ override) the bindings in the main default.xml.
 
   <bind key="grave" modifiers="Shift" action="ZoomNext" display="true" /> <!-- ` -->
   <bind key="asciitilde" modifiers="Shift" action="ZoomNext" /> <!-- ~ -->
+  <bind key="KP_9" action="ZoomNext" />
   <bind key="grave" action="ZoomPrev" display="true" /> <!-- ` -->
+  <bind key="KP_8" action="ZoomPrev" />
 
 <!-- View -->
 

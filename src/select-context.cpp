@@ -910,7 +910,6 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 			switch (get_group0_keyval (&event->key)) {
                 case GDK_KEY_Left: // move selection left
                 case GDK_KEY_KP_Left:
-                case GDK_KEY_KP_4:
                     if (!MOD__CTRL) { // not ctrl
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
@@ -927,7 +926,6 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     break;
                 case GDK_KEY_Up: // move selection up
                 case GDK_KEY_KP_Up:
-                case GDK_KEY_KP_8:
                     if (!MOD__CTRL) { // not ctrl
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
@@ -944,7 +942,6 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     break;
                 case GDK_KEY_Right: // move selection right
                 case GDK_KEY_KP_Right:
-                case GDK_KEY_KP_6:
                     if (!MOD__CTRL) { // not ctrl
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
@@ -961,7 +958,6 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     break;
                 case GDK_KEY_Down: // move selection down
                 case GDK_KEY_KP_Down:
-                case GDK_KEY_KP_2:
                     if (!MOD__CTRL) { // not ctrl
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
