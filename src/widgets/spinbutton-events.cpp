@@ -43,7 +43,9 @@ void
 spinbutton_undo (GtkWidget *w)
 {
 	gdouble *ini = (gdouble *) g_object_get_data(G_OBJECT (w), "ini");
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), *ini);
+	if (ini) {
+	    gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), *ini);
+	}
 }
 
 void
