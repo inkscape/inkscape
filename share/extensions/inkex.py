@@ -26,14 +26,25 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 """
-import sys, copy, optparse, random, re
+import copy
 import gettext
+import optparse
+import os
+import random
+import re
+import sys
+
 from math import *
 
-gettext.install('inkscape')
-# _ = gettext.gettext
-# gettext.bindtextdomain('inkscape', '/usr/share/locale')
-# gettext.textdomain('inkscape')
+if sys.platform.startswith('win'):
+    import locale
+    current_locale, encoding = locale.getdefaultlocale()
+    os.environ['LANG'] = current_locale
+    gettext= gettext.translation('inkscape', "C:\Program Files\Inkscape\locale", [current_locale])
+else:
+    gettext= gettext.translation('inkscape')
+
+_ = gettext.gettext
 
 #a dictionary of all of the xmlns prefixes in a standard inkscape doc
 NSS = {
@@ -97,9 +108,9 @@ def errormsg(msg):
          inkex.errormsg(_("This extension requires two selected paths."))
     """
     if isinstance(msg, unicode):
-        sys.stderr.write((msg + "\n").encode("UTF-8"))
+        sys.stderr.write(_(msg).encode("UTF-8") + "\n")
     else:
-        sys.stderr.write((unicode(msg, "utf-8", errors='replace') + "\n").encode("UTF-8"))
+        sys.stderr.write((unicode(_(msg), "utf-8", errors='replace') + "\n").encode("UTF-8"))
 
 def check_inkbool(option, opt, value):
     if str(value).capitalize() == 'True':

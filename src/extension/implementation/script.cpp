@@ -861,13 +861,7 @@ void Script::checkStderr (const Glib::ustring &data,
     textview->set_wrap_mode(Gtk::WRAP_WORD);
     textview->show();
 
-    // Remove the last character
-    char *errormsg = (char*) data.c_str();
-    while (*errormsg != '\0') errormsg++;
-    errormsg -= 1;
-    *errormsg = '\0';
-
-    textview->get_buffer()->set_text(_(data.c_str()));
+    textview->get_buffer()->set_text(data.c_str());
 
     Gtk::ScrolledWindow * scrollwindow = new Gtk::ScrolledWindow();
     scrollwindow->add(*textview);
