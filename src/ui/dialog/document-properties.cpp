@@ -781,6 +781,20 @@ void DocumentProperties::build_metadata()
         }
     }
 
+    Gtk::Button *button_save = manage (new Gtk::Button(_("_Save as default"),1));
+    button_save->set_tooltip_text(_("Save this metadata as the default metadata"));
+    Gtk::Button *button_load = manage (new Gtk::Button(_("Use _default"),1));
+    button_load->set_tooltip_text(_("Use the previously saved default metadata here"));
+    Gtk::HButtonBox *box_buttons = manage (new Gtk::HButtonBox);
+    box_buttons->set_layout(Gtk::BUTTONBOX_END);
+    box_buttons->set_spacing(4);
+    box_buttons->pack_start(*button_save, true, true, 6);
+    box_buttons->pack_start(*button_load, true, true, 6);
+    _page_metadata1.pack_end(*box_buttons, false, false, 0);
+
+    button_save->signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::save_default_metadata));
+    button_load->signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::load_default_metadata));
+
     _page_metadata2.show();
 
     row = 0;
@@ -1256,6 +1270,23 @@ void DocumentProperties::on_response (int id)
     if (id == Gtk::RESPONSE_CLOSE)
         hide();
 }
+
+void DocumentProperties::load_default_metadata()
+{
+    /* Get the data RDF entities data from preferences*/
+    for (RDElist::iterator it = _rdflist.begin(); it != _rdflist.end(); ++it) {
+        (*it)->load_from_preferences ();
+    }
+}
+
+void DocumentProperties::save_default_metadata()
+{
+    /* Save these RDF entities to preferences*/
+    for (RDElist::iterator it = _rdflist.begin(); it != _rdflist.end(); ++it) {
+        (*it)->save_to_preferences (SP_ACTIVE_DOCUMENT);
+   }
+}
+
 
 void DocumentProperties::_handleDocumentReplaced(SPDesktop* desktop, SPDocument *document)
 {

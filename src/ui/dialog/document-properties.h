@@ -20,6 +20,7 @@
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/notebook.h>
+#include <gtkmm/buttonbox.h>
 #include <gtkmm/textview.h>
 
 #include "ui/widget/page-sizer.h"
@@ -89,6 +90,8 @@ protected:
     void  editEmbeddedScript();
     void  external_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
     void  embedded_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
+    void  load_default_metadata();
+    void  save_default_metadata();
 
     void _handleDocumentReplaced(SPDesktop* desktop, SPDocument *document);
     void _handleActivateDesktop(Inkscape::Application *application, SPDesktop *desktop);

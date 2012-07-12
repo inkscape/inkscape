@@ -186,9 +186,9 @@ SPDesktop* sp_file_new_default()
         g_free(foundTemplate);
         foundTemplate = 0;
     }
+    rdf_add_from_preferences( SP_ACTIVE_DOCUMENT );
     return desk;
 }
-
 
 /*######################
 ## D E L E T E

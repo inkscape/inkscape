@@ -15,6 +15,8 @@
 #include <glibmm/i18n.h>
 #include "document.h"
 
+#define PREFS_METADATA      "/metadata/rdf/"
+
 // yeah, it's not a triple yet...
 /**
  * \brief Holds license name/resource doubles for rdf_license_t entries
@@ -131,6 +133,8 @@ void                   rdf_set_license(SPDocument * doc,
                                        struct rdf_license_t const * license);
 
 void rdf_set_defaults ( SPDocument * doc );
+
+void rdf_add_from_preferences ( SPDocument *doc );
 
 #endif // SEEN_RDF_H
 

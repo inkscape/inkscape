@@ -31,6 +31,8 @@ public:
     virtual ~EntityEntry() = 0;
     virtual void update (SPDocument *doc) = 0;
     virtual void on_changed() = 0;
+    virtual void load_from_preferences() = 0;
+    void save_to_preferences(SPDocument *doc);
     Gtk::Label _label;
     Gtk::Widget *_packable;
 
@@ -46,6 +48,7 @@ public:
     EntityLineEntry (rdf_work_entity_t* ent, Registry& wr);
     ~EntityLineEntry();
     void update (SPDocument *doc);
+    void load_from_preferences();
 
 protected:
     virtual void on_changed();
@@ -56,6 +59,7 @@ public:
     EntityMultiLineEntry (rdf_work_entity_t* ent, Registry& wr);
     ~EntityMultiLineEntry();
     void update (SPDocument *doc);
+    void load_from_preferences();
 
 protected: 
     virtual void on_changed();

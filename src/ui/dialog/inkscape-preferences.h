@@ -286,6 +286,7 @@ protected:
     UI::Widget::PrefCheckButton _font_dialog;
 
     UI::Widget::PrefCheckButton _misc_comment;
+    UI::Widget::PrefCheckButton _misc_default_metadata;
     UI::Widget::PrefCheckButton _misc_forkvectors;
     UI::Widget::PrefCheckButton _misc_gradienteditor;
     UI::Widget::PrefCheckButton _misc_scripts;

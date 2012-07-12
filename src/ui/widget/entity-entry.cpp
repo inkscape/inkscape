@@ -27,6 +27,7 @@
 #include "sp-root.h"
 #include "document-undo.h"
 #include "document-private.h"
+#include "preferences.h"
 #include "verbs.h"
 
 #include "entity-entry.h"
@@ -72,6 +73,13 @@ EntityEntry::~EntityEntry()
     _changed_connection.disconnect();
 }
 
+void EntityEntry::save_to_preferences(SPDocument *doc)
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    const gchar *text = rdf_get_work_entity (doc, _entity);
+    prefs->setString(PREFS_METADATA + Glib::ustring(_entity->name), Glib::ustring(text ? text : ""));
+}
+
 EntityLineEntry::EntityLineEntry (rdf_work_entity_t* ent, Registry& wr)
 : EntityEntry (ent, wr)
 {
@@ -95,6 +103,16 @@ void EntityLineEntry::update(SPDocument *doc)
         rdf_set_work_entity(doc, _entity, text);
     }
     static_cast<Gtk::Entry*>(_packable)->set_text (text ? text : "");
+}
+
+
+void EntityLineEntry::load_from_preferences()
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring text = prefs->getString(PREFS_METADATA + Glib::ustring(_entity->name));
+    if (text.length() > 0) {
+        static_cast<Gtk::Entry*>(_packable)->set_text (text.c_str());
+    }
 }
 
 void
@@ -145,6 +163,19 @@ void EntityMultiLineEntry::update(SPDocument *doc)
     Gtk::TextView *tv = static_cast<Gtk::TextView*>(s->get_child());
     tv->get_buffer()->set_text (text ? text : "");
 }
+
+
+void EntityMultiLineEntry::load_from_preferences()
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring text = prefs->getString(PREFS_METADATA + Glib::ustring(_entity->name));
+    if (text.length() > 0) {
+        Gtk::ScrolledWindow *s = static_cast<Gtk::ScrolledWindow*>(_packable);
+        Gtk::TextView *tv = static_cast<Gtk::TextView*>(s->get_child());
+        tv->get_buffer()->set_text (text.c_str());
+    }
+}
+
 
 void
 EntityMultiLineEntry::on_changed()

@@ -19,6 +19,7 @@
 #include "sp-item-group.h"
 #include "inkscape.h"
 #include "sp-root.h"
+#include "preferences.h"
 
 /*
    Example RDF XML from various places...
@@ -1135,6 +1136,36 @@ void RDFImpl::setDefaults( SPDocument * doc )
     }
 }
 
+/*
+ * Add the metadata stored in the users preferences to the document if
+ *   a) the preference 'Input/Output->Add default metatdata to new documents' is true, and
+ *   b) there is no metadata already in the file (such as from a template)
+ */
+void rdf_add_from_preferences(SPDocument *doc)
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (!prefs->getBool("/metadata/addToNewFile")) {
+        return;
+    }
+
+    // If there is already some metadata in the doc (from a template) dont add default metadata
+    for (struct rdf_work_entity_t *entity = rdf_work_entities; entity && entity->name; entity++) {
+        if ( entity->editable == RDF_EDIT_GENERIC &&
+                rdf_get_work_entity (doc, entity)) {
+            return;
+        }
+    }
+
+    // Put the metadata from user preferences into the doc
+    for (struct rdf_work_entity_t *entity = rdf_work_entities; entity && entity->name; entity++) {
+        if ( entity->editable == RDF_EDIT_GENERIC ) {
+            Glib::ustring text = prefs->getString(PREFS_METADATA + Glib::ustring(entity->name));
+            if (text.length() > 0) {
+                rdf_set_work_entity (doc, entity, text.c_str());
+            }
+        }
+    }
+}
 
 /*
   Local Variables:

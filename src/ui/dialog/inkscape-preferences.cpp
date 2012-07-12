@@ -779,6 +779,10 @@ void InkscapePreferences::initPageIO()
     _page_io.add_line( false, "", _misc_comment, "",
                            _("When on, a comment will be added to the raw print output, marking the rendered output for an object with its label"), true);
 
+    _misc_default_metadata.init( _("Add default metadata to new documents"), "/metadata/addToNewFile", false);
+    _page_io.add_line( false, "", _misc_default_metadata, "",
+                           _("Add default metadata to new documents. Default metadata can be set from Document Properties->Metadata."), true);
+
     // Input devices options
     _mouse_sens.init ( "/options/cursortolerance/value", 0.0, 30.0, 1.0, 1.0, 8.0, true, false);
     _page_mouse.add_line( false, _("Grab sensitivity:"), _mouse_sens, _("pixels"),
