@@ -32,9 +32,9 @@
 using Inkscape::DocumentUndo;
 
 #define KNOT_EVENT_MASK (GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | \
-			 GDK_POINTER_MOTION_MASK | \
-			 GDK_POINTER_MOTION_HINT_MASK | \
-			 GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK)
+             GDK_POINTER_MOTION_MASK | \
+             GDK_POINTER_MOTION_HINT_MASK | \
+             GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK)
 
 static bool nograb = false;
 
@@ -75,13 +75,13 @@ GType sp_knot_get_type()
     if (!type) {
         GTypeInfo info = {
             sizeof(SPKnotClass),
-            NULL,	/* base_init */
-            NULL,	/* base_finalize */
+            NULL,    /* base_init */
+            NULL,    /* base_finalize */
             (GClassInitFunc) sp_knot_class_init,
-            NULL,	/* class_finalize */
-            NULL,	/* class_data */
+            NULL,    /* class_finalize */
+            NULL,    /* class_data */
             sizeof (SPKnot),
-            16,	/* n_preallocs */
+            16,    /* n_preallocs */
             (GInstanceInitFunc) sp_knot_init,
             NULL
         };
@@ -138,13 +138,13 @@ static void sp_knot_class_init(SPKnotClass *klass)
                                           G_TYPE_UINT);
 
     knot_signals[UNGRABBED] = g_signal_new("ungrabbed",
-					    G_TYPE_FROM_CLASS(klass),
-					    G_SIGNAL_RUN_FIRST,
-					    G_STRUCT_OFFSET(SPKnotClass, ungrabbed),
-					    NULL, NULL,
-					    g_cclosure_marshal_VOID__UINT,
-					    G_TYPE_NONE, 1,
-					    G_TYPE_UINT);
+                        G_TYPE_FROM_CLASS(klass),
+                        G_SIGNAL_RUN_FIRST,
+                        G_STRUCT_OFFSET(SPKnotClass, ungrabbed),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__UINT,
+                        G_TYPE_NONE, 1,
+                        G_TYPE_UINT);
 
     knot_signals[MOVED] = g_signal_new("moved",
                                         G_TYPE_FROM_CLASS(klass),
@@ -323,14 +323,14 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             }
             break;
     case GDK_BUTTON_PRESS:
-            if (event->button.button == 1 && !knot->desktop->event_context->space_panning) {
+            if ((event->button.button == 1) && knot->desktop && knot->desktop->event_context && !knot->desktop->event_context->space_panning) {
                 Geom::Point const p = knot->desktop->w2d(Geom::Point(event->button.x, event->button.y));
                 sp_knot_start_dragging(knot, p, (gint) event->button.x, (gint) event->button.y, event->button.time);
                 consumed = TRUE;
             }
             break;
     case GDK_BUTTON_RELEASE:
-            if (event->button.button == 1 && !knot->desktop->event_context->space_panning) {
+            if (event->button.button == 1 && knot->desktop && knot->desktop->event_context && !knot->desktop->event_context->space_panning) {
                 // If we have any pending snap event, then invoke it now
                 if (knot->desktop->event_context->_delayed_snap_event) {
                     sp_event_context_snap_watchdog_callback(knot->desktop->event_context->_delayed_snap_event);
@@ -368,7 +368,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             }
             break;
     case GDK_MOTION_NOTIFY:
-            if (grabbed && !knot->desktop->event_context->space_panning) {
+            if (grabbed && knot->desktop && knot->desktop->event_context && !knot->desktop->event_context->space_panning) {
                 consumed = TRUE;
 
                 if ( within_tolerance
@@ -404,7 +404,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             sp_knot_set_flag(knot, SP_KNOT_MOUSEOVER, TRUE);
             sp_knot_set_flag(knot, SP_KNOT_GRABBED, FALSE);
 
-            if (knot->tip) {
+            if (knot->tip && knot->desktop && knot->desktop->event_context) {
                 knot->desktop->event_context->defaultMessageContext()->set(Inkscape::NORMAL_MESSAGE, knot->tip);
             }
 
@@ -416,7 +416,7 @@ static int sp_knot_handler(SPCanvasItem */*item*/, GdkEvent *event, SPKnot *knot
             sp_knot_set_flag(knot, SP_KNOT_MOUSEOVER, FALSE);
             sp_knot_set_flag(knot, SP_KNOT_GRABBED, FALSE);
 
-            if (knot->tip) {
+            if (knot->tip && knot->desktop && knot->desktop->event_context) {
                 knot->desktop->event_context->defaultMessageContext()->clear();
             }
 

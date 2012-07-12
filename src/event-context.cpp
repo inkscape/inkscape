@@ -177,7 +177,7 @@ static void sp_event_context_dispose(GObject *object) {
 void sp_event_context_update_cursor(SPEventContext *ec) {
     GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(ec->desktop));
     if (gtk_widget_get_window (w)) {
-	
+    
         GtkStyle *style = gtk_widget_get_style(w);
 
         /* fixme: */
@@ -197,29 +197,30 @@ void sp_event_context_update_cursor(SPEventContext *ec) {
                     SP_RGBA32_U_COMPOSE(SP_RGBA32_R_U(strokeColor),SP_RGBA32_G_U(strokeColor),SP_RGBA32_B_U(strokeColor),SP_COLOR_F_TO_U(strokeOpacity))
                     );
                 if (pixbuf != NULL) {
-                    if (ec->cursor)
+                    if (ec->cursor) {
 #if GTK_CHECK_VERSION(3,0,0)
                         g_object_unref(ec->cursor);
 #else
                         gdk_cursor_unref(ec->cursor);
 #endif
+                    }
                     ec->cursor = gdk_cursor_new_from_pixbuf(display, pixbuf, ec->hot_x, ec->hot_y);
                     g_object_unref(pixbuf);
                 }
             } else {
-		GdkPixbuf *pixbuf = gdk_pixbuf_new_from_xpm_data((const gchar **)ec->cursor_shape);
+        GdkPixbuf *pixbuf = gdk_pixbuf_new_from_xpm_data((const gchar **)ec->cursor_shape);
 
                 if (pixbuf) {
-                    if (ec->cursor)
+                    if (ec->cursor) {
 #if GTK_CHECK_VERSION(3,0,0)
                         g_object_unref(ec->cursor);
 #else
                         gdk_cursor_unref(ec->cursor);
 #endif
+                    }
                     ec->cursor = gdk_cursor_new_from_pixbuf(display,
-				    pixbuf, ec->hot_x, ec->hot_y);
-                
-		    g_object_unref(pixbuf);
+                    pixbuf, ec->hot_x, ec->hot_y);
+                    g_object_unref(pixbuf);
                 }
             }
         }
@@ -941,7 +942,7 @@ gint sp_event_context_root_handler(SPEventContext * event_context,
                 DelayedSnapEvent::EVENTCONTEXT_ROOT_HANDLER);
         break;
     case GDK_BUTTON_RELEASE:
-        if (event_context->_delayed_snap_event) {
+        if (event_context && event_context->_delayed_snap_event) {
             // If we have any pending snapping action, then invoke it now
             sp_event_context_snap_watchdog_callback(
                     event_context->_delayed_snap_event);
@@ -982,7 +983,7 @@ gint sp_event_context_item_handler(SPEventContext * event_context,
         sp_event_context_snap_delay_handler(event_context, (gpointer) item, NULL, (GdkEventMotion *) event, DelayedSnapEvent::EVENTCONTEXT_ITEM_HANDLER);
         break;
     case GDK_BUTTON_RELEASE:
-        if (event_context->_delayed_snap_event) {
+        if (event_context && event_context->_delayed_snap_event) {
             // If we have any pending snapping action, then invoke it now
             sp_event_context_snap_watchdog_callback(event_context->_delayed_snap_event);
         }
@@ -1039,8 +1040,8 @@ void sp_event_root_menu_popup(SPDesktop *desktop, SPItem *item, GdkEvent *event)
     if (event->type == GDK_KEY_PRESS) {
         item = sp_desktop_selection(desktop)->singleItem();
     }
-	ContextMenu* CM = new ContextMenu(desktop, item);
-	CM->show();
+    ContextMenu* CM = new ContextMenu(desktop, item);
+    CM->show();
 
     switch (event->type) {
     case GDK_BUTTON_PRESS:
@@ -1285,9 +1286,16 @@ gboolean sp_event_context_snap_watchdog_callback(gpointer data) {
     }
 
     SPEventContext *ec = dse->getEventContext();
-    if (ec == NULL || ec->desktop == NULL) {
+    if (ec == NULL) {
+        delete dse;
         return false;
     }
+    if (ec->desktop == NULL) {
+        ec->_delayed_snap_event = NULL;
+        delete dse;
+        return false;
+    }
+    
     ec->_dse_callback_in_process = true;
 
     SPDesktop *dt = ec->desktop;
@@ -1316,8 +1324,26 @@ gboolean sp_event_context_snap_watchdog_callback(gpointer data) {
         break;
     case DelayedSnapEvent::CONTROL_POINT_HANDLER: {
         using Inkscape::UI::ControlPoint;
-        ControlPoint *point = reinterpret_cast<ControlPoint*> (dse->getItem2());
-        point->_eventHandler(ec, dse->getEvent());
+        gpointer pitem2 = dse->getItem2();
+        if (!pitem2)
+        {
+            ec->_delayed_snap_event = NULL;
+            delete dse;
+            return false;
+        }
+        ControlPoint *point = reinterpret_cast<ControlPoint*> (pitem2);
+        if (point) {
+            if (point->position().isFinite() && (dt == point->_desktop)) {            
+                point->_eventHandler(ec, dse->getEvent());
+            }
+            else {
+                //workaround:
+                //[Bug 781893] Crash after moving a Bezier node after Knot path effect?
+                // --> at some time, some point with X = 0 and Y = nan (not a number) is created ...
+                //     even so, the desktop pointer is invalid and equal to 0xff
+                g_warning ("encountered non finite point when evaluating snapping callback");
+            }
+        }
     }
         break;
     case DelayedSnapEvent::GUIDE_HANDLER: {

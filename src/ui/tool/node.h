@@ -309,14 +309,14 @@ public:
     // default copy, default assign
 
     self &operator++() {
-        _node = _node->ln_next;
+        _node = (_node?_node->ln_next:NULL);
         return *this;
     }
     self &operator--() {
-        _node = _node->ln_prev;
+        _node = (_node?_node->ln_prev:NULL);
         return *this;
     }
-    bool operator==(self const &other) const { return _node == other._node; }
+    bool operator==(self const &other) const { if(&other){return _node == other._node;} else{return false;} }
     N &operator*() const { return *static_cast<N*>(_node); }
     inline operator bool() const; // define after NodeList
     /// Get a pointer to the underlying node. Equivalent to <code>&*i</code>.

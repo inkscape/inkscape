@@ -182,6 +182,7 @@ public:
 
     // temporarily public, until snap delay is refactored a little
     virtual bool _eventHandler(SPEventContext *event_context, GdkEvent *event);
+    SPDesktop *const _desktop; ///< The desktop this control point resides on.
 
 protected:
 
@@ -335,7 +336,6 @@ protected:
 
     virtual bool _hasDragTips() const { return false; }
 
-    SPDesktop *const _desktop; ///< The desktop this control point resides on.
 
     SPCanvasItem * _canvas_item; ///< Visual representation of the control point.
 

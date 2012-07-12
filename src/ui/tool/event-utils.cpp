@@ -55,6 +55,9 @@ unsigned combine_key_events(guint keyval, gint mask)
 
 unsigned combine_motion_events(SPCanvas *canvas, GdkEventMotion &event, gint mask)
 {
+    if (canvas == NULL) {
+        return false;
+    }
     GdkEvent *event_next;
     gint i = 0;
     event.x -= canvas->x0;
@@ -62,7 +65,7 @@ unsigned combine_motion_events(SPCanvas *canvas, GdkEventMotion &event, gint mas
 
     event_next = gdk_event_get();
     // while the next event is also a motion notify
-    while (event_next && event_next->type == GDK_MOTION_NOTIFY
+    while (event_next && (event_next->type == GDK_MOTION_NOTIFY)
             && (!mask || event_next->motion.state & mask))
     {
         if (event_next->motion.device == event.device) {
@@ -86,8 +89,9 @@ unsigned combine_motion_events(SPCanvas *canvas, GdkEventMotion &event, gint mas
         i++;
     }
     // otherwise, put it back onto the queue
-    if (event_next)
+    if (event_next) {
         gdk_event_put(event_next);
+    }
     event.x += canvas->x0;
     event.y += canvas->y0;
 
