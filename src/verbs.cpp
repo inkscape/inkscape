@@ -1332,6 +1332,18 @@ void LayerVerb::perform(SPAction *action, void *data)
             }
             break;
         }
+        case SP_VERB_LAYER_SHOW_ALL: {
+            dt->toggleAllLayers( false );
+            DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:showall", SP_VERB_LAYER_SHOW_ALL, _("Show all layers"));
+            break;
+        }
+
+        case SP_VERB_LAYER_HIDE_ALL: {
+            dt->toggleAllLayers( true );
+            DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:hideall", SP_VERB_LAYER_HIDE_ALL, _("Hide all layers"));
+            break;
+        }
+
         case SP_VERB_LAYER_TOGGLE_LOCK:
         case SP_VERB_LAYER_TOGGLE_HIDE: {
             if ( dt->currentLayer() == dt->currentRoot() ) {
@@ -2443,6 +2455,10 @@ Verb *Verb::_base_verbs[] = {
                   N_("Delete the current layer"), INKSCAPE_ICON("layer-delete")),
     new LayerVerb(SP_VERB_LAYER_SOLO, "LayerSolo", N_("_Show/hide other layers"),
                   N_("Solo the current layer"), NULL),
+    new LayerVerb(SP_VERB_LAYER_SHOW_ALL, "LayerShowAll", N_("_Show all layers"),
+                    N_("Show all the layers"), NULL),
+    new LayerVerb(SP_VERB_LAYER_HIDE_ALL, "LayerHideAll", N_("_Hide all layers"),
+                    N_("Hide all the layers"), NULL),
     new LayerVerb(SP_VERB_LAYER_TOGGLE_LOCK, "LayerToggleLock", N_("_Lock/Unlock Current Layer"),
                   N_("Toggle lock on current layer"), NULL),
     new LayerVerb(SP_VERB_LAYER_TOGGLE_HIDE, "LayerToggleHide", N_("_Show/hide Current Layer"),

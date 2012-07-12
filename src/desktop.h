@@ -280,6 +280,7 @@ public:
 
     void setCurrentLayer(SPObject *object);
     void toggleLayerSolo(SPObject *object);
+    void toggleAllLayers(bool hidden);
     SPObject *layerForObject(SPObject *object);
     bool isLayer(SPObject *object) const;
     bool isWithinViewport(SPItem *item) const;

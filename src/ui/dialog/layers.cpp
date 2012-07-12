@@ -67,6 +67,8 @@ enum {
     BUTTON_DUPLICATE,
     BUTTON_DELETE,
     BUTTON_SOLO,
+    BUTTON_SHOW_ALL,
+    BUTTON_HIDE_ALL,
     DRAGNDROP
 };
 
@@ -249,6 +251,16 @@ bool LayersPanel::_executeAction()
             case BUTTON_SOLO:
             {
                 _fireAction( SP_VERB_LAYER_SOLO );
+            }
+            break;
+            case BUTTON_SHOW_ALL:
+            {
+                _fireAction( SP_VERB_LAYER_SHOW_ALL );
+            }
+            break;
+            case BUTTON_HIDE_ALL:
+            {
+                _fireAction( SP_VERB_LAYER_HIDE_ALL );
             }
             break;
             case DRAGNDROP:
@@ -855,10 +867,14 @@ LayersPanel::LayersPanel() :
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RENAME, 0, "Rename", (int)BUTTON_RENAME ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_DUPLICATE, 0, "Duplicate", (int)BUTTON_DUPLICATE ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_NEW, 0, "New", (int)BUTTON_NEW ) );
-        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_SOLO, 0, "Solo", (int)BUTTON_SOLO ) );
 
-	Gtk::MenuItem* item = Gtk::manage(new Gtk::SeparatorMenuItem());
-        _popupMenu.append(*item);
+        _popupMenu.append(*manage(new Gtk::SeparatorMenuItem()));
+
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_SOLO, 0, "Solo", (int)BUTTON_SOLO ) );
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_SHOW_ALL, 0, "Show All", (int)BUTTON_SHOW_ALL ) );
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_HIDE_ALL, 0, "Hide All", (int)BUTTON_HIDE_ALL ) );
+
+        _popupMenu.append(*manage(new Gtk::SeparatorMenuItem()));
 
         _watchingNonTop.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_RAISE, GTK_STOCK_GO_UP, "Up", (int)BUTTON_UP ) );
         _watchingNonBottom.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOWER, GTK_STOCK_GO_DOWN, "Down", (int)BUTTON_DOWN ) );

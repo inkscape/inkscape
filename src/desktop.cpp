@@ -496,6 +496,13 @@ void SPDesktop::setCurrentLayer(SPObject *object) {
     _layer_hierarchy->setBottom(object);
 }
 
+void SPDesktop::toggleAllLayers(bool hide) {
+
+    for ( SPObject* obj = currentRoot(); obj; obj = Inkscape::previous_layer(currentRoot(), obj) ) {
+        SP_ITEM(obj)->setHidden(hide);
+    }
+}
+
 void SPDesktop::toggleLayerSolo(SPObject *object) {
     g_return_if_fail(SP_IS_GROUP(object));
     g_return_if_fail( currentRoot() == object || (currentRoot() && currentRoot()->isAncestorOf(object)) );
