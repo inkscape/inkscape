@@ -494,6 +494,15 @@ void DocumentProperties::embedded_create_popup_menu(Gtk::Widget& parent, sigc::s
     _EmbeddedScriptsContextMenu.accelerate(parent);
 }
 
+void DocumentProperties::onSelectRow()
+{
+    Glib::RefPtr<Gtk::TreeSelection> sel = _LinkedProfilesList.get_selection();
+    if (sel) {
+        _unlink_btn.set_sensitive(sel->count_selected_rows () > 0);
+    }
+}
+
+
 void DocumentProperties::removeSelectedProfile(){
     Glib::ustring name;
     if(_LinkedProfilesList.get_selection()) {
@@ -520,6 +529,7 @@ void DocumentProperties::removeSelectedProfile(){
     }
 
     populate_linked_profiles_box();
+    onSelectRow();
 }
 
 void DocumentProperties::build_cms()
@@ -530,7 +540,11 @@ void DocumentProperties::build_cms()
     Gtk::Label *label_avail = manage (new Gtk::Label("", Gtk::ALIGN_START));
     label_avail->set_markup (_("<b>Available Color Profiles:</b>"));
 
-    _link_btn.set_label(_("Link Profile"));
+    _link_btn.set_tooltip_text(_("Link Profile"));
+    _link_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_ADD, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+
+    _unlink_btn.set_tooltip_text(_("Unlink Profile"));
+    _unlink_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_REMOVE, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
 
     _page_cms.set_spacing(4);
     gint row = 0;
@@ -549,8 +563,9 @@ void DocumentProperties::build_cms()
     label_avail->set_alignment(0.0);
     _page_cms.table().attach(*label_avail, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
-    _page_cms.table().attach(_combo_avail, 0, 2, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
-    _page_cms.table().attach(_link_btn, 2, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_cms.table().attach(_combo_avail, 0, 1, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_cms.table().attach(_link_btn, 1, 2, row, row + 1, (Gtk::AttachOptions)0, (Gtk::AttachOptions)0, 2, 0);
+    _page_cms.table().attach(_unlink_btn, 2, 3, row, row + 1, (Gtk::AttachOptions)0, (Gtk::AttachOptions)0, 0, 0);
 
     populate_available_profiles();
 
@@ -570,6 +585,9 @@ void DocumentProperties::build_cms()
     _LinkedProfilesListScroller.set_size_request(-1, 90);
 
     _link_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::linkSelectedProfile));
+    _unlink_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::removeSelectedProfile));
+
+    _LinkedProfilesList.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &DocumentProperties::onSelectRow) );
 
     _LinkedProfilesList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::linked_profiles_list_button_release));
     cms_create_popup_menu(_LinkedProfilesList, sigc::mem_fun(*this, &DocumentProperties::removeSelectedProfile));
@@ -579,6 +597,7 @@ void DocumentProperties::build_cms()
         _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
     }
     _emb_profiles_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_linked_profiles_box));
+    onSelectRow();
 }
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 

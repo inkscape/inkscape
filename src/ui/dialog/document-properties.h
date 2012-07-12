@@ -70,6 +70,7 @@ protected:
     void  populate_linked_profiles_box();
     void  linkSelectedProfile();
     void  removeSelectedProfile();
+    void  onSelectRow();
     void  linked_profiles_list_button_release(GdkEventButton* event);
     void  cms_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -132,6 +133,7 @@ protected:
     //---------------------------------------------------------------
     Gtk::ComboBoxText _combo_avail;
     Gtk::Button         _link_btn;
+    Gtk::Button         _unlink_btn;
     class LinkedProfilesColumns : public Gtk::TreeModel::ColumnRecord
         {
         public:
