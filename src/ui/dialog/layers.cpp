@@ -657,20 +657,13 @@ void LayersPanel::_handleEditingCancelled()
     _text_renderer->property_editable() = false;
 }
 
-void LayersPanel::_handleRowChange( Gtk::TreeModel::Path const& /*path*/, Gtk::TreeModel::iterator const& iter )
-{
-    Gtk::TreeModel::Row row = *iter;
-    Glib::ustring label = row[_model->_colLabel];
-    _renameLayer(row, label);
-}
-
 void LayersPanel::_renameLayer(Gtk::TreeModel::Row row, const Glib::ustring& name)
 {
     if ( row && _desktop && _desktop->layer_manager) {
         SPObject* obj = row[_model->_colObject];
         if ( obj ) {
             gchar const* oldLabel = obj->label();
-            if ( oldLabel && oldLabel[0] && !name.empty() && (name != oldLabel) ) {
+            if ( !name.empty() && (!oldLabel || name != oldLabel) ) {
                 _desktop->layer_manager->renameLayer( obj, name.c_str(), FALSE );
                 DocumentUndo::done( _desktop->doc() , SP_VERB_NONE,
                                                     _("Renamed layer"));
@@ -771,8 +764,6 @@ LayersPanel::LayersPanel() :
     _tree.get_selection()->set_select_function( sigc::mem_fun(*this, &LayersPanel::_rowSelectFunction) );
 
     _tree.signal_drag_drop().connect( sigc::mem_fun(*this, &LayersPanel::_handleDragDrop), false);
-    _tree.get_model()->signal_row_changed().connect( sigc::mem_fun(*this, &LayersPanel::_handleRowChange) );
-
 
     _text_renderer->signal_edited().connect( sigc::mem_fun(*this, &LayersPanel::_handleEdited) );
     _text_renderer->signal_editing_canceled().connect( sigc::mem_fun(*this, &LayersPanel::_handleEditingCancelled) );
