@@ -37,6 +37,7 @@
 #include "sp-script.h"
 #include "ui/widget/color-picker.h"
 #include "ui/widget/scalar-unit.h"
+#include "ui/dialog/filedialog.h"
 #include "verbs.h"
 #include "widgets/icon.h"
 #include "xml/node-event-vector.h"
@@ -494,7 +495,7 @@ void DocumentProperties::embedded_create_popup_menu(Gtk::Widget& parent, sigc::s
     _EmbeddedScriptsContextMenu.accelerate(parent);
 }
 
-void DocumentProperties::onSelectRow()
+void DocumentProperties::onColorProfileSelectRow()
 {
     Glib::RefPtr<Gtk::TreeSelection> sel = _LinkedProfilesList.get_selection();
     if (sel) {
@@ -529,7 +530,7 @@ void DocumentProperties::removeSelectedProfile(){
     }
 
     populate_linked_profiles_box();
-    onSelectRow();
+    onColorProfileSelectRow();
 }
 
 void DocumentProperties::build_cms()
@@ -587,7 +588,7 @@ void DocumentProperties::build_cms()
     _link_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::linkSelectedProfile));
     _unlink_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::removeSelectedProfile));
 
-    _LinkedProfilesList.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &DocumentProperties::onSelectRow) );
+    _LinkedProfilesList.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &DocumentProperties::onColorProfileSelectRow) );
 
     _LinkedProfilesList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::linked_profiles_list_button_release));
     cms_create_popup_menu(_LinkedProfilesList, sigc::mem_fun(*this, &DocumentProperties::removeSelectedProfile));
@@ -597,7 +598,7 @@ void DocumentProperties::build_cms()
         _emb_profiles_observer.set(SP_OBJECT(current->data)->parent);
     }
     _emb_profiles_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_linked_profiles_box));
-    onSelectRow();
+    onColorProfileSelectRow();
 }
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
@@ -616,7 +617,12 @@ void DocumentProperties::build_scripting()
     Gtk::Label *label_external= manage (new Gtk::Label("", Gtk::ALIGN_START));
     label_external->set_markup (_("<b>External script files:</b>"));
 
-    _add_btn.set_label(_("Add"));
+    _external_add_btn.set_tooltip_text(_("Link"));
+    _external_add_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_ADD, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+
+    _external_remove_btn.set_tooltip_text(_("Remove"));
+    _external_remove_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_REMOVE, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+
 
     _page_external_scripts.set_spacing(4);
     gint row = 0;
@@ -632,8 +638,9 @@ void DocumentProperties::build_scripting()
     _page_external_scripts.table().attach(*spacer_external, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
 
-    _page_external_scripts.table().attach(_script_entry, 0, 2, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
-    _page_external_scripts.table().attach(_add_btn, 2, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_external_scripts.table().attach(_script_entry, 0, 1, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    _page_external_scripts.table().attach(_external_add_btn, 1, 2, row, row + 1, (Gtk::AttachOptions)0, (Gtk::AttachOptions)0, 2, 0);
+    _page_external_scripts.table().attach(_external_remove_btn, 2, 3, row, row + 1, (Gtk::AttachOptions)0, (Gtk::AttachOptions)0, 0, 0);
     row++;
 
     //# Set up the External Scripts box
@@ -649,7 +656,21 @@ void DocumentProperties::build_scripting()
     Gtk::Label *label_embedded= manage (new Gtk::Label("", Gtk::ALIGN_START));
     label_embedded->set_markup (_("<b>Embedded script files:</b>"));
 
-    _new_btn.set_label(_("New"));
+    _embed_new_btn.set_tooltip_text(_("New"));
+    _embed_new_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_ADD, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+
+    _embed_remove_btn.set_tooltip_text(_("Remove"));
+    _embed_remove_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_REMOVE, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
+
+#if !WITH_GTKMM_3_0
+    // TODO: This has been removed from Gtkmm 3.0. Check that
+    //       everything still looks OK!
+    _embed_button_box.set_child_min_width( 16 );
+    _embed_button_box.set_spacing( 4 );
+#endif
+    _embed_button_box.set_layout (Gtk::BUTTONBOX_START);
+    _embed_button_box.add(_embed_new_btn);
+    _embed_button_box.add(_embed_remove_btn);
 
     _page_embedded_scripts.set_spacing(4);
     row = 0;
@@ -660,12 +681,12 @@ void DocumentProperties::build_scripting()
     _page_embedded_scripts.table().attach(_EmbeddedScriptsListScroller, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
 
+    _page_embedded_scripts.table().attach(_embed_button_box, 0, 1, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
+    row++;
+
     Gtk::HBox* spacer_embedded = Gtk::manage(new Gtk::HBox());
     spacer_embedded->set_size_request(SPACE_SIZE_X, SPACE_SIZE_Y);
     _page_embedded_scripts.table().attach(*spacer_embedded, 0, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
-    row++;
-
-    _page_embedded_scripts.table().attach(_new_btn, 2, 3, row, row + 1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0, 0, 0);
     row++;
 
     //# Set up the Embedded Scripts box
@@ -688,9 +709,13 @@ void DocumentProperties::build_scripting()
     _EmbeddedContentScroller.add(_EmbeddedContent);
     _EmbeddedContentScroller.set_shadow_type(Gtk::SHADOW_IN);
     _EmbeddedContentScroller.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-    _EmbeddedContentScroller.set_size_request(-1, -1);
+    _EmbeddedContentScroller.set_size_request(-1, 140);
 
     _EmbeddedScriptsList.signal_cursor_changed().connect(sigc::mem_fun(*this, &DocumentProperties::changeEmbeddedScript));
+    _EmbeddedScriptsList.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &DocumentProperties::onEmbeddedScriptSelectRow) );
+
+    _ExternalScriptsList.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &DocumentProperties::onExternalScriptSelectRow) );
+
     _EmbeddedContent.get_buffer()->signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::editEmbeddedScript));
 
     populate_script_lists();
@@ -700,17 +725,20 @@ void DocumentProperties::build_scripting()
     _ExternalScriptsListScroller.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS);
     _ExternalScriptsListScroller.set_size_request(-1, 90);
 
-    _add_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::addExternalScript));
+    _external_add_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::addExternalScript));
 
     _EmbeddedScriptsListScroller.add(_EmbeddedScriptsList);
     _EmbeddedScriptsListScroller.set_shadow_type(Gtk::SHADOW_IN);
     _EmbeddedScriptsListScroller.set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_ALWAYS);
     _EmbeddedScriptsListScroller.set_size_request(-1, 90);
 
-    _new_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::addEmbeddedScript));
-
+    _embed_new_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::addEmbeddedScript));
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+
+    _external_remove_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::removeExternalScript));
+    _embed_remove_btn.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::removeEmbeddedScript));
+
     _ExternalScriptsList.signal_button_release_event().connect_notify(sigc::mem_fun(*this, &DocumentProperties::external_scripts_list_button_release));
     external_create_popup_menu(_ExternalScriptsList, sigc::mem_fun(*this, &DocumentProperties::removeExternalScript));
 
@@ -724,6 +752,8 @@ void DocumentProperties::build_scripting()
         _scripts_observer.set(SP_OBJECT(current->data)->parent);
     }
     _scripts_observer.signal_changed().connect(sigc::mem_fun(*this, &DocumentProperties::populate_script_lists));
+    onEmbeddedScriptSelectRow();
+    onExternalScriptSelectRow();
 }
 
 void DocumentProperties::build_metadata()
@@ -768,10 +798,20 @@ void DocumentProperties::build_metadata()
 }
 
 void DocumentProperties::addExternalScript(){
+
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    if (!desktop){
+    if (!desktop) {
         g_warning("No active desktop");
-    } else {
+        return;
+    }
+
+    if (_script_entry.get_text().empty() ) {
+        // Click Add button with no filename, show a Browse dialog
+        browseExternalScript();
+    }
+
+    if (!_script_entry.get_text().empty()) {
+
         Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
         Inkscape::XML::Node *scriptRepr = xml_doc->createElement("svg:script");
         scriptRepr->setAttribute("xlink:href", (gchar*) _script_entry.get_text().c_str());
@@ -784,6 +824,55 @@ void DocumentProperties::addExternalScript(){
 
         populate_script_lists();
     }
+
+}
+
+static Inkscape::UI::Dialog::FileOpenDialog * selectPrefsFileInstance = NULL;
+
+void  DocumentProperties::browseExternalScript() {
+
+    //# Get the current directory for finding files
+    static Glib::ustring open_path;
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+
+    Glib::ustring attr = prefs->getString(_prefs_path);
+    if (!attr.empty()) open_path = attr;
+
+    //# Test if the open_path directory exists
+    if (!Inkscape::IO::file_test(open_path.c_str(),
+              (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR)))
+        open_path = "";
+
+    //# If no open path, default to our home directory
+    if (open_path.empty())
+    {
+        open_path = g_get_home_dir();
+        open_path.append(G_DIR_SEPARATOR_S);
+    }
+
+    //# Create a dialog
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (!selectPrefsFileInstance) {
+        selectPrefsFileInstance =
+              Inkscape::UI::Dialog::FileOpenDialog::create(
+                 *desktop->getToplevel(),
+                 open_path,
+                 Inkscape::UI::Dialog::SVG_TYPES,
+                 _("Select a script to load"));
+    }
+
+    //# Show the dialog
+    bool const success = selectPrefsFileInstance->show();
+
+    if (!success) {
+        return;
+    }
+
+    //# User selected something.  Get name and type
+    Glib::ustring fileName = selectPrefsFileInstance->getFilename();
+
+    _script_entry.set_text(fileName);
 }
 
 void DocumentProperties::addEmbeddedScript(){
@@ -866,6 +955,22 @@ void DocumentProperties::removeEmbeddedScript(){
     }
 
     populate_script_lists();
+}
+
+void DocumentProperties::onExternalScriptSelectRow()
+{
+    Glib::RefPtr<Gtk::TreeSelection> sel = _ExternalScriptsList.get_selection();
+    if (sel) {
+        _external_remove_btn.set_sensitive(sel->count_selected_rows () > 0);
+    }
+}
+
+void DocumentProperties::onEmbeddedScriptSelectRow()
+{
+    Glib::RefPtr<Gtk::TreeSelection> sel = _EmbeddedScriptsList.get_selection();
+    if (sel) {
+        _embed_remove_btn.set_sensitive(sel->count_selected_rows () > 0);
+    }
 }
 
 void DocumentProperties::changeEmbeddedScript(){

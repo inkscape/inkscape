@@ -70,7 +70,7 @@ protected:
     void  populate_linked_profiles_box();
     void  linkSelectedProfile();
     void  removeSelectedProfile();
-    void  onSelectRow();
+    void  onColorProfileSelectRow();
     void  linked_profiles_list_button_release(GdkEventButton* event);
     void  cms_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -79,10 +79,13 @@ protected:
     void  embedded_scripts_list_button_release(GdkEventButton* event);
     void  populate_script_lists();
     void  addExternalScript();
+    void  browseExternalScript();
     void  addEmbeddedScript();
     void  removeExternalScript();
     void  removeEmbeddedScript();
     void  changeEmbeddedScript();
+    void  onExternalScriptSelectRow();
+    void  onEmbeddedScriptSelectRow();
     void  editEmbeddedScript();
     void  external_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
     void  embedded_create_popup_menu(Gtk::Widget& parent, sigc::slot<void> rem);
@@ -149,8 +152,16 @@ protected:
     Gtk::Menu _EmbProfContextMenu;
 
     //---------------------------------------------------------------
-    Gtk::Button         _add_btn;
-    Gtk::Button         _new_btn;
+    Gtk::Button         _external_add_btn;
+    Gtk::Button         _external_remove_btn;
+    Gtk::Button         _embed_new_btn;
+    Gtk::Button         _embed_remove_btn;
+#if WITH_GTKMM_3_0
+    Gtk::ButtonBox _embed_button_box;
+#else
+    Gtk::HButtonBox _embed_button_box;
+#endif
+
     class ExternalScriptsColumns : public Gtk::TreeModel::ColumnRecord
         {
         public:
