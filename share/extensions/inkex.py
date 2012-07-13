@@ -40,7 +40,7 @@ if sys.platform.startswith('win'):
     import locale
     current_locale, encoding = locale.getdefaultlocale()
     os.environ['LANG'] = current_locale
-    gettext= gettext.translation('inkscape', "C:\Program Files\Inkscape\locale", [current_locale])
+    gettext= gettext.translation('inkscape', "C:\Program Files\Inkscape\locale", [current_locale], fallback=True)
 else:
     gettext= gettext.translation('inkscape')
 
