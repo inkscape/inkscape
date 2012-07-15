@@ -203,6 +203,64 @@ FileOpenDialogImplWin32::~FileOpenDialogImplWin32()
         delete[] _extension_map;
 }
 
+void FileOpenDialogImplWin32::addFilterMenu(Glib::ustring name, Glib::ustring pattern)
+{
+    list<Filter> filter_list;
+
+    int extension_index = 0;
+    int filter_length = 1;
+
+    ustring all_exe_files_filter = pattern;
+    Filter all_exe_files;
+
+    const gchar *all_exe_files_filter_name = name.data();
+
+    // Calculate the amount of memory required
+    int filter_count = 1;
+
+    _extension_map = new Inkscape::Extension::Extension*[filter_count];
+
+    // Filter Executable Files
+    all_exe_files.name = g_utf8_to_utf16(all_exe_files_filter_name,
+        -1, NULL, &all_exe_files.name_length, NULL);
+    all_exe_files.filter = g_utf8_to_utf16(all_exe_files_filter.data(),
+            -1, NULL, &all_exe_files.filter_length, NULL);
+    all_exe_files.mod = NULL;
+    filter_list.push_front(all_exe_files);
+
+    _filter = new wchar_t[filter_length];
+    wchar_t *filterptr = _filter;
+
+    for(list<Filter>::iterator filter_iterator = filter_list.begin();
+        filter_iterator != filter_list.end(); ++filter_iterator)
+    {
+        const Filter &filter = *filter_iterator;
+
+        wcsncpy(filterptr, (wchar_t*)filter.name, filter.name_length);
+        filterptr += filter.name_length;
+        g_free(filter.name);
+
+        *(filterptr++) = L'\0';
+        *(filterptr++) = L'*';
+
+        if(filter.filter != NULL)
+        {
+            wcsncpy(filterptr, (wchar_t*)filter.filter, filter.filter_length);
+            filterptr += filter.filter_length;
+            g_free(filter.filter);
+        }
+
+        *(filterptr++) = L'\0';
+
+        // Associate this input extension with the file type name
+        _extension_map[extension_index++] = filter.mod;
+    }
+    *(filterptr++) = L'\0';
+
+    _filter_count = extension_index;
+    _filter_index = 1;  // Select the 1st filter in the list
+}
+
 void FileOpenDialogImplWin32::createFilterMenu()
 {
     list<Filter> filter_list;
@@ -210,6 +268,10 @@ void FileOpenDialogImplWin32::createFilterMenu()
     int extension_index = 0;
     int filter_length = 1;
     
+    if (dialogType == CUSTOM_TYPE) {
+        return;
+    }
+
     if (dialogType != EXE_TYPES) {
         // Compose the filter string
         Inkscape::Extension::DB::InputList extension_list;

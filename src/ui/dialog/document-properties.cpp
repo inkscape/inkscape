@@ -617,7 +617,7 @@ void DocumentProperties::build_scripting()
     Gtk::Label *label_external= manage (new Gtk::Label("", Gtk::ALIGN_START));
     label_external->set_markup (_("<b>External script files:</b>"));
 
-    _external_add_btn.set_tooltip_text(_("Link"));
+    _external_add_btn.set_tooltip_text(_("Add the current file name or browse for a file"));
     _external_add_btn.set_image(*manage(Glib::wrap(gtk_image_new_from_stock ( GTK_STOCK_ADD, GTK_ICON_SIZE_SMALL_TOOLBAR ) )));
 
     _external_remove_btn.set_tooltip_text(_("Remove"));
@@ -872,8 +872,9 @@ void  DocumentProperties::browseExternalScript() {
               Inkscape::UI::Dialog::FileOpenDialog::create(
                  *desktop->getToplevel(),
                  open_path,
-                 Inkscape::UI::Dialog::SVG_TYPES,
+                 Inkscape::UI::Dialog::CUSTOM_TYPE,
                  _("Select a script to load"));
+        selectPrefsFileInstance->addFilterMenu("Javascript Files", "*.js");
     }
 
     //# Show the dialog
@@ -920,17 +921,19 @@ void DocumentProperties::removeExternalScript(){
 
     const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
     while ( current ) {
-        SPObject* obj = SP_OBJECT(current->data);
-        SPScript* script = (SPScript*) obj;
-        if (name == script->xlinkhref){
+        if (current->data && SP_IS_OBJECT(current->data)) {
+            SPObject* obj = SP_OBJECT(current->data);
+            SPScript* script = (SPScript*) obj;
+            if (name == script->xlinkhref){
 
-            //XML Tree being used directly here while it shouldn't be.
-            Inkscape::XML::Node *repr = obj->getRepr();
-            if (repr){
-                sp_repr_unparent(repr);
+                //XML Tree being used directly here while it shouldn't be.
+                Inkscape::XML::Node *repr = obj->getRepr();
+                if (repr){
+                    sp_repr_unparent(repr);
 
-                // inform the document, so we can undo
-                DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_EXTERNAL_SCRIPT, _("Remove external script"));
+                    // inform the document, so we can undo
+                    DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_EXTERNAL_SCRIPT, _("Remove external script"));
+                }
             }
         }
         current = g_slist_next(current);

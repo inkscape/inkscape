@@ -46,7 +46,8 @@ typedef enum {
     SVG_TYPES,
     IMPORT_TYPES,
     EXPORT_TYPES,
-    EXE_TYPES
+    EXE_TYPES,
+    CUSTOM_TYPE
     } FileDialogType;
 
 /**
@@ -123,6 +124,8 @@ public:
     virtual std::vector<Glib::ustring> getFilenames() = 0;
 
     virtual Glib::ustring getCurrentDirectory() = 0;
+
+    virtual void addFilterMenu(Glib::ustring name, Glib::ustring pattern) = 0;
 
 protected:
     /**

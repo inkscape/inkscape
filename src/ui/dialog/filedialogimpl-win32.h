@@ -54,6 +54,7 @@ public:
     /// Get the path of the current directory
     Glib::ustring getCurrentDirectory();
 
+
 protected:
     /// The dialog type
     FileDialogType dialogType;
@@ -147,6 +148,13 @@ public:
     /// if the selected filter requires an automatic type detection
     virtual Inkscape::Extension::Extension* getSelectionType()
         { return FileDialogBaseWin32::getSelectionType(); }
+
+
+    /// Add a custom file filter menu item
+    /// @param name - Name of the filter (such as "Javscript")
+    /// @param pattern - File filtering patter (such as "*.js")
+    /// Use the FileDialogType::CUSTOM_TYPE in constructor to not include other file types
+    virtual void addFilterMenu(Glib::ustring name, Glib::ustring pattern);
 
 private:
 

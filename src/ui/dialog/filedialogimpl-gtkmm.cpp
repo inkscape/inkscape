@@ -732,8 +732,28 @@ FileOpenDialogImplGtk::~FileOpenDialogImplGtk()
 
 }
 
+void FileOpenDialogImplGtk::addFilterMenu(Glib::ustring name, Glib::ustring pattern)
+{
+
+#if WITH_GTKMM_3_0
+        Glib::RefPtr<Gtk::FileFilter> allFilter = Gtk::FileFilter::create();
+        allFilter->set_name(_(name.c_str()));
+        allFilter->add_pattern(pattern);
+#else
+        Gtk::FileFilter allFilter;
+        allFilter.set_name(_(name.c_str()));
+        allFilter.add_pattern(pattern);
+#endif
+        extensionMap[Glib::ustring(_("All Files"))]=NULL;
+        add_filter(allFilter);
+}
+
 void FileOpenDialogImplGtk::createFilterMenu()
 {
+    if (_dialogType == CUSTOM_TYPE) {
+        return;
+    }
+
     if (_dialogType == EXE_TYPES) {
 #if WITH_GTKMM_3_0
         Glib::RefPtr<Gtk::FileFilter> allFilter = Gtk::FileFilter::create();

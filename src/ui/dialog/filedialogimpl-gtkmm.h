@@ -236,12 +236,19 @@ public:
 
 	Glib::ustring getCurrentDirectory();
 
+    /// Add a custom file filter menu item
+    /// @param name - Name of the filter (such as "Javscript")
+    /// @param pattern - File filtering patter (such as "*.js")
+    /// Use the FileDialogType::CUSTOM_TYPE in constructor to not include other file types
+    void addFilterMenu(Glib::ustring name, Glib::ustring pattern);
+
 private:
 
     /**
      *  Create a filter menu for this type of dialog
      */
     void createFilterMenu();
+
 
     /**
      * Filter name->extension lookup
