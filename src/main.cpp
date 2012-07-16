@@ -474,7 +474,8 @@ gchar * blankParam = g_strdup("");
 #ifdef WIN32
 
 /**
- * Set up the PATH and PYTHONPATH environment variables on Windows
+ * Set up the PATH, INKSCAPE_LOCALEDIR and PYTHONPATH environment
+ * variables on Windows
  * @param exe Inkscape executable directory in UTF-8
  */
 static void _win32_set_inkscape_env(gchar const *exe)
@@ -525,7 +526,11 @@ static void _win32_set_inkscape_env(gchar const *exe)
     } else {
         printf("python not found\n\n");
     }*/
-
+    
+    // INKSCAPE_LOCALEDIR is needed by Python/Gettext
+    gchar *localepath = g_build_filename(exe, PACKAGE_LOCALE_DIR, NULL);
+    g_setenv("INKSCAPE_LOCALEDIR", localepath, TRUE);
+    
     g_free(python);
     g_free(scripts);
     g_free(perl);
@@ -538,6 +543,8 @@ static void _win32_set_inkscape_env(gchar const *exe)
 
     g_free(new_path);
     g_free(new_pythonpath);
+    
+    g_free(localepath);
 }
 #endif
 

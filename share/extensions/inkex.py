@@ -36,13 +36,19 @@ import sys
 
 from math import *
 
+domain = 'inkscape'
 if sys.platform.startswith('win'):
     import locale
     current_locale, encoding = locale.getdefaultlocale()
     os.environ['LANG'] = current_locale
-    gettext= gettext.translation('inkscape', "C:\Program Files\Inkscape\locale", [current_locale], fallback=True)
+    try:
+        localdir = os.environ['INKSCAPE_LOCALEDIR'];
+        #sys.stderr.write(str(localdir) + "\n")
+        gettext= gettext.translation(domain, localdir, [current_locale], fallback=True)
+    except KeyError:
+        gettext= gettext.translation(domain, fallback=True)
 else:
-    gettext= gettext.translation('inkscape')
+    gettext= gettext.translation(domain, fallback=True)
 
 _ = gettext.gettext
 
