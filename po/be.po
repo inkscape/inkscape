@@ -29529,7 +29529,7 @@ msgid "Keys and Mouse Reference"
 msgstr "Па клявішах і мышы"
 
 #: ../share/extensions/inkscape_help_keys.inx.h:2
-msgid "http://inkscape.org/doc/keys048.html"
+msgid "http://inkscape.org/doc/keys048.be.html"
 msgstr ""
 
 #: ../share/extensions/inkscape_help_manual.inx.h:1
