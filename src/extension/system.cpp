@@ -74,6 +74,16 @@ SPDocument *open(Extension *key, gchar const *filename)
     relpath &= (filename[0] != '\\') && !(isalpha(filename[0]) && (filename[1] == ':'));
 #endif
 
+    // Do not consider an URI as a relative path.
+    if (relpath) {
+        gchar const * cp = filename;
+
+        while (isalpha(*cp) || isdigit(*cp) || *cp == '+' || *cp == '-' || *cp == '.')
+            cp++;
+
+        relpath = *cp != ':' || cp[1] != '/' || cp[2] != '/';
+    }
+
     if (relpath) {
         gchar * curdir = NULL;
 #ifndef WIN32
