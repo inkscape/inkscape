@@ -31,6 +31,7 @@
 
 #include "desktop.h"
 #include "widgets/font-selector.h"
+#include "preferences.h"
 
 /* SPFontSelector */
 
@@ -344,11 +345,15 @@ static void sp_font_selector_size_changed( GtkComboBox */*cbox*/, SPFontSelector
             value = -1;
         free (text);
     }
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int max_size = prefs->getInt("/dialogs/textandfont/maxFontSize", 10000); // somewhat arbitrary, but text&font preview freezes with too huge fontsizes
+
     if (value <= 0) {
         return; // could not parse value 
     }
-    if (value > 10000)
-        value = 10000; // somewhat arbitrary, but text&font preview freezes with too huge fontsizes
+    if (value > max_size)
+        value = max_size;
 
     fsel->fontsize = value;
     if ( fabs(fsel->fontsize-old_size) > 0.001)

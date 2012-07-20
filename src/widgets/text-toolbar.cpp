@@ -360,6 +360,12 @@ static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObje
     }
     g_free( text );
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int max_size = prefs->getInt("/dialogs/textandfont/maxFontSize", 10000); // somewhat arbitrary, but text&font preview freezes with too huge fontsizes
+
+    if (size > max_size)
+        size = max_size;
+
     // Set css font size.
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream osfs;
