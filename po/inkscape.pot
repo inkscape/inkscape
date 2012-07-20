@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-07-18 21:38+0200\n"
+"POT-Creation-Date: 2012-07-20 07:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -8006,7 +8006,7 @@ msgstr ""
 msgid "Is the effect previewed live on canvas?"
 msgstr ""
 
-#: ../src/extension/system.cpp:143 ../src/extension/system.cpp:145
+#: ../src/extension/system.cpp:153 ../src/extension/system.cpp:155
 msgid "Format autodetect failed. The file is being opened as SVG."
 msgstr ""
 
@@ -11815,7 +11815,6 @@ msgstr ""
 #: ../share/extensions/text_flipcase.inx.h:2
 #: ../share/extensions/text_lowercase.inx.h:2
 #: ../share/extensions/text_randomcase.inx.h:2
-#: ../share/extensions/text_replace.inx.h:4
 #: ../share/extensions/text_sentencecase.inx.h:3
 #: ../share/extensions/text_titlecase.inx.h:2
 #: ../share/extensions/text_uppercase.inx.h:2
@@ -28092,18 +28091,6 @@ msgstr ""
 
 #: ../share/extensions/text_randomcase.inx.h:3
 msgid "rANdOm CasE"
-msgstr ""
-
-#: ../share/extensions/text_replace.inx.h:1
-msgid "By:"
-msgstr ""
-
-#: ../share/extensions/text_replace.inx.h:2
-msgid "Replace text"
-msgstr ""
-
-#: ../share/extensions/text_replace.inx.h:3
-msgid "Replace:"
 msgstr ""
 
 #: ../share/extensions/text_sentencecase.inx.h:2
