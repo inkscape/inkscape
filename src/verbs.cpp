@@ -2681,7 +2681,7 @@ Verb *Verb::_base_verbs[] = {
                    N_("View and select font family, font size and other text properties"), INKSCAPE_ICON("dialog-text-and-font")),
     new DialogVerb(SP_VERB_DIALOG_XML_EDITOR, "DialogXMLEditor", N_("_XML Editor..."),
                    N_("View and edit the XML tree of the document"), INKSCAPE_ICON("dialog-xml-editor")),
-    new DialogVerb(SP_VERB_DIALOG_FIND, "DialogFind", N_("_Find..."),
+    new DialogVerb(SP_VERB_DIALOG_FIND, "DialogFind", N_("_Find/Replace..."),
                    N_("Find objects in document"), GTK_STOCK_FIND ),
     new DialogVerb(SP_VERB_DIALOG_FINDREPLACE, "DialogFindReplace", N_("Find and _Replace Text..."),
                    N_("Find and replace text in document"), GTK_STOCK_FIND_AND_REPLACE ),
