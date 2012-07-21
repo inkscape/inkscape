@@ -714,7 +714,7 @@ void SPDocument::do_change_uri(gchar const *const filename, bool const rebase)
         Inkscape::XML::rebase_hrefs(this, new_base, true);
     }
 
-    repr->setAttribute("sodipodi:docname", this->name);
+    repr->setAttribute("sodipodi:docname", new_name);
     DocumentUndo::setUndoSensitive(this, saved);
 
 
