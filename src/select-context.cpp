@@ -122,6 +122,7 @@ sp_select_context_init(SPSelectContext *sc)
     sc->cycling_items_cmp = NULL;
     sc->cycling_items_selected_before = NULL;
     sc->cycling_cur_item = NULL;
+    sc->cycling_wrap = true;
     sc->_seltrans = NULL;
     sc->_describer = NULL;
 
@@ -457,15 +458,17 @@ sp_select_context_cycle_through_items(SPSelectContext *sc, Inkscape::Selection *
     GList *next;
     if (scroll_event->direction == GDK_SCROLL_UP) {
         next = sc->cycling_cur_item->next;
-        if (next == NULL)
+        if (next == NULL && sc->cycling_wrap)
             next = sc->cycling_items;
     } else {
         next = sc->cycling_cur_item->prev;
-        if (next == NULL)
+        if (next == NULL && sc->cycling_wrap)
             next = g_list_last(sc->cycling_items);
     }
-    sc->cycling_cur_item = next;
-    item = SP_ITEM(sc->cycling_cur_item->data);
+    if (next) {
+        sc->cycling_cur_item = next;
+        item = SP_ITEM(sc->cycling_cur_item->data);
+    }
     arenaitem = item->get_arenaitem(desktop->dkey);
     arenaitem->setOpacity(1.0);
 
@@ -855,6 +858,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     // set the current item to the bottommost one so that the cycling step below re-starts at the top
                     sc->cycling_cur_item = g_list_last(sc->cycling_items);
                 }
+
+                sc->cycling_wrap = prefs->getBool("/options/selection/cycleWrap", true);
 
                 // Cycle through the items underneath the mouse pointer, one-by-one
                 sp_select_context_cycle_through_items(sc, selection, scroll_event, shift_pressed);

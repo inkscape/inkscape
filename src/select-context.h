@@ -42,6 +42,7 @@ struct SPSelectContext : public SPEventContext {
 	GList *cycling_items_cmp;
 	GList *cycling_items_selected_before;
 	GList *cycling_cur_item;
+	bool cycling_wrap;
 
 	SPItem *item;
 	SPCanvasItem *grabbed;

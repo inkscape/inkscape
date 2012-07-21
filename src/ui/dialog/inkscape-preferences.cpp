@@ -1089,6 +1089,13 @@ void InkscapePreferences::initPageBehavior()
     _page_select.add_line( false, "", _sel_layer_deselects, "",
                            _("Uncheck this to be able to keep the current objects selected when the current layer changes"));
 
+
+    _sel_cycle.init ( _("Wrap when cycling objects in z-order"), "/options/selection/cycleWrap", true);
+
+    _page_select.add_group_header( _("Alt+Scroll Wheel"));
+    _page_select.add_line( true, "", _sel_cycle, "",
+                           _("Wrap around at start and end when cycling objects in z-order"));
+
     this->AddPage(_page_select, _("Selecting"), iter_behavior, PREFS_PAGE_BEHAVIOR_SELECTING);
 
     // Transforms options
