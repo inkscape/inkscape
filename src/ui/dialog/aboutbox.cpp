@@ -386,6 +386,7 @@ void AboutBox::initStrings() {
 "Alex Valavanis\n"
 "Joakim Verona\n"
 "Lucas Vieites\n"
+"Daniel Wagenaar\n"
 "Michael Wybrow\n"
 "Gellule Xg\n"
 "Daniel Yacob\n"
