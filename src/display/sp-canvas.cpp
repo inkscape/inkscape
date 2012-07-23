@@ -1422,6 +1422,7 @@ void SPCanvasImpl::realize(GtkWidget *widget)
                              GDK_KEY_RELEASE_MASK |
                              GDK_ENTER_NOTIFY_MASK |
                              GDK_LEAVE_NOTIFY_MASK |
+                             GDK_SCROLL_MASK |
                              GDK_FOCUS_CHANGE_MASK);
 
 #if GTK_CHECK_VERSION(3,0,0)
@@ -1557,7 +1558,10 @@ int SPCanvasImpl::emitEvent(SPCanvas *canvas, GdkEvent *event)
             mask = GDK_KEY_RELEASE_MASK;
             break;
         case GDK_SCROLL:
-            mask = GDK_SCROLL;
+            mask = GDK_SCROLL_MASK;
+#if GTK_CHECK_VERSION(3,0,0)
+            mask |= GDK_SMOOTH_SCROLL_MASK;
+#endif
             break;
         default:
             mask = 0;

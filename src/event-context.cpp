@@ -691,6 +691,10 @@ static gint sp_event_context_private_root_handler(
         int const wheel_scroll = prefs->getIntLimited(
                 "/options/wheelscroll/value", 40, 0, 1000);
 
+        // Size of smooth-scrolls (only used in GTK+ 3)
+        gdouble delta_x = 0;
+        gdouble delta_y = 0;
+
         /* shift + wheel, pan left--right */
         if (event->scroll.state & GDK_SHIFT_MASK) {
             switch (event->scroll.direction) {
@@ -740,6 +744,12 @@ static gint sp_event_context_private_root_handler(
             case GDK_SCROLL_RIGHT:
                 desktop->scroll_world(-wheel_scroll, 0);
                 break;
+#if GTK_CHECK_VERSION(3,0,0)
+            case GDK_SCROLL_SMOOTH:
+                gdk_event_get_scroll_deltas(event, &delta_x, &delta_y);
+                desktop->scroll_world(delta_x, delta_y);
+                break;
+#endif
             }
         }
         break;
