@@ -1345,8 +1345,8 @@ void InkscapePreferences::initPageBitmaps()
                            _("Automatically reload linked images when file is changed on disk"));
     _misc_bitmap_editor.init("/options/bitmapeditor/value", true);
     _page_bitmaps.add_line( false, _("Bitmap editor:"), _misc_bitmap_editor, "", "", true);
-    _importexport_export.init("/dialogs/export/defaultxdpi/value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
-    _page_bitmaps.add_line( false, _("Default export resolution:"), _importexport_export, _("dpi"),
+    _importexport_export_res.init("/dialogs/export/defaultxdpi/value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
+    _page_bitmaps.add_line( false, _("Default export resolution:"), _importexport_export_res, _("dpi"),
                             _("Default bitmap resolution (in dots per inch) in the Export dialog"), false);
     _bitmap_copy_res.init("/options/createbitmap/resolution", 1.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
     _page_bitmaps.add_line( false, _("Resolution for Create Bitmap Copy:"), _bitmap_copy_res, _("dpi"),
@@ -1357,6 +1357,9 @@ void InkscapePreferences::initPageBitmaps()
         _bitmap_import.init("/dialogs/import/link", labels, values, G_N_ELEMENTS(values), "ask");
         _page_bitmaps.add_line( false, _("Bitmap import:"), _bitmap_import, "", "", false);
     }
+    _importexport_import_res.init("/dialogs/import/defaultxdpi/value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
+    _page_bitmaps.add_line( false, _("Default import resolution:"), _importexport_import_res, _("dpi"),
+                            _("Default bitmap resolution (in dots per inch) for bitmap import"), false);
 
     this->AddPage(_page_bitmaps, _("Bitmaps"), PREFS_PAGE_BITMAPS);
 }

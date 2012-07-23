@@ -208,9 +208,27 @@ fi
 dnl ******************************
 dnl Check for libpng 
 dnl ******************************
-AC_CHECK_LIB(png, png_read_info, [AC_CHECK_HEADER(png.h, png_ok=yes, png_ok=yes)], png_ok=no, -lz -lm)
+AC_CHECK_LIB(png, png_read_info, [AC_CHECK_HEADER(png.h, png_ok=yes, png_ok=no)], png_ok=no, -lz -lm)
 if test "x$png_ok" != "xyes"; then
 	AC_MSG_ERROR([libpng >= 1.2 is needed to compile inkscape])
+fi
+
+dnl ******************************
+dnl Check for libexif
+dnl ******************************
+AC_CHECK_LIB(exif, exif_data_new_from_file, [AC_CHECK_HEADER(libexif/exif-data.h, exif_ok=yes, exif_ok=no)], exif_ok=no, -lm)
+if test "x$exif_ok" = "xyes"; then
+   LIBS="-lexif $LIBS"
+   AC_DEFINE(HAVE_EXIF, 1, [Use libexif])
+fi
+
+dnl ******************************
+dnl Check for libjpeg
+dnl ******************************
+AC_CHECK_LIB(jpeg, jpeg_CreateDecompress, [AC_CHECK_HEADER(jpeglib.h, jpeg_ok=yes, jpeg_ok=no)], jpeg_ok=no)
+if test "x$jpeg_ok" = "xyes"; then
+   LIBS="-ljpeg $LIBS"
+   AC_DEFINE(HAVE_JPEG, 1, [Use libjpeg])
 fi
 
 dnl Handle possible dlopen requirement for libgc

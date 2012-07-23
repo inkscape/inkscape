@@ -136,4 +136,7 @@ ink_common_sources +=	\
 	extension/internal/emf-win32-print.h \
 	extension/internal/emf-win32-print.cpp \
 	extension/internal/emf-win32-inout.h \
-	extension/internal/emf-win32-inout.cpp 
+	extension/internal/emf-win32-inout.cpp \
+	extension/internal/image-resolution.h \
+	extension/internal/image-resolution.cpp
+	
