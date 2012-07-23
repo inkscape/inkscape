@@ -757,6 +757,8 @@ if test "x$enable_gtk3" = "xyes"; then
 		
 		AC_MSG_RESULT([Using external GDL])
 		AC_DEFINE(WITH_EXT_GDL,1,[Build with external GDL])
+	else
+		AC_MSG_ERROR([Some dependencies were not fulfilled for the experimental GTK+ 3 build. One possible cause for this is a new dependency on the gdl-3.0 development package.])
 	fi
 else
 
