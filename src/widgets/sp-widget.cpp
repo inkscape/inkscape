@@ -41,7 +41,7 @@ public:
     static void dispose(GObject *object);
     static void show(GtkWidget *widget);
     static void hide(GtkWidget *widget);
-    static void sizeRequest(GtkWidget *widget, GtkRequisition *requisition);
+
 #if GTK_CHECK_VERSION(3,0,0)
     static void getPreferredWidth(GtkWidget *widget,
                                   gint *minimal_width,
@@ -52,8 +52,10 @@ public:
                                    gint *natural_height);
     static gboolean draw(GtkWidget *widget, cairo_t *cr);
 #else
+    static void sizeRequest(GtkWidget *widget, GtkRequisition *requisition);
     static gboolean expose(GtkWidget *widget, GdkEventExpose *event);
 #endif
+
     static void sizeAllocate(GtkWidget *widget, GtkAllocation *allocation);
     static void modifySelectionCB(Application *inkscape, Selection *selection, guint flags, SPWidget *spw);
     static void changeSelectionCB(Application *inkscape, Selection *selection, SPWidget *spw);
@@ -247,6 +249,27 @@ gboolean SPWidgetImpl::expose(GtkWidget *widget, GdkEventExpose *event)
     return FALSE;
 }
 
+#if GTK_CHECK_VERSION(3,0,0)
+void SPWidgetImpl::getPreferredWidth(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+{
+    GtkBin    *bin   = GTK_BIN(widget);
+    GtkWidget *child = gtk_bin_get_child(bin);
+
+    if(child) {
+        gtk_widget_get_preferred_width(child, minimal_width, natural_width);
+    }
+}
+
+void SPWidgetImpl::getPreferredHeight(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+    GtkBin    *bin   = GTK_BIN(widget);
+    GtkWidget *child = gtk_bin_get_child(bin);
+
+    if(child) {
+        gtk_widget_get_preferred_height(child, minimal_height, natural_height);
+    }
+}
+#else
 void SPWidgetImpl::sizeRequest(GtkWidget *widget, GtkRequisition *requisition)
 {
     GtkBin    *bin   = GTK_BIN(widget);
@@ -255,23 +278,6 @@ void SPWidgetImpl::sizeRequest(GtkWidget *widget, GtkRequisition *requisition)
     if (child) {
         gtk_widget_size_request(child, requisition);
     }
-}
-
-#if GTK_CHECK_VERSION(3,0,0)
-void SPWidgetImpl::getPreferredWidth(GtkWidget *widget, gint *minimal_width, gint *natural_width)
-{
-    GtkRequisition requisition;
-    sizeRequest(widget, &requisition);
-    *minimal_width = requisition.width;
-    *natural_width = requisition.width;
-}
-
-void SPWidgetImpl::getPreferredHeight(GtkWidget *widget, gint *minimal_height, gint *natural_height)
-{
-    GtkRequisition requisition;
-    sizeRequest(widget, &requisition);
-    *minimal_height = requisition.height;
-    *natural_height = requisition.height;
 }
 #endif
 
