@@ -296,6 +296,7 @@ Export::Export (void) :
     batch_box.pack_start(batch_export, false, false);
 
     hide_export.set_sensitive(true);
+    hide_export.set_active (true);
     hide_box.pack_start(hide_export, false, false);
 
     Gtk::HBox *closeWhenBox = Gtk::manage(new Gtk::HBox(false, 5));
@@ -544,11 +545,8 @@ void Export::updateCheckbuttons ()
         batch_export.set_active (false);
         batch_export.set_sensitive(false);
     }
-    if (num > 0) {
-        hide_export.set_sensitive(true);
-    } else {
-        hide_export.set_sensitive(false);
-    }
+
+    hide_export.set_sensitive (num > 0 && current_key == SELECTION_SELECTION);
 }
 
 inline void Export::findDefaultSelection()
@@ -785,6 +783,8 @@ void Export::onAreaToggled ()
             setValue(ydpi_adj, ydpi);
         }
     }
+
+    hide_export.set_sensitive (key == SELECTION_SELECTION);
 
     return;
 } // end of sp_export_area_toggled()
