@@ -185,9 +185,9 @@ int gr_drag_style_query(SPStyle *style, int property, gpointer data)
             style->stroke.setColor( cf[0], cf[1], cf[2] );
             style->stroke.set = TRUE;
 
-            style->fill_opacity.value = SP_SCALE24_FROM_FLOAT (1.0);
+            style->fill_opacity.value = SP_SCALE24_FROM_FLOAT (cf[3]);
             style->fill_opacity.set = TRUE;
-            style->stroke_opacity.value = SP_SCALE24_FROM_FLOAT (1.0);
+            style->stroke_opacity.value = SP_SCALE24_FROM_FLOAT (cf[3]);
             style->stroke_opacity.set = TRUE;
 
             style->opacity.value = SP_SCALE24_FROM_FLOAT (cf[3]);
