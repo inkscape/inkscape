@@ -40,6 +40,7 @@ namespace Inkscape {
         static void selectSameFillColor(SPDesktop *dt);
         static void selectSameStrokeColor(SPDesktop *dt);
         static void selectSameStrokeStyle(SPDesktop *dt);
+        static void selectSameObjectType(SPDesktop *dt);
         static void invert(SPDesktop *desktop);
         static void invertAllInAll(SPDesktop *desktop);
         static void reverse(SPDesktop *dt);
@@ -134,8 +135,10 @@ enum SPSelectStrokeStyleType {
 
 void sp_select_same_fill_stroke_style(SPDesktop *desktop, gboolean fill, gboolean strok, gboolean style);
 void sp_select_same_stroke_style(SPDesktop *desktop);
+void sp_select_same_object_type(SPDesktop *desktop);
 GSList *sp_get_same_fill_or_stroke_color(SPItem *sel, GSList *src, SPSelectStrokeStyleType type);
 GSList *sp_get_same_stroke_style(SPItem *sel, GSList *src, SPSelectStrokeStyleType type);
+GSList *sp_get_same_object_type(SPItem *sel, GSList *src);
 
 void scroll_to_show_item(SPDesktop *desktop, SPItem *item);
 

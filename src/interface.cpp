@@ -1711,16 +1711,51 @@ void ContextMenu::MakeItemMenu (void)
     mi->show();
     append(*mi);
     
-    /* Select same fill and stroke */
-    mi = manage(new Gtk::MenuItem(_("_Select Same Fill and Stroke"),1));
+
+
+    mi = manage(new Gtk::MenuItem(_("Select Same")));
+    mi->show();
+    Gtk::Menu *select_same_submenu = manage(new Gtk::Menu());
     if (_desktop->selection->isEmpty()) {
         mi->set_sensitive(FALSE);
-    } else {
-        mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SelectSameFillStroke));
     }
+    mi->set_submenu(*select_same_submenu);
+    append(*mi);
+
+    /* Select same fill and stroke */
+    mi = manage(new Gtk::MenuItem(_("Fill and Stroke"),1));
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SelectSameFillStroke));
     mi->set_sensitive(!SP_IS_ANCHOR(_item));
     mi->show();
-    append(*mi);
+    select_same_submenu->append(*mi);
+
+    /* Select same fill color */
+    mi = manage(new Gtk::MenuItem(_("Fill Color"),1));
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SelectSameFillColor));
+    mi->set_sensitive(!SP_IS_ANCHOR(_item));
+    mi->show();
+    select_same_submenu->append(*mi);
+
+    /* Select same stroke color */
+    mi = manage(new Gtk::MenuItem(_("Stroke Color"),1));
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SelectSameStrokeColor));
+    mi->set_sensitive(!SP_IS_ANCHOR(_item));
+    mi->show();
+    select_same_submenu->append(*mi);
+
+    /* Select same stroke style */
+    mi = manage(new Gtk::MenuItem(_("Stroke Style"),1));
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SelectSameStrokeStyle));
+    mi->set_sensitive(!SP_IS_ANCHOR(_item));
+    mi->show();
+    select_same_submenu->append(*mi);
+
+    /* Select same stroke style */
+    mi = manage(new Gtk::MenuItem(_("Object type"),1));
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SelectSameObjectType));
+    mi->set_sensitive(!SP_IS_ANCHOR(_item));
+    mi->show();
+    select_same_submenu->append(*mi);
 
     /* Create link */
     mi = manage(new Gtk::MenuItem(_("_Create Link"),1));
@@ -1793,6 +1828,26 @@ void ContextMenu::MakeItemMenu (void)
 void ContextMenu::SelectSameFillStroke(void)
 {
     sp_select_same_fill_stroke_style(_desktop, true, true, true);
+}
+
+void ContextMenu::SelectSameFillColor(void)
+{
+    sp_select_same_fill_stroke_style(_desktop, true, false, false);
+}
+
+void ContextMenu::SelectSameStrokeColor(void)
+{
+    sp_select_same_fill_stroke_style(_desktop, false, true, false);
+}
+
+void ContextMenu::SelectSameStrokeStyle(void)
+{
+    sp_select_same_stroke_style(_desktop);
+}
+
+void ContextMenu::SelectSameObjectType(void)
+{
+    sp_select_same_object_type(_desktop);
 }
 
 void ContextMenu::ItemProperties(void)

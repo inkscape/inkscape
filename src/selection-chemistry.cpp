@@ -48,6 +48,12 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "sp-flowtext.h"
 #include "sp-flowregion.h"
 #include "sp-image.h"
+#include "sp-rect.h"
+#include "sp-ellipse.h"
+#include "sp-star.h"
+#include "sp-spiral.h"
+#include "sp-polyline.h"
+#include "sp-line.h"
 #include "text-editing.h"
 #include "text-context.h"
 #include "connector-context.h"
@@ -170,6 +176,11 @@ void SelectionHelper::selectSameStrokeColor(SPDesktop *dt)
 void SelectionHelper::selectSameStrokeStyle(SPDesktop *dt)
 {
     sp_select_same_stroke_style(dt);
+}
+
+void SelectionHelper::selectSameObjectType(SPDesktop *dt)
+{
+    sp_select_same_object_type(dt);
 }
 
 void SelectionHelper::invert(SPDesktop *dt)
@@ -1699,6 +1710,45 @@ void sp_select_same_fill_stroke_style(SPDesktop *desktop, gboolean fill, gboolea
 
 
 /*
+ * Selects all the visible items with the same object type as the items in the current selection
+ *
+ * Params:
+ * desktop - set the selection on this desktop
+ */
+void sp_select_same_object_type(SPDesktop *desktop)
+{
+    if (!desktop) {
+        return;
+    }
+
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    bool onlyvisible = prefs->getBool("/options/kbselection/onlyvisible", true);
+    bool onlysensitive = prefs->getBool("/options/kbselection/onlysensitive", true);
+    bool ingroups = TRUE;
+
+    GSList *all_list = get_all_items(NULL, desktop->currentRoot(), desktop, onlyvisible, onlysensitive, ingroups, NULL);
+    GSList *matches = all_list;
+
+    Inkscape::Selection *selection = sp_desktop_selection (desktop);
+
+    for (GSList const* sel_iter = selection->itemList(); sel_iter; sel_iter = sel_iter->next) {
+        SPItem *sel = SP_ITEM(sel_iter->data);
+        matches = sp_get_same_object_type(sel, matches);
+    }
+
+    selection->clear();
+    selection->setList(matches);
+
+    if (matches) {
+        g_slist_free(matches);
+    }
+    if (all_list) {
+        g_slist_free(all_list);
+    }
+}
+
+/*
  * Selects all the visible items with the same stroke style as the items in the current selection
  *
  * Params:
@@ -1789,6 +1839,61 @@ GSList *sp_get_same_fill_or_stroke_color(SPItem *sel, GSList *src, SPSelectStrok
 
         if (match) {
             matches = g_slist_prepend(matches, iter);
+        }
+    }
+
+    return matches;
+}
+
+bool item_type_match (SPItem *i, SPItem *j)
+{
+    if ( SP_IS_RECT(i)) {
+        return ( SP_IS_RECT(j) );
+
+    } else if (SP_IS_GENERICELLIPSE(i) || SP_IS_ELLIPSE(i) || SP_IS_ARC(i) || SP_IS_CIRCLE(i)) {
+        return (SP_IS_GENERICELLIPSE(j) || SP_IS_ELLIPSE(j) || SP_IS_ARC(j) || SP_IS_CIRCLE(j));
+
+    } else if (SP_IS_STAR(i) || SP_IS_POLYGON(i)) {
+        return (SP_IS_STAR(j) || SP_IS_POLYGON(j)) ;
+
+    } else if (SP_IS_SPIRAL(i)) {
+        return (SP_IS_SPIRAL(j));
+
+    } else if (SP_IS_PATH(i) || SP_IS_LINE(i) || SP_IS_POLYLINE(i)) {
+        return (SP_IS_PATH(j) || SP_IS_LINE(j) || SP_IS_POLYLINE(j));
+
+    } else if (SP_IS_TEXT(i) || SP_IS_FLOWTEXT(i) || SP_IS_TSPAN(i) || SP_IS_TREF(i) || SP_IS_STRING(i)) {
+        return (SP_IS_TEXT(j) || SP_IS_FLOWTEXT(j) || SP_IS_TSPAN(j) || SP_IS_TREF(j) || SP_IS_STRING(j));
+
+    }  else if (SP_IS_USE(i)) {
+        return (SP_IS_USE(j)) ;
+
+    } else if (SP_IS_IMAGE(i)) {
+        return (SP_IS_IMAGE(j));
+
+    } else if (SP_IS_OFFSET(i) && SP_OFFSET(i)->sourceHref) {   // Linked offset
+        return (SP_IS_OFFSET(j) && SP_OFFSET(j)->sourceHref);
+
+    }  else if (SP_IS_OFFSET(i) && !SP_OFFSET(i)->sourceHref) { // Dynamic offset
+        return (SP_IS_OFFSET(j) && !SP_OFFSET(j)->sourceHref);
+
+    }
+
+    return false;
+}
+
+/*
+ * Find all items in src list that have the same object type as sel by type
+ * Return the list of matching items
+ */
+GSList *sp_get_same_object_type(SPItem *sel, GSList *src)
+{
+    GSList *matches = NULL;
+
+    for (GSList *i = src; i != NULL; i = i->next) {
+        SPItem *item = SP_ITEM(i->data);
+        if (item_type_match (sel, item)) {
+            matches = g_slist_prepend (matches, item);
         }
     }
 

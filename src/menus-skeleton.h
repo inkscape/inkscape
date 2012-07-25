@@ -81,6 +81,7 @@ static char const menus_skeleton[] =
 "           <verb verb-id=\"EditSelectSameFillColor\" />\n"
 "           <verb verb-id=\"EditSelectSameStrokeColor\" />\n"
 "           <verb verb-id=\"EditSelectSameStrokeStyle\" />\n"
+"           <verb verb-id=\"EditSelectSameObjectType\" />\n"
 "       </submenu>\n"
 "       <verb verb-id=\"EditInvert\" />\n"
 "       <verb verb-id=\"EditDeselect\" />\n"

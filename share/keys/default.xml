@@ -336,6 +336,9 @@ override) the bindings in the main default.xml.
   <bind key="a" modifiers="Ctrl,Alt" action="EditSelectAllInAllLayers" display="true" />
   <bind key="A" modifiers="Ctrl,Alt" action="EditSelectAllInAllLayers" />
 
+  <bind key="a" modifiers="Shift,Alt" action="EditSelectSameObjectType" display="true" />
+  <bind key="A" modifiers="Shift,Alt" action="EditSelectSameObjectType" />
+
   <bind key="exclam" action="EditInvert" display="true" />
   <bind key="exclam" modifiers="Shift" action="EditInvert" />
 

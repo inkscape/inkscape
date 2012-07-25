@@ -973,6 +973,9 @@ void EditVerb::perform(SPAction *action, void *data)
         case SP_VERB_EDIT_SELECT_SAME_STROKE_STYLE:
             SelectionHelper::selectSameStrokeStyle(dt);
             break;
+        case SP_VERB_EDIT_SELECT_SAME_OBJECT_TYPE:
+            SelectionHelper::selectSameObjectType(dt);
+            break;
         case SP_VERB_EDIT_INVERT:
             SelectionHelper::invert(dt);
             break;
@@ -2327,6 +2330,8 @@ Verb *Verb::_base_verbs[] = {
                 N_("Select all objects with the same stroke as the selected objects"), GTK_STOCK_SELECT_ALL),
     new EditVerb(SP_VERB_EDIT_SELECT_SAME_STROKE_STYLE, "EditSelectSameStrokeStyle", N_("Stroke St_yle"),
                 N_("Select all objects with the same stroke style (width, dash, markers) as the selected objects"), GTK_STOCK_SELECT_ALL),
+    new EditVerb(SP_VERB_EDIT_SELECT_SAME_OBJECT_TYPE, "EditSelectSameObjectType", N_("_Object Type"),
+                N_("Select all objects with the same object type (rect, arc, text, path, bitmap etc) as the selected objects"), GTK_STOCK_SELECT_ALL),
     new EditVerb(SP_VERB_EDIT_INVERT, "EditInvert", N_("In_vert Selection"),
                  N_("Invert selection (unselect what is selected and select everything else)"), INKSCAPE_ICON("edit-select-invert")),
     new EditVerb(SP_VERB_EDIT_INVERT_IN_ALL_LAYERS, "EditInvertInAllLayers", N_("Invert in All Layers"),

@@ -172,6 +172,10 @@ class ContextMenu : public Gtk::Menu
         void ItemProperties(void);
         void ItemSelectThis(void);
         void SelectSameFillStroke(void);
+        void SelectSameFillColor(void);
+        void SelectSameStrokeColor(void);
+        void SelectSameStrokeStyle(void);
+        void SelectSameObjectType(void);
         void ItemCreateLink(void);
         void SetMask(void);
         void ReleaseMask(void);
