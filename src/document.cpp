@@ -354,9 +354,9 @@ SPDocument *SPDocument::createDoc(Inkscape::XML::Document *rdoc,
     /* End of quick hack 2 */
 
     /* Quick hack 3 - Set uri attributes */
-    if (uri) {
-        rroot->setAttribute("sodipodi:docname", uri);
-    }
+//    if (uri) {					// this is done in do_change_uri()
+//        rroot->setAttribute("sodipodi:docname", uri);
+//    }
     /* End of quick hack 3 */
 
     /* Eliminate obsolete sodipodi:docbase, for privacy reasons */
@@ -714,7 +714,8 @@ void SPDocument::do_change_uri(gchar const *const filename, bool const rebase)
         Inkscape::XML::rebase_hrefs(this, new_base, true);
     }
 
-    repr->setAttribute("sodipodi:docname", new_name);
+    if (strncmp(new_name, "ink_ext_XXXXXX", 14))	// do not use temporary filenames
+        repr->setAttribute("sodipodi:docname", new_name);
     DocumentUndo::setUndoSensitive(this, saved);
 
 
