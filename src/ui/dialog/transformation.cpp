@@ -34,6 +34,9 @@
 #include "macros.h"
 #include "sp-item.h"
 #include "util/glib-list-iterators.h"
+#include "ui/icon-names.h"
+#include "widgets/icon.h"
+
 
 namespace Inkscape {
 namespace UI {
@@ -86,6 +89,9 @@ Transformation::Transformation()
       _scalar_transform_d     ("_D:", _("Transformation matrix element D")),
       _scalar_transform_e     ("_E:", _("Transformation matrix element E")),
       _scalar_transform_f     ("_F:", _("Transformation matrix element F")),
+
+      _counterclockwise_rotate (),
+      _clockwise_rotate (),
 
       _check_move_relative    (_("Rela_tive move"), _("Add the specified relative displacement to the current position; otherwise, edit the current absolute position directly")),
       _check_scale_proportional (_("_Scale proportionally"), _("Preserve the width/height ratio of the scaled objects")),
@@ -272,14 +278,47 @@ void Transformation::layoutPageRotate()
     _scalar_rotate.setDigits(3);
     _scalar_rotate.setIncrements(0.1, 1.0);
 
+    _counterclockwise_rotate.add(*manage( Glib::wrap(
+            sp_icon_new(Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("object-rotate-left")))));
+    _counterclockwise_rotate.set_mode(false);
+    _counterclockwise_rotate.set_relief(Gtk::RELIEF_NONE);
+    _counterclockwise_rotate.set_tooltip_text(_("Rotate in a counterclockwise direction"));
+
+    _clockwise_rotate.add(*manage( Glib::wrap(
+            sp_icon_new(Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("object-rotate-right")))));
+    _clockwise_rotate.set_mode(false);
+    _clockwise_rotate.set_relief(Gtk::RELIEF_NONE);
+    _clockwise_rotate.set_tooltip_text(_("Rotate in a clockwise direction"));
+
+    Gtk::RadioButton::Group group = _counterclockwise_rotate.get_group();
+    _clockwise_rotate.set_group(group);
+
     _page_rotate.table()
         .attach(_scalar_rotate, 0, 2, 0, 1, Gtk::FILL, Gtk::SHRINK);
 
     _page_rotate.table()
         .attach(_units_rotate, 2, 3, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
 
+    _page_rotate.table()
+        .attach(_counterclockwise_rotate, 3, 4, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
+
+    _page_rotate.table()
+        .attach(_clockwise_rotate, 4, 5, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (prefs->getBool("/dialogs/transformation/rotateCounterClockwise", TRUE)) {
+        _counterclockwise_rotate.set_active();
+        onRotateCounterclockwiseClicked();
+    } else {
+        _clockwise_rotate.set_active();
+        onRotateClockwiseClicked();
+    }
+
     _scalar_rotate.signal_value_changed()
         .connect(sigc::mem_fun(*this, &Transformation::onRotateValueChanged));
+
+    _counterclockwise_rotate.signal_clicked().connect(sigc::mem_fun(*this, &Transformation::onRotateCounterclockwiseClicked));
+    _clockwise_rotate.signal_clicked().connect(sigc::mem_fun(*this, &Transformation::onRotateClockwiseClicked));
 
     //TODO: honour rotation center?
 }
@@ -730,6 +769,10 @@ void Transformation::applyPageRotate(Inkscape::Selection *selection)
     double angle = _scalar_rotate.getValue(DEG);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    if (!prefs->getBool("/dialogs/transformation/rotateCounterClockwise", TRUE)) {
+        angle *= -1;
+    }
+
     if (prefs->getBool("/dialogs/transformation/applyseparately")) {
         for (GSList const *l = selection->itemList(); l != NULL; l = l->next) {
             SPItem *item = SP_ITEM(l->data);
@@ -915,6 +958,20 @@ void Transformation::onScaleYValueChanged()
 void Transformation::onRotateValueChanged()
 {
     setResponseSensitive(Gtk::RESPONSE_APPLY, true);
+}
+
+void Transformation::onRotateCounterclockwiseClicked()
+{
+    _scalar_rotate.setTooltipText(_("Rotation angle (positive = counterclockwise)"));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/dialogs/transformation/rotateCounterClockwise", TRUE);
+}
+
+void Transformation::onRotateClockwiseClicked()
+{
+    _scalar_rotate.setTooltipText(_("Rotation angle (positive = clockwise)"));
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/dialogs/transformation/rotateCounterClockwise", FALSE);
 }
 
 void Transformation::onSkewValueChanged()

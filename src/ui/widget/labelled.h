@@ -54,6 +54,7 @@ public:
     Gtk::Label const *getLabel() const;
 
     void setLabelText(const Glib::ustring &str);
+    void setTooltipText(const Glib::ustring &tooltip);
 
 protected:
     Gtk::Widget  *_widget;

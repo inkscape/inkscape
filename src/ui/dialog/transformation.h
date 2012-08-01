@@ -151,6 +151,9 @@ protected:
     UI::Widget::Scalar            _scalar_transform_e;
     UI::Widget::Scalar            _scalar_transform_f;
 
+    Gtk::RadioButton         _counterclockwise_rotate;
+    Gtk::RadioButton         _clockwise_rotate;
+
     UI::Widget::CheckButton  _check_move_relative;
     UI::Widget::CheckButton  _check_scale_proportional;
     UI::Widget::CheckButton  _check_apply_separately;
@@ -182,6 +185,8 @@ protected:
     void onScaleXValueChanged();
     void onScaleYValueChanged();
     void onRotateValueChanged();
+    void onRotateCounterclockwiseClicked();
+    void onRotateClockwiseClicked();
     void onSkewValueChanged();
     void onTransformValueChanged();
     void onReplaceMatrixToggled();
