@@ -696,6 +696,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         if (event->button.state & GDK_SHIFT_MASK) {
                             selection->toggle(event_context->item_to_select);
                         } else {
+                            drag->deselectAll();
                             selection->set(event_context->item_to_select);
                         }
                     }

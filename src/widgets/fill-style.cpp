@@ -84,6 +84,7 @@ private:
     static void fillruleChangedCB( SPPaintSelector *psel, SPPaintSelector::FillRule mode, FillNStroke *self );
 
     void selectionModifiedCB(guint flags);
+    void eventContextCB(SPDesktop *desktop, SPEventContext *eventcontext);
 
     void dragFromPaint();
     void updateFromPaint();
@@ -99,6 +100,7 @@ private:
     sigc::connection selectChangedConn;
     sigc::connection subselChangedConn;
     sigc::connection selectModifiedConn;
+    sigc::connection eventContextConn;
 };
 
 } // namespace Inkscape
@@ -133,7 +135,8 @@ FillNStroke::FillNStroke( FillOrStroke kind ) :
     update(false),
     selectChangedConn(),
     subselChangedConn(),
-    selectModifiedConn()
+    selectModifiedConn(),
+    eventContextConn()
 {
     // Add and connect up the paint selector widget:
     psel = sp_paint_selector_new(kind);
@@ -169,6 +172,7 @@ FillNStroke::~FillNStroke()
     selectModifiedConn.disconnect();
     subselChangedConn.disconnect();
     selectChangedConn.disconnect();
+    eventContextConn.disconnect();
 }
 
 /**
@@ -197,11 +201,13 @@ void FillNStroke::setDesktop(SPDesktop *desktop)
             selectModifiedConn.disconnect();
             subselChangedConn.disconnect();
             selectChangedConn.disconnect();
+            eventContextConn.disconnect();
         }
         this->desktop = desktop;
         if (desktop && desktop->selection) {
             selectChangedConn = desktop->selection->connectChanged(sigc::hide(sigc::mem_fun(*this, &FillNStroke::performUpdate)));
             subselChangedConn = desktop->connectToolSubselectionChanged(sigc::hide(sigc::mem_fun(*this, &FillNStroke::performUpdate)));
+            eventContextConn = desktop->connectEventContextChanged(sigc::hide(sigc::bind(sigc::mem_fun(*this, &FillNStroke::eventContextCB), (SPEventContext *)NULL)));
 
             // Must check flags, so can't call performUpdate() directly.
             selectModifiedConn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &FillNStroke::selectionModifiedCB)));
@@ -209,6 +215,16 @@ void FillNStroke::setDesktop(SPDesktop *desktop)
         performUpdate();
     }
 }
+
+/**
+ * Listen to this "change in tool" event, in case a subselection tool (such as Gradient or Node) selection
+ * is changed back to a selection tool - especially needed for selected gradient stops.
+ */
+void FillNStroke::eventContextCB(SPDesktop *desktop, SPEventContext *eventcontext)
+{
+    performUpdate();
+}
+
 
 /**
  * Gets the active fill or stroke style property, then sets the appropriate
