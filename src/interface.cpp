@@ -1960,7 +1960,8 @@ void ContextMenu::AnchorLinkFollow(void)
 void ContextMenu::AnchorLinkRemove(void)
 {
     GSList *children = NULL;
-    sp_item_group_ungroup(static_cast<SPAnchor*>(_item), &children);
+    sp_item_group_ungroup(static_cast<SPAnchor*>(_item), &children, false);
+    DocumentUndo::done(_desktop->doc(), SP_VERB_NONE, _("Remove link"));
     g_slist_free(children);
 }
 
