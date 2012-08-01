@@ -1529,8 +1529,11 @@ void FilterEffectsDialog::PrimitiveList::update()
                 //XML Tree being used directly here while it shouldn't be.
                 row[_columns.type_id] = FPConverter.get_id_from_key(prim->getRepr()->name());
                 row[_columns.type] = _(FPConverter.get_label(row[_columns.type_id]).c_str());
-                row[_columns.id] = prim->getId();
-
+                
+                if (prim->getId()) {
+                    row[_columns.id] =  Glib::ustring(prim->getId());
+                }
+                
                 if(prim == active_prim) {
                     get_selection()->select(row);
                     active_found = true;
