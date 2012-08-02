@@ -194,11 +194,11 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
 								GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
 								NULL, event->button.time);
 			dc->grabbed = SP_CANVAS_ITEM(desktop->acetate);
-			
+
             break;
 	case GDK_MOTION_NOTIFY:
-            if (event->motion.state & GDK_BUTTON2_MASK) {
-                // pass on middle-drag
+            if (event->motion.state & GDK_BUTTON2_MASK || event->motion.state & GDK_BUTTON3_MASK) {
+                // pass on middle and right drag
                 ret = FALSE;
                 break;
             } else if (!event_context->space_panning) {
