@@ -122,7 +122,12 @@ public:
         : _attr(a),
           _default(value)
     {}
-
+    
+    AttrWidget(const SPAttributeEnum a, char* value)
+        : _attr(a),
+          _default(value)
+    {}
+    
     AttrWidget(const SPAttributeEnum a)
         : _attr(a),
           _default()
