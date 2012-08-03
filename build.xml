@@ -469,6 +469,7 @@
            ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
            ${devlibs}/bin/libxml2.dll
            ${devlibs}/bin/libxslt.dll
+           ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
            ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
            -liconv
@@ -540,6 +541,7 @@
            ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
            ${devlibs}/bin/libxml2.dll
            ${devlibs}/bin/libxslt.dll
+           ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
            ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
            -liconv
@@ -589,6 +591,7 @@
            ${pcl.gtkmm-2.4}  ${pcl.pangoft2} ${pcl.gthread-2.0}
            ${devlibs}/bin/libxml2.dll
            ${devlibs}/bin/libxslt.dll
+           ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
            ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
            -liconv
@@ -653,6 +656,7 @@
     <copy todir="${dist}" file="${devlibs}/bin/libfontconfig-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libxml2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libxslt.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libexslt.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libexpat-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpg-0.1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpg-stream-0.1.dll"/>
