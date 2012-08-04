@@ -71,6 +71,7 @@ private:
     SPDesktop *targetDesktop;
     Gtk::Widget *fillWdgt;
     Gtk::Widget *strokeWdgt;
+    Gtk::Widget *strokeStyleWdgt;
     sigc::connection desktopChangeConn;
 };
 

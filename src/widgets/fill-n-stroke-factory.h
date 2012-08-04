@@ -18,6 +18,7 @@ namespace Inkscape {
 namespace Widgets {
 
 Gtk::Widget *createStyleWidget( FillOrStroke kind );
+Gtk::Widget *createStrokeStyleWidget( );
 
 } // namespace Widgets
 } // namespace Inkscape

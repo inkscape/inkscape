@@ -96,7 +96,10 @@ void FillAndStroke::setTargetDesktop(SPDesktop *desktop)
             sp_fill_style_widget_set_desktop(fillWdgt, desktop);
         }
         if (strokeWdgt) {
-            sp_stroke_style_widget_set_desktop(strokeWdgt, desktop);
+            sp_fill_style_widget_set_desktop(strokeWdgt, desktop);
+        }
+        if (strokeStyleWdgt) {
+            sp_stroke_style_widget_set_desktop(strokeStyleWdgt, desktop);
         }
     }
 }
@@ -118,10 +121,10 @@ FillAndStroke::_layoutPageStrokePaint()
 void
 FillAndStroke::_layoutPageStrokeStyle()
 {
-    //Gtk::Widget *ssl = manage(Glib::wrap(sp_stroke_style_line_widget_new()));
-    //Gtk::Widget *ssl = static_cast<Gtk::Widget *>(sp_stroke_style_line_widget_new());
-    Gtk::Widget *ssl = sp_stroke_style_line_widget_new();
-    _page_stroke_style.table().attach(*ssl, 0, 1, 0, 1);
+    //Gtk::Widget *strokeStyleWdgt = manage(Glib::wrap(sp_stroke_style_line_widget_new()));
+    //Gtk::Widget *strokeStyleWdgt = static_cast<Gtk::Widget *>(sp_stroke_style_line_widget_new());
+    strokeStyleWdgt = sp_stroke_style_line_widget_new();
+    _page_stroke_style.table().attach(*strokeStyleWdgt, 0, 1, 0, 1);
 }
 
 void
