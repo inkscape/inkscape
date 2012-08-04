@@ -109,9 +109,14 @@ MarkerComboBox::handleDefsModified(MarkerComboBox *self)
 void
 MarkerComboBox::refreshHistory()
 {
+    if (updating)
+        return;
+
+    updating = true;
     const char *active = get_active()->get_value(marker_columns.marker);
     sp_marker_list_from_doc(doc, true);
     set_selected(active);
+    updating = false;
 }
 
 /**
