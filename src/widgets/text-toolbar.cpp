@@ -70,6 +70,7 @@
 #include "../libnrtype/font-instance.h"
 #include "../text-context.h"
 #include "../text-editing.h"
+#include "widgets/font-selector.h"
 
 
 using Inkscape::UnitTracker;
@@ -161,6 +162,79 @@ static void cell_data_func(GtkCellLayout * /*cell_layout*/,
 
     g_free(family);
     g_free(family_escaped);
+}
+
+/*
+ * Fill the font style combobox with the available font styles for the selected font family
+ * Set the selected style to that in font
+ */
+static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
+{
+
+    Ink_ComboBoxEntry_Action* act = INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontFamilyAction" ) );
+    GtkTreeModel *model = ink_comboboxentry_action_get_model( act );
+    gchar *current_font = ink_comboboxentry_action_get_active_text( act );
+
+    // Get an iter to the selected font from the model data
+    // We cant get it from the combo, cause it might not have been created yet
+    gboolean found = false;
+    GtkTreeIter iter;
+    gboolean valid = gtk_tree_model_get_iter_first( model, &iter );
+    while ( valid ) {
+
+      // Get text from list entry
+      gchar* text = 0;
+      gtk_tree_model_get( model, &iter, 0, &text, -1 ); // Column 0
+
+      // Check for match
+      if( strcmp( current_font, text ) == 0 ){
+        found = true;
+        break;
+      }
+      valid = gtk_tree_model_iter_next( model, &iter );
+    }
+
+    if (!found) {
+        return;
+    }
+
+    // Get the list of styles from the selected font
+    GList *list=0;
+    gtk_tree_model_get (model, &iter, 1, &list, -1);
+
+    Ink_ComboBoxEntry_Action* fontStyleAction = INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontStyleAction" ) );
+
+    gchar *current_style = ink_comboboxentry_action_get_active_text( fontStyleAction );
+
+    GtkListStore *store = GTK_LIST_STORE( ink_comboboxentry_action_get_model( fontStyleAction ) );
+    gtk_list_store_clear ( store );
+
+    // Add list of styles to the style combo
+    for (GList *l=list; l; l = l->next)
+    {
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter, 0, (char*)l->data, -1);
+    }
+
+    // Select the style in the combo that best matches font
+    if (font) {
+
+        unsigned int index = sp_font_selector_get_best_style(font, list);
+
+        Ink_ComboBoxEntry_Action* fontStyleAction =
+            INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontStyleAction" ) );
+        model = ink_comboboxentry_action_get_model( fontStyleAction );
+        GtkTreePath *path_c = gtk_tree_path_new ();
+        gtk_tree_path_append_index (path_c, index);
+        gtk_tree_model_get_iter(model, &iter, path_c);
+        gchar *name;
+        gtk_tree_model_get (model, &iter, 0, &name, -1);
+        ink_comboboxentry_action_set_active_text( fontStyleAction, name );
+
+    } else if (current_style) {
+        ink_comboboxentry_action_set_active_text( fontStyleAction, current_style );
+    }
+
 }
 
 // Font family
@@ -289,6 +363,10 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
                 sp_repr_css_set_property (css, "font-variant", c);
 
                 font->Unref();
+
+                // Set the list of font styles
+                sp_text_fontstyle_populate(tbl);
+
             } else {
                 g_warning(_("Failed to find font matching: %s\n"), newFontSpec.c_str());
             }
@@ -397,8 +475,11 @@ static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObje
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
 
-// Handles both Bold and Italic/Oblique
-static void sp_text_style_changed( InkToggleAction* act, GObject *tbl )
+/*
+ *  Font style
+ */
+//static void sp_text_fontstyle_value_changed( EgeSelectOneAction *act, GObject *tbl )
+static void sp_text_fontstyle_value_changed( Ink_ComboBoxEntry_Action *act, GObject *tbl )
 {
     // quit if run by the _changed callbacks
     if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
@@ -406,15 +487,11 @@ static void sp_text_style_changed( InkToggleAction* act, GObject *tbl )
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-    // Called by Bold or Italics button?
-    const gchar* name = gtk_action_get_name( GTK_ACTION( act ) );
-    gint prop = (strcmp(name, "TextBoldAction") == 0) ? 0 : 1;
-
     // First query font-specification, this is the most complete font face description.
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
     int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
-    // font_specification will not be set unless defined explicitely on a tspan.
+    // font_specification will not be set unless defined explicitily on a tspan.
     // This should be fixed!
     Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
 
@@ -435,59 +512,31 @@ static void sp_text_style_changed( InkToggleAction* act, GObject *tbl )
     // Now that we have the old face, find the new face.
     Glib::ustring newFontSpec = "";
     SPCSSAttr   *css        = sp_repr_css_attr_new ();
-    gboolean active = gtk_toggle_action_get_active( GTK_TOGGLE_ACTION(act) );
 
-    switch (prop)
-    {
-        case 0:
-        {
-            // Bold
-            if (!fontSpec.empty())  newFontSpec = font_factory::Default()->FontSpecificationSetBold(fontSpec, active);
-            if ( !fontSpec.empty() && !newFontSpec.empty() ) {
+    gchar *current_style = ink_comboboxentry_action_get_active_text( act );
+    Glib::ustring fontFamily = query->text->font_family.set ?  query->text->font_family.value : "";
 
-                // Set weight using new font if found.
-                font_instance * font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
-                if (font) {
-                    gchar c[256];
-                    font->Attribute( "weight", c, 256);
-                    sp_repr_css_set_property (css, "font-weight", c);
-                    font->Unref();
-                    font = NULL;
-                }
-            } else {
+    font_instance *font = (font_factory::Default())->FaceFromUIStrings (fontFamily.c_str(), current_style);
 
-                // Blindly set weight.
-                sp_repr_css_set_property (css, "font-weight", (active == 0 ? "normal" : "bold") );
-            }
-            break;
-        }
+    if (font) {
+        gchar c[256];
 
-        case 1:
-        {
-            // Italic/Oblique
-            if (!fontSpec.empty()) newFontSpec = font_factory::Default()->FontSpecificationSetItalic(fontSpec, active);
+        font->Attribute( "weight", c, 256);
+        sp_repr_css_set_property (css, "font-weight", c);
 
-            if ( !fontSpec.empty() && !newFontSpec.empty() ) {
+        font->Attribute("style", c, 256);
+        sp_repr_css_set_property (css, "font-style", c);
 
-                // Don't even set the italic/oblique if the font didn't exist on the system
-                if ( active ) {
-                    if ( newFontSpec.find( "Italic" ) != Glib::ustring::npos ) {
-                        sp_repr_css_set_property (css, "font-style", "italic");
-                    } else {
-                        sp_repr_css_set_property (css, "font-style", "oblique");
-                    }
-                } else {
-                    sp_repr_css_set_property (css, "font-style", "normal");
-                }
+        font->Attribute("stretch", c, 256);
+        sp_repr_css_set_property (css, "font-stretch", c);
 
-            } else {
+        font->Attribute("variant", c, 256);
+        sp_repr_css_set_property (css, "font-variant", c);
 
-                // Blindly set style.
-                sp_repr_css_set_property (css, "font-style", (active == 0 ? "normal" : "italic") );
-            }
-            break;
-        }
+        font->Unref();
+        font = NULL;
     }
+
 
     if (!newFontSpec.empty()) {
         sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str());
@@ -1152,23 +1201,9 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
             INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontSizeAction" ) );
         ink_comboboxentry_action_set_active_text( fontSizeAction, size_text );
 
-
-        // Weight (Bold)
-        // Note: in the enumeration, normal and lighter come at the end so we must explicitly test for them.
-        gboolean boldSet = ((query->font_weight.computed >= SP_CSS_FONT_WEIGHT_700) &&
-                            (query->font_weight.computed != SP_CSS_FONT_WEIGHT_NORMAL) &&
-                            (query->font_weight.computed != SP_CSS_FONT_WEIGHT_LIGHTER));
-
-        InkToggleAction* textBoldAction = INK_TOGGLE_ACTION( g_object_get_data( tbl, "TextBoldAction" ) );
-        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(textBoldAction), boldSet );
-
-
-        // Style (Italic/Oblique)
-        gboolean italicSet = (query->font_style.computed != SP_CSS_FONT_STYLE_NORMAL);
-
-        InkToggleAction* textItalicAction = INK_TOGGLE_ACTION( g_object_get_data( tbl, "TextItalicAction" ) );
-        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(textItalicAction), italicSet );
-
+        // Font styles
+        font_instance *font = font_factory::Default()->FaceFromStyle(query);
+        sp_text_fontstyle_populate(tbl, font);
 
         // Superscript
         gboolean superscriptSet =
@@ -1438,30 +1473,19 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         g_object_set_data( holder, "TextFontSizeAction", act );
     }
 
-    /* Style - Bold */
+    /* Font styles */
     {
-        InkToggleAction* act = ink_toggle_action_new( "TextBoldAction",               // Name
-                                                      _("Toggle Bold"),               // Label
-                                                      _("Toggle bold or normal weight"),  // Tooltip
-                                                      GTK_STOCK_BOLD,                 // Icon (inkId)
-                                                      secondarySize );                // Icon size
-        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_text_style_changed), holder );
-        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/text/bold", false) );
-        g_object_set_data( holder, "TextBoldAction", act );
-    }
+        GtkListStore* model_style = gtk_list_store_new( 1, G_TYPE_STRING );
 
-    /* Style - Italic/Oblique */
-    {
-        InkToggleAction* act = ink_toggle_action_new( "TextItalicAction",                     // Name
-                                                      _("Toggle Italic/Oblique"),             // Label
-                                                      _("Toggle italic/oblique style"),// Tooltip
-                                                      GTK_STOCK_ITALIC,                       // Icon (inkId)
-                                                      secondarySize );                        // Icon size
-        gtk_action_group_add_action( mainActions, GTK_ACTION( act ) );
-        g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_text_style_changed), holder );
-        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(act), prefs->getBool("/tools/text/italic", false) );
-        g_object_set_data( holder, "TextItalicAction", act );
+       Ink_ComboBoxEntry_Action* act = ink_comboboxentry_action_new( "TextFontStyleAction",
+                                                                      _("Font Style"),
+                                                                      _("Font style"),
+                                                                      NULL,
+                                                                      GTK_TREE_MODEL(model_style),
+                                                                      12 ); // Width in characters
+        g_signal_connect( G_OBJECT(act), "changed", G_CALLBACK(sp_text_fontstyle_value_changed), holder );
+        gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
+        g_object_set_data( holder, "TextFontStyleAction", act );
     }
 
     /* Style - Superscript */

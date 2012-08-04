@@ -35,7 +35,7 @@ void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, doubl
 font_instance *sp_font_selector_get_font (SPFontSelector *fsel);
 double  sp_font_selector_get_size (SPFontSelector *fsel);
 
-
+unsigned int sp_font_selector_get_best_style (font_instance *font, GList *list);
 
 #endif // SP_FONT_SELECTOR_H
 

@@ -425,6 +425,78 @@ GtkWidget *sp_font_selector_new()
     return (GtkWidget *) fsel;
 }
 
+/*
+ * Returns the index of the fonts closest style match from the provided list of styles
+ * Used in both the Text dialog and the Text toolbar to set the style combo on selection change
+ */
+unsigned int sp_font_selector_get_best_style (font_instance *font, GList *list)
+{
+    font_instance *tempFont = NULL;
+    unsigned int currentStyleNumber = 0;
+    unsigned int bestStyleNumber = 0;
+
+    Glib::ustring family = font_factory::Default()->GetUIFamilyString(font->descr);
+
+    PangoFontDescription *incomingFont = pango_font_description_copy(font->descr);
+    pango_font_description_unset_fields(incomingFont, PANGO_FONT_MASK_SIZE);
+
+    char *incomingFontString = pango_font_description_to_string(incomingFont);
+
+    tempFont = (font_factory::Default())->FaceFromUIStrings(family.c_str(), (char*)list->data);
+
+    PangoFontDescription *bestMatchForFont = NULL;
+    if (tempFont) {
+        bestMatchForFont = pango_font_description_copy(tempFont->descr);
+        tempFont->Unref();
+        tempFont = NULL;
+    }
+
+    pango_font_description_unset_fields(bestMatchForFont, PANGO_FONT_MASK_SIZE);
+
+    list = list->next;
+
+    while (list) {
+        currentStyleNumber++;
+
+        tempFont = font_factory::Default()->FaceFromUIStrings(family.c_str(), (char*)list->data);
+
+        PangoFontDescription *currentMatchForFont = NULL;
+        if (tempFont) {
+            currentMatchForFont = pango_font_description_copy(tempFont->descr);
+            tempFont->Unref();
+            tempFont = NULL;
+        }
+
+        if (currentMatchForFont) {
+            pango_font_description_unset_fields(currentMatchForFont, PANGO_FONT_MASK_SIZE);
+
+            char *currentMatchString = pango_font_description_to_string(currentMatchForFont);
+
+            if (!strcmp(incomingFontString, currentMatchString)
+                    || pango_font_description_better_match(incomingFont, bestMatchForFont, currentMatchForFont)) {
+                // Found a better match for the font we are looking for
+                pango_font_description_free(bestMatchForFont);
+                bestMatchForFont = pango_font_description_copy(currentMatchForFont);
+                bestStyleNumber = currentStyleNumber;
+            }
+
+            g_free(currentMatchString);
+
+            pango_font_description_free(currentMatchForFont);
+        }
+
+        list = list->next;
+    }
+
+    if (bestMatchForFont)
+        pango_font_description_free(bestMatchForFont);
+    if (incomingFont)
+        pango_font_description_free(incomingFont);
+    g_free(incomingFontString);
+
+    return bestStyleNumber;
+}
+
 void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, double size)
 {
     if (font)
@@ -451,65 +523,7 @@ void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, doubl
         gtk_tree_model_get_iter (model, &iter, path.gobj());
         gtk_tree_model_get (model, &iter, 1, &list, -1);
 
-        unsigned int currentStyleNumber = 0;
-        unsigned int bestStyleNumber = 0;
-        
-        PangoFontDescription *incomingFont = pango_font_description_copy(font->descr);
-        pango_font_description_unset_fields(incomingFont, PANGO_FONT_MASK_SIZE);
-        
-        char *incomingFontString = pango_font_description_to_string(incomingFont);
-        
-        tempFont = (font_factory::Default())->FaceFromUIStrings(family.c_str(), (char*)list->data);
-        
-        PangoFontDescription *bestMatchForFont = NULL;
-        if (tempFont) {
-            bestMatchForFont = pango_font_description_copy(tempFont->descr);
-            tempFont->Unref();
-            tempFont = NULL;
-        }
-        
-        pango_font_description_unset_fields(bestMatchForFont, PANGO_FONT_MASK_SIZE);
-        
-        list = list->next;
-        
-        while (list) {
-            currentStyleNumber++;
-            
-            tempFont = font_factory::Default()->FaceFromUIStrings(family.c_str(), (char*)list->data);
-            
-            PangoFontDescription *currentMatchForFont = NULL;
-            if (tempFont) {
-                currentMatchForFont = pango_font_description_copy(tempFont->descr);
-                tempFont->Unref();
-                tempFont = NULL;
-            }
-            
-            if (currentMatchForFont) {
-                pango_font_description_unset_fields(currentMatchForFont, PANGO_FONT_MASK_SIZE);
-                
-                char *currentMatchString = pango_font_description_to_string(currentMatchForFont);
-                
-                if (!strcmp(incomingFontString, currentMatchString)
-                        || pango_font_description_better_match(incomingFont, bestMatchForFont, currentMatchForFont)) {
-                    // Found a better match for the font we are looking for
-                    pango_font_description_free(bestMatchForFont);
-                    bestMatchForFont = pango_font_description_copy(currentMatchForFont);
-                    bestStyleNumber = currentStyleNumber;
-                }
-                
-                g_free(currentMatchString);
-                
-                pango_font_description_free(currentMatchForFont);
-            }
-            
-            list = list->next;
-        }
-        
-        if (bestMatchForFont)
-            pango_font_description_free(bestMatchForFont);
-        if (incomingFont)
-            pango_font_description_free(incomingFont);
-        g_free(incomingFontString);
+        unsigned int bestStyleNumber = sp_font_selector_get_best_style(font, list);
 
         GtkTreePath *path_c = gtk_tree_path_new ();
         gtk_tree_path_append_index (path_c, bestStyleNumber);
