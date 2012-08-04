@@ -982,6 +982,8 @@ StrokeStyle::updateAllMarkers(GSList const *objects)
             return;
         }
 
+        combo->setDesktop(desktop);
+
         if (object->style->marker[keyloc[i].loc].value != NULL && !all_texts) {
             // If the object has this type of markers,
 

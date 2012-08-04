@@ -198,7 +198,9 @@ SPObject *get_stock_item(gchar const *urn)
         SPDesktop *desktop = inkscape_active_desktop();
         SPDocument *doc = sp_desktop_document(desktop);
         SPDefs *defs = doc->getDefs();
-
+        if (!defs) {
+            return NULL;
+        }
         SPObject *object = NULL;
         if (!strcmp(base, "marker")) {
             for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )

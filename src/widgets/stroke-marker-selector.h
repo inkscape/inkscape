@@ -16,6 +16,7 @@
 
 #include <sigc++/signal.h>
 
+#include "desktop.h"
 #include "document.h"
 #include "inkscape.h"
 #include "display/drawing.h"
@@ -34,11 +35,13 @@ public:
     MarkerComboBox(gchar const *id);
     ~MarkerComboBox();
 
+    void setDesktop(SPDesktop *desktop);
+
     sigc::signal<void> changed_signal;
 
     void set_current(SPObject *marker);
     void set_active_history();
-    void set_selected(const gchar *name);
+    void set_selected(const gchar *name, gboolean retry=true);
     const gchar *get_active_marker_uri();
     bool update() { return updating; };
     gchar const *get_id() { return combo_id; };
@@ -48,7 +51,6 @@ private:
     Glib::RefPtr<Gtk::ListStore> marker_store;
     gchar const *combo_id;
     bool updating;
-    bool is_history;
     SPDesktop *desktop;
     SPDocument *doc;
     SPDocument *sandbox;
@@ -60,22 +62,23 @@ private:
     public:
         Gtk::TreeModelColumn<Glib::ustring> label;
         Gtk::TreeModelColumn<const gchar *> marker;   // ustring doesnt work here on windows due to unicode
-        Gtk::TreeModelColumn<bool> isstock;
+        Gtk::TreeModelColumn<gboolean> stock;
         Gtk::TreeModelColumn<Gtk::Image *> image;
-        Gtk::TreeModelColumn<bool> history;
-        Gtk::TreeModelColumn<bool> isseparator;
+        Gtk::TreeModelColumn<gboolean> history;
+        Gtk::TreeModelColumn<gboolean> separator;
 
         MarkerColumns() {
-            add(label); add(marker); add(isstock);  add(image); add(history); add(isseparator);
+            add(label); add(stock);  add(marker);  add(history); add(separator); add(image);
         }
     };
     MarkerColumns marker_columns;
 
     void init_combo();
     void set_history(Gtk::TreeModel::Row match_row);
-    void sp_marker_list_from_doc(SPDocument *source);
+    void sp_marker_list_from_doc(SPDocument *source,  gboolean history);
     GSList *get_marker_list (SPDocument *source);
-    void add_markers (GSList *marker_list, SPDocument *source);
+    void add_markers (GSList *marker_list, SPDocument *source,  gboolean history);
+    void remove_markers (gboolean history);
     SPDocument *ink_markers_preview_doc ();
     Gtk::Image * create_marker_image(unsigned psize, gchar const *mname,
                        SPDocument *source, Inkscape::Drawing &drawing, unsigned /*visionkey*/);
@@ -87,7 +90,10 @@ private:
     void prepareImageRenderer( Gtk::TreeModel::const_iterator const &row );
     static gboolean separator_cb (GtkTreeModel *model, GtkTreeIter *iter, gpointer data);
 
+    static void handleDefsModified(MarkerComboBox *self);
+    void refreshHistory();
 
+    sigc::connection modified_connection;
 };
 
 #endif // SEEN_SP_MARKER_SELECTOR_NEW_H

@@ -221,6 +221,9 @@ SPDocument::~SPDocument() {
 
 SPDefs *SPDocument::getDefs()
 {
+    if (!root) {
+        return NULL;
+    }
     return root->defs;
 }
 

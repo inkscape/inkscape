@@ -46,8 +46,7 @@ static Inkscape::UI::Cache::SvgPreview svg_preview_cache;
 MarkerComboBox::MarkerComboBox(gchar const *id) :
             Gtk::ComboBox(),
             combo_id(id),
-            updating(false),
-            is_history(false)
+            updating(false)
 {
 
     marker_store = Gtk::ListStore::create(marker_columns);
@@ -66,6 +65,8 @@ MarkerComboBox::MarkerComboBox(gchar const *id) :
     desktop = inkscape_active_desktop();
     doc = sp_desktop_document(desktop);
 
+    modified_connection = doc->getDefs()->connectModified( sigc::hide(sigc::hide(sigc::bind(sigc::ptr_fun(&MarkerComboBox::handleDefsModified), this))) );
+
     init_combo();
 
     show();
@@ -74,6 +75,43 @@ MarkerComboBox::MarkerComboBox(gchar const *id) :
 MarkerComboBox::~MarkerComboBox() {
     delete combo_id;
     delete sandbox;
+
+    if (doc) {
+        modified_connection.disconnect();
+    }
+}
+
+void MarkerComboBox::setDesktop(SPDesktop *desktop)
+{
+    if (this->desktop != desktop) {
+
+        if (doc) {
+            modified_connection.disconnect();
+        }
+
+        this->desktop = desktop;
+        doc = sp_desktop_document(desktop);
+
+        if (doc) {
+            modified_connection = doc->getDefs()->connectModified( sigc::hide(sigc::hide(sigc::bind(sigc::ptr_fun(&MarkerComboBox::handleDefsModified), this))) );
+        }
+
+        refreshHistory();
+    }
+}
+
+void
+MarkerComboBox::handleDefsModified(MarkerComboBox *self)
+{
+    self->refreshHistory();
+}
+
+void
+MarkerComboBox::refreshHistory()
+{
+    const char *active = get_active()->get_value(marker_columns.marker);
+    sp_marker_list_from_doc(doc, true);
+    set_selected(active);
 }
 
 /**
@@ -82,12 +120,22 @@ MarkerComboBox::~MarkerComboBox() {
 void
 MarkerComboBox::init_combo()
 {
-    updating = false;
+    if (updating)
+        return;
+
+    const gchar *active = NULL;
+    if (get_active()) {
+        active = get_active()->get_value(marker_columns.marker);
+    }
 
     if (!doc) {
         Gtk::TreeModel::Row row = *(marker_store->append());
         row[marker_columns.label] = _("No document selected");
+        row[marker_columns.marker] = g_strdup("None");
         row[marker_columns.image] = NULL;
+        row[marker_columns.stock] = false;
+        row[marker_columns.history] = false;
+        row[marker_columns.separator] = false;
         set_sensitive(false);
         set_current(NULL);
         return;
@@ -95,11 +143,17 @@ MarkerComboBox::init_combo()
 
     static SPDocument *markers_doc = NULL;
 
-    // add "None"
-    Gtk::TreeModel::Row row = *(marker_store->append());
-    row[marker_columns.label] = _("None");
-    row[marker_columns.marker] = g_strdup("none");
-    row[marker_columns.image] = NULL;
+    // add separator
+    Gtk::TreeModel::Row row_sep = *(marker_store->append());
+    row_sep[marker_columns.label] = "Separator";
+    row_sep[marker_columns.marker] = g_strdup("None");
+    row_sep[marker_columns.image] = NULL;
+    row_sep[marker_columns.stock] = false;
+    row_sep[marker_columns.history] = false;
+    row_sep[marker_columns.separator] = true;
+
+    // load markers from the current doc
+    sp_marker_list_from_doc(doc, true);
 
     // find and load markers.svg
     if (markers_doc == NULL) {
@@ -110,27 +164,17 @@ MarkerComboBox::init_combo()
         g_free(markers_source);
     }
 
-    // suck in from current doc
-    is_history = true;
-    sp_marker_list_from_doc(doc);
-    is_history = false;
-
-    // add separator
-    Gtk::TreeModel::Row row_sep = *(marker_store->append());
-    row_sep[marker_columns.label] = "Separator";
-    row_sep[marker_columns.isseparator] = true;
-    row_sep[marker_columns.image] = NULL;
-
-    // suck in from markers.svg
+    // load markers from markers.svg
     if (markers_doc) {
         doc->ensureUpToDate();
-        sp_marker_list_from_doc(markers_doc);
+        sp_marker_list_from_doc(markers_doc, false);
     }
 
     set_sensitive(true);
 
     /* Set history */
-    set_current(NULL);
+    set_selected(active);
+
 }
 
 /**
@@ -178,7 +222,7 @@ const gchar * MarkerComboBox::get_active_marker_uri()
 
     gchar const *marker = "";
     if (strcmp(markid, "none")) {
-        bool stockid = get_active()->get_value(marker_columns.isstock);
+        bool stockid = get_active()->get_value(marker_columns.stock);
 
         gchar *markurn;
         if (stockid)
@@ -208,7 +252,7 @@ void MarkerComboBox::set_active_history() {
 }
 
 
-void MarkerComboBox::set_selected(const gchar *name) {
+void MarkerComboBox::set_selected(const gchar *name, gboolean retry/*=true*/) {
 
     if (!name) {
         set_active(0);
@@ -221,42 +265,23 @@ void MarkerComboBox::set_selected(const gchar *name) {
             if (row[marker_columns.marker] &&
                     !strcmp(row[marker_columns.marker], name)) {
                 set_active(iter);
-                if (strcmp(name, "none"))
-                    set_history(row);
                 return;
             }
     }
+
+    // Didn't find it in the list, try refreshing from the doc
+    if (retry) {
+        sp_marker_list_from_doc(doc, true);
+        set_selected(name, false);
+    }
 }
 
-void MarkerComboBox::set_history(Gtk::TreeModel::Row match_row) {
-
-    if (!match_row) {
-        return;
-    }
-
-    for(Gtk::TreeIter iter = marker_store->children().begin();
-        iter != marker_store->children().end(); ++iter) {
-            Gtk::TreeModel::Row row = (*iter);
-            if (row[marker_columns.history] &&
-                    !strcmp(row[marker_columns.marker], match_row[marker_columns.marker])) {
-                    return;
-            }
-    }
-
-    // Add a new row to the history
-    Gtk::TreeModel::Row row = *(marker_store->insert_after(marker_store->children().begin()));
-    row[marker_columns.marker] = g_strdup(match_row.get_value(marker_columns.marker));
-    row[marker_columns.label] = match_row.get_value(marker_columns.label);
-    row[marker_columns.isstock] = match_row.get_value(marker_columns.isstock);
-    row[marker_columns.image] = match_row.get_value(marker_columns.image);
-    row[marker_columns.history] = true;
-}
 
 /**
  * Pick up all markers from source, except those that are in
  * current_doc (if non-NULL), and add items to the combo.
  */
-void MarkerComboBox::sp_marker_list_from_doc(SPDocument *source)
+void MarkerComboBox::sp_marker_list_from_doc(SPDocument *source, gboolean history)
 {
     GSList *ml = get_marker_list(source);
     GSList *clean_ml = NULL;
@@ -268,10 +293,14 @@ void MarkerComboBox::sp_marker_list_from_doc(SPDocument *source)
         // Add to the list of markers we really do wish to show
         clean_ml = g_slist_prepend (clean_ml, ml->data);
     }
-    add_markers(clean_ml, source);
+
+    remove_markers(history); // Seem to need to remove 2x
+    remove_markers(history);
+    add_markers(clean_ml, source, history);
 
     g_slist_free (ml);
     g_slist_free (clean_ml);
+
 }
 
 /**
@@ -285,6 +314,10 @@ GSList *MarkerComboBox::get_marker_list (SPDocument *source)
 
     GSList *ml   = NULL;
     SPDefs *defs = source->getDefs();
+    if (!defs) {
+        return NULL;
+    }
+
     for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
     {
         if (SP_IS_MARKER(child)) {
@@ -295,31 +328,76 @@ GSList *MarkerComboBox::get_marker_list (SPDocument *source)
 }
 
 /**
- * Adds previews of markers in marker_list to the combo
+ * Remove history or non-history markers from the combo
  */
-void MarkerComboBox::add_markers (GSList *marker_list, SPDocument *source)
+void MarkerComboBox::remove_markers (gboolean history)
+{
+    // Having the model set causes assertions when erasing rows, temporarily disconnect
+    unset_model();
+    for(Gtk::TreeIter iter = marker_store->children().begin();
+        iter != marker_store->children().end(); ++iter) {
+            Gtk::TreeModel::Row row = (*iter);
+            if (row[marker_columns.history] == history && row[marker_columns.separator] == false) {
+                marker_store->erase(iter);
+                iter = marker_store->children().begin();
+            }
+    }
+
+    set_model(marker_store);
+}
+
+/**
+ * Adds markers in marker_list to the combo
+ */
+void MarkerComboBox::add_markers (GSList *marker_list, SPDocument *source, gboolean history)
 {
     // Do this here, outside of loop, to speed up preview generation:
     Inkscape::Drawing drawing;
     unsigned const visionkey = SPItem::display_key_new(1);
     drawing.setRoot(sandbox->getRoot()->invoke_show(drawing, visionkey, SP_ITEM_SHOW_DISPLAY));
+    // Find the separator,
+    Gtk::TreeIter sep_iter;
+    for(Gtk::TreeIter iter = marker_store->children().begin();
+        iter != marker_store->children().end(); ++iter) {
+            Gtk::TreeModel::Row row = (*iter);
+            if (row[marker_columns.separator]) {
+                sep_iter = iter;
+            }
+    }
+
+    if (history) {
+        // add "None"
+        Gtk::TreeModel::Row row = *(marker_store->prepend());
+        row[marker_columns.label] = _("None");
+        row[marker_columns.stock] = false;
+        row[marker_columns.marker] = g_strdup("None");
+        row[marker_columns.image] = NULL;
+        row[marker_columns.history] = true;
+        row[marker_columns.separator] = false;
+    }
 
     for (; marker_list != NULL; marker_list = marker_list->next) {
 
         Inkscape::XML::Node *repr = reinterpret_cast<SPItem *>(marker_list->data)->getRepr();
-        bool isstock = (repr->attribute("inkscape:stockid"));
         gchar const *markid = repr->attribute("id");
 
         // generate preview
         Gtk::Image *prv = create_marker_image (22, markid, source, drawing, visionkey);
         prv->show();
 
-        Gtk::TreeModel::Row row = *(marker_store->append());
+        // Add history before separator, others after
+        Gtk::TreeModel::Row row;
+        if (history)
+            row = *(marker_store->insert(sep_iter));
+        else
+            row = *(marker_store->append());
+
         row[marker_columns.label] = gr_ellipsize_text(markid, 20);
+        row[marker_columns.stock] = !history;
         row[marker_columns.marker] = g_strdup(markid);
-        row[marker_columns.isstock] = isstock;
         row[marker_columns.image] = prv;
-        row[marker_columns.history] = is_history;
+        row[marker_columns.history] = history;
+        row[marker_columns.separator] = false;
 
     }
 
@@ -414,7 +492,7 @@ void MarkerComboBox::prepareImageRenderer( Gtk::TreeModel::const_iterator const 
 gboolean MarkerComboBox::separator_cb (GtkTreeModel *model, GtkTreeIter *iter, gpointer /*data*/) {
 
     gboolean sep = FALSE;
-    gtk_tree_model_get(model, iter, 5, &sep, -1);
+    gtk_tree_model_get(model, iter, 4, &sep, -1);
     return sep;
 }
 
