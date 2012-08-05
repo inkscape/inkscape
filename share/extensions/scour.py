@@ -70,8 +70,8 @@ except ImportError:
 	pass
 
 APP = 'scour'
-VER = '0.26'
-COPYRIGHT = 'Copyright Jeff Schiller, Louis Simard, 2010'
+VER = '0.26+r220'
+COPYRIGHT = 'Copyright Jeff Schiller, Louis Simard, 2012'
 
 NS = { 	'SVG': 		'http://www.w3.org/2000/svg', 
 		'XLINK': 	'http://www.w3.org/1999/xlink', 
@@ -564,6 +564,25 @@ numBytesSavedInLengths = 0
 numBytesSavedInTransforms = 0
 numPointsRemovedFromPolygon = 0
 numCommentBytes = 0
+
+def flattenDefs(doc):
+	"""
+	Puts all defined elements into a newly created defs in the document.  This function
+	handles recursive defs elements.
+	"""
+	defs = doc.documentElement.getElementsByTagName('defs')
+
+	if defs.length > 1:
+		topDef = doc.createElementNS(NS['SVG'], 'defs')
+
+		for defElem in defs:
+			# Remove all children of this defs and put it into the topDef.
+			while defElem.hasChildNodes():
+				topDef.appendChild(defElem.firstChild)
+			defElem.parentNode.removeChild(defElem)
+
+		if topDef.hasChildNodes():
+			doc.documentElement.insertBefore(topDef, doc.documentElement.firstChild)
 
 def removeUnusedDefs(doc, defElem, elemsToRemove=None):
 	if elemsToRemove is None:
@@ -2556,7 +2575,9 @@ def removeComments(element) :
 	if isinstance(element, xml.dom.minidom.Document):
 		# must process the document object separately, because its
 		# documentElement's nodes have None as their parentNode
-		for subelement in element.childNodes:
+		# iterate in reverse order to prevent mess-ups with renumbering
+		for index in xrange(len(element.childNodes) - 1, -1, -1):
+			subelement = element.childNodes[index]
 			if isinstance(subelement, xml.dom.minidom.Comment):
 				numCommentBytes += len(subelement.data)
 				element.removeChild(subelement)
@@ -2566,7 +2587,9 @@ def removeComments(element) :
 		numCommentBytes += len(element.data)
 		element.parentNode.removeChild(element)
 	else:
-		for subelement in element.childNodes:
+		# iterate in reverse order to prevent mess-ups with renumbering
+		for index in xrange(len(element.childNodes) - 1, -1, -1):
+			subelement = element.childNodes[index]
 			removeComments(subelement)
 
 def embedRasters(element, options) :
@@ -2886,6 +2909,9 @@ def scourString(in_string, options=None):
 	# remove <metadata> if the user wants to
 	if options.remove_metadata:
 		removeMetadataElements(doc)
+	
+	# flattend defs elements into just one defs element
+	flattenDefs(doc)
 	
 	# remove unreferenced gradients/patterns outside of defs
 	# and most unreferenced elements inside of defs
