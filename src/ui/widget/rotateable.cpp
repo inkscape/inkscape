@@ -33,16 +33,16 @@ Rotateable::Rotateable():
 }
 
 bool Rotateable::on_click(GdkEventButton *event) {
-		if (event->button == 1) {
+	if (event->button == 1) {
         drag_started_x = event->x;
         drag_started_y = event->y;
-        modifier = get_single_modifier(modifier, event->state); 
+        modifier = get_single_modifier(modifier, event->state);
         dragging = true;
         working = false;
         current_axis = axis;
         return true;
-		} 
-		return false; 
+    }
+    return false;
 }
 
 guint Rotateable::get_single_modifier(guint old, guint state) {
@@ -108,9 +108,9 @@ bool Rotateable::on_motion(GdkEventMotion *event) {
 
 
 bool Rotateable::on_release(GdkEventButton *event) {
-		if (dragging && working) {
+	if (dragging && working) {
         double angle = atan2(event->y - drag_started_y, event->x - drag_started_x);
-        double force = CLAMP (-(angle - current_axis)/maxdecl, -1, 1);
+        double force = CLAMP(-(angle - current_axis) / maxdecl, -1, 1);
         if (fabs(force) < 0.002)
             force = 0; // snap to zero
         do_release(force, modifier);
@@ -118,10 +118,10 @@ bool Rotateable::on_release(GdkEventButton *event) {
         dragging = false;
         working = false;
         return true;
-		}
+    }
     dragging = false;
     working = false;
-		return false;
+    return false;
 }
 
 
