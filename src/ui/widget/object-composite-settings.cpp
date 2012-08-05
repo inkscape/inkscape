@@ -37,8 +37,8 @@ namespace Inkscape {
 namespace UI {
 namespace Widget {
 
-void ObjectCompositeSettings::_on_desktop_activate(
-    Inkscape::Application */*application*/,
+/*void ObjectCompositeSettings::_on_desktop_activate(
+    Inkscape::Application *application,
     SPDesktop *desktop,
     ObjectCompositeSettings *w
 ) {
@@ -48,14 +48,14 @@ void ObjectCompositeSettings::_on_desktop_activate(
 }
 
 void ObjectCompositeSettings::_on_desktop_deactivate(
-    Inkscape::Application */*application*/,
-    SPDesktop */*desktop*/,
+    Inkscape::Application *application,
+    SPDesktop *desktop,
     ObjectCompositeSettings *w
 ) {
     if (w->_subject) {
         w->_subject->setDesktop(NULL);
     }
-}
+}*/
 
 ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char const *history_prefix, int flags)
 : _verb_code(verb_code),
@@ -109,8 +109,9 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
 
     show_all_children();
 
-    _desktop_activated = g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (&ObjectCompositeSettings::_on_desktop_activate), this );
-    _desktop_activated = g_signal_connect ( G_OBJECT (INKSCAPE), "deactivate_desktop", G_CALLBACK (&ObjectCompositeSettings::_on_desktop_deactivate), this );
+    // These signals dont properly detect change in desktop, rely on owner dialog to call setSubject() from setTargetDesktop()
+    //_desktop_activated = g_signal_connect ( G_OBJECT (INKSCAPE), "activate_desktop", G_CALLBACK (&ObjectCompositeSettings::_on_desktop_activate), this );
+    //_desktop_activated = g_signal_connect ( G_OBJECT (INKSCAPE), "deactivate_desktop", G_CALLBACK (&ObjectCompositeSettings::_on_desktop_deactivate), this );
 }
 
 ObjectCompositeSettings::~ObjectCompositeSettings() {

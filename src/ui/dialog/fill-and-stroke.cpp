@@ -101,6 +101,7 @@ void FillAndStroke::setTargetDesktop(SPDesktop *desktop)
         if (strokeStyleWdgt) {
             sp_stroke_style_widget_set_desktop(strokeStyleWdgt, desktop);
         }
+        _composite_settings.setSubject(&_subject);
     }
 }
 
