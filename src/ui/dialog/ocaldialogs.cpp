@@ -333,15 +333,7 @@ bool LoadingBox::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     int height = get_allocation().get_height();
 
 #if WITH_GTKMM_3_0
-    // FIXME: Should use Gtk::StyleContext::render_frame instead
-    GtkWidget* widget = GTK_WIDGET(gobj());
-    gtk_paint_shadow(gtk_widget_get_style(widget),
-		     cr->cobj(),
-                     gtk_widget_get_state(widget),
-		     GTK_SHADOW_IN,
-		     widget,
-		     "viewport",
-		     x, y, width, height);
+    get_style_context()->render_frame(cr, x, y, width, height);
 #else
     get_style()->paint_shadow(get_window(), get_state(), Gtk::SHADOW_IN,
         Gdk::Rectangle(x, y, width, height),
@@ -353,14 +345,8 @@ bool LoadingBox::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
         int spinner_x = x + (width - spinner_size) / 2;
         int spinner_y = y + (height - spinner_size) / 2;
 
-        // FIXME: Gtk::Style::paint_spinner not yet in gtkmm
-	// In Gtkmm 3.0, Gtk::StyleContext::render_activity should
-	// be used instead.
 #if WITH_GTKMM_3_0
-        gtk_paint_spinner(gtk_widget_get_style(GTK_WIDGET(gobj())),
-            cr->cobj(),
-            gtk_widget_get_state(GTK_WIDGET(gobj())), GTK_WIDGET(gobj()),
-            NULL, spinner_step, spinner_x, spinner_y, spinner_size, spinner_size);
+        get_style_context()->render_activity(cr, spinner_x, spinner_y, spinner_size, spinner_size);
 #else
         gtk_paint_spinner(gtk_widget_get_style(GTK_WIDGET(gobj())),
             gtk_widget_get_window(GTK_WIDGET(gobj())),
@@ -502,16 +488,16 @@ bool PreviewWidget::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     int height = get_allocation().get_height();
 
 #if WITH_GTKMM_3_0
-    // FIXME: Should use Gtk::StyleContext instead
-    GtkWidget *widget = GTK_WIDGET(gobj());
-    GtkStyle *style = gtk_widget_get_style(widget);
-    Gdk::Color background_fill = Glib::wrap(&(style->base[gtk_widget_get_state(widget)]));
+    Gdk::RGBA background_fill;
+    get_style_context()->lookup_color("base_color", background_fill);
+    cr->rectangle(x, y, width, height);
+    Gdk::Cairo::set_source_rgba(cr, background_fill);
 #else
     Gdk::Color background_fill = get_style()->get_base(get_state());
-#endif
-
     cr->rectangle(x, y, width, height);
     Gdk::Cairo::set_source_color(cr, background_fill);
+#endif
+    
     cr->fill();
 
     return false;
@@ -632,28 +618,18 @@ bool BaseBox::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     int height = get_allocation().get_height();
 
 #if WITH_GTKMM_3_0
-    // FIXME: Should use Gtk::StyleContext instead
-    GtkWidget *widget = GTK_WIDGET(gobj());
-    GtkStyle *style = gtk_widget_get_style(widget);
-    Gdk::Color background_fill = Glib::wrap(&(style->base[gtk_widget_get_state(widget)]));
+    Gdk::RGBA background_fill;
+    get_style_context()->lookup_color("base_color", background_fill);
+    cr->rectangle(x, y, width, height);
+    Gdk::Cairo::set_source_rgba(cr, background_fill);
+    cr->fill();
+    get_style_context()->render_frame(cr, x, y, width, height);
 #else
     Gdk::Color background_fill = get_style()->get_base(get_state());
-#endif
-
     cr->rectangle(x, y, width, height);
     Gdk::Cairo::set_source_color(cr, background_fill);
     cr->fill();
-
-#if WITH_GTKMM_3_0
-    // FIXME: Should use Gtk::StyleContext::render_frame instead
-    gtk_paint_shadow(style,
-                     cr->cobj(),
-		     gtk_widget_get_state(widget),
-		     GTK_SHADOW_IN,
-		     widget,
-		     "viewport",
-		     x, y, width, height);
-#else
+    
     get_style()->paint_shadow(get_window(), get_state(), Gtk::SHADOW_IN,
         Gdk::Rectangle(x, y, width, height),
         *this, Glib::ustring("viewport"), x, y, width, height);
@@ -704,15 +680,14 @@ bool LogoArea::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
         // Draw logo, we mask [read fill] it with the mid colour from the
         // user's GTK theme
 #if WITH_GTKMM_3_0
-        // FIXME: Should use Gtk::StyleContext instead
-        GtkWidget *widget = GTK_WIDGET(gobj());
-        GtkStyle *style = gtk_widget_get_style(widget);
-        Gdk::Color logo_fill = Glib::wrap(&(style->mid[gtk_widget_get_state(widget)]));
+        // For GTK+ 3, use grey
+        Gdk::RGBA logo_fill("grey");
+        Gdk::Cairo::set_source_rgba(cr, logo_fill);
 #else
         Gdk::Color logo_fill = get_style()->get_mid(get_state());
+        Gdk::Cairo::set_source_color(cr, logo_fill);
 #endif
 
-        Gdk::Cairo::set_source_color(cr, logo_fill);
         cr->mask(logo_mask, x_logo, y_logo);
     }
     
@@ -1183,23 +1158,23 @@ void ImportDialog::update_label_no_search_results()
 {
     Glib::ustring keywords = Glib::Markup::escape_text(entry_search->get_text());
 
-#if WITH_GTKMM_3_0
-    // FIXME: Should use Gtk::StyleContext instead
-    GtkWidget *widget = GTK_WIDGET(entry_search->gobj());
-    GtkStyle *style = gtk_widget_get_style(widget);
-    Gdk::Color grey = Glib::wrap(&(style->text_aa[gtk_widget_get_state(widget)]));
-#else
-    Gdk::Color grey = entry_search->get_style()->get_text_aa(entry_search->get_state());
-#endif
-
     Glib::ustring msg_one = Glib::ustring::compose(
         _("No clipart named <b>%1</b> was found."),
         keywords);
     Glib::ustring msg_two = _("Please make sure all keywords are spelled correctly,"
                               " or try again with different keywords.");
+
+#if WITH_GTKMM_3_0
+    Glib::ustring markup = Glib::ustring::compose(
+        "<span size=\"large\">%1</span>\n<span>%2</span>",
+        msg_one, msg_two);
+#else
+    Gdk::Color grey = entry_search->get_style()->get_text_aa(entry_search->get_state());
     Glib::ustring markup = Glib::ustring::compose(
         "<span size=\"large\">%1</span>\n<span color=\"%2\">%3</span>",
         msg_one, grey.to_string(), msg_two);
+#endif
+
     label_not_found->set_markup(markup);
 }
 
