@@ -46,7 +46,8 @@ static Inkscape::UI::Cache::SvgPreview svg_preview_cache;
 MarkerComboBox::MarkerComboBox(gchar const *id) :
             Gtk::ComboBox(),
             combo_id(id),
-            updating(false)
+            updating(false),
+            markerCount(0)
 {
 
     marker_store = Gtk::ListStore::create(marker_columns);
@@ -113,9 +114,23 @@ MarkerComboBox::refreshHistory()
         return;
 
     updating = true;
-    const char *active = get_active()->get_value(marker_columns.marker);
-    sp_marker_list_from_doc(doc, true);
-    set_selected(active);
+
+    GSList *ml = get_marker_list(doc);
+
+    /*
+     * Seems to be no way to get notified of changes just to markers,
+     * so listen to changes in all defs and check if the number of markers has changed here
+     * to avoid unnecessary refreshes when things like gradients change
+    */
+    if (markerCount != g_slist_length(ml)) {
+        const char *active = get_active()->get_value(marker_columns.marker);
+        sp_marker_list_from_doc(doc, true);
+        set_selected(active);
+        markerCount = g_slist_length(ml);
+    }
+
+    g_slist_free (ml);
+
     updating = false;
 }
 

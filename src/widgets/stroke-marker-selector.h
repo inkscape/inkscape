@@ -48,9 +48,11 @@ public:
 
 private:
 
+
     Glib::RefPtr<Gtk::ListStore> marker_store;
     gchar const *combo_id;
     bool updating;
+    guint markerCount;
     SPDesktop *desktop;
     SPDocument *doc;
     SPDocument *sandbox;
@@ -91,6 +93,7 @@ private:
     static gboolean separator_cb (GtkTreeModel *model, GtkTreeIter *iter, gpointer data);
 
     static void handleDefsModified(MarkerComboBox *self);
+
     void refreshHistory();
 
     sigc::connection modified_connection;
