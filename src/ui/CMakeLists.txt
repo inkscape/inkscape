@@ -80,9 +80,8 @@ set(ui_SRC
 	widget/dock.cpp
 	widget/entity-entry.cpp
 	widget/entry.cpp
-	widget/frame.cpp
 	widget/filter-effect-chooser.cpp
-	widget/handlebox.cpp
+	widget/frame.cpp
 	widget/imageicon.cpp
 	widget/imagetoggler.cpp
 	widget/labelled.cpp
@@ -99,7 +98,6 @@ set(ui_SRC
 	widget/registry.cpp
 	widget/rendering-options.cpp
 	widget/rotateable.cpp
-	widget/ruler.cpp
 	widget/scalar-unit.cpp
 	widget/scalar.cpp
 	widget/selected-style.cpp
@@ -107,12 +105,9 @@ set(ui_SRC
 	widget/spinbutton.cpp
 	widget/style-subject.cpp
 	widget/style-swatch.cpp
-	widget/svg-canvas.cpp
 	widget/text.cpp
 	widget/tolerance-slider.cpp
-	widget/toolbox.cpp
 	widget/unit-menu.cpp
-	widget/zoom-status.cpp
 
 	view/view.cpp
 	view/view-widget.cpp
@@ -198,10 +193,6 @@ set(ui_SRC
 	tool/shape-record.h
 	tool/transform-handle-set.h
 
-	view/edit-widget-interface.h
-	view/view-widget.h
-	view/view.h
-
 	widget/attr-widget.h
 	widget/button.h
 	widget/color-picker.h
@@ -211,9 +202,8 @@ set(ui_SRC
 	widget/dock.h
 	widget/entity-entry.h
 	widget/entry.h
-	widget/frame.h
 	widget/filter-effect-chooser.h
-	widget/handlebox.h
+	widget/frame.h
 	widget/imageicon.h
 	widget/imagetoggler.h
 	widget/labelled.h
@@ -231,7 +221,6 @@ set(ui_SRC
 	widget/registry.h
 	widget/rendering-options.h
 	widget/rotateable.h
-	widget/ruler.h
 	widget/scalar-unit.h
 	widget/scalar.h
 	widget/selected-style.h
@@ -239,12 +228,13 @@ set(ui_SRC
 	widget/spinbutton.h
 	widget/style-subject.h
 	widget/style-swatch.h
-	widget/svg-canvas.h
 	widget/text.h
 	widget/tolerance-slider.h
-	widget/toolbox.h
 	widget/unit-menu.h
-	widget/zoom-status.h
+
+	view/edit-widget-interface.h
+	view/view-widget.h
+	view/view.h
 )
 
 if(WIN32)

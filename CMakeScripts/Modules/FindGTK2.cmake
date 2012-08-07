@@ -193,6 +193,7 @@ function(_GTK2_FIND_INCLUDE_DIR _var _hdr)
             /usr/local/lib64
             /usr/local/lib
             /usr/lib64
+            /usr/lib/x86_64-linux-gnu
             /usr/lib
             /opt/gnome/include
             /opt/gnome/lib
