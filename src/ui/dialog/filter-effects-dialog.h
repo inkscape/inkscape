@@ -21,6 +21,7 @@
 #include "ui/widget/combo-enums.h"
 #include "ui/widget/spin-slider.h"
 #include "xml/helper-observer.h"
+#include "ui/dialog/desktop-tracker.h"
 
 #include <gtkmm/notebook.h>
 #include <gtkmm/sizegroup.h>
@@ -74,14 +75,15 @@ private:
             Gtk::TreeModelColumn<int> sel;
         };
 
-        static void on_activate_desktop(Application*, SPDesktop*, FilterModifier*);
-        static void on_deactivate_desktop(Application*, SPDesktop*, FilterModifier*);
+        void setTargetDesktop(SPDesktop *desktop);
+
         void on_document_replaced(SPDesktop*, SPDocument*)
         {
             update_filters();
         }
        
-        static void on_inkscape_change_selection(Application *, Selection *, FilterModifier*);
+        void on_change_selection();
+        void on_modified_selection( guint flags );
         
         void update_selection(Selection *);
         void on_filter_selection_changed();
@@ -96,6 +98,22 @@ private:
         void duplicate_filter();
         void rename_filter();
 
+        /**
+         * Stores the current desktop.
+         */
+        SPDesktop *_desktop;
+
+        /**
+         * Auxiliary widget to keep track of desktop changes for the floating dialog.
+         */
+        DesktopTracker _deskTrack;
+
+        /**
+         * Link to callback function for a change in desktop (window).
+         */
+        sigc::connection desktopChangeConn;
+        sigc::connection _selectChangedConn;
+        sigc::connection _selectModifiedConn;
         sigc::connection _doc_replaced;
         sigc::connection _resource_changed;
 

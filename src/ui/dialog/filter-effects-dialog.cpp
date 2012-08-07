@@ -1108,7 +1108,11 @@ Glib::RefPtr<Gtk::Menu> create_popup_menu(Gtk::Widget& parent, sigc::slot<void> 
 
 /*** FilterModifier ***/
 FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
-    : _dialog(d), _add(Gtk::Stock::NEW), _observer(new Inkscape::XML::SignalObserver)
+    :    _desktop(NULL),
+         _deskTrack(),
+         _dialog(d),
+         _add(Gtk::Stock::NEW),
+         _observer(new Inkscape::XML::SignalObserver)
 {
     Gtk::ScrolledWindow* sw = Gtk::manage(new Gtk::ScrolledWindow);
     pack_start(*sw);
@@ -1149,54 +1153,60 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
 
     _list.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &FilterModifier::on_filter_selection_changed));
     _observer->signal_changed().connect(signal_filter_changed().make_slot());
-    g_signal_connect(G_OBJECT(INKSCAPE), "change_selection",
-                     G_CALLBACK(&FilterModifier::on_inkscape_change_selection), this);
 
-    g_signal_connect(G_OBJECT(INKSCAPE), "activate_desktop",
-                     G_CALLBACK(&FilterModifier::on_activate_desktop), this);
-    g_signal_connect(G_OBJECT(INKSCAPE), "deactivate_desktop",
-                     G_CALLBACK(&FilterModifier::on_deactivate_desktop), this);
+    desktopChangeConn = _deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &FilterModifier::setTargetDesktop) );
+    _deskTrack.connect(GTK_WIDGET(gobj()));
 
-    on_activate_desktop(INKSCAPE, d.getDesktop(), this);
     update_filters();
 }
 
 FilterEffectsDialog::FilterModifier::~FilterModifier()
 {
+   _selectChangedConn.disconnect();
+   _selectModifiedConn.disconnect();
    _resource_changed.disconnect();
    _doc_replaced.disconnect();
 }
 
-void FilterEffectsDialog::FilterModifier::on_activate_desktop(Application*, SPDesktop* desktop, FilterModifier* me)
+void FilterEffectsDialog::FilterModifier::setTargetDesktop(SPDesktop *desktop)
 {
-    me->_doc_replaced.disconnect();
-    me->_doc_replaced = desktop->connectDocumentReplaced(
-        sigc::mem_fun(me, &FilterModifier::on_document_replaced));
+    if (_desktop != desktop) {
+        if (_desktop) {
+            _selectChangedConn.disconnect();
+            _selectModifiedConn.disconnect();
+            _doc_replaced.disconnect();
+            _resource_changed.disconnect();
+            _dialog.setDesktop(NULL);
+        }
+        _desktop = desktop;
+        if (desktop) {
+            if (desktop->selection) {
+                _selectChangedConn = desktop->selection->connectChanged(sigc::hide(sigc::mem_fun(*this, &FilterModifier::on_change_selection)));
+                _selectModifiedConn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &FilterModifier::on_modified_selection)));
+            }
+            _doc_replaced = desktop->connectDocumentReplaced( sigc::mem_fun(*this, &FilterModifier::on_document_replaced));
+            _resource_changed = sp_desktop_document(desktop)->connectResourcesChanged("filter",sigc::mem_fun(*this, &FilterModifier::update_filters));
+            _dialog.setDesktop(desktop);
 
-    me->_resource_changed.disconnect();
-    me->_resource_changed =
-        sp_desktop_document(desktop)->connectResourcesChanged("filter",sigc::mem_fun(me, &FilterModifier::update_filters));
-
-    me->_dialog.setDesktop(desktop);
-
-    me->update_filters();
+            update_filters();
+        }
+    }
 }
-
-void FilterEffectsDialog::FilterModifier::on_deactivate_desktop(Application*, SPDesktop* /*desktop*/, FilterModifier* me)
-{
-    me->_doc_replaced.disconnect();
-    me->_resource_changed.disconnect();
-    me->_dialog.setDesktop(NULL);
-}
-
 
 // When the selection changes, show the active filter(s) in the dialog
-void FilterEffectsDialog::FilterModifier::on_inkscape_change_selection(Application */*inkscape*/,
-                                                                       Selection *sel,
-                                                                       FilterModifier* fm)
+void FilterEffectsDialog::FilterModifier::on_change_selection()
 {
-    if(fm && sel)
-        fm->update_selection(sel);
+    Inkscape::Selection *selection = sp_desktop_selection (SP_ACTIVE_DESKTOP);
+    update_selection(selection);
+}
+
+void FilterEffectsDialog::FilterModifier::on_modified_selection( guint flags )
+{
+    if (flags & ( SP_OBJECT_MODIFIED_FLAG |
+                   SP_OBJECT_PARENT_MODIFIED_FLAG |
+                   SP_OBJECT_STYLE_MODIFIED_FLAG) ) {
+        on_change_selection();
+    }
 }
 
 // Update each filter's sel property based on the current object selection;
@@ -1205,6 +1215,10 @@ void FilterEffectsDialog::FilterModifier::on_inkscape_change_selection(Applicati
 //  If only one filter is in use, it is selected
 void FilterEffectsDialog::FilterModifier::update_selection(Selection *sel)
 {
+    if (!sel) {
+        return;
+    }
+
     std::set<SPObject*> used;
 
     for (GSList const *i = sel->itemList(); i != NULL; i = i->next) {

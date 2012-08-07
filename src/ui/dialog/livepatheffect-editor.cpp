@@ -80,6 +80,7 @@ static void lpeeditor_selection_modified (Inkscape::Selection * selection, guint
 
 LivePathEffectEditor::LivePathEffectEditor()
     : UI::Widget::Panel("", "/dialogs/livepatheffect", SP_VERB_DIALOG_LIVE_PATH_EFFECT),
+      deskTrack(),
       lpe_list_locked(false),
       effectwidget(NULL),
       status_label("", Gtk::ALIGN_CENTER),
@@ -173,6 +174,9 @@ LivePathEffectEditor::LivePathEffectEditor()
     button_remove.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectEditor::onRemove));
     button_up.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectEditor::onUp));
     button_down.signal_clicked().connect(sigc::mem_fun(*this, &LivePathEffectEditor::onDown));
+
+    desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &LivePathEffectEditor::setDesktop) );
+    deskTrack.connect(GTK_WIDGET(gobj()));
 
     show_all_children();
 }
