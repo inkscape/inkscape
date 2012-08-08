@@ -1,13 +1,29 @@
 /** 
  * @file Object properties dialog.
  */
-/* Author:
- *   Lauris Kaplinski <lauris@ximian.com>
- *   Kris De Gussem <Kris.DeGussem@gmail.com>
+/* 
+ * Inkscape, an Open Source vector graphics editor
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (C) 2001 Ximian, Inc.
- * Copyright (C) 2012 Authors
- * Released under GNU GPL, read the file 'COPYING' for more information
+ * Copyright (C) 2012 Kris De Gussem <Kris.DeGussem@gmail.com>
+ * c++version based on former C-version (GPL v2) with authors:
+ *   Lauris Kaplinski <lauris@kaplinski.com>
+ *   bulia byak <buliabyak@users.sf.net>
+ *   Johan Engelen <goejendaagh@zonnet.nl>
+ *   Abhishek Sharma
  */
 
 #ifndef SEEN_DIALOGS_ITEM_PROPERTIES_H
@@ -102,11 +118,6 @@ private:
      */
     void hidden_toggled(void);
     
-    /*
-     * On signal modified, invokes an update.
-     */
-    //void selectionModifiedCB( guint flags );
-    
     /**
      * Can be invoked for setting the desktop. Currently not used.
      */
@@ -116,7 +127,6 @@ private:
      * Is invoked by the desktop tracker when the desktop changes.
      */
     void setTargetDesktop(SPDesktop *desktop);
-
 };
 
 }

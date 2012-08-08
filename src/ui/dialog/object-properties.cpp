@@ -1,17 +1,29 @@
 /**
  * @file Object properties dialog.
  */
-/* Authors:
+/* 
+ * Inkscape, an Open Source vector graphics editor
+ * 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * Copyright (C) 2012 Kris De Gussem <Kris.DeGussem@gmail.com>
+ * c++ version based on former C-version (GPL v2) with authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <goejendaagh@zonnet.nl>
  *   Abhishek Sharma
- *   Kris De Gussem <Kris.DeGussem@gmail.com>
- *
- * Copyright (C) 1999-2012 Authors
- * Copyright (C) 2001 Ximian, Inc.
- *
- * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
 #ifdef HAVE_CONFIG_H
@@ -55,7 +67,6 @@ ObjectProperties::ObjectProperties (void) :
     deskTrack(),
     selectChangedConn(),
     subselChangedConn()
-    // selectModifiedConn()
 {
     //initialize labels for the table at the bottom of the dialog
     int_labels.push_back("onclick");
@@ -77,7 +88,6 @@ ObjectProperties::ObjectProperties (void) :
 
 ObjectProperties::~ObjectProperties (void)
 {
-    // selectModifiedConn.disconnect();
     subselChangedConn.disconnect();
     selectChangedConn.disconnect();
     desktopChangeConn.disconnect();
@@ -394,7 +404,6 @@ void ObjectProperties::setTargetDesktop(SPDesktop *desktop)
 {
     if (this->desktop != desktop) {
         if (this->desktop) {
-            // selectModifiedConn.disconnect();
             subselChangedConn.disconnect();
             selectChangedConn.disconnect();
         }
@@ -402,23 +411,10 @@ void ObjectProperties::setTargetDesktop(SPDesktop *desktop)
         if (desktop && desktop->selection) {
             selectChangedConn = desktop->selection->connectChanged(sigc::hide(sigc::mem_fun(*this, &ObjectProperties::widget_setup)));
             subselChangedConn = desktop->connectToolSubselectionChanged(sigc::hide(sigc::mem_fun(*this, &ObjectProperties::widget_setup)));
-
-            //// Must check flags, so can't call widget_setup() directly.
-            // selectModifiedConn = desktop->selection->connectModified(sigc::hide<0>(sigc::mem_fun(*this, &ObjectProperties::selectionModifiedCB)));
         }
         widget_setup();
     }
 }
-
-// void ObjectProperties::selectionModifiedCB( guint flags )
-// {
-    // if (flags & ( SP_OBJECT_MODIFIED_FLAG |
-                   // SP_OBJECT_PARENT_MODIFIED_FLAG |
-                   // SP_OBJECT_STYLE_MODIFIED_FLAG) ) {
-        // widget_setup();
-    // }
-// }
-
 }
 }
 }
