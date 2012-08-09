@@ -119,6 +119,9 @@ struct EditWidgetInterface
     /// Toggle CMS on/off and set preference value accordingly
     virtual void toggleColorProfAdjust() = 0;
 
+    /// Is CMS on/off
+    virtual bool colorProfAdjustEnabled() = 0;
+
     /// Temporarily block signals and update zoom display
     virtual void updateZoom() = 0;
 

@@ -1430,6 +1430,11 @@ void SPDesktop::toggleColorProfAdjust()
     _widget->toggleColorProfAdjust();
 }
 
+bool SPDesktop::colorProfAdjustEnabled()
+{
+    return _widget->colorProfAdjustEnabled();
+}
+
 void SPDesktop::toggleGrids()
 {
     if (namedview->grids) {
@@ -1459,6 +1464,7 @@ void SPDesktop::toggleSnapGlobal()
     bool v = namedview->getSnapGlobal();
     namedview->setSnapGlobal(!v);
 }
+
 
 //----------------------------------------------------------------------
 // Callback implementations. The virtual ones are connected by the view.

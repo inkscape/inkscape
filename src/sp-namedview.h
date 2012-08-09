@@ -89,6 +89,7 @@ struct SPNamedView : public SPObjectGroup {
     bool getSnapGlobal() const;
     void setSnapGlobal(bool v);
     void setGuides(bool v);
+    bool getGuides();
 
 private:
     double getMarginLength(gchar const * const key,SPUnit const * const margin_units,SPUnit const * const return_units,double const width,double const height,bool const use_width);

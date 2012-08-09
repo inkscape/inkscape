@@ -1073,6 +1073,17 @@ void SPNamedView::setGuides(bool v)
     sp_repr_set_boolean(this->getRepr(), "inkscape:guide-bbox", v);
 }
 
+bool SPNamedView::getGuides()
+{
+    g_assert(this->getRepr() != NULL);
+    unsigned int v;
+    unsigned int set = sp_repr_get_boolean(this->getRepr(), "showguides", &v);
+    if (!set) { // hide guides if not specified, for backwards compatibility
+        v = FALSE;
+    }
+
+    return v;
+}
 /**
  * Gets page fitting margin information from the namedview node in the XML.
  * \param nv_repr reference to this document's namedview

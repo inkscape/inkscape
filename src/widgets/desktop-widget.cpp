@@ -1924,6 +1924,12 @@ sp_desktop_widget_toggle_scrollbars (SPDesktopWidget *dtw)
     }
 }
 
+bool sp_desktop_widget_color_prof_adj_enabled( SPDesktopWidget *dtw )
+{
+    return gtk_widget_get_sensitive( dtw->cms_adjust ) &&
+              SP_BUTTON_IS_DOWN(dtw->cms_adjust) ;
+}
+
 void sp_desktop_widget_toggle_color_prof_adj( SPDesktopWidget *dtw )
 {
 

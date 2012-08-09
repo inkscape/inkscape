@@ -534,16 +534,34 @@ checkitem_toggled(GtkCheckMenuItem *menuitem, gpointer user_data)
 {
     gchar const *pref = (gchar const *) user_data;
     Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(menuitem), "view");
+    SPAction *action = (SPAction *) g_object_get_data(G_OBJECT(menuitem), "action");
 
+    if (action) {
+
+        sp_ui_menu_activate(menuitem, action);
+
+    } else if (pref) {
+        // The Show/Hide menu items without actions
+        Glib::ustring pref_path = getLayoutPrefPath( view );
+        pref_path += pref;
+        pref_path += "/state";
+
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        gboolean checked = gtk_check_menu_item_get_active(menuitem);
+        prefs->setBool(pref_path, checked);
+
+        reinterpret_cast<SPDesktop*>(view)->layoutWidget();
+    }
+}
+
+static bool getViewStateFromPref(Inkscape::UI::View::View *view, gchar const *pref)
+{
     Glib::ustring pref_path = getLayoutPrefPath( view );
     pref_path += pref;
     pref_path += "/state";
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gboolean checked = gtk_check_menu_item_get_active(menuitem);
-    prefs->setBool(pref_path, checked);
-
-    reinterpret_cast<SPDesktop*>(view)->layoutWidget();
+    return prefs->getBool(pref_path, true);
 }
 
 #if GTK_CHECK_VERSION(3,0,0)
@@ -556,13 +574,34 @@ static gboolean checkitem_update(GtkWidget *widget, GdkEventExpose * /*event*/, 
 
     gchar const *pref = (gchar const *) user_data;
     Inkscape::UI::View::View *view = (Inkscape::UI::View::View *) g_object_get_data(G_OBJECT(menuitem), "view");
+    SPAction *action = (SPAction *) g_object_get_data(G_OBJECT(menuitem), "action");
+    SPDesktop *dt = static_cast<SPDesktop*>(view);
 
-    Glib::ustring pref_path = getLayoutPrefPath( view );
-    pref_path += pref;
-    pref_path += "/state";
+    bool ison = false;
+    if (action) {
 
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool ison = prefs->getBool(pref_path, true);
+        if (!strcmp(action->id, "ToggleGrid")) {
+            ison = dt->gridsEnabled();
+        }
+        if (!strcmp(action->id, "ToggleGuides")) {
+            ison = dt->namedview->getGuides();
+        }
+        if (!strcmp(action->id, "ToggleSnapGlobal")) {
+            ison = dt->namedview->getSnapGlobal();
+        }
+        if (!strcmp(action->id, "ViewCmsToggle")) {
+            ison = dt->colorProfAdjustEnabled();
+        }
+        if (!strcmp(action->id, "ToggleRulers")) {
+            ison = getViewStateFromPref(view, pref);
+        }
+        if (!strcmp(action->id, "ToggleScrollbars")) {
+            ison = getViewStateFromPref(view, pref);
+        }
+    } else if (pref) {
+        // The Show/Hide menu items without actions
+        ison = getViewStateFromPref(view, pref);
+    }
 
     g_signal_handlers_block_by_func(G_OBJECT(menuitem), (gpointer)(GCallback)checkitem_toggled, user_data);
     gtk_check_menu_item_set_active(menuitem, ison);
@@ -570,6 +609,7 @@ static gboolean checkitem_update(GtkWidget *widget, GdkEventExpose * /*event*/, 
 
     return FALSE;
 }
+
 
 static void taskToggled(GtkCheckMenuItem *menuitem, gpointer userData)
 {
@@ -647,6 +687,7 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
     SPAction *action = (verb) ? verb->get_action(view) : 0;
     GtkWidget *item = gtk_check_menu_item_new();
 
+
     if (verb && shortcut!=GDK_KEY_VoidSymbol) {
         gchar* c = sp_shortcut_get_label(shortcut);
 
@@ -688,6 +729,7 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 
     g_object_set_data(G_OBJECT(item), "view", (gpointer) view);
+    g_object_set_data(G_OBJECT(item), "action", (gpointer) action);
 
     g_signal_connect( G_OBJECT(item), "toggled", (GCallback) callback_toggle, (void *) pref);
 
@@ -697,8 +739,11 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
     g_signal_connect( G_OBJECT(item), "expose_event", (GCallback) callback_update, (void *) pref);
 #endif
 
+    (*callback_update)(item, NULL, (void *)pref);
+
     g_signal_connect( G_OBJECT(item), "select", G_CALLBACK(sp_ui_menu_select), (gpointer) (action ? action->tip : tip));
     g_signal_connect( G_OBJECT(item), "deselect", G_CALLBACK(sp_ui_menu_deselect), NULL);
+
 }
 
 static void
@@ -912,6 +957,14 @@ void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape
                         g_signal_connect( G_OBJECT(item), "expose_event", (GCallback) update_view_menu, (void *) action);
 #endif
                     }
+                } else if (menu_pntr->attribute("check") != NULL) {
+                    SPAction *action = NULL;
+                    if (verb->get_code() != SP_VERB_NONE) {
+                        action = verb->get_action(view);
+                    }
+                    sp_ui_menu_append_check_item_from_verb(GTK_MENU(menu), view, action->name, action->tip, NULL,
+                            checkitem_toggled, checkitem_update, verb);
+
                 } else {
                     sp_ui_menu_append_item_from_verb(GTK_MENU(menu), verb, view);
                     group = NULL;

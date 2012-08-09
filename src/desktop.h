@@ -358,6 +358,7 @@ public:
     bool isWaitingCursor() const { return waiting_cursor; };
 
     void toggleColorProfAdjust();
+    bool colorProfAdjustEnabled();
 
     void toggleGrids();
     void toggleSnapGlobal();
