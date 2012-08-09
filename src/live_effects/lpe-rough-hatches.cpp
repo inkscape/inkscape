@@ -414,7 +414,7 @@ LPERoughHatches::linearSnake(Piecewise<D2<SBasis> > const &f, Point const &org){
     while ( i < lscs.size() ){
         int dir = 0;
         //switch orientation of first segment according to starting point.
-        if ((i % 2 == n % 2) && ((j + 1) < lscs[i].size()) && !lscs[i][j].used){
+        if ((static_cast<long long>(i) % 2 == n % 2) && ((j + 1) < lscs[i].size()) && !lscs[i][j].used){
             j += 1;
             dir = 2;
         }

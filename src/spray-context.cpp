@@ -474,10 +474,10 @@ bool sp_spray_recursive(SPDesktop *desktop,
         }
     } else if (mode == SPRAY_MODE_SINGLE_PATH) {
 
-        SPItem *father;         //initial Object
-        SPItem *item_copied;    //Projected Object
-        SPItem *unionResult;    //previous union
-        SPItem *son;            //father copy
+        SPItem *father = NULL;         //initial Object
+        SPItem *item_copied = NULL;    //Projected Object
+        SPItem *unionResult = NULL;    //previous union
+        SPItem *son = NULL;            //father copy
 
         int i=1;
         for (GSList *items = g_slist_copy((GSList *) selection->itemList());
