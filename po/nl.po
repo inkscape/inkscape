@@ -9869,7 +9869,7 @@ msgstr "Br_eedte relatief aan lengte schalen"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:49
 msgid "Scale the width of the stitch path relative to its length"
-msgstr "Schaal de breedte van het naaipad relatief ten opzichte van zijn lengte"
+msgstr "Schaal de breedte van het naaipad relatief tov zijn lengte"
 
 #: ../src/live_effects/lpe-envelope.cpp:31
 msgid "Top bend path:"
@@ -10388,7 +10388,7 @@ msgstr "Variatie in lengte lijnen:"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "Random variatie in de lengte van de lijnen (relatief ten opzichte van de maximum lengte)"
+msgstr "Random variatie in de lengte van de lijnen (relatief tov de maximum lengte)"
 
 #: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Max. overlap:"
@@ -10396,7 +10396,7 @@ msgstr "Max. overlap:"
 
 #: ../src/live_effects/lpe-sketch.cpp:44
 msgid "How much successive strokes should overlap (relative to maximum length)"
-msgstr "Hoeveel opeenvolgende lijnen moeten overlappen (relatief ten opzichte van de maximum lengte)"
+msgstr "Hoeveel opeenvolgende lijnen moeten overlappen (relatief tov de maximum lengte)"
 
 #: ../src/live_effects/lpe-sketch.cpp:45
 msgid "Overlap variation:"
@@ -10404,7 +10404,7 @@ msgstr "Variatie overlap:"
 
 #: ../src/live_effects/lpe-sketch.cpp:46
 msgid "Random variation of overlap (relative to maximum overlap)"
-msgstr "Random variatie in overlap (relatief ten opzichte van de maximum lengte)"
+msgstr "Random variatie in overlap (relatief tov de maximum lengte)"
 
 #: ../src/live_effects/lpe-sketch.cpp:47
 msgid "Max. end tolerance:"
@@ -10412,7 +10412,7 @@ msgstr "Max. afstand einden:"
 
 #: ../src/live_effects/lpe-sketch.cpp:48
 msgid "Maximum distance between ends of original and approximating paths (relative to maximum length)"
-msgstr "Maximum afstand tussen uiteinden van originele en benaderende paden (relatief ten opzichte van maximum lengte)"
+msgstr "Maximum afstand tussen uiteinden van originele en benaderende paden (relatief tov maximum lengte)"
 
 #: ../src/live_effects/lpe-sketch.cpp:49
 msgid "Average offset:"
@@ -13185,7 +13185,7 @@ msgstr "Knooppunten"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:940
 msgid "Relative to: "
-msgstr "Relatief ten opzichte van:"
+msgstr "Relatief tov: "
 
 #: ../src/ui/dialog/align-and-distribute.cpp:941
 msgid "_Treat selection as group: "
@@ -15491,7 +15491,7 @@ msgstr "Rela_tieve verplaatsing"
 
 #: ../src/ui/dialog/guides.cpp:47
 msgid "Move and/or rotate the guide relative to current settings"
-msgstr "Hulplijn verplaatsen en/of verdraaiien relatief ten opzichte van de huidige instellingen"
+msgstr "Hulplijn verplaatsen en/of verdraaien relatief tov de huidige instellingen"
 
 #: ../src/ui/dialog/guides.cpp:48
 msgid "_X:"
@@ -17311,7 +17311,7 @@ msgstr "Relatief kleven van hulplijnhoeken"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1198
 msgid "When on, the snap angles when rotating a guideline will be relative to the original angle"
-msgstr "Indien aangevinkt, zijn de kleefhoeken bij het draaien van een hulplijn relatief ten opzichte van de originele hoek"
+msgstr "Indien aangevinkt, zijn de kleefhoeken bij het draaien van een hulplijn relatief tov de originele hoek"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1200
 msgid "Zoom in/out by:"
@@ -22618,7 +22618,7 @@ msgstr "Van objecten uitsnijden"
 
 #: ../src/widgets/erasor-toolbar.cpp:150
 msgid "The width of the eraser pen (relative to the visible canvas area)"
-msgstr "De breedte van de gom (relatief ten opzichte van het zichtbare canvasoppervlak)"
+msgstr "De breedte van de gom (relatief tov het zichtbare canvasoppervlak)"
 
 #: ../src/widgets/fill-style.cpp:342
 msgid "Change fill rule"
@@ -23608,7 +23608,7 @@ msgstr "(brede verstuiving)"
 
 #: ../src/widgets/spray-toolbar.cpp:133
 msgid "The width of the spray area (relative to the visible canvas area)"
-msgstr "De breedte van het verstuivingsgebied (relatief ten opzichte van het canvas)"
+msgstr "De breedte van het verstuivingsgebied (relatief tov het canvas)"
 
 #: ../src/widgets/spray-toolbar.cpp:146
 msgid "(maximum mean)"
@@ -26270,7 +26270,7 @@ msgid ""
 "* A relative path (or a filename without path) is relative to the user's home directory."
 msgstr ""
 "* Type de bestandsextensie niet. Deze wordt automatisch toegevoegd.\n"
-"* Een relatief pad (of bestand zonder pad) is relatief ten opzichte van de homedirectory."
+"* Een relatief pad (of bestand zonder pad) is relatief tov de homedirectory."
 
 #: ../share/extensions/extractimage.inx.h:3
 msgid "Extract Image"
@@ -29894,7 +29894,7 @@ msgstr "Een layoutgroep dient enkel voor het genereren van betere code (indien n
 
 #: ../share/extensions/webslicer_create_group.inx.h:8
 msgid "Percent (relative to parent size)"
-msgstr "Percentage (relatief ten opzichte van grootte ouder)"
+msgstr "Percentage (relatief tov grootte ouder)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:9
 msgid "Pixel (fixed)"
@@ -29910,7 +29910,7 @@ msgstr "Slicer"
 
 #: ../share/extensions/webslicer_create_group.inx.h:12
 msgid "Undefined (relative to non-floating content size)"
-msgstr "Onbepaald (relatief ten opzichte van de grootte van niet-vlottende inhoud)"
+msgstr "Onbepaald (relatief tov de grootte van niet-vlottende inhoud)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:13
 #: ../share/extensions/webslicer_create_rect.inx.h:41
