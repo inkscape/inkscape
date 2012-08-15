@@ -65,7 +65,7 @@ type2term(GType type)
     if (type == SP_TYPE_BOX3D)
         { return _("3D Box"); }
     if (type == SP_TYPE_TEXT)
-        { return _("Text"); }
+        { return C_("Object", "Text"); }
     if (type == SP_TYPE_USE)
         // TRANSLATORS: "Clone" is a noun, type of object
         { return C_("Object", "Clone"); }

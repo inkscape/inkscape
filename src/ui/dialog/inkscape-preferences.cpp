@@ -371,7 +371,7 @@ void InkscapePreferences::initPageTools()
     AddGradientCheckbox(_page_zoom, "/tools/zoom", false);
 
     //Measure
-    this->AddPage(_page_measure, C_("Measurement tool", "Measure"), iter_tools, PREFS_PAGE_TOOLS_MEASURE);
+    this->AddPage(_page_measure, C_("ContextVerb", "Measure"), iter_tools, PREFS_PAGE_TOOLS_MEASURE);
     PrefCheckButton* cb = Gtk::manage( new PrefCheckButton);
     cb->init ( _("Ignore first and last points"), "/tools/measure/ignore_1st_and_last", true);
     _page_measure.add_line( false, "", *cb, "", _("The start and end of the measurement tool's control line will not be considered for calculating lengths. Only lengths between actual curve intersections will be displayed."));
@@ -429,7 +429,7 @@ void InkscapePreferences::initPageTools()
                             _("If on, each newly created object will be selected (deselecting previous selection)"));
 
     //Text
-    this->AddPage(_page_text, _("Text"), iter_tools, PREFS_PAGE_TOOLS_TEXT);
+    this->AddPage(_page_text, C_("ContextVerb", "Text"), iter_tools, PREFS_PAGE_TOOLS_TEXT);
     this->AddSelcueCheckbox(_page_text, "/tools/text", true);
     this->AddGradientCheckbox(_page_text, "/tools/text", true);
     {

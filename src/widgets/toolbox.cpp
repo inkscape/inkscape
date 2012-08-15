@@ -599,7 +599,7 @@ Glib::RefPtr<VerbAction> VerbAction::create(Inkscape::Verb* verb, Inkscape::Verb
 }
 
 VerbAction::VerbAction(Inkscape::Verb* verb, Inkscape::Verb* verb2, Inkscape::UI::View::View *view) :
-    Gtk::Action(Glib::ustring(verb->get_id()), Gtk::StockID(verb->get_image()), Glib::ustring(_(verb->get_name())), Glib::ustring(_(verb->get_tip()))),
+    Gtk::Action(Glib::ustring(verb->get_id()), Gtk::StockID(verb->get_image()), Glib::ustring(g_dpgettext2(NULL, "ContextVerb", verb->get_name())), Glib::ustring(_(verb->get_tip()))),
     verb(verb),
     verb2(verb2),
     view(view),
