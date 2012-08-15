@@ -360,6 +360,21 @@ static void sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *con
     guchar *const str_value_unsigned = cr_term_to_string(decl->value);
     gchar *const str_value = reinterpret_cast<gchar *>(str_value_unsigned);
     gchar *value_unquoted = attribute_unquote (str_value); // libcroco returns strings quoted in ""
+    gchar *units = NULL;
+
+    /*
+    * Problem with parsing of units em and ex, like font-size "1.2em" and "3.4ex"
+    * stringstream thinks they are in scientific "e" notation and fails
+    * Must be a better way using std::fixed, precision etc
+    *
+    * HACK for now is to strip off em and ex units and add them back at the end
+    */
+    int l = strlen(value_unquoted);
+    if (!strncmp(&value_unquoted[l-2], "em", 2) ||
+            !strncmp(&value_unquoted[l-2], "ex", 2)) {
+        units = g_strndup(&value_unquoted[l-2], 2);
+        value_unquoted = g_strndup(value_unquoted, l-2);
+    }
 
     // libcroco uses %.17f for formatting... leading to trailing zeros or small rounding errors.
     // CSSOStringStream is used here to write valid CSS (as in sp_style_write_string). This has
@@ -379,6 +394,11 @@ static void sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *con
     Inkscape::CSSOStringStream os;
     if( number_valid ) os << number;
     os << characters;
+    if (units) {
+        os << units;
+        //g_message("sp_repr_css_merge_from_decl looks like em or ex units %s --> %s", str_value, os.str().c_str());
+        g_free(units);
+    }
     ((Node *) css)->setAttribute(decl->property->stryng->str, os.str().c_str(), false);
     g_free(value_unquoted);
     g_free(str_value);
