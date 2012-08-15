@@ -143,7 +143,7 @@ LayerManager::~LayerManager()
     _layer_connection.disconnect();
     _document_connection.disconnect();
     _resource_connection.disconnect();
-    _document = 0;
+    _document = NULL;
 }
 
 void LayerManager::setCurrentLayer( SPObject* obj )
@@ -172,7 +172,7 @@ void LayerManager::renameLayer( SPObject* obj, gchar const *label, bool uniquify
         if ( pos != Glib::ustring::npos ) {
             gchar* numpart = g_strdup(base.substr(pos+1).c_str());
             if ( numpart ) {
-                gchar* endPtr = 0;
+                gchar* endPtr = NULL;
                 guint64 val = g_ascii_strtoull( numpart, &endPtr, 10);
                 if ( ((val > 0) || (endPtr != numpart)) && (val < 65536) ) {
                     base.erase( pos );
@@ -310,7 +310,7 @@ void LayerManager::_rebuild() {
             while ( higher && (higher->parent != root) ) {
                 higher = higher->parent;
             }
-            Node const* node = higher ? higher->getRepr() : 0;
+            Node const* node = higher ? higher->getRepr() : NULL;
             if ( node && node->parent() ) {
 //                 Debug::EventTracker<DebugAddLayer> tracker(*layer);
 
