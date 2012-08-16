@@ -32,6 +32,7 @@
 #include "desktop.h"
 #include "widgets/font-selector.h"
 #include "preferences.h"
+#include "unit-constants.h"
 
 /* SPFontSelector */
 
@@ -84,15 +85,7 @@ static void sp_font_selector_size_changed       (GtkComboBox            *combobo
                                                  SPFontSelector         *fsel);
 
 static void sp_font_selector_emit_set           (SPFontSelector         *fsel);
-
-namespace {
-    const char *sizes[] = {
-        "4", "6", "8", "9", "10", "11", "12", "13", "14",
-        "16", "18", "20", "22", "24", "28",
-        "32", "36", "40", "48", "56", "64", "72", "144",
-        NULL
-    };
-}
+static void sp_font_selector_set_sizes( SPFontSelector *fsel );
 
 static GtkHBoxClass *fs_parent_class = NULL;
 static guint fs_signals[LAST_SIGNAL] = { 0 };
@@ -135,6 +128,15 @@ static void sp_font_selector_class_init(SPFontSelectorClass *c)
 
     object_class->dispose = sp_font_selector_dispose;
 }
+
+void sp_font_selector_set_size_tooltip(SPFontSelector *fsel)
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
+    Glib::ustring tooltip = Glib::ustring::format("Font size (", sp_style_get_css_unit_string(unit), ")");
+    gtk_widget_set_tooltip_text (fsel->size, _(tooltip.c_str()));
+}
+
 
 static void sp_font_selector_init(SPFontSelector *fsel)
 {
@@ -227,7 +229,7 @@ This conditional and its #else block can be deleted in the future.
         fsel->size = gtk_combo_box_entry_new_text ();
 #endif
 
-        gtk_widget_set_tooltip_text (fsel->size, _("Font size (px)"));
+        sp_font_selector_set_size_tooltip(fsel);
         gtk_widget_set_size_request(fsel->size, 90, -1);
         g_signal_connect (G_OBJECT(fsel->size), "changed", G_CALLBACK (sp_font_selector_size_changed), fsel);
         gtk_box_pack_end (GTK_BOX(hb), fsel->size, FALSE, FALSE, 0);
@@ -236,14 +238,7 @@ This conditional and its #else block can be deleted in the future.
         gtk_widget_show_all (l);
         gtk_box_pack_end(GTK_BOX (hb), l, TRUE, TRUE, 0);
 
-        for (unsigned int n = 0; sizes[n]; ++n)
-        {
-#if GTK_CHECK_VERSION(2, 24,0)
-            gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT(fsel->size), sizes[n]);
-#else
-            gtk_combo_box_append_text (GTK_COMBO_BOX(fsel->size), sizes[n]);
-#endif
-        }
+        sp_font_selector_set_sizes(fsel);
 
         gtk_widget_show_all (fsel->size);
 
@@ -325,6 +320,39 @@ static void sp_font_selector_style_select_row (GtkTreeSelection *selection,
     {
         sp_font_selector_emit_set (fsel);
     }
+}
+
+
+/*
+ * Set the default list of font sizes, scaled to the users preferred unit
+ */
+static void sp_font_selector_set_sizes( SPFontSelector *fsel )
+{
+    GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model (GTK_COMBO_BOX(fsel->size)));
+    gtk_list_store_clear(store);
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
+
+    int sizes[] = {
+        4, 6, 8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 28,
+        32, 36, 40, 48, 56, 64, 72, 144
+    };
+
+    // Array must be same length as SPCSSUnit in style.h
+    float ratios[] = {1, 1, 1, 10, 4, 40, 100, 16, 8, 0.16};
+
+    for (unsigned int n = 0; n < G_N_ELEMENTS(sizes); ++n)
+    {
+        double size = sizes[n] / ratios[unit];
+
+#if GTK_CHECK_VERSION(2, 24,0)
+        gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT(fsel->size), Glib::ustring::format(size).c_str());
+#else
+        gtk_combo_box_append_text (GTK_COMBO_BOX(fsel->size), size);
+#endif
+    }
+
 }
 
 static void sp_font_selector_size_changed( GtkComboBox */*cbox*/, SPFontSelector *fsel )
@@ -502,7 +530,6 @@ void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, doubl
     if (font)
     {  
         Gtk::TreePath path;
-        font_instance *tempFont = NULL;
         
         Glib::ustring family = font_factory::Default()->GetUIFamilyString(font->descr);
 
@@ -536,6 +563,8 @@ void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, doubl
             g_snprintf (s, 8, "%.5g", size); // UI, so printf is ok
             gtk_entry_set_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(fsel->size))), s);
             fsel->fontsize = size;
+            sp_font_selector_set_size_tooltip(fsel);
+            sp_font_selector_set_sizes(fsel);
         }
     }
     
@@ -550,6 +579,9 @@ font_instance* sp_font_selector_get_font(SPFontSelector *fsel)
     return fsel->font;
 }
 
+/*
+ * Return the font size in pixels
+ */
 double sp_font_selector_get_size(SPFontSelector *fsel)
 {
     return fsel->fontsize;

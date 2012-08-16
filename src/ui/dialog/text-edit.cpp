@@ -316,7 +316,10 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
         font_instance *font = font_factory::Default()->FaceFromStyle(query);
 
         if (font) {
-            sp_font_selector_set_font (fsel, font, query->font_size.computed);
+
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
+            sp_font_selector_set_font (fsel, font, sp_style_get_css_font_size_units(query->font_size.computed, unit) );
             setPreviewText(font, phrase);
             font->Unref();
             font=NULL;
@@ -362,13 +365,16 @@ void TextEdit::setPreviewText (font_instance *font, Glib::ustring phrase)
     }
 
     char *desc = pango_font_description_to_string(font->descr);
-    double size = sp_font_selector_get_size(fsel);
+    double unit_size = sp_font_selector_get_size(fsel);
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
+    double px_size = unit_size * (unit_size / sp_style_get_css_font_size_units(unit_size, unit));
 
     gchar *const phrase_escaped = g_markup_escape_text(phrase.c_str(), -1);
 
     gchar *markup = g_strdup_printf("<span font=\"%s\" size=\"%d\">%s</span>",
-        desc, (int) (size * PANGO_SCALE), phrase_escaped);
-
+        desc, (int) (px_size * PANGO_SCALE),  phrase_escaped);
 
     preview_label.set_markup(markup);
 
@@ -461,7 +467,9 @@ SPCSSAttr *TextEdit::getTextStyle ()
             sp_repr_css_set_property (css, "font-variant", c);
 
             Inkscape::CSSOStringStream os;
-            os << sp_font_selector_get_size (fsel) << "px"; // must specify px, see inkscape bug 1221626 and 1610103
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
+            os << sp_font_selector_get_size (fsel) << sp_style_get_css_unit_string(unit);
             sp_repr_css_set_property (css, "font-size", os.str().c_str());
 
             font->Unref();

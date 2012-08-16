@@ -573,6 +573,17 @@ void ink_comboboxentry_action_popup_disable( Ink_ComboBoxEntry_Action* action ) 
     action->entry_completion = 0;
   }
 }
+void     ink_comboboxentry_action_set_tooltip( Ink_ComboBoxEntry_Action* action, const gchar* tooltip ) {
+
+  // Widget may not have been created....
+  if( action->entry ) {
+      gtk_widget_set_tooltip_text ( GTK_WIDGET(action->entry), tooltip);
+  }
+  if( action->combobox ) {
+      gtk_widget_set_tooltip_text ( GTK_WIDGET(action->combobox), tooltip);
+  }
+
+}
 
 void     ink_comboboxentry_action_set_warning( Ink_ComboBoxEntry_Action* action, const gchar* warning ) {
 

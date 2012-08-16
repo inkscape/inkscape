@@ -313,6 +313,7 @@ void InkscapePreferences::initPageTools()
     //Selector
     this->AddPage(_page_selector, _("Selector"), iter_tools, PREFS_PAGE_TOOLS_SELECTOR);
 
+
     AddSelcueCheckbox(_page_selector, "/tools/select", false);
     _page_selector.add_group_header( _("When transforming, show"));
     _t_sel_trans_obj.init ( _("Objects"), "/tools/select/show", "content", true, 0);
@@ -441,6 +442,12 @@ void InkscapePreferences::initPageTools()
         _page_text.add_line( false, "", _font_dialog, "", _("Show font substitution warning dialog when requested fonts are not available on the system"));
     }
 
+    Glib::ustring sizeLabels[] = {_("Pixel"), _("Point"), _("Pica"), _("Millimeter"), _("Centimeter"), _("Inch"), _("Em square")/*, _("Ex square"), _("Percent")*/};
+    int sizeValues[] = {SP_CSS_UNIT_PX, SP_CSS_UNIT_PT, SP_CSS_UNIT_PC, SP_CSS_UNIT_MM, SP_CSS_UNIT_CM, SP_CSS_UNIT_IN, SP_CSS_UNIT_EM/*, SP_CSS_UNIT_EX, SP_CSS_UNIT_PERCENT*/};
+
+    _font_unit_type.init( "/options/font/unitType", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), SP_CSS_UNIT_PT );
+    _page_text.add_line( false, _("Text size unit type:"), _font_unit_type, "",
+                       _("Set the type of unit used in the text toolbar and text dialogs"), false);
 
     this->AddNewObjectsStyle(_page_text, "/tools/text");
 

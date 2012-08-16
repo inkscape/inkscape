@@ -89,6 +89,7 @@ void     ink_comboboxentry_action_popup_enable(  Ink_ComboBoxEntry_Action* actio
 void     ink_comboboxentry_action_popup_disable( Ink_ComboBoxEntry_Action* action );
 
 void     ink_comboboxentry_action_set_warning( Ink_ComboBoxEntry_Action* action, const gchar* warning );
+void     ink_comboboxentry_action_set_tooltip( Ink_ComboBoxEntry_Action* action, const gchar* tooltip );
 
 void     ink_comboboxentry_action_set_altx_name( Ink_ComboBoxEntry_Action* action, const gchar* altx_name );
 

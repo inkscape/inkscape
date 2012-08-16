@@ -120,7 +120,7 @@ struct SPIString {
     gchar *value;
 };
 
-enum {
+enum SPCSSUnit {
     SP_CSS_UNIT_NONE,
     SP_CSS_UNIT_PX,
     SP_CSS_UNIT_PT,
@@ -440,6 +440,9 @@ gchar *sp_style_write_string(SPStyle const *style, guint flags = SP_STYLE_FLAG_I
 gchar *sp_style_write_difference(SPStyle const *from, SPStyle const *to);
 
 void sp_style_set_to_uri_string (SPStyle *style, bool isfill, const gchar *uri);
+
+gchar const *sp_style_get_css_unit_string(int unit);
+double sp_style_get_css_font_size_units(double size, int unit);
 
 /* SPTextStyle */
 

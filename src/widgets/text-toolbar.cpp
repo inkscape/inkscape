@@ -445,9 +445,10 @@ static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObje
         size = max_size;
 
     // Set css font size.
+    int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream osfs;
-    osfs << size << "px"; // For now always use px
+    osfs << size << sp_style_get_css_unit_string(unit);
     sp_repr_css_set_property (css, "font-size", osfs.str().c_str());
 
     // Apply font size to selected objects.
@@ -900,7 +901,6 @@ static void sp_text_letterspacing_value_changed( GtkAdjustment *adj, GObject *tb
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     sp_desktop_set_style (desktop, css, true, false);
 
-
     // If no selected objects, set default.
     SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
     int result_numbers =
@@ -918,7 +918,6 @@ static void sp_text_letterspacing_value_changed( GtkAdjustment *adj, GObject *tb
     }
 
     sp_style_unref(query);
-
 
     sp_repr_css_attr_unref (css);
 
@@ -1080,6 +1079,31 @@ static void sp_text_orientation_mode_changed( EgeSelectOneAction *act, GObject *
 }
 
 /*
+ * Set the default list of font sizes, scaled to the users preferred unit
+ */
+void sp_text_set_sizes(GtkListStore* model_size, int unit)
+{
+    gtk_list_store_clear(model_size);
+
+    // List of font sizes for drop-down menu
+    int sizes[] = {
+        4, 6, 8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 28,
+        32, 36, 40, 48, 56, 64, 72, 144
+    };
+
+    // Array must be same length as SPCSSUnit in style.h
+    float ratios[] = {1, 1, 1, 10, 4, 40, 100, 16, 8, 0.16};
+
+    for( unsigned int i = 0; i < G_N_ELEMENTS(sizes); ++i ) {
+        GtkTreeIter iter;
+        Glib::ustring size = Glib::ustring::format(sizes[i] / (float)ratios[unit]);
+        gtk_list_store_append( model_size, &iter );
+        gtk_list_store_set( model_size, &iter, 0, size.c_str(), -1 );
+    }
+}
+
+
+/*
  * This function sets up the text-tool tool-controls, setting the entry boxes
  * etc. to the values from the current selection or the default if no selection.
  * It is called whenever a text selection is changed, including stepping cursor
@@ -1191,15 +1215,21 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
             ink_comboboxentry_action_set_active_text( fontFamilyAction, fontFamily );
         }
 
-
         // Size (average of text selected)
-        double size = query->font_size.computed;
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
+        double size = sp_style_get_css_font_size_units(query->font_size.computed, unit);
+
         gchar size_text[G_ASCII_DTOSTR_BUF_SIZE];
         g_ascii_dtostr (size_text, sizeof (size_text), size);
 
         Ink_ComboBoxEntry_Action* fontSizeAction =
             INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontSizeAction" ) );
+        sp_text_set_sizes(GTK_LIST_STORE(ink_comboboxentry_action_get_model(fontSizeAction)), unit);
         ink_comboboxentry_action_set_active_text( fontSizeAction, size_text );
+
+        Glib::ustring tooltip = Glib::ustring::format("Font size (", sp_style_get_css_unit_string(unit), ")");
+        ink_comboboxentry_action_set_tooltip ( fontSizeAction, tooltip.c_str());
 
         // Font styles
         font_instance *font = font_factory::Default()->FaceFromStyle(query);
@@ -1451,20 +1481,16 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
     {
         // List of font sizes for drop-down menu
         GtkListStore* model_size = gtk_list_store_new( 1, G_TYPE_STRING );
-        gchar const *const sizes[] = {
-            "4",  "6",  "8",  "9", "10", "11", "12", "13", "14", "16",
-            "18", "20", "22", "24", "28", "32", "36", "40", "48", "56",
-            "64", "72", "144"
-        };
-        for( unsigned int i = 0; i < G_N_ELEMENTS(sizes); ++i ) {
-            GtkTreeIter iter;
-            gtk_list_store_append( model_size, &iter );
-            gtk_list_store_set( model_size, &iter, 0, sizes[i], -1 );
-        }
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
+
+        sp_text_set_sizes(model_size, unit);
+
+        Glib::ustring tooltip = Glib::ustring::format("Font size (", sp_style_get_css_unit_string(unit), ")");
 
         Ink_ComboBoxEntry_Action* act = ink_comboboxentry_action_new( "TextFontSizeAction",
                                                                       _("Font Size"),
-                                                                      _("Font size (px)"),
+                                                                      _(tooltip.c_str()),
                                                                       NULL,
                                                                       GTK_TREE_MODEL(model_size),
                                                                       4 ); // Width in characters

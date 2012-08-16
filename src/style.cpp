@@ -61,6 +61,8 @@ using std::vector;
 
 #define BMAX 8192
 
+#define SP_CSS_FONT_SIZE_DEFAULT 12.0;
+
 class SPStyleEnum;
 
 /*#########################
@@ -2442,6 +2444,55 @@ sp_style_set_to_uri_string (SPStyle *style, bool isfill, const gchar *uri)
     sp_style_set_ipaint_to_uri_string (style, isfill? &style->fill : &style->stroke, uri);
 }
 
+gchar const *
+sp_style_get_css_unit_string(int unit)
+{
+    // specify px by default, see inkscape bug 1221626, mozilla bug 234789
+
+    switch (unit) {
+
+        case SP_CSS_UNIT_NONE: return "px";
+        case SP_CSS_UNIT_PX: return "px";
+        case SP_CSS_UNIT_PT: return "pt";
+        case SP_CSS_UNIT_PC: return "pc";
+        case SP_CSS_UNIT_MM: return "mm";
+        case SP_CSS_UNIT_CM: return "cm";
+        case SP_CSS_UNIT_IN: return "in";
+        case SP_CSS_UNIT_EM: return "em";
+        case SP_CSS_UNIT_EX: return "ex";
+        case SP_CSS_UNIT_PERCENT: return "%";
+        default: return "px";
+    }
+    return "px";
+}
+
+/*
+ * Convert a size in pixels into another CSS unit size
+ */
+double
+sp_style_get_css_font_size_units(double size, int unit)
+{
+    double unit_size = size;
+    switch (unit) {
+
+        case SP_CSS_UNIT_NONE: unit_size = size; break;
+        case SP_CSS_UNIT_PX: unit_size = size; break;
+        case SP_CSS_UNIT_PT: unit_size = size * PT_PER_PX;  break;
+        case SP_CSS_UNIT_PC: unit_size = size * (PT_PER_PX / PT_PER_PC);  break;
+        case SP_CSS_UNIT_MM: unit_size = size * MM_PER_PX;  break;
+        case SP_CSS_UNIT_CM: unit_size = size * CM_PER_PX;  break;
+        case SP_CSS_UNIT_IN: unit_size = size * IN_PER_PX;  break;
+        case SP_CSS_UNIT_EM: unit_size = size / SP_CSS_FONT_SIZE_DEFAULT; break;
+        case SP_CSS_UNIT_EX: unit_size = size * 2.0 / SP_CSS_FONT_SIZE_DEFAULT ; break;
+        case SP_CSS_UNIT_PERCENT: unit_size = size * 100.0 / SP_CSS_FONT_SIZE_DEFAULT; break;
+
+        default:
+            g_warning("sp_style_get_css_font_size_units conversion to %d not implemented.", unit);
+            break;
+    }
+
+    return unit_size;
+}
 /**
  *
  */
@@ -3300,6 +3351,7 @@ sp_style_read_ilength(SPILength *val, gchar const *str)
              * X server or whatever).  E.g. don't fill in computed here, do
              * it at the same time as percentage units are done.
              */
+            val->value = value;
             if (!*e) {
                 /* Userspace */
                 val->unit = SP_CSS_UNIT_NONE;
@@ -3327,11 +3379,11 @@ sp_style_read_ilength(SPILength *val, gchar const *str)
             } else if (!strcmp(e, "em")) {
                 /* EM square */
                 val->unit = SP_CSS_UNIT_EM;
-                val->value = value;
+                val->computed = value * SP_CSS_FONT_SIZE_DEFAULT;
             } else if (!strcmp(e, "ex")) {
                 /* ex square */
                 val->unit = SP_CSS_UNIT_EX;
-                val->value = value;
+                val->computed = value * 0.5 * SP_CSS_FONT_SIZE_DEFAULT;
             } else if (!strcmp(e, "%")) {
                 /* Percentage */
                 val->unit = SP_CSS_UNIT_PERCENT;
@@ -4166,7 +4218,9 @@ sp_style_write_ifontsize(gchar *p, gint const len, gchar const *key,
             }
         } else if (val->type == SP_FONT_SIZE_LENGTH) {
             Inkscape::CSSOStringStream os;
-            os << key << ":" << val->computed << "px;";      // must specify px, see inkscape bug 1221626, mozilla bug 234789
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
+            os << key << ":" << sp_style_get_css_font_size_units(val->computed, unit) << sp_style_get_css_unit_string(unit) << ";";
             return g_strlcpy(p, os.str().c_str(), len);
         } else if (val->type == SP_FONT_SIZE_PERCENTAGE) {
             Inkscape::CSSOStringStream os;
@@ -4289,7 +4343,6 @@ void SPIPaint::clear()
         }
     }
 }
-
 
 /**
  * Clear filter object, and disconnect style from paintserver (if present).

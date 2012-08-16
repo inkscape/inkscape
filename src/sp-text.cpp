@@ -38,6 +38,7 @@
 #include "display/drawing-text.h"
 #include "attributes.h"
 #include "document.h"
+#include "preferences.h"
 #include "desktop-handles.h"
 #include "sp-namedview.h"
 #include "style.h"
@@ -48,12 +49,14 @@
 #include "mod360.h"
 #include "sp-title.h"
 #include "sp-desc.h"
+#include "sp-text.h"
 
 #include "sp-textpath.h"
 #include "sp-tref.h"
 #include "sp-tspan.h"
 
 #include "text-editing.h"
+#include "unit-constants.h"
 
 /*#####################################################
 #  SPTEXT
