@@ -70,10 +70,10 @@ override) the bindings in the main default.xml.
   <bind action="FileVacuum" />
 
   <bind key="w" modifiers="Ctrl" action="FileClose" display="true" />
-  <bind key="W" modifiers="Ctrl" action="FileClose" display="true" />
+  <bind key="W" modifiers="Ctrl" action="FileClose" />
 
   <bind key="q" modifiers="Ctrl" action="FileQuit" display="true" />
-  <bind key="Q" modifiers="Ctrl" action="FileQuit" display="true" />
+  <bind key="Q" modifiers="Ctrl" action="FileQuit" />
 
 <!-- Tools -->
 
@@ -288,7 +288,7 @@ override) the bindings in the main default.xml.
   <bind key="Y" modifiers="Ctrl" action="EditRedo" />
 
   <bind key="h" modifiers="Ctrl,Shift" action="DialogUndoHistory" display="true" />
-  <bind key="H" modifiers="Ctrl,Shift" action="DialogUndoHistory" display="true" />
+  <bind key="H" modifiers="Ctrl,Shift" action="DialogUndoHistory" />
 
   <bind key="x" modifiers="Ctrl" action="EditCut" display="true" />
   <bind key="X" modifiers="Ctrl" action="EditCut" />

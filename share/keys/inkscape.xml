@@ -70,10 +70,10 @@ override) the bindings in the main default.xml.
   <bind action="FileVacuum" />
 
   <bind key="w" modifiers="Ctrl" action="FileClose" display="true" />
-  <bind key="W" modifiers="Ctrl" action="FileClose" display="true" />
+  <bind key="W" modifiers="Ctrl" action="FileClose" />
 
   <bind key="q" modifiers="Ctrl" action="FileQuit" display="true" />
-  <bind key="Q" modifiers="Ctrl" action="FileQuit" display="true" />
+  <bind key="Q" modifiers="Ctrl" action="FileQuit" />
 
 <!-- Tools -->
 
@@ -118,6 +118,9 @@ override) the bindings in the main default.xml.
   <bind key="E" action="ToolArc" />
 
   <bind action="ArcPrefs" />
+
+  <bind key="m" action="ToolMeasure" />
+  <bind key="M" action="ToolMeasure" display="true" />
 
   <bind key="F9" modifiers="Shift" action="ToolStar" />
   <bind key="asterisk" modifiers="Shift" action="ToolStar" /> 	 
@@ -233,7 +236,7 @@ override) the bindings in the main default.xml.
   <bind key="KP_9" action="ZoomNext" />
   <bind key="grave" action="ZoomPrev" display="true" /> <!-- ` -->
   <bind key="KP_8" action="ZoomPrev" />
-
+  
 <!-- View -->
 
   <bind key="F11" action="FullScreen" display="true" /> 
@@ -285,7 +288,7 @@ override) the bindings in the main default.xml.
   <bind key="Y" modifiers="Ctrl" action="EditRedo" />
 
   <bind key="h" modifiers="Ctrl,Shift" action="DialogUndoHistory" display="true" />
-  <bind key="H" modifiers="Ctrl,Shift" action="DialogUndoHistory" display="true" />
+  <bind key="H" modifiers="Ctrl,Shift" action="DialogUndoHistory" />
 
   <bind key="x" modifiers="Ctrl" action="EditCut" display="true" />
   <bind key="X" modifiers="Ctrl" action="EditCut" />
@@ -332,6 +335,9 @@ override) the bindings in the main default.xml.
 
   <bind key="a" modifiers="Ctrl,Alt" action="EditSelectAllInAllLayers" display="true" />
   <bind key="A" modifiers="Ctrl,Alt" action="EditSelectAllInAllLayers" />
+
+  <bind key="a" modifiers="Shift,Alt" action="EditSelectSameObjectType" display="true" />
+  <bind key="A" modifiers="Shift,Alt" action="EditSelectSameObjectType" />
 
   <bind key="exclam" action="EditInvert" display="true" />
   <bind key="exclam" modifiers="Shift" action="EditInvert" />
@@ -593,5 +599,14 @@ override) the bindings in the main default.xml.
   <!-- You can also assign keys to individual effects. The action should be set to he
   effect id from the .inx file, for example "org.ekips.filter.addnodes" for the Add
   Nodes effect. -->
+
+ <bind key="g" modifiers="Ctrl,Alt" action="org.inkscape.typography.newglyphlayer" display="true"/>
+ <bind key="G" modifiers="Ctrl,Alt" action="org.inkscape.typography.newglyphlayer"/>
+
+ <bind key="h" modifiers="Ctrl,Alt" action="org.inkscape.typography.previousglyphlayer" display="true"/>
+ <bind key="H" modifiers="Ctrl,Alt" action="org.inkscape.typography.previousglyphlayer"/>
+
+ <bind key="j" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer" display="true"/>
+ <bind key="J" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer"/>
 
 </keys>

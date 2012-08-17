@@ -165,7 +165,7 @@ ToolPaintBucket: Fill bounded areas -->
     
   <!--  Paste in Front, Ctrl+F -->
 
-  <bind key="f" modifiers="Ctrl" action="EditPaste" display="true"/>
+  <bind key="f" modifiers="Ctrl" action="EditPaste"/>
   <bind key="F" modifiers="Ctrl" action="EditPaste"/>
 
   <!-- Paste in Back, Ctrl+B -->
@@ -357,9 +357,9 @@ Type
 -->
 
   <bind key="t" modifiers="Ctrl" action="DialogText" display="true"/>
-  <bind key="T" modifiers="Ctrl" action="DialogText" display="true"/>
-  <bind key="t" modifiers="Alt,Ctrl" action="DialogText" display="true"/>
-  <bind key="T" modifiers="Alt,Ctrl" action="DialogText" display="true"/>
+  <bind key="T" modifiers="Ctrl" action="DialogText" />
+  <bind key="t" modifiers="Alt,Ctrl" action="DialogText" />
+  <bind key="T" modifiers="Alt,Ctrl" action="DialogText" />
 
 <!--- Help -->
 <!-- Illustrator Help, F1 -->
