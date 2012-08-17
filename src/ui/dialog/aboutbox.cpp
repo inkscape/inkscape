@@ -243,6 +243,7 @@ void AboutBox::initStrings() {
 "Arpad Biro\n"
 "Nicholas Bishop\n"
 "Joshua L. Blocher\n"
+"Hanno Böck\n"
 "Henrik Bohre\n"
 "Boldewyn\n"
 "Daniel Borgmann\n"
