@@ -48,7 +48,9 @@ public:
 
     enum AlignTarget { LAST=0, FIRST, BIGGEST, SMALLEST, PAGE, DRAWING, SELECTION };
 
-    AlignTarget getAlignTarget() const;
+
+
+    static AlignTarget getAlignTarget();
 
 #if WITH_GTKMM_3_0
     Gtk::Grid &align_table(){return _alignTable;}
@@ -64,7 +66,7 @@ public:
     Gtk::Table &nodes_table(){return _nodesTable;}
 #endif
 
-    std::list<SPItem *>::iterator find_master(std::list <SPItem *> &list, bool horizontal);
+    static std::list<SPItem *>::iterator find_master(std::list <SPItem *> &list, bool horizontal);
     void setMode(bool nodeEdit);
 
     Geom::OptRect randomize_bbox;
@@ -137,6 +139,82 @@ struct BBoxSort
     BBoxSort(const BBoxSort &rhs);
 };
 bool operator< (const BBoxSort &a, const BBoxSort &b);
+
+
+class Action {
+public :
+
+    Action(const Glib::ustring &id,
+           const Glib::ustring &tiptext,
+           guint row, guint column,
+    #if WITH_GTKMM_3_0
+       Gtk::Grid &parent,
+    #else
+       Gtk::Table &parent,
+    #endif
+           AlignAndDistribute &dialog);
+
+    virtual ~Action(){}
+
+    AlignAndDistribute &_dialog;
+
+private :
+    virtual void on_button_click(){}
+
+    Glib::ustring _id;
+
+#if WITH_GTKMM_3_0
+    Gtk::Grid &_parent;
+#else
+    Gtk::Table &_parent;
+#endif
+};
+
+
+class ActionAlign : public Action {
+public :
+    struct Coeffs {
+       double mx0, mx1, my0, my1;
+       double sx0, sx1, sy0, sy1;
+       int verb_id;
+    };
+    ActionAlign(const Glib::ustring &id,
+                const Glib::ustring &tiptext,
+                guint row, guint column,
+                AlignAndDistribute &dialog,
+                guint coeffIndex):
+        Action(id, tiptext, row, column,
+               dialog.align_table(), dialog),
+        _index(coeffIndex),
+        _dialog(dialog)
+    {}
+
+    /*
+     * Static function called to align from a keyboard shortcut
+     */
+    static void do_verb_action(SPDesktop *desktop, int verb);
+
+private :
+
+
+    virtual void on_button_click() {
+        //Retreive selected objects
+        SPDesktop *desktop = _dialog.getDesktop();
+        if (!desktop) return;
+
+        ActionAlign::do_action(desktop, _index);
+    }
+
+    static void do_action(SPDesktop *desktop, int index);
+    static int verb_to_coeff(int verb);
+
+    guint _index;
+    AlignAndDistribute &_dialog;
+
+    static const Coeffs _allCoeffs[11];
+
+};
+
 
 } // namespace Dialog
 } // namespace UI

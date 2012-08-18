@@ -66,6 +66,7 @@
 #include "sp-namedview.h"
 #include "text-chemistry.h"
 #include "tools-switch.h"
+#include "ui/dialog/align-and-distribute.h"
 #include "ui/dialog/clonetiler.h"
 #include "ui/dialog/dialog-manager.h"
 #include "ui/dialog/document-properties.h"
@@ -85,6 +86,7 @@
 #include <gtk/gtk.h>
 
 using Inkscape::DocumentUndo;
+using Inkscape::UI::Dialog::ActionAlign;
 
 //#ifdef WITH_INKBOARD
 //#include "jabber_whiteboard/session-manager.h"
@@ -1634,6 +1636,19 @@ void ContextVerb::perform(SPAction *action, void *data)
             prefs->setInt("/dialogs/preferences/page", PREFS_PAGE_TOOLS_LPETOOL);
             dt->_dlg_mgr->showDialog("InkscapePreferences");
             break;
+        case SP_VERB_ALIGN_HORIZONTAL_RIGHT_TO_ANCHOR:
+        case SP_VERB_ALIGN_HORIZONTAL_LEFT:
+        case SP_VERB_ALIGN_HORIZONTAL_CENTER:
+        case SP_VERB_ALIGN_HORIZONTAL_RIGHT:
+        case SP_VERB_ALIGN_HORIZONTAL_LEFT_TO_ANCHOR:
+        case SP_VERB_ALIGN_VERTICAL_BOTTOM_TO_ANCHOR:
+        case SP_VERB_ALIGN_VERTICAL_TOP:
+        case SP_VERB_ALIGN_VERTICAL_CENTER:
+        case SP_VERB_ALIGN_VERTICAL_BOTTOM:
+        case SP_VERB_ALIGN_VERTICAL_TOP_TO_ANCHOR:
+        case SP_VERB_ALIGN_VERTICAL_HORIZONTAL_CENTER:
+            ActionAlign::do_verb_action(dt, verb);
+            break;
 
         default:
             break;
@@ -2599,7 +2614,6 @@ Verb *Verb::_base_verbs[] = {
                     N_("Open Preferences for the Eraser tool"), NULL),
     new ContextVerb(SP_VERB_CONTEXT_LPETOOL_PREFS, "LPEToolPrefs", N_("LPE Tool Preferences"),
                     N_("Open Preferences for the LPETool tool"), NULL),
-
     // Zoom/View
     new ZoomVerb(SP_VERB_ZOOM_IN, "ZoomIn", N_("Zoom In"), N_("Zoom in"), INKSCAPE_ICON("zoom-in")),
     new ZoomVerb(SP_VERB_ZOOM_OUT, "ZoomOut", N_("Zoom Out"), N_("Zoom out"), INKSCAPE_ICON("zoom-out")),
@@ -2781,6 +2795,32 @@ Verb *Verb::_base_verbs[] = {
                  N_("Link an ICC color profile"), NULL),
     new EditVerb(SP_VERB_EDIT_REMOVE_COLOR_PROFILE, "RemoveColorProfile", N_("Remove Color Profile"),
                  N_("Remove a linked ICC color profile"), NULL),
+
+     // Align
+     new ContextVerb(SP_VERB_ALIGN_HORIZONTAL_RIGHT_TO_ANCHOR, "AlignHorizontalRightToAnchor", N_("Align right edges of objects to the left edge of the anchor"),
+             N_("Align right edges of objects to the left edge of the anchor"), INKSCAPE_ICON("align-horizontal-right-to-anchor")),
+     new ContextVerb(SP_VERB_ALIGN_HORIZONTAL_LEFT, "AlignHorizontalLeft", N_("Align left edges"),
+             N_("Align left edges"), INKSCAPE_ICON("align-horizontal-left")),
+     new ContextVerb(SP_VERB_ALIGN_HORIZONTAL_CENTER, "AlignHorizontalCenter", N_("Center on vertical axis"),
+             N_("Center on vertical axis"), INKSCAPE_ICON("align-horizontal-center")),
+     new ContextVerb(SP_VERB_ALIGN_HORIZONTAL_RIGHT, "AlignHorizontalRight", N_("Align right sides"),
+             N_("Align right sides"), INKSCAPE_ICON("align-horizontal-right")),
+     new ContextVerb(SP_VERB_ALIGN_HORIZONTAL_LEFT_TO_ANCHOR, "AlignHorizontalLeftToAnchor", N_("Align left edges of objects to the right edge of the anchor"),
+             N_("Align left edges of objects to the right edge of the anchor"), INKSCAPE_ICON("align-horizontal-left-to-anchor")),
+     new ContextVerb(SP_VERB_ALIGN_VERTICAL_BOTTOM_TO_ANCHOR, "AlignVerticalBottomToAnchor", N_("Align bottom edges of objects to the top edge of the anchor"),
+             N_("Align bottom edges of objects to the top edge of the anchor"), INKSCAPE_ICON("align-vertical-bottom-to-anchor")),
+     new ContextVerb(SP_VERB_ALIGN_VERTICAL_TOP, "AlignVerticalTop", N_("Align top edges"),
+             N_("Align top edges"), INKSCAPE_ICON("align-vertical-top")),
+     new ContextVerb(SP_VERB_ALIGN_VERTICAL_CENTER, "AlignVerticalCenter", N_("Center on horizontal axis"),
+             N_("Center on horizontal axis"), INKSCAPE_ICON("align-vertical-center")),
+     new ContextVerb(SP_VERB_ALIGN_VERTICAL_BOTTOM, "AlignVerticalBottom", N_("Align bottom edges"),
+             N_("Align bottom edges"), INKSCAPE_ICON("align-vertical-bottom")),
+     new ContextVerb(SP_VERB_ALIGN_VERTICAL_TOP_TO_ANCHOR, "AlignVerticalTopToAnchor", N_("Align top edges of objects to the bottom edge of the anchor"),
+             N_("Align top edges of objects to the bottom edge of the anchor"), INKSCAPE_ICON("align-vertical-top-to-anchor")),
+     new ContextVerb(SP_VERB_ALIGN_VERTICAL_HORIZONTAL_CENTER, "AlignVerticalHorizontalCenter", N_("Center on horizontal and vertical axis"),
+             N_("Center on horizontal and vertical axis"), INKSCAPE_ICON("align-vertical-center")),
+
+
     // Footer
     new Verb(SP_VERB_LAST, " '\"invalid id", NULL, NULL, NULL)
 };
