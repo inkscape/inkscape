@@ -94,7 +94,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
             if (!ir)
                 ir = new ImageResolution(uri);
             if (ir->ok())
-                xscale = 90.0 / ir->x();
+                xscale = 900.0 / floor(10.*ir->x() + .5);  // round-off to 0.1 dpi
             else
                 xscale = 90.0 / defaultxdpi;
         }
@@ -110,7 +110,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
             if (!ir)
                 ir = new ImageResolution(uri);
             if (ir->ok())
-                yscale = 90.0 / ir->y();
+                yscale = 900.0 / floor(10.*ir->y() + .5);  // round-off to 0.1 dpi
             else
                 yscale = 90.0 / defaultxdpi;
         }
