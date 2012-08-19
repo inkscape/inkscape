@@ -119,6 +119,11 @@ protected:
     Gtk::HBox _anchorBox;
     Gtk::HBox _selgrpBox;
     Gtk::VBox _alignBox;
+    Gtk::HBox _alignTableBox;
+    Gtk::HBox _distributeTableBox;
+    Gtk::HBox _rearrangeTableBox;
+    Gtk::HBox _removeOverlapTableBox;
+    Gtk::HBox _nodesTableBox;
     Gtk::Label _anchorLabel;
     Gtk::Label _selgrpLabel;
     Gtk::CheckButton _selgrp;

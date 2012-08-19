@@ -1060,24 +1060,31 @@ AlignAndDistribute::AlignAndDistribute()
     _combo.set_active(prefs->getInt("/dialogs/align/align-to", 6));
     _combo.signal_changed().connect(sigc::mem_fun(*this, &AlignAndDistribute::on_ref_change));
 
-    _anchorBox.pack_start(_anchorLabel);
-    _anchorBox.pack_start(_combo);
+    _anchorBox.pack_end(_combo, false, false);
+    _anchorBox.pack_end(_anchorLabel, false, false);
 
     _selgrpLabel.set_mnemonic_widget(_selgrp);
-    _selgrpBox.pack_start(_selgrpLabel);
-    _selgrpBox.pack_start(_selgrp);
+    _selgrpBox.pack_end(_selgrp, false, false);
+    _selgrpBox.pack_end(_selgrpLabel, false, false);
     _selgrp.set_active(prefs->getBool("/dialogs/align/sel-as-groups"));
     _selgrp.signal_toggled().connect(sigc::mem_fun(*this, &AlignAndDistribute::on_selgrp_toggled));
 
+    // Right align the buttons
+    _alignTableBox.pack_end(_alignTable, false, false);
+    _distributeTableBox.pack_end(_distributeTable, false, false);
+    _rearrangeTableBox.pack_end(_rearrangeTable, false, false);
+    _removeOverlapTableBox.pack_end(_removeOverlapTable, false, false);
+    _nodesTableBox.pack_end(_nodesTable, false, false);
+
     _alignBox.pack_start(_anchorBox);
     _alignBox.pack_start(_selgrpBox);
-    _alignBox.pack_start(_alignTable);
+    _alignBox.pack_start(_alignTableBox);
 
     _alignFrame.add(_alignBox);
-    _distributeFrame.add(_distributeTable);
-    _rearrangeFrame.add(_rearrangeTable);
-    _removeOverlapFrame.add(_removeOverlapTable);
-    _nodesFrame.add(_nodesTable);
+    _distributeFrame.add(_distributeTableBox);
+    _rearrangeFrame.add(_rearrangeTableBox);
+    _removeOverlapFrame.add(_removeOverlapTableBox);
+    _nodesFrame.add(_nodesTableBox);
 
     Gtk::Box *contents = _getContents();
     contents->set_spacing(4);
