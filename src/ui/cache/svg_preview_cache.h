@@ -40,6 +40,7 @@ class SvgPreview {
     GdkPixbuf*    get_preview_from_cache(const Glib::ustring& key);
     void          set_preview_in_cache(const Glib::ustring& key, GdkPixbuf* px);
     GdkPixbuf*    get_preview(const gchar* uri, const gchar* id, Inkscape::DrawingItem *root, double scale_factor, unsigned int psize);
+    void          remove_preview_from_cache(const Glib::ustring& key);
 };
 
 }; // namespace Cache

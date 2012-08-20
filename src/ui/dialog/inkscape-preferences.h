@@ -281,6 +281,10 @@ protected:
     UI::Widget::PrefCheckButton _sel_layer_deselects;
     UI::Widget::PrefCheckButton _sel_cycle;
 
+    UI::Widget::PrefCheckButton _markers_color_stock;
+    UI::Widget::PrefCheckButton _markers_color_custom;
+    UI::Widget::PrefCheckButton _markers_color_update;
+
     UI::Widget::PrefSpinButton  _importexport_export_res;
     UI::Widget::PrefSpinButton  _importexport_import_res;
     UI::Widget::PrefSlider      _snap_delay;

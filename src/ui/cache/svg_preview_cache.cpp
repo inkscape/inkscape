@@ -121,6 +121,14 @@ GdkPixbuf* SvgPreview::get_preview(const gchar* uri, const gchar* id, Inkscape::
     return px;
 }
 
+void SvgPreview::remove_preview_from_cache(const Glib::ustring& key) {
+    std::map<Glib::ustring, GdkPixbuf *>::iterator found = _pixmap_cache.find(key);
+    if ( found != _pixmap_cache.end() ) {
+        _pixmap_cache.erase(key);
+    }
+}
+
+
 }
 }
 }

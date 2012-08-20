@@ -1073,6 +1073,18 @@ void InkscapePreferences::initPageBehavior()
     _page_behavior.add_line( false, _("Simplification threshold:"), _misc_simpl, "",
                            _("How strong is the Node tool's Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
 
+    _markers_color_stock.init ( _("Color stock markers the same color as object"), "/options/markers/colorStockMarkers", true);
+    _markers_color_custom.init ( _("Color custom markers the same color as object"), "/options/markers/colorCustomMarkers", false);
+    _markers_color_update.init ( _("Update marker color when object color changes"), "/options/markers/colorUpdateMarkers", true);
+
+    _page_behavior.add_group_header( _("Markers"));
+    _page_behavior.add_line( true, "", _markers_color_stock, "",
+                           _("Stroke color same as object, fill color either object fill color or marker fill color"));
+    _page_behavior.add_line( true, "", _markers_color_custom, "",
+                           _("Stroke color same as object, fill color either object fill color or marker fill color"));
+    _page_behavior.add_line( true, "", _markers_color_update, "",
+                           _("Update marker color when object color changes"));
+
     // Selecting options
     _sel_all.init ( _("Select in all layers"), "/options/kbselection/inlayer", PREFS_SELECTION_ALL, false, 0);
     _sel_current.init ( _("Select only within current layer"), "/options/kbselection/inlayer", PREFS_SELECTION_LAYER, true, &_sel_all);

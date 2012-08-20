@@ -35,6 +35,7 @@
 #include "inkscape.h"
 #include "io/sys.h"
 #include "marker.h"
+#include "preferences.h"
 #include "path-prefix.h"
 #include "selection.h"
 #include "sp-linear-gradient.h"
@@ -81,6 +82,8 @@ Gtk::Widget *sp_stroke_style_line_widget_new(void);
  */
 void sp_stroke_style_widget_set_desktop(Gtk::Widget *widget, SPDesktop *desktop);
 
+SPObject *getMarkerObj(gchar const *n, SPDocument *doc);
+
 namespace Inkscape {
 
 class StrokeStyle : public Gtk::VBox
@@ -92,7 +95,7 @@ public:
 
 private:
 
-    SPObject *getMarkerName(gchar const *n, SPDocument *doc);
+
     void updateLine();
     void updateAllMarkers(GSList const *objects);
     void updateMarkerHist(SPMarkerLoc const which);
@@ -103,6 +106,10 @@ private:
     void setCapButtons(Gtk::ToggleButton *active);
     void scaleLine();
     void setScaledDash(SPCSSAttr *css, int ndash, double *dash, double offset, double scale);
+    void setMarkerColor(SPItem *item, SPObject *marker,  MarkerComboBox *marker_combo);
+    SPObject *forkMarker(SPItem *item, SPObject *marker, MarkerComboBox *marker_combo);
+    const char *getItemColorForMarker(SPItem *item, Inkscape::PaintTarget fill_or_stroke, MarkerComboBox *marker_combo);
+
     Gtk::RadioButton * makeRadioButton(Gtk::RadioButton *tb, char const *icon,
                            Gtk::HBox *hb, gchar const *key, gchar const *data);
     static gboolean setStrokeWidthUnit(SPUnitSelector *,

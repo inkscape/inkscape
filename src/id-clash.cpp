@@ -79,6 +79,9 @@ const char* clipboard_properties[] = {
     "fill",
     "filter",
     "stroke",
+    "marker-end",
+    "marker-mid",
+    "marker-start"
 };
 #define NUM_CLIPBOARD_PROPERTIES (sizeof(clipboard_properties) / sizeof(*clipboard_properties))
 
@@ -111,6 +114,7 @@ find_references(SPObject *elem, refmap_type *refmap)
                     g_free(uri);
                 }
             }
+
         }
         return; // nothing more to do for inkscape:clipboard elements
     }
@@ -150,6 +154,20 @@ find_references(SPObject *elem, refmap_type *refmap)
             const gchar *id = obj->getId();
             IdReference idref = { REF_STYLE, elem, "filter" };
             (*refmap)[id].push_back(idref);
+        }
+    }
+
+    /* check for url(#...) references in markers */
+    const gchar *markers[4] = { "", "marker-start", "marker-mid", "marker-end" };
+    for (unsigned i = SP_MARKER_LOC_START; i < SP_MARKER_LOC_QTY; i++) {
+        const gchar *value = style->marker[i].value;
+        if (value) {
+            gchar *uri = extract_uri(value);
+            if (uri && uri[0] == '#') {
+                IdReference idref = { REF_STYLE, elem, markers[i] };
+                (*refmap)[uri+1].push_back(idref);
+            }
+            g_free(uri);
         }
     }
 
@@ -244,6 +262,7 @@ fix_up_refs(const refmap_type *refmap, const id_changelist_type &id_changes)
                 gchar *style_string = sp_repr_css_write_string(style);
                 it->elem->getRepr()->setAttribute("style", style_string);
                 g_free(style_string);
+
             } else {
                 g_assert(0); // shouldn't happen
             }

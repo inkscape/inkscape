@@ -45,6 +45,8 @@ public:
     const gchar *get_active_marker_uri();
     bool update() { return updating; };
     gchar const *get_id() { return combo_id; };
+    bool isSelectedStock();
+    void update_marker_image(gchar const *mname);
 
 private:
 

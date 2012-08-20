@@ -173,7 +173,7 @@ sp_gradient_load_from_svg(gchar const *name, SPDocument *current_doc)
 // if necessary it will import the object. Copes with name clashes through use of the inkscape:stockid property
 // This should be set to be the same as the id in the libary file.
 
-SPObject *get_stock_item(gchar const *urn)
+SPObject *get_stock_item(gchar const *urn, gboolean stock)
 {
     g_assert(urn != NULL);
     
@@ -202,7 +202,7 @@ SPObject *get_stock_item(gchar const *urn)
             return NULL;
         }
         SPObject *object = NULL;
-        if (!strcmp(base, "marker")) {
+        if (!strcmp(base, "marker") && !stock) {
             for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
             {
                 if (child->getRepr()->attribute("inkscape:stockid") &&
@@ -214,7 +214,7 @@ SPObject *get_stock_item(gchar const *urn)
             }
             
         }
-        else if (!strcmp(base,"pattern"))  {
+        else if (!strcmp(base,"pattern") && !stock)  {
             for ( SPObject *child = defs->firstChild() ; child; child = child->getNext() )
             {
                 if (child->getRepr()->attribute("inkscape:stockid") &&
@@ -226,7 +226,7 @@ SPObject *get_stock_item(gchar const *urn)
             }
             
         }
-        else if (!strcmp(base,"gradient"))  {
+        else if (!strcmp(base,"gradient") && !stock)  {
             for ( SPObject *child = defs->firstChild(); child; child = child->getNext() )
             {
                 if (child->getRepr()->attribute("inkscape:stockid") &&
@@ -255,6 +255,10 @@ SPObject *get_stock_item(gchar const *urn)
         g_free(base);
         g_free(name);
         
+        if (object) {
+            object->getRepr()->setAttribute("inkscape:isstock", "true");
+        }
+
         return object;
     }
     

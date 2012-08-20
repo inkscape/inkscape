@@ -17,6 +17,6 @@
 
 class SPObject;
 
-SPObject *get_stock_item(gchar const *urn);
+SPObject *get_stock_item(gchar const *urn, gboolean stock=FALSE);
 
 #endif // SEEN_INK_STOCK_ITEMS_H
