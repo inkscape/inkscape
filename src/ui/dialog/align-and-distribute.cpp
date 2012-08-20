@@ -244,7 +244,7 @@ void ActionAlign::do_verb_action(SPDesktop *desktop, int verb)
 
 int ActionAlign::verb_to_coeff(int verb) {
 
-    for(uint i = 0; i < G_N_ELEMENTS(_allCoeffs); i++) {
+    for(guint i = 0; i < G_N_ELEMENTS(_allCoeffs); i++) {
         if (_allCoeffs[i].verb_id == verb) {
             return i;
         }
