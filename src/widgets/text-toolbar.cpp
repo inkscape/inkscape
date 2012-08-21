@@ -445,10 +445,14 @@ static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObje
         size = max_size;
 
     // Set css font size.
-    int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream osfs;
-    osfs << size << sp_style_get_css_unit_string(unit);
+    int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
+    if (prefs->getBool("/options/font/textOutputPx", false)) {
+        osfs << sp_style_css_size_units_to_px(size, unit) << sp_style_get_css_unit_string(SP_CSS_UNIT_PX);
+    } else {
+        osfs << size << sp_style_get_css_unit_string(unit);
+    }
     sp_repr_css_set_property (css, "font-size", osfs.str().c_str());
 
     // Apply font size to selected objects.
@@ -1218,7 +1222,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         // Size (average of text selected)
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
-        double size = sp_style_get_css_font_size_units(query->font_size.computed, unit);
+        double size = sp_style_css_size_px_to_units(query->font_size.computed, unit);
 
         gchar size_text[G_ASCII_DTOSTR_BUF_SIZE];
         g_ascii_dtostr (size_text, sizeof (size_text), size);

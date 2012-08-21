@@ -2470,7 +2470,7 @@ sp_style_get_css_unit_string(int unit)
  * Convert a size in pixels into another CSS unit size
  */
 double
-sp_style_get_css_font_size_units(double size, int unit)
+sp_style_css_size_px_to_units(double size, int unit)
 {
     double unit_size = size;
     switch (unit) {
@@ -2492,6 +2492,19 @@ sp_style_get_css_font_size_units(double size, int unit)
     }
 
     return unit_size;
+}
+
+/*
+ * Convert a size in a CSS unit size to pixels
+ */
+double
+sp_style_css_size_units_to_px(double size, int unit)
+{
+    if (unit == SP_CSS_UNIT_PX) {
+        return size;
+    }
+    //g_message("sp_style_css_size_units_to_px %f %d = %f px", size, unit, out);
+    return size * (size / sp_style_css_size_px_to_units(size, unit));;
 }
 /**
  *
@@ -4220,7 +4233,10 @@ sp_style_write_ifontsize(gchar *p, gint const len, gchar const *key,
             Inkscape::CSSOStringStream os;
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
-            os << key << ":" << sp_style_get_css_font_size_units(val->computed, unit) << sp_style_get_css_unit_string(unit) << ";";
+            if (prefs->getBool("/options/font/textOutputPx", false)) {
+                unit = SP_CSS_UNIT_PX;
+            }
+            os << key << ":" << sp_style_css_size_px_to_units(val->computed, unit) << sp_style_get_css_unit_string(unit) << ";";
             return g_strlcpy(p, os.str().c_str(), len);
         } else if (val->type == SP_FONT_SIZE_PERCENTAGE) {
             Inkscape::CSSOStringStream os;

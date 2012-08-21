@@ -55,6 +55,7 @@ extern "C" {
 #include "widgets/icon.h"
 #include "widgets/font-selector.h"
 #include <glibmm/i18n.h>
+#include "unit-constants.h"
 
 
 namespace Inkscape {
@@ -319,7 +320,7 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
 
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
-            sp_font_selector_set_font (fsel, font, sp_style_get_css_font_size_units(query->font_size.computed, unit) );
+            sp_font_selector_set_font (fsel, font, sp_style_css_size_px_to_units(query->font_size.computed, unit) );
             setPreviewText(font, phrase);
             font->Unref();
             font=NULL;
@@ -365,16 +366,15 @@ void TextEdit::setPreviewText (font_instance *font, Glib::ustring phrase)
     }
 
     char *desc = pango_font_description_to_string(font->descr);
-    double unit_size = sp_font_selector_get_size(fsel);
-
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
-    double px_size = unit_size * (unit_size / sp_style_get_css_font_size_units(unit_size, unit));
+    double pt_size = sp_style_css_size_units_to_px(sp_font_selector_get_size(fsel), unit) * PT_PER_PX;
 
     gchar *const phrase_escaped = g_markup_escape_text(phrase.c_str(), -1);
 
+    // Pango font size is in 1024ths of a point
     gchar *markup = g_strdup_printf("<span font=\"%s\" size=\"%d\">%s</span>",
-        desc, (int) (px_size * PANGO_SCALE),  phrase_escaped);
+        desc, (int) (pt_size * PANGO_SCALE ),  phrase_escaped);
 
     preview_label.set_markup(markup);
 
@@ -469,7 +469,11 @@ SPCSSAttr *TextEdit::getTextStyle ()
             Inkscape::CSSOStringStream os;
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
-            os << sp_font_selector_get_size (fsel) << sp_style_get_css_unit_string(unit);
+            if (prefs->getBool("/options/font/textOutputPx", false)) {
+                os << sp_style_css_size_units_to_px(sp_font_selector_get_size (fsel), unit) << sp_style_get_css_unit_string(SP_CSS_UNIT_PX);
+            } else {
+                os << sp_font_selector_get_size (fsel) << sp_style_get_css_unit_string(unit);
+            }
             sp_repr_css_set_property (css, "font-size", os.str().c_str());
 
             font->Unref();

@@ -445,9 +445,12 @@ void InkscapePreferences::initPageTools()
     Glib::ustring sizeLabels[] = {_("Pixel"), _("Point"), _("Pica"), _("Millimeter"), _("Centimeter"), _("Inch"), _("Em square")/*, _("Ex square"), _("Percent")*/};
     int sizeValues[] = {SP_CSS_UNIT_PX, SP_CSS_UNIT_PT, SP_CSS_UNIT_PC, SP_CSS_UNIT_MM, SP_CSS_UNIT_CM, SP_CSS_UNIT_IN, SP_CSS_UNIT_EM/*, SP_CSS_UNIT_EX, SP_CSS_UNIT_PERCENT*/};
 
+    _page_text.add_group_header( _("Text units"));
     _font_unit_type.init( "/options/font/unitType", sizeLabels, sizeValues, G_N_ELEMENTS(sizeLabels), SP_CSS_UNIT_PT );
     _page_text.add_line( false, _("Text size unit type:"), _font_unit_type, "",
                        _("Set the type of unit used in the text toolbar and text dialogs"), false);
+    _font_output_px.init ( _("Always output text size in pixels (px)"), "/options/font/textOutputPx", false);
+    _page_text.add_line( false, "", _font_output_px, "", _("Always convert the text size units above into pixels (px) before saving to file"));
 
     this->AddNewObjectsStyle(_page_text, "/tools/text");
 
