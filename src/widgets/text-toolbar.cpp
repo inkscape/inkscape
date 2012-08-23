@@ -514,12 +514,18 @@ static void sp_text_fontstyle_value_changed( Ink_ComboBoxEntry_Action *act, GObj
         }
     }
 
-    // Now that we have the old face, find the new face.
-    Glib::ustring newFontSpec = "";
     SPCSSAttr   *css        = sp_repr_css_attr_new ();
 
     gchar *current_style = ink_comboboxentry_action_get_active_text( act );
-    Glib::ustring fontFamily = query->text->font_family.set ?  query->text->font_family.value : "";
+    Glib::ustring fontFamily = "";
+
+    if (query->text->font_family.set) {
+        fontFamily = query->text->font_family.value;
+    } else {
+        // if the font_family is not set, get it from the font family combo instead
+        Ink_ComboBoxEntry_Action* act = INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontFamilyAction" ) );
+        fontFamily = ink_comboboxentry_action_get_active_text( act );
+    }
 
     font_instance *font = (font_factory::Default())->FaceFromUIStrings (fontFamily.c_str(), current_style);
 
@@ -542,11 +548,6 @@ static void sp_text_fontstyle_value_changed( Ink_ComboBoxEntry_Action *act, GObj
         font = NULL;
     }
 
-
-    if (!newFontSpec.empty()) {
-        sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str());
-    }
-
     // If querying returned nothing, update default style.
     if (result_fontspec == QUERY_STYLE_NOTHING)
     {
@@ -563,6 +564,7 @@ static void sp_text_fontstyle_value_changed( Ink_ComboBoxEntry_Action *act, GObj
         DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                        _("Text: Change font style"));
     }
+
     sp_repr_css_attr_unref (css);
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
@@ -1168,15 +1170,11 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
      *   Numbers (font-size, letter-spacing, word-spacing, line-height, text-anchor, writing-mode)
      *   Font specification (Inkscape private attribute)
      */
-    SPStyle *query =
-        sp_style_new (SP_ACTIVE_DOCUMENT);
+    SPStyle *query =  sp_style_new (SP_ACTIVE_DOCUMENT);
     int result_family   = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
     int result_style    = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
     int result_numbers  = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
     int result_baseline = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_BASELINES);
-
-    // Used later:
-    sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
 
     /*
      * If no text in selection (querying returned nothing), read the style from
