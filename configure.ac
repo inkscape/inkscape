@@ -953,6 +953,7 @@ AC_ARG_ENABLE(osxapp,
        enable_osxapp=$enableval,enable_osxapp=no)
 if test "$enable_osxapp" = "yes"; then
    AC_DEFINE(ENABLE_OSX_APP_LOCATIONS,,[Build with OSX .app data dir paths?])
+   LDFLAGS="$LDFLAGS -headerpad_max_install_names"
 fi
 
 dnl ******************************
