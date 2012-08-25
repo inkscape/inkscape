@@ -409,8 +409,8 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
     // unfreeze
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 
-    // focus to canvas
-    gtk_widget_grab_focus (GTK_WIDGET((SP_ACTIVE_DESKTOP)->canvas));
+    // focus to canvas (not useful if you want to choose font for your text)
+    //gtk_widget_grab_focus (GTK_WIDGET((SP_ACTIVE_DESKTOP)->canvas));
 
 #ifdef DEBUG_TEXT
     std::cout << "sp_text_toolbox_fontfamily_changes: exit"  << std::endl;
