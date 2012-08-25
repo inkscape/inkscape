@@ -469,7 +469,7 @@ SPCSSAttr *TextEdit::getTextStyle ()
             Inkscape::CSSOStringStream os;
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
-            if (prefs->getBool("/options/font/textOutputPx", false)) {
+            if (prefs->getBool("/options/font/textOutputPx", true)) {
                 os << sp_style_css_size_units_to_px(sp_font_selector_get_size (fsel), unit) << sp_style_get_css_unit_string(SP_CSS_UNIT_PX);
             } else {
                 os << sp_font_selector_get_size (fsel) << sp_style_get_css_unit_string(unit);

@@ -448,7 +448,7 @@ static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObje
     SPCSSAttr *css = sp_repr_css_attr_new ();
     Inkscape::CSSOStringStream osfs;
     int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
-    if (prefs->getBool("/options/font/textOutputPx", false)) {
+    if (prefs->getBool("/options/font/textOutputPx", true)) {
         osfs << sp_style_css_size_units_to_px(size, unit) << sp_style_get_css_unit_string(SP_CSS_UNIT_PX);
     } else {
         osfs << size << sp_style_get_css_unit_string(unit);

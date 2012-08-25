@@ -4233,7 +4233,7 @@ sp_style_write_ifontsize(gchar *p, gint const len, gchar const *key,
             Inkscape::CSSOStringStream os;
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
-            if (prefs->getBool("/options/font/textOutputPx", false)) {
+            if (prefs->getBool("/options/font/textOutputPx", true)) {
                 unit = SP_CSS_UNIT_PX;
             }
             os << key << ":" << sp_style_css_size_px_to_units(val->computed, unit) << sp_style_get_css_unit_string(unit) << ";";
