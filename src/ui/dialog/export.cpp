@@ -228,7 +228,7 @@ Export::Export (void) :
     /* Bitmap size frame */
     {
         size_box.set_border_width(3);
-        bm_label = new Gtk::Label(_("<big><b>Bitmap size</b></big>"), Gtk::ALIGN_START);
+        bm_label = new Gtk::Label(_("<big><b>Image size</b></big>"), Gtk::ALIGN_START);
         bm_label->set_use_markup(true);
         size_box.pack_start(*bm_label, false, false, 0);
         Gtk::Table *t = new Gtk::Table(2, 5, false);

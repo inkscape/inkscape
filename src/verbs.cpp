@@ -2736,8 +2736,8 @@ Verb *Verb::_base_verbs[] = {
                    N_("Edit SVG fonts"), NULL),
     new DialogVerb(SP_VERB_DIALOG_PRINT_COLORS_PREVIEW, "DialogPrintColorsPreview", N_("Print Colors..."),
                    N_("Select which color separations to render in Print Colors Preview rendermode"), NULL),
-    new DialogVerb(SP_VERB_DIALOG_EXPORT, "DialogExport", N_("_Export Bitmap..."),
-                N_("Export this document or a selection as a bitmap image"), INKSCAPE_ICON("document-export")),
+    new DialogVerb(SP_VERB_DIALOG_EXPORT, "DialogExport", N_("_Export PNG Image..."),
+                N_("Export this document or a selection as a PNG image"), INKSCAPE_ICON("document-export")),
 
     // Help
     new HelpVerb(SP_VERB_HELP_ABOUT_EXTENSIONS, "HelpAboutExtensions", N_("About E_xtensions"),
