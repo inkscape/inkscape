@@ -24,6 +24,7 @@
 #include "event-log.h"
 
 #include "widgets/icon.h"
+#include "ui/dialog/desktop-tracker.h"
 
 class SPDesktop;
 
@@ -67,6 +68,7 @@ private:
     Glib::Property<Glib::RefPtr<Gdk::Pixbuf> > _property_icon;
     Glib::Property<unsigned int> _property_event_type;
     std::map<const unsigned int, Glib::RefPtr<Gdk::Pixbuf> > _icon_cache;
+
 };
 
 
@@ -135,6 +137,7 @@ protected:
     SPDocument *_document;
     EventLog *_event_log;
 
+
     const EventLog::EventModelColumns *_columns;
 
     Gtk::ScrolledWindow _scrolled_window;    
@@ -142,6 +145,10 @@ protected:
     Glib::RefPtr<Gtk::TreeModel> _event_list_store;
     Gtk::TreeView _event_list_view;
     Glib::RefPtr<Gtk::TreeSelection> _event_list_selection;
+
+    SPDesktop *_desktop;
+    DesktopTracker _deskTrack;
+    sigc::connection _desktopChangeConn;
 
     EventLog::CallbackMap _callback_connections;
 

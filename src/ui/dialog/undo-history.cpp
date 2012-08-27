@@ -159,7 +159,11 @@ UndoHistory::UndoHistory()
       _document (sp_desktop_document(getDesktop())),
       _event_log (getDesktop() ? getDesktop()->event_log : NULL),
       _columns (_event_log ? &_event_log->getColumns() : NULL),
-      _event_list_selection (_event_list_view.get_selection())
+      _event_list_selection (_event_list_view.get_selection()),
+      _desktop(NULL),
+      _deskTrack(),
+      _desktopChangeConn()
+
 {
     if ( !_document || !_event_log || !_columns ) return;
 
@@ -216,6 +220,9 @@ UndoHistory::UndoHistory()
     // connect with the EventLog
     _event_log->connectWithDialog(&_event_list_view, &_callback_connections);
 
+    _desktopChangeConn = _deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &UndoHistory::setDesktop) );
+    _deskTrack.connect(GTK_WIDGET(gobj()));
+
     show_all_children();
 
     // scroll to the selected row
@@ -224,7 +231,9 @@ UndoHistory::UndoHistory()
 
 UndoHistory::~UndoHistory()
 {
+    _desktopChangeConn.disconnect();
 }
+
 
 void
 UndoHistory::_onListSelectionChange()
