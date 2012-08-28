@@ -889,6 +889,7 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool save_geometry_in_file = prefs->getBool("/options/savewindowgeometry/value", 0);
+    bool save_viewport_in_file = prefs->getBool("/options/savedocviewport/value", true);
     Inkscape::XML::Node *view = desktop->namedview->getRepr();
     Geom::Rect const r = desktop->get_display_area();
 
@@ -896,9 +897,11 @@ void sp_namedview_document_from_window(SPDesktop *desktop)
     bool saved = DocumentUndo::getUndoSensitive(sp_desktop_document(desktop));
     DocumentUndo::setUndoSensitive(sp_desktop_document(desktop), false);
 
-    sp_repr_set_svg_double(view, "inkscape:zoom", desktop->current_zoom());
-    sp_repr_set_svg_double(view, "inkscape:cx", r.midpoint()[Geom::X]);
-    sp_repr_set_svg_double(view, "inkscape:cy", r.midpoint()[Geom::Y]);
+    if (save_viewport_in_file) {
+        sp_repr_set_svg_double(view, "inkscape:zoom", desktop->current_zoom());
+        sp_repr_set_svg_double(view, "inkscape:cx", r.midpoint()[Geom::X]);
+        sp_repr_set_svg_double(view, "inkscape:cy", r.midpoint()[Geom::Y]);
+    }
 
     if (save_geometry_in_file) {
         gint w, h, x, y;

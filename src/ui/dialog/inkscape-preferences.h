@@ -225,6 +225,7 @@ protected:
     UI::Widget::PrefRadioButton _win_save_geom;
     UI::Widget::PrefRadioButton _win_save_geom_prefs;
     UI::Widget::PrefCheckButton _win_hide_task;
+    UI::Widget::PrefCheckButton _win_save_viewport;
     UI::Widget::PrefCheckButton _win_zoom_resize;
     UI::Widget::PrefCheckButton _win_show_close;
     UI::Widget::PrefSpinButton _win_trans_focus; /**< The dialog transparency setting for when the dialog is focused. */
