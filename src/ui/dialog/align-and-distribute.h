@@ -22,6 +22,7 @@
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/label.h>
 #include "2geom/rect.h"
+#include "ui/dialog/desktop-tracker.h"
 
 #if WITH_GTKMM_3_0
 #include <gtkmm/checkbutton.h>
@@ -108,6 +109,7 @@ protected:
     void addBaselineButton(const Glib::ustring &id, const Glib::ustring tiptext,
                            guint row, guint col, Gtk::Table &table, Geom::Dim2 orientation, bool distribute);
 #endif
+    void setTargetDesktop(SPDesktop *desktop);
 
     std::list<Action *> _actionList;
     UI::Widget::Frame _alignFrame, _distributeFrame, _rearrangeFrame, _removeOverlapFrame, _nodesFrame;
@@ -128,6 +130,10 @@ protected:
     Gtk::Label _selgrpLabel;
     Gtk::CheckButton _selgrp;
     Gtk::ComboBoxText _combo;
+
+    SPDesktop *_desktop;
+    DesktopTracker _deskTrack;
+    sigc::connection _desktopChangeConn;
 
 private:
     AlignAndDistribute(AlignAndDistribute const &d);

@@ -1104,6 +1104,9 @@ AlignAndDistribute::AlignAndDistribute()
     g_signal_connect (G_OBJECT (INKSCAPE), "change_selection", G_CALLBACK (on_selection_changed), this);
     randomize_bbox = Geom::OptRect();
 
+    _desktopChangeConn = _deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &AlignAndDistribute::setDesktop) );
+    _deskTrack.connect(GTK_WIDGET(gobj()));
+
     show_all_children();
 
     on_tool_changed (NULL, NULL, this); // set current mode
@@ -1114,10 +1117,22 @@ AlignAndDistribute::~AlignAndDistribute()
     sp_signal_disconnect_by_data (G_OBJECT (INKSCAPE), this);
 
     for (std::list<Action *>::iterator it = _actionList.begin();
-         it != _actionList.end();
-         ++it)
+         it != _actionList.end();  ++it) {
         delete *it;
+    }
+
+    _desktopChangeConn.disconnect();
+    _deskTrack.disconnect();
 }
+
+void AlignAndDistribute::setTargetDesktop(SPDesktop *desktop)
+{
+    if (_desktop != desktop) {
+        _desktop = desktop;
+        on_tool_changed (NULL, NULL, this);
+    }
+}
+
 
 void AlignAndDistribute::on_ref_change(){
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
