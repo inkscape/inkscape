@@ -1784,6 +1784,10 @@ void ZoomVerb::perform(SPAction *action, void *data)
         case SP_VERB_FULLSCREEN:
             dt->fullscreen();
             break;
+        case SP_VERB_FULLSCREENFOCUS:
+            dt->fullscreen();
+            dt->focusMode(!dt->is_fullscreen());
+            break;
 #endif // HAVE_GTK_WINDOW_FULLSCREEN
         case SP_VERB_FOCUSTOGGLE:
             dt->focusMode(!dt->is_focusMode());
@@ -2634,6 +2638,8 @@ Verb *Verb::_base_verbs[] = {
                  INKSCAPE_ICON("zoom-double-size")),
 #ifdef HAVE_GTK_WINDOW_FULLSCREEN
     new ZoomVerb(SP_VERB_FULLSCREEN, "FullScreen", N_("_Fullscreen"), N_("Stretch this document window to full screen"),
+                 INKSCAPE_ICON("view-fullscreen")),
+    new ZoomVerb(SP_VERB_FULLSCREENFOCUS, "FullScreenFocus", N_("Fullscreen & Focus Mode"), Glib::ustring::format(N_("Stretch this document window to full screen"), N_(" and "), N_("Remove excess toolbars to focus on drawing")).c_str(),
                  INKSCAPE_ICON("view-fullscreen")),
 #endif // HAVE_GTK_WINDOW_FULLSCREEN
     new ZoomVerb(SP_VERB_FOCUSTOGGLE, "FocusToggle", N_("Toggle _Focus Mode"), N_("Remove excess toolbars to focus on drawing"),
