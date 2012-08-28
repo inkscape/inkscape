@@ -444,7 +444,9 @@ MarkerComboBox::update_marker_image(gchar const *mname)
     unsigned const visionkey = SPItem::display_key_new(1);
     drawing.setRoot(sandbox->getRoot()->invoke_show(drawing, visionkey, SP_ITEM_SHOW_DISPLAY));
     Gtk::Image *prv = create_marker_image(22, mname, doc, drawing, visionkey);
-    prv->show();
+    if (prv) {
+        prv->show();
+    }
     sandbox->getRoot()->invoke_hide(visionkey);
 
     for(Gtk::TreeIter iter = marker_store->children().begin();
