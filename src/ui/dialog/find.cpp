@@ -65,12 +65,12 @@ Find::Find()
     : UI::Widget::Panel("", "/dialogs/find", SP_VERB_DIALOG_FIND),
 
       entry_find(_("F_ind:"), _("Find objects by their content or properties (exact or partial match)")),
-      entry_replace(_("Re_place:"), _("Replace match with this value")),
+      entry_replace(_("R_eplace:"), _("Replace match with this value")),
 
       check_scope_all(_("_All"), _("Search in all layers")),
       check_scope_layer(_("Current _layer"), _("Limit search to the current layer")),
-      check_scope_selection(_("S_election"), _("Limit search to the current selection")),
-      check_searchin_text(_("Te_xt"), _("Search in text objects")),
+      check_scope_selection(_("Sele_ction"), _("Limit search to the current selection")),
+      check_searchin_text(_("_Text"), _("Search in text objects")),
       check_searchin_property(_("_Properties"), _("Search in object properties, styles, attributes and IDs")),
       vbox_searchin(0, false),
       frame_searchin(_("Search in")),
@@ -85,9 +85,9 @@ Find::Find()
 
       check_ids(_("_ID"), _("Search id name"), true),
       check_attributename(_("Attribute _name"), _("Search attribute name"), false),
-      check_attributevalue(_("Attribute _value"), _("Search attribute value"), true),
+      check_attributevalue(_("Attri_bute value"), _("Search attribute value"), true),
       check_style(_("_Style"), _("Search style"), true),
-      check_font(_("_Font"), _("Search fonts"), false),
+      check_font(_("F_ont"), _("Search fonts"), false),
       frame_properties(_("Properties")),
 
       check_alltypes(_("All types"), _("Search all object types"), true),

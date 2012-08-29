@@ -76,7 +76,7 @@ static char const menus_skeleton[] =
 "       <separator/>\n"
 "       <verb verb-id=\"EditSelectAll\" />\n"
 "       <verb verb-id=\"EditSelectAllInAllLayers\" />\n"
-"       <submenu name=\"" N_("Selec_t Same") "\">\n"
+"       <submenu name=\"" N_("Select Sa_me") "\">\n"
 "           <verb verb-id=\"EditSelectSameFillStroke\" />\n"
 "           <verb verb-id=\"EditSelectSameFillColor\" />\n"
 "           <verb verb-id=\"EditSelectSameStrokeColor\" />\n"

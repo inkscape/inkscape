@@ -1811,7 +1811,7 @@ void ContextMenu::MakeItemMenu (void)
     select_same_submenu->append(*mi);
 
     /* Create link */
-    mi = manage(new Gtk::MenuItem(_("_Create Link"),1));
+    mi = manage(new Gtk::MenuItem(_("Create _Link"),1));
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ItemCreateLink));
     mi->set_sensitive(!SP_IS_ANCHOR(_item));
     mi->show();
@@ -1856,7 +1856,7 @@ void ContextMenu::MakeItemMenu (void)
     append(*mi);
     
     /* Set Clip */
-    mi = manage(new Gtk::MenuItem(_("Set _Clip"),1));
+    mi = manage(new Gtk::MenuItem(_("Set Cl_ip"),1));
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::SetClip));
     if (ClipRefOK || MaskRefOK) {
         mi->set_sensitive(FALSE);
