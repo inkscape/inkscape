@@ -1087,14 +1087,6 @@ void InkscapePreferences::initPageBehavior()
     _markers_color_custom.init ( _("Color custom markers the same color as object"), "/options/markers/colorCustomMarkers", false);
     _markers_color_update.init ( _("Update marker color when object color changes"), "/options/markers/colorUpdateMarkers", true);
 
-    _page_behavior.add_group_header( _("Markers"));
-    _page_behavior.add_line( true, "", _markers_color_stock, "",
-                           _("Stroke color same as object, fill color either object fill color or marker fill color"));
-    _page_behavior.add_line( true, "", _markers_color_custom, "",
-                           _("Stroke color same as object, fill color either object fill color or marker fill color"));
-    _page_behavior.add_line( true, "", _markers_color_update, "",
-                           _("Update marker color when object color changes"));
-
     // Selecting options
     _sel_all.init ( _("Select in all layers"), "/options/kbselection/inlayer", PREFS_SELECTION_ALL, false, 0);
     _sel_current.init ( _("Select only within current layer"), "/options/kbselection/inlayer", PREFS_SELECTION_LAYER, true, &_sel_all);
@@ -1294,6 +1286,17 @@ void InkscapePreferences::initPageBehavior()
                         _("Ungroup groups created when setting clip/mask"));
     
     this->AddPage(_page_mask, _("Clippaths and masks"), iter_behavior, PREFS_PAGE_BEHAVIOR_MASKS);
+
+
+    _page_markers.add_group_header( _("Stroke Style Markers"));
+    _page_markers.add_line( true, "", _markers_color_stock, "",
+                           _("Stroke color same as object, fill color either object fill color or marker fill color"));
+    _page_markers.add_line( true, "", _markers_color_custom, "",
+                           _("Stroke color same as object, fill color either object fill color or marker fill color"));
+    _page_markers.add_line( true, "", _markers_color_update, "",
+                           _("Update marker color when object color changes"));
+
+    this->AddPage(_page_markers, _("Markers"), iter_behavior, PREFS_PAGE_BEHAVIOR_MARKERS);
 }
 
 void InkscapePreferences::initPageRendering()

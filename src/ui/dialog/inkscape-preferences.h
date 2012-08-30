@@ -68,6 +68,7 @@ enum {
     PREFS_PAGE_BEHAVIOR_STEPS,
     PREFS_PAGE_BEHAVIOR_CLONES,
     PREFS_PAGE_BEHAVIOR_MASKS,
+    PREFS_PAGE_BEHAVIOR_MARKERS,
     PREFS_PAGE_IO,
     PREFS_PAGE_IO_MOUSE,
     PREFS_PAGE_IO_SVGOUTPUT,
@@ -151,6 +152,7 @@ protected:
     UI::Widget::DialogPage _page_steps;
     UI::Widget::DialogPage _page_clones;
     UI::Widget::DialogPage _page_mask;
+    UI::Widget::DialogPage _page_markers;
 
     UI::Widget::DialogPage _page_io;
     UI::Widget::DialogPage _page_mouse;
