@@ -145,7 +145,7 @@ SPDesktop *sp_file_new(const Glib::ustring &templ)
     return dt;
 }
 
-SPDesktop* sp_file_new_default()
+Glib::ustring sp_file_default_template_uri()
 {
     std::list<gchar *> sources;
     sources.push_back( profile_path("templates") ); // first try user's local dir
@@ -181,12 +181,22 @@ SPDesktop* sp_file_new_default()
         g_free(*it);
     }
 
-    SPDesktop* desk = sp_file_new(foundTemplate ? foundTemplate : "");
+    Glib::ustring templateUri = foundTemplate ? foundTemplate : "";
+
     if (foundTemplate) {
         g_free(foundTemplate);
         foundTemplate = 0;
     }
+
+    return templateUri;
+}
+
+SPDesktop* sp_file_new_default()
+{
+    Glib::ustring templateUri = sp_file_default_template_uri();
+    SPDesktop* desk = sp_file_new(sp_file_default_template_uri());
     rdf_add_from_preferences( SP_ACTIVE_DOCUMENT );
+
     return desk;
 }
 

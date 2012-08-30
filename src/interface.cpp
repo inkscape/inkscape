@@ -314,6 +314,17 @@ sp_ui_close_view(GtkWidget */*widget*/)
         return; // Shutdown operation has been canceled, so do nothing
     }
 
+    // If closing the last document, open a new document so Inkscape doesn't quit.
+    std::list<SPDesktop *> desktops;
+    inkscape_get_all_desktops(desktops);
+    if (desktops.size() == 1) {
+        Glib::ustring templateUri = sp_file_default_template_uri();
+        SPDocument *doc = SPDocument::createNewDoc( templateUri.c_str() , TRUE, true );
+        dt->change_document(doc);
+        sp_namedview_window_from_document(dt);
+        return;
+    }
+
     // Shutdown can proceed; use the stored reference to the desktop here instead of the current SP_ACTIVE_DESKTOP,
     // because the user might have changed the focus in the meantime (see bug #381357 on Launchpad)
     dt->destroyWidget();

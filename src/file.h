@@ -28,6 +28,8 @@ namespace Inkscape {
     }
 }
 
+// Get the name of the default template uri
+Glib::ustring sp_file_default_template_uri();
 
 /*######################
 ## N E W
