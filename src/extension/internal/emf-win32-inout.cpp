@@ -1603,8 +1603,51 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             dbg_str << "<!-- EMR_CHORD -->\n";
             break;
         case EMR_PIE:
+        {
             dbg_str << "<!-- EMR_PIE -->\n";
+
+            PEMRPIE pEmr = (PEMRPIE) lpEMFR;
+            RECTL rc = pEmr->rclBox;
+
+            double l  = pix_to_x_point( d, rc.left, rc.top );
+            double t  = pix_to_y_point( d, rc.left, rc.top );
+            double r  = pix_to_x_point( d, rc.right, rc.bottom );
+            double b  = pix_to_y_point( d, rc.right, rc.bottom );
+            double x1 = pix_to_x_point( d, pEmr->ptlStart.x, pEmr->ptlStart.y );
+            double y1 = pix_to_y_point( d, pEmr->ptlStart.x, pEmr->ptlStart.y );
+            double x2 = pix_to_x_point( d, pEmr->ptlEnd.x, pEmr->ptlEnd.y );
+            double y2 = pix_to_y_point( d, pEmr->ptlEnd.x, pEmr->ptlEnd.y );
+
+            SVGOStringStream tmp_pie;
+            tmp_pie << "d=\"" <<
+                "\n\tM " << x1 << " " << y1 << " ";
+
+            double angle1 = -atan2(y1 - (t + b) / 2.0, x1 - (l + r) / 2.0);
+            double angle2 = -atan2(y2 - (t + b) / 2.0, x2 - (l + r) / 2.0);
+            double angle  = angle2 - angle1;
+            if (angle < 0) angle += 2*M_PI;
+
+            bool large_arc_flag = false;
+            if (angle > M_PI) large_arc_flag = true;
+
+            tmp_pie << "\n\tA " <<
+                fabs(l - r) / 2.0 << " " <<
+                fabs(t - b) / 2.0 << " " <<
+                "0 " << large_arc_flag << " 0 " <<
+                x2 << " " << y2 << " " <<
+                "\n\tL " << (l + r) / 2.0 << " " << (t + b) / 2.0 << " " <<
+                "\n\tz";
+
+            assert_empty_path(d, "EMR_PIE");
+
+            *(d->outsvg) += "    <path ";
+            output_style(d, lpEMFR->iType);
+            *(d->outsvg) += "\n\t";
+            *(d->outsvg) += tmp_pie.str().c_str();
+            *(d->outsvg) += " \" /> \n";
+            *(d->path) = "";
             break;
+        }
         case EMR_SELECTPALETTE:
             dbg_str << "<!-- EMR_SELECTPALETTE -->\n";
             break;
