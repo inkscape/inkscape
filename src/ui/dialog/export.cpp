@@ -415,6 +415,7 @@ void Export::set_default_filename () {
 
                 final_name = g_strconcat(uri_copy, ".png", NULL);
                 filename_entry.set_text(final_name);
+                filename_entry.set_position(strlen(final_name));
 
                 g_free(final_name);
                 g_free(uri_copy);
@@ -422,6 +423,8 @@ void Export::set_default_filename () {
         } else {
             name = g_strconcat(uri, ".png", NULL);
             filename_entry.set_text(name);
+            filename_entry.set_position(strlen(name));
+
             g_free(name);
         }
 
@@ -768,6 +771,7 @@ void Export::onAreaToggled ()
         if (!filename.empty()) {
             original_name = filename;
             filename_entry.set_text(filename);
+            filename_entry.set_position(filename.length());
         }
 
         if (xdpi != 0.0) {
@@ -1043,6 +1047,7 @@ void Export::onExport ()
         // make sure that .png is the extension of the file:
         Glib::ustring const filename_ext = filename_add_extension(filename, "png");
         filename_entry.set_text(filename_ext);
+        filename_entry.set_position(filename_ext.length());
         Glib::ustring path = absolutize_path_from_document_location(doc, filename_ext);
 
         Glib::ustring dirname = Glib::path_get_dirname(path);
@@ -1280,6 +1285,7 @@ void Export::onBrowse ()
         // Copy the selected file name, converting from UTF-16 to UTF-8
         gchar *utf8string = g_utf16_to_utf8((const gunichar2*)opf.lpstrFile, _MAX_PATH, NULL, NULL, NULL);
         filename_entry.set_text(utf8string);
+        filename_entry.set_position(strlen(utf8string));
         g_free(utf8string);
 
     }
@@ -1295,6 +1301,7 @@ void Export::onBrowse ()
 
         gchar * utf8file = g_filename_to_utf8( file, -1, NULL, NULL, NULL );
         filename_entry.set_text (utf8file);
+        filename_entry.set_position(strlen(utf8file));
 
         g_free(utf8file);
         g_free(file);
