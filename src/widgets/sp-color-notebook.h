@@ -47,6 +47,7 @@ protected:
     static void _entryChanged( SPColorSelector *csel, SPColorNotebook *colorbook );
     static void _entryModified( SPColorSelector *csel, SPColorNotebook *colorbook );
     static void _buttonClicked(GtkWidget *widget,  SPColorNotebook *colorbook);
+    static void _picker_clicked(GtkWidget *widget,  SPColorNotebook *colorbook);
 
     virtual void _colorChanged();
 
@@ -66,6 +67,7 @@ protected:
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     GtkWidget *_box_outofgamut, *_box_colormanaged, *_box_toomuchink;
 #endif //defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+    GtkWidget *_btn_picker;
     GtkWidget *_p; /* Color preview */
     GtkWidget *_btn;
     GtkWidget *_popup;

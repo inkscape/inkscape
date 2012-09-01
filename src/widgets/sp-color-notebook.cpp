@@ -37,6 +37,8 @@
 #include "../profile-manager.h"
 #include "color-profile.h"
 #include "cms-system.h"
+#include "widgets/icon.h"
+#include "tools-switch.h"
 
 using Inkscape::CMSSystem;
 
@@ -376,6 +378,17 @@ void ColorNotebook::init()
 
 #endif //defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
+
+    /* Color picker */
+    GtkWidget *picker = gtk_image_new_from_icon_name ("color-picker", GTK_ICON_SIZE_SMALL_TOOLBAR);
+    _btn_picker = gtk_button_new ();
+    gtk_button_set_relief(GTK_BUTTON(_btn_picker), GTK_RELIEF_NONE);
+    gtk_widget_show (_btn);
+    gtk_container_add (GTK_CONTAINER (_btn_picker), picker);
+    gtk_widget_set_tooltip_text (_btn_picker, _("Pick colors from image"));
+    gtk_box_pack_start(GTK_BOX(rgbabox), _btn_picker, FALSE, FALSE, 2);
+    g_signal_connect(G_OBJECT(_btn_picker), "clicked", G_CALLBACK(ColorNotebook::_picker_clicked), _csel);
+
     /* Create RGBA entry and color preview */
     _rgbal = gtk_label_new_with_mnemonic (_("RGBA_:"));
     gtk_misc_set_alignment (GTK_MISC (_rgbal), 1.0, 0.5);
@@ -494,6 +507,11 @@ void ColorNotebook::_colorChanged()
     }
 
     _updateRgbaEntry( _color, _alpha );
+}
+
+void ColorNotebook::_picker_clicked(GtkWidget *widget, SPColorNotebook *colorbook)
+{
+    tools_switch(SP_ACTIVE_DESKTOP, TOOLS_DROPPER);
 }
 
 void ColorNotebook::_rgbaEntryChangedHook(GtkEntry *entry, SPColorNotebook *colorbook)
