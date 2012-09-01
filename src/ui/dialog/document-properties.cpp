@@ -103,7 +103,7 @@ DocumentProperties::DocumentProperties()
       _rcb_canb(_("Show page _border"), _("If set, rectangular page border is shown"), "showborder", _wr, false),
       _rcb_bord(_("Border on _top of drawing"), _("If set, border is always on top of the drawing"), "borderlayer", _wr, false),
       _rcb_shad(_("_Show border shadow"), _("If set, page border shows a shadow on its right and lower side"), "inkscape:showpageshadow", _wr, false),
-      _rcp_bg(_("Back_ground:"), _("Background color"), _("Color and transparency of the page background (also used for bitmap export)"), "pagecolor", "inkscape:pageopacity", _wr),
+      _rcp_bg(_("Back_ground color:"), _("Background color"), _("Color and transparency of the page background (also used for bitmap export)"), "pagecolor", "inkscape:pageopacity", _wr),
       _rcp_bord(_("Border _color:"), _("Page border color"), _("Color of the page border"), "bordercolor", "borderopacity", _wr),
       _rum_deflt(_("Default _units:"), "inkscape:document-units", _wr),
       _page_sizer(_wr),
@@ -248,6 +248,8 @@ void DocumentProperties::build_page()
 
     Gtk::Label* label_gen = manage (new Gtk::Label);
     label_gen->set_markup (_("<b>General</b>"));
+    Gtk::Label* label_col = manage (new Gtk::Label);
+    label_col->set_markup (_("<b>Color</b>"));
     Gtk::Label* label_bor = manage (new Gtk::Label);
     label_bor->set_markup (_("<b>Border</b>"));
     Gtk::Label *label_for = manage (new Gtk::Label);
@@ -258,6 +260,7 @@ void DocumentProperties::build_page()
     {
         label_gen,         0,
         0,                 &_rum_deflt,
+        label_col,         0,
         _rcp_bg._label,    &_rcp_bg,
         0,                 0,
         label_for,         0,
