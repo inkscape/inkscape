@@ -137,14 +137,14 @@ Export::Export (void) :
     unitbox(false, 0),
     units_label(_("Units:")),
     filename_box(false, 5),
-    browse_label(_("_Browse..."), 1),
+    browse_label(_("_Export As..."), 1),
     browse_image(Gtk::StockID(Gtk::Stock::INDEX), Gtk::ICON_SIZE_BUTTON),
     batch_box(false, 5),
     batch_export(_("B_atch export all selected objects"), _("Export each selected object into its own PNG file, using export hints if any (caution, overwrites without asking!)")),
     hide_box(false, 5),
     hide_export(_("Hide a_ll except selected"), _("In the exported image, hide all objects except those that are selected")),
-    closeWhenDone(_("Close this dialog when complete"), _("Once the export completes, close this dialog")),
-    button_box(Gtk::BUTTONBOX_END),
+    closeWhenDone(_("Close when complete"), _("Once the export completes, close this dialog")),
+    button_box(false, 3),
     export_label(_("_Export"), 1),
     export_image(Gtk::StockID(Gtk::Stock::APPLY), Gtk::ICON_SIZE_BUTTON),
     _prog(),
@@ -299,8 +299,6 @@ Export::Export (void) :
     hide_export.set_active (true);
     hide_box.pack_start(hide_export, false, false);
 
-    Gtk::HBox *closeWhenBox = Gtk::manage(new Gtk::HBox(false, 5));
-    closeWhenBox->pack_start(closeWhenDone, Gtk::PACK_SHRINK);
 
     /* Export Button row */
     button_box.set_border_width(3);
@@ -310,8 +308,9 @@ Export::Export (void) :
 
     export_button.add(*export_image_label);
     export_button.set_tooltip_text (_("Export the bitmap file with these settings"));
-    button_box.pack_end(export_button, Gtk::PACK_SHRINK);
 
+    button_box.pack_start(closeWhenDone, true, true, 0 );
+    button_box.pack_end(export_button, false, false, 0);
 
     /* Main dialog */
     Gtk::Box *contents = _getContents();
@@ -319,8 +318,7 @@ Export::Export (void) :
     contents->pack_start(singleexport_box);
     contents->pack_start(batch_box);
     contents->pack_start(hide_box);
-    contents->pack_start(*closeWhenBox);
-    contents->pack_end(button_box, Gtk::PACK_SHRINK);
+    contents->pack_end(button_box, false, 0);
     contents->pack_end(_prog, Gtk::PACK_EXPAND_WIDGET);
 
     /* Signal handlers */

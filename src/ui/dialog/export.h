@@ -349,7 +349,7 @@ private:
     Inkscape::UI::Widget::CheckButton closeWhenDone;
 
     /* Export Button widgets */
-    Gtk::HButtonBox button_box;
+    Gtk::HBox button_box;
     Gtk::Button export_button;
     Gtk::Label export_label;
     Gtk::Image export_image;
