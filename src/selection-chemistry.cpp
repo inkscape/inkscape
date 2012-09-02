@@ -150,11 +150,18 @@ void SelectionHelper::selectAllInAll(SPDesktop *dt)
 
 void SelectionHelper::selectNone(SPDesktop *dt)
 {
+    InkNodeTool *nt = NULL;
     if (tools_isactive(dt, TOOLS_NODES)) {
-        InkNodeTool *nt = static_cast<InkNodeTool*>(dt->event_context);
+        nt = static_cast<InkNodeTool*>(dt->event_context);
+    }
+
+    if (nt && !nt->_selected_nodes->empty()) {
         nt->_selected_nodes->clear();
-    } else {
+    } else if (!sp_desktop_selection(dt)->isEmpty()) {
         sp_desktop_selection(dt)->clear();
+    } else {
+        // If nothing selected switch to selection tool
+        tools_switch(dt, TOOLS_SELECT);
     }
 }
 

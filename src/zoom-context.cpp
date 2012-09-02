@@ -22,6 +22,7 @@
 #include "pixmaps/cursor-zoom.xpm"
 #include "pixmaps/cursor-zoom-out.xpm"
 #include "preferences.h"
+#include "selection-chemistry.h"
 
 #include "zoom-context.h"
 
@@ -216,6 +217,9 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
         case GDK_KEY_PRESS:
             switch (get_group0_keyval (&event->key)) {
                 case GDK_KEY_Escape:
+                    if (!Inkscape::Rubberband::get(desktop)->is_started()) {
+                        Inkscape::SelectionHelper::selectNone(desktop);
+                    }
                     Inkscape::Rubberband::get(desktop)->stop();
                     xp = yp = 0;
                     escaped = true;

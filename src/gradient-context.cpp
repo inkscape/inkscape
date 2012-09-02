@@ -47,6 +47,7 @@
 #include "rubberband.h"
 #include "document-undo.h"
 #include "verbs.h"
+#include "selection-chemistry.h"
 
 using Inkscape::DocumentUndo;
 
@@ -759,7 +760,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             if (drag->selected) {
                 drag->deselectAll();
             } else {
-                selection->clear();
+                Inkscape::SelectionHelper::selectNone(desktop);
             }
             ret = TRUE;
             //TODO: make dragging escapable by Esc

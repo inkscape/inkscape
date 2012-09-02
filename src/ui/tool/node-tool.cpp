@@ -41,6 +41,7 @@
 
 #include "pixmaps/cursor-node.xpm"
 #include "pixmaps/cursor-node-d.xpm"
+#include "selection-chemistry.h"
 
 #include <gdk/gdkkeysyms.h>
 
@@ -517,7 +518,7 @@ gint ink_node_tool_root_handler(SPEventContext *event_context, GdkEvent *event)
         {
         case GDK_KEY_Escape: // deselect everything
             if (nt->_selected_nodes->empty()) {
-                selection->clear();
+                Inkscape::SelectionHelper::selectNone(desktop);
             } else {
                 nt->_selected_nodes->clear();
             }
