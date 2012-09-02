@@ -19,6 +19,7 @@
 #include <gtkmm/notebook.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/radiobutton.h>
+#include <gtkmm/table.h>
 
 #include "ui/widget/panel.h"
 #include "ui/widget/spinbutton.h"
@@ -129,8 +130,10 @@ private:
     Gtk::RadioButton      HorizRightRadioButton;
     double HorizAlign;
 
+    Inkscape::UI::Widget::UnitMenu      PaddingUnitMenu;
     Inkscape::UI::Widget::ScalarUnit    XPadding;
     Inkscape::UI::Widget::ScalarUnit    YPadding;
+    Gtk::Table                          PaddingTable;
 
     // BBox or manual spacing
     Gtk::VBox             SpacingVBox;

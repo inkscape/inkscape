@@ -124,7 +124,7 @@ void TileDialog::Grid_Arrange ()
 {
 
     int cnt,row_cnt,col_cnt,a,row,col;
-    double grid_left,grid_top,col_width,row_height,paddingx,paddingy,width, height, new_x, new_y,cx,cy;
+    double grid_left,grid_top,col_width,row_height,paddingx,paddingy,width, height, new_x, new_y;
     double total_col_width,total_row_height;
     col_width = 0;
     row_height = 0;
@@ -174,9 +174,6 @@ void TileDialog::Grid_Arrange ()
 
         width = b->dimensions()[Geom::X];
         height = b->dimensions()[Geom::Y];
-
-        cx = b->midpoint()[Geom::X];
-        cy = b->midpoint()[Geom::Y];
 
         if (b->min()[Geom::X] < grid_left) {
             grid_left = b->min()[Geom::X];
@@ -615,8 +612,9 @@ static void updateSelectionCallback(Inkscape::Application */*inkscape*/, Inkscap
  */
 TileDialog::TileDialog()
     : UI::Widget::Panel("", "/dialogs/gridtiler", SP_VERB_SELECTION_GRIDTILE),
-      XPadding(_("X:"), _("Horizontal spacing between columns."), UNIT_TYPE_LINEAR, "", "object-columns"),
-      YPadding(_("Y:"), _("Vertical spacing between rows."), XPadding, "", "object-rows")
+      XPadding(_("X:"), _("Horizontal spacing between columns."), UNIT_TYPE_LINEAR, "", "object-columns", &PaddingUnitMenu),
+      YPadding(_("Y:"), _("Vertical spacing between rows."), UNIT_TYPE_LINEAR, "", "object-rows", &PaddingUnitMenu),
+      PaddingTable(2, 2, false)
 {
      // bool used by spin button callbacks to stop loops where they change each other.
     updating = false;
@@ -817,6 +815,8 @@ TileDialog::TileDialog()
 
     {
         /*#### Padding ####*/
+        PaddingUnitMenu.setUnitType(UNIT_TYPE_LINEAR);
+        PaddingUnitMenu.setUnit("px");
 
         YPadding.setDigits(5);
         YPadding.setIncrements(0.2, 0);
@@ -833,8 +833,14 @@ TileDialog::TileDialog()
 
         XPadding.signal_value_changed().connect(sigc::mem_fun(*this, &TileDialog::on_xpad_spinbutton_changed));
     }
-    TileBox.pack_start(XPadding, false, false, MARGIN);
-    TileBox.pack_start(YPadding, false, false, MARGIN);
+
+    PaddingTable.set_border_width(MARGIN);
+    PaddingTable.set_row_spacings(MARGIN);
+    PaddingTable.set_col_spacings(MARGIN);
+    PaddingTable.attach(XPadding, 0, 1, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
+    PaddingTable.attach(PaddingUnitMenu, 1, 2, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
+    PaddingTable.attach(YPadding, 0, 1, 1, 2, Gtk::SHRINK, Gtk::SHRINK);
+    TileBox.pack_start(PaddingTable, false, false, MARGIN);
 
     contents->pack_start(TileBox);
 
