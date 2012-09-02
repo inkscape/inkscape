@@ -185,10 +185,10 @@ class ContextMenu : public Gtk::Menu
         
         
         /**
-         * callback, is executed on clicking the anchor "Ungroup" menu entry
+         * callback, is executed on clicking the anchor "Group" and "Ungroup" menu entry
          */
         void ActivateUngroup(void);
-        
+        void ActivateGroup(void);
         
         void AnchorLinkProperties(void);
         /**

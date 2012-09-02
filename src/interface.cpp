@@ -1887,6 +1887,17 @@ void ContextMenu::MakeItemMenu (void)
     }
     mi->show();
     append(*mi);
+
+    /* Group */
+    mi = manage(new Gtk::MenuItem(_("_Group"),1));
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ActivateGroup));
+    if (_desktop->selection->isEmpty() || _desktop->selection->single()) {
+        mi->set_sensitive(FALSE);
+    } else {
+        mi->set_sensitive(TRUE);
+    }
+    mi->show();
+    append(*mi);
 }
 
 void ContextMenu::SelectSameFillStroke(void)
@@ -1977,6 +1988,11 @@ void ContextMenu::MakeGroupMenu(void)
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ActivateUngroup));
     mi->show();
     append(*mi);
+}
+
+void ContextMenu::ActivateGroup(void)
+{
+    sp_selection_group(_desktop);
 }
 
 void ContextMenu::ActivateUngroup(void)
