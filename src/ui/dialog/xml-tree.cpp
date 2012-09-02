@@ -842,6 +842,10 @@ gboolean XmlTree::quit_on_esc (GtkWidget *w, GdkEventKey *event, GObject */*tbl*
         case GDK_KEY_Escape: // defocus
             gtk_widget_destroy(w);
             return TRUE;
+        case GDK_KEY_Return: // create
+        case GDK_KEY_KP_Enter:
+            gtk_widget_destroy(w);
+            return TRUE;
     }
     return FALSE;
 }
