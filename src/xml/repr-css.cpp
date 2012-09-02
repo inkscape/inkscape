@@ -286,8 +286,6 @@ gchar *sp_repr_css_write_string(SPCSSAttr *css)
         if (!strcmp(g_quark_to_string(iter->key), "font-family")
                 || !strcmp(g_quark_to_string(iter->key), "-inkscape-font-specification")) {
             // we only quote font-family/font-specification, as SPStyle does
-            gchar *t = g_strdup (iter->value);
-            g_free (t);
             gchar *val_quoted = css2_escape_quote (iter->value);
             if (val_quoted) {
                 buffer.append(val_quoted);
