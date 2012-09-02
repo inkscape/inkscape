@@ -240,7 +240,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         InkToggleAction* act = ink_toggle_action_new( "SprayPressureAction",
                                                       _("Pressure"),
                                                       _("Use the pressure of the input device to alter the amount of sprayed objects"),
-                                                      "use_pressure",
+                                                      INKSCAPE_ICON("draw-use-pressure"),
                                                       Inkscape::ICON_SIZE_DECORATION );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
         PrefPusher *pusher = new PrefPusher(GTK_TOGGLE_ACTION(act), "/tools/spray/usepressure");
