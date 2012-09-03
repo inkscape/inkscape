@@ -270,9 +270,10 @@ double sp_repr_css_double_property(SPCSSAttr *css, gchar const *name, double def
 /**
  * Write a style attribute string from a list of properties stored in an SPCSAttr object.
  */
-void sp_repr_css_write_string(SPCSSAttr *css, Glib::ustring &str)
+gchar *sp_repr_css_write_string(SPCSSAttr *css)
 {
-    str.clear();
+    Glib::ustring buffer;
+
     for ( List<AttributeRecord const> iter = css->attributeList() ;
           iter ; ++iter )
     {
@@ -280,24 +281,26 @@ void sp_repr_css_write_string(SPCSSAttr *css, Glib::ustring &str)
             continue;
         }
 
-        str.append(g_quark_to_string(iter->key));
-        str.push_back(':');
+        buffer.append(g_quark_to_string(iter->key));
+        buffer.push_back(':');
         if (!strcmp(g_quark_to_string(iter->key), "font-family")
                 || !strcmp(g_quark_to_string(iter->key), "-inkscape-font-specification")) {
             // we only quote font-family/font-specification, as SPStyle does
             gchar *val_quoted = css2_escape_quote (iter->value);
             if (val_quoted) {
-                str.append(val_quoted);
+                buffer.append(val_quoted);
                 g_free (val_quoted);
             }
         } else {
-            str.append(iter->value); // unquoted
+            buffer.append(iter->value); // unquoted
         }
 
         if (rest(iter)) {
-            str.push_back(';');
+            buffer.push_back(';');
         }
     }
+
+    return (buffer.empty() ? NULL : g_strdup (buffer.c_str()));
 }
 
 /**
@@ -309,8 +312,7 @@ void sp_repr_css_set(Node *repr, SPCSSAttr *css, gchar const *attr)
     g_assert(css != NULL);
     g_assert(attr != NULL);
 
-    Glib::ustring value;
-    sp_repr_css_write_string(css, value);
+    gchar *value = sp_repr_css_write_string(css);
 
     /*
      * If the new value is different from the old value, this will sometimes send a signal via
@@ -318,7 +320,9 @@ void sp_repr_css_set(Node *repr, SPCSSAttr *css, gchar const *attr)
      * SPObject::sp_object_repr_attr_changed and thus updates the object's SPStyle. This update
      * results in another call to repr->setAttribute().
      */
-    repr->setAttribute(attr, value.c_str());
+    repr->setAttribute(attr, value);
+
+    if (value) g_free (value);
 }
 
 /**

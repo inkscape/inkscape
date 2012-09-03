@@ -128,13 +128,17 @@ void sp_attribute_clean_style(Node *repr, unsigned int flags) {
 
   // Find element's style
   SPCSSAttr *css = sp_repr_css_attr( repr, "style" );
+
   sp_attribute_clean_style(repr, css, flags);
+
+  // g_warning( "sp_repr_write_stream_element(): Final style:" );
+  //sp_repr_css_print( css );
 
   // Convert css node's properties data to string and set repr node's attribute "style" to that string.
   // sp_repr_css_set( repr, css, "style"); // Don't use as it will cause loop.
-  Glib::ustring value;
-  sp_repr_css_write_string(css, value);
-  repr->setAttribute("style", value.c_str());
+  gchar *value = sp_repr_css_write_string(css);
+  repr->setAttribute("style", value);
+  if (value) g_free (value);
 
   sp_repr_css_attr_unref( css );
 }
@@ -143,7 +147,7 @@ void sp_attribute_clean_style(Node *repr, unsigned int flags) {
 /**
  * Clean CSS style on an element.
  */
-Glib::ustring sp_attribute_clean_style(Node *repr, gchar const *string, unsigned int flags) {
+gchar * sp_attribute_clean_style(Node *repr, gchar const *string, unsigned int flags) {
 
   g_return_val_if_fail (repr != NULL, NULL);
   g_return_val_if_fail (repr->type() == Inkscape::XML::ELEMENT_NODE, NULL);
@@ -151,12 +155,11 @@ Glib::ustring sp_attribute_clean_style(Node *repr, gchar const *string, unsigned
   SPCSSAttr *css = sp_repr_css_attr_new();
   sp_repr_css_attr_add_from_string( css, string );
   sp_attribute_clean_style(repr, css, flags);
-  Glib::ustring string_cleaned;
-  sp_repr_css_write_string (css, string_cleaned);
+  gchar* string_cleaned = sp_repr_css_write_string( css );
 
   sp_repr_css_attr_unref( css );
 
-  return string_cleaned;
+  return  string_cleaned;
 }
 
 

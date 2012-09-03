@@ -1031,9 +1031,15 @@ Inkscape::XML::Node * SPObject::sp_object_private_write(SPObject *object, Inksca
             if( prefs->getBool("/options/svgoutput/check_on_editing") ) {
 
                 unsigned int flags = sp_attribute_clean_get_prefs();
-                Glib::ustring s_cleaned = sp_attribute_clean_style( repr, s, flags ); 
+                gchar *s_cleaned = sp_attribute_clean_style( repr, s, flags ); 
+ 
+                // g_warning("SPObject::sp_object_private_write: %s", object->getId() );
+                // g_warning("                                   old: :%s:", repr->attribute("style") );
+                // g_warning("                                   new: :%s:", s );
+                // g_warning("                               cleaned: :%s:", s_cleaned );
+
                 g_free( s );
-                s = (s_cleaned.empty() ? NULL : g_strdup (s_cleaned.c_str()));
+                s = s_cleaned;
             }
 
             if( s == NULL || strcmp(s,"") == 0 ) {

@@ -226,9 +226,7 @@ gchar *finish_create_shape (DocumentInterface *object, GError ** /*error*/, Inks
     SPCSSAttr *style = sp_desktop_get_style(object->desk, TRUE);
     
     if (style) {
-        Glib::ustring str;
-        sp_repr_css_write_string(style, str);
-        newNode->setAttribute("style", str.c_str(), TRUE);
+        newNode->setAttribute("style", sp_repr_css_write_string(style), TRUE);
     }
     else {
         newNode->setAttribute("style", "fill:#0000ff;fill-opacity:1;stroke:#c900b9;stroke-width:0;stroke-miterlimit:0;stroke-opacity:1;stroke-dasharray:none", TRUE);
@@ -567,7 +565,7 @@ gchar *document_interface_node(DocumentInterface *object, gchar *type, GError **
 }
 
 /****************************************************************************
-     ENVIRONMENT FUNCTIONS
+     ENVIORNMENT FUNCTIONS
 ****************************************************************************/
 gdouble
 document_interface_document_get_width (DocumentInterface *object)
@@ -584,9 +582,7 @@ document_interface_document_get_height (DocumentInterface *object)
 gchar *document_interface_document_get_css(DocumentInterface *object, GError ** /*error*/)
 {
     SPCSSAttr *current = (object->desk)->current;
-    glib::ustring str;
-    sp_repr_css_write_string(current, str);
-    return (str.empty() ? NULL : g_strdup (str.c_str()));
+    return sp_repr_css_write_string(current);
 }
 
 gboolean document_interface_document_merge_css(DocumentInterface *object,

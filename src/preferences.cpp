@@ -489,18 +489,18 @@ void Preferences::setString(Glib::ustring const &pref_path, Glib::ustring const 
 
 void Preferences::setStyle(Glib::ustring const &pref_path, SPCSSAttr *style)
 {
-    Glib::ustring css_str;
-    sp_repr_css_write_string(style, css_str);
-    _setRawValue(pref_path, css_str.c_str());
+    gchar *css_str = sp_repr_css_write_string(style);
+    _setRawValue(pref_path, css_str);
+    g_free(css_str);
 }
 
 void Preferences::mergeStyle(Glib::ustring const &pref_path, SPCSSAttr *style)
 {
     SPCSSAttr *current = getStyle(pref_path);
     sp_repr_css_merge(current, style);
-    Glib::ustring css_str;
-    sp_repr_css_write_string(current, css_str);
-    _setRawValue(pref_path, css_str.c_str());
+    gchar *css_str = sp_repr_css_write_string(current);
+    _setRawValue(pref_path, css_str);
+    g_free(css_str);
     sp_repr_css_attr_unref(current);
 }
 

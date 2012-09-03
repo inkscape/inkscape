@@ -320,7 +320,7 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
     Glib::ustring element = g_quark_to_string(_name);
     //g_warning("setAttribute:  %s: %s: %s", element.c_str(), name, value);
 
-    Glib::ustring cleaned_value = (value ? value : Glib::ustring());
+    gchar* cleaned_value = g_strdup( value );
 
     // Only check elements in SVG name space and don't block setting attribute to NULL.
     if( element.substr(0,4) == "svg:" && value != NULL) {
@@ -338,6 +338,7 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
             if( (attr_warn || attr_remove) && value != NULL ) {
                 bool is_useful = sp_attribute_check_attribute( element, id, name, attr_warn );
                 if( !is_useful && attr_remove ) {
+                    g_free( cleaned_value );
                     return; // Don't add to tree.
                 }
             }
@@ -345,6 +346,7 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
             // Check style properties -- Note: if element is not yet inserted into
             // tree (and thus has no parent), default values will not be tested.
             if( !strcmp( name, "style" ) && (flags >= SP_ATTR_CLEAN_STYLE_WARN) ) {
+                g_free( cleaned_value );
                 cleaned_value = sp_attribute_clean_style( this, value, flags );
                 // if( g_strcmp0( value, cleaned_value ) ) {
                 //     g_warning( "SimpleNode::setAttribute: %s", id.c_str() );
@@ -370,8 +372,8 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
     ptr_shared<char> old_value=( existing ? existing->value : ptr_shared<char>() );
 
     ptr_shared<char> new_value=ptr_shared<char>();
-    if (~cleaned_value.empty()) {
-        new_value = share_string(cleaned_value.c_str());
+    if (cleaned_value) {
+        new_value = share_string(cleaned_value);
         tracker.set<DebugSetAttribute>(*this, key, new_value);
         if (!existing) {
             if (ref) {
@@ -399,6 +401,9 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
         _observers.notifyAttributeChanged(*this, key, old_value, new_value);
         //g_warning( "setAttribute notified: %s: %s: %s: %s", name, element.c_str(), old_value, new_value ); 
     }
+
+    g_free( cleaned_value );
+
 }
 
 void SimpleNode::addChild(Node *generic_child, Node *generic_ref) {
