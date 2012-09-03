@@ -669,7 +669,8 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
     }
 
     SP_ACTIVE_DESKTOP->event_log->rememberFileSave();
-    SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("Document saved."));
+    Glib::ustring msg = Glib::ustring::format(_("Document saved."), " ", doc->getURI());
+    SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::NORMAL_MESSAGE, msg.c_str());
     return true;
 }
 
@@ -945,7 +946,8 @@ sp_file_save_document(Gtk::Window &parentWindow, SPDocument *doc)
             }
         }
     } else {
-        SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("No changes need to be saved."));
+        Glib::ustring msg = Glib::ustring::format(_("No changes need to be saved."), " ", doc->getURI());
+        SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, msg.c_str());
         success = TRUE;
     }
 
