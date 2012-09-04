@@ -588,8 +588,8 @@ override) the bindings in the main default.xml.
   <bind key="h" modifiers="Ctrl,Alt" action="AlignHorizontalCenter" display="true" />
   <bind key="H" modifiers="Ctrl,Alt" action="AlignHorizontalCenter" />
 
-  <bind key="v" modifiers="Ctrl,Alt" action="AlignVerticalCenter" display="true" />
-  <bind key="V" modifiers="Ctrl,Alt" action="AlignVerticalCenter" />
+  <bind key="t" modifiers="Ctrl,Alt" action="AlignVerticalCenter" display="true" />
+  <bind key="T" modifiers="Ctrl,Alt" action="AlignVerticalCenter" />
 
   <bind key="KP_2" modifiers="Ctrl,Alt" action="AlignVerticalBottom" display="true" />
   <bind key="KP_2" modifiers="Ctrl,Alt" action="AlignVerticalBottom" />
