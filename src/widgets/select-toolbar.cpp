@@ -497,13 +497,13 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     // four spinbuttons
 
     eact = create_adjustment_action( "XAction", C_("Select toolbar", "X position"), C_("Select toolbar", "X:"), "X",
-                                     0.0, GTK_WIDGET(desktop->canvas), tracker, spw,
+                                    -1e6, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Horizontal coordinate of selection"), TRUE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
     contextActions->push_back( GTK_ACTION(eact) );
 
     eact = create_adjustment_action( "YAction", C_("Select toolbar", "Y position"), C_("Select toolbar", "Y:"), "Y",
-                                     0.0, GTK_WIDGET(desktop->canvas), tracker, spw,
+                                     -1e6, GTK_WIDGET(desktop->canvas), tracker, spw,
                                      _("Vertical coordinate of selection"), FALSE );
     gtk_action_group_add_action( selectionActions, GTK_ACTION(eact) );
     contextActions->push_back( GTK_ACTION(eact) );
