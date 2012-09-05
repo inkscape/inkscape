@@ -185,21 +185,14 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
         g_warning("Parameter <exportId> might not exist");
     }
 
-    bool new_exportDrawing  = FALSE;
+    bool new_exportCanvas  = true;
     try {
-        new_exportDrawing  = mod->get_param_bool("areaDrawing");
-    }
-    catch(...) {
-        g_warning("Parameter <areaDrawing> might not exist");
+        new_exportCanvas = (strcmp(ext->get_param_optiongroup("area"), "page") == 0);
+    } catch(...) {
+        g_warning("Parameter <area> might not exist");
     }
 
-    bool new_exportCanvas  = FALSE;
-    try {
-        new_exportCanvas  = mod->get_param_bool("areaPage");
-    }
-    catch(...) {
-        g_warning("Parameter <exportCanvas> might not exist");
-    }
+    bool new_exportDrawing  = !new_exportCanvas;
 
     // Create PDF file
     {
@@ -235,32 +228,34 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
 void
 CairoRendererPdfOutput::init (void)
 {
-	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-			"<name>Portable Document Format</name>\n"
-			"<id>org.inkscape.output.pdf.cairorenderer</id>\n"
-			"<param name=\"PDFversion\" gui-text=\"" N_("Restrict to PDF version:") "\" type=\"enum\" >\n"
+    Inkscape::Extension::build_from_mem(
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+            "<name>Portable Document Format</name>\n"
+            "<id>org.inkscape.output.pdf.cairorenderer</id>\n"
+            "<param name=\"PDFversion\" gui-text=\"" N_("Restrict to PDF version:") "\" type=\"enum\" >\n"
 #if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 10, 0))
-				"<_item value='PDF-1.5'>" N_("PDF 1.5") "</_item>\n"
+                "<_item value='PDF-1.5'>" N_("PDF 1.5") "</_item>\n"
 #endif
                 "<_item value='PDF-1.4'>" N_("PDF 1.4") "</_item>\n"
-			"</param>\n"
-			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
-			"<param name=\"textToLaTeX\" gui-text=\"" N_("PDF+LaTeX: Omit text in PDF, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
-			"<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
-			"<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi):") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
-			"<param name=\"areaDrawing\" gui-text=\"" N_("Export area is drawing") "\" type=\"boolean\">false</param>\n"
-			"<param name=\"areaPage\" gui-text=\"" N_("Export area is page") "\" type=\"boolean\">false</param>\n"
-			"<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID:") "\" type=\"string\"></param>\n"
-			"<output>\n"
-				"<extension>.pdf</extension>\n"
-				"<mimetype>application/pdf</mimetype>\n"
-				"<filetypename>Portable Document Format (*.pdf)</filetypename>\n"
-				"<filetypetooltip>PDF File</filetypetooltip>\n"
-			"</output>\n"
-		"</inkscape-extension>", new CairoRendererPdfOutput());
+            "</param>\n"
+            "<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
+            "<param name=\"textToLaTeX\" gui-text=\"" N_("PDF+LaTeX: Omit text in PDF, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
+            "<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
+            "<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi):") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
+            "<param name=\"area\" gui-text=\"" N_("Output page size") "\" type=\"optiongroup\" >\n"
+                "<option value=\"page\">" N_("Use document's page size") "</option>"
+                "<option value=\"drawing\">" N_("Use exported object's size") "</option>"
+            "</param>"
+            "<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID:") "\" type=\"string\"></param>\n"
+            "<output>\n"
+                "<extension>.pdf</extension>\n"
+                "<mimetype>application/pdf</mimetype>\n"
+                "<filetypename>Portable Document Format (*.pdf)</filetypename>\n"
+                "<filetypetooltip>PDF File</filetypetooltip>\n"
+            "</output>\n"
+        "</inkscape-extension>", new CairoRendererPdfOutput());
 
-	return;
+    return;
 }
 
 } } }  /* namespace Inkscape, Extension, Internal */

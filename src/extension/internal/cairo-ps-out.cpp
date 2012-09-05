@@ -169,13 +169,10 @@ CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar con
 
     bool new_areaPage  = true;
     try {
-        new_areaPage = mod->get_param_bool("areaPage");
+        new_areaPage = (strcmp(ext->get_param_optiongroup("area"), "page") == 0);
     } catch(...) {}
 
-    bool new_areaDrawing  = true;
-    try {
-        new_areaDrawing = mod->get_param_bool("areaDrawing");
-    } catch(...) {}
+    bool new_areaDrawing  = !new_areaPage;
 
     const gchar *new_exportId = NULL;
     try {
@@ -252,13 +249,10 @@ CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar co
 
     bool new_areaPage  = true;
     try {
-        new_areaPage = mod->get_param_bool("areaPage");
+        new_areaPage = (strcmp(ext->get_param_optiongroup("area"), "page") == 0);
     } catch(...) {}
 
-    bool new_areaDrawing  = true;
-    try {
-        new_areaDrawing = mod->get_param_bool("areaDrawing");
-    } catch(...) {}
+    bool new_areaDrawing  = !new_areaPage;
 
     const gchar *new_exportId = NULL;
     try {
@@ -310,32 +304,34 @@ CairoEpsOutput::textToPath(Inkscape::Extension::Print * ext)
 void
 CairoPsOutput::init (void)
 {
-	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-			"<name>" N_("PostScript") "</name>\n"
-			"<id>" SP_MODULE_KEY_PRINT_CAIRO_PS "</id>\n"
-			"<param name=\"PSlevel\" gui-text=\"" N_("Restrict to PS level:") "\" type=\"enum\" >\n"
-				"<_item value='PS3'>" N_("PostScript level 3") "</_item>\n"
+    Inkscape::Extension::build_from_mem(
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+            "<name>" N_("PostScript") "</name>\n"
+            "<id>" SP_MODULE_KEY_PRINT_CAIRO_PS "</id>\n"
+            "<param name=\"PSlevel\" gui-text=\"" N_("Restrict to PS level:") "\" type=\"enum\" >\n"
+                "<_item value='PS3'>" N_("PostScript level 3") "</_item>\n"
 #if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2))
                 "<_item value='PS2'>" N_("PostScript level 2") "</_item>\n"
 #endif
             "</param>\n"
-			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
-			"<param name=\"textToLaTeX\" gui-text=\"" N_("PS+LaTeX: Omit text in PS, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
-			"<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
-			"<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi):") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
-			"<param name=\"areaDrawing\" gui-text=\"" N_("Export area is drawing") "\" type=\"boolean\">true</param>\n"
-			"<param name=\"areaPage\" gui-text=\"" N_("Export area is page") "\" type=\"boolean\">true</param>\n"
-			"<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID:") "\" type=\"string\"></param>\n"
-			"<output>\n"
-				"<extension>.ps</extension>\n"
-                                "<mimetype>image/x-postscript</mimetype>\n"
-				"<filetypename>" N_("PostScript (*.ps)") "</filetypename>\n"
-				"<filetypetooltip>" N_("PostScript File") "</filetypetooltip>\n"
-			"</output>\n"
-		"</inkscape-extension>", new CairoPsOutput());
+            "<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
+            "<param name=\"textToLaTeX\" gui-text=\"" N_("PS+LaTeX: Omit text in PS, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
+            "<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
+            "<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi):") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
+            "<param name=\"area\" gui-text=\"" N_("Output page size") "\" type=\"optiongroup\" >\n"
+                "<option value=\"page\">" N_("Use document's page size") "</option>"
+                "<option value=\"drawing\">" N_("Use exported object's size") "</option>"
+            "</param>"
+            "<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID:") "\" type=\"string\"></param>\n"
+            "<output>\n"
+            "<extension>.ps</extension>\n"
+                "<mimetype>image/x-postscript</mimetype>\n"
+                "<filetypename>" N_("PostScript (*.ps)") "</filetypename>\n"
+                "<filetypetooltip>" N_("PostScript File") "</filetypetooltip>\n"
+            "</output>\n"
+        "</inkscape-extension>", new CairoPsOutput());
 
-	return;
+    return;
 }
 
 /**
@@ -348,32 +344,34 @@ CairoPsOutput::init (void)
 void
 CairoEpsOutput::init (void)
 {
-	Inkscape::Extension::build_from_mem(
-		"<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-			"<name>" N_("Encapsulated PostScript") "</name>\n"
-			"<id>" SP_MODULE_KEY_PRINT_CAIRO_EPS "</id>\n"
-			"<param name=\"PSlevel\" gui-text=\"" N_("Restrict to PS level:") "\" type=\"enum\" >\n"
-				"<_item value='PS3'>" N_("PostScript level 3") "</_item>\n"
+    Inkscape::Extension::build_from_mem(
+        "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
+            "<name>" N_("Encapsulated PostScript") "</name>\n"
+            "<id>" SP_MODULE_KEY_PRINT_CAIRO_EPS "</id>\n"
+            "<param name=\"PSlevel\" gui-text=\"" N_("Restrict to PS level:") "\" type=\"enum\" >\n"
+                "<_item value='PS3'>" N_("PostScript level 3") "</_item>\n"
 #if (CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 5, 2))
                 "<_item value='PS2'>" N_("PostScript level 2") "</_item>\n"
 #endif
             "</param>\n"
-			"<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
-			"<param name=\"textToLaTeX\" gui-text=\"" N_("EPS+LaTeX: Omit text in EPS, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
-			"<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
-			"<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi):") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
-			"<param name=\"areaDrawing\" gui-text=\"" N_("Export area is drawing") "\" type=\"boolean\">true</param>\n"
-			"<param name=\"areaPage\" gui-text=\"" N_("Export area is page") "\" type=\"boolean\">true</param>\n"
-			"<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID:") "\" type=\"string\"></param>\n"
-			"<output>\n"
-				"<extension>.eps</extension>\n"
-                                "<mimetype>image/x-e-postscript</mimetype>\n"
-				"<filetypename>" N_("Encapsulated PostScript (*.eps)") "</filetypename>\n"
-				"<filetypetooltip>" N_("Encapsulated PostScript File") "</filetypetooltip>\n"
-			"</output>\n"
-		"</inkscape-extension>", new CairoEpsOutput());
+            "<param name=\"textToPath\" gui-text=\"" N_("Convert texts to paths") "\" type=\"boolean\">false</param>\n"
+            "<param name=\"textToLaTeX\" gui-text=\"" N_("EPS+LaTeX: Omit text in EPS, and create LaTeX file") "\" type=\"boolean\">false</param>\n"
+            "<param name=\"blurToBitmap\" gui-text=\"" N_("Rasterize filter effects") "\" type=\"boolean\">true</param>\n"
+            "<param name=\"resolution\" gui-text=\"" N_("Resolution for rasterization (dpi):") "\" type=\"int\" min=\"1\" max=\"10000\">90</param>\n"
+            "<param name=\"area\" gui-text=\"" N_("Output page size") "\" type=\"optiongroup\" >\n"
+                "<option value=\"page\">" N_("Use document's page size") "</option>"
+                "<option value=\"drawing\">" N_("Use exported object's size") "</option>"
+            "</param>"
+            "<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID:") "\" type=\"string\"></param>\n"
+            "<output>\n"
+                "<extension>.eps</extension>\n"
+                "<mimetype>image/x-e-postscript</mimetype>\n"
+                "<filetypename>" N_("Encapsulated PostScript (*.eps)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Encapsulated PostScript File") "</filetypetooltip>\n"
+            "</output>\n"
+        "</inkscape-extension>", new CairoEpsOutput());
 
-	return;
+    return;
 }
 
 } } }  /* namespace Inkscape, Extension, Implementation */
