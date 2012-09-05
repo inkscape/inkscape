@@ -314,7 +314,7 @@ static void sp_toggle_selector(SPDesktop *dt) {
  * Toggles current tool between active tool and dropper tool.
  * Subroutine of sp_event_context_private_root_handler().
  */
-static void sp_toggle_dropper(SPDesktop *dt) {
+void sp_toggle_dropper(SPDesktop *dt) {
     if (!dt->event_context)
         return;
 

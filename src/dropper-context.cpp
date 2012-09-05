@@ -43,6 +43,7 @@
 #include "dropper-context.h"
 #include "message-context.h"
 #include "verbs.h"
+#include "event-context.h"
 
 using Inkscape::DocumentUndo;
 
@@ -321,6 +322,11 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                 if (!(sp_desktop_selection(desktop)->isEmpty())) {
                     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_DROPPER,
                                        _("Set picked color"));
+                }
+
+                if (prefs->getBool("/tools/dropper/onetimepick", false)) {
+                    prefs->setBool("/tools/dropper/onetimepick", false);
+                    sp_toggle_dropper(desktop);
                 }
 
                 ret = TRUE;

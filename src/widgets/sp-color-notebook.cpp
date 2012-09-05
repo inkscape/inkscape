@@ -39,6 +39,7 @@
 #include "cms-system.h"
 #include "widgets/icon.h"
 #include "tools-switch.h"
+#include "event-context.h"
 
 using Inkscape::CMSSystem;
 
@@ -511,7 +512,10 @@ void ColorNotebook::_colorChanged()
 
 void ColorNotebook::_picker_clicked(GtkWidget *widget, SPColorNotebook *colorbook)
 {
-    tools_switch(SP_ACTIVE_DESKTOP, TOOLS_DROPPER);
+    // Set the dropper into a "one click" mode, so it reverts to the previous tool after a click
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setBool("/tools/dropper/onetimepick", true);
+    sp_toggle_dropper(SP_ACTIVE_DESKTOP);
 }
 
 void ColorNotebook::_rgbaEntryChangedHook(GtkEntry *entry, SPColorNotebook *colorbook)

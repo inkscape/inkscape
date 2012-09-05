@@ -188,6 +188,8 @@ guint get_group0_keyval(GdkEventKey *event);
 SPItem *sp_event_context_find_item (SPDesktop *desktop, Geom::Point const &p, bool select_under, bool into_groups);
 SPItem *sp_event_context_over_item (SPDesktop *desktop, SPItem *item, Geom::Point const &p);
 
+void sp_toggle_dropper(SPDesktop *dt);
+
 ShapeEditor *sp_event_context_get_shape_editor (SPEventContext *ec);
 bool sp_event_context_knot_mouseover(SPEventContext *ec);
 
