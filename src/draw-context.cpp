@@ -808,7 +808,7 @@ void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char cons
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     Geom::Affine const i2d (item->i2dt_affine ());
-    Geom::Point pp = pt;
+    Geom::Point pp = pt * i2d.inverse();
     double rad = 0.5 * prefs->getDouble(tool_path + "/dot-size", 3.0);
     if (event_state & GDK_MOD1_MASK) {
         // TODO: We vary the dot size between 0.5*rad and 1.5*rad, where rad is the dot size
@@ -827,7 +827,6 @@ void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char cons
     sp_repr_set_svg_double (repr, "sodipodi:rx", rad * stroke_width);
     sp_repr_set_svg_double (repr, "sodipodi:ry", rad * stroke_width);
     item->updateRepr();
-    item->set_item_transform(i2d.inverse());
 
     sp_desktop_selection(desktop)->set(item);
 
