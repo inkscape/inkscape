@@ -382,6 +382,11 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
                 // do not return true, so that space would work switching to selector
             }
             break;
+        case GDK_KEY_Delete:
+        case GDK_KEY_KP_Delete:
+        case GDK_KEY_BackSpace:
+            ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY);
+            break;
 
         default:
             break;

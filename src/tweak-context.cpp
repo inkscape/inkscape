@@ -1502,6 +1502,12 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
                 case GDK_KEY_Control_R:
                     sp_tweak_switch_mode_temporarily(tc, TWEAK_MODE_SHRINK_GROW, MOD__SHIFT);
                     break;
+                case GDK_KEY_Delete:
+                case GDK_KEY_KP_Delete:
+                case GDK_KEY_BackSpace:
+                    ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY);
+                    break;
+
                 default:
                     break;
             }

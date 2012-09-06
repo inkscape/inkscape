@@ -892,6 +892,12 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
                 case GDK_KEY_Control_L:
                 case GDK_KEY_Control_R:
                     break;
+                case GDK_KEY_Delete:
+                case GDK_KEY_KP_Delete:
+                case GDK_KEY_BackSpace:
+                    ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY);
+                    break;
+
                 default:
                     break;
             }

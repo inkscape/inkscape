@@ -672,6 +672,9 @@ bool MultiPathManipulator::event(SPEventContext *event_context, GdkEvent *event)
                 // b) ctrl+del preserves shape (del_preserves_shape is false), and control is pressed
                 // Hence xor
                 deleteNodes(del_preserves_shape ^ held_control(event->key));
+
+                // Delete any selected gradient nodes as well
+                event_context->deleteSelectedDrag(held_control(event->key));
             }
             return true;
         case GDK_KEY_c:

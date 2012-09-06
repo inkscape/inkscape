@@ -106,6 +106,7 @@ void sp_event_context_snap_delay_handler(SPEventContext *ec, gpointer const dse_
 struct SPEventContext : public GObject {
     void enableSelectionCue (bool enable=true);
     void enableGrDrag (bool enable=true);
+    bool deleteSelectedDrag(bool just_one);
 
     /// Desktop eventcontext stack
     SPEventContext *next;

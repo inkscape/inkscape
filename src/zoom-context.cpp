@@ -238,6 +238,12 @@ static gint sp_zoom_context_root_handler(SPEventContext *event_context, GdkEvent
                     event_context->cursor_shape = cursor_zoom_out_xpm;
                     sp_event_context_update_cursor(event_context);
                     break;
+                case GDK_KEY_Delete:
+                case GDK_KEY_KP_Delete:
+                case GDK_KEY_BackSpace:
+                    ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY);
+                    break;
+
                 default:
 			break;
 		}

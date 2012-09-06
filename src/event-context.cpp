@@ -897,6 +897,19 @@ void SPEventContext::enableGrDrag(bool enable) {
 }
 
 /**
+ * Delete a selected GrDrag point
+ */
+bool SPEventContext::deleteSelectedDrag(bool just_one) {
+
+    if (_grdrag && _grdrag->selected) {
+        _grdrag->deleteSelected(just_one);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+/**
  * Calls virtual set() function of SPEventContext.
  */
 void sp_event_context_read(SPEventContext *ec, gchar const *key) {
