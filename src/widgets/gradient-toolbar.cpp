@@ -671,22 +671,8 @@ static void select_drag_by_stop( GtkWidget *data, SPGradient *gradient, SPEventC
 
     SPStop *stop = get_selected_stop(data);
 
-
-    SPStop *stop_iter;
-    GList *i;
-
-    // Walk thru the draggers and the gradient stops at the same time
-    for (i = drag->draggers, stop_iter = gradient->getFirstStop();
-            i != NULL && stop_iter && SP_IS_STOP(stop_iter);
-                i = i->next, stop_iter = SP_STOP(stop_iter->getNext())) {
-
-        if (stop == stop_iter) {
-            GrDragger *d = (GrDragger *) i->data;
-            drag->setSelected(d, false, true);
-            blocked = FALSE;
-            return;
-        }
-    }
+    drag->selectByStop(stop, false, true);
+    blocked = FALSE;
 }
 
 static void select_stop_by_drag(GtkWidget *combo_box, SPGradient *gradient, SPEventContext *ev, GtkWidget *data)

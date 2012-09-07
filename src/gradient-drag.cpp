@@ -1759,7 +1759,7 @@ void GrDrag::selectByCoords(std::vector<Geom::Point> coords)
 /**
  * Select draggers by stop
  */
-void GrDrag::selectByStop(SPStop *stop )
+void GrDrag::selectByStop(SPStop *stop, bool add_to_selection, bool override )
 {
     for (GList *i = this->draggers; i != NULL; i = i->next) {
 
@@ -1768,11 +1768,11 @@ void GrDrag::selectByStop(SPStop *stop )
 
             GrDraggable *d = (GrDraggable *) j->data;
             SPGradient *gradient = getGradient(d->item, d->fill_or_stroke);
-            SPGradient *vector = sp_gradient_get_forked_vector_if_necessary(gradient, false);
+            SPGradient *vector = gradient->getVector(false);
             SPStop *stop_i = sp_get_stop_i(vector, d->point_i);
 
             if (stop_i == stop) {
-                setSelected(dragger, true, true);
+                setSelected(dragger, add_to_selection, override);
             }
         }
     }
