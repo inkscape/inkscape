@@ -8,6 +8,7 @@
  *
  * Released under GNU LGPL.  Read the file 'COPYING' for more information.
  */
+#include <glib.h>
 #include <iostream>
 #include <cassert>
 #include <cstdlib>
@@ -43,7 +44,7 @@ int genXConstraints(int n, boxf* bb, Variable** vs, Constraint*** cs,int transit
     return m;
 }
 int genYConstraints(int n, boxf* bb, Variable** vs, Constraint*** cs) {
-    assert(n > 0);
+    g_assert(n > 0);
     Rectangle* rs[n];
     for(int i=0;i<n;i++) {
         rs[i]=new Rectangle(bb[i].LL.x,bb[i].UR.x,bb[i].LL.y,bb[i].UR.y);
