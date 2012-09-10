@@ -1300,7 +1300,8 @@ void SvgBuilder::_flushText() {
                 sp_repr_css_set_property(glyph.style, "-inkscape-font-specification", properFontSpec.c_str());
 
                 // Set style and unref SPCSSAttr if it won't be needed anymore
-                sp_repr_css_change(tspan_node, glyph.style, "style");
+                // assume all <tspan> nodes in a <text> node share the same style
+                sp_repr_css_change(text_node, glyph.style, "style");
                 if ( glyph.style_changed && i != _glyphs.begin() ) {    // Free previous style
                     sp_repr_css_attr_unref((*prev_iterator).style);
                 }
