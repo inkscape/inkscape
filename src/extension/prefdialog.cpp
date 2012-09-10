@@ -114,6 +114,11 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
         _signal_preview.connect(sigc::mem_fun(this, &PrefDialog::preview_toggle));
     }
 
+    // Set window modality for effects that don't use live preview
+    if (_effect != NULL && _effect->no_live_preview) {
+        set_modal(false);
+    }
+
     GtkWidget *dlg = GTK_WIDGET(gobj());
     sp_transientize(dlg);
 
