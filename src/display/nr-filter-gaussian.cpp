@@ -145,6 +145,7 @@ static void
 _make_kernel(FIRValue *const kernel, double const deviation)
 {
     int const scr_len = _effect_area_scr(deviation);
+    g_assert(scr_len >= 0);
     double const d_sq = sqr(deviation) * 2;
     double k[scr_len+1]; // This is only called for small kernel sizes (above approximately 10 coefficients the IIR filter is used)
 
