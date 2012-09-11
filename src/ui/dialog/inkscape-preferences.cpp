@@ -194,7 +194,7 @@ void InkscapePreferences::AddDotSizeSpinbutton(DialogPage &p, Glib::ustring cons
 {
     PrefSpinButton* sb = Gtk::manage( new PrefSpinButton);
     sb->init ( prefs_path + "/dot-size", 0.0, 1000.0, 0.1, 10.0, def_value, false, false);
-    p.add_line( false, _("Ctrl+click dot size:"), *sb, _("times current stroke width"),
+    p.add_line( false, _("Ctrl+click _dot size:"), *sb, _("times current stroke width"),
                        _("Size of dots created with Ctrl+click (relative to current stroke width)"),
                        false );
 }
@@ -353,7 +353,7 @@ void InkscapePreferences::initPageTools()
     _t_node_pathflash_selected.init ( _("Show temporary outline for selected paths"), "/tools/nodes/pathflash_selected", false);
     _page_node.add_line( true, "", _t_node_pathflash_selected, "", _("Show temporary outline even when a path is selected for editing"));
     _t_node_pathflash_timeout.init("/tools/nodes/pathflash_timeout", 0, 10000.0, 100.0, 100.0, 1000.0, true, false);
-    _page_node.add_line( false, _("Flash time:"), _t_node_pathflash_timeout, "ms", _("Specifies how long the path outline will be visible after a mouse-over (in milliseconds); specify 0 to have the outline shown until mouse leaves the path"), false);
+    _page_node.add_line( false, _("_Flash time:"), _t_node_pathflash_timeout, "ms", _("Specifies how long the path outline will be visible after a mouse-over (in milliseconds); specify 0 to have the outline shown until mouse leaves the path"), false);
     _page_node.add_group_header(_("Editing preferences"));
     _t_node_single_node_transform_handles.init(_("Show transform handles for single nodes"), "/tools/nodes/single_node_transform_handles", false);
     _page_node.add_line( true, "", _t_node_single_node_transform_handles, "", _("Show transform handles even when only a single node is selected"));
@@ -570,17 +570,14 @@ void InkscapePreferences::initPageUI()
 
     _misc_recent.init("/options/maxrecentdocuments/value", 0.0, 1000.0, 1.0, 1.0, 1.0, true, false);
 
-    Gtk::HBox* recent_hbox = Gtk::manage(new Gtk::HBox());
     Gtk::Button* reset_recent = Gtk::manage(new Gtk::Button(_("Clear list")));
     reset_recent->signal_clicked().connect(sigc::mem_fun(*this, &InkscapePreferences::on_reset_open_recent_clicked));
-    recent_hbox->pack_start(_misc_recent, false, false);
-    recent_hbox->pack_start(*reset_recent, false, false);
 
-    _page_ui.add_line( false, _("Maximum documents in Open Recent:"), *recent_hbox, "",
-                              _("Set the maximum length of the Open Recent list in the File menu, or clear the list"), false);
+    _page_ui.add_line( false, _("Maximum documents in Open _Recent:"), _misc_recent, "",
+                              _("Set the maximum length of the Open Recent list in the File menu, or clear the list"), false, reset_recent);
 
     _ui_zoom_correction.init(300, 30, 1.00, 200.0, 1.0, 10.0, 1.0);
-    _page_ui.add_line( false, _("Zoom correction factor (in %):"), _ui_zoom_correction, "",
+    _page_ui.add_line( false, _("_Zoom correction factor (in %):"), _ui_zoom_correction, "",
                               _("Adjust the slider until the length of the ruler on your screen matches its real length. This information is used when zooming to 1:1, 1:2, etc., to display objects in their true sizes"), true);
 
 
@@ -658,11 +655,11 @@ void InkscapePreferences::initPageUI()
 
     _page_windows.add_group_header( _("Dialog Transparency"));
     _win_trans_focus.init("/dialogs/transparency/on-focus", 0.5, 1.0, 0.01, 0.1, 1.0, false, false);
-    _page_windows.add_line( true, _("Opacity when focused:"), _win_trans_focus, "", "");
+    _page_windows.add_line( true, _("_Opacity when focused:"), _win_trans_focus, "", "", false);
     _win_trans_blur.init("/dialogs/transparency/on-blur", 0.0, 1.0, 0.01, 0.1, 0.5, false, false);
-    _page_windows.add_line( true, _("Opacity when unfocused:"), _win_trans_blur, "", "");
+    _page_windows.add_line( true, _("Opacity when _unfocused:"), _win_trans_blur, "", "", false);
     _win_trans_time.init("/dialogs/transparency/animate-time", 0, 1000, 10, 100, 100, true, false);
-    _page_windows.add_line( true, _("Time of opacity change animation:"), _win_trans_time, "ms", "");
+    _page_windows.add_line( true, _("_Time of opacity change animation:"), _win_trans_time, "ms", "", false);
 
 
     _page_windows.add_group_header( _("Miscellaneous"));
@@ -802,14 +799,14 @@ void InkscapePreferences::initPageIO()
 
     // Input devices options
     _mouse_sens.init ( "/options/cursortolerance/value", 0.0, 30.0, 1.0, 1.0, 8.0, true, false);
-    _page_mouse.add_line( false, _("Grab sensitivity:"), _mouse_sens, _("pixels"),
+    _page_mouse.add_line( false, _("_Grab sensitivity:"), _mouse_sens, _("pixels"),
                            _("How close on the screen you need to be to an object to be able to grab it with mouse (in screen pixels)"), false);
     _mouse_thres.init ( "/options/dragtolerance/value", 0.0, 20.0, 1.0, 1.0, 4.0, true, false);
-    _page_mouse.add_line( false, _("Click/drag threshold:"), _mouse_thres, _("pixels"),
+    _page_mouse.add_line( false, _("_Click/drag threshold:"), _mouse_thres, _("pixels"),
                            _("Maximum mouse drag (in screen pixels) which is considered a click, not a drag"), false);
 
     _mouse_grabsize.init("/options/grabsize/value", 1, 7, 1, 2, 3, 0);
-    _page_mouse.add_line(false, _("Handle size"), _mouse_grabsize, "",
+    _page_mouse.add_line(false, _("_Handle size"), _mouse_grabsize, "",
                          _("Set the relative size of node handles"), true);
 
     _mouse_use_ext_input.init( _("Use pressure-sensitive tablet (requires restart)"), "/options/useextinput/value", true);
@@ -831,7 +828,7 @@ void InkscapePreferences::initPageIO()
     _page_svgoutput.add_line( true, "", _svgoutput_inlineattrs, "", _("Put attributes on the same line as the element tag"), false);
 
     _svgoutput_indent.init("/options/svgoutput/indent", 0.0, 1000.0, 1.0, 2.0, 2.0, true, false);
-    _page_svgoutput.add_line( true, _("Indent, spaces:"), _svgoutput_indent, "", _("The number of spaces to use for indenting nested elements; set to 0 for no indentation"), false);
+    _page_svgoutput.add_line( true, _("_Indent, spaces:"), _svgoutput_indent, "", _("The number of spaces to use for indenting nested elements; set to 0 for no indentation"), false);
 
     _page_svgoutput.add_group_header( _("Path data"));
 
@@ -844,10 +841,10 @@ void InkscapePreferences::initPageIO()
     _page_svgoutput.add_group_header( _("Numbers"));
 
     _svgoutput_numericprecision.init("/options/svgoutput/numericprecision", 1.0, 16.0, 1.0, 2.0, 8.0, true, false);
-    _page_svgoutput.add_line( true, _("Numeric precision:"), _svgoutput_numericprecision, "", _("Significant figures of the values written to the SVG file"), false);
+    _page_svgoutput.add_line( true, _("_Numeric precision:"), _svgoutput_numericprecision, "", _("Significant figures of the values written to the SVG file"), false);
 
     _svgoutput_minimumexponent.init("/options/svgoutput/minimumexponent", -32.0, -1, 1.0, 2.0, -8.0, true, false);
-    _page_svgoutput.add_line( true, _("Minimum exponent:"), _svgoutput_minimumexponent, "", _("The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero"), false);
+    _page_svgoutput.add_line( true, _("Minimum _exponent:"), _svgoutput_minimumexponent, "", _("The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero"), false);
 
     /* Code to add controls for attribute checking options */
 
@@ -1040,11 +1037,11 @@ void InkscapePreferences::initPageIO()
     _save_autosave_enable.init( _("Enable autosave (requires restart)"), "/options/autosave/enable", false);
     _page_autosave.add_line(false, "", _save_autosave_enable, "", _("Automatically save the current document(s) at a given interval, thus minimizing loss in case of a crash"), false);
     _save_autosave_interval.init("/options/autosave/interval", 1.0, 10800.0, 1.0, 10.0, 10.0, true, false);
-    _page_autosave.add_line(false, _("Interval (in minutes):"), _save_autosave_interval, "", _("Interval (in minutes) at which document will be autosaved"), false);
+    _page_autosave.add_line(false, _("_Interval (in minutes):"), _save_autosave_interval, "", _("Interval (in minutes) at which document will be autosaved"), false);
     _save_autosave_path.init("/options/autosave/path", true);
-    _page_autosave.add_line(false, C_("Filesystem", "Path:"), _save_autosave_path, "", _("The directory where autosaves will be written"), false);
+    _page_autosave.add_line(false, C_("Filesystem", "_Path:"), _save_autosave_path, "", _("The directory where autosaves will be written"), false);
     _save_autosave_max.init("/options/autosave/max", 1.0, 100.0, 1.0, 10.0, 10.0, true, false);
-    _page_autosave.add_line(false, _("Maximum number of autosaves:"), _save_autosave_max, "", _("Maximum number of autosaved files; use this to limit the storage space used"), false);
+    _page_autosave.add_line(false, _("_Maximum number of autosaves:"), _save_autosave_max, "", _("Maximum number of autosaved files; use this to limit the storage space used"), false);
 
     /* When changing the interval or enabling/disabling the autosave function,
      * update our running configuration
@@ -1063,13 +1060,13 @@ void InkscapePreferences::initPageIO()
 
     // Open Clip Art options
     _importexport_ocal_url.init("/options/ocalurl/str", true, g_strdup_printf("openclipart.org"));
-    _page_openclipart.add_line( false, _("Open Clip Art Library Server Name:"), _importexport_ocal_url, "",
+    _page_openclipart.add_line( false, _("Open Clip Art Library _Server Name:"), _importexport_ocal_url, "",
         _("The server name of the Open Clip Art Library webdav server; it's used by the Import and Export to OCAL function"), true);
     _importexport_ocal_username.init("/options/ocalusername/str", true);
-    _page_openclipart.add_line( false, _("Open Clip Art Library Username:"), _importexport_ocal_username, "",
+    _page_openclipart.add_line( false, _("Open Clip Art Library _Username:"), _importexport_ocal_username, "",
             _("The username used to log into Open Clip Art Library"), true);
     _importexport_ocal_password.init("/options/ocalpassword/str", false);
-    _page_openclipart.add_line( false, _("Open Clip Art Library Password:"), _importexport_ocal_password, "",
+    _page_openclipart.add_line( false, _("Open Clip Art Library _Password:"), _importexport_ocal_password, "",
             _("The password used to log into Open Clip Art Library"), true);
     this->AddPage(_page_openclipart, _("Open Clip Art"), iter_io, PREFS_PAGE_IO_OPENCLIPART);
 }
@@ -1080,7 +1077,7 @@ void InkscapePreferences::initPageBehavior()
     _path_behavior = _page_list.get_model()->get_path(iter_behavior);
 
     _misc_simpl.init("/options/simplifythreshold/value", 0.0001, 1.0, 0.0001, 0.0010, 0.0010, false, false);
-    _page_behavior.add_line( false, _("Simplification threshold:"), _misc_simpl, "",
+    _page_behavior.add_line( false, _("_Simplification threshold:"), _misc_simpl, "",
                            _("How strong is the Node tool's Simplify command by default. If you invoke this command several times in quick succession, it will act more and more aggressively; invoking it again after a pause restores the default threshold."), false);
 
     _markers_color_stock.init ( _("Color stock markers the same color as object"), "/options/markers/colorStockMarkers", true);
@@ -1145,21 +1142,21 @@ void InkscapePreferences::initPageBehavior()
 
     // Scrolling options
     _scroll_wheel.init ( "/options/wheelscroll/value", 0.0, 1000.0, 1.0, 1.0, 40.0, true, false);
-    _page_scrolling.add_line( false, _("Mouse wheel scrolls by:"), _scroll_wheel, _("pixels"),
+    _page_scrolling.add_line( false, _("Mouse _wheel scrolls by:"), _scroll_wheel, _("pixels"),
                            _("One mouse wheel notch scrolls by this distance in screen pixels (horizontally with Shift)"), false);
     _page_scrolling.add_group_header( _("Ctrl+arrows"));
     _scroll_arrow_px.init ( "/options/keyscroll/value", 0.0, 1000.0, 1.0, 1.0, 10.0, true, false);
-    _page_scrolling.add_line( true, _("Scroll by:"), _scroll_arrow_px, _("pixels"),
+    _page_scrolling.add_line( true, _("Sc_roll by:"), _scroll_arrow_px, _("pixels"),
                            _("Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"), false);
     _scroll_arrow_acc.init ( "/options/scrollingacceleration/value", 0.0, 5.0, 0.01, 1.0, 0.35, false, false);
-    _page_scrolling.add_line( true, _("Acceleration:"), _scroll_arrow_acc, "",
+    _page_scrolling.add_line( true, _("_Acceleration:"), _scroll_arrow_acc, "",
                            _("Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no acceleration)"), false);
     _page_scrolling.add_group_header( _("Autoscrolling"));
     _scroll_auto_speed.init ( "/options/autoscrollspeed/value", 0.0, 5.0, 0.01, 1.0, 0.7, false, false);
-    _page_scrolling.add_line( true, _("Speed:"), _scroll_auto_speed, "",
+    _page_scrolling.add_line( true, _("_Speed:"), _scroll_auto_speed, "",
                            _("How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn autoscroll off)"), false);
     _scroll_auto_thres.init ( "/options/autoscrolldistance/value", -600.0, 600.0, 1.0, 1.0, -10.0, true, false);
-    _page_scrolling.add_line( true, _("Threshold:"), _scroll_auto_thres, _("pixels"),
+    _page_scrolling.add_line( true, _("_Threshold:"), _scroll_auto_thres, _("pixels"),
                            _("How far (in screen pixels) you need to be from the canvas edge to trigger autoscroll; positive is outside the canvas, negative is within the canvas"), false);
     _scroll_space.init ( _("Left mouse button pans when Space is pressed"), "/options/spacepans/value", false);
     _page_scrolling.add_line( false, "", _scroll_space, "",
@@ -1175,7 +1172,7 @@ void InkscapePreferences::initPageBehavior()
                              _("After snapping, a symbol is drawn at the point that has snapped"));
 
     _snap_delay.init("/options/snapdelay/value", 0, 1000, 50, 100, 300, 0);
-    _page_snapping.add_line( false, _("Delay (in ms):"), _snap_delay, "",
+    _page_snapping.add_line( false, _("_Delay (in ms):"), _snap_delay, "",
                              _("Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate."), true);
 
     _snap_closest_only.init( _("Only snap the node closest to the pointer"), "/options/snapclosestonly/value", false);
@@ -1183,7 +1180,7 @@ void InkscapePreferences::initPageBehavior()
                              _("Only try to snap the node that is initially closest to the mouse pointer"));
 
     _snap_weight.init("/options/snapweight/value", 0, 1, 0.1, 0.2, 0.5, 1);
-    _page_snapping.add_line( false, _("Weight factor:"), _snap_weight, "",
+    _page_snapping.add_line( false, _("_Weight factor:"), _snap_weight, "",
                              _("When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"), true);
 
     _snap_mouse_pointer.init( _("Snap the mouse pointer when dragging a constrained knot"), "/options/snapmousepointer/value", false);
@@ -1195,14 +1192,14 @@ void InkscapePreferences::initPageBehavior()
     // Steps options
     _steps_arrow.init ( "/options/nudgedistance/value", 0.0, 1000.0, 0.01, 2.0, UNIT_TYPE_LINEAR, "px");
     //nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
-    _page_steps.add_line( false, _("Arrow keys move by:"), _steps_arrow, "",
+    _page_steps.add_line( false, _("_Arrow keys move by:"), _steps_arrow, "",
                           _("Pressing an arrow key moves selected object(s) or node(s) by this distance"), false);
     _steps_scale.init ( "/options/defaultscale/value", 0.0, 1000.0, 0.01, 2.0, UNIT_TYPE_LINEAR, "px");
     //defaultscale is limited to 1000 in select-context.cpp: use the same limit here
-    _page_steps.add_line( false, _("> and < scale by:"), _steps_scale, "",
+    _page_steps.add_line( false, _("> and < _scale by:"), _steps_scale, "",
                           _("Pressing > or < scales selection up or down by this increment"), false);
     _steps_inset.init ( "/options/defaultoffsetwidth/value", 0.0, 3000.0, 0.01, 2.0, UNIT_TYPE_LINEAR, "px");
-    _page_steps.add_line( false, _("Inset/Outset by:"), _steps_inset, "",
+    _page_steps.add_line( false, _("_Inset/Outset by:"), _steps_inset, "",
                           _("Inset and Outset commands displace the path by this distance"), false);
     _steps_compass.init ( _("Compass-like display of angles"), "/options/compassangledisplay/value", true);
     _page_steps.add_line( false, "", _steps_compass, "",
@@ -1212,13 +1209,13 @@ void InkscapePreferences::initPageBehavior()
     int values[num_items] = {2, 3, 4, 5, 6, 8, 10, 12, 15, 18, 24, 30, 60, 90, 180, 360, 0};
     _steps_rot_snap.set_size_request(_sb_width);
     _steps_rot_snap.init("/options/rotationsnapsperpi/value", labels, values, num_items, 12);
-    _page_steps.add_line( false, _("Rotation snaps every:"), _steps_rot_snap, _("degrees"),
+    _page_steps.add_line( false, _("_Rotation snaps every:"), _steps_rot_snap, _("degrees"),
                            _("Rotating with Ctrl pressed snaps every that much degrees; also, pressing [ or ] rotates by this amount"), false);
     _steps_rot_relative.init ( _("Relative snapping of guideline angles"), "/options/relativeguiderotationsnap/value", false);
     _page_steps.add_line( false, "", _steps_rot_relative, "",
                             _("When on, the snap angles when rotating a guideline will be relative to the original angle"));
     _steps_zoom.init ( "/options/zoomincrement/value", 101.0, 500.0, 1.0, 1.0, 1.414213562, true, true);
-    _page_steps.add_line( false, _("Zoom in/out by:"), _steps_zoom, _("%"),
+    _page_steps.add_line( false, _("_Zoom in/out by:"), _steps_zoom, _("%"),
                           _("Zoom tool click, +/- keys, and middle click zoom in and out by this multiplier"), false);
     this->AddPage(_page_steps, _("Steps"), iter_behavior, PREFS_PAGE_BEHAVIOR_STEPS);
 
@@ -1304,12 +1301,12 @@ void InkscapePreferences::initPageRendering()
 
     /* threaded blur */ //related comments/widgets/functions should be renamed and option should be moved elsewhere when inkscape is fully multi-threaded
     _filter_multi_threaded.init("/options/threading/numthreads", 1.0, 8.0, 1.0, 2.0, 4.0, true, false);
-    _page_rendering.add_line( false, _("Number of Threads:"), _filter_multi_threaded, _("(requires restart)"),
+    _page_rendering.add_line( false, _("Number of _Threads:"), _filter_multi_threaded, _("(requires restart)"),
                            _("Configure number of processors/threads to use when rendering filters"), false);
 
     // rendering cache
     _rendering_cache_size.init("/options/renderingcache/size", 0.0, 4096.0, 1.0, 32.0, 64.0, true, false);
-    _page_rendering.add_line( false, _("Rendering cache size:"), _rendering_cache_size, C_("mebibyte (2^20 bytes) abbreviation","MiB"), _("Set the amount of memory per document which can be used to store rendered parts of the drawing for later reuse; set to zero to disable caching"), false);
+    _page_rendering.add_line( false, _("Rendering _cache size:"), _rendering_cache_size, C_("mebibyte (2^20 bytes) abbreviation","MiB"), _("Set the amount of memory per document which can be used to store rendered parts of the drawing for later reuse; set to zero to disable caching"), false);
 
     /* blur quality */
     _blur_quality_best.init ( _("Best quality (slowest)"), "/options/blurquality/value",
@@ -1376,12 +1373,12 @@ void InkscapePreferences::initPageBitmaps()
     _page_bitmaps.add_line( false, "", _misc_bitmap_autoreload, "",
                            _("Automatically reload linked images when file is changed on disk"));
     _misc_bitmap_editor.init("/options/bitmapeditor/value", true);
-    _page_bitmaps.add_line( false, _("Bitmap editor:"), _misc_bitmap_editor, "", "", true);
+    _page_bitmaps.add_line( false, _("_Bitmap editor:"), _misc_bitmap_editor, "", "", true);
     _importexport_export_res.init("/dialogs/export/defaultxdpi/value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
-    _page_bitmaps.add_line( false, _("Default export resolution:"), _importexport_export_res, _("dpi"),
+    _page_bitmaps.add_line( false, _("Default export _resolution:"), _importexport_export_res, _("dpi"),
                             _("Default bitmap resolution (in dots per inch) in the Export dialog"), false);
     _bitmap_copy_res.init("/options/createbitmap/resolution", 1.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
-    _page_bitmaps.add_line( false, _("Resolution for Create Bitmap Copy:"), _bitmap_copy_res, _("dpi"),
+    _page_bitmaps.add_line( false, _("Resolution for Create Bitmap _Copy:"), _bitmap_copy_res, _("dpi"),
                             _("Resolution used by the Create Bitmap Copy command"), false);
     {
         Glib::ustring labels[] = {_("Always embed"), _("Always link"), _("Ask")};
@@ -1390,7 +1387,7 @@ void InkscapePreferences::initPageBitmaps()
         _page_bitmaps.add_line( false, _("Bitmap import:"), _bitmap_import, "", "", false);
     }
     _importexport_import_res.init("/dialogs/import/defaultxdpi/value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
-    _page_bitmaps.add_line( false, _("Default import resolution:"), _importexport_import_res, _("dpi"),
+    _page_bitmaps.add_line( false, _("Default _import resolution:"), _importexport_import_res, _("dpi"),
                             _("Default bitmap resolution (in dots per inch) for bitmap import"), false);
 
     this->AddPage(_page_bitmaps, _("Bitmaps"), PREFS_PAGE_BITMAPS);
@@ -1487,7 +1484,7 @@ static void appendList( Glib::ustring& tmp, const gchar* const*listing )
 void InkscapePreferences::initPageSystem()
 {
     _misc_latency_skew.init("/debug/latency/skew", 0.5, 2.0, 0.01, 0.10, 1.0, false, false);
-    _page_system.add_line( false, _("Latency skew:"), _misc_latency_skew, _("(requires restart)"),
+    _page_system.add_line( false, _("Latency _skew:"), _misc_latency_skew, _("(requires restart)"),
                            _("Factor by which the event clock is skewed from the actual time (0.9766 on some systems)"), false);
 
     _misc_namedicon_delay.init( _("Pre-render named icons"), "/options/iconrender/named_nodelay", false);

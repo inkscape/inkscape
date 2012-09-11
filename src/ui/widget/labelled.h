@@ -56,7 +56,11 @@ public:
     void setLabelText(const Glib::ustring &str);
     void setTooltipText(const Glib::ustring &tooltip);
 
+private:
+    virtual bool on_mnemonic_activate( bool group_cycling );
+
 protected:
+
     Gtk::Widget  *_widget;
     Gtk::Label   *_label;
     Gtk::Label   *_suffix;

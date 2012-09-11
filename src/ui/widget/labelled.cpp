@@ -78,6 +78,11 @@ Labelled::setTooltipText(const Glib::ustring &tooltip)
     _widget->set_tooltip_text(tooltip);
 }
 
+bool Labelled::on_mnemonic_activate ( bool group_cycling )
+{
+    return _widget->mnemonic_activate ( group_cycling );
+}
+
 } // namespace Widget
 } // namespace UI
 } // namespace Inkscape

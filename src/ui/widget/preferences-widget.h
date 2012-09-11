@@ -130,6 +130,7 @@ private:
     void on_slider_value_changed();
     void on_spinbutton_value_changed();
     void on_unit_changed();
+    virtual bool on_mnemonic_activate( bool group_cycling );
 
     Inkscape::UI::Widget::SpinButton _sb;
     UnitMenu        _unit;
@@ -147,7 +148,8 @@ public:
 private:
     void on_slider_value_changed();
     void on_spinbutton_value_changed();
-    
+    virtual bool on_mnemonic_activate( bool group_cycling );
+
     Glib::ustring _prefs_path;
     Inkscape::UI::Widget::SpinButton _sb;
     Gtk::HScale     _slider;
@@ -188,6 +190,7 @@ class PrefEntryButtonHBox : public Gtk::HBox
 public:
     void init(Glib::ustring const &prefs_path,
             bool mask, Glib::ustring const &default_string);
+
 protected:
     Glib::ustring _prefs_path;
     Glib::ustring _default_string;
@@ -195,6 +198,7 @@ protected:
     Gtk::Entry *relatedEntry;
     void onRelatedEntryChangedCallback();
     void onRelatedButtonClickedCallback();
+    virtual bool on_mnemonic_activate( bool group_cycling );
 };
 
 class PrefEntryFileButtonHBox : public Gtk::HBox
@@ -208,6 +212,7 @@ protected:
     Gtk::Entry *relatedEntry;
     void onRelatedEntryChangedCallback();
     void onRelatedButtonClickedCallback();
+    virtual bool on_mnemonic_activate( bool group_cycling );
 };
 
 class PrefFileButton : public Gtk::FileChooserButton
@@ -247,7 +252,7 @@ class DialogPage : public Gtk::Table
 {
 public:
     DialogPage();
-    void add_line(bool indent, Glib::ustring const &label, Gtk::Widget& widget, Glib::ustring const &suffix, Glib::ustring const &tip, bool expand = true);
+    void add_line(bool indent, Glib::ustring const &label, Gtk::Widget& widget, Glib::ustring const &suffix, Glib::ustring const &tip, bool expand = true, Gtk::Widget *other_widget = NULL);
     void add_group_header(Glib::ustring name);
     void set_tip(Gtk::Widget &widget, Glib::ustring const &tip);
 };

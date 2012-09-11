@@ -54,7 +54,7 @@ DialogPage::DialogPage()
     this->set_row_spacings(6);
 }
 
-void DialogPage::add_line(bool indent, Glib::ustring const &label, Gtk::Widget &widget, Glib::ustring const &suffix, const Glib::ustring &tip, bool expand_widget)
+void DialogPage::add_line(bool indent, Glib::ustring const &label, Gtk::Widget &widget, Glib::ustring const &suffix, const Glib::ustring &tip, bool expand_widget, Gtk::Widget *other_widget)
 {
     int start_col;
     int row = this->property_n_rows();
@@ -68,6 +68,10 @@ void DialogPage::add_line(bool indent, Glib::ustring const &label, Gtk::Widget &
         Gtk::HBox* hb = Gtk::manage(new Gtk::HBox());
         hb->set_spacing(12);
         hb->pack_start(widget,false,false);
+        if (other_widget) {
+            hb->pack_start(*other_widget,false,false);
+        }
+
         w = (Gtk::Widget*) hb;
     }
     if (label != "")
@@ -468,6 +472,12 @@ ZoomCorrRulerSlider::on_unit_changed() {
     }
 }
 
+bool ZoomCorrRulerSlider::on_mnemonic_activate ( bool group_cycling )
+{
+    return _sb.mnemonic_activate ( group_cycling );
+}
+
+
 void
 ZoomCorrRulerSlider::init(int ruler_width, int ruler_height, double lower, double upper,
                       double step_increment, double page_increment, double default_value)
@@ -537,6 +547,11 @@ PrefSlider::on_spinbutton_value_changed()
         _slider.set_value(_sb.get_value());
         freeze = false;
     }
+}
+
+bool PrefSlider::on_mnemonic_activate ( bool group_cycling )
+{
+    return _sb.mnemonic_activate ( group_cycling );
 }
 
 void
@@ -674,6 +689,11 @@ void PrefEntryButtonHBox::onRelatedButtonClickedCallback()
     }
 }
 
+bool PrefEntryButtonHBox::on_mnemonic_activate ( bool group_cycling )
+{
+    return relatedEntry->mnemonic_activate ( group_cycling );
+}
+
 void PrefEntryFileButtonHBox::init(Glib::ustring const &prefs_path,
             bool visibility)
 {
@@ -804,6 +824,11 @@ void PrefEntryFileButtonHBox::onRelatedButtonClickedCallback()
         
         relatedEntry->set_text(fileName);
     }
+}
+
+bool PrefEntryFileButtonHBox::on_mnemonic_activate ( bool group_cycling )
+{
+    return relatedEntry->mnemonic_activate ( group_cycling );
 }
 
 void PrefFileButton::init(Glib::ustring const &prefs_path)
