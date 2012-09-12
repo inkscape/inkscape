@@ -430,6 +430,8 @@ void gr_get_usage_counts(SPDocument *doc, std::map<SPGradient *, gint> *mapUsage
 
     for (GSList *i = all_list; i != NULL; i = i->next) {
         SPItem *item = SP_ITEM(i->data);
+        if (!item->getId())
+            continue;
         SPGradient *gr = NULL;
         gr = gr_item_get_gradient(item, true); // fill
         if (gr) {
