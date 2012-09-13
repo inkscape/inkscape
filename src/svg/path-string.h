@@ -130,8 +130,12 @@ public:
     }
 
     PathString &closePath() {
-        _abs_state.appendOp('z');
+        commonbase += _abs_state.str;
+        _abs_state.str.clear();
+        _rel_state = _abs_state;
+        _abs_state.appendOp('Z');
         _rel_state.appendOp('z');
+        _rel_state.switches++;
         _current_point = _initial_point;
         return *this;
     }
