@@ -3881,22 +3881,23 @@ static gint
 sp_style_write_istring(gchar *p, gint const len, gchar const *const key,
                        SPIString const *const val, SPIString const *const base, guint const flags)
 {
+    gint res = 0;
     if ((flags & SP_STYLE_FLAG_ALWAYS)
         || ((flags & SP_STYLE_FLAG_IFSET) && val->set)
         || ((flags & SP_STYLE_FLAG_IFDIFF) && val->set
             && (!base->set || strcmp(val->value, base->value))))
     {
         if (val->inherit) {
-            return g_snprintf(p, len, "%s:inherit;", key);
+            res = g_snprintf(p, len, "%s:inherit;", key);
         } else {
             gchar *val_quoted = css2_escape_quote(val->value);
             if (val_quoted) {
-                return g_snprintf(p, len, "%s:%s;", key, val_quoted);
+                res = g_snprintf(p, len, "%s:%s;", key, val_quoted);
                 g_free (val_quoted);
             }
         }
     }
-    return 0;
+    return res;
 }
 
 
