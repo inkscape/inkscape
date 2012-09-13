@@ -377,6 +377,7 @@ share/extensions/wireframe_sphere.py
 [type: gettext/xml] share/extensions/color_darker.inx
 [type: gettext/xml] share/extensions/color_desaturate.inx
 [type: gettext/xml] share/extensions/color_grayscale.inx
+[type: gettext/xml] share/extensions/color_HSL_adjust.inx
 [type: gettext/xml] share/extensions/color_lesshue.inx
 [type: gettext/xml] share/extensions/color_lesslight.inx
 [type: gettext/xml] share/extensions/color_lesssaturation.inx
