@@ -32,7 +32,7 @@ class Adjustment;
 
 class MarkerComboBox : public Gtk::ComboBox {
 public:
-    MarkerComboBox(gchar const *id);
+    MarkerComboBox(gchar const *id, int loc);
     ~MarkerComboBox();
 
     void setDesktop(SPDesktop *desktop);
@@ -45,14 +45,15 @@ public:
     const gchar *get_active_marker_uri();
     bool update() { return updating; };
     gchar const *get_id() { return combo_id; };
-    bool isSelectedStock();
     void update_marker_image(gchar const *mname);
+    int get_loc() { return loc; };
 
 private:
 
 
     Glib::RefPtr<Gtk::ListStore> marker_store;
     gchar const *combo_id;
+    int loc;
     bool updating;
     guint markerCount;
     SPDesktop *desktop;

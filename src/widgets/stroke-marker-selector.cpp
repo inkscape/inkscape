@@ -45,9 +45,10 @@
 
 static Inkscape::UI::Cache::SvgPreview svg_preview_cache;
 
-MarkerComboBox::MarkerComboBox(gchar const *id) :
+MarkerComboBox::MarkerComboBox(gchar const *id, int l) :
             Gtk::ComboBox(),
             combo_id(id),
+            loc(l),
             updating(false),
             markerCount(0)
 {
@@ -254,11 +255,6 @@ const gchar * MarkerComboBox::get_active_marker_uri()
     }
 
     return marker;
-}
-
-bool MarkerComboBox::isSelectedStock()
-{
-    return get_active()->get_value(marker_columns.stock);
 }
 
 void MarkerComboBox::set_active_history() {

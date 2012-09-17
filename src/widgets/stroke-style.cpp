@@ -291,7 +291,7 @@ StrokeStyle::StrokeStyle() :
     // TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
     // (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
 
-    startMarkerCombo = manage(new MarkerComboBox("marker-start"));
+    startMarkerCombo = manage(new MarkerComboBox("marker-start", SP_MARKER_LOC_START));
     spw_label(table, _("_Start Markers:"), 0, i, startMarkerCombo);
     startMarkerCombo->set_tooltip_text(_("Start Markers are drawn on the first node of a path or shape"));
     startMarkerConn = startMarkerCombo->signal_changed().connect(
@@ -301,7 +301,7 @@ StrokeStyle::StrokeStyle() :
     table->attach(*startMarkerCombo, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
     i++;
 
-    midMarkerCombo =  manage(new MarkerComboBox("marker-mid"));
+    midMarkerCombo =  manage(new MarkerComboBox("marker-mid", SP_MARKER_LOC_MID));
     spw_label(table, _("_Mid Markers:"), 0, i, midMarkerCombo);
     midMarkerCombo->set_tooltip_text(_("Mid Markers are drawn on every node of a path or shape except the first and last nodes"));
     midMarkerConn = midMarkerCombo->signal_changed().connect(
@@ -311,7 +311,7 @@ StrokeStyle::StrokeStyle() :
     table->attach(*midMarkerCombo, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
     i++;
 
-    endMarkerCombo = manage(new MarkerComboBox("marker-end"));
+    endMarkerCombo = manage(new MarkerComboBox("marker-end", SP_MARKER_LOC_END));
     spw_label(table, _("_End Markers:"), 0, i, endMarkerCombo);
     endMarkerCombo->set_tooltip_text(_("End Markers are drawn on the last node of a path or shape"));
     endMarkerConn = endMarkerCombo->signal_changed().connect(
@@ -429,11 +429,7 @@ StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw, SPMa
         if (selrepr) {
             sp_repr_css_change_recursive(selrepr, css, "style");
             SPObject *markerObj = getMarkerObj(marker, document);
-            if (!marker_combo->isSelectedStock()) {
-                // If arrow, marker will already be forked
-                markerObj = spw->forkMarker(item, markerObj, marker_combo);
-            }
-            spw->setMarkerColor(item, markerObj, marker_combo);
+            spw->setMarkerColor(markerObj, marker_combo->get_loc(), item);
         }
 
         item->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -570,74 +566,46 @@ StrokeStyle::selectionChangedCB()
 }
 
 /*
- * Make a new copy of a marker, set as auto collectable
- * Set the referencing items url to the new marker
+ * Fork marker if necessary and set the referencing items url to the new marker
  * Return the new marker
  */
 SPObject *
-StrokeStyle::forkMarker(SPItem *item, SPObject *marker, MarkerComboBox *marker_combo)
+StrokeStyle::forkMarker(SPObject *marker, int loc, SPItem *item)
 {
-
     if (!item || !marker) {
         return NULL;
     }
 
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gboolean colorStock = prefs->getBool("/options/markers/colorStockMarkers", true);
-    gboolean colorCustom = prefs->getBool("/options/markers/colorCustomMarkers", false);
-    const gchar *stock = marker->getRepr()->attribute("inkscape:isstock");
-    gboolean isStock = (!stock || !strcmp(stock,"true"));
-    gchar const *combo_id = marker_combo->get_id();
+    gchar const *marker_id = SPMarkerNames[loc].key;
 
-    if (isStock ? !colorStock : !colorCustom) {
+    /*
+     * Optimization when all the references to this marker are from this item
+     * then we can reuse it and dont need to fork
+     */
+    Glib::ustring urlId = Glib::ustring::format("url(#", marker->getRepr()->attribute("id"), ")");
+    unsigned int refs = 0;
+    for (int i = SP_MARKER_LOC_START; i < SP_MARKER_LOC_QTY; i++) {
+        if (item->style->marker[i].set && !strcmp(urlId.c_str(), item->style->marker[i].value)) {
+            refs++;
+        }
+    }
+    if (marker->hrefcount <= refs) {
         return marker;
     }
 
-
-    /*
-     * Optimization
-     * If this item already has this marker elsewhere (start/mid or end),
-     * then we can reuse it and dont need to fork
-     */
-    SPCSSAttr *css = sp_css_attr_from_object(item, SP_STYLE_FLAG_ALWAYS);
-    Glib::ustring urlId = Glib::ustring::format("url(#", marker->getRepr()->attribute("id"), ")");
-    const gchar *markers[3] = { "marker-start", "marker-mid", "marker-end" };
-    //gboolean exists = false;
-    for (int i = 0; i < 3; i++) {
-        if (!strcmp(marker_combo->get_id(), markers[i])) {
-            continue;
-        }
-        const char *urlMark = sp_repr_css_property(css, markers[i], "");
-        if (!strcmp(urlId.c_str(), urlMark)) {
-            return marker;
-        }
-    }
-
-
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
-    SPDefs *defs = doc->getDefs();
-    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
-    // Turn off garbage-collectable or it might be collected before we can use it
-    marker->getRepr()->setAttribute("inkscape:collect", NULL);
-    Inkscape::XML::Node *mark_repr = marker->getRepr()->duplicate(xml_doc);
-    defs->getRepr()->addChild(mark_repr, NULL);
-    gchar const *markid = marker->getRepr()->attribute("inkscape:stockid") ? marker->getRepr()->attribute("inkscape:stockid") : marker->getRepr()->attribute("id");
-    mark_repr->setAttribute("inkscape:stockid", markid);
+    marker = sp_marker_fork_if_necessary(marker);
 
     // Update the items url to new marker
+    Inkscape::XML::Node *mark_repr = marker->getRepr();
     SPCSSAttr *css_item = sp_repr_css_attr_new();
-    sp_repr_css_set_property(css_item, combo_id, g_strconcat("url(#", mark_repr->attribute("id"), ")", NULL));
+    sp_repr_css_set_property(css_item, marker_id, g_strconcat("url(#", mark_repr->attribute("id"), ")", NULL));
     sp_repr_css_change_recursive(item->getRepr(), css_item, "style");
-
-    // privates are garbage-collectable
-    mark_repr->setAttribute("inkscape:collect", "always");
-    marker->getRepr()->setAttribute("inkscape:collect", "always");
 
     Inkscape::GC::release(mark_repr);
     sp_repr_css_attr_unref(css_item);
     css_item = 0;
 
-    return doc->getObjectById(mark_repr->attribute("id"));
+    return marker;
 }
 
 /**
@@ -650,7 +618,7 @@ StrokeStyle::forkMarker(SPItem *item, SPObject *marker, MarkerComboBox *marker_c
  *
  */
 void
-StrokeStyle::setMarkerColor(SPItem *item, SPObject *marker, MarkerComboBox *marker_combo)
+StrokeStyle::setMarkerColor(SPObject *marker, int loc, SPItem *item)
 {
 
     if (!item || !marker) {
@@ -667,6 +635,9 @@ StrokeStyle::setMarkerColor(SPItem *item, SPObject *marker, MarkerComboBox *mark
         return;
     }
 
+    // Check if we need to fork this marker
+    marker = forkMarker(marker, loc, item);
+
     Inkscape::XML::Node *repr = marker->getRepr()->firstChild();
     if (!repr) {
         return;
@@ -674,9 +645,9 @@ StrokeStyle::setMarkerColor(SPItem *item, SPObject *marker, MarkerComboBox *mark
 
     // Current line style
     SPCSSAttr *css_item = sp_css_attr_from_object(item, SP_STYLE_FLAG_ALWAYS);
-    const char *lstroke = getItemColorForMarker(item, FOR_STROKE, marker_combo);
+    const char *lstroke = getItemColorForMarker(item, FOR_STROKE, loc);
     const char *lstroke_opacity = sp_repr_css_property(css_item, "stroke-opacity", "1");
-    const char *lfill = getItemColorForMarker(item, FOR_FILL, marker_combo);
+    const char *lfill = getItemColorForMarker(item, FOR_FILL, loc);
     const char *lfill_opacity = sp_repr_css_property(css_item, "fill-opacity", "1");
 
     // Current marker style
@@ -725,7 +696,7 @@ StrokeStyle::setMarkerColor(SPItem *item, SPObject *marker, MarkerComboBox *mark
  * If its a gradient, then return first or last stop color
  */
 const char *
-StrokeStyle::getItemColorForMarker(SPItem *item, Inkscape::PaintTarget fill_or_stroke, MarkerComboBox *marker_combo)
+StrokeStyle::getItemColorForMarker(SPItem *item, Inkscape::PaintTarget fill_or_stroke, int loc)
 {
     SPCSSAttr *css_item = sp_css_attr_from_object(item, SP_STYLE_FLAG_ALWAYS);
     const char *color;
@@ -736,11 +707,12 @@ StrokeStyle::getItemColorForMarker(SPItem *item, Inkscape::PaintTarget fill_or_s
 
     if (!strncmp (color, "url(", 4)) {
         // If the item has a gradient use the first stop color for the marker
+
         SPGradient *grad = getGradient(item, fill_or_stroke);
         if (grad) {
             SPGradient *vector = grad->getVector(FALSE);
             SPStop *stop = vector->getFirstStop();
-            if (marker_combo == endMarkerCombo) {
+            if (loc == SP_MARKER_LOC_END) {
                 stop = sp_last_stop(vector);
             }
             if (stop) {
@@ -1231,7 +1203,7 @@ StrokeStyle::updateAllMarkers(GSList const *objects)
             gboolean update = prefs->getBool("/options/markers/colorUpdateMarkers", true);
 
             if (update) {
-                setMarkerColor(SP_ITEM(object), marker, combo);
+                setMarkerColor(marker, combo->get_loc(), SP_ITEM(object));
 
                 SPDocument *document = sp_desktop_document(desktop);
                 DocumentUndo::done(document, SP_VERB_DIALOG_FILL_STROKE,

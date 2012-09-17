@@ -67,6 +67,15 @@ class Widget;
 class Container;
 }
 
+struct { gchar const *key; gint value; } const SPMarkerNames[] = {
+    {"marker-all", SP_MARKER_LOC},
+    {"marker-start", SP_MARKER_LOC_START},
+    {"marker-mid", SP_MARKER_LOC_MID},
+    {"marker-end", SP_MARKER_LOC_END},
+    {"", SP_MARKER_LOC_QTY},
+    {NULL, -1}
+};
+
 /**
  * Creates an instance of a paint style widget.
  */
@@ -106,9 +115,9 @@ private:
     void setCapButtons(Gtk::ToggleButton *active);
     void scaleLine();
     void setScaledDash(SPCSSAttr *css, int ndash, double *dash, double offset, double scale);
-    void setMarkerColor(SPItem *item, SPObject *marker,  MarkerComboBox *marker_combo);
-    SPObject *forkMarker(SPItem *item, SPObject *marker, MarkerComboBox *marker_combo);
-    const char *getItemColorForMarker(SPItem *item, Inkscape::PaintTarget fill_or_stroke, MarkerComboBox *marker_combo);
+    void setMarkerColor(SPObject *marker, int loc, SPItem *item);
+    SPObject *forkMarker(SPObject *marker, int loc, SPItem *item);
+    const char *getItemColorForMarker(SPItem *item, Inkscape::PaintTarget fill_or_stroke, int loc);
 
     Gtk::RadioButton * makeRadioButton(Gtk::RadioButton *tb, char const *icon,
                            Gtk::HBox *hb, gchar const *key, gchar const *data);

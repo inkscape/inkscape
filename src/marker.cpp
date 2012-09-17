@@ -27,6 +27,7 @@
 #include "marker.h"
 #include "document.h"
 #include "document-private.h"
+#include "preferences.h"
 
 struct SPMarkerView {
 	SPMarkerView *next;
@@ -725,6 +726,38 @@ const gchar *generate_marker(GSList *reprs, Geom::Rect bounds, SPDocument *docum
 
     Inkscape::GC::release(repr);
     return mark_id;
+}
+
+SPObject *sp_marker_fork_if_necessary(SPObject *marker)
+{
+    if (marker->hrefcount < 2) {
+        return marker;
+    }
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gboolean colorStock = prefs->getBool("/options/markers/colorStockMarkers", true);
+    gboolean colorCustom = prefs->getBool("/options/markers/colorCustomMarkers", false);
+    const gchar *stock = marker->getRepr()->attribute("inkscape:isstock");
+    gboolean isStock = (!stock || !strcmp(stock,"true"));
+
+    if (isStock ? !colorStock : !colorCustom) {
+        return marker;
+    }
+
+    SPDocument *doc = marker->document;
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
+    // Turn off garbage-collectable or it might be collected before we can use it
+    marker->getRepr()->setAttribute("inkscape:collect", NULL);
+    Inkscape::XML::Node *mark_repr = marker->getRepr()->duplicate(xml_doc);
+    doc->getDefs()->getRepr()->addChild(mark_repr, NULL);
+    if (!mark_repr->attribute("inkscape:stockid")) {
+        mark_repr->setAttribute("inkscape:stockid", mark_repr->attribute("id"));
+    }
+    marker->getRepr()->setAttribute("inkscape:collect", "always");
+
+    SPObject *marker_new = static_cast<SPObject *>(doc->getObjectByRepr(mark_repr));
+    Inkscape::GC::release(mark_repr);
+    return marker_new;
 }
 
 /*
