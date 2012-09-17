@@ -614,7 +614,7 @@ Geom::OptRect SPShape::sp_shape_bbox(SPItem const *item, Geom::Affine const &tra
                             tr = Geom::Scale(style->stroke_width.computed) * tr;
                         }
                         tr = marker_item->transform * marker->c2p * tr * transform;
-                        bbox |= marker_item->visualBounds();
+                        bbox |= marker_item->visualBounds(tr);
                     }
                 }
             }
