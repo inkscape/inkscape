@@ -691,9 +691,11 @@ static gint sp_event_context_private_root_handler(
         int const wheel_scroll = prefs->getIntLimited(
                 "/options/wheelscroll/value", 40, 0, 1000);
 
+#if GTK_CHECK_VERSION(3,0,0)
         // Size of smooth-scrolls (only used in GTK+ 3)
         gdouble delta_x = 0;
         gdouble delta_y = 0;
+#endif
 
         /* shift + wheel, pan left--right */
         if (event->scroll.state & GDK_SHIFT_MASK) {
@@ -1059,10 +1061,18 @@ static void set_event_location(SPDesktop *desktop, GdkEvent *event) {
  * Create popup menu and tell Gtk to show it.
  */
 void sp_event_root_menu_popup(SPDesktop *desktop, SPItem *item, GdkEvent *event) {
+
+    // It seems the param item is the SPItem at the bottom of the z-order
+    // Using the same function call used on left click in sp_select_context_item_handler() to get top of z-order
+    // fixme: sp_canvas_arena should set the top z-order object as arena->active
+    item = sp_event_context_find_item (desktop,
+                              Geom::Point(event->button.x, event->button.y), FALSE, FALSE);
+
     /* fixme: This is not what I want but works for now (Lauris) */
     if (event->type == GDK_KEY_PRESS) {
         item = sp_desktop_selection(desktop)->singleItem();
     }
+
     ContextMenu* CM = new ContextMenu(desktop, item);
     CM->show();
 
