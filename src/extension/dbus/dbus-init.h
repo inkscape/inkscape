@@ -12,6 +12,7 @@
 
 #include "desktop.h"
 
+
 namespace Inkscape {
 namespace Extension {
 namespace Dbus {

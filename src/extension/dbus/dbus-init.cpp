@@ -128,9 +128,6 @@ dbus_init_desktop_interface (SPDesktop * dt)
     DBusGConnection *connection;
     DBusGProxy *proxy;
 	DocumentInterface *obj;
-	dbus_g_error_domain_register (INKSCAPE_ERROR,
-				NULL,
-				INKSCAPE_TYPE_ERROR);
 
     std::string name("/org/inkscape/desktop_");
 	std::stringstream out;

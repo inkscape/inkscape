@@ -45,6 +45,23 @@ struct _ApplicationInterfaceClass {
         GObjectClass parent;
 };
 
+
+typedef enum
+{
+  INKSCAPE_ERROR_SELECTION,
+  INKSCAPE_ERROR_OBJECT,
+  INKSCAPE_ERROR_VERB,
+  INKSCAPE_ERROR_OTHER
+} InkscapeError;
+
+
+
+#define INKSCAPE_ERROR (inkscape_error_quark ())
+#define INKSCAPE_TYPE_ERROR (inkscape_error_get_type ())
+
+GQuark inkscape_error_quark (void);
+GType inkscape_error_get_type (void);
+
 /****************************************************************************
      DESKTOP FUNCTIONS
 ****************************************************************************/

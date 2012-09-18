@@ -39,6 +39,9 @@ application_interface_class_init (ApplicationInterfaceClass *klass)
 static void
 application_interface_init (ApplicationInterface *object)
 {
+    dbus_g_error_domain_register (INKSCAPE_ERROR,
+                NULL,
+                INKSCAPE_TYPE_ERROR);
 }
 
 
@@ -46,6 +49,44 @@ ApplicationInterface *
 application_interface_new (void)
 {
         return (ApplicationInterface*)g_object_new (TYPE_APPLICATION_INTERFACE, NULL);
+}
+
+/*
+ * Error stuff...
+ *
+ * To add a new error type, edit here and in the .h InkscapeError enum.
+ */
+GQuark
+inkscape_error_quark (void)
+{
+  static GQuark quark = 0;
+  if (!quark)
+    quark = g_quark_from_static_string ("inkscape_error");
+
+  return quark;
+}
+
+#define ENUM_ENTRY(NAME, DESC) { NAME, "" #NAME "", DESC }
+
+GType inkscape_error_get_type(void)
+{
+    static GType etype = 0;
+
+    if (etype == 0) {
+        static const GEnumValue values[] =
+            {
+
+                ENUM_ENTRY(INKSCAPE_ERROR_SELECTION, "Incompatible_Selection"),
+                ENUM_ENTRY(INKSCAPE_ERROR_OBJECT, "Incompatible_Object"),
+                ENUM_ENTRY(INKSCAPE_ERROR_VERB, "Failed_Verb"),
+                ENUM_ENTRY(INKSCAPE_ERROR_OTHER, "Generic_Error"),
+                { 0, 0, 0 }
+            };
+
+        etype = g_enum_register_static("InkscapeError", values);
+    }
+
+    return etype;
 }
 
 /****************************************************************************
