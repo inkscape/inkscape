@@ -865,6 +865,9 @@ SPObject *SPDocument::getObjectById(Glib::ustring const &id) const
 SPObject *SPDocument::getObjectById(gchar const *id) const
 {
     g_return_val_if_fail(id != NULL, NULL);
+    if (!priv || !priv->iddef) {
+    	return NULL;
+    }
 
     GQuark idq = g_quark_from_string(id);
     gpointer rv = g_hash_table_lookup(priv->iddef, GINT_TO_POINTER(idq));
