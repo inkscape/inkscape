@@ -1222,13 +1222,16 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
         double size = sp_style_css_size_px_to_units(query->font_size.computed, unit);
 
-        gchar size_text[G_ASCII_DTOSTR_BUF_SIZE];
-        g_ascii_dtostr (size_text, sizeof (size_text), size);
+        //gchar size_text[G_ASCII_DTOSTR_BUF_SIZE];
+        //g_ascii_dtostr (size_text, sizeof (size_text), size);
+
+        Inkscape::CSSOStringStream os;
+        os << size;
 
         Ink_ComboBoxEntry_Action* fontSizeAction =
             INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontSizeAction" ) );
         sp_text_set_sizes(GTK_LIST_STORE(ink_comboboxentry_action_get_model(fontSizeAction)), unit);
-        ink_comboboxentry_action_set_active_text( fontSizeAction, size_text );
+        ink_comboboxentry_action_set_active_text( fontSizeAction, os.str().c_str() );
 
         Glib::ustring tooltip = Glib::ustring::format("Font size (", sp_style_get_css_unit_string(unit), ")");
         ink_comboboxentry_action_set_tooltip ( fontSizeAction, tooltip.c_str());
