@@ -2425,5 +2425,206 @@ sodipodi:docname="filters.svg">
 <feComposite result="result14" operator="over" in2="fbSourceGraphic" in="fbSourceGraphic" />
 <feComposite in="result14" operator="in" in2="SourceGraphic" result="result15" />
 </filter>
+<filter id="filter53" inkscape:menu="Bump" style="color-interpolation-filters:sRGB;" inkscape:menu-tooltip="Carving emboss effect" inkscape:label="Bump Engraving">
+<feConvolveMatrix in="SourceGraphic" bias="0" divisor="0" targetX="1" targetY="1" result="result10" kernelMatrix="0 100 0 100 -405 100 0 100 0 " order="3 3" />
+<feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.21 -0.72 -0.07 1 0 " in="result10" type="matrix" result="result2" />
+<feGaussianBlur result="result11" stdDeviation="0.01" />
+<feDiffuseLighting surfaceScale="15" result="result1" diffuseConstant="0.5" in="result11" lighting-color="#ffffff">
+<feDistantLight elevation="10" azimuth="225" />
+</feDiffuseLighting>
+<feComposite in2="SourceGraphic" in="result1" k3="0.5" k2="1" operator="arithmetic" result="result9" />
+<feColorMatrix in="result9" type="saturate" result="result13" values="0" />
+<feComponentTransfer result="component1" in="result13">
+<feFuncR tableValues="0 1 1" type="discrete" />
+<feFuncG tableValues="0 1 1" type="discrete" />
+<feFuncB tableValues="0 1 1" type="discrete" />
+</feComponentTransfer>
+<feBlend in2="SourceGraphic" mode="normal" result="result14" />
+<feComposite in2="SourceGraphic" in="result14" operator="in" result="fbSourceGraphic" />
+</filter>
+<filter id="filter81" inkscape:menu="Image Paint and Draw" inkscape:menu-tooltip="Old chromolithographic effect" x="0" y="0" width="1" height="1" style="color-interpolation-filters:sRGB;" inkscape:label="Chromolitho Alternate">
+<feConvolveMatrix result="convolve" order="3 3" kernelMatrix="0 250 0 250 -1025 250 0 250 0" in="SourceGraphic" divisor="0" bias="0" />
+<feBlend in2="SourceGraphic" result="blend" mode="multiply" in="convolve" />
+<feTurbulence result="turbulence" seed="0" numOctaves="3" baseFrequency="1 1" type="fractalNoise" />
+<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 " result="result3" type="matrix" />
+<feColorMatrix type="saturate" result="result7" values="1" />
+<feComposite in2="blend" result="composite1" operator="arithmetic" k3="0.1" k2="1" k1="3.5" in="result7" />
+<feBlend in2="blend" mode="normal" result="result6" />
+<feColorMatrix values="1" result="result2" type="saturate" in="result6" />
+<feComponentTransfer result="fbSourceGraphic">
+<feFuncR type="discrete" tableValues="0 1 1" />
+<feFuncG type="discrete" tableValues="0 1 1" />
+<feFuncB type="discrete" tableValues="0 1 1" />
+</feComponentTransfer>
+<feComposite in2="SourceGraphic" in="fbSourceGraphic" result="composite" k2="1" operator="in" />
+</filter>
+<filter id="filter109" inkscape:menu="Bump" inkscape:menu-tooltip="Convoluted emboss effect" style="color-interpolation-filters:sRGB;" inkscape:label="Convoluted Bump">
+<feConvolveMatrix in="SourceGraphic" bias="0" divisor="0" targetX="1" targetY="1" result="result10" kernelMatrix="0 100 0 100 -401 100 0 100 0 " order="3 3" />
+<feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.21 -0.72 -0.07 1 0 " in="result10" type="matrix" result="result2" />
+<feGaussianBlur result="result11" stdDeviation="0.01" />
+<feDiffuseLighting surfaceScale="15" result="result1" diffuseConstant="0.5" in="result11" lighting-color="#ffffff">
+<feDistantLight elevation="10" azimuth="225" />
+</feDiffuseLighting>
+<feGaussianBlur result="result12" in="SourceGraphic" stdDeviation="0.01" />
+<feComposite in2="result12" in="result1" k3="0.8" k2="1" operator="arithmetic" result="result9" />
+<feComposite in2="SourceGraphic" in="result9" operator="in" result="result7" />
+</filter>
+<filter id="filter127" inkscape:menu="Shadows and Glows" inkscape:menu-tooltip="Cut out, add inner shadow and colorize some parts of an image" style="color-interpolation-filters:sRGB;" inkscape:label="Emergence">
+<feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.21 0.72 0.07 0 0 " result="result1" />
+<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 2 0 " result="result9" />
+<feComposite in2="result9" in="SourceGraphic" operator="in" result="result4" />
+<feFlood in="SourceGraphic" result="result2" flood-color="rgb(0,0,0)" />
+<feComposite in2="result9" operator="in" result="result10" />
+<feComposite in2="result4" operator="atop" />
+<feGaussianBlur stdDeviation="3" result="result8" />
+<feOffset dx="3" dy="3" result="result3" in="result8" />
+<feFlood flood-opacity="1" flood-color="rgb(219,173,62)" result="result5" in="SourceGraphic" />
+<feMerge result="result6">
+<feMergeNode in="result5" />
+<feMergeNode in="result3" />
+<feMergeNode in="result4" />
+</feMerge>
+<feComposite in2="SourceGraphic" operator="in" result="result7" />
+</filter>
+<filter id="filter169" inkscape:menu="Image Paint and Draw" style="color-interpolation-filters:sRGB" inkscape:label="Litho" inkscape:menu-tooltip="Create a two colors lithographic effect">
+<feGaussianBlur stdDeviation="0.01" />
+<feColorMatrix values="0" result="fbSourceGraphic" type="hueRotate" />
+<feColorMatrix result="fbSourceGraphic" in="fbSourceGraphic" values="0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0.21 0.72 0.072 0 0 0 0 0 50 0 " />
+<feComponentTransfer result="fbSourceGraphic" in="fbSourceGraphic">
+<feFuncR type="discrete" tableValues="0 1 1" />
+<feFuncG type="discrete" tableValues="0 1 1" />
+<feFuncB type="discrete" tableValues="0 1 1" />
+</feComponentTransfer>
+<feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.21 -0.72 -0.07 1 0 " in="fbSourceGraphic" result="result1" />
+<feFlood flood-color="rgb(144,7,7)" result="result3" flood-opacity="1" />
+<feComposite in2="result1" operator="in" result="result5" />
+<feBlend in2="fbSourceGraphic" mode="screen" in="result3" result="result4" />
+<feComposite in2="SourceGraphic" operator="in" in="result4" result="result2" />
+</filter>
+<filter id="filter229" inkscape:menu="Image Paint and Draw" inkscape:menu-tooltip="Draw an image with neon or chalk lines" style="color-interpolation-filters:sRGB;" inkscape:label="Neon Draw Alternate">
+<feBlend in2="SourceGraphic" stdDeviation="19" mode="normal" result="blend" />
+<feGaussianBlur in="blend" stdDeviation="2" result="blur1" />
+<feColorMatrix result="result2" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 50 0 " />
+<feComponentTransfer result="component1">
+<feFuncR type="discrete" tableValues="0 0.3 0.3 0.3 0.3 0.6 0.6 0.6 0.6 1 1" />
+<feFuncG type="discrete" tableValues="0 0.3 0.3 0.3 0.3 0.6 0.6 0.6 0.6 1 1" />
+<feFuncB type="discrete" tableValues="0 0.3 0.3 0.3 0.3 0.6 0.6 0.6 0.6 1 1" />
+</feComponentTransfer>
+<feGaussianBlur in="component1" stdDeviation="2" result="blur2" />
+<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 50 0 " result="result2" />
+<feComponentTransfer in="result2" result="component2">
+<feFuncR type="table" tableValues="0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 0 0 0 1" />
+<feFuncG type="table" tableValues="0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 0 0 0 1" />
+<feFuncB type="table" tableValues="0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 0 0 0 1" />
+</feComponentTransfer>
+<feComposite in2="blur2" in="component2" k3="1" operator="arithmetic" k2="1" result="composite1" stdDeviation="11" />
+<feComposite in2="SourceGraphic" in="composite1" operator="in" result="fbSourceGraphic" />
+</filter>
+<filter id="filter291" inkscape:menu="Color" inkscape:menu-tooltip="Colorize separately the three color channels" inkscape:label="Paint Channels" style="color-interpolation-filters:sRGB;">
+<feColorMatrix type="saturate" values="0" result="result3" />
+<feColorMatrix in="SourceGraphic" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 -0.5 -0.5 0 0 " result="colormatrix" />
+<feFlood flood-color="rgb(68,0,134)" result="result1" flood-opacity="1" />
+<feComposite in2="colormatrix" operator="in" result="result2" />
+<feComposite in2="colormatrix" result="result12" operator="arithmetic" k2="1" k3="-0.5" />
+<feBlend in2="result3" mode="normal" in="result12" result="result6" />
+<feColorMatrix result="colormatrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.5 1 -0.5 0 0 " in="SourceGraphic" />
+<feFlood flood-color="rgb(254,63,0)" result="result4" flood-opacity="1" />
+<feComposite in2="colormatrix" operator="in" result="result5" />
+<feComposite in2="colormatrix" result="result13" operator="arithmetic" k2="1" k3="-0.5" />
+<feBlend in2="result6" in="result13" mode="normal" result="result9" />
+<feColorMatrix in="SourceGraphic" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.5 -0.5 1 0 0 " result="colormatrix" />
+<feFlood flood-color="rgb(255,204,0)" result="result7" flood-opacity="1" />
+<feComposite in2="colormatrix" operator="in" result="result8" />
+<feComposite in2="colormatrix" result="result14" operator="arithmetic" k2="1" k3="-0.5" />
+<feBlend in2="result9" mode="normal" in="result14" result="result10" />
+<feComposite in2="SourceGraphic" operator="in" result="result11" in="result10" />
+</filter>
+<filter id="filter451" inkscape:menu="Fill and Transparency" inkscape:menu-tooltip="Create a semi transparent posterized image" style="color-interpolation-filters:sRGB" inkscape:label="Posterized Light Eraser 4">
+<feGaussianBlur stdDeviation="0.01" result="result1" in="SourceGraphic" />
+<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 50 0 " result="fbSourceGraphic" in="result1" />
+<feColorMatrix type="saturate" result="result8" values="1" />
+<feComponentTransfer in="result8" result="result7">
+<feFuncR tableValues="0 0.2 0.4 0.6 0.8 1 1" type="discrete" />
+<feFuncG tableValues="0 0.2 0.4 0.6 0.8 1 1" type="discrete" />
+<feFuncB tableValues="0 0.2 0.4 0.6 0.8 1 1" type="discrete" />
+</feComponentTransfer>
+<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.21 -0.72 -0.07 1 0 " result="result2" in="result7" />
+<feComposite in2="SourceGraphic" operator="in" result="result9" in="result2" />
+</filter>
+<filter id="filter499" inkscape:menu="Color" inkscape:menu-tooltip="Like Duochrome but with three colors" inkscape:label="Trichrome" style="color-interpolation-filters:sRGB;">
+<feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.21 -0.72 -0.07 1 0 " result="result1" />
+<feColorMatrix result="result3" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 2 -1 " />
+<feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.21 0.72 0.07 0 0 " in="SourceGraphic" result="result2" />
+<feColorMatrix result="result9" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1.5 -0.5 " />
+<feMerge result="result11">
+<feMergeNode in="result3" />
+<feMergeNode in="result9" />
+</feMerge>
+<feFlood flood-opacity="1" flood-color="rgb(186,22,91)" result="result10" in="SourceGraphic" />
+<feComposite in2="result11" result="result12" operator="out" />
+<feFlood flood-opacity="1" result="result13" in="SourceGraphic" flood-color="rgb(1,171,171)" />
+<feComposite in2="result3" result="result14" operator="in" />
+<feComposite in2="result12" result="result17" k3="1" k2="1" operator="arithmetic" />
+<feFlood flood-opacity="1" result="result15" flood-color="rgb(255,255,0)" in="SourceGraphic" />
+<feComposite in2="result9" result="result16" operator="in" />
+<feComposite in2="result17" result="result18" k3="1" k2="1" operator="arithmetic" />
+<feComposite in2="SourceGraphic" operator="in" />
+</filter>
+<filter id="filter533" inkscape:menu="Fill and Transparency" inkscape:menu-tooltip="Make the image progressively transparent without alterating its lightness" inkscape:label="White to Transparency" style="color-interpolation-filters:sRGB">
+<feColorMatrix values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -1 0 0 1 0 " result="result5" />
+<feColorMatrix values="1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 -1 0 1 0 " in="SourceGraphic" result="result4" />
+<feBlend in2="result4" result="result3" mode="lighten" in="result5" />
+<feColorMatrix in="SourceGraphic" values="1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 -1 1 0 " result="result2" />
+<feBlend in2="result2" mode="lighten" result="result3" in="result3" />
+<feComposite in2="SourceGraphic" operator="in" in="result3" />
+</filter>
+<filter id="filter581" inkscape:menu="Morphology" inkscape:menu-tooltip="Blurred multiple contour for objects" y="-0.2" x="-0.34" width="1.6" height="1.4" inkscape:label="Contouring table" style="color-interpolation-filters:sRGB">
+<feFlood result="result2" flood-color="rgb(255,255,255)" />
+<feGaussianBlur result="result1" in="SourceAlpha" stdDeviation="17" />
+<feComposite in2="result1" result="result17" operator="in" />
+<feComposite in2="result2" in="result17" result="fbSourceGraphic" operator="over" />
+<feComponentTransfer in="fbSourceGraphic" result="result9">
+<feFuncR type="table" tableValues="0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1" />
+<feFuncG type="table" tableValues="0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1" />
+<feFuncB type="table" tableValues="0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1" />
+</feComponentTransfer>
+<feColorMatrix result="result6" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.21 -0.72 -0.07 1 0 " in="result9" />
+<feFlood flood-color="rgb(128,128,128)" result="result8" />
+<feComposite in2="result6" result="result12" operator="in" />
+</filter>
+<filter id="filter609" inkscape:menu="Morphology" inkscape:menu-tooltip="Converts blurred contour to posterized steps" inkscape:label="Posterized Blur" style="color-interpolation-filters:sRGB;">
+<feComposite in2="SourceGraphic" result="result1" k4="1" operator="arithmetic" />
+<feGaussianBlur in="SourceAlpha" result="blur" stdDeviation="17" />
+<feComposite in2="blur" in="blur" result="composite3" operator="in" />
+<feBlend in2="result1" result="fbSourceGraphic" mode="multiply" />
+<feComponentTransfer result="component1" in="fbSourceGraphic">
+<feFuncR tableValues="0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 1" type="discrete" />
+<feFuncG tableValues="0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 1" type="discrete" />
+<feFuncB tableValues="0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 1" type="discrete" />
+</feComponentTransfer>
+<feColorMatrix result="colormatrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.2125 -0.7154 -0.0721 1 0 " />
+<feGaussianBlur stdDeviation="10" in="SourceGraphic" result="result2" />
+<feColorMatrix result="result3" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 50 0 " />
+<feComponentTransfer in="result3" result="component1">
+<feFuncR type="discrete" tableValues="0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 1" />
+<feFuncG type="discrete" tableValues="0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 1" />
+<feFuncB type="discrete" tableValues="0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 1" />
+</feComponentTransfer>
+<feComposite in2="colormatrix" operator="in" />
+</filter>
+<filter id="filter672" inkscape:menu="Morphology" inkscape:menu-tooltip="Sharp multiple contour for objects" style="color-interpolation-filters:sRGB" inkscape:label="Contouring discrete" height="1.4" width="1.6" x="-0.34" y="-0.2">
+<feFlood flood-color="rgb(255,255,255)" result="result2" />
+<feGaussianBlur stdDeviation="14" in="SourceAlpha" result="result1" />
+<feComposite in2="result1" operator="in" result="result17" />
+<feComposite in2="result2" operator="over" result="fbSourceGraphic" in="result17" stdDeviation="23" />
+<feComponentTransfer result="result9" in="fbSourceGraphic">
+<feFuncR tableValues="0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1" type="discrete" />
+<feFuncG tableValues="0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1" type="discrete" />
+<feFuncB tableValues="0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 1" type="discrete" />
+</feComponentTransfer>
+<feColorMatrix in="result9" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.21 -0.72 -0.07 1 0 " result="result6" />
+<feFlood result="result8" flood-color="rgb(128,128,128)" />
+<feComposite in2="result6" operator="in" result="result12" />
+</filter>
 </defs>
 </svg>
