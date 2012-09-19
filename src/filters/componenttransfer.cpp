@@ -100,7 +100,7 @@ sp_feComponentTransfer_build(SPObject *object, SPDocument *document, Inkscape::X
     /*LOAD ATTRIBUTES FROM REPR HERE*/
 
     //do we need this?
-    document->addResource("feComponentTransfer", object);
+    //document->addResource("feComponentTransfer", object);
 }
 
 static void sp_feComponentTransfer_children_modified(SPFeComponentTransfer *sp_componenttransfer)
