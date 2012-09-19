@@ -59,6 +59,7 @@ struct _Ink_ComboBoxEntry_Action {
   gboolean            popup;      // Do we pop-up an entry-completion dialog?
   gchar              *warning;    // Text for warning that entry isn't in list.
   gchar              *altx_name;  // Target for Alt-X keyboard shortcut.
+  GtkWidget          *focusWidget;
 };
 
 
@@ -74,7 +75,8 @@ Ink_ComboBoxEntry_Action *ink_comboboxentry_action_new ( const gchar  *name,
 							 GtkTreeModel *model,
 							 gint          entry_width = -1,
 							 gint          extra_width = -1,
-							 gpointer cell_data_func = NULL );
+							 gpointer cell_data_func = NULL,
+							 GtkWidget* focusWidget = NULL);
 
 GtkTreeModel     *ink_comboboxentry_action_get_model( Ink_ComboBoxEntry_Action* action );
 GtkComboBox      *ink_comboboxentry_action_get_comboboxentry( Ink_ComboBoxEntry_Action* action );

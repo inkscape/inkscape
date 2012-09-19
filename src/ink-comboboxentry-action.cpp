@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "ink-comboboxentry-action.h"
 
@@ -42,6 +43,7 @@ static gint check_comma_separated_text( Ink_ComboBoxEntry_Action* action );
 static void combo_box_changed_cb( GtkComboBox* widget, gpointer data );
 static void entry_activate_cb( GtkEntry* widget, gpointer data );
 static gboolean match_selected_cb( GtkEntryCompletion* widget, GtkTreeModel* model, GtkTreeIter* iter, gpointer data );
+static gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data );
 
 enum {
   PROP_MODEL = 1,
@@ -50,7 +52,8 @@ enum {
   PROP_ENTRY_WIDTH,
   PROP_EXTRA_WIDTH,
   PROP_CELL_DATA_FUNC,
-  PROP_POPUP
+  PROP_POPUP,
+  PROP_FOCUS_WIDGET
 };
 
 enum {
@@ -105,6 +108,11 @@ static void ink_comboboxentry_action_set_property (GObject *object, guint proper
     action->popup  = g_value_get_boolean( value );
     break;
 
+  case PROP_FOCUS_WIDGET:
+   action->focusWidget = (GtkWidget*)g_value_get_pointer( value );
+   break;
+
+
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
   }
@@ -144,6 +152,11 @@ static void ink_comboboxentry_action_get_property (GObject *object, guint proper
   case PROP_POPUP:
     g_value_set_boolean (value, action->popup);
     break;
+
+  case PROP_FOCUS_WIDGET:
+    g_value_set_pointer (value, action->focusWidget);
+    break;
+
 
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -240,6 +253,13 @@ static void ink_comboboxentry_action_class_init (Ink_ComboBoxEntry_ActionClass *
                                                          false,
                                                          (GParamFlags)G_PARAM_READWRITE));
 
+  g_object_class_install_property( gobject_class,
+                                   PROP_FOCUS_WIDGET,
+                                   g_param_spec_pointer( "focus-widget",
+                                                         "Focus Widget",
+                                                         "The widget to return focus to",
+                                                         (GParamFlags)(G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT) ) );
+
   // We need to know when GtkComboBoxEvent or Menu ready for reading
   signals[CHANGED] = g_signal_new( "changed",
                                    G_TYPE_FROM_CLASS(klass),
@@ -269,6 +289,7 @@ static void ink_comboboxentry_action_init (Ink_ComboBoxEntry_Action *action)
   action->popup = false;
   action->warning = NULL;
   action->altx_name = NULL;
+  action->focusWidget = NULL;
 }
 
 GType ink_comboboxentry_action_get_type ()
@@ -306,7 +327,8 @@ Ink_ComboBoxEntry_Action *ink_comboboxentry_action_new (const gchar   *name,
                                                         GtkTreeModel  *model,
                                                         gint           entry_width,
                                                         gint           extra_width,
-                                                        void          *cell_data_func )
+                                                        void          *cell_data_func,
+                                                        GtkWidget      *focusWidget)
 {
   g_return_val_if_fail (name != NULL, NULL);
 
@@ -319,6 +341,7 @@ Ink_ComboBoxEntry_Action *ink_comboboxentry_action_new (const gchar   *name,
                                                   "entry_width",    entry_width,
                                                   "extra_width",    extra_width,
                                                   "cell_data_func", cell_data_func,
+                                                  "focus-widget",   focusWidget,
                                                   NULL);
 }
 
@@ -415,6 +438,7 @@ GtkWidget* create_tool_item( GtkAction* action )
 
       // Add signal for GtkEntry to check if finished typing.
       g_signal_connect( G_OBJECT(child), "activate", G_CALLBACK(entry_activate_cb), action );
+      g_signal_connect( G_OBJECT(child), "key-press-event", G_CALLBACK(keypress_cb), action );
 
     }
 
@@ -560,6 +584,7 @@ void ink_comboboxentry_action_popup_enable( Ink_ComboBoxEntry_Action* action ) {
     gtk_entry_completion_set_inline_selection( action->entry_completion, true );
 
     g_signal_connect (G_OBJECT (action->entry_completion),  "match-selected", G_CALLBACK (match_selected_cb), action );
+
 
   }
 }
@@ -764,3 +789,43 @@ static gboolean match_selected_cb( GtkEntryCompletion* /*widget*/, GtkTreeModel*
   return false;
 }
 
+void ink_comboboxentry_action_defocus( Ink_ComboBoxEntry_Action* action )
+{
+    if ( action->focusWidget ) {
+        gtk_widget_grab_focus( action->focusWidget );
+    }
+}
+
+gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
+{
+    gboolean wasConsumed = FALSE; /* default to report event not consumed */
+    guint key = 0;
+    Ink_ComboBoxEntry_Action* action = INK_COMBOBOXENTRY_ACTION( data );
+    gdk_keymap_translate_keyboard_state( gdk_keymap_get_for_display( gdk_display_get_default() ),
+                                         event->hardware_keycode, (GdkModifierType)event->state,
+                                         0, &key, 0, 0, 0 );
+
+    switch ( key ) {
+
+        // TODO Add bindings for Esc/Tab/LeftTab
+        case GDK_KEY_Escape:
+        {
+            //gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), action->private_data->lastVal );
+            ink_comboboxentry_action_defocus( action );
+            wasConsumed = TRUE;
+        }
+        break;
+
+        case GDK_KEY_Return:
+        case GDK_KEY_KP_Enter:
+        {
+            ink_comboboxentry_action_defocus( action );
+            //wasConsumed = TRUE;
+        }
+        break;
+
+
+    }
+
+    return wasConsumed;
+}
