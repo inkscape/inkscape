@@ -20,6 +20,9 @@
 
 #include <2geom/transforms.h>
 #include <2geom/bezier-curve.h>
+#include <2geom/crossing.h>
+#include <2geom/line.h>
+#include <2geom/angle.h>
 
 #include "style.h"
 #include "document-private.h"
@@ -355,10 +358,45 @@ SPGradient *sp_gradient_reset_to_userspace(SPGradient *gr, SPItem *item)
             g_free(c);
         }
     } else if (SP_IS_LINEARGRADIENT(gr)) {
-        sp_repr_set_svg_double(repr, "x1", (center - Geom::Point(width/2, 0))[Geom::X]);
-        sp_repr_set_svg_double(repr, "y1", (center - Geom::Point(width/2, 0))[Geom::Y]);
-        sp_repr_set_svg_double(repr, "x2", (center + Geom::Point(width/2, 0))[Geom::X]);
-        sp_repr_set_svg_double(repr, "y2", (center + Geom::Point(width/2, 0))[Geom::Y]);
+
+        // Assume horizontal gradient by default (as per SVG 1.1)
+        Geom::Point pStart = center - Geom::Point(width/2, 0);
+        Geom::Point pEnd = center + Geom::Point(width/2, 0);
+
+        // Get the preferred gradient angle from prefs
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        double angle = prefs->getDouble("/dialogs/gradienteditor/angle", 0.0);
+
+        if (angle != 0.0) {
+
+            Geom::Line grl(center, Geom::deg_to_rad(angle));
+            Geom::LineSegment bbl1(bbox->corner(0), bbox->corner(1));
+            Geom::LineSegment bbl2(bbox->corner(1), bbox->corner(2));
+            Geom::LineSegment bbl3(bbox->corner(2), bbox->corner(3));
+            Geom::LineSegment bbl4(bbox->corner(3), bbox->corner(0));
+
+            // Find where our gradient line intersects the bounding box.
+            if (intersection(bbl1, grl)) {
+                pStart = bbl1.pointAt((*intersection(bbl1, grl)).ta);
+                pEnd = bbl3.pointAt((*intersection(bbl3, grl)).ta);
+                if (intersection(bbl1, grl.ray(grl.angle()))) {
+                    std::swap(pStart, pEnd);
+                }
+            } else if (intersection(bbl2, grl)) {
+                pStart = bbl2.pointAt((*intersection(bbl2, grl)).ta);
+                pEnd = bbl4.pointAt((*intersection(bbl4, grl)).ta);
+                if (intersection(bbl2, grl.ray(grl.angle()))) {
+                    std::swap(pStart, pEnd);
+                }
+            }
+
+        }
+
+        sp_repr_set_svg_double(repr, "x1", pStart[Geom::X]);
+        sp_repr_set_svg_double(repr, "y1", pStart[Geom::Y]);
+        sp_repr_set_svg_double(repr, "x2", pEnd[Geom::X]);
+        sp_repr_set_svg_double(repr, "y2", pEnd[Geom::Y]);
+
     } else {
         // Mesh
         // THIS IS BEING CALLED TWICE WHENEVER A NEW GRADIENT IS CREATED, WRITING HERE CAUSES PROBLEMS

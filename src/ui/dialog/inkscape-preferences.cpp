@@ -478,6 +478,11 @@ void InkscapePreferences::initPageTools()
     _page_gradient.add_line( false, "", _misc_gradienteditor, "",
                            _("When on, the Gradient Edit button in the Fill & Stroke dialog will show the legacy Gradient Editor dialog, when off the Gradient Tool will be used"), true);
 
+    _misc_gradientangle.init("/dialogs/gradienteditor/angle", -359, 359, 1, 90, 0, false, false);
+    _page_gradient.add_line( false, _("Linear gradient _angle:"), _misc_gradientangle, "",
+                           _("Default angle of new linear gradients in degrees (clockwise from horizontal"), false);
+
+
     //Dropper
     this->AddPage(_page_dropper, _("Dropper"), iter_tools, PREFS_PAGE_TOOLS_DROPPER);
     this->AddSelcueCheckbox(_page_dropper, "/tools/dropper", true);
