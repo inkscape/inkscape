@@ -346,6 +346,41 @@ void SPGradient::setSwatch( bool swatch )
     }
 }
 
+
+/**
+ * return true if this gradient is "equivalent" to that gradient.
+ * Equivalent meaning they have the same stop count, same stop colors and same stop opacity
+ * @param that - A gradient to compare this to
+ */
+gboolean SPGradient::isEquivalent(SPGradient *that)
+{
+    //TODO Make this work for mesh gradients
+
+    if (this->getStopCount() != that->getStopCount())
+        return FALSE;
+
+    if (this->hasStops() != that->hasStops())
+        return FALSE;
+
+    if (!this->getVector() || !that->getVector())
+        return FALSE;
+
+    SPStop *as = this->getVector()->getFirstStop();
+    SPStop *bs = that->getVector()->getFirstStop();
+
+    while (as && bs) {
+        if (!as->getEffectiveColor().isClose(bs->getEffectiveColor(), 0.001) ||
+                as->offset != bs->offset) {
+            return FALSE;
+        }
+        as = as->getNextStop();
+        bs = bs->getNextStop();
+    }
+
+    return TRUE;
+}
+
+
 /**
  * Return stop's color as 32bit value.
  */
@@ -2210,6 +2245,7 @@ sp_meshgradient_repr_write(SPMeshGradient *mg)
 {
     mg->array.write( mg );
 }
+
 
 /*
   Local Variables:

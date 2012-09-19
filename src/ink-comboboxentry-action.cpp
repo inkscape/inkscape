@@ -807,7 +807,7 @@ gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
 
     switch ( key ) {
 
-        // TODO Add bindings for Esc/Tab/LeftTab
+        // TODO Add bindings for Tab/LeftTab
         case GDK_KEY_Escape:
         {
             //gtk_spin_button_set_value( GTK_SPIN_BUTTON(widget), action->private_data->lastVal );

@@ -143,6 +143,7 @@ public:
     SPStop* getFirstStop();
     int getStopCount() const;
 
+    gboolean isEquivalent(SPGradient *b);
 
     /** Mesh Gradients **************/
 

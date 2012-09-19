@@ -26,6 +26,7 @@
 #include "xml/node.h"
 #include "xml/repr.h"
 #include "sp-root.h"
+#include "sp-gradient.h"
 
 typedef enum { REF_HREF, REF_STYLE, REF_URL, REF_CLIPBOARD } ID_REF_TYPE;
 
@@ -287,6 +288,33 @@ prevent_id_clashes(SPDocument *imported_doc, SPDocument *current_doc)
     change_clashing_ids(imported_doc, current_doc, imported_root, refmap,
                         &id_changes);
     fix_up_refs(refmap, id_changes);
+
+    delete refmap;
+}
+
+/*
+ * Change any references of svg:def from_obj into to_obj
+ */
+void
+change_def_references(SPObject *from_obj, SPObject *to_obj)
+{
+    refmap_type *refmap = new refmap_type;
+    id_changelist_type id_changes;
+    SPDocument *current_doc = from_obj->document;
+    std::string old_id(from_obj->getId());
+
+    find_references(current_doc->getRoot(), refmap);
+
+    refmap_type::const_iterator pos = refmap->find(old_id);
+    if (pos != refmap->end()) {
+        std::list<IdReference>::const_iterator it;
+        const std::list<IdReference>::const_iterator it_end = pos->second.end();
+        for (it = pos->second.begin(); it != it_end; ++it) {
+            if (it->type == REF_STYLE) {
+                sp_style_set_property_url(it->elem, it->attr, to_obj, false);
+            }
+        }
+    }
 
     delete refmap;
 }

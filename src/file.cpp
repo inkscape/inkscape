@@ -1142,6 +1142,8 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
             place_to_insert = in_doc->getRoot();
         }
 
+        in_doc->importDefs(doc);
+
         // Construct a new object representing the imported image,
         // and insert it into the current document.
         SPObject *new_obj = NULL;
@@ -1162,12 +1164,7 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
             // don't lose top-level defs or style elements
             else if (child->getRepr()->type() == Inkscape::XML::ELEMENT_NODE) {
                 const gchar *tag = child->getRepr()->name();
-                if (!strcmp(tag, "svg:defs")) {
-                    for ( SPObject *x = child->firstChild(); x; x = x->getNext() ) {
-                        in_defs->getRepr()->addChild(x->getRepr()->duplicate(xml_in_doc), last_def);
-                    }
-                }
-                else if (!strcmp(tag, "svg:style")) {
+                if (!strcmp(tag, "svg:style")) {
                     in_doc->getRoot()->appendChildRepr(child->getRepr()->duplicate(xml_in_doc));
                 }
             }
