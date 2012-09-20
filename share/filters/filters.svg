@@ -2425,7 +2425,7 @@ sodipodi:docname="filters.svg">
 <feComposite result="result14" operator="over" in2="fbSourceGraphic" in="fbSourceGraphic" />
 <feComposite in="result14" operator="in" in2="SourceGraphic" result="result15" />
 </filter>
-<filter id="filter53" inkscape:menu="Bump" style="color-interpolation-filters:sRGB;" inkscape:menu-tooltip="Carving emboss effect" inkscape:label="Bump Engraving">
+<filter id="filter53" inkscape:menu="Bumps" style="color-interpolation-filters:sRGB;" inkscape:menu-tooltip="Carving emboss effect" inkscape:label="Bump Engraving">
 <feConvolveMatrix in="SourceGraphic" bias="0" divisor="0" targetX="1" targetY="1" result="result10" kernelMatrix="0 100 0 100 -405 100 0 100 0 " order="3 3" />
 <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.21 -0.72 -0.07 1 0 " in="result10" type="matrix" result="result2" />
 <feGaussianBlur result="result11" stdDeviation="0.01" />
@@ -2458,7 +2458,7 @@ sodipodi:docname="filters.svg">
 </feComponentTransfer>
 <feComposite in2="SourceGraphic" in="fbSourceGraphic" result="composite" k2="1" operator="in" />
 </filter>
-<filter id="filter109" inkscape:menu="Bump" inkscape:menu-tooltip="Convoluted emboss effect" style="color-interpolation-filters:sRGB;" inkscape:label="Convoluted Bump">
+<filter id="filter109" inkscape:menu="Bumps" inkscape:menu-tooltip="Convoluted emboss effect" style="color-interpolation-filters:sRGB;" inkscape:label="Convoluted Bump">
 <feConvolveMatrix in="SourceGraphic" bias="0" divisor="0" targetX="1" targetY="1" result="result10" kernelMatrix="0 100 0 100 -401 100 0 100 0 " order="3 3" />
 <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.21 -0.72 -0.07 1 0 " in="result10" type="matrix" result="result2" />
 <feGaussianBlur result="result11" stdDeviation="0.01" />
