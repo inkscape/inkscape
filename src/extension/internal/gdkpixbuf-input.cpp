@@ -80,6 +80,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         double width = gdk_pixbuf_get_width(pb);
         double height = gdk_pixbuf_get_height(pb);
         double defaultxdpi = prefs->getDouble("/dialogs/import/defaultxdpi/value", PX_PER_IN);
+        bool forcexdpi = prefs->getBool("/dialogs/import/forcexdpi");
         ImageResolution *ir = 0;
         double xscale = 1;
         double yscale = 1;
@@ -91,9 +92,9 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
                 xscale = 72.0 / (double)dpi;
             }
         } else {
-            if (!ir)
+            if (!ir && !forcexdpi)
                 ir = new ImageResolution(uri);
-            if (ir->ok())
+            if (ir && ir->ok())
                 xscale = 900.0 / floor(10.*ir->x() + .5);  // round-off to 0.1 dpi
             else
                 xscale = 90.0 / defaultxdpi;
@@ -107,9 +108,9 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
                 yscale = 72.0 / (double)dpi;
             }
         } else {
-            if (!ir)
+            if (!ir && !forcexdpi)
                 ir = new ImageResolution(uri);
-            if (ir->ok())
+            if (ir && ir->ok())
                 yscale = 900.0 / floor(10.*ir->y() + .5);  // round-off to 0.1 dpi
             else
                 yscale = 90.0 / defaultxdpi;

@@ -1394,6 +1394,9 @@ void InkscapePreferences::initPageBitmaps()
     _importexport_import_res.init("/dialogs/import/defaultxdpi/value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
     _page_bitmaps.add_line( false, _("Default _import resolution:"), _importexport_import_res, _("dpi"),
                             _("Default bitmap resolution (in dots per inch) for bitmap import"), false);
+    _importexport_import_res_override.init(_("Override file resolution"), "/dialogs/import/forcexdpi", false);
+    _page_bitmaps.add_line( false, "", _importexport_import_res_override, "",
+                            _("Use default bitmap resolution in favor of information from file"));
 
     this->AddPage(_page_bitmaps, _("Bitmaps"), PREFS_PAGE_BITMAPS);
 }
