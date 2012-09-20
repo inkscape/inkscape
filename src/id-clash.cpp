@@ -260,10 +260,9 @@ fix_up_refs(const refmap_type *refmap, const id_changelist_type &id_changes)
                 gchar *url = g_strdup_printf("url(#%s)", obj->getId());
                 sp_repr_css_set_property(style, it->attr, url);
                 g_free(url);
-                gchar *style_string = sp_repr_css_write_string(style);
-                it->elem->getRepr()->setAttribute("style", style_string);
-                g_free(style_string);
-
+                Glib::ustring style_string;
+                sp_repr_css_write_string(style, style_string);
+                it->elem->getRepr()->setAttribute("style", style_string.c_str());
             } else {
                 g_assert(0); // shouldn't happen
             }

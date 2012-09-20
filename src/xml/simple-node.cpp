@@ -318,8 +318,7 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
 
     // Check usefulness of attributes on elements in the svg namespace, optionally don't add them to tree.
     Glib::ustring element = g_quark_to_string(_name);
-    //g_warning("setAttribute:  %s: %s: %s", element.c_str(), name, value);
-
+    // g_message("setAttribute:  %s: %s: %s", element.c_str(), name, value);
     gchar* cleaned_value = g_strdup( value );
 
     // Only check elements in SVG name space and don't block setting attribute to NULL.
@@ -347,7 +346,7 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
             // tree (and thus has no parent), default values will not be tested.
             if( !strcmp( name, "style" ) && (flags >= SP_ATTR_CLEAN_STYLE_WARN) ) {
                 g_free( cleaned_value );
-                cleaned_value = sp_attribute_clean_style( this, value, flags );
+                cleaned_value = const_cast<char*>(sp_attribute_clean_style( this, value, flags ).c_str());
                 // if( g_strcmp0( value, cleaned_value ) ) {
                 //     g_warning( "SimpleNode::setAttribute: %s", id.c_str() );
                 //     g_warning( "     original: %s", value);
@@ -401,9 +400,7 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
         _observers.notifyAttributeChanged(*this, key, old_value, new_value);
         //g_warning( "setAttribute notified: %s: %s: %s: %s", name, element.c_str(), old_value, new_value ); 
     }
-
     g_free( cleaned_value );
-
 }
 
 void SimpleNode::addChild(Node *generic_child, Node *generic_ref) {

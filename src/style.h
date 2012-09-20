@@ -617,7 +617,7 @@ void sp_style_unset_property_attrs(SPObject *o);
 void sp_style_set_property_url (SPObject *item, gchar const *property, SPObject *linked, bool recursive);
 
 gchar *attribute_unquote(gchar const *val);
-gchar *css2_escape_quote(gchar const *val);
+Glib::ustring css2_escape_quote(gchar const *val);
 
 #endif // SEEN_SP_STYLE_H
 
