@@ -1766,15 +1766,16 @@ void ContextMenu::MakeItemMenu (void)
     AddSeparator();
     
     /* Select item */
-    mi = manage(new Gtk::MenuItem(_("_Select This"),1));
-    if (_desktop->selection->includes(_item)) {
-        mi->set_sensitive(FALSE);
-    } else {
-        mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ItemSelectThis));
+    if (Inkscape::Verb::getbyid( "org.inkscape.followlink" )) {
+        mi = manage(new Gtk::MenuItem(_("_Select This"),1));
+        if (_desktop->selection->includes(_item)) {
+            mi->set_sensitive(FALSE);
+        } else {
+            mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ItemSelectThis));
+        }
+        mi->show();
+        append(*mi);
     }
-    mi->show();
-    append(*mi);
-    
 
 
     mi = manage(new Gtk::MenuItem(_("Select Same")));
@@ -2034,7 +2035,18 @@ void ContextMenu::AnchorLinkProperties(void)
 
 void ContextMenu::AnchorLinkFollow(void)
 {
-    /* shell out to an external browser here */
+
+    if (_desktop->selection->isEmpty()) {
+        _desktop->selection->set(_item);
+    }
+    // Opening the selected links with a python extension
+    Inkscape::Verb *verb = Inkscape::Verb::getbyid( "org.inkscape.followlink" );
+    if (verb) {
+        SPAction *action = verb->get_action(_desktop);
+        if (action) {
+            sp_action_perform(action, NULL);
+        }
+    }
 }
 
 void ContextMenu::AnchorLinkRemove(void)

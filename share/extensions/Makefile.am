@@ -79,6 +79,7 @@ extensions = \
 	ink2canvas.py \
 	inkex.py \
 	Inkscape.pm \
+	inkscape_follow_link.py \
 	inkwebeffect.py \
 	interp.py \
 	interp_att_g.py \
@@ -263,6 +264,7 @@ modules = \
 	handles.inx \
 	hpgl_output.inx \
 	ink2canvas.inx \
+	inkscape_follow_link.inx \
 	inkscape_help_askaquestion.inx \
 	inkscape_help_commandline.inx \
 	inkscape_help_faq.inx\
