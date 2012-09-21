@@ -53,6 +53,9 @@
 #ifdef WITH_LIBWPG
 #include "internal/wpg-input.h"
 #endif
+#ifdef WITH_LIBVISIO
+#include "internal/vsd-input.h"
+#endif
 #include "preferences.h"
 #include "io/sys.h"
 #ifdef WITH_DBUS
@@ -182,6 +185,9 @@ init()
     Internal::LatexOutput::init();
 #ifdef WITH_LIBWPG
     Internal::WpgInput::init();
+#endif
+#ifdef WITH_LIBVISIO
+    Internal::VsdInput::init();
 #endif
 
     /* Effects */

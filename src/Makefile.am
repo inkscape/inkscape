@@ -51,6 +51,7 @@ all_libs =			\
 	$(PYTHON_LIBS)		\
 	$(INKBOARD_LIBS)	\
 	$(LIBWPG_LIBS)		\
+	$(LIBVISIO_LIBS)		\
 	$(DBUS_LIBS)		\
 	$(GDL_LIBS)             \
 	$(IMAGEMAGICK_LIBS)
@@ -74,6 +75,7 @@ INCLUDES =	\
 	$(IMAGEMAGICK_CFLAGS) \
 	$(INKBOARD_CFLAGS) \
 	$(LIBWPG_CFLAGS) \
+	$(LIBVISIO_CFLAGS) \
 	$(DBUS_CFLAGS) \
 	$(GDL_CFLAGS)  \
 	$(XFT_CFLAGS)	\

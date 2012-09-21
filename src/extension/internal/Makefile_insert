@@ -4,7 +4,12 @@ if WITH_LIBWPG
 ink_common_sources += \
 	extension/internal/wpg-input.cpp	\
 	extension/internal/wpg-input.h
+endif
 
+if WITH_LIBVISIO
+ink_common_sources += \
+	extension/internal/vsd-input.cpp	\
+	extension/internal/vsd-input.h
 endif
 
 if USE_IMAGE_MAGICK
