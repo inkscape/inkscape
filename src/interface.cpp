@@ -322,6 +322,7 @@ sp_ui_close_view(GtkWidget */*widget*/)
         SPDocument *doc = SPDocument::createNewDoc( templateUri.c_str() , TRUE, true );
         dt->change_document(doc);
         sp_namedview_window_from_document(dt);
+        sp_namedview_update_layers_from_document(dt);
         return;
     }
 
