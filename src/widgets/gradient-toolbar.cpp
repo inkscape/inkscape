@@ -633,27 +633,7 @@ static void gr_linked_changed(GtkToggleAction *act, gpointer /*data*/)
 static void gr_reverse(GtkWidget * /*button*/, gpointer data)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(data);
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-    SPEventContext *ev = sp_desktop_event_context(desktop);
-
-    if (!ev) {
-        return;
-    }
-
-    GrDrag *drag = ev->get_drag();
-
-    // First try selected dragger
-    if (drag && drag->selected) {
-        drag->selected_reverse_vector();
-    } else { // If no drag or no dragger selected, act on selection (both fill and stroke gradients)
-        for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
-            sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_FILL);
-            sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_STROKE);
-        }
-    }
-    // we did an undoable action
-    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_GRADIENT,
-                       _("Invert gradient"));
+    sp_gradient_invert_selected_gradients(desktop, Inkscape::FOR_FILL_AND_STROKE);
 }
 
 /*

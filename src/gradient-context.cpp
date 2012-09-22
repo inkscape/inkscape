@@ -837,18 +837,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_r:
         case GDK_KEY_R:
             if (MOD__SHIFT_ONLY) {
-                // First try selected dragger
-                if (drag && drag->selected) {
-                    drag->selected_reverse_vector();
-                } else { // If no drag or no dragger selected, act on selection (both fill and stroke gradients)
-                    for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
-                        sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_FILL);
-                        sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_STROKE);
-                    }
-                }
-                // we did an undoable action
-                DocumentUndo::done(sp_desktop_document (desktop), SP_VERB_CONTEXT_GRADIENT,
-                                   _("Invert gradient"));
+                sp_gradient_invert_selected_gradients(desktop, Inkscape::FOR_FILL_AND_STROKE);
                 ret = TRUE;
             }
             break;

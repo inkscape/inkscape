@@ -26,7 +26,13 @@
 
 #include "style.h"
 #include "document-private.h"
+#include "document-undo.h"
 #include "desktop-style.h"
+#include "desktop-handles.h"
+#include "event-context.h"
+#include "selection.h"
+#include "verbs.h"
+#include <glibmm/i18n.h>
 
 #include "sp-gradient-reference.h"
 #include "sp-gradient-vector.h"
@@ -47,6 +53,7 @@
 
 #define noSP_GR_VERBOSE
 
+using Inkscape::DocumentUndo;
 
 namespace {
 
@@ -1507,6 +1514,36 @@ SPGradient *sp_gradient_vector_for_object( SPDocument *const doc, SPDesktop *con
     return sp_document_default_gradient_vector( doc, color, singleStop );
 }
 
+
+void sp_gradient_invert_selected_gradients(SPDesktop *desktop, Inkscape::PaintTarget fill_or_stroke)
+{
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+    SPEventContext *ev = sp_desktop_event_context(desktop);
+
+    if (!ev) {
+        return;
+    }
+
+    GrDrag *drag = ev->get_drag();
+
+    // First try selected dragger
+    if (drag && drag->selected) {
+        drag->selected_reverse_vector();
+    } else { // If no drag or no dragger selected, act on selection (both fill and stroke gradients)
+        for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
+            if (fill_or_stroke == Inkscape::FOR_FILL_AND_STROKE) {
+                sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_FILL);
+                sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_STROKE);
+            } else {
+                sp_item_gradient_reverse_vector(SP_ITEM(i->data), fill_or_stroke);
+            }
+        }
+    }
+
+    // we did an undoable action
+    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_GRADIENT,
+                       _("Invert gradient"));
+}
 
 /*
   Local Variables:

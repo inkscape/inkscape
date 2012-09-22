@@ -48,6 +48,7 @@
 #include "pixmaps/cursor-adj-s.xpm"
 #include "pixmaps/cursor-adj-l.xpm"
 #include "sp-cursor.h"
+#include "gradient-chemistry.h"
 
 static gdouble const _sw_presets[]     = { 32 ,  16 ,  10 ,  8 ,  6 ,  4 ,  3 ,  2 ,  1.5 ,  1 ,  0.75 ,  0.5 ,  0.25 ,  0.1 };
 static gchar const *const _sw_presets_str[] = {"32", "16", "10", "8", "6", "4", "3", "2", "1.5", "1", "0.75", "0.5", "0.25", "0.1"};
@@ -598,6 +599,12 @@ void SelectedStyle::on_fill_invert() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     guint32 color = _thisselected[SS_FILL];
     gchar c[64];
+    if (_mode[SS_FILL] == SS_LGRADIENT || _mode[SS_FILL] == SS_RGRADIENT) {
+        g_message("Gradient");
+        sp_gradient_invert_selected_gradients(_desktop, Inkscape::FOR_FILL);
+        return;
+    }
+
     if (_mode[SS_FILL] != SS_COLOR) return;
     sp_svg_write_color (c, sizeof(c),
         SP_RGBA32_U_COMPOSE(
@@ -618,6 +625,11 @@ void SelectedStyle::on_stroke_invert() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     guint32 color = _thisselected[SS_STROKE];
     gchar c[64];
+    if (_mode[SS_FILL] == SS_LGRADIENT || _mode[SS_FILL] == SS_RGRADIENT) {
+        g_message("Gradient");
+        sp_gradient_invert_selected_gradients(_desktop, Inkscape::FOR_STROKE);
+        return;
+    }
     if (_mode[SS_STROKE] != SS_COLOR) return;
     sp_svg_write_color (c, sizeof(c),
         SP_RGBA32_U_COMPOSE(

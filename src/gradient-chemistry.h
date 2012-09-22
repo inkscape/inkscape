@@ -70,6 +70,7 @@ SPStop *sp_vector_add_stop(SPGradient *vector, SPStop* prev_stop, SPStop* next_s
 
 void sp_gradient_transform_multiply(SPGradient *gradient, Geom::Affine postmul, bool set);
 
+void sp_gradient_invert_selected_gradients(SPDesktop *desktop, Inkscape::PaintTarget fill_or_stroke);
 
 /**
  * Fetches either the fill or the stroke gradient from the given item.
