@@ -63,7 +63,7 @@ FillAndStroke::FillAndStroke()
     _layoutPageStrokePaint();
     _layoutPageStrokeStyle();
 
-    contents->pack_start(_composite_settings, false, false, 0);
+    contents->pack_start(_composite_settings, true, true, 0);
 
     show_all_children();
 

@@ -20,6 +20,7 @@
 #include "sp-filter.h"
 #include "ui/widget/combo-enums.h"
 #include "ui/widget/spin-slider.h"
+#include "ui/widget/spin-scale.h"
 #include "xml/helper-observer.h"
 #include "ui/dialog/desktop-tracker.h"
 

@@ -186,7 +186,7 @@ void DualSpinSlider::set_from_attribute(SPObject* o)
         gchar** toks = g_strsplit(val, " ", 2);
 
         if(toks) {
-            double v1, v2;
+            double v1 = 0.0, v2 = 0.0;
             if(toks[0])
                 v1 = v2 = Glib::Ascii::strtod(toks[0]);
             if(toks[1])

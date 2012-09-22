@@ -78,8 +78,8 @@ namespace Dialog {
 
 using Inkscape::UI::Widget::AttrWidget;
 using Inkscape::UI::Widget::ComboBoxEnum;
-using Inkscape::UI::Widget::DualSpinSlider;
-using Inkscape::UI::Widget::SpinSlider;
+using Inkscape::UI::Widget::DualSpinScale;
+using Inkscape::UI::Widget::SpinScale;
 
 
 // Returns the number of inputs available for the filter primitive type
@@ -484,8 +484,8 @@ public:
         : AttrWidget(SP_ATTR_VALUES),
           // TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
           _matrix(SP_ATTR_VALUES, _("This matrix determines a linear transform on color space. Each line affects one of the color components. Each column determines how much of each color component from the input is passed to the output. The last column does not depend on input colors, so can be used to adjust a constant component value.")),
-          _saturation(0, 0, 1, 0.1, 0.01, 2, SP_ATTR_VALUES),
-          _angle(0, 0, 360, 0.1, 0.01, 1, SP_ATTR_VALUES),
+          _saturation("", 0, 0, 1, 0.1, 0.01, 2, SP_ATTR_VALUES),
+          _angle("", 0, 0, 360, 0.1, 0.01, 1, SP_ATTR_VALUES),
           _label(_("None"), Gtk::ALIGN_START),
           _use_stored(false),
           _saturation_store(0),
@@ -567,8 +567,8 @@ private:
     }
 
     MatrixAttr _matrix;
-    SpinSlider _saturation;
-    SpinSlider _angle;
+    SpinScale _saturation;
+    SpinScale _angle;
     Gtk::Label _label;
 
     // Store separate values for the different color modes
@@ -808,22 +808,22 @@ public:
         return cmv;
     }
 
-    // SpinSlider
-    SpinSlider* add_spinslider(double def, const SPAttributeEnum attr, const Glib::ustring& label,
+    // SpinScale
+    SpinScale* add_spinscale(double def, const SPAttributeEnum attr, const Glib::ustring& label,
                          const double lo, const double hi, const double step_inc, const double climb, const int digits, char* tip_text = NULL)
     {
-        SpinSlider* spinslider = new SpinSlider(def, lo, hi, step_inc, climb, digits, attr, tip_text);
+        SpinScale* spinslider = new SpinScale("", def, lo, hi, step_inc, climb, digits, attr, tip_text);
         add_widget(spinslider, label);
         add_attr_widget(spinslider);
         return spinslider;
     }
 
-    // DualSpinSlider
-    DualSpinSlider* add_dualspinslider(const SPAttributeEnum attr, const Glib::ustring& label,
+    // DualSpinScale
+    DualSpinScale* add_dualspinscale(const SPAttributeEnum attr, const Glib::ustring& label,
                                        const double lo, const double hi, const double step_inc,
                                        const double climb, const int digits, char* tip_text1 = NULL, char* tip_text2 = NULL)
     {
-        DualSpinSlider* dss = new DualSpinSlider(lo, lo, hi, step_inc, climb, digits, attr, tip_text1, tip_text2);
+        DualSpinScale* dss = new DualSpinScale("", "", lo, lo, hi, step_inc, climb, digits, attr, tip_text1, tip_text2);
         add_widget(dss, label);
         add_attr_widget(dss);
         return dss;
@@ -971,8 +971,8 @@ public:
         // FIXME: these range values are complete crap
 
         _settings.type(LIGHT_DISTANT);
-        _settings.add_spinslider(0, SP_ATTR_AZIMUTH, _("Azimuth"), 0, 360, 1, 1, 0, _("Direction angle for the light source on the XY plane, in degrees"));
-        _settings.add_spinslider(0, SP_ATTR_ELEVATION, _("Elevation"), 0, 360, 1, 1, 0, _("Direction angle for the light source on the YZ plane, in degrees"));
+        _settings.add_spinscale(0, SP_ATTR_AZIMUTH, _("Azimuth"), 0, 360, 1, 1, 0, _("Direction angle for the light source on the XY plane, in degrees"));
+        _settings.add_spinscale(0, SP_ATTR_ELEVATION, _("Elevation"), 0, 360, 1, 1, 0, _("Direction angle for the light source on the YZ plane, in degrees"));
 
         _settings.type(LIGHT_POINT);
         _settings.add_multispinbutton(/*default x:*/ (double) 0, /*default y:*/ (double) 0, /*default z:*/ (double) 0, SP_ATTR_X, SP_ATTR_Y, SP_ATTR_Z, _("Location:"), -99999, 99999, 1, 100, 0, _("X coordinate"), _("Y coordinate"), _("Z coordinate"));
@@ -982,9 +982,9 @@ public:
         _settings.add_multispinbutton(/*default x:*/ (double) 0, /*default y:*/ (double) 0, /*default z:*/ (double) 0,
                                       SP_ATTR_POINTSATX, SP_ATTR_POINTSATY, SP_ATTR_POINTSATZ,
                                       _("Points At"), -99999, 99999, 1, 100, 0, _("X coordinate"), _("Y coordinate"), _("Z coordinate"));
-        _settings.add_spinslider(1, SP_ATTR_SPECULAREXPONENT, _("Specular Exponent"), 1, 100, 1, 1, 0, _("Exponent value controlling the focus for the light source"));
+        _settings.add_spinscale(1, SP_ATTR_SPECULAREXPONENT, _("Specular Exponent"), 1, 100, 1, 1, 0, _("Exponent value controlling the focus for the light source"));
         //TODO: here I have used 100 degrees as default value. But spec says that if not specified, no limiting cone is applied. So, there should be a way for the user to set a "no limiting cone" option.
-        _settings.add_spinslider(100, SP_ATTR_LIMITINGCONEANGLE, _("Cone Angle"), 1, 100, 1, 1, 0, _("This is the angle between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. No light is projected outside this cone."));
+        _settings.add_spinscale(100, SP_ATTR_LIMITINGCONEANGLE, _("Cone Angle"), 1, 100, 1, 1, 0, _("This is the angle between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. No light is projected outside this cone."));
     }
 
     Gtk::VBox& get_box()
@@ -2331,7 +2331,7 @@ void FilterEffectsDialog::show_all_vfunc()
 
 void FilterEffectsDialog::init_settings_widgets()
 {
-    // TODO: Find better range/climb-rate/digits values for the SpinSliders,
+    // TODO: Find better range/climb-rate/digits values for the SpinScales,
     //       most of the current values are complete guesses!
 
     _empty_settings.set_sensitive(false);
@@ -2358,18 +2358,18 @@ void FilterEffectsDialog::init_settings_widgets()
     /*
     //TRANSLATORS: for info on "Slope" and "Intercept", see http://id.mind.net/~zona/mmts/functionInstitute/linearFunctions/lsif.html
     _settings->add_combo(COMPONENTTRANSFER_TYPE_IDENTITY, SP_ATTR_TYPE, _("Type"), ComponentTransferTypeConverter);
-    _ct_slope = _settings->add_spinslider(1, SP_ATTR_SLOPE, _("Slope"), -10, 10, 0.1, 0.01, 2);
-    _ct_intercept = _settings->add_spinslider(0, SP_ATTR_INTERCEPT, _("Intercept"), -10, 10, 0.1, 0.01, 2);
-    _ct_amplitude = _settings->add_spinslider(1, SP_ATTR_AMPLITUDE, _("Amplitude"), 0, 10, 0.1, 0.01, 2);
-    _ct_exponent = _settings->add_spinslider(1, SP_ATTR_EXPONENT, _("Exponent"), 0, 10, 0.1, 0.01, 2);
-    _ct_offset = _settings->add_spinslider(0, SP_ATTR_OFFSET, _("Offset"), -10, 10, 0.1, 0.01, 2);*/
+    _ct_slope = _settings->add_spinscale(1, SP_ATTR_SLOPE, _("Slope"), -10, 10, 0.1, 0.01, 2);
+    _ct_intercept = _settings->add_spinscale(0, SP_ATTR_INTERCEPT, _("Intercept"), -10, 10, 0.1, 0.01, 2);
+    _ct_amplitude = _settings->add_spinscale(1, SP_ATTR_AMPLITUDE, _("Amplitude"), 0, 10, 0.1, 0.01, 2);
+    _ct_exponent = _settings->add_spinscale(1, SP_ATTR_EXPONENT, _("Exponent"), 0, 10, 0.1, 0.01, 2);
+    _ct_offset = _settings->add_spinscale(0, SP_ATTR_OFFSET, _("Offset"), -10, 10, 0.1, 0.01, 2);*/
 
     _settings->type(NR_FILTER_COMPOSITE);
     _settings->add_combo(COMPOSITE_OVER, SP_ATTR_OPERATOR, _("Operator:"), CompositeOperatorConverter);
-    _k1 = _settings->add_spinslider(0, SP_ATTR_K1, _("K1:"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
-    _k2 = _settings->add_spinslider(0, SP_ATTR_K2, _("K2:"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
-    _k3 = _settings->add_spinslider(0, SP_ATTR_K3, _("K3:"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
-    _k4 = _settings->add_spinslider(0, SP_ATTR_K4, _("K4:"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
+    _k1 = _settings->add_spinscale(0, SP_ATTR_K1, _("K1:"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
+    _k2 = _settings->add_spinscale(0, SP_ATTR_K2, _("K2:"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
+    _k3 = _settings->add_spinscale(0, SP_ATTR_K3, _("K3:"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
+    _k4 = _settings->add_spinscale(0, SP_ATTR_K4, _("K4:"), -10, 10, 0.1, 0.01, 2, _("If the arithmetic operation is chosen, each result pixel is computed using the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel values of the first and second inputs respectively."));
 
     _settings->type(NR_FILTER_CONVOLVEMATRIX);
     _convolve_order = _settings->add_dualspinbutton((char*)"3", SP_ATTR_ORDER, _("Size:"), 1, 5, 1, 1, 0, _("width of the convolve matrix"), _("height of the convolve matrix"));
@@ -2377,50 +2377,50 @@ void FilterEffectsDialog::init_settings_widgets()
     //TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
     _convolve_matrix = _settings->add_matrix(SP_ATTR_KERNELMATRIX, _("Kernel:"), _("This matrix describes the convolve operation that is applied to the input image in order to calculate the pixel colors at the output. Different arrangements of values in this matrix result in various possible visual effects. An identity matrix would lead to a motion blur effect (parallel to the matrix diagonal) while a matrix filled with a constant non-zero value would lead to a common blur effect."));
     _convolve_order->signal_attr_changed().connect(sigc::mem_fun(*this, &FilterEffectsDialog::convolve_order_changed));
-    _settings->add_spinslider(0, SP_ATTR_DIVISOR, _("Divisor:"), 0, 1000, 1, 0.1, 2, _("After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."));
-    _settings->add_spinslider(0, SP_ATTR_BIAS, _("Bias:"), -10, 10, 1, 0.01, 1, _("This value is added to each component. This is useful to define a constant value as the zero response of the filter."));
+    _settings->add_spinscale(0, SP_ATTR_DIVISOR, _("Divisor:"), 0, 1000, 1, 0.1, 2, _("After applying the kernelMatrix to the input image to yield a number, that number is divided by divisor to yield the final destination color value. A divisor that is the sum of all the matrix values tends to have an evening effect on the overall color intensity of the result."));
+    _settings->add_spinscale(0, SP_ATTR_BIAS, _("Bias:"), -10, 10, 1, 0.01, 1, _("This value is added to each component. This is useful to define a constant value as the zero response of the filter."));
     _settings->add_combo(CONVOLVEMATRIX_EDGEMODE_DUPLICATE, SP_ATTR_EDGEMODE, _("Edge Mode:"), ConvolveMatrixEdgeModeConverter, _("Determines how to extend the input image as necessary with color values so that the matrix operations can be applied when the kernel is positioned at or near the edge of the input image."));
     _settings->add_checkbutton(false, SP_ATTR_PRESERVEALPHA, _("Preserve Alpha"), "true", "false", _("If set, the alpha channel won't be altered by this filter primitive."));
 
     _settings->type(NR_FILTER_DIFFUSELIGHTING);
     _settings->add_color(/*default: white*/ 0xffffffff, SP_PROP_LIGHTING_COLOR, _("Diffuse Color:"), _("Defines the color of the light source"));
-    _settings->add_spinslider(1, SP_ATTR_SURFACESCALE, _("Surface Scale:"), -5, 5, 0.01, 0.001, 3, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
-    _settings->add_spinslider(1, SP_ATTR_DIFFUSECONSTANT, _("Constant:"), 0, 5, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
-    _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length:"), 0.01, 10, 1, 0.01, 1);
+    _settings->add_spinscale(1, SP_ATTR_SURFACESCALE, _("Surface Scale:"), -5, 5, 0.01, 0.001, 3, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
+    _settings->add_spinscale(1, SP_ATTR_DIFFUSECONSTANT, _("Constant:"), 0, 5, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
+    _settings->add_dualspinscale(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length:"), 0.01, 10, 1, 0.01, 1);
     _settings->add_lightsource();
 
     _settings->type(NR_FILTER_DISPLACEMENTMAP);
-    _settings->add_spinslider(0, SP_ATTR_SCALE, _("Scale:"), 0, 100, 1, 0.01, 1, _("This defines the intensity of the displacement effect."));
+    _settings->add_spinscale(0, SP_ATTR_SCALE, _("Scale:"), 0, 100, 1, 0.01, 1, _("This defines the intensity of the displacement effect."));
     _settings->add_combo(DISPLACEMENTMAP_CHANNEL_ALPHA, SP_ATTR_XCHANNELSELECTOR, _("X displacement:"), DisplacementMapChannelConverter, _("Color component that controls the displacement in the X direction"));
     _settings->add_combo(DISPLACEMENTMAP_CHANNEL_ALPHA, SP_ATTR_YCHANNELSELECTOR, _("Y displacement:"), DisplacementMapChannelConverter, _("Color component that controls the displacement in the Y direction"));
 
     _settings->type(NR_FILTER_FLOOD);
     _settings->add_color(/*default: black*/ 0, SP_PROP_FLOOD_COLOR, _("Flood Color:"), _("The whole filter region will be filled with this color."));
-    _settings->add_spinslider(1, SP_PROP_FLOOD_OPACITY, _("Opacity:"), 0, 1, 0.1, 0.01, 2);
+    _settings->add_spinscale(1, SP_PROP_FLOOD_OPACITY, _("Opacity:"), 0, 1, 0.1, 0.01, 2);
 
     _settings->type(NR_FILTER_GAUSSIANBLUR);
-    _settings->add_dualspinslider(SP_ATTR_STDDEVIATION, _("Standard Deviation:"), 0.01, 100, 1, 0.01, 1, _("The standard deviation for the blur operation."));
+    _settings->add_dualspinscale(SP_ATTR_STDDEVIATION, _("Standard Deviation:"), 0.01, 100, 1, 0.01, 1, _("The standard deviation for the blur operation."));
 
     _settings->type(NR_FILTER_MERGE);
     _settings->add_no_params();
 
     _settings->type(NR_FILTER_MORPHOLOGY);
     _settings->add_combo(MORPHOLOGY_OPERATOR_ERODE, SP_ATTR_OPERATOR, _("Operator:"), MorphologyOperatorConverter, _("Erode: performs \"thinning\" of input image.\nDilate: performs \"fattenning\" of input image."));
-    _settings->add_dualspinslider(SP_ATTR_RADIUS, _("Radius:"), 0, 100, 1, 0.01, 1);
+    _settings->add_dualspinscale(SP_ATTR_RADIUS, _("Radius:"), 0, 100, 1, 0.01, 1);
 
     _settings->type(NR_FILTER_IMAGE);
     _settings->add_fileorelement(SP_ATTR_XLINK_HREF, _("Source of Image:"));
 
     _settings->type(NR_FILTER_OFFSET);
-    _settings->add_spinslider(0, SP_ATTR_DX, _("Delta X:"), -100, 100, 1, 0.01, 1, _("This is how far the input image gets shifted to the right"));
-    _settings->add_spinslider(0, SP_ATTR_DY, _("Delta Y:"), -100, 100, 1, 0.01, 1, _("This is how far the input image gets shifted downwards"));
+    _settings->add_spinscale(0, SP_ATTR_DX, _("Delta X:"), -100, 100, 1, 0.01, 1, _("This is how far the input image gets shifted to the right"));
+    _settings->add_spinscale(0, SP_ATTR_DY, _("Delta Y:"), -100, 100, 1, 0.01, 1, _("This is how far the input image gets shifted downwards"));
 
     _settings->type(NR_FILTER_SPECULARLIGHTING);
     _settings->add_color(/*default: white*/ 0xffffffff, SP_PROP_LIGHTING_COLOR, _("Specular Color:"), _("Defines the color of the light source"));
-    _settings->add_spinslider(1, SP_ATTR_SURFACESCALE, _("Surface Scale:"), -5, 5, 0.1, 0.01, 2, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
-    _settings->add_spinslider(1, SP_ATTR_SPECULARCONSTANT, _("Constant:"), 0, 5, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
-    _settings->add_spinslider(1, SP_ATTR_SPECULAREXPONENT, _("Exponent:"), 1, 50, 1, 0.01, 1, _("Exponent for specular term, larger is more \"shiny\"."));
-    _settings->add_dualspinslider(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length:"), 0.01, 10, 1, 0.01, 1);
+    _settings->add_spinscale(1, SP_ATTR_SURFACESCALE, _("Surface Scale:"), -5, 5, 0.1, 0.01, 2, _("This value amplifies the heights of the bump map defined by the input alpha channel"));
+    _settings->add_spinscale(1, SP_ATTR_SPECULARCONSTANT, _("Constant:"), 0, 5, 0.1, 0.01, 2, _("This constant affects the Phong lighting model."));
+    _settings->add_spinscale(1, SP_ATTR_SPECULAREXPONENT, _("Exponent:"), 1, 50, 1, 0.01, 1, _("Exponent for specular term, larger is more \"shiny\"."));
+    _settings->add_dualspinscale(SP_ATTR_KERNELUNITLENGTH, _("Kernel Unit Length:"), 0.01, 10, 1, 0.01, 1);
     _settings->add_lightsource();
 
     _settings->type(NR_FILTER_TILE);
@@ -2429,9 +2429,9 @@ void FilterEffectsDialog::init_settings_widgets()
     _settings->type(NR_FILTER_TURBULENCE);
 //    _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
     _settings->add_combo(TURBULENCE_TURBULENCE, SP_ATTR_TYPE, _("Type:"), TurbulenceTypeConverter, _("Indicates whether the filter primitive should perform a noise or turbulence function."));
-    _settings->add_dualspinslider(SP_ATTR_BASEFREQUENCY, _("Base Frequency:"), 0, 1, 0.001, 0.01, 3);
-    _settings->add_spinslider(1, SP_ATTR_NUMOCTAVES, _("Octaves:"), 1, 10, 1, 1, 0);
-    _settings->add_spinslider(0, SP_ATTR_SEED, _("Seed:"), 0, 1000, 1, 1, 0, _("The starting number for the pseudo random number generator."));
+    _settings->add_dualspinscale(SP_ATTR_BASEFREQUENCY, _("Base Frequency:"), 0, 1, 0.001, 0.01, 3);
+    _settings->add_spinscale(1, SP_ATTR_NUMOCTAVES, _("Octaves:"), 1, 10, 1, 1, 0);
+    _settings->add_spinscale(0, SP_ATTR_SEED, _("Seed:"), 0, 1000, 1, 1, 0, _("The starting number for the pseudo random number generator."));
 }
 
 void FilterEffectsDialog::add_primitive()

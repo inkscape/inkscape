@@ -959,16 +959,18 @@ void DocumentProperties::removeEmbeddedScript(){
 
     const GSList *current = SP_ACTIVE_DOCUMENT->getResourceList( "script" );
     while ( current ) {
-        SPObject* obj = SP_OBJECT(current->data);
-        if (id == obj->getId()){
+        if (current->data && SP_IS_OBJECT(current->data)) {
+            SPObject* obj = SP_OBJECT(current->data);
+            if (id == obj->getId()){
 
-            //XML Tree being used directly here while it shouldn't be.
-            Inkscape::XML::Node *repr = obj->getRepr();
-            if (repr){
-                sp_repr_unparent(repr);
+                //XML Tree being used directly here while it shouldn't be.
+                Inkscape::XML::Node *repr = obj->getRepr();
+                if (repr){
+                    sp_repr_unparent(repr);
 
-                // inform the document, so we can undo
-                DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_EMBEDDED_SCRIPT, _("Remove embedded script"));
+                    // inform the document, so we can undo
+                    DocumentUndo::done(SP_ACTIVE_DOCUMENT, SP_VERB_EDIT_REMOVE_EMBEDDED_SCRIPT, _("Remove embedded script"));
+                }
             }
         }
         current = g_slist_next(current);

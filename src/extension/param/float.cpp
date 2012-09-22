@@ -14,6 +14,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm/scale.h>
 #include "ui/widget/spinbutton.h"
+#include "ui/widget/spin-scale.h"
 
 #include "xml/node.h"
 #include "extension/extension.h"
@@ -175,9 +176,6 @@ Gtk::Widget * ParamFloat::get_widget(SPDocument * doc, Inkscape::XML::Node * nod
     }
 
     Gtk::HBox * hbox = Gtk::manage(new Gtk::HBox(false, 4));
-    Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_START));
-    label->show();
-    hbox->pack_start(*label, true, true, _indent);
 
 #if WITH_GTKMM_3_0
     ParamFloatAdjustment * pfa = new ParamFloatAdjustment(this, doc, node, changeSignal);
@@ -187,24 +185,27 @@ Gtk::Widget * ParamFloat::get_widget(SPDocument * doc, Inkscape::XML::Node * nod
 #endif
     
     if (_mode == FULL) {
-#if WITH_GTKMM_3_0
-        Gtk::HScale * scale = Gtk::manage(new Gtk::HScale(fadjust));
-#else
-        Gtk::HScale * scale = Gtk::manage(new Gtk::HScale(*fadjust));
-#endif
-        scale->set_draw_value(false);
-        scale->set_size_request(200, -1);
+
+        UI::Widget::SpinScale *scale = new UI::Widget::SpinScale(_(_text), fadjust, _precision);
+        scale->set_size_request(400, -1);
         scale->show();
         hbox->pack_start(*scale, false, false);
+
     }
+    else if (_mode == MINIMAL) {
+
+        Gtk::Label * label = Gtk::manage(new Gtk::Label(_(_text), Gtk::ALIGN_START));
+        label->show();
+        hbox->pack_start(*label, true, true, _indent);
 
 #if WITH_GTKMM_3_0
     Inkscape::UI::Widget::SpinButton * spin = Gtk::manage(new Inkscape::UI::Widget::SpinButton(fadjust, 0.1, _precision));
 #else
     Inkscape::UI::Widget::SpinButton * spin = Gtk::manage(new Inkscape::UI::Widget::SpinButton(*fadjust, 0.1, _precision));
 #endif
-    spin->show();
-    hbox->pack_start(*spin, false, false);
+        spin->show();
+        hbox->pack_start(*spin, false, false);
+    }
 
     hbox->show();
 

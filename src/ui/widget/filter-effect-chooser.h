@@ -18,6 +18,7 @@
 #include "combo-enums.h"
 #include "filter-enums.h"
 #include "spin-slider.h"
+#include "spin-scale.h"
 
 namespace Inkscape {
 namespace UI {
@@ -45,17 +46,14 @@ public:
     double get_blur_value() const;
     void set_blur_value(const double);
     void set_blur_sensitive(const bool);
-    Gtk::Label *get_blur_label() { return &_lb_blur; };
-
 
 private:
     int _flags;
     Gtk::HBox _hb_blend;
-    Gtk::HBox _hb_blur;
-    Gtk::Label _lb_blend, _lb_blur, _lb_blur_unit;
+    Gtk::Label _lb_blend;
 
     ComboBoxEnum<Inkscape::Filters::FilterBlendMode> _blend;
-    SpinSlider _blur;
+    SpinScale _blur;
 
     sigc::signal<void> _signal_blend_blur_changed;
 };

@@ -47,6 +47,7 @@
 
 #include "icon-size.h"
 #include "ege-adjustment-action.h"
+#include "ui/widget/gimpspinscale.h"
 
 
 static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass );
@@ -835,15 +836,8 @@ static GtkWidget* create_tool_item( GtkAction* action )
 
         if ( act->private_data->appearanceMode == APPEARANCE_FULL ) {
             /* Slider */
-            gchar *leakyForNow = g_value_dup_string( &value );
-#if GTK_CHECK_VERSION(3,0,0)
-            spinbutton = gtk_scale_new(GTK_ORIENTATION_HORIZONTAL, act->private_data->adj);
-#else
-            spinbutton = gtk_hscale_new( act->private_data->adj);
-#endif
+            spinbutton  = gimp_spin_scale_new (act->private_data->adj, g_value_get_string( &value ), 0);
             gtk_widget_set_size_request(spinbutton, 100, -1);
-            gtk_scale_set_digits( GTK_SCALE(spinbutton), 0 );
-            g_signal_connect( G_OBJECT(spinbutton), "format-value", G_CALLBACK(slider_format_falue), leakyForNow );
 
         } else if ( act->private_data->appearanceMode == APPEARANCE_MINIMAL ) {
             spinbutton = gtk_scale_button_new( GTK_ICON_SIZE_MENU, 0, 100, 2, 0 );
