@@ -171,6 +171,7 @@ class ContextMenu : public Gtk::Menu
         //callbacks for the context menu entries of an SP_TYPE_ITEM object
         void ItemProperties(void);
         void ItemSelectThis(void);
+        void ItemMoveTo(void);
         void SelectSameFillStroke(void);
         void SelectSameFillColor(void);
         void SelectSameStrokeColor(void);

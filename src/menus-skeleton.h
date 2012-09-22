@@ -167,6 +167,7 @@ static char const menus_skeleton[] =
 "       <separator/>\n"
 "       <verb verb-id=\"LayerMoveToNext\" />\n"
 "       <verb verb-id=\"LayerMoveToPrev\" />\n"
+"       <verb verb-id=\"LayerMoveTo\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"LayerRaise\" />\n"
 "       <verb verb-id=\"LayerLower\" />\n"

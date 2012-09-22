@@ -28,7 +28,10 @@
 #include "sp-item.h"
 #include "verbs.h"
 #include "selection.h"
-
+#include "selection-chemistry.h"
+#include "ui/icon-names.h"
+#include "ui/widget/imagetoggler.h"
+#include "event-context.h"
 
 namespace Inkscape {
 namespace UI {
@@ -51,7 +54,7 @@ LayerPropertiesDialog::LayerPropertiesDialog()
                          0, 1, 0, 1, Gtk::FILL, Gtk::FILL);
     _layout_table.attach(_layer_name_entry,
                          1, 2, 0, 1, Gtk::FILL | Gtk::EXPAND, Gtk::FILL);
-    mainVBox->pack_start(_layout_table, false, false, 4);
+    mainVBox->pack_start(_layout_table, true, true, 4);
 
     // Buttons
     _close_button.set_use_stock(true);
@@ -82,6 +85,7 @@ LayerPropertiesDialog::LayerPropertiesDialog()
 }
 
 LayerPropertiesDialog::~LayerPropertiesDialog() {
+
     _setDesktop(NULL);
     _setLayer(NULL);
 }
@@ -168,6 +172,131 @@ LayerPropertiesDialog::_setup_position_controls() {
     show_all_children();
 }
 
+void
+LayerPropertiesDialog::_setup_layers_controls() {
+
+    ModelColumns *zoop = new ModelColumns();
+    _model = zoop;
+    _store = Gtk::TreeStore::create( *zoop );
+    _tree.set_model( _store );
+    _tree.set_headers_visible(false);
+
+    Inkscape::UI::Widget::ImageToggler *eyeRenderer = manage( new Inkscape::UI::Widget::ImageToggler(
+        INKSCAPE_ICON("object-visible"), INKSCAPE_ICON("object-hidden")) );
+    int visibleColNum = _tree.append_column("vis", *eyeRenderer) - 1;
+    Gtk::TreeViewColumn* col = _tree.get_column(visibleColNum);
+    if ( col ) {
+        col->add_attribute( eyeRenderer->property_active(), _model->_colVisible );
+    }
+
+    Inkscape::UI::Widget::ImageToggler * renderer = manage( new Inkscape::UI::Widget::ImageToggler(
+        INKSCAPE_ICON("object-locked"), INKSCAPE_ICON("object-unlocked")) );
+    int lockedColNum = _tree.append_column("lock", *renderer) - 1;
+    col = _tree.get_column(lockedColNum);
+    if ( col ) {
+        col->add_attribute( renderer->property_active(), _model->_colLocked );
+    }
+
+    Gtk::CellRendererText *_text_renderer = manage(new Gtk::CellRendererText());
+    int nameColNum = _tree.append_column("Name", *_text_renderer) - 1;
+    Gtk::TreeView::Column *_name_column = _tree.get_column(nameColNum);
+    _name_column->add_attribute(_text_renderer->property_text(), _model->_colLabel);
+
+    _tree.set_expander_column( *_tree.get_column(nameColNum) );
+    _tree.signal_key_press_event().connect( sigc::mem_fun(*this, &LayerPropertiesDialog::_handleKeyEvent), false );
+    _tree.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &LayerPropertiesDialog::_handleButtonEvent) );
+
+    _scroller.add( _tree );
+    _scroller.set_policy( Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC );
+    _scroller.set_shadow_type(Gtk::SHADOW_IN);
+    _scroller.set_size_request(220, 180);
+
+    SPDocument* document = _desktop->doc();
+    SPRoot* root = document->getRoot();
+    if ( root ) {
+        SPObject* target = _desktop->currentLayer();
+        _store->clear();
+        _addLayer( document, (SPObject *)root, 0, target, 0 );
+    }
+
+    _layout_table.remove(_layer_name_entry);
+    _layout_table.remove(_layer_name_label);
+
+    _layout_table.attach(_scroller,
+                         0, 2, 1, 2, Gtk::FILL | Gtk::EXPAND, Gtk::FILL | Gtk::EXPAND);
+    show_all_children();
+}
+
+void LayerPropertiesDialog::_addLayer( SPDocument* doc, SPObject* layer, Gtk::TreeModel::Row* parentRow, SPObject* target, int level )
+{
+    int _maxNestDepth = 20;
+    if ( _desktop && _desktop->layer_manager && layer && (level < _maxNestDepth) ) {
+        unsigned int counter = _desktop->layer_manager->childCount(layer);
+        for ( unsigned int i = 0; i < counter; i++ ) {
+            SPObject *child = _desktop->layer_manager->nthChildOf(layer, i);
+            if ( child ) {
+#if DUMP_LAYERS
+                g_message(" %3d    layer:%p  {%s}   [%s]", level, child, child->id, child->label() );
+#endif // DUMP_LAYERS
+
+                Gtk::TreeModel::iterator iter = parentRow ? _store->prepend(parentRow->children()) : _store->prepend();
+                Gtk::TreeModel::Row row = *iter;
+                row[_model->_colObject] = child;
+                row[_model->_colLabel] = child->label() ? child->label() : child->getId();
+                row[_model->_colVisible] = SP_IS_ITEM(child) ? !SP_ITEM(child)->isHidden() : false;
+                row[_model->_colLocked] = SP_IS_ITEM(child) ? SP_ITEM(child)->isLocked() : false;
+
+                if ( target && child == target ) {
+                    _tree.expand_to_path( _store->get_path(iter) );
+
+                    Glib::RefPtr<Gtk::TreeSelection> select = _tree.get_selection();
+                    select->select(iter);
+
+                    //_checkTreeSelection();
+                }
+
+                _addLayer( doc, child, &row, target, level + 1 );
+            }
+        }
+    }
+}
+
+SPObject* LayerPropertiesDialog::_selectedLayer()
+{
+    SPObject* obj = 0;
+
+    Gtk::TreeModel::iterator iter = _tree.get_selection()->get_selected();
+    if ( iter ) {
+        Gtk::TreeModel::Row row = *iter;
+        obj = row[_model->_colObject];
+    }
+
+    return obj;
+}
+
+bool LayerPropertiesDialog::_handleKeyEvent(GdkEventKey *event)
+{
+
+    switch (get_group0_keyval(event)) {
+        case GDK_KEY_Return:
+        case GDK_KEY_KP_Enter: {
+            _strategy->perform(*this);
+            _close();
+            return true;
+        }
+        break;
+    }
+    return false;
+}
+
+void LayerPropertiesDialog::_handleButtonEvent(GdkEventButton* event)
+{
+    if ( (event->type == GDK_2BUTTON_PRESS) && (event->button == 1) ) {
+        _strategy->perform(*this);
+        _close();
+    }
+}
+
 /** Formats the label for a given layer row 
  */
 void LayerPropertiesDialog::_prepareLabelRenderer(
@@ -229,6 +358,20 @@ void LayerPropertiesDialog::Create::perform(LayerPropertiesDialog &dialog) {
     sp_desktop_selection(desktop)->clear();
     desktop->setCurrentLayer(new_layer);
     desktop->messageStack()->flash(Inkscape::NORMAL_MESSAGE, _("New layer created."));
+}
+
+void LayerPropertiesDialog::Move::setup(LayerPropertiesDialog &dialog) {
+    dialog.set_title(_("Move to Layer"));
+    //TODO: find an unused layer number, forming name from _("Layer ") + "%d"
+    dialog._layer_name_entry.set_text(_("Layer"));
+    dialog._apply_button.set_label(_("_Move"));
+    dialog._setup_layers_controls();
+}
+
+void LayerPropertiesDialog::Move::perform(LayerPropertiesDialog &dialog) {
+
+    SPObject *moveto = dialog._selectedLayer();
+    sp_selection_to_layer(dialog._desktop, moveto, false);
 }
 
 void LayerPropertiesDialog::_setDesktop(SPDesktop *desktop) {

@@ -18,8 +18,12 @@
 #include <gtkmm/table.h>
 #include <gtkmm/combobox.h>
 #include <gtkmm/liststore.h>
+#include <gtkmm/treeview.h>
+#include <gtkmm/treestore.h>
+#include <gtkmm/scrolledwindow.h>
 
 #include "layer-fns.h"
+#include "ui/widget/layer-selector.h"
 
 class SPDesktop;
 
@@ -40,6 +44,9 @@ class LayerPropertiesDialog : public Gtk::Dialog {
     static void showCreate(SPDesktop *desktop, SPObject *layer) {
         _showDialog(Create::instance(), desktop, layer);
     }
+    static void showMove(SPDesktop *desktop, SPObject *layer) {
+        _showDialog(Move::instance(), desktop, layer);
+    }
 
 protected:
     struct Strategy {
@@ -57,9 +64,15 @@ protected:
         void setup(LayerPropertiesDialog &dialog);
         void perform(LayerPropertiesDialog &dialog);
     };
+    struct Move : public Strategy {
+        static Move &instance() { static Move instance; return instance; }
+        void setup(LayerPropertiesDialog &dialog);
+        void perform(LayerPropertiesDialog &dialog);
+    };
 
     friend class Rename;
     friend class Create;
+    friend class Move;
 
     Strategy *_strategy;
     SPDesktop *_desktop;
@@ -81,6 +94,31 @@ protected:
     Gtk::ComboBox     _layer_position_combo;
     Gtk::Table        _layout_table;
     bool              _position_visible;
+
+    class ModelColumns : public Gtk::TreeModel::ColumnRecord
+    {
+    public:
+
+        ModelColumns()
+        {
+            add(_colObject);
+            add(_colVisible);
+            add(_colLocked);
+            add(_colLabel);
+        }
+        virtual ~ModelColumns() {}
+
+        Gtk::TreeModelColumn<SPObject*> _colObject;
+        Gtk::TreeModelColumn<Glib::ustring> _colLabel;
+        Gtk::TreeModelColumn<bool> _colVisible;
+        Gtk::TreeModelColumn<bool> _colLocked;
+    };
+
+    Gtk::TreeView _tree;
+    ModelColumns* _model;
+    Glib::RefPtr<Gtk::TreeStore> _store;
+    Gtk::ScrolledWindow _scroller;
+
 
     PositionDropdownColumns _dropdown_columns;
     Gtk::CellRendererText _label_renderer;
@@ -104,7 +142,13 @@ protected:
     void _close();
 
     void _setup_position_controls();
+    void _setup_layers_controls();
     void _prepareLabelRenderer(Gtk::TreeModel::const_iterator const &row);
+
+    void _addLayer( SPDocument* doc, SPObject* layer, Gtk::TreeModel::Row* parentRow, SPObject* target, int level );
+    SPObject* _selectedLayer();
+    bool _handleKeyEvent(GdkEventKey *event);
+    void _handleButtonEvent(GdkEventButton* event);
 
 private:
     LayerPropertiesDialog(LayerPropertiesDialog const &); // no copy

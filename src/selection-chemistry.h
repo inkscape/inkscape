@@ -97,6 +97,7 @@ void sp_selection_paste_size_separately(SPDesktop *desktop, bool apply_x, bool a
 
 void sp_selection_to_next_layer( SPDesktop *desktop, bool suppressDone = false );
 void sp_selection_to_prev_layer( SPDesktop *desktop, bool suppressDone = false );
+void sp_selection_to_layer( SPDesktop *desktop, SPObject *layer, bool suppressDone = false );
 
 void sp_selection_apply_affine(Inkscape::Selection *selection, Geom::Affine const &affine, bool set_i2d = true, bool compensate = true);
 void sp_selection_remove_transform (SPDesktop *desktop);

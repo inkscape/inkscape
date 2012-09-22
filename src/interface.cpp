@@ -79,6 +79,7 @@
 // #include "inkscape.h"
 #include "ui/dialog/dialog-manager.h"
 // #include "../xml/repr.h"
+#include "ui/dialog/layer-properties.h"
 
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
@@ -1823,6 +1824,16 @@ void ContextMenu::MakeItemMenu (void)
     mi->show();
     select_same_submenu->append(*mi);
 
+    /* Move to layer */
+    mi = manage(new Gtk::MenuItem(_("_Move to layer ..."),1));
+    if (_desktop->selection->isEmpty()) {
+        mi->set_sensitive(FALSE);
+    } else {
+        mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ItemMoveTo));
+    }
+    mi->show();
+    append(*mi);
+
     /* Create link */
     mi = manage(new Gtk::MenuItem(_("Create _Link"),1));
     mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ItemCreateLink));
@@ -1937,6 +1948,13 @@ void ContextMenu::ItemSelectThis(void)
 {
     _desktop->selection->set(_item);
 }
+
+void ContextMenu::ItemMoveTo(void)
+{
+    Inkscape::UI::Dialogs::LayerPropertiesDialog::showMove(_desktop, _desktop->currentLayer());
+}
+
+
 
 void ContextMenu::ItemCreateLink(void)
 {

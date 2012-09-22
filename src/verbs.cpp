@@ -1190,6 +1190,10 @@ void LayerVerb::perform(SPAction *action, void *data)
             sp_selection_to_prev_layer(dt);
             break;
         }
+        case SP_VERB_LAYER_MOVE_TO: {
+            Inkscape::UI::Dialogs::LayerPropertiesDialog::showMove(dt, dt->currentLayer());
+            break;
+        }
         case SP_VERB_LAYER_TO_TOP:
         case SP_VERB_LAYER_TO_BOTTOM:
         case SP_VERB_LAYER_RAISE:
@@ -2465,6 +2469,8 @@ Verb *Verb::_base_verbs[] = {
                   N_("Move selection to the layer above the current"), INKSCAPE_ICON("selection-move-to-layer-above")),
     new LayerVerb(SP_VERB_LAYER_MOVE_TO_PREV, "LayerMoveToPrev", N_("Move Selection to Layer Bel_ow"),
                   N_("Move selection to the layer below the current"), INKSCAPE_ICON("selection-move-to-layer-below")),
+    new LayerVerb(SP_VERB_LAYER_MOVE_TO, "LayerMoveTo", N_("Move Selection to Layer..."),
+                  N_("Move selection to layer"), INKSCAPE_ICON("layer-rename")),
     new LayerVerb(SP_VERB_LAYER_TO_TOP, "LayerToTop", N_("Layer to _Top"),
                   N_("Raise the current layer to the top"), INKSCAPE_ICON("layer-top")),
     new LayerVerb(SP_VERB_LAYER_TO_BOTTOM, "LayerToBottom", N_("Layer to _Bottom"),

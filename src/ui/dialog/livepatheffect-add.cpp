@@ -48,6 +48,7 @@ LivePathEffectAdd::LivePathEffectAdd() :
     effectlist_treeview.set_model(effectlist_store);
     effectlist_treeview.set_headers_visible(false);
     effectlist_treeview.append_column("Name", _columns.name);
+    //effectlist_treeview.set_activates_default(true);
 
     /**
      * Initialize Effect list
@@ -68,7 +69,7 @@ LivePathEffectAdd::LivePathEffectAdd() :
      * Buttons
      */
     close_button.set_use_stock(true);
-    close_button.set_can_default();
+    //close_button.set_can_default();
     add_button.set_use_underline(true);
     add_button.set_can_default();
 

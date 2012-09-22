@@ -1314,6 +1314,36 @@ void sp_selection_to_prev_layer(SPDesktop *dt, bool suppressDone)
     g_slist_free(const_cast<GSList *>(items));
 }
 
+void sp_selection_to_layer(SPDesktop *dt, SPObject *moveto, bool suppressDone)
+{
+    Inkscape::Selection *selection = sp_desktop_selection(dt);
+
+    // check if something is selected
+    if (selection->isEmpty()) {
+        dt->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to move."));
+        return;
+    }
+
+    GSList const *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
+
+    if (moveto) {
+        GSList *temp_clip = NULL;
+        sp_selection_copy_impl(items, &temp_clip, dt->doc()->getReprDoc()); // we're in the same doc, so no need to copy defs
+        sp_selection_delete_impl(items, false, false);
+        GSList *copied = sp_selection_paste_impl(sp_desktop_document(dt), moveto, &temp_clip);
+        selection->setReprList((GSList const *) copied);
+        g_slist_free(copied);
+        if (temp_clip) g_slist_free(temp_clip);
+        if (moveto) dt->setCurrentLayer(moveto);
+        if ( !suppressDone ) {
+            DocumentUndo::done(sp_desktop_document(dt), SP_VERB_LAYER_MOVE_TO,
+                               _("Move selection to layer"));
+        }
+    }
+
+    g_slist_free(const_cast<GSList *>(items));
+}
+
 bool
 selection_contains_original(SPItem *item, Inkscape::Selection *selection)
 {
