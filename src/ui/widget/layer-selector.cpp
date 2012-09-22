@@ -239,7 +239,7 @@ private:
 
 void LayerSelector::_layersChanged()
 {
-    _selectLayer(_desktop->currentLayer());
+    //_selectLayer(_desktop->currentLayer());
 }
 
 /** Selects the given layer in the dropdown selector.
