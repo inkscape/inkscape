@@ -19,6 +19,8 @@ ink_common_sources +=	\
 	ui/widget/entry.h        \
 	ui/widget/filter-effect-chooser.h \
 	ui/widget/filter-effect-chooser.cpp \
+	ui/widget/gimpspinscale.c      \
+	ui/widget/gimpspinscale.h        \
 	ui/widget/frame.cpp      \
 	ui/widget/frame.h        \
 	ui/widget/imageicon.cpp		\
@@ -62,6 +64,8 @@ ink_common_sources +=	\
 	ui/widget/selected-style.cpp	\
 	ui/widget/spinbutton.h	\
 	ui/widget/spinbutton.cpp	\
+	ui/widget/spin-scale.h		\
+	ui/widget/spin-scale.cpp	\
 	ui/widget/spin-slider.h		\
 	ui/widget/spin-slider.cpp	\
 	ui/widget/style-subject.h	\
