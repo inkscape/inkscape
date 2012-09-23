@@ -601,7 +601,6 @@ StrokeStyle::forkMarker(SPObject *marker, int loc, SPItem *item)
     sp_repr_css_set_property(css_item, marker_id, g_strconcat("url(#", mark_repr->attribute("id"), ")", NULL));
     sp_repr_css_change_recursive(item->getRepr(), css_item, "style");
 
-    Inkscape::GC::release(mark_repr);
     sp_repr_css_attr_unref(css_item);
     css_item = 0;
 
