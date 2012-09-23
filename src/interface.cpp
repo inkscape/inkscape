@@ -2097,6 +2097,12 @@ void ContextMenu::MakeImageMenu (void)
         mi->set_sensitive( FALSE );
     }
 
+    /* Trace Bitmap */
+    mi = manage(new Gtk::MenuItem(_("_Trace Bitmap..."),1));
+    mi->signal_activate().connect(sigc::mem_fun(*this, &ContextMenu::ImageTraceBitmap));
+    mi->show();
+    insert(*mi,positionOfLastDialog++);
+
     /* Embed image */
     if (Inkscape::Verb::getbyid( "org.ekips.filter.embedselectedimages" )) {
         mi = manage(new Gtk::MenuItem(C_("Context menu", "Embed Image")));
@@ -2206,6 +2212,12 @@ void ContextMenu::ImageEdit(void)
         g_error_free(errThing);
         errThing = 0;
     }
+}
+
+void ContextMenu::ImageTraceBitmap(void)
+{
+    inkscape_dialogs_unhide();
+    _desktop->_dlg_mgr->showDialog("Trace");
 }
 
 void ContextMenu::ImageEmbed(void)
