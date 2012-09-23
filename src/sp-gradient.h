@@ -77,8 +77,7 @@ namespace Inkscape {
 
 enum PaintTarget {
     FOR_FILL,
-    FOR_STROKE,
-    FOR_FILL_AND_STROKE
+    FOR_STROKE
 };
 
 /**

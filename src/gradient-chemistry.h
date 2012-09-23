@@ -70,6 +70,8 @@ SPStop *sp_vector_add_stop(SPGradient *vector, SPStop* prev_stop, SPStop* next_s
 
 void sp_gradient_transform_multiply(SPGradient *gradient, Geom::Affine postmul, bool set);
 
+void sp_gradient_reverse_selected_gradients(SPDesktop *desktop);
+
 void sp_gradient_invert_selected_gradients(SPDesktop *desktop, Inkscape::PaintTarget fill_or_stroke);
 
 /**
@@ -98,6 +100,7 @@ void sp_item_gradient_stop_set_style(SPItem *item, GrPointType point_type, guint
 guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke);
 void sp_item_gradient_edit_stop(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke);
 void sp_item_gradient_reverse_vector(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
+void sp_item_gradient_invert_vector_color(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 
 #endif // SEEN_SP_GRADIENT_CHEMISTRY_H
 

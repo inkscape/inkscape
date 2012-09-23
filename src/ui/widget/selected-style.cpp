@@ -600,9 +600,9 @@ void SelectedStyle::on_fill_invert() {
     guint32 color = _thisselected[SS_FILL];
     gchar c[64];
     if (_mode[SS_FILL] == SS_LGRADIENT || _mode[SS_FILL] == SS_RGRADIENT) {
-        g_message("Gradient");
         sp_gradient_invert_selected_gradients(_desktop, Inkscape::FOR_FILL);
         return;
+
     }
 
     if (_mode[SS_FILL] != SS_COLOR) return;
@@ -625,8 +625,7 @@ void SelectedStyle::on_stroke_invert() {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     guint32 color = _thisselected[SS_STROKE];
     gchar c[64];
-    if (_mode[SS_FILL] == SS_LGRADIENT || _mode[SS_FILL] == SS_RGRADIENT) {
-        g_message("Gradient");
+    if (_mode[SS_STROKE] == SS_LGRADIENT || _mode[SS_STROKE] == SS_RGRADIENT) {
         sp_gradient_invert_selected_gradients(_desktop, Inkscape::FOR_STROKE);
         return;
     }

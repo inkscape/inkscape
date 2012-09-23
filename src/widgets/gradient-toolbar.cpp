@@ -633,7 +633,7 @@ static void gr_linked_changed(GtkToggleAction *act, gpointer /*data*/)
 static void gr_reverse(GtkWidget * /*button*/, gpointer data)
 {
     SPDesktop *desktop = static_cast<SPDesktop *>(data);
-    sp_gradient_invert_selected_gradients(desktop, Inkscape::FOR_FILL_AND_STROKE);
+    sp_gradient_reverse_selected_gradients(desktop);
 }
 
 /*

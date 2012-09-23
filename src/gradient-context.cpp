@@ -837,7 +837,7 @@ sp_gradient_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_r:
         case GDK_KEY_R:
             if (MOD__SHIFT_ONLY) {
-                sp_gradient_invert_selected_gradients(desktop, Inkscape::FOR_FILL_AND_STROKE);
+                sp_gradient_reverse_selected_gradients(desktop);
                 ret = TRUE;
             }
             break;

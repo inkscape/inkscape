@@ -959,6 +959,44 @@ void sp_item_gradient_reverse_vector(SPItem *item, Inkscape::PaintTarget fill_or
     g_slist_free (child_objects);
 }
 
+void sp_item_gradient_invert_vector_color(SPItem *item, Inkscape::PaintTarget fill_or_stroke)
+{
+#ifdef SP_GR_VERBOSE
+    g_message("sp_item_gradient_invert_vector_color(%p, %d)", item, fill_or_stroke);
+#endif
+    SPGradient *gradient = getGradient(item, fill_or_stroke);
+    if (!gradient || !SP_IS_GRADIENT(gradient))
+        return;
+
+    SPGradient *vector = gradient->getVector();
+    if (!vector) // orphan!
+        return;
+
+    vector = sp_gradient_fork_vector_if_necessary (vector);
+    if ( gradient != vector && gradient->ref->getObject() != vector ) {
+        sp_gradient_repr_set_link(gradient->getRepr(), vector);
+    }
+
+    for ( SPObject *child = vector->firstChild(); child; child = child->getNext()) {
+        if (SP_IS_STOP(child)) {
+            guint32 color =  sp_stop_get_rgba32(SP_STOP(child));
+            //g_message("Stop color %d", color);
+            gchar c[64];
+            sp_svg_write_color (c, sizeof(c),
+                SP_RGBA32_U_COMPOSE(
+                        (255 - SP_RGBA32_R_U(color)),
+                        (255 - SP_RGBA32_G_U(color)),
+                        (255 - SP_RGBA32_B_U(color)),
+                        SP_RGBA32_A_U(color)
+                )
+            );
+            SPCSSAttr *css = sp_repr_css_attr_new ();
+            sp_repr_css_set_property (css, "stop-color", c);
+            sp_repr_css_change(child->getRepr(), css, "style");
+            sp_repr_css_attr_unref (css);
+        }
+    }
+}
 
 /**
 Set the position of point point_type of the gradient applied to item (either fill_or_stroke) to
@@ -1514,8 +1552,20 @@ SPGradient *sp_gradient_vector_for_object( SPDocument *const doc, SPDesktop *con
     return sp_document_default_gradient_vector( doc, color, singleStop );
 }
 
-
 void sp_gradient_invert_selected_gradients(SPDesktop *desktop, Inkscape::PaintTarget fill_or_stroke)
+{
+    Inkscape::Selection *selection = sp_desktop_selection(desktop);
+
+    for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
+        sp_item_gradient_invert_vector_color(SP_ITEM(i->data), fill_or_stroke);
+    }
+
+    // we did an undoable action
+    DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_GRADIENT,
+                       _("Invert gradient colors"));
+}
+
+void sp_gradient_reverse_selected_gradients(SPDesktop *desktop)
 {
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     SPEventContext *ev = sp_desktop_event_context(desktop);
@@ -1531,18 +1581,14 @@ void sp_gradient_invert_selected_gradients(SPDesktop *desktop, Inkscape::PaintTa
         drag->selected_reverse_vector();
     } else { // If no drag or no dragger selected, act on selection (both fill and stroke gradients)
         for (GSList const* i = selection->itemList(); i != NULL; i = i->next) {
-            if (fill_or_stroke == Inkscape::FOR_FILL_AND_STROKE) {
-                sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_FILL);
-                sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_STROKE);
-            } else {
-                sp_item_gradient_reverse_vector(SP_ITEM(i->data), fill_or_stroke);
-            }
+            sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_FILL);
+            sp_item_gradient_reverse_vector(SP_ITEM(i->data), Inkscape::FOR_STROKE);
         }
     }
 
     // we did an undoable action
     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_GRADIENT,
-                       _("Invert gradient"));
+                       _("Reverse gradient"));
 }
 
 /*
