@@ -458,8 +458,10 @@ static void ink_toggle_action_update_icon( InkToggleAction* action )
                     GtkToolButton* button = GTK_TOOL_BUTTON(proxies->data);
 
                     GtkWidget* child = sp_icon_new( action->private_data->iconSize, action->private_data->iconId );
-                    gtk_widget_show_all( child );
-                    gtk_tool_button_set_icon_widget( button, child );
+                    GtkWidget* align = gtk_alignment_new( 0.5, 0.5, 0.0, 0.0 );
+                    gtk_container_add( GTK_CONTAINER(align), child );
+                    gtk_widget_show_all( align );
+                    gtk_tool_button_set_icon_widget( button, align );
                 }
             }
 

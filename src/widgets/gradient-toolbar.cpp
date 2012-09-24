@@ -1231,7 +1231,7 @@ void sp_gradient_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, 
                                                         _("Link gradients"),
                                                         _("Link gradients to change all related gradients"),
                                                         INKSCAPE_ICON("object-unlocked"),
-                                                        secondarySize );
+                                                        Inkscape::ICON_SIZE_DECORATION );
         g_object_set( itact, "short_label", "Lock", NULL );
         g_signal_connect_after( G_OBJECT(itact), "toggled", G_CALLBACK(gr_linked_changed), desktop) ;
         gtk_action_group_add_action( mainActions, GTK_ACTION(itact) );
