@@ -172,6 +172,27 @@ static void sp_event_context_dispose(GObject *object) {
 }
 
 /**
+ * Set the cursor to a standard GDK cursor
+ */
+void sp_event_context_set_cursor(SPEventContext *event_context, GdkCursorType cursor_type) {
+
+    GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(event_context->desktop));
+    GdkDisplay *display = gdk_display_get_default();
+    GdkCursor *cursor = gdk_cursor_new_for_display(display, cursor_type);
+
+#if WITH_GTKMM_3_0
+    if (cursor) {
+          gdk_window_set_cursor (gtk_widget_get_window (w), cursor);
+          g_object_unref (cursor);
+    }
+#else
+    gdk_window_set_cursor (gtk_widget_get_window (w), cursor);
+    gdk_cursor_unref (cursor);
+#endif
+
+}
+
+/**
  * Recreates and draws cursor on desktop related to SPEventContext.
  */
 void sp_event_context_update_cursor(SPEventContext *ec) {
@@ -360,6 +381,7 @@ static gint sp_event_context_private_root_handler(
         SPEventContext *event_context, GdkEvent *event) {
     static Geom::Point button_w;
     static unsigned int panning = 0;
+    static unsigned int panning_cursor = 0;
     static unsigned int zoom_rb = 0;
 
     SPDesktop *desktop = event_context->desktop;
@@ -393,6 +415,7 @@ static gint sp_event_context_private_root_handler(
         switch (event->button.button) {
         case 1:
             if (event_context->space_panning) {
+
                 // When starting panning, make sure there are no snap events pending because these might disable the panning again
                 sp_event_context_discard_delayed_snap_event(event_context);
                 panning = 1;
@@ -408,6 +431,7 @@ static gint sp_event_context_private_root_handler(
             if (event->button.state & GDK_SHIFT_MASK) {
                 zoom_rb = 2;
             } else {
+
                 // When starting panning, make sure there are no snap events pending because these might disable the panning again
                 sp_event_context_discard_delayed_snap_event(event_context);
                 panning = 2;
@@ -415,6 +439,7 @@ static gint sp_event_context_private_root_handler(
                         GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK
                                 | GDK_POINTER_MOTION_HINT_MASK, NULL,
                         event->button.time - 1);
+
             }
             ret = TRUE;
             break;
@@ -466,6 +491,11 @@ static gint sp_event_context_private_root_handler(
                 gobble_motion_events(panning == 2 ? GDK_BUTTON2_MASK : (panning
                         == 1 ? GDK_BUTTON1_MASK : GDK_BUTTON3_MASK));
 
+                if (panning_cursor == 0) {
+                    panning_cursor = 1;
+                    sp_event_context_set_cursor(event_context, GDK_FLEUR);
+                }
+
                 Geom::Point const motion_w(event->motion.x, event->motion.y);
                 Geom::Point const moved_w(motion_w - button_w);
                 event_context->desktop->scroll_world(moved_w, true); // we're still scrolling, do not redraw
@@ -496,6 +526,11 @@ static gint sp_event_context_private_root_handler(
         break;
     case GDK_BUTTON_RELEASE:
         xp = yp = 0;
+        if (panning_cursor == 1) {
+            panning_cursor = 0;
+            GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(event_context->desktop));
+            gdk_window_set_cursor(gtk_widget_get_window (w), event_context->cursor);
+        }
         if (within_tolerance && (panning || zoom_rb)) {
             zoom_rb = 0;
             if (panning) {
@@ -665,6 +700,7 @@ static gint sp_event_context_private_root_handler(
             if (event_context->space_panning) {
                 event_context->space_panning = false;
                 event_context->_message_context->clear();
+
                 if (panning == 1) {
                     panning = 0;
                     sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate),
