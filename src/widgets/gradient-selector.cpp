@@ -153,7 +153,7 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     Gtk::TreeView::Column* name_column = sel->treeview->get_column(1);
     sel->text_renderer->property_editable() = true;
     name_column->add_attribute(sel->text_renderer->property_text(), sel->columns->name);
-    name_column->set_min_width(200);
+    name_column->set_min_width(180);
     name_column->set_clickable(true);
     name_column->set_resizable(true);
 

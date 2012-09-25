@@ -57,8 +57,8 @@ MarkerComboBox::MarkerComboBox(gchar const *id, int l) :
     set_model(marker_store);
     pack_start(image_renderer, false);
     pack_end(label_renderer, true);
-    label_renderer.set_padding(5, 0);
-    image_renderer.set_padding(5, 0);
+    label_renderer.set_padding(2, 0);
+    image_renderer.set_padding(2, 0);
     set_cell_data_func(label_renderer, sigc::mem_fun(*this, &MarkerComboBox::prepareLabelRenderer));
     set_cell_data_func(image_renderer, sigc::mem_fun(*this, &MarkerComboBox::prepareImageRenderer));
     gtk_combo_box_set_row_separator_func(GTK_COMBO_BOX(gobj()), MarkerComboBox::separator_cb, NULL, NULL);
@@ -562,6 +562,7 @@ MarkerComboBox::create_marker_image(unsigned psize, gchar const *mname,
 void MarkerComboBox::prepareLabelRenderer( Gtk::TreeModel::const_iterator const &row ) {
     Glib::ustring name=(*row)[marker_columns.label];
     label_renderer.property_markup() = name.c_str();
+    label_renderer.property_scale() = 0.8;
 }
 
 void MarkerComboBox::prepareImageRenderer( Gtk::TreeModel::const_iterator const &row ) {
