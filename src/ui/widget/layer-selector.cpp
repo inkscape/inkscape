@@ -34,6 +34,7 @@
 #include "widgets/icon.h"
 #include "widgets/shrink-wrap-button.h"
 #include "xml/node-event-vector.h"
+#include "widgets/gradient-vector.h"
 
 namespace Inkscape {
 namespace Widgets {
@@ -578,8 +579,8 @@ void LayerSelector::_prepareLabelRenderer(
 
         gchar const *label;
         if ( object != root ) {
-            label = object->label();
-            if (!label) {
+            label = gr_ellipsize_text (object->label(), 50).c_str();
+            if (!object->label()) {
                 label = object->defaultLabel();
                 label_defaulted = true;
             }
@@ -599,6 +600,7 @@ void LayerSelector::_prepareLabelRenderer(
     _label_renderer.property_style() = ( label_defaulted ?
                                          Pango::STYLE_ITALIC :
                                          Pango::STYLE_NORMAL );
+
 }
 
 void LayerSelector::_lockLayer(bool lock) {
