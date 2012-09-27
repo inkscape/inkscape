@@ -546,7 +546,7 @@ void ColorItem::_regenPreview(EekPreview * preview)
                                                 | (_isLive ? PREVIEW_LINK_OTHER:0)) );
 }
 
-Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewSize size, guint ratio)
+Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewSize size, guint ratio, guint border)
 {
     Gtk::Widget* widget = 0;
     if ( style == PREVIEW_STYLE_BLURB) {
@@ -565,7 +565,7 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
 
         _regenPreview(preview);
 
-        eek_preview_set_details( preview, (::PreviewStyle)style, (::ViewType)view, (::PreviewSize)size, ratio );
+        eek_preview_set_details( preview, (::PreviewStyle)style, (::ViewType)view, (::PreviewSize)size, ratio, border );
 
         def.addCallback( _colorDefChanged, this );
 

@@ -35,12 +35,13 @@ typedef enum {
     VIEW_TYPE_GRID
 } ViewType;
 
+
 class Previewable
 {
 public:
 // TODO need to add some nice parameters
     virtual ~Previewable() {}
-    virtual Gtk::Widget* getPreview( PreviewStyle style, ViewType view, ::PreviewSize size, guint ratio ) = 0;
+    virtual Gtk::Widget* getPreview( PreviewStyle style, ViewType view, ::PreviewSize size, guint ratio, guint border) = 0;
 };
 
 

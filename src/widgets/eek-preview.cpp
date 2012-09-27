@@ -42,6 +42,7 @@ using std::min;
 
 #include <gtk/gtk.h>
 #include "eek-preview.h"
+#include "preferences.h"
 
 #define PRIME_BUTTON_MAGIC_NUMBER 1
 
@@ -224,13 +225,27 @@ static gboolean eek_preview_expose_event( GtkWidget* widget, GdkEventExpose* /* 
 
 static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
 {
-        GtkStyle* style = gtk_widget_get_style(widget);
-	GtkAllocation allocation;
-	gtk_widget_get_allocation (widget, &allocation);
-        EekPreview* preview = EEK_PREVIEW(widget);
-        GdkColor fg = {0, preview->_r, preview->_g, preview->_b};
-	gint insetX = 0;
-	gint insetY = 0;
+    GtkStyle* style = gtk_widget_get_style(widget);
+    GtkAllocation allocation;
+    gtk_widget_get_allocation(widget, &allocation);
+    EekPreview* preview = EEK_PREVIEW(widget);
+    GdkColor fg = { 0, preview->_r, preview->_g, preview->_b };
+	gint insetTop = 0, insetBottom = 0;
+	gint insetLeft = 0, insetRight = 0;
+
+    if (preview->_border == BORDER_SOLID) {
+        insetTop = 1;
+        insetLeft = 1;
+    }
+    if (preview->_border == BORDER_SOLID_LAST_ROW) {
+        insetTop = insetBottom = 1;
+        insetLeft = 1;
+    }
+    if (preview->_border == BORDER_WIDE) {
+        insetTop = insetBottom = 1;
+        insetLeft = insetRight = 1;
+    }
+
 
 #if GTK_CHECK_VERSION(3,0,0)
         GtkStyleContext *context = gtk_widget_get_style_context(widget);
@@ -247,30 +262,32 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
 #else
 	GdkWindow* window = gtk_widget_get_window(widget);
         
-        gtk_paint_flat_box( style,
-                            window,
-                            (GtkStateType)gtk_widget_get_state(widget),
-                            GTK_SHADOW_NONE,
-                            NULL,
-                            widget,
-                            NULL,
-                            0, 0,
-                            allocation.width, allocation.height);
+    gtk_paint_flat_box( style,
+                        window,
+                        (GtkStateType)gtk_widget_get_state(widget),
+                        GTK_SHADOW_NONE,
+                        NULL,
+                        widget,
+                        NULL,
+                        0, 0,
+                        allocation.width, allocation.height);
         
 	gdk_colormap_alloc_color( gdk_colormap_get_system(), &fg, FALSE, TRUE );
 #endif
 
-	GdkRectangle rect = {insetX, 
-		             insetY,
-			     allocation.width - (insetX * 2),
-			     allocation.height - (insetY * 2)};
+	// Border
+	if (preview->_border != BORDER_NONE) {
+        cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
+        cairo_rectangle(cr, 0, 0, allocation.width, allocation.height);
+        cairo_fill(cr);
+	}
 
-	gdk_cairo_set_source_color(cr, &fg);
-	gdk_cairo_rectangle(cr, &rect);
-	cairo_paint(cr);
+    cairo_set_source_rgb(cr, preview->_r/65535.0, preview->_g/65535.0, preview->_b/65535.0 );
+    cairo_rectangle(cr, insetLeft, insetTop, allocation.width - (insetLeft + insetRight), allocation.height - (insetTop + insetBottom));
+    cairo_fill(cr);
 
-        if ( preview->_previewPixbuf ) {
-            GtkDrawingArea *da = &(preview->drawing);
+	if ( preview->_previewPixbuf ) {
+        GtkDrawingArea *da = &(preview->drawing);
 	    GdkWindow *da_window = gtk_widget_get_window(GTK_WIDGET(da));
 	    cairo_t *cr = gdk_cairo_create(da_window);
 
@@ -278,29 +295,38 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
 	    gint w = gdk_window_get_width(da_window);
 	    gint h = gdk_window_get_height(da_window);
 #else
-            gint w = 0;
-            gint h = 0;
+        gint w = 0;
+        gint h = 0;
 	    gdk_drawable_get_size(da_window, &w, &h);
 #endif
-            
-	    if ((w != preview->_scaledW) || (h != preview->_scaledH)) {
-                if (preview->_scaled) {
-                    g_object_unref(preview->_scaled);
-                }
-                preview->_scaled = gdk_pixbuf_scale_simple(preview->_previewPixbuf, w, h, GDK_INTERP_BILINEAR);
-                preview->_scaledW = w;
-                preview->_scaledH = h;
-            }
 
-            GdkPixbuf *pix = (preview->_scaled) ? preview->_scaled : preview->_previewPixbuf;
-	    gdk_cairo_set_source_pixbuf(cr, pix, 0, 0);
+
+	    if ((w != preview->_scaledW) || (h != preview->_scaledH)) {
+            if (preview->_scaled) {
+                g_object_unref(preview->_scaled);
+            }
+            preview->_scaled = gdk_pixbuf_scale_simple(preview->_previewPixbuf, w - (insetLeft + insetRight), h - (insetTop + insetBottom), GDK_INTERP_BILINEAR);
+            preview->_scaledW = w - (insetLeft + insetRight);
+            preview->_scaledH = h - (insetTop + insetBottom);
+        }
+
+        GdkPixbuf *pix = (preview->_scaled) ? preview->_scaled : preview->_previewPixbuf;
+
+        // Border
+        if (preview->_border != BORDER_NONE) {
+            cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
+            cairo_rectangle(cr, 0, 0, allocation.width, allocation.height);
+            cairo_fill(cr);
+        }
+
+	    gdk_cairo_set_source_pixbuf(cr, pix, insetLeft, insetTop);
 	    cairo_paint(cr);
 	    cairo_destroy(cr);
-        }
+    }
 
         if ( preview->_linked ) {
             /* Draw arrow */
-            GdkRectangle possible = {insetX, insetY, (allocation.width - (insetX * 2)), (allocation.height - (insetY * 2)) };
+            GdkRectangle possible = {insetLeft, insetTop, (allocation.width - (insetLeft + insetRight)), (allocation.height - (insetTop + insetBottom)) };
             GdkRectangle area = {possible.x, possible.y, possible.width / 2, possible.height / 2 };
 
             /* Make it square */
@@ -370,7 +396,7 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
             }
 
             if ( preview->_linked & PREVIEW_LINK_OTHER ) {
-                GdkRectangle otherArea = {insetX, area.y, area.width, area.height};
+                GdkRectangle otherArea = {insetLeft, area.y, area.width, area.height};
                 if ( otherArea.height < possible.height ) {
                     otherArea.y = possible.y + (possible.height - otherArea.height) / 2;
                 }
@@ -752,7 +778,7 @@ void eek_preview_set_focus_on_click( EekPreview* preview, gboolean focus_on_clic
     }
 }
 
-void eek_preview_set_details( EekPreview* preview, PreviewStyle prevstyle, ViewType view, PreviewSize size, guint ratio )
+void eek_preview_set_details( EekPreview* preview, PreviewStyle prevstyle, ViewType view, PreviewSize size, guint ratio, guint border )
 {
     preview->_prevstyle = prevstyle;
     preview->_view = view;
@@ -766,7 +792,7 @@ void eek_preview_set_details( EekPreview* preview, PreviewStyle prevstyle, ViewT
         ratio = PREVIEW_MAX_RATIO;
     }
     preview->_ratio = ratio;
-
+    preview->_border = border;
     gtk_widget_queue_draw(GTK_WIDGET(preview));
 }
 
@@ -802,7 +828,7 @@ static void eek_preview_init( EekPreview *preview )
     preview->_view = VIEW_TYPE_LIST;
     preview->_size = PREVIEW_SIZE_SMALL;
     preview->_ratio = 100;
-
+    preview->_border = BORDER_NONE;
     preview->_previewPixbuf = 0;
     preview->_scaled = 0;
 

@@ -42,7 +42,8 @@ static const int PANEL_SETTING_SIZE = 0;
 static const int PANEL_SETTING_MODE = 1;
 static const int PANEL_SETTING_SHAPE = 2;
 static const int PANEL_SETTING_WRAP = 3;
-static const int PANEL_SETTING_NEXTFREE = 4;
+static const int PANEL_SETTING_BORDER = 4;
+static const int PANEL_SETTING_NEXTFREE = 5;
 
 
 void Panel::prep() {
@@ -93,7 +94,7 @@ void Panel::_init()
     Glib::ustring tmp("<");
     _anchor = SP_ANCHOR_CENTER;
 
-    guint panel_size = 0, panel_mode = 0, panel_ratio = 100;
+    guint panel_size = 0, panel_mode = 0, panel_ratio = 100, panel_border = 0;
     bool panel_wrap = 0;
     if (!_prefs_path.empty()) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -101,6 +102,7 @@ void Panel::_init()
         panel_size = prefs->getIntLimited(_prefs_path + "/panel_size", 1, 0, PREVIEW_SIZE_HUGE);
         panel_mode = prefs->getIntLimited(_prefs_path + "/panel_mode", 1, 0, 10);
         panel_ratio = prefs->getIntLimited(_prefs_path + "/panel_ratio", 100, 0, 500 );
+        panel_border = prefs->getIntLimited(_prefs_path + "/panel_border", BORDER_NONE, 0, 2 );
     }
 
     _menu = new Gtk::Menu();
@@ -198,6 +200,42 @@ void Panel::_init()
     }
 
     {
+        Glib::ustring widthItemLabel(C_("Swatches", "Border"));
+
+        //TRANSLATORS: Indicates border of colour swatches
+        const gchar *widthLabels[] = {
+            NC_("Swatches border", "None"),
+            NC_("Swatches border", "Solid"),
+            NC_("Swatches border", "Wide"),
+        };
+
+        Gtk::MenuItem *item = manage( new Gtk::MenuItem(widthItemLabel));
+        Gtk::Menu *type_menu = manage(new Gtk::Menu());
+        item->set_submenu(*type_menu);
+        _menu->append(*item);
+
+        Gtk::RadioMenuItem::Group widthGroup;
+
+        guint values[] = {0, 1, 2};
+        guint hot_index = 0;
+        for ( guint i = 0; i < G_N_ELEMENTS(widthLabels); ++i ) {
+            // Assume all values are in increasing order
+            if ( values[i] <= panel_border ) {
+                hot_index = i;
+            }
+        }
+        for ( guint i = 0; i < G_N_ELEMENTS(widthLabels); ++i ) {
+            Glib::ustring _label(g_dpgettext2(NULL, "Swatches border", widthLabels[i]));
+            Gtk::RadioMenuItem *_item = manage(new Gtk::RadioMenuItem(widthGroup, _label));
+            type_menu->append(*_item);
+            if ( i <= hot_index ) {
+                _item->set_active(true);
+            }
+            _item->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), PANEL_SETTING_BORDER, values[i]));
+        }
+    }
+
+    {
         //TRANSLATORS: "Wrap" indicates how colour swatches are displayed
         Glib::ustring wrap_label(C_("Swatches","Wrap"));
         Gtk::CheckMenuItem *check = manage(new Gtk::CheckMenuItem(wrap_label));
@@ -259,6 +297,7 @@ void Panel::_init()
     _bounceCall(PANEL_SETTING_MODE, panel_mode);
     _bounceCall(PANEL_SETTING_SHAPE, panel_ratio);
     _bounceCall(PANEL_SETTING_WRAP, panel_wrap);
+    _bounceCall(PANEL_SETTING_BORDER, panel_border);
 }
 
 void Panel::setLabel(Glib::ustring const &label)
@@ -323,7 +362,7 @@ void Panel::present()
 
 void Panel::restorePanelPrefs()
 {
-    guint panel_size = 0, panel_mode = 0, panel_ratio = 100;
+    guint panel_size = 0, panel_mode = 0, panel_ratio = 100, panel_border = 0;
     bool panel_wrap = 0;
     if (!_prefs_path.empty()) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -331,11 +370,13 @@ void Panel::restorePanelPrefs()
         panel_size = prefs->getIntLimited(_prefs_path + "/panel_size", 1, 0, PREVIEW_SIZE_HUGE);
         panel_mode = prefs->getIntLimited(_prefs_path + "/panel_mode", 1, 0, 10);
         panel_ratio = prefs->getIntLimited(_prefs_path + "/panel_ratio", 000, 0, 500 );
+        panel_border = prefs->getIntLimited(_prefs_path + "/panel_border", BORDER_NONE, 0, 2 );
     }
     _bounceCall(PANEL_SETTING_SIZE, panel_size);
     _bounceCall(PANEL_SETTING_MODE, panel_mode);
     _bounceCall(PANEL_SETTING_SHAPE, panel_ratio);
     _bounceCall(PANEL_SETTING_WRAP, panel_wrap);
+    _bounceCall(PANEL_SETTING_BORDER, panel_border);
 }
 
 sigc::signal<void, int> &Panel::signalResponse()
@@ -360,30 +401,32 @@ void Panel::_bounceCall(int i, int j)
         if (_fillable) {
             ViewType curr_type = _fillable->getPreviewType();
             guint curr_ratio = _fillable->getPreviewRatio();
+            ::BorderStyle curr_border = _fillable->getPreviewBorder();
+
             switch (j) {
             case 0:
             {
-                _fillable->setStyle(::PREVIEW_SIZE_TINY, curr_type, curr_ratio);
+                _fillable->setStyle(::PREVIEW_SIZE_TINY, curr_type, curr_ratio, curr_border);
             }
             break;
             case 1:
             {
-                _fillable->setStyle(::PREVIEW_SIZE_SMALL, curr_type, curr_ratio);
+                _fillable->setStyle(::PREVIEW_SIZE_SMALL, curr_type, curr_ratio, curr_border);
             }
             break;
             case 2:
             {
-                _fillable->setStyle(::PREVIEW_SIZE_MEDIUM, curr_type, curr_ratio);
+                _fillable->setStyle(::PREVIEW_SIZE_MEDIUM, curr_type, curr_ratio, curr_border);
             }
             break;
             case 3:
             {
-                _fillable->setStyle(::PREVIEW_SIZE_BIG, curr_type, curr_ratio);
+                _fillable->setStyle(::PREVIEW_SIZE_BIG, curr_type, curr_ratio, curr_border);
             }
             break;
             case 4:
             {
-                _fillable->setStyle(::PREVIEW_SIZE_HUGE, curr_type, curr_ratio);
+                _fillable->setStyle(::PREVIEW_SIZE_HUGE, curr_type, curr_ratio, curr_border);
             }
             break;
             default:
@@ -399,15 +442,16 @@ void Panel::_bounceCall(int i, int j)
         if (_fillable) {
             ::PreviewSize curr_size = _fillable->getPreviewSize();
             guint curr_ratio = _fillable->getPreviewRatio();
+            ::BorderStyle curr_border = _fillable->getPreviewBorder();
             switch (j) {
             case 0:
             {
-                _fillable->setStyle(curr_size, VIEW_TYPE_LIST, curr_ratio);
+                _fillable->setStyle(curr_size, VIEW_TYPE_LIST, curr_ratio, curr_border);
             }
             break;
             case 1:
             {
-                _fillable->setStyle(curr_size, VIEW_TYPE_GRID, curr_ratio);
+                _fillable->setStyle(curr_size, VIEW_TYPE_GRID, curr_ratio, curr_border);
             }
             break;
             default:
@@ -423,7 +467,40 @@ void Panel::_bounceCall(int i, int j)
         if ( _fillable ) {
             ViewType curr_type = _fillable->getPreviewType();
             ::PreviewSize curr_size = _fillable->getPreviewSize();
-            _fillable->setStyle(curr_size, curr_type, j);
+            ::BorderStyle curr_border = _fillable->getPreviewBorder();
+
+            _fillable->setStyle(curr_size, curr_type, j, curr_border);
+        }
+        break;
+    case PANEL_SETTING_BORDER:
+        if (!_prefs_path.empty()) {
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            prefs->setInt(_prefs_path + "/panel_border", j);
+        }
+        if ( _fillable ) {
+            ::PreviewSize curr_size = _fillable->getPreviewSize();
+            ViewType curr_type = _fillable->getPreviewType();
+            guint curr_ratio = _fillable->getPreviewRatio();
+
+            switch (j) {
+            case 0:
+            {
+                _fillable->setStyle(curr_size, curr_type, curr_ratio, BORDER_NONE);
+            }
+            break;
+            case 1:
+            {
+                _fillable->setStyle(curr_size, curr_type, curr_ratio, BORDER_SOLID);
+            }
+            break;
+            case 2:
+            {
+                _fillable->setStyle(curr_size, curr_type, curr_ratio, BORDER_WIDE);
+            }
+            break;
+            default:
+                break;
+            }
         }
         break;
     case PANEL_SETTING_WRAP:
