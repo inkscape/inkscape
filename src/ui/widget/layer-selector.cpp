@@ -579,7 +579,7 @@ void LayerSelector::_prepareLabelRenderer(
 
         gchar const *label;
         if ( object != root ) {
-            label = gr_ellipsize_text (object->label(), 50).c_str();
+            label = object->label();
             if (!object->label()) {
                 label = object->defaultLabel();
                 label_defaulted = true;
@@ -588,7 +588,7 @@ void LayerSelector::_prepareLabelRenderer(
             label = _("(root)");
         }
 
-        gchar *text = g_markup_printf_escaped(format, label);
+        gchar *text = g_markup_printf_escaped(format, gr_ellipsize_text (label, 50).c_str());
         _label_renderer.property_markup() = text;
         g_free(text);
         g_free(format);
