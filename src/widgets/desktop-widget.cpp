@@ -680,6 +680,7 @@ static void sp_desktop_widget_dispose(GObject *object)
         g_signal_handlers_disconnect_by_func (G_OBJECT (dtw->zoom_status), (gpointer) G_CALLBACK (sp_dtw_zoom_populate_popup), dtw);
         g_signal_handlers_disconnect_by_func (G_OBJECT (dtw->canvas), (gpointer) G_CALLBACK (sp_desktop_widget_event), dtw);
 
+        dtw->layer_selector->setDesktop(NULL);
         dtw->layer_selector->unreference();
         inkscape_remove_desktop (dtw->desktop); // clears selection too
         dtw->modified_connection.disconnect();
