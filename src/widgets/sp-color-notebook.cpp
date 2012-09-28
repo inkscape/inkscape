@@ -287,7 +287,7 @@ void ColorNotebook::init()
     sp_set_font_size_smaller (_buttonbox);
     gtk_table_attach (GTK_TABLE (table), _buttonbox, 0, 2, row, row + 1,
                       static_cast<GtkAttachOptions>(GTK_EXPAND|GTK_FILL),
-                      static_cast<GtkAttachOptions>(GTK_EXPAND|GTK_FILL),
+                      static_cast<GtkAttachOptions>(0),
                       XPAD, YPAD);
     row++;
 
