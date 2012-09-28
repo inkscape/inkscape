@@ -550,7 +550,8 @@ static gboolean eek_preview_button_press_cb( GtkWidget* widget, GdkEventButton* 
             gtk_widget_grab_focus(widget);
         }
 
-        if ( event->button == PRIME_BUTTON_MAGIC_NUMBER ) {
+        if ( event->button == PRIME_BUTTON_MAGIC_NUMBER ||
+                event->button == 2 ) {
             preview->_hot = TRUE;
             if ( preview->_within ) {
                 gtk_widget_set_state( widget, GTK_STATE_ACTIVE );
@@ -567,8 +568,10 @@ static gboolean eek_preview_button_release_cb( GtkWidget* widget, GdkEventButton
         EekPreview* preview = EEK_PREVIEW(widget);
         preview->_hot = FALSE;
         gtk_widget_set_state( widget, GTK_STATE_NORMAL );
-        if ( preview->_within && event->button == PRIME_BUTTON_MAGIC_NUMBER ) {
-            gboolean isAlt = (event->state & GDK_SHIFT_MASK) == GDK_SHIFT_MASK;
+        if ( preview->_within &&
+            (event->button == PRIME_BUTTON_MAGIC_NUMBER || event->button == 2)) {
+            gboolean isAlt = ( ((event->state & GDK_SHIFT_MASK) == GDK_SHIFT_MASK) ||
+                                (event->button == 2));
 
             if ( isAlt ) {
                 g_signal_emit( widget, eek_preview_signals[ALTCLICKED_SIGNAL], 0, 2 );
