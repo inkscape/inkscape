@@ -615,9 +615,8 @@ Duochrome::get_filter_text (Inkscape::Extension::Extension * ext)
 
     Filter's parameters:
     * Channel (enum, all colors, default Red) -> colormatrix (values)
-    * Background blend (enum, all blend modes, default Multiply) -> blend (mode)
+    * Background blend (enum, Normal, Multiply, Screen, default Normal) -> blend (mode)
     * Channel to alpha (boolean, default false) -> colormatrix (values)
-    * Invert (boolean, default false) -> colormatrix (values)
 
 */
 class ExtractChannel : public Inkscape::Extension::Internal::Filter::Filter {
@@ -637,16 +636,16 @@ public:
                 "<_item value=\"r\">" N_("Red") "</_item>\n"
                 "<_item value=\"g\">" N_("Green") "</_item>\n"
                 "<_item value=\"b\">" N_("Blue") "</_item>\n"
+                "<_item value=\"c\">" N_("Cyan") "</_item>\n"
+                "<_item value=\"m\">" N_("Majenta") "</_item>\n"
+                "<_item value=\"y\">" N_("Yellow") "</_item>\n"
               "</param>\n"
               "<param name=\"blend\" gui-text=\"" N_("Background blend mode:") "\" type=\"enum\">\n"
                 "<_item value=\"multiply\">" N_("Multiply") "</_item>\n"
                 "<_item value=\"normal\">" N_("Normal") "</_item>\n"
                 "<_item value=\"screen\">" N_("Screen") "</_item>\n"
-                "<_item value=\"darken\">" N_("Darken") "</_item>\n"
-                "<_item value=\"lighten\">" N_("Lighten") "</_item>\n"
               "</param>\n"
               "<param name=\"alpha\" gui-text=\"" N_("Channel to alpha") "\" type=\"boolean\">false</param>\n"
-              "<param name=\"invert\" gui-text=\"" N_("Inverted") "\" type=\"boolean\">false</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -667,45 +666,45 @@ ExtractChannel::get_filter_text (Inkscape::Extension::Extension * ext)
 
     std::ostringstream blend;
     std::ostringstream colors;
-    std::ostringstream alpha;
-    std::ostringstream invert;
 
     blend << ext->get_param_enum("blend");
 
     const gchar *channel = ext->get_param_enum("source");
     if (ext->get_param_bool("alpha")) {
-        colors << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
-    } else if ((g_ascii_strcasecmp("r", channel) == 0)) {
-        colors << "0 0 0 0 1 0 0 0 0 0 0 0 0 0 0";
-    } else if ((g_ascii_strcasecmp("g", channel) == 0)) {
-        colors << "0 0 0 0 0 0 0 0 0 1 0 0 0 0 0";
-    } else {
-        colors << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 1";
-    }
-
-    if (ext->get_param_bool("invert")) {
         if ((g_ascii_strcasecmp("r", channel) == 0)) {
-            alpha << "-1 0 0 1";
+            colors << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0";
         } else if ((g_ascii_strcasecmp("g", channel) == 0)) {
-            alpha << "0 -1 0 1";
+            colors << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0";
+        } else if ((g_ascii_strcasecmp("b", channel) == 0)) {
+            colors << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0";
+        } else if ((g_ascii_strcasecmp("c", channel) == 0)) {
+            colors << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1 0 0 1 0";
+        } else if ((g_ascii_strcasecmp("m", channel) == 0)) {
+            colors << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1 0 1 0";
         } else {
-            alpha << "0 0 -1 1";
+            colors << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1 1 0";
         }
     } else {
         if ((g_ascii_strcasecmp("r", channel) == 0)) {
-            alpha << "1 0 0 0";
+            colors << "0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0";
         } else if ((g_ascii_strcasecmp("g", channel) == 0)) {
-            alpha << "0 1 0 0";
+            colors << "0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0";
+        } else if ((g_ascii_strcasecmp("b", channel) == 0)) {
+            colors << "0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0";
+        } else if ((g_ascii_strcasecmp("c", channel) == 0)) {
+            colors << "0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 -1 0 0 1 0";
+        } else if ((g_ascii_strcasecmp("m", channel) == 0)) {
+            colors << "0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 -1 0 1 0";
         } else {
-            alpha << "0 0 1 0";
+            colors << "0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 -1 1 0";
         }
     }
 
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Extract Channel\">\n"
-          "<feColorMatrix in=\"SourceGraphic\" values=\"%s %s %s 0 \" result=\"colormatrix\" />\n"
+          "<feColorMatrix in=\"SourceGraphic\" values=\"%s 0 \" result=\"colormatrix\" />\n"
           "<feBlend in2=\"BackgroundImage\" mode=\"%s\" result=\"blend\" />\n"
-        "</filter>\n", colors.str().c_str(), alpha.str().c_str(), invert.str().c_str(), blend.str().c_str() );
+        "</filter>\n", colors.str().c_str(), blend.str().c_str() );
 
     return _filter;
 }; /* ExtractChannel filter */
@@ -1157,9 +1156,9 @@ LightnessContrast::get_filter_text (Inkscape::Extension::Extension * ext)
 }; /* Lightness-Contrast filter */
 
 /**
-    \brief    Custom predefined Nudge filter.
+    \brief    Custom predefined Nudge RGB filter.
     
-    Nudge separately RGB channels and blend them to different types of backgrounds
+    Nudge RGB channels separately and blend them to different types of backgrounds
 
     Filter's parameters:
     Offsets
@@ -1193,8 +1192,8 @@ public:
     static void init (void) {
         Inkscape::Extension::build_from_mem(
             "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-              "<name>" N_("Nudge") "</name>\n"
-              "<id>org.inkscape.effect.filter.Nudge</id>\n"
+              "<name>" N_("Nudge RGB") "</name>\n"
+              "<id>org.inkscape.effect.filter.NudgeRGB</id>\n"
               "<param name=\"tab\" type=\"notebook\">\n"
                 "<page name=\"offsettab\" _gui-text=\"Offset\">\n"
                   "<_param name=\"redOffset\" type=\"description\" appearance=\"header\">" N_("Red offset") "</_param>\n"
@@ -1232,7 +1231,7 @@ public:
                     "<submenu name=\"" N_("Color") "\"/>\n"
                   "</submenu>\n"
                 "</effects-menu>\n"
-                "<menu-tip>" N_("Nudge separately RGB channels and blend them to different types of backgrounds") "</menu-tip>\n"
+                "<menu-tip>" N_("Nudge RGB channels separately and blend them to different types of backgrounds") "</menu-tip>\n"
               "</effect>\n"
             "</inkscape-extension>\n", new Nudge());
     };
@@ -1277,7 +1276,7 @@ Nudge::get_filter_text (Inkscape::Extension::Extension * ext)
     a << (color & 0xff) / 255.0F;
     
     _filter = g_strdup_printf(
-        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Nudge\">\n"
+        "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Nudge RGB\">\n"
           "<feFlood flood-opacity=\"%s\" flood-color=\"rgb(%s,%s,%s)\" result=\"flood\" />\n"
           "<feColorMatrix in=\"SourceGraphic\" values=\"0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 \" result=\"colormatrix1\" />\n"
           "<feOffset dy=\"%s\" dx=\"%s\" result=\"offset1\" />\n"
@@ -1297,7 +1296,7 @@ Nudge::get_filter_text (Inkscape::Extension::Extension * ext)
 
     return _filter;
 
-}; /* Nudge filter */
+}; /* Nudge RGB filter */
 
 /**
     \brief    Custom predefined Quadritone filter.

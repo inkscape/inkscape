@@ -3,7 +3,7 @@
 /* Change the 'PAINT' above to be your file name */
 
 /*
- * Copyright (C) 2011 Authors:
+ * Copyright (C) 2012 Authors:
  *   Ivan Louette (filters)
  *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
  *
@@ -563,13 +563,13 @@ Electrize::get_filter_text (Inkscape::Extension::Extension * ext)
 
     Filter's parameters:
     * Lines type (enum, default smooth) ->
-        smooth = component1 (type="table"), component2 (type="table"), composite1 (in2="blur2")
-        hard = component1 (type="discrete"), component2 (type="discrete"), composite1 (in2="component1")
-    * Simplify (0.01->20., default 1.5) -> blur1 (stdDeviation)
-    * Line width (0.01->20., default 1.5) -> blur2 (stdDeviation)
-    * Lightness (0.->10., default 0.5) -> composite1 (k3)
+        smooth = component2 (type="table"), composite1 (in2="blur2")
+        hard = component2 (type="discrete"), composite1 (in2="component1")
+    * Simplify (0.01->20., default 3) -> blur1 (stdDeviation)
+    * Line width (0.01->20., default 3) -> blur2 (stdDeviation)
+    * Lightness (0.->10., default 1) -> composite1 (k2)
     * Blend (enum [normal, multiply, screen], default normal) -> blend (mode)
-    * Dark mode (boolean, default false) -> composite1 (true: in2="component2")
+    * Dark mode (boolean, default false) -> composite2 (true: in2="component2")
 */
 class NeonDraw : public Inkscape::Extension::Internal::Filter::Filter {
 protected:
@@ -588,15 +588,14 @@ public:
                 "<_item value=\"table\">" N_("Smoothed") "</_item>\n"
                 "<_item value=\"discrete\">" N_("Contrasted") "</_item>\n"
               "</param>\n"
-              "<param name=\"simply\" gui-text=\"" N_("Simplify:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"20.00\">1.5</param>\n"
-              "<param name=\"width\" gui-text=\"" N_("Line width:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"20.00\">1.5</param>\n"
-              "<param name=\"lightness\" gui-text=\"" N_("Lightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"10.00\">0.5</param>\n"
+              "<param name=\"simply\" gui-text=\"" N_("Simplify:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"20.00\">3</param>\n"
+              "<param name=\"width\" gui-text=\"" N_("Line width:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"20.00\">3</param>\n"
+              "<param name=\"lightness\" gui-text=\"" N_("Lightness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.00\" max=\"10.00\">1</param>\n"
               "<param name=\"blend\" gui-text=\"" N_("Blend mode:") "\" type=\"enum\">\n"
                 "<_item value=\"normal\">Normal</_item>\n"
                 "<_item value=\"multiply\">Multiply</_item>\n"
                 "<_item value=\"screen\">Screen</_item>\n"
               "</param>\n"
-              "<param name=\"dark\" gui-text=\"" N_("Dark mode") "\" type=\"boolean\" >false</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"
                 "<effects-menu>\n"
@@ -620,7 +619,6 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream width;
     std::ostringstream lightness;
     std::ostringstream type;
-    std::ostringstream dark;
 
     type << ext->get_param_enum("type");
     blend << ext->get_param_enum("blend");
@@ -628,33 +626,27 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
     width << ext->get_param_float("width");
     lightness << ext->get_param_float("lightness");
 
-    const gchar *typestr = ext->get_param_enum("type");
-    if (ext->get_param_bool("dark")) {
-        dark << "component2";
-    } else if ((g_ascii_strcasecmp("table", typestr) == 0)) {
-        dark << "blur2";
-    } else {
-        dark << "component1";
-    }
-
     _filter = g_strdup_printf(
         "<filter xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\" style=\"color-interpolation-filters:sRGB;\" inkscape:label=\"Neon Draw\">\n"
           "<feBlend mode=\"%s\" result=\"blend\" />\n"
           "<feGaussianBlur in=\"blend\" stdDeviation=\"%s\" result=\"blur1\" />\n"
+          "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 50 0\" result=\"color1\" />\n"
           "<feComponentTransfer result=\"component1\">\n"
-            "<feFuncR type=\"discrete\" tableValues=\"0 0.3 0.6 1 1\" />\n"
-            "<feFuncG type=\"discrete\" tableValues=\"0 0.3 0.6 1 1\" />\n"
-            "<feFuncB type=\"discrete\" tableValues=\"0 0.3 0.6 1 1\" />\n"
+            "<feFuncR type=\"discrete\" tableValues=\"0 0.3 0.3 0.3 0.3 0.6 0.6 0.6 0.6 1 1\" />\n"
+            "<feFuncG type=\"discrete\" tableValues=\"0 0.3 0.3 0.3 0.3 0.6 0.6 0.6 0.6 1 1\" />\n"
+            "<feFuncB type=\"discrete\" tableValues=\"0 0.3 0.3 0.3 0.3 0.6 0.6 0.6 0.6 1 1\" />\n"
           "</feComponentTransfer>\n"
           "<feGaussianBlur in=\"component1\" stdDeviation=\"%s\" result=\"blur2\" />\n"
-          "<feComponentTransfer in=\"blur2\" result=\"component2\">\n"
-            "<feFuncR type=\"%s\" tableValues=\"0 1 0 1 0 1 0 1\" />\n"
-            "<feFuncG type=\"%s\" tableValues=\"0 1 0 1 0 1 0 1\" />\n"
-            "<feFuncB type=\"%s\" tableValues=\"0 1 0 1 0 1 0 1\" />\n"
+          "<feColorMatrix values=\"1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 50 0\" result=\"color2\" />\n"
+          "<feComponentTransfer in=\"color2\" result=\"component2\">\n"
+            "<feFuncR type=\"%s\" tableValues=\"0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 0 0 0 1\" />\n"
+            "<feFuncG type=\"%s\" tableValues=\"0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 0 0 0 1\" />\n"
+            "<feFuncB type=\"%s\" tableValues=\"0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 0 0 0 1\" />\n"
           "</feComponentTransfer>\n"
-          "<feComposite in=\"component2\" in2=\"%s\" k3=\"%s\" operator=\"arithmetic\" k2=\"1\" result=\"composite1\" />\n"
+          "<feComposite in=\"component2\" in2=\"blur2\" k3=\"%s\" operator=\"arithmetic\" k2=\"1\" result=\"composite1\" />\n"
+          "<feColorMatrix values=\"-1 0 0 0 1 0 -1 0 0 0 1 0 -1 0 1 -0.21 -0.72 -0.07 2 0\" result=\"color3\" />\n"
           "<feComposite in=\"composite1\" in2=\"SourceGraphic\" operator=\"in\" result=\"composite2\" />\n"
-        "</filter>\n", blend.str().c_str(), simply.str().c_str(), width.str().c_str(), type.str().c_str(), type.str().c_str(), type.str().c_str(), dark.str().c_str(), lightness.str().c_str());
+        "</filter>\n", blend.str().c_str(), simply.str().c_str(), width.str().c_str(), type.str().c_str(), type.str().c_str(), type.str().c_str(), lightness.str().c_str());
 
     return _filter;
 }; /* NeonDraw filter */

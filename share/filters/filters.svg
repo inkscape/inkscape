@@ -2209,7 +2209,7 @@ sodipodi:docname="filters.svg">
 </feMerge>
 <feComposite in2="SourceGraphic" operator="in" result="result11" />
 </filter>
-<filter id="f217" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Aluminium effect with sharp brushed reflexions" inkscape:label="Aluminium" style="color-interpolation-filters:sRGB">
+<filter id="f217" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Aluminium effect with sharp brushed reflections" inkscape:label="Aluminium" style="color-interpolation-filters:sRGB">
 <feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
 <feComposite operator="xor" in2="SourceGraphic" result="result22" />
 <feComposite k2="1" operator="arithmetic" result="result20" in2="result22" in="result22" />
@@ -2365,7 +2365,7 @@ sodipodi:docname="filters.svg">
 <feComposite result="result14" operator="over" in2="fbSourceGraphic" in="fbSourceGraphic" />
 <feComposite in="result14" operator="in" in2="result17" result="result15" />
 </filter>
-<filter id="f230" style="color-interpolation-filters:sRGB" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Unrealistic reflexions with sharp edges" inkscape:label="Sharp Deco">
+<filter id="f230" style="color-interpolation-filters:sRGB" x="-0.25" width="1.5" y="-0.25" height="1.5" inkscape:menu="Non realistic 3D shaders" inkscape:menu-tooltip="Unrealistic reflections with sharp edges" inkscape:label="Sharp Deco">
 <feGaussianBlur result="result8" stdDeviation="5" in="SourceGraphic" />
 <feComposite in="SourceGraphic" result="result19" in2="result8" operator="out" />
 <feComposite k2="1" operator="arithmetic" result="result17" in2="result8" />
@@ -2401,7 +2401,7 @@ sodipodi:docname="filters.svg">
 <feComposite in2="fbSourceGraphic" operator="xor" result="result14" />
 <feComposite result="result15" in2="result2" operator="in" in="result14" />
 </filter>
-<filter id="f233" inkscape:label="Refractive Glass" inkscape:menu-tooltip="Double reflexion through glass with some refraction" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB">
+<filter id="f233" inkscape:label="Refractive Glass" inkscape:menu-tooltip="Double reflection through glass with some refraction" inkscape:menu="Non realistic 3D shaders" height="1.5" y="-0.25" width="1.5" x="-0.25" style="color-interpolation-filters:sRGB">
 <feGaussianBlur stdDeviation="5" result="result8" in="SourceGraphic" />
 <feComposite in="result8" in2="result8" operator="xor" result="result18" />
 <feComposite in="result8" k1="1" k2="0.5" operator="arithmetic" result="result16" in2="result18" />
@@ -2501,25 +2501,6 @@ sodipodi:docname="filters.svg">
 <feBlend in2="fbSourceGraphic" mode="screen" in="result3" result="result4" />
 <feComposite in2="SourceGraphic" operator="in" in="result4" result="result2" />
 </filter>
-<filter id="filter229" inkscape:menu="Image Paint and Draw" inkscape:menu-tooltip="Draw an image with neon or chalk lines" style="color-interpolation-filters:sRGB;" inkscape:label="Neon Draw Alternate">
-<feBlend in2="SourceGraphic" stdDeviation="19" mode="normal" result="blend" />
-<feGaussianBlur in="blend" stdDeviation="2" result="blur1" />
-<feColorMatrix result="result2" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 50 0 " />
-<feComponentTransfer result="component1">
-<feFuncR type="discrete" tableValues="0 0.3 0.3 0.3 0.3 0.6 0.6 0.6 0.6 1 1" />
-<feFuncG type="discrete" tableValues="0 0.3 0.3 0.3 0.3 0.6 0.6 0.6 0.6 1 1" />
-<feFuncB type="discrete" tableValues="0 0.3 0.3 0.3 0.3 0.6 0.6 0.6 0.6 1 1" />
-</feComponentTransfer>
-<feGaussianBlur in="component1" stdDeviation="2" result="blur2" />
-<feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 50 0 " result="result2" />
-<feComponentTransfer in="result2" result="component2">
-<feFuncR type="table" tableValues="0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 0 0 0 1" />
-<feFuncG type="table" tableValues="0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 0 0 0 1" />
-<feFuncB type="table" tableValues="0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 0 0 0 1" />
-</feComponentTransfer>
-<feComposite in2="blur2" in="component2" k3="1" operator="arithmetic" k2="1" result="composite1" stdDeviation="11" />
-<feComposite in2="SourceGraphic" in="composite1" operator="in" result="fbSourceGraphic" />
-</filter>
 <filter id="filter291" inkscape:menu="Color" inkscape:menu-tooltip="Colorize separately the three color channels" inkscape:label="Paint Channels" style="color-interpolation-filters:sRGB;">
 <feColorMatrix type="saturate" values="0" result="result3" />
 <feColorMatrix in="SourceGraphic" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 -0.5 -0.5 0 0 " result="colormatrix" />
@@ -2570,13 +2551,14 @@ sodipodi:docname="filters.svg">
 <feComposite in2="result17" result="result18" k3="1" k2="1" operator="arithmetic" />
 <feComposite in2="SourceGraphic" operator="in" />
 </filter>
-<filter id="filter533" inkscape:menu="Fill and Transparency" inkscape:menu-tooltip="Make the image progressively transparent without alterating its lightness" inkscape:label="White to Transparency" style="color-interpolation-filters:sRGB">
-<feColorMatrix values="0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -1 0 0 1 0 " result="result5" />
-<feColorMatrix values="1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 -1 0 1 0 " in="SourceGraphic" result="result4" />
-<feBlend in2="result4" result="result3" mode="lighten" in="result5" />
-<feColorMatrix in="SourceGraphic" values="1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 -1 1 0 " result="result2" />
-<feBlend in2="result2" mode="lighten" result="result3" in="result3" />
-<feComposite in2="SourceGraphic" operator="in" in="result3" />
+<filter id="filter106" inkscape:label="Simulate CMY" inkscape:menu="Color" inkscape:menu-tooltip="Render Cyan, Magenta and Yellow channels with a colorizable background" style="color-interpolation-filters:sRGB">
+<feFlood flood-color="rgb(255,255,255)" result="result6" flood-opacity="0" />
+<feColorMatrix result="result3" values="0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 -1 0 0 1 0 " in="SourceGraphic" />
+<feBlend mode="multiply" in2="result6" result="result7" in="result3" />
+<feColorMatrix result="result2" in="SourceGraphic" values="0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 -1 0 1 0 " />
+<feBlend result="result4" in="result2" in2="result7" mode="multiply" />
+<feColorMatrix result="result1" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 -1 1 0 " in="SourceGraphic" />
+<feBlend in2="result4" mode="multiply" result="result5" in="result1" />
 </filter>
 <filter id="filter581" inkscape:menu="Morphology" inkscape:menu-tooltip="Blurred multiple contour for objects" y="-0.2" x="-0.34" width="1.6" height="1.4" inkscape:label="Contouring table" style="color-interpolation-filters:sRGB">
 <feFlood result="result2" flood-color="rgb(255,255,255)" />
