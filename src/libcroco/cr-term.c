@@ -365,9 +365,9 @@ cr_term_to_string (CRTerm * a_this)
                                                 tmp_str = NULL;
                                         }
 
-                                        g_free (content);
-                                        content = NULL;
                                 }
+                                g_free (content);
+                                content = NULL;
                                 g_string_append (str_buf, ")");
                         }
 
