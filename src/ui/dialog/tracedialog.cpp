@@ -294,8 +294,9 @@ void TraceDialogImpl::potraceProcess(bool do_i_trace)
              {
              int width  = preview->get_width();
              int height = preview->get_height();
-             double scaleFX = 200.0 / (double)width;
-             double scaleFY = 200.0 / (double)height;
+             const Gtk::Allocation& vboxAlloc = previewImage.get_allocation();
+             double scaleFX = vboxAlloc.get_width() / (double)width;
+             double scaleFY = vboxAlloc.get_height() / (double)height;
              double scaleFactor = scaleFX > scaleFY ? scaleFY : scaleFX;
              int newWidth  = (int) (((double)width)  * scaleFactor);
              int newHeight = (int) (((double)height) * scaleFactor);
@@ -645,7 +646,7 @@ TraceDialogImpl::TraceDialogImpl() :
 
     //#### end left panel
 
-    mainHBox.pack_start(leftVBox);
+    mainHBox.pack_start(leftVBox, false, false, 0);
 
     //#### begin right panel
 
@@ -677,7 +678,7 @@ TraceDialogImpl::TraceDialogImpl() :
 
     //#### end right panel
 
-    mainHBox.pack_start(rightVBox);
+    mainHBox.pack_start(rightVBox, true, true, 0);
 
     //#### Global stuff
 
