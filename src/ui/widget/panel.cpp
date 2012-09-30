@@ -572,21 +572,21 @@ void Panel::_apply()
     g_warning("Apply button clicked for panel [Panel::_apply()]");
 }
 
-Gtk::Button *Panel::addResponseButton(const Glib::ustring &button_text, int response_id)
+Gtk::Button *Panel::addResponseButton(const Glib::ustring &button_text, int response_id, bool pack_start)
 {
     Gtk::Button *button = new Gtk::Button(button_text);
-    _addResponseButton(button, response_id);
+    _addResponseButton(button, response_id, pack_start);
     return button;
 }
 
-Gtk::Button *Panel::addResponseButton(const Gtk::StockID &stock_id, int response_id)
+Gtk::Button *Panel::addResponseButton(const Gtk::StockID &stock_id, int response_id, bool pack_start)
 {
     Gtk::Button *button = new Gtk::Button(stock_id);
-    _addResponseButton(button, response_id);
+    _addResponseButton(button, response_id, pack_start);
     return button;
 }
 
-void Panel::_addResponseButton(Gtk::Button *button, int response_id)
+void Panel::_addResponseButton(Gtk::Button *button, int response_id, bool pack_start)
 {
     // Create a button box for the response buttons if it's the first button to be added
     if (!_action_area) {
@@ -596,6 +596,10 @@ void Panel::_addResponseButton(Gtk::Button *button, int response_id)
     }
 
     _action_area->pack_end(*button);
+
+    if (pack_start) {
+        _action_area->set_child_secondary( *button , true);
+    }
 
     if (response_id != 0) {
         // Re-emit clicked signals as response signals
