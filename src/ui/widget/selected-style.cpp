@@ -23,6 +23,7 @@
 #include "desktop-handles.h"
 #include "style.h"
 #include "desktop-style.h"
+#include "sp-namedview.h"
 #include "sp-linear-gradient-fns.h"
 #include "sp-radial-gradient-fns.h"
 #include "sp-pattern.h"
@@ -38,7 +39,6 @@
 #include "sp-gradient.h"
 #include "svg/svg-color.h"
 #include "svg/css-ostringstream.h"
-#include "helper/units.h"
 #include "event-context.h"
 #include "message-context.h"
 #include "verbs.h"
@@ -144,10 +144,7 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
 
       _opacity_blocked (false),
 
-      _popup_px(_sw_group),
-      _popup_pt(_sw_group),
-      _popup_mm(_sw_group),
-
+      _unit_mis(NULL),
       _sw_unit(NULL)
 {
     _drop[0] = _drop[1] = 0;
@@ -298,34 +295,39 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
     }
 
     {
-        _popup_px.add(*(new Gtk::Label(_("px"), 0.0, 0.5)));
-        _popup_px.signal_activate().connect(sigc::mem_fun(*this, &SelectedStyle::on_popup_px));
-        _popup_sw.attach(_popup_px, 0,1, 0,1);
+        int row = 0;
 
-        _popup_pt.add(*(new Gtk::Label(_("pt"), 0.0, 0.5)));
-        _popup_pt.signal_activate().connect(sigc::mem_fun(*this, &SelectedStyle::on_popup_pt));
-        _popup_sw.attach(_popup_pt, 0,1, 1,2);
+        // List of units should match with Fill/Stroke dialog stroke style width list
+        for (GSList *l = sp_unit_get_list(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE); l != NULL; l = l->next) {
+            SPUnit const *u = (SPUnit*)l->data;
+            Gtk::RadioMenuItem *mi = Gtk::manage(new Gtk::RadioMenuItem(_sw_group));
+            mi->add(*(new Gtk::Label(u->abbr, 0.0, 0.5)));
+            _unit_mis = g_slist_append(_unit_mis, mi);
+            mi->signal_activate().connect(sigc::bind<SPUnitId>(sigc::mem_fun(*this, &SelectedStyle::on_popup_units), u->unit_id));
+            _popup_sw.attach(*mi, 0,1, row, row+1);
+            row++;
+        }
 
-        _popup_mm.add(*(new Gtk::Label(_("mm"), 0.0, 0.5)));
-        _popup_mm.signal_activate().connect(sigc::mem_fun(*this, &SelectedStyle::on_popup_mm));
-        _popup_sw.attach(_popup_mm, 0,1, 2,3);
-
-        _popup_sw.attach(*(new Gtk::SeparatorMenuItem()), 0,1, 3,4);
+        _popup_sw.attach(*(new Gtk::SeparatorMenuItem()), 0,1, row, row+1);
+        row++;
 
         for (guint i = 0; i < G_N_ELEMENTS(_sw_presets_str); ++i) {
             Gtk::MenuItem *mi = Gtk::manage(new Gtk::MenuItem());
             mi->add(*(new Gtk::Label(_sw_presets_str[i], 0.0, 0.5)));
             mi->signal_activate().connect(sigc::bind<int>(sigc::mem_fun(*this, &SelectedStyle::on_popup_preset), i));
-            _popup_sw.attach(*mi, 0,1, 4+i, 5+i);
+            _popup_sw.attach(*mi, 0,1, row, row+1);
+            row++;
         }
 
-        guint i = G_N_ELEMENTS(_sw_presets_str) + 5;
-
-        _popup_sw.attach(*(new Gtk::SeparatorMenuItem()), 0,1, i,i+1);
+        _popup_sw.attach(*(new Gtk::SeparatorMenuItem()), 0,1, row, row+1);
+        row++;
 
         _popup_sw_remove.add(*(new Gtk::Label(_("Remove"), 0.0, 0.5)));
         _popup_sw_remove.signal_activate().connect(sigc::mem_fun(*this, &SelectedStyle::on_stroke_remove));
-        _popup_sw.attach(_popup_sw_remove, 0,1, i+1,i+2);
+        _popup_sw.attach(_popup_sw_remove, 0,1, row, row+1);
+        row++;
+
+        sp_set_font_size_smaller (GTK_WIDGET(_popup_sw.gobj()));
 
         _popup_sw.show_all();
     }
@@ -447,7 +449,17 @@ SelectedStyle::setDesktop(SPDesktop *desktop)
             this )
     ));
 
-    //_sw_unit = (SPUnit *) sp_desktop_namedview(desktop)->doc_units;
+    _sw_unit = (SPUnit *) sp_desktop_namedview(desktop)->doc_units;
+
+    // Set the doc default unit active in the units list
+    gint length = g_slist_length(_unit_mis);
+    for (int i = 0; i < length; i++) {
+        Gtk::RadioMenuItem *mi = (Gtk::RadioMenuItem *) g_slist_nth_data(_unit_mis, i);
+        if (mi && mi->get_label() == Glib::ustring(_sw_unit->abbr)) {
+            mi->set_active();
+            break;
+        }
+    }
 }
 
 void SelectedStyle::dragDataReceived( GtkWidget */*widget*/,
@@ -887,16 +899,8 @@ SelectedStyle::on_opacity_click(GdkEventButton *event)
     return false;
 }
 
-void SelectedStyle::on_popup_px() {
-    _sw_unit = (SPUnit *) &(sp_unit_get_by_id(SP_UNIT_PX));
-    update();
-}
-void SelectedStyle::on_popup_pt() {
-    _sw_unit = (SPUnit *) &(sp_unit_get_by_id(SP_UNIT_PT));
-    update();
-}
-void SelectedStyle::on_popup_mm() {
-    _sw_unit = (SPUnit *) &(sp_unit_get_by_id(SP_UNIT_MM));
+void SelectedStyle::on_popup_units(SPUnitId id) {
+    _sw_unit = (SPUnit *) &(sp_unit_get_by_id(id));
     update();
 }
 

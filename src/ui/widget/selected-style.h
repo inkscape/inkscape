@@ -27,6 +27,7 @@
 #include <sigc++/sigc++.h>
 
 #include "rotateable.h"
+#include "helper/units.h"
 
 class SPDesktop;
 class SPUnit;
@@ -250,12 +251,8 @@ protected:
 
     Gtk::Menu _popup_sw; 
     Gtk::RadioButtonGroup _sw_group;
-    Gtk::RadioMenuItem _popup_px; 
-    void on_popup_px();
-    Gtk::RadioMenuItem _popup_pt; 
-    void on_popup_pt();
-    Gtk::RadioMenuItem _popup_mm;
-    void on_popup_mm();
+    GSList *_unit_mis;
+    void on_popup_units(SPUnitId id);
     void on_popup_preset(int i);
     Gtk::MenuItem _popup_sw_remove;
 
