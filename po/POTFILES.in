@@ -151,6 +151,7 @@ src/libgdl/gdl-switcher.c
 src/libnrtype/FontFactory.cpp
 src/live_effects/effect.cpp
 src/live_effects/lpe-bendpath.cpp
+src/live_effects/lpe-clone-original.cpp
 src/live_effects/lpe-constructgrid.cpp
 src/live_effects/lpe-curvestitch.cpp
 src/live_effects/lpe-envelope.cpp
@@ -158,6 +159,7 @@ src/live_effects/lpe-gears.cpp
 src/live_effects/lpe-interpolate.cpp
 src/live_effects/lpe-knot.cpp
 src/live_effects/lpe-patternalongpath.cpp
+src/live_effects/lpe-powerstroke.cpp
 src/live_effects/lpe-rough-hatches.cpp
 src/live_effects/lpe-ruler.cpp
 src/live_effects/lpe-sketch.cpp
@@ -242,6 +244,7 @@ src/ui/dialog/input.cpp
 src/ui/dialog/layer-properties.cpp
 src/ui/dialog/layers.cpp
 src/ui/dialog/livepatheffect-editor.cpp
+src/ui/dialog/livepatheffect-add.cpp
 src/ui/dialog/memory.cpp
 src/ui/dialog/messages.cpp
 src/ui/dialog/object-attributes.cpp

@@ -120,9 +120,9 @@ const Util::EnumData<EffectType> LPETypeData[] = {
     {ROUGH_HATCHES,         N_("Hatches (rough)"),         "rough_hatches"},
     {SKETCH,                N_("Sketch"),                  "sketch"},
     {RULER,                 N_("Ruler"),                   "ruler"},
-/* 0.49 ?*/
-    {POWERSTROKE,           N_("[Unstable!] Power stroke"), "powerstroke"},
-    {CLONE_ORIGINAL,        N_("[Unstable!] Clone original path"), "clone_original"},
+/* 0.49 */
+    {POWERSTROKE,           N_("Power stroke"), "powerstroke"},
+    {CLONE_ORIGINAL,        N_("Clone original path"), "clone_original"},
 };
 const Util::EnumDataConverter<EffectType> LPETypeConverter(LPETypeData, sizeof(LPETypeData)/sizeof(*LPETypeData));
 
