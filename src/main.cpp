@@ -1557,25 +1557,21 @@ static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime
     }
 
     if (sp_export_area_drawing) {
-        (*i)->set_param_bool ("areaDrawing", TRUE);
-    } else {
-        (*i)->set_param_bool ("areaDrawing", FALSE);
+        (*i)->set_param_optiongroup ("area", "drawing");
     }
 
     if (sp_export_area_page) {
         if (sp_export_eps) {
             g_warning ("EPS cannot have its bounding box extend beyond its content, so if your drawing is smaller than the page, --export-area-page will clip it to drawing.");
         }
-        (*i)->set_param_bool ("areaPage", TRUE);
-    } else {
-        (*i)->set_param_bool ("areaPage", FALSE);
+        (*i)->set_param_optiongroup ("area", "page");
     }
 
     if (!sp_export_area_drawing && !sp_export_area_page && !sp_export_id) {
         // neither is set, set page as default for ps/pdf and drawing for eps
         if (sp_export_eps) {
             try {
-               (*i)->set_param_bool("areaDrawing", TRUE);
+               (*i)->set_param_optiongroup("area", "drawing");
             } catch (...) {}
         }
     }
