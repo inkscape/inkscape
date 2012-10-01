@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-01 11:17+0200\n"
+"POT-Creation-Date: 2012-10-01 14:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6839,7 +6839,7 @@ msgid "Fade to:"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:743
-#: ../src/ui/widget/selected-style.cpp:248
+#: ../src/ui/widget/selected-style.cpp:245
 #: ../src/widgets/sp-color-icc-selector.cpp:234
 #: ../src/widgets/sp-color-scales.cpp:464
 #: ../src/widgets/sp-color-scales.cpp:465
@@ -6847,7 +6847,7 @@ msgid "Black"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:744
-#: ../src/ui/widget/selected-style.cpp:244
+#: ../src/ui/widget/selected-style.cpp:241
 msgid "White"
 msgstr ""
 
@@ -6870,7 +6870,7 @@ msgid "Customize greyscale components"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:904
-#: ../src/ui/widget/selected-style.cpp:240
+#: ../src/ui/widget/selected-style.cpp:237
 msgid "Invert"
 msgstr ""
 
@@ -8716,8 +8716,7 @@ msgstr ""
 msgid "Units"
 msgstr ""
 
-#: ../src/helper/units.cpp:38 ../src/ui/widget/selected-style.cpp:305
-#: ../share/extensions/dxf_outlines.inx.h:27
+#: ../src/helper/units.cpp:38 ../share/extensions/dxf_outlines.inx.h:27
 msgid "pt"
 msgstr ""
 
@@ -8749,8 +8748,7 @@ msgstr ""
 msgid "Pixel"
 msgstr ""
 
-#: ../src/helper/units.cpp:40 ../src/ui/widget/selected-style.cpp:301
-#: ../share/extensions/dxf_outlines.inx.h:28
+#: ../src/helper/units.cpp:40 ../share/extensions/dxf_outlines.inx.h:28
 #: ../share/extensions/gears.inx.h:11
 msgid "px"
 msgstr ""
@@ -8780,8 +8778,7 @@ msgstr ""
 msgid "Millimeter"
 msgstr ""
 
-#: ../src/helper/units.cpp:43 ../src/ui/widget/selected-style.cpp:309
-#: ../share/extensions/dxf_outlines.inx.h:25
+#: ../src/helper/units.cpp:43 ../share/extensions/dxf_outlines.inx.h:25
 #: ../share/extensions/gears.inx.h:10
 #: ../share/extensions/gcodetools_area.inx.h:55
 #: ../share/extensions/gcodetools_dxf_points.inx.h:24
@@ -9004,7 +9001,7 @@ msgid "Open _Recent"
 msgstr ""
 
 #: ../src/interface.cpp:1185 ../src/interface.cpp:1271
-#: ../src/interface.cpp:1374 ../src/ui/widget/selected-style.cpp:484
+#: ../src/interface.cpp:1374 ../src/ui/widget/selected-style.cpp:496
 msgid "Drop color"
 msgstr ""
 
@@ -13980,7 +13977,7 @@ msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:626
 #: ../src/ui/dialog/document-properties.cpp:665
-#: ../src/ui/widget/selected-style.cpp:326
+#: ../src/ui/widget/selected-style.cpp:325
 msgid "Remove"
 msgstr ""
 
@@ -19949,8 +19946,8 @@ msgid "MetadataLicence|Other"
 msgstr ""
 
 #: ../src/ui/widget/object-composite-settings.cpp:67
-#: ../src/ui/widget/selected-style.cpp:1059
-#: ../src/ui/widget/selected-style.cpp:1060
+#: ../src/ui/widget/selected-style.cpp:1063
+#: ../src/ui/widget/selected-style.cpp:1064
 msgid "Opacity (%)"
 msgstr ""
 
@@ -19959,8 +19956,8 @@ msgid "Change blur"
 msgstr ""
 
 #: ../src/ui/widget/object-composite-settings.cpp:220
-#: ../src/ui/widget/selected-style.cpp:883
-#: ../src/ui/widget/selected-style.cpp:1185
+#: ../src/ui/widget/selected-style.cpp:895
+#: ../src/ui/widget/selected-style.cpp:1189
 msgid "Change opacity"
 msgstr ""
 
@@ -20194,305 +20191,305 @@ msgstr ""
 msgid "O:"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:168
+#: ../src/ui/widget/selected-style.cpp:165
 msgid "N/A"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:171
-#: ../src/ui/widget/selected-style.cpp:1052
-#: ../src/ui/widget/selected-style.cpp:1053
+#: ../src/ui/widget/selected-style.cpp:168
+#: ../src/ui/widget/selected-style.cpp:1056
+#: ../src/ui/widget/selected-style.cpp:1057
 #: ../src/widgets/gradient-toolbar.cpp:175
 msgid "Nothing selected"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:173
+#: ../src/ui/widget/selected-style.cpp:170
 #: ../src/ui/widget/style-swatch.cpp:300
 msgctxt "Fill and stroke"
 msgid "<i>None</i>"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:176
+#: ../src/ui/widget/selected-style.cpp:173
 #: ../src/ui/widget/style-swatch.cpp:302
 msgctxt "Fill and stroke"
 msgid "No fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:176
+#: ../src/ui/widget/selected-style.cpp:173
 #: ../src/ui/widget/style-swatch.cpp:302
 msgctxt "Fill and stroke"
 msgid "No stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:178
+#: ../src/ui/widget/selected-style.cpp:175
 #: ../src/ui/widget/style-swatch.cpp:281 ../src/widgets/paint-selector.cpp:239
 msgid "Pattern"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:181
+#: ../src/ui/widget/selected-style.cpp:178
 #: ../src/ui/widget/style-swatch.cpp:283
 msgid "Pattern fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:181
+#: ../src/ui/widget/selected-style.cpp:178
 #: ../src/ui/widget/style-swatch.cpp:283
 msgid "Pattern stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:183
+#: ../src/ui/widget/selected-style.cpp:180
 msgid "<b>L</b>"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:186
+#: ../src/ui/widget/selected-style.cpp:183
 #: ../src/ui/widget/style-swatch.cpp:275
 msgid "Linear gradient fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:186
+#: ../src/ui/widget/selected-style.cpp:183
 #: ../src/ui/widget/style-swatch.cpp:275
 msgid "Linear gradient stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:193
+#: ../src/ui/widget/selected-style.cpp:190
 msgid "<b>R</b>"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:196
+#: ../src/ui/widget/selected-style.cpp:193
 #: ../src/ui/widget/style-swatch.cpp:279
 msgid "Radial gradient fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:196
+#: ../src/ui/widget/selected-style.cpp:193
 #: ../src/ui/widget/style-swatch.cpp:279
 msgid "Radial gradient stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:203
+#: ../src/ui/widget/selected-style.cpp:200
 msgid "Different"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:206
+#: ../src/ui/widget/selected-style.cpp:203
 msgid "Different fills"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:206
+#: ../src/ui/widget/selected-style.cpp:203
 msgid "Different strokes"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:208
+#: ../src/ui/widget/selected-style.cpp:205
 #: ../src/ui/widget/style-swatch.cpp:305
 msgid "<b>Unset</b>"
 msgstr ""
 
 #. TRANSLATORS COMMENT: unset is a verb here
-#: ../src/ui/widget/selected-style.cpp:211
-#: ../src/ui/widget/selected-style.cpp:269
-#: ../src/ui/widget/selected-style.cpp:515
+#: ../src/ui/widget/selected-style.cpp:208
+#: ../src/ui/widget/selected-style.cpp:266
+#: ../src/ui/widget/selected-style.cpp:527
 #: ../src/ui/widget/style-swatch.cpp:307 ../src/widgets/fill-style.cpp:708
 msgid "Unset fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:211
-#: ../src/ui/widget/selected-style.cpp:269
-#: ../src/ui/widget/selected-style.cpp:531
+#: ../src/ui/widget/selected-style.cpp:208
+#: ../src/ui/widget/selected-style.cpp:266
+#: ../src/ui/widget/selected-style.cpp:543
 #: ../src/ui/widget/style-swatch.cpp:307 ../src/widgets/fill-style.cpp:708
 msgid "Unset stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:214
+#: ../src/ui/widget/selected-style.cpp:211
 msgid "Flat color fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:214
+#: ../src/ui/widget/selected-style.cpp:211
 msgid "Flat color stroke"
 msgstr ""
 
 #. TRANSLATOR COMMENT: A means "Averaged"
-#: ../src/ui/widget/selected-style.cpp:217
+#: ../src/ui/widget/selected-style.cpp:214
 msgid "<b>a</b>"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:220
+#: ../src/ui/widget/selected-style.cpp:217
 msgid "Fill is averaged over selected objects"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:220
+#: ../src/ui/widget/selected-style.cpp:217
 msgid "Stroke is averaged over selected objects"
 msgstr ""
 
 #. TRANSLATOR COMMENT: M means "Multiple"
-#: ../src/ui/widget/selected-style.cpp:223
+#: ../src/ui/widget/selected-style.cpp:220
 msgid "<b>m</b>"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:226
+#: ../src/ui/widget/selected-style.cpp:223
 msgid "Multiple selected objects have the same fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:226
+#: ../src/ui/widget/selected-style.cpp:223
 msgid "Multiple selected objects have the same stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:228
+#: ../src/ui/widget/selected-style.cpp:225
 msgid "Edit fill..."
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:228
+#: ../src/ui/widget/selected-style.cpp:225
 msgid "Edit stroke..."
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:232
+#: ../src/ui/widget/selected-style.cpp:229
 msgid "Last set color"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:236
+#: ../src/ui/widget/selected-style.cpp:233
 msgid "Last selected color"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:252
+#: ../src/ui/widget/selected-style.cpp:249
 msgid "Copy color"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:256
+#: ../src/ui/widget/selected-style.cpp:253
 msgid "Paste color"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:260
-#: ../src/ui/widget/selected-style.cpp:808
+#: ../src/ui/widget/selected-style.cpp:257
+#: ../src/ui/widget/selected-style.cpp:820
 msgid "Swap fill and stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:264
-#: ../src/ui/widget/selected-style.cpp:540
-#: ../src/ui/widget/selected-style.cpp:549
+#: ../src/ui/widget/selected-style.cpp:261
+#: ../src/ui/widget/selected-style.cpp:552
+#: ../src/ui/widget/selected-style.cpp:561
 msgid "Make fill opaque"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:264
+#: ../src/ui/widget/selected-style.cpp:261
 msgid "Make stroke opaque"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:273
-#: ../src/ui/widget/selected-style.cpp:497 ../src/widgets/fill-style.cpp:506
+#: ../src/ui/widget/selected-style.cpp:270
+#: ../src/ui/widget/selected-style.cpp:509 ../src/widgets/fill-style.cpp:506
 msgid "Remove fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:273
-#: ../src/ui/widget/selected-style.cpp:506 ../src/widgets/fill-style.cpp:506
+#: ../src/ui/widget/selected-style.cpp:270
+#: ../src/ui/widget/selected-style.cpp:518 ../src/widgets/fill-style.cpp:506
 msgid "Remove stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:561
+#: ../src/ui/widget/selected-style.cpp:573
 msgid "Apply last set color to fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:573
+#: ../src/ui/widget/selected-style.cpp:585
 msgid "Apply last set color to stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:584
+#: ../src/ui/widget/selected-style.cpp:596
 msgid "Apply last selected color to fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:595
+#: ../src/ui/widget/selected-style.cpp:607
 msgid "Apply last selected color to stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:621
+#: ../src/ui/widget/selected-style.cpp:633
 msgid "Invert fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:645
+#: ../src/ui/widget/selected-style.cpp:657
 msgid "Invert stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:657
+#: ../src/ui/widget/selected-style.cpp:669
 msgid "White fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:669
+#: ../src/ui/widget/selected-style.cpp:681
 msgid "White stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:681
+#: ../src/ui/widget/selected-style.cpp:693
 msgid "Black fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:693
+#: ../src/ui/widget/selected-style.cpp:705
 msgid "Black stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:736
+#: ../src/ui/widget/selected-style.cpp:748
 msgid "Paste fill"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:754
+#: ../src/ui/widget/selected-style.cpp:766
 msgid "Paste stroke"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:918
+#: ../src/ui/widget/selected-style.cpp:922
 msgid "Change stroke width"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1013
+#: ../src/ui/widget/selected-style.cpp:1017
 msgid ", drag to adjust"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1098
+#: ../src/ui/widget/selected-style.cpp:1102
 #, c-format
 msgid "Stroke width: %.5g%s%s"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1102
+#: ../src/ui/widget/selected-style.cpp:1106
 msgid " (averaged)"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1130
+#: ../src/ui/widget/selected-style.cpp:1134
 msgid "0 (transparent)"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1154
+#: ../src/ui/widget/selected-style.cpp:1158
 msgid "100% (opaque)"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1314
+#: ../src/ui/widget/selected-style.cpp:1318
 msgid "Adjust saturation"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1316
+#: ../src/ui/widget/selected-style.cpp:1320
 #, c-format
 msgid ""
 "Adjusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
 "<b>Ctrl</b> to adjust lightness, without modifiers to adjust hue"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1320
+#: ../src/ui/widget/selected-style.cpp:1324
 msgid "Adjust lightness"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1322
+#: ../src/ui/widget/selected-style.cpp:1326
 #, c-format
 msgid ""
 "Adjusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with "
 "<b>Shift</b> to adjust saturation, without modifiers to adjust hue"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1326
+#: ../src/ui/widget/selected-style.cpp:1330
 msgid "Adjust hue"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1328
+#: ../src/ui/widget/selected-style.cpp:1332
 #, c-format
 msgid ""
 "Adjusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</"
 "b> to adjust saturation, with <b>Ctrl</b> to adjust lightness"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1441
-#: ../src/ui/widget/selected-style.cpp:1455
+#: ../src/ui/widget/selected-style.cpp:1445
+#: ../src/ui/widget/selected-style.cpp:1459
 msgid "Adjust stroke width"
 msgstr ""
 
-#: ../src/ui/widget/selected-style.cpp:1442
+#: ../src/ui/widget/selected-style.cpp:1446
 #, c-format
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
 msgstr ""
