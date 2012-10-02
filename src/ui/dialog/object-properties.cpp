@@ -155,6 +155,8 @@ void ObjectProperties::MakeWidget(void)
                        Gtk::EXPAND | Gtk::FILL,
                        Gtk::AttachOptions(), 0, 0 );
     LabelTitle.set_mnemonic_widget (EntryTitle);
+    // pressing enter in the label field is the same as clicking Set:
+    EntryTitle.signal_activate().connect(sigc::mem_fun(this, &ObjectProperties::label_changed));
 
     /* Create the frame for the object description */
     FrameDescription.set_label_widget (LabelDescription);
