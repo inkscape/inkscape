@@ -99,7 +99,7 @@ struct DocumentSubset::Relations : public GC::Managed<GC::ATOMIC>,
             Siblings new_children;
             bool found_one=false;
             for ( Siblings::iterator iter=children.begin()
-                ; iter != children.end() ; iter++ )
+                ; iter != children.end() ; ++iter )
             {
                 if (obj->isAncestorOf(*iter)) {
                     if (!found_one) {

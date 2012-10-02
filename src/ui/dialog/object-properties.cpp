@@ -333,7 +333,6 @@ void ObjectProperties::label_changed(void)
 
     /* Retrieve the label widget for the object's label */
     Glib::ustring label = EntryLabel.get_text();
-    g_assert(!label.empty());
 
     /* Give feedback on success of setting the drawing object's label
      * using the widget's label text
