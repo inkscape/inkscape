@@ -789,11 +789,13 @@ interpolate(SPPencilContext *pc)
 
         /* Set up direction of next curve. */
         {
-            Geom::CubicBezier const * last_seg = dynamic_cast<Geom::CubicBezier const *>(pc->green_curve->last_segment());
-            g_assert( last_seg );      // Relevance: validity of (*last_seg)[2]
+            Geom::Curve const * last_seg = pc->green_curve->last_segment();
+            g_assert( last_seg );      // Relevance: validity of (*last_seg)
             pc->p[0] = last_seg->finalPoint();
             pc->npoints = 1;
-            Geom::Point const req_vec( pc->p[0] - (*last_seg)[2] );
+            Geom::Curve *last_seg_reverse = last_seg->reverse();
+            Geom::Point const req_vec( -last_seg_reverse->unitTangentAt(0) );
+            delete last_seg_reverse;
             pc->req_tangent = ( ( Geom::is_zero(req_vec) || !in_svg_plane(req_vec) )
                                 ? Geom::Point(0, 0)
                                 : Geom::unit_vector(req_vec) );
@@ -881,11 +883,13 @@ sketch_interpolate(SPPencilContext *pc)
 
         /* Set up direction of next curve. */
         {
-            Geom::CubicBezier const * last_seg = dynamic_cast<Geom::CubicBezier const *>(pc->green_curve->last_segment());
-            g_assert( last_seg );      // Relevance: validity of (*last_seg)[2]
+            Geom::Curve const * last_seg = pc->green_curve->last_segment();
+            g_assert( last_seg );      // Relevance: validity of (*last_seg)
             pc->p[0] = last_seg->finalPoint();
             pc->npoints = 1;
-            Geom::Point const req_vec( pc->p[0] - (*last_seg)[2] );
+            Geom::Curve *last_seg_reverse = last_seg->reverse();
+            Geom::Point const req_vec( -last_seg_reverse->unitTangentAt(0) );
+            delete last_seg_reverse;
             pc->req_tangent = ( ( Geom::is_zero(req_vec) || !in_svg_plane(req_vec) )
                                 ? Geom::Point(0, 0)
                                 : Geom::unit_vector(req_vec) );
@@ -926,15 +930,18 @@ fit_and_split(SPPencilContext *pc)
 
         /* Set up direction of next curve. */
         {
-            Geom::CubicBezier const * last_seg = dynamic_cast<Geom::CubicBezier const *>(pc->red_curve->last_segment());
-            g_assert( last_seg );      // Relevance: validity of (*last_seg)[2]
+            Geom::Curve const * last_seg = pc->red_curve->last_segment();
+            g_assert( last_seg );      // Relevance: validity of (*last_seg)
             pc->p[0] = last_seg->finalPoint();
             pc->npoints = 1;
-            Geom::Point const req_vec( pc->p[0] - (*last_seg)[2] );
+            Geom::Curve *last_seg_reverse = last_seg->reverse();
+            Geom::Point const req_vec( -last_seg_reverse->unitTangentAt(0) );
+            delete last_seg_reverse;
             pc->req_tangent = ( ( Geom::is_zero(req_vec) || !in_svg_plane(req_vec) )
                                 ? Geom::Point(0, 0)
                                 : Geom::unit_vector(req_vec) );
         }
+
 
         pc->green_curve->append_continuous(pc->red_curve, 0.0625);
         SPCurve *curve = pc->red_curve->copy();
