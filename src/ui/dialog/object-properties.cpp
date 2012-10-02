@@ -54,7 +54,7 @@ ObjectProperties::ObjectProperties (void) :
     LabelID(_("_ID:"), 1),
     LabelLabel(_("_Label:"), 1),
     LabelTitle(_("_Title:"),1),
-    LabelDescription(_("_Description"),1),
+    LabelDescription(_("_Description:"),1),
     FrameDescription("", FALSE),
     HBoxCheck(FALSE, 0),
     CheckTable(1, 2, TRUE),
@@ -69,16 +69,15 @@ ObjectProperties::ObjectProperties (void) :
     subselChangedConn()
 {
     //initialize labels for the table at the bottom of the dialog
-    int_labels.push_back("onclick");
-    int_labels.push_back("onmouseover");
-    int_labels.push_back("onmouseout");
-    int_labels.push_back("onmousedown");
-    int_labels.push_back("onmouseup");
-    int_labels.push_back("onmousemove");
-    int_labels.push_back("onfocusin");
-    int_labels.push_back("onfocusout");
-    int_labels.push_back("onfocusout");
-    int_labels.push_back("onload");
+    int_labels.push_back("onclick:");
+    int_labels.push_back("onmouseover:");
+    int_labels.push_back("onmouseout:");
+    int_labels.push_back("onmousedown:");
+    int_labels.push_back("onmouseup:");
+    int_labels.push_back("onmousemove:");
+    int_labels.push_back("onfocusin:");
+    int_labels.push_back("onfocusout:");
+    int_labels.push_back("onload:");
     
     desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &ObjectProperties::setTargetDesktop) );
     deskTrack.connect(GTK_WIDGET(gobj()));
@@ -101,10 +100,11 @@ void ObjectProperties::MakeWidget(void)
     
     TopTable.set_border_width(4);
     TopTable.set_row_spacings(4);
-    TopTable.set_col_spacings(4);
-    contents->pack_start (TopTable, true, true, 0);
+    TopTable.set_col_spacings(0);
+    contents->pack_start (TopTable, false, false, 0);
 
     /* Create the label for the object id */
+    LabelID.set_label (LabelID.get_label() + " ");
     LabelID.set_alignment (1, 0.5);
     TopTable.attach (LabelID, 0, 1, 0, 1,
                        Gtk::SHRINK | Gtk::FILL,
@@ -124,6 +124,7 @@ void ObjectProperties::MakeWidget(void)
     EntryID.grab_focus();
 
     /* Create the label for the object label */
+    LabelLabel.set_label (LabelLabel.get_label() + " ");
     LabelLabel.set_alignment (1, 0.5);
     TopTable.attach (LabelLabel, 0, 1, 1, 2,
                        Gtk::SHRINK | Gtk::FILL,
@@ -141,6 +142,7 @@ void ObjectProperties::MakeWidget(void)
     EntryLabel.signal_activate().connect(sigc::mem_fun(this, &ObjectProperties::label_changed));
 
     /* Create the label for the object title */
+    LabelTitle.set_label (LabelTitle.get_label() + " ");
     LabelTitle.set_alignment (1, 0.5);
     TopTable.attach (LabelTitle, 0, 1, 2, 3,
                        Gtk::SHRINK | Gtk::FILL,
@@ -149,18 +151,15 @@ void ObjectProperties::MakeWidget(void)
     /* Create the entry box for the object title */
     EntryTitle.set_sensitive (FALSE);
     EntryTitle.set_max_length (256);
-    TopTable.attach (EntryTitle, 1, 3, 2, 3,
+    TopTable.attach (EntryTitle, 1, 2, 2, 3,
                        Gtk::EXPAND | Gtk::FILL,
                        Gtk::AttachOptions(), 0, 0 );
     LabelTitle.set_mnemonic_widget (EntryTitle);
 
     /* Create the frame for the object description */
     FrameDescription.set_label_widget (LabelDescription);
-    FrameDescription.set_padding (4,0,0,0);
-
-    TopTable.attach (FrameDescription, 0, 3, 3, 4,
-                       Gtk::EXPAND | Gtk::FILL,
-                       Gtk::EXPAND | Gtk::FILL, 0, 0 );
+    FrameDescription.set_padding (0,0,0,0);
+    contents->pack_start (FrameDescription, true, true, 0);
 
     /* Create the text view box for the object description */
     FrameTextDescription.set_border_width(4);
@@ -175,8 +174,8 @@ void ObjectProperties::MakeWidget(void)
 
     /* Check boxes */
     contents->pack_start (HBoxCheck, FALSE, FALSE, 0);
-    CheckTable.set_border_width(0);
-    HBoxCheck.pack_start (CheckTable, TRUE, TRUE, 10);
+    CheckTable.set_border_width(4);
+    HBoxCheck.pack_start (CheckTable, TRUE, TRUE, 0);
 
     /* Hide */
     CBHide.set_tooltip_text (_("Check to make the object invisible"));
@@ -195,7 +194,9 @@ void ObjectProperties::MakeWidget(void)
 
 
     /* Button for setting the object's id, label, title and description. */
-    HBoxCheck.pack_start (BSet, TRUE, TRUE, 10);
+    CheckTable.attach (BSet, 2, 3, 0, 1,
+                       Gtk::EXPAND | Gtk::FILL,
+                       Gtk::AttachOptions(), 0, 0 );
     BSet.signal_clicked().connect(sigc::mem_fun(this, &ObjectProperties::label_changed));
 
     /* Create the frame for interactivity options */
