@@ -42,6 +42,7 @@ set(ui_SRC
 	dialog/filter-effects-dialog.cpp
 	dialog/find.cpp
 	dialog/floating-behavior.cpp
+	dialog/font-substitution.cpp
 	dialog/glyphs.cpp
 	dialog/guides.cpp
 	dialog/icon-preview.cpp
@@ -82,6 +83,7 @@ set(ui_SRC
 	widget/entry.cpp
 	widget/filter-effect-chooser.cpp
 	widget/frame.cpp
+	widget/gimpspinscale.c
 	widget/imageicon.cpp
 	widget/imagetoggler.cpp
 	widget/labelled.cpp
@@ -101,6 +103,7 @@ set(ui_SRC
 	widget/scalar-unit.cpp
 	widget/scalar.cpp
 	widget/selected-style.cpp
+	widget/spin-scale.cpp
 	widget/spin-slider.cpp
 	widget/spinbutton.cpp
 	widget/style-subject.cpp
@@ -117,6 +120,7 @@ set(ui_SRC
 	# Headers
 	clipboard.h
 	control-manager.h
+	control-types.h
 	icon-names.h
 	previewable.h
 	previewfillable.h
@@ -148,6 +152,7 @@ set(ui_SRC
 	dialog/filter-effects-dialog.h
 	dialog/find.h
 	dialog/floating-behavior.h
+	dialog/font-substitution.h
 	dialog/glyphs.h
 	dialog/guides.h
 	dialog/icon-preview.h
@@ -204,6 +209,7 @@ set(ui_SRC
 	widget/entry.h
 	widget/filter-effect-chooser.h
 	widget/frame.h
+	widget/gimpspinscale.h
 	widget/imageicon.h
 	widget/imagetoggler.h
 	widget/labelled.h
@@ -224,6 +230,7 @@ set(ui_SRC
 	widget/scalar-unit.h
 	widget/scalar.h
 	widget/selected-style.h
+	widget/spin-scale.h
 	widget/spin-slider.h
 	widget/spinbutton.h
 	widget/style-subject.h

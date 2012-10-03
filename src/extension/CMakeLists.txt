@@ -41,6 +41,7 @@ set(extension_SRC
 	internal/gdkpixbuf-input.cpp
 	internal/gimpgrad.cpp
 	internal/grid.cpp
+	internal/image-resolution.cpp
 	internal/latex-pstricks.cpp
 	internal/latex-pstricks-out.cpp
 	internal/odf.cpp
@@ -50,6 +51,7 @@ set(extension_SRC
 	internal/javafx-out.cpp
 	internal/svg.cpp
 	internal/svgz.cpp
+	internal/vsd-input.cpp
 
 	internal/filter/filter-all.cpp
 	internal/filter/filter-file.cpp
@@ -129,6 +131,7 @@ set(extension_SRC
 	internal/gdkpixbuf-input.h
 	internal/gimpgrad.h
 	internal/grid.h
+	internal/image-resolution.h
 	internal/javafx-out.h
 	internal/latex-pstricks-out.h
 	internal/latex-pstricks.h
@@ -141,6 +144,7 @@ set(extension_SRC
 	internal/pov-out.h
 	internal/svg.h
 	internal/svgz.h
+	internal/vsd-input.h
 
 	script/InkscapeScript.h
 )
