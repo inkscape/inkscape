@@ -47,7 +47,8 @@ option(WITH_PROFILING "Turn on profiling" OFF) # Set to true if compiler/linker 
 
 option(WITH_GTKSPELL "Compile with support for GTK spelling widget" ON)
 option(WITH_LIBWPG "Compile with support of libpoppler-cairo for WordPrefect Graphics" ON)
-option(ENABLE_POPPLER_CAIRO "Compile with support of libpoppler-cairo for rendering PDF preview" ON)
+option(ENABLE_POPPLER "Compile with support of libpoppler" ON)
+option(ENABLE_POPPLER_CAIRO "Compile with support of libpoppler-cairo for rendering PDF preview (depends on ENABLE_POPPLER)" ON)
 
 include(CMakeScripts/ConfigPaths.cmake) # Installation Paths
 include(CMakeScripts/DefineDependsandFlags.cmake) # Includes, Compiler Flags, and Link Libraries
