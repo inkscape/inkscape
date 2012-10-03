@@ -109,7 +109,8 @@ static void resizeHSVWheel( GtkHSV *hsv, GtkAllocation *allocation )
     gint diam = std::min(allocation->width, allocation->height);
 
     // drop a little for resizing
-    diam -= 4;
+    // This magic number stops the dialog expanding in width when resizing height
+    diam -= 16;
 
     GtkStyle *style = gtk_widget_get_style( GTK_WIDGET(hsv) );
     if ( style ) {
@@ -161,7 +162,7 @@ void ColorWheelSelector::init()
     _wheel = gtk_hsv_new();
     gtk_hsv_set_metrics( GTK_HSV(_wheel), 48, 8 );
     gtk_widget_show( _wheel );
-    gtk_table_attach( GTK_TABLE(t), _wheel, 0, 3, row, row + 1,  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), XPAD, YPAD);
+    gtk_table_attach( GTK_TABLE(t), _wheel, 0, 3, row, row + 1,  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
 
     row++;
 
