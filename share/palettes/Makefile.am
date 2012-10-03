@@ -3,6 +3,7 @@ palettesdir = $(datadir)/inkscape/palettes
 
 palettes_DATA = \
     README \
+    Android-icon-palette.gpl \
     Blues.gpl \
     echo-palette.gpl \
     Gold.gpl \
