@@ -349,7 +349,7 @@ static void sp_font_selector_set_sizes( SPFontSelector *fsel )
 #if GTK_CHECK_VERSION(2, 24,0)
         gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT(fsel->size), Glib::ustring::format(size).c_str());
 #else
-        gtk_combo_box_append_text (GTK_COMBO_BOX(fsel->size), size);
+        gtk_combo_box_append_text (GTK_COMBO_BOX(fsel->size), Glib::ustring::format(size).c_str());
 #endif
     }
 
