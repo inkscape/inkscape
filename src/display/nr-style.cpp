@@ -60,7 +60,9 @@ NRStyle::~NRStyle()
 {
     if (fill_pattern) cairo_pattern_destroy(fill_pattern);
     if (stroke_pattern) cairo_pattern_destroy(stroke_pattern);
-    if (dash) delete dash;
+    if (dash){
+        delete [] dash;
+    }
 }
 
 void NRStyle::set(SPStyle *style)
@@ -126,7 +128,9 @@ void NRStyle::set(SPStyle *style)
     }
     miter_limit = style->stroke_miterlimit.value;
 
-    if (dash) delete [] dash;
+    if (dash){
+        delete [] dash;
+    }
 
     n_dash = style->stroke_dash.n_dash;
     if (n_dash != 0) {
