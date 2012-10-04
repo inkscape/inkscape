@@ -237,6 +237,9 @@ static void removeit( GtkWidget *widget, gpointer data )
     gtk_container_remove( GTK_CONTAINER(data), widget );
 }
 
+/* extern'ed from colot-item.cpp */
+gboolean colorItemHandleButtonPress( GtkWidget* widget, GdkEventButton* event, gpointer user_data );
+
 gboolean colorItemHandleButtonPress( GtkWidget* widget, GdkEventButton* event, gpointer user_data )
 {
     gboolean handled = FALSE;
@@ -371,13 +374,13 @@ static char* trim( char* str ) {
     return ret;
 }
 
-void skipWhitespace( char*& str ) {
+static void skipWhitespace( char*& str ) {
     while ( *str == ' ' || *str == '\t' ) {
         str++;
     }
 }
 
-bool parseNum( char*& str, int& val ) {
+static bool parseNum( char*& str, int& val ) {
     val = 0;
     while ( '0' <= *str && *str <= '9' ) {
         val = val * 10 + (*str - '0');

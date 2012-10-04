@@ -359,7 +359,7 @@ sp_paint_selector_fillrule_toggled(GtkToggleButton *tb, SPPaintSelector *psel)
     }
 }
 
-void
+static void
 sp_paint_selector_show_fillrule(SPPaintSelector *psel, bool is_fill)
 {
     if (psel->fillrulebox) {
@@ -791,7 +791,7 @@ static void sp_psel_pattern_change(GtkWidget * /*widget*/, SPPaintSelector *psel
  *  Returns a list of patterns in the defs of the given source document as a GSList object
  *  Returns NULL if there are no patterns in the document.
  */
-GSList *
+static GSList *
 ink_pattern_list_get (SPDocument *source)
 {
     if (source == NULL)

@@ -377,7 +377,7 @@ unsigned long sp_gradient_to_hhssll(SPGradient *gr)
     return ((int)(hsl[0]*100 * 10000)) + ((int)(hsl[1]*100 * 100)) + ((int)(hsl[2]*100 * 1));
 }
 
-GSList *get_all_doc_items(GSList *list, SPObject *from, bool onlyvisible, bool onlysensitive, bool ingroups, GSList const *exclude)
+static GSList *get_all_doc_items(GSList *list, SPObject *from, bool onlyvisible, bool onlysensitive, bool ingroups, GSList const *exclude)
 {
     for ( SPObject *child = from->firstChild() ; child; child = child->getNext() ) {
         if (SP_IS_ITEM(child)) {

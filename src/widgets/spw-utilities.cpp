@@ -24,6 +24,7 @@
 #include "selection.h"
 
 #include "helper/unit-menu.h"
+#include "spw-utilities.h"
 
 #include <gtk/gtk.h>
 
@@ -194,7 +195,7 @@ spw_unit_selector(GtkWidget * dialog, GtkWidget * table,
   return sb;
 }
 
-void
+static void
 sp_set_font_size_recursive (GtkWidget *w, gpointer font)
 {
 	guint size = GPOINTER_TO_UINT (font);

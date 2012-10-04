@@ -52,6 +52,7 @@
 #include "ink-action.h"
 #include <2geom/rect.h>
 #include "ui/icon-names.h"
+#include "select-toolbar.h"
 
 using Inkscape::UnitTracker;
 using Inkscape::DocumentUndo;

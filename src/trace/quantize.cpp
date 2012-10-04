@@ -16,6 +16,7 @@
 
 #include "pool.h"
 #include "imagemap.h"
+#include "quantize.h"
 
 typedef struct Ocnode_def Ocnode;
 
@@ -211,16 +212,19 @@ static void ocnodePrint(Ocnode *node, int indent)
         ocnodePrint(node->child[i], indent+2);
         }
 }
+
+#if 0
 void octreePrint(Ocnode *node)
 {
     printf("<<octree>>\n");
     if (node) printf("[r:%p] ", node); ocnodePrint(node, 2);
 }
+#endif
 
 /**
  * builds a single <rgb> color leaf at location <ref>
  */
-void ocnodeLeaf(pool<Ocnode> *pool, Ocnode **ref, RGB rgb)
+static void ocnodeLeaf(pool<Ocnode> *pool, Ocnode **ref, RGB rgb)
 {
     assert(ref);
     Ocnode *node = ocnodeNew(pool);
@@ -237,7 +241,7 @@ void ocnodeLeaf(pool<Ocnode> *pool, Ocnode **ref, RGB rgb)
 /**
  *  merge nodes <node1> and <node2> at location <ref> with parent <parent>
  */
-int octreeMerge(pool<Ocnode> *pool, Ocnode *parent, Ocnode **ref, Ocnode *node1, Ocnode *node2)
+static int octreeMerge(pool<Ocnode> *pool, Ocnode *parent, Ocnode **ref, Ocnode *node1, Ocnode *node2)
 {
     assert(ref);
     if (!node1 && !node2) return 0;
@@ -415,7 +419,7 @@ static void ocnodeStrip(pool<Ocnode> *pool, Ocnode **ref, int *count, unsigned l
 /**
  * reduce the leaves of an octree to a given number
  */
-void octreePrune(pool<Ocnode> *pool, Ocnode **ref, int ncolor)
+static void octreePrune(pool<Ocnode> *pool, Ocnode **ref, int ncolor)
 {
   assert(ref);
   assert(ncolor > 0);
@@ -435,8 +439,8 @@ void octreePrune(pool<Ocnode> *pool, Ocnode **ref, int ncolor)
  * build an octree associated to the area of a color map <rgbmap>,
  * included in the specified (x1,y1)--(x2,y2) rectangle.
  */
-void octreeBuildArea(pool<Ocnode> *pool, RgbMap *rgbmap, Ocnode **ref,
-                     int x1, int y1, int x2, int y2, int ncolor)
+static void octreeBuildArea(pool<Ocnode> *pool, RgbMap *rgbmap, Ocnode **ref,
+                            int x1, int y1, int x2, int y2, int ncolor)
 {
     int dx = x2 - x1, dy = y2 - y1;
     int xm = x1 + dx/2, ym = y1 + dy/2;
@@ -465,7 +469,7 @@ void octreeBuildArea(pool<Ocnode> *pool, RgbMap *rgbmap, Ocnode **ref,
  * build an octree associated to the <rgbmap> color map,
  * pruned to <ncolor> colors.
  */
-Ocnode *octreeBuild(pool<Ocnode> *pool, RgbMap *rgbmap, int ncolor)
+static Ocnode *octreeBuild(pool<Ocnode> *pool, RgbMap *rgbmap, int ncolor)
 {
     //create the octree
     Ocnode *node = NULL;

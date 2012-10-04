@@ -61,7 +61,7 @@ void sp_dialog_shutdown(GObject * /*object*/, gpointer dlgPtr)
 }
 
 
-void hideCallback(GObject * /*object*/, gpointer dlgPtr)
+static void hideCallback(GObject * /*object*/, gpointer dlgPtr)
 {
     g_return_if_fail( dlgPtr != NULL );
 
@@ -69,7 +69,7 @@ void hideCallback(GObject * /*object*/, gpointer dlgPtr)
     dlg->onHideF12();
 }
 
-void unhideCallback(GObject * /*object*/, gpointer dlgPtr)
+static void unhideCallback(GObject * /*object*/, gpointer dlgPtr)
 {
     g_return_if_fail( dlgPtr != NULL );
 

@@ -755,7 +755,7 @@ struct Baselines
     {}
 };
 
-bool operator< (const Baselines &a, const Baselines &b)
+static bool operator< (const Baselines &a, const Baselines &b)
 {
     return (a._base[a._orientation] < b._base[b._orientation]);
 }

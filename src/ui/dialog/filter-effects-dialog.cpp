@@ -83,7 +83,7 @@ using Inkscape::UI::Widget::SpinScale;
 
 
 // Returns the number of inputs available for the filter primitive type
-int input_count(const SPFilterPrimitive* prim)
+static int input_count(const SPFilterPrimitive* prim)
 {
     if(!prim)
         return 0;
@@ -1087,8 +1087,8 @@ FilterEffectsDialog::LightSourceControl* FilterEffectsDialog::Settings::add_ligh
     return ls;
 }
 
-Glib::RefPtr<Gtk::Menu> create_popup_menu(Gtk::Widget& parent, sigc::slot<void> dup,
-                                          sigc::slot<void> rem)
+static Glib::RefPtr<Gtk::Menu> create_popup_menu(Gtk::Widget& parent, sigc::slot<void> dup,
+                                                 sigc::slot<void> rem)
 {
     Glib::RefPtr<Gtk::Menu> menu(new Gtk::Menu);
 
@@ -2123,7 +2123,7 @@ bool FilterEffectsDialog::PrimitiveList::on_button_release_event(GdkEventButton*
 }
 
 // Checks all of prim's inputs, removes any that use result
-void check_single_connection(SPFilterPrimitive* prim, const int result)
+static void check_single_connection(SPFilterPrimitive* prim, const int result)
 {
     if (prim && (result >= 0)) {
         if (prim->image_in == result) {

@@ -16,6 +16,8 @@
 #include <gtkmm/button.h>
 #include <gtk/gtk.h>
 
+#include "shrink-wrap-button.h"
+
 namespace Inkscape {
 namespace Widgets {
 

@@ -126,7 +126,7 @@ static unsigned long crc_table[256];
 /**
  * make the table for a fast CRC.
  */
-void makeCrcTable()
+static void makeCrcTable()
 {
     if (crc_table_ready)
         return;

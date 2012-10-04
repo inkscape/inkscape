@@ -20,6 +20,7 @@
 
 #include "sp-widget.h"
 #include "widget-sizes.h"
+#include "spinbutton-events.h"
 
 gboolean
 spinbutton_focus_in (GtkWidget *w, GdkEventKey */*event*/, gpointer /*data*/)

@@ -200,7 +200,7 @@ void InkscapePreferences::AddDotSizeSpinbutton(DialogPage &p, Glib::ustring cons
 }
 
 
-void StyleFromSelectionToTool(Glib::ustring const &prefs_path, StyleSwatch *swatch)
+static void StyleFromSelectionToTool(Glib::ustring const &prefs_path, StyleSwatch *swatch)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop == NULL)

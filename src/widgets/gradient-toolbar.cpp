@@ -55,6 +55,7 @@
 #include "svg/svg-color.h"
 #include "desktop-style.h"
 #include "gradient-context.h"
+#include "gradient-toolbar.h"
 
 #include "toolbox.h"
 
@@ -918,7 +919,7 @@ static void gr_new_fillstroke_changed( EgeSelectOneAction *act, GObject * /*tbl*
 /*
  * User selected a gradient from the combobox
  */
-void gr_gradient_combo_changed(EgeSelectOneAction *act, gpointer data)
+static void gr_gradient_combo_changed(EgeSelectOneAction *act, gpointer data)
 {
     if (blocked) {
         return;
@@ -947,7 +948,7 @@ void gr_gradient_combo_changed(EgeSelectOneAction *act, gpointer data)
 
 }
 
-void gr_spread_change(EgeSelectOneAction *act, GtkWidget *widget)
+static void gr_spread_change(EgeSelectOneAction *act, GtkWidget *widget)
 {
     if (blocked) {
         return;

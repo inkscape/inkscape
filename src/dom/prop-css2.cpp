@@ -1279,7 +1279,7 @@ bool parseProperty(char *name, char *value)
 }
 
 
-bool printTable()
+static bool printTable()
 {
     for (CssProp *prop=cssProps; prop->name ; prop++)
         {

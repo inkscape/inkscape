@@ -9,6 +9,7 @@
 
 #include "xml/node-iterators.h"
 #include "util/find-if-before.h"
+#include "node-fns.h"
 
 namespace Inkscape {
 namespace XML {

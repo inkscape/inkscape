@@ -1137,7 +1137,7 @@ NULL
 
 
 
-bool printTable()
+static bool printTable()
 {
     for (CssProp *prop=cssProps; prop->name ; prop++)
         {

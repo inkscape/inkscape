@@ -75,7 +75,7 @@ static char *sp_xml_ns_auto_prefix(char const *uri);
 /**
  * Locale-independent double to string conversion
  */
-unsigned int sp_xml_dtoa(gchar *buf, double val, unsigned int tprec, unsigned int fprec, unsigned int padf)
+static unsigned int sp_xml_dtoa(gchar *buf, double val, unsigned int tprec, unsigned int fprec, unsigned int padf)
 {
     double dival, fval, epsilon;
     int idigits, ival, i;
