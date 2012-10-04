@@ -778,7 +778,7 @@ static GtkWidget* create_menu_item( GtkAction* action )
     return item;
 }
 
-void value_changed_cb( GtkSpinButton* spin, EgeAdjustmentAction* act )
+static void value_changed_cb( GtkSpinButton* spin, EgeAdjustmentAction* act )
 {
     if ( gtk_widget_has_focus( GTK_WIDGET(spin) ) ) {
         gint start = 0, end = 0;

@@ -366,7 +366,7 @@ box3d_set_transform(SPItem *item, Geom::Affine const &xform)
     return Geom::identity();
 }
 
-Proj::Pt3
+static Proj::Pt3
 box3d_get_proj_corner (guint id, Proj::Pt3 const &c0, Proj::Pt3 const &c7) {
     return Proj::Pt3 ((id & Box3D::X) ? c7[Proj::X] : c0[Proj::X],
                       (id & Box3D::Y) ? c7[Proj::Y] : c0[Proj::Y],

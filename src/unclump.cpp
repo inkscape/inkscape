@@ -15,6 +15,7 @@
 #include <map>
 #include <2geom/transforms.h>
 #include "sp-item.h"
+#include "unclump.h"
 
 
 // Taking bbox of an item is an expensive operation, and we need to do it many times, so here we
@@ -27,7 +28,7 @@ std::map<const gchar *, Geom::Point> wh_cache;
 /**
 Center of bbox of item
 */
-Geom::Point
+static Geom::Point
 unclump_center (SPItem *item)
 {
     std::map<const gchar *, Geom::Point>::iterator i = c_cache.find(item->getId());
@@ -46,7 +47,7 @@ unclump_center (SPItem *item)
     }
 }
 
-Geom::Point
+static Geom::Point
 unclump_wh (SPItem *item)
 {
     Geom::Point wh;
@@ -71,7 +72,7 @@ Distance between "edges" of item1 and item2. An item is considered to be an elli
 so its radius (distance from center to edge) depends on the w/h and the angle towards the other item.
 May be negative if the edge of item1 is between the center and the edge of item2.
 */
-double
+static double
 unclump_dist (SPItem *item1, SPItem *item2)
 {
 	Geom::Point c1 = unclump_center (item1);
@@ -166,7 +167,7 @@ unclump_dist (SPItem *item1, SPItem *item2)
 /**
 Average unclump_dist from item to others
 */
-double unclump_average (SPItem *item, GSList *others)
+static double unclump_average (SPItem *item, GSList *others)
 {
     int n = 0;
     double sum = 0;
@@ -190,7 +191,7 @@ double unclump_average (SPItem *item, GSList *others)
 /**
 Closest to item among others
  */
-SPItem *unclump_closest (SPItem *item, GSList *others)
+static SPItem *unclump_closest (SPItem *item, GSList *others)
 {
     double min = HUGE_VAL;
     SPItem *closest = NULL;
@@ -214,7 +215,7 @@ SPItem *unclump_closest (SPItem *item, GSList *others)
 /**
 Most distant from item among others
  */
-SPItem *unclump_farest (SPItem *item, GSList *others)
+static SPItem *unclump_farest (SPItem *item, GSList *others)
 {
     double max = -HUGE_VAL;
     SPItem *farest = NULL;
@@ -240,7 +241,7 @@ Removes from the \a rest list those items that are "behind" \a closest as seen f
 i.e. those on the other side of the line through \a closest perpendicular to the direction from \a
 item to \a closest. Returns a newly created list which must be freed.
  */
-GSList *
+static GSList *
 unclump_remove_behind (SPItem *item, SPItem *closest, GSList *rest)
 {
     Geom::Point it = unclump_center (item);
@@ -282,7 +283,7 @@ unclump_remove_behind (SPItem *item, SPItem *closest, GSList *rest)
 /**
 Moves \a what away from \a from by \a dist
  */
-void
+static void
 unclump_push (SPItem *from, SPItem *what, double dist)
 {
     Geom::Point it = unclump_center (what);
@@ -305,7 +306,7 @@ unclump_push (SPItem *from, SPItem *what, double dist)
 /**
 Moves \a what towards \a to by \a dist
  */
-void
+static void
 unclump_pull (SPItem *to, SPItem *what, double dist)
 {
     Geom::Point it = unclump_center (what);

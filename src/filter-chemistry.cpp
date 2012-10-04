@@ -242,7 +242,7 @@ new_filter_gaussian_blur (SPDocument *document, gdouble radius, double expansion
  * Creates a simple filter with a blend primitive and a blur primitive of specified radius for
  * an item with the given matrix expansion, width and height
  */
-SPFilter *
+static SPFilter *
 new_filter_blend_gaussian_blur (SPDocument *document, const char *blendmode, gdouble radius, double expansion,
                                 double expansionX, double expansionY, double width, double height)
 {

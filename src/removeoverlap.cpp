@@ -17,6 +17,7 @@
 #include "sp-item-transform.h"
 #include "libvpsc/generate-constraints.h"
 #include "libvpsc/remove_rectangle_overlap.h"
+#include "removeoverlap.h"
 
 using vpsc::Rectangle;
 

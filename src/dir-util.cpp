@@ -7,6 +7,7 @@
 #include <string>
 #include <cstring>
 #include <glib.h>
+#include "dir-util.h"
 
 std::string sp_relative_path_from_path( std::string const &path, std::string const &base)
 {

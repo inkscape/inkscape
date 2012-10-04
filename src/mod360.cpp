@@ -1,6 +1,8 @@
 #include <glib.h>
 #include <math.h>
 
+#include "mod360.h"
+
 /** Returns \a x wrapped around to between 0 and less than 360,
     or 0 if \a x isn't finite.
 **/

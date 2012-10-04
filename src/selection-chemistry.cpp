@@ -256,7 +256,7 @@ void SelectionHelper::selectPrev(SPDesktop *dt)
  * Copies repr and its inherited css style elements, along with the accumulated transform 'full_t',
  * then prepends the copy to 'clip'.
  */
-void sp_selection_copy_one(Inkscape::XML::Node *repr, Geom::Affine full_t, GSList **clip, Inkscape::XML::Document* xml_doc)
+static void sp_selection_copy_one(Inkscape::XML::Node *repr, Geom::Affine full_t, GSList **clip, Inkscape::XML::Document* xml_doc)
 {
     Inkscape::XML::Node *copy = repr->duplicate(xml_doc);
 
@@ -275,7 +275,7 @@ void sp_selection_copy_one(Inkscape::XML::Node *repr, Geom::Affine full_t, GSLis
     *clip = g_slist_prepend(*clip, copy);
 }
 
-void sp_selection_copy_impl(GSList const *items, GSList **clip, Inkscape::XML::Document* xml_doc)
+static void sp_selection_copy_impl(GSList const *items, GSList **clip, Inkscape::XML::Document* xml_doc)
 {
     // Sort items:
     GSList *sorted_items = g_slist_copy(const_cast<GSList *>(items));
@@ -290,7 +290,7 @@ void sp_selection_copy_impl(GSList const *items, GSList **clip, Inkscape::XML::D
     g_slist_free(static_cast<GSList *>(sorted_items));
 }
 
-GSList *sp_selection_paste_impl(SPDocument *doc, SPObject *parent, GSList **clip)
+static GSList *sp_selection_paste_impl(SPDocument *doc, SPObject *parent, GSList **clip)
 {
     Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
@@ -321,7 +321,7 @@ GSList *sp_selection_paste_impl(SPDocument *doc, SPObject *parent, GSList **clip
     return copied;
 }
 
-void sp_selection_delete_impl(GSList const *items, bool propagate = true, bool propagate_descendants = true)
+static void sp_selection_delete_impl(GSList const *items, bool propagate = true, bool propagate_descendants = true)
 {
     for (GSList const *i = items ; i ; i = i->next ) {
         sp_object_ref((SPObject *)i->data, NULL);
@@ -372,7 +372,7 @@ void sp_selection_delete(SPDesktop *desktop)
                        _("Delete"));
 }
 
-void add_ids_recursive(std::vector<const gchar *> &ids, SPObject *obj)
+static void add_ids_recursive(std::vector<const gchar *> &ids, SPObject *obj)
 {
     if (obj) {
         ids.push_back(obj->getId());
@@ -540,7 +540,7 @@ GSList *get_all_items(GSList *list, SPObject *from, SPDesktop *desktop, bool onl
     return list;
 }
 
-void sp_edit_select_all_full(SPDesktop *dt, bool force_all_layers, bool invert)
+static void sp_edit_select_all_full(SPDesktop *dt, bool force_all_layers, bool invert)
 {
     if (!dt)
         return;
@@ -626,7 +626,7 @@ void sp_edit_invert_in_all_layers(SPDesktop *desktop)
     sp_edit_select_all_full(desktop, true, true);
 }
 
-void sp_selection_group_impl(GSList *p, Inkscape::XML::Node *group, Inkscape::XML::Document *xml_doc, SPDocument *doc) {
+static void sp_selection_group_impl(GSList *p, Inkscape::XML::Node *group, Inkscape::XML::Document *xml_doc, SPDocument *doc) {
 
     p = g_slist_sort(p, (GCompareFunc) sp_repr_compare_position);
 
@@ -845,7 +845,7 @@ enclose_items(GSList const *items)
 }
 
 // TODO determine if this is intentionally different from SPObject::getPrev()
-SPObject *prev_sibling(SPObject *child)
+static SPObject *prev_sibling(SPObject *child)
 {
     SPObject *prev = 0;
     if ( child && SP_IS_GROUP(child->parent) ) {
@@ -1153,7 +1153,7 @@ void sp_selection_paste_livepatheffect(SPDesktop *desktop)
 }
 
 
-void sp_selection_remove_livepatheffect_impl(SPItem *item)
+static void sp_selection_remove_livepatheffect_impl(SPItem *item)
 {
     if ( item && SP_IS_LPE_ITEM(item) &&
          sp_lpe_item_has_path_effect(SP_LPE_ITEM(item))) {
@@ -1344,7 +1344,7 @@ void sp_selection_to_layer(SPDesktop *dt, SPObject *moveto, bool suppressDone)
     g_slist_free(const_cast<GSList *>(items));
 }
 
-bool
+static bool
 selection_contains_original(SPItem *item, Inkscape::Selection *selection)
 {
     bool contains_original = false;
@@ -1371,7 +1371,7 @@ selection_contains_original(SPItem *item, Inkscape::Selection *selection)
 }
 
 
-bool
+static bool
 selection_contains_both_clone_and_original(Inkscape::Selection *selection)
 {
     bool clone_with_original = false;
@@ -1882,7 +1882,7 @@ GSList *sp_get_same_fill_or_stroke_color(SPItem *sel, GSList *src, SPSelectStrok
     return matches;
 }
 
-bool item_type_match (SPItem *i, SPItem *j)
+static bool item_type_match (SPItem *i, SPItem *j)
 {
     if ( SP_IS_RECT(i)) {
         return ( SP_IS_RECT(j) );

@@ -1065,7 +1065,7 @@ inkscape_find_desktop_by_dkey (unsigned int dkey)
 
 
 
-unsigned int
+static unsigned int
 inkscape_maximum_dkey()
 {
     unsigned int dkey = 0;
@@ -1081,7 +1081,7 @@ inkscape_maximum_dkey()
 
 
 
-SPDesktop *
+static SPDesktop *
 inkscape_next_desktop ()
 {
     SPDesktop *d = NULL;
@@ -1112,7 +1112,7 @@ inkscape_next_desktop ()
 
 
 
-SPDesktop *
+static SPDesktop *
 inkscape_prev_desktop ()
 {
     SPDesktop *d = NULL;

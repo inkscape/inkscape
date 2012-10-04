@@ -4567,7 +4567,7 @@ sp_css_attr_unset_text(SPCSSAttr *css)
     return css;
 }
 
-bool
+static bool
 is_url(char const *p)
 {
     if (p == NULL)
@@ -4607,7 +4607,7 @@ sp_css_attr_unset_uris(SPCSSAttr *css)
 /**
  * Scale a single-value property.
  */
-void
+static void
 sp_css_attr_scale_property_single(SPCSSAttr *css, gchar const *property,
                                   double ex, bool only_with_units = false)
 {
@@ -4631,7 +4631,7 @@ sp_css_attr_scale_property_single(SPCSSAttr *css, gchar const *property,
 /**
  * Scale a list-of-values property.
  */
-void
+static void
 sp_css_attr_scale_property_list(SPCSSAttr *css, gchar const *property, double ex)
 {
     gchar const *string = sp_repr_css_property(css, property, NULL);

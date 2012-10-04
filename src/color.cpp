@@ -352,7 +352,7 @@ sp_color_rgb_to_hsl_floatv (float *hsl, float r, float g, float b)
     }
 }
 
-float
+static float
 hue_2_rgb (float v1, float v2, float h)
 {
     if (h < 0) h += 6.0;

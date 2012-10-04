@@ -1204,7 +1204,7 @@ void SPItem::adjust_stroke( gdouble ex )
 /**
  * Find out the inverse of previous transform of an item (from its repr)
  */
-Geom::Affine sp_item_transform_repr (SPItem *item)
+static Geom::Affine sp_item_transform_repr (SPItem *item)
 {
     Geom::Affine t_old(Geom::identity());
     gchar const *t_attr = item->getRepr()->attribute("transform");
@@ -1253,7 +1253,7 @@ void SPItem::freeze_stroke_width_recursive(bool freeze)
 /**
  * Recursively adjust rx and ry of rects.
  */
-void
+static void
 sp_item_adjust_rects_recursive(SPItem *item, Geom::Affine advertized_transform)
 {
     if (SP_IS_RECT (item)) {

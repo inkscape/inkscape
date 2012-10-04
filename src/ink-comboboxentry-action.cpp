@@ -789,7 +789,7 @@ static gboolean match_selected_cb( GtkEntryCompletion* /*widget*/, GtkTreeModel*
   return false;
 }
 
-void ink_comboboxentry_action_defocus( Ink_ComboBoxEntry_Action* action )
+static void ink_comboboxentry_action_defocus( Ink_ComboBoxEntry_Action* action )
 {
     if ( action->focusWidget ) {
         gtk_widget_grab_focus( action->focusWidget );

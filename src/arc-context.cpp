@@ -159,7 +159,7 @@ static void sp_arc_context_dispose(GObject *object)
  * Callback that processes the "changed" signal on the selection;
  * destroys old and creates new knotholder.
  */
-void sp_arc_context_selection_changed(Inkscape::Selection * selection, gpointer data)
+static void sp_arc_context_selection_changed(Inkscape::Selection * selection, gpointer data)
 {
     SPArcContext *ac = SP_ARC_CONTEXT(data);
     SPEventContext *ec = SP_EVENT_CONTEXT(ac);

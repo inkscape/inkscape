@@ -500,7 +500,7 @@ sp_dyna_draw_brush(SPDynaDrawContext *dc)
     dc->npoints++;
 }
 
-void
+static void
 sp_ddc_update_toolbox (SPDesktop *desktop, const gchar *id, double value)
 {
     desktop->setToolboxAdjustmentValue (id, value);

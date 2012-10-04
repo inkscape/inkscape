@@ -167,7 +167,7 @@ static void sp_flood_context_dispose(GObject *object)
  * Callback that processes the "changed" signal on the selection;
  * destroys old and creates new knotholder.
  */
-void sp_flood_context_selection_changed(Inkscape::Selection *selection, gpointer data)
+static void sp_flood_context_selection_changed(Inkscape::Selection *selection, gpointer data)
 {
     SPFloodContext *rc = SP_FLOOD_CONTEXT(data);
     SPEventContext *ec = SP_EVENT_CONTEXT(rc);

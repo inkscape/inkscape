@@ -113,7 +113,7 @@ static std::map<Glib::ustring, Gdk::AxisUse> &getStringToAxis()
     return mapping;
 }
 
-std::map<Gdk::AxisUse, Glib::ustring> &getAxisToString()
+static std::map<Gdk::AxisUse, Glib::ustring> &getAxisToString()
 {
     static bool init = false;
     static std::map<Gdk::AxisUse, Glib::ustring> mapping;
@@ -139,7 +139,7 @@ static std::map<Glib::ustring, Gdk::InputMode> &getStringToMode()
     return mapping;
 }
 
-std::map<Gdk::InputMode, Glib::ustring> &getModeToString()
+static std::map<Gdk::InputMode, Glib::ustring> &getModeToString()
 {
     static bool init = false;
     static std::map<Gdk::InputMode, Glib::ustring> mapping;

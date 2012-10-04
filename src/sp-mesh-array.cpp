@@ -72,7 +72,7 @@
 
 enum { ROW, COL };
 
-void swap_p( Geom::Point *p1, Geom::Point *p2 ) {
+static void swap_p( Geom::Point *p1, Geom::Point *p2 ) {
     Geom::Point temp = *p1;
     *p1 = *p2;
     *p2 = temp;
@@ -957,7 +957,7 @@ void SPMeshNodeArray::write( SPMeshGradient *mg ) {
    Find default color based on color of first stop in "vector" gradient.
    This should be rewritten if dependence on "vector" is removed.
 */
-SPColor default_color( SPItem *item ) {
+static SPColor default_color( SPItem *item ) {
 
     // Set initial color to the color of the object before adding the mesh.
     // This is a bit tricky as at the moment, a "vector" gradient is created

@@ -204,7 +204,7 @@ vp_knot_moved_handler (SPKnot *knot, Geom::Point const *ppointer, guint state, g
     dragger->dragging_started = true;
 }
 
-void
+static void
 vp_knot_grabbed_handler (SPKnot */*knot*/, unsigned int /*state*/, gpointer data)
 {
     VPDragger *dragger = (VPDragger *) data;

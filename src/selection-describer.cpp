@@ -36,7 +36,7 @@
 #include "sp-polyline.h"
 #include "sp-spiral.h"
 
-const gchar *
+static const gchar *
 type2term(GType type)
 {
     if (type == SP_TYPE_ANCHOR)
@@ -80,7 +80,7 @@ type2term(GType type)
     return NULL;
 }
 
-GSList *collect_terms (GSList *items)
+static GSList *collect_terms (GSList *items)
 {
     GSList *r = NULL;
     for (GSList *i = items; i != NULL; i = i->next) {
@@ -92,7 +92,7 @@ GSList *collect_terms (GSList *items)
 }
 
 // Returns the number of filtered items in the list
-int count_filtered (GSList *items)
+static int count_filtered (GSList *items)
 {
     int count=0;
     SPItem *item=NULL;

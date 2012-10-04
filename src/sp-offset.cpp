@@ -750,7 +750,7 @@ static void sp_offset_snappoints(SPItem const *item, std::vector<Inkscape::SnapC
  *  dot(A, rot90(B))*dot(C, rot90(B)) == -1.
  *    -- njh
  */
-bool
+static bool
 vectors_are_clockwise (Geom::Point A, Geom::Point B, Geom::Point C)
 {
     using Geom::rot90;

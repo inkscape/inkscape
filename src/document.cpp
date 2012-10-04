@@ -1107,7 +1107,7 @@ static GSList *find_items_in_area(GSList *s, SPGroup *group, unsigned int dkey, 
 /**
 Returns true if an item is among the descendants of group (recursively).
  */
-bool item_is_in_group(SPItem *item, SPGroup *group)
+static bool item_is_in_group(SPItem *item, SPGroup *group)
 {
     bool inGroup = false;
     for ( SPObject *o = group->firstChild() ; o && !inGroup; o = o->getNext() ) {
@@ -1158,7 +1158,7 @@ items. If upto != NULL, then if item upto is encountered (at any level), stops s
 upwards in z-order and returns what it has found so far (i.e. the found item is
 guaranteed to be lower than upto).
  */
-SPItem *find_item_at_point(unsigned int dkey, SPGroup *group, Geom::Point const p, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
+static SPItem *find_item_at_point(unsigned int dkey, SPGroup *group, Geom::Point const p, gboolean into_groups, bool take_insensitive = false, SPItem *upto = NULL)
 {
     SPItem *seen = NULL;
     SPItem *newseen = NULL;
@@ -1203,7 +1203,7 @@ SPItem *find_item_at_point(unsigned int dkey, SPGroup *group, Geom::Point const 
 Returns the topmost non-layer group from the descendants of group which is at point
 p, or NULL if none. Recurses into layers but not into groups.
  */
-SPItem *find_group_at_point(unsigned int dkey, SPGroup *group, Geom::Point const p)
+static SPItem *find_group_at_point(unsigned int dkey, SPGroup *group, Geom::Point const p)
 {
     SPItem *seen = NULL;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -1374,7 +1374,7 @@ sp_document_resource_list_free(gpointer /*key*/, gpointer value, gpointer /*data
     return TRUE;
 }
 
-unsigned int count_objects_recursive(SPObject *obj, unsigned int count)
+static unsigned int count_objects_recursive(SPObject *obj, unsigned int count)
 {
     count++; // obj itself
 
@@ -1385,12 +1385,12 @@ unsigned int count_objects_recursive(SPObject *obj, unsigned int count)
     return count;
 }
 
-unsigned int objects_in_document(SPDocument *document)
+static unsigned int objects_in_document(SPDocument *document)
 {
     return count_objects_recursive(document->getRoot(), 0);
 }
 
-void vacuum_document_recursive(SPObject *obj)
+static void vacuum_document_recursive(SPObject *obj)
 {
     if (SP_IS_DEFS(obj)) {
         for ( SPObject *def = obj->firstChild(); def; def = def->getNext()) {

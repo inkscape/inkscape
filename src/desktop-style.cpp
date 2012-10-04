@@ -1117,7 +1117,7 @@ objects_query_fontstyle (GSList *objects, SPStyle *style_res)
 /**
  * Write to style_res the baseline numbers.
  */
-int
+static int
 objects_query_baselines (GSList *objects, SPStyle *style_res)
 {
     bool different = false;
@@ -1273,7 +1273,7 @@ objects_query_fontfamily (GSList *objects, SPStyle *style_res)
     }
 }
 
-int
+static int
 objects_query_fontspecification (GSList *objects, SPStyle *style_res)
 {
     bool different = false;
@@ -1335,7 +1335,7 @@ objects_query_fontspecification (GSList *objects, SPStyle *style_res)
     }
 }
 
-int
+static int
 objects_query_blend (GSList *objects, SPStyle *style_res)
 {
     const int empty_prev = -2;

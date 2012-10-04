@@ -1,6 +1,8 @@
 #include <string.h>
 #include <glib.h>
 
+#include "extract-uri.h"
+
 // FIXME: kill this ugliness when we have a proper CSS parser
 
 // Functions as per 4.3.4 of CSS 2.1

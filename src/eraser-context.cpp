@@ -443,7 +443,7 @@ sp_eraser_brush(SPEraserContext *dc)
     dc->npoints++;
 }
 
-void
+static void
 sp_erc_update_toolbox (SPDesktop *desktop, const gchar *id, double value)
 {
     desktop->setToolboxAdjustmentValue (id, value);

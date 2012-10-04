@@ -176,7 +176,7 @@ sp_tweak_context_dispose(GObject *object)
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
-bool is_transform_mode (gint mode)
+static bool is_transform_mode (gint mode)
 {
     return (mode == TWEAK_MODE_MOVE || 
             mode == TWEAK_MODE_MOVE_IN_OUT || 
@@ -186,12 +186,12 @@ bool is_transform_mode (gint mode)
             mode == TWEAK_MODE_MORELESS);
 }
 
-bool is_color_mode (gint mode)
+static bool is_color_mode (gint mode)
 {
     return (mode == TWEAK_MODE_COLORPAINT || mode == TWEAK_MODE_COLORJITTER || mode == TWEAK_MODE_BLUR);
 }
 
-void
+static void
 sp_tweak_update_cursor (SPTweakContext *tc, bool with_shift)
 {
     SPEventContext *event_context = SP_EVENT_CONTEXT(tc);
@@ -376,14 +376,14 @@ sp_tweak_extinput(SPTweakContext *tc, GdkEvent *event)
     }
 }
 
-double
+static double
 get_dilate_radius (SPTweakContext *tc)
 {
     // 10 times the pen width:
     return 500 * tc->width/SP_EVENT_CONTEXT(tc)->desktop->current_zoom();
 }
 
-double
+static double
 get_path_force (SPTweakContext *tc)
 {
     double force = 8 * (tc->usepressure? tc->pressure : TC_DEFAULT_PRESSURE)
@@ -394,14 +394,14 @@ get_path_force (SPTweakContext *tc)
     return force * tc->force;
 }
 
-double
+static double
 get_move_force (SPTweakContext *tc)
 {
     double force = (tc->usepressure? tc->pressure : TC_DEFAULT_PRESSURE);
     return force * tc->force;
 }
 
-bool
+static bool
 sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::Point p, Geom::Point vector, gint mode, double radius, double force, double fidelity, bool reverse)
 {
     bool did = false;
@@ -697,7 +697,7 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
     return did;
 }
 
-void
+static void
 tweak_colorpaint (float *color, guint32 goal, double force, bool do_h, bool do_s, bool do_l)
 {
     float rgb_g[3];
@@ -729,7 +729,7 @@ tweak_colorpaint (float *color, guint32 goal, double force, bool do_h, bool do_s
     }
 }
 
-void
+static void
 tweak_colorjitter (float *color, double force, bool do_h, bool do_s, bool do_l)
 {
     float hsl_c[3];
@@ -754,7 +754,7 @@ tweak_colorjitter (float *color, double force, bool do_h, bool do_s, bool do_l)
     sp_color_hsl_to_rgb_floatv (color, hsl_c[0], hsl_c[1], hsl_c[2]);
 }
 
-void
+static void
 tweak_color (guint mode, float *color, guint32 goal, double force, bool do_h, bool do_s, bool do_l)
 {
     if (mode == TWEAK_MODE_COLORPAINT) {
@@ -764,7 +764,7 @@ tweak_color (guint mode, float *color, guint32 goal, double force, bool do_h, bo
     }
 }
 
-void
+static void
 tweak_opacity (guint mode, SPIScale24 *style_opacity, double opacity_goal, double force)
 {
     double opacity = SP_SCALE24_TO_FLOAT (style_opacity->value);
@@ -780,7 +780,7 @@ tweak_opacity (guint mode, SPIScale24 *style_opacity, double opacity_goal, doubl
 }
 
 
-double
+static double
 tweak_profile (double dist, double radius)
 {
     if (radius == 0) {
@@ -797,9 +797,9 @@ tweak_profile (double dist, double radius)
     }
 }
 
-void tweak_colors_in_gradient(SPItem *item, Inkscape::PaintTarget fill_or_stroke,
-                              guint32 const rgb_goal, Geom::Point p_w, double radius, double force, guint mode,
-                              bool do_h, bool do_s, bool do_l, bool /*do_o*/)
+static void tweak_colors_in_gradient(SPItem *item, Inkscape::PaintTarget fill_or_stroke,
+                                     guint32 const rgb_goal, Geom::Point p_w, double radius, double force, guint mode,
+                                     bool do_h, bool do_s, bool do_l, bool /*do_o*/)
 {
     SPGradient *gradient = getGradient(item, fill_or_stroke);
 
@@ -917,7 +917,7 @@ void tweak_colors_in_gradient(SPItem *item, Inkscape::PaintTarget fill_or_stroke
     }
 }
 
-bool
+static bool
 sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
                           guint32 fill_goal, bool do_fill,
                           guint32 stroke_goal, bool do_stroke,
@@ -1051,7 +1051,7 @@ sp_tweak_color_recursive (guint mode, SPItem *item, SPItem *item_at_point,
 }
 
 
-bool
+static bool
 sp_tweak_dilate (SPTweakContext *tc, Geom::Point event_p, Geom::Point p, Geom::Point vector, bool reverse)
 {
     Inkscape::Selection *selection = sp_desktop_selection(SP_EVENT_CONTEXT(tc)->desktop);
@@ -1141,7 +1141,7 @@ sp_tweak_dilate (SPTweakContext *tc, Geom::Point event_p, Geom::Point p, Geom::P
     return did;
 }
 
-void
+static void
 sp_tweak_update_area (SPTweakContext *tc)
 {
         double radius = get_dilate_radius(tc);
@@ -1150,7 +1150,7 @@ sp_tweak_update_area (SPTweakContext *tc)
         sp_canvas_item_show(tc->dilate_area);
 }
 
-void
+static void
 sp_tweak_switch_mode (SPTweakContext *tc, gint mode, bool with_shift)
 {
     SP_EVENT_CONTEXT(tc)->desktop->setToolboxSelectOneValue ("tweak_tool_mode", mode);
@@ -1159,7 +1159,7 @@ sp_tweak_switch_mode (SPTweakContext *tc, gint mode, bool with_shift)
     sp_tweak_update_cursor (tc, with_shift);
 }
 
-void
+static void
 sp_tweak_switch_mode_temporarily (SPTweakContext *tc, gint mode, bool with_shift)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();

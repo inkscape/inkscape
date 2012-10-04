@@ -234,7 +234,7 @@ private:
     PushPull(const PushPull& other);
 };
 
-void user_read_data( png_structp png_ptr, png_bytep data, png_size_t length )
+static void user_read_data( png_structp png_ptr, png_bytep data, png_size_t length )
 {
 //    g_message( "user_read_data(%d)", length );
 
@@ -255,12 +255,12 @@ void user_read_data( png_structp png_ptr, png_bytep data, png_size_t length )
 //    g_message("things out");
 }
 
-void user_write_data( png_structp /*png_ptr*/, png_bytep /*data*/, png_size_t /*length*/ )
+static void user_write_data( png_structp /*png_ptr*/, png_bytep /*data*/, png_size_t /*length*/ )
 {
     //g_message( "user_write_data(%d)", length );
 }
 
-void user_flush_data( png_structp /*png_ptr*/ )
+static void user_flush_data( png_structp /*png_ptr*/ )
 {
     //g_message( "user_flush_data" );
 }
@@ -424,7 +424,7 @@ static bool readPngAndHeaders( PushPull &youme, gint & dpiX, gint & dpiY )
     return good;
 }
 
-static GdkPixbuf* pixbuf_new_from_file( const char *filename, time_t &modTime, gchar*& pixPath, GError **/*error*/ )
+GdkPixbuf* pixbuf_new_from_file( const char *filename, time_t &modTime, gchar*& pixPath, GError **/*error*/ )
 {
     GdkPixbuf* buf = NULL;
     PushPull youme;

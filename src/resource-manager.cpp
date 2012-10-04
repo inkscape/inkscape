@@ -28,7 +28,7 @@
 
 namespace Inkscape {
 
-std::vector<std::string> splitPath( std::string const &path )
+static std::vector<std::string> splitPath( std::string const &path )
 {
     std::vector<std::string> parts;
 
@@ -50,7 +50,7 @@ std::vector<std::string> splitPath( std::string const &path )
     return parts;
 }
 
-std::string convertPathToRelative( std::string const &path, std::string const &docbase )
+static std::string convertPathToRelative( std::string const &path, std::string const &docbase )
 {
     std::string result = path;
 

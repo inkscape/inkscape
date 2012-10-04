@@ -174,7 +174,7 @@ static void sp_event_context_dispose(GObject *object) {
 /**
  * Set the cursor to a standard GDK cursor
  */
-void sp_event_context_set_cursor(SPEventContext *event_context, GdkCursorType cursor_type) {
+static void sp_event_context_set_cursor(SPEventContext *event_context, GdkCursorType cursor_type) {
 
     GtkWidget *w = GTK_WIDGET(sp_desktop_canvas(event_context->desktop));
     GdkDisplay *display = gdk_display_get_default();

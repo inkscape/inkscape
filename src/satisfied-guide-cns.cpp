@@ -1,8 +1,9 @@
-#include <desktop-handles.h>
-#include <sp-guide.h>
-#include <sp-guide-constraint.h>
-#include <sp-namedview.h>
-#include <approx-equal.h>
+#include "desktop-handles.h"
+#include "sp-guide.h"
+#include "sp-guide-constraint.h"
+#include "sp-namedview.h"
+#include "approx-equal.h"
+#include "satisfied-guide-cns.h"
 
 void satisfied_guide_cns(SPDesktop const &desktop,
                          std::vector<Inkscape::SnapCandidatePoint> const &snappoints,

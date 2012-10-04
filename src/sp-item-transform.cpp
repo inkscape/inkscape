@@ -16,6 +16,7 @@
 
 #include <2geom/transforms.h>
 #include "sp-item.h"
+#include "sp-item-transform.h"
 
 void sp_item_rotate_rel(SPItem *item, Geom::Rotate const &rotation)
 {

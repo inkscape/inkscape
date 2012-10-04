@@ -6,6 +6,7 @@
 #include <2geom/transforms.h>
 #include <sp-guide.h>
 #include <sp-item-rm-unsatisfied-cns.h>
+#include <sp-item-notify-moveto.h>
 using std::vector;
 
 

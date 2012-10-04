@@ -23,6 +23,7 @@
 
 #include "ui/dialog/guides.h"
 #include "desktop.h"
+#include "desktop-events.h"
 #include "desktop-handles.h"
 #include "dialogs/dialog-events.h"
 #include "display/canvas-axonomgrid.h"

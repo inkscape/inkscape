@@ -20,6 +20,7 @@
 #include "sp-mesh-gradient-fns.h"
 #include "sp-mesh-row-fns.h"
 #include "sp-mesh-patch-fns.h"
+#include "sp-object-repr.h"
 #include "sp-path.h"
 #include "sp-radial-gradient-fns.h"
 #include "sp-rect.h"

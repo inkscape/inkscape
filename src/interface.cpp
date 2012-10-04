@@ -396,7 +396,7 @@ sp_ui_menu_deselect(gpointer object)
 /**
  * Creates and attaches a scaled icon to the given menu item.
  */
-void
+static void
 sp_ui_menuitem_add_icon( GtkWidget *item, gchar *icon_name )
 {
     static bool iconsInjected = false;
@@ -686,7 +686,7 @@ static gboolean update_view_menu(GtkWidget *widget, GdkEventExpose * /*event*/, 
     return FALSE;
 }
 
-void
+static void
 sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *view, gchar const *label, gchar const *tip, gchar const *pref,
                                        void (*callback_toggle)(GtkCheckMenuItem *, gpointer user_data),
 #if GTK_CHECK_VERSION(3,0,0)
@@ -806,7 +806,7 @@ compare_file_basenames(gchar const *a, gchar const *b) {
     return rc;
 }
 
-void
+static void
 sp_menu_get_svg_filenames_from_dir(gchar const *dirname, std::list<gchar const*> *files)
 {
     if ( Inkscape::IO::file_test( dirname, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR) ) ) {
@@ -840,7 +840,7 @@ sp_menu_get_svg_filenames_from_dir(gchar const *dirname, std::list<gchar const*>
     files->sort(compare_file_basenames);
 }
 
-void
+static void
 sp_menu_add_filenames_to_menu(GtkWidget *menu, Inkscape::UI::View::View *view, std::list<gchar const*> *files)
 {
     if (!files->empty()) {
@@ -876,7 +876,7 @@ sp_menu_add_filenames_to_menu(GtkWidget *menu, Inkscape::UI::View::View *view, s
     }
 
 }
-void
+static void
 sp_menu_append_new_templates(GtkWidget *menu, Inkscape::UI::View::View *view)
 {
     // user's local dir
@@ -891,7 +891,7 @@ sp_menu_append_new_templates(GtkWidget *menu, Inkscape::UI::View::View *view)
 
 }
 
-void
+static void
 sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
 {
     //sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
@@ -915,7 +915,7 @@ sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
 }
 
 
-void addTaskMenuItems(GtkMenu *menu, Inkscape::UI::View::View *view)
+static void addTaskMenuItems(GtkMenu *menu, Inkscape::UI::View::View *view)
 {
     gchar const* data[] = {
         C_("Interface setup", "Default"), _("Default interface setup"),
@@ -982,7 +982,7 @@ private:
  * @param  menu   Menu to be added to
  * @param  view   The View that this menu is being built for
  */
-void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI::View::View *view)
+static void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, Inkscape::UI::View::View *view)
 {
     if (menus == NULL) return;
     if (menu == NULL)  return;

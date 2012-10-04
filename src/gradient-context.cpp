@@ -266,7 +266,7 @@ sp_gradient_context_is_over_line (SPGradientContext *rc, SPItem *item, Geom::Poi
     return close;
 }
 
-std::vector<Geom::Point>
+static std::vector<Geom::Point>
 sp_gradient_context_get_stop_intervals (GrDrag *drag, GSList **these_stops, GSList **next_stops)
 {
     std::vector<Geom::Point> coords;
@@ -419,7 +419,7 @@ sp_gradient_context_add_stops_between_selected_stops (SPGradientContext *rc)
     g_slist_free (new_stops);
 }
 
-double sqr(double x) {return x*x;}
+static double sqr(double x) {return x*x;}
 
 static void
 sp_gradient_simplify(SPGradientContext *rc, double tolerance)

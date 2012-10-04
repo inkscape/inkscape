@@ -290,7 +290,7 @@ sp_pattern_set (SPObject *object, unsigned int key, const gchar *value)
 
 /* fixme: We need ::order_changed handler too (Lauris) */
 
-GSList *pattern_getchildren(SPPattern *pat)
+static GSList *pattern_getchildren(SPPattern *pat)
 {
     GSList *l = NULL;
 
@@ -381,7 +381,7 @@ static void pattern_ref_modified (SPObject */*ref*/, guint /*flags*/, SPPattern 
 /**
 Count how many times pat is used by the styles of o and its descendants
 */
-guint
+static guint
 count_pattern_hrefs(SPObject *o, SPPattern *pat)
 {
     if (!o)
@@ -590,7 +590,7 @@ Geom::OptRect pattern_viewBox (SPPattern *pat)
     return viewbox;
 }
 
-bool pattern_hasItemChildren (SPPattern *pat)
+static bool pattern_hasItemChildren (SPPattern *pat)
 {
     bool hasChildren = false;
     for (SPObject *child = pat->firstChild() ; child && !hasChildren ; child = child->getNext() ) {

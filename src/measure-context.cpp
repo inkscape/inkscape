@@ -306,7 +306,7 @@ static gint sp_measure_context_item_handler(SPEventContext *event_context, SPIte
     return ret;
 }
 
-bool GeomPointSortPredicate(const Geom::Point& p1, const Geom::Point& p2)
+static bool GeomPointSortPredicate(const Geom::Point& p1, const Geom::Point& p2)
 {
     if (p1[Geom::Y] == p2[Geom::Y]) {
         return p1[Geom::X] < p2[Geom::X];
@@ -315,7 +315,7 @@ bool GeomPointSortPredicate(const Geom::Point& p1, const Geom::Point& p2)
     }
 }
 
-void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom::PathVector const &lineseg, SPCurve *curve, std::vector<Geom::Point> &intersections)
+static void calculate_intersections(SPDesktop * /*desktop*/, SPItem* item, Geom::PathVector const &lineseg, SPCurve *curve, std::vector<Geom::Point> &intersections)
 {
     curve->transform(item->i2doc_affine());
 

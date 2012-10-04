@@ -132,7 +132,7 @@ static void gr_drag_sel_modified(Inkscape::Selection */*selection*/, guint /*fla
  * skip), and fill the \a style with the averaged color of all draggables of the selected dragger, if
  * any.
  */
-int gr_drag_style_query(SPStyle *style, int property, gpointer data)
+static int gr_drag_style_query(SPStyle *style, int property, gpointer data)
 {
     GrDrag *drag = (GrDrag *) data;
 

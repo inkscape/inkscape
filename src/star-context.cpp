@@ -170,7 +170,7 @@ sp_star_context_dispose (GObject *object)
  *
  * @param  selection Should not be NULL.
  */
-void sp_star_context_selection_changed (Inkscape::Selection * selection, gpointer data)
+static void sp_star_context_selection_changed (Inkscape::Selection * selection, gpointer data)
 {
     g_assert (selection != NULL);
 

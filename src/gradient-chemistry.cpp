@@ -42,6 +42,7 @@
 #include "sp-stop.h"
 #include "widgets/gradient-vector.h"
 #include "gradient-drag.h"
+#include "gradient-chemistry.h"
 
 #include "sp-text.h"
 #include "sp-tspan.h"
@@ -173,7 +174,7 @@ static SPGradient *sp_gradient_get_private_normalized(SPDocument *document, SPGr
 /**
 Count how many times gr is used by the styles of o and its descendants
 */
-guint count_gradient_hrefs(SPObject *o, SPGradient *gr)
+static guint count_gradient_hrefs(SPObject *o, SPGradient *gr)
 {
     if (!o)
         return 1;
@@ -207,8 +208,8 @@ guint count_gradient_hrefs(SPObject *o, SPGradient *gr)
 /**
  * If gr has other users, create a new private; also check if gr links to vector, relink if not
  */
-SPGradient *sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradient *vector,
-                                                  SPGradientType type, SPObject *o)
+static SPGradient *sp_gradient_fork_private_if_necessary(SPGradient *gr, SPGradient *vector,
+                                                         SPGradientType type, SPObject *o)
 {
 #ifdef SP_GR_VERBOSE
     g_message("sp_gradient_fork_private_if_necessary(%p, %p, %d, %p)", gr, vector, type, o);

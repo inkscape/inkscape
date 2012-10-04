@@ -86,7 +86,7 @@ void SPAvoidRef::setAvoid(char const *value)
     }
 }
 
-void print_connection_points(std::map<int, ConnectionPoint>& cp)
+static void print_connection_points(std::map<int, ConnectionPoint>& cp)
 {
     std::map<int, ConnectionPoint>::iterator i;
     for (i=cp.begin(); i!=cp.end(); ++i)

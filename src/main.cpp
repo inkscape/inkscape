@@ -731,7 +731,7 @@ main(int argc, char **argv)
 
 
 
-void fixupSingleFilename( gchar **orig, gchar **spare )
+static void fixupSingleFilename( gchar **orig, gchar **spare )
 {
     if ( orig && *orig && **orig ) {
         GError *error = NULL;
@@ -749,7 +749,7 @@ void fixupSingleFilename( gchar **orig, gchar **spare )
 
 
 
-GSList *fixupFilenameEncoding( GSList* fl )
+static GSList *fixupFilenameEncoding( GSList* fl )
 {
     GSList *newFl = NULL;
     while ( fl ) {
@@ -788,7 +788,7 @@ GSList *fixupFilenameEncoding( GSList* fl )
     return newFl;
 }
 
-int sp_common_main( int argc, char const **argv, GSList **flDest )
+static int sp_common_main( int argc, char const **argv, GSList **flDest )
 {
     /// \todo fixme: Move these to some centralized location (Lauris)
     sp_object_type_register("sodipodi:namedview", SP_TYPE_NAMEDVIEW);
@@ -1002,7 +1002,7 @@ sp_main_gui(int argc, char const **argv)
 /**
  * Process file list
  */
-int sp_process_file_list(GSList *fl)
+static int sp_process_file_list(GSList *fl)
 {
     int retVal = 0;
     while (fl) {
@@ -1108,7 +1108,7 @@ int sp_process_file_list(GSList *fl)
  * Run the application as an interactive shell, parsing command lines from stdin
  * Returns -1 on error.
  */
-int sp_main_shell(char const* command_name)
+static int sp_main_shell(char const* command_name)
 {
     int retval = 0;
 

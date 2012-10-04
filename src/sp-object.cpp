@@ -339,7 +339,7 @@ SPObject const *SPObject::nearestCommonAncestor(SPObject const *object) const {
     return longest_common_suffix<SPObject::ConstParentIterator>(this, object, NULL, &same_objects);
 }
 
-SPObject const *AncestorSon(SPObject const *obj, SPObject const *ancestor) {
+static SPObject const *AncestorSon(SPObject const *obj, SPObject const *ancestor) {
     SPObject const *result = 0;
     if ( obj && ancestor ) {
         if (obj->parent == ancestor) {

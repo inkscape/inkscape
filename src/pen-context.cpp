@@ -861,7 +861,7 @@ static gint pen_handle_2button_press(SPPenContext *const pc, GdkEventButton cons
     return ret;
 }
 
-void pen_redraw_all (SPPenContext *const pc)
+static void pen_redraw_all (SPPenContext *const pc)
 {
     // green
     if (pc->green_bpaths) {
@@ -915,7 +915,7 @@ void pen_redraw_all (SPPenContext *const pc)
     }
 }
 
-void pen_lastpoint_move (SPPenContext *const pc, gdouble x, gdouble y)
+static void pen_lastpoint_move (SPPenContext *const pc, gdouble x, gdouble y)
 {
     if (pc->npoints != 5)
         return;
@@ -936,12 +936,12 @@ void pen_lastpoint_move (SPPenContext *const pc, gdouble x, gdouble y)
     pen_redraw_all(pc);
 }
 
-void pen_lastpoint_move_screen (SPPenContext *const pc, gdouble x, gdouble y)
+static void pen_lastpoint_move_screen (SPPenContext *const pc, gdouble x, gdouble y)
 {
     pen_lastpoint_move (pc, x / pc->desktop->current_zoom(), y / pc->desktop->current_zoom());
 }
 
-void pen_lastpoint_tocurve (SPPenContext *const pc)
+static void pen_lastpoint_tocurve (SPPenContext *const pc)
 {
     if (pc->npoints != 5)
         return;
@@ -956,7 +956,7 @@ void pen_lastpoint_tocurve (SPPenContext *const pc)
     pen_redraw_all(pc);
 }
 
-void pen_lastpoint_toline (SPPenContext *const pc)
+static void pen_lastpoint_toline (SPPenContext *const pc)
 {
     if (pc->npoints != 5)
         return;
