@@ -129,7 +129,7 @@ static void sp_font_selector_class_init(SPFontSelectorClass *c)
     object_class->dispose = sp_font_selector_dispose;
 }
 
-void sp_font_selector_set_size_tooltip(SPFontSelector *fsel)
+static void sp_font_selector_set_size_tooltip(SPFontSelector *fsel)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);

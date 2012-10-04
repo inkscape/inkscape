@@ -13,6 +13,7 @@
 #include <glib.h>
 #include <glibmm/ustring.h>
 #include "debug/simple-event.h"
+#include "timestamp.h"
 
 namespace Inkscape {
 

@@ -42,7 +42,7 @@
  *    0  *elem1 == *elem2
  *    >0  *elem1 goes after *elem2
  */
-int sp_compare_x_position(SPItem *first, SPItem *second)
+static int sp_compare_x_position(SPItem *first, SPItem *second)
 {
     using Geom::X;
     using Geom::Y;
@@ -84,7 +84,7 @@ int sp_compare_x_position(SPItem *first, SPItem *second)
 /*
  *    Sort items by their y co-ordinates.
  */
-int
+static int
 sp_compare_y_position(SPItem *first, SPItem *second)
 {
     Geom::OptRect a = first->documentVisualBounds();

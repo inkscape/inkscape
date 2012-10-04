@@ -18,7 +18,7 @@
 //TODO  : delete this
 GtkWidget * sp_find_dialog_old (void);
 
-void
+static void
 //GtkWidget *
 sp_find_dialog(){
     // DialogFind::get().present();
@@ -102,7 +102,7 @@ static gboolean sp_find_dialog_delete(GObject *, GdkEvent *, gpointer /*data*/)
     return FALSE; // which means, go ahead and destroy it
 }
 
-void
+static void
 sp_find_squeeze_window()
 {
     GtkRequisition r;
@@ -114,7 +114,7 @@ sp_find_squeeze_window()
     gtk_window_resize ((GtkWindow *) dlg, r.width, r.height);
 }
 
-bool
+static bool
 item_id_match (SPItem *item, const gchar *id, bool exact)
 {
     if (item->getRepr() == NULL) {
@@ -138,7 +138,7 @@ item_id_match (SPItem *item, const gchar *id, bool exact)
     }
 }
 
-bool
+static bool
 item_text_match (SPItem *item, const gchar *text, bool exact)
 {
     if (item->getRepr() == NULL) {
@@ -162,7 +162,7 @@ item_text_match (SPItem *item, const gchar *text, bool exact)
     return false;
 }
 
-bool
+static bool
 item_style_match (SPItem *item, const gchar *text, bool exact)
 {
     if (item->getRepr() == NULL) {
@@ -181,7 +181,8 @@ item_style_match (SPItem *item, const gchar *text, bool exact)
     }
 }
 
-bool item_attr_match(SPItem *item, const gchar *name, bool exact)
+static bool
+item_attr_match(SPItem *item, const gchar *name, bool exact)
 {
     bool result = false;
     if (item->getRepr()) {
@@ -196,7 +197,7 @@ bool item_attr_match(SPItem *item, const gchar *name, bool exact)
 }
 
 
-GSList *
+static GSList *
 filter_onefield (GSList *l, GObject *dlg, const gchar *field, bool (*match_function)(SPItem *, const gchar *, bool), bool exact)
 {
     GtkWidget *widget = GTK_WIDGET (g_object_get_data(G_OBJECT (dlg), field));
@@ -218,13 +219,13 @@ filter_onefield (GSList *l, GObject *dlg, const gchar *field, bool (*match_funct
 }
 
 
-bool
+static bool
 type_checkbox (GtkWidget *widget, const gchar *data)
 {
     return  gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (g_object_get_data(G_OBJECT (widget), data)));
 }
 
-bool
+static bool
 item_type_match (SPItem *item, GtkWidget *widget)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -263,7 +264,7 @@ item_type_match (SPItem *item, GtkWidget *widget)
     return false;
 }
 
-GSList *
+static GSList *
 filter_types (GSList *l, GObject *dlg, bool (*match_function)(SPItem *, GtkWidget *))
 {
     GtkWidget *widget = GTK_WIDGET (g_object_get_data(G_OBJECT (dlg), "types"));
@@ -283,7 +284,7 @@ filter_types (GSList *l, GObject *dlg, bool (*match_function)(SPItem *, GtkWidge
 }
 
 
-GSList *
+static GSList *
 filter_list (GSList *l, GObject *dlg, bool exact)
 {
     l = filter_onefield (l, dlg, "text", item_text_match, exact);
@@ -296,7 +297,7 @@ filter_list (GSList *l, GObject *dlg, bool exact)
     return l;
 }
 
-GSList *
+static GSList *
 all_items (SPObject *r, GSList *l, bool hidden, bool locked)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -321,7 +322,7 @@ all_items (SPObject *r, GSList *l, bool hidden, bool locked)
     return l;
 }
 
-GSList *
+static GSList *
 all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor, bool hidden, bool locked)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
@@ -343,7 +344,8 @@ all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor, bool
 }
 
 
-void sp_find_dialog_find(GObject *, GObject *dlg)
+static void
+sp_find_dialog_find(GObject *, GObject *dlg)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
@@ -392,7 +394,7 @@ void sp_find_dialog_find(GObject *, GObject *dlg)
     }
 }
 
-void
+static void
 sp_find_reset_searchfield (GObject *dlg, const gchar *field)
 {
     GtkWidget *widget = GTK_WIDGET (g_object_get_data(G_OBJECT (dlg), field));
@@ -400,7 +402,7 @@ sp_find_reset_searchfield (GObject *dlg, const gchar *field)
 }
 
 
-void
+static void
 sp_find_dialog_reset (GObject *, GObject *dlg)
 {
     sp_find_reset_searchfield (dlg, "text");
@@ -417,7 +419,7 @@ sp_find_dialog_reset (GObject *, GObject *dlg)
 
 #define FIND_LABELWIDTH 80
 
-void
+static void
 sp_find_new_searchfield (GtkWidget *dlg, GtkWidget *vb, const gchar *label, const gchar *id, const gchar *tip)
 {
 #if GTK_CHECK_VERSION(3,0,0)
@@ -442,7 +444,7 @@ sp_find_new_searchfield (GtkWidget *dlg, GtkWidget *vb, const gchar *label, cons
     gtk_box_pack_start (GTK_BOX (vb), hb, FALSE, FALSE, 0);
 }
 
-void
+static void
 sp_find_new_button (GtkWidget *dlg, GtkWidget *hb, const gchar *label, const gchar *tip, void (*function) (GObject *, GObject *))
 {
     GtkWidget *b = gtk_button_new_with_mnemonic (label);
@@ -452,7 +454,7 @@ sp_find_new_button (GtkWidget *dlg, GtkWidget *hb, const gchar *label, const gch
     gtk_widget_show (b);
 }
 
-void
+static void
 toggle_alltypes (GtkToggleButton *tb, gpointer data)
 {
     GtkWidget *alltypes_pane =  GTK_WIDGET (g_object_get_data(G_OBJECT (data), "all-pane"));
@@ -475,7 +477,7 @@ toggle_alltypes (GtkToggleButton *tb, gpointer data)
     sp_find_squeeze_window();
 }
 
-void
+static void
 toggle_shapes (GtkToggleButton *tb, gpointer data)
 {
     GtkWidget *shapes_pane =  GTK_WIDGET (g_object_get_data(G_OBJECT (data), "shapes-pane"));
@@ -492,7 +494,7 @@ toggle_shapes (GtkToggleButton *tb, gpointer data)
 }
 
 
-GtkWidget *
+static GtkWidget *
 sp_find_types_checkbox (GtkWidget *w, const gchar *data, gboolean active,
                         const gchar *tip,
                         const gchar *label,
@@ -520,7 +522,7 @@ sp_find_types_checkbox (GtkWidget *w, const gchar *data, gboolean active,
     return hb;
 }
 
-GtkWidget *
+static GtkWidget *
 sp_find_types_checkbox_indented (GtkWidget *w, const gchar *data, gboolean active,
                                  const gchar *tip,
                                  const gchar *label,
@@ -548,7 +550,7 @@ sp_find_types_checkbox_indented (GtkWidget *w, const gchar *data, gboolean activ
 }
 
 
-GtkWidget *
+static GtkWidget *
 sp_find_types ()
 {
 #if GTK_CHECK_VERSION(3,0,0)

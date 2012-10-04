@@ -36,7 +36,7 @@ namespace Geom {
 
 /** Find the point where two straight lines cross.
 */
-boost::optional<Point> intersection_point( Point const & origin_a, Point const & vector_a,
+static boost::optional<Point> intersection_point( Point const & origin_a, Point const & vector_a,
                                            Point const & origin_b, Point const & vector_b)
 {
     Coord denom = cross(vector_b, vector_a);
@@ -47,7 +47,7 @@ boost::optional<Point> intersection_point( Point const & origin_a, Point const &
     return boost::none;
 }
 
-Geom::CubicBezier sbasis_to_cubicbezier(Geom::D2<Geom::SBasis> const & sbasis_in)
+static Geom::CubicBezier sbasis_to_cubicbezier(Geom::D2<Geom::SBasis> const & sbasis_in)
 {
     std::vector<Geom::Point> temp;
     sbasis_to_bezier(temp, sbasis_in, 4);
@@ -205,12 +205,12 @@ static bool compare_offsets (Geom::Point first, Geom::Point second)
     return first[Geom::X] < second[Geom::X];
 }
 
-Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis> > const & B,
-                                          Geom::Piecewise<Geom::SBasis> const & y, // width path
-                                          LineJoinType jointype,
-                                          double miter_limit,
-                                          bool /*forward_direction*/,
-                                          double tol=Geom::EPSILON)
+static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::SBasis> > const & B,
+                                                 Geom::Piecewise<Geom::SBasis> const & y, // width path
+                                                 LineJoinType jointype,
+                                                 double miter_limit,
+                                                 bool /*forward_direction*/,
+                                                 double tol=Geom::EPSILON)
 {
 /* per definition, each discontinuity should be fixed with a join-ending, as defined by linejoin_type
 */

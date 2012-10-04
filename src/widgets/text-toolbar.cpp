@@ -1087,7 +1087,7 @@ static void sp_text_orientation_mode_changed( EgeSelectOneAction *act, GObject *
 /*
  * Set the default list of font sizes, scaled to the users preferred unit
  */
-void sp_text_set_sizes(GtkListStore* model_size, int unit)
+static void sp_text_set_sizes(GtkListStore* model_size, int unit)
 {
     gtk_list_store_clear(model_size);
 
@@ -1434,7 +1434,7 @@ static void sp_text_toolbox_selection_modified(Inkscape::Selection *selection, g
     sp_text_toolbox_selection_changed (selection, tbl);
 }
 
-void
+static void
 sp_text_toolbox_subselection_changed (gpointer /*tc*/, GObject *tbl)
 {
     sp_text_toolbox_selection_changed (NULL, tbl);

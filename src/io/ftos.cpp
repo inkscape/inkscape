@@ -172,7 +172,7 @@ using namespace std;
 
 // This routine counts from the end of a string like '10229000' to find the index
 // of the first non-'0' character (5 would be returned for the above number.)
-int countDigs(char *p)
+static int countDigs(char *p)
 {
     int length =0;
     while (*(p+length)!='\0') length++;               // Count total length
@@ -186,7 +186,7 @@ int countDigs(char *p)
 // is between 0 and 1.  Returns 1 if v==0.  Return value is positive for numbers
 // greater than or equal to 1, negative for numbers less than 0.1, and zero for
 // numbers between 0.1 and 1.
-int countLhsDigits(double v)
+static int countLhsDigits(double v)
 {
     if (v<0) v = -v;                   // Take abs value
     else if (v==0) return 1;           // Special case if v==0

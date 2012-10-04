@@ -180,7 +180,7 @@ static NativeClass nc_DOMBase =
 //########################################################################
 
 
-void JNICALL DOMImplementation_nCreateDocument
+static void JNICALL DOMImplementation_nCreateDocument
   (JNIEnv *env, jobject obj)
 {
     DOMImplementationImpl domImpl;

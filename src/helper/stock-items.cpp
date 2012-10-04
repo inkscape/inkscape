@@ -33,7 +33,7 @@
 #include "inkscape.h"
 
 #include "io/sys.h"
-
+#include "stock-items.h"
 
 
 

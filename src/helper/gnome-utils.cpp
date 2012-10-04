@@ -16,6 +16,8 @@
 #include <ctype.h>
 #include <glib.h>
 
+#include "gnome-utils.h"
+
 /**
  * gnome_uri_list_extract_uris:
  * @uri_list: an uri-list in the standard format.

@@ -111,7 +111,7 @@ String normalizePath(const String &str)
 /**
  * Convert a java string to a C++ string
  */
-String getString(JNIEnv *env, jstring jstr)
+static String getString(JNIEnv *env, jstring jstr)
 {
     const char *chars = env->GetStringUTFChars(jstr, JNI_FALSE);
     String str = chars;
@@ -138,62 +138,62 @@ String getExceptionString(JNIEnv *env)
 	return buf;
 }
 
-jint getObjInt(JNIEnv *env, jobject obj, const char *name)
+static jint getObjInt(JNIEnv *env, jobject obj, const char *name)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "I");
     return env->GetIntField(obj, fid);
 }
 
-void setObjInt(JNIEnv *env, jobject obj, const char *name, jint val)
+static void setObjInt(JNIEnv *env, jobject obj, const char *name, jint val)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "I");
     env->SetIntField(obj, fid, val);
 }
 
-jlong getObjLong(JNIEnv *env, jobject obj, const char *name)
+static jlong getObjLong(JNIEnv *env, jobject obj, const char *name)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "J");
     return env->GetLongField(obj, fid);
 }
 
-void setObjLong(JNIEnv *env, jobject obj, const char *name, jlong val)
+static void setObjLong(JNIEnv *env, jobject obj, const char *name, jlong val)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "J");
     env->SetLongField(obj, fid, val);
 }
 
-jfloat getObjFloat(JNIEnv *env, jobject obj, const char *name)
+static jfloat getObjFloat(JNIEnv *env, jobject obj, const char *name)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "F");
     return env->GetFloatField(obj, fid);
 }
 
-void setObjFloat(JNIEnv *env, jobject obj, const char *name, jfloat val)
+static void setObjFloat(JNIEnv *env, jobject obj, const char *name, jfloat val)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "F");
     env->SetFloatField(obj, fid, val);
 }
 
-jdouble getObjDouble(JNIEnv *env, jobject obj, const char *name)
+static jdouble getObjDouble(JNIEnv *env, jobject obj, const char *name)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "D");
     return env->GetDoubleField(obj, fid);
 }
 
-void setObjDouble(JNIEnv *env, jobject obj, const char *name, jdouble val)
+static void setObjDouble(JNIEnv *env, jobject obj, const char *name, jdouble val)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "D");
     env->SetDoubleField(obj, fid, val);
 }
 
-String getObjString(JNIEnv *env, jobject obj, const char *name)
+static String getObjString(JNIEnv *env, jobject obj, const char *name)
 {
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "Ljava/lang/String;");
     jstring jstr = (jstring)env->GetObjectField(obj, fid);
     return getString(env, jstr);
 }
 
-void setObjString(JNIEnv *env, jobject obj, const char *name, const String &val)
+static void setObjString(JNIEnv *env, jobject obj, const char *name, const String &val)
 {
     jstring jstr = env->NewStringUTF(val.c_str());
     jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "Ljava/lang/String;");
@@ -725,7 +725,7 @@ static void populateClassPath(const String &javaroot,
  * This is provided to scripts can grab the current copy or the
  * repr tree.  If anyone has a smarter way of doing this, please implement. 
  */    
-jstring JNICALL documentGet(JNIEnv *env, jobject /*obj*/, jlong /*ptr*/)
+static jstring JNICALL documentGet(JNIEnv *env, jobject /*obj*/, jlong /*ptr*/)
 {
     //JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
     String buf =  sp_repr_save_buf((SP_ACTIVE_DOCUMENT)->rdoc);
@@ -737,7 +737,7 @@ jstring JNICALL documentGet(JNIEnv *env, jobject /*obj*/, jlong /*ptr*/)
  * This is provided to scripts can load an XML tree into Inkscape.
  * If anyone has a smarter way of doing this, please implement. 
  */    
-jboolean JNICALL documentSet(JNIEnv */*env*/, jobject /*obj*/, jlong /*ptr*/, jstring /*jstr*/)
+static jboolean JNICALL documentSet(JNIEnv */*env*/, jobject /*obj*/, jlong /*ptr*/, jstring /*jstr*/)
 {
     /*
     JavaBinderyImpl *bind = (JavaBinderyImpl *)ptr;
@@ -752,7 +752,7 @@ jboolean JNICALL documentSet(JNIEnv */*env*/, jobject /*obj*/, jlong /*ptr*/, js
  * redirect its logging stream here.
  * For the main C++/Java bindings, see dobinding.cpp 
  */    
-void JNICALL logWrite(JNIEnv */*env*/, jobject /*obj*/, jlong ptr, jint ch)
+static void JNICALL logWrite(JNIEnv */*env*/, jobject /*obj*/, jlong ptr, jint ch)
 {
     JavaBinderyImpl *bind = reinterpret_cast<JavaBinderyImpl *>(ptr);
     bind->log(ch);

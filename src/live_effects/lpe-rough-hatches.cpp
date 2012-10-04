@@ -68,7 +68,7 @@ struct LevelCrossingInfoOrder {
 
 typedef std::vector<LevelCrossing> LevelCrossings;
 
-std::vector<double>
+static std::vector<double>
 discontinuities(Piecewise<D2<SBasis> > const &f){
     std::vector<double> result;
     if (f.size()==0) return result;
@@ -211,7 +211,7 @@ public:
 // Bend a path...
 //-------------------------------------------------------
 
-Piecewise<D2<SBasis> > bend(Piecewise<D2<SBasis> > const &f, Piecewise<SBasis> bending){
+static Piecewise<D2<SBasis> > bend(Piecewise<D2<SBasis> > const &f, Piecewise<SBasis> bending){
     D2<Piecewise<SBasis> > ff = make_cuts_independent(f);
     ff[X] += compose(bending, ff[Y]);
     return sectionize(ff);

@@ -583,7 +583,7 @@ static gboolean eek_preview_button_release_cb( GtkWidget* widget, GdkEventButton
     return FALSE;
 }
 
-gboolean eek_preview_key_press_event( GtkWidget* widget, GdkEventKey* event)
+static gboolean eek_preview_key_press_event( GtkWidget* widget, GdkEventKey* event)
 {
     (void)widget;
     (void)event;
@@ -591,7 +591,7 @@ gboolean eek_preview_key_press_event( GtkWidget* widget, GdkEventKey* event)
     return FALSE;
 }
 
-gboolean eek_preview_key_release_event( GtkWidget* widget, GdkEventKey* event)
+static gboolean eek_preview_key_release_event( GtkWidget* widget, GdkEventKey* event)
 {
     (void)widget;
     (void)event;

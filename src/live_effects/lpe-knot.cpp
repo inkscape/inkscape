@@ -51,7 +51,7 @@ public:
 };
 
 
-Geom::Path::size_type size_nondegenerate(Geom::Path const &path) {
+static Geom::Path::size_type size_nondegenerate(Geom::Path const &path) {
     Geom::Path::size_type retval = path.size_open();
 
     // if path is closed and closing segment is not degenerate
@@ -283,7 +283,7 @@ CrossingPoints::get(unsigned const i, unsigned const ni)
     return CrossingPoint();
 }
 
-unsigned
+static unsigned
 idx_of_nearest(CrossingPoints const &cpts, Geom::Point const &p)
 {
     double dist=-1;
@@ -500,7 +500,8 @@ LPEKnot::doEffect_path (std::vector<Geom::Path> const &path_in)
 
 
 //recursively collect gpaths and stroke widths (stolen from "sp-lpe_item.cpp").
-void collectPathsAndWidths (SPLPEItem const *lpeitem, std::vector<Geom::Path> &paths, std::vector<double> &stroke_widths){
+static void
+collectPathsAndWidths (SPLPEItem const *lpeitem, std::vector<Geom::Path> &paths, std::vector<double> &stroke_widths){
     if (SP_IS_GROUP(lpeitem)) {
         GSList const *item_list = sp_item_group_item_list(SP_GROUP(lpeitem));
         for ( GSList const *iter = item_list; iter; iter = iter->next ) {

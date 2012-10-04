@@ -112,7 +112,8 @@ private:
     }
 };
 
-void makeContinuous(D2<SBasis> &a, Point const b) {
+static void
+makeContinuous(D2<SBasis> &a, Point const b) {
     for(unsigned d=0;d<2;d++)
         a[d][0][0] = b[d];
 }

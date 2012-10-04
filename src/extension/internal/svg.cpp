@@ -44,7 +44,7 @@ using Inkscape::XML::Node;
 
 
 
-void pruneExtendedAttributes( Inkscape::XML::Node *repr )
+static void pruneExtendedAttributes( Inkscape::XML::Node *repr )
 {
     if (repr) {
         if ( repr->type() == Inkscape::XML::ELEMENT_NODE ) {

@@ -13,6 +13,7 @@
 
 #include <cstring>
 #include <glib.h>
+#include "quote.h"
 
 
 /** \return strlen(xml_quote_strdup(\a val)) (without doing the malloc).
