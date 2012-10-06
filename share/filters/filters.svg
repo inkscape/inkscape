@@ -2560,7 +2560,7 @@ sodipodi:docname="filters.svg">
 <feColorMatrix result="result1" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 -1 1 0 " in="SourceGraphic" />
 <feBlend in2="result4" mode="multiply" result="result5" in="result1" />
 </filter>
-<filter id="filter581" inkscape:menu="Morphology" inkscape:menu-tooltip="Blurred multiple contour for objects" y="-0.2" x="-0.34" width="1.6" height="1.4" inkscape:label="Contouring table" style="color-interpolation-filters:sRGB">
+<filter id="filter581" inkscape:menu="Morphology" inkscape:menu-tooltip="Blurred multiple contours for objects" y="-0.2" x="-0.34" width="1.6" height="1.4" inkscape:label="Contouring table" style="color-interpolation-filters:sRGB">
 <feFlood result="result2" flood-color="rgb(255,255,255)" />
 <feGaussianBlur result="result1" in="SourceAlpha" stdDeviation="17" />
 <feComposite in2="result1" result="result17" operator="in" />
