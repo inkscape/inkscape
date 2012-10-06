@@ -28,6 +28,7 @@
 #include <2geom/path-intersection.h>
 #include <2geom/crossing.h>
 #include <2geom/ellipse.h>
+#include <math.h>
 
 #include "spiro.h"
 
@@ -86,6 +87,70 @@ static Ellipse find_ellipse(Point P, Point Q, Point O)
     return Ellipse(A, B, C, D, E, F);
 }
 
+/**
+ * Refer to: Weisstein, Eric W. "Circle-Circle Intersection."
+             From MathWorld--A Wolfram Web Resource.
+             http://mathworld.wolfram.com/Circle-CircleIntersection.html
+ *
+ * @return 0 if no intersection
+ * @return 1 if one circle is contained in the other
+ * @return 2 if intersections are found (they are written to p0 and p1)
+ */
+static int circle_circle_intersection(Circle const &circle0, Circle const &circle1,
+                                      Point & p0, Point & p1)
+{
+    Point X0 = circle0.center();
+    double r0 = circle0.ray();
+    Point X1 = circle1.center();
+    double r1 = circle1.ray();
+
+    /* dx and dy are the vertical and horizontal distances between
+    * the circle centers.
+    */
+    Point D = X1 - X0;
+
+    /* Determine the straight-line distance between the centers. */
+    double d = L2(D);
+
+    /* Check for solvability. */
+    if (d > (r0 + r1))
+    {
+        /* no solution. circles do not intersect. */
+        return 0;
+    }
+    if (d <= fabs(r0 - r1))
+    {
+        /* no solution. one circle is contained in the other */
+        return 1;
+    }
+
+    /* 'point 2' is the point where the line through the circle
+    * intersection points crosses the line between the circle
+    * centers.  
+    */
+
+    /* Determine the distance from point 0 to point 2. */
+    double a = ((r0*r0) - (r1*r1) + (d*d)) / (2.0 * d) ;
+
+    /* Determine the coordinates of point 2. */
+    Point p2 = X0 + D * (a/d);
+
+    /* Determine the distance from point 2 to either of the
+    * intersection points.
+    */
+    double h = std::sqrt((r0*r0) - (a*a));
+
+    /* Now determine the offsets of the intersection points from
+    * point 2.
+    */
+    Point r = (h/d)*rot90(D);
+
+    /* Determine the absolute intersection points. */
+    p0 = p2 + r;
+    p1 = p2 - r;
+
+    return 2;
+}
 
 } // namespace Geom
 
@@ -121,7 +186,8 @@ enum LineJoinType {
   LINEJOIN_ROUND,
   LINEJOIN_EXTRP_MITER,
   LINEJOIN_MITER,
-  LINEJOIN_SPIRO
+  LINEJOIN_SPIRO,
+  LINEJOIN_EXTRP_MITER_ARC
 };
 static const Util::EnumData<unsigned> LineJoinTypeData[] = {
     {LINEJOIN_BEVEL, N_("Beveled"),   "bevel"},
@@ -129,6 +195,7 @@ static const Util::EnumData<unsigned> LineJoinTypeData[] = {
     {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"},
     {LINEJOIN_MITER, N_("Miter"),     "miter"},
     {LINEJOIN_SPIRO, N_("Spiro"),     "spiro"},
+//    {LINEJOIN_EXTRP_MITER_ARC, N_("Extrapolated arc"),     "extrp_arc"}, 
 };
 static const Util::EnumDataConverter<unsigned> LineJoinTypeConverter(LineJoinTypeData, sizeof(LineJoinTypeData)/sizeof(*LineJoinTypeData));
 
@@ -308,6 +375,78 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
                             pb.curveTo(sub2.second[1], sub2.second[2], sub2.second[3]);
                         }
                     }
+                    break;
+                }
+                case LINEJOIN_EXTRP_MITER_ARC: {
+                    Geom::Circle circle0;
+                    Geom::Circle circle1;
+                    {
+                        Geom::Point tang0(0.,0.);
+                        Geom::Coord curv0 = 0;
+                        std::vector<Geom::Point> derivs = reverse(B[prev_i]).valueAndDerivatives(0.,5);
+                        for (unsigned deriv_n = 1, count = 0; deriv_n < derivs.size(); deriv_n++) {
+                            Geom::Coord length = derivs[deriv_n].length();
+                            if ( ! Geom::are_near(length, 0) ) {
+                                if (count == 0) {
+                                    tang0 = derivs[deriv_n] / length;
+                                    curv0 = length; // save the length of the tangent
+                                    count++;
+                                } else {
+                                    //curv0 = length / curv0; // curvature = tangent' / tangent
+                                    break; // break out of for-loop
+                                }
+                            }
+                        }
+                        double r0 = curv0;
+                        Geom::Point center0 = B[prev_i].at1() - r0*tang0.ccw();
+                        circle0 = Geom::Circle(center0, r0);
+                    }
+                    {
+                        Geom::Point tang1(0.,0.);
+                        Geom::Coord curv1 = 0;
+                        std::vector<Geom::Point> derivs = B[i].valueAndDerivatives(0.,5);
+                        for (unsigned deriv_n = 1, count = 0; deriv_n < derivs.size(); deriv_n++) {
+                            Geom::Coord length = derivs[deriv_n].length();
+                            if ( ! Geom::are_near(length, 0) ) {
+                                if (count == 0) {
+                                    tang1 = derivs[deriv_n] / length;
+                                    curv1 = length; // save the length of the tangent
+                                    count++;
+                                } else {
+                                    //curv1 = length / curv1; // curvature = tangent' / tangent
+                                    break; // break out of for-loop
+                                }
+                            }
+                        }
+                        double r1 = curv1;
+                        Geom::Point center1 = B[i].at0() - r1*tang1.ccw();
+                        circle1 = Geom::Circle(center1, r1);
+                    }
+
+                    Geom::Point points[2];
+                    int solutions = circle_circle_intersection(circle0, circle1, points[0], points[1]);
+                    if (solutions == 2) {
+                        Geom::EllipticalArc *arc0 = circle0.arc(B[prev_i].at1(), 0.5*(B[prev_i].at1()+B[i].at0()), points[0], true);
+                        Geom::EllipticalArc *arc1 = circle1.arc(points[0],       0.5*(B[prev_i].at1()+B[i].at0()), B[i].at0(), true);
+
+                        if (arc0) {
+                            build_from_sbasis(pb,arc0->toSBasis(), tol, false);
+                            delete arc0;
+                            arc0 = NULL;
+                        }
+                        if (arc1) {
+                            build_from_sbasis(pb,arc1->toSBasis(), tol, false);
+                            delete arc1;
+                            arc1 = NULL;
+                        }
+                    } else if (solutions == 1) { // one circle is inside the other
+                        // don't know what to do: default to bevel
+                        pb.lineTo(B[i].at0());
+                    } else { // no intersections
+                        // don't know what to do: default to bevel
+                        pb.lineTo(B[i].at0());
+                    }
+
                     break;
                 }
                 case LINEJOIN_MITER: {
