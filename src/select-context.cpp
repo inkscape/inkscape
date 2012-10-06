@@ -1140,8 +1140,9 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             }
             // set cursor to default.
             if (!desktop->isWaitingCursor()) {
-		GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
-                gdk_window_set_cursor(window, event_context->cursor);
+                // Do we need to reset the cursor here on key release ?
+                //GdkWindow* window = gtk_widget_get_window (GTK_WIDGET (sp_desktop_canvas(desktop)));
+                //gdk_window_set_cursor(window, event_context->cursor);
             }
             break;
         default:
