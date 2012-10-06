@@ -811,7 +811,7 @@ void InkscapePreferences::initPageIO()
                            _("Maximum mouse drag (in screen pixels) which is considered a click, not a drag"), false);
 
     _mouse_grabsize.init("/options/grabsize/value", 1, 7, 1, 2, 3, 0);
-    _page_mouse.add_line(false, _("_Handle size"), _mouse_grabsize, "",
+    _page_mouse.add_line(false, _("_Handle size:"), _mouse_grabsize, "",
                          _("Set the relative size of node handles"), true);
 
     _mouse_use_ext_input.init( _("Use pressure-sensitive tablet (requires restart)"), "/options/useextinput/value", true);
