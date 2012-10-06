@@ -1815,7 +1815,7 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             dbg_str << "<!-- EMR_BITBLT -->\n";
 
             PEMRBITBLT pEmr = (PEMRBITBLT) lpEMFR;
-            if (pEmr->dwRop == DPA) {
+            if ((pEmr->dwRop == PATCOPY) || (pEmr->dwRop == DPA)) {
                 // should be an application of a DIBPATTERNBRUSHPT, use a solid color instead
                 double l = pix_to_x_point( d, pEmr->xDest, pEmr->yDest);
                 double t = pix_to_y_point( d, pEmr->xDest, pEmr->yDest);
