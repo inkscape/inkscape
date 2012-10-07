@@ -27,13 +27,14 @@ font.
 It can also replace all fonts indiscriminately, and list all fonts
 currently being used.
 '''
-
+# standard library
 import os
 import sys
+# local library
 import inkex
 import simplestyle
-import gettext
-_ = gettext.gettext
+
+inkex.localize()
 
 text_tags = ['{http://www.w3.org/2000/svg}tspan',
                             '{http://www.w3.org/2000/svg}text',

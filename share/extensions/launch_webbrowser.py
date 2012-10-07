@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-import gettext
+# standard library
 import webbrowser
 import threading
 from optparse import OptionParser
-
-_ = gettext.gettext
+# local library
+import inkex
+inkex.localize()
 
 class VisitWebSiteWithoutLockingInkscape(threading.Thread):
     def __init__(self):

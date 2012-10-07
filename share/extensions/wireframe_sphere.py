@@ -54,13 +54,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
                         Hidden lines of latitude still not properly calculated.
                         Prolate and oblate spheroids not considered.
 '''
-
-import inkex, simplestyle
-
-import gettext
-_ = gettext.gettext
-
+# standard library
 from math import *
+# local library
+import inkex
+import simplestyle
+
+inkex.localize()
 
 #SVG OUTPUT FUNCTIONS ================================================
 def draw_SVG_ellipse((rx, ry), (cx, cy), parent, start_end=(0,2*pi),transform='' ):

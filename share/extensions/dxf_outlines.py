@@ -30,9 +30,17 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, simplestyle, simpletransform, cubicsuperpath, coloreffect, dxf_templates, math
-import gettext
-_ = gettext.gettext
+# standard library
+import math
+# local library
+import inkex
+import simplestyle
+import simpletransform
+import cubicsuperpath
+import coloreffect
+import dxf_templates
+
+inkex.localize()
 
 try:
     from numpy import *

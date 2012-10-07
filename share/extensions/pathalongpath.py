@@ -30,12 +30,19 @@ as painted on these lines.
 Now move and bend L to make it fit a skeleton, and see what happens to the normals:
 they move and rotate, deforming the pattern.
 '''
+# standard library
+import copy
+import math
+import re
+import random
+# local library
+import inkex
+import cubicsuperpath
+import bezmisc
+import pathmodifier
+import simpletransform
 
-import inkex, cubicsuperpath, bezmisc
-import pathmodifier,simpletransform
-import copy, math, re, random
-import gettext
-_ = gettext.gettext
+inkex.localize()
 
 def flipxy(path):
     for pathcomp in path:

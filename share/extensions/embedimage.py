@@ -16,10 +16,16 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
+# standard library
+import base64
+import os
+import sys
+import urllib
+import urlparse
+# local library
+import inkex
 
-import inkex, os, base64, urlparse, urllib
-import gettext
-_ = gettext.gettext
+inkex.localize()
 
 class Embedder(inkex.Effect):
     def __init__(self):
@@ -74,7 +80,7 @@ class Embedder(inkex.Effect):
             if (not os.path.isfile(path)):
                 inkex.errormsg(_('No xlink:href or sodipodi:absref attributes found, or they do not point to an existing file! Unable to embed image.'))
                 if path:
-                    inkex.errormsg(_("Sorry we could not locate %s") % path)
+                    inkex.errormsg(_("Sorry we could not locate %s") % str(path))
 
             if (os.path.isfile(path)):
                 file = open(path,"rb").read()

@@ -30,8 +30,8 @@ import os
 import zipfile
 import glob
 import re
-import gettext
-_ = gettext.gettext
+
+inkex.localize()
 
 def propStrToDict(inStr):
 	dictio = {}

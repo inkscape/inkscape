@@ -27,11 +27,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 """
-import sys, os
-import inkex, simplestyle, simplepath, simpletransform
+# standard library
+import sys
+import os
+# local library
+import inkex
+import simplestyle
+import simplepath
+import simpletransform
 import voronoi
-import gettext
-_ = gettext.gettext
+
+inkex.localize()
 
 class Point:
   def __init__(self,x,y):

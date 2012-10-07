@@ -18,40 +18,32 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 Perspective approach & math by Dmitry Platonov, shadowjack@mail.ru, 2006
 """
-import sys, inkex, os, re, simplepath, cubicsuperpath, simpletransform, voronoi2svg
-import gettext
-_ = gettext.gettext
+# standard library
+import sys
+import os
+import re
+try:
+    from subprocess import Popen, PIPE
+    bsubprocess = True
+except:
+    bsubprocess = False
+# local library
+import inkex
+import simplepath
+import cubicsuperpath
+import simpletransform
+import voronoi2svg
 from ffgeom import *
+
+inkex.localize()
+
+# third party
 try:
     from numpy import *
     from numpy.linalg import *
 except:
     inkex.errormsg(_("Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."))
     exit()
-
-try:
-    from subprocess import Popen, PIPE
-    bsubprocess = True
-except:
-    bsubprocess = False
-
-uuconv = {'in':90.0, 'pt':1.25, 'px':1, 'mm':3.5433070866, 'cm':35.433070866, 'pc':15.0}
-def unittouu(string):
-    unit = re.compile('(%s)$' % '|'.join(uuconv.keys()))
-    param = re.compile(r'(([-+]?[0-9]+(\.[0-9]*)?|[-+]?\.[0-9]+)([eE][-+]?[0-9]+)?)')
-
-    p = param.match(string)
-    u = unit.search(string)    
-    if p:
-        retval = float(p.string[p.start():p.end()])
-    else:
-        retval = 0.0
-    if u:
-        try:
-            return retval * uuconv[u.string[u.start():u.end()]]
-        except KeyError:
-            pass
-    return retval
 
 class Project(inkex.Effect):
     def __init__(self):

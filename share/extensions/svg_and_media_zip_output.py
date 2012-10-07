@@ -36,8 +36,7 @@ TODOs
 - maybe add better extention
 - consider switching to lzma in order to allow cross platform compression with no encoding problem...
 '''
-
-import inkex
+# standard library
 import urlparse
 import urllib
 import os, os.path
@@ -46,11 +45,13 @@ import zipfile
 import shutil
 import sys
 import tempfile
-import simplestyle
-import gettext
 import locale
+# local library
+import inkex
+import simplestyle
+
 locale.setlocale(locale.LC_ALL, '')
-_ = gettext.gettext
+inkex.localize()
 
 class CompressedMediaOutput(inkex.Effect):
     def __init__(self):

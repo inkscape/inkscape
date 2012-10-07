@@ -29,8 +29,8 @@ import os
 import re
 from lxml import etree
 from copy import deepcopy
-import gettext
-_ = gettext.gettext
+
+inkex.localize()
 
 class JessyInk_Effects(inkex.Effect):
 	def __init__(self):

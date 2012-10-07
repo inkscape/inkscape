@@ -68,9 +68,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 gcodetools_current_version = "1.7"
 
-import inkex, simplestyle, simplepath
-import cubicsuperpath, simpletransform, bezmisc
-
+# standard library
 import os
 import math
 import bezmisc
@@ -82,9 +80,15 @@ import cmath
 import numpy
 import codecs
 import random
-import gettext
-_ = gettext.gettext
+# local library
+import inkex
+import simplestyle
+import simplepath
+import cubicsuperpath
+import simpletransform
+import bezmisc
 
+inkex.localize()
  
 ### Check if inkex has errormsg (0.46 version does not have one.) Could be removed later.
 if "errormsg" not in dir(inkex):

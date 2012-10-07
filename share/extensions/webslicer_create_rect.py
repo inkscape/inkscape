@@ -16,12 +16,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-
+# local library
 from webslicer_effect import *
 import inkex
-import gettext
 
-_ = gettext.gettext
+inkex.localize()
 
 class WebSlicer_CreateRect(WebSlicer_Effect):
 

@@ -20,14 +20,20 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 """
-import random, inkex, simplestyle, gettext, voronoi
-_ = gettext.gettext
+# standard library
+import random
+# local library
+import inkex
+import simplestyle
+import voronoi
+
+inkex.localize()
 
 try:
     from subprocess import Popen, PIPE
 except:
-    inkex.errormsg(_("Failed to import the subprocess module. Please report this as a bug at : https://bugs.launchpad.net/inkscape."))
-    inkex.errormsg("Python version is : " + str(inkex.sys.version_info))
+    inkex.errormsg(_("Failed to import the subprocess module. Please report this as a bug at: https://bugs.launchpad.net/inkscape."))
+    inkex.errormsg(_("Python version is: ") + str(inkex.sys.version_info))
     exit()
 
 def clip_line(x1, y1, x2, y2, w, h):

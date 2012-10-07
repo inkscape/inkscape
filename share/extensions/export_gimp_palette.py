@@ -7,11 +7,19 @@ Warranty: see above
 
 DOCNAME='sodipodi:docname'
 
-import sys, simplestyle
+# standard library
+import sys
+# third party
 try:
     from xml.dom.minidom import parse
 except:
-    sys.exit(_('The export_gpl.py module requires PyXML.  Please download the latest version from http://pyxml.sourceforge.net/.'))
+    inkex.errormsg(_('The export_gpl.py module requires PyXML.  Please download the latest version from http://pyxml.sourceforge.net/.'))
+    sys.exit()
+# local library
+import inkex
+import simplestyle
+
+inkex.localize()
 
 colortags=(u'fill',u'stroke',u'stop-color',u'flood-color',u'lighting-color')
 colors={}

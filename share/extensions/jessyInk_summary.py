@@ -25,8 +25,8 @@ sys.path.append('C:\Program Files\Inkscape\share\extensions')
 
 # We will use the inkex module with the predefined Effect base class.
 import inkex
-import gettext
-_ = gettext.gettext
+
+inkex.localize()
 
 def propStrToList(str):
 	list = []
@@ -71,7 +71,7 @@ class JessyInk_Summary(inkex.Effect):
 				inkex.errormsg(_("JessyInk script installed."))
 	
 		slides = []
-		masterSlide = None 
+		masterSlide = None  
 
 		for node in self.document.xpath("//svg:g[@inkscape:groupmode='layer']", namespaces=inkex.NSS):
 			if node.get("{" + inkex.NSS["jessyink"] + "}masterSlide"):

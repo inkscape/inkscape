@@ -51,11 +51,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
     0.50    2009-10-25  Full functionality, up to 144x144.
                         ASCII and compressed digit encoding only.
 '''
+# local library
+import inkex
+import simplestyle
 
-import inkex, simplestyle
-
-import gettext
-_ = gettext.gettext
+inkex.localize()
     
 symbols = {
     'sq10': (10, 10),

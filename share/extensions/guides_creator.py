@@ -43,18 +43,16 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 import sys
 sys.path.append('/usr/share/inkscape/extensions')
 
+from xml.etree import ElementTree as ET
+# for golden number formulae
+from math import sqrt
+
 # We will use the inkex module with the predefined Effect base class.
 import inkex
 from simplestyle import *
 
-from xml.etree import ElementTree as ET
-
-# for golden number formulae
-from math import sqrt
-
-# for printing debugging output
-import gettext
-_ = gettext.gettext
+# for localized debugging output
+inkex.localize()
 
 def printDebug(string):
         inkex.errormsg(_(string))

@@ -37,22 +37,22 @@ will export to:
 etc.
 
 '''
-
+# standard library
+import locale
 import os
 import sys
-import inkex
-import simplestyle
-import locale
-import gettext
-_ = gettext.gettext
-
-locale.setlocale(locale.LC_ALL, '')
-
 try:
     from subprocess import Popen, PIPE
     bsubprocess = True
 except:
     bsubprocess = False
+# local library
+import inkex
+import simplestyle
+
+inkex.localize()
+
+locale.setlocale(locale.LC_ALL, '')
 
 def float_sort(a, b):
     '''

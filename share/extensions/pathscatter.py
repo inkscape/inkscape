@@ -30,13 +30,21 @@ as painted on these lines.
 Now move and bend L to make it fit a skeleton, and see what happens to the normals:
 they move and rotate, deforming the pattern.
 '''
-
-import inkex, cubicsuperpath, bezmisc
-import pathmodifier, simpletransform 
+# standard library
+import copy
+import math
+import re
+import random
+# third party
 from lxml import etree
-import copy, math, re, random
-import gettext
-_ = gettext.gettext
+# local library
+import inkex
+import cubicsuperpath
+import bezmisc
+import pathmodifier
+import simpletransform 
+
+inkex.localize()
 
 def zSort(inNode,idList):
     sortedList=[]

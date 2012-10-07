@@ -17,9 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import random, inkex, simplestyle, copy
-import gettext
-_ = gettext.gettext
+# standard library
+import random
+import copy
+# local library
+import inkex
+import simplestyle
+
+inkex.localize()
 
 class MyEffect(inkex.Effect):
     def __init__(self):

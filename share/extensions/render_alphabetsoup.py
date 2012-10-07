@@ -18,22 +18,23 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-
+# standard library
 import copy
-import inkex
-import simplestyle
 import math
 import cmath
 import string
 import random
-import render_alphabetsoup_config
-import bezmisc
-import simplepath
 import os
 import sys
 import re
-import gettext
-_ = gettext.gettext
+# local library
+import inkex
+import simplestyle
+import render_alphabetsoup_config
+import bezmisc
+import simplepath
+
+inkex.localize()
 
 syntax   = render_alphabetsoup_config.syntax
 alphabet = render_alphabetsoup_config.alphabet

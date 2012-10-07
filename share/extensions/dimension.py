@@ -32,16 +32,19 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
 
-import sys, inkex, pathmodifier
-from simpletransform import *
-import gettext
-_ = gettext.gettext
-
+# standard library
+import sys
 try:
     from subprocess import Popen, PIPE
     bsubprocess = True
 except:
     bsubprocess = False
+# local library
+import inkex
+import pathmodifier
+from simpletransform import *
+
+inkex.localize()
 
 class Dimension(pathmodifier.PathModifier):
     def __init__(self):
@@ -127,7 +130,8 @@ class Dimension(pathmodifier.PathModifier):
         try:
             testing_the_water = self.bbox[0]
         except TypeError:
-            sys.exit(_('Unable to process this object.  Try changing it into a path first.'))
+            inkex.errormsg(_('Unable to process this object.  Try changing it into a path first.'))
+            exit()
 
         layer = self.current_layer
 
