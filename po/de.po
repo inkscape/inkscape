@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-10-01 14:06+0200\n"
-"PO-Revision-Date: 2012-10-07 10:40+0100\n"
+"PO-Revision-Date: 2012-10-07 15:55+0100\n"
 "Last-Translator: Uwe Schoeler <mail@uwe-schoeler.de>\n"
 "Language-Team:  <de@li.org>\n"
 "Language: de\n"
@@ -252,7 +252,7 @@ msgstr "Ölgemälde"
 #: ../src/extension/internal/filter/paint.h:879
 #: ../src/extension/internal/filter/paint.h:983
 msgid "Image Paint and Draw"
-msgstr ""
+msgstr "Bild malen und zeichnen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Simulate oil painting style"
@@ -1964,7 +1964,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:1
 msgid "Simulate CMY"
-msgstr ""
+msgstr "Simuliere CMY"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Render Cyan, Magenta and Yellow channels with a colorizable background"
@@ -4254,9 +4254,8 @@ msgid "Units:"
 msgstr "Einheiten:"
 
 #: ../src/ui/dialog/export.cpp:140
-#, fuzzy
 msgid "_Export As..."
-msgstr "Bitmap _exportieren…"
+msgstr "_exportieren als…"
 
 #: ../src/ui/dialog/export.cpp:143
 msgid "B_atch export all selected objects"
@@ -4287,16 +4286,15 @@ msgstr "Automatisches Speichern abgeschlossen."
 
 #: ../src/ui/dialog/export.cpp:146
 msgid "Once the export completes, close this dialog"
-msgstr ""
+msgstr "Wenn der Export fertig ist, schließe den Dialog."
 
 #: ../src/ui/dialog/export.cpp:148
 msgid "_Export"
 msgstr "_Exportieren"
 
 #: ../src/ui/dialog/export.cpp:166
-#, fuzzy
 msgid "<b>Export area</b>"
-msgstr "<big><b>Exportbereich</b></big>"
+msgstr "<b>Exportbereich</b>"
 
 #: ../src/ui/dialog/export.cpp:196
 msgid "_x0:"
@@ -4378,14 +4376,13 @@ msgid "No items selected."
 msgstr "Kein Filter gewählt"
 
 #: ../src/ui/dialog/export.cpp:945 ../src/ui/dialog/export.cpp:947
-#, fuzzy
 msgid "Exporting %1 files"
-msgstr "Exportiere %d Dateien"
+msgstr "Exportiere %1 Dateien"
 
 #: ../src/ui/dialog/export.cpp:987 ../src/ui/dialog/export.cpp:989
-#, fuzzy, c-format
+#, c-format
 msgid "Exporting file <b>%s</b>..."
-msgstr "Exportiere %d Dateien"
+msgstr "Exportiere Dateie <b>%s</b>..."
 
 #: ../src/ui/dialog/export.cpp:998 ../src/ui/dialog/export.cpp:1089
 #, c-format
@@ -4393,9 +4390,9 @@ msgid "Could not export to filename %s.\n"
 msgstr "Konnte nicht als Datei %s exportieren.\n"
 
 #: ../src/ui/dialog/export.cpp:1001
-#, fuzzy, c-format
+#, c-format
 msgid "Could not export to filename <b>%s</b>."
-msgstr "Konnte nicht als Datei %s exportieren.\n"
+msgstr "Konnte nicht als Datei <b>%s</b> exportieren."
 
 #: ../src/ui/dialog/export.cpp:1016
 #, c-format
@@ -4412,7 +4409,6 @@ msgid "You have to enter a filename"
 msgstr "Sie müssen einen Dateinamen angeben"
 
 #: ../src/ui/dialog/export.cpp:1042
-#, fuzzy
 msgid "The chosen area to be exported is invalid."
 msgstr "Der zum Exportieren gewählte Bereich ist ungültig"
 
@@ -4437,9 +4433,8 @@ msgid "Drawing exported to <b>%s</b>."
 msgstr "Editiere Parameter <b>%s</b>."
 
 #: ../src/ui/dialog/export.cpp:1104
-#, fuzzy
 msgid "Export aborted."
-msgstr "Exportieren läuft"
+msgstr "Export abgebochen."
 
 #: ../src/ui/dialog/export.cpp:1222 ../src/ui/dialog/export.cpp:1256
 msgid "Select a filename for exporting"
@@ -4679,7 +4674,7 @@ msgstr "_Ignorieren"
 
 #: ../src/ui/dialog/spellcheck.cpp:76
 msgid "A_dd"
-msgstr ""
+msgstr "Hinzufügen"
 
 #: ../src/ui/dialog/spellcheck.cpp:78
 msgid "_Stop"
@@ -5123,7 +5118,7 @@ msgstr "Senkrechte Winkelhalbierende"
 
 #: ../src/display/snap-indicator.cpp:114
 msgid "path (tangential)"
-msgstr ""
+msgstr "Pfad (tangential)"
 
 #: ../src/display/snap-indicator.cpp:117
 msgid "path intersection"
@@ -6257,7 +6252,7 @@ msgstr "Seitengröße setzen"
 #: ../src/extension/internal/cairo-ps-out.cpp:363
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:247
 msgid "Use exported object's size"
-msgstr ""
+msgstr "Nutze exportierte Objektgröße"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:365
@@ -8901,7 +8896,7 @@ msgstr "Stil auf Objekte anwenden"
 #: ../src/flood-context.cpp:1201
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
 msgstr ""
-"<b>Zeichne über</b> Gebieten um zur Füllung hinzuzufügen, <b>Alt</b> für "
+"<b>Zeichne über</b> Flächen um zur Füllung hinzuzufügen, <b>Alt</b> für "
 "Füllen durch Berührung"
 
 #: ../src/gradient-context.cpp:134 ../src/gradient-drag.cpp:95
@@ -15871,7 +15866,7 @@ msgstr "Attribut für Filterbaustein setzen"
 
 #: ../src/ui/dialog/find.cpp:67
 msgid "F_ind:"
-msgstr ""
+msgstr "Finden:"
 
 #: ../src/ui/dialog/find.cpp:67
 #, fuzzy
@@ -15891,7 +15886,7 @@ msgstr "Dupliziert Objekte; mit Shift Löschen"
 
 #: ../src/ui/dialog/find.cpp:70
 msgid "_All"
-msgstr ""
+msgstr "_Alles"
 
 #: ../src/ui/dialog/find.cpp:70
 #, fuzzy
@@ -16003,7 +15998,7 @@ msgstr "Klone durchsuchen"
 
 #: ../src/ui/dialog/find.cpp:90
 msgid "F_ont"
-msgstr ""
+msgstr "Schrift"
 
 #: ../src/ui/dialog/find.cpp:90
 #, fuzzy
@@ -17243,7 +17238,7 @@ msgstr "Ausmessen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:377
 msgid "Ignore first and last points"
-msgstr ""
+msgstr "Ersten und letzen Punkt ignorieren"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:378
 msgid ""
@@ -17842,7 +17837,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:604
 #: ../src/ui/dialog/inkscape-preferences.cpp:631
 msgid "Don't save dialogs status"
-msgstr ""
+msgstr "Dialogstatus nicht speichern"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:606
 #: ../src/ui/dialog/inkscape-preferences.cpp:639
@@ -17855,7 +17850,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:611
 msgid "GTK open/save dialogs"
-msgstr ""
+msgstr "GTk Öffnen/Speichern-Dialog"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:613
 msgid "Dialogs are hidden in taskbar"
@@ -17924,11 +17919,11 @@ msgstr "Ziel"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:645
 msgid "Use Windows like open and save dialogs"
-msgstr ""
+msgstr "Nutze Windows-artige Öffnen- und Speichern-Dialoge"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:647
 msgid "Use GTK open and save dialogs "
-msgstr ""
+msgstr "Nutze GTK-Öffnen- und Speichern-Dialoge"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:651
 msgid "Dialogs on top:"
@@ -18726,7 +18721,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1118
 msgid "Alt+Scroll Wheel"
-msgstr ""
+msgstr "Alt+Scroll-Rad"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1120
 msgid "Wrap around at start and end when cycling objects in z-order"
@@ -19383,9 +19378,8 @@ msgid "_Bitmap editor:"
 msgstr "Bitmap-Editor:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1383
-#, fuzzy
 msgid "Default export _resolution:"
-msgstr "Bevorzugte Auflösung für das Exportieren:"
+msgstr "Standard-Exportauflösung:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1384
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
@@ -19416,20 +19410,16 @@ msgid "Ask"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1392
-#, fuzzy
 msgid "Bitmap import:"
-msgstr "Bitmap-Editor:"
+msgstr "Bitmap-Import:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1395
-#, fuzzy
 msgid "Default _import resolution:"
-msgstr "Bevorzugte Auflösung für das Exportieren:"
+msgstr "Standard-Importauflösung:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1396
-#, fuzzy
 msgid "Default bitmap resolution (in dots per inch) for bitmap import"
-msgstr ""
-"Bevorzugte Auflösung der Bitmap (Punkte pro Zoll) im Exportieren-Dialog"
+msgstr "Standard-Bitmapauflösung (Punkte pro Zoll) für Bitmap-Import"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1397
 #, fuzzy
@@ -19532,9 +19522,8 @@ msgid "Location of users configuration"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1516
-#, fuzzy
 msgid "User preferences: "
-msgstr "Einstellungen für das Löschwerkzeug"
+msgstr "Benutzereinstellungen:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1516
 #, fuzzy
@@ -19542,9 +19531,8 @@ msgid "Location of the users preferences file"
 msgstr "Fehler beim Erstellen der Einstellungs-Datei %s."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1520
-#, fuzzy
 msgid "User extensions: "
-msgstr "Verdic Erweiterung"
+msgstr "Benutzererweiterungen:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1520
 #, fuzzy
@@ -19562,7 +19550,7 @@ msgstr "Ort entlang der Kurve"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1532
 msgid "Temporary files: "
-msgstr ""
+msgstr "Temporäre Dateien:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1532
 msgid "Location of the temporary files used for autosave"
@@ -19733,9 +19721,8 @@ msgid "New layer created."
 msgstr "Neue Ebene angelegt."
 
 #: ../src/ui/dialog/layer-properties.cpp:364
-#, fuzzy
 msgid "Move to Layer"
-msgstr "Ebene absenken"
+msgstr "Zur Ebene verschieben"
 
 #: ../src/ui/dialog/layer-properties.cpp:367
 #: ../src/ui/dialog/transformation.cpp:109
@@ -19793,9 +19780,8 @@ msgid "X"
 msgstr "X"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:111
-#, fuzzy
 msgid "Add path effect"
-msgstr "Pfad-Effekt aktivieren"
+msgstr "Pfad-Effekt hinzufügen"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:115
 #, fuzzy
@@ -19828,9 +19814,8 @@ msgstr ""
 #: ../src/ui/dialog/livepatheffect-editor.cpp:312
 #: ../src/ui/dialog/livepatheffect-editor.cpp:316
 #: ../src/ui/dialog/livepatheffect-editor.cpp:324
-#, fuzzy
 msgid "Select a path or shape"
-msgstr "Element ist weder Pfad noch Form"
+msgstr "Wähle einen Pfad oder Form"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:320
 msgid "Only one item can be selected"
@@ -19870,9 +19855,8 @@ msgid "Deactivate path effect"
 msgstr "Pfad-Effekt deaktivieren"
 
 #: ../src/ui/dialog/livepatheffect-add.cpp:32
-#, fuzzy
 msgid "Add Path Effect"
-msgstr "Pfad-Effekt aktivieren"
+msgstr "Pfad-Effekt hinzufügen"
 
 #: ../src/ui/dialog/memory.cpp:96
 msgid "Heap"
@@ -20051,14 +20035,12 @@ msgid "Clipart found"
 msgstr "Clipart gefunden"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:749
-#, fuzzy
 msgid "Downloading image..."
-msgstr "Bitmap ausgeben"
+msgstr "Herunterladen des Bildes"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:897
-#, fuzzy
 msgid "Could not download image"
-msgstr "Konnte Datei nicht finden: %s"
+msgstr "Konnte Bild nicht herunterladen"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:907
 msgid "Clipart downloaded successfully"
@@ -20079,9 +20061,8 @@ msgid "Searching clipart..."
 msgstr "Kehre Pfadrichtungen um..."
 
 #: ../src/ui/dialog/ocaldialogs.cpp:1088 ../src/ui/dialog/ocaldialogs.cpp:1109
-#, fuzzy
 msgid "Could not connect to the Open Clip Art Library"
-msgstr "Dieses Dokument zur Open Clip Art Library exportieren"
+msgstr "Konnte nicht zu Open Clip Art Library verbinden"
 
 #: ../src/ui/dialog/ocaldialogs.cpp:1128
 #, fuzzy
@@ -23409,7 +23390,7 @@ msgstr "Farbeimer"
 
 #: ../src/verbs.cpp:2575
 msgid "Fill bounded areas"
-msgstr "Abgegrenzte Gebiete füllen"
+msgstr "Abgegrenzte Flächen füllen"
 
 #: ../src/verbs.cpp:2576
 #, fuzzy
@@ -23556,9 +23537,8 @@ msgid "Open Preferences for the Gradient tool"
 msgstr "Eigenschaften für Farbverläufe öffnen"
 
 #: ../src/verbs.cpp:2611
-#, fuzzy
 msgid "Mesh Preferences"
-msgstr "Messwerkzeug-Einstellungen"
+msgstr "Gitter-Einstellungen"
 
 #: ../src/verbs.cpp:2612
 #, fuzzy
@@ -23866,7 +23846,6 @@ msgstr "Die Auswahl in das Fenster einpassen"
 
 #. Dialogs
 #: ../src/verbs.cpp:2690
-#, fuzzy
 msgid "P_references..."
 msgstr "Einstellungen"
 
@@ -23960,9 +23939,8 @@ msgid "View and edit the XML tree of the document"
 msgstr "Zeige und ändere den XML-Baum des Dokuments"
 
 #: ../src/verbs.cpp:2715
-#, fuzzy
 msgid "_Find/Replace..."
-msgstr "Text suchen und e_rsetzen..."
+msgstr "Suchen/Ersetzen..."
 
 #: ../src/verbs.cpp:2716
 msgid "Find objects in document"
@@ -24017,9 +23995,8 @@ msgstr ""
 "verstreut angeordnet sind"
 
 #: ../src/verbs.cpp:2729
-#, fuzzy
 msgid "_Object attributes..."
-msgstr "Objekt_eigenschaften…"
+msgstr "_Objekteigenschaften…"
 
 #: ../src/verbs.cpp:2730
 #, fuzzy
@@ -24095,12 +24072,10 @@ msgstr ""
 "Rendermodus aus"
 
 #: ../src/verbs.cpp:2751
-#, fuzzy
 msgid "_Export PNG Image..."
-msgstr "Ein Bild extrahieren"
+msgstr "_Exportiere PNG Bild..."
 
 #: ../src/verbs.cpp:2752
-#, fuzzy
 msgid "Export this document or a selection as a PNG image"
 msgstr "Das Dokument oder eine Auswahl als Bitmap-Bild exportieren"
 
@@ -25028,28 +25003,24 @@ msgid "Create a duplicate gradient"
 msgstr "Farbverläufe erstellen und bearbeiten"
 
 #: ../src/widgets/gradient-selector.cpp:213
-#, fuzzy
 msgid "Edit gradient"
-msgstr "Radialer Farbverlauf"
+msgstr "Farbverlauf bearbeiten"
 
 #: ../src/widgets/gradient-toolbar.cpp:169
 #: ../src/widgets/gradient-toolbar.cpp:182
 #: ../src/widgets/gradient-toolbar.cpp:774
 #: ../src/widgets/gradient-toolbar.cpp:1109
 #: ../src/widgets/gradient-toolbar.cpp:1156
-#, fuzzy
 msgid "No gradient"
-msgstr "Farbverlaufs-Anfasser verschieben"
+msgstr "Kein Farbverlauf"
 
 #: ../src/widgets/gradient-toolbar.cpp:188
-#, fuzzy
 msgid "Multiple gradients"
-msgstr "Farbverlaufs-Anfasser verschieben"
+msgstr "Mehrfache Farbverläufe"
 
 #: ../src/widgets/gradient-toolbar.cpp:694
-#, fuzzy
 msgid "Multiple stops"
-msgstr "Mehrfachstile"
+msgstr "Mehrfach-Stopp"
 
 #: ../src/widgets/gradient-toolbar.cpp:792
 #: ../src/widgets/gradient-vector.cpp:630
@@ -25061,9 +25032,8 @@ msgid "Assign gradient to object"
 msgstr "Farbverlauf einem Objekt zuweisen"
 
 #: ../src/widgets/gradient-toolbar.cpp:967
-#, fuzzy
 msgid "Set gradient repeat"
-msgstr "Farbverlauf für die Kontur setzen"
+msgstr "Setze Verlaufswiederholung"
 
 #: ../src/widgets/gradient-toolbar.cpp:1005
 #: ../src/widgets/gradient-vector.cpp:741
@@ -25071,9 +25041,8 @@ msgid "Change gradient stop offset"
 msgstr "Versatz der Zwischenfarben des Farbverlaufs ändern"
 
 #: ../src/widgets/gradient-toolbar.cpp:1049
-#, fuzzy
 msgid "linear"
-msgstr "Linie"
+msgstr "linear"
 
 #: ../src/widgets/gradient-toolbar.cpp:1049
 msgid "Create linear gradient"
@@ -25092,9 +25061,8 @@ msgid "New:"
 msgstr "Neu:"
 
 #: ../src/widgets/gradient-toolbar.cpp:1079
-#, fuzzy
 msgid "fill"
-msgstr "gefüllt"
+msgstr "füllen"
 
 #: ../src/widgets/gradient-toolbar.cpp:1079
 msgid "Create gradient in the fill"
@@ -25119,9 +25087,8 @@ msgid "Select"
 msgstr "Auswählen"
 
 #: ../src/widgets/gradient-toolbar.cpp:1112
-#, fuzzy
 msgid "Select:"
-msgstr "Auswählen"
+msgstr "Auswählen:"
 
 #: ../src/widgets/gradient-toolbar.cpp:1130
 msgid "reflected"
@@ -25132,9 +25099,8 @@ msgid "direct"
 msgstr "direkt"
 
 #: ../src/widgets/gradient-toolbar.cpp:1135
-#, fuzzy
 msgid "Repeat"
-msgstr "Wiederholung:"
+msgstr "Wiederholen"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
 #: ../src/widgets/gradient-toolbar.cpp:1137
@@ -26595,7 +26561,7 @@ msgstr ""
 
 #: ../src/widgets/stroke-style.cpp:305
 msgid "_Mid Markers:"
-msgstr "_Mittelmarkierungen:"
+msgstr "_Mittelmarkierung:"
 
 #: ../src/widgets/stroke-style.cpp:306
 msgid ""
@@ -26607,7 +26573,7 @@ msgstr ""
 
 #: ../src/widgets/stroke-style.cpp:315
 msgid "_End Markers:"
-msgstr "_Endmarkierungen:"
+msgstr "_Endmarkierung:"
 
 #: ../src/widgets/stroke-style.cpp:316
 msgid "End Markers are drawn on the last node of a path or shape"
@@ -26704,14 +26670,12 @@ msgid "Font not found on system"
 msgstr "Schrift wurde im System nicht gefunden"
 
 #: ../src/widgets/text-toolbar.cpp:1517
-#, fuzzy
 msgid "Font Style"
-msgstr "Schriftgröße"
+msgstr "Schriftstil"
 
 #: ../src/widgets/text-toolbar.cpp:1518
-#, fuzzy
 msgid "Font style"
-msgstr "Schriftgröße"
+msgstr "Schriftstil"
 
 #. Name
 #: ../src/widgets/text-toolbar.cpp:1534
@@ -26923,9 +26887,8 @@ msgid "Bounding box"
 msgstr "Umrandungsbox"
 
 #: ../src/widgets/toolbox.cpp:1710
-#, fuzzy
 msgid "Snap bounding boxes"
-msgstr "An Ecken der Umrandung einrasten"
+msgstr "An der Umrandung einrasten"
 
 #: ../src/widgets/toolbox.cpp:1719
 msgid "Bounding box edges"
@@ -30247,9 +30210,8 @@ msgstr "Kommandozeilen-Optionen"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_commandline.inx.h:3
-#, fuzzy
 msgid "http://inkscape.org/doc/inkscape-man.html"
-msgstr "http://inkscape.org/doc/keys048.html"
+msgstr "http://inkscape.org/doc/inkscape-man.html"
 
 #: ../share/extensions/inkscape_help_faq.inx.h:1
 msgid "FAQ"
@@ -30257,9 +30219,8 @@ msgstr "FAQ"
 
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_faq.inx.h:3
-#, fuzzy
 msgid "http://wiki.inkscape.org/wiki/index.php/FAQ"
-msgstr "http://inkscape.org/doc/keys048.html"
+msgstr "http://wiki.inkscape.org/wiki/index.php/FAQ"
 
 # war "Abkürzungen", was aber zur Maus nicht wirklich passt...
 #: ../share/extensions/inkscape_help_keys.inx.h:1
@@ -32287,9 +32248,8 @@ msgid "1 - Setup Typography Canvas"
 msgstr ""
 
 #: ../share/extensions/setup_typography_canvas.inx.h:2
-#, fuzzy
 msgid "Ascender:"
-msgstr "Rendern"
+msgstr "Aufsteigend:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:3
 #, fuzzy
@@ -32297,9 +32257,8 @@ msgid "Caps Height:"
 msgstr "Höhe der Striche:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:4
-#, fuzzy
 msgid "Descender:"
-msgstr "Abhängigkeit:"
+msgstr "Absteigend:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:5
 msgid "Em-size:"
@@ -32564,9 +32523,8 @@ msgstr ""
 "python.org/library/codecs.html#standard-encodings)"
 
 #: ../share/extensions/svgcalendar.inx.h:24
-#, fuzzy
 msgid "Show week number"
-msgstr "Foliennummer"
+msgstr "Zeige Wochennummern:"
 
 #: ../share/extensions/svgcalendar.inx.h:25
 msgid "Sun Mon Tue Wed Thu Fri Sat"
@@ -32586,19 +32544,16 @@ msgstr ""
 "Ist das obere Häckchen gesetzt, sind die unteren Optionen bedeutungslos."
 
 #: ../share/extensions/svgcalendar.inx.h:29
-#, fuzzy
 msgid "Week number color:"
-msgstr "Farbe für Wochentage"
+msgstr "Farbe für Wochennummern:"
 
 #: ../share/extensions/svgcalendar.inx.h:30
-#, fuzzy
 msgid "Week number column name:"
-msgstr "Anzahl der Spalten verringern:"
+msgstr "Wochennummer-Spaltenname:"
 
 #: ../share/extensions/svgcalendar.inx.h:31
-#, fuzzy
 msgid "Week start day:"
-msgstr "Wochenbeginn"
+msgstr "Wochenbeginn:"
 
 #: ../share/extensions/svgcalendar.inx.h:32
 msgid "Weekday name color:"
@@ -32630,9 +32585,8 @@ msgid "You may change the names for other languages:"
 msgstr "Sie können die Namen der anderen Sprachen ändern:"
 
 #: ../share/extensions/svgfont2layers.inx.h:1
-#, fuzzy
 msgid "Convert SVG Font to Glyph Layers"
-msgstr "In allen Ebenen invertieren"
+msgstr "Konvertiere SVG Schrift zu Glyph-Ebenen"
 
 #: ../share/extensions/svgfont2layers.inx.h:2
 msgid "Load only the first 30 glyphs (Recommended)"
@@ -32647,9 +32601,8 @@ msgid "Bottom to top"
 msgstr "Von Unten nach Oben"
 
 #: ../share/extensions/text_extract.inx.h:3
-#, fuzzy
 msgid "Extract"
-msgstr "Ein Bild extrahieren"
+msgstr "Extrahieren"
 
 #: ../share/extensions/text_extract.inx.h:4
 msgid "Horizontal point:"
