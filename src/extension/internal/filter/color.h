@@ -637,7 +637,7 @@ public:
                 "<_item value=\"g\">" N_("Green") "</_item>\n"
                 "<_item value=\"b\">" N_("Blue") "</_item>\n"
                 "<_item value=\"c\">" N_("Cyan") "</_item>\n"
-                "<_item value=\"m\">" N_("Majenta") "</_item>\n"
+                "<_item value=\"m\">" N_("Magenta") "</_item>\n"
                 "<_item value=\"y\">" N_("Yellow") "</_item>\n"
               "</param>\n"
               "<param name=\"blend\" gui-text=\"" N_("Background blend mode:") "\" type=\"enum\">\n"

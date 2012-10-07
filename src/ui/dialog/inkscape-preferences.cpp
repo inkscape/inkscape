@@ -480,7 +480,7 @@ void InkscapePreferences::initPageTools()
 
     _misc_gradientangle.init("/dialogs/gradienteditor/angle", -359, 359, 1, 90, 0, false, false);
     _page_gradient.add_line( false, _("Linear gradient _angle:"), _misc_gradientangle, "",
-                           _("Default angle of new linear gradients in degrees (clockwise from horizontal"), false);
+                           _("Default angle of new linear gradients in degrees (clockwise from horizontal)"), false);
 
 
     //Dropper
