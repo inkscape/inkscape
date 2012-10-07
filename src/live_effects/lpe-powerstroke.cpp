@@ -28,6 +28,7 @@
 #include <2geom/path-intersection.h>
 #include <2geom/crossing.h>
 #include <2geom/ellipse.h>
+#include <2geom/math-utils.h>
 #include <math.h>
 
 #include "spiro.h"
@@ -382,8 +383,9 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
                 case LINEJOIN_EXTRP_MITER_ARC: {
                     Geom::Circle circle0;
                     Geom::Circle circle1;
+                    Geom::Point tang0(0.,0.);
                     {
-                        Geom::Point tang0(0.,0.);
+                        Geom::Point norm0(0.,0.);
                         Geom::Coord curv0 = 0;
                         std::vector<Geom::Point> derivs = reverse(B[prev_i]).valueAndDerivatives(0.,5);
                         for (unsigned deriv_n = 1, count = 0; deriv_n < derivs.size(); deriv_n++) {
@@ -394,17 +396,25 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
                                     curv0 = length; // save the length of the tangent
                                     count++;
                                 } else {
-                                    //curv0 = length / curv0; // curvature = tangent' / tangent
+                                    // curv0 =  need good way to calculate curvature
+                                    // calculate direction of normal
+                                    double angle = angle_between(tang0, derivs[deriv_n]);
+                                    if (angle >= 0 ) {
+                                        norm0 = tang0.ccw();
+                                    } else {
+                                        norm0 = tang0.cw();
+                                    }
                                     break; // break out of for-loop
                                 }
                             }
                         }
                         double r0 = curv0;
-                        Geom::Point center0 = B[prev_i].at1() - r0*tang0.ccw();
+                        Geom::Point center0 = B[prev_i].at1() - r0*norm0;
                         circle0 = Geom::Circle(center0, r0);
                     }
+                    Geom::Point tang1(0.,0.);
                     {
-                        Geom::Point tang1(0.,0.);
+                        Geom::Point norm1(0.,0.);
                         Geom::Coord curv1 = 0;
                         std::vector<Geom::Point> derivs = B[i].valueAndDerivatives(0.,5);
                         for (unsigned deriv_n = 1, count = 0; deriv_n < derivs.size(); deriv_n++) {
@@ -416,20 +426,31 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
                                     count++;
                                 } else {
                                     //curv1 = length / curv1; // curvature = tangent' / tangent
+                                    // calculate direction of normal
+                                    double angle = angle_between(tang1, derivs[deriv_n]);
+                                    if (angle >= 0 ) {
+                                        norm1 = tang1.ccw();
+                                    } else {
+                                        norm1 = tang1.cw();
+                                    }
                                     break; // break out of for-loop
                                 }
                             }
                         }
                         double r1 = curv1;
-                        Geom::Point center1 = B[i].at0() - r1*tang1.ccw();
+                        Geom::Point center1 = B[i].at0() - r1*norm1;
                         circle1 = Geom::Circle(center1, r1);
                     }
 
                     Geom::Point points[2];
                     int solutions = circle_circle_intersection(circle0, circle1, points[0], points[1]);
                     if (solutions == 2) {
-                        Geom::EllipticalArc *arc0 = circle0.arc(B[prev_i].at1(), 0.5*(B[prev_i].at1()+points[0]), points[0], true);
-                        Geom::EllipticalArc *arc1 = circle1.arc(points[0],       0.5*(points[0]+B[i].at0()), B[i].at0(), true);
+                        Geom::Point sol = points[0];
+                        if ( dot(tang0,sol-B[prev_i].at1()) > 0 ) {
+                            sol = points[1];
+                        }
+                        Geom::EllipticalArc *arc0 = circle0.arc(B[prev_i].at1(), 0.5*(B[prev_i].at1()+sol), sol, true);
+                        Geom::EllipticalArc *arc1 = circle1.arc(sol, 0.5*(sol+B[i].at0()), B[i].at0(), true);
 
                         if (arc0) {
                             build_from_sbasis(pb,arc0->toSBasis(), tol, false);
