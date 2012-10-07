@@ -143,13 +143,13 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     sel->icon_renderer = Gtk::manage(new Gtk::CellRendererPixbuf());
     sel->text_renderer = Gtk::manage(new Gtk::CellRendererText());
 
-    sel->treeview->append_column("Gradient", *sel->icon_renderer);
+    sel->treeview->append_column(_("Gradient"), *sel->icon_renderer);
     Gtk::TreeView::Column* icon_column = sel->treeview->get_column(0);
     icon_column->add_attribute(sel->icon_renderer->property_pixbuf(), sel->columns->pixbuf);
     icon_column->set_sort_column(sel->columns->color);
     icon_column->set_clickable(true);
 
-    sel->treeview->append_column("Name", *sel->text_renderer);
+    sel->treeview->append_column(_("Name"), *sel->text_renderer);
     Gtk::TreeView::Column* name_column = sel->treeview->get_column(1);
     sel->text_renderer->property_editable() = true;
     name_column->add_attribute(sel->text_renderer->property_text(), sel->columns->name);
