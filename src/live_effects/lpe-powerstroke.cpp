@@ -195,7 +195,9 @@ static const Util::EnumData<unsigned> LineJoinTypeData[] = {
     {LINEJOIN_EXTRP_MITER,  N_("Extrapolated"),      "extrapolated"},
     {LINEJOIN_MITER, N_("Miter"),     "miter"},
     {LINEJOIN_SPIRO, N_("Spiro"),     "spiro"},
-//    {LINEJOIN_EXTRP_MITER_ARC, N_("Extrapolated arc"),     "extrp_arc"}, 
+#ifdef LPE_ENABLE_TEST_EFFECTS
+    {LINEJOIN_EXTRP_MITER_ARC, N_("Extrapolated arc"),     "extrp_arc"}, 
+#endif
 };
 static const Util::EnumDataConverter<unsigned> LineJoinTypeConverter(LineJoinTypeData, sizeof(LineJoinTypeData)/sizeof(*LineJoinTypeData));
 
@@ -426,8 +428,8 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
                     Geom::Point points[2];
                     int solutions = circle_circle_intersection(circle0, circle1, points[0], points[1]);
                     if (solutions == 2) {
-                        Geom::EllipticalArc *arc0 = circle0.arc(B[prev_i].at1(), 0.5*(B[prev_i].at1()+B[i].at0()), points[0], true);
-                        Geom::EllipticalArc *arc1 = circle1.arc(points[0],       0.5*(B[prev_i].at1()+B[i].at0()), B[i].at0(), true);
+                        Geom::EllipticalArc *arc0 = circle0.arc(B[prev_i].at1(), 0.5*(B[prev_i].at1()+points[0]), points[0], true);
+                        Geom::EllipticalArc *arc1 = circle1.arc(points[0],       0.5*(points[0]+B[i].at0()), B[i].at0(), true);
 
                         if (arc0) {
                             build_from_sbasis(pb,arc0->toSBasis(), tol, false);
