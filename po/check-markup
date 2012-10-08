@@ -138,7 +138,7 @@ sub check_strs ($@) {
 	die "check_strs: expecting >= 2 strings";
     }
     if ((($_[0] eq '""') && ($_[1] =~ /Project-Id-Version:.*POT-Creation-Date:/s))
-    or ($_[0] eq '"> and < scale by:"')
+    or ($_[0] eq '"> and < _scale by:"')
     or $is_pango_str == 0)
     {
 	# Not a Pango string.
