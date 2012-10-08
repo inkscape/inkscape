@@ -16,12 +16,14 @@ use HTML::TokeParser;
 
 # Groups of elements defined in spec.
 # Note "use" is not a container element but it acts like one!
+# Note "flowRoot, flowPara, flowSpan, flowRegion, and flowRect are Inkscape
+#   specific (failed SVG1.2 items)
 my @container_elements = ("a", "defs", "glyph", "g", "marker", "mask", "missing-glyph", "pattern", "svg", "switch", "symbol", "use");
 my @graphics_elements = ("circle", "ellipse", "image", "line", "path", "polygon", "polyline", "rect", "text", "use");
 my @filter_primitives = ("feBlend", "feColorMatrix", "feComponentTransfer", "feComposite", "feConvolveMatrix",
 			 "feDiffuseLighting", "feDisplacementMap", "feFlood", "feGaussianBlur", "feImage",
 			 "feMerge", "feMorphology", "feOffset", "feSpecularLighting", "feTile", "feTurbulence" );
-my @text_content_elements = ("altGlyph", "textPath", "text", "tref", "tspan");
+my @text_content_elements = ("altGlyph", "textPath", "text", "tref", "tspan", "flowRoot", "flowPara", "flowSpan");
 my @shapes = ("path", "rect", "circle", "ellipse", "line", "polyline", "polygon");
 my @viewport = ("svg", "symbol", "foreignObject" );
 
@@ -154,6 +156,11 @@ push @{$properties{ "display" }->{elements}}, @graphics_elements;
 
 push @{$properties{ "image-rendering" }->{elements}}, "pattern", "image", "feImage";
 
+# "title" isn't in the SVG spec (except for style sheets) but it is commonly supported by browsers
+push @{$properties{ "title" }->{elements}}, @graphics_elements, "g";
+$properties{ "title" }->{default} = "NO DEFAULT";
+$properties{ "title" }->{inherit} = "no";
+
 push @{$properties{ "visibility" }->{elements}}, @graphics_elements;
 
 
@@ -166,9 +173,16 @@ $properties{ "marker-mid" }->{inherit} = $properties{ "marker-start" }->{inherit
 
 
 # Inkscape uses CSS property 'line-height' even though this is not part of SVG spec.
-push @{$properties{ "line-height" }->{elements}}, "text";
+push @{$properties{ "line-height" }->{elements}}, "text", "flowRoot", "flowPara";
 $properties{ "line-height" }->{default} = "NO DEFAULT";
 $properties{ "line-height" }->{inherit} = "no";
+
+# Inkscape uses CSS property 'text-align' for flowed text. It is not an SVG 1.1 property
+# but is found in SVG 1.2 Tiny.
+push @{$properties{ "text-align" }->{elements}}, "flowRoot";
+$properties{ "text-align" }->{default} = "start";
+$properties{ "text-align" }->{inherit} = "yes";
+
 
 # Output
 

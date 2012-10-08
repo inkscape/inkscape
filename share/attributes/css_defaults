@@ -108,11 +108,15 @@
 
 "stroke-width" - "1" - "yes"
 
+"text-align" - "start" - "yes"
+
 "text-anchor" - "start" - "yes"
 
 "text-decoration" - "NO_DEFAULT" - "no"
 
 "text-rendering" - "auto" - "yes"
+
+"title" - "NO DEFAULT" - "no"
 
 "unicode-bidi" - "normal" - "no"
 
