@@ -309,8 +309,24 @@ static gint inkscape_autosave(gpointer)
 
     GDir *autosave_dir_ptr = g_dir_open(autosave_dir.c_str(), 0, NULL);
     if( !autosave_dir_ptr ){
-        g_warning("Cannot open autosave directory!");
-        return TRUE;
+        // Try to create the autosave directory if it doesn't exist
+        if (g_mkdir(autosave_dir.c_str(), 0755)) {
+            // the creation failed
+            Glib::ustring msg = Glib::ustring::format(
+                    _("Autosave failed! Cannot create directory "), Glib::filename_to_utf8(autosave_dir));
+            g_warning("%s", msg.c_str());
+            SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::ERROR_MESSAGE, msg.c_str());
+            return TRUE;
+        }
+        // Try to read dir again
+        autosave_dir_ptr = g_dir_open(autosave_dir.c_str(), 0, NULL);
+        if( !autosave_dir_ptr ){
+            Glib::ustring msg = Glib::ustring::format(
+                    _("Autosave failed! Cannot open directory "), Glib::filename_to_utf8(autosave_dir));
+            g_warning("%s", msg.c_str());
+            SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::ERROR_MESSAGE, msg.c_str());
+            return TRUE;
+        }
     }
 
     time_t sptime = time(NULL);
