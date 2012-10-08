@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-07 19:45+0200\n"
+"POT-Creation-Date: 2012-10-08 22:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6102,7 +6102,7 @@ msgstr ""
 #: ../src/extension/internal/filter/bevels.h:135
 #: ../src/extension/internal/filter/bevels.h:219
 #: ../src/extension/internal/filter/paint.h:89
-#: ../src/live_effects/lpe-powerstroke.cpp:209
+#: ../src/live_effects/lpe-powerstroke.cpp:210
 #: ../share/extensions/fractalize.inx.h:3
 msgid "Smoothness:"
 msgstr ""
@@ -6714,7 +6714,7 @@ msgid "Discrete"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:429 ../src/filter-enums.cpp:85
-#: ../src/live_effects/lpe-powerstroke.cpp:161
+#: ../src/live_effects/lpe-powerstroke.cpp:162
 msgid "Linear"
 msgstr ""
 
@@ -8882,39 +8882,47 @@ msgstr ""
 msgid "Ex squares"
 msgstr ""
 
+#: ../src/inkscape.cpp:316
+msgid "Autosave failed! Cannot create directory "
+msgstr ""
+
 #: ../src/inkscape.cpp:325
+msgid "Autosave failed! Cannot open directory "
+msgstr ""
+
+#: ../src/inkscape.cpp:341
 msgid "Autosaving documents..."
 msgstr ""
 
-#: ../src/inkscape.cpp:396
+#: ../src/inkscape.cpp:412
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr ""
 
-#: ../src/inkscape.cpp:399 ../src/inkscape.cpp:406
+#: ../src/inkscape.cpp:415 ../src/inkscape.cpp:422
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
 msgstr ""
 
-#: ../src/inkscape.cpp:421
+#: ../src/inkscape.cpp:437
 msgid "Autosave complete."
 msgstr ""
 
-#: ../src/inkscape.cpp:667
+#: ../src/inkscape.cpp:683
 msgid "Untitled document"
 msgstr ""
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:699
+#: ../src/inkscape.cpp:715
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr ""
 
-#: ../src/inkscape.cpp:700
+#: ../src/inkscape.cpp:716
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr ""
 
-#: ../src/inkscape.cpp:701
+#: ../src/inkscape.cpp:717
 msgid "Automatic backup of the following documents failed:\n"
 msgstr ""
 
@@ -10139,127 +10147,127 @@ msgstr ""
 msgid "Fuse ends closer than this number. 0 means don't fuse."
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:162
+#: ../src/live_effects/lpe-powerstroke.cpp:163
 msgid "CubicBezierFit"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:163
+#: ../src/live_effects/lpe-powerstroke.cpp:164
 msgid "CubicBezierJohan"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:164
+#: ../src/live_effects/lpe-powerstroke.cpp:165
 msgid "SpiroInterpolator"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:176
+#: ../src/live_effects/lpe-powerstroke.cpp:177
 msgid "Butt"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:177
+#: ../src/live_effects/lpe-powerstroke.cpp:178
 msgid "Square"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:178
+#: ../src/live_effects/lpe-powerstroke.cpp:179
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:16
 msgid "Round"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:179
+#: ../src/live_effects/lpe-powerstroke.cpp:180
 msgid "Peak"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:180
+#: ../src/live_effects/lpe-powerstroke.cpp:181
 msgid "Zero width"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:193
+#: ../src/live_effects/lpe-powerstroke.cpp:194
 msgid "Beveled"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:194
+#: ../src/live_effects/lpe-powerstroke.cpp:195
 #: ../src/widgets/star-toolbar.cpp:547
 msgid "Rounded"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:195
+#: ../src/live_effects/lpe-powerstroke.cpp:196
 msgid "Extrapolated"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:196
+#: ../src/live_effects/lpe-powerstroke.cpp:197
 msgid "Miter"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:197
+#: ../src/live_effects/lpe-powerstroke.cpp:198
 #: ../src/widgets/pencil-toolbar.cpp:138
 msgid "Spiro"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:199
+#: ../src/live_effects/lpe-powerstroke.cpp:200
 msgid "Extrapolated arc"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:206
+#: ../src/live_effects/lpe-powerstroke.cpp:207
 msgid "Offset points"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:207
+#: ../src/live_effects/lpe-powerstroke.cpp:208
 msgid "Sort points"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:207
+#: ../src/live_effects/lpe-powerstroke.cpp:208
 msgid "Sort offset points according to their time value along the curve"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:208
+#: ../src/live_effects/lpe-powerstroke.cpp:209
 msgid "Interpolator type:"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:208
+#: ../src/live_effects/lpe-powerstroke.cpp:209
 msgid ""
 "Determines which kind of interpolator will be used to interpolate between "
 "stroke width along the path"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:209
+#: ../src/live_effects/lpe-powerstroke.cpp:210
 msgid ""
 "Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear "
 "interpolation, 1 = smooth"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:210
+#: ../src/live_effects/lpe-powerstroke.cpp:211
 msgid "Start cap:"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:210
+#: ../src/live_effects/lpe-powerstroke.cpp:211
 msgid "Determines the shape of the path's start"
 msgstr ""
 
 #. Join type
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
-#: ../src/live_effects/lpe-powerstroke.cpp:211
+#: ../src/live_effects/lpe-powerstroke.cpp:212
 #: ../src/widgets/stroke-style.cpp:186
 msgid "Join:"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:211
+#: ../src/live_effects/lpe-powerstroke.cpp:212
 msgid "Specifies the shape of the path's corners"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:212
+#: ../src/live_effects/lpe-powerstroke.cpp:213
 msgid "Miter limit:"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:212
+#: ../src/live_effects/lpe-powerstroke.cpp:213
 #: ../src/widgets/stroke-style.cpp:234
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:213
+#: ../src/live_effects/lpe-powerstroke.cpp:214
 msgid "End cap:"
 msgstr ""
 
-#: ../src/live_effects/lpe-powerstroke.cpp:213
+#: ../src/live_effects/lpe-powerstroke.cpp:214
 msgid "Determines the shape of the path's end"
 msgstr ""
 
@@ -17359,7 +17367,9 @@ msgid "Autosave _directory:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1049
-msgid "The directory where autosaves will be written"
+msgid ""
+"The directory where autosaves will be written. This should be an absolute "
+"path (starts with / on UNIX or a drive letter such as C: on Windows). "
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1051
@@ -18992,7 +19002,7 @@ msgstr ""
 msgid "Convert"
 msgstr ""
 
-#: ../src/ui/dialog/swatches.cpp:531
+#: ../src/ui/dialog/swatches.cpp:540
 #, c-format
 msgid "Palettes directory (%s) is unavailable."
 msgstr ""
