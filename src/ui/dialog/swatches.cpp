@@ -62,10 +62,10 @@ namespace Dialogs {
 #define VBLOCK 16
 #define PREVIEW_PIXBUF_WIDTH 128
 
-void _loadPaletteFile( gchar const *filename );
+void _loadPaletteFile( gchar const *filename, gboolean user=FALSE );
 
-
-std::vector<SwatchPage*> possible;
+std::list<SwatchPage*> userSwatchPages;
+std::list<SwatchPage*> systemSwatchPages;
 static std::map<SPDocument*, SwatchPage*> docPalettes;
 static std::vector<DocTrack*> docTrackings;
 static std::map<SwatchesPanel*, SPDocument*> docPerPanel;
@@ -391,7 +391,7 @@ static bool parseNum( char*& str, int& val ) {
 }
 
 
-void _loadPaletteFile( gchar const *filename )
+void _loadPaletteFile( gchar const *filename, gboolean user/*=FALSE*/ )
 {
     char block[1024];
     FILE *f = Inkscape::IO::fopen_utf8name( filename, "r" );
@@ -493,7 +493,10 @@ void _loadPaletteFile( gchar const *filename )
                     }
                 } while ( result && !hasErr );
                 if ( !hasErr ) {
-                    possible.push_back(onceMore);
+                    if (user)
+                        userSwatchPages.push_back(onceMore);
+                    else
+                        systemSwatchPages.push_back(onceMore);
 #if ENABLE_MAGIC_COLORS
                     ColorItem::_wireMagicColors( onceMore );
 #endif // ENABLE_MAGIC_COLORS
@@ -507,9 +510,16 @@ void _loadPaletteFile( gchar const *filename )
     }
 }
 
+static bool
+compare_swatch_names(SwatchPage const *a, SwatchPage const *b) {
+
+    return g_utf8_collate(a->_name.c_str(), b->_name.c_str()) < 0;
+}
+
 static void loadEmUp()
 {
     static bool beenHere = false;
+    gboolean userPalete = true;
     if ( !beenHere ) {
         beenHere = true;
 
@@ -521,7 +531,6 @@ static void loadEmUp()
         // Use this loop to iterate through a list of possible document locations.
         while (!sources.empty()) {
             gchar *dirname = sources.front();
-
             if ( Inkscape::IO::file_test( dirname, G_FILE_TEST_EXISTS )
                 && Inkscape::IO::file_test( dirname, G_FILE_TEST_IS_DIR )) {
                 GError *err = 0;
@@ -535,11 +544,13 @@ static void loadEmUp()
                     while ((filename = (gchar *)g_dir_read_name(directory)) != NULL) {
                         gchar* lower = g_ascii_strdown( filename, -1 );
 //                        if ( g_str_has_suffix(lower, ".gpl") ) {
+                          if ( !g_str_has_suffix(lower, "~") ) {
                             gchar* full = g_build_filename(dirname, filename, NULL);
                             if ( !Inkscape::IO::file_test( full, G_FILE_TEST_IS_DIR ) ) {
-                                _loadPaletteFile(full);
+                                _loadPaletteFile(full, userPalete);
                             }
                             g_free(full);
+                          }
 //                      }
                         g_free(lower);
                     }
@@ -550,15 +561,15 @@ static void loadEmUp()
             // toss the dirname
             g_free(dirname);
             sources.pop_front();
+            userPalete = false;
         }
     }
+
+   // Sort the list of swatches by name, grouped by user/system
+   userSwatchPages.sort(compare_swatch_names);
+   systemSwatchPages.sort(compare_swatch_names);
+
 }
-
-
-
-
-
-
 
 
 
@@ -592,7 +603,7 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
     }
 
     loadEmUp();
-    if ( !possible.empty() ) {
+    if ( !systemSwatchPages.empty() ) {
         SwatchPage* first = 0;
         int index = 0;
         Glib::ustring targetName;
@@ -603,8 +614,9 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
                 if (targetName == "Auto") {
                     first = docPalettes[0];
                 } else {
-                    index++;
-                    for ( std::vector<SwatchPage*>::iterator iter = possible.begin(); iter != possible.end(); ++iter ) {
+                    //index++;
+                    std::vector<SwatchPage*> pages = _getSwatchSets();
+                    for ( std::vector<SwatchPage*>::iterator iter = pages.begin(); iter != pages.end(); ++iter ) {
                         if ( (*iter)->_name == targetName ) {
                             first = *iter;
                             break;
@@ -635,6 +647,7 @@ SwatchesPanel::SwatchesPanel(gchar const* prefsPath) :
                 hotItem = single;
             }
             _regItem( single, 3, i );
+
             i++;
         }
     }
@@ -1027,6 +1040,7 @@ void SwatchesPanel::handleDefsModified(SPDocument *document)
     }
 }
 
+
 std::vector<SwatchPage*> SwatchesPanel::_getSwatchSets() const
 {
     std::vector<SwatchPage*> tmp;
@@ -1034,7 +1048,8 @@ std::vector<SwatchPage*> SwatchesPanel::_getSwatchSets() const
         tmp.push_back(docPalettes[_currentDocument]);
     }
 
-    tmp.insert(tmp.end(), possible.begin(), possible.end());
+    tmp.insert(tmp.end(), userSwatchPages.begin(), userSwatchPages.end());
+    tmp.insert(tmp.end(), systemSwatchPages.begin(), systemSwatchPages.end());
 
     return tmp;
 }

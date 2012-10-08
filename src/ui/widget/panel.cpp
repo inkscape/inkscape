@@ -560,6 +560,7 @@ void Panel::_regItem(Gtk::MenuItem* item, int group, int id)
     _menu->append(*item);
     item->signal_activate().connect(sigc::bind<int, int>(sigc::mem_fun(*this, &Panel::_bounceCall), group + PANEL_SETTING_NEXTFREE, id));
     item->show();
+
 }
 
 void Panel::_handleAction(int /*set_id*/, int /*item_id*/)
