@@ -351,7 +351,8 @@ static void sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *con
     guchar *const str_value_unsigned = cr_term_to_string(decl->value);
     gchar *const str_value = reinterpret_cast<gchar *>(str_value_unsigned);
     gchar *value_unquoted = attribute_unquote (str_value); // libcroco returns strings quoted in ""
-    gchar *units = NULL;
+    Glib::ustring value_unquoted2 = value_unquoted ? value_unquoted : Glib::ustring();
+    Glib::ustring units;
 
     /*
     * Problem with parsing of units em and ex, like font-size "1.2em" and "3.4ex"
@@ -360,18 +361,22 @@ static void sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *con
     *
     * HACK for now is to strip off em and ex units and add them back at the end
     */
-    int l = strlen(value_unquoted);
-    if (!strncmp(&value_unquoted[l-2], "em", 2) ||
-            !strncmp(&value_unquoted[l-2], "ex", 2)) {
-        units = g_strndup(&value_unquoted[l-2], 2);
-        value_unquoted = g_strndup(value_unquoted, l-2);
+    int le = value_unquoted2.length();
+    if (le > 2) {
+        units = value_unquoted2.substr(le-2, 2);
+        if ((units == "em") || (units == "ex")) {
+            value_unquoted2 = value_unquoted2.substr(0, le-2);
+        }
+        else {
+            units.clear();
+        }
     }
 
     // libcroco uses %.17f for formatting... leading to trailing zeros or small rounding errors.
     // CSSOStringStream is used here to write valid CSS (as in sp_style_write_string). This has
     // the additional benefit of respecting the numerical precission set in the SVG Output
     // preferences. We assume any numerical part comes first (if not, the whole string is copied).
-    std::stringstream ss( value_unquoted );
+    std::stringstream ss( value_unquoted2 );
     double number = 0;
     std::string characters;
     std::string temp;
@@ -385,10 +390,9 @@ static void sp_repr_css_merge_from_decl(SPCSSAttr *css, CRDeclaration const *con
     Inkscape::CSSOStringStream os;
     if( number_valid ) os << number;
     os << characters;
-    if (units) {
+    if (!units.empty()) {
         os << units;
         //g_message("sp_repr_css_merge_from_decl looks like em or ex units %s --> %s", str_value, os.str().c_str());
-        g_free(units);
     }
     ((Node *) css)->setAttribute(decl->property->stryng->str, os.str().c_str(), false);
     g_free(value_unquoted);
