@@ -533,6 +533,17 @@ override) the bindings in the main default.xml.
   <bind key="l" modifiers="Ctrl,Shift" action="DialogLayers" display="true" />
   <bind key="L" modifiers="Ctrl,Shift" action="DialogLayers" />  
 
+  <bind action="LayerDuplicate" />  
+  <bind action="LayerDelete" />  
+
+  <bind action="LayerSolo" />  
+
+  <bind action="LayerShowAll" />  
+  <bind action="LayerHideAll" />  
+
+  <bind action="LayerLockAll" />  
+  <bind action="LayerUnlockAll" />  
+
   <bind action="LayerToggleHide" />  
   <bind action="LayerToggleLock" />  
 
