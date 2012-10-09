@@ -1342,17 +1342,27 @@ void LayerVerb::perform(SPAction *action, void *data)
             break;
         }
         case SP_VERB_LAYER_SHOW_ALL: {
-            dt->toggleAllLayers( false );
+            dt->toggleHideAllLayers( false );
             DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:showall", SP_VERB_LAYER_SHOW_ALL, _("Show all layers"));
             break;
         }
-
         case SP_VERB_LAYER_HIDE_ALL: {
-            dt->toggleAllLayers( true );
+            dt->toggleHideAllLayers( true );
             DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:hideall", SP_VERB_LAYER_HIDE_ALL, _("Hide all layers"));
             break;
         }
 
+        case SP_VERB_LAYER_LOCK_ALL: {
+            dt->toggleLockAllLayers( true );
+            DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:lockall", SP_VERB_LAYER_LOCK_ALL, _("Lock all layers"));
+            break;
+        }
+
+        case SP_VERB_LAYER_UNLOCK_ALL: {
+            dt->toggleLockAllLayers( false );
+            DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:unlockall", SP_VERB_LAYER_UNLOCK_ALL, _("Unlock all layers"));
+            break;
+        }
         case SP_VERB_LAYER_TOGGLE_LOCK:
         case SP_VERB_LAYER_TOGGLE_HIDE: {
             if ( dt->currentLayer() == dt->currentRoot() ) {
@@ -2489,6 +2499,10 @@ Verb *Verb::_base_verbs[] = {
                     N_("Show all the layers"), NULL),
     new LayerVerb(SP_VERB_LAYER_HIDE_ALL, "LayerHideAll", N_("_Hide all layers"),
                     N_("Hide all the layers"), NULL),
+    new LayerVerb(SP_VERB_LAYER_LOCK_ALL, "LayerLockAll", N_("_Lock all layers"),
+                    N_("Lock all the layers"), NULL),
+    new LayerVerb(SP_VERB_LAYER_UNLOCK_ALL, "LayerUnlockAll", N_("_Unlock all layers"),
+                    N_("Unlock all the layers"), NULL),
     new LayerVerb(SP_VERB_LAYER_TOGGLE_LOCK, "LayerToggleLock", N_("_Lock/Unlock Current Layer"),
                   N_("Toggle lock on current layer"), NULL),
     new LayerVerb(SP_VERB_LAYER_TOGGLE_HIDE, "LayerToggleHide", N_("_Show/hide Current Layer"),

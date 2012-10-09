@@ -69,6 +69,8 @@ enum {
     BUTTON_SOLO,
     BUTTON_SHOW_ALL,
     BUTTON_HIDE_ALL,
+    BUTTON_LOCK_ALL,
+    BUTTON_UNLOCK_ALL,
     DRAGNDROP
 };
 
@@ -261,6 +263,16 @@ bool LayersPanel::_executeAction()
             case BUTTON_HIDE_ALL:
             {
                 _fireAction( SP_VERB_LAYER_HIDE_ALL );
+            }
+            break;
+            case BUTTON_LOCK_ALL:
+            {
+                _fireAction( SP_VERB_LAYER_LOCK_ALL );
+            }
+            break;
+            case BUTTON_UNLOCK_ALL:
+            {
+                _fireAction( SP_VERB_LAYER_UNLOCK_ALL );
             }
             break;
             case DRAGNDROP:
@@ -873,6 +885,11 @@ LayersPanel::LayersPanel() :
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_SOLO, 0, "Solo", (int)BUTTON_SOLO ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_SHOW_ALL, 0, "Show All", (int)BUTTON_SHOW_ALL ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_HIDE_ALL, 0, "Hide All", (int)BUTTON_HIDE_ALL ) );
+
+        _popupMenu.append(*manage(new Gtk::SeparatorMenuItem()));
+
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOCK_ALL, 0, "Lock All", (int)BUTTON_LOCK_ALL ) );
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_UNLOCK_ALL, 0, "Unlock All", (int)BUTTON_UNLOCK_ALL ) );
 
         _popupMenu.append(*manage(new Gtk::SeparatorMenuItem()));
 
