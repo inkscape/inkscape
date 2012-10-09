@@ -59,6 +59,16 @@ def localize():
             trans = gettext.translation(domain, localdir, [current_locale], fallback=True)
         except KeyError:
             trans = gettext.translation(domain, fallback=True)
+    elif sys.platform.startswith('darwin'):
+        try:
+            localdir = os.environ['INKSCAPE_LOCALEDIR'];
+            trans = gettext.translation(domain, localdir, fallback=True)
+        except KeyError:
+            try:
+                localdir = os.environ['PACKAGE_LOCALE_DIR'];
+                trans = gettext.translation(domain, localdir, fallback=True)
+            except KeyError:
+                trans = gettext.translation(domain, fallback=True)
     else:
         try:
             localdir = os.environ['PACKAGE_LOCALE_DIR'];
