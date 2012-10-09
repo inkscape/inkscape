@@ -114,17 +114,36 @@ fi
 # If the AppleCollationOrder preference doesn't exist, we fall back to using
 # the AppleLocale preference.
 LANGSTR=`defaults read .GlobalPreferences AppleCollationOrder 2>/dev/null`
-if [ "x$LANGSTR" == "x" ]
+if [ "x$LANGSTR" == "x" -o "x$LANGSTR" == "xroot" ]
 then
     echo "Warning: AppleCollationOrder setting not found, using AppleLocale." 1>&2
     LANGSTR=`defaults read .GlobalPreferences AppleLocale 2>/dev/null | \
             sed 's/_.*//'`
+	echo "Setting LANGSTR from AppleLocale: $LANGSTR" 1>&2
+else
+	echo "Setting LANGSTR from AppleCollationOrder: $LANGSTR" 1>&2
 fi
 
 # NOTE: Have to add ".UTF-8" to the LANG since omitting causes Inkscape
 #       to crash on startup in locale_from_utf8().
-export LANG="`grep \"\`echo $LANGSTR\`_\" /usr/share/locale/locale.alias | \
-	tail -n1 | sed 's/\./ /' | awk '{print $2}'`.UTF-8"
+if [ "x$LANGSTR" == "x" ]
+then 
+	# override broken script
+	echo "Overriding empty LANGSTR" 1>&2
+	export LANG="en_US.UTF-8"
+else
+	tmpLANG="`grep \"\`echo $LANGSTR\`_\" /usr/share/locale/locale.alias | \
+		tail -n1 | sed 's/\./ /' | awk '{print $2}'`"
+	if [ "x$tmpLANG" == "x" ]
+	then
+		# override broken script
+		echo "Overriding empty LANG from /usr/share/locale/locale.alias" 1>&2
+		export LANG="en_US.UTF-8"
+	else
+		echo "Setting LANG from /usr/share/locale/locale.alias" 1>&2
+		export LANG="$tmpLANG.UTF-8"
+	fi
+fi
 echo "Setting Language: $LANG" 1>&2
 
 sed 's|${HOME}|'"$HOME|g" "$TOP/etc/pango/pangorc" > "${HOME}/.inkscape-etc/pangorc"
