@@ -13,36 +13,38 @@ pixmap_path "${THEMEDIR}"
 style "clearlooks-default"
 {
 	GtkButton		::default_border	 = { 0, 0, 0, 0 }
-	GtkRange			::trough_border	 = 0
-	GtkPaned			::handle_size		 = 6
-	GtkRange			::slider_width		 = 15
-	GtkRange			::stepper_size		 = 15
-	GtkScrollbar	::min_slider_length = 30
-	GtkCheckButton	::indicator_size	 = 12
+	GtkRange		::trough_border 	 = 0
+	GtkPaned		::handle_size		 = 6
+	GtkRange		::slider_width		 = 15
+	GtkRange		::stepper_size		 = 15
+	GtkScale		::slider-length		 = 23
+	GtkScale		::trough-side-details	 = 1
+	GtkScrollbar		::min_slider_length	 = 30
+	GtkCheckButton		::indicator_size	 = 12
 	GtkMenuBar		::internal-padding	 = 0
-	GtkTreeView		::expander_size	 = 14
-	GtkExpander		::expander_size	 = 16
+	GtkTreeView		::expander_size		 = 14
+	GtkExpander		::expander_size		 = 16
 
 	xthickness = 1
 	ythickness = 1
 
-	fg[NORMAL]			= "#000000" # black
+	fg[NORMAL]		= "#000000" # black
 	fg[PRELIGHT]		= "#000000" # black
 	fg[SELECTED]		= "#ffffff" # white 
-	fg[ACTIVE]			= "#000000" # black
-	fg[INSENSITIVE]	= {0.6, 0.6, 0.6} # dark gray
+	fg[ACTIVE]		= "#000000" # black
+	fg[INSENSITIVE]		= {0.6, 0.6, 0.6} # dark gray
 
-	bg[NORMAL]			= {0.95, 0.95, 0.95} # very light gray
+	bg[NORMAL]		= {0.95, 0.95, 0.95} # very light gray
 	bg[PRELIGHT]		= "#ffffff" # white
 	bg[SELECTED]		= OSX_MENU_COLOR_PLACEHOLDER	# menu color
-	bg[INSENSITIVE]	= {0.9, 0.9, 0.9} # light gray
-	bg[ACTIVE]			= {0.85, 0.85, 0.85} # gray
+	bg[INSENSITIVE]		= {0.9, 0.9, 0.9} # light gray
+	bg[ACTIVE]		= {0.85, 0.85, 0.85} # gray
 
 	base[NORMAL]		= "#ffffff" # white 
 	base[PRELIGHT]		= OSX_MENU_COLOR_PLACEHOLDER # menu color
 	base[ACTIVE]		= {0.6, 0.6, 0.6} # dark gray
 	base[SELECTED]		= OSX_HILI_COLOR_PLACEHOLDER # highlight color
-	base[INSENSITIVE] = {0.9, 0.9, 0.9} # light gray
+	base[INSENSITIVE] 	= {0.9, 0.9, 0.9} # light gray
 
 	text[NORMAL]		= "#000000" # black
 	text[PRELIGHT]		= "#000000" # black
@@ -52,10 +54,13 @@ style "clearlooks-default"
 
 	engine "clearlooks" 
 	{
-	menubarstyle		= 1		# 0 = flat, 1 = sunken, 2 = flat gradient
-	menuitemstyle		= 0		# 0 = flat, 1 = 3d-ish (gradient), 2 = 3d-ish (button)
-	listviewitemstyle	= 0		# 0 = flat, 1 = 3d-ish (gradient)
-	progressbarstyle	= 0		# 0 = candy bar, 1 = flat
+		colorize_scrollbar	 = FALSE	#TRUE
+		reliefstyle		 = 1
+		menubarstyle		 = 0		# 0 = flat, 1 = sunken, 2 = flat gradient
+		toolbarstyle		 = 0		# 0 = flat, 1 = enable effects
+		animation		 = FALSE
+		radius			 = 3.0		# 3.0 = default, 0.0 = sharp corners
+		style			 = GUMMY	# CLASSIC, GUMMY, GLOSSY
 	}
 }
 	
@@ -72,6 +77,10 @@ style "clearlooks-button" = "clearlooks-default"
 	ythickness = 3
 
 	bg[NORMAL] = "#f0f1f2" # a hint of blue...
+
+	engine "clearlooks" {
+		style = CLASSIC
+	}
 }
 
 style "clearlooks-notebook" = "clearlooks-wide"
@@ -95,13 +104,18 @@ style "clearlooks-menu" = "clearlooks-default"
 
 style "clearlooks-menu-item" = "clearlooks-default"
 {
-	xthickness = 2
-	ythickness = 3
+	xthickness = 0
+	ythickness = 2
+
 	fg[PRELIGHT] = "#ffffff"
 	text[PRELIGHT] = "#ffffff"
 	# We want PRELIGHT to be white for widgets, but coloured for the menu.
 	bg[PRELIGHT]		= OSX_MENU_COLOR_PLACEHOLDER
 
+	# Radius of the menu items (inside menus)
+	engine "clearlooks" {
+		radius = 0.0
+	}
 }
 
 style "clearlooks-menu-itembar" = "clearlooks-default"
@@ -517,7 +531,17 @@ gtk-font-name="Lucida Grande 10"
 #
 # insckape-decoration	layers lock, "affect" icons, etc.
 #
-gtk-icon-sizes = "gtk-dialog=48,48:gtk-button=16,16:gtk-large-toolbar=22,22:gtk-small-toolbar=16,16:gtk-menu=16,16:inkscape-decoration=16,16"
+#gtk-icon-sizes = "gtk-dialog=48,48:gtk-button=16,16:gtk-large-toolbar=22,22:gtk-small-toolbar=16,16:gtk-menu=16,16:inkscape-decoration=16,16"
+gtk-icon-sizes = "gtk-dialog=48,48:gtk-button=16,16:gtk-large-toolbar=24,24:gtk-small-toolbar=16,16:gtk-menu=16,16:inkscape-decoration=12,12"
 
 # use OS X default pdf-viewer for print preview
 gtk-print-preview-command="/usr/bin/open %f"
+
+# Whether images should be shown on buttons.
+# Default value: TRUE
+gtk-button-images = 0
+
+# Whether images should be shown in menus.
+gtk-menu-images = 0
+
+
