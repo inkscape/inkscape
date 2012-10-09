@@ -282,7 +282,7 @@ Also see GNUPlot's `epslatex' output terminal.
 
 =item B<-T>, B<--export-text-to-path>
 
-Convert text objects to paths on export, where applicable (for PS, EPS, and PDF export).
+Convert text objects to paths on export, where applicable (for PS, EPS, PDF and SVG export).
 
 =item B<--export-ignore-filters>
 

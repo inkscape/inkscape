@@ -390,7 +390,7 @@ struct poptOption options[] = {
 
     {"export-text-to-path", 'T',
      POPT_ARG_NONE, &sp_export_text_to_path, SP_ARG_EXPORT_TEXT_TO_PATH,
-     N_("Convert text object to paths on export (PS, EPS, PDF)"),
+     N_("Convert text object to paths on export (PS, EPS, PDF, SVG)"),
      NULL},
 
     {"export-ignore-filters", 0,

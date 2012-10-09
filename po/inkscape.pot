@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-09 12:46+0200\n"
+"POT-Creation-Date: 2012-10-09 13:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10936,7 +10936,7 @@ msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr ""
 
 #: ../src/main.cpp:393
-msgid "Convert text object to paths on export (PS, EPS, PDF)"
+msgid "Convert text object to paths on export (PS, EPS, PDF, SVG)"
 msgstr ""
 
 #: ../src/main.cpp:398
