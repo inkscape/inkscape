@@ -270,6 +270,10 @@ rsync -av "$binary_dir/../share/locale"/* "$pkgresources/locale"
 mkdir -p "$pkgresources/share"
 cp -rp "$LIBPREFIX/share/mime" "$pkgresources/share/"
 
+# Copy GTK hicolor icon theme index file
+mkdir -p "$pkgresources/share/icons/hicolor"
+cp "$LIBPREFIX/share/icons/hicolor/index.theme"  "$pkgresources/share/icons/hicolor"
+
 # Icons and the rest of the script framework
 rsync -av --exclude ".svn" "$resdir"/Resources/* "$pkgresources/"
 
