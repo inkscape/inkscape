@@ -153,6 +153,32 @@ static int circle_circle_intersection(Circle const &circle0, Circle const &circl
     return 2;
 }
 
+/**
+ * Find circle that touches inside of the curve, with radius matching the curvature, at time value \c t.
+ * Because this method internally uses unitTangentAt, t should be smaller than 1.0 (see unitTangentAt).
+ */
+Circle touching_circle( D2<SBasis> const &curve, double t, double tol=0.01 )
+{
+    //Piecewise<SBasis> k = curvature(curve, tol);
+    D2<SBasis> dM=derivative(curve);
+    if ( are_near(L2sq(dM(t)),0.) ) {
+        dM=derivative(dM);
+    }
+    if ( are_near(L2sq(dM(t)),0.) ) {   // try second time
+        dM=derivative(dM);
+    }
+    Piecewise<D2<SBasis> > unitv = unitVector(dM,tol);
+    Piecewise<SBasis> dMlength = dot(Piecewise<D2<SBasis> >(dM),unitv);
+    Piecewise<SBasis> k = cross(derivative(unitv),unitv);
+    k = divide(k,dMlength,tol,3);
+    double curv = k(t); // note that this value is signed
+
+    Geom::Point normal = unitTangentAt(curve, t).cw();
+    double radius = 1/curv;
+    Geom::Point center = curve(t) + radius*normal;
+    return Geom::Circle(center, fabs(radius));
+}
+
 } // namespace Geom
 
 namespace Inkscape {
@@ -381,76 +407,26 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
                     break;
                 }
                 case LINEJOIN_EXTRP_MITER_ARC: {
-                    Geom::Circle circle0;
-                    Geom::Circle circle1;
-                    Geom::Point tang0(0.,0.);
-                    {
-                        Geom::Point norm0(0.,0.);
-                        Geom::Coord curv0 = 0;
-                        std::vector<Geom::Point> derivs = reverse(B[prev_i]).valueAndDerivatives(0.,5);
-                        for (unsigned deriv_n = 1, count = 0; deriv_n < derivs.size(); deriv_n++) {
-                            Geom::Coord length = derivs[deriv_n].length();
-                            if ( ! Geom::are_near(length, 0) ) {
-                                if (count == 0) {
-                                    tang0 = derivs[deriv_n] / length;
-                                    curv0 = length; // save the length of the tangent
-                                    count++;
-                                } else {
-                                    // curv0 =  need good way to calculate curvature
-                                    // calculate direction of normal
-                                    double angle = angle_between(tang0, derivs[deriv_n]);
-                                    if (angle >= 0 ) {
-                                        norm0 = tang0.ccw();
-                                    } else {
-                                        norm0 = tang0.cw();
-                                    }
-                                    break; // break out of for-loop
-                                }
-                            }
-                        }
-                        double r0 = curv0;
-                        Geom::Point center0 = B[prev_i].at1() - r0*norm0;
-                        circle0 = Geom::Circle(center0, r0);
-                    }
-                    Geom::Point tang1(0.,0.);
-                    {
-                        Geom::Point norm1(0.,0.);
-                        Geom::Coord curv1 = 0;
-                        std::vector<Geom::Point> derivs = B[i].valueAndDerivatives(0.,5);
-                        for (unsigned deriv_n = 1, count = 0; deriv_n < derivs.size(); deriv_n++) {
-                            Geom::Coord length = derivs[deriv_n].length();
-                            if ( ! Geom::are_near(length, 0) ) {
-                                if (count == 0) {
-                                    tang1 = derivs[deriv_n] / length;
-                                    curv1 = length; // save the length of the tangent
-                                    count++;
-                                } else {
-                                    //curv1 = length / curv1; // curvature = tangent' / tangent
-                                    // calculate direction of normal
-                                    double angle = angle_between(tang1, derivs[deriv_n]);
-                                    if (angle >= 0 ) {
-                                        norm1 = tang1.ccw();
-                                    } else {
-                                        norm1 = tang1.cw();
-                                    }
-                                    break; // break out of for-loop
-                                }
-                            }
-                        }
-                        double r1 = curv1;
-                        Geom::Point center1 = B[i].at0() - r1*norm1;
-                        circle1 = Geom::Circle(center1, r1);
-                    }
-
+                    Geom::Circle circle1 = Geom::touching_circle(reverse(B[prev_i]),0.);
+                    Geom::Circle circle2 = Geom::touching_circle(B[i],0.);
                     Geom::Point points[2];
-                    int solutions = circle_circle_intersection(circle0, circle1, points[0], points[1]);
+                    int solutions = circle_circle_intersection(circle1, circle2, points[0], points[1]);
                     if (solutions == 2) {
-                        Geom::Point sol = points[0];
-                        if ( dot(tang0,sol-B[prev_i].at1()) > 0 ) {
+                        Geom::Point sol(0.,0.);
+                        if ( dot(tang2,points[0]-B[i].at0()) > 0 ) {
+                            // points[0] is bad, choose points[1]
                             sol = points[1];
+                        } else if ( dot(tang2,points[1]-B[i].at0()) > 0 ) { // points[0] could be good, now check points[1]
+                            // points[1] is bad, choose points[0]
+                            sol = points[0];
+                        } else {
+                            // both points are good, choose nearest
+                            sol = ( distanceSq(B[i].at0(), points[0]) < distanceSq(B[i].at0(), points[1]) ) ?
+                                    points[0] : points[1];
                         }
-                        Geom::EllipticalArc *arc0 = circle0.arc(B[prev_i].at1(), 0.5*(B[prev_i].at1()+sol), sol, true);
-                        Geom::EllipticalArc *arc1 = circle1.arc(sol, 0.5*(sol+B[i].at0()), B[i].at0(), true);
+
+                        Geom::EllipticalArc *arc0 = circle1.arc(B[prev_i].at1(), 0.5*(B[prev_i].at1()+sol), sol, true);
+                        Geom::EllipticalArc *arc1 = circle2.arc(sol, 0.5*(sol+B[i].at0()), B[i].at0(), true);
 
                         if (arc0) {
                             build_from_sbasis(pb,arc0->toSBasis(), tol, false);
@@ -462,13 +438,30 @@ static Geom::Path path_from_piecewise_fix_cusps( Geom::Piecewise<Geom::D2<Geom::
                             delete arc1;
                             arc1 = NULL;
                         }
-                    } else if (solutions == 1) { // one circle is inside the other
+
+                        break;
+                    } else {
+                        // fall back to miter
+                        boost::optional<Geom::Point> p = intersection_point( B[prev_i].at1(), tang1,
+                                                                             B[i].at0(), tang2 );
+                        if (p) {
+                            // check size of miter
+                            Geom::Point point_on_path = B[prev_i].at1() - rot90(tang1) * width;
+                            Geom::Coord len = distance(*p, point_on_path);
+                            if (len <= fabs(width) * miter_limit) {
+                                // miter OK
+                                pb.lineTo(*p);
+                            }
+                        }
+                        pb.lineTo(B[i].at0());
+                    }
+                    /*else if (solutions == 1) { // one circle is inside the other
                         // don't know what to do: default to bevel
                         pb.lineTo(B[i].at0());
                     } else { // no intersections
                         // don't know what to do: default to bevel
                         pb.lineTo(B[i].at0());
-                    }
+                    } */
 
                     break;
                 }
