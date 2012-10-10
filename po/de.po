@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-10-08 22:42+0200\n"
-"PO-Revision-Date: 2012-10-09 16:34+0100\n"
+"PO-Revision-Date: 2012-10-10 05:48+0100\n"
 "Last-Translator: Uwe Schoeler <mail@uwe-schoeler.de>\n"
 "Language-Team:  <de@li.org>\n"
 "Language: de\n"
@@ -1619,7 +1619,7 @@ msgstr "Poster Kreuzrauschen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Overlay with a small scale screen like noise"
-msgstr ""
+msgstr "Einblendung mit einem kleinen Bildschirm wie Rauschen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Cross Noise Poster B"
@@ -1641,7 +1641,7 @@ msgstr "raues Poster"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Adds roughness to one of the two channels of the Poster paint filter"
-msgstr ""
+msgstr "Fügt Rauigkeit einem der beiden Kanäle des Poster-Mal-Filters hinzu"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -1755,7 +1755,7 @@ msgstr "gebürstetes Metall"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Satiny metal surface effect"
-msgstr ""
+msgstr "Seidiger Metalloberflächen-Effekt"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Opaline"
@@ -1843,7 +1843,7 @@ msgstr "Aluminium geprägt"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Satiny aluminium effect with embossing"
-msgstr ""
+msgstr "Seidiger Aluminium-Effekt mit Prägung"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Refractive Glass"
@@ -1941,7 +1941,7 @@ msgstr "Simuliere CMY"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Render Cyan, Magenta and Yellow channels with a colorizable background"
-msgstr ""
+msgstr "Render Blau, Rot und Gelb-Kanäle mit einem colorierbaren Hintergrund"
 
 #: ../share/filters/filters.svg.h:1
 #, fuzzy
@@ -1949,9 +1949,8 @@ msgid "Contouring table"
 msgstr "Gergonne-Dreieck"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Blurred multiple contours for objects"
-msgstr "Verschwommene farbige Kontur, leer"
+msgstr "Verschwommene multiple Konturen für Objekte"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Posterized Blur"
@@ -1968,9 +1967,8 @@ msgid "Contouring discrete"
 msgstr "Diskrete Konturen"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Sharp multiple contour for objects"
-msgstr "An Objektmittelpunkten ein-/ausrasten"
+msgstr "Scharfe multiple Konturen für Objekte"
 
 #. Palette: ./inkscape.gpl
 #: ../share/palettes/palettes.h:2
@@ -6596,7 +6594,7 @@ msgstr "Mischen zum Hintergrund"
 
 #: ../src/extension/internal/filter/blurs.h:354
 msgid "Blur eroded by white or transparency"
-msgstr ""
+msgstr "Verschwommen erodiert durch Weiß oder Transparenz"
 
 #: ../src/extension/internal/filter/bumps.h:80
 msgid "Bump"
@@ -6782,9 +6780,8 @@ msgid "Image"
 msgstr "Bild"
 
 #: ../src/extension/internal/filter/bumps.h:326
-#, fuzzy
 msgid "Blurred image"
-msgstr "Alle Bilder einbetten"
+msgstr "Verschwommenes Bild"
 
 #: ../src/extension/internal/filter/bumps.h:328
 msgid "Background opacity:"
@@ -7050,14 +7047,12 @@ msgid "Channel to alpha"
 msgstr "Kanal zu Alpha"
 
 #: ../src/extension/internal/filter/color.h:656
-#, fuzzy
 msgid "Extract color channel as a transparent image"
-msgstr "Extrahiere bestimmen Farbkanal aus Bild"
+msgstr "Extrahiere Farbkanal als ein transparentes Bild"
 
 #: ../src/extension/internal/filter/color.h:739
-#, fuzzy
 msgid "Fade to Black or White"
-msgstr "Schwarz-Weiß"
+msgstr "Zu Schwarz oder Weiß ausblenden"
 
 #: ../src/extension/internal/filter/color.h:741
 #: ../src/extension/internal/filter/image.h:56
@@ -7099,7 +7094,7 @@ msgstr "Transparent"
 
 #: ../src/extension/internal/filter/color.h:832
 msgid "Customize greyscale components"
-msgstr ""
+msgstr "Anpassen der Graustufen-Komponenten"
 
 #: ../src/extension/internal/filter/color.h:904
 #: ../src/ui/widget/selected-style.cpp:237
@@ -7111,9 +7106,8 @@ msgid "Invert channels:"
 msgstr "Kanäle invertieren:"
 
 #: ../src/extension/internal/filter/color.h:907
-#, fuzzy
 msgid "No inversion"
-msgstr "Kien Invertieren"
+msgstr "Keine Umkehrung"
 
 #: ../src/extension/internal/filter/color.h:908
 msgid "Red and blue"
@@ -7145,7 +7139,7 @@ msgstr "Transparenz invertieren"
 
 #: ../src/extension/internal/filter/color.h:923
 msgid "Manage hue, lightness and transparency inversions"
-msgstr ""
+msgstr "Verwalten Farbton, Helligkeit und Transparenz-Umkehrungen"
 
 #: ../src/extension/internal/filter/color.h:1041
 msgid "Lights:"
@@ -7500,7 +7494,7 @@ msgstr "Inhalt verwischen"
 
 #: ../src/extension/internal/filter/morphology.h:79
 msgid "Smooth edges and angles of shapes"
-msgstr ""
+msgstr "Glatte Kanten und Ecken von Formen"
 
 #: ../src/extension/internal/filter/morphology.h:166
 msgid "Outline"
@@ -7577,9 +7571,8 @@ msgid "Stroke opacity:"
 msgstr "Strich-Deckkraft:"
 
 #: ../src/extension/internal/filter/morphology.h:206
-#, fuzzy
 msgid "Adds a colorizable outline"
-msgstr "Fügt einfärbbaren Lichthof im Inneren hinzu"
+msgstr "Fügt einfärbbaren Umriss hinzu"
 
 #: ../src/extension/internal/filter/overlays.h:56
 msgid "Noise Fill"
@@ -7642,9 +7635,8 @@ msgid "Drawing blend:"
 msgstr "Zeichnen abgebrochen"
 
 #: ../src/extension/internal/filter/paint.h:84
-#, fuzzy
 msgid "Dented"
-msgstr "Zentrieren"
+msgstr "Verbeult"
 
 #: ../src/extension/internal/filter/paint.h:88
 #: ../src/extension/internal/filter/paint.h:701
@@ -7690,7 +7682,7 @@ msgstr "Länge:"
 
 #: ../src/extension/internal/filter/paint.h:248
 msgid "Convert image to an engraving made of vertical and horizontal lines"
-msgstr ""
+msgstr "Konvertiere Bild in eine Gravur aus vertikalen und horizontalen Linien"
 
 # not sure here -cm-
 #: ../src/extension/internal/filter/paint.h:332
@@ -7777,14 +7769,12 @@ msgid "Line type:"
 msgstr "Linientyp:"
 
 #: ../src/extension/internal/filter/paint.h:588
-#, fuzzy
 msgid "Smoothed"
-msgstr "Glätten"
+msgstr "Geglättet"
 
 #: ../src/extension/internal/filter/paint.h:589
-#, fuzzy
 msgid "Contrasted"
-msgstr "Kontrast"
+msgstr "Abgestochen"
 
 #: ../src/extension/internal/filter/paint.h:592
 msgid "Line width:"
@@ -7801,14 +7791,12 @@ msgid "Posterize and draw smooth lines around color shapes"
 msgstr "Posterisiere und zeichne weicle Linien um farbige Formen herum"
 
 #: ../src/extension/internal/filter/paint.h:689
-#, fuzzy
 msgid "Point Engraving"
-msgstr "Gravur"
+msgstr "Punkt-Gravur"
 
 #: ../src/extension/internal/filter/paint.h:702
-#, fuzzy
 msgid "Noise blend:"
-msgstr "Blase mit Lichthof"
+msgstr "Rauschmischung:"
 
 #: ../src/extension/internal/filter/paint.h:710
 #, fuzzy
@@ -7836,9 +7824,8 @@ msgid "Convert image to a transparent point engraving"
 msgstr "In einfärbbares transparentes Positiv oder Negativ umwandeln"
 
 #: ../src/extension/internal/filter/paint.h:852
-#, fuzzy
 msgid "Poster Paint"
-msgstr "erzwungen"
+msgstr "Poster-Malen"
 
 #: ../src/extension/internal/filter/paint.h:858
 msgid "Transfer type:"
@@ -10618,9 +10605,8 @@ msgid "Offset points"
 msgstr "Versatzpunkte"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:208
-#, fuzzy
 msgid "Sort points"
-msgstr "Orientierungspunkte"
+msgstr "Punkte sortieren"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:208
 msgid "Sort offset points according to their time value along the curve"
@@ -10628,9 +10614,8 @@ msgstr ""
 "Sortiert versetzte Punkte entsprechend ihres Zeitwertes entlang der Kurve"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:209
-#, fuzzy
 msgid "Interpolator type:"
-msgstr "Stil Interpolieren"
+msgstr "Interpolatortyp"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:209
 msgid ""
@@ -10645,6 +10630,8 @@ msgid ""
 "Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear "
 "interpolation, 1 = smooth"
 msgstr ""
+"Setzt die Weichheit für den CubicBezierJohan-Interpolator; 0 = Lineare "
+"Interpolation, 1 = weich"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:211
 #, fuzzy
@@ -13775,13 +13762,12 @@ msgstr ""
 "Objekte, <b>Anfasser ziehen</b> verändert Farbverlauf."
 
 #: ../src/tools-switch.cpp:213
-#, fuzzy
 msgid ""
 "<b>Drag</b> or <b>double click</b> to create a mesh on selected objects, "
 "<b>drag handles</b> to adjust meshes."
 msgstr ""
-"<b>Ziehen</b> oder <b>Doppelklicken</b> erzeugt Farbverlauf für gewählte "
-"Objekte, <b>Anfasser ziehen</b> verändert Farbverlauf."
+"<b>Ziehen</b> oder <b>Doppelklicken</b> erzeugt ein Gitter auf gewählten "
+"Objekten, <b>Anfasser ziehen</b> um Gitter einzustellen."
 
 #: ../src/tools-switch.cpp:220
 msgid ""
@@ -23535,9 +23521,8 @@ msgid "Stretch this document window to full screen"
 msgstr "Dieses Dokumentenfenster auf Vollbild aufziehen"
 
 #: ../src/verbs.cpp:2648
-#, fuzzy
 msgid "Fullscreen & Focus Mode"
-msgstr "Schaltet _Fokusmodus um"
+msgstr "Vollbild und Fokusmodus"
 
 #: ../src/verbs.cpp:2648
 #, fuzzy
@@ -23612,14 +23597,12 @@ msgid "_Grayscale"
 msgstr "_Graustufen"
 
 #: ../src/verbs.cpp:2669
-#, fuzzy
 msgid "Switch to grayscale display mode"
-msgstr "In den normalen Anzeigemodus wechseln"
+msgstr "In den Graustufen-Anzeigemodus wechseln"
 
 #: ../src/verbs.cpp:2673
-#, fuzzy
 msgid "Toggle between normal and grayscale color display modes"
-msgstr "Zwischen normaler und Umriss-Ansicht umschalten"
+msgstr "Zwischen normaler und Graustufen-Farb-Ansicht umschalten"
 
 # ???
 #: ../src/verbs.cpp:2675
@@ -24016,9 +23999,8 @@ msgid "Repeat the last extension with the same settings"
 msgstr "Letzten Effekt mit den gleichen Einstellungen anwenden"
 
 #: ../src/verbs.cpp:2786
-#, fuzzy
 msgid "_Previous Extension Settings..."
-msgstr "Einstellungen der vorherigen Erweiterung…"
+msgstr "Vorherige Erweiterungs-Einstellungen…"
 
 #: ../src/verbs.cpp:2787
 msgid "Repeat the last extension with new settings"
@@ -25121,9 +25103,8 @@ msgid "Insert"
 msgstr "Einfügen"
 
 #: ../src/widgets/node-toolbar.cpp:366
-#, fuzzy
 msgid "Insert node at min X"
-msgstr "Knoten einfügen"
+msgstr "Knoten einfügen bei min X"
 
 #: ../src/widgets/node-toolbar.cpp:367
 #, fuzzy
@@ -25135,9 +25116,8 @@ msgid "Insert min X"
 msgstr "Eingabe min X"
 
 #: ../src/widgets/node-toolbar.cpp:376
-#, fuzzy
 msgid "Insert node at max X"
-msgstr "Knoten einfügen"
+msgstr "Knoten einfügen bei max X"
 
 #: ../src/widgets/node-toolbar.cpp:377
 #, fuzzy
@@ -25149,9 +25129,8 @@ msgid "Insert max X"
 msgstr "Eingabe max X"
 
 #: ../src/widgets/node-toolbar.cpp:386
-#, fuzzy
 msgid "Insert node at min Y"
-msgstr "Knoten einfügen"
+msgstr "Knoten einfügen bei min Y"
 
 #: ../src/widgets/node-toolbar.cpp:387
 #, fuzzy
@@ -25163,9 +25142,8 @@ msgid "Insert min Y"
 msgstr "Eingabe min Y"
 
 #: ../src/widgets/node-toolbar.cpp:396
-#, fuzzy
 msgid "Insert node at max Y"
-msgstr "Knoten einfügen"
+msgstr "Knoten einfügen bei max Y"
 
 #: ../src/widgets/node-toolbar.cpp:397
 #, fuzzy
@@ -25878,7 +25856,6 @@ msgid "Scatter:"
 msgstr "Streuung:"
 
 #: ../src/widgets/spray-toolbar.cpp:165
-#, fuzzy
 msgid "Increase to scatter sprayed objects"
 msgstr "Vergrößern der Streuung gesprühter Objekte"
 
@@ -25916,12 +25893,10 @@ msgid "Amount"
 msgstr "Menge"
 
 #: ../src/widgets/spray-toolbar.cpp:226
-#, fuzzy
 msgid "Adjusts the number of items sprayed per click"
 msgstr "Anzahl der Objekte festlegen, die per Klick gesprüht werden."
 
 #: ../src/widgets/spray-toolbar.cpp:242
-#, fuzzy
 msgid ""
 "Use the pressure of the input device to alter the amount of sprayed objects"
 msgstr ""
@@ -27372,6 +27347,8 @@ msgid ""
 "Orientation points have not been defined! A default set of orientation "
 "points has been automatically added."
 msgstr ""
+"Orientierungspunkte wurden noch nicht definiert. Ein Standard-Set von "
+"Orienttierungspunkten wurde automatisch hinzugefügt."
 
 #: ../share/extensions/gcodetools.py:6672
 msgid ""
@@ -27440,6 +27417,11 @@ msgid ""
 "update the JessyInk script.\n"
 "\n"
 msgstr ""
+"Das JessyInk-Skript ist in dieser SVG-Datei nicht installiert oder hat eine "
+"andere Version als die JessyInk-Erweiterung. Bitte wählen Sie \"install/"
+"update...\" aus dem \"JessyInk\" Untermenü des \"Erweiterungen\" Menü, um "
+"das JessyInk-Skript zu installieren oder zu aktualisieren.\n"
+"\n"
 
 #: ../share/extensions/jessyInk_autoTexts.py:48
 msgid ""
@@ -27608,6 +27590,8 @@ msgid ""
 "No object selected. Please select the object you want to assign a view to "
 "and then press apply.\n"
 msgstr ""
+"Kein Objekt ausgewählt. Bitte wählen Sie das gewünschte Objekt für die "
+"Zuweisung einer Ansicht und drücken Sie dann anwenden.\n"
 
 #: ../share/extensions/markers_strokepaint.py:83
 #, python-format
@@ -28095,17 +28079,14 @@ msgid "Lightness (%):"
 msgstr "Helligkeit (%):"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:16
-#, fuzzy
 msgid "Random hue"
 msgstr "Zufallsfarbton"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:17
-#, fuzzy
 msgid "Random lightness"
 msgstr "Zufallshelligkeit"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:18
-#, fuzzy
 msgid "Random saturation"
 msgstr "Zufallssättigung"
 
@@ -28395,7 +28376,6 @@ msgid "Orthocentre"
 msgstr "Höhenschnittpunkt"
 
 #: ../share/extensions/draw_from_triangle.inx.h:28
-#, fuzzy
 msgid "Point At:"
 msgstr "Zeigt auf"
 
@@ -28664,9 +28644,8 @@ msgid "Only black and white:"
 msgstr "Nur Schwarz-Weiß"
 
 #: ../share/extensions/edge3d.inx.h:8
-#, fuzzy
 msgid "Shades:"
-msgstr "Formen"
+msgstr "Schatten:"
 
 #: ../share/extensions/edge3d.inx.h:9
 msgid "Stroke width:"
@@ -29226,7 +29205,7 @@ msgstr "Pfad zu GCode"
 #: ../share/extensions/gcodetools_lathe.inx.h:37
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:27
 msgid "Post-processor:"
-msgstr ""
+msgstr "Nachbereitung:"
 
 #: ../share/extensions/gcodetools_area.inx.h:40
 #: ../share/extensions/gcodetools_dxf_points.inx.h:18
@@ -29290,6 +29269,9 @@ msgid ""
 "+Ctrl+G) 3. Press Apply Suspected small objects will be marked out by "
 "colored arrows."
 msgstr ""
+"Nutzung: 1. Wählen Sie alle Flächen Verschiebungen (graue Umrandung) 2. "
+"Objekt/Gruppierung aufheben (Umschalt+Ctrl+G) 3. Klicken Sie auf Übernehmen "
+"und kleine Objekte werden durch farbige Pfeile markiert."
 
 #: ../share/extensions/gcodetools_area.inx.h:49
 #: ../share/extensions/gcodetools_dxf_points.inx.h:21
@@ -29368,9 +29350,8 @@ msgid "Engraving"
 msgstr "Gravur"
 
 #: ../share/extensions/gcodetools_engraving.inx.h:17
-#, fuzzy
 msgid "Maximum distance for engraving (mm/inch):"
-msgstr "Maximale Verschiebung in X, px"
+msgstr "Maximale Distanz für die Gravur (mm/inch):"
 
 #: ../share/extensions/gcodetools_engraving.inx.h:28
 msgid "Smooth convex corners between this value and 180 degrees:"
@@ -29417,9 +29398,8 @@ msgid "Graffiti"
 msgstr "Graffiti"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:19
-#, fuzzy
 msgid "Maximum segment length:"
-msgstr "Maximale Segmentlänge (px)"
+msgstr "Maximale Segmentlänge:"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:20
 #, fuzzy
@@ -29505,9 +29485,8 @@ msgid "Lathe Z axis remap:"
 msgstr ""
 
 #: ../share/extensions/gcodetools_lathe.inx.h:24
-#, fuzzy
 msgid "Lathe modify path"
-msgstr "Pfad modifizieren"
+msgstr "Pfad drehend modifizieren"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:25
 msgid "Lathe width:"
@@ -29522,15 +29501,16 @@ msgid ""
 "This function modifies path so it will be able to be cut with the "
 "rectangular cutter."
 msgstr ""
+"Diese Funktion verändert den Pfad, damit er mit dem Rechteck-Schneider "
+"geschnitten werden kann."
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:1
 msgid "-------------------------------------------------"
 msgstr "-------------------------------------------------"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:2
-#, fuzzy
 msgid "Create in-out paths"
-msgstr "Erstelle Spiral-Pfad"
+msgstr "Erstelle Innen-Außen-Pfade"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:3
 msgid "Do not add in-out reference points"
@@ -29555,10 +29535,9 @@ msgstr ""
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:11
 msgid "Maximum angle for corner (0-180 deg):"
-msgstr ""
+msgstr "Maximaler Winkel für Ecke (0-180 Grad):"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:12
-#, fuzzy
 msgid "Perpendicular"
 msgstr "Senkrechte Winkelhalbierende"
 
@@ -29568,7 +29547,7 @@ msgstr "Ecken vorbereiten"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:14
 msgid "Prepare path for plasma or laser cuters"
-msgstr ""
+msgstr "Pfad für Plasma- oder Laserschneider vorbereiten"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:15
 msgid "Replace original path"
@@ -29621,7 +29600,7 @@ msgstr "Graffiti"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:12
 msgid "lathe cutter"
-msgstr ""
+msgstr "Drehbank-Schneider"
 
 # !!!
 #: ../share/extensions/gcodetools_tools_library.inx.h:13
@@ -30999,9 +30978,8 @@ msgid "Assign stroke color"
 msgstr "Farbe der Kontur setzen"
 
 #: ../share/extensions/markers_strokepaint.inx.h:4
-#, fuzzy
 msgid "Color Markers"
-msgstr "Farbleisten"
+msgstr "Farbmarkierungen"
 
 #: ../share/extensions/markers_strokepaint.inx.h:7
 msgid "From object"
@@ -31744,7 +31722,7 @@ msgstr "Datenmatrix"
 #: ../share/extensions/render_barcode_datamatrix.inx.h:4
 #: ../share/extensions/render_barcode_qrcode.inx.h:16
 msgid "Size, in unit squares:"
-msgstr ""
+msgstr "Größe in der Einheit Quadrate:"
 
 #: ../share/extensions/render_barcode_datamatrix.inx.h:5
 msgid "Square Size (px):"
@@ -31796,6 +31774,8 @@ msgid ""
 "With \"Auto\", the size of the barcode depends on the length of the text and "
 "the error correction level"
 msgstr ""
+"Mit \"Auto\" ist die Größe des Barcodes von der Textlänge und des "
+"Fehlerkorrekturlevels abhängig"
 
 #: ../share/extensions/replace_font.inx.h:1
 msgid "And replace with: "
@@ -31805,6 +31785,8 @@ msgstr "Und ersetze mit:"
 msgid ""
 "Choose this tab if you would like to see a list of the fonts used/found."
 msgstr ""
+"Schließen Sie diesen Tab wenn Sie eine Liste der benutzten/gefundenen "
+"Schriftarten sehen möchten."
 
 #: ../share/extensions/replace_font.inx.h:3
 msgid "Entire drawing"
@@ -31984,7 +31966,7 @@ msgstr "Behalten der Editor-Daten"
 
 #: ../share/extensions/scour.inx.h:17
 msgid "Number of significant digits for coords:"
-msgstr ""
+msgstr "Anzahl der signifikanten Ziffern für die Koordinaten:"
 
 #: ../share/extensions/scour.inx.h:18
 msgid "Optimized SVG (*.svg)"
@@ -32109,7 +32091,7 @@ msgstr ""
 
 #: ../share/extensions/scour.inx.h:47
 msgid "Work around renderer bugs"
-msgstr ""
+msgstr "Um Render-Fehler herum arbeiten"
 
 #: ../share/extensions/scour.inx.h:48
 msgid "XML indentation (pretty-printing):"
@@ -32117,7 +32099,7 @@ msgstr ""
 
 #: ../share/extensions/setup_typography_canvas.inx.h:1
 msgid "1 - Setup Typography Canvas"
-msgstr ""
+msgstr "1- Setup Typografie-Leinwand"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:2
 msgid "Ascender:"
@@ -32462,7 +32444,7 @@ msgstr "Konvertiere SVG Schrift zu Glyph-Ebenen"
 
 #: ../share/extensions/svgfont2layers.inx.h:2
 msgid "Load only the first 30 glyphs (Recommended)"
-msgstr ""
+msgstr "Lade nur die ersten 30 Glyphen (Empfohlen)"
 
 #: ../share/extensions/text_braille.inx.h:1
 msgid "Convert to Braille"
@@ -32614,6 +32596,8 @@ msgid ""
 "Select a set of objects. Their centroids will be used as the sites of the "
 "Voronoi diagram. Text objects are not handled."
 msgstr ""
+"Wählen Sie ein Set von Objekten. Ihre Flächenschwerpunkte werden wie die "
+"Seiten der Voronoi-Diagramme verwendet. Textobjekte werden nicht behandelt."
 
 #: ../share/extensions/voronoi2svg.inx.h:10
 msgid "Show the bounding box"
@@ -32625,7 +32609,7 @@ msgstr "Diagrammtyp:"
 
 #: ../share/extensions/voronoi2svg.inx.h:12
 msgid "Voronoi Diagram"
-msgstr "Voronoi Muster"
+msgstr "Voronoi Diagramm"
 
 #: ../share/extensions/voronoi2svg.inx.h:13
 msgid "Voronoi and Delaunay"
