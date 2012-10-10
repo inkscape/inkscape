@@ -1905,6 +1905,10 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
                 (gchar *) g_utf16_to_utf8( (gunichar2 *) wide_text, pEmr->emrtext.nChars, NULL, NULL, NULL );
 
             if (ansi_text) {
+                if ((wide_text[0] < 32) && (strlen(ansi_text) == 1)) {
+                    g_free(ansi_text);  // filter out isolated control characters
+                    ansi_text = g_strdup("");
+                }
 //                gchar *p = ansi_text;
 //                while (*p) {
 //                    if (*p < 32 || *p >= 127) {
