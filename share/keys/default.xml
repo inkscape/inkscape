@@ -122,6 +122,8 @@ override) the bindings in the main default.xml.
   <bind key="m" action="ToolMeasure" />
   <bind key="M" action="ToolMeasure" display="true" />
 
+  <bind action="MeasurePrefs" />
+
   <bind key="F9" modifiers="Shift" action="ToolStar" />
   <bind key="asterisk" modifiers="Shift" action="ToolStar" /> 	 
   <bind key="asterisk" action="ToolStar" /> 	 
@@ -193,7 +195,6 @@ override) the bindings in the main default.xml.
 
   <bind action="SprayPrefs" />
 
-
 <!-- Zoom -->
 
   <bind key="plus" action="ZoomIn" display="true" />
@@ -248,33 +249,44 @@ override) the bindings in the main default.xml.
   <bind key="Tab" modifiers="Ctrl,Shift" action="PrevWindow" display="true" />
   <bind key="ISO_Left_Tab" modifiers="Ctrl,Shift" action="PrevWindow" />
 
+  <bind key="numbersign" modifiers="Shift" action="ToggleGrid" /> <!-- # -->
+  <bind key="numbersign" action="ToggleGrid" display="true" />
+  
+  <bind key="bar" modifiers="Shift" action="ToggleGuides" /> <!-- | -->
+  <bind key="bar" action="ToggleGuides" display="true" />
+
+  <bind key="percent" action="ToggleSnapGlobal" display="true" /> <!-- % -->
+  <bind key="percent" modifiers="Shift" action="ToggleSnapGlobal" />
+
+  <bind action="ToggleCommandsToolbar" />
+  <bind action="ToggleSnapToolbar" />
+  <bind action="ToggleToolToolbar" />
+  <bind action="ToggleToolbox" />
+
   <bind key="r" modifiers="Ctrl" action="ToggleRulers" display="true" />
   <bind key="R" modifiers="Ctrl" action="ToggleRulers" />
 
   <bind key="b" modifiers="Ctrl" action="ToggleScrollbars" display="true" />
   <bind key="B" modifiers="Ctrl" action="ToggleScrollbars" />
 
-  <bind key="bar" modifiers="Shift" action="ToggleGuides" /> <!-- | -->
-  <bind key="bar" action="ToggleGuides" display="true" />
-
-  <bind key="numbersign" modifiers="Shift" action="ToggleGrid" /> <!-- # -->
-  <bind key="numbersign" action="ToggleGrid" display="true" />
+  <bind action="TogglePalette" />
+  <bind action="ToggleStatusbar" />
   
-  <bind key="percent" action="ToggleSnapGlobal" display="true" /> <!-- % -->
-  <bind key="percent" modifiers="Shift" action="ToggleSnapGlobal" />
-
   <bind action="ViewNew" />
   <bind action="ViewNewPreview" />
   <bind action="ViewIconPreview" />
 
-  <bind action="ViewModeNormal" />
-  <bind action="ViewModeOutline" />
-  <bind action="ViewColorModeNormal" />
-  <bind action="ViewColorModeGrayscale" />
-
   <bind key="KP_5" modifiers="Ctrl" action="ViewModeToggle" display="true" />
   <bind key="KP_Begin" modifiers="Ctrl" action="ViewModeToggle" />
+
+  <bind action="ViewModeNormal" />
+  <bind action="ViewModeNoFilters" />
+  <bind action="ViewModeOutline" />
+
   <bind key="KP_5" modifiers="Shift" action="ViewColorModeToggle" display="true" />
+
+  <bind action="ViewColorModeNormal" />
+  <bind action="ViewColorModeGrayscale" />
 
 <!-- Edit -->
 
@@ -326,8 +338,12 @@ override) the bindings in the main default.xml.
   <bind key="d" modifiers="Alt,Shift" action="EditUnlinkClone" display="true" />
   <bind key="D" modifiers="Alt,Shift" action="EditUnlinkClone" />
 
+  <bind action="EditRelinkClone" />
+
   <bind key="d" modifiers="Shift" action="EditCloneSelectOriginal" display="true" />
   <bind key="D" modifiers="Shift" action="EditCloneSelectOriginal" />
+
+  <bind action="EditCloneOriginalPathLPE" />
 
   <bind key="a" modifiers="Ctrl" action="EditSelectAll" display="true" />
   <bind key="A" modifiers="Ctrl" action="EditSelectAll" />
@@ -336,6 +352,11 @@ override) the bindings in the main default.xml.
 
   <bind key="a" modifiers="Ctrl,Alt" action="EditSelectAllInAllLayers" display="true" />
   <bind key="A" modifiers="Ctrl,Alt" action="EditSelectAllInAllLayers" />
+
+  <bind action="EditSelectSameFillStroke" />  
+  <bind action="EditSelectSameFillColor" />  
+  <bind action="EditSelectSameStrokeColor" />  
+  <bind action="EditSelectSameStrokeStyle" />  
 
   <bind key="a" modifiers="Shift,Alt" action="EditSelectSameObjectType" display="true" />
   <bind key="A" modifiers="Shift,Alt" action="EditSelectSameObjectType" />
@@ -411,6 +432,10 @@ override) the bindings in the main default.xml.
   <bind action="ObjectRotate90CCW" /> 
 
   <bind action="ObjectRemoveTransform" /> 
+
+  <bind action="FitCanvasToSelection" /> 
+  <bind action="FitCanvasToDrawing" /> 
+  <bind action="FitCanvasToSelectionOrDrawing" /> 
 
 <!-- Path -->
 
@@ -530,18 +555,20 @@ override) the bindings in the main default.xml.
   <bind key="Page_Down" modifiers="Shift" action="LayerMoveToPrev" display="true" />
   <bind key="KP_Page_Down" modifiers="Shift" action="LayerMoveToPrev" />
 
+  <bind action="LayerMoveTo" />  
+
   <bind key="l" modifiers="Ctrl,Shift" action="DialogLayers" display="true" />
   <bind key="L" modifiers="Ctrl,Shift" action="DialogLayers" />  
 
   <bind action="LayerDuplicate" />  
   <bind action="LayerDelete" />  
 
-  <bind action="LayerSolo" />  
-
-  <bind action="LayerShowAll" />  
   <bind action="LayerHideAll" />  
+  <bind action="LayerSolo" />  
+  <bind action="LayerShowAll" />  
 
   <bind action="LayerLockAll" />  
+  <bind action="LayerLockOthers" />  
   <bind action="LayerUnlockAll" />  
 
   <bind action="LayerToggleHide" />  
@@ -575,6 +602,8 @@ override) the bindings in the main default.xml.
 
   <bind key="o" modifiers="Ctrl,Shift" action="DialogObjectProperties" display="true" />
   <bind key="O" modifiers="Ctrl,Shift" action="DialogObjectProperties" />
+
+  <bind action="DialogObjectAttributes" />
 
   <bind key="w" modifiers="Ctrl,Shift" action="DialogSwatches" display="true" />
   <bind key="W" modifiers="Ctrl,Shift" action="DialogSwatches" />
