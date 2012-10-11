@@ -588,11 +588,18 @@ void PdfImportDialog::_setPreviewPage(int page) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+bool
+PdfInput::wasCancelled () {
+    return _cancelled;
+}
+
 /**
  * Parses the selected page of the given PDF document using PdfParser.
  */
 SPDocument *
 PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
+
+    _cancelled = false;
 
     // Initialize the globalParams variable for poppler
     if (!globalParams) {
@@ -648,6 +655,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     if (inkscape_use_gui()) {
         dlg = new PdfImportDialog(pdf_doc, uri);
         if (!dlg->showDialog()) {
+            _cancelled = true;
             delete dlg;
             delete pdf_doc;
             return NULL;

@@ -152,6 +152,10 @@ Input::open (const gchar *uri)
 
     SPDocument *const doc = imp->open(this, uri);
 
+    if (imp->wasCancelled()) {
+        throw Input::open_cancelled();
+    }
+
     return doc;
 }
 
@@ -227,8 +231,7 @@ Input::prefs (const gchar *uri)
 
     delete dialog;
 
-    if (response == Gtk::RESPONSE_OK) return true;
-    return false;
+    return (response == Gtk::RESPONSE_OK);
 }
 
 } }  /* namespace Inkscape, Extension */

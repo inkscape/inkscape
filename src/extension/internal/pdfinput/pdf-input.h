@@ -135,7 +135,9 @@ public:
     SPDocument *open( Inkscape::Extension::Input *mod,
                                 const gchar *uri );
     static void         init( void );
-
+    virtual bool wasCancelled();
+private:
+    bool _cancelled;
 };
 
 } // namespace Implementation

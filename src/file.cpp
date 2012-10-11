@@ -235,12 +235,16 @@ bool sp_file_open(const Glib::ustring &uri,
     }
 
     SPDocument *doc = NULL;
+    bool cancelled = false;
     try {
         doc = Inkscape::Extension::open(key, uri.c_str());
     } catch (Inkscape::Extension::Input::no_extension_found &e) {
         doc = NULL;
     } catch (Inkscape::Extension::Input::open_failed &e) {
         doc = NULL;
+    } catch (Inkscape::Extension::Input::open_cancelled &e) {
+        doc = NULL;
+        cancelled = true;
     }
 
     if (desktop) {
@@ -287,7 +291,7 @@ bool sp_file_open(const Glib::ustring &uri,
         }
 
         return TRUE;
-    } else {
+    } else if (!cancelled) {
         gchar *safeUri = Inkscape::IO::sanitizeString(uri.c_str());
         gchar *text = g_strdup_printf(_("Failed to load the requested file %s"), safeUri);
         sp_ui_error_dialog(text);
@@ -295,6 +299,8 @@ bool sp_file_open(const Glib::ustring &uri,
         g_free(safeUri);
         return FALSE;
     }
+
+    return FALSE;
 }
 
 /**

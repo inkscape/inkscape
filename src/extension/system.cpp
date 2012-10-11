@@ -144,6 +144,7 @@ SPDocument *open(Extension *key, gchar const *filename)
     }
 
     SPDocument *doc = imod->open(filename);
+
     if (!doc) {
         throw Input::open_failed();
     }

@@ -39,6 +39,10 @@ public:
         virtual ~no_extension_found() throw() {}
         const char *what() const throw() { return "No suitable input extension found"; }
     };
+    struct open_cancelled : public std::exception {
+        virtual ~open_cancelled() throw() {}
+        const char *what() const throw() { return "Open was cancelled"; }
+    };
 
                   Input                (Inkscape::XML::Node * in_repr,
                                         Implementation::Implementation * in_imp);

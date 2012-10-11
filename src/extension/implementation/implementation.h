@@ -104,6 +104,7 @@ public:
     virtual bool check(Inkscape::Extension::Extension * /*module*/) { return true; }
 
     virtual bool cancelProcessing () { return true; }
+    virtual bool wasCancelled () { return false; }
     virtual void commitDocument () {}
 
     // ----- Input functions -----
