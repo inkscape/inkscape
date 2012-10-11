@@ -11,7 +11,7 @@
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
  *
- * Copyright (C) 1999-2010 authors
+ * Copyright (C) 1999-2012 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -66,6 +66,9 @@ void sp_selection_clone_original_path_lpe(SPDesktop *desktop);
 
 void sp_selection_to_marker(SPDesktop *desktop, bool apply = true);
 void sp_selection_to_guides(SPDesktop *desktop);
+
+void sp_selection_symbol(SPDesktop *desktop, bool apply = true);
+void sp_selection_unsymbol(SPDesktop *desktop);
 
 void sp_selection_tile(SPDesktop *desktop, bool apply = true);
 void sp_selection_untile(SPDesktop *desktop);

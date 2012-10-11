@@ -78,6 +78,7 @@
 #include "ui/dialog/layers.h"
 #include "ui/dialog/object-properties.h"
 #include "ui/dialog/swatches.h"
+#include "ui/dialog/symbols.h"
 #include "ui/dialog/spellcheck.h"
 #include "ui/icon-names.h"
 #include "ui/tool/node-tool.h"
@@ -956,6 +957,12 @@ void EditVerb::perform(SPAction *action, void *data)
             break;
         case SP_VERB_EDIT_UNTILE:
             sp_selection_untile(dt);
+            break;
+        case SP_VERB_EDIT_SYMBOL:
+            sp_selection_symbol(dt);
+            break;
+        case SP_VERB_EDIT_UNSYMBOL:
+            sp_selection_unsymbol(dt);
             break;
         case SP_VERB_EDIT_CLEAR_ALL:
             sp_edit_clear_all(dt);
@@ -1912,6 +1919,9 @@ void DialogVerb::perform(SPAction *action, void *data)
         case SP_VERB_DIALOG_SWATCHES:
             dt->_dlg_mgr->showDialog("Swatches");
             break;
+        case SP_VERB_DIALOG_SYMBOLS:
+            dt->_dlg_mgr->showDialog("Symbols");
+            break;
         case SP_VERB_DIALOG_TRANSFORM:
             dt->_dlg_mgr->showDialog("Transformation");
             break;
@@ -2375,6 +2385,10 @@ Verb *Verb::_base_verbs[] = {
                  N_("Convert selection to a rectangle with tiled pattern fill"), NULL),
     new EditVerb(SP_VERB_EDIT_UNTILE, "ObjectsFromPattern", N_("Pattern to _Objects"),
                  N_("Extract objects from a tiled pattern fill"), NULL),
+    new EditVerb(SP_VERB_EDIT_SYMBOL, "ObjectsToSymbol", N_("Group to Symbol"),
+                 N_("Convert group to a symbol"), NULL),
+    new EditVerb(SP_VERB_EDIT_UNSYMBOL, "ObjectsFromSymbol", N_("Symbol to Group"),
+                 N_("Extract group from a symbol"), NULL),
     new EditVerb(SP_VERB_EDIT_CLEAR_ALL, "EditClearAll", N_("Clea_r All"),
                  N_("Delete all objects from document"), NULL),
     new EditVerb(SP_VERB_EDIT_SELECT_ALL, "EditSelectAll", N_("Select Al_l"),
@@ -2748,6 +2762,8 @@ Verb *Verb::_base_verbs[] = {
     // TRANSLATORS: "Swatches" means: color samples
     new DialogVerb(SP_VERB_DIALOG_SWATCHES, "DialogSwatches", N_("S_watches..."),
                    N_("Select colors from a swatches palette"), GTK_STOCK_SELECT_COLOR),
+    new DialogVerb(SP_VERB_DIALOG_SYMBOLS, "DialogSymbols", N_("S_ymbols..."),
+                   N_("Select symbol from a symbols palette"), GTK_STOCK_SELECT_COLOR),
     new DialogVerb(SP_VERB_DIALOG_TRANSFORM, "DialogTransform", N_("Transfor_m..."),
                    N_("Precisely control objects' transformations"), INKSCAPE_ICON("dialog-transform")),
     new DialogVerb(SP_VERB_DIALOG_ALIGN_DISTRIBUTE, "DialogAlignDistribute", N_("_Align and Distribute..."),

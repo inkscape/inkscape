@@ -7,9 +7,11 @@
  *   Jon A. Cruz <jon@joncruz.org>
  *   Incorporates some code from selection-chemistry.cpp, see that file for more credits.
  *   Abhishek Sharma
+ *   Tavmjong Bah
  *
  * Copyright (C) 2008 authors
  * Copyright (C) 2010 Jon A. Cruz
+ * Copyright (C) 2012 Tavmjong Bah (Symbol additions)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -66,6 +68,8 @@
 #include "sp-mask.h"
 #include "sp-textpath.h"
 #include "sp-rect.h"
+#include "sp-use.h"
+#include "sp-symbol.h"
 #include "live_effects/lpeobject.h"
 #include "live_effects/lpeobject-reference.h"
 #include "live_effects/parameter/path.h"
@@ -109,6 +113,7 @@ class ClipboardManagerImpl : public ClipboardManager {
 public:
     virtual void copy(SPDesktop *desktop);
     virtual void copyPathParameter(Inkscape::LivePathEffect::PathParam *);
+    virtual void copySymbol(Inkscape::XML::Node* symbol, gchar const* style);
     virtual bool paste(SPDesktop *desktop, bool in_place);
     virtual bool pasteStyle(SPDesktop *desktop);
     virtual bool pasteSize(SPDesktop *desktop, bool separately, bool apply_x, bool apply_y);
@@ -289,6 +294,43 @@ void ClipboardManagerImpl::copyPathParameter(Inkscape::LivePathEffect::PathParam
     g_free(svgd);
     _root->appendChild(pathnode);
     Inkscape::GC::release(pathnode);
+
+    fit_canvas_to_drawing(_clipboardSPDoc);
+    _setClipboardTargets();
+}
+
+/**
+ * Copy a symbol from the symbol dialog.
+ * @param symbol The Inkscape::XML::Node for the symbol.
+ */
+void ClipboardManagerImpl::copySymbol(Inkscape::XML::Node* symbol, gchar const* style)
+{
+    //std::cout << "ClipboardManagerImpl::copySymbol" << std::endl;
+    if ( symbol == NULL ) {
+        return;
+    }
+
+    _discardInternalClipboard();
+    _createInternalClipboard();
+
+    // We add "_duplicate" to have a well defined symbol name that
+    // bypasses the "prevent_id_classes" routine. We'll get rid of it
+    // when we paste.
+    Inkscape::XML::Node *repr = symbol->duplicate(_doc);
+    Glib::ustring symbol_name = repr->attribute("id");
+
+    symbol_name += "_inkscape_duplicate";
+    repr->setAttribute("id",    symbol_name.c_str());
+    _defs->appendChild(repr);
+
+    Glib::ustring id("#");
+    id += symbol->attribute("id");
+
+    Inkscape::XML::Node *use = _doc->createElement("svg:use");
+    use->setAttribute("xlink:href", id.c_str() );
+    // Set a default style in <use> rather than <symbol> so it can be changed.
+    use->setAttribute("style", style );
+    _root->appendChild(use);
 
     fit_canvas_to_drawing(_clipboardSPDoc);
     _setClipboardTargets();
@@ -724,6 +766,14 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
             _copyNode(filter->getRepr(), _doc, _defs);
         }
     }
+
+    // Copy symbols: We may want to be more clever...
+    // if (SP_IS_USE(item)) {
+    //     SPObject *symbol = SP_USE(item)->child;
+    //     if( symbol && SP_IS_SYMBOL(symbol) ) {
+    //         _copyNode(symbol->getRepr(), _doc, _defs);
+    //     }
+    // }
 
     // recurse
     for (SPObject *o = item->children ; o != NULL ; o = o->next) {

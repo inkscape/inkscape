@@ -34,6 +34,7 @@ extern "C" {
 #  define INKSCAPE_PALETTESDIR    BR_DATADIR( "/inkscape/palettes" )
 #  define INKSCAPE_PATTERNSDIR    BR_DATADIR( "/inkscape/patterns" )
 #  define INKSCAPE_SCREENSDIR     BR_DATADIR( "/inkscape/screens" )
+#  define INKSCAPE_SYMBOLSDIR     BR_DATADIR( "/inkscape/symbols" )
 #  define INKSCAPE_TUTORIALSDIR   BR_DATADIR( "/inkscape/tutorials" )
 #  define INKSCAPE_TEMPLATESDIR   BR_DATADIR( "/inkscape/templates" )
 #  define INKSCAPE_UIDIR          BR_DATADIR( "/inkscape/ui" )
@@ -56,6 +57,7 @@ extern "C" {
 #    define INKSCAPE_PALETTESDIR  WIN32_DATADIR("share\\palettes")
 #    define INKSCAPE_PATTERNSDIR  WIN32_DATADIR("share\\patterns")
 #    define INKSCAPE_SCREENSDIR   WIN32_DATADIR("share\\screens")
+#    define INKSCAPE_SYMBOLSDIR   WIN32_DATADIR("share\\symbols")
 #    define INKSCAPE_TUTORIALSDIR WIN32_DATADIR("share\\tutorials")
 #    define INKSCAPE_TEMPLATESDIR WIN32_DATADIR("share\\templates")
 #    define INKSCAPE_UIDIR        WIN32_DATADIR("share\\ui")
@@ -77,6 +79,7 @@ extern "C" {
 #    define INKSCAPE_PALETTESDIR  "Contents/Resources/palettes"
 #    define INKSCAPE_PATTERNSDIR  "Contents/Resources/patterns"
 #    define INKSCAPE_SCREENSDIR   "Contents/Resources/screens"
+#    define INKSCAPE_SYMBOLSDIR   "Contents/Resources/symbols"
 #    define INKSCAPE_TUTORIALSDIR "Contents/Resources/tutorials"
 #    define INKSCAPE_TEMPLATESDIR "Contents/Resources/templates"
 #    define INKSCAPE_UIDIR        "Contents/Resources/ui"
@@ -98,6 +101,7 @@ extern "C" {
 #    define INKSCAPE_PALETTESDIR  INKSCAPE_DATADIR "/inkscape/palettes"
 #    define INKSCAPE_PATTERNSDIR  INKSCAPE_DATADIR "/inkscape/patterns"
 #    define INKSCAPE_SCREENSDIR   INKSCAPE_DATADIR "/inkscape/screens"
+#    define INKSCAPE_SYMBOLSDIR   INKSCAPE_DATADIR "/inkscape/symbols"
 #    define INKSCAPE_TUTORIALSDIR INKSCAPE_DATADIR "/inkscape/tutorials"
 #    define INKSCAPE_TEMPLATESDIR INKSCAPE_DATADIR "/inkscape/templates"
 #    define INKSCAPE_UIDIR        INKSCAPE_DATADIR "/inkscape/ui"

@@ -11,6 +11,7 @@ SUBDIRS = attributes \
           palettes \
           patterns \
           screens \
+          symbols \
           templates \
           tutorials \
           ui

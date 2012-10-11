@@ -33,6 +33,7 @@
 #include "ui/dialog/memory.h"
 #include "ui/dialog/messages.h"
 #include "ui/dialog/scriptdialog.h"
+#include "ui/dialog/symbols.h"
 #include "ui/dialog/tile.h"
 #include "ui/dialog/tracedialog.h"
 #include "ui/dialog/transformation.h"
@@ -121,6 +122,7 @@ DialogManager::DialogManager() {
         registerFactory("SvgFontsDialog",      &create<SvgFontsDialog,       FloatingBehavior>);
 #endif
         registerFactory("Swatches",            &create<SwatchesPanel,        FloatingBehavior>);
+        registerFactory("Symbols",             &create<SymbolsDialog,        FloatingBehavior>);
         registerFactory("TileDialog",          &create<TileDialog,           FloatingBehavior>);
         registerFactory("Trace",               &create<TraceDialog,          FloatingBehavior>);
         registerFactory("Transformation",      &create<Transformation,       FloatingBehavior>);
@@ -156,6 +158,7 @@ DialogManager::DialogManager() {
         registerFactory("SvgFontsDialog",      &create<SvgFontsDialog,       DockBehavior>);
 #endif
         registerFactory("Swatches",            &create<SwatchesPanel,        DockBehavior>);
+        registerFactory("Symbols",             &create<SymbolsDialog,        DockBehavior>);
         registerFactory("TileDialog",          &create<TileDialog,           DockBehavior>);
         registerFactory("Trace",               &create<TraceDialog,          DockBehavior>);
         registerFactory("Transformation",      &create<Transformation,       DockBehavior>);

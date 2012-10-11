@@ -321,6 +321,14 @@ sp_use_description(SPItem *item)
 
     char *ret;
     if (use->child) {
+
+        if( SP_IS_SYMBOL( use->child ) ) {
+            //char *symbol_desc = SP_ITEM(use->child)->description();
+            //g_free(symbol_desc);
+            return g_strdup(_("<b>Clone of Symbol</b>"));
+            //return g_strdup_printf(_("<b>Clone of Symbol</b>: %s"), symbol_desc );
+        }
+
         static unsigned recursion_depth = 0;
         if (recursion_depth >= 4) {
             /* TRANSLATORS: Used for statusbar description for long <use> chains:

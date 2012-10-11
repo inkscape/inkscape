@@ -7,10 +7,12 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Jon A. Cruz <jon@joncruz.org>
  *   Abhishek Sharma
+ *   Tavmjong Bah <tavmjong@free.fr>
  *
  * Copyright (C) 2004-2005 MenTaLguY
  * Copyright (C) 1999-2002 Lauris Kaplinski
  * Copyright (C) 2000-2001 Ximian, Inc.
+ * Copyright (C) 2012 Tavmjong Bah
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -59,6 +61,7 @@
 #include "sp-item-group.h"
 #include "sp-namedview.h"
 #include "sp-object-repr.h"
+#include "sp-symbol.h"
 #include "transf_mat_3x4.h"
 #include "unit-constants.h"
 #include "xml/repr.h"
@@ -1454,9 +1457,10 @@ void SPDocument::importDefs(SPDocument *source)
 
     for (Inkscape::XML::Node *def = defs->firstChild() ; def ; def = def->next()) {
 
-        // Prevent duplicates of solid swatches by checking if equivalent swatch already exists
         gboolean duplicate = false;
         SPObject *src = source->getObjectByRepr(def);
+
+        // Prevent duplicates of solid swatches by checking if equivalent swatch already exists
         if (src && SP_IS_GRADIENT(src)) {
             SPGradient *gr = SP_GRADIENT(src);
             if (gr->isSolid() || gr->getVector()->isSolid()) {
@@ -1469,6 +1473,35 @@ void SPDocument::importDefs(SPDocument *source)
                             break;
                         }
                     }
+                }
+            }
+        }
+
+        // Prevent duplication of symbols... could be more clever.
+        // The tag "_inkscape_duplicate" is added to "id" by ClipboardManagerImpl::copySymbol(). 
+        // We assume that symbols are in defs section (not required by SVG spec).
+        if (src && SP_IS_SYMBOL(src)) {
+
+            Glib::ustring id = src->getRepr()->attribute("id");
+            size_t pos = id.find( "_inkscape_duplicate" );
+            if( pos != Glib::ustring::npos ) {
+
+                // This is our symbol, now get rid of tag
+                id.erase( pos ); 
+
+                // Check that it really is a duplicate
+                for (SPObject *trg = this->getDefs()->firstChild() ; trg ; trg = trg->getNext()) {
+                    if( trg && SP_IS_SYMBOL(trg) && src != trg ) { 
+                        std::string id2 = trg->getRepr()->attribute("id");
+
+                        if( !id.compare( id2 ) ) {
+                            duplicate = true;
+                            break;
+                        }
+                    }
+                }
+                if ( !duplicate ) {
+                    src->getRepr()->setAttribute("id", id.c_str() );
                 }
             }
         }

@@ -1130,6 +1130,7 @@ share/markers/Makefile
 share/palettes/Makefile
 share/patterns/Makefile
 share/screens/Makefile
+share/symbols/Makefile
 share/templates/Makefile
 share/tutorials/Makefile
 share/ui/Makefile

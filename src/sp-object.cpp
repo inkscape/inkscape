@@ -1409,6 +1409,9 @@ void SPObject::_requireSVGVersion(Inkscape::Version version) {
    be made.  The same applies to 'desc' elements.  Therefore, these functions
    ignore all but the first 'title' child element and first 'desc' child
    element, except when deleting a title or description.
+
+   This will change in SVG 2, where multiple 'title' and 'desc' elements will
+   be allowed with different localized strings.
 */
 
 gchar * SPObject::title() const

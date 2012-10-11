@@ -405,6 +405,11 @@ static Geom::OptRect sp_symbol_bbox(SPItem const *item, Geom::Affine const &tran
             Geom::Affine const a( symbol->c2p * transform );
             bbox = ((SPItemClass *) (parent_class))->bbox(item, a, type);
         }
+    } else {
+        // Need bounding box for Symbols dialog
+
+        Geom::Affine const a;
+        bbox = ((SPItemClass *) (parent_class))->bbox(item, a, type);
     }
     return bbox;
 }

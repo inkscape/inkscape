@@ -135,6 +135,7 @@ if(UNIX)
 			${CMAKE_SOURCE_DIR}/share/palettes
 			${CMAKE_SOURCE_DIR}/share/patterns
 			${CMAKE_SOURCE_DIR}/share/screens
+			${CMAKE_SOURCE_DIR}/share/symbols
 			${CMAKE_SOURCE_DIR}/share/templates
 			${CMAKE_SOURCE_DIR}/share/tutorials
 			${CMAKE_SOURCE_DIR}/share/ui
