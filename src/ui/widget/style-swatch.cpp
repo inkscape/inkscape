@@ -340,15 +340,12 @@ void StyleSwatch::setStyle(SPStyle *query)
     if (op != 1) {
         {
             gchar *str;
-            if (op == 0)
-                str = g_strdup_printf(_("O:%.3g"), op);
-            else
-                str = g_strdup_printf(_("O:.%d"), (int) (op*10));
+            str = g_strdup_printf(_("O: %2.0f"), (op*100.0));
             _opacity_value.set_markup (str);
             g_free (str);
         }
         {
-            gchar *str = g_strdup_printf(_("Opacity: %.3g"), op);
+            gchar *str = g_strdup_printf(_("Opacity: %2.1f %%"), (op*100.0));
             _opacity_place.set_tooltip_text(str);
             g_free (str);
         }
