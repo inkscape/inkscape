@@ -55,6 +55,7 @@
 #include "document.h"
 #include "event-log.h"
 #include "helper/units.h"
+#include "interface.h"
 #include "inkscape-private.h"
 #include "layer-fns.h"
 #include "layer-manager.h"
@@ -1318,6 +1319,17 @@ SPDesktop::toggleScrollbars()
     _widget->toggleScrollbars();
 }
 
+
+void SPDesktop::toggleToolbar(gchar const *toolbar_name)
+{
+    Glib::ustring pref_path = getLayoutPrefPath(this) + toolbar_name + "/state";
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gboolean visible = prefs->getBool(pref_path, true);
+    prefs->setBool(pref_path, !visible);
+
+    layoutWidget();
+}
+
 void
 SPDesktop::layoutWidget()
 {
@@ -1473,7 +1485,6 @@ void SPDesktop::toggleSnapGlobal()
     bool v = namedview->getSnapGlobal();
     namedview->setSnapGlobal(!v);
 }
-
 
 //----------------------------------------------------------------------
 // Callback implementations. The virtual ones are connected by the view.

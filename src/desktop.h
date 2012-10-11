@@ -365,6 +365,7 @@ public:
     void toggleSnapGlobal();
     bool gridsEnabled() const { return grids_visible; };
     void showGrids(bool show, bool dirty_document = true);
+    void toggleToolbar(gchar const *toolbar_name);
 
     bool is_iconified();
     bool is_maximized();

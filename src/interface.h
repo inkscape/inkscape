@@ -81,6 +81,7 @@ GtkWidget *sp_ui_main_menubar (Inkscape::UI::View::View *view);
 void sp_menu_append_recent_documents (GtkWidget *menu);
 void sp_ui_dialog_title_string (Inkscape::Verb * verb, gchar* c);
 
+Glib::ustring getLayoutPrefPath( Inkscape::UI::View::View *view );
 
 /**
  *

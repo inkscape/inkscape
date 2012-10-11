@@ -1785,6 +1785,24 @@ void ZoomVerb::perform(SPAction *action, void *data)
         case SP_VERB_TOGGLE_SCROLLBARS:
             dt->toggleScrollbars();
             break;
+        case SP_VERB_TOGGLE_COMMANDS_TOOLBAR:
+            dt->toggleToolbar("commands");
+            break;
+        case SP_VERB_TOGGLE_SNAP_TOOLBAR:
+            dt->toggleToolbar("snaptoolbox");
+            break;
+        case SP_VERB_TOGGLE_TOOL_TOOLBAR:
+            dt->toggleToolbar("toppanel");
+            break;
+        case SP_VERB_TOGGLE_TOOLBOX:
+            dt->toggleToolbar("toolbox");
+            break;
+        case SP_VERB_TOGGLE_PALETTE:
+            dt->toggleToolbar("panels");
+            break;
+        case SP_VERB_TOGGLE_STATUSBAR:
+            dt->toggleToolbar("statusbar");
+            break;
         case SP_VERB_TOGGLE_GUIDES:
             sp_namedview_toggle_guides(doc, repr);
             break;
@@ -1843,6 +1861,7 @@ void ZoomVerb::perform(SPAction *action, void *data)
             inkscape_dialogs_unhide();
             dt->_dlg_mgr->showDialog("IconPreviewPanel");
             break;
+
         default:
             break;
     }
@@ -2646,6 +2665,12 @@ Verb *Verb::_base_verbs[] = {
     new ZoomVerb(SP_VERB_TOGGLE_GRID, "ToggleGrid", N_("_Grid"), N_("Show or hide the grid"), INKSCAPE_ICON("show-grid")),
     new ZoomVerb(SP_VERB_TOGGLE_GUIDES, "ToggleGuides", N_("G_uides"), N_("Show or hide guides (drag from a ruler to create a guide)"), INKSCAPE_ICON("show-guides")),
     new ZoomVerb(SP_VERB_TOGGLE_SNAPPING, "ToggleSnapGlobal", N_("Snap"), N_("Enable snapping"), INKSCAPE_ICON("snap")),
+    new ZoomVerb(SP_VERB_TOGGLE_COMMANDS_TOOLBAR, "ToggleCommandsToolbar", N_("_Commands Bar"), N_("Show or hide the Commands bar (under the menu)"), NULL),
+    new ZoomVerb(SP_VERB_TOGGLE_SNAP_TOOLBAR, "ToggleSnapToolbar", N_("Sn_ap Controls Bar"), N_("Show or hide the snapping controls"), NULL),
+    new ZoomVerb(SP_VERB_TOGGLE_TOOL_TOOLBAR, "ToggleToolToolbar", N_("T_ool Controls Bar"), N_("Show or hide the Tool Controls bar"), NULL),
+    new ZoomVerb(SP_VERB_TOGGLE_TOOLBOX, "ToggleToolbox", N_("_Toolbox"), N_("Show or hide the main toolbox (on the left)"), NULL),
+    new ZoomVerb(SP_VERB_TOGGLE_PALETTE, "TogglePalette", N_("_Palette"), N_("Show or hide the color palette"), NULL),
+    new ZoomVerb(SP_VERB_TOGGLE_STATUSBAR, "ToggleStatusbar", N_("_Statusbar"), N_("Show or hide the statusbar (at the bottom of the window)"), NULL),
     new ZoomVerb(SP_VERB_ZOOM_NEXT, "ZoomNext", N_("Nex_t Zoom"), N_("Next zoom (from the history of zooms)"),
                  INKSCAPE_ICON("zoom-next")),
     new ZoomVerb(SP_VERB_ZOOM_PREV, "ZoomPrev", N_("Pre_vious Zoom"), N_("Previous zoom (from the history of zooms)"),

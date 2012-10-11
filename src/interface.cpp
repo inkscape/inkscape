@@ -527,7 +527,7 @@ static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb
 } // end of sp_ui_menu_append_item_from_verb
 
 
-static Glib::ustring getLayoutPrefPath( Inkscape::UI::View::View *view )
+Glib::ustring getLayoutPrefPath( Inkscape::UI::View::View *view )
 {
     Glib::ustring prefPath;
 
@@ -554,7 +554,7 @@ checkitem_toggled(GtkCheckMenuItem *menuitem, gpointer user_data)
         sp_ui_menu_activate(menuitem, action);
 
     } else if (pref) {
-        // The Show/Hide menu items without actions
+        // All check menu items should have actions now, but just in case
         Glib::ustring pref_path = getLayoutPrefPath( view );
         pref_path += pref;
         pref_path += "/state";
@@ -596,19 +596,16 @@ static gboolean checkitem_update(GtkWidget *widget, GdkEventExpose * /*event*/, 
         if (!strcmp(action->id, "ToggleGrid")) {
             ison = dt->gridsEnabled();
         }
-        if (!strcmp(action->id, "ToggleGuides")) {
+        else if (!strcmp(action->id, "ToggleGuides")) {
             ison = dt->namedview->getGuides();
         }
-        if (!strcmp(action->id, "ToggleSnapGlobal")) {
+        else if (!strcmp(action->id, "ToggleSnapGlobal")) {
             ison = dt->namedview->getSnapGlobal();
         }
-        if (!strcmp(action->id, "ViewCmsToggle")) {
+        else if (!strcmp(action->id, "ViewCmsToggle")) {
             ison = dt->colorProfAdjustEnabled();
         }
-        if (!strcmp(action->id, "ToggleRulers")) {
-            ison = getViewStateFromPref(view, pref);
-        }
-        if (!strcmp(action->id, "ToggleScrollbars")) {
+        else  {
             ison = getViewStateFromPref(view, pref);
         }
     } else if (pref) {
@@ -896,22 +893,22 @@ sp_ui_checkboxes_menus(GtkMenu *m, Inkscape::UI::View::View *view)
 {
     //sp_ui_menu_append_check_item_from_verb(m, view, _("_Menu"), _("Show or hide the menu bar"), "menu",
     //                                       checkitem_toggled, checkitem_update, 0);
-    sp_ui_menu_append_check_item_from_verb(m, view, _("_Commands Bar"), _("Show or hide the Commands bar (under the menu)"), "commands",
-                                           checkitem_toggled, checkitem_update, 0);
-    sp_ui_menu_append_check_item_from_verb(m, view, _("Sn_ap Controls Bar"), _("Show or hide the snapping controls"), "snaptoolbox",
-                                           checkitem_toggled, checkitem_update, 0);
-    sp_ui_menu_append_check_item_from_verb(m, view, _("T_ool Controls Bar"), _("Show or hide the Tool Controls bar"), "toppanel",
-                                           checkitem_toggled, checkitem_update, 0);
-    sp_ui_menu_append_check_item_from_verb(m, view, _("_Toolbox"), _("Show or hide the main toolbox (on the left)"), "toolbox",
-                                           checkitem_toggled, checkitem_update, 0);
+    sp_ui_menu_append_check_item_from_verb(m, view, NULL, NULL, "commands",
+                                           checkitem_toggled, checkitem_update, Inkscape::Verb::get(SP_VERB_TOGGLE_COMMANDS_TOOLBAR));
+    sp_ui_menu_append_check_item_from_verb(m, view,NULL, NULL, "snaptoolbox",
+                                           checkitem_toggled, checkitem_update, Inkscape::Verb::get(SP_VERB_TOGGLE_SNAP_TOOLBAR));
+    sp_ui_menu_append_check_item_from_verb(m, view, NULL, NULL, "toppanel",
+                                           checkitem_toggled, checkitem_update, Inkscape::Verb::get(SP_VERB_TOGGLE_TOOL_TOOLBAR));
+    sp_ui_menu_append_check_item_from_verb(m, view, NULL, NULL, "toolbox",
+                                           checkitem_toggled, checkitem_update, Inkscape::Verb::get(SP_VERB_TOGGLE_TOOLBOX));
     sp_ui_menu_append_check_item_from_verb(m, view, NULL, NULL, "rulers",
                                            checkitem_toggled, checkitem_update, Inkscape::Verb::get(SP_VERB_TOGGLE_RULERS));
     sp_ui_menu_append_check_item_from_verb(m, view, NULL, NULL, "scrollbars",
                                            checkitem_toggled, checkitem_update, Inkscape::Verb::get(SP_VERB_TOGGLE_SCROLLBARS));
-    sp_ui_menu_append_check_item_from_verb(m, view, _("_Palette"), _("Show or hide the color palette"), "panels",
-                                           checkitem_toggled, checkitem_update, 0);
-    sp_ui_menu_append_check_item_from_verb(m, view, _("_Statusbar"), _("Show or hide the statusbar (at the bottom of the window)"), "statusbar",
-                                           checkitem_toggled, checkitem_update, 0);
+    sp_ui_menu_append_check_item_from_verb(m, view, NULL, NULL, "panels",
+                                           checkitem_toggled, checkitem_update, Inkscape::Verb::get(SP_VERB_TOGGLE_PALETTE));
+    sp_ui_menu_append_check_item_from_verb(m, view, NULL, NULL, "statusbar",
+                                           checkitem_toggled, checkitem_update, Inkscape::Verb::get(SP_VERB_TOGGLE_STATUSBAR));
 }
 
 
