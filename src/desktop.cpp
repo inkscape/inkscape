@@ -511,6 +511,35 @@ void SPDesktop::toggleLockAllLayers(bool lock) {
     }
 }
 
+void SPDesktop::toggleLockOtherLayers(SPObject *object) {
+    g_return_if_fail(SP_IS_GROUP(object));
+    g_return_if_fail( currentRoot() == object || (currentRoot() && currentRoot()->isAncestorOf(object)) );
+
+    bool othersLocked = false;
+    std::vector<SPObject*> layers;
+    for ( SPObject* obj = Inkscape::next_layer(currentRoot(), object); obj; obj = Inkscape::next_layer(currentRoot(), obj) ) {
+        // Dont lock any ancestors, since that would in turn lock the layer as well
+        if (!obj->isAncestorOf(object)) {
+            layers.push_back(obj);
+            othersLocked |= !SP_ITEM(obj)->isLocked();
+        }
+    }
+    for ( SPObject* obj = Inkscape::previous_layer(currentRoot(), object); obj; obj = Inkscape::previous_layer(currentRoot(), obj) ) {
+        if (!obj->isAncestorOf(object)) {
+            layers.push_back(obj);
+            othersLocked |= !SP_ITEM(obj)->isLocked();
+        }
+    }
+
+    SPItem *item = SP_ITEM(object);
+    if ( item->isLocked() ) {
+        item->setLocked(false);
+    }
+
+    for ( std::vector<SPObject*>::iterator it = layers.begin(); it != layers.end(); ++it ) {
+        SP_ITEM(*it)->setLocked(othersLocked);
+    }
+}
 
 
 void SPDesktop::toggleLayerSolo(SPObject *object) {

@@ -1351,13 +1351,20 @@ void LayerVerb::perform(SPAction *action, void *data)
             DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:hideall", SP_VERB_LAYER_HIDE_ALL, _("Hide all layers"));
             break;
         }
-
         case SP_VERB_LAYER_LOCK_ALL: {
             dt->toggleLockAllLayers( true );
             DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:lockall", SP_VERB_LAYER_LOCK_ALL, _("Lock all layers"));
             break;
         }
-
+        case SP_VERB_LAYER_LOCK_OTHERS: {
+            if ( dt->currentLayer() == dt->currentRoot() ) {
+                dt->messageStack()->flash(Inkscape::ERROR_MESSAGE, _("No current layer."));
+            } else {
+                dt->toggleLockOtherLayers( dt->currentLayer() );
+                DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:lockothers", SP_VERB_LAYER_LOCK_OTHERS, _("Lock other layers"));
+            }
+            break;
+        }
         case SP_VERB_LAYER_UNLOCK_ALL: {
             dt->toggleLockAllLayers( false );
             DocumentUndo::maybeDone(sp_desktop_document(dt), "layer:unlockall", SP_VERB_LAYER_UNLOCK_ALL, _("Unlock all layers"));
@@ -2520,6 +2527,8 @@ Verb *Verb::_base_verbs[] = {
                     N_("Hide all the layers"), NULL),
     new LayerVerb(SP_VERB_LAYER_LOCK_ALL, "LayerLockAll", N_("_Lock all layers"),
                     N_("Lock all the layers"), NULL),
+    new LayerVerb(SP_VERB_LAYER_LOCK_OTHERS, "LayerLockOthers", N_("Lock/Unlock _other layers"),
+                    N_("Lock all the other layers"), NULL),
     new LayerVerb(SP_VERB_LAYER_UNLOCK_ALL, "LayerUnlockAll", N_("_Unlock all layers"),
                     N_("Unlock all the layers"), NULL),
     new LayerVerb(SP_VERB_LAYER_TOGGLE_LOCK, "LayerToggleLock", N_("_Lock/Unlock Current Layer"),

@@ -69,6 +69,7 @@ enum {
     BUTTON_SOLO,
     BUTTON_SHOW_ALL,
     BUTTON_HIDE_ALL,
+    BUTTON_LOCK_OTHERS,
     BUTTON_LOCK_ALL,
     BUTTON_UNLOCK_ALL,
     DRAGNDROP
@@ -263,6 +264,11 @@ bool LayersPanel::_executeAction()
             case BUTTON_HIDE_ALL:
             {
                 _fireAction( SP_VERB_LAYER_HIDE_ALL );
+            }
+            break;
+            case BUTTON_LOCK_OTHERS:
+            {
+                _fireAction( SP_VERB_LAYER_LOCK_OTHERS );
             }
             break;
             case BUTTON_LOCK_ALL:
@@ -888,6 +894,7 @@ LayersPanel::LayersPanel() :
 
         _popupMenu.append(*manage(new Gtk::SeparatorMenuItem()));
 
+        _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOCK_OTHERS, 0, "Lock Others", (int)BUTTON_LOCK_OTHERS ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_LOCK_ALL, 0, "Lock All", (int)BUTTON_LOCK_ALL ) );
         _watching.push_back( &_addPopupItem( targetDesktop, SP_VERB_LAYER_UNLOCK_ALL, 0, "Unlock All", (int)BUTTON_UNLOCK_ALL ) );
 
