@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-10-08 22:42+0200\n"
-"PO-Revision-Date: 2012-10-11 12:44+0100\n"
+"PO-Revision-Date: 2012-10-12 13:44+0100\n"
 "Last-Translator: Uwe Schoeler <mail@uwe-schoeler.de>\n"
 "Language-Team:  <de@li.org>\n"
 "Language: de\n"
@@ -1614,14 +1614,12 @@ msgid "Cross Noise Poster B"
 msgstr "Poster Kreuzrauschen B"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Adds a small scale screen like noise locally"
 msgstr "Fügt kleinteilige Körnung hinzu"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Poster Color Fun"
-msgstr "Farbe einfügen"
+msgstr "Poster Farbspaß"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Poster Rough"
@@ -1632,9 +1630,8 @@ msgid "Adds roughness to one of the two channels of the Poster paint filter"
 msgstr "Fügt Rauigkeit einem der beiden Kanäle des Poster-Mal-Filters hinzu"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Alpha Monochrome Cracked"
-msgstr "Schwarzweisses Negativ"
+msgstr "Alpha Monochrome gebrochen"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic noise fill texture; adjust color in Flood"
@@ -1653,7 +1650,6 @@ msgid "Cross Noise B"
 msgstr "Kreuzrauschen B"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Adds a small scale crossy graininess"
 msgstr "Fügt kleinteilige Körnung hinzu"
 
@@ -1842,14 +1838,12 @@ msgid "Satiny glass effect"
 msgstr "Satin Glaseffekt"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Bump Engraving"
-msgstr "Gravur"
+msgstr "Stoß-Gravur"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Carving emboss effect"
-msgstr "Pfad-Effekt einfügen"
+msgstr "Geschnitzter Prägeeffekt"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Chromolitho Alternate"
@@ -1868,9 +1862,8 @@ msgid "Convoluted emboss effect"
 msgstr "Gewundener Prägeeffekt"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Emergence"
-msgstr "Abweichung"
+msgstr "Erscheinung"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Cut out, add inner shadow and colorize some parts of an image"
@@ -1895,9 +1888,8 @@ msgid "Colorize separately the three color channels"
 msgstr "Färbt die drei Farbkanäle separat"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Posterized Light Eraser 4"
-msgstr "Helligkeitsradierer"
+msgstr "Posterisierender Helligkeitsradierer 4"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Create a semi transparent posterized image"
@@ -1932,9 +1924,8 @@ msgid "Posterized Blur"
 msgstr "Posterisiertes Verwischen"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Converts blurred contour to posterized steps"
-msgstr "Texte in Pfade umwandeln"
+msgstr "Konvertiert verschwimmende Kontur in posterisierende Schritte"
 
 # Zeit korrekt?
 #: ../share/filters/filters.svg.h:1
@@ -6068,9 +6059,8 @@ msgid "Threshold:"
 msgstr "Schwellwert:"
 
 #: ../src/extension/internal/bitmap/threshold.cpp:46
-#, fuzzy
 msgid "Threshold selected bitmap(s)"
-msgstr "Ausgewählte Bitmaps mit einem Schwellwert auf zwei Farben reduzieren."
+msgstr "Schwellwert ausgewählter Bitmap(s)"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:41
 msgid "Unsharp Mask"
@@ -6580,9 +6570,8 @@ msgstr "Bild-Vereinfachungen:"
 
 #: ../src/extension/internal/filter/bumps.h:85
 #: ../src/extension/internal/filter/bumps.h:317
-#, fuzzy
 msgid "Bump simplification:"
-msgstr "Schwellwert für Vereinfachungen:"
+msgstr "Stoß-Vereinfachungen:"
 
 #: ../src/extension/internal/filter/bumps.h:86
 #: ../src/extension/internal/filter/bumps.h:318
@@ -6591,9 +6580,8 @@ msgstr "Schneiden:"
 
 #: ../src/extension/internal/filter/bumps.h:87
 #: ../src/extension/internal/filter/bumps.h:319
-#, fuzzy
 msgid "Bump source"
-msgstr "Raue Texturen"
+msgstr "Stoß-Quelle"
 
 #: ../src/extension/internal/filter/bumps.h:88
 #: ../src/extension/internal/filter/bumps.h:320
@@ -6620,9 +6608,8 @@ msgid "Blue:"
 msgstr "Blau:"
 
 #: ../src/extension/internal/filter/bumps.h:91
-#, fuzzy
 msgid "Bump from background"
-msgstr "Hintergrund entfernen"
+msgstr "Stoß vom Hintergrund"
 
 #: ../src/extension/internal/filter/bumps.h:94
 msgid "Lighting type:"
@@ -6762,24 +6749,20 @@ msgid "Lighting"
 msgstr "Blitz"
 
 #: ../src/extension/internal/filter/bumps.h:337
-#, fuzzy
 msgid "Lighting blend:"
-msgstr "Hervorhebungsfarbe:"
+msgstr "Blitz-Mischung:"
 
 #: ../src/extension/internal/filter/bumps.h:344
-#, fuzzy
 msgid "Highlight blend:"
-msgstr "_Hervorhebungsfarbe:"
+msgstr "Schlaglicht-Mischung:"
 
 #: ../src/extension/internal/filter/bumps.h:353
-#, fuzzy
 msgid "Bump color"
-msgstr "Füllfarbe"
+msgstr "Beulenfarbe"
 
 #: ../src/extension/internal/filter/bumps.h:354
-#, fuzzy
 msgid "Revert bump"
-msgstr "Samtene Oberflächenstruktur"
+msgstr "Beule umkehren"
 
 #: ../src/extension/internal/filter/bumps.h:355
 msgid "Transparency type:"
@@ -6906,9 +6889,8 @@ msgid "Gamma"
 msgstr "Gamma"
 
 #: ../src/extension/internal/filter/color.h:439
-#, fuzzy
 msgid "Basic component transfer structure"
-msgstr "Einfaches Transparenzrauschen"
+msgstr "Basis-Komponente Transferstruktur"
 
 #: ../src/extension/internal/filter/color.h:508
 msgid "Duochrome"
@@ -6919,9 +6901,8 @@ msgid "Fluorescence level:"
 msgstr "Fluoreszenz-Level"
 
 #: ../src/extension/internal/filter/color.h:513
-#, fuzzy
 msgid "Swap:"
-msgstr "Form:"
+msgstr "Tausch:"
 
 #: ../src/extension/internal/filter/color.h:514
 msgid "No swap"
@@ -6948,9 +6929,8 @@ msgid "Color 2"
 msgstr "Farbe 2"
 
 #: ../src/extension/internal/filter/color.h:534
-#, fuzzy
 msgid "Convert luminance values to a duochrome palette"
-msgstr "Farbpalette auf zwei Farben reduzieren"
+msgstr "Konvertiert Luminanzwerte in eine duochrome Palette"
 
 #: ../src/extension/internal/filter/color.h:633
 msgid "Extract Channel"
@@ -7173,9 +7153,8 @@ msgid "Background"
 msgstr "Hintergrund"
 
 #: ../src/extension/internal/filter/color.h:1221
-#, fuzzy
 msgid "Composite:"
-msgstr "Kombinieren"
+msgstr "Zusammengesetzt:"
 
 #: ../src/extension/internal/filter/color.h:1222
 #: ../src/extension/internal/filter/morphology.h:173
@@ -7217,7 +7196,6 @@ msgid "Moonarize"
 msgstr "Lunarisieren"
 
 #: ../src/extension/internal/filter/color.h:1425
-#, fuzzy
 msgid "Classic photographic solarization effect"
 msgstr "Klassischer fotografischer Solarisationseffekt"
 
@@ -7250,9 +7228,8 @@ msgid "Glow:"
 msgstr "Glühen:"
 
 #: ../src/extension/internal/filter/color.h:1516
-#, fuzzy
 msgid "Glow blend:"
-msgstr "Blase mit Lichthof"
+msgstr "Glühend "
 
 #: ../src/extension/internal/filter/color.h:1521
 msgid "Local light:"
@@ -7362,9 +7339,8 @@ msgid "Intensity:"
 msgstr "Intensität:"
 
 #: ../src/extension/internal/filter/distort.h:99
-#, fuzzy
 msgid "Blur and displace edges of shapes and pictures"
-msgstr "Fügt einfärbbaren Lichthof um Kanten in Objekten und Bilder hinzu"
+msgstr "verwischt und versetzt Kanten von Formen und Bildern"
 
 #: ../src/extension/internal/filter/distort.h:190
 msgid "Roughen"
@@ -7585,9 +7561,8 @@ msgid "Drawing mode"
 msgstr "Zeichenmodus"
 
 #: ../src/extension/internal/filter/paint.h:76
-#, fuzzy
 msgid "Drawing blend:"
-msgstr "Zeichnen abgebrochen"
+msgstr "Zeichnung mischen:"
 
 #: ../src/extension/internal/filter/paint.h:84
 msgid "Dented"
@@ -7710,9 +7685,8 @@ msgid "Levels:"
 msgstr "Ebenen:"
 
 #: ../src/extension/internal/filter/paint.h:511
-#, fuzzy
 msgid "Electro solarization effects"
-msgstr "Klassischer fotografischer Solarisationseffekt"
+msgstr "Elektro-Solarisationseffekt"
 
 # not sure here -cm-
 #: ../src/extension/internal/filter/paint.h:585
@@ -7754,9 +7728,8 @@ msgid "Noise blend:"
 msgstr "Rauschmischung:"
 
 #: ../src/extension/internal/filter/paint.h:710
-#, fuzzy
 msgid "Grain lightness:"
-msgstr "Helligkeit"
+msgstr "Körnige Helligkeit:"
 
 #: ../src/extension/internal/filter/paint.h:712
 #: ../src/extension/internal/filter/transparency.h:343
@@ -8885,7 +8858,7 @@ msgstr "Gitterverlauf <b>Tensor</b>"
 
 #: ../src/gradient-drag.cpp:565
 msgid "Added patch row or column"
-msgstr ""
+msgstr "Hinzugefügte Patchreihe oder Spalte"
 
 #: ../src/gradient-drag.cpp:791
 msgid "Merge gradient handles"
@@ -10143,9 +10116,8 @@ msgid "The size of the grid in Y direction."
 msgstr "Die Größe des Gitters in Y-Richtung"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
-#, fuzzy
 msgid "Stitch path:"
-msgstr "Verändere Pfad"
+msgstr "Stich-Pfad"
 
 #: ../src/live_effects/lpe-curvestitch.cpp:42
 msgid "The path that will be used as stitch."
@@ -17631,7 +17603,6 @@ msgid "Dialogs are hidden in taskbar"
 msgstr "Dialoge werden in der Fensterliste nicht angezeigt"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:614
-#, fuzzy
 msgid "Save and restore documents viewport"
 msgstr "Fenstergeometrie für jedes Dokument speichern und wiederherstellen"
 
@@ -17725,7 +17696,6 @@ msgid "_Opacity when focused:"
 msgstr "Deckkraft bei Focus:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:665
-#, fuzzy
 msgid "Opacity when _unfocused:"
 msgstr "Trübung wenn nicht fokussiert:"
 
@@ -17890,9 +17860,8 @@ msgstr ""
 "Dokument-Eigenschaften-> Metadaten gesetzt werden."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:807
-#, fuzzy
 msgid "_Grab sensitivity:"
-msgstr "Entfernung zum Erfassen:"
+msgstr "Anfass-Empfindlichkeit:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:807
 #: ../src/ui/dialog/inkscape-preferences.cpp:810
@@ -17911,7 +17880,6 @@ msgstr ""
 "Pixeln)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:810
-#, fuzzy
 msgid "_Click/drag threshold:"
 msgstr "Schwellwert für Klicken/Ziehen:"
 
@@ -17985,9 +17953,8 @@ msgid "Put attributes on the same line as the element tag"
 msgstr "Schreibt Attribute in die gleiche Zeile wie das Element-Tag."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:836
-#, fuzzy
 msgid "_Indent, spaces:"
-msgstr "Einrücken:"
+msgstr "E_inzug, Leerzeichen:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:836
 msgid ""
@@ -18035,9 +18002,8 @@ msgid "Significant figures of the values written to the SVG file"
 msgstr "Maßgebliche Zahlen der Werte, die in die SVG-Datei geschrieben werden"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:852
-#, fuzzy
 msgid "Minimum _exponent:"
-msgstr "Mindestgröße:"
+msgstr "Minimal _Exponent:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:852
 msgid ""
@@ -18095,9 +18061,8 @@ msgid "Remove style properties"
 msgstr "Stileigenschaften löschen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:870
-#, fuzzy
 msgid "Delete inappropriate style properties"
-msgstr "Führungslinien-Eigenschaften setzen"
+msgstr "Unpassende Stileigenschaften löschen"
 
 #. Add default or inherited style properties options
 #: ../src/ui/dialog/inkscape-preferences.cpp:873
@@ -18117,9 +18082,8 @@ msgstr ""
 "Datenbank-Dateien liegen in inkscape_data_dir/Attribute."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:878
-#, fuzzy
 msgid "Delete redundant style properties"
-msgstr "Führungslinien-Eigenschaften setzen"
+msgstr "Redundante Stileigenschaften löschen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:880
 msgid "Check Attributes and Style Properties on"
@@ -18412,7 +18376,7 @@ msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1092
 msgid "Color stock markers the same color as object"
-msgstr ""
+msgstr "Farbe Standard-Marker in der gleichen Farbe wie das Objekt"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1093
 msgid "Color custom markers the same color as object"
@@ -18862,9 +18826,8 @@ msgid "Are deleted"
 msgstr "ebenso gelöscht"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1243
-#, fuzzy
 msgid "Moving original: clones and linked offsets"
-msgstr "Wenn das Original verschoben wird, werden Klone:"
+msgstr "Verschiebe Original: Klone und verbundener Versatz"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1245
 msgid "Clones are translated by the same vector as their original"
@@ -18897,9 +18860,8 @@ msgid "Orphaned clones are deleted along with their original"
 msgstr "Klone werden zusammen mit ihrem Original gelöscht."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1256
-#, fuzzy
 msgid "Duplicating original+clones/linked offset"
-msgstr "Wenn Original und Klone dupliziert werden:"
+msgstr "Duplizieren Original+Klone/verbundener Versatz"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1258
 msgid "Relink duplicated clones"
@@ -18995,9 +18957,8 @@ msgid "Clippaths and masks"
 msgstr "Ausschneidepfade und Maskierungen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1297
-#, fuzzy
 msgid "Stroke Style Markers"
-msgstr "_Muster der Kontur"
+msgstr "Strich-Stilmarkierungen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1299
 #: ../src/ui/dialog/inkscape-preferences.cpp:1301
@@ -19022,11 +18983,10 @@ msgid "(requires restart)"
 msgstr "(erfordert Neustart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1314
-#, fuzzy
 msgid "Configure number of processors/threads to use when rendering filters"
 msgstr ""
-"Einstellen der Anzahl an Prozessoren/Threads die für das Rendern mit dem "
-"Gaus'schem Weichzeichner genutzt werden sollen."
+"Konfiguration der Anzahl an Prozessoren/Threads, die für das Rendern genutzt "
+"werden sollen."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1318
 msgid "Rendering _cache size:"
@@ -19134,7 +19094,7 @@ msgstr "16×16"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1378
 msgid "Oversample bitmaps:"
-msgstr "Bitmap Antialiasing:"
+msgstr "Bitmap Überabtastung:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1381
 msgid "Automatically reload bitmaps"
@@ -19583,9 +19543,8 @@ msgid "Create and apply path effect"
 msgstr "Pfad-Effekt erstellen und anwenden"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:463
-#, fuzzy
 msgid "Create and apply Clone original path effect"
-msgstr "Pfad-Effekt erstellen und anwenden"
+msgstr "Erstellen und Anwenden des Klon-Original-Pfadeffekts"
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:483
 msgid "Remove path effect"
@@ -20158,9 +20117,8 @@ msgstr "Gewählte Objekte anordnen"
 #. # begin single scan
 #. brightness
 #: ../src/ui/dialog/tracedialog.cpp:507
-#, fuzzy
 msgid "_Brightness cutoff"
-msgstr "Entlang eines Helligkeitswerts"
+msgstr "Helligkeit ausschalten"
 
 #: ../src/ui/dialog/tracedialog.cpp:511
 msgid "Trace by a given brightness level"
@@ -22802,9 +22760,8 @@ msgid "_Lock/Unlock Current Layer"
 msgstr "Aktuelle Ebene sperren/entsperren"
 
 #: ../src/verbs.cpp:2493
-#, fuzzy
 msgid "Toggle lock on current layer"
-msgstr "Aktuelle Ebene vereinzeln"
+msgstr "Sperre auf aktuellen Layer umschalten"
 
 #: ../src/verbs.cpp:2494
 msgid "_Show/hide Current Layer"
@@ -28028,6 +27985,8 @@ msgid ""
 "Converts to HSL, randomizes hue and/or saturation and/or lightness and "
 "converts it back to RGB."
 msgstr ""
+"Konvertiert nach HSL, stellt Farbton und/oder Sättigung und/oder Helligkeit "
+"zufällig ein und wandelt sie wieder zurück nach RGB."
 
 #: ../share/extensions/color_randomize.inx.h:7
 #: ../share/extensions/render_alphabetsoup.inx.h:2
@@ -28853,6 +28812,14 @@ msgid ""
 "www.cnc-club.ru/gcodetoolsru Credits: Nick Drobchenko, Vladimir Kalyaev, "
 "John Brooker, Henry Nicolas, Chris Lusby Taylor. Gcodetools ver. 1.7"
 msgstr ""
+"Gcode-Werkzeug Plug-in: Wandelt Pfade zu Gcode (mit Kreisinterpolation), "
+"erstellt versetzte Pfade und graviert scharfe Ecken mittels Kegelschneider. "
+"Dieses Plug-In berechnet Gcode für Pfade mittels Kreisinterpolation oder "
+"lineare Bewegung, wenn nötig. Einführungen, Handbücher und Unterstützung "
+"finden Sie im Englischen Support-Forum http://www.cnc-club.ru/gcodetools und "
+"im russischen Support-Forum: http://www.cnc-club.ru/gcodetoolsru Danksagung: "
+"Nick Drobchenko, Vladimir Kalyaev, John Brooker, Henry Nicolas, Chris Lusby "
+"Taylor. Gcode-Werkzeug Ver. 1.7"
 
 #: ../share/extensions/gcodetools_about.inx.h:4
 msgid ""
@@ -28905,9 +28872,8 @@ msgstr "Hinzufügen eines numerischen Anhangs an den Dateinamen"
 #: ../share/extensions/gcodetools_graffiti.inx.h:4
 #: ../share/extensions/gcodetools_lathe.inx.h:2
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:2
-#, fuzzy
 msgid "Additional post-processor:"
-msgstr "Zusätzliche Pakete"
+msgstr "Weitere Nachbereitung:"
 
 #: ../share/extensions/gcodetools_area.inx.h:5
 msgid "Area"
@@ -29083,9 +29049,8 @@ msgstr "Versatz entlang Z-Achse:"
 #: ../share/extensions/gcodetools_graffiti.inx.h:28
 #: ../share/extensions/gcodetools_lathe.inx.h:33
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:23
-#, fuzzy
 msgid "Parameterize Gcode"
-msgstr "Parameter"
+msgstr "GCode Parametrisieren"
 
 #: ../share/extensions/gcodetools_area.inx.h:36
 #: ../share/extensions/gcodetools_lathe.inx.h:34
@@ -29187,7 +29152,7 @@ msgstr ""
 #: ../share/extensions/gcodetools_lathe.inx.h:46
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:35
 msgid "Z safe height for G00 move over blank:"
-msgstr ""
+msgstr "Z sichere Höhe für G00 bewegen über blank"
 
 #: ../share/extensions/gcodetools_area.inx.h:50
 msgid "Zig zag"
@@ -29348,7 +29313,7 @@ msgstr "Ausrichtungstyp:"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:31
 msgid "Preview's paint emmit (pts/s):"
-msgstr ""
+msgstr "Farbemmission für Vorschau (pts/s)"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:32
 msgid "Preview's size (px):"
@@ -29375,14 +29340,12 @@ msgstr "Graffiti-Punkte"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:43
 #: ../share/extensions/gcodetools_orientation_points.inx.h:14
-#, fuzzy
 msgid "in-out reference point"
-msgstr "Einstellungen für Farbverläufe"
+msgstr "Innen-Außen-Referenzpunkt"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:6
-#, fuzzy
 msgid "Create fine cut using:"
-msgstr "Objekte erstellen mit:"
+msgstr "Erstelle Feinschnitt mit:"
 
 #: ../share/extensions/gcodetools_lathe.inx.h:12
 msgid "Fine cut count:"
@@ -29437,9 +29400,8 @@ msgid "Do not add in-out reference points"
 msgstr "Keine Innen-Außen-Referenzpunkte hinzufügen"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:7
-#, fuzzy
 msgid "In-out path length:"
-msgstr "Pfadlänge"
+msgstr "Innen-Außen-Pfadlänge:"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:8
 msgid "In-out path max distance to reference point:"
@@ -29532,7 +29494,6 @@ msgid "plasma"
 msgstr "Plasma"
 
 #: ../share/extensions/gcodetools_tools_library.inx.h:14
-#, fuzzy
 msgid "tangent knife"
 msgstr "Tangentialer Versatz"
 
@@ -30663,6 +30624,16 @@ msgid ""
 "    * Layout padding: inner padding for each part of the layout.\n"
 "      "
 msgstr ""
+"\n"
+"Parameter:\n"
+"     * Seitengröße: Breite und Höhe\n"
+"     * Seitenränder: Zusätzlicher Platz um jede Seite.\n"
+"     * Anordnung Zeilen und Spalten:\n"
+"     * Anordnung: Breite und Höhe automatisch berechnen, wenn eins 0 ist.\n"
+"     * Layoutgröße automatisch berechnen: Verwenden Sie nicht die "
+"Layoutgrößen-Werte.\n"
+"     * Layout-Margin: Weißer Fläche um jeden Teil des Layouts.\n"
+"     * Layout Padding: Innere Füllung für jeden Teil des Layouts."
 
 #: ../share/extensions/layout_nup.inx.h:11
 msgid "Auto calculate layout size"
@@ -30706,14 +30677,12 @@ msgid "Left:"
 msgstr "Links:"
 
 #: ../share/extensions/layout_nup.inx.h:21
-#, fuzzy
 msgid "Margin box"
-msgstr "Objektrahmen"
+msgstr "Randbox"
 
 #: ../share/extensions/layout_nup.inx.h:22
-#, fuzzy
 msgid "Margin guide"
-msgstr "Führungslinie verschieben"
+msgstr "Randführungslinie"
 
 #: ../share/extensions/layout_nup.inx.h:23
 #: ../share/extensions/printing_marks.inx.h:9
@@ -30722,25 +30691,23 @@ msgstr "Markierungen"
 
 #: ../share/extensions/layout_nup.inx.h:24
 msgid "N-up layout"
-msgstr ""
+msgstr "N-up layout"
 
 #: ../share/extensions/layout_nup.inx.h:25
-#, fuzzy
 msgid "Padding box"
 msgstr "Umrandungsbox"
 
 #: ../share/extensions/layout_nup.inx.h:26
 msgid "Padding guide"
-msgstr ""
+msgstr "Umrandungslinie"
 
 #: ../share/extensions/layout_nup.inx.h:27
 msgid "Page dimensions"
 msgstr "Seitendimensionen"
 
 #: ../share/extensions/layout_nup.inx.h:28
-#, fuzzy
 msgid "Page margins"
-msgstr "Linker Rand"
+msgstr "Seitenrand"
 
 #: ../share/extensions/layout_nup.inx.h:29
 msgid "Place holder"
