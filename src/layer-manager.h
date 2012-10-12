@@ -30,6 +30,7 @@ public:
 
     void setCurrentLayer( SPObject* obj );
     void renameLayer( SPObject* obj, gchar const *label, bool uniquify );
+    Glib::ustring getNextLayerName( SPObject* obj, gchar const *label);
 
     sigc::connection connectCurrentLayerChanged(const sigc::slot<void, SPObject *> & slot) {
         return _layer_changed_signal.connect(slot);

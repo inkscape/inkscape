@@ -331,8 +331,11 @@ void LayerPropertiesDialog::Rename::perform(LayerPropertiesDialog &dialog) {
 
 void LayerPropertiesDialog::Create::setup(LayerPropertiesDialog &dialog) {
     dialog.set_title(_("Add Layer"));
-    //TODO: find an unused layer number, forming name from _("Layer ") + "%d"
-    dialog._layer_name_entry.set_text(_("Layer"));
+
+    // Set the initial name to the "next available" layer name
+    LayerManager *mgr = dialog._desktop->layer_manager;
+    Glib::ustring newName = mgr->getNextLayerName(NULL, dialog._desktop->currentLayer()->label());
+    dialog._layer_name_entry.set_text(newName.c_str());
     dialog._apply_button.set_label(_("_Add"));
     dialog._setup_position_controls();
 }
