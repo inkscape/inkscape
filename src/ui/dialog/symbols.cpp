@@ -101,7 +101,11 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   table->attach(*Gtk::manage(labelSet),0,1,row,row+1,Gtk::SHRINK,Gtk::SHRINK);
 
   symbolSet = new Gtk::ComboBoxText();  // Fill in later
+#if WITH_GTKMM_2_24
   symbolSet->append("Current Document");
+#else
+  symbolSet->append_text("Current Document");
+#endif
   symbolSet->set_active_text("Current Document");
   table->attach(*Gtk::manage(symbolSet),1,2,row,row+1,Gtk::FILL|Gtk::EXPAND,Gtk::SHRINK);
 
@@ -139,7 +143,11 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   const gchar *scales[] =
     {"Fit", "Fit to width", "Fit to height", "0.1", "0.2", "0.5", "1.0", "2.0", "5.0", NULL};
   for( int i = 0; scales[i]; ++i ) {
+#if WITH_GTKMM_2_24
     previewScale->append(scales[i]);
+#else
+    previewScale->append_text(scales[i]);
+#endif
   }
   previewScale->set_active_text(scales[0]);
   table->attach(*Gtk::manage(previewScale),1,2,row,row+1,Gtk::FILL|Gtk::EXPAND,Gtk::SHRINK);
@@ -157,7 +165,12 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   previewSize = new Gtk::ComboBoxText();
   const gchar *sizes[] = {"16", "24", "32", "48", "64", NULL};
   for( int i = 0; sizes[i]; ++i ) {
+#if WITH_GTKMM_2_24
     previewSize->append(sizes[i]);
+#else
+    previewSize->append_text(sizes[i]);
+#endif
+
   }
   previewSize->set_active_text(sizes[2]);
   table->attach(*Gtk::manage(previewSize),1,2,row,row+1,Gtk::FILL|Gtk::EXPAND,Gtk::SHRINK);
@@ -291,7 +304,11 @@ void SymbolsDialog::get_symbols() {
 	    SPDocument* symbol_doc = SPDocument::createNewDoc( fullname, FALSE );
 	    if( symbol_doc ) {
 	      symbolSets[Glib::ustring(filename)]= symbol_doc;
+#if WITH_GTKMM_2_24
 	      symbolSet->append(filename);
+#else
+	      symbolSet->append_text(filename);
+#endif
 	    }
 	  }
 	  g_free( fullname );
