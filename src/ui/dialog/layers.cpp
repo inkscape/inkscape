@@ -562,25 +562,35 @@ void LayersPanel::_handleButtonEvent(GdkEventButton* event)
 {
     static unsigned doubleclick = 0;
 
-    // TODO - fix to a better is-popup function
     if ( (event->type == GDK_BUTTON_PRESS) && (event->button == 3) ) {
+        // TODO - fix to a better is-popup function
+        Gtk::TreeModel::Path path;
+        int x = static_cast<int>(event->x);
+        int y = static_cast<int>(event->y);
+        if ( _tree.get_path_at_pos( x, y, path ) ) {
+            _checkTreeSelection();
+            _popupMenu.popup(event->button, event->time);
+        }
+    }
 
-        {
-            Gtk::TreeModel::Path path;
-            Gtk::TreeViewColumn* col = 0;
-            int x = static_cast<int>(event->x);
-            int y = static_cast<int>(event->y);
-            int x2 = 0;
-            int y2 = 0;
-            if ( _tree.get_path_at_pos( x, y,
-                                        path, col,
-                                        x2, y2 ) ) {
-                _checkTreeSelection();
-                _popupMenu.popup(event->button, event->time);
+    if ( event->type == GDK_BUTTON_RELEASE && (event->button == 1)
+            && (event->state & GDK_SHIFT_MASK)) {
+        // Shift left click on the visible/lock columns toggles "solo" mode
+        Gtk::TreeModel::Path path;
+        Gtk::TreeViewColumn* col = 0;
+        int x = static_cast<int>(event->x);
+        int y = static_cast<int>(event->y);
+        int x2 = 0;
+        int y2 = 0;
+        if ( _tree.get_path_at_pos( x, y, path, col, x2, y2 ) ) {
+            if (col == _tree.get_column(COL_VISIBLE-1)) {
+                _takeAction(BUTTON_SOLO);
+            } else if (col == _tree.get_column(COL_LOCKED-1)) {
+                _takeAction(BUTTON_LOCK_OTHERS);
             }
         }
-
     }
+
 
     if ( (event->type == GDK_2BUTTON_PRESS) && (event->button == 1) ) {
         doubleclick = 1;
