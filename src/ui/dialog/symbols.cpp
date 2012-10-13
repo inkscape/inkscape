@@ -435,7 +435,6 @@ SymbolsDialog::create_symbol_image(gchar const *symbol_id,
 				     Inkscape::Drawing* drawing,
 				     unsigned /*visionkey*/)
 {
-
   // Retrieve the symbol named 'symbol_id' from the source SVG document
   SPObject const* symbol = source->getObjectById(symbol_id);
   if (symbol == NULL) {
@@ -465,6 +464,8 @@ SymbolsDialog::create_symbol_image(gchar const *symbol_id,
 	style = source->getReprRoot()->attribute("style");
     }
   }
+  // Last ditch effort to provide some default styling
+  if( !style ) style = "fill:#bbbbbb;stroke:#808080";
 
   // This is for display in Symbols dialog only
   if( style ) {
@@ -498,15 +499,6 @@ SymbolsDialog::create_symbol_image(gchar const *symbol_id,
 
   SPItem *item = SP_ITEM(object_temp);
 
-  // Find object's bbox in document.
-  // Note symbols can have own viewport... ignore for now.
-  //Geom::OptRect dbox = item->geometricBounds();
-  Geom::OptRect dbox = item->documentVisualBounds();
-  // if (!dbox) {
-  //   //std::cout << "  No dbox" << std::endl;
-  //   //return NULL;
-  // }
-
   Glib::ustring previewSizeString = previewSize->get_active_text();
   unsigned psize = atol( previewSizeString.c_str() );
 
@@ -520,22 +512,40 @@ SymbolsDialog::create_symbol_image(gchar const *symbol_id,
   //Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::wrap(svg_preview_cache.get_preview_from_cache(key));
   Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::RefPtr<Gdk::Pixbuf>(0);
 
+  // Find object's bbox in document.
+  // Note symbols can have own viewport... ignore for now.
+  //Geom::OptRect dbox = item->geometricBounds();
+  Geom::OptRect dbox = item->documentVisualBounds();
+  if (!dbox) {
+    //std::cout << "  No dbox" << std::endl;
+    return pixbuf;
+  }
+
   if (!pixbuf) {
 
     /* Scale symbols to fit */
     double scale = 1.0;
+    double width  = dbox->width();
+    double height = dbox->height();
+    if( width == 0.0 ) {
+      width = 1.0;
+    }
+    if( height == 0.0 ) {
+      height = 1.0;
+    }
+
     switch (previewScaleRow) {
     case 0:
 	/* Fit */
-	scale = psize/std::max(dbox->width(),dbox->height());
+	scale = psize/std::max(width,height);
 	break;
     case 1:
 	/* Fit width */
-	scale = psize/dbox->width();
+	scale = psize/width;
 	break;
     case 2:
 	/* Fit height */
-	scale = psize/dbox->height();
+	scale = psize/height;
 	break;
     default:
 	scale = atof( previewScaleString.c_str() );
@@ -560,8 +570,7 @@ SPDocument* SymbolsDialog::symbols_preview_doc()
 "<svg xmlns=\"http://www.w3.org/2000/svg\""
 "     xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\""
 "     xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\""
-"     xmlns:xlink=\"http://www.w3.org/1999/xlink\""
-"     style=\"fill:none;stroke:black;stroke-width:2\">"
+"     xmlns:xlink=\"http://www.w3.org/1999/xlink\">"
 "  <defs id=\"defs\">"  
 "    <symbol id=\"the_symbol\"/>"
 "  </defs>"
@@ -582,10 +591,6 @@ void SymbolsDialog::setTargetDesktop(SPDesktop *desktop)
   }
 }
 
-
 } //namespace Dialogs
 } //namespace UI
 } //namespace Inkscape
-
-
-
