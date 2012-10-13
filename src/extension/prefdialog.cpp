@@ -32,13 +32,13 @@ namespace Extension {
 
 
 /** \brief  Creates a new preference dialog for extension preferences
-    \param  name  Name of the Extension who's dialog this is
+    \param  name  Name of the Extension whose dialog this is
     \param  help  The help string for the extension (NULL if none)
     \param  controls  The extension specific widgets in the dialog
 
     This function initializes the dialog with the name of the extension
     in the title.  It adds a few buttons and sets up handlers for
-    them.  It also places the passed in widgets into the dialog.
+    them.  It also places the passed-in widgets into the dialog.
 */
 PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * controls, Effect * effect) :
 #if WITH_GTKMM_3_0
@@ -102,12 +102,10 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
         Gtk::Box * hbox = dynamic_cast<Gtk::Box *>(_button_preview);
         if (hbox != NULL) {
 #if WITH_GTKMM_3_0
-            Gtk::Widget * back = hbox->get_children().back();
+            _checkbox_preview = dynamic_cast<Gtk::CheckButton *>(hbox->get_children().front());
 #else
-            Gtk::Widget * back = hbox->children().back().get_widget();
+            _checkbox_preview = dynamic_cast<Gtk::CheckButton *>(hbox->children().back().get_widget());
 #endif
-            Gtk::CheckButton * cb = dynamic_cast<Gtk::CheckButton *>(back);
-            _checkbox_preview = cb;
         }
 
         preview_toggle();
