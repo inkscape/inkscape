@@ -293,7 +293,7 @@ void Handle::dragged(Geom::Point &new_pos, GdkEventMotion *event)
     Geom::Point parent_pos = _parent->position();
     Geom::Point origin = _last_drag_origin();
     SnapManager &sm = _desktop->namedview->snap_manager;
-    bool snap = sm.someSnapperMightSnap();
+    bool snap = held_shift(*event) ? false : sm.someSnapperMightSnap();
     boost::optional<Inkscape::Snapper::SnapConstraint> ctrl_constraint;
 
     // with Alt, preserve length
