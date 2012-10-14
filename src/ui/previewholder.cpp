@@ -63,7 +63,12 @@ PreviewHolder::~PreviewHolder()
 bool PreviewHolder::on_scroll_event(GdkEventScroll *event)
 {
     // Scroll horizontally by page on mouse wheel
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> adj = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_hadjustment();
+#else
     Gtk::Adjustment *adj = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_hadjustment();
+#endif
+
     if (!adj) {
         return FALSE;
     }
