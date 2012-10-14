@@ -55,11 +55,34 @@ void FilterFlood::render_cairo(FilterSlot &slot)
 #endif
 
     cairo_surface_t *out = ink_cairo_surface_create_same_size(input, CAIRO_CONTENT_COLOR_ALPHA);
-    cairo_t *ct = cairo_create(out);
-    cairo_set_source_rgba(ct, r, g, b, a);
-    cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
-    cairo_paint(ct);
-    cairo_destroy(ct);
+
+    // Get filter primitive area in user units
+    Geom::Rect fp = filter_primitive_area( slot.get_units() );
+
+    // Convert to Cairo units
+    Geom::Rect fp_cairo = fp * slot.get_units().get_matrix_user2pb();
+
+    // Get area in slot (tile to fill)
+    Geom::Rect sa = slot.get_slot_area();
+
+    // Get overlap
+    Geom::OptRect optoverlap = intersect( fp_cairo, sa );
+    if( optoverlap ) {
+
+        Geom::Rect overlap = *optoverlap;
+
+        double dx = fp_cairo.min()[Geom::X] - sa.min()[Geom::X];
+        double dy = fp_cairo.min()[Geom::Y] - sa.min()[Geom::Y];
+        if( dx < 0.0 ) dx = 0.0;
+        if( dy < 0.0 ) dy = 0.0;
+
+        cairo_t *ct = cairo_create(out);
+        cairo_set_source_rgba(ct, r, g, b, a);
+        cairo_set_operator(ct, CAIRO_OPERATOR_SOURCE);
+        cairo_rectangle(ct, dx, dy, overlap.width(), overlap.height() );
+        cairo_fill(ct);
+        cairo_destroy(ct);
+    }
 
     slot.set(_output, out);
     cairo_surface_destroy(out);
