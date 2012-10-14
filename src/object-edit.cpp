@@ -1086,13 +1086,13 @@ sp_star_knot_click(SPItem *item, guint state)
 void
 StarKnotHolderEntity1::knot_click(guint state)
 {
-    return sp_star_knot_click(item, state);
+    sp_star_knot_click(item, state);
 }
 
 void
 StarKnotHolderEntity2::knot_click(guint state)
 {
-    return sp_star_knot_click(item, state);
+    sp_star_knot_click(item, state);
 }
 
 StarKnotHolder::StarKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolderReleasedFunc relhandler) :
