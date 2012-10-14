@@ -122,13 +122,13 @@ LPETangentToCurve::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desk
 namespace TtC {
 
 void
-KnotHolderEntityAttachPt::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
+KnotHolderEntityAttachPt::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
     using namespace Geom;
 
     LPETangentToCurve* lpe = dynamic_cast<LPETangentToCurve *>(_effect);
 
-    Geom::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p, state);
 
     // FIXME: There must be a better way of converting the path's SPCurve* to pwd2.
     SPCurve *curve = SP_PATH(item)->get_curve_for_edit();
@@ -146,11 +146,11 @@ KnotHolderEntityAttachPt::knot_set(Geom::Point const &p, Geom::Point const &/*or
 }
 
 void
-KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
+KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
     LPETangentToCurve *lpe = dynamic_cast<LPETangentToCurve *>(_effect);
 
-    Geom::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p, state);
 
     double lambda = Geom::nearest_point(s, lpe->ptA, lpe->derivA);
     lpe->length_left.param_set_value(-lambda);
@@ -159,11 +159,11 @@ KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*ori
 }
 
 void
-KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
+KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
     LPETangentToCurve *lpe = dynamic_cast<LPETangentToCurve *>(_effect);
     
-    Geom::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p, state);
 
     double lambda = Geom::nearest_point(s, lpe->ptA, lpe->derivA);
     lpe->length_right.param_set_value(lambda);

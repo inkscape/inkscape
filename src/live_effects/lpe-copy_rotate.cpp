@@ -152,7 +152,7 @@ KnotHolderEntityStartingAngle::knot_set(Geom::Point const &p, Geom::Point const 
 {
     LPECopyRotate* lpe = dynamic_cast<LPECopyRotate *>(_effect);
 
-    Geom::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p, state);
 
     // I first suspected the minus sign to be a bug in 2geom but it is
     // likely due to SVG's choice of coordinate system orientation (max)
@@ -172,7 +172,7 @@ KnotHolderEntityRotationAngle::knot_set(Geom::Point const &p, Geom::Point const 
 {
     LPECopyRotate* lpe = dynamic_cast<LPECopyRotate *>(_effect);
 
-    Geom::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p, state);
 
     // I first suspected the minus sign to be a bug in 2geom but it is
     // likely due to SVG's choice of coordinate system orientation (max)
@@ -191,14 +191,14 @@ Geom::Point
 KnotHolderEntityStartingAngle::knot_get()
 {
     LPECopyRotate* lpe = dynamic_cast<LPECopyRotate *>(_effect);
-    return snap_knot_position(lpe->start_pos);
+    return lpe->start_pos;
 }
 
 Geom::Point
 KnotHolderEntityRotationAngle::knot_get()
 {
     LPECopyRotate* lpe = dynamic_cast<LPECopyRotate *>(_effect);
-    return snap_knot_position(lpe->rot_pos);
+    return lpe->rot_pos;
 }
 
 } // namespace CR

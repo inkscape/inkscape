@@ -31,7 +31,7 @@ namespace PB {
 class KnotHolderEntityEnd : public LPEKnotHolderEntity {
 public:
     KnotHolderEntityEnd(LPEPerpBisector *effect) : LPEKnotHolderEntity(effect) {};
-    void bisector_end_set(Geom::Point const &p, bool left = true);
+    void bisector_end_set(Geom::Point const &p, guint state, bool left = true);
 };
 
 class KnotHolderEntityLeftEnd : public KnotHolderEntityEnd {
@@ -61,11 +61,11 @@ KnotHolderEntityRightEnd::knot_get() {
 }
 
 void
-KnotHolderEntityEnd::bisector_end_set(Geom::Point const &p, bool left) {
+KnotHolderEntityEnd::bisector_end_set(Geom::Point const &p, guint state, bool left) {
     LPEPerpBisector *lpe = dynamic_cast<LPEPerpBisector *>(_effect);
     if (!lpe) return;
 
-    Geom::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p, state);
 
     double lambda = Geom::nearest_point(s, lpe->M, lpe->perp_dir);
     if (left) {
@@ -81,13 +81,13 @@ KnotHolderEntityEnd::bisector_end_set(Geom::Point const &p, bool left) {
 }
 
 void
-KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/) {
-    bisector_end_set(p);
+KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state) {
+    bisector_end_set(p, state);
 }
 
 void
-KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/) {
-    bisector_end_set(p, false);
+KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state) {
+    bisector_end_set(p, state, false);
 }
 
 } //namescape PB

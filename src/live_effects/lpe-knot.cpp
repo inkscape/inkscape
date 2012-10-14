@@ -634,7 +634,7 @@ Geom::Point
 KnotHolderEntityCrossingSwitcher::knot_get()
 {
     LPEKnot* lpe = dynamic_cast<LPEKnot *>(_effect);
-    return snap_knot_position(lpe->switcher);
+    return lpe->switcher;
 }
 
 void

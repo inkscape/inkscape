@@ -99,11 +99,11 @@ LPEAngleBisector::addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *deskt
 namespace AB {
 
 void
-KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
+KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
     LPEAngleBisector *lpe = dynamic_cast<LPEAngleBisector *>(_effect);
 
-    Geom::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p, state);
 
     double lambda = Geom::nearest_point(s, lpe->ptA, lpe->dir);
     lpe->length_left.param_set_value(-lambda);
@@ -112,11 +112,11 @@ KnotHolderEntityLeftEnd::knot_set(Geom::Point const &p, Geom::Point const &/*ori
 }
 
 void
-KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
+KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
     LPEAngleBisector *lpe = dynamic_cast<LPEAngleBisector *>(_effect);
 
-    Geom::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p, state);
 
     double lambda = Geom::nearest_point(s, lpe->ptA, lpe->dir);
     lpe->length_right.param_set_value(lambda);

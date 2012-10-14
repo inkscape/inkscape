@@ -149,8 +149,8 @@ public:
     VectorParamKnotHolderEntity_Origin(VectorParam *p) : param(p) { }
     virtual ~VectorParamKnotHolderEntity_Origin() {}
 
-    virtual void knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/) {
-        Geom::Point const s = snap_knot_position(p);
+    virtual void knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state) {
+        Geom::Point const s = snap_knot_position(p, state);
         param->setOrigin(s);
         sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
     };

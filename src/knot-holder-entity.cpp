@@ -89,8 +89,12 @@ KnotHolderEntity::update_knot()
 }
 
 Geom::Point
-KnotHolderEntity::snap_knot_position(Geom::Point const &p)
+KnotHolderEntity::snap_knot_position(Geom::Point const &p, guint state)
 {
+    if (state & GDK_SHIFT_MASK) { // Don't snap when shift-key is held
+        return p;
+    }
+
     Geom::Affine const i2dt (item->i2dt_affine());
     Geom::Point s = p * i2dt;
 
@@ -103,8 +107,12 @@ KnotHolderEntity::snap_knot_position(Geom::Point const &p)
 }
 
 Geom::Point
-KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::SnapConstraint const &constraint)
+KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape::Snapper::SnapConstraint const &constraint, guint state)
 {
+    if (state & GDK_SHIFT_MASK) { // Don't snap when shift-key is held
+        return p;
+    }
+
     Geom::Affine const i2d (item->i2dt_affine());
     Geom::Point s = p * i2d;
 
@@ -148,7 +156,7 @@ PatternKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &ori
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
     // FIXME: this snapping should be done together with knowing whether control was pressed. If GDK_CONTROL_MASK, then constrained snapping should be used.
-    Geom::Point p_snapped = snap_knot_position(p);
+    Geom::Point p_snapped = snap_knot_position(p, state);
 
     if ( state & GDK_CONTROL_MASK ) {
         if (fabs((p - origin)[Geom::X]) > fabs((p - origin)[Geom::Y])) {
@@ -220,7 +228,7 @@ PatternKnotHolderEntityScale::knot_set(Geom::Point const &p, Geom::Point const &
     SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
     // FIXME: this snapping should be done together with knowing whether control was pressed. If GDK_CONTROL_MASK, then constrained snapping should be used.
-    Geom::Point p_snapped = snap_knot_position(p);
+    Geom::Point p_snapped = snap_knot_position(p, state);
 
     // get angle from current transform
     gdouble theta = sp_pattern_extract_theta(pat);

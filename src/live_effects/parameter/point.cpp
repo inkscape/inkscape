@@ -141,9 +141,9 @@ private:
 };
 
 void
-PointParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint /*state*/)
+PointParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &/*origin*/, guint state)
 {
-    Geom::Point const s = snap_knot_position(p);
+    Geom::Point const s = snap_knot_position(p, state);
     pparam->param_setValue(s);
     sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
 }
