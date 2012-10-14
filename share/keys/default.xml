@@ -269,7 +269,9 @@ override) the bindings in the main default.xml.
   <bind key="b" modifiers="Ctrl" action="ToggleScrollbars" display="true" />
   <bind key="B" modifiers="Ctrl" action="ToggleScrollbars" />
 
-  <bind action="TogglePalette" />
+  <bind key="p" modifiers="Shift,Alt" action="TogglePalette" display="true" />
+  <bind key="P" modifiers="Shift,Alt" action="TogglePalette" />
+
   <bind action="ToggleStatusbar" />
   
   <bind action="ViewNew" />
@@ -675,8 +677,5 @@ override) the bindings in the main default.xml.
  
  <bind key="j" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer" display="true"/>
  <bind key="J" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer"/>
-
- <bind key="p" modifiers="Shift,Alt" action="TogglePalette" display="true" />
- <bind key="P" modifiers="Shift,Alt" action="TogglePalette" />
 
 </keys>
