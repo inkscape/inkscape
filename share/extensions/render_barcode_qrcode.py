@@ -3,6 +3,8 @@
 import math, sys
 import inkex
 
+inkex.localize()
+
 #QRCode for Python
 #
 #Ported from the Javascript library by Sam Curren
