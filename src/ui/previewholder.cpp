@@ -17,6 +17,7 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/sizegroup.h>
 #include <gtkmm/scrollbar.h>
+#include <gtkmm/adjustment.h>
 
 #define COLUMNS_FOR_SMALL 16
 #define COLUMNS_FOR_LARGE 8
@@ -56,9 +57,25 @@ PreviewHolder::PreviewHolder() :
 
 PreviewHolder::~PreviewHolder()
 {
+
 }
 
+bool PreviewHolder::on_scroll_event(GdkEventScroll *event)
+{
+    // Scroll horizontally by page on mouse wheel
+    Gtk::Adjustment *adj = dynamic_cast<Gtk::ScrolledWindow*>(_scroller)->get_hadjustment();
+    if (!adj) {
+        return FALSE;
+    }
 
+    int move = (event->direction == GDK_SCROLL_DOWN) ? adj->get_page_size() : -adj->get_page_size();
+
+    double value = std::min(adj->get_upper() - move, adj->get_value() + move );
+
+    adj->set_value(value);
+
+    return FALSE;
+}
 
 void PreviewHolder::clear()
 {

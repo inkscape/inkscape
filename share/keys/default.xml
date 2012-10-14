@@ -676,4 +676,7 @@ override) the bindings in the main default.xml.
  <bind key="j" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer" display="true"/>
  <bind key="J" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer"/>
 
+ <bind key="p" modifiers="Shift,Alt" action="TogglePalette" display="true" />
+ <bind key="P" modifiers="Shift,Alt" action="TogglePalette" />
+
 </keys>

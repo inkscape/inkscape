@@ -46,6 +46,7 @@ public:
 
 protected:
     virtual void on_size_allocate( Gtk::Allocation& allocation );
+    virtual bool on_scroll_event(GdkEventScroll*);
 //    virtual void on_size_request( Gtk::Requisition* requisition );
 
 
