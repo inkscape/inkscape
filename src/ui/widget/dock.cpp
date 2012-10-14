@@ -81,9 +81,15 @@ Dock::Dock(Gtk::Orientation orientation)
         static_cast<GdlSwitcherStyle>(prefs->getIntLimited("/options/dock/switcherstyle",
                                                                       GDL_SWITCHER_STYLE_BOTH, 0, 4));
 
-    g_object_set (GDL_DOCK_OBJECT(_gdl_dock)->master,
-                  "switcher-style", gdl_switcher_style,
-                  NULL);
+    GdlDockMaster* master = NULL;
+    
+    g_object_get(GDL_DOCK_OBJECT(_gdl_dock),
+            "master", &master,
+            NULL);
+    
+    g_object_set(master,
+            "switcher-style", gdl_switcher_style,
+            NULL);
 
     GdlDockBarStyle gdl_dock_bar_style =
         static_cast<GdlDockBarStyle>(prefs->getIntLimited("/options/dock/dockbarstyle",
