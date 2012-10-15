@@ -35,7 +35,6 @@ public:
 
     void set_document( SPDocument *document );
     void set_href(const gchar *href);
-    void set_region(SVGLength x, SVGLength y, SVGLength width, SVGLength height);
     void set_align( unsigned int align );
     void set_clip( unsigned int clip );
     bool from_element;
