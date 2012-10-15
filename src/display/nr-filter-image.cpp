@@ -52,8 +52,8 @@ void FilterImage::render_cairo(FilterSlot &slot)
     //cairo_surface_t *input = slot.getcairo(_input);
 
     // Viewport is filter primitive area (in user coordinates).
-    // Note: viewport calculation in non-trivial. Do not use
-    // rely on get_matrix_primitiveunits2pb().
+    // Note: viewport calculation in non-trivial. Do not rely
+    // on get_matrix_primitiveunits2pb().
     Geom::Rect vp = filter_primitive_area( slot.get_units() );
     double feImageX      = vp.min()[Geom::X];
     double feImageY      = vp.min()[Geom::Y];
