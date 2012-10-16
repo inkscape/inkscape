@@ -346,7 +346,7 @@ SimpleNode::setAttribute(gchar const *name, gchar const *value, bool const /*is_
             // tree (and thus has no parent), default values will not be tested.
             if( !strcmp( name, "style" ) && (flags >= SP_ATTR_CLEAN_STYLE_WARN) ) {
                 g_free( cleaned_value );
-                cleaned_value = const_cast<char*>(sp_attribute_clean_style( this, value, flags ).c_str());
+                cleaned_value = g_strdup( sp_attribute_clean_style( this, value, flags ).c_str() );
                 // if( g_strcmp0( value, cleaned_value ) ) {
                 //     g_warning( "SimpleNode::setAttribute: %s", id.c_str() );
                 //     g_warning( "     original: %s", value);
