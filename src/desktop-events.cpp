@@ -508,7 +508,7 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
 #endif
             } else {
                 GdkCursor *guide_cursor;
-                guide_cursor = gdk_cursor_new (GDK_FLEUR);
+                guide_cursor = gdk_cursor_new (GDK_HAND1);
                 gdk_window_set_cursor(gtk_widget_get_window (GTK_WIDGET(sp_desktop_canvas(desktop))), guide_cursor);
 #if GTK_CHECK_VERSION(3,0,0)
                 g_object_unref(guide_cursor);
