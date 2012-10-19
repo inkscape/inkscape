@@ -151,9 +151,11 @@
         #define HAVE_SYS_STAT_H               1
         #define HAVE_INTTYPES_H               1
         #define HAVE_OPENMP                   1
-		#define HAVE_TR1_UNORDERED_SET        1
+        #define HAVE_TR1_UNORDERED_SET        1
 
         #define HAVE_LIBLCMS1                 1
+
+        #define WITH_GTKMM_2_24               1
 
         #define ENABLE_NLS                    1
         #define HAVE_BIND_TEXTDOMAIN_CODESET  1
@@ -178,7 +180,7 @@
         
         /* use poppler for pdf import? */
         #define HAVE_POPPLER                  1
-	#define HAVE_POPPLER_GLIB             1
+        #define HAVE_POPPLER_GLIB             1
         #define HAVE_POPPLER_CAIRO            1
 
         /* do we want bitmap manipulation? */
