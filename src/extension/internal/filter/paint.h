@@ -644,7 +644,6 @@ NeonDraw::get_filter_text (Inkscape::Extension::Extension * ext)
             "<feFuncB type=\"%s\" tableValues=\"0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 0 0 0 1\" />\n"
           "</feComponentTransfer>\n"
           "<feComposite in=\"component2\" in2=\"blur2\" k3=\"%s\" operator=\"arithmetic\" k2=\"1\" result=\"composite1\" />\n"
-          "<feColorMatrix values=\"-1 0 0 0 1 0 -1 0 0 0 1 0 -1 0 1 -0.21 -0.72 -0.07 2 0\" result=\"color3\" />\n"
           "<feComposite in=\"composite1\" in2=\"SourceGraphic\" operator=\"in\" result=\"composite2\" />\n"
         "</filter>\n", blend.str().c_str(), simply.str().c_str(), width.str().c_str(), type.str().c_str(), type.str().c_str(), type.str().c_str(), lightness.str().c_str());
 

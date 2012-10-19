@@ -2520,7 +2520,7 @@ sodipodi:docname="filters.svg">
 <feBlend in2="result9" mode="normal" in="result14" result="result10" />
 <feComposite in2="SourceGraphic" operator="in" result="result11" in="result10" />
 </filter>
-<filter id="filter451" inkscape:menu="Fill and Transparency" inkscape:menu-tooltip="Create a semi transparent posterized image" style="color-interpolation-filters:sRGB" inkscape:label="Posterized Light Eraser 4">
+<filter id="filter451" inkscape:menu="Fill and Transparency" inkscape:menu-tooltip="Create a semi transparent posterized image" style="color-interpolation-filters:sRGB" inkscape:label="Posterized Light Eraser">
 <feGaussianBlur stdDeviation="0.01" result="result1" in="SourceGraphic" />
 <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 50 0 " result="fbSourceGraphic" in="result1" />
 <feColorMatrix type="saturate" result="result8" values="1" />
