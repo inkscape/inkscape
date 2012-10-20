@@ -57,7 +57,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-10-09 13:32+0200\n"
-"PO-Revision-Date: 2012-10-12 21:17+0100\n"
+"PO-Revision-Date: 2012-10-20 09:33+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
@@ -6098,7 +6098,7 @@ msgstr "Paginagrootte document gebruiken"
 #: ../src/extension/internal/cairo-ps-out.cpp:363
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:247
 msgid "Use exported object's size"
-msgstr ""
+msgstr "Objectgrootte gebruiken"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:325
 #: ../src/extension/internal/cairo-ps-out.cpp:365
@@ -9907,7 +9907,7 @@ msgstr "Liniaal"
 #. 0.49
 #: ../src/live_effects/effect.cpp:124
 msgid "Power stroke"
-msgstr "Dynamische lijn"
+msgstr "Power stroke"
 
 #: ../src/live_effects/effect.cpp:125
 #: ../src/selection-chemistry.cpp:2758
@@ -10295,19 +10295,19 @@ msgstr "Uiteinden dichter dan dit getal aaneensmelten. 0 betekent geen versmelti
 
 #: ../src/live_effects/lpe-powerstroke.cpp:163
 msgid "CubicBezierFit"
-msgstr ""
+msgstr "CubicBezierFit"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:164
 msgid "CubicBezierJohan"
-msgstr ""
+msgstr "CubicBezierJohan"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:165
 msgid "SpiroInterpolator"
-msgstr ""
+msgstr "SpiroInterpolator"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:177
 msgid "Butt"
-msgstr ""
+msgstr "Knot"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:178
 msgid "Square"
@@ -10320,15 +10320,15 @@ msgstr "Rond"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:180
 msgid "Peak"
-msgstr ""
+msgstr "Piek"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:181
 msgid "Zero width"
-msgstr ""
+msgstr "Nulbreedte"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:194
 msgid "Beveled"
-msgstr ""
+msgstr "Afgeschuind"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:195
 #: ../src/widgets/star-toolbar.cpp:547
@@ -10370,15 +10370,15 @@ msgstr "Type interpolator:"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:209
 msgid "Determines which kind of interpolator will be used to interpolate between stroke width along the path"
-msgstr ""
+msgstr "Bepaalt de gebruikte interpolator voor eht interpoleren tussen lijnbreedte en pad"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:210
 msgid "Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear interpolation, 1 = smooth"
-msgstr ""
+msgstr "Stelt de gladheid in voor de CubicBezierJohan interpolator; 0 = lineaire interpolatie, 1 = glad"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:211
 msgid "Start cap:"
-msgstr "Uiteinde begin:"
+msgstr "Afronding begin:"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:211
 msgid "Determines the shape of the path's start"
@@ -10407,7 +10407,7 @@ msgstr "Maximale lengte (in lijnbreedtes) van de punt"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:214
 msgid "End cap:"
-msgstr "Rond uiteinde:"
+msgstr "Afronding uiteinde:"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:214
 msgid "Determines the shape of the path's end"
@@ -21254,13 +21254,12 @@ msgid "Create one or more paths from a bitmap by tracing it"
 msgstr "Door overtrekken één of meer paden aanmaken uit een bitmap"
 
 #: ../src/verbs.cpp:2459
-#, fuzzy
 msgid "Make a _Bitmap Copy"
 msgstr "Als _bitmap kopiëren"
 
 #: ../src/verbs.cpp:2460
 msgid "Export selection to a bitmap and insert it into document"
-msgstr "De selectie omzetten naar een bitmap en in het document importeren"
+msgstr "De selectie omzetten naar een bitmap en in het document plaatsen"
 
 #: ../src/verbs.cpp:2461
 msgid "_Combine"
@@ -21338,9 +21337,8 @@ msgid "Move selection to the layer below the current"
 msgstr "De geselecteerde objecten naar de laag onder de huidige verplaatsen"
 
 #: ../src/verbs.cpp:2482
-#, fuzzy
 msgid "Move Selection to Layer..."
-msgstr "_Selectie omhoog verplaatsen"
+msgstr "Selectie naar laag verplaatsen..."
 
 #: ../src/verbs.cpp:2484
 msgid "Layer to _Top"
@@ -21408,31 +21406,27 @@ msgstr "Alle lagen tonen"
 
 #: ../src/verbs.cpp:2500
 msgid "_Hide all layers"
-msgstr "Alle lagen _verbergen"
+msgstr "Alle lagen ver_bergen"
 
 #: ../src/verbs.cpp:2501
 msgid "Hide all the layers"
 msgstr "Alle lagen verbergen"
 
 #: ../src/verbs.cpp:2502
-#, fuzzy
 msgid "_Lock all layers"
-msgstr "Alle lagen t_onen"
+msgstr "Alle lagen ver_grendelen"
 
 #: ../src/verbs.cpp:2503
-#, fuzzy
 msgid "Lock all the layers"
-msgstr "Alle lagen tonen"
+msgstr "Alle lagen vergrendelen"
 
 #: ../src/verbs.cpp:2504
-#, fuzzy
 msgid "_Unlock all layers"
-msgstr "Laag ontgrendelen"
+msgstr "Alle lagen _ontgrendelen"
 
 #: ../src/verbs.cpp:2505
-#, fuzzy
 msgid "Unlock all the layers"
-msgstr "Alle lagen tonen"
+msgstr "Alle lagen ontgrendelen"
 
 #: ../src/verbs.cpp:2506
 msgid "_Lock/Unlock Current Layer"
@@ -21558,7 +21552,6 @@ msgstr "Maskerpad uitschakelen"
 
 #. Tools
 #: ../src/verbs.cpp:2550
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Select"
 msgstr "Selecteren"
@@ -21568,17 +21561,15 @@ msgid "Select and transform objects"
 msgstr "Objecten selecteren of vervormen"
 
 #: ../src/verbs.cpp:2552
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Node Edit"
-msgstr "Knooppunten wijzigen"
+msgstr "Knooppunt wijzigen"
 
 #: ../src/verbs.cpp:2553
 msgid "Edit paths by nodes"
 msgstr "Paden aanpassen via hun knooppunten"
 
 #: ../src/verbs.cpp:2554
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Tweak"
 msgstr "Boetseren"
@@ -21588,7 +21579,6 @@ msgid "Tweak objects by sculpting or painting"
 msgstr "Objecten aanpassen door boetseren of verven"
 
 #: ../src/verbs.cpp:2556
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Spray"
 msgstr "Verstuiven"
@@ -21598,7 +21588,6 @@ msgid "Spray objects by sculpting or painting"
 msgstr "Object verstuiven door boetseren of verven"
 
 #: ../src/verbs.cpp:2558
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Rectangle"
 msgstr "Rechthoek"
@@ -21608,7 +21597,6 @@ msgid "Create rectangles and squares"
 msgstr "Rechthoeken of vierkanten maken"
 
 #: ../src/verbs.cpp:2560
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "3D Box"
 msgstr "3D-kubus"
@@ -21618,7 +21606,6 @@ msgid "Create 3D boxes"
 msgstr "3D-kubussen maken"
 
 #: ../src/verbs.cpp:2562
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Ellipse"
 msgstr "Ellips"
@@ -21628,7 +21615,6 @@ msgid "Create circles, ellipses, and arcs"
 msgstr "Cirkels, ellipsen of bogen maken"
 
 #: ../src/verbs.cpp:2564
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Star"
 msgstr "Ster"
@@ -21638,7 +21624,6 @@ msgid "Create stars and polygons"
 msgstr "Sterren of veelhoeken maken"
 
 #: ../src/verbs.cpp:2566
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Spiral"
 msgstr "Spiraal"
@@ -21648,7 +21633,6 @@ msgid "Create spirals"
 msgstr "Spiralen maken"
 
 #: ../src/verbs.cpp:2568
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Pencil"
 msgstr "Potlood"
@@ -21658,7 +21642,6 @@ msgid "Draw freehand lines"
 msgstr "Lijnen tekenen uit de losse hand"
 
 #: ../src/verbs.cpp:2570
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Pen"
 msgstr "Pen"
@@ -21668,7 +21651,6 @@ msgid "Draw Bezier curves and straight lines"
 msgstr "Rechten of Bezierkrommes trekken"
 
 #: ../src/verbs.cpp:2572
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Calligraphy"
 msgstr "Kalligrafie"
@@ -21682,7 +21664,6 @@ msgid "Create and edit text objects"
 msgstr "Tekstobjecten maken en aanpassen"
 
 #: ../src/verbs.cpp:2576
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Gradient"
 msgstr "Kleurverloop"
@@ -21692,7 +21673,6 @@ msgid "Create and edit gradients"
 msgstr "Kleurverlopen maken en aanpassen"
 
 #: ../src/verbs.cpp:2578
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Mesh"
 msgstr "Mesh"
@@ -21702,7 +21682,6 @@ msgid "Create and edit meshes"
 msgstr "Meshes maken en bewerken"
 
 #: ../src/verbs.cpp:2580
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Zoom"
 msgstr "Zoomen"
@@ -21716,7 +21695,6 @@ msgid "Measurement tool"
 msgstr "Meetlat"
 
 #: ../src/verbs.cpp:2584
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Dropper"
 msgstr "Pipet"
@@ -21727,7 +21705,6 @@ msgid "Pick colors from image"
 msgstr "Kleur uitkiezen in de afbeelding"
 
 #: ../src/verbs.cpp:2586
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Connector"
 msgstr "Verbinding"
@@ -21737,7 +21714,6 @@ msgid "Create diagram connectors"
 msgstr "Diagramverbindingen maken"
 
 #: ../src/verbs.cpp:2588
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Paint Bucket"
 msgstr "Verfemmer"
@@ -21747,7 +21723,6 @@ msgid "Fill bounded areas"
 msgstr "Afgebakende gebieden vullen"
 
 #: ../src/verbs.cpp:2590
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "LPE Edit"
 msgstr "Padeffect wijzigen"
@@ -21757,7 +21732,6 @@ msgid "Edit Path Effect parameters"
 msgstr "Wijzig padeffectparameters"
 
 #: ../src/verbs.cpp:2592
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "Eraser"
 msgstr "Gom"
@@ -21767,7 +21741,6 @@ msgid "Erase existing paths"
 msgstr "Bestaande pagen verwijderen"
 
 #: ../src/verbs.cpp:2594
-#, fuzzy
 msgctxt "ContextVerb"
 msgid "LPE Tool"
 msgstr "Padeffecten"
@@ -22056,14 +22029,12 @@ msgid "Stretch this document window to full screen"
 msgstr "Dit documentvenster vergroten tot de volledige schermgrootte"
 
 #: ../src/verbs.cpp:2662
-#, fuzzy
 msgid "Fullscreen & Focus Mode"
-msgstr "_Focus modus aan/uitzetten"
+msgstr "Volledig scherm en focus modus"
 
 #: ../src/verbs.cpp:2662
-#, fuzzy
 msgid " and "
-msgstr "Binnen- en buitenrand"
+msgstr " en "
 
 #: ../src/verbs.cpp:2662
 #: ../src/verbs.cpp:2665
@@ -22406,14 +22377,12 @@ msgid "Select which color separations to render in Print Colors Preview rendermo
 msgstr "Selecteer welke kleuren gerenderd worden in de weergavemodus Afdrukvoorbeeld kleuren"
 
 #: ../src/verbs.cpp:2765
-#, fuzzy
 msgid "_Export PNG Image..."
-msgstr "Afbeelding extraheren..."
+msgstr "PNG-afbeelding _exporteren..."
 
 #: ../src/verbs.cpp:2766
-#, fuzzy
 msgid "Export this document or a selection as a PNG image"
-msgstr "Document of selectie als bitmapafbeelding exporteren"
+msgstr "Document of selectie als PNG-afbeelding exporteren"
 
 #. Help
 #: ../src/verbs.cpp:2769
@@ -22574,9 +22543,8 @@ msgstr "Een gelinkt ICC-kleurprofiel verwijderen"
 
 #: ../src/verbs.cpp:2846
 #: ../src/verbs.cpp:2847
-#, fuzzy
 msgid "Center on horizontal and vertical axis"
-msgstr "Centreren om de horizontale as"
+msgstr "Centreren op horizontale en verticale as"
 
 #: ../src/widgets/arc-toolbar.cpp:146
 msgid "Arc: Change start/end"
@@ -24755,9 +24723,8 @@ msgid "Set stroke style"
 msgstr "Lijnstijl instellen"
 
 #: ../src/widgets/stroke-style.cpp:1209
-#, fuzzy
 msgid "Set marker color"
-msgstr "Lijnkleur instellen"
+msgstr "Markeringskleur instellen"
 
 #: ../src/widgets/swatch-selector.cpp:140
 msgid "Change swatch color"
@@ -24834,14 +24801,12 @@ msgid "Font not found on system"
 msgstr "Lettertype niet aanwezig op systeem"
 
 #: ../src/widgets/text-toolbar.cpp:1517
-#, fuzzy
 msgid "Font Style"
-msgstr "Lettertypegrootte"
+msgstr "Lettertypestijl"
 
 #: ../src/widgets/text-toolbar.cpp:1518
-#, fuzzy
 msgid "Font style"
-msgstr "Lettergrootte:"
+msgstr "Lettertypestijl"
 
 #. Name
 #: ../src/widgets/text-toolbar.cpp:1534
@@ -26299,39 +26264,34 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/color_HSL_adjust.inx.h:10
-#, fuzzy
 msgid "HSL Adjust"
 msgstr "TVH aanpassen"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:12
-#, fuzzy
 msgid "Hue (°):"
 msgstr "Tintrotatie (°):"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:14
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Lightness (%):"
-msgstr "Lichtheid:"
+msgstr "Lichtheid (%):"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:16
-#, fuzzy
 msgid "Random hue"
-msgstr "Willekeurige boom"
+msgstr "Random tint"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:17
-#, fuzzy
 msgid "Random lightness"
-msgstr "Helderheid korrel:"
+msgstr "Random lichtheid"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:18
-#, fuzzy
 msgid "Random saturation"
-msgstr "Verzadiging aanpassen"
+msgstr "Random verzadiging"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:20
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Saturation (%):"
-msgstr "Verzadiging:"
+msgstr "Verzadiging (%):"
 
 #: ../share/extensions/color_lesshue.inx.h:2
 msgid "Less Hue"
