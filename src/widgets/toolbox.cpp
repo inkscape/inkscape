@@ -1423,8 +1423,13 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
 
             GtkWidget* kludge = dataHolders[aux_toolboxes[i].type_name];
 
+#if GTK_CHECK_VERSION(3,0,0)
+            GtkWidget* holder = gtk_grid_new();
+            gtk_grid_attach( GTK_GRID(holder), kludge, 2, 0, 1, 1);
+#else
             GtkWidget* holder = gtk_table_new( 1, 3, FALSE );
             gtk_table_attach( GTK_TABLE(holder), kludge, 2, 3, 0, 1, GTK_SHRINK, GTK_SHRINK, 0, 0 );
+#endif
 
             gchar* tmp = g_strdup_printf( "/ui/%s", aux_toolboxes[i].ui_name );
             GtkWidget* toolBar = gtk_ui_manager_get_widget( mgr, tmp );
@@ -1438,7 +1443,12 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
             Inkscape::IconSize toolboxSize = ToolboxFactory::prefToSize("/toolbox/small");
             gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), static_cast<GtkIconSize>(toolboxSize) );
 
+#if GTK_CHECK_VERSION(3,0,0)
+            gtk_widget_set_hexpand(toolBar, TRUE);
+            gtk_grid_attach( GTK_GRID(holder), toolBar, 0, 0, 1, 1);
+#else
             gtk_table_attach( GTK_TABLE(holder), toolBar, 0, 1, 0, 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0 );
+#endif
 
             if ( aux_toolboxes[i].swatch_verb_id != SP_VERB_INVALID ) {
                 Inkscape::UI::Widget::StyleSwatch *swatch = new Inkscape::UI::Widget::StyleSwatch( NULL, _(aux_toolboxes[i].swatch_tip) );
@@ -1446,7 +1456,16 @@ void setup_aux_toolbox(GtkWidget *toolbox, SPDesktop *desktop)
                 swatch->setClickVerb( aux_toolboxes[i].swatch_verb_id );
                 swatch->setWatchedTool( aux_toolboxes[i].swatch_tool, true );
                 GtkWidget *swatch_ = GTK_WIDGET( swatch->gobj() );
+
+#if GTK_CHECK_VERSION(3,0,0)
+                gtk_widget_set_margin_left(swatch_, AUX_BETWEEN_BUTTON_GROUPS);
+                gtk_widget_set_margin_right(swatch_, AUX_BETWEEN_BUTTON_GROUPS);
+                gtk_widget_set_margin_top(swatch_, AUX_SPACING);
+                gtk_widget_set_margin_bottom(swatch_, AUX_SPACING);
+                gtk_grid_attach( GTK_GRID(holder), swatch_, 1, 0, 1, 1);
+#else
                 gtk_table_attach( GTK_TABLE(holder), swatch_, 1, 2, 0, 1, (GtkAttachOptions)(GTK_SHRINK | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), AUX_BETWEEN_BUTTON_GROUPS, AUX_SPACING );
+#endif
             }
 
             gtk_widget_show_all( holder );
