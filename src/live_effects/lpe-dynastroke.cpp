@@ -115,7 +115,7 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
 {
     using namespace Geom;
 
-     std::cout<<"do effect: debut\n";
+//     std::cout<<"do effect: debut\n";
     
      Piecewise<D2<SBasis> > output;
      Piecewise<D2<SBasis> > m = pwd2_in;
@@ -156,13 +156,13 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
     
      DynastrokeMethod stroke_method = method.get_value();
      if (roundness==1.) {
-         std::cout<<"round pen.\n";
+//         std::cout<<"round pen.\n";
          n1 = n*double(width);
          n2 =-n1;
      }else{
          switch(stroke_method) {
              case DSM_ELLIPTIC_PEN:{
-                 std::cout<<"ellptic pen\n";
+//                 std::cout<<"ellptic pen\n";
                  //FIXME: roundness=0???
                  double c = cos(angle_rad), s = sin(angle_rad); 
                  Affine rot,slant;
@@ -178,7 +178,7 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
                  break;
              }    
              case DSM_THICKTHIN_FAST:{
-                 std::cout<<"fast thick thin pen\n";
+//                 std::cout<<"fast thick thin pen\n";
                  D2<Piecewise<SBasis> > n_xy = make_cuts_independent(n);
                  w = n_xy[X]*sin(angle_rad) - n_xy[Y]*cos(angle_rad);
                  w = w * ((1 - roundness)*width/2.) + ((1 + roundness)*width/2.);
@@ -187,7 +187,7 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
                  break;
              }
              case DSM_THICKTHIN_SLOW:{
-                 std::cout<<"slow thick thin pen\n";
+//                 std::cout<<"slow thick thin pen\n";
                  D2<Piecewise<SBasis> > n_xy = make_cuts_independent(n);
                  w = n_xy[X]*cos(angle_rad)+ n_xy[Y]*sin(angle_rad);
                  w = w * ((1 - roundness)*width/2.) + ((1 + roundness)*width/2.);
@@ -196,12 +196,12 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
                  Piecewise<SBasis> dw = derivative(w);
                  Piecewise<SBasis> ncomp = sqrt(dot(v,v)-dw*dw,.1,3);
                  //FIXME: is force continuity usefull? compatible with corners?
-                 std::cout<<"ici\n";
+//                 std::cout<<"ici\n";
                  n1 = -dw*v + ncomp*rot90(v);
                  n1 = w*force_continuity(unitVector(n1),.1);
                  n2 = -dw*v - ncomp*rot90(v);
                  n2 = w*force_continuity(unitVector(n2),.1);
-                 std::cout<<"ici2\n";
+//                 std::cout<<"ici2\n";
                  break;
              }
              default:{
@@ -219,13 +219,13 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
      Piecewise<D2<SBasis> > left, right;
      if ( m.segs.front().at0() == m.segs.back().at1()){
          // if closed:
-         std::cout<<"closed input.\n";
+//         std::cout<<"closed input.\n";
          left  = m + n1;//+ n;
          right = m + n2;//- n;
      } else {
          //if not closed, shape the ends:
          //TODO: allow fancy ends...
-         std::cout<<"shaping the ends\n";
+//         std::cout<<"shaping the ends\n";
          double grow_length = growfor;// * width;
          double fade_length = fadefor;// * width;
          Piecewise<SBasis > s = arcLengthSb(m);
@@ -240,7 +240,7 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
              factor_in.concat(Piecewise<SBasis >(Linear(1)));
              factor_in.cuts[2]=totlength;
          }
-         std::cout<<"shaping the ends ici\n";
+//         std::cout<<"shaping the ends ici\n";
          //scale factor for a sharp end
          join[0] = Linear(1,0);
          join[1] = Linear(1,1);
@@ -254,7 +254,7 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
              factor_out = Piecewise<SBasis >(join);
              factor_out.setDomain(Interval(totlength-fade_length,totlength));
          }
-         std::cout<<"shaping the ends ici ici\n";
+//         std::cout<<"shaping the ends ici ici\n";
          
          Piecewise<SBasis > factor = factor_in*factor_out;
          n1 = compose(factor,s)*n1;
@@ -262,10 +262,10 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
          
          left  = m + n1;
          right = m + n2;
-         std::cout<<"shaping the ends ici ici ici\n";
+//         std::cout<<"shaping the ends ici ici ici\n";
          
          if (start_cap.get_value() == DSCT_ROUND){
-             std::cout<<"shaping round start\n";
+//             std::cout<<"shaping round start\n";
              SBasis tau(2,Linear(0));
              tau[1] = Linear(-1,0);
              Piecewise<SBasis > hbump;
@@ -280,7 +280,7 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
              right += - hbump * rot90(n);
          }
          if (end_cap.get_value() == DSCT_ROUND){
-             std::cout<<"shaping round end\n";
+//             std::cout<<"shaping round end\n";
              SBasis tau(2,Linear(0));
              tau[1] = Linear(0,1);
              Piecewise<SBasis > hbump;
@@ -299,11 +299,11 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
      left = force_continuity(left);
      right = force_continuity(right);
           
-     std::cout<<"gathering result: left";
+//     std::cout<<"gathering result: left";
      output = left;
-     std::cout<<" + reverse(right)";
+//     std::cout<<" + reverse(right)";
      output.concat(reverse(right));
-     std::cout<<". done\n";
+//     std::cout<<". done\n";
 
 //-----------
         return output;
