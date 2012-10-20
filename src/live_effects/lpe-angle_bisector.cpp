@@ -42,8 +42,8 @@ public:
 
 LPEAngleBisector::LPEAngleBisector(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    length_left(_("Length left"), _("Specifies the left end of the bisector"), "length-left", &wr, this, 0),
-    length_right(_("Length right"), _("Specifies the right end of the bisector"), "length-right", &wr, this, 250)
+    length_left(_("Length left:"), _("Specifies the left end of the bisector"), "length-left", &wr, this, 0),
+    length_right(_("Length right:"), _("Specifies the right end of the bisector"), "length-right", &wr, this, 250)
 {
     show_orig_path = true;
     _provides_knotholder_entities = true;
