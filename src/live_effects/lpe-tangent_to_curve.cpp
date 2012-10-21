@@ -58,10 +58,10 @@ public:
 
 LPETangentToCurve::LPETangentToCurve(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    angle(_("Angle"), _("Additional angle between tangent and curve"), "angle", &wr, this, 0.0),
-    t_attach(_("Location along curve"), _("Location of the point of attachment along the curve (between 0.0 and number-of-segments)"), "t_attach", &wr, this, 0.5),
-    length_left(_("Length left"), _("Specifies the left end of the tangent"), "length-left", &wr, this, 150),
-    length_right(_("Length right"), _("Specifies the right end of the tangent"), "length-right", &wr, this, 150)
+    angle(_("Angle:"), _("Additional angle between tangent and curve"), "angle", &wr, this, 0.0),
+    t_attach(_("Location along curve:"), _("Location of the point of attachment along the curve (between 0.0 and number-of-segments)"), "t_attach", &wr, this, 0.5),
+    length_left(_("Length left:"), _("Specifies the left end of the tangent"), "length-left", &wr, this, 150),
+    length_right(_("Length right:"), _("Specifies the right end of the tangent"), "length-right", &wr, this, 150)
 {
     show_orig_path = true;
     _provides_knotholder_entities = true;

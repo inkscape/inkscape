@@ -20,7 +20,7 @@ namespace LivePathEffect {
 
 LPETextLabel::LPETextLabel(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    label(_("Label"), _("Text label attached to the path"), "label", &wr, this, "This is a label")
+    label(_("Label:"), _("Text label attached to the path"), "label", &wr, this, "This is a label")
 {
     registerParameter( dynamic_cast<Parameter *>(&label) );
 }

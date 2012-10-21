@@ -94,8 +94,8 @@ KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*or
 
 LPEPerpBisector::LPEPerpBisector(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    length_left(_("Length left"), _("Specifies the left end of the bisector"), "length-left", &wr, this, 200),
-    length_right(_("Length right"), _("Specifies the right end of the bisector"), "length-right", &wr, this, 200),
+    length_left(_("Length left:"), _("Specifies the left end of the bisector"), "length-left", &wr, this, 200),
+    length_right(_("Length right:"), _("Specifies the right end of the bisector"), "length-right", &wr, this, 200),
     A(0,0), B(0,0), M(0,0), C(0,0), D(0,0), perp_dir(0,0)
 {
     show_orig_path = true;

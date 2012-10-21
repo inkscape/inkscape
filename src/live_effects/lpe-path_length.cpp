@@ -23,9 +23,9 @@ namespace LivePathEffect {
 
 LPEPathLength::LPEPathLength(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    scale(_("Scale"), _("Scaling factor"), "scale", &wr, this, 1.0),
+    scale(_("Scale:"), _("Scaling factor"), "scale", &wr, this, 1.0),
     info_text(this),
-    unit(_("Unit"), _("Unit"), "unit", &wr, this),
+    unit(_("Unit:"), _("Unit"), "unit", &wr, this),
     display_unit(_("Display unit"), _("Print unit after path length"), "display_unit", &wr, this, true)
 {
     registerParameter(dynamic_cast<Parameter *>(&scale));

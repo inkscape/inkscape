@@ -27,7 +27,7 @@ namespace LivePathEffect {
 
 LPERecursiveSkeleton::LPERecursiveSkeleton(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    iterations(_("Iterations"), _("recursivity"), "iterations", &wr, this, 2)
+    iterations(_("Iterations:"), _("recursivity"), "iterations", &wr, this, 2)
 {
     show_orig_path = true;
     concatenate_before_pwd2 = true;

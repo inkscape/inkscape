@@ -48,9 +48,9 @@ public:
 
 LPECopyRotate::LPECopyRotate(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    starting_angle(_("Starting"), _("Angle of the first copy"), "starting_angle", &wr, this, 0.0),
-    rotation_angle(_("Rotation angle"), _("Angle between two successive copies"), "rotation_angle", &wr, this, 30.0),
-    num_copies(_("Number of copies"), _("Number of copies of the original path"), "num_copies", &wr, this, 5),
+    starting_angle(_("Starting:"), _("Angle of the first copy"), "starting_angle", &wr, this, 0.0),
+    rotation_angle(_("Rotation angle:"), _("Angle between two successive copies"), "rotation_angle", &wr, this, 30.0),
+    num_copies(_("Number of copies:"), _("Number of copies of the original path"), "num_copies", &wr, this, 5),
     origin(_("Origin"), _("Origin of the rotation"), "origin", &wr, this, "Adjust the origin of the rotation"),
     dist_angle_handle(100)
 {

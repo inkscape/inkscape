@@ -32,8 +32,8 @@ static const Util::EnumDataConverter<unsigned> BoolopTypeConverter(BoolopTypeDat
 
 LPEBoolops::LPEBoolops(LivePathEffectObject *lpeobject) :
     Effect(lpeobject),
-    bool_path(_("2nd path"), _("Path to which the original path will be boolop'ed."), "path_2nd", &wr, this, "M0,0 L1,0"),
-    boolop_type(_("Boolop type"), _("Determines which kind of boolop will be performed."), "boolop_type", BoolopTypeConverter, &wr, this, Geom::BOOLOP_UNION)
+    bool_path(_("2nd path:"), _("Path to which the original path will be boolop'ed."), "path_2nd", &wr, this, "M0,0 L1,0"),
+    boolop_type(_("Boolop type:"), _("Determines which kind of boolop will be performed."), "boolop_type", BoolopTypeConverter, &wr, this, Geom::BOOLOP_UNION)
 {
     show_orig_path = true;
 
