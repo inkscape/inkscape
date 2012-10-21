@@ -447,7 +447,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     dtw->hscrollbar = gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, GTK_ADJUSTMENT (dtw->hadj));
     gtk_widget_set_halign(dtw->hscrollbar, GTK_ALIGN_FILL);
     gtk_widget_set_hexpand(dtw->hscrollbar, TRUE);
-    gtk_widget_set_valign(dtw->hscrollbar, GTK_ALIGN_END);
     gtk_grid_attach(GTK_GRID(canvas_tbl), dtw->hscrollbar, 1, 2, 1, 1);
     dtw->vscrollbar_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_set_homogeneous(GTK_BOX(dtw->vscrollbar_box), FALSE);
@@ -483,7 +482,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #if GTK_CHECK_VERSION(3,0,0)
     gtk_widget_set_valign(dtw->vscrollbar, GTK_ALIGN_FILL);
     gtk_widget_set_vexpand(dtw->vscrollbar, TRUE);
-    gtk_widget_set_halign(dtw->vscrollbar, GTK_ALIGN_END);
     gtk_grid_attach(GTK_GRID(canvas_tbl), dtw->vscrollbar_box, 2, 0, 1, 2);
 #else
     gtk_table_attach(GTK_TABLE(canvas_tbl), dtw->vscrollbar_box, 2, 3, 0, 2,
