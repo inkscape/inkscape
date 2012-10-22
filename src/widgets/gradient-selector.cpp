@@ -336,6 +336,14 @@ void SPGradientSelector::onTreeSelection()
         return;
     }
 
+    if (!treeview->has_focus()) {
+        /* Workaround for GTK bug on Windows/OS X
+         * When the treeview initially doesn't have focus and is clicked
+         * sometimes get_selection()->signal_changed() has the wrong selection
+         */
+        treeview->grab_focus();
+    }
+
     const Glib::RefPtr<Gtk::TreeSelection> sel = treeview->get_selection();
     if (!sel) {
         return;
