@@ -60,6 +60,7 @@ set(ui_SRC
 	dialog/print-colors-preview-dialog.cpp
 	dialog/print.cpp
 	dialog/scriptdialog.cpp
+	dialog/symbols.cpp
 	dialog/xml-tree.cpp
 	# dialog/session-player.cpp
 	dialog/spellcheck.cpp
@@ -174,6 +175,7 @@ set(ui_SRC
 	dialog/spellcheck.h
 	dialog/svg-fonts-dialog.h
 	dialog/swatches.h
+	dialog/symbols.h
 	dialog/text-edit.h
 	dialog/tile.h
 	dialog/tracedialog.h

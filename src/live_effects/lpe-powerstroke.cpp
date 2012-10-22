@@ -157,7 +157,7 @@ static int circle_circle_intersection(Circle const &circle0, Circle const &circl
  * Find circle that touches inside of the curve, with radius matching the curvature, at time value \c t.
  * Because this method internally uses unitTangentAt, t should be smaller than 1.0 (see unitTangentAt).
  */
-Circle touching_circle( D2<SBasis> const &curve, double t, double tol=0.01 )
+static Circle touching_circle( D2<SBasis> const &curve, double t, double tol=0.01 )
 {
     //Piecewise<SBasis> k = curvature(curve, tol);
     D2<SBasis> dM=derivative(curve);
