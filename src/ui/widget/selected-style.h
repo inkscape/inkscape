@@ -61,8 +61,10 @@ public:
     ~RotateableSwatch();
 
     double color_adjust (float *hsl, double by, guint32 cc, guint state);
+
     virtual void do_motion (double by, guint state);
     virtual void do_release (double by, guint state);
+    virtual void do_scroll (double by, guint state);
 
 private:
     guint fillstroke;
@@ -87,6 +89,7 @@ public:
     double value_adjust(double current, double by, guint modifier, bool final);
     virtual void do_motion (double by, guint state);
     virtual void do_release (double by, guint state);
+    virtual void do_scroll (double by, guint state);
 
 private:
     SelectedStyle *parent;

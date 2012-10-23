@@ -24,12 +24,15 @@ Rotateable::Rotateable():
 {
 		dragging = false;
 		working = false;
+		scrolling = false;
 		modifier = 0;
 		current_axis = axis;
 
     signal_button_press_event().connect(sigc::mem_fun(*this, &Rotateable::on_click));
     signal_motion_notify_event().connect(sigc::mem_fun(*this, &Rotateable::on_motion));
     signal_button_release_event().connect(sigc::mem_fun(*this, &Rotateable::on_release));
+    signal_scroll_event().connect(sigc::mem_fun(*this, &Rotateable::on_scroll));
+
 }
 
 bool Rotateable::on_click(GdkEventButton *event) {
@@ -124,6 +127,34 @@ bool Rotateable::on_release(GdkEventButton *event) {
     return false;
 }
 
+bool Rotateable::on_scroll(GdkEventScroll* event)
+{
+    double change = 0.0;
+
+    if (event->direction == GDK_SCROLL_UP) {
+        change = 1.0;
+    } else if (event->direction == GDK_SCROLL_DOWN) {
+        change = -1.0;
+    } else {
+        return FALSE;
+    }
+
+    drag_started_x = event->x;
+    drag_started_y = event->y;
+    modifier = get_single_modifier(modifier, event->state);
+    dragging = false;
+    working = false;
+    scrolling = true;
+    current_axis = axis;
+
+    do_scroll(change, modifier);
+
+    dragging = false;
+    working = false;
+    scrolling = false;
+
+    return TRUE;
+}
 
 Rotateable::~Rotateable() {
 }
