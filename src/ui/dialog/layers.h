@@ -13,7 +13,6 @@
 #define SEEN_LAYERS_PANEL_H
 
 #include <gtkmm/box.h>
-#include <gtkmm/buttonbox.h>
 #include <gtkmm/treeview.h>
 #include <gtkmm/treestore.h>
 #include <gtkmm/scrolledwindow.h>
@@ -122,9 +121,13 @@ private:
     Gtk::CellRendererText *_text_renderer;
     Gtk::TreeView::Column *_name_column;
 #if WITH_GTKMM_3_0
-    Gtk::ButtonBox _buttonsRow;
+    Gtk::Box _buttonsRow;
+    Gtk::Box _buttonsPrimary;
+    Gtk::Box _buttonsSecondary;
 #else
-    Gtk::HButtonBox _buttonsRow;
+    Gtk::HBox _buttonsRow;
+    Gtk::HBox _buttonsPrimary;
+    Gtk::HBox _buttonsSecondary;
 #endif
     Gtk::ScrolledWindow _scroller;
     Gtk::Menu _popupMenu;
