@@ -61,7 +61,7 @@ struct SPGradientSelector {
     /* Tree */
     bool _checkForSelected(const Gtk::TreePath& path, const Gtk::TreeIter& iter, SPGradient *vector);
     void onTreeSelection();
-    void onTreeEdited( const Glib::ustring& path_string, const Glib::ustring& new_text);
+    void onGradientRename( const Glib::ustring& path_string, const Glib::ustring& new_text);
     void onTreeNameColClick();
     void onTreeColorColClick();
     void onTreeCountColClick();

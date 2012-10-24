@@ -19,6 +19,7 @@
 #include <gtk/gtk.h>
 
 #include "document.h"
+#include "../document-undo.h"
 #include "../document-private.h"
 #include "../gradient-chemistry.h"
 #include "inkscape.h"
@@ -169,7 +170,7 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     count_column->signal_clicked().connect( sigc::mem_fun(*sel, &SPGradientSelector::onTreeCountColClick) );
 
     gvs->tree_select_connection = sel->treeview->get_selection()->signal_changed().connect( sigc::mem_fun(*sel, &SPGradientSelector::onTreeSelection) );
-    sel->text_renderer->signal_edited().connect( sigc::mem_fun(*sel, &SPGradientSelector::onTreeEdited) );
+    sel->text_renderer->signal_edited().connect( sigc::mem_fun(*sel, &SPGradientSelector::onGradientRename) );
 
     sel->scrolled_window = Gtk::manage(new Gtk::ScrolledWindow());
     sel->scrolled_window->add(*sel->treeview);
@@ -289,7 +290,7 @@ SPGradientSpread SPGradientSelector::getSpread()
     return gradientSpread;
 }
 
-void SPGradientSelector::onTreeEdited( const Glib::ustring& path_string, const Glib::ustring& new_text)
+void SPGradientSelector::onGradientRename( const Glib::ustring& path_string, const Glib::ustring& new_text)
 {
     Gtk::TreePath path(path_string);
     Gtk::TreeModel::iterator iter = store->get_iter(path);
@@ -300,10 +301,12 @@ void SPGradientSelector::onTreeEdited( const Glib::ustring& path_string, const G
         if ( row ) {
             SPObject* obj = row[columns->data];
             if ( obj ) {
+                row[columns->name] = gr_prepare_label(obj);
                 if (!new_text.empty() && new_text != row[columns->name]) {
                   rename_id(obj, new_text );
+                  Inkscape::DocumentUndo::done(obj->document, SP_VERB_CONTEXT_GRADIENT,
+                                     _("Rename gradient"));
                 }
-                row[columns->name] = gr_prepare_label(obj);
             }
         }
     }
