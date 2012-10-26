@@ -251,7 +251,7 @@ CanvasAxonomGrid::readRepr()
 
     if ( (value = repr->attribute("gridanglex")) ) {
         angle_deg[X] = g_ascii_strtod(value, NULL);
-        if (angle_deg[X] < 1.0) angle_deg[X] = 1.0;
+        if (angle_deg[X] < 0.) angle_deg[X] = 0.;
         if (angle_deg[X] > 89.0) angle_deg[X] = 89.0;
         angle_rad[X] = deg_to_rad(angle_deg[X]);
         tan_angle[X] = tan(angle_rad[X]);
@@ -259,7 +259,7 @@ CanvasAxonomGrid::readRepr()
 
     if ( (value = repr->attribute("gridanglez")) ) {
         angle_deg[Z] = g_ascii_strtod(value, NULL);
-        if (angle_deg[Z] < 1.0) angle_deg[Z] = 1.0;
+        if (angle_deg[Z] < 0.) angle_deg[Z] = 0.;
         if (angle_deg[Z] > 89.0) angle_deg[Z] = 89.0;
         angle_rad[Z] = deg_to_rad(angle_deg[Z]);
         tan_angle[Z] = tan(angle_rad[Z]);
@@ -477,8 +477,8 @@ CanvasAxonomGrid::Update (Geom::Affine const &affine, unsigned int /*flags*/)
 
     spacing_ylines = sw[Geom::X] /(tan_angle[X] + tan_angle[Z]);
     lyw            = sw[Geom::Y];
-    lxw_x          = sw[Geom::X] / tan_angle[X];
-    lxw_z          = sw[Geom::X] / tan_angle[Z];
+    lxw_x          = Geom::are_near(tan_angle[X],0.) ? Geom::infinity() : sw[Geom::X] / tan_angle[X];
+    lxw_z          = Geom::are_near(tan_angle[Z],0.) ? Geom::infinity() : sw[Geom::X] / tan_angle[Z];
 
     if (empspacing == 0) {
         scaled = true;
@@ -526,8 +526,12 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     for (gdouble y = xstart_y_sc; y < buf->rect.bottom(); y += lyw, xlinenum++) {
         gint const x0 = buf->rect.left();
         gint const y0 = round(y);
-        gint const x1 = x0 + round( (buf->rect.bottom() - y) / tan_angle[X] );
-        gint const y1 = buf->rect.bottom();
+        gint x1 = x0 + round( (buf->rect.bottom() - y) / tan_angle[X] );
+        gint y1 = buf->rect.bottom();
+        if ( Geom::are_near(tan_angle[X],0.) ) {
+            x1 = buf->rect.right();
+            y1 = y0;
+        }
 
         if (!scaled && (xlinenum % empspacing) != 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
@@ -536,18 +540,21 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         }
     }
     // lines starting from top side
-    gdouble const xstart_x_sc = buf->rect.left() + (lxw_x - (xstart_y_sc - buf->rect.top()) / tan_angle[X]) ;
-    xlinenum = xlinestart-1;
-    for (gdouble x = xstart_x_sc; x < buf->rect.right(); x += lxw_x, xlinenum--) {
-        gint const y0 = buf->rect.top();
-        gint const y1 = buf->rect.bottom();
-        gint const x0 = round(x);
-        gint const x1 = x0 + round( (y1 - y0) / tan_angle[X] );
+    if (!Geom::are_near(tan_angle[X],0.))
+    {
+        gdouble const xstart_x_sc = buf->rect.left() + (lxw_x - (xstart_y_sc - buf->rect.top()) / tan_angle[X]) ;
+        xlinenum = xlinestart-1;
+        for (gdouble x = xstart_x_sc; x < buf->rect.right(); x += lxw_x, xlinenum--) {
+            gint const y0 = buf->rect.top();
+            gint const y1 = buf->rect.bottom();
+            gint const x0 = round(x);
+            gint const x1 = x0 + round( (y1 - y0) / tan_angle[X] );
 
-        if (!scaled && (xlinenum % empspacing) != 0) {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
-        } else {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, _empcolor);
+            if (!scaled && (xlinenum % empspacing) != 0) {
+                sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
+            } else {
+                sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, _empcolor);
+            }
         }
     }
 
@@ -575,8 +582,12 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
     for (gdouble y = zstart_y_sc; y < buf->rect.bottom(); y += lyw, zlinenum++, next_y = y) {
         gint const x0 = buf->rect.left();
         gint const y0 = round(y);
-        gint const x1 = x0 + round( (y - buf->rect.top() ) / tan_angle[Z] );
-        gint const y1 = buf->rect.top();
+        gint x1 = x0 + round( (y - buf->rect.top() ) / tan_angle[Z] );
+        gint y1 = buf->rect.top();
+        if ( Geom::are_near(tan_angle[Z],0.) ) {
+            x1 = buf->rect.right();
+            y1 = y0;
+        }
 
         if (!scaled && (zlinenum % empspacing) != 0) {
             sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
@@ -585,17 +596,20 @@ CanvasAxonomGrid::Render (SPCanvasBuf *buf)
         }
     }
     // draw lines from bottom-up
-    gdouble const zstart_x_sc = buf->rect.left() + (next_y - buf->rect.bottom()) / tan_angle[Z] ;
-    for (gdouble x = zstart_x_sc; x < buf->rect.right(); x += lxw_z, zlinenum++) {
-        gint const y0 = buf->rect.bottom();
-        gint const y1 = buf->rect.top();
-        gint const x0 = round(x);
-        gint const x1 = x0 + round(buf->rect.height() / tan_angle[Z] );
+    if (!Geom::are_near(tan_angle[Z],0.))
+    {
+        gdouble const zstart_x_sc = buf->rect.left() + (next_y - buf->rect.bottom()) / tan_angle[Z] ;
+        for (gdouble x = zstart_x_sc; x < buf->rect.right(); x += lxw_z, zlinenum++) {
+            gint const y0 = buf->rect.bottom();
+            gint const y1 = buf->rect.top();
+            gint const x0 = round(x);
+            gint const x1 = x0 + round(buf->rect.height() / tan_angle[Z] );
 
-        if (!scaled && (zlinenum % empspacing) != 0) {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
-        } else {
-            sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, _empcolor);
+            if (!scaled && (zlinenum % empspacing) != 0) {
+                sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, color);
+            } else {
+                sp_caxonomgrid_drawline (buf, x0, y0, x1, y1, _empcolor);
+            }
         }
     }
 
