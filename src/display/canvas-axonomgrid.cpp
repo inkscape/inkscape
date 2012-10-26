@@ -2,7 +2,7 @@
  * Authors:
  *    Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
- * Copyright (C) 2006-2011 Authors
+ * Copyright (C) 2006-2012 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -18,10 +18,11 @@
   * THIS FILE AND THE HEADER FILE NEED CLEANING UP. PLEASE DO NOT HESISTATE TO DO SO.
   */
 
+#include "display/canvas-axonomgrid.h"
+
 #include <glibmm/i18n.h>
 
 #include "ui/widget/registered-widget.h"
-#include "display/canvas-axonomgrid.h"
 #include "2geom/line.h"
 #include "desktop.h"
 #include "canvas-grid.h"
