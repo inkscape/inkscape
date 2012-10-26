@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-10-09 13:32+0200\n"
-"PO-Revision-Date: 2012-10-17 09:40+0300\n"
+"PO-Revision-Date: 2012-10-24 16:34+0300\n"
 "Last-Translator: Jānis Eisaks <jancs@dv.lv>\n"
 "Language-Team: Latvian\n"
 "Language: lv\n"
@@ -122,7 +122,7 @@ msgstr "Objekta malas deg ugunī"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Bloom"
-msgstr ""
+msgstr "Ziedēšana"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Soft, cushion-like bevel with matte highlights"
@@ -134,7 +134,7 @@ msgstr "Mala ar valnīti"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Ridged border with inner bevel"
-msgstr ""
+msgstr "Vaļņota mala ar iekšēju slīpumu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Ripple"
@@ -148,7 +148,7 @@ msgstr "Deformēt"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Horizontal rippling of edges"
-msgstr ""
+msgstr "Horizontāla malu viļņošanās"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Speckle"
@@ -280,7 +280,7 @@ msgstr "Faktūras"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Bulging, knotty, slick 3D surface"
-msgstr ""
+msgstr "Izspiedusies, mezglaina, spīdīga 3D virsma"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Barbed Wire"
@@ -288,7 +288,7 @@ msgstr "Dzeloņstieple"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Gray bevelled wires with drop shadows"
-msgstr ""
+msgstr "Pelēkas slīpi nocirstas stieples ar ēnu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Swiss Cheese"
@@ -312,7 +312,7 @@ msgstr "Poga"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Soft bevel, slightly depressed middle"
-msgstr ""
+msgstr "Neizteikts slīpums ar nedaudz zemāku vidusdaļu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Inset"
@@ -345,7 +345,7 @@ msgstr "Spīdīgs, kunkuļains ievārījuma smērējums"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Pixel Smear"
-msgstr ""
+msgstr "Pikseļu izsmērēšana"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Van Gogh painting effect for bitmaps"
@@ -371,7 +371,7 @@ msgstr "Grambas (puni)"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Flexible bubbles effect with some displacement"
-msgstr ""
+msgstr "Elastīgu burbuļu efekts ar nelielu pārvietojumu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Glowing Bubble"
@@ -399,7 +399,7 @@ msgstr "Izkusis metāls"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Melting parts of object together, with a glossy bevel and a glow"
-msgstr ""
+msgstr "Sakausē kopā objekta daļas, veidojot gludu un spīdīgu slīpumu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Pressed Steel"
@@ -415,7 +415,7 @@ msgstr "Matēts slīpums"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Soft, pastel-colored, blurry bevel"
-msgstr ""
+msgstr "Neizteikts, izplūdis, slīpums pasteļkrāsās"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Thin Membrane"
@@ -477,7 +477,7 @@ msgstr "Sarūsējis metāls"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Eroded metal texture with ridges, grooves, holes and bumps"
-msgstr ""
+msgstr "Sarūsējuša metāla tekstūra ar valnīšiem, gropēm, caurumiem un grambām"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Cracked Lava"
@@ -545,7 +545,7 @@ msgstr "Metalizēts efekts ar maigu apgaismojumu, viegli caurspīdīgs gar malā
 
 #: ../share/filters/filters.svg.h:1
 msgid "Dragee"
-msgstr ""
+msgstr "Dražeja"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Gel Ridge with a pearlescent look"
@@ -608,11 +608,11 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:1
 msgid "Gold Splatter"
-msgstr ""
+msgstr "Zelta šļakatas"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Splattered cast metal, with golden highlights"
-msgstr ""
+msgstr "Metāla šļakatas ar zeltainu izcēlumu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Gold Paste"
@@ -692,7 +692,7 @@ msgstr "Elektronu mikroskopija"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Bevel, crude light, discoloration and glow like in electronic microscopy"
-msgstr ""
+msgstr "Slīpums, vienkārša gaisma, nabadzīgas krāsa un spīdums kā elektronu mikroskopijā"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Tartan"
@@ -700,7 +700,7 @@ msgstr "Seģene"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Checkered tartan pattern"
-msgstr ""
+msgstr "Rūtaina auduma raksts"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Shaken Liquid"
@@ -736,19 +736,19 @@ msgstr "Apgaismota krāsaina stikla efekts ar gaismas avotu apakšā"
 
 #: ../share/filters/filters.svg.h:1
 msgid "HSL Bumps Alpha"
-msgstr ""
+msgstr "HLS grambu alfa"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Same as HSL Bumps but with transparent highlights"
-msgstr ""
+msgstr "Līdzīgi kā HLS grambas, tikai ar caurspīdīgiem izcēlumiem"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Bubbly Bumps Alpha"
-msgstr ""
+msgstr "Sīkburbuļainu grambu alfa"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Same as Bubbly Bumps but with transparent highlights"
-msgstr ""
+msgstr "Līdzīgi kā sīkburbuļainas grambas, tikai ar caurspīdīgiem izcēlumiem"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Torn Edges"
@@ -828,7 +828,7 @@ msgstr "Matētas kūsājošas pumpas"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Same as Bubbly Bumps but with a diffuse light instead of a specular one"
-msgstr ""
+msgstr "Līdzīgi kā sīkburbuļainas grambas, tikai ar izkliedētu gaismu atstarotas vietā"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Blotting Paper"
@@ -888,7 +888,7 @@ msgstr "Gludas varavīksnes krāsas, viegli apkusušas gar malām"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Flex Metal"
-msgstr ""
+msgstr "Lokans metāls"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Bright, polished uneven metal casting, colorizable"
@@ -924,7 +924,7 @@ msgstr "3D pērļu karaliene"
 
 #: ../share/filters/filters.svg.h:1
 msgid "3D warped, iridescent pearly shell texture"
-msgstr ""
+msgstr "3D savīta, zaigojoša perlamutra tekstūra"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Tiger Fur"
@@ -1011,15 +1011,15 @@ msgstr "Pievieno maza mēroga graudainību"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Plaster Color"
-msgstr ""
+msgstr "Ģipša krāsa"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Colored plaster emboss effect"
-msgstr ""
+msgstr "Krāsota ģipša ciļņa efekts"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Velvet Bumps"
-msgstr ""
+msgstr "Velvets"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Gives Smooth Bumps velvet like"
@@ -1264,7 +1264,7 @@ msgstr "Biezas, spīdīgas un caurspīdīgas krāsas faktūra ar lielu dziļumu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Canvas Bumps"
-msgstr ""
+msgstr "Audekla pumpainums"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Canvas texture with an HSL sensitive height map"
@@ -1272,19 +1272,19 @@ msgstr "Auduma faktūra ar HLS-jūtīgu augstuma karti"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Canvas Bumps Matte"
-msgstr ""
+msgstr "Audekla pumpainums, matēts"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Same as Canvas Bumps but with a diffuse light instead of a specular one"
-msgstr ""
+msgstr "Līdzīgi kā Audekla pumpainums, tikai ar izkliedētu gaismu atstarotās vietā"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Canvas Bumps Alpha"
-msgstr ""
+msgstr "Audekla pumpainuma alfa"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Same as Canvas Bumps but with transparent highlights"
-msgstr ""
+msgstr "Līdzīgi kā Audekla pumpainums, tikai ar caurspīdīgu izcēlumu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Bright Metal"
@@ -1349,15 +1349,15 @@ msgstr "Reljefa druka"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Bumps effect with a bevel, color flood and complex lighting"
-msgstr ""
+msgstr "Pumpainuma efekts ar slīpumu, krāsu aizpildījumu un saliktu apgaismojumu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Growing Cells"
-msgstr ""
+msgstr "Augošas šūnas"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Random rounded living cells like fill"
-msgstr ""
+msgstr "Aizpildījums ar dažādu izmēru dzīvām šūnām līdzīgiem objektiem"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Fluorescence"
@@ -1377,7 +1377,7 @@ msgstr "Pikseļu rīki"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Reduce or remove antialiasing around shapes"
-msgstr ""
+msgstr "Samazināt vai aizvākt kropļojumnovērsi ap figūrām"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Set Resolution"
@@ -1393,7 +1393,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:1
 msgid "Matte emboss effect"
-msgstr ""
+msgstr "Matēta ciļņa efekts"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic Specular Bump"
@@ -1425,7 +1425,7 @@ msgstr "Plastilīns"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Matte modeling paste emboss effect"
-msgstr ""
+msgstr "Matētas modelēšanas masas ciļņa efekts"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Rough Canvas Painting"
@@ -1433,7 +1433,7 @@ msgstr "Glezna uz raupja audekla"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Paper Bump"
-msgstr ""
+msgstr "Papīra pumpainums"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Paper like emboss effect"
@@ -1474,11 +1474,11 @@ msgstr "Krāsot objektus ar caurspīdīgu nekārtību, kas apliecas apkārt krā
 
 #: ../share/filters/filters.svg.h:1
 msgid "Pointillism"
-msgstr ""
+msgstr "Puantilisms"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Gives a turbulent pointillist HSL sensitive transparency"
-msgstr ""
+msgstr "Rada nekārtīgu, puantilisku, HLS jūtīgu caurspīdīgumu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Silhouette Marbled"
@@ -1498,7 +1498,7 @@ msgstr "Pievieno necaurspīdīgu, izkrāsojamu fonu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Flatten Transparency"
-msgstr ""
+msgstr "Placināt caurspīdīgumu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Adds a white opaque background"
@@ -1530,7 +1530,7 @@ msgstr "Pastiprināt un pārzīmēt krāsu robežas ar 1 bita melno un balto"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Poster Draw"
-msgstr ""
+msgstr "Plakāta zīmēšana"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Enhance and redraw edges around posterized areas"
@@ -1554,11 +1554,11 @@ msgstr "Pievieno noteiktā vietā neliela apjoma ekrānam līdzīgu troksni"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Poster Color Fun"
-msgstr ""
+msgstr "Plakāta krāsu karuselis"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Poster Rough"
-msgstr ""
+msgstr "Raupjš plakāts"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Adds roughness to one of the two channels of the Poster paint filter"
@@ -1610,11 +1610,11 @@ msgstr "Nekārtīgs plakāts"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Tartan Smart"
-msgstr ""
+msgstr "Rūtainais viedais"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Highly configurable checkered tartan pattern"
-msgstr ""
+msgstr "Rūtaina auduma raksts ar plašām pieskaņošanas iespējām"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Light Contour"
@@ -1630,7 +1630,7 @@ msgstr "Šķidrums"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Colorizable filling with liquid transparency"
-msgstr ""
+msgstr "Krāsojams aizpildījums ar nenoteiktu caurspīdīgumu"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Aluminium"
@@ -3262,7 +3262,7 @@ msgstr "Izveidot elipsi"
 #: ../src/box3d-context.cpp:472
 #: ../src/box3d-context.cpp:479
 msgid "Change perspective (angle of PLs)"
-msgstr ""
+msgstr "Mainīt perspektīvu (leņķi starp PL )"
 
 #. status text
 #: ../src/box3d-context.cpp:663
@@ -3536,15 +3536,15 @@ msgstr "Uzkrāt pārbīdes katrai slejai"
 #. TRANSLATORS: "Cumulate" is a verb here
 #: ../src/ui/dialog/clonetiler.cpp:311
 msgid "<small>Exclude tile:</small>"
-msgstr ""
+msgstr "<small>Neņemt vērā raksta elementu:</small>"
 
 #: ../src/ui/dialog/clonetiler.cpp:317
 msgid "Exclude tile height in shift"
-msgstr ""
+msgstr "Pārbīdot neņemt vērā raksta elementa augstumu"
 
 #: ../src/ui/dialog/clonetiler.cpp:322
 msgid "Exclude tile width in shift"
-msgstr ""
+msgstr "Pārbīdot neņemt vērā raksta elementa platumu"
 
 #: ../src/ui/dialog/clonetiler.cpp:331
 msgid "Sc_ale"
@@ -4074,7 +4074,7 @@ msgstr "_Eksportēt kā..."
 
 #: ../src/ui/dialog/export.cpp:143
 msgid "B_atch export all selected objects"
-msgstr ""
+msgstr "Visu _atlasīto objektu secīgs eksports"
 
 #: ../src/ui/dialog/export.cpp:143
 msgid "Export each selected object into its own PNG file, using export hints if any (caution, overwrites without asking!)"
@@ -4171,11 +4171,12 @@ msgid "Export the bitmap file with these settings"
 msgstr "Eksportēt bitkartes attēlu ar šiem iestatījumiem"
 
 #: ../src/ui/dialog/export.cpp:544
-#, fuzzy, c-format
+#, c-format
 msgid "B_atch export %d selected object"
 msgid_plural "B_atch export %d selected objects"
-msgstr[0] "Rādīt atlasītā objekta(-u) masku(-as)"
-msgstr[1] ""
+msgstr[0] "Secīgs %d atlasītā objekta eksports"
+msgstr[1] "Secīgs %d atlasīto objektu eksports"
+msgstr[2] "Secīgs %d atlasīto objektu eksports"
 
 #: ../src/ui/dialog/export.cpp:862
 msgid "Export in progress"
@@ -5152,11 +5153,11 @@ msgstr "Zīmēt ceļu"
 
 #: ../src/draw-context.cpp:834
 msgid "Creating single dot"
-msgstr ""
+msgstr "Izveido atsevišķu punktu"
 
 #: ../src/draw-context.cpp:835
 msgid "Create single dot"
-msgstr ""
+msgstr "Izveidot atsevišķu punktu"
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
@@ -5169,7 +5170,7 @@ msgstr " alfa %.3g"
 #: ../src/dropper-context.cpp:284
 #, c-format
 msgid ", averaged with radius %d"
-msgstr ""
+msgstr ", noapaļots ar rādiusu %d"
 
 #: ../src/dropper-context.cpp:284
 #, c-format
@@ -5220,7 +5221,7 @@ msgstr ""
 
 #: ../src/eraser-context.cpp:839
 msgid "Draw eraser stroke"
-msgstr ""
+msgstr "Zīmēt dzēšgumijas vilkumu"
 
 #: ../src/event-context.cpp:678
 msgid "<b>Space+mouse drag</b> to pan canvas"
@@ -5244,9 +5245,8 @@ msgid "_Redo"
 msgstr "At_kārtot"
 
 #: ../src/extension/dependency.cpp:235
-#, fuzzy
 msgid "Dependency:"
-msgstr "Atkarību pārbaude"
+msgstr "Atkarība:"
 
 #: ../src/extension/dependency.cpp:236
 msgid "  type: "
@@ -5307,15 +5307,13 @@ msgid "the XML description of it got lost."
 msgstr "tā XML apraksts ir zudis."
 
 #: ../src/extension/extension.cpp:270
-#, fuzzy
 msgid "no implementation was defined for the extension."
-msgstr "tam nav definēts nosaukums."
+msgstr ""
 
 #. std::cout << "Failed: " << *(_deps[i]) << std::endl;
 #: ../src/extension/extension.cpp:277
-#, fuzzy
 msgid "a dependency was not met."
-msgstr "Netika ievērota politika."
+msgstr "nav izpildīta atkarības prasība."
 
 #: ../src/extension/extension.cpp:297
 msgid "Extension \""
@@ -5326,9 +5324,9 @@ msgid "\" failed to load because "
 msgstr "\" neizdevās ielādēt, jo "
 
 #: ../src/extension/extension.cpp:624
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create extension error log file '%s'"
-msgstr "Žurnāla kļūda: neizdevās atvērt rakstīšanai žurnāla failu \"%1\"."
+msgstr "Nav iespējams izveidot paplašinājuma kļūdu žurnāla failu '%s'"
 
 #: ../src/extension/extension.cpp:727
 #: ../share/extensions/webslicer_create_rect.inx.h:26
@@ -5348,9 +5346,8 @@ msgid "Loaded"
 msgstr "Ielādēts"
 
 #: ../src/extension/extension.cpp:729
-#, fuzzy
 msgid "Unloaded"
-msgstr "Parole veiksmīgi aizmirsta."
+msgstr "Aizvākts no atmiņas"
 
 #: ../src/extension/extension.cpp:729
 msgid "Deactivated"
@@ -5375,9 +5372,8 @@ msgid "Modules directory (%s) is unavailable.  External modules in that director
 msgstr "Moduļu mape (%s) nav pieejama.  Ārējie moduļi no šī mapes netiks ielādēti."
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:39
-#, fuzzy
 msgid "Adaptive Threshold"
-msgstr "Apstiprināt slieksni"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:41
 #: ../src/extension/internal/bitmap/raise.cpp:42
@@ -5454,9 +5450,8 @@ msgid "Raster"
 msgstr "Rastrs"
 
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:49
-#, fuzzy
 msgid "Apply adaptive thresholding to selected bitmap(s)"
-msgstr "MacPaint bitkartes attēls"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/addNoise.cpp:45
 msgid "Add Noise"
@@ -5592,18 +5587,16 @@ msgid "Matte Channel"
 msgstr "Matējuma kanāls"
 
 #: ../src/extension/internal/bitmap/channel.cpp:66
-#, fuzzy
 msgid "Extract specific channel from image"
-msgstr "Ekstraģēt krāsa kanālu kā caurspīdīgu attēlu"
+msgstr "Ekstraģēt no attēla noteiktu kanālu"
 
 #: ../src/extension/internal/bitmap/charcoal.cpp:38
 msgid "Charcoal"
 msgstr "Kokogle"
 
 #: ../src/extension/internal/bitmap/charcoal.cpp:47
-#, fuzzy
 msgid "Apply charcoal stylization to selected bitmap(s)"
-msgstr "Alfa -> iezīmētais"
+msgstr "Alfa -> iezīmētai"
 
 #: ../src/extension/internal/bitmap/colorize.cpp:50
 #: ../src/extension/internal/filter/color.h:316
@@ -5651,9 +5644,8 @@ msgid "Crop selected bitmap(s)."
 msgstr "Apgriezt izvēlēto (-ās) bitkarti (-es)"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:37
-#, fuzzy
 msgid "Cycle Colormap"
-msgstr "Krāsu kartes izvēlne"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:39
 #: ../src/extension/internal/bitmap/spread.cpp:39
@@ -5663,29 +5655,24 @@ msgid "Amount:"
 msgstr "Apjoms:"
 
 #: ../src/extension/internal/bitmap/cycleColormap.cpp:45
-#, fuzzy
 msgid "Cycle colormap(s) of selected bitmap(s)"
-msgstr "Apstrādāt atlasīto(s) attēlu(s) ar Gausa izpludinājumu"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:36
-#, fuzzy
 msgid "Despeckle"
-msgstr "Noņemt troksni"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/despeckle.cpp:43
-#, fuzzy
 msgid "Reduce speckle noise of selected bitmap(s)"
-msgstr "Pievienot nejaušu troksni izvēlētajai (-ām) bitkartei (-ēm)"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/edge.cpp:37
-#, fuzzy
 msgid "Edge"
-msgstr "Kontūras"
+msgstr "Mala"
 
 #: ../src/extension/internal/bitmap/edge.cpp:45
-#, fuzzy
 msgid "Highlight edges of selected bitmap(s)"
-msgstr "Apstrādāt atlasīto(s) attēlu(s) ar Gausa izpludinājumu"
+msgstr "Izcelt atlasītā(o) attēla(u)  malas"
 
 #: ../src/extension/internal/bitmap/emboss.cpp:38
 msgid "Emboss"
@@ -5700,9 +5687,8 @@ msgid "Enhance"
 msgstr "Uzlabot"
 
 #: ../src/extension/internal/bitmap/enhance.cpp:42
-#, fuzzy
 msgid "Enhance selected bitmap(s); minimize noise"
-msgstr "Pievienot nejaušu troksni izvēlētajai (-ām) bitkartei (-ēm)"
+msgstr "Uzlabot atlasīto(ās) bitkarti(es  (samazināt troksni)"
 
 #: ../src/extension/internal/bitmap/equalize.cpp:35
 msgid "Equalize"
@@ -5710,7 +5696,7 @@ msgstr "Izlīdzināt"
 
 #: ../src/extension/internal/bitmap/equalize.cpp:42
 msgid "Equalize selected bitmap(s); histogram equalization"
-msgstr ""
+msgstr "Izlīdzināt atlasīto (-ās) bitkarti (-es); histogrammas izlīdzināšana"
 
 #: ../src/extension/internal/bitmap/gaussianBlur.cpp:38
 #: ../src/filter-enums.cpp:28
@@ -5732,9 +5718,8 @@ msgid "Implode"
 msgstr ""
 
 #: ../src/extension/internal/bitmap/implode.cpp:45
-#, fuzzy
 msgid "Implode selected bitmap(s)"
-msgstr "Izpludināt izvēlēto (-ās) bitkarti (-es)"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/level.cpp:41
 msgid "Level"
@@ -5781,9 +5766,8 @@ msgid "Replace each pixel component with the median color in a circular neighbor
 msgstr ""
 
 #: ../src/extension/internal/bitmap/modulate.cpp:40
-#, fuzzy
 msgid "HSB Adjust"
-msgstr "Pielāgot spilgtumu"
+msgstr "Pieskaņot HSB"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:42
 msgid "Hue:"
@@ -5891,9 +5875,8 @@ msgstr "Azimuts:"
 #: ../src/extension/internal/bitmap/shade.cpp:43
 #: ../src/extension/internal/filter/bumps.h:111
 #: ../src/extension/internal/filter/bumps.h:336
-#, fuzzy
 msgid "Elevation:"
-msgstr "Augstums:"
+msgstr "Pacēklums"
 
 #: ../src/extension/internal/bitmap/shade.cpp:44
 msgid "Colored Shading"
@@ -5918,9 +5901,8 @@ msgid "Solarize selected bitmap(s), like overexposing photographic film"
 msgstr "Solarizēt atlasīto(-ās) bitkarti(-es), līdzīgi kā pāreksponējot fotofilmu"
 
 #: ../src/extension/internal/bitmap/spread.cpp:37
-#, fuzzy
 msgid "Dither"
-msgstr "Tonēšanas izmērs:"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/spread.cpp:45
 msgid "Randomly scatter pixels in selected bitmap(s), within the given radius of the original position"
@@ -5946,18 +5928,16 @@ msgid "Threshold:"
 msgstr "Slieksnis:"
 
 #: ../src/extension/internal/bitmap/threshold.cpp:46
-#, fuzzy
 msgid "Threshold selected bitmap(s)"
-msgstr "Izpludināt izvēlēto (-ās) bitkarti (-es)"
+msgstr ""
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:41
 msgid "Unsharp Mask"
 msgstr "Izplūduma maska"
 
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:52
-#, fuzzy
 msgid "Sharpen selected bitmap(s) using unsharp mask algorithms"
-msgstr "MacPaint bitkartes attēls"
+msgstr "Palielināt bitkartes attēla (-u) izšķirtspēju izmantojot asum samazināšanas algoritmus"
 
 #: ../src/extension/internal/bitmap/wave.cpp:38
 msgid "Wave"
@@ -5972,19 +5952,16 @@ msgid "Wavelength:"
 msgstr "Viļņa garums:"
 
 #: ../src/extension/internal/bitmap/wave.cpp:47
-#, fuzzy
 msgid "Alter selected bitmap(s) along sine wave"
-msgstr "MacPaint bitkartes attēls"
+msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:135
-#, fuzzy
 msgid "Inset/Outset Halo"
-msgstr "Pārvietot atlasītos ceļus uz iekšu"
+msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:137
-#, fuzzy
 msgid "Width in px of the halo"
-msgstr "Maksimālais pārvietojums gar X asi (px):"
+msgstr ""
 
 #: ../src/extension/internal/bluredge.cpp:138
 msgid "Number of steps:"
@@ -6029,9 +6006,8 @@ msgstr "PostScript level 2"
 #: ../src/extension/internal/cairo-ps-out.cpp:357
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:241
 #: ../src/extension/internal/emf-win32-inout.cpp:2544
-#, fuzzy
 msgid "Convert texts to paths"
-msgstr "Montēšanas ceļi, kurus ignorēt"
+msgstr "Pārvērst tekstus par ceļiem"
 
 #: ../src/extension/internal/cairo-ps-out.cpp:318
 msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
@@ -6040,9 +6016,8 @@ msgstr "PS+LaTeX: izlaist tekstu PS un izveidot  LaTeX failu"
 #: ../src/extension/internal/cairo-ps-out.cpp:319
 #: ../src/extension/internal/cairo-ps-out.cpp:359
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:243
-#, fuzzy
 msgid "Rasterize filter effects"
-msgstr "Filtra efektu apgabala platums"
+msgstr ""
 
 #: ../src/extension/internal/cairo-ps-out.cpp:320
 #: ../src/extension/internal/cairo-ps-out.cpp:360
@@ -6169,9 +6144,8 @@ msgstr "Gludums:"
 #: ../src/extension/internal/filter/bevels.h:56
 #: ../src/extension/internal/filter/bevels.h:137
 #: ../src/extension/internal/filter/bevels.h:221
-#, fuzzy
 msgid "Elevation (°):"
-msgstr "Augstums"
+msgstr ""
 
 #: ../src/extension/internal/filter/bevels.h:57
 #: ../src/extension/internal/filter/bevels.h:138
@@ -6182,9 +6156,8 @@ msgstr "Azimuts (°):"
 #: ../src/extension/internal/filter/bevels.h:58
 #: ../src/extension/internal/filter/bevels.h:139
 #: ../src/extension/internal/filter/bevels.h:223
-#, fuzzy
 msgid "Lighting color"
-msgstr "krāsas izvēlētājs"
+msgstr ""
 
 #: ../src/extension/internal/filter/bevels.h:62
 #: ../src/extension/internal/filter/bevels.h:143
@@ -6240,9 +6213,8 @@ msgid "Filters"
 msgstr "Filtri"
 
 #: ../src/extension/internal/filter/bevels.h:66
-#, fuzzy
 msgid "Basic diffuse bevel to use for building textures"
-msgstr "Pamata spoguļgluds slīpums faktūru veidošanai"
+msgstr ""
 
 #: ../src/extension/internal/filter/bevels.h:133
 msgid "Matte Jelly"
@@ -6424,9 +6396,8 @@ msgstr "Fona krāsa"
 #: ../src/extension/internal/filter/blurs.h:337
 #: ../src/extension/internal/filter/bumps.h:129
 #: ../src/extension/internal/filter/color.h:1211
-#, fuzzy
 msgid "Blend type:"
-msgstr "Līknes tips:"
+msgstr "Sajaukšanas tips:"
 
 #: ../src/extension/internal/filter/blurs.h:338
 #: ../src/extension/internal/filter/bumps.h:130
@@ -6557,9 +6528,8 @@ msgid "Point"
 msgstr "Punkts"
 
 #: ../src/extension/internal/filter/bumps.h:107
-#, fuzzy
 msgid "Spot"
-msgstr "3x3x3, 4 punkts"
+msgstr ""
 
 #: ../src/extension/internal/filter/bumps.h:109
 msgid "Distant light options"
@@ -6650,23 +6620,20 @@ msgid "Lighting"
 msgstr "Apgaismojums"
 
 #: ../src/extension/internal/filter/bumps.h:337
-#, fuzzy
 msgid "Lighting blend:"
-msgstr "Krāsu ekspozīcija"
+msgstr ""
 
 #: ../src/extension/internal/filter/bumps.h:344
-#, fuzzy
 msgid "Highlight blend:"
-msgstr "Krāsu ekspozīcija"
+msgstr ""
 
 #: ../src/extension/internal/filter/bumps.h:353
 msgid "Bump color"
 msgstr "Reljefa krāsa"
 
 #: ../src/extension/internal/filter/bumps.h:354
-#, fuzzy
 msgid "Revert bump"
-msgstr "Rel_jefa karte"
+msgstr ""
 
 #: ../src/extension/internal/filter/bumps.h:355
 msgid "Transparency type:"
@@ -6683,7 +6650,6 @@ msgstr ""
 #: ../src/extension/internal/filter/distort.h:70
 #: ../src/extension/internal/filter/morphology.h:174
 #: ../src/filter-enums.cpp:72
-#, fuzzy
 msgid "In"
 msgstr "Pēc"
 
@@ -6715,9 +6681,8 @@ msgid "Brightness filter"
 msgstr "Spilgtuma filtrs"
 
 #: ../src/extension/internal/filter/color.h:151
-#, fuzzy
 msgid "Channel Painting"
-msgstr "Eļļas glezna"
+msgstr "Kanālu krāsosana"
 
 #: ../src/extension/internal/filter/color.h:159
 #: ../src/extension/internal/filter/transparency.h:135
@@ -6800,9 +6765,8 @@ msgid "Gamma"
 msgstr "Gamma"
 
 #: ../src/extension/internal/filter/color.h:439
-#, fuzzy
 msgid "Basic component transfer structure"
-msgstr "Pātraucam pārraidīšanu..."
+msgstr ""
 
 #: ../src/extension/internal/filter/color.h:508
 msgid "Duochrome"
@@ -6983,9 +6947,8 @@ msgid "Green and blue"
 msgstr "Zaļš un zils"
 
 #: ../src/extension/internal/filter/color.h:912
-#, fuzzy
 msgid "Light transparency:"
-msgstr "Krāsas caurspīdīgums."
+msgstr "Gaismas caurspīdīgums:"
 
 #: ../src/extension/internal/filter/color.h:913
 msgid "Invert hue"
@@ -7028,9 +6991,8 @@ msgid "Modify lightness and contrast separately"
 msgstr "Mainīt spilgtumu un kontrastu atsevišķi"
 
 #: ../src/extension/internal/filter/color.h:1195
-#, fuzzy
 msgid "Nudge RGB"
-msgstr "RGB attēls"
+msgstr ""
 
 #: ../src/extension/internal/filter/color.h:1199
 msgid "Red offset"
@@ -7132,9 +7094,8 @@ msgid "Phosphorescence"
 msgstr "Fosforescence"
 
 #: ../src/extension/internal/filter/color.h:1506
-#, fuzzy
 msgid "Colored nights"
-msgstr "Krāsoti burti"
+msgstr "Krāsainās naktis"
 
 #: ../src/extension/internal/filter/color.h:1507
 msgid "Hue to background"
@@ -7171,9 +7132,8 @@ msgstr "Filca spalvas"
 #: ../src/extension/internal/filter/distort.h:71
 #: ../src/extension/internal/filter/morphology.h:175
 #: ../src/filter-enums.cpp:73
-#, fuzzy
 msgid "Out"
-msgstr "Tālāk"
+msgstr ""
 
 #: ../src/extension/internal/filter/distort.h:77
 #: ../src/extension/internal/filter/textures.h:75
@@ -7260,9 +7220,8 @@ msgid "Blur and displace edges of shapes and pictures"
 msgstr "Izpludināt un nobīdīt figūru un attēlu malas"
 
 #: ../src/extension/internal/filter/distort.h:190
-#, fuzzy
 msgid "Roughen"
-msgstr "Ceļa nelīdzena padarīšanas pieskaņošana"
+msgstr ""
 
 #: ../src/extension/internal/filter/distort.h:192
 #: ../src/extension/internal/filter/overlays.h:60
@@ -7359,9 +7318,8 @@ msgid "Hide image"
 msgstr "Slēpt attēlu"
 
 #: ../src/extension/internal/filter/morphology.h:172
-#, fuzzy
 msgid "Composite type:"
-msgstr "Līknes tips:"
+msgstr ""
 
 #: ../src/extension/internal/filter/morphology.h:177
 #: ../src/filter-enums.cpp:75
@@ -7422,9 +7380,8 @@ msgid "Stroke opacity:"
 msgstr "Vilkuma necaurspīdība:"
 
 #: ../src/extension/internal/filter/morphology.h:206
-#, fuzzy
 msgid "Adds a colorizable outline"
-msgstr "Pievieno necaurspīdīgu, izkrāsojamu fonu"
+msgstr "Pievieno izkrāsojamas aprises"
 
 #: ../src/extension/internal/filter/overlays.h:56
 msgid "Noise Fill"
@@ -7478,14 +7435,12 @@ msgstr "Hromolito"
 
 #: ../src/extension/internal/filter/paint.h:75
 #: ../share/extensions/jessyInk_keyBindings.inx.h:5
-#, fuzzy
 msgid "Drawing mode"
-msgstr "Pārslēgt zīmēšanas režīmu"
+msgstr "Zīmēšanas režīms"
 
 #: ../src/extension/internal/filter/paint.h:76
-#, fuzzy
 msgid "Drawing blend:"
-msgstr "Krāsu ekspozīcija"
+msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:84
 msgid "Dented"
@@ -7568,9 +7523,8 @@ msgstr "Aizpildījuma krāsa"
 
 #: ../src/extension/internal/filter/paint.h:352
 #: ../src/extension/internal/filter/paint.h:716
-#, fuzzy
 msgid "Image on fill"
-msgstr "Attēls uz vilkuima"
+msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:355
 msgid "Stroke color"
@@ -7610,9 +7564,8 @@ msgid "Electro solarization effects"
 msgstr "Elektrosolorizācijas efekts"
 
 #: ../src/extension/internal/filter/paint.h:585
-#, fuzzy
 msgid "Neon Draw"
-msgstr "Zīmēt robežu"
+msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:587
 msgid "Line type:"
@@ -7623,9 +7576,8 @@ msgid "Smoothed"
 msgstr "Nogludināts"
 
 #: ../src/extension/internal/filter/paint.h:589
-#, fuzzy
 msgid "Contrasted"
-msgstr "Kontrasts"
+msgstr "Kontrastēts"
 
 #: ../src/extension/internal/filter/paint.h:592
 msgid "Line width:"
@@ -7646,14 +7598,12 @@ msgid "Point Engraving"
 msgstr "Punkta gravēšana"
 
 #: ../src/extension/internal/filter/paint.h:702
-#, fuzzy
 msgid "Noise blend:"
-msgstr "Krāsu ekspozīcija"
+msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:710
-#, fuzzy
 msgid "Grain lightness:"
-msgstr "Hroma gaišums"
+msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:712
 #: ../src/extension/internal/filter/transparency.h:343
@@ -7673,9 +7623,8 @@ msgid "Convert image to a transparent point engraving"
 msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:852
-#, fuzzy
 msgid "Poster Paint"
-msgstr "Zīmēšanas režīms"
+msgstr "Plakāta zīmēšana"
 
 #: ../src/extension/internal/filter/paint.h:858
 msgid "Transfer type:"
@@ -7690,14 +7639,12 @@ msgid "Painting"
 msgstr "Glezna"
 
 #: ../src/extension/internal/filter/paint.h:870
-#, fuzzy
 msgid "Simplify (primary):"
-msgstr "Primārā GIcon"
+msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:871
-#, fuzzy
 msgid "Simplify (secondary):"
-msgstr "Sekundārā GIcon"
+msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:872
 msgid "Pre-saturation:"
@@ -7708,33 +7655,28 @@ msgid "Post-saturation:"
 msgstr "Pēcpiesātinājums:"
 
 #: ../src/extension/internal/filter/paint.h:874
-#, fuzzy
 msgid "Simulate antialiasing"
-msgstr "Teksta nogludināšana"
+msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:882
 msgid "Poster and painting effects"
 msgstr "Plakātu un gleznu efekti"
 
 #: ../src/extension/internal/filter/paint.h:975
-#, fuzzy
 msgid "Posterize Basic"
-msgstr "Pamata latīņu"
+msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:986
-#, fuzzy
 msgid "Simple posterizing effect"
-msgstr "Vienkārša efektu iestatne"
+msgstr ""
 
 #: ../src/extension/internal/filter/protrusions.h:48
-#, fuzzy
 msgid "Snow crest"
-msgstr "No rīta sniegs"
+msgstr ""
 
 #: ../src/extension/internal/filter/protrusions.h:50
-#, fuzzy
 msgid "Drift Size:"
-msgstr "&Tikai izmērs"
+msgstr ""
 
 #: ../src/extension/internal/filter/protrusions.h:58
 msgid "Snow has fallen on object"
@@ -7777,9 +7719,8 @@ msgid "Use object's color"
 msgstr "Izmantot objekta krāsu"
 
 #: ../src/extension/internal/filter/shadows.h:82
-#, fuzzy
 msgid "Colorizable Drop shadow"
-msgstr "Krītošas ēnas _X pārvietojums"
+msgstr ""
 
 #: ../src/extension/internal/filter/textures.h:62
 msgid "Ink Blot"
@@ -7790,23 +7731,20 @@ msgid "Frequency:"
 msgstr "Biežums:"
 
 #: ../src/extension/internal/filter/textures.h:71
-#, fuzzy
 msgid "Horizontal inlay:"
-msgstr "Horizontālais Noregulējums"
+msgstr ""
 
 #: ../src/extension/internal/filter/textures.h:72
-#, fuzzy
 msgid "Vertical inlay:"
-msgstr "Vertikālās formas"
+msgstr ""
 
 #: ../src/extension/internal/filter/textures.h:73
 msgid "Displacement:"
 msgstr "Pārvietojums:"
 
 #: ../src/extension/internal/filter/textures.h:79
-#, fuzzy
 msgid "Overlapping"
-msgstr "Variāciju atlasītāji"
+msgstr "Pārklāšanās"
 
 #: ../src/extension/internal/filter/textures.h:80
 msgid "External"
@@ -7818,9 +7756,8 @@ msgid "Custom"
 msgstr "Izvēles"
 
 #: ../src/extension/internal/filter/textures.h:83
-#, fuzzy
 msgid "Custom stroke options"
-msgstr "Pielāgotas šifrēšanas opcijas"
+msgstr "Pielāgotas vilkuma iespejas"
 
 #: ../src/extension/internal/filter/textures.h:84
 msgid "k1:"
@@ -7893,9 +7830,8 @@ msgid "Silhouette"
 msgstr "Siluets"
 
 #: ../src/extension/internal/filter/transparency.h:344
-#, fuzzy
 msgid "Cutout"
-msgstr "Ārējais izgriezums"
+msgstr ""
 
 #: ../src/extension/internal/filter/transparency.h:353
 msgid "Repaint anything visible monochrome"
@@ -8065,9 +8001,8 @@ msgid "bleed box"
 msgstr "pārlaides rāmis"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:73
-#, fuzzy
 msgid "art box"
-msgstr "izvēles rūtiņa"
+msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:85
 msgid "Select page:"
@@ -8081,9 +8016,8 @@ msgstr "no %i"
 
 #. Crop settings
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:110
-#, fuzzy
 msgid "Clip to:"
-msgstr "Kā apcirpt"
+msgstr "t"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:125
 msgid "Page settings"
@@ -8103,9 +8037,8 @@ msgstr "raupjš"
 
 #. Text options
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:141
-#, fuzzy
 msgid "Text handling:"
-msgstr "Mēstuļu asptrāde"
+msgstr ""
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:144
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:146
@@ -8264,9 +8197,8 @@ msgid "Vector graphics format used by Corel WordPerfect"
 msgstr "Corel WordPerfect vektoru grafikas formāts"
 
 #: ../src/extension/prefdialog.cpp:251
-#, fuzzy
 msgid "Live preview"
-msgstr "_Atjaunināt priekšskatījumu pie izmaiņām"
+msgstr "Dzīvais priekšskats"
 
 #: ../src/extension/prefdialog.cpp:251
 msgid "Is the effect previewed live on canvas?"
@@ -8402,9 +8334,8 @@ msgid "Select file to export to"
 msgstr "Izvēlieties failu, uz kuru eksportēt"
 
 #: ../src/file.cpp:1643
-#, fuzzy
 msgid "Import Clip Art"
-msgstr "Importēt ..."
+msgstr ""
 
 #: ../src/filter-enums.cpp:21
 msgid "Color Matrix"
@@ -8415,14 +8346,12 @@ msgid "Composite"
 msgstr "Salikts"
 
 #: ../src/filter-enums.cpp:24
-#, fuzzy
 msgid "Convolve Matrix"
-msgstr "Lauka matrica"
+msgstr ""
 
 #: ../src/filter-enums.cpp:25
-#, fuzzy
 msgid "Diffuse Lighting"
-msgstr "Telpiskuma izgaismojums"
+msgstr ""
 
 #: ../src/filter-enums.cpp:26
 msgid "Displacement Map"
@@ -8451,14 +8380,12 @@ msgid "Tile"
 msgstr "Raksta elements"
 
 #: ../src/filter-enums.cpp:40
-#, fuzzy
 msgid "Source Graphic"
-msgstr "Grafikas veiktspēja"
+msgstr ""
 
 #: ../src/filter-enums.cpp:41
-#, fuzzy
 msgid "Source Alpha"
-msgstr "Pašreizējā Alpha"
+msgstr ""
 
 #: ../src/filter-enums.cpp:42
 msgid "Background Image"
@@ -8469,14 +8396,12 @@ msgid "Background Alpha"
 msgstr "Fona Alfa"
 
 #: ../src/filter-enums.cpp:44
-#, fuzzy
 msgid "Fill Paint"
-msgstr "Zīmēšanas režīms"
+msgstr ""
 
 #: ../src/filter-enums.cpp:45
-#, fuzzy
 msgid "Stroke Paint"
-msgstr "Vilkuma krāsa"
+msgstr ""
 
 #: ../src/filter-enums.cpp:61
 msgid "Matrix"
@@ -8491,9 +8416,8 @@ msgid "Hue Rotate"
 msgstr "Griezt nokrāsu"
 
 #: ../src/filter-enums.cpp:64
-#, fuzzy
 msgid "Luminance to Alpha"
-msgstr "Alfa -> iezīmējums"
+msgstr ""
 
 #. File
 #: ../src/filter-enums.cpp:70
@@ -8801,24 +8725,20 @@ msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Atlasiet <b>objektus</b>, kuriem izveidot krāsu pāreju."
 
 #: ../src/gradient-drag.cpp:104
-#, fuzzy
 msgid "Mesh gradient <b>corner</b>"
-msgstr "Rādīt stūra pogas"
+msgstr ""
 
 #: ../src/gradient-drag.cpp:105
-#, fuzzy
 msgid "Mesh gradient <b>handle</b>"
-msgstr " no %d krāsu pārejas tura"
+msgstr ""
 
 #: ../src/gradient-drag.cpp:106
-#, fuzzy
 msgid "Mesh gradient <b>tensor</b>"
-msgstr "Gradienta redaktora izvēlne"
+msgstr ""
 
 #: ../src/gradient-drag.cpp:565
-#, fuzzy
 msgid "Added patch row or column"
-msgstr "Dzēst katru kolonnu un rindu"
+msgstr ""
 
 #: ../src/gradient-drag.cpp:791
 msgid "Merge gradient handles"
@@ -9174,9 +9094,8 @@ msgid "Custom"
 msgstr "Izvēles"
 
 #: ../src/interface.cpp:922
-#, fuzzy
 msgid "Setup for custom task"
-msgstr "Meklēt uzdevumu sarakstus:"
+msgstr ""
 
 #: ../src/interface.cpp:923
 msgctxt "Interface setup"
@@ -9184,9 +9103,8 @@ msgid "Wide"
 msgstr "Plats"
 
 #: ../src/interface.cpp:923
-#, fuzzy
 msgid "Setup for widescreen work"
-msgstr "Smags darbs, maza alga"
+msgstr ""
 
 #: ../src/interface.cpp:1035
 #, c-format
@@ -9449,9 +9367,8 @@ msgstr "Aizvērt šo doku"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:721
 #: ../src/libgdl/gdl-dock-tablabel.c:125
-#, fuzzy
 msgid "Controlling dock item"
-msgstr "Vēlamais dokojamā elementa augstums"
+msgstr "Vadošā doka elements"
 
 #: ../src/libgdl/gdl-dock-item-grip.c:722
 msgid "Dockitem which 'owns' this grip"
@@ -9561,15 +9478,13 @@ msgstr "Ja iestatīts 1, visi galvenajam piesaistītie dokojamie elementi ir sl�
 
 #: ../src/libgdl/gdl-dock-master.c:157
 #: ../src/libgdl/gdl-switcher.c:732
-#, fuzzy
 msgid "Switcher Style"
-msgstr "Sākuma stils:"
+msgstr ""
 
 #: ../src/libgdl/gdl-dock-master.c:158
 #: ../src/libgdl/gdl-switcher.c:733
-#, fuzzy
 msgid "Switcher buttons style"
-msgstr "Norādīt apvilkšanas stilu"
+msgstr ""
 
 #: ../src/libgdl/gdl-dock-master.c:783
 #, c-format
@@ -9615,14 +9530,12 @@ msgid "Human readable name for the dock object"
 msgstr "Dokojamā objekta cilvēkam saprotams nosaukums"
 
 #: ../src/libgdl/gdl-dock-object.c:140
-#, fuzzy
 msgid "Stock Icon"
-msgstr "Krājuma ikona"
+msgstr ""
 
 #: ../src/libgdl/gdl-dock-object.c:141
-#, fuzzy
 msgid "Stock icon for the dock object"
-msgstr "Dokojamā objekta Pixbuf ikona"
+msgstr ""
 
 #: ../src/libgdl/gdl-dock-object.c:147
 msgid "Pixbuf Icon"
@@ -9924,7 +9837,7 @@ msgstr ""
 
 #: ../src/live_effects/effect.cpp:120
 msgid "Hatches (rough)"
-msgstr ""
+msgstr "Iesvītrojums (rupjš)"
 
 #: ../src/live_effects/effect.cpp:121
 msgid "Sketch"
@@ -10000,7 +9913,7 @@ msgstr "Pirms apliekšanas gar liektu ceļu pagriež oriģinālu par 90 grādiem
 
 #: ../src/live_effects/lpe-clone-original.cpp:18
 msgid "Linked path:"
-msgstr ""
+msgstr "Saistītie ceļi:"
 
 #: ../src/live_effects/lpe-clone-original.cpp:18
 msgid "Path from which to take the original path data"
@@ -10958,7 +10871,7 @@ msgstr "Neizmantot X serveri (apstrādāt failus tikai no komandrindas)"
 
 #: ../src/main.cpp:279
 msgid "Try to use X server (even if $DISPLAY is not set)"
-msgstr "M`ēģiniet izmantot X serveri (pat ja $DISPLAY nav iestatīts)"
+msgstr "Mēģiniet izmantot X serveri (pat ja $DISPLAY nav iestatīts)"
 
 #: ../src/main.cpp:284
 msgid "Open specified document(s) (option string may be excluded)"
@@ -11391,24 +11304,20 @@ msgid "<b>No objects</b> to convert to path in the selection."
 msgstr "Atlasītajā <b>nav</b> par ceļu pārvēršamu <b>objektu</b>."
 
 #: ../src/path-chemistry.cpp:602
-#, fuzzy
 msgid "Select <b>path(s)</b> to reverse."
-msgstr "Atlasiet vienkāršojamo(s) <b>ceļu(s)</b>."
+msgstr ""
 
 #: ../src/path-chemistry.cpp:611
-#, fuzzy
 msgid "Reversing paths..."
-msgstr "Importēt kontūras"
+msgstr ""
 
 #: ../src/path-chemistry.cpp:646
-#, fuzzy
 msgid "Reverse path"
-msgstr " Direktorija ceļš "
+msgstr ""
 
 #: ../src/path-chemistry.cpp:648
-#, fuzzy
 msgid "<b>No paths</b> to reverse in the selection."
-msgstr "Atlasītajā <b>nav vienkāršojamu ceļu</b>."
+msgstr ""
 
 #: ../src/pen-context.cpp:250
 #: ../src/pencil-context.cpp:561
@@ -11481,18 +11390,16 @@ msgstr ""
 
 #. Write curves to object
 #: ../src/pencil-context.cpp:505
-#, fuzzy
 msgid "Finishing freehand"
-msgstr "&Brīvrokas daudzstūris"
+msgstr ""
 
 #: ../src/pencil-context.cpp:611
 msgid "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. Release <b>Alt</b> to finalize."
 msgstr ""
 
 #: ../src/pencil-context.cpp:639
-#, fuzzy
 msgid "Finishing freehand sketch"
-msgstr "Sketch diagramma (*.sk)"
+msgstr "Beidz brīvrokas uzmetumu"
 
 #: ../src/persp3d.cpp:346
 msgid "Toggle vanishing point"
@@ -12723,7 +12630,7 @@ msgstr "Izveidot spirāli"
 #: ../src/splivarot.cpp:68
 #: ../src/splivarot.cpp:74
 msgid "Union"
-msgstr ""
+msgstr "Apvienojums"
 
 #: ../src/splivarot.cpp:80
 msgid "Intersection"
@@ -12736,11 +12643,11 @@ msgstr "Atšķirība"
 
 #: ../src/splivarot.cpp:98
 msgid "Exclusion"
-msgstr ""
+msgstr "Izslēgšana"
 
 #: ../src/splivarot.cpp:103
 msgid "Division"
-msgstr ""
+msgstr "Dalīšana"
 
 #: ../src/splivarot.cpp:108
 msgid "Cut path"
@@ -13239,14 +13146,14 @@ msgid "%s. Drag to <b>move</b>."
 msgstr "%s. Velciet, lai <b>pārvietou</b>."
 
 #: ../src/tweak-context.cpp:215
-#, fuzzy, c-format
+#, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
-msgstr "<b>Uzklikšķiniet</b> vai <b>vilkt apkārt laukumam</b>, lai tuvinātu, <b>Shift+klikšķis</b> - lai tālinātu."
+msgstr ""
 
 #: ../src/tweak-context.cpp:219
-#, fuzzy, c-format
+#, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
-msgstr "Klikšķiniet un pavelciet, lai pārvietotu visus punktus"
+msgstr ""
 
 #: ../src/tweak-context.cpp:223
 #, c-format
@@ -13264,9 +13171,9 @@ msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr "%s. Velciet vai uzklikšķiniet, lai <b>dublētu</b>; ar Shift - <b>dzēstu</b>."
 
 #: ../src/tweak-context.cpp:235
-#, fuzzy, c-format
+#, c-format
 msgid "%s. Drag to <b>push paths</b>."
-msgstr "Montēšanas ceļi, kurus ignorēt"
+msgstr ""
 
 #: ../src/tweak-context.cpp:239
 #, c-format
@@ -13279,9 +13186,9 @@ msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr ""
 
 #: ../src/tweak-context.cpp:255
-#, fuzzy, c-format
+#, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
-msgstr "Klikšķiniet vai klikšķiniet un pavelciet, lai pievienotu punktu"
+msgstr ""
 
 #: ../src/tweak-context.cpp:259
 #, c-format
@@ -13299,9 +13206,8 @@ msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>.
 msgstr "%s. Velciet vai uzklikšķiniet, lai<b>palielinātu izpludinājumu</b>; ar Shift t - <b>lai samazinātu</b>."
 
 #: ../src/tweak-context.cpp:1233
-#, fuzzy
 msgid "<b>Nothing selected!</b> Select objects to tweak."
-msgstr "<b>Nekas nav atlasīts!</b> Atlasiet izsmidzināmos objektus."
+msgstr ""
 
 #: ../src/tweak-context.cpp:1267
 msgid "Move tweak"
@@ -13336,18 +13242,16 @@ msgid "Shrink/grow path tweak"
 msgstr "Ceļa samazinājuma/palielinājuma pieskaņosana"
 
 #: ../src/tweak-context.cpp:1299
-#, fuzzy
 msgid "Attract/repel path tweak"
-msgstr "Ceļa samazinājuma/palielinājuma pieskaņosana"
+msgstr ""
 
 #: ../src/tweak-context.cpp:1303
 msgid "Roughen path tweak"
 msgstr "Ceļa nelīdzena padarīšanas pieskaņošana"
 
 #: ../src/tweak-context.cpp:1307
-#, fuzzy
 msgid "Color paint tweak"
-msgstr "Krāsu drebēšanas pieskaņošana"
+msgstr ""
 
 #: ../src/tweak-context.cpp:1311
 msgid "Color jitter tweak"
@@ -13754,9 +13658,8 @@ msgid "Capture log messages"
 msgstr "Pārtvert žurnāla ierakstus"
 
 #: ../src/ui/dialog/debug.cpp:87
-#, fuzzy
 msgid "Release log messages"
-msgstr "Kļūdu žurnāla ieraksti"
+msgstr ""
 
 #: ../src/ui/dialog/document-metadata.cpp:71
 #: ../src/ui/dialog/document-properties.cpp:150
@@ -14004,9 +13907,8 @@ msgid "<b>Color</b>"
 msgstr "<b>Krāsa</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:254
-#, fuzzy
 msgid "<b>Border</b>"
-msgstr "Robeža"
+msgstr "<b>Mala</b>"
 
 #: ../src/ui/dialog/document-properties.cpp:256
 msgid "<b>Page Size</b>"
@@ -14346,7 +14248,7 @@ msgstr "Kaira"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1591
 msgid "Antialias"
-msgstr ""
+msgstr "Kropļojumnovērse"
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1617
 msgid "Destination"
@@ -14416,7 +14318,7 @@ msgstr "Krītošās gaismas leņķis XY plaknē, grādos"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:975
 msgid "Elevation"
-msgstr ""
+msgstr "Pacēlums"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:975
 msgid "Direction angle for the light source on the YZ plane, in degrees"
@@ -14655,7 +14557,7 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2381
 msgid "Bias:"
-msgstr ""
+msgstr "Nosliece:"
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2381
 msgid "This value is added to each component. This is useful to define a constant value as the zero response of the filter."
@@ -14794,9 +14696,8 @@ msgid "Indicates whether the filter primitive should perform a noise or turbulen
 msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2432
-#, fuzzy
 msgid "Base Frequency:"
-msgstr "<b>CPU frekvence:</b> %1"
+msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2433
 msgid "Octaves:"
@@ -14936,16 +14837,15 @@ msgstr "Kur meklēt"
 
 #: ../src/ui/dialog/find.cpp:77
 msgid "Scope"
-msgstr ""
+msgstr "Darbības lauks"
 
 #: ../src/ui/dialog/find.cpp:79
 msgid "Case sensiti_ve"
 msgstr "Reģistrjūtīgs"
 
 #: ../src/ui/dialog/find.cpp:79
-#, fuzzy
 msgid "Match upper/lower case"
-msgstr "Romiešu cipari ar mazajiem burtiem"
+msgstr "Ņemt vērā lielos/mazos burtus"
 
 #: ../src/ui/dialog/find.cpp:80
 msgid "E_xact match"
@@ -15721,9 +15621,8 @@ msgid "Bamum"
 msgstr "Bamuma"
 
 #: ../src/ui/dialog/glyphs.cpp:264
-#, fuzzy
 msgid "Modifier Tone Letters"
-msgstr "Skaņas modificējamās zīmes"
+msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:265
 msgid "Latin Extended-D"
@@ -15842,9 +15741,8 @@ msgid "Append text"
 msgstr "Pievienot tekstu"
 
 #: ../src/ui/dialog/guides.cpp:47
-#, fuzzy
 msgid "Rela_tive change"
-msgstr "Nevar nomainīt direktoriju"
+msgstr ""
 
 #: ../src/ui/dialog/guides.cpp:47
 msgid "Move and/or rotate the guide relative to current settings"
@@ -15915,9 +15813,8 @@ msgid "Selection only or whole document"
 msgstr "Tikai iezīmēto vai visu dokumentu."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:176
-#, fuzzy
 msgid "Show selection cue"
-msgstr "Rādīt attēla iezīmējumu"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:177
 msgid "Whether selected objects display a selection cue (the same as in selector)"
@@ -15940,9 +15837,8 @@ msgid "Converting an object to guides places these along the object's true edges
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:197
-#, fuzzy
 msgid "Ctrl+click _dot size:"
-msgstr "Ctrl-klikšķis, lai iestatītu klonēšanas avotu"
+msgstr "Ctrl-klikšķis, lai iestatītu punkta izmēru:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:197
 msgid "times current stroke width"
@@ -16038,9 +15934,8 @@ msgid "Treat groups as a single object during conversion to guides rather than c
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:308
-#, fuzzy
 msgid "Average all sketches"
-msgstr "Pārrakstīt visus mērļus?"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:309
 msgid "Width is in absolute units"
@@ -16052,13 +15947,12 @@ msgstr "Atlasiet jaunu ceļu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:311
 msgid "Don't attach connectors to text objects"
-msgstr ""
+msgstr "Nepievienot savienotājus teksta objektiem"
 
 #. Selector
 #: ../src/ui/dialog/inkscape-preferences.cpp:314
-#, fuzzy
 msgid "Selector"
-msgstr "Logu izvēlētājs"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:318
 msgid "When transforming, show"
@@ -16081,9 +15975,8 @@ msgid "Show only a box outline of the objects when moving or transforming"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:325
-#, fuzzy
 msgid "Per-object selection cue"
-msgstr "Rādīt attēla iezīmējumu"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:328
 msgid "No per-object selection indication"
@@ -16092,7 +15985,7 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:329
 #, fuzzy
 msgid "Mark"
-msgstr "%1 marka"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:331
 msgid "Each selected object has a diamond mark in the top left corner"
@@ -16172,9 +16065,8 @@ msgid "Show temporary outline even when a path is selected for editing"
 msgstr "Rādīt pagaidu aprises pat tad, ja ceļš ir atlasīts labošanai"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:356
-#, fuzzy
 msgid "_Flash time:"
-msgstr "&Pieejas laiks"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:356
 msgid "Specifies how long the path outline will be visible after a mouse-over (in milliseconds); specify 0 to have the outline shown until mouse leaves the path"
@@ -16185,9 +16077,8 @@ msgid "Editing preferences"
 msgstr "Labošanas uzstādījumi"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:358
-#, fuzzy
 msgid "Show transform handles for single nodes"
-msgstr "Rādīt atlasīto mezglu pārveidošanas turus"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:359
 msgid "Show transform handles even when only a single node is selected"
@@ -16207,9 +16098,8 @@ msgid "Tweak"
 msgstr "Pieskaņot"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:365
-#, fuzzy
 msgid "Object paint style"
-msgstr "Mainīt objekta stilu"
+msgstr ""
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:370
@@ -16538,7 +16428,7 @@ msgstr "Khmeru (km)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:515
 msgid "Kinyarwanda (rw)"
-msgstr ""
+msgstr "Kinjaruanda (rw)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:515
 msgid "Korean (ko)"
@@ -16726,9 +16616,8 @@ msgstr ""
 
 #. show infobox
 #: ../src/ui/dialog/inkscape-preferences.cpp:594
-#, fuzzy
 msgid "Show filter primitives infobox"
-msgstr "Parādīt ātro filtru joslu"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:596
 msgid "Show icons and descriptions for the filter primitives available at the filter effects dialog"
@@ -16774,9 +16663,8 @@ msgid "Dialogs are hidden in taskbar"
 msgstr "Dialogi ir paslēpti uzdevumu joslā"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:614
-#, fuzzy
 msgid "Save and restore documents viewport"
-msgstr "Saglabāt un atjaunot dialoglodziņu stāvokli"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:615
 msgid "Zoom when window is resized"
@@ -16851,19 +16739,16 @@ msgid "Dialog Transparency"
 msgstr "Dialogu caurspēdīgums"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:663
-#, fuzzy
 msgid "_Opacity when focused:"
-msgstr "Aktivizēt fokusēto attēlu"
+msgstr "Necaurspīdība fokusetam"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:665
-#, fuzzy
 msgid "Opacity when _unfocused:"
-msgstr "Redzams, kad horizontāls"
+msgstr "Necaurspīdība ārpus fokusa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:667
-#, fuzzy
 msgid "_Time of opacity change animation:"
-msgstr "Mainīt datumu un laiku"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:670
 msgid "Miscellaneous"
@@ -16996,9 +16881,8 @@ msgid "Add default metadata to new documents. Default metadata can be set from D
 msgstr "Pievienot metadatus jaunam dokumentam. Noklusētos metadatus var iestatīt izmantojot Dokumenta īpašības -> Metadati."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:807
-#, fuzzy
 msgid "_Grab sensitivity:"
-msgstr "Spiedienjūtīgs"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:807
 #: ../src/ui/dialog/inkscape-preferences.cpp:810
@@ -17013,9 +16897,8 @@ msgid "How close on the screen you need to be to an object to be able to grab it
 msgstr "Cik tuvu objektam uz ekrāna ir jāatrodas, lai to būtu iespējams satvert ar peli (ekrāna pikseļos)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:810
-#, fuzzy
 msgid "_Click/drag threshold:"
-msgstr "Horizontālās vilkšanas aizture"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:811
 msgid "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
@@ -17063,18 +16946,16 @@ msgid "XML formatting"
 msgstr "XML formatēšana"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:832
-#, fuzzy
 msgid "Inline attributes"
-msgstr "saglabāt &Atribūtus"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:833
 msgid "Put attributes on the same line as the element tag"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:836
-#, fuzzy
 msgid "_Indent, spaces:"
-msgstr "Zīmēt atstarpes"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:836
 msgid "The number of spaces to use for indenting nested elements; set to 0 for no indentation"
@@ -17093,9 +16974,8 @@ msgid "If set, relative coordinates may be used in path data"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:843
-#, fuzzy
 msgid "Force repeat commands"
-msgstr "Komanda (skatīt --commands)"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:844
 msgid "Force repeating of the same path command (for example, 'L 1,2 L 3,4' instead of 'L 1,2 3,4')"
@@ -17114,9 +16994,8 @@ msgid "Significant figures of the values written to the SVG file"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:852
-#, fuzzy
 msgid "Minimum _exponent:"
-msgstr "Eksponente: 0x"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:852
 msgid "The smallest number written to SVG is 10 to the power of this exponent; anything smaller is written as zero"
@@ -17125,9 +17004,8 @@ msgstr ""
 #. Code to add controls for attribute checking options
 #. Add incorrect style properties options
 #: ../src/ui/dialog/inkscape-preferences.cpp:857
-#, fuzzy
 msgid "Improper Attributes Actions"
-msgstr "Mapju darbības - Apstiprināšana"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:859
 #: ../src/ui/dialog/inkscape-preferences.cpp:867
@@ -17212,9 +17090,8 @@ msgstr "SVG izvade"
 
 #. TRANSLATORS: see http://www.newsandtech.com/issues/2004/03-04/pt/03-04_rendering.htm
 #: ../src/ui/dialog/inkscape-preferences.cpp:895
-#, fuzzy
 msgid "Perceptual"
-msgstr "Perceptuāls"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "Relative Colorimetric"
@@ -17246,9 +17123,8 @@ msgid "Display profile:"
 msgstr "Ekrāna profils:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:919
-#, fuzzy
 msgid "Retrieve profile from display"
-msgstr "Rādīt logus no visām darba vietām"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:922
 msgid "Retrieve profiles from those attached to displays via XICC"
@@ -17259,16 +17135,12 @@ msgid "Retrieve profiles from those attached to displays"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:929
-#, fuzzy
 msgid "Display rendering intent:"
-msgstr "_Ekrāna renderēšanas veids:"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:930
-#, fuzzy
 msgid "The rendering intent to use to calibrate display output"
 msgstr ""
-"ICC profils ekrāna krāsu kalibrēšanai.\n"
-"Pārmeklētās mapes: %s"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:932
 msgid "Proofing"
@@ -17307,9 +17179,8 @@ msgid "The ICC profile to use to simulate device output"
 msgstr "ICC profils, ko izmantot imitējot izvadi uz iekārtas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:952
-#, fuzzy
 msgid "Device rendering intent:"
-msgstr "_Ekrāna renderēšanas veids:"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:953
 msgid "The rendering intent to use to calibrate device output"
@@ -17397,16 +17268,14 @@ msgid "Autosave"
 msgstr "Automātiska saglabāšana"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1072
-#, fuzzy
 msgid "Open Clip Art Library _Server Name:"
-msgstr "Open Clip Art bibliotēkas servera nosaukums:"
+msgstr "Open Clip Art bibliotēkas _servera nosaukums:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1073
 msgid "The server name of the Open Clip Art Library webdav server; it's used by the Import and Export to OCAL function"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1075
-#, fuzzy
 msgid "Open Clip Art Library _Username:"
 msgstr "Open Clip Art bibliotēkas lietotāja vārds:"
 
@@ -17415,9 +17284,8 @@ msgid "The username used to log into Open Clip Art Library"
 msgstr "Lietotāja vārds, ar kuru pieslēgties Open Clip Art bibliotēkai"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1078
-#, fuzzy
 msgid "Open Clip Art Library _Password:"
-msgstr "Open Clip Art bibliotēkas parole:"
+msgstr "Open Clip Art bibliotēkas _parole:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1079
 msgid "The password used to log into Open Clip Art Library"
@@ -17518,9 +17386,8 @@ msgid "Wrap around at start and end when cycling objects in z-order"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1126
-#, fuzzy
 msgid "Selecting"
-msgstr "Izvēlas grumu %1..."
+msgstr "Izvēlas"
 
 #. Transforms options
 #: ../src/ui/dialog/inkscape-preferences.cpp:1129
@@ -17680,9 +17547,8 @@ msgid "Only try to snap the node that is initially closest to the mouse pointer"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1192
-#, fuzzy
 msgid "_Weight factor:"
-msgstr "Mērogs: %d:1"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1193
 msgid "When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"
@@ -17719,9 +17585,8 @@ msgid "Pressing > or < scales selection up or down by this increment"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1211
-#, fuzzy
 msgid "_Inset/Outset by:"
-msgstr "lasīt grupai"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1212
 msgid "Inset and Outset commands displace the path by this distance"
@@ -17817,9 +17682,8 @@ msgid "Orphaned clones are deleted along with their original"
 msgstr "Kloni-bāreņi tiek nodzēsti kopā ar to oriģinālu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1256
-#, fuzzy
 msgid "Duplicating original+clones/linked offset"
-msgstr "Kad pabeigts, dzēst oriģinālo, nešifrēto failu"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1258
 msgid "Relink duplicated clones"
@@ -17892,9 +17756,8 @@ msgid "Ungroup groups created when setting clip/mask"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1294
-#, fuzzy
 msgid "Clippaths and masks"
-msgstr "Apstiprināt slāņa maskas"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1297
 msgid "Stroke Style Markers"
@@ -17923,9 +17786,8 @@ msgid "Configure number of processors/threads to use when rendering filters"
 msgstr "Iestatiet filtru renderēšanai izmantojamo procesoru/pavedienu skaitu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1318
-#, fuzzy
 msgid "Rendering _cache size:"
-msgstr "Bufera izmērs:"
+msgstr "Renderēšanas bufera izmērs:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1318
 msgctxt "mebibyte (2^20 bytes) abbreviation"
@@ -17999,7 +17861,6 @@ msgstr "Filtru efektu kvalitāte attēlošanai uz ekrāna"
 #. build custom preferences tab
 #: ../src/ui/dialog/inkscape-preferences.cpp:1368
 #: ../src/ui/dialog/print.cpp:224
-#, fuzzy
 msgid "Rendering"
 msgstr "Renderē"
 
@@ -18020,9 +17881,8 @@ msgid "16x16"
 msgstr "16x16"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1378
-#, fuzzy
 msgid "Oversample bitmaps:"
-msgstr "Savienotas bitkartes"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1381
 msgid "Automatically reload bitmaps"
@@ -18129,9 +17989,8 @@ msgid "Spellcheck"
 msgstr "Pareizrakstība"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1499
-#, fuzzy
 msgid "Latency _skew:"
-msgstr "Sašķiebt attēlu"
+msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1500
 msgid "Factor by which the event clock is skewed from the actual time (0.9766 on some systems)"
@@ -18286,9 +18145,8 @@ msgstr "Planšetdators"
 
 #: ../src/ui/dialog/input.cpp:856
 #: ../src/ui/dialog/input.cpp:1626
-#, fuzzy
 msgid "pad"
-msgstr "X papild"
+msgstr ""
 
 #: ../src/ui/dialog/input.cpp:897
 msgid "_Use pressure-sensitive tablet (requires restart)"
@@ -18819,9 +18677,8 @@ msgid "Edit glyph name"
 msgstr "Labot glifanosaukumu"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:640
-#, fuzzy
 msgid "Set glyph unicode"
-msgstr "Pēc _Unicode bloka"
+msgstr "Iestatīt unikoda glifus"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:652
 msgid "Remove font"
@@ -18900,7 +18757,7 @@ msgstr "Rakstsavirzes lielums:"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:866
 msgid "Set font family"
-msgstr "Iestatīt fonta ģimeni"
+msgstr "Iestatīt fonta saimi"
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:875
 msgid "font"
@@ -19109,9 +18966,8 @@ msgid "Sc_ans:"
 msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:624
-#, fuzzy
 msgid "The desired number of scans"
-msgstr "Tīkla līnijas numurs"
+msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:629
 msgid "Co_lors"
@@ -19140,9 +18996,8 @@ msgstr "Pirms vektorizēšanas bitkartei pielietot Gausa izpludināšanu"
 
 #. TRANSLATORS: "Stack" is a verb here
 #: ../src/ui/dialog/tracedialog.cpp:656
-#, fuzzy
 msgid "Stac_k scans"
-msgstr "steka pārplūšana"
+msgstr ""
 
 #: ../src/ui/dialog/tracedialog.cpp:660
 msgid "Stack scans on top of one another (no gaps) instead of tiling (usually with gaps)"
@@ -19210,9 +19065,8 @@ msgid "Increase this to reduce the number of nodes in the trace by more aggressi
 msgstr "Palieliniet šo, lai samazinātu mezglu skaitu vektorizētajā attēlā ar agresīvākas optimizācijas palīdzību"
 
 #: ../src/ui/dialog/tracedialog.cpp:738
-#, fuzzy
 msgid "To_lerance:"
-msgstr " Kopét uz"
+msgstr ""
 
 #. ## end option page
 #: ../src/ui/dialog/tracedialog.cpp:752
@@ -19345,9 +19199,8 @@ msgid "Transformation matrix element F"
 msgstr "Pārveidošanas matricas elements F"
 
 #: ../src/ui/dialog/transformation.cpp:96
-#, fuzzy
 msgid "Rela_tive move"
-msgstr "Pārvietot direktoriju \"%s\" uz:"
+msgstr ""
 
 #: ../src/ui/dialog/transformation.cpp:96
 msgid "Add the specified relative displacement to the current position; otherwise, edit the current absolute position directly"
@@ -19467,9 +19320,8 @@ msgid "Add nodes"
 msgstr "Pievienot mezglus"
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:346
-#, fuzzy
 msgid "Add extremum nodes"
-msgstr "Sakļaut augšējā līmeņa mezglus"
+msgstr ""
 
 #: ../src/ui/tool/multi-path-manipulator.cpp:352
 msgid "Duplicate nodes"
@@ -19693,10 +19545,9 @@ msgid "<b>Ctrl</b>: move along axes, click to change node type"
 msgstr "<b>Ctrl</b>: pārvietoties gar asīm, uzklikšķiniet, lai mainītu mezgla tipu"
 
 #: ../src/ui/tool/node.cpp:1277
-#, fuzzy
 msgctxt "Path node tip"
 msgid "<b>Alt</b>: sculpt nodes"
-msgstr "Sakļaut augšējā līmeņa mezglus"
+msgstr ""
 
 #: ../src/ui/tool/node.cpp:1285
 #, c-format
@@ -19745,9 +19596,8 @@ msgid "Delete node"
 msgstr "Dzēst mezglu"
 
 #: ../src/ui/tool/path-manipulator.cpp:1383
-#, fuzzy
 msgid "Cycle node type"
-msgstr "Mainīt mezgla tipu"
+msgstr "Mainīt mezgla tipu uz riņķi"
 
 #: ../src/ui/tool/path-manipulator.cpp:1398
 msgid "Drag handle"
@@ -20105,9 +19955,8 @@ msgid "Bitmap options"
 msgstr "Bitkartes iestatījumi"
 
 #: ../src/ui/widget/rendering-options.cpp:36
-#, fuzzy
 msgid "Preferred resolution of rendering, in dots per inch."
-msgstr "Noklusētā bitkartes izšķirtspēja (punktos uz collu) eksporta dialoglodzinņā"
+msgstr "Noklusētā izšķirtspēja renderēšanai, punktos uz collu"
 
 #: ../src/ui/widget/rendering-options.cpp:44
 msgid "Render using Cairo vector operations.  The resulting image is usually smaller in file size and can be arbitrarily scaled, but some filter effects will not be correctly rendered."
@@ -20319,14 +20168,12 @@ msgid "Remove stroke"
 msgstr "Aizvākt vilkumu"
 
 #: ../src/ui/widget/selected-style.cpp:573
-#, fuzzy
 msgid "Apply last set color to fill"
-msgstr "Krāsa: <b>%s</b>; <b>Uzklikšķiniet</b>, lai iestatītu aizpildījumu, <b>Shift+klikšķis</b> - lai iestatītu vilkumu"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:585
-#, fuzzy
 msgid "Apply last set color to stroke"
-msgstr "Krāsa: <b>%s</b>; <b>Uzklikšķiniet</b>, lai iestatītu aizpildījumu, <b>Shift+klikšķis</b> - lai iestatītu vilkumu"
+msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:596
 msgid "Apply last selected color to fill"
@@ -20476,22 +20323,23 @@ msgstr "Necaurspīdība: %.3g"
 
 #: ../src/vanishing-point.cpp:132
 msgid "Split vanishing points"
-msgstr ""
+msgstr "Sadalīt saplūšanas punktus"
 
 #: ../src/vanishing-point.cpp:177
 msgid "Merge vanishing points"
-msgstr ""
+msgstr "Apvienot saplūšanas punktus"
 
 #: ../src/vanishing-point.cpp:243
 msgid "3D box: Move vanishing point"
-msgstr ""
+msgstr "3D paralēlskaldnis: pārvietot saplūšanas punktu"
 
 #: ../src/vanishing-point.cpp:326
 #, c-format
 msgid "<b>Finite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural "<b>Finite</b> vanishing point shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box(es)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>Galīgs</b> saplūšanas punkts, kopējs <b>%d</b> paralēlskaldnim"
+msgstr[1] "<b>Galīgs</b> saplūšanas punkts, kopējs <b>%d</b> paralēlskaldņiem; velciet ar <b>Shift</b>, lai atdalītu atlasīto(s) paralēlskaldni (-ņus)"
+msgstr[2] "<b>Galīgs</b> saplūšanas punkts, kopējs <b>%d</b> paralēlskaldņiem; velciet ar <b>Shift</b>, lai atdalītu atlasīto(s) paralēlskaldni (-ņus)"
 
 #. This won't make sense any more when infinite VPs are not shown on the canvas,
 #. but currently we update the status message anyway
@@ -20499,15 +20347,17 @@ msgstr[1] ""
 #, c-format
 msgid "<b>Infinite</b> vanishing point shared by <b>%d</b> box"
 msgid_plural "<b>Infinite</b> vanishing point shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box(es)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>Bezalīgs</b> saplūšanas punkts, kopējs <b>%d</b> paralēlskaldnim"
+msgstr[1] "<b>Bezgalīgs</b> saplūšanas punkts, kopējs <b>%d</b> paralēlskaldņiem; velciet ar <b>Shift</b>, lai atdalītu atlasīto(s) paralēlskaldni (-ņus)"
+msgstr[2] "<b>Bezgalīgs</b> saplūšanas punkts, kopējs <b>%d</b> paralēlskaldņiem; velciet ar <b>Shift</b>, lai atdalītu atlasīto(s) paralēlskaldni (-ņus)"
 
 #: ../src/vanishing-point.cpp:341
 #, c-format
 msgid "shared by <b>%d</b> box; drag with <b>Shift</b> to separate selected box(es)"
 msgid_plural "shared by <b>%d</b> boxes; drag with <b>Shift</b> to separate selected box(es)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "kopējs <b>%d</b> paralēlskaldnim; velciet ar <b>Shift</b>, lai atdalītu atlasīto(s) paralēlskaldni (-ņus)"
+msgstr[1] "kopējs <b>%d</b> paralēlskaldņiem; velciet ar <b>Shift</b>, lai atdalītu atlasīto(s) paralēlskaldni (-ņus)"
+msgstr[2] ", kopējs <b>%d</b> paralēlskaldņiem; velciet ar <b>Shift</b>, lai atdalītu atlasīto(s) paralēlskaldni (-ņus)"
 
 #: ../src/verbs.cpp:1166
 msgid "Switch to next layer"
@@ -20890,9 +20740,8 @@ msgid "Scale each selected object vertically to match the height of the copied o
 msgstr "Mērogot katru atlasīto objektu vertikāli, lai atbilstu nokopētā objekta augstumam"
 
 #: ../src/verbs.cpp:2322
-#, fuzzy
 msgid "Paste _In Place"
-msgstr "Slēgt izvietojumu"
+msgstr "Ielīmēt vietā"
 
 #: ../src/verbs.cpp:2323
 msgid "Paste objects from clipboard to the original location"
@@ -20904,7 +20753,7 @@ msgstr "Ielīmēt ceļa _efektu"
 
 #: ../src/verbs.cpp:2325
 msgid "Apply the path effect of the copied object to selection"
-msgstr ""
+msgstr "Pielietot nokopētā objekta ceļa efektu atlasītajam"
 
 #: ../src/verbs.cpp:2326
 msgid "Remove Path _Effect"
@@ -20912,7 +20761,7 @@ msgstr "Aizvākt ceļa _efektu"
 
 #: ../src/verbs.cpp:2327
 msgid "Remove any path effects from selected objects"
-msgstr ""
+msgstr "Aizvākt visus ceļa efektus no atlasītajiem objektiem"
 
 #: ../src/verbs.cpp:2328
 msgid "_Remove Filters"
@@ -20971,9 +20820,8 @@ msgid "Select the object to which the selected clone is linked"
 msgstr "Atlasīt objektu, kuram ir piesaistīts atlasītais klons"
 
 #: ../src/verbs.cpp:2342
-#, fuzzy
 msgid "Clone original path (LPE)"
-msgstr "{Nestabils!] Klonēt sākotnējo ceļu"
+msgstr ""
 
 #: ../src/verbs.cpp:2343
 msgid "Creates a new path, applies the Clone original LPE, and refers it to the selected path"
@@ -20984,9 +20832,8 @@ msgid "Objects to _Marker"
 msgstr "Objektus par _marķieriem"
 
 #: ../src/verbs.cpp:2345
-#, fuzzy
 msgid "Convert selection to a line marker"
-msgstr "Atlasiet <b>objektu(s)</b>, kurus vēlaties pārvērst par marķieriem."
+msgstr "Pārvērst atlasīto par līnijas marķieri"
 
 #: ../src/verbs.cpp:2346
 msgid "Objects to Gu_ides"
@@ -21109,9 +20956,8 @@ msgid "Select previous object or node"
 msgstr "Izvēlēties iepriekšējo objektu vai mezglu"
 
 #: ../src/verbs.cpp:2376
-#, fuzzy
 msgid "D_eselect"
-msgstr "Noņ&emt izvēli visiem"
+msgstr "Atc_elt atlasi"
 
 #: ../src/verbs.cpp:2377
 msgid "Deselect any selected objects or nodes"
@@ -21236,9 +21082,8 @@ msgstr ""
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
 #: ../src/verbs.cpp:2420
-#, fuzzy
 msgid "Cut _Path"
-msgstr " Direktorija ceļš "
+msgstr ""
 
 #: ../src/verbs.cpp:2421
 msgid "Cut the bottom path's stroke into pieces, removing fill"
@@ -21248,19 +21093,16 @@ msgstr ""
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
 #: ../src/verbs.cpp:2425
-#, fuzzy
 msgid "Outs_et"
-msgstr "U&zstādīt izvēlēto"
+msgstr ""
 
 #: ../src/verbs.cpp:2426
-#, fuzzy
 msgid "Outset selected paths"
-msgstr "Pārvietot atlasītos ceļus uz iekšu"
+msgstr ""
 
 #: ../src/verbs.cpp:2428
-#, fuzzy
 msgid "O_utset Path by 1 px"
-msgstr "Kārtot pēc dokumenta ceļa"
+msgstr ""
 
 #: ../src/verbs.cpp:2429
 msgid "Outset selected paths by 1 px"
@@ -21286,9 +21128,8 @@ msgid "Inset selected paths"
 msgstr "Pārvietot atlasītos ceļus uz iekšu"
 
 #: ../src/verbs.cpp:2439
-#, fuzzy
 msgid "I_nset Path by 1 px"
-msgstr "Kārtot pēc dokumenta ceļa"
+msgstr ""
 
 #: ../src/verbs.cpp:2440
 msgid "Inset selected paths by 1 px"
@@ -21324,7 +21165,7 @@ msgstr "Vilku_mu par ceļu"
 
 #: ../src/verbs.cpp:2451
 msgid "Convert selected object's stroke to paths"
-msgstr ""
+msgstr "Pārvērst atlasītā objekta vilkumu ceļos"
 
 #: ../src/verbs.cpp:2452
 msgid "Si_mplify"
@@ -21332,10 +21173,9 @@ msgstr "V_ienkāršot"
 
 #: ../src/verbs.cpp:2453
 msgid "Simplify selected paths (remove extra nodes)"
-msgstr ""
+msgstr "Vienkāršo atlasītos ceļus (aizvāc liekos mezglus)"
 
 #: ../src/verbs.cpp:2454
-#, fuzzy
 msgid "_Reverse"
 msgstr "Apg_rieztā secībā"
 
@@ -21345,7 +21185,7 @@ msgstr ""
 
 #: ../src/verbs.cpp:2458
 msgid "Create one or more paths from a bitmap by tracing it"
-msgstr ""
+msgstr "Vektorizējot izveido no bitkartes vienu vai vairākus ceļus"
 
 #: ../src/verbs.cpp:2459
 msgid "Make a _Bitmap Copy"
@@ -21353,7 +21193,7 @@ msgstr "Izveidot _bitkartes kopiju"
 
 #: ../src/verbs.cpp:2460
 msgid "Export selection to a bitmap and insert it into document"
-msgstr ""
+msgstr "Eksportēt atlasīto uz bitkarti un ievietot to dokumentā"
 
 #: ../src/verbs.cpp:2461
 msgid "_Combine"
@@ -21361,7 +21201,7 @@ msgstr "_Kombinēt"
 
 #: ../src/verbs.cpp:2462
 msgid "Combine several paths into one"
-msgstr ""
+msgstr "Apvieno vairākus ceļus vienā"
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
@@ -21379,7 +21219,7 @@ msgstr "Rin_das un slejas..."
 
 #: ../src/verbs.cpp:2468
 msgid "Arrange selected objects in a table"
-msgstr ""
+msgstr "Sakārtot atlasītos objektus tabulā"
 
 #. Layer
 #: ../src/verbs.cpp:2470
@@ -21597,7 +21437,7 @@ msgstr "_Pārveidot par tekstu"
 
 #: ../src/verbs.cpp:2529
 msgid "Convert flowed text to regular text object (preserves appearance)"
-msgstr ""
+msgstr "Pārvērš teksta aizpildījumu par vienkāršu teksta objektu (saglabājot izskatu)"
 
 #: ../src/verbs.cpp:2531
 msgid "Flip _Horizontal"
@@ -21617,7 +21457,7 @@ msgstr "Apmest izvēlēto objektu vertikāli"
 
 #: ../src/verbs.cpp:2537
 msgid "Apply mask to selection (using the topmost object as mask)"
-msgstr ""
+msgstr "Uzlieciet masku atlasītajam (izmantojot augšējo objektu kā masku)"
 
 #: ../src/verbs.cpp:2539
 msgid "Edit mask"
@@ -21670,7 +21510,7 @@ msgstr "Pieskaņot"
 
 #: ../src/verbs.cpp:2555
 msgid "Tweak objects by sculpting or painting"
-msgstr ""
+msgstr "Pieskaņot objektus veidojot vai krāsojot"
 
 #: ../src/verbs.cpp:2556
 msgctxt "ContextVerb"
@@ -21679,7 +21519,7 @@ msgstr "Smidzināt"
 
 #: ../src/verbs.cpp:2557
 msgid "Spray objects by sculpting or painting"
-msgstr ""
+msgstr "Izsmidzināt objektus veidojot vai krāsojot"
 
 #: ../src/verbs.cpp:2558
 msgctxt "ContextVerb"
@@ -21791,7 +21631,7 @@ msgstr "Mērinstruments"
 #: ../src/verbs.cpp:2584
 msgctxt "ContextVerb"
 msgid "Dropper"
-msgstr ""
+msgstr "Pipete"
 
 #: ../src/verbs.cpp:2585
 #: ../src/widgets/sp-color-notebook.cpp:389
@@ -21974,7 +21814,7 @@ msgstr "Atvērt iestatījumus tālummaiņas rīkam"
 
 #: ../src/verbs.cpp:2629
 msgid "Measure Preferences"
-msgstr ""
+msgstr "Mērīšanas iestatījumi"
 
 #: ../src/verbs.cpp:2630
 msgid "Open Preferences for the Measure tool"
@@ -21982,11 +21822,11 @@ msgstr "Atvērt iestatījumus mērīšanas rīkam"
 
 #: ../src/verbs.cpp:2631
 msgid "Dropper Preferences"
-msgstr ""
+msgstr "Pipetes iestatījumi"
 
 #: ../src/verbs.cpp:2632
 msgid "Open Preferences for the Dropper tool"
-msgstr ""
+msgstr "Atvērt pipetes rīka iestatījumus"
 
 #: ../src/verbs.cpp:2633
 msgid "Connector Preferences"
@@ -22222,7 +22062,7 @@ msgstr "Ikonu priekšskatījums..."
 
 #: ../src/verbs.cpp:2693
 msgid "Open a window to preview objects at different icon resolutions"
-msgstr ""
+msgstr "Atveriet logu, lai priekšskatītu objektus atšķirīgā ikonu izšķirtspējā"
 
 #: ../src/verbs.cpp:2694
 msgid "_Page"
@@ -22296,11 +22136,11 @@ msgstr "Izvēlieties simbolus no glifu paletes"
 #. TRANSLATORS: "Swatches" means: color samples
 #: ../src/verbs.cpp:2715
 msgid "S_watches..."
-msgstr ""
+msgstr "Krāsu paraugi..."
 
 #: ../src/verbs.cpp:2716
 msgid "Select colors from a swatches palette"
-msgstr ""
+msgstr "Izvēlieties krāsas no krāsu paraugu paletes"
 
 #: ../src/verbs.cpp:2717
 msgid "Transfor_m..."
@@ -22336,7 +22176,7 @@ msgstr "Atsaukumu vēsture"
 
 #: ../src/verbs.cpp:2726
 msgid "View and select font family, font size and other text properties"
-msgstr ""
+msgstr "Aplūkojiet un izvēlieties fontu saimi, fonta izmēru un citas teksta īpašības"
 
 #: ../src/verbs.cpp:2727
 msgid "_XML Editor..."
@@ -22723,16 +22563,16 @@ msgstr "Leņķis X virzienā"
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/box3d-toolbar.cpp:322
 msgid "Angle of PLs in X direction"
-msgstr ""
+msgstr "Leņķis starp PL X virzienā"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/box3d-toolbar.cpp:344
 msgid "State of VP in X direction"
-msgstr ""
+msgstr "SP stāvoklis X virzienā"
 
 #: ../src/widgets/box3d-toolbar.cpp:345
 msgid "Toggle VP in X direction between 'finite' and 'infinite' (=parallel)"
-msgstr ""
+msgstr "Pārslēdziet SP X virzienā starp 'galīgs' un 'bezgalīgs' (=paralēls)"
 
 #: ../src/widgets/box3d-toolbar.cpp:360
 msgid "Angle in Y direction"
@@ -22745,16 +22585,16 @@ msgstr "Leņķis Y:"
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/box3d-toolbar.cpp:362
 msgid "Angle of PLs in Y direction"
-msgstr ""
+msgstr "Leņķis starp PL Y virzienā"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/box3d-toolbar.cpp:383
 msgid "State of VP in Y direction"
-msgstr ""
+msgstr "SP stāvoklis Y virzienā"
 
 #: ../src/widgets/box3d-toolbar.cpp:384
 msgid "Toggle VP in Y direction between 'finite' and 'infinite' (=parallel)"
-msgstr ""
+msgstr "Pārslēdziet SP Y virzienā starp 'galīgs' un 'bezgalīgs' (=paralēls)"
 
 #: ../src/widgets/box3d-toolbar.cpp:399
 msgid "Angle in Z direction"
@@ -22763,16 +22603,16 @@ msgstr "Leņķis Z virzienā"
 #. Translators: PL is short for 'perspective line'
 #: ../src/widgets/box3d-toolbar.cpp:401
 msgid "Angle of PLs in Z direction"
-msgstr ""
+msgstr "Leņķis starp PL Z virzienā"
 
 #. Translators: VP is short for 'vanishing point'
 #: ../src/widgets/box3d-toolbar.cpp:422
 msgid "State of VP in Z direction"
-msgstr ""
+msgstr "SP stāvoklis Z virzienā"
 
 #: ../src/widgets/box3d-toolbar.cpp:423
 msgid "Toggle VP in Z direction between 'finite' and 'infinite' (=parallel)"
-msgstr ""
+msgstr "Pārslēdziet SP Z virzienā starp 'galīgs' un 'bezgalīgs' (=paralēls)"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:231
 msgid "No preset"
@@ -23175,7 +23015,7 @@ msgstr "Z:"
 #. display the initial welcome message in the statusbar
 #: ../src/widgets/desktop-widget.cpp:634
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
-msgstr ""
+msgstr "<b>Laipni lūdzam Inkscape!</b> Izmantojiet figūru zīmēšanas vai brīvrokas līdzekļus, lai izveidotu objektus; izmantojiet kursora bultiņu, lai tos pārvietotu vai pārveidotu."
 
 #: ../src/widgets/desktop-widget.cpp:737
 #, c-format
@@ -23268,7 +23108,7 @@ msgstr "Norādīt necaurspīdību"
 
 #: ../src/widgets/dropper-toolbar.cpp:133
 msgid "If alpha was picked, assign it to selection as fill or stroke transparency"
-msgstr ""
+msgstr "Ja ir izvēlēta alfa, piešķiriet to atlasītajam kā aizpildījuma vai vilkuma caurspīdīgumu"
 
 #: ../src/widgets/dropper-toolbar.cpp:136
 msgid "Assign"
@@ -23302,7 +23142,7 @@ msgstr "Dzēšgumijas platums (attiecībā pret redzamo auduma laukumu)"
 
 #: ../src/widgets/fill-style.cpp:358
 msgid "Change fill rule"
-msgstr ""
+msgstr "Mainiet aizpildīšanas noteikumu"
 
 #: ../src/widgets/fill-style.cpp:443
 #: ../src/widgets/fill-style.cpp:522
@@ -24440,7 +24280,7 @@ msgstr "_S"
 #: ../src/widgets/sp-color-icc-selector.cpp:219
 #: ../src/widgets/sp-color-scales.cpp:432
 msgid "_L:"
-msgstr ""
+msgstr "_L:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:220
 #: ../src/widgets/sp-color-icc-selector.cpp:221
@@ -24572,7 +24412,7 @@ msgstr ""
 
 #: ../src/widgets/star-toolbar.cpp:483
 msgid "Star instead of a regular polygon (with one handle)"
-msgstr ""
+msgstr "Zvaigzne regulāra daudzstūra vietā (ar vienu turi)"
 
 #: ../src/widgets/star-toolbar.cpp:504
 msgid "triangle/tri-star"
@@ -24816,7 +24656,7 @@ msgstr "Iestatīt marķiera krāsu"
 
 #: ../src/widgets/swatch-selector.cpp:140
 msgid "Change swatch color"
-msgstr ""
+msgstr "Mainiet krāsu paraugu krāsu"
 
 #: ../src/widgets/text-toolbar.cpp:371
 #, c-format
@@ -24825,7 +24665,7 @@ msgstr "Neizdevās atrast atbilstošu fontu: %s\n"
 
 #: ../src/widgets/text-toolbar.cpp:405
 msgid "Text: Change font family"
-msgstr "Teksts: mainīt fonta grupu"
+msgstr "Teksts: mainīt fonta saimi"
 
 #: ../src/widgets/text-toolbar.cpp:473
 msgid "Text: Change font size"
@@ -25086,11 +24926,11 @@ msgstr "Jauno spirāļu stils"
 
 #: ../src/widgets/toolbox.cpp:195
 msgid "Style of new paths created by Pencil"
-msgstr ""
+msgstr "Jauno, ar zīmuļa rīku veidoto ceļu stils"
 
 #: ../src/widgets/toolbox.cpp:197
 msgid "Style of new paths created by Pen"
-msgstr ""
+msgstr "Jauno, ar spalvas rīku veidoto ceļu stils"
 
 #: ../src/widgets/toolbox.cpp:199
 msgid "Style of new calligraphic strokes"
@@ -25281,7 +25121,7 @@ msgstr "Iekšā/ārā pārvietošanas režīms"
 
 #: ../src/widgets/tweak-toolbar.cpp:190
 msgid "Move objects towards cursor; with Shift from cursor"
-msgstr ""
+msgstr "Pārvietot objektus uz kursora pusi; ar Shift - prom no kursora"
 
 #: ../src/widgets/tweak-toolbar.cpp:196
 msgid "Move jitter mode"
@@ -25337,7 +25177,7 @@ msgstr "Pievilkšanas/atgrūšanas režīms"
 
 #: ../src/widgets/tweak-toolbar.cpp:239
 msgid "Attract parts of paths towards cursor; with Shift from cursor"
-msgstr ""
+msgstr "Pievilkt ceļa daļas uz kursora pusi; ar Shift - prom no kursora"
 
 #: ../src/widgets/tweak-toolbar.cpp:245
 msgid "Roughen mode"
@@ -25501,11 +25341,11 @@ msgstr "Diemžēl, %s atrast neizdevās"
 #: ../share/extensions/embedimage.py:108
 #, python-format
 msgid "%s is not of type image/png, image/jpeg, image/bmp, image/gif, image/tiff, or image/x-icon"
-msgstr ""
+msgstr "%s tips nav  image/png, image/jpeg, image/bmp, image/gif, image/tiff, vai image/x-icon"
 
 #: ../share/extensions/export_gimp_palette.py:16
 msgid "The export_gpl.py module requires PyXML.  Please download the latest version from http://pyxml.sourceforge.net/."
-msgstr ""
+msgstr "Modulim export_gpl.py ir nepieciešams PyXML.  Lūdzu, lejupielādējiet jaunāko versiju no http://pyxml.sourceforge.net/."
 
 #: ../share/extensions/extractimage.py:68
 #, python-format
@@ -25526,7 +25366,7 @@ msgstr "Lūdzu, izvēlieties taisnstūri"
 #: ../share/extensions/gcodetools.py:6232
 #: ../share/extensions/gcodetools.py:6427
 msgid "No paths are selected! Trying to work on all available paths."
-msgstr ""
+msgstr "Nav atlasīts neviens ceļš! Mēģina apstrādāt visus pieejamos ceļus."
 
 #: ../share/extensions/gcodetools.py:3324
 msgid "Noting is selected. Please select something."
@@ -25675,6 +25515,11 @@ msgid ""
 "and Russian support forum:\n"
 "\thttp://www.cnc-club.ru/gcodetoolsru"
 msgstr ""
+"Pamācības, rokasgrāmatas un atbalsts ir atrodams\n"
+"angļu valodā - forumā:\n"
+"\thttp://www.cnc-club.ru/gcodetools\n"
+"un kievu valodā - forumā:\n"
+"\thttp://www.cnc-club.ru/gcodetoolsru"
 
 #: ../share/extensions/gcodetools.py:6107
 msgid "Lathe X and Z axis remap should be 'X', 'Y' or 'Z'. Exiting..."
@@ -25763,10 +25608,12 @@ msgid ""
 "Node with id '{0}' is not a suitable text node and was therefore ignored.\n"
 "\n"
 msgstr ""
+"Mezglls ar id '{0}' nav izmantojams teksta mezgls un tādēļ nav ņemts vērā.\n"
+"\n"
 
 #: ../share/extensions/jessyInk_effects.py:53
 msgid "No object selected. Please select the object you want to assign an effect to and then press apply.\n"
-msgstr ""
+msgstr "Nav atlasīts neviens objekts. Lūdzu, atlasiet objektu, kuram vēlaties pielietot efektu un pēc tam nospiediet 'Pielietot'.\n"
 
 #: ../share/extensions/jessyInk_export.py:82
 msgid "Could not find Inkscape command.\n"
@@ -25841,6 +25688,8 @@ msgid ""
 "\n"
 "{0}Initial effect (order number {1}):"
 msgstr ""
+"\n"
+"{0}Sākotnējais efekts (kārtas numurs {1}):"
 
 #: ../share/extensions/jessyInk_summary.py:170
 msgid ""
@@ -25852,7 +25701,7 @@ msgstr ""
 
 #: ../share/extensions/jessyInk_summary.py:174
 msgid "{0}\tView will be set according to object \"{1}\""
-msgstr ""
+msgstr "{0}\tSkats tiks iestatīts atbilstoši objektam \"{1}\""
 
 #: ../share/extensions/jessyInk_summary.py:176
 msgid "{0}\tObject \"{1}\""
@@ -25899,7 +25748,7 @@ msgstr "Ir izvēlēts vairāk nekā viens objekts. Lūdzu, izvēlieties tikai vi
 
 #: ../share/extensions/jessyInk_view.py:79
 msgid "No object selected. Please select the object you want to assign a view to and then press apply.\n"
-msgstr ""
+msgstr "Nav atlasīts neviens objekts. Lūdzu, atlasiet objektu, kuram vēlaties pielietot skatu un pēc tam nospiediet 'Pielietot'.\n"
 
 #: ../share/extensions/markers_strokepaint.py:83
 #, python-format
@@ -25922,6 +25771,8 @@ msgid ""
 "The total length of the pattern is too small :\n"
 "Please choose a larger object or set 'Space between copies' > 0"
 msgstr ""
+"Raksta kopējais garums ir pārāk mazs:\n"
+"lūdzu, izvēlieties lielāku objektu vai arī iestatiet 'Attālums starp kopijām' > 0"
 
 #: ../share/extensions/pathalongpath.py:277
 msgid ""
@@ -25932,7 +25783,7 @@ msgstr ""
 #: ../share/extensions/pathmodifier.py:237
 #, python-format
 msgid "Please first convert objects to paths!  (Got [%s].)"
-msgstr ""
+msgstr "Lūdzu, vispirms pārvērtiet objektus par ceļiem!  (Iegūts [%s].)"
 
 #: ../share/extensions/perspective.py:45
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
@@ -25945,11 +25796,13 @@ msgid ""
 "The first selected object is of type '%s'.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
+"Pirmā atlasītā objekta tips ir '%s'.\n"
+"Mēģiniet izmantot darbību Ceļš->Objektu par ceļu."
 
 #: ../share/extensions/perspective.py:67
 #: ../share/extensions/summersnight.py:59
 msgid "This extension requires that the second selected path be four nodes long."
-msgstr ""
+msgstr "Šim paplašinājuma ir nepieciešams, lai otrais atlasītais ceļš būtu četrus mezglus garš."
 
 #: ../share/extensions/perspective.py:93
 #: ../share/extensions/summersnight.py:92
@@ -25957,6 +25810,8 @@ msgid ""
 "The second selected object is a group, not a path.\n"
 "Try using the procedure Object->Ungroup."
 msgstr ""
+"Otrais atlasītais objekts ir grupa, nevis ceļš.\n"
+"Mēģiniet izmantot darbību Objekts ->Atgrupēt."
 
 #: ../share/extensions/perspective.py:95
 #: ../share/extensions/summersnight.py:94
@@ -25964,6 +25819,8 @@ msgid ""
 "The second selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
+"Otrais atlasītais objekts nav ceļš.\n"
+"Mēģiniet izmantot darbību Ceļš->Objektu par ceļu."
 
 #: ../share/extensions/perspective.py:98
 #: ../share/extensions/summersnight.py:97
@@ -25971,10 +25828,12 @@ msgid ""
 "The first selected object is not a path.\n"
 "Try using the procedure Path->Object to Path."
 msgstr ""
+"Pirmais atlasītais objekts nav ceļš.\n"
+"Mēģiniet izmantot darbību Ceļš->Objektu par ceļu."
 
 #: ../share/extensions/polyhedron_3d.py:65
 msgid "Failed to import the numpy module. This module is required by this extension. Please install it and try again.  On a Debian-like system this can be done with the command 'sudo apt-get install python-numpy'."
-msgstr ""
+msgstr "Neizdevās importēt numpy moduli, kas ir nepieciešams šim paplašinājumam. Lūdzu, uzstādiet to un mēģiniet vēlreiz. Uz Debian-veidīgām sistēmām to var paveikt ar komandu 'sudo apt-get install python-numpy'."
 
 #: ../share/extensions/polyhedron_3d.py:336
 msgid "No face data found in specified file."
@@ -26003,7 +25862,7 @@ msgstr ""
 
 #: ../share/extensions/render_barcode_datamatrix.py:202
 msgid "Unrecognised DataMatrix size"
-msgstr ""
+msgstr "Neatpazīts DataMatrix izmērs"
 
 #. we have an invalid bit value
 #: ../share/extensions/render_barcode_datamatrix.py:643
@@ -26061,6 +25920,8 @@ msgid ""
 "This extension requires two selected paths. \n"
 "The second path must be exactly four nodes long."
 msgstr ""
+"Šim paplašinājuma ir nepieciešami divi atlasīti ceļi.\n"
+"Otrajam ceļam ir jābūt tieši četrus mezglus garam."
 
 #: ../share/extensions/svg_and_media_zip_output.py:128
 #, python-format
@@ -26116,11 +25977,11 @@ msgstr "Mape \"%s\" nepstāv."
 #: ../share/extensions/webslicer_export.py:102
 #, python-format
 msgid "You have more than one element with \"%s\" html-id."
-msgstr ""
+msgstr "Jums ir vairāk nekā viens elements ar \"%s\" html-id."
 
 #: ../share/extensions/webslicer_export.py:332
 msgid "You must install the ImageMagick to get JPG and GIF."
-msgstr ""
+msgstr "Lai iegūtu JPG un GIF, ir nepieciešams uzstādīt ImageMagick."
 
 #. PARAMETER PROCESSING
 #. lines of longitude are odd : abort
@@ -26192,7 +26053,7 @@ msgstr "Adobe Illustrator SVG (*.ai.svg)"
 
 #: ../share/extensions/aisvg.inx.h:3
 msgid "Cleans the cruft out of Adobe Illustrator SVGs before opening"
-msgstr ""
+msgstr "Tīra nederīgo informāciju no Adobe Illustrator SVG failiem pirms atvēršanas"
 
 #: ../share/extensions/ccx_input.inx.h:1
 msgid "Corel DRAW Compressed Exchange files (.ccx)"
@@ -26444,7 +26305,7 @@ msgstr "Lai varētu importēt Dia failus, jābūt uzstādītai Dia.  Aplikāciju
 
 #: ../share/extensions/dia.inx.h:5
 msgid "The dia2svg.sh script should be installed with your Inkscape distribution.  If you do not have it, there is likely to be something wrong with your Inkscape installation."
-msgstr ""
+msgstr "Skriptam dia2svg.sh ir jābūt uzstādītam, uzstādot jūsu Inkscape pakotni. Ja jums tā nav, ļoti iespējams, ka uzstādīšanas gaitā ir bijušas kādas problēmas."
 
 #: ../share/extensions/dimension.inx.h:1
 msgid "Bounding box type :"
@@ -26629,7 +26490,7 @@ msgstr "Simediānas punkts"
 
 #: ../share/extensions/draw_from_triangle.inx.h:34
 msgid "Symmedians"
-msgstr ""
+msgstr "Simediāna"
 
 #: ../share/extensions/draw_from_triangle.inx.h:35
 msgid ""
@@ -26690,7 +26551,7 @@ msgstr "DXF ievade"
 
 #: ../share/extensions/dxf_input.inx.h:10
 msgid "Gcodetools compatible point import"
-msgstr ""
+msgstr "Ar G-code rīkiem savietojama punkta imports"
 
 #: ../share/extensions/dxf_input.inx.h:12
 msgid "Import AutoCAD's Document Exchange Format"
@@ -26909,7 +26770,7 @@ msgstr "Dziļums:"
 
 #: ../share/extensions/foldablebox.inx.h:3
 msgid "Foldable Box"
-msgstr "Salokām paralēlskaldnis"
+msgstr "Salokāms paralēlskaldnis"
 
 #: ../share/extensions/foldablebox.inx.h:5
 msgid "Paper Thickness:"
@@ -26929,7 +26790,7 @@ msgstr "Apakšiedaļas:"
 
 #: ../share/extensions/funcplot.inx.h:1
 msgid "Add x-axis endpoints"
-msgstr ""
+msgstr "Pievienojiet x-ass gala punktus"
 
 #: ../share/extensions/funcplot.inx.h:2
 msgid "Calculate first derivative numerically"
@@ -27008,6 +26869,15 @@ msgid ""
 "\n"
 "The constants pi and e are also available."
 msgstr ""
+"Pieejamas Python matemātiskās funkcijas:\n"
+"\n"
+"ceil(x); fabs(x); floor(x); fmod(x,y); frexp(x); ldexp(x,i); \n"
+"modf(x); exp(x); log(x [, base]); log10(x); pow(x,y); sqrt(x); \n"
+"acos(x); asin(x); atan(x); atan2(y,x); hypot(x,y); \n"
+"cos(x); sin(x); tan(x); degrees(x); radians(x); \n"
+"cosh(x); sinh(x); tanh(x).\n"
+"\n"
+"Konstantes  pi un e ir arīdzan pieejamas.."
 
 #: ../share/extensions/funcplot.inx.h:32
 msgid "Start X value:"
@@ -27041,7 +26911,7 @@ msgstr ""
 
 #: ../share/extensions/gears.inx.h:2
 msgid "Diameter of center hole (0 for none):"
-msgstr ""
+msgstr "Centra cauruma diametrs (0 - bez cauruma):"
 
 #: ../share/extensions/gears.inx.h:3
 msgid "Gear"
@@ -27075,7 +26945,7 @@ msgstr "Par"
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:4
 #: ../share/extensions/gcodetools_tools_library.inx.h:1
 msgid "Gcodetools"
-msgstr ""
+msgstr "G-code rīki"
 
 #: ../share/extensions/gcodetools_about.inx.h:3
 #: ../share/extensions/gcodetools_area.inx.h:25
@@ -27596,7 +27466,7 @@ msgstr ""
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:11
 msgid "Maximum angle for corner (0-180 deg):"
-msgstr ""
+msgstr "Maksimālais stūra leņķis (0-180 gr.):"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:12
 msgid "Perpendicular"
@@ -27683,7 +27553,7 @@ msgstr "Malas platums (px):"
 
 #: ../share/extensions/generate_voronoi.inx.h:9
 msgid "Voronoi Pattern"
-msgstr "Voronova tekstūra"
+msgstr "Voronoja raksts"
 
 #: ../share/extensions/gimp_xcf.inx.h:1
 msgid "GIMP XCF"
@@ -27854,7 +27724,7 @@ msgstr "Leņķa iedaļas"
 
 #: ../share/extensions/grid_polar.inx.h:4
 msgid "Centre Dot Diameter (px):"
-msgstr ""
+msgstr "Centra punkta diametrs (px):"
 
 #: ../share/extensions/grid_polar.inx.h:5
 msgid "Circular Divisions"
@@ -28006,7 +27876,7 @@ msgstr "Giljotīna"
 
 #: ../share/extensions/guillotine.inx.h:4
 msgid "Ignore these settings and use export hints?"
-msgstr ""
+msgstr "Neņemt vērā šos iestatījumus un izmantot eksportēšanas padomus?"
 
 #: ../share/extensions/guillotine.inx.h:5
 msgid "Image name (without extension)"
@@ -28018,11 +27888,11 @@ msgstr "Zīmēt turus"
 
 #: ../share/extensions/hpgl_output.inx.h:1
 msgid "Export to an HP Graphics Language file"
-msgstr ""
+msgstr "Eksportēt uz  HP Graphics Language failu"
 
 #: ../share/extensions/hpgl_output.inx.h:2
 msgid "HP Graphics Language file (*.hpgl)"
-msgstr ""
+msgstr "HP Graphics Language fails (*.hpgl)"
 
 #: ../share/extensions/hpgl_output.inx.h:3
 msgid "HPGL Output"
@@ -28094,7 +27964,7 @@ msgstr "Inkscape rokasgrāmata:"
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_manual.inx.h:3
 msgid "http://tavmjong.free.fr/INKSCAPE/MANUAL/html/index.php"
-msgstr ""
+msgstr "http://tavmjong.free.fr/INKSCAPE/MANUAL/html/index.php"
 
 #: ../share/extensions/inkscape_help_relnotes.inx.h:1
 msgid "New in This Version"
@@ -28103,7 +27973,7 @@ msgstr "Kas jauns šajā versijā"
 #. i18n. Please don't translate it unless a page exists in your language
 #: ../share/extensions/inkscape_help_relnotes.inx.h:3
 msgid "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.49"
-msgstr ""
+msgstr "http://wiki.inkscape.org/wiki/index.php/Release_notes/0.49"
 
 #: ../share/extensions/inkscape_help_reportabug.inx.h:1
 msgid "Report a Bug"
@@ -28316,11 +28186,11 @@ msgstr ""
 
 #: ../share/extensions/jessyInk_export.inx.h:3
 msgid "JessyInk zipped pdf or png output"
-msgstr ""
+msgstr "JessyInk saspiesta pdf vai png izvade"
 
 #: ../share/extensions/jessyInk_export.inx.h:4
 msgid "JessyInk zipped pdf or png output (*.zip)"
-msgstr ""
+msgstr "JessyInk saspiesta pdf vai png izvade (*.zip)"
 
 #: ../share/extensions/jessyInk_export.inx.h:5
 msgid "PDF"
@@ -28646,7 +28516,7 @@ msgstr "Skatīt"
 
 #: ../share/extensions/layers2svgfont.inx.h:1
 msgid "3 - Convert Glyph Layers to SVG Font"
-msgstr ""
+msgstr "3 - Pārvērst glifu slāņus par SVG fontu"
 
 #: ../share/extensions/layers2svgfont.inx.h:2
 #: ../share/extensions/new_glyph_layer.inx.h:2
@@ -29779,15 +29649,16 @@ msgstr ""
 
 #: ../share/extensions/scour.inx.h:6
 msgid "Help (Ids)"
-msgstr ""
+msgstr "Palīdzība (Ids)"
 
 #: ../share/extensions/scour.inx.h:7
 msgid "Help (Options)"
 msgstr "Palīdzība (opcijas)"
 
 #: ../share/extensions/scour.inx.h:8
+#, fuzzy
 msgid "Ids"
-msgstr ""
+msgstr "Ids"
 
 #: ../share/extensions/scour.inx.h:9
 msgid ""
@@ -29805,7 +29676,7 @@ msgstr "Saglabāt redaktora datus"
 
 #: ../share/extensions/scour.inx.h:17
 msgid "Number of significant digits for coords:"
-msgstr ""
+msgstr "Zīmīgo ciparu skaits koordinātēm:"
 
 #: ../share/extensions/scour.inx.h:18
 msgid "Optimized SVG (*.svg)"
@@ -29883,7 +29754,7 @@ msgstr ""
 
 #: ../share/extensions/scour.inx.h:47
 msgid "Work around renderer bugs"
-msgstr ""
+msgstr "Apiet renderētāja kļūdas"
 
 #: ../share/extensions/scour.inx.h:48
 msgid "XML indentation (pretty-printing):"
@@ -29992,7 +29863,7 @@ msgstr "Sadalīt:"
 
 #: ../share/extensions/split.inx.h:7
 msgid "This effect splits texts into different lines, words or letters."
-msgstr ""
+msgstr "Šis efekts sadala tekstu dažādās līnijās, vārdos vai burtos."
 
 #: ../share/extensions/split.inx.h:8
 msgctxt "split"
@@ -30027,7 +29898,7 @@ msgstr "Aploksne"
 
 #: ../share/extensions/svg2fxg.inx.h:1
 msgid "Adobe's XML Graphics file format"
-msgstr ""
+msgstr "Adobe's XML Graphics faila formāts"
 
 #: ../share/extensions/svg2fxg.inx.h:2
 msgid "FXG Output"
@@ -30069,7 +29940,7 @@ msgstr "Attēla zip mape:"
 
 #: ../share/extensions/svg_and_media_zip_output.inx.h:5
 msgid "Inkscape's native file format compressed with Zip and including all media files"
-msgstr ""
+msgstr "Inkscape oriģinālais faila formāts, saspiests ar zip saturošs visus mēdiju failus."
 
 #: ../share/extensions/svgcalendar.inx.h:1
 msgid "Automatically set size and position"
@@ -30362,7 +30233,7 @@ msgstr "Delonē triangulācija"
 
 #: ../share/extensions/voronoi2svg.inx.h:7
 msgid "Options for Voronoi diagram"
-msgstr "Voronoi diagrammas iestatījumi"
+msgstr "Voronoja diagrammas iestatījumi"
 
 #: ../share/extensions/voronoi2svg.inx.h:9
 msgid "Select a set of objects. Their centroids will be used as the sites of the Voronoi diagram. Text objects are not handled."
@@ -30378,7 +30249,7 @@ msgstr "Diagrammas tips"
 
 #: ../share/extensions/voronoi2svg.inx.h:12
 msgid "Voronoi Diagram"
-msgstr "Voronoi diagramma"
+msgstr "Voronoja diagramma"
 
 #: ../share/extensions/voronoi2svg.inx.h:13
 msgid "Voronoi and Delaunay"
@@ -30409,7 +30280,7 @@ msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:8
 msgid "Percent (relative to parent size)"
-msgstr ""
+msgstr "Procenti (attiecībā pret vecāka izmēru)"
 
 #: ../share/extensions/webslicer_create_group.inx.h:9
 msgid "Pixel (fixed)"
