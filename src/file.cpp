@@ -952,7 +952,13 @@ sp_file_save_document(Gtk::Window &parentWindow, SPDocument *doc)
             }
         }
     } else {
-        Glib::ustring msg = Glib::ustring::format(_("No changes need to be saved."), " ", doc->getURI());
+        Glib::ustring msg;
+        if ( doc->getURI() == NULL )
+        {
+            msg = Glib::ustring::format(_("No changes need to be saved."));
+        } else {
+            msg = Glib::ustring::format(_("No changes need to be saved."), " ", doc->getURI());
+        }
         SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::WARNING_MESSAGE, msg.c_str());
         success = TRUE;
     }
