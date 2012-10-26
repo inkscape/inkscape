@@ -12,47 +12,35 @@
   * smaller than 90 degrees (measured from horizontal, 0 degrees being a line extending
   * to the right). The x-axis will always have an angle between 0 and 90 degrees.
   */
-
- /*
-  * TODO:
-  * THIS FILE AND THE HEADER FILE NEED CLEANING UP. PLEASE DO NOT HESISTATE TO DO SO.
-  */
-
+ 
 #include "display/canvas-axonomgrid.h"
 
 #include <glibmm/i18n.h>
 
 #include "ui/widget/registered-widget.h"
-#include "2geom/line.h"
 #include "desktop.h"
-#include "canvas-grid.h"
 #include "desktop-handles.h"
 #include "display/cairo-utils.h"
 #include "display/canvas-grid.h"
 #include "display/sp-canvas-util.h"
+#include "display/sp-canvas.h"
 #include "document.h"
-#include "helper/units.h"
 #include "inkscape.h"
 #include "preferences.h"
 #include "sp-namedview.h"
 #include "sp-object.h"
 #include "svg/svg-color.h"
+#include "2geom/line.h"
+#include "2geom/angle.h"
 #include "util/mathfns.h"
-#include "xml/node-event-vector.h"
 #include "round.h"
-#include "display/sp-canvas.h"
+#include "helper/units.h"
 
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
 #include <gtkmm/table.h>
 
 enum Dim3 { X=0, Y, Z };
-
-#ifndef M_PI
-# define M_PI 3.14159265358979323846
-#endif
-
-static double deg_to_rad(double deg) { return deg*M_PI/180.0;}
 
 /**
  * This function calls Cairo to render a line on a particular canvas buffer.
@@ -139,9 +127,9 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     angle_deg[Z] = prefs->getDouble("/options/grids/axonom/angle_z", 30.0);
     angle_deg[Y] = 0;
 
-    angle_rad[X] = deg_to_rad(angle_deg[X]);
+    angle_rad[X] = Geom::deg_to_rad(angle_deg[X]);
     tan_angle[X] = tan(angle_rad[X]);
-    angle_rad[Z] = deg_to_rad(angle_deg[Z]);
+    angle_rad[Z] = Geom::deg_to_rad(angle_deg[Z]);
     tan_angle[Z] = tan(angle_rad[Z]);
 
     snapper = new CanvasAxonomGridSnapper(this, &namedview->snap_manager, 0);
@@ -254,7 +242,7 @@ CanvasAxonomGrid::readRepr()
         angle_deg[X] = g_ascii_strtod(value, NULL);
         if (angle_deg[X] < 0.) angle_deg[X] = 0.;
         if (angle_deg[X] > 89.0) angle_deg[X] = 89.0;
-        angle_rad[X] = deg_to_rad(angle_deg[X]);
+        angle_rad[X] = Geom::deg_to_rad(angle_deg[X]);
         tan_angle[X] = tan(angle_rad[X]);
     }
 
@@ -262,7 +250,7 @@ CanvasAxonomGrid::readRepr()
         angle_deg[Z] = g_ascii_strtod(value, NULL);
         if (angle_deg[Z] < 0.) angle_deg[Z] = 0.;
         if (angle_deg[Z] > 89.0) angle_deg[Z] = 89.0;
-        angle_rad[Z] = deg_to_rad(angle_deg[Z]);
+        angle_rad[Z] = Geom::deg_to_rad(angle_deg[Z]);
         tan_angle[Z] = tan(angle_rad[Z]);
     }
 

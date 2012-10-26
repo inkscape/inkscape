@@ -2,9 +2,12 @@
 #define CANVAS_AXONOMGRID_H
 
 /*
- * Copyright (C) 2006-2007 Johan Engelen  <johan@shouraizou.nl>
+ * Authors:
+ *    Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
-  */
+ * Copyright (C) 2006-2012 Authors
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
 
 #include "line-snapper.h"
 #include "canvas-grid.h"
@@ -15,7 +18,7 @@ struct SPNamedView;
 
 namespace Inkscape {
 namespace XML {
-	class Node;
+    class Node;
 };
 
 class CanvasAxonomGrid : public CanvasGrid {
@@ -36,6 +39,9 @@ public:
 
     bool scaled;          /**< Whether the grid is in scaled mode */
 
+protected:
+    friend class CanvasAxonomGridSnapper;
+
     Geom::Point ow;         /**< Transformed origin by the affine for the zoom */
     double lyw;           /**< Transformed length y by the affine for the zoom */
     double lxw_x;
@@ -44,7 +50,6 @@ public:
 
     Geom::Point sw;          /**< the scaling factors of the affine transform */
 
-protected:
     virtual Gtk::Widget * newSpecificWidget();
 
 private:
@@ -63,7 +68,7 @@ public:
     bool ThisSnapperMightSnap() const;
 
     Geom::Coord getSnapperTolerance() const; //returns the tolerance of the snapper in screen pixels (i.e. independent of zoom)
-	bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
+    bool getSnapperAlwaysSnap() const; //if true, then the snapper will always snap, regardless of its tolerance
 
 private:
     LineList _getSnapLines(Geom::Point const &p) const;
