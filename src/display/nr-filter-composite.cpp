@@ -48,10 +48,11 @@ struct ComposeArithmetic {
         gint32 go = _k1*ga*gb + _k2*ga + _k3*gb + _k4;
         gint32 bo = _k1*ba*bb + _k2*ba + _k3*bb + _k4;
 
-        ao = (pxclamp(ao, 0, 255*255*255) + (255*255/2)) / (255*255);
-        ro = (pxclamp(ro, 0, 255*255*255) + (255*255/2)) / (255*255);
-        go = (pxclamp(go, 0, 255*255*255) + (255*255/2)) / (255*255);
-        bo = (pxclamp(bo, 0, 255*255*255) + (255*255/2)) / (255*255);
+        ao = pxclamp(ao, 0, 255*255*255); // r, g and b are premultiplied, so should be clamped to the alpha channel
+        ro = (pxclamp(ro, 0, ao) + (255*255/2)) / (255*255);
+        go = (pxclamp(go, 0, ao) + (255*255/2)) / (255*255);
+        bo = (pxclamp(bo, 0, ao) + (255*255/2)) / (255*255);
+        ao = (ao + (255*255/2)) / (255*255);
 
         ASSEMBLE_ARGB32(pxout, ao, ro, go, bo)
         return pxout;
