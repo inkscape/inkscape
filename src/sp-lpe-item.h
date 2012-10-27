@@ -49,8 +49,8 @@ public:
     Inkscape::LivePathEffect::LPEObjectReference* current_path_effect;
     std::vector<Inkscape::Display::TemporaryItem*> lpe_helperpaths;
 
-    void replacePathEffects( std::vector<LivePathEffectObject const *> const old_lpeobjs,
-                             std::vector<LivePathEffectObject const *> const new_lpeobjs );
+    void replacePathEffects( std::vector<LivePathEffectObject const *> const &old_lpeobjs,
+                             std::vector<LivePathEffectObject const *> const &new_lpeobjs );
 };
 
 struct SPLPEItemClass {
