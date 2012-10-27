@@ -58,9 +58,9 @@ sp_canvastext_get_type (void)
 
 static void sp_canvastext_class_init(SPCanvasTextClass *klass)
 {
-    SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
+    SPCanvasItemClass *item_class = SP_CANVAS_ITEM_CLASS(klass);
 
-    parent_class_ct = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
+    parent_class_ct = SP_CANVAS_ITEM_CLASS(g_type_class_peek_parent(klass));
 
     item_class->destroy = sp_canvastext_destroy;
     item_class->update = sp_canvastext_update;

@@ -1081,7 +1081,7 @@ void SPCanvasGroup::update(SPCanvasItem *item, Geom::Affine const &affine, unsig
     Geom::OptRect bounds;
 
     for (GList *list = group->items; list; list = list->next) {
-        SPCanvasItem *i = (SPCanvasItem *)list->data;
+        SPCanvasItem *i = SP_CANVAS_ITEM(list->data);
 
         sp_canvas_item_invoke_update (i, affine, flags);
 
@@ -1118,7 +1118,7 @@ double SPCanvasGroup::point(SPCanvasItem *item, Geom::Point p, SPCanvasItem **ac
     double dist = 0.0;
 
     for (GList *list = group->items; list; list = list->next) {
-        SPCanvasItem *child = (SPCanvasItem *)list->data;
+        SPCanvasItem *child = SP_CANVAS_ITEM(list->data);
 
         if ((child->x1 <= x2) && (child->y1 <= y2) && (child->x2 >= x1) && (child->y2 >= y1)) {
             SPCanvasItem *point_item = NULL; // cater for incomplete item implementations
@@ -1152,7 +1152,7 @@ void SPCanvasGroup::render(SPCanvasItem *item, SPCanvasBuf *buf)
     SPCanvasGroup const *group = SP_CANVAS_GROUP(item);
 
     for (GList *list = group->items; list; list = list->next) {
-        SPCanvasItem *child = (SPCanvasItem *)list->data;
+        SPCanvasItem *child = SP_CANVAS_ITEM(list->data);
         if (child->visible) {
             if ((child->x1 < buf->rect.right()) &&
                 (child->y1 < buf->rect.bottom()) &&
@@ -1171,7 +1171,7 @@ void SPCanvasGroup::viewboxChanged(SPCanvasItem *item, Geom::IntRect const &new_
     SPCanvasGroup *group = SP_CANVAS_GROUP(item);
     
     for (GList *list = group->items; list; list = list->next) {
-        SPCanvasItem *child = (SPCanvasItem *)list->data;
+        SPCanvasItem *child = SP_CANVAS_ITEM(list->data);
         if (child->visible) {
             if (SP_CANVAS_ITEM_GET_CLASS(child)->viewbox_changed) {
                 SP_CANVAS_ITEM_GET_CLASS(child)->viewbox_changed(child, new_area);
@@ -1649,7 +1649,6 @@ int SPCanvasImpl::emitEvent(SPCanvas *canvas, GdkEvent *event)
 int SPCanvasImpl::pickCurrentItem(SPCanvas *canvas, GdkEvent *event)
 {
     int button_down = 0;
-    double x, y;
 
     if (!canvas->root) // canvas may have already be destroyed by closing desktop durring interrupted display!
         return FALSE;
@@ -1709,6 +1708,7 @@ int SPCanvasImpl::pickCurrentItem(SPCanvas *canvas, GdkEvent *event)
     // LeaveNotify means that there is no current item, so we don't look for one
     if (canvas->pick_event.type != GDK_LEAVE_NOTIFY) {
         // these fields don't have the same offsets in both types of events
+        double x, y;
 
         if (canvas->pick_event.type == GDK_ENTER_NOTIFY) {
             x = canvas->pick_event.crossing.x;

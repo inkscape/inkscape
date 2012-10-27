@@ -52,9 +52,9 @@ sp_ctrlpoint_get_type (void)
 
 static void sp_ctrlpoint_class_init(SPCtrlPointClass *klass)
 {
-    SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
+    SPCanvasItemClass *item_class = SP_CANVAS_ITEM_CLASS(klass);
 
-    parent_class = (SPCanvasItemClass*)g_type_class_peek_parent (klass);
+    parent_class = SP_CANVAS_ITEM_CLASS(g_type_class_peek_parent(klass));
 
     item_class->destroy = sp_ctrlpoint_destroy;
     item_class->update = sp_ctrlpoint_update;

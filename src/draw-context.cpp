@@ -104,9 +104,9 @@ static void sp_draw_context_class_init(SPDrawContextClass *klass)
     SPEventContextClass *ec_class;
 
     object_class = (GObjectClass *)klass;
-    ec_class = (SPEventContextClass *) klass;
+    ec_class = SP_EVENT_CONTEXT_CLASS(klass);
 
-    draw_parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
+    draw_parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_draw_context_dispose;
 
@@ -175,8 +175,8 @@ static void sp_draw_context_setup(SPEventContext *ec)
     SPDrawContext *dc = SP_DRAW_CONTEXT(ec);
     SPDesktop *dt = ec->desktop;
 
-    if (((SPEventContextClass *) draw_parent_class)->setup) {
-        ((SPEventContextClass *) draw_parent_class)->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(draw_parent_class))->setup) {
+        (SP_EVENT_CONTEXT_CLASS(draw_parent_class))->setup(ec);
     }
 
     dc->selection = sp_desktop_selection(dt);
@@ -261,8 +261,8 @@ gint sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) draw_parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) draw_parent_class)->root_handler(ec, event);
+        if ((SP_EVENT_CONTEXT_CLASS(draw_parent_class))->root_handler) {
+            ret = (SP_EVENT_CONTEXT_CLASS(draw_parent_class))->root_handler(ec, event);
         }
     }
 
@@ -700,7 +700,7 @@ SPDrawAnchor *spdc_test_inside(SPDrawContext *dc, Geom::Point p)
     }
 
     for (GSList *l = dc->white_anchors; l != NULL; l = l->next) {
-        SPDrawAnchor *na = sp_draw_anchor_test((SPDrawAnchor *) l->data, p, !active);
+        SPDrawAnchor *na = sp_draw_anchor_test(static_cast<SPDrawAnchor*>(l->data), p, !active);
         if ( !active && na ) {
             active = na;
         }
@@ -720,7 +720,7 @@ static void spdc_reset_white(SPDrawContext *dc)
         dc->white_curves = g_slist_remove(dc->white_curves, dc->white_curves->data);
     }
     while (dc->white_anchors) {
-        sp_draw_anchor_destroy((SPDrawAnchor *) dc->white_anchors->data);
+        sp_draw_anchor_destroy(static_cast<SPDrawAnchor*>(dc->white_anchors->data));
         dc->white_anchors = g_slist_remove(dc->white_anchors, dc->white_anchors->data);
     }
 }
@@ -767,7 +767,7 @@ static void spdc_free_colors(SPDrawContext *dc)
         dc->white_curves = g_slist_remove(dc->white_curves, dc->white_curves->data);
     }
     while (dc->white_anchors) {
-        sp_draw_anchor_destroy((SPDrawAnchor *) dc->white_anchors->data);
+        sp_draw_anchor_destroy(static_cast<SPDrawAnchor *>(dc->white_anchors->data));
         dc->white_anchors = g_slist_remove(dc->white_anchors, dc->white_anchors->data);
     }
 }

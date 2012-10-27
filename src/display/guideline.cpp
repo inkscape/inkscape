@@ -66,9 +66,9 @@ GType sp_guideline_get_type()
 
 static void sp_guideline_class_init(SPGuideLineClass *c)
 {
-    parent_class = (SPCanvasItemClass*) g_type_class_peek_parent(c);
+    parent_class = SP_CANVAS_ITEM_CLASS(g_type_class_peek_parent(c));
 
-    SPCanvasItemClass *item_class = (SPCanvasItemClass *) c;
+    SPCanvasItemClass *item_class = SP_CANVAS_ITEM_CLASS(c);
     item_class->destroy = sp_guideline_destroy;
     item_class->update = sp_guideline_update;
     item_class->render = sp_guideline_render;
@@ -191,8 +191,8 @@ static void sp_guideline_update(SPCanvasItem *item, Geom::Affine const &affine, 
 {
     SPGuideLine *gl = SP_GUIDELINE(item);
 
-    if (((SPCanvasItemClass *) parent_class)->update) {
-        ((SPCanvasItemClass *) parent_class)->update(item, affine, flags);
+    if ((SP_CANVAS_ITEM_CLASS(parent_class))->update) {
+        (SP_CANVAS_ITEM_CLASS(parent_class))->update(item, affine, flags);
     }
 
     gl->affine = affine;
