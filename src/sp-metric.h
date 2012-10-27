@@ -3,7 +3,7 @@
 
 /** Known metrics so far.  (I don't know why this doesn't include pica.) */
 enum SPMetric {
-    NONE,
+    SP_NONE,
     SP_MM,
     SP_CM,
     SP_IN,

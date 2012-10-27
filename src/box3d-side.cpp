@@ -65,8 +65,7 @@ static void box3d_side_class_init(Box3DSideClass *klass)
 {
     SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
     SPShapeClass *shape_class = reinterpret_cast<SPShapeClass *>(klass);
-
-    parent_class = (SPShapeClass *)g_type_class_ref (SP_TYPE_SHAPE);
+    parent_class = SP_SHAPE_CLASS(g_type_class_ref (SP_TYPE_SHAPE));
 
     sp_object_class->build = box3d_side_build;
     sp_object_class->write = box3d_side_write;
@@ -86,8 +85,8 @@ box3d_side_init (Box3DSide * side)
 
 static void box3d_side_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
 {
-    if (((SPObjectClass *) parent_class)->build) {
-        ((SPObjectClass *) parent_class)->build(object, document, repr);
+    if ((SP_OBJECT_CLASS(parent_class))->build) {
+        (SP_OBJECT_CLASS(parent_class))->build(object, document, repr);
     }
 
     object->readAttr( "inkscape:box3dsidetype" );
@@ -111,7 +110,7 @@ box3d_side_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::
     static_cast<SPShape *>(object)->setShape();
 
     /* Duplicate the path */
-    SPCurve const *curve = ((SPShape *) object)->_curve;
+    SPCurve const *curve = (SP_SHAPE(object))->_curve;
     //Nulls might be possible if this called iteratively
     if ( !curve ) {
         return NULL;
@@ -120,8 +119,8 @@ box3d_side_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::
     repr->setAttribute("d", d);
     g_free (d);
 
-    if (((SPObjectClass *) (parent_class))->write)
-        ((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
+    if ((SP_OBJECT_CLASS(parent_class))->write)
+        (SP_OBJECT_CLASS(parent_class))->write (object, xml_doc, repr, flags);
 
     return repr;
 }
@@ -154,8 +153,8 @@ box3d_side_set (SPObject *object, unsigned int key, const gchar *value)
             }
             break;
     default:
-        if (((SPObjectClass *) parent_class)->set)
-            ((SPObjectClass *) parent_class)->set (object, key, value);
+        if ((SP_OBJECT_CLASS(parent_class))->set)
+            (SP_OBJECT_CLASS(parent_class))->set (object, key, value);
         break;
     }
 }
@@ -173,8 +172,8 @@ box3d_side_update (SPObject *object, SPCtx *ctx, guint flags)
         static_cast<SPShape *>(object)->setShape ();
     }
 
-    if (((SPObjectClass *) parent_class)->update)
-        ((SPObjectClass *) parent_class)->update (object, ctx, flags);
+    if ((SP_OBJECT_CLASS(parent_class))->update)
+        (SP_OBJECT_CLASS(parent_class))->update (object, ctx, flags);
 }
 
 /* Create a new Box3DSide and append it to the parent box */

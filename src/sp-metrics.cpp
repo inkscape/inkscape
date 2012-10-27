@@ -37,7 +37,7 @@ sp_absolute_metric_to_metric (gdouble length_src, const SPMetric metric_src, con
   case SP_PX:
     src = PX_PER_IN;
     break;
-  case NONE:
+  case SP_NONE:
     src = 1;
     break;
   }
@@ -67,7 +67,7 @@ sp_absolute_metric_to_metric (gdouble length_src, const SPMetric metric_src, con
   case SP_PX:
     dst = PX_PER_IN;
     break;
-  case NONE:
+  case SP_NONE:
     dst = 1;
     break;
   }
