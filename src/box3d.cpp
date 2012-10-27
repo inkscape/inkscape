@@ -82,13 +82,12 @@ box3d_get_type(void)
     return type;
 }
 
-static void
-box3d_class_init(SPBox3DClass *klass)
+static void box3d_class_init(SPBox3DClass *klass)
 {
-    SPObjectClass *sp_object_class = (SPObjectClass *) klass;
-    SPItemClass *item_class = (SPItemClass *) klass;
+    SPObjectClass *sp_object_class = SP_OBJECT_CLASS(klass);
+    SPItemClass *item_class = SP_ITEM_CLASS(klass);
 
-    parent_class = (SPGroupClass *) g_type_class_ref(SP_TYPE_GROUP);
+    parent_class = SP_GROUP_CLASS(g_type_class_ref(SP_TYPE_GROUP));
 
     sp_object_class->build = box3d_build;
     sp_object_class->release = box3d_release;
@@ -110,8 +109,8 @@ box3d_init(SPBox3D *box)
 
 static void box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) (parent_class))->build) {
-        ((SPObjectClass *) (parent_class))->build(object, document, repr);
+    if ((SP_OBJECT_CLASS(parent_class))->build) {
+        (SP_OBJECT_CLASS(parent_class))->build(object, document, repr);
     }
 
     SPBox3D *box = SP_BOX3D (object);
@@ -140,7 +139,7 @@ static void box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::N
 static void
 box3d_release(SPObject *object)
 {
-    SPBox3D *box = (SPBox3D *) object;
+    SPBox3D *box = SP_BOX3D(object);
 
     if (box->persp_href) {
         g_free(box->persp_href);
@@ -173,8 +172,8 @@ box3d_release(SPObject *object)
         */
     }
 
-    if (((SPObjectClass *) parent_class)->release)
-        ((SPObjectClass *) parent_class)->release(object);
+    if ((SP_OBJECT_CLASS(parent_class))->release)
+        (SP_OBJECT_CLASS(parent_class))->release(object);
 }
 
 static void
@@ -225,8 +224,8 @@ box3d_set(SPObject *object, unsigned int key, const gchar *value)
             }
             break;
         default:
-            if (((SPObjectClass *) (parent_class))->set) {
-                ((SPObjectClass *) (parent_class))->set(object, key, value);
+            if ((SP_OBJECT_CLASS(parent_class))->set) {
+                (SP_OBJECT_CLASS(parent_class))->set(object, key, value);
             }
             break;
     }
@@ -260,8 +259,8 @@ box3d_update(SPObject *object, SPCtx *ctx, guint flags)
     }
 
     // Invoke parent method
-    if (((SPObjectClass *) (parent_class))->update)
-        ((SPObjectClass *) (parent_class))->update(object, ctx, flags);
+    if ((SP_OBJECT_CLASS(parent_class))->update)
+        (SP_OBJECT_CLASS(parent_class))->update(object, ctx, flags);
 }
 
 
@@ -307,8 +306,8 @@ static Inkscape::XML::Node * box3d_write(SPObject *object, Inkscape::XML::Docume
         box->save_corner7 = box->orig_corner7;
     }
 
-    if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
+    if ((SP_OBJECT_CLASS(parent_class))->write) {
+        (SP_OBJECT_CLASS(parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -684,7 +683,7 @@ box3d_half_line_crosses_joining_line (Geom::Point const &A, Geom::Point const &B
     {
         inters = Geom::intersection(lineAB, lineCD);
     }
-    catch (Geom::InfiniteSolutions e)
+    catch (Geom::InfiniteSolutions& e)
     {
         // We're probably dealing with parallel lines, so they don't really cross
         return false;
@@ -1078,6 +1077,8 @@ box3d_recompute_z_orders (SPBox3D *box) {
             central_axis = Box3D::Z;
         }
 
+        // FIXME: At present, this is not used.  Why is it calculated?
+        /*
         unsigned int central_corner = 3 ^ central_axis;
         if (central_axis == Box3D::Z) {
             central_corner = central_corner ^ Box3D::XYZ;
@@ -1085,6 +1086,7 @@ box3d_recompute_z_orders (SPBox3D *box) {
         if (box3d_XY_axes_are_swapped(box)) {
             central_corner = central_corner ^ Box3D::XYZ;
         }
+        */
 
         Geom::Point c1(box3d_get_corner_screen(box, 1, false));
         Geom::Point c2(box3d_get_corner_screen(box, 2, false));
