@@ -13,9 +13,13 @@
   * to the right). The x-axis will always have an angle between 0 and 90 degrees.
   */
  
-#include "display/canvas-axonomgrid.h"
 
+#include <gtkmm/box.h>
+#include <gtkmm/label.h>
+#include <gtkmm/table.h>
 #include <glibmm/i18n.h>
+
+#include "display/canvas-axonomgrid.h"
 
 #include "ui/widget/registered-widget.h"
 #include "desktop.h"
@@ -36,9 +40,6 @@
 #include "round.h"
 #include "helper/units.h"
 
-#include <gtkmm/box.h>
-#include <gtkmm/label.h>
-#include <gtkmm/table.h>
 
 enum Dim3 { X=0, Y, Z };
 

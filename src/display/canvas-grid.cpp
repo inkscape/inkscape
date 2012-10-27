@@ -14,6 +14,9 @@
  */
 
 #include <glibmm/i18n.h>
+#include <gtkmm/box.h>
+#include <gtkmm/label.h>
+#include <gtkmm/table.h>
 
 #include "ui/widget/registered-widget.h"
 #include "desktop.h"
@@ -36,10 +39,6 @@
 #include "xml/node-event-vector.h"
 #include "verbs.h"
 #include "display/sp-canvas.h"
-
-#include <gtkmm/box.h>
-#include <gtkmm/label.h>
-#include <gtkmm/table.h>
 
 using Inkscape::DocumentUndo;
 
