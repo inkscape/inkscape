@@ -119,7 +119,7 @@ SVGTableEntry interfaceTable[] =
     { "SVGUnitTypes",                 SVG_UNIT_TYPES                  },
     { "SVGURIReference",              SVG_URI_REFERENCE               },
     { "SVGViewSpec",                  SVG_VIEW_SPEC                   },
-    { "SVGZoomAndPan",                SVG_ZOOM_AND_PAN                }
+    { "SVGZoomAndPan",                static_cast<int>(SVG_ZOOM_AND_PAN)}
 };
 
 

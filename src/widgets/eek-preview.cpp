@@ -229,9 +229,14 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
     GtkAllocation allocation;
     gtk_widget_get_allocation(widget, &allocation);
     EekPreview* preview = EEK_PREVIEW(widget);
-    GdkColor fg = { 0, preview->_r, preview->_g, preview->_b };
-	gint insetTop = 0, insetBottom = 0;
-	gint insetLeft = 0, insetRight = 0;
+    
+    GdkColor fg = { 0,
+        static_cast<guint16>(preview->_r),
+        static_cast<guint16>(preview->_g),
+        static_cast<guint16>(preview->_b)};
+
+    gint insetTop = 0, insetBottom = 0;
+    gint insetLeft = 0, insetRight = 0;
 
     if (preview->_border == BORDER_SOLID) {
         insetTop = 1;

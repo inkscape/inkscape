@@ -639,9 +639,9 @@ bool ColorProfile::GamutCheck(SPColor color)
 
     cmsUInt8Number outofgamut = 0;
     guchar check_color[4] = {
-        SP_RGBA32_R_U(val),
-        SP_RGBA32_G_U(val),
-        SP_RGBA32_B_U(val),
+        static_cast<guchar>(SP_RGBA32_R_U(val)),
+        static_cast<guchar>(SP_RGBA32_G_U(val)),
+        static_cast<guchar>(SP_RGBA32_B_U(val)),
         255};
     cmsDoTransform(ColorProfile::getTransfGamutCheck(), &check_color, &outofgamut, 1);
 

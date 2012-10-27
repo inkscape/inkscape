@@ -510,9 +510,9 @@ void ColorICCSelector::_switchToProfile( gchar const* name )
                 if ( trans ) {
                     guint32 val = _color.toRGBA32(0);
                     guchar pre[4] = {
-                        SP_RGBA32_R_U(val),
-                        SP_RGBA32_G_U(val),
-                        SP_RGBA32_B_U(val),
+                        static_cast<guchar>(SP_RGBA32_R_U(val)),
+                        static_cast<guchar>(SP_RGBA32_G_U(val)),
+                        static_cast<guchar>(SP_RGBA32_B_U(val)),
                         255};
 #ifdef DEBUG_LCMS
                     g_message("Shoving in [%02x] [%02x] [%02x]", pre[0], pre[1], pre[2]);

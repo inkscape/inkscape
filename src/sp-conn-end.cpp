@@ -152,7 +152,7 @@ sp_conn_get_route_and_redraw(SPPath *const path,
     // Set sensible values incase there the connector ends are not
     // attached to any shapes.
     Geom::PathVector conn_pv = path->_curve->get_pathvector();
-    double endPos[2] = { 0, conn_pv[0].size() };
+    double endPos[2] = { 0.0, static_cast<double>(conn_pv[0].size()) };
 
     SPConnEnd** _connEnd = path->connEndPair.getConnEnds();
     for (unsigned h = 0; h < 2; ++h) {
