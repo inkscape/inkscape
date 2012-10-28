@@ -639,16 +639,21 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool page
 
     bool ret = ctx->setupSurface(ctx->_width, ctx->_height);
 
-    if (ret && !pageBoundingBox)
-    {
-        double high = doc->getHeight();
-        if (ctx->_vector_based_target)
-            high *= PT_PER_PX;
+    if (ret) {
+        if (pageBoundingBox) {
+            // translate to set bleed/margin
+            Geom::Affine tp( Geom::Translate( bleedmargin_px, bleedmargin_px ) );
+            ctx->transform(tp);
+        } else {
+            double high = doc->getHeight();
+            if (ctx->_vector_based_target)
+                high *= PT_PER_PX;
 
-        /// @fixme hardcoded dt2doc transform?
-        Geom::Affine tp(Geom::Translate(-d.left() * (ctx->_vector_based_target ? PX_PER_PT : 1.0),
-                                        (d.bottom() - high) * (ctx->_vector_based_target ? PX_PER_PT : 1.0)));
-        ctx->transform(tp);
+            // this transform translates the export drawing to a virtual page (0,0)-(width,height)
+            Geom::Affine tp(Geom::Translate(-d.left() * (ctx->_vector_based_target ? PX_PER_PT : 1.0),
+                                            (d.bottom() - high) * (ctx->_vector_based_target ? PX_PER_PT : 1.0)));
+            ctx->transform(tp);
+        }
     }
 
     return ret;
