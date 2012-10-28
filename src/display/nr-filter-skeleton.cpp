@@ -42,7 +42,8 @@ FilterSkeleton::~FilterSkeleton()
 void FilterSkeleton::render_cairo(FilterSlot &slot) {
     cairo_surface_t *in = slot.getcairo(_input);
     cairo_surface_t *out = ink_cairo_surface_create_identical(in);
-    cairo_t *ct = cairo_create(out);
+
+//    cairo_t *ct = cairo_create(out);
 
 //    cairo_set_source_surface(ct, in, offset[X], offset[Y]);
 //    cairo_paint(ct);

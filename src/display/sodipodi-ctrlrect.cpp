@@ -61,9 +61,9 @@ GType sp_ctrlrect_get_type()
 
 static void sp_ctrlrect_class_init(SPCtrlRectClass *c)
 {
-    SPCanvasItemClass *item_class = (SPCanvasItemClass *) c;
+    SPCanvasItemClass *item_class = SP_CANVAS_ITEM_CLASS(c);
 
-    parent_class = (SPCanvasItemClass*) g_type_class_peek_parent(c);
+    parent_class = SP_CANVAS_ITEM_CLASS(g_type_class_peek_parent(c));
 
     item_class->destroy = sp_ctrlrect_destroy;
     item_class->update = sp_ctrlrect_update;
@@ -119,8 +119,6 @@ void CtrlRect::render(SPCanvasBuf *buf)
     using Geom::X;
     using Geom::Y;
 
-    static double const dashes[2] = {4.0, 4.0};
-
     if (!_area) {
         return;
     }
@@ -129,6 +127,7 @@ void CtrlRect::render(SPCanvasBuf *buf)
                                  area[X].max() + _shadow_size, area[Y].max() + _shadow_size);
     if ( area_w_shadow.intersects(buf->rect) )
     {
+        static double const dashes[2] = {4.0, 4.0};
         cairo_save(buf->ct);
         cairo_translate(buf->ct, -buf->rect.left(), -buf->rect.top());
         cairo_set_line_width(buf->ct, 1);
@@ -161,8 +160,8 @@ void CtrlRect::update(Geom::Affine const &affine, unsigned int flags)
     using Geom::X;
     using Geom::Y;
 
-    if (((SPCanvasItemClass *) parent_class)->update) {
-        ((SPCanvasItemClass *) parent_class)->update(this, affine, flags);
+    if ((SP_CANVAS_ITEM_CLASS(parent_class))->update) {
+        (SP_CANVAS_ITEM_CLASS(parent_class))->update(this, affine, flags);
     }
 
     sp_canvas_item_reset_bounds(this);

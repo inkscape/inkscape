@@ -99,8 +99,10 @@ void FilterImage::render_cairo(FilterSlot &slot)
         Geom::Rect area = *optarea;
         Geom::Affine user2pb = slot.get_units().get_matrix_user2pb();
 
+        /* FIXME: These variables are currently unused.  Why were they calculated?
         double scaleX = feImageWidth / area.width();
         double scaleY = feImageHeight / area.height();
+        */
 
         Geom::Rect sa = slot.get_slot_area();
         cairo_surface_t *out = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,

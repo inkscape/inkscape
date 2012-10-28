@@ -63,10 +63,10 @@ sp_ctrl_get_type (void)
 static void
 sp_ctrl_class_init (SPCtrlClass *klass)
 {
-    SPCanvasItemClass *item_class = (SPCanvasItemClass *) klass;
+    SPCanvasItemClass *item_class = SP_CANVAS_ITEM_CLASS(klass);
     GObjectClass *g_object_class = (GObjectClass *) klass;
 
-    parent_class = (SPCanvasItemClass *)g_type_class_peek_parent (klass);
+    parent_class = SP_CANVAS_ITEM_CLASS(g_type_class_peek_parent (klass));
 
     g_object_class->set_property = sp_ctrl_set_property;
     g_object_class->get_property = sp_ctrl_get_property;
@@ -287,8 +287,8 @@ sp_ctrl_update (SPCanvasItem *item, Geom::Affine const &affine, unsigned int fla
 
     ctrl = SP_CTRL (item);
 
-    if (((SPCanvasItemClass *) parent_class)->update)
-        (* ((SPCanvasItemClass *) parent_class)->update) (item, affine, flags);
+    if ((SP_CANVAS_ITEM_CLASS(parent_class))->update)
+        (* (SP_CANVAS_ITEM_CLASS(parent_class))->update) (item, affine, flags);
 
     sp_canvas_item_reset_bounds (item);
 
