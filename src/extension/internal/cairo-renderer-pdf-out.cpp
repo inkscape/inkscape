@@ -39,6 +39,8 @@
 #include <2geom/affine.h>
 #include "document.h"
 
+#include "unit-constants.h"
+
 namespace Inkscape {
 namespace Extension {
 namespace Internal {
@@ -57,7 +59,7 @@ bool CairoRendererPdfOutput::check(Inkscape::Extension::Extension * /*module*/)
 static bool
 pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level,
                             bool texttopath, bool omittext, bool filtertobitmap, int resolution,
-                            const gchar * const exportId, bool exportDrawing, bool exportCanvas)
+                            const gchar * const exportId, bool exportDrawing, bool exportCanvas, float bleedmargin_px)
 {
     doc->ensureUpToDate();
 
@@ -99,7 +101,7 @@ pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int
     bool ret = ctx->setPdfTarget (filename);
     if(ret) {
         /* Render document */
-        ret = renderer->setupDocument(ctx, doc, pageBoundingBox, base);
+        ret = renderer->setupDocument(ctx, doc, pageBoundingBox, bleedmargin_px, base);
         if (ret) {
             renderer->renderItem(ctx, base);
             ret = ctx->finish();
@@ -191,8 +193,15 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
     } catch(...) {
         g_warning("Parameter <area> might not exist");
     }
-
     bool new_exportDrawing  = !new_exportCanvas;
+
+    float new_bleedmargin_px = 0.;
+    try {
+        new_bleedmargin_px = mod->get_param_float("bleed") * PX_PER_MM;
+    }
+    catch(...) {
+        g_warning("Parameter <bleed> might not exist");
+    }
 
     // Create PDF file
     {
@@ -200,7 +209,7 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
         final_name = g_strdup_printf("> %s", filename);
         ret = pdf_render_document_to_file(doc, final_name, level,
                                           new_textToPath, new_textToLaTeX, new_blurToBitmap, new_bitmapResolution,
-                                          new_exportId, new_exportDrawing, new_exportCanvas);
+                                          new_exportId, new_exportDrawing, new_exportCanvas, new_bleedmargin_px);
         g_free(final_name);
 
         if (!ret)
@@ -209,7 +218,7 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
 
     // Create LaTeX file (if requested)
     if (new_textToLaTeX) {
-        ret = latex_render_document_text_to_file(doc, filename, new_exportId, new_exportDrawing, new_exportCanvas, true);
+        ret = latex_render_document_text_to_file(doc, filename, new_exportId, new_exportDrawing, new_exportCanvas, new_bleedmargin_px, true);
 
         if (!ret)
             throw Inkscape::Extension::Output::save_failed();
@@ -246,6 +255,7 @@ CairoRendererPdfOutput::init (void)
                 "<option value=\"page\">" N_("Use document's page size") "</option>"
                 "<option value=\"drawing\">" N_("Use exported object's size") "</option>"
             "</param>"
+            "<param name=\"bleed\" gui-text=\"" N_("Bleed/margin (mm)") "\" type=\"float\" min=\"-10000\" max=\"10000\">0</param>\n"
             "<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID:") "\" type=\"string\"></param>\n"
             "<output>\n"
                 "<extension>.pdf</extension>\n"

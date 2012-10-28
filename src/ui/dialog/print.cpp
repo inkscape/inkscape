@@ -138,7 +138,7 @@ static void draw_page(
 #endif             
         bool ret = ctx->setSurfaceTarget (surface, true, &ctm);
         if (ret) {
-            ret = renderer.setupDocument (ctx, junk->_doc, TRUE, NULL);
+            ret = renderer.setupDocument (ctx, junk->_doc, TRUE, 0., NULL);
             if (ret) {
                 renderer.renderItem(ctx, junk->_base);
                 ret = ctx->finish();

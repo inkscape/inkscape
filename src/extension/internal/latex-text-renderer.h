@@ -29,7 +29,7 @@ namespace Extension {
 namespace Internal {
 
 bool latex_render_document_text_to_file(SPDocument *doc, gchar const *filename,
-                                        const gchar * const exportId, bool exportDrawing, bool exportCanvas,
+                                        const gchar * const exportId, bool exportDrawing, bool exportCanvas, float bleedmargin_px,
                                         bool pdflatex);
 
 class LaTeXTextRenderer {
@@ -41,7 +41,7 @@ public:
 
     /** Initializes the LaTeXTextRenderer according to the specified
     SPDocument. Important to set the boundingbox to the pdf boundingbox */
-    bool setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *base);
+    bool setupDocument(SPDocument *doc, bool pageBoundingBox, float bleedmargin_px, SPItem *base);
 
     /** Traverses the object tree and invokes the render methods. */
     void renderItem(SPItem *item);

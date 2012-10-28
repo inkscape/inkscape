@@ -56,7 +56,7 @@ namespace Internal {
  */
 bool
 latex_render_document_text_to_file( SPDocument *doc, gchar const *filename,
-                                    const gchar * const exportId, bool exportDrawing, bool exportCanvas,
+                                    const gchar * const exportId, bool exportDrawing, bool exportCanvas, float bleedmargin_px,
                                     bool pdflatex)
 {
     doc->ensureUpToDate();
@@ -84,7 +84,7 @@ latex_render_document_text_to_file( SPDocument *doc, gchar const *filename,
     bool ret = renderer->setTargetFile(filename);
     if (ret) {
         /* Render document */
-        bool ret = renderer->setupDocument(doc, pageBoundingBox, base);
+        bool ret = renderer->setupDocument(doc, pageBoundingBox, bleedmargin_px, base);
         if (ret) {
             renderer->renderItem(base);
         }
@@ -569,7 +569,7 @@ LaTeXTextRenderer::renderItem(SPItem *item)
 }
 
 bool
-LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *base)
+LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, float bleedmargin_px, SPItem *base)
 {
 // The boundingbox calculation here should be exactly the same as the one by CairoRenderer::setupDocument !
 
@@ -588,6 +588,7 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, SPItem *
         }
         d = *bbox;
     }
+    d.expandBy(bleedmargin_px);
 
     // scale all coordinates, such that the width of the image is 1, this is convenient for scaling the image in LaTeX
     double scale = 1/(d.width());

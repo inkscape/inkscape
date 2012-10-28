@@ -604,7 +604,7 @@ void CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
 }
 
 bool
-CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool pageBoundingBox, SPItem *base)
+CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool pageBoundingBox, float bleedmargin_px, SPItem *base)
 {
 // PLEASE note when making changes to the boundingbox and transform calculation, corresponding changes should be made to PDFLaTeXRenderer::setupDocument !!!
 
@@ -625,6 +625,7 @@ CairoRenderer::setupDocument(CairoRenderContext *ctx, SPDocument *doc, bool page
         }
         d = *bbox;
     }
+    d.expandBy(bleedmargin_px);
 
     if (ctx->_vector_based_target) {
         // convert from px to pt
