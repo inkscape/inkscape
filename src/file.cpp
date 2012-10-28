@@ -675,7 +675,12 @@ file_save(Gtk::Window &parentWindow, SPDocument *doc, const Glib::ustring &uri,
     }
 
     SP_ACTIVE_DESKTOP->event_log->rememberFileSave();
-    Glib::ustring msg = Glib::ustring::format(_("Document saved."), " ", doc->getURI());
+    Glib::ustring msg;
+    if (doc->getURI() == NULL) {
+        msg = Glib::ustring::format(_("Document saved."));
+    } else {
+        msg = Glib::ustring::format(_("Document saved."), " ", doc->getURI());
+    }
     SP_ACTIVE_DESKTOP->messageStack()->flash(Inkscape::NORMAL_MESSAGE, msg.c_str());
     return true;
 }
