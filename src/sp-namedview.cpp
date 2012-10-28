@@ -790,7 +790,7 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
 {
     SPNamedView *nv = desktop->namedview;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool geometry_from_file = prefs->getBool("/options/savewindowgeometry/value");
+    bool geometry_from_file = (1 == prefs->getInt("/options/savewindowgeometry/value", 0));
     bool show_dialogs = TRUE;
 
     // restore window size and position stored with the document
@@ -888,7 +888,7 @@ void sp_namedview_update_layers_from_document (SPDesktop *desktop)
 void sp_namedview_document_from_window(SPDesktop *desktop)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    bool save_geometry_in_file = prefs->getBool("/options/savewindowgeometry/value", 0);
+    bool save_geometry_in_file = (1 == prefs->getInt("/options/savewindowgeometry/value", 0));
     bool save_viewport_in_file = prefs->getBool("/options/savedocviewport/value", true);
     Inkscape::XML::Node *view = desktop->namedview->getRepr();
     Geom::Rect const r = desktop->get_display_area();
