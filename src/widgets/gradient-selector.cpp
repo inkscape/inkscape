@@ -374,7 +374,10 @@ bool SPGradientSelector::_checkForSelected(const Gtk::TreePath &path, const Gtk:
     {
         treeview->scroll_to_row(path, 0.5);
         Glib::RefPtr<Gtk::TreeSelection> select = treeview->get_selection();
+        bool wasBlocked = blocked;
+        blocked = true;
         select->select(iter);
+        blocked = wasBlocked;
         found = true;
     }
 
