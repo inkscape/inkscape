@@ -199,6 +199,7 @@ SPObject *get_stock_item(gchar const *urn, gboolean stock)
         SPDocument *doc = sp_desktop_document(desktop);
         SPDefs *defs = doc->getDefs();
         if (!defs) {
+            g_free(base);
             return NULL;
         }
         SPObject *object = NULL;

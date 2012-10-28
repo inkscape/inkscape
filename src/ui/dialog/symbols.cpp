@@ -418,6 +418,8 @@ void SymbolsDialog::draw_symbols( SPDocument* symbolDocument ) {
 	(*row)[columns->symbol_image] = pixbuf;
     }
   }
+
+  delete columns;
 }
 
 /*
