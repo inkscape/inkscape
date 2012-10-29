@@ -434,13 +434,12 @@ StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw, SPMa
 
         item->requestModified(SP_OBJECT_MODIFIED_FLAG);
         item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
+
+        DocumentUndo::done(document, SP_VERB_DIALOG_FILL_STROKE, _("Set markers"));
     }
 
     sp_repr_css_attr_unref(css);
     css = 0;
-
-    DocumentUndo::done(document, SP_VERB_DIALOG_FILL_STROKE,
-                       _("Set markers"));
 
     spw->update = false;
 
