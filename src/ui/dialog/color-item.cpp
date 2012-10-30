@@ -35,6 +35,7 @@
 #include "xml/node.h"
 #include "xml/repr.h"
 #include "verbs.h"
+#include "widgets/gradient-vector.h"
 
 #include "color.h" // for SP_RGBA32_U_COMPOSE
 
@@ -356,21 +357,20 @@ void ColorItem::setGradient(SPGradient *grad)
         // TODO regen and push to listeners
     }
 
-    setName( _grad->defaultLabel() );
+    setName( gr_prepare_label(_grad) );
 }
 
 void ColorItem::setName(const Glib::ustring name)
 {
-    def.descr = name;
+    //def.descr = name;
 
     for ( std::vector<Gtk::Widget*>::iterator it = _previews.begin(); it != _previews.end(); ++it ) {
         Gtk::Widget* widget = *it;
         if ( IS_EEK_PREVIEW(widget->gobj()) ) {
-            EekPreview * preview = EEK_PREVIEW(widget->gobj());
-            gtk_widget_set_tooltip_text(GTK_WIDGET(preview), def.descr.c_str());
+            gtk_widget_set_tooltip_text(GTK_WIDGET(widget->gobj()), name.c_str());
         }
         else if ( GTK_IS_LABEL(widget->gobj()) ) {
-            gtk_label_set_text(GTK_LABEL(widget->gobj()), def.descr.c_str());
+            gtk_label_set_text(GTK_LABEL(widget->gobj()), name.c_str());
         }
     }
 }
