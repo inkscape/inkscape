@@ -766,7 +766,9 @@ void CGroup::_showChildren (Inkscape::Drawing &drawing, Inkscape::DrawingItem *a
         if (SP_IS_ITEM (o)) {
             child = SP_ITEM (o);
             ac = child->invoke_show (drawing, key, flags);
-            ai->appendChild(ac);
+            if (ac) {
+                ai->appendChild(ac);
+            }
         }
         l = g_slist_remove (l, o);
     }
