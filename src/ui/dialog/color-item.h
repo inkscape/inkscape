@@ -60,6 +60,7 @@ public:
     void setGradient(SPGradient *grad);
     SPGradient * getGradient() const { return _grad; }
     void setPattern(cairo_pattern_t *pattern);
+    void setName(const Glib::ustring name);
 
     void setState( bool fill, bool stroke );
     bool isFill() { return _isFill; }

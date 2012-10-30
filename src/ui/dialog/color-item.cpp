@@ -355,6 +355,24 @@ void ColorItem::setGradient(SPGradient *grad)
         _grad = grad;
         // TODO regen and push to listeners
     }
+
+    setName( _grad->defaultLabel() );
+}
+
+void ColorItem::setName(const Glib::ustring name)
+{
+    def.descr = name;
+
+    for ( std::vector<Gtk::Widget*>::iterator it = _previews.begin(); it != _previews.end(); ++it ) {
+        Gtk::Widget* widget = *it;
+        if ( IS_EEK_PREVIEW(widget->gobj()) ) {
+            EekPreview * preview = EEK_PREVIEW(widget->gobj());
+            gtk_widget_set_tooltip_text(GTK_WIDGET(preview), def.descr.c_str());
+        }
+        else if ( GTK_IS_LABEL(widget->gobj()) ) {
+            gtk_label_set_text(GTK_LABEL(widget->gobj()), def.descr.c_str());
+        }
+    }
 }
 
 void ColorItem::setPattern(cairo_pattern_t *pattern)
@@ -366,6 +384,7 @@ void ColorItem::setPattern(cairo_pattern_t *pattern)
         cairo_pattern_destroy(_pattern);
     }
     _pattern = pattern;
+
     _updatePreviews();
 }
 
