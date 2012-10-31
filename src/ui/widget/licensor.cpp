@@ -44,7 +44,7 @@ const struct rdf_license_t _other_license =
 
 class LicenseItem : public Gtk::RadioButton {
 public:
-    LicenseItem (struct rdf_license_t const* license, EntityEntry* entity, Registry &wr);
+    LicenseItem (struct rdf_license_t const* license, EntityEntry* entity, Registry &wr, Gtk::RadioButtonGroup *group);
 protected:
     void on_toggled();
     struct rdf_license_t const *_lic;
@@ -52,13 +52,12 @@ protected:
     Registry                   &_wr;
 };
 
-LicenseItem::LicenseItem (struct rdf_license_t const* license, EntityEntry* entity, Registry &wr)
+LicenseItem::LicenseItem (struct rdf_license_t const* license, EntityEntry* entity, Registry &wr, Gtk::RadioButtonGroup *group)
 : Gtk::RadioButton(_(license->name)), _lic(license), _eep(entity), _wr(wr)
 {
-    static Gtk::RadioButtonGroup group = get_group();
-    static bool first = true;
-    if (first) first = false;
-    else       set_group (group);
+    if (group) {
+        set_group (*group);
+    }
 }
 
 /// \pre it is assumed that the license URI entry is a Gtk::Entry
@@ -97,18 +96,19 @@ void Licensor::init (Registry& wr)
 
     LicenseItem *i;
     wr.setUpdating (true);
-    i = manage (new LicenseItem (&_proprietary_license, _eentry, wr));
+    i = manage (new LicenseItem (&_proprietary_license, _eentry, wr, NULL));
+    Gtk::RadioButtonGroup group = i->get_group();
     add (*i);
     LicenseItem *pd = i;
 
     for (struct rdf_license_t * license = rdf_licenses;
              license && license->name;
              license++) {
-        i = manage (new LicenseItem (license, _eentry, wr));
+        i = manage (new LicenseItem (license, _eentry, wr, &group));
         add(*i);
     }
     // add Other at the end before the URI field for the confused ppl.
-    LicenseItem *io = manage (new LicenseItem (&_other_license, _eentry, wr));
+    LicenseItem *io = manage (new LicenseItem (&_other_license, _eentry, wr, &group));
     add (*io);
 
     pd->set_active();

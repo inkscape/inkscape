@@ -150,6 +150,7 @@ DocumentProperties::DocumentProperties()
     _notebook.append_page(_page_metadata1, _("Metadata"));
     _notebook.append_page(_page_metadata2, _("License"));
 
+    _wr.setUpdating (true);
     build_page();
     build_guides();
     build_gridspage();
@@ -159,6 +160,7 @@ DocumentProperties::DocumentProperties()
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     build_scripting();
     build_metadata();
+    _wr.setUpdating (false);
 
     _grids_button_new.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onNewGrid));
     _grids_button_remove.signal_clicked().connect(sigc::mem_fun(*this, &DocumentProperties::onRemoveGrid));

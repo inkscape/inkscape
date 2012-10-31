@@ -245,12 +245,14 @@ PageSizer::PageSizer(Registry & _wr)
       _widgetRegistry(&_wr)
 {
     // set precision of scalar entry boxes
+    _wr.setUpdating (true);
     _dimensionWidth.setDigits(5);
     _dimensionHeight.setDigits(5);
     _marginTop.setDigits(5);
     _marginLeft.setDigits(5);
     _marginRight.setDigits(5);
     _marginBottom.setDigits(5);
+    _wr.setUpdating (false);
 
     //# Set up the Paper Size combo box
     _paperSizeListStore = Gtk::ListStore::create(_paperSizeListColumns);
@@ -315,11 +317,13 @@ PageSizer::PageSizer(Registry & _wr)
     // Setting default custom unit to document unit
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
     SPNamedView *nv = sp_desktop_namedview(dt);
+    _wr.setUpdating (true);
     if (nv->units) {
         _dimensionUnits.setUnit(nv->units);
     } else if (nv->doc_units) {
         _dimensionUnits.setUnit(nv->doc_units);
     }
+    _wr.setUpdating (false);
     
     //## Set up custom size frame
     _customFrame.set_label(_("Custom size"));

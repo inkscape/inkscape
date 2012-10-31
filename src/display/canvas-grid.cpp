@@ -350,12 +350,13 @@ CanvasGrid::newWidget()
     _rcb_enabled->setSlaveWidgets(slaves);
 
     // set widget values
+    _wr.setUpdating (true);
     _rcb_visible->setActive(visible);
     if (snapper != NULL) {
         _rcb_enabled->setActive(snapper->getEnabled());
         _rcb_snap_visible_only->setActive(snapper->getSnapVisibleOnly());
     }
-
+    _wr.setUpdating (false);
     return dynamic_cast<Gtk::Widget *> (vbox);
 }
 
@@ -734,7 +735,6 @@ _wr.setUpdating (true);
                 new Inkscape::UI::Widget::RegisteredCheckButton( _("_Show dots instead of lines"),
                        _("If set, displays dots at gridpoints instead of gridlines"),
                         "dotted", _wr, false, repr, doc) );
-_wr.setUpdating (false);
 
     Gtk::Widget const *const widget_array[] = {
         0,                  _rumg,
@@ -773,6 +773,8 @@ _wr.setUpdating (false);
     _rsi->setValue (empspacing);
 
     _rcb_dotted->setActive(render_dotted);
+
+    _wr.setUpdating (false);
 
     _rsu_ox->setProgrammatically = false;
     _rsu_oy->setProgrammatically = false;
