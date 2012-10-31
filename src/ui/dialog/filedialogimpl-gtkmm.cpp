@@ -141,13 +141,12 @@ bool SVGPreview::setDocument(SPDocument *doc)
 
     //This should remove it from the box, and free resources
     if (viewerGtk)
-        gtk_widget_destroy(viewerGtk);
+        Gtk::Container::remove(*viewerGtk);
 
-    viewerGtk  = sp_svg_view_widget_new(doc);
-    GtkWidget *vbox = (GtkWidget *)gobj();
-    gtk_box_pack_start(GTK_BOX(vbox), viewerGtk, TRUE, TRUE, 0);
-    gtk_widget_show(viewerGtk);
-
+    viewerGtk  = Glib::wrap(sp_svg_view_widget_new(doc));
+    Gtk::VBox *vbox = Glib::wrap(gobj());
+    vbox->pack_start(*viewerGtk,  TRUE, TRUE, 0);
+    viewerGtk->show();
     return true;
 }
 

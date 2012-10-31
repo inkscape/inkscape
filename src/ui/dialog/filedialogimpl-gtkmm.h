@@ -121,7 +121,7 @@ private:
     /**
      * The sp_svg_view widget
      */
-    GtkWidget *viewerGtk;
+    Gtk::Widget *viewerGtk;
 
     /**
      * are we currently showing the "no preview" image?
