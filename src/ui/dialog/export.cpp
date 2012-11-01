@@ -296,7 +296,7 @@ Export::Export (void) :
     batch_box.pack_start(batch_export, false, false);
 
     hide_export.set_sensitive(true);
-    hide_export.set_active (true);
+    hide_export.set_active (prefs->getBool("/dialogs/export/hideexceptselected/value", false));
     hide_box.pack_start(hide_export, false, false);
 
 
@@ -328,6 +328,7 @@ Export::Export (void) :
     browse_button.signal_clicked().connect(sigc::mem_fun(*this, &Export::onBrowse));
     batch_export.signal_clicked().connect(sigc::mem_fun(*this, &Export::onBatchClicked));
     export_button.signal_clicked().connect(sigc::mem_fun(*this, &Export::onExport));
+    hide_export.signal_clicked().connect(sigc::mem_fun(*this, &Export::onHideExceptSelected));
 
     desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &Export::setTargetDesktop) );
     deskTrack.connect(GTK_WIDGET(gobj()));
@@ -547,7 +548,7 @@ void Export::updateCheckbuttons ()
         batch_export.set_sensitive(false);
     }
 
-    hide_export.set_sensitive (num > 0 && current_key == SELECTION_SELECTION);
+    //hide_export.set_sensitive (num > 0);
 }
 
 inline void Export::findDefaultSelection()
@@ -786,8 +787,6 @@ void Export::onAreaToggled ()
         }
     }
 
-    hide_export.set_sensitive (key == SELECTION_SELECTION);
-
     return;
 } // end of sp_export_area_toggled()
 
@@ -917,6 +916,11 @@ Glib::ustring Export::absolutize_path_from_document_location (SPDocument *doc, c
         path = filename;
     }
     return path;
+}
+
+void Export::onHideExceptSelected ()
+{
+    prefs->setBool("/dialogs/export/hideexceptselected/value", hide_export.get_active());
 }
 
 /// Called when export button is clicked

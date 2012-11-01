@@ -178,6 +178,11 @@ private:
 #endif
 
     /**
+     * Hide except selected callback
+     */
+    void onHideExceptSelected ();
+
+    /**
      * Area width value changed callback
      */
     void onAreaWidthChange   ();
