@@ -197,6 +197,10 @@ void ink_node_tool_dispose(GObject *object)
 
     nt->enableGrDrag(false);
 
+    if (nt->flash_tempitem) {
+        nt->desktop->remove_temporary_canvasitem(nt->flash_tempitem);
+    }
+
     nt->_selection_changed_connection.disconnect();
     nt->_selection_modified_connection.disconnect();
     nt->_mouseover_changed_connection.disconnect();
