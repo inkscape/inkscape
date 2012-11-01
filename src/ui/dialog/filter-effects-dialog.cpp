@@ -1193,6 +1193,17 @@ void FilterEffectsDialog::FilterModifier::setTargetDesktop(SPDesktop *desktop)
     }
 }
 
+// When the document changes, update connection to resources
+void FilterEffectsDialog::FilterModifier::on_document_replaced(SPDesktop *desktop, SPDocument *document)
+{
+    if (_resource_changed) {
+        _resource_changed.disconnect();
+    }
+    _resource_changed = document->connectResourcesChanged("filter",sigc::mem_fun(*this, &FilterModifier::update_filters));
+
+    update_filters();
+}
+
 // When the selection changes, show the active filter(s) in the dialog
 void FilterEffectsDialog::FilterModifier::on_change_selection()
 {

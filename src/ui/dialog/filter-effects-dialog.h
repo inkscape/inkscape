@@ -77,12 +77,8 @@ private:
         };
 
         void setTargetDesktop(SPDesktop *desktop);
-
-        void on_document_replaced(SPDesktop*, SPDocument*)
-        {
-            update_filters();
-        }
        
+        void on_document_replaced(SPDesktop *desktop, SPDocument *document);
         void on_change_selection();
         void on_modified_selection( guint flags );
         
