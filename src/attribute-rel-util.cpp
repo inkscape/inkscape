@@ -76,7 +76,14 @@ void sp_attribute_clean_recursive(Node *repr, unsigned int flags) {
   }
   
   for(Node *child=repr->firstChild() ; child ; child = child->next()) {
-    sp_attribute_clean_recursive( child, flags );
+
+    // Don't remove default css values if element is in <defs> or is a <symbol>
+    Glib::ustring element = child->name();
+    unsigned int flags_temp = flags;
+    if( element.compare( "svg:defs" ) == 0 || element.compare( "svg:symbol" ) == 0 ) {
+      flags_temp &= ~(SP_ATTR_CLEAN_DEFAULT_WARN|SP_ATTR_CLEAN_DEFAULT_REMOVE);
+    }
+    sp_attribute_clean_recursive( child, flags_temp );
   }
 }
 
