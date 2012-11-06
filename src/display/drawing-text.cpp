@@ -162,7 +162,7 @@ unsigned DrawingText::_renderItem(DrawingContext &ct, Geom::IntRect const &/*are
         guint32 rgba = _drawing.outlinecolor;
         Inkscape::DrawingContext::Save save(ct);
         ct.setSource(rgba);
-        ct.setTolerance(1.25); // low quality, but good enough for outline mode
+        ct.setTolerance(0.5); // low quality, but good enough for outline mode
 
         for (ChildrenList::iterator i = _children.begin(); i != _children.end(); ++i) {
             DrawingGlyphs *g = dynamic_cast<DrawingGlyphs *>(&*i);

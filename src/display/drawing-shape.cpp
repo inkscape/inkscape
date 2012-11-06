@@ -167,7 +167,7 @@ DrawingShape::_renderItem(DrawingContext &ct, Geom::IntRect const &area, unsigne
         {   Inkscape::DrawingContext::Save save(ct);
             ct.setSource(rgba);
             ct.setLineWidth(0.5);
-            ct.setTolerance(1.25);
+            ct.setTolerance(0.5);
             ct.stroke();
         }
     } else {
