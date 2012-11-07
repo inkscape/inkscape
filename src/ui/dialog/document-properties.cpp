@@ -203,41 +203,36 @@ DocumentProperties::~DocumentProperties()
  * widget in columns 2-3; (non-0, 0) means label in columns 1-3; and
  * (non-0, non-0) means two widgets in columns 2 and 3.
  */
-inline void attach_all(Gtk::Table &table, Gtk::Widget *const arr[], unsigned const n, int start = 0)
+inline void attach_all(Gtk::Table &table, Gtk::Widget *const arr[], unsigned const n, int start = 0, int docum_prop_flag = 0)
 {
-    for (unsigned i = 0, r = start; i < n; i += 2)
-    {
-        if (arr[i] && arr[i+1])
-        {
-            table.attach(*arr[i],   1, 2, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            table.attach(*arr[i+1], 2, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-        }
-        else
-        {
+    for (unsigned i = 0, r = start; i < n; i += 2) {
+        if (arr[i] && arr[i+1]) {
+            table.attach(*arr[i],   1, 2, r, r+1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+            table.attach(*arr[i+1], 2, 3, r, r+1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+        } else {
             if (arr[i+1]) {
                 Gtk::AttachOptions yoptions = (Gtk::AttachOptions)0;
                 if (dynamic_cast<Inkscape::UI::Widget::PageSizer*>(arr[i+1])) {
                     // only the PageSizer in Document Properties|Page should be stretched vertically
                     yoptions = Gtk::FILL|Gtk::EXPAND;
                 }
-                table.attach(*arr[i+1], 1, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, yoptions, 0,0);
-            }
-            else if (arr[i])
-            {
+                if (docum_prop_flag) {
+                    if( i==(n-4) || i==(n-6) ) {
+                        table.attach(*arr[i+1], 1, 3, r, r+1, Gtk::FILL|Gtk::EXPAND, yoptions, 20,0);
+                    } else {
+                        table.attach(*arr[i+1], 1, 3, r, r+1, Gtk::FILL|Gtk::EXPAND, yoptions, 0,0);
+                    }
+                } else {
+                    table.attach(*arr[i+1], 1, 3, r, r+1, Gtk::FILL|Gtk::EXPAND, yoptions, 0,0);
+                }
+            } else if (arr[i]) {
                 Gtk::Label& label = reinterpret_cast<Gtk::Label&>(*arr[i]);
                 label.set_alignment (0.0);
-                table.attach (label, 0, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            }
-            else
-            {
+                table.attach (label, 0, 3, r, r+1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+            } else {
                 Gtk::HBox *space = manage (new Gtk::HBox);
                 space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
-                table.attach (*space, 0, 1, r, r+1,
-                      (Gtk::AttachOptions)0, (Gtk::AttachOptions)0,0,0);
+                table.attach (*space, 0, 1, r, r+1, (Gtk::AttachOptions)0, (Gtk::AttachOptions)0,0,0);
             }
         }
         ++r;
@@ -275,7 +270,12 @@ void DocumentProperties::build_page()
         _rcp_bord._label,  &_rcp_bord,
     };
 
-    attach_all(_page_page.table(), widget_array, G_N_ELEMENTS(widget_array));
+    std::list<Gtk::Widget*> _slaveList;
+    _slaveList.push_back(&_rcb_bord);
+    _slaveList.push_back(&_rcb_shad);
+    _rcb_canb.setSlaveWidgets(_slaveList);
+
+    attach_all(_page_page.table(), widget_array, G_N_ELEMENTS(widget_array),0,1);
 }
 
 void DocumentProperties::build_guides()
