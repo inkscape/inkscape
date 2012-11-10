@@ -2104,15 +2104,15 @@ static cairo_pattern_t *sp_meshgradient_create_pattern(SPPaintServer *ps,
 
     cp = cairo_pattern_create_mesh();
 
-    for( uint i = 0; i < array->patch_rows(); ++i ) {
-        for( uint j = 0; j < array->patch_columns(); ++j ) {
+    for( unsigned int i = 0; i < array->patch_rows(); ++i ) {
+        for( unsigned int j = 0; j < array->patch_columns(); ++j ) {
 
             SPMeshPatchI patch( &(array->nodes), i, j );
 
             cairo_mesh_pattern_begin_patch( cp );
             cairo_mesh_pattern_move_to( cp, patch.getPoint( 0, 0 )[X], patch.getPoint( 0, 0 )[Y] ); 
 
-            for( uint k = 0; k < 4; ++k ) {
+            for( unsigned int k = 0; k < 4; ++k ) {
 #ifdef DEBUG_MESH
                 std::cout << i << " " << j << " "
                           << patch.getPathType( k ) << "  (";
