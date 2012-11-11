@@ -193,8 +193,6 @@ SPObject *sp_object_hunref(SPObject *object, gpointer owner);
  * SPObjects are bound to the higher-level container SPDocument, which
  * provides document level functionality such as the undo stack,
  * dictionary and so on. Source: doc/architecture.txt
- *
- * @todo need to remove redundant sp_object_... prefixing on methods.
  */
 class SPObject : public GObject {
 public:
