@@ -969,7 +969,7 @@ static Geom::Affine getODFTransform(const SPItem *item)
 static Geom::OptRect getODFBoundingBox(const SPItem *item)
 {
     // TODO: geometric or visual?
-    Geom::OptRect bbox = ((SPItem *)item)->documentVisualBounds();
+    Geom::OptRect bbox = item->documentVisualBounds();
     if (bbox) {
         *bbox *= Geom::Affine(Geom::Scale(pxToCm));
     }

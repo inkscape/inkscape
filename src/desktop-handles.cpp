@@ -44,7 +44,7 @@ sp_desktop_canvas (SPDesktop const * desktop)
 {
 	g_return_val_if_fail (desktop != NULL, NULL);
 
-	return ((SPCanvasItem *) desktop->main)->canvas;
+	return (SP_CANVAS_ITEM(desktop->main))->canvas;
 }
 
 SPCanvasItem *

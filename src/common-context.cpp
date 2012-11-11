@@ -56,9 +56,9 @@ GType sp_common_context_get_type(void)
 static void sp_common_context_class_init(SPCommonContextClass *klass)
 {
     GObjectClass *object_class = (GObjectClass *) klass;
-    SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
+    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
 
-    common_parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
+    common_parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_common_context_dispose;
 

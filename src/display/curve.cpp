@@ -150,7 +150,7 @@ SPCurve::concat(GSList const *list)
     SPCurve *new_curve = new SPCurve();
 
     for (GSList const *l = list; l != NULL; l = l->next) {
-        SPCurve *c = (SPCurve *) l->data;
+        SPCurve *c = static_cast<SPCurve *>(l->data);
         new_curve->_pathv.insert( new_curve->_pathv.end(), c->get_pathvector().begin(), c->get_pathvector().end() );
     }
 

@@ -845,8 +845,8 @@ public:
         Inkscape::Preferences::Observer(path), _ec(ec) {
     }
     virtual void notify(Inkscape::Preferences::Entry const &val) {
-        if (((SPEventContextClass *) G_OBJECT_GET_CLASS(_ec))->set) {
-            ((SPEventContextClass *) G_OBJECT_GET_CLASS(_ec))->set(_ec,
+        if ((SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(_ec)))->set) {
+            (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(_ec)))->set(_ec,
                     const_cast<Inkscape::Preferences::Entry*> (&val));
         }
     }
@@ -879,8 +879,8 @@ sp_event_context_new(GType type, SPDesktop *desktop, gchar const *pref_path,
         prefs->addObserver(*(ec->pref_observer));
     }
 
-    if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->setup)
-        ((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->setup)
+        (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->setup(ec);
 
     return ec;
 }
@@ -898,8 +898,8 @@ void sp_event_context_finish(SPEventContext *ec) {
         g_warning("Finishing event context with active link\n");
     }
 
-    if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->finish)
-        ((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->finish(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->finish)
+        (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->finish(ec);
 }
 
 //-------------------------------member functions
@@ -955,11 +955,11 @@ void sp_event_context_read(SPEventContext *ec, gchar const *key) {
     g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
     g_return_if_fail(key != NULL);
 
-    if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->set) {
+    if ((SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->set) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         Inkscape::Preferences::Entry val = prefs->getEntry(
                 ec->pref_observer->observed_path + '/' + key);
-        ((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->set(ec, &val);
+        (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->set(ec, &val);
     }
 }
 
@@ -975,8 +975,8 @@ void sp_event_context_activate(SPEventContext *ec) {
     // context should take care of this by itself.
     sp_event_context_discard_delayed_snap_event(ec);
 
-    if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->activate)
-        ((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->activate(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->activate)
+        (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->activate(ec);
 }
 
 /**
@@ -986,8 +986,8 @@ void sp_event_context_deactivate(SPEventContext *ec) {
     g_return_if_fail(ec != NULL);
     g_return_if_fail(SP_IS_EVENT_CONTEXT(ec));
 
-    if (((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->deactivate)
-        ((SPEventContextClass *) G_OBJECT_GET_CLASS(ec))->deactivate(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->deactivate)
+        (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(ec)))->deactivate(ec);
 }
 
 /**
@@ -1028,7 +1028,7 @@ gint sp_event_context_virtual_root_handler(SPEventContext * event_context, GdkEv
     gint ret = false;
     if (event_context) {    // If no event-context is available then do nothing, otherwise Inkscape would crash
                             // (see the comment in SPDesktop::set_event_context, and bug LP #622350)
-        ret = ((SPEventContextClass *) G_OBJECT_GET_CLASS(event_context))->root_handler(event_context, event);
+        ret = (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(event_context)))->root_handler(event_context, event);
         set_event_location(event_context->desktop, event);
     }
     return ret;
@@ -1067,7 +1067,7 @@ gint sp_event_context_virtual_item_handler(SPEventContext * event_context, SPIte
     gint ret = false;
     if (event_context) {    // If no event-context is available then do nothing, otherwise Inkscape would crash
                             // (see the comment in SPDesktop::set_event_context, and bug LP #622350)
-        ret = ((SPEventContextClass *) G_OBJECT_GET_CLASS(event_context))->item_handler(event_context, item, event);
+        ret = (SP_EVENT_CONTEXT_CLASS(G_OBJECT_GET_CLASS(event_context)))->item_handler(event_context, item, event);
         if (!ret) {
             ret = sp_event_context_virtual_root_handler(event_context, event);
         } else {

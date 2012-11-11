@@ -140,7 +140,7 @@ public: // FIXME: make more of this private!
     }
 
     guint singleSelectedDraggerSingleDraggableType() {
-        return (selected? ((GrDraggable *) ((GrDragger *) selected->data)->draggables->data)->point_type : 0);}
+        return (selected? (static_cast<GrDraggable*>((static_cast<GrDragger*>(selected->data))->draggables->data))->point_type : 0);}
 
     // especially the selection must be private, fix gradient-context to remove direct access to it
     GList *selected; // list of GrDragger*
