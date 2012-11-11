@@ -266,7 +266,7 @@ static void sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tb
 
 static void sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, Geom::Dim2 d)
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data( tbl, "tracker" ));
@@ -632,17 +632,17 @@ void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
 
     sigc::connection *c_selection_changed =
         new sigc::connection (sp_desktop_selection (desktop)->connectChanged
-                              (sigc::bind (sigc::ptr_fun (sp_node_toolbox_sel_changed), (GObject*)holder)));
+                              (sigc::bind (sigc::ptr_fun (sp_node_toolbox_sel_changed), holder)));
     pool->add_connection ("selection-changed", c_selection_changed);
 
     sigc::connection *c_selection_modified =
         new sigc::connection (sp_desktop_selection (desktop)->connectModified
-                              (sigc::bind (sigc::ptr_fun (sp_node_toolbox_sel_modified), (GObject*)holder)));
+                              (sigc::bind (sigc::ptr_fun (sp_node_toolbox_sel_modified), holder)));
     pool->add_connection ("selection-modified", c_selection_modified);
 
     sigc::connection *c_subselection_changed =
         new sigc::connection (desktop->connectToolSubselectionChanged
-                              (sigc::bind (sigc::ptr_fun (sp_node_toolbox_coord_changed), (GObject*)holder)));
+                              (sigc::bind (sigc::ptr_fun (sp_node_toolbox_coord_changed), holder)));
     pool->add_connection ("tool-subselection-changed", c_subselection_changed);
 
     Inkscape::ConnectionPool::connect_destroy (G_OBJECT (holder), pool);

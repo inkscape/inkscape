@@ -82,7 +82,7 @@ static void sp_erc_width_value_changed( GtkAdjustment *adj, GObject *tbl )
 
 static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     bool eraserMode = ege_select_one_action_get_active( act ) != 0;
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -94,9 +94,11 @@ static void sp_erasertb_mode_changed( EgeSelectOneAction *act, GObject *tbl )
         // in turn, prevent listener from responding
         g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
+        /*
         if ( eraserMode != 0 ) {
         } else {
         }
+        */
         // TODO finish implementation
 
         g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );

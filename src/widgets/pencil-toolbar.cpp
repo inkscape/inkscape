@@ -91,7 +91,7 @@ using Inkscape::UI::PrefPusher;
 /* This is used in generic functions below to share large portions of code between pen and pencil tool */
 static Glib::ustring const freehand_tool_name(GObject *dataKludge)
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data(dataKludge, "desktop");
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(dataKludge, "desktop"));
     return ( tools_isactive(desktop, TOOLS_FREEHAND_PEN)
              ? "/tools/freehand/pen"
              : "/tools/freehand/pencil" );
@@ -104,7 +104,7 @@ static void freehand_mode_changed(EgeSelectOneAction* act, GObject* tbl)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt(freehand_tool_name(tbl) + "/freehand-mode", mode);
 
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop");
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(tbl, "desktop"));
 
     // in pen tool we have more options than in pencil tool; if one of them was chosen, we do any
     // preparatory work here

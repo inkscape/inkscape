@@ -227,7 +227,7 @@ static void box3d_toolbox_selection_changed(Inkscape::Selection *selection, GObj
 
 static void box3d_angle_value_changed(GtkAdjustment *adj, GObject *dataKludge, Proj::Axis axis)
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( dataKludge, "desktop" ));
     SPDocument *document = sp_desktop_document(desktop);
 
     // quit if run by the attr_changed or selection changed listener
@@ -431,7 +431,7 @@ void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject
     }
 
     sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(box3d_toolbox_selection_changed), (GObject *)holder))
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(box3d_toolbox_selection_changed), G_OBJECT(holder)))
        );
     g_signal_connect(holder, "destroy", G_CALLBACK(delete_connection), connection);
     g_signal_connect(holder, "destroy", G_CALLBACK(purge_repr_listener), holder);

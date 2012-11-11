@@ -64,10 +64,9 @@ spinbutton_defocus (GtkWidget *container)
 	}
 }
 
-gboolean
-spinbutton_keypress (GtkWidget *w, GdkEventKey *event, gpointer data)
+gboolean spinbutton_keypress(GtkWidget *w, GdkEventKey *event, gpointer data)
 {
-    SPWidget *spw = (SPWidget *) data;
+    SPWidget *spw = SP_WIDGET(data);
     gdouble v;
     gdouble step;
     gdouble page;

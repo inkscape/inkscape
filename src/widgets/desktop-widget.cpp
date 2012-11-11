@@ -301,7 +301,7 @@ GType SPDesktopWidget::getType(void)
 static void
 sp_desktop_widget_class_init (SPDesktopWidgetClass *klass)
 {
-    dtw_parent_class = (SPViewWidgetClass*)g_type_class_peek_parent (klass);
+    dtw_parent_class = SP_VIEW_WIDGET_CLASS(g_type_class_peek_parent(klass));
 
     GObjectClass *object_class = (GObjectClass *) klass;
     GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;

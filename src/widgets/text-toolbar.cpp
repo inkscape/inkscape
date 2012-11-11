@@ -665,7 +665,7 @@ static void sp_text_align_mode_changed( EgeSelectOneAction *act, GObject *tbl )
     // move the x of all texts to preserve the same bbox
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     for (GSList const *items = selection->itemList(); items != NULL; items = items->next) {
-        if (SP_IS_TEXT((SPItem *) items->data)) {
+        if (SP_IS_TEXT(SP_ITEM(items->data))) {
             SPItem *item = SP_ITEM(items->data);
 
             unsigned writing_mode = item->style->writing_mode.value;
@@ -1156,7 +1156,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
          items = items->next) {
         // const gchar* id = reinterpret_cast<SPItem *>(items->data)->getId();
         // std::cout << "    " << id << std::endl;
-        if( SP_IS_FLOWTEXT(( SPItem *) items->data )) {
+        if( SP_IS_FLOWTEXT(SP_ITEM(items->data))) {
             isFlow = true;
             // std::cout << "   Found flowed text" << std::endl;
             break;
@@ -1849,17 +1849,17 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
 
     sigc::connection *c_selection_changed =
         new sigc::connection (sp_desktop_selection (desktop)->connectChanged
-                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_changed), (GObject*)holder)));
+                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_changed), holder)));
     pool->add_connection ("selection-changed", c_selection_changed);
 
     sigc::connection *c_selection_modified =
         new sigc::connection (sp_desktop_selection (desktop)->connectModified
-                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_modified), (GObject*)holder)));
+                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_selection_modified), holder)));
     pool->add_connection ("selection-modified", c_selection_modified);
 
     sigc::connection *c_subselection_changed =
         new sigc::connection (desktop->connectToolSubselectionChanged
-                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_subselection_changed), (GObject*)holder)));
+                              (sigc::bind (sigc::ptr_fun (sp_text_toolbox_subselection_changed), holder)));
     pool->add_connection ("tool-subselection-changed", c_subselection_changed);
 
     Inkscape::ConnectionPool::connect_destroy (G_OBJECT (holder), pool);

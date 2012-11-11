@@ -123,7 +123,7 @@ void gr_apply_gradient(Inkscape::Selection *selection, GrDrag *drag, SPGradient 
     if (drag && drag->selected) {
         GrDragger *dragger = static_cast<GrDragger*>(drag->selected->data);
         for (GSList const* i = dragger->draggables; i != NULL; i = i->next) { // for all draggables of dragger
-            GrDraggable *draggable = (GrDraggable *) i->data;
+            GrDraggable *draggable = static_cast<GrDraggable*>(i->data);
             gr_apply_gradient_to_item(draggable->item, gr, initialType, initialMode, draggable->fill_or_stroke);
         }
         return;
@@ -675,10 +675,10 @@ static void select_stop_by_drag(GtkWidget *combo_box, SPGradient *gradient, SPEv
 
     // for all selected draggers
     for (GList *i = drag->selected; i != NULL; i = i->next) {
-        GrDragger *dragger = (GrDragger *) i->data;
+        GrDragger *dragger = static_cast<GrDragger*>(i->data);
         // for all draggables of dragger
         for (GSList const* j = dragger->draggables; j != NULL; j = j->next) {
-            GrDraggable *draggable = (GrDraggable *) j->data;
+            GrDraggable *draggable = static_cast<GrDraggable*>(j->data);
 
             if (draggable->point_type != POINT_RG_FOCUS) {
                 n++;

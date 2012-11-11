@@ -259,7 +259,7 @@ static void sp_dcc_save_profile(GtkWidget * /*widget*/, GObject *tbl)
 {
     using Inkscape::UI::Dialog::CalligraphicProfileRename;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(tbl, "desktop" ));
     if (! desktop) {
         return;
     }

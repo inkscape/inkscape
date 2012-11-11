@@ -41,12 +41,9 @@ static Inkscape::XML::NodeEventVector repr_events = {
 	NULL  /* order_changed */
 };
 
-GtkWidget *
-sp_xmlview_attr_list_new (Inkscape::XML::Node * repr)
+GtkWidget *sp_xmlview_attr_list_new (Inkscape::XML::Node * repr)
 {
-    SPXMLViewAttrList * attr_list;
-
-    attr_list = (SPXMLViewAttrList*)g_object_new (SP_TYPE_XMLVIEW_ATTR_LIST, NULL);
+    SPXMLViewAttrList * attr_list = SP_XMLVIEW_ATTR_LIST(g_object_new(SP_TYPE_XMLVIEW_ATTR_LIST, NULL));
 
     attr_list->store = gtk_list_store_new (ATTR_N_COLS, G_TYPE_STRING, G_TYPE_UINT, G_TYPE_STRING );
     gtk_tree_view_set_model (GTK_TREE_VIEW(attr_list), GTK_TREE_MODEL(attr_list->store));

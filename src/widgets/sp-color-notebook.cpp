@@ -107,7 +107,7 @@ sp_color_notebook_switch_page(GtkNotebook *notebook,
 {
     if ( colorbook )
     {
-        ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
+        ColorNotebook* nb = dynamic_cast<ColorNotebook*>(SP_COLOR_SELECTOR(colorbook)->base);
         nb->switchPage( notebook, page, page_num );
 
         // remember the page we switched to
@@ -144,7 +144,7 @@ static gint sp_color_notebook_menu_handler( GtkWidget *widget, GdkEvent *event )
     if (event->type == GDK_BUTTON_PRESS)
     {
         SPColorSelector* csel = SP_COLOR_SELECTOR(widget);
-        ((ColorNotebook*)(csel->base))->menuHandler( event );
+        (dynamic_cast<ColorNotebook*>(csel->base))->menuHandler( event );
 
         /* Tell calling code that we have handled this event; the buck
          * stops here. */
@@ -173,11 +173,11 @@ static void sp_color_notebook_menuitem_response (GtkMenuItem *menuitem, gpointer
     {
         if ( active )
         {
-            ((ColorNotebook*)(SP_COLOR_SELECTOR(entry->backPointer)->base))->addPage(entry->type, entry->submode);
+            (dynamic_cast<ColorNotebook*>(SP_COLOR_SELECTOR(entry->backPointer)->base))->addPage(entry->type, entry->submode);
         }
         else
         {
-            ((ColorNotebook*)(SP_COLOR_SELECTOR(entry->backPointer)->base))->removePage(entry->type, entry->submode);
+            (dynamic_cast<ColorNotebook*>(SP_COLOR_SELECTOR(entry->backPointer)->base))->removePage(entry->type, entry->submode);
         }
     }
 }
@@ -467,14 +467,11 @@ static void sp_color_notebook_hide(GtkWidget *widget)
     gtk_widget_hide(widget);
 }
 
-GtkWidget *
-sp_color_notebook_new (void)
+GtkWidget *sp_color_notebook_new()
 {
-    SPColorNotebook *colorbook;
+    SPColorNotebook *colorbook = SP_COLOR_NOTEBOOK(g_object_new (SP_TYPE_COLOR_NOTEBOOK, NULL));
 
-    colorbook = (SPColorNotebook*)g_object_new (SP_TYPE_COLOR_NOTEBOOK, NULL);
-
-    return GTK_WIDGET (colorbook);
+    return GTK_WIDGET(colorbook);
 }
 
 ColorNotebook::ColorNotebook( SPColorSelector* csel )
@@ -520,7 +517,7 @@ void ColorNotebook::_picker_clicked(GtkWidget *widget, SPColorNotebook *colorboo
 
 void ColorNotebook::_rgbaEntryChangedHook(GtkEntry *entry, SPColorNotebook *colorbook)
 {
-    ((ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base))->_rgbaEntryChanged( entry );
+    (dynamic_cast<ColorNotebook*>(SP_COLOR_SELECTOR(colorbook)->base))->_rgbaEntryChanged( entry );
 }
 
 void ColorNotebook::_rgbaEntryChanged(GtkEntry* entry)
@@ -630,7 +627,7 @@ void ColorNotebook::_setCurrentPage(int i)
 
 void ColorNotebook::_buttonClicked(GtkWidget *widget,  SPColorNotebook *colorbook)
 {
-    ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
+    ColorNotebook* nb = dynamic_cast<ColorNotebook*>(SP_COLOR_SELECTOR(colorbook)->base);
 
     if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(widget))) {
         return;
@@ -645,14 +642,14 @@ void ColorNotebook::_buttonClicked(GtkWidget *widget,  SPColorNotebook *colorboo
 
 void ColorNotebook::_entryGrabbed (SPColorSelector *, SPColorNotebook *colorbook)
 {
-    ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
+    ColorNotebook* nb = dynamic_cast<ColorNotebook*>(SP_COLOR_SELECTOR(colorbook)->base);
     nb->_grabbed();
 }
 
 void ColorNotebook::_entryDragged (SPColorSelector *csel, SPColorNotebook *colorbook)
 {
     gboolean oldState;
-    ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
+    ColorNotebook* nb = dynamic_cast<ColorNotebook*>(SP_COLOR_SELECTOR(colorbook)->base);
 
     oldState = nb->_dragging;
 
@@ -664,14 +661,14 @@ void ColorNotebook::_entryDragged (SPColorSelector *csel, SPColorNotebook *color
 
 void ColorNotebook::_entryReleased (SPColorSelector *, SPColorNotebook *colorbook)
 {
-    ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
+    ColorNotebook* nb = dynamic_cast<ColorNotebook*>(SP_COLOR_SELECTOR(colorbook)->base);
     nb->_released();
 }
 
 void ColorNotebook::_entryChanged (SPColorSelector *csel, SPColorNotebook *colorbook)
 {
     gboolean oldState;
-    ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
+    ColorNotebook* nb = dynamic_cast<ColorNotebook*>(SP_COLOR_SELECTOR(colorbook)->base);
 
     oldState = nb->_dragging;
 
@@ -688,7 +685,7 @@ void ColorNotebook::_entryModified (SPColorSelector *csel, SPColorNotebook *colo
     g_return_if_fail (csel != NULL);
     g_return_if_fail (SP_IS_COLOR_SELECTOR (csel));
 
-    ColorNotebook* nb = (ColorNotebook*)(SP_COLOR_SELECTOR(colorbook)->base);
+    ColorNotebook* nb = dynamic_cast<ColorNotebook*>(SP_COLOR_SELECTOR(colorbook)->base);
     SPColor color;
     gfloat alpha = 1.0;
 

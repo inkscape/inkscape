@@ -881,7 +881,7 @@ GtkWidget *IconImpl::newFull( Inkscape::IconSize lsize, gchar const *name )
 
     if ( !widget ) {
         //g_message("Creating an SPIcon instance for %s:%d", name, (int)lsize);
-        SPIcon *icon = (SPIcon *)g_object_new(SP_TYPE_ICON, NULL);
+        SPIcon *icon = SP_ICON(g_object_new(SP_TYPE_ICON, NULL));
         icon->lsize = lsize;
         icon->name = g_strdup(name);
         icon->psize = getPhysSize(lsize);

@@ -89,7 +89,7 @@ static void sp_rtb_sensitivize( GObject *tbl )
 static void sp_rtb_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_name,
                                  void (*setter)(SPRect *, gdouble))
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
 
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data( tbl, "tracker" ));
     SPUnit const *unit = tracker->getActiveUnit();
@@ -395,7 +395,7 @@ void sp_rect_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
     sp_rtb_sensitivize( holder );
 
     sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), (GObject *)holder))
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_rect_toolbox_selection_changed), holder))
         );
     g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
     g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );

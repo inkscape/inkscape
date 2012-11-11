@@ -83,7 +83,7 @@ static void sp_lpetool_mode_changed(EgeSelectOneAction *act, GObject *tbl)
 {
     using namespace Inkscape::LivePathEffect;
 
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data(tbl, "desktop");
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data(tbl, "desktop"));
     SPEventContext *ec = desktop->event_context;
     if (!SP_IS_LPETOOL_CONTEXT(ec)) {
         return;
@@ -199,7 +199,7 @@ static void lpetool_unit_changed(GtkAction* /*act*/, GObject* tbl)
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setInt("/tools/lpetool/unitid", unit->unit_id);
 
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     if (SP_IS_LPETOOL_CONTEXT(desktop->event_context)) {
         SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(desktop->event_context);
         lpetool_delete_measuring_items(lc);
@@ -399,7 +399,7 @@ void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GO
     {
         GtkAction* act = tracker->createAction( "LPEToolUnitsAction", _("Units"), ("") );
         gtk_action_group_add_action( mainActions, act );
-        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(lpetool_unit_changed), (GObject*)holder );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(lpetool_unit_changed), holder );
         g_object_set_data(holder, "lpetool_units_action", act);
         gtk_action_set_sensitive(act, prefs->getBool("/tools/lpetool/show_measuring_info", true));
     }
@@ -421,12 +421,12 @@ void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GO
 
     sigc::connection *c_selection_modified =
         new sigc::connection (sp_desktop_selection (desktop)->connectModified
-                              (sigc::bind (sigc::ptr_fun (sp_lpetool_toolbox_sel_modified), (GObject*)holder)));
+                              (sigc::bind (sigc::ptr_fun (sp_lpetool_toolbox_sel_modified), holder)));
     pool->add_connection ("selection-modified", c_selection_modified);
 
     sigc::connection *c_selection_changed =
         new sigc::connection (sp_desktop_selection (desktop)->connectChanged
-                              (sigc::bind (sigc::ptr_fun(sp_lpetool_toolbox_sel_changed), (GObject*)holder)));
+                              (sigc::bind (sigc::ptr_fun(sp_lpetool_toolbox_sel_changed), holder)));
     pool->add_connection ("selection-changed", c_selection_changed);
 }
 

@@ -198,12 +198,9 @@ static void sp_color_scales_hide(GtkWidget *widget)
 	gtk_widget_hide(widget);
 }
 
-GtkWidget *
-sp_color_scales_new (void)
+GtkWidget *sp_color_scales_new()
 {
-	SPColorScales *csel;
-
-	csel = (SPColorScales*)g_object_new (SP_TYPE_COLOR_SCALES, NULL);
+	SPColorScales *csel = SP_COLOR_SCALES(g_object_new (SP_TYPE_COLOR_SCALES, NULL));
 
 	return GTK_WIDGET (csel);
 }

@@ -98,7 +98,7 @@ static void sp_connector_path_set_ignore(void)
 
 static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl )
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     Inkscape::Selection * selection = sp_desktop_selection(desktop);
     SPDocument *doc = sp_desktop_document(desktop);
 
@@ -123,7 +123,7 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
     bool modmade = false;
     GSList *l = (GSList *) selection->itemList();
     while (l) {
-        SPItem *item = (SPItem *) l->data;
+        SPItem *item = SP_ITEM(l->data);
 
         if (cc_item_is_connector(item)) {
             item->setAttribute( "inkscape:connector-type",
@@ -148,7 +148,7 @@ static void sp_connector_orthogonal_toggled( GtkToggleAction* act, GObject *tbl 
 
 static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     Inkscape::Selection * selection = sp_desktop_selection(desktop);
     SPDocument *doc = sp_desktop_document(desktop);
 
@@ -172,7 +172,7 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
     bool modmade = false;
     GSList *l = (GSList *) selection->itemList();
     while (l) {
-        SPItem *item = (SPItem *) l->data;
+        SPItem *item = SP_ITEM(l->data);
 
         if (cc_item_is_connector(item)) {
             item->setAttribute( "inkscape:connector-curvature",
@@ -198,7 +198,7 @@ static void connector_curvature_changed(GtkAdjustment *adj, GObject* tbl)
 
 static void connector_spacing_changed(GtkAdjustment *adj, GObject* tbl)
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     SPDocument *doc = sp_desktop_document(desktop);
 
     if (!DocumentUndo::getUndoSensitive(doc)) {
@@ -305,7 +305,7 @@ static void connector_tb_event_attr_changed(Inkscape::XML::Node *repr,
 
 static void sp_connector_new_connection_point(GtkWidget *, GObject *tbl)
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     SPConnectorContext* cc = SP_CONNECTOR_CONTEXT(desktop->event_context);
 
     if (cc->mode == SP_CONNECTOR_CONTEXT_EDITING_MODE) {
@@ -315,7 +315,7 @@ static void sp_connector_new_connection_point(GtkWidget *, GObject *tbl)
 
 static void sp_connector_remove_connection_point(GtkWidget *, GObject *tbl)
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     SPConnectorContext* cc = SP_CONNECTOR_CONTEXT(desktop->event_context);
 
     if (cc->mode == SP_CONNECTOR_CONTEXT_EDITING_MODE) {
@@ -461,7 +461,7 @@ void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions,
         gtk_toggle_action_set_active(GTK_TOGGLE_ACTION(act), ( tbuttonstate ? TRUE : FALSE ));
 
         g_signal_connect_after( G_OBJECT(act), "toggled", G_CALLBACK(sp_directed_graph_layout_toggled), holder );
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_connector_toolbox_selection_changed), (GObject *)holder));
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_connector_toolbox_selection_changed), holder));
     }
 
     // Avoid overlaps toggle button

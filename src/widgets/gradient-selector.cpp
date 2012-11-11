@@ -249,12 +249,9 @@ void SPGradientSelector::setSpread(SPGradientSpread spread)
 }
 
 
-GtkWidget *
-sp_gradient_selector_new (void)
+GtkWidget *sp_gradient_selector_new()
 {
-    SPGradientSelector *sel;
-
-    sel = (SPGradientSelector*)g_object_new (SP_TYPE_GRADIENT_SELECTOR, NULL);
+    SPGradientSelector *sel = SP_GRADIENT_SELECTOR(g_object_new (SP_TYPE_GRADIENT_SELECTOR, NULL));
 
     return (GtkWidget *) sel;
 }
@@ -361,7 +358,7 @@ void SPGradientSelector::onTreeSelection()
     }
 
     if (obj) {
-        sp_gradient_selector_vector_set (NULL, (SPGradient*)obj, this);
+        sp_gradient_selector_vector_set (NULL, SP_GRADIENT(obj), this);
     }
 }
 
@@ -508,7 +505,7 @@ sp_gradient_selector_add_vector_clicked (GtkWidget */*w*/, SPGradientSelector *s
 
     Glib::ustring old_id = gr->getId();
 
-    gr = (SPGradient *) doc->getObjectByRepr(repr);
+    gr = SP_GRADIENT(doc->getObjectByRepr(repr));
 
     // Rename the new gradients id to be similar to the cloned gradients
     rename_id(gr, old_id);

@@ -234,12 +234,9 @@ static void sp_color_wheel_selector_hide(GtkWidget *widget)
     gtk_widget_hide(widget);
 }
 
-GtkWidget *
-sp_color_wheel_selector_new (void)
+GtkWidget *sp_color_wheel_selector_new()
 {
-    SPColorWheelSelector *csel;
-
-    csel = (SPColorWheelSelector*)g_object_new (SP_TYPE_COLOR_WHEEL_SELECTOR, NULL);
+    SPColorWheelSelector *csel = SP_COLOR_WHEEL_SELECTOR(g_object_new (SP_TYPE_COLOR_WHEEL_SELECTOR, NULL));
 
     return GTK_WIDGET (csel);
 }

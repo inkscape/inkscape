@@ -373,12 +373,9 @@ sp_color_slider_motion_notify (GtkWidget *widget, GdkEventMotion *event)
 	return FALSE;
 }
 
-GtkWidget *
-sp_color_slider_new (GtkAdjustment *adjustment)
+GtkWidget *sp_color_slider_new(GtkAdjustment *adjustment)
 {
-	SPColorSlider *slider;
-
-	slider = (SPColorSlider*)g_object_new (SP_TYPE_COLOR_SLIDER, NULL);
+	SPColorSlider *slider = SP_COLOR_SLIDER(g_object_new(SP_TYPE_COLOR_SLIDER, NULL));
 
 	sp_color_slider_set_adjustment (slider, adjustment);
 

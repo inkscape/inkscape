@@ -46,14 +46,10 @@ static Inkscape::XML::NodeEventVector repr_events = {
     NULL  /* order_changed */
 };
 
-GtkWidget *
-sp_xmlview_content_new (Inkscape::XML::Node * repr)
+GtkWidget *sp_xmlview_content_new(Inkscape::XML::Node * repr)
 {
-    GtkTextBuffer *tb;
-    SPXMLViewContent *text;
-
-    tb = gtk_text_buffer_new (NULL);
-    text = (SPXMLViewContent*)g_object_new (SP_TYPE_XMLVIEW_CONTENT, NULL);
+    GtkTextBuffer *tb = gtk_text_buffer_new(NULL);
+    SPXMLViewContent *text = SP_XMLVIEW_CONTENT(g_object_new(SP_TYPE_XMLVIEW_CONTENT, NULL));
     gtk_text_view_set_buffer (GTK_TEXT_VIEW (text), tb);
     gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text), GTK_WRAP_CHAR);
 

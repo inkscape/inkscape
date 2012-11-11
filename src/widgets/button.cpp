@@ -218,9 +218,7 @@ sp_button_perform_action (SPButton *button, gpointer /*data*/)
 GtkWidget *
 sp_button_new( Inkscape::IconSize size, SPButtonType type, SPAction *action, SPAction *doubleclick_action )
 {
-	SPButton *button;
-
-	button = (SPButton *)g_object_new (SP_TYPE_BUTTON, NULL);
+	SPButton *button = SP_BUTTON(g_object_new(SP_TYPE_BUTTON, NULL));
 
 	button->type = type;
 	button->lsize = CLAMP( size, Inkscape::ICON_SIZE_MENU, Inkscape::ICON_SIZE_DECORATION );

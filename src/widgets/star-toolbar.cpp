@@ -74,7 +74,7 @@ using Inkscape::UI::PrefPusher;
 
 static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKludge )
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( dataKludge, "desktop" ));
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         // do not remember prefs if this call is initiated by an undo change, because undoing object
@@ -120,7 +120,7 @@ static void sp_stb_magnitude_value_changed( GtkAdjustment *adj, GObject *dataKlu
 
 static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKludge )
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( dataKludge, "desktop" ));
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         if (!IS_NAN(gtk_adjustment_get_value(adj))) {
@@ -173,7 +173,7 @@ static void sp_stb_proportion_value_changed( GtkAdjustment *adj, GObject *dataKl
 
 static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GObject *dataKludge )
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( dataKludge, "desktop" ));
     bool flat = ege_select_one_action_get_active( act ) == 0;
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
@@ -218,7 +218,7 @@ static void sp_stb_sides_flat_state_changed( EgeSelectOneAction *act, GObject *d
 
 static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludge )
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( dataKludge, "desktop" ));
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -257,7 +257,7 @@ static void sp_stb_rounded_value_changed( GtkAdjustment *adj, GObject *dataKludg
 
 static void sp_stb_randomized_value_changed( GtkAdjustment *adj, GObject *dataKludge )
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( dataKludge, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( dataKludge, "desktop" ));
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -584,7 +584,7 @@ void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
     }
 
     sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_star_toolbox_selection_changed), (GObject *)holder))
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_star_toolbox_selection_changed), holder))
         );
     g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
     g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );

@@ -72,7 +72,7 @@ using Inkscape::UI::PrefPusher;
 static void
 sp_measure_fontsize_value_changed(GtkAdjustment *adj, GObject *tbl)
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -122,7 +122,7 @@ void sp_measure_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, G
     // units menu
     {
         GtkAction* act = tracker->createAction( "MeasureUnitsAction", _("Units:"), _("The units to be used for the measurements") );
-        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(measure_unit_changed), (GObject*)holder );
+        g_signal_connect_after( G_OBJECT(act), "changed", G_CALLBACK(measure_unit_changed), holder );
         gtk_action_group_add_action( mainActions, act );
     }
 } // end of sp_measure_toolbox_prep()

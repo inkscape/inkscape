@@ -92,7 +92,7 @@ static void sp_arctb_sensitivize( GObject *tbl, double v1, double v2 )
 static void
 sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *value_name, gchar const *other_name)
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -128,8 +128,8 @@ sp_arctb_startend_value_changed(GtkAdjustment *adj, GObject *tbl, gchar const *v
             }
 
             sp_genericellipse_normalize(ge);
-            ((SPObject *)arc)->updateRepr();
-            ((SPObject *)arc)->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+            (SP_OBJECT(arc))->updateRepr();
+            (SP_OBJECT(arc))->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 
             modmade = true;
         }
@@ -163,7 +163,7 @@ static void sp_arctb_end_value_changed(GtkAdjustment *adj, GObject *tbl)
 
 static void sp_arctb_open_state_changed( EgeSelectOneAction *act, GObject *tbl )
 {
-    SPDesktop *desktop = (SPDesktop *) g_object_get_data( tbl, "desktop" );
+    SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setBool("/tools/shapes/arc/open", ege_select_one_action_get_active(act) != 0);
@@ -419,7 +419,7 @@ void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObjec
 
 
     sigc::connection *connection = new sigc::connection(
-        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), (GObject *)holder))
+        sp_desktop_selection(desktop)->connectChanged(sigc::bind(sigc::ptr_fun(sp_arc_toolbox_selection_changed), G_OBJECT(holder)))
         );
     g_signal_connect( holder, "destroy", G_CALLBACK(delete_connection), connection );
     g_signal_connect( holder, "destroy", G_CALLBACK(purge_repr_listener), holder );
