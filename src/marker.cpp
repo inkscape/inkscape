@@ -119,7 +119,7 @@ sp_marker_init (SPMarker *marker)
  * parent class' build routine to attach the object to its document and
  * repr.  The result will be creation of the whole document tree.
  *
- * \see sp_object_build()
+ * \see SPObject::build()
  */
 static void sp_marker_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
@@ -147,7 +147,7 @@ static void sp_marker_build(SPObject *object, SPDocument *document, Inkscape::XM
  * and release its SPRepr bindings.  The result will be the destruction
  * of the entire document tree.
  *
- * \see sp_object_release()
+ * \see SPObject::release()
  */
 static void sp_marker_release(SPObject *object)
 {

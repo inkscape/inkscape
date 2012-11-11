@@ -312,7 +312,7 @@ void sp_repr_css_set(Node *repr, SPCSSAttr *css, gchar const *attr)
     /*
      * If the new value is different from the old value, this will sometimes send a signal via
      * CompositeNodeObserver::notiftyAttributeChanged() which results in calling
-     * SPObject::sp_object_repr_attr_changed and thus updates the object's SPStyle. This update
+     * SPObject::repr_attr_changed and thus updates the object's SPStyle. This update
      * results in another call to repr->setAttribute().
      */
     repr->setAttribute(attr, value.c_str());

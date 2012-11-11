@@ -18,7 +18,7 @@
 class SPObject;
 class SPObjectClass;
 
-#define SP_TYPE_OBJECT (SPObject::sp_object_get_type ())
+#define SP_TYPE_OBJECT (SPObject::get_type ())
 #define SP_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_OBJECT, SPObject))
 #define SP_OBJECT_CLASS(clazz) (G_TYPE_CHECK_CLASS_CAST((clazz), SP_TYPE_OBJECT, SPObjectClass))
 #define SP_IS_OBJECT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_OBJECT))
@@ -260,7 +260,7 @@ public:
      * Represents the style properties, whether from presentation attributes, the <tt>style</tt>
      * attribute, or inherited.
      *
-     * sp_object_private_set doesn't handle SP_ATTR_STYLE or any presentation attributes at the
+     * private_set() doesn't handle SP_ATTR_STYLE or any presentation attributes at the
      * time of writing, so this is probably NULL for all SPObject's that aren't an SPItem.
      *
      * However, this gives rise to the bugs mentioned in sp_object_get_style_property.
@@ -801,18 +801,18 @@ private:
     /**
      * Callback to initialize the SPObject object.
      */
-    static void sp_object_init(SPObject *object);
+    static void init(SPObject *object);
 
     /**
      * Callback to destroy all members and connections of object and itself.
      */
-    static void sp_object_finalize(GObject *object);
+    static void finalize(GObject *object);
 
     /**
      * Callback for child_added event.
      * Invoked whenever the given mutation event happens in the XML tree.
      */
-    static void sp_object_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
+    static void child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
 
     /**
      * Remove object's child whose node equals repr, release and
@@ -822,7 +822,7 @@ private:
      * tree, BEFORE removal from the XML tree happens, so grouping
      * objects can safely release the child data.
      */
-    static void sp_object_remove_child(SPObject *object, Inkscape::XML::Node *child);
+    static void remove_child(SPObject *object, Inkscape::XML::Node *child);
 
     /**
      * Move object corresponding to child after sibling object corresponding
@@ -830,7 +830,7 @@ private:
      * Invoked whenever the given mutation event happens in the XML tree.
      * @param old_ref Ignored
      */
-    static void sp_object_order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
+    static void order_changed(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref);
 
     /**
      * Removes, releases and unrefs all children of object.
@@ -841,9 +841,9 @@ private:
      * document and releases the SPRepr bindings; implementations should free
      * state data and release all child objects.  Invoking release on
      * SPRoot destroys the whole document tree.
-     * @see sp_object_build()
+     * @see build()
      */
-    static void sp_object_release(SPObject *object);
+    static void release(SPObject *object);
 
     /**
      * Virtual build callback.
@@ -854,21 +854,21 @@ private:
      * generate the children objects and so on.  Invoking build on the SPRoot
      * object results in creation of the whole document tree (this is, what
      * SPDocument does after the creation of the XML tree).
-     * @see sp_object_release()
+     * @see release()
      */
-    static void sp_object_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
+    static void build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 
     /**
      * Callback for set event.
      */
-    static void sp_object_private_set(SPObject *object, unsigned int key, gchar const *value);
+    static void private_set(SPObject *object, unsigned int key, gchar const *value);
 
     /**
      * Callback for write event.
      */
-    static Inkscape::XML::Node *sp_object_private_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+    static Inkscape::XML::Node *private_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-    static gchar *sp_object_get_unique_id(SPObject *object, gchar const *defid);
+    static gchar *get_unique_id(SPObject *object, gchar const *defid);
 
     /* Real handlers of repr signals */
 
@@ -877,34 +877,34 @@ public:
     /**
      * Registers the SPObject class with Gdk and returns its type number.
      */
-    static GType sp_object_get_type();
+    static GType get_type();
 
     /**
      * Callback for attr_changed node event.
      */
-    static void sp_object_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gchar const *oldval, gchar const *newval, bool is_interactive, gpointer data);
+    static void repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gchar const *oldval, gchar const *newval, bool is_interactive, gpointer data);
 
     /**
      * Callback for content_changed node event.
      */
-    static void sp_object_repr_content_changed(Inkscape::XML::Node *repr, gchar const *oldcontent, gchar const *newcontent, gpointer data);
+    static void repr_content_changed(Inkscape::XML::Node *repr, gchar const *oldcontent, gchar const *newcontent, gpointer data);
 
     /**
      * Callback for child_added node event.
      */
-    static void sp_object_repr_child_added(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, gpointer data);
+    static void repr_child_added(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, gpointer data);
 
     /**
      * Callback for remove_child node event.
      */
-    static void sp_object_repr_child_removed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, void *data);
+    static void repr_child_removed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *ref, void *data);
 
     /**
      * Callback for order_changed node event.
      *
      * \todo fixme:
      */
-    static void sp_object_repr_order_changed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *old, Inkscape::XML::Node *newer, gpointer data);
+    static void repr_order_changed(Inkscape::XML::Node *repr, Inkscape::XML::Node *child, Inkscape::XML::Node *old, Inkscape::XML::Node *newer, gpointer data);
 
 
     friend class SPObjectClass;
@@ -942,7 +942,7 @@ private:
     /**
      * Initializes the SPObject vtable.
      */
-    static void sp_object_class_init(SPObjectClass *klass);
+    static void init(SPObjectClass *klass);
 
     friend class SPObject;
 };

@@ -146,7 +146,7 @@ void SPShape::sp_shape_finalize(GObject *object)
  *
  * This is to be invoked immediately after creation of an SPShape.
  *
- * \see sp_object_build()
+ * \see SPObject::build()
  */
 void SPShape::sp_shape_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
@@ -167,7 +167,7 @@ void SPShape::sp_shape_build(SPObject *object, SPDocument *document, Inkscape::X
  * by other objects.  This routine also disconnects/unrefs markers and
  * curves attached to it.
  *
- * \see sp_object_release()
+ * \see SPObject::release()
  */
 void SPShape::sp_shape_release(SPObject *object)
 {
