@@ -61,6 +61,8 @@ namespace Extension {
 namespace Internal {
 
 static float device_scale = DEVICESCALE;
+static float device_x;
+static float device_y;
 static RECTL rc_old;
 static bool clipset = false;
 
@@ -322,11 +324,11 @@ _pix_y_to_point(PEMF_CALLBACK_DATA d, double px)
 static double
 pix_to_x_point(PEMF_CALLBACK_DATA d, double px, double py)
 {
-    double ppx = _pix_x_to_point(d, px);
-    double ppy = _pix_y_to_point(d, py);
+    double ppx = px * d->dc[d->level].worldTransform.eM11 + py * d->dc[d->level].worldTransform.eM21 + d->dc[d->level].worldTransform.eDx;
+    double x = _pix_x_to_point(d, ppx);
 
-    double x = ppx * d->dc[d->level].worldTransform.eM11 + ppy * d->dc[d->level].worldTransform.eM21 + d->dc[d->level].worldTransform.eDx;
     x *= device_scale;
+    x -= device_x;
     
     return x;
 }
@@ -334,11 +336,11 @@ pix_to_x_point(PEMF_CALLBACK_DATA d, double px, double py)
 static double
 pix_to_y_point(PEMF_CALLBACK_DATA d, double px, double py)
 {
-    double ppx = _pix_x_to_point(d, px);
-    double ppy = _pix_y_to_point(d, py);
+    double ppy = px * d->dc[d->level].worldTransform.eM12 + py * d->dc[d->level].worldTransform.eM22 + d->dc[d->level].worldTransform.eDy;
+    double y = _pix_y_to_point(d, ppy);
 
-    double y = ppx * d->dc[d->level].worldTransform.eM12 + ppy * d->dc[d->level].worldTransform.eM22 + d->dc[d->level].worldTransform.eDy;
     y *= device_scale;
+    y -= device_y;
     
     return y;
 }
@@ -773,8 +775,10 @@ myEnhMetaFileProc(HDC /*hDC*/, HANDLETABLE * /*lpHTable*/, ENHMETARECORD const *
             d->xDPI = 2540;
             d->yDPI = 2540;
 
-            d->dc[d->level].PixelsInX = pEmr->rclFrame.right;  // - pEmr->rclFrame.left;
-            d->dc[d->level].PixelsInY = pEmr->rclFrame.bottom; // - pEmr->rclFrame.top;
+            d->dc[d->level].PixelsInX = pEmr->rclFrame.right - pEmr->rclFrame.left;
+            d->dc[d->level].PixelsInY = pEmr->rclFrame.bottom - pEmr->rclFrame.top;
+            device_x = pEmr->rclFrame.left/100.0*PX_PER_MM;
+            device_y = pEmr->rclFrame.top/100.0*PX_PER_MM;
 
             d->MMX = d->dc[d->level].PixelsInX / 100.0;
             d->MMY = d->dc[d->level].PixelsInY / 100.0;
@@ -2464,9 +2468,10 @@ EmfWin32::open( Inkscape::Extension::Input * /*mod*/, const gchar *uri )
         DWORD dwNeeded = GetEnhMetaFileDescriptionA( hemf, 0, NULL );
         if ( dwNeeded > 0 ) {
             d.pDesc = (CHAR *) malloc( dwNeeded + 1 );
+            d.pDesc[dwNeeded] = 0;
             if ( GetEnhMetaFileDescription( hemf, dwNeeded, d.pDesc ) == 0 )
                 lstrcpy( d.pDesc, "" );
-            if ( lstrlen( d.pDesc ) > 1 )
+            if ((lstrlen(d.pDesc) > 1) && (lstrlen(d.pDesc) < dwNeeded))
                 d.pDesc[lstrlen(d.pDesc)] = '#';
         }
 
