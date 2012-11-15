@@ -31,7 +31,7 @@ FilterMerge::~FilterMerge()
 
 void FilterMerge::render_cairo(FilterSlot &slot)
 {
-    if (_input_image.size() == 0) return;
+    if (_input_image.empty()) return;
 
     // output is RGBA if at least one input is RGBA
     bool rgba32 = false;

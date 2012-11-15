@@ -274,9 +274,9 @@ CanvasGrid::NewGrid(SPNamedView * nv, Inkscape::XML::Node * repr, SPDocument * d
 
     switch (gridtype) {
         case GRID_RECTANGULAR:
-            return (CanvasGrid*) new CanvasXYGrid(nv, repr, doc);
+            return dynamic_cast<CanvasGrid*>(new CanvasXYGrid(nv, repr, doc));
         case GRID_AXONOMETRIC:
-            return (CanvasGrid*) new CanvasAxonomGrid(nv, repr, doc);
+            return dynamic_cast<CanvasGrid*>(new CanvasAxonomGrid(nv, repr, doc));
     }
 
     return NULL;
@@ -366,7 +366,7 @@ CanvasGrid::on_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gc
     if (!data)
         return;
 
-    ((CanvasGrid*) data)->onReprAttrChanged(repr, key, oldval, newval, is_interactive);
+    (static_cast<CanvasGrid*>(data))->onReprAttrChanged(repr, key, oldval, newval, is_interactive);
 }
 
 bool CanvasGrid::isEnabled()
