@@ -4,6 +4,9 @@ rem call wixenv.bat
 @echo todo implement custom icon and artwork
 @echo todo insert files from ../source/release
 
+@echo build files.wxs
+python files.py
+
 @echo call wix compiler ...
 candle inkscape.wxs -ext WiXUtilExtension
 @if NOT %ERRORLEVEL% == 0 goto theend
