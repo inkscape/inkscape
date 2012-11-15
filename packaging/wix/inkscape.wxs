@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi' xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	<Product Name='Inkscape 0.48' Id='81922150-317e-4bb0-a31d-ff1c14f707c5' UpgradeCode='4d5fedaa-84a0-48be-bd2a-08246398361a' Language='1033' Codepage='1252' Version='1.7.0' Manufacturer='inkscape.org'>
+
+		<Package Id='*' Keywords='Installer' Description="Inkscape Installer" Comments='inkscape is registered trademark of inkscape.org' Manufacturer='inkscape.org' InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+
+		<Media Id='1' Cabinet='Sample.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
+		<Property Id='DiskPrompt' Value="inkscape 0.48 Installation [1]" />
+
+		<Property Id='ALLUSERS' Value="2" />
+
+		<DirectoryRef Id="ApplicationProgramsFolder">
+			<Component Id="ApplicationShortcut" Guid="37de8ea4-e83a-4e40-8f9c-c6066b78d935">
+				<Shortcut Id="ApplicationStartMenuShortcut" 
+						  Name="Inkscape 0.48.3"
+						  Description="Inkscape Vector Graphics Application"
+						  Target="[INSTALLDIR]inkscape.exe"
+						  WorkingDirectory="INSTALLDIR"/>
+				<util:InternetShortcut Id="OnlineDocumentationShortcut"
+								Name="Inkscape Homepage"
+									   Target="http://www.inkscape.org/"/>
+				<RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+				<RegistryValue Root="HKCU" Key="Software\Microsoft\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+			</Component>
+		</DirectoryRef>
+
+		<DirectoryRef Id="DesktopFolder">
+			<Component Id="DesktopShortcut" Guid="3afc08a7-05a1-40cf-90c2-0d6c042bfc41">
+				<Shortcut Id="desktopFoobar10" Directory="DesktopFolder" Target="[INSTALLDIR]inkscape.exe" Name="Inkscape 0.48" WorkingDirectory='INSTALLDIR' Icon="inkscape.exe" IconIndex="0" />
+				<RemoveFolder Id="DesktopFolder" On="uninstall"/>
+				<RegistryValue Root="HKCU" Key="Software\Microsoft\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+			</Component>
+		</DirectoryRef>
+		
+    
+
+		<Feature Id='Complete' Title='inkscape 0.48' Description='The complete Package' Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'  Absent="disallow" AllowAdvertise='no'>
+<!--
+			<Feature Id='MainProgram' Level='1' Title='inkscape Application' Description='the inkscape Application' Absent="disallow" AllowAdvertise='no'>
+				<ComponentRef Id='MainExecutable' />
+			</Feature>
+-->
+			<Feature Id='MainProgram' Level='1' Title='inkscape Application' Description='the inkscape Application' Absent="disallow" AllowAdvertise='no'>
+				<ComponentGroupRef Id='AllOther' />
+			</Feature>
+			
+			<!-- shortcuts -->
+			<Feature Id='ApplicationShortcut' Level='1' Title='Start Menu entry' Description='an entry in the start Menu' AllowAdvertise='no'>
+				<ComponentRef Id='ApplicationShortcut' />
+			</Feature>
+			<Feature Id='DesktopShortcut' Level='1' Title='Desktop link' Description='an link on the desktop' AllowAdvertise='no'>
+				<ComponentRef Id='DesktopShortcut' />
+			</Feature>
+
+			<Feature Id='Examples' Level='1' Title='Examples' Description='examples as svg' AllowAdvertise='no'>
+				<ComponentGroupRef Id='Examples' />
+			</Feature>
+
+			<Feature Id='Translations' Level='1' Title='Translations' Description='translations' AllowAdvertise='no'>
+				<ComponentGroupRef Id='Translations' />
+			</Feature>
+
+			<Feature Id='Tutorials' Level='1' Title='Tutorials' Description='tutorials as svg' AllowAdvertise='no'>
+				<ComponentGroupRef Id='Tutorials' />
+			</Feature>
+<!--
+			<ComponentRef Id='ProgramMenuDir' />
+-->
+		</Feature>
+		<WixVariable Id="WixUILicenseRtf" Value="..\..\inkscape\COPYING" />
+		<UIRef Id="WixUI_Mondo" />
+		<UIRef Id="WixUI_ErrorProgressText" />
+
+		<Icon Id="inkscape.exe" SourceFile="..\..\inkscape\inkscape.exe" />
+
+	</Product>
+</Wix>

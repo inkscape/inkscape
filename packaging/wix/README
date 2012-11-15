@@ -1,0 +1,19 @@
+howto create windows msi installer
+
+you need:
+1. windows installer XML installed and callable from your path
+   get it from http://wixtoolset.org/
+   the installer is tested using version 3.6 
+2. python installed and callable from your path
+   the installer is tested using version 2.7
+
+build the installer
+1. build inkscape
+2. set environment variables
+   wixenv.bat
+2. create installer using batch
+   install.bat
+
+when completed there should be inkscape.msi in your path
+   
+
