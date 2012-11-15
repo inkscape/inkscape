@@ -1438,7 +1438,7 @@ void Export::areaXChange (Gtk::Adjustment *adj)
         return;
     }
 
-    if (sp_unit_selector_update_test ((SPUnitSelector *)unit_selector->gobj())) {
+    if (sp_unit_selector_update_test(SP_UNIT_SELECTOR(unit_selector->gobj()))) {
         return;
     }
 
@@ -1485,7 +1485,7 @@ void Export::areaYChange (Gtk::Adjustment *adj)
         return;
     }
 
-    if (sp_unit_selector_update_test ((SPUnitSelector *)unit_selector->gobj()))  {
+    if (sp_unit_selector_update_test (SP_UNIT_SELECTOR(unit_selector->gobj())))  {
         return;
     }
 
@@ -1640,7 +1640,7 @@ void Export::onBitmapWidthChange ()
         return;
     }
 
-    if (sp_unit_selector_update_test ((SPUnitSelector *)unit_selector->gobj())) {
+    if (sp_unit_selector_update_test(SP_UNIT_SELECTOR(unit_selector->gobj()))) {
        return;
     }
 
@@ -1674,7 +1674,7 @@ void Export::onBitmapHeightChange ()
         return;
     }
 
-    if (sp_unit_selector_update_test ((SPUnitSelector *)unit_selector->gobj())) {
+    if (sp_unit_selector_update_test(SP_UNIT_SELECTOR(unit_selector->gobj()))) {
        return;
     }
 
@@ -1734,7 +1734,7 @@ void Export::onExportXdpiChange()
         return;
     }
 
-    if (sp_unit_selector_update_test ((SPUnitSelector *)unit_selector->gobj())) {
+    if (sp_unit_selector_update_test(SP_UNIT_SELECTOR(unit_selector->gobj()))) {
        return;
     }
 
@@ -1836,7 +1836,7 @@ void Export::setValuePx(Glib::RefPtr<Gtk::Adjustment>& adj, double val)
 void Export::setValuePx( Gtk::Adjustment *adj, double val)
 #endif
 {
-    const SPUnit *unit = sp_unit_selector_get_unit ((SPUnitSelector *)unit_selector->gobj() );
+    const SPUnit *unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(unit_selector->gobj()) );
 
     setValue(adj, sp_pixels_get_units (val, *unit));
 
@@ -1886,7 +1886,7 @@ float Export::getValuePx(  Gtk::Adjustment *adj )
 #endif
 {
     float value = getValue( adj);
-    const SPUnit *unit = sp_unit_selector_get_unit ((SPUnitSelector *)unit_selector->gobj());
+    const SPUnit *unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(unit_selector->gobj()));
 
     return sp_units_get_pixels (value, *unit);
 } // end of sp_export_value_get_px()

@@ -1327,7 +1327,7 @@ void FilterEffectsDialog::FilterModifier::update_filters()
 
     for(const GSList *l = filters; l; l = l->next) {
         Gtk::TreeModel::Row row = *_model->append();
-        SPFilter* f = (SPFilter*)l->data;
+        SPFilter* f = SP_FILTER(l->data);
         row[_columns.filter] = f;
         const gchar* lbl = f->label();
         const gchar* id = f->getId();
@@ -1454,7 +1454,7 @@ void FilterEffectsDialog::CellRendererConnection::get_size_vfunc(
     if(height) {
         // Scale the height depending on the number of inputs, unless it's
         // the first primitive, in which case there are no connections
-        SPFilterPrimitive* prim = (SPFilterPrimitive*)_primitive.get_value();
+        SPFilterPrimitive* prim = SP_FILTER_PRIMITIVE(_primitive.get_value());
         (*height) = size * input_count(prim);
     }
 }
@@ -1536,11 +1536,10 @@ void FilterEffectsDialog::PrimitiveList::update()
 {
     SPFilter* f = _dialog._filter_modifier.get_selected_filter();
     const SPFilterPrimitive* active_prim = get_selected();
-    bool active_found = false;
-
     _model->clear();
 
     if(f) {
+        bool active_found = false;
         _dialog._primitive_box.set_sensitive(true);
         _dialog.update_filter_general_settings_view();
         for(SPObject *prim_obj = f->children;

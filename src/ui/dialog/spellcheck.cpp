@@ -219,8 +219,8 @@ void SpellCheck::setTargetDesktop(SPDesktop *desktop)
 void SpellCheck::clearRects()
 {
     for (GSList *it = _rects; it; it = it->next) {
-        sp_canvas_item_hide((SPCanvasItem*) it->data);
-        sp_canvas_item_destroy((SPCanvasItem*) it->data);
+        sp_canvas_item_hide(SP_CANVAS_ITEM(it->data));
+        sp_canvas_item_destroy(SP_CANVAS_ITEM(it->data));
     }
     g_slist_free(_rects);
     _rects = NULL;
@@ -330,8 +330,8 @@ SpellCheck::nextText()
     _text = getText(_root);
     if (_text) {
 
-        _modified_connection = ((SPObject*) _text)->connectModified(sigc::mem_fun(*this, &SpellCheck::onObjModified));
-        _release_connection = ((SPObject*) _text)->connectRelease(sigc::mem_fun(*this, &SpellCheck::onObjReleased));
+        _modified_connection = (SP_OBJECT(_text))->connectModified(sigc::mem_fun(*this, &SpellCheck::onObjModified));
+        _release_connection = (SP_OBJECT(_text))->connectRelease(sigc::mem_fun(*this, &SpellCheck::onObjReleased));
 
         _layout = te_get_layout (_text);
         _begin_w = _layout->begin();

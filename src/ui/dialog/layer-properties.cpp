@@ -216,7 +216,7 @@ LayerPropertiesDialog::_setup_layers_controls() {
     if ( root ) {
         SPObject* target = _desktop->currentLayer();
         _store->clear();
-        _addLayer( document, (SPObject *)root, 0, target, 0 );
+        _addLayer( document, SP_OBJECT(root), 0, target, 0 );
     }
 
     _layout_table.remove(_layer_name_entry);

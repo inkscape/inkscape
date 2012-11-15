@@ -48,12 +48,11 @@ public:
      */
     TracingEngineResult(const std::string &theStyle,
                         const std::string &thePathData,
-                        long theNodeCount)
-        {
-        style     = theStyle;
-        pathData  = thePathData;
-        nodeCount = theNodeCount;
-        }
+                        long theNodeCount) :
+	    style(theStyle),
+	    pathData(thePathData),
+	    nodeCount(theNodeCount)
+        {}
 
     TracingEngineResult(const TracingEngineResult &other)
         { assign(other); }

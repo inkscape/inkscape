@@ -207,7 +207,7 @@ GSList * FontSubstitution::getFontReplacedItems(SPDocument* doc, Glib::ustring *
 
     // Check if any document styles are not in the actual layout
     std::map<SPItem *, Glib::ustring>::const_iterator mapIter;
-    for (mapIter = mapFontStyles.begin(); mapIter != mapFontStyles.end(); mapIter++) {
+    for (mapIter = mapFontStyles.begin(); mapIter != mapFontStyles.end(); ++mapIter) {
         SPItem *item = mapIter->first;
         Glib::ustring fonts = mapIter->second;
 
@@ -241,7 +241,7 @@ GSList * FontSubstitution::getFontReplacedItems(SPDocument* doc, Glib::ustring *
     }
 
     std::set<Glib::ustring>::const_iterator setIter;
-    for (setIter = setErrors.begin(); setIter != setErrors.end(); setIter++) {
+    for (setIter = setErrors.begin(); setIter != setErrors.end(); ++setIter) {
         Glib::ustring err = (*setIter);
         out->append(err + "\n");
         g_warning("%s", err.c_str());

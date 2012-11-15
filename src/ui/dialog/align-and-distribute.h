@@ -213,7 +213,7 @@ private :
         SPDesktop *desktop = _dialog.getDesktop();
         if (!desktop) return;
 
-        ActionAlign::do_action(desktop, _index);
+        do_action(desktop, _index);
     }
 
     static void do_action(SPDesktop *desktop, int index);

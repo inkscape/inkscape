@@ -928,7 +928,7 @@ void DocumentProperties::removeExternalScript(){
     while ( current ) {
         if (current->data && SP_IS_OBJECT(current->data)) {
             SPObject* obj = SP_OBJECT(current->data);
-            SPScript* script = (SPScript*) obj;
+            SPScript* script = SP_SCRIPT(obj);
             if (name == script->xlinkhref){
 
                 //XML Tree being used directly here while it shouldn't be.
@@ -1085,7 +1085,7 @@ void DocumentProperties::populate_script_lists(){
     if (current) _scripts_observer.set(SP_OBJECT(current->data)->parent);
     while ( current ) {
         SPObject* obj = SP_OBJECT(current->data);
-        SPScript* script = (SPScript*) obj;
+        SPScript* script = SP_SCRIPT(obj);
         if (script->xlinkhref)
         {
             Gtk::TreeModel::Row row = *(_ExternalScriptsListStore->append());

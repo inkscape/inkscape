@@ -123,7 +123,7 @@ void ObjectAttributes::widget_setup (void)
     }
     
     blocked = true;
-    SPObject *obj = (SPObject*)item; //to get the selected item
+    SPObject *obj = SP_OBJECT(item); //to get the selected item
     GObjectClass *klass = G_OBJECT_GET_CLASS(obj); //to deduce the object's type
     GType type = G_TYPE_FROM_CLASS(klass);
     const SPAttrDesc *desc;

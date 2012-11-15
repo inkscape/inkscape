@@ -1326,8 +1326,8 @@ void CloneTiler::on_picker_color_changed(guint rgba)
 
 void CloneTiler::clonetiler_change_selection(Inkscape::Application * /*inkscape*/, Inkscape::Selection *selection, GtkWidget *dlg)
 {
-    GtkWidget *buttons = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "buttons_on_tiles");
-    GtkWidget *status = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "status");
+    GtkWidget *buttons = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "buttons_on_tiles"));
+    GtkWidget *status = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "status"));
 
     if (selection->isEmpty()) {
         gtk_widget_set_sensitive (buttons, FALSE);
@@ -2204,7 +2204,7 @@ void CloneTiler::clonetiler_apply(GtkWidget */*widget*/, GtkWidget *dlg)
     desktop->setWaitingCursor();
 
     // set statusbar text
-    GtkWidget *status = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "status");
+    GtkWidget *status = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "status"));
     gtk_label_set_markup (GTK_LABEL(status), _("<small>Creating tiled clones...</small>"));
     gtk_widget_queue_draw(GTK_WIDGET(status));
     gdk_window_process_all_updates();
@@ -2870,10 +2870,10 @@ void CloneTiler::clonetiler_pick_switched(GtkToggleButton */*tb*/, gpointer data
 }
 
 
-void CloneTiler::clonetiler_switch_to_create(GtkToggleButton */*tb*/, GtkWidget *dlg)
+void CloneTiler::clonetiler_switch_to_create(GtkToggleButton * /*tb*/, GtkWidget *dlg)
 {
-    GtkWidget *rowscols = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "rowscols");
-    GtkWidget *widthheight = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "widthheight");
+    GtkWidget *rowscols = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "rowscols"));
+    GtkWidget *widthheight = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "widthheight"));
 
     if (rowscols) {
         gtk_widget_set_sensitive (rowscols, TRUE);
@@ -2887,10 +2887,10 @@ void CloneTiler::clonetiler_switch_to_create(GtkToggleButton */*tb*/, GtkWidget 
 }
 
 
-void CloneTiler::clonetiler_switch_to_fill(GtkToggleButton */*tb*/, GtkWidget *dlg)
+void CloneTiler::clonetiler_switch_to_fill(GtkToggleButton * /*tb*/, GtkWidget *dlg)
 {
-    GtkWidget *rowscols = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "rowscols");
-    GtkWidget *widthheight = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "widthheight");
+    GtkWidget *rowscols = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "rowscols"));
+    GtkWidget *widthheight = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "widthheight"));
 
     if (rowscols) {
         gtk_widget_set_sensitive (rowscols, FALSE);
@@ -2929,7 +2929,7 @@ void CloneTiler::clonetiler_fill_height_changed(GtkAdjustment *adj, GtkWidget *u
 
 void CloneTiler::clonetiler_do_pick_toggled(GtkToggleButton *tb, GtkWidget *dlg)
 {
-    GtkWidget *vvb = (GtkWidget *) g_object_get_data (G_OBJECT(dlg), "dotrace");
+    GtkWidget *vvb = GTK_WIDGET(g_object_get_data (G_OBJECT(dlg), "dotrace"));
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setBool(prefs_path + "dotrace", gtk_toggle_button_get_active (tb));

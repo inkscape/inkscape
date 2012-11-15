@@ -278,7 +278,7 @@ void SvgFontsDialog::update_fonts()
     _model->clear();
     for(const GSList *l = fonts; l; l = l->next) {
         Gtk::TreeModel::Row row = *_model->append();
-        SPFont* f = (SPFont*)l->data;
+        SPFont* f = SP_FONT(l->data);
         row[_columns.spfont] = f;
         row[_columns.svgfont] = new SvgFont(f);
         const gchar* lbl = f->label();
@@ -318,7 +318,7 @@ void SvgFontsDialog::update_global_settings_tab(){
     SPObject* obj;
     for (obj=font->children; obj; obj=obj->next){
         if (SP_IS_FONTFACE(obj)){
-            _familyname_entry->set_text(((SPFontFace*) obj)->font_family);
+            _familyname_entry->set_text((SP_FONTFACE(obj))->font_family);
         }
     }
 }

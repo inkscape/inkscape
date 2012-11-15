@@ -1314,7 +1314,6 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
             }
         }
         return master;
-        break;
     }
 
     case SMALLEST:
@@ -1331,7 +1330,6 @@ std::list<SPItem *>::iterator AlignAndDistribute::find_master( std::list<SPItem 
             }
         }
         return master;
-        break;
     }
 
     default:

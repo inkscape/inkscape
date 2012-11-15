@@ -64,7 +64,7 @@ public:
     FileDialogBase(const Glib::ustring &title, Gtk::Window& /*parent*/) : Gtk::Window(Gtk::WINDOW_TOPLEVEL)
     {
         set_title(title);
-        sp_transientize((GtkWidget*) gobj());
+        sp_transientize(GTK_WIDGET(gobj()));
         
         // Allow shrinking of window so labels wrap correctly
         set_resizable(true);
