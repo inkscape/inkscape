@@ -300,7 +300,7 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
 
         // List of units should match with Fill/Stroke dialog stroke style width list
         for (GSList *l = sp_unit_get_list(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE); l != NULL; l = l->next) {
-            SPUnit const *u = (SPUnit*)l->data;
+            SPUnit const *u = static_cast<SPUnit*>(l->data);
             Gtk::RadioMenuItem *mi = Gtk::manage(new Gtk::RadioMenuItem(_sw_group));
             mi->add(*(new Gtk::Label(u->abbr, 0.0, 0.5)));
             _unit_mis = g_slist_append(_unit_mis, mi);
@@ -451,7 +451,7 @@ SelectedStyle::setDesktop(SPDesktop *desktop)
             this )
     ));
 
-    _sw_unit = (SPUnit *) sp_desktop_namedview(desktop)->doc_units;
+    _sw_unit = const_cast<SPUnit*>(sp_desktop_namedview(desktop)->doc_units);
 
     // Set the doc default unit active in the units list
     gint length = g_slist_length(_unit_mis);
@@ -988,13 +988,13 @@ SelectedStyle::update()
 
                     if (SP_IS_LINEARGRADIENT (server)) {
                         SPGradient *vector = SP_GRADIENT(server)->getVector();
-                        sp_gradient_image_set_gradient ((SPGradientImage *) _gradient_preview_l[i], vector);
+                        sp_gradient_image_set_gradient(SP_GRADIENT_IMAGE(_gradient_preview_l[i]), vector);
                         place->add(_gradient_box_l[i]);
                         place->set_tooltip_text(__lgradient[i]);
                         _mode[i] = SS_LGRADIENT;
                     } else if (SP_IS_RADIALGRADIENT (server)) {
                         SPGradient *vector = SP_GRADIENT(server)->getVector();
-                        sp_gradient_image_set_gradient ((SPGradientImage *) _gradient_preview_r[i], vector);
+                        sp_gradient_image_set_gradient(SP_GRADIENT_IMAGE(_gradient_preview_r[i]), vector);
                         place->add(_gradient_box_r[i]);
                         place->set_tooltip_text(__rgradient[i]);
                         _mode[i] = SS_RGRADIENT;

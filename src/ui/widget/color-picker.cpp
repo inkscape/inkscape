@@ -55,7 +55,7 @@ void ColorPicker::setupDialog(const Glib::ustring &title)
     _colorSelectorDialog.hide();
     _colorSelectorDialog.set_title (title);
     _colorSelectorDialog.set_border_width (4);
-    _colorSelector = (SPColorSelector*)sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK);
+    _colorSelector = SP_COLOR_SELECTOR(sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK));
     _colorSelectorDialog.get_vbox()->pack_start (
               *Glib::wrap(&_colorSelector->vbox), true, true, 0);
 

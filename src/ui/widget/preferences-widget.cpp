@@ -640,7 +640,7 @@ void PrefCombo::on_changed()
     if (this->get_visible()) //only take action if user changed value
     {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        if(_values.size() > 0)
+        if(!_values.empty())
         {
             prefs->setInt(_prefs_path, _values[this->get_active_row_number()]);
         }
