@@ -65,8 +65,9 @@ class ScourInkscape (inkex.Effect):
             action="store", dest="renderer_workaround", default=False,
             help="work around various renderer bugs (currently only librsvg)")
 
-    def effect(self):   
+    def effect(self):
         input = file(self.args[0], "r")
+        self.options.infilename=self.args[0]
         sys.stdout.write(scourString(input.read(), self.options).encode("UTF-8"))
         input.close()
         sys.stdout.close()
