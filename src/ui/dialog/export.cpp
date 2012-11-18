@@ -1260,6 +1260,14 @@ void Export::onBrowse ()
     WCHAR* title_string = (WCHAR*)g_utf8_to_utf16(_("Select a filename for exporting"), -1, NULL, NULL, NULL);
     WCHAR* extension_string = (WCHAR*)g_utf8_to_utf16("*.png", -1, NULL, NULL, NULL);
     // Copy the selected file name, converting from UTF-8 to UTF-16
+    std::string dirname = Glib::path_get_dirname(filename.raw());
+    if ( !Glib::file_test(dirname, Glib::FILE_TEST_EXISTS) ||
+         Glib::file_test(filename, Glib::FILE_TEST_IS_DIR) ||
+         dirname.empty() )
+    {
+        Glib::ustring tmp;
+        filename = create_filepath_from_id(tmp, tmp);
+    }
     WCHAR _filename[_MAX_PATH + 1];
     memset(_filename, 0, sizeof(_filename));
     gunichar2* utf16_path_string = g_utf8_to_utf16(filename.c_str(), -1, NULL, NULL, NULL);
