@@ -64,7 +64,7 @@ private:
     void _preToggle( GdkEvent const *event );
     void _toggled( Glib::ustring const& str, int targetCol );
 
-    void _handleButtonEvent(GdkEventButton *event);
+    bool _handleButtonEvent(GdkEventButton *event);
     bool _handleKeyEvent(GdkEventKey *event);
     bool _handleDragDrop(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, guint time);
     void _handleEdited(const Glib::ustring& path, const Glib::ustring& new_text);

@@ -558,7 +558,8 @@ bool LayersPanel::_handleKeyEvent(GdkEventKey *event)
     }
     return false;
 }
-void LayersPanel::_handleButtonEvent(GdkEventButton* event)
+
+bool LayersPanel::_handleButtonEvent(GdkEventButton* event)
 {
     static unsigned doubleclick = 0;
 
@@ -573,9 +574,9 @@ void LayersPanel::_handleButtonEvent(GdkEventButton* event)
         }
     }
 
-    if ( event->type == GDK_BUTTON_RELEASE && (event->button == 1)
-            && (event->state & GDK_SHIFT_MASK)) {
-        // Shift left click on the visible/lock columns toggles "solo" mode
+    if ( (event->type == GDK_BUTTON_PRESS) && (event->button == 1)
+            && (event->state & GDK_MOD1_MASK)) {
+        // Alt left click on the visible/lock columns - eat this event to keep row selection
         Gtk::TreeModel::Path path;
         Gtk::TreeViewColumn* col = 0;
         int x = static_cast<int>(event->x);
@@ -583,10 +584,45 @@ void LayersPanel::_handleButtonEvent(GdkEventButton* event)
         int x2 = 0;
         int y2 = 0;
         if ( _tree.get_path_at_pos( x, y, path, col, x2, y2 ) ) {
-            if (col == _tree.get_column(COL_VISIBLE-1)) {
-                _takeAction(BUTTON_SOLO);
-            } else if (col == _tree.get_column(COL_LOCKED-1)) {
-                _takeAction(BUTTON_LOCK_OTHERS);
+            if (col == _tree.get_column(COL_VISIBLE-1) ||
+                    col == _tree.get_column(COL_LOCKED-1)) {
+                return true;
+            }
+        }
+    }
+
+    // TODO - ImageToggler doesn't seem to handle Shift/Alt clicks - so we deal with them here.
+    if ( (event->type == GDK_BUTTON_RELEASE) && (event->button == 1)
+            && (event->state & (GDK_SHIFT_MASK | GDK_MOD1_MASK))) {
+
+        Gtk::TreeModel::Path path;
+        Gtk::TreeViewColumn* col = 0;
+        int x = static_cast<int>(event->x);
+        int y = static_cast<int>(event->y);
+        int x2 = 0;
+        int y2 = 0;
+        if ( _tree.get_path_at_pos( x, y, path, col, x2, y2 ) ) {
+            if (event->state & GDK_SHIFT_MASK) {
+                // Shift left click on the visible/lock columns toggles "solo" mode
+                if (col == _tree.get_column(COL_VISIBLE - 1)) {
+                    _takeAction(BUTTON_SOLO);
+                } else if (col == _tree.get_column(COL_LOCKED - 1)) {
+                    _takeAction(BUTTON_LOCK_OTHERS);
+                }
+            } else if (event->state & GDK_MOD1_MASK) {
+                // Alt+left click on the visible/lock columns toggles "solo" mode and preserves selection
+                Gtk::TreeModel::iterator iter = _store->get_iter(path);
+                if (_store->iter_is_valid(iter)) {
+                    Gtk::TreeModel::Row row = *iter;
+                    SPObject *obj = row[_model->_colObject];
+                    if (col == _tree.get_column(COL_VISIBLE - 1)) {
+                        _desktop->toggleLayerSolo( obj );
+                        DocumentUndo::maybeDone(_desktop->doc(), "layer:solo", SP_VERB_LAYER_SOLO, _("Toggle layer solo"));
+                    } else if (col == _tree.get_column(COL_LOCKED - 1)) {
+                        _desktop->toggleLockOtherLayers( obj );
+                        DocumentUndo::maybeDone(_desktop->doc(), "layer:lockothers", SP_VERB_LAYER_LOCK_OTHERS, _("Lock other layers"));
+                    }
+                }
             }
         }
     }
@@ -612,6 +648,7 @@ void LayersPanel::_handleButtonEvent(GdkEventButton* event)
         }
     }
 
+    return false;
 }
 
 /*
@@ -808,8 +845,8 @@ LayersPanel::LayersPanel() :
     _text_renderer->signal_edited().connect( sigc::mem_fun(*this, &LayersPanel::_handleEdited) );
     _text_renderer->signal_editing_canceled().connect( sigc::mem_fun(*this, &LayersPanel::_handleEditingCancelled) );
 
-    _tree.signal_button_press_event().connect_notify( sigc::mem_fun(*this, &LayersPanel::_handleButtonEvent) );
-    _tree.signal_button_release_event().connect_notify( sigc::mem_fun(*this, &LayersPanel::_handleButtonEvent) );
+    _tree.signal_button_press_event().connect( sigc::mem_fun(*this, &LayersPanel::_handleButtonEvent), false );
+    _tree.signal_button_release_event().connect( sigc::mem_fun(*this, &LayersPanel::_handleButtonEvent), false );
     _tree.signal_key_press_event().connect( sigc::mem_fun(*this, &LayersPanel::_handleKeyEvent), false );
 
     _scroller.add( _tree );
