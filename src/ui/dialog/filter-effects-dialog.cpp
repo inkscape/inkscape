@@ -62,6 +62,7 @@
 
 #include "io/sys.h"
 #include <iostream>
+#include "selection-chemistry.h"
 
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/colorbutton.h>
@@ -1397,6 +1398,29 @@ void FilterEffectsDialog::FilterModifier::remove_filter()
 
     if(filter) {
         SPDocument* doc = filter->document;
+
+        // Delete all references to this filter
+        GSList *all = get_all_items(NULL, _desktop->currentRoot(), _desktop, false, false, true, NULL);
+        for (GSList *i = all; i != NULL; i = i->next) {
+            if (!SP_IS_ITEM(i->data)) {
+                continue;
+            }
+            SPItem *item = SP_ITEM(i->data);
+            if (!item->style) {
+                continue;
+            }
+
+            const SPIFilter *ifilter = &(item->style->filter);
+            if (ifilter && ifilter->href) {
+                const SPObject *obj = ifilter->href->getObject();
+                if (obj && obj == (SPObject *)filter) {
+                    ::remove_filter(item, false);
+                }
+            }
+        }
+        if (all) {
+            g_slist_free(all);
+        }
 
         //XML Tree being used directly here while it shouldn't be.
         sp_repr_unparent(filter->getRepr());
