@@ -59,6 +59,7 @@
 #include "dialogs/dialog-events.h"
 #include "message-context.h"
 #include "ui/uxmanager.h"
+#include "ui/clipboard.h"
 
 #include "display/sp-canvas.h"
 #include "color.h"
@@ -97,6 +98,7 @@ typedef enum {
     APP_X_INKY_COLOR,
     APP_X_COLOR,
     APP_OSWB_COLOR,
+    APP_X_INK_PASTE
 } ui_drop_target_info;
 
 static GtkTargetEntry ui_drop_target_entries [] = {
@@ -109,7 +111,8 @@ static GtkTargetEntry ui_drop_target_entries [] = {
     {(gchar *)"application/x-inkscape-color", 0, APP_X_INKY_COLOR},
 #endif // ENABLE_MAGIC_COLORS
     {(gchar *)"application/x-oswb-color",     0, APP_OSWB_COLOR  },
-    {(gchar *)"application/x-color",          0, APP_X_COLOR     }
+    {(gchar *)"application/x-color",          0, APP_X_COLOR     },
+    {(gchar *)"application/x-inkscape-paste", 0, APP_X_INK_PASTE }
 };
 
 static GtkTargetEntry *completeDropTargets = 0;
@@ -1427,6 +1430,13 @@ sp_ui_drag_data_received(GtkWidget *widget,
         case URI_LIST: {
             gchar *uri = (gchar *)gtk_selection_data_get_data (data);
             sp_ui_import_files(uri);
+            break;
+        }
+
+        case APP_X_INK_PASTE: {
+            Inkscape::UI::ClipboardManager *cm = Inkscape::UI::ClipboardManager::get();
+            cm->paste(desktop);
+            DocumentUndo::done( doc, SP_VERB_NONE, _("Drop Symbol") );
             break;
         }
 

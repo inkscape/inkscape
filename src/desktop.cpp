@@ -1903,6 +1903,7 @@ SPDesktop::show_dialogs()
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_CLONETILER, "/dialogs/clonetiler") );
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_ITEM, "/dialogs/object") );
     mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_SPELLCHECK, "/dialogs/spellcheck") );
+    mapVerbPreference.insert(std::make_pair ((int)SP_VERB_DIALOG_SYMBOLS, "/dialogs/symbols") );
 
     for (iter = mapVerbPreference.begin(); iter != mapVerbPreference.end(); iter++) {
         int verbId = iter->first;

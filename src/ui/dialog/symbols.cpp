@@ -123,6 +123,12 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   iconView->set_tooltip_column( 1 );
   iconView->set_pixbuf_column(  columns->symbol_image );
 
+  std::vector< Gtk::TargetEntry > targets;
+  targets.push_back(Gtk::TargetEntry( "application/x-inkscape-paste"));
+
+  iconView->enable_model_drag_source (targets, Gdk::BUTTON1_MASK, Gdk::ACTION_COPY);
+  iconView->signal_drag_data_get().connect(sigc::mem_fun(*this, &SymbolsDialog::iconDragDataGet));
+
   sigc::connection connIconChanged;
   connIconChanged =
     iconView->signal_selection_changed().connect(sigc::mem_fun(*this, &SymbolsDialog::iconChanged));
@@ -226,6 +232,27 @@ void SymbolsDialog::rebuild() {
     symbolDocument = currentDocument;
   }
   draw_symbols( symbolDocument );
+}
+
+void SymbolsDialog::iconDragDataGet(const Glib::RefPtr<Gdk::DragContext>& context, Gtk::SelectionData& data, guint info, guint time) {
+
+#if WITH_GTKMM_3_0
+  std::vector<Gtk::TreePath> iconArray = iconView->get_selected_items();
+#else
+  Gtk::IconView::ArrayHandle_TreePaths iconArray = iconView->get_selected_items();
+#endif
+
+  if( iconArray.empty() ) {
+    //std::cout << "  iconArray empty: huh? " << std::endl;
+  } else {
+    Gtk::TreeModel::Path const & path = *iconArray.begin();
+    Gtk::ListStore::iterator row = store->get_iter(path);
+    Glib::ustring symbol_id = (*row)[getColumns()->symbol_id];
+
+    GdkAtom dataAtom = gdk_atom_intern( "application/x-inkscape-paste", FALSE );
+    gtk_selection_data_set( data.gobj(), dataAtom, 9, (guchar*)symbol_id.c_str(), symbol_id.length() );
+  }
+
 }
 
 void SymbolsDialog::iconChanged() {

@@ -54,6 +54,7 @@ private:
 
     void rebuild();
     void iconChanged();
+    void iconDragDataGet(const Glib::RefPtr<Gdk::DragContext>& context, Gtk::SelectionData& selection_data, guint info, guint time);
 
     void get_symbols();
     void draw_symbols( SPDocument* symbol_document );
