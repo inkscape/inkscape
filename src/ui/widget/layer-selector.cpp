@@ -241,7 +241,11 @@ private:
 void LayerSelector::_layersChanged()
 {
     if (_desktop) {
-        _selectLayer(_desktop->currentLayer());
+        /*
+         * This code fixes #166691 but causes issues #1066543 and #1080378.
+         * Comment out until solution found.
+         */
+        //_selectLayer(_desktop->currentLayer());
     }
 }
 
