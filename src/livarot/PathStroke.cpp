@@ -20,7 +20,7 @@
  */
 
 // until i find something better
-Geom::Point StrokeNormalize(const Geom::Point value) {
+static Geom::Point StrokeNormalize(const Geom::Point value) {
     double length = L2(value); 
     if ( length < 0.0000001 ) { 
         return Geom::Point(0, 0);
@@ -30,7 +30,7 @@ Geom::Point StrokeNormalize(const Geom::Point value) {
 }
 
 // faster version if length is known
-Geom::Point StrokeNormalize(const Geom::Point value, double length) {
+static Geom::Point StrokeNormalize(const Geom::Point value, double length) {
     if ( length < 0.0000001 ) { 
         return Geom::Point(0, 0);
     } else { 

@@ -18,6 +18,8 @@
 #include <string>		// for string
 #include <cstring>
 
+#include "../io/ftos.h"  /* own include */ /* note - why in different dirs? */
+
 using std::string;
 
 string itos(int n)

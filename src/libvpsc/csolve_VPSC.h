@@ -60,7 +60,9 @@ int genXConstraints(int n, boxf[], Variable** vs, Constraint*** cs,
 int genYConstraints(int n, boxf[], Variable** vs, Constraint*** cs);
 
 void satisfyVPSC(Solver*);
+void deleteVPSC(Solver*);
 void solveVPSC(Solver*);
+void splitIncVPSC(IncSolver*);
 Solver* newIncSolver(int n, Variable* vs[], int m, Constraint* cs[]);
 void splitIncSolver(IncSolver*);
 int getSplitCnt(IncSolver *vpsc);

@@ -406,7 +406,7 @@ Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int wildPath,in
     if (startBord >= 0)
     {
       // parcours en profondeur pour mettre les leF et riF a leurs valeurs
-      swdData[startBord].misc = (void *) (1+nbNest);
+      swdData[startBord].misc = (void *)(intptr_t)(1 + nbNest);
       //printf("part de %d\n",startBord);
       int curBord = startBord;
       bool back = false;
@@ -507,7 +507,7 @@ Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int wildPath,in
               startBord=nb;
             }
           }
-          swdData[nb].misc = (void *) (1+nbNest);
+          swdData[nb].misc = (void *)(intptr_t)(1 + nbNest);
           swdData[nb].ind = searchInd++;
           swdData[nb].precParc = curBord;
           swdData[curBord].suivParc = nb;

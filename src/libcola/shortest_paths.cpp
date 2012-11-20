@@ -33,7 +33,7 @@ void floyd_warshall(
         }
     }
 }
-void dijkstra_init(Node* vs, vector<Edge>& es, double* eweights) {
+static void dijkstra_init(Node* vs, vector<Edge>& es, double* eweights) {
     for(unsigned i=0;i<es.size();i++) {
         unsigned u=es[i].first, v=es[i].second;
         vs[u].neighbours.push_back(&vs[v]);
@@ -42,7 +42,7 @@ void dijkstra_init(Node* vs, vector<Edge>& es, double* eweights) {
         vs[v].nweights.push_back(eweights[i]);
     }
 }
-void dijkstra(
+static void dijkstra(
         unsigned s,
         unsigned n,
         Node* vs,

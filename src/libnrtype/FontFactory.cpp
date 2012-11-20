@@ -276,7 +276,7 @@ family_name_compare(char const *a, char const *b)
 #endif
 }
 
-void noop(...) {}
+static void noop(...) {}
 //#define PANGO_DEBUG g_print
 #define PANGO_DEBUG noop
 
@@ -285,7 +285,7 @@ void noop(...) {}
 ///////////////////// FontFactory
 #ifndef USE_PANGO_WIN32
 // the substitute function to tell fontconfig to enforce outline fonts
-void FactorySubstituteFunc(FcPattern *pattern,gpointer /*data*/)
+static void FactorySubstituteFunc(FcPattern *pattern,gpointer /*data*/)
 {
     FcPatternAddBool(pattern, "FC_OUTLINE",FcTrue);
     //char *fam = NULL;

@@ -204,7 +204,7 @@ class ShiftSegment
 };
 typedef std::list<ShiftSegment> ShiftSegmentList;
 
-bool cmpShiftSegment(const ShiftSegment& u, const ShiftSegment& v)
+static bool cmpShiftSegment(const ShiftSegment& u, const ShiftSegment& v)
 {
     return u < v;
 }
@@ -488,7 +488,7 @@ Event **events;
 
 
 // Used for quicksort.  Must return <0, 0, or >0.
-int compare_events(const void *a, const void *b)
+static int compare_events(const void *a, const void *b)
 {
 	Event *ea = *(Event**) a;
 	Event *eb = *(Event**) b;

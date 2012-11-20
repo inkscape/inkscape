@@ -26,6 +26,7 @@
 //      on the average.
 ///////////////////////////////////////////////////////////////////////
 #include <math.h>
+#include "../io/ftos.h"  /* own include */ /* note - why in different dirs? */
 
 double rround(double x)
 {

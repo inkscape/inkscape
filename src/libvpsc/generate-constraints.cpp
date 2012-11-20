@@ -105,7 +105,7 @@ bool CmpNodePos::operator() (const Node* u, const Node* v) const {
 	 */
 }
 
-NodeSet* getLeftNeighbours(NodeSet &scanline,Node *v) {
+static NodeSet* getLeftNeighbours(NodeSet &scanline,Node *v) {
 	NodeSet *leftv = new NodeSet;
 	NodeSet::iterator i=scanline.find(v);
 	while(i--!=scanline.begin()) {
@@ -120,7 +120,7 @@ NodeSet* getLeftNeighbours(NodeSet &scanline,Node *v) {
 	}
 	return leftv;
 }
-NodeSet* getRightNeighbours(NodeSet &scanline,Node *v) {
+static NodeSet* getRightNeighbours(NodeSet &scanline,Node *v) {
 	NodeSet *rightv = new NodeSet;
 	NodeSet::iterator i=scanline.find(v);
 	for(++i;i!=scanline.end(); ++i) {
@@ -144,7 +144,7 @@ struct Event {
 	Event(EventType t, Node *v, double p) : type(t),v(v),pos(p) {};
 };
 Event **events;
-int compare_events(const void *a, const void *b) {
+static int compare_events(const void *a, const void *b) {
 	Event *ea=*(Event**)a;
 	Event *eb=*(Event**)b;
 	if(ea->v->r==eb->v->r) {

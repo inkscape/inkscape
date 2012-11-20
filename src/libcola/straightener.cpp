@@ -109,7 +109,7 @@ namespace straightener {
         Event(EventType t, Edge *e, double p) : type(t),v(NULL),e(e),pos(p) {};
     };
     Event **events;
-    int compare_events(const void *a, const void *b) {
+    static int compare_events(const void *a, const void *b) {
         Event *ea=*(Event**)a;
         Event *eb=*(Event**)b;
         if((ea->v!=NULL&&ea->v==eb->v)||(ea->e!=NULL&&ea->e==eb->e)) {

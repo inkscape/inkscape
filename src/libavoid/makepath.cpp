@@ -82,7 +82,7 @@ class ANode
 // it back into a heap) when getting the next node to examine.  This way we
 // get better complexity -- logarithmic pushs and pops to the heap.
 //
-bool operator<(const ANode &a, const ANode &b)
+static bool operator<(const ANode &a, const ANode &b)
 {
     if (a.f != b.f)
     {

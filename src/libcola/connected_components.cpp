@@ -39,7 +39,7 @@ namespace cola {
             Rectangle* r;
         };
         // Depth first search traversal of graph to find connected component
-        void dfs(Node* v,
+        static void dfs(Node* v,
                 list<Node*>& remaining,
                 Component* component,
                 map<unsigned,pair<Component*,unsigned> > &cmap) {

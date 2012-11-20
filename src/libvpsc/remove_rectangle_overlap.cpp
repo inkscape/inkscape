@@ -15,6 +15,7 @@
 #include "solve_VPSC.h"
 #include "variable.h"
 #include "constraint.h"
+#include "remove_rectangle_overlap.h"  /* own include */
 #ifdef RECTANGLE_OVERLAP_LOGGING
 #include <fstream>
 #include "blocks.h"

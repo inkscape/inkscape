@@ -75,7 +75,7 @@ typedef struct
 
 /** Unit Resolver...
  */
-bool unitresolverproc  (const gchar* identifier, GimpEevlQuantity *result, Unit* unit)
+static bool unitresolverproc  (const gchar* identifier, GimpEevlQuantity *result, Unit* unit)
 {
     static UnitTable unit_table;
 
