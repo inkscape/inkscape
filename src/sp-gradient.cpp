@@ -2051,13 +2051,32 @@ sp_radialgradient_create_pattern(SPPaintServer *ps,
     double scale = 1.0;
     double tolerance = cairo_get_tolerance(ct);
 
+    // NOTE: SVG2 will allow the use of a focus circle which can
+    // have its center outside the first circle.
+
     // code below suggested by Cairo devs to overcome tolerance problems
     // more: https://bugs.freedesktop.org/show_bug.cgi?id=40918
-    Geom::Point d = focus - center;
-    if (d.length() + tolerance > radius) {
-        scale = radius / d.length();
 
-        double dx = d.x(), dy = d.y();
+    // Corrected for
+    // https://bugs.launchpad.net/inkscape/+bug/970355
+
+    Geom::Affine gs2user = gr->gradientTransform;
+    Geom::Scale  gs2user_scale;
+
+    if (gr->getUnits() == SP_GRADIENT_UNITS_OBJECTBOUNDINGBOX && bbox) {
+        Geom::Affine bbox2user(bbox->width(), 0, 0, bbox->height(), bbox->left(), bbox->top());
+        gs2user *= bbox2user;
+        gs2user_scale = Geom::Scale( gs2user[0], gs2user[3] );
+    }
+
+    Geom::Point d = focus - center;
+    Geom::Point d_user = d * gs2user_scale;
+    Geom::Point r_user( radius, 0 );
+    r_user *= gs2user_scale;
+
+    if (d_user.length() + tolerance > r_user.length()) {
+        scale = r_user.length() / d_user.length();
+        double dx = d_user.x(), dy = d_user.y();
         cairo_user_to_device_distance(ct, &dx, &dy);
         if (!Geom::are_near(dx, 0, tolerance) ||
             !Geom::are_near(dy, 0, tolerance))
