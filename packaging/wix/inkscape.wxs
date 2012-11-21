@@ -32,6 +32,21 @@
 			</Component>
 		</DirectoryRef>
 		
+		<DirectoryRef Id="INSTALLDIR">
+			<Component Id="RegisterExtension" Guid="d544e040-573e-4ea8-983e-4bcae6b87f3d">
+				<ProgId Id="inkscape.svg" Description='scalable vector graphics file' Icon='file_inkscape_exe'>
+					<Extension Id='svg' ContentType='application/svg'>
+						<Verb Id='edit' Command='Edit with Inkscape' TargetFile='file_inkscape_exe' Argument='"%1"' />
+					</Extension>
+					<!-- currently this creates an error
+					<Extension Id='svgz' ContentType='application/svgz'>
+						<Verb Id='open' Command='Open with Inkscape' TargetFile='file_inkscape_exe' Argument='"%1"' />
+					</Extension>
+					-->
+				</ProgId>
+			</Component>
+		</DirectoryRef>
+
     
 
 		<Feature Id='Complete' Title='inkscape 0.48' Description='The complete Package' Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'  Absent="disallow" AllowAdvertise='no'>
@@ -40,16 +55,25 @@
 				<ComponentRef Id='MainExecutable' />
 			</Feature>
 -->
+			<!--
 			<Feature Id='MainProgram' Level='1' Title='inkscape Application' Description='the inkscape Application' Absent="disallow" AllowAdvertise='no'>
+			-->
 				<ComponentGroupRef Id='AllOther' />
+			<!--
 			</Feature>
+			-->
 			
 			<!-- shortcuts -->
 			<Feature Id='ApplicationShortcut' Level='1' Title='Start Menu entry' Description='an entry in the start Menu' AllowAdvertise='no'>
 				<ComponentRef Id='ApplicationShortcut' />
 			</Feature>
+			
 			<Feature Id='DesktopShortcut' Level='1' Title='Desktop link' Description='an link on the desktop' AllowAdvertise='no'>
 				<ComponentRef Id='DesktopShortcut' />
+			</Feature>
+			
+			<Feature Id='RegisterExtension' Level='1' Title='register file extension' Description='register .svg and .svgz file extension to explorer context menu' AllowAdvertise='no'>
+				<ComponentRef Id='RegisterExtension' />
 			</Feature>
 
 			<Feature Id='Examples' Level='1' Title='Examples' Description='examples as svg' AllowAdvertise='no'>

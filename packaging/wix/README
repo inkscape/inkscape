@@ -18,7 +18,6 @@ when completed there should be inkscape.msi in your path
 
 things still todo
 - detailed explanation what to do for new revisions
-- link .svg file names to inkscape
 - include some inkscapeish artwork
 - better filenames (nightly builds versus releases)
 - howto remove python .pyc files after deinstallation

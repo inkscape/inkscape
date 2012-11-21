@@ -28,6 +28,9 @@ def directory(root, breadcrumb, level, exclude=[]):
 		_id = '_%06d' % (len(file_ids.keys()) + 1)
 		file_ids[file_key] = 'component' + _id
 		wxs.write(indent(level)+ "<Component Id='component" + _id + "' Guid='" + str(uuid.uuid4()) + "' DiskId='1'>\n")
+		if file == 'inkscape.exe':
+			# we refenrence inkscape.exe in inkscape.wxs
+			_id = '_inkscape_exe'
 		wxs.write(indent(level + 1)+ "<File Id='file" + _id + "' Name='" + file + "' DiskId='1' Source='" + file_key + "' KeyPath='yes' />\n")
 		wxs.write(indent(level)+ "</Component>\n")
 	# then all directories
