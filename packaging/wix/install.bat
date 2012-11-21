@@ -1,8 +1,3 @@
-@echo set environment parameter ...
-rem call wixenv.bat
-
-@echo todo implement custom icon and artwork
-@echo todo insert files from ../source/release
 
 @echo build files.wxs
 python files.py
@@ -19,6 +14,7 @@ light -ext WixUIExtension -ext WiXUtilExtension inkscape.wixobj files.wixobj -o 
 @if NOT %ERRORLEVEL% == 0 goto theend
 
 @echo the installer is now created
+@rem uncomment following line if you want to test the installer
 goto theend
 
 @echo install ...

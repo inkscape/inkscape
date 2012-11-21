@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='windows-1252'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi' xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
-	<Product Name='Inkscape 0.48' Id='81922150-317e-4bb0-a31d-ff1c14f707c5' UpgradeCode='4d5fedaa-84a0-48be-bd2a-08246398361a' Language='1033' Codepage='1252' Version='1.7.0' Manufacturer='inkscape.org'>
+	<Product Name='Inkscape 0.48' Id='81922150-317e-4bb0-a31d-ff1c14f707c5' UpgradeCode='4d5fedaa-84a0-48be-bd2a-08246398361a' Language='1033' Codepage='1252' Version='0.48' Manufacturer='inkscape.org'>
 
 		<Package Id='*' Keywords='Installer' Description="Inkscape Installer" Comments='inkscape is registered trademark of inkscape.org' Manufacturer='inkscape.org' InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
 
@@ -67,7 +67,7 @@
 			<ComponentRef Id='ProgramMenuDir' />
 -->
 		</Feature>
-		<WixVariable Id="WixUILicenseRtf" Value="..\..\inkscape\COPYING" />
+		<WixVariable Id="WixUILicenseRtf" Value="gpl-2.0.rtf" />
 		<UIRef Id="WixUI_Mondo" />
 		<UIRef Id="WixUI_ErrorProgressText" />
 

@@ -14,7 +14,7 @@ def indent(level):
 		indentstring += '    '
 	return indentstring
 
-def directory(root, breadcrumb, level):
+def directory(root, breadcrumb, level, exclude=[]):
 	"""
 	list all files and directory recursivly
 	create the file_ids dictionary to be used in ComponentGroup references
@@ -22,7 +22,7 @@ def directory(root, breadcrumb, level):
 	global file_ids
 	global directory_ids
 	# first list files within directory
-	files = [ f for f in os.listdir(root) if os.path.isfile(os.path.join(root,f)) ]
+	files = [ f for f in os.listdir(root) if os.path.isfile(os.path.join(root,f)) and f not in exclude]
 	for file in files:
 		file_key = os.path.join(root, file)
 		_id = '_%06d' % (len(file_ids.keys()) + 1)
@@ -65,7 +65,7 @@ with open('files.wxs', 'w') as wxs:
 	wxs.write(indent(3) + "<Directory Id='ProgramFilesFolder' Name='PFiles'>\n")
 	wxs.write(indent(4) + "<Directory Id='INSTALLDIR' Name='Inkscape'>\n")
 	print "start parsing ..\..\inkscape"
-	directory('..\..\inkscape', 'inkscape', 5)
+	directory('..\..\inkscape', 'inkscape', 5, ['inkscape.dbg', 'inkview.dbg', 'gdb.exe'])
 	print "found %d files" % len(file_ids.keys())
 	wxs.write(indent(4) + "</Directory>\n")
 	wxs.write(indent(3) + "</Directory>\n")
