@@ -6,7 +6,7 @@
 # Christian Meyer <chrisime@gnome.org>, 2000-2002.
 # Christian Neumair <chris@gnome-de.org>, 2002, 2003.
 # Colin Marquardt <colin@marquardt-home.de>, 2004-2007.
-# Adib Taraben <theadib@yahoo.com>, 2004.
+# Adib Taraben <theadib@gmail.com>, 2004.
 # Jörg Müller <jfm@ram-brand.de>, 2005.
 # Wolfram Strempfer <wolfram@strempfer.de>, 2006.
 # McBen <viertelvor12@gmx.net>, 2008.
