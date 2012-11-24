@@ -22,6 +22,7 @@
 #include "filter-chemistry.h"
 #include "inkscape.h"
 #include "selection.h"
+#include "preferences.h"
 #include "style.h"
 #include "svg/css-ostringstream.h"
 #include "ui/icon-names.h"
@@ -58,6 +59,8 @@ FillAndStroke::FillAndStroke()
     _notebook.append_page(_page_fill, _createPageTabLabel(_("_Fill"), INKSCAPE_ICON("object-fill")));
     _notebook.append_page(_page_stroke_paint, _createPageTabLabel(_("Stroke _paint"), INKSCAPE_ICON("object-stroke")));
     _notebook.append_page(_page_stroke_style, _createPageTabLabel(_("Stroke st_yle"), INKSCAPE_ICON("object-stroke-style")));
+
+    _notebook.signal_switch_page().connect(sigc::mem_fun(this, &FillAndStroke::_onSwitchPage));
 
     _layoutPageFill();
     _layoutPageStrokePaint();
@@ -105,6 +108,23 @@ void FillAndStroke::setTargetDesktop(SPDesktop *desktop)
     }
 }
 
+#if WITH_GTKMM_3_0
+void FillAndStroke::_onSwitchPage(Gtk::Widget * /*page*/, guint pagenum)
+#else
+void FillAndStroke::_onSwitchPage(GtkNotebookPage * /*page*/, guint pagenum)
+#endif
+{
+    _savePagePref(pagenum);
+}
+
+void
+FillAndStroke::_savePagePref(guint page_num)
+{
+    // remember the current page
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    prefs->setInt("/dialogs/fillstroke/page", page_num);
+}
+
 void
 FillAndStroke::_layoutPageFill()
 {
@@ -133,6 +153,8 @@ FillAndStroke::showPageFill()
 {
     present();
     _notebook.set_current_page(0);
+    _savePagePref(0);
+
 }
 
 void
@@ -140,6 +162,7 @@ FillAndStroke::showPageStrokePaint()
 {
     present();
     _notebook.set_current_page(1);
+    _savePagePref(1);
 }
 
 void
@@ -147,6 +170,8 @@ FillAndStroke::showPageStrokeStyle()
 {
     present();
     _notebook.set_current_page(2);
+    _savePagePref(2);
+
 }
 
 Gtk::HBox&

@@ -32,6 +32,7 @@
 #include "desktop-style.h"
 #include "preferences.h"
 #include "sp-namedview.h"
+#include "sp-cursor.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "selection.h"
@@ -39,6 +40,8 @@
 #include "document-undo.h"
 
 #include "pixmaps/cursor-dropper.xpm"
+#include "pixmaps/cursor-dropper-f.xpm"
+#include "pixmaps/cursor-dropper-s.xpm"
 
 #include "dropper-context.h"
 #include "message-context.h"
@@ -56,6 +59,9 @@ static void sp_dropper_context_finish(SPEventContext *ec);
 static gint sp_dropper_context_root_handler(SPEventContext *ec, GdkEvent * event);
 
 static SPEventContextClass *parent_class;
+
+static GdkCursor *cursor_dropper_fill = NULL;
+static GdkCursor *cursor_dropper_stroke = NULL;
 
 GType sp_dropper_context_get_type()
 {
@@ -90,9 +96,13 @@ static void sp_dropper_context_class_init(SPDropperContextClass *klass)
 static void sp_dropper_context_init(SPDropperContext *dc)
 {
     SPEventContext *event_context = SP_EVENT_CONTEXT(dc);
-    event_context->cursor_shape = cursor_dropper_xpm;
+    event_context->cursor_shape = cursor_dropper_f_xpm;
     event_context->hot_x = 7;
     event_context->hot_y = 7;
+
+    cursor_dropper_fill = sp_cursor_new_from_xpm(cursor_dropper_f_xpm , 7, 7);
+    cursor_dropper_stroke = sp_cursor_new_from_xpm(cursor_dropper_s_xpm , 7, 7);
+
 }
 
 static void sp_dropper_context_setup(SPEventContext *ec)
@@ -143,6 +153,27 @@ static void sp_dropper_context_finish(SPEventContext *ec)
         sp_canvas_item_destroy(dc->area);
         dc->area = NULL;
     }
+
+    if (cursor_dropper_fill) {
+#if GTK_CHECK_VERSION(3,0,0)
+        g_object_unref(cursor_dropper_fill);
+#else
+        gdk_cursor_unref (cursor_dropper_fill);
+#endif
+        cursor_dropper_fill = NULL;
+    }
+    if (cursor_dropper_stroke) {
+#if GTK_CHECK_VERSION(3,0,0)
+        g_object_unref(cursor_dropper_stroke);
+#else
+        gdk_cursor_unref (cursor_dropper_stroke);
+#endif
+        cursor_dropper_fill = NULL;
+    }
+
+    //Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    //prefs->setBool("/tools/dropper/onetimepick", false);
+
 }
 
 
@@ -204,6 +235,13 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                 break;
             } else if (!event_context->space_panning) {
                 // otherwise, constantly calculate color no matter is any button pressed or not
+
+                // If one time pick with stroke set the pixmap
+                if (prefs->getBool("/tools/dropper/onetimepick", false) && prefs->getInt("/dialogs/fillstroke/page", 0) == 1) {
+                    //TODO Only set when not set already
+                    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(desktop)));
+                    gdk_window_set_cursor(window, cursor_dropper_stroke);
+                }
 
                 double rw = 0.0;
                 double R(0), G(0), B(0), A(0);
@@ -310,14 +348,24 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
 
                 double alpha_to_set = setalpha? dc->alpha : 1.0;
 
+                bool fill = !(event->button.state & GDK_SHIFT_MASK); // Stroke if Shift key held
+                if (prefs->getBool("/tools/dropper/onetimepick", false)) {
+                    // "One time" pick from Fill/Stroke dialog stroke page, always apply fill or stroke (ignore <Shift> key)
+                    fill = (prefs->getInt("/dialogs/fillstroke/page", 0) == 0)  ? true : false;
+                }
+
                 // do the actual color setting
                 sp_desktop_set_color(desktop,
                                      (event->button.state & GDK_MOD1_MASK)?
                                      ColorRGBA(1 - dc->R, 1 - dc->G, 1 - dc->B, alpha_to_set) : ColorRGBA(dc->R, dc->G, dc->B, alpha_to_set),
-                                     false,  !(event->button.state & GDK_SHIFT_MASK));
+                                     false,  fill);
 
                 // REJON: set aux. toolbar input to hex color!
 
+                if (event->button.state & GDK_SHIFT_MASK) {
+                    GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(desktop)));
+                    gdk_window_set_cursor(window, cursor_dropper_stroke);
+                }
 
                 if (!(sp_desktop_selection(desktop)->isEmpty())) {
                     DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_DROPPER,
@@ -332,25 +380,46 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                 ret = TRUE;
             }
             break;
-	case GDK_KEY_PRESS:
-            switch (get_group0_keyval(&event->key)) {
-		case GDK_KEY_Up:
-		case GDK_KEY_Down:
-		case GDK_KEY_KP_Up:
-		case GDK_KEY_KP_Down:
-                    // prevent the zoom field from activation
-                    if (!MOD__CTRL_ONLY) {
-                        ret = TRUE;
-                    }
-                    break;
-		case GDK_KEY_Escape:
-                    sp_desktop_selection(desktop)->clear();
-		default:
-                    break;
+    case GDK_KEY_PRESS:
+        switch (get_group0_keyval(&event->key)) {
+        case GDK_KEY_Up:
+        case GDK_KEY_Down:
+        case GDK_KEY_KP_Up:
+        case GDK_KEY_KP_Down:
+            // prevent the zoom field from activation
+            if (!MOD__CTRL_ONLY) {
+                ret = TRUE;
             }
             break;
-	default:
+        case GDK_KEY_Escape:
+            sp_desktop_selection(desktop)->clear();
+        case GDK_KEY_Shift_L:
+        case GDK_KEY_Shift_R:
+            if (!desktop->isWaitingCursor() && !prefs->getBool("/tools/dropper/onetimepick", false)) {
+                GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(desktop)));
+                gdk_window_set_cursor(window, cursor_dropper_stroke);
+            }
+
             break;
+        default:
+            break;
+        }
+        break;
+    case GDK_KEY_RELEASE:
+        switch (get_group0_keyval(&event->key)) {
+        case GDK_KEY_Shift_L:
+        case GDK_KEY_Shift_R:
+            if (!desktop->isWaitingCursor() && !prefs->getBool("/tools/dropper/onetimepick", false)) {
+                GdkWindow* window = gtk_widget_get_window(GTK_WIDGET(sp_desktop_canvas(desktop)));
+                gdk_window_set_cursor(window, cursor_dropper_fill);
+            }
+            break;
+        default:
+            break;
+        }
+        break;
+    default:
+        break;
     }
 
     if (!ret) {
