@@ -26,7 +26,8 @@
 
 		<DirectoryRef Id="DesktopFolder">
 			<Component Id="DesktopShortcut" Guid="3afc08a7-05a1-40cf-90c2-0d6c042bfc41">
-				<Shortcut Id="desktopFoobar10" Directory="DesktopFolder" Target="[INSTALLDIR]inkscape.exe" Name="Inkscape 0.48" WorkingDirectory='INSTALLDIR' Icon="inkscape.exe" IconIndex="0" />
+				<!-- Shortcut Id="desktopFoobar10" Directory="DesktopFolder" Target="[INSTALLDIR]inkscape.exe" Name="Inkscape 0.48" WorkingDirectory='INSTALLDIR' Icon="file_inkscape_exe" IconIndex="0" / -->
+				<Shortcut Id="desktopFoobar10" Directory="DesktopFolder" Target="[INSTALLDIR]inkscape.exe" Name="Inkscape 0.48" WorkingDirectory='INSTALLDIR' />
 				<RemoveFolder Id="DesktopFolder" On="uninstall"/>
 				<RegistryValue Root="HKCU" Key="Software\Microsoft\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
 			</Component>
@@ -38,11 +39,10 @@
 					<Extension Id='svg' ContentType='application/svg'>
 						<Verb Id='edit' Command='Edit with Inkscape' TargetFile='file_inkscape_exe' Argument='"%1"' />
 					</Extension>
-					<!-- currently this creates an error
 					<Extension Id='svgz' ContentType='application/svgz'>
 						<Verb Id='open' Command='Open with Inkscape' TargetFile='file_inkscape_exe' Argument='"%1"' />
 					</Extension>
-					-->
+					
 				</ProgId>
 			</Component>
 		</DirectoryRef>
@@ -91,11 +91,16 @@
 			<ComponentRef Id='ProgramMenuDir' />
 -->
 		</Feature>
+		<!-- set license text -->
 		<WixVariable Id="WixUILicenseRtf" Value="gpl-2.0.rtf" />
+		<!-- set dialog custom bitmaps -->
+		<WixVariable Id="WixUIDialogBmp" Value="Bitmaps\dialog.bmp"/>
+		<WixVariable Id="WixUIBannerBmp" Value="Bitmaps\banner.bmp"/>	
+
 		<UIRef Id="WixUI_Mondo" />
 		<UIRef Id="WixUI_ErrorProgressText" />
 
-		<Icon Id="inkscape.exe" SourceFile="..\..\inkscape\inkscape.exe" />
-
+		<Icon Id="inkscape.ico" SourceFile="..\..\inkscape.ico" />
+		<Property Id="ARPPRODUCTICON" Value="inkscape.ico" />
 	</Product>
 </Wix>
