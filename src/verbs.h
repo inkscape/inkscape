@@ -348,6 +348,7 @@ enum {
 gchar *sp_action_get_title (const SPAction *action);
 
 #include <map>
+#include <vector>
 
 namespace Inkscape {
 
@@ -418,6 +419,9 @@ private:
      */
     unsigned int  _code;
 
+    /** Name of the group the verb belongs to. */
+    gchar const * _group;
+
     /**
      * Whether this verb is set to default to sensitive or
      * insensitive when new actions are created.
@@ -452,16 +456,23 @@ public:
     gchar const * get_name (void) { return _name; }
 
     /** Accessor to get the internal variable. */
+    gchar const * get_short_tip (void) { return _tip; };
+
+    /** Accessor to get the internal variable. */
     gchar const * get_tip (void) ;
 
     /** Accessor to get the internal variable. */
     gchar const * get_image (void) { return _image; }
+
+    /** Get the verbs group */
+    gchar const * get_group (void) { return _group; }
 
     /** Set the name after initialization. */
     gchar const * set_name (gchar const * name) { _name = name; return _name; }
 
     /** Set the tooltip after initialization. */
     gchar const * set_tip (gchar const * tip) { _tip = tip; return _tip; }
+
 
 protected:
     SPAction *make_action_helper (Inkscape::UI::View::View *view, void (*perform_fun)(SPAction *, void *), void *in_pntr = NULL);
@@ -494,7 +505,8 @@ public:
          gchar const * id,
          gchar const * name,
          gchar const * tip,
-         gchar const * image) :
+         gchar const * image,
+         gchar const * group) :
         _actions(0),
         _id(id),
         _name(name),
@@ -503,12 +515,13 @@ public:
         _shortcut(0),
         _image(image),
         _code(code),
+        _group(group),
         _default_sensitive(true)
     {
         _verbs.insert(VerbTable::value_type(_code, this));
         _verb_ids.insert(VerbIDTable::value_type(_id, this));
     }
-    Verb (gchar const * id, gchar const * name, gchar const * tip, gchar const * image);
+    Verb (gchar const * id, gchar const * name, gchar const * tip, gchar const * image, gchar const * group);
     virtual ~Verb (void);
 
     SPAction * get_action(Inkscape::UI::View::View * view);
@@ -560,6 +573,8 @@ protected:
 
 public:
     static void list (void);
+    static std::vector<Inkscape::Verb *>getList (void);
+
 }; /* Verb class */
 
 

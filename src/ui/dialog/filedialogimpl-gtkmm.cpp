@@ -1047,7 +1047,9 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk( Gtk::Window &parentWindow,
         fileTypeCheckbox.set_active(prefs->getBool("/dialogs/save_as/append_extension", true));
     }
 
-    createFileTypeMenu();
+    if (_dialogType != CUSTOM_TYPE)
+        createFileTypeMenu();
+
     fileTypeComboBox.set_size_request(200,40);
     fileTypeComboBox.signal_changed().connect(
          sigc::mem_fun(*this, &FileSaveDialogImplGtk::fileTypeChangedCallback) );
@@ -1174,7 +1176,24 @@ void FileSaveDialogImplGtk::fileTypeChangedCallback()
     updateNameAndExtension();
 }
 
+void FileSaveDialogImplGtk::addFileType(Glib::ustring name, Glib::ustring pattern)
+{
+    //#Let user choose
+    FileType guessType;
+    guessType.name = name;
+    guessType.pattern = pattern;
+    guessType.extension = NULL;
+    #if WITH_GTKMM_2_24
+    fileTypeComboBox.append(guessType.name);
+    #else
+    fileTypeComboBox.append_text(guessType.name);
+    #endif
+    fileTypes.push_back(guessType);
 
+
+    fileTypeComboBox.set_active(0);
+    fileTypeChangedCallback(); //call at least once to set the filter
+}
 
 void FileSaveDialogImplGtk::createFileTypeMenu()
 {

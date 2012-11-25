@@ -152,6 +152,9 @@ Glib::ustring FileSaveDialog::getDocTitle()
 
 void FileSaveDialog::appendExtension(Glib::ustring& path, Inkscape::Extension::Output* outputExtension)
 {
+	if (!outputExtension)
+		return;
+
 	try {
 		bool appendExtension = true;
 		Glib::ustring utf8Name = Glib::filename_to_utf8( path );

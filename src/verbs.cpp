@@ -133,7 +133,7 @@ public:
              gchar const *name,
              gchar const *tip,
              gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("File"))
     { }
 }; // FileVerb class
 
@@ -152,7 +152,7 @@ public:
              gchar const *name,
              gchar const *tip,
              gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("Edit"))
     { }
 }; // EditVerb class
 
@@ -171,7 +171,7 @@ public:
                   gchar const *name,
                   gchar const *tip,
                   gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("Selection"))
     { }
 }; // SelectionVerb class
 
@@ -190,7 +190,7 @@ public:
               gchar const *name,
               gchar const *tip,
               gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("Layer"))
     { }
 }; // LayerVerb class
 
@@ -209,7 +209,7 @@ public:
                gchar const *name,
                gchar const *tip,
                gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("Object"))
     { }
 }; // ObjectVerb class
 
@@ -228,7 +228,7 @@ public:
                 gchar const *name,
                 gchar const *tip,
                 gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("Context"))
     { }
 }; // ContextVerb class
 
@@ -247,7 +247,7 @@ public:
              gchar const *name,
              gchar const *tip,
              gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("View"))
     { }
 }; // ZoomVerb class
 
@@ -267,7 +267,7 @@ public:
                gchar const *name,
                gchar const *tip,
                gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("Dialog"))
     { }
 }; // DialogVerb class
 
@@ -286,7 +286,7 @@ public:
              gchar const *name,
              gchar const *tip,
              gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("Help"))
     { }
 }; // HelpVerb class
 
@@ -305,7 +305,7 @@ public:
                  gchar const *name,
                  gchar const *tip,
                  gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("Help"))
     { }
 }; // TutorialVerb class
 
@@ -324,7 +324,7 @@ public:
               gchar const *name,
               gchar const *tip,
               gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("Text"))
     { }
 }; //TextVerb : public Verb
 
@@ -341,7 +341,7 @@ Verb::VerbIDTable Verb::_verb_ids;
  * each call it is incremented.  The list of allocated verbs is kept
  * in the \c _verbs hashtable which is indexed by the \c code.
  */
-Verb::Verb(gchar const *id, gchar const *name, gchar const *tip, gchar const *image) :
+Verb::Verb(gchar const *id, gchar const *name, gchar const *tip, gchar const *image, gchar const *group) :
     _actions(0),
     _id(id),
     _name(name),
@@ -350,6 +350,7 @@ Verb::Verb(gchar const *id, gchar const *name, gchar const *tip, gchar const *im
     _shortcut(0),
     _image(image),
     _code(0),
+    _group(group),
     _default_sensitive(false)
 {
     static int count = SP_VERB_LAST;
@@ -2002,6 +2003,7 @@ void DialogVerb::perform(SPAction *action, void *data)
         case SP_VERB_DIALOG_PRINT_COLORS_PREVIEW:
             dt->_dlg_mgr->showDialog("PrintColorsPreviewDialog");
             break;
+
         default:
             break;
     }
@@ -2104,7 +2106,7 @@ public:
                    gchar const *name,
                    gchar const *tip,
                    gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("Extensions"))
     {
         set_default_sensitive(false);
     }
@@ -2169,7 +2171,7 @@ public:
                    gchar const *name,
                    gchar const *tip,
                    gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("View"))
     {
         set_default_sensitive(false);
     }
@@ -2235,7 +2237,7 @@ public:
                    gchar const *name,
                    gchar const *tip,
                    gchar const *image) :
-        Verb(code, id, name, tip, image)
+        Verb(code, id, name, tip, image, _("Layer"))
     {
         set_default_sensitive(true);
     }
@@ -2294,8 +2296,8 @@ void LockAndHideVerb::perform(SPAction *action, void *data)
 // these must be in the same order as the SP_VERB_* enum in "verbs.h"
 Verb *Verb::_base_verbs[] = {
     // Header
-    new Verb(SP_VERB_INVALID, NULL, NULL, NULL, NULL),
-    new Verb(SP_VERB_NONE, "None", N_("None"), N_("Does nothing"), NULL),
+    new Verb(SP_VERB_INVALID, NULL, NULL, NULL, NULL, NULL),
+    new Verb(SP_VERB_NONE, "None", N_("None"), N_("Does nothing"), NULL, NULL),
 
     // File
     new FileVerb(SP_VERB_FILE_NEW, "FileNew", N_("Default"), N_("Create new document from the default template"),
@@ -2707,7 +2709,7 @@ Verb *Verb::_base_verbs[] = {
 #ifdef HAVE_GTK_WINDOW_FULLSCREEN
     new ZoomVerb(SP_VERB_FULLSCREEN, "FullScreen", N_("_Fullscreen"), N_("Stretch this document window to full screen"),
                  INKSCAPE_ICON("view-fullscreen")),
-    new ZoomVerb(SP_VERB_FULLSCREENFOCUS, "FullScreenFocus", N_("Fullscreen & Focus Mode"), Glib::ustring::format(N_("Stretch this document window to full screen"), N_(" and "), N_("Remove excess toolbars to focus on drawing")).c_str(),
+    new ZoomVerb(SP_VERB_FULLSCREENFOCUS, "FullScreenFocus", N_("Fullscreen & Focus Mode"), N_("Stretch this document window to full screen"),
                  INKSCAPE_ICON("view-fullscreen")),
 #endif // HAVE_GTK_WINDOW_FULLSCREEN
     new ZoomVerb(SP_VERB_FOCUSTOGGLE, "FocusToggle", N_("Toggle _Focus Mode"), N_("Remove excess toolbars to focus on drawing"),
@@ -2814,7 +2816,6 @@ Verb *Verb::_base_verbs[] = {
                    N_("Select which color separations to render in Print Colors Preview rendermode"), NULL),
     new DialogVerb(SP_VERB_DIALOG_EXPORT, "DialogExport", N_("_Export PNG Image..."),
                 N_("Export this document or a selection as a PNG image"), INKSCAPE_ICON("document-export")),
-
     // Help
     new HelpVerb(SP_VERB_HELP_ABOUT_EXTENSIONS, "HelpAboutExtensions", N_("About E_xtensions"),
                  N_("Information on Inkscape extensions"), NULL),
@@ -2898,9 +2899,27 @@ Verb *Verb::_base_verbs[] = {
 
 
     // Footer
-    new Verb(SP_VERB_LAST, " '\"invalid id", NULL, NULL, NULL)
+    new Verb(SP_VERB_LAST, " '\"invalid id", NULL, NULL, NULL, NULL)
 };
 
+std::vector<Inkscape::Verb *>
+Verb::getList (void) {
+
+    std::vector<Verb *> verbs;
+    // Go through the dynamic verb table
+    for (VerbTable::iterator iter = _verbs.begin(); iter != _verbs.end(); ++iter) {
+        Verb * verb = iter->second;
+        if (verb->get_code() == SP_VERB_INVALID ||
+                verb->get_code() == SP_VERB_NONE ||
+                verb->get_code() == SP_VERB_LAST) {
+            continue;
+        }
+
+        verbs.push_back(verb);
+    }
+
+    return verbs;
+};
 
 void
 Verb::list (void) {

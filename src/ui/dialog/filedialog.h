@@ -208,6 +208,8 @@ public:
 
     virtual Glib::ustring getCurrentDirectory() = 0;
 
+    virtual void addFileType(Glib::ustring name, Glib::ustring pattern) = 0;
+
 protected:
 
     /**

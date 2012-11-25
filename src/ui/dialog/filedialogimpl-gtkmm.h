@@ -291,6 +291,7 @@ public:
     virtual void setSelectionType( Inkscape::Extension::Extension * key );
 
 	Glib::ustring getCurrentDirectory();
+	void addFileType(Glib::ustring name, Glib::ustring pattern);
 
 private:
     //void change_title(const Glib::ustring& title);

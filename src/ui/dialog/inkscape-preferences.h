@@ -18,15 +18,19 @@
 #include <iostream>
 #include <vector>
 #include "ui/widget/preferences-widget.h"
+#include "ui/widget/button.h"
+#include <stddef.h>
 #include <gtkmm/colorbutton.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/treestore.h>
 #include <gtkmm/treeview.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/notebook.h>
-#include <stddef.h>
 #include <gtkmm/textview.h>
 #include <gtkmm/scrolledwindow.h>
+#include <gtkmm/liststore.h>
+#include <gtkmm/treemodel.h>
+#include <gtkmm/treemodelfilter.h>
 
 #include "ui/widget/panel.h"
 
@@ -60,6 +64,7 @@ enum {
     PREFS_PAGE_UI,
     PREFS_PAGE_UI_WINDOWS,
     PREFS_PAGE_UI_GRIDS,
+    PREFS_PAGE_UI_KEYBOARD_SHORTCUTS,
     PREFS_PAGE_BEHAVIOR,
     PREFS_PAGE_BEHAVIOR_SELECTING,
     PREFS_PAGE_BEHAVIOR_TRANSFORMS,
@@ -79,6 +84,7 @@ enum {
     PREFS_PAGE_BITMAPS,
     PREFS_PAGE_RENDERING,
     PREFS_PAGE_SPELLCHECK
+
 };
 
 namespace Inkscape {
@@ -165,6 +171,8 @@ protected:
     UI::Widget::DialogPage _page_system;
     UI::Widget::DialogPage _page_bitmaps;
     UI::Widget::DialogPage _page_spellcheck;
+
+    UI::Widget::DialogPage _page_keyshortcuts;
 
     UI::Widget::PrefSpinButton _mouse_sens;
     UI::Widget::PrefSpinButton _mouse_thres;
@@ -337,11 +345,15 @@ protected:
     UI::Widget::PrefCheckButton _spell_ignorenumbers;
     UI::Widget::PrefCheckButton _spell_ignoreallcaps;
 
+
     UI::Widget::PrefCombo       _misc_overs_bitmap;
     UI::Widget::PrefEntryFileButtonHBox       _misc_bitmap_editor;
     UI::Widget::PrefCheckButton _misc_bitmap_autoreload;
     UI::Widget::PrefSpinButton  _bitmap_copy_res;
     UI::Widget::PrefCombo       _bitmap_import;
+
+    UI::Widget::PrefEntry       _kb_search;
+    UI::Widget::PrefCombo       _kb_filelist;
 
     UI::Widget::PrefCheckButton _save_use_current_dir;
     UI::Widget::PrefCheckButton _save_autosave_enable;
@@ -411,6 +423,37 @@ protected:
     UI::Widget::PrefEntry       _importexport_ocal_username;
     UI::Widget::PrefEntry       _importexport_ocal_password;
 
+    /*
+     * Keyboard shortcut members
+     */
+    class ModelColumns: public Gtk::TreeModel::ColumnRecord {
+    public:
+        ModelColumns() {
+            add(name);
+            add(id);
+            add(shortcut);
+            add(description);
+            add(shortcutid);
+            add(user_set);
+        }
+        virtual ~ModelColumns() {
+        }
+
+        Gtk::TreeModelColumn<Glib::ustring> name;
+        Gtk::TreeModelColumn<Glib::ustring> id;
+        Gtk::TreeModelColumn<Glib::ustring> shortcut;
+        Gtk::TreeModelColumn<Glib::ustring> description;
+        Gtk::TreeModelColumn<unsigned int> shortcutid;
+        Gtk::TreeModelColumn<unsigned int> user_set;
+    };
+    ModelColumns _kb_columns;
+    static ModelColumns &onKBGetCols();
+    Glib::RefPtr<Gtk::TreeStore> _kb_store;
+    Gtk::TreeView _kb_tree;
+    Gtk::CellRendererAccel _kb_shortcut_renderer;
+    Glib::RefPtr<Gtk::TreeModelFilter> _kb_filter;
+    gboolean _kb_shortcuts_loaded;
+
     int _max_dialog_width;
     int _max_dialog_height;
     int _sb_width;
@@ -441,8 +484,25 @@ protected:
     void initPageBitmaps();
     void initPageSystem();
     void initPageI18n(); // Do we still need it?
+    void initKeyboardShortcuts(Gtk::TreeModel::iterator iter_ui);
 
     void _presentPages();
+
+    /*
+     * Functions for the Keyboard shortcut editor panel
+     */
+    void onKBReset();
+    void onKBImport();
+    void onKBExport();
+    void onKBList();
+    void onKBRealize();
+    void onKBListKeyboardShortcuts();
+    void onKBTreeEdited (const Glib::ustring& path, guint accel_key, Gdk::ModifierType accel_mods, guint hardware_keycode);
+    void onKBTreeCleared(const Glib::ustring& path_string);
+    bool onKBSearchKeyEvent(GdkEventKey *event);
+    bool onKBSearchFilter(const Gtk::TreeModel::const_iterator& iter);
+    static void onKBShortcutRenderer(Gtk::CellRenderer *rndr, Gtk::TreeIter const &iter);
+
 
 private:
     InkscapePreferences();

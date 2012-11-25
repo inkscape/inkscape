@@ -343,6 +343,8 @@ public:
 
     virtual void setSelectionType( Inkscape::Extension::Extension *key );
 
+    virtual void addFileType(Glib::ustring name, Glib::ustring pattern);
+
 private:
 	/// A handle to the title label and edit box
     HWND _title_label;
