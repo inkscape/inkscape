@@ -254,6 +254,7 @@ src/ui/dialog/print.cpp
 src/ui/dialog/print-colors-preview-dialog.cpp
 src/ui/dialog/scriptdialog.cpp
 src/ui/dialog/svg-fonts-dialog.cpp
+src/ui/dialog/symbols.cpp
 src/ui/dialog/swatches.cpp
 src/ui/dialog/tile.cpp
 src/ui/dialog/tracedialog.cpp

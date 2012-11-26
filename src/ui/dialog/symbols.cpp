@@ -15,6 +15,8 @@
 #include <iostream>
 #include <algorithm>
 
+#include <glibmm/i18n.h>
+
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/label.h>
 #include <gtkmm/table.h>
@@ -97,16 +99,16 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   guint row = 0;
 
   /******************** Symbol Sets *************************/
-  Gtk::Label* labelSet = new Gtk::Label("Symbol set: ");
+  Gtk::Label* labelSet = new Gtk::Label(_("Symbol set: "));
   table->attach(*Gtk::manage(labelSet),0,1,row,row+1,Gtk::SHRINK,Gtk::SHRINK);
 
   symbolSet = new Gtk::ComboBoxText();  // Fill in later
 #if WITH_GTKMM_2_24
-  symbolSet->append("Current Document");
+  symbolSet->append(_("Current Document"));
 #else
-  symbolSet->append_text("Current Document");
+  symbolSet->append_text(_("Current Document"));
 #endif
-  symbolSet->set_active_text("Current Document");
+  symbolSet->set_active_text(_("Current Document"));
   table->attach(*Gtk::manage(symbolSet),1,2,row,row+1,Gtk::FILL|Gtk::EXPAND,Gtk::SHRINK);
 
   sigc::connection connSet =
@@ -142,12 +144,12 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   ++row;
 
   /******************** Preview Scale ***********************/
-  Gtk::Label* labelScale = new Gtk::Label("Preview scale: ");
+  Gtk::Label* labelScale = new Gtk::Label(_("Preview scale: "));
   table->attach(*Gtk::manage(labelScale),0,1,row,row+1,Gtk::SHRINK,Gtk::SHRINK);
 
   previewScale = new Gtk::ComboBoxText();
   const gchar *scales[] =
-    {"Fit", "Fit to width", "Fit to height", "0.1", "0.2", "0.5", "1.0", "2.0", "5.0", NULL};
+    {_("Fit"), _("Fit to width"), _("Fit to height"), "0.1", "0.2", "0.5", "1.0", "2.0", "5.0", NULL};
   for( int i = 0; scales[i]; ++i ) {
 #if WITH_GTKMM_2_24
     previewScale->append(scales[i]);
@@ -165,7 +167,7 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   ++row;
 
   /******************** Preview Size ************************/
-  Gtk::Label* labelSize = new Gtk::Label("Preview size: ");
+  Gtk::Label* labelSize = new Gtk::Label(_("Preview size: "));
   table->attach(*Gtk::manage(labelSize),0,1,row,row+1,Gtk::SHRINK,Gtk::SHRINK);
 
   previewSize = new Gtk::ComboBoxText();

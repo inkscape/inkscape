@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-25 20:58+0100\n"
+"POT-Creation-Date: 2012-11-26 07:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19052,6 +19052,38 @@ msgstr ""
 
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:932
 msgid "Preview Text:"
+msgstr ""
+
+#. ******************* Symbol Sets ************************
+#: ../src/ui/dialog/symbols.cpp:102
+msgid "Symbol set: "
+msgstr ""
+
+#: ../src/ui/dialog/symbols.cpp:107 ../src/ui/dialog/symbols.cpp:109
+#: ../src/ui/dialog/symbols.cpp:111
+msgid "Current Document"
+msgstr ""
+
+#. ******************* Preview Scale **********************
+#: ../src/ui/dialog/symbols.cpp:147
+msgid "Preview scale: "
+msgstr ""
+
+#: ../src/ui/dialog/symbols.cpp:152
+msgid "Fit"
+msgstr ""
+
+#: ../src/ui/dialog/symbols.cpp:152
+msgid "Fit to width"
+msgstr ""
+
+#: ../src/ui/dialog/symbols.cpp:152
+msgid "Fit to height"
+msgstr ""
+
+#. ******************* Preview Size ***********************
+#: ../src/ui/dialog/symbols.cpp:170
+msgid "Preview size: "
 msgstr ""
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
