@@ -3,7 +3,6 @@
 if WITH_EXT_GDL
 
 EXTRA_DIST += \
-        libgdl/gdl-tools.h		\
 	libgdl/gdl-dock-object.h	\
 	libgdl/gdl-dock-master.h	\
 	libgdl/gdl-dock.h		\
@@ -13,7 +12,6 @@ EXTRA_DIST += \
 	libgdl/gdl-dock-tablabel.h	\
 	libgdl/gdl-dock-placeholder.h	\
 	libgdl/gdl-dock-bar.h		\
-	libgdl/gdl-stock-icons.h	\
 	libgdl/gdl-i18n.h		\
 	libgdl/gdl-i18n.c		\
 	libgdl/gdl-dock-object.c	\
@@ -47,7 +45,6 @@ libgdl/clean:
 	rm -f libgdl/libgdl.a $(libgdl_gdl_a_OBJECTS)
 
 libgdl_libgdl_a_SOURCES =	\
-	libgdl/gdl-tools.h		\
 	libgdl/gdl-dock-object.h	\
 	libgdl/gdl-dock-master.h	\
 	libgdl/gdl-dock.h		\
@@ -57,7 +54,6 @@ libgdl_libgdl_a_SOURCES =	\
 	libgdl/gdl-dock-tablabel.h	\
 	libgdl/gdl-dock-placeholder.h	\
 	libgdl/gdl-dock-bar.h		\
-	libgdl/gdl-stock-icons.h	\
 	libgdl/gdl-i18n.h		\
 	libgdl/gdl-i18n.c		\
 	libgdl/gdl-dock-object.c	\

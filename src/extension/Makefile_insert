@@ -3,7 +3,6 @@
 ink_common_sources +=	\
     extension/extension.cpp	\
     extension/extension.h	\
-    extension/extension-forward.h	\
     extension/db.cpp	\
     extension/db.h	\
     extension/dependency.cpp \

@@ -209,21 +209,8 @@ EXTRA_DIST = \
 	packaging/win32/portable/App/AppInfo/appicon_32.png \
 	packaging/win32/portable/App/AppInfo/appinfo.ini \
 	packaging/win32/portable/App/AppInfo/installer.ini \
-	packaging/win32/portable/Other/Help/images/donation_button.png \
-	packaging/win32/portable/Other/Help/images/favicon.ico \
-	packaging/win32/portable/Other/Help/images/help_background_footer.png \
-	packaging/win32/portable/Other/Help/images/help_background_header.png \
-	packaging/win32/portable/Other/Help/images/help_logo_top.png \
-	packaging/win32/portable/Other/Source/InkscapePortable.ini \
-	packaging/win32/portable/Other/Source/InkscapePortable.jpg \
-	packaging/win32/portable/Other/Source/InkscapePortable.nsi \
-	packaging/win32/portable/Other/Source/License.txt \
-	packaging/win32/portable/Other/Source/PortableApps.comInstallerCustom.nsh \
-	packaging/win32/portable/Other/Source/PortableApps.comLauncherLANG_ENGLISH.nsh \
-	packaging/win32/portable/Other/Source/Readme.txt \
-	packaging/win32/portable/Other/Source/ReplaceInFileWithTextReplace.nsh \
-        po/inkscape.pot \
-        po/update_po_files.sh \
+	po/inkscape.pot \
+	po/update_po_files.sh \
 	src/inkscape.rc	src/inkview.rc
 
 # We want the built inkscape.1 to go in the distributed .tar.gz so

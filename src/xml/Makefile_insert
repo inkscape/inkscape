@@ -40,8 +40,7 @@ ink_common_sources +=	\
 	xml/subtree.cpp	\
 	xml/subtree.h	\
 	xml/text-node.h \
-	xml/invalid-operation-exception.h \
-	xml/xml-forward.h
+	xml/invalid-operation-exception.h
 
 # ######################
 # ### CxxTest stuff ####

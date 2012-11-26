@@ -40,7 +40,7 @@ ink_common_sources +=	\
 	dir-util.cpp dir-util.h						\
 	document.cpp document.h document-private.h			\
 	document-subset.cpp document-subset.h				\
-	document-undo.cpp						\
+	document-undo.cpp document-undo.h \
 	doxygen-main.cpp						\
 	draw-anchor.cpp	draw-anchor.h					\
 	draw-context.cpp draw-context.h					\
@@ -61,7 +61,6 @@ ink_common_sources +=	\
 	filter-enums.cpp filter-enums.h					\
 	fixes.cpp							\
 	flood-context.cpp flood-context.h				\
-	forward.h							\
 	gc-alloc.h							\
 	gc-anchored.h gc-anchored.cpp					\
 	gc-core.h							\

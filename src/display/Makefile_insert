@@ -47,7 +47,6 @@ ink_common_sources += \
 	display/guideline.h	\
 	display/nr-3dutils.cpp \
 	display/nr-3dutils.h \
-	display/nr-arena-forward.h	\
 	display/nr-filter-blend.cpp     \
 	display/nr-filter-blend.h       \
 	display/nr-filter-colormatrix.cpp	\
@@ -107,6 +106,8 @@ ink_common_sources += \
 	display/sodipodi-ctrlrect.h	\
 	display/sp-canvas.cpp	\
 	display/sp-canvas.h	\
+	display/sp-canvas-item.h \
+	display/sp-canvas-group.h \
 	display/sp-canvas-util.cpp	\
 	display/sp-canvas-util.h	\
 	display/sp-ctrlcurve.cpp	\

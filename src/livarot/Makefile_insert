@@ -37,6 +37,5 @@ livarot_libvarot_a_SOURCES =	\
 	livarot/sweep-event.cpp \
 	livarot/sweep-event.h	\
 	livarot/sweep-event-queue.h	\
-	livarot/livarot-forward.h \
 	livarot/path-description.h \
 	livarot/path-description.cpp

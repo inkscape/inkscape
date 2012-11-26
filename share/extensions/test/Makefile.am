@@ -42,7 +42,6 @@ EXTRA_DIST = \
 		perfectboundcover.test.py \
 		perspective.test.py \
 		polyhedron_3d.test.py \
-		printing-marks.test.py \
 		radiusrand.test.py \
 		render_alphabetsoup.test.py \
 		render_barcode.test.py \
