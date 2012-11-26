@@ -173,14 +173,7 @@ public:
     virtual bool hasCursor() const {return gdk_device_get_has_cursor (device);}
 
     virtual gint getNumKeys() const {
-// Backward-compatibility: The GSEAL-compliant
-// gdk_device_get_n_keys function was only introduced
-// with GTK 2.24
-#if GTK_CHECK_VERSION(2, 24, 0)
-	    return gdk_device_get_n_keys (device);
-#else
-	    return device->num_keys;
-#endif // GTK_CHECK_VERSION
+        return gdk_device_get_n_keys (device);
     }
     virtual Glib::ustring getLink() const {return link;}
     virtual void setLink( Glib::ustring const& link ) {this->link = link;}

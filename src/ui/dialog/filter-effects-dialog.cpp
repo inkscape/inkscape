@@ -1058,11 +1058,7 @@ private:
 
     void update()
     {
-#if WITH_GTKMM_2_24
-	    _box.hide();
-#else
-    	    _box.hide_all();
-#endif
+        _box.hide();
         _box.show();
         _light_box.show_all();
 
@@ -1128,13 +1124,8 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
     if(col)
        col->add_attribute(_cell_toggle.property_active(), _columns.sel);
     _list.append_column_editable(_("_Filter"), _columns.label);
-#if WITH_GTKMM_2_24
     ((Gtk::CellRendererText*)_list.get_column(1)->get_first_cell())->
         signal_edited().connect(sigc::mem_fun(*this, &FilterEffectsDialog::FilterModifier::on_name_edited));
-#else
-    ((Gtk::CellRendererText*)_list.get_column(1)->get_first_cell_renderer())->
-        signal_edited().connect(sigc::mem_fun(*this, &FilterEffectsDialog::FilterModifier::on_name_edited));
-#endif
 
     sw->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
     sw->set_shadow_type(Gtk::SHADOW_IN);
@@ -2648,11 +2639,7 @@ void FilterEffectsDialog::update_filter_general_settings_view()
         }
         else {
             std::vector<Gtk::Widget*> vect = _settings_tab2.get_children();
-#if WITH_GTKMM_2_24
             vect[0]->hide();
-#else
-            vect[0]->hide_all();
-#endif
             _no_filter_selected.show();
         }
 
@@ -2671,11 +2658,7 @@ void FilterEffectsDialog::update_settings_view()
 
     std::vector<Gtk::Widget*> vect1 = _settings_tab1.get_children();
     for(unsigned int i=0; i<vect1.size(); i++) 
-#if WITH_GTKMM_2_24
 	    vect1[i]->hide();
-#else
-	    vect1[i]->hide_all();
-#endif
     _empty_settings.show();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -2699,11 +2682,7 @@ void FilterEffectsDialog::update_settings_view()
 //Second Tab
 
     std::vector<Gtk::Widget*> vect2 = _settings_tab2.get_children();
-#if WITH_GTKMM_2_24
     vect2[0]->hide();
-#else
-    vect2[0]->hide_all();
-#endif
     _no_filter_selected.show();
 
     SPFilter* filter = _filter_modifier.get_selected_filter();

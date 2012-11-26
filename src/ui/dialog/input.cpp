@@ -609,11 +609,7 @@ InputDialogImpl::InputDialogImpl() :
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
 
-#if WITH_GTKMM_2_24
     linkCombo.append(_("None"));
-#else
-    linkCombo.append_text(_("None"));
-#endif
     linkCombo.set_active_text(_("None"));
     linkCombo.set_sensitive(false);
     linkConnection = linkCombo.signal_changed().connect(sigc::mem_fun(*this, &InputDialogImpl::linkComboChanged));
@@ -1282,24 +1278,15 @@ void InputDialogImpl::resyncToSelection() {
             devDetails.set_sensitive(true);
 
             linkConnection.block();
-#if WITH_GTKMM_2_24
             linkCombo.remove_all();
             linkCombo.append(_("None"));
-#else
-            linkCombo.clear_items();
-            linkCombo.append_text(_("None"));
-#endif
             linkCombo.set_active(0);
             if ( dev->getSource() != Gdk::SOURCE_MOUSE ) {
                 Glib::ustring linked = dev->getLink();
                 std::list<Glib::RefPtr<InputDevice const> > devList = Inkscape::DeviceManager::getManager().getDevices();
                 for ( std::list<Glib::RefPtr<InputDevice const> >::const_iterator it = devList.begin(); it != devList.end(); ++it ) {
                     if ( ((*it)->getSource() != Gdk::SOURCE_MOUSE) && ((*it) != dev) ) {
-#if WITH_GTKMM_2_24
                         linkCombo.append((*it)->getName().c_str());
-#else
-                        linkCombo.append_text((*it)->getName().c_str());
-#endif
                         if ( (linked.length() > 0) && (linked == (*it)->getId()) ) {
                             linkCombo.set_active_text((*it)->getName().c_str());
                         }
@@ -1334,18 +1321,10 @@ void InputDialogImpl::setupValueAndCombo( gint reported, gint actual, Gtk::Label
     label.set_label(tmp);
     g_free(tmp);
 
-#if WITH_GTKMM_2_24
     combo.remove_all();
-#else
-    combo.clear_items();
-#endif
     for ( gint i = 1; i <= reported; ++i ) {
         tmp = g_strdup_printf("%d", i);
-#if WITH_GTKMM_2_24
         combo.append(tmp);
-#else
-        combo.append_text(tmp);
-#endif
         g_free(tmp);
     }
 

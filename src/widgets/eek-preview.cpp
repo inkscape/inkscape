@@ -296,15 +296,8 @@ static gboolean eek_preview_draw(GtkWidget* widget, cairo_t* cr)
 	    GdkWindow *da_window = gtk_widget_get_window(GTK_WIDGET(da));
 	    cairo_t *cr = gdk_cairo_create(da_window);
 
-#if GTK_CHECK_VERSION(2,24,0)
 	    gint w = gdk_window_get_width(da_window);
 	    gint h = gdk_window_get_height(da_window);
-#else
-        gint w = 0;
-        gint h = 0;
-	    gdk_drawable_get_size(da_window, &w, &h);
-#endif
-
 
 	    if ((w != preview->_scaledW) || (h != preview->_scaledH)) {
             if (preview->_scaled) {

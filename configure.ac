@@ -807,7 +807,7 @@ else
 		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
 	fi
 
-	PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.24  gtk+-2.0 >= 2.22  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.22)
+	PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.24  gtk+-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.24)
 	
 	# Disable deprecated symbols to make GTK+ 3 migration easier.
 	# This should also be applied to GTK+ 3 builds too,
@@ -826,19 +826,6 @@ else
 fi
 
 AM_CONDITIONAL(WITH_EXT_GDL, test "x$with_gtkmm_3_0" = "xyes")
-
-dnl ***********************************
-dnl Checks for specific series of Gtkmm
-dnl  - There are no convenient macros 
-dnl    defined in Gtkmm itself, so we 
-dnl    need to perform these checks 
-dnl    ourselves.
-dnl ***********************************
-
-PKG_CHECK_MODULES(GTKMM_2_24, gtkmm-2.4 >= 2.24, with_gtkmm_2_24=yes, with_gtkmm_2_24=no)
-if test "x$with_gtkmm_2_24" = "xyes"; then
-	AC_DEFINE(WITH_GTKMM_2_24,1,[Build with Gtkmm 2.24.x or higher])
-fi
 
 dnl Ideally, we want to avoid including any glib headers other than the 
 dnl top-level <glib.h>, because they are all deprecated in glib >= 2.31.

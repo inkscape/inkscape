@@ -305,11 +305,7 @@ Gtk::Widget * ParamRadioButton::get_widget(SPDocument * doc, Inkscape::XML::Node
         switch ( _mode ) {
             case MINIMAL:
             {
-#if WITH_GTKMM_2_24
                 cbt->append(*text);
-#else
-                cbt->append_text(*text);
-#endif
                 if (!entr->value->compare(_value)) {
                     cbt->set_active_text(*text);
                     comboSet = true;

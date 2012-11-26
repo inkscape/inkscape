@@ -106,30 +106,12 @@ TextEdit::TextEdit()
     GtkWidget *px = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("text_line_spacing") );
     layout_hbox.pack_start(*Gtk::manage(Glib::wrap(px)), false, false);
 
-/*
-This would introduce dependency on gtk version 2.24 which is currently not available in
-Trisquel GNU/Linux 4.5.1 (released on May 25th, 2011)
-This conditional and its #else block can be deleted in the future.
-*/
-#if GTK_CHECK_VERSION(2, 24,0)
     spacing_combo = gtk_combo_box_text_new_with_entry ();
-#else
-    spacing_combo = gtk_combo_box_entry_new_text ();
-#endif
     gtk_widget_set_size_request (spacing_combo, 90, -1);
 
     const gchar *spacings[] = {"50%", "80%", "90%", "100%", "110%", "120%", "130%", "140%", "150%", "200%", "300%", NULL};
     for (int i = 0; spacings[i]; i++) {
-/*
-This would introduce dependency on gtk version 2.24 which is currently not available in
-Trisquel GNU/Linux 4.5.1 (released on May 25th, 2011)
-This conditional and its #else block can be deleted in the future.
-*/
-#if GTK_CHECK_VERSION(2, 24,0)
         gtk_combo_box_text_append_text((GtkComboBoxText *) spacing_combo, spacings[i]);
-#else
-        gtk_combo_box_append_text((GtkComboBox *) spacing_combo, spacings[i]);
-#endif
     }
 
     gtk_widget_set_tooltip_text (px, _("Spacing between lines (percent of font size)"));
@@ -505,16 +487,7 @@ SPCSSAttr *TextEdit::getTextStyle ()
         // Note that CSS 1.1 does not support line-height; we set it for consistency, but also set
         // sodipodi:linespacing for backwards compatibility; in 1.2 we use line-height for flowtext
 
-/*
-This would introduce dependency on gtk version 2.24 which is currently not available in
-Trisquel GNU/Linux 4.5.1 (released on May 25th, 2011)
-This conditional and its #else block can be deleted in the future.
-*/
-#if GTK_CHECK_VERSION(2, 24,0)
         const gchar *sstr = gtk_combo_box_text_get_active_text ((GtkComboBoxText *) spacing_combo);
-#else
-        const gchar *sstr = gtk_entry_get_text ((GtkEntry *) (gtk_bin_get_child (GTK_BIN (spacing_combo))));
-#endif
         sp_repr_css_set_property (css, "line-height", sstr);
 
         return css;

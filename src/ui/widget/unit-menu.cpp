@@ -34,11 +34,7 @@ bool UnitMenu::setUnitType(UnitType unit_type)
     UnitTable::UnitMap::iterator iter = m.begin();
     while(iter != m.end()) {
         Glib::ustring text = (*iter).first;
-#if WITH_GTKMM_2_24
         append(text);
-#else
-        append_text(text);
-#endif
         ++iter;
     }
     _type = unit_type;
@@ -49,11 +45,7 @@ bool UnitMenu::setUnitType(UnitType unit_type)
 
 bool UnitMenu::resetUnitType(UnitType unit_type) 
 {
-#if WITH_GTKMM_2_24
-	remove_all();
-#else
-	clear_items();
-#endif
+    remove_all();
 
     return setUnitType(unit_type);
 }
@@ -61,11 +53,7 @@ bool UnitMenu::resetUnitType(UnitType unit_type)
 void UnitMenu::addUnit(Unit const& u)
 {
     _unit_table.addUnit(u, false);
-#if WITH_GTKMM_2_24
     append(u.abbr);
-#else
-    append_text(u.abbr);
-#endif
 }
 
 Unit UnitMenu::getUnit() const

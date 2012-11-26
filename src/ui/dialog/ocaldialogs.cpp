@@ -963,11 +963,7 @@ void SearchResultList::populate_from_xml(xmlNode * a_node)
             {
                 if (!strcmp((const char*)cur_node->name, "title"))
                 {
-#if WITH_GTKMM_2_24
                     row_num = append("");
-#else
-                    row_num = append_text("");
-#endif
                     xmlChar *xml_title = xmlNodeGetContent(cur_node);
                     char* title = (char*) xml_title;
                     

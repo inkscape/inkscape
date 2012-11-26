@@ -1040,7 +1040,6 @@ AlignAndDistribute::AlignAndDistribute()
 
     //Rest of the widgetry
 
-#if WITH_GTKMM_2_24
     _combo.append(_("Last selected"));
     _combo.append(_("First selected"));
     _combo.append(_("Biggest object"));
@@ -1048,15 +1047,6 @@ AlignAndDistribute::AlignAndDistribute()
     _combo.append(_("Page"));
     _combo.append(_("Drawing"));
     _combo.append(_("Selection"));
-#else
-    _combo.append_text(_("Last selected"));
-    _combo.append_text(_("First selected"));
-    _combo.append_text(_("Biggest object"));
-    _combo.append_text(_("Smallest object"));
-    _combo.append_text(_("Page"));
-    _combo.append_text(_("Drawing"));
-    _combo.append_text(_("Selection"));
-#endif
     _combo.set_active(prefs->getInt("/dialogs/align/align-to", 6));
     _combo.signal_changed().connect(sigc::mem_fun(*this, &AlignAndDistribute::on_ref_change));
 
@@ -1154,21 +1144,12 @@ void AlignAndDistribute::on_selgrp_toggled(){
 void AlignAndDistribute::setMode(bool nodeEdit)
 {
     //Act on widgets used in node mode
-#if WITH_GTKMM_2_24
     void ( Gtk::Widget::*mNode) ()  = nodeEdit ?
         &Gtk::Widget::show_all : &Gtk::Widget::hide;
 
     //Act on widgets used in selection mode
   void ( Gtk::Widget::*mSel) ()  = nodeEdit ?
       &Gtk::Widget::hide : &Gtk::Widget::show_all;
-#else
-    void ( Gtk::Widget::*mNode) ()  = nodeEdit ?
-        &Gtk::Widget::show_all : &Gtk::Widget::hide_all;
-
-    //Act on widgets used in selection mode
-  void ( Gtk::Widget::*mSel) ()  = nodeEdit ?
-      &Gtk::Widget::hide_all : &Gtk::Widget::show_all;
-#endif
 
     ((_alignFrame).*(mSel))();
     ((_distributeFrame).*(mSel))();

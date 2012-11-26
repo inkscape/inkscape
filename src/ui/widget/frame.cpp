@@ -56,9 +56,7 @@ Frame::set_label(const Glib::ustring &label_text, gboolean label_bold /*= TRUE*/
 void
 Frame::set_padding (guint padding_top, guint padding_bottom, guint padding_left, guint padding_right)
 {
-#if WITH_GTKMM_2_24
     _alignment.set_padding(padding_top, padding_bottom, padding_left, padding_right);
-#endif
 }
 
 Gtk::Label const *

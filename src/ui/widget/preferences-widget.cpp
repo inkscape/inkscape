@@ -378,12 +378,7 @@ ZoomCorrRuler::redraw() {
     Glib::RefPtr<Gdk::Window> window = get_window();
     Cairo::RefPtr<Cairo::Context> cr = window->create_cairo_context();
 
-#if WITH_GTKMM_2_24
     int w = window->get_width();
-#else
-    int w, h;
-    window->get_size(w, h);
-#endif
     _drawing_width = w - _border * 2;
 
     cr->set_source_rgb(1.0, 1.0, 1.0);
@@ -597,11 +592,7 @@ void PrefCombo::init(Glib::ustring const &prefs_path,
 
     for (int i = 0 ; i < num_items; ++i)
     {
-#if WITH_GTKMM_2_24
         this->append(labels[i]);
-#else
-        this->append_text(labels[i]);
-#endif
         _values.push_back(values[i]);
         if (value == values[i])
             row = i;
@@ -623,11 +614,7 @@ void PrefCombo::init(Glib::ustring const &prefs_path,
 
     for (int i = 0 ; i < num_items; ++i)
     {
-#if WITH_GTKMM_2_24
         this->append(labels[i]);
-#else
-        this->append_text(labels[i]);
-#endif
         _ustr_values.push_back(values[i]);
         if (value == values[i])
             row = i;

@@ -432,12 +432,7 @@ static gboolean
     gdk_cairo_region (cr, event->region);
     cairo_clip (cr);
 
-#if GTK_CHECK_VERSION(2, 24,0)
     w = gdk_window_get_width (event->window);
-#else
-    gdk_drawable_get_size (event->window, &w, NULL);
-#endif
-
 #endif
 
     cairo_set_line_width (cr, 1.0);
@@ -687,12 +682,7 @@ gimp_spin_scale_change_value (GtkWidget *widget,
 
   gimp_spin_scale_get_limits (GIMP_SPIN_SCALE (widget), &lower, &upper);
 
-#if GTK_CHECK_VERSION(2, 24,0)
   width = gdk_window_get_width (text_window);
-#else
-  gdk_drawable_get_size (text_window, &width, NULL);
-#endif
-
 #endif
 
 

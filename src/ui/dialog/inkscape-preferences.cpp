@@ -986,18 +986,10 @@ void InkscapePreferences::initPageIO()
         Glib::ustring current = prefs->getString( "/options/displayprofile/uri" );
 
         gint index = 0;
-#if WITH_GTKMM_2_24
         _cms_display_profile.append(_("<none>"));
-#else
-        _cms_display_profile.append_text(_("<none>"));
-#endif
         index++;
         for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
-#if WITH_GTKMM_2_24
             _cms_display_profile.append( *it );
-#else
-            _cms_display_profile.append_text( *it );
-#endif
             Glib::ustring path = CMSSystem::getPathForProfile(*it);
             if ( !path.empty() && path == current ) {
                 _cms_display_profile.set_active(index);
@@ -1012,11 +1004,7 @@ void InkscapePreferences::initPageIO()
         current = prefs->getString("/options/softproof/uri");
         index = 0;
         for ( std::vector<Glib::ustring>::iterator it = names.begin(); it != names.end(); ++it ) {
-#if WITH_GTKMM_2_24
             _cms_proof_profile.append( *it );
-#else
-            _cms_proof_profile.append_text( *it );
-#endif
             Glib::ustring path = CMSSystem::getPathForProfile(*it);
             if ( !path.empty() && path == current ) {
                 _cms_proof_profile.set_active(index);

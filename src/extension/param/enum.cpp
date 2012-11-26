@@ -242,11 +242,7 @@ Gtk::Widget *ParamComboBox::get_widget(SPDocument * doc, Inkscape::XML::Node * n
     for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
         enumentry * entr = reinterpret_cast<enumentry *>(list->data);
         Glib::ustring text = entr->guitext;
-#if WITH_GTKMM_2_24
         combo->append(text);
-#else
-        combo->append_text(text);
-#endif
 
         if ( _value && !entr->value.compare(_value) ) {
             settext = entr->guitext;

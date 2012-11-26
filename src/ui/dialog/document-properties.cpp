@@ -333,21 +333,13 @@ void DocumentProperties::build_snap()
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 /// Populates the available color profiles combo box
 void DocumentProperties::populate_available_profiles(){
-#if WITH_GTKMM_2_24
     _combo_avail.remove_all(); // Clear any existing items in the combo box
-#else
-    _combo_avail.clear_items(); // Clear any existing items in the combo box
-#endif
 
     // Iterate through the list of profiles and add the name to the combo box.
     std::vector<std::pair<Glib::ustring, Glib::ustring> > pairs = ColorProfile::getProfileFilesWithNames();
     for ( std::vector<std::pair<Glib::ustring, Glib::ustring> >::const_iterator it = pairs.begin(); it != pairs.end(); ++it ) {
         Glib::ustring name = it->second;
-#if WITH_GTKMM_2_24
 	_combo_avail.append(name);
-#else
-	_combo_avail.append_text(name);
-#endif
     }
 }
 
@@ -1160,11 +1152,7 @@ void DocumentProperties::build_gridspage()
     _grids_hbox_crea.pack_start(_grids_button_new, true, true);
 
     for (gint t = 0; t <= GRID_MAXTYPENR; t++) {
-#if WITH_GTKMM_2_24
         _grids_combo_gridtype.append( CanvasGrid::getName( (GridType) t ) );
-#else
-        _grids_combo_gridtype.append_text( CanvasGrid::getName( (GridType) t ) );
-#endif
     }
     _grids_combo_gridtype.set_active_text( CanvasGrid::getName(GRID_RECTANGULAR) );
 

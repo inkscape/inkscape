@@ -109,10 +109,6 @@ SpellCheck::SpellCheck (void) :
     tree_view.append_column(_("Suggestions:"), tree_columns.suggestions);
 
     {
-// Backward compatibility fix: The GtkComboBoxText API was introduced with
-// GTK+ 2.24.  This check should eventually be dropped when we bump our
-// GTK dependency.
-#if GTK_CHECK_VERSION(2, 24, 0)
         dictionary_combo = gtk_combo_box_text_new();
         gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (dictionary_combo),  _lang.c_str());
         if (_lang2 != "") {
@@ -121,16 +117,6 @@ SpellCheck::SpellCheck (void) :
         if (_lang3 != "") {
             gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (dictionary_combo), _lang3.c_str());
         }
-#else
-        dictionary_combo = gtk_combo_box_new_text();
-        gtk_combo_box_append_text (GTK_COMBO_BOX (dictionary_combo),  _lang.c_str());
-        if (_lang2 != "") {
-            gtk_combo_box_append_text (GTK_COMBO_BOX (dictionary_combo), _lang2.c_str());
-        }
-        if (_lang3 != "") {
-            gtk_combo_box_append_text (GTK_COMBO_BOX (dictionary_combo), _lang3.c_str());
-        }
-#endif
         gtk_combo_box_set_active (GTK_COMBO_BOX (dictionary_combo), 0);
         gtk_widget_show_all (dictionary_combo);
     }
