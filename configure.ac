@@ -59,6 +59,7 @@ if test "$GCC" = "yes"; then
   CPPFLAGS="-DGLIBMM_DISABLE_DEPRECATED $CPPFLAGS"
   CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
   CPPFLAGS="-DGTK_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
+  CPPFLAGS="-DG_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
 
   # Ensure that private GTK+ fields are not accessible. This is the case for
   # GTK+ 3, so it is important to avoid using them in GTK+ 2.
@@ -788,7 +789,7 @@ if test "x$enable_gtk3" = "xyes"; then
 		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
 	fi
 
-	PKG_CHECK_MODULES(INKSCAPE, gtkmm-3.0  gdkmm-3.0 gtk+-3.0 gdk-3.0 gdl-3.0 > 3.3.4 glib-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4, with_gtkmm_3_0=yes, with_gtkmm_3_0=no)
+	PKG_CHECK_MODULES(INKSCAPE, gtkmm-3.0  gdkmm-3.0 gtk+-3.0 gdk-3.0 gdl-3.0 > 3.3.4 glib-2.0 >= 2.28  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4, with_gtkmm_3_0=yes, with_gtkmm_3_0=no)
 
 	if test "x$with_gtkmm_3_0" = "xyes"; then
 		AC_MSG_RESULT([Using EXPERIMENTAL Gtkmm 3 build])
@@ -807,7 +808,7 @@ else
 		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
 	fi
 
-	PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.24  gtk+-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.24)
+	PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.28  gtk+-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.24)
 	
 	# Disable deprecated symbols to make GTK+ 3 migration easier.
 	# This should also be applied to GTK+ 3 builds too,
@@ -826,17 +827,6 @@ else
 fi
 
 AM_CONDITIONAL(WITH_EXT_GDL, test "x$with_gtkmm_3_0" = "xyes")
-
-dnl Ideally, we want to avoid including any glib headers other than the 
-dnl top-level <glib.h>, because they are all deprecated in glib >= 2.31.
-dnl However, glibmm < 2.28 *does* include the deprecated glib headers, so we
-dnl can only define the deprecation-checking compiler flag if we're using 
-dnl glibmm versions.
-PKG_CHECK_MODULES(GLIBMM_2_28, glibmm-2.4 >= 2.28, with_glibmm_2_28=yes, with_glibmm_2_28=no)
-if test "x$with_glibmm_2_28" = "xyes"; then
-	AC_DEFINE(WITH_GLIBMM_2_28,1,[Build with Glibmm 2.28.x or higher])
-	CPPFLAGS="-DG_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
-fi
 
 # Check for GTK+ backend target
 AC_MSG_CHECKING([for GTK+ backend target])
