@@ -817,10 +817,10 @@ SPDesktopWidget::updateTitle(gchar const* uri)
         gchar const *fname = uri;
         GString *name = g_string_new ("");
 
-        gchar const *grayscalename = "(grayscale) ";
-        gchar const *grayscalenamecomma = ", grayscale";
-        gchar const *printcolorsname = "(print colors preview) ";
-        gchar const *printcolorsnamecomma = ", print colors preview";
+        gchar const *grayscalename = _("(grayscale) ");
+        gchar const *grayscalenamecomma = _(", grayscale");
+        gchar const *printcolorsname = _("(print colors preview) ");
+        gchar const *printcolorsnamecomma = _(", print colors preview");
         gchar const *colormodename = "";
         gchar const *colormodenamecomma = "";
         gchar const *modifiedname = "";
