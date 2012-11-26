@@ -743,7 +743,7 @@ void LayersPanel::_renameLayer(Gtk::TreeModel::Row row, const Glib::ustring& nam
             if ( !name.empty() && (!oldLabel || name != oldLabel) ) {
                 _desktop->layer_manager->renameLayer( obj, name.c_str(), FALSE );
                 DocumentUndo::done( _desktop->doc() , SP_VERB_NONE,
-                                                    _("Renamed layer"));
+                                                    _("Rename layer"));
             }
 
         }
