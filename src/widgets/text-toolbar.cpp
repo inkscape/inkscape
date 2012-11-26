@@ -1233,7 +1233,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
         sp_text_set_sizes(GTK_LIST_STORE(ink_comboboxentry_action_get_model(fontSizeAction)), unit);
         ink_comboboxentry_action_set_active_text( fontSizeAction, os.str().c_str() );
 
-        Glib::ustring tooltip = Glib::ustring::format("Font size (", sp_style_get_css_unit_string(unit), ")");
+        Glib::ustring tooltip = Glib::ustring::format(_("Font size"), " (", sp_style_get_css_unit_string(unit), ")");
         ink_comboboxentry_action_set_tooltip ( fontSizeAction, tooltip.c_str());
 
         // Font styles
@@ -1492,7 +1492,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
 
         sp_text_set_sizes(model_size, unit);
 
-        Glib::ustring tooltip = Glib::ustring::format("Font size (", sp_style_get_css_unit_string(unit), ")");
+        Glib::ustring tooltip = Glib::ustring::format(_("Font size"), " (", sp_style_get_css_unit_string(unit), ")");
 
         Ink_ComboBoxEntry_Action* act = ink_comboboxentry_action_new( "TextFontSizeAction",
                                                                       _("Font Size"),

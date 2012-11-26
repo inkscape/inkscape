@@ -133,7 +133,7 @@ static void sp_font_selector_set_size_tooltip(SPFontSelector *fsel)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
-    Glib::ustring tooltip = Glib::ustring::format("Font size (", sp_style_get_css_unit_string(unit), ")");
+    Glib::ustring tooltip = Glib::ustring::format(_("Font size"), " (", sp_style_get_css_unit_string(unit), ")");
     gtk_widget_set_tooltip_text (fsel->size, _(tooltip.c_str()));
 }
 
