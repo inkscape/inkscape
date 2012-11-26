@@ -1109,7 +1109,7 @@ void sp_gradient_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, 
         gtk_list_store_append(store, &iter);
         gtk_list_store_set(store, &iter, 0, _("No gradient"), 1, NULL, 2, NULL, -1);
 
-        EgeSelectOneAction* act1 = ege_select_one_action_new( "GradientSelectGradientAction", _("Select"), ("Choose a gradient"), NULL, GTK_TREE_MODEL(store) );
+        EgeSelectOneAction* act1 = ege_select_one_action_new( "GradientSelectGradientAction", _("Select"), (_("Choose a gradient")), NULL, GTK_TREE_MODEL(store) );
         g_object_set( act1, "short_label", _("Select:"), NULL );
         ege_select_one_action_set_appearance( act1, "compact" );
         gtk_action_set_sensitive( GTK_ACTION(act1), FALSE );
@@ -1125,13 +1125,13 @@ void sp_gradient_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, 
 
         GtkTreeIter iter;
         gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("none"), 1, SP_GRADIENT_SPREAD_PAD, -1 );
+        gtk_list_store_set( model, &iter, 0, _("None"), 1, SP_GRADIENT_SPREAD_PAD, -1 );
 
         gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("reflected"), 1, SP_GRADIENT_SPREAD_REFLECT, -1 );
+        gtk_list_store_set( model, &iter, 0, _("Reflected"), 1, SP_GRADIENT_SPREAD_REFLECT, -1 );
 
         gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _("direct"), 1, SP_GRADIENT_SPREAD_REPEAT, -1 );
+        gtk_list_store_set( model, &iter, 0, _("Direct"), 1, SP_GRADIENT_SPREAD_REPEAT, -1 );
 
         EgeSelectOneAction* act1 = ege_select_one_action_new( "GradientSelectRepeatAction", _("Repeat"),
                 (// TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/pservers.html#LinearGradientSpreadMethodAttribute
