@@ -408,21 +408,20 @@ static gboolean
     gimp_spin_scale_expose (GtkWidget      *widget, GdkEventExpose *event)
 #endif
 {
-  GimpSpinScalePrivate *private = GET_PRIVATE (widget);
-  GtkStyle             *style   = gtk_widget_get_style (widget);
-
+    GimpSpinScalePrivate *private = GET_PRIVATE (widget);
 
 #if WITH_GTKMM_3_0
+    GtkStyleContext      *style   = gtk_widget_get_style_context(widget);
     GtkAllocation         allocation;
+    GdkRGBA               color;
 
     cairo_save (cr);
     GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
     cairo_restore (cr);
 
     gtk_widget_get_allocation (widget, &allocation);
-
-
 #else
+    GtkStyle             *style   = gtk_widget_get_style (widget);
     cairo_t              *cr;
     gint                  w;
 
@@ -499,12 +498,17 @@ static gboolean
 
 #if WITH_GTKMM_3_0
       cairo_move_to (cr, layout_offset_x, text_area.y + layout_offset_y-3);
+      
+      gtk_style_context_get_color (style, gtk_widget_get_state_flags (widget),
+                                   &color);
+      
+      gdk_cairo_set_source_rgba (cr, &color);
 #else
       cairo_move_to (cr, layout_offset_x, layout_offset_y-3);
-#endif
-
+      
       gdk_cairo_set_source_color (cr,
                                   &style->text[gtk_widget_get_state (widget)]);
+#endif
 
       pango_cairo_show_layout (cr, private->layout);
     }

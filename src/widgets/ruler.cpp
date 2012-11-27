@@ -690,7 +690,14 @@ static void sp_ruler_real_draw_pos(SPRuler *ruler,
           y = ROUND ((priv->position - priv->lower) * increment) + (ythickness - bs_height) / 2 - 1;
         }
 
+#if GTK_CHECK_VERSION(3,0,0)
+      GtkStyleContext *sc = gtk_widget_get_style_context(widget);
+      GdkRGBA color;
+      gtk_style_context_get_color(sc, gtk_widget_get_state_flags(widget), &color);
+      gdk_cairo_set_source_rgba(cr, &color);
+#else
       gdk_cairo_set_source_color(cr, &style->fg[gtk_widget_get_state(widget)]);
+#endif
 
       cairo_move_to (cr, x, y);
 

@@ -648,13 +648,22 @@ static gboolean sp_color_slider_draw(GtkWidget *widget, cairo_t *cr)
 	gint w = ARROW_SIZE;
 	cairo_set_line_width(cr, 1.0);
 
+#if GTK_CHECK_VERSION(3,0,0)
+	GdkRGBA white = {1,1,1,1};
+	GdkRGBA black = {0,0,0,1};
+#else
 	GdkColor white, black;
 	gdk_color_parse("#fff", &white);
 	gdk_color_parse("#000", &black);
+#endif
 
 	while ( w > 0 )
 	{
+#if GTK_CHECK_VERSION(3,0,0)
+		gdk_cairo_set_source_rgba(cr, &white);
+#else
 		gdk_cairo_set_source_color(cr, &white);
+#endif
 		cairo_move_to(cr, x - 0.5, y1 + 0.5);
 		cairo_line_to(cr, x + w - 1 + 0.5, y1 + 0.5);
 		cairo_move_to(cr, x - 0.5, y2 + 0.5);
@@ -664,7 +673,11 @@ static gboolean sp_color_slider_draw(GtkWidget *widget, cairo_t *cr)
 		x++;
 		if ( w > 0 )
 		{
+#if GTK_CHECK_VERSION(3,0,0)
+			gdk_cairo_set_source_rgba(cr, &black);
+#else
 			gdk_cairo_set_source_color(cr, &black);
+#endif
 			cairo_move_to(cr, x - 0.5, y1 + 0.5);
 			cairo_line_to(cr, x + w - 1 + 0.5, y1 + 0.5);
 			cairo_move_to(cr, x - 0.5, y2 + 0.5);
