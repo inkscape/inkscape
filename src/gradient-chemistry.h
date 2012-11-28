@@ -74,6 +74,8 @@ void sp_gradient_reverse_selected_gradients(SPDesktop *desktop);
 
 void sp_gradient_invert_selected_gradients(SPDesktop *desktop, Inkscape::PaintTarget fill_or_stroke);
 
+void sp_gradient_unset_swatch(SPDesktop *desktop, std::string id);
+
 /**
  * Fetches either the fill or the stroke gradient from the given item.
  *

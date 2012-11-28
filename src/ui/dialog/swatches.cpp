@@ -54,6 +54,8 @@
 #include "dialog-manager.h"
 #include "selection.h"
 #include "verbs.h"
+#include "gradient-chemistry.h"
+#include "helper/action.h"
 
 namespace Inkscape {
 namespace UI {
@@ -142,8 +144,21 @@ static void editGradientImpl( SPDesktop* desktop, SPGradient* gr )
         }
 
         if (!shown) {
-            GtkWidget *dialog = sp_gradient_vector_editor_new( gr );
-            gtk_widget_show( dialog );
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            if (prefs->getBool("/dialogs/gradienteditor/showlegacy", false)) {
+                // Legacy gradient dialog
+                GtkWidget *dialog = sp_gradient_vector_editor_new( gr );
+                gtk_widget_show( dialog );
+            } else {
+                // Invoke the gradient tool
+                Inkscape::Verb *verb = Inkscape::Verb::get( SP_VERB_CONTEXT_GRADIENT );
+                if ( verb ) {
+                    SPAction *action = verb->get_action( ( Inkscape::UI::View::View * ) SP_ACTIVE_DESKTOP);
+                    if ( action ) {
+                        sp_action_perform( action, NULL );
+                    }
+                }
+            }
         }
     }
 }
@@ -197,20 +212,7 @@ void SwatchesPanelHook::deleteGradient( GtkMenuItem */*menuitem*/, gpointer /*us
     if ( bounceTarget ) {
         SwatchesPanel* swp = bouncePanel;
         SPDesktop* desktop = swp ? swp->getDesktop() : 0;
-        SPDocument *doc = desktop ? desktop->doc() : 0;
-        if (doc) {
-            std::string targetName(bounceTarget->def.descr);
-            const GSList *gradients = doc->getResourceList("gradient");
-            for (const GSList *item = gradients; item; item = item->next) {
-                SPGradient* grad = SP_GRADIENT(item->data);
-                if ( targetName == grad->getId() ) {
-                    grad->setSwatch(false);
-                    DocumentUndo::done(doc, SP_VERB_CONTEXT_GRADIENT,
-                                       _("Delete"));
-                    break;
-                }
-            }
-        }
+        sp_gradient_unset_swatch(desktop, bounceTarget->def.descr);
     }
 }
 

@@ -27,6 +27,7 @@
 #include "style.h"
 #include "document-private.h"
 #include "document-undo.h"
+#include "desktop.h"
 #include "desktop-style.h"
 #include "desktop-handles.h"
 #include "event-context.h"
@@ -1592,6 +1593,23 @@ void sp_gradient_reverse_selected_gradients(SPDesktop *desktop)
                        _("Reverse gradient"));
 }
 
+void sp_gradient_unset_swatch(SPDesktop *desktop, std::string id)
+{
+    SPDocument *doc = desktop ? desktop->doc() : 0;
+
+    if (doc) {
+        const GSList *gradients = doc->getResourceList("gradient");
+        for (const GSList *item = gradients; item; item = item->next) {
+            SPGradient* grad = SP_GRADIENT(item->data);
+            if ( id == grad->getId() ) {
+                grad->setSwatch(false);
+                DocumentUndo::done(doc, SP_VERB_CONTEXT_GRADIENT,
+                                   _("Delete swatch"));
+                break;
+            }
+        }
+    }
+}
 /*
   Local Variables:
   mode:c++

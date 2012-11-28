@@ -53,6 +53,8 @@ static void sp_gradient_selector_dispose(GObject *object);
 static void sp_gradient_selector_vector_set (SPGradientVectorSelector *gvs, SPGradient *gr, SPGradientSelector *sel);
 static void sp_gradient_selector_edit_vector_clicked (GtkWidget *w, SPGradientSelector *sel);
 static void sp_gradient_selector_add_vector_clicked (GtkWidget *w, SPGradientSelector *sel);
+static void sp_gradient_selector_delete_vector_clicked (GtkWidget *w, SPGradientSelector *sel);
+
 
 static GtkVBoxClass *parent_class;
 static guint signals[LAST_SIGNAL] = {0};
@@ -125,6 +127,7 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     sel->safelyInit = true;
     sel->blocked = false;
     new (&sel->nonsolid) std::vector<GtkWidget*>();
+    new (&sel->swatch_widgets) std::vector<GtkWidget*>();
 
     sel->mode = SPGradientSelector::MODE_LINEAR;
 
@@ -189,7 +192,7 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
 #else
     GtkWidget *hb = gtk_hbox_new( FALSE, 2 );
 #endif
-    sel->nonsolid.push_back(hb);
+    //sel->nonsolid.push_back(hb);
     gtk_box_pack_start( GTK_BOX(sel), hb, FALSE, FALSE, 0 );
 
     sel->add = gtk_button_new ();
@@ -213,6 +216,16 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     gtk_button_set_relief(GTK_BUTTON(sel->edit), GTK_RELIEF_NONE);
     gtk_widget_set_tooltip_text( sel->edit, _("Edit gradient"));
 
+    sel->del = gtk_button_new ();
+    gtk_button_set_image((GtkButton*)sel->del , gtk_image_new_from_stock ( GTK_STOCK_REMOVE, GTK_ICON_SIZE_SMALL_TOOLBAR ) );
+
+    sel->swatch_widgets.push_back(sel->del);
+    gtk_box_pack_start (GTK_BOX (hb), sel->del, FALSE, FALSE, 0);
+    g_signal_connect (G_OBJECT (sel->del), "clicked", G_CALLBACK (sp_gradient_selector_delete_vector_clicked), sel);
+    gtk_widget_set_sensitive (sel->del, FALSE);
+    gtk_button_set_relief(GTK_BUTTON(sel->del), GTK_RELIEF_NONE);
+    gtk_widget_set_tooltip_text( sel->del, _("Delete swatch"));
+
     gtk_widget_show_all(hb);
 
 
@@ -226,6 +239,7 @@ static void sp_gradient_selector_dispose(GObject *object)
         sel->safelyInit = false;
         using std::vector;
         sel->nonsolid.~vector<GtkWidget*>();
+        sel->swatch_widgets.~vector<GtkWidget*>();
     }
 
     if (sel->icon_renderer) {
@@ -265,9 +279,23 @@ void SPGradientSelector::setMode(SelectorMode mode)
             {
                 gtk_widget_hide(*it);
             }
+            for (std::vector<GtkWidget*>::iterator it = swatch_widgets.begin(); it != swatch_widgets.end(); ++it)
+            {
+                gtk_widget_show_all(*it);
+            }
 
             SPGradientVectorSelector* vs = SP_GRADIENT_VECTOR_SELECTOR(vectors);
             vs->setSwatched();
+        } else {
+            for (std::vector<GtkWidget*>::iterator it = nonsolid.begin(); it != nonsolid.end(); ++it)
+            {
+                gtk_widget_show_all(*it);
+            }
+            for (std::vector<GtkWidget*>::iterator it = swatch_widgets.begin(); it != swatch_widgets.end(); ++it)
+            {
+                gtk_widget_hide(*it);
+            }
+
         }
     }
 }
@@ -412,6 +440,17 @@ void SPGradientSelector::setVector(SPDocument *doc, SPGradient *vector)
                     gtk_widget_show_all(*it);
                 }
             }
+        } else if (mode != MODE_SWATCH) {
+
+            for (std::vector<GtkWidget*>::iterator it = swatch_widgets.begin(); it != swatch_widgets.end(); ++it)
+            {
+                gtk_widget_hide(*it);
+            }
+            for (std::vector<GtkWidget*>::iterator it = nonsolid.begin(); it != nonsolid.end(); ++it)
+            {
+                gtk_widget_show_all(*it);
+            }
+
         }
 
         if (edit) {
@@ -420,12 +459,18 @@ void SPGradientSelector::setVector(SPDocument *doc, SPGradient *vector)
         if (add) {
             gtk_widget_set_sensitive(add, TRUE);
         }
+        if (del) {
+            gtk_widget_set_sensitive(del, TRUE);
+        }
     } else {
         if (edit) {
             gtk_widget_set_sensitive(edit, FALSE);
         }
         if (add) {
             gtk_widget_set_sensitive(add, (doc != NULL));
+        }
+        if (del) {
+            gtk_widget_set_sensitive(del, FALSE);
         }
     }
 }
@@ -449,6 +494,29 @@ sp_gradient_selector_vector_set (SPGradientVectorSelector *gvs, SPGradient *gr, 
         sel->blocked = FALSE;
 
     }
+}
+
+
+static void
+sp_gradient_selector_delete_vector_clicked (GtkWidget */*w*/, SPGradientSelector *sel)
+{
+    const Glib::RefPtr<Gtk::TreeSelection> selection = sel->treeview->get_selection();
+    if (!selection) {
+        return;
+    }
+
+    SPGradient *obj = NULL;
+    /* Single selection */
+    Gtk::TreeModel::iterator iter = selection->get_selected();
+    if ( iter ) {
+        Gtk::TreeModel::Row row = *iter;
+        obj = row[sel->columns->data];
+    }
+
+    if (obj) {
+        sp_gradient_unset_swatch(SP_ACTIVE_DESKTOP, obj->getId());
+    }
+
 }
 
 static void

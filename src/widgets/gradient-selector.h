@@ -97,6 +97,7 @@ struct SPGradientSelector {
     /* Editing buttons */
     GtkWidget *edit;
     GtkWidget *add;
+    GtkWidget *del;
     GtkWidget *merge;
 
     /* Position widget */
@@ -106,6 +107,7 @@ struct SPGradientSelector {
     bool blocked;
 
     std::vector<GtkWidget*> nonsolid;
+    std::vector<GtkWidget*> swatch_widgets;
 
     void setMode(SelectorMode mode);
     void setUnits(SPGradientUnits units);
