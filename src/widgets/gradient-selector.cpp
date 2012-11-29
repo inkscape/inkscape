@@ -284,6 +284,9 @@ void SPGradientSelector::setMode(SelectorMode mode)
                 gtk_widget_show_all(*it);
             }
 
+            Gtk::TreeView::Column* icon_column = treeview->get_column(0);
+            icon_column->set_title(_("Swatch"));
+
             SPGradientVectorSelector* vs = SP_GRADIENT_VECTOR_SELECTOR(vectors);
             vs->setSwatched();
         } else {
@@ -295,6 +298,8 @@ void SPGradientSelector::setMode(SelectorMode mode)
             {
                 gtk_widget_hide(*it);
             }
+            Gtk::TreeView::Column* icon_column = treeview->get_column(0);
+            icon_column->set_title(_("Gradient"));
 
         }
     }
