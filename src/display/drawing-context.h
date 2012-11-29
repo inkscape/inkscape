@@ -101,6 +101,8 @@ public:
     cairo_t *raw() { return _ct; }
     cairo_surface_t *rawTarget() { return cairo_get_group_target(_ct); }
 
+    DrawingSurface *surface() { return _surface; } // Needed to find scale in drawing-item.cpp
+
 private:
     DrawingContext(cairo_t *ct, DrawingSurface *surface, bool destroy);
 
