@@ -111,8 +111,7 @@ Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
 
     // This is definitely a hack... but what else to do?
     // Current viewport might not be document viewport... but how to find?
-    SPDesktop*  desktop  = inkscape_active_desktop();
-    SPDocument* document = sp_desktop_document(desktop);
+    SPDocument* document = inkscape_active_document();
     SPRoot*     root = document->getRoot();
     Geom::Rect  viewport;
     if( root->viewBox_set ) {

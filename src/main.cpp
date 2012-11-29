@@ -1032,6 +1032,9 @@ static int sp_process_file_list(GSList *fl)
             g_warning("Specified document %s cannot be opened (does not exist or not a valid SVG file)", filename);
             retVal++;
         } else {
+
+            inkscape_add_document(doc);
+
             if (sp_vacuum_defs) {
                 doc->vacuumDocument();
             }
@@ -1098,6 +1101,8 @@ static int sp_process_file_list(GSList *fl)
             } else if (sp_query_x || sp_query_y) {
                 do_query_dimension (doc, false, sp_query_x? Geom::X : Geom::Y, sp_query_id);
             }
+
+            inkscape_remove_document(doc);
 
             delete doc;
         }

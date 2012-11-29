@@ -1270,6 +1270,10 @@ inkscape_active_document (void)
 {
     if (SP_ACTIVE_DESKTOP) {
         return sp_desktop_document (SP_ACTIVE_DESKTOP);
+    } else if (!inkscape->document_set.empty()) {
+        // If called from the command line there will be no desktop
+        // So 'fall back' to take the first listed document in the Inkscape instance
+        return inkscape->document_set.begin()->first;
     }
 
     return NULL;
