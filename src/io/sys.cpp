@@ -239,6 +239,40 @@ bool Inkscape::IO::file_is_writable( char const *utf8name)
     return success;
 }
 
+/**Checks if directory of file exists, useful
+ * because inkscape doesn't create directories.*/
+bool Inkscape::IO::file_directory_exists( char const *utf8name ){
+    bool exists = true;
+
+    if ( utf8name) {
+        gchar *filename = NULL;
+        if (utf8name && !g_utf8_validate(utf8name, -1, NULL)) {
+            /* FIXME: Trying to guess whether or not a filename is already in utf8 is unreliable.
+               If any callers pass non-utf8 data (e.g. using g_get_home_dir), then change caller to
+               use simple g_file_test.  Then add g_return_val_if_fail(g_utf_validate(...), false)
+               to beginning of this function. */
+            filename = g_strdup(utf8name);
+            // Looks like g_get_home_dir isn't safe.
+            //g_warning("invalid UTF-8 detected internally. HUNT IT DOWN AND KILL IT!!!");
+        } else {
+            filename = g_filename_from_utf8 ( utf8name, -1, NULL, NULL, NULL );
+        }
+        if ( filename ) {
+            gchar *dirname = g_path_get_dirname(filename);
+            exists = Inkscape::IO::file_test( dirname, G_FILE_TEST_EXISTS);
+            g_free(filename);
+            g_free(dirname);
+            filename = NULL;
+            dirname = NULL;
+        } else {
+            g_warning( "Unable to convert filename in IO:file_test" );
+        }
+    }
+
+    return exists;
+
+}
+
 /** Wrapper around g_dir_open, but taking a utf8name as first argument. */
 GDir *
 Inkscape::IO::dir_open(gchar const *const utf8name, guint const flags, GError **const error)

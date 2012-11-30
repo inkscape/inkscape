@@ -169,10 +169,10 @@ enum {
 
 int sp_main_gui(int argc, char const **argv);
 int sp_main_console(int argc, char const **argv);
-static void sp_do_export_png(SPDocument *doc);
-static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const *mime);
+static int sp_do_export_png(SPDocument *doc);
+static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const *mime);
 #ifdef WIN32
-static void do_export_emf(SPDocument* doc, gchar const* uri, char const *mime);
+static int do_export_emf(SPDocument* doc, gchar const* uri, char const *mime);
 #endif //WIN32
 static void do_query_dimension (SPDocument *doc, bool extent, Geom::Dim2 const axis, const gchar *id);
 static void do_query_all (SPDocument *doc);
@@ -1046,7 +1046,7 @@ static int sp_process_file_list(GSList *fl)
                 sp_print_document_to_file(doc, sp_global_printer);
             }
             if (sp_export_png || (sp_export_id && sp_export_use_hints)) {
-                sp_do_export_png(doc);
+                retVal |= sp_do_export_png(doc);
             }
             if (sp_export_svg) {
                 if (sp_export_text_to_path) {
@@ -1081,17 +1081,17 @@ static int sp_process_file_list(GSList *fl)
                                           doc->getBase(), sp_export_svg);
             }
             if (sp_export_ps) {
-                do_export_ps_pdf(doc, sp_export_ps, "image/x-postscript");
+                retVal |= do_export_ps_pdf(doc, sp_export_ps, "image/x-postscript");
             }
             if (sp_export_eps) {
-                do_export_ps_pdf(doc, sp_export_eps, "image/x-e-postscript");
+                retVal |= do_export_ps_pdf(doc, sp_export_eps, "image/x-e-postscript");
             }
             if (sp_export_pdf) {
-                do_export_ps_pdf(doc, sp_export_pdf, "application/pdf");
+                retVal |= do_export_ps_pdf(doc, sp_export_pdf, "application/pdf");
             }
 #ifdef WIN32
             if (sp_export_emf) {
-                do_export_emf(doc, sp_export_emf, "image/x-emf");
+                retVal |= do_export_emf(doc, sp_export_emf, "image/x-emf");
             }
 #endif //WIN32
             if (sp_query_all) {
@@ -1299,7 +1299,7 @@ do_query_all_recurse (SPObject *o)
 }
 
 
-static void sp_do_export_png(SPDocument *doc)
+static int sp_do_export_png(SPDocument *doc)
 {
     Glib::ustring filename;
     bool filename_from_hint = false;
@@ -1330,7 +1330,7 @@ static void sp_do_export_png(SPDocument *doc)
         if (o) {
             if (!SP_IS_ITEM (o)) {
                 g_warning("Object with id=\"%s\" is not a visible item. Nothing exported.", sp_export_id);
-                return;
+                return 1;
             }
 
             items = g_slist_prepend (items, SP_ITEM(o));
@@ -1377,11 +1377,11 @@ static void sp_do_export_png(SPDocument *doc)
                 area = *areaMaybe;
             } else {
                 g_warning("Unable to determine a valid bounding box. Nothing exported.");
-                return;
+                return 1;
             }
         } else {
             g_warning("Object with id=\"%s\" was not found in the document. Nothing exported.", sp_export_id);
-            return;
+            return 1;
         }
     }
 
@@ -1390,7 +1390,7 @@ static void sp_do_export_png(SPDocument *doc)
         gdouble x0,y0,x1,y1;
         if (sscanf(sp_export_area, "%lg:%lg:%lg:%lg", &x0, &y0, &x1, &y1) != 4) {
             g_warning("Cannot parse export area '%s'; use 'x0:y0:x1:y1'. Nothing exported.", sp_export_area);
-            return;
+            return 1;
         }
         area = Geom::Rect(Geom::Interval(x0,x1), Geom::Interval(y0,y1));
     } else if (sp_export_area_page || !(sp_export_id || sp_export_area_drawing)) {
@@ -1404,7 +1404,7 @@ static void sp_do_export_png(SPDocument *doc)
     if (filename.empty()) {
         if (!sp_export_png) {
             g_warning ("No export filename given and no filename hint. Nothing exported.");
-            return;
+            return 1;
         }
         filename = sp_export_png;
     }
@@ -1413,7 +1413,7 @@ static void sp_do_export_png(SPDocument *doc)
         dpi = atof(sp_export_dpi);
         if ((dpi < 0.1) || (dpi > 10000.0)) {
             g_warning("DPI value %s out of range [0.1 - 10000.0]. Nothing exported.", sp_export_dpi);
-            return;
+            return 1;
         }
         g_print("DPI: %g\n", dpi);
     }
@@ -1435,7 +1435,7 @@ static void sp_do_export_png(SPDocument *doc)
         width = strtoul(sp_export_width, NULL, 0);
         if ((width < 1) || (width > PNG_UINT_31_MAX) || (errno == ERANGE) ) {
             g_warning("Export width %lu out of range (1 - %lu). Nothing exported.", width, (unsigned long int)PNG_UINT_31_MAX);
-            return;
+            return 1;
         }
         dpi = (gdouble) width * PX_PER_IN / area.width();
     }
@@ -1445,7 +1445,7 @@ static void sp_do_export_png(SPDocument *doc)
         height = strtoul(sp_export_height, NULL, 0);
         if ((height < 1) || (height > PNG_UINT_31_MAX)) {
             g_warning("Export height %lu out of range (1 - %lu). Nothing exported.", height, (unsigned long int)PNG_UINT_31_MAX);
-            return;
+            return 1;
         }
         dpi = (gdouble) height * PX_PER_IN / area.height();
     }
@@ -1508,19 +1508,28 @@ static void sp_do_export_png(SPDocument *doc)
         path = filename;
     }
 
-    g_print("Background RRGGBBAA: %08x\n", bgcolor);
+    int retcode = 0;
+    //check if specified directory exists
 
-    g_print("Area %g:%g:%g:%g exported to %lu x %lu pixels (%g dpi)\n", area[Geom::X][0], area[Geom::Y][0], area[Geom::X][1], area[Geom::Y][1], width, height, dpi);
-
-    g_print("Bitmap saved as: %s\n", filename.c_str());
-
-    if ((width >= 1) && (height >= 1) && (width <= PNG_UINT_31_MAX) && (height <= PNG_UINT_31_MAX)) {
-        sp_export_png_file(doc, path.c_str(), area, width, height, dpi, dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL);
+    if (!Inkscape::IO::file_directory_exists(filename.c_str())) {
+        g_warning("File path \"%s\" includes directory that doesn't exist.\n", filename.c_str());
+        retcode = 1;
     } else {
-        g_warning("Calculated bitmap dimensions %lu %lu are out of range (1 - %lu). Nothing exported.", width, height, (unsigned long int)PNG_UINT_31_MAX);
+        g_print("Background RRGGBBAA: %08x\n", bgcolor);
+
+        g_print("Area %g:%g:%g:%g exported to %lu x %lu pixels (%g dpi)\n", area[Geom::X][0], area[Geom::Y][0], area[Geom::X][1], area[Geom::Y][1], width, height, dpi);
+
+        g_print("Bitmap saved as: %s\n", filename.c_str());
+
+        if ((width >= 1) && (height >= 1) && (width <= PNG_UINT_31_MAX) && (height <= PNG_UINT_31_MAX)) {
+            sp_export_png_file(doc, path.c_str(), area, width, height, dpi, dpi, bgcolor, NULL, NULL, true, sp_export_id_only ? items : NULL);
+        } else {
+            g_warning("Calculated bitmap dimensions %lu %lu are out of range (1 - %lu). Nothing exported.", width, height, (unsigned long int)PNG_UINT_31_MAX);
+        }
     }
 
     g_slist_free (items);
+    return retcode;
 }
 
 
@@ -1532,7 +1541,7 @@ static void sp_do_export_png(SPDocument *doc)
  *  \param mime MIME type to export as.
  */
 
-static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
+static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
 {
     Inkscape::Extension::DB::OutputList o;
     Inkscape::Extension::db.get_output_list(o);
@@ -1544,14 +1553,14 @@ static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime
     if (i == o.end())
     {
         g_warning ("Could not find an extension to export to MIME type %s.", mime);
-        return;
+        return 1;
     }
 
     if (sp_export_id) {
         SPObject *o = doc->getObjectById(sp_export_id);
         if (o == NULL) {
             g_warning("Object with id=\"%s\" was not found in the document. Nothing exported.", sp_export_id);
-            return;
+            return 1;
         }
         (*i)->set_param_string ("exportId", sp_export_id);
     } else {
@@ -1612,7 +1621,14 @@ static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime
         (*i)->set_param_int("resolution", (int) dpi);
     }
 
+    //check if specified directory exists
+    if (!Inkscape::IO::file_directory_exists(uri)) {
+        g_warning("File path \"%s\" includes directory that doesn't exist.\n", uri);
+        return 1;
+    }
+
     (*i)->save(doc, uri);
+    return 0;
 }
 
 #ifdef WIN32
@@ -1624,7 +1640,7 @@ static void do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime
  *  \param mime MIME type to export as (should be "image/x-emf")
  */
 
-static void do_export_emf(SPDocument* doc, gchar const* uri, char const* mime)
+static int do_export_emf(SPDocument* doc, gchar const* uri, char const* mime)
 {
     Inkscape::Extension::DB::OutputList o;
     Inkscape::Extension::db.get_output_list(o);
@@ -1636,10 +1652,18 @@ static void do_export_emf(SPDocument* doc, gchar const* uri, char const* mime)
     if (i == o.end())
     {
         g_warning ("Could not find an extension to export to MIME type %s.", mime);
-        return;
+        return 1;
+    }
+
+    //check if specified directory exists
+    if (!Inkscape::IO::file_directory_exists(uri)){
+        g_warning("File path \"%s\" includes directory that doesn't exist.\n",
+        uri);
+        return 1;
     }
 
     (*i)->save(doc, uri);
+    return 0;
 }
 #endif //WIN32
 
