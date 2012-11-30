@@ -29,9 +29,12 @@ public:
         return "CalligraphicProfileRename";
     }
     
-    static void show(SPDesktop *desktop);
+    static void show(SPDesktop *desktop, const Glib::ustring profile_name);
     static bool applied() {
         return instance()._applied;
+    }
+    static bool deleted() {
+        return instance()._deleted;
     }
     static Glib::ustring getProfileName() {
         return instance()._profile_name;
@@ -40,14 +43,17 @@ public:
 protected:
     void _close();
     void _apply();
+    void _delete();
 
     Gtk::Label        _profile_name_label;
     Gtk::Entry        _profile_name_entry;
     Gtk::Table        _layout_table;
     Gtk::Button       _close_button;
+    Gtk::Button       _delete_button;
     Gtk::Button       _apply_button;
     Glib::ustring _profile_name;
     bool _applied;
+    bool _deleted;
 private:
     static CalligraphicProfileRename &instance() {
         static CalligraphicProfileRename instance_;

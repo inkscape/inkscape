@@ -503,6 +503,13 @@ public:
     static void unload(bool save=true);
     /*@}*/
 
+    /**
+     * Remove a node from prefs
+     * @param pref_path　Path to entry
+     *
+     */
+    void remove(Glib::ustring const &pref_path);
+
 protected:
     /* helper methods used by Entry
      * This will enable using the same Entry class with different backends.

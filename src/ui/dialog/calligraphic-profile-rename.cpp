@@ -30,6 +30,8 @@ namespace Dialog {
 CalligraphicProfileRename::CalligraphicProfileRename() :
     _applied(false)
 {
+    set_title(_("Edit profile"));
+
     Gtk::Box *mainVBox = get_vbox();
     _layout_table.set_spacings(4);
     _layout_table.resize (1, 2);
@@ -49,19 +51,27 @@ CalligraphicProfileRename::CalligraphicProfileRename() :
     _close_button.set_label(Gtk::Stock::CANCEL.id);
     _close_button.set_can_default();
 
+    _delete_button.set_use_underline(true);
+    _delete_button.set_label(_("Delete"));
+    _delete_button.set_can_default();
+    _delete_button.set_visible(false);
+
     _apply_button.set_use_underline(true);
     _apply_button.set_label(_("Save"));
     _apply_button.set_can_default();
 
     _close_button.signal_clicked()
-    .connect(sigc::mem_fun(*this, &CalligraphicProfileRename::_close));
+            .connect(sigc::mem_fun(*this, &CalligraphicProfileRename::_close));
+    _delete_button.signal_clicked()
+            .connect(sigc::mem_fun(*this, &CalligraphicProfileRename::_delete));
     _apply_button.signal_clicked()
-    .connect(sigc::mem_fun(*this, &CalligraphicProfileRename::_apply));
+            .connect(sigc::mem_fun(*this, &CalligraphicProfileRename::_apply));
 
     signal_delete_event().connect( sigc::bind_return(
         sigc::hide(sigc::mem_fun(*this, &CalligraphicProfileRename::_close)), true ) );
 
     add_action_widget(_close_button, Gtk::RESPONSE_CLOSE);
+    add_action_widget(_delete_button, Gtk::RESPONSE_DELETE_EVENT);
     add_action_widget(_apply_button, Gtk::RESPONSE_APPLY);
 
     _apply_button.grab_default();
@@ -73,6 +83,15 @@ void CalligraphicProfileRename::_apply()
 {
     _profile_name = _profile_name_entry.get_text();
     _applied = true;
+    _deleted = false;
+    _close();
+}
+
+void CalligraphicProfileRename::_delete()
+{
+    _profile_name = _profile_name_entry.get_text();
+    _applied = true;
+    _deleted = true;
     _close();
 }
 
@@ -81,11 +100,25 @@ void CalligraphicProfileRename::_close()
     this->Gtk::Dialog::hide();
 }
 
-void CalligraphicProfileRename::show(SPDesktop *desktop)
+void CalligraphicProfileRename::show(SPDesktop *desktop, const Glib::ustring profile_name)
 {
     CalligraphicProfileRename &dial = instance();
     dial._applied=false;
+    dial._deleted=false;
     dial.set_modal(true);
+
+    dial._profile_name = profile_name;
+    dial._profile_name_entry.set_text(profile_name);
+
+    if (profile_name.empty()) {
+        dial.set_title(_("Add profile"));
+        dial._delete_button.set_visible(false);
+
+    } else {
+        dial.set_title(_("Edit profile"));
+        dial._delete_button.set_visible(true);
+    }
+
     desktop->setWindowTransient (dial.gobj());
     dial.property_destroy_with_parent() = true;
     //  dial.Gtk::Dialog::show();

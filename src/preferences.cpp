@@ -504,6 +504,17 @@ void Preferences::mergeStyle(Glib::ustring const &pref_path, SPCSSAttr *style)
     sp_repr_css_attr_unref(current);
 }
 
+/**
+ *  Remove an entry
+ *  Make sure observers have been removed before calling
+ */
+void Preferences::remove(Glib::ustring const &pref_path)
+{
+    Inkscape::XML::Node *node = _getNode(pref_path, false);
+    if (node && node->parent()) {
+        node->parent()->removeChild(node);
+    }
+}
 
 /**
  * Class that holds additional information for registered Observers.

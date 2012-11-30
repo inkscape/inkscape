@@ -407,6 +407,7 @@ static gchar const * ui_descr =
         "  <toolbar name='CalligraphyToolbar'>"
         "    <separator />"
         "    <toolitem action='SetProfileAction'/>"
+        "    <toolitem action='ProfileEditAction'/>"
         "    <separator />"
         "    <toolitem action='CalligraphyWidthAction' />"
         "    <toolitem action='PressureAction' />"

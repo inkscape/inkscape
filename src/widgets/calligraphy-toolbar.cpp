@@ -74,6 +74,16 @@ using Inkscape::UI::PrefPusher;
 //########################
 //##     Calligraphy    ##
 //########################
+
+std::vector<Glib::ustring> get_presets_list() {
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+
+    std::vector<Glib::ustring> presets = prefs->getAllDirs("/tools/calligraphic/preset");
+
+    return presets;
+}
+
 void update_presets_list(GObject *tbl)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -88,7 +98,7 @@ void update_presets_list(GObject *tbl)
         return;
     }
 
-    std::vector<Glib::ustring> presets = prefs->getAllDirs("/tools/calligraphic/preset");
+    std::vector<Glib::ustring> presets = get_presets_list();
 
     int ege_index = 1;
     for (std::vector<Glib::ustring>::iterator i = presets.begin(); i != presets.end(); ++i, ++ege_index) {
@@ -233,22 +243,24 @@ static void sp_dcc_build_presets_list(GObject *tbl)
 
     // iterate over all presets to populate the list
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    std::vector<Glib::ustring> presets = prefs->getAllDirs("/tools/calligraphic/preset");
+    std::vector<Glib::ustring> presets = get_presets_list();
     int ii=1;
 
     for (std::vector<Glib::ustring>::iterator i = presets.begin(); i != presets.end(); ++i) {
         GtkTreeIter iter;
         Glib::ustring preset_name = prefs->getString(*i + "/name");
-        gtk_list_store_append( model, &iter );
-        gtk_list_store_set( model, &iter, 0, _(preset_name.data()), 1, ii++, -1 );
+        if (!preset_name.empty()) {
+            gtk_list_store_append( model, &iter );
+            gtk_list_store_set( model, &iter, 0, _(preset_name.data()), 1, ii++, -1 );
+        }
     }
 
-    {
+/*    {
         GtkTreeIter iter;
         gtk_list_store_append( model, &iter );
         gtk_list_store_set( model, &iter, 0, _("Save..."), 1, ii, -1 );
         g_object_set_data(tbl, "save_presets_index", GINT_TO_POINTER(ii));
-    }
+    }*/
 
     g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(FALSE));
 
@@ -268,15 +280,25 @@ static void sp_dcc_save_profile(GtkWidget * /*widget*/, GObject *tbl)
         return;
     }
 
-    CalligraphicProfileRename::show(desktop);
+    EgeSelectOneAction *sel = static_cast<EgeSelectOneAction *>(g_object_get_data(tbl, "profile_selector"));
+    //gint preset_index = ege_select_one_action_get_active( sel );
+    Glib::ustring current_profile_name = _("No preset");
+    if (ege_select_one_action_get_active_text( sel )) {
+        current_profile_name = ege_select_one_action_get_active_text( sel );
+    }
+
+    if (current_profile_name == _("No preset")) {
+        current_profile_name = "";
+    }
+    CalligraphicProfileRename::show(desktop, current_profile_name);
     if ( !CalligraphicProfileRename::applied()) {
         // dialog cancelled
         update_presets_list (tbl);
         return;
     }
-    Glib::ustring profile_name = CalligraphicProfileRename::getProfileName();
+    Glib::ustring new_profile_name = CalligraphicProfileRename::getProfileName();
 
-    if (profile_name.empty()) {
+    if (new_profile_name.empty()) {
         // empty name entered
         update_presets_list (tbl);
         return;
@@ -285,7 +307,7 @@ static void sp_dcc_save_profile(GtkWidget * /*widget*/, GObject *tbl)
     g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(TRUE));
 
     // If there's a preset with the given name, find it and set save_path appropriately
-    std::vector<Glib::ustring> presets = prefs->getAllDirs("/tools/calligraphic/preset");
+    std::vector<Glib::ustring> presets = get_presets_list();
     int total_presets = presets.size();
     int new_index = -1;
     Glib::ustring save_path; // profile pref path without a trailing slash
@@ -293,11 +315,19 @@ static void sp_dcc_save_profile(GtkWidget * /*widget*/, GObject *tbl)
     int temp_index = 0;
     for (std::vector<Glib::ustring>::iterator i = presets.begin(); i != presets.end(); ++i, ++temp_index) {
         Glib::ustring name = prefs->getString(*i + "/name");
-        if (!name.empty() && profile_name == name) {
+        if (!name.empty() && (new_profile_name == name || current_profile_name == name)) {
             new_index = temp_index;
             save_path = *i;
             break;
         }
+    }
+
+
+    if ( CalligraphicProfileRename::deleted() && new_index != -1) {
+        prefs->remove(save_path);
+        g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(FALSE));
+        sp_dcc_build_presets_list (tbl);
+        return;
     }
 
     if (new_index == -1) {
@@ -327,7 +357,7 @@ static void sp_dcc_save_profile(GtkWidget * /*widget*/, GObject *tbl)
             g_warning("Bad key when writing preset: %s\n", widget_name);
         }
     }
-    prefs->setString(save_path + "/name", profile_name);
+    prefs->setString(save_path + "/name", new_profile_name);
 
     g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(FALSE));
     sp_dcc_build_presets_list (tbl);
@@ -338,7 +368,7 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
-    gint preset_index = ege_select_one_action_get_active( act );
+    guint preset_index = ege_select_one_action_get_active( act );
     // This is necessary because EgeSelectOneAction spams us with GObject "changed" signal calls
     // even when the preset is not changed. It would be good to replace it with something more
     // modern. Index 0 means "No preset", so we don't do anything.
@@ -346,6 +376,7 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl)
         return;
     }
 
+/*
     gint save_presets_index = GPOINTER_TO_INT(g_object_get_data(tbl, "save_presets_index"));
 
     if (preset_index == save_presets_index) {
@@ -353,14 +384,19 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl)
         sp_dcc_save_profile(NULL, tbl);
         return;
     }
+*/
 
     if (g_object_get_data(tbl, "presets_blocked")) {
         return;
     }
 
     // preset_index is one-based so we subtract 1
-    std::vector<Glib::ustring> presets = prefs->getAllDirs("/tools/calligraphic/preset");
-    Glib::ustring preset_path = presets.at(preset_index - 1);
+    std::vector<Glib::ustring> presets = get_presets_list();
+
+    Glib::ustring preset_path = "";
+    if (preset_index - 1 < presets.size()) {
+        preset_path = presets.at(preset_index - 1);
+    }
 
     if (!preset_path.empty()) {
         g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(TRUE)); //temporarily block the selector so no one will updadte it while we're reading it
@@ -391,7 +427,14 @@ static void sp_ddc_change_profile(EgeSelectOneAction* act, GObject* tbl)
             }
         }
         g_object_set_data(tbl, "presets_blocked", GINT_TO_POINTER(FALSE));
+    } else {
+        ege_select_one_action_set_active(act, 0);
     }
+}
+
+static void sp_ddc_edit_profile(GtkAction * /*act*/, GObject* tbl)
+{
+    sp_dcc_save_profile(NULL, tbl);
 }
 
 void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
@@ -594,6 +637,18 @@ void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
 
             g_signal_connect(G_OBJECT(act1), "changed", G_CALLBACK(sp_ddc_change_profile), holder);
             gtk_action_group_add_action(mainActions, GTK_ACTION(act1));
+        }
+
+        /*calligraphic profile editor */
+        {
+            InkAction* inky = ink_action_new( "ProfileEditAction",
+                                              _("Add/Edit Profile"),
+                                              _("Add or edit calligraphic profile"),
+                                              GTK_STOCK_PROPERTIES,
+                                              Inkscape::ICON_SIZE_DECORATION );
+            g_object_set( inky, "short_label", _("Edit"), NULL );
+            g_signal_connect_after( G_OBJECT(inky), "activate", G_CALLBACK(sp_ddc_edit_profile), (GObject*)holder );
+            gtk_action_group_add_action( mainActions, GTK_ACTION(inky) );
         }
     }
 }
