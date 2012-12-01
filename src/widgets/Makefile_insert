@@ -66,8 +66,6 @@ ink_common_sources +=	\
 	widgets/spiral-toolbar.h		\
 	widgets/sp-attribute-widget.cpp	\
 	widgets/sp-attribute-widget.h	\
-	widgets/sp-color-gtkselector.cpp	\
-	widgets/sp-color-gtkselector.h	\
 	widgets/sp-color-icc-selector.cpp	\
 	widgets/sp-color-icc-selector.h	\
 	widgets/sp-color-notebook.cpp	\
