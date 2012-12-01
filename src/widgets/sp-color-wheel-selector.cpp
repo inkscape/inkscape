@@ -146,13 +146,17 @@ static void handleWheelAllocation(GtkHSV *hsv, GtkAllocation *allocation, gpoint
 
 void ColorWheelSelector::init()
 {
-    GtkWidget *t;
     gint row = 0;
 
     _updating = FALSE;
     _dragging = FALSE;
 
-    t = gtk_table_new (5, 3, FALSE);
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidget *t = gtk_grid_new();
+#else
+    GtkWidget *t = gtk_table_new (5, 3, FALSE);
+#endif
+
     gtk_widget_show (t);
     gtk_box_pack_start (GTK_BOX (_csel), t, TRUE, TRUE, 0);
 
@@ -162,7 +166,16 @@ void ColorWheelSelector::init()
     _wheel = gtk_hsv_new();
     gtk_hsv_set_metrics( GTK_HSV(_wheel), 48, 8 );
     gtk_widget_show( _wheel );
-    gtk_table_attach( GTK_TABLE(t), _wheel, 0, 3, row, row + 1,  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
+
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_halign(_wheel, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(_wheel, GTK_ALIGN_FILL);
+    gtk_widget_set_hexpand(_wheel, TRUE);
+    gtk_widget_set_vexpand(_wheel, TRUE);
+    gtk_grid_attach(GTK_GRID(t), _wheel, 0, row, 3, 1);
+#else
+    gtk_table_attach( GTK_TABLE(t), _wheel, 0, 3, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+#endif
 
     row++;
 
@@ -170,7 +183,18 @@ void ColorWheelSelector::init()
     _label = gtk_label_new_with_mnemonic (_("_A:"));
     gtk_misc_set_alignment (GTK_MISC (_label), 1.0, 0.5);
     gtk_widget_show (_label);
+
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_margin_left(_label, XPAD);
+    gtk_widget_set_margin_right(_label, XPAD);
+    gtk_widget_set_margin_top(_label, YPAD);
+    gtk_widget_set_margin_bottom(_label, YPAD);
+    gtk_widget_set_halign(_label, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(_label, GTK_ALIGN_FILL);
+    gtk_grid_attach(GTK_GRID(t), _label, 0, row, 1, 1);
+#else
     gtk_table_attach (GTK_TABLE (t), _label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD);
+#endif
 
     /* Adjustment */
     _adj = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 255.0, 1.0, 10.0, 10.0);
@@ -179,7 +203,19 @@ void ColorWheelSelector::init()
     _slider = sp_color_slider_new (_adj);
     gtk_widget_set_tooltip_text (_slider, _("Alpha (opacity)"));
     gtk_widget_show (_slider);
-    gtk_table_attach (GTK_TABLE (t), _slider, 1, 2, row, row + 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)GTK_FILL, XPAD, YPAD);
+
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_margin_left(_slider, XPAD);
+    gtk_widget_set_margin_right(_slider, XPAD);
+    gtk_widget_set_margin_top(_slider, YPAD);
+    gtk_widget_set_margin_bottom(_slider, YPAD);
+    gtk_widget_set_hexpand(_slider, TRUE);
+    gtk_widget_set_halign(_slider, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(_slider, GTK_ALIGN_FILL);
+    gtk_grid_attach(GTK_GRID(t), _slider, 1, row, 1, 1);
+#else
+    gtk_table_attach (GTK_TABLE (t), _slider, 1, 2, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, XPAD, YPAD);
+#endif
 
     sp_color_slider_set_colors (SP_COLOR_SLIDER (_slider),
                                 SP_RGBA32_F_COMPOSE (1.0, 1.0, 1.0, 0.0),
@@ -193,7 +229,16 @@ void ColorWheelSelector::init()
     sp_dialog_defocus_on_enter (_sbtn);
     gtk_label_set_mnemonic_widget (GTK_LABEL(_label), _sbtn);
     gtk_widget_show (_sbtn);
-    gtk_table_attach (GTK_TABLE (t), _sbtn, 2, 3, row, row + 1, (GtkAttachOptions)0, (GtkAttachOptions)0, XPAD, YPAD);
+
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_margin_left(_sbtn, XPAD);
+    gtk_widget_set_margin_right(_sbtn, XPAD);
+    gtk_widget_set_margin_top(_sbtn, YPAD);
+    gtk_widget_set_margin_bottom(_sbtn, YPAD);
+    gtk_grid_attach(GTK_GRID(t), _sbtn, 2, row, 1, 1);
+#else
+    gtk_table_attach (GTK_TABLE (t), _sbtn, 2, 3, row, row + 1, 0, 0, XPAD, YPAD);
+#endif
 
     /* Signals */
     g_signal_connect (G_OBJECT (_adj), "value_changed",
