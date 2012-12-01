@@ -337,44 +337,37 @@ sp_svgview_ctrlwin_delete (GtkWidget */*widget*/, GdkEvent */*event*/, void */*d
     return FALSE;
 }
 
-static GtkWidget *
-sp_svgview_control_show (struct SPSlideShow *ss)
+static GtkWidget* sp_svgview_control_show(struct SPSlideShow *ss)
 {
     if (!ctrlwin) {
-	GtkWidget *t, *b;
-	ctrlwin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_transient_for (GTK_WINDOW(ctrlwin), GTK_WINDOW(ss->window));
-    g_signal_connect (G_OBJECT (ctrlwin), "key_press_event", (GCallback) sp_svgview_main_key_press, ss);
-	g_signal_connect (G_OBJECT (ctrlwin), "delete_event", (GCallback) sp_svgview_ctrlwin_delete, NULL);
-	t = gtk_table_new (1, 4, TRUE);
-	gtk_container_add ((GtkContainer *) ctrlwin, t);
-	b = gtk_button_new_from_stock (GTK_STOCK_GOTO_FIRST);
-	gtk_table_attach ((GtkTable *) t, b, 0, 1, 0, 1,
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-			  0, 0);
-	g_signal_connect ((GObject *) b, "clicked", (GCallback) sp_svgview_goto_first_cb, ss);
-	b = gtk_button_new_from_stock (GTK_STOCK_GO_BACK);
-	gtk_table_attach ((GtkTable *) t, b, 1, 2, 0, 1,
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-			  0, 0);
-	g_signal_connect (G_OBJECT(b), "clicked", (GCallback) sp_svgview_show_prev_cb, ss);
-	b = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
-	gtk_table_attach ((GtkTable *) t, b, 2, 3, 0, 1,
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-			  0, 0);
-	g_signal_connect (G_OBJECT(b), "clicked", (GCallback) sp_svgview_show_next_cb, ss);
-	b = gtk_button_new_from_stock (GTK_STOCK_GOTO_LAST);
-	gtk_table_attach ((GtkTable *) t, b, 3, 4, 0, 1,
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-			  (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-			  0, 0);
-	g_signal_connect (G_OBJECT(b), "clicked", (GCallback) sp_svgview_goto_last_cb, ss);
-	gtk_widget_show_all (ctrlwin);
+	ctrlwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        gtk_window_set_resizable(GTK_WINDOW(ctrlwin), FALSE);
+        gtk_window_set_transient_for(GTK_WINDOW(ctrlwin), GTK_WINDOW(ss->window));
+        g_signal_connect(G_OBJECT (ctrlwin), "key_press_event", (GCallback) sp_svgview_main_key_press, ss);
+        g_signal_connect(G_OBJECT (ctrlwin), "delete_event", (GCallback) sp_svgview_ctrlwin_delete, NULL);
+
+#if GTK_CHECK_VERSION(3,0,0)
+	GtkWidget *t = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+#else
+	GtkWidget *t = gtk_hbutton_box_new();
+#endif
+
+	gtk_container_add(GTK_CONTAINER(ctrlwin), t);
+	GtkWidget *b = gtk_button_new_from_stock(GTK_STOCK_GOTO_FIRST);
+	gtk_container_add(GTK_CONTAINER(t), b);
+	g_signal_connect(G_OBJECT(b), "clicked", (GCallback) sp_svgview_goto_first_cb, ss);
+	b = gtk_button_new_from_stock(GTK_STOCK_GO_BACK);
+	gtk_container_add(GTK_CONTAINER(t), b);
+	g_signal_connect(G_OBJECT(b), "clicked", (GCallback) sp_svgview_show_prev_cb, ss);
+	b = gtk_button_new_from_stock(GTK_STOCK_GO_FORWARD);
+	gtk_container_add(GTK_CONTAINER(t), b);
+	g_signal_connect(G_OBJECT(b), "clicked", (GCallback) sp_svgview_show_next_cb, ss);
+	b = gtk_button_new_from_stock(GTK_STOCK_GOTO_LAST);
+	gtk_container_add(GTK_CONTAINER(t), b);
+	g_signal_connect(G_OBJECT(b), "clicked", (GCallback) sp_svgview_goto_last_cb, ss);
+	gtk_widget_show_all(ctrlwin);
     } else {
-	gtk_window_present ((GtkWindow *) ctrlwin);
+	gtk_window_present(GTK_WINDOW(ctrlwin));
     }
 
     return NULL;
