@@ -174,7 +174,7 @@ void ColorWheelSelector::init()
     gtk_widget_set_vexpand(_wheel, TRUE);
     gtk_grid_attach(GTK_GRID(t), _wheel, 0, row, 3, 1);
 #else
-    gtk_table_attach( GTK_TABLE(t), _wheel, 0, 3, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+    gtk_table_attach(GTK_TABLE(t), _wheel, 0, 3, row, row + 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
 #endif
 
     row++;
@@ -214,7 +214,7 @@ void ColorWheelSelector::init()
     gtk_widget_set_valign(_slider, GTK_ALIGN_FILL);
     gtk_grid_attach(GTK_GRID(t), _slider, 1, row, 1, 1);
 #else
-    gtk_table_attach (GTK_TABLE (t), _slider, 1, 2, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, XPAD, YPAD);
+    gtk_table_attach(GTK_TABLE (t), _slider, 1, 2, row, row + 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), GTK_FILL, XPAD, YPAD);
 #endif
 
     sp_color_slider_set_colors (SP_COLOR_SLIDER (_slider),
@@ -237,7 +237,7 @@ void ColorWheelSelector::init()
     gtk_widget_set_margin_bottom(_sbtn, YPAD);
     gtk_grid_attach(GTK_GRID(t), _sbtn, 2, row, 1, 1);
 #else
-    gtk_table_attach (GTK_TABLE (t), _sbtn, 2, 3, row, row + 1, 0, 0, XPAD, YPAD);
+    gtk_table_attach (GTK_TABLE (t), _sbtn, 2, 3, row, row + 1, (GtkAttachOptions)0, (GtkAttachOptions)0, XPAD, YPAD);
 #endif
 
     /* Signals */
