@@ -133,13 +133,16 @@ void sp_color_scales_init (SPColorScales *cs)
 
 void ColorScales::init()
 {
-	GtkWidget *t;
 	gint i;
 
 	_updating = FALSE;
 	_dragging = FALSE;
 
-	t = gtk_table_new (5, 3, FALSE);
+#if GTK_CHECK_VERSION(3,0,0)
+	GtkWidget *t = gtk_grid_new();
+#else
+	GtkWidget *t = gtk_table_new (5, 3, FALSE);
+#endif
 	gtk_widget_show (t);
 	gtk_box_pack_start (GTK_BOX (_csel), t, TRUE, TRUE, 4);
 
@@ -149,20 +152,51 @@ void ColorScales::init()
 		_l[i] = gtk_label_new("");
 		gtk_misc_set_alignment (GTK_MISC (_l[i]), 1.0, 0.5);
 		gtk_widget_show (_l[i]);
+
+#if GTK_CHECK_VERSION(3,0,0)
+		gtk_widget_set_margin_left(_l[i], XPAD);
+		gtk_widget_set_margin_right(_l[i], XPAD);
+		gtk_widget_set_margin_top(_l[i], YPAD);
+		gtk_widget_set_margin_bottom(_l[i], YPAD);
+		gtk_grid_attach(GTK_GRID(t), _l[i], 0, i, 1, 1);
+#else
 		gtk_table_attach (GTK_TABLE (t), _l[i], 0, 1, i, i + 1, GTK_FILL, GTK_FILL, XPAD, YPAD);
+#endif
+
 		/* Adjustment */
 		_a[i] = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, _rangeLimit, 1.0, 10.0, 10.0);
 		/* Slider */
 		_s[i] = sp_color_slider_new (_a[i]);
 		gtk_widget_show (_s[i]);
-		gtk_table_attach (GTK_TABLE (t), _s[i], 1, 2, i, i + 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)GTK_FILL, XPAD, YPAD);
+
+#if GTK_CHECK_VERSION(3,0,0)
+		gtk_widget_set_margin_left(_s[i], XPAD);
+		gtk_widget_set_margin_right(_s[i], XPAD);
+		gtk_widget_set_margin_top(_s[i], YPAD);
+		gtk_widget_set_margin_bottom(_s[i], YPAD);
+		gtk_widget_set_hexpand(_s[i], TRUE);
+		gtk_grid_attach(GTK_GRID(t), _s[i], 1, i, 1, 1);
+#else
+		gtk_table_attach (GTK_TABLE (t), _s[i], 1, 2, i, i + 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), GTK_FILL, XPAD, YPAD);
+#endif
 
 		/* Spinbutton */
 		_b[i] = gtk_spin_button_new (GTK_ADJUSTMENT (_a[i]), 1.0, 0);
 		sp_dialog_defocus_on_enter (_b[i]);
 		gtk_label_set_mnemonic_widget (GTK_LABEL(_l[i]), _b[i]);
 		gtk_widget_show (_b[i]);
+
+#if GTK_CHECK_VERSION(3,0,0)
+		gtk_widget_set_margin_left(_b[i], XPAD);
+		gtk_widget_set_margin_right(_b[i], XPAD);
+		gtk_widget_set_margin_top(_b[i], YPAD);
+		gtk_widget_set_margin_bottom(_b[i], YPAD);
+		gtk_widget_set_halign(_b[i], GTK_ALIGN_CENTER);
+		gtk_widget_set_valign(_b[i], GTK_ALIGN_CENTER);
+		gtk_grid_attach(GTK_GRID(t), _b[i], 2, i, 1, 1);
+#else
 		gtk_table_attach (GTK_TABLE (t), _b[i], 2, 3, i, i + 1, (GtkAttachOptions)0, (GtkAttachOptions)0, XPAD, YPAD);
+#endif
 
 		/* Attach channel value to adjustment */
 		g_object_set_data (G_OBJECT (_a[i]), "channel", GINT_TO_POINTER (i));

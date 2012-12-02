@@ -235,6 +235,8 @@ void ColorWheelSelector::init()
     gtk_widget_set_margin_right(_sbtn, XPAD);
     gtk_widget_set_margin_top(_sbtn, YPAD);
     gtk_widget_set_margin_bottom(_sbtn, YPAD);
+    gtk_widget_set_halign(_sbtn, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(_sbtn, GTK_ALIGN_CENTER);
     gtk_grid_attach(GTK_GRID(t), _sbtn, 2, row, 1, 1);
 #else
     gtk_table_attach (GTK_TABLE (t), _sbtn, 2, 3, row, row + 1, (GtkAttachOptions)0, (GtkAttachOptions)0, XPAD, YPAD);
