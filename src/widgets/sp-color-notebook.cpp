@@ -195,7 +195,6 @@ sp_color_notebook_init (SPColorNotebook *colorbook)
 
 void ColorNotebook::init()
 {
-    GtkWidget* table = 0;
     guint row = 0;
     guint i = 0;
     guint j = 0;
@@ -279,22 +278,49 @@ void ColorNotebook::init()
         }
     }
 
-    table = gtk_table_new (2, 3, FALSE);
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidget* table = gtk_grid_new();
+#else
+    GtkWidget* table = gtk_table_new(2, 3, FALSE);
+#endif
+
     gtk_widget_show (table);
 
     gtk_box_pack_start (GTK_BOX (_csel), table, TRUE, TRUE, 0);
 
     sp_set_font_size_smaller (_buttonbox);
+
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_margin_left(_buttonbox, XPAD);
+    gtk_widget_set_margin_right(_buttonbox, XPAD);
+    gtk_widget_set_margin_top(_buttonbox, YPAD);
+    gtk_widget_set_margin_bottom(_buttonbox, YPAD);
+    gtk_widget_set_hexpand(_buttonbox, TRUE);
+    gtk_widget_set_valign(_buttonbox, GTK_ALIGN_CENTER);
+    gtk_grid_attach(GTK_GRID(table), _buttonbox, 0, row, 2, 1);
+#else
     gtk_table_attach (GTK_TABLE (table), _buttonbox, 0, 2, row, row + 1,
                       static_cast<GtkAttachOptions>(GTK_EXPAND|GTK_FILL),
                       static_cast<GtkAttachOptions>(0),
                       XPAD, YPAD);
+#endif
+
     row++;
 
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_margin_left(_book, XPAD*2);
+    gtk_widget_set_margin_right(_book, XPAD*2);
+    gtk_widget_set_margin_top(_book, YPAD);
+    gtk_widget_set_margin_bottom(_book, YPAD);
+    gtk_widget_set_hexpand(_book, TRUE);
+    gtk_widget_set_vexpand(_book, TRUE);
+    gtk_grid_attach(GTK_GRID(table), _book, 0, row, 2, 1);
+#else
     gtk_table_attach (GTK_TABLE (table), _book, 0, 2, row, row + 1,
                       static_cast<GtkAttachOptions>(GTK_EXPAND|GTK_FILL),
                       static_cast<GtkAttachOptions>(GTK_EXPAND|GTK_FILL),
                       XPAD*2, YPAD);
+#endif
 
     // restore the last active page
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -349,7 +375,6 @@ void ColorNotebook::init()
 
 #if GTK_CHECK_VERSION(3,0,0)
     GtkWidget *rgbabox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_set_homogeneous(GTK_BOX(rgbabox), FALSE);
 #else
     GtkWidget *rgbabox = gtk_hbox_new (FALSE, 0);
 #endif
@@ -376,7 +401,6 @@ void ColorNotebook::init()
     gtk_widget_set_tooltip_text (_box_toomuchink, _("Too much ink!"));
     gtk_widget_set_sensitive (_box_toomuchink, false);
     gtk_box_pack_start(GTK_BOX(rgbabox), _box_toomuchink, FALSE, FALSE, 2);
-
 #endif //defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 
@@ -411,7 +435,15 @@ void ColorNotebook::init()
     gtk_widget_hide(GTK_WIDGET(_box_toomuchink));
 #endif //defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_margin_left(rgbabox, XPAD);
+    gtk_widget_set_margin_right(rgbabox, XPAD);
+    gtk_widget_set_margin_top(rgbabox, YPAD);
+    gtk_widget_set_margin_bottom(rgbabox, YPAD);
+    gtk_grid_attach(GTK_GRID(table), rgbabox, 0, row, 2, 1);
+#else
     gtk_table_attach (GTK_TABLE (table), rgbabox, 0, 2, row, row + 1, GTK_FILL, GTK_SHRINK, XPAD, YPAD);
+#endif
 
 #ifdef SPCS_PREVIEW
     _p = sp_color_preview_new (0xffffffff);
