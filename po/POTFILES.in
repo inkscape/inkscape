@@ -307,7 +307,6 @@ src/widgets/select-toolbar.cpp
 src/widgets/spiral-toolbar.cpp
 src/widgets/spray-toolbar.cpp
 src/widgets/sp-attribute-widget.cpp
-src/widgets/sp-color-gtkselector.cpp
 src/widgets/sp-color-icc-selector.cpp
 src/widgets/sp-color-notebook.cpp
 src/widgets/sp-color-scales.cpp

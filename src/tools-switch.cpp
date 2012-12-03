@@ -144,7 +144,7 @@ tools_switch(SPDesktop *dt, int num)
             dt->set_event_context(SP_TYPE_SPRAY_CONTEXT, tool_names[num]);
             dt->activate_guides(true);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));
-            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b>, <b>click</b> or <b>scroll</b> to spray the selected objects."));
+            dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b>, <b>click</b> or <b>click and scroll</b> to spray the selected objects."));
             break;
         case TOOLS_SHAPES_RECT:
             dt->set_event_context(SP_TYPE_RECT_CONTEXT, tool_names[num]);

@@ -232,13 +232,13 @@ static void sp_spray_update_cursor(SPSprayContext *tc, bool /*with_shift*/)
 
    switch (tc->mode) {
        case SPRAY_MODE_COPY:
-           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or scroll to spray <b>copies</b> of the initial selection."), sel_message);
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or click and scroll to spray <b>copies</b> of the initial selection."), sel_message);
            break;
        case SPRAY_MODE_CLONE:
-           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or scroll to spray <b>clones</b> of the initial selection."), sel_message);
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or click and scroll to spray <b>clones</b> of the initial selection."), sel_message);
            break;
        case SPRAY_MODE_SINGLE_PATH:
-           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or scroll to spray in a <b>single path</b> of the initial selection."), sel_message);
+           tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag, click or click and scroll to spray in a <b>single path</b> of the initial selection."), sel_message);
            break;
        default:
            break;
