@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-11-26 07:41+0100\n"
-"PO-Revision-Date: 2012-11-26 08:02+0100\n"
+"PO-Revision-Date: 2012-12-02 08:12+0100\n"
 "Last-Translator: Nicolas Dufour <nicoduf@yahoo.fr>\n"
 "Language-Team:  <fr@li.org>\n"
 "Language: \n"
@@ -1037,9 +1037,8 @@ msgid "Gives Smooth Bumps velvet like"
 msgstr "Donne un bosselage doux semblable à du velours"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Comics Cream"
-msgstr "Crème agitée BD"
+msgstr "Crème BD"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Non realistic 3D shaders"
@@ -1582,7 +1581,7 @@ msgstr ""
 
 #: ../share/filters/filters.svg.h:1
 msgid "Alpha Monochrome Cracked"
-msgstr ""
+msgstr "Monochrome transparent craquelé"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Basic noise fill texture; adjust color in Flood"
@@ -1619,9 +1618,8 @@ msgid "Duotone Turbulent"
 msgstr "Duotone turbulent"
 
 #: ../share/filters/filters.svg.h:1
-#, fuzzy
 msgid "Light Eraser Cracked"
-msgstr "Gomme lumière"
+msgstr "Gomme lumière craquelée"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Poster Turbulent"
@@ -9125,9 +9123,8 @@ msgid "Drop SVG"
 msgstr "Déposer un SVG"
 
 #: ../src/interface.cpp:1439
-#, fuzzy
 msgid "Drop Symbol"
-msgstr "Symboles khmer"
+msgstr "Déposer le symbole"
 
 #: ../src/interface.cpp:1470
 msgid "Drop bitmap image"
@@ -18001,12 +17998,13 @@ msgid "Bitmaps"
 msgstr "Bitmaps"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1424
+#, fuzzy
 msgid "Select a file of predefined shortcuts to use. Any customized shortcuts you create will be added seperately to "
-msgstr ""
+msgstr "Sélectionnez un fichier de raccourcis prédéfinis à utiliser."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1427
 msgid "Shortcut file:"
-msgstr ""
+msgstr "Fichier des raccourcis :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1430
 msgid "Search:"
@@ -18014,7 +18012,7 @@ msgstr "Rechercher :"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1442
 msgid "Shortcut"
-msgstr ""
+msgstr "Raccourci"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1443
 #: ../src/ui/widget/page-sizer.cpp:262
@@ -18030,7 +18028,7 @@ msgstr "Réinitialiser"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1479
 msgid "Remove all your customized keyboard shortcuts, and revert to the shortcuts in the shortcut file listed above"
-msgstr ""
+msgstr "Remplace tous les raccourcis clavier personnalisés par ceux définis dans le fichier choisi"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1483
 #, fuzzy
@@ -18039,7 +18037,7 @@ msgstr "_Importer..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1483
 msgid "Import custom keyboard shortcuts from a file"
-msgstr ""
+msgstr "Importer des raccourcis clavier personnalisés à partir d'un fichier"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1486
 #, fuzzy
@@ -18047,9 +18045,8 @@ msgid "Export ..."
 msgstr "E_xporter sous..."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1486
-#, fuzzy
 msgid "Export custom keyboard shortcuts to a file"
-msgstr "Exporter le document en fichier PS"
+msgstr "Exporter les raccourcis clavier personnalisés dans un fichier"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1496
 msgid "Keyboard Shortcuts"
@@ -20387,36 +20384,36 @@ msgid "Adjust alpha"
 msgstr "Ajuster l'opacité"
 
 #: ../src/ui/widget/selected-style.cpp:1329
-#, fuzzy, c-format
+#, c-format
 msgid "Adjusting <b>alpha</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Ctrl</b> to adjust lightness, with <b>Shift</b> to adjust saturation, without modifiers to adjust hue"
-msgstr "Ajustement de la <b>luminosité</b> : valeur précédente %.3g, désormais <b>%.3g</b> (diff. %.3g); <b>Maj</b> pour ajuster la saturation, sans touche modificatrice pour ajuster la teinte"
+msgstr "Ajustement de l'<b>opacité</b> : valeur précédente %.3g, désormais <b>%.3g</b> (diff. %.3g) ; <b>Ctrl</b> pour ajuster la luminosité, <b>Maj</b> pour ajuster la saturation, sans touche modificatrice pour ajuster la teinte"
 
 #: ../src/ui/widget/selected-style.cpp:1333
 msgid "Adjust saturation"
 msgstr "Ajuster la saturation"
 
 #: ../src/ui/widget/selected-style.cpp:1335
-#, fuzzy, c-format
+#, c-format
 msgid "Adjusting <b>saturation</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Ctrl</b> to adjust lightness, with <b>Alt</b> to adjust alpha, without modifiers to adjust hue"
-msgstr "Ajustement de la <b>saturation</b> : valeur précédente %.3g, désormais <b>%.3g</b> (diff. %.3g); <b>Ctrl</b> pour ajuster la luminosité, sans touche modificatrice pour ajuster la teinte"
+msgstr "Ajustement de la <b>saturation</b> : valeur précédente %.3g, désormais <b>%.3g</b> (diff. %.3g) ; <b>Ctrl</b> pour ajuster la luminosité, csans touche modificatrice pour ajuster la teinte"
 
 #: ../src/ui/widget/selected-style.cpp:1339
 msgid "Adjust lightness"
 msgstr "Ajuster la luminosité"
 
 #: ../src/ui/widget/selected-style.cpp:1341
-#, fuzzy, c-format
+#, c-format
 msgid "Adjusting <b>lightness</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</b> to adjust saturation, with <b>Alt</b> to adjust alpha, without modifiers to adjust hue"
-msgstr "Ajustement de la <b>luminosité</b> : valeur précédente %.3g, désormais <b>%.3g</b> (diff. %.3g); <b>Maj</b> pour ajuster la saturation, sans touche modificatrice pour ajuster la teinte"
+msgstr "Ajustement de la <b>luminosité</b> : valeur précédente %.3g, désormais <b>%.3g</b> (diff. %.3g) ; <b>Maj</b> pour ajuster la saturation, <b>Alt</b> pour ajuster l'opacité, sans touche modificatrice pour ajuster la teinte"
 
 #: ../src/ui/widget/selected-style.cpp:1345
 msgid "Adjust hue"
 msgstr "Ajuster la teinte"
 
 #: ../src/ui/widget/selected-style.cpp:1347
-#, fuzzy, c-format
+#, c-format
 msgid "Adjusting <b>hue</b>: was %.3g, now <b>%.3g</b> (diff %.3g); with <b>Shift</b> to adjust saturation, with <b>Alt</b> to adjust alpha, with <b>Ctrl</b> to adjust lightness"
-msgstr "Ajustement de la <b>teinte</b> : valeur précédente %.3g, désormais <b>%.3g</b> (diff. %.3g); <b>Maj</b> pour ajuster la saturation, <b>Ctrl</b> pour ajuster la luminosité"
+msgstr "Ajustement de la <b>teinte</b> : valeur précédente %.3g, désormais <b>%.3g</b> (diff. %.3g) ; <b>Maj</b> pour ajuster la saturation, <b>Ctrl</b> pour ajuster la luminosité, <b>Alt</b> pour ajuster l'opacité"
 
 #: ../src/ui/widget/selected-style.cpp:1467
 #: ../src/ui/widget/selected-style.cpp:1481
@@ -27264,7 +27261,7 @@ msgstr "Nombre de dents :"
 
 #: ../share/extensions/gears.inx.h:3
 msgid "Circular pitch (tooth size):"
-msgstr ""
+msgstr "Pas circulaire (taille de dent) :"
 
 #: ../share/extensions/gears.inx.h:4
 msgid "Pressure angle (degrees):"
@@ -27276,7 +27273,7 @@ msgstr "Diamètre du trou central (0 pour aucun) :"
 
 #: ../share/extensions/gears.inx.h:10
 msgid "Unit of measurement for both circular pitch and center diameter."
-msgstr ""
+msgstr "Unité de mesure pour le pas circulaire et le diamètre du centre."
 
 #: ../share/extensions/gcodetools_about.inx.h:1
 msgid "About"
@@ -27284,7 +27281,7 @@ msgstr "À propos"
 
 #: ../share/extensions/gcodetools_about.inx.h:2
 msgid "Gcodetools was developed to make simple Gcode from Inkscape's paths. Gcode is a special format which is used in most of CNC machines. So Gcodetools allows you to use Inkscape as CAM program. It can be use with a lot of machine types: Mills Lathes Laser and Plasma cutters and engravers Mill engravers Plotters etc. To get more info visit developers page at http://www.cnc-club.ru/gcodetools"
-msgstr ""
+msgstr "Gcodetools a été développé pour réaliser du code Gcode simple à partir des chemins d'Inkscape. Gcode est un format spécial utilisé dans la plupart des machines-outils à commande numérique. Ainsi Gcodetools vous permet d'utiliser Inkscape comme un programme de fabrication assistée par ordinateur. Il peut être utilisé avec un grand nombre de machines. Pour de plus amples informations, visitez la page des développeurs sur le site http://www.cnc-club.ru/gcodetools"
 
 #: ../share/extensions/gcodetools_about.inx.h:4
 #: ../share/extensions/gcodetools_area.inx.h:54
