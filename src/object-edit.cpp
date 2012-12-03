@@ -1305,7 +1305,7 @@ SpiralKnotHolder::SpiralKnotHolder(SPDesktop *desktop, SPItem *item, SPKnotHolde
 
     entity_outer->create(desktop, item, this, Inkscape::CTRL_TYPE_SHAPER,
                          _("Roll/unroll the spiral from <b>outside</b>; with <b>Ctrl</b> to snap angle; "
-                           "with <b>Shift</b> to scale/rotate"));
+                           "with <b>Shift</b> to scale/rotate; with <b>Alt</b> to lock radius"));
 
     entity.push_back(entity_inner);
     entity.push_back(entity_outer);
