@@ -177,7 +177,7 @@
         /* shared whiteboard */
         #undef WITH_INKBOARD
         #undef HAVE_SSL
-        
+
         /* use poppler for pdf import? */
         #define HAVE_POPPLER                  1
         #define HAVE_POPPLER_GLIB             1
@@ -186,12 +186,19 @@
         /* do we want bitmap manipulation? */
         #define WITH_IMAGE_MAGICK             1
 
+        /* Exif and JPEG support for image resolution import */
+        #define HAVE_EXIF                     1
+        #define HAVE_JPEG                     1
+
         /* Allow reading WordPerfect? */
         #define WITH_LIBWPG                   1
 
-        /* Default  to libwpg 0.1.x */
-        #define WITH_LIBWPG01                 1
+        /* Default  to libwpg 0.2.x */
+        #define WITH_LIBWPG02                 1
 
+        /* Visio import filter */
+        #define WITH_LIBVISIO                 1
+		
         /* Do we support SVG Fonts? */
         #define ENABLE_SVG_FONTS              1
 
@@ -376,7 +383,7 @@
             ${pcc.cairo}
             ${pcc.poppler}
             -I${devlibs}/include/gc
-            ${pcc.libwpg-0.1} ${pcc.libwpg-stream-0.1}
+            ${pcc.libwpg-0.2} ${pcc.libvisio-0.0}
             -I${cxxtest}
             <!-- PERL -->
             <!-- -Wno-comment -I${devlibs}/perl/lib/CORE -->
@@ -473,13 +480,13 @@
            ${devlibs}/bin/libxslt.dll
            ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-           ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
            ${pcl.lcms}
            ${pcl.gsl}
-           -lpng -ljpeg -ltiff -lpopt -lz
+           -lpng -ljpeg -ltiff -lexif -lpopt -lz
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
@@ -545,13 +552,13 @@
            ${devlibs}/bin/libxslt.dll
            ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-           ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
            ${pcl.lcms}
            ${pcl.gsl}
-           -lpng -ljpeg -ltiff -lpopt -lz
+           -lpng -ljpeg -ltiff -lexif -lpopt -lz
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
@@ -595,13 +602,13 @@
            ${devlibs}/bin/libxslt.dll
            ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-           ${pcl.libwpg-0.1} ${pcl.libwpg-stream-0.1}
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
            ${pcl.lcms}
            ${pcl.gsl}
-           -lpng -ljpeg -ltiff -lpopt -lz
+           -lpng -ljpeg -ltiff -lexif -lpopt -lz
            -lgc
            -lws2_32 -lintl -lgdi32 -lcomdlg32 -lm
            -lgomp -lpthreadGC2 -laspell
@@ -660,14 +667,15 @@
     <copy todir="${dist}" file="${devlibs}/bin/libxslt.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libexslt.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libexpat-1.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libwpg-0.1.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libwpg-stream-0.1.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libwpd-0.8.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/libwpd-stream-0.8.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libwpg-0.2.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libwpd-0.9.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libwpd-stream-0.9.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libvisio-0.0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libjpeg-7.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpng12-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpng14-14.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libtiff-3.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libexif-12.dll"/>
 	<copy todir="${dist}" file="${devlibs}/bin/libopenjpeg-2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/msvcr70.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/msvcr71.dll"/>
