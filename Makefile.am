@@ -209,6 +209,18 @@ EXTRA_DIST = \
 	packaging/win32/portable/App/AppInfo/appicon_32.png \
 	packaging/win32/portable/App/AppInfo/appinfo.ini \
 	packaging/win32/portable/App/AppInfo/installer.ini \
+	packaging/wix/README \
+	packaging/wix/inkscape.wxs \
+	packaging/wix/gpl-2.0.rtf \
+	packaging/wix/install.bat \
+	packaging/wix/files.py \
+	packaging/wix/version.py \
+	packaging/wix/next_uuid.py \
+	packaging/wix/wixenv.bat \
+	packaging/wix/Bitmaps/banner.bmp \
+	packaging/wix/Bitmaps/banner.svg \
+	packaging/wix/Bitmaps/dialog.bmp \
+	packaging/wix/Bitmaps/dialog.svg \
 	po/inkscape.pot \
 	po/update_po_files.sh \
 	src/inkscape.rc	src/inkview.rc
