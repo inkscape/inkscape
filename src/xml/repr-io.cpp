@@ -297,12 +297,18 @@ Document *sp_repr_read_file (const gchar * filename, const gchar *default_ns)
         XmlSource src;
 
         if ( (src.setFile(filename) == 0) ) {
+            int parse_options = XML_PARSE_HUGE; // do not use XML_PARSE_NOENT ! see bug lp:1025185
+            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+            bool allowNetAccess = prefs->getBool("/options/externalresources/xml/allow_net_access", false);
+            if (!allowNetAccess) {
+                parse_options |= XML_PARSE_NONET;
+            }
             doc = xmlReadIO( XmlSource::readCb,
                              XmlSource::closeCb,
                              &src,
                              localFilename,
                              src.getEncoding(),
-                             XML_PARSE_NOENT | XML_PARSE_HUGE);
+                             parse_options);
         }
     }
 
