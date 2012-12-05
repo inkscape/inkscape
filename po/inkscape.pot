@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-03 15:26+0100\n"
+"POT-Creation-Date: 2012-12-05 23:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7448,7 +7448,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:332
 #: ../src/ui/dialog/align-and-distribute.cpp:1048
-#: ../src/widgets/desktop-widget.cpp:1926
+#: ../src/widgets/desktop-widget.cpp:1947
 msgid "Drawing"
 msgstr ""
 
@@ -9350,7 +9350,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:1047
 #: ../src/ui/dialog/document-properties.cpp:144
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1546
-#: ../src/widgets/desktop-widget.cpp:1922
+#: ../src/widgets/desktop-widget.cpp:1943
 #: ../share/extensions/voronoi2svg.inx.h:9
 msgid "Page"
 msgstr ""
@@ -13612,7 +13612,7 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1049
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1550 ../src/verbs.cpp:174
-#: ../src/widgets/desktop-widget.cpp:1930
+#: ../src/widgets/desktop-widget.cpp:1951
 #: ../share/extensions/printing_marks.inx.h:18
 msgid "Selection"
 msgstr ""
@@ -23489,7 +23489,7 @@ msgid ""
 msgstr ""
 
 #: ../src/widgets/desktop-widget.cpp:820
-msgid "(grayscale) "
+msgid "grayscale"
 msgstr ""
 
 #: ../src/widgets/desktop-widget.cpp:821
@@ -23497,52 +23497,60 @@ msgid ", grayscale"
 msgstr ""
 
 #: ../src/widgets/desktop-widget.cpp:822
-msgid "(print colors preview) "
+msgid "print colors preview"
 msgstr ""
 
 #: ../src/widgets/desktop-widget.cpp:823
 msgid ", print colors preview"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:842
-#, c-format
-msgid "%s%s: %d (outline%s) - Inkscape"
+#: ../src/widgets/desktop-widget.cpp:824
+msgid "outline"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:844
-#, c-format
-msgid "%s%s: %d (no filters%s) - Inkscape"
-msgstr ""
-
-#: ../src/widgets/desktop-widget.cpp:846
-#, c-format
-msgid "%s%s: %d %s- Inkscape"
-msgstr ""
-
-#: ../src/widgets/desktop-widget.cpp:850
-#, c-format
-msgid "%s%s (outline%s) - Inkscape"
+#: ../src/widgets/desktop-widget.cpp:825
+msgid "no filters"
 msgstr ""
 
 #: ../src/widgets/desktop-widget.cpp:852
 #, c-format
-msgid "%s%s (no filters%s) - Inkscape"
+msgid "%s%s: %d (%s%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:854
+#: ../src/widgets/desktop-widget.cpp:854 ../src/widgets/desktop-widget.cpp:858
 #, c-format
-msgid "%s%s %s- Inkscape"
+msgid "%s%s: %d (%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1021
+#: ../src/widgets/desktop-widget.cpp:860
+#, c-format
+msgid "%s%s: %d - Inkscape"
+msgstr ""
+
+#: ../src/widgets/desktop-widget.cpp:866
+#, c-format
+msgid "%s%s (%s%s) - Inkscape"
+msgstr ""
+
+#: ../src/widgets/desktop-widget.cpp:868 ../src/widgets/desktop-widget.cpp:872
+#, c-format
+msgid "%s%s (%s) - Inkscape"
+msgstr ""
+
+#: ../src/widgets/desktop-widget.cpp:874
+#, c-format
+msgid "%s%s - Inkscape"
+msgstr ""
+
+#: ../src/widgets/desktop-widget.cpp:1042
 msgid "Color-managed display is <b>enabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1023
+#: ../src/widgets/desktop-widget.cpp:1044
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1078
+#: ../src/widgets/desktop-widget.cpp:1099
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -23551,12 +23559,12 @@ msgid ""
 "If you close without saving, your changes will be discarded."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1088
-#: ../src/widgets/desktop-widget.cpp:1147
+#: ../src/widgets/desktop-widget.cpp:1109
+#: ../src/widgets/desktop-widget.cpp:1168
 msgid "Close _without saving"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1137
+#: ../src/widgets/desktop-widget.cpp:1158
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -23565,11 +23573,11 @@ msgid ""
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1149
+#: ../src/widgets/desktop-widget.cpp:1170
 msgid "_Save as Inkscape SVG"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1359
+#: ../src/widgets/desktop-widget.cpp:1380
 msgid "Note:"
 msgstr ""
 
