@@ -2080,30 +2080,33 @@ void GrDrag::updateDraggers()
 
         if (style && (style->fill.isPaintserver())) {
             SPPaintServer *server = style->getFillPaintServer();
-            if ( server && (server->isSolid()
-                    || (SP_GRADIENT(server)->getVector() && SP_GRADIENT(server)->getVector()->isSolid())) ) {
-                // Suppress "gradientness" of solid paint
-            } else if ( SP_IS_LINEARGRADIENT(server) ) {
-                addDraggersLinear( SP_LINEARGRADIENT(server), item, Inkscape::FOR_FILL );
-            } else if ( SP_IS_RADIALGRADIENT(server) ) {
-                addDraggersRadial( SP_RADIALGRADIENT(server), item, Inkscape::FOR_FILL );
-            } else if ( SP_IS_MESHGRADIENT(server) ) {
-                addDraggersMesh(   SP_MESHGRADIENT(server),   item, Inkscape::FOR_FILL );
+            if ( server && SP_IS_GRADIENT( server ) ) {
+                if ( server->isSolid()
+                     || (SP_GRADIENT(server)->getVector() && SP_GRADIENT(server)->getVector()->isSolid())) {
+                    // Suppress "gradientness" of solid paint
+                } else if ( SP_IS_LINEARGRADIENT(server) ) {
+                    addDraggersLinear( SP_LINEARGRADIENT(server), item, Inkscape::FOR_FILL );
+                } else if ( SP_IS_RADIALGRADIENT(server) ) {
+                    addDraggersRadial( SP_RADIALGRADIENT(server), item, Inkscape::FOR_FILL );
+                } else if ( SP_IS_MESHGRADIENT(server) ) {
+                    addDraggersMesh(   SP_MESHGRADIENT(server),   item, Inkscape::FOR_FILL );
+                }
             }
-
         }
 
         if (style && (style->stroke.isPaintserver())) {
             SPPaintServer *server = style->getStrokePaintServer();
-            if ( server && (server->isSolid()
-                    || (SP_GRADIENT(server)->getVector() && SP_GRADIENT(server)->getVector()->isSolid())) ) {
-                // Suppress "gradientness" of solid paint
-            } else if ( SP_IS_LINEARGRADIENT(server) ) {
-                addDraggersLinear( SP_LINEARGRADIENT(server), item, Inkscape::FOR_STROKE );
-            } else if ( SP_IS_RADIALGRADIENT(server) ) {
-                addDraggersRadial( SP_RADIALGRADIENT(server), item, Inkscape::FOR_STROKE );
-            } else if ( SP_IS_MESHGRADIENT(server) ) {
-                addDraggersMesh(   SP_MESHGRADIENT(server),   item, Inkscape::FOR_STROKE );
+            if ( server && SP_IS_GRADIENT( server ) ) {
+                if ( server->isSolid()
+                     || (SP_GRADIENT(server)->getVector() && SP_GRADIENT(server)->getVector()->isSolid())) {
+                    // Suppress "gradientness" of solid paint
+                } else if ( SP_IS_LINEARGRADIENT(server) ) {
+                    addDraggersLinear( SP_LINEARGRADIENT(server), item, Inkscape::FOR_STROKE );
+                } else if ( SP_IS_RADIALGRADIENT(server) ) {
+                    addDraggersRadial( SP_RADIALGRADIENT(server), item, Inkscape::FOR_STROKE );
+                } else if ( SP_IS_MESHGRADIENT(server) ) {
+                    addDraggersMesh(   SP_MESHGRADIENT(server),   item, Inkscape::FOR_STROKE );
+                }
             }
         }
     }
@@ -2147,59 +2150,61 @@ void GrDrag::updateLines()
 
         if (style && (style->fill.isPaintserver())) {
             SPPaintServer *server = item->style->getFillPaintServer();
-            if ( server && (server->isSolid() ||
-                    (SP_GRADIENT(server)->getVector() && SP_GRADIENT(server)->getVector()->isSolid())) ) {
-                // Suppress "gradientness" of solid paint
-            } else if ( SP_IS_LINEARGRADIENT(server) ) {
-                addLine(item, getGradientCoords(item, POINT_LG_BEGIN, 0, Inkscape::FOR_FILL), getGradientCoords(item, POINT_LG_END, 0, Inkscape::FOR_FILL), Inkscape::FOR_FILL);
-            } else if ( SP_IS_RADIALGRADIENT(server) ) {
-                Geom::Point center = getGradientCoords(item, POINT_RG_CENTER, 0, Inkscape::FOR_FILL);
-                addLine(item, center, getGradientCoords(item, POINT_RG_R1, 0, Inkscape::FOR_FILL), Inkscape::FOR_FILL);
-                addLine(item, center, getGradientCoords(item, POINT_RG_R2, 0, Inkscape::FOR_FILL), Inkscape::FOR_FILL);
-            } else if ( SP_IS_MESHGRADIENT(server) ) {
+            if ( server && SP_IS_GRADIENT( server ) ) {
+                if ( server->isSolid()
+                     || (SP_GRADIENT(server)->getVector() && SP_GRADIENT(server)->getVector()->isSolid())) {
+                    // Suppress "gradientness" of solid paint
+                } else if ( SP_IS_LINEARGRADIENT(server) ) {
+                    addLine(item, getGradientCoords(item, POINT_LG_BEGIN, 0, Inkscape::FOR_FILL), getGradientCoords(item, POINT_LG_END, 0, Inkscape::FOR_FILL), Inkscape::FOR_FILL);
+                } else if ( SP_IS_RADIALGRADIENT(server) ) {
+                    Geom::Point center = getGradientCoords(item, POINT_RG_CENTER, 0, Inkscape::FOR_FILL);
+                    addLine(item, center, getGradientCoords(item, POINT_RG_R1, 0, Inkscape::FOR_FILL), Inkscape::FOR_FILL);
+                    addLine(item, center, getGradientCoords(item, POINT_RG_R2, 0, Inkscape::FOR_FILL), Inkscape::FOR_FILL);
+                } else if ( SP_IS_MESHGRADIENT(server) ) {
 
-                SPMeshGradient *mg = SP_MESHGRADIENT(server);
+                    SPMeshGradient *mg = SP_MESHGRADIENT(server);
 
-                guint rows    = mg->array.patch_rows();
-                guint columns = mg->array.patch_columns();
-                for ( guint i = 0; i < rows; ++i ) {
-                    for ( guint j = 0; j < columns; ++j ) {
+                    guint rows    = mg->array.patch_rows();
+                    guint columns = mg->array.patch_columns();
+                    for ( guint i = 0; i < rows; ++i ) {
+                        for ( guint j = 0; j < columns; ++j ) {
 
-                        std::vector<Geom::Point> h;
+                            std::vector<Geom::Point> h;
 
-                        SPMeshPatchI patch( &(mg->array.nodes), i, j );
+                            SPMeshPatchI patch( &(mg->array.nodes), i, j );
 
-                        // Top line
-                        h = patch.getPointsForSide( 0 );
-                        for( guint p = 0; p < 4; ++p ) {
-                            h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
-                        }
-                        addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
+                            // Top line
+                            h = patch.getPointsForSide( 0 );
+                            for( guint p = 0; p < 4; ++p ) {
+                                h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
+                            }
+                            addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
 
-                        // Right line
-                        if( j == columns - 1 ) {
-                            h = patch.getPointsForSide( 1 );
+                            // Right line
+                            if( j == columns - 1 ) {
+                                h = patch.getPointsForSide( 1 );
+                                for( guint p = 0; p < 4; ++p ) {
+                                    h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
+                                }
+                                addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
+                            }
+
+                            // Bottom line
+                            if( i == rows    - 1 ) {
+                                h = patch.getPointsForSide( 2 );
+                                for( guint p = 0; p < 4; ++p ) {
+                                    h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
+                                }
+                                addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
+                            }
+
+                            // Left line
+                            h = patch.getPointsForSide( 3 );
                             for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
                             addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
                         }
-
-                        // Bottom line
-                        if( i == rows    - 1 ) {
-                            h = patch.getPointsForSide( 2 );
-                            for( guint p = 0; p < 4; ++p ) {
-                                h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
-                            }
-                            addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
-                        }
-
-                        // Left line
-                        h = patch.getPointsForSide( 3 );
-                        for( guint p = 0; p < 4; ++p ) {
-                            h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
-                        }
-                        addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_FILL );
                     }
                 }                        
             }
@@ -2207,62 +2212,64 @@ void GrDrag::updateLines()
 
         if (style && (style->stroke.isPaintserver())) {
             SPPaintServer *server = item->style->getStrokePaintServer();
-            if ( server && (server->isSolid()
-                    || (SP_GRADIENT(server)->getVector() && SP_GRADIENT(server)->getVector()->isSolid())) ) {
-                // Suppress "gradientness" of solid paint
-            } else if ( SP_IS_LINEARGRADIENT(server) ) {
-                addLine(item, getGradientCoords(item, POINT_LG_BEGIN, 0, Inkscape::FOR_STROKE), getGradientCoords(item, POINT_LG_END, 0, Inkscape::FOR_STROKE), Inkscape::FOR_STROKE);
-            } else if ( SP_IS_RADIALGRADIENT(server) ) {
-                Geom::Point center = getGradientCoords(item, POINT_RG_CENTER, 0, Inkscape::FOR_STROKE);
-                addLine(item, center, getGradientCoords(item, POINT_RG_R1, 0, Inkscape::FOR_STROKE), Inkscape::FOR_STROKE);
-                addLine(item, center, getGradientCoords(item, POINT_RG_R2, 0, Inkscape::FOR_STROKE), Inkscape::FOR_STROKE);
-            } else if ( SP_IS_MESHGRADIENT(server) ) {
+            if ( server && SP_IS_GRADIENT( server ) ) {
+                if ( server->isSolid()
+                     || (SP_GRADIENT(server)->getVector() && SP_GRADIENT(server)->getVector()->isSolid())) {
+                    // Suppress "gradientness" of solid paint
+                } else if ( SP_IS_LINEARGRADIENT(server) ) {
+                    addLine(item, getGradientCoords(item, POINT_LG_BEGIN, 0, Inkscape::FOR_STROKE), getGradientCoords(item, POINT_LG_END, 0, Inkscape::FOR_STROKE), Inkscape::FOR_STROKE);
+                } else if ( SP_IS_RADIALGRADIENT(server) ) {
+                    Geom::Point center = getGradientCoords(item, POINT_RG_CENTER, 0, Inkscape::FOR_STROKE);
+                    addLine(item, center, getGradientCoords(item, POINT_RG_R1, 0, Inkscape::FOR_STROKE), Inkscape::FOR_STROKE);
+                    addLine(item, center, getGradientCoords(item, POINT_RG_R2, 0, Inkscape::FOR_STROKE), Inkscape::FOR_STROKE);
+                } else if ( SP_IS_MESHGRADIENT(server) ) {
 
-                // MESH FIXME: TURN ROUTINE INTO FUNCTION AND CALL FOR BOTH FILL AND STROKE.
-                SPMeshGradient *mg = SP_MESHGRADIENT(server);
+                    // MESH FIXME: TURN ROUTINE INTO FUNCTION AND CALL FOR BOTH FILL AND STROKE.
+                    SPMeshGradient *mg = SP_MESHGRADIENT(server);
 
-                guint rows    = mg->array.patch_rows();
-                guint columns = mg->array.patch_columns();
-                for ( guint i = 0; i < rows; ++i ) {
-                    for ( guint j = 0; j < columns; ++j ) {
+                    guint rows    = mg->array.patch_rows();
+                    guint columns = mg->array.patch_columns();
+                    for ( guint i = 0; i < rows; ++i ) {
+                        for ( guint j = 0; j < columns; ++j ) {
 
-                        std::vector<Geom::Point> h;
+                            std::vector<Geom::Point> h;
 
-                        SPMeshPatchI patch( &(mg->array.nodes), i, j );
+                            SPMeshPatchI patch( &(mg->array.nodes), i, j );
 
-                        // Top line
-                        h = patch.getPointsForSide( 0 );
-                        for( guint p = 0; p < 4; ++p ) {
-                            h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
-                        }
-                        addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
+                            // Top line
+                            h = patch.getPointsForSide( 0 );
+                            for( guint p = 0; p < 4; ++p ) {
+                                h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
+                            }
+                            addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
 
-                        // Right line
-                        if( j == columns - 1 ) {
-                            h = patch.getPointsForSide( 1 );
+                            // Right line
+                            if( j == columns - 1 ) {
+                                h = patch.getPointsForSide( 1 );
+                                for( guint p = 0; p < 4; ++p ) {
+                                    h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
+                                }
+                                addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
+                            }
+
+                            // Bottom line
+                            if( i == rows    - 1 ) {
+                                h = patch.getPointsForSide( 2 );
+                                for( guint p = 0; p < 4; ++p ) {
+                                    h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
+                                }
+                                addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
+                            }
+
+                            // Left line
+                            h = patch.getPointsForSide( 3 );
                             for( guint p = 0; p < 4; ++p ) {
                                 h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
                             }
                             addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
                         }
-
-                        // Bottom line
-                        if( i == rows    - 1 ) {
-                            h = patch.getPointsForSide( 2 );
-                            for( guint p = 0; p < 4; ++p ) {
-                                h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
-                            }
-                            addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
-                        }
-
-                        // Left line
-                        h = patch.getPointsForSide( 3 );
-                        for( guint p = 0; p < 4; ++p ) {
-                            h[p] *= Geom::Affine(mg->gradientTransform) * (Geom::Affine)item->i2dt_affine();
-                        }
-                        addCurve (item, h[0], h[1], h[2], h[3], Inkscape::FOR_STROKE );
-                    }
-                }                        
+                    }                        
+                }
             }
         }
     }
