@@ -102,15 +102,16 @@ static inline Tt clip_round_cast(Ts const v) {
     Ts const minval = std::numeric_limits<Tt>::min();
     Ts const maxval = std::numeric_limits<Tt>::max();
     Tt const minval_rounded = std::numeric_limits<Tt>::min();
-    Ts const maxval_rounded = std::numeric_limits<Tt>::max();
+    Tt const maxval_rounded = std::numeric_limits<Tt>::max();
     if ( v < minval ) return minval_rounded;
     if ( v > maxval ) return maxval_rounded;
     return round_cast<Tt>(v);
 }
 
 template<typename Tt, typename Ts>
-static inline Tt clip_round_cast_varmax(Ts const v, Ts const maxval, Tt const maxval_rounded) {
+static inline Tt clip_round_cast_varmax(Ts const v, Tt const maxval_rounded) {
     Ts const minval = std::numeric_limits<Tt>::min();
+    Tt const maxval = maxval_rounded;
     Tt const minval_rounded = std::numeric_limits<Tt>::min();
     if ( v < minval ) return minval_rounded;
     if ( v > maxval ) return maxval_rounded;
@@ -339,7 +340,7 @@ filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
         dstimg -= dstr1;
         if ( PREMULTIPLIED_ALPHA ) {
             dstimg[alpha_PC] = clip_round_cast<PT>(v[0][alpha_PC]);
-            PREMUL_ALPHA_LOOP dstimg[c] = clip_round_cast_varmax<PT>(v[0][c], v[0][alpha_PC], dstimg[alpha_PC]);
+            PREMUL_ALPHA_LOOP dstimg[c] = clip_round_cast_varmax<PT>(v[0][c], dstimg[alpha_PC]);
         } else {
             for(unsigned int c=0; c<PC; c++) dstimg[c] = clip_round_cast<PT>(v[0][c]);
         }
@@ -354,7 +355,7 @@ filter2D_IIR(PT *const dest, int const dstr1, int const dstr2,
             dstimg -= dstr1;
             if ( PREMULTIPLIED_ALPHA ) {
                 dstimg[alpha_PC] = clip_round_cast<PT>(v[0][alpha_PC]);
-                PREMUL_ALPHA_LOOP dstimg[c] = clip_round_cast_varmax<PT>(v[0][c], v[0][alpha_PC], dstimg[alpha_PC]);
+                PREMUL_ALPHA_LOOP dstimg[c] = clip_round_cast_varmax<PT>(v[0][c], dstimg[alpha_PC]);
             } else {
                 for(unsigned int c=0; c<PC; c++) dstimg[c] = clip_round_cast<PT>(v[0][c]);
             }
