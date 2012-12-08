@@ -298,30 +298,21 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
     // Next, get all points to consider for snapping
     SnapManager const &m = _desktop->namedview->snap_manager;
     _snap_points.clear();
-    _snap_points = selection->getSnapPoints(&m.snapprefs);
-    std::vector<Inkscape::SnapCandidatePoint> snap_points_hull = selection->getSnapPointsConvexHull(&m.snapprefs);
+    if (m.someSnapperMightSnap(false)) { // Only search for snap sources when really needed, to avoid unnecessary delays
+        _snap_points = selection->getSnapPoints(&m.snapprefs); // This might take some time!
+    }
     if (_snap_points.size() > 200 && !(prefs->getBool("/options/snapclosestonly/value", false))) {
         /* Snapping a huge number of nodes will take way too long, so limit the number of snappable nodes
         A typical user would rarely ever try to snap such a large number of nodes anyway, because
         (s)he would hardly be able to discern which node would be snapping */
-        _snap_points = snap_points_hull;
-        //}
+        _snap_points.resize(200);
         // Unfortunately, by now we will have lost the font-baseline snappoints :-(
     }
 
     // Find bbox hulling all special points, which excludes stroke width. Here we need to include the
     // path nodes, for example because a rectangle which has been converted to a path doesn't have
     // any other special points
-    Geom::Rect snap_points_bbox;
-    if ( snap_points_hull.empty() == false ) {
-        std::vector<Inkscape::SnapCandidatePoint>::iterator i = snap_points_hull.begin();
-        snap_points_bbox = Geom::Rect((*i).getPoint(), (*i).getPoint());
-        i++;
-        while (i != snap_points_hull.end()) {
-            snap_points_bbox.expandTo((*i).getPoint());
-            i++;
-        }
-    }
+    Geom::OptRect snap_points_bbox = selection->bounds(SPItem::GEOMETRIC_BBOX);
 
     _bbox_points.clear();
     // Collect the bounding box's corners and midpoints for each selected item
@@ -329,11 +320,8 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
         bool c = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_CORNER);
         bool mp = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_MIDPOINT);
         bool emp = m.snapprefs.isTargetSnappable(SNAPTARGET_BBOX_EDGE_MIDPOINT);
-        // 1) Preferably we'd use the bbox of each selected item, instead of the bbox of the selection as a whole; for translations
-        // this is easy to do, but when snapping the visual bbox while scaling we will have to compensate for the scaling of the
-        // stroke width. (see get_scale_transform_for_stroke()). This however is currently only implemented for a single bbox.
-        // 2) More than 50 items will produce at least 200 bbox points, which might make Inkscape crawl
-        // (see the comment a few lines above). In that case we will use the bbox of the selection as a whole
+        // Preferably we'd use the bbox of each selected item, but for example 50 items will produce at least 200 bbox points,
+        // which might make Inkscape crawl(see the comment a few lines above). In that case we will use the bbox of the selection as a whole
         bool c1 = (_items.size() > 0) && (_items.size() < 50);
         bool c2 = prefs->getBool("/options/snapclosestonly/value", false);
         if (translating && (c1 || c2)) {
@@ -353,10 +341,14 @@ void Inkscape::SelTrans::grab(Geom::Point const &p, gdouble x, gdouble y, bool s
         //  - one for snapping the boundingbox, which can be either visual or geometric
         //  - one for snapping the special points
         // The "opposite" in case of a geometric boundingbox always coincides with the "opposite" for the special points
-        // These distinct "opposites" are needed in the snapmanager to avoid bugs such as #sf1540195 (in which
+        // These distinct "opposites" are needed in the snapmanager to avoid bugs such as LP167905 (in which
         // a box is caught between two guides)
         _opposite_for_bboxpoints = _bbox->min() + _bbox->dimensions() * Geom::Scale(1-x, 1-y);
-        _opposite_for_specpoints = snap_points_bbox.min() + snap_points_bbox.dimensions() * Geom::Scale(1-x, 1-y);
+        if (snap_points_bbox) {
+            _opposite_for_specpoints = (*snap_points_bbox).min() + (*snap_points_bbox).dimensions() * Geom::Scale(1-x, 1-y);
+        } else {
+            _opposite_for_specpoints = _opposite_for_bboxpoints;
+        }
         _opposite = _opposite_for_bboxpoints;
     }
 

@@ -267,12 +267,6 @@ public:
     std::vector<Inkscape::SnapCandidatePoint> getSnapPoints(SnapPreferences const *snapprefs) const;
 
     /**
-     * Gets the snap points of a selection that form a convex hull.
-     * @return Selection's convex hull points
-     */
-    std::vector<Inkscape::SnapCandidatePoint> getSnapPointsConvexHull(SnapPreferences const *snapprefs) const;
-
-    /**
      * Connects a slot to be notified of selection changes.
      *
      * This method connects the given slot such that it will

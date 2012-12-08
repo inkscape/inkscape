@@ -1193,10 +1193,10 @@ void SPShape::sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::Snap
 
         // Find the internal intersections of each path and consider these for snapping
         // (using "Method 1" as described in Inkscape::ObjectSnapper::_collectNodes())
-        if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_PATH_INTERSECTION)) {
+        if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_PATH_INTERSECTION) || snapprefs->isSourceSnappable(Inkscape::SNAPSOURCE_PATH_INTERSECTION)) {
             Geom::Crossings cs;
             try {
-                cs = self_crossings(*path_it);
+                cs = self_crossings(*path_it); // This can be slow!
                 if (!cs.empty()) { // There might be multiple intersections...
                     for (Geom::Crossings::const_iterator i = cs.begin(); i != cs.end(); ++i) {
                         Geom::Point p_ix = (*path_it).pointAt((*i).ta);
