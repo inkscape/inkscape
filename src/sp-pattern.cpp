@@ -608,8 +608,7 @@ sp_pattern_create_pattern(SPPaintServer *ps,
                           double opacity)
 {
     SPPattern *pat = SP_PATTERN (ps);
-    Geom::Affine ps2user;
-    Geom::Affine vb2ps = Geom::identity();
+
     bool needs_opacity = (1.0 - opacity) >= 1e-3;
     bool visible = opacity >= 1e-3;
 
@@ -646,6 +645,8 @@ sp_pattern_create_pattern(SPPaintServer *ps,
         }
     }
 
+    // viewBox to pattern server
+    Geom::Affine vb2ps = Geom::identity();
     if (pat->viewBox_set) {
         Geom::Rect vb = *pattern_viewBox(pat);
         gdouble tmp_x = pattern_width (pat) / vb.width();
@@ -655,6 +656,11 @@ sp_pattern_create_pattern(SPPaintServer *ps,
         vb2ps = Geom::Affine(tmp_x, 0.0, 0.0, tmp_y, pattern_x(pat) - vb.left() * tmp_x, pattern_y(pat) - vb.top() * tmp_y);
     }
 
+    // We must determine the size and scaling of the pattern at the time it is displayed and render
+    // the pattern onto a surface with that size and at that resolution.
+
+    // Pattern server to user
+    Geom::Affine ps2user;
     ps2user = pattern_patternTransform(pat);
     if (!pat->viewBox_set && pattern_patternContentUnits (pat) == SP_PATTERN_UNITS_OBJECTBOUNDINGBOX) {
         /* BBox to user coordinate system */
@@ -663,6 +669,7 @@ sp_pattern_create_pattern(SPPaintServer *ps,
     }
     ps2user = Geom::Translate (pattern_x (pat), pattern_y (pat)) * ps2user;
 
+    // Pattern size in pattern space
     Geom::Rect pattern_tile = Geom::Rect::from_xywh(pattern_x(pat), pattern_y(pat),
         pattern_width(pat), pattern_height(pat));
 
@@ -672,22 +679,33 @@ sp_pattern_create_pattern(SPPaintServer *ps,
         pattern_tile = pattern_tile * bbox2user;
     }
 
+    // Transform of object with pattern (includes screen scaling)
     cairo_matrix_t cm;
     cairo_get_matrix(base_ct, &cm);
     Geom::Affine full(cm.xx, cm.yx, cm.xy, cm.yy, 0, 0);
+
+    // The DrawingSurface class is suppose to handle the mapping from "logical space"
+    // (coordinates in the rendering) to "physical space" (surface pixels).
+    // An oversampling is done as the pattern may not pixel align with the final surface.
+    // The cairo surface is created when the DrawingContext is declared.
 
     // oversample the pattern slightly
     // TODO: find optimum value
     // TODO: this is lame. instead of using descrim(), we should extract
     //       the scaling component from the complete matrix and use it
     //       to find the optimum tile size for rendering
-    Geom::Point c(pattern_tile.dimensions()*vb2ps.descrim()*ps2user.descrim()*full.descrim()*1.1);
+    // c is number of pixels in buffer x and y.
+    Geom::Point c(pattern_tile.dimensions()*vb2ps.descrim()*ps2user.descrim()*full.descrim()*2);
+
     c[Geom::X] = ceil(c[Geom::X]);
     c[Geom::Y] = ceil(c[Geom::Y]);
-    
+
+    // Create drawing surface with size of pattern tile (in tile space) but with number of pixels
+    // based on required resolution (c).
+    Inkscape::DrawingSurface pattern_surface(pattern_tile, c.ceil());
+    Inkscape::DrawingContext ct(pattern_surface);
+
     Geom::IntRect one_tile = pattern_tile.roundOutwards();
-    Inkscape::DrawingSurface temp(pattern_tile, c.ceil());
-    Inkscape::DrawingContext ct(temp);
 
     // render pattern.
     if (needs_opacity) {
@@ -695,9 +713,13 @@ sp_pattern_create_pattern(SPPaintServer *ps,
     }
 
     // TODO: make sure there are no leaks.
-    Inkscape::UpdateContext ctx;
-    ctx.ctm = vb2ps;
+    Inkscape::UpdateContext ctx;  // UpdateContext is structure with only ctm!
+    ctx.ctm = vb2ps;// * full;
+
     drawing.update(Geom::IntRect::infinite(), ctx);
+
+    // Render drawing to pattern_surface via drawing context, this calls root->render
+    // which is really DrawingItem->render().
     drawing.render(ct, one_tile);
     for (SPObject *child = shown->firstChild() ; child != NULL; child = child->getNext() ) {
         if (SP_IS_ITEM (child)) {
@@ -705,15 +727,23 @@ sp_pattern_create_pattern(SPPaintServer *ps,
         }
     }
 
+    // Uncomment to debug
+    // cairo_surface_t* raw = pattern_surface.raw();
+    // std::cout << "  cairo_surface (sp-pattern): "
+    //           << " width: "  << cairo_image_surface_get_width( raw )
+    //           << " height: " << cairo_image_surface_get_height( raw )
+    //           << std::endl;
+    // cairo_surface_write_to_png( pattern_surface.raw(), "sp-pattern.png" );
+
     if (needs_opacity) {
         ct.popGroupToSource(); // pop raw pattern
         ct.paint(opacity); // apply opacity
     }
 
-    cairo_pattern_t *cp = cairo_pattern_create_for_surface(temp.raw());
-
+    cairo_pattern_t *cp = cairo_pattern_create_for_surface(pattern_surface.raw());
     // Apply transformation to user space. Also compensate for oversampling.
-    ink_cairo_pattern_set_matrix(cp, ps2user.inverse() * temp.drawingTransform());
+    ink_cairo_pattern_set_matrix(cp, ps2user.inverse() * pattern_surface.drawingTransform());
+
     cairo_pattern_set_extend(cp, CAIRO_EXTEND_REPEAT);
 
     return cp;
