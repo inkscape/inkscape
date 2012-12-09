@@ -54,11 +54,11 @@ if test "$GCC" = "yes"; then
   CPPFLAGS="-Wformat -Wformat-security $CPPFLAGS"
   # Enable all default warnings
   CPPFLAGS="-Wall $CPPFLAGS"
-  # Ensure that no deprecated glibmm symbols are introduced.
-  # lp:inkscape builds cleanly with this option at r10957
-  CPPFLAGS="-DGLIBMM_DISABLE_DEPRECATED $CPPFLAGS"
-  CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
-  CPPFLAGS="-DGTK_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
+
+  # Permit only top-level Glib headers to be used.
+  # 
+  # TODO: This is already the case for Glib >= 2.32 so this flag can be dropped
+  #       when all targeted distros use higher Glib versions.
   CPPFLAGS="-DG_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
 
   # Ensure that private GTK+ fields are not accessible. This is the case for
@@ -789,7 +789,7 @@ if test "x$enable_gtk3" = "xyes"; then
 		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
 	fi
 
-	PKG_CHECK_MODULES(INKSCAPE, gtkmm-3.0  gdkmm-3.0 gtk+-3.0 gdk-3.0 gdl-3.0 > 3.3.4 glib-2.0 >= 2.28  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4, with_gtkmm_3_0=yes, with_gtkmm_3_0=no)
+	PKG_CHECK_MODULES(INKSCAPE, gtkmm-3.0  gdkmm-3.0 gtk+-3.0 gdk-3.0 gdl-3.0 > 3.3.4 glib-2.0 >= 2.28  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4 pango >= 1.24, with_gtkmm_3_0=yes, with_gtkmm_3_0=no)
 
 	if test "x$with_gtkmm_3_0" = "xyes"; then
 		AC_MSG_RESULT([Using EXPERIMENTAL Gtkmm 3 build])
@@ -808,7 +808,7 @@ else
 		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
 	fi
 
-	PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.28  gtk+-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.24)
+	PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.28  gtk+-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.24 pango >= 1.24)
 	
 	# Disable deprecated symbols to make GTK+ 3 migration easier.
 	# This should also be applied to GTK+ 3 builds too,
@@ -816,6 +816,11 @@ else
 	CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
 	CPPFLAGS="-DGTK_DISABLE_DEPRECATED $CPPFLAGS"
 	CPPFLAGS="-DGDKMM_DISABLE_DEPRECATED $CPPFLAGS"
+  
+	# Allow only top-level GTK+ headers to be used.  This is mandatory
+	# for GTK+ >= 3.0 so there is no need to apply the flag in GTK+ 3
+	# builds.
+	CPPFLAGS="-DGTK_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
 
 	# FIXME: This is disabled because our internal
 	# copy of GDL still uses deprecated GTK+ 2 symbols.
@@ -827,6 +832,25 @@ else
 fi
 
 AM_CONDITIONAL(WITH_EXT_GDL, test "x$with_gtkmm_3_0" = "xyes")
+
+dnl Pango 1.32.4 uses a deprecated Glib symbol:
+dnl   https://bugzilla.gnome.org/show_bug.cgi?id=689843
+dnl 
+dnl TODO: Get rid of this check once we are sure that all targeted
+dnl       platforms have got rid of this Pango version.  Apply the
+dnl       G_DISABLE_DEPRECATED flag to all builds.
+with_pango_1_32_4="no"
+PKG_CHECK_MODULES(PANGO_1_32_4, pango = 1.32.4, with_pango_1_32_4=yes, with_pango_1_32_4=no)
+
+if test "x$with_pango_1_32_4" = "xyes"; then
+	AC_MSG_WARN([Pango 1.32.4 detected.  Deprecated Glib symbol usage will be allowed])
+else
+	# Ensure that no deprecated glibmm symbols are introduced.
+	# lp:inkscape builds cleanly with this option at r10957
+	CPPFLAGS="-DGLIBMM_DISABLE_DEPRECATED $CPPFLAGS"
+	CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
+fi
+
 
 # Check for GTK+ backend target
 AC_MSG_CHECKING([for GTK+ backend target])
