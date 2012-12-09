@@ -122,10 +122,17 @@ StrokeStyle::StrokeStyle() :
     f->show();
     add(*f);
 
+#if WITH_GTKMM_3_0
+    table = new Gtk::Grid();
+    table->set_border_width(4);
+    table->set_row_spacing(4);
+#else
     table = new Gtk::Table(3, 6, false);
-    table->show();
     table->set_border_width(4);
     table->set_row_spacings(4);
+#endif
+    
+    table->show();
     f->add(*table);
 
     gint i = 0;
@@ -282,7 +289,16 @@ StrokeStyle::StrokeStyle() :
     dashSelector = manage(new SPDashSelector);
 
     dashSelector->show();
+
+#if WITH_GTKMM_3_0
+    dashSelector->set_hexpand();
+    dashSelector->set_halign(Gtk::ALIGN_FILL);
+    dashSelector->set_valign(Gtk::ALIGN_CENTER);
+    table->attach(*dashSelector, 1, i, 3, 1);
+#else
     table->attach(*dashSelector, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
+#endif
+
     dashSelector->changed_signal.connect(sigc::mem_fun(*this, &StrokeStyle::lineDashChangedCB));
 
     i++;
@@ -298,7 +314,16 @@ StrokeStyle::StrokeStyle() :
             sigc::bind<MarkerComboBox *, StrokeStyle *, SPMarkerLoc>(
                 sigc::ptr_fun(&StrokeStyle::markerSelectCB), startMarkerCombo, this, SP_MARKER_LOC_START));
     startMarkerCombo->show();
+
+#if WITH_GTKMM_3_0
+    startMarkerCombo->set_hexpand();
+    startMarkerCombo->set_halign(Gtk::ALIGN_FILL);
+    startMarkerCombo->set_valign(Gtk::ALIGN_CENTER);
+    table->attach(*startMarkerCombo, 1, i, 3, 1);
+#else
     table->attach(*startMarkerCombo, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
+#endif
+
     i++;
 
     midMarkerCombo =  manage(new MarkerComboBox("marker-mid", SP_MARKER_LOC_MID));
@@ -308,7 +333,16 @@ StrokeStyle::StrokeStyle() :
         sigc::bind<MarkerComboBox *, StrokeStyle *, SPMarkerLoc>(
             sigc::ptr_fun(&StrokeStyle::markerSelectCB), midMarkerCombo, this, SP_MARKER_LOC_MID));
     midMarkerCombo->show();
+
+#if WITH_GTKMM_3_0
+    midMarkerCombo->set_hexpand();
+    midMarkerCombo->set_halign(Gtk::ALIGN_FILL);
+    midMarkerCombo->set_valign(Gtk::ALIGN_CENTER);
+    table->attach(*midMarkerCombo, 1, i, 3, 1);
+#else
     table->attach(*midMarkerCombo, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
+#endif
+
     i++;
 
     endMarkerCombo = manage(new MarkerComboBox("marker-end", SP_MARKER_LOC_END));
@@ -318,7 +352,16 @@ StrokeStyle::StrokeStyle() :
         sigc::bind<MarkerComboBox *, StrokeStyle *, SPMarkerLoc>(
             sigc::ptr_fun(&StrokeStyle::markerSelectCB), endMarkerCombo, this, SP_MARKER_LOC_END));
     endMarkerCombo->show();
+
+#if WITH_GTKMM_3_0
+    endMarkerCombo->set_hexpand();
+    endMarkerCombo->set_halign(Gtk::ALIGN_FILL);
+    endMarkerCombo->set_valign(Gtk::ALIGN_CENTER);
+    table->attach(*endMarkerCombo, 1, i, 3, 1);
+#else
     table->attach(*endMarkerCombo, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
+#endif
+
     i++;
 
     setDesktop(desktop);

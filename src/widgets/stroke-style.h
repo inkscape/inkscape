@@ -15,9 +15,19 @@
 #ifndef SEEN_DIALOGS_STROKE_STYLE_H
 #define SEEN_DIALOGS_STROKE_STYLE_H
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include "widgets/dash-selector.h"
 #include <gtkmm/radiobutton.h>
+
+#if WITH_GTKMM_3_0
+#include <gtkmm/grid.h>
+#else
 #include <gtkmm/table.h>
+#endif
+
 #include <glibmm/i18n.h>
 
 #include "desktop.h"
@@ -139,11 +149,12 @@ private:
     MarkerComboBox *startMarkerCombo;
     MarkerComboBox *midMarkerCombo;
     MarkerComboBox *endMarkerCombo;
-    Gtk::Table *table;
 #if WITH_GTKMM_3_0
+    Gtk::Grid *table;
     Glib::RefPtr<Gtk::Adjustment> *widthAdj;
     Glib::RefPtr<Gtk::Adjustment> *miterLimitAdj;
 #else
+    Gtk::Table *table;
     Gtk::Adjustment *widthAdj;
     Gtk::Adjustment *miterLimitAdj;
 #endif

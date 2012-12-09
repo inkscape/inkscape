@@ -815,9 +815,15 @@ CloneTiler::CloneTiler (void) :
                 GtkWidget *frame = gtk_frame_new (_("1. Pick from the drawing:"));
                 gtk_box_pack_start (GTK_BOX (vvb), frame, FALSE, FALSE, 0);
 
+#if GTK_CHECK_VERSION(3,0,0)
+                GtkWidget *table = gtk_grid_new();
+                gtk_grid_set_row_spacing(GTK_GRID(table), 4);
+                gtk_grid_set_column_spacing(GTK_GRID(table), 6);
+#else
                 GtkWidget *table = gtk_table_new (3, 3, FALSE);
                 gtk_table_set_row_spacings (GTK_TABLE (table), 4);
                 gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+#endif
                 gtk_container_add(GTK_CONTAINER(frame), table);
 
 
@@ -893,9 +899,16 @@ CloneTiler::CloneTiler (void) :
                 GtkWidget *frame = gtk_frame_new (_("2. Tweak the picked value:"));
                 gtk_box_pack_start (GTK_BOX (vvb), frame, FALSE, FALSE, VB_MARGIN);
 
+#if GTK_CHECK_VERSION(3,0,0)
+                GtkWidget *table = gtk_grid_new();
+                gtk_grid_set_row_spacing(GTK_GRID(table), 4);
+                gtk_grid_set_column_spacing(GTK_GRID(table), 6);
+#else
                 GtkWidget *table = gtk_table_new (4, 2, FALSE);
                 gtk_table_set_row_spacings (GTK_TABLE (table), 4);
                 gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+#endif
+
                 gtk_container_add(GTK_CONTAINER(frame), table);
 
                 {
@@ -935,10 +948,15 @@ CloneTiler::CloneTiler (void) :
                 GtkWidget *frame = gtk_frame_new (_("3. Apply the value to the clones':"));
                 gtk_box_pack_start (GTK_BOX (vvb), frame, FALSE, FALSE, 0);
 
-
+#if GTK_CHECK_VERSION(3,0,0)
+                GtkWidget *table = gtk_grid_new();
+                gtk_grid_set_row_spacing(GTK_GRID(table), 4);
+                gtk_grid_set_column_spacing(GTK_GRID(table), 6);
+#else
                 GtkWidget *table = gtk_table_new (2, 2, FALSE);
                 gtk_table_set_row_spacings (GTK_TABLE (table), 4);
                 gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+#endif
                 gtk_container_add(GTK_CONTAINER(frame), table);
 
                 {
@@ -987,10 +1005,17 @@ CloneTiler::CloneTiler (void) :
 
         // Rows/columns, width/height
         {
+#if GTK_CHECK_VERSION(3,0,0)
+            GtkWidget *table = gtk_grid_new();
+            gtk_grid_set_row_spacing(GTK_GRID(table), 4);
+            gtk_grid_set_column_spacing(GTK_GRID(table), 6);
+#else
             GtkWidget *table = gtk_table_new (2, 2, FALSE);
-            gtk_container_set_border_width (GTK_CONTAINER (table), VB_MARGIN);
             gtk_table_set_row_spacings (GTK_TABLE (table), 4);
             gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+#endif
+
+            gtk_container_set_border_width (GTK_CONTAINER (table), VB_MARGIN);
             gtk_box_pack_start (GTK_BOX (mainbox), table, FALSE, FALSE, 0);
 
             {
@@ -2807,15 +2832,29 @@ void CloneTiler::clonetiler_table_attach(GtkWidget *table, GtkWidget *widget, fl
 {
     GtkWidget *a = gtk_alignment_new (align, 0, 0, 0);
     gtk_container_add(GTK_CONTAINER(a), widget);
-    gtk_table_attach ( GTK_TABLE (table), a, col, col + 1, row, row + 1, (GtkAttachOptions)4, (GtkAttachOptions)0, 0, 0 );
+
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_halign(table, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(table, GTK_ALIGN_CENTER);
+    gtk_grid_attach(GTK_GRID(table), a, col, row, 1, 1);
+#else
+    gtk_table_attach ( GTK_TABLE (table), a, col, col + 1, row, row + 1, GTK_FILL, (GtkAttachOptions)0, 0, 0 );
+#endif
 }
 
 GtkWidget * CloneTiler::clonetiler_table_x_y_rand(int values)
 {
+#if GTK_CHECK_VERSION(3,0,0)
+    GtkWidget *table = gtk_grid_new();
+    gtk_grid_set_row_spacing(GTK_GRID(table), 6);
+    gtk_grid_set_column_spacing(GTK_GRID(table), 8);
+#else
     GtkWidget *table = gtk_table_new (values + 2, 5, FALSE);
-    gtk_container_set_border_width (GTK_CONTAINER (table), VB_MARGIN);
     gtk_table_set_row_spacings (GTK_TABLE (table), 6);
     gtk_table_set_col_spacings (GTK_TABLE (table), 8);
+#endif
+
+    gtk_container_set_border_width (GTK_CONTAINER (table), VB_MARGIN);
 
     {
 #if GTK_CHECK_VERSION(3,0,0)
