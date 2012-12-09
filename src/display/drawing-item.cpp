@@ -20,7 +20,6 @@
 #include "nr-filter.h"
 #include "preferences.h"
 #include "style.h"
-#include "2geom/rect.h"
 
 namespace Inkscape {
 
@@ -541,17 +540,8 @@ DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flag
         iarea.intersectWith(_drawbox);
     }
 
-    // Must use same scale factor between "logical space" (coordinates in the
-    // rendering) and "physical space" (surface pixels). See drawing-surface.cpp.
-    // See bug 955141.
-    // There must be a better lib2geom way of finding sarea.
-    DrawingSurface* ds = ct.surface();
-    Geom::Scale scale = ds->scale();
-    Geom::Rect rarea( *iarea );
-    Geom::Point sarea( rarea.dimensions() * scale );
-    DrawingSurface intermediate( *iarea, sarea.ceil() );
+    DrawingSurface intermediate(*iarea);
     DrawingContext ict(intermediate);
-
     unsigned render_result = RENDER_OK;
 
     // 1. Render clipping path with alpha = opacity.
@@ -624,24 +614,9 @@ DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flag
         cachect.fill();
         _cache->markClean(*carea);
     }
-
-    ct.rectangle(*carea); // Area to be filled
-
-    // Account for difference between logical and physical spaces.
-    ct.scale( intermediate.scale().inverse() );
-
-    // Must shift origin to compensate for scaling.
-    Geom::Point factor( Geom::Point(1,1) - intermediate.scale().vector() );
-    Geom::Point origin( intermediate.origin() );
-    Geom::Point shift( origin[Geom::X] * factor[Geom::X], origin[Geom::Y] * factor[Geom::Y] ); 
-    ct.translate( -shift );
-
+    ct.rectangle(*carea);
     ct.setSource(&intermediate);
     ct.fill();
-
-    ct.translate(  shift );
-    ct.scale( intermediate.scale() );
-
     ct.setSource(0,0,0,0);
     // the call above is to clear a ref on the intermediate surface held by ct
 
