@@ -695,7 +695,7 @@ sp_pattern_create_pattern(SPPaintServer *ps,
     //       the scaling component from the complete matrix and use it
     //       to find the optimum tile size for rendering
     // c is number of pixels in buffer x and y.
-    Geom::Point c(pattern_tile.dimensions()*vb2ps.descrim()*ps2user.descrim()*full.descrim()*2);
+    Geom::Point c(pattern_tile.dimensions()*vb2ps.descrim()*ps2user.descrim()*full.descrim()*1.1);
 
     c[Geom::X] = ceil(c[Geom::X]);
     c[Geom::Y] = ceil(c[Geom::Y]);
@@ -705,6 +705,7 @@ sp_pattern_create_pattern(SPPaintServer *ps,
     Inkscape::DrawingSurface pattern_surface(pattern_tile, c.ceil());
     Inkscape::DrawingContext ct(pattern_surface);
 
+    pattern_tile *= pattern_surface.drawingTransform();
     Geom::IntRect one_tile = pattern_tile.roundOutwards();
 
     // render pattern.
@@ -714,8 +715,8 @@ sp_pattern_create_pattern(SPPaintServer *ps,
 
     // TODO: make sure there are no leaks.
     Inkscape::UpdateContext ctx;  // UpdateContext is structure with only ctm!
-    ctx.ctm = vb2ps;// * full;
-
+    ctx.ctm = vb2ps * pattern_surface.drawingTransform();
+    ct.transform( pattern_surface.drawingTransform().inverse() );
     drawing.update(Geom::IntRect::infinite(), ctx);
 
     // Render drawing to pattern_surface via drawing context, this calls root->render
