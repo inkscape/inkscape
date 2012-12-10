@@ -11,8 +11,18 @@
 #ifndef INKSCAPE_DIALOG_GUIDELINE_H
 #define INKSCAPE_DIALOG_GUIDELINE_H
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <gtkmm/dialog.h>
+
+#if WITH_GTKMM_3_0
+#include <gtkmm/grid.h>
+#else
 #include <gtkmm/table.h>
+#endif
+
 #include <gtkmm/label.h>
 #include <gtkmm/colorbutton.h>
 #include "ui/widget/button.h"
@@ -62,7 +72,13 @@ private:
 
     SPDesktop *_desktop;
     SPGuide *_guide;
+
+#if WITH_GTKMM_3_0
+    Gtk::Grid  _layout_table;
+#else
     Gtk::Table  _layout_table;
+#endif
+
     Gtk::Label  _label_name;
     Gtk::Label  _label_descr;
     Inkscape::UI::Widget::CheckButton _relative_toggle;

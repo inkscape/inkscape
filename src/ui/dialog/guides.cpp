@@ -168,30 +168,54 @@ void GuidelinePropertiesDialog::_setup() {
 
     Gtk::Box *mainVBox = get_vbox();
 
+#if WITH_GTKMM_3_0
+    _layout_table.set_row_spacing(4);
+    _layout_table.set_column_spacing(4);
+#else
     _layout_table.set_spacings(4);
     _layout_table.resize (3, 4);
+#endif
 
     mainVBox->pack_start(_layout_table, false, false, 0);
 
     _label_name.set_label("foo0");
-    _layout_table.attach(_label_name,
-                         0, 3, 0, 1, Gtk::FILL, Gtk::FILL);
     _label_name.set_alignment(0, 0.5);
 
     _label_descr.set_label("foo1");
+    _label_descr.set_alignment(0, 0.5);
+    
+#if WITH_GTKMM_3_0
+    _label_name.set_halign(Gtk::ALIGN_FILL);
+    _label_name.set_valign(Gtk::ALIGN_FILL);
+    _layout_table.attach(_label_name, 0, 0, 3, 1);
+
+    _label_descr.set_halign(Gtk::ALIGN_FILL);
+    _label_descr.set_valign(Gtk::ALIGN_FILL);
+    _layout_table.attach(_label_descr, 0, 1, 3, 1);
+
+    _label_entry.set_halign(Gtk::ALIGN_FILL);
+    _label_entry.set_valign(Gtk::ALIGN_FILL);
+    _label_entry.set_hexpand();
+    _layout_table.attach(_label_entry, 1, 2, 2, 1);
+
+    _color.set_halign(Gtk::ALIGN_FILL);
+    _color.set_valign(Gtk::ALIGN_FILL);
+    _color.set_hexpand();
+    _layout_table.attach(_color, 1, 3, 2, 1);
+#else
+    _layout_table.attach(_label_name,
+                         0, 3, 0, 1, Gtk::FILL, Gtk::FILL);
+
     _layout_table.attach(_label_descr,
                          0, 3, 1, 2, Gtk::FILL, Gtk::FILL);
-    _label_descr.set_alignment(0, 0.5);
-
-    // indent
-//    _layout_table.attach(*manage(new Gtk::Label(" ")),
-//                         0, 1, 2, 3, Gtk::FILL, Gtk::FILL, 10);
 
     _layout_table.attach(_label_entry,
                          1, 3, 2, 3, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
 
     _layout_table.attach(_color,
                          1, 3, 3, 4, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+#endif
+
     _color.signal_color_set().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_colorChanged));
 
 
@@ -211,6 +235,22 @@ void GuidelinePropertiesDialog::_setup() {
     _spin_button_y.setDigits(3);
     _spin_button_y.setIncrements(1.0, 10.0);
     _spin_button_y.setRange(-1e6, 1e6);
+
+#if WITH_GTKMM_3_0
+    _spin_button_x.set_halign(Gtk::ALIGN_FILL);
+    _spin_button_x.set_valign(Gtk::ALIGN_FILL);
+    _spin_button_x.set_hexpand();
+    _layout_table.attach(_spin_button_x, 1, 4, 1, 1);
+    
+    _spin_button_y.set_halign(Gtk::ALIGN_FILL);
+    _spin_button_y.set_valign(Gtk::ALIGN_FILL);
+    _spin_button_y.set_hexpand();
+    _layout_table.attach(_spin_button_y, 1, 5, 1, 1);
+
+    _unit_menu.set_halign(Gtk::ALIGN_FILL);
+    _unit_menu.set_valign(Gtk::ALIGN_FILL);
+    _layout_table.attach(_unit_menu, 2, 4, 1, 1);
+#else
     _layout_table.attach(_spin_button_x,
                          1, 2, 4, 5, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
     _layout_table.attach(_spin_button_y,
@@ -218,17 +258,33 @@ void GuidelinePropertiesDialog::_setup() {
 
     _layout_table.attach(_unit_menu,
                          2, 3, 4, 5, Gtk::FILL, Gtk::FILL);
+#endif
 
     // angle spinbutton
     _spin_angle.setDigits(3);
     _spin_angle.setIncrements(1.0, 10.0);
     _spin_angle.setRange(-3600., 3600.);
+
+#if WITH_GTKMM_3_0
+    _spin_angle.set_halign(Gtk::ALIGN_FILL);
+    _spin_angle.set_valign(Gtk::ALIGN_FILL);
+    _spin_angle.set_hexpand();
+    _layout_table.attach(_spin_angle, 1, 6, 2, 1);
+
+    // mode radio button
+    _relative_toggle.set_halign(Gtk::ALIGN_FILL);
+    _relative_toggle.set_valign(Gtk::ALIGN_FILL);
+    _relative_toggle.set_hexpand();
+    _layout_table.attach(_relative_toggle, 1, 7, 2, 1);
+#else
     _layout_table.attach(_spin_angle,
                          1, 3, 6, 7, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
 
     // mode radio button
     _layout_table.attach(_relative_toggle,
                          1, 3, 7, 8, Gtk::EXPAND | Gtk::FILL, Gtk::FILL);
+#endif
+
     _relative_toggle.signal_toggled().connect(sigc::mem_fun(*this, &GuidelinePropertiesDialog::_modeChanged));
     _relative_toggle.set_active(_relative_toggle_status);
 
