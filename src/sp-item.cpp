@@ -552,7 +552,6 @@ void SPItem::sp_item_set(SPObject *object, unsigned key, gchar const *value)
 
 void SPItem::clip_ref_changed(SPObject *old_clip, SPObject *clip, SPItem *item)
 {
-    item->bbox_valid = FALSE; // force a re-evaluation
     if (old_clip) {
         SPItemView *v;
         /* Hide clippath */
