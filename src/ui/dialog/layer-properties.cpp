@@ -42,18 +42,35 @@ LayerPropertiesDialog::LayerPropertiesDialog()
 {
     Gtk::Box *mainVBox = get_vbox();
 
+#if WITH_GTKMM_3_0
+    _layout_table.set_row_spacing(4);
+    _layout_table.set_column_spacing(4);
+#else
     _layout_table.set_spacings(4);
     _layout_table.resize (1, 2);
+#endif
 
     // Layer name widgets
     _layer_name_entry.set_activates_default(true);
     _layer_name_label.set_label(_("Layer name:"));
     _layer_name_label.set_alignment(1.0, 0.5);
 
+#if WITH_GTKMM_3_0
+    _layer_name_label.set_halign(Gtk::ALIGN_FILL);
+    _layer_name_label.set_valign(Gtk::ALIGN_FILL);
+    _layout_table.attach(_layer_name_label, 0, 0, 1, 1);
+    
+    _layer_name_entry.set_halign(Gtk::ALIGN_FILL);
+    _layer_name_entry.set_valign(Gtk::ALIGN_FILL);
+    _layer_name_entry.set_hexpand();
+    _layout_table.attach(_layer_name_entry, 1, 0, 1, 1);
+#else
     _layout_table.attach(_layer_name_label,
                          0, 1, 0, 1, Gtk::FILL, Gtk::FILL);
     _layout_table.attach(_layer_name_entry,
                          1, 2, 0, 1, Gtk::FILL | Gtk::EXPAND, Gtk::FILL);
+#endif
+
     mainVBox->pack_start(_layout_table, true, true, 4);
 
     // Buttons
@@ -149,7 +166,9 @@ LayerPropertiesDialog::_setup_position_controls() {
     _layer_position_combo.set_cell_data_func(_label_renderer,
                                              sigc::mem_fun(*this, &LayerPropertiesDialog::_prepareLabelRenderer));
 
+#if !WITH_GTKMM_3_0
     _layout_table.resize (2, 2);
+#endif
 
     Gtk::ListStore::iterator row;
     row = _dropdown_list->append();
@@ -163,12 +182,25 @@ LayerPropertiesDialog::_setup_position_controls() {
     row->set_value(_dropdown_columns.position, LPOS_CHILD);
     row->set_value(_dropdown_columns.name, Glib::ustring(_("As sublayer of current")));
 
-    _layout_table.attach(_layer_position_combo,
-                         1, 2, 1, 2, Gtk::FILL | Gtk::EXPAND, Gtk::FILL);
     _layer_position_label.set_label(_("Position:"));
     _layer_position_label.set_alignment(1.0, 0.5);
+    
+#if WITH_GTKMM_3_0
+    _layer_position_combo.set_halign(Gtk::ALIGN_FILL);
+    _layer_position_combo.set_valign(Gtk::ALIGN_FILL);
+    _layer_position_combo.set_hexpand();
+    _layout_table.attach(_layer_position_combo, 1, 1, 1, 1);
+
+    _layer_position_label.set_halign(Gtk::ALIGN_FILL);
+    _layer_position_label.set_valign(Gtk::ALIGN_FILL);
+    _layout_table.attach(_layer_position_label, 0, 1, 1, 1);
+#else
+    _layout_table.attach(_layer_position_combo,
+                         1, 2, 1, 2, Gtk::FILL | Gtk::EXPAND, Gtk::FILL);
     _layout_table.attach(_layer_position_label,
                          0, 1, 1, 2, Gtk::FILL, Gtk::FILL);
+#endif
+
     show_all_children();
 }
 
@@ -222,8 +254,17 @@ LayerPropertiesDialog::_setup_layers_controls() {
     _layout_table.remove(_layer_name_entry);
     _layout_table.remove(_layer_name_label);
 
+#if WITH_GTKMM_3_0
+    _scroller.set_halign(Gtk::ALIGN_FILL);
+    _scroller.set_valign(Gtk::ALIGN_FILL);
+    _scroller.set_hexpand();
+    _scroller.set_vexpand();
+    _layout_table.attach(_scroller, 0, 1, 2, 1);
+#else
     _layout_table.attach(_scroller,
                          0, 2, 1, 2, Gtk::FILL | Gtk::EXPAND, Gtk::FILL | Gtk::EXPAND);
+#endif
+
     show_all_children();
 }
 
