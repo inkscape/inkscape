@@ -1514,8 +1514,6 @@ Geom::Affine SPItem::i2dt_affine() const
         ret = i2doc_affine()
             * Geom::Scale(1, -1)
             * Geom::Translate(0, document->getHeight());
-
-        g_return_val_if_fail(desktop != NULL, ret);
     }
     return ret;
 }
