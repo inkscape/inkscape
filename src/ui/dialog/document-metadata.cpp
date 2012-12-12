@@ -61,13 +61,30 @@ DocumentMetadata::getInstance()
 
 
 DocumentMetadata::DocumentMetadata()
+#if WITH_GTKMM_3_0
+    : UI::Widget::Panel ("", "/dialogs/documentmetadata", SP_VERB_DIALOG_METADATA)
+#else
     : UI::Widget::Panel ("", "/dialogs/documentmetadata", SP_VERB_DIALOG_METADATA),
       _page_metadata1(1, 1), _page_metadata2(1, 1)
+#endif
 {
     hide();
     _getContents()->set_spacing (4);
     _getContents()->pack_start(_notebook, true, true);
 
+    _page_metadata1.set_border_width(2);
+    _page_metadata2.set_border_width(2);
+   
+#if WITH_GTKMM_3_0
+    _page_metadata1.set_column_spacing(2);
+    _page_metadata2.set_column_spacing(2);
+    _page_metadata1.set_row_spacing(2);
+    _page_metadata2.set_row_spacing(2);
+#else 
+    _page_metadata1.set_spacings(2);
+    _page_metadata2.set_spacings(2);
+#endif
+    
     _notebook.append_page(_page_metadata1, _("Metadata"));
     _notebook.append_page(_page_metadata2, _("License"));
 
@@ -98,50 +115,6 @@ DocumentMetadata::~DocumentMetadata()
         delete (*it);
 }
 
-//========================================================================
-
-/**
- * Helper function that attachs widgets in a 3xn table. The widgets come in an
- * array that has two entries per table row. The two entries code for four
- * possible cases: (0,0) means insert space in first column; (0, non-0) means
- * widget in columns 2-3; (non-0, 0) means label in columns 1-3; and
- * (non-0, non-0) means two widgets in columns 2 and 3.
- */
-inline void attach_all(Gtk::Table &table, const Gtk::Widget *arr[], unsigned size, int start = 0)
-{
-    for (unsigned i=0, r=start; i<size/sizeof(Gtk::Widget*); i+=2)
-    {
-        if (arr[i] && arr[i+1])
-        {
-            table.attach (const_cast<Gtk::Widget&>(*arr[i]),   1, 2, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 2, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-        }
-        else
-        {
-            if (arr[i+1])
-                table.attach (const_cast<Gtk::Widget&>(*arr[i+1]), 1, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            else if (arr[i])
-            {
-                Gtk::Label& label = static_cast<Gtk::Label&> (const_cast<Gtk::Widget&>(*arr[i]));
-                label.set_alignment (0.0);
-                table.attach (label, 0, 3, r, r+1,
-                      Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
-            }
-            else
-            {
-                Gtk::HBox *space = manage (new Gtk::HBox);
-                space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
-                table.attach (*space, 0, 1, r, r+1,
-                      (Gtk::AttachOptions)0, (Gtk::AttachOptions)0,0,0);
-            }
-        }
-        ++r;
-    }
-}
-
 void
 DocumentMetadata::build_metadata()
 {
@@ -152,7 +125,14 @@ DocumentMetadata::build_metadata()
     Gtk::Label *label = manage (new Gtk::Label);
     label->set_markup (_("<b>Dublin Core Entities</b>"));
     label->set_alignment (0.0);
-    _page_metadata1.table().attach (*label, 0,3,0,1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+
+#if WITH_GTKMM_3_0
+    label->set_valign(Gtk::ALIGN_CENTER);
+    _page_metadata1.attach(*label, 0, 0, 3, 1);
+#else
+    _page_metadata1.attach(*label, 0,3,0,1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+#endif
+
      /* add generic metadata entry areas */
     struct rdf_work_entity_t * entity;
     int row = 1;
@@ -162,9 +142,22 @@ DocumentMetadata::build_metadata()
             _rdflist.push_back (w);
             Gtk::HBox *space = manage (new Gtk::HBox);
             space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
-            _page_metadata1.table().attach (*space, 0,1, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
-            _page_metadata1.table().attach (w->_label, 1,2, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
-            _page_metadata1.table().attach (*w->_packable, 2,3, row, row+1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+
+#if WITH_GTKMM_3_0
+            space->set_valign(Gtk::ALIGN_CENTER);
+            _page_metadata1.attach(*space, 0, row, 1, 1);
+
+            w->_label.set_valign(Gtk::ALIGN_CENTER);
+            _page_metadata1.attach(w->_label, 1, row, 1, 1);
+
+            w->_packable->set_hexpand();
+            w->_packable->set_valign(Gtk::ALIGN_CENTER);
+            _page_metadata1.attach(*w->_packable, 2, row, 1, 1);
+#else
+            _page_metadata1.attach(*space, 0,1, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+            _page_metadata1.attach(w->_label, 1,2, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+            _page_metadata1.attach(*w->_packable, 2,3, row, row+1, Gtk::FILL|Gtk::EXPAND, (Gtk::AttachOptions)0,0,0);
+#endif
         }
     }
 
@@ -174,14 +167,31 @@ DocumentMetadata::build_metadata()
     Gtk::Label *llabel = manage (new Gtk::Label);
     llabel->set_markup (_("<b>License</b>"));
     llabel->set_alignment (0.0);
-    _page_metadata2.table().attach (*llabel, 0,3, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+
+#if WITH_GTKMM_3_0
+    llabel->set_valign(Gtk::ALIGN_CENTER);
+    _page_metadata2.attach(*llabel, 0, row, 3, 1);
+#else
+    _page_metadata2.attach(*llabel, 0,3, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+#endif
+
     /* add license selector pull-down and URI */
     ++row;
     _licensor.init (_wr);
     Gtk::HBox *space = manage (new Gtk::HBox);
     space->set_size_request (SPACE_SIZE_X, SPACE_SIZE_Y);
-    _page_metadata2.table().attach (*space, 0,1, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
-    _page_metadata2.table().attach (_licensor, 1,3, row, row+1, Gtk::EXPAND|Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+
+#if WITH_GTKMM_3_0
+    space->set_valign(Gtk::ALIGN_CENTER);
+    _page_metadata2.attach(*space, 0, row, 1, 1);
+
+    _licensor.set_hexpand();
+    _licensor.set_valign(Gtk::ALIGN_CENTER);
+    _page_metadata2.attach(_licensor, 1, row, 2, 1);
+#else
+    _page_metadata2.attach(*space, 0,1, row, row+1, Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+    _page_metadata2.attach(_licensor, 1,3, row, row+1, Gtk::EXPAND|Gtk::FILL, (Gtk::AttachOptions)0,0,0);
+#endif
 }
 
 /**

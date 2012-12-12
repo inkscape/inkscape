@@ -13,12 +13,22 @@
 #ifndef INKSCAPE_UI_DIALOG_DOCUMENT_METADATA_H
 #define INKSCAPE_UI_DIALOG_DOCUMENT_METADATA_H
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <list>
 #include <stddef.h>
 #include "ui/widget/panel.h"
 #include <gtkmm/notebook.h>
+
+#if WITH_GTKMM_3_0
+# include <gtkmm/grid.h>
+#else
+# include <gtkmm/table.h>
+#endif
+
 #include "ui/widget/licensor.h"
-#include "ui/widget/notebook-page.h"
 #include "ui/widget/registry.h"
 
 namespace Inkscape {
@@ -51,8 +61,13 @@ protected:
 
     Gtk::Notebook  _notebook;
 
-    UI::Widget::NotebookPage _page_metadata1;
-    UI::Widget::NotebookPage _page_metadata2;
+#if WITH_GTKMM_3_0
+    Gtk::Grid     _page_metadata1;
+    Gtk::Grid     _page_metadata2;
+#else
+    Gtk::Table     _page_metadata1;
+    Gtk::Table     _page_metadata2;
+#endif
 
     //---------------------------------------------------------------
     RDElist _rdflist;
