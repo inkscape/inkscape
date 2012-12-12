@@ -66,26 +66,25 @@ spinbutton_defocus (GtkWidget *container)
 
 gboolean spinbutton_keypress(GtkWidget *w, GdkEventKey *event, gpointer data)
 {
-    SPWidget *spw = SP_WIDGET(data);
     gdouble v;
     gdouble step;
     gdouble page;
 
 	switch (get_group0_keyval (event)) {
 	case GDK_KEY_Escape: // defocus
-		spinbutton_undo (w);
-		spinbutton_defocus(GTK_WIDGET(spw));
+		spinbutton_undo(w);
+		spinbutton_defocus(w);
 		return TRUE; // I consumed the event
 		break;
 	case GDK_KEY_Return: // defocus
 	case GDK_KEY_KP_Enter:
-		spinbutton_defocus (GTK_WIDGET(spw));
+		spinbutton_defocus(w);
 		return TRUE; // I consumed the event
 		break;
 	case GDK_KEY_Tab:
 	case GDK_KEY_ISO_Left_Tab:
 		// set the flag meaning "do not leave toolbar when changing value"
-		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
+		g_object_set_data(G_OBJECT(w), "stay", GINT_TO_POINTER(TRUE));
 		return FALSE; // I didn't consume the event
 		break;
 
@@ -94,45 +93,45 @@ gboolean spinbutton_keypress(GtkWidget *w, GdkEventKey *event, gpointer data)
 
 	case GDK_KEY_Up:
 	case GDK_KEY_KP_Up:
-		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
-		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON (w));
-	    gtk_spin_button_get_increments(GTK_SPIN_BUTTON (w), &step, &page);
+		g_object_set_data(G_OBJECT(w), "stay", GINT_TO_POINTER(TRUE));
+		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON(w));
+		gtk_spin_button_get_increments(GTK_SPIN_BUTTON(w), &step, &page);
 		v += step;
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), v);
 		return TRUE; // I consumed the event
 		break;
 	case GDK_KEY_Down:
 	case GDK_KEY_KP_Down:
-		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
-		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON (w));
-	    gtk_spin_button_get_increments(GTK_SPIN_BUTTON (w), &step, &page);
+		g_object_set_data(G_OBJECT(w), "stay", GINT_TO_POINTER(TRUE));
+		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON(w));
+		gtk_spin_button_get_increments(GTK_SPIN_BUTTON(w), &step, &page);
 		v -= step;
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), v);
 		return TRUE; // I consumed the event
 		break;
 	case GDK_KEY_Page_Up:
 	case GDK_KEY_KP_Page_Up:
-		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
-		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON (w));
-	    gtk_spin_button_get_increments(GTK_SPIN_BUTTON (w), &step, &page);
+		g_object_set_data(G_OBJECT(w), "stay", GINT_TO_POINTER(TRUE));
+		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON(w));
+		gtk_spin_button_get_increments(GTK_SPIN_BUTTON(w), &step, &page);
 		v += page;
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), v);
 		return TRUE; // I consumed the event
 		break;
 	case GDK_KEY_Page_Down:
 	case GDK_KEY_KP_Page_Down:
-		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
-		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON (w));
-	    gtk_spin_button_get_increments(GTK_SPIN_BUTTON (w), &step, &page);
+		g_object_set_data(G_OBJECT(w), "stay", GINT_TO_POINTER(TRUE));
+		v = gtk_spin_button_get_value(GTK_SPIN_BUTTON(w));
+		gtk_spin_button_get_increments(GTK_SPIN_BUTTON(w), &step, &page);
 		v -= page;
 		gtk_spin_button_set_value(GTK_SPIN_BUTTON(w), v);
 		return TRUE; // I consumed the event
 		break;
 	case GDK_KEY_z:
 	case GDK_KEY_Z:
-		g_object_set_data (G_OBJECT (spw), "stay", GINT_TO_POINTER(TRUE));
+		g_object_set_data(G_OBJECT(w), "stay", GINT_TO_POINTER(TRUE));
 		if (event->state & GDK_CONTROL_MASK) {
-			spinbutton_undo (w);
+			spinbutton_undo(w);
 			return TRUE; // I consumed the event
 		}
 		break;
@@ -142,3 +141,14 @@ gboolean spinbutton_keypress(GtkWidget *w, GdkEventKey *event, gpointer data)
 	}
 	return FALSE; // I didn't consume the event
 }
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
