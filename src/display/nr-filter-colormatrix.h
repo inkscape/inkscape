@@ -42,6 +42,15 @@ public:
     virtual void set_type(FilterColorMatrixType type);
     virtual void set_value(gdouble value);
     virtual void set_values(std::vector<gdouble> const &values);
+
+public:
+    struct ColorMatrixMatrix {
+        ColorMatrixMatrix(std::vector<double> const &values);
+        guint32 operator()(guint32 in);
+    private:
+        gint32 _v[20];
+    };
+
 private:
     std::vector<gdouble> values;
     gdouble value;

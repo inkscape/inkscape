@@ -32,50 +32,47 @@ FilterPrimitive * FilterColorMatrix::create() {
 FilterColorMatrix::~FilterColorMatrix()
 {}
 
-struct ColorMatrixMatrix {
-    ColorMatrixMatrix(std::vector<double> const &values) {
-        unsigned limit = std::min(static_cast<size_t>(20), values.size());
-        for (unsigned i = 0; i < limit; ++i) {
-            if (i % 5 == 4) {
-                _v[i] = round(values[i]*255*255);
-            } else {
-                _v[i] = round(values[i]*255);
-            }
-        }
-        for (unsigned i = limit; i < 20; ++i) {
-            _v[i] = 0;
+FilterColorMatrix::ColorMatrixMatrix::ColorMatrixMatrix(std::vector<double> const &values) {
+    unsigned limit = std::min(static_cast<size_t>(20), values.size());
+    for (unsigned i = 0; i < limit; ++i) {
+        if (i % 5 == 4) {
+            _v[i] = round(values[i]*255*255);
+        } else {
+            _v[i] = round(values[i]*255);
         }
     }
-
-    guint32 operator()(guint32 in) {
-        EXTRACT_ARGB32(in, a, r, g, b)
-        // we need to un-premultiply alpha values for this type of matrix
-        // TODO: unpremul can be ignored if there is an identity mapping on the alpha channel
-        if (a != 0) {
-            r = unpremul_alpha(r, a);
-            g = unpremul_alpha(g, a);
-            b = unpremul_alpha(b, a);
-        }
-
-        gint32 ro = r*_v[0]  + g*_v[1]  + b*_v[2]  + a*_v[3]  + _v[4];
-        gint32 go = r*_v[5]  + g*_v[6]  + b*_v[7]  + a*_v[8]  + _v[9];
-        gint32 bo = r*_v[10] + g*_v[11] + b*_v[12] + a*_v[13] + _v[14];
-        gint32 ao = r*_v[15] + g*_v[16] + b*_v[17] + a*_v[18] + _v[19];
-        ro = (pxclamp(ro, 0, 255*255) + 127) / 255;
-        go = (pxclamp(go, 0, 255*255) + 127) / 255;
-        bo = (pxclamp(bo, 0, 255*255) + 127) / 255;
-        ao = (pxclamp(ao, 0, 255*255) + 127) / 255;
-
-        ro = premul_alpha(ro, ao);
-        go = premul_alpha(go, ao);
-        bo = premul_alpha(bo, ao);
-
-        ASSEMBLE_ARGB32(pxout, ao, ro, go, bo)
-        return pxout;
+    for (unsigned i = limit; i < 20; ++i) {
+        _v[i] = 0;
     }
-private:
-    gint32 _v[20];
-};
+}
+
+guint32 FilterColorMatrix::ColorMatrixMatrix::operator()(guint32 in) {
+    EXTRACT_ARGB32(in, a, r, g, b)
+    // we need to un-premultiply alpha values for this type of matrix
+    // TODO: unpremul can be ignored if there is an identity mapping on the alpha channel
+    if (a != 0) {
+        r = unpremul_alpha(r, a);
+        g = unpremul_alpha(g, a);
+        b = unpremul_alpha(b, a);
+    }
+
+    gint32 ro = r*_v[0]  + g*_v[1]  + b*_v[2]  + a*_v[3]  + _v[4];
+    gint32 go = r*_v[5]  + g*_v[6]  + b*_v[7]  + a*_v[8]  + _v[9];
+    gint32 bo = r*_v[10] + g*_v[11] + b*_v[12] + a*_v[13] + _v[14];
+    gint32 ao = r*_v[15] + g*_v[16] + b*_v[17] + a*_v[18] + _v[19];
+    ro = (pxclamp(ro, 0, 255*255) + 127) / 255;
+    go = (pxclamp(go, 0, 255*255) + 127) / 255;
+    bo = (pxclamp(bo, 0, 255*255) + 127) / 255;
+    ao = (pxclamp(ao, 0, 255*255) + 127) / 255;
+
+    ro = premul_alpha(ro, ao);
+    go = premul_alpha(go, ao);
+    bo = premul_alpha(bo, ao);
+
+    ASSEMBLE_ARGB32(pxout, ao, ro, go, bo)
+    return pxout;
+}
+
 
 struct ColorMatrixSaturate {
     ColorMatrixSaturate(double v_in) {
@@ -163,7 +160,7 @@ void FilterColorMatrix::render_cairo(FilterSlot &slot)
 
     switch (type) {
     case COLORMATRIX_MATRIX:
-        ink_cairo_surface_filter(input, out, ColorMatrixMatrix(values));
+        ink_cairo_surface_filter(input, out, FilterColorMatrix::ColorMatrixMatrix(values));
         break;
     case COLORMATRIX_SATURATE:
         ink_cairo_surface_filter(input, out, ColorMatrixSaturate(value));

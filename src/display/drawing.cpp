@@ -4,8 +4,9 @@
  *//*
  * Authors:
  *   Krzysztof Kosiński <tweenk.pl@gmail.com>
+ *   Johan Engelen <j.b.c.engelen@alumnus.utwente.nl>
  *
- * Copyright (C) 2011 Authors
+ * Copyright (C) 2011-2012 Authors
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
@@ -13,6 +14,12 @@
 #include "display/drawing.h"
 #include "nr-filter-gaussian.h"
 #include "nr-filter-types.h"
+
+//grayscale colormode:
+#include "nr-filter-colormatrix.h"
+#include "cairo-templates.h"
+#include "drawing-context.h"
+
 
 namespace Inkscape {
 
@@ -145,11 +152,36 @@ Drawing::update(Geom::IntRect const &area, UpdateContext const &ctx, unsigned fl
     _pickItemsForCaching();
 }
 
+// hardcoded grayscale color matrix values. could be turned into preference settings in future.
+static const gdouble grayscale_value_matrix[] = {
+    0.21, 0.72, 0.072, 0, 0,
+    0.21, 0.72, 0.072, 0, 0,
+    0.21, 0.72, 0.072, 0, 0,
+    0   , 0   , 0    , 1, 0
+};
+static Filters::FilterColorMatrix::ColorMatrixMatrix grayscale_colormatrix(
+    std::vector<gdouble> (grayscale_value_matrix, grayscale_value_matrix + sizeof(grayscale_value_matrix) / sizeof(grayscale_value_matrix[0]) )
+);
+
 void
 Drawing::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flags)
 {
     if (_root) {
         _root->render(ct, area, flags);
+    }
+
+    if (colorMode() == COLORMODE_GRAYSCALE) {
+        // apply grayscale filter on top of everything
+        cairo_surface_t *input = ct.rawTarget();
+        cairo_surface_t *out = ink_cairo_surface_create_identical(input);
+        ink_cairo_surface_filter(input, out, grayscale_colormatrix);
+        Geom::Point origin = ct.targetLogicalBounds().min();
+        ct.setSource(out, origin[Geom::X], origin[Geom::Y]);
+        ct.setOperator(CAIRO_OPERATOR_SOURCE);
+        ct.paint();
+        ct.setOperator(CAIRO_OPERATOR_OVER);
+    
+        cairo_surface_destroy(out);
     }
 }
 
