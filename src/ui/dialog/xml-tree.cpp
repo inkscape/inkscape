@@ -79,7 +79,11 @@ XmlTree::XmlTree (void) :
     xml_attribute_delete_button (_("Delete attribute")),
     text_container (),
     attr_container (),
-    attr_subpaned_container (),
+#if WITH_GTKMM_3_0
+    attr_subpaned_container(Gtk::ORIENTATION_VERTICAL),
+#else
+    attr_subpaned_container(),
+#endif
     set_attr (_("Set")),
     new_window(NULL)
 {

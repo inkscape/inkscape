@@ -424,7 +424,12 @@ private:
         Gtk::CheckButton useExt;
         Gtk::Button save;
 
+#if WITH_GTKMM_3_0
+        Gtk::Paned pane;
+#else
         Gtk::HPaned pane;
+#endif
+
         Gtk::VBox detailsBox;
         Gtk::HBox titleFrame;
         Gtk::Label titleLabel;
@@ -485,8 +490,15 @@ private:
     Inkscape::UI::Widget::Frame axisFrame;
     Gtk::ScrolledWindow treeScroller;
     Gtk::ScrolledWindow detailScroller;
+
+#if WITH_GTKMM_3_0
+    Gtk::Paned splitter;
+    Gtk::Paned split2;
+#else
     Gtk::HPaned splitter;
     Gtk::VPaned split2;
+#endif
+
     Gtk::Label devName;
     Gtk::Label devKeyCount;
     Gtk::Label devAxesCount;
@@ -589,7 +601,11 @@ InputDialogImpl::InputDialogImpl() :
     treeScroller(),
     detailScroller(),
     splitter(),
+#if WITH_GTKMM_3_0
+    split2(Gtk::ORIENTATION_VERTICAL),
+#else
     split2(),
+#endif
     axisTable(11, 2),
     linkCombo(),
     topHolder(),
@@ -1048,7 +1064,12 @@ InputDialogImpl::ConfPanel::ConfPanel() :
     useExt.set_active(Preferences::get()->getBool("/options/useextinput/value"));
     useExt.signal_toggled().connect(sigc::mem_fun(*this, &InputDialogImpl::ConfPanel::useExtToggled));
 
+#if WITH_GTKMM_3_0
+    Gtk::ButtonBox *buttonBox = manage(new Gtk::ButtonBox);
+#else
     Gtk::HButtonBox *buttonBox = manage (new Gtk::HButtonBox);
+#endif
+
     buttonBox->set_layout (Gtk::BUTTONBOX_END);
     //Gtk::Alignment *align = new Gtk::Alignment(Gtk::ALIGN_END, Gtk::ALIGN_START, 0, 0);
     buttonBox->add(save);

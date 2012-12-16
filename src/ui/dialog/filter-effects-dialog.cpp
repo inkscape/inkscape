@@ -2380,7 +2380,12 @@ FilterEffectsDialog::FilterEffectsDialog()
     _add_primitive_type.remove_row(NR_FILTER_COMPONENTTRANSFER);
 
     // Initialize widget hierarchy
+#if WITH_GTKMM_3_0
+    Gtk::Paned* hpaned = Gtk::manage(new Gtk::Paned);
+#else
     Gtk::HPaned* hpaned = Gtk::manage(new Gtk::HPaned);
+#endif
+
     Gtk::ScrolledWindow* sw_prims = Gtk::manage(new Gtk::ScrolledWindow);
     Gtk::HBox* infobox = Gtk::manage(new Gtk::HBox(/*homogeneous:*/false, /*spacing:*/4));
     Gtk::HBox* hb_prims = Gtk::manage(new Gtk::HBox);

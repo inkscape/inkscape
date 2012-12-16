@@ -578,7 +578,12 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     if (create_dock) {
         dtw->dock = new Inkscape::UI::Widget::Dock();
 
+#if WITH_GTKMM_3_0
+        Gtk::Paned *paned = new Gtk::Paned();
+#else
         Gtk::HPaned *paned = new Gtk::HPaned();
+#endif
+
         paned->pack1(*Glib::wrap(canvas_tbl));
         paned->pack2(dtw->dock->getWidget(), Gtk::FILL);
 

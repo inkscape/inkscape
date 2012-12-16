@@ -1196,7 +1196,13 @@ ImportDialog::ImportDialog(Gtk::Window& parent_window, FileDialogType file_types
 
     // Creation
     Gtk::VBox *vbox = new Gtk::VBox(false, 0);
+
+#if WITH_GTKMM_3_0
+    Gtk::ButtonBox *hbuttonbox_bottom = new Gtk::ButtonBox();
+#else
     Gtk::HButtonBox *hbuttonbox_bottom = new Gtk::HButtonBox();
+#endif
+
     Gtk::HBox *hbox_bottom = new Gtk::HBox(false, 12);
     BaseBox *basebox_logo = new BaseBox();
     BaseBox *basebox_no_search_results = new BaseBox();
@@ -1204,7 +1210,13 @@ ImportDialog::ImportDialog(Gtk::Window& parent_window, FileDialogType file_types
     label_description = new Gtk::Label();
     entry_search = new SearchEntry();
     button_search = new Gtk::Button(_("Search"));
+
+#if WITH_GTKMM_3_0
+    Gtk::ButtonBox* hbuttonbox_search = new Gtk::ButtonBox();
+#else
     Gtk::HButtonBox* hbuttonbox_search = new Gtk::HButtonBox();
+#endif
+
     Gtk::ScrolledWindow* scrolledwindow_preview = new Gtk::ScrolledWindow();
     preview_files = new PreviewWidget();
     /// Add the buttons in the bottom of the dialog

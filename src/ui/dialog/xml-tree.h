@@ -13,6 +13,10 @@
 #ifndef SEEN_DIALOGS_XML_TREE_H
 #define SEEN_DIALOGS_XML_TREE_H
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include "ui/widget/panel.h"
 #include <gtkmm/entry.h>
 #include <gtkmm/textview.h>
@@ -215,7 +219,12 @@ private:
     Gtk::Button *create_button;
     Gtk::Entry *name_entry;
 
+#if WITH_GTKMM_3_0
+    Gtk::Paned paned;
+#else
     Gtk::HPaned paned;
+#endif
+
     Gtk::VBox left_box;
     Gtk::VBox right_box;
     Gtk::HBox status_box;
@@ -239,7 +248,13 @@ private:
     Gtk::ScrolledWindow text_container;
     Gtk::HBox attr_hbox;
     Gtk::VBox attr_container;
+
+#if WITH_GTKMM_3_0
+    Gtk::Paned attr_subpaned_container;
+#else
     Gtk::VPaned attr_subpaned_container;
+#endif
+
     Gtk::Button set_attr;
 
     GtkWidget *new_window;
