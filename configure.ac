@@ -696,7 +696,7 @@ AC_ARG_ENABLE(wpg,
 with_libvisio=no
 
 if test "x$enable_visio" = "xyes"; then
-	PKG_CHECK_MODULES(LIBVISIO, libvisio-0.0 >= 0.0.15 libwpd-0.9 libwpd-stream-0.9 libwpg-0.2, with_libvisio=yes, with_libvisio=no)
+	PKG_CHECK_MODULES(LIBVISIO, libvisio-0.0 >= 0.0.20 libwpd-0.9 libwpd-stream-0.9 libwpg-0.2, with_libvisio=yes, with_libvisio=no)
 
 	if test "x$with_libvisio" = "xyes"; then
 		AC_DEFINE(WITH_LIBVISIO,1,[Build in libvisio])
