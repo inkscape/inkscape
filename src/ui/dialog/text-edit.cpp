@@ -95,11 +95,21 @@ TextEdit::TextEdit()
     styleButton(&align_center, _("Align center"), GTK_STOCK_JUSTIFY_CENTER, &align_left);
     styleButton(&align_right, _("Align right"), GTK_STOCK_JUSTIFY_RIGHT, &align_left);
     styleButton(&align_justify, _("Justify (only flowed text)"), GTK_STOCK_JUSTIFY_FILL, &align_left);
+
+#if WITH_GTKMM_3_0
+    align_sep.set_orientation(Gtk::ORIENTATION_VERTICAL);
+#endif
+
     layout_hbox.pack_start(align_sep, false, false, 10);
 
     /* Direction buttons */
     styleButton(&text_horizontal, _("Horizontal text"), INKSCAPE_ICON("format-text-direction-horizontal"), NULL);
     styleButton(&text_vertical, _("Vertical text"), INKSCAPE_ICON("format-text-direction-vertical"), &text_horizontal);
+
+#if WITH_GTKMM_3_0
+    text_sep.set_orientation(Gtk::ORIENTATION_VERTICAL);
+#endif
+
     layout_hbox.pack_start(text_sep, false, false, 10);
 
     /* Line Spacing */

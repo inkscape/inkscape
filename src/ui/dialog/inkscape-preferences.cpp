@@ -1461,7 +1461,12 @@ void InkscapePreferences::initKeyboardShortcuts(Gtk::TreeModel::iterator iter_ui
     _page_keyshortcuts.attach(*scroller, 0, 2, row, row+1, Gtk::EXPAND | Gtk::FILL, Gtk::EXPAND | Gtk::FILL);
     row++;
 
+#if WITH_GTKMM_3_0
+    Gtk::ButtonBox *box_buttons = manage(new Gtk::ButtonBox);
+#else
     Gtk::HButtonBox *box_buttons = manage (new Gtk::HButtonBox);
+#endif
+
     box_buttons->set_layout(Gtk::BUTTONBOX_END);
     box_buttons->set_spacing(4);
     _page_keyshortcuts.attach(*box_buttons, 0, 3, row, row+1, Gtk::EXPAND | Gtk::FILL, Gtk::SHRINK);

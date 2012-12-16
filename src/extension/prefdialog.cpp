@@ -88,7 +88,12 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
             _param_preview = Parameter::make(doc->root(), _effect);
         }
 
+#if WITH_GTKMM_3_0
+        Gtk::Separator * sep = Gtk::manage(new Gtk::Separator());
+#else
         Gtk::HSeparator * sep = Gtk::manage(new Gtk::HSeparator());
+#endif
+
         sep->show();
         this->get_vbox()->pack_start(*sep, true, true, 4);
 

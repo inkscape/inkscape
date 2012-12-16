@@ -240,10 +240,20 @@ private:
     GtkWidget *     dictionary_combo;
     Gtk::HBox       dictionary_hbox;
 
+#if WITH_GTKMM_3_0
+    Gtk::Separator  action_sep;
+#else
     Gtk::HSeparator action_sep;
+#endif
+
     Gtk::Button     stop_button;
     Gtk::Button     start_button;
+
+#if WITH_GTKMM_3_0
+    Gtk::ButtonBox  actionbutton_hbox;
+#else
     Gtk::HButtonBox actionbutton_hbox;
+#endif
 
     SPDesktop *     desktop;
     DesktopTracker  deskTrack;
