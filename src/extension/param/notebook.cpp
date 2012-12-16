@@ -206,14 +206,16 @@ Gtk::Widget * ParamNotebookPage::get_widget(SPDocument * doc, Inkscape::XML::Nod
     for (GSList * list = parameters; list != NULL; list = g_slist_next(list)) {
         Parameter * param = reinterpret_cast<Parameter *>(list->data);
         Gtk::Widget * widg = param->get_widget(doc, node, changeSignal);
-        gchar const * tip = param->get_tooltip();
-//        printf("Tip: '%s'\n", tip);
-        vbox->pack_start(*widg, false, false, 2);
-        if (tip) {
-            widg->set_tooltip_text(tip);
-        } else {
-            widg->set_tooltip_text("");
-            widg->set_has_tooltip(false);
+        if (widg) {
+            gchar const * tip = param->get_tooltip();
+    //        printf("Tip: '%s'\n", tip);
+            vbox->pack_start(*widg, false, false, 2);
+            if (tip) {
+                widg->set_tooltip_text(tip);
+            } else {
+                widg->set_tooltip_text("");
+                widg->set_has_tooltip(false);
+            }
         }
     }
 
