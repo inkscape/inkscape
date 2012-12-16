@@ -10,6 +10,10 @@
 #ifndef INKSCAPE_UI_WIDGET_PAGE_SIZER_H
 #define INKSCAPE_UI_WIDGET_PAGE_SIZER_H
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <stddef.h>
 #include "ui/widget/registered-widget.h"
 #include <sigc++/sigc++.h>
@@ -21,7 +25,13 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/scrolledwindow.h>
-#include <gtkmm/table.h>
+
+#if WITH_GTKMM_3_0
+# include <gtkmm/grid.h>
+#else
+# include <gtkmm/table.h>
+#endif
+
 #include <gtkmm/radiobutton.h>
 
 namespace Inkscape {    
@@ -207,7 +217,13 @@ protected:
 
     //### Custom size frame
     Gtk::Frame           _customFrame;
+
+#if WITH_GTKMM_3_0
+    Gtk::Grid            _customDimTable;
+#else
     Gtk::Table           _customDimTable;
+#endif
+
     RegisteredUnitMenu   _dimensionUnits;
     RegisteredScalarUnit _dimensionWidth;
     RegisteredScalarUnit _dimensionHeight;
@@ -215,7 +231,13 @@ protected:
 
     //### Fit Page options
     Gtk::Expander        _fitPageMarginExpander;
+
+#if WITH_GTKMM_3_0
+    Gtk::Grid            _marginTable;
+#else
     Gtk::Table           _marginTable;
+#endif
+
     Gtk::Alignment       _marginTopAlign;
     Gtk::Alignment       _marginLeftAlign;
     Gtk::Alignment       _marginRightAlign;

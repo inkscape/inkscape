@@ -330,14 +330,36 @@ PageSizer::PageSizer(Registry & _wr)
     pack_start (_customFrame, false, false, 0);
     _customFrame.add(_customDimTable);
 
-    _customDimTable.resize(3, 2);
     _customDimTable.set_border_width(4);
+
+#if WITH_GTKMM_3_0
+    _customDimTable.set_row_spacing(4);
+    _customDimTable.set_column_spacing(4);
+
+    _dimensionWidth.set_hexpand();
+    _dimensionWidth.set_vexpand();
+    _customDimTable.attach(_dimensionWidth,        0, 0, 1, 1);
+
+    _dimensionUnits.set_hexpand();
+    _dimensionUnits.set_vexpand();
+    _customDimTable.attach(_dimensionUnits,        1, 0, 1, 1);
+
+    _dimensionHeight.set_hexpand();
+    _dimensionHeight.set_vexpand();
+    _customDimTable.attach(_dimensionHeight,       0, 1, 1, 1);
+
+    _fitPageMarginExpander.set_hexpand();
+    _fitPageMarginExpander.set_vexpand();
+    _customDimTable.attach(_fitPageMarginExpander, 0, 2, 2, 1);
+#else
+    _customDimTable.resize(3, 2);
     _customDimTable.set_row_spacings(4);
     _customDimTable.set_col_spacings(4);
     _customDimTable.attach(_dimensionWidth,        0,1, 0,1);
     _customDimTable.attach(_dimensionUnits,        1,2, 0,1);
     _customDimTable.attach(_dimensionHeight,       0,1, 1,2);
     _customDimTable.attach(_fitPageMarginExpander, 0,2, 2,3);
+#endif
     
     _dimTabOrderGList = NULL;
     _dimTabOrderGList = g_list_append(_dimTabOrderGList, _dimensionWidth.gobj());
@@ -353,7 +375,32 @@ PageSizer::PageSizer(Registry & _wr)
     _fitPageMarginExpander.add(_marginTable);
     
     //## Set up margin settings
-    _marginTable.resize(4, 2);
+    _marginTable.set_border_width(4);
+
+#if WITH_GTKMM_3_0
+    _marginTable.set_row_spacing(4);
+    _marginTable.set_column_spacing(4);
+
+    _marginTopAlign.set_hexpand();
+    _marginTopAlign.set_vexpand();
+    _marginTable.attach(_marginTopAlign,     0, 0, 2, 1);
+
+    _marginLeftAlign.set_hexpand();
+    _marginLeftAlign.set_vexpand();
+    _marginTable.attach(_marginLeftAlign,    0, 1, 1, 1);
+
+    _marginRightAlign.set_hexpand();
+    _marginRightAlign.set_vexpand();
+    _marginTable.attach(_marginRightAlign,   1, 1, 1, 1);
+
+    _marginBottomAlign.set_hexpand();
+    _marginBottomAlign.set_vexpand();
+    _marginTable.attach(_marginBottomAlign,  0, 2, 2, 1);
+
+    _fitPageButtonAlign.set_hexpand();
+    _fitPageButtonAlign.set_vexpand();
+    _marginTable.attach(_fitPageButtonAlign, 0, 3, 2, 1);
+#else
     _marginTable.set_border_width(4);
     _marginTable.set_row_spacings(4);
     _marginTable.set_col_spacings(4);
@@ -362,6 +409,7 @@ PageSizer::PageSizer(Registry & _wr)
     _marginTable.attach(_marginRightAlign,   1,2, 1,2);
     _marginTable.attach(_marginBottomAlign,  0,2, 2,3);
     _marginTable.attach(_fitPageButtonAlign, 0,2, 3,4);
+#endif
     
     _marginTopAlign.set(0.5, 0.5, 0.0, 1.0);
     _marginTopAlign.add(_marginTop);
