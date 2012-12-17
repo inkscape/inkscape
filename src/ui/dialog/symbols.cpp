@@ -14,6 +14,9 @@
 
 #include <iostream>
 #include <algorithm>
+#include <locale>
+#include <functional>
+#include <sstream>
 
 #include <glibmm/i18n.h>
 
@@ -42,6 +45,11 @@
 #include "sp-root.h"
 #include "sp-use.h"
 #include "sp-symbol.h"
+
+#ifdef WITH_LIBVISIO
+#include <libvisio/libvisio.h>
+#include <libwpd-stream/libwpd-stream.h>
+#endif
 
 #include "verbs.h"
 #include "xml/repr.h"
@@ -289,6 +297,78 @@ void SymbolsDialog::iconChanged() {
   }
 }
 
+#ifdef WITH_LIBVISIO
+// Read Visio stencil files
+SPDocument* read_vss( gchar* fullname, gchar* filename ) {
+
+  WPXFileStream input(fullname);
+
+  if (!libvisio::VisioDocument::isSupported(&input)) {
+    return NULL;
+  }
+
+  libvisio::VSDStringVector output;
+  if (!libvisio::VisioDocument::generateSVGStencils(&input, output)) {
+    return NULL;
+  }
+
+  if (output.empty()) {
+    return NULL;
+  }
+
+  Glib::ustring tmpSVGOutput;
+  tmpSVGOutput += "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";
+  tmpSVGOutput += "<svg\n";
+  tmpSVGOutput += "  xmlns=\"http://www.w3.org/2000/svg\"\n";
+  tmpSVGOutput += "  xmlns:svg=\"http://www.w3.org/2000/svg\"\n";
+  tmpSVGOutput += "  xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n";
+  tmpSVGOutput += "  version=\"1.1\"\n";
+  tmpSVGOutput += "  style=\"fill:none;stroke:#000000;stroke-width:2\">\n";
+  tmpSVGOutput += "  <title>";
+  tmpSVGOutput += filename;
+  tmpSVGOutput += "</title>\n";
+  tmpSVGOutput += "  <defs>\n";
+
+  // Create a string we can use for the symbol id (libvisio doesn't give us a name)
+  std::string sanitized( filename );
+  sanitized.erase( sanitized.find_last_of(".vss")-3 );
+  sanitized.erase( std::remove_if( sanitized.begin(), sanitized.end(), ispunct ), sanitized.end() );
+  std::replace( sanitized.begin(), sanitized.end(), ' ', '_' );
+  // std::cout << filename << "   |" << sanitized << "|" << std::endl;
+
+  // Each "symbol" is in it's own SVG file, we wrap with <symbol> and merge into one file.
+  for (unsigned i=0; i<output.size(); ++i) {
+
+    std::stringstream ss;
+    ss << i;
+
+    tmpSVGOutput += "    <symbol id=\"";
+    tmpSVGOutput += sanitized;
+    tmpSVGOutput += "_";
+    tmpSVGOutput += ss.str();
+    tmpSVGOutput += "\">\n";
+
+    std::istringstream iss( output[i].cstr() );
+    std::string line;
+    while( std::getline( iss, line ) ) {
+      // std::cout << line << std::endl;
+      if( line.find( "svg:svg" ) == std::string::npos ) {
+	tmpSVGOutput += line;
+	tmpSVGOutput += "\n";
+      }
+    }
+
+    tmpSVGOutput += "    </symbol>\n";
+  }
+
+  tmpSVGOutput += "  </defs>\n";
+  tmpSVGOutput += "</svg>\n";
+	      
+  return SPDocument::createNewDocFromMem( tmpSVGOutput.c_str(), strlen( tmpSVGOutput.c_str()), 0 );
+
+}
+#endif
+											  
 /* Hunts preference directories for symbol files */
 void SymbolsDialog::get_symbols() {
 
@@ -317,11 +397,31 @@ void SymbolsDialog::get_symbols() {
 
 	  if ( !Inkscape::IO::file_test( fullname, G_FILE_TEST_IS_DIR ) ) {
 
-	    SPDocument* symbol_doc = SPDocument::createNewDoc( fullname, FALSE );
-	    if( symbol_doc ) {
-	      symbolSets[Glib::ustring(filename)]= symbol_doc;
-	      symbolSet->append(filename);
+	    Glib::ustring fn( filename );
+	    Glib::ustring tag = fn.substr( fn.find_last_of(".") + 1 );
+
+	    SPDocument* symbol_doc = NULL;
+
+#ifdef WITH_LIBVISIO
+	    if( tag.compare( "vss" ) == 0 ) {
+
+	      symbol_doc = read_vss( fullname, filename );
+	      if( symbol_doc ) {
+		symbolSets[Glib::ustring(filename)]= symbol_doc;
+		symbolSet->append(filename);
+	      }
 	    }
+#endif
+	    // Try to read all remaining files as SVG
+	    if( !symbol_doc ) {
+
+	      symbol_doc = SPDocument::createNewDoc( fullname, FALSE );
+	      if( symbol_doc ) {
+		symbolSets[Glib::ustring(filename)]= symbol_doc;
+		symbolSet->append(filename);
+	      }
+	    }
+
 	  }
 	  g_free( fullname );
 	}
