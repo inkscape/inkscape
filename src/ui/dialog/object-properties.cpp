@@ -69,15 +69,15 @@ ObjectProperties::ObjectProperties (void) :
     subselChangedConn()
 {
     //initialize labels for the table at the bottom of the dialog
-    int_labels.push_back("onclick:");
-    int_labels.push_back("onmouseover:");
-    int_labels.push_back("onmouseout:");
-    int_labels.push_back("onmousedown:");
-    int_labels.push_back("onmouseup:");
-    int_labels.push_back("onmousemove:");
-    int_labels.push_back("onfocusin:");
-    int_labels.push_back("onfocusout:");
-    int_labels.push_back("onload:");
+    int_labels.push_back("onclick");
+    int_labels.push_back("onmouseover");
+    int_labels.push_back("onmouseout");
+    int_labels.push_back("onmousedown");
+    int_labels.push_back("onmouseup");
+    int_labels.push_back("onmousemove");
+    int_labels.push_back("onfocusin");
+    int_labels.push_back("onfocusout");
+    int_labels.push_back("onload");
     
     desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &ObjectProperties::setTargetDesktop) );
     deskTrack.connect(GTK_WIDGET(gobj()));
