@@ -174,6 +174,9 @@ static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
     Ink_ComboBoxEntry_Action* act = INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontFamilyAction" ) );
     GtkTreeModel *model = ink_comboboxentry_action_get_model( act );
     gchar *current_font = ink_comboboxentry_action_get_active_text( act );
+    if (!current_font) {
+        return;
+    }
 
     // Get an iter to the selected font from the model data
     // We cant get it from the combo, cause it might not have been created yet
@@ -183,11 +186,11 @@ static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
     while ( valid ) {
 
       // Get text from list entry
-      gchar* text = 0;
+      gchar* text = NULL;
       gtk_tree_model_get( model, &iter, 0, &text, -1 ); // Column 0
 
       // Check for match
-      if( strcmp( current_font, text ) == 0 ){
+      if ( text && (strcmp( current_font, text ) == 0) ) {
         found = true;
         break;
       }
@@ -199,7 +202,7 @@ static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
     }
 
     // Get the list of styles from the selected font
-    GList *list=0;
+    GList *list = NULL;
     gtk_tree_model_get (model, &iter, 1, &list, -1);
 
     Ink_ComboBoxEntry_Action* fontStyleAction = INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontStyleAction" ) );
