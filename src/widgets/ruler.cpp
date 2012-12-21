@@ -37,11 +37,7 @@ struct _SPRulerPrivate
   GtkOrientation orientation;
   SPRulerMetric *metric;
 
-#if GTK_CHECK_VERSION(3,0,0)
   cairo_surface_t *backing_store;
-#else
-  GdkPixmap *backing_store;
-#endif
   
   gint slider_size;
   gint xsrc;
@@ -443,11 +439,7 @@ static void sp_ruler_draw_ticks(SPRuler *ruler)
   g_return_if_fail(SP_IS_RULER(ruler));
   SPRulerPrivate *priv = ruler->priv;
 
-#if GTK_CHECK_VERSION(3,0,0)
   cairo_t *cr = cairo_create(priv->backing_store);
-#else
-  cairo_t *cr = gdk_cairo_create(priv->backing_store);
-#endif
 
   if (SP_RULER_GET_CLASS(ruler)->draw_ticks)
     SP_RULER_GET_CLASS(ruler)->draw_ticks(ruler, cr);
@@ -508,11 +500,7 @@ static void sp_ruler_unrealize(GtkWidget *widget)
 
   if (priv->backing_store)
     {
-#if GTK_CHECK_VERSION(3,0,0)
       cairo_surface_destroy(priv->backing_store);
-#else
-      g_object_unref(priv->backing_store);
-#endif
       priv->backing_store = NULL;
     }
 
@@ -586,15 +574,14 @@ static gboolean sp_ruler_expose(GtkWidget *widget,
   SPRuler *ruler = SP_RULER (widget);
   SPRulerPrivate *priv = ruler->priv;
 
-#if GTK_CHECK_VERSION(3,0,0)
+#if !GTK_CHECK_VERSION(3,0,0)
+  cairo_t *cr = gdk_cairo_create(gtk_widget_get_window(widget));
+  gdk_cairo_region(cr, event->region);
+  cairo_clip(cr);
+#endif
+
   cairo_set_source_surface(cr, priv->backing_store, 0, 0);
   cairo_paint(cr);
-#else
-  cairo_t *cr = gdk_cairo_create(gtk_widget_get_window(widget));
-  gdk_cairo_set_source_pixmap(cr, priv->backing_store, 0, 0);
-  gdk_cairo_region(cr, event->region);
-  cairo_fill(cr);
-#endif
 
   if (SP_RULER_GET_CLASS(ruler)->draw_pos)
     SP_RULER_GET_CLASS(ruler)->draw_pos(ruler, cr);
@@ -615,21 +602,12 @@ static void sp_ruler_make_pixmap(SPRuler *ruler)
   gtk_widget_get_allocation(widget, &allocation);
 
   if (priv->backing_store)
-#if GTK_CHECK_VERSION(3,0,0)
       cairo_surface_destroy(priv->backing_store);
 
   priv->backing_store = gdk_window_create_similar_surface(gtk_widget_get_window(widget),
 		                                          CAIRO_CONTENT_COLOR,
 							  allocation.width,
 							  allocation.height);
-#else
-      g_object_unref(priv->backing_store);
-
-  priv->backing_store = gdk_pixmap_new(gtk_widget_get_window(widget),
-				       allocation.width,
-				       allocation.height,
-				       -1);
-#endif
 
   priv->xsrc = 0;
   priv->ysrc = 0;
@@ -802,27 +780,19 @@ static void sp_ruler_real_draw_ticks(SPRuler *ruler, cairo_t *cr)
     }
     
 #if GTK_CHECK_VERSION(3,0,0)
-    gtk_render_frame(context, 
-                     cr,
-		     0, 0, 
-		     allocation.width, allocation.height);
-    
-    gtk_render_background(context, 
-                          cr,
-			  0, 0, 
-			  allocation.width, allocation.height);
+    GdkRGBA color;
+    gtk_style_context_get_background_color(context,
+                                           gtk_widget_get_state_flags(widget),
+                                           &color);
+    gdk_cairo_set_source_rgba(cr, &color);
 #else
-    gtk_paint_box(style, priv->backing_store,
-                  GTK_STATE_NORMAL, GTK_SHADOW_NONE, NULL, widget,
-                  orientation == GTK_ORIENTATION_HORIZONTAL ? "hruler" : "vruler",
-                  0, 0, 
-                  allocation.width, allocation.height);
+    gdk_cairo_set_source_color(cr, &style->bg[gtk_widget_get_state(widget)]);
 #endif
+    cairo_paint(cr);
     
     cairo_set_line_width(cr, 1.0);
 
 #if GTK_CHECK_VERSION(3,0,0)
-    GdkRGBA color;
     gtk_style_context_get_color(context,
                                 gtk_widget_get_state_flags(widget),
                                 &color);
