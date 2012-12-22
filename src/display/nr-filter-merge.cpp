@@ -33,6 +33,11 @@ void FilterMerge::render_cairo(FilterSlot &slot)
 {
     if (_input_image.empty()) return;
 
+    SPColorInterpolation ci_fp  = SP_CSS_COLOR_INTERPOLATION_AUTO;
+    if( _style ) {
+        ci_fp = (SPColorInterpolation)_style->color_interpolation_filters.computed;
+    }
+
     // output is RGBA if at least one input is RGBA
     bool rgba32 = false;
     cairo_surface_t *out = NULL;
@@ -40,6 +45,7 @@ void FilterMerge::render_cairo(FilterSlot &slot)
         cairo_surface_t *in = slot.getcairo(*i);
         if (cairo_surface_get_content(in) == CAIRO_CONTENT_COLOR_ALPHA) {
             out = ink_cairo_surface_create_identical(in);
+            set_cairo_surface_ci( out, ci_fp );
             rgba32 = true;
             break;
         }
@@ -52,6 +58,19 @@ void FilterMerge::render_cairo(FilterSlot &slot)
 
     for (std::vector<int>::iterator i = _input_image.begin(); i != _input_image.end(); ++i) {
         cairo_surface_t *in = slot.getcairo(*i);
+
+        SPColorInterpolation ci_in = get_cairo_surface_ci(in);
+        //std::cout << "FilterMerge: slot: ci: " << ci_in << std::endl;
+        if( ci_in == SP_CSS_COLOR_INTERPOLATION_SRGB &&
+            ci_fp == SP_CSS_COLOR_INTERPOLATION_LINEARRGB ) {
+            //std::cout << "FilterMerge: srgb -> linear" << std::endl;
+            ink_cairo_surface_srgb_to_linear( in );
+        }
+        if( ci_in == SP_CSS_COLOR_INTERPOLATION_LINEARRGB &&
+            ci_fp == SP_CSS_COLOR_INTERPOLATION_SRGB ) {
+            //std::cout << "FilterMerge: linear -> srgb" << std::endl;
+            ink_cairo_surface_linear_to_srgb( in );
+        }
         cairo_set_source_surface(out_ct, in, 0, 0);
         cairo_paint(out_ct);
     }

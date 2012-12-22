@@ -74,6 +74,34 @@ void FilterDisplacementMap::render_cairo(FilterSlot &slot)
     cairo_surface_t *texture = slot.getcairo(_input);
     cairo_surface_t *map = slot.getcairo(_input2);
     cairo_surface_t *out = ink_cairo_surface_create_identical(texture);
+    // color_interpolation_filters for out same as texture. See spec.
+    copy_cairo_surface_ci( texture, out );
+
+    // We may need to transform map surface to correct color interpolation space. The map surface
+    // might be used as input to another primitive but it is likely that all the primitives in a given
+    // filter use the same color interpolation space so we don't copy the map before converting.
+    // The converting function tags surface with the proper ci value.
+    SPColorInterpolation ci_map = get_cairo_surface_ci(map);
+    SPColorInterpolation ci_fp = SP_CSS_COLOR_INTERPOLATION_AUTO;
+    if( _style ) {
+        ci_fp = (SPColorInterpolation)_style->color_interpolation_filters.computed;
+    }
+    if( ci_map == SP_CSS_COLOR_INTERPOLATION_SRGB &&
+        ci_fp  == SP_CSS_COLOR_INTERPOLATION_LINEARRGB ) {
+        //std::cout << "FilterDisplacementMap: srgb -> linear" << std::endl;
+        ink_cairo_surface_srgb_to_linear( map );
+    }
+    if( ci_map == SP_CSS_COLOR_INTERPOLATION_LINEARRGB &&
+        ci_fp  == SP_CSS_COLOR_INTERPOLATION_SRGB ) {
+        //std::cout << "FilterDisplacementMap: linear -> srgb" << std::endl;
+        ink_cairo_surface_linear_to_srgb( map );
+    }
+
+    // std::cout << "FilterDisplacementMap: ci data: "
+    //           << " texture: " << get_cairo_surface_ci(texture)
+    //           << " map: "     << get_cairo_surface_ci(map)
+    //           << " out: "     << get_cairo_surface_ci(out)
+    //           << std::endl;
 
     Geom::Affine trans = slot.get_units().get_matrix_primitiveunits2pb();
     double scalex = scale * trans.expansionX();

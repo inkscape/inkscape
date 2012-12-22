@@ -130,11 +130,8 @@ sp_filter_init(SPFilter *filter)
 static void
 sp_filter_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) filter_parent_class)->build) {
-        ((SPObjectClass *) filter_parent_class)->build(object, document, repr);
-    }
-
     //Read values of key attributes from XML nodes into object.
+    object->readAttr( "style" ); // struct not derived from SPItem, we need to do this ourselves.
     object->readAttr( "filterUnits" );
     object->readAttr( "primitiveUnits" );
     object->readAttr( "x" );
@@ -143,6 +140,10 @@ sp_filter_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
     object->readAttr( "height" );
     object->readAttr( "filterRes" );
     object->readAttr( "xlink:href" );
+
+    if (((SPObjectClass *) filter_parent_class)->build) {
+        ((SPObjectClass *) filter_parent_class)->build(object, document, repr);
+    }
 
 //is this necessary?
     document->addResource("filter", object);
@@ -365,25 +366,6 @@ sp_filter_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::N
         repr->setAttribute("xlink:href", uri_string);
         g_free(uri_string);
     }
-
-    // TODO: This is evil, correctly implement support for color-interpolation-filters!!!
-    // The color-interpolation-filters attribute is initially set to linearRGB according to the SVG standard.
-    // However, Inkscape completely ignores it and implicitly assumes that it is sRGB (like color-interpolation).
-    // This results in a discrepancy between Inkscape and other renderers in how they render filters.
-    // To mitigate this problem I've (Jasper van de Gronde,th.v.d.gronde@hccnet.nl) added this to ensure that at least
-    // any filters written by Inkscape will henceforth be rendered the same in other renderers.
-    // In the future Inkscape should have proper support for the color-interpolation properties and this should be changed.
-
-    // repr->setAttribute("color-interpolation-filters", "sRGB");
-
-    // Actually, the above line is not correct as the attribute is only allowed on filter
-    // primitives and not <filter> objects. However, it is allowed as a property in a style
-    // attribute. Note, this property must also be set in sp-filter-chemistry, filter_new() as the
-    // code here is not necessarily called when a new filter is created.  29 Aug 2011 Tav.
-    SPCSSAttr *css = sp_repr_css_attr_new();
-    sp_repr_css_set_property(css, "color-interpolation-filters", "sRGB");
-    sp_repr_css_change(repr, css, "style");
-    sp_repr_css_attr_unref(css);
 
     if (((SPObjectClass *) filter_parent_class)->write) {
         ((SPObjectClass *) filter_parent_class)->write(object, doc, repr, flags);

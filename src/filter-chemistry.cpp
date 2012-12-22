@@ -98,7 +98,10 @@ SPFilter *new_filter(SPDocument *document)
     Inkscape::XML::Node *repr;
     repr = xml_doc->createElement("svg:filter");
 
-    // Inkscape only supports sRGB. See note in sp-filter.cpp.
+    // Inkscape now supports both sRGB and linear color-interpolation-filters.
+    // But, for the moment, keep sRGB as default value for new filters
+    // (historically set to sRGB and doesn't require conversion between
+    // filter cairo surfaces and other types of cairo surfaces).
     SPCSSAttr *css = sp_repr_css_attr_new();
     sp_repr_css_set_property(css, "color-interpolation-filters", "sRGB");
     sp_repr_css_change(repr, css, "style");

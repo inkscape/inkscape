@@ -35,6 +35,12 @@ void FilterOffset::render_cairo(FilterSlot &slot)
 {
     cairo_surface_t *in = slot.getcairo(_input);
     cairo_surface_t *out = ink_cairo_surface_create_identical(in);
+    // color_interpolation_filters for out same as in. See spec (DisplacementMap).
+    copy_cairo_surface_ci(in, out);
+
+    // std::cout << "FilterOffset: ci data: out: "
+    //           << get_cairo_surface_ci(out) << std::endl;
+
     cairo_t *ct = cairo_create(out);
 
     Geom::Affine trans = slot.get_units().get_matrix_primitiveunits2pb();

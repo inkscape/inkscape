@@ -164,6 +164,7 @@ void FilterMorphology::render_cairo(FilterSlot &slot)
     if (xradius == 0.0 || yradius == 0.0) {
         // output is transparent black
         cairo_surface_t *out = ink_cairo_surface_create_identical(input);
+        copy_cairo_surface_ci(input, out);
         slot.set(_output, out);
         cairo_surface_destroy(out);
         return;
@@ -191,6 +192,11 @@ void FilterMorphology::render_cairo(FilterSlot &slot)
     }
 
     cairo_surface_t *out = ink_cairo_surface_create_identical(interm);
+
+    // color_interpolation_filters for out same as input. See spec (DisplacementMap).
+    copy_cairo_surface_ci(input, out);
+    // std::cout << "FilterMorphology: ci set to: "
+    //           << get_cairo_surface_ci(out) << std::endl;
 
     if (Operator == MORPHOLOGY_OPERATOR_DILATE) {
         if (bpp == 1) {

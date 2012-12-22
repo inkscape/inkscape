@@ -375,6 +375,13 @@ void FilterTurbulence::render_cairo(FilterSlot &slot)
     cairo_surface_t *input = slot.getcairo(_input);
     cairo_surface_t *out = ink_cairo_surface_create_same_size(input, CAIRO_CONTENT_COLOR_ALPHA);
 
+    // color_interpolation_filter is determined by CSS value (see spec. Turbulence).
+    if( _style ) {
+        set_cairo_surface_ci(out, (SPColorInterpolation)_style->color_interpolation_filters.computed );
+    }
+    // std::cout << "FilterTurbulance: ci data: out: "
+    //           << get_cairo_surface_ci(out) << std::endl;
+
     if (!gen->ready()) {
         Geom::Point ta(fTileX, fTileY);
         Geom::Point tb(fTileX + fTileWidth, fTileY + fTileHeight);

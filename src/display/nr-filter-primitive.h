@@ -16,6 +16,8 @@
 #include "display/nr-filter-types.h"
 #include "svg/svg-length.h"
 
+class SPStyle;
+
 namespace Inkscape {
 namespace Filters {
 
@@ -113,6 +115,11 @@ public:
      */
     virtual bool can_handle_affine(Geom::Affine const &) { return false; }
 
+    /**
+     * Sets style for access to properties used by filter primitives.
+     */
+    void setStyle(SPStyle *style);
+
 protected:
     int _input;
     int _output;
@@ -122,6 +129,8 @@ protected:
     SVGLength _subregion_y;
     SVGLength _subregion_width;
     SVGLength _subregion_height;
+
+    SPStyle *_style;
 };
 
 

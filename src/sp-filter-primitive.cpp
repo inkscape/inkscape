@@ -20,6 +20,7 @@
 #include <string.h>
 
 #include "attributes.h"
+#include "style.h"
 #include "sp-filter-primitive.h"
 #include "xml/repr.h"
 #include "sp-filter.h"
@@ -100,16 +101,17 @@ static void sp_filter_primitive_init(SPFilterPrimitive *filter_primitive)
 static void
 sp_filter_primitive_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if ((static_cast<SPObjectClass *>(filter_primitive_parent_class))->build) {
-        (static_cast<SPObjectClass *>(filter_primitive_parent_class))->build(object, document, repr);
-    }
-
+    object->readAttr( "style" ); // struct not derived from SPItem, we need to do this ourselves.
     object->readAttr( "in" );
     object->readAttr( "result" );
     object->readAttr( "x" );
     object->readAttr( "y" );
     object->readAttr( "width" );
     object->readAttr( "height" );
+
+    if ((static_cast<SPObjectClass *>(filter_primitive_parent_class))->build) {
+        (static_cast<SPObjectClass *>(filter_primitive_parent_class))->build(object, document, repr);
+    }
 }
 
 /**
@@ -188,7 +190,9 @@ sp_filter_primitive_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     //SPFilterPrimitive *filter_primitive = SP_FILTER_PRIMITIVE(object);
 
+    // Is this required?
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
+        object->readAttr( "style" );
         object->readAttr( "in" );
         object->readAttr( "result" );
         object->readAttr( "x" );
@@ -311,6 +315,9 @@ void sp_filter_primitive_renderer_common(SPFilterPrimitive *sp_prim, Inkscape::F
 
     /* TODO: place here code to handle input images, filter area etc. */
     nr_prim->set_subregion( sp_prim->x, sp_prim->y, sp_prim->width, sp_prim->height );
+
+    // Give renderer access to filter properties
+    nr_prim->setStyle( sp_prim->style );
 }
 
 

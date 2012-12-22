@@ -84,11 +84,13 @@ cairo_surface_t *FilterSlot::getcairo(int slot_nr)
             case NR_FILTER_SOURCEGRAPHIC: {
                 cairo_surface_t *tr = _get_transformed_source_graphic();
                 _set_internal(NR_FILTER_SOURCEGRAPHIC, tr);
+                //std::cout << "Source Graphic: ci data: " << get_cairo_surface_ci( tr ) << std::endl;
                 cairo_surface_destroy(tr);
             } break;
             case NR_FILTER_BACKGROUNDIMAGE: {
                 cairo_surface_t *bg = _get_transformed_background();
                 _set_internal(NR_FILTER_BACKGROUNDIMAGE, bg);
+                //std::cout << "Background Image: ci data: " << get_cairo_surface_ci( bg ) << std::endl;
                 cairo_surface_destroy(bg);
             } break;
             case NR_FILTER_SOURCEALPHA: {
@@ -129,6 +131,9 @@ cairo_surface_t *FilterSlot::_get_transformed_source_graphic()
 
     if (trans.isTranslation()) {
         cairo_surface_reference(_source_graphic);
+
+        // Assume all source graphics are sRGB
+        set_cairo_surface_ci( _source_graphic, SP_CSS_COLOR_INTERPOLATION_SRGB );
         return _source_graphic;
     }
 
@@ -145,6 +150,8 @@ cairo_surface_t *FilterSlot::_get_transformed_source_graphic()
     cairo_paint(tsg_ct);
     cairo_destroy(tsg_ct);
 
+    // Assume all source graphics are sRGB
+    set_cairo_surface_ci( tsg, SP_CSS_COLOR_INTERPOLATION_SRGB );
     return tsg;
 }
 
@@ -171,6 +178,9 @@ cairo_surface_t *FilterSlot::_get_transformed_background()
     } else {
         tbg = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, _slot_w, _slot_h);
     }
+
+    // Assume all source graphics are sRGB
+    set_cairo_surface_ci( tbg, SP_CSS_COLOR_INTERPOLATION_SRGB );
 
     return tbg;
 }

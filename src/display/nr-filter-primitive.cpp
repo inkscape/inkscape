@@ -20,6 +20,7 @@
 #include "desktop-handles.h"
 #include "document.h"
 #include "sp-root.h"
+#include "style.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -45,11 +46,14 @@ FilterPrimitive::FilterPrimitive()
     _subregion_y.unset(SVGLength::PERCENT, 0, 0);
     _subregion_width.unset(SVGLength::PERCENT, 1, 0);
     _subregion_height.unset(SVGLength::PERCENT, 1, 0);
+
+    _style = NULL;
 }
 
 FilterPrimitive::~FilterPrimitive()
 {
-    // Nothing to do here
+    if(_style)
+        sp_style_unref(_style);
 }
 
 void FilterPrimitive::render_cairo(FilterSlot &slot)
@@ -178,6 +182,14 @@ Geom::Rect FilterPrimitive::filter_primitive_area(FilterUnits const &units)
     Geom::Rect area(minp, maxp);
     return area;
 }
+
+void FilterPrimitive::setStyle(SPStyle *style)
+{
+    if (style) sp_style_ref(style);
+    if (_style) sp_style_unref(_style);
+    _style = style;
+}
+
 
 } /* namespace Filters */
 } /* namespace Inkscape */
