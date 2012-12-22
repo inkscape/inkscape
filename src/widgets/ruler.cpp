@@ -492,18 +492,39 @@ sp_ruler_unmap (GtkWidget *widget)
 static void sp_ruler_size_request(GtkWidget *widget, 
 		                  GtkRequisition *requisition)
 {
-  SPRulerPrivate *priv = SP_RULER_GET_PRIVATE (widget);
-  GtkStyle *style = gtk_widget_get_style(widget);
+  SPRulerPrivate  *priv    = SP_RULER_GET_PRIVATE (widget);
+
+#if GTK_CHECK_VERSION(3,0,0)
+  GtkStyleContext *context = gtk_widget_get_style_context (widget);
+  GtkBorder        border;
+
+  gtk_style_context_get_border (context, static_cast<GtkStateFlags>(0), &border);
+  
+  requisition->width  = border.left + border.right;
+  requisition->height = border.top  + border.bottom;
+#else
+  GtkStyle        *style   = gtk_widget_get_style(widget);
+#endif
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
+#if GTK_CHECK_VERSION(3,0,0)
+      requisition->width  += 1;
+      requisition->height += RULER_WIDTH;
+#else
       requisition->width  = style->xthickness * 2 + 1;
       requisition->height = style->ythickness * 2 + RULER_WIDTH;
+#endif
     }
   else
     {
+#if GTK_CHECK_VERSION(3,0,0)
+      requisition->width  += RULER_WIDTH;
+      requisition->height += 1;
+#else
       requisition->width  = style->xthickness * 2 + RULER_WIDTH;
       requisition->height = style->ythickness * 2 + 1;
+#endif
     }
 }
 
@@ -829,6 +850,7 @@ static void sp_ruler_draw_ticks(SPRuler *ruler)
 #if GTK_CHECK_VERSION(3,0,0)
     GtkStyleContext *context = gtk_widget_get_style_context (widget);
     GtkStateFlags    state   = gtk_widget_get_state_flags (widget);
+    GtkBorder        border;
 #else
     GtkStyle        *style   = gtk_widget_get_style (widget);
     GtkStateType     state   = gtk_widget_get_state (widget);
@@ -859,10 +881,7 @@ static void sp_ruler_draw_ticks(SPRuler *ruler)
     gint digit_height = (int) floor (RULER_FONT_SIZE * RULER_FONT_VERTICAL_SPACING / PANGO_SCALE + 0.5);
     
 #if GTK_CHECK_VERSION(3,0,0)
-    GtkBorder padding;
-    gtk_style_context_get_padding(context, state, &padding);
-    gint xthickness = padding.left;
-    gint ythickness = padding.top;
+    gtk_style_context_get_border (context, static_cast<GtkStateFlags>(0), &border);
 #else
     gint xthickness = style->xthickness;
     gint ythickness = style->ythickness;
@@ -965,6 +984,15 @@ static void sp_ruler_draw_ticks(SPRuler *ruler)
             // by a pixel, and jump back on the next redraw). This is suppressed by adding 1e-9 (that's only one nanopixel ;-))
             gint pos = int(Inkscape::round((cur - lower) * increment + 1e-12)) - UNUSED_PIXELS;
 
+#if GTK_CHECK_VERSION(3,0,0)
+            if (priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
+                cairo_move_to(cr, pos+0.5, height + border.top);
+		cairo_line_to(cr, pos+0.5, height - length + border.bottom);
+            } else {
+                cairo_move_to(cr, height + border.left - length, pos+0.5);
+		cairo_line_to(cr, height + border.right, pos+0.5);
+            }
+#else
             if (priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
                 cairo_move_to(cr, pos+0.5, height + ythickness);
 		cairo_line_to(cr, pos+0.5, height - length + ythickness);
@@ -972,6 +1000,7 @@ static void sp_ruler_draw_ticks(SPRuler *ruler)
                 cairo_move_to(cr, height + xthickness - length, pos+0.5);
 		cairo_line_to(cr, height + xthickness, pos+0.5);
             }
+#endif
 
             /* draw label */
             double label_spacing_px = fabs((increment*(double)priv->metric->ruler_scale[scale])/priv->metric->subdivide[i]);
@@ -992,7 +1021,11 @@ static void sp_ruler_draw_ticks(SPRuler *ruler)
                     for (gint j = 0; j < (int) strlen (unit_str); j++) {
                         digit_str[0] = unit_str[j];
                         pango_layout_set_text (pango_layout, digit_str, 1);
+#if GTK_CHECK_VERSION(3,0,0)
+			cairo_move_to(cr, border.left + 1, pos + digit_height * (j) + 1);
+#else
 			cairo_move_to(cr, xthickness + 1, pos + digit_height * (j) + 1);
+#endif
 			pango_cairo_show_layout(cr, pango_layout);
                     }
                 }
