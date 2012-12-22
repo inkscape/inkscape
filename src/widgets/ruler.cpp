@@ -226,26 +226,6 @@ sp_ruler_init (SPRuler *ruler)
   sp_ruler_set_metric(ruler, SP_PX);
 }
 
-/**
- * sp_ruler_invalidate_ticks:
- * @ruler: the ruler to invalidate
- *
- * For performance reasons, #SPRuler keeps a backbuffer containing the
- * prerendered contents of the ticks. To cause a repaint of this buffer,
- * call this function instead of gtk_widget_queue_draw().
- **/
-static void sp_ruler_invalidate_ticks(SPRuler *ruler)
-{
-  SPRulerPrivate *priv = SP_RULER_GET_PRIVATE (ruler);
-  g_return_if_fail(SP_IS_RULER(ruler));
-
-  if(priv->backing_store == NULL)
-      return;
-
-  sp_ruler_draw_ticks(ruler);
-  gtk_widget_queue_draw(GTK_WIDGET(ruler));
-}
-
 
 /**
  * sp_ruler_set_range:
@@ -287,7 +267,7 @@ sp_ruler_set_range (SPRuler *ruler,
     }
   g_object_thaw_notify (G_OBJECT (ruler));
 
-  sp_ruler_invalidate_ticks(ruler);
+  gtk_widget_queue_draw (GTK_WIDGET (ruler));
 }
 
 /**
@@ -1049,7 +1029,7 @@ void sp_ruler_set_metric(SPRuler *ruler, SPMetric metric)
 
   g_object_notify(G_OBJECT(ruler), "metric");
 
-  sp_ruler_invalidate_ticks(ruler);
+  gtk_widget_queue_draw (GTK_WIDGET (ruler));
 }
 
 /*
