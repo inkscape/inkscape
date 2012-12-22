@@ -24,6 +24,7 @@
 #include <2geom/transforms.h>
 #include <2geom/sbasis-to-bezier.h>
 #include "color.h"
+#include "style.h"
 #include "helper/geom-curves.h"
 
 namespace Inkscape {
@@ -276,6 +277,26 @@ feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv)
     }
 }
 
+SPColorInterpolation
+get_cairo_surface_ci(cairo_surface_t *surface) {
+    void* data = cairo_surface_get_user_data( surface, &ci_key );
+    if( data != NULL ) {
+        return (SPColorInterpolation)GPOINTER_TO_INT( data );
+    } else {
+        return SP_CSS_COLOR_INTERPOLATION_AUTO;
+    }
+}
+
+void
+set_cairo_surface_ci(cairo_surface_t *surface, SPColorInterpolation ci) {
+    cairo_surface_set_user_data(surface, &ci_key, GINT_TO_POINTER (ci), NULL);
+}
+
+void
+copy_cairo_surface_ci(cairo_surface_t *in, cairo_surface_t *out) {
+    cairo_surface_set_user_data(out, &ci_key, cairo_surface_get_user_data(in, &ci_key), NULL);
+}
+
 void
 ink_cairo_set_source_rgba32(cairo_t *ct, guint32 rgba)
 {
@@ -395,6 +416,7 @@ cairo_surface_t *
 ink_cairo_surface_create_identical(cairo_surface_t *s)
 {
     cairo_surface_t *ns = ink_cairo_surface_create_same_size(s, cairo_surface_get_content(s));
+    cairo_surface_set_user_data(ns, &ci_key, cairo_surface_get_user_data(s, &ci_key), NULL);
     return ns;
 }
 
@@ -545,6 +567,94 @@ void ink_cairo_surface_average_color_premul(cairo_surface_t *surface, double &r,
     g = CLAMP(g, 0.0, 1.0);
     b = CLAMP(b, 0.0, 1.0);
     a = CLAMP(a, 0.0, 1.0);
+}
+
+void srgb_to_linear( guint32* c, guint32 a ) {
+
+    *c = unpremul_alpha( *c, a );
+
+    double cc = *c/255.0;
+
+    if( cc < 0.04045 ) {
+        cc /= 12.92;
+    } else {
+        cc = pow( (cc+0.055)/1.055, 2.4 );
+    }
+    cc *= 255.0;
+
+    *c = (int)cc;
+
+    *c = premul_alpha( *c, a );
+}
+
+void linear_to_srgb( guint32* c, guint32 a ) {
+
+    *c = unpremul_alpha( *c, a );
+
+    double cc = *c/255.0;
+
+    if( cc < 0.0031308 ) {
+        cc *= 12.92;
+    } else {
+        cc = pow( cc, 1.0/2.4 )*1.055-0.055;
+    }
+    cc *= 255.0;
+
+    *c = (int)cc;
+
+    *c = premul_alpha( *c, a );
+}
+
+int ink_cairo_surface_srgb_to_linear(cairo_surface_t *surface)
+{
+    cairo_surface_flush(surface);
+    int width = cairo_image_surface_get_width(surface);
+    int height = cairo_image_surface_get_height(surface);
+    int stride = cairo_image_surface_get_stride(surface);
+    unsigned char *data = cairo_image_surface_get_data(surface);
+
+    /* TODO convert this to OpenMP somehow */
+    for (int y = 0; y < height; ++y, data += stride) {
+        for (int x = 0; x < width; ++x) {
+            guint32 px = *reinterpret_cast<guint32*>(data + 4*x);
+            EXTRACT_ARGB32(px, a,r,g,b)    ; // Unneeded semi-colon for indenting
+            if( a != 0 ) {
+                srgb_to_linear( &r, a );
+                srgb_to_linear( &g, a );
+                srgb_to_linear( &b, a );
+            }
+            ASSEMBLE_ARGB32(px2, a,r,g,b);
+            *reinterpret_cast<guint32*>(data + 4*x) = px2;
+        }
+    }
+    set_cairo_surface_ci( surface, SP_CSS_COLOR_INTERPOLATION_LINEARRGB );
+    return width * height;
+}
+
+int ink_cairo_surface_linear_to_srgb(cairo_surface_t *surface)
+{
+    cairo_surface_flush(surface);
+    int width = cairo_image_surface_get_width(surface);
+    int height = cairo_image_surface_get_height(surface);
+    int stride = cairo_image_surface_get_stride(surface);
+    unsigned char *data = cairo_image_surface_get_data(surface);
+
+    /* TODO convert this to OpenMP somehow */
+    for (int y = 0; y < height; ++y, data += stride) {
+        for (int x = 0; x < width; ++x) {
+            guint32 px = *reinterpret_cast<guint32*>(data + 4*x);
+            EXTRACT_ARGB32(px, a,r,g,b)    ; // Unneeded semi-colon for indenting
+            if( a != 0 ) {
+                linear_to_srgb( &r, a );
+                linear_to_srgb( &g, a );
+                linear_to_srgb( &b, a );
+            }
+            ASSEMBLE_ARGB32(px2, a,r,g,b);
+            *reinterpret_cast<guint32*>(data + 4*x) = px2;
+        }
+    }
+    set_cairo_surface_ci( surface, SP_CSS_COLOR_INTERPOLATION_SRGB );
+    return width * height;
 }
 
 cairo_pattern_t *

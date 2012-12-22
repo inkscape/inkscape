@@ -15,6 +15,7 @@
 #include <glib.h>
 #include <cairomm/cairomm.h>
 #include <2geom/forward.h>
+#include "style.h"
 
 struct SPColor;
 struct _GdkPixbuf;
@@ -81,6 +82,16 @@ public:
 
 } // namespace Inkscape
 
+/**
+ * Key for cairo_surface_t to keep track of current color interpolation value
+ * Only the address of the structure is used, it is never initialized. See:
+ * http://www.cairographics.org/manual/cairo-Types.html#cairo-user-data-key-t
+ */
+static cairo_user_data_key_t ci_key;
+SPColorInterpolation get_cairo_surface_ci(cairo_surface_t *surface);
+void set_cairo_surface_ci(cairo_surface_t *surface, SPColorInterpolation cif);
+void copy_cairo_surface_ci(cairo_surface_t *in, cairo_surface_t *out);
+
 void ink_cairo_set_source_color(cairo_t *ct, SPColor const &color, double opacity);
 void ink_cairo_set_source_rgba32(cairo_t *ct, guint32 rgba);
 void ink_cairo_transform(cairo_t *ct, Geom::Affine const &m);
@@ -101,6 +112,9 @@ int ink_cairo_surface_get_height(cairo_surface_t *surface);
 guint32 ink_cairo_surface_average_color(cairo_surface_t *surface);
 void ink_cairo_surface_average_color(cairo_surface_t *surface, double &r, double &g, double &b, double &a);
 void ink_cairo_surface_average_color_premul(cairo_surface_t *surface, double &r, double &g, double &b, double &a);
+
+int ink_cairo_surface_srgb_to_linear(cairo_surface_t *surface);
+int ink_cairo_surface_linear_to_srgb(cairo_surface_t *surface);
 
 cairo_pattern_t *ink_cairo_pattern_create_checkerboard();
 
