@@ -677,9 +677,9 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
         }
     }
     /* color interpolation */
-    SPS_READ_PENUM_IF_UNSET(&style->color_interpolation, repr, "color_interpolation", enum_color_interpolation, true);
+    SPS_READ_PENUM_IF_UNSET(&style->color_interpolation, repr, "color-interpolation", enum_color_interpolation, true);
     /* color interpolation filters*/
-    SPS_READ_PENUM_IF_UNSET(&style->color_interpolation_filters, repr, "color_interpolation_filters", enum_color_interpolation, true);
+    SPS_READ_PENUM_IF_UNSET(&style->color_interpolation_filters, repr, "color-interpolation-filters", enum_color_interpolation, true);
     /* fill */
     if (!style->fill.set) {
         val = repr->attribute("fill");
@@ -1234,11 +1234,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             }
             break;
         case SP_PROP_COLOR_INTERPOLATION_FILTERS:
-            // We read it but issue warning
             SPS_READ_IENUM_IF_UNSET(&style->color_interpolation_filters, val, enum_color_interpolation, true);
-            if( style->color_interpolation_filters.value != SP_CSS_COLOR_INTERPOLATION_SRGB ) {
-                g_warning("Inkscape currently only supports color-interpolation-filters = sRGB");
-            }
             break;
         case SP_PROP_COLOR_PROFILE:
             g_warning("Unimplemented style property SP_PROP_COLOR_PROFILE: value: %s", val);
