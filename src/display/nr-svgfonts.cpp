@@ -16,7 +16,7 @@
 #include <2geom/transforms.h>
 #include <cairo.h>
 #include <vector>
-#include "style.h"
+#include "sp-object.h"
 #include "svg/svg.h"
 #include "display/cairo-utils.h"
 #include "display/nr-svgfonts.h"

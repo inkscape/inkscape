@@ -258,9 +258,6 @@ enum SPAttributeEnum {
     SP_ATTR_POINTSATY,
     SP_ATTR_POINTSATZ,
     SP_ATTR_LIMITINGCONEANGLE,
-    /*feFlood*/
-    SP_ATTR_FLOODCOLOR,
-    SP_ATTR_FLOODOPACITY,
     /* SPGaussianBlur */
     SP_ATTR_STDDEVIATION,
     /*feImage*/

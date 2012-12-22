@@ -258,9 +258,6 @@ static SPStyleProp const props[] = {
     {SP_ATTR_POINTSATY, "pointsAtY"},
     {SP_ATTR_POINTSATZ, "pointsAtZ"},
     {SP_ATTR_LIMITINGCONEANGLE, "limitingConeAngle"},
-    /*feFlood*/
-    {SP_ATTR_FLOODCOLOR, "flood-color"},
-    {SP_ATTR_FLOODOPACITY, "flood-opacity"},
     /* SPGaussianBlur */
     {SP_ATTR_STDDEVIATION, "stdDeviation"},
     /*feImage*/
