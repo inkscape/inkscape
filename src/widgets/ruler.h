@@ -45,9 +45,6 @@ struct _SPRuler
 struct _SPRulerClass
 {
   GtkWidgetClass parent_class;
-
-  void (* draw_pos)   (SPRuler *ruler,
-		       cairo_t *cr);
 };
 
 struct _SPRulerMetric

@@ -86,17 +86,15 @@ static void     sp_ruler_size_allocate   (GtkWidget      *widget,
                                                       GtkAllocation  *allocation);
 static gboolean sp_ruler_motion_notify               (GtkWidget      *widget,
                                                       GdkEventMotion *event);
-#if GTK_CHECK_VERSION(3,0,0)
 static gboolean sp_ruler_draw            (GtkWidget      *widget,
 		                          cairo_t        *cr);
-#else
+#if !GTK_CHECK_VERSION(3,0,0)
 static gboolean sp_ruler_expose          (GtkWidget      *widget,
                                           GdkEventExpose *event);
 #endif
 static void     sp_ruler_make_pixmap     (SPRuler *ruler);
 static void     sp_ruler_draw_ticks      (SPRuler *ruler);
-static void     sp_ruler_real_draw_pos   (SPRuler *ruler,
-		                          cairo_t *cr);
+static void     sp_ruler_draw_pos        (SPRuler *ruler);
 
 #define SP_RULER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), SP_TYPE_RULER, SPRulerPrivate))
 
@@ -140,8 +138,6 @@ sp_ruler_class_init (SPRulerClass *klass)
 #endif
   widget_class->size_allocate = sp_ruler_size_allocate;
   widget_class->motion_notify_event = sp_ruler_motion_notify;
-
-  klass->draw_pos = sp_ruler_real_draw_pos;
 
   g_object_class_override_property (gobject_class,
                                     PROP_ORIENTATION,
@@ -546,32 +542,42 @@ static void sp_ruler_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
     }
 }
 
-#if GTK_CHECK_VERSION(3,0,0)
-static gboolean sp_ruler_draw(GtkWidget *widget,
-		              cairo_t *cr)
-#else
-static gboolean sp_ruler_expose(GtkWidget *widget,
-                                GdkEventExpose *event)
-#endif
-{
-  SPRuler *ruler = SP_RULER (widget);
-  SPRulerPrivate *priv = ruler->priv;
 
 #if !GTK_CHECK_VERSION(3,0,0)
-  cairo_t *cr = gdk_cairo_create(gtk_widget_get_window(widget));
-  gdk_cairo_region(cr, event->region);
-  cairo_clip(cr);
+static gboolean sp_ruler_expose(GtkWidget *widget,
+                                GdkEventExpose *event)
+{
+    cairo_t        *cr    = gdk_cairo_create(gtk_widget_get_window(widget));
+    GtkAllocation   allocation;
+  
+    gdk_cairo_region (cr, event->region);
+    cairo_clip (cr);
+
+    gtk_widget_get_allocation (widget, &allocation);
+    cairo_translate (cr, allocation.x, allocation.y);
+
+    gboolean result = sp_ruler_draw (widget, cr);
+
+    cairo_destroy (cr);
+
+    return result;
+}
 #endif
+
+
+
+static gboolean sp_ruler_draw(GtkWidget *widget,
+		              cairo_t *cr)
+{
+  SPRuler        *ruler = SP_RULER (widget);
+  SPRulerPrivate *priv  = SP_RULER_GET_PRIVATE (ruler);
+
+  sp_ruler_draw_ticks (ruler);
 
   cairo_set_source_surface(cr, priv->backing_store, 0, 0);
   cairo_paint(cr);
 
-  if (SP_RULER_GET_CLASS(ruler)->draw_pos)
-    SP_RULER_GET_CLASS(ruler)->draw_pos(ruler, cr);
-
-#if !GTK_CHECK_VERSION(3,0,0)
-  cairo_destroy (cr);
-#endif
+  sp_ruler_draw_pos (ruler);
 
   return FALSE;
 }
@@ -599,27 +605,48 @@ static void sp_ruler_make_pixmap(SPRuler *ruler)
 }
 
 
-static void sp_ruler_real_draw_pos(SPRuler *ruler,
-                                   cairo_t *cr)
+static void
+sp_ruler_draw_pos (SPRuler *ruler)
 {
-  GtkAllocation allocation;
-  GtkWidget *widget = GTK_WIDGET (ruler);
-  SPRulerPrivate *priv = ruler->priv;
-  gint x, y;
-  gint bs_width, bs_height;
-  gdouble increment;
+  GtkWidget       *widget  = GTK_WIDGET (ruler);
 
-  GtkStyle *style = gtk_widget_get_style(widget);
+#if GTK_CHECK_VERSION(3,0,0)
+  GtkStyleContext *context = gtk_widget_get_style_context (widget);
+  GtkBorder        border;
+  GdkRGBA          color;
+#else
+  GtkStyle        *style   = gtk_widget_get_style (widget);
+  GtkStateType     state   = gtk_widget_get_state (widget);
+  gint             xthickness;
+  gint             ythickness;
+#endif
+  
+  SPRulerPrivate  *priv    = SP_RULER_GET_PRIVATE (ruler);
+  GtkAllocation    allocation;
+  gint             x, y;
+  gint             width, height;
+  gint             bs_width, bs_height;
+
+  if (! gtk_widget_is_drawable (widget))
+      return;
+
   gtk_widget_get_allocation(widget, &allocation);
 
-  gint xthickness = style->xthickness;
-  gint ythickness = style->ythickness;
-  gint width = allocation.width;
-  gint height = allocation.height;
+#if GTK_CHECK_VERSION(3,0,0)
+  gtk_style_context_get_border (context, static_cast<GtkStateFlags>(0), &border);
+#else
+  xthickness = style->xthickness;
+  ythickness = style->ythickness;
+#endif
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
-      height -= ythickness * 2;
+      width  = allocation.width;
+#if GTK_CHECK_VERSION(3,0,0)
+      height = allocation.height - (border.top + border.bottom);
+#else
+      height = allocation.height - ythickness * 2;
+#endif
 
       bs_width = height / 2 + 2;
       bs_width |= 1;  /* make sure it's odd */
@@ -627,7 +654,12 @@ static void sp_ruler_real_draw_pos(SPRuler *ruler,
     }
   else
     {
-      width -= xthickness * 2;
+#if GTK_CHECK_VERSION(3,0,0)
+      width  = allocation.width - (border.left + border.right);
+#else
+      width  = allocation.width - xthickness * 2;
+#endif
+      height = allocation.height;
 
       bs_height = width / 2 + 2;
       bs_height |= 1;  /* make sure it's odd */
@@ -636,28 +668,60 @@ static void sp_ruler_real_draw_pos(SPRuler *ruler,
 
   if ((bs_width > 0) && (bs_height > 0))
     {
+      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (widget));
+      gdouble lower;
+      gdouble upper;
+      gdouble position;
+      gdouble increment;
+
+      cairo_rectangle (cr,
+                       allocation.x, allocation.y,
+                       allocation.width, allocation.height);
+      cairo_clip (cr);
+
+      cairo_translate (cr, allocation.x, allocation.y);
+
+      /* If a backing store exists, restore the ruler  */
+      if (priv->backing_store)
+        {
+          cairo_set_source_surface (cr, priv->backing_store, 0, 0);
+          cairo_rectangle (cr, priv->xsrc, priv->ysrc, bs_width, bs_height);
+          cairo_fill (cr);
+        }
+
+      sp_ruler_get_range (ruler, &lower, &upper, &position, NULL);
+
       if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
         {
-          increment = (gdouble) width / (priv->upper - priv->lower);
+          increment = (gdouble) width / (upper - lower);
 
-          x = ROUND ((priv->position - priv->lower) * increment) + (xthickness - bs_width) / 2 - 1;
+#if GTK_CHECK_VERSION(3,0,0)
+          x = ROUND ((position - lower) * increment) + (border.left - bs_width) / 2 - 1;
+          y = (height + bs_height) / 2 + border.top;
+#else
+          x = ROUND ((position - lower) * increment) + (xthickness - bs_width) / 2 - 1;
           y = (height + bs_height) / 2 + ythickness;
+#endif
         }
       else
         {
-          increment = (gdouble) height / (priv->upper - priv->lower);
+          increment = (gdouble) height / (upper - lower);
 
+#if GTK_CHECK_VERSION(3,0,0)
+          x = (width + bs_width) / 2 + border.left;
+          y = ROUND ((position - lower) * increment) + (border.top - bs_height) / 2 - 1;
+#else
           x = (width + bs_width) / 2 + xthickness;
-          y = ROUND ((priv->position - priv->lower) * increment) + (ythickness - bs_height) / 2 - 1;
+          y = ROUND ((position - lower) * increment) + (ythickness - bs_height) / 2 - 1;
+#endif
         }
 
 #if GTK_CHECK_VERSION(3,0,0)
-      GtkStyleContext *sc = gtk_widget_get_style_context(widget);
-      GdkRGBA color;
-      gtk_style_context_get_color(sc, gtk_widget_get_state_flags(widget), &color);
-      gdk_cairo_set_source_rgba(cr, &color);
+      gtk_style_context_get_color (context, gtk_widget_get_state_flags (widget),
+                                   &color);
+      gdk_cairo_set_source_rgba (cr, &color);
 #else
-      gdk_cairo_set_source_color(cr, &style->fg[gtk_widget_get_state(widget)]);
+      gdk_cairo_set_source_color (cr, &style->fg[state]);
 #endif
 
       cairo_move_to (cr, x, y);
@@ -674,6 +738,8 @@ static void sp_ruler_real_draw_pos(SPRuler *ruler,
         }
 
       cairo_fill (cr);
+
+      cairo_destroy (cr);
 
       priv->xsrc = x;
       priv->ysrc = y;
