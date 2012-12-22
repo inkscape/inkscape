@@ -59,20 +59,22 @@ struct _SPRulerMetric
 };
 
 
-GType           sp_ruler_get_type   (void) G_GNUC_CONST;
-GtkWidget*      sp_ruler_new        (GtkOrientation  orientation);
-void            sp_ruler_set_range  (SPRuler        *ruler,
-                                     gdouble         lower,
-                                     gdouble         upper,
-                                     gdouble         position,
-                                     gdouble         max_size);
-void            sp_ruler_get_range  (SPRuler        *ruler,
-                                     gdouble        *lower,
-                                     gdouble        *upper,
-                                     gdouble        *position,
-                                     gdouble        *max_size);
-void     sp_ruler_set_metric(SPRuler *ruler, SPMetric  metric);
-SPMetric sp_ruler_get_metric(SPRuler *ruler);
+GType           sp_ruler_get_type     (void) G_GNUC_CONST;
+GtkWidget*      sp_ruler_new          (GtkOrientation  orientation);
+void            sp_ruler_set_position (SPRuler      *ruler,
+                                       gdouble       set_position);
+gdouble         sp_ruler_get_position (SPRuler      *ruler);
+void            sp_ruler_set_range    (SPRuler        *ruler,
+                                       gdouble         lower,
+                                       gdouble         upper,
+                                       gdouble         max_size);
+void            sp_ruler_get_range    (SPRuler        *ruler,
+                                       gdouble        *lower,
+                                       gdouble        *upper,
+                                       gdouble        *max_size);
+void            sp_ruler_set_metric   (SPRuler        *ruler,
+                                       SPMetric        metric);
+SPMetric        sp_ruler_get_metric   (SPRuler        *ruler);
 
 #endif /* __SP_RULER_H__ */
 

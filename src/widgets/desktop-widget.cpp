@@ -1717,12 +1717,8 @@ void
 SPDesktopWidget::viewSetPosition (Geom::Point p)
 {
     Geom::Point const origin = ( p - ruler_origin );
-    gdouble hlower, hupper, hmax_range;
-    gdouble vlower, vupper, vmax_range;
-    sp_ruler_get_range(SP_RULER(hruler), &hlower, &hupper, NULL, &hmax_range);
-    sp_ruler_set_range(SP_RULER(hruler), hlower, hupper, origin[Geom::X], hmax_range);
-    sp_ruler_get_range(SP_RULER(vruler), &vlower, &vupper, NULL, &vmax_range);
-    sp_ruler_set_range(SP_RULER(vruler), vlower, vupper, origin[Geom::Y], vmax_range);
+    sp_ruler_set_position(SP_RULER(hruler), origin[Geom::X]);
+    sp_ruler_set_position(SP_RULER(vruler), origin[Geom::Y]);
 }
 
 void
@@ -1741,13 +1737,11 @@ sp_desktop_widget_update_hruler (SPDesktopWidget *dtw)
      * coincides with the pixel buffer, everything will line up nicely.
      */
     Geom::IntRect viewbox = dtw->canvas->getViewboxIntegers();
-    gdouble position;
 
     double const scale = dtw->desktop->current_zoom();
     double s = viewbox.min()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
     double e = viewbox.max()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
-    sp_ruler_get_range(SP_RULER(dtw->hruler), NULL, NULL, &position, NULL);
-    sp_ruler_set_range(SP_RULER(dtw->hruler), s,  e, position, (e - s));
+    sp_ruler_set_range(SP_RULER(dtw->hruler), s,  e, (e - s));
 }
 
 void
@@ -1759,13 +1753,11 @@ sp_desktop_widget_update_vruler (SPDesktopWidget *dtw)
      * coincides with the pixel buffer, everything will line up nicely.
      */
     Geom::IntRect viewbox = dtw->canvas->getViewboxIntegers();
-    gdouble position;
 
     double const scale = dtw->desktop->current_zoom();
     double s = viewbox.min()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
     double e = viewbox.max()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
-    sp_ruler_get_range(SP_RULER(dtw->vruler), NULL, NULL, &position, NULL);
-    sp_ruler_set_range(SP_RULER(dtw->vruler), s, e, position, (e - s));
+    sp_ruler_set_range(SP_RULER(dtw->vruler), s, e, (e - s));
 }
 
 
