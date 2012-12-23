@@ -195,8 +195,6 @@ void FilterMorphology::render_cairo(FilterSlot &slot)
 
     // color_interpolation_filters for out same as input. See spec (DisplacementMap).
     copy_cairo_surface_ci(input, out);
-    // std::cout << "FilterMorphology: ci set to: "
-    //           << get_cairo_surface_ci(out) << std::endl;
 
     if (Operator == MORPHOLOGY_OPERATOR_DILATE) {
         if (bpp == 1) {

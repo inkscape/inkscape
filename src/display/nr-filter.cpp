@@ -161,14 +161,8 @@ int Filter::render(Inkscape::DrawingItem const *item, DrawingContext &graphic, D
     Geom::Point origin = graphic.targetLogicalBounds().min();
     cairo_surface_t *result = slot.get_result(_output_slot);
 
-    // std::cout << "Filter: result: ci data: "
-    //           << get_cairo_surface_ci(result) << std::endl;
-
     // Assume for the moment that we paint the filter in sRGB
-    if( get_cairo_surface_ci(result) == SP_CSS_COLOR_INTERPOLATION_LINEARRGB ) {
-        //std::cout << "Filter: result: linear -> sRGB" << std::endl;
-        ink_cairo_surface_linear_to_srgb( result );
-    }
+    set_cairo_surface_ci( result, SP_CSS_COLOR_INTERPOLATION_SRGB );
 
     graphic.setSource(result, origin[Geom::X], origin[Geom::Y]);
     graphic.setOperator(CAIRO_OPERATOR_SOURCE);

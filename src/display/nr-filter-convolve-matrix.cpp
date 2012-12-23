@@ -123,28 +123,12 @@ void FilterConvolveMatrix::render_cairo(FilterSlot &slot)
     // We may need to transform input surface to correct color interpolation space. The input surface
     // might be used as input to another primitive but it is likely that all the primitives in a given
     // filter use the same color interpolation space so we don't copy the input before converting.
-    // The converting function tags surface with the proper ci value.
-    SPColorInterpolation ci_in = get_cairo_surface_ci(input);
     SPColorInterpolation ci_fp = SP_CSS_COLOR_INTERPOLATION_AUTO;
     if( _style ) {
         ci_fp = (SPColorInterpolation)_style->color_interpolation_filters.computed;
         set_cairo_surface_ci(out, ci_fp);
     }
-    if( ci_in == SP_CSS_COLOR_INTERPOLATION_SRGB &&
-        ci_fp == SP_CSS_COLOR_INTERPOLATION_LINEARRGB ) {
-        //std::cout << "FilterConvolveMatrix: srgb -> linear" << std::endl;
-        ink_cairo_surface_srgb_to_linear( input );
-    }
-    if( ci_in == SP_CSS_COLOR_INTERPOLATION_LINEARRGB &&
-        ci_fp == SP_CSS_COLOR_INTERPOLATION_SRGB ) {
-        //std::cout << "FilterConvolveMatrix: linear -> srgb" << std::endl;
-        ink_cairo_surface_linear_to_srgb( input );
-    }
-
-    // std::cout << "FilterConvolveMatrix: ci data: "
-    //           << " in1: " << get_cairo_surface_ci(input)
-    //           << " out: " << get_cairo_surface_ci(out)
-    //           << std::endl;
+    set_cairo_surface_ci( input, ci_fp );
 
     if (bias!=0 && !bias_warning) {
         g_warning("It is unknown whether Inkscape's implementation of bias in feConvolveMatrix "

@@ -122,8 +122,6 @@ void FilterImage::render_cairo(FilterSlot &slot)
 
         // For the moment, we'll assume that any image is in sRGB color space
         set_cairo_surface_ci(out, SP_CSS_COLOR_INTERPOLATION_SRGB);
-        // std::cout << "FilterImage: ci set to: "
-        //           << get_cairo_surface_ci(out) << std::endl;
 
         slot.set(_output, out);
         cairo_surface_destroy(out);
@@ -192,8 +190,6 @@ void FilterImage::render_cairo(FilterSlot &slot)
 
     // For the moment, we'll assume that any image is in sRGB color space
     set_cairo_surface_ci(out, SP_CSS_COLOR_INTERPOLATION_SRGB);
-    // std::cout << "FilterImage: ci set to: "
-    //           << get_cairo_surface_ci(out) << std::endl;
 
     cairo_t *ct = cairo_create(out);
     cairo_translate(ct, -sa.min()[Geom::X], -sa.min()[Geom::Y]);

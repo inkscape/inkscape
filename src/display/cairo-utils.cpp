@@ -287,9 +287,26 @@ get_cairo_surface_ci(cairo_surface_t *surface) {
     }
 }
 
+/** Set the color_interpolation_value for a Cairo surface.
+ *  Transform the surface between sRGB and linearRGB if necessary. */
 void
 set_cairo_surface_ci(cairo_surface_t *surface, SPColorInterpolation ci) {
-    cairo_surface_set_user_data(surface, &ci_key, GINT_TO_POINTER (ci), NULL);
+
+    if( cairo_surface_get_content( surface ) != CAIRO_CONTENT_ALPHA ) {
+
+        SPColorInterpolation ci_in = get_cairo_surface_ci( surface );
+
+        if( ci_in == SP_CSS_COLOR_INTERPOLATION_SRGB &&
+            ci    == SP_CSS_COLOR_INTERPOLATION_LINEARRGB ) {
+            ink_cairo_surface_srgb_to_linear( surface );
+        }
+        if( ci_in == SP_CSS_COLOR_INTERPOLATION_LINEARRGB &&
+            ci    == SP_CSS_COLOR_INTERPOLATION_SRGB ) {
+            ink_cairo_surface_linear_to_srgb( surface );
+        }
+
+        cairo_surface_set_user_data(surface, &ci_key, GINT_TO_POINTER (ci), NULL);
+    }
 }
 
 void
@@ -627,7 +644,6 @@ int ink_cairo_surface_srgb_to_linear(cairo_surface_t *surface)
             *reinterpret_cast<guint32*>(data + 4*x) = px2;
         }
     }
-    set_cairo_surface_ci( surface, SP_CSS_COLOR_INTERPOLATION_LINEARRGB );
     return width * height;
 }
 
@@ -653,7 +669,6 @@ int ink_cairo_surface_linear_to_srgb(cairo_surface_t *surface)
             *reinterpret_cast<guint32*>(data + 4*x) = px2;
         }
     }
-    set_cairo_surface_ci( surface, SP_CSS_COLOR_INTERPOLATION_SRGB );
     return width * height;
 }
 

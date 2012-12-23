@@ -129,14 +129,9 @@ void FilterDiffuseLighting::render_cairo(FilterSlot &slot)
     // Only alpha channel of input is used, no need to check input color_interpolation_filter value.
     SPColorInterpolation ci_fp  = SP_CSS_COLOR_INTERPOLATION_AUTO;
     if( _style ) {
-        set_cairo_surface_ci(out, (SPColorInterpolation)_style->color_interpolation_filters.computed );
-        set_cairo_surface_ci(out, ci_fp );
+        ci_fp = (SPColorInterpolation)_style->color_interpolation_filters.computed;
     }
-
-    // std::cout << "FilterDiffuseLighting: ci data: "
-    //           << " in1: " << get_cairo_surface_ci(input)
-    //           << " out: " << get_cairo_surface_ci(out)
-    //           << std::endl;
+    set_cairo_surface_ci(out, ci_fp );
 
     Geom::Rect slot_area = slot.get_slot_area();
     Geom::Point p = slot_area.min();

@@ -84,13 +84,11 @@ cairo_surface_t *FilterSlot::getcairo(int slot_nr)
             case NR_FILTER_SOURCEGRAPHIC: {
                 cairo_surface_t *tr = _get_transformed_source_graphic();
                 _set_internal(NR_FILTER_SOURCEGRAPHIC, tr);
-                //std::cout << "Source Graphic: ci data: " << get_cairo_surface_ci( tr ) << std::endl;
                 cairo_surface_destroy(tr);
             } break;
             case NR_FILTER_BACKGROUNDIMAGE: {
                 cairo_surface_t *bg = _get_transformed_background();
                 _set_internal(NR_FILTER_BACKGROUNDIMAGE, bg);
-                //std::cout << "Background Image: ci data: " << get_cairo_surface_ci( bg ) << std::endl;
                 cairo_surface_destroy(bg);
             } break;
             case NR_FILTER_SOURCEALPHA: {

@@ -379,8 +379,6 @@ void FilterTurbulence::render_cairo(FilterSlot &slot)
     if( _style ) {
         set_cairo_surface_ci(out, (SPColorInterpolation)_style->color_interpolation_filters.computed );
     }
-    // std::cout << "FilterTurbulance: ci data: out: "
-    //           << get_cairo_surface_ci(out) << std::endl;
 
     if (!gen->ready()) {
         Geom::Point ta(fTileX, fTileY);

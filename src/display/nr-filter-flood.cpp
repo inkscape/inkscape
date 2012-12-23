@@ -62,9 +62,6 @@ void FilterFlood::render_cairo(FilterSlot &slot)
         set_cairo_surface_ci(out, (SPColorInterpolation)_style->color_interpolation_filters.computed );
     }
 
-    // std::cout << "FilterFlood: ci data: out: "
-    //           << get_cairo_surface_ci(out) << std::endl;
-
     // Get filter primitive area in user units
     Geom::Rect fp = filter_primitive_area( slot.get_units() );
 

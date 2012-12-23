@@ -69,45 +69,15 @@ void FilterComposite::render_cairo(FilterSlot &slot)
     // We may need to transform input surface to correct color interpolation space. The input surface
     // might be used as input to another primitive but it is likely that all the primitives in a given
     // filter use the same color interpolation space so we don't copy the input before converting.
-    // The converting function tags surface with the proper ci value.
-    // Note: an alpha only surface should not have ci set.
-    SPColorInterpolation ci_in1 = get_cairo_surface_ci(input1);
-    SPColorInterpolation ci_in2 = get_cairo_surface_ci(input2);
     SPColorInterpolation ci_fp  = SP_CSS_COLOR_INTERPOLATION_AUTO;
     if( _style ) {
         ci_fp = (SPColorInterpolation)_style->color_interpolation_filters.computed;
     }
-    if( ci_in1 == SP_CSS_COLOR_INTERPOLATION_SRGB &&
-        ci_fp  == SP_CSS_COLOR_INTERPOLATION_LINEARRGB ) {
-        //std::cout << "FilterColorComposite: srgb -> linear" << std::endl;
-        ink_cairo_surface_srgb_to_linear( input1 );
-    }
-    if( ci_in1 == SP_CSS_COLOR_INTERPOLATION_LINEARRGB &&
-        ci_fp  == SP_CSS_COLOR_INTERPOLATION_SRGB ) {
-        //std::cout << "FilterColorComposite: linear -> srgb" << std::endl;
-        ink_cairo_surface_linear_to_srgb( input1 );
-    }
-    if( ci_in2 == SP_CSS_COLOR_INTERPOLATION_SRGB &&
-        ci_fp  == SP_CSS_COLOR_INTERPOLATION_LINEARRGB ) {
-        std::cout << "FilterColorComposite: srgb -> linear" << std::endl;
-        //ink_cairo_surface_srgb_to_linear( input2 );
-    }
-    if( ci_in2 == SP_CSS_COLOR_INTERPOLATION_LINEARRGB &&
-        ci_fp  == SP_CSS_COLOR_INTERPOLATION_SRGB ) {
-        //std::cout << "FilterColorComposite: linear -> srgb" << std::endl;
-        ink_cairo_surface_linear_to_srgb( input2 );
-    }
+    set_cairo_surface_ci( input1, ci_fp );
+    set_cairo_surface_ci( input2, ci_fp );
 
     cairo_surface_t *out = ink_cairo_surface_create_output(input1, input2);
-    if( cairo_surface_get_content( out ) == CAIRO_CONTENT_COLOR_ALPHA ) {
-        set_cairo_surface_ci(out, ci_fp );
-    }
-
-    // std::cout << "FilterComposite: ci data: "
-    //           << " in1: " << get_cairo_surface_ci(input1)
-    //           << " in2: " << get_cairo_surface_ci(input2)
-    //           << " out: " << get_cairo_surface_ci(out)
-    //           << std::endl;
+    set_cairo_surface_ci(out, ci_fp );
 
     if (op == COMPOSITE_ARITHMETIC) {
         ink_cairo_surface_blend(input1, input2, out, ComposeArithmetic(k1, k2, k3, k4));

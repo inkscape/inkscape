@@ -59,18 +59,7 @@ void FilterMerge::render_cairo(FilterSlot &slot)
     for (std::vector<int>::iterator i = _input_image.begin(); i != _input_image.end(); ++i) {
         cairo_surface_t *in = slot.getcairo(*i);
 
-        SPColorInterpolation ci_in = get_cairo_surface_ci(in);
-        //std::cout << "FilterMerge: slot: ci: " << ci_in << std::endl;
-        if( ci_in == SP_CSS_COLOR_INTERPOLATION_SRGB &&
-            ci_fp == SP_CSS_COLOR_INTERPOLATION_LINEARRGB ) {
-            //std::cout << "FilterMerge: srgb -> linear" << std::endl;
-            ink_cairo_surface_srgb_to_linear( in );
-        }
-        if( ci_in == SP_CSS_COLOR_INTERPOLATION_LINEARRGB &&
-            ci_fp == SP_CSS_COLOR_INTERPOLATION_SRGB ) {
-            //std::cout << "FilterMerge: linear -> srgb" << std::endl;
-            ink_cairo_surface_linear_to_srgb( in );
-        }
+        set_cairo_surface_ci( in, ci_fp );
         cairo_set_source_surface(out_ct, in, 0, 0);
         cairo_paint(out_ct);
     }

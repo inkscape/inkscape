@@ -91,6 +91,7 @@ static cairo_user_data_key_t ci_key;
 SPColorInterpolation get_cairo_surface_ci(cairo_surface_t *surface);
 void set_cairo_surface_ci(cairo_surface_t *surface, SPColorInterpolation cif);
 void copy_cairo_surface_ci(cairo_surface_t *in, cairo_surface_t *out);
+void convert_cairo_surface_ci(cairo_surface_t *surface, SPColorInterpolation cif);
 
 void ink_cairo_set_source_color(cairo_t *ct, SPColor const &color, double opacity);
 void ink_cairo_set_source_rgba32(cairo_t *ct, guint32 rgba);

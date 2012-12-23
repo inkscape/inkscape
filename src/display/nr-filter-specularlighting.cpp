@@ -142,14 +142,9 @@ void FilterSpecularLighting::render_cairo(FilterSlot &slot)
     // Only alpha channel of input is used, no need to check input color_interpolation_filter value.
     SPColorInterpolation ci_fp  = SP_CSS_COLOR_INTERPOLATION_AUTO;
     if( _style ) {
-        set_cairo_surface_ci(out, (SPColorInterpolation)_style->color_interpolation_filters.computed );
-        set_cairo_surface_ci(out, ci_fp );
+        ci_fp = (SPColorInterpolation)_style->color_interpolation_filters.computed;
     }
-
-    // std::cout << "FilterSpecularLighting: ci data: "
-    //           << " in1: " << get_cairo_surface_ci(input)
-    //           << " out: " << get_cairo_surface_ci(out)
-    //           << std::endl;
+    set_cairo_surface_ci(out, ci_fp );
 
     Geom::Affine trans = slot.get_units().get_matrix_primitiveunits2pb();
     Geom::Point p = slot.get_slot_area().min();
