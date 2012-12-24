@@ -44,7 +44,6 @@ struct _SPRulerPrivate
   
   SPRulerMetric   *metric;
   
-  gint             slider_size;
   gint             xsrc;
   gint             ysrc;
 };
@@ -784,13 +783,48 @@ sp_ruler_draw_pos (SPRuler *ruler)
 
 #define UNUSED_PIXELS         2     // There appear to be two pixels that are not being used at each end of the ruler
 
-GtkWidget* sp_ruler_new(GtkOrientation orientation)
+/**
+ * sp_ruler_new:
+ * @orientation: the ruler's orientation
+ *
+ * Creates a new ruler.
+ *
+ * Return value: a new #SPRuler widget.
+ */
+GtkWidget *
+sp_ruler_new (GtkOrientation orientation)
 {
-  return GTK_WIDGET(g_object_new(SP_TYPE_RULER, 
-		                 "orientation", orientation,
-		                 NULL));
+  return GTK_WIDGET (g_object_new (SP_TYPE_RULER, 
+		                   "orientation", orientation,
+                                   NULL));
 }
 
+static void
+sp_ruler_update_position (SPRuler *ruler,
+                          gdouble  x,
+                          gdouble  y)
+{
+  SPRulerPrivate *priv = SP_RULER_GET_PRIVATE (ruler);
+  GtkAllocation   allocation;
+  gdouble         lower;
+  gdouble         upper;
+
+  gtk_widget_get_allocation (GTK_WIDGET (ruler), &allocation);
+  sp_ruler_get_range (ruler, &lower, &upper, NULL);
+
+  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+    {
+     sp_ruler_set_position (ruler,
+                            lower +
+                            (upper - lower) * x / allocation.width);
+    }
+  else
+    {
+     sp_ruler_set_position (ruler,
+                            lower +
+                            (upper - lower) * y / allocation.height);
+    }
+}
 
 /**
  * sp_ruler_set_position:
@@ -836,24 +870,9 @@ static gboolean
 sp_ruler_motion_notify (GtkWidget      *widget,
 		        GdkEventMotion *event)
 {
-  GtkAllocation  allocation;
   SPRuler *ruler = SP_RULER(widget);
-  SPRulerPrivate *priv = SP_RULER_GET_PRIVATE (ruler);
-  
-  gdk_event_request_motions(event);
-  gint x = event->x;
-  gint y = event->y;
-  
-  gtk_widget_get_allocation(widget, &allocation);
-  
-  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
-    priv->position = priv->lower + (priv->upper - priv->lower) * (x + UNUSED_PIXELS) / (allocation.width + 2*UNUSED_PIXELS);
-  else
-    priv->position = priv->lower + (priv->upper - priv->lower) * (y + UNUSED_PIXELS) / (allocation.height + 2*UNUSED_PIXELS);
 
-  g_object_notify(G_OBJECT(ruler), "position");
-
-  gtk_widget_queue_draw(widget);
+  sp_ruler_update_position (ruler, event->x, event->y);
 
   return FALSE;
 }
@@ -915,12 +934,20 @@ sp_ruler_draw_ticks (SPRuler *ruler)
     if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
      {
         width = allocation.width; // in pixels; is apparently 2 pixels shorter than the canvas at each end
-        height = allocation.height;
+#if GTK_CHECK_VERSION(3,0,0)
+        height = allocation.height - (border.top + border.bottom);
+#else
+        height = allocation.height - ythickness * 2;
+#endif
      }
     else
      {
         width = allocation.height;
-        height = allocation.width;
+#if GTK_CHECK_VERSION(3,0,0)
+        height = allocation.width - (border.top + border.bottom);
+#else
+        height = allocation.width - ythickness * 2;
+#endif
      }
 
     cr = cairo_create (priv->backing_store);
