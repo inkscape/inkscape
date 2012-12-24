@@ -40,6 +40,7 @@ struct _SPRulerPrivate
 
   GdkWindow       *input_window;
   cairo_surface_t *backing_store;
+  PangoLayout     *layout;
   
   SPRulerMetric   *metric;
   
@@ -58,44 +59,47 @@ enum {
   PROP_METRIC
 };
 
-static void     sp_ruler_set_property         (GObject        *object,
-                                               guint           prop_id,
-                                               const GValue   *value,
-                                               GParamSpec     *pspec);
-static void     sp_ruler_get_property         (GObject        *object,
-                                               guint           prop_id,
-                                               GValue         *value,
-                                               GParamSpec     *pspec);
-static void     sp_ruler_realize              (GtkWidget      *widget);
-static void     sp_ruler_unrealize            (GtkWidget      *widget);
-static void     sp_ruler_map                  (GtkWidget      *widget);
-static void     sp_ruler_unmap                (GtkWidget      *widget);
-static void     sp_ruler_size_request         (GtkWidget      *widget,
-                                               GtkRequisition *requisition);
+static void          sp_ruler_set_property         (GObject        *object,
+                                                    guint           prop_id,
+                                                    const GValue   *value,
+                                                    GParamSpec     *pspec);
+static void          sp_ruler_get_property         (GObject        *object,
+                                                    guint           prop_id,
+                                                    GValue         *value,
+                                                    GParamSpec     *pspec);
+static void          sp_ruler_realize              (GtkWidget      *widget);
+static void          sp_ruler_unrealize            (GtkWidget      *widget);
+static void          sp_ruler_map                  (GtkWidget      *widget);
+static void          sp_ruler_unmap                (GtkWidget      *widget);
+static void          sp_ruler_size_request         (GtkWidget      *widget,
+                                                    GtkRequisition *requisition);
 
 #if GTK_CHECK_VERSION(3,0,0)
-static void     sp_ruler_get_preferred_width  (GtkWidget      *widget, 
-                                               gint           *minimal_width,
-                                               gint           *natural_width);
+static void          sp_ruler_get_preferred_width  (GtkWidget      *widget, 
+                                                    gint           *minimal_width,
+                                                    gint           *natural_width);
 
-static void     sp_ruler_get_preferred_height (GtkWidget      *widget, 
-                                               gint           *minimal_height,
-                                               gint           *natural_height);
+static void          sp_ruler_get_preferred_height (GtkWidget      *widget, 
+                                                    gint           *minimal_height,
+                                                    gint           *natural_height);
 #endif
 
-static void     sp_ruler_size_allocate        (GtkWidget      *widget,
-                                               GtkAllocation  *allocation);
-static gboolean sp_ruler_motion_notify        (GtkWidget      *widget,
-                                               GdkEventMotion *event);
-static gboolean sp_ruler_draw                 (GtkWidget      *widget,
-		                               cairo_t        *cr);
+static void          sp_ruler_size_allocate        (GtkWidget      *widget,
+                                                    GtkAllocation  *allocation);
+static gboolean      sp_ruler_motion_notify        (GtkWidget      *widget,
+                                                    GdkEventMotion *event);
+static gboolean      sp_ruler_draw                 (GtkWidget      *widget,
+		                                    cairo_t        *cr);
 #if !GTK_CHECK_VERSION(3,0,0)
-static gboolean sp_ruler_expose               (GtkWidget      *widget,
-                                               GdkEventExpose *event);
+static gboolean      sp_ruler_expose               (GtkWidget      *widget,
+                                                    GdkEventExpose *event);
 #endif
-static void     sp_ruler_draw_ticks           (SPRuler *ruler);
-static void     sp_ruler_draw_pos             (SPRuler *ruler);
-static void     sp_ruler_make_pixmap          (SPRuler *ruler);
+static void          sp_ruler_draw_ticks           (SPRuler        *ruler);
+static void          sp_ruler_draw_pos             (SPRuler        *ruler);
+static void          sp_ruler_make_pixmap          (SPRuler        *ruler);
+
+static PangoLayout * sp_ruler_get_layout           (GtkWidget      *widget,
+                                                    const gchar    *text);
 
 #define SP_RULER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), SP_TYPE_RULER, SPRulerPrivate))
 
@@ -455,6 +459,12 @@ sp_ruler_unrealize(GtkWidget *widget)
       cairo_surface_destroy (priv->backing_store);
       priv->backing_store = NULL;
     }
+  
+  if (priv->layout)
+    {
+      g_object_unref (priv->layout);
+      priv->layout = NULL;
+    }
 
   if (priv->input_window)
     {
@@ -487,10 +497,19 @@ sp_ruler_unmap (GtkWidget *widget)
   GTK_WIDGET_CLASS (sp_ruler_parent_class)->unmap (widget);
 }
 
-static void sp_ruler_size_request(GtkWidget *widget, 
-		                  GtkRequisition *requisition)
+static void
+sp_ruler_size_request (GtkWidget      *widget, 
+                       GtkRequisition *requisition)
 {
   SPRulerPrivate  *priv    = SP_RULER_GET_PRIVATE (widget);
+  PangoLayout     *layout;
+  PangoRectangle   ink_rect;
+  gint             size;
+
+  layout = sp_ruler_get_layout (widget, "0123456789");
+  pango_layout_get_pixel_extents (layout, &ink_rect, NULL);
+
+  size = 2 + ink_rect.height * 1.7;
 
 #if GTK_CHECK_VERSION(3,0,0)
   GtkStyleContext *context = gtk_widget_get_style_context (widget);
@@ -508,19 +527,19 @@ static void sp_ruler_size_request(GtkWidget *widget,
     {
 #if GTK_CHECK_VERSION(3,0,0)
       requisition->width  += 1;
-      requisition->height += RULER_WIDTH;
+      requisition->height += size;
 #else
       requisition->width  = style->xthickness * 2 + 1;
-      requisition->height = style->ythickness * 2 + RULER_WIDTH;
+      requisition->height = style->ythickness * 2 + size;
 #endif
     }
   else
     {
 #if GTK_CHECK_VERSION(3,0,0)
-      requisition->width  += RULER_WIDTH;
+      requisition->width  += size;
       requisition->height += 1;
 #else
-      requisition->width  = style->xthickness * 2 + RULER_WIDTH;
+      requisition->width  = style->xthickness * 2 + size;
       requisition->height = style->ythickness * 2 + 1;
 #endif
     }
@@ -561,10 +580,10 @@ sp_ruler_size_allocate (GtkWidget     *widget,
     }
 }
 
-
 #if !GTK_CHECK_VERSION(3,0,0)
-static gboolean sp_ruler_expose(GtkWidget *widget,
-                                GdkEventExpose *event)
+static gboolean
+sp_ruler_expose (GtkWidget *widget,
+                 GdkEventExpose *event)
 {
     cairo_t        *cr    = gdk_cairo_create(gtk_widget_get_window(widget));
     GtkAllocation   allocation;
@@ -583,10 +602,9 @@ static gboolean sp_ruler_expose(GtkWidget *widget,
 }
 #endif
 
-
-
-static gboolean sp_ruler_draw(GtkWidget *widget,
-		              cairo_t *cr)
+static gboolean
+sp_ruler_draw (GtkWidget *widget,
+	       cairo_t *cr)
 {
   SPRuler        *ruler = SP_RULER (widget);
   SPRulerPrivate *priv  = SP_RULER_GET_PRIVATE (ruler);
@@ -600,7 +618,6 @@ static gboolean sp_ruler_draw(GtkWidget *widget,
 
   return FALSE;
 }
-
 
 static void
 sp_ruler_make_pixmap (SPRuler *ruler)
@@ -620,7 +637,6 @@ sp_ruler_make_pixmap (SPRuler *ruler)
                                        allocation.width,
                                        allocation.height);
 }
-
 
 static void
 sp_ruler_draw_pos (SPRuler *ruler)
@@ -870,11 +886,13 @@ sp_ruler_draw_ticks (SPRuler *ruler)
     gdouble          start, end, cur;
     gchar            unit_str[32];
     gint             digit_height;
+    gint             digit_offset;
     gchar            digit_str[2] = { '\0', '\0' };
     gint             text_size;
     gint             pos;
     gdouble          max_size;
     PangoLayout     *layout;
+    PangoRectangle   logical_rect, ink_rect;
 
     if (! gtk_widget_is_drawable (widget))
       return;
@@ -888,14 +906,11 @@ sp_ruler_draw_ticks (SPRuler *ruler)
     ythickness = style->ythickness;
 #endif
 
-    PangoContext *pango_context = gtk_widget_get_pango_context (widget);
-    layout = pango_layout_new (pango_context);
-    PangoFontDescription *fs = pango_font_description_new ();
-    pango_font_description_set_size (fs, RULER_FONT_SIZE);
-    pango_layout_set_font_description (layout, fs);
-    pango_font_description_free (fs);
-
-    digit_height = (gint) floor (RULER_FONT_SIZE * RULER_FONT_VERTICAL_SPACING / PANGO_SCALE + 0.5);
+    layout = sp_ruler_get_layout (widget, "0123456789");
+    pango_layout_get_extents (layout, &ink_rect, &logical_rect);
+    
+    digit_height = PANGO_PIXELS (ink_rect.height) + 2;
+    digit_offset = ink_rect.y;
     
     if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
      {
@@ -1072,19 +1087,38 @@ sp_ruler_draw_ticks (SPRuler *ruler)
                 if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
                   {
                     pango_layout_set_text (layout, unit_str, -1);
-		    cairo_move_to(cr, pos+2, 0);
+                    pango_layout_get_extents (layout, &logical_rect, NULL);
+
+#if GTK_CHECK_VERSION(3,0,0)
+		    cairo_move_to (cr,
+                                   pos + 2,
+                                   border.top + PANGO_PIXELS (logical_rect.y - digit_offset));
+#else
+		    cairo_move_to (cr,
+                                   pos + 2,
+                                   ythickness + PANGO_PIXELS (logical_rect.y - digit_offset));
+#endif
+
 		    pango_cairo_show_layout(cr, layout);
                   }
                 else
                   {
-                    for (gint j = 0; j < (int) strlen (unit_str); j++)
+                    gint j;
+
+                    for (j = 0; j < (int) strlen (unit_str); j++)
                       {
                         digit_str[0] = unit_str[j];
                         pango_layout_set_text (layout, digit_str, 1);
+                        pango_layout_get_extents (layout, NULL, &logical_rect);
+
 #if GTK_CHECK_VERSION(3,0,0)
-			cairo_move_to(cr, border.left + 1, pos + digit_height * (j) + 1);
+			cairo_move_to (cr,
+                                       border.left + 1,
+                                       pos + digit_height * j + 2 + PANGO_PIXELS (logical_rect.y - digit_offset));
 #else
-			cairo_move_to(cr, xthickness + 1, pos + digit_height * (j) + 1);
+			cairo_move_to (cr,
+                                       xthickness + 1,
+                                       pos + digit_height * j + 2 + PANGO_PIXELS (logical_rect.y - digit_offset));
 #endif
 			pango_cairo_show_layout (cr, layout);
                       }
@@ -1101,8 +1135,9 @@ out:
     cairo_destroy (cr);
 }
 
-
-void sp_ruler_set_metric(SPRuler *ruler, SPMetric metric)
+void
+sp_ruler_set_metric (SPRuler  *ruler,
+                     SPMetric  metric)
 {
   g_return_if_fail(ruler != NULL);
   g_return_if_fail(SP_IS_RULER (ruler));
@@ -1117,6 +1152,46 @@ void sp_ruler_set_metric(SPRuler *ruler, SPMetric metric)
   g_object_notify(G_OBJECT(ruler), "metric");
 
   gtk_widget_queue_draw (GTK_WIDGET (ruler));
+}
+
+static PangoLayout*
+sp_ruler_create_layout (GtkWidget   *widget,
+                        const gchar *text)
+{
+  PangoLayout    *layout;
+  PangoAttrList  *attrs;
+  PangoAttribute *attr;
+
+  layout = gtk_widget_create_pango_layout (widget, text);
+
+  attrs = pango_attr_list_new ();
+
+  attr = pango_attr_scale_new (PANGO_SCALE_X_SMALL);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  pango_layout_set_attributes (layout, attrs);
+  pango_attr_list_unref (attrs);
+
+  return layout;
+}
+
+static PangoLayout *
+sp_ruler_get_layout (GtkWidget   *widget,
+                     const gchar *text)
+{
+  SPRulerPrivate *priv = SP_RULER_GET_PRIVATE (widget);
+
+  if (priv->layout)
+    {
+      pango_layout_set_text (priv->layout, text, -1);
+      return priv->layout;
+    }
+
+  priv->layout = sp_ruler_create_layout (widget, text);
+
+  return priv->layout;
 }
 
 /*
