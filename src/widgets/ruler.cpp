@@ -30,7 +30,10 @@
 
 #define ROUND(x) ((int) ((x) + 0.5))
 
-struct _SPRulerPrivate
+/* All distances below are in 1/72nd's of an inch. (According to
+ * Adobe, that's a point, but points are really 1/72.27 in.)
+ */
+typedef struct
 {
   GtkOrientation   orientation;
   gdouble          lower;
@@ -46,7 +49,7 @@ struct _SPRulerPrivate
   
   gint             xsrc;
   gint             ysrc;
-};
+} SPRulerPrivate;
 
 enum {
   PROP_0,
@@ -75,11 +78,11 @@ static void          sp_ruler_size_request         (GtkWidget      *widget,
 
 #if GTK_CHECK_VERSION(3,0,0)
 static void          sp_ruler_get_preferred_width  (GtkWidget      *widget, 
-                                                    gint           *minimal_width,
+                                                    gint           *minimum_width,
                                                     gint           *natural_width);
 
 static void          sp_ruler_get_preferred_height (GtkWidget      *widget, 
-                                                    gint           *minimal_height,
+                                                    gint           *minimum_height,
                                                     gint           *natural_height);
 #endif
 
@@ -217,7 +220,6 @@ sp_ruler_init (SPRuler *ruler)
   priv->orientation   = GTK_ORIENTATION_HORIZONTAL;
   priv->xsrc          = 0;
   priv->ysrc          = 0;
-  priv->slider_size   = 0;
   priv->lower         = 0;
   priv->upper         = 0;
   priv->position      = 0;
@@ -497,6 +499,33 @@ sp_ruler_unmap (GtkWidget *widget)
 }
 
 static void
+sp_ruler_size_allocate (GtkWidget     *widget,
+                        GtkAllocation *allocation)
+{
+  SPRuler        *ruler = SP_RULER(widget);
+  SPRulerPrivate *priv  = SP_RULER_GET_PRIVATE (ruler);
+  GtkAllocation   widget_allocation;
+  gboolean        resized;
+
+  gtk_widget_get_allocation (widget, &widget_allocation);
+  
+  resized = (widget_allocation.width  != allocation->width ||
+             widget_allocation.height != allocation->height);
+
+  gtk_widget_set_allocation(widget, allocation);
+
+  if (gtk_widget_get_realized (widget))
+    {
+      gdk_window_move_resize (priv->input_window,
+                              allocation->x, allocation->y,
+                              allocation->width, allocation->height);
+      
+      if (resized)
+        sp_ruler_make_pixmap (ruler);
+    }
+}
+
+static void
 sp_ruler_size_request (GtkWidget      *widget, 
                        GtkRequisition *requisition)
 {
@@ -545,41 +574,30 @@ sp_ruler_size_request (GtkWidget      *widget,
 }
 
 #if GTK_CHECK_VERSION(3,0,0)
-static void sp_ruler_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+static void
+sp_ruler_get_preferred_width (GtkWidget *widget,
+                              gint      *minimum_width,
+                              gint      *natural_width)
 {
-	GtkRequisition requisition;
-	sp_ruler_size_request(widget, &requisition);
-	*minimal_width = *natural_width = requisition.width;
-}
+  GtkRequisition requisition;
 
-static void sp_ruler_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
-{
-	GtkRequisition requisition;
-	sp_ruler_size_request(widget, &requisition);
-	*minimal_height = *natural_height = requisition.height;
+  sp_ruler_size_request (widget, &requisition);
+
+  *minimum_width = *natural_width = requisition.width;
 }
-#endif
 
 static void
-sp_ruler_size_allocate (GtkWidget     *widget,
-                        GtkAllocation *allocation)
+sp_ruler_get_preferred_height (GtkWidget *widget,
+                               gint      *minimum_height,
+                               gint      *natural_height)
 {
-  SPRuler        *ruler = SP_RULER(widget);
-  SPRulerPrivate *priv  = SP_RULER_GET_PRIVATE (ruler);
-
-  gtk_widget_set_allocation(widget, allocation);
-
-  if (gtk_widget_get_realized (widget))
-    {
-      gdk_window_move_resize (priv->input_window,
-                              allocation->x, allocation->y,
-                              allocation->width, allocation->height);
-        
-      sp_ruler_make_pixmap (ruler);
-    }
+  GtkRequisition requisition;
+  
+  sp_ruler_size_request(widget, &requisition);
+  
+  *minimum_height = *natural_height = requisition.height;
 }
-
-#if !GTK_CHECK_VERSION(3,0,0)
+#else
 static gboolean
 sp_ruler_expose (GtkWidget *widget,
                  GdkEventExpose *event)
@@ -780,8 +798,12 @@ sp_ruler_draw_pos (SPRuler *ruler)
     }
 }
 
-
-#define UNUSED_PIXELS         2     // There appear to be two pixels that are not being used at each end of the ruler
+// FIXME: Figure out why this is different in Gtk+ 2 and Gtk+ 3
+#if GTK_CHECK_VERSION(3,0,0)
+# define UNUSED_PIXELS 0
+#else
+# define UNUSED_PIXELS 2     // There appear to be two pixels that are not being used at each end of the ruler
+#endif
 
 /**
  * sp_ruler_new:
@@ -933,7 +955,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
     
     if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
      {
-        width = allocation.width; // in pixels; is apparently 2 pixels shorter than the canvas at each end
+        width = allocation.width;
 #if GTK_CHECK_VERSION(3,0,0)
         height = allocation.height - (border.top + border.bottom);
 #else

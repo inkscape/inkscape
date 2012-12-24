@@ -27,7 +27,6 @@
 
 
 typedef struct _SPRuler         SPRuler;
-typedef struct _SPRulerPrivate  SPRulerPrivate;
 typedef struct _SPRulerClass    SPRulerClass;
 typedef struct _SPRulerMetric   SPRulerMetric;
 
@@ -37,9 +36,6 @@ typedef struct _SPRulerMetric   SPRulerMetric;
 struct _SPRuler
 {
   GtkWidget widget;
-
-  /*< private >*/
-  SPRulerPrivate *priv;
 };
 
 struct _SPRulerClass
