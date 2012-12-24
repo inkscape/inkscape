@@ -41,6 +41,7 @@ The constants pi and e are also available.</_param>
 	<param name="fofx" type="string" _gui-text="Function:">exp(-x*x)</param>
 	<param name="fponum" type="boolean" _gui-text="Calculate first derivative numerically">true</param>
 	<param name="fpofx" type="string" _gui-text="First derivative:">x</param>
+	<param name="clip" type="boolean" _gui-text="Clip with rectangle">false</param>
 	<param name="remove" type="boolean" _gui-text="Remove rectangle">true</param>
 	<param name="drawaxis" type="boolean" _gui-text="Draw Axes">false</param>
 	<param name="endpts" type="boolean" _gui-text="Add x-axis endpoints">false</param>

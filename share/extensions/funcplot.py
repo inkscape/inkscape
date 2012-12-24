@@ -28,6 +28,7 @@ Changes:
 # standard library
 from math import *
 from random import *
+from copy import deepcopy
 # local library
 import inkex
 import simplepath
@@ -217,6 +218,10 @@ class FuncPlot(inkex.Effect):
                         action="store", type="string", 
                         dest="fpofx", default="cos(x)",
                         help="f'(x) for plotting") 
+        self.OptionParser.add_option("--clip",
+                        action="store", type="inkbool",
+                        dest="clip", default=False,
+                        help="If True, clip with copy of source rectangle")
         self.OptionParser.add_option("--remove",
                         action="store", type="inkbool", 
                         dest="remove", default=True,
@@ -293,6 +298,16 @@ class FuncPlot(inkex.Effect):
                                 
                 # add path into SVG structure
                 node.getparent().append(newpath)
+                # option whether to clip the path with rect or not.
+                if self.options.clip:
+                    defs = self.xpathSingle('/svg:svg//svg:defs')
+                    if defs == None:
+                        defs = inkex.etree.SubElement(self.document.getroot(),inkex.addNS('defs','svg'))
+                    clip = inkex.etree.SubElement(defs,inkex.addNS('clipPath','svg'))
+                    clip.append(deepcopy(node))
+                    clipId = self.uniqueId('clipPath')
+                    clip.set('id', clipId)
+                    newpath.set('clip-path', 'url(#'+clipId+')')
                 # option wether to remove the rectangle or not.
                 if self.options.remove:
                     node.getparent().remove(node)
