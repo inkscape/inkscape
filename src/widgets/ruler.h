@@ -45,8 +45,6 @@ struct _SPRulerClass
 
 struct _SPRulerMetric
 {
-  gchar const *metric_name;
-  gchar const *abbrev;
   /* This should be points_per_unit. This is the size of the unit
    * in 1/72nd's of an inch and has nothing to do with screen pixels */
   gdouble pixels_per_unit;
