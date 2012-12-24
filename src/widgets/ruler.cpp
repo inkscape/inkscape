@@ -27,27 +27,25 @@
 #define GTK_PARAM_READWRITE G_PARAM_READWRITE|G_PARAM_STATIC_NAME|G_PARAM_STATIC_NICK|G_PARAM_STATIC_BLURB
 
 #define MINIMUM_INCR          5
-#define MAXIMUM_SUBDIVIDE     5
-#define MAXIMUM_SCALES        10
 
 #define ROUND(x) ((int) ((x) + 0.5))
 
 struct _SPRulerPrivate
 {
-  GtkOrientation orientation;
-  SPRulerMetric *metric;
+  GtkOrientation   orientation;
+  gdouble          lower;
+  gdouble          upper;
+  gdouble          position;
+  gdouble          max_size;
 
   GdkWindow       *input_window;
   cairo_surface_t *backing_store;
   
-  gint slider_size;
-  gint xsrc;
-  gint ysrc;
-
-  gdouble lower;    /* The upper limit of the ruler (in points) */
-  gdouble upper;    /* The lower limit of the ruler */
-  gdouble position; /* The position of the mark on the ruler */
-  gdouble max_size; /* The maximum size of the ruler */
+  SPRulerMetric   *metric;
+  
+  gint             slider_size;
+  gint             xsrc;
+  gint             ysrc;
 };
 
 enum {
@@ -85,19 +83,19 @@ static void     sp_ruler_get_preferred_height (GtkWidget      *widget,
                                                gint           *natural_height);
 #endif
 
-static void     sp_ruler_size_allocate   (GtkWidget      *widget,
-                                                      GtkAllocation  *allocation);
-static gboolean sp_ruler_motion_notify               (GtkWidget      *widget,
-                                                      GdkEventMotion *event);
-static gboolean sp_ruler_draw            (GtkWidget      *widget,
-		                          cairo_t        *cr);
+static void     sp_ruler_size_allocate        (GtkWidget      *widget,
+                                               GtkAllocation  *allocation);
+static gboolean sp_ruler_motion_notify        (GtkWidget      *widget,
+                                               GdkEventMotion *event);
+static gboolean sp_ruler_draw                 (GtkWidget      *widget,
+		                               cairo_t        *cr);
 #if !GTK_CHECK_VERSION(3,0,0)
-static gboolean sp_ruler_expose          (GtkWidget      *widget,
-                                          GdkEventExpose *event);
+static gboolean sp_ruler_expose               (GtkWidget      *widget,
+                                               GdkEventExpose *event);
 #endif
-static void     sp_ruler_draw_ticks      (SPRuler *ruler);
-static void     sp_ruler_draw_pos        (SPRuler *ruler);
-static void     sp_ruler_make_pixmap     (SPRuler *ruler);
+static void     sp_ruler_draw_ticks           (SPRuler *ruler);
+static void     sp_ruler_draw_pos             (SPRuler *ruler);
+static void     sp_ruler_make_pixmap          (SPRuler *ruler);
 
 #define SP_RULER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), SP_TYPE_RULER, SPRulerPrivate))
 
@@ -818,8 +816,9 @@ sp_ruler_get_position (SPRuler *ruler)
     return SP_RULER_GET_PRIVATE (ruler)->position;
 }
 
-static gboolean sp_ruler_motion_notify(GtkWidget      *widget,
-			               GdkEventMotion *event)
+static gboolean
+sp_ruler_motion_notify (GtkWidget      *widget,
+		        GdkEventMotion *event)
 {
   GtkAllocation  allocation;
   SPRuler *ruler = SP_RULER(widget);
@@ -843,84 +842,127 @@ static gboolean sp_ruler_motion_notify(GtkWidget      *widget,
   return FALSE;
 }
 
-static void sp_ruler_draw_ticks(SPRuler *ruler)
+static void
+sp_ruler_draw_ticks (SPRuler *ruler)
 {
     GtkWidget       *widget  = GTK_WIDGET (ruler);
 
 #if GTK_CHECK_VERSION(3,0,0)
     GtkStyleContext *context = gtk_widget_get_style_context (widget);
-    GtkStateFlags    state   = gtk_widget_get_state_flags (widget);
     GtkBorder        border;
+    GdkRGBA          color;
 #else
     GtkStyle        *style   = gtk_widget_get_style (widget);
     GtkStateType     state   = gtk_widget_get_state (widget);
+    gint             xthickness;
+    gint             ythickness;
 #endif
 
     SPRulerPrivate  *priv    = SP_RULER_GET_PRIVATE (ruler);
     GtkAllocation    allocation;
-    cairo_t         *cr      = cairo_create(priv->backing_store);
-    gint             width   = 0;
-    gint             height  = 0;
-    gint             length;
-    gdouble          increment;  /* Number of pixels per unit */
-    gint             scale;      /* Number of units per major unit */
+    cairo_t         *cr;
+    gint             i;
+    gint             width, height;
+    gint             length, ideal_length;
+    gdouble          lower, upper; /* Upper and lower limits, in ruler units */
+    gdouble          increment;    /* Number of pixels per unit */
+    guint            scale;        /* Number of units per major unit */
+    gdouble          start, end, cur;
     gchar            unit_str[32];
+    gint             digit_height;
     gchar            digit_str[2] = { '\0', '\0' };
     gint             text_size;
+    gint             pos;
+    gdouble          max_size;
+    PangoLayout     *layout;
 
-    g_return_if_fail (ruler != NULL);
+    if (! gtk_widget_is_drawable (widget))
+      return;
 
+    gtk_widget_get_allocation (widget, &allocation);
 
-    PangoContext *pango_context = gtk_widget_get_pango_context (widget);
-    PangoLayout  *pango_layout = pango_layout_new (pango_context);
-    PangoFontDescription *fs = pango_font_description_new ();
-    pango_font_description_set_size (fs, RULER_FONT_SIZE);
-    pango_layout_set_font_description (pango_layout, fs);
-    pango_font_description_free (fs);
-
-    gint digit_height = (int) floor (RULER_FONT_SIZE * RULER_FONT_VERTICAL_SPACING / PANGO_SCALE + 0.5);
-    
 #if GTK_CHECK_VERSION(3,0,0)
     gtk_style_context_get_border (context, static_cast<GtkStateFlags>(0), &border);
 #else
-    gint xthickness = style->xthickness;
-    gint ythickness = style->ythickness;
+    xthickness = style->xthickness;
+    ythickness = style->ythickness;
 #endif
 
-    gtk_widget_get_allocation (widget, &allocation);
+    PangoContext *pango_context = gtk_widget_get_pango_context (widget);
+    layout = pango_layout_new (pango_context);
+    PangoFontDescription *fs = pango_font_description_new ();
+    pango_font_description_set_size (fs, RULER_FONT_SIZE);
+    pango_layout_set_font_description (layout, fs);
+    pango_font_description_free (fs);
+
+    digit_height = (gint) floor (RULER_FONT_SIZE * RULER_FONT_VERTICAL_SPACING / PANGO_SCALE + 0.5);
     
-    if (priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
+    if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+     {
         width = allocation.width; // in pixels; is apparently 2 pixels shorter than the canvas at each end
         height = allocation.height;
-    } else {
+     }
+    else
+     {
         width = allocation.height;
         height = allocation.width;
-    }
-    
-#if GTK_CHECK_VERSION(3,0,0)
-    GdkRGBA color;
-    gtk_style_context_get_background_color(context,
-                                           state,
-                                           &color);
-    gdk_cairo_set_source_rgba(cr, &color);
-#else
-    gdk_cairo_set_source_color(cr, &style->bg[state]);
-#endif
-    cairo_paint(cr);
-    
-    cairo_set_line_width(cr, 1.0);
+     }
 
+    cr = cairo_create (priv->backing_store);
+    
 #if GTK_CHECK_VERSION(3,0,0)
-    gtk_style_context_get_color(context,
-                                state,
-                                &color);
-    gdk_cairo_set_source_rgba(cr, &color);
+    gtk_render_background (context, cr, 0, 0, allocation.width, allocation.height);
+    gtk_render_frame (context, cr, 0, 0, allocation.width, allocation.height);
+    
+    gtk_style_context_get_color (context, gtk_widget_get_state_flags (widget),
+                                 &color);
+    gdk_cairo_set_source_rgba (cr, &color);
+
+    if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+      {
+        cairo_rectangle (cr,
+                         border.left,
+                         height + border.top,
+                         allocation.width - (border.left + border.right),
+                         1);      
+      }
+    else
+      {
+        cairo_rectangle (cr,
+                         height + border.left,
+                         border.top,
+                         1,
+                         allocation.height - (border.top + border.bottom));
+      }
 #else
+    gdk_cairo_set_source_color (cr, &style->bg[state]);
+    
+    cairo_paint (cr);
+    
     gdk_cairo_set_source_color(cr, &style->fg[state]);
+
+    if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+      {
+        cairo_rectangle (cr,
+                         xthickness,
+                         height + ythickness,
+                         allocation.width - 2 * xthickness,
+                         1);      
+      }
+    else
+      {
+        cairo_rectangle (cr,
+                         height + xthickness,
+                         ythickness,
+                         1,
+                         allocation.height - 2 * ythickness);
+      }
 #endif
 
-    gdouble upper = priv->upper / priv->metric->pixels_per_unit; // upper and lower are expressed in ruler units
-    gdouble lower = priv->lower / priv->metric->pixels_per_unit;
+    sp_ruler_get_range (ruler, &lower, &upper, &max_size);
+
+    upper /= priv->metric->pixels_per_unit; // upper and lower are expressed in ruler units
+    lower /= priv->metric->pixels_per_unit;
     /* "pixels_per_unit" should be "points_per_unit". This is the size of the unit
     * in 1/72nd's of an inch and has nothing to do with screen pixels */
 
@@ -930,76 +972,90 @@ static void sp_ruler_draw_ticks(SPRuler *ruler)
     increment = (gdouble) (width + 2*UNUSED_PIXELS) / (upper - lower); // screen pixels per ruler unit
 
     /* determine the scale
-    *  For vruler, use the maximum extents of the ruler to determine the largest
-    *  possible number to be displayed.  Calculate the height in pixels
-    *  of this displayed text. Use this height to find a scale which
-    *  leaves sufficient room for drawing the ruler.
-    *  For hruler, we calculate the text size as for the vruler instead of using
-    *  text_width = gdk_string_width(font, unit_str), so that the result
-    *  for the scale looks consistent with an accompanying vruler
+    *    Use the maximum extents of the ruler to determine the largest
+    *    possible number to be displayed.  Calculate the height in pixels
+    *    of this displayed text. Use this height to find a scale which
+    *    leaves sufficient room for drawing the ruler.
+    *
+    *    We calculate the text size as for the vruler instead of
+    *    actually measuring the text width, so that the result for the
+    *    scale looks consistent with an accompanying vruler
     */
     scale = (gint)(ceil(priv->max_size / priv->metric->pixels_per_unit));
     sprintf (unit_str, "%d", scale);
     text_size = strlen (unit_str) * digit_height + 1;
 
-    for (scale = 0; scale < MAXIMUM_SCALES; scale++)
-        if (priv->metric->ruler_scale[scale] * fabs(increment) > 2 * text_size)
+    for (scale = 0; scale < G_N_ELEMENTS (priv->metric->ruler_scale); scale++)
+        if (priv->metric->ruler_scale[scale] * fabs (increment) > 2 * text_size)
             break;
 
-    if (scale == MAXIMUM_SCALES)
-        scale = MAXIMUM_SCALES - 1;
+    if (scale == G_N_ELEMENTS (priv->metric->ruler_scale))
+        scale = G_N_ELEMENTS (priv->metric->ruler_scale) - 1;
 
     /* drawing starts here */
     length = 0;
-    for (gint i = MAXIMUM_SUBDIVIDE - 1; i >= 0; i--) {
-        double subd_incr = priv->metric->ruler_scale[scale] / 
-                    priv->metric->subdivide[i];
-        if (subd_incr * fabs(increment) <= MINIMUM_INCR) 
+    for (i = G_N_ELEMENTS (priv->metric->subdivide) - 1; i >= 0; i--)
+      {
+        gdouble subd_incr = ((gdouble) priv->metric->ruler_scale[scale] / 
+                             (gdouble) priv->metric->subdivide[i]);
+
+        if (subd_incr * fabs (increment) <= MINIMUM_INCR) 
             continue;
 
         /* Calculate the length of the tickmarks. Make sure that
         * this length increases for each set of ticks
         */
-        gint ideal_length = height / (i + 1) - 1;
+        ideal_length = height / (i + 1) - 1;
         if (ideal_length > ++length)
             length = ideal_length;
 
-        gdouble start = 0;
-	gdouble end = 0;
-	if (lower < upper) {
+	if (lower < upper)
+          {
             start = floor (lower / subd_incr) * subd_incr;
             end   = ceil  (upper / subd_incr) * subd_incr;
-        } else {
+          }
+        else
+          {
             start = floor (upper / subd_incr) * subd_incr;
             end   = ceil  (lower / subd_incr) * subd_incr;
-        }
+          }
 
         gint tick_index = 0;
-        gdouble cur = start; // location (in ruler units) of the first invisible tick at the left side of the canvas 
 
-        while (cur <= end) {
+        for (cur = start; cur <= end; cur += subd_incr)
+          {
             // due to the typical values for cur, lower and increment, pos will often end up to
             // be e.g. 641.50000000000; rounding behaviour is not defined in such a case (see round.h)
             // and jitter will be apparent (upon redrawing some of the lines on the ruler might jump a
             // by a pixel, and jump back on the next redraw). This is suppressed by adding 1e-9 (that's only one nanopixel ;-))
-            gint pos = int(Inkscape::round((cur - lower) * increment + 1e-12)) - UNUSED_PIXELS;
+            pos = gint(Inkscape::round((cur - lower) * increment + 1e-12)) - UNUSED_PIXELS;
 
 #if GTK_CHECK_VERSION(3,0,0)
-            if (priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
-                cairo_move_to(cr, pos+0.5, height + border.top);
-		cairo_line_to(cr, pos+0.5, height - length + border.bottom);
-            } else {
-                cairo_move_to(cr, height + border.left - length, pos+0.5);
-		cairo_line_to(cr, height + border.right, pos+0.5);
-            }
+            if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+             {
+               cairo_rectangle (cr,
+                                pos, height + border.top - length,
+                                1,   length);
+             }
+            else 
+             {
+               cairo_rectangle (cr,
+                                height + border.left - length, pos,
+                                length,                        1);
+             }
 #else
-            if (priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
-                cairo_move_to(cr, pos+0.5, height + ythickness);
-		cairo_line_to(cr, pos+0.5, height - length + ythickness);
-            } else {
-                cairo_move_to(cr, height + xthickness - length, pos+0.5);
-		cairo_line_to(cr, height + xthickness, pos+0.5);
-            }
+            if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+             {
+               cairo_rectangle (cr,
+                                pos, height + ythickness - length,
+                                1,   length);
+             }
+            else 
+             {
+               cairo_rectangle (cr,
+                                height + xthickness - length, pos,
+                                length,                       1);
+             }
 #endif
 
             /* draw label */
@@ -1007,39 +1063,37 @@ static void sp_ruler_draw_ticks(SPRuler *ruler)
             if (i == 0 && 
                 (label_spacing_px > 6*digit_height || tick_index%2 == 0 || cur == 0) && 
                 (label_spacing_px > 3*digit_height || tick_index%4 == 0 || cur == 0))
-            {
+              {
                 if (fabs((int)cur) >= 2000 && (((int) cur)/1000)*1000 == ((int) cur))
                     sprintf (unit_str, "%dk", ((int) cur)/1000);
                 else
                     sprintf (unit_str, "%d", (int) cur);
 
-                if (priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
-                    pango_layout_set_text (pango_layout, unit_str, -1);
+                if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+                  {
+                    pango_layout_set_text (layout, unit_str, -1);
 		    cairo_move_to(cr, pos+2, 0);
-		    pango_cairo_show_layout(cr, pango_layout);
-                } else {
-                    for (gint j = 0; j < (int) strlen (unit_str); j++) {
+		    pango_cairo_show_layout(cr, layout);
+                  }
+                else
+                  {
+                    for (gint j = 0; j < (int) strlen (unit_str); j++)
+                      {
                         digit_str[0] = unit_str[j];
-                        pango_layout_set_text (pango_layout, digit_str, 1);
+                        pango_layout_set_text (layout, digit_str, 1);
 #if GTK_CHECK_VERSION(3,0,0)
 			cairo_move_to(cr, border.left + 1, pos + digit_height * (j) + 1);
 #else
 			cairo_move_to(cr, xthickness + 1, pos + digit_height * (j) + 1);
 #endif
-			pango_cairo_show_layout(cr, pango_layout);
-                    }
-                }
-		
-            }
-            /* Calculate cur from start rather than incrementing by subd_incr
-            * in each iteration. This is to avoid propagation of floating point 
-            * errors in subd_incr.
-            */
+			pango_cairo_show_layout (cr, layout);
+                      }
+                  }
+              }
+        
             ++tick_index;
-            cur = start + tick_index * subd_incr;
-	    cairo_stroke(cr);
-        }
-    }
+          }
+      }
 
     cairo_fill (cr);
 
