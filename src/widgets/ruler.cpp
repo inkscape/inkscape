@@ -797,13 +797,6 @@ sp_ruler_draw_pos (SPRuler *ruler)
     }
 }
 
-// FIXME: Figure out why this is different in Gtk+ 2 and Gtk+ 3
-#if GTK_CHECK_VERSION(3,0,0)
-# define UNUSED_PIXELS 0
-#else
-# define UNUSED_PIXELS 2     // There appear to be two pixels that are not being used at each end of the ruler
-#endif
-
 /**
  * sp_ruler_new:
  * @orientation: the ruler's orientation
@@ -1032,7 +1025,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
     if ((upper - lower) == 0)
         goto out;
 
-    increment = (gdouble) (width + 2*UNUSED_PIXELS) / (upper - lower); // screen pixels per ruler unit
+    increment = (gdouble) width / (upper - lower);
 
     /* determine the scale
     *    Use the maximum extents of the ruler to determine the largest
@@ -1091,7 +1084,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
             // be e.g. 641.50000000000; rounding behaviour is not defined in such a case (see round.h)
             // and jitter will be apparent (upon redrawing some of the lines on the ruler might jump a
             // by a pixel, and jump back on the next redraw). This is suppressed by adding 1e-9 (that's only one nanopixel ;-))
-            pos = gint(Inkscape::round((cur - lower) * increment + 1e-12)) - UNUSED_PIXELS;
+            pos = gint(Inkscape::round((cur - lower) * increment + 1e-12));
 
 #if GTK_CHECK_VERSION(3,0,0)
             if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)

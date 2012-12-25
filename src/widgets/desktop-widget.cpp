@@ -321,8 +321,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
     new (&dtw->modified_connection) sigc::connection();
 
-    GtkWidget *widget = GTK_WIDGET (dtw);
-
     dtw->window = 0;
     dtw->desktop = NULL;
     dtw->_interaction_disabled_counter = 0;
@@ -386,26 +384,19 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     g_signal_connect (G_OBJECT (eventbox), "motion_notify_event", G_CALLBACK (sp_dt_hruler_event), dtw);
 
 #if GTK_CHECK_VERSION(3,0,0)
-    GtkBorder border;
-    GtkStyleContext *context = gtk_widget_get_style_context(widget);
-    gtk_style_context_get_border(context, static_cast<GtkStateFlags>(0), &border);
-
     GtkWidget *tbl = gtk_grid_new();
     GtkWidget *canvas_tbl = gtk_grid_new();
     
-    gtk_widget_set_margin_left(eventbox, border.left);
-    gtk_widget_set_margin_right(eventbox, border.right);
     gtk_grid_attach(GTK_GRID(canvas_tbl), eventbox, 1, 0, 1, 1);
 #else
-    guint xthickness = gtk_widget_get_style(widget)->xthickness;
-    guint ythickness = gtk_widget_get_style(widget)->ythickness;
-    
     GtkWidget *tbl = gtk_table_new(2, 3, FALSE);
     GtkWidget *canvas_tbl = gtk_table_new(3, 3, FALSE);
    
-    gtk_table_attach(GTK_TABLE (canvas_tbl), eventbox, 1, 2, 0, 1, 
-            GTK_FILL, GTK_FILL, 
-            xthickness, 0);
+    gtk_table_attach(GTK_TABLE(canvas_tbl),
+                     eventbox,
+                     1, 2,     0, 1, 
+		     GTK_FILL, GTK_FILL, 
+		     0,        0);
 #endif
 
     gtk_box_pack_start( GTK_BOX(dtw->hbox), tbl, TRUE, TRUE, 1 );
@@ -419,13 +410,13 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_container_add (GTK_CONTAINER (eventbox), GTK_WIDGET (dtw->vruler));
 
 #if GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_set_margin_top(eventbox, border.top);
-    gtk_widget_set_margin_bottom(eventbox, border.bottom);
     gtk_grid_attach(GTK_GRID(canvas_tbl), eventbox, 0, 1, 1, 1);
 #else
-    gtk_table_attach(GTK_TABLE (canvas_tbl), eventbox, 0, 1, 1, 2,
-            GTK_FILL, GTK_FILL,
-            0, ythickness);
+    gtk_table_attach(GTK_TABLE (canvas_tbl),
+                     eventbox,
+		     0, 1,     1, 2,
+                     GTK_FILL, GTK_FILL,
+                     0,        0);
 #endif
 
     g_signal_connect (G_OBJECT (eventbox), "button_press_event", G_CALLBACK (sp_dt_vruler_event), dtw);
