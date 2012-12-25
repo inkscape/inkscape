@@ -381,20 +381,25 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     sp_ruler_set_metric(SP_RULER(dtw->hruler), SP_PT);
     gtk_widget_set_tooltip_text (dtw->hruler_box, gettext(sp_unit_get_plural (&sp_unit_get_by_id(SP_UNIT_PT))));
     gtk_container_add (GTK_CONTAINER (eventbox), dtw->hruler);
-    guint xthickness = gtk_widget_get_style(widget)->xthickness;
-    guint ythickness = gtk_widget_get_style(widget)->ythickness;
     g_signal_connect (G_OBJECT (eventbox), "button_press_event", G_CALLBACK (sp_dt_hruler_event), dtw);
     g_signal_connect (G_OBJECT (eventbox), "button_release_event", G_CALLBACK (sp_dt_hruler_event), dtw);
     g_signal_connect (G_OBJECT (eventbox), "motion_notify_event", G_CALLBACK (sp_dt_hruler_event), dtw);
 
 #if GTK_CHECK_VERSION(3,0,0)
+    GtkBorder border;
+    GtkStyleContext *context = gtk_widget_get_style_context(widget);
+    gtk_style_context_get_border(context, static_cast<GtkStateFlags>(0), &border);
+
     GtkWidget *tbl = gtk_grid_new();
     GtkWidget *canvas_tbl = gtk_grid_new();
     
-    gtk_widget_set_margin_left(eventbox, xthickness);
-    gtk_widget_set_margin_right(eventbox, xthickness);
+    gtk_widget_set_margin_left(eventbox, border.left);
+    gtk_widget_set_margin_right(eventbox, border.right);
     gtk_grid_attach(GTK_GRID(canvas_tbl), eventbox, 1, 0, 1, 1);
 #else
+    guint xthickness = gtk_widget_get_style(widget)->xthickness;
+    guint ythickness = gtk_widget_get_style(widget)->ythickness;
+    
     GtkWidget *tbl = gtk_table_new(2, 3, FALSE);
     GtkWidget *canvas_tbl = gtk_table_new(3, 3, FALSE);
    
@@ -414,8 +419,8 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_container_add (GTK_CONTAINER (eventbox), GTK_WIDGET (dtw->vruler));
 
 #if GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_set_margin_top(eventbox, ythickness);
-    gtk_widget_set_margin_bottom(eventbox, ythickness);
+    gtk_widget_set_margin_top(eventbox, border.top);
+    gtk_widget_set_margin_bottom(eventbox, border.bottom);
     gtk_grid_attach(GTK_GRID(canvas_tbl), eventbox, 0, 1, 1, 1);
 #else
     gtk_table_attach(GTK_TABLE (canvas_tbl), eventbox, 0, 1, 1, 2,
@@ -1700,13 +1705,6 @@ SPDesktopWidget::viewSetPosition (Geom::Point p)
 void
 sp_desktop_widget_update_rulers (SPDesktopWidget *dtw)
 {
-    sp_desktop_widget_update_hruler(dtw);
-    sp_desktop_widget_update_vruler(dtw);
-}
-
-void
-sp_desktop_widget_update_hruler (SPDesktopWidget *dtw)
-{
     /* The viewbox (in integers) must exactly match the size of SPCanvasbuf's pixel buffer.
      * This is important because the former is being used for drawing the ruler, whereas
      * the latter is used for drawing e.g. the grids and guides. Only when the viewbox
@@ -1715,25 +1713,19 @@ sp_desktop_widget_update_hruler (SPDesktopWidget *dtw)
     Geom::IntRect viewbox = dtw->canvas->getViewboxIntegers();
 
     double const scale = dtw->desktop->current_zoom();
-    double s = viewbox.min()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
-    double e = viewbox.max()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
-    sp_ruler_set_range(SP_RULER(dtw->hruler), s,  e, (e - s));
-}
+    double lower_x = viewbox.min()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
+    double upper_x = viewbox.max()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
+    sp_ruler_set_range(SP_RULER(dtw->hruler),
+	      	       lower_x,
+		       upper_x,
+		       (upper_x - lower_x));
 
-void
-sp_desktop_widget_update_vruler (SPDesktopWidget *dtw)
-{
-    /* The viewbox (in integers) must exactly match the size of SPCanvasbuf's pixel buffer.
-     * This is important because the former is being used for drawing the ruler, whereas
-     * the latter is used for drawing e.g. the grids and guides. Only when the viewbox
-     * coincides with the pixel buffer, everything will line up nicely.
-     */
-    Geom::IntRect viewbox = dtw->canvas->getViewboxIntegers();
-
-    double const scale = dtw->desktop->current_zoom();
-    double s = viewbox.min()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
-    double e = viewbox.max()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
-    sp_ruler_set_range(SP_RULER(dtw->vruler), s, e, (e - s));
+    double lower_y = viewbox.min()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
+    double upper_y = viewbox.max()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
+    sp_ruler_set_range(SP_RULER(dtw->vruler),
+                       lower_y,
+		       upper_y,
+		       (upper_y - lower_y));
 }
 
 
