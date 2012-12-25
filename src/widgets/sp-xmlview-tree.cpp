@@ -122,7 +122,7 @@ GtkWidget *sp_xmlview_tree_new(Inkscape::XML::Node * repr, void * /*factory*/, v
     g_signal_connect(GTK_TREE_VIEW(tree), "drag_data_received",  G_CALLBACK(on_drag_data_received), tree);
     g_signal_connect(GTK_TREE_VIEW(tree), "drag-motion",  G_CALLBACK(do_drag_motion), tree);
 
-    return (GtkWidget *) tree;
+    return GTK_WIDGET(tree);
 }
 
 GType
@@ -151,14 +151,14 @@ sp_xmlview_tree_get_type (void)
 void sp_xmlview_tree_class_init(SPXMLViewTreeClass * klass)
 {
 #if GTK_CHECK_VERSION(3,0,0)
-    GtkWidgetClass * widget_class = (GtkWidgetClass *) klass;
+    GtkWidgetClass * widget_class = GTK_WIDGET_CLASS(klass);
     widget_class->destroy = sp_xmlview_tree_destroy;
 #else
-    GtkObjectClass * object_class = (GtkObjectClass *) klass;
+    GtkObjectClass * object_class = GTK_OBJECT_CLASS(klass);
     object_class->destroy = sp_xmlview_tree_destroy;
 #endif
     
-    parent_class = (GtkTreeViewClass *) g_type_class_peek_parent (klass);
+    parent_class = GTK_TREE_VIEW_CLASS(g_type_class_peek_parent (klass));
 
     // Signal for when a tree drag and drop has completed
     g_signal_new (  "tree_move",
@@ -441,7 +441,7 @@ void on_row_changed(GtkTreeModel *tree_model, GtkTreePath *path, GtkTreeIter *it
         return;
     }
 
-    GtkTreeRowReference  *old_parent_ref = (GtkTreeRowReference *)g_object_get_data (G_OBJECT (tree), "drag-src-path");
+    GtkTreeRowReference  *old_parent_ref = static_cast<GtkTreeRowReference *>(g_object_get_data (G_OBJECT (tree), "drag-src-path"));
     if (!old_parent_ref) {
         //No drag source location
         g_signal_emit_by_name(G_OBJECT (tree), "tree_move", GUINT_TO_POINTER(0) );

@@ -84,7 +84,7 @@ static void
 sp_unit_selector_class_init(SPUnitSelectorClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
-    unit_selector_parent_class = (GtkHBoxClass*)g_type_class_peek_parent(klass);
+    unit_selector_parent_class = GTK_HBOX_CLASS(g_type_class_peek_parent(klass));
 
     signals[SET_UNIT] = g_signal_new("set_unit",
                                      G_TYPE_FROM_CLASS(klass),
@@ -148,17 +148,17 @@ sp_unit_selector_finalize(GObject *object)
 GtkWidget *
 sp_unit_selector_new(guint bases)
 {
-    SPUnitSelector *us = (SPUnitSelector*)g_object_new(SP_TYPE_UNIT_SELECTOR, NULL);
+    SPUnitSelector *us = SP_UNIT_SELECTOR(g_object_new(SP_TYPE_UNIT_SELECTOR, NULL));
 
     sp_unit_selector_set_bases(us, bases);
 
-    return (GtkWidget *) us;
+    return GTK_WIDGET(us);
 }
 
 void
 sp_unit_selector_setsize(GtkWidget *us, guint w, guint h)
 {
-    gtk_widget_set_size_request(((SPUnitSelector *) us)->combo_box, w, h);
+    gtk_widget_set_size_request((SP_UNIT_SELECTOR(us))->combo_box, w, h);
 }
 
 SPUnit const *
@@ -180,7 +180,7 @@ on_combo_box_changed (GtkComboBox *widget, SPUnitSelector *us)
     }
 
     SPUnit const *unit = NULL;
-    gtk_tree_model_get ((GtkTreeModel *)us->store, &iter, COMBO_COL_UNIT, &unit, -1);
+    gtk_tree_model_get (GTK_TREE_MODEL(us->store), &iter, COMBO_COL_UNIT, &unit, -1);
 
     g_return_if_fail(unit != NULL);
 
@@ -242,7 +242,7 @@ spus_rebuild_menu(SPUnitSelector *us)
     gint pos = 0;
     gint p = 0;
     for (GSList *l = us->units; l != NULL; l = l->next) {
-        SPUnit const *u = (SPUnit*)l->data;
+        SPUnit const *u = static_cast<SPUnit const*>(l->data);
 
         // use only abbreviations in the menu
         //        i = gtk_menu_item_new_with_label((us->abbr) ? (us->plural) ? u->abbr_plural : u->abbr : (us->plural) ? u->plural : u->name);
@@ -272,7 +272,7 @@ sp_unit_selector_set_bases(SPUnitSelector *us, guint bases)
     g_return_if_fail(units != NULL);
     sp_unit_free_list(us->units);
     us->units = units;
-    us->unit = (SPUnit*)units->data;
+    us->unit = static_cast<SPUnit *>(units->data);
 
     spus_rebuild_menu(us);
 }

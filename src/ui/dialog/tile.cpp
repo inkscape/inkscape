@@ -194,7 +194,7 @@ void TileDialog::Grid_Arrange ()
 
     g_return_if_fail(selection);
     const GSList *items2 = selection->itemList();
-    GSList *rev = g_slist_copy((GSList *) items2);
+    GSList *rev = g_slist_copy(const_cast<GSList *>(items2));
     GSList *sorted = NULL;
     rev = g_slist_sort(rev, (GCompareFunc) sp_compare_y_position);
     sorted = g_slist_sort(rev, (GCompareFunc) sp_compare_x_position);
@@ -667,7 +667,7 @@ TileDialog::TileDialog()
     NoOfRowsSpinner.signal_changed().connect(sigc::mem_fun(*this, &TileDialog::on_col_spinbutton_changed));
     NoOfRowsSpinner.set_tooltip_text(_("Number of rows"));
     NoOfRowsBox.pack_start(NoOfRowsSpinner, false, false, MARGIN);
-    gtk_size_group_add_widget(_col1, (GtkWidget *) NoOfRowsBox.gobj());
+    gtk_size_group_add_widget(_col1, GTK_WIDGET(NoOfRowsBox.gobj()));
 
     RowHeightButton.set_label(_("Equal _height"));
     RowHeightButton.set_use_underline(true);
@@ -724,7 +724,7 @@ TileDialog::TileDialog()
     XByYLabel.set_markup(" &#215; ");
     XByYLabelVBox.pack_start(XByYLabel, false, false, MARGIN);
     SpinsHBox.pack_start(XByYLabelVBox, false, false, MARGIN);
-    gtk_size_group_add_widget(_col2, (GtkWidget *) XByYLabelVBox.gobj());
+    gtk_size_group_add_widget(_col2, GTK_WIDGET(XByYLabelVBox.gobj()));
 
     /*#### Number of columns ####*/
 
@@ -739,7 +739,7 @@ TileDialog::TileDialog()
     NoOfColsSpinner.signal_changed().connect(sigc::mem_fun(*this, &TileDialog::on_row_spinbutton_changed));
     NoOfColsSpinner.set_tooltip_text(_("Number of columns"));
     NoOfColsBox.pack_start(NoOfColsSpinner, false, false, MARGIN);
-    gtk_size_group_add_widget(_col3, (GtkWidget *) NoOfColsBox.gobj());
+    gtk_size_group_add_widget(_col3, GTK_WIDGET(NoOfColsBox.gobj()));
 
     ColumnWidthButton.set_label(_("Equal _width"));
     ColumnWidthButton.set_use_underline(true);

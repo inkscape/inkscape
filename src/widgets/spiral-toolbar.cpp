@@ -147,15 +147,15 @@ static void sp_spl_tb_defaults(GtkWidget * /*widget*/, GObject *obj)
     gdouble exp = 1.0;
     gdouble t0 = 0.0;
 
-    adj = (GtkAdjustment*)g_object_get_data(obj, "revolution");
+    adj = GTK_ADJUSTMENT(g_object_get_data(obj, "revolution"));
     gtk_adjustment_set_value(adj, rev);
     gtk_adjustment_value_changed(adj);
 
-    adj = (GtkAdjustment*)g_object_get_data(obj, "expansion");
+    adj = GTK_ADJUSTMENT(g_object_get_data(obj, "expansion"));
     gtk_adjustment_set_value(adj, exp);
     gtk_adjustment_value_changed(adj);
 
-    adj = (GtkAdjustment*)g_object_get_data(obj, "t0");
+    adj = GTK_ADJUSTMENT(g_object_get_data(obj, "t0"));
     gtk_adjustment_set_value(adj, t0);
     gtk_adjustment_value_changed(adj);
 
@@ -181,17 +181,17 @@ static void spiral_tb_event_attr_changed(Inkscape::XML::Node *repr,
     g_object_set_data(G_OBJECT(tbl), "freeze", GINT_TO_POINTER(TRUE));
 
     GtkAdjustment *adj;
-    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "revolution");
+    adj = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(tbl), "revolution"));
     double revolution = 3.0;
     sp_repr_get_double(repr, "sodipodi:revolution", &revolution);
     gtk_adjustment_set_value(adj, revolution);
 
-    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "expansion");
+    adj = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(tbl), "expansion"));
     double expansion = 1.0;
     sp_repr_get_double(repr, "sodipodi:expansion", &expansion);
     gtk_adjustment_set_value(adj, expansion);
 
-    adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "t0");
+    adj = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(tbl), "t0"));
     double t0 = 0.0;
     sp_repr_get_double(repr, "sodipodi:t0", &t0);
     gtk_adjustment_set_value(adj, t0);

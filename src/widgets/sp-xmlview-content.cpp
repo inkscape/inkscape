@@ -59,7 +59,7 @@ GtkWidget *sp_xmlview_content_new(Inkscape::XML::Node * repr)
 
     sp_xmlview_content_set_repr (text, repr);
 
-    return (GtkWidget *) text;
+    return GTK_WIDGET(text);
 }
 
 void
@@ -107,14 +107,14 @@ GType sp_xmlview_content_get_type(void)
 void sp_xmlview_content_class_init(SPXMLViewContentClass * klass)
 {
 #if GTK_CHECK_VERSION(3,0,0)
-    GtkWidgetClass * widget_class = (GtkWidgetClass *) klass;
+    GtkWidgetClass * widget_class = GTK_WIDGET_CLASS(klass);
     widget_class->destroy = sp_xmlview_content_destroy;
 #else
-    GtkObjectClass * object_class = (GtkObjectClass *) klass;
+    GtkObjectClass * object_class = GTK_OBJECT_CLASS(klass);
     object_class->destroy = sp_xmlview_content_destroy;
 #endif
 
-    parent_class = (GtkTextViewClass*)g_type_class_peek_parent (klass);
+    parent_class = GTK_TEXT_VIEW_CLASS(g_type_class_peek_parent (klass));
 }
 
 void

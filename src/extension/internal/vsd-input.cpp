@@ -142,7 +142,7 @@ VsdImportDialog::VsdImportDialog(const std::vector<WPXString> &vec)
      this->get_vbox()->pack_start(*vbox2);
      this->set_title(_("Page Selector"));
      this->set_modal(true);
-     sp_transientize((GtkWidget *)this->gobj());  //Make transient
+     sp_transientize(GTK_WIDGET(this->gobj()));  //Make transient
      this->property_window_position().set_value(Gtk::WIN_POS_NONE);
      this->set_resizable(true);
      this->property_destroy_with_parent().set_value(false);

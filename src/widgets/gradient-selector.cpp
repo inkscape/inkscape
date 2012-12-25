@@ -86,9 +86,9 @@ GType sp_gradient_selector_get_type(void)
 
 static void sp_gradient_selector_class_init(SPGradientSelectorClass *klass)
 {
-    GObjectClass *object_class = (GObjectClass *) klass;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
-    parent_class = (GtkVBoxClass*)g_type_class_peek_parent (klass);
+    parent_class = GTK_VBOX_CLASS(g_type_class_peek_parent (klass));
 
     signals[GRABBED] =  g_signal_new ("grabbed",
                                         G_TYPE_FROM_CLASS(object_class),
@@ -196,7 +196,7 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     gtk_box_pack_start( GTK_BOX(sel), hb, FALSE, FALSE, 0 );
 
     sel->add = gtk_button_new ();
-    gtk_button_set_image((GtkButton*)sel->add , gtk_image_new_from_stock ( GTK_STOCK_ADD, GTK_ICON_SIZE_SMALL_TOOLBAR ) );
+    gtk_button_set_image(GTK_BUTTON(sel->add), gtk_image_new_from_stock ( GTK_STOCK_ADD, GTK_ICON_SIZE_SMALL_TOOLBAR ) );
 
     sel->nonsolid.push_back(sel->add);
     gtk_box_pack_start (GTK_BOX (hb), sel->add, FALSE, FALSE, 0);
@@ -207,7 +207,7 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     gtk_widget_set_tooltip_text( sel->add, _("Create a duplicate gradient"));
 
     sel->edit = gtk_button_new ();
-    gtk_button_set_image((GtkButton*)sel->edit , gtk_image_new_from_stock ( GTK_STOCK_EDIT, GTK_ICON_SIZE_SMALL_TOOLBAR ) );
+    gtk_button_set_image(GTK_BUTTON(sel->edit), gtk_image_new_from_stock ( GTK_STOCK_EDIT, GTK_ICON_SIZE_SMALL_TOOLBAR ) );
 
     sel->nonsolid.push_back(sel->edit);
     gtk_box_pack_start (GTK_BOX (hb), sel->edit, FALSE, FALSE, 0);
@@ -217,7 +217,7 @@ static void sp_gradient_selector_init(SPGradientSelector *sel)
     gtk_widget_set_tooltip_text( sel->edit, _("Edit gradient"));
 
     sel->del = gtk_button_new ();
-    gtk_button_set_image((GtkButton*)sel->del , gtk_image_new_from_stock ( GTK_STOCK_REMOVE, GTK_ICON_SIZE_SMALL_TOOLBAR ) );
+    gtk_button_set_image(GTK_BUTTON(sel->del), gtk_image_new_from_stock ( GTK_STOCK_REMOVE, GTK_ICON_SIZE_SMALL_TOOLBAR ) );
 
     sel->swatch_widgets.push_back(sel->del);
     gtk_box_pack_start (GTK_BOX (hb), sel->del, FALSE, FALSE, 0);
@@ -251,8 +251,8 @@ static void sp_gradient_selector_dispose(GObject *object)
         sel->text_renderer = NULL;
     }
 
-    if (((GObjectClass *) (parent_class))->dispose) {
-        (* ((GObjectClass *) (parent_class))->dispose) (object);
+    if ((G_OBJECT_CLASS(parent_class))->dispose) {
+        (* (G_OBJECT_CLASS(parent_class))->dispose) (object);
     }
 }
 
@@ -267,7 +267,7 @@ GtkWidget *sp_gradient_selector_new()
 {
     SPGradientSelector *sel = SP_GRADIENT_SELECTOR(g_object_new (SP_TYPE_GRADIENT_SELECTOR, NULL));
 
-    return (GtkWidget *) sel;
+    return GTK_WIDGET(sel);
 }
 
 void SPGradientSelector::setMode(SelectorMode mode)

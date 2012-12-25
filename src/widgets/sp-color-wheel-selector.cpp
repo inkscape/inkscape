@@ -56,12 +56,9 @@ sp_color_wheel_selector_get_type (void)
 static void sp_color_wheel_selector_class_init(SPColorWheelSelectorClass *klass)
 {
     static const gchar* nameset[] = {N_("Wheel"), 0};
-    GObjectClass *object_class = (GObjectClass *) klass;
-    GtkWidgetClass *widget_class;
-    SPColorSelectorClass *selector_class;
-
-    widget_class = (GtkWidgetClass *) klass;
-    selector_class = SP_COLOR_SELECTOR_CLASS (klass);
+    GObjectClass   *object_class = G_OBJECT_CLASS(klass);
+    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
+    SPColorSelectorClass *selector_class = SP_COLOR_SELECTOR_CLASS (klass);
 
     parent_class = SP_COLOR_SELECTOR_CLASS (g_type_class_peek_parent (klass));
 
@@ -197,7 +194,7 @@ void ColorWheelSelector::init()
 #endif
 
     /* Adjustment */
-    _adj = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 255.0, 1.0, 10.0, 10.0);
+    _adj = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, 0.0, 255.0, 1.0, 10.0, 10.0));
 
     /* Slider */
     _slider = sp_color_slider_new (_adj);
@@ -266,8 +263,8 @@ void ColorWheelSelector::init()
 
 static void sp_color_wheel_selector_dispose(GObject *object)
 {
-    if (((GObjectClass *) (parent_class))->dispose)
-        (* ((GObjectClass *) (parent_class))->dispose) (object);
+    if ((G_OBJECT_CLASS(parent_class))->dispose)
+        (* (G_OBJECT_CLASS(parent_class))->dispose) (object);
 }
 
 static void

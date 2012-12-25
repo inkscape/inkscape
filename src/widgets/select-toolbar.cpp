@@ -88,13 +88,13 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
             if (unit.base == SP_UNIT_DIMENSIONLESS) {
                 double const val = 1. / unit.unittobase;
                 for (unsigned i = 0; i < G_N_ELEMENTS(keyval); ++i) {
-                    GtkAdjustment *a = (GtkAdjustment *) g_object_get_data(G_OBJECT(spw), keyval[i].key);
+                    GtkAdjustment *a = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(spw), keyval[i].key));
                     gtk_adjustment_set_value(a, val);
                     tracker->setFullVal( a, keyval[i].val );
                 }
             } else {
                 for (unsigned i = 0; i < G_N_ELEMENTS(keyval); ++i) {
-                    GtkAdjustment *a = (GtkAdjustment *) g_object_get_data(G_OBJECT(spw), keyval[i].key);
+                    GtkAdjustment *a = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(spw), keyval[i].key));
                     gtk_adjustment_set_value(a, sp_pixels_get_units(keyval[i].val, unit));
                 }
             }

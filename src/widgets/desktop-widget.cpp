@@ -303,8 +303,8 @@ sp_desktop_widget_class_init (SPDesktopWidgetClass *klass)
 {
     dtw_parent_class = SP_VIEW_WIDGET_CLASS(g_type_class_peek_parent(klass));
 
-    GObjectClass *object_class = (GObjectClass *) klass;
-    GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
 
     object_class->dispose = sp_desktop_widget_dispose;
 
@@ -424,7 +424,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     g_signal_connect (G_OBJECT (eventbox), "motion_notify_event", G_CALLBACK (sp_dt_vruler_event), dtw);
 
     // Horizontal scrollbar
-    dtw->hadj = (GtkAdjustment *) gtk_adjustment_new (0.0, -4000.0, 4000.0, 10.0, 100.0, 4.0);
+    dtw->hadj = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, -4000.0, 4000.0, 10.0, 100.0, 4.0));
 
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->hscrollbar = gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, GTK_ADJUSTMENT (dtw->hadj));
@@ -449,7 +449,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     g_signal_connect (G_OBJECT (dtw->sticky_zoom), "toggled", G_CALLBACK (sp_dtw_sticky_zoom_toggled), dtw);
 
     // Vertical scrollbar
-    dtw->vadj = (GtkAdjustment *) gtk_adjustment_new (0.0, -4000.0, 4000.0, 10.0, 100.0, 4.0);
+    dtw->vadj = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, -4000.0, 4000.0, 10.0, 100.0, 4.0));
 
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->vscrollbar = gtk_scrollbar_new(GTK_ORIENTATION_VERTICAL, GTK_ADJUSTMENT(dtw->vadj));
@@ -788,7 +788,7 @@ static void sp_desktop_widget_dispose(GObject *object)
 void
 SPDesktopWidget::updateTitle(gchar const* uri)
 {
-    Gtk::Window *window = (Gtk::Window*)g_object_get_data(G_OBJECT(this), "window");
+    Gtk::Window *window = static_cast<Gtk::Window*>(g_object_get_data(G_OBJECT(this), "window"));
 
     if (window) {
         gchar const *fname = uri;
@@ -1098,7 +1098,7 @@ SPDesktopWidget::shutdown()
             switch (response) {
             case GTK_RESPONSE_YES:
             {
-                Gtk::Window *window = (Gtk::Window*)g_object_get_data(G_OBJECT(this), "window");
+                Gtk::Window *window = static_cast<Gtk::Window*>(g_object_get_data(G_OBJECT(this), "window"));
 
                 doc->doRef();
                 sp_namedview_document_from_window(desktop);
@@ -1162,7 +1162,7 @@ SPDesktopWidget::shutdown()
             {
                 doc->doRef();
 
-                Gtk::Window *window = (Gtk::Window*)g_object_get_data(G_OBJECT(this), "window");
+                Gtk::Window *window = static_cast<Gtk::Window*>(g_object_get_data(G_OBJECT(this), "window"));
 
                 if (sp_file_save_dialog(*window, doc, Inkscape::Extension::FILE_SAVE_METHOD_INKSCAPE_SVG)) {
                     doc->doUnref();
@@ -1274,7 +1274,7 @@ SPDesktopWidget::getWindowGeometry (gint &x, gint &y, gint &w, gint &h)
     gboolean vis = gtk_widget_get_visible (GTK_WIDGET(this));
     (void)vis; // TODO figure out why it is here but not used.
 
-    Gtk::Window *window = (Gtk::Window*)g_object_get_data(G_OBJECT(this), "window");
+    Gtk::Window *window = static_cast<Gtk::Window*>(g_object_get_data(G_OBJECT(this), "window"));
 
     if (window)
     {
@@ -1286,7 +1286,7 @@ SPDesktopWidget::getWindowGeometry (gint &x, gint &y, gint &w, gint &h)
 void
 SPDesktopWidget::setWindowPosition (Geom::Point p)
 {
-    Gtk::Window *window = (Gtk::Window*)g_object_get_data(G_OBJECT(this), "window");
+    Gtk::Window *window = static_cast<Gtk::Window*>(g_object_get_data(G_OBJECT(this), "window"));
 
     if (window)
     {
@@ -1297,7 +1297,7 @@ SPDesktopWidget::setWindowPosition (Geom::Point p)
 void
 SPDesktopWidget::setWindowSize (gint w, gint h)
 {
-    Gtk::Window *window = (Gtk::Window*)g_object_get_data(G_OBJECT(this), "window");
+    Gtk::Window *window = static_cast<Gtk::Window*>(g_object_get_data(G_OBJECT(this), "window"));
 
     if (window)
     {
@@ -1315,10 +1315,10 @@ SPDesktopWidget::setWindowSize (gint w, gint h)
 void
 SPDesktopWidget::setWindowTransient (void *p, int transient_policy)
 {
-    Gtk::Window *window = (Gtk::Window*)g_object_get_data(G_OBJECT(this), "window");
+    Gtk::Window *window = static_cast<Gtk::Window*>(g_object_get_data(G_OBJECT(this), "window"));
     if (window)
     {
-        GtkWindow *w = (GtkWindow *) window->gobj();
+        GtkWindow *w = GTK_WINDOW(window->gobj());
         gtk_window_set_transient_for (GTK_WINDOW(p), w);
 
         /*
@@ -1563,7 +1563,7 @@ SPDesktopWidget::setToolboxSelectOneValue (gchar const *id, int value)
 {
     gpointer hb = sp_search_by_data_recursive(aux_toolbox, (gpointer) id);
     if (hb) {
-        ege_select_one_action_set_active((EgeSelectOneAction*) hb, value);
+        ege_select_one_action_set_active(EGE_SELECT_ONE_ACTION(hb), value);
     }
 }
 

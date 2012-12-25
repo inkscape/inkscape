@@ -242,7 +242,7 @@ static void sp_pencil_tb_defaults(GtkWidget * /*widget*/, GObject *obj)
     // fixme: make settable
     gdouble tolerance = 4;
 
-    adj = (GtkAdjustment*)g_object_get_data(obj, "tolerance");
+    adj = GTK_ADJUSTMENT(g_object_get_data(obj, "tolerance"));
     gtk_adjustment_set_value(adj, tolerance);
     gtk_adjustment_value_changed(adj);
 
@@ -282,7 +282,7 @@ public:
         }
         g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-        GtkAdjustment * adj = (GtkAdjustment*)g_object_get_data(tbl, "tolerance");
+        GtkAdjustment * adj = GTK_ADJUSTMENT(g_object_get_data(tbl, "tolerance"));
 
         double v = val.getDouble(adj->value);
         gtk_adjustment_set_value(adj, v);

@@ -337,7 +337,7 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
             gtk_action_set_sensitive( prop_action, FALSE );
         }
     } else if ((!strcmp(name, "sodipodi:r1") || !strcmp(name, "sodipodi:r2")) && (!isFlatSided) ) {
-        adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "proportion");
+        adj = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(tbl), "proportion"));
         gdouble r1 = 1.0;
         gdouble r2 = 1.0;
         sp_repr_get_double(repr, "sodipodi:r1", &r1);
@@ -348,7 +348,7 @@ static void star_tb_event_attr_changed(Inkscape::XML::Node *repr, gchar const *n
             gtk_adjustment_set_value(adj, r1/r2);
         }
     } else if (!strcmp(name, "sodipodi:sides")) {
-        adj = (GtkAdjustment*)g_object_get_data(G_OBJECT(tbl), "magnitude");
+        adj = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(tbl), "magnitude"));
         int sides = 0;
         sp_repr_get_int(repr, "sodipodi:sides", &sides);
         gtk_adjustment_set_value(adj, sides);

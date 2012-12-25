@@ -229,7 +229,7 @@ PdfImportCairoDialog::PdfImportCairoDialog(PopplerDocument *doc)
     this->get_vbox()->pack_start(*hbox1);
     this->set_title(_("PDF Import Settings"));
     this->set_modal(true);
-    sp_transientize((GtkWidget *)this->gobj());  //Make transient
+    sp_transientize(GTK_WIDGET(this->gobj()));  //Make transient
     this->property_window_position().set_value(Gtk::WIN_POS_NONE);
     this->set_resizable(true);
     this->property_destroy_with_parent().set_value(false);
@@ -416,7 +416,7 @@ static void copy_cairo_surface_to_pixbuf (cairo_surface_t *surface,
         cairo_height = gdk_pixbuf_get_height (pixbuf);
     for (y = 0; y < cairo_height; y++)
     {
-        src = (unsigned int *) (cairo_data + y * cairo_rowstride);
+        src = reinterpret_cast<unsigned int *>(cairo_data + y * cairo_rowstride);
         dst = pixbuf_data + y * pixbuf_rowstride;
         for (x = 0; x < cairo_width; x++)
         {
@@ -622,8 +622,8 @@ PdfInputCairo::open(Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
 static cairo_status_t
         _write_ustring_cb(void *closure, const unsigned char *data, unsigned int length)
 {
-    Glib::ustring* stream = (Glib::ustring*)closure;
-    stream->append((const char*)data, length);
+    Glib::ustring* stream = static_cast<Glib::ustring*>(closure);
+    stream->append(reinterpret_cast<const char*>(data), length);
 
     return CAIRO_STATUS_SUCCESS;
 }

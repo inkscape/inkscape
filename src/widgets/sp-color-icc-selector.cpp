@@ -104,12 +104,9 @@ sp_color_icc_selector_get_type (void)
 static void sp_color_icc_selector_class_init(SPColorICCSelectorClass *klass)
 {
     static const gchar* nameset[] = {N_("CMS"), 0};
-    GObjectClass *object_class = (GObjectClass *) klass;
-    GtkWidgetClass *widget_class;
-    SPColorSelectorClass *selector_class;
-
-    widget_class = (GtkWidgetClass *) klass;
-    selector_class = SP_COLOR_SELECTOR_CLASS (klass);
+    GObjectClass   *object_class = G_OBJECT_CLASS(klass);
+    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
+    SPColorSelectorClass *selector_class = SP_COLOR_SELECTOR_CLASS (klass);
 
     parent_class = SP_COLOR_SELECTOR_CLASS (g_type_class_peek_parent (klass));
 
@@ -453,7 +450,7 @@ void ColorICCSelector::init()
 #endif
 
     /* Adjustment */
-    _adj = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 255.0, 1.0, 10.0, 10.0);
+    _adj = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, 0.0, 255.0, 1.0, 10.0, 10.0));
 
     /* Slider */
     _slider = sp_color_slider_new (_adj);
@@ -510,8 +507,8 @@ void ColorICCSelector::init()
 
 static void sp_color_icc_selector_dispose(GObject *object)
 {
-    if (((GObjectClass *) (parent_class))->dispose)
-        (* ((GObjectClass *) (parent_class))->dispose)(object);
+    if ((G_OBJECT_CLASS(parent_class))->dispose)
+        (* (G_OBJECT_CLASS(parent_class))->dispose)(object);
 }
 
 static void
@@ -672,7 +669,7 @@ void ColorICCSelector::_profilesChanged( std::string const & name )
 
     g_signal_handler_block( G_OBJECT(_profileSel), _profChangedID );
 
-    GtkListStore *store = (GtkListStore *)gtk_combo_box_get_model (combo);
+    GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model(combo));
     gtk_list_store_clear(store);
 
     GtkTreeIter iter;
@@ -1008,7 +1005,7 @@ void ColorICCSelector::_adjustmentChanged( GtkAdjustment *adjustment, SPColorICC
 
 void ColorICCSelector::_sliderGrabbed( SPColorSlider */*slider*/, SPColorICCSelector */*cs*/ )
 {
-//    ColorICCSelector* iccSelector = (ColorICCSelector*)(SP_COLOR_SELECTOR(cs)->base);
+//    ColorICCSelector* iccSelector = dynamic_cast<ColorICCSelector*>(SP_COLOR_SELECTOR(cs)->base);
 //     if (!iccSelector->_dragging) {
 //         iccSelector->_dragging = TRUE;
 //         iccSelector->_grabbed();
@@ -1018,7 +1015,7 @@ void ColorICCSelector::_sliderGrabbed( SPColorSlider */*slider*/, SPColorICCSele
 
 void ColorICCSelector::_sliderReleased( SPColorSlider */*slider*/, SPColorICCSelector */*cs*/ )
 {
-//     ColorICCSelector* iccSelector = (ColorICCSelector*)(SP_COLOR_SELECTOR(cs)->base);
+//     ColorICCSelector* iccSelector = dynamic_cast<ColorICCSelector*>(SP_COLOR_SELECTOR(cs)->base);
 //     if (iccSelector->_dragging) {
 //         iccSelector->_dragging = FALSE;
 //         iccSelector->_released();
@@ -1035,7 +1032,7 @@ void ColorICCSelector::_sliderChanged( SPColorSlider */*slider*/, SPColorICCSele
 #ifdef DEBUG_LCMS
     g_message("Changed  %p and %p", slider, cs );
 #endif // DEBUG_LCMS
-//     ColorICCSelector* iccSelector = (ColorICCSelector*)(SP_COLOR_SELECTOR(cs)->base);
+//     ColorICCSelector* iccSelector = dynamic_cast<ColorICCSelector*>(SP_COLOR_SELECTOR(cs)->base);
 
 //     iccSelector->_updateInternals( iccSelector->_color, ColorScales::getScaled( iccSelector->_adj ), iccSelector->_dragging );
 }

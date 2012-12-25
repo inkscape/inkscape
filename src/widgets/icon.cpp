@@ -164,13 +164,10 @@ GType SPIcon::getType()
 
 void IconImpl::classInit(SPIconClass *klass)
 {
-    GObjectClass *object_class;
-    GtkWidgetClass *widget_class;
+    GObjectClass   *object_class = G_OBJECT_CLASS(klass);
+    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
 
-    object_class = (GObjectClass *) klass;
-    widget_class = (GtkWidgetClass *) klass;
-
-    parent_class = (GtkWidgetClass*)g_type_class_peek_parent(klass);
+    parent_class = GTK_WIDGET_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = IconImpl::dispose;
 
@@ -205,7 +202,7 @@ void IconImpl::dispose(GObject *object)
         icon->name = 0;
     }
 
-    ((GObjectClass *) (parent_class))->dispose(object);
+    (G_OBJECT_CLASS(parent_class))->dispose(object);
 }
 
 void IconImpl::reset( SPIcon *icon )
@@ -865,7 +862,7 @@ GtkWidget *IconImpl::newFull( Inkscape::IconSize lsize, gchar const *name )
             if ( dump ) {
                 g_message( "skipped gtk '%s' %d  (not GTK_IMAGE_STOCK)", name, lsize );
             }
-            //g_object_unref( (GObject *)img );
+            //g_object_unref(G_OBJECT(img));
             img = 0;
         }
     }
@@ -1022,7 +1019,7 @@ int IconImpl::getPhysSize(int size)
             "inkscape-decoration"
         };
 
-        GtkWidget *icon = (GtkWidget *)g_object_new(SP_TYPE_ICON, NULL);
+        GtkWidget *icon = GTK_WIDGET(g_object_new(SP_TYPE_ICON, NULL));
 
         for (unsigned i = 0; i < G_N_ELEMENTS(gtkSizes); ++i) {
             guint const val_ix = (gtkSizes[i] <= GTK_ICON_SIZE_DIALOG) ? (guint)gtkSizes[i] : (guint)Inkscape::ICON_SIZE_DECORATION;
@@ -1075,7 +1072,7 @@ int IconImpl::getPhysSize(int size)
 
 GdkPixbuf *IconImpl::loadPixmap(gchar const *name, unsigned /*lsize*/, unsigned psize)
 {
-    gchar *path = (gchar *) g_strdup_printf("%s/%s.png", INKSCAPE_PIXMAPDIR, name);
+    gchar *path = g_strdup_printf("%s/%s.png", INKSCAPE_PIXMAPDIR, name);
     // TODO: bulia, please look over
     gsize bytesRead = 0;
     gsize bytesWritten = 0;
@@ -1089,7 +1086,7 @@ GdkPixbuf *IconImpl::loadPixmap(gchar const *name, unsigned /*lsize*/, unsigned 
     g_free(localFilename);
     g_free(path);
     if (!pb) {
-        path = (gchar *) g_strdup_printf("%s/%s.xpm", INKSCAPE_PIXMAPDIR, name);
+        path = g_strdup_printf("%s/%s.xpm", INKSCAPE_PIXMAPDIR, name);
         // TODO: bulia, please look over
         gsize bytesRead = 0;
         gsize bytesWritten = 0;

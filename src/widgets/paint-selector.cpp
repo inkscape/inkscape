@@ -157,9 +157,9 @@ GType sp_paint_selector_get_type(void)
 static void
 sp_paint_selector_class_init(SPPaintSelectorClass *klass)
 {
-    GObjectClass *object_class = (GObjectClass *) klass;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
-    parent_class = (GtkVBoxClass*)g_type_class_peek_parent(klass);
+    parent_class = GTK_VBOX_CLASS(g_type_class_peek_parent(klass));
 
     psel_signals[MODE_CHANGED] = g_signal_new("mode_changed",
                                                 G_TYPE_FROM_CLASS(object_class),
@@ -311,8 +311,8 @@ static void sp_paint_selector_dispose(GObject *object)
     // clean up our long-living pattern menu
     g_object_set_data(G_OBJECT(psel),"patternmenu",NULL);
 
-    if (((GObjectClass *) parent_class)->dispose)
-        (* ((GObjectClass *) parent_class)->dispose)(object);
+    if ((G_OBJECT_CLASS(parent_class))->dispose)
+        (* (G_OBJECT_CLASS(parent_class))->dispose)(object);
 }
 
 static GtkWidget *sp_paint_selector_style_button_add(SPPaintSelector *psel,
@@ -655,7 +655,7 @@ static void sp_paint_selector_set_mode_color(SPPaintSelector *psel, SPPaintSelec
 
     if ((psel->mode == SPPaintSelector::MODE_COLOR_RGB) || (psel->mode == SPPaintSelector::MODE_COLOR_CMYK)) {
         /* Already have color selector */
-        csel = (GtkWidget*)g_object_get_data(G_OBJECT(psel->selector), "color-selector");
+        csel = GTK_WIDGET(g_object_get_data(G_OBJECT(psel->selector), "color-selector"));
     } else {
 
         sp_paint_selector_clear_frame(psel);
@@ -732,7 +732,7 @@ static void sp_paint_selector_set_mode_gradient(SPPaintSelector *psel, SPPaintSe
 
     if ((psel->mode == SPPaintSelector::MODE_GRADIENT_LINEAR) || (psel->mode == SPPaintSelector::MODE_GRADIENT_RADIAL)) {
         /* Already have gradient selector */
-        gsel = (GtkWidget*)g_object_get_data(G_OBJECT(psel->selector), "gradient-selector");
+        gsel = GTK_WIDGET(g_object_get_data(G_OBJECT(psel->selector), "gradient-selector"));
     } else {
         sp_paint_selector_clear_frame(psel);
         /* Create new gradient selector */
@@ -799,7 +799,7 @@ ink_pattern_list_get (SPDocument *source)
 
     GSList *pl = NULL;
     GSList const *patterns = source->getResourceList("pattern");
-    for (GSList *l = (GSList *) patterns; l != NULL; l = l->next) {
+    for (GSList *l = const_cast<GSList *>(patterns); l != NULL; l = l->next) {
         if (SP_PATTERN(l->data) == pattern_getroot(SP_PATTERN(l->data))) {  // only if this is a root pattern
             pl = g_slist_prepend(pl, l->data);
         }
@@ -995,7 +995,7 @@ static void sp_paint_selector_set_mode_pattern(SPPaintSelector *psel, SPPaintSel
 
     if (psel->mode == SPPaintSelector::MODE_PATTERN) {
         /* Already have pattern menu */
-        tbl = (GtkWidget*)g_object_get_data(G_OBJECT(psel->selector), "pattern-selector");
+        tbl = GTK_WIDGET(g_object_get_data(G_OBJECT(psel->selector), "pattern-selector"));
     } else {
         sp_paint_selector_clear_frame(psel);
 
@@ -1081,7 +1081,7 @@ SPPattern *SPPaintSelector::getPattern()
     SPPattern *pat = 0;
     g_return_val_if_fail((mode == MODE_PATTERN) , NULL);
 
-    GtkWidget *combo = (GtkWidget *) g_object_get_data(G_OBJECT(this), "patternmenu");
+    GtkWidget *combo = GTK_WIDGET(g_object_get_data(G_OBJECT(this), "patternmenu"));
 
     /* no pattern menu if we were just selected */
     if ( combo == NULL ) {

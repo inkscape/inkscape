@@ -245,7 +245,7 @@ PdfImportDialog::PdfImportDialog(PDFDoc *doc, const gchar */*uri*/)
     this->get_vbox()->pack_start(*hbox1);
     this->set_title(_("PDF Import Settings"));
     this->set_modal(true);
-    sp_transientize((GtkWidget *)this->gobj());  //Make transient
+    sp_transientize(GTK_WIDGET(this->gobj()));  //Make transient
     this->property_window_position().set_value(Gtk::WIN_POS_NONE);
     this->set_resizable(true);
     this->property_destroy_with_parent().set_value(false);
@@ -446,7 +446,7 @@ static void copy_cairo_surface_to_pixbuf (cairo_surface_t *surface,
         cairo_height = gdk_pixbuf_get_height (pixbuf);
     for (y = 0; y < cairo_height; y++)
     {
-        src = (unsigned int *) (cairo_data + y * cairo_rowstride);
+        src = reinterpret_cast<unsigned int *>(cairo_data + y * cairo_rowstride);
         dst = pixbuf_data + y * pixbuf_rowstride;
         for (x = 0; x < cairo_width; x++)
         {
@@ -603,7 +603,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     PDFDoc *pdf_doc = new PDFDoc(filename_goo, NULL, NULL, NULL);   // TODO: Could ask for password
     //delete filename_goo;
 #else
-    wchar_t *wfilename = (wchar_t*)g_utf8_to_utf16 (uri, -1, NULL, NULL, NULL);
+    wchar_t *wfilename = static_cast<wchar_t*>(g_utf8_to_utf16 (uri, -1, NULL, NULL, NULL));
 
     if (wfilename == NULL) {
       return NULL;

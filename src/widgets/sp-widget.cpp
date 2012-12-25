@@ -306,7 +306,7 @@ GtkWidget *SPWidgetImpl::constructGlobal(SPWidget *spw, Inkscape::Application *i
 
     g_signal_emit(spw, signals[CONSTRUCT], 0);
 
-    return (GtkWidget *) spw;
+    return GTK_WIDGET(spw);
 }
 
 void SPWidgetImpl::modifySelectionCB(Application *inkscape, Selection *selection, guint flags, SPWidget *spw)

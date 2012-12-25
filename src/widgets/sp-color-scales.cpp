@@ -78,12 +78,9 @@ static void
 sp_color_scales_class_init (SPColorScalesClass *klass)
 {
 	static const gchar* nameset[] = {N_("RGB"), N_("HSL"), N_("CMYK"), 0};
-	GObjectClass *object_class = (GObjectClass *) klass;
-	GtkWidgetClass *widget_class;
-	SPColorSelectorClass *selector_class;
-
-	widget_class = (GtkWidgetClass *) klass;
-	selector_class = SP_COLOR_SELECTOR_CLASS (klass);
+	GObjectClass *object_class = G_OBJECT_CLASS(klass);
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
+	SPColorSelectorClass *selector_class = SP_COLOR_SELECTOR_CLASS (klass);
 
 	parent_class = SP_COLOR_SELECTOR_CLASS (g_type_class_peek_parent (klass));
 
@@ -164,7 +161,7 @@ void ColorScales::init()
 #endif
 
 		/* Adjustment */
-		_a[i] = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, _rangeLimit, 1.0, 10.0, 10.0);
+		_a[i] = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, 0.0, _rangeLimit, 1.0, 10.0, 10.0));
 		/* Slider */
 		_s[i] = sp_color_slider_new (_a[i]);
 		gtk_widget_show (_s[i]);
@@ -217,8 +214,8 @@ void ColorScales::init()
 
 static void sp_color_scales_dispose(GObject *object)
 {
-	if (((GObjectClass *) (parent_class))->dispose)
-		(* ((GObjectClass *) (parent_class))->dispose) (object);
+	if ((G_OBJECT_CLASS(parent_class))->dispose)
+		(* (G_OBJECT_CLASS(parent_class))->dispose) (object);
 }
 
 static void
@@ -466,7 +463,7 @@ void ColorScales::setMode(SPColorScalesMode mode)
 		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[3]), _("_A:"));
 		gtk_widget_set_tooltip_text (_s[3], _("Alpha (opacity)"));
 		gtk_widget_set_tooltip_text (_b[3], _("Alpha (opacity)"));
-		sp_color_slider_set_map (SP_COLOR_SLIDER (_s[0]), (guchar*)sp_color_scales_hue_map ());
+		sp_color_slider_set_map (SP_COLOR_SLIDER (_s[0]), reinterpret_cast<guchar*>(g_strdup(sp_color_scales_hue_map())));
 		gtk_widget_hide (_l[4]);
 		gtk_widget_hide (_s[4]);
 		gtk_widget_hide (_b[4]);

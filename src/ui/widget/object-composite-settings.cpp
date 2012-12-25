@@ -89,8 +89,8 @@ ObjectCompositeSettings::ObjectCompositeSettings(unsigned int verb_code, char co
     /* SizeGroup keeps the blur and opacity labels aligned in Fill & Stroke dlg */
 /*
     GtkSizeGroup *labels = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
-    gtk_size_group_add_widget(labels, (GtkWidget *) _opacity_label.gobj());
-    gtk_size_group_add_widget(labels, (GtkWidget *) _fe_cb.get_blur_label()->gobj());
+    gtk_size_group_add_widget(labels, GTK_WIDGET(_opacity_label.gobj()));
+    gtk_size_group_add_widget(labels, GTK_WIDGET(_fe_cb.get_blur_label()->gobj()));
 */
 
     show_all_children();

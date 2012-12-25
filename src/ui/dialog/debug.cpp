@@ -126,7 +126,7 @@ void DebugDialogImpl::show()
 {
     //call super()
     Gtk::Dialog::show();
-    //sp_transientize((GtkWidget *)gobj());  //Make transient
+    //sp_transientize(GTK_WIDGET(gobj()));  //Make transient
     raise();
     Gtk::Dialog::present();
 }

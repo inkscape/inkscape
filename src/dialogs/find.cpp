@@ -111,7 +111,7 @@ sp_find_squeeze_window()
 #else
     gtk_widget_size_request(dlg, &r);
 #endif
-    gtk_window_resize ((GtkWindow *) dlg, r.width, r.height);
+    gtk_window_resize (GTK_WINDOW(dlg), r.width, r.height);
 }
 
 static bool
@@ -156,7 +156,7 @@ item_text_match (SPItem *item, const gchar *text, bool exact)
             //FIXME: strcasestr
             ret = ((bool) (strstr(item_text, text) != NULL));
         }
-        g_free ((void*) item_text);
+        g_free(static_cast<void*>(g_strdup(item_text)));
         return ret;
     }
     return false;
@@ -327,8 +327,8 @@ all_selection_items (Inkscape::Selection *s, GSList *l, SPObject *ancestor, bool
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-   for (GSList *i = (GSList *) s->itemList(); i != NULL; i = i->next) {
-        if ( SP_IS_ITEM(i->data) && !reinterpret_cast<SPObject*>(i->data)->cloned && !desktop->isLayer(SP_ITEM(i->data))) {
+   for (GSList *i = const_cast<GSList *>(s->itemList()); i != NULL; i = i->next) {
+        if ( SP_IS_ITEM(i->data) && !SP_OBJECT(i->data)->cloned && !desktop->isLayer(SP_ITEM(i->data))) {
             SPItem * item = SP_ITEM(i->data);
             if (!ancestor || ancestor->isAncestorOf(item)) {
                 if ((hidden || !desktop->itemIsHidden(item)) && (locked || !item->isLocked())) {
@@ -511,7 +511,7 @@ sp_find_types_checkbox (GtkWidget *w, const gchar *data, gboolean active,
     {
         GtkWidget *b  = gtk_check_button_new_with_label (label);
         gtk_widget_show (b);
-        gtk_toggle_button_set_active ((GtkToggleButton *) b, active);
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(b), active);
         g_object_set_data (G_OBJECT (w), data, b);
         gtk_widget_set_tooltip_text (b, tip);
         if (toggled)
@@ -709,9 +709,9 @@ sp_find_dialog_old (void)
 //        if (y<0) y=0;
 
         if (w && h)
-            gtk_window_resize ((GtkWindow *) dlg, w, h);
+            gtk_window_resize(GTK_WINDOW(dlg), w, h);
         if (x >= 0 && y >= 0 && (x < (gdk_screen_width()-MIN_ONSCREEN_DISTANCE)) && (y < (gdk_screen_height()-MIN_ONSCREEN_DISTANCE))) {
-            gtk_window_move ((GtkWindow *) dlg, x, y);
+            gtk_window_move(GTK_WINDOW(dlg), x, y);
         } else {
             gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_CENTER);
         }
@@ -764,7 +764,7 @@ sp_find_dialog_old (void)
             {
             GtkWidget *b  = gtk_check_button_new_with_mnemonic (_("Search in s_election"));
             gtk_widget_show (b);
-            gtk_toggle_button_set_active ((GtkToggleButton *) b, FALSE);
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(b), FALSE);
             g_object_set_data (G_OBJECT (dlg), "inselection", b);
             gtk_widget_set_tooltip_text (b, _("Limit search to the current selection"));
             gtk_box_pack_start (GTK_BOX (vb), b, FALSE, FALSE, 0);
@@ -773,7 +773,7 @@ sp_find_dialog_old (void)
             {
             GtkWidget *b  = gtk_check_button_new_with_mnemonic (_("Search in current _layer"));
             gtk_widget_show (b);
-            gtk_toggle_button_set_active ((GtkToggleButton *) b, FALSE);
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(b), FALSE);
             g_object_set_data (G_OBJECT (dlg), "inlayer", b);
             gtk_widget_set_tooltip_text (b, _("Limit search to the current layer"));
             gtk_box_pack_start (GTK_BOX (vb), b, FALSE, FALSE, 0);
@@ -782,7 +782,7 @@ sp_find_dialog_old (void)
             {
             GtkWidget *b  = gtk_check_button_new_with_mnemonic (_("Include _hidden"));
             gtk_widget_show (b);
-            gtk_toggle_button_set_active ((GtkToggleButton *) b, FALSE);
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(b), FALSE);
             g_object_set_data (G_OBJECT (dlg), "includehidden", b);
             gtk_widget_set_tooltip_text (b, _("Include hidden objects in search"));
             gtk_box_pack_start (GTK_BOX (vb), b, FALSE, FALSE, 0);
@@ -791,7 +791,7 @@ sp_find_dialog_old (void)
             {
             GtkWidget *b  = gtk_check_button_new_with_mnemonic (_("Include l_ocked"));
             gtk_widget_show (b);
-            gtk_toggle_button_set_active ((GtkToggleButton *) b, FALSE);
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(b), FALSE);
             g_object_set_data (G_OBJECT (dlg), "includelocked", b);
             gtk_widget_set_tooltip_text (b, _("Include locked objects in search"));
             gtk_box_pack_start (GTK_BOX (vb), b, FALSE, FALSE, 0);
@@ -814,8 +814,8 @@ sp_find_dialog_old (void)
         }
     }
 
-    gtk_widget_show((GtkWidget *) dlg);
-    gtk_window_present ((GtkWindow *) dlg);
+    gtk_widget_show(GTK_WIDGET(dlg));
+    gtk_window_present(GTK_WINDOW(dlg));
     sp_find_dialog_reset (NULL, G_OBJECT (dlg));
 
     return dlg;

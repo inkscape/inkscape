@@ -609,7 +609,7 @@ static void update_stop_list( GtkWidget *vb, SPGradient *gradient, SPStop *new_s
     if (!combo_box) {
         return;
     }
-    GtkListStore *store = (GtkListStore *)gtk_combo_box_get_model (GTK_COMBO_BOX(combo_box));
+    GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(combo_box)));
     if (!store) {
         return;
     }
@@ -720,7 +720,7 @@ static SPStop *get_selected_stop( GtkWidget *vb)
     if (combo_box) {
         GtkTreeIter  iter;
         if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX(combo_box), &iter)) {
-            GtkListStore *store = (GtkListStore *)gtk_combo_box_get_model (GTK_COMBO_BOX(combo_box));
+            GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(combo_box)));
             gtk_tree_model_get (GTK_TREE_MODEL(store), &iter, 2, &stop, -1);
         }
     }
@@ -931,7 +931,7 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
 
     /* Adjustment */
     GtkAdjustment *Offset_adj = NULL;
-    Offset_adj= (GtkAdjustment *) gtk_adjustment_new(0.0, 0.0, 1.0, 0.01, 0.01, 0.0);
+    Offset_adj= GTK_ADJUSTMENT(gtk_adjustment_new(0.0, 0.0, 1.0, 0.01, 0.01, 0.0));
     g_object_set_data(G_OBJECT(vb), "offset", Offset_adj);
 
     SPStop *stop = get_selected_stop(vb);
@@ -1197,10 +1197,10 @@ static void sp_gradient_vector_widget_destroy(GtkWidget *object, gpointer /*data
 static void sp_gradient_vector_widget_destroy(GtkObject *object, gpointer /*data*/)
 #endif
 {
-    SPObject *gradient = reinterpret_cast<SPObject*>(g_object_get_data(G_OBJECT(object), "gradient"));
+    SPObject *gradient = SP_OBJECT(g_object_get_data(G_OBJECT(object), "gradient"));
 
-    sigc::connection *release_connection = (sigc::connection *)g_object_get_data(G_OBJECT(object), "gradient_release_connection");
-    sigc::connection *modified_connection = (sigc::connection *)g_object_get_data(G_OBJECT(object), "gradient_modified_connection");
+    sigc::connection *release_connection = static_cast<sigc::connection *>(g_object_get_data(G_OBJECT(object), "gradient_release_connection"));
+    sigc::connection *modified_connection = static_cast<sigc::connection *>(g_object_get_data(G_OBJECT(object), "gradient_modified_connection"));
 
     if (gradient) {
         g_assert( release_connection != NULL );
@@ -1316,7 +1316,7 @@ static void sp_gradient_vector_color_changed(SPColorSelector *csel, GObject *obj
     if (combo_box) {
         GtkTreeIter  iter;
         if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX(combo_box), &iter)) {
-            GtkListStore *store = (GtkListStore *)gtk_combo_box_get_model (GTK_COMBO_BOX(combo_box));
+            GtkListStore *store = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(combo_box)));
 
             Inkscape::UI::Widget::ColorPreview *cp = Gtk::manage(new Inkscape::UI::Widget::ColorPreview(sp_stop_get_rgba32(stop)));
             GdkPixbuf *pb = cp->toPixbuf(64, 16);

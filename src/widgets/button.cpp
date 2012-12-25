@@ -76,11 +76,11 @@ GType sp_button_get_type(void)
 static void
 sp_button_class_init (SPButtonClass *klass)
 {
-	GObjectClass *object_class=(GObjectClass *)klass;
-	GtkWidgetClass *widget_class=(GtkWidgetClass *)klass;
-	GtkButtonClass *button_class=(GtkButtonClass *)klass;
+	GObjectClass *object_class=G_OBJECT_CLASS(klass);
+	GtkWidgetClass *widget_class=GTK_WIDGET_CLASS(klass);
+	GtkButtonClass *button_class=GTK_BUTTON_CLASS(klass);
 
-	parent_class = (GtkToggleButtonClass *)g_type_class_peek_parent (klass);
+	parent_class = GTK_TOGGLE_BUTTON_CLASS(g_type_class_peek_parent(klass));
 
 	object_class->dispose = sp_button_dispose;
 #if GTK_CHECK_VERSION(3,0,0)
@@ -123,7 +123,7 @@ static void sp_button_dispose(GObject *object)
     button->c_set_active.~connection();
     button->c_set_sensitive.~connection();
 
-	((GObjectClass *) (parent_class))->dispose(object);
+	(G_OBJECT_CLASS(parent_class))->dispose(object);
 }
 
 
@@ -185,7 +185,7 @@ sp_button_clicked (GtkButton *button)
 	SPButton *sp_button=SP_BUTTON (button);
 
 	if (sp_button->type == SP_BUTTON_TYPE_TOGGLE) {
-		((GtkButtonClass *) (parent_class))->clicked (button);
+		(GTK_BUTTON_CLASS(parent_class))->clicked (button);
 	}
 }
 
@@ -230,7 +230,7 @@ sp_button_new( Inkscape::IconSize size, SPButtonType type, SPAction *action, SPA
 	// The Inkscape style is no-relief buttons
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
-	return (GtkWidget *) button;
+	return GTK_WIDGET(button);
 }
 
 void
@@ -287,7 +287,7 @@ sp_button_set_action (SPButton *button, SPAction *action)
 		}
 	}
 
-	sp_button_set_composed_tooltip ((GtkWidget *) button, action);
+	sp_button_set_composed_tooltip(GTK_WIDGET(button), action);
 }
 
 static void

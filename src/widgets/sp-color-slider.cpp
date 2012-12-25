@@ -86,12 +86,10 @@ sp_color_slider_get_type (void)
 
 static void sp_color_slider_class_init(SPColorSliderClass *klass)
 {
-	GObjectClass *object_class = (GObjectClass *) klass;
-	GtkWidgetClass *widget_class;
+	GObjectClass   *object_class = G_OBJECT_CLASS(klass);
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
 
-	widget_class = (GtkWidgetClass *) klass;
-
-	parent_class = (GtkWidgetClass*)g_type_class_peek_parent (klass);
+	parent_class = GTK_WIDGET_CLASS(g_type_class_peek_parent(klass));
 
 	slider_signals[GRABBED] = g_signal_new ("grabbed",
 						  G_TYPE_FROM_CLASS(object_class),
@@ -185,8 +183,8 @@ static void sp_color_slider_dispose(GObject *object)
 		slider->adjustment = NULL;
 	}
 
-	if (((GObjectClass *) (parent_class))->dispose)
-		(* ((GObjectClass *) (parent_class))->dispose) (object);
+	if ((G_OBJECT_CLASS(parent_class))->dispose)
+		(* (G_OBJECT_CLASS(parent_class))->dispose) (object);
 }
 
 static void
@@ -311,17 +309,16 @@ sp_color_slider_button_press (GtkWidget *widget, GdkEventButton *event)
 		g_signal_emit (G_OBJECT (slider), slider_signals[DRAGGED], 0);
 
 #if GTK_CHECK_VERSION(3,0,0)
-		gdk_device_grab(gdk_event_get_device((GdkEvent*)event),
+		gdk_device_grab(gdk_event_get_device(GDK_EVENT(event)),
 				gtk_widget_get_window(widget), 
 				GDK_OWNERSHIP_NONE,
 				FALSE,
-				(GdkEventMask)(GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK),
+				static_cast<GdkEventMask>(GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK),
 				NULL,
 				event->time);
 #else		
 		gdk_pointer_grab(gtk_widget_get_window(widget), FALSE,
-				  (GdkEventMask)(GDK_POINTER_MOTION_MASK |
-				  GDK_BUTTON_RELEASE_MASK),
+				  static_cast<GdkEventMask>(GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK),
 				  NULL, NULL, event->time);
 #endif
 	}
@@ -339,8 +336,8 @@ sp_color_slider_button_release (GtkWidget *widget, GdkEventButton *event)
 	if (event->button == 1) {
 
 #if GTK_CHECK_VERSION(3,0,0)
-		gdk_device_ungrab(gdk_event_get_device((GdkEvent *)event),
-                                  gdk_event_get_time((GdkEvent *)event));
+		gdk_device_ungrab(gdk_event_get_device(GDK_EVENT(event)),
+                                  gdk_event_get_time(GDK_EVENT(event)));
 #else
 		gdk_pointer_ungrab (event->time);
 #endif
@@ -388,7 +385,7 @@ void sp_color_slider_set_adjustment(SPColorSlider *slider, GtkAdjustment *adjust
     g_return_if_fail (SP_IS_COLOR_SLIDER (slider));
 
     if (!adjustment) {
-        adjustment = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 1.0, 0.01, 0.0, 0.0);
+        adjustment = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, 0.0, 1.0, 0.01, 0.0, 0.0));
     } else {
         gtk_adjustment_set_page_increment(adjustment, 0.0);
         gtk_adjustment_set_page_size(adjustment, 0.0);
@@ -448,7 +445,7 @@ sp_color_slider_set_map (SPColorSlider *slider, const guchar *map)
 	g_return_if_fail (slider != NULL);
 	g_return_if_fail (SP_IS_COLOR_SLIDER (slider));
 
-	slider->map = (guchar *) map;
+	slider->map = const_cast<guchar *>(map);
 
 	gtk_widget_queue_draw (GTK_WIDGET (slider));
 }

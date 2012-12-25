@@ -113,7 +113,7 @@ GType sp_font_selector_get_type()
 
 static void sp_font_selector_class_init(SPFontSelectorClass *c)
 {
-    GObjectClass *object_class = (GObjectClass *) c;
+    GObjectClass *object_class = G_OBJECT_CLASS(c);
 
     fs_parent_class = (GtkHBoxClass* )g_type_class_peek_parent (c);
 
@@ -285,7 +285,7 @@ static void sp_font_selector_family_select_row(GtkTreeSelection *selection,
     for ( ; list ; list = list->next )
     {
         gtk_list_store_append (store, &iter);
-        gtk_list_store_set (store, &iter, 0, (char*)list->data, -1);
+        gtk_list_store_set (store, &iter, 0, static_cast<char*>(list->data), -1);
     }
 
     gtk_tree_view_set_model (GTK_TREE_VIEW (fsel->style_treeview), GTK_TREE_MODEL (store));
@@ -433,7 +433,7 @@ GtkWidget *sp_font_selector_new()
 {
     SPFontSelector *fsel = SP_FONT_SELECTOR(g_object_new(SP_TYPE_FONT_SELECTOR, NULL));
 
-    return (GtkWidget *) fsel;
+    return GTK_WIDGET(fsel);
 }
 
 /*
@@ -453,7 +453,7 @@ unsigned int sp_font_selector_get_best_style (font_instance *font, GList *list)
 
     char *incomingFontString = pango_font_description_to_string(incomingFont);
 
-    tempFont = (font_factory::Default())->FaceFromUIStrings(family.c_str(), (char*)list->data);
+    tempFont = (font_factory::Default())->FaceFromUIStrings(family.c_str(), static_cast<char*>(list->data));
 
     PangoFontDescription *bestMatchForFont = NULL;
     if (tempFont) {
@@ -469,7 +469,7 @@ unsigned int sp_font_selector_get_best_style (font_instance *font, GList *list)
     while (list) {
         currentStyleNumber++;
 
-        tempFont = font_factory::Default()->FaceFromUIStrings(family.c_str(), (char*)list->data);
+        tempFont = font_factory::Default()->FaceFromUIStrings(family.c_str(), static_cast<char*>(list->data));
 
         PangoFontDescription *currentMatchForFont = NULL;
         if (tempFont) {

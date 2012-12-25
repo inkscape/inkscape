@@ -68,7 +68,7 @@ GtkWidget *sp_xmlview_attr_list_new (Inkscape::XML::Node * repr)
 
     sp_xmlview_attr_list_set_repr (attr_list, repr);
 
-    return (GtkWidget *) attr_list;
+    return GTK_WIDGET(attr_list);
 }
 
 void
@@ -114,14 +114,14 @@ GType sp_xmlview_attr_list_get_type(void)
 void sp_xmlview_attr_list_class_init (SPXMLViewAttrListClass * klass)
 {
 #if GTK_CHECK_VERSION(3,0,0)
-	GtkWidgetClass * widget_class = (GtkWidgetClass *) klass;
+	GtkWidgetClass * widget_class = GTK_WIDGET_CLASS(klass);
 	widget_class->destroy = sp_xmlview_attr_list_destroy;
 #else
-	GtkObjectClass * object_class = (GtkObjectClass *) klass;
+	GtkObjectClass * object_class = GTK_OBJECT_CLASS(klass);
 	object_class->destroy = sp_xmlview_attr_list_destroy;
 #endif
 
-	parent_class = (GtkTreeViewClass*)g_type_class_peek_parent (klass);
+	parent_class = GTK_TREE_VIEW_CLASS(g_type_class_peek_parent (klass));
 
         g_signal_new("row-value-changed",
                       G_TYPE_FROM_CLASS(klass),

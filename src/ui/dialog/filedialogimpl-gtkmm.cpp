@@ -100,9 +100,9 @@ findEntryWidgets(Gtk::Container *parent,
         Gtk::Widget *child = children[i];
         GtkWidget *wid = child->gobj();
         if (GTK_IS_ENTRY(wid))
-           result.push_back((Gtk::Entry *)child);
+           result.push_back(dynamic_cast<Gtk::Entry *>(child));
         else if (GTK_IS_CONTAINER(wid))
-            findEntryWidgets((Gtk::Container *)child, result);
+            findEntryWidgets(dynamic_cast<Gtk::Container *>(child), result);
         }
 
 }
@@ -119,9 +119,9 @@ findExpanderWidgets(Gtk::Container *parent,
         Gtk::Widget *child = children[i];
         GtkWidget *wid = child->gobj();
         if (GTK_IS_EXPANDER(wid))
-           result.push_back((Gtk::Expander *)child);
+           result.push_back(dynamic_cast<Gtk::Expander *>(child));
         else if (GTK_IS_CONTAINER(wid))
-            findExpanderWidgets((Gtk::Container *)child, result);
+            findExpanderWidgets(dynamic_cast<Gtk::Container *>(child), result);
         }
 
 }
@@ -522,7 +522,7 @@ bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
     if (Glib::file_test(fileName, Glib::FILE_TEST_IS_REGULAR))
         {
         Glib::ustring fileNameUtf8 = Glib::filename_to_utf8(fileName);
-        gchar *fName = (gchar *)fileNameUtf8.c_str();
+        gchar *fName = const_cast<gchar *>(fileNameUtf8.c_str());
         struct stat info;
         if (g_stat(fName, &info))
             {
@@ -898,7 +898,7 @@ bool
 FileOpenDialogImplGtk::show()
 {
     set_modal (TRUE);                      //Window
-    sp_transientize((GtkWidget *)gobj());  //Make transient
+    sp_transientize(GTK_WIDGET(gobj()));  //Make transient
     gint b = run();                        //Dialog
     svgPreview.showNoPreview();
     hide();
@@ -1241,7 +1241,7 @@ FileSaveDialogImplGtk::show()
 {
     change_path(myFilename);
     set_modal (TRUE);                      //Window
-    sp_transientize((GtkWidget *)gobj());  //Make transient
+    sp_transientize(GTK_WIDGET(gobj()));  //Make transient
     gint b = run();                        //Dialog
     svgPreview.showNoPreview();
     set_preview_widget_active(false);
@@ -1688,7 +1688,7 @@ FileExportDialogImpl::show()
         s = getcwd (NULL, 0);
     set_current_folder(Glib::filename_from_utf8(s)); //hack to force initial dir listing
     set_modal (TRUE);                      //Window
-    sp_transientize((GtkWidget *)gobj());  //Make transient
+    sp_transientize(GTK_WIDGET(gobj()));  //Make transient
     gint b = run();                        //Dialog
     svgPreview.showNoPreview();
     hide();

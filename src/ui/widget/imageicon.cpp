@@ -117,7 +117,7 @@ bool ImageIcon::showSvgDocument(const SPDocument *docArg)
     viewerGtkmm->show();
     pack_start(*viewerGtkmm, TRUE, TRUE, 0);
 
-    //GtkWidget *vbox = (GtkWidget *)gobj();
+    //GtkWidget *vbox = GTK_WIDGET(gobj());
     //gtk_box_pack_start(GTK_BOX(vbox), viewerGtk, TRUE, TRUE, 0);
 
     return true;
@@ -306,7 +306,7 @@ void ImageIcon::showBrokenImage(const Glib::ustring &errorMessage)
         "</svg>";
 
     //Fill in the template
-    char *cErrorMessage = (char *)errorMessage.c_str();
+    char *cErrorMessage = const_cast<char *>(errorMessage.c_str());
     gchar *xmlBuffer = g_strdup_printf(xformat, cErrorMessage);
 
     //g_message("%s\n", xmlBuffer);
@@ -375,7 +375,7 @@ bool ImageIcon::show(const Glib::ustring &fileName)
     if (!Glib::file_test(fileName, Glib::FILE_TEST_EXISTS))
         return false;
 
-    gchar *fName = (gchar *)fileName.c_str();
+    gchar *fName = const_cast<gchar *>(fileName.c_str());
     //g_message("fname:%s\n", fName);
 
 

@@ -139,7 +139,7 @@ bool
 ExportDialog::show()
 {
     set_modal (TRUE);                      //Window
-    sp_transientize((GtkWidget *)gobj());  //Make transient
+    sp_transientize(GTK_WIDGET(gobj()));  //Make transient
     gint b = run();                        //Dialog
     hide();
 
@@ -244,7 +244,7 @@ bool
 ExportPasswordDialog::show()
 {
     set_modal (TRUE);                      //Window
-    sp_transientize((GtkWidget *)gobj());  //Make transient
+    sp_transientize(GTK_WIDGET(gobj()));  //Make transient
     gint b = run();                        //Dialog
     hide();
 
@@ -957,40 +957,40 @@ void SearchResultList::populate_from_xml(xmlNode * a_node)
     for (xmlNode *cur_node = a_node; cur_node; cur_node = cur_node->next) {
 
         // Get items information
-        if (strcmp((const char*)cur_node->name, "rss")) // Avoid the root
+        if (strcmp(reinterpret_cast<const char*>(cur_node->name), "rss")) // Avoid the root
             if (cur_node->type == XML_ELEMENT_NODE &&
-                    (cur_node->parent->name && !strcmp((const char*)cur_node->parent->name, "item")))
+                    (cur_node->parent->name && !strcmp(reinterpret_cast<const char*>(cur_node->parent->name), "item")))
             {
-                if (!strcmp((const char*)cur_node->name, "title"))
+                if (!strcmp(reinterpret_cast<const char*>(cur_node->name), "title"))
                 {
                     row_num = append("");
                     xmlChar *xml_title = xmlNodeGetContent(cur_node);
-                    char* title = (char*) xml_title;
+                    char* title = reinterpret_cast<char*>(xml_title);
                     
                     set_text(row_num, RESULTS_COLUMN_TITLE, title);
                     xmlFree(title);
                 }
-                else if (!strcmp((const char*)cur_node->name, "pubDate"))
+                else if (!strcmp(reinterpret_cast<const char*>(cur_node->name), "pubDate"))
                 {
                     xmlChar *xml_date = xmlNodeGetContent(cur_node);
-                    char* date = (char*) xml_date;
+                    char* date = reinterpret_cast<char*>(xml_date);
                     
                     set_text(row_num, RESULTS_COLUMN_DATE, date);
                     xmlFree(xml_date);
                 }
-                else if (!strcmp((const char*)cur_node->name, "creator"))
+                else if (!strcmp(reinterpret_cast<const char*>(cur_node->name), "creator"))
                 {
                     xmlChar *xml_creator = xmlNodeGetContent(cur_node);
-                    char* creator = (char*) xml_creator;
+                    char* creator = reinterpret_cast<char*>(xml_creator);
                     
                     set_text(row_num, RESULTS_COLUMN_CREATOR, creator);
                     xmlFree(xml_creator);
                 }
-                else if (!strcmp((const char*)cur_node->name, "description"))
+                else if (!strcmp(reinterpret_cast<const char*>(cur_node->name), "description"))
                 {
                     xmlChar *xml_description = xmlNodeGetContent(cur_node);
                     //char* final_description;
-                    char* stripped_description = g_strstrip((char*) xml_description);
+                    char* stripped_description = g_strstrip(reinterpret_cast<char*>(xml_description));
 
                     if (!strcmp(stripped_description, "")) {
                         stripped_description = _("No description");
@@ -1002,30 +1002,30 @@ void SearchResultList::populate_from_xml(xmlNode * a_node)
                     set_text(row_num, RESULTS_COLUMN_DESCRIPTION, stripped_description);
                     xmlFree(xml_description);
                 }
-                else if (!strcmp((const char*)cur_node->name, "enclosure"))
+                else if (!strcmp(reinterpret_cast<const char*>(cur_node->name), "enclosure"))
                 {
-                    xmlChar *xml_url = xmlGetProp(cur_node, (xmlChar*) "url");
-                    char* url = (char*) xml_url;
+                    xmlChar *xml_url = xmlGetProp(cur_node, reinterpret_cast<xmlChar*>(g_strdup("url")));
+                    char* url = reinterpret_cast<char*>(xml_url);
                     char* filename = g_path_get_basename(url);
 
                     set_text(row_num, RESULTS_COLUMN_URL, url);
                     set_text(row_num, RESULTS_COLUMN_FILENAME, filename);
                     xmlFree(xml_url);
                 }
-                else if (!strcmp((const char*)cur_node->name, "thumbnail"))
+                else if (!strcmp(reinterpret_cast<const char*>(cur_node->name), "thumbnail"))
                 {
-                    xmlChar *xml_thumbnail_url = xmlGetProp(cur_node, (xmlChar*) "url");
-                    char* thumbnail_url = (char*) xml_thumbnail_url;
+                    xmlChar *xml_thumbnail_url = xmlGetProp(cur_node, reinterpret_cast<xmlChar*>(g_strdup("url")));
+                    char* thumbnail_url = reinterpret_cast<char*>(xml_thumbnail_url);
                     char* thumbnail_filename = g_path_get_basename(thumbnail_url);
 
                     set_text(row_num, RESULTS_COLUMN_THUMBNAIL_URL, thumbnail_url);
                     set_text(row_num, RESULTS_COLUMN_THUMBNAIL_FILENAME, thumbnail_filename);
                     xmlFree(xml_thumbnail_url);
                 }
-                else if (!strcmp((const char*)cur_node->name, "guid"))
+                else if (!strcmp(reinterpret_cast<const char*>(cur_node->name), "guid"))
                 {
                     xmlChar *xml_guid = xmlNodeGetContent(cur_node);
-                    char* guid_url = (char*) xml_guid;
+                    char* guid_url = reinterpret_cast<char*>(xml_guid);
                     char* guid = g_path_get_basename(guid_url);
 
                     set_text(row_num, RESULTS_COLUMN_GUID, guid);

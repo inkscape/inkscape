@@ -69,8 +69,8 @@ GType sp_gradient_image_get_type(void)
 
 static void sp_gradient_image_class_init(SPGradientImageClass *klass)
 {
-	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
-	parent_class = (GtkWidgetClass*)g_type_class_peek_parent (klass);
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
+	parent_class = GTK_WIDGET_CLASS(g_type_class_peek_parent (klass));
 
 #if GTK_CHECK_VERSION(3,0,0)
 //	GObjectClass *object_class = G_OBJECT_CLASS(klass); 
@@ -80,7 +80,7 @@ static void sp_gradient_image_class_init(SPGradientImageClass *klass)
 	widget_class->draw = sp_gradient_image_draw;
 	widget_class->destroy = sp_gradient_image_destroy;
 #else
-	GtkObjectClass *object_class = (GtkObjectClass *) klass;
+	GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
 
 	object_class->destroy = sp_gradient_image_destroy;
 	widget_class->size_request = sp_gradient_image_size_request;
@@ -120,8 +120,8 @@ static void sp_gradient_image_destroy(GtkObject *object)
 	if (parent_class->destroy)
 		(* (parent_class)->destroy) (object);
 #else
-	if (((GtkObjectClass *) (parent_class))->destroy)
-		(* ((GtkObjectClass *) (parent_class))->destroy) (object);
+	if ((GTK_OBJECT_CLASS(parent_class))->destroy)
+		(* (GTK_OBJECT_CLASS(parent_class))->destroy) (object);
 #endif
 }
 
@@ -196,7 +196,7 @@ sp_gradient_image_new (SPGradient *gradient)
 
 	sp_gradient_image_set_gradient (image, gradient);
 
-	return (GtkWidget *) image;
+	return GTK_WIDGET(image);
 }
 
 GdkPixbuf*
