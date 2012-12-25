@@ -330,7 +330,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     /* Main table */
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_box_set_homogeneous(GTK_BOX(dtw->vbox), FALSE);
 #else
     dtw->vbox = gtk_vbox_new (FALSE, 0);
 #endif
@@ -338,7 +337,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->statusbar = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_set_homogeneous(GTK_BOX(dtw->statusbar), FALSE);
 #else
     dtw->statusbar = gtk_hbox_new (FALSE, 0);
 #endif
@@ -355,7 +353,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-    gtk_box_set_homogeneous(GTK_BOX(dtw->hbox), FALSE);
 #else
     dtw->hbox = gtk_hbox_new(FALSE, 0);
 #endif
@@ -396,11 +393,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     
     gtk_widget_set_margin_left(eventbox, xthickness);
     gtk_widget_set_margin_right(eventbox, xthickness);
-    
-    gtk_widget_set_halign(eventbox, GTK_ALIGN_FILL);
-    gtk_widget_set_hexpand(eventbox, TRUE);
-    gtk_widget_set_valign(eventbox, GTK_ALIGN_START);
-
     gtk_grid_attach(GTK_GRID(canvas_tbl), eventbox, 1, 0, 1, 1);
 #else
     GtkWidget *tbl = gtk_table_new(2, 3, FALSE);
@@ -424,11 +416,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #if GTK_CHECK_VERSION(3,0,0)
     gtk_widget_set_margin_top(eventbox, ythickness);
     gtk_widget_set_margin_bottom(eventbox, ythickness);
-
-    gtk_widget_set_halign(eventbox, GTK_ALIGN_START);
-    gtk_widget_set_valign(eventbox, GTK_ALIGN_FILL);
-    gtk_widget_set_vexpand(eventbox, TRUE);
-
     gtk_grid_attach(GTK_GRID(canvas_tbl), eventbox, 0, 1, 1, 1);
 #else
     gtk_table_attach(GTK_TABLE (canvas_tbl), eventbox, 0, 1, 1, 2,
@@ -445,11 +432,8 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->hscrollbar = gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, GTK_ADJUSTMENT (dtw->hadj));
-    gtk_widget_set_halign(dtw->hscrollbar, GTK_ALIGN_FILL);
-    gtk_widget_set_hexpand(dtw->hscrollbar, TRUE);
     gtk_grid_attach(GTK_GRID(canvas_tbl), dtw->hscrollbar, 1, 2, 1, 1);
     dtw->vscrollbar_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_box_set_homogeneous(GTK_BOX(dtw->vscrollbar_box), FALSE);
 #else
     dtw->hscrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (dtw->hadj));
     gtk_table_attach(GTK_TABLE (canvas_tbl), dtw->hscrollbar, 1, 2, 2, 3,
@@ -480,8 +464,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_box_pack_start (GTK_BOX (dtw->vscrollbar_box), dtw->vscrollbar, TRUE, TRUE, 0);
 
 #if GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_set_valign(dtw->vscrollbar, GTK_ALIGN_FILL);
-    gtk_widget_set_vexpand(dtw->vscrollbar, TRUE);
     gtk_grid_attach(GTK_GRID(canvas_tbl), dtw->vscrollbar_box, 2, 0, 1, 2);
 #else
     gtk_table_attach(GTK_TABLE(canvas_tbl), dtw->vscrollbar_box, 2, 3, 0, 2,
@@ -561,8 +543,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     g_signal_connect (G_OBJECT (dtw->canvas), "event", G_CALLBACK (sp_desktop_widget_event), dtw);
 
 #if GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_set_halign(GTK_WIDGET(dtw->canvas), GTK_ALIGN_FILL);
-    gtk_widget_set_valign(GTK_WIDGET(dtw->canvas), GTK_ALIGN_FILL);
     gtk_widget_set_hexpand(GTK_WIDGET(dtw->canvas), TRUE);
     gtk_widget_set_vexpand(GTK_WIDGET(dtw->canvas), TRUE);
     gtk_grid_attach(GTK_GRID(canvas_tbl), GTK_WIDGET(dtw->canvas), 1, 1, 1, 1);
@@ -596,8 +576,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #if GTK_CHECK_VERSION(3,0,0)
         gtk_widget_set_hexpand(GTK_WIDGET(paned->gobj()), TRUE);
         gtk_widget_set_vexpand(GTK_WIDGET(paned->gobj()), TRUE);
-        gtk_widget_set_halign(GTK_WIDGET(paned->gobj()), GTK_ALIGN_FILL);
-        gtk_widget_set_valign(GTK_WIDGET(paned->gobj()), GTK_ALIGN_FILL);
         gtk_grid_attach(GTK_GRID(tbl), GTK_WIDGET (paned->gobj()), 1, 1, 1, 1);
 #else
         gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (paned->gobj()), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
@@ -608,8 +586,6 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #if GTK_CHECK_VERSION(3,0,0)
         gtk_widget_set_hexpand(GTK_WIDGET(canvas_tbl), TRUE);
         gtk_widget_set_vexpand(GTK_WIDGET(canvas_tbl), TRUE);
-        gtk_widget_set_halign(GTK_WIDGET(canvas_tbl), GTK_ALIGN_FILL);
-        gtk_widget_set_valign(GTK_WIDGET(canvas_tbl), GTK_ALIGN_FILL);
         gtk_grid_attach(GTK_GRID(tbl), GTK_WIDGET (canvas_tbl), 1, 1, 1, 1);
 #else
         gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (canvas_tbl), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
