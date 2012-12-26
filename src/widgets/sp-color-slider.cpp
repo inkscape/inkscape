@@ -309,7 +309,7 @@ sp_color_slider_button_press (GtkWidget *widget, GdkEventButton *event)
 		g_signal_emit (G_OBJECT (slider), slider_signals[DRAGGED], 0);
 
 #if GTK_CHECK_VERSION(3,0,0)
-		gdk_device_grab(gdk_event_get_device(GDK_EVENT(event)),
+		gdk_device_grab(gdk_event_get_device(reinterpret_cast<GdkEvent *>(event)),
 				gtk_widget_get_window(widget), 
 				GDK_OWNERSHIP_NONE,
 				FALSE,
@@ -336,8 +336,8 @@ sp_color_slider_button_release (GtkWidget *widget, GdkEventButton *event)
 	if (event->button == 1) {
 
 #if GTK_CHECK_VERSION(3,0,0)
-		gdk_device_ungrab(gdk_event_get_device(GDK_EVENT(event)),
-                                  gdk_event_get_time(GDK_EVENT(event)));
+		gdk_device_ungrab(gdk_event_get_device(reinterpret_cast<GdkEvent *>(event)),
+                                  gdk_event_get_time(reinterpret_cast<GdkEvent *>(event)));
 #else
 		gdk_pointer_ungrab (event->time);
 #endif
