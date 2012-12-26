@@ -35,11 +35,6 @@
 
 #define STATUS_LAYER_FONT_SIZE 7700
 
-#define RULER_WIDTH           12
-#define RULER_HEIGHT          12
-#define RULER_FONT_SIZE 6500
-#define RULER_FONT_VERTICAL_SPACING 1.2
-
 /*
   Local Variables:
   mode:c++

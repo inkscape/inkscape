@@ -1,5 +1,20 @@
 /*
- * Customized ruler class for inkscape
+ * Customized ruler class for inkscape.  Note that this is a fork of
+ * the GimpRuler widget from GIMP: libgimpwidgets/gimpruler.c.
+ * The GIMP code is released under the GPL 3.  The GIMP code itself
+ * is a fork of the now-obsolete GtkRuler widget from GTK+ 2.
+ *
+ * Major differences between implementations in Inkscape and GIMP are
+ * as follows:
+ *  - We use values from a table of ruler metrics to set sizing depending
+ *    on the desired unit for the ruler scale.  GIMP uses the same metrics
+ *    for all units, but allows the unit to be specified.
+ *
+ *  - We use a default font size of PANGO_SCALE_X_SMALL for labels,
+ *    GIMP uses PANGO_SCALE_SMALL (i.e., a bit larger than ours).
+ *
+ *  - In GIMP, the ruler position follows "track widgets" by connecting
+ *    to their GtkWidget:motion-notify-event.
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>
@@ -7,6 +22,7 @@
  *   bulia byak <buliabyak@users.sf.net>
  *   Diederik van Lierop <mail@diedenrezi.nl>
  *   Jon A. Cruz <jon@joncruz.org>
+ *   Alex Valavanis <valavanisalex@gmail.com>
  *
  * Copyright (C) 1999-2011 authors
  *
@@ -18,17 +34,29 @@
 #include <cstdio>
 
 #include "widget-sizes.h"
-#include "desktop-widget.h"
 #include "ruler.h"
 #include "unit-constants.h"
 #include "round.h"
 #include <glibmm/i18n.h>
 
+#define ROUND(x) ((int) ((x) + 0.5))
+
 #define GTK_PARAM_READWRITE G_PARAM_READWRITE|G_PARAM_STATIC_NAME|G_PARAM_STATIC_NICK|G_PARAM_STATIC_BLURB
 
-#define MINIMUM_INCR          5
+#define DEFAULT_RULER_FONT_SCALE  PANGO_SCALE_X_SMALL
+#define MINIMUM_INCR              5
 
-#define ROUND(x) ((int) ((x) + 0.5))
+
+enum {
+  PROP_0,
+  PROP_ORIENTATION,
+  PROP_LOWER,
+  PROP_UPPER,
+  PROP_POSITION,
+  PROP_MAX_SIZE,
+  PROP_METRIC
+};
+
 
 /* All distances below are in 1/72nd's of an inch. (According to
  * Adobe, that's a point, but points are really 1/72.27 in.)
@@ -44,6 +72,7 @@ typedef struct
   GdkWindow       *input_window;
   cairo_surface_t *backing_store;
   PangoLayout     *layout;
+  gdouble          font_scale;
   
   SPRulerMetric   *metric;
   
@@ -51,59 +80,9 @@ typedef struct
   gint             ysrc;
 } SPRulerPrivate;
 
-enum {
-  PROP_0,
-  PROP_ORIENTATION,
-  PROP_LOWER,
-  PROP_UPPER,
-  PROP_POSITION,
-  PROP_MAX_SIZE,
-  PROP_METRIC
-};
+#define SP_RULER_GET_PRIVATE(ruler) \
+  G_TYPE_INSTANCE_GET_PRIVATE (ruler, SP_TYPE_RULER, SPRulerPrivate)
 
-static void          sp_ruler_set_property         (GObject        *object,
-                                                    guint           prop_id,
-                                                    const GValue   *value,
-                                                    GParamSpec     *pspec);
-static void          sp_ruler_get_property         (GObject        *object,
-                                                    guint           prop_id,
-                                                    GValue         *value,
-                                                    GParamSpec     *pspec);
-static void          sp_ruler_realize              (GtkWidget      *widget);
-static void          sp_ruler_unrealize            (GtkWidget      *widget);
-static void          sp_ruler_map                  (GtkWidget      *widget);
-static void          sp_ruler_unmap                (GtkWidget      *widget);
-static void          sp_ruler_size_request         (GtkWidget      *widget,
-                                                    GtkRequisition *requisition);
-
-#if GTK_CHECK_VERSION(3,0,0)
-static void          sp_ruler_get_preferred_width  (GtkWidget      *widget, 
-                                                    gint           *minimum_width,
-                                                    gint           *natural_width);
-
-static void          sp_ruler_get_preferred_height (GtkWidget      *widget, 
-                                                    gint           *minimum_height,
-                                                    gint           *natural_height);
-#endif
-
-static void          sp_ruler_size_allocate        (GtkWidget      *widget,
-                                                    GtkAllocation  *allocation);
-static gboolean      sp_ruler_motion_notify        (GtkWidget      *widget,
-                                                    GdkEventMotion *event);
-static gboolean      sp_ruler_draw                 (GtkWidget      *widget,
-		                                    cairo_t        *cr);
-#if !GTK_CHECK_VERSION(3,0,0)
-static gboolean      sp_ruler_expose               (GtkWidget      *widget,
-                                                    GdkEventExpose *event);
-#endif
-static void          sp_ruler_draw_ticks           (SPRuler        *ruler);
-static void          sp_ruler_draw_pos             (SPRuler        *ruler);
-static void          sp_ruler_make_pixmap          (SPRuler        *ruler);
-
-static PangoLayout * sp_ruler_get_layout           (GtkWidget      *widget,
-                                                    const gchar    *text);
-
-#define SP_RULER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), SP_TYPE_RULER, SPRulerPrivate))
 
 /// Ruler metrics.
 static SPRulerMetric const sp_ruler_metrics[] = {
@@ -119,9 +98,59 @@ static SPRulerMetric const sp_ruler_metrics[] = {
   {PX_PER_M,  { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_M
 };
 
-G_DEFINE_TYPE_WITH_CODE (SPRuler, sp_ruler, GTK_TYPE_WIDGET,
-                         G_IMPLEMENT_INTERFACE (GTK_TYPE_ORIENTABLE,
-                                                NULL))
+
+static void          sp_ruler_set_property         (GObject        *object,
+                                                    guint           prop_id,
+                                                    const GValue   *value,
+                                                    GParamSpec     *pspec);
+static void          sp_ruler_get_property         (GObject        *object,
+                                                    guint           prop_id,
+                                                    GValue         *value,
+                                                    GParamSpec     *pspec);
+
+static void          sp_ruler_realize              (GtkWidget      *widget);
+static void          sp_ruler_unrealize            (GtkWidget      *widget);
+static void          sp_ruler_map                  (GtkWidget      *widget);
+static void          sp_ruler_unmap                (GtkWidget      *widget);
+static void          sp_ruler_size_allocate        (GtkWidget      *widget,
+                                                    GtkAllocation  *allocation);
+
+#if GTK_CHECK_VERSION(3,0,0)
+static void          sp_ruler_get_preferred_width  (GtkWidget      *widget, 
+                                                    gint           *minimum_width,
+                                                    gint           *natural_width);
+
+static void          sp_ruler_get_preferred_height (GtkWidget      *widget, 
+                                                    gint           *minimum_height,
+                                                    gint           *natural_height);
+static void          sp_ruler_style_updated        (GtkWidget      *widget);
+#else
+static void          sp_ruler_size_request         (GtkWidget      *widget,
+                                                    GtkRequisition *requisition);
+static void          sp_ruler_style_set            (GtkWidget      *widget,
+		                                    GtkStyle       *prev_style);
+#endif
+
+static gboolean      sp_ruler_motion_notify        (GtkWidget      *widget,
+                                                    GdkEventMotion *event);
+static gboolean      sp_ruler_draw                 (GtkWidget      *widget,
+		                                    cairo_t        *cr);
+#if !GTK_CHECK_VERSION(3,0,0)
+static gboolean      sp_ruler_expose               (GtkWidget      *widget,
+                                                    GdkEventExpose *event);
+#endif
+static void          sp_ruler_draw_ticks           (SPRuler        *ruler);
+static void          sp_ruler_draw_pos             (SPRuler        *ruler);
+static void          sp_ruler_make_pixmap          (SPRuler        *ruler);
+
+static PangoLayout * sp_ruler_get_layout           (GtkWidget      *widget,
+                                                    const gchar    *text);
+
+
+G_DEFINE_TYPE (SPRuler, sp_ruler, GTK_TYPE_WIDGET)
+
+#define parent_class sp_ruler_parent_class
+
 
 static void
 sp_ruler_class_init (SPRulerClass *klass)
@@ -140,18 +169,25 @@ sp_ruler_class_init (SPRulerClass *klass)
 #if GTK_CHECK_VERSION(3,0,0)
   widget_class->get_preferred_width  = sp_ruler_get_preferred_width;
   widget_class->get_preferred_height = sp_ruler_get_preferred_height;
+  widget_class->style_updated        = sp_ruler_style_updated;
   widget_class->draw                 = sp_ruler_draw;
 #else
   widget_class->size_request         = sp_ruler_size_request;
+  widget_class->style_set            = sp_ruler_style_set;
   widget_class->expose_event         = sp_ruler_expose;
 #endif
   widget_class->motion_notify_event = sp_ruler_motion_notify;
 
   g_type_class_add_private (object_class, sizeof (SPRulerPrivate));
 
-  g_object_class_override_property (object_class,
-                                    PROP_ORIENTATION,
-                                    "orientation");
+  g_object_class_install_property (object_class,
+                                   PROP_ORIENTATION,
+				   g_param_spec_enum ("orientation",
+					              _("Orientation"),
+						      _("The orientation of the ruler"),
+                                                      GTK_TYPE_ORIENTATION,
+						      GTK_ORIENTATION_HORIZONTAL,
+						      static_cast<GParamFlags>(GTK_PARAM_READWRITE)));
 
   g_object_class_install_property (object_class,
                                    PROP_LOWER,
@@ -206,7 +242,15 @@ sp_ruler_class_init (SPRulerClass *klass)
 						      _("The metric used for the ruler"),
 						      0, 8,
 						      SP_PX,
-						      static_cast<GParamFlags>(GTK_PARAM_READWRITE)));  
+						      static_cast<GParamFlags>(GTK_PARAM_READWRITE)));
+
+  gtk_widget_class_install_style_property (widget_class,
+		                           g_param_spec_double ("font-scale",
+						                NULL, NULL,
+								0.0,
+								G_MAXDOUBLE,
+								DEFAULT_RULER_FONT_SCALE,
+								G_PARAM_READABLE));
 }
 
 static void
@@ -224,6 +268,7 @@ sp_ruler_init (SPRuler *ruler)
   priv->position      = 0;
   priv->max_size      = 0;
   priv->backing_store = NULL;
+  priv->font_scale    = DEFAULT_RULER_FONT_SCALE;
 
   sp_ruler_set_metric(ruler, SP_PX);
 }
@@ -569,6 +614,33 @@ sp_ruler_size_request (GtkWidget      *widget,
       requisition->width  = style->xthickness * 2 + size;
       requisition->height = style->ythickness * 2 + 1;
 #endif
+    }
+}
+
+static void
+#if GTK_CHECK_VERSION(3,0,0)
+sp_ruler_style_updated (GtkWidget *widget)
+#else
+sp_ruler_style_set (GtkWidget *widget,
+                    GtkStyle  *prev_style)
+#endif
+{
+  SPRulerPrivate *priv = SP_RULER_GET_PRIVATE (widget);
+
+#if GTK_CHECK_VERSION(3,0,0)
+  GTK_WIDGET_CLASS (sp_ruler_parent_class)->style_updated (widget);
+#else
+  GTK_WIDGET_CLASS (sp_ruler_parent_class)->style_set (widget, prev_style);
+#endif
+
+  gtk_widget_style_get (widget,
+		        "font-scale", &priv->font_scale,
+			NULL);
+
+  if (priv->layout)
+    {
+     g_object_unref (priv->layout);
+     priv->layout = NULL;
     }
 }
 
@@ -1199,6 +1271,7 @@ static PangoLayout*
 sp_ruler_create_layout (GtkWidget   *widget,
                         const gchar *text)
 {
+  SPRulerPrivate *priv = SP_RULER_GET_PRIVATE (widget);
   PangoLayout    *layout;
   PangoAttrList  *attrs;
   PangoAttribute *attr;
@@ -1207,7 +1280,7 @@ sp_ruler_create_layout (GtkWidget   *widget,
 
   attrs = pango_attr_list_new ();
 
-  attr = pango_attr_scale_new (PANGO_SCALE_X_SMALL);
+  attr = pango_attr_scale_new (priv->font_scale);
   attr->start_index = 0;
   attr->end_index   = -1;
   pango_attr_list_insert (attrs, attr);
