@@ -603,7 +603,7 @@ PdfInput::open(::Inkscape::Extension::Input * /*mod*/, const gchar * uri) {
     PDFDoc *pdf_doc = new PDFDoc(filename_goo, NULL, NULL, NULL);   // TODO: Could ask for password
     //delete filename_goo;
 #else
-    wchar_t *wfilename = static_cast<wchar_t*>(g_utf8_to_utf16 (uri, -1, NULL, NULL, NULL));
+    wchar_t *wfilename = reinterpret_cast<wchar_t*>(g_utf8_to_utf16 (uri, -1, NULL, NULL, NULL));
 
     if (wfilename == NULL) {
       return NULL;
