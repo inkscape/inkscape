@@ -13,8 +13,7 @@
  *  - We use a default font size of PANGO_SCALE_X_SMALL for labels,
  *    GIMP uses PANGO_SCALE_SMALL (i.e., a bit larger than ours).
  *
- *  - In GIMP, the ruler position follows "track widgets" by connecting
- *    to their GtkWidget:motion-notify-event.
+ *  - We abbreviate large numbers in tick-labels (e.g., 10000 -> 10k) 
  *
  * Authors:
  *   Lauris Kaplinski <lauris@kaplinski.com>

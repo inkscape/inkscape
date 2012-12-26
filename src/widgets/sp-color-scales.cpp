@@ -463,7 +463,7 @@ void ColorScales::setMode(SPColorScalesMode mode)
 		gtk_label_set_markup_with_mnemonic (GTK_LABEL (_l[3]), _("_A:"));
 		gtk_widget_set_tooltip_text (_s[3], _("Alpha (opacity)"));
 		gtk_widget_set_tooltip_text (_b[3], _("Alpha (opacity)"));
-		sp_color_slider_set_map (SP_COLOR_SLIDER (_s[0]), reinterpret_cast<guchar*>(g_strdup(sp_color_scales_hue_map())));
+		sp_color_slider_set_map (SP_COLOR_SLIDER (_s[0]), (guchar *)(sp_color_scales_hue_map()));
 		gtk_widget_hide (_l[4]);
 		gtk_widget_hide (_s[4]);
 		gtk_widget_hide (_b[4]);
