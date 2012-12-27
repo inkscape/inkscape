@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-05 23:16+0100\n"
+"POT-Creation-Date: 2012-12-27 20:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -945,8 +945,8 @@ msgstr ""
 msgid "Black Light"
 msgstr ""
 
-#: ../share/filters/filters.svg.h:1 ../src/ui/dialog/clonetiler.cpp:826
-#: ../src/ui/dialog/clonetiler.cpp:965
+#: ../share/filters/filters.svg.h:1 ../src/ui/dialog/clonetiler.cpp:832
+#: ../src/ui/dialog/clonetiler.cpp:983
 #: ../src/extension/internal/bitmap/colorize.cpp:52
 #: ../src/extension/internal/filter/bumps.h:101
 #: ../src/extension/internal/filter/bumps.h:324
@@ -3809,11 +3809,11 @@ msgstr ""
 msgid "1. Pick from the drawing:"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:827
+#: ../src/ui/dialog/clonetiler.cpp:833
 msgid "Pick the visible color and opacity"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:834 ../src/ui/dialog/clonetiler.cpp:975
+#: ../src/ui/dialog/clonetiler.cpp:840 ../src/ui/dialog/clonetiler.cpp:993
 #: ../src/extension/internal/bitmap/opacity.cpp:38
 #: ../src/extension/internal/filter/transparency.h:279
 #: ../src/widgets/tweak-toolbar.cpp:353
@@ -3821,168 +3821,168 @@ msgstr ""
 msgid "Opacity"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:835
+#: ../src/ui/dialog/clonetiler.cpp:841
 msgid "Pick the total accumulated opacity"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:842
+#: ../src/ui/dialog/clonetiler.cpp:848
 msgid "R"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:843
+#: ../src/ui/dialog/clonetiler.cpp:849
 msgid "Pick the Red component of the color"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:850
+#: ../src/ui/dialog/clonetiler.cpp:856
 msgid "G"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:851
+#: ../src/ui/dialog/clonetiler.cpp:857
 msgid "Pick the Green component of the color"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:858
+#: ../src/ui/dialog/clonetiler.cpp:864
 msgid "B"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:859
+#: ../src/ui/dialog/clonetiler.cpp:865
 msgid "Pick the Blue component of the color"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:866
+#: ../src/ui/dialog/clonetiler.cpp:872
 msgctxt "Clonetiler color hue"
 msgid "H"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:867
+#: ../src/ui/dialog/clonetiler.cpp:873
 msgid "Pick the hue of the color"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:874
+#: ../src/ui/dialog/clonetiler.cpp:880
 msgctxt "Clonetiler color saturation"
 msgid "S"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:875
+#: ../src/ui/dialog/clonetiler.cpp:881
 msgid "Pick the saturation of the color"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:882
+#: ../src/ui/dialog/clonetiler.cpp:888
 msgctxt "Clonetiler color lightness"
 msgid "L"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:883
+#: ../src/ui/dialog/clonetiler.cpp:889
 msgid "Pick the lightness of the color"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:893
+#: ../src/ui/dialog/clonetiler.cpp:899
 msgid "2. Tweak the picked value:"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:903
+#: ../src/ui/dialog/clonetiler.cpp:916
 msgid "Gamma-correct:"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:907
+#: ../src/ui/dialog/clonetiler.cpp:920
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:914
+#: ../src/ui/dialog/clonetiler.cpp:927
 msgid "Randomize:"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:918
+#: ../src/ui/dialog/clonetiler.cpp:931
 msgid "Randomize the picked value by this percentage"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:925
+#: ../src/ui/dialog/clonetiler.cpp:938
 msgid "Invert:"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:929
+#: ../src/ui/dialog/clonetiler.cpp:942
 msgid "Invert the picked value"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:935
+#: ../src/ui/dialog/clonetiler.cpp:948
 msgid "3. Apply the value to the clones':"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:945
+#: ../src/ui/dialog/clonetiler.cpp:963
 msgid "Presence"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:948
+#: ../src/ui/dialog/clonetiler.cpp:966
 msgid ""
 "Each clone is created with the probability determined by the picked value in "
 "that point"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:955
+#: ../src/ui/dialog/clonetiler.cpp:973
 msgid "Size"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:958
+#: ../src/ui/dialog/clonetiler.cpp:976
 msgid "Each clone's size is determined by the picked value in that point"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:968
+#: ../src/ui/dialog/clonetiler.cpp:986
 msgid ""
 "Each clone is painted by the picked color (the original must have unset fill "
 "or stroke)"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:978
+#: ../src/ui/dialog/clonetiler.cpp:996
 msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1019
+#: ../src/ui/dialog/clonetiler.cpp:1044
 msgid "How many rows in the tiling"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1049
+#: ../src/ui/dialog/clonetiler.cpp:1074
 msgid "How many columns in the tiling"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1093
+#: ../src/ui/dialog/clonetiler.cpp:1118
 msgid "Width of the rectangle to be filled"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1127
+#: ../src/ui/dialog/clonetiler.cpp:1152
 msgid "Height of the rectangle to be filled"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1144
+#: ../src/ui/dialog/clonetiler.cpp:1169
 msgid "Rows, columns: "
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1145
+#: ../src/ui/dialog/clonetiler.cpp:1170
 msgid "Create the specified number of rows and columns"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1154
+#: ../src/ui/dialog/clonetiler.cpp:1179
 msgid "Width, height: "
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1155
+#: ../src/ui/dialog/clonetiler.cpp:1180
 msgid "Fill the specified width and height with the tiling"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1176
+#: ../src/ui/dialog/clonetiler.cpp:1201
 msgid "Use saved size and position of the tile"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1179
+#: ../src/ui/dialog/clonetiler.cpp:1204
 msgid ""
 "Pretend that the size and position of the tile are the same as the last time "
 "you tiled it (if any), instead of using the current size"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1213
+#: ../src/ui/dialog/clonetiler.cpp:1238
 msgid " <b>_Create</b> "
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1215
+#: ../src/ui/dialog/clonetiler.cpp:1240
 msgid "Create and tile the clones of the selection"
 msgstr ""
 
@@ -3991,93 +3991,93 @@ msgstr ""
 #. diagrams on the left in the following screenshot:
 #. http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
 #. So unclumping is the process of spreading a number of objects out more evenly.
-#: ../src/ui/dialog/clonetiler.cpp:1235
+#: ../src/ui/dialog/clonetiler.cpp:1260
 msgid " _Unclump "
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1236
+#: ../src/ui/dialog/clonetiler.cpp:1261
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1242
+#: ../src/ui/dialog/clonetiler.cpp:1267
 msgid " Re_move "
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1243
+#: ../src/ui/dialog/clonetiler.cpp:1268
 msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1259
+#: ../src/ui/dialog/clonetiler.cpp:1284
 msgid " R_eset "
 msgstr ""
 
 #. TRANSLATORS: "change" is a noun here
-#: ../src/ui/dialog/clonetiler.cpp:1261
+#: ../src/ui/dialog/clonetiler.cpp:1286
 msgid ""
 "Reset all shifts, scales, rotates, opacity and color changes in the dialog "
 "to zero"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1334
+#: ../src/ui/dialog/clonetiler.cpp:1359
 msgid "<small>Nothing selected.</small>"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1340
+#: ../src/ui/dialog/clonetiler.cpp:1365
 msgid "<small>More than one object selected.</small>"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1347
+#: ../src/ui/dialog/clonetiler.cpp:1372
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:1352
+#: ../src/ui/dialog/clonetiler.cpp:1377
 msgid "<small>Object has no tiled clones.</small>"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2072
+#: ../src/ui/dialog/clonetiler.cpp:2097
 msgid "Select <b>one object</b> whose tiled clones to unclump."
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2094
+#: ../src/ui/dialog/clonetiler.cpp:2119
 msgid "Unclump tiled clones"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2123
+#: ../src/ui/dialog/clonetiler.cpp:2148
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2146
+#: ../src/ui/dialog/clonetiler.cpp:2171
 msgid "Delete tiled clones"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2193 ../src/selection-chemistry.cpp:2469
+#: ../src/ui/dialog/clonetiler.cpp:2218 ../src/selection-chemistry.cpp:2469
 msgid "Select an <b>object</b> to clone."
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2199
+#: ../src/ui/dialog/clonetiler.cpp:2224
 msgid ""
 "If you want to clone several objects, <b>group</b> them and <b>clone the "
 "group</b>."
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2208
+#: ../src/ui/dialog/clonetiler.cpp:2233
 msgid "<small>Creating tiled clones...</small>"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2613
+#: ../src/ui/dialog/clonetiler.cpp:2638
 msgid "Create tiled clones"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2832
+#: ../src/ui/dialog/clonetiler.cpp:2871
 msgid "<small>Per row:</small>"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2850
+#: ../src/ui/dialog/clonetiler.cpp:2889
 msgid "<small>Per column:</small>"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2858
+#: ../src/ui/dialog/clonetiler.cpp:2897
 msgid "<small>Randomize:</small>"
 msgstr ""
 
@@ -4172,9 +4172,9 @@ msgid "_Height:"
 msgstr ""
 
 #: ../src/ui/dialog/export.cpp:260
-#: ../src/ui/dialog/inkscape-preferences.cpp:1382
-#: ../src/ui/dialog/inkscape-preferences.cpp:1385
-#: ../src/ui/dialog/inkscape-preferences.cpp:1394
+#: ../src/ui/dialog/inkscape-preferences.cpp:1384
+#: ../src/ui/dialog/inkscape-preferences.cpp:1387
+#: ../src/ui/dialog/inkscape-preferences.cpp:1396
 msgid "dpi"
 msgstr ""
 
@@ -4570,144 +4570,144 @@ msgid "AaBbCcIiPpQq12369$€¢?.;/()"
 msgstr ""
 
 #. Align buttons
-#: ../src/ui/dialog/text-edit.cpp:94 ../src/widgets/text-toolbar.cpp:1565
-#: ../src/widgets/text-toolbar.cpp:1566
+#: ../src/ui/dialog/text-edit.cpp:94 ../src/widgets/text-toolbar.cpp:1568
+#: ../src/widgets/text-toolbar.cpp:1569
 msgid "Align left"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:95 ../src/widgets/text-toolbar.cpp:1573
-#: ../src/widgets/text-toolbar.cpp:1574
+#: ../src/ui/dialog/text-edit.cpp:95 ../src/widgets/text-toolbar.cpp:1576
+#: ../src/widgets/text-toolbar.cpp:1577
 msgid "Align center"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:96 ../src/widgets/text-toolbar.cpp:1581
-#: ../src/widgets/text-toolbar.cpp:1582
+#: ../src/ui/dialog/text-edit.cpp:96 ../src/widgets/text-toolbar.cpp:1584
+#: ../src/widgets/text-toolbar.cpp:1585
 msgid "Align right"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:97 ../src/widgets/text-toolbar.cpp:1590
+#: ../src/ui/dialog/text-edit.cpp:97 ../src/widgets/text-toolbar.cpp:1593
 msgid "Justify (only flowed text)"
 msgstr ""
 
 #. Direction buttons
-#: ../src/ui/dialog/text-edit.cpp:101 ../src/widgets/text-toolbar.cpp:1625
+#: ../src/ui/dialog/text-edit.cpp:106 ../src/widgets/text-toolbar.cpp:1628
 msgid "Horizontal text"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:102 ../src/widgets/text-toolbar.cpp:1632
+#: ../src/ui/dialog/text-edit.cpp:107 ../src/widgets/text-toolbar.cpp:1635
 msgid "Vertical text"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:117 ../src/ui/dialog/text-edit.cpp:118
+#: ../src/ui/dialog/text-edit.cpp:127 ../src/ui/dialog/text-edit.cpp:128
 msgid "Spacing between lines (percent of font size)"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:551 ../src/text-context.cpp:1519
+#: ../src/ui/dialog/text-edit.cpp:561 ../src/text-context.cpp:1519
 msgid "Set text style"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:70 ../src/ui/dialog/xml-tree.cpp:119
+#: ../src/ui/dialog/xml-tree.cpp:70 ../src/ui/dialog/xml-tree.cpp:123
 msgid "New element node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:71 ../src/ui/dialog/xml-tree.cpp:125
+#: ../src/ui/dialog/xml-tree.cpp:71 ../src/ui/dialog/xml-tree.cpp:129
 msgid "New text node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:72 ../src/ui/dialog/xml-tree.cpp:139
+#: ../src/ui/dialog/xml-tree.cpp:72 ../src/ui/dialog/xml-tree.cpp:143
 msgid "nodeAsInXMLdialogTooltip|Delete node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:73 ../src/ui/dialog/xml-tree.cpp:131
-#: ../src/ui/dialog/xml-tree.cpp:970
+#: ../src/ui/dialog/xml-tree.cpp:73 ../src/ui/dialog/xml-tree.cpp:135
+#: ../src/ui/dialog/xml-tree.cpp:974
 msgid "Duplicate node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:79 ../src/ui/dialog/xml-tree.cpp:184
-#: ../src/ui/dialog/xml-tree.cpp:1005
+#: ../src/ui/dialog/xml-tree.cpp:79 ../src/ui/dialog/xml-tree.cpp:188
+#: ../src/ui/dialog/xml-tree.cpp:1009
 msgid "Delete attribute"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:83
+#: ../src/ui/dialog/xml-tree.cpp:87
 msgid "Set"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:114
+#: ../src/ui/dialog/xml-tree.cpp:118
 msgid "Drag to reorder nodes"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:145 ../src/ui/dialog/xml-tree.cpp:146
-#: ../src/ui/dialog/xml-tree.cpp:1126
+#: ../src/ui/dialog/xml-tree.cpp:149 ../src/ui/dialog/xml-tree.cpp:150
+#: ../src/ui/dialog/xml-tree.cpp:1130
 msgid "Unindent node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:150 ../src/ui/dialog/xml-tree.cpp:151
-#: ../src/ui/dialog/xml-tree.cpp:1104
+#: ../src/ui/dialog/xml-tree.cpp:154 ../src/ui/dialog/xml-tree.cpp:155
+#: ../src/ui/dialog/xml-tree.cpp:1108
 msgid "Indent node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:155 ../src/ui/dialog/xml-tree.cpp:156
-#: ../src/ui/dialog/xml-tree.cpp:1055
+#: ../src/ui/dialog/xml-tree.cpp:159 ../src/ui/dialog/xml-tree.cpp:160
+#: ../src/ui/dialog/xml-tree.cpp:1059
 msgid "Raise node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:160 ../src/ui/dialog/xml-tree.cpp:161
-#: ../src/ui/dialog/xml-tree.cpp:1073
+#: ../src/ui/dialog/xml-tree.cpp:164 ../src/ui/dialog/xml-tree.cpp:165
+#: ../src/ui/dialog/xml-tree.cpp:1077
 msgid "Lower node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:201
+#: ../src/ui/dialog/xml-tree.cpp:205
 msgid "Attribute name"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:216
+#: ../src/ui/dialog/xml-tree.cpp:220
 msgid "Attribute value"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:304
+#: ../src/ui/dialog/xml-tree.cpp:308
 msgid "<b>Click</b> to select nodes, <b>drag</b> to rearrange."
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:315
+#: ../src/ui/dialog/xml-tree.cpp:319
 msgid "<b>Click</b> attribute to edit."
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:319
+#: ../src/ui/dialog/xml-tree.cpp:323
 #, c-format
 msgid ""
 "Attribute <b>%s</b> selected. Press <b>Ctrl+Enter</b> when done editing to "
 "commit changes."
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:559
+#: ../src/ui/dialog/xml-tree.cpp:563
 msgid "Drag XML subtree"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:861
+#: ../src/ui/dialog/xml-tree.cpp:865
 msgid "New element node..."
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:899
+#: ../src/ui/dialog/xml-tree.cpp:903
 msgid "Cancel"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:905
+#: ../src/ui/dialog/xml-tree.cpp:909
 msgid "Create"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:936
+#: ../src/ui/dialog/xml-tree.cpp:940
 msgid "Create new element node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:952
+#: ../src/ui/dialog/xml-tree.cpp:956
 msgid "Create new text node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:986
+#: ../src/ui/dialog/xml-tree.cpp:990
 msgid "nodeAsInXMLinHistoryDialog|Delete node"
 msgstr ""
 
-#: ../src/ui/dialog/xml-tree.cpp:1029
+#: ../src/ui/dialog/xml-tree.cpp:1033
 msgid "Change attribute"
 msgstr ""
 
@@ -5173,8 +5173,8 @@ msgstr ""
 msgid "Draw eraser stroke"
 msgstr ""
 
-#: ../src/event-context.cpp:678
-msgid "<b>Space+mouse drag</b> to pan canvas"
+#: ../src/event-context.cpp:694
+msgid "<b>Space+mouse move</b> to pan canvas"
 msgstr ""
 
 #: ../src/event-log.cpp:37
@@ -5423,8 +5423,8 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:1502
 #: ../src/extension/internal/filter/distort.h:69
 #: ../src/extension/internal/filter/morphology.h:60 ../src/rdf.cpp:241
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2467
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2546
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2472
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2551
 #: ../src/ui/dialog/object-attributes.cpp:48
 #: ../share/extensions/jessyInk_effects.inx.h:5
 #: ../share/extensions/jessyInk_export.inx.h:3
@@ -5474,7 +5474,7 @@ msgstr ""
 #: ../src/extension/internal/bitmap/oilPaint.cpp:39
 #: ../src/extension/internal/bitmap/sharpen.cpp:40
 #: ../src/extension/internal/bitmap/unsharpmask.cpp:43
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2524
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2529
 msgid "Radius:"
 msgstr ""
 
@@ -5784,7 +5784,7 @@ msgstr ""
 
 #: ../src/extension/internal/bitmap/opacity.cpp:40
 #: ../src/extension/internal/filter/blurs.h:333
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2514
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2519
 #: ../src/widgets/dropper-toolbar.cpp:112
 msgid "Opacity:"
 msgstr ""
@@ -6285,7 +6285,7 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:1511
 #: ../src/extension/internal/filter/paint.h:704
 #: ../src/extension/internal/filter/transparency.h:62
-#: ../src/filter-enums.cpp:53 ../src/ui/dialog/input.cpp:365
+#: ../src/filter-enums.cpp:53 ../src/ui/dialog/input.cpp:374
 msgid "Screen"
 msgstr ""
 
@@ -6779,47 +6779,47 @@ msgid "Extract Channel"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:636 ../src/filter-enums.cpp:100
-#: ../src/flood-context.cpp:246 ../src/widgets/sp-color-icc-selector.cpp:230
-#: ../src/widgets/sp-color-scales.cpp:432
-#: ../src/widgets/sp-color-scales.cpp:433
+#: ../src/flood-context.cpp:252 ../src/widgets/sp-color-icc-selector.cpp:227
+#: ../src/widgets/sp-color-scales.cpp:429
+#: ../src/widgets/sp-color-scales.cpp:430
 msgid "Red"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:637 ../src/filter-enums.cpp:101
-#: ../src/flood-context.cpp:247 ../src/widgets/sp-color-icc-selector.cpp:230
-#: ../src/widgets/sp-color-scales.cpp:435
-#: ../src/widgets/sp-color-scales.cpp:436
+#: ../src/flood-context.cpp:253 ../src/widgets/sp-color-icc-selector.cpp:227
+#: ../src/widgets/sp-color-scales.cpp:432
+#: ../src/widgets/sp-color-scales.cpp:433
 msgid "Green"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:638 ../src/filter-enums.cpp:102
-#: ../src/flood-context.cpp:248 ../src/widgets/sp-color-icc-selector.cpp:230
-#: ../src/widgets/sp-color-scales.cpp:438
-#: ../src/widgets/sp-color-scales.cpp:439
+#: ../src/flood-context.cpp:254 ../src/widgets/sp-color-icc-selector.cpp:227
+#: ../src/widgets/sp-color-scales.cpp:435
+#: ../src/widgets/sp-color-scales.cpp:436
 msgid "Blue"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:639
-#: ../src/widgets/sp-color-icc-selector.cpp:234
-#: ../src/widgets/sp-color-icc-selector.cpp:235
-#: ../src/widgets/sp-color-scales.cpp:486
-#: ../src/widgets/sp-color-scales.cpp:487
+#: ../src/widgets/sp-color-icc-selector.cpp:231
+#: ../src/widgets/sp-color-icc-selector.cpp:232
+#: ../src/widgets/sp-color-scales.cpp:483
+#: ../src/widgets/sp-color-scales.cpp:484
 msgid "Cyan"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:640
-#: ../src/widgets/sp-color-icc-selector.cpp:234
-#: ../src/widgets/sp-color-icc-selector.cpp:235
-#: ../src/widgets/sp-color-scales.cpp:489
-#: ../src/widgets/sp-color-scales.cpp:490
+#: ../src/widgets/sp-color-icc-selector.cpp:231
+#: ../src/widgets/sp-color-icc-selector.cpp:232
+#: ../src/widgets/sp-color-scales.cpp:486
+#: ../src/widgets/sp-color-scales.cpp:487
 msgid "Magenta"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:641
-#: ../src/widgets/sp-color-icc-selector.cpp:234
-#: ../src/widgets/sp-color-icc-selector.cpp:235
-#: ../src/widgets/sp-color-scales.cpp:492
-#: ../src/widgets/sp-color-scales.cpp:493
+#: ../src/widgets/sp-color-icc-selector.cpp:231
+#: ../src/widgets/sp-color-icc-selector.cpp:232
+#: ../src/widgets/sp-color-scales.cpp:489
+#: ../src/widgets/sp-color-scales.cpp:490
 msgid "Yellow"
 msgstr ""
 
@@ -6852,9 +6852,9 @@ msgstr ""
 
 #: ../src/extension/internal/filter/color.h:743
 #: ../src/ui/widget/selected-style.cpp:246
-#: ../src/widgets/sp-color-icc-selector.cpp:234
-#: ../src/widgets/sp-color-scales.cpp:495
-#: ../src/widgets/sp-color-scales.cpp:496
+#: ../src/widgets/sp-color-icc-selector.cpp:231
+#: ../src/widgets/sp-color-scales.cpp:492
+#: ../src/widgets/sp-color-scales.cpp:493
 msgid "Black"
 msgstr ""
 
@@ -6963,7 +6963,7 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:1206
 #: ../src/ui/dialog/object-attributes.cpp:65
 #: ../src/ui/dialog/object-attributes.cpp:73 ../src/ui/dialog/tile.cpp:615
-#: ../src/widgets/desktop-widget.cpp:671 ../src/widgets/node-toolbar.cpp:591
+#: ../src/widgets/desktop-widget.cpp:648 ../src/widgets/node-toolbar.cpp:591
 msgid "X:"
 msgstr ""
 
@@ -6972,7 +6972,7 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:1207
 #: ../src/ui/dialog/object-attributes.cpp:66
 #: ../src/ui/dialog/object-attributes.cpp:74 ../src/ui/dialog/tile.cpp:616
-#: ../src/widgets/desktop-widget.cpp:681 ../src/widgets/node-toolbar.cpp:609
+#: ../src/widgets/desktop-widget.cpp:658 ../src/widgets/node-toolbar.cpp:609
 msgid "Y:"
 msgstr ""
 
@@ -7286,7 +7286,7 @@ msgid "XOR"
 msgstr ""
 
 #: ../src/extension/internal/filter/morphology.h:179
-#: ../src/ui/dialog/layer-properties.cpp:168
+#: ../src/ui/dialog/layer-properties.cpp:185
 msgid "Position:"
 msgstr ""
 
@@ -7448,7 +7448,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:332
 #: ../src/ui/dialog/align-and-distribute.cpp:1048
-#: ../src/widgets/desktop-widget.cpp:1947
+#: ../src/widgets/desktop-widget.cpp:1903
 msgid "Drawing"
 msgstr ""
 
@@ -7738,7 +7738,7 @@ msgid "Source:"
 msgstr ""
 
 #: ../src/extension/internal/filter/transparency.h:59
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2464
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2469
 #: ../src/widgets/erasor-toolbar.cpp:129 ../src/widgets/pencil-toolbar.cpp:162
 #: ../src/widgets/spray-toolbar.cpp:203 ../src/widgets/tweak-toolbar.cpp:273
 #: ../share/extensions/extrude.inx.h:2 ../share/extensions/triangle.inx.h:8
@@ -7857,7 +7857,7 @@ msgstr ""
 #: ../share/extensions/draw_from_triangle.inx.h:58
 #: ../share/extensions/eqtexsvg.inx.h:4
 #: ../share/extensions/foldablebox.inx.h:9
-#: ../share/extensions/funcplot.inx.h:37 ../share/extensions/gears.inx.h:11
+#: ../share/extensions/funcplot.inx.h:38 ../share/extensions/gears.inx.h:11
 #: ../share/extensions/grid_cartesian.inx.h:23
 #: ../share/extensions/grid_isometric.inx.h:11
 #: ../share/extensions/grid_polar.inx.h:22
@@ -8143,11 +8143,11 @@ msgstr ""
 msgid "Vector graphics format used by Corel WordPerfect"
 msgstr ""
 
-#: ../src/extension/prefdialog.cpp:249
+#: ../src/extension/prefdialog.cpp:254
 msgid "Live preview"
 msgstr ""
 
-#: ../src/extension/prefdialog.cpp:249
+#: ../src/extension/prefdialog.cpp:254
 msgid "Is the effect previewed live on canvas?"
 msgstr ""
 
@@ -8263,7 +8263,7 @@ msgstr ""
 msgid "Saving document..."
 msgstr ""
 
-#: ../src/file.cpp:1219 ../src/ui/dialog/ocaldialogs.cpp:1207
+#: ../src/file.cpp:1219 ../src/ui/dialog/ocaldialogs.cpp:1225
 msgid "Import"
 msgstr ""
 
@@ -8383,12 +8383,12 @@ msgstr ""
 #: ../src/ui/dialog/filter-effects-dialog.cpp:490
 #: ../src/ui/dialog/inkscape-preferences.cpp:331
 #: ../src/ui/dialog/inkscape-preferences.cpp:622
-#: ../src/ui/dialog/inkscape-preferences.cpp:1212
-#: ../src/ui/dialog/inkscape-preferences.cpp:1369
-#: ../src/ui/dialog/inkscape-preferences.cpp:1745
-#: ../src/ui/dialog/input.cpp:612 ../src/ui/dialog/input.cpp:613
-#: ../src/ui/dialog/input.cpp:1282 ../src/verbs.cpp:2300
-#: ../src/widgets/gradient-toolbar.cpp:1128
+#: ../src/ui/dialog/inkscape-preferences.cpp:1214
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
+#: ../src/ui/dialog/inkscape-preferences.cpp:1752
+#: ../src/ui/dialog/input.cpp:693 ../src/ui/dialog/input.cpp:694
+#: ../src/ui/dialog/input.cpp:1485 ../src/ui/dialog/input.cpp:1539
+#: ../src/verbs.cpp:2300 ../src/widgets/gradient-toolbar.cpp:1128
 #: ../src/widgets/pencil-toolbar.cpp:190
 #: ../share/extensions/gcodetools_area.inx.h:48
 #: ../share/extensions/gcodetools_dxf_points.inx.h:19
@@ -8402,7 +8402,7 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: ../src/filter-enums.cpp:103 ../src/flood-context.cpp:252
+#: ../src/filter-enums.cpp:103 ../src/flood-context.cpp:258
 msgid "Alpha"
 msgstr ""
 
@@ -8430,59 +8430,59 @@ msgstr ""
 msgid "Spot Light"
 msgstr ""
 
-#: ../src/flood-context.cpp:245
+#: ../src/flood-context.cpp:251
 msgid "Visible Colors"
 msgstr ""
 
-#: ../src/flood-context.cpp:249 ../src/widgets/sp-color-icc-selector.cpp:232
-#: ../src/widgets/sp-color-icc-selector.cpp:233
-#: ../src/widgets/sp-color-scales.cpp:458
-#: ../src/widgets/sp-color-scales.cpp:459 ../src/widgets/tweak-toolbar.cpp:305
+#: ../src/flood-context.cpp:255 ../src/widgets/sp-color-icc-selector.cpp:229
+#: ../src/widgets/sp-color-icc-selector.cpp:230
+#: ../src/widgets/sp-color-scales.cpp:455
+#: ../src/widgets/sp-color-scales.cpp:456 ../src/widgets/tweak-toolbar.cpp:305
 #: ../share/extensions/color_randomize.inx.h:3
 msgid "Hue"
 msgstr ""
 
-#: ../src/flood-context.cpp:250 ../src/ui/dialog/inkscape-preferences.cpp:902
-#: ../src/widgets/sp-color-icc-selector.cpp:232
-#: ../src/widgets/sp-color-icc-selector.cpp:233
-#: ../src/widgets/sp-color-scales.cpp:461
-#: ../src/widgets/sp-color-scales.cpp:462 ../src/widgets/tweak-toolbar.cpp:321
+#: ../src/flood-context.cpp:256 ../src/ui/dialog/inkscape-preferences.cpp:902
+#: ../src/widgets/sp-color-icc-selector.cpp:229
+#: ../src/widgets/sp-color-icc-selector.cpp:230
+#: ../src/widgets/sp-color-scales.cpp:458
+#: ../src/widgets/sp-color-scales.cpp:459 ../src/widgets/tweak-toolbar.cpp:321
 #: ../share/extensions/color_randomize.inx.h:4
 msgid "Saturation"
 msgstr ""
 
-#: ../src/flood-context.cpp:251 ../src/widgets/sp-color-icc-selector.cpp:233
-#: ../src/widgets/sp-color-scales.cpp:464
-#: ../src/widgets/sp-color-scales.cpp:465 ../src/widgets/tweak-toolbar.cpp:337
+#: ../src/flood-context.cpp:257 ../src/widgets/sp-color-icc-selector.cpp:230
+#: ../src/widgets/sp-color-scales.cpp:461
+#: ../src/widgets/sp-color-scales.cpp:462 ../src/widgets/tweak-toolbar.cpp:337
 #: ../share/extensions/color_randomize.inx.h:5
 msgid "Lightness"
 msgstr ""
 
-#: ../src/flood-context.cpp:263
+#: ../src/flood-context.cpp:269
 msgctxt "Flood autogap"
 msgid "None"
 msgstr ""
 
-#: ../src/flood-context.cpp:264
+#: ../src/flood-context.cpp:270
 msgctxt "Flood autogap"
 msgid "Small"
 msgstr ""
 
-#: ../src/flood-context.cpp:265
+#: ../src/flood-context.cpp:271
 msgctxt "Flood autogap"
 msgid "Medium"
 msgstr ""
 
-#: ../src/flood-context.cpp:266
+#: ../src/flood-context.cpp:272
 msgctxt "Flood autogap"
 msgid "Large"
 msgstr ""
 
-#: ../src/flood-context.cpp:486
+#: ../src/flood-context.cpp:494
 msgid "<b>Too much inset</b>, the result is empty."
 msgstr ""
 
-#: ../src/flood-context.cpp:527
+#: ../src/flood-context.cpp:535
 #, c-format
 msgid ""
 "Area filled, path with <b>%d</b> node created and unioned with selection."
@@ -8491,32 +8491,32 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/flood-context.cpp:533
+#: ../src/flood-context.cpp:541
 #, c-format
 msgid "Area filled, path with <b>%d</b> node created."
 msgid_plural "Area filled, path with <b>%d</b> nodes created."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/flood-context.cpp:801 ../src/flood-context.cpp:1100
+#: ../src/flood-context.cpp:809 ../src/flood-context.cpp:1119
 msgid "<b>Area is not bounded</b>, cannot fill."
 msgstr ""
 
-#: ../src/flood-context.cpp:1105
+#: ../src/flood-context.cpp:1124
 msgid ""
 "<b>Only the visible part of the bounded area was filled.</b> If you want to "
 "fill all of the area, undo, zoom out, and fill again."
 msgstr ""
 
-#: ../src/flood-context.cpp:1123 ../src/flood-context.cpp:1282
+#: ../src/flood-context.cpp:1142 ../src/flood-context.cpp:1301
 msgid "Fill bounded area"
 msgstr ""
 
-#: ../src/flood-context.cpp:1142
+#: ../src/flood-context.cpp:1161
 msgid "Set style on object"
 msgstr ""
 
-#: ../src/flood-context.cpp:1201
+#: ../src/flood-context.cpp:1220
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
 msgstr ""
 
@@ -8702,15 +8702,15 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gradient-drag.cpp:2358
+#: ../src/gradient-drag.cpp:2369
 msgid "Move gradient handle(s)"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:2394
+#: ../src/gradient-drag.cpp:2405
 msgid "Move gradient mid stop(s)"
 msgstr ""
 
-#: ../src/gradient-drag.cpp:2683
+#: ../src/gradient-drag.cpp:2694
 msgid "Delete gradient stop(s)"
 msgstr ""
 
@@ -8776,7 +8776,7 @@ msgstr ""
 msgid "Percent"
 msgstr ""
 
-#: ../src/helper/units.cpp:42 ../src/ui/dialog/inkscape-preferences.cpp:1222
+#: ../src/helper/units.cpp:42 ../src/ui/dialog/inkscape-preferences.cpp:1224
 msgid "%"
 msgstr ""
 
@@ -9218,7 +9218,7 @@ msgid "Dockitem which 'owns' this grip"
 msgstr ""
 
 #. Name
-#: ../src/libgdl/gdl-dock-item.c:298 ../src/widgets/text-toolbar.cpp:1637
+#: ../src/libgdl/gdl-dock-item.c:298 ../src/widgets/text-toolbar.cpp:1640
 #: ../share/extensions/gcodetools_graffiti.inx.h:9
 #: ../share/extensions/gcodetools_orientation_points.inx.h:1
 msgid "Orientation"
@@ -9350,7 +9350,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:1047
 #: ../src/ui/dialog/document-properties.cpp:144
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1546
-#: ../src/widgets/desktop-widget.cpp:1943
+#: ../src/widgets/desktop-widget.cpp:1899
 #: ../share/extensions/voronoi2svg.inx.h:9
 msgid "Page"
 msgstr ""
@@ -9360,7 +9360,7 @@ msgid "The index of the current page"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-object.c:125
-#: ../src/ui/dialog/inkscape-preferences.cpp:1429
+#: ../src/ui/dialog/inkscape-preferences.cpp:1431
 #: ../src/ui/widget/page-sizer.cpp:260
 #: ../src/widgets/gradient-selector.cpp:156
 #: ../src/widgets/sp-xmlview-attr-list.cpp:54
@@ -9571,7 +9571,7 @@ msgstr ""
 msgid "Dock #%d"
 msgstr ""
 
-#: ../src/libnrtype/FontFactory.cpp:910
+#: ../src/libnrtype/FontFactory.cpp:903
 msgid "Ignoring font without family that will crash Pango"
 msgstr ""
 
@@ -10207,7 +10207,7 @@ msgstr ""
 #. TRANSLATORS: The line join style specifies the shape to be used at the
 #. corners of paths. It can be "miter", "round" or "bevel".
 #: ../src/live_effects/lpe-powerstroke.cpp:238
-#: ../src/widgets/stroke-style.cpp:186
+#: ../src/widgets/stroke-style.cpp:193
 msgid "Join:"
 msgstr ""
 
@@ -10220,7 +10220,7 @@ msgid "Miter limit:"
 msgstr ""
 
 #: ../src/live_effects/lpe-powerstroke.cpp:239
-#: ../src/widgets/stroke-style.cpp:234
+#: ../src/widgets/stroke-style.cpp:241
 msgid "Maximum length of the miter (in units of stroke width)"
 msgstr ""
 
@@ -10583,7 +10583,7 @@ msgid "How many construction lines (tangents) to draw"
 msgstr ""
 
 #: ../src/live_effects/lpe-sketch.cpp:58
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2508
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2513
 #: ../share/extensions/render_alphabetsoup.inx.h:3
 msgid "Scale:"
 msgstr ""
@@ -10839,7 +10839,7 @@ msgid "The ID of the object to export"
 msgstr ""
 
 #: ../src/main.cpp:335 ../src/main.cpp:433
-#: ../src/ui/dialog/inkscape-preferences.cpp:1432
+#: ../src/ui/dialog/inkscape-preferences.cpp:1434
 msgid "ID"
 msgstr ""
 
@@ -11525,7 +11525,7 @@ msgstr ""
 msgid "Unique URI to a related document"
 msgstr ""
 
-#: ../src/rdf.cpp:264 ../src/ui/dialog/inkscape-preferences.cpp:1765
+#: ../src/rdf.cpp:264 ../src/ui/dialog/inkscape-preferences.cpp:1772
 msgid "Language:"
 msgstr ""
 
@@ -11854,7 +11854,7 @@ msgstr ""
 msgid "Rotate 90&#176; CW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1690 ../src/seltrans.cpp:479
+#: ../src/selection-chemistry.cpp:1690 ../src/seltrans.cpp:471
 #: ../src/ui/dialog/transformation.cpp:800
 msgid "Rotate"
 msgstr ""
@@ -11863,7 +11863,7 @@ msgstr ""
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2099 ../src/seltrans.cpp:476
+#: ../src/selection-chemistry.cpp:2099 ../src/seltrans.cpp:468
 #: ../src/ui/dialog/transformation.cpp:775
 #: ../share/extensions/interp_att_g.inx.h:12
 msgid "Scale"
@@ -11882,7 +11882,7 @@ msgid "Move horizontally"
 msgstr ""
 
 #: ../src/selection-chemistry.cpp:2145 ../src/selection-chemistry.cpp:2171
-#: ../src/seltrans.cpp:473 ../src/ui/dialog/transformation.cpp:714
+#: ../src/seltrans.cpp:465 ../src/ui/dialog/transformation.cpp:714
 msgid "Move"
 msgstr ""
 
@@ -12269,77 +12269,77 @@ msgid_plural "; <i>%d filtered objects</i> "
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/seltrans.cpp:482 ../src/ui/dialog/transformation.cpp:858
+#: ../src/seltrans.cpp:474 ../src/ui/dialog/transformation.cpp:858
 msgid "Skew"
 msgstr ""
 
-#: ../src/seltrans.cpp:494
+#: ../src/seltrans.cpp:486
 msgid "Set center"
 msgstr ""
 
-#: ../src/seltrans.cpp:569
+#: ../src/seltrans.cpp:561
 msgid "Stamp"
 msgstr ""
 
-#: ../src/seltrans.cpp:598
+#: ../src/seltrans.cpp:590
 msgid ""
 "<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; "
 "with <b>Shift</b> to scale around rotation center"
 msgstr ""
 
-#: ../src/seltrans.cpp:599
+#: ../src/seltrans.cpp:591
 msgid ""
 "<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</"
 "b> to scale around rotation center"
 msgstr ""
 
-#: ../src/seltrans.cpp:603
+#: ../src/seltrans.cpp:595
 msgid ""
 "<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to "
 "skew around the opposite side"
 msgstr ""
 
-#: ../src/seltrans.cpp:604
+#: ../src/seltrans.cpp:596
 msgid ""
 "<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> "
 "to rotate around the opposite corner"
 msgstr ""
 
-#: ../src/seltrans.cpp:617
+#: ../src/seltrans.cpp:609
 msgid ""
 "<b>Center</b> of rotation and skewing: drag to reposition; scaling with "
 "Shift also uses this center"
 msgstr ""
 
-#: ../src/seltrans.cpp:767
+#: ../src/seltrans.cpp:759
 msgid "Reset center"
 msgstr ""
 
-#: ../src/seltrans.cpp:1004 ../src/seltrans.cpp:1101
+#: ../src/seltrans.cpp:996 ../src/seltrans.cpp:1093
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1215
+#: ../src/seltrans.cpp:1207
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1290
+#: ../src/seltrans.cpp:1282
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr ""
 
-#: ../src/seltrans.cpp:1325
+#: ../src/seltrans.cpp:1317
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr ""
 
-#: ../src/seltrans.cpp:1501
+#: ../src/seltrans.cpp:1493
 #, c-format
 msgid ""
 "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; "
@@ -13612,7 +13612,7 @@ msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1049
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1550 ../src/verbs.cpp:174
-#: ../src/widgets/desktop-widget.cpp:1951
+#: ../src/widgets/desktop-widget.cpp:1907
 #: ../share/extensions/printing_marks.inx.h:18
 msgid "Selection"
 msgstr ""
@@ -13680,22 +13680,22 @@ msgstr ""
 msgid "Release log messages"
 msgstr ""
 
-#: ../src/ui/dialog/document-metadata.cpp:71
+#: ../src/ui/dialog/document-metadata.cpp:88
 #: ../src/ui/dialog/document-properties.cpp:150
 msgid "Metadata"
 msgstr ""
 
-#: ../src/ui/dialog/document-metadata.cpp:72
+#: ../src/ui/dialog/document-metadata.cpp:89
 #: ../src/ui/dialog/document-properties.cpp:151
 msgid "License"
 msgstr ""
 
-#: ../src/ui/dialog/document-metadata.cpp:153
+#: ../src/ui/dialog/document-metadata.cpp:126
 #: ../src/ui/dialog/document-properties.cpp:763
 msgid "<b>Dublin Core Entities</b>"
 msgstr ""
 
-#: ../src/ui/dialog/document-metadata.cpp:175
+#: ../src/ui/dialog/document-metadata.cpp:168
 #: ../src/ui/dialog/document-properties.cpp:799
 msgid "<b>License</b>"
 msgstr ""
@@ -13731,7 +13731,8 @@ msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:106
 msgid ""
-"Color and transparency of the page background (also used for bitmap export)"
+"Color of the page background. Note: transparency setting ignored while "
+"editing but used when exporting to bitmap."
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:107
@@ -14470,43 +14471,43 @@ msgstr ""
 msgid "No filter selected"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2403
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2408
 msgid "Effect parameters"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2404
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2409
 msgid "Filter General Settings"
 msgstr ""
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2460
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2465
 msgid "Coordinates:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2460
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2465
 msgid "X coordinate of the left corners of filter effects region"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2460
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2465
 msgid "Y coordinate of the upper corners of filter effects region"
 msgstr ""
 
 #. default width:
 #. default height:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2461
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2466
 msgid "Dimensions:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2461
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2466
 msgid "Width of filter effects region"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2461
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2466
 msgid "Height of filter effects region"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2467
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2472
 msgid ""
 "Indicates the type of matrix operation. The keyword 'matrix' indicates that "
 "a full 5x4 matrix of values will be provided. The other keywords represent "
@@ -14514,78 +14515,78 @@ msgid ""
 "performed without specifying a complete matrix."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2468
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2473
 msgid "Value(s):"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2483
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2523
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2488
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2528
 msgid "Operator:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2484
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2489
 msgid "K1:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2484
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2485
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2486
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2487
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2489
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2490
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2491
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2492
 msgid ""
 "If the arithmetic operation is chosen, each result pixel is computed using "
 "the formula k1*i1*i2 + k2*i1 + k3*i2 + k4 where i1 and i2 are the pixel "
 "values of the first and second inputs respectively."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2485
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2490
 msgid "K2:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2486
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2491
 msgid "K3:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2487
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2492
 msgid "K4:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2490
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2495
 msgid "Size:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2490
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2495
 msgid "width of the convolve matrix"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2490
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2495
 msgid "height of the convolve matrix"
 msgstr ""
 
 #. default x:
 #. default y:
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2491
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2496
 #: ../src/ui/dialog/object-attributes.cpp:47
 msgid "Target:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2491
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2496
 msgid ""
 "X coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2491
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2496
 msgid ""
 "Y coordinate of the target point in the convolve matrix. The convolution is "
 "applied to pixels around this point."
 msgstr ""
 
 #. TRANSLATORS: for info on "Kernel", see http://en.wikipedia.org/wiki/Kernel_(matrix)
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2493
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2498
 msgid "Kernel:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2493
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2498
 msgid ""
 "This matrix describes the convolve operation that is applied to the input "
 "image in order to calculate the pixel colors at the output. Different "
@@ -14595,11 +14596,11 @@ msgid ""
 "would lead to a common blur effect."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2495
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2500
 msgid "Divisor:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2495
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2500
 msgid ""
 "After applying the kernelMatrix to the input image to yield a number, that "
 "number is divided by divisor to yield the final destination color value. A "
@@ -14607,189 +14608,189 @@ msgid ""
 "effect on the overall color intensity of the result."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2496
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2501
 msgid "Bias:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2496
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2501
 msgid ""
 "This value is added to each component. This is useful to define a constant "
 "value as the zero response of the filter."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2497
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2502
 msgid "Edge Mode:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2497
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2502
 msgid ""
 "Determines how to extend the input image as necessary with color values so "
 "that the matrix operations can be applied when the kernel is positioned at "
 "or near the edge of the input image."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2498
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2503
 msgid "Preserve Alpha"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2498
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2503
 msgid "If set, the alpha channel won't be altered by this filter primitive."
 msgstr ""
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2501
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2506
 msgid "Diffuse Color:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2501
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2534
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2506
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2539
 msgid "Defines the color of the light source"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2502
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2535
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2507
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2540
 msgid "Surface Scale:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2502
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2535
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2507
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2540
 msgid ""
 "This value amplifies the heights of the bump map defined by the input alpha "
 "channel"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2503
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2536
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2508
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2541
 msgid "Constant:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2503
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2536
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2508
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2541
 msgid "This constant affects the Phong lighting model."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2504
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2538
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2509
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2543
 msgid "Kernel Unit Length:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2508
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2513
 msgid "This defines the intensity of the displacement effect."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2509
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2514
 msgid "X displacement:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2509
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2514
 msgid "Color component that controls the displacement in the X direction"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2510
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2515
 msgid "Y displacement:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2510
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2515
 msgid "Color component that controls the displacement in the Y direction"
 msgstr ""
 
 #. default: black
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2513
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2518
 msgid "Flood Color:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2513
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2518
 msgid "The whole filter region will be filled with this color."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2517
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2522
 msgid "Standard Deviation:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2517
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2522
 msgid "The standard deviation for the blur operation."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2523
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2528
 msgid ""
 "Erode: performs \"thinning\" of input image.\n"
 "Dilate: performs \"fattenning\" of input image."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2527
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2532
 msgid "Source of Image:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2530
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2535
 msgid "Delta X:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2530
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2535
 msgid "This is how far the input image gets shifted to the right"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2531
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2536
 msgid "Delta Y:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2531
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2536
 msgid "This is how far the input image gets shifted downwards"
 msgstr ""
 
 #. default: white
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2534
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2539
 msgid "Specular Color:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2537
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2542
 #: ../share/extensions/interp.inx.h:2
 msgid "Exponent:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2537
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2542
 msgid "Exponent for specular term, larger is more \"shiny\"."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2546
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2551
 msgid ""
 "Indicates whether the filter primitive should perform a noise or turbulence "
 "function."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2547
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2552
 msgid "Base Frequency:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2548
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2553
 msgid "Octaves:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2549
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2554
 msgid "Seed:"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2549
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2554
 msgid "The starting number for the pseudo random number generator."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2561
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2566
 msgid "Add filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2578
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2583
 msgid ""
 "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, "
 "multiply, darken and lighten."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2582
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2587
 msgid ""
 "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to "
 "color of each rendered pixel. This allows for effects like turning object to "
 "grayscale, modifying color saturation and changing color hue."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2586
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2591
 msgid ""
 "The <b>feComponentTransfer</b> filter primitive manipulates the input's "
 "color components (red, green, blue, and alpha) according to particular "
@@ -14797,7 +14798,7 @@ msgid ""
 "adjustment, color balance, and thresholding."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2590
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2595
 msgid ""
 "The <b>feComposite</b> filter primitive composites two images using one of "
 "the Porter-Duff blending modes or the arithmetic mode described in SVG "
@@ -14805,7 +14806,7 @@ msgid ""
 "between the corresponding pixel values of the images."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2594
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2599
 msgid ""
 "The <b>feConvolveMatrix</b> lets you specify a Convolution to be applied on "
 "the image. Common effects created using convolution matrices are blur, "
@@ -14814,7 +14815,7 @@ msgid ""
 "is faster and resolution-independent."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2598
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2603
 msgid ""
 "The <b>feDiffuseLighting</b> and feSpecularLighting filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -14822,7 +14823,7 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2602
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2607
 msgid ""
 "The <b>feDisplacementMap</b> filter primitive displaces the pixels in the "
 "first input using the second input as a displacement map, that shows from "
@@ -14830,26 +14831,26 @@ msgid ""
 "effects."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2606
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2611
 msgid ""
 "The <b>feFlood</b> filter primitive fills the region with a given color and "
 "opacity.  It is usually used as an input to other filters to apply color to "
 "a graphic."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2610
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2615
 msgid ""
 "The <b>feGaussianBlur</b> filter primitive uniformly blurs its input.  It is "
 "commonly used together with feOffset to create a drop shadow effect."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2614
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2619
 msgid ""
 "The <b>feImage</b> filter primitive fills the region with an external image "
 "or another part of the document."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2618
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2623
 msgid ""
 "The <b>feMerge</b> filter primitive composites several temporary images "
 "inside the filter primitive to a single image. It uses normal alpha "
@@ -14857,21 +14858,21 @@ msgid ""
 "in 'normal' mode or several feComposite primitives in 'over' mode."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2622
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2627
 msgid ""
 "The <b>feMorphology</b> filter primitive provides erode and dilate effects. "
 "For single-color objects erode makes the object thinner and dilate makes it "
 "thicker."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2626
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2631
 msgid ""
 "The <b>feOffset</b> filter primitive offsets the image by an user-defined "
 "amount. For example, this is useful for drop shadows, where the shadow is in "
 "a slightly different position than the actual object."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2630
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2635
 msgid ""
 "The feDiffuseLighting and <b>feSpecularLighting</b> filter primitives create "
 "\"embossed\" shadings.  The input's alpha channel is used to provide depth "
@@ -14879,23 +14880,23 @@ msgid ""
 "opacity areas recede away from the viewer."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2634
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2639
 msgid ""
 "The <b>feTile</b> filter primitive tiles a region with its input graphic"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2638
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2643
 msgid ""
 "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of "
 "noise is useful in simulating several nature phenomena like clouds, fire and "
 "smoke and in generating complex textures like marble or granite."
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2657
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2662
 msgid "Duplicate filter primitive"
 msgstr ""
 
-#: ../src/ui/dialog/filter-effects-dialog.cpp:2710
+#: ../src/ui/dialog/filter-effects-dialog.cpp:2715
 msgid "Set filter primitive attribute"
 msgstr ""
 
@@ -15809,9 +15810,9 @@ msgstr ""
 msgid "_X:"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:49 ../src/widgets/sp-color-icc-selector.cpp:220
-#: ../src/widgets/sp-color-icc-selector.cpp:221
-#: ../src/widgets/sp-color-scales.cpp:491
+#: ../src/ui/dialog/guides.cpp:49 ../src/widgets/sp-color-icc-selector.cpp:217
+#: ../src/widgets/sp-color-icc-selector.cpp:218
+#: ../src/widgets/sp-color-scales.cpp:488
 msgid "_Y:"
 msgstr ""
 
@@ -15835,12 +15836,12 @@ msgstr ""
 msgid "Guideline"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:261
+#: ../src/ui/dialog/guides.cpp:317
 #, c-format
 msgid "Guideline ID: %s"
 msgstr ""
 
-#: ../src/ui/dialog/guides.cpp:267
+#: ../src/ui/dialog/guides.cpp:323
 #, c-format
 msgid "Current: %s"
 msgstr ""
@@ -16179,7 +16180,7 @@ msgstr ""
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:375
-#: ../src/widgets/desktop-widget.cpp:636
+#: ../src/widgets/desktop-widget.cpp:613
 msgid "Zoom"
 msgstr ""
 
@@ -16217,7 +16218,7 @@ msgstr ""
 
 #. Pen
 #: ../src/ui/dialog/inkscape-preferences.cpp:423
-#: ../src/ui/dialog/input.cpp:1197
+#: ../src/ui/dialog/input.cpp:1399
 msgid "Pen"
 msgstr ""
 
@@ -17358,8 +17359,8 @@ msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:989
-#: ../src/widgets/sp-color-icc-selector.cpp:327
-#: ../src/widgets/sp-color-icc-selector.cpp:680
+#: ../src/widgets/sp-color-icc-selector.cpp:324
+#: ../src/widgets/sp-color-icc-selector.cpp:677
 msgid "<none>"
 msgstr ""
 
@@ -17476,7 +17477,7 @@ msgid "Color custom markers the same color as object"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1089
-#: ../src/ui/dialog/inkscape-preferences.cpp:1298
+#: ../src/ui/dialog/inkscape-preferences.cpp:1300
 msgid "Update marker color when object color changes"
 msgstr ""
 
@@ -17678,222 +17679,216 @@ msgid ""
 "autoscroll; positive is outside the canvas, negative is within the canvas"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1165
-msgid "Left mouse button pans when Space is pressed"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1167
-msgid ""
-"When on, pressing and holding Space and dragging with left mouse button pans "
-"canvas (as in Adobe Illustrator); when off, Space temporarily switches to "
-"Selector tool (default)"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1168
+#.
+#. _scroll_space.init ( _("Left mouse button pans when Space is pressed"), "/options/spacepans/value", false);
+#. _page_scrolling.add_line( false, "", _scroll_space, "",
+#. _("When on, pressing and holding Space and dragging with left mouse button pans canvas (as in Adobe Illustrator); when off, Space temporarily switches to Selector tool (default)"));
+#.
+#: ../src/ui/dialog/inkscape-preferences.cpp:1170
 msgid "Mouse wheel zooms by default"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1170
+#: ../src/ui/dialog/inkscape-preferences.cpp:1172
 msgid ""
 "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when "
 "off, it zooms with Ctrl and scrolls without Ctrl"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1171
+#: ../src/ui/dialog/inkscape-preferences.cpp:1173
 msgid "Scrolling"
 msgstr ""
 
 #. Snapping options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1174
+#: ../src/ui/dialog/inkscape-preferences.cpp:1176
 msgid "Enable snap indicator"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1176
+#: ../src/ui/dialog/inkscape-preferences.cpp:1178
 msgid "After snapping, a symbol is drawn at the point that has snapped"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1179
+#: ../src/ui/dialog/inkscape-preferences.cpp:1181
 msgid "_Delay (in ms):"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1180
+#: ../src/ui/dialog/inkscape-preferences.cpp:1182
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
 "When set to zero or to a very small number, snapping will be immediate."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1182
+#: ../src/ui/dialog/inkscape-preferences.cpp:1184
 msgid "Only snap the node closest to the pointer"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1184
+#: ../src/ui/dialog/inkscape-preferences.cpp:1186
 msgid ""
 "Only try to snap the node that is initially closest to the mouse pointer"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1187
+#: ../src/ui/dialog/inkscape-preferences.cpp:1189
 msgid "_Weight factor:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1188
+#: ../src/ui/dialog/inkscape-preferences.cpp:1190
 msgid ""
 "When multiple snap solutions are found, then Inkscape can either prefer the "
 "closest transformation (when set to 0), or prefer the node that was "
 "initially the closest to the pointer (when set to 1)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1190
+#: ../src/ui/dialog/inkscape-preferences.cpp:1192
 msgid "Snap the mouse pointer when dragging a constrained knot"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1192
+#: ../src/ui/dialog/inkscape-preferences.cpp:1194
 msgid ""
 "When dragging a knot along a constraint line, then snap the position of the "
 "mouse pointer instead of snapping the projection of the knot onto the "
 "constraint line"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1194
+#: ../src/ui/dialog/inkscape-preferences.cpp:1196
 msgid "Snapping"
 msgstr ""
 
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:1199
+#: ../src/ui/dialog/inkscape-preferences.cpp:1201
 msgid "_Arrow keys move by:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1200
+#: ../src/ui/dialog/inkscape-preferences.cpp:1202
 msgid ""
 "Pressing an arrow key moves selected object(s) or node(s) by this distance"
 msgstr ""
 
 #. defaultscale is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:1203
+#: ../src/ui/dialog/inkscape-preferences.cpp:1205
 msgid "> and < _scale by:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1204
+#: ../src/ui/dialog/inkscape-preferences.cpp:1206
 msgid "Pressing > or < scales selection up or down by this increment"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1206
+#: ../src/ui/dialog/inkscape-preferences.cpp:1208
 msgid "_Inset/Outset by:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1207
+#: ../src/ui/dialog/inkscape-preferences.cpp:1209
 msgid "Inset and Outset commands displace the path by this distance"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1208
+#: ../src/ui/dialog/inkscape-preferences.cpp:1210
 msgid "Compass-like display of angles"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1210
+#: ../src/ui/dialog/inkscape-preferences.cpp:1212
 msgid ""
 "When on, angles are displayed with 0 at north, 0 to 360 range, positive "
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
 "counterclockwise"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1216
+#: ../src/ui/dialog/inkscape-preferences.cpp:1218
 msgid "_Rotation snaps every:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1216
+#: ../src/ui/dialog/inkscape-preferences.cpp:1218
 msgid "degrees"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1217
+#: ../src/ui/dialog/inkscape-preferences.cpp:1219
 msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1218
+#: ../src/ui/dialog/inkscape-preferences.cpp:1220
 msgid "Relative snapping of guideline angles"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1220
+#: ../src/ui/dialog/inkscape-preferences.cpp:1222
 msgid ""
 "When on, the snap angles when rotating a guideline will be relative to the "
 "original angle"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1222
+#: ../src/ui/dialog/inkscape-preferences.cpp:1224
 msgid "_Zoom in/out by:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1223
+#: ../src/ui/dialog/inkscape-preferences.cpp:1225
 msgid ""
 "Zoom tool click, +/- keys, and middle click zoom in and out by this "
 "multiplier"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1224
+#: ../src/ui/dialog/inkscape-preferences.cpp:1226
 msgid "Steps"
 msgstr ""
 
 #. Clones options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1227
+#: ../src/ui/dialog/inkscape-preferences.cpp:1229
 msgid "Move in parallel"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1229
+#: ../src/ui/dialog/inkscape-preferences.cpp:1231
 msgid "Stay unmoved"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1231
+#: ../src/ui/dialog/inkscape-preferences.cpp:1233
 msgid "Move according to transform"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1233
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid "Are unlinked"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1235
+#: ../src/ui/dialog/inkscape-preferences.cpp:1237
 msgid "Are deleted"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1238
+#: ../src/ui/dialog/inkscape-preferences.cpp:1240
 msgid "Moving original: clones and linked offsets"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1240
+#: ../src/ui/dialog/inkscape-preferences.cpp:1242
 msgid "Clones are translated by the same vector as their original"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1242
+#: ../src/ui/dialog/inkscape-preferences.cpp:1244
 msgid "Clones preserve their positions when their original is moved"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1244
+#: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid ""
 "Each clone moves according to the value of its transform= attribute; for "
 "example, a rotated clone will move in a different direction than its original"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1247
 msgid "Deleting original: clones"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1247
+#: ../src/ui/dialog/inkscape-preferences.cpp:1249
 msgid "Orphaned clones are converted to regular objects"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1249
+#: ../src/ui/dialog/inkscape-preferences.cpp:1251
 msgid "Orphaned clones are deleted along with their original"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1251
+#: ../src/ui/dialog/inkscape-preferences.cpp:1253
 msgid "Duplicating original+clones/linked offset"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1253
+#: ../src/ui/dialog/inkscape-preferences.cpp:1255
 msgid "Relink duplicated clones"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1255
+#: ../src/ui/dialog/inkscape-preferences.cpp:1257
 msgid ""
 "When duplicating a selection containing both a clone and its original "
 "(possibly in groups), relink the duplicated clone to the duplicated original "
@@ -17901,112 +17896,112 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
-#: ../src/ui/dialog/inkscape-preferences.cpp:1258
+#: ../src/ui/dialog/inkscape-preferences.cpp:1260
 msgid "Clones"
 msgstr ""
 
 #. Clip paths and masks options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1261
+#: ../src/ui/dialog/inkscape-preferences.cpp:1263
 msgid "When applying, use the topmost selected object as clippath/mask"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1263
+#: ../src/ui/dialog/inkscape-preferences.cpp:1265
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1264
+#: ../src/ui/dialog/inkscape-preferences.cpp:1266
 msgid "Remove clippath/mask object after applying"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1266
+#: ../src/ui/dialog/inkscape-preferences.cpp:1268
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1268
+#: ../src/ui/dialog/inkscape-preferences.cpp:1270
 msgid "Before applying"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1270
+#: ../src/ui/dialog/inkscape-preferences.cpp:1272
 msgid "Do not group clipped/masked objects"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1271
+#: ../src/ui/dialog/inkscape-preferences.cpp:1273
 msgid "Enclose every clipped/masked object in its own group"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1272
+#: ../src/ui/dialog/inkscape-preferences.cpp:1274
 msgid "Put all clipped/masked objects into one group"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1275
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Apply clippath/mask to every object"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1280
 msgid "Apply clippath/mask to groups containing single object"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1283
 msgid "Apply clippath/mask to group containing all objects"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1283
+#: ../src/ui/dialog/inkscape-preferences.cpp:1285
 msgid "After releasing"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1285
+#: ../src/ui/dialog/inkscape-preferences.cpp:1287
 msgid "Ungroup automatically created groups"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1287
+#: ../src/ui/dialog/inkscape-preferences.cpp:1289
 msgid "Ungroup groups created when setting clip/mask"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1289
+#: ../src/ui/dialog/inkscape-preferences.cpp:1291
 msgid "Clippaths and masks"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1294
 msgid "Stroke Style Markers"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1294
 #: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1298
 msgid ""
 "Stroke color same as object, fill color either object fill color or marker "
 "fill color"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1300
+#: ../src/ui/dialog/inkscape-preferences.cpp:1302
 msgid "Markers"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1308
+#: ../src/ui/dialog/inkscape-preferences.cpp:1310
 msgid "Number of _Threads:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1308
-#: ../src/ui/dialog/inkscape-preferences.cpp:1804
+#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1811
 msgid "(requires restart)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1309
+#: ../src/ui/dialog/inkscape-preferences.cpp:1311
 msgid "Configure number of processors/threads to use when rendering filters"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1313
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid "Rendering _cache size:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1313
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgctxt "mebibyte (2^20 bytes) abbreviation"
 msgid "MiB"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1313
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid ""
 "Set the amount of memory per document which can be used to store rendered "
 "parts of the drawing for later reuse; set to zero to disable caching"
@@ -18014,357 +18009,358 @@ msgstr ""
 
 #. blur quality
 #. filter quality
-#: ../src/ui/dialog/inkscape-preferences.cpp:1316
-#: ../src/ui/dialog/inkscape-preferences.cpp:1340
-msgid "Best quality (slowest)"
-msgstr ""
-
 #: ../src/ui/dialog/inkscape-preferences.cpp:1318
 #: ../src/ui/dialog/inkscape-preferences.cpp:1342
-msgid "Better quality (slower)"
+msgid "Best quality (slowest)"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1320
 #: ../src/ui/dialog/inkscape-preferences.cpp:1344
-msgid "Average quality"
+msgid "Better quality (slower)"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1322
 #: ../src/ui/dialog/inkscape-preferences.cpp:1346
-msgid "Lower quality (faster)"
+msgid "Average quality"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1324
 #: ../src/ui/dialog/inkscape-preferences.cpp:1348
+msgid "Lower quality (faster)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1326
+#: ../src/ui/dialog/inkscape-preferences.cpp:1350
 msgid "Lowest quality (fastest)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1327
+#: ../src/ui/dialog/inkscape-preferences.cpp:1329
 msgid "Gaussian blur quality for display"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1329
-#: ../src/ui/dialog/inkscape-preferences.cpp:1353
+#: ../src/ui/dialog/inkscape-preferences.cpp:1331
+#: ../src/ui/dialog/inkscape-preferences.cpp:1355
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1331
-#: ../src/ui/dialog/inkscape-preferences.cpp:1355
-msgid "Better quality, but slower display"
-msgstr ""
-
 #: ../src/ui/dialog/inkscape-preferences.cpp:1333
 #: ../src/ui/dialog/inkscape-preferences.cpp:1357
-msgid "Average quality, acceptable display speed"
+msgid "Better quality, but slower display"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1335
 #: ../src/ui/dialog/inkscape-preferences.cpp:1359
-msgid "Lower quality (some artifacts), but display is faster"
+msgid "Average quality, acceptable display speed"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1337
 #: ../src/ui/dialog/inkscape-preferences.cpp:1361
+msgid "Lower quality (some artifacts), but display is faster"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1339
+#: ../src/ui/dialog/inkscape-preferences.cpp:1363
 msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1351
+#: ../src/ui/dialog/inkscape-preferences.cpp:1353
 msgid "Filter effects quality for display"
 msgstr ""
 
 #. build custom preferences tab
-#: ../src/ui/dialog/inkscape-preferences.cpp:1363
+#: ../src/ui/dialog/inkscape-preferences.cpp:1365
 #: ../src/ui/dialog/print.cpp:224
 msgid "Rendering"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1369
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
 msgid "2x2"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1369
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
 msgid "4x4"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1369
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
 msgid "8x8"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1369
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
 msgid "16x16"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1373
+#: ../src/ui/dialog/inkscape-preferences.cpp:1375
 msgid "Oversample bitmaps:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1376
+#: ../src/ui/dialog/inkscape-preferences.cpp:1378
 msgid "Automatically reload bitmaps"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1378
+#: ../src/ui/dialog/inkscape-preferences.cpp:1380
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1380
+#: ../src/ui/dialog/inkscape-preferences.cpp:1382
 msgid "_Bitmap editor:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1382
+#: ../src/ui/dialog/inkscape-preferences.cpp:1384
 msgid "Default export _resolution:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1383
+#: ../src/ui/dialog/inkscape-preferences.cpp:1385
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1385
+#: ../src/ui/dialog/inkscape-preferences.cpp:1387
 msgid "Resolution for Create Bitmap _Copy:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1386
+#: ../src/ui/dialog/inkscape-preferences.cpp:1388
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1388
+#: ../src/ui/dialog/inkscape-preferences.cpp:1390
 msgid "Always embed"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1388
+#: ../src/ui/dialog/inkscape-preferences.cpp:1390
 msgid "Always link"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1388
+#: ../src/ui/dialog/inkscape-preferences.cpp:1390
 msgid "Ask"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1391
+#: ../src/ui/dialog/inkscape-preferences.cpp:1393
 msgid "Bitmap import:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1394
+#: ../src/ui/dialog/inkscape-preferences.cpp:1396
 msgid "Default _import resolution:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1395
+#: ../src/ui/dialog/inkscape-preferences.cpp:1397
 msgid "Default bitmap resolution (in dots per inch) for bitmap import"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1396
+#: ../src/ui/dialog/inkscape-preferences.cpp:1398
 msgid "Override file resolution"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1398
+#: ../src/ui/dialog/inkscape-preferences.cpp:1400
 msgid "Use default bitmap resolution in favor of information from file"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1400
+#: ../src/ui/dialog/inkscape-preferences.cpp:1402
 msgid "Bitmaps"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1412
+#: ../src/ui/dialog/inkscape-preferences.cpp:1414
 msgid ""
 "Select a file of predefined shortcuts to use. Any customized shortcuts you "
 "create will be added seperately to "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1415
+#: ../src/ui/dialog/inkscape-preferences.cpp:1417
 msgid "Shortcut file:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1418
+#: ../src/ui/dialog/inkscape-preferences.cpp:1420
 msgid "Search:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1430
+#: ../src/ui/dialog/inkscape-preferences.cpp:1432
 msgid "Shortcut"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1431
+#: ../src/ui/dialog/inkscape-preferences.cpp:1433
 #: ../src/ui/widget/page-sizer.cpp:262
 msgid "Description"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1467
+#: ../src/ui/dialog/inkscape-preferences.cpp:1474
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:693
 #: ../src/ui/dialog/tracedialog.cpp:812
 #: ../src/ui/widget/preferences-widget.cpp:648
 msgid "Reset"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1467
+#: ../src/ui/dialog/inkscape-preferences.cpp:1474
 msgid ""
 "Remove all your customized keyboard shortcuts, and revert to the shortcuts "
 "in the shortcut file listed above"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1471
+#: ../src/ui/dialog/inkscape-preferences.cpp:1478
 msgid "Import ..."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1471
+#: ../src/ui/dialog/inkscape-preferences.cpp:1478
 msgid "Import custom keyboard shortcuts from a file"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1474
+#: ../src/ui/dialog/inkscape-preferences.cpp:1481
 msgid "Export ..."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1474
+#: ../src/ui/dialog/inkscape-preferences.cpp:1481
 msgid "Export custom keyboard shortcuts to a file"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1484
+#: ../src/ui/dialog/inkscape-preferences.cpp:1491
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1766
+#: ../src/ui/dialog/inkscape-preferences.cpp:1773
 msgid "Set the main spell check language"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1769
+#: ../src/ui/dialog/inkscape-preferences.cpp:1776
 msgid "Second language:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1770
+#: ../src/ui/dialog/inkscape-preferences.cpp:1777
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1773
+#: ../src/ui/dialog/inkscape-preferences.cpp:1780
 msgid "Third language:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1774
+#: ../src/ui/dialog/inkscape-preferences.cpp:1781
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1776
+#: ../src/ui/dialog/inkscape-preferences.cpp:1783
 msgid "Ignore words with digits"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1778
+#: ../src/ui/dialog/inkscape-preferences.cpp:1785
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1780
+#: ../src/ui/dialog/inkscape-preferences.cpp:1787
 msgid "Ignore words in ALL CAPITALS"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1782
+#: ../src/ui/dialog/inkscape-preferences.cpp:1789
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1784
+#: ../src/ui/dialog/inkscape-preferences.cpp:1791
 msgid "Spellcheck"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1804
+#: ../src/ui/dialog/inkscape-preferences.cpp:1811
 msgid "Latency _skew:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1805
+#: ../src/ui/dialog/inkscape-preferences.cpp:1812
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1807
+#: ../src/ui/dialog/inkscape-preferences.cpp:1814
 msgid "Pre-render named icons"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1809
+#: ../src/ui/dialog/inkscape-preferences.cpp:1816
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1817
+#: ../src/ui/dialog/inkscape-preferences.cpp:1824
 msgid "System info"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1821
+#: ../src/ui/dialog/inkscape-preferences.cpp:1828
 msgid "User config: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1821
+#: ../src/ui/dialog/inkscape-preferences.cpp:1828
 msgid "Location of users configuration"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1825
+#: ../src/ui/dialog/inkscape-preferences.cpp:1832
 msgid "User preferences: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1825
+#: ../src/ui/dialog/inkscape-preferences.cpp:1832
 msgid "Location of the users preferences file"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1829
+#: ../src/ui/dialog/inkscape-preferences.cpp:1836
 msgid "User extensions: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1829
+#: ../src/ui/dialog/inkscape-preferences.cpp:1836
 msgid "Location of the users extensions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1833
+#: ../src/ui/dialog/inkscape-preferences.cpp:1840
 msgid "User cache: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1833
+#: ../src/ui/dialog/inkscape-preferences.cpp:1840
 msgid "Location of users cache"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1841
+#: ../src/ui/dialog/inkscape-preferences.cpp:1848
 msgid "Temporary files: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1841
+#: ../src/ui/dialog/inkscape-preferences.cpp:1848
 msgid "Location of the temporary files used for autosave"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1845
+#: ../src/ui/dialog/inkscape-preferences.cpp:1852
 msgid "Inkscape data: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1845
+#: ../src/ui/dialog/inkscape-preferences.cpp:1852
 msgid "Location of Inkscape data"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1849
+#: ../src/ui/dialog/inkscape-preferences.cpp:1856
 msgid "Inkscape extensions: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1849
+#: ../src/ui/dialog/inkscape-preferences.cpp:1856
 msgid "Location of the Inkscape extensions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1858
+#: ../src/ui/dialog/inkscape-preferences.cpp:1865
 msgid "System data: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1858
+#: ../src/ui/dialog/inkscape-preferences.cpp:1865
 msgid "Locations of system data"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1882
+#: ../src/ui/dialog/inkscape-preferences.cpp:1889
 msgid "Icon theme: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1882
+#: ../src/ui/dialog/inkscape-preferences.cpp:1889
 msgid "Locations of icon themes"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1884
+#: ../src/ui/dialog/inkscape-preferences.cpp:1891
 msgid "System"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:352 ../src/ui/dialog/input.cpp:364
+#: ../src/ui/dialog/input.cpp:352 ../src/ui/dialog/input.cpp:373
+#: ../src/ui/dialog/input.cpp:1555
 msgid "Disabled"
 msgstr ""
 
@@ -18373,124 +18369,164 @@ msgctxt "Input device"
 msgid "Screen"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:354 ../src/ui/dialog/input.cpp:366
+#: ../src/ui/dialog/input.cpp:354 ../src/ui/dialog/input.cpp:375
 msgid "Window"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:533
+#: ../src/ui/dialog/input.cpp:599
 msgid "Test Area"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:588 ../share/extensions/svgcalendar.inx.h:2
+#: ../src/ui/dialog/input.cpp:600
+msgid "Axis"
+msgstr ""
+
+#: ../src/ui/dialog/input.cpp:664 ../share/extensions/svgcalendar.inx.h:2
 msgid "Configuration"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:589 ../src/ui/dialog/input.cpp:785
+#: ../src/ui/dialog/input.cpp:665
 msgid "Hardware"
 msgstr ""
 
-#. Gtk::Label* lbl = Gtk::manage(new Gtk::Label(_("Name:")));
-#. devDetails.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
-#. ::Gtk::FILL,
-#. ::Gtk::SHRINK);
-#. devDetails.attach(devName, 1, 2, rowNum, rowNum + 1,
-#. ::Gtk::SHRINK,
-#. ::Gtk::SHRINK);
-#.
-#. rowNum++;
-#: ../src/ui/dialog/input.cpp:607
+#: ../src/ui/dialog/input.cpp:688
 msgid "Link:"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:622
+#: ../src/ui/dialog/input.cpp:704
 msgid "Axes count:"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:645
+#: ../src/ui/dialog/input.cpp:728
 msgid "axis:"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:657
+#: ../src/ui/dialog/input.cpp:742
 msgid "Button count:"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:823
+#: ../src/ui/dialog/input.cpp:924
 msgid "Tablet"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:852 ../src/ui/dialog/input.cpp:1605
+#: ../src/ui/dialog/input.cpp:953 ../src/ui/dialog/input.cpp:1845
 msgid "pad"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:893
+#: ../src/ui/dialog/input.cpp:995
 msgid "_Use pressure-sensitive tablet (requires restart)"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:894 ../src/verbs.cpp:2309
+#: ../src/ui/dialog/input.cpp:996 ../src/verbs.cpp:2309
 msgid "_Save"
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:50
+#: ../src/ui/dialog/input.cpp:1000
+msgid "Axes"
+msgstr ""
+
+#: ../src/ui/dialog/input.cpp:1001
+msgid "Keys"
+msgstr ""
+
+#: ../src/ui/dialog/input.cpp:1002 ../src/widgets/spray-toolbar.cpp:202
+#: ../src/widgets/tweak-toolbar.cpp:272
+msgid "Mode"
+msgstr ""
+
+#: ../src/ui/dialog/input.cpp:1084
+msgid ""
+"A device can be 'Disabled', its co-ordinates mapped to the whole 'Screen', "
+"or to a single (usually focused) 'Window'"
+msgstr ""
+
+#: ../src/ui/dialog/input.cpp:1530 ../src/ui/dialog/layers.cpp:912
+msgid "X"
+msgstr ""
+
+#: ../src/ui/dialog/input.cpp:1530
+msgid "Y"
+msgstr ""
+
+#: ../src/ui/dialog/input.cpp:1530 ../src/widgets/calligraphy-toolbar.cpp:601
+#: ../src/widgets/spray-toolbar.cpp:241 ../src/widgets/tweak-toolbar.cpp:391
+msgid "Pressure"
+msgstr ""
+
+#: ../src/ui/dialog/input.cpp:1530
+msgid "X tilt"
+msgstr ""
+
+#: ../src/ui/dialog/input.cpp:1530
+msgid "Y tilt"
+msgstr ""
+
+#: ../src/ui/dialog/input.cpp:1530
+#: ../src/widgets/sp-color-wheel-selector.cpp:58
+msgid "Wheel"
+msgstr ""
+
+#: ../src/ui/dialog/layer-properties.cpp:55
 msgid "Layer name:"
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:119
+#: ../src/ui/dialog/layer-properties.cpp:136
 msgid "Add layer"
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:157
+#: ../src/ui/dialog/layer-properties.cpp:176
 msgid "Above current"
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:161
+#: ../src/ui/dialog/layer-properties.cpp:180
 msgid "Below current"
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:164
+#: ../src/ui/dialog/layer-properties.cpp:183
 msgid "As sublayer of current"
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:311
+#: ../src/ui/dialog/layer-properties.cpp:352
 msgid "Rename Layer"
 msgstr ""
 
 #. TODO: find an unused layer number, forming name from _("Layer ") + "%d"
-#: ../src/ui/dialog/layer-properties.cpp:313
-#: ../src/ui/dialog/layer-properties.cpp:369 ../src/verbs.cpp:193
+#: ../src/ui/dialog/layer-properties.cpp:354
+#: ../src/ui/dialog/layer-properties.cpp:410 ../src/verbs.cpp:193
 #: ../src/verbs.cpp:2240
 msgid "Layer"
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:314
+#: ../src/ui/dialog/layer-properties.cpp:355
 msgid "_Rename"
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:327 ../src/ui/dialog/layers.cpp:746
+#: ../src/ui/dialog/layer-properties.cpp:368 ../src/ui/dialog/layers.cpp:746
 msgid "Rename layer"
 msgstr ""
 
 #. TRANSLATORS: This means "The layer has been renamed"
-#: ../src/ui/dialog/layer-properties.cpp:329
+#: ../src/ui/dialog/layer-properties.cpp:370
 msgid "Renamed layer"
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:333
+#: ../src/ui/dialog/layer-properties.cpp:374
 msgid "Add Layer"
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:339
+#: ../src/ui/dialog/layer-properties.cpp:380
 msgid "_Add"
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:363
+#: ../src/ui/dialog/layer-properties.cpp:404
 msgid "New layer created."
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:367
+#: ../src/ui/dialog/layer-properties.cpp:408
 msgid "Move to Layer"
 msgstr ""
 
-#: ../src/ui/dialog/layer-properties.cpp:370
+#: ../src/ui/dialog/layer-properties.cpp:411
 #: ../src/ui/dialog/transformation.cpp:109
 msgid "_Move"
 msgstr ""
@@ -18546,10 +18582,6 @@ msgstr ""
 #: ../src/ui/dialog/layers.cpp:902
 msgctxt "Layers"
 msgid "Top"
-msgstr ""
-
-#: ../src/ui/dialog/layers.cpp:912
-msgid "X"
 msgstr ""
 
 #: ../src/ui/dialog/livepatheffect-editor.cpp:111
@@ -18827,25 +18859,25 @@ msgstr ""
 msgid "Could not connect to the Open Clip Art Library"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:1124
+#: ../src/ui/dialog/ocaldialogs.cpp:1130
 msgid "Could not parse search results"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:1158
+#: ../src/ui/dialog/ocaldialogs.cpp:1164
 msgid "No clipart named <b>%1</b> was found."
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:1160
+#: ../src/ui/dialog/ocaldialogs.cpp:1166
 msgid ""
 "Please make sure all keywords are spelled correctly, or try again with "
 "different keywords."
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:1200
+#: ../src/ui/dialog/ocaldialogs.cpp:1212
 msgid "Search"
 msgstr ""
 
-#: ../src/ui/dialog/ocaldialogs.cpp:1206
+#: ../src/ui/dialog/ocaldialogs.cpp:1224
 msgid "Close"
 msgstr ""
 
@@ -19059,34 +19091,34 @@ msgid "Preview Text:"
 msgstr ""
 
 #. ******************* Symbol Sets ************************
-#: ../src/ui/dialog/symbols.cpp:102
+#: ../src/ui/dialog/symbols.cpp:110
 msgid "Symbol set: "
 msgstr ""
 
 #. Fill in later
-#: ../src/ui/dialog/symbols.cpp:106 ../src/ui/dialog/symbols.cpp:107
+#: ../src/ui/dialog/symbols.cpp:114 ../src/ui/dialog/symbols.cpp:115
 msgid "Current Document"
 msgstr ""
 
 #. ******************* Preview Scale **********************
-#: ../src/ui/dialog/symbols.cpp:143
+#: ../src/ui/dialog/symbols.cpp:151
 msgid "Preview scale: "
 msgstr ""
 
-#: ../src/ui/dialog/symbols.cpp:148
+#: ../src/ui/dialog/symbols.cpp:156
 msgid "Fit"
 msgstr ""
 
-#: ../src/ui/dialog/symbols.cpp:148
+#: ../src/ui/dialog/symbols.cpp:156
 msgid "Fit to width"
 msgstr ""
 
-#: ../src/ui/dialog/symbols.cpp:148
+#: ../src/ui/dialog/symbols.cpp:156
 msgid "Fit to height"
 msgstr ""
 
 #. ******************* Preview Size ***********************
-#: ../src/ui/dialog/symbols.cpp:162
+#: ../src/ui/dialog/symbols.cpp:170
 msgid "Preview size: "
 msgstr ""
 
@@ -20148,21 +20180,21 @@ msgstr ""
 msgid "Custom size"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:352
+#: ../src/ui/widget/page-sizer.cpp:374
 msgid "Resi_ze page to content..."
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:378
+#: ../src/ui/widget/page-sizer.cpp:426
 msgid "_Resize page to drawing or selection"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:379
+#: ../src/ui/widget/page-sizer.cpp:427
 msgid ""
 "Resize the page to fit the current selection, or the entire drawing if there "
 "is no selection"
 msgstr ""
 
-#: ../src/ui/widget/page-sizer.cpp:444
+#: ../src/ui/widget/page-sizer.cpp:492
 msgid "Set page size"
 msgstr ""
 
@@ -23328,11 +23360,6 @@ msgid ""
 "minimum width, black - maximum width)"
 msgstr ""
 
-#: ../src/widgets/calligraphy-toolbar.cpp:601
-#: ../src/widgets/spray-toolbar.cpp:241 ../src/widgets/tweak-toolbar.cpp:391
-msgid "Pressure"
-msgstr ""
-
 #: ../src/widgets/calligraphy-toolbar.cpp:602
 msgid "Use the pressure of the input device to alter the width of the pen"
 msgstr ""
@@ -23469,88 +23496,88 @@ msgstr ""
 msgid "Pattern offset"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:466
+#: ../src/widgets/desktop-widget.cpp:446
 msgid "Zoom drawing if window size changes"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:670
+#: ../src/widgets/desktop-widget.cpp:647
 msgid "Cursor coordinates"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:696
+#: ../src/widgets/desktop-widget.cpp:673
 msgid "Z:"
 msgstr ""
 
 #. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:739
+#: ../src/widgets/desktop-widget.cpp:716
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:820
+#: ../src/widgets/desktop-widget.cpp:797
 msgid "grayscale"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:821
+#: ../src/widgets/desktop-widget.cpp:798
 msgid ", grayscale"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:822
+#: ../src/widgets/desktop-widget.cpp:799
 msgid "print colors preview"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:823
+#: ../src/widgets/desktop-widget.cpp:800
 msgid ", print colors preview"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:824
+#: ../src/widgets/desktop-widget.cpp:801
 msgid "outline"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:825
+#: ../src/widgets/desktop-widget.cpp:802
 msgid "no filters"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:852
+#: ../src/widgets/desktop-widget.cpp:829
 #, c-format
 msgid "%s%s: %d (%s%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:854 ../src/widgets/desktop-widget.cpp:858
+#: ../src/widgets/desktop-widget.cpp:831 ../src/widgets/desktop-widget.cpp:835
 #, c-format
 msgid "%s%s: %d (%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:860
+#: ../src/widgets/desktop-widget.cpp:837
 #, c-format
 msgid "%s%s: %d - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:866
+#: ../src/widgets/desktop-widget.cpp:843
 #, c-format
 msgid "%s%s (%s%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:868 ../src/widgets/desktop-widget.cpp:872
+#: ../src/widgets/desktop-widget.cpp:845 ../src/widgets/desktop-widget.cpp:849
 #, c-format
 msgid "%s%s (%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:874
+#: ../src/widgets/desktop-widget.cpp:851
 #, c-format
 msgid "%s%s - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1042
+#: ../src/widgets/desktop-widget.cpp:1019
 msgid "Color-managed display is <b>enabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1044
+#: ../src/widgets/desktop-widget.cpp:1021
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1099
+#: ../src/widgets/desktop-widget.cpp:1076
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -23559,12 +23586,12 @@ msgid ""
 "If you close without saving, your changes will be discarded."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1109
-#: ../src/widgets/desktop-widget.cpp:1168
+#: ../src/widgets/desktop-widget.cpp:1086
+#: ../src/widgets/desktop-widget.cpp:1145
 msgid "Close _without saving"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1158
+#: ../src/widgets/desktop-widget.cpp:1135
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -23573,11 +23600,11 @@ msgid ""
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1170
+#: ../src/widgets/desktop-widget.cpp:1147
 msgid "_Save as Inkscape SVG"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1380
+#: ../src/widgets/desktop-widget.cpp:1357
 msgid "Note:"
 msgstr ""
 
@@ -23660,8 +23687,8 @@ msgstr ""
 msgid "Set pattern on stroke"
 msgstr ""
 
-#: ../src/widgets/font-selector.cpp:136 ../src/widgets/text-toolbar.cpp:1236
-#: ../src/widgets/text-toolbar.cpp:1495
+#: ../src/widgets/font-selector.cpp:136 ../src/widgets/text-toolbar.cpp:1239
+#: ../src/widgets/text-toolbar.cpp:1498
 msgid "Font size"
 msgstr ""
 
@@ -23956,7 +23983,7 @@ msgstr ""
 msgid "Open LPE dialog (to adapt parameters numerically)"
 msgstr ""
 
-#: ../src/widgets/measure-toolbar.cpp:103 ../src/widgets/text-toolbar.cpp:1498
+#: ../src/widgets/measure-toolbar.cpp:103 ../src/widgets/text-toolbar.cpp:1501
 msgid "Font Size"
 msgstr ""
 
@@ -24714,10 +24741,6 @@ msgstr ""
 msgid "Spray objects in a single path"
 msgstr ""
 
-#: ../src/widgets/spray-toolbar.cpp:202 ../src/widgets/tweak-toolbar.cpp:272
-msgid "Mode"
-msgstr ""
-
 #. Population
 #: ../src/widgets/spray-toolbar.cpp:222
 msgid "(low population)"
@@ -24788,87 +24811,87 @@ msgstr ""
 msgid "CMS"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:216
-#: ../src/widgets/sp-color-scales.cpp:431
+#: ../src/widgets/sp-color-icc-selector.cpp:213
+#: ../src/widgets/sp-color-scales.cpp:428
 msgid "_R:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:216
-#: ../src/widgets/sp-color-icc-selector.cpp:217
-#: ../src/widgets/sp-color-scales.cpp:434
+#: ../src/widgets/sp-color-icc-selector.cpp:213
+#: ../src/widgets/sp-color-icc-selector.cpp:214
+#: ../src/widgets/sp-color-scales.cpp:431
 msgid "_G:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:216
-#: ../src/widgets/sp-color-scales.cpp:437
+#: ../src/widgets/sp-color-icc-selector.cpp:213
+#: ../src/widgets/sp-color-scales.cpp:434
 msgid "_B:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:218
-#: ../src/widgets/sp-color-icc-selector.cpp:219
-#: ../src/widgets/sp-color-scales.cpp:457
+#: ../src/widgets/sp-color-icc-selector.cpp:215
+#: ../src/widgets/sp-color-icc-selector.cpp:216
+#: ../src/widgets/sp-color-scales.cpp:454
 msgid "_H:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:218
-#: ../src/widgets/sp-color-icc-selector.cpp:219
-#: ../src/widgets/sp-color-scales.cpp:460
+#: ../src/widgets/sp-color-icc-selector.cpp:215
+#: ../src/widgets/sp-color-icc-selector.cpp:216
+#: ../src/widgets/sp-color-scales.cpp:457
 msgid "_S:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:219
-#: ../src/widgets/sp-color-scales.cpp:463
+#: ../src/widgets/sp-color-icc-selector.cpp:216
+#: ../src/widgets/sp-color-scales.cpp:460
 msgid "_L:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:220
-#: ../src/widgets/sp-color-icc-selector.cpp:221
-#: ../src/widgets/sp-color-scales.cpp:485
+#: ../src/widgets/sp-color-icc-selector.cpp:217
+#: ../src/widgets/sp-color-icc-selector.cpp:218
+#: ../src/widgets/sp-color-scales.cpp:482
 msgid "_C:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:220
-#: ../src/widgets/sp-color-icc-selector.cpp:221
-#: ../src/widgets/sp-color-scales.cpp:488
+#: ../src/widgets/sp-color-icc-selector.cpp:217
+#: ../src/widgets/sp-color-icc-selector.cpp:218
+#: ../src/widgets/sp-color-scales.cpp:485
 msgid "_M:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:220
-#: ../src/widgets/sp-color-scales.cpp:494
+#: ../src/widgets/sp-color-icc-selector.cpp:217
+#: ../src/widgets/sp-color-scales.cpp:491
 msgid "_K:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:231
+#: ../src/widgets/sp-color-icc-selector.cpp:228
 msgid "Gray"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:300
+#: ../src/widgets/sp-color-icc-selector.cpp:297
 msgid "Fix"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:303
+#: ../src/widgets/sp-color-icc-selector.cpp:300
 msgid "Fix RGB fallback to match icc-color() value."
 msgstr ""
 
 #. Label
-#: ../src/widgets/sp-color-icc-selector.cpp:441
-#: ../src/widgets/sp-color-scales.cpp:440
-#: ../src/widgets/sp-color-scales.cpp:466
-#: ../src/widgets/sp-color-scales.cpp:497
-#: ../src/widgets/sp-color-wheel-selector.cpp:183
+#: ../src/widgets/sp-color-icc-selector.cpp:438
+#: ../src/widgets/sp-color-scales.cpp:437
+#: ../src/widgets/sp-color-scales.cpp:463
+#: ../src/widgets/sp-color-scales.cpp:494
+#: ../src/widgets/sp-color-wheel-selector.cpp:180
 msgid "_A:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:460
-#: ../src/widgets/sp-color-icc-selector.cpp:482
-#: ../src/widgets/sp-color-scales.cpp:441
-#: ../src/widgets/sp-color-scales.cpp:442
-#: ../src/widgets/sp-color-scales.cpp:467
-#: ../src/widgets/sp-color-scales.cpp:468
-#: ../src/widgets/sp-color-scales.cpp:498
-#: ../src/widgets/sp-color-scales.cpp:499
-#: ../src/widgets/sp-color-wheel-selector.cpp:204
-#: ../src/widgets/sp-color-wheel-selector.cpp:228
+#: ../src/widgets/sp-color-icc-selector.cpp:457
+#: ../src/widgets/sp-color-icc-selector.cpp:479
+#: ../src/widgets/sp-color-scales.cpp:438
+#: ../src/widgets/sp-color-scales.cpp:439
+#: ../src/widgets/sp-color-scales.cpp:464
+#: ../src/widgets/sp-color-scales.cpp:465
+#: ../src/widgets/sp-color-scales.cpp:495
+#: ../src/widgets/sp-color-scales.cpp:496
+#: ../src/widgets/sp-color-wheel-selector.cpp:201
+#: ../src/widgets/sp-color-wheel-selector.cpp:225
 msgid "Alpha (opacity)"
 msgstr ""
 
@@ -24907,10 +24930,6 @@ msgstr ""
 
 #: ../src/widgets/sp-color-selector.cpp:64
 msgid "Unnamed"
-msgstr ""
-
-#: ../src/widgets/sp-color-wheel-selector.cpp:58
-msgid "Wheel"
 msgstr ""
 
 #: ../src/widgets/sp-xmlview-attr-list.cpp:64
@@ -25091,11 +25110,11 @@ msgstr ""
 msgid "Scatter randomly the corners and angles"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:151
+#: ../src/widgets/stroke-style.cpp:158
 msgid "Stroke width"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:153
+#: ../src/widgets/stroke-style.cpp:160
 msgctxt "Stroke width"
 msgid "_Width:"
 msgstr ""
@@ -25103,93 +25122,93 @@ msgstr ""
 #. TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:197
+#: ../src/widgets/stroke-style.cpp:204
 msgid "Miter join"
 msgstr ""
 
 #. TRANSLATORS: Round join: joining lines with a rounded corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:204
+#: ../src/widgets/stroke-style.cpp:211
 msgid "Round join"
 msgstr ""
 
 #. TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
 #. For an example, draw a triangle with a large stroke width and modify the
 #. "Join" option (in the Fill and Stroke dialog).
-#: ../src/widgets/stroke-style.cpp:211
+#: ../src/widgets/stroke-style.cpp:218
 msgid "Bevel join"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:236
+#: ../src/widgets/stroke-style.cpp:243
 msgid "Miter _limit:"
 msgstr ""
 
 #. Cap type
 #. TRANSLATORS: cap type specifies the shape for the ends of lines
 #. spw_label(t, _("_Cap:"), 0, i);
-#: ../src/widgets/stroke-style.cpp:252
+#: ../src/widgets/stroke-style.cpp:259
 msgid "Cap:"
 msgstr ""
 
 #. TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
 #. of the line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:260
+#: ../src/widgets/stroke-style.cpp:267
 msgid "Butt cap"
 msgstr ""
 
 #. TRANSLATORS: Round cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are rounded
-#: ../src/widgets/stroke-style.cpp:266
+#: ../src/widgets/stroke-style.cpp:273
 msgid "Round cap"
 msgstr ""
 
 #. TRANSLATORS: Square cap: the line shape extends beyond the end point of the
 #. line; the ends of the line are square
-#: ../src/widgets/stroke-style.cpp:272
+#: ../src/widgets/stroke-style.cpp:279
 msgid "Square cap"
 msgstr ""
 
 #. Dash
-#: ../src/widgets/stroke-style.cpp:277
+#: ../src/widgets/stroke-style.cpp:284
 msgid "Dashes:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:295
+#: ../src/widgets/stroke-style.cpp:311
 msgid "_Start Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:296
+#: ../src/widgets/stroke-style.cpp:312
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:305
+#: ../src/widgets/stroke-style.cpp:330
 msgid "_Mid Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:306
+#: ../src/widgets/stroke-style.cpp:331
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:315
+#: ../src/widgets/stroke-style.cpp:349
 msgid "_End Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:316
+#: ../src/widgets/stroke-style.cpp:350
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:438
+#: ../src/widgets/stroke-style.cpp:481
 msgid "Set markers"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1027 ../src/widgets/stroke-style.cpp:1120
+#: ../src/widgets/stroke-style.cpp:1070 ../src/widgets/stroke-style.cpp:1163
 msgid "Set stroke style"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1208
+#: ../src/widgets/stroke-style.cpp:1251
 msgid "Set marker color"
 msgstr ""
 
@@ -25197,64 +25216,64 @@ msgstr ""
 msgid "Change swatch color"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:371
+#: ../src/widgets/text-toolbar.cpp:374
 #, c-format
 msgid "Failed to find font matching: %s\n"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:405
+#: ../src/widgets/text-toolbar.cpp:408
 msgid "Text: Change font family"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:473
+#: ../src/widgets/text-toolbar.cpp:476
 msgid "Text: Change font size"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:565
+#: ../src/widgets/text-toolbar.cpp:568
 msgid "Text: Change font style"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:645
+#: ../src/widgets/text-toolbar.cpp:648
 msgid "Text: Change superscript or subscript"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:790
+#: ../src/widgets/text-toolbar.cpp:793
 msgid "Text: Change alignment"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:833
+#: ../src/widgets/text-toolbar.cpp:836
 msgid "Text: Change line-height"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:882
+#: ../src/widgets/text-toolbar.cpp:885
 msgid "Text: Change word-spacing"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:923
+#: ../src/widgets/text-toolbar.cpp:926
 msgid "Text: Change letter-spacing"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:963
+#: ../src/widgets/text-toolbar.cpp:966
 msgid "Text: Change dx (kern)"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:997
+#: ../src/widgets/text-toolbar.cpp:1000
 msgid "Text: Change dy"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1032
+#: ../src/widgets/text-toolbar.cpp:1035
 msgid "Text: Change rotate"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1080
+#: ../src/widgets/text-toolbar.cpp:1083
 msgid "Text: Change orientation"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1461
+#: ../src/widgets/text-toolbar.cpp:1464
 msgid "Font Family"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1462
+#: ../src/widgets/text-toolbar.cpp:1465
 msgid "Select Font Family (Alt-X to access)"
 msgstr ""
 
@@ -25263,176 +25282,176 @@ msgstr ""
 #. Cell layout
 #. Focus widget
 #. Enable entry completion
-#: ../src/widgets/text-toolbar.cpp:1470
+#: ../src/widgets/text-toolbar.cpp:1473
 msgid "Font not found on system"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1517
+#: ../src/widgets/text-toolbar.cpp:1520
 msgid "Font Style"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1518
+#: ../src/widgets/text-toolbar.cpp:1521
 msgid "Font style"
 msgstr ""
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1534
+#: ../src/widgets/text-toolbar.cpp:1537
 msgid "Toggle Superscript"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1535
+#: ../src/widgets/text-toolbar.cpp:1538
 msgid "Toggle superscript"
 msgstr ""
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1547
+#: ../src/widgets/text-toolbar.cpp:1550
 msgid "Toggle Subscript"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1548
+#: ../src/widgets/text-toolbar.cpp:1551
 msgid "Toggle subscript"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1589
+#: ../src/widgets/text-toolbar.cpp:1592
 msgid "Justify"
 msgstr ""
 
 #. Name
-#: ../src/widgets/text-toolbar.cpp:1596
+#: ../src/widgets/text-toolbar.cpp:1599
 msgid "Alignment"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1597
+#: ../src/widgets/text-toolbar.cpp:1600
 msgid "Text alignment"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1624
+#: ../src/widgets/text-toolbar.cpp:1627
 msgid "Horizontal"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1631
+#: ../src/widgets/text-toolbar.cpp:1634
 msgid "Vertical"
 msgstr ""
 
 #. Label
-#: ../src/widgets/text-toolbar.cpp:1638
+#: ../src/widgets/text-toolbar.cpp:1641
 msgid "Text orientation"
 msgstr ""
 
 #. Drop down menu
-#: ../src/widgets/text-toolbar.cpp:1661
+#: ../src/widgets/text-toolbar.cpp:1664
 msgid "Smaller spacing"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1661 ../src/widgets/text-toolbar.cpp:1692
-#: ../src/widgets/text-toolbar.cpp:1723
+#: ../src/widgets/text-toolbar.cpp:1664 ../src/widgets/text-toolbar.cpp:1695
+#: ../src/widgets/text-toolbar.cpp:1726
 msgctxt "Text tool"
 msgid "Normal"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1661
+#: ../src/widgets/text-toolbar.cpp:1664
 msgid "Larger spacing"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1666
+#: ../src/widgets/text-toolbar.cpp:1669
 msgid "Line Height"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1667
+#: ../src/widgets/text-toolbar.cpp:1670
 msgid "Line:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1668
+#: ../src/widgets/text-toolbar.cpp:1671
 msgid "Spacing between lines (times font size)"
 msgstr ""
 
 #. Drop down menu
-#: ../src/widgets/text-toolbar.cpp:1692 ../src/widgets/text-toolbar.cpp:1723
+#: ../src/widgets/text-toolbar.cpp:1695 ../src/widgets/text-toolbar.cpp:1726
 msgid "Negative spacing"
 msgstr ""
 
-#: ../src/widgets/text-toolbar.cpp:1692 ../src/widgets/text-toolbar.cpp:1723
+#: ../src/widgets/text-toolbar.cpp:1695 ../src/widgets/text-toolbar.cpp:1726
 msgid "Positive spacing"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1697
+#: ../src/widgets/text-toolbar.cpp:1700
 msgid "Word spacing"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1698
+#: ../src/widgets/text-toolbar.cpp:1701
 msgid "Word:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1699
+#: ../src/widgets/text-toolbar.cpp:1702
 msgid "Spacing between words (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1728
+#: ../src/widgets/text-toolbar.cpp:1731
 msgid "Letter spacing"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1729
+#: ../src/widgets/text-toolbar.cpp:1732
 msgid "Letter:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1730
+#: ../src/widgets/text-toolbar.cpp:1733
 msgid "Spacing between letters (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1759
+#: ../src/widgets/text-toolbar.cpp:1762
 msgid "Kerning"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1760
+#: ../src/widgets/text-toolbar.cpp:1763
 msgid "Kern:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1761
+#: ../src/widgets/text-toolbar.cpp:1764
 msgid "Horizontal kerning (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1790
+#: ../src/widgets/text-toolbar.cpp:1793
 msgid "Vertical Shift"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1791
+#: ../src/widgets/text-toolbar.cpp:1794
 msgid "Vert:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1792
+#: ../src/widgets/text-toolbar.cpp:1795
 msgid "Vertical shift (px)"
 msgstr ""
 
 #. name
-#: ../src/widgets/text-toolbar.cpp:1821
+#: ../src/widgets/text-toolbar.cpp:1824
 msgid "Letter rotation"
 msgstr ""
 
 #. label
-#: ../src/widgets/text-toolbar.cpp:1822
+#: ../src/widgets/text-toolbar.cpp:1825
 msgid "Rot:"
 msgstr ""
 
 #. short label
-#: ../src/widgets/text-toolbar.cpp:1823
+#: ../src/widgets/text-toolbar.cpp:1826
 msgid "Character rotation (degrees)"
 msgstr ""
 
@@ -25899,15 +25918,15 @@ msgstr ""
 msgid "Unable to find image data."
 msgstr ""
 
-#: ../share/extensions/funcplot.py:47
+#: ../share/extensions/funcplot.py:48
 msgid "x-interval cannot be zero. Please modify 'Start X' or 'End X'"
 msgstr ""
 
-#: ../share/extensions/funcplot.py:59
+#: ../share/extensions/funcplot.py:60
 msgid "y-interval cannot be zero. Please modify 'Y top' or 'Y bottom'"
 msgstr ""
 
-#: ../share/extensions/funcplot.py:300
+#: ../share/extensions/funcplot.py:315
 msgid "Please select a rectangle"
 msgstr ""
 
@@ -27474,16 +27493,20 @@ msgid "First derivative:"
 msgstr ""
 
 #: ../share/extensions/funcplot.inx.h:34
+msgid "Clip with rectangle"
+msgstr ""
+
+#: ../share/extensions/funcplot.inx.h:35
 #: ../share/extensions/param_curves.inx.h:28
 msgid "Remove rectangle"
 msgstr ""
 
-#: ../share/extensions/funcplot.inx.h:35
+#: ../share/extensions/funcplot.inx.h:36
 #: ../share/extensions/param_curves.inx.h:29
 msgid "Draw Axes"
 msgstr ""
 
-#: ../share/extensions/funcplot.inx.h:36
+#: ../share/extensions/funcplot.inx.h:37
 msgid "Add x-axis endpoints"
 msgstr ""
 
