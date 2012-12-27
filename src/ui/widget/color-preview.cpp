@@ -26,13 +26,6 @@ ColorPreview::ColorPreview (guint32 rgba)
 }
 
 void
-ColorPreview::on_size_request (Gtk::Requisition *req)
-{
-    req->width = SPCP_DEFAULT_WIDTH;
-    req->height = SPCP_DEFAULT_HEIGHT;
-}
-
-void
 ColorPreview::on_size_allocate (Gtk::Allocation &all)
 {
     set_allocation (all);
@@ -40,14 +33,55 @@ ColorPreview::on_size_allocate (Gtk::Allocation &all)
         queue_draw();
 }
 
+#if WITH_GTKMM_3_0
+void
+ColorPreview::get_preferred_height_vfunc(int& minimum_height, int& natural_height) const
+{
+    minimum_height = natural_height = SPCP_DEFAULT_HEIGHT;
+}
+
+void
+ColorPreview::get_preferred_height_for_width_vfunc(int /* width */, int& minimum_height, int& natural_height) const
+{
+    minimum_height = natural_height = SPCP_DEFAULT_HEIGHT;
+}
+
+void
+ColorPreview::get_preferred_width_vfunc(int& minimum_width, int& natural_width) const
+{
+    minimum_width = natural_width = SPCP_DEFAULT_WIDTH;
+}
+
+void
+ColorPreview::get_preferred_width_for_height_vfunc(int /* height */, int& minimum_width, int& natural_width) const
+{
+    minimum_width = natural_width = SPCP_DEFAULT_WIDTH;
+}
+#else
+void
+ColorPreview::on_size_request (Gtk::Requisition *req)
+{
+    req->width = SPCP_DEFAULT_WIDTH;
+    req->height = SPCP_DEFAULT_HEIGHT;
+}
+
 bool
 ColorPreview::on_expose_event (GdkEventExpose *event)
 {
-    if (get_is_drawable())
-        paint (&event->area);
+    bool result = true;
 
-    return true;
+    if (get_is_drawable())
+    {
+        Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
+	cr->rectangle(event->area.x, event->area.y,
+                      event->area.width, event->area.height);
+	cr->clip();
+        result = on_draw(cr);
+    }
+
+    return result;
 }
+#endif
 
 void
 ColorPreview::setRgba32 (guint32 rgba)
@@ -58,11 +92,10 @@ ColorPreview::setRgba32 (guint32 rgba)
         queue_draw();
 }
 
-void
-ColorPreview::paint (GdkRectangle *area)
+bool
+ColorPreview::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
 {
     GdkRectangle warea, carea;
-    GdkRectangle wpaint, cpaint;
     gint w2;
 
     const Gtk::Allocation& allocation = get_allocation();
@@ -70,12 +103,6 @@ ColorPreview::paint (GdkRectangle *area)
     warea.y = allocation.get_y();
     warea.width = allocation.get_width();
     warea.height = allocation.get_height();
-
-    if (!gdk_rectangle_intersect (area, &warea, &wpaint)) 
-        return;
-
-    GtkWidget *widget = GTK_WIDGET(this->gobj());
-    cairo_t *ct = gdk_cairo_create(gtk_widget_get_window(widget));
 
     /* Transparent area */
 
@@ -86,17 +113,15 @@ ColorPreview::paint (GdkRectangle *area)
     carea.width = w2;
     carea.height = warea.height;
 
-    if (gdk_rectangle_intersect (area, &carea, &cpaint)) {
-        cairo_pattern_t *checkers = ink_cairo_pattern_create_checkerboard();
+    cairo_pattern_t *checkers = ink_cairo_pattern_create_checkerboard();
 
-        cairo_rectangle(ct, carea.x, carea.y, carea.width, carea.height);
-        cairo_set_source(ct, checkers);
-        cairo_fill_preserve(ct);
-        ink_cairo_set_source_rgba32(ct, _rgba);
-        cairo_fill(ct);
+    cr->rectangle(carea.x, carea.y, carea.width, carea.height);
+    cairo_set_source(cr->cobj(), checkers);
+    cr->fill_preserve();
+    ink_cairo_set_source_rgba32(cr->cobj(), _rgba);
+    cr->fill();
 
-        cairo_pattern_destroy(checkers);
-    }
+    cairo_pattern_destroy(checkers);
 
     /* Solid area */
 
@@ -105,13 +130,11 @@ ColorPreview::paint (GdkRectangle *area)
     carea.width = warea.width - w2;
     carea.height = warea.height;
 
-    if (gdk_rectangle_intersect (area, &carea, &cpaint)) {
-        cairo_rectangle(ct, carea.x, carea.y, carea.width, carea.height);
-        ink_cairo_set_source_rgba32(ct, _rgba | 0xff);
-        cairo_fill(ct);
-    }
+    cr->rectangle(carea.x, carea.y, carea.width, carea.height);
+    ink_cairo_set_source_rgba32(cr->cobj(), _rgba | 0xff);
+    cr->fill();
 
-    cairo_destroy(ct);
+    return true;
 }
 
 GdkPixbuf*
@@ -173,3 +196,4 @@ ColorPreview::toPixbuf (int width, int height)
   fill-column:99
   End:
 */
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4 :

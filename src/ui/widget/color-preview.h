@@ -11,6 +11,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <gtkmm/widget.h>
 
 namespace Inkscape {
@@ -27,10 +31,19 @@ public:
     GdkPixbuf* toPixbuf (int width, int height);
 
 protected:
-    virtual void on_size_request (Gtk::Requisition *req);
     virtual void on_size_allocate (Gtk::Allocation &all);
-    virtual bool on_expose_event (GdkEventExpose *event);
-    void paint (GdkRectangle *area);
+
+#if WITH_GTKMM_3_0
+    virtual void get_preferred_height_vfunc(int& minimum_height, int& natural_height) const;
+    virtual void get_preferred_height_for_width_vfunc(int width, int& minimum_height, int& natural_height) const;
+    virtual void get_preferred_width_vfunc(int& minimum_width, int& natural_width) const;
+    virtual void get_preferred_width_for_height_vfunc(int height, int& minimum_width, int& natural_width) const;
+#else
+    virtual void on_size_request (Gtk::Requisition *req);
+    virtual bool on_expose_event(GdkEventExpose *event);
+#endif
+
+    virtual bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
 
     guint32 _rgba;
 };
