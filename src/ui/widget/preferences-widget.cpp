@@ -373,10 +373,27 @@ ZoomCorrRuler::draw_marks(Cairo::RefPtr<Cairo::Context> cr, double dist, int maj
     }
 }
 
-void
-ZoomCorrRuler::redraw() {
+#if !WITH_GTKMM_3_0
+bool
+ZoomCorrRuler::on_expose_event(GdkEventExpose *event) {
+    bool result = false;
+
+    if(get_is_drawable())
+    {
+        Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
+        cr->rectangle(event->area.x, event->area.y,
+                      event->area.width, event->area.height);
+        cr->clip();
+        result = on_draw(cr);
+    }
+
+    return result;
+}
+#endif
+
+bool
+ZoomCorrRuler::on_draw(const Cairo::RefPtr<Cairo::Context>& cr) {
     Glib::RefPtr<Gdk::Window> window = get_window();
-    Cairo::RefPtr<Cairo::Context> cr = window->create_cairo_context();
 
     int w = window->get_width();
     _drawing_width = w - _border * 2;
@@ -415,13 +432,10 @@ ZoomCorrRuler::redraw() {
         draw_marks(cr, 1, 1);
     }
     cr->stroke();
-}
 
-bool
-ZoomCorrRuler::on_expose_event(GdkEventExpose */*event*/) {
-    this->redraw();
     return true;
 }
+
 
 void
 ZoomCorrRulerSlider::on_slider_value_changed()
@@ -432,7 +446,7 @@ ZoomCorrRulerSlider::on_slider_value_changed()
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("/options/zoomcorrection/value", _slider.get_value() / 100.0);
         _sb.set_value(_slider.get_value());
-        _ruler.redraw();
+        _ruler.queue_draw();
         freeze = false;
     }
 }
@@ -446,7 +460,7 @@ ZoomCorrRulerSlider::on_spinbutton_value_changed()
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setDouble("/options/zoomcorrection/value", _sb.get_value() / 100.0);
         _slider.set_value(_sb.get_value());
-        _ruler.redraw();
+        _ruler.queue_draw();
         freeze = false;
     }
 }
@@ -463,7 +477,7 @@ ZoomCorrRulerSlider::on_unit_changed() {
     double conv = _unit.getConversion(_unit.getUnitAbbr(), "px");
     _ruler.set_unit_conversion(conv);
     if (_ruler.get_visible()) {
-        _ruler.redraw();
+        _ruler.queue_draw();
     }
 }
 

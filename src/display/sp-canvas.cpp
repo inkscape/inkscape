@@ -2203,16 +2203,12 @@ gint SPCanvasImpl::handleExpose(GtkWidget *widget, GdkEventExpose *event)
         return FALSE;
     }
 
-#if GTK_CHECK_VERSION(3,0,0)
-    int n_rects = cairo_region_num_rectangles(event->region);
-#else
     int n_rects = 0;
     GdkRectangle *rects = NULL;
     gdk_region_get_rectangles(event->region, &rects, &n_rects);
 
     if(rects == NULL)
 	    return FALSE;
-#endif
     
     if (n_rects == 0)
     {
@@ -2221,23 +2217,15 @@ gint SPCanvasImpl::handleExpose(GtkWidget *widget, GdkEventExpose *event)
     else
     {
         for (int i = 0; i < n_rects; i++) {
-#if GTK_CHECK_VERSION(3,0,0)
-		cairo_rectangle_int_t rectangle;
-		cairo_region_get_rectangle(event->region, i, &rectangle);
-#else
-		GdkRectangle rectangle = rects[i];
-#endif
+            GdkRectangle rectangle = rects[i];
 		
             Geom::IntRect r = Geom::IntRect::from_xywh(
-                rectangle.x + canvas->x0, rectangle.y + canvas->y0,
-                rectangle.width, rectangle.height);
+                    rectangle.x + canvas->x0, rectangle.y + canvas->y0,
+                    rectangle.width, rectangle.height);
             
             canvas->requestRedraw(r.left(), r.top(), r.right(), r.bottom());
         }
        
-#if !GTK_CHECK_VERSION(3,0,0)	
-        g_free (rects);
-#endif
         return FALSE;
     }
 }

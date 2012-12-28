@@ -101,8 +101,6 @@ public:
     ZoomCorrRuler(int width = 100, int height = 20);
     void set_size(int x, int y);
     void set_unit_conversion(double conv) { _unitconv = conv; }
-    void set_cairo_context(Cairo::RefPtr<Cairo::Context> cr);
-    void redraw();
 
     int width() { return _min_width + _border*2; }
 
@@ -110,7 +108,12 @@ public:
     static const double textpadding;
 
 private:
+#if !WITH_GTKMM_3_0
     bool on_expose_event(GdkEventExpose *event);
+#endif
+
+    bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr);
+
     void draw_marks(Cairo::RefPtr<Cairo::Context> cr, double dist, int major_interval);
 
     double _unitconv;
