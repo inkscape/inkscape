@@ -1517,8 +1517,8 @@ FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
       _observer(new Inkscape::XML::SignalObserver)
 {
 #if WITH_GTKMM_3_0
-    d.signal_draw().connect(sigc::mem_fun(*this, &PrimitiveList::on_draw));
-    signal_draw().connect(sigc::mem_fun(*this, &PrimitiveList::on_draw));
+    d.signal_draw().connect(sigc::mem_fun(*this, &PrimitiveList::on_draw_signal));
+    signal_draw().connect(sigc::mem_fun(*this, &PrimitiveList::on_draw_signal));
 #else
     d.signal_expose_event().connect(sigc::mem_fun(*this, &PrimitiveList::on_expose_signal));
     signal_expose_event().connect(sigc::mem_fun(*this, &PrimitiveList::on_expose_signal));
@@ -1688,25 +1688,29 @@ void FilterEffectsDialog::PrimitiveList::remove_selected()
 bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose *e)
 {
     bool result = false;
-    Glib::RefPtr<Gdk::Window> win = get_bin_window();
 
     if (get_is_drawable())
     {
-        Cairo::RefPtr<Cairo::Context> cr = win->create_cairo_context();
-        cr->rectangle(e->area.x, e->area.y, e->area.width, e->area.height);
-        cr->clip();
-        result = on_draw(cr);
+        Cairo::RefPtr<Cairo::Context> cr = get_bin_window()->create_cairo_context();
+        result = on_draw_signal(cr);
     }
 
     return result;
 }
 #endif
 
-bool FilterEffectsDialog::PrimitiveList::on_draw(const Cairo::RefPtr<Cairo::Context> &cr)
+bool FilterEffectsDialog::PrimitiveList::on_draw_signal(const Cairo::RefPtr<Cairo::Context> & cr)
 {
     cr->set_line_width(1.0);
 
 #if GTK_CHECK_VERSION(3,0,0)
+    // In GTK+ 3, the draw function receives the widget window, not the
+    // bin_window (i.e., just the area under the column headers).  We 
+    // therefore translate the origin of our coordinate system to account for this
+    int x_origin, y_origin;
+    convert_bin_window_to_widget_coords(0,0,x_origin,y_origin);
+    cr->translate(x_origin, y_origin);
+    
     GtkStyleContext *sc = gtk_widget_get_style_context(GTK_WIDGET(gobj()));
     GdkRGBA bg_color, fg_color;
     gtk_style_context_get_background_color(sc, GTK_STATE_FLAG_NORMAL, &bg_color);
