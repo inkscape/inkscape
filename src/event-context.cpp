@@ -1403,17 +1403,16 @@ gboolean sp_event_context_snap_watchdog_callback(gpointer data) {
         sp_event_context_virtual_root_handler(ec, dse->getEvent());
         break;
     case DelayedSnapEvent::EVENTCONTEXT_ITEM_HANDLER: {
-        SPItem* item = NULL;
-        item = SP_ITEM(dse->getItem());
+        gpointer item = dse->getItem();
         if (item && SP_IS_ITEM(item)) {
-            sp_event_context_virtual_item_handler(ec, item, dse->getEvent());
+            sp_event_context_virtual_item_handler(ec, SP_ITEM(item), dse->getEvent());
         }
     }
         break;
     case DelayedSnapEvent::KNOT_HANDLER: {
-        SPKnot* knot = SP_KNOT(dse->getItem2());
+        gpointer knot = dse->getItem2();
         if (knot && SP_IS_KNOT(knot)) {
-            sp_knot_handler_request_position(dse->getEvent(), knot);
+            sp_knot_handler_request_position(dse->getEvent(), SP_KNOT(knot));
         }
     }
         break;
