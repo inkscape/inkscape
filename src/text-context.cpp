@@ -104,10 +104,10 @@ GType sp_text_context_get_type()
 
 static void sp_text_context_class_init(SPTextContextClass *klass)
 {
-    GObjectClass *object_class=(GObjectClass *)klass;
-    SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
+    GObjectClass *object_class=G_OBJECT_CLASS(klass);
+    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
 
-    parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
+    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_text_context_dispose;
 
@@ -236,8 +236,8 @@ static void sp_text_context_setup(SPEventContext *ec)
         }
     }
 
-    if (((SPEventContextClass *) parent_class)->setup)
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup)
+        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
 
     ec->shape_editor = new ShapeEditor(ec->desktop);
 
@@ -455,8 +455,8 @@ static gint sp_text_context_item_handler(SPEventContext *event_context, SPItem *
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->item_handler)
-            ret = ((SPEventContextClass *) parent_class)->item_handler(event_context, item, event);
+        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->item_handler)
+            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->item_handler(event_context, item, event);
     }
 
     return ret;
@@ -1324,8 +1324,8 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
     }
 
     // if nobody consumed it so far
-    if (((SPEventContextClass *) parent_class)->root_handler) { // and there's a handler in parent context,
-        return ((SPEventContextClass *) parent_class)->root_handler(event_context, event); // send event to parent
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler) { // and there's a handler in parent context,
+        return (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler(event_context, event); // send event to parent
     } else {
         return FALSE; // return "I did nothing" value so that global shortcuts can be activated
     }
@@ -1428,7 +1428,7 @@ SPCSSAttr *sp_text_get_style_at_cursor(SPEventContext const *ec)
 
     SPObject const *obj = sp_te_object_at_position(tc->text, tc->text_sel_end);
     if (obj)
-        return take_style_from_item((SPItem *) obj);
+        return take_style_from_item(SP_ITEM(obj));
     return NULL;
 }
 

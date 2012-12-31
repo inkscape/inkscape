@@ -86,10 +86,10 @@ GType sp_arc_context_get_type()
 static void sp_arc_context_class_init(SPArcContextClass *klass)
 {
 
-    GObjectClass *object_class = (GObjectClass *) klass;
-    SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
 
-    parent_class = (SPEventContextClass*) g_type_class_peek_parent(klass);
+    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_arc_context_dispose;
 
@@ -127,8 +127,8 @@ static void sp_arc_context_finish(SPEventContext *ec)
     sp_arc_finish(ac);
     ac->sel_changed_connection.disconnect();
 
-    if (((SPEventContextClass *) parent_class)->finish) {
-        ((SPEventContextClass *) parent_class)->finish(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->finish) {
+        (SP_EVENT_CONTEXT_CLASS(parent_class))->finish(ec);
     }
 }
 
@@ -174,8 +174,8 @@ static void sp_arc_context_setup(SPEventContext *ec)
     SPArcContext *ac = SP_ARC_CONTEXT(ec);
     Inkscape::Selection *selection = sp_desktop_selection(ec->desktop);
 
-    if (((SPEventContextClass *) parent_class)->setup) {
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup) {
+        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
     }
 
     ec->shape_editor = new ShapeEditor(ec->desktop);
@@ -219,8 +219,8 @@ static gint sp_arc_context_item_handler(SPEventContext *event_context, SPItem *i
             break;
     }
 
-    if (((SPEventContextClass *) parent_class)->item_handler) {
-        ret = ((SPEventContextClass *) parent_class)->item_handler(event_context, item, event);
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->item_handler) {
+        ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->item_handler(event_context, item, event);
     }
 
     return ret;
@@ -401,8 +401,8 @@ static gint sp_arc_context_root_handler(SPEventContext *event_context, GdkEvent 
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler) {
+            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler(event_context, event);
         }
     }
 

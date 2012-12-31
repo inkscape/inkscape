@@ -84,9 +84,9 @@ GType sp_dropper_context_get_type()
 
 static void sp_dropper_context_class_init(SPDropperContextClass *klass)
 {
-    SPEventContextClass *ec_class = (SPEventContextClass *) klass;
+    SPEventContextClass *ec_class = SP_EVENT_CONTEXT_CLASS(klass);
 
-    parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
+    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     ec_class->setup = sp_dropper_context_setup;
     ec_class->finish = sp_dropper_context_finish;
@@ -109,8 +109,8 @@ static void sp_dropper_context_setup(SPEventContext *ec)
 {
     SPDropperContext *dc = SP_DROPPER_CONTEXT(ec);
 
-    if (((SPEventContextClass *) parent_class)->setup) {
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup) {
+        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
     }
 
     /* TODO: have a look at sp_dyna_draw_context_setup where the same is done.. generalize? at least make it an arcto! */
@@ -206,7 +206,7 @@ guint32 sp_dropper_context_get_color(SPEventContext *ec)
 
 static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
-    SPDropperContext *dc = (SPDropperContext *) event_context;
+    SPDropperContext *dc = SP_DROPPER_CONTEXT(event_context);
     int ret = FALSE;
     SPDesktop *desktop = event_context->desktop;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -423,8 +423,8 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler) {
+            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler(event_context, event);
         }
     }
 

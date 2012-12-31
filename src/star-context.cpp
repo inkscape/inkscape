@@ -88,10 +88,10 @@ sp_star_context_get_type (void)
 static void
 sp_star_context_class_init (SPStarContextClass * klass)
 {
-    GObjectClass *object_class = (GObjectClass *) klass;
-    SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
 
-    parent_class = (SPEventContextClass*)g_type_class_peek_parent (klass);
+    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent (klass));
 
     object_class->dispose = sp_star_context_dispose;
 
@@ -128,15 +128,15 @@ sp_star_context_init (SPStarContext * star_context)
 static void sp_star_context_finish(SPEventContext *ec)
 {
     SPStarContext *sc = SP_STAR_CONTEXT(ec);
-	SPDesktop *desktop = ec->desktop;
+    SPDesktop *desktop = ec->desktop;
 
-	sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
-	sp_star_finish(sc);
+    sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
+    sp_star_finish(sc);
     sc->sel_changed_connection.disconnect();
 
-    if (((SPEventContextClass *) parent_class)->finish) {
-		((SPEventContextClass *) parent_class)->finish(ec);
-	}
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->finish) {
+        (SP_EVENT_CONTEXT_CLASS(parent_class))->finish(ec);
+    }
 }
 
 
@@ -187,8 +187,8 @@ sp_star_context_setup (SPEventContext *ec)
 {
    SPStarContext *sc = SP_STAR_CONTEXT (ec);
 
-    if (((SPEventContextClass *) parent_class)->setup)
-        ((SPEventContextClass *) parent_class)->setup (ec);
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup)
+        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup (ec);
 
     sp_event_context_read (ec, "magnitude");
     sp_event_context_read (ec, "proportion");
@@ -413,8 +413,8 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler)
-            ret = ((SPEventContextClass *) parent_class)->root_handler (event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler)
+            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler (event_context, event);
     }
 
     return ret;

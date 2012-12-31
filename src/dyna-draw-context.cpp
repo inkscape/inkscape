@@ -128,10 +128,10 @@ GType sp_dyna_draw_context_get_type(void)
 static void
 sp_dyna_draw_context_class_init(SPDynaDrawContextClass *klass)
 {
-    GObjectClass *object_class = (GObjectClass *) klass;
-    SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
 
-    dd_parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
+    dd_parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_dyna_draw_context_dispose;
 
@@ -195,8 +195,8 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
 {
     SPDynaDrawContext *ddc = SP_DYNA_DRAW_CONTEXT(ec);
 
-    if (((SPEventContextClass *) dd_parent_class)->setup)
-        ((SPEventContextClass *) dd_parent_class)->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(dd_parent_class))->setup)
+        (SP_EVENT_CONTEXT_CLASS(dd_parent_class))->setup(ec);
 
     ddc->accumulated = new SPCurve();
     ddc->currentcurve = new SPCurve();
@@ -974,8 +974,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) dd_parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) dd_parent_class)->root_handler(event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(dd_parent_class))->root_handler) {
+            ret = (SP_EVENT_CONTEXT_CLASS(dd_parent_class))->root_handler(event_context, event);
         }
     }
 

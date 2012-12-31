@@ -287,13 +287,10 @@ sp_connector_context_get_type(void)
 static void
 sp_connector_context_class_init(SPConnectorContextClass *klass)
 {
-    GObjectClass *object_class;
-    SPEventContextClass *event_context_class;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
 
-    object_class = (GObjectClass *) klass;
-    event_context_class = (SPEventContextClass *) klass;
-
-    parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
+    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_connector_context_dispose;
 
@@ -405,8 +402,8 @@ sp_connector_context_setup(SPEventContext *ec)
     SPConnectorContext *cc = SP_CONNECTOR_CONTEXT(ec);
     SPDesktop *dt = ec->desktop;
 
-    if (((SPEventContextClass *) parent_class)->setup) {
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup) {
+        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
     }
 
     cc->selection = sp_desktop_selection(dt);
@@ -514,8 +511,8 @@ sp_connector_context_finish(SPEventContext *ec)
     spcc_connector_finish(cc);
     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
 
-    if (((SPEventContextClass *) parent_class)->finish) {
-        ((SPEventContextClass *) parent_class)->finish(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->finish) {
+        (SP_EVENT_CONTEXT_CLASS(parent_class))->finish(ec);
     }
 
     if (cc->selection) {
@@ -735,7 +732,7 @@ sp_connector_context_root_handler(SPEventContext *ec, GdkEvent *event)
 
     if (!ret) {
         gint (*const parent_root_handler)(SPEventContext *, GdkEvent *)
-            = ((SPEventContextClass *) parent_class)->root_handler;
+            = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler;
         if (parent_root_handler) {
             ret = parent_root_handler(ec, event);
         }
@@ -1939,12 +1936,12 @@ void cc_selection_set_avoid(bool const set_avoid)
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
-    GSList *l = (GSList *) selection->itemList();
+    GSList *l = const_cast<GSList *>(selection->itemList());
 
     int changes = 0;
 
     while (l) {
-        SPItem *item = (SPItem *) l->data;
+        SPItem *item = SP_ITEM(l->data);
 
         char const *value = (set_avoid) ? "true" : NULL;
 

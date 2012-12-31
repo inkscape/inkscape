@@ -106,11 +106,9 @@ GType sp_event_context_get_type(void) {
  * Callback to set up the SPEventContext vtable.
  */
 static void sp_event_context_class_init(SPEventContextClass *klass) {
-    GObjectClass *object_class;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
-    object_class = (GObjectClass *) klass;
-
-    parent_class = (GObjectClass*) g_type_class_peek_parent(klass);
+    parent_class = G_OBJECT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_event_context_dispose;
 

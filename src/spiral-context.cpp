@@ -84,10 +84,10 @@ sp_spiral_context_get_type()
 static void
 sp_spiral_context_class_init(SPSpiralContextClass *klass)
 {
-    GObjectClass *object_class = (GObjectClass *) klass;
-    SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
 
-    parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
+    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_spiral_context_dispose;
 
@@ -123,15 +123,15 @@ sp_spiral_context_init(SPSpiralContext *spiral_context)
 static void sp_spiral_context_finish(SPEventContext *ec)
 {
     SPSpiralContext *sc = SP_SPIRAL_CONTEXT(ec);
-	SPDesktop *desktop = ec->desktop;
+    SPDesktop *desktop = ec->desktop;
 
-	sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
-	sp_spiral_finish(sc);
+    sp_canvas_item_ungrab(SP_CANVAS_ITEM(desktop->acetate), GDK_CURRENT_TIME);
+    sp_spiral_finish(sc);
     sc->sel_changed_connection.disconnect();
 
-    if (((SPEventContextClass *) parent_class)->finish) {
-		((SPEventContextClass *) parent_class)->finish(ec);
-	}
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->finish) {
+        (SP_EVENT_CONTEXT_CLASS(parent_class))->finish(ec);
+    }
 }
 
 static void
@@ -177,8 +177,8 @@ sp_spiral_context_setup(SPEventContext *ec)
 {
     SPSpiralContext *sc = SP_SPIRAL_CONTEXT(ec);
 
-    if (((SPEventContextClass *) parent_class)->setup)
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup)
+        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
 
     sp_event_context_read(ec, "expansion");
     sp_event_context_read(ec, "revolution");
@@ -398,8 +398,8 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler)
-            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler)
+            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler(event_context, event);
     }
 
     return ret;
@@ -426,7 +426,7 @@ static void sp_spiral_drag(SPSpiralContext *sc, Geom::Point const &p, guint stat
         // Set style
         sp_desktop_apply_style_tool(desktop, repr, "/tools/shapes/spiral", false);
 
-        sc->item = (SPItem *) desktop->currentLayer()->appendChildRepr(repr);
+        sc->item = SP_ITEM(desktop->currentLayer()->appendChildRepr(repr));
         Inkscape::GC::release(repr);
         sc->item->transform = SP_ITEM(desktop->currentLayer())->i2doc_affine().inverse();
         sc->item->updateRepr();

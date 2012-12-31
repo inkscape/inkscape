@@ -114,10 +114,10 @@ sp_tweak_context_get_type(void)
 static void
 sp_tweak_context_class_init(SPTweakContextClass *klass)
 {
-    GObjectClass *object_class = (GObjectClass *) klass;
-    SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
 
-    parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
+    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_tweak_context_dispose;
 
@@ -200,7 +200,7 @@ sp_tweak_update_cursor (SPTweakContext *tc, bool with_shift)
     guint num = 0;
     gchar *sel_message = NULL;
     if (!desktop->selection->isEmpty()) {
-        num = g_slist_length((GSList *) desktop->selection->itemList());
+        num = g_slist_length(const_cast<GSList *>(desktop->selection->itemList()));
         sel_message = g_strdup_printf(ngettext("<b>%i</b> object selected","<b>%i</b> objects selected",num), num);
     } else {
         sel_message = g_strdup_printf(_("<b>Nothing</b> selected"));
@@ -277,7 +277,7 @@ sp_tweak_context_style_set(SPCSSAttr const *css, SPTweakContext *tc)
 {
     if (tc->mode == TWEAK_MODE_COLORPAINT) { // intercept color setting only in this mode
         // we cannot store properties with uris
-        css = sp_css_attr_unset_uris ((SPCSSAttr *) css);
+        css = sp_css_attr_unset_uris (const_cast<SPCSSAttr *>(css));
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         prefs->setStyle("/tools/tweak/style", const_cast<SPCSSAttr*>(css));
         return true;
@@ -290,8 +290,8 @@ sp_tweak_context_setup(SPEventContext *ec)
 {
     SPTweakContext *tc = SP_TWEAK_CONTEXT(ec);
 
-    if (((SPEventContextClass *) parent_class)->setup) {
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup) {
+        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
     }
 
     {
@@ -419,9 +419,9 @@ sp_tweak_dilate_recursive (Inkscape::Selection *selection, SPItem *item, Geom::P
         SPDocument *doc = item->document;
         sp_item_list_to_curves (items, &selected, &to_select);
         g_slist_free (items);
-        SPObject* newObj = doc->getObjectByRepr((Inkscape::XML::Node *) to_select->data);
+        SPObject* newObj = doc->getObjectByRepr(static_cast<Inkscape::XML::Node *>(to_select->data));
         g_slist_free (to_select);
-        item = (SPItem *) newObj;
+        item = SP_ITEM(newObj);
         selection->add(item);
     }
 
@@ -1110,11 +1110,11 @@ sp_tweak_dilate (SPTweakContext *tc, Geom::Point event_p, Geom::Point p, Geom::P
     double move_force = get_move_force(tc);
     double color_force = MIN(sqrt(path_force)/20.0, 1);
 
-    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
+    for (GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
          items != NULL;
          items = items->next) {
 
-        SPItem *item = (SPItem *) items->data;
+        SPItem *item = SP_ITEM(items->data);
 
         if (is_color_mode (tc->mode)) {
             if (do_fill || do_stroke || do_opacity) {
@@ -1227,7 +1227,7 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
 
                 guint num = 0;
                 if (!desktop->selection->isEmpty()) {
-                    num = g_slist_length((GSList *) desktop->selection->itemList());
+                    num = g_slist_length(const_cast<GSList *>(desktop->selection->itemList()));
                 }
                 if (num == 0) {
                     tc->_message_context->flash(Inkscape::ERROR_MESSAGE, _("<b>Nothing selected!</b> Select objects to tweak."));
@@ -1535,8 +1535,8 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler) {
+            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler(event_context, event);
         }
     }
 

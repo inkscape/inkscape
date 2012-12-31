@@ -121,10 +121,10 @@ GType sp_spray_context_get_type(void)
 
 static void sp_spray_context_class_init(SPSprayContextClass *klass)
 {
-    GObjectClass *object_class = (GObjectClass *) klass;
-    SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
 
-    parent_class = (SPEventContextClass*)g_type_class_peek_parent(klass);
+    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_spray_context_dispose;
 
@@ -223,7 +223,7 @@ static void sp_spray_update_cursor(SPSprayContext *tc, bool /*with_shift*/)
     guint num = 0;
     gchar *sel_message = NULL;
     if (!desktop->selection->isEmpty()) {
-        num = g_slist_length((GSList *) desktop->selection->itemList());
+        num = g_slist_length(const_cast<GSList *>(desktop->selection->itemList()));
         sel_message = g_strdup_printf(ngettext("<b>%i</b> object selected","<b>%i</b> objects selected",num), num);
     } else {
         sel_message = g_strdup_printf(_("<b>Nothing</b> selected"));
@@ -251,8 +251,8 @@ static void sp_spray_context_setup(SPEventContext *ec)
 {
     SPSprayContext *tc = SP_SPRAY_CONTEXT(ec);
 
-    if (((SPEventContextClass *) parent_class)->setup) {
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup) {
+        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
     }
 
     {
@@ -460,7 +460,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 parent->appendChild(copy);
 
                 SPObject *new_obj = doc->getObjectByRepr(copy);
-                item_copied = (SPItem *) new_obj;   //convertion object->item
+                item_copied = SP_ITEM(new_obj);   //convertion object->item
                 Geom::Point center=item->getCenter();
                 sp_spray_scale_rel(center,desktop, item_copied, Geom::Scale(_scale,_scale));
                 sp_spray_scale_rel(center,desktop, item_copied, Geom::Scale(scale,scale));
@@ -480,11 +480,11 @@ static bool sp_spray_recursive(SPDesktop *desktop,
         SPItem *son = NULL;            //father copy
 
         int i=1;
-        for (GSList *items = g_slist_copy((GSList *) selection->itemList());
+        for (GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
                 items != NULL;
                 items = items->next) {
 
-            SPItem *item1 = (SPItem *) items->data;
+            SPItem *item1 = SP_ITEM(items->data);
             if (i == 1) {
                 father = item1;
             }
@@ -504,7 +504,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 Inkscape::XML::Node *copy1 = old_repr->duplicate(xml_doc);
                 parent->appendChild(copy1);
                 SPObject *new_obj1 = doc->getObjectByRepr(copy1);
-                son = (SPItem *) new_obj1;   // conversion object->item
+                son = SP_ITEM(new_obj1);   // conversion object->item
                 unionResult = son;
                 Inkscape::GC::release(copy1);
             }
@@ -514,7 +514,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 Inkscape::XML::Node *copy2 = old_repr->duplicate(xml_doc);
                 parent->appendChild(copy2);
                 SPObject *new_obj2 = doc->getObjectByRepr(copy2);
-                item_copied = (SPItem *) new_obj2;
+                item_copied = SP_ITEM(new_obj2);
 
                 // Move around the cursor
                 Geom::Point move = (Geom::Point(cos(tilt)*cos(dp)*dr/(1-ratio)+sin(tilt)*sin(dp)*dr/(1+ratio), -sin(tilt)*cos(dp)*dr/(1-ratio)+cos(tilt)*sin(dp)*dr/(1+ratio)))+(p-a->midpoint()); 
@@ -554,7 +554,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
 
                 SPObject *clone_object = doc->getObjectByRepr(clone);
                 // conversion object->item
-                item_copied = (SPItem *) clone_object;
+                item_copied = SP_ITEM(clone_object);
                 Geom::Point center = item->getCenter();
                 sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(_scale, _scale));
                 sp_spray_scale_rel(center, desktop, item_copied, Geom::Scale(scale, scale));
@@ -599,11 +599,11 @@ static bool sp_spray_dilate(SPSprayContext *tc, Geom::Point /*event_p*/, Geom::P
     double move_mean = get_move_mean(tc);
     double move_standard_deviation = get_move_standard_deviation(tc);
 
-    for (GSList *items = g_slist_copy((GSList *) selection->itemList());
+    for (GSList *items = g_slist_copy(const_cast<GSList *>(selection->itemList()));
          items != NULL;
          items = items->next) {
 
-        SPItem *item = (SPItem *) items->data;
+        SPItem *item = SP_ITEM(items->data);
 
         if (is_transform_modes(tc->mode)) {
             if (sp_spray_recursive(desktop, selection, item, p, vector, tc->mode, radius, move_force, tc->population, tc->scale, tc->scale_variation, reverse, move_mean, move_standard_deviation, tc->ratio, tc->tilt, tc->rotation_variation, tc->distrib))
@@ -701,7 +701,7 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
 
             guint num = 0;
             if (!desktop->selection->isEmpty()) {
-                num = g_slist_length((GSList *) desktop->selection->itemList());
+                num = g_slist_length(const_cast<GSList *>(desktop->selection->itemList()));
             }
             if (num == 0) {
                 tc->_message_context->flash(Inkscape::ERROR_MESSAGE, _("<b>Nothing selected!</b> Select objects to spray."));
@@ -926,8 +926,8 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler) {
+            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler(event_context, event);
         }
     }
 
