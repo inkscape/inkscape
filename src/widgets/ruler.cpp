@@ -267,6 +267,20 @@ sp_ruler_init (SPRuler *ruler)
   priv->max_size      = 0;
   priv->backing_store = NULL;
   priv->font_scale    = DEFAULT_RULER_FONT_SCALE;
+
+#if GTK_CHECK_VERSION(3,0,0)
+  const gchar *str = 
+    "SPRuler {\n"
+    "  background-color: @bg_color;\n"
+    "}\n";
+  
+  GtkCssProvider *css = gtk_css_provider_new ();
+  gtk_css_provider_load_from_data (css, str, -1, NULL);
+  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (ruler)),
+                                  GTK_STYLE_PROVIDER (css),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  g_object_unref (css);
+#endif
 }
 
 static void
