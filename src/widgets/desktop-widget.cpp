@@ -376,7 +376,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     GtkWidget *eventbox = gtk_event_box_new ();
     dtw->hruler = sp_ruler_new(GTK_ORIENTATION_HORIZONTAL);
     dtw->hruler_box = eventbox;
-    sp_ruler_set_metric(SP_RULER(dtw->hruler), SP_PT);
+    sp_ruler_set_unit(SP_RULER(dtw->hruler), SP_PT);
     gtk_widget_set_tooltip_text (dtw->hruler_box, gettext(sp_unit_get_plural (&sp_unit_get_by_id(SP_UNIT_PT))));
     gtk_container_add (GTK_CONTAINER (eventbox), dtw->hruler);
     g_signal_connect (G_OBJECT (eventbox), "button_press_event", G_CALLBACK (sp_dt_hruler_event), dtw);
@@ -405,7 +405,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     eventbox = gtk_event_box_new ();
     dtw->vruler = sp_ruler_new(GTK_ORIENTATION_VERTICAL);
     dtw->vruler_box = eventbox;
-    sp_ruler_set_metric (SP_RULER (dtw->vruler), SP_PT);
+    sp_ruler_set_unit (SP_RULER (dtw->vruler), SP_PT);
     gtk_widget_set_tooltip_text (dtw->vruler_box, gettext(sp_unit_get_plural (&sp_unit_get_by_id(SP_UNIT_PT))));
     gtk_container_add (GTK_CONTAINER (eventbox), GTK_WIDGET (dtw->vruler));
 
@@ -1722,8 +1722,8 @@ void SPDesktopWidget::namedviewModified(SPObject *obj, guint flags)
         this->dt2r = 1.0 / nv->doc_units->unittobase;
         this->ruler_origin = Geom::Point(0,0); //nv->gridorigin;   Why was the grid origin used here?
 
-        sp_ruler_set_metric(SP_RULER (this->vruler), nv->getDefaultMetric());
-        sp_ruler_set_metric(SP_RULER (this->hruler), nv->getDefaultMetric());
+        sp_ruler_set_unit(SP_RULER (this->vruler), nv->getDefaultMetric());
+        sp_ruler_set_unit(SP_RULER (this->hruler), nv->getDefaultMetric());
 
         /* This loops through all the grandchildren of aux toolbox,
          * and for each that it finds, it performs an sp_search_by_data_recursive(),

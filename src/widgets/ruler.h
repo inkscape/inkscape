@@ -27,10 +27,8 @@ G_BEGIN_DECLS
 #define SP_IS_RULER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_RULER))
 #define SP_RULER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), SP_TYPE_RULER, SPRulerClass))
 
-
 typedef struct _SPRuler         SPRuler;
 typedef struct _SPRulerClass    SPRulerClass;
-typedef struct _SPRulerMetric   SPRulerMetric;
 
 struct _SPRuler
 {
@@ -40,12 +38,6 @@ struct _SPRuler
 struct _SPRulerClass
 {
   GtkWidgetClass parent_class;
-};
-
-struct _SPRulerMetric
-{
-  gdouble ruler_scale[10];
-  gint subdivide[5];        /* five possible modes of subdivision */
 };
 
 
@@ -58,6 +50,9 @@ void            sp_ruler_add_track_widget    (SPRuler        *ruler,
 void            sp_ruler_remove_track_widget (SPRuler        *ruler,
 		                              GtkWidget      *widget);
 
+void            sp_ruler_set_unit            (SPRuler        *ruler,
+                                              SPMetric        unit);
+SPMetric        sp_ruler_get_unit            (SPRuler        *ruler);
 void            sp_ruler_set_position        (SPRuler        *ruler,
                                               gdouble         set_position);
 gdouble         sp_ruler_get_position        (SPRuler        *ruler);
@@ -69,9 +64,6 @@ void            sp_ruler_get_range           (SPRuler        *ruler,
                                               gdouble        *lower,
                                               gdouble        *upper,
                                               gdouble        *max_size);
-void            sp_ruler_set_metric          (SPRuler        *ruler,
-                                              SPMetric        metric);
-SPMetric        sp_ruler_get_metric          (SPRuler        *ruler);
 
 G_END_DECLS
 

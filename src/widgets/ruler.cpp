@@ -6,9 +6,8 @@
  *
  * Major differences between implementations in Inkscape and GIMP are
  * as follows:
- *  - We use values from a table of ruler metrics to set sizing depending
- *    on the desired unit for the ruler scale.  GIMP uses the same metrics
- *    for all units, but allows the unit to be specified.
+ *  - We use a 1,2,4,8... scale for inches and 1,2,5,10... for everything
+ *    else.  GIMP uses 1,2,5,10... for everything.
  *
  *  - We use a default font size of PANGO_SCALE_X_SMALL for labels,
  *    GIMP uses PANGO_SCALE_SMALL (i.e., a bit larger than ours).
@@ -49,11 +48,11 @@
 enum {
   PROP_0,
   PROP_ORIENTATION,
+  PROP_UNIT,
   PROP_LOWER,
   PROP_UPPER,
   PROP_POSITION,
-  PROP_MAX_SIZE,
-  PROP_METRIC
+  PROP_MAX_SIZE
 };
 
 
@@ -63,6 +62,7 @@ enum {
 typedef struct
 {
   GtkOrientation   orientation;
+  SPMetric         unit;
   gdouble          lower;
   gdouble          upper;
   gdouble          position;
@@ -72,8 +72,6 @@ typedef struct
   cairo_surface_t *backing_store;
   PangoLayout     *layout;
   gdouble          font_scale;
-  
-  SPRulerMetric   *metric;
   
   gint             xsrc;
   gint             ysrc;
@@ -85,20 +83,23 @@ typedef struct
   G_TYPE_INSTANCE_GET_PRIVATE (ruler, SP_TYPE_RULER, SPRulerPrivate)
 
 
-/// Ruler metrics.
-static SPRulerMetric const sp_ruler_metrics[] = {
-  // NOTE: the order of records in this struct must correspond to the SPMetric enum.
-  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_NONE
-  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_MM
-  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_CM
-  {{ 1, 2, 4,  8, 16, 32,  64, 128, 256,  512 }, { 1, 2,  4,  8,  16 }}, // SP_IN
-  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_FT
-  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_PT
-  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_PC
-  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_PX
-  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_M
+struct SPRulerMetric
+{
+  gdouble ruler_scale[16];
+  gint    subdivide[5];
 };
 
+// Ruler metric for general use.
+static SPRulerMetric const ruler_metric_general = {
+  { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
+  { 1, 5, 10, 50, 100 }
+};
+
+// Ruler metric for inch scales.
+static SPRulerMetric const ruler_metric_inches = {
+  { 1, 2, 4,  8, 16, 32,  64, 128, 256,  512, 1024, 2048, 4096, 8192, 16384, 32768 },
+  { 1, 2,  4,  8,  16 }
+};
 
 static void          sp_ruler_dispose              (GObject        *object);
 static void          sp_ruler_set_property         (GObject        *object,
@@ -192,6 +193,16 @@ sp_ruler_class_init (SPRulerClass *klass)
 						      GTK_ORIENTATION_HORIZONTAL,
 						      static_cast<GParamFlags>(GTK_PARAM_READWRITE)));
 
+  /* FIXME: Should probably use g_param_spec_enum */
+  g_object_class_install_property (object_class,
+                                   PROP_UNIT,
+                                   g_param_spec_uint ("unit",
+						      _("Unit"),
+						      _("Unit of the ruler"),
+						      0, 8,
+						      SP_PX,
+						      static_cast<GParamFlags>(GTK_PARAM_READWRITE)));
+  
   g_object_class_install_property (object_class,
                                    PROP_LOWER,
                                    g_param_spec_double ("lower",
@@ -231,21 +242,6 @@ sp_ruler_class_init (SPRulerClass *klass)
 							G_MAXDOUBLE,
 							0.0,
 							static_cast<GParamFlags>(GTK_PARAM_READWRITE)));  
-  /**
-   * SPRuler:metric:
-   *
-   * The metric used for the ruler.
-   *
-   * TODO: This should probably use g_param_spec_enum
-   */
-  g_object_class_install_property (object_class,
-                                   PROP_METRIC,
-                                   g_param_spec_uint("metric",
-						      _("Metric"),
-						      _("The metric used for the ruler"),
-						      0, 8,
-						      SP_PX,
-						      static_cast<GParamFlags>(GTK_PARAM_READWRITE)));
 
   gtk_widget_class_install_style_property (widget_class,
 		                           g_param_spec_double ("font-scale",
@@ -264,16 +260,13 @@ sp_ruler_init (SPRuler *ruler)
   gtk_widget_set_has_window (GTK_WIDGET (ruler), FALSE);
 
   priv->orientation   = GTK_ORIENTATION_HORIZONTAL;
-  priv->xsrc          = 0;
-  priv->ysrc          = 0;
+  priv->unit          = SP_PX;
   priv->lower         = 0;
   priv->upper         = 0;
   priv->position      = 0;
   priv->max_size      = 0;
   priv->backing_store = NULL;
   priv->font_scale    = DEFAULT_RULER_FONT_SCALE;
-
-  sp_ruler_set_metric(ruler, SP_PX);
 }
 
 static void
@@ -378,6 +371,11 @@ sp_ruler_set_property (GObject      *object,
       priv->orientation = static_cast<GtkOrientation>(g_value_get_enum (value));
       gtk_widget_queue_resize (GTK_WIDGET (ruler));
       break;
+    
+    case PROP_UNIT:
+      sp_ruler_set_unit (ruler, static_cast<SPMetric>(g_value_get_int (value)));
+      break;
+
     case PROP_LOWER:
       sp_ruler_set_range (ruler,
                           g_value_get_double (value),
@@ -390,18 +388,18 @@ sp_ruler_set_property (GObject      *object,
                           g_value_get_double (value),
 			  priv->max_size);
       break;
+
     case PROP_POSITION:
       sp_ruler_set_position (ruler, g_value_get_double (value));
       break;
+
     case PROP_MAX_SIZE:
       sp_ruler_set_range (ruler,
                           priv->lower,
                           priv->upper,
 			  g_value_get_double (value));
       break;
-    case PROP_METRIC:
-      sp_ruler_set_metric (ruler, static_cast<SPMetric>(g_value_get_enum (value)));
-      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -422,6 +420,10 @@ sp_ruler_get_property (GObject      *object,
     case PROP_ORIENTATION:
       g_value_set_enum (value, priv->orientation);
       break;
+    
+    case PROP_UNIT:
+      g_value_set_int (value, priv->unit);
+      break;
     case PROP_LOWER:
       g_value_set_double (value, priv->lower);
       break;
@@ -434,40 +436,11 @@ sp_ruler_get_property (GObject      *object,
     case PROP_MAX_SIZE:
       g_value_set_double (value, priv->max_size);
       break;
-    case PROP_METRIC:
-      g_value_set_enum(value, sp_ruler_get_metric(ruler));
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
     }
 }
-
-
-/**
- * sp_ruler_get_metric:
- * @ruler: a #SPRuler
- *
- * Gets the units used for a #SPRuler. See sp_ruler_set_metric().
- *
- * Return value: the units currently used for @ruler
- **/
-SPMetric sp_ruler_get_metric(SPRuler *ruler)
-{
-  g_return_val_if_fail(SP_IS_RULER(ruler), static_cast<SPMetric>(0));
-  SPRulerPrivate *priv = SP_RULER_GET_PRIVATE (ruler);
-
-  for (size_t i = 0; i < G_N_ELEMENTS(sp_ruler_metrics); i++) {
-    if (priv->metric == &sp_ruler_metrics[i]) {
-      return static_cast<SPMetric>(i);
-    }
-  }
-
-  g_assert_not_reached ();
-
-  return static_cast<SPMetric>(0);
-}
-
 
 static void
 sp_ruler_realize (GtkWidget *widget)
@@ -1076,6 +1049,44 @@ sp_ruler_remove_track_widget (SPRuler   *ruler,
 }
 
 /**
+ * sp_ruler_set_unit:
+ * @ruler: a #SPRuler
+ * @unit: the #SPMetric to set the ruler to
+ *
+ * This sets the unit of the ruler.
+ */
+void
+sp_ruler_set_unit (SPRuler  *ruler,
+                   SPMetric  unit)
+{
+  SPRulerPrivate *priv = SP_RULER_GET_PRIVATE (ruler);
+  
+  g_return_if_fail (SP_IS_RULER (ruler));
+
+  if (priv->unit != unit)
+    {
+      priv->unit = unit;
+      g_object_notify(G_OBJECT(ruler), "unit");
+
+      gtk_widget_queue_draw (GTK_WIDGET (ruler));
+    }
+}
+
+/**
+ * sp_ruler_get_unit:
+ * @ruler: a #SPRuler
+ *
+ * Return value: the unit currently used in the @ruler widget.
+ **/
+SPMetric
+sp_ruler_get_unit (SPRuler *ruler)
+{
+  g_return_val_if_fail(SP_IS_RULER(ruler), static_cast<SPMetric>(0));
+
+  return SP_RULER_GET_PRIVATE (ruler)->unit;
+}
+
+/**
  * sp_ruler_set_position:
  * @ruler: a #SPRuler
  * @position: the position to set the ruler to
@@ -1159,6 +1170,8 @@ sp_ruler_draw_ticks (SPRuler *ruler)
     gint             text_size;
     gint             pos;
     gdouble          max_size;
+    SPMetric         unit;
+    SPRulerMetric    ruler_metric = ruler_metric_general; /* The metric to use for this unit system */
     PangoLayout     *layout;
     PangoRectangle   logical_rect, ink_rect;
 
@@ -1271,19 +1284,32 @@ sp_ruler_draw_ticks (SPRuler *ruler)
     sprintf (unit_str, "%d", scale);
     text_size = strlen (unit_str) * digit_height + 1;
 
-    for (scale = 0; scale < G_N_ELEMENTS (priv->metric->ruler_scale); scale++)
-        if (priv->metric->ruler_scale[scale] * fabs (increment) > 2 * text_size)
+    /* Inkscape change to ruler: Use a 1,2,4,8... scale for inches
+     * or a 1,2,5,10... scale for everything else */
+    if (sp_ruler_get_unit (ruler) == SP_IN)
+      ruler_metric = ruler_metric_inches;
+
+    for (scale = 0; scale < G_N_ELEMENTS (ruler_metric.ruler_scale); scale++)
+        if (ruler_metric.ruler_scale[scale] * fabs (increment) > 2 * text_size)
             break;
 
-    if (scale == G_N_ELEMENTS (priv->metric->ruler_scale))
-        scale = G_N_ELEMENTS (priv->metric->ruler_scale) - 1;
+    if (scale == G_N_ELEMENTS (ruler_metric.ruler_scale))
+        scale = G_N_ELEMENTS (ruler_metric.ruler_scale) - 1;
+
+    unit = sp_ruler_get_unit (ruler);
 
     /* drawing starts here */
     length = 0;
-    for (i = G_N_ELEMENTS (priv->metric->subdivide) - 1; i >= 0; i--)
+    for (i = G_N_ELEMENTS (ruler_metric.subdivide) - 1; i >= 0; i--)
       {
-        gdouble subd_incr = ((gdouble) priv->metric->ruler_scale[scale] / 
-                             (gdouble) priv->metric->subdivide[i]);
+        gdouble subd_incr;
+       
+        /* hack to get proper subdivisions at full pixels */
+        if (unit == SP_PX && scale == 1 && i == 1)
+          subd_incr = 1.0;
+        else
+          subd_incr = ((gdouble) ruler_metric.ruler_scale[scale] / 
+                       (gdouble) ruler_metric.subdivide[i]);
 
         if (subd_incr * fabs (increment) <= MINIMUM_INCR) 
             continue;
@@ -1345,7 +1371,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
 #endif
 
             /* draw label */
-            double label_spacing_px = fabs((increment*(double)priv->metric->ruler_scale[scale])/priv->metric->subdivide[i]);
+            double label_spacing_px = fabs(increment*(double)ruler_metric.ruler_scale[scale]/ruler_metric.subdivide[i]);
             if (i == 0 && 
                 (label_spacing_px > 6*digit_height || tick_index%2 == 0 || cur == 0) && 
                 (label_spacing_px > 3*digit_height || tick_index%4 == 0 || cur == 0))
@@ -1404,25 +1430,6 @@ sp_ruler_draw_ticks (SPRuler *ruler)
 
 out:
     cairo_destroy (cr);
-}
-
-void
-sp_ruler_set_metric (SPRuler  *ruler,
-                     SPMetric  metric)
-{
-  g_return_if_fail(ruler != NULL);
-  g_return_if_fail(SP_IS_RULER (ruler));
-  g_return_if_fail((unsigned) metric < G_N_ELEMENTS(sp_ruler_metrics));
-  SPRulerPrivate *priv = SP_RULER_GET_PRIVATE (ruler);
-
-  if (metric == 0) 
-	return;
-
-  priv->metric = const_cast<SPRulerMetric *>(&sp_ruler_metrics[metric]);
-
-  g_object_notify(G_OBJECT(ruler), "metric");
-
-  gtk_widget_queue_draw (GTK_WIDGET (ruler));
 }
 
 static PangoLayout*
