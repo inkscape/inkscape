@@ -88,15 +88,15 @@ typedef struct
 /// Ruler metrics.
 static SPRulerMetric const sp_ruler_metrics[] = {
   // NOTE: the order of records in this struct must correspond to the SPMetric enum.
-  {1,         { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_NONE
-  {PX_PER_MM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_MM
-  {PX_PER_CM, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_CM
-  {PX_PER_IN, { 1, 2, 4,  8, 16, 32,  64, 128, 256,  512 }, { 1, 2,  4,  8,  16 }}, // SP_IN
-  {PX_PER_FT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_FT
-  {PX_PER_PT, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_PT
-  {PX_PER_PC, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_PC
-  {PX_PER_PX, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_PX
-  {PX_PER_M,  { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_M
+  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_NONE
+  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_MM
+  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_CM
+  {{ 1, 2, 4,  8, 16, 32,  64, 128, 256,  512 }, { 1, 2,  4,  8,  16 }}, // SP_IN
+  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_FT
+  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_PT
+  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_PC
+  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_PX
+  {{ 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }}, // SP_M
 };
 
 
@@ -1252,11 +1252,6 @@ sp_ruler_draw_ticks (SPRuler *ruler)
 
     sp_ruler_get_range (ruler, &lower, &upper, &max_size);
 
-    upper /= priv->metric->pixels_per_unit; // upper and lower are expressed in ruler units
-    lower /= priv->metric->pixels_per_unit;
-    /* "pixels_per_unit" should be "points_per_unit". This is the size of the unit
-    * in 1/72nd's of an inch and has nothing to do with screen pixels */
-
     if ((upper - lower) == 0)
         goto out;
 
@@ -1272,7 +1267,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
     *    actually measuring the text width, so that the result for the
     *    scale looks consistent with an accompanying vruler
     */
-    scale = (gint)(ceil(priv->max_size / priv->metric->pixels_per_unit));
+    scale = ceil (priv->max_size);
     sprintf (unit_str, "%d", scale);
     text_size = strlen (unit_str) * digit_height + 1;
 

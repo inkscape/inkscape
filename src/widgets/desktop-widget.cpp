@@ -1696,23 +1696,17 @@ SPDesktopWidget::viewSetPosition (Geom::Point p)
 void
 sp_desktop_widget_update_rulers (SPDesktopWidget *dtw)
 {
-    /* The viewbox (in integers) must exactly match the size of SPCanvasbuf's pixel buffer.
-     * This is important because the former is being used for drawing the ruler, whereas
-     * the latter is used for drawing e.g. the grids and guides. Only when the viewbox
-     * coincides with the pixel buffer, everything will line up nicely.
-     */
-    Geom::IntRect viewbox = dtw->canvas->getViewboxIntegers();
+    Geom::Rect viewbox = dtw->desktop->get_display_area();
 
-    double const scale = dtw->desktop->current_zoom();
-    double lower_x = viewbox.min()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
-    double upper_x = viewbox.max()[Geom::X] / scale - dtw->ruler_origin[Geom::X];
+    double lower_x = dtw->dt2r * (viewbox.left()  - dtw->ruler_origin[Geom::X]);
+    double upper_x = dtw->dt2r * (viewbox.right() - dtw->ruler_origin[Geom::X]);
     sp_ruler_set_range(SP_RULER(dtw->hruler),
 	      	       lower_x,
 		       upper_x,
 		       (upper_x - lower_x));
 
-    double lower_y = viewbox.min()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
-    double upper_y = viewbox.max()[Geom::Y] / -scale - dtw->ruler_origin[Geom::Y];
+    double lower_y = dtw->dt2r * (viewbox.bottom() - dtw->ruler_origin[Geom::Y]);
+    double upper_y = dtw->dt2r * (viewbox.top()    - dtw->ruler_origin[Geom::Y]);
     sp_ruler_set_range(SP_RULER(dtw->vruler),
                        lower_y,
 		       upper_y,

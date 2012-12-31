@@ -18,6 +18,8 @@
 #include <iostream>
 #include <glib.h>
 
+G_BEGIN_DECLS
+
 #define SP_TYPE_RULER            (sp_ruler_get_type ())
 #define SP_RULER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_RULER, SPRuler))
 #define SP_RULER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_RULER, SPRulerClass))
@@ -30,12 +32,9 @@ typedef struct _SPRuler         SPRuler;
 typedef struct _SPRulerClass    SPRulerClass;
 typedef struct _SPRulerMetric   SPRulerMetric;
 
-/* All distances below are in 1/72nd's of an inch. (According to
- * Adobe that's a point, but points are really 1/72.27 in.)
- */
 struct _SPRuler
 {
-  GtkWidget widget;
+  GtkWidget parent_instance;
 };
 
 struct _SPRulerClass
@@ -45,9 +44,6 @@ struct _SPRulerClass
 
 struct _SPRulerMetric
 {
-  /* This should be points_per_unit. This is the size of the unit
-   * in 1/72nd's of an inch and has nothing to do with screen pixels */
-  gdouble pixels_per_unit;
   gdouble ruler_scale[10];
   gint subdivide[5];        /* five possible modes of subdivision */
 };
@@ -76,6 +72,8 @@ void            sp_ruler_get_range           (SPRuler        *ruler,
 void            sp_ruler_set_metric          (SPRuler        *ruler,
                                               SPMetric        metric);
 SPMetric        sp_ruler_get_metric          (SPRuler        *ruler);
+
+G_END_DECLS
 
 #endif /* __SP_RULER_H__ */
 
