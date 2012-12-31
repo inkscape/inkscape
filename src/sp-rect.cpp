@@ -207,6 +207,8 @@ sp_rect_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
     sp_repr_set_svg_double(repr, "x", rect->x.computed);
     sp_repr_set_svg_double(repr, "y", rect->y.computed);
 
+    sp_rect_set_shape ((SPShape *) rect); // evaluate SPCurve
+
     if (((SPObjectClass *) parent_class)->write)
         ((SPObjectClass *) parent_class)->write(object, xml_doc, repr, flags);
 

@@ -369,6 +369,7 @@ static Inkscape::XML::Node *sp_genericellipse_write(SPObject *object, Inkscape::
             sp_arc_set_elliptical_path_attribute(SP_ARC(object), object->getRepr());
         }
     }
+    sp_genericellipse_set_shape ((SPShape *) ellipse); // evaluate SPCurve
 
     if (((SPObjectClass *) ge_parent_class)->write) {
         ((SPObjectClass *) ge_parent_class)->write(object, xml_doc, repr, flags);
