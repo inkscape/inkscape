@@ -1139,6 +1139,7 @@ SPDesktop::zoom_drawing()
     SPItem *docitem = doc()->getRoot();
     g_return_if_fail (docitem != NULL);
 
+    docitem->bbox_valid = FALSE;
     Geom::OptRect d = docitem->desktopVisualBounds();
 
     /* Note that the second condition here indicates that
