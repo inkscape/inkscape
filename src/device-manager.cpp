@@ -42,12 +42,7 @@ static bool isValidDevice(GdkDevice *device)
 	gboolean source_matches = (gdk_device_get_source (device) == fakeout[i].source);
 	gboolean mode_matches = (gdk_device_get_mode (device) == fakeout[i].mode);
 	gboolean num_axes_matches = (gdk_device_get_n_axes (device) == fakeout[i].num_axes);
-
-#if GTK_CHECK_VERSION (2, 24, 0)
 	gboolean num_keys_matches = (gdk_device_get_n_keys (device) == fakeout[i].num_keys);
-#else
-	gboolean num_keys_matches = (device->num_keys == fakeout[i].num_keys);
-#endif
 
 	if (name_matches && source_matches && mode_matches 
 			&& num_axes_matches && num_keys_matches)
@@ -683,11 +678,7 @@ static void createFakeList() {
             fakeout[4].mode = gdk_device_get_mode (device);
             fakeout[4].has_cursor = gdk_device_get_has_cursor (device);
             fakeout[4].num_axes = gdk_device_get_n_axes (device);
-#if GTK_CHECK_VERSION (2, 24, 0)
             fakeout[4].num_keys = gdk_device_get_n_keys (device);
-#else
-            fakeout[4].num_keys = device->num_keys;
-#endif
         } else {
             fakeout[4].name = g_strdup("Core Pointer");
             fakeout[4].source = GDK_SOURCE_MOUSE;

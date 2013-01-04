@@ -361,16 +361,8 @@ GtkWidget* create_tool_item( GtkAction* action )
 
     item = GTK_WIDGET( gtk_tool_item_new() );
 
-    GtkWidget* comboBoxEntry;
-
-// Backward-compatibility: GtkComboBoxEntry is deprecated in GTK+ >= 2.24
-// gtk_combo_box_set_entry_text_column is unavailable in earlier versions
-#if GTK_CHECK_VERSION (2, 24, 0)
-    comboBoxEntry = gtk_combo_box_new_with_model_and_entry (ink_comboboxentry_action->model);
+    GtkWidget* comboBoxEntry = gtk_combo_box_new_with_model_and_entry (ink_comboboxentry_action->model);
     gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (comboBoxEntry), 0);
-#else 
-    comboBoxEntry = gtk_combo_box_entry_new_with_model( ink_comboboxentry_action->model, 0 );
-#endif
 
     // Name it so we can muck with it using an RC file
     gtk_widget_set_name( comboBoxEntry, combobox_name );

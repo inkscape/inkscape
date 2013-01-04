@@ -785,15 +785,8 @@ GtkWidget* create_tool_item( GtkAction* action )
             GtkWidget *normal;
 
             if (act->private_data->selectionMode == SELECTION_OPEN) {
-
-// Backward-compatibility: GtkComboBoxEntry is deprecated in GTK+ >= 2.24
-// and gtk_combo_box_set_entry_text_column is unavailable in earlier versions.
-#if GTK_CHECK_VERSION (2, 24, 0)
 		normal = gtk_combo_box_new_with_model_and_entry (act->private_data->model);
 		gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (normal), act->private_data->labelColumn);
-#else
-                normal = gtk_combo_box_entry_new_with_model (act->private_data->model, act->private_data->labelColumn);
-#endif
 
                 GtkWidget *child = gtk_bin_get_child( GTK_BIN(normal) );
                 if (GTK_IS_ENTRY(child)) {
@@ -897,13 +890,7 @@ void resync_active( EgeSelectOneAction* act, gint active, gboolean override )
                     }
                     if ( GTK_IS_COMBO_BOX(combodata) ) {
                         GtkComboBox* combo = GTK_COMBO_BOX(combodata);
-// Backward-compatibility: GtkComboBoxEntry is deprecated in GTK+ >= 2.24
-// gtk_combo_box_get_has_entry is unavailable in earlier versions
-#if GTK_CHECK_VERSION (2, 24, 0)
                         if ((active == -1) && (gtk_combo_box_get_has_entry(combo))) {
-#else
-                        if ((active == -1) && (GTK_IS_COMBO_BOX_ENTRY(combo))) {
-#endif
                             gtk_entry_set_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(combo))), act->private_data->activeText);
                         } else if ( gtk_combo_box_get_active(combo) != active ) {
                             gtk_combo_box_set_active( combo, active );
@@ -1019,10 +1006,6 @@ void combo_changed_cb( GtkComboBox* widget, gpointer user_data )
     GtkComboBox        *cb = GTK_COMBO_BOX (widget);
     gint                newActive = gtk_combo_box_get_active(widget);
 
-// Backward-compatibility: gtk_combo_box_get_active_text is deprecated in
-// GTK+ >= 2.24.  gtk_combo_box_get_has_entry is unavailable in earlier
-// versions.
-#if GTK_CHECK_VERSION (2, 24, 0)
     if (gtk_combo_box_get_has_entry (cb)) {
 	    GtkBin   *bin = GTK_BIN (cb);
 	    GtkEntry *entry = GTK_ENTRY (gtk_bin_get_child (bin));
@@ -1038,9 +1021,6 @@ void combo_changed_cb( GtkComboBox* widget, gpointer user_data )
 		    gtk_tree_model_get (model, &iter, 0, &text, -1);
 	    }
     }
-#else
-    text = gtk_combo_box_get_active_text (cb);
-#endif
 
     if (!text) {
         /* User probably deleted the data in the model */
