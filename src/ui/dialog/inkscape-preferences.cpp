@@ -320,6 +320,7 @@ void InkscapePreferences::initPageTools()
 
 
     AddSelcueCheckbox(_page_selector, "/tools/select", false);
+    AddGradientCheckbox(_page_selector, "/tools/select", false);
     _page_selector.add_group_header( _("When transforming, show"));
     _t_sel_trans_obj.init ( _("Objects"), "/tools/select/show", "content", true, 0);
     _page_selector.add_line( true, "", _t_sel_trans_obj, "",
