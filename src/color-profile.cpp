@@ -5,7 +5,7 @@
 #define noDEBUG_LCMS
 
 #include <glib/gstdio.h>
-#include <sys/fcntl.h>
+#include <fcntl.h>
 #include <gdkmm/color.h>
 #include <glib/gi18n.h>
 
