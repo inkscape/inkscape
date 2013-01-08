@@ -9,6 +9,7 @@
 #include "sp-color-scales.h"
 #include "sp-color-icc-selector.h"
 #include "../svg/svg-icc-color.h"
+#include "ui/widget/gimpcolorwheel.h"
 
 G_BEGIN_DECLS
 
@@ -101,46 +102,6 @@ void sp_color_wheel_selector_init (SPColorWheelSelector *cs)
     }
 }
 
-static void resizeHSVWheel( GtkHSV *hsv, GtkAllocation *allocation )
-{
-    gint diam = std::min(allocation->width, allocation->height);
-
-    // drop a little for resizing
-    // This magic number stops the dialog expanding in width when resizing height
-    diam -= 16;
-
-    GtkStyle *style = gtk_widget_get_style( GTK_WIDGET(hsv) );
-    if ( style ) {
-        gint thick = std::max(style->xthickness, style->ythickness);
-        if (thick > 0) {
-            diam -= thick * 2;
-        }
-    }
-    gint padding = -1;
-    gtk_widget_style_get( GTK_WIDGET(hsv), 
-                          "focus-padding", &padding,
-                          NULL );
-    if (padding > 0) {
-        diam -= padding * 2;
-    }
-     
-    diam = std::max(20, diam);
-    gint ring = static_cast<gint>( static_cast<gdouble>(diam) / (4.0 * 1.618) );
-    gtk_hsv_set_metrics( hsv, diam, ring );
-}
-
-static void handleWheelStyleSet(GtkHSV *hsv, GtkStyle* /*previous*/, gpointer /*userData*/)
-{
-    GtkAllocation allocation = {0, 0, 0, 0};
-    gtk_widget_get_allocation( GTK_WIDGET(hsv), &allocation );
-    resizeHSVWheel( hsv, &allocation );
-}
-
-static void handleWheelAllocation(GtkHSV *hsv, GtkAllocation *allocation, gpointer /*userData*/)
-{
-    resizeHSVWheel( hsv, allocation );
-}
-
 void ColorWheelSelector::init()
 {
     gint row = 0;
@@ -160,8 +121,7 @@ void ColorWheelSelector::init()
     /* Create components */
     row = 0;
 
-    _wheel = gtk_hsv_new();
-    gtk_hsv_set_metrics( GTK_HSV(_wheel), 48, 8 );
+    _wheel = gimp_color_wheel_new();
     gtk_widget_show( _wheel );
 
 #if GTK_CHECK_VERSION(3,0,0)
@@ -252,13 +212,6 @@ void ColorWheelSelector::init()
 
     g_signal_connect( G_OBJECT(_wheel), "changed",
                         G_CALLBACK (_wheelChanged), _csel );
-
-
-    // GTK does not automatically scale the color wheel, so we have to add that in:
-    g_signal_connect( G_OBJECT (_wheel), "size-allocate",
-                        G_CALLBACK (handleWheelAllocation), _csel );
-    g_signal_connect( G_OBJECT (_wheel), "style-set",
-                        G_CALLBACK (handleWheelStyleSet), _csel );
 }
 
 static void sp_color_wheel_selector_dispose(GObject *object)
@@ -299,11 +252,9 @@ void ColorWheelSelector::_colorChanged()
 #endif
     _updating = TRUE;
     {
-        gdouble h = 0;
-        gdouble s = 0;
-        gdouble v = 0;
-        gtk_rgb_to_hsv( _color.v.c[0], _color.v.c[1], _color.v.c[2], &h, &s, &v  );
-        gtk_hsv_set_color( GTK_HSV(_wheel), h, s, v );
+        float hsv[3] = {0,0,0};
+        sp_color_rgb_to_hsv_floatv(hsv, _color.v.c[0], _color.v.c[1], _color.v.c[2]);
+        gimp_color_wheel_set_color( GIMP_COLOR_WHEEL(_wheel), hsv[0], hsv[1], hsv[2] );
     }
 
     guint32 start = _color.toRGBA32( 0x00 );
@@ -374,21 +325,19 @@ void ColorWheelSelector::_sliderChanged( SPColorSlider *slider, SPColorWheelSele
     wheelSelector->_updateInternals( wheelSelector->_color, ColorScales::getScaled( wheelSelector->_adj ), wheelSelector->_dragging );
 }
 
-void ColorWheelSelector::_wheelChanged( GtkHSV *hsv, SPColorWheelSelector *cs )
+void ColorWheelSelector::_wheelChanged( GimpColorWheel *wheel, SPColorWheelSelector *cs )
 {
     ColorWheelSelector* wheelSelector = static_cast<ColorWheelSelector*>(SP_COLOR_SELECTOR(cs)->base);
 
     gdouble h = 0;
     gdouble s = 0;
     gdouble v = 0;
-    gtk_hsv_get_color( hsv, &h, &s, &v );
+    gimp_color_wheel_get_color( wheel, &h, &s, &v );
     
-    gdouble r = 0;
-    gdouble g = 0;
-    gdouble b = 0;
-    gtk_hsv_to_rgb(h, s, v, &r, &g, &b);
+    float rgb[3] = {0,0,0};
+    sp_color_hsv_to_rgb_floatv (rgb, h, s, v); 
 
-    SPColor color(r, g, b);
+    SPColor color(rgb[0], rgb[1], rgb[2]);
 
     guint32 start = color.toRGBA32( 0x00 );
     guint32 mid = color.toRGBA32( 0x7f );
@@ -397,7 +346,7 @@ void ColorWheelSelector::_wheelChanged( GtkHSV *hsv, SPColorWheelSelector *cs )
     sp_color_slider_set_colors (SP_COLOR_SLIDER(wheelSelector->_slider), start, mid, end);
 
     preserve_icc(&color, cs);
-    wheelSelector->_updateInternals( color, wheelSelector->_alpha, gtk_hsv_is_adjusting( hsv ) );
+    wheelSelector->_updateInternals( color, wheelSelector->_alpha, gimp_color_wheel_is_adjusting(wheel) );
 }
 
 
