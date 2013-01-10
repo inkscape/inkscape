@@ -102,8 +102,6 @@ static void     gimp_color_wheel_map            (GtkWidget          *widget);
 static void     gimp_color_wheel_unmap          (GtkWidget          *widget);
 static void     gimp_color_wheel_realize        (GtkWidget          *widget);
 static void     gimp_color_wheel_unrealize      (GtkWidget          *widget);
-static void     gimp_color_wheel_size_request   (GtkWidget          *widget,
-                                                 GtkRequisition     *requisition);
 static void     gimp_color_wheel_size_allocate  (GtkWidget          *widget,
                                                  GtkAllocation      *allocation);
 static gboolean gimp_color_wheel_button_press   (GtkWidget          *widget,
@@ -112,10 +110,9 @@ static gboolean gimp_color_wheel_button_release (GtkWidget          *widget,
                                                  GdkEventButton     *event);
 static gboolean gimp_color_wheel_motion         (GtkWidget          *widget,
                                                  GdkEventMotion     *event);
+#if GTK_CHECK_VERSION(3,0,0)
 static gboolean gimp_color_wheel_draw           (GtkWidget          *widget,
                                                  cairo_t            *cr);
-
-#if GTK_CHECK_VERSION(3,0,0)
 static void     gimp_color_wheel_get_preferred_width (GtkWidget     *widget,
 		                                 gint               *minimum_width,
 						 gint               *natural_width);
@@ -125,6 +122,8 @@ static void     gimp_color_wheel_get_preferred_height (GtkWidget    *widget,
 #else
 static gboolean gimp_color_wheel_expose         (GtkWidget          *widget,
                                                  GdkEventExpose     *event);
+static void     gimp_color_wheel_size_request   (GtkWidget          *widget,
+                                                 GtkRequisition     *requisition);
 #endif
 
 static gboolean gimp_color_wheel_grab_broken    (GtkWidget          *widget,
@@ -842,29 +841,17 @@ gimp_color_wheel_motion (GtkWidget      *widget,
 /* Redrawing */
 
 /* Paints the hue ring */
-#if GTK_CHECK_VERSION(3,0,0)
 static void
 paint_ring (GimpColorWheel *wheel,
             cairo_t        *cr)
-#else
-static void
-paint_ring (GimpColorWheel *wheel,
-            cairo_t        *cr,
-            gint            x,
-            gint            y,
-            gint            width,
-            gint            height)
-#endif
 {
-  GtkWidget             *widget = GTK_WIDGET (wheel);
-  GimpColorWheelPrivate *priv   = wheel->priv;
 #if GTK_CHECK_VERSION(3,0,0)
-  gint                   width, height;
+  GtkWidget             *widget = GTK_WIDGET (wheel);
 #else
   GtkAllocation          allocation;
-  gint                   focus_width;
-  gint                   focus_pad;
 #endif
+  GimpColorWheelPrivate *priv   = wheel->priv;
+  gint                   width, height;
   gint                   xx, yy;
   gdouble                dx, dy, dist;
   gdouble                center_x;
@@ -881,20 +868,14 @@ paint_ring (GimpColorWheel *wheel,
 #if GTK_CHECK_VERSION(3,0,0)
   width  = gtk_widget_get_allocated_width  (widget);
   height = gtk_widget_get_allocated_height (widget);
+#else
+  gtk_widget_get_allocation (GTK_WIDGET (wheel), &allocation);
+  width  = allocation.width;
+  height = allocation.height;
+#endif
 
   center_x = width  / 2.0;
   center_y = height / 2.0;
-#else
-  gtk_widget_get_allocation (GTK_WIDGET (wheel), &allocation);
-
-  gtk_widget_style_get (widget,
-                        "focus-line-width", &focus_width,
-                        "focus-padding", &focus_pad,
-                        NULL);
-
-  center_x = allocation.width / 2.0;
-  center_y = allocation.height / 2.0;
-#endif
 
   outer = priv->size / 2.0;
   inner = outer - priv->ring_width;
@@ -907,20 +888,11 @@ paint_ring (GimpColorWheel *wheel,
   for (yy = 0; yy < height; yy++)
     {
       p = buf + yy * width;
-
-#if GTK_CHECK_VERSION(3,0,0)
       dy = -(yy - center_y);
-#else
-      dy = -(yy + y - center_y);
-#endif
 
       for (xx = 0; xx < width; xx++)
         {
-#if GTK_CHECK_VERSION(3,0,0)
           dx = xx - center_x;
-#else
-          dx = xx + x - center_x;
-#endif
 
           dist = dx * dx + dy * dy;
           if (dist < ((inner-1) * (inner-1)) || dist > ((outer+1) * (outer+1)))
@@ -965,17 +937,10 @@ paint_ring (GimpColorWheel *wheel,
   else
     cairo_set_source_rgb (source_cr, 1.0, 1.0, 1.0);
 
-#if GTK_CHECK_VERSION(3,0,0)
   cairo_move_to (source_cr, center_x, center_y);
   cairo_line_to (source_cr,
                  center_x + cos (priv->h * 2.0 * G_PI) * priv->size / 2,
                  center_y - sin (priv->h * 2.0 * G_PI) * priv->size / 2);
-#else
-  cairo_move_to (source_cr, -x + center_x, - y + center_y);
-  cairo_line_to (source_cr,
-                 -x + center_x + cos (priv->h * 2.0 * G_PI) * priv->size / 2,
-                 -y + center_y - sin (priv->h * 2.0 * G_PI) * priv->size / 2);
-#endif
   cairo_stroke (source_cr);
   cairo_destroy (source_cr);
 
@@ -983,11 +948,7 @@ paint_ring (GimpColorWheel *wheel,
 
   cairo_save (cr);
 
-#if GTK_CHECK_VERSION(3,0,0)
   cairo_set_source_surface (cr, source, 0, 0);
-#else
-  cairo_set_source_surface (cr, source, x, y);
-#endif
   cairo_surface_destroy (source);
 
   cairo_set_line_width (cr, priv->ring_width);
@@ -1031,21 +992,10 @@ get_color (gdouble  h,
 #define PAD 3
 
 /* Paints the HSV triangle */
-#if GTK_CHECK_VERSION(3,0,0)
 static void
 paint_triangle (GimpColorWheel *wheel,
                 cairo_t        *cr,
                 gboolean        draw_focus)
-#else
-static void
-paint_triangle (GimpColorWheel *wheel,
-                cairo_t        *cr,
-                gint            x,
-                gint            y,
-                gint            width,
-                gint            height,
-                gboolean        draw_focus)
-#endif
 {
   GtkWidget             *widget = GTK_WIDGET (wheel);
   GimpColorWheelPrivate *priv   = wheel->priv;
@@ -1062,14 +1012,19 @@ paint_triangle (GimpColorWheel *wheel,
   cairo_surface_t       *source;
   gdouble                r, g, b;
   gint                   stride;
-#if GTK_CHECK_VERSION(3,0,0)
   gint                   width, height;
+#if GTK_CHECK_VERSION(3,0,0)
   GtkStyleContext       *context;
 
   width  = gtk_widget_get_allocated_width  (widget);
   height = gtk_widget_get_allocated_height (widget);
 #else
   gchar                 *detail;
+
+  GtkAllocation          allocation;
+  gtk_widget_get_allocation (widget, &allocation);
+  width  = allocation.width;
+  height = allocation.height;
 #endif
 
   /* Compute triangle's vertices */
@@ -1124,15 +1079,9 @@ paint_triangle (GimpColorWheel *wheel,
     {
       p = buf + yy * width;
 
-#if GTK_CHECK_VERSION(3,0,0)
       if (yy >= y1 - PAD && yy < y3 + PAD)
         {
           y_interp = CLAMP (yy, y1, y3);
-#else
-      if (yy + y >= y1 - PAD && yy + y < y3 + PAD)
-        {
-          y_interp = CLAMP (yy + y, y1, y3);
-#endif
 
           if (y_interp < y2)
             {
@@ -1165,22 +1114,13 @@ paint_triangle (GimpColorWheel *wheel,
               SWAP (bl, br, t);
             }
 
-#if GTK_CHECK_VERSION(3,0,0)
           x_start = MAX (xl - PAD, 0);
           x_end = MIN (xr + PAD, width);
-#else
-          x_start = MAX (xl - PAD, x);
-          x_end = MIN (xr + PAD, x + width);
-#endif
           x_start = MIN (x_start, x_end);
 
           c = (rl << 16) | (gl << 8) | bl;
 
-#if GTK_CHECK_VERSION(3,0,0)
           for (xx = 0; xx < x_start; xx++)
-#else
-          for (xx = x; xx < x_start; xx++)
-#endif
             *p++ = c;
 
           for (; xx < x_end; xx++)
@@ -1194,11 +1134,7 @@ paint_triangle (GimpColorWheel *wheel,
 
           c = (rr << 16) | (gr << 8) | br;
 
-#if GTK_CHECK_VERSION(3,0,0)
           for (; xx < width; xx++)
-#else
-          for (; xx < x + width; xx++)
-#endif
             *p++ = c;
         }
     }
@@ -1209,11 +1145,7 @@ paint_triangle (GimpColorWheel *wheel,
 
   /* Draw a triangle with the image as a source */
 
-#if GTK_CHECK_VERSION(3,0,0)
   cairo_set_source_surface (cr, source, 0, 0);
-#else
-  cairo_set_source_surface (cr, source, x, y);
-#endif
   cairo_surface_destroy (source);
 
   cairo_move_to (cr, x1, y1);
@@ -1270,9 +1202,6 @@ paint_triangle (GimpColorWheel *wheel,
 
   if (draw_focus && ! priv->focus_on_ring)
     {
-#if !GTK_CHECK_VERSION(3,0,0)
-      GtkAllocation allocation;
-#endif
       gint focus_width;
       gint focus_pad;
 
@@ -1335,37 +1264,27 @@ static gint
 gimp_color_wheel_expose (GtkWidget      *widget,
                          GdkEventExpose *event)
 {
+  cairo_t               *cr    = gdk_cairo_create (gtk_widget_get_window (widget));
+
   GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
   GimpColorWheelPrivate *priv  = wheel->priv;
   gboolean               draw_focus;
   GtkAllocation          allocation;
-  GdkRectangle           dest;
-  cairo_t               *cr;
 
   if (! (event->window == gtk_widget_get_window (widget) &&
          gtk_widget_is_drawable (widget)))
     return FALSE;
 
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+  
   gtk_widget_get_allocation (widget, &allocation);
-
-  if (!gdk_rectangle_intersect (&event->area, &allocation, &dest))
-    return FALSE;
-
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
   cairo_translate (cr, allocation.x, allocation.y);
   
   draw_focus = gtk_widget_has_focus (widget);
   
-  paint_ring (wheel, cr,
-              dest.x - allocation.x,
-	      dest.y - allocation.y,
-	      dest.width, dest.height);
-  paint_triangle (wheel, cr,
-		  dest.x - allocation.x,
-		  dest.y - allocation.y,
-		  dest.width, dest.height,
-		  draw_focus);
+  paint_ring (wheel, cr);
+  paint_triangle (wheel, cr, draw_focus);
 
   cairo_destroy (cr);
   
