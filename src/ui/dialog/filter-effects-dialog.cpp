@@ -1201,6 +1201,7 @@ void FilterEffectsDialog::FilterModifier::on_change_selection()
 {
     Inkscape::Selection *selection = sp_desktop_selection (SP_ACTIVE_DESKTOP);
     update_selection(selection);
+    update_filters(); 
 }
 
 void FilterEffectsDialog::FilterModifier::on_modified_selection( guint flags )
