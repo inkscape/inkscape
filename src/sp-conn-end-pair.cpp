@@ -82,9 +82,7 @@ sp_conn_end_pair_build(SPObject *object)
 {
     object->readAttr( "inkscape:connector-type" );
     object->readAttr( "inkscape:connection-start" );
-    object->readAttr( "inkscape:connection-start-point" );
     object->readAttr( "inkscape:connection-end" );
-    object->readAttr( "inkscape:connection-end-point" );
     object->readAttr( "inkscape:connector-curvature" );
 }
 
@@ -164,10 +162,6 @@ SPConnEndPair::setAttr(unsigned const key, gchar const *const value)
         case SP_ATTR_CONNECTION_END:
             this->_connEnd[(key == SP_ATTR_CONNECTION_START ? 0 : 1)]->setAttacherHref(value, _path);
             break;
-        case SP_ATTR_CONNECTION_START_POINT:
-        case SP_ATTR_CONNECTION_END_POINT:
-            this->_connEnd[(key == SP_ATTR_CONNECTION_START_POINT ? 0 : 1)]->setAttacherEndpoint(value, _path);
-            break;
     }
 
 }
@@ -175,15 +169,10 @@ SPConnEndPair::setAttr(unsigned const key, gchar const *const value)
 void
 SPConnEndPair::writeRepr(Inkscape::XML::Node *const repr) const
 {
-    char const * const attr_strs[] = {"inkscape:connection-start", "inkscape:connection-start-point",
-                                      "inkscape:connection-end", "inkscape:connection-end-point"};
+    char const * const attr_strs[] = {"inkscape:connection-start", "inkscape:connection-end"};
     for (unsigned handle_ix = 0; handle_ix < 2; ++handle_ix) {
         if (this->_connEnd[handle_ix]->ref.getURI()) {
-            repr->setAttribute(attr_strs[2*handle_ix], this->_connEnd[handle_ix]->ref.getURI()->toString());
-            std::ostringstream ostr;
-            ostr<<(this->_connEnd[handle_ix]->type == ConnPointDefault ? "d":"u") <<
-                  this->_connEnd[handle_ix]->id;
-            repr->setAttribute(attr_strs[2*handle_ix+1], ostr.str().c_str());
+            repr->setAttribute(attr_strs[handle_ix], this->_connEnd[handle_ix]->ref.getURI()->toString());
         }
     }
     repr->setAttribute("inkscape:connector-curvature", Glib::Ascii::dtostr(_connCurvature).c_str());
@@ -222,7 +211,7 @@ void SPConnEndPair::getEndpoints(Geom::Point endPts[]) const
     for (unsigned h = 0; h < 2; ++h) {
         if ( h2attItem[h] ) {
             g_assert(h2attItem[h]->avoidRef);
-            endPts[h] = h2attItem[h]->avoidRef->getConnectionPointPos(_connEnd[h]->type, _connEnd[h]->id);
+            endPts[h] = h2attItem[h]->avoidRef->getConnectionPointPos();
         }
         else if (!curve->is_empty())
         {

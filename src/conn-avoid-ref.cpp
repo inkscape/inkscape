@@ -23,7 +23,6 @@
 #include "helper/geom-curves.h"
 #include "svg/stringstream.h"
 #include "conn-avoid-ref.h"
-#include "connection-points.h"
 #include "sp-conn-end.h"
 #include "sp-path.h"
 #include "libavoid/router.h"
@@ -83,206 +82,6 @@ void SPAvoidRef::setAvoid(char const *value)
         if (value && (strcmp(value, "true") == 0)) {
             new_setting = true;
         }
-    }
-}
-
-static void print_connection_points(std::map<int, ConnectionPoint>& cp)
-{
-    std::map<int, ConnectionPoint>::iterator i;
-    for (i=cp.begin(); i!=cp.end(); ++i)
-    {
-        const ConnectionPoint& p = i->second;
-        std::cout<<p.id<<" "<<p.type<<" "<<p.pos[Geom::X]<<" "<<p.pos[Geom::Y]<<std::endl;
-    }
-}
-
-void SPAvoidRef::setConnectionPoints(gchar const *value)
-{
-    std::set<int> updates;
-    std::set<int> deletes;
-    std::set<int> seen;
-
-    if (value)
-    {
-        /* Rebuild the connection points list.
-           Update the connectors for which
-           the endpoint has changed.
-        */
-
-        gchar ** strarray = g_strsplit(value, "|", 0);
-        gchar ** iter = strarray;
-
-        while (*iter != NULL) {
-            ConnectionPoint cp;
-            Inkscape::SVGIStringStream is(*iter);
-            is>>cp;
-            cp.type = ConnPointUserDefined;
-
-            /* Mark this connection point as seen, so we can delete
-               the other ones.
-            */
-            seen.insert(cp.id);
-            if ( connection_points.find(cp.id) != connection_points.end() )
-            {
-                /* An already existing connection point.
-                   Check to see if changed, and, if it is
-                   the case, trigger connector update for
-                   the connector attached to this connection
-                   point. This is done by adding the
-                   connection point to a list of connection
-                   points to be updated.
-                */
-                if ( connection_points[cp.id] != cp )
-                    // The connection point got updated.
-                    // Put it in the update list.
-                    updates.insert(cp.id);
-            }
-            connection_points[cp.id] = cp;
-            ++iter;
-        }
-        /* Delete the connection points that didn't appear
-           in the new connection point list.
-        */
-        std::map<int, ConnectionPoint>::iterator it;
-
-        for (it=connection_points.begin(); it!=connection_points.end(); ++it)
-            if ( seen.find(it->first) == seen.end())
-                deletes.insert(it->first);
-        g_strfreev(strarray);
-    }
-    else
-    {
-        /* Delete all the user-defined connection points
-           Actually we do this by adding them to the list
-           of connection points to be deleted.
-        */
-        std::map<int, ConnectionPoint>::iterator it;
-
-        for (it=connection_points.begin(); it!=connection_points.end(); ++it)
-            deletes.insert(it->first);
-    }
-    /* Act upon updates and deletes.
-    */
-    if (deletes.empty() && updates.empty())
-        // Nothing to do, just return.
-        return;
-    // Get a list of attached connectors.
-    GSList* conns = getAttachedConnectors(Avoid::runningToAndFrom);
-    for (GSList *i = conns; i != NULL; i = i->next)
-    {
-        SPPath* path = SP_PATH(i->data);
-        SPConnEnd** connEnds = path->connEndPair.getConnEnds();
-        for (int ix=0; ix<2; ++ix) {
-            if (connEnds[ix]->type == ConnPointUserDefined) {
-                if (updates.find(connEnds[ix]->id) != updates.end()) {
-                    if (path->connEndPair.isAutoRoutingConn()) {
-                        path->connEndPair.tellLibavoidNewEndpoints();
-                    } else {
-                    }
-                }
-                else if (deletes.find(connEnds[ix]->id) != deletes.end()) {
-                    sp_conn_end_detach(path, ix);
-                }
-            }
-        }
-    }
-    g_slist_free(conns);
-    // Remove all deleted connection points
-    if (deletes.size())
-        for (std::set<int>::iterator it = deletes.begin(); it != deletes.end(); ++it)
-            connection_points.erase(*it);
-}
-
-void SPAvoidRef::setConnectionPointsAttrUndoable(const gchar* value, const gchar* action)
-{
-    SPDocument* doc = item->document;
-
-    item->setAttribute( "inkscape:connection-points", value, 0 );
-    item->updateRepr();
-    doc->ensureUpToDate();
-    DocumentUndo::done(doc, SP_VERB_CONTEXT_CONNECTOR, action);
-}
-
-void SPAvoidRef::addConnectionPoint(ConnectionPoint &cp)
-{
-    Inkscape::SVGOStringStream ostr;
-    bool first = true;
-    int newId = 1;
-    if ( connection_points.size() )
-    {
-        for (IdConnectionPointMap::iterator it = connection_points.begin(); ; )
-        {
-            if ( first )
-            {
-                first = false;
-                ostr<<it->second;
-            }
-            else
-                ostr<<'|'<<it->second;
-            IdConnectionPointMap::iterator prev_it = it;
-            ++it;
-            if ( it == connection_points.end() || prev_it->first + 1 != it->first )
-            {
-                newId = prev_it->first + 1;
-                break;
-            }
-        }
-    }
-    cp.id = newId;
-    if ( first )
-    {
-        first = false;
-        ostr<<cp;
-    }
-    else
-        ostr<<'|'<<cp;
-
-    this->setConnectionPointsAttrUndoable( ostr.str().c_str(), _("Add a new connection point") );
-}
-
-void SPAvoidRef::updateConnectionPoint(ConnectionPoint &cp)
-{
-    Inkscape::SVGOStringStream ostr;
-    IdConnectionPointMap::iterator cp_pos = connection_points.find( cp.id );
-    if ( cp_pos != connection_points.end() )
-    {
-        bool first = true;
-        for (IdConnectionPointMap::iterator it = connection_points.begin(); it != connection_points.end(); ++it)
-        {
-            ConnectionPoint* to_write;
-            if ( it != cp_pos )
-                to_write = &it->second;
-            else
-                to_write = &cp;
-            if ( first )
-            {
-                first = false;
-                ostr<<*to_write;
-            }
-            else
-                ostr<<'|'<<*to_write;
-        }
-        this->setConnectionPointsAttrUndoable( ostr.str().c_str(), _("Move a connection point") );
-    }
-}
-
-void SPAvoidRef::deleteConnectionPoint(ConnectionPoint &cp)
-{
-    Inkscape::SVGOStringStream ostr;
-    IdConnectionPointMap::iterator cp_pos = connection_points.find( cp.id );
-    if ( cp_pos != connection_points.end() ) {
-        bool first = true;
-        for (IdConnectionPointMap::iterator it = connection_points.begin(); it != connection_points.end(); ++it) {
-            if ( it != cp_pos ) {
-                if ( first ) {
-                    first = false;
-                    ostr<<it->second;
-                } else {
-                    ostr<<'|'<<it->second;
-                }
-            }
-        }
-        this->setConnectionPointsAttrUndoable( ostr.str().c_str(), _("Remove a connection point") );
     }
 }
 
@@ -387,45 +186,13 @@ GSList *SPAvoidRef::getAttachedConnectors(const unsigned int type)
     return list;
 }
 
-Geom::Point SPAvoidRef::getConnectionPointPos(const int type, const int id)
+Geom::Point SPAvoidRef::getConnectionPointPos()
 {
     g_assert(item);
-    Geom::Point pos;
-    const Geom::Affine& transform = item->i2doc_affine();
-
-    if ( type == ConnPointDefault )
-    {
-        // For now, just default to the centre of the item
-        Geom::OptRect bbox = item->documentVisualBounds();
-        pos = (bbox) ? bbox->midpoint() : Geom::Point(0, 0);
-    }
-    else
-    {
-        // Get coordinates from the list of connection points
-        // that are attached to the item
-        pos = connection_points[id].pos * transform;
-    }
-
-    return pos;
-}
-
-bool SPAvoidRef::isValidConnPointId( const int type, const int id )
-{
-    if ( type < 0 || type > 1 )
-        return false;
-    else
-    {
-        if ( type == ConnPointDefault )
-            if ( id < 0 || id > 8 )
-                return false;
-            else
-            {
-            }
-        else
-            return connection_points.find( id ) != connection_points.end();
-    }
-
-    return true;
+    // the center is all we are interested in now; we used to care
+    // about non-center points, but that's moot.
+    Geom::OptRect bbox = item->documentVisualBounds();
+    return (bbox) ? bbox->midpoint() : Geom::Point(0, 0);
 }
 
 static std::vector<Geom::Point> approxCurveWithPoints(SPCurve *curve)

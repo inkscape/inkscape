@@ -18,7 +18,6 @@
 #include "event-context.h"
 #include <2geom/point.h>
 #include "libavoid/connector.h"
-#include "connection-points.h"
 #include <glibmm/i18n.h>
 
 #define SP_TYPE_CONNECTOR_CONTEXT (sp_connector_context_get_type())
@@ -44,12 +43,7 @@ enum {
     SP_CONNECTOR_CONTEXT_NEWCONNPOINT
 };
 
-enum {
-    SP_CONNECTOR_CONTEXT_DRAWING_MODE,
-    SP_CONNECTOR_CONTEXT_EDITING_MODE
-};
-
-typedef std::map<SPKnot *, ConnectionPoint>  ConnectionPointMap;
+typedef std::map<SPKnot *, int>  SPKnotList;
 
 struct SPConnectorContext : public SPEventContext {
     Inkscape::Selection *selection;
@@ -57,13 +51,7 @@ struct SPConnectorContext : public SPEventContext {
 
     /** \invar npoints in {0, 2}. */
     gint npoints;
-    /* The tool mode can be connector drawing or
-       connection points editing.
-    */
-    unsigned int mode : 1;
     unsigned int state : 4;
-
-    gchar* knot_tip;
 
     // Red curve
     SPCanvasItem *red_bpath;
@@ -89,7 +77,6 @@ struct SPConnectorContext : public SPEventContext {
     Inkscape::XML::Node *active_conn_repr;
     sigc::connection sel_changed_connection;
 
-
     // The activehandle
     SPKnot *active_handle;
 
@@ -99,13 +86,11 @@ struct SPConnectorContext : public SPEventContext {
     SPItem *clickeditem;
     SPKnot *clickedhandle;
 
-    ConnectionPointMap connpthandles;
+    SPKnotList knots;
     SPKnot *endpt_handle[2];
     guint  endpt_handler_id[2];
     gchar *shref;
-    gchar *scpid;
     gchar *ehref;
-    gchar *ecpid;
     SPCanvasItem *c0, *c1, *cl0, *cl1;
 };
 
@@ -113,7 +98,6 @@ struct SPConnectorContextClass : public SPEventContextClass { };
 
 GType sp_connector_context_get_type();
 
-void sp_connector_context_switch_mode(SPEventContext* ec, unsigned int newMode);
 void cc_selection_set_avoid(bool const set_ignore);
 void cc_create_connection_point(SPConnectorContext* cc);
 void cc_remove_connection_point(SPConnectorContext* cc);

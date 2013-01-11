@@ -184,6 +184,7 @@ static void sp_knot_init(SPKnot *knot)
 {
     knot->desktop = NULL;
     knot->item = NULL;
+    knot->owner = NULL;
     knot->flags = 0;
 
     knot->size = 8;

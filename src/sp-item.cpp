@@ -511,9 +511,6 @@ void SPItem::sp_item_set(SPObject *object, unsigned key, gchar const *value)
         case SP_ATTR_CONNECTOR_AVOID:
             item->avoidRef->setAvoid(value);
             break;
-        case SP_ATTR_CONNECTION_POINTS:
-            item->avoidRef->setConnectionPoints(value);
-            break;
         case SP_ATTR_TRANSFORM_CENTER_X:
             if (value) {
                 item->transform_center_x = g_strtod(value, NULL);
