@@ -204,12 +204,6 @@ class ShiftSegment
 };
 typedef std::list<ShiftSegment> ShiftSegmentList;
 
-static bool cmpShiftSegment(const ShiftSegment& u, const ShiftSegment& v)
-{
-    return u < v;
-}
-
-
 struct Node;
 struct CmpNodePos { bool operator()(const Node* u, const Node* v) const; };
 

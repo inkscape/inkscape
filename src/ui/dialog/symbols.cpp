@@ -231,8 +231,8 @@ void SymbolsDialog::rebuild() {
   draw_symbols( symbolDocument );
 }
 
-void SymbolsDialog::iconDragDataGet(const Glib::RefPtr<Gdk::DragContext>& context, Gtk::SelectionData& data, guint info, guint time) {
-
+void SymbolsDialog::iconDragDataGet(const Glib::RefPtr<Gdk::DragContext>& /*context*/, Gtk::SelectionData& data, guint /*info*/, guint /*time*/)
+{
 #if WITH_GTKMM_3_0
   std::vector<Gtk::TreePath> iconArray = iconView->get_selected_items();
 #else

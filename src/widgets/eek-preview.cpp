@@ -581,22 +581,6 @@ static gboolean eek_preview_button_release_cb( GtkWidget* widget, GdkEventButton
     return FALSE;
 }
 
-static gboolean eek_preview_key_press_event( GtkWidget* widget, GdkEventKey* event)
-{
-    (void)widget;
-    (void)event;
-    g_message("TICK");
-    return FALSE;
-}
-
-static gboolean eek_preview_key_release_event( GtkWidget* widget, GdkEventKey* event)
-{
-    (void)widget;
-    (void)event;
-    g_message("tock");
-    return FALSE;
-}
-
 static void eek_preview_get_property( GObject *object,
                                       guint property_id,
                                       GValue *value,

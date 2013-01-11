@@ -487,8 +487,7 @@ SPGradient *SPGradientSelector::getVector()
 }
 
 
-static void
-sp_gradient_selector_vector_set (SPGradientVectorSelector *gvs, SPGradient *gr, SPGradientSelector *sel)
+static void sp_gradient_selector_vector_set(SPGradientVectorSelector * /*gvs*/, SPGradient *gr, SPGradientSelector *sel)
 {
 
     if (!sel->blocked) {
@@ -497,7 +496,6 @@ sp_gradient_selector_vector_set (SPGradientVectorSelector *gvs, SPGradient *gr, 
         sel->setVector((gr) ? gr->document : 0, gr);
         g_signal_emit (G_OBJECT (sel), signals[CHANGED], 0, gr);
         sel->blocked = FALSE;
-
     }
 }
 

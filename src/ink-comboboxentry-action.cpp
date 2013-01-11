@@ -788,7 +788,7 @@ static void ink_comboboxentry_action_defocus( Ink_ComboBoxEntry_Action* action )
     }
 }
 
-gboolean keypress_cb( GtkWidget *widget, GdkEventKey *event, gpointer data )
+gboolean keypress_cb( GtkWidget * /*widget*/, GdkEventKey *event, gpointer data )
 {
     gboolean wasConsumed = FALSE; /* default to report event not consumed */
     guint key = 0;

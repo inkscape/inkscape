@@ -108,8 +108,6 @@ static SPItemClass *parent_class;
 extern "C"
 {
     void user_read_data( png_structp png_ptr, png_bytep data, png_size_t length );
-    void user_write_data( png_structp png_ptr, png_bytep data, png_size_t length );
-    void user_flush_data( png_structp png_ptr );
 }
 
 
@@ -253,16 +251,6 @@ static void user_read_data( png_structp png_ptr, png_bytep data, png_size_t leng
         }
     }
 //    g_message("things out");
-}
-
-static void user_write_data( png_structp /*png_ptr*/, png_bytep /*data*/, png_size_t /*length*/ )
-{
-    //g_message( "user_write_data(%d)", length );
-}
-
-static void user_flush_data( png_structp /*png_ptr*/ )
-{
-    //g_message( "user_flush_data" );
 }
 
 

@@ -1186,7 +1186,7 @@ void FilterEffectsDialog::FilterModifier::setTargetDesktop(SPDesktop *desktop)
 }
 
 // When the document changes, update connection to resources
-void FilterEffectsDialog::FilterModifier::on_document_replaced(SPDesktop *desktop, SPDocument *document)
+void FilterEffectsDialog::FilterModifier::on_document_replaced(SPDesktop * /*desktop*/, SPDocument *document)
 {
     if (_resource_changed) {
         _resource_changed.disconnect();
@@ -1686,7 +1686,7 @@ void FilterEffectsDialog::PrimitiveList::remove_selected()
 }
 
 #if !WITH_GTKMM_3_0
-bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose *e)
+bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose * /*evt*/)
 {
     bool result = false;
 

@@ -220,7 +220,7 @@ void FillNStroke::setDesktop(SPDesktop *desktop)
  * Listen to this "change in tool" event, in case a subselection tool (such as Gradient or Node) selection
  * is changed back to a selection tool - especially needed for selected gradient stops.
  */
-void FillNStroke::eventContextCB(SPDesktop *desktop, SPEventContext *eventcontext)
+void FillNStroke::eventContextCB(SPDesktop * /*desktop*/, SPEventContext * /*eventcontext*/)
 {
     performUpdate();
 }

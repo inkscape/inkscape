@@ -434,8 +434,7 @@ StrokeStyle::makeRadioButton(Gtk::RadioButton *tb, char const *icon,
  * Gets the marker uri string and applies it to all selected
  * items in the current desktop.
  */
-void
-StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw, SPMarkerLoc const which)
+void StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw, SPMarkerLoc const /*which*/)
 {
     if (spw->update) {
         return;
@@ -485,12 +484,10 @@ StrokeStyle::markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw, SPMa
     css = 0;
 
     spw->update = false;
-
 };
 
-void
-StrokeStyle::updateMarkerHist(SPMarkerLoc const which) {
-
+void StrokeStyle::updateMarkerHist(SPMarkerLoc const which)
+{
     switch (which) {
         case SP_MARKER_LOC_START:
             startMarkerConn.block();

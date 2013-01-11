@@ -420,7 +420,7 @@ void sp_shortcut_file_export_do(char const *exportname) {
  * Element (b) is used in shortcut lookup and contains an uppercase version of the gdk_keyval_name,
  *   or a gdk_keyval_name name and the "Shift" modifier for Shift altered hardware code keys (see get_group0_keyval() for explanation)
  */
-void sp_shortcut_delete_from_file(char const *action, unsigned int const shortcut) {
+void sp_shortcut_delete_from_file(char const * /*action*/, unsigned int const shortcut) {
 
     char const *filename = get_path(USER, KEYS, "default.xml");
 

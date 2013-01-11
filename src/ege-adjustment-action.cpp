@@ -810,12 +810,6 @@ static gboolean event_cb( EgeAdjustmentAction* act, GdkEvent* evt )
     return handled;
 }
 
-static gchar *slider_format_falue( GtkScale* scale, gdouble value, gchar *label )
-{
-    (void)scale;
-    return g_strdup_printf("%s %d", label, (int) round(value));
-}
-
 static GtkWidget* create_tool_item( GtkAction* action )
 {
     GtkWidget* item = 0;

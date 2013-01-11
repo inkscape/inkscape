@@ -655,7 +655,7 @@ bool LayersPanel::_handleButtonEvent(GdkEventButton* event)
  * Drap and drop within the tree
  * Save the drag source and drop target SPObjects and if its a drag between layers or into (sublayer) a layer
  */
-bool LayersPanel::_handleDragDrop(const Glib::RefPtr<Gdk::DragContext>& context, int x, int y, guint time)
+bool LayersPanel::_handleDragDrop(const Glib::RefPtr<Gdk::DragContext>& /*context*/, int x, int y, guint /*time*/)
 {
     int cell_x = 0, cell_y = 0;
     Gtk::TreeModel::Path target_path;

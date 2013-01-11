@@ -19,10 +19,9 @@ namespace UI {
 namespace Widget {
 
 SpinScale::SpinScale(const char* label, double value, double lower, double upper, double step_inc,
-                       double climb_rate, int digits, const SPAttributeEnum a, const char* tip_text)
+                     double /*climb_rate*/, int digits, const SPAttributeEnum a, const char* tip_text)
     : AttrWidget(a, value)
 {
-
 #if WITH_GTKMM_3_0
     _adjustment = Gtk::Adjustment::create(value, lower, upper, step_inc);
     _spinscale = gimp_spin_scale_new (_adjustment->gobj(), label, digits);

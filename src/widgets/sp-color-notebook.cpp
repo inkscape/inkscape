@@ -539,7 +539,7 @@ void ColorNotebook::_colorChanged()
     _updateRgbaEntry( _color, _alpha );
 }
 
-void ColorNotebook::_picker_clicked(GtkWidget *widget, SPColorNotebook *colorbook)
+void ColorNotebook::_picker_clicked(GtkWidget * /*widget*/, SPColorNotebook * /*colorbook*/)
 {
     // Set the dropper into a "one click" mode, so it reverts to the previous tool after a click
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();

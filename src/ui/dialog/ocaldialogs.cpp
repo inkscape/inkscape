@@ -324,7 +324,11 @@ bool LoadingBox::_on_expose_event(GdkEventExpose* /*event*/)
 }
 #endif
 
-bool LoadingBox::_on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
+bool LoadingBox::_on_draw(const Cairo::RefPtr<Cairo::Context> &
+#if WITH_GTKMM_3_0
+cr
+#endif
+)
 {
     // Draw shadow
     int x = get_allocation().get_x();

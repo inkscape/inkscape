@@ -309,7 +309,7 @@ gboolean IconImpl::draw(GtkWidget *widget, cairo_t* cr)
 }
 
 #if !GTK_CHECK_VERSION(3,0,0)
-gboolean IconImpl::expose(GtkWidget *widget, GdkEventExpose *event)
+gboolean IconImpl::expose(GtkWidget *widget, GdkEventExpose * /*event*/)
 {
     gboolean result = TRUE;
 

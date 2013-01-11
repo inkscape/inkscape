@@ -14,8 +14,6 @@
 
 #include <gtk/gtk.h>
 
-void sp_find_dialog();
-
 
 #endif /* !SEEN_FIND_H */
 

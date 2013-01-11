@@ -178,16 +178,6 @@ static void sp_dropper_context_finish(SPEventContext *ec)
 
 
 /**
- * Returns the current dropper context icc-color.
- */
-static SPColor* sp_dropper_context_get_icc_color(SPEventContext */*ec*/)
-{
-    //TODO: implement-me!
-
-    return 0; // At least we will cause a clean crash, instead of random corruption.
-}
-
-/**
  * Returns the current dropper context color.
  */
 guint32 sp_dropper_context_get_color(SPEventContext *ec)

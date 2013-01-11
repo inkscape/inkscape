@@ -698,16 +698,15 @@ set_cross_grab (GimpColorWheel *wheel,
 #endif
 }
 
-static gboolean
-gimp_color_wheel_grab_broken (GtkWidget          *widget,
-                              GdkEventGrabBroken *event)
+static gboolean gimp_color_wheel_grab_broken(GtkWidget *widget, GdkEventGrabBroken *event)
 {
-  GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
-  GimpColorWheelPrivate *priv  = wheel->priv;
+    (void)event;
+    GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
+    GimpColorWheelPrivate *priv  = wheel->priv;
 
-  priv->mode = DRAG_NONE;
+    priv->mode = DRAG_NONE;
 
-  return TRUE;
+    return TRUE;
 }
 
 static gboolean

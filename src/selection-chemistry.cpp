@@ -2892,7 +2892,7 @@ void sp_selection_to_guides(SPDesktop *desktop)
 /*
  * Convert <g> to <symbol>, leaving all <use> elements referencing group unchanged.
  */
-void sp_selection_symbol(SPDesktop *desktop, bool apply )
+void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
 {
 
     if (desktop == NULL) {

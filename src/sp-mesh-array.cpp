@@ -72,12 +72,6 @@
 
 enum { ROW, COL };
 
-static void swap_p( Geom::Point *p1, Geom::Point *p2 ) {
-    Geom::Point temp = *p1;
-    *p1 = *p2;
-    *p2 = temp;
-};
-
 SPMeshPatchI::SPMeshPatchI( std::vector<std::vector< SPMeshNode* > > * n, int r, int c ) {
 
     nodes = n;

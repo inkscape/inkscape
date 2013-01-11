@@ -1527,7 +1527,7 @@ void InkscapePreferences::onKBExport()
     sp_shortcut_file_export();
 }
 
-bool InkscapePreferences::onKBSearchKeyEvent(GdkEventKey *event)
+bool InkscapePreferences::onKBSearchKeyEvent(GdkEventKey * /*event*/)
 {
     _kb_filter->refilter();
     return FALSE;

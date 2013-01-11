@@ -35,7 +35,6 @@ static void sp_xmlview_tree_destroy(GtkObject * object);
 #endif
 
 static NodeData * node_data_new (SPXMLViewTree * tree, GtkTreeIter * node, GtkTreeRowReference  *rowref, Inkscape::XML::Node * repr);
-static void node_data_free (gpointer data);
 
 static GtkTreeRowReference * add_node (SPXMLViewTree * tree, GtkTreeIter * parent, GtkTreeIter * before, Inkscape::XML::Node * repr);
 
@@ -259,15 +258,6 @@ NodeData *node_data_new(SPXMLViewTree * tree, GtkTreeIter * /*node*/, GtkTreeRow
     data->repr = repr;
     Inkscape::GC::anchor(repr);
     return data;
-}
-
-void node_data_free(gpointer ptr)
-{
-    NodeData *data = static_cast<NodeData *>(ptr);
-    sp_repr_remove_listener_by_data (data->repr, data);
-    g_assert (data->repr != NULL);
-    Inkscape::GC::release(data->repr);
-    g_free (data);
 }
 
 void element_child_added (Inkscape::XML::Node * /*repr*/, Inkscape::XML::Node * child, Inkscape::XML::Node * ref, gpointer ptr)
