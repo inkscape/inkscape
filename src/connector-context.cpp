@@ -1124,7 +1124,7 @@ cc_generic_knot_handler(SPCanvasItem *, GdkEvent *event, SPKnot *knot)
 
     gboolean consumed = FALSE;
 
-    gchar* knot_tip = "Click to join at this point";
+    gchar const *knot_tip = "Click to join at this point";
     switch (event->type) {
         case GDK_ENTER_NOTIFY:
             sp_knot_set_flag(knot, SP_KNOT_MOUSEOVER, TRUE);

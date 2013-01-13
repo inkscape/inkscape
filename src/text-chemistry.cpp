@@ -41,18 +41,6 @@
 using Inkscape::DocumentUndo;
 
 static SPItem *
-text_in_selection(Inkscape::Selection *selection)
-{
-    for (GSList *items = (GSList *) selection->itemList();
-         items != NULL;
-         items = items->next) {
-        if (SP_IS_TEXT(items->data))
-            return ((SPItem *) items->data);
-    }
-    return NULL;
-}
-
-static SPItem *
 flowtext_in_selection(Inkscape::Selection *selection)
 {
     for (GSList *items = (GSList *) selection->itemList();

@@ -12,7 +12,7 @@
             <param name="with-code" type="boolean" _gui-text="With HTML and CSS">true</param>
         </page>
         <page name="Help" _gui-text="Help">
-            <_param name="about" type="description">All sliced images, and optionaly code, will be generated as you had configured and saved to one directory.</_param>
+            <_param name="about" type="description">All sliced images, and optionally - code, will be generated as you had configured and saved to one directory.</_param>
         </page>
     </param>
     <effect needs-live-preview="false">
