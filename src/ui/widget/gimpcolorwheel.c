@@ -686,14 +686,22 @@ set_cross_grab (GimpColorWheel *wheel,
     gdk_cursor_new_for_display (gtk_widget_get_display (GTK_WIDGET (wheel)),
                                 GDK_CROSSHAIR);
 
+#if GTK_CHECK_VERSION(3,0,0)
+  gdk_device_grab (gtk_get_current_event_device(),
+		   priv->window,
+		   GDK_OWNERSHIP_NONE,
+		   FALSE,
+		   GDK_POINTER_MOTION_MASK      |
+		   GDK_POINTER_MOTION_HINT_MASK |
+		   GDK_BUTTON_RELEASE_MASK,
+		   cursor, time);
+  g_object_unref (cursor);
+#else
   gdk_pointer_grab (priv->window, FALSE,
                     GDK_POINTER_MOTION_MASK      |
                     GDK_POINTER_MOTION_HINT_MASK |
                     GDK_BUTTON_RELEASE_MASK,
                     NULL, cursor, time);
-#if GTK_CHECK_VERSION(3,0,0)
-  g_object_unref (cursor);
-#else
   gdk_cursor_unref (cursor);
 #endif
 }
@@ -795,8 +803,13 @@ gimp_color_wheel_button_release (GtkWidget      *widget,
   else
     g_assert_not_reached ();
 
+#if GTK_CHECK_VERSION(3,0,0)
+  gdk_device_ungrab (gtk_get_current_event_device(),
+                     event->time);
+#else
   gdk_display_pointer_ungrab (gdk_window_get_display (event->window),
                               event->time);
+#endif
 
   return TRUE;
 }
