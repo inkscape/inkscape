@@ -25,6 +25,7 @@ src/desktop-events.cpp
 src/desktop.cpp
 src/ui/dialog/clonetiler.cpp
 src/ui/dialog/export.cpp
+src/ui/dialog/export.h
 src/dialogs/find.cpp
 src/ui/dialog/spellcheck.cpp
 src/ui/dialog/text-edit.cpp
