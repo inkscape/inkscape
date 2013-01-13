@@ -20,7 +20,7 @@
 #include <2geom/rect.h>
 #include "display/drawing-item.h"
 #include "display/rendermode.h"
-
+#include "nr-filter-colormatrix.h"
 
 typedef struct _SPCanvasArena SPCanvasArena;
 
@@ -65,6 +65,8 @@ public:
 
     OutlineColors const &colors() const { return _colors; }
 
+    void setGrayscaleMatrix(gdouble value_matrix[20]);
+
     void update(Geom::IntRect const &area = Geom::IntRect::infinite(), UpdateContext const &ctx = UpdateContext(), unsigned flags = DrawingItem::STATE_ALL, unsigned reset = 0);
     void render(DrawingContext &ct, Geom::IntRect const &area, unsigned flags = 0);
     DrawingItem *pick(Geom::Point const &p, double delta, unsigned flags);
@@ -97,6 +99,7 @@ private:
     size_t _cache_budget; ///< maximum allowed size of cache
 
     OutlineColors _colors;
+    Filters::FilterColorMatrix::ColorMatrixMatrix _grayscale_colormatrix;
     SPCanvasArena *_canvasarena; // may be NULL is this arena is not the screen
                                  // but used for export etc.
 

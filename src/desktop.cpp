@@ -433,6 +433,20 @@ void SPDesktop::_setDisplayMode(Inkscape::RenderMode mode) {
     _widget->setTitle( sp_desktop_document(this)->getName() );
 }
 void SPDesktop::_setDisplayColorMode(Inkscape::ColorMode mode) {
+    // reload grayscale matrix from prefs
+    if (mode == Inkscape::COLORMODE_GRAYSCALE) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        gdouble r = prefs->getDoubleLimited("/options/rendering/grayscale/red-factor",0.21,0.,1.);
+        gdouble g = prefs->getDoubleLimited("/options/rendering/grayscale/green-factor",0.72,0.,1.);
+        gdouble b = prefs->getDoubleLimited("/options/rendering/grayscale/blue-factor",0.072,0.,1.);
+        gdouble grayscale_value_matrix[20] = { r, g, b, 0, 0,
+                                               r, g, b, 0, 0,
+                                               r, g, b, 0, 0,
+                                               0, 0, 0, 1, 0 };
+        g_message("%g",grayscale_value_matrix[0]);
+        SP_CANVAS_ARENA (drawing)->drawing.setGrayscaleMatrix(grayscale_value_matrix);
+    }
+
     SP_CANVAS_ARENA (drawing)->drawing.setColorMode(mode);
     canvas->colorrendermode = mode;
     _display_color_mode = mode;
