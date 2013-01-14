@@ -1097,6 +1097,9 @@ void InkscapePreferences::initPageBehavior()
     _sel_locked.init ( _("Ignore locked objects and layers"), "/options/kbselection/onlysensitive", true);
     _sel_layer_deselects.init ( _("Deselect upon layer change"), "/options/selection/layerdeselect", true);
 
+    _page_select.add_line( false, "", _sel_layer_deselects, "",
+                           _("Uncheck this to be able to keep the current objects selected when the current layer changes"));
+
     _page_select.add_group_header( _("Ctrl+A, Tab, Shift+Tab"));
     _page_select.add_line( true, "", _sel_all, "",
                            _("Make keyboard selection commands work on objects in all layers"));
@@ -1108,10 +1111,6 @@ void InkscapePreferences::initPageBehavior()
                            _("Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden layer)"));
     _page_select.add_line( true, "", _sel_locked, "",
                            _("Uncheck this to be able to select objects that are locked (either by themselves or by being in a locked layer)"));
-
-    _page_select.add_line( false, "", _sel_layer_deselects, "",
-                           _("Uncheck this to be able to keep the current objects selected when the current layer changes"));
-
 
     _sel_cycle.init ( _("Wrap when cycling objects in z-order"), "/options/selection/cycleWrap", true);
 
