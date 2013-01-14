@@ -812,7 +812,7 @@ void InkscapePreferences::initPageIO()
 
     // Input devices options
     _mouse_sens.init ( "/options/cursortolerance/value", 0.0, 30.0, 1.0, 1.0, 8.0, true, false);
-    _page_mouse.add_line( false, _("_Grab sensitivity:"), _mouse_sens, _("pixels"),
+    _page_mouse.add_line( false, _("_Grab sensitivity:"), _mouse_sens, _("pixels (requires restart)"),
                            _("How close on the screen you need to be to an object to be able to grab it with mouse (in screen pixels)"), false);
     _mouse_thres.init ( "/options/dragtolerance/value", 0.0, 20.0, 1.0, 1.0, 4.0, true, false);
     _page_mouse.add_line( false, _("_Click/drag threshold:"), _mouse_thres, _("pixels"),
