@@ -936,47 +936,19 @@ static Glib::RefPtr<Gtk::ActionGroup> create_or_fetch_actions( SPDesktop* deskto
 }
 
 
-static void handlebox_detached(GtkHandleBox* /*handlebox*/, GtkWidget* widget, gpointer /*userData*/)
-{
-	GtkAllocation alloc;
-	gtk_widget_get_allocation(widget, &alloc);
-    gtk_widget_set_size_request( widget,
-                                 alloc.width,
-                                 alloc.height );
-}
-
-static void handlebox_attached(GtkHandleBox* /*handlebox*/, GtkWidget* widget, gpointer /*userData*/)
-{
-    gtk_widget_set_size_request( widget, -1, -1 );
-}
-
 static GtkWidget* toolboxNewCommon( GtkWidget* tb, BarId id, GtkPositionType handlePos )
 {
     g_object_set_data(G_OBJECT(tb), "desktop", NULL);
 
     gtk_widget_set_sensitive(tb, FALSE);
 
-    GtkWidget *hb = 0;
-    gboolean forceFloatAllowed = Inkscape::Preferences::get()->getBool("/options/workarounds/floatallowed", false);
-    if ( UXManager::getInstance()->isFloatWindowProblem() && !forceFloatAllowed ) {
-        hb = gtk_event_box_new(); // A simple, neutral container.
-    } else {
-        hb = gtk_handle_box_new();
-        gtk_handle_box_set_handle_position(GTK_HANDLE_BOX(hb), handlePos);
-        gtk_handle_box_set_shadow_type(GTK_HANDLE_BOX(hb), GTK_SHADOW_OUT);
-        gtk_handle_box_set_snap_edge(GTK_HANDLE_BOX(hb), GTK_POS_LEFT);
-    }
+    GtkWidget *hb = gtk_event_box_new(); // A simple, neutral container.
 
     gtk_container_add(GTK_CONTAINER(hb), tb);
     gtk_widget_show(GTK_WIDGET(tb));
 
     sigc::connection* conn = new sigc::connection;
     g_object_set_data(G_OBJECT(hb), "event_context_connection", conn);
-
-    if ( GTK_IS_HANDLE_BOX(hb) ) {
-        g_signal_connect(G_OBJECT(hb), "child_detached", G_CALLBACK(handlebox_detached), static_cast<gpointer>(0));
-        g_signal_connect(G_OBJECT(hb), "child_attached", G_CALLBACK(handlebox_attached), static_cast<gpointer>(0));
-    }
 
     gpointer val = GINT_TO_POINTER(id);
     g_object_set_data(G_OBJECT(hb), BAR_ID_KEY, val);
@@ -1193,14 +1165,8 @@ static void setupToolboxCommon( GtkWidget *toolbox,
     Inkscape::IconSize toolboxSize = ToolboxFactory::prefToSize(sizePref);
     gtk_toolbar_set_icon_size( GTK_TOOLBAR(toolBar), static_cast<GtkIconSize>(toolboxSize) );
 
-    if (GTK_IS_HANDLE_BOX(toolbox)) {
-        // g_message("GRABBING ORIENTATION   [%s]", toolbarName);
-        GtkPositionType pos = gtk_handle_box_get_handle_position(GTK_HANDLE_BOX(toolbox));
-        orientation = ((pos == GTK_POS_LEFT) || (pos == GTK_POS_RIGHT)) ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
-    } else {
-        GtkPositionType pos = static_cast<GtkPositionType>(GPOINTER_TO_INT(g_object_get_data( G_OBJECT(toolbox), HANDLE_POS_MARK )));
-        orientation = ((pos == GTK_POS_LEFT) || (pos == GTK_POS_RIGHT)) ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
-    }
+    GtkPositionType pos = static_cast<GtkPositionType>(GPOINTER_TO_INT(g_object_get_data( G_OBJECT(toolbox), HANDLE_POS_MARK )));
+    orientation = ((pos == GTK_POS_LEFT) || (pos == GTK_POS_RIGHT)) ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
     gtk_orientable_set_orientation (GTK_ORIENTABLE(toolBar), orientation);
     gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolBar), TRUE);
 
@@ -1226,7 +1192,6 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
 #endif
 
     GtkPositionType pos = (orientation == GTK_ORIENTATION_HORIZONTAL) ? GTK_POS_LEFT : GTK_POS_TOP;
-    GtkHandleBox* handleBox = 0;
 
     if (GTK_IS_BIN(toolbox)) {
 #if DUMP_DETAILS
@@ -1275,9 +1240,6 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
                         if (GTK_IS_TOOLBAR(child2)) {
                             GtkToolbar* childBar = GTK_TOOLBAR(child2);
                             gtk_orientable_set_orientation(GTK_ORIENTABLE(childBar), orientation);
-                            if (GTK_IS_HANDLE_BOX(toolbox)) {
-                                handleBox = GTK_HANDLE_BOX(toolbox);
-                            }
                         } else {
                             g_message("need to add dynamic switch");
                         }
@@ -1285,24 +1247,13 @@ void ToolboxFactory::setOrientation(GtkWidget* toolbox, GtkOrientation orientati
                     g_list_free(children);
                 } else {
                     // The call is being made before the toolbox proper has been setup.
-                    if (GTK_IS_HANDLE_BOX(toolbox)) {
-                        handleBox = GTK_HANDLE_BOX(toolbox);
-                    } else {
-                        g_object_set_data(G_OBJECT(toolbox), HANDLE_POS_MARK, GINT_TO_POINTER(pos));
-                    }
+                    g_object_set_data(G_OBJECT(toolbox), HANDLE_POS_MARK, GINT_TO_POINTER(pos));
                 }
             } else if (GTK_IS_TOOLBAR(child)) {
                 GtkToolbar* toolbar = GTK_TOOLBAR(child);
                 gtk_orientable_set_orientation( GTK_ORIENTABLE(toolbar), orientation );
-                if (GTK_IS_HANDLE_BOX(toolbox)) {
-                    handleBox = GTK_HANDLE_BOX(toolbox);
-                }
             }
         }
-    }
-
-    if (handleBox) {
-        gtk_handle_box_set_handle_position(handleBox, pos);
     }
 }
 

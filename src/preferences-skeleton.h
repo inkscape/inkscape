@@ -369,7 +369,6 @@ static char const preferences_skeleton[] =
 "    </group>\n"
 "    <group id=\"workarounds\"\n"
 "           colorsontop=\"0\"\n"
-"           floatallowed=\"0\"\n"
 "           partialdynamic=\"0\"/>\n"
 "  </group>\n"
 "\n"
