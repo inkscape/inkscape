@@ -45,8 +45,8 @@ namespace Dialogs {
 GuidelinePropertiesDialog::GuidelinePropertiesDialog(SPGuide *guide, SPDesktop *desktop)
 : _desktop(desktop), _guide(guide),
   _relative_toggle(_("Rela_tive change"), _("Move and/or rotate the guide relative to current settings")),
-  _spin_button_x(_("_X:"), "", UNIT_TYPE_LINEAR, "", "", &_unit_menu),
-  _spin_button_y(_("_Y:"), "", UNIT_TYPE_LINEAR, "", "", &_unit_menu),
+  _spin_button_x(C_("Guides", "_X:"), "", UNIT_TYPE_LINEAR, "", "", &_unit_menu),
+  _spin_button_y(C_("Guides", "_Y:"), "", UNIT_TYPE_LINEAR, "", "", &_unit_menu),
   _label_entry(_("_Label:"), _("Optionally give this guideline a name")),
   _spin_angle(_("_Angle:"), "", UNIT_TYPE_RADIAL),
   _mode(true), _oldpos(0.,0.), _oldangle(0.0)
