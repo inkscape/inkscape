@@ -573,45 +573,20 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
         lbl->set_alignment(Gtk::ALIGN_START, Gtk::ALIGN_CENTER);
         widget = lbl;
     } else {
-//         Glib::ustring blank("          ");
-//         if ( size == Inkscape::ICON_SIZE_MENU || size == Inkscape::ICON_SIZE_DECORATION ) {
-//             blank = " ";
-//         }
-
         GtkWidget* eekWidget = eek_preview_new();
         EekPreview * preview = EEK_PREVIEW(eekWidget);
         Gtk::Widget* newBlot = Glib::wrap(eekWidget);
-
         _regenPreview(preview);
 
-        eek_preview_set_details( preview, (::PreviewStyle)style, (::ViewType)view, (::PreviewSize)size, ratio, border );
+        eek_preview_set_details( preview, 
+                                 (::ViewType)view,
+                                 (::PreviewSize)size,
+                                 ratio,
+                                 border );
 
         def.addCallback( _colorDefChanged, this );
-
-        GValue val = {0, {{0}, {0}}};
-        g_value_init( &val, G_TYPE_BOOLEAN );
-        g_value_set_boolean( &val, FALSE );
-        g_object_set_property( G_OBJECT(preview), "focus-on-click", &val );
-
-/*
-        Gtk::Button *btn = new Gtk::Button(blank);
-        Gdk::Color color;
-        color.set_rgb((_r << 8)|_r, (_g << 8)|_g, (_b << 8)|_b);
-        btn->modify_bg(Gtk::STATE_NORMAL, color);
-        btn->modify_bg(Gtk::STATE_ACTIVE, color);
-        btn->modify_bg(Gtk::STATE_PRELIGHT, color);
-        btn->modify_bg(Gtk::STATE_SELECTED, color);
-
-        Gtk::Widget* newBlot = btn;
-*/
-
+        eek_preview_set_focus_on_click(preview, FALSE);
         newBlot->set_tooltip_text(def.descr);
-
-/*
-        newBlot->signal_clicked().connect( sigc::mem_fun(*this, &ColorItem::buttonClicked) );
-
-        sigc::signal<void> type_signal_something;
-*/
 
         g_signal_connect( G_OBJECT(newBlot->gobj()),
                           "clicked",
@@ -673,26 +648,6 @@ Gtk::Widget* ColorItem::getPreview(PreviewStyle style, ViewType view, ::PreviewS
                           "leave-notify-event",
                           G_CALLBACK(handleLeaveNotify),
                           this);
-
-//         g_signal_connect( G_OBJECT(newBlot->gobj()),
-//                           "drag-drop",
-//                           G_CALLBACK(dragDropColorData),
-//                           this);
-
-        if ( def.isEditable() )
-        {
-//             gtk_drag_dest_set( GTK_WIDGET(newBlot->gobj()),
-//                                GTK_DEST_DEFAULT_ALL,
-//                                destColorTargets,
-//                                G_N_ELEMENTS(destColorTargets),
-//                                GdkDragAction(GDK_ACTION_COPY | GDK_ACTION_MOVE) );
-
-
-//             g_signal_connect( G_OBJECT(newBlot->gobj()),
-//                               "drag-data-received",
-//                               G_CALLBACK(_dropDataIn),
-//                               this );
-        }
 
         g_signal_connect( G_OBJECT(newBlot->gobj()),
                           "destroy",
