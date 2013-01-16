@@ -22,6 +22,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 """
 # standard library
 import sys
+# local library
+from run_command import run
+import inkex
+
+inkex.localize()
+
+cmd = None
+
 try:
     from subprocess import Popen, PIPE
     p = Popen('uniconvertor', shell=True, stdout=PIPE, stderr=PIPE).wait()
@@ -37,13 +45,6 @@ except ImportError:
     if p!=32512 : cmd = 'uniconv'
     p = Popen3('uniconvertor', True).wait()
     if p!=32512 : cmd = 'uniconvertor'
-# local library
-from run_command import run
-import inkex
-
-cmd = None
-
-inkex.localize()
 
 if cmd == None:
     # there's no succeffully-returning uniconv command; try to get the module directly (on Windows)
