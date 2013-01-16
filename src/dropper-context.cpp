@@ -50,6 +50,23 @@
 
 using Inkscape::DocumentUndo;
 
+typedef struct
+{
+    double        R;
+    double        G;
+    double        B;
+    double        alpha;
+
+    unsigned int  dragging : 1;
+    
+    SPCanvasItem *grabbed;
+    SPCanvasItem *area;
+    Geom::Point   centre;
+} SPDropperContextPrivate;
+
+#define SP_DROPPER_CONTEXT_GET_PRIVATE(dc) \
+    G_TYPE_INSTANCE_GET_PRIVATE(dc, SP_TYPE_DROPPER_CONTEXT, SPDropperContextPrivate)
+
 static void sp_dropper_context_class_init(SPDropperContextClass *klass);
 static void sp_dropper_context_init(SPDropperContext *dc);
 
@@ -63,34 +80,21 @@ static SPEventContextClass *parent_class;
 static GdkCursor *cursor_dropper_fill = NULL;
 static GdkCursor *cursor_dropper_stroke = NULL;
 
-GType sp_dropper_context_get_type()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPDropperContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_dropper_context_class_init,
-            NULL, NULL,
-            sizeof(SPDropperContext),
-            4,
-            (GInstanceInitFunc) sp_dropper_context_init,
-            NULL,	/* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPDropperContext", &info, (GTypeFlags) 0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPDropperContext, sp_dropper_context, SP_TYPE_EVENT_CONTEXT);
 
-static void sp_dropper_context_class_init(SPDropperContextClass *klass)
+static void
+sp_dropper_context_class_init(SPDropperContextClass *klass)
 {
-    SPEventContextClass *ec_class = SP_EVENT_CONTEXT_CLASS(klass);
+    GObjectClass        *object_class = G_OBJECT_CLASS (klass);
+    SPEventContextClass *ec_class     = SP_EVENT_CONTEXT_CLASS(klass);
 
     parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     ec_class->setup = sp_dropper_context_setup;
     ec_class->finish = sp_dropper_context_finish;
     ec_class->root_handler = sp_dropper_context_root_handler;
+    
+    g_type_class_add_private(object_class, sizeof(SPDropperContext));
 }
 
 static void sp_dropper_context_init(SPDropperContext *dc)
@@ -105,9 +109,11 @@ static void sp_dropper_context_init(SPDropperContext *dc)
 
 }
 
-static void sp_dropper_context_setup(SPEventContext *ec)
+static void
+sp_dropper_context_setup(SPEventContext *ec)
 {
-    SPDropperContext *dc = SP_DROPPER_CONTEXT(ec);
+    SPDropperContext        *dc   = SP_DROPPER_CONTEXT(ec);
+    SPDropperContextPrivate *priv = SP_DROPPER_CONTEXT_GET_PRIVATE(dc);
 
     if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup) {
         (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
@@ -122,11 +128,11 @@ static void sp_dropper_context_setup(SPEventContext *ec)
     c->curveto(1, -C1, C1, -1, 0, -1 );
     c->curveto(-C1, -1, -1, -C1, -1, 0 );
     c->closepath();
-    dc->area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
+    priv->area = sp_canvas_bpath_new(sp_desktop_controls(ec->desktop), c);
     c->unref();
-    sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(dc->area), 0x00000000,(SPWindRule)0);
-    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(dc->area), 0x0000007f, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
-    sp_canvas_item_hide(dc->area);
+    sp_canvas_bpath_set_fill(SP_CANVAS_BPATH(priv->area), 0x00000000,(SPWindRule)0);
+    sp_canvas_bpath_set_stroke(SP_CANVAS_BPATH(priv->area), 0x0000007f, 1.0, SP_STROKE_LINEJOIN_MITER, SP_STROKE_LINECAP_BUTT);
+    sp_canvas_item_hide(priv->area);
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     if (prefs->getBool("/tools/dropper/selcue")) {
@@ -138,20 +144,22 @@ static void sp_dropper_context_setup(SPEventContext *ec)
     }
 }
 
-static void sp_dropper_context_finish(SPEventContext *ec)
+static void
+sp_dropper_context_finish(SPEventContext *ec)
 {
-    SPDropperContext *dc = SP_DROPPER_CONTEXT(ec);
+    SPDropperContext        *dc   = SP_DROPPER_CONTEXT(ec);
+    SPDropperContextPrivate *priv = SP_DROPPER_CONTEXT_GET_PRIVATE(dc);
 
     ec->enableGrDrag(false);
 	
-    if (dc->grabbed) {
-        sp_canvas_item_ungrab(dc->grabbed, GDK_CURRENT_TIME);
-        dc->grabbed = NULL;
+    if (priv->grabbed) {
+        sp_canvas_item_ungrab(priv->grabbed, GDK_CURRENT_TIME);
+        priv->grabbed = NULL;
     }
 
-    if (dc->area) {
-        sp_canvas_item_destroy(dc->area);
-        dc->area = NULL;
+    if (priv->area) {
+        sp_canvas_item_destroy(priv->area);
+        priv->area = NULL;
     }
 
     if (cursor_dropper_fill) {
@@ -176,30 +184,38 @@ static void sp_dropper_context_finish(SPEventContext *ec)
 
 }
 
-
 /**
  * Returns the current dropper context color.
  */
-guint32 sp_dropper_context_get_color(SPEventContext *ec)
+guint32
+sp_dropper_context_get_color(SPEventContext *ec)
 {
-    SPDropperContext *dc = SP_DROPPER_CONTEXT(ec);
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    SPDropperContext        *dc    = SP_DROPPER_CONTEXT(ec);
+    SPDropperContextPrivate *priv  = SP_DROPPER_CONTEXT_GET_PRIVATE(dc);
+    Inkscape::Preferences   *prefs = Inkscape::Preferences::get();
 
     int pick = prefs->getInt("/tools/dropper/pick",
-                                       SP_DROPPER_PICK_VISIBLE);
+                             SP_DROPPER_PICK_VISIBLE);
+
     bool setalpha = prefs->getBool("/tools/dropper/setalpha", true);
 
-    return SP_RGBA32_F_COMPOSE(dc->R, dc->G, dc->B,
-        (pick == SP_DROPPER_PICK_ACTUAL && setalpha) ? dc->alpha : 1.0);
+    return SP_RGBA32_F_COMPOSE(priv->R,
+                               priv->G,
+                               priv->B,
+                               (pick == SP_DROPPER_PICK_ACTUAL && setalpha) ? priv->alpha 
+                                                                              : 1.0);
 }
 
-
-static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEvent *event)
+static gint
+sp_dropper_context_root_handler(SPEventContext *event_context,
+                                GdkEvent       *event)
 {
-    SPDropperContext *dc = SP_DROPPER_CONTEXT(event_context);
+    SPDropperContext        *dc      = SP_DROPPER_CONTEXT(event_context);
+    SPDropperContextPrivate *priv    = SP_DROPPER_CONTEXT_GET_PRIVATE(dc);
+    SPDesktop               *desktop = event_context->desktop;
+    Inkscape::Preferences   *prefs   = Inkscape::Preferences::get();
+
     int ret = FALSE;
-    SPDesktop *desktop = event_context->desktop;
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     int pick = prefs->getInt("/tools/dropper/pick", SP_DROPPER_PICK_VISIBLE);
     bool setalpha = prefs->getBool("/tools/dropper/setalpha", true);
@@ -207,15 +223,15 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
     switch (event->type) {
 	case GDK_BUTTON_PRESS:
             if (event->button.button == 1 && !event_context->space_panning) {
-                dc->centre = Geom::Point(event->button.x, event->button.y);
-                dc->dragging = TRUE;
+                priv->centre = Geom::Point(event->button.x, event->button.y);
+                priv->dragging = TRUE;
                 ret = TRUE;
             }
 			
 			sp_canvas_item_grab(SP_CANVAS_ITEM(desktop->acetate),
 								GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK,
 								NULL, event->button.time);
-			dc->grabbed = SP_CANVAS_ITEM(desktop->acetate);
+			priv->grabbed = SP_CANVAS_ITEM(desktop->acetate);
 
             break;
 	case GDK_MOTION_NOTIFY:
@@ -236,25 +252,25 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                 double rw = 0.0;
                 double R(0), G(0), B(0), A(0);
 
-                if (dc->dragging) {
+                if (priv->dragging) {
                     // calculate average
 
                     // radius
-                    rw = std::min(Geom::L2(Geom::Point(event->button.x, event->button.y) - dc->centre), 400.0);
+                    rw = std::min(Geom::L2(Geom::Point(event->button.x, event->button.y) - priv->centre), 400.0);
 
                     if (rw == 0) { // happens sometimes, little idea why...
                         break;
                     }
 
-                    Geom::Point const cd = desktop->w2d(dc->centre);
+                    Geom::Point const cd = desktop->w2d(priv->centre);
                     Geom::Affine const w2dt = desktop->w2d();
                     const double scale = rw * w2dt.descrim();
                     Geom::Affine const sm( Geom::Scale(scale, scale) * Geom::Translate(cd) );
-                    sp_canvas_item_affine_absolute(dc->area, sm);
-                    sp_canvas_item_show(dc->area);
+                    sp_canvas_item_affine_absolute(priv->area, sm);
+                    sp_canvas_item_show(priv->area);
 
                     /* Get buffer */
-                    Geom::Rect r(dc->centre, dc->centre);
+                    Geom::Rect r(priv->centre, priv->centre);
                     r.expandBy(rw);
                     if (!r.hasZeroArea()) {
                         Geom::IntRect area = r.roundOutwards();
@@ -293,13 +309,13 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                 }
 
                 // remember color
-                dc->R = R;
-                dc->G = G;
-                dc->B = B;
-                dc->alpha = A;
+                priv->R = R;
+                priv->G = G;
+                priv->B = B;
+                priv->alpha = A;
 
                 // status message
-                double alpha_to_set = setalpha? dc->alpha : 1.0;
+                double alpha_to_set = setalpha? priv->alpha : 1.0;
                 guint32 c32 = SP_RGBA32_F_COMPOSE(R, G, B, alpha_to_set);
 
                 gchar c[64];
@@ -309,9 +325,9 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                 // locale-sensitive printf is OK, since this goes to the UI, not into SVG
                 gchar *alpha = g_strdup_printf(_(" alpha %.3g"), alpha_to_set);
                 // where the color is picked, to show in the statusbar
-                gchar *where = dc->dragging ? g_strdup_printf(_(", averaged with radius %d"), (int) rw) : g_strdup_printf(_(" under cursor"));
+                gchar *where = priv->dragging ? g_strdup_printf(_(", averaged with radius %d"), (int) rw) : g_strdup_printf(_(" under cursor"));
                 // message, to show in the statusbar
-                const gchar *message = dc->dragging ? _("<b>Release mouse</b> to set color.") : _("<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard");
+                const gchar *message = priv->dragging ? _("<b>Release mouse</b> to set color.") : _("<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard");
                 event_context->defaultMessageContext()->setF(
                     Inkscape::NORMAL_MESSAGE,
                     "<b>%s%s</b>%s. %s", c,
@@ -328,15 +344,15 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
 	case GDK_BUTTON_RELEASE:
             if (event->button.button == 1 && !event_context->space_panning)
             {
-                sp_canvas_item_hide(dc->area);
-                dc->dragging = FALSE;
+                sp_canvas_item_hide(priv->area);
+                priv->dragging = FALSE;
 				
-				if (dc->grabbed) {
-					sp_canvas_item_ungrab(dc->grabbed, event->button.time);
-					dc->grabbed = NULL;
+				if (priv->grabbed) {
+					sp_canvas_item_ungrab(priv->grabbed, event->button.time);
+					priv->grabbed = NULL;
 				}
 
-                double alpha_to_set = setalpha? dc->alpha : 1.0;
+                double alpha_to_set = setalpha? priv->alpha : 1.0;
 
                 bool fill = !(event->button.state & GDK_SHIFT_MASK); // Stroke if Shift key held
                 if (prefs->getBool("/tools/dropper/onetimepick", false)) {
@@ -347,7 +363,7 @@ static gint sp_dropper_context_root_handler(SPEventContext *event_context, GdkEv
                 // do the actual color setting
                 sp_desktop_set_color(desktop,
                                      (event->button.state & GDK_MOD1_MASK)?
-                                     ColorRGBA(1 - dc->R, 1 - dc->G, 1 - dc->B, alpha_to_set) : ColorRGBA(dc->R, dc->G, dc->B, alpha_to_set),
+                                     ColorRGBA(1 - priv->R, 1 - priv->G, 1 - priv->B, alpha_to_set) : ColorRGBA(priv->R, priv->G, priv->B, alpha_to_set),
                                      false,  fill);
 
                 // REJON: set aux. toolbar input to hex color!
