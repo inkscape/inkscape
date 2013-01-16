@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-01-13 10:55+0100\n"
-"PO-Revision-Date: 2013-01-15 07:49+0100\n"
+"POT-Creation-Date: 2013-01-15 09:14+0100\n"
+"PO-Revision-Date: 2013-01-16 10:11+0100\n"
 "Last-Translator: Uwe Schoeler <mail@uwe-schoeler.de>\n"
 "Language-Team:  <de@li.org>\n"
 "Language: de\n"
@@ -3405,11 +3405,11 @@ msgstr "Führungslinie löschen"
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Führungslinie</b>: %s"
 
-#: ../src/desktop.cpp:894
+#: ../src/desktop.cpp:908
 msgid "No previous zoom."
 msgstr "Kein vorheriger Zoomfaktor."
 
-#: ../src/desktop.cpp:915
+#: ../src/desktop.cpp:929
 msgid "No next zoom."
 msgstr "Kein nächster Zoomfaktor."
 
@@ -4253,9 +4253,9 @@ msgid "_Height:"
 msgstr "_Höhe:"
 
 #: ../src/ui/dialog/export.cpp:260
-#: ../src/ui/dialog/inkscape-preferences.cpp:1385
-#: ../src/ui/dialog/inkscape-preferences.cpp:1388
-#: ../src/ui/dialog/inkscape-preferences.cpp:1397
+#: ../src/ui/dialog/inkscape-preferences.cpp:1384
+#: ../src/ui/dialog/inkscape-preferences.cpp:1387
+#: ../src/ui/dialog/inkscape-preferences.cpp:1396
 msgid "dpi"
 msgstr "dpi"
 
@@ -8480,9 +8480,9 @@ msgstr "Umbrechen"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:490
 #: ../src/ui/dialog/inkscape-preferences.cpp:332
 #: ../src/ui/dialog/inkscape-preferences.cpp:623
-#: ../src/ui/dialog/inkscape-preferences.cpp:1215
-#: ../src/ui/dialog/inkscape-preferences.cpp:1372
-#: ../src/ui/dialog/inkscape-preferences.cpp:1753
+#: ../src/ui/dialog/inkscape-preferences.cpp:1214
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
+#: ../src/ui/dialog/inkscape-preferences.cpp:1752
 #: ../src/ui/dialog/input.cpp:693 ../src/ui/dialog/input.cpp:694
 #: ../src/ui/dialog/input.cpp:1485 ../src/ui/dialog/input.cpp:1539
 #: ../src/verbs.cpp:2300 ../src/widgets/gradient-toolbar.cpp:1128
@@ -8897,7 +8897,7 @@ msgstr "Px"
 msgid "Percent"
 msgstr "Prozent"
 
-#: ../src/helper/units.cpp:42 ../src/ui/dialog/inkscape-preferences.cpp:1225
+#: ../src/helper/units.cpp:42 ../src/ui/dialog/inkscape-preferences.cpp:1224
 msgid "%"
 msgstr "%"
 
@@ -9518,7 +9518,7 @@ msgid "The index of the current page"
 msgstr "Aktuelle Seitenzahl"
 
 #: ../src/libgdl/gdl-dock-object.c:125
-#: ../src/ui/dialog/inkscape-preferences.cpp:1432
+#: ../src/ui/dialog/inkscape-preferences.cpp:1431
 #: ../src/ui/widget/page-sizer.cpp:260
 #: ../src/widgets/gradient-selector.cpp:156
 #: ../src/widgets/sp-xmlview-attr-list.cpp:54
@@ -9745,7 +9745,7 @@ msgstr "Y-Koordinate eines schwebenden Docks"
 msgid "Dock #%d"
 msgstr "Andocken #%d"
 
-#: ../src/libnrtype/FontFactory.cpp:903
+#: ../src/libnrtype/FontFactory.cpp:909
 msgid "Ignoring font without family that will crash Pango"
 msgstr ""
 "Schrift ohne zugehörige Schriftfamilie wird ignoriert, damit Pango nicht "
@@ -11088,7 +11088,7 @@ msgid "The ID of the object to export"
 msgstr "Kennung des zu exportierenden Objektes"
 
 #: ../src/main.cpp:335 ../src/main.cpp:433
-#: ../src/ui/dialog/inkscape-preferences.cpp:1435
+#: ../src/ui/dialog/inkscape-preferences.cpp:1434
 msgid "ID"
 msgstr "Kennung"
 
@@ -11856,7 +11856,7 @@ msgstr "Beziehung:"
 msgid "Unique URI to a related document"
 msgstr "Eindeutige URI zu einem verwandten Dokument."
 
-#: ../src/rdf.cpp:264 ../src/ui/dialog/inkscape-preferences.cpp:1773
+#: ../src/rdf.cpp:264 ../src/ui/dialog/inkscape-preferences.cpp:1772
 msgid "Language:"
 msgstr "Sprache:"
 
@@ -16507,14 +16507,14 @@ msgid "Move and/or rotate the guide relative to current settings"
 msgstr "Führungslinie relativ zur aktuellen Position verschieben/rotieren"
 
 #: ../src/ui/dialog/guides.cpp:48
+msgctxt "Guides"
 msgid "_X:"
-msgstr "X:"
+msgstr "_X: [Führungslinien]"
 
-#: ../src/ui/dialog/guides.cpp:49 ../src/widgets/sp-color-icc-selector.cpp:217
-#: ../src/widgets/sp-color-icc-selector.cpp:218
-#: ../src/widgets/sp-color-scales.cpp:488
+#: ../src/ui/dialog/guides.cpp:49
+msgctxt "Guides"
 msgid "_Y:"
-msgstr "Y:"
+msgstr "_Y: [Führungslinien]"
 
 #: ../src/ui/dialog/guides.cpp:50 ../src/ui/dialog/object-properties.cpp:55
 msgid "_Label:"
@@ -17813,12 +17813,8 @@ msgid "_Grab sensitivity:"
 msgstr "Anfass-Empfindlichkeit:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:815
-#: ../src/ui/dialog/inkscape-preferences.cpp:818
-#: ../src/ui/dialog/inkscape-preferences.cpp:1150
-#: ../src/ui/dialog/inkscape-preferences.cpp:1154
-#: ../src/ui/dialog/inkscape-preferences.cpp:1164
-msgid "pixels"
-msgstr "Pixel"
+msgid "pixels (requires restart)"
+msgstr "Pixel (erfordert Neustart)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:816
 msgid ""
@@ -17831,6 +17827,13 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:818
 msgid "_Click/drag threshold:"
 msgstr "Schwellwert für Klicken/Ziehen:"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:818
+#: ../src/ui/dialog/inkscape-preferences.cpp:1149
+#: ../src/ui/dialog/inkscape-preferences.cpp:1153
+#: ../src/ui/dialog/inkscape-preferences.cpp:1163
+msgid "pixels"
+msgstr "Pixel"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:819
 msgid ""
@@ -18333,7 +18336,7 @@ msgstr ""
 "Objekt"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1090
-#: ../src/ui/dialog/inkscape-preferences.cpp:1301
+#: ../src/ui/dialog/inkscape-preferences.cpp:1300
 msgid "Update marker color when object color changes"
 msgstr "Aktualisiert die Markierungsfarbe, wenn das Objekt die Farbe ändert"
 
@@ -18362,44 +18365,7 @@ msgstr "Gesperrte Objekte und Ebenen ignorieren"
 msgid "Deselect upon layer change"
 msgstr "Auswahl bei Ebenenwechsel aufheben"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1100
-msgid "Ctrl+A, Tab, Shift+Tab"
-msgstr "Strg+A, Tabulator, Umschalt+Tabulator:"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1102
-msgid "Make keyboard selection commands work on objects in all layers"
-msgstr "Tastaturkommandos zur Auswahl wirken auf Objekte aller Ebenen"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1104
-msgid "Make keyboard selection commands work on objects in current layer only"
-msgstr ""
-"Tastaturkommandos zur Auswahl wirken nur auf Objekte in der aktuellen Ebene"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1106
-msgid ""
-"Make keyboard selection commands work on objects in current layer and all "
-"its sublayers"
-msgstr ""
-"Tastaturkommandos zur Auswahl wirken auf Objekte in der aktuellen Ebene und "
-"aller ihrer Unterebenen"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1108
-msgid ""
-"Uncheck this to be able to select objects that are hidden (either by "
-"themselves or by being in a hidden layer)"
-msgstr ""
-"Dieses abwählen, damit ausgeblendete Objekte ausgewählt werden können (gilt "
-"auch für Objekte in ausgeblendeten Ebenen/Gruppierungen)"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1110
-msgid ""
-"Uncheck this to be able to select objects that are locked (either by "
-"themselves or by being in a locked layer)"
-msgstr ""
-"Dieses abwählen damit gesperrte Objekte ausgewählt werden können (gilt auch "
-"für Objekte in gesperrten Ebenen/Gruppierungen)"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1113
+#: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid ""
 "Uncheck this to be able to keep the current objects selected when the "
 "current layer changes"
@@ -18407,81 +18373,118 @@ msgstr ""
 "Dieses abwählen um Objekte ausgewählt zu lassen, wenn die aktuelle Ebene "
 "geändert wird"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+#: ../src/ui/dialog/inkscape-preferences.cpp:1103
+msgid "Ctrl+A, Tab, Shift+Tab"
+msgstr "Strg+A, Tabulator, Umschalt+Tabulator:"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1105
+msgid "Make keyboard selection commands work on objects in all layers"
+msgstr "Tastaturkommandos zur Auswahl wirken auf Objekte aller Ebenen"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1107
+msgid "Make keyboard selection commands work on objects in current layer only"
+msgstr ""
+"Tastaturkommandos zur Auswahl wirken nur auf Objekte in der aktuellen Ebene"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1109
+msgid ""
+"Make keyboard selection commands work on objects in current layer and all "
+"its sublayers"
+msgstr ""
+"Tastaturkommandos zur Auswahl wirken auf Objekte in der aktuellen Ebene und "
+"aller ihrer Unterebenen"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1111
+msgid ""
+"Uncheck this to be able to select objects that are hidden (either by "
+"themselves or by being in a hidden layer)"
+msgstr ""
+"Dieses abwählen, damit ausgeblendete Objekte ausgewählt werden können (gilt "
+"auch für Objekte in ausgeblendeten Ebenen/Gruppierungen)"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1113
+msgid ""
+"Uncheck this to be able to select objects that are locked (either by "
+"themselves or by being in a locked layer)"
+msgstr ""
+"Dieses abwählen damit gesperrte Objekte ausgewählt werden können (gilt auch "
+"für Objekte in gesperrten Ebenen/Gruppierungen)"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1115
 msgid "Wrap when cycling objects in z-order"
 msgstr "Beim drehen von Objekten in Z-Ordnung einwickeln."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1117
 msgid "Alt+Scroll Wheel"
 msgstr "Alt+Scroll-Rad"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1119
 msgid "Wrap around at start and end when cycling objects in z-order"
 msgstr ""
 "Beim drehen von Objekten in Z-Ordnung um den Start- und Endpunkt einwickeln."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1121
 msgid "Selecting"
 msgstr "Auswählen"
 
 #. Transforms options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1125
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 #: ../src/widgets/select-toolbar.cpp:572
 msgid "Scale stroke width"
 msgstr "Breite der Kontur skalieren"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1126
+#: ../src/ui/dialog/inkscape-preferences.cpp:1125
 msgid "Scale rounded corners in rectangles"
 msgstr "Abgerundete Ecken in Rechtecken mitskalieren"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1127
+#: ../src/ui/dialog/inkscape-preferences.cpp:1126
 msgid "Transform gradients"
 msgstr "Farbverläufe transformieren"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1128
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "Transform patterns"
 msgstr "Füllmuster transformieren"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1129
+#: ../src/ui/dialog/inkscape-preferences.cpp:1128
 msgid "Optimized"
 msgstr "Optimiert"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1130
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid "Preserved"
 msgstr "Beibehalten"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1133
+#: ../src/ui/dialog/inkscape-preferences.cpp:1132
 #: ../src/widgets/select-toolbar.cpp:573
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr ""
 "Wenn Objekte skaliert werden, dann wird die Breite der Kontur ebenso "
 "skaliert."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1135
+#: ../src/ui/dialog/inkscape-preferences.cpp:1134
 #: ../src/widgets/select-toolbar.cpp:584
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr ""
 "Wenn Rechtecke skaliert werden, dann werden die Radien von abgerundeten "
 "Ecken ebenso mitskaliert."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1137
+#: ../src/ui/dialog/inkscape-preferences.cpp:1136
 #: ../src/widgets/select-toolbar.cpp:595
 msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr ""
 "Farbverläufe (in Füllung oder Konturen) zusammen mit den Objekten "
 "transformieren"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1139
+#: ../src/ui/dialog/inkscape-preferences.cpp:1138
 #: ../src/widgets/select-toolbar.cpp:606
 msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr ""
 "Muster (in Füllung oder Konturen) zusammen mit den Objekten transformieren"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1140
+#: ../src/ui/dialog/inkscape-preferences.cpp:1139
 msgid "Store transformation"
 msgstr "Transformation speichern:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1141
 msgid ""
 "If possible, apply transformation to objects without adding a transform= "
 "attribute"
@@ -18489,19 +18492,19 @@ msgstr ""
 "Wenn möglich, dann werden Transformationen auf Objekte angewendet, ohne ein "
 "transform=-Attribut hinzuzufügen."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1144
+#: ../src/ui/dialog/inkscape-preferences.cpp:1143
 msgid "Always store transformation as a transform= attribute on objects"
 msgstr "Transformationen immer als transform=-Attribute speichern."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1145
 msgid "Transforms"
 msgstr "Transformationen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1150
+#: ../src/ui/dialog/inkscape-preferences.cpp:1149
 msgid "Mouse _wheel scrolls by:"
 msgstr "Mausrad rollt um:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1150
 msgid ""
 "One mouse wheel notch scrolls by this distance in screen pixels "
 "(horizontally with Shift)"
@@ -18509,23 +18512,23 @@ msgstr ""
 "Eine Stufe des Maus-Rades rollt um die angegebene Distanz in Pixeln "
 "(horizontal mit Umschalttaste)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1152
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "Ctrl+arrows"
 msgstr "Strg+Pfeile"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1154
+#: ../src/ui/dialog/inkscape-preferences.cpp:1153
 msgid "Sc_roll by:"
 msgstr "Rolle um:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1155
+#: ../src/ui/dialog/inkscape-preferences.cpp:1154
 msgid "Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"
 msgstr "Strg+Pfeiltasten rollen um diese Distanz (in Pixeln)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1157
+#: ../src/ui/dialog/inkscape-preferences.cpp:1156
 msgid "_Acceleration:"
 msgstr "Beschleunigung:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1158
+#: ../src/ui/dialog/inkscape-preferences.cpp:1157
 msgid ""
 "Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no "
 "acceleration)"
@@ -18533,15 +18536,15 @@ msgstr ""
 "Drücken von Strg+Pfeiltaste erhöht zunehmend die Rollgeschwindigkeit (0 "
 "bedeutet »keine Beschleunigung«)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1159
+#: ../src/ui/dialog/inkscape-preferences.cpp:1158
 msgid "Autoscrolling"
 msgstr "Automatisches Rollen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1161
+#: ../src/ui/dialog/inkscape-preferences.cpp:1160
 msgid "_Speed:"
 msgstr "Geschwindigkeit:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1162
+#: ../src/ui/dialog/inkscape-preferences.cpp:1161
 msgid ""
 "How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn "
 "autoscroll off)"
@@ -18549,12 +18552,12 @@ msgstr ""
 "Geschwindigkeit mit der die Arbeitsfläche verschoben wird, wenn der Zeiger "
 "ihren Rand überschreitet (0: Autorollen ist deaktiviert)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1164
+#: ../src/ui/dialog/inkscape-preferences.cpp:1163
 #: ../src/ui/dialog/tracedialog.cpp:521 ../src/ui/dialog/tracedialog.cpp:720
 msgid "_Threshold:"
 msgstr "Schwellwert:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1165
+#: ../src/ui/dialog/inkscape-preferences.cpp:1164
 msgid ""
 "How far (in screen pixels) you need to be from the canvas edge to trigger "
 "autoscroll; positive is outside the canvas, negative is within the canvas"
@@ -18568,11 +18571,11 @@ msgstr ""
 #. _page_scrolling.add_line( false, "", _scroll_space, "",
 #. _("When on, pressing and holding Space and dragging with left mouse button pans canvas (as in Adobe Illustrator); when off, Space temporarily switches to Selector tool (default)"));
 #.
-#: ../src/ui/dialog/inkscape-preferences.cpp:1171
+#: ../src/ui/dialog/inkscape-preferences.cpp:1170
 msgid "Mouse wheel zooms by default"
 msgstr "Standardmäßig zoomt das Mausrad"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1173
+#: ../src/ui/dialog/inkscape-preferences.cpp:1172
 msgid ""
 "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when "
 "off, it zooms with Ctrl and scrolls without Ctrl"
@@ -18580,25 +18583,25 @@ msgstr ""
 "Wenn aktiviert kann mit dem Mausrad die Ansicht vergrößert/verkleinert "
 "werden. Ist dies deaktiviert benötigt man dazu Strg+Mausrad. "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1174
+#: ../src/ui/dialog/inkscape-preferences.cpp:1173
 msgid "Scrolling"
 msgstr "Rollen"
 
 #. Snapping options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1177
+#: ../src/ui/dialog/inkscape-preferences.cpp:1176
 msgid "Enable snap indicator"
 msgstr "Einrast-Indikator aktivieren"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1179
+#: ../src/ui/dialog/inkscape-preferences.cpp:1178
 msgid "After snapping, a symbol is drawn at the point that has snapped"
 msgstr ""
 "Nach dem Einrasten wird ein Symbol an der Stelle, die einrastete, gezeichnet."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1182
+#: ../src/ui/dialog/inkscape-preferences.cpp:1181
 msgid "_Delay (in ms):"
 msgstr "Verzögerung (in msec):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1183
+#: ../src/ui/dialog/inkscape-preferences.cpp:1182
 msgid ""
 "Postpone snapping as long as the mouse is moving, and then wait an "
 "additional fraction of a second. This additional delay is specified here. "
@@ -18608,22 +18611,22 @@ msgstr ""
 "zusätzlichen Sekundenbruchteil. Diese additive Verzögerung wird hier "
 "festgelegt. Ist sie sehr klein, passiert das Einrasten sofort."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1185
+#: ../src/ui/dialog/inkscape-preferences.cpp:1184
 msgid "Only snap the node closest to the pointer"
 msgstr "Nur an dem Knoten einrasten, der dem Zeiger am nähesten ist."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1187
+#: ../src/ui/dialog/inkscape-preferences.cpp:1186
 msgid ""
 "Only try to snap the node that is initially closest to the mouse pointer"
 msgstr ""
 "Nur versuchen an dem Knoten einzurasten, der dem Mauszeiger zu Beginn am "
 "nächsten ist."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1190
+#: ../src/ui/dialog/inkscape-preferences.cpp:1189
 msgid "_Weight factor:"
 msgstr "Gewichtsfaktor:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1191
+#: ../src/ui/dialog/inkscape-preferences.cpp:1190
 msgid ""
 "When multiple snap solutions are found, then Inkscape can either prefer the "
 "closest transformation (when set to 0), or prefer the node that was "
@@ -18633,11 +18636,11 @@ msgstr ""
 "Transformation anwenden (wenn auf 0 gesetzt) oder am Knoten, der dem "
 "Mauszeiger am nähesten ist (wenn auf 1 gesetzt) einrasten."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1193
+#: ../src/ui/dialog/inkscape-preferences.cpp:1192
 msgid "Snap the mouse pointer when dragging a constrained knot"
 msgstr "Rastet den Mauszeiger ein, wenn ein festgesetzter Knoten gezogen wird."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1195
+#: ../src/ui/dialog/inkscape-preferences.cpp:1194
 msgid ""
 "When dragging a knot along a constraint line, then snap the position of the "
 "mouse pointer instead of snapping the projection of the knot onto the "
@@ -18646,16 +18649,16 @@ msgstr ""
 "Wird ein Knoten entlang einer festgesetzten Linie gezogen, dann rastet der "
 "Mauszeiger statt der Projektion des Knotens auf der Linie ein."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1197
+#: ../src/ui/dialog/inkscape-preferences.cpp:1196
 msgid "Snapping"
 msgstr "Einrasten"
 
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:1202
+#: ../src/ui/dialog/inkscape-preferences.cpp:1201
 msgid "_Arrow keys move by:"
 msgstr "Pfeiltasten bewegen um:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1203
+#: ../src/ui/dialog/inkscape-preferences.cpp:1202
 msgid ""
 "Pressing an arrow key moves selected object(s) or node(s) by this distance"
 msgstr ""
@@ -18663,31 +18666,31 @@ msgstr ""
 "Knoten) um diese Entfernung (in SVG-Pixeln)"
 
 #. defaultscale is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:1206
+#: ../src/ui/dialog/inkscape-preferences.cpp:1205
 msgid "> and < _scale by:"
 msgstr "> und < skalieren um:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1207
+#: ../src/ui/dialog/inkscape-preferences.cpp:1206
 msgid "Pressing > or < scales selection up or down by this increment"
 msgstr ""
 "Drücken von > oder < skaliert die ausgewählten Elemente um diesen Wert "
 "größer oder kleiner (in SVG-Pixeln) "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1209
+#: ../src/ui/dialog/inkscape-preferences.cpp:1208
 msgid "_Inset/Outset by:"
 msgstr "Schrumpfen/Erweitern um:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1210
+#: ../src/ui/dialog/inkscape-preferences.cpp:1209
 msgid "Inset and Outset commands displace the path by this distance"
 msgstr ""
 "Schrumpfungs- und Erweiterungsbefehle verändern den Pfad um diese Distanz "
 "(in SVG-Pixeln)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1211
+#: ../src/ui/dialog/inkscape-preferences.cpp:1210
 msgid "Compass-like display of angles"
 msgstr "Anzeige von Winkeln wie bei einem Kompaß"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1213
+#: ../src/ui/dialog/inkscape-preferences.cpp:1212
 msgid ""
 "When on, angles are displayed with 0 at north, 0 to 360 range, positive "
 "clockwise; otherwise with 0 at east, -180 to 180 range, positive "
@@ -18698,15 +18701,15 @@ msgstr ""
 "-180 bis 180, positiv entgegen dem Uhrzeigersinn"
 
 # !!! need %s
-#: ../src/ui/dialog/inkscape-preferences.cpp:1219
+#: ../src/ui/dialog/inkscape-preferences.cpp:1218
 msgid "_Rotation snaps every:"
 msgstr "Rotation rastet ein alle:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1219
+#: ../src/ui/dialog/inkscape-preferences.cpp:1218
 msgid "degrees"
 msgstr "Grad"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1220
+#: ../src/ui/dialog/inkscape-preferences.cpp:1219
 msgid ""
 "Rotating with Ctrl pressed snaps every that much degrees; also, pressing "
 "[ or ] rotates by this amount"
@@ -18714,11 +18717,11 @@ msgstr ""
 "Rotation mit gedrückter Strg-Taste lässt das Objekt mit dieser Gradrastung "
 "einrasten; die Tasten [ oder ] haben den gleichen Effekt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1221
+#: ../src/ui/dialog/inkscape-preferences.cpp:1220
 msgid "Relative snapping of guideline angles"
 msgstr "Relatives Einrasten von Führungslininen-Winkeln"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1223
+#: ../src/ui/dialog/inkscape-preferences.cpp:1222
 msgid ""
 "When on, the snap angles when rotating a guideline will be relative to the "
 "original angle"
@@ -18726,11 +18729,11 @@ msgstr ""
 "Wenn eingeschaltet, wird der Einrastwinkel beim Drehen einer Führungslinie "
 "relativ zum ursprünglichen Winkel"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1225
+#: ../src/ui/dialog/inkscape-preferences.cpp:1224
 msgid "_Zoom in/out by:"
 msgstr "Zoomfaktor vergrößern/verkleinern um:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1226
+#: ../src/ui/dialog/inkscape-preferences.cpp:1225
 msgid ""
 "Zoom tool click, +/- keys, and middle click zoom in and out by this "
 "multiplier"
@@ -18738,45 +18741,45 @@ msgstr ""
 "Mit dem Zoomwerkzeug klicken, die + oder - Taste drücken, oder die mittlere "
 "Maustaste betätigen, damit sich die Zoomgröße um diesen Faktor ändert"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1227
+#: ../src/ui/dialog/inkscape-preferences.cpp:1226
 msgid "Steps"
 msgstr "Schritte"
 
 #. Clones options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1230
+#: ../src/ui/dialog/inkscape-preferences.cpp:1229
 msgid "Move in parallel"
 msgstr "parallel verschoben"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1232
+#: ../src/ui/dialog/inkscape-preferences.cpp:1231
 msgid "Stay unmoved"
 msgstr "unbewegt bleiben"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1233
 msgid "Move according to transform"
 msgstr "sich entsprechend des transform=-Attributs bewegen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1236
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid "Are unlinked"
 msgstr "ihre Verbindung zum Original verlieren"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1238
+#: ../src/ui/dialog/inkscape-preferences.cpp:1237
 msgid "Are deleted"
 msgstr "ebenso gelöscht"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1240
 msgid "Moving original: clones and linked offsets"
 msgstr "Verschiebe Original: Klone und verbundener Versatz"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1242
 msgid "Clones are translated by the same vector as their original"
 msgstr "Klone werden mit demselben Vektor wie das Original verschoben."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1244
 msgid "Clones preserve their positions when their original is moved"
 msgstr ""
 "Klone bleiben an ihren Positionen, während das Original verschoben wird."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1247
+#: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid ""
 "Each clone moves according to the value of its transform= attribute; for "
 "example, a rotated clone will move in a different direction than its original"
@@ -18785,27 +18788,27 @@ msgstr ""
 "Attributs. Ein rotierter Klon wird sich zum Beispiel in eine andere Richtung "
 "als das Original drehen."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1248
+#: ../src/ui/dialog/inkscape-preferences.cpp:1247
 msgid "Deleting original: clones"
 msgstr "Lösche Original: Klone"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1250
+#: ../src/ui/dialog/inkscape-preferences.cpp:1249
 msgid "Orphaned clones are converted to regular objects"
 msgstr "Klone ohne Original werden zu regulären Objekten umgewandelt."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1252
+#: ../src/ui/dialog/inkscape-preferences.cpp:1251
 msgid "Orphaned clones are deleted along with their original"
 msgstr "Klone werden zusammen mit ihrem Original gelöscht."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1254
+#: ../src/ui/dialog/inkscape-preferences.cpp:1253
 msgid "Duplicating original+clones/linked offset"
 msgstr "Duplizieren Original+Klone/verbundener Versatz"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1256
+#: ../src/ui/dialog/inkscape-preferences.cpp:1255
 msgid "Relink duplicated clones"
 msgstr "Duplizierte Klone neu verbinden"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1258
+#: ../src/ui/dialog/inkscape-preferences.cpp:1257
 msgid ""
 "When duplicating a selection containing both a clone and its original "
 "(possibly in groups), relink the duplicated clone to the duplicated original "
@@ -18816,29 +18819,29 @@ msgstr ""
 "den alten Originalen."
 
 #. TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
-#: ../src/ui/dialog/inkscape-preferences.cpp:1261
+#: ../src/ui/dialog/inkscape-preferences.cpp:1260
 msgid "Clones"
 msgstr "Klone"
 
 #. Clip paths and masks options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1264
+#: ../src/ui/dialog/inkscape-preferences.cpp:1263
 msgid "When applying, use the topmost selected object as clippath/mask"
 msgstr ""
 "Verwende das oberste ausgewählte Objekt beim Anwenden als Ausschneidepfad "
 "oder Maskierung"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1266
+#: ../src/ui/dialog/inkscape-preferences.cpp:1265
 msgid ""
 "Uncheck this to use the bottom selected object as the clipping path or mask"
 msgstr ""
 "Nicht auswählen, um das unterste ausgewählte Objekt als Ausschneidepfad oder "
 "Maskierung zu verwenden"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1267
+#: ../src/ui/dialog/inkscape-preferences.cpp:1266
 msgid "Remove clippath/mask object after applying"
 msgstr "Ausschneidepfad oder Maskierungsobjekt nach dem Anwenden entfernen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1269
+#: ../src/ui/dialog/inkscape-preferences.cpp:1268
 msgid ""
 "After applying, remove the object used as the clipping path or mask from the "
 "drawing"
@@ -18846,60 +18849,60 @@ msgstr ""
 "Entferne das Objekt von der Zeichnung, welches als Ausschneidepfad oder "
 "Maskierung verwendet wird, nach dem Anwenden"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1271
+#: ../src/ui/dialog/inkscape-preferences.cpp:1270
 msgid "Before applying"
 msgstr "Vor dem Anwenden:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1273
+#: ../src/ui/dialog/inkscape-preferences.cpp:1272
 msgid "Do not group clipped/masked objects"
 msgstr "Kein Gruppieren ausgeschnittener/maskierter Objekte"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1274
+#: ../src/ui/dialog/inkscape-preferences.cpp:1273
 msgid "Enclose every clipped/masked object in its own group"
 msgstr ""
 "Jedes ausgeschnittene/maskierte Objekt in seiner eigenen Gruppe anlegen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1275
+#: ../src/ui/dialog/inkscape-preferences.cpp:1274
 msgid "Put all clipped/masked objects into one group"
 msgstr ""
 "Alle ausgeschnittenen/maskierten Objekte in einer einzelne Gruppe ablegen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Apply clippath/mask to every object"
 msgstr "Ausschneidungspfad/Maske auf jedes Objekt anwenden"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1280
 msgid "Apply clippath/mask to groups containing single object"
 msgstr ""
 "Ausschneidungspfad/Maske auf Gruppen anwenden, die Einzelobjekte beinhalten"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1284
+#: ../src/ui/dialog/inkscape-preferences.cpp:1283
 msgid "Apply clippath/mask to group containing all objects"
 msgstr ""
 "Ausschneidungspfad/Maske auf Gruppen anwenden, die alle Objekte beinhalten"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1286
+#: ../src/ui/dialog/inkscape-preferences.cpp:1285
 msgid "After releasing"
 msgstr "Nach dem Lösen:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1288
+#: ../src/ui/dialog/inkscape-preferences.cpp:1287
 msgid "Ungroup automatically created groups"
 msgstr "Gruppierung automatisch erstellter Gruppen aufheben"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1290
+#: ../src/ui/dialog/inkscape-preferences.cpp:1289
 msgid "Ungroup groups created when setting clip/mask"
 msgstr "Gruppierung aufheben beim Setzen der Ausschneidung/Maske"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1291
 msgid "Clippaths and masks"
 msgstr "Ausschneidepfade und Maskierungen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1295
+#: ../src/ui/dialog/inkscape-preferences.cpp:1294
 msgid "Stroke Style Markers"
 msgstr "Strich-Stilmarkierungen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1297
-#: ../src/ui/dialog/inkscape-preferences.cpp:1299
+#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1298
 msgid ""
 "Stroke color same as object, fill color either object fill color or marker "
 "fill color"
@@ -18907,35 +18910,35 @@ msgstr ""
 "Konturfarbe wie Objekt, Füllfarbe entweder Objekt-Füllfarbe oder Marker-"
 "Füllfarbe"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1303
+#: ../src/ui/dialog/inkscape-preferences.cpp:1302
 msgid "Markers"
 msgstr "Markierungen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1311
+#: ../src/ui/dialog/inkscape-preferences.cpp:1310
 msgid "Number of _Threads:"
 msgstr "Anzahl der Threads:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1311
-#: ../src/ui/dialog/inkscape-preferences.cpp:1812
+#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1811
 msgid "(requires restart)"
 msgstr "(erfordert Neustart)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1312
+#: ../src/ui/dialog/inkscape-preferences.cpp:1311
 msgid "Configure number of processors/threads to use when rendering filters"
 msgstr ""
 "Konfiguration der Anzahl an Prozessoren/Threads, die für das Rendern genutzt "
 "werden sollen."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1316
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid "Rendering _cache size:"
 msgstr "Rendering-Cachegröße:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1316
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgctxt "mebibyte (2^20 bytes) abbreviation"
 msgid "MiB"
 msgstr "MiB"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1316
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid ""
 "Set the amount of memory per document which can be used to store rendered "
 "parts of the drawing for later reuse; set to zero to disable caching"
@@ -18946,37 +18949,37 @@ msgstr ""
 
 #. blur quality
 #. filter quality
-#: ../src/ui/dialog/inkscape-preferences.cpp:1319
-#: ../src/ui/dialog/inkscape-preferences.cpp:1343
+#: ../src/ui/dialog/inkscape-preferences.cpp:1318
+#: ../src/ui/dialog/inkscape-preferences.cpp:1342
 msgid "Best quality (slowest)"
 msgstr "Beste Qualität (am langsamsten)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1321
-#: ../src/ui/dialog/inkscape-preferences.cpp:1345
+#: ../src/ui/dialog/inkscape-preferences.cpp:1320
+#: ../src/ui/dialog/inkscape-preferences.cpp:1344
 msgid "Better quality (slower)"
 msgstr "Gute Qualität (langsamer)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1323
-#: ../src/ui/dialog/inkscape-preferences.cpp:1347
+#: ../src/ui/dialog/inkscape-preferences.cpp:1322
+#: ../src/ui/dialog/inkscape-preferences.cpp:1346
 msgid "Average quality"
 msgstr "Durchschnittliche Qualität"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1325
-#: ../src/ui/dialog/inkscape-preferences.cpp:1349
+#: ../src/ui/dialog/inkscape-preferences.cpp:1324
+#: ../src/ui/dialog/inkscape-preferences.cpp:1348
 msgid "Lower quality (faster)"
 msgstr "Niedrigere Qualität (schneller)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1327
-#: ../src/ui/dialog/inkscape-preferences.cpp:1351
+#: ../src/ui/dialog/inkscape-preferences.cpp:1326
+#: ../src/ui/dialog/inkscape-preferences.cpp:1350
 msgid "Lowest quality (fastest)"
 msgstr "Niedrigste Qualität (am schnellsten)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1330
+#: ../src/ui/dialog/inkscape-preferences.cpp:1329
 msgid "Gaussian blur quality for display"
 msgstr "Anzeige Qualität des Gaußschen Weichzeichners:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1332
-#: ../src/ui/dialog/inkscape-preferences.cpp:1356
+#: ../src/ui/dialog/inkscape-preferences.cpp:1331
+#: ../src/ui/dialog/inkscape-preferences.cpp:1355
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
@@ -18984,124 +18987,124 @@ msgstr ""
 "Beste Qualität, aber die Anzeige kann bei hohen Zoomstufen sehr langsam sein "
 "(Bitmap-Export verwendet immer diese Einstellung)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1334
-#: ../src/ui/dialog/inkscape-preferences.cpp:1358
+#: ../src/ui/dialog/inkscape-preferences.cpp:1333
+#: ../src/ui/dialog/inkscape-preferences.cpp:1357
 msgid "Better quality, but slower display"
 msgstr "Bessere Qualität, aber langsamere Anzeige"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1336
-#: ../src/ui/dialog/inkscape-preferences.cpp:1360
+#: ../src/ui/dialog/inkscape-preferences.cpp:1335
+#: ../src/ui/dialog/inkscape-preferences.cpp:1359
 msgid "Average quality, acceptable display speed"
 msgstr "Durchschnittliche Qualität, akzeptable Geschwindigkeit der Anzeige"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1338
-#: ../src/ui/dialog/inkscape-preferences.cpp:1362
+#: ../src/ui/dialog/inkscape-preferences.cpp:1337
+#: ../src/ui/dialog/inkscape-preferences.cpp:1361
 msgid "Lower quality (some artifacts), but display is faster"
 msgstr "Niedrigere Qualität (einige Artefakte), aber schnellere Anzeige"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1340
-#: ../src/ui/dialog/inkscape-preferences.cpp:1364
+#: ../src/ui/dialog/inkscape-preferences.cpp:1339
+#: ../src/ui/dialog/inkscape-preferences.cpp:1363
 msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr "Niedrigste Qualität (beträchtliche Artefakte), aber schnellste Anzeige"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1354
+#: ../src/ui/dialog/inkscape-preferences.cpp:1353
 msgid "Filter effects quality for display"
 msgstr "Effekt-Qualität für Anzeige:"
 
 #. build custom preferences tab
-#: ../src/ui/dialog/inkscape-preferences.cpp:1366
+#: ../src/ui/dialog/inkscape-preferences.cpp:1365
 #: ../src/ui/dialog/print.cpp:224
 msgid "Rendering"
 msgstr "Rendern"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1372
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
 msgid "2x2"
 msgstr "2×2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1372
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
 msgid "4x4"
 msgstr "4×4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1372
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
 msgid "8x8"
 msgstr "8×8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1372
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
 msgid "16x16"
 msgstr "16×16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1376
+#: ../src/ui/dialog/inkscape-preferences.cpp:1375
 msgid "Oversample bitmaps:"
 msgstr "Bitmap Überabtastung:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1379
+#: ../src/ui/dialog/inkscape-preferences.cpp:1378
 msgid "Automatically reload bitmaps"
 msgstr "Automatisches Aktualisieren von Bildern"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1381
+#: ../src/ui/dialog/inkscape-preferences.cpp:1380
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr "Bilder neu laden, wenn diese auf dem Datenträger geändert wurden."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1383
+#: ../src/ui/dialog/inkscape-preferences.cpp:1382
 msgid "_Bitmap editor:"
 msgstr "_Bitmap-Editor:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1385
+#: ../src/ui/dialog/inkscape-preferences.cpp:1384
 msgid "Default export _resolution:"
 msgstr "Standard-Exportauflösung:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1386
+#: ../src/ui/dialog/inkscape-preferences.cpp:1385
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr ""
 "Bevorzugte Auflösung der Bitmap (Punkte pro Zoll) im Exportieren-Dialog"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1388
+#: ../src/ui/dialog/inkscape-preferences.cpp:1387
 msgid "Resolution for Create Bitmap _Copy:"
 msgstr "Auflösung von Bitmap Kopien:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1389
+#: ../src/ui/dialog/inkscape-preferences.cpp:1388
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr "Auflösung von Bildern die mit \"Kopiere als Bitmap\" erstellt werden."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1391
+#: ../src/ui/dialog/inkscape-preferences.cpp:1390
 msgid "Always embed"
 msgstr "Immer einbetten"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1391
+#: ../src/ui/dialog/inkscape-preferences.cpp:1390
 msgid "Always link"
 msgstr "Immer verlinken"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1391
+#: ../src/ui/dialog/inkscape-preferences.cpp:1390
 msgid "Ask"
 msgstr "Fragen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1394
+#: ../src/ui/dialog/inkscape-preferences.cpp:1393
 msgid "Bitmap import:"
 msgstr "Bitmap-Import:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1397
+#: ../src/ui/dialog/inkscape-preferences.cpp:1396
 msgid "Default _import resolution:"
 msgstr "Standard-Importauflösung:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1398
+#: ../src/ui/dialog/inkscape-preferences.cpp:1397
 msgid "Default bitmap resolution (in dots per inch) for bitmap import"
 msgstr "Standard-Bitmapauflösung (Punkte pro Zoll) für Bitmap-Import"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1399
+#: ../src/ui/dialog/inkscape-preferences.cpp:1398
 msgid "Override file resolution"
 msgstr "Datei-Auflösung überschreiben"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1401
+#: ../src/ui/dialog/inkscape-preferences.cpp:1400
 msgid "Use default bitmap resolution in favor of information from file"
 msgstr ""
 "Verwenden Sie Standard-Bitmap-Auflösung zu Gunsten von Informationen aus der "
 "Datei"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1403
+#: ../src/ui/dialog/inkscape-preferences.cpp:1402
 msgid "Bitmaps"
 msgstr "Bitmaps"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1415
+#: ../src/ui/dialog/inkscape-preferences.cpp:1414
 msgid ""
 "Select a file of predefined shortcuts to use. Any customized shortcuts you "
 "create will be added seperately to "
@@ -19109,31 +19112,31 @@ msgstr ""
 "Wählen Sie eine Datei mit vorderfinierten Tastaturkürzeln. Jeder "
 "benutzerdefinierte Kürzel der erstellt wird, wird separat hinzugefügt zu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1418
+#: ../src/ui/dialog/inkscape-preferences.cpp:1417
 msgid "Shortcut file:"
 msgstr "Tastenkürzel-Datei:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1421
+#: ../src/ui/dialog/inkscape-preferences.cpp:1420
 msgid "Search:"
 msgstr "Suchen:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1433
+#: ../src/ui/dialog/inkscape-preferences.cpp:1432
 msgid "Shortcut"
 msgstr "Tastenkürzel"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1434
+#: ../src/ui/dialog/inkscape-preferences.cpp:1433
 #: ../src/ui/widget/page-sizer.cpp:262
 msgid "Description"
 msgstr "Beschreibung"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1475
+#: ../src/ui/dialog/inkscape-preferences.cpp:1474
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:693
 #: ../src/ui/dialog/tracedialog.cpp:812
 #: ../src/ui/widget/preferences-widget.cpp:662
 msgid "Reset"
 msgstr " _Zurücksetzen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1475
+#: ../src/ui/dialog/inkscape-preferences.cpp:1474
 msgid ""
 "Remove all your customized keyboard shortcuts, and revert to the shortcuts "
 "in the shortcut file listed above"
@@ -19141,35 +19144,35 @@ msgstr ""
 "Alle individuellen Tastaturkürzel entfernen und zurück zu den Verknüpfungen "
 "in der Shortcut-Datei der oben aufgeführten"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1479
+#: ../src/ui/dialog/inkscape-preferences.cpp:1478
 msgid "Import ..."
 msgstr "_Importieren…"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1479
+#: ../src/ui/dialog/inkscape-preferences.cpp:1478
 msgid "Import custom keyboard shortcuts from a file"
 msgstr "Importieren einer benutzerdefinierten Tastaturkürzel-Datei"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1482
+#: ../src/ui/dialog/inkscape-preferences.cpp:1481
 msgid "Export ..."
 msgstr "_Exportieren…"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1482
+#: ../src/ui/dialog/inkscape-preferences.cpp:1481
 msgid "Export custom keyboard shortcuts to a file"
 msgstr "Benutzerdefinierte Tastaturkürzel in eine Datei exportieren"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1492
+#: ../src/ui/dialog/inkscape-preferences.cpp:1491
 msgid "Keyboard Shortcuts"
 msgstr "Tastaturkürzel"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1774
+#: ../src/ui/dialog/inkscape-preferences.cpp:1773
 msgid "Set the main spell check language"
 msgstr "Setzen der Hauptsprache der Rechtschreibprüfung"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1777
+#: ../src/ui/dialog/inkscape-preferences.cpp:1776
 msgid "Second language:"
 msgstr "Zweite Sprache:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1778
+#: ../src/ui/dialog/inkscape-preferences.cpp:1777
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
@@ -19177,11 +19180,11 @@ msgstr ""
 "Setzen der zweiten Sprache der Rechtschreibprüfung; die Prüfung stoppt nur "
 "bei Wörtern, die in allen ausgewählten Sprachen unbekannt sind."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1781
+#: ../src/ui/dialog/inkscape-preferences.cpp:1780
 msgid "Third language:"
 msgstr "Dritte Sprache:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1782
+#: ../src/ui/dialog/inkscape-preferences.cpp:1781
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
@@ -19189,31 +19192,31 @@ msgstr ""
 "Setzen der dritten Sprache der Rechtschreibprüfung; die Prüfung stoppt nur "
 "bei Wörtern, die in allen ausgewählten Sprachen unbekannt sind."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1784
+#: ../src/ui/dialog/inkscape-preferences.cpp:1783
 msgid "Ignore words with digits"
 msgstr "Ignoriere Wörter mit Zahlen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1786
+#: ../src/ui/dialog/inkscape-preferences.cpp:1785
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr "Ignoriere Wörter mit Zahlen, wie  \"R2D2\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1788
+#: ../src/ui/dialog/inkscape-preferences.cpp:1787
 msgid "Ignore words in ALL CAPITALS"
 msgstr "Ignoriere Wörter die GROSSGESCHRIEBEN sind"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1790
+#: ../src/ui/dialog/inkscape-preferences.cpp:1789
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr "Ignoriere Wörter die GROSSGESCHRIEBEN sind, wie \"IUPAC\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1792
+#: ../src/ui/dialog/inkscape-preferences.cpp:1791
 msgid "Spellcheck"
 msgstr "Rechtschreibprüfung"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1812
+#: ../src/ui/dialog/inkscape-preferences.cpp:1811
 msgid "Latency _skew:"
 msgstr "Latenz-Schrägstellung:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1813
+#: ../src/ui/dialog/inkscape-preferences.cpp:1812
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)"
@@ -19221,11 +19224,11 @@ msgstr ""
 "Faktor, um den die Ereigniszeit gegenüber der Systemzeit verlangsamt wird "
 "(0,9766 auf manchen Systemen)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1815
+#: ../src/ui/dialog/inkscape-preferences.cpp:1814
 msgid "Pre-render named icons"
 msgstr "Symbole mit Namen im Voraus rendern"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1817
+#: ../src/ui/dialog/inkscape-preferences.cpp:1816
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
@@ -19233,83 +19236,83 @@ msgstr ""
 "Benannte Icons werden gerendert, bevor die Benutzeroberfläche dargestellt "
 "wird. Damit werden Fehler in der GTK+-Hinweisen zu benannten Icons umgangen."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1825
+#: ../src/ui/dialog/inkscape-preferences.cpp:1824
 msgid "System info"
 msgstr "System-Information"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1829
+#: ../src/ui/dialog/inkscape-preferences.cpp:1828
 msgid "User config: "
 msgstr "Benutzerkonfiguration:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1829
+#: ../src/ui/dialog/inkscape-preferences.cpp:1828
 msgid "Location of users configuration"
 msgstr "Ort der Benutzerkonfiguration"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1833
+#: ../src/ui/dialog/inkscape-preferences.cpp:1832
 msgid "User preferences: "
 msgstr "Benutzereinstellungen:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1833
+#: ../src/ui/dialog/inkscape-preferences.cpp:1832
 msgid "Location of the users preferences file"
 msgstr "Ort der Benutzer-Einstellungsdatei"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1837
+#: ../src/ui/dialog/inkscape-preferences.cpp:1836
 msgid "User extensions: "
 msgstr "Benutzererweiterungen:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1837
+#: ../src/ui/dialog/inkscape-preferences.cpp:1836
 msgid "Location of the users extensions"
 msgstr "Ort der Benutzer-Erweiterungen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1841
+#: ../src/ui/dialog/inkscape-preferences.cpp:1840
 msgid "User cache: "
 msgstr "Benutzer Cache:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1841
+#: ../src/ui/dialog/inkscape-preferences.cpp:1840
 msgid "Location of users cache"
 msgstr "Ort des Benutzer-Caches"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1849
+#: ../src/ui/dialog/inkscape-preferences.cpp:1848
 msgid "Temporary files: "
 msgstr "Temporäre Dateien:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1849
+#: ../src/ui/dialog/inkscape-preferences.cpp:1848
 msgid "Location of the temporary files used for autosave"
 msgstr "Ort der temp. Dateien, die für Auto-Speicherung verwendet werden"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1853
+#: ../src/ui/dialog/inkscape-preferences.cpp:1852
 msgid "Inkscape data: "
 msgstr "Inkscapedaten:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1853
+#: ../src/ui/dialog/inkscape-preferences.cpp:1852
 msgid "Location of Inkscape data"
 msgstr "Ort der Inkscapedaten"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1857
+#: ../src/ui/dialog/inkscape-preferences.cpp:1856
 msgid "Inkscape extensions: "
 msgstr "Inkscape-Erweiterungen:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1857
+#: ../src/ui/dialog/inkscape-preferences.cpp:1856
 msgid "Location of the Inkscape extensions"
 msgstr "Ort der Inkscape-Erweiterungen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1866
+#: ../src/ui/dialog/inkscape-preferences.cpp:1865
 msgid "System data: "
 msgstr "System"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1866
+#: ../src/ui/dialog/inkscape-preferences.cpp:1865
 msgid "Locations of system data"
 msgstr "Ort der Systemdaten"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1890
+#: ../src/ui/dialog/inkscape-preferences.cpp:1889
 msgid "Icon theme: "
 msgstr "Icon Thema:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1890
+#: ../src/ui/dialog/inkscape-preferences.cpp:1889
 msgid "Locations of icon themes"
 msgstr "Ort der Icon-Themen"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1892
+#: ../src/ui/dialog/inkscape-preferences.cpp:1891
 msgid "System"
 msgstr "System"
 
@@ -26054,6 +26057,12 @@ msgstr "_C:"
 #: ../src/widgets/sp-color-scales.cpp:485
 msgid "_M:"
 msgstr "_M:"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:217
+#: ../src/widgets/sp-color-icc-selector.cpp:218
+#: ../src/widgets/sp-color-scales.cpp:488
+msgid "_Y:"
+msgstr "Y:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:217
 #: ../src/widgets/sp-color-scales.cpp:491
