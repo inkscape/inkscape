@@ -61,9 +61,9 @@ public:
     virtual ~CanvasGrid();
 
     // TODO: see effect.h and effect.cpp from live_effects how to link enums to SVGname to typename properly. (johan)
-    const char * getName();
-    const char * getSVGName();
-    GridType     getGridType();
+    const char * getName() const;
+    const char * getSVGName() const;
+    GridType     getGridType() const;
     static const char * getName(GridType type);
     static const char * getSVGName(GridType type);
     static GridType     getGridTypeFromSVGName(const char * typestr);
@@ -97,8 +97,8 @@ public:
 
     static void on_repr_attr_changed (Inkscape::XML::Node * repr, const gchar *key, const gchar *oldval, const gchar *newval, bool is_interactive, void * data);
 
-    bool isVisible() { return (isEnabled() &&visible); };
-    bool isEnabled();
+    bool isVisible() const { return (isEnabled() &&visible); };
+    bool isEnabled() const;
 
 protected:
     CanvasGrid(SPNamedView * nv, Inkscape::XML::Node * in_repr, SPDocument *in_doc, GridType type);

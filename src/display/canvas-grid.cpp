@@ -183,19 +183,19 @@ CanvasGrid::~CanvasGrid()
 }
 
 const char *
-CanvasGrid::getName()
+CanvasGrid::getName() const
 {
     return _(grid_name[gridtype]);
 }
 
 const char *
-CanvasGrid::getSVGName()
+CanvasGrid::getSVGName() const
 {
     return grid_svgname[gridtype];
 }
 
 GridType
-CanvasGrid::getGridType()
+CanvasGrid::getGridType() const
 {
     return gridtype;
 }
@@ -369,7 +369,7 @@ CanvasGrid::on_repr_attr_changed(Inkscape::XML::Node *repr, gchar const *key, gc
     (static_cast<CanvasGrid*>(data))->onReprAttrChanged(repr, key, oldval, newval, is_interactive);
 }
 
-bool CanvasGrid::isEnabled()
+bool CanvasGrid::isEnabled() const
 {
     if (snapper == NULL) {
        return false;
