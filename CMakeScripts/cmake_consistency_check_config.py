@@ -30,7 +30,6 @@ IGNORE = (
     "src/libnr/nr-compose-reference.cpp",
     "src/libnr/testnr.cp",
     "src/live_effects/lpe-skeleton.cpp",
-    "src/sp-animation.cpp",
     "src/sp-skeleton.cpp",
     "src/svg/test-stubs.cpp",
     "src/ui/dialog/session-player.cpp",

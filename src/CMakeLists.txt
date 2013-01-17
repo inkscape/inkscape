@@ -12,7 +12,6 @@ set(sp_SRC
 	attribute-rel-svg.cpp
 	attribute-rel-util.cpp
 	sp-anchor.cpp
-	# sp-animation.cpp
 	sp-clippath.cpp
 	sp-conn-end-pair.cpp
 	sp-conn-end.cpp
@@ -88,7 +87,6 @@ set(sp_SRC
 	attribute-rel-svg.h
 	attribute-rel-util.h
 	sp-anchor.h
-	sp-animation.h
 	sp-clippath.h
 	sp-conn-end-pair.h
 	sp-conn-end.h

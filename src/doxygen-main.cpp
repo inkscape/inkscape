@@ -330,7 +330,7 @@ namespace XML {}
  * [\ref geom.cpp] [\ref mod360.cpp]
  */
 /** \page OtherServices Classes and Files From Other Services
- * [\ref inkview.cpp, \ref slideshow.cpp] [\ref sp-animation.cpp]
+ * [\ref inkview.cpp, \ref slideshow.cpp]
  *
  * Inkscape::GC
  *

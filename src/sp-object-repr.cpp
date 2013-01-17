@@ -42,7 +42,6 @@
 #include "sp-clippath.h"
 #include "sp-mask.h"
 #include "sp-anchor.h"
-//#include "sp-animation.h"
 #include "sp-flowdiv.h"
 #include "sp-flowregion.h"
 #include "sp-flowtext.h"
