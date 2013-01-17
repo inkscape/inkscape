@@ -50,8 +50,6 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_draw_context_class_init(SPDrawContextClass *klass);
-static void sp_draw_context_init(SPDrawContext *dc);
 static void sp_draw_context_dispose(GObject *object);
 
 static void sp_draw_context_setup(SPEventContext *ec);
@@ -76,27 +74,7 @@ static void spdc_flush_white(SPDrawContext *dc, SPCurve *gc);
 static void spdc_reset_white(SPDrawContext *dc);
 static void spdc_free_colors(SPDrawContext *dc);
 
-
-static SPEventContextClass *draw_parent_class;
-
-GType sp_draw_context_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPDrawContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_draw_context_class_init,
-            NULL, NULL,
-            sizeof(SPDrawContext),
-            4,
-            (GInstanceInitFunc) sp_draw_context_init,
-            NULL,   // value_table
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPDrawContext", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPDrawContext, sp_draw_context, SP_TYPE_EVENT_CONTEXT);
 
 static void sp_draw_context_class_init(SPDrawContextClass *klass)
 {
@@ -105,8 +83,6 @@ static void sp_draw_context_class_init(SPDrawContextClass *klass)
 
     object_class = (GObjectClass *)klass;
     ec_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    draw_parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_draw_context_dispose;
 
@@ -167,7 +143,7 @@ static void sp_draw_context_dispose(GObject *object)
 
     spdc_free_colors(dc);
 
-    G_OBJECT_CLASS(draw_parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_draw_context_parent_class)->dispose(object);
 }
 
 static void sp_draw_context_setup(SPEventContext *ec)
@@ -175,8 +151,8 @@ static void sp_draw_context_setup(SPEventContext *ec)
     SPDrawContext *dc = SP_DRAW_CONTEXT(ec);
     SPDesktop *dt = ec->desktop;
 
-    if ((SP_EVENT_CONTEXT_CLASS(draw_parent_class))->setup) {
-        (SP_EVENT_CONTEXT_CLASS(draw_parent_class))->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(sp_draw_context_parent_class))->setup) {
+        (SP_EVENT_CONTEXT_CLASS(sp_draw_context_parent_class))->setup(ec);
     }
 
     dc->selection = sp_desktop_selection(dt);
@@ -261,8 +237,8 @@ gint sp_draw_context_root_handler(SPEventContext *ec, GdkEvent *event)
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(draw_parent_class))->root_handler) {
-            ret = (SP_EVENT_CONTEXT_CLASS(draw_parent_class))->root_handler(ec, event);
+        if ((SP_EVENT_CONTEXT_CLASS(sp_draw_context_parent_class))->root_handler) {
+            ret = (SP_EVENT_CONTEXT_CLASS(sp_draw_context_parent_class))->root_handler(ec, event);
         }
     }
 

@@ -14,7 +14,7 @@
 
 #include "sp-object.h"
 
-
+G_BEGIN_DECLS
 
 /* Animation base class */
 
@@ -70,6 +70,6 @@ struct SPAnimateClass {
 
 GType sp_animate_get_type (void);
 
-
+G_END_DECLS
 
 #endif

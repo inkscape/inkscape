@@ -29,9 +29,6 @@
 
 /* FeFlood base class */
 
-static void sp_feFlood_class_init(SPFeFloodClass *klass);
-static void sp_feFlood_init(SPFeFlood *feFlood);
-
 static void sp_feFlood_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feFlood_release(SPObject *object);
 static void sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value);
@@ -39,34 +36,12 @@ static void sp_feFlood_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feFlood_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feFlood_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
-static SPFilterPrimitiveClass *feFlood_parent_class;
-
-GType sp_feFlood_get_type()
-{
-    static GType feFlood_type = 0;
-
-    if (!feFlood_type) {
-        GTypeInfo feFlood_info = {
-            sizeof(SPFeFloodClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feFlood_class_init,
-            NULL, NULL,
-            sizeof(SPFeFlood),
-            16,
-            (GInstanceInitFunc) sp_feFlood_init,
-            NULL,    /* value_table */
-        };
-        feFlood_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeFlood", &feFlood_info, (GTypeFlags)0);
-    }
-    return feFlood_type;
-}
+G_DEFINE_TYPE(SPFeFlood, sp_feFlood, SP_TYPE_FILTER_PRIMITIVE);
 
 static void sp_feFlood_class_init(SPFeFloodClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    feFlood_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feFlood_build;
     sp_object_class->release = sp_feFlood_release;
@@ -90,8 +65,8 @@ static void sp_feFlood_init(SPFeFlood *feFlood)
 static void
 sp_feFlood_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feFlood_parent_class)->build) {
-        ((SPObjectClass *) feFlood_parent_class)->build(object, document, repr);
+    if ((SP_OBJECT_CLASS(sp_feFlood_parent_class))->build) {
+        (SP_OBJECT_CLASS(sp_feFlood_parent_class))->build(object, document, repr);
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
@@ -104,8 +79,8 @@ sp_feFlood_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
  */
 static void sp_feFlood_release(SPObject *object)
 {
-    if (((SPObjectClass *) feFlood_parent_class)->release)
-        ((SPObjectClass *) feFlood_parent_class)->release(object);
+    if ((SP_OBJECT_CLASS(sp_feFlood_parent_class))->release)
+        (SP_OBJECT_CLASS(sp_feFlood_parent_class))->release(object);
 }
 
 /**
@@ -170,8 +145,8 @@ sp_feFlood_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         default:
-            if (((SPObjectClass *) feFlood_parent_class)->set)
-                ((SPObjectClass *) feFlood_parent_class)->set(object, key, value);
+            if ((SP_OBJECT_CLASS(sp_feFlood_parent_class))->set)
+                (SP_OBJECT_CLASS(sp_feFlood_parent_class))->set(object, key, value);
             break;
     }
 
@@ -190,8 +165,8 @@ sp_feFlood_update(SPObject *object, SPCtx *ctx, guint flags)
 
     }
 
-    if (((SPObjectClass *) feFlood_parent_class)->update) {
-        ((SPObjectClass *) feFlood_parent_class)->update(object, ctx, flags);
+    if ((SP_OBJECT_CLASS(sp_feFlood_parent_class))->update) {
+        (SP_OBJECT_CLASS(sp_feFlood_parent_class))->update(object, ctx, flags);
     }
 }
 
@@ -207,8 +182,8 @@ sp_feFlood_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::
         repr = object->getRepr()->duplicate(doc);
     }
 
-    if (((SPObjectClass *) feFlood_parent_class)->write) {
-        ((SPObjectClass *) feFlood_parent_class)->write(object, doc, repr, flags);
+    if ((SP_OBJECT_CLASS(sp_feFlood_parent_class))->write) {
+        (SP_OBJECT_CLASS(sp_feFlood_parent_class))->write(object, doc, repr, flags);
     }
 
     return repr;

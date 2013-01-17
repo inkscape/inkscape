@@ -20,6 +20,7 @@
 #include "event-context.h"
 #include "live_effects/effect.h"
 
+G_BEGIN_DECLS
 /* Freehand context */
 
 #define SP_TYPE_DRAW_CONTEXT (sp_draw_context_get_type())
@@ -82,7 +83,7 @@ struct SPDrawContext : public SPEventContext{
 
 struct SPDrawContextClass : public SPEventContextClass{};
 
-GType sp_draw_context_get_type(void);
+GType sp_draw_context_get_type(void) G_GNUC_CONST;
 
 /**
  * Returns FIRST active anchor (the activated one).
@@ -119,6 +120,7 @@ void spdc_check_for_and_apply_waiting_LPE(SPDrawContext *dc, SPItem *item);
  */
 void spdc_create_single_dot(SPEventContext *ec, Geom::Point const &pt, char const *tool, guint event_state);
 
+G_END_DECLS
 #endif // SEEN_SP_DRAW_CONTEXT_H
 
 /*

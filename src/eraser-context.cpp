@@ -83,9 +83,6 @@ using Inkscape::DocumentUndo;
 #define DRAG_DEFAULT 1.0
 #define DRAG_MAX 1.0
 
-
-static void sp_eraser_context_class_init(SPEraserContextClass *klass);
-static void sp_eraser_context_init(SPEraserContext *erc);
 static void sp_eraser_context_dispose(GObject *object);
 
 static void sp_eraser_context_setup(SPEventContext *ec);
@@ -104,37 +101,13 @@ static Geom::Point sp_eraser_get_npoint(SPEraserContext const *erc, Geom::Point 
 static Geom::Point sp_eraser_get_vpoint(SPEraserContext const *erc, Geom::Point n);
 static void draw_temporary_box(SPEraserContext *dc);
 
-
-static SPEventContextClass *eraser_parent_class = 0;
-
-GType sp_eraser_context_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPEraserContextClass),
-            0, // base_init
-            0, // base_finalize
-            (GClassInitFunc)sp_eraser_context_class_init,
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPEraserContext),
-            0, // n_preallocs
-            (GInstanceInitFunc)sp_eraser_context_init,
-            0 // value_table
-        };
-        type = g_type_register_static(SP_TYPE_COMMON_CONTEXT, "SPEraserContext", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPEraserContext, sp_eraser_context, SP_TYPE_COMMON_CONTEXT);
 
 static void
 sp_eraser_context_class_init(SPEraserContextClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    eraser_parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_eraser_context_dispose;
 
@@ -154,9 +127,7 @@ sp_eraser_context_init(SPEraserContext *erc)
 static void
 sp_eraser_context_dispose(GObject *object)
 {
-    //SPEraserContext *erc = SP_ERASER_CONTEXT(object);
-
-    G_OBJECT_CLASS(eraser_parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_eraser_context_parent_class)->dispose(object);
 }
 
 static void
@@ -165,8 +136,8 @@ sp_eraser_context_setup(SPEventContext *ec)
     SPEraserContext *erc = SP_ERASER_CONTEXT(ec);
     SPDesktop *desktop = ec->desktop;
 
-    if ((SP_EVENT_CONTEXT_CLASS(eraser_parent_class))->setup)
-        (SP_EVENT_CONTEXT_CLASS(eraser_parent_class))->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(sp_eraser_context_parent_class))->setup)
+        (SP_EVENT_CONTEXT_CLASS(sp_eraser_context_parent_class))->setup(ec);
 
     erc->accumulated = new SPCurve();
     erc->currentcurve = new SPCurve();
@@ -222,8 +193,8 @@ static void
 sp_eraser_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 {
     //pass on up to parent class to handle common attributes.
-    if ( eraser_parent_class->set ) {
-        eraser_parent_class->set(ec, val);
+    if (SP_EVENT_CONTEXT_CLASS(sp_eraser_context_parent_class)->set ) {
+        SP_EVENT_CONTEXT_CLASS(sp_eraser_context_parent_class)->set(ec, val);
     }
 }
 
@@ -689,8 +660,8 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(eraser_parent_class))->root_handler) {
-            ret = (SP_EVENT_CONTEXT_CLASS(eraser_parent_class))->root_handler(event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(sp_eraser_context_parent_class))->root_handler) {
+            ret = (SP_EVENT_CONTEXT_CLASS(sp_eraser_context_parent_class))->root_handler(event_context, event);
         }
     }
 

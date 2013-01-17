@@ -21,6 +21,8 @@
 
 #include "common-context.h"
 
+G_BEGIN_DECLS
+
 #define SP_TYPE_ERASER_CONTEXT (sp_eraser_context_get_type())
 #define SP_ERASER_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_ERASER_CONTEXT, SPEraserContext))
 #define SP_ERASER_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), SP_TYPE_ERASER_CONTEXT, SPEraserContextClass))
@@ -44,6 +46,8 @@ struct SPEraserContext : public SPCommonContext {
 struct SPEraserContextClass : public SPEventContextClass{};
 
 GType sp_eraser_context_get_type(void);
+
+G_END_DECLS
 
 #endif // SP_ERASER_CONTEXT_H_SEEN
 

@@ -73,7 +73,7 @@ sp_mask_get_type (void)
 static void
 sp_mask_class_init (SPMaskClass *klass)
 {
-	parent_class = (SPObjectGroupClass*) g_type_class_ref (SP_TYPE_OBJECTGROUP);
+	parent_class = SP_OBJECTGROUP_CLASS(g_type_class_ref(SP_TYPE_OBJECTGROUP));
 
 	SPObjectClass *sp_object_class = (SPObjectClass *) klass;
 	sp_object_class->build = sp_mask_build;

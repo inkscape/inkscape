@@ -18,7 +18,7 @@
 #include "sp-shape.h"
 #include <2geom/forward.h>
 
-
+G_BEGIN_DECLS
 
 #define SP_TYPE_RECT            (sp_rect_get_type ())
 #define SP_RECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_RECT, SPRect))
@@ -44,7 +44,7 @@ struct SPRectClass {
 
 
 /* Standard GType function */
-GType sp_rect_get_type (void);
+GType sp_rect_get_type (void) G_GNUC_CONST;
 
 void sp_rect_position_set (SPRect * rect, gdouble x, gdouble y, gdouble width, gdouble height);
 
@@ -64,6 +64,8 @@ gdouble sp_rect_get_visible_width (SPRect *rect);
 gdouble sp_rect_get_visible_height (SPRect *rect);
 
 void sp_rect_compensate_rxry (SPRect *rect, Geom::Affine xform);
+
+G_END_DECLS
 
 #endif // SEEN_SP_RECT_H
 

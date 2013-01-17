@@ -17,11 +17,15 @@
 #include <stddef.h>
 #include <sigc++/connection.h>
 
-#define SP_TYPE_SWITCH            (CSwitch::getType())
+G_BEGIN_DECLS
+
+#define SP_TYPE_SWITCH            (sp_switch_get_type())
 #define SP_SWITCH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_SWITCH, SPSwitch))
 #define SP_SWITCH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_SWITCH, SPSwitchClass))
 #define SP_IS_SWITCH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_SWITCH))
 #define SP_IS_SWITCH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_SWITCH))
+
+GType sp_switch_get_type() G_GNUC_CONST;
 
 /*
  * Virtual methods of SPSwitch
@@ -32,8 +36,6 @@ public:
     virtual ~CSwitch();
 
     friend class SPSwitch;
-
-    static GType getType();
     
     virtual void onChildAdded(Inkscape::XML::Node *child);
     virtual void onChildRemoved(Inkscape::XML::Node *child);
@@ -60,5 +62,7 @@ struct SPSwitch : public SPGroup {
 
 struct SPSwitchClass : public SPGroupClass {
 };
+
+G_END_DECLS
 
 #endif

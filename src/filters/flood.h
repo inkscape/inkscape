@@ -15,10 +15,12 @@
 #include "sp-filter-primitive.h"
 #include "svg/svg-icc-color.h"
 
-#define SP_TYPE_FEFLOOD (sp_feFlood_get_type())
-#define SP_FEFLOOD(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FEFLOOD, SPFeFlood))
-#define SP_FEFLOOD_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FEFLOOD, SPFeFloodClass))
-#define SP_IS_FEFLOOD(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEFLOOD))
+G_BEGIN_DECLS
+
+#define SP_TYPE_FEFLOOD            (sp_feFlood_get_type())
+#define SP_FEFLOOD(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_FEFLOOD, SPFeFlood))
+#define SP_FEFLOOD_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_FEFLOOD, SPFeFloodClass))
+#define SP_IS_FEFLOOD(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEFLOOD))
 #define SP_IS_FEFLOOD_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEFLOOD))
 
 class SPFeFloodClass;
@@ -33,9 +35,9 @@ struct SPFeFloodClass {
     SPFilterPrimitiveClass parent_class;
 };
 
-GType sp_feFlood_get_type();
+GType sp_feFlood_get_type() G_GNUC_CONST;
 
-
+G_END_DECLS
 #endif /* !SP_FEFLOOD_H_SEEN */
 
 /*

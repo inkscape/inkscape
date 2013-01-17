@@ -53,8 +53,6 @@ enum {
     PROP_HICOLOR
 };
 
-static void sp_guide_class_init(SPGuideClass *gc);
-static void sp_guide_init(SPGuide *guide);
 static void sp_guide_set_property(GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
 static void sp_guide_get_property(GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
 
@@ -62,35 +60,12 @@ static void sp_guide_build(SPObject *object, SPDocument *document, Inkscape::XML
 static void sp_guide_release(SPObject *object);
 static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value);
 
-static SPObjectClass *parent_class;
-
-GType sp_guide_get_type(void)
-{
-    static GType guide_type = 0;
-
-    if (!guide_type) {
-        GTypeInfo guide_info = {
-            sizeof(SPGuideClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_guide_class_init,
-            NULL, NULL,
-            sizeof(SPGuide),
-            16,
-            (GInstanceInitFunc) sp_guide_init,
-            NULL,       /* value_table */
-        };
-        guide_type = g_type_register_static(SP_TYPE_OBJECT, "SPGuide", &guide_info, (GTypeFlags) 0);
-    }
-
-    return guide_type;
-}
+G_DEFINE_TYPE(SPGuide, sp_guide, SP_TYPE_OBJECT);
 
 static void sp_guide_class_init(SPGuideClass *gc)
 {
     GObjectClass *gobject_class = (GObjectClass *) gc;
     SPObjectClass *sp_object_class = (SPObjectClass *) gc;
-
-    parent_class = (SPObjectClass*) g_type_class_ref(SP_TYPE_OBJECT);
 
     gobject_class->set_property = sp_guide_set_property;
     gobject_class->get_property = sp_guide_get_property;
@@ -158,8 +133,8 @@ static void sp_guide_get_property(GObject *object, guint prop_id, GValue *value,
 
 static void sp_guide_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) (parent_class))->build) {
-        (* ((SPObjectClass *) (parent_class))->build)(object, document, repr);
+    if ((SP_OBJECT_CLASS(sp_guide_parent_class))->build) {
+        (* (SP_OBJECT_CLASS(sp_guide_parent_class))->build)(object, document, repr);
     }
 
     object->readAttr( "inkscape:label" );
@@ -184,8 +159,8 @@ static void sp_guide_release(SPObject *object)
         object->document->removeResource("guide", object);
     }
 
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release(object);
+    if ((SP_OBJECT_CLASS(sp_guide_parent_class))->release) {
+        (SP_OBJECT_CLASS(sp_guide_parent_class))->release(object);
     }
 }
 
@@ -260,8 +235,8 @@ static void sp_guide_set(SPObject *object, unsigned int key, const gchar *value)
         }
         break;
     default:
-            if (((SPObjectClass *) (parent_class))->set) {
-                ((SPObjectClass *) (parent_class))->set(object, key, value);
+            if ((SP_OBJECT_CLASS(sp_guide_parent_class))->set) {
+                (SP_OBJECT_CLASS(sp_guide_parent_class))->set(object, key, value);
             }
             break;
     }

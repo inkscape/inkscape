@@ -25,35 +25,11 @@
 #include <sigc++/functors/ptr_fun.h>
 #include <sigc++/adaptors/bind.h>
 
-static void sp_switch_class_init (SPSwitchClass *klass);
-static void sp_switch_init (SPSwitch *group);
-
-static SPGroupClass * parent_class;
-
-GType CSwitch::getType (void)
-{
-	static GType switch_type = 0;
-	if (!switch_type) {
-		GTypeInfo switch_info = {
-			sizeof (SPSwitchClass),
-			NULL,	/* base_init */
-			NULL,	/* base_finalize */
-			(GClassInitFunc) sp_switch_class_init,
-			NULL,	/* class_finalize */
-			NULL,	/* class_data */
-			sizeof (SPSwitch),
-			16,	/* n_preallocs */
-             (GInstanceInitFunc) sp_switch_init,
-			NULL,	/* value_table */
-		};
-		switch_type = g_type_register_static (SP_TYPE_GROUP, "SPSwitch", &switch_info, (GTypeFlags)0);
-	}
-	return switch_type;
-}
+G_DEFINE_TYPE(SPSwitch, sp_switch, SP_TYPE_GROUP);
 
 static void
-sp_switch_class_init (SPSwitchClass *) {
-    parent_class = (SPGroupClass *)g_type_class_ref (SP_TYPE_GROUP);
+sp_switch_class_init (SPSwitchClass *) 
+{
 }
 
 static void sp_switch_init (SPSwitch *group)

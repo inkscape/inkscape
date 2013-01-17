@@ -62,8 +62,6 @@
 #  SPTEXT
 #####################################################*/
 
-static void sp_text_class_init (SPTextClass *classname);
-static void sp_text_init (SPText *text);
 static void sp_text_release (SPObject *object);
 
 static void sp_text_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
@@ -82,37 +80,13 @@ static void sp_text_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
 static Geom::Affine sp_text_set_transform(SPItem *item, Geom::Affine const &xform);
 static void sp_text_print (SPItem *item, SPPrintContext *gpc);
 
-static SPItemClass *text_parent_class;
-
-GType
-sp_text_get_type ()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof (SPTextClass),
-            NULL,    /* base_init */
-            NULL,    /* base_finalize */
-            (GClassInitFunc) sp_text_class_init,
-            NULL,    /* class_finalize */
-            NULL,    /* class_data */
-            sizeof (SPText),
-            16,    /* n_preallocs */
-            (GInstanceInitFunc) sp_text_init,
-            NULL,    /* value_table */
-        };
-        type = g_type_register_static (SP_TYPE_ITEM, "SPText", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPText, sp_text, SP_TYPE_ITEM);
 
 static void
 sp_text_class_init (SPTextClass *classname)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) classname;
     SPItemClass *item_class = (SPItemClass *) classname;
-
-    text_parent_class = (SPItemClass*)g_type_class_ref (SP_TYPE_ITEM);
 
     sp_object_class->release = sp_text_release;
     sp_object_class->build = sp_text_build;
@@ -146,8 +120,8 @@ sp_text_release (SPObject *object)
     text->attributes.~TextTagAttributes();
     text->layout.~Layout();
 
-    if (((SPObjectClass *) text_parent_class)->release)
-        ((SPObjectClass *) text_parent_class)->release(object);
+    if ((SP_OBJECT_CLASS(sp_text_parent_class))->release)
+        (SP_OBJECT_CLASS(sp_text_parent_class))->release(object);
 }
 
 static void
@@ -159,8 +133,8 @@ sp_text_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
     object->readAttr( "dy" );
     object->readAttr( "rotate" );
 
-    if (((SPObjectClass *) text_parent_class)->build)
-        ((SPObjectClass *) text_parent_class)->build(object, doc, repr);
+    if ((SP_OBJECT_CLASS(sp_text_parent_class))->build)
+        (SP_OBJECT_CLASS(sp_text_parent_class))->build(object, doc, repr);
 
     object->readAttr( "sodipodi:linespacing" );    // has to happen after the styles are read
 }
@@ -186,8 +160,8 @@ sp_text_set(SPObject *object, unsigned key, gchar const *value)
                 object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
                 break;
             default:
-                if (((SPObjectClass *) text_parent_class)->set)
-                    ((SPObjectClass *) text_parent_class)->set (object, key, value);
+                if ((SP_OBJECT_CLASS(sp_text_parent_class))->set)
+                    (SP_OBJECT_CLASS(sp_text_parent_class))->set (object, key, value);
                 break;
         }
     }
@@ -198,8 +172,8 @@ sp_text_child_added (SPObject *object, Inkscape::XML::Node *rch, Inkscape::XML::
 {
     SPText *text = SP_TEXT (object);
 
-    if (((SPObjectClass *) text_parent_class)->child_added)
-        ((SPObjectClass *) text_parent_class)->child_added (object, rch, ref);
+    if ((SP_OBJECT_CLASS(sp_text_parent_class))->child_added)
+        (SP_OBJECT_CLASS(sp_text_parent_class))->child_added (object, rch, ref);
 
     text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_CONTENT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
 }
@@ -209,8 +183,8 @@ sp_text_remove_child (SPObject *object, Inkscape::XML::Node *rch)
 {
     SPText *text = SP_TEXT (object);
 
-    if (((SPObjectClass *) text_parent_class)->remove_child)
-        ((SPObjectClass *) text_parent_class)->remove_child (object, rch);
+    if ((SP_OBJECT_CLASS(sp_text_parent_class))->remove_child)
+        (SP_OBJECT_CLASS(sp_text_parent_class))->remove_child (object, rch);
 
     text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_TEXT_CONTENT_MODIFIED_FLAG | SP_TEXT_LAYOUT_MODIFIED_FLAG);
 }
@@ -219,8 +193,8 @@ static void sp_text_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     SPText *text = SP_TEXT (object);
 
-    if (((SPObjectClass *) text_parent_class)->update)
-        ((SPObjectClass *) text_parent_class)->update (object, ctx, flags);
+    if ((SP_OBJECT_CLASS(sp_text_parent_class))->update)
+        (SP_OBJECT_CLASS(sp_text_parent_class))->update (object, ctx, flags);
 
     guint cflags = (flags & SP_OBJECT_MODIFIED_CASCADE);
     if (flags & SP_OBJECT_MODIFIED_FLAG) cflags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
@@ -264,8 +238,8 @@ static void sp_text_update(SPObject *object, SPCtx *ctx, guint flags)
 
 static void sp_text_modified(SPObject *object, guint flags)
 {
-    if (((SPObjectClass *) text_parent_class)->modified) {
-        ((SPObjectClass *) text_parent_class)->modified (object, flags);
+    if ((SP_OBJECT_CLASS(sp_text_parent_class))->modified) {
+        (SP_OBJECT_CLASS(sp_text_parent_class))->modified (object, flags);
     }
 
     guint cflags = (flags & SP_OBJECT_MODIFIED_CASCADE);
@@ -357,8 +331,8 @@ static Inkscape::XML::Node *sp_text_write(SPObject *object, Inkscape::XML::Docum
         text->getRepr()->setAttribute("sodipodi:linespacing", NULL);
     }
 
-    if (((SPObjectClass *) (text_parent_class))->write) {
-        ((SPObjectClass *) (text_parent_class))->write (object, xml_doc, repr, flags);
+    if ((SP_OBJECT_CLASS(sp_text_parent_class))->write) {
+        (SP_OBJECT_CLASS(sp_text_parent_class))->write (object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -396,8 +370,8 @@ sp_text_show(SPItem *item, Inkscape::Drawing &drawing, unsigned /* key*/, unsign
 static void
 sp_text_hide(SPItem *item, unsigned key)
 {
-    if (((SPItemClass *) text_parent_class)->hide)
-        ((SPItemClass *) text_parent_class)->hide (item, key);
+    if ((SP_ITEM_CLASS(sp_text_parent_class))->hide)
+        (SP_ITEM_CLASS(sp_text_parent_class))->hide (item, key);
 }
 
 static char * sp_text_description(SPItem *item)

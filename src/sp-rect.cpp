@@ -31,9 +31,6 @@
 
 #define noRECT_VERBOSE
 
-static void sp_rect_class_init(SPRectClass *klass);
-static void sp_rect_init(SPRect *rect);
-
 static void sp_rect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_rect_set(SPObject *object, unsigned key, gchar const *value);
 static void sp_rect_update(SPObject *object, SPCtx *ctx, guint flags);
@@ -46,30 +43,7 @@ static void sp_rect_convert_to_guides(SPItem *item);
 static void sp_rect_set_shape(SPShape *shape);
 static void sp_rect_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
 
-static SPShapeClass *parent_class;
-
-GType
-sp_rect_get_type(void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPRectClass),
-            NULL,   /* base_init */
-            NULL,   /* base_finalize */
-            (GClassInitFunc) sp_rect_class_init,
-            NULL,   /* class_finalize */
-            NULL,   /* class_data */
-            sizeof(SPRect),
-            16,     /* n_preallocs */
-            (GInstanceInitFunc) sp_rect_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_SHAPE, "SPRect", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPRect, sp_rect, SP_TYPE_SHAPE);
 
 static void
 sp_rect_class_init(SPRectClass *klass)
@@ -77,8 +51,6 @@ sp_rect_class_init(SPRectClass *klass)
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
     SPItemClass *item_class = (SPItemClass *) klass;
     SPShapeClass *shape_class = (SPShapeClass *) klass;
-
-    parent_class = (SPShapeClass *)g_type_class_ref(SP_TYPE_SHAPE);
 
     sp_object_class->build = sp_rect_build;
     sp_object_class->write = sp_rect_write;
@@ -108,8 +80,8 @@ sp_rect_init(SPRect */*rect*/)
 static void
 sp_rect_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) parent_class)->build)
-        ((SPObjectClass *) parent_class)->build(object, document, repr);
+    if ((SP_OBJECT_CLASS(sp_rect_parent_class))->build)
+        (SP_OBJECT_CLASS(sp_rect_parent_class))->build(object, document, repr);
 
     object->readAttr( "x" );
     object->readAttr( "y" );
@@ -160,8 +132,8 @@ sp_rect_set(SPObject *object, unsigned key, gchar const *value)
             object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
-            if (((SPObjectClass *) parent_class)->set)
-                ((SPObjectClass *) parent_class)->set(object, key, value);
+            if ((SP_OBJECT_CLASS(sp_rect_parent_class))->set)
+                (SP_OBJECT_CLASS(sp_rect_parent_class))->set(object, key, value);
             break;
     }
 }
@@ -187,8 +159,8 @@ sp_rect_update(SPObject *object, SPCtx *ctx, guint flags)
         flags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B; // since we change the description, it's not a "just translation" anymore
     }
 
-    if (((SPObjectClass *) parent_class)->update)
-        ((SPObjectClass *) parent_class)->update(object, ctx, flags);
+    if ((SP_OBJECT_CLASS(sp_rect_parent_class))->update)
+        (SP_OBJECT_CLASS(sp_rect_parent_class))->update(object, ctx, flags);
 }
 
 static Inkscape::XML::Node *
@@ -209,8 +181,8 @@ sp_rect_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
 
     sp_rect_set_shape ((SPShape *) rect); // evaluate SPCurve
 
-    if (((SPObjectClass *) parent_class)->write)
-        ((SPObjectClass *) parent_class)->write(object, xml_doc, repr, flags);
+    if ((SP_OBJECT_CLASS(sp_rect_parent_class))->write)
+        (SP_OBJECT_CLASS(sp_rect_parent_class))->write(object, xml_doc, repr, flags);
 
     return repr;
 }
