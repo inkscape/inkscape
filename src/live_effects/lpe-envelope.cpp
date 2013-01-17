@@ -225,7 +225,7 @@ LPEEnvelope::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
 }
 
 void
-LPEEnvelope::resetDefaults(SPItem * item)
+LPEEnvelope::resetDefaults(SPItem const* item)
 {
     Effect::resetDefaults(item);
 

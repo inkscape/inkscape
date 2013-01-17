@@ -123,7 +123,7 @@ LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
 }
 
 void
-LPEBendPath::resetDefaults(SPItem * item)
+LPEBendPath::resetDefaults(SPItem const* item)
 {
     Effect::resetDefaults(item);
 

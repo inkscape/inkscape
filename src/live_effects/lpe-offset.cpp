@@ -40,7 +40,7 @@ LPEOffset::~LPEOffset()
 }
 
 void
-LPEOffset::doOnApply(SPLPEItem *lpeitem)
+LPEOffset::doOnApply(SPLPEItem const* lpeitem)
 {
     offset_pt.param_set_and_write_new_value(*(SP_SHAPE(lpeitem)->_curve->first_point()));
 }

@@ -227,7 +227,6 @@ public:
     /**
      * Returns the XML representation of tree
      */
-    //Inkscape::XML::Node const* getRepr() const;
 //protected:
     Inkscape::XML::Node * getRepr();
 

@@ -65,7 +65,7 @@ LPEParallel::~LPEParallel()
 }
 
 void
-LPEParallel::doOnApply (SPLPEItem *lpeitem)
+LPEParallel::doOnApply (SPLPEItem const* lpeitem)
 {
     SPCurve const *curve = SP_SHAPE(lpeitem)->_curve;
 

@@ -26,7 +26,7 @@ public:
 
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
-    virtual void resetDefaults(SPItem * item);
+    virtual void resetDefaults(SPItem const* item);
 
 private:
     VectorParam extrude_vector;

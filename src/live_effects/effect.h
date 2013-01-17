@@ -53,7 +53,7 @@ public:
 
     EffectType effectType() const;
 
-    virtual void doOnApply (SPLPEItem *lpeitem);
+    virtual void doOnApply (SPLPEItem const* lpeitem);
     virtual void doBeforeEffect (SPLPEItem *lpeitem);
 
     void writeParamsToSVG();
@@ -78,7 +78,7 @@ public:
     /**
      * Sets all parameters to their default values and writes them to SVG.
      */
-    virtual void resetDefaults(SPItem * item);
+    virtual void resetDefaults(SPItem const* item);
 
     /// /todo: is this method really necessary? it causes UI inconsistensies... (johan)
     virtual void transform_multiply(Geom::Affine const& postmul, bool set);

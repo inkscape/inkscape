@@ -43,7 +43,7 @@ LPEMirrorSymmetry::~LPEMirrorSymmetry()
 }
 
 void
-LPEMirrorSymmetry::doOnApply (SPLPEItem *lpeitem)
+LPEMirrorSymmetry::doOnApply (SPLPEItem const* lpeitem)
 {
     using namespace Geom;
 

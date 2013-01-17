@@ -99,7 +99,7 @@ LPEInterpolate::doEffect_path (Geom::PathVector const & path_in)
 }
 
 void
-LPEInterpolate::resetDefaults(SPItem * item)
+LPEInterpolate::resetDefaults(SPItem const* item)
 {
     Effect::resetDefaults(item);
 

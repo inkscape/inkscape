@@ -170,7 +170,7 @@ LPEExtrude::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2
 }
 
 void
-LPEExtrude::resetDefaults(SPItem * item)
+LPEExtrude::resetDefaults(SPItem const* item)
 {
     Effect::resetDefaults(item);
 

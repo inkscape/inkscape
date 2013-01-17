@@ -51,7 +51,7 @@ public:
 
     virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
 
-    virtual void resetDefaults(SPItem * item);
+    virtual void resetDefaults(SPItem const* item);
 
     virtual void doBeforeEffect(SPLPEItem * item);
 

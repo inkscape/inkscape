@@ -269,7 +269,7 @@ LPEVonKoch::doBeforeEffect (SPLPEItem *lpeitem)
 
 
 void
-LPEVonKoch::resetDefaults(SPItem * item)
+LPEVonKoch::resetDefaults(SPItem const* item)
 {
     Effect::resetDefaults(item);
 

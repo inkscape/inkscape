@@ -317,7 +317,7 @@ Effect::effectType() const {
  * Is performed a single time when the effect is freshly applied to a path
  */
 void
-Effect::doOnApply (SPLPEItem */*lpeitem*/)
+Effect::doOnApply (SPLPEItem const*/*lpeitem*/)
 {
 }
 
@@ -643,7 +643,7 @@ Effect::editNextParamOncanvas(SPItem * item, SPDesktop * desktop)
 * The nice thing about this is that this function can use knowledge of the original path and set things accordingly for example to the size or origin of the original path!
 */
 void
-Effect::resetDefaults(SPItem * /*item*/)
+Effect::resetDefaults(SPItem const* /*item*/)
 {
     std::vector<Inkscape::LivePathEffect::Parameter *>::iterator p;
     for (p = param_vector.begin(); p != param_vector.end(); ++p) {

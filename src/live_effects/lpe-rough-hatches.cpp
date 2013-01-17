@@ -555,7 +555,7 @@ LPERoughHatches::doBeforeEffect (SPLPEItem */*lpeitem*/)
 
 
 void
-LPERoughHatches::resetDefaults(SPItem * item)
+LPERoughHatches::resetDefaults(SPItem const* item)
 {
     Effect::resetDefaults(item);
 

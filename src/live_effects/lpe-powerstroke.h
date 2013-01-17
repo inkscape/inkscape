@@ -27,7 +27,7 @@ public:
 
     virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & path_in);
 
-    virtual void doOnApply(SPLPEItem *lpeitem);
+    virtual void doOnApply(SPLPEItem const* lpeitem);
 
     // methods called by path-manipulator upon edits
     void adjustForNewPath(std::vector<Geom::Path> const & path_in);

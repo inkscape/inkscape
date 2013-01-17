@@ -179,7 +179,7 @@ LPELattice::doBeforeEffect (SPLPEItem *lpeitem)
 }
 
 void
-LPELattice::resetDefaults(SPItem * item)
+LPELattice::resetDefaults(SPItem const* item)
 {
     Effect::resetDefaults(item);
 

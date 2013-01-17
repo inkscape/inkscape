@@ -263,7 +263,7 @@ LPEPowerStroke::~LPEPowerStroke()
 
 
 void
-LPEPowerStroke::doOnApply(SPLPEItem *lpeitem)
+LPEPowerStroke::doOnApply(SPLPEItem const* lpeitem)
 {
     if (SP_IS_SHAPE(lpeitem)) {
         std::vector<Geom::Point> points;
