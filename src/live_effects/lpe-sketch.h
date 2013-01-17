@@ -31,7 +31,7 @@ public:
 
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 
-    virtual void doBeforeEffect (SPLPEItem *lpeitem);
+    virtual void doBeforeEffect (SPLPEItem const* lpeitem);
 
 private:
     // add the parameters for your effect here:

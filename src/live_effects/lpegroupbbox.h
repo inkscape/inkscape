@@ -22,7 +22,7 @@ protected:
     Geom::Interval boundingbox_Y;
 
 	//This sets boundingbox_X and boundingbox_Y
-    void original_bbox(SPLPEItem *lpeitem, bool absolute = false);
+    void original_bbox(SPLPEItem const* lpeitem, bool absolute = false);
 };
 
 }; //namespace LivePathEffect

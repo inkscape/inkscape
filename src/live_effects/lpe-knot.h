@@ -56,7 +56,7 @@ public:
   LPEKnot(LivePathEffectObject *lpeobject);
   virtual ~LPEKnot();
   
-  virtual void doBeforeEffect (SPLPEItem *lpeitem);
+  virtual void doBeforeEffect (SPLPEItem const* lpeitem);
   virtual std::vector<Geom::Path> doEffect_path (std::vector<Geom::Path> const & input_path);
   
   /* the knotholder entity classes must be declared friends */

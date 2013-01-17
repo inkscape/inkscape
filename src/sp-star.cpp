@@ -566,7 +566,7 @@ static void sp_star_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
  */
 
 Geom::Point
-sp_star_get_xy (SPStar *star, SPStarPoint point, gint index, bool randomized)
+sp_star_get_xy (SPStar const *star, SPStarPoint point, gint index, bool randomized)
 {
     gdouble darg = 2.0 * M_PI / (double) star->sides;
 

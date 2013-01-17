@@ -31,7 +31,7 @@ public:
     LPEEnvelope(LivePathEffectObject *lpeobject);
     virtual ~LPEEnvelope();
 
-    virtual void doBeforeEffect (SPLPEItem *lpeitem);
+    virtual void doBeforeEffect (SPLPEItem const* lpeitem);
 
     virtual Geom::Piecewise<Geom::D2<Geom::SBasis> > doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in);
 

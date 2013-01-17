@@ -88,7 +88,7 @@ struct SPOffsetClass
 GType sp_offset_get_type (void);
 
 double sp_offset_distance_to_original (SPOffset * offset, Geom::Point px);
-void sp_offset_top_point (SPOffset * offset, Geom::Point *px);
+void sp_offset_top_point (SPOffset const *offset, Geom::Point *px);
 
 SPItem *sp_offset_get_source (SPOffset *offset);
 

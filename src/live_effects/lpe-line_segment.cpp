@@ -43,7 +43,7 @@ LPELineSegment::~LPELineSegment()
 }
 
 void
-LPELineSegment::doBeforeEffect (SPLPEItem *lpeitem)
+LPELineSegment::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     lpetool_get_limiting_bbox_corners(lpeitem->document, bboxA, bboxB);
 }

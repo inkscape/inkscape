@@ -515,73 +515,73 @@ SPPattern *pattern_getroot(SPPattern *pat)
 // Access functions that look up fields up the chain of referenced patterns and return the first one which is set
 // FIXME: all of them must use chase_hrefs the same as in SPGradient, to avoid lockup on circular refs
 
-guint pattern_patternUnits (SPPattern *pat)
+guint pattern_patternUnits (SPPattern const *pat)
 {
-	for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-		if (pat_i->patternUnits_set)
-			return pat_i->patternUnits;
-	}
-	return pat->patternUnits;
+    for (SPPattern const *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
+        if (pat_i->patternUnits_set)
+            return pat_i->patternUnits;
+    }
+    return pat->patternUnits;
 }
 
-guint pattern_patternContentUnits (SPPattern *pat)
+guint pattern_patternContentUnits (SPPattern const *pat)
 {
-	for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-		if (pat_i->patternContentUnits_set)
-			return pat_i->patternContentUnits;
-	}
-	return pat->patternContentUnits;
+    for (SPPattern const *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
+        if (pat_i->patternContentUnits_set)
+            return pat_i->patternContentUnits;
+    }
+    return pat->patternContentUnits;
 }
 
 Geom::Affine const &pattern_patternTransform(SPPattern const *pat)
 {
-	for (SPPattern const *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-		if (pat_i->patternTransform_set)
-			return pat_i->patternTransform;
-	}
-	return pat->patternTransform;
+    for (SPPattern const *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
+        if (pat_i->patternTransform_set)
+            return pat_i->patternTransform;
+    }
+    return pat->patternTransform;
 }
 
-gdouble pattern_x (SPPattern *pat)
+gdouble pattern_x (SPPattern const *pat)
 {
-	for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-		if (pat_i->x._set)
-			return pat_i->x.computed;
-	}
-	return 0;
+    for (SPPattern const *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
+        if (pat_i->x._set)
+            return pat_i->x.computed;
+    }
+    return 0;
 }
 
-gdouble pattern_y (SPPattern *pat)
+gdouble pattern_y (SPPattern const *pat)
 {
-	for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-		if (pat_i->y._set)
-			return pat_i->y.computed;
-	}
-	return 0;
+    for (SPPattern const *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
+        if (pat_i->y._set)
+            return pat_i->y.computed;
+    }
+    return 0;
 }
 
-gdouble pattern_width (SPPattern *pat)
+gdouble pattern_width (SPPattern const* pat)
 {
-	for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-		if (pat_i->width._set)
-			return pat_i->width.computed;
-	}
-	return 0;
+    for (SPPattern const *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
+        if (pat_i->width._set)
+            return pat_i->width.computed;
+    }
+    return 0;
 }
 
-gdouble pattern_height (SPPattern *pat)
+gdouble pattern_height (SPPattern const *pat)
 {
-	for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-		if (pat_i->height._set)
-			return pat_i->height.computed;
-	}
-	return 0;
+    for (SPPattern const *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
+        if (pat_i->height._set)
+            return pat_i->height.computed;
+    }
+    return 0;
 }
 
-Geom::OptRect pattern_viewBox (SPPattern *pat)
+Geom::OptRect pattern_viewBox (SPPattern const *pat)
 {
     Geom::OptRect viewbox;
-    for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
+    for (SPPattern const *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
         if (pat_i->viewBox_set) {
             viewbox = pat_i->viewBox;
             break;
@@ -590,10 +590,10 @@ Geom::OptRect pattern_viewBox (SPPattern *pat)
     return viewbox;
 }
 
-static bool pattern_hasItemChildren (SPPattern *pat)
+static bool pattern_hasItemChildren (SPPattern const *pat)
 {
     bool hasChildren = false;
-    for (SPObject *child = pat->firstChild() ; child && !hasChildren ; child = child->getNext() ) {
+    for (SPObject const *child = pat->firstChild() ; child && !hasChildren ; child = child->getNext() ) {
         if (SP_IS_ITEM(child)) {
             hasChildren = true;
         }

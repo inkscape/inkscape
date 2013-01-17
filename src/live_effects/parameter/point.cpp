@@ -133,7 +133,7 @@ public:
     virtual ~PointParamKnotHolderEntity() {}
 
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
     virtual void knot_click(guint state);
 
 private:
@@ -149,7 +149,7 @@ PointParamKnotHolderEntity::knot_set(Geom::Point const &p, Geom::Point const &/*
 }
 
 Geom::Point
-PointParamKnotHolderEntity::knot_get()
+PointParamKnotHolderEntity::knot_get() const
 {
     return *pparam;
 }

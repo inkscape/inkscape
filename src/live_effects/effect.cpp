@@ -300,7 +300,7 @@ Effect::~Effect()
 }
 
 Glib::ustring
-Effect::getName()
+Effect::getName() const
 {
     if (lpeobj->effecttype_set && LPETypeConverter.is_valid_id(lpeobj->effecttype) )
         return Glib::ustring( _(LPETypeConverter.get_label(lpeobj->effecttype).c_str()) );
@@ -325,7 +325,7 @@ Effect::doOnApply (SPLPEItem const*/*lpeitem*/)
  * Is performed each time before the effect is updated.
  */
 void
-Effect::doBeforeEffect (SPLPEItem */*lpeitem*/)
+Effect::doBeforeEffect (SPLPEItem const*/*lpeitem*/)
 {
     //Do nothing for simple effects
 }
@@ -370,7 +370,7 @@ Effect::writeParamsToSVG() {
  * your LPE. But don't forget to call the parent method so that is_ready is set to true!
  */
 void
-Effect::acceptParamPath (SPPath */*param_path*/) {
+Effect::acceptParamPath (SPPath const*/*param_path*/) {
     setReady();
 }
 
@@ -424,7 +424,7 @@ Effect::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_in)
 }
 
 void
-Effect::readallParameters(Inkscape::XML::Node * repr)
+Effect::readallParameters(Inkscape::XML::Node const* repr)
 {
     std::vector<Parameter *>::iterator it = param_vector.begin();
     while (it != param_vector.end()) {
@@ -491,7 +491,7 @@ Effect::addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item) {
  * This is the function called by external code like SPLPEItem.
  */
 std::vector<Geom::PathVector>
-Effect::getHelperPaths(SPLPEItem *lpeitem)
+Effect::getHelperPaths(SPLPEItem const* lpeitem)
 {
     std::vector<Geom::PathVector> hp_vec;
 
@@ -524,7 +524,7 @@ Effect::getHelperPaths(SPLPEItem *lpeitem)
  * This function should be overwritten by derived effects if they want to provide their own helperpaths.
  */
 void
-Effect::addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVector> &/*hp_vec*/)
+Effect::addCanvasIndicators(SPLPEItem const*/*lpeitem*/, std::vector<Geom::PathVector> &/*hp_vec*/)
 {
 }
 

@@ -36,7 +36,7 @@ class KnotHolderEntityOffset : public LPEKnotHolderEntity
 public:
     KnotHolderEntityOffset(LPEPerspectivePath *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
 };
 
 } // namespace PP
@@ -71,7 +71,7 @@ LPEPerspectivePath::~LPEPerspectivePath()
 }
 
 void
-LPEPerspectivePath::doBeforeEffect (SPLPEItem *lpeitem)
+LPEPerspectivePath::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     original_bbox(lpeitem, true);
 }
@@ -165,9 +165,9 @@ KnotHolderEntityOffset::knot_set(Geom::Point const &p, Geom::Point const &origin
 }
 
 Geom::Point
-KnotHolderEntityOffset::knot_get()
+KnotHolderEntityOffset::knot_get() const
 {
-    LPEPerspectivePath* lpe = dynamic_cast<LPEPerspectivePath *>(_effect);
+    LPEPerspectivePath const *lpe = dynamic_cast<LPEPerspectivePath const*>(_effect);
     return lpe->orig + Geom::Point(lpe->offsetx, -lpe->offsety);
 }
 

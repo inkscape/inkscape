@@ -539,7 +539,7 @@ LPERoughHatches::smoothSnake(std::vector<std::vector<Point> > const &linearSnake
 }
 
 void
-LPERoughHatches::doBeforeEffect (SPLPEItem */*lpeitem*/)
+LPERoughHatches::doBeforeEffect (SPLPEItem const*/*lpeitem*/)
 {
     using namespace Geom;
     top_edge_variation.resetRandomizer();

@@ -46,7 +46,7 @@ public:
 
     virtual void param_editOncanvas(SPItem * item, SPDesktop * dt);
     virtual void param_setup_nodepath(Inkscape::NodePath::Path *np);
-    virtual void addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec);
+    virtual void addCanvasIndicators(SPLPEItem const* lpeitem, std::vector<Geom::PathVector> &hp_vec);
 
     virtual void param_transform_multiply(Geom::Affine const& /*postmul*/, bool /*set*/);
 

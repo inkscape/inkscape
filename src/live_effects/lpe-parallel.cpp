@@ -32,14 +32,14 @@ class KnotHolderEntityLeftEnd : public LPEKnotHolderEntity {
 public:
     KnotHolderEntityLeftEnd(LPEParallel *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
 };
 
 class KnotHolderEntityRightEnd : public LPEKnotHolderEntity {
 public:
     KnotHolderEntityRightEnd(LPEParallel *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
 };
 
 } // namespace Pl
@@ -143,16 +143,16 @@ KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*or
 }
 
 Geom::Point
-KnotHolderEntityLeftEnd::knot_get()
+KnotHolderEntityLeftEnd::knot_get() const
 {
-    LPEParallel *lpe = dynamic_cast<LPEParallel *>(_effect);
+    LPEParallel const *lpe = dynamic_cast<LPEParallel const*>(_effect);
     return lpe->C;
 }
 
 Geom::Point
-KnotHolderEntityRightEnd::knot_get()
+KnotHolderEntityRightEnd::knot_get() const
 {
-    LPEParallel *lpe = dynamic_cast<LPEParallel *>(_effect);
+    LPEParallel const *lpe = dynamic_cast<LPEParallel const*>(_effect);
     return lpe->D;
 }
 

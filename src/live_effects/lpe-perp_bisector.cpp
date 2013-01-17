@@ -38,25 +38,25 @@ class KnotHolderEntityLeftEnd : public KnotHolderEntityEnd {
 public:
     KnotHolderEntityLeftEnd(LPEPerpBisector *effect) : KnotHolderEntityEnd(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
 };
 
 class KnotHolderEntityRightEnd : public KnotHolderEntityEnd {
 public:
     KnotHolderEntityRightEnd(LPEPerpBisector *effect) : KnotHolderEntityEnd(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
 };
 
 Geom::Point
-KnotHolderEntityLeftEnd::knot_get() {
-    LPEPerpBisector *lpe = dynamic_cast<LPEPerpBisector *>(_effect);
+KnotHolderEntityLeftEnd::knot_get() const {
+    LPEPerpBisector const* lpe = dynamic_cast<LPEPerpBisector const*>(_effect);
     return Geom::Point(lpe->C);
 }
 
 Geom::Point
-KnotHolderEntityRightEnd::knot_get() {
-    LPEPerpBisector *lpe = dynamic_cast<LPEPerpBisector *>(_effect);
+KnotHolderEntityRightEnd::knot_get() const {
+    LPEPerpBisector const* lpe = dynamic_cast<LPEPerpBisector const*>(_effect);
     return Geom::Point(lpe->D);
 }
 

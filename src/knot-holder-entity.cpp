@@ -133,13 +133,13 @@ KnotHolderEntity::snap_knot_position_constrained(Geom::Point const &p, Inkscape:
 
 /*  TODO: this pattern manipulation is not able to handle general transformation matrices. Only matrices that are the result of a pure scale times a pure rotation. */
 
-static gdouble sp_pattern_extract_theta(SPPattern *pat)
+static gdouble sp_pattern_extract_theta(SPPattern const *pat)
 {
     Geom::Affine transf = pat->patternTransform;
     return Geom::atan2(transf.xAxis());
 }
 
-static Geom::Point sp_pattern_extract_scale(SPPattern *pat)
+static Geom::Point sp_pattern_extract_scale(SPPattern const *pat)
 {
     Geom::Affine transf = pat->patternTransform;
     return Geom::Point( transf.expansionX(), transf.expansionY() );
@@ -175,18 +175,18 @@ PatternKnotHolderEntityXY::knot_set(Geom::Point const &p, Geom::Point const &ori
 }
 
 Geom::Point
-PatternKnotHolderEntityXY::knot_get()
+PatternKnotHolderEntityXY::knot_get() const
 {
     SPPattern const *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
     return sp_pattern_extract_trans(pat);
 }
 
 Geom::Point
-PatternKnotHolderEntityAngle::knot_get()
+PatternKnotHolderEntityAngle::knot_get() const
 {
-    SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
+    SPPattern const *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
-    gdouble x = (pattern_width(pat));
+    gdouble x = pattern_width(pat);
     gdouble y = 0;
     Geom::Point delta = Geom::Point(x,y);
     Geom::Point scale = sp_pattern_extract_scale(pat);
@@ -258,9 +258,9 @@ PatternKnotHolderEntityScale::knot_set(Geom::Point const &p, Geom::Point const &
 
 
 Geom::Point
-PatternKnotHolderEntityScale::knot_get()
+PatternKnotHolderEntityScale::knot_get() const
 {
-    SPPattern *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
+    SPPattern const *pat = SP_PATTERN(SP_STYLE_FILL_SERVER(SP_OBJECT(item)->style));
 
     gdouble x = pattern_width(pat);
     gdouble y = pattern_height(pat);

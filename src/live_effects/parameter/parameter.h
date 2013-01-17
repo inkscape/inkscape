@@ -61,7 +61,7 @@ public:
     // overload these for your particular parameter to make it provide knotholder handles or canvas helperpaths
     virtual bool providesKnotHolderEntities() const { return false; }
     virtual void addKnotHolderEntities(KnotHolder */*knotholder*/, SPDesktop */*desktop*/, SPItem */*item*/) {};
-    virtual void addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVector> &/*hp_vec*/) {};
+    virtual void addCanvasIndicators(SPLPEItem const*/*lpeitem*/, std::vector<Geom::PathVector> &/*hp_vec*/) {};
 
     virtual void param_editOncanvas(SPItem * /*item*/, SPDesktop * /*dt*/) {};
     virtual void param_setup_nodepath(Inkscape::NodePath::Path */*np*/) {};

@@ -91,14 +91,14 @@ const gchar *pattern_tile (GSList *reprs, Geom::Rect bounds, SPDocument *documen
 
 SPPattern *pattern_getroot (SPPattern *pat);
 
-guint pattern_patternUnits (SPPattern *pat);
-guint pattern_patternContentUnits (SPPattern *pat);
+guint pattern_patternUnits (SPPattern const *pat);
+guint pattern_patternContentUnits (SPPattern const *pat);
 Geom::Affine const &pattern_patternTransform(SPPattern const *pat);
-gdouble pattern_x (SPPattern *pat);
-gdouble pattern_y (SPPattern *pat);
-gdouble pattern_width (SPPattern *pat);
-gdouble pattern_height (SPPattern *pat);
-Geom::OptRect pattern_viewBox (SPPattern *pat);
+gdouble pattern_x (SPPattern const *pat);
+gdouble pattern_y (SPPattern const *pat);
+gdouble pattern_width (SPPattern const *pat);
+gdouble pattern_height (SPPattern const *pat);
+Geom::OptRect pattern_viewBox (SPPattern const *pat);
 
 #endif // SEEN_SP_PATTERN_H
 

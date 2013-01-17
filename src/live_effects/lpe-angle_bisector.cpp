@@ -28,14 +28,14 @@ class KnotHolderEntityLeftEnd : public LPEKnotHolderEntity {
 public:
     KnotHolderEntityLeftEnd(LPEAngleBisector* effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
 };
 
 class KnotHolderEntityRightEnd : public LPEKnotHolderEntity {
 public:
     KnotHolderEntityRightEnd(LPEAngleBisector* effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
 };
 
 } // namespace TtC
@@ -125,16 +125,16 @@ KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*or
 }
 
 Geom::Point
-KnotHolderEntityLeftEnd::knot_get()
+KnotHolderEntityLeftEnd::knot_get() const
 {
-    LPEAngleBisector *lpe = dynamic_cast<LPEAngleBisector *>(_effect);
+    LPEAngleBisector const* lpe = dynamic_cast<LPEAngleBisector const*>(_effect);
     return lpe->ptA - lpe->dir * lpe->length_left;
 }
 
 Geom::Point
-KnotHolderEntityRightEnd::knot_get()
+KnotHolderEntityRightEnd::knot_get() const
 {
-    LPEAngleBisector *lpe = dynamic_cast<LPEAngleBisector *>(_effect);
+    LPEAngleBisector const* lpe = dynamic_cast<LPEAngleBisector const*>(_effect);
     return lpe->ptA + lpe->dir * lpe->length_right;
 }
 

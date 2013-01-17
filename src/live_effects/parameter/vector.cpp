@@ -154,7 +154,7 @@ public:
         param->setOrigin(s);
         sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
     };
-    virtual Geom::Point knot_get(){
+    virtual Geom::Point knot_get() const {
         return param->origin;
     };
     virtual void knot_click(guint /*state*/){
@@ -176,7 +176,7 @@ public:
         param->setVector(s);
         sp_lpe_item_update_patheffect(SP_LPE_ITEM(item), false, false);
     };
-    virtual Geom::Point knot_get(){
+    virtual Geom::Point knot_get() const {
         return param->origin + param->vector;
     };
     virtual void knot_click(guint /*state*/){

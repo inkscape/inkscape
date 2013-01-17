@@ -33,7 +33,7 @@ public:
 
     virtual void resetDefaults(SPItem const* item);
 
-    virtual void doBeforeEffect(SPLPEItem * item);
+    virtual void doBeforeEffect(SPLPEItem const* item);
 
   std::vector<double>
     generateLevels(Geom::Interval const &domain, double x_org);

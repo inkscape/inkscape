@@ -241,7 +241,7 @@ LPEVonKoch::doEffect_path (std::vector<Geom::Path> const & path_in)
 */
 
 void
-LPEVonKoch::doBeforeEffect (SPLPEItem *lpeitem)
+LPEVonKoch::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     using namespace Geom;
     original_bbox(lpeitem);

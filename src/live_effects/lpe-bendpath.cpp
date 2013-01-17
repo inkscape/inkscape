@@ -72,7 +72,7 @@ LPEBendPath::~LPEBendPath()
 }
 
 void
-LPEBendPath::doBeforeEffect (SPLPEItem *lpeitem)
+LPEBendPath::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     // get the item bounding box
     original_bbox(lpeitem);

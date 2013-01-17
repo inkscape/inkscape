@@ -50,7 +50,7 @@ LPEEnvelope::~LPEEnvelope()
 }
 
 void
-LPEEnvelope::doBeforeEffect (SPLPEItem *lpeitem)
+LPEEnvelope::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     // get the item bounding box
     original_bbox(lpeitem);

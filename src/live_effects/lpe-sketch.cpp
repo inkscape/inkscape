@@ -362,7 +362,7 @@ LPESketch::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_
 }
 
 void
-LPESketch::doBeforeEffect (SPLPEItem */*lpeitem*/)
+LPESketch::doBeforeEffect (SPLPEItem const*/*lpeitem*/)
 {
     //init random parameters.
     parallel_offset.resetRandomizer();

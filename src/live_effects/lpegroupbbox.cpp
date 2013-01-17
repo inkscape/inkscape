@@ -22,7 +22,7 @@ namespace LivePathEffect {
  *                  or of the transformed lpeitem (\c absolute = \c true) using sp_item_i2doc_affine.
  * @post Updated values of boundingbox_X and boundingbox_Y. These intervals are set to empty intervals when the precondition is not met.
  */
-void GroupBBoxEffect::original_bbox(SPLPEItem *lpeitem, bool absolute)
+void GroupBBoxEffect::original_bbox(SPLPEItem const* lpeitem, bool absolute)
 {
     // Get item bounding box
     Geom::Affine transform;

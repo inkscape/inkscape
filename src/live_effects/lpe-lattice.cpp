@@ -173,7 +173,7 @@ LPELattice::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2
 }
 
 void
-LPELattice::doBeforeEffect (SPLPEItem *lpeitem)
+LPELattice::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     original_bbox(lpeitem);
 }

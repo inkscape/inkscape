@@ -31,7 +31,7 @@ public:
     /** Disable the canvas indicators of parent class by overriding this method */
     virtual void param_editOncanvas(SPItem * /*item*/, SPDesktop * /*dt*/) {};
     /** Disable the canvas indicators of parent class by overriding this method */
-    virtual void addCanvasIndicators(SPLPEItem * /*lpeitem*/, std::vector<Geom::PathVector> & /*hp_vec*/) {};
+    virtual void addCanvasIndicators(SPLPEItem const* /*lpeitem*/, std::vector<Geom::PathVector> & /*hp_vec*/) {};
 
 protected:
     virtual void linked_modified_callback(SPObject *linked_obj, guint flags);

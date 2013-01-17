@@ -36,14 +36,14 @@ class KnotHolderEntityAttachPt : public LPEKnotHolderEntity {
 public:
     KnotHolderEntityAttachPt(LPETangentToCurve *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
 };
 
 class KnotHolderEntityLeftEnd : public LPEKnotHolderEntity {
 public:
     KnotHolderEntityLeftEnd(LPETangentToCurve *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
 };
 
 class KnotHolderEntityRightEnd : public LPEKnotHolderEntity
@@ -51,7 +51,7 @@ class KnotHolderEntityRightEnd : public LPEKnotHolderEntity
 public:
     KnotHolderEntityRightEnd(LPETangentToCurve *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
 };
 
 } // namespace TtC
@@ -172,23 +172,23 @@ KnotHolderEntityRightEnd::knot_set(Geom::Point const &p, Geom::Point const &/*or
 }
 
 Geom::Point
-KnotHolderEntityAttachPt::knot_get()
+KnotHolderEntityAttachPt::knot_get() const
 {
-    LPETangentToCurve* lpe = dynamic_cast<LPETangentToCurve *>(_effect);
+    LPETangentToCurve const *lpe = dynamic_cast<LPETangentToCurve const*>(_effect);
     return lpe->ptA;
 }
 
 Geom::Point
-KnotHolderEntityLeftEnd::knot_get()
+KnotHolderEntityLeftEnd::knot_get() const
 {
-    LPETangentToCurve *lpe = dynamic_cast<LPETangentToCurve *>(_effect);
+    LPETangentToCurve const *lpe = dynamic_cast<LPETangentToCurve const*>(_effect);
     return lpe->C;
 }
 
 Geom::Point
-KnotHolderEntityRightEnd::knot_get()
+KnotHolderEntityRightEnd::knot_get() const
 {
-    LPETangentToCurve *lpe = dynamic_cast<LPETangentToCurve *>(_effect);
+    LPETangentToCurve const *lpe = dynamic_cast<LPETangentToCurve const*>(_effect);
     return lpe->D;
 }
 

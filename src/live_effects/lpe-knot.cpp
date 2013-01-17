@@ -46,7 +46,7 @@ class KnotHolderEntityCrossingSwitcher : public LPEKnotHolderEntity {
 public:
     KnotHolderEntityCrossingSwitcher(LPEKnot *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
     virtual void knot_click(guint state);
 };
 
@@ -531,7 +531,7 @@ collectPathsAndWidths (SPLPEItem const *lpeitem, std::vector<Geom::Path> &paths,
 
 
 void
-LPEKnot::doBeforeEffect (SPLPEItem *lpeitem)
+LPEKnot::doBeforeEffect (SPLPEItem const* lpeitem)
 {
     using namespace Geom;
     original_bbox(lpeitem);
@@ -631,9 +631,9 @@ KnotHolderEntityCrossingSwitcher::knot_set(Geom::Point const &p, Geom::Point con
 }
 
 Geom::Point
-KnotHolderEntityCrossingSwitcher::knot_get()
+KnotHolderEntityCrossingSwitcher::knot_get() const
 {
-    LPEKnot* lpe = dynamic_cast<LPEKnot *>(_effect);
+    LPEKnot const *lpe = dynamic_cast<LPEKnot const*>(_effect);
     return lpe->switcher;
 }
 

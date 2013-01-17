@@ -54,13 +54,13 @@ public:
     EffectType effectType() const;
 
     virtual void doOnApply (SPLPEItem const* lpeitem);
-    virtual void doBeforeEffect (SPLPEItem *lpeitem);
+    virtual void doBeforeEffect (SPLPEItem const* lpeitem);
 
     void writeParamsToSVG();
 
-    virtual void acceptParamPath (SPPath *param_path);
+    virtual void acceptParamPath (SPPath const* param_path);
     static int acceptsNumClicks(EffectType type);
-    int acceptsNumClicks() { return acceptsNumClicks(effectType()); }
+    int acceptsNumClicks() const { return acceptsNumClicks(effectType()); }
     void doAcceptPathPreparations(SPLPEItem *lpeitem);
 
     /*
@@ -90,20 +90,20 @@ public:
     //       (but spiro lpe still needs it!)
     virtual LPEPathFlashType pathFlashType() const { return DEFAULT; }
     void addHandles(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
-    std::vector<Geom::PathVector> getHelperPaths(SPLPEItem *lpeitem);
+    std::vector<Geom::PathVector> getHelperPaths(SPLPEItem const* lpeitem);
 
     inline bool providesOwnFlashPaths() const {
         return provides_own_flash_paths || show_orig_path;
     }
     inline bool showOrigPath() const { return show_orig_path; }
 
-    Glib::ustring          getName();
+    Glib::ustring          getName() const;
     Inkscape::XML::Node *  getRepr();
     SPDocument *           getSPDoc();
     LivePathEffectObject * getLPEObj() {return lpeobj;};
     Parameter *            getParameter(const char * key);
 
-    void readallParameters(Inkscape::XML::Node * repr);
+    void readallParameters(Inkscape::XML::Node const* repr);
     void setParameter(const gchar * key, const gchar * new_value);
 
     inline bool isVisible() const { return is_visible; }
@@ -128,7 +128,7 @@ protected:
 
     virtual void addKnotHolderEntities(KnotHolder * /*knotholder*/, SPDesktop * /*desktop*/, SPItem * /*item*/) {};
 
-    virtual void addCanvasIndicators(SPLPEItem *lpeitem, std::vector<Geom::PathVector> &hp_vec);
+    virtual void addCanvasIndicators(SPLPEItem const* lpeitem, std::vector<Geom::PathVector> &hp_vec);
 
     std::vector<Parameter *> param_vector;
     bool _provides_knotholder_entities;

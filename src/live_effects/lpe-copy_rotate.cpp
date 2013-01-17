@@ -34,14 +34,14 @@ class KnotHolderEntityStartingAngle : public LPEKnotHolderEntity {
 public:
     KnotHolderEntityStartingAngle(LPECopyRotate *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
 };
 
 class KnotHolderEntityRotationAngle : public LPEKnotHolderEntity {
 public:
     KnotHolderEntityRotationAngle(LPECopyRotate *effect) : LPEKnotHolderEntity(effect) {};
     virtual void knot_set(Geom::Point const &p, Geom::Point const &origin, guint state);
-    virtual Geom::Point knot_get();
+    virtual Geom::Point knot_get() const;
 };
 
 } // namespace CR
@@ -188,16 +188,16 @@ KnotHolderEntityRotationAngle::knot_set(Geom::Point const &p, Geom::Point const 
 }
 
 Geom::Point
-KnotHolderEntityStartingAngle::knot_get()
+KnotHolderEntityStartingAngle::knot_get() const
 {
-    LPECopyRotate* lpe = dynamic_cast<LPECopyRotate *>(_effect);
+    LPECopyRotate const *lpe = dynamic_cast<LPECopyRotate const*>(_effect);
     return lpe->start_pos;
 }
 
 Geom::Point
-KnotHolderEntityRotationAngle::knot_get()
+KnotHolderEntityRotationAngle::knot_get() const
 {
-    LPECopyRotate* lpe = dynamic_cast<LPECopyRotate *>(_effect);
+    LPECopyRotate const *lpe = dynamic_cast<LPECopyRotate const*>(_effect);
     return lpe->rot_pos;
 }
 
