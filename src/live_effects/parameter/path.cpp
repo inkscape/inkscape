@@ -77,7 +77,7 @@ PathParam::~PathParam()
 }
 
 std::vector<Geom::Path> const &
-PathParam::get_pathvector()
+PathParam::get_pathvector() const
 {
     return _pathvector;
 }

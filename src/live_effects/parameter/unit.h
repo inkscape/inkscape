@@ -30,11 +30,11 @@ public:
     virtual gchar * param_getSVGValue() const;
     virtual void param_set_default();
     void param_set_value(SPUnit const *val);
-    const gchar *get_abbreviation();
+    const gchar *get_abbreviation() const;
 
     virtual Gtk::Widget * param_newWidget();
 
-    operator SPUnit const *() { return unit; }
+    operator SPUnit const *() const { return unit; }
 
 private:
     SPUnit const *unit;

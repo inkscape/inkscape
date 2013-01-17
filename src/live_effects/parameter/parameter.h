@@ -59,7 +59,7 @@ public:
     virtual Glib::ustring * param_getTooltip() { return &param_tooltip; };
 
     // overload these for your particular parameter to make it provide knotholder handles or canvas helperpaths
-    virtual bool providesKnotHolderEntities() { return false; }
+    virtual bool providesKnotHolderEntities() const { return false; }
     virtual void addKnotHolderEntities(KnotHolder */*knotholder*/, SPDesktop */*desktop*/, SPItem */*item*/) {};
     virtual void addCanvasIndicators(SPLPEItem */*lpeitem*/, std::vector<Geom::PathVector> &/*hp_vec*/) {};
 
@@ -112,8 +112,7 @@ public:
 
     virtual Gtk::Widget * param_newWidget();
 
-    inline operator gdouble()
-        { return value; };
+    inline operator gdouble() const { return value; };
 
 protected:
     gdouble value;

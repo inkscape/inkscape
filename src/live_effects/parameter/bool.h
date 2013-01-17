@@ -36,10 +36,9 @@ public:
     void param_setValue(bool newvalue);
     virtual void param_set_default();
 
-    bool get_value() { return value; };
+    bool get_value() const { return value; };
 
-    inline operator bool()
-        { return value; };
+    inline operator bool() const { return value; };
 
 private:
     BoolParam(const BoolParam&);

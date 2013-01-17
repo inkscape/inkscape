@@ -309,7 +309,7 @@ Effect::getName()
 }
 
 EffectType
-Effect::effectType() {
+Effect::effectType() const {
     return lpeobj->effecttype;
 }
 
@@ -663,7 +663,7 @@ Effect::transform_multiply(Geom::Affine const& postmul, bool set)
 }
 
 bool
-Effect::providesKnotholder()
+Effect::providesKnotholder() const
 {
     // does the effect actively provide any knotholder entities of its own?
     if (_provides_knotholder_entities) {
@@ -671,7 +671,7 @@ Effect::providesKnotholder()
     }
 
     // otherwise: are there any parameters that have knotholderentities?
-    for (std::vector<Parameter *>::iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
+    for (std::vector<Parameter *>::const_iterator p = param_vector.begin(); p != param_vector.end(); ++p) {
         if ((*p)->providesKnotHolderEntities()) {
             return true;
         }

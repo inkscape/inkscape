@@ -31,7 +31,7 @@ public:
                 const gchar * default_value = "M0,0 L1,1");
     virtual ~PathParam();
 
-    std::vector<Geom::Path> const & get_pathvector();
+    std::vector<Geom::Path> const & get_pathvector() const;
     Geom::Piecewise<Geom::D2<Geom::SBasis> > const & get_pwd2();
 
     virtual Gtk::Widget * param_newWidget();

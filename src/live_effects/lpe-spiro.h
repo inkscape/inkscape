@@ -18,7 +18,7 @@ public:
     LPESpiro(LivePathEffectObject *lpeobject);
     virtual ~LPESpiro();
 
-    virtual LPEPathFlashType pathFlashType() { return SUPPRESS_FLASH; }
+    virtual LPEPathFlashType pathFlashType() const { return SUPPRESS_FLASH; }
 
     virtual void doEffect(SPCurve * curve);
 

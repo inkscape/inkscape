@@ -59,7 +59,7 @@ UnitParam::param_set_value(SPUnit const *val)
 }
 
 const gchar *
-UnitParam::get_abbreviation()
+UnitParam::get_abbreviation() const
 {
     return sp_unit_get_abbreviation(unit);
 }

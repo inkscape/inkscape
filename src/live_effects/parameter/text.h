@@ -46,7 +46,7 @@ public:
 			 const double t, const double length, bool use_curvature = false);
     void setAnchor(double x_value, double y_value);
 
-    const Glib::ustring get_value() { return defvalue; };
+    const Glib::ustring get_value() const { return defvalue; };
 
 private:
     TextParam(const TextParam&);

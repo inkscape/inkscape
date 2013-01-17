@@ -42,8 +42,7 @@ public:
     void resetRandomizer();
 
     operator gdouble();
-    inline gdouble get_value()
-        { return value; } ;
+    inline gdouble get_value() { return value; } ;
 
 protected:
     long startseed;

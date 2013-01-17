@@ -52,7 +52,7 @@ public:
     void set_origin_oncanvas_looks(SPKnotShapeType shape, SPKnotModeType mode, guint32 color);
     void set_oncanvas_color(guint32 color);
 
-    virtual bool providesKnotHolderEntities() { return true; }
+    virtual bool providesKnotHolderEntities() const { return true; }
     virtual void addKnotHolderEntities(KnotHolder *knotholder, SPDesktop *desktop, SPItem *item);
 
 private:
