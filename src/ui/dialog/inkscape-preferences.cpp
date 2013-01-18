@@ -1651,7 +1651,7 @@ void InkscapePreferences::onKBListKeyboardShortcuts()
         }
 
         // Find this group in the tree
-        Glib::ustring group = verb->get_group() ? verb->get_group() : "Misc";
+        Glib::ustring group = verb->get_group() ? _(verb->get_group()) : _("Misc");
         Gtk::TreeStore::iterator iter_group;
         bool found = false;
         while (path) {
@@ -1679,7 +1679,7 @@ void InkscapePreferences::onKBListKeyboardShortcuts()
         }
 
         // Remove the key accelerators from the verb name
-        Glib::ustring name = verb->get_name();
+        Glib::ustring name = _(verb->get_name());
         std::string::size_type k = 0;
         while((k=name.find('_',k))!=name.npos) {
             name.erase(k, 1);
@@ -1698,9 +1698,9 @@ void InkscapePreferences::onKBListKeyboardShortcuts()
         }
         // Add the verb to the group
         Gtk::TreeStore::iterator row = _kb_store->append(iter_group->children());
-        (*row)[_kb_columns.name] = name;
+        (*row)[_kb_columns.name] =  name;
         (*row)[_kb_columns.shortcut] = shortcut_label;
-        (*row)[_kb_columns.description] = verb->get_short_tip() ? verb->get_short_tip() : "";
+        (*row)[_kb_columns.description] = verb->get_short_tip() ? _(verb->get_short_tip()) : "";
         (*row)[_kb_columns.shortcutid] = shortcut_id;
         (*row)[_kb_columns.id] = verb->get_id();
         (*row)[_kb_columns.user_set] = sp_shortcut_is_user_set(verb);
