@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-01-15 09:14+0100\n"
-"PO-Revision-Date: 2013-01-16 10:11+0100\n"
+"PO-Revision-Date: 2013-01-18 21:47+0100\n"
 "Last-Translator: Uwe Schoeler <mail@uwe-schoeler.de>\n"
 "Language-Team:  <de@li.org>\n"
 "Language: de\n"
@@ -686,10 +686,9 @@ msgstr "Innenliegender Farbschatten, äußerer schwarzer Schatten"
 msgid "Air Spray"
 msgstr "Airbrush"
 
-# Wie Thickness einbringen?
 #: ../share/filters/filters.svg.h:1
 msgid "Convert to small scattered particles with some thickness"
-msgstr "In kleine verstreute Partikel umwandeln"
+msgstr "In kleine verstreute Partikel mit etwas Dicke umwandeln"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Warm Inside"
@@ -1064,10 +1063,9 @@ msgstr "Comic sahnig"
 msgid "Non realistic 3D shaders"
 msgstr "Übersteigerte Schattierungen"
 
-# Could be better
 #: ../share/filters/filters.svg.h:1
 msgid "Comics shader with creamy waves transparency"
-msgstr "Comicschattierung mit flockiger Oberfläche und Transparenz"
+msgstr "Comicschattierung mit cremiger Wellen-Transparenz"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Chewing Gum"
@@ -1270,10 +1268,9 @@ msgstr "Erzeugt eine einstellbare raue Oberfläche auf Materialien und Bildern "
 msgid "Lapping"
 msgstr "Läppen"
 
-# Übersetzung passt nicht?
 #: ../share/filters/filters.svg.h:1
 msgid "Something like a water noise"
-msgstr "Dünn, wie eine Seifenblase"
+msgstr "Etwas wie leichte Wasserbewegung"
 
 #: ../share/filters/filters.svg.h:1
 msgid "Monochrome Transparency"
@@ -3333,10 +3330,9 @@ msgstr "<b>3D Box</b>; <b>Umschalt</b> um in Z-Richtung zu vergrößern"
 msgid "Create 3D box"
 msgstr "3D-Quader erzeugen"
 
-# !!!
 #: ../src/box3d.cpp:321
 msgid "<b>3D Box</b>"
-msgstr "<b>3D Quader</b>"
+msgstr "<b>3D Box</b>"
 
 #: ../src/connector-context.cpp:610
 msgid "Creating new connector"
@@ -3492,17 +3488,15 @@ msgstr "<b>P6M</b>: Reflektion + 60&#176; Rotation"
 msgid "Select one of the 17 symmetry groups for the tiling"
 msgstr "Eine der 17 Symmetrie-Gruppen zum Kacheln auswählen"
 
-# Translators: This is *not* the key name.
 #: ../src/ui/dialog/clonetiler.cpp:180
 msgid "S_hift"
-msgstr "_Verschiebung"
+msgstr "Versc_hiebung"
 
-# !!!
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
 #: ../src/ui/dialog/clonetiler.cpp:190
 #, no-c-format
 msgid "<b>Shift X:</b>"
-msgstr "<b>X-Verschiebung:</b>"
+msgstr "<b>Verschiebung X:</b>"
 
 #: ../src/ui/dialog/clonetiler.cpp:198
 #, no-c-format
@@ -3518,12 +3512,11 @@ msgstr "Horizontale Verschiebung pro Spalte (in % der Kachelbreite)"
 msgid "Randomize the horizontal shift by this percentage"
 msgstr "Zufällige horizontale Verschiebung um diesen Prozentsatz"
 
-# !!!
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) vertically by this amount
 #: ../src/ui/dialog/clonetiler.cpp:222
 #, no-c-format
 msgid "<b>Shift Y:</b>"
-msgstr "<b>Y-Verschiebung:</b>"
+msgstr "<b>Verschiebung X:</b>"
 
 #: ../src/ui/dialog/clonetiler.cpp:230
 #, no-c-format
@@ -3787,7 +3780,6 @@ msgstr ""
 "Ursprüngliche Farbe der Klone (Füllung oder Kontur des Originals dürfen "
 "nicht gesetzt sein )"
 
-# !!!
 #: ../src/ui/dialog/clonetiler.cpp:682
 msgid "<b>H:</b>"
 msgstr "<b>H:</b>"
@@ -3804,7 +3796,6 @@ msgstr "Farbton der Kacheln um diesen Prozentsatz für jede Spalte verändern"
 msgid "Randomize the tile hue by this percentage"
 msgstr "Farbton der Kachel zufällig um diesen Prozentsatz verändern"
 
-# !!!
 #: ../src/ui/dialog/clonetiler.cpp:709
 msgid "<b>S:</b>"
 msgstr "<b>S:</b>"
@@ -3823,7 +3814,6 @@ msgstr ""
 msgid "Randomize the color saturation by this percentage"
 msgstr "Farbsättigung um diesen Prozentsatz zufällig verändern"
 
-# !!!
 #: ../src/ui/dialog/clonetiler.cpp:735
 msgid "<b>L:</b>"
 msgstr "<b>L:</b>"
@@ -4176,7 +4166,7 @@ msgid ""
 "Export each selected object into its own PNG file, using export hints if any "
 "(caution, overwrites without asking!)"
 msgstr ""
-"Exportiere jedes gewählte Objekt in eine eigene PNG-Datei, unter "
+"Exportiert jedes gewählte Objekt in eine eigene PNG-Datei, unter "
 "Berücksichtigung von Exporthinweisen, wenn vorhanden (Vorsicht, überschreibt "
 "ohne Warnung!)"
 
@@ -4228,7 +4218,6 @@ msgstr "y_1:"
 msgid "Hei_ght:"
 msgstr "Höhe:"
 
-# !!!
 #: ../src/ui/dialog/export.cpp:231
 msgid "<b>Image size</b>"
 msgstr "<b>Bildgröße</b>"
@@ -4493,12 +4482,10 @@ msgstr "Versatz"
 msgid "_Accept"
 msgstr "_Bestätigen"
 
-# CHECK
 #: ../src/ui/dialog/spellcheck.cpp:74
 msgid "_Ignore once"
 msgstr "Einmal _ignorieren"
 
-# CHECK
 #: ../src/ui/dialog/spellcheck.cpp:75
 msgid "_Ignore"
 msgstr "_Ignorieren"
@@ -5213,7 +5200,6 @@ msgstr "[Unverändert]"
 msgid "_Undo"
 msgstr "_Rückgängig"
 
-# !!! "Wiederholen" wird evtl. spaeter fuer "repeat" gebraucht
 #: ../src/event-log.cpp:274 ../src/event-log.cpp:278 ../src/verbs.cpp:2338
 msgid "_Redo"
 msgstr "_Wiederherstellen"
@@ -6780,11 +6766,10 @@ msgstr "Identität"
 msgid "Table"
 msgstr "Tabelle"
 
-# CHECK
 #: ../src/extension/internal/filter/color.h:428
 #: ../src/extension/internal/filter/paint.h:500 ../src/filter-enums.cpp:84
 msgid "Discrete"
-msgstr "Separat"
+msgstr "Getrennt"
 
 #: ../src/extension/internal/filter/color.h:429 ../src/filter-enums.cpp:85
 #: ../src/live_effects/lpe-powerstroke.cpp:188
@@ -7185,7 +7170,6 @@ msgstr "eng"
 msgid "No fill"
 msgstr "Keine Füllung"
 
-# CHECK
 #: ../src/extension/internal/filter/distort.h:83
 msgid "Turbulence:"
 msgstr "Turbulenz:"
@@ -7197,7 +7181,6 @@ msgstr "Turbulenz:"
 msgid "Fractal noise"
 msgstr "Fraktales Rauschen"
 
-# CHECK
 #: ../src/extension/internal/filter/distort.h:85
 #: ../src/extension/internal/filter/distort.h:194
 #: ../src/extension/internal/filter/overlays.h:62
@@ -7253,7 +7236,6 @@ msgstr "verwischt und versetzt Kanten von Formen und Bildern"
 msgid "Roughen"
 msgstr "Aufraumodus"
 
-# CHECK
 #: ../src/extension/internal/filter/distort.h:192
 #: ../src/extension/internal/filter/overlays.h:60
 #: ../src/extension/internal/filter/paint.h:692
@@ -7564,10 +7546,9 @@ msgstr "Konturfarbe"
 msgid "Image on stroke"
 msgstr "Bild als Kontur"
 
-# !!!
 #: ../src/extension/internal/filter/paint.h:367
 msgid "Convert images to duochrome drawings"
-msgstr "Konvertiere Bilder zu Duochrome-Zeichnungen"
+msgstr "Konvertiert Bilder nach Duochrome-Zeichnungen"
 
 #: ../src/extension/internal/filter/paint.h:495
 msgid "Electrize"
