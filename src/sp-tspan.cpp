@@ -48,9 +48,6 @@
 #  SPTSPAN
 #####################################################*/
 
-static void sp_tspan_class_init(SPTSpanClass *classname);
-static void sp_tspan_init(SPTSpan *tspan);
-
 static void sp_tspan_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
 static void sp_tspan_release(SPObject *object);
 static void sp_tspan_set(SPObject *object, unsigned key, gchar const *value);
@@ -60,43 +57,13 @@ static Geom::OptRect sp_tspan_bbox(SPItem const *item, Geom::Affine const &trans
 static Inkscape::XML::Node *sp_tspan_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static char *sp_tspan_description (SPItem *item);
 
-static SPItemClass *tspan_parent_class;
-
-/**
- *
- */
-GType
-sp_tspan_get_type()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPTSpanClass),
-            NULL,    /* base_init */
-            NULL,    /* base_finalize */
-            (GClassInitFunc) sp_tspan_class_init,
-            NULL,    /* class_finalize */
-            NULL,    /* class_data */
-            sizeof(SPTSpan),
-            16,    /* n_preallocs */
-            (GInstanceInitFunc) sp_tspan_init,
-            NULL,    /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_ITEM, "SPTSpan", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPTSpan, sp_tspan, SP_TYPE_ITEM);
 
 static void
 sp_tspan_class_init(SPTSpanClass *classname)
 {
-    SPObjectClass * sp_object_class;
-    SPItemClass * item_class;
-
-    sp_object_class = (SPObjectClass *) classname;
-    item_class = (SPItemClass *) classname;
-
-    tspan_parent_class = (SPItemClass*)g_type_class_ref(SP_TYPE_ITEM);
+    SPObjectClass *sp_object_class = SP_OBJECT_CLASS(classname);
+    SPItemClass   *item_class      = SP_ITEM_CLASS(classname);
 
     sp_object_class->build = sp_tspan_build;
     sp_object_class->release = sp_tspan_release;
@@ -123,15 +90,13 @@ sp_tspan_release(SPObject *object)
 
     tspan->attributes.~TextTagAttributes();
 
-    if (((SPObjectClass *) tspan_parent_class)->release)
-        ((SPObjectClass *) tspan_parent_class)->release(object);
+    if ((SP_OBJECT_CLASS(sp_tspan_parent_class))->release)
+        (SP_OBJECT_CLASS(sp_tspan_parent_class))->release(object);
 }
 
 static void
 sp_tspan_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
 {
-    //SPTSpan *tspan = SP_TSPAN(object);
-
     object->readAttr( "x" );
     object->readAttr( "y" );
     object->readAttr( "dx" );
@@ -139,8 +104,8 @@ sp_tspan_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
     object->readAttr( "rotate" );
     object->readAttr( "sodipodi:role" );
 
-    if (((SPObjectClass *) tspan_parent_class)->build)
-        ((SPObjectClass *) tspan_parent_class)->build(object, doc, repr);
+    if ((SP_OBJECT_CLASS(sp_tspan_parent_class))->build)
+        (SP_OBJECT_CLASS(sp_tspan_parent_class))->build(object, doc, repr);
 }
 
 static void
@@ -160,8 +125,8 @@ sp_tspan_set(SPObject *object, unsigned key, gchar const *value)
                 }
                 break;
             default:
-                if (((SPObjectClass *) tspan_parent_class)->set)
-                    (((SPObjectClass *) tspan_parent_class)->set)(object, key, value);
+                if ((SP_OBJECT_CLASS(sp_tspan_parent_class))->set)
+                    (SP_OBJECT_CLASS(sp_tspan_parent_class))->set(object, key, value);
                 break;
         }
     }
@@ -169,8 +134,8 @@ sp_tspan_set(SPObject *object, unsigned key, gchar const *value)
 
 static void sp_tspan_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    if (((SPObjectClass *) tspan_parent_class)->update) {
-        ((SPObjectClass *) tspan_parent_class)->update(object, ctx, flags);
+    if ((SP_OBJECT_CLASS(sp_tspan_parent_class))->update) {
+        (SP_OBJECT_CLASS(sp_tspan_parent_class))->update(object, ctx, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -187,8 +152,8 @@ static void sp_tspan_update(SPObject *object, SPCtx *ctx, guint flags)
 
 static void sp_tspan_modified(SPObject *object, unsigned flags)
 {
-    if (((SPObjectClass *) tspan_parent_class)->modified) {
-        ((SPObjectClass *) tspan_parent_class)->modified(object, flags);
+    if ((SP_OBJECT_CLASS(sp_tspan_parent_class))->modified) {
+        (SP_OBJECT_CLASS(sp_tspan_parent_class))->modified(object, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -272,8 +237,8 @@ sp_tspan_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
         }
     }
 
-    if (((SPObjectClass *) tspan_parent_class)->write) {
-        ((SPObjectClass *) tspan_parent_class)->write(object, xml_doc, repr, flags);
+    if ((SP_OBJECT_CLASS(sp_tspan_parent_class))->write) {
+        (SP_OBJECT_CLASS(sp_tspan_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -292,8 +257,6 @@ sp_tspan_description(SPItem *item)
 #  SPTEXTPATH
 #####################################################*/
 
-static void sp_textpath_class_init(SPTextPathClass *classname);
-static void sp_textpath_init(SPTextPath *textpath);
 static void sp_textpath_finalize(GObject *obj);
 
 static void sp_textpath_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
@@ -303,42 +266,15 @@ static void sp_textpath_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_textpath_modified(SPObject *object, unsigned flags);
 static Inkscape::XML::Node *sp_textpath_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static SPItemClass *textpath_parent_class;
-
 void   refresh_textpath_source(SPTextPath* offset);
 
+G_DEFINE_TYPE(SPTextPath, sp_textpath, SP_TYPE_ITEM);
 
-/**
- *
- */
-GType
-sp_textpath_get_type()
+static void
+sp_textpath_class_init(SPTextPathClass *classname)
 {
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPTextPathClass),
-            NULL,    /* base_init */
-            NULL,    /* base_finalize */
-            (GClassInitFunc) sp_textpath_class_init,
-            NULL,    /* class_finalize */
-            NULL,    /* class_data */
-            sizeof(SPTextPath),
-            16,    /* n_preallocs */
-            (GInstanceInitFunc) sp_textpath_init,
-            NULL,    /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_ITEM, "SPTextPath", &info, (GTypeFlags)0);
-    }
-    return type;
-}
-
-static void sp_textpath_class_init(SPTextPathClass *classname)
-{
-    GObjectClass  *gobject_class = reinterpret_cast<GObjectClass *>(classname);
-    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(classname);
-
-    textpath_parent_class = reinterpret_cast<SPItemClass*>(g_type_class_ref(SP_TYPE_ITEM));
+    GObjectClass  *gobject_class   = G_OBJECT_CLASS(classname);
+    SPObjectClass *sp_object_class = SP_OBJECT_CLASS(classname);
 
     gobject_class->finalize = sp_textpath_finalize;
 
@@ -381,11 +317,12 @@ sp_textpath_release(SPObject *object)
     if (textpath->originalPath) delete textpath->originalPath;
     textpath->originalPath = NULL;
 
-    if (((SPObjectClass *) textpath_parent_class)->release)
-        ((SPObjectClass *) textpath_parent_class)->release(object);
+    if ((SP_OBJECT_CLASS(sp_textpath_parent_class))->release)
+        (SP_OBJECT_CLASS(sp_textpath_parent_class))->release(object);
 }
 
-static void sp_textpath_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
+static void
+sp_textpath_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
 {
     object->readAttr( "x" );
     object->readAttr( "y" );
@@ -410,8 +347,8 @@ static void sp_textpath_build(SPObject *object, SPDocument *doc, Inkscape::XML::
         repr->addChild(rch, NULL);
     }
 
-    if (((SPObjectClass *) textpath_parent_class)->build) {
-        ((SPObjectClass *) textpath_parent_class)->build(object, doc, repr);
+    if ((SP_OBJECT_CLASS(sp_textpath_parent_class))->build) {
+        (SP_OBJECT_CLASS(sp_textpath_parent_class))->build(object, doc, repr);
     }
 }
 
@@ -432,8 +369,8 @@ sp_textpath_set(SPObject *object, unsigned key, gchar const *value)
                 object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
                 break;
             default:
-                if (((SPObjectClass *) textpath_parent_class)->set)
-                    (((SPObjectClass *) textpath_parent_class)->set)(object, key, value);
+                if ((SP_OBJECT_CLASS(sp_textpath_parent_class))->set)
+                    (SP_OBJECT_CLASS(sp_textpath_parent_class))->set(object, key, value);
                 break;
         }
     }
@@ -449,8 +386,8 @@ static void sp_textpath_update(SPObject *object, SPCtx *ctx, guint flags)
     }
     textpath->isUpdating = false;
 
-    if (((SPObjectClass *) textpath_parent_class)->update) {
-        ((SPObjectClass *) textpath_parent_class)->update(object, ctx, flags);
+    if ((SP_OBJECT_CLASS(sp_textpath_parent_class))->update) {
+        (SP_OBJECT_CLASS(sp_textpath_parent_class))->update(object, ctx, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -486,10 +423,11 @@ void   refresh_textpath_source(SPTextPath* tp)
     }
 }
 
-static void sp_textpath_modified(SPObject *object, unsigned flags)
+static void
+sp_textpath_modified(SPObject *object, unsigned flags)
 {
-    if (((SPObjectClass *) textpath_parent_class)->modified) {
-        ((SPObjectClass *) textpath_parent_class)->modified(object, flags);
+    if ((SP_OBJECT_CLASS(sp_textpath_parent_class))->modified) {
+        (SP_OBJECT_CLASS(sp_textpath_parent_class))->modified(object, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -503,6 +441,7 @@ static void sp_textpath_modified(SPObject *object, unsigned flags)
         }
     }
 }
+
 static Inkscape::XML::Node *
 sp_textpath_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
@@ -559,8 +498,8 @@ sp_textpath_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::
         }
     }
 
-    if (((SPObjectClass *) textpath_parent_class)->write) {
-        ((SPObjectClass *) textpath_parent_class)->write(object, xml_doc, repr, flags);
+    if ((SP_OBJECT_CLASS(sp_textpath_parent_class))->write) {
+        (SP_OBJECT_CLASS(sp_textpath_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
