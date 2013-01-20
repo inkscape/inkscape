@@ -82,15 +82,6 @@ public:
 
 } // namespace Inkscape
 
-/**
- * Key for cairo_surface_t to keep track of current color interpolation value
- * Only the address of the structure is used, it is never initialized. See:
- * http://www.cairographics.org/manual/cairo-Types.html#cairo-user-data-key-t
- */
-// TODO fixme check this usage. A static here in a header file is probably not doing what was intended:
-static cairo_user_data_key_t ci_key;
-
-
 SPColorInterpolation get_cairo_surface_ci(cairo_surface_t *surface);
 void set_cairo_surface_ci(cairo_surface_t *surface, SPColorInterpolation cif);
 void copy_cairo_surface_ci(cairo_surface_t *in, cairo_surface_t *out);

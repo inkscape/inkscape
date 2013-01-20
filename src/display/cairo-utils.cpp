@@ -27,6 +27,17 @@
 #include "style.h"
 #include "helper/geom-curves.h"
 
+namespace {
+
+/**
+ * Key for cairo_surface_t to keep track of current color interpolation value
+ * Only the address of the structure is used, it is never initialized. See:
+ * http://www.cairographics.org/manual/cairo-Types.html#cairo-user-data-key-t
+ */
+cairo_user_data_key_t ci_key;
+
+} // namespace
+
 namespace Inkscape {
 
 CairoGroup::CairoGroup(cairo_t *_ct) : ct(_ct), pushed(false) {}
