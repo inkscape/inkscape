@@ -67,6 +67,7 @@ public:
 private:
     bool blocked;
     SPItem *CurrentItem; //to store the current item, for not wasting resources
+    std::vector<Glib::ustring> int_attrs;
     std::vector<Glib::ustring> int_labels;
     
     Gtk::Table TopTable; //the table with the object properties

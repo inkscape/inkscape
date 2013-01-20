@@ -69,15 +69,25 @@ ObjectProperties::ObjectProperties (void) :
     subselChangedConn()
 {
     //initialize labels for the table at the bottom of the dialog
-    int_labels.push_back("onclick");
-    int_labels.push_back("onmouseover");
-    int_labels.push_back("onmouseout");
-    int_labels.push_back("onmousedown");
-    int_labels.push_back("onmouseup");
-    int_labels.push_back("onmousemove");
-    int_labels.push_back("onfocusin");
-    int_labels.push_back("onfocusout");
-    int_labels.push_back("onload");
+    int_attrs.push_back("onclick");
+    int_attrs.push_back("onmouseover");
+    int_attrs.push_back("onmouseout");
+    int_attrs.push_back("onmousedown");
+    int_attrs.push_back("onmouseup");
+    int_attrs.push_back("onmousemove");
+    int_attrs.push_back("onfocusin");
+    int_attrs.push_back("onfocusout");
+    int_attrs.push_back("onload");
+	
+    int_labels.push_back("onclick:");
+    int_labels.push_back("onmouseover:");
+    int_labels.push_back("onmouseout:");
+    int_labels.push_back("onmousedown:");
+    int_labels.push_back("onmouseup:");
+    int_labels.push_back("onmousemove:");
+    int_labels.push_back("onfocusin:");
+    int_labels.push_back("onfocusout:");
+    int_labels.push_back("onload:");
     
     desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &ObjectProperties::setTargetDesktop) );
     deskTrack.connect(GTK_WIDGET(gobj()));
@@ -291,7 +301,7 @@ void ObjectProperties::widget_setup(void)
         
         if (CurrentItem == NULL)
         {
-            attrTable.set_object(obj, int_labels, int_labels, (GtkWidget*)EInteractivity.gobj());
+            attrTable.set_object(obj, int_labels, int_attrs, (GtkWidget*)EInteractivity.gobj());
         }
         else
         {
