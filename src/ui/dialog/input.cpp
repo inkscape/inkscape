@@ -999,7 +999,7 @@ InputDialogImpl::ConfPanel::ConfPanel() :
     titleLabel(""),
     axisFrame(_("Axes")),
     keysFrame(_("Keys")),
-    modeLabel(_("Mode")),
+    modeLabel(_("Mode:")),
     modeBox(false, 4)
 
 {
