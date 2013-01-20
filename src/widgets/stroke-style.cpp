@@ -549,8 +549,9 @@ gboolean StrokeStyle::setStrokeWidthUnit(SPUnitSelector *,
 
         gdouble average = stroke_average_width (objects);
 
-        if (average == Geom::infinity() || average == 0)
+        if ((average == Geom::infinity()) || (average < 1e-8)){ //less than 1e-8: to campare against zero, while taking numeric accuracy into account
             return FALSE;
+        }
 
 #if WITH_GTKMM_3_0
         (*spw->widthAdj)->set_value(100.0 * w / average);
