@@ -862,7 +862,7 @@ SPDocument::removeUndoObserver(Inkscape::UndoStackObserver& observer)
 
 SPObject *SPDocument::getObjectById(Glib::ustring const &id) const
 {
-    return getObjectById( id.c_str() );
+    return getObjectById( id );
 }
 
 SPObject *SPDocument::getObjectById(gchar const *id) const

@@ -195,7 +195,7 @@ ExecutionEnv::reselect (void) {
     Inkscape::Selection * selection = sp_desktop_selection(desktop);
 
     for (std::list<Glib::ustring>::iterator i = _selected.begin(); i != _selected.end(); ++i) {
-        SPObject * obj = doc->getObjectById(i->c_str());
+        SPObject * obj = doc->getObjectById(*i);
         if (obj != NULL) {
             selection->add(obj);
         }
