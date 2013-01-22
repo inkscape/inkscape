@@ -36,9 +36,9 @@ struct IdReference {
     const char *attr;  // property or href-like attribute
 };
 
-typedef std::map<std::string, std::list<IdReference> > refmap_type;
+typedef std::map<Glib::ustring, std::list<IdReference> > refmap_type;
 
-typedef std::pair<SPObject*, std::string> id_changeitem_type;
+typedef std::pair<SPObject*, Glib::ustring> id_changeitem_type;
 typedef std::list<id_changeitem_type> id_changelist_type;
 
 const char *href_like_attributes[] = {
@@ -298,7 +298,7 @@ void
 change_def_references(SPObject *from_obj, SPObject *to_obj)
 {
     refmap_type *refmap = new refmap_type;
-    id_changelist_type id_changes;
+    id_changelist_type id_changes; //delete this line
     SPDocument *current_doc = from_obj->document;
     std::string old_id(from_obj->getId());
 
@@ -324,9 +324,15 @@ change_def_references(SPObject *from_obj, SPObject *to_obj)
  */
 void rename_id(SPObject *elem, Glib::ustring const &new_name)
 {
-    gchar *id = g_strdup(new_name.c_str());
+    if (new_name.empty()){
+        g_message("Invalid Id, will not change.");
+        return;
+    }
+    gchar *id = g_strdup(new_name.c_str()); //id is not empty here as new_name is check to be not empty
     g_strcanon (id, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.:", '_');
-    if (!*id || !isalnum (*id)) {
+    Glib::ustring new_name2 = id; //will not fail as id can not be NULL, see length check on new_name
+    g_free (id);
+    if (!isalnum (new_name2[0])) {
         g_message("Invalid Id, will not change.");
         return;
     }
@@ -337,31 +343,27 @@ void rename_id(SPObject *elem, Glib::ustring const &new_name)
     find_references(current_doc->getRoot(), refmap);
 
     std::string old_id(elem->getId());
-    std::string new_id(id);
-    if (id && current_doc->getObjectById(id)) {
+    if (current_doc->getObjectById(id)) {
         // Choose a new ID.
         // To try to preserve any meaningfulness that the original ID
         // may have had, the new ID is the old ID followed by a hyphen
         // and one or more digits.
-        new_id += '-';
+        new_name2 += '-';
         for (;;) {
-            new_id += "0123456789"[std::rand() % 10];
-            const char *str = new_id.c_str();
-            if (current_doc->getObjectById(str) == NULL)
+            new_name2 += "0123456789"[std::rand() % 10];
+            if (current_doc->getObjectById(new_name2) == NULL)
                 break;
         }
     }
 
     // Change to the new ID
-    elem->getRepr()->setAttribute("id", new_id.c_str());
+    elem->getRepr()->setAttribute("id", new_name2.c_str());
     // Make a note of this change, if we need to fix up refs to it
     if (refmap->find(old_id) != refmap->end()) {
         id_changes.push_back(id_changeitem_type(elem, old_id));
     }
 
     fix_up_refs(refmap, id_changes);
-
-    g_free (id);
     delete refmap;
 }
 
