@@ -298,7 +298,6 @@ void
 change_def_references(SPObject *from_obj, SPObject *to_obj)
 {
     refmap_type *refmap = new refmap_type;
-    id_changelist_type id_changes; //delete this line
     SPDocument *current_doc = from_obj->document;
     std::string old_id(from_obj->getId());
 
