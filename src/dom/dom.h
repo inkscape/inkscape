@@ -224,7 +224,8 @@ public:
 
 
     DOMException(const DOMString &reasonMsg)
-        { msg = reasonMsg; }
+        : msg (reasonMsg)
+        { }
 
     DOMException(short theCode)
         {
@@ -318,8 +319,8 @@ public:
      *
      */
     DOMStringList(const DOMStringList &other)
+        : strings (other.strings)
         {
-        strings = other.strings;
         }
 
     /**
@@ -369,14 +370,14 @@ private:
     {
 	public:
 	    NamePair(const DOMString &theNamespaceURI, const DOMString &theName)
+	        : namespaceURI (theNamespaceURI),
+	          name         (theName)
 	        {
-	        namespaceURI = theNamespaceURI;
-	        name         = theName;
 	        }
 	    NamePair(const NamePair &other)
+	        : namespaceURI (other.namespaceURI),
+	          name         (other.name)
 	        {
-	        namespaceURI = other.namespaceURI;
-	        name         = other.name;
 	        }
 	    NamePair &operator=(const NamePair &other)
 	        {
@@ -463,8 +464,8 @@ public:
      *
      */
     NameList(const NameList &other)
+        : namePairs (other.namePairs)
         {
-        namePairs = other.namePairs;
         }
 
     /**
@@ -533,8 +534,8 @@ public:
      *
      */
     DOMImplementationList(const DOMImplementationList &other)
+        : implementations (other.implementations)
         {
-        implementations = other.implementations;
         }
 
     /**
@@ -1018,8 +1019,8 @@ public:
      *
      */
     NodeList(const NodeList &other)
+        : nodes (other.nodes)
         {
-        nodes = other.nodes;
         }
 
     /**
@@ -1087,10 +1088,10 @@ private:
 	    NamedNodeMapEntry(const DOMString &theNamespaceURI,
 	                      const DOMString &theName,
 	                      const NodePtr   theNode)
+	        : namespaceURI (theNamespaceURI),
+	          name         (theName),
+	          node         (theNode)
 	        {
-	        namespaceURI = theNamespaceURI;
-	        name         = theName;
-	        node         = theNode;
 	        }
 	    NamedNodeMapEntry(const NamedNodeMapEntry &other)
 	        {
@@ -1277,8 +1278,8 @@ public:
      *
      */
     NamedNodeMap(const NamedNodeMap &other)
+        : entries (other.entries)
         {
-        entries = other.entries;
         }
 
     /**

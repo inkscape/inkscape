@@ -209,9 +209,9 @@ void sp_attribute_clean_style(Node* repr, SPCSSAttr *css, unsigned int flags) {
     }
 
     // Find parent value for same property (property)
-    gchar const * property_p = NULL;
     gchar const * value_p = NULL;
     if( css_parent != NULL ) {
+        gchar const * property_p = NULL;
         for ( List<AttributeRecord const> iter_p = css_parent->attributeList() ; iter_p ; ++iter_p ) {
 
             property_p = g_quark_to_string(iter_p->key);

@@ -279,7 +279,7 @@ template <int S, int T> SolutionKind gaussjord_solve (double A[S][T], double x[T
     // we need to adapt the value if we we are in the "projective case" (see above)
     double val_new = (proj ? projectify<S,T>(cols, B, x, index, val) : val);
 
-    if (index != -1 && index >= 0 && index < T) {
+    if (index >= 0 && index < T) {
         // we want the specified coefficient of the solution vector to have a given value
         x[index] = val_new;
     }

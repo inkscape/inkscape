@@ -269,8 +269,8 @@ public:
      *
      */
     CSSRuleList(const CSSRuleList &other)
+        : rules (other.rules)
         {
-        rules = other.rules;
         }
 
     /**
@@ -1012,9 +1012,10 @@ public:
     /**
      *
      */
-    CSSFontFaceRule(const CSSFontFaceRule &other) : CSSRule(other)
+    CSSFontFaceRule(const CSSFontFaceRule &other)
+        : CSSRule(other),
+          style (other.style)
         {
-        style = other.style;
         }
 
     /**
@@ -1433,9 +1434,10 @@ public:
     /**
      *
      */
-    CSSValueList(const CSSValueList &other) : CSSValue(other)
+    CSSValueList(const CSSValueList &other)
+        : CSSValue(other),
+          items (other.items)
         {
-        items = other.items;
         }
 
     /**
@@ -2014,8 +2016,8 @@ public:
      *
      */
     ElementCSSInlineStyle(const ElementCSSInlineStyle &other)
+        : style (other.style)
         {
-        style = other.style;
         }
 
     /**

@@ -308,13 +308,14 @@ public:
      *
      */
     StyleSheet()
+        : type(""),
+          disabled (false),
+          ownerNode (NULL),
+          parentStylesheet (NULL),
+          href (""),
+          title (""),
+          mediaList ()
         {
-        type             = "";
-        disabled         = false;
-        ownerNode        = NULL;
-        parentStylesheet = NULL;
-        href             = "";
-        title            = "";
         }
 
 
@@ -422,8 +423,8 @@ public:
      *
      */
     StyleSheetList(const StyleSheetList &other)
+        : sheets (other.sheets)
         {
-        sheets = other.sheets;
         }
 
     /**
@@ -489,8 +490,8 @@ public:
      *
      */
     LinkStyle(const LinkStyle &other)
+        : sheet (other.sheet)
         {
-        sheet = other.sheet;
         }
 
     /**
@@ -556,8 +557,8 @@ public:
      *
      */
     DocumentStyle(const DocumentStyle &other)
+        : styleSheets (other.styleSheets)
         {
-        styleSheets = other.styleSheets;
         }
 
     /**

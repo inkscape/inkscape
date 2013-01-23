@@ -153,7 +153,7 @@ public:
     template<class Y> Ptr &operator=(const Y * ref)
         {
         decrementRefCount(_ref);
-        _ref = (Y *) ref;
+        _ref = const_cast<Y *>(ref);
         incrementRefCount(_ref);
         return *this;
         }
