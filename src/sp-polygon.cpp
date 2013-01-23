@@ -25,45 +25,17 @@
 #include "xml/repr.h"
 #include "document.h"
 
-static void sp_polygon_class_init(SPPolygonClass *pc);
-static void sp_polygon_init(SPPolygon *polygon);
-
 static void sp_polygon_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *sp_polygon_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
 static gchar *sp_polygon_description(SPItem *item);
 
-static SPShapeClass *parent_class;
-
-GType sp_polygon_get_type(void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPPolygonClass),
-            0, // base_init
-            0, // base_finalize
-            (GClassInitFunc)sp_polygon_class_init,
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPPolygon),
-            0, // n_preallocs
-            (GInstanceInitFunc)sp_polygon_init,
-            0 // value_table
-        };
-        type = g_type_register_static(SP_TYPE_SHAPE, "SPPolygon", &info, static_cast<GTypeFlags>(0));
-    }
-
-    return type;
-}
+G_DEFINE_TYPE(SPPolygon, sp_polygon, SP_TYPE_SHAPE);
 
 static void sp_polygon_class_init(SPPolygonClass *pc)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) pc;
     SPItemClass *item_class = (SPItemClass *) pc;
-
-    parent_class = (SPShapeClass *) g_type_class_ref(SP_TYPE_SHAPE);
 
     sp_object_class->build = sp_polygon_build;
     sp_object_class->write = sp_polygon_write;
@@ -79,8 +51,8 @@ static void sp_polygon_init(SPPolygon */*polygon*/)
 
 static void sp_polygon_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) parent_class)->build) {
-        ((SPObjectClass *) parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_polygon_parent_class)->build) {
+        ((SPObjectClass *) sp_polygon_parent_class)->build(object, document, repr);
     }
 
     object->readAttr( "points" );
@@ -126,8 +98,8 @@ static Inkscape::XML::Node *sp_polygon_write(SPObject *object, Inkscape::XML::Do
     repr->setAttribute("points", str);
     g_free(str);
 
-    if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_polygon_parent_class))->write) {
+        ((SPObjectClass *) (sp_polygon_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -213,8 +185,8 @@ void sp_polygon_set(SPObject *object, unsigned int key, const gchar *value)
             break;
         }
         default:
-            if (((SPObjectClass *) parent_class)->set) {
-                ((SPObjectClass *) parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_polygon_parent_class)->set) {
+                ((SPObjectClass *) sp_polygon_parent_class)->set(object, key, value);
             }
             break;
     }

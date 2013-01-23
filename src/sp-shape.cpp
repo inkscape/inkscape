@@ -54,58 +54,47 @@
 #define noSHAPE_VERBOSE
 
 void sp_shape_print (SPItem * item, SPPrintContext * ctx);
+static void sp_shape_finalize (GObject *object);
+static void sp_shape_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
+static void sp_shape_release (SPObject *object);
+static void sp_shape_set(SPObject *object, unsigned key, gchar const *value);
+static void sp_shape_update (SPObject *object, SPCtx *ctx, unsigned int flags);
+static void sp_shape_modified (SPObject *object, unsigned int flags);
+static Inkscape::XML::Node *sp_shape_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+static Geom::OptRect sp_shape_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
+static Inkscape::DrawingItem *sp_shape_show (SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
+static void sp_shape_hide (SPItem *item, unsigned int key);
+static void sp_shape_snappoints (SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+static void sp_shape_update_marker_view (SPShape *shape, Inkscape::DrawingItem *ai);
 
-SPLPEItemClass * SPShapeClass::parent_class = 0;
-
-/**
- * Registers the SPShape class with Gdk and returns its type number.
- */
-GType SPShape::getType(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof (SPShapeClass),
-            NULL, NULL,
-            (GClassInitFunc) SPShapeClass::sp_shape_class_init,
-            NULL, NULL,
-            sizeof (SPShape),
-            16,
-            (GInstanceInitFunc) sp_shape_init,
-            NULL,    /* value_table */
-        };
-        type = g_type_register_static (SP_TYPE_LPE_ITEM, "SPShape", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPShape, sp_shape, SP_TYPE_LPE_ITEM);
 
 /**
  * Initializes a SPShapeClass object.  Establishes the function pointers to the class'
  * member routines in the class vtable, and sets pointers to parent classes.
  */
-void SPShapeClass::sp_shape_class_init(SPShapeClass *klass)
+static void
+sp_shape_class_init(SPShapeClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     SPObjectClass *sp_object_class = SP_OBJECT_CLASS(klass);
     SPItemClass * item_class = SP_ITEM_CLASS(klass);
     SPLPEItemClass * lpe_item_class = SP_LPE_ITEM_CLASS(klass);
 
-    parent_class = (SPLPEItemClass *)g_type_class_peek_parent (klass);
+    gobject_class->finalize = sp_shape_finalize;
 
-    gobject_class->finalize = SPShape::sp_shape_finalize;
+    sp_object_class->build    = sp_shape_build;
+    sp_object_class->release  = sp_shape_release;
+    sp_object_class->set      = sp_shape_set;
+    sp_object_class->update   = sp_shape_update;
+    sp_object_class->modified = sp_shape_modified;
+    sp_object_class->write    = sp_shape_write;
 
-    sp_object_class->build = SPShape::sp_shape_build;
-    sp_object_class->release = SPShape::sp_shape_release;
-    sp_object_class->set = SPShape::sp_shape_set;
-    sp_object_class->update = SPShape::sp_shape_update;
-    sp_object_class->modified = SPShape::sp_shape_modified;
-    sp_object_class->write = SPShape::sp_shape_write;
-
-    item_class->bbox = SPShape::sp_shape_bbox;
+    item_class->bbox = sp_shape_bbox;
     item_class->print = sp_shape_print;
-    item_class->show = SPShape::sp_shape_show;
-    item_class->hide = SPShape::sp_shape_hide;
-    item_class->snappoints = SPShape::sp_shape_snappoints;
+    item_class->show = sp_shape_show;
+    item_class->hide = sp_shape_hide;
+    item_class->snappoints = sp_shape_snappoints;
     lpe_item_class->update_patheffect = NULL;
 
     klass->set_shape = NULL;
@@ -114,7 +103,8 @@ void SPShapeClass::sp_shape_class_init(SPShapeClass *klass)
 /**
  * Initializes an SPShape object.
  */
-void SPShape::sp_shape_init(SPShape *shape)
+static void
+sp_shape_init(SPShape *shape)
 {
     for ( int i = 0 ; i < SP_MARKER_LOC_QTY ; i++ ) {
         new (&shape->_release_connect[i]) sigc::connection();
@@ -125,7 +115,8 @@ void SPShape::sp_shape_init(SPShape *shape)
     shape->_curve_before_lpe = NULL;
 }
 
-void SPShape::sp_shape_finalize(GObject *object)
+static void
+sp_shape_finalize(GObject *object)
 {
     SPShape *shape=(SPShape *)object;
 
@@ -136,8 +127,8 @@ void SPShape::sp_shape_finalize(GObject *object)
         shape->_modified_connect[i].~connection();
     }
 
-    if (((GObjectClass *) (SPShapeClass::parent_class))->finalize) {
-        (* ((GObjectClass *) (SPShapeClass::parent_class))->finalize)(object);
+    if (((GObjectClass *) (sp_shape_parent_class))->finalize) {
+        (* ((GObjectClass *) (sp_shape_parent_class))->finalize)(object);
     }
 }
 
@@ -148,10 +139,11 @@ void SPShape::sp_shape_finalize(GObject *object)
  *
  * \see SPObject::build()
  */
-void SPShape::sp_shape_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void
+sp_shape_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) (SPShapeClass::parent_class))->build) {
-       (*((SPObjectClass *) (SPShapeClass::parent_class))->build) (object, document, repr);
+    if (((SPObjectClass *) (sp_shape_parent_class))->build) {
+       (*((SPObjectClass *) (sp_shape_parent_class))->build) (object, document, repr);
     }
 
     for (int i = 0 ; i < SP_MARKER_LOC_QTY ; i++) {
@@ -169,7 +161,8 @@ void SPShape::sp_shape_build(SPObject *object, SPDocument *document, Inkscape::X
  *
  * \see SPObject::release()
  */
-void SPShape::sp_shape_release(SPObject *object)
+static void
+sp_shape_release(SPObject *object)
 {
     SPItem *item;
     SPShape *shape;
@@ -196,24 +189,24 @@ void SPShape::sp_shape_release(SPObject *object)
         shape->_curve_before_lpe = shape->_curve_before_lpe->unref();
     }
 
-    if (((SPObjectClass *) SPShapeClass::parent_class)->release) {
-      ((SPObjectClass *) SPShapeClass::parent_class)->release (object);
+    if (((SPObjectClass *) sp_shape_parent_class)->release) {
+      ((SPObjectClass *) sp_shape_parent_class)->release (object);
     }
 }
 
-
-
-void SPShape::sp_shape_set(SPObject *object, unsigned int key, gchar const *value)
+static void
+sp_shape_set(SPObject *object, unsigned int key, gchar const *value)
 {
-    if (((SPObjectClass *) SPShapeClass::parent_class)->set) {
-        ((SPObjectClass *) SPShapeClass::parent_class)->set(object, key, value);
+    if (((SPObjectClass *) sp_shape_parent_class)->set) {
+        ((SPObjectClass *) sp_shape_parent_class)->set(object, key, value);
     }
 }
 
-Inkscape::XML::Node * SPShape::sp_shape_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node*
+sp_shape_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags)
 {
-    if (((SPObjectClass *)(SPShapeClass::parent_class))->write) {
-        ((SPObjectClass *)(SPShapeClass::parent_class))->write(object, doc, repr, flags);
+    if (((SPObjectClass *)(sp_shape_parent_class))->write) {
+        ((SPObjectClass *)(sp_shape_parent_class))->write(object, doc, repr, flags);
     }
 
     return repr;
@@ -223,12 +216,13 @@ Inkscape::XML::Node * SPShape::sp_shape_write(SPObject *object, Inkscape::XML::D
  * Updates the shape when its attributes have changed.  Also establishes
  * marker objects to match the style settings.
  */
-void SPShape::sp_shape_update(SPObject *object, SPCtx *ctx, unsigned int flags)
+static void
+sp_shape_update(SPObject *object, SPCtx *ctx, unsigned int flags)
 {
     SPShape *shape = (SPShape *) object;
 
-    if (((SPObjectClass *) (SPShapeClass::parent_class))->update) {
-        (* ((SPObjectClass *) (SPShapeClass::parent_class))->update) (object, ctx, flags);
+    if (((SPObjectClass *) (sp_shape_parent_class))->update) {
+        (* ((SPObjectClass *) (sp_shape_parent_class))->update) (object, ctx, flags);
     }
 
     /* This stanza checks that an object's marker style agrees with
@@ -372,7 +366,8 @@ Geom::Affine sp_shape_marker_get_transform_at_end(Geom::Curve const & c)
  *
  * @todo figure out what to do when both 'marker' and for instance 'marker-end' are set.
  */
-void SPShape::sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem *ai)
+static void
+sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem *ai)
 {
     SPStyle *style = ((SPObject *) shape)->style;
 
@@ -482,12 +477,13 @@ void SPShape::sp_shape_update_marker_view(SPShape *shape, Inkscape::DrawingItem 
 /**
  * Sets modified flag for all sub-item views.
  */
-void SPShape::sp_shape_modified(SPObject *object, unsigned int flags)
+static void
+sp_shape_modified(SPObject *object, unsigned int flags)
 {
     SPShape *shape = SP_SHAPE (object);
 
-    if (((SPObjectClass *) (SPShapeClass::parent_class))->modified) {
-      (* ((SPObjectClass *) (SPShapeClass::parent_class))->modified) (object, flags);
+    if (((SPObjectClass *) (sp_shape_parent_class))->modified) {
+      (* ((SPObjectClass *) (sp_shape_parent_class))->modified) (object, flags);
     }
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
@@ -502,7 +498,8 @@ void SPShape::sp_shape_modified(SPObject *object, unsigned int flags)
  * Calculates the bounding box for item, storing it into bbox.
  * This also includes the bounding boxes of any markers included in the shape.
  */
-Geom::OptRect SPShape::sp_shape_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType bboxtype)
+static Geom::OptRect
+sp_shape_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType bboxtype)
 {
     SPShape const *shape = SP_SHAPE (item);
     Geom::OptRect bbox;
@@ -792,7 +789,8 @@ sp_shape_print (SPItem *item, SPPrintContext *ctx)
 /**
  * Sets style, path, and paintbox.  Updates marker views, including dimensions.
  */
-Inkscape::DrawingItem * SPShape::sp_shape_show(SPItem *item, Inkscape::Drawing &drawing, unsigned int /*key*/, unsigned int /*flags*/)
+static Inkscape::DrawingItem*
+sp_shape_show(SPItem *item, Inkscape::Drawing &drawing, unsigned int /*key*/, unsigned int /*flags*/)
 {
     SPObject *object = item;
     SPShape *shape = SP_SHAPE(item);
@@ -835,7 +833,8 @@ Inkscape::DrawingItem * SPShape::sp_shape_show(SPItem *item, Inkscape::Drawing &
 /**
  * Hides/removes marker views from the shape.
  */
-void SPShape::sp_shape_hide(SPItem *item, unsigned int key)
+static void
+sp_shape_hide(SPItem *item, unsigned int key)
 {
     SPShape *shape;
     SPItemView *v;
@@ -854,8 +853,8 @@ void SPShape::sp_shape_hide(SPItem *item, unsigned int key)
       }
     }
 
-    if (((SPItemClass *) SPShapeClass::parent_class)->hide) {
-      ((SPItemClass *) SPShapeClass::parent_class)->hide (item, key);
+    if (((SPItemClass *) sp_shape_parent_class)->hide) {
+      ((SPItemClass *) sp_shape_parent_class)->hide (item, key);
     }
 }
 
@@ -1110,7 +1109,8 @@ void SPShape::setCurveInsync(SPCurve *new_curve, unsigned int owner)
 /**
  * Return all nodes in a path that are to be considered for snapping
  */
-void SPShape::sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
+static void
+sp_shape_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
     g_assert(item != NULL);
     g_assert(SP_IS_SHAPE(item));

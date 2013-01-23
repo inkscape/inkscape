@@ -25,9 +25,6 @@
 #include "ui/view/view.h"
 #include "document.h"
 
-static void sp_anchor_class_init(SPAnchorClass *ac);
-static void sp_anchor_init(SPAnchor *anchor);
-
 static void sp_anchor_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_anchor_release(SPObject *object);
 static void sp_anchor_set(SPObject *object, unsigned int key, const gchar *value);
@@ -36,37 +33,12 @@ static Inkscape::XML::Node *sp_anchor_write(SPObject *object, Inkscape::XML::Doc
 static gchar *sp_anchor_description(SPItem *item);
 static gint sp_anchor_event(SPItem *item, SPEvent *event);
 
-static SPGroupClass *parent_class;
-
-GType sp_anchor_get_type(void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPAnchorClass),
-            NULL,	/* base_init */
-            NULL,	/* base_finalize */
-            (GClassInitFunc) sp_anchor_class_init,
-            NULL,	/* class_finalize */
-            NULL,	/* class_data */
-            sizeof(SPAnchor),
-            16,	/* n_preallocs */
-            (GInstanceInitFunc) sp_anchor_init,
-            NULL,	/* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_GROUP, "SPAnchor", &info, (GTypeFlags) 0);
-    }
-
-    return type;
-}
+G_DEFINE_TYPE(SPAnchor, sp_anchor, SP_TYPE_GROUP);
 
 static void sp_anchor_class_init(SPAnchorClass *ac)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) ac;
     SPItemClass *item_class = (SPItemClass *) ac;
-
-    parent_class = (SPGroupClass *) g_type_class_ref(SP_TYPE_GROUP);
 
     sp_object_class->build = sp_anchor_build;
     sp_object_class->release = sp_anchor_release;
@@ -84,8 +56,8 @@ static void sp_anchor_init(SPAnchor *anchor)
 
 static void sp_anchor_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) (parent_class))->build) {
-        ((SPObjectClass *) (parent_class))->build(object, document, repr);
+    if (((SPObjectClass *) (sp_anchor_parent_class))->build) {
+        ((SPObjectClass *) (sp_anchor_parent_class))->build(object, document, repr);
     }
 
     object->readAttr( "xlink:type" );
@@ -107,8 +79,8 @@ static void sp_anchor_release(SPObject *object)
         anchor->href = NULL;
     }
 
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release(object);
+    if (((SPObjectClass *) sp_anchor_parent_class)->release) {
+        ((SPObjectClass *) sp_anchor_parent_class)->release(object);
     }
 }
 
@@ -132,8 +104,8 @@ static void sp_anchor_set(SPObject *object, unsigned int key, const gchar *value
             object->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
 	default:
-            if (((SPObjectClass *) (parent_class))->set) {
-                ((SPObjectClass *) (parent_class))->set(object, key, value);
+            if (((SPObjectClass *) (sp_anchor_parent_class))->set) {
+                ((SPObjectClass *) (sp_anchor_parent_class))->set(object, key, value);
             }
             break;
     }
@@ -164,8 +136,8 @@ static Inkscape::XML::Node *sp_anchor_write(SPObject *object, Inkscape::XML::Doc
         COPY_ATTR(repr, object->getRepr(), "target");
     }
 
-    if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_anchor_parent_class))->write) {
+        ((SPObjectClass *) (sp_anchor_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;

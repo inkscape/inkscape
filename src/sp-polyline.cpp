@@ -20,61 +20,44 @@
 #include "xml/repr.h"
 #include "document.h"
 
-SPShapeClass * SPPolyLineClass::static_parent_class=0;
+static void                 sp_polyline_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
+static void                 sp_polyline_set(SPObject *object, unsigned int key, const gchar *value);
+static Inkscape::XML::Node* sp_polyline_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+static gchar*               sp_polyline_get_description(SPItem * item);
 
-GType SPPolyLine::sp_polyline_get_type(void)
+
+G_DEFINE_TYPE(SPPolyLine, sp_polyline, SP_TYPE_SHAPE);
+
+static void
+sp_polyline_class_init(SPPolyLineClass *klass)
 {
-    static GType polyline_type = 0;
-
-    if (!polyline_type) {
-        GTypeInfo polyline_info = {
-            sizeof (SPPolyLineClass),
-            NULL,   /* base_init */
-            NULL,   /* base_finalize */
-            (GClassInitFunc) SPPolyLineClass::sp_polyline_class_init,
-            NULL,   /* klass_finalize */
-            NULL,   /* klass_data */
-            sizeof (SPPolyLine),
-            16,     /* n_preallocs */
-            (GInstanceInitFunc) SPPolyLine::init,
-            NULL,   /* value_table */
-        };
-        polyline_type = g_type_register_static (SP_TYPE_SHAPE, "SPPolyLine", &polyline_info, (GTypeFlags)0);
-    }
-    return polyline_type;
-}
-
-void SPPolyLineClass::sp_polyline_class_init(SPPolyLineClass *klass)
-{
-    //GObjectClass * gobject_class = (GObjectClass *) klass;
     SPObjectClass * sp_object_class = (SPObjectClass *) klass;
     SPItemClass * item_class = (SPItemClass *) klass;
 
-    static_parent_class = (SPShapeClass *)g_type_class_ref(SP_TYPE_SHAPE);
+    sp_object_class->build = sp_polyline_build;
+    sp_object_class->set   = sp_polyline_set;
+    sp_object_class->write = sp_polyline_write;
 
-    sp_object_class->build = SPPolyLine::build;
-    sp_object_class->set = SPPolyLine::set;
-    sp_object_class->write = SPPolyLine::write;
-
-    item_class->description = SPPolyLine::getDescription;
+    item_class->description = sp_polyline_get_description;
 }
 
-void SPPolyLine::init(SPPolyLine * /*polyline*/)
+static void
+sp_polyline_init(SPPolyLine * /*polyline*/)
 {
-    /* Nothing here */
 }
 
-void SPPolyLine::build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
+static void
+sp_polyline_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
 {
-
-    if (((SPObjectClass *) SPPolyLineClass::static_parent_class)->build) {
-        ((SPObjectClass *) SPPolyLineClass::static_parent_class)->build (object, document, repr);
+    if (((SPObjectClass *) sp_polyline_parent_class)->build) {
+        ((SPObjectClass *) sp_polyline_parent_class)->build (object, document, repr);
     }
 
     object->readAttr( "points" );
 }
 
-void SPPolyLine::set(SPObject *object, unsigned int key, const gchar *value)
+static void
+sp_polyline_set(SPObject *object, unsigned int key, const gchar *value)
 {
     SPPolyLine *polyline = SP_POLYLINE(object);
 
@@ -125,14 +108,15 @@ void SPPolyLine::set(SPObject *object, unsigned int key, const gchar *value)
             break;
 	}
 	default:
-            if (((SPObjectClass *) SPPolyLineClass::static_parent_class)->set) {
-                ((SPObjectClass *) SPPolyLineClass::static_parent_class)->set (object, key, value);
+            if (((SPObjectClass *) sp_polyline_parent_class)->set) {
+                ((SPObjectClass *) sp_polyline_parent_class)->set (object, key, value);
             }
             break;
     }
 }
 
-Inkscape::XML::Node *SPPolyLine::write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node*
+sp_polyline_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SP_POLYLINE(object);
 
@@ -144,14 +128,15 @@ Inkscape::XML::Node *SPPolyLine::write(SPObject *object, Inkscape::XML::Document
         repr->mergeFrom(object->getRepr(), "id");
     }
 
-    if (((SPObjectClass *) (SPPolyLineClass::static_parent_class))->write) {
-        ((SPObjectClass *) (SPPolyLineClass::static_parent_class))->write (object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_polyline_parent_class))->write) {
+        ((SPObjectClass *) (sp_polyline_parent_class))->write (object, xml_doc, repr, flags);
     }
 
     return repr;
 }
 
-gchar *SPPolyLine::getDescription(SPItem * /*item*/)
+static gchar*
+sp_polyline_get_description(SPItem * /*item*/)
 {
     return g_strdup(_("<b>Polyline</b>"));
 }

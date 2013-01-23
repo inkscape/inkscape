@@ -75,53 +75,52 @@
 
 #define noSP_ITEM_DEBUG_IDLE
 
-SPObjectClass * SPItemClass::static_parent_class=0;
+static void                 sp_item_build  (SPObject                *object,
+                                            SPDocument              *document,
+                                            Inkscape::XML::Node     *repr);
+static void                 sp_item_release(SPObject                *object);
+static void                 sp_item_set    (SPObject                *object,
+                                            unsigned                 key,
+                                            gchar const             *value);
+static void                 sp_item_update (SPObject                *object,
+                                            SPCtx                   *ctx,
+                                            guint                    flags);
+static Inkscape::XML::Node* sp_item_write  (SPObject                *object,
+                                            Inkscape::XML::Document *doc,
+                                            Inkscape::XML::Node     *repr,
+                                            guint                    flags);
 
-/**
- * Registers SPItem class and returns its type number.
- */
-GType
-SPItem::getType(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPItemClass),
-            NULL, NULL,
-            (GClassInitFunc) SPItemClass::sp_item_class_init,
-            NULL, NULL,
-            sizeof(SPItem),
-            16,
-            (GInstanceInitFunc) sp_item_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_OBJECT, "SPItem", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+static SPItemView*          sp_item_view_list_remove(SPItemView     *list,
+                                                     SPItemView     *view);
+
+static gchar *sp_item_private_description(SPItem *item);
+static void sp_item_private_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
+
+G_DEFINE_TYPE(SPItem, sp_item, SP_TYPE_OBJECT);
 
 /**
  * SPItem vtable initialization.
  */
-void SPItemClass::sp_item_class_init(SPItemClass *klass)
+static void
+sp_item_class_init(SPItemClass *klass)
 {
     SPObjectClass *sp_object_class = SP_OBJECT_CLASS(klass);
-    static_parent_class = SP_OBJECT_CLASS(g_type_class_ref(SP_TYPE_OBJECT));
 
-    sp_object_class->build = SPItem::sp_item_build;
-    sp_object_class->release = SPItem::sp_item_release;
-    sp_object_class->set = SPItem::sp_item_set;
-    sp_object_class->update = SPItem::sp_item_update;
-    sp_object_class->write = SPItem::sp_item_write;
+    sp_object_class->build   = sp_item_build;
+    sp_object_class->release = sp_item_release;
+    sp_object_class->set     = sp_item_set;
+    sp_object_class->update  = sp_item_update;
+    sp_object_class->write   = sp_item_write;
 
-    klass->description = SPItem::sp_item_private_description;
-    klass->snappoints = SPItem::sp_item_private_snappoints;
+    klass->description = sp_item_private_description;
+    klass->snappoints  = sp_item_private_snappoints;
 }
 
 /**
  * Callback for SPItem object initialization.
  */
-void SPItem::sp_item_init(SPItem *item)
+static void
+sp_item_init(SPItem *item)
 {
     item->init();
 }
@@ -412,7 +411,8 @@ void SPItem::moveTo(SPItem *target, gboolean intoafter) {
 }
 
 
-void SPItem::sp_item_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
+static void
+sp_item_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
     object->readAttr( "style" );
     object->readAttr( "transform" );
@@ -425,12 +425,13 @@ void SPItem::sp_item_build(SPObject *object, SPDocument *document, Inkscape::XML
     object->readAttr( "inkscape:connector-avoid" );
     object->readAttr( "inkscape:connection-points" );
 
-    if ((SP_OBJECT_CLASS(SPItemClass::static_parent_class))->build) {
-        (* (SP_OBJECT_CLASS(SPItemClass::static_parent_class))->build)(object, document, repr);
+    if ((SP_OBJECT_CLASS(sp_item_parent_class))->build) {
+        (* (SP_OBJECT_CLASS(sp_item_parent_class))->build)(object, document, repr);
     }
 }
 
-void SPItem::sp_item_release(SPObject *object)
+static void
+sp_item_release(SPObject *object)
 {
     SPItem *item = SP_ITEM(object);
 
@@ -445,8 +446,8 @@ void SPItem::sp_item_release(SPObject *object)
     delete item->clip_ref;
     delete item->mask_ref;
 
-    if ((SP_OBJECT_CLASS(SPItemClass::static_parent_class))->release) {
-        (SP_OBJECT_CLASS(SPItemClass::static_parent_class))->release(object);
+    if ((SP_OBJECT_CLASS(sp_item_parent_class))->release) {
+        (SP_OBJECT_CLASS(sp_item_parent_class))->release(object);
     }
 
     while (item->display) {
@@ -456,7 +457,8 @@ void SPItem::sp_item_release(SPObject *object)
     item->_transformed_signal.~signal();
 }
 
-void SPItem::sp_item_set(SPObject *object, unsigned key, gchar const *value)
+static void
+sp_item_set(SPObject *object, unsigned key, gchar const *value)
 {
     SPItem *item = SP_ITEM(object);
 
@@ -539,8 +541,8 @@ void SPItem::sp_item_set(SPObject *object, unsigned key, gchar const *value)
                 sp_style_read_from_object(object->style, object);
                 object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);
             } else {
-                if ((SP_OBJECT_CLASS(SPItemClass::static_parent_class))->set) {
-                    (* (SP_OBJECT_CLASS(SPItemClass::static_parent_class))->set)(object, key, value);
+                if ((SP_OBJECT_CLASS(sp_item_parent_class))->set) {
+                    (* (SP_OBJECT_CLASS(sp_item_parent_class))->set)(object, key, value);
                 }
             }
             break;
@@ -597,12 +599,13 @@ void SPItem::mask_ref_changed(SPObject *old_mask, SPObject *mask, SPItem *item)
     }
 }
 
-void SPItem::sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
+static void
+sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     SPItem *item = SP_ITEM(object);
 
-    if ((SP_OBJECT_CLASS(SPItemClass::static_parent_class))->update) {
-        (* (SP_OBJECT_CLASS(SPItemClass::static_parent_class))->update)(object, ctx, flags);
+    if ((SP_OBJECT_CLASS(sp_item_parent_class))->update) {
+        (* (SP_OBJECT_CLASS(sp_item_parent_class))->update)(object, ctx, flags);
     }
 
     // any of the modifications defined in sp-object.h might change bbox,
@@ -657,7 +660,8 @@ void SPItem::sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
         item->avoidRef->handleSettingChange();
 }
 
-Inkscape::XML::Node *SPItem::sp_item_write(SPObject *const object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node*
+sp_item_write(SPObject *const object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPItem *item = SP_ITEM(object);
 
@@ -717,8 +721,8 @@ Inkscape::XML::Node *SPItem::sp_item_write(SPObject *const object, Inkscape::XML
         }
     }
 
-    if ((SP_OBJECT_CLASS(SPItemClass::static_parent_class))->write) {
-        (SP_OBJECT_CLASS(SPItemClass::static_parent_class))->write(object, xml_doc, repr, flags);
+    if ((SP_OBJECT_CLASS(sp_item_parent_class))->write) {
+        (SP_OBJECT_CLASS(sp_item_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -898,7 +902,8 @@ unsigned SPItem::pos_in_parent()
     return 0;
 }
 
-void SPItem::sp_item_private_snappoints(SPItem const * /*item*/, std::vector<Inkscape::SnapCandidatePoint> &/*p*/, Inkscape::SnapPreferences const * /*snapprefs*/)
+static void
+sp_item_private_snappoints(SPItem const * /*item*/, std::vector<Inkscape::SnapCandidatePoint> &/*p*/, Inkscape::SnapPreferences const * /*snapprefs*/)
 {
     /* This will only be called if the derived class doesn't override this.
      * see for example sp_genericellipse_snappoints in sp-ellipse.cpp
@@ -966,7 +971,8 @@ void SPItem::invoke_print(SPPrintContext *ctx)
     }
 }
 
-gchar *SPItem::sp_item_private_description(SPItem */*item*/)
+static gchar*
+sp_item_private_description(SPItem * /*item*/)
 {
     return g_strdup(_("Object"));
 }
@@ -1558,7 +1564,8 @@ SPItemView *SPItem::sp_item_view_new_prepend(SPItemView *list, SPItem *item, uns
     return new_view;
 }
 
-SPItemView *SPItem::sp_item_view_list_remove(SPItemView *list, SPItemView *view)
+static SPItemView*
+sp_item_view_list_remove(SPItemView *list, SPItemView *view)
 {
     SPItemView *ret = list;
     if (view == list) {

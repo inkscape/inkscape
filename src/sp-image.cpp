@@ -76,9 +76,6 @@
 #define MAGIC_EPSILON_TOO 1e-18
 // TODO: also check if it is correct to be using two different epsilon values
 
-static void sp_image_class_init (SPImageClass * klass);
-static void sp_image_init (SPImage * image);
-
 static void sp_image_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
 static void sp_image_release (SPObject * object);
 static void sp_image_set (SPObject *object, unsigned int key, const gchar *value);
@@ -94,16 +91,12 @@ static Inkscape::DrawingItem *sp_image_show (SPItem *item, Inkscape::Drawing &dr
 static Geom::Affine sp_image_set_transform (SPItem *item, Geom::Affine const &xform);
 static void sp_image_set_curve(SPImage *image);
 
-
 static GdkPixbuf *sp_image_repr_read_image( time_t& modTime, gchar*& pixPath, const gchar *href, const gchar *absref, const gchar *base );
 static GdkPixbuf *sp_image_pixbuf_force_rgba (GdkPixbuf * pixbuf);
 static void sp_image_update_arenaitem (SPImage *img, Inkscape::DrawingImage *ai);
 static void sp_image_update_canvas_image (SPImage *image);
 static GdkPixbuf * sp_image_repr_read_dataURI (const gchar * uri_data);
 static GdkPixbuf * sp_image_repr_read_b64 (const gchar * uri_data);
-
-static SPItemClass *parent_class;
-
 
 extern "C"
 {
@@ -519,33 +512,12 @@ GdkPixbuf* pixbuf_new_from_file( const char *filename, GError **error )
 }
 }
 
-GType sp_image_get_type(void)
-{
-    static GType image_type = 0;
-    if (!image_type) {
-        GTypeInfo image_info = {
-            sizeof (SPImageClass),
-            NULL,       /* base_init */
-            NULL,       /* base_finalize */
-            (GClassInitFunc) sp_image_class_init,
-            NULL,       /* class_finalize */
-            NULL,       /* class_data */
-            sizeof (SPImage),
-            16, /* n_preallocs */
-            (GInstanceInitFunc) sp_image_init,
-            NULL,       /* value_table */
-        };
-        image_type = g_type_register_static (SPItem::getType (), "SPImage", &image_info, (GTypeFlags)0);
-    }
-    return image_type;
-}
+G_DEFINE_TYPE(SPImage, sp_image, SP_TYPE_ITEM);
 
 static void sp_image_class_init( SPImageClass * klass )
 {
-    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
-    SPItemClass *item_class = reinterpret_cast<SPItemClass *>(klass);
-
-    parent_class = reinterpret_cast<SPItemClass*>(g_type_class_ref(SPItem::getType()));
+    SPObjectClass *sp_object_class = SP_OBJECT_CLASS(klass);
+    SPItemClass *item_class = SP_ITEM_CLASS(klass);
 
     sp_object_class->build = sp_image_build;
     sp_object_class->release = sp_image_release;
@@ -586,8 +558,8 @@ static void sp_image_init( SPImage *image )
 
 static void sp_image_build( SPObject *object, SPDocument *document, Inkscape::XML::Node *repr )
 {
-    if (((SPObjectClass *) parent_class)->build) {
-        ((SPObjectClass *) parent_class)->build (object, document, repr);
+    if (((SPObjectClass *) sp_image_parent_class)->build) {
+        ((SPObjectClass *) sp_image_parent_class)->build (object, document, repr);
     }
 
     object->readAttr( "xlink:href" );
@@ -637,8 +609,8 @@ static void sp_image_release( SPObject *object )
         image->curve = image->curve->unref();
     }
 
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release (object);
+    if (((SPObjectClass *) sp_image_parent_class)->release) {
+        ((SPObjectClass *) sp_image_parent_class)->release (object);
     }
 }
 
@@ -756,8 +728,8 @@ static void sp_image_set( SPObject *object, unsigned int key, const gchar *value
             break;
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
         default:
-            if (((SPObjectClass *) (parent_class))->set)
-                ((SPObjectClass *) (parent_class))->set (object, key, value);
+            if (((SPObjectClass *) (sp_image_parent_class))->set)
+                ((SPObjectClass *) (sp_image_parent_class))->set (object, key, value);
             break;
     }
 
@@ -769,8 +741,8 @@ static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
     SPImage *image = SP_IMAGE(object);
     SPDocument *doc = object->document;
 
-    if (((SPObjectClass *) (parent_class))->update) {
-        ((SPObjectClass *) (parent_class))->update (object, ctx, flags);
+    if (((SPObjectClass *) (sp_image_parent_class))->update) {
+        ((SPObjectClass *) (sp_image_parent_class))->update (object, ctx, flags);
     }
 
     if (flags & SP_IMAGE_HREF_MODIFIED_FLAG) {
@@ -973,8 +945,8 @@ static void sp_image_modified( SPObject *object, unsigned int flags )
 {
     SPImage *image = SP_IMAGE (object);
 
-    if (((SPObjectClass *) (parent_class))->modified) {
-      (* ((SPObjectClass *) (parent_class))->modified) (object, flags);
+    if (((SPObjectClass *) (sp_image_parent_class))->modified) {
+      (* ((SPObjectClass *) (sp_image_parent_class))->modified) (object, flags);
     }
 
     if (flags & SP_OBJECT_STYLE_MODIFIED_FLAG) {
@@ -1016,8 +988,8 @@ static Inkscape::XML::Node *sp_image_write( SPObject *object, Inkscape::XML::Doc
     }
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-    if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_image_parent_class))->write) {
+        ((SPObjectClass *) (sp_image_parent_class))->write (object, xml_doc, repr, flags);
     }
 
     return repr;

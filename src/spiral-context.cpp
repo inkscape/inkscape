@@ -46,8 +46,6 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_spiral_context_class_init(SPSpiralContextClass * klass);
-static void sp_spiral_context_init(SPSpiralContext *spiral_context);
 static void sp_spiral_context_dispose(GObject *object);
 static void sp_spiral_context_setup(SPEventContext *ec);
 static void sp_spiral_context_finish(SPEventContext *ec);
@@ -59,35 +57,13 @@ static void sp_spiral_drag(SPSpiralContext *sc, Geom::Point const &p, guint stat
 static void sp_spiral_finish(SPSpiralContext *sc);
 static void sp_spiral_cancel(SPSpiralContext *sc);
 
-static SPEventContextClass *parent_class;
-
-GType
-sp_spiral_context_get_type()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPSpiralContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_spiral_context_class_init,
-            NULL, NULL,
-            sizeof(SPSpiralContext),
-            4,
-            (GInstanceInitFunc) sp_spiral_context_init,
-            NULL,    /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPSpiralContext", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPSpiralContext, sp_spiral_context, SP_TYPE_EVENT_CONTEXT);
 
 static void
 sp_spiral_context_class_init(SPSpiralContextClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_spiral_context_dispose;
 
@@ -129,8 +105,8 @@ static void sp_spiral_context_finish(SPEventContext *ec)
     sp_spiral_finish(sc);
     sc->sel_changed_connection.disconnect();
 
-    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->finish) {
-        (SP_EVENT_CONTEXT_CLASS(parent_class))->finish(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(sp_spiral_context_parent_class))->finish) {
+        (SP_EVENT_CONTEXT_CLASS(sp_spiral_context_parent_class))->finish(ec);
     }
 }
 
@@ -155,7 +131,7 @@ sp_spiral_context_dispose(GObject *object)
         delete sc->_message_context;
     }
 
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_spiral_context_parent_class)->dispose(object);
 }
 
 /**
@@ -177,8 +153,8 @@ sp_spiral_context_setup(SPEventContext *ec)
 {
     SPSpiralContext *sc = SP_SPIRAL_CONTEXT(ec);
 
-    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup)
-        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(sp_spiral_context_parent_class))->setup)
+        (SP_EVENT_CONTEXT_CLASS(sp_spiral_context_parent_class))->setup(ec);
 
     sp_event_context_read(ec, "expansion");
     sp_event_context_read(ec, "revolution");
@@ -398,8 +374,8 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler)
-            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler(event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(sp_spiral_context_parent_class))->root_handler)
+            ret = (SP_EVENT_CONTEXT_CLASS(sp_spiral_context_parent_class))->root_handler(event_context, event);
     }
 
     return ret;

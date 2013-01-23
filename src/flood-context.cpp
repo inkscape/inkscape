@@ -75,8 +75,6 @@ using Inkscape::Display::ExtractARGB32;
 using Inkscape::Display::ExtractRGB32;
 using Inkscape::Display::AssembleARGB32;
 
-static void sp_flood_context_class_init(SPFloodContextClass *klass);
-static void sp_flood_context_init(SPFloodContext *flood_context);
 static void sp_flood_context_dispose(GObject *object);
 
 static void sp_flood_context_setup(SPEventContext *ec);
@@ -86,34 +84,12 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
 
 static void sp_flood_finish(SPFloodContext *rc);
 
-static SPEventContextClass *parent_class;
-
-
-GType sp_flood_context_get_type()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPFloodContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_flood_context_class_init,
-            NULL, NULL,
-            sizeof(SPFloodContext),
-            4,
-            (GInstanceInitFunc) sp_flood_context_init,
-            NULL,    /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPFloodContext", &info, (GTypeFlags) 0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPFloodContext, sp_flood_context, SP_TYPE_EVENT_CONTEXT);
 
 static void sp_flood_context_class_init(SPFloodContextClass *klass)
 {
     GObjectClass *object_class = (GObjectClass *) klass;
     SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
-
-    parent_class = (SPEventContextClass *) g_type_class_peek_parent(klass);
 
     object_class->dispose = sp_flood_context_dispose;
 
@@ -160,7 +136,7 @@ static void sp_flood_context_dispose(GObject *object)
         delete rc->_message_context;
     }
 
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_flood_context_parent_class)->dispose(object);
 }
 
 /**
@@ -181,8 +157,8 @@ static void sp_flood_context_setup(SPEventContext *ec)
 {
     SPFloodContext *rc = SP_FLOOD_CONTEXT(ec);
 
-    if (((SPEventContextClass *) parent_class)->setup) {
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if (((SPEventContextClass *) sp_flood_context_parent_class)->setup) {
+        ((SPEventContextClass *) sp_flood_context_parent_class)->setup(ec);
     }
 
     ec->shape_editor = new ShapeEditor(ec->desktop);
@@ -1166,8 +1142,8 @@ static gint sp_flood_context_item_handler(SPEventContext *event_context, SPItem 
         break;
     }
 
-    if (((SPEventContextClass *) parent_class)->item_handler) {
-        ret = ((SPEventContextClass *) parent_class)->item_handler(event_context, item, event);
+    if (((SPEventContextClass *) sp_flood_context_parent_class)->item_handler) {
+        ret = ((SPEventContextClass *) sp_flood_context_parent_class)->item_handler(event_context, item, event);
     }
 
     return ret;
@@ -1274,8 +1250,8 @@ static gint sp_flood_context_root_handler(SPEventContext *event_context, GdkEven
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
+        if (((SPEventContextClass *) sp_flood_context_parent_class)->root_handler) {
+            ret = ((SPEventContextClass *) sp_flood_context_parent_class)->root_handler(event_context, event);
         }
     }
 

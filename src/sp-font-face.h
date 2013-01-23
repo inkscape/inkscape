@@ -23,6 +23,8 @@
 
 #include "sp-object.h"
 
+G_BEGIN_DECLS
+
 #define SP_TYPE_FONTFACE (sp_fontface_get_type ())
 #define SP_FONTFACE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FONTFACE, SPFontFace))
 #define SP_FONTFACE_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_FONTFACE, SPFontFaceClass))
@@ -114,6 +116,8 @@ struct SPFontFaceClass {
 };
 
 GType sp_fontface_get_type (void);
+
+G_END_DECLS
 
 #endif //#ifndef __SP_FONTFACE_H__
 #endif //#ifdef ENABLE_SVG_FONTS

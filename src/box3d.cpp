@@ -39,9 +39,6 @@
 #include "desktop-handles.h"
 #include "macros.h"
 
-static void box3d_class_init(SPBox3DClass *klass);
-static void box3d_init(SPBox3D *box3d);
-
 static void box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void box3d_release(SPObject *object);
 static void box3d_set(SPObject *object, unsigned int key, const gchar *value);
@@ -54,40 +51,14 @@ static void box3d_convert_to_guides(SPItem *item);
 
 static void box3d_ref_changed(SPObject *old_ref, SPObject *ref, SPBox3D *box);
 
-static SPGroupClass *parent_class;
-
 static gint counter = 0;
 
-GType
-box3d_get_type(void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPBox3DClass),
-            NULL,   /* base_init */
-            NULL,   /* base_finalize */
-            (GClassInitFunc) box3d_class_init,
-            NULL,   /* class_finalize */
-            NULL,   /* class_data */
-            sizeof(SPBox3D),
-            16,     /* n_preallocs */
-            (GInstanceInitFunc) box3d_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_GROUP, "SPBox3D", &info, (GTypeFlags) 0);
-    }
-
-    return type;
-}
+G_DEFINE_TYPE(SPBox3D, box3d, SP_TYPE_GROUP);
 
 static void box3d_class_init(SPBox3DClass *klass)
 {
     SPObjectClass *sp_object_class = SP_OBJECT_CLASS(klass);
     SPItemClass *item_class = SP_ITEM_CLASS(klass);
-
-    parent_class = SP_GROUP_CLASS(g_type_class_ref(SP_TYPE_GROUP));
 
     sp_object_class->build = box3d_build;
     sp_object_class->release = box3d_release;
@@ -109,8 +80,8 @@ box3d_init(SPBox3D *box)
 
 static void box3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if ((SP_OBJECT_CLASS(parent_class))->build) {
-        (SP_OBJECT_CLASS(parent_class))->build(object, document, repr);
+    if ((SP_OBJECT_CLASS(box3d_parent_class))->build) {
+        (SP_OBJECT_CLASS(box3d_parent_class))->build(object, document, repr);
     }
 
     SPBox3D *box = SP_BOX3D (object);
@@ -172,8 +143,8 @@ box3d_release(SPObject *object)
         */
     }
 
-    if ((SP_OBJECT_CLASS(parent_class))->release)
-        (SP_OBJECT_CLASS(parent_class))->release(object);
+    if ((SP_OBJECT_CLASS(box3d_parent_class))->release)
+        (SP_OBJECT_CLASS(box3d_parent_class))->release(object);
 }
 
 static void
@@ -224,8 +195,8 @@ box3d_set(SPObject *object, unsigned int key, const gchar *value)
             }
             break;
         default:
-            if ((SP_OBJECT_CLASS(parent_class))->set) {
-                (SP_OBJECT_CLASS(parent_class))->set(object, key, value);
+            if ((SP_OBJECT_CLASS(box3d_parent_class))->set) {
+                (SP_OBJECT_CLASS(box3d_parent_class))->set(object, key, value);
             }
             break;
     }
@@ -259,8 +230,8 @@ box3d_update(SPObject *object, SPCtx *ctx, guint flags)
     }
 
     // Invoke parent method
-    if ((SP_OBJECT_CLASS(parent_class))->update)
-        (SP_OBJECT_CLASS(parent_class))->update(object, ctx, flags);
+    if ((SP_OBJECT_CLASS(box3d_parent_class))->update)
+        (SP_OBJECT_CLASS(box3d_parent_class))->update(object, ctx, flags);
 }
 
 
@@ -306,8 +277,8 @@ static Inkscape::XML::Node * box3d_write(SPObject *object, Inkscape::XML::Docume
         box->save_corner7 = box->orig_corner7;
     }
 
-    if ((SP_OBJECT_CLASS(parent_class))->write) {
-        (SP_OBJECT_CLASS(parent_class))->write(object, xml_doc, repr, flags);
+    if ((SP_OBJECT_CLASS(box3d_parent_class))->write) {
+        (SP_OBJECT_CLASS(box3d_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;

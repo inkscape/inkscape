@@ -24,51 +24,38 @@
 #include "document.h"
 #include "inkscape.h"
 
-SPShapeClass * SPLineClass::static_parent_class = 0;
+static void                 sp_line_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
+static void                 sp_line_set(SPObject *object, unsigned int key, const gchar *value);
+static Inkscape::XML::Node* sp_line_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
+static void                 sp_line_update(SPObject *object, SPCtx *ctx, guint flags);
+static gchar*               sp_line_get_description(SPItem * item);
+static Geom::Affine         sp_line_set_transform(SPItem *item, Geom::Affine const &xform);
+static void                 sp_line_set_shape(SPShape *shape);
+static void                 sp_line_convert_to_guides(SPItem *item);
 
-GType SPLine::sp_line_get_type(void)
+G_DEFINE_TYPE(SPLine, sp_line, SP_TYPE_SHAPE);
+
+static void
+sp_line_class_init(SPLineClass *klass)
 {
-    static GType line_type = 0;
-
-    if (!line_type) {
-        GTypeInfo line_info = {
-            sizeof(SPLineClass),
-            NULL,       /* base_init */
-            NULL,       /* base_finalize */
-            (GClassInitFunc) SPLineClass::sp_line_class_init,
-            NULL,       /* klass_finalize */
-            NULL,       /* klass_data */
-            sizeof(SPLine),
-            16, /* n_preallocs */
-            (GInstanceInitFunc) init,
-            NULL,       /* value_table */
-        };
-        line_type = g_type_register_static(SP_TYPE_SHAPE, "SPLine", &line_info,(GTypeFlags)0);
-    }
-    return line_type;
-}
-
-void SPLineClass::sp_line_class_init(SPLineClass *klass)
-{
-    SPLineClass::static_parent_class = (SPShapeClass *) g_type_class_ref(SP_TYPE_SHAPE);
-
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
-    sp_object_class->build = SPLine::build;
-    sp_object_class->set = SPLine::set;
-    sp_object_class->write = SPLine::write;
+    SPItemClass   *item_class      = (SPItemClass *) klass;
+    SPShapeClass  *shape_class     = (SPShapeClass *) klass;
 
-    SPItemClass *item_class = (SPItemClass *) klass;
-    item_class->description = SPLine::getDescription;
-    item_class->set_transform = SPLine::setTransform;
-    item_class->convert_to_guides = SPLine::convertToGuides;
+    sp_object_class->build  = sp_line_build;
+    sp_object_class->set    = sp_line_set;
+    sp_object_class->write  = sp_line_write;
+    sp_object_class->update = sp_line_update;
 
-    sp_object_class->update = SPLine::update;
+    item_class->description       = sp_line_get_description;
+    item_class->set_transform     = sp_line_set_transform;
+    item_class->convert_to_guides = sp_line_convert_to_guides;
 
-    SPShapeClass *shape_class = (SPShapeClass *) klass;
-    shape_class->set_shape = SPLine::setShape;
+    shape_class->set_shape = sp_line_set_shape;
 }
 
-void SPLine::init(SPLine * line)
+static void
+sp_line_init(SPLine * line)
 {
     line->x1.unset();
     line->y1.unset();
@@ -77,10 +64,11 @@ void SPLine::init(SPLine * line)
 }
 
 
-void SPLine::build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
+static void
+sp_line_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
 {
-    if (((SPObjectClass *) SPLineClass::static_parent_class)->build) {
-        ((SPObjectClass *) SPLineClass::static_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_line_parent_class)->build) {
+        ((SPObjectClass *) sp_line_parent_class)->build(object, document, repr);
     }
 
     object->readAttr( "x1" );
@@ -89,7 +77,8 @@ void SPLine::build(SPObject * object, SPDocument * document, Inkscape::XML::Node
     object->readAttr( "y2" );
 }
 
-void SPLine::set(SPObject *object, unsigned int key, const gchar *value)
+static void
+sp_line_set(SPObject *object, unsigned int key, const gchar *value)
 {
     SPLine * line = SP_LINE(object);
 
@@ -113,14 +102,15 @@ void SPLine::set(SPObject *object, unsigned int key, const gchar *value)
             object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
-            if (((SPObjectClass *) SPLineClass::static_parent_class)->set) {
-                ((SPObjectClass *) SPLineClass::static_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_line_parent_class)->set) {
+                ((SPObjectClass *) sp_line_parent_class)->set(object, key, value);
             }
             break;
     }
 }
 
-void SPLine::update(SPObject *object, SPCtx *ctx, guint flags)
+static void
+sp_line_update(SPObject *object, SPCtx *ctx, guint flags)
 {
     if (flags & (SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
         SPLine *line = SP_LINE(object);
@@ -139,13 +129,14 @@ void SPLine::update(SPObject *object, SPCtx *ctx, guint flags)
         ((SPShape *) object)->setShape();
     }
 
-    if (((SPObjectClass *) SPLineClass::static_parent_class)->update) {
-        ((SPObjectClass *) SPLineClass::static_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_line_parent_class)->update) {
+        ((SPObjectClass *) sp_line_parent_class)->update(object, ctx, flags);
     }
 }
 
 
-Inkscape::XML::Node * SPLine::write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node*
+sp_line_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
 {
     SPLine *line  = SP_LINE(object);
 
@@ -162,19 +153,21 @@ Inkscape::XML::Node * SPLine::write(SPObject *object, Inkscape::XML::Document *x
     sp_repr_set_svg_double(repr, "x2", line->x2.computed);
     sp_repr_set_svg_double(repr, "y2", line->y2.computed);
 
-    if (((SPObjectClass *) (SPLineClass::static_parent_class))->write) {
-        ((SPObjectClass *) (SPLineClass::static_parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_line_parent_class))->write) {
+        ((SPObjectClass *) (sp_line_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
 }
 
-gchar * SPLine::getDescription(SPItem */*item*/)
+static gchar*
+sp_line_get_description(SPItem * /*item*/)
 {
     return g_strdup(_("<b>Line</b>"));
 }
 
-void SPLine::convertToGuides(SPItem *item)
+static void
+sp_line_convert_to_guides(SPItem *item)
 {
     SPLine *line = SP_LINE(item);
     Geom::Point points[2];
@@ -187,7 +180,8 @@ void SPLine::convertToGuides(SPItem *item)
     SPGuide::createSPGuide(item->document, points[0], points[1]);
 }
 
-Geom::Affine SPLine::setTransform(SPItem *item, Geom::Affine const &xform)
+static Geom::Affine
+sp_line_set_transform(SPItem *item, Geom::Affine const &xform)
 {
     SPLine *line = SP_LINE(item);
     Geom::Point points[2];
@@ -210,7 +204,8 @@ Geom::Affine SPLine::setTransform(SPItem *item, Geom::Affine const &xform)
     return Geom::identity();
 }
 
-void SPLine::setShape(SPShape *shape)
+static void
+sp_line_set_shape(SPShape *shape)
 {
     SPLine *line = SP_LINE(shape);
 

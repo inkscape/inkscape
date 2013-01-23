@@ -25,9 +25,6 @@
 
 #include "display/nr-svgfonts.h"
 
-static void sp_font_class_init(SPFontClass *fc);
-static void sp_font_init(SPFont *font);
-
 static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_font_release(SPObject *object);
 static void sp_font_set(SPObject *object, unsigned int key, const gchar *value);
@@ -37,38 +34,11 @@ static void sp_font_child_added(SPObject *object, Inkscape::XML::Node *child, In
 static void sp_font_remove_child(SPObject *object, Inkscape::XML::Node *child);
 static void sp_font_update(SPObject *object, SPCtx *ctx, guint flags);
 
-// static gchar *sp_font_description(SPItem *item);
-
-static SPObjectClass *parent_class;
-
-GType sp_font_get_type(void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPFontClass),
-            NULL,       /* base_init */
-            NULL,       /* base_finalize */
-            (GClassInitFunc) sp_font_class_init,
-            NULL,       /* class_finalize */
-            NULL,       /* class_data */
-            sizeof(SPFont),
-            16, /* n_preallocs */
-            (GInstanceInitFunc) sp_font_init,
-            NULL,       /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_OBJECT, "SPFont", &info, (GTypeFlags) 0);
-    }
-
-    return type;
-}
+G_DEFINE_TYPE(SPFont, sp_font, SP_TYPE_OBJECT);
 
 static void sp_font_class_init(SPFontClass *fc)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) fc;
-
-    parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
 
     sp_object_class->build = sp_font_build;
     sp_object_class->release = sp_font_release;
@@ -98,8 +68,8 @@ static void sp_font_init(SPFont *font)
 
 static void sp_font_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) (parent_class))->build) {
-        ((SPObjectClass *) (parent_class))->build(object, document, repr);
+    if (((SPObjectClass *) (sp_font_parent_class))->build) {
+        ((SPObjectClass *) (sp_font_parent_class))->build(object, document, repr);
     }
 
     object->readAttr( "horiz-origin-x" );
@@ -125,8 +95,8 @@ sp_font_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML:
 {
     SPFont *f = SP_FONT(object);
 
-    if (((SPObjectClass *) parent_class)->child_added)
-        (* ((SPObjectClass *) parent_class)->child_added)(object, child, ref);
+    if (((SPObjectClass *) sp_font_parent_class)->child_added)
+        (* ((SPObjectClass *) sp_font_parent_class)->child_added)(object, child, ref);
 
     sp_font_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -141,8 +111,8 @@ sp_font_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {
     SPFont *f = SP_FONT(object);
 
-    if (((SPObjectClass *) parent_class)->remove_child)
-        (* ((SPObjectClass *) parent_class)->remove_child)(object, child);
+    if (((SPObjectClass *) sp_font_parent_class)->remove_child)
+        (* ((SPObjectClass *) sp_font_parent_class)->remove_child)(object, child);
 
     sp_font_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -153,8 +123,8 @@ static void sp_font_release(SPObject *object)
     //SPFont *font = SP_FONT(object);
     object->document->removeResource("font", object);
 
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release(object);
+    if (((SPObjectClass *) sp_font_parent_class)->release) {
+        ((SPObjectClass *) sp_font_parent_class)->release(object);
     }
 }
 
@@ -219,8 +189,8 @@ static void sp_font_set(SPObject *object, unsigned int key, const gchar *value)
             break;
         }
         default:
-            if (((SPObjectClass *) (parent_class))->set) {
-                ((SPObjectClass *) (parent_class))->set(object, key, value);
+            if (((SPObjectClass *) (sp_font_parent_class))->set) {
+                ((SPObjectClass *) (sp_font_parent_class))->set(object, key, value);
             }
             break;
     }
@@ -241,8 +211,8 @@ sp_font_update(SPObject *object, SPCtx *ctx, guint flags)
         object->readAttr( "vert-adv-y" );
     }
 
-    if (((SPObjectClass *) parent_class)->update) {
-        ((SPObjectClass *) parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_font_parent_class)->update) {
+        ((SPObjectClass *) sp_font_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -274,8 +244,8 @@ static Inkscape::XML::Node *sp_font_write(SPObject *object, Inkscape::XML::Docum
         COPY_ATTR(repr, object->getRepr(), "vert-adv-y");
     }
 
-    if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_font_parent_class))->write) {
+        ((SPObjectClass *) (sp_font_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;

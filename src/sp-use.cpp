@@ -38,8 +38,6 @@
 
 /* fixme: */
 
-static void sp_use_class_init(SPUseClass *classname);
-static void sp_use_init(SPUse *use);
 static void sp_use_finalize(GObject *obj);
 
 static void sp_use_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
@@ -60,32 +58,10 @@ static void sp_use_href_changed(SPObject *old_ref, SPObject *ref, SPUse *use);
 
 static void sp_use_delete_self(SPObject *deleted, SPUse *self);
 
-static SPItemClass *parent_class;
-
 //void m_print(gchar *say, Geom::Affine m)
 //{ g_print("%s %g %g %g %g %g %g\n", say, m[0], m[1], m[2], m[3], m[4], m[5]); }
 
-GType
-sp_use_get_type(void)
-{
-    static GType use_type = 0;
-    if (!use_type) {
-        GTypeInfo use_info = {
-            sizeof(SPUseClass),
-            NULL,   /* base_init */
-            NULL,   /* base_finalize */
-            (GClassInitFunc) sp_use_class_init,
-            NULL,   /* class_finalize */
-            NULL,   /* class_data */
-            sizeof(SPUse),
-            16,     /* n_preallocs */
-            (GInstanceInitFunc) sp_use_init,
-            NULL,   /* value_table */
-        };
-        use_type = g_type_register_static(SP_TYPE_ITEM, "SPUse", &use_info, (GTypeFlags)0);
-    }
-    return use_type;
-}
+G_DEFINE_TYPE(SPUse, sp_use, SP_TYPE_ITEM);
 
 static void
 sp_use_class_init(SPUseClass *classname)
@@ -93,8 +69,6 @@ sp_use_class_init(SPUseClass *classname)
     GObjectClass *gobject_class = (GObjectClass *) classname;
     SPObjectClass *sp_object_class = (SPObjectClass *) classname;
     SPItemClass *item_class = (SPItemClass *) classname;
-
-    parent_class = (SPItemClass*) g_type_class_ref(SP_TYPE_ITEM);
 
     gobject_class->finalize = sp_use_finalize;
 
@@ -155,8 +129,8 @@ sp_use_finalize(GObject *obj)
 static void
 sp_use_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) parent_class)->build) {
-        (* ((SPObjectClass *) parent_class)->build)(object, document, repr);
+    if (((SPObjectClass *) sp_use_parent_class)->build) {
+        (* ((SPObjectClass *) sp_use_parent_class)->build)(object, document, repr);
     }
 
     object->readAttr( "x" );
@@ -189,8 +163,8 @@ sp_use_release(SPObject *object)
 
     use->ref->detach();
 
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release(object);
+    if (((SPObjectClass *) sp_use_parent_class)->release) {
+        ((SPObjectClass *) sp_use_parent_class)->release(object);
     }
 }
 
@@ -242,8 +216,8 @@ sp_use_set(SPObject *object, unsigned key, gchar const *value)
         }
 
         default:
-            if (((SPObjectClass *) parent_class)->set) {
-                ((SPObjectClass *) parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_use_parent_class)->set) {
+                ((SPObjectClass *) sp_use_parent_class)->set(object, key, value);
             }
             break;
     }
@@ -258,8 +232,8 @@ sp_use_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::
         repr = xml_doc->createElement("svg:use");
     }
 
-    if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_use_parent_class))->write) {
+        ((SPObjectClass *) (sp_use_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     sp_repr_set_svg_double(repr, "x", use->x.computed);
@@ -380,8 +354,8 @@ sp_use_hide(SPItem *item, unsigned key)
         SP_ITEM(use->child)->invoke_hide(key);
     }
 
-    if (((SPItemClass *) parent_class)->hide) {
-        ((SPItemClass *) parent_class)->hide(item, key);
+    if (((SPItemClass *) sp_use_parent_class)->hide) {
+        ((SPItemClass *) sp_use_parent_class)->hide(item, key);
     }
 }
 
@@ -585,8 +559,8 @@ sp_use_update(SPObject *object, SPCtx *ctx, unsigned flags)
     SPItemCtx *ictx = (SPItemCtx *) ctx;
     SPItemCtx cctx = *ictx;
 
-    if (((SPObjectClass *) (parent_class))->update)
-        ((SPObjectClass *) (parent_class))->update(object, ctx, flags);
+    if (((SPObjectClass *) (sp_use_parent_class))->update)
+        ((SPObjectClass *) (sp_use_parent_class))->update(object, ctx, flags);
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
         flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;

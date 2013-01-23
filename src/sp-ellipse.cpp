@@ -64,9 +64,6 @@ static double sp_round(double x, double y)
 }
 #endif
 
-static void sp_genericellipse_class_init(SPGenericEllipseClass *klass);
-static void sp_genericellipse_init(SPGenericEllipse *ellipse);
-
 static void sp_genericellipse_update(SPObject *object, SPCtx *ctx, guint flags);
 
 static void sp_genericellipse_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs);
@@ -79,29 +76,7 @@ static Inkscape::XML::Node *sp_genericellipse_write(SPObject *object, Inkscape::
 
 static gboolean sp_arc_set_elliptical_path_attribute(SPArc *arc, Inkscape::XML::Node *repr);
 
-static SPShapeClass *ge_parent_class;
-
-GType
-sp_genericellipse_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPGenericEllipseClass),
-            NULL,   /* base_init */
-            NULL,   /* base_finalize */
-            (GClassInitFunc) sp_genericellipse_class_init,
-            NULL,   /* class_finalize */
-            NULL,   /* class_data */
-            sizeof(SPGenericEllipse),
-            16,   /* n_preallocs */
-            (GInstanceInitFunc) sp_genericellipse_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_SHAPE, "SPGenericEllipse", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPGenericEllipse, sp_genericellipse, SP_TYPE_SHAPE);
 
 static void sp_genericellipse_class_init(SPGenericEllipseClass *klass)
 {
@@ -109,8 +84,6 @@ static void sp_genericellipse_class_init(SPGenericEllipseClass *klass)
     SPItemClass *item_class = (SPItemClass *) klass;
     SPLPEItemClass *lpe_item_class = (SPLPEItemClass *) klass;
     SPShapeClass *shape_class = (SPShapeClass *) klass;
-
-    ge_parent_class = (SPShapeClass*) g_type_class_ref(SP_TYPE_SHAPE);
 
     sp_object_class->update = sp_genericellipse_update;
     sp_object_class->write = sp_genericellipse_write;
@@ -154,8 +127,8 @@ sp_genericellipse_update(SPObject *object, SPCtx *ctx, guint flags)
         static_cast<SPShape *>(object)->setShape();
     }
 
-    if (((SPObjectClass *) ge_parent_class)->update)
-        ((SPObjectClass *) ge_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_genericellipse_parent_class)->update)
+        ((SPObjectClass *) sp_genericellipse_parent_class)->update(object, ctx, flags);
 }
 
 static void
@@ -371,8 +344,8 @@ static Inkscape::XML::Node *sp_genericellipse_write(SPObject *object, Inkscape::
     }
     sp_genericellipse_set_shape ((SPShape *) ellipse); // evaluate SPCurve
 
-    if (((SPObjectClass *) ge_parent_class)->write) {
-        ((SPObjectClass *) ge_parent_class)->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) sp_genericellipse_parent_class)->write) {
+        ((SPObjectClass *) sp_genericellipse_parent_class)->write(object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -380,44 +353,17 @@ static Inkscape::XML::Node *sp_genericellipse_write(SPObject *object, Inkscape::
 
 /* SVG <ellipse> element */
 
-static void sp_ellipse_class_init(SPEllipseClass *klass);
-static void sp_ellipse_init(SPEllipse *ellipse);
-
 static void sp_ellipse_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *sp_ellipse_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_ellipse_set(SPObject *object, unsigned int key, gchar const *value);
 static gchar *sp_ellipse_description(SPItem *item);
 
-static SPGenericEllipseClass *ellipse_parent_class;
-
-GType
-sp_ellipse_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPEllipseClass),
-            NULL,   /* base_init */
-            NULL,   /* base_finalize */
-            (GClassInitFunc) sp_ellipse_class_init,
-            NULL,   /* class_finalize */
-            NULL,   /* class_data */
-            sizeof(SPEllipse),
-            16,   /* n_preallocs */
-            (GInstanceInitFunc) sp_ellipse_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_GENERICELLIPSE, "SPEllipse", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPEllipse, sp_ellipse, SP_TYPE_GENERICELLIPSE);
 
 static void sp_ellipse_class_init(SPEllipseClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
     SPItemClass *item_class = (SPItemClass *) klass;
-
-    ellipse_parent_class = (SPGenericEllipseClass*) g_type_class_ref(SP_TYPE_GENERICELLIPSE);
 
     sp_object_class->build = sp_ellipse_build;
     sp_object_class->write = sp_ellipse_write;
@@ -435,8 +381,8 @@ sp_ellipse_init(SPEllipse */*ellipse*/)
 static void
 sp_ellipse_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) ellipse_parent_class)->build)
-        (* ((SPObjectClass *) ellipse_parent_class)->build) (object, document, repr);
+    if (((SPObjectClass *) sp_ellipse_parent_class)->build)
+        (* ((SPObjectClass *) sp_ellipse_parent_class)->build) (object, document, repr);
 
     object->readAttr( "cx" );
     object->readAttr( "cy" );
@@ -460,8 +406,8 @@ sp_ellipse_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::X
     sp_repr_set_svg_double(repr, "rx", ellipse->rx.computed);
     sp_repr_set_svg_double(repr, "ry", ellipse->ry.computed);
 
-    if (((SPObjectClass *) ellipse_parent_class)->write)
-        (* ((SPObjectClass *) ellipse_parent_class)->write) (object, xml_doc, repr, flags);
+    if (((SPObjectClass *) sp_ellipse_parent_class)->write)
+        (* ((SPObjectClass *) sp_ellipse_parent_class)->write) (object, xml_doc, repr, flags);
 
     return repr;
 }
@@ -495,8 +441,8 @@ sp_ellipse_set(SPObject *object, unsigned int key, gchar const *value)
             object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
-            if (((SPObjectClass *) ellipse_parent_class)->set)
-                ((SPObjectClass *) ellipse_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_ellipse_parent_class)->set)
+                ((SPObjectClass *) sp_ellipse_parent_class)->set(object, key, value);
             break;
     }
 }
@@ -527,45 +473,18 @@ sp_ellipse_position_set(SPEllipse *ellipse, gdouble x, gdouble y, gdouble rx, gd
 
 /* SVG <circle> element */
 
-static void sp_circle_class_init(SPCircleClass *klass);
-static void sp_circle_init(SPCircle *circle);
-
 static void sp_circle_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *sp_circle_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_circle_set(SPObject *object, unsigned int key, gchar const *value);
 static gchar *sp_circle_description(SPItem *item);
 
-static SPGenericEllipseClass *circle_parent_class;
-
-GType
-sp_circle_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPCircleClass),
-            NULL,   /* base_init */
-            NULL,   /* base_finalize */
-            (GClassInitFunc) sp_circle_class_init,
-            NULL,   /* class_finalize */
-            NULL,   /* class_data */
-            sizeof(SPCircle),
-            16,   /* n_preallocs */
-            (GInstanceInitFunc) sp_circle_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_GENERICELLIPSE, "SPCircle", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPCircle, sp_circle, SP_TYPE_GENERICELLIPSE);
 
 static void
 sp_circle_class_init(SPCircleClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
     SPItemClass *item_class = (SPItemClass *) klass;
-
-    circle_parent_class = (SPGenericEllipseClass*) g_type_class_ref(SP_TYPE_GENERICELLIPSE);
 
     sp_object_class->build = sp_circle_build;
     sp_object_class->write = sp_circle_write;
@@ -583,8 +502,8 @@ sp_circle_init(SPCircle */*circle*/)
 static void
 sp_circle_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) circle_parent_class)->build)
-        (* ((SPObjectClass *) circle_parent_class)->build)(object, document, repr);
+    if (((SPObjectClass *) sp_circle_parent_class)->build)
+        (* ((SPObjectClass *) sp_circle_parent_class)->build)(object, document, repr);
 
     object->readAttr( "cx" );
     object->readAttr( "cy" );
@@ -606,8 +525,8 @@ sp_circle_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XM
     sp_repr_set_svg_double(repr, "cy", ellipse->cy.computed);
     sp_repr_set_svg_double(repr, "r", ellipse->rx.computed);
 
-    if (((SPObjectClass *) circle_parent_class)->write)
-        ((SPObjectClass *) circle_parent_class)->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) sp_circle_parent_class)->write)
+        ((SPObjectClass *) sp_circle_parent_class)->write(object, xml_doc, repr, flags);
 
     return repr;
 }
@@ -636,8 +555,8 @@ sp_circle_set(SPObject *object, unsigned int key, gchar const *value)
             object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
-            if (((SPObjectClass *) circle_parent_class)->set)
-                ((SPObjectClass *) circle_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_circle_parent_class)->set)
+                ((SPObjectClass *) sp_circle_parent_class)->set(object, key, value);
             break;
     }
 }
@@ -649,9 +568,6 @@ static gchar *sp_circle_description(SPItem */*item*/)
 
 /* <path sodipodi:type="arc"> element */
 
-static void sp_arc_class_init(SPArcClass *klass);
-static void sp_arc_init(SPArc *arc);
-
 static void sp_arc_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *sp_arc_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_arc_set(SPObject *object, unsigned int key, gchar const *value);
@@ -659,37 +575,13 @@ static void sp_arc_modified(SPObject *object, guint flags);
 
 static gchar *sp_arc_description(SPItem *item);
 
-static SPGenericEllipseClass *arc_parent_class;
-
-GType
-sp_arc_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPArcClass),
-            NULL,   /* base_init */
-            NULL,   /* base_finalize */
-            (GClassInitFunc) sp_arc_class_init,
-            NULL,   /* class_finalize */
-            NULL,   /* class_data */
-            sizeof(SPArc),
-            16,   /* n_preallocs */
-            (GInstanceInitFunc) sp_arc_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_GENERICELLIPSE, "SPArc", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPArc, sp_arc, SP_TYPE_GENERICELLIPSE);
 
 static void
 sp_arc_class_init(SPArcClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
     SPItemClass *item_class = (SPItemClass *) klass;
-
-    arc_parent_class = (SPGenericEllipseClass*) g_type_class_ref(SP_TYPE_GENERICELLIPSE);
 
     sp_object_class->build = sp_arc_build;
     sp_object_class->write = sp_arc_write;
@@ -708,8 +600,8 @@ sp_arc_init(SPArc */*arc*/)
 static void
 sp_arc_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) arc_parent_class)->build)
-        (* ((SPObjectClass *) arc_parent_class)->build) (object, document, repr);
+    if (((SPObjectClass *) sp_arc_parent_class)->build)
+        (* ((SPObjectClass *) sp_arc_parent_class)->build) (object, document, repr);
 
     object->readAttr( "sodipodi:cx" );
     object->readAttr( "sodipodi:cy" );
@@ -797,8 +689,8 @@ sp_arc_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::
     // write d=
     sp_arc_set_elliptical_path_attribute(arc, repr);
 
-    if (((SPObjectClass *) arc_parent_class)->write)
-        ((SPObjectClass *) arc_parent_class)->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) sp_arc_parent_class)->write)
+        ((SPObjectClass *) sp_arc_parent_class)->write(object, xml_doc, repr, flags);
 
     return repr;
 }
@@ -850,8 +742,8 @@ sp_arc_set(SPObject *object, unsigned int key, gchar const *value)
             object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
-            if (((SPObjectClass *) arc_parent_class)->set)
-                ((SPObjectClass *) arc_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_arc_parent_class)->set)
+                ((SPObjectClass *) sp_arc_parent_class)->set(object, key, value);
             break;
     }
 }
@@ -863,8 +755,8 @@ sp_arc_modified(SPObject *object, guint flags)
         ((SPShape *) object)->setShape();
     }
 
-    if (((SPObjectClass *) arc_parent_class)->modified)
-        ((SPObjectClass *) arc_parent_class)->modified(object, flags);
+    if (((SPObjectClass *) sp_arc_parent_class)->modified)
+        ((SPObjectClass *) sp_arc_parent_class)->modified(object, flags);
 }
 
 static gchar *sp_arc_description(SPItem *item)

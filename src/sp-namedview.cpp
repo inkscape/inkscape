@@ -49,9 +49,6 @@ using Inkscape::DocumentUndo;
 #define DEFAULTBORDERCOLOR 0x000000ff
 #define DEFAULTPAGECOLOR 0xffffff00
 
-static void sp_namedview_class_init(SPNamedViewClass *klass);
-static void sp_namedview_init(SPNamedView *namedview);
-
 static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_namedview_release(SPObject *object);
 static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *value);
@@ -65,35 +62,11 @@ static void sp_namedview_show_single_guide(SPGuide* guide, bool show);
 static gboolean sp_str_to_bool(const gchar *str);
 static gboolean sp_nv_read_opacity(const gchar *str, guint32 *color);
 
-static SPObjectGroupClass * parent_class;
-
-GType
-sp_namedview_get_type()
-{
-    static GType namedview_type = 0;
-    if (!namedview_type) {
-        GTypeInfo namedview_info = {
-            sizeof(SPNamedViewClass),
-            NULL,       /* base_init */
-            NULL,       /* base_finalize */
-            (GClassInitFunc) sp_namedview_class_init,
-            NULL,       /* class_finalize */
-            NULL,       /* class_data */
-            sizeof(SPNamedView),
-            16, /* n_preallocs */
-            (GInstanceInitFunc) sp_namedview_init,
-            NULL,       /* value_table */
-        };
-        namedview_type = g_type_register_static(SP_TYPE_OBJECTGROUP, "SPNamedView", &namedview_info, (GTypeFlags)0);
-    }
-    return namedview_type;
-}
+G_DEFINE_TYPE(SPNamedView, sp_namedview, SP_TYPE_OBJECTGROUP);
 
 static void sp_namedview_class_init(SPNamedViewClass * klass)
 {
-    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
-
-    parent_class = reinterpret_cast<SPObjectGroupClass *>(g_type_class_ref(SP_TYPE_OBJECTGROUP));
+    SPObjectClass *sp_object_class = SP_OBJECT_CLASS(klass);
 
     sp_object_class->build = sp_namedview_build;
     sp_object_class->release = sp_namedview_release;
@@ -215,8 +188,8 @@ static void sp_namedview_build(SPObject *object, SPDocument *document, Inkscape:
     SPNamedView *nv = (SPNamedView *) object;
     SPObjectGroup *og = (SPObjectGroup *) object;
 
-    if (((SPObjectClass *) (parent_class))->build) {
-        (* ((SPObjectClass *) (parent_class))->build)(object, document, repr);
+    if (((SPObjectClass *) (sp_namedview_parent_class))->build) {
+        (* ((SPObjectClass *) (sp_namedview_parent_class))->build)(object, document, repr);
     }
 
     object->readAttr( "inkscape:document-units" );
@@ -303,8 +276,8 @@ static void sp_namedview_release(SPObject *object)
         namedview->grids = g_slist_remove_link(namedview->grids, namedview->grids); // deletes first entry
     }
 
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release(object);
+    if (((SPObjectClass *) sp_namedview_parent_class)->release) {
+        ((SPObjectClass *) sp_namedview_parent_class)->release(object);
     }
 
     namedview->snap_manager.~SnapManager();
@@ -624,8 +597,8 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
     }
     default:
-            if (((SPObjectClass *) (parent_class))->set) {
-                ((SPObjectClass *) (parent_class))->set(object, key, value);
+            if (((SPObjectClass *) (sp_namedview_parent_class))->set) {
+                ((SPObjectClass *) (sp_namedview_parent_class))->set(object, key, value);
             }
             break;
     }
@@ -676,8 +649,8 @@ static void sp_namedview_child_added(SPObject *object, Inkscape::XML::Node *chil
 {
     SPNamedView *nv = (SPNamedView *) object;
 
-    if (((SPObjectClass *) (parent_class))->child_added) {
-        (* ((SPObjectClass *) (parent_class))->child_added)(object, child, ref);
+    if (((SPObjectClass *) (sp_namedview_parent_class))->child_added) {
+        (* ((SPObjectClass *) (sp_namedview_parent_class))->child_added)(object, child, ref);
     }
 
     if (!strcmp(child->name(), "inkscape:grid")) {
@@ -730,8 +703,8 @@ static void sp_namedview_remove_child(SPObject *object, Inkscape::XML::Node *chi
         }
     }
 
-    if (((SPObjectClass *) (parent_class))->remove_child) {
-        (* ((SPObjectClass *) (parent_class))->remove_child)(object, child);
+    if (((SPObjectClass *) (sp_namedview_parent_class))->remove_child) {
+        (* ((SPObjectClass *) (sp_namedview_parent_class))->remove_child)(object, child);
     }
 }
 

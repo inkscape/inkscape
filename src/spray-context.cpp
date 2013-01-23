@@ -78,16 +78,13 @@ using namespace std;
 #define DDC_RED_RGBA 0xff0000ff
 #define DYNA_MIN_WIDTH 1.0e-6
 
-static void sp_spray_context_class_init(SPSprayContextClass *klass);
-static void sp_spray_context_init(SPSprayContext *ddc);
 static void sp_spray_context_dispose(GObject *object);
 
 static void sp_spray_context_setup(SPEventContext *ec);
 static void sp_spray_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static gint sp_spray_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
-static SPEventContextClass *parent_class = 0;
-
+G_DEFINE_TYPE(SPSprayContext, sp_spray_context, SP_TYPE_EVENT_CONTEXT);
 
 /**
  * This function returns pseudo-random numbers from a normal distribution
@@ -100,31 +97,10 @@ inline double NormalDistribution(double mu, double sigma)
   return mu + sigma * sqrt( -2.0 * log(g_random_double_range(0, 1)) ) * cos( 2.0*M_PI*g_random_double_range(0, 1) );
 }
 
-GType sp_spray_context_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPSprayContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_spray_context_class_init,
-            NULL, NULL,
-            sizeof(SPSprayContext),
-            4,
-            (GInstanceInitFunc) sp_spray_context_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPSprayContext", &info, (GTypeFlags)0);
-    }
-    return type;
-}
-
 static void sp_spray_context_class_init(SPSprayContextClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_spray_context_dispose;
 
@@ -204,7 +180,7 @@ static void sp_spray_context_dispose(GObject *object)
         delete tc->_message_context;
     }
 
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_spray_context_parent_class)->dispose(object);
 }
 
 static bool is_transform_modes(gint mode)
@@ -251,8 +227,8 @@ static void sp_spray_context_setup(SPEventContext *ec)
 {
     SPSprayContext *tc = SP_SPRAY_CONTEXT(ec);
 
-    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup) {
-        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(sp_spray_context_parent_class))->setup) {
+        (SP_EVENT_CONTEXT_CLASS(sp_spray_context_parent_class))->setup(ec);
     }
 
     {
@@ -926,8 +902,8 @@ gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *even
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler) {
-            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler(event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(sp_spray_context_parent_class))->root_handler) {
+            ret = (SP_EVENT_CONTEXT_CLASS(sp_spray_context_parent_class))->root_handler(event_context, event);
         }
     }
 

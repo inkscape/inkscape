@@ -261,9 +261,6 @@ static std::vector<FontFaceStretchType> sp_read_fontFaceStretchType(gchar const 
     return v;
 }
 
-static void sp_fontface_class_init(SPFontFaceClass *fc);
-static void sp_fontface_init(SPFontFace *font);
-
 static void sp_fontface_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_fontface_release(SPObject *object);
 static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *value);
@@ -273,36 +270,11 @@ static void sp_fontface_child_added(SPObject *object, Inkscape::XML::Node *child
 static void sp_fontface_remove_child(SPObject *object, Inkscape::XML::Node *child);
 static void sp_fontface_update(SPObject *object, SPCtx *ctx, guint flags);
 
-static SPObjectClass *parent_class;
-
-GType sp_fontface_get_type(void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPFontFaceClass),
-            NULL,       /* base_init */
-            NULL,       /* base_finalize */
-            (GClassInitFunc) sp_fontface_class_init,
-            NULL,       /* class_finalize */
-            NULL,       /* class_data */
-            sizeof(SPFontFace),
-            16, /* n_preallocs */
-            (GInstanceInitFunc) sp_fontface_init,
-            NULL,       /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_OBJECT, "SPFontFace", &info, (GTypeFlags) 0);
-    }
-
-    return type;
-}
+G_DEFINE_TYPE(SPFontFace, sp_fontface, SP_TYPE_OBJECT);
 
 static void sp_fontface_class_init(SPFontFaceClass *fc)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) fc;
-
-    parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
 
     sp_object_class->build = sp_fontface_build;
     sp_object_class->release = sp_fontface_release;
@@ -369,8 +341,8 @@ static void sp_fontface_init(SPFontFace *face)
 
 static void sp_fontface_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) (parent_class))->build) {
-        ((SPObjectClass *) (parent_class))->build(object, document, repr);
+    if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->build) {
+        (SP_OBJECT_CLASS(sp_fontface_parent_class))->build(object, document, repr);
     }
 
     object->readAttr( "font-family" );
@@ -420,8 +392,8 @@ sp_fontface_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::
 {
     SPFontFace *f = SP_FONTFACE(object);
 
-    if (((SPObjectClass *) parent_class)->child_added)
-        (* ((SPObjectClass *) parent_class)->child_added)(object, child, ref);
+    if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->child_added)
+        (* (SP_OBJECT_CLASS(sp_fontface_parent_class))->child_added)(object, child, ref);
 
     sp_fontface_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -436,8 +408,8 @@ sp_fontface_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {
     SPFontFace *f = SP_FONTFACE(object);
 
-    if (((SPObjectClass *) parent_class)->remove_child)
-        (* ((SPObjectClass *) parent_class)->remove_child)(object, child);
+    if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->remove_child)
+        (* (SP_OBJECT_CLASS(sp_fontface_parent_class))->remove_child)(object, child);
 
     sp_fontface_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -445,10 +417,8 @@ sp_fontface_remove_child(SPObject *object, Inkscape::XML::Node *child)
 
 static void sp_fontface_release(SPObject *object)
 {
-    //SPFontFace *font = SP_FONTFACE(object);
-
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release(object);
+    if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->release) {
+        (SP_OBJECT_CLASS(sp_fontface_parent_class))->release(object);
     }
 }
 
@@ -736,8 +706,8 @@ static void sp_fontface_set(SPObject *object, unsigned int key, const gchar *val
             break;
         }
         default:
-            if (((SPObjectClass *) (parent_class))->set) {
-                ((SPObjectClass *) (parent_class))->set(object, key, value);
+            if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->set) {
+                (SP_OBJECT_CLASS(sp_fontface_parent_class))->set(object, key, value);
             }
             break;
     }
@@ -785,8 +755,8 @@ sp_fontface_update(SPObject *object, SPCtx *ctx, guint flags)
         object->readAttr( "overline-thickness" );
     }
 
-    if (((SPObjectClass *) parent_class)->update) {
-        ((SPObjectClass *) parent_class)->update(object, ctx, flags);
+    if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->update) {
+        (SP_OBJECT_CLASS(sp_fontface_parent_class))->update(object, ctx, flags);
     }
 }
 
@@ -873,8 +843,8 @@ static Inkscape::XML::Node *sp_fontface_write(SPObject *object, Inkscape::XML::D
         COPY_ATTR(repr, object->getRepr(), "overline-thickness");
     }
 
-    if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
+    if ((SP_OBJECT_CLASS(sp_fontface_parent_class))->write) {
+        (SP_OBJECT_CLASS(sp_fontface_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
