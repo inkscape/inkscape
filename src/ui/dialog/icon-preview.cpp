@@ -352,7 +352,7 @@ void IconPreviewPanel::refreshPreview()
         SPObject *target = 0;
         if ( selectionButton && selectionButton->get_active() )
         {
-            target = (hold && !targetId.empty()) ? desktop->doc()->getObjectById( targetId ) : 0;
+            target = (hold && !targetId.empty()) ? desktop->doc()->getObjectById( targetId.c_str() ) : 0;
             if ( !target ) {
                 targetId.clear();
                 Inkscape::Selection * sel = sp_desktop_selection(desktop);
