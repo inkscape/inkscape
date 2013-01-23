@@ -58,7 +58,7 @@ GdkPixbuf *grayMapToGdkPixbuf(GrayMap *grayMap)
 
     GdkPixbuf *buf = gdk_pixbuf_new_from_data(pixdata, GDK_COLORSPACE_RGB,
                         0, 8, grayMap->width, grayMap->height,
-                        rowstride, NULL, NULL);
+                        rowstride, (GdkPixbufDestroyNotify)g_free, NULL);
 
     //### Fill in the odd cells with RGB values
     int x,y;
@@ -122,7 +122,7 @@ PackedPixelMap *gdkPixbufToPackedPixelMap(GdkPixbuf *buf)
     return ppMap;
 }
 
-GdkPixbuf *packedPixelMapToGdkPixbuf(PackedPixelMap *ppMap)
+/*GdkPixbuf *packedPixelMapToGdkPixbuf(PackedPixelMap *ppMap)
 {
     if (!ppMap)
         return NULL;
@@ -137,7 +137,7 @@ GdkPixbuf *packedPixelMapToGdkPixbuf(PackedPixelMap *ppMap)
 
     GdkPixbuf *buf = gdk_pixbuf_new_from_data(pixdata, GDK_COLORSPACE_RGB,
                         0, 8, ppMap->width, ppMap->height,
-                        rowstride, NULL, NULL);
+                        rowstride, NULL, NULL); //first NULL: replace by (GdkPixbufDestroyNotify)g_free ??
 
     //### Fill in the cells with RGB values
     int x,y;
@@ -158,7 +158,7 @@ GdkPixbuf *packedPixelMapToGdkPixbuf(PackedPixelMap *ppMap)
 
     return buf;
 }
-
+*/
 
 
 /*#########################################################################
@@ -203,6 +203,7 @@ RgbMap *gdkPixbufToRgbMap(GdkPixbuf *buf)
     return rgbMap;
 }
 
+/*
 GdkPixbuf *rgbMapToGdkPixbuf(RgbMap *rgbMap)
 {
     if (!rgbMap)
@@ -218,7 +219,7 @@ GdkPixbuf *rgbMapToGdkPixbuf(RgbMap *rgbMap)
 
     GdkPixbuf *buf = gdk_pixbuf_new_from_data(pixdata, GDK_COLORSPACE_RGB,
                         0, 8, rgbMap->width, rgbMap->height,
-                        rowstride, NULL, NULL);
+                        rowstride, NULL, NULL); //first NULL: replace by (GdkPixbufDestroyNotify)g_free ??
 
     //### Fill in the cells with RGB values
     int x,y;
@@ -239,6 +240,7 @@ GdkPixbuf *rgbMapToGdkPixbuf(RgbMap *rgbMap)
 
     return buf;
 }
+*/
 
 /*#########################################################################
 ## I N D E X E D   M A P
@@ -260,7 +262,7 @@ GdkPixbuf *indexedMapToGdkPixbuf(IndexedMap *iMap)
 
     GdkPixbuf *buf = gdk_pixbuf_new_from_data(pixdata, GDK_COLORSPACE_RGB,
                         0, 8, iMap->width, iMap->height,
-                        rowstride, NULL, NULL);
+                        rowstride, (GdkPixbufDestroyNotify)g_free, NULL);
 
     //### Fill in the cells with RGB values
     int x,y;
