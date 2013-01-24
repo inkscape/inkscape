@@ -432,6 +432,9 @@ void SymbolsDialog::get_symbols() {
 
 GSList* SymbolsDialog::symbols_in_doc_recursive (SPObject *r, GSList *l)
 { 
+  if (!r) {
+    return l;
+  }
 
   // Stop multiple counting of same symbol
   if( SP_IS_USE(r) ) {
