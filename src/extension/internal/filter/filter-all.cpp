@@ -64,7 +64,8 @@ Filter::filters_all (void )
     Invert::init();
     Lighting::init();
     LightnessContrast::init();
-    Nudge::init();
+    NudgeRGB::init();
+    NudgeCMY::init();
     Quadritone::init();
     Solarize::init();
     Tritone::init();
