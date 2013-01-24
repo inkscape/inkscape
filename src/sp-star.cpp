@@ -32,9 +32,6 @@
 
 #include "sp-star.h"
 
-static void sp_star_class_init (SPStarClass *klass);
-static void sp_star_init (SPStar *star);
-
 static void sp_star_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
 static Inkscape::XML::Node *sp_star_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_star_set (SPObject *object, unsigned int key, const gchar *value);
@@ -46,37 +43,14 @@ static void sp_star_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
 static void sp_star_set_shape (SPShape *shape);
 static void sp_star_update_patheffect (SPLPEItem *lpeitem, bool write);
 
-static SPShapeClass *parent_class;
-
-GType
-sp_star_get_type (void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof (SPStarClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_star_class_init,
-            NULL, NULL,
-            sizeof (SPStar),
-            16,
-            (GInstanceInitFunc) sp_star_init,
-            NULL,    /* value_table */
-        };
-        type = g_type_register_static (SP_TYPE_SHAPE, "SPStar", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPStar, sp_star, SP_TYPE_SHAPE);
 
 static void sp_star_class_init(SPStarClass *klass)
 {
-    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
-    SPItemClass *item_class = reinterpret_cast<SPItemClass *>(klass);
-    SPLPEItemClass *lpe_item_class = reinterpret_cast<SPLPEItemClass *>(klass);
-    SPShapeClass *shape_class = reinterpret_cast<SPShapeClass *>(klass);
-
-    parent_class = reinterpret_cast<SPShapeClass *>(g_type_class_ref(SP_TYPE_SHAPE));
+    SPObjectClass  *sp_object_class = SP_OBJECT_CLASS(klass);
+    SPItemClass    *item_class      = SP_ITEM_CLASS(klass);
+    SPLPEItemClass *lpe_item_class  = SP_LPE_ITEM_CLASS(klass);
+    SPShapeClass   *shape_class     = SP_SHAPE_CLASS(klass);
 
     sp_object_class->build = sp_star_build;
     sp_object_class->write = sp_star_write;
@@ -107,8 +81,8 @@ sp_star_init (SPStar * star)
 static void
 sp_star_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
 {
-    if (((SPObjectClass *) parent_class)->build)
-        ((SPObjectClass *) parent_class)->build (object, document, repr);
+    if (((SPObjectClass *) sp_star_parent_class)->build)
+        ((SPObjectClass *) sp_star_parent_class)->build (object, document, repr);
 
     object->readAttr( "sodipodi:cx" );
     object->readAttr( "sodipodi:cy" );
@@ -150,8 +124,8 @@ sp_star_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
     repr->setAttribute("d", d);
     g_free (d);
 
-    if (((SPObjectClass *) (parent_class))->write)
-        ((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_star_parent_class))->write)
+        ((SPObjectClass *) (sp_star_parent_class))->write (object, xml_doc, repr, flags);
 
     return repr;
 }
@@ -250,8 +224,8 @@ sp_star_set (SPObject *object, unsigned int key, const gchar *value)
         object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
     default:
-        if (((SPObjectClass *) parent_class)->set)
-            ((SPObjectClass *) parent_class)->set (object, key, value);
+        if (((SPObjectClass *) sp_star_parent_class)->set)
+            ((SPObjectClass *) sp_star_parent_class)->set (object, key, value);
         break;
     }
 }
@@ -265,8 +239,8 @@ sp_star_update (SPObject *object, SPCtx *ctx, guint flags)
         ((SPShape *) object)->setShape ();
     }
 
-    if (((SPObjectClass *) parent_class)->update)
-        ((SPObjectClass *) parent_class)->update (object, ctx, flags);
+    if (((SPObjectClass *) sp_star_parent_class)->update)
+        ((SPObjectClass *) sp_star_parent_class)->update (object, ctx, flags);
 }
 
 static void
@@ -544,8 +518,8 @@ static void sp_star_snappoints(SPItem const *item, std::vector<Inkscape::SnapCan
     Inkscape::SnapPreferences local_snapprefs = *snapprefs;
     local_snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT, false);
 
-    if (((SPItemClass *) parent_class)->snappoints) {
-        ((SPItemClass *) parent_class)->snappoints (item, p, &local_snapprefs);
+    if (((SPItemClass *) sp_star_parent_class)->snappoints) {
+        ((SPItemClass *) sp_star_parent_class)->snappoints (item, p, &local_snapprefs);
     }
 
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT)) {

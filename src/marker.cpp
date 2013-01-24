@@ -35,9 +35,6 @@ struct SPMarkerView {
   std::vector<Inkscape::DrawingItem *> items;
 };
 
-static void sp_marker_class_init (SPMarkerClass *klass);
-static void sp_marker_init (SPMarker *marker);
-
 static void sp_marker_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_marker_release (SPObject *object);
 static void sp_marker_set (SPObject *object, unsigned int key, const gchar *value);
@@ -51,30 +48,7 @@ static void sp_marker_print (SPItem *item, SPPrintContext *ctx);
 
 static void sp_marker_view_remove (SPMarker *marker, SPMarkerView *view, unsigned int destroyitems);
 
-static SPGroupClass *parent_class = 0;
-
-/**
- * Registers the SPMarker class with Gdk and returns its type number.
- */
-GType
-sp_marker_get_type (void)
-{
-	static GType type = 0;
-	if (!type) {
-		GTypeInfo info = {
-			sizeof (SPMarkerClass),
-			NULL, NULL,
-			(GClassInitFunc) sp_marker_class_init,
-			NULL, NULL,
-			sizeof (SPMarker),
-			16,
-			(GInstanceInitFunc) sp_marker_init,
-			NULL,	/* value_table */
-		};
-		type = g_type_register_static (SP_TYPE_GROUP, "SPMarker", &info, (GTypeFlags)0);
-	}
-	return type;
-}
+G_DEFINE_TYPE(SPMarker, sp_marker, SP_TYPE_GROUP);
 
 /**
  * Initializes a SPMarkerClass object.  Establishes the function pointers to the class'
@@ -85,18 +59,16 @@ static void sp_marker_class_init(SPMarkerClass *klass)
     SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
     SPItemClass *sp_item_class = reinterpret_cast<SPItemClass *>(klass);
 
-    parent_class = reinterpret_cast<SPGroupClass *>(g_type_class_ref(SP_TYPE_GROUP));
+    sp_object_class->build = sp_marker_build;
+    sp_object_class->release = sp_marker_release;
+    sp_object_class->set = sp_marker_set;
+    sp_object_class->update = sp_marker_update;
+    sp_object_class->write = sp_marker_write;
 
-	sp_object_class->build = sp_marker_build;
-	sp_object_class->release = sp_marker_release;
-	sp_object_class->set = sp_marker_set;
-	sp_object_class->update = sp_marker_update;
-	sp_object_class->write = sp_marker_write;
-
-	sp_item_class->show = sp_marker_private_show;
-	sp_item_class->hide = sp_marker_private_hide;
-	sp_item_class->bbox = sp_marker_bbox;
-	sp_item_class->print = sp_marker_print;
+    sp_item_class->show = sp_marker_private_show;
+    sp_item_class->hide = sp_marker_private_hide;
+    sp_item_class->bbox = sp_marker_bbox;
+    sp_item_class->print = sp_marker_print;
 }
 
 /**
@@ -132,8 +104,8 @@ static void sp_marker_build(SPObject *object, SPDocument *document, Inkscape::XM
     object->readAttr( "viewBox" );
     object->readAttr( "preserveAspectRatio" );
 
-    if (reinterpret_cast<SPObjectClass *>(parent_class)->build) {
-        reinterpret_cast<SPObjectClass *>(parent_class)->build(object, document, repr);
+    if (reinterpret_cast<SPObjectClass *>(sp_marker_parent_class)->build) {
+        reinterpret_cast<SPObjectClass *>(sp_marker_parent_class)->build(object, document, repr);
     }
 }
 
@@ -156,12 +128,12 @@ static void sp_marker_release(SPObject *object)
     while (marker->views) {
         // Destroy all DrawingItems etc.
         // Parent class ::hide method
-        reinterpret_cast<SPItemClass *>(parent_class)->hide(marker, marker->views->key);
+        reinterpret_cast<SPItemClass *>(sp_marker_parent_class)->hide(marker, marker->views->key);
         sp_marker_view_remove (marker, marker->views, TRUE);
     }
 
-    if (reinterpret_cast<SPObjectClass *>(parent_class)->release) {
-        reinterpret_cast<SPObjectClass *>(parent_class)->release(object);
+    if (reinterpret_cast<SPObjectClass *>(sp_marker_parent_class)->release) {
+        reinterpret_cast<SPObjectClass *>(sp_marker_parent_class)->release(object);
     }
 }
 
@@ -311,8 +283,8 @@ static void sp_marker_set(SPObject *object, unsigned int key, const gchar *value
 		}
 		break;
 	default:
-		if (((SPObjectClass *) parent_class)->set)
-			((SPObjectClass *) parent_class)->set (object, key, value);
+		if (((SPObjectClass *) sp_marker_parent_class)->set)
+			((SPObjectClass *) sp_marker_parent_class)->set (object, key, value);
 		break;
 	}
 }
@@ -430,8 +402,8 @@ static void sp_marker_update(SPObject *object, SPCtx *ctx, guint flags)
     }
 
     // And invoke parent method
-    if (((SPObjectClass *) (parent_class))->update) {
-        ((SPObjectClass *) (parent_class))->update (object, (SPCtx *) &rctx, flags);
+    if (((SPObjectClass *) (sp_marker_parent_class))->update) {
+        ((SPObjectClass *) (sp_marker_parent_class))->update (object, (SPCtx *) &rctx, flags);
     }
 
     // As last step set additional transform of drawing group
@@ -503,8 +475,8 @@ sp_marker_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::X
 	//XML Tree being used directly here while it shouldn't be....
 	repr->setAttribute("preserveAspectRatio", object->getRepr()->attribute("preserveAspectRatio"));
 
-	if (((SPObjectClass *) (parent_class))->write)
-		((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
+	if (((SPObjectClass *) (sp_marker_parent_class))->write)
+		((SPObjectClass *) (sp_marker_parent_class))->write (object, xml_doc, repr, flags);
 
 	return repr;
 }
@@ -572,7 +544,7 @@ sp_marker_show_dimension (SPMarker *marker, unsigned int key, unsigned int size)
     if (view && (view->items.size() != size)) {
         /* Free old view and allocate new */
         /* Parent class ::hide method */
-        ((SPItemClass *) parent_class)->hide ((SPItem *) marker, key);
+        ((SPItemClass *) sp_marker_parent_class)->hide ((SPItem *) marker, key);
         sp_marker_view_remove (marker, view, TRUE);
         view = NULL;
     }
@@ -611,7 +583,7 @@ sp_marker_show_instance ( SPMarker *marker, Inkscape::DrawingItem *parent,
             }
             if (!v->items[pos]) {
                 /* Parent class ::show method */
-                v->items[pos] = ((SPItemClass *) parent_class)->show ((SPItem *) marker,
+                v->items[pos] = ((SPItemClass *) sp_marker_parent_class)->show ((SPItem *) marker,
                                                                       parent->drawing(), key,
                                                                       SP_ITEM_REFERENCE_FLAGS);
                 if (v->items[pos]) {
@@ -658,7 +630,7 @@ sp_marker_hide (SPMarker *marker, unsigned int key)
 		next = v->next;
 		if (v->key == key) {
 			/* Parent class ::hide method */
-			((SPItemClass *) parent_class)->hide ((SPItem *) marker, key);
+			((SPItemClass *) sp_marker_parent_class)->hide ((SPItem *) marker, key);
 			sp_marker_view_remove (marker, v, TRUE);
 			return;
 		}

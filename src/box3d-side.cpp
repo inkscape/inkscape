@@ -26,9 +26,6 @@
 
 struct SPPathClass;
 
-static void box3d_side_class_init (Box3DSideClass *klass);
-static void box3d_side_init (Box3DSide *side);
-
 static void box3d_side_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static Inkscape::XML::Node *box3d_side_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void box3d_side_set (SPObject *object, unsigned int key, const gchar *value);
@@ -38,34 +35,12 @@ static void box3d_side_set_shape (SPShape *shape);
 
 static void box3d_side_compute_corner_ids(Box3DSide *side, unsigned int corners[4]);
 
-static SPShapeClass *parent_class;
-
-GType
-box3d_side_get_type (void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof (Box3DSideClass),
-            NULL, NULL,
-            (GClassInitFunc) box3d_side_class_init,
-            NULL, NULL,
-            sizeof (Box3DSide),
-            16,
-            (GInstanceInitFunc) box3d_side_init,
-            NULL,	/* value_table */
-        };
-        type = g_type_register_static (SP_TYPE_SHAPE, "Box3DSide", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(Box3DSide, box3d_side, SP_TYPE_SHAPE);
 
 static void box3d_side_class_init(Box3DSideClass *klass)
 {
     SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
     SPShapeClass *shape_class = reinterpret_cast<SPShapeClass *>(klass);
-    parent_class = SP_SHAPE_CLASS(g_type_class_ref (SP_TYPE_SHAPE));
 
     sp_object_class->build = box3d_side_build;
     sp_object_class->write = box3d_side_write;
@@ -85,8 +60,8 @@ box3d_side_init (Box3DSide * side)
 
 static void box3d_side_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
 {
-    if ((SP_OBJECT_CLASS(parent_class))->build) {
-        (SP_OBJECT_CLASS(parent_class))->build(object, document, repr);
+    if ((SP_OBJECT_CLASS(box3d_side_parent_class))->build) {
+        (SP_OBJECT_CLASS(box3d_side_parent_class))->build(object, document, repr);
     }
 
     object->readAttr( "inkscape:box3dsidetype" );
@@ -119,8 +94,8 @@ box3d_side_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::
     repr->setAttribute("d", d);
     g_free (d);
 
-    if ((SP_OBJECT_CLASS(parent_class))->write)
-        (SP_OBJECT_CLASS(parent_class))->write (object, xml_doc, repr, flags);
+    if ((SP_OBJECT_CLASS(box3d_side_parent_class))->write)
+        (SP_OBJECT_CLASS(box3d_side_parent_class))->write (object, xml_doc, repr, flags);
 
     return repr;
 }
@@ -153,8 +128,8 @@ box3d_side_set (SPObject *object, unsigned int key, const gchar *value)
             }
             break;
     default:
-        if ((SP_OBJECT_CLASS(parent_class))->set)
-            (SP_OBJECT_CLASS(parent_class))->set (object, key, value);
+        if ((SP_OBJECT_CLASS(box3d_side_parent_class))->set)
+            (SP_OBJECT_CLASS(box3d_side_parent_class))->set (object, key, value);
         break;
     }
 }
@@ -172,8 +147,8 @@ box3d_side_update (SPObject *object, SPCtx *ctx, guint flags)
         static_cast<SPShape *>(object)->setShape ();
     }
 
-    if ((SP_OBJECT_CLASS(parent_class))->update)
-        (SP_OBJECT_CLASS(parent_class))->update (object, ctx, flags);
+    if ((SP_OBJECT_CLASS(box3d_side_parent_class))->update)
+        (SP_OBJECT_CLASS(box3d_side_parent_class))->update (object, ctx, flags);
 }
 
 /* Create a new Box3DSide and append it to the parent box */

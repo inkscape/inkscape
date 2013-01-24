@@ -7,16 +7,12 @@
 
 #include "widgets/button.h"
 
-static void ink_action_class_init( InkActionClass* klass );
-static void ink_action_init( InkAction* action );
 static void ink_action_finalize( GObject* obj );
 static void ink_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec );
 static void ink_action_set_property( GObject* obj, guint propId, const GValue *value, GParamSpec* pspec );
 
 static GtkWidget* ink_action_create_menu_item( GtkAction* action );
 static GtkWidget* ink_action_create_tool_item( GtkAction* action );
-
-static GtkActionClass* gInkActionParentClass = 0;
 
 struct _InkActionPrivate
 {
@@ -26,28 +22,7 @@ struct _InkActionPrivate
 
 #define INK_ACTION_GET_PRIVATE( o ) ( G_TYPE_INSTANCE_GET_PRIVATE( (o), INK_ACTION_TYPE, InkActionPrivate ) )
 
-GType ink_action_get_type( void )
-{
-    static GType myType = 0;
-    if ( !myType ) {
-        static const GTypeInfo myInfo = {
-            sizeof( InkActionClass ),
-            NULL, /* base_init */
-            NULL, /* base_finalize */
-            (GClassInitFunc)ink_action_class_init,
-            NULL, /* class_finalize */
-            NULL, /* class_data */
-            sizeof( InkAction ),
-            0, /* n_preallocs */
-            (GInstanceInitFunc)ink_action_init,
-            NULL
-        };
-
-        myType = g_type_register_static( GTK_TYPE_ACTION, "InkAction", &myInfo, (GTypeFlags)0 );
-    }
-
-    return myType;
-}
+G_DEFINE_TYPE(InkAction, ink_action, GTK_TYPE_ACTION);
 
 enum {
     PROP_INK_ID = 1,
@@ -57,7 +32,6 @@ enum {
 static void ink_action_class_init( InkActionClass* klass )
 {
     if ( klass ) {
-        gInkActionParentClass = GTK_ACTION_CLASS( g_type_class_peek_parent( klass ) );
         GObjectClass * objClass = G_OBJECT_CLASS( klass );
 
         objClass->finalize = ink_action_finalize;
@@ -203,7 +177,7 @@ static GtkWidget* ink_action_create_menu_item( GtkAction* action )
         g_free( label );
         label = 0;
     } else {
-        item = gInkActionParentClass->create_menu_item( action );
+        item = GTK_ACTION_CLASS(ink_action_parent_class)->create_menu_item( action );
     }
 
     return item;
@@ -212,7 +186,7 @@ static GtkWidget* ink_action_create_menu_item( GtkAction* action )
 static GtkWidget* ink_action_create_tool_item( GtkAction* action )
 {
     InkAction* act = INK_ACTION( action );
-    GtkWidget* item = gInkActionParentClass->create_tool_item(action);
+    GtkWidget* item = GTK_ACTION_CLASS(ink_action_parent_class)->create_tool_item(action);
 
     if ( act->private_data->iconId ) {
         if ( GTK_IS_TOOL_BUTTON(item) ) {
@@ -241,8 +215,6 @@ static GtkWidget* ink_action_create_tool_item( GtkAction* action )
 /* --------------------------------------------------------------- */
 
 
-static void ink_toggle_action_class_init( InkToggleActionClass* klass );
-static void ink_toggle_action_init( InkToggleAction* action );
 static void ink_toggle_action_finalize( GObject* obj );
 static void ink_toggle_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec );
 static void ink_toggle_action_set_property( GObject* obj, guint propId, const GValue *value, GParamSpec* pspec );
@@ -252,8 +224,6 @@ static GtkWidget* ink_toggle_action_create_tool_item( GtkAction* action );
 
 static void ink_toggle_action_update_icon( InkToggleAction* action );
 
-static GtkToggleActionClass* gInkToggleActionParentClass = 0;
-
 struct _InkToggleActionPrivate
 {
     gchar* iconId;
@@ -262,34 +232,11 @@ struct _InkToggleActionPrivate
 
 #define INK_TOGGLE_ACTION_GET_PRIVATE( o ) ( G_TYPE_INSTANCE_GET_PRIVATE( (o), INK_TOGGLE_ACTION_TYPE, InkToggleActionPrivate ) )
 
-GType ink_toggle_action_get_type( void )
-{
-    static GType myType = 0;
-    if ( !myType ) {
-        static const GTypeInfo myInfo = {
-            sizeof( InkToggleActionClass ),
-            NULL, /* base_init */
-            NULL, /* base_finalize */
-            (GClassInitFunc)ink_toggle_action_class_init,
-            NULL, /* class_finalize */
-            NULL, /* class_data */
-            sizeof( InkToggleAction ),
-            0, /* n_preallocs */
-            (GInstanceInitFunc)ink_toggle_action_init,
-            NULL
-        };
-
-        myType = g_type_register_static( GTK_TYPE_TOGGLE_ACTION, "InkToggleAction", &myInfo, (GTypeFlags)0 );
-    }
-
-    return myType;
-}
-
+G_DEFINE_TYPE(InkToggleAction, ink_toggle_action, GTK_TYPE_TOGGLE_ACTION);
 
 static void ink_toggle_action_class_init( InkToggleActionClass* klass )
 {
     if ( klass ) {
-        gInkToggleActionParentClass = GTK_TOGGLE_ACTION_CLASS( g_type_class_peek_parent( klass ) );
         GObjectClass * objClass = G_OBJECT_CLASS( klass );
 
         objClass->finalize = ink_toggle_action_finalize;
@@ -413,7 +360,7 @@ void ink_toggle_action_set_property( GObject* obj, guint propId, const GValue *v
 
 static GtkWidget* ink_toggle_action_create_menu_item( GtkAction* action )
 {
-    GtkWidget* item = gInkToggleActionParentClass->parent_class.create_menu_item(action);
+    GtkWidget* item = GTK_TOGGLE_ACTION_CLASS(ink_toggle_action_parent_class)->parent_class.create_menu_item(action);
 
     return item;
 }
@@ -422,7 +369,7 @@ static GtkWidget* ink_toggle_action_create_tool_item( GtkAction* action )
 {
     InkToggleAction* act = INK_TOGGLE_ACTION( action );
 
-    GtkWidget* item = gInkToggleActionParentClass->parent_class.create_tool_item(action);
+    GtkWidget* item = GTK_TOGGLE_ACTION_CLASS(ink_toggle_action_parent_class)->parent_class.create_tool_item(action);
     if ( GTK_IS_TOOL_BUTTON(item) ) {
         GtkToolButton* button = GTK_TOOL_BUTTON(item);
         if ( act->private_data->iconId ) {
@@ -477,16 +424,12 @@ static void ink_toggle_action_update_icon( InkToggleAction* action )
 /* --------------------------------------------------------------- */
 
 
-static void ink_radio_action_class_init( InkRadioActionClass* klass );
-static void ink_radio_action_init( InkRadioAction* action );
 static void ink_radio_action_finalize( GObject* obj );
 static void ink_radio_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec );
 static void ink_radio_action_set_property( GObject* obj, guint propId, const GValue *value, GParamSpec* pspec );
 
 static GtkWidget* ink_radio_action_create_menu_item( GtkAction* action );
 static GtkWidget* ink_radio_action_create_tool_item( GtkAction* action );
-
-static GtkRadioActionClass* gInkRadioActionParentClass = 0;
 
 struct _InkRadioActionPrivate
 {
@@ -496,34 +439,11 @@ struct _InkRadioActionPrivate
 
 #define INK_RADIO_ACTION_GET_PRIVATE( o ) ( G_TYPE_INSTANCE_GET_PRIVATE( (o), INK_RADIO_ACTION_TYPE, InkRadioActionPrivate ) )
 
-GType ink_radio_action_get_type( void )
-{
-    static GType myType = 0;
-    if ( !myType ) {
-        static const GTypeInfo myInfo = {
-            sizeof( InkRadioActionClass ),
-            NULL, /* base_init */
-            NULL, /* base_finalize */
-            (GClassInitFunc)ink_radio_action_class_init,
-            NULL, /* class_finalize */
-            NULL, /* class_data */
-            sizeof( InkRadioAction ),
-            0, /* n_preallocs */
-            (GInstanceInitFunc)ink_radio_action_init,
-            NULL
-        };
-
-        myType = g_type_register_static( GTK_TYPE_RADIO_ACTION, "InkRadioAction", &myInfo, (GTypeFlags)0 );
-    }
-
-    return myType;
-}
-
+G_DEFINE_TYPE(InkRadioAction, ink_radio_action, GTK_TYPE_RADIO_ACTION);
 
 static void ink_radio_action_class_init( InkRadioActionClass* klass )
 {
     if ( klass ) {
-        gInkRadioActionParentClass = GTK_RADIO_ACTION_CLASS( g_type_class_peek_parent( klass ) );
         GObjectClass * objClass = G_OBJECT_CLASS( klass );
 
         objClass->finalize = ink_radio_action_finalize;
@@ -642,7 +562,7 @@ void ink_radio_action_set_property( GObject* obj, guint propId, const GValue *va
 
 static GtkWidget* ink_radio_action_create_menu_item( GtkAction* action )
 {
-    GtkWidget* item = gInkRadioActionParentClass->parent_class.parent_class.create_menu_item(action);
+    GtkWidget* item = GTK_RADIO_ACTION_CLASS(ink_radio_action_parent_class)->parent_class.parent_class.create_menu_item(action);
 
     return item;
 }
@@ -650,7 +570,7 @@ static GtkWidget* ink_radio_action_create_menu_item( GtkAction* action )
 static GtkWidget* ink_radio_action_create_tool_item( GtkAction* action )
 {
     InkRadioAction* act = INK_RADIO_ACTION( action );
-    GtkWidget* item = gInkRadioActionParentClass->parent_class.parent_class.create_tool_item(action);
+    GtkWidget* item = GTK_RADIO_ACTION_CLASS(ink_radio_action_parent_class)->parent_class.parent_class.create_tool_item(action);
 
     if ( act->private_data->iconId ) {
         if ( GTK_IS_TOOL_BUTTON(item) ) {
@@ -681,34 +601,7 @@ static GtkWidget* ink_radio_action_create_tool_item( GtkAction* action )
 
 // ToolMenu Action is happily derived from http://www.gtkforums.com/viewtopic.php?t=4215
 
-static void ink_tool_menu_action_init (InkToolMenuAction *tma);
-static void ink_tool_menu_action_class_init (InkToolMenuActionClass *klass);
-
-GType
-ink_tool_menu_action_get_type (void)
-{
-   static GType myType = 0;
-   if (! myType)
-   {
-      static const GTypeInfo myInfo =
-      {
-         sizeof (InkToolMenuActionClass),
-         NULL, /* base_init */
-         NULL, /* base_finalize */
-         (GClassInitFunc) ink_tool_menu_action_class_init,
-         NULL, /* class_finalize */
-         NULL, /* class_data */
-         sizeof (InkToolMenuAction),
-         0, /* n_preallocs */
-         (GInstanceInitFunc) ink_tool_menu_action_init,
-         NULL
-      };
-
-        myType = g_type_register_static( INK_ACTION_TYPE, "InkToolMenuAction", &myInfo, (GTypeFlags)0 );
-    }
-
-    return myType;
-}
+G_DEFINE_TYPE(InkToolMenuAction, ink_tool_menu_action, INK_ACTION_TYPE);
 
 static void
 ink_tool_menu_action_class_init (InkToolMenuActionClass *klass)

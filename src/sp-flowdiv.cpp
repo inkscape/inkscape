@@ -14,8 +14,6 @@
 #include "sp-string.h"
 #include "document.h"
 
-static void sp_flowdiv_class_init (SPFlowdivClass *klass);
-static void sp_flowdiv_init (SPFlowdiv *group);
 static void sp_flowdiv_release (SPObject *object);
 static Inkscape::XML::Node *sp_flowdiv_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_flowdiv_update (SPObject *object, SPCtx *ctx, unsigned int flags);
@@ -23,8 +21,6 @@ static void sp_flowdiv_modified (SPObject *object, guint flags);
 static void sp_flowdiv_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr);
 static void sp_flowdiv_set (SPObject *object, unsigned int key, const gchar *value);
 
-static void sp_flowtspan_class_init (SPFlowtspanClass *klass);
-static void sp_flowtspan_init (SPFlowtspan *group);
 static void sp_flowtspan_release (SPObject *object);
 static Inkscape::XML::Node *sp_flowtspan_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_flowtspan_update (SPObject *object, SPCtx *ctx, unsigned int flags);
@@ -32,8 +28,6 @@ static void sp_flowtspan_modified (SPObject *object, guint flags);
 static void sp_flowtspan_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr);
 static void sp_flowtspan_set (SPObject *object, unsigned int key, const gchar *value);
 
-static void sp_flowpara_class_init (SPFlowparaClass *klass);
-static void sp_flowpara_init (SPFlowpara *group);
 static void sp_flowpara_release (SPObject *object);
 static Inkscape::XML::Node *sp_flowpara_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_flowpara_update (SPObject *object, SPCtx *ctx, unsigned int flags);
@@ -41,50 +35,19 @@ static void sp_flowpara_modified (SPObject *object, guint flags);
 static void sp_flowpara_build (SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr);
 static void sp_flowpara_set (SPObject *object, unsigned int key, const gchar *value);
 
-static void sp_flowline_class_init (SPFlowlineClass *klass);
 static void sp_flowline_release (SPObject *object);
-static void sp_flowline_init (SPFlowline *group);
 static Inkscape::XML::Node *sp_flowline_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_flowline_modified (SPObject *object, guint flags);
 
-static void sp_flowregionbreak_class_init (SPFlowregionbreakClass *klass);
 static void sp_flowregionbreak_release (SPObject *object);
-static void sp_flowregionbreak_init (SPFlowregionbreak *group);
 static Inkscape::XML::Node *sp_flowregionbreak_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_flowregionbreak_modified (SPObject *object, guint flags);
 
-static SPItemClass * flowdiv_parent_class;
-static SPItemClass * flowtspan_parent_class;
-static SPItemClass * flowpara_parent_class;
-static SPObjectClass * flowline_parent_class;
-static SPObjectClass * flowregionbreak_parent_class;
-
-GType sp_flowdiv_get_type(void)
-{
-	static GType group_type = 0;
-	if (!group_type) {
-		GTypeInfo group_info = {
-			sizeof (SPFlowdivClass),
-			NULL,	/* base_init */
-			NULL,	/* base_finalize */
-			(GClassInitFunc) sp_flowdiv_class_init,
-			NULL,	/* class_finalize */
-			NULL,	/* class_data */
-			sizeof (SPFlowdiv),
-			16,	/* n_preallocs */
-			(GInstanceInitFunc) sp_flowdiv_init,
-			NULL,	/* value_table */
-		};
-		group_type = g_type_register_static (SP_TYPE_ITEM, "SPFlowdiv", &group_info, (GTypeFlags)0);
-	}
-	return group_type;
-}
+G_DEFINE_TYPE(SPFlowdiv, sp_flowdiv, SP_TYPE_ITEM);
 
 static void sp_flowdiv_class_init(SPFlowdivClass *klass)
 {
     SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
-
-    flowdiv_parent_class = reinterpret_cast<SPItemClass *>(g_type_class_ref(SP_TYPE_ITEM));
 
     sp_object_class->build = sp_flowdiv_build;
     sp_object_class->set = sp_flowdiv_set;
@@ -100,8 +63,8 @@ static void sp_flowdiv_init(SPFlowdiv */*group*/)
 
 static void sp_flowdiv_release(SPObject *object)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowdiv_parent_class)->release) {
-        reinterpret_cast<SPObjectClass *>(flowdiv_parent_class)->release(object);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowdiv_parent_class)->release) {
+        reinterpret_cast<SPObjectClass *>(sp_flowdiv_parent_class)->release(object);
     }
 }
 
@@ -110,8 +73,8 @@ static void sp_flowdiv_update(SPObject *object, SPCtx *ctx, unsigned int flags)
     SPItemCtx *ictx = reinterpret_cast<SPItemCtx *>(ctx);
     SPItemCtx cctx = *ictx;
 
-    if (reinterpret_cast<SPObjectClass *>(flowdiv_parent_class)->update) {
-        reinterpret_cast<SPObjectClass *>(flowdiv_parent_class)->update(object, ctx, flags);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowdiv_parent_class)->update) {
+        reinterpret_cast<SPObjectClass *>(sp_flowdiv_parent_class)->update(object, ctx, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -144,8 +107,8 @@ static void sp_flowdiv_update(SPObject *object, SPCtx *ctx, unsigned int flags)
 
 static void sp_flowdiv_modified(SPObject *object, guint flags)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowdiv_parent_class)->modified) {
-        reinterpret_cast<SPObjectClass *>(flowdiv_parent_class)->modified(object, flags);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowdiv_parent_class)->modified) {
+        reinterpret_cast<SPObjectClass *>(sp_flowdiv_parent_class)->modified(object, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -173,15 +136,15 @@ static void sp_flowdiv_build(SPObject *object, SPDocument *doc, Inkscape::XML::N
 {
     object->_requireSVGVersion(Inkscape::Version(1, 2));
 
-    if (reinterpret_cast<SPObjectClass *>(flowdiv_parent_class)->build) {
-        reinterpret_cast<SPObjectClass *>(flowdiv_parent_class)->build(object, doc, repr);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowdiv_parent_class)->build) {
+        reinterpret_cast<SPObjectClass *>(sp_flowdiv_parent_class)->build(object, doc, repr);
     }
 }
 
 static void sp_flowdiv_set(SPObject *object, unsigned int key, const gchar *value)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowdiv_parent_class)->set) {
-        reinterpret_cast<SPObjectClass *>(flowdiv_parent_class)->set(object, key, value);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowdiv_parent_class)->set) {
+        reinterpret_cast<SPObjectClass *>(sp_flowdiv_parent_class)->set(object, key, value);
     }
 }
 
@@ -222,8 +185,8 @@ static Inkscape::XML::Node *sp_flowdiv_write(SPObject *object, Inkscape::XML::Do
         }
     }
 
-    if (((SPObjectClass *) (flowdiv_parent_class))->write) {
-        ((SPObjectClass *) (flowdiv_parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_flowdiv_parent_class))->write) {
+        ((SPObjectClass *) (sp_flowdiv_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -233,34 +196,11 @@ static Inkscape::XML::Node *sp_flowdiv_write(SPObject *object, Inkscape::XML::Do
 /*
  *
  */
-
-GType
-sp_flowtspan_get_type (void)
-{
-	static GType group_type = 0;
-	if (!group_type) {
-		GTypeInfo group_info = {
-			sizeof (SPFlowtspanClass),
-			NULL,	/* base_init */
-			NULL,	/* base_finalize */
-			(GClassInitFunc) sp_flowtspan_class_init,
-			NULL,	/* class_finalize */
-			NULL,	/* class_data */
-			sizeof (SPFlowtspan),
-			16,	/* n_preallocs */
-			(GInstanceInitFunc) sp_flowtspan_init,
-			NULL,	/* value_table */
-		};
-		group_type = g_type_register_static (SP_TYPE_ITEM, "SPFlowtspan", &group_info, (GTypeFlags)0);
-	}
-	return group_type;
-}
+G_DEFINE_TYPE(SPFlowtspan, sp_flowtspan, SP_TYPE_ITEM);
 
 static void sp_flowtspan_class_init(SPFlowtspanClass *klass)
 {
     SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
-
-    flowtspan_parent_class = reinterpret_cast<SPItemClass *>(g_type_class_ref(SP_TYPE_ITEM));
 
     sp_object_class->build = sp_flowtspan_build;
     sp_object_class->set = sp_flowtspan_set;
@@ -276,8 +216,8 @@ static void sp_flowtspan_init(SPFlowtspan */*group*/)
 
 static void sp_flowtspan_release(SPObject *object)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowtspan_parent_class)->release) {
-        reinterpret_cast<SPObjectClass *>(flowtspan_parent_class)->release(object);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowtspan_parent_class)->release) {
+        reinterpret_cast<SPObjectClass *>(sp_flowtspan_parent_class)->release(object);
     }
 }
 
@@ -286,8 +226,8 @@ static void sp_flowtspan_update(SPObject *object, SPCtx *ctx, unsigned int flags
     SPItemCtx *ictx = reinterpret_cast<SPItemCtx *>(ctx);
     SPItemCtx cctx = *ictx;
 
-    if (reinterpret_cast<SPObjectClass *>(flowtspan_parent_class)->update) {
-        reinterpret_cast<SPObjectClass *>(flowtspan_parent_class)->update(object, ctx, flags);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowtspan_parent_class)->update) {
+        reinterpret_cast<SPObjectClass *>(sp_flowtspan_parent_class)->update(object, ctx, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -320,8 +260,8 @@ static void sp_flowtspan_update(SPObject *object, SPCtx *ctx, unsigned int flags
 
 static void sp_flowtspan_modified(SPObject *object, guint flags)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowtspan_parent_class)->modified) {
-        reinterpret_cast<SPObjectClass *>(flowtspan_parent_class)->modified(object, flags);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowtspan_parent_class)->modified) {
+        reinterpret_cast<SPObjectClass *>(sp_flowtspan_parent_class)->modified(object, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -347,15 +287,15 @@ static void sp_flowtspan_modified(SPObject *object, guint flags)
 
 static void sp_flowtspan_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowtspan_parent_class)->build) {
-        reinterpret_cast<SPObjectClass *>(flowtspan_parent_class)->build(object, doc, repr);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowtspan_parent_class)->build) {
+        reinterpret_cast<SPObjectClass *>(sp_flowtspan_parent_class)->build(object, doc, repr);
     }
 }
 
 static void sp_flowtspan_set(SPObject *object, unsigned int key, const gchar *value)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowtspan_parent_class)->set) {
-        reinterpret_cast<SPObjectClass *>(flowtspan_parent_class)->set(object, key, value);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowtspan_parent_class)->set) {
+        reinterpret_cast<SPObjectClass *>(sp_flowtspan_parent_class)->set(object, key, value);
     }
 }
 
@@ -396,8 +336,8 @@ static Inkscape::XML::Node *sp_flowtspan_write(SPObject *object, Inkscape::XML::
         }
     }
 
-    if (((SPObjectClass *) (flowtspan_parent_class))->write) {
-        ((SPObjectClass *) (flowtspan_parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_flowtspan_parent_class))->write) {
+        ((SPObjectClass *) (sp_flowtspan_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -408,34 +348,11 @@ static Inkscape::XML::Node *sp_flowtspan_write(SPObject *object, Inkscape::XML::
 /*
  *
  */
-
-GType
-sp_flowpara_get_type (void)
-{
-	static GType group_type = 0;
-	if (!group_type) {
-		GTypeInfo group_info = {
-			sizeof (SPFlowparaClass),
-			NULL,	/* base_init */
-			NULL,	/* base_finalize */
-			(GClassInitFunc) sp_flowpara_class_init,
-			NULL,	/* class_finalize */
-			NULL,	/* class_data */
-			sizeof (SPFlowpara),
-			16,	/* n_preallocs */
-			(GInstanceInitFunc) sp_flowpara_init,
-			NULL,	/* value_table */
-		};
-		group_type = g_type_register_static (SP_TYPE_ITEM, "SPFlowpara", &group_info, (GTypeFlags)0);
-	}
-	return group_type;
-}
+G_DEFINE_TYPE(SPFlowpara, sp_flowpara, SP_TYPE_ITEM);
 
 static void sp_flowpara_class_init(SPFlowparaClass *klass)
 {
     SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
-
-    flowpara_parent_class = reinterpret_cast<SPItemClass *>(g_type_class_ref(SP_TYPE_ITEM));
 
     sp_object_class->build = sp_flowpara_build;
     sp_object_class->set = sp_flowpara_set;
@@ -451,8 +368,8 @@ static void sp_flowpara_init (SPFlowpara */*group*/)
 
 static void sp_flowpara_release(SPObject *object)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowpara_parent_class)->release) {
-        reinterpret_cast<SPObjectClass *>(flowpara_parent_class)->release(object);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowpara_parent_class)->release) {
+        reinterpret_cast<SPObjectClass *>(sp_flowpara_parent_class)->release(object);
     }
 }
 
@@ -461,8 +378,8 @@ static void sp_flowpara_update(SPObject *object, SPCtx *ctx, unsigned int flags)
     SPItemCtx *ictx = reinterpret_cast<SPItemCtx *>(ctx);
     SPItemCtx cctx = *ictx;
 
-    if (reinterpret_cast<SPObjectClass *>(flowpara_parent_class)->update) {
-        reinterpret_cast<SPObjectClass *>(flowpara_parent_class)->update(object, ctx, flags);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowpara_parent_class)->update) {
+        reinterpret_cast<SPObjectClass *>(sp_flowpara_parent_class)->update(object, ctx, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -495,8 +412,8 @@ static void sp_flowpara_update(SPObject *object, SPCtx *ctx, unsigned int flags)
 
 static void sp_flowpara_modified(SPObject *object, guint flags)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowpara_parent_class)->modified) {
-        reinterpret_cast<SPObjectClass *>(flowpara_parent_class)->modified(object, flags);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowpara_parent_class)->modified) {
+        reinterpret_cast<SPObjectClass *>(sp_flowpara_parent_class)->modified(object, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -522,15 +439,15 @@ static void sp_flowpara_modified(SPObject *object, guint flags)
 
 static void sp_flowpara_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowpara_parent_class)->build) {
-        reinterpret_cast<SPObjectClass *>(flowpara_parent_class)->build(object, doc, repr);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowpara_parent_class)->build) {
+        reinterpret_cast<SPObjectClass *>(sp_flowpara_parent_class)->build(object, doc, repr);
     }
 }
 
 static void sp_flowpara_set(SPObject *object, unsigned int key, const gchar *value)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowpara_parent_class)->set) {
-        reinterpret_cast<SPObjectClass *>(flowpara_parent_class)->set(object, key, value);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowpara_parent_class)->set) {
+        reinterpret_cast<SPObjectClass *>(sp_flowpara_parent_class)->set(object, key, value);
     }
 }
 
@@ -569,8 +486,8 @@ static Inkscape::XML::Node *sp_flowpara_write(SPObject *object, Inkscape::XML::D
         }
     }
 
-    if (((SPObjectClass *) (flowpara_parent_class))->write) {
-        ((SPObjectClass *) (flowpara_parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_flowpara_parent_class))->write) {
+        ((SPObjectClass *) (sp_flowpara_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -579,33 +496,11 @@ static Inkscape::XML::Node *sp_flowpara_write(SPObject *object, Inkscape::XML::D
 /*
  *
  */
-
-GType sp_flowline_get_type(void)
-{
-	static GType group_type = 0;
-	if (!group_type) {
-		GTypeInfo group_info = {
-			sizeof (SPFlowlineClass),
-			NULL,	/* base_init */
-			NULL,	/* base_finalize */
-			(GClassInitFunc) sp_flowline_class_init,
-			NULL,	/* class_finalize */
-			NULL,	/* class_data */
-			sizeof (SPFlowline),
-			16,	/* n_preallocs */
-			(GInstanceInitFunc) sp_flowline_init,
-			NULL,	/* value_table */
-		};
-		group_type = g_type_register_static (SP_TYPE_OBJECT, "SPFlowline", &group_info, (GTypeFlags)0);
-	}
-	return group_type;
-}
+G_DEFINE_TYPE(SPFlowline, sp_flowline, SP_TYPE_OBJECT);
 
 static void sp_flowline_class_init(SPFlowlineClass *klass)
 {
     SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
-
-    flowline_parent_class = reinterpret_cast<SPObjectClass *>(g_type_class_ref(SP_TYPE_OBJECT));
 
     sp_object_class->release = sp_flowline_release;
     sp_object_class->write = sp_flowline_write;
@@ -618,15 +513,15 @@ static void sp_flowline_init(SPFlowline */*group*/)
 
 static void sp_flowline_release(SPObject *object)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowline_parent_class)->release) {
-        reinterpret_cast<SPObjectClass *>(flowline_parent_class)->release(object);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowline_parent_class)->release) {
+        reinterpret_cast<SPObjectClass *>(sp_flowline_parent_class)->release(object);
     }
 }
 
 static void sp_flowline_modified(SPObject *object, guint flags)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowline_parent_class)->modified) {
-        reinterpret_cast<SPObjectClass *>(flowline_parent_class)->modified(object, flags);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowline_parent_class)->modified) {
+        reinterpret_cast<SPObjectClass *>(sp_flowline_parent_class)->modified(object, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -644,8 +539,8 @@ static Inkscape::XML::Node *sp_flowline_write(SPObject *object, Inkscape::XML::D
     } else {
     }
 
-    if (reinterpret_cast<SPObjectClass *>(flowline_parent_class)->write) {
-        reinterpret_cast<SPObjectClass *>(flowline_parent_class)->write(object, xml_doc, repr, flags);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowline_parent_class)->write) {
+        reinterpret_cast<SPObjectClass *>(sp_flowline_parent_class)->write(object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -654,33 +549,11 @@ static Inkscape::XML::Node *sp_flowline_write(SPObject *object, Inkscape::XML::D
 /*
  *
  */
-
-GType sp_flowregionbreak_get_type(void)
-{
-	static GType group_type = 0;
-	if (!group_type) {
-		GTypeInfo group_info = {
-			sizeof (SPFlowregionbreakClass),
-			NULL,	/* base_init */
-			NULL,	/* base_finalize */
-			(GClassInitFunc) sp_flowregionbreak_class_init,
-			NULL,	/* class_finalize */
-			NULL,	/* class_data */
-			sizeof (SPFlowregionbreak),
-			16,	/* n_preallocs */
-			(GInstanceInitFunc) sp_flowregionbreak_init,
-			NULL,	/* value_table */
-		};
-		group_type = g_type_register_static (SP_TYPE_OBJECT, "SPFlowregionbreak", &group_info, (GTypeFlags)0);
-	}
-	return group_type;
-}
+G_DEFINE_TYPE(SPFlowregionbreak, sp_flowregionbreak, SP_TYPE_OBJECT);
 
 static void sp_flowregionbreak_class_init(SPFlowregionbreakClass *klass)
 {
     SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
-
-    flowregionbreak_parent_class = reinterpret_cast<SPObjectClass *>(g_type_class_ref(SP_TYPE_OBJECT));
 
     sp_object_class->release = sp_flowregionbreak_release;
     sp_object_class->write = sp_flowregionbreak_write;
@@ -693,15 +566,15 @@ static void sp_flowregionbreak_init(SPFlowregionbreak */*group*/)
 
 static void sp_flowregionbreak_release(SPObject *object)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowregionbreak_parent_class)->release) {
-        reinterpret_cast<SPObjectClass *>(flowregionbreak_parent_class)->release(object);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowregionbreak_parent_class)->release) {
+        reinterpret_cast<SPObjectClass *>(sp_flowregionbreak_parent_class)->release(object);
     }
 }
 
 static void sp_flowregionbreak_modified(SPObject *object, guint flags)
 {
-    if (reinterpret_cast<SPObjectClass *>(flowregionbreak_parent_class)->modified) {
-        reinterpret_cast<SPObjectClass *>(flowregionbreak_parent_class)->modified(object, flags);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowregionbreak_parent_class)->modified) {
+        reinterpret_cast<SPObjectClass *>(sp_flowregionbreak_parent_class)->modified(object, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -719,8 +592,8 @@ static Inkscape::XML::Node *sp_flowregionbreak_write(SPObject *object, Inkscape:
     } else {
     }
 
-    if (reinterpret_cast<SPObjectClass *>(flowregionbreak_parent_class)->write) {
-        reinterpret_cast<SPObjectClass *>(flowregionbreak_parent_class)->write(object, xml_doc, repr, flags);
+    if (reinterpret_cast<SPObjectClass *>(sp_flowregionbreak_parent_class)->write) {
+        reinterpret_cast<SPObjectClass *>(sp_flowregionbreak_parent_class)->write(object, xml_doc, repr, flags);
     }
 
     return repr;

@@ -28,9 +28,6 @@
 
 #include "sp-spiral.h"
 
-static void sp_spiral_class_init (SPSpiralClass *klass);
-static void sp_spiral_init (SPSpiral *spiral);
-
 static void sp_spiral_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
 static Inkscape::XML::Node *sp_spiral_write (SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_spiral_set (SPObject *object, unsigned int key, const gchar *value);
@@ -44,33 +41,7 @@ static void sp_spiral_update_patheffect (SPLPEItem *lpeitem, bool write);
 
 static Geom::Point sp_spiral_get_tangent (SPSpiral const *spiral, gdouble t);
 
-static SPShapeClass *parent_class;
-
-/**
- * Register SPSpiral class and return its type number.
- */
-GType
-sp_spiral_get_type (void)
-{
-    static GType spiral_type = 0;
-
-    if (!spiral_type) {
-        GTypeInfo spiral_info = {
-            sizeof (SPSpiralClass),
-            NULL,    /* base_init */
-            NULL,    /* base_finalize */
-            (GClassInitFunc) sp_spiral_class_init,
-            NULL,    /* class_finalize */
-            NULL,    /* class_data */
-            sizeof (SPSpiral),
-            16,    /* n_preallocs */
-            (GInstanceInitFunc) sp_spiral_init,
-            NULL,    /* value_table */
-        };
-        spiral_type = g_type_register_static (SP_TYPE_SHAPE, "SPSpiral", &spiral_info, (GTypeFlags)0);
-    }
-    return spiral_type;
-}
+G_DEFINE_TYPE(SPSpiral, sp_spiral, SP_TYPE_SHAPE);
 
 /**
  * SPSpiral vtable initialization.
@@ -81,8 +52,6 @@ static void sp_spiral_class_init(SPSpiralClass *klass)
     SPItemClass *item_class = reinterpret_cast<SPItemClass *>(klass);
     SPLPEItemClass *lpe_item_class = reinterpret_cast<SPLPEItemClass *>(klass);
     SPShapeClass *shape_class = reinterpret_cast<SPShapeClass *>(klass);
-
-    parent_class = reinterpret_cast<SPShapeClass *>(g_type_class_ref(SP_TYPE_SHAPE));
 
     sp_object_class->build = sp_spiral_build;
     sp_object_class->write = sp_spiral_write;
@@ -117,8 +86,8 @@ sp_spiral_init (SPSpiral * spiral)
  */
 static void sp_spiral_build(SPObject * object, SPDocument * document, Inkscape::XML::Node * repr)
 {
-    if (reinterpret_cast<SPObjectClass *>(parent_class)->build) {
-        reinterpret_cast<SPObjectClass *>(parent_class)->build(object, document, repr);
+    if (reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->build) {
+        reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->build(object, document, repr);
     }
 
     object->readAttr( "sodipodi:cx" );
@@ -168,8 +137,8 @@ sp_spiral_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::X
     repr->setAttribute("d", d);
     g_free (d);
 
-    if (reinterpret_cast<SPObjectClass *>(parent_class)->write) {
-        reinterpret_cast<SPObjectClass *>(parent_class)->write(object, xml_doc, repr, flags | SP_SHAPE_WRITE_PATH);
+    if (reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->write) {
+        reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->write(object, xml_doc, repr, flags | SP_SHAPE_WRITE_PATH);
     }
 
     return repr;
@@ -260,8 +229,8 @@ static void sp_spiral_set(SPObject *object, unsigned int key, const gchar *value
         object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
         break;
     default:
-        if (reinterpret_cast<SPObjectClass *>(parent_class)->set) {
-            reinterpret_cast<SPObjectClass *>(parent_class)->set(object, key, value);
+        if (reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->set) {
+            reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->set(object, key, value);
         }
         break;
     }
@@ -276,8 +245,8 @@ static void sp_spiral_update(SPObject *object, SPCtx *ctx, guint flags)
         reinterpret_cast<SPShape *>(object)->setShape();
     }
 
-    if (reinterpret_cast<SPObjectClass *>(parent_class)->update) {
-        reinterpret_cast<SPObjectClass *>(parent_class)->update(object, ctx, flags);
+    if (reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->update) {
+        reinterpret_cast<SPObjectClass *>(sp_spiral_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -510,8 +479,8 @@ static void sp_spiral_snappoints(SPItem const *item, std::vector<Inkscape::SnapC
     Inkscape::SnapPreferences local_snapprefs = *snapprefs;
     local_snapprefs.setTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT, false);
 
-    if ((reinterpret_cast<SPItemClass *>(parent_class))->snappoints) {
-        (reinterpret_cast<SPItemClass *>(parent_class))->snappoints (item, p, &local_snapprefs);
+    if ((reinterpret_cast<SPItemClass *>(sp_spiral_parent_class))->snappoints) {
+        (reinterpret_cast<SPItemClass *>(sp_spiral_parent_class))->snappoints (item, p, &local_snapprefs);
     }
 
     if (snapprefs->isTargetSnappable(Inkscape::SNAPTARGET_OBJECT_MIDPOINT)) {

@@ -15,7 +15,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#define SP_TYPE_CLIPPATH (SPClipPath::sp_clippath_get_type())
+#define SP_TYPE_CLIPPATH (sp_clippath_get_type())
 #define SP_CLIPPATH(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_CLIPPATH, SPClipPath))
 #define SP_CLIPPATH_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST((klass), SP_TYPE_CLIPPATH, SPClipPathClass))
 #define SP_IS_CLIPPATH(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_CLIPPATH))
@@ -27,6 +27,7 @@ class SPClipPathView;
 #include "uri-references.h"
 #include "xml/node.h"
 
+GType sp_clippath_get_type() G_GNUC_CONST;
 
 namespace Inkscape {
 
@@ -53,16 +54,6 @@ public:
     Geom::OptRect geometricBounds(Geom::Affine const &transform);
 
 private:
-    static void init(SPClipPath *clippath);
-
-    static void build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
-    static void release(SPObject * object);
-    static void set(SPObject *object, unsigned int key, gchar const *value);
-    static void childAdded(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
-    static void update(SPObject *object, SPCtx *ctx, guint flags);
-    static void modified(SPObject *object, guint flags);
-    static Inkscape::XML::Node *write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-
     friend class SPClipPathClass;
 };
 
@@ -71,9 +62,6 @@ public:
     SPObjectGroupClass parent_class;
 
 private:
-    static void sp_clippath_class_init(SPClipPathClass *klass);
-    static SPObjectGroupClass *static_parent_class;
-
     friend class SPClipPath;
 };
 

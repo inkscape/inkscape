@@ -50,8 +50,6 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_star_context_class_init (SPStarContextClass * klass);
-static void sp_star_context_init (SPStarContext * star_context);
 static void sp_star_context_dispose (GObject *object);
 
 static void sp_star_context_setup (SPEventContext *ec);
@@ -63,35 +61,13 @@ static void sp_star_drag (SPStarContext * sc, Geom::Point p, guint state);
 static void sp_star_finish (SPStarContext * sc);
 static void sp_star_cancel(SPStarContext * sc);
 
-static SPEventContextClass * parent_class;
-
-GType
-sp_star_context_get_type (void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof (SPStarContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_star_context_class_init,
-            NULL, NULL,
-            sizeof (SPStarContext),
-            4,
-            (GInstanceInitFunc) sp_star_context_init,
-            NULL,    /* value_table */
-        };
-        type = g_type_register_static (SP_TYPE_EVENT_CONTEXT, "SPStarContext", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPStarContext, sp_star_context, SP_TYPE_EVENT_CONTEXT);
 
 static void
 sp_star_context_class_init (SPStarContextClass * klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent (klass));
 
     object_class->dispose = sp_star_context_dispose;
 
@@ -134,8 +110,8 @@ static void sp_star_context_finish(SPEventContext *ec)
     sp_star_finish(sc);
     sc->sel_changed_connection.disconnect();
 
-    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->finish) {
-        (SP_EVENT_CONTEXT_CLASS(parent_class))->finish(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(sp_star_context_parent_class))->finish) {
+        (SP_EVENT_CONTEXT_CLASS(sp_star_context_parent_class))->finish(ec);
     }
 }
 
@@ -161,7 +137,7 @@ sp_star_context_dispose (GObject *object)
         delete sc->_message_context;
     }
 
-    G_OBJECT_CLASS (parent_class)->dispose (object);
+    G_OBJECT_CLASS (sp_star_context_parent_class)->dispose (object);
 }
 
 /**
@@ -187,8 +163,8 @@ sp_star_context_setup (SPEventContext *ec)
 {
    SPStarContext *sc = SP_STAR_CONTEXT (ec);
 
-    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup)
-        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup (ec);
+    if ((SP_EVENT_CONTEXT_CLASS(sp_star_context_parent_class))->setup)
+        (SP_EVENT_CONTEXT_CLASS(sp_star_context_parent_class))->setup (ec);
 
     sp_event_context_read (ec, "magnitude");
     sp_event_context_read (ec, "proportion");
@@ -413,8 +389,8 @@ static gint sp_star_context_root_handler(SPEventContext *event_context, GdkEvent
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler)
-            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler (event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(sp_star_context_parent_class))->root_handler)
+            ret = (SP_EVENT_CONTEXT_CLASS(sp_star_context_parent_class))->root_handler (event_context, event);
     }
 
     return ret;

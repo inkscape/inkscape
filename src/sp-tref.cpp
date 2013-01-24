@@ -52,8 +52,6 @@ static void build_string_from_root(Inkscape::XML::Node *root, Glib::ustring *ret
 
 /* TRef base class */
 
-static void sp_tref_class_init(SPTRefClass *tref_class);
-static void sp_tref_init(SPTRef *tref);
 static void sp_tref_finalize(GObject *obj);
 
 static void sp_tref_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
@@ -69,36 +67,13 @@ static gchar *sp_tref_description(SPItem *item);
 static void sp_tref_href_changed(SPObject *old_ref, SPObject *ref, SPTRef *tref);
 static void sp_tref_delete_self(SPObject *deleted, SPTRef *self);
 
-static SPObjectClass *tref_parent_class;
-
-GType
-sp_tref_get_type()
-{
-    static GType tref_type = 0;
-
-    if (!tref_type) {
-        GTypeInfo tref_info = {
-            sizeof(SPTRefClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_tref_class_init,
-            NULL, NULL,
-            sizeof(SPTRef),
-            16,
-            (GInstanceInitFunc) sp_tref_init,
-            NULL,    /* value_table */
-        };
-        tref_type = g_type_register_static(SP_TYPE_ITEM, "SPTRef", &tref_info, (GTypeFlags)0);
-    }
-    return tref_type;
-}
+G_DEFINE_TYPE(SPTRef, sp_tref, SP_TYPE_ITEM);
 
 static void
 sp_tref_class_init(SPTRefClass *tref_class)
 {
     GObjectClass *gobject_class = (GObjectClass *) tref_class;
     SPObjectClass *sp_object_class = (SPObjectClass *)tref_class;
-
-    tref_parent_class = (SPObjectClass*)g_type_class_peek_parent(tref_class);
 
     sp_object_class->build = sp_tref_build;
     sp_object_class->release = sp_tref_release;
@@ -148,8 +123,8 @@ sp_tref_finalize(GObject *obj)
 static void
 sp_tref_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) tref_parent_class)->build) {
-        ((SPObjectClass *) tref_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_tref_parent_class)->build) {
+        ((SPObjectClass *) sp_tref_parent_class)->build(object, document, repr);
     }
 
     object->readAttr( "xlink:href" );
@@ -178,8 +153,8 @@ sp_tref_release(SPObject *object)
 
     tref->uriOriginalRef->detach();
 
-    if (((SPObjectClass *) tref_parent_class)->release)
-        ((SPObjectClass *) tref_parent_class)->release(object);
+    if (((SPObjectClass *) sp_tref_parent_class)->release)
+        ((SPObjectClass *) sp_tref_parent_class)->release(object);
 }
 
 /**
@@ -225,8 +200,8 @@ sp_tref_set(SPObject *object, unsigned int key, gchar const *value)
         }
 
     } else { // default
-        if (((SPObjectClass *) tref_parent_class)->set) {
-            ((SPObjectClass *) tref_parent_class)->set(object, key, value);
+        if (((SPObjectClass *) sp_tref_parent_class)->set) {
+            ((SPObjectClass *) sp_tref_parent_class)->set(object, key, value);
         }
     }
 
@@ -243,8 +218,8 @@ sp_tref_update(SPObject *object, SPCtx *ctx, guint flags)
 
     SPTRef *tref = SP_TREF(object);
 
-    if (((SPObjectClass *) tref_parent_class)->update) {
-        ((SPObjectClass *) tref_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_tref_parent_class)->update) {
+        ((SPObjectClass *) sp_tref_parent_class)->update(object, ctx, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) {
@@ -307,8 +282,8 @@ sp_tref_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
         g_free(uri_string);
     }
 
-    if (((SPObjectClass *) tref_parent_class)->write) {
-        ((SPObjectClass *) tref_parent_class)->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) sp_tref_parent_class)->write) {
+        ((SPObjectClass *) sp_tref_parent_class)->write(object, xml_doc, repr, flags);
     }
 
     return repr;

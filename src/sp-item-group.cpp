@@ -53,8 +53,6 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_group_class_init (SPGroupClass *klass);
-static void sp_group_init (SPGroup *group);
 static void sp_group_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_group_release(SPObject *object);
 static void sp_group_dispose(GObject *object);
@@ -77,29 +75,7 @@ static void sp_group_snappoints (SPItem const *item, std::vector<Inkscape::SnapC
 static void sp_group_update_patheffect(SPLPEItem *lpeitem, bool write);
 static void sp_group_perform_patheffect(SPGroup *group, SPGroup *topgroup, bool write);
 
-static SPLPEItemClass * parent_class;
-
-GType
-sp_group_get_type (void)
-{
-    static GType group_type = 0;
-    if (!group_type) {
-        GTypeInfo group_info = {
-            sizeof (SPGroupClass),
-            NULL,	/* base_init */
-            NULL,	/* base_finalize */
-            (GClassInitFunc) sp_group_class_init,
-            NULL,	/* class_finalize */
-            NULL,	/* class_data */
-            sizeof (SPGroup),
-            16,	/* n_preallocs */
-            (GInstanceInitFunc) sp_group_init,
-            NULL,	/* value_table */
-        };
-        group_type = g_type_register_static (SP_TYPE_LPE_ITEM, "SPGroup", &group_info, (GTypeFlags)0);
-    }
-    return group_type;
-}
+G_DEFINE_TYPE(SPGroup, sp_group, SP_TYPE_LPE_ITEM);
 
 static void
 sp_group_class_init (SPGroupClass *klass)
@@ -113,8 +89,6 @@ sp_group_class_init (SPGroupClass *klass)
     sp_object_class = (SPObjectClass *) klass;
     item_class = (SPItemClass *) klass;
     lpe_item_class = (SPLPEItemClass *) klass;
-
-    parent_class = (SPLPEItemClass *)g_type_class_ref (SP_TYPE_LPE_ITEM);
 
     object_class->dispose = sp_group_dispose;
 
@@ -150,8 +124,8 @@ static void sp_group_build(SPObject *object, SPDocument *document, Inkscape::XML
 {
     object->readAttr( "inkscape:groupmode" );
 
-    if (((SPObjectClass *)parent_class)->build) {
-        ((SPObjectClass *)parent_class)->build(object, document, repr);
+    if (((SPObjectClass *)sp_group_parent_class)->build) {
+        ((SPObjectClass *)sp_group_parent_class)->build(object, document, repr);
     }
 }
 
@@ -159,8 +133,8 @@ static void sp_group_release(SPObject *object) {
     if ( SP_GROUP(object)->_layer_mode == SPGroup::LAYER ) {
         object->document->removeResource("layer", object);
     }
-    if (((SPObjectClass *)parent_class)->release) {
-        ((SPObjectClass *)parent_class)->release(object);
+    if (((SPObjectClass *)sp_group_parent_class)->release) {
+        ((SPObjectClass *)sp_group_parent_class)->release(object);
     }
 }
 
@@ -175,8 +149,8 @@ static void sp_group_child_added(SPObject *object, Inkscape::XML::Node *child, I
 {
     SPGroup *group = SP_GROUP(object);
 
-    if (((SPObjectClass *) (parent_class))->child_added) {
-        (* ((SPObjectClass *) (parent_class))->child_added) (object, child, ref);
+    if (((SPObjectClass *) (sp_group_parent_class))->child_added) {
+        (* ((SPObjectClass *) (sp_group_parent_class))->child_added) (object, child, ref);
     }
 
     group->group->onChildAdded(child);
@@ -187,8 +161,8 @@ static void sp_group_child_added(SPObject *object, Inkscape::XML::Node *child, I
 static void
 sp_group_remove_child (SPObject * object, Inkscape::XML::Node * child)
 {
-    if (((SPObjectClass *) (parent_class))->remove_child)
-        (* ((SPObjectClass *) (parent_class))->remove_child) (object, child);
+    if (((SPObjectClass *) (sp_group_parent_class))->remove_child)
+        (* ((SPObjectClass *) (sp_group_parent_class))->remove_child) (object, child);
 
     SP_GROUP(object)->group->onChildRemoved(child);
 }
@@ -196,8 +170,8 @@ sp_group_remove_child (SPObject * object, Inkscape::XML::Node * child)
 static void
 sp_group_order_changed (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref)
 {
-    if (((SPObjectClass *) (parent_class))->order_changed)
-        (* ((SPObjectClass *) (parent_class))->order_changed) (object, child, old_ref, new_ref);
+    if (((SPObjectClass *) (sp_group_parent_class))->order_changed)
+        (* ((SPObjectClass *) (sp_group_parent_class))->order_changed) (object, child, old_ref, new_ref);
 
     SP_GROUP(object)->group->onOrderChanged(child, old_ref, new_ref);
 }
@@ -205,8 +179,8 @@ sp_group_order_changed (SPObject *object, Inkscape::XML::Node *child, Inkscape::
 static void
 sp_group_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 {
-    if (((SPObjectClass *) (parent_class))->update)
-        ((SPObjectClass *) (parent_class))->update (object, ctx, flags);
+    if (((SPObjectClass *) (sp_group_parent_class))->update)
+        ((SPObjectClass *) (sp_group_parent_class))->update (object, ctx, flags);
 
     SP_GROUP(object)->group->onUpdate(ctx, flags);
 }
@@ -214,8 +188,8 @@ sp_group_update (SPObject *object, SPCtx *ctx, unsigned int flags)
 static void
 sp_group_modified (SPObject *object, guint flags)
 {
-    if (((SPObjectClass *) (parent_class))->modified)
-        ((SPObjectClass *) (parent_class))->modified (object, flags);
+    if (((SPObjectClass *) (sp_group_parent_class))->modified)
+        ((SPObjectClass *) (sp_group_parent_class))->modified (object, flags);
 
     SP_GROUP(object)->group->onModified(flags);
 }
@@ -269,8 +243,8 @@ static Inkscape::XML::Node * sp_group_write(SPObject *object, Inkscape::XML::Doc
         repr->setAttribute("inkscape:groupmode", value);
     }
 
-    if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_group_parent_class))->write) {
+        ((SPObjectClass *) (sp_group_parent_class))->write (object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -307,8 +281,8 @@ static void sp_group_set(SPObject *object, unsigned key, char const *value) {
             }
             break;
         default: {
-            if (((SPObjectClass *) (parent_class))->set) {
-                (* ((SPObjectClass *) (parent_class))->set)(object, key, value);
+            if (((SPObjectClass *) (sp_group_parent_class))->set) {
+                (* ((SPObjectClass *) (sp_group_parent_class))->set)(object, key, value);
             }
         }
     }
@@ -787,8 +761,8 @@ void CGroup::hide (unsigned int key) {
         l = g_slist_remove (l, o);
     }
 
-    if (((SPItemClass *) parent_class)->hide)
-        ((SPItemClass *) parent_class)->hide (_group, key);
+    if (((SPItemClass *) sp_group_parent_class)->hide)
+        ((SPItemClass *) sp_group_parent_class)->hide (_group, key);
 }
 
 void CGroup::onOrderChanged (Inkscape::XML::Node *child, Inkscape::XML::Node *, Inkscape::XML::Node *)

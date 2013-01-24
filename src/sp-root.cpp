@@ -31,11 +31,6 @@
 #include "svg/svg.h"
 #include "xml/repr.h"
 
-class SPDesktop;
-
-static void sp_root_class_init(SPRootClass *klass);
-static void sp_root_init(SPRoot *root);
-
 static void sp_root_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_root_release(SPObject *object);
 static void sp_root_set(SPObject *object, unsigned int key, gchar const *value);
@@ -48,29 +43,7 @@ static Inkscape::XML::Node *sp_root_write(SPObject *object, Inkscape::XML::Docum
 static Inkscape::DrawingItem *sp_root_show(SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigned int flags);
 static void sp_root_print(SPItem *item, SPPrintContext *ctx);
 
-static SPGroupClass *parent_class;
-
-/**
- * Returns the type info of sp_root, including its class sizes and initialization routines.
- */
-GType sp_root_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPRootClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_root_class_init,
-            NULL, NULL,
-            sizeof(SPRoot),
-            16,
-            (GInstanceInitFunc) sp_root_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_GROUP, "SPRoot", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPRoot, sp_root, SP_TYPE_GROUP);
 
 /**
  * Initializes an SPRootClass object by setting its class and parent class objects, and registering
@@ -80,8 +53,6 @@ static void sp_root_class_init(SPRootClass *klass)
 {
     SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
     SPItemClass *sp_item_class = reinterpret_cast<SPItemClass *>(klass);
-
-    parent_class = reinterpret_cast<SPGroupClass *>(g_type_class_ref(SP_TYPE_GROUP));
 
     sp_object_class->build = sp_root_build;
     sp_object_class->release = sp_root_release;
@@ -147,8 +118,8 @@ static void sp_root_build(SPObject *object, SPDocument *document, Inkscape::XML:
     object->readAttr( "preserveAspectRatio" );
     object->readAttr( "onload" );
 
-    if (((SPObjectClass *) parent_class)->build)
-        (* ((SPObjectClass *) parent_class)->build) (object, document, repr);
+    if (((SPObjectClass *) sp_root_parent_class)->build)
+        (* ((SPObjectClass *) sp_root_parent_class)->build) (object, document, repr);
 
     // Search for first <defs> node
     for (SPObject *o = group->firstChild() ; o ; o = o->getNext() ) {
@@ -171,8 +142,8 @@ static void sp_root_release(SPObject *object)
     SPRoot *root = (SPRoot *) object;
     root->defs = NULL;
 
-    if (((SPObjectClass *) parent_class)->release)
-        ((SPObjectClass *) parent_class)->release(object);
+    if (((SPObjectClass *) sp_root_parent_class)->release)
+        ((SPObjectClass *) sp_root_parent_class)->release(object);
 }
 
 /**
@@ -315,8 +286,8 @@ static void sp_root_set(SPObject *object, unsigned int key, gchar const *value)
             break;
         default:
             /* Pass the set event to the parent */
-            if (((SPObjectClass *) parent_class)->set) {
-                ((SPObjectClass *) parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_root_parent_class)->set) {
+                ((SPObjectClass *) sp_root_parent_class)->set(object, key, value);
             }
             break;
     }
@@ -331,8 +302,8 @@ static void sp_root_child_added(SPObject *object, Inkscape::XML::Node *child, In
     SPRoot *root = (SPRoot *) object;
     SPGroup *group = (SPGroup *) object;
 
-    if (((SPObjectClass *) (parent_class))->child_added) {
-        (* ((SPObjectClass *) (parent_class))->child_added)(object, child, ref);
+    if (((SPObjectClass *) (sp_root_parent_class))->child_added) {
+        (* ((SPObjectClass *) (sp_root_parent_class))->child_added)(object, child, ref);
     }
 
     SPObject *co = object->document->getObjectByRepr(child);
@@ -371,8 +342,8 @@ static void sp_root_remove_child(SPObject *object, Inkscape::XML::Node *child)
         }
     }
 
-    if (((SPObjectClass *) (parent_class))->remove_child) {
-        (* ((SPObjectClass *) (parent_class))->remove_child)(object, child);
+    if (((SPObjectClass *) (sp_root_parent_class))->remove_child) {
+        (* ((SPObjectClass *) (sp_root_parent_class))->remove_child)(object, child);
     }
 }
 
@@ -508,8 +479,8 @@ static void sp_root_update(SPObject *object, SPCtx *ctx, guint flags)
     rctx.i2vp = Geom::identity();
 
     /* And invoke parent method */
-    if (((SPObjectClass *) (parent_class))->update)
-        ((SPObjectClass *) (parent_class))->update(object, (SPCtx *) &rctx, flags);
+    if (((SPObjectClass *) (sp_root_parent_class))->update)
+        ((SPObjectClass *) (sp_root_parent_class))->update(object, (SPCtx *) &rctx, flags);
 
     /* As last step set additional transform of drawing group */
     for (SPItemView *v = root->display; v != NULL; v = v->next) {
@@ -527,8 +498,8 @@ static void sp_root_modified(SPObject *object, guint flags)
 {
     SPRoot *root = SP_ROOT(object);
 
-    if (((SPObjectClass *) (parent_class))->modified)
-        (* ((SPObjectClass *) (parent_class))->modified)(object, flags);
+    if (((SPObjectClass *) (sp_root_parent_class))->modified)
+        (* ((SPObjectClass *) (sp_root_parent_class))->modified)(object, flags);
 
     /* fixme: (Lauris) */
     if (!object->parent && (flags & SP_OBJECT_VIEWPORT_MODIFIED_FLAG)) {
@@ -576,8 +547,8 @@ sp_root_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML:
         repr->setAttribute("viewBox", os.str().c_str());
     }
 
-    if (((SPObjectClass *) (parent_class))->write)
-        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_root_parent_class))->write)
+        ((SPObjectClass *) (sp_root_parent_class))->write(object, xml_doc, repr, flags);
 
     return repr;
 }
@@ -591,8 +562,8 @@ sp_root_show(SPItem *item, Inkscape::Drawing &drawing, unsigned int key, unsigne
     SPRoot *root = SP_ROOT(item);
 
     Inkscape::DrawingItem *ai;
-    if (((SPItemClass *) (parent_class))->show) {
-        ai = ((SPItemClass *) (parent_class))->show(item, drawing, key, flags);
+    if (((SPItemClass *) (sp_root_parent_class))->show) {
+        ai = ((SPItemClass *) (sp_root_parent_class))->show(item, drawing, key, flags);
         if (ai) {
             Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(ai);
             g->setChildTransform(root->c2p);
@@ -613,8 +584,8 @@ static void sp_root_print(SPItem *item, SPPrintContext *ctx)
 
     sp_print_bind(ctx, root->c2p, 1.0);
 
-    if (((SPItemClass *) (parent_class))->print) {
-        ((SPItemClass *) (parent_class))->print(item, ctx);
+    if (((SPItemClass *) (sp_root_parent_class))->print) {
+        ((SPItemClass *) (sp_root_parent_class))->print(item, ctx);
     }
 
     sp_print_release(ctx);

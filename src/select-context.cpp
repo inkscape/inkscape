@@ -51,17 +51,12 @@
 
 using Inkscape::DocumentUndo;
 
-
-static void sp_select_context_class_init(SPSelectContextClass *klass);
-static void sp_select_context_init(SPSelectContext *select_context);
 static void sp_select_context_dispose(GObject *object);
 
 static void sp_select_context_setup(SPEventContext *ec);
 static void sp_select_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static gint sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 static gint sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
-
-static SPEventContextClass *parent_class;
 
 static GdkCursor *CursorSelectMouseover = NULL;
 static GdkCursor *CursorSelectDragging = NULL;
@@ -74,33 +69,13 @@ static gint xp = 0, yp = 0; // where drag started
 static gint tolerance = 0;
 static bool within_tolerance = false;
 
-GType
-sp_select_context_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPSelectContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_select_context_class_init,
-            NULL, NULL,
-            sizeof(SPSelectContext),
-            4,
-            (GInstanceInitFunc) sp_select_context_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPSelectContext", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPSelectContext, sp_select_context, SP_TYPE_EVENT_CONTEXT);
 
 static void
 sp_select_context_class_init(SPSelectContextClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_select_context_dispose;
 
@@ -180,7 +155,7 @@ sp_select_context_dispose(GObject *object)
         CursorSelectMouseover = NULL;
     }
 
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_select_context_parent_class)->dispose(object);
 }
 
 static void
@@ -188,8 +163,8 @@ sp_select_context_setup(SPEventContext *ec)
 {
     SPSelectContext *select_context = SP_SELECT_CONTEXT(ec);
 
-    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup) {
-        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(sp_select_context_parent_class))->setup) {
+        (SP_EVENT_CONTEXT_CLASS(sp_select_context_parent_class))->setup(ec);
     }
 
     SPDesktop *desktop = ec->desktop;
@@ -432,8 +407,8 @@ sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkE
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->item_handler)
-            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->item_handler(event_context, item, event);
+        if ((SP_EVENT_CONTEXT_CLASS(sp_select_context_parent_class))->item_handler)
+            ret = (SP_EVENT_CONTEXT_CLASS(sp_select_context_parent_class))->item_handler(event_context, item, event);
     }
 
     return ret;
@@ -1150,8 +1125,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler)
-            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler(event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(sp_select_context_parent_class))->root_handler)
+            ret = (SP_EVENT_CONTEXT_CLASS(sp_select_context_parent_class))->root_handler(event_context, event);
     }
 
     return ret;
