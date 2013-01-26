@@ -7,42 +7,16 @@
 #include "style.h"
 using Inkscape::XML::TEXT_NODE;
 
-static void sp_style_elem_init(SPStyleElem *style_elem);
-static void sp_style_elem_class_init(SPStyleElemClass *klass);
 static void sp_style_elem_build(SPObject *object, SPDocument *doc, Inkscape::XML::Node *repr);
 static void sp_style_elem_set(SPObject *object, unsigned const key, gchar const *const value);
 static void sp_style_elem_read_content(SPObject *);
 static Inkscape::XML::Node *sp_style_elem_write(SPObject *, Inkscape::XML::Document *, Inkscape::XML::Node *, guint flags);
 
-static SPObjectClass *parent_class;
-
-GType
-sp_style_elem_get_type()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPStyleElemClass),
-            NULL,   /* base_init */
-            NULL,   /* base_finalize */
-            (GClassInitFunc) sp_style_elem_class_init,
-            NULL,   /* class_finalize */
-            NULL,   /* class_data */
-            sizeof(SPStyleElem),
-            16,     /* n_preallocs */
-            (GInstanceInitFunc) sp_style_elem_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_OBJECT, "SPStyleElem", &info, (GTypeFlags) 0);
-    }
-
-    return type;
-}
+G_DEFINE_TYPE(SPStyleElem, sp_style_elem, SP_TYPE_OBJECT);
 
 static void
 sp_style_elem_class_init(SPStyleElemClass *klass)
 {
-    parent_class = (SPObjectClass *)g_type_class_ref(SP_TYPE_OBJECT);
     /* FIXME */
 
     klass->build = sp_style_elem_build;
@@ -89,8 +63,8 @@ sp_style_elem_set(SPObject *object, unsigned const key, gchar const *const value
 
         /* title is ignored. */
         default: {
-            if (parent_class->set) {
-                parent_class->set(object, key, value);
+            if (SP_OBJECT_CLASS(sp_style_elem_parent_class)->set) {
+                SP_OBJECT_CLASS(sp_style_elem_parent_class)->set(object, key, value);
             }
             break;
         }
@@ -138,8 +112,8 @@ sp_style_elem_write(SPObject *const object, Inkscape::XML::Document *xml_doc, In
     }
     /* todo: media */
 
-    if (((SPObjectClass *) parent_class)->write)
-        ((SPObjectClass *) parent_class)->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) sp_style_elem_parent_class)->write)
+        ((SPObjectClass *) sp_style_elem_parent_class)->write(object, xml_doc, repr, flags);
 
     return repr;
 }
@@ -402,8 +376,8 @@ sp_style_elem_build(SPObject *object, SPDocument *document, Inkscape::XML::Node 
     };
     rec_add_listener(*repr, &nodeEventVector, object);
 
-    if (((SPObjectClass *) parent_class)->build) {
-        ((SPObjectClass *) parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_style_elem_parent_class)->build) {
+        ((SPObjectClass *) sp_style_elem_parent_class)->build(object, document, repr);
     }
 }
 

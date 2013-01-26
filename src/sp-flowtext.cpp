@@ -34,8 +34,6 @@
 #include "display/drawing-text.h"
 
 
-static void sp_flowtext_class_init(SPFlowtextClass *klass);
-static void sp_flowtext_init(SPFlowtext *group);
 static void sp_flowtext_dispose(GObject *object);
 
 static void sp_flowtext_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
@@ -53,29 +51,7 @@ static void sp_flowtext_snappoints(SPItem const *item, std::vector<Inkscape::Sna
 static Inkscape::DrawingItem *sp_flowtext_show(SPItem *item, Inkscape::Drawing &drawing, unsigned key, unsigned flags);
 static void sp_flowtext_hide(SPItem *item, unsigned key);
 
-static SPItemClass *parent_class;
-
-GType
-sp_flowtext_get_type(void)
-{
-    static GType group_type = 0;
-    if (!group_type) {
-        GTypeInfo group_info = {
-            sizeof(SPFlowtextClass),
-            NULL,   /* base_init */
-            NULL,   /* base_finalize */
-            (GClassInitFunc) sp_flowtext_class_init,
-            NULL,   /* class_finalize */
-            NULL,   /* class_data */
-            sizeof(SPFlowtext),
-            16,     /* n_preallocs */
-            (GInstanceInitFunc) sp_flowtext_init,
-            NULL,   /* value_table */
-        };
-        group_type = g_type_register_static(SP_TYPE_ITEM, "SPFlowtext", &group_info, (GTypeFlags)0);
-    }
-    return group_type;
-}
+G_DEFINE_TYPE(SPFlowtext, sp_flowtext, SP_TYPE_ITEM);
 
 static void
 sp_flowtext_class_init(SPFlowtextClass *klass)
@@ -83,8 +59,6 @@ sp_flowtext_class_init(SPFlowtextClass *klass)
     GObjectClass *object_class = (GObjectClass *) klass;
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
     SPItemClass *item_class = (SPItemClass *) klass;
-
-    parent_class = (SPItemClass *)g_type_class_ref(SP_TYPE_ITEM);
 
     object_class->dispose = sp_flowtext_dispose;
 
@@ -122,8 +96,8 @@ sp_flowtext_dispose(GObject *object)
 static void
 sp_flowtext_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
-    if (((SPObjectClass *) (parent_class))->child_added)
-        (* ((SPObjectClass *) (parent_class))->child_added)(object, child, ref);
+    if (((SPObjectClass *) (sp_flowtext_parent_class))->child_added)
+        (* ((SPObjectClass *) (sp_flowtext_parent_class))->child_added)(object, child, ref);
 
     object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
@@ -133,8 +107,8 @@ sp_flowtext_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::
 static void
 sp_flowtext_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {
-    if (((SPObjectClass *) (parent_class))->remove_child)
-        (* ((SPObjectClass *) (parent_class))->remove_child)(object, child);
+    if (((SPObjectClass *) (sp_flowtext_parent_class))->remove_child)
+        (* ((SPObjectClass *) (sp_flowtext_parent_class))->remove_child)(object, child);
 
     object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
@@ -145,8 +119,8 @@ static void sp_flowtext_update(SPObject *object, SPCtx *ctx, unsigned flags)
     SPItemCtx *ictx = (SPItemCtx *) ctx;
     SPItemCtx cctx = *ictx;
 
-    if (((SPObjectClass *) (parent_class))->update) {
-        ((SPObjectClass *) (parent_class))->update(object, ctx, flags);
+    if (((SPObjectClass *) (sp_flowtext_parent_class))->update) {
+        ((SPObjectClass *) (sp_flowtext_parent_class))->update(object, ctx, flags);
     }
 
     if (flags & SP_OBJECT_MODIFIED_FLAG) flags |= SP_OBJECT_PARENT_MODIFIED_FLAG;
@@ -225,8 +199,8 @@ sp_flowtext_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *r
 {
     object->_requireSVGVersion(Inkscape::Version(1, 2));
 
-    if (((SPObjectClass *) (parent_class))->build) {
-        (* ((SPObjectClass *) (parent_class))->build)(object, document, repr);
+    if (((SPObjectClass *) (sp_flowtext_parent_class))->build) {
+        (* ((SPObjectClass *) (sp_flowtext_parent_class))->build)(object, document, repr);
     }
 
     object->readAttr( "inkscape:layoutOptions" );     // must happen after css has been read
@@ -284,8 +258,8 @@ sp_flowtext_set(SPObject *object, unsigned key, gchar const *value)
             break;
         }
         default:
-            if (((SPObjectClass *) (parent_class))->set) {
-                (* ((SPObjectClass *) (parent_class))->set)(object, key, value);
+            if (((SPObjectClass *) (sp_flowtext_parent_class))->set) {
+                (* ((SPObjectClass *) (sp_flowtext_parent_class))->set)(object, key, value);
             }
             break;
     }
@@ -320,8 +294,8 @@ static Inkscape::XML::Node *sp_flowtext_write(SPObject *object, Inkscape::XML::D
         }
     }
 
-    if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_flowtext_parent_class))->write) {
+        ((SPObjectClass *) (sp_flowtext_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -404,8 +378,8 @@ sp_flowtext_show(SPItem *item, Inkscape::Drawing &drawing, unsigned/* key*/, uns
 static void
 sp_flowtext_hide(SPItem *item, unsigned int key)
 {
-    if (((SPItemClass *) parent_class)->hide)
-        ((SPItemClass *) parent_class)->hide(item, key);
+    if (((SPItemClass *) sp_flowtext_parent_class)->hide)
+        ((SPItemClass *) sp_flowtext_parent_class)->hide(item, key);
 }
 
 

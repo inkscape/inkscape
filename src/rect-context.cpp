@@ -49,8 +49,6 @@ using Inkscape::DocumentUndo;
 
 //static const double goldenratio = 1.61803398874989484820; // golden ratio
 
-static void sp_rect_context_class_init(SPRectContextClass *klass);
-static void sp_rect_context_init(SPRectContext *rect_context);
 static void sp_rect_context_dispose(GObject *object);
 
 static void sp_rect_context_setup(SPEventContext *ec);
@@ -64,34 +62,12 @@ static void sp_rect_drag(SPRectContext &rc, Geom::Point const pt, guint state);
 static void sp_rect_finish(SPRectContext *rc);
 static void sp_rect_cancel(SPRectContext *rc);
 
-static SPEventContextClass *parent_class;
-
-
-GType sp_rect_context_get_type()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPRectContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_rect_context_class_init,
-            NULL, NULL,
-            sizeof(SPRectContext),
-            4,
-            (GInstanceInitFunc) sp_rect_context_init,
-            NULL,    /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPRectContext", &info, (GTypeFlags) 0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPRectContext, sp_rect_context, SP_TYPE_EVENT_CONTEXT);
 
 static void sp_rect_context_class_init(SPRectContextClass *klass)
 {
     GObjectClass *object_class = (GObjectClass *) klass;
     SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
-
-    parent_class = (SPEventContextClass *) g_type_class_peek_parent(klass);
 
     object_class->dispose = sp_rect_context_dispose;
 
@@ -133,8 +109,8 @@ static void sp_rect_context_finish(SPEventContext *ec)
     sp_rect_finish(rc);
     rc->sel_changed_connection.disconnect();
 
-    if (((SPEventContextClass *) parent_class)->finish) {
-        ((SPEventContextClass *) parent_class)->finish(ec);
+    if (((SPEventContextClass *) sp_rect_context_parent_class)->finish) {
+        ((SPEventContextClass *) sp_rect_context_parent_class)->finish(ec);
     }
 }
 
@@ -161,7 +137,7 @@ static void sp_rect_context_dispose(GObject *object)
         delete rc->_message_context;
     }
 
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_rect_context_parent_class)->dispose(object);
 }
 
 /**
@@ -182,8 +158,8 @@ static void sp_rect_context_setup(SPEventContext *ec)
 {
     SPRectContext *rc = SP_RECT_CONTEXT(ec);
 
-    if (((SPEventContextClass *) parent_class)->setup) {
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if (((SPEventContextClass *) sp_rect_context_parent_class)->setup) {
+        ((SPEventContextClass *) sp_rect_context_parent_class)->setup(ec);
     }
 
     ec->shape_editor = new ShapeEditor(ec->desktop);
@@ -245,8 +221,8 @@ static gint sp_rect_context_item_handler(SPEventContext *event_context, SPItem *
         break;
     }
 
-    if (((SPEventContextClass *) parent_class)->item_handler) {
-        ret = ((SPEventContextClass *) parent_class)->item_handler(event_context, item, event);
+    if (((SPEventContextClass *) sp_rect_context_parent_class)->item_handler) {
+        ret = ((SPEventContextClass *) sp_rect_context_parent_class)->item_handler(event_context, item, event);
     }
 
     return ret;
@@ -458,8 +434,8 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
+        if (((SPEventContextClass *) sp_rect_context_parent_class)->root_handler) {
+            ret = ((SPEventContextClass *) sp_rect_context_parent_class)->root_handler(event_context, event);
         }
     }
 

@@ -53,8 +53,6 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_box3d_context_class_init(Box3DContextClass *klass);
-static void sp_box3d_context_init(Box3DContext *box3d_context);
 static void sp_box3d_context_dispose(GObject *object);
 
 static void sp_box3d_context_setup(SPEventContext *ec);
@@ -66,33 +64,12 @@ static gint sp_box3d_context_item_handler(SPEventContext *event_context, SPItem 
 static void sp_box3d_drag(Box3DContext &bc, guint state);
 static void sp_box3d_finish(Box3DContext *bc);
 
-static SPEventContextClass *parent_class;
-
-GType sp_box3d_context_get_type()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(Box3DContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_box3d_context_class_init,
-            NULL, NULL,
-            sizeof(Box3DContext),
-            4,
-            (GInstanceInitFunc) sp_box3d_context_init,
-            NULL,    /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "Box3DContext", &info, (GTypeFlags) 0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(Box3DContext, sp_box3d_context, SP_TYPE_EVENT_CONTEXT);
 
 static void sp_box3d_context_class_init(Box3DContextClass *klass)
 {
     GObjectClass *object_class = (GObjectClass *) klass;
     SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
-
-    parent_class = (SPEventContextClass *) g_type_class_peek_parent(klass);
 
     object_class->dispose = sp_box3d_context_dispose;
 
@@ -135,8 +112,8 @@ static void sp_box3d_context_finish(SPEventContext *ec)
     bc->sel_changed_connection.disconnect();
 //    sp_repr_remove_listener_by_data(cc->active_shape_repr, cc);
 
-    if (((SPEventContextClass *) parent_class)->finish) {
-        ((SPEventContextClass *) parent_class)->finish(ec);
+    if (((SPEventContextClass *) sp_box3d_context_parent_class)->finish) {
+        ((SPEventContextClass *) sp_box3d_context_parent_class)->finish(ec);
     }
 }
 
@@ -166,7 +143,7 @@ static void sp_box3d_context_dispose(GObject *object)
         delete bc->_message_context;
     }
 
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_box3d_context_parent_class)->dispose(object);
 }
 
 /**
@@ -211,8 +188,8 @@ static void sp_box3d_context_setup(SPEventContext *ec)
 {
     Box3DContext *bc = SP_BOX3D_CONTEXT(ec);
 
-    if (((SPEventContextClass *) parent_class)->setup) {
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if (((SPEventContextClass *) sp_box3d_context_parent_class)->setup) {
+        ((SPEventContextClass *) sp_box3d_context_parent_class)->setup(ec);
     }
 
     ec->shape_editor = new ShapeEditor(ec->desktop);
@@ -259,8 +236,8 @@ static gint sp_box3d_context_item_handler(SPEventContext *event_context, SPItem 
         break;
     }
 
-    if (((SPEventContextClass *) parent_class)->item_handler) {
-        ret = ((SPEventContextClass *) parent_class)->item_handler(event_context, item, event);
+    if (((SPEventContextClass *) sp_box3d_context_parent_class)->item_handler) {
+        ret = ((SPEventContextClass *) sp_box3d_context_parent_class)->item_handler(event_context, item, event);
     }
 
     return ret;
@@ -572,8 +549,8 @@ static gint sp_box3d_context_root_handler(SPEventContext *event_context, GdkEven
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
+        if (((SPEventContextClass *) sp_box3d_context_parent_class)->root_handler) {
+            ret = ((SPEventContextClass *) sp_box3d_context_parent_class)->root_handler(event_context, event);
         }
     }
 

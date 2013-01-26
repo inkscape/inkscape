@@ -51,8 +51,6 @@
 
 #define noPATH_VERBOSE
 
-static void sp_path_class_init(SPPathClass *klass);
-static void sp_path_init(SPPath *path);
 static void sp_path_finalize(GObject *obj);
 static void sp_path_release(SPObject *object);
 
@@ -67,31 +65,7 @@ static void sp_path_convert_to_guides(SPItem *item);
 static void sp_path_update(SPObject *object, SPCtx *ctx, guint flags);
 static void sp_path_update_patheffect(SPLPEItem *lpeitem, bool write);
 
-static SPShapeClass *parent_class;
-
-/**
- * Gets the GType object for SPPathClass
- */
-GType
-sp_path_get_type(void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPPathClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_path_class_init,
-            NULL, NULL,
-            sizeof(SPPath),
-            16,
-            (GInstanceInitFunc) sp_path_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_SHAPE, "SPPath", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPPath, sp_path, SP_TYPE_SHAPE);
 
 /**
  *  Does the object-oriented work of initializing the class structure
@@ -105,8 +79,6 @@ sp_path_class_init(SPPathClass * klass)
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
     SPItemClass *item_class = (SPItemClass *) klass;
     SPLPEItemClass *lpe_item_class = (SPLPEItemClass *) klass;
-
-    parent_class = (SPShapeClass *)g_type_class_peek_parent(klass);
 
     gobject_class->finalize = sp_path_finalize;
 
@@ -216,8 +188,8 @@ sp_path_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 
     sp_conn_end_pair_build(object);
 
-    if (((SPObjectClass *) parent_class)->build) {
-        ((SPObjectClass *) parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_path_parent_class)->build) {
+        ((SPObjectClass *) sp_path_parent_class)->build(object, document, repr);
     }
 
     object->readAttr( "inkscape:original-d" );
@@ -237,8 +209,8 @@ sp_path_release(SPObject *object)
 
     path->connEndPair.release();
 
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release(object);
+    if (((SPObjectClass *) sp_path_parent_class)->release) {
+        ((SPObjectClass *) sp_path_parent_class)->release(object);
     }
 }
 
@@ -294,8 +266,8 @@ sp_path_set(SPObject *object, unsigned int key, gchar const *value)
             path->connEndPair.setAttr(key, value);
             break;
         default:
-            if (((SPObjectClass *) parent_class)->set) {
-                ((SPObjectClass *) parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_path_parent_class)->set) {
+                ((SPObjectClass *) sp_path_parent_class)->set(object, key, value);
             }
             break;
     }
@@ -337,8 +309,8 @@ g_message("sp_path_write writes 'd' attribute");
 
     SP_PATH(shape)->connEndPair.writeRepr(repr);
 
-    if (((SPObjectClass *)(parent_class))->write) {
-        ((SPObjectClass *)(parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *)(sp_path_parent_class))->write) {
+        ((SPObjectClass *)(sp_path_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -351,8 +323,8 @@ sp_path_update(SPObject *object, SPCtx *ctx, guint flags)
         flags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B; // since we change the description, it's not a "just translation" anymore
     }
 
-    if (((SPObjectClass *) parent_class)->update) {
-        ((SPObjectClass *) parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_path_parent_class)->update) {
+        ((SPObjectClass *) sp_path_parent_class)->update(object, ctx, flags);
     }
 
     SPPath *path = SP_PATH(object);

@@ -46,17 +46,12 @@
 #include "ege-output-action.h"
 
 
-static void ege_output_action_class_init( EgeOutputActionClass* klass );
-static void ege_output_action_init( EgeOutputAction* action );
 static void ege_output_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec );
 static void ege_output_action_set_property( GObject* obj, guint propId, const GValue *value, GParamSpec* pspec );
 static void fixup_labels( GObject *gobject, GParamSpec *arg1, gpointer user_data );
 
 /* static GtkWidget* create_menu_item( GtkAction* action ); */
 static GtkWidget* create_tool_item( GtkAction* action );
-
-static GtkActionClass* gParentClass = 0;
-
 
 struct _EgeOutputActionPrivate
 {
@@ -69,34 +64,12 @@ enum {
     PROP_USE_MARKUP = 1,
 };
 
-GType ege_output_action_get_type( void )
-{
-    static GType myType = 0;
-    if ( !myType ) {
-        static const GTypeInfo myInfo = {
-            sizeof( EgeOutputActionClass ),
-            NULL, /* base_init */
-            NULL, /* base_finalize */
-            (GClassInitFunc)ege_output_action_class_init,
-            NULL, /* class_finalize */
-            NULL, /* class_data */
-            sizeof( EgeOutputAction ),
-            0, /* n_preallocs */
-            (GInstanceInitFunc)ege_output_action_init,
-            NULL
-        };
-
-        myType = g_type_register_static( GTK_TYPE_ACTION, "EgeOutputAction", &myInfo, (GTypeFlags)0 );
-    }
-
-    return myType;
-}
+G_DEFINE_TYPE(EgeOutputAction, ege_output_action, GTK_TYPE_ACTION);
 
 void ege_output_action_class_init( EgeOutputActionClass* klass )
 {
     if ( klass ) {
         GObjectClass* objClass = G_OBJECT_CLASS( klass );
-        gParentClass = GTK_ACTION_CLASS( g_type_class_peek_parent( klass ) );
 
         objClass->get_property = ege_output_action_get_property;
         objClass->set_property = ege_output_action_set_property;
@@ -228,7 +201,7 @@ GtkWidget* create_tool_item( GtkAction* action )
 
         g_value_unset( &value );
     } else {
-        item = gParentClass->create_tool_item( action );
+        item = GTK_ACTION_CLASS(ege_output_action_parent_class)->create_tool_item( action );
     }
 
     return item;

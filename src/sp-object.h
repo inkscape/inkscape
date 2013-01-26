@@ -800,10 +800,7 @@ private:
 
 public:
 
-    /**
-     * Registers the SPObject class with Gdk and returns its type number.
-     */
-    static GType get_type();
+    static GType get_type() {return sp_object_get_type();}
 
     /**
      * Callback for attr_changed node event.

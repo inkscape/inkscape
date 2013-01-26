@@ -81,43 +81,19 @@ using Inkscape::DocumentUndo;
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
-static void sp_tweak_context_class_init(SPTweakContextClass *klass);
-static void sp_tweak_context_init(SPTweakContext *ddc);
 static void sp_tweak_context_dispose(GObject *object);
 
 static void sp_tweak_context_setup(SPEventContext *ec);
 static void sp_tweak_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static gint sp_tweak_context_root_handler(SPEventContext *ec, GdkEvent *event);
 
-static SPEventContextClass *parent_class;
-
-GType
-sp_tweak_context_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPTweakContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_tweak_context_class_init,
-            NULL, NULL,
-            sizeof(SPTweakContext),
-            4,
-            (GInstanceInitFunc) sp_tweak_context_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPTweakContext", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPTweakContext, sp_tweak_context, SP_TYPE_EVENT_CONTEXT);
 
 static void
 sp_tweak_context_class_init(SPTweakContextClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_tweak_context_dispose;
 
@@ -173,7 +149,7 @@ sp_tweak_context_dispose(GObject *object)
         delete tc->_message_context;
     }
 
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_tweak_context_parent_class)->dispose(object);
 }
 
 static bool is_transform_mode (gint mode)
@@ -290,8 +266,8 @@ sp_tweak_context_setup(SPEventContext *ec)
 {
     SPTweakContext *tc = SP_TWEAK_CONTEXT(ec);
 
-    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup) {
-        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(sp_tweak_context_parent_class))->setup) {
+        (SP_EVENT_CONTEXT_CLASS(sp_tweak_context_parent_class))->setup(ec);
     }
 
     {
@@ -1535,8 +1511,8 @@ sp_tweak_context_root_handler(SPEventContext *event_context,
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler) {
-            ret = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler(event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(sp_tweak_context_parent_class))->root_handler) {
+            ret = (SP_EVENT_CONTEXT_CLASS(sp_tweak_context_parent_class))->root_handler(event_context, event);
         }
     }
 

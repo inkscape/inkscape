@@ -26,9 +26,6 @@
 #include "sp-symbol.h"
 #include "document.h"
 
-static void sp_symbol_class_init (SPSymbolClass *klass);
-static void sp_symbol_init (SPSymbol *symbol);
-
 static void sp_symbol_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_symbol_release (SPObject *object);
 static void sp_symbol_set (SPObject *object, unsigned int key, const gchar *value);
@@ -42,34 +39,12 @@ static void sp_symbol_hide (SPItem *item, unsigned int key);
 static Geom::OptRect sp_symbol_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type);
 static void sp_symbol_print (SPItem *item, SPPrintContext *ctx);
 
-static SPGroupClass *parent_class;
-
-GType
-sp_symbol_get_type (void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof (SPSymbolClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_symbol_class_init,
-            NULL, NULL,
-            sizeof (SPSymbol),
-            16,
-            (GInstanceInitFunc) sp_symbol_init,
-            NULL,	/* value_table */
-        };
-        type = g_type_register_static (SP_TYPE_GROUP, "SPSymbol", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPSymbol, sp_symbol, SP_TYPE_GROUP);
 
 static void sp_symbol_class_init(SPSymbolClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
     SPItemClass *sp_item_class = (SPItemClass *) klass;
-
-    parent_class = (SPGroupClass *)g_type_class_ref (SP_TYPE_GROUP);
 
     sp_object_class->build = sp_symbol_build;
     sp_object_class->release = sp_symbol_release;
@@ -97,15 +72,15 @@ static void sp_symbol_build(SPObject *object, SPDocument *document, Inkscape::XM
     object->readAttr( "viewBox" );
     object->readAttr( "preserveAspectRatio" );
 
-    if (((SPObjectClass *) parent_class)->build) {
-        ((SPObjectClass *) parent_class)->build (object, document, repr);
+    if (((SPObjectClass *) sp_symbol_parent_class)->build) {
+        ((SPObjectClass *) sp_symbol_parent_class)->build (object, document, repr);
     }
 }
 
 static void sp_symbol_release(SPObject *object)
 {
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release (object);
+    if (((SPObjectClass *) sp_symbol_parent_class)->release) {
+        ((SPObjectClass *) sp_symbol_parent_class)->release (object);
     }
 }
 
@@ -202,16 +177,16 @@ static void sp_symbol_set(SPObject *object, unsigned int key, const gchar *value
         }
         break;
     default:
-        if (((SPObjectClass *) parent_class)->set)
-            ((SPObjectClass *) parent_class)->set (object, key, value);
+        if (((SPObjectClass *) sp_symbol_parent_class)->set)
+            ((SPObjectClass *) sp_symbol_parent_class)->set (object, key, value);
         break;
     }
 }
 
 static void sp_symbol_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
-    if (((SPObjectClass *) (parent_class))->child_added) {
-        ((SPObjectClass *) (parent_class))->child_added (object, child, ref);
+    if (((SPObjectClass *) (sp_symbol_parent_class))->child_added) {
+        ((SPObjectClass *) (sp_symbol_parent_class))->child_added (object, child, ref);
     }
 }
 
@@ -315,8 +290,8 @@ static void sp_symbol_update(SPObject *object, SPCtx *ctx, guint flags)
         }
 
         // And invoke parent method
-        if (((SPObjectClass *) (parent_class))->update) {
-            ((SPObjectClass *) (parent_class))->update (object, (SPCtx *) &rctx, flags);
+        if (((SPObjectClass *) (sp_symbol_parent_class))->update) {
+            ((SPObjectClass *) (sp_symbol_parent_class))->update (object, (SPCtx *) &rctx, flags);
 	}
 
         // As last step set additional transform of drawing group
@@ -326,8 +301,8 @@ static void sp_symbol_update(SPObject *object, SPCtx *ctx, guint flags)
         }
     } else {
         // No-op
-        if (((SPObjectClass *) (parent_class))->update) {
-            ((SPObjectClass *) (parent_class))->update (object, ctx, flags);
+        if (((SPObjectClass *) (sp_symbol_parent_class))->update) {
+            ((SPObjectClass *) (sp_symbol_parent_class))->update (object, ctx, flags);
 	}
     }
 }
@@ -336,8 +311,8 @@ static void sp_symbol_modified(SPObject *object, guint flags)
 {
     SP_SYMBOL(object);
 
-    if (((SPObjectClass *) (parent_class))->modified) {
-        (* ((SPObjectClass *) (parent_class))->modified) (object, flags);
+    if (((SPObjectClass *) (sp_symbol_parent_class))->modified) {
+        (* ((SPObjectClass *) (sp_symbol_parent_class))->modified) (object, flags);
     }
 }
 
@@ -355,8 +330,8 @@ static Inkscape::XML::Node *sp_symbol_write(SPObject *object, Inkscape::XML::Doc
     //XML Tree being used directly here while it shouldn't be.
     repr->setAttribute("preserveAspectRatio", object->getRepr()->attribute("preserveAspectRatio"));
 
-    if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_symbol_parent_class))->write) {
+        ((SPObjectClass *) (sp_symbol_parent_class))->write (object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -369,8 +344,8 @@ static Inkscape::DrawingItem *sp_symbol_show(SPItem *item, Inkscape::Drawing &dr
 
     if (symbol->cloned) {
         // Cloned <symbol> is actually renderable
-        if (((SPItemClass *) (parent_class))->show) {
-            ai = ((SPItemClass *) (parent_class))->show (item, drawing, key, flags);
+        if (((SPItemClass *) (sp_symbol_parent_class))->show) {
+            ai = ((SPItemClass *) (sp_symbol_parent_class))->show (item, drawing, key, flags);
             Inkscape::DrawingGroup *g = dynamic_cast<Inkscape::DrawingGroup *>(ai);
             if (g) {
             	g->setChildTransform(symbol->c2p);
@@ -387,8 +362,8 @@ static void sp_symbol_hide(SPItem *item, unsigned int key)
 
     if (symbol->cloned) {
         /* Cloned <symbol> is actually renderable */
-        if (((SPItemClass *) (parent_class))->hide) {
-            ((SPItemClass *) (parent_class))->hide (item, key);
+        if (((SPItemClass *) (sp_symbol_parent_class))->hide) {
+            ((SPItemClass *) (sp_symbol_parent_class))->hide (item, key);
 	}
     }
 }
@@ -401,15 +376,15 @@ static Geom::OptRect sp_symbol_bbox(SPItem const *item, Geom::Affine const &tran
     if (symbol->cloned) {
         // Cloned <symbol> is actually renderable
 
-        if (((SPItemClass *) (parent_class))->bbox) {
+        if (((SPItemClass *) (sp_symbol_parent_class))->bbox) {
             Geom::Affine const a( symbol->c2p * transform );
-            bbox = ((SPItemClass *) (parent_class))->bbox(item, a, type);
+            bbox = ((SPItemClass *) (sp_symbol_parent_class))->bbox(item, a, type);
         }
     } else {
         // Need bounding box for Symbols dialog
 
         Geom::Affine const a;
-        bbox = ((SPItemClass *) (parent_class))->bbox(item, a, type);
+        bbox = ((SPItemClass *) (sp_symbol_parent_class))->bbox(item, a, type);
     }
     return bbox;
 }
@@ -422,8 +397,8 @@ static void sp_symbol_print(SPItem *item, SPPrintContext *ctx)
 
         sp_print_bind(ctx, symbol->c2p, 1.0);
 
-        if (((SPItemClass *) (parent_class))->print) {
-            ((SPItemClass *) (parent_class))->print (item, ctx);
+        if (((SPItemClass *) (sp_symbol_parent_class))->print) {
+            ((SPItemClass *) (sp_symbol_parent_class))->print (item, ctx);
         }
 
         sp_print_release (ctx);

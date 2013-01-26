@@ -27,9 +27,6 @@
 
 using Inkscape::DocumentUndo;
 
-static void persp3d_class_init(Persp3DClass *klass);
-static void persp3d_init(Persp3D *persp);
-
 static void persp3d_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void persp3d_release(SPObject *object);
 static void persp3d_set(SPObject *object, unsigned key, gchar const *value);
@@ -40,8 +37,6 @@ static void persp3d_on_repr_attr_changed (Inkscape::XML::Node * repr, const gcha
 
 static void persp3d_update_with_point (Persp3DImpl *persp_impl, Proj::Axis const axis, Proj::Pt2 const &new_image);
 static gchar * persp3d_pt_to_str (Persp3DImpl *persp_impl, Proj::Axis const axis);
-
-static SPObjectClass *persp3d_parent_class;
 
 static int global_counter = 0;
 
@@ -54,28 +49,7 @@ Persp3DImpl::Persp3DImpl() {
     my_counter = global_counter++;
 }
 
-/**
- * Registers Persp3d class and returns its type.
- */
-GType
-persp3d_get_type()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(Persp3DClass),
-            NULL, NULL,
-            (GClassInitFunc) persp3d_class_init,
-            NULL, NULL,
-            sizeof(Persp3D),
-            16,
-            (GInstanceInitFunc) persp3d_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_OBJECT, "Persp3D", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(Persp3D, persp3d, SP_TYPE_OBJECT);
 
 static Inkscape::XML::NodeEventVector const persp3d_repr_events = {
     NULL, /* child_added */
@@ -91,8 +65,6 @@ static Inkscape::XML::NodeEventVector const persp3d_repr_events = {
 static void persp3d_class_init(Persp3DClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
-
-    persp3d_parent_class = (SPObjectClass *) g_type_class_ref(SP_TYPE_OBJECT);
 
     sp_object_class->build = persp3d_build;
     sp_object_class->release = persp3d_release;

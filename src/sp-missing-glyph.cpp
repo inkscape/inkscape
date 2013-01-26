@@ -21,44 +21,16 @@
 #include "sp-missing-glyph.h"
 #include "document.h"
 
-static void sp_missing_glyph_class_init(SPMissingGlyphClass *gc);
-static void sp_missing_glyph_init(SPMissingGlyph *glyph);
-
 static void sp_missing_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_missing_glyph_release(SPObject *object);
 static void sp_missing_glyph_set(SPObject *object, unsigned int key, const gchar *value);
 static Inkscape::XML::Node *sp_missing_glyph_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static SPObjectClass *parent_class;
-
-GType sp_missing_glyph_get_type(void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPMissingGlyphClass),
-            NULL,	/* base_init */
-            NULL,	/* base_finalize */
-            (GClassInitFunc) sp_missing_glyph_class_init,
-            NULL,	/* class_finalize */
-            NULL,	/* class_data */
-            sizeof(SPMissingGlyph),
-            16,	/* n_preallocs */
-            (GInstanceInitFunc) sp_missing_glyph_init,
-            NULL,	/* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_OBJECT, "SPMissingGlyph", &info, (GTypeFlags) 0);
-    }
-
-    return type;
-}
+G_DEFINE_TYPE(SPMissingGlyph, sp_missing_glyph, SP_TYPE_OBJECT);
 
 static void sp_missing_glyph_class_init(SPMissingGlyphClass *gc)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) gc;
-
-    parent_class = (SPObjectClass*)g_type_class_peek_parent(gc);
 
     sp_object_class->build = sp_missing_glyph_build;
     sp_object_class->release = sp_missing_glyph_release;
@@ -78,8 +50,8 @@ static void sp_missing_glyph_init(SPMissingGlyph *glyph)
 
 static void sp_missing_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) (parent_class))->build) {
-        ((SPObjectClass *) (parent_class))->build(object, document, repr);
+    if (((SPObjectClass *) (sp_missing_glyph_parent_class))->build) {
+        ((SPObjectClass *) (sp_missing_glyph_parent_class))->build(object, document, repr);
     }
 
     object->readAttr( "d" );
@@ -93,8 +65,8 @@ static void sp_missing_glyph_release(SPObject *object)
 {
     //SPMissingGlyph *glyph = SP_MISSING_GLYPH(object);
 
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release(object);
+    if (((SPObjectClass *) sp_missing_glyph_parent_class)->release) {
+        ((SPObjectClass *) sp_missing_glyph_parent_class)->release(object);
     }
 }
 
@@ -150,8 +122,8 @@ static void sp_missing_glyph_set(SPObject *object, unsigned int key, const gchar
         }
         default:
         {
-            if (((SPObjectClass *) (parent_class))->set) {
-                ((SPObjectClass *) (parent_class))->set(object, key, value);
+            if (((SPObjectClass *) (sp_missing_glyph_parent_class))->set) {
+                ((SPObjectClass *) (sp_missing_glyph_parent_class))->set(object, key, value);
             }
             break;
         }
@@ -186,8 +158,8 @@ static Inkscape::XML::Node *sp_missing_glyph_write(SPObject *object, Inkscape::X
         COPY_ATTR(repr, object->getRepr(), "vert-adv-y");
     }
 
-    if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_missing_glyph_parent_class))->write) {
+        ((SPObjectClass *) (sp_missing_glyph_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;

@@ -19,8 +19,6 @@
 #define DRAG_MAX 1.0
 
 
-static void sp_common_context_class_init(SPCommonContextClass *klass);
-static void sp_common_context_init(SPCommonContext *erc);
 static void sp_common_context_dispose(GObject *object);
 
 static void sp_common_context_setup(SPEventContext *ec);
@@ -28,37 +26,12 @@ static void sp_common_context_set(SPEventContext *ec, Inkscape::Preferences::Ent
 
 static gint sp_common_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 
-
-static SPEventContextClass *common_parent_class = 0;
-
-GType sp_common_context_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPCommonContextClass),
-            0, // base_init
-            0, // base_finalize
-            (GClassInitFunc)sp_common_context_class_init,
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPCommonContext),
-            0, // n_preallocs
-            (GInstanceInitFunc)sp_common_context_init,
-            0 // value_table
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPCommonContext", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
-
+G_DEFINE_TYPE(SPCommonContext, sp_common_context, SP_TYPE_EVENT_CONTEXT);
 
 static void sp_common_context_class_init(SPCommonContextClass *klass)
 {
     GObjectClass *object_class = (GObjectClass *) klass;
     SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    common_parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_common_context_dispose;
 
@@ -144,14 +117,14 @@ static void sp_common_context_dispose(GObject *object)
         ctx->_message_context = 0;
     }
 
-    G_OBJECT_CLASS(common_parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_common_context_parent_class)->dispose(object);
 }
 
 
 static void sp_common_context_setup(SPEventContext *ec)
 {
-    if ( common_parent_class->setup ) {
-        common_parent_class->setup(ec);
+    if ( SP_EVENT_CONTEXT_CLASS(sp_common_context_parent_class)->setup ) {
+        SP_EVENT_CONTEXT_CLASS(sp_common_context_parent_class)->setup(ec);
     }
 }
 
@@ -199,8 +172,8 @@ static gint sp_common_context_root_handler(SPEventContext *event_context, GdkEve
 
 
     if ( !ret ) {
-        if ( common_parent_class->root_handler ) {
-            ret = common_parent_class->root_handler(event_context, event);
+        if ( SP_EVENT_CONTEXT_CLASS(sp_common_context_parent_class)->root_handler ) {
+            ret = SP_EVENT_CONTEXT_CLASS(sp_common_context_parent_class)->root_handler(event_context, event);
         }
     }
 

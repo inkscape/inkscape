@@ -47,9 +47,6 @@
 
 using Inkscape::ControlManager;
 
-
-static void sp_pen_context_class_init(SPPenContextClass *klass);
-static void sp_pen_context_init(SPPenContext *pc);
 static void sp_pen_context_dispose(GObject *object);
 
 static void sp_pen_context_setup(SPEventContext *ec);
@@ -78,35 +75,12 @@ static void pen_enable_events(SPPenContext *const pc);
 static Geom::Point pen_drag_origin_w(0, 0);
 static bool pen_within_tolerance = false;
 
-static SPDrawContextClass *pen_parent_class;
-
 static int pen_next_paraxial_direction(const SPPenContext *const pc, Geom::Point const &pt, Geom::Point const &origin, guint state);
 static void pen_set_to_nearest_horiz_vert(const SPPenContext *const pc, Geom::Point &pt, guint const state, bool snap);
 
 static int pen_last_paraxial_dir = 0; // last used direction in horizontal/vertical mode; 0 = horizontal, 1 = vertical
 
-
-/**
- * Register SPPenContext with Gdk and return its type.
- */
-GType sp_pen_context_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPPenContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_pen_context_class_init,
-            NULL, NULL,
-            sizeof(SPPenContext),
-            4,
-            (GInstanceInitFunc) sp_pen_context_init,
-            NULL,   // value_table
-        };
-        type = g_type_register_static(SP_TYPE_DRAW_CONTEXT, "SPPenContext", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPPenContext, sp_pen_context, SP_TYPE_DRAW_CONTEXT);
 
 /**
  * Initialize the SPPenContext vtable.
@@ -118,8 +92,6 @@ static void sp_pen_context_class_init(SPPenContextClass *klass)
 
     object_class = (GObjectClass *) klass;
     event_context_class = (SPEventContextClass *) klass;
-
-    pen_parent_class = (SPDrawContextClass*)g_type_class_peek_parent(klass);
 
     object_class->dispose = sp_pen_context_dispose;
 
@@ -181,7 +153,7 @@ static void sp_pen_context_dispose(GObject *object)
         pc->cl1 = NULL;
     }
 
-    G_OBJECT_CLASS(pen_parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_pen_context_parent_class)->dispose(object);
 
     if (pc->expecting_clicks_for_LPE > 0) {
         // we received too few clicks to sanely set the parameter path so we remove the LPE from the item
@@ -203,8 +175,8 @@ static void sp_pen_context_setup(SPEventContext *ec)
 {
     SPPenContext *pc = SP_PEN_CONTEXT(ec);
 
-    if (((SPEventContextClass *) pen_parent_class)->setup) {
-        ((SPEventContextClass *) pen_parent_class)->setup(ec);
+    if (((SPEventContextClass *) sp_pen_context_parent_class)->setup) {
+        ((SPEventContextClass *) sp_pen_context_parent_class)->setup(ec);
     }
 
     ControlManager &mgr = ControlManager::getManager();
@@ -265,8 +237,8 @@ static void sp_pen_context_finish(SPEventContext *ec)
         pen_cancel (pc);
     }
 
-    if (((SPEventContextClass *) pen_parent_class)->finish) {
-        ((SPEventContextClass *) pen_parent_class)->finish(ec);
+    if (((SPEventContextClass *) sp_pen_context_parent_class)->finish) {
+        ((SPEventContextClass *) sp_pen_context_parent_class)->finish(ec);
     }
 }
 
@@ -347,8 +319,8 @@ static gint sp_pen_context_item_handler(SPEventContext *ec, SPItem *item, GdkEve
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) pen_parent_class)->item_handler)
-            ret = ((SPEventContextClass *) pen_parent_class)->item_handler(ec, item, event);
+        if (((SPEventContextClass *) sp_pen_context_parent_class)->item_handler)
+            ret = ((SPEventContextClass *) sp_pen_context_parent_class)->item_handler(ec, item, event);
     }
 
     return ret;
@@ -390,7 +362,7 @@ static gint sp_pen_context_root_handler(SPEventContext *ec, GdkEvent *event)
 
     if (!ret) {
         gint (*const parent_root_handler)(SPEventContext *, GdkEvent *)
-            = ((SPEventContextClass *) pen_parent_class)->root_handler;
+            = ((SPEventContextClass *) sp_pen_context_parent_class)->root_handler;
         if (parent_root_handler) {
             ret = parent_root_handler(ec, event);
         }

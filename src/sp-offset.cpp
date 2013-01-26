@@ -68,8 +68,6 @@ class SPDocument;
  * radius (look in object-edit).
  */
 
-static void sp_offset_class_init (SPOffsetClass * klass);
-static void sp_offset_init (SPOffset * offset);
 static void sp_offset_finalize(GObject *obj);
 
 static void sp_offset_build (SPObject * object, SPDocument * document,
@@ -102,38 +100,7 @@ static void sp_offset_source_modified (SPObject *iSource, guint flags, SPItem *i
 // reappearing in offset when the radius becomes too large
 static bool   use_slow_but_correct_offset_method=false;
 
-
-// nothing special here, same for every class in sodipodi/inkscape
-static SPShapeClass *parent_class;
-
-/**
- * Register SPOffset class and return its type number.
- */
-GType
-sp_offset_get_type (void)
-{
-    static GType offset_type = 0;
-
-    if (!offset_type)
-    {
-        GTypeInfo offset_info = {
-            sizeof (SPOffsetClass),
-            NULL,			/* base_init */
-            NULL,			/* base_finalize */
-            (GClassInitFunc) sp_offset_class_init,
-            NULL,			/* class_finalize */
-            NULL,			/* class_data */
-            sizeof (SPOffset),
-            16,			/* n_preallocs */
-            (GInstanceInitFunc) sp_offset_init,
-            NULL,			/* value_table */
-        };
-        offset_type =
-            g_type_register_static (SP_TYPE_SHAPE, "SPOffset", &offset_info,
-                                    (GTypeFlags) 0);
-    }
-    return offset_type;
-}
+G_DEFINE_TYPE(SPOffset, sp_offset, SP_TYPE_SHAPE);
 
 /**
  * SPOffset vtable initialization.
@@ -145,8 +112,6 @@ sp_offset_class_init(SPOffsetClass *klass)
     SPObjectClass *sp_object_class = (SPObjectClass *) klass;
     SPItemClass   *item_class = (SPItemClass *) klass;
     SPShapeClass  *shape_class = (SPShapeClass *) klass;
-
-    parent_class = (SPShapeClass *) g_type_class_ref (SP_TYPE_SHAPE);
 
     gobject_class->finalize = sp_offset_finalize;
 
@@ -213,8 +178,8 @@ sp_offset_finalize(GObject *obj)
 static void
 sp_offset_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) parent_class)->build)
-        ((SPObjectClass *) parent_class)->build (object, document, repr);
+    if (((SPObjectClass *) sp_offset_parent_class)->build)
+        ((SPObjectClass *) sp_offset_parent_class)->build (object, document, repr);
 
     //XML Tree being used directly here while it shouldn't be.
     if (object->getRepr()->attribute("inkscape:radius")) {
@@ -290,8 +255,8 @@ sp_offset_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XM
     repr->setAttribute("d", d);
     g_free (d);
 
-    if (((SPObjectClass *) (parent_class))->write)
-        ((SPObjectClass *) (parent_class))->write (object, xml_doc, repr,
+    if (((SPObjectClass *) (sp_offset_parent_class))->write)
+        ((SPObjectClass *) (sp_offset_parent_class))->write (object, xml_doc, repr,
                                                    flags | SP_SHAPE_WRITE_PATH);
 
     return repr;
@@ -317,8 +282,8 @@ sp_offset_release(SPObject *object)
     offset->sourceHref = NULL;
     offset->sourceRef->detach();
 
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release (object);
+    if (((SPObjectClass *) sp_offset_parent_class)->release) {
+        ((SPObjectClass *) sp_offset_parent_class)->release (object);
     }
 
 }
@@ -389,8 +354,8 @@ sp_offset_set(SPObject *object, unsigned key, gchar const *value)
             }
             break;
         default:
-            if (((SPObjectClass *) parent_class)->set)
-                ((SPObjectClass *) parent_class)->set (object, key, value);
+            if (((SPObjectClass *) sp_offset_parent_class)->set)
+                ((SPObjectClass *) sp_offset_parent_class)->set (object, key, value);
             break;
     }
 }
@@ -411,8 +376,8 @@ sp_offset_update(SPObject *object, SPCtx *ctx, guint flags)
     }
     offset->isUpdating=false;
 
-    if (((SPObjectClass *) parent_class)->update)
-        ((SPObjectClass *) parent_class)->update (object, ctx, flags);
+    if (((SPObjectClass *) sp_offset_parent_class)->update)
+        ((SPObjectClass *) sp_offset_parent_class)->update (object, ctx, flags);
 }
 
 /**
@@ -725,8 +690,8 @@ sp_offset_set_shape(SPShape *shape)
  */
 static void sp_offset_snappoints(SPItem const *item, std::vector<Inkscape::SnapCandidatePoint> &p, Inkscape::SnapPreferences const *snapprefs)
 {
-    if (((SPItemClass *) parent_class)->snappoints) {
-        ((SPItemClass *) parent_class)->snappoints (item, p, snapprefs);
+    if (((SPItemClass *) sp_offset_parent_class)->snappoints) {
+        ((SPItemClass *) sp_offset_parent_class)->snappoints (item, p, snapprefs);
     }
 }
 

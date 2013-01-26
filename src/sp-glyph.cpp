@@ -23,45 +23,17 @@
 #include "document.h"
 #include <cstring>
 
-static void sp_glyph_class_init(SPGlyphClass *gc);
-static void sp_glyph_init(SPGlyph *glyph);
-
 static void sp_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_glyph_release(SPObject *object);
 static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value);
 static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_glyph_update(SPObject *object, SPCtx *ctx, guint flags);
 
-static SPObjectClass *parent_class;
-
-GType sp_glyph_get_type(void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPGlyphClass),
-            NULL,       /* base_init */
-            NULL,       /* base_finalize */
-            (GClassInitFunc) sp_glyph_class_init,
-            NULL,       /* class_finalize */
-            NULL,       /* class_data */
-            sizeof(SPGlyph),
-            16, /* n_preallocs */
-            (GInstanceInitFunc) sp_glyph_init,
-            NULL,       /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_OBJECT, "SPGlyph", &info, (GTypeFlags) 0);
-    }
-
-    return type;
-}
+G_DEFINE_TYPE(SPGlyph, sp_glyph, SP_TYPE_OBJECT);
 
 static void sp_glyph_class_init(SPGlyphClass *gc)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *) gc;
-
-    parent_class = (SPObjectClass*)g_type_class_peek_parent(gc);
 
     sp_object_class->build = sp_glyph_build;
     sp_object_class->release = sp_glyph_release;
@@ -88,8 +60,8 @@ static void sp_glyph_init(SPGlyph *glyph)
 
 static void sp_glyph_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) (parent_class))->build) {
-        ((SPObjectClass *) (parent_class))->build(object, document, repr);
+    if (((SPObjectClass *) (sp_glyph_parent_class))->build) {
+        ((SPObjectClass *) (sp_glyph_parent_class))->build(object, document, repr);
     }
 
     object->readAttr( "unicode" );
@@ -108,8 +80,8 @@ static void sp_glyph_release(SPObject *object)
 {
     //SPGlyph *glyph = SP_GLYPH(object);
 
-    if (((SPObjectClass *) parent_class)->release) {
-        ((SPObjectClass *) parent_class)->release(object);
+    if (((SPObjectClass *) sp_glyph_parent_class)->release) {
+        ((SPObjectClass *) sp_glyph_parent_class)->release(object);
     }
 }
 
@@ -233,8 +205,8 @@ static void sp_glyph_set(SPObject *object, unsigned int key, const gchar *value)
         }
         default:
         {
-            if (((SPObjectClass *) (parent_class))->set) {
-                ((SPObjectClass *) (parent_class))->set(object, key, value);
+            if (((SPObjectClass *) (sp_glyph_parent_class))->set) {
+                ((SPObjectClass *) (sp_glyph_parent_class))->set(object, key, value);
             }
             break;
         }
@@ -264,8 +236,8 @@ sp_glyph_update(SPObject *object, SPCtx *ctx, guint flags)
             object->readAttr( "vert-adv-y" );
     }
 
-    if (((SPObjectClass *) parent_class)->update) {
-        ((SPObjectClass *) parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_glyph_parent_class)->update) {
+        ((SPObjectClass *) sp_glyph_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -306,8 +278,8 @@ static Inkscape::XML::Node *sp_glyph_write(SPObject *object, Inkscape::XML::Docu
         COPY_ATTR(repr, object->getRepr(), "vert-adv-y");
     }
 
-    if (((SPObjectClass *) (parent_class))->write) {
-        ((SPObjectClass *) (parent_class))->write(object, xml_doc, repr, flags);
+    if (((SPObjectClass *) (sp_glyph_parent_class))->write) {
+        ((SPObjectClass *) (sp_glyph_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;

@@ -47,15 +47,11 @@
 using Inkscape::ControlManager;
 using Inkscape::CTLINE_SECONDARY;
 
-static void sp_measure_context_class_init(SPMeasureContextClass *klass);
-static void sp_measure_context_init(SPMeasureContext *measure_context);
 static void sp_measure_context_setup(SPEventContext *ec);
 static void sp_measure_context_finish(SPEventContext *ec);
 
 static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 static gint sp_measure_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
-
-static SPEventContextClass *parent_class;
 
 static gint xp = 0; // where drag started
 static gint yp = 0;
@@ -68,26 +64,7 @@ boost::optional<Geom::Point> lastEnd;
 
 std::vector<Inkscape::Display::TemporaryItem*> measure_tmp_items;
 
-GType sp_measure_context_get_type(void)
-{
-    static GType type = 0;
-
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPMeasureContextClass),
-            NULL, NULL,
-            reinterpret_cast<GClassInitFunc>(sp_measure_context_class_init), // TODO needs two params?
-            NULL, NULL,
-            sizeof(SPMeasureContext),
-            4,
-            reinterpret_cast<GInstanceInitFunc>(sp_measure_context_init), // TODO needs two params?
-            NULL,       // value_table
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPMeasureContext", &info, static_cast<GTypeFlags>(0));
-    }
-
-    return type;
-}
+G_DEFINE_TYPE(SPMeasureContext, sp_measure_context, SP_TYPE_EVENT_CONTEXT);
 
 namespace
 {
@@ -258,8 +235,6 @@ static void sp_measure_context_class_init(SPMeasureContextClass *klass)
 {
     SPEventContextClass *event_context_class = reinterpret_cast<SPEventContextClass *>(klass);
 
-    parent_class = static_cast<SPEventContextClass*>(g_type_class_peek_parent(klass));
-
     event_context_class->setup = sp_measure_context_setup;
     event_context_class->finish = sp_measure_context_finish;
 
@@ -290,8 +265,8 @@ static void sp_measure_context_finish(SPEventContext *ec)
 
 static void sp_measure_context_setup(SPEventContext *ec)
 {
-    if (parent_class->setup) {
-        parent_class->setup(ec);
+    if (SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->setup) {
+        SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->setup(ec);
     }
 }
 
@@ -299,8 +274,8 @@ static gint sp_measure_context_item_handler(SPEventContext *event_context, SPIte
 {
     gint ret = FALSE;
 
-    if (parent_class->item_handler) {
-        ret = parent_class->item_handler(event_context, item, event);
+    if (SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->item_handler) {
+        ret = SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->item_handler(event_context, item, event);
     }
 
     return ret;
@@ -789,8 +764,8 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
     }
 
     if (!ret) {
-        if (parent_class->root_handler) {
-            ret = parent_class->root_handler(event_context, event);
+        if (SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->root_handler) {
+            ret = SP_EVENT_CONTEXT_CLASS(sp_measure_context_parent_class)->root_handler(event_context, event);
         }
     }
 

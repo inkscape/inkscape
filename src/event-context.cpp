@@ -54,8 +54,6 @@
 #include "sp-guide.h"
 #include "color.h"
 
-static void sp_event_context_class_init(SPEventContextClass *klass);
-static void sp_event_context_init(SPEventContext *event_context);
 static void sp_event_context_dispose(GObject *object);
 
 static void sp_event_context_private_setup(SPEventContext *ec);
@@ -65,8 +63,6 @@ static gint sp_event_context_private_item_handler(
         SPEventContext *event_context, SPItem *item, GdkEvent *event);
 
 static void set_event_location(SPDesktop * desktop, GdkEvent * event);
-
-static GObjectClass *parent_class;
 
 // globals for temporary switching to selector by space
 static bool selector_toggled = FALSE;
@@ -85,30 +81,13 @@ static guint32 scroll_event_time = 0;
 static gdouble scroll_multiply = 1;
 static guint scroll_keyval = 0;
 
-/**
- * Registers the SPEventContext class with Glib and returns its type number.
- */
-GType sp_event_context_get_type(void) {
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = { sizeof(SPEventContextClass), NULL, NULL,
-                (GClassInitFunc) sp_event_context_class_init, NULL, NULL,
-                sizeof(SPEventContext), 4,
-                (GInstanceInitFunc) sp_event_context_init, NULL, /* value_table */
-        };
-        type = g_type_register_static(G_TYPE_OBJECT, "SPEventContext", &info,
-                (GTypeFlags) 0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPEventContext, sp_event_context, G_TYPE_OBJECT);
 
 /**
  * Callback to set up the SPEventContext vtable.
  */
 static void sp_event_context_class_init(SPEventContextClass *klass) {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
-
-    parent_class = G_OBJECT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_event_context_dispose;
 
@@ -166,7 +145,7 @@ static void sp_event_context_dispose(GObject *object) {
         delete ec->_delayed_snap_event;
     }
 
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_event_context_parent_class)->dispose(object);
 }
 
 /**
