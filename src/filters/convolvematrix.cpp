@@ -29,10 +29,6 @@
 #include "display/nr-filter-convolve-matrix.h"
 
 /* FeConvolveMatrix base class */
-
-static void sp_feConvolveMatrix_class_init(SPFeConvolveMatrixClass *klass);
-static void sp_feConvolveMatrix_init(SPFeConvolveMatrix *feConvolveMatrix);
-
 static void sp_feConvolveMatrix_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feConvolveMatrix_release(SPObject *object);
 static void sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value);
@@ -40,36 +36,13 @@ static void sp_feConvolveMatrix_update(SPObject *object, SPCtx *ctx, guint flags
 static Inkscape::XML::Node *sp_feConvolveMatrix_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feConvolveMatrix_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
-static SPFilterPrimitiveClass *feConvolveMatrix_parent_class;
-
-GType
-sp_feConvolveMatrix_get_type()
-{
-    static GType feConvolveMatrix_type = 0;
-
-    if (!feConvolveMatrix_type) {
-        GTypeInfo feConvolveMatrix_info = {
-            sizeof(SPFeConvolveMatrixClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feConvolveMatrix_class_init,
-            NULL, NULL,
-            sizeof(SPFeConvolveMatrix),
-            16,
-            (GInstanceInitFunc) sp_feConvolveMatrix_init,
-            NULL,    /* value_table */
-        };
-        feConvolveMatrix_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeConvolveMatrix", &feConvolveMatrix_info, (GTypeFlags)0);
-    }
-    return feConvolveMatrix_type;
-}
+G_DEFINE_TYPE(SPFeConvolveMatrix, sp_feConvolveMatrix, SP_TYPE_FILTER_PRIMITIVE);
 
 static void
 sp_feConvolveMatrix_class_init(SPFeConvolveMatrixClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    feConvolveMatrix_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feConvolveMatrix_build;
     sp_object_class->release = sp_feConvolveMatrix_release;
@@ -104,8 +77,8 @@ sp_feConvolveMatrix_init(SPFeConvolveMatrix *feConvolveMatrix)
 static void
 sp_feConvolveMatrix_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feConvolveMatrix_parent_class)->build) {
-        ((SPObjectClass *) feConvolveMatrix_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_feConvolveMatrix_parent_class)->build) {
+        ((SPObjectClass *) sp_feConvolveMatrix_parent_class)->build(object, document, repr);
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
@@ -126,8 +99,8 @@ sp_feConvolveMatrix_build(SPObject *object, SPDocument *document, Inkscape::XML:
 static void
 sp_feConvolveMatrix_release(SPObject *object)
 {
-    if (((SPObjectClass *) feConvolveMatrix_parent_class)->release)
-        ((SPObjectClass *) feConvolveMatrix_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feConvolveMatrix_parent_class)->release)
+        ((SPObjectClass *) sp_feConvolveMatrix_parent_class)->release(object);
 }
 
 static Inkscape::Filters::FilterConvolveMatrixEdgeMode sp_feConvolveMatrix_read_edgeMode(gchar const *value){
@@ -265,8 +238,8 @@ sp_feConvolveMatrix_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         default:
-            if (((SPObjectClass *) feConvolveMatrix_parent_class)->set)
-                ((SPObjectClass *) feConvolveMatrix_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_feConvolveMatrix_parent_class)->set)
+                ((SPObjectClass *) sp_feConvolveMatrix_parent_class)->set(object, key, value);
             break;
     }
 
@@ -285,8 +258,8 @@ sp_feConvolveMatrix_update(SPObject *object, SPCtx *ctx, guint flags)
 
     }
 
-    if (((SPObjectClass *) feConvolveMatrix_parent_class)->update) {
-        ((SPObjectClass *) feConvolveMatrix_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feConvolveMatrix_parent_class)->update) {
+        ((SPObjectClass *) sp_feConvolveMatrix_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -303,8 +276,8 @@ sp_feConvolveMatrix_write(SPObject *object, Inkscape::XML::Document *doc, Inksca
     }
 
 
-    if (((SPObjectClass *) feConvolveMatrix_parent_class)->write) {
-        ((SPObjectClass *) feConvolveMatrix_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feConvolveMatrix_parent_class)->write) {
+        ((SPObjectClass *) sp_feConvolveMatrix_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

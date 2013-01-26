@@ -81,8 +81,6 @@ using Inkscape::DocumentUndo;
 
 #define DYNA_MIN_WIDTH 1.0e-6
 
-static void sp_dyna_draw_context_class_init(SPDynaDrawContextClass *klass);
-static void sp_dyna_draw_context_init(SPDynaDrawContext *ddc);
 static void sp_dyna_draw_context_dispose(GObject *object);
 
 static void sp_dyna_draw_context_setup(SPEventContext *ec);
@@ -101,37 +99,13 @@ static Geom::Point sp_dyna_draw_get_npoint(SPDynaDrawContext const *ddc, Geom::P
 static Geom::Point sp_dyna_draw_get_vpoint(SPDynaDrawContext const *ddc, Geom::Point n);
 static void draw_temporary_box(SPDynaDrawContext *dc);
 
-
-static SPEventContextClass *dd_parent_class = 0;
-
-GType sp_dyna_draw_context_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPDynaDrawContextClass),
-            0, // base_init
-            0, // base_finalize
-            (GClassInitFunc)sp_dyna_draw_context_class_init,
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPDynaDrawContext),
-            0, // n_preallocs
-            (GInstanceInitFunc)sp_dyna_draw_context_init,
-            0 // value_table
-        };
-        type = g_type_register_static(SP_TYPE_COMMON_CONTEXT, "SPDynaDrawContext", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPDynaDrawContext, sp_dyna_draw_context, SP_TYPE_COMMON_CONTEXT);
 
 static void
 sp_dyna_draw_context_class_init(SPDynaDrawContextClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    dd_parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_dyna_draw_context_dispose;
 
@@ -182,7 +156,7 @@ sp_dyna_draw_context_dispose(GObject *object)
     }
 
 
-    G_OBJECT_CLASS(dd_parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_dyna_draw_context_parent_class)->dispose(object);
 
     ddc->hatch_pointer_past.~list();
     ddc->hatch_nearest_past.~list();
@@ -195,8 +169,8 @@ sp_dyna_draw_context_setup(SPEventContext *ec)
 {
     SPDynaDrawContext *ddc = SP_DYNA_DRAW_CONTEXT(ec);
 
-    if ((SP_EVENT_CONTEXT_CLASS(dd_parent_class))->setup)
-        (SP_EVENT_CONTEXT_CLASS(dd_parent_class))->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(sp_dyna_draw_context_parent_class))->setup)
+        (SP_EVENT_CONTEXT_CLASS(sp_dyna_draw_context_parent_class))->setup(ec);
 
     ddc->accumulated = new SPCurve();
     ddc->currentcurve = new SPCurve();
@@ -262,8 +236,8 @@ sp_dyna_draw_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
         ddc->keep_selected = val->getBool();
     } else {
         //pass on up to parent class to handle common attributes.
-        if ( dd_parent_class->set ) {
-            dd_parent_class->set(ec, val);
+        if ( SP_COMMON_CONTEXT_CLASS(sp_dyna_draw_context_parent_class)->set ) {
+            SP_COMMON_CONTEXT_CLASS(sp_dyna_draw_context_parent_class)->set(ec, val);
         }
     }
 
@@ -974,8 +948,8 @@ sp_dyna_draw_context_root_handler(SPEventContext *event_context,
     }
 
     if (!ret) {
-        if ((SP_EVENT_CONTEXT_CLASS(dd_parent_class))->root_handler) {
-            ret = (SP_EVENT_CONTEXT_CLASS(dd_parent_class))->root_handler(event_context, event);
+        if ((SP_EVENT_CONTEXT_CLASS(sp_dyna_draw_context_parent_class))->root_handler) {
+            ret = (SP_EVENT_CONTEXT_CLASS(sp_dyna_draw_context_parent_class))->root_handler(event_context, event);
         }
     }
 

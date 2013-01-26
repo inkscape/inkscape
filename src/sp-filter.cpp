@@ -38,10 +38,6 @@ using std::pair;
 #include "display/nr-filter.h"
 
 /* Filter base class */
-
-static void sp_filter_class_init(SPFilterClass *klass);
-static void sp_filter_init(SPFilter *filter);
-
 static void sp_filter_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_filter_release(SPObject *object);
 static void sp_filter_set(SPObject *object, unsigned int key, gchar const *value);
@@ -55,36 +51,12 @@ static Inkscape::XML::Node *sp_filter_write(SPObject *object, Inkscape::XML::Doc
 static void filter_ref_changed(SPObject *old_ref, SPObject *ref, SPFilter *filter);
 static void filter_ref_modified(SPObject *href, guint flags, SPFilter *filter);
 
-static SPObjectClass *filter_parent_class;
-
-GType
-sp_filter_get_type()
-{
-    static GType filter_type = 0;
-
-    if (!filter_type) {
-        GTypeInfo filter_info = {
-            sizeof(SPFilterClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_filter_class_init,
-            NULL, NULL,
-            sizeof(SPFilter),
-            16,
-            (GInstanceInitFunc) sp_filter_init,
-            NULL,    /* value_table */
-        };
-        filter_type = g_type_register_static(SP_TYPE_OBJECT, "SPFilter", &filter_info, (GTypeFlags)0);
-    }
-    return filter_type;
-}
+G_DEFINE_TYPE(SPFilter, sp_filter, SP_TYPE_OBJECT);
 
 static void
 sp_filter_class_init(SPFilterClass *klass)
 {
-
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-
-    filter_parent_class = (SPObjectClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_filter_build;
     sp_object_class->release = sp_filter_release;
@@ -141,8 +113,8 @@ sp_filter_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
     object->readAttr( "filterRes" );
     object->readAttr( "xlink:href" );
 
-    if (((SPObjectClass *) filter_parent_class)->build) {
-        ((SPObjectClass *) filter_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_filter_parent_class)->build) {
+        ((SPObjectClass *) sp_filter_parent_class)->build(object, document, repr);
     }
 
 //is this necessary?
@@ -174,8 +146,8 @@ static void sp_filter_release(SPObject *object)
     filter->modified_connection.~connection();
     delete filter->_image_name;
 
-    if (((SPObjectClass *) filter_parent_class)->release)
-        ((SPObjectClass *) filter_parent_class)->release(object);
+    if (((SPObjectClass *) sp_filter_parent_class)->release)
+        ((SPObjectClass *) sp_filter_parent_class)->release(object);
 }
 
 /**
@@ -249,8 +221,8 @@ sp_filter_set(SPObject *object, unsigned int key, gchar const *value)
             break;
         default:
             // See if any parents need this value.
-            if (((SPObjectClass *) filter_parent_class)->set) {
-                ((SPObjectClass *) filter_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_filter_parent_class)->set) {
+                ((SPObjectClass *) sp_filter_parent_class)->set(object, key, value);
             }
             break;
     }
@@ -271,8 +243,8 @@ sp_filter_update(SPObject *object, SPCtx *ctx, guint flags)
 
     }
 
-    if (((SPObjectClass *) filter_parent_class)->update) {
-        ((SPObjectClass *) filter_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_filter_parent_class)->update) {
+        ((SPObjectClass *) sp_filter_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -367,8 +339,8 @@ sp_filter_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::N
         g_free(uri_string);
     }
 
-    if (((SPObjectClass *) filter_parent_class)->write) {
-        ((SPObjectClass *) filter_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_filter_parent_class)->write) {
+        ((SPObjectClass *) sp_filter_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;
@@ -407,8 +379,8 @@ sp_filter_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XM
 {
     //SPFilter *f = SP_FILTER(object);
 
-    if (((SPObjectClass *) filter_parent_class)->child_added)
-        (* ((SPObjectClass *) filter_parent_class)->child_added)(object, child, ref);
+    if (((SPObjectClass *) sp_filter_parent_class)->child_added)
+        (* ((SPObjectClass *) sp_filter_parent_class)->child_added)(object, child, ref);
 
     object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }
@@ -421,8 +393,8 @@ sp_filter_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {
 //    SPFilter *f = SP_FILTER(object);
 
-    if (((SPObjectClass *) filter_parent_class)->remove_child)
-        (* ((SPObjectClass *) filter_parent_class)->remove_child)(object, child);
+    if (((SPObjectClass *) sp_filter_parent_class)->remove_child)
+        (* ((SPObjectClass *) sp_filter_parent_class)->remove_child)(object, child);
 
     object->requestModified(SP_OBJECT_MODIFIED_FLAG);
 }

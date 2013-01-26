@@ -41,8 +41,6 @@
 
 #include "lpe-tool-context.h"
 
-static void sp_lpetool_context_class_init(SPLPEToolContextClass *klass);
-static void sp_lpetool_context_init(SPLPEToolContext *erc);
 static void sp_lpetool_context_dispose(GObject *object);
 
 static void sp_lpetool_context_setup(SPEventContext *ec);
@@ -66,36 +64,13 @@ SubtoolEntry lpesubtools[] = {
     {Inkscape::LivePathEffect::MIRROR_SYMMETRY, "draw-geometry-mirror"}
 };
 
-static SPPenContextClass *lpetool_parent_class = 0;
-
-GType sp_lpetool_context_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPLPEToolContextClass),
-            0, // base_init
-            0, // base_finalize
-            (GClassInitFunc)sp_lpetool_context_class_init,
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPLPEToolContext),
-            0, // n_preallocs
-            (GInstanceInitFunc)sp_lpetool_context_init,
-            0 // value_table
-        };
-        type = g_type_register_static(SP_TYPE_PEN_CONTEXT, "SPLPEToolContext", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPLPEToolContext, sp_lpetool_context, SP_TYPE_PEN_CONTEXT);
 
 static void
 sp_lpetool_context_class_init(SPLPEToolContextClass *klass)
 {
     GObjectClass *object_class = (GObjectClass *) klass;
     SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
-
-    lpetool_parent_class = (SPPenContextClass*)g_type_class_peek_parent(klass);
 
     object_class->dispose = sp_lpetool_context_dispose;
 
@@ -140,7 +115,7 @@ sp_lpetool_context_dispose(GObject *object)
         delete lc->_lpetool_message_context;
     }
 
-    G_OBJECT_CLASS(lpetool_parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_lpetool_context_parent_class)->dispose(object);
 }
 
 static void
@@ -148,8 +123,8 @@ sp_lpetool_context_setup(SPEventContext *ec)
 {
     SPLPEToolContext *lc = SP_LPETOOL_CONTEXT(ec);
 
-    if (((SPEventContextClass *) lpetool_parent_class)->setup)
-        ((SPEventContextClass *) lpetool_parent_class)->setup(ec);
+    if (((SPEventContextClass *) sp_lpetool_context_parent_class)->setup)
+        ((SPEventContextClass *) sp_lpetool_context_parent_class)->setup(ec);
 
     Inkscape::Selection *selection = sp_desktop_selection (ec->desktop);
     SPItem *item = selection->singleItem();
@@ -204,8 +179,8 @@ sp_lpetool_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val)
 
     /*
     //pass on up to parent class to handle common attributes.
-    if ( lpetool_parent_class->set ) {
-        lpetool_parent_class->set(ec, key, val);
+    if ( sp_lpetool_context_parent_class->set ) {
+        sp_lpetool_context_parent_class->set(ec, key, val);
     }
     */
 }
@@ -234,8 +209,8 @@ sp_lpetool_context_item_handler(SPEventContext *ec, SPItem *item, GdkEvent *even
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) lpetool_parent_class)->item_handler)
-            ret = ((SPEventContextClass *) lpetool_parent_class)->item_handler(ec, item, event);
+        if (((SPEventContextClass *) sp_lpetool_context_parent_class)->item_handler)
+            ret = ((SPEventContextClass *) sp_lpetool_context_parent_class)->item_handler(ec, item, event);
     }
 
     return ret;
@@ -252,7 +227,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
     if (sp_pen_context_has_waiting_LPE(lc)) {
         // quit when we are waiting for a LPE to be applied
-        ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
+        ret = ((SPEventContextClass *) sp_lpetool_context_parent_class)->root_handler(event_context, event);
         return ret;
     }
 
@@ -284,7 +259,7 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 sp_pen_context_wait_for_LPE_mouse_clicks(lc, type, Inkscape::LivePathEffect::Effect::acceptsNumClicks(type));
 
                 // we pass the mouse click on to pen tool as the first click which it should collect
-                ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
+                ret = ((SPEventContextClass *) sp_lpetool_context_parent_class)->root_handler(event_context, event);
             }
             break;
 
@@ -320,8 +295,8 @@ sp_lpetool_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) lpetool_parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) lpetool_parent_class)->root_handler(event_context, event);
+        if (((SPEventContextClass *) sp_lpetool_context_parent_class)->root_handler) {
+            ret = ((SPEventContextClass *) sp_lpetool_context_parent_class)->root_handler(event_context, event);
         }
     }
 

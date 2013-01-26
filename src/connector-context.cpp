@@ -109,8 +109,6 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_connector_context_class_init(SPConnectorContextClass *klass);
-static void sp_connector_context_init(SPConnectorContext *conn_context);
 static void sp_connector_context_dispose(GObject *object);
 
 static void sp_connector_context_setup(SPEventContext *ec);
@@ -156,8 +154,6 @@ static void shape_event_attr_changed(Inkscape::XML::Node *repr, gchar const *nam
 
 /*static Geom::Point connector_drag_origin_w(0, 0);
 static bool connector_within_tolerance = false;*/
-static SPEventContextClass *parent_class;
-
 
 static Inkscape::XML::NodeEventVector shape_repr_events = {
     NULL, /* child_added */
@@ -175,34 +171,13 @@ static Inkscape::XML::NodeEventVector layer_repr_events = {
     NULL  /* order_changed */
 };
 
-
-GType
-sp_connector_context_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPConnectorContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_connector_context_class_init,
-            NULL, NULL,
-            sizeof(SPConnectorContext),
-            4,
-            (GInstanceInitFunc) sp_connector_context_init,
-            NULL,   /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPConnectorContext", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPConnectorContext, sp_connector_context, SP_TYPE_EVENT_CONTEXT);
 
 static void
 sp_connector_context_class_init(SPConnectorContextClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     SPEventContextClass *event_context_class = SP_EVENT_CONTEXT_CLASS(klass);
-
-    parent_class = SP_EVENT_CONTEXT_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = sp_connector_context_dispose;
 
@@ -283,7 +258,7 @@ sp_connector_context_dispose(GObject *object)
     }
     g_assert( cc->newConnRef == NULL );
 
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_connector_context_parent_class)->dispose(object);
 }
 
 
@@ -293,8 +268,8 @@ sp_connector_context_setup(SPEventContext *ec)
     SPConnectorContext *cc = SP_CONNECTOR_CONTEXT(ec);
     SPDesktop *dt = ec->desktop;
 
-    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->setup) {
-        (SP_EVENT_CONTEXT_CLASS(parent_class))->setup(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(sp_connector_context_parent_class))->setup) {
+        (SP_EVENT_CONTEXT_CLASS(sp_connector_context_parent_class))->setup(ec);
     }
 
     cc->selection = sp_desktop_selection(dt);
@@ -358,8 +333,8 @@ sp_connector_context_finish(SPEventContext *ec)
     spcc_connector_finish(cc);
     cc->state = SP_CONNECTOR_CONTEXT_IDLE;
 
-    if ((SP_EVENT_CONTEXT_CLASS(parent_class))->finish) {
-        (SP_EVENT_CONTEXT_CLASS(parent_class))->finish(ec);
+    if ((SP_EVENT_CONTEXT_CLASS(sp_connector_context_parent_class))->finish) {
+        (SP_EVENT_CONTEXT_CLASS(sp_connector_context_parent_class))->finish(ec);
     }
 
     if (cc->selection) {
@@ -560,7 +535,7 @@ sp_connector_context_root_handler(SPEventContext *ec, GdkEvent *event)
 
     if (!ret) {
         gint (*const parent_root_handler)(SPEventContext *, GdkEvent *)
-            = (SP_EVENT_CONTEXT_CLASS(parent_class))->root_handler;
+            = (SP_EVENT_CONTEXT_CLASS(sp_connector_context_parent_class))->root_handler;
         if (parent_root_handler) {
             ret = parent_root_handler(ec, event);
         }

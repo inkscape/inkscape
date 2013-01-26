@@ -53,8 +53,6 @@
 
 using Inkscape::DocumentUndo;
 
-static void sp_mesh_context_class_init(SPMeshContextClass *klass);
-static void sp_mesh_context_init(SPMeshContext *gr_context);
 static void sp_mesh_context_dispose(GObject *object);
 
 static void sp_mesh_context_setup(SPEventContext *ec);
@@ -63,34 +61,12 @@ static gint sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent
 
 static void sp_mesh_drag(SPMeshContext &rc, Geom::Point const pt, guint state, guint32 etime);
 
-static SPEventContextClass *parent_class;
-
-
-GType sp_mesh_context_get_type()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPMeshContextClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_mesh_context_class_init,
-            NULL, NULL,
-            sizeof(SPMeshContext),
-            4,
-            (GInstanceInitFunc) sp_mesh_context_init,
-            NULL,    /* value_table */
-        };
-        type = g_type_register_static(SP_TYPE_EVENT_CONTEXT, "SPMeshContext", &info, (GTypeFlags) 0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPMeshContext, sp_mesh_context, SP_TYPE_EVENT_CONTEXT);
 
 static void sp_mesh_context_class_init(SPMeshContextClass *klass)
 {
     GObjectClass *object_class = (GObjectClass *) klass;
     SPEventContextClass *event_context_class = (SPEventContextClass *) klass;
-
-    parent_class = (SPEventContextClass *) g_type_class_peek_parent(klass);
 
     object_class->dispose = sp_mesh_context_dispose;
 
@@ -129,7 +105,7 @@ static void sp_mesh_context_dispose(GObject *object)
     rc->subselcon->disconnect();
     delete rc->subselcon;
 
-    G_OBJECT_CLASS(parent_class)->dispose(object);
+    G_OBJECT_CLASS(sp_mesh_context_parent_class)->dispose(object);
 }
 
 const gchar *ms_handle_descr [] = {
@@ -270,8 +246,8 @@ static void sp_mesh_context_setup(SPEventContext *ec)
 {
     SPMeshContext *rc = SP_MESH_CONTEXT(ec);
 
-    if (((SPEventContextClass *) parent_class)->setup) {
-        ((SPEventContextClass *) parent_class)->setup(ec);
+    if (((SPEventContextClass *) sp_mesh_context_parent_class)->setup) {
+        ((SPEventContextClass *) sp_mesh_context_parent_class)->setup(ec);
     }
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -948,8 +924,8 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     }
 
     if (!ret) {
-        if (((SPEventContextClass *) parent_class)->root_handler) {
-            ret = ((SPEventContextClass *) parent_class)->root_handler(event_context, event);
+        if (((SPEventContextClass *) sp_mesh_context_parent_class)->root_handler) {
+            ret = ((SPEventContextClass *) sp_mesh_context_parent_class)->root_handler(event_context, event);
         }
     }
 

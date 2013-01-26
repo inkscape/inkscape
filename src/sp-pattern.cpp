@@ -40,10 +40,6 @@
 /*
  * Pattern
  */
-
-static void sp_pattern_class_init (SPPatternClass *klass);
-static void sp_pattern_init (SPPattern *gr);
-
 static void sp_pattern_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_pattern_release (SPObject *object);
 static void sp_pattern_set (SPObject *object, unsigned int key, const gchar *value);
@@ -55,29 +51,7 @@ static void pattern_ref_modified (SPObject *ref, guint flags, SPPattern *pattern
 
 static cairo_pattern_t *sp_pattern_create_pattern(SPPaintServer *ps, cairo_t *ct, Geom::OptRect const &bbox, double opacity);
 
-static SPPaintServerClass * pattern_parent_class;
-
-GType
-sp_pattern_get_type (void)
-{
-	static GType pattern_type = 0;
-	if (!pattern_type) {
-		GTypeInfo pattern_info = {
-			sizeof (SPPatternClass),
-			NULL,	/* base_init */
-			NULL,	/* base_finalize */
-			(GClassInitFunc) sp_pattern_class_init,
-			NULL,	/* class_finalize */
-			NULL,	/* class_data */
-			sizeof (SPPattern),
-			16,	/* n_preallocs */
-			(GInstanceInitFunc) sp_pattern_init,
-			NULL,	/* value_table */
-		};
-		pattern_type = g_type_register_static (SP_TYPE_PAINT_SERVER, "SPPattern", &pattern_info, (GTypeFlags)0);
-	}
-	return pattern_type;
-}
+G_DEFINE_TYPE(SPPattern, sp_pattern, SP_TYPE_PAINT_SERVER);
 
 static void
 sp_pattern_class_init (SPPatternClass *klass)
@@ -87,8 +61,6 @@ sp_pattern_class_init (SPPatternClass *klass)
 
 	sp_object_class = (SPObjectClass *) klass;
 	ps_class = (SPPaintServerClass *) klass;
-
-	pattern_parent_class = (SPPaintServerClass*)g_type_class_ref (SP_TYPE_PAINT_SERVER);
 
 	sp_object_class->build = sp_pattern_build;
 	sp_object_class->release = sp_pattern_release;
@@ -129,8 +101,8 @@ sp_pattern_init (SPPattern *pat)
 static void
 sp_pattern_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-	if (((SPObjectClass *) pattern_parent_class)->build)
-		(* ((SPObjectClass *) pattern_parent_class)->build) (object, document, repr);
+	if (((SPObjectClass *) sp_pattern_parent_class)->build)
+		(* ((SPObjectClass *) sp_pattern_parent_class)->build) (object, document, repr);
 
 	object->readAttr( "patternUnits" );
 	object->readAttr( "patternContentUnits" );
@@ -164,8 +136,8 @@ static void sp_pattern_release(SPObject *object)
 
     pat->modified_connection.~connection();
 
-    if (((SPObjectClass *) pattern_parent_class)->release) {
-        ((SPObjectClass *) pattern_parent_class)->release (object);
+    if (((SPObjectClass *) sp_pattern_parent_class)->release) {
+        ((SPObjectClass *) sp_pattern_parent_class)->release (object);
     }
 }
 
@@ -280,8 +252,8 @@ sp_pattern_set (SPObject *object, unsigned int key, const gchar *value)
 		}
 		break;
 	default:
-		if (((SPObjectClass *) pattern_parent_class)->set)
-			((SPObjectClass *) pattern_parent_class)->set (object, key, value);
+		if (((SPObjectClass *) sp_pattern_parent_class)->set)
+			((SPObjectClass *) sp_pattern_parent_class)->set (object, key, value);
 		break;
 	}
 }

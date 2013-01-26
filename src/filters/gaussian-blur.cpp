@@ -31,10 +31,6 @@
 //#include "macros.h"
 
 /* GaussianBlur base class */
-
-static void sp_gaussianBlur_class_init(SPGaussianBlurClass *klass);
-static void sp_gaussianBlur_init(SPGaussianBlur *gaussianBlur);
-
 static void sp_gaussianBlur_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_gaussianBlur_release(SPObject *object);
 static void sp_gaussianBlur_set(SPObject *object, unsigned int key, gchar const *value);
@@ -42,36 +38,13 @@ static void sp_gaussianBlur_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_gaussianBlur_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_gaussianBlur_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
-static SPFilterPrimitiveClass *gaussianBlur_parent_class;
-
-GType
-sp_gaussianBlur_get_type()
-{
-    static GType gaussianBlur_type = 0;
-
-    if (!gaussianBlur_type) {
-        GTypeInfo gaussianBlur_info = {
-            sizeof(SPGaussianBlurClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_gaussianBlur_class_init,
-            NULL, NULL,
-            sizeof(SPGaussianBlur),
-            16,
-            (GInstanceInitFunc) sp_gaussianBlur_init,
-            NULL,    /* value_table */
-        };
-        gaussianBlur_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPGaussianBlur", &gaussianBlur_info, (GTypeFlags)0);
-    }
-    return gaussianBlur_type;
-}
+G_DEFINE_TYPE(SPGaussianBlur, sp_gaussianBlur, SP_TYPE_FILTER_PRIMITIVE);
 
 static void
 sp_gaussianBlur_class_init(SPGaussianBlurClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    gaussianBlur_parent_class = (SPFilterPrimitiveClass *)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_gaussianBlur_build;
     sp_object_class->release = sp_gaussianBlur_release;
@@ -95,8 +68,8 @@ sp_gaussianBlur_init(SPGaussianBlur */*gaussianBlur*/)
 static void
 sp_gaussianBlur_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) gaussianBlur_parent_class)->build) {
-        ((SPObjectClass *) gaussianBlur_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_gaussianBlur_parent_class)->build) {
+        ((SPObjectClass *) sp_gaussianBlur_parent_class)->build(object, document, repr);
     }
 
     object->readAttr( "stdDeviation" );
@@ -110,8 +83,8 @@ static void
 sp_gaussianBlur_release(SPObject *object)
 {
 
-    if (((SPObjectClass *) gaussianBlur_parent_class)->release)
-        ((SPObjectClass *) gaussianBlur_parent_class)->release(object);
+    if (((SPObjectClass *) sp_gaussianBlur_parent_class)->release)
+        ((SPObjectClass *) sp_gaussianBlur_parent_class)->release(object);
 }
 
 /**
@@ -128,8 +101,8 @@ sp_gaussianBlur_set(SPObject *object, unsigned int key, gchar const *value)
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
-            if (((SPObjectClass *) gaussianBlur_parent_class)->set)
-                ((SPObjectClass *) gaussianBlur_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_gaussianBlur_parent_class)->set)
+                ((SPObjectClass *) sp_gaussianBlur_parent_class)->set(object, key, value);
             break;
     }
 
@@ -145,8 +118,8 @@ sp_gaussianBlur_update(SPObject *object, SPCtx *ctx, guint flags)
         object->readAttr( "stdDeviation" );
     }
 
-    if (((SPObjectClass *) gaussianBlur_parent_class)->update) {
-        ((SPObjectClass *) gaussianBlur_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_gaussianBlur_parent_class)->update) {
+        ((SPObjectClass *) sp_gaussianBlur_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -162,8 +135,8 @@ sp_gaussianBlur_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::
         repr = object->getRepr()->duplicate(doc);
     }
 
-    if (((SPObjectClass *) gaussianBlur_parent_class)->write) {
-        ((SPObjectClass *) gaussianBlur_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_gaussianBlur_parent_class)->write) {
+        ((SPObjectClass *) sp_gaussianBlur_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

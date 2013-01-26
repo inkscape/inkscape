@@ -49,9 +49,6 @@ enum {
     CHANGED = 0,
     LAST_SIGNAL};
 
-
-static void ege_select_one_action_class_init( EgeSelectOneActionClass* klass );
-static void ege_select_one_action_init( EgeSelectOneAction* action );
 static void ege_select_one_action_finalize( GObject* action );
 static void ege_select_one_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec );
 static void ege_select_one_action_set_property( GObject* obj, guint propId, const GValue *value, GParamSpec* pspec );
@@ -73,7 +70,6 @@ static void disconnect_proxy( GtkAction *action, GtkWidget *proxy );
 
 static int scan_max_width( GtkTreeModel *model, gint labelColumn );
 
-static GtkActionClass* gParentClass = 0;
 static guint signals[LAST_SIGNAL] = {0};
 static GQuark gDataName = 0;
 
@@ -126,28 +122,7 @@ enum {
     PROP_SELECTION
 };
 
-GType ege_select_one_action_get_type( void )
-{
-    static GType myType = 0;
-    if ( !myType ) {
-        static const GTypeInfo myInfo = {
-            sizeof( EgeSelectOneActionClass ),
-            NULL, /* base_init */
-            NULL, /* base_finalize */
-            (GClassInitFunc)ege_select_one_action_class_init,
-            NULL, /* class_finalize */
-            NULL, /* class_data */
-            sizeof( EgeSelectOneAction ),
-            0, /* n_preallocs */
-            (GInstanceInitFunc)ege_select_one_action_init,
-            NULL
-        };
-
-        myType = g_type_register_static( GTK_TYPE_ACTION, "EgeSelectOneAction", &myInfo, (GTypeFlags)0 );
-    }
-
-    return myType;
-}
+G_DEFINE_TYPE(EgeSelectOneAction, ege_select_one_action, GTK_TYPE_ACTION);
 
 GtkTreeModel *ege_select_one_action_get_model(EgeSelectOneAction* action ){
     return GTK_TREE_MODEL(action->private_data->model);
@@ -155,7 +130,6 @@ GtkTreeModel *ege_select_one_action_get_model(EgeSelectOneAction* action ){
 void ege_select_one_action_class_init( EgeSelectOneActionClass* klass )
 {
     if ( klass ) {
-        gParentClass = GTK_ACTION_CLASS( g_type_class_peek_parent( klass ) );
         GObjectClass* objClass = G_OBJECT_CLASS( klass );
 
         gDataName = g_quark_from_string("ege-select1-action");
@@ -292,8 +266,8 @@ void ege_select_one_action_finalize( GObject* object )
     g_free( action->private_data->appearance );
     g_free( action->private_data->selection );
 
-    if ( G_OBJECT_CLASS(gParentClass)->finalize ) {
-        (*G_OBJECT_CLASS(gParentClass)->finalize)(object);
+    if ( G_OBJECT_CLASS(ege_select_one_action_parent_class)->finalize ) {
+        (*G_OBJECT_CLASS(ege_select_one_action_parent_class)->finalize)(object);
     }
 }
 
@@ -631,7 +605,7 @@ GtkWidget* create_menu_item( GtkAction* action )
 
         g_free(sss);
     } else {
-        item = gParentClass->create_menu_item( action );
+        item = GTK_ACTION_CLASS(ege_select_one_action_parent_class)->create_menu_item( action );
     }
 
     return item;
@@ -855,7 +829,7 @@ GtkWidget* create_tool_item( GtkAction* action )
 
         gtk_widget_show_all( item );
     } else {
-        item = gParentClass->create_tool_item( action );
+        item = GTK_ACTION_CLASS(ege_select_one_action_parent_class)->create_tool_item( action );
     }
 
     return item;
@@ -864,12 +838,12 @@ GtkWidget* create_tool_item( GtkAction* action )
 
 void connect_proxy( GtkAction *action, GtkWidget *proxy )
 {
-    gParentClass->connect_proxy( action, proxy );
+    GTK_ACTION_CLASS(ege_select_one_action_parent_class)->connect_proxy( action, proxy );
 }
 
 void disconnect_proxy( GtkAction *action, GtkWidget *proxy )
 {
-    gParentClass->disconnect_proxy( action, proxy );
+    GTK_ACTION_CLASS(ege_select_one_action_parent_class)->disconnect_proxy( action, proxy );
 }
 
 

@@ -34,9 +34,6 @@ struct SPMaskView {
 	Geom::OptRect bbox;
 };
 
-static void sp_mask_class_init (SPMaskClass *klass);
-static void sp_mask_init (SPMask *mask);
-
 static void sp_mask_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_mask_release (SPObject * object);
 static void sp_mask_set (SPObject *object, unsigned int key, const gchar *value);
@@ -48,33 +45,11 @@ static Inkscape::XML::Node *sp_mask_write (SPObject *object, Inkscape::XML::Docu
 SPMaskView *sp_mask_view_new_prepend (SPMaskView *list, unsigned int key, Inkscape::DrawingItem *arenaitem);
 SPMaskView *sp_mask_view_list_remove (SPMaskView *list, SPMaskView *view);
 
-static SPObjectGroupClass *parent_class;
-
-GType
-sp_mask_get_type (void)
-{
-	static GType type = 0;
-	if (!type) {
-		GTypeInfo info = {
-			sizeof (SPMaskClass),
-			NULL, NULL,
-			(GClassInitFunc) sp_mask_class_init,
-			NULL, NULL,
-			sizeof (SPMask),
-			16,
-			(GInstanceInitFunc) sp_mask_init,
-			NULL,	/* value_table */
-		};
-		type = g_type_register_static (SP_TYPE_OBJECTGROUP, "SPMask", &info, (GTypeFlags)0);
-	}
-	return type;
-}
+G_DEFINE_TYPE(SPMask, sp_mask, SP_TYPE_OBJECTGROUP);
 
 static void
 sp_mask_class_init (SPMaskClass *klass)
 {
-	parent_class = SP_OBJECTGROUP_CLASS(g_type_class_ref(SP_TYPE_OBJECTGROUP));
-
 	SPObjectClass *sp_object_class = (SPObjectClass *) klass;
 	sp_object_class->build = sp_mask_build;
 	sp_object_class->release = sp_mask_release;
@@ -100,8 +75,8 @@ sp_mask_init (SPMask *mask)
 static void
 sp_mask_build (SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-	if (((SPObjectClass *) parent_class)->build) {
-		((SPObjectClass *) parent_class)->build (object, document, repr);
+	if (((SPObjectClass *) sp_mask_parent_class)->build) {
+		((SPObjectClass *) sp_mask_parent_class)->build (object, document, repr);
 	}
 
 	object->readAttr( "maskUnits" );
@@ -124,8 +99,8 @@ static void sp_mask_release (SPObject * object)
         cp->display = sp_mask_view_list_remove (cp->display, cp->display);
     }
 
-    if (((SPObjectClass *) (parent_class))->release) {
-        ((SPObjectClass *) parent_class)->release (object);
+    if (((SPObjectClass *) (sp_mask_parent_class))->release) {
+        ((SPObjectClass *) sp_mask_parent_class)->release (object);
     }
 }
 
@@ -162,8 +137,8 @@ sp_mask_set (SPObject *object, unsigned int key, const gchar *value)
 		object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 		break;
 	default:
-		if (((SPObjectClass *) parent_class)->set)
-			((SPObjectClass *) parent_class)->set (object, key, value);
+		if (((SPObjectClass *) sp_mask_parent_class)->set)
+			((SPObjectClass *) sp_mask_parent_class)->set (object, key, value);
 		break;
 	}
 }
@@ -172,7 +147,7 @@ static void
 sp_mask_child_added (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
 	/* Invoke SPObjectGroup implementation */
-	((SPObjectClass *) (parent_class))->child_added (object, child, ref);
+	((SPObjectClass *) (sp_mask_parent_class))->child_added (object, child, ref);
 
 	/* Show new object */
 	SPObject *ochild = object->document->getObjectByRepr(child);
@@ -258,8 +233,8 @@ sp_mask_write (SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML
 		repr = xml_doc->createElement("svg:mask");
 	}
 
-	if (((SPObjectClass *) (parent_class))->write)
-		((SPObjectClass *) (parent_class))->write (object, xml_doc, repr, flags);
+	if (((SPObjectClass *) (sp_mask_parent_class))->write)
+		((SPObjectClass *) (sp_mask_parent_class))->write (object, xml_doc, repr, flags);
 
 	return repr;
 }

@@ -31,10 +31,6 @@
 #include "display/nr-filter-types.h"
 
 /* FeBlend base class */
-
-static void sp_feBlend_class_init(SPFeBlendClass *klass);
-static void sp_feBlend_init(SPFeBlend *feBlend);
-
 static void sp_feBlend_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feBlend_release(SPObject *object);
 static void sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value);
@@ -42,36 +38,13 @@ static void sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feBlend_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feBlend_build_renderer(SPFilterPrimitive *sp_prim, Inkscape::Filters::Filter *filter);
 
-static SPFilterPrimitiveClass *feBlend_parent_class;
-
-GType
-sp_feBlend_get_type()
-{
-    static GType feBlend_type = 0;
-
-    if (!feBlend_type) {
-        GTypeInfo feBlend_info = {
-            sizeof(SPFeBlendClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feBlend_class_init,
-            NULL, NULL,
-            sizeof(SPFeBlend),
-            16,
-            (GInstanceInitFunc) sp_feBlend_init,
-            NULL,    /* value_table */
-        };
-        feBlend_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeBlend", &feBlend_info, (GTypeFlags)0);
-    }
-    return feBlend_type;
-}
+G_DEFINE_TYPE(SPFeBlend, sp_feBlend, SP_TYPE_FILTER_PRIMITIVE);
 
 static void
 sp_feBlend_class_init(SPFeBlendClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    feBlend_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feBlend_build;
     sp_object_class->release = sp_feBlend_release;
@@ -98,8 +71,8 @@ sp_feBlend_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 {
     SPFeBlend *blend = SP_FEBLEND(object);
 
-    if (((SPObjectClass *) feBlend_parent_class)->build) {
-        ((SPObjectClass *) feBlend_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_feBlend_parent_class)->build) {
+        ((SPObjectClass *) sp_feBlend_parent_class)->build(object, document, repr);
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
@@ -123,8 +96,8 @@ sp_feBlend_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 static void
 sp_feBlend_release(SPObject *object)
 {
-    if (((SPObjectClass *) feBlend_parent_class)->release)
-        ((SPObjectClass *) feBlend_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feBlend_parent_class)->release)
+        ((SPObjectClass *) sp_feBlend_parent_class)->release(object);
 }
 
 static Inkscape::Filters::FilterBlendMode sp_feBlend_readmode(gchar const *value)
@@ -186,8 +159,8 @@ sp_feBlend_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         default:
-            if (((SPObjectClass *) feBlend_parent_class)->set)
-                ((SPObjectClass *) feBlend_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_feBlend_parent_class)->set)
+                ((SPObjectClass *) sp_feBlend_parent_class)->set(object, key, value);
             break;
     }
 
@@ -218,8 +191,8 @@ sp_feBlend_update(SPObject *object, SPCtx *ctx, guint flags)
         object->getRepr()->setAttribute("in2", sp_filter_name_for_image(parent, blend->in2));
     }
 
-    if (((SPObjectClass *) feBlend_parent_class)->update) {
-        ((SPObjectClass *) feBlend_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feBlend_parent_class)->update) {
+        ((SPObjectClass *) sp_feBlend_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -267,8 +240,8 @@ sp_feBlend_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::
     }
     repr->setAttribute("mode", mode);
 
-    if (((SPObjectClass *) feBlend_parent_class)->write) {
-        ((SPObjectClass *) feBlend_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feBlend_parent_class)->write) {
+        ((SPObjectClass *) sp_feBlend_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

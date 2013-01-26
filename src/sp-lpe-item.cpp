@@ -39,9 +39,6 @@
 #include <algorithm>
 
 /* LPEItem base class */
-
-static void sp_lpe_item_class_init(SPLPEItemClass *klass);
-static void sp_lpe_item_init(SPLPEItem *lpe_item);
 static void sp_lpe_item_finalize(GObject *object);
 
 static void sp_lpe_item_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
@@ -64,34 +61,12 @@ typedef std::list<std::string> HRefList;
 static std::string patheffectlist_write_svg(PathEffectList const & list);
 static std::string hreflist_write_svg(HRefList const & list);
 
-static SPItemClass *parent_class;
-
-GType
-sp_lpe_item_get_type()
-{
-    static GType lpe_item_type = 0;
-
-    if (!lpe_item_type) {
-        GTypeInfo lpe_item_info = {
-            sizeof(SPLPEItemClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_lpe_item_class_init,
-            NULL, NULL,
-            sizeof(SPLPEItem),
-            16,
-            (GInstanceInitFunc) sp_lpe_item_init,
-            NULL,    /* value_table */
-        };
-        lpe_item_type = g_type_register_static(SP_TYPE_ITEM, "SPLPEItem", &lpe_item_info, (GTypeFlags)0);
-    }
-    return lpe_item_type;
-}
+G_DEFINE_TYPE(SPLPEItem, sp_lpe_item, SP_TYPE_ITEM);
 
 static void sp_lpe_item_class_init(SPLPEItemClass *klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     SPObjectClass *sp_object_class = SP_OBJECT_CLASS(klass);
-    parent_class = SP_ITEM_CLASS(g_type_class_peek_parent(klass));
     
     gobject_class->finalize = sp_lpe_item_finalize;
     sp_object_class->build = sp_lpe_item_build;
@@ -119,8 +94,8 @@ sp_lpe_item_init(SPLPEItem *lpeitem)
 
 static void sp_lpe_item_finalize(GObject *object)
 {
-    if (((GObjectClass *) (parent_class))->finalize) {
-        (* ((GObjectClass *) (parent_class))->finalize)(object);
+    if (((GObjectClass *) (sp_lpe_item_parent_class))->finalize) {
+        (* ((GObjectClass *) (sp_lpe_item_parent_class))->finalize)(object);
     }
 }
 
@@ -133,8 +108,8 @@ static void sp_lpe_item_build(SPObject *object, SPDocument *document, Inkscape::
 {
     object->readAttr( "inkscape:path-effect" );
 
-    if ((SP_OBJECT_CLASS(parent_class))->build) {
-        (SP_OBJECT_CLASS(parent_class))->build(object, document, repr);
+    if ((SP_OBJECT_CLASS(sp_lpe_item_parent_class))->build) {
+        (SP_OBJECT_CLASS(sp_lpe_item_parent_class))->build(object, document, repr);
     }
 }
 
@@ -165,8 +140,8 @@ static void sp_lpe_item_release(SPObject *object)
     delete lpeitem->path_effect_list;
     lpeitem->path_effect_list = NULL;
 
-    if ((SP_OBJECT_CLASS(parent_class))->release)
-        (SP_OBJECT_CLASS(parent_class))->release(object);
+    if ((SP_OBJECT_CLASS(sp_lpe_item_parent_class))->release)
+        (SP_OBJECT_CLASS(sp_lpe_item_parent_class))->release(object);
 }
 
 /**
@@ -234,8 +209,8 @@ static void sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *val
             }
             break;
         default:
-            if ((SP_OBJECT_CLASS(parent_class))->set) {
-                (SP_OBJECT_CLASS(parent_class))->set(object, key, value);
+            if ((SP_OBJECT_CLASS(sp_lpe_item_parent_class))->set) {
+                (SP_OBJECT_CLASS(sp_lpe_item_parent_class))->set(object, key, value);
             }
             break;
     }
@@ -247,8 +222,8 @@ static void sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *val
 static void
 sp_lpe_item_update(SPObject *object, SPCtx *ctx, guint flags)
 {
-    if ((SP_OBJECT_CLASS(parent_class))->update) {
-        (SP_OBJECT_CLASS(parent_class))->update(object, ctx, flags);
+    if ((SP_OBJECT_CLASS(sp_lpe_item_parent_class))->update) {
+        (SP_OBJECT_CLASS(sp_lpe_item_parent_class))->update(object, ctx, flags);
     }
 
     // update the helperpaths of all LPEs applied to the item
@@ -264,8 +239,8 @@ static void sp_lpe_item_modified (SPObject *object, unsigned int flags)
         sp_lpe_item_update_patheffect(SP_LPE_ITEM(object), true, true);
     }
 
-    if ((SP_OBJECT_CLASS(parent_class))->modified) {
-        (* (SP_OBJECT_CLASS(parent_class))->modified) (object, flags);
+    if ((SP_OBJECT_CLASS(sp_lpe_item_parent_class))->modified) {
+        (* (SP_OBJECT_CLASS(sp_lpe_item_parent_class))->modified) (object, flags);
     }
 }
 
@@ -285,8 +260,8 @@ static Inkscape::XML::Node * sp_lpe_item_write(SPObject *object, Inkscape::XML::
         }
     }
 
-    if ((SP_OBJECT_CLASS(parent_class))->write) {
-        (SP_OBJECT_CLASS(parent_class))->write(object, xml_doc, repr, flags);
+    if ((SP_OBJECT_CLASS(sp_lpe_item_parent_class))->write) {
+        (SP_OBJECT_CLASS(sp_lpe_item_parent_class))->write(object, xml_doc, repr, flags);
     }
 
     return repr;
@@ -666,8 +641,8 @@ void sp_lpe_item_edit_next_param_oncanvas(SPLPEItem *lpeitem, SPDesktop *dt)
 
 static void sp_lpe_item_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 {
-    if ((SP_OBJECT_CLASS(parent_class))->child_added)
-        (* (SP_OBJECT_CLASS(parent_class))->child_added) (object, child, ref);
+    if ((SP_OBJECT_CLASS(sp_lpe_item_parent_class))->child_added)
+        (* (SP_OBJECT_CLASS(sp_lpe_item_parent_class))->child_added) (object, child, ref);
 
     if (SP_IS_LPE_ITEM(object) && sp_lpe_item_has_path_effect_recursive(SP_LPE_ITEM(object))) {
         SPObject *ochild = object->get_child_by_repr(child);
@@ -686,8 +661,8 @@ static void sp_lpe_item_remove_child(SPObject * object, Inkscape::XML::Node * ch
         }
     }
 
-    if ((SP_OBJECT_CLASS(parent_class))->remove_child)
-        (* (SP_OBJECT_CLASS(parent_class))->remove_child) (object, child);
+    if ((SP_OBJECT_CLASS(sp_lpe_item_parent_class))->remove_child)
+        (* (SP_OBJECT_CLASS(sp_lpe_item_parent_class))->remove_child) (object, child);
 }
 
 static std::string patheffectlist_write_svg(PathEffectList const & list)

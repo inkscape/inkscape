@@ -30,10 +30,6 @@
 #include "display/nr-filter-image.h"
 
 /* FeImage base class */
-
-static void sp_feImage_class_init(SPFeImageClass *klass);
-static void sp_feImage_init(SPFeImage *feImage);
-
 static void sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feImage_release(SPObject *object);
 static void sp_feImage_set(SPObject *object, unsigned int key, gchar const *value);
@@ -41,34 +37,12 @@ static void sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feImage_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feImage_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
-static SPFilterPrimitiveClass *feImage_parent_class;
-
-GType sp_feImage_get_type()
-{
-    static GType feImage_type = 0;
-
-    if (!feImage_type) {
-        GTypeInfo feImage_info = {
-            sizeof(SPFeImageClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feImage_class_init,
-            NULL, NULL,
-            sizeof(SPFeImage),
-            16,
-            (GInstanceInitFunc) sp_feImage_init,
-            NULL,    /* value_table */
-        };
-        feImage_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeImage", &feImage_info, (GTypeFlags)0);
-    }
-    return feImage_type;
-}
+G_DEFINE_TYPE(SPFeImage, sp_feImage, SP_TYPE_FILTER_PRIMITIVE);
 
 static void sp_feImage_class_init(SPFeImageClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass * sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    feImage_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feImage_build;
     sp_object_class->release = sp_feImage_release;
@@ -96,8 +70,8 @@ static void sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::X
     SPFeImage *feImage = SP_FEIMAGE(object);
     feImage->document = document;
 
-    if (((SPObjectClass *) feImage_parent_class)->build) {
-        ((SPObjectClass *) feImage_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_feImage_parent_class)->build) {
+        ((SPObjectClass *) sp_feImage_parent_class)->build(object, document, repr);
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
@@ -117,8 +91,8 @@ static void sp_feImage_release(SPObject *object)
     feImage->_href_modified_connection.disconnect();
     if (feImage->SVGElemRef) delete feImage->SVGElemRef;
 
-    if (((SPObjectClass *) feImage_parent_class)->release)
-        ((SPObjectClass *) feImage_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feImage_parent_class)->release)
+        ((SPObjectClass *) sp_feImage_parent_class)->release(object);
 }
 
 static void sp_feImage_elem_modified(SPObject* /*href*/, guint /*flags*/, SPObject* obj)
@@ -247,8 +221,8 @@ static void sp_feImage_set(SPObject *object, unsigned int key, gchar const *valu
             break;
 
         default:
-            if (((SPObjectClass *) feImage_parent_class)->set)
-                ((SPObjectClass *) feImage_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_feImage_parent_class)->set)
+                ((SPObjectClass *) sp_feImage_parent_class)->set(object, key, value);
             break;
     }
 
@@ -266,8 +240,8 @@ static void sp_feImage_update(SPObject *object, SPCtx *ctx, guint flags)
         /* do something to trigger redisplay, updates? */
     }
 
-    if (((SPObjectClass *) feImage_parent_class)->update) {
-        ((SPObjectClass *) feImage_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feImage_parent_class)->update) {
+        ((SPObjectClass *) sp_feImage_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -282,8 +256,8 @@ static Inkscape::XML::Node * sp_feImage_write(SPObject *object, Inkscape::XML::D
         repr = object->getRepr()->duplicate(doc);
     }
 
-    if (((SPObjectClass *) feImage_parent_class)->write) {
-        ((SPObjectClass *) feImage_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feImage_parent_class)->write) {
+        ((SPObjectClass *) sp_feImage_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

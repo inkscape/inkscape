@@ -26,10 +26,6 @@
 #include "display/nr-filter-offset.h"
 
 /* FeOffset base class */
-
-static void sp_feOffset_class_init(SPFeOffsetClass *klass);
-static void sp_feOffset_init(SPFeOffset *feOffset);
-
 static void sp_feOffset_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feOffset_release(SPObject *object);
 static void sp_feOffset_set(SPObject *object, unsigned int key, gchar const *value);
@@ -37,36 +33,13 @@ static void sp_feOffset_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feOffset_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feOffset_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
-static SPFilterPrimitiveClass *feOffset_parent_class;
-
-GType
-sp_feOffset_get_type()
-{
-    static GType feOffset_type = 0;
-
-    if (!feOffset_type) {
-        GTypeInfo feOffset_info = {
-            sizeof(SPFeOffsetClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feOffset_class_init,
-            NULL, NULL,
-            sizeof(SPFeOffset),
-            16,
-            (GInstanceInitFunc) sp_feOffset_init,
-            NULL,    /* value_table */
-        };
-        feOffset_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeOffset", &feOffset_info, (GTypeFlags)0);
-    }
-    return feOffset_type;
-}
+G_DEFINE_TYPE(SPFeOffset, sp_feOffset, SP_TYPE_FILTER_PRIMITIVE);
 
 static void
 sp_feOffset_class_init(SPFeOffsetClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    feOffset_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feOffset_build;
     sp_object_class->release = sp_feOffset_release;
@@ -92,8 +65,8 @@ sp_feOffset_init(SPFeOffset *feOffset)
 static void
 sp_feOffset_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feOffset_parent_class)->build) {
-        ((SPObjectClass *) feOffset_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_feOffset_parent_class)->build) {
+        ((SPObjectClass *) sp_feOffset_parent_class)->build(object, document, repr);
     }
 
     object->readAttr( "dx" );
@@ -106,8 +79,8 @@ sp_feOffset_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *r
 static void
 sp_feOffset_release(SPObject *object)
 {
-    if (((SPObjectClass *) feOffset_parent_class)->release)
-        ((SPObjectClass *) feOffset_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feOffset_parent_class)->release)
+        ((SPObjectClass *) sp_feOffset_parent_class)->release(object);
 }
 
 /**
@@ -137,8 +110,8 @@ sp_feOffset_set(SPObject *object, unsigned int key, gchar const *value)
             
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         default:
-            if (((SPObjectClass *) feOffset_parent_class)->set)
-                ((SPObjectClass *) feOffset_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_feOffset_parent_class)->set)
+                ((SPObjectClass *) sp_feOffset_parent_class)->set(object, key, value);
             break;
     }
 
@@ -155,8 +128,8 @@ sp_feOffset_update(SPObject *object, SPCtx *ctx, guint flags)
         object->readAttr( "dy" );
     }
 
-    if (((SPObjectClass *) feOffset_parent_class)->update) {
-        ((SPObjectClass *) feOffset_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feOffset_parent_class)->update) {
+        ((SPObjectClass *) sp_feOffset_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -172,8 +145,8 @@ sp_feOffset_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML:
         repr = object->getRepr()->duplicate(doc);
     }
 
-    if (((SPObjectClass *) feOffset_parent_class)->write) {
-        ((SPObjectClass *) feOffset_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feOffset_parent_class)->write) {
+        ((SPObjectClass *) sp_feOffset_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

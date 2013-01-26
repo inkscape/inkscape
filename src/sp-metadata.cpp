@@ -33,45 +33,18 @@
 
 /* Metadata base class */
 
-static void sp_metadata_class_init (SPMetadataClass *klass);
-static void sp_metadata_init (SPMetadata *metadata);
-
 static void sp_metadata_build (SPObject * object, SPDocument * document, Inkscape::XML::Node * repr);
 static void sp_metadata_release (SPObject *object);
 static void sp_metadata_set (SPObject *object, unsigned int key, const gchar *value);
 static void sp_metadata_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_metadata_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static SPObjectClass *metadata_parent_class;
-
-GType
-sp_metadata_get_type (void)
-{
-    static GType metadata_type = 0;
-
-    if (!metadata_type) {
-        GTypeInfo metadata_info = {
-            sizeof (SPMetadataClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_metadata_class_init,
-            NULL, NULL,
-            sizeof (SPMetadata),
-            16,
-            (GInstanceInitFunc) sp_metadata_init,
-            NULL,    /* value_table */
-        };
-        metadata_type = g_type_register_static (SP_TYPE_OBJECT, "SPMetadata", &metadata_info, (GTypeFlags)0);
-    }
-    return metadata_type;
-}
+G_DEFINE_TYPE(SPMetadata, sp_metadata, SP_TYPE_OBJECT);
 
 static void
 sp_metadata_class_init (SPMetadataClass *klass)
 {
-    //GObjectClass *gobject_class = (GObjectClass *)klass;
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-
-    metadata_parent_class = (SPObjectClass*)g_type_class_peek_parent (klass);
 
     sp_object_class->build = sp_metadata_build;
     sp_object_class->release = sp_metadata_release;
@@ -123,8 +96,8 @@ static void sp_metadata_build(SPObject *object, SPDocument *document, Inkscape::
         }
     }
 
-    if (((SPObjectClass *) metadata_parent_class)->build)
-        ((SPObjectClass *) metadata_parent_class)->build (object, document, repr);
+    if (((SPObjectClass *) sp_metadata_parent_class)->build)
+        ((SPObjectClass *) sp_metadata_parent_class)->build (object, document, repr);
 }
 
 /**
@@ -136,8 +109,8 @@ static void sp_metadata_release(SPObject *object)
 
     // handle ourself
 
-    if (((SPObjectClass *) metadata_parent_class)->release)
-        ((SPObjectClass *) metadata_parent_class)->release (object);
+    if (((SPObjectClass *) sp_metadata_parent_class)->release)
+        ((SPObjectClass *) sp_metadata_parent_class)->release (object);
 }
 
 /**
@@ -150,8 +123,8 @@ static void sp_metadata_set(SPObject *object, unsigned int key, const gchar *val
     SP_METADATA(object); // ensures the object is of the proper type.
 
     // see if any parents need this value
-    if (reinterpret_cast<SPObjectClass *>(metadata_parent_class)->set) {
-        reinterpret_cast<SPObjectClass *>(metadata_parent_class)->set(object, key, value);
+    if (reinterpret_cast<SPObjectClass *>(sp_metadata_parent_class)->set) {
+        reinterpret_cast<SPObjectClass *>(sp_metadata_parent_class)->set(object, key, value);
     }
 }
 
@@ -170,8 +143,8 @@ static void sp_metadata_update(SPObject *object, SPCtx *ctx, guint flags)
 
     }
 
-    if (((SPObjectClass *) metadata_parent_class)->update)
-        ((SPObjectClass *) metadata_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_metadata_parent_class)->update)
+        ((SPObjectClass *) sp_metadata_parent_class)->update(object, ctx, flags);
 }
 
 /**
@@ -190,8 +163,8 @@ static Inkscape::XML::Node *sp_metadata_write(SPObject *object, Inkscape::XML::D
         }
     }
 
-    if (((SPObjectClass *) metadata_parent_class)->write) {
-        ((SPObjectClass *) metadata_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_metadata_parent_class)->write) {
+        ((SPObjectClass *) sp_metadata_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

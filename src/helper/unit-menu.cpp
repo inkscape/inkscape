@@ -52,39 +52,16 @@ struct SPUnitSelectorClass {
 
 enum {SET_UNIT, LAST_SIGNAL};
 
-static void sp_unit_selector_class_init(SPUnitSelectorClass *klass);
-static void sp_unit_selector_init(SPUnitSelector *selector);
 static void sp_unit_selector_finalize(GObject *object);
 
-static GtkHBoxClass *unit_selector_parent_class;
 static guint signals[LAST_SIGNAL] = {0};
 
-GType sp_unit_selector_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPUnitSelectorClass),
-            0, // base_init
-            0, // base_finalize
-            (GClassInitFunc)sp_unit_selector_class_init,
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPUnitSelector),
-            0, // n_preallocs
-            (GInstanceInitFunc)sp_unit_selector_init,
-            0 // value_table
-        };
-        type = g_type_register_static(GTK_TYPE_HBOX, "SPUnitSelector", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPUnitSelector, sp_unit_selector, GTK_TYPE_HBOX);
 
 static void
 sp_unit_selector_class_init(SPUnitSelectorClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
-    unit_selector_parent_class = GTK_HBOX_CLASS(g_type_class_peek_parent(klass));
 
     signals[SET_UNIT] = g_signal_new("set_unit",
                                      G_TYPE_FROM_CLASS(klass),
@@ -142,7 +119,7 @@ sp_unit_selector_finalize(GObject *object)
 
     selector->unit = NULL;
 
-    G_OBJECT_CLASS(unit_selector_parent_class)->finalize(object);
+    G_OBJECT_CLASS(sp_unit_selector_parent_class)->finalize(object);
 }
 
 GtkWidget *

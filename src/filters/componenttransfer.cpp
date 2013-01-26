@@ -28,10 +28,6 @@
 #include "display/nr-filter-component-transfer.h"
 
 /* FeComponentTransfer base class */
-
-static void sp_feComponentTransfer_class_init(SPFeComponentTransferClass *klass);
-static void sp_feComponentTransfer_init(SPFeComponentTransfer *feComponentTransfer);
-
 static void sp_feComponentTransfer_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feComponentTransfer_release(SPObject *object);
 static void sp_feComponentTransfer_set(SPObject *object, unsigned int key, gchar const *value);
@@ -40,35 +36,14 @@ static void sp_feComponentTransfer_build_renderer(SPFilterPrimitive *primitive, 
 static void sp_feComponentTransfer_remove_child(SPObject *object, Inkscape::XML::Node *child);
 static void sp_feComponentTransfer_child_added(SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *ref);
 static Inkscape::XML::Node *sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
-static SPFilterPrimitiveClass *feComponentTransfer_parent_class;
 
-GType
-sp_feComponentTransfer_get_type()
-{
-    static GType feComponentTransfer_type = 0;
-
-    if (!feComponentTransfer_type) {
-        GTypeInfo feComponentTransfer_info = {
-            sizeof(SPFeComponentTransferClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feComponentTransfer_class_init,
-            NULL, NULL,
-            sizeof(SPFeComponentTransfer),
-            16,
-            (GInstanceInitFunc) sp_feComponentTransfer_init,
-            NULL,    /* value_table */
-        };
-        feComponentTransfer_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeComponentTransfer", &feComponentTransfer_info, (GTypeFlags)0);
-    }
-    return feComponentTransfer_type;
-}
+G_DEFINE_TYPE(SPFeComponentTransfer, sp_feComponentTransfer, SP_TYPE_FILTER_PRIMITIVE);
 
 static void
 sp_feComponentTransfer_class_init(SPFeComponentTransferClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-    feComponentTransfer_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feComponentTransfer_build;
     sp_object_class->release = sp_feComponentTransfer_release;
@@ -93,8 +68,8 @@ sp_feComponentTransfer_init(SPFeComponentTransfer */*feComponentTransfer*/)
 static void
 sp_feComponentTransfer_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feComponentTransfer_parent_class)->build) {
-        ((SPObjectClass *) feComponentTransfer_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->build) {
+        ((SPObjectClass *) sp_feComponentTransfer_parent_class)->build(object, document, repr);
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
@@ -144,8 +119,8 @@ sp_feComponentTransfer_child_added(SPObject *object, Inkscape::XML::Node *child,
 {
     SPFeComponentTransfer *f = SP_FECOMPONENTTRANSFER(object);
 
-    if (((SPObjectClass *) feComponentTransfer_parent_class)->child_added)
-        (* ((SPObjectClass *) feComponentTransfer_parent_class)->child_added)(object, child, ref);
+    if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->child_added)
+        (* ((SPObjectClass *) sp_feComponentTransfer_parent_class)->child_added)(object, child, ref);
 
     sp_feComponentTransfer_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -160,8 +135,8 @@ sp_feComponentTransfer_remove_child(SPObject *object, Inkscape::XML::Node *child
 {
     SPFeComponentTransfer *f = SP_FECOMPONENTTRANSFER(object);
 
-    if (((SPObjectClass *) feComponentTransfer_parent_class)->remove_child)
-        (* ((SPObjectClass *) feComponentTransfer_parent_class)->remove_child)(object, child);
+    if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->remove_child)
+        (* ((SPObjectClass *) sp_feComponentTransfer_parent_class)->remove_child)(object, child);
 
     sp_feComponentTransfer_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -173,8 +148,8 @@ sp_feComponentTransfer_remove_child(SPObject *object, Inkscape::XML::Node *child
 static void
 sp_feComponentTransfer_release(SPObject *object)
 {
-    if (((SPObjectClass *) feComponentTransfer_parent_class)->release)
-        ((SPObjectClass *) feComponentTransfer_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->release)
+        ((SPObjectClass *) sp_feComponentTransfer_parent_class)->release(object);
 }
 
 /**
@@ -189,8 +164,8 @@ sp_feComponentTransfer_set(SPObject *object, unsigned int key, gchar const *valu
     switch(key) {
         /*DEAL WITH SETTING ATTRIBUTES HERE*/
         default:
-            if (((SPObjectClass *) feComponentTransfer_parent_class)->set)
-                ((SPObjectClass *) feComponentTransfer_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->set)
+                ((SPObjectClass *) sp_feComponentTransfer_parent_class)->set(object, key, value);
             break;
     }
 }
@@ -208,8 +183,8 @@ sp_feComponentTransfer_update(SPObject *object, SPCtx *ctx, guint flags)
 
     }
 
-    if (((SPObjectClass *) feComponentTransfer_parent_class)->update) {
-        ((SPObjectClass *) feComponentTransfer_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->update) {
+        ((SPObjectClass *) sp_feComponentTransfer_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -225,8 +200,8 @@ sp_feComponentTransfer_write(SPObject *object, Inkscape::XML::Document *doc, Ink
         repr = object->getRepr()->duplicate(doc);
     }
 
-    if (((SPObjectClass *) feComponentTransfer_parent_class)->write) {
-        ((SPObjectClass *) feComponentTransfer_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feComponentTransfer_parent_class)->write) {
+        ((SPObjectClass *) sp_feComponentTransfer_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

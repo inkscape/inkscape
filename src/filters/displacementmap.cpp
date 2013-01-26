@@ -26,10 +26,6 @@
 #include "display/nr-filter-displacement-map.h"
 
 /* FeDisplacementMap base class */
-
-static void sp_feDisplacementMap_class_init(SPFeDisplacementMapClass *klass);
-static void sp_feDisplacementMap_init(SPFeDisplacementMap *feDisplacementMap);
-
 static void sp_feDisplacementMap_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feDisplacementMap_release(SPObject *object);
 static void sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar const *value);
@@ -37,36 +33,13 @@ static void sp_feDisplacementMap_update(SPObject *object, SPCtx *ctx, guint flag
 static void sp_feDisplacementMap_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 static Inkscape::XML::Node *sp_feDisplacementMap_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static SPFilterPrimitiveClass *feDisplacementMap_parent_class;
-
-GType
-sp_feDisplacementMap_get_type()
-{
-    static GType feDisplacementMap_type = 0;
-
-    if (!feDisplacementMap_type) {
-        GTypeInfo feDisplacementMap_info = {
-            sizeof(SPFeDisplacementMapClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feDisplacementMap_class_init,
-            NULL, NULL,
-            sizeof(SPFeDisplacementMap),
-            16,
-            (GInstanceInitFunc) sp_feDisplacementMap_init,
-            NULL,    /* value_table */
-        };
-        feDisplacementMap_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeDisplacementMap", &feDisplacementMap_info, (GTypeFlags)0);
-    }
-    return feDisplacementMap_type;
-}
+G_DEFINE_TYPE(SPFeDisplacementMap, sp_feDisplacementMap, SP_TYPE_FILTER_PRIMITIVE);
 
 static void
 sp_feDisplacementMap_class_init(SPFeDisplacementMapClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    feDisplacementMap_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feDisplacementMap_build;
     sp_object_class->release = sp_feDisplacementMap_release;
@@ -93,8 +66,8 @@ sp_feDisplacementMap_init(SPFeDisplacementMap *feDisplacementMap)
 static void
 sp_feDisplacementMap_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feDisplacementMap_parent_class)->build) {
-        ((SPObjectClass *) feDisplacementMap_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_feDisplacementMap_parent_class)->build) {
+        ((SPObjectClass *) sp_feDisplacementMap_parent_class)->build(object, document, repr);
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
@@ -121,8 +94,8 @@ sp_feDisplacementMap_build(SPObject *object, SPDocument *document, Inkscape::XML
 static void
 sp_feDisplacementMap_release(SPObject *object)
 {
-    if (((SPObjectClass *) feDisplacementMap_parent_class)->release)
-        ((SPObjectClass *) feDisplacementMap_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feDisplacementMap_parent_class)->release)
+        ((SPObjectClass *) sp_feDisplacementMap_parent_class)->release(object);
 }
 
 static FilterDisplacementMapChannelSelector sp_feDisplacementMap_readChannelSelector(gchar const *value)
@@ -191,8 +164,8 @@ sp_feDisplacementMap_set(SPObject *object, unsigned int key, gchar const *value)
             }
             break;
         default:
-            if (((SPObjectClass *) feDisplacementMap_parent_class)->set)
-                ((SPObjectClass *) feDisplacementMap_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_feDisplacementMap_parent_class)->set)
+                ((SPObjectClass *) sp_feDisplacementMap_parent_class)->set(object, key, value);
             break;
     }
 
@@ -224,8 +197,8 @@ sp_feDisplacementMap_update(SPObject *object, SPCtx *ctx, guint flags)
         object->getRepr()->setAttribute("in2", sp_filter_name_for_image(parent, disp->in2));
     }
 
-    if (((SPObjectClass *) feDisplacementMap_parent_class)->update) {
-        ((SPObjectClass *) feDisplacementMap_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feDisplacementMap_parent_class)->update) {
+        ((SPObjectClass *) sp_feDisplacementMap_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -277,8 +250,8 @@ sp_feDisplacementMap_write(SPObject *object, Inkscape::XML::Document *doc, Inksc
     repr->setAttribute("yChannelSelector",
                        get_channelselector_name(disp->yChannelSelector));
 
-    if (((SPObjectClass *) feDisplacementMap_parent_class)->write) {
-        ((SPObjectClass *) feDisplacementMap_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feDisplacementMap_parent_class)->write) {
+        ((SPObjectClass *) sp_feDisplacementMap_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

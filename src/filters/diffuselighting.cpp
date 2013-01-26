@@ -31,10 +31,6 @@
 #include "display/nr-filter-diffuselighting.h"
 
 /* FeDiffuseLighting base class */
-
-static void sp_feDiffuseLighting_class_init(SPFeDiffuseLightingClass *klass);
-static void sp_feDiffuseLighting_init(SPFeDiffuseLighting *feDiffuseLighting);
-
 static void sp_feDiffuseLighting_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feDiffuseLighting_release(SPObject *object);
 static void sp_feDiffuseLighting_set(SPObject *object, unsigned int key, gchar const *value);
@@ -52,35 +48,13 @@ static Inkscape::XML::Node *sp_feDiffuseLighting_write(SPObject *object, Inkscap
 static void sp_feDiffuseLighting_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 static void sp_feDiffuseLighting_children_modified(SPFeDiffuseLighting *sp_diffuselighting);
 
-static SPFilterPrimitiveClass *feDiffuseLighting_parent_class;
-
-GType
-sp_feDiffuseLighting_get_type()
-{
-    static GType feDiffuseLighting_type = 0;
-
-    if (!feDiffuseLighting_type) {
-        GTypeInfo feDiffuseLighting_info = {
-            sizeof(SPFeDiffuseLightingClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feDiffuseLighting_class_init,
-            NULL, NULL,
-            sizeof(SPFeDiffuseLighting),
-            16,
-            (GInstanceInitFunc) sp_feDiffuseLighting_init,
-            NULL,    /* value_table */
-        };
-        feDiffuseLighting_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeDiffuseLighting", &feDiffuseLighting_info, (GTypeFlags)0);
-    }
-    return feDiffuseLighting_type;
-}
+G_DEFINE_TYPE(SPFeDiffuseLighting, sp_feDiffuseLighting, SP_TYPE_FILTER_PRIMITIVE);
 
 static void
 sp_feDiffuseLighting_class_init(SPFeDiffuseLightingClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-    feDiffuseLighting_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feDiffuseLighting_build;
     sp_object_class->release = sp_feDiffuseLighting_release;
@@ -116,8 +90,8 @@ sp_feDiffuseLighting_init(SPFeDiffuseLighting *feDiffuseLighting)
 static void
 sp_feDiffuseLighting_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feDiffuseLighting_parent_class)->build) {
-        ((SPObjectClass *) feDiffuseLighting_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_feDiffuseLighting_parent_class)->build) {
+        ((SPObjectClass *) sp_feDiffuseLighting_parent_class)->build(object, document, repr);
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
@@ -134,8 +108,8 @@ sp_feDiffuseLighting_build(SPObject *object, SPDocument *document, Inkscape::XML
 static void
 sp_feDiffuseLighting_release(SPObject *object)
 {
-    if (((SPObjectClass *) feDiffuseLighting_parent_class)->release)
-        ((SPObjectClass *) feDiffuseLighting_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feDiffuseLighting_parent_class)->release)
+        ((SPObjectClass *) sp_feDiffuseLighting_parent_class)->release(object);
 }
 
 /**
@@ -213,8 +187,8 @@ sp_feDiffuseLighting_set(SPObject *object, unsigned int key, gchar const *value)
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
-            if (((SPObjectClass *) feDiffuseLighting_parent_class)->set)
-                ((SPObjectClass *) feDiffuseLighting_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_feDiffuseLighting_parent_class)->set)
+                ((SPObjectClass *) sp_feDiffuseLighting_parent_class)->set(object, key, value);
             break;
     }
 
@@ -233,8 +207,8 @@ sp_feDiffuseLighting_update(SPObject *object, SPCtx *ctx, guint flags)
         object->readAttr( "lighting-color" );
     }
 
-    if (((SPObjectClass *) feDiffuseLighting_parent_class)->update) {
-        ((SPObjectClass *) feDiffuseLighting_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feDiffuseLighting_parent_class)->update) {
+        ((SPObjectClass *) sp_feDiffuseLighting_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -269,8 +243,8 @@ sp_feDiffuseLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inksc
     } else
         repr->setAttribute("lighting-color", NULL);
         
-    if (((SPObjectClass *) feDiffuseLighting_parent_class)->write) {
-        ((SPObjectClass *) feDiffuseLighting_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feDiffuseLighting_parent_class)->write) {
+        ((SPObjectClass *) sp_feDiffuseLighting_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;
@@ -284,8 +258,8 @@ sp_feDiffuseLighting_child_added(SPObject *object, Inkscape::XML::Node *child, I
 {
     SPFeDiffuseLighting *f = SP_FEDIFFUSELIGHTING(object);
 
-    if (((SPObjectClass *) feDiffuseLighting_parent_class)->child_added)
-        (* ((SPObjectClass *) feDiffuseLighting_parent_class)->child_added)(object, child, ref);
+    if (((SPObjectClass *) sp_feDiffuseLighting_parent_class)->child_added)
+        (* ((SPObjectClass *) sp_feDiffuseLighting_parent_class)->child_added)(object, child, ref);
 
     sp_feDiffuseLighting_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -300,8 +274,8 @@ sp_feDiffuseLighting_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {   
     SPFeDiffuseLighting *f = SP_FEDIFFUSELIGHTING(object);
 
-    if (((SPObjectClass *) feDiffuseLighting_parent_class)->remove_child)
-        (* ((SPObjectClass *) feDiffuseLighting_parent_class)->remove_child)(object, child);   
+    if (((SPObjectClass *) sp_feDiffuseLighting_parent_class)->remove_child)
+        (* ((SPObjectClass *) sp_feDiffuseLighting_parent_class)->remove_child)(object, child);   
 
     sp_feDiffuseLighting_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -311,8 +285,8 @@ static void
 sp_feDiffuseLighting_order_changed (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref)
 {
     SPFeDiffuseLighting *f = SP_FEDIFFUSELIGHTING(object);
-    if (((SPObjectClass *) (feDiffuseLighting_parent_class))->order_changed)
-        (* ((SPObjectClass *) (feDiffuseLighting_parent_class))->order_changed) (object, child, old_ref, new_ref);
+    if (((SPObjectClass *) (sp_feDiffuseLighting_parent_class))->order_changed)
+        (* ((SPObjectClass *) (sp_feDiffuseLighting_parent_class))->order_changed) (object, child, old_ref, new_ref);
 
     sp_feDiffuseLighting_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);

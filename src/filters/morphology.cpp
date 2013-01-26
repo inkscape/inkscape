@@ -27,10 +27,6 @@
 #include "display/nr-filter-morphology.h"
 
 /* FeMorphology base class */
-
-static void sp_feMorphology_class_init(SPFeMorphologyClass *klass);
-static void sp_feMorphology_init(SPFeMorphology *feMorphology);
-
 static void sp_feMorphology_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feMorphology_release(SPObject *object);
 static void sp_feMorphology_set(SPObject *object, unsigned int key, gchar const *value);
@@ -38,36 +34,13 @@ static void sp_feMorphology_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feMorphology_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feMorphology_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
-static SPFilterPrimitiveClass *feMorphology_parent_class;
-
-GType
-sp_feMorphology_get_type()
-{
-    static GType feMorphology_type = 0;
-
-    if (!feMorphology_type) {
-        GTypeInfo feMorphology_info = {
-            sizeof(SPFeMorphologyClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feMorphology_class_init,
-            NULL, NULL,
-            sizeof(SPFeMorphology),
-            16,
-            (GInstanceInitFunc) sp_feMorphology_init,
-            NULL,    /* value_table */
-        };
-        feMorphology_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeMorphology", &feMorphology_info, (GTypeFlags)0);
-    }
-    return feMorphology_type;
-}
+G_DEFINE_TYPE(SPFeMorphology, sp_feMorphology, SP_TYPE_FILTER_PRIMITIVE);
 
 static void
 sp_feMorphology_class_init(SPFeMorphologyClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-    
-    feMorphology_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feMorphology_build;
     sp_object_class->release = sp_feMorphology_release;
@@ -92,8 +65,8 @@ sp_feMorphology_init(SPFeMorphology *feMorphology)
 static void
 sp_feMorphology_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feMorphology_parent_class)->build) {
-        ((SPObjectClass *) feMorphology_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_feMorphology_parent_class)->build) {
+        ((SPObjectClass *) sp_feMorphology_parent_class)->build(object, document, repr);
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
@@ -107,8 +80,8 @@ sp_feMorphology_build(SPObject *object, SPDocument *document, Inkscape::XML::Nod
 static void
 sp_feMorphology_release(SPObject *object)
 {
-    if (((SPObjectClass *) feMorphology_parent_class)->release)
-        ((SPObjectClass *) feMorphology_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feMorphology_parent_class)->release)
+        ((SPObjectClass *) sp_feMorphology_parent_class)->release(object);
 }
 
 static Inkscape::Filters::FilterMorphologyOperator sp_feMorphology_read_operator(gchar const *value){
@@ -151,8 +124,8 @@ sp_feMorphology_set(SPObject *object, unsigned int key, gchar const *value)
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
-            if (((SPObjectClass *) feMorphology_parent_class)->set)
-                ((SPObjectClass *) feMorphology_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_feMorphology_parent_class)->set)
+                ((SPObjectClass *) sp_feMorphology_parent_class)->set(object, key, value);
             break;
     }
 
@@ -171,8 +144,8 @@ sp_feMorphology_update(SPObject *object, SPCtx *ctx, guint flags)
 
     }
 
-    if (((SPObjectClass *) feMorphology_parent_class)->update) {
-        ((SPObjectClass *) feMorphology_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feMorphology_parent_class)->update) {
+        ((SPObjectClass *) sp_feMorphology_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -188,8 +161,8 @@ sp_feMorphology_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::
         repr = object->getRepr()->duplicate(doc);
     }
 
-    if (((SPObjectClass *) feMorphology_parent_class)->write) {
-        ((SPObjectClass *) feMorphology_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feMorphology_parent_class)->write) {
+        ((SPObjectClass *) sp_feMorphology_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

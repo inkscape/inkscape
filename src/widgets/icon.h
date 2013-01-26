@@ -17,7 +17,7 @@
 #include <gtkmm/widget.h>
 #include "icon-size.h"
 
-#define SP_TYPE_ICON SPIcon::getType()
+#define SP_TYPE_ICON sp_icon_get_type()
 #define SP_ICON(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_ICON, SPIcon))
 #define SP_IS_ICON(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_ICON))
 
@@ -29,6 +29,8 @@ struct SPIconClass {
     GtkWidgetClass parent_class;
 };
 
+GType sp_icon_get_type() G_GNUC_CONST;
+
 struct SPIcon {
     GtkWidget widget;
 
@@ -37,8 +39,6 @@ struct SPIcon {
     gchar *name;
 
     GdkPixbuf *pb;
-
-    static GType getType(void);
 
     friend class SPIconImpl;
 };

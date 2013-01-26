@@ -227,21 +227,6 @@ public:
     static int pickCurrentItem(SPCanvas *canvas, GdkEvent *event);
 
     /**
-     * Class initialization function for SPCanvasClass.
-     */
-    static void classInit(SPCanvasClass *klass);
-
-    /**
-     * Callback: object initialization for SPCanvas.
-     */
-    static void init(SPCanvas *canvas);
-
-    /**
-     * Destroy handler for SPCanvas.
-     */
-    static void dispose(GObject *object);
-
-    /**
      * The canvas widget's realize callback.
      */
     static void realize(GtkWidget *widget);
@@ -369,24 +354,10 @@ public:
     static void add_idle(SPCanvas *canvas);
 
     /**
-     * Convenience function to remove the idle handler of a canvas.
-     */
-    static void remove_idle(SPCanvas *canvas);
-
-    /**
-     * Removes the transient state of the canvas (idle handler, grabs).
-     */
-    static void shutdown_transients(SPCanvas *canvas);
-
-    /**
      * Update callback for canvas widget.
      */
     static void requestCanvasUpdate(SPCanvas *canvas);
-
-    static GtkWidgetClass *parentClass;
 };
-
-GtkWidgetClass *SPCanvasImpl::parentClass = 0;
 
 GType SPCanvasItem::getType()
 {
@@ -437,9 +408,9 @@ void sp_canvas_item_class_init(SPCanvasItemClass *klass)
                                              G_TYPE_BOOLEAN, 1,
                                              GDK_TYPE_EVENT);
 
-    gobject_class->dispose = sp_canvas_item_dispose;
+    gobject_class->dispose  = sp_canvas_item_dispose;
     gobject_class->finalize = sp_canvas_item_finalize;
-    klass->destroy = sp_canvas_item_real_destroy;
+    klass->destroy          = sp_canvas_item_real_destroy;
   
     object_signals[DESTROY] =
       g_signal_new ("destroy",
@@ -1218,68 +1189,46 @@ void SPCanvasGroup::remove(SPCanvasItem *item)
     }
 }
 
-/**
- * Registers the SPCanvas class if necessary, and returns the type ID
- * associated to it.
- *
- * @return The type ID of the SPCanvas class.
- */
-GType SPCanvas::getType(void)
+static void sp_canvas_dispose            (GObject  *object);
+static void sp_canvas_shutdown_transients(SPCanvas *canvas);
+
+G_DEFINE_TYPE(SPCanvas, sp_canvas, GTK_TYPE_WIDGET);
+
+static void
+sp_canvas_class_init(SPCanvasClass *klass)
 {
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPCanvasClass),
-            0, // base_init
-            0, // base_finalize
-            (GClassInitFunc)SPCanvasImpl::classInit,
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPCanvas),
-            0, // n_preallocs
-            (GInstanceInitFunc)SPCanvasImpl::init,
-            0 // value_table
-        };
-        type = g_type_register_static(GTK_TYPE_WIDGET, "SPCanvas", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
+    GObjectClass   *object_class = G_OBJECT_CLASS(klass);
+    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
 
-void SPCanvasImpl::classInit(SPCanvasClass *klass)
-{
-    GObjectClass *object_class = (GObjectClass *) klass;
-    GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
+    object_class->dispose = sp_canvas_dispose;
 
-    parentClass = reinterpret_cast<GtkWidgetClass *>(g_type_class_peek_parent(klass));
-
-    object_class->dispose = SPCanvasImpl::dispose;
-
-    widget_class->realize = SPCanvasImpl::realize;
-    widget_class->unrealize = SPCanvasImpl::unrealize;
+    widget_class->realize              = SPCanvasImpl::realize;
+    widget_class->unrealize            = SPCanvasImpl::unrealize;
 
 #if GTK_CHECK_VERSION(3,0,0)
-    widget_class->get_preferred_width = SPCanvasImpl::getPreferredWidth;
+    widget_class->get_preferred_width  = SPCanvasImpl::getPreferredWidth;
     widget_class->get_preferred_height = SPCanvasImpl::getPreferredHeight;
-    widget_class->draw = SPCanvasImpl::handleDraw;
+    widget_class->draw                 = SPCanvasImpl::handleDraw;
 #else
-    widget_class->size_request = SPCanvasImpl::sizeRequest;
-    widget_class->expose_event = SPCanvasImpl::handleExpose;
+    widget_class->size_request         = SPCanvasImpl::sizeRequest;
+    widget_class->expose_event         = SPCanvasImpl::handleExpose;
 #endif
 
-    widget_class->size_allocate = SPCanvasImpl::sizeAllocate;
-    widget_class->button_press_event = SPCanvasImpl::button;
+    widget_class->size_allocate        = SPCanvasImpl::sizeAllocate;
+    widget_class->button_press_event   = SPCanvasImpl::button;
     widget_class->button_release_event = SPCanvasImpl::button;
-    widget_class->motion_notify_event = SPCanvasImpl::handleMotion;
-    widget_class->scroll_event = SPCanvasImpl::handleScroll;
-    widget_class->key_press_event = SPCanvasImpl::handleKeyEvent;
-    widget_class->key_release_event = SPCanvasImpl::handleKeyEvent;
-    widget_class->enter_notify_event = SPCanvasImpl::handleCrossing;
-    widget_class->leave_notify_event = SPCanvasImpl::handleCrossing;
-    widget_class->focus_in_event = SPCanvasImpl::handleFocusIn;
-    widget_class->focus_out_event = SPCanvasImpl::handleFocusOut;
+    widget_class->motion_notify_event  = SPCanvasImpl::handleMotion;
+    widget_class->scroll_event         = SPCanvasImpl::handleScroll;
+    widget_class->key_press_event      = SPCanvasImpl::handleKeyEvent;
+    widget_class->key_release_event    = SPCanvasImpl::handleKeyEvent;
+    widget_class->enter_notify_event   = SPCanvasImpl::handleCrossing;
+    widget_class->leave_notify_event   = SPCanvasImpl::handleCrossing;
+    widget_class->focus_in_event       = SPCanvasImpl::handleFocusIn;
+    widget_class->focus_out_event      = SPCanvasImpl::handleFocusOut;
 }
 
-void SPCanvasImpl::init(SPCanvas *canvas)
+static void
+sp_canvas_init(SPCanvas *canvas)
 {
     gtk_widget_set_has_window (GTK_WIDGET (canvas), TRUE);
     gtk_widget_set_double_buffered (GTK_WIDGET (canvas), FALSE);
@@ -1318,7 +1267,7 @@ void SPCanvasImpl::init(SPCanvas *canvas)
     canvas->is_scrolling = false;
 }
 
-void SPCanvasImpl::remove_idle(SPCanvas *canvas)
+static void sp_canvas_remove_idle(SPCanvas *canvas)
 {
     if (canvas->idle_id) {
         g_source_remove (canvas->idle_id);
@@ -1326,7 +1275,8 @@ void SPCanvasImpl::remove_idle(SPCanvas *canvas)
     }
 }
 
-void SPCanvasImpl::shutdown_transients(SPCanvas *canvas)
+static void
+sp_canvas_shutdown_transients(SPCanvas *canvas)
 {
     // We turn off the need_redraw flag, since if the canvas is mapped again
     // it will request a redraw anyways.  We do not turn off the need_update
@@ -1352,10 +1302,11 @@ void SPCanvasImpl::shutdown_transients(SPCanvas *canvas)
 #endif
     }
 
-    remove_idle(canvas);
+    sp_canvas_remove_idle(canvas);
 }
 
-void SPCanvasImpl::dispose(GObject *object)
+static void
+sp_canvas_dispose(GObject *object)
 {
     SPCanvas *canvas = SP_CANVAS(object);
 
@@ -1364,12 +1315,12 @@ void SPCanvasImpl::dispose(GObject *object)
         canvas->root = NULL;
     }
 
-    shutdown_transients(canvas);
+    sp_canvas_shutdown_transients(canvas);
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     canvas->cms_key.~ustring();
 #endif
-    if (G_OBJECT_CLASS(parentClass)->dispose) {
-        (* G_OBJECT_CLASS(parentClass)->dispose)(object);
+    if (G_OBJECT_CLASS(sp_canvas_parent_class)->dispose) {
+        (* G_OBJECT_CLASS(sp_canvas_parent_class)->dispose)(object);
     }
 }
 
@@ -1388,7 +1339,7 @@ void trackLatency(GdkEvent const *event)
 
 GtkWidget *SPCanvas::createAA()
 {
-    SPCanvas *canvas = reinterpret_cast<SPCanvas *>(g_object_new(SPCanvas::getType(), NULL));
+    SPCanvas *canvas = SP_CANVAS(g_object_new(SP_TYPE_CANVAS, NULL));
     return GTK_WIDGET(canvas);
 }
 
@@ -1456,10 +1407,10 @@ void SPCanvasImpl::unrealize(GtkWidget *widget)
     canvas->grabbed_item = NULL;
     canvas->focused_item = NULL;
 
-    shutdown_transients(canvas);
+    sp_canvas_shutdown_transients(canvas);
 
-    if (GTK_WIDGET_CLASS(parentClass)->unrealize)
-        (* GTK_WIDGET_CLASS(parentClass)->unrealize)(widget);
+    if (GTK_WIDGET_CLASS(sp_canvas_parent_class)->unrealize)
+        (* GTK_WIDGET_CLASS(sp_canvas_parent_class)->unrealize)(widget);
 }
 
 

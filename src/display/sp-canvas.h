@@ -39,7 +39,7 @@
 
 G_BEGIN_DECLS
 
-#define SP_TYPE_CANVAS (SPCanvas::getType())
+#define SP_TYPE_CANVAS (sp_canvas_get_type())
 #define SP_CANVAS(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_CANVAS, SPCanvas))
 #define SP_IS_CANVAS(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_CANVAS))
 
@@ -71,13 +71,13 @@ G_END_DECLS
 
 class SPCanvasImpl;
 
+GType sp_canvas_get_type() G_GNUC_CONST;
+
 /**
  * Port of GnomeCanvas for inkscape needs.
  */
 struct SPCanvas {
     friend class SPCanvasImpl;
-
-    static GType getType();
 
     /**
      * Returns new canvas as widget.

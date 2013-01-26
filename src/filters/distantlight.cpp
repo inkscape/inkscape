@@ -30,46 +30,18 @@
 #include "macros.h"
 
 /* FeDistantLight class */
-
-static void sp_fedistantlight_class_init(SPFeDistantLightClass *klass);
-static void sp_fedistantlight_init(SPFeDistantLight *fedistantlight);
-
 static void sp_fedistantlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_fedistantlight_release(SPObject *object);
 static void sp_fedistantlight_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_fedistantlight_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_fedistantlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static SPObjectClass *feDistantLight_parent_class;
-
-GType
-sp_fedistantlight_get_type()
-{
-    static GType fedistantlight_type = 0;
-
-    if (!fedistantlight_type) {
-        GTypeInfo fedistantlight_info = {
-            sizeof(SPFeDistantLightClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_fedistantlight_class_init,
-            NULL, NULL,
-            sizeof(SPFeDistantLight),
-            16,
-            (GInstanceInitFunc) sp_fedistantlight_init,
-            NULL,    /* value_table */
-        };
-        fedistantlight_type = g_type_register_static(SP_TYPE_OBJECT, "SPFeDistantLight", &fedistantlight_info, (GTypeFlags)0);
-    }
-    return fedistantlight_type;
-}
+G_DEFINE_TYPE(SPFeDistantLight, sp_fedistantlight, SP_TYPE_OBJECT);
 
 static void
 sp_fedistantlight_class_init(SPFeDistantLightClass *klass)
 {
-
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-
-    feDistantLight_parent_class = (SPObjectClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_fedistantlight_build;
     sp_object_class->release = sp_fedistantlight_release;
@@ -95,8 +67,8 @@ sp_fedistantlight_init(SPFeDistantLight *fedistantlight)
 static void
 sp_fedistantlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feDistantLight_parent_class)->build) {
-        ((SPObjectClass *) feDistantLight_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_fedistantlight_parent_class)->build) {
+        ((SPObjectClass *) sp_fedistantlight_parent_class)->build(object, document, repr);
     }
 
     //Read values of key attributes from XML nodes into object.
@@ -170,8 +142,8 @@ sp_fedistantlight_set(SPObject *object, unsigned int key, gchar const *value)
         break;
     default:
         // See if any parents need this value.
-        if (((SPObjectClass *) feDistantLight_parent_class)->set) {
-            ((SPObjectClass *) feDistantLight_parent_class)->set(object, key, value);
+        if (((SPObjectClass *) sp_fedistantlight_parent_class)->set) {
+            ((SPObjectClass *) sp_fedistantlight_parent_class)->set(object, key, value);
         }
         break;
     }
@@ -192,8 +164,8 @@ sp_fedistantlight_update(SPObject *object, SPCtx *ctx, guint flags)
         object->readAttr( "elevation" );
     }
 
-    if (((SPObjectClass *) feDistantLight_parent_class)->update) {
-        ((SPObjectClass *) feDistantLight_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_fedistantlight_parent_class)->update) {
+        ((SPObjectClass *) sp_fedistantlight_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -214,8 +186,8 @@ sp_fedistantlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape
     if (fedistantlight->elevation_set)
         sp_repr_set_css_double(repr, "elevation", fedistantlight->elevation);
 
-    if (((SPObjectClass *) feDistantLight_parent_class)->write) {
-        ((SPObjectClass *) feDistantLight_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_fedistantlight_parent_class)->write) {
+        ((SPObjectClass *) sp_fedistantlight_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

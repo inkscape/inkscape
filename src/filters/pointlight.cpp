@@ -30,46 +30,18 @@
 #include "macros.h"
 
 /* FePointLight class */
-
-static void sp_fepointlight_class_init(SPFePointLightClass *klass);
-static void sp_fepointlight_init(SPFePointLight *fepointlight);
-
 static void sp_fepointlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_fepointlight_release(SPObject *object);
 static void sp_fepointlight_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_fepointlight_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_fepointlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static SPObjectClass *fePointLight_parent_class;
-
-GType
-sp_fepointlight_get_type()
-{
-    static GType fepointlight_type = 0;
-
-    if (!fepointlight_type) {
-        GTypeInfo fepointlight_info = {
-            sizeof(SPFePointLightClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_fepointlight_class_init,
-            NULL, NULL,
-            sizeof(SPFePointLight),
-            16,
-            (GInstanceInitFunc) sp_fepointlight_init,
-            NULL,    /* value_table */
-        };
-        fepointlight_type = g_type_register_static(SP_TYPE_OBJECT, "SPFePointLight", &fepointlight_info, (GTypeFlags)0);
-    }
-    return fepointlight_type;
-}
+G_DEFINE_TYPE(SPFePointLight, sp_fepointlight, SP_TYPE_OBJECT);
 
 static void
 sp_fepointlight_class_init(SPFePointLightClass *klass)
 {
-
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-
-    fePointLight_parent_class = (SPObjectClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_fepointlight_build;
     sp_object_class->release = sp_fepointlight_release;
@@ -98,8 +70,8 @@ sp_fepointlight_init(SPFePointLight *fepointlight)
 static void
 sp_fepointlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) fePointLight_parent_class)->build) {
-        ((SPObjectClass *) fePointLight_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_fepointlight_parent_class)->build) {
+        ((SPObjectClass *) sp_fepointlight_parent_class)->build(object, document, repr);
     }
 
     //Read values of key attributes from XML nodes into object.
@@ -192,8 +164,8 @@ sp_fepointlight_set(SPObject *object, unsigned int key, gchar const *value)
         break;
     default:
         // See if any parents need this value.
-        if (((SPObjectClass *) fePointLight_parent_class)->set) {
-            ((SPObjectClass *) fePointLight_parent_class)->set(object, key, value);
+        if (((SPObjectClass *) sp_fepointlight_parent_class)->set) {
+            ((SPObjectClass *) sp_fepointlight_parent_class)->set(object, key, value);
         }
         break;
     }
@@ -215,8 +187,8 @@ sp_fepointlight_update(SPObject *object, SPCtx *ctx, guint flags)
         object->readAttr( "z" );
     }
 
-    if (((SPObjectClass *) fePointLight_parent_class)->update) {
-        ((SPObjectClass *) fePointLight_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_fepointlight_parent_class)->update) {
+        ((SPObjectClass *) sp_fepointlight_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -239,8 +211,8 @@ sp_fepointlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::
     if (fepointlight->z_set)
         sp_repr_set_css_double(repr, "z", fepointlight->z);
 
-    if (((SPObjectClass *) fePointLight_parent_class)->write) {
-        ((SPObjectClass *) fePointLight_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_fepointlight_parent_class)->write) {
+        ((SPObjectClass *) sp_fepointlight_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

@@ -19,34 +19,9 @@
 #include "document.h"
 #include "helper/action.h"
 
-static void sp_action_class_init (SPActionClass *klass);
-static void sp_action_init (SPAction *action);
 static void sp_action_finalize (GObject *object);
 
-static GObjectClass *parent_class;
-
-/**
- * Register SPAction class and return its type.
- */
-GType
-sp_action_get_type (void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPActionClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_action_class_init,
-            NULL, NULL,
-            sizeof(SPAction),
-            0,
-            (GInstanceInitFunc) sp_action_init,
-            NULL
-        };
-        type = g_type_register_static(G_TYPE_OBJECT, "SPAction", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPAction, sp_action, G_TYPE_OBJECT);
 
 /**
  * SPAction vtable initialization.
@@ -54,8 +29,6 @@ sp_action_get_type (void)
 static void
 sp_action_class_init (SPActionClass *klass)
 {
-    parent_class = (GObjectClass*) g_type_class_ref(G_TYPE_OBJECT);
-
     GObjectClass *object_class = (GObjectClass *) klass;
     object_class->finalize = sp_action_finalize;
 }
@@ -84,19 +57,19 @@ sp_action_init (SPAction *action)
 static void
 sp_action_finalize (GObject *object)
 {
-	SPAction *action = SP_ACTION(object);
+    SPAction *action = SP_ACTION(object);
 
-	g_free (action->image);
-	g_free (action->tip);
-	g_free (action->name);
-	g_free (action->id);
+    g_free (action->image);
+    g_free (action->tip);
+    g_free (action->name);
+    g_free (action->id);
 
     action->signal_perform.~signal();
     action->signal_set_sensitive.~signal();
     action->signal_set_active.~signal();
     action->signal_set_name.~signal();
 
-	parent_class->finalize (object);
+    G_OBJECT_CLASS(sp_action_parent_class)->finalize (object);
 }
 
 /**

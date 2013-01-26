@@ -50,8 +50,6 @@
 #include "ui/widget/gimpspinscale.h"
 
 
-static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass );
-static void ege_adjustment_action_init( EgeAdjustmentAction* action );
 static void ege_adjustment_action_finalize( GObject* object );
 static void ege_adjustment_action_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec );
 static void ege_adjustment_action_set_property( GObject* obj, guint propId, const GValue *value, GParamSpec* pspec );
@@ -70,8 +68,6 @@ static void ege_adjustment_action_defocus( EgeAdjustmentAction* action );
 static void egeAct_free_description( gpointer data, gpointer user_data );
 static void egeAct_free_all_descriptions( EgeAdjustmentAction* action );
 
-
-static GtkActionClass* gParentClass = 0;
 static EgeCreateAdjWidgetCB gFactoryCb = 0;
 static GQuark gDataName = 0;
 
@@ -146,34 +142,11 @@ enum {
     BUMP_CUSTOM = 100
 };
 
-GType ege_adjustment_action_get_type( void )
-{
-    static GType myType = 0;
-    if ( !myType ) {
-        static const GTypeInfo myInfo = {
-            sizeof( EgeAdjustmentActionClass ),
-            NULL, /* base_init */
-            NULL, /* base_finalize */
-            (GClassInitFunc)ege_adjustment_action_class_init,
-            NULL, /* class_finalize */
-            NULL, /* class_data */
-            sizeof( EgeAdjustmentAction ),
-            0, /* n_preallocs */
-            (GInstanceInitFunc)ege_adjustment_action_init,
-            NULL
-        };
-
-        myType = g_type_register_static( GTK_TYPE_ACTION, "EgeAdjustmentAction", &myInfo, (GTypeFlags)0 );
-    }
-
-    return myType;
-}
-
+G_DEFINE_TYPE(EgeAdjustmentAction, ege_adjustment_action, GTK_TYPE_ACTION);
 
 static void ege_adjustment_action_class_init( EgeAdjustmentActionClass* klass )
 {
     if ( klass ) {
-        gParentClass = GTK_ACTION_CLASS( g_type_class_peek_parent( klass ) );
         GObjectClass * objClass = G_OBJECT_CLASS( klass );
 
         gDataName = g_quark_from_string("ege-adj-action");
@@ -308,8 +281,8 @@ static void ege_adjustment_action_finalize( GObject* object )
 
     egeAct_free_all_descriptions( action );
 
-    if ( G_OBJECT_CLASS(gParentClass)->finalize ) {
-        (*G_OBJECT_CLASS(gParentClass)->finalize)(object);
+    if ( G_OBJECT_CLASS(ege_adjustment_action_parent_class)->finalize ) {
+        (*G_OBJECT_CLASS(ege_adjustment_action_parent_class)->finalize)(object);
     }
 }
 
@@ -772,7 +745,7 @@ static GtkWidget* create_menu_item( GtkAction* action )
         gtk_widget_show_all( subby );
         g_value_unset( &value );
     } else {
-        item = gParentClass->create_menu_item( action );
+        item = GTK_ACTION_CLASS(ege_adjustment_action_parent_class)->create_menu_item( action );
     }
 
     return item;
@@ -910,7 +883,7 @@ static GtkWidget* create_tool_item( GtkAction* action )
 
         g_value_unset( &value );
     } else {
-        item = gParentClass->create_tool_item( action );
+        item = GTK_ACTION_CLASS(ege_adjustment_action_parent_class)->create_tool_item( action );
     }
 
     return item;
@@ -918,12 +891,12 @@ static GtkWidget* create_tool_item( GtkAction* action )
 
 static void connect_proxy( GtkAction *action, GtkWidget *proxy )
 {
-    gParentClass->connect_proxy( action, proxy );
+    GTK_ACTION_CLASS(ege_adjustment_action_parent_class)->connect_proxy( action, proxy );
 }
 
 static void disconnect_proxy( GtkAction *action, GtkWidget *proxy )
 {
-    gParentClass->disconnect_proxy( action, proxy );
+    GTK_ACTION_CLASS(ege_adjustment_action_parent_class)->disconnect_proxy( action, proxy );
 }
 
 void ege_adjustment_action_defocus( EgeAdjustmentAction* action )

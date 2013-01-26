@@ -63,8 +63,12 @@ enum {
 };
 static guint signals[N_SIGNALS] = {0};
 
-static GtkActionClass *ink_comboboxentry_action_parent_class = NULL;
 static GQuark gDataName = 0;
+
+static void ink_comboboxentry_action_init (Ink_ComboBoxEntry_Action *action);
+static void ink_comboboxentry_action_class_init (Ink_ComboBoxEntry_ActionClass *klass);
+
+G_DEFINE_TYPE(Ink_ComboBoxEntry_Action, ink_comboboxentry_action, GTK_TYPE_ACTION);
 
 static void ink_comboboxentry_action_finalize (GObject *object)
 {
@@ -174,8 +178,8 @@ ink_comboboxentry_action_connect_proxy (GtkAction *action,
   GTK_ACTION_CLASS (ink_comboboxentry_action_parent_class)->connect_proxy (action, proxy);
 }
 
-
-static void ink_comboboxentry_action_class_init (Ink_ComboBoxEntry_ActionClass *klass)
+static void
+ink_comboboxentry_action_class_init (Ink_ComboBoxEntry_ActionClass *klass)
 {
 
   GObjectClass     *gobject_class = G_OBJECT_CLASS (klass);
@@ -191,8 +195,6 @@ static void ink_comboboxentry_action_class_init (Ink_ComboBoxEntry_ActionClass *
 
   klass->parent_class.create_tool_item = create_tool_item;
   klass->parent_class.create_menu_item = create_menu_item;
-
-  ink_comboboxentry_action_parent_class = GTK_ACTION_CLASS(g_type_class_peek_parent (klass) );
 
   g_object_class_install_property (
                                    gobject_class,
@@ -291,34 +293,6 @@ static void ink_comboboxentry_action_init (Ink_ComboBoxEntry_Action *action)
   action->altx_name = NULL;
   action->focusWidget = NULL;
 }
-
-GType ink_comboboxentry_action_get_type ()
-{
-  static GType ink_comboboxentry_action_type = 0;
-
-  if (!ink_comboboxentry_action_type) {
-    static const GTypeInfo ink_comboboxentry_action_info = {
-      sizeof(Ink_ComboBoxEntry_ActionClass),
-      NULL, /* base_init */
-      NULL, /* base_finalize */
-      (GClassInitFunc) ink_comboboxentry_action_class_init,
-      NULL, /* class_finalize */
-      NULL, /* class_data */
-      sizeof(Ink_ComboBoxEntry_Action),
-      0,    /* n_preallocs */
-      (GInstanceInitFunc)ink_comboboxentry_action_init, /* instance_init */
-      NULL  /* value_table */
-    };
-
-    ink_comboboxentry_action_type = g_type_register_static (GTK_TYPE_ACTION,
-                                                            "Ink_ComboBoxEntry_Action",
-                                                            &ink_comboboxentry_action_info,
-                                                            (GTypeFlags)0 );
-  }
-
-  return ink_comboboxentry_action_type;
-}
-
 
 Ink_ComboBoxEntry_Action *ink_comboboxentry_action_new (const gchar   *name,
                                                         const gchar   *label,
@@ -439,7 +413,7 @@ GtkWidget* create_tool_item( GtkAction* action )
 
   } else {
 
-    item = ink_comboboxentry_action_parent_class->create_tool_item( action );
+    item = GTK_ACTION_CLASS(ink_comboboxentry_action_parent_class)->create_tool_item( action );
 
   }
 
@@ -451,7 +425,7 @@ GtkWidget* create_menu_item( GtkAction* action )
 {
   GtkWidget* item = 0;
 
-    item = ink_comboboxentry_action_parent_class->create_menu_item( action );
+    item = GTK_ACTION_CLASS(ink_comboboxentry_action_parent_class)->create_menu_item( action );
     g_warning( "ink_comboboxentry_action: create_menu_item not implemented" );
     // One can easily modify ege-select-one-action routine to implement this.
   return item;

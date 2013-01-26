@@ -23,10 +23,6 @@
 #include "display/nr-filter-tile.h"
 
 /* FeTile base class */
-
-static void sp_feTile_class_init(SPFeTileClass *klass);
-static void sp_feTile_init(SPFeTile *feTile);
-
 static void sp_feTile_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feTile_release(SPObject *object);
 static void sp_feTile_set(SPObject *object, unsigned int key, gchar const *value);
@@ -34,36 +30,13 @@ static void sp_feTile_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feTile_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feTile_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
-static SPFilterPrimitiveClass *feTile_parent_class;
-
-GType
-sp_feTile_get_type()
-{
-    static GType feTile_type = 0;
-
-    if (!feTile_type) {
-        GTypeInfo feTile_info = {
-            sizeof(SPFeTileClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feTile_class_init,
-            NULL, NULL,
-            sizeof(SPFeTile),
-            16,
-            (GInstanceInitFunc) sp_feTile_init,
-            NULL,    /* value_table */
-        };
-        feTile_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeTile", &feTile_info, (GTypeFlags)0);
-    }
-    return feTile_type;
-}
+G_DEFINE_TYPE(SPFeTile, sp_feTile, SP_TYPE_FILTER_PRIMITIVE);
 
 static void
 sp_feTile_class_init(SPFeTileClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    feTile_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feTile_build;
     sp_object_class->release = sp_feTile_release;
@@ -86,8 +59,8 @@ sp_feTile_init(SPFeTile */*feTile*/)
 static void
 sp_feTile_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feTile_parent_class)->build) {
-        ((SPObjectClass *) feTile_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_feTile_parent_class)->build) {
+        ((SPObjectClass *) sp_feTile_parent_class)->build(object, document, repr);
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
@@ -99,8 +72,8 @@ sp_feTile_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *rep
 static void
 sp_feTile_release(SPObject *object)
 {
-    if (((SPObjectClass *) feTile_parent_class)->release)
-        ((SPObjectClass *) feTile_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feTile_parent_class)->release)
+        ((SPObjectClass *) sp_feTile_parent_class)->release(object);
 }
 
 /**
@@ -115,8 +88,8 @@ sp_feTile_set(SPObject *object, unsigned int key, gchar const *value)
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         default:
-            if (((SPObjectClass *) feTile_parent_class)->set)
-                ((SPObjectClass *) feTile_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_feTile_parent_class)->set)
+                ((SPObjectClass *) sp_feTile_parent_class)->set(object, key, value);
             break;
     }
 
@@ -135,8 +108,8 @@ sp_feTile_update(SPObject *object, SPCtx *ctx, guint flags)
 
     }
 
-    if (((SPObjectClass *) feTile_parent_class)->update) {
-        ((SPObjectClass *) feTile_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feTile_parent_class)->update) {
+        ((SPObjectClass *) sp_feTile_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -152,8 +125,8 @@ sp_feTile_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::N
         repr = object->getRepr()->duplicate(doc);
     }
 
-    if (((SPObjectClass *) feTile_parent_class)->write) {
-        ((SPObjectClass *) feTile_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feTile_parent_class)->write) {
+        ((SPObjectClass *) sp_feTile_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

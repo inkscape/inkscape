@@ -41,9 +41,6 @@
 #include "icon.h"
 
 struct IconImpl {
-    static void classInit(SPIconClass *klass);
-    static void init(SPIcon *icon);
-
     static GtkWidget *newFull( Inkscape::IconSize lsize, gchar const *name );
 
     static void dispose(GObject *object);
@@ -104,12 +101,10 @@ struct IconImpl {
 
 private:
     static const std::string magicNumber;
-    static GtkWidgetClass *parent_class;
     static std::map<Glib::ustring, Glib::ustring> legacyNames;
 };
 
 const std::string IconImpl::magicNumber = "1.0";
-GtkWidgetClass *IconImpl::parent_class = 0;
 std::map<Glib::ustring, Glib::ustring> IconImpl::legacyNames;
 
 
@@ -141,33 +136,13 @@ public:
 static std::map<Glib::ustring, std::vector<IconCacheItem> > iconSetCache;
 static std::set<Glib::ustring> internalNames;
 
-GType SPIcon::getType()
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPIconClass),
-            NULL,
-            NULL,
-            reinterpret_cast<GClassInitFunc>(IconImpl::classInit),
-            NULL,
-            NULL,
-            sizeof(SPIcon),
-            0,
-            reinterpret_cast<GInstanceInitFunc>(IconImpl::init),
-            NULL
-        };
-        type = g_type_register_static(GTK_TYPE_WIDGET, "SPIcon", &info, (GTypeFlags)0);
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPIcon, sp_icon, GTK_TYPE_WIDGET);
 
-void IconImpl::classInit(SPIconClass *klass)
+static void
+sp_icon_class_init(SPIconClass *klass)
 {
     GObjectClass   *object_class = G_OBJECT_CLASS(klass);
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
-
-    parent_class = GTK_WIDGET_CLASS(g_type_class_peek_parent(klass));
 
     object_class->dispose = IconImpl::dispose;
 
@@ -184,7 +159,8 @@ void IconImpl::classInit(SPIconClass *klass)
     widget_class->style_set = IconImpl::styleSet;
 }
 
-void IconImpl::init(SPIcon *icon)
+static void
+sp_icon_init(SPIcon *icon)
 {
     gtk_widget_set_has_window (GTK_WIDGET (icon), FALSE);
     icon->lsize = Inkscape::ICON_SIZE_BUTTON;
@@ -202,7 +178,7 @@ void IconImpl::dispose(GObject *object)
         icon->name = 0;
     }
 
-    (G_OBJECT_CLASS(parent_class))->dispose(object);
+    (G_OBJECT_CLASS(sp_icon_parent_class))->dispose(object);
 }
 
 void IconImpl::reset( SPIcon *icon )
@@ -375,8 +351,8 @@ GdkPixbuf* IconImpl::renderup( gchar const* name, Inkscape::IconSize lsize, unsi
 
 void IconImpl::screenChanged( GtkWidget *widget, GdkScreen *previous_screen )
 {
-    if ( GTK_WIDGET_CLASS( parent_class )->screen_changed ) {
-        GTK_WIDGET_CLASS( parent_class )->screen_changed( widget, previous_screen );
+    if ( GTK_WIDGET_CLASS( sp_icon_parent_class )->screen_changed ) {
+        GTK_WIDGET_CLASS( sp_icon_parent_class )->screen_changed( widget, previous_screen );
     }
     SPIcon *icon = SP_ICON(widget);
     themeChanged(icon);
@@ -384,8 +360,8 @@ void IconImpl::screenChanged( GtkWidget *widget, GdkScreen *previous_screen )
 
 void IconImpl::styleSet( GtkWidget *widget, GtkStyle *previous_style )
 {
-    if ( GTK_WIDGET_CLASS( parent_class )->style_set ) {
-        GTK_WIDGET_CLASS( parent_class )->style_set( widget, previous_style );
+    if ( GTK_WIDGET_CLASS( sp_icon_parent_class )->style_set ) {
+        GTK_WIDGET_CLASS( sp_icon_parent_class )->style_set( widget, previous_style );
     }
     SPIcon *icon = SP_ICON(widget);
     themeChanged(icon);

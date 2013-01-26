@@ -23,45 +23,18 @@
 #include "filters/merge.h"
 #include "display/nr-filter-types.h"
 
-static void sp_feMergeNode_class_init(SPFeMergeNodeClass *klass);
-static void sp_feMergeNode_init(SPFeMergeNode *skeleton);
-
 static void sp_feMergeNode_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feMergeNode_release(SPObject *object);
 static void sp_feMergeNode_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_feMergeNode_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feMergeNode_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static SPObjectClass *feMergeNode_parent_class;
-
-GType
-sp_feMergeNode_get_type()
-{
-    static GType feMergeNode_type = 0;
-
-    if (!feMergeNode_type) {
-        GTypeInfo feMergeNode_info = {
-            sizeof(SPFeMergeNodeClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feMergeNode_class_init,
-            NULL, NULL,
-            sizeof(SPFeMergeNode),
-            16,
-            (GInstanceInitFunc) sp_feMergeNode_init,
-            NULL,    /* value_table */
-        };
-        feMergeNode_type = g_type_register_static(SP_TYPE_OBJECT, "SPFeMergeNode", &feMergeNode_info, (GTypeFlags)0);
-    }
-    return feMergeNode_type;
-}
+G_DEFINE_TYPE(SPFeMergeNode, sp_feMergeNode, SP_TYPE_OBJECT);
 
 static void
 sp_feMergeNode_class_init(SPFeMergeNodeClass *klass)
 {
-    //GObjectClass *gobject_class = (GObjectClass *)klass;
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-
-    feMergeNode_parent_class = (SPObjectClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feMergeNode_build;
     sp_object_class->release = sp_feMergeNode_release;
@@ -95,8 +68,8 @@ sp_feMergeNode_release(SPObject *object)
 {
     /* deal with our children and our selves here */
 
-    if (((SPObjectClass *) feMergeNode_parent_class)->release)
-        ((SPObjectClass *) feMergeNode_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feMergeNode_parent_class)->release)
+        ((SPObjectClass *) sp_feMergeNode_parent_class)->release(object);
 }
 
 /**
@@ -117,8 +90,8 @@ sp_feMergeNode_set(SPObject *object, unsigned int key, gchar const *value)
     }
 
     /* See if any parents need this value. */
-    if (((SPObjectClass *) feMergeNode_parent_class)->set) {
-        ((SPObjectClass *) feMergeNode_parent_class)->set(object, key, value);
+    if (((SPObjectClass *) sp_feMergeNode_parent_class)->set) {
+        ((SPObjectClass *) sp_feMergeNode_parent_class)->set(object, key, value);
     }
 }
 
@@ -134,8 +107,8 @@ sp_feMergeNode_update(SPObject *object, SPCtx *ctx, guint flags)
         object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
     }
 
-    if (((SPObjectClass *) feMergeNode_parent_class)->update) {
-        ((SPObjectClass *) feMergeNode_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feMergeNode_parent_class)->update) {
+        ((SPObjectClass *) sp_feMergeNode_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -157,8 +130,8 @@ sp_feMergeNode_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::X
         }
     }
 
-    if (((SPObjectClass *) feMergeNode_parent_class)->write) {
-        ((SPObjectClass *) feMergeNode_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feMergeNode_parent_class)->write) {
+        ((SPObjectClass *) sp_feMergeNode_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

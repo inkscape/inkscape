@@ -31,10 +31,6 @@
 #include "display/nr-filter-specularlighting.h"
 
 /* FeSpecularLighting base class */
-
-static void sp_feSpecularLighting_class_init(SPFeSpecularLightingClass *klass);
-static void sp_feSpecularLighting_init(SPFeSpecularLighting *feSpecularLighting);
-
 static void sp_feSpecularLighting_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feSpecularLighting_release(SPObject *object);
 static void sp_feSpecularLighting_set(SPObject *object, unsigned int key, gchar const *value);
@@ -52,35 +48,13 @@ static Inkscape::XML::Node *sp_feSpecularLighting_write(SPObject *object, Inksca
 static void sp_feSpecularLighting_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 static void sp_feSpecularLighting_children_modified(SPFeSpecularLighting *sp_specularlighting);
 
-static SPFilterPrimitiveClass *feSpecularLighting_parent_class;
-
-GType
-sp_feSpecularLighting_get_type()
-{
-    static GType feSpecularLighting_type = 0;
-
-    if (!feSpecularLighting_type) {
-        GTypeInfo feSpecularLighting_info = {
-            sizeof(SPFeSpecularLightingClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feSpecularLighting_class_init,
-            NULL, NULL,
-            sizeof(SPFeSpecularLighting),
-            16,
-            (GInstanceInitFunc) sp_feSpecularLighting_init,
-            NULL,    /* value_table */
-        };
-        feSpecularLighting_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeSpecularLighting", &feSpecularLighting_info, (GTypeFlags)0);
-    }
-    return feSpecularLighting_type;
-}
+G_DEFINE_TYPE(SPFeSpecularLighting, sp_feSpecularLighting, SP_TYPE_FILTER_PRIMITIVE);
 
 static void
 sp_feSpecularLighting_class_init(SPFeSpecularLightingClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-    feSpecularLighting_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feSpecularLighting_build;
     sp_object_class->release = sp_feSpecularLighting_release;
@@ -118,8 +92,8 @@ sp_feSpecularLighting_init(SPFeSpecularLighting *feSpecularLighting)
 static void
 sp_feSpecularLighting_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feSpecularLighting_parent_class)->build) {
-        ((SPObjectClass *) feSpecularLighting_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->build) {
+        ((SPObjectClass *) sp_feSpecularLighting_parent_class)->build(object, document, repr);
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
@@ -137,8 +111,8 @@ sp_feSpecularLighting_build(SPObject *object, SPDocument *document, Inkscape::XM
 static void
 sp_feSpecularLighting_release(SPObject *object)
 {
-    if (((SPObjectClass *) feSpecularLighting_parent_class)->release)
-        ((SPObjectClass *) feSpecularLighting_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->release)
+        ((SPObjectClass *) sp_feSpecularLighting_parent_class)->release(object);
 }
 
 /**
@@ -239,8 +213,8 @@ sp_feSpecularLighting_set(SPObject *object, unsigned int key, gchar const *value
             object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
             break;
         default:
-            if (((SPObjectClass *) feSpecularLighting_parent_class)->set)
-                ((SPObjectClass *) feSpecularLighting_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->set)
+                ((SPObjectClass *) sp_feSpecularLighting_parent_class)->set(object, key, value);
             break;
     }
 
@@ -260,8 +234,8 @@ sp_feSpecularLighting_update(SPObject *object, SPCtx *ctx, guint flags)
         object->readAttr( "lighting-color" );
     }
 
-    if (((SPObjectClass *) feSpecularLighting_parent_class)->update) {
-        ((SPObjectClass *) feSpecularLighting_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->update) {
+        ((SPObjectClass *) sp_feSpecularLighting_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -292,8 +266,8 @@ sp_feSpecularLighting_write(SPObject *object, Inkscape::XML::Document *doc, Inks
         sp_svg_write_color(c, sizeof(c), fespecularlighting->lighting_color);
         repr->setAttribute("lighting-color", c);
     }
-    if (((SPObjectClass *) feSpecularLighting_parent_class)->write) {
-        ((SPObjectClass *) feSpecularLighting_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->write) {
+        ((SPObjectClass *) sp_feSpecularLighting_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;
@@ -307,8 +281,8 @@ sp_feSpecularLighting_child_added(SPObject *object, Inkscape::XML::Node *child, 
 {
     SPFeSpecularLighting *f = SP_FESPECULARLIGHTING(object);
 
-    if (((SPObjectClass *) feSpecularLighting_parent_class)->child_added)
-        (* ((SPObjectClass *) feSpecularLighting_parent_class)->child_added)(object, child, ref);
+    if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->child_added)
+        (* ((SPObjectClass *) sp_feSpecularLighting_parent_class)->child_added)(object, child, ref);
 
     sp_feSpecularLighting_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -323,8 +297,8 @@ sp_feSpecularLighting_remove_child(SPObject *object, Inkscape::XML::Node *child)
 {   
     SPFeSpecularLighting *f = SP_FESPECULARLIGHTING(object);
 
-    if (((SPObjectClass *) feSpecularLighting_parent_class)->remove_child)
-        (* ((SPObjectClass *) feSpecularLighting_parent_class)->remove_child)(object, child);   
+    if (((SPObjectClass *) sp_feSpecularLighting_parent_class)->remove_child)
+        (* ((SPObjectClass *) sp_feSpecularLighting_parent_class)->remove_child)(object, child);   
 
     sp_feSpecularLighting_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
@@ -334,8 +308,8 @@ static void
 sp_feSpecularLighting_order_changed (SPObject *object, Inkscape::XML::Node *child, Inkscape::XML::Node *old_ref, Inkscape::XML::Node *new_ref)
 {
     SPFeSpecularLighting *f = SP_FESPECULARLIGHTING(object);
-    if (((SPObjectClass *) (feSpecularLighting_parent_class))->order_changed)
-        (* ((SPObjectClass *) (feSpecularLighting_parent_class))->order_changed) (object, child, old_ref, new_ref);
+    if (((SPObjectClass *) (sp_feSpecularLighting_parent_class))->order_changed)
+        (* ((SPObjectClass *) (sp_feSpecularLighting_parent_class))->order_changed) (object, child, old_ref, new_ref);
 
     sp_feSpecularLighting_children_modified(f);
     object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);

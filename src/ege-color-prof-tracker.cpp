@@ -90,11 +90,9 @@ enum {
     ADDED,
     REMOVED,
     MODIFIED,
-    LAST_SIGNAL};
+    LAST_SIGNAL
+};
 
-
-static void ege_color_prof_tracker_class_init( EgeColorProfTrackerClass* klass );
-static void ege_color_prof_tracker_init( EgeColorProfTracker* tracker );
 static void ege_color_prof_tracker_get_property( GObject* obj, guint propId, GValue* value, GParamSpec * pspec );
 static void ege_color_prof_tracker_set_property( GObject* obj, guint propId, const GValue *value, GParamSpec* pspec );
 
@@ -114,7 +112,6 @@ void handle_property_change(GdkScreen* screen, const gchar* name);
 void add_x11_tracking_for_screen(GdkScreen* screen, ScreenTrack* screenTrack);
 #endif /* GDK_WINDOWING_X11 */
 
-static GObjectClass* gParentClass = 0;
 static guint signals[LAST_SIGNAL] = {0};
 
 static GSList* tracked_screens = 0;
@@ -140,33 +137,11 @@ static void clear_profile( GdkScreen* screen, guint monitor );
 static void set_profile( GdkScreen* screen, guint monitor, const guint8* data, guint len );
 static void track_screen( GdkScreen* screen, EgeColorProfTracker* tracker );
 
-GType ege_color_prof_tracker_get_type( void )
-{
-    static GType myType = 0;
-    if ( !myType ) {
-        static const GTypeInfo myInfo = {
-            sizeof( EgeColorProfTrackerClass ),
-            NULL, /* base_init */
-            NULL, /* base_finalize */
-            (GClassInitFunc)ege_color_prof_tracker_class_init,
-            NULL, /* class_finalize */
-            NULL, /* class_data */
-            sizeof( EgeColorProfTracker ),
-            0, /* n_preallocs */
-            (GInstanceInitFunc)ege_color_prof_tracker_init,
-            NULL
-        };
-
-        myType = g_type_register_static( G_TYPE_OBJECT, "EgeColorProfTracker", &myInfo, (GTypeFlags)0 );
-    }
-
-    return myType;
-}
+G_DEFINE_TYPE(EgeColorProfTracker, ege_color_prof_tracker, G_TYPE_OBJECT);
 
 void ege_color_prof_tracker_class_init( EgeColorProfTrackerClass* klass )
 {
     if ( klass ) {
-        gParentClass = G_OBJECT_CLASS( g_type_class_peek_parent( klass ) );
         GObjectClass* objClass = G_OBJECT_CLASS( klass );
 
         objClass->get_property = ege_color_prof_tracker_get_property;

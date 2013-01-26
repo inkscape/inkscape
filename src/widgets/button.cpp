@@ -25,8 +25,6 @@
 
 #include "button.h"
 
-static void sp_button_class_init (SPButtonClass *klass);
-static void sp_button_init (SPButton *button);
 static void sp_button_dispose(GObject *object);
 
 #if GTK_CHECK_VERSION(3,0,0)
@@ -50,28 +48,7 @@ static void sp_button_set_doubleclick_action (SPButton *button, SPAction *action
 static void sp_button_action_set_active (SPButton *button, bool active);
 static void sp_button_set_composed_tooltip (GtkWidget *widget, SPAction *action);
 
-static GtkToggleButtonClass *parent_class;
-
-GType sp_button_get_type(void)
-{
-    static GType type = 0;
-    if (!type) {
-        GTypeInfo info = {
-            sizeof(SPButtonClass),
-            0, // base_init
-            0, // base_finalize
-            (GClassInitFunc)sp_button_class_init,
-            0, // class_finalize
-            0, // class_data
-            sizeof(SPButton),
-            0, // n_preallocs
-            (GInstanceInitFunc)sp_button_init,
-            0 // value_table
-        };
-        type = g_type_register_static(GTK_TYPE_TOGGLE_BUTTON, "SPButton", &info, static_cast<GTypeFlags>(0));
-    }
-    return type;
-}
+G_DEFINE_TYPE(SPButton, sp_button, GTK_TYPE_TOGGLE_BUTTON);
 
 static void
 sp_button_class_init (SPButtonClass *klass)
@@ -79,8 +56,6 @@ sp_button_class_init (SPButtonClass *klass)
 	GObjectClass *object_class=G_OBJECT_CLASS(klass);
 	GtkWidgetClass *widget_class=GTK_WIDGET_CLASS(klass);
 	GtkButtonClass *button_class=GTK_BUTTON_CLASS(klass);
-
-	parent_class = GTK_TOGGLE_BUTTON_CLASS(g_type_class_peek_parent(klass));
 
 	object_class->dispose = sp_button_dispose;
 #if GTK_CHECK_VERSION(3,0,0)
@@ -120,10 +95,10 @@ static void sp_button_dispose(GObject *object)
 		sp_button_set_doubleclick_action (button, NULL);
 	}
 
-    button->c_set_active.~connection();
-    button->c_set_sensitive.~connection();
+	button->c_set_active.~connection();
+	button->c_set_sensitive.~connection();
 
-	(G_OBJECT_CLASS(parent_class))->dispose(object);
+	(G_OBJECT_CLASS(sp_button_parent_class))->dispose(object);
 }
 
 
@@ -185,7 +160,7 @@ sp_button_clicked (GtkButton *button)
 	SPButton *sp_button=SP_BUTTON (button);
 
 	if (sp_button->type == SP_BUTTON_TYPE_TOGGLE) {
-		(GTK_BUTTON_CLASS(parent_class))->clicked (button);
+		(GTK_BUTTON_CLASS(sp_button_parent_class))->clicked (button);
 	}
 }
 
@@ -340,3 +315,13 @@ sp_button_new_from_data( Inkscape::IconSize size,
 	return button;
 }
 
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

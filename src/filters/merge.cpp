@@ -25,10 +25,6 @@
 #include "display/nr-filter-merge.h"
 
 /* FeMerge base class */
-
-static void sp_feMerge_class_init(SPFeMergeClass *klass);
-static void sp_feMerge_init(SPFeMerge *feMerge);
-
 static void sp_feMerge_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feMerge_release(SPObject *object);
 static void sp_feMerge_set(SPObject *object, unsigned int key, gchar const *value);
@@ -36,36 +32,13 @@ static void sp_feMerge_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feMerge_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feMerge_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
-static SPFilterPrimitiveClass *feMerge_parent_class;
-
-GType
-sp_feMerge_get_type()
-{
-    static GType feMerge_type = 0;
-
-    if (!feMerge_type) {
-        GTypeInfo feMerge_info = {
-            sizeof(SPFeMergeClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feMerge_class_init,
-            NULL, NULL,
-            sizeof(SPFeMerge),
-            16,
-            (GInstanceInitFunc) sp_feMerge_init,
-            NULL,    /* value_table */
-        };
-        feMerge_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeMerge", &feMerge_info, (GTypeFlags)0);
-    }
-    return feMerge_type;
-}
+G_DEFINE_TYPE(SPFeMerge, sp_feMerge, SP_TYPE_FILTER_PRIMITIVE);
 
 static void
 sp_feMerge_class_init(SPFeMergeClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    feMerge_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feMerge_build;
     sp_object_class->release = sp_feMerge_release;
@@ -89,8 +62,8 @@ sp_feMerge_init(SPFeMerge */*feMerge*/)
 static void
 sp_feMerge_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feMerge_parent_class)->build) {
-        ((SPObjectClass *) feMerge_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_feMerge_parent_class)->build) {
+        ((SPObjectClass *) sp_feMerge_parent_class)->build(object, document, repr);
     }
 
     /*LOAD ATTRIBUTES FROM REPR HERE*/
@@ -102,8 +75,8 @@ sp_feMerge_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *re
 static void
 sp_feMerge_release(SPObject *object)
 {
-    if (((SPObjectClass *) feMerge_parent_class)->release)
-        ((SPObjectClass *) feMerge_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feMerge_parent_class)->release)
+        ((SPObjectClass *) sp_feMerge_parent_class)->release(object);
 }
 
 /**
@@ -118,8 +91,8 @@ sp_feMerge_set(SPObject *object, unsigned int key, gchar const *value)
     switch(key) {
 	/*DEAL WITH SETTING ATTRIBUTES HERE*/
         default:
-            if (((SPObjectClass *) feMerge_parent_class)->set)
-                ((SPObjectClass *) feMerge_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_feMerge_parent_class)->set)
+                ((SPObjectClass *) sp_feMerge_parent_class)->set(object, key, value);
             break;
     }
 
@@ -135,8 +108,8 @@ sp_feMerge_update(SPObject *object, SPCtx *ctx, guint flags)
         object->parent->requestModified(SP_OBJECT_MODIFIED_FLAG);
     }
 
-    if (((SPObjectClass *) feMerge_parent_class)->update) {
-        ((SPObjectClass *) feMerge_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feMerge_parent_class)->update) {
+        ((SPObjectClass *) sp_feMerge_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -153,8 +126,8 @@ sp_feMerge_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::
     }
 
 
-    if (((SPObjectClass *) feMerge_parent_class)->write) {
-        ((SPObjectClass *) feMerge_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feMerge_parent_class)->write) {
+        ((SPObjectClass *) sp_feMerge_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

@@ -26,10 +26,6 @@
 #include "sp-filter.h"
 
 /* FeComposite base class */
-
-static void sp_feComposite_class_init(SPFeCompositeClass *klass);
-static void sp_feComposite_init(SPFeComposite *feComposite);
-
 static void sp_feComposite_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_feComposite_release(SPObject *object);
 static void sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value);
@@ -37,36 +33,13 @@ static void sp_feComposite_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_feComposite_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 static void sp_feComposite_build_renderer(SPFilterPrimitive *primitive, Inkscape::Filters::Filter *filter);
 
-static SPFilterPrimitiveClass *feComposite_parent_class;
-
-GType
-sp_feComposite_get_type()
-{
-    static GType feComposite_type = 0;
-
-    if (!feComposite_type) {
-        GTypeInfo feComposite_info = {
-            sizeof(SPFeCompositeClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_feComposite_class_init,
-            NULL, NULL,
-            sizeof(SPFeComposite),
-            16,
-            (GInstanceInitFunc) sp_feComposite_init,
-            NULL,    /* value_table */
-        };
-        feComposite_type = g_type_register_static(SP_TYPE_FILTER_PRIMITIVE, "SPFeComposite", &feComposite_info, (GTypeFlags)0);
-    }
-    return feComposite_type;
-}
+G_DEFINE_TYPE(SPFeComposite, sp_feComposite, SP_TYPE_FILTER_PRIMITIVE);
 
 static void
 sp_feComposite_class_init(SPFeCompositeClass *klass)
 {
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
     SPFilterPrimitiveClass *sp_primitive_class = (SPFilterPrimitiveClass *)klass;
-
-    feComposite_parent_class = (SPFilterPrimitiveClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_feComposite_build;
     sp_object_class->release = sp_feComposite_release;
@@ -96,8 +69,8 @@ sp_feComposite_init(SPFeComposite *feComposite)
 static void
 sp_feComposite_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feComposite_parent_class)->build) {
-        ((SPObjectClass *) feComposite_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_feComposite_parent_class)->build) {
+        ((SPObjectClass *) sp_feComposite_parent_class)->build(object, document, repr);
     }
 
     SPFeComposite *comp = SP_FECOMPOSITE(object);
@@ -128,8 +101,8 @@ sp_feComposite_build(SPObject *object, SPDocument *document, Inkscape::XML::Node
 static void
 sp_feComposite_release(SPObject *object)
 {
-    if (((SPObjectClass *) feComposite_parent_class)->release)
-        ((SPObjectClass *) feComposite_parent_class)->release(object);
+    if (((SPObjectClass *) sp_feComposite_parent_class)->release)
+        ((SPObjectClass *) sp_feComposite_parent_class)->release(object);
 }
 
 static FeCompositeOperator
@@ -212,8 +185,8 @@ sp_feComposite_set(SPObject *object, unsigned int key, gchar const *value)
             break;
 
         default:
-            if (((SPObjectClass *) feComposite_parent_class)->set)
-                ((SPObjectClass *) feComposite_parent_class)->set(object, key, value);
+            if (((SPObjectClass *) sp_feComposite_parent_class)->set)
+                ((SPObjectClass *) sp_feComposite_parent_class)->set(object, key, value);
             break;
     }
 
@@ -246,8 +219,8 @@ sp_feComposite_update(SPObject *object, SPCtx *ctx, guint flags)
         object->getRepr()->setAttribute("in2", sp_filter_name_for_image(parent, comp->in2));
     }
 
-    if (((SPObjectClass *) feComposite_parent_class)->update) {
-        ((SPObjectClass *) feComposite_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_feComposite_parent_class)->update) {
+        ((SPObjectClass *) sp_feComposite_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -309,8 +282,8 @@ sp_feComposite_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::X
         repr->setAttribute("k4", 0);
     }
 
-    if (((SPObjectClass *) feComposite_parent_class)->write) {
-        ((SPObjectClass *) feComposite_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_feComposite_parent_class)->write) {
+        ((SPObjectClass *) sp_feComposite_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;

@@ -30,46 +30,18 @@
 #include "macros.h"
 
 /* FeSpotLight class */
-
-static void sp_fespotlight_class_init(SPFeSpotLightClass *klass);
-static void sp_fespotlight_init(SPFeSpotLight *fespotlight);
-
 static void sp_fespotlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);
 static void sp_fespotlight_release(SPObject *object);
 static void sp_fespotlight_set(SPObject *object, unsigned int key, gchar const *value);
 static void sp_fespotlight_update(SPObject *object, SPCtx *ctx, guint flags);
 static Inkscape::XML::Node *sp_fespotlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::XML::Node *repr, guint flags);
 
-static SPObjectClass *feSpotLight_parent_class;
-
-GType
-sp_fespotlight_get_type()
-{
-    static GType fespotlight_type = 0;
-
-    if (!fespotlight_type) {
-        GTypeInfo fespotlight_info = {
-            sizeof(SPFeSpotLightClass),
-            NULL, NULL,
-            (GClassInitFunc) sp_fespotlight_class_init,
-            NULL, NULL,
-            sizeof(SPFeSpotLight),
-            16,
-            (GInstanceInitFunc) sp_fespotlight_init,
-            NULL,    /* value_table */
-        };
-        fespotlight_type = g_type_register_static(SP_TYPE_OBJECT, "SPFeSpotLight", &fespotlight_info, (GTypeFlags)0);
-    }
-    return fespotlight_type;
-}
+G_DEFINE_TYPE(SPFeSpotLight, sp_fespotlight, SP_TYPE_OBJECT);
 
 static void
 sp_fespotlight_class_init(SPFeSpotLightClass *klass)
 {
-
     SPObjectClass *sp_object_class = (SPObjectClass *)klass;
-
-    feSpotLight_parent_class = (SPObjectClass*)g_type_class_peek_parent(klass);
 
     sp_object_class->build = sp_fespotlight_build;
     sp_object_class->release = sp_fespotlight_release;
@@ -108,8 +80,8 @@ sp_fespotlight_init(SPFeSpotLight *fespotlight)
 static void
 sp_fespotlight_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr)
 {
-    if (((SPObjectClass *) feSpotLight_parent_class)->build) {
-        ((SPObjectClass *) feSpotLight_parent_class)->build(object, document, repr);
+    if (((SPObjectClass *) sp_fespotlight_parent_class)->build) {
+        ((SPObjectClass *) sp_fespotlight_parent_class)->build(object, document, repr);
     }
 
     //Read values of key attributes from XML nodes into object.
@@ -290,8 +262,8 @@ sp_fespotlight_set(SPObject *object, unsigned int key, gchar const *value)
         break;
     default:
         // See if any parents need this value.
-        if (((SPObjectClass *) feSpotLight_parent_class)->set) {
-            ((SPObjectClass *) feSpotLight_parent_class)->set(object, key, value);
+        if (((SPObjectClass *) sp_fespotlight_parent_class)->set) {
+            ((SPObjectClass *) sp_fespotlight_parent_class)->set(object, key, value);
         }
         break;
     }
@@ -318,8 +290,8 @@ sp_fespotlight_update(SPObject *object, SPCtx *ctx, guint flags)
         object->readAttr( "limitingConeAngle" );
     }
 
-    if (((SPObjectClass *) feSpotLight_parent_class)->update) {
-        ((SPObjectClass *) feSpotLight_parent_class)->update(object, ctx, flags);
+    if (((SPObjectClass *) sp_fespotlight_parent_class)->update) {
+        ((SPObjectClass *) sp_fespotlight_parent_class)->update(object, ctx, flags);
     }
 }
 
@@ -352,8 +324,8 @@ sp_fespotlight_write(SPObject *object, Inkscape::XML::Document *doc, Inkscape::X
     if (fespotlight->limitingConeAngle_set)
         sp_repr_set_css_double(repr, "limitingConeAngle", fespotlight->limitingConeAngle);
 
-    if (((SPObjectClass *) feSpotLight_parent_class)->write) {
-        ((SPObjectClass *) feSpotLight_parent_class)->write(object, doc, repr, flags);
+    if (((SPObjectClass *) sp_fespotlight_parent_class)->write) {
+        ((SPObjectClass *) sp_fespotlight_parent_class)->write(object, doc, repr, flags);
     }
 
     return repr;
