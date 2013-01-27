@@ -313,6 +313,22 @@ sp_desktop_widget_class_init (SPDesktopWidgetClass *klass)
 }
 
 /**
+ * Callback for changes in size of the canvas table (i.e. the container for
+ * the canvas, the rulers etc).
+ *
+ * This adjusts the range of the rulers when the dock container is adjusted
+ * (fixes lp:950552)
+ */
+static void
+canvas_tbl_size_allocate(GtkWidget    *widget,
+                         GdkRectangle *allocation,
+                         gpointer      data)
+{
+   SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data); 
+   sp_desktop_widget_update_rulers (dtw);
+}
+
+/**
  * Callback for SPDesktopWidget object initialization.
  */
 void SPDesktopWidget::init( SPDesktopWidget *dtw )
@@ -743,6 +759,13 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
         }
         overallTimer = 0;
     }
+    
+    // Ensure that ruler ranges are updated correctly whenever the canvas table
+    // is resized
+    g_signal_connect (G_OBJECT (canvas_tbl),
+                      "size-allocate",
+                      G_CALLBACK (canvas_tbl_size_allocate),
+                      dtw);
 }
 
 /**
