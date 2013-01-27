@@ -101,9 +101,6 @@ struct EditWidgetInterface
     /// Update the "inactive desktop" indicator
     virtual void deactivateDesktop() = 0;
 
-    /// Set rulers to position
-    virtual void viewSetPosition (Geom::Point p) = 0;
-
     /// Update rulers from current values
     virtual void updateRulers() = 0;
 

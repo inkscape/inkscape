@@ -27,12 +27,6 @@ namespace UI {
 namespace View {
 
 static void 
-_onPositionSet (double x, double y, View* v)
-{
-    v->onPositionSet (x,y);
-}
-
-static void 
 _onResized (double x, double y, View* v)
 {
     v->onResized (x,y);
@@ -69,7 +63,6 @@ View::View()
     _message_stack = GC::release(new Inkscape::MessageStack());
     _tips_message_context = new Inkscape::MessageContext(_message_stack);
 
-    _position_set_connection = _position_set_signal.connect (sigc::bind (sigc::ptr_fun (&_onPositionSet), this));
     _resized_connection = _resized_signal.connect (sigc::bind (sigc::ptr_fun (&_onResized), this));
     _redraw_requested_connection = _redraw_requested_signal.connect (sigc::bind (sigc::ptr_fun (&_onRedrawRequested), this));
     
@@ -100,16 +93,6 @@ void View::_close() {
     }
     
    Inkscape::Verb::delete_all_view (this);
-}
-
-void View::setPosition (double x, double y)
-{
-    _position_set_signal.emit (x,y);
-}
-
-void View::setPosition(Geom::Point const &p) 
-{ 
-    setPosition (double(p[Geom::X]), double(p[Geom::Y])); 
 }
 
 void View::emitResized (double width, double height)

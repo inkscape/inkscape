@@ -90,8 +90,6 @@ public:
     Inkscape::MessageContext *tipsMessageContext() const
       { return _tips_message_context; }
 
-    void setPosition(gdouble x, gdouble y);
-    void setPosition(Geom::Point const &p);
     void emitResized(gdouble width, gdouble height);
     void requestRedraw();
 
@@ -101,7 +99,6 @@ public:
     virtual void mouseover() = 0;
     virtual void mouseout() = 0;
 
-    virtual void onPositionSet (double, double) = 0;
     virtual void onResized (double, double) = 0;
     virtual void onRedrawRequested() = 0;
     virtual void onStatusMessage (Inkscape::MessageType type, gchar const *message) = 0;
@@ -126,13 +123,11 @@ protected:
      */
     virtual void setDocument(SPDocument *doc);
 
-    sigc::signal<void,double,double>   _position_set_signal;
     sigc::signal<void,double,double>   _resized_signal;
     sigc::signal<void,gchar const*>    _document_uri_set_signal;
     sigc::signal<void>                 _redraw_requested_signal;
 
 private:
-    sigc::connection _position_set_connection;
     sigc::connection _resized_connection;
     sigc::connection _redraw_requested_connection;
     sigc::connection _message_changed_connection;  // foreign

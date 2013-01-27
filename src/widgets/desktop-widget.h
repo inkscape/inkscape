@@ -168,8 +168,6 @@ struct SPDesktopWidget {
             { sp_dtw_desktop_activate (_dtw); }
         virtual void deactivateDesktop()
             { sp_dtw_desktop_deactivate (_dtw); }
-        virtual void viewSetPosition (Geom::Point p)
-            { _dtw->viewSetPosition (p); }
         virtual void updateRulers()
             { sp_desktop_widget_update_rulers (_dtw); }
         virtual void updateScrollbars (double scale)

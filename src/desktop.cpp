@@ -1539,12 +1539,6 @@ void SPDesktop::toggleSnapGlobal()
 // Callback implementations. The virtual ones are connected by the view.
 
 void
-SPDesktop::onPositionSet (double x, double y)
-{
-    _widget->viewSetPosition (Geom::Point(x,y));
-}
-
-void
 SPDesktop::onResized (double /*x*/, double /*y*/)
 {
    // Nothing called here

@@ -196,7 +196,6 @@ static gint sp_dt_ruler_event(GtkWidget *widget, GdkEvent *event, SPDesktopWidge
                 sp_guideline_set_position(SP_GUIDELINE(guide), event_dt);
 
                 desktop->set_coordinate_status(event_dt);
-                desktop->setPosition(event_dt);
             }
             break;
     case GDK_BUTTON_RELEASE:
@@ -395,7 +394,6 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                 }
                 moved = true;
                 desktop->set_coordinate_status(motion_dt);
-                desktop->setPosition(motion_dt);
 
                 ret = TRUE;
             }
@@ -483,7 +481,6 @@ gint sp_dt_guide_event(SPCanvasItem *item, GdkEvent *event, gpointer data)
                     }
                     moved = false;
                     desktop->set_coordinate_status(event_dt);
-                    desktop->setPosition (event_dt);
                 }
                 drag_type = SP_DRAG_NONE;
                 sp_canvas_item_ungrab(item, event->button.time);

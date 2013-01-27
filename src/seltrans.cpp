@@ -813,8 +813,6 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, Geom::Point *position, 
         return TRUE;
     }
 
-    knot->desktop->setPosition(*position);
-
     // When holding shift while rotating or skewing, the transformation will be
     // relative to the point opposite of the handle; otherwise it will be relative
     // to the center as set for the selection

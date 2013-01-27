@@ -520,6 +520,9 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     gtk_widget_set_can_focus (GTK_WIDGET (dtw->canvas), TRUE);
 
+    sp_ruler_add_track_widget (SP_RULER(dtw->hruler), GTK_WIDGET(dtw->canvas));
+    sp_ruler_add_track_widget (SP_RULER(dtw->vruler), GTK_WIDGET(dtw->canvas));
+
 #if GTK_CHECK_VERSION(3,0,0)
     GdkRGBA white = {1,1,1,1};
     gtk_widget_override_background_color(GTK_WIDGET(dtw->canvas),
@@ -1685,13 +1688,6 @@ SPDesktopWidget* SPDesktopWidget::createInstance(SPNamedView *namedview)
     return dtw;
 }
 
-void
-SPDesktopWidget::viewSetPosition (Geom::Point p)
-{
-    Geom::Point const origin = ( p - ruler_origin );
-    sp_ruler_set_position(SP_RULER(hruler), origin[Geom::X]);
-    sp_ruler_set_position(SP_RULER(vruler), origin[Geom::Y]);
-}
 
 void
 sp_desktop_widget_update_rulers (SPDesktopWidget *dtw)

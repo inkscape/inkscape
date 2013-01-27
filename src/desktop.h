@@ -431,7 +431,6 @@ private:
     sigc::connection _commit_connection;
     sigc::connection _modified_connection;
 
-    virtual void onPositionSet (double, double);
     virtual void onResized (double, double);
     virtual void onRedrawRequested();
     virtual void onStatusMessage (Inkscape::MessageType type, gchar const *message);

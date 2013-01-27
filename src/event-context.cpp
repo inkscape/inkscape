@@ -1082,7 +1082,7 @@ gint sp_event_context_virtual_item_handler(SPEventContext * event_context, SPIte
 }
 
 /**
- * Emits 'position_set' signal on desktop and shows coordinates on status bar.
+ * Shows coordinates on status bar.
  */
 static void set_event_location(SPDesktop *desktop, GdkEvent *event) {
     if (event->type != GDK_MOTION_NOTIFY) {
@@ -1091,7 +1091,6 @@ static void set_event_location(SPDesktop *desktop, GdkEvent *event) {
 
     Geom::Point const button_w(event->button.x, event->button.y);
     Geom::Point const button_dt(desktop->w2d(button_w));
-    desktop->setPosition(button_dt);
     desktop->set_coordinate_status(button_dt);
 }
 
