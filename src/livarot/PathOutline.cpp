@@ -387,7 +387,7 @@ void Path::SubContractOutline(int off, int num_pd,
 				if (closeIfNeeded) {
 					if ( Geom::LInfty (curX- firstP) < 0.0001 ) {
 						OutlineJoin (dest, firstP, curT, firstT, width, join,
-									 miter);
+									 miter, nType);
 						dest->Close ();
 					}  else {
                                             PathDescrLineTo temp(firstP);
@@ -404,7 +404,7 @@ void Path::SubContractOutline(int off, int num_pd,
 							Geom::Point pos;
 							pos = curX;
 							OutlineJoin (dest, pos, curT, stNor, width, join,
-										 miter);
+										 miter, nType);
 						}
 						dest->LineTo (enPos+width*enNor);
 
@@ -413,7 +413,7 @@ void Path::SubContractOutline(int off, int num_pd,
 							Geom::Point pos;
 							pos = firstP;
 							OutlineJoin (dest, enPos, enNor, firstT, width, join,
-										 miter);
+										 miter, nType);
 							dest->Close ();
 						}
 					}
@@ -429,7 +429,7 @@ void Path::SubContractOutline(int off, int num_pd,
 				if (Geom::LInfty (curX - firstP) < 0.0001)
 				{
 					OutlineJoin (dest, firstP, curT, firstT, width, join,
-								 miter);
+								 miter, nType);
 					dest->Close ();
 				}
 				else
@@ -445,7 +445,7 @@ void Path::SubContractOutline(int off, int num_pd,
 					// jointure
 					{
 						OutlineJoin (dest, stPos, curT, stNor, width, join,
-									 miter);
+									 miter, nType);
 					}
 
 					dest->LineTo (enPos+width*enNor);
@@ -453,7 +453,7 @@ void Path::SubContractOutline(int off, int num_pd,
 					// jointure
 					{
 						OutlineJoin (dest, enPos, enNor, firstT, width, join,
-									 miter);
+									 miter, nType);
 						dest->Close ();
 					}
 				}
@@ -497,7 +497,7 @@ void Path::SubContractOutline(int off, int num_pd,
 				// jointure
 				Geom::Point pos;
 				pos = curX;
-				OutlineJoin (dest, pos, curT, stNor, width, join, miter);
+				OutlineJoin (dest, pos, curT, stNor, width, join, miter, nType);
 			}
 
 			int n_d = dest->LineTo (nextX+width*enNor);
@@ -547,7 +547,7 @@ void Path::SubContractOutline(int off, int num_pd,
 				// jointure
 				Geom::Point pos;
 				pos = curX;
-				OutlineJoin (dest, pos, curT, stNor, width, join, miter);
+				OutlineJoin (dest, pos, curT, stNor, width, join, miter, nType);
 			}
 
 			callsData.piece = curP;
@@ -603,7 +603,7 @@ void Path::SubContractOutline(int off, int num_pd,
 				// jointure
 				Geom::Point pos;
 				pos = curX;
-				OutlineJoin (dest, pos, curT, stNor, width, join, miter);
+				OutlineJoin (dest, pos, curT, stNor, width, join, miter, nType);
 			}
 
 			callsData.piece = curP;
@@ -661,7 +661,7 @@ void Path::SubContractOutline(int off, int num_pd,
 					// jointure
 					Geom::Point pos;
 					pos = curX;
-					if (stTle > 0) OutlineJoin (dest, pos, curT, stNor, width, join, miter);
+					if (stTle > 0) OutlineJoin (dest, pos, curT, stNor, width, join, miter, nType);
 				}
 				int n_d = dest->LineTo (nextX+width*enNor);
 				if (n_d >= 0) {
@@ -692,7 +692,7 @@ void Path::SubContractOutline(int off, int num_pd,
 					// jointure
 					Geom::Point pos;
 					pos = curX;
-					OutlineJoin (dest, pos, curT, stNor, width, join, miter);
+					OutlineJoin (dest, pos, curT, stNor, width, join, miter, nType);
 				}
 
 				callsData.piece = curP;
@@ -729,7 +729,7 @@ void Path::SubContractOutline(int off, int num_pd,
 					} else {
 						// jointure
 						Geom::Point pos=curX;
-						OutlineJoin (dest, pos, stTgt, stNor, width, join,  miter);
+						OutlineJoin (dest, pos, stTgt, stNor, width, join,  miter, nType);
 						//                                              dest->LineTo(curX+width*stNor.x,curY+width*stNor.y);
 					}
 				}
@@ -1164,7 +1164,7 @@ Path::TangentOnBezAt (double at, Geom::Point const &iS,
 
 void
 Path::OutlineJoin (Path * dest, Geom::Point pos, Geom::Point stNor, Geom::Point enNor, double width,
-                   JoinType join, double miter)
+                   JoinType join, double miter, int nType)
 {
     /* 
         Arbitrarily decide if we're on the inside or outside of a half turn.
@@ -1188,8 +1188,16 @@ Path::OutlineJoin (Path * dest, Geom::Point pos, Geom::Point stNor, Geom::Point 
     } else {
         if ((angSi > 0 && width >= 0) 
             || (angSi < 0 && width < 0)) { // This is an inside join -> join is independent of chosen JoinType.
-            dest->LineTo (pos);
-            dest->LineTo (pos + width*enNor);
+            if ((dest->descr_cmd[dest->descr_cmd.size() - 1]->getType() == descr_lineto) && (nType == descr_lineto)) {
+                PathDescrLineTo* nLine = dynamic_cast<PathDescrLineTo*>(dest->descr_cmd[dest->descr_cmd.size() - 1]);
+                Geom::Point const biss = unit_vector(Geom::rot90( stNor - enNor ));
+                double c2 = Geom::dot (biss, enNor);
+                double l = width / c2;
+                nLine->p = pos + l*biss;  // relocate to bisector
+            } else {
+//                dest->LineTo (pos);	// redundant
+                dest->LineTo (pos + width*enNor);
+            }
         } else if (angSi == 0 && TurnInside) { // Half turn (180 degrees) ... inside (see above).
             dest->LineTo (pos + width*enNor);
         } else { // This is an outside join -> chosen JoinType should be applied.
@@ -1241,8 +1249,14 @@ Path::OutlineJoin (Path * dest, Geom::Point pos, Geom::Point stNor, Geom::Point 
                 if ( fabs(l) > miter) {
                     dest->LineTo (pos + width*enNor);
                 } else {
-                    dest->LineTo (pos+l*biss);
-                    dest->LineTo (pos+width*enNor);
+                    if (dest->descr_cmd[dest->descr_cmd.size() - 1]->getType() == descr_lineto) {
+                        PathDescrLineTo* nLine = dynamic_cast<PathDescrLineTo*>(dest->descr_cmd[dest->descr_cmd.size() - 1]);
+                        nLine->p = pos+l*biss; // relocate to bisector
+                    } else {
+                        dest->LineTo (pos+l*biss);
+                    }
+                    if (nType != descr_lineto)
+                        dest->LineTo (pos+width*enNor);
                 }
             } else { // Bevel join
                 dest->LineTo (pos + width*enNor);

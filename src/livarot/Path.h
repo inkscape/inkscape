@@ -335,7 +335,7 @@ public:
 			      PathDescrBezierTo & fin, bool before,
 			      Geom::Point & pos, Geom::Point & tgt, double &len, double &rad);
   static void OutlineJoin (Path * dest, Geom::Point pos, Geom::Point stNor, Geom::Point enNor,
-			   double width, JoinType join, double miter);
+			   double width, JoinType join, double miter, int nType);
 
   static bool IsNulCurve (std::vector<PathDescr*> const &cmd, int curD, Geom::Point const &curX);
 
