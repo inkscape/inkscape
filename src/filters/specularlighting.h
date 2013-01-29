@@ -23,6 +23,8 @@
 #define SP_IS_FESPECULARLIGHTING(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FESPECULARLIGHTING))
 #define SP_IS_FESPECULARLIGHTING_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FESPECULARLIGHTING))
 
+class SVGICCColor;
+
 namespace Inkscape {
 namespace Filters {
 class FilterSpecularLighting;
@@ -41,6 +43,7 @@ struct SPFeSpecularLighting : public SPFilterPrimitive {
     NumberOptNumber kernelUnitLength;
     guint32 lighting_color;
     guint lighting_color_set : 1;
+    SVGICCColor *icc;
 
     Inkscape::Filters::FilterSpecularLighting *renderer;
 };

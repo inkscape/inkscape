@@ -18,10 +18,13 @@
 # include "config.h"
 #endif
 
+#include "strneq.h"
+
 #include "attributes.h"
 #include "svg/svg.h"
 #include "sp-object.h"
 #include "svg/svg-color.h"
+#include "svg/svg-icc-color.h"
 #include "filters/diffuselighting.h"
 #include "filters/distantlight.h"
 #include "filters/pointlight.h"
@@ -74,6 +77,8 @@ sp_feDiffuseLighting_init(SPFeDiffuseLighting *feDiffuseLighting)
     feDiffuseLighting->surfaceScale = 1;
     feDiffuseLighting->diffuseConstant = 1;
     feDiffuseLighting->lighting_color = 0xffffffff;
+    feDiffuseLighting->icc = NULL;
+
     //TODO kernelUnit
     feDiffuseLighting->renderer = NULL;
 
@@ -176,6 +181,16 @@ sp_feDiffuseLighting_set(SPObject *object, unsigned int key, gchar const *value)
             feDiffuseLighting->lighting_color = sp_svg_read_color(value, &cend_ptr, 0xffffffff);
             //if a value was read
             if (cend_ptr) {
+                while (g_ascii_isspace(*cend_ptr)) {
+                    ++cend_ptr;
+                }
+                if (strneq(cend_ptr, "icc-color(", 10)) {
+                    if (!feDiffuseLighting->icc) feDiffuseLighting->icc = new SVGICCColor();
+                    if ( ! sp_svg_read_icc_color( cend_ptr, feDiffuseLighting->icc ) ) {
+                        delete feDiffuseLighting->icc;
+                        feDiffuseLighting->icc = NULL;
+                    }
+                }
                 feDiffuseLighting->lighting_color_set = TRUE; 
             } else {
                 //lighting_color already contains the default value
@@ -328,6 +343,8 @@ static void sp_feDiffuseLighting_build_renderer(SPFilterPrimitive *primitive, In
     nr_diffuselighting->diffuseConstant = sp_diffuselighting->diffuseConstant;
     nr_diffuselighting->surfaceScale = sp_diffuselighting->surfaceScale;
     nr_diffuselighting->lighting_color = sp_diffuselighting->lighting_color;
+    nr_diffuselighting->set_icc(sp_diffuselighting->icc);
+
     //We assume there is at most one child
     nr_diffuselighting->light_type = Inkscape::Filters::NO_LIGHT;
     if (SP_IS_FEDISTANTLIGHT(primitive->children)) {

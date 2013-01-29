@@ -21,6 +21,8 @@
 #include "display/nr-filter-units.h"
 #include "display/nr-filter-utils.h"
 #include "display/nr-light.h"
+#include "svg/svg-icc-color.h"
+#include "svg/svg-color.h"
 
 namespace Inkscape {
 namespace Filters {
@@ -126,12 +128,37 @@ void FilterDiffuseLighting::render_cairo(FilterSlot &slot)
     cairo_surface_t *input = slot.getcairo(_input);
     cairo_surface_t *out = ink_cairo_surface_create_same_size(input, CAIRO_CONTENT_COLOR_ALPHA);
 
+    double r = SP_RGBA32_R_F(lighting_color);
+    double g = SP_RGBA32_G_F(lighting_color);
+    double b = SP_RGBA32_B_F(lighting_color);
+
+#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+
+    if (icc) {
+        guchar ru, gu, bu;
+        icc_color_to_sRGB(icc, &ru, &gu, &bu);
+        r = SP_COLOR_U_TO_F(ru);
+        g = SP_COLOR_U_TO_F(gu);
+        b = SP_COLOR_U_TO_F(bu);
+    }
+#endif
+
     // Only alpha channel of input is used, no need to check input color_interpolation_filter value.
     SPColorInterpolation ci_fp  = SP_CSS_COLOR_INTERPOLATION_AUTO;
     if( _style ) {
         ci_fp = (SPColorInterpolation)_style->color_interpolation_filters.computed;
+
+        // Lighting color is always defined in terms of sRGB, preconvert to linearRGB
+        // if color_interpolation_filters set to linearRGB (for efficiency assuming
+        // next filter primitive has same value of cif).
+        if( ci_fp == SP_CSS_COLOR_INTERPOLATION_LINEARRGB ) {
+            srgb_to_linear( &r );
+            srgb_to_linear( &g );
+            srgb_to_linear( &b );
+        }
     }
     set_cairo_surface_ci(out, ci_fp );
+    guint32 color = SP_RGBA32_F_COMPOSE( r, g, b, 1.0 ); 
 
     Geom::Rect slot_area = slot.get_slot_area();
     Geom::Point p = slot_area.min();
@@ -142,15 +169,15 @@ void FilterDiffuseLighting::render_cairo(FilterSlot &slot)
     switch (light_type) {
     case DISTANT_LIGHT:
         ink_cairo_surface_synthesize(out,
-            DiffuseDistantLight(input, light.distant, lighting_color, scale, diffuseConstant));
+            DiffuseDistantLight(input, light.distant, color, scale, diffuseConstant));
         break;
     case POINT_LIGHT:
         ink_cairo_surface_synthesize(out,
-            DiffusePointLight(input, light.point, lighting_color, trans, scale, diffuseConstant, x0, y0));
+            DiffusePointLight(input, light.point, color, trans, scale, diffuseConstant, x0, y0));
         break;
     case SPOT_LIGHT:
         ink_cairo_surface_synthesize(out,
-            DiffuseSpotLight(input, light.spot, lighting_color, trans, scale, diffuseConstant, x0, y0));
+            DiffuseSpotLight(input, light.spot, color, trans, scale, diffuseConstant, x0, y0));
         break;
     default: {
         cairo_t *ct = cairo_create(out);
@@ -163,6 +190,10 @@ void FilterDiffuseLighting::render_cairo(FilterSlot &slot)
 
     slot.set(_output, out);
     cairo_surface_destroy(out);
+}
+
+void FilterDiffuseLighting::set_icc(SVGICCColor *icc_color) {
+    icc = icc_color;
 }
 
 void FilterDiffuseLighting::area_enlarge(Geom::IntRect &area, Geom::Affine const & /*trans*/)

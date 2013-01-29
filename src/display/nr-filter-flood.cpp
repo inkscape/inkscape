@@ -45,8 +45,6 @@ void FilterFlood::render_cairo(FilterSlot &slot)
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
-    // DOES THIS REALLY BELONG HERE? SHOULDN'T ICC BE APPLIED AFTER ALL COMPOSITING?
-    // What if color_interpolation_filter is set to linear RGB?
     if (icc) {
         guchar ru, gu, bu;
         icc_color_to_sRGB(icc, &ru, &gu, &bu);
@@ -57,10 +55,21 @@ void FilterFlood::render_cairo(FilterSlot &slot)
 #endif
 
     cairo_surface_t *out = ink_cairo_surface_create_same_size(input, CAIRO_CONTENT_COLOR_ALPHA);
-    // color_interpolation_filter is determined by CSS value (see spec. Turbulence).
+
+    SPColorInterpolation ci_fp  = SP_CSS_COLOR_INTERPOLATION_AUTO;
     if( _style ) {
-        set_cairo_surface_ci(out, (SPColorInterpolation)_style->color_interpolation_filters.computed );
+        ci_fp = (SPColorInterpolation)_style->color_interpolation_filters.computed;
+
+        // Flood color is always defined in terms of sRGB, preconvert to linearRGB
+        // if color_interpolation_filters set to linearRGB (for efficiency assuming
+        // next filter primitive has same value of cif).
+        if( ci_fp == SP_CSS_COLOR_INTERPOLATION_LINEARRGB ) {
+            srgb_to_linear( &r );
+            srgb_to_linear( &g );
+            srgb_to_linear( &b );
+        }
     }
+    set_cairo_surface_ci(out, ci_fp );
 
     // Get filter primitive area in user units
     Geom::Rect fp = filter_primitive_area( slot.get_units() );

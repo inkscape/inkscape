@@ -597,6 +597,15 @@ void ink_cairo_surface_average_color_premul(cairo_surface_t *surface, double &r,
     a = CLAMP(a, 0.0, 1.0);
 }
 
+void srgb_to_linear( double* c ) {
+
+    if( *c < 0.04045 ) {
+        *c /= 12.92;
+    } else {
+        *c = pow( (*c+0.055)/1.055, 2.4 );
+    }
+}
+
 void srgb_to_linear( guint32* c, guint32 a ) {
 
     *c = unpremul_alpha( *c, a );

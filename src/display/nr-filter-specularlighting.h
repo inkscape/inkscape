@@ -20,6 +20,7 @@
 class SPFeDistantLight;
 class SPFePointLight;
 class SPFeSpotLight;
+class SVGICCColor;
 
 namespace Inkscape {
 namespace Filters {
@@ -33,6 +34,7 @@ public:
     virtual ~FilterSpecularLighting();
 
     virtual void render_cairo(FilterSlot &slot);
+    virtual void set_icc(SVGICCColor *icc_color);
     virtual void area_enlarge(Geom::IntRect &area, Geom::Affine const &trans);
     virtual double complexity(Geom::Affine const &ctm);
 
@@ -48,6 +50,7 @@ public:
     guint32 lighting_color;
 
 private:
+    SVGICCColor *icc;
 };
 
 } /* namespace Filters */

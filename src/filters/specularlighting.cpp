@@ -18,10 +18,13 @@
 # include "config.h"
 #endif
 
+#include "strneq.h"
+
 #include "attributes.h"
 #include "svg/svg.h"
 #include "sp-object.h"
 #include "svg/svg-color.h"
+#include "svg/svg-icc-color.h"
 #include "filters/specularlighting.h"
 #include "filters/distantlight.h"
 #include "filters/pointlight.h"
@@ -75,6 +78,8 @@ sp_feSpecularLighting_init(SPFeSpecularLighting *feSpecularLighting)
     feSpecularLighting->specularConstant = 1;
     feSpecularLighting->specularExponent = 1;
     feSpecularLighting->lighting_color = 0xffffffff;
+    feSpecularLighting->icc = NULL;
+
     //TODO kernelUnit
     feSpecularLighting->renderer = NULL;
     
@@ -202,6 +207,16 @@ sp_feSpecularLighting_set(SPObject *object, unsigned int key, gchar const *value
             feSpecularLighting->lighting_color = sp_svg_read_color(value, &cend_ptr, 0xffffffff);
             //if a value was read
             if (cend_ptr) {
+                while (g_ascii_isspace(*cend_ptr)) {
+                    ++cend_ptr;
+                }
+                if (strneq(cend_ptr, "icc-color(", 10)) {
+                    if (!feSpecularLighting->icc) feSpecularLighting->icc = new SVGICCColor();
+                    if ( ! sp_svg_read_icc_color( cend_ptr, feSpecularLighting->icc ) ) {
+                        delete feSpecularLighting->icc;
+                        feSpecularLighting->icc = NULL;
+                    }
+                }
                 feSpecularLighting->lighting_color_set = TRUE;
             } else {
                 //lighting_color already contains the default value
@@ -352,6 +367,8 @@ static void sp_feSpecularLighting_build_renderer(SPFilterPrimitive *primitive, I
     nr_specularlighting->specularExponent = sp_specularlighting->specularExponent;
     nr_specularlighting->surfaceScale = sp_specularlighting->surfaceScale;
     nr_specularlighting->lighting_color = sp_specularlighting->lighting_color;
+    nr_specularlighting->set_icc(sp_specularlighting->icc);
+
     //We assume there is at most one child
     nr_specularlighting->light_type = Inkscape::Filters::NO_LIGHT;
     if (SP_IS_FEDISTANTLIGHT(primitive->children)) {

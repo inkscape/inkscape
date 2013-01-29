@@ -108,6 +108,7 @@ guint32 ink_cairo_surface_average_color(cairo_surface_t *surface);
 void ink_cairo_surface_average_color(cairo_surface_t *surface, double &r, double &g, double &b, double &a);
 void ink_cairo_surface_average_color_premul(cairo_surface_t *surface, double &r, double &g, double &b, double &a);
 
+void srgb_to_linear( double *c);
 int ink_cairo_surface_srgb_to_linear(cairo_surface_t *surface);
 int ink_cairo_surface_linear_to_srgb(cairo_surface_t *surface);
 
