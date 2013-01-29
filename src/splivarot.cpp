@@ -1002,8 +1002,8 @@ sp_selected_path_outline(SPDesktop *desktop)
                     break;
             }
 
-            if (o_width < 0.01)
-                o_width = 0.01;
+            if (o_width < 0.032)
+                o_width = 0.032;
             o_miter = i_style->stroke_miterlimit.value * o_width;
         }
 
