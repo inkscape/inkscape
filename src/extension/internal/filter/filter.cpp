@@ -172,7 +172,7 @@ void Filter::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::Vie
 
 			// no filter
 			if (filternode == NULL) {
-				g_warning("no assoziating filter found!");
+				g_warning("no assigned filter found!");
 				continue;
 			}
 
