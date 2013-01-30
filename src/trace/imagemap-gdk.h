@@ -24,17 +24,9 @@ extern "C" {
 #endif
 
 GrayMap *gdkPixbufToGrayMap(GdkPixbuf *buf);
-
 GdkPixbuf *grayMapToGdkPixbuf(GrayMap *grayMap);
-
 PackedPixelMap *gdkPixbufToPackedPixelMap(GdkPixbuf *buf);
-
-//GdkPixbuf *packedPixelMapToGdkPixbuf(PackedPixelMap *ppMap);
-
 RgbMap *gdkPixbufToRgbMap(GdkPixbuf *buf);
-
-//GdkPixbuf *rgbMapToGdkPixbuf(RgbMap *rgbMap);
-
 GdkPixbuf *indexedMapToGdkPixbuf(IndexedMap *iMap);
 
 

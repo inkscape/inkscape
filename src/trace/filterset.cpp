@@ -365,41 +365,6 @@ grayMapCanny(GrayMap *gm, double lowThreshold, double highThreshold)
 
 
 
-
-
-
-
-/**
- *
- */
-GdkPixbuf *
-gdkCanny(GdkPixbuf *img, double lowThreshold, double highThreshold)
-{
-    if (!img)
-        return NULL;
-
-
-    GrayMap *grayMap = gdkPixbufToGrayMap(img);
-    if (!grayMap)
-        return NULL;
-
-    /*grayMap->writePPM(grayMap, "gbefore.ppm");*/
-
-    GrayMap *cannyGm = grayMapCanny(grayMap,lowThreshold, highThreshold);
-
-    grayMap->destroy(grayMap);
-
-    if (!cannyGm)
-        return NULL;
-
-    /*grayMap->writePPM(grayMap, "gafter.ppm");*/
-
-    GdkPixbuf *newImg = grayMapToGdkPixbuf(cannyGm);
-
-
-    return newImg;
-}
-
 /*#########################################################################
 ### Q U A N T I Z A T I O N
 #########################################################################*/
