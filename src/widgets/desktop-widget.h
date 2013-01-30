@@ -105,7 +105,11 @@ struct SPDesktopWidget {
 
     unsigned int _interaction_disabled_counter;
 
-    SPCanvas *canvas;
+    SPCanvas  *canvas;
+
+    /** A table for displaying the canvas, rulers etc */
+    GtkWidget *canvas_tbl;
+
     Geom::Point ruler_origin;
     double dt2r;
 

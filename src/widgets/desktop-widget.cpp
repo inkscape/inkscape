@@ -324,8 +324,8 @@ canvas_tbl_size_allocate(GtkWidget    *widget,
                          GdkRectangle *allocation,
                          gpointer      data)
 {
-   SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data); 
-   sp_desktop_widget_update_rulers (dtw);
+    SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data); 
+    sp_desktop_widget_update_rulers (dtw);
 }
 
 /**
@@ -401,14 +401,14 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
 #if GTK_CHECK_VERSION(3,0,0)
     GtkWidget *tbl = gtk_grid_new();
-    GtkWidget *canvas_tbl = gtk_grid_new();
+    dtw->canvas_tbl = gtk_grid_new();
     
-    gtk_grid_attach(GTK_GRID(canvas_tbl), eventbox, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), eventbox, 1, 0, 1, 1);
 #else
     GtkWidget *tbl = gtk_table_new(2, 3, FALSE);
-    GtkWidget *canvas_tbl = gtk_table_new(3, 3, FALSE);
+    dtw->canvas_tbl = gtk_table_new(3, 3, FALSE);
    
-    gtk_table_attach(GTK_TABLE(canvas_tbl),
+    gtk_table_attach(GTK_TABLE(dtw->canvas_tbl),
                      eventbox,
                      1, 2,     0, 1, 
 		     GTK_FILL, GTK_FILL, 
@@ -426,9 +426,9 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_container_add (GTK_CONTAINER (eventbox), GTK_WIDGET (dtw->vruler));
 
 #if GTK_CHECK_VERSION(3,0,0)
-    gtk_grid_attach(GTK_GRID(canvas_tbl), eventbox, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), eventbox, 0, 1, 1, 1);
 #else
-    gtk_table_attach(GTK_TABLE (canvas_tbl),
+    gtk_table_attach(GTK_TABLE (dtw->canvas_tbl),
                      eventbox,
 		     0, 1,     1, 2,
                      GTK_FILL, GTK_FILL,
@@ -444,11 +444,11 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
 #if GTK_CHECK_VERSION(3,0,0)
     dtw->hscrollbar = gtk_scrollbar_new(GTK_ORIENTATION_HORIZONTAL, GTK_ADJUSTMENT (dtw->hadj));
-    gtk_grid_attach(GTK_GRID(canvas_tbl), dtw->hscrollbar, 1, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), dtw->hscrollbar, 1, 2, 1, 1);
     dtw->vscrollbar_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 #else
     dtw->hscrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (dtw->hadj));
-    gtk_table_attach(GTK_TABLE (canvas_tbl), dtw->hscrollbar, 1, 2, 2, 3,
+    gtk_table_attach(GTK_TABLE (dtw->canvas_tbl), dtw->hscrollbar, 1, 2, 2, 3,
             GTK_FILL, GTK_SHRINK,
             0, 0);
     dtw->vscrollbar_box = gtk_vbox_new (FALSE, 0);
@@ -476,9 +476,9 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gtk_box_pack_start (GTK_BOX (dtw->vscrollbar_box), dtw->vscrollbar, TRUE, TRUE, 0);
 
 #if GTK_CHECK_VERSION(3,0,0)
-    gtk_grid_attach(GTK_GRID(canvas_tbl), dtw->vscrollbar_box, 2, 0, 1, 2);
+    gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), dtw->vscrollbar_box, 2, 0, 1, 2);
 #else
-    gtk_table_attach(GTK_TABLE(canvas_tbl), dtw->vscrollbar_box, 2, 3, 0, 2,
+    gtk_table_attach(GTK_TABLE(dtw->canvas_tbl), dtw->vscrollbar_box, 2, 3, 0, 2,
             GTK_SHRINK, GTK_FILL,
             0, 0);
 #endif
@@ -514,9 +514,9 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
 #if GTK_CHECK_VERSION(3,0,0)
-    gtk_grid_attach( GTK_GRID(canvas_tbl), dtw->cms_adjust, 2, 2, 1, 1);
+    gtk_grid_attach( GTK_GRID(dtw->canvas_tbl), dtw->cms_adjust, 2, 2, 1, 1);
 #else
-    gtk_table_attach( GTK_TABLE(canvas_tbl), dtw->cms_adjust, 2, 3, 2, 3,
+    gtk_table_attach( GTK_TABLE(dtw->canvas_tbl), dtw->cms_adjust, 2, 3, 2, 3,
             (GtkAttachOptions)(GTK_SHRINK),
             (GtkAttachOptions)(GTK_SHRINK),
             0, 0);
@@ -560,9 +560,9 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 #if GTK_CHECK_VERSION(3,0,0)
     gtk_widget_set_hexpand(GTK_WIDGET(dtw->canvas), TRUE);
     gtk_widget_set_vexpand(GTK_WIDGET(dtw->canvas), TRUE);
-    gtk_grid_attach(GTK_GRID(canvas_tbl), GTK_WIDGET(dtw->canvas), 1, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(dtw->canvas_tbl), GTK_WIDGET(dtw->canvas), 1, 1, 1, 1);
 #else
-    gtk_table_attach (GTK_TABLE (canvas_tbl), GTK_WIDGET(dtw->canvas), 1, 2, 1, 2, (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), 0, 0);
+    gtk_table_attach (GTK_TABLE (dtw->canvas_tbl), GTK_WIDGET(dtw->canvas), 1, 2, 1, 2, (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), (GtkAttachOptions)(GTK_FILL | GTK_EXPAND), 0, 0);
 #endif
 
     /* Dock */
@@ -579,7 +579,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
         Gtk::HPaned *paned = new Gtk::HPaned();
 #endif
 
-        paned->pack1(*Glib::wrap(canvas_tbl));
+        paned->pack1(*Glib::wrap(dtw->canvas_tbl));
         paned->pack2(dtw->dock->getWidget(), Gtk::FILL);
 
         /* Prevent the paned from catching F6 and F8 by unsetting the default callbacks */
@@ -599,11 +599,11 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
 
     } else {
 #if GTK_CHECK_VERSION(3,0,0)
-        gtk_widget_set_hexpand(GTK_WIDGET(canvas_tbl), TRUE);
-        gtk_widget_set_vexpand(GTK_WIDGET(canvas_tbl), TRUE);
-        gtk_grid_attach(GTK_GRID(tbl), GTK_WIDGET (canvas_tbl), 1, 1, 1, 1);
+        gtk_widget_set_hexpand(GTK_WIDGET(dtw->canvas_tbl), TRUE);
+        gtk_widget_set_vexpand(GTK_WIDGET(dtw->canvas_tbl), TRUE);
+        gtk_grid_attach(GTK_GRID(tbl), GTK_WIDGET (dtw->canvas_tbl), 1, 1, 1, 1);
 #else
-        gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (canvas_tbl), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
+        gtk_table_attach (GTK_TABLE (tbl), GTK_WIDGET (dtw->canvas_tbl), 1, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                           (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), 0, 0);
 #endif
     }
@@ -762,7 +762,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     
     // Ensure that ruler ranges are updated correctly whenever the canvas table
     // is resized
-    g_signal_connect (G_OBJECT (canvas_tbl),
+    g_signal_connect (G_OBJECT (dtw->canvas_tbl),
                       "size-allocate",
                       G_CALLBACK (canvas_tbl_size_allocate),
                       dtw);
@@ -787,6 +787,8 @@ static void sp_desktop_widget_dispose(GObject *object)
         g_signal_handlers_disconnect_by_func (G_OBJECT (dtw->zoom_status), (gpointer) G_CALLBACK (sp_dtw_zoom_value_changed), dtw);
         g_signal_handlers_disconnect_by_func (G_OBJECT (dtw->zoom_status), (gpointer) G_CALLBACK (sp_dtw_zoom_populate_popup), dtw);
         g_signal_handlers_disconnect_by_func (G_OBJECT (dtw->canvas), (gpointer) G_CALLBACK (sp_desktop_widget_event), dtw);
+        g_signal_handlers_disconnect_by_func (G_OBJECT (dtw->canvas_tbl), (gpointer) G_CALLBACK (canvas_tbl_size_allocate), dtw);
+
 
         dtw->layer_selector->setDesktop(NULL);
         dtw->layer_selector->unreference();
