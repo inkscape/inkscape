@@ -3,7 +3,7 @@
 /* Change the 'SHADOWS' above to be your file name */
 
 /*
- * Copyright (C) 2011 Authors:
+ * Copyright (C) 2013 Authors:
  *   Ivan Louette (filters)
  *   Nicolas Dufour (UI) <nicoduf@yahoo.fr>
  *
@@ -39,6 +39,7 @@ namespace Filter {
         inner = composite1 (operator="out"), composite2 (operator="atop", in1="offset", in2="SourceGraphic")
         innercut = composite1 (operator="in"), composite2 (operator="out", in1="offset", in2="SourceGraphic")
         outercut = composite1 (operator="out"), composite2 (operator="in", in1="SourceGraphic", in2="offset")
+        shadow = composite1 (operator="out"), composite2 (operator="atop", in1="offset", in2="offset")
     * Color (guint, default 0,0,0,127) -> flood (flood-opacity, flood-color)
     * Use object's color (boolean, default false) -> composite1 (in1, in2)
 */
@@ -60,11 +61,12 @@ public:
                   "<param name=\"blur\" gui-text=\"" N_("Blur radius (px):") "\" type=\"float\" appearance=\"full\" min=\"0.0\" max=\"200.0\">3.0</param>\n"
                   "<param name=\"xoffset\" gui-text=\"" N_("Horizontal offset (px):") "\" type=\"float\" appearance=\"full\" min=\"-50.0\" max=\"50.0\">6.0</param>\n"
                   "<param name=\"yoffset\" gui-text=\"" N_("Vertical offset (px):") "\" type=\"float\" appearance=\"full\" min=\"-50.0\" max=\"50.0\">6.0</param>\n"
-                  "<param name=\"type\" gui-text=\"" N_("Blur type:") "\" type=\"enum\" >\n"
+                  "<param name=\"type\" gui-text=\"" N_("Shadow type:") "\" type=\"enum\" >\n"
                     "<_item value=\"outer\">" N_("Outer") "</_item>\n"
                     "<_item value=\"inner\">" N_("Inner") "</_item>\n"
                     "<_item value=\"outercut\">" N_("Outer cutout") "</_item>\n"
                     "<_item value=\"innercut\">" N_("Inner cutout") "</_item>\n"
+                    "<_item value=\"shadow\">" N_("Shadow only") "</_item>\n"
                   "</param>\n"
                 "</page>\n"
                 "<page name=\"coltab\" _gui-text=\"" N_("Blur color") "\">\n"
@@ -151,11 +153,16 @@ ColorizableDropShadow::get_filter_text (Inkscape::Extension::Extension * ext)
         comp2op << "out";
         comp2in1 << "offset";
         comp2in2 << "SourceGraphic";
-    } else { //innercut
+    } else if ((g_ascii_strcasecmp("innercut", type) == 0)){
         comp1op << "out";
         comp1in1 << "flood";
         comp1in2 << "SourceGraphic";
         comp2op << "in";
+    } else { //shadow
+        comp1op << "in";
+        comp2op << "atop";
+        comp2in1 << "offset";
+        comp2in2 << "offset";
     }
 
     _filter = g_strdup_printf(
