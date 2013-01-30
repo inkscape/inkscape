@@ -63,17 +63,6 @@ set(extension_SRC
 
 	script/InkscapeScript.cpp
 
-	# dxf2svg/aci2rgb.cpp
-	# dxf2svg/entities2elements.cpp
-	# dxf2svg/tables2svg_info.cpp
-	# dxf2svg/blocks.cpp
-	# dxf2svg/entities.cpp
-	# dxf2svg/tables.cpp
-	# dxf2svg/dxf2svg.cpp
-	# dxf2svg/read_dxf.cpp
-	# dxf2svg/test_dxf.cpp
-
-
 	# ------
 	# Header
 	db.h
