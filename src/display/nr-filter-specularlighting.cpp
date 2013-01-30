@@ -165,9 +165,9 @@ void FilterSpecularLighting::render_cairo(FilterSlot &slot)
         // if color_interpolation_filters set to linearRGB (for efficiency assuming
         // next filter primitive has same value of cif).
         if( ci_fp == SP_CSS_COLOR_INTERPOLATION_LINEARRGB ) {
-            srgb_to_linear( &r );
-            srgb_to_linear( &g );
-            srgb_to_linear( &b );
+            r = srgb_to_linear( r );
+            g = srgb_to_linear( g );
+            b = srgb_to_linear( b );
         }
     }
     set_cairo_surface_ci(out, ci_fp );

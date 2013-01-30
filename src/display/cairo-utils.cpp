@@ -597,20 +597,11 @@ void ink_cairo_surface_average_color_premul(cairo_surface_t *surface, double &r,
     a = CLAMP(a, 0.0, 1.0);
 }
 
-void srgb_to_linear( double* c ) {
+static guint32 srgb_to_linear( const guint32 c, const guint32 a ) {
 
-    if( *c < 0.04045 ) {
-        *c /= 12.92;
-    } else {
-        *c = pow( (*c+0.055)/1.055, 2.4 );
-    }
-}
+    const guint32 c1 = unpremul_alpha( c, a );
 
-void srgb_to_linear( guint32* c, guint32 a ) {
-
-    *c = unpremul_alpha( *c, a );
-
-    double cc = *c/255.0;
+    double cc = c1/255.0;
 
     if( cc < 0.04045 ) {
         cc /= 12.92;
@@ -619,16 +610,16 @@ void srgb_to_linear( guint32* c, guint32 a ) {
     }
     cc *= 255.0;
 
-    *c = (int)cc;
+    const guint32 c2 = (int)cc;
 
-    *c = premul_alpha( *c, a );
+    return premul_alpha( c2, a );
 }
 
-void linear_to_srgb( guint32* c, guint32 a ) {
+static guint32 linear_to_srgb( const guint32 c, const guint32 a ) {
 
-    *c = unpremul_alpha( *c, a );
+    const guint32 c1 = unpremul_alpha( c, a );
 
-    double cc = *c/255.0;
+    double cc = c1/255.0;
 
     if( cc < 0.0031308 ) {
         cc *= 12.92;
@@ -637,9 +628,9 @@ void linear_to_srgb( guint32* c, guint32 a ) {
     }
     cc *= 255.0;
 
-    *c = (int)cc;
+    const guint32 c2 = (int)cc;
 
-    *c = premul_alpha( *c, a );
+    return premul_alpha( c2, a );
 }
 
 int ink_cairo_surface_srgb_to_linear(cairo_surface_t *surface)
@@ -656,9 +647,9 @@ int ink_cairo_surface_srgb_to_linear(cairo_surface_t *surface)
             guint32 px = *reinterpret_cast<guint32*>(data + 4*x);
             EXTRACT_ARGB32(px, a,r,g,b)    ; // Unneeded semi-colon for indenting
             if( a != 0 ) {
-                srgb_to_linear( &r, a );
-                srgb_to_linear( &g, a );
-                srgb_to_linear( &b, a );
+                r = srgb_to_linear( r, a );
+                g = srgb_to_linear( g, a );
+                b = srgb_to_linear( b, a );
             }
             ASSEMBLE_ARGB32(px2, a,r,g,b);
             *reinterpret_cast<guint32*>(data + 4*x) = px2;
@@ -681,9 +672,9 @@ int ink_cairo_surface_linear_to_srgb(cairo_surface_t *surface)
             guint32 px = *reinterpret_cast<guint32*>(data + 4*x);
             EXTRACT_ARGB32(px, a,r,g,b)    ; // Unneeded semi-colon for indenting
             if( a != 0 ) {
-                linear_to_srgb( &r, a );
-                linear_to_srgb( &g, a );
-                linear_to_srgb( &b, a );
+                r = linear_to_srgb( r, a );
+                g = linear_to_srgb( g, a );
+                b = linear_to_srgb( b, a );
             }
             ASSEMBLE_ARGB32(px2, a,r,g,b);
             *reinterpret_cast<guint32*>(data + 4*x) = px2;
