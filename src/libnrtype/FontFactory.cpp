@@ -824,7 +824,12 @@ font_instance* font_factory::FaceFromUIStrings(char const *uiFamily, char const 
 
     g_assert(uiFamily && uiStyle);
     if (uiFamily && uiStyle) {
-        Glib::ustring uiString = Glib::ustring(uiFamily) + Glib::ustring(uiStyle);
+
+        // If font list, take only first font in list
+        gchar** tokens = g_strsplit( uiFamily, ",", 0 );
+        g_strstrip( tokens[0] );
+
+        Glib::ustring uiString = Glib::ustring(tokens[0]) + Glib::ustring(uiStyle);
 
         UIStringToPangoStringMap::iterator uiToPangoIter = fontStringMap.find(uiString);
 
