@@ -831,6 +831,8 @@ font_instance* font_factory::FaceFromUIStrings(char const *uiFamily, char const 
 
         Glib::ustring uiString = Glib::ustring(tokens[0]) + Glib::ustring(uiStyle);
 
+        g_strfreev( tokens );
+
         UIStringToPangoStringMap::iterator uiToPangoIter = fontStringMap.find(uiString);
 
         if (uiToPangoIter != fontStringMap.end ()) {

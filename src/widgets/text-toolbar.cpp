@@ -178,6 +178,11 @@ static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
         return;
     }
 
+    // If font list, take only first font in list
+    gchar** tokens = g_strsplit( current_font, ",", 0 );
+    g_strstrip( tokens[0] );
+    current_font = tokens[0];
+
     // Get an iter to the selected font from the model data
     // We cant get it from the combo, cause it might not have been created yet
     gboolean found = false;
@@ -196,6 +201,8 @@ static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
       }
       valid = gtk_tree_model_iter_next( model, &iter );
     }
+
+    g_strfreev( tokens );
 
     if (!found) {
         return;
