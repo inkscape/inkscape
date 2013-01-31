@@ -454,7 +454,7 @@ Glib::ustring font_factory::ReplaceFontSpecificationFamily(const Glib::ustring &
     // what constitutes a "family" in our own UI may be different from how Pango
     // sees it.
 
-    // Find the PangoFontDescription associated with the font specification string.
+    // Find the PangoFontDescription associated with the old font specification string.
     PangoStringToDescrMap::iterator it = fontInstanceMap.find(fontSpec);
 
 
@@ -464,15 +464,23 @@ Glib::ustring font_factory::ReplaceFontSpecificationFamily(const Glib::ustring &
         // Make copy
         PangoFontDescription *descr = pango_font_description_copy((*it).second);
 
-        // Grab the UI Family string from the descr
+        // Grab the old UI Family string from the descr
         Glib::ustring uiFamily = GetUIFamilyString(descr);
 
         // Replace the UI Family name with the new family name
         std::size_t found = fontSpec.find(uiFamily);
         if (found != Glib::ustring::npos) {
+
+            // Add comma to end of newFamily... commas at end don't hurt but are
+            // required if the last part of a family name is a valid font style
+            // (e.g. "Arial Black").
+            Glib::ustring newFamilyComma = newFamily;
+            if( *newFamilyComma.rbegin() != ',' ) {
+                newFamilyComma += ",";
+            }
             newFontSpec = fontSpec;
             newFontSpec.erase(found, uiFamily.size());
-            newFontSpec.insert(found, newFamily);
+            newFontSpec.insert(found, newFamilyComma);
 
             // If the new font specification does not exist in the reference maps,
             // search for the next best match for the faces in that style
@@ -716,6 +724,7 @@ void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
 
                         FamilyToStylesMap::iterator iter = map->find(familyUIName);
 
+                        // Insert new family
                         if (iter == map->end()) {
                             map->insert(std::make_pair(familyUIName, std::list<Glib::ustring>()));
                         }
