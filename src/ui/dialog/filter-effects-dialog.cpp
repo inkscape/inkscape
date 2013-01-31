@@ -1730,8 +1730,6 @@ bool FilterEffectsDialog::PrimitiveList::on_draw_signal(const Cairo::RefPtr<Cair
                                 (bg_color_active.green + fg_color_active.green)/2.0,
                                 (bg_color_active.blue + fg_color_active.blue)/2.0,
                                 (bg_color_active.alpha + fg_color_active.alpha)/2.0};
-
-    GdkRGBA black = {0,0,0,1};
 #else
     GtkStyle *style = gtk_widget_get_style(GTK_WIDGET(gobj()));
 #endif
@@ -1902,11 +1900,7 @@ bool FilterEffectsDialog::PrimitiveList::on_draw_signal(const Cairo::RefPtr<Cair
         // Draw drag connection
         if(row_prim == prim && _in_drag) {
 		cr->save();
-#if GTK_CHECK_VERSION(3,0,0)
-                gdk_cairo_set_source_rgba(cr->cobj(), &black);
-#else
-		gdk_cairo_set_source_color(cr->cobj(), &(style->black));
-#endif
+                cr->set_source_rgb(0.0, 0.0, 0.0);
 		cr->move_to(outline_x, con_drag_y);
 		cr->line_to(mx, con_drag_y);
 		cr->line_to(mx, my);
@@ -1936,8 +1930,6 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Cairo::RefPtr<Cai
                          (bg_color.green + fg_color.green)/2.0,
                          (bg_color.blue + fg_color.blue)/2.0,
                          (bg_color.alpha + fg_color.alpha)/2.0};
-    
-    GdkRGBA black = {0,0,0,1};
 #else
     GtkStyle *style = gtk_widget_get_style(GTK_WIDGET(gobj()));
 #endif
@@ -1955,17 +1947,14 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Cairo::RefPtr<Cai
         const int tw = get_input_type_width();
         gint end_x = text_start_x + tw * src_id + (int)(tw * 0.5f) + 1;
 
+	if(use_default && is_first)
 #if GTK_CHECK_VERSION(3,0,0)
-	if(use_default && is_first)
-		gdk_cairo_set_source_rgba(cr->cobj(), &mid_color);
-	else
-		gdk_cairo_set_source_rgba(cr->cobj(), &black);
+            gdk_cairo_set_source_rgba(cr->cobj(), &mid_color);
 #else
-	if(use_default && is_first)
-		gdk_cairo_set_source_color(cr->cobj(), &(style->dark[GTK_STATE_NORMAL]));
-	else
-		gdk_cairo_set_source_color(cr->cobj(), &(style->black));
+            gdk_cairo_set_source_color(cr->cobj(), &(style->dark[GTK_STATE_NORMAL]));
 #endif
+	else
+            cr->set_source_rgb(0.0, 0.0, 0.0);
 	
 	cr->rectangle(end_x-2, y1-2, 5, 5);
 	cr->fill_preserve();
@@ -1993,11 +1982,7 @@ void FilterEffectsDialog::PrimitiveList::draw_connection(const Cairo::RefPtr<Cai
             const int y2 = rct.get_y() + rct.get_height();
 
             // Draw a bevelled 'L'-shaped connection
-#if GTK_CHECK_VERSION(3,0,0)
-	    gdk_cairo_set_source_rgba(cr->cobj(), &black);
-#else
-	    gdk_cairo_set_source_color(cr->cobj(), &(style->black));
-#endif
+	    cr->set_source_rgb(0.0, 0.0, 0.0);
 	    cr->move_to(x1, y1);
 	    cr->line_to(x2-fheight/4, y1);
 	    cr->line_to(x2, y1-fheight/4);

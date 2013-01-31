@@ -642,49 +642,26 @@ static gboolean sp_color_slider_draw(GtkWidget *widget, cairo_t *cr)
 	gint x = (int)(slider->value * (carea.width - 1) - ARROW_SIZE / 2 + carea.x);
 	gint y1 = carea.y;
 	gint y2 = carea.y + carea.height - 1;
-	gint w = ARROW_SIZE;
 	cairo_set_line_width(cr, 1.0);
 
-#if GTK_CHECK_VERSION(3,0,0)
-	GdkRGBA white = {1,1,1,1};
-	GdkRGBA black = {0,0,0,1};
-#else
-	GdkColor white, black;
-	gdk_color_parse("#fff", &white);
-	gdk_color_parse("#000", &black);
-#endif
+	// Define top arrow
+	cairo_move_to(cr, x - 0.5,                y1 + 0.5);
+	cairo_line_to(cr, x + ARROW_SIZE - 0.5,   y1 + 0.5);
+	cairo_line_to(cr, x + (ARROW_SIZE-1)/2.0, y1 + ARROW_SIZE/2.0 + 0.5);
+	cairo_line_to(cr, x - 0.5,                y1 + 0.5);
 
-	while ( w > 0 )
-	{
-#if GTK_CHECK_VERSION(3,0,0)
-		gdk_cairo_set_source_rgba(cr, &white);
-#else
-		gdk_cairo_set_source_color(cr, &white);
-#endif
-		cairo_move_to(cr, x - 0.5, y1 + 0.5);
-		cairo_line_to(cr, x + w - 1 + 0.5, y1 + 0.5);
-		cairo_move_to(cr, x - 0.5, y2 + 0.5);
-		cairo_line_to(cr, x + w - 1 + 0.5, y2 + 0.5);
-		cairo_stroke(cr);
-		w -=2;
-		x++;
-		if ( w > 0 )
-		{
-#if GTK_CHECK_VERSION(3,0,0)
-			gdk_cairo_set_source_rgba(cr, &black);
-#else
-			gdk_cairo_set_source_color(cr, &black);
-#endif
-			cairo_move_to(cr, x - 0.5, y1 + 0.5);
-			cairo_line_to(cr, x + w - 1 + 0.5, y1 + 0.5);
-			cairo_move_to(cr, x - 0.5, y2 + 0.5);
-			cairo_line_to(cr, x + w - 1 + 0.5, y2 + 0.5);
-			cairo_stroke(cr);
-		}
-		y1++;
-		y2--;
-	}
+	// Define bottom arrow
+	cairo_move_to(cr, x - 0.5,                y2 + 0.5);
+	cairo_line_to(cr, x + ARROW_SIZE - 0.5,   y2 + 0.5);
+	cairo_line_to(cr, x + (ARROW_SIZE-1)/2.0, y2 - ARROW_SIZE/2.0 + 0.5);
+	cairo_line_to(cr, x - 0.5,                y2 + 0.5);
 
+	// Render both arrows
+	cairo_set_source_rgb(cr, 1.0, 1.0, 1.0);
+	cairo_stroke_preserve(cr);
+	cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
+	cairo_fill(cr);
+	
 	return FALSE;
 }
 
