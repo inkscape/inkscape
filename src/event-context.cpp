@@ -712,6 +712,7 @@ static gint sp_event_context_private_root_handler(
                 sp_toggle_selector(desktop);
                 ret = TRUE;
             }
+            within_tolerance = false;
             break;
         case GDK_KEY_Q:
         case GDK_KEY_q:
