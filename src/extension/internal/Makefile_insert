@@ -12,6 +12,12 @@ ink_common_sources += \
 	extension/internal/vsd-input.h
 endif
 
+if WITH_LIBCDR
+ink_common_sources += \
+	extension/internal/cdr-input.cpp	\
+	extension/internal/cdr-input.h
+endif
+
 if USE_IMAGE_MAGICK
 ink_common_sources +=			\
 	extension/internal/bitmap/imagemagick.cpp		\

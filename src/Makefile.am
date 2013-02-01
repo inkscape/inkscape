@@ -48,6 +48,7 @@ all_libs =			\
 	$(INKBOARD_LIBS)	\
 	$(LIBWPG_LIBS)		\
 	$(LIBVISIO_LIBS)		\
+	$(LIBCDR_LIBS)		\
 	$(DBUS_LIBS)		\
 	$(GDL_LIBS)             \
 	$(IMAGEMAGICK_LIBS)
@@ -72,6 +73,7 @@ INCLUDES =	\
 	$(INKBOARD_CFLAGS) \
 	$(LIBWPG_CFLAGS) \
 	$(LIBVISIO_CFLAGS) \
+	$(LIBCDR_CFLAGS) \
 	$(DBUS_CFLAGS) \
 	$(GDL_CFLAGS)  \
 	$(XFT_CFLAGS)	\

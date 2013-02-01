@@ -706,6 +706,27 @@ AC_SUBST(LIBVISIO_LIBS)
 AC_SUBST(LIBVISIO_CFLAGS)
 AM_CONDITIONAL(WITH_LIBVISIO, test "x$with_libvisio" = "xyes")
 
+dnl ********************************
+dnl Check for libcdr for extension
+dnl ********************************
+
+AC_ARG_ENABLE(wpg,
+       [  --disable-cdr           compile without support for Microsoft Visio Diagrams],
+       enable_cdr=$enableval,enable_cdr=yes)
+
+with_libcdr=no
+
+if test "x$enable_cdr" = "xyes"; then
+	PKG_CHECK_MODULES(LIBCDR, libcdr-0.0 >= 0.0.3 libwpd-0.9 libwpd-stream-0.9 libwpg-0.2, with_libcdr=yes, with_libcdr=no)
+
+	if test "x$with_libcdr" = "xyes"; then
+		AC_DEFINE(WITH_LIBCDR,1,[Build in libcdr])
+	fi
+fi
+AC_SUBST(LIBCDR_LIBS)
+AC_SUBST(LIBCDR_CFLAGS)
+AM_CONDITIONAL(WITH_LIBCDR, test "x$with_libcdr" = "xyes")
+
 dnl ******************************
 dnl Support doing a local install
 dnl   (mostly for distcheck)
@@ -1170,6 +1191,7 @@ Configuration:
         ImageMagick Magick++:     ${magick_ok}
         Libwpg:                   ${with_libwpg}
         Libvisio:                 ${with_libvisio}
+        Libcdr:                   ${with_libcdr}
         Doing Local Install:      ${with_localinstall}
         GTK+ backend target:      ${gtk_backend_target}
 "

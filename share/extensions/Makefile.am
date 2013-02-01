@@ -196,7 +196,7 @@ modules = \
 	ai_input.inx \
 	aisvg.inx \
 	ccx_input.inx \
-	cdr_input.inx\
+	cdr_input.inx \
 	cdt_input.inx \
 	cgm_input.inx \
 	cmx_input.inx \

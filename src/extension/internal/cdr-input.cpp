@@ -16,14 +16,14 @@
 #include <stdio.h>
 #include "config.h"
 
-#include "vsd-input.h"
+#include "cdr-input.h"
 
-#ifdef WITH_LIBVISIO
+#ifdef WITH_LIBCDR
 
 #include <string>
 #include <cstring>
 
-#include <libvisio/libvisio.h>
+#include <libcdr/libcdr.h>
 #include <libwpd-stream/libwpd-stream.h>
 
 #include <gtkmm/alignment.h>
@@ -56,10 +56,10 @@ namespace Extension {
 namespace Internal {
 
 
-class VsdImportDialog : public Gtk::Dialog {
+class CdrImportDialog : public Gtk::Dialog {
 public:
-     VsdImportDialog(const std::vector<WPXString> &vec);
-     virtual ~VsdImportDialog();
+     CdrImportDialog(const std::vector<WPXString> &vec);
+     virtual ~CdrImportDialog();
 
      bool showDialog();
      unsigned getSelectedPage();
@@ -89,7 +89,7 @@ private:
      int _preview_width, _preview_height;    // Size of the preview area
 };
 
-VsdImportDialog::VsdImportDialog(const std::vector<WPXString> &vec)
+CdrImportDialog::CdrImportDialog(const std::vector<WPXString> &vec)
      : _vec(vec), _current_page(1)
 {
      int num_pages = _vec.size();
@@ -161,12 +161,12 @@ VsdImportDialog::VsdImportDialog(const std::vector<WPXString> &vec)
      vbox2->show();
 
      // Connect signals
-     _pageNumberSpin_adj->signal_value_changed().connect(sigc::mem_fun(*this, &VsdImportDialog::_onPageNumberChanged));
+     _pageNumberSpin_adj->signal_value_changed().connect(sigc::mem_fun(*this, &CdrImportDialog::_onPageNumberChanged));
 }
 
-VsdImportDialog::~VsdImportDialog() {}
+CdrImportDialog::~CdrImportDialog() {}
 
-bool VsdImportDialog::showDialog()
+bool CdrImportDialog::showDialog()
 {
      show();
      gint b = run();
@@ -178,12 +178,12 @@ bool VsdImportDialog::showDialog()
      }
 }
 
-unsigned VsdImportDialog::getSelectedPage()
+unsigned CdrImportDialog::getSelectedPage()
 {
      return _current_page;
 }
 
-void VsdImportDialog::_onPageNumberChanged()
+void CdrImportDialog::_onPageNumberChanged()
 {
      unsigned page = static_cast<unsigned>(_pageNumberSpin->get_value_as_int());
      _current_page = CLAMP(page, 1U, _vec.size());
@@ -193,7 +193,7 @@ void VsdImportDialog::_onPageNumberChanged()
 /**
  * \brief Renders the given page's thumbnail
  */
-void VsdImportDialog::_setPreviewPage(unsigned page)
+void CdrImportDialog::_setPreviewPage(unsigned page)
 {
      SPDocument *doc = SPDocument::createNewDocFromMem(_vec[page-1].cstr(), strlen(_vec[page-1].cstr()), 0);
      Gtk::Widget * tmpPreviewArea = Glib::wrap(sp_svg_view_widget_new(doc));
@@ -206,16 +206,16 @@ void VsdImportDialog::_setPreviewPage(unsigned page)
      _previewArea->show_now();
 }
 
-SPDocument *VsdInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * uri)
+SPDocument *CdrInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * uri)
 {
      WPXFileStream input(uri);
 
-     if (!libvisio::VisioDocument::isSupported(&input)) {
+     if (!libcdr::CDRDocument::isSupported(&input)) {
           return NULL;
      }
 
-     libvisio::VSDStringVector output;
-     if (!libvisio::VisioDocument::generateSVG(&input, output)) {
+     libcdr::CDRStringVector output;
+     if (!libcdr::CDRDocument::generateSVG(&input, output)) {
           return NULL;
      }
 
@@ -234,9 +234,9 @@ SPDocument *VsdInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * u
 
      // If only one page is present, import that one without bothering user
      if (tmpSVGOutput.size() > 1) {
-          VsdImportDialog *dlg = 0;
+          CdrImportDialog *dlg = 0;
           if (inkscape_use_gui()) {
-               dlg = new VsdImportDialog(tmpSVGOutput);
+               dlg = new CdrImportDialog(tmpSVGOutput);
                if (!dlg->showDialog()) {
                     delete dlg;
                     return NULL;
@@ -259,66 +259,66 @@ SPDocument *VsdInput::open(Inkscape::Extension::Input * /*mod*/, const gchar * u
 
 #include "clear-n_.h"
 
-void VsdInput::init(void)
+void CdrInput::init(void)
 {
-    /* VSD */
+    /* CDR */
      Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-            "<name>" N_("VSD Input") "</name>\n"
-            "<id>org.inkscape.input.vsd</id>\n"
+            "<name>" N_("Corel DRAW Input") "</name>\n"
+            "<id>org.inkscape.input.cdr</id>\n"
             "<input>\n"
-                "<extension>.vsd</extension>\n"
-                "<mimetype>application/vnd.visio</mimetype>\n"
-                "<filetypename>" N_("Microsoft Visio Diagram (*.vsd)") "</filetypename>\n"
-                "<filetypetooltip>" N_("File format used by Microsoft Visio 6 and later") "</filetypetooltip>\n"
+                "<extension>.cdr</extension>\n"
+                "<mimetype>image/x-xcdr</mimetype>\n"
+                "<filetypename>" N_("Corel DRAW 7-X4 files (*.cdr)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Open files saved in Corel DRAW 7-X4") "</filetypetooltip>\n"
             "</input>\n"
-        "</inkscape-extension>", new VsdInput());
+        "</inkscape-extension>", new CdrInput());
 
-     /* VDX */
+    /* CDT */
      Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-            "<name>" N_("VDX Input") "</name>\n"
-            "<id>org.inkscape.input.vdx</id>\n"
+            "<name>" N_("Corel DRAW templates input") "</name>\n"
+            "<id>org.inkscape.input.cdt</id>\n"
             "<input>\n"
-                "<extension>.vdx</extension>\n"
-                "<mimetype>application/vnd.visio</mimetype>\n"
-                "<filetypename>" N_("Microsoft Visio XML Diagram (*.vdx)") "</filetypename>\n"
-                "<filetypetooltip>" N_("File format used by Microsoft Visio 2010 and later") "</filetypetooltip>\n"
+                "<extension>.cdt</extension>\n"
+                "<mimetype>application/x-xcdt</mimetype>\n"
+                "<filetypename>" N_("Corel DRAW 7-13 template files (*.cdt)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Open files saved in Corel DRAW 7-13") "</filetypetooltip>\n"
             "</input>\n"
-        "</inkscape-extension>", new VsdInput());
+        "</inkscape-extension>", new CdrInput());
 
-     /* VSDM */
+    /* CCX */
      Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-            "<name>" N_("VSDM Input") "</name>\n"
-            "<id>org.inkscape.input.vsdm</id>\n"
+            "<name>" N_("Corel DRAW Compressed Exchange files input") "</name>\n"
+            "<id>org.inkscape.input.ccx</id>\n"
             "<input>\n"
-                "<extension>.vsdm</extension>\n"
-                "<mimetype>application/vnd.visio</mimetype>\n"
-                "<filetypename>" N_("Microsoft Visio 2013 drawing (*.vsdm)") "</filetypename>\n"
-                "<filetypetooltip>" N_("File format used by Microsoft Visio 2013 and later") "</filetypetooltip>\n"
+                "<extension>.ccx</extension>\n"
+                "<mimetype>application/x-xccx</mimetype>\n"
+                "<filetypename>" N_("Corel DRAW Compressed Exchange files (*.ccx)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Open compressed exchange files saved in Corel DRAW") "</filetypetooltip>\n"
             "</input>\n"
-        "</inkscape-extension>", new VsdInput());
+        "</inkscape-extension>", new CdrInput());
 
-     /* VSDX */
+    /* CMX */
      Inkscape::Extension::build_from_mem(
         "<inkscape-extension xmlns=\"" INKSCAPE_EXTENSION_URI "\">\n"
-            "<name>" N_("VSDX Input") "</name>\n"
-            "<id>org.inkscape.input.vsdx</id>\n"
+            "<name>" N_("Corel DRAW Presentation Exchange files input") "</name>\n"
+            "<id>org.inkscape.input.cmx</id>\n"
             "<input>\n"
-                "<extension>.vsdx</extension>\n"
-                "<mimetype>application/vnd.visio</mimetype>\n"
-                "<filetypename>" N_("Microsoft Visio 2013 drawing (*.vsdx)") "</filetypename>\n"
-                "<filetypetooltip>" N_("File format used by Microsoft Visio 2013 and later") "</filetypetooltip>\n"
+                "<extension>.cmx</extension>\n"
+                "<mimetype>application/x-xcmx</mimetype>\n"
+                "<filetypename>" N_("Corel DRAW Presentation Exchange files (*.cmx)") "</filetypename>\n"
+                "<filetypetooltip>" N_("Open presentation exchange files saved in Corel DRAW") "</filetypetooltip>\n"
             "</input>\n"
-        "</inkscape-extension>", new VsdInput());
+        "</inkscape-extension>", new CdrInput());
 
      return;
 
 } // init
 
 } } }  /* namespace Inkscape, Extension, Implementation */
-#endif /* WITH_LIBVISIO */
+#endif /* WITH_LIBCDR */
 
 /*
   Local Variables:
