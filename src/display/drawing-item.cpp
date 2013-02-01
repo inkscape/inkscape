@@ -550,10 +550,12 @@ DrawingItem::render(DrawingContext &ct, Geom::IntRect const &area, unsigned flag
     // for overlapping clip children. To fix this we use the SOURCE operator
     // instead of the default OVER.
     ict.setOperator(CAIRO_OPERATOR_SOURCE);
+    ict.paint();
     if (_clip) {
+        ict.pushGroup();
         _clip->clip(ict, *carea); // fixme: carea or area?
-    } else {
-        // if there is no clipping path, fill the entire surface with alpha = opacity.
+        ict.popGroupToSource();
+        ict.setOperator(CAIRO_OPERATOR_IN);
         ict.paint();
     }
     ict.setOperator(CAIRO_OPERATOR_OVER); // reset back to default
