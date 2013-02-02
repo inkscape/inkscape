@@ -204,14 +204,6 @@ static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
 
     g_strfreev( tokens );
 
-    if (!found) {
-        return;
-    }
-
-    // Get the list of styles from the selected font
-    GList *list = NULL;
-    gtk_tree_model_get (model, &iter, 1, &list, -1);
-
     Ink_ComboBoxEntry_Action* fontStyleAction = INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontStyleAction" ) );
 
     gchar *current_style = ink_comboboxentry_action_get_active_text( fontStyleAction );
@@ -219,11 +211,30 @@ static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
     GtkListStore *store = GTK_LIST_STORE( ink_comboboxentry_action_get_model( fontStyleAction ) );
     gtk_list_store_clear ( store );
 
-    // Add list of styles to the style combo
-    for (GList *l=list; l; l = l->next)
-    {
+    // Get the list of styles from the selected font
+    GList *list = NULL;
+
+    if (found) {
+
+        // Add list of styles to the style combo
+        gtk_tree_model_get (model, &iter, 1, &list, -1);
+        for (GList *l=list; l; l = l->next)
+        {
+            gtk_list_store_append (store, &iter);
+            gtk_list_store_set (store, &iter, 0, (char*)l->data, -1);
+        }
+
+    } else {
+
+        // Create generic list if selected font-family not available on system
         gtk_list_store_append (store, &iter);
-        gtk_list_store_set (store, &iter, 0, (char*)l->data, -1);
+        gtk_list_store_set (store, &iter, 0, "Normal", -1);
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter, 0, "Italic", -1);
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter, 0, "Bold", -1);
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter, 0, "Bold Italic", -1);
     }
 
     // Select the style in the combo that best matches font
@@ -526,7 +537,7 @@ static void sp_text_fontstyle_value_changed( Ink_ComboBoxEntry_Action *act, GObj
 
     SPCSSAttr   *css        = sp_repr_css_attr_new ();
 
-    gchar *current_style = ink_comboboxentry_action_get_active_text( act );
+    Glib::ustring current_style = ink_comboboxentry_action_get_active_text( act );
     Glib::ustring fontFamily = "";
 
     if (query->text->font_family.set) {
@@ -537,9 +548,10 @@ static void sp_text_fontstyle_value_changed( Ink_ComboBoxEntry_Action *act, GObj
         fontFamily = ink_comboboxentry_action_get_active_text( act );
     }
 
-    font_instance *font = (font_factory::Default())->FaceFromUIStrings (fontFamily.c_str(), current_style);
+    font_instance *font = (font_factory::Default())->FaceFromUIStrings (fontFamily.c_str(), current_style.c_str());
 
     if (font) {
+
         gchar c[256];
 
         font->Attribute( "weight", c, 256);
@@ -556,6 +568,19 @@ static void sp_text_fontstyle_value_changed( Ink_ComboBoxEntry_Action *act, GObj
 
         font->Unref();
         font = NULL;
+
+    } else {
+
+        // Font not found on system, blindly update style
+        // Options match choices in sp_text_fontstyle_populate
+        sp_repr_css_set_property (css, "font-weight", "normal");
+        sp_repr_css_set_property (css, "font-style",  "normal" );
+        if( current_style.find("Bold") != Glib::ustring::npos ) {
+            sp_repr_css_set_property (css, "font-weight", "bold");
+        }
+        if( current_style.find("Italic") != Glib::ustring::npos ) {
+            sp_repr_css_set_property (css, "font-style", "italic");
+        }
     }
 
     // If querying returned nothing, update default style.
