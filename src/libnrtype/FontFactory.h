@@ -54,6 +54,9 @@ struct font_descr_equal : public std::binary_function<PangoFontDescription*, Pan
 int style_name_compare(char const *aa, char const *bb);
 int family_name_compare(char const *a, char const *b);
 
+// Wraps calls to pango_font_description_get_family with some name substitution
+const char *sp_font_description_get_family(PangoFontDescription const *fontDescr);
+
 // Map type for gathering UI family and style strings
 typedef std::map<Glib::ustring, std::list<Glib::ustring> > FamilyToStylesMap;
 

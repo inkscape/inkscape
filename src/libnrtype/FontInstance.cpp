@@ -285,14 +285,14 @@ unsigned int font_instance::Attribute(const gchar *key, gchar *str, unsigned int
              bool b = (weight >= PANGO_WEIGHT_BOLD);
 
              res = g_strdup_printf ("%s%s%s%s",
-                                    pango_font_description_get_family(descr),
+                     sp_font_description_get_family(descr),
                                     (b || i || o) ? "-" : "",
                                     (b) ? "Bold" : "",
                                     (i) ? "Italic" : ((o) ? "Oblique" : "")  );
              free_res = true;
          }
     } else if ( strcmp(key,"family") == 0 ) {
-        res=(char*)pango_font_description_get_family(descr);
+        res=(char*)sp_font_description_get_family(descr);
         free_res=false;
     } else if ( strcmp(key,"style") == 0 ) {
         PangoStyle v=pango_font_description_get_style(descr);

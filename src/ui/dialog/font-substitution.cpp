@@ -260,7 +260,7 @@ Glib::ustring FontSubstitution::getSubstituteFontName (Glib::ustring font)
     font_instance *res = (font_factory::Default())->Face(descr);
     if (res->pFont) {
         PangoFontDescription *nFaceDesc = pango_font_describe(res->pFont);
-        out = pango_font_description_get_family(nFaceDesc);
+        out = sp_font_description_get_family(nFaceDesc);
     }
     pango_font_description_free(descr);
 

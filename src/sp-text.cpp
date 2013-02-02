@@ -384,7 +384,7 @@ static char * sp_text_description(SPItem *item)
     char name_buf[256];
     char *n;
     if (tf) {
-        tf->Name(name_buf, sizeof(name_buf));
+        tf->Family(name_buf, sizeof(name_buf));
         n = xml_quote_strdup(name_buf);
         tf->Unref();
     } else {

@@ -340,7 +340,7 @@ Glib::ustring Layout::getFontFamily(unsigned span_index) const
         return "";
 
     if (_spans[span_index].font) {
-        return pango_font_description_get_family(_spans[span_index].font->descr);
+        return sp_font_description_get_family(_spans[span_index].font->descr);
     }
 
     return "";
@@ -368,7 +368,7 @@ Glib::ustring Layout::dumpAsText() const
         snprintf(line, sizeof(line), "  in chunk %d (x=%f, baselineshift=%f)\n", _spans[span_index].in_chunk, _chunks[_spans[span_index].in_chunk].left_x, _spans[span_index].baseline_shift);
         result += line;
         if (_spans[span_index].font) {
-            snprintf(line, sizeof(line), "    font '%s' %f %s %s\n", pango_font_description_get_family(_spans[span_index].font->descr), _spans[span_index].font_size, style_to_text(pango_font_description_get_style(_spans[span_index].font->descr)), weight_to_text(pango_font_description_get_weight(_spans[span_index].font->descr)));
+            snprintf(line, sizeof(line), "    font '%s' %f %s %s\n", sp_font_description_get_family(_spans[span_index].font->descr), _spans[span_index].font_size, style_to_text(pango_font_description_get_style(_spans[span_index].font->descr)), weight_to_text(pango_font_description_get_weight(_spans[span_index].font->descr)));
             result += line;
         }
         snprintf(line, sizeof(line), "    x_start = %f, x_end = %f\n", _spans[span_index].x_start, _spans[span_index].x_end);
