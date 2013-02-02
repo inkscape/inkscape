@@ -998,12 +998,13 @@ sp_desktop_widget_event (GtkWidget *widget, GdkEvent *event, SPDesktopWidget *dt
     if (GTK_WIDGET_CLASS (dtw_parent_class)->event) {
         return (* GTK_WIDGET_CLASS (dtw_parent_class)->event) (widget, event);
     } else {
-        // The keypress events need to be passed to desktop handler explicitly,
-        // because otherwise the event contexts only receive keypresses when the mouse cursor
-        // is over the canvas. This redirection is only done for keypresses and only if there's no
+        // The key press/release events need to be passed to desktop handler explicitly,
+        // because otherwise the event contexts only receive key events when the mouse cursor
+        // is over the canvas. This redirection is only done for key events and only if there's no
         // current item on the canvas, because item events and all mouse events are caught
         // and passed on by the canvas acetate (I think). --bb
-        if (event->type == GDK_KEY_PRESS && !dtw->canvas->current_item) {
+        if ((event->type == GDK_KEY_PRESS || event->type == GDK_KEY_RELEASE)
+                && !dtw->canvas->current_item) {
             return sp_desktop_root_handler (NULL, event, dtw->desktop);
         }
     }
