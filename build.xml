@@ -198,7 +198,10 @@
 
         /* Visio import filter */
         #define WITH_LIBVISIO                 1
-		
+
+        /* Corel Draw import filter */
+        #define WITH_LIBCDR                   1
+
         /* Do we support SVG Fonts? */
         #define ENABLE_SVG_FONTS              1
 
@@ -383,7 +386,7 @@
             ${pcc.cairo}
             ${pcc.poppler}
             -I${devlibs}/include/gc
-            ${pcc.libwpg-0.2} ${pcc.libvisio-0.0}
+            ${pcc.libwpg-0.2} ${pcc.libvisio-0.0} ${pcc.libcdr-0.0}
             -I${cxxtest}
             <!-- PERL -->
             <!-- -Wno-comment -I${devlibs}/perl/lib/CORE -->
@@ -480,7 +483,7 @@
            ${devlibs}/bin/libxslt.dll
            ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0}
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
@@ -552,7 +555,7 @@
            ${devlibs}/bin/libxslt.dll
            ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0}
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
@@ -602,7 +605,7 @@
            ${devlibs}/bin/libxslt.dll
            ${devlibs}/bin/libexslt.dll
            ${pcl.cairo} ${pcl.cairomm-1.0}
-           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0}
+           ${pcl.libwpg-0.2} ${pcl.libvisio-0.0} ${pcl.libcdr-0.0}
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
@@ -635,7 +638,7 @@
     <copy todir="${dist}" file="TRANSLATORS"/>
     <copy todir="${dist}" file="${devlibs}/bin/libatkmm-1.6-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libglibmm-2.4-1.dll"/>
-	<copy todir="${dist}" file="${devlibs}/bin/libgiomm-2.4-1.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libgiomm-2.4-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libgtkmm-2.4-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libgdkmm-2.4-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangomm-1.4-1.dll"/>
@@ -656,7 +659,7 @@
     <copy todir="${dist}" file="${devlibs}/bin/libpixman-1-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libgcc_s_sjlj-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpoppler-5.dll"/>
-	<copy todir="${dist}" file="${devlibs}/bin/libpoppler-glib-4.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libpoppler-glib-4.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangocairo-1.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpango-1.0-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpangoft2-1.0-0.dll"/>
@@ -671,28 +674,33 @@
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-0.9.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libwpd-stream-0.9.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libvisio-0.0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libcdr-0.0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/icui18n50.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/icudata50.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/icuuc50.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libjpeg-7.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpng12-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpng14-14.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libtiff-3.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libexif-12.dll"/>
-	<copy todir="${dist}" file="${devlibs}/bin/libopenjpeg-2.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libopenjpeg-2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/msvcr70.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/msvcr71.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/zlib1.dll"/>
-	<copy todir="${dist}" file="${devlibs}/bin/bzip2.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/bzip2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/iconv.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpopt-0.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/liblcms-1.dll"/>
-	<copy todir="${dist}" file="${devlibs}/bin/libMagick++-3.dll"/>
-	<copy todir="${dist}" file="${devlibs}/bin/libMagickCore-3.dll"/>
-	<copy todir="${dist}" file="${devlibs}/bin/libMagickWand-3.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/liblcms2-2.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libMagick++-3.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libMagickCore-3.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/libMagickWand-3.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/intl.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libintl-8.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/pthreadGC2.dll"/>
     <!-- MINGW support DLLs needed for openmp support  -->
     <copy todir="${dist}" file="${mingw_bin}/mingwm10.dll"/>
-	<copy todir="${dist}" file="${mingw_bin}/libgomp-1.dll"/>
+    <copy todir="${dist}" file="${mingw_bin}/libgomp-1.dll"/>
 
     <!-- MSGFMT files -->
     <copy todir="${dist}">
