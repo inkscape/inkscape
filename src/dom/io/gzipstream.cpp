@@ -188,7 +188,7 @@ void GzipOutputStream::close()
  */
 void GzipOutputStream::flush()
 {
-    if (closed || buffer.size()<1)
+    if (closed || buffer.empty())
         return;
 
     std::vector<unsigned char> compBuf;

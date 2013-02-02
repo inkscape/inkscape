@@ -295,11 +295,11 @@ public:
     /**
      *
      */
-    NodeIterator(const NodeIterator &other)
+    NodeIterator(const NodeIterator &other) :
+        whatToShow (other.whatToShow),
+        filter (other.filter),
+        expandEntityReferences (other.expandEntityReferences)
         {
-        whatToShow             = other.whatToShow;
-        filter                 = other.filter;
-        expandEntityReferences = other.expandEntityReferences;
         }
 
     /**
@@ -499,12 +499,12 @@ public:
     /**
      *
      */
-    TreeWalker(const TreeWalker &other)
+    TreeWalker(const TreeWalker &other) : 
+        whatToShow (other.whatToShow),
+        filter (other.filter),
+        expandEntityReferences (other.expandEntityReferences),
+        currentNode (other.currentNode)
         {
-        whatToShow             = other.whatToShow;
-        filter                 = other.filter;
-        expandEntityReferences = other.expandEntityReferences;
-        currentNode            = other.currentNode;
         }
 
     /**

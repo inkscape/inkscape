@@ -1701,7 +1701,6 @@ void ElementImpl::normalizeNamespaces()
         if (attrNode->getNodeType() != Node::ATTRIBUTE_NODE)
             continue;
         AttrImplPtr attr = reinterpret_cast<AttrImpl *>(attrNode.get());
-        DOMString attrNS     = attr->getNamespaceURI();
         DOMString attrName   = attr->getLocalName();
         DOMString attrPrefix = attr->getPrefix();
         DOMString attrValue  = attr->getNodeValue();
@@ -1826,7 +1825,6 @@ void ElementImpl::normalizeNamespaces()
         AttrPtr attr = reinterpret_cast<Attr *>(attrNode.get());
         DOMString attrNS     = attr->getNamespaceURI();
         DOMString attrPrefix = attr->getPrefix();
-        DOMString attrValue  = attr->getNodeValue();
         if (attrNS == XMLNSNAME)
             continue;
 
@@ -2360,12 +2358,15 @@ CDATASectionImpl::~CDATASectionImpl()
 DocumentTypeImpl::DocumentTypeImpl(const DOMString& theName,
                                    const DOMString& thePublicId,
                                    const DOMString& theSystemId)
-                                  : NodeImpl()
+                                  : NodeImpl(),
+                                    name(), //what with this variable?
+                                    publicId(thePublicId),
+                                    systemId(theSystemId),
+                                    entities(),
+                                    notations()
 {
-    nodeType = DOCUMENT_TYPE_NODE;
-    nodeName = theName;
-    publicId = thePublicId;
-    systemId = theSystemId;
+    nodeType = DOCUMENT_TYPE_NODE;//of class NodeImpl
+    nodeName = theName;//of class NodeImpl
 }
 
 /**
@@ -3017,19 +3018,22 @@ NodePtr DocumentImpl::renameNode(const NodePtr node,
 DocumentImpl::DocumentImpl(const DOMImplementation *domImpl,
                  const DOMString &/*theNamespaceURI*/,
                  const DOMString &theQualifiedName,
-                 const DocumentTypePtr theDoctype) : NodeImpl()
+                 const DocumentTypePtr theDoctype)
+                 : NodeImpl(),
+                   namespaceIndex(0),
+                   parent(const_cast<DOMImplementation *>(domImpl)),
+                   qualifiedName(theQualifiedName),
+                   xmlStandalone(false),
+                   strictErrorChecking(false),
+                   domConfig(NULL)
 {
-    nodeType        = DOCUMENT_NODE;
-    nodeName        = "#document";
-    parent          = const_cast<DOMImplementation *>(domImpl);
-    //documentURI     = stringCache(theNamespaceURI);
-    qualifiedName   = theQualifiedName;
+    nodeType = DOCUMENT_NODE;//of class NodeImpl
+    nodeName = "#document";//of class NodeImpl
     if (theDoctype.get()) //only assign if not null.
         doctype     = theDoctype;
     else
         doctype     = new DocumentTypeImpl("", "", "");
     documentElement = new ElementImpl(this, "root");
-    namespaceIndex  = 0;
 }
 
 

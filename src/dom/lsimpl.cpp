@@ -227,7 +227,7 @@ bool LSSerializerImpl::writeToURI(const NodePtr nodeArg,
 
     DOMString uri = uriArg;
     char *fileName = (char *) uri.c_str(); //temporary hack
-    FILE *f = fopen(fileName, "rb");
+    FILE *f = fopen(fileName, "wb");
     if (!f)
         return false;
     for (unsigned int i=0 ; i<outbuf.size() ; i++)

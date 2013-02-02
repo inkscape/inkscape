@@ -51,7 +51,8 @@ class StreamException
 public:
 
     StreamException(const DOMString &theReason) throw()
-        { reason = theReason; }
+        : reason(theReason)
+        {}
     virtual ~StreamException() throw()
         {  }
     char const *what()
@@ -576,7 +577,13 @@ protected:
     Writer *destination;
 
     BasicWriter()
-        { destination = NULL; }
+        {
+            destination = NULL;
+            for(int k=0;k<2048;++k)
+            {
+                formatBuf[k]=0;
+            }
+        }
 
     //Used for printf() or other things that might
     //require formatting before sending down the stream

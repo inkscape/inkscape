@@ -526,11 +526,11 @@ protected:
         UserDataEntry(const DOMString       &theKey,
                       const DOMUserData     *theData,
                       const UserDataHandler *theHandler)
+                      : next(NULL),
+                        key(theKey),
+                        data(const_cast<DOMUserData *>(theData)),
+                        handler(const_cast<UserDataHandler *>(theHandler))
         {
-            next    = NULL;
-            key     = theKey;
-            data    = const_cast<DOMUserData *>(theData);
-            handler = const_cast<UserDataHandler *>(theHandler);
         }
 
         virtual ~UserDataEntry()
@@ -1967,10 +1967,10 @@ protected:
             next = NULL;
         }
         NamedElementItem(const DOMString &nameArg, ElementPtr elemArg)
+            : next (NULL),
+              name (nameArg),
+              elem (elemArg)
         {
-            next = NULL;
-            name = nameArg;
-            elem = elemArg;
         }
         ~NamedElementItem()
         {

@@ -44,18 +44,20 @@ namespace odf
  */
 ImageData::ImageData(const std::string &fname,
               const std::vector<unsigned char> &buf)
+    : fileName (fname),
+      data (buf)
+
 {
-    fileName = fname;
-    data     = buf;
 }
 
 /**
  *
  */
 ImageData::ImageData(const ImageData &other)
+    : fileName (other.fileName),
+      data (other.data)
+
 {
-    fileName = other.fileName;
-    data     = other.data;
 }
 
 /**
@@ -120,10 +122,10 @@ OdfDocument::OdfDocument() :
 /**
  *
  */
-OdfDocument::OdfDocument(const OdfDocument &other)
+OdfDocument::OdfDocument(const OdfDocument &other) :
+    content (other.content),
+    images (other.images)
 {
-    content = other.content;
-    images  = other.images;
 }
 
 

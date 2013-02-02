@@ -193,7 +193,12 @@ public:
     /**
      *
      */
-    ElementLayout() {}
+    ElementLayout() :
+        title(),
+        backgroundColor(),
+        height(0),
+        width(0)
+    {}
 
     /**
      *
@@ -274,8 +279,9 @@ public:
     /**
      *
      */
-    SMILRegionInterface(const SMILRegionInterface &other)
-       { regionElement = other.regionElement; }
+    SMILRegionInterface(const SMILRegionInterface &other) :
+           regionElement (other.regionElement)
+       {}
 
     /**
      *
@@ -542,9 +548,9 @@ public:
     /**
      *
      */
-    TimeList(const TimeList &other)
+    TimeList(const TimeList &other) :
+            items (other.items)
         {
-        items = other.items;
         }
 
     /**
@@ -1586,7 +1592,15 @@ public:
     /**
      *
      */
-    ElementTest()
+    ElementTest() :
+            systemBitrate (0),
+            systemCaptions (false),
+            systemLanguage (),
+            systemRequired (false),
+            systemScreenSize (false),
+            systemScreenDepth (false),
+            systemOverdubOrSubtitle (),
+            systemAudioDesc (false)
         {
         }
 
@@ -1629,8 +1643,6 @@ public:
 
 
 protected:
-
-
     long      systemBitrate;
     bool      systemCaptions;
     DOMString systemLanguage;
