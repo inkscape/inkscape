@@ -238,7 +238,7 @@ static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
     }
 
     // Select the style in the combo that best matches font
-    if (font) {
+    if (font && list) {
 
         unsigned int index = sp_font_selector_get_best_style(font, list);
 

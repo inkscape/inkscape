@@ -442,6 +442,10 @@ GtkWidget *sp_font_selector_new()
  */
 unsigned int sp_font_selector_get_best_style (font_instance *font, GList *list)
 {
+    if ( !font || !list) {
+        return 0;
+    }
+
     font_instance *tempFont = NULL;
     unsigned int currentStyleNumber = 0;
     unsigned int bestStyleNumber = 0;
