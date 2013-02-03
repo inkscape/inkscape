@@ -235,6 +235,8 @@ static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
         gtk_list_store_set (store, &iter, 0, "Bold", -1);
         gtk_list_store_append (store, &iter);
         gtk_list_store_set (store, &iter, 0, "Bold Italic", -1);
+
+        /// \todo \c list should be initialized here with "Normal", "Italic", etc too
     }
 
     // Select the style in the combo that best matches font
