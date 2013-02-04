@@ -407,11 +407,11 @@ const char *sp_font_description_get_family(PangoFontDescription const *fontDescr
     static std::map<Glib::ustring, Glib::ustring> fontNameMap;
     std::map<Glib::ustring, Glib::ustring>::iterator it;
 
-    fontNameMap.insert(std::make_pair("Sans", "sans-serif"));
-    fontNameMap.insert(std::make_pair("Serif", "serif"));
-    fontNameMap.insert(std::make_pair("Monospace", "monospace"));
-    //fontNameMap.insert(std::make_pair("", "cursive"));
-    //fontNameMap.insert(std::make_pair("", "fantasy"));
+    if (fontNameMap.empty()) {
+        fontNameMap.insert(std::make_pair("Sans", "sans-serif"));
+        fontNameMap.insert(std::make_pair("Serif", "serif"));
+        fontNameMap.insert(std::make_pair("Monospace", "monospace"));
+    }
 
     const char *pangoFamily = pango_font_description_get_family(fontDescr);
 
