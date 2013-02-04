@@ -1173,6 +1173,13 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     std::cout << selected_text << std::endl;
 #endif
 
+    // Check if the toolbar has been created; quit if it has not.
+    Ink_ComboBoxEntry_Action* fontFamilyAction =
+        INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontFamilyAction" ) );
+    if( fontFamilyAction->combobox == NULL ) {
+        return;
+    }
+
     // quit if run by the _changed callbacks
     if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
 #ifdef DEBUG_TEXT
