@@ -211,32 +211,31 @@ static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
     GtkListStore *store = GTK_LIST_STORE( ink_comboboxentry_action_get_model( fontStyleAction ) );
     gtk_list_store_clear ( store );
 
-    // Get the list of styles from the selected font
+    // Get the list of styles from the selected font.
     GList *list = NULL;
 
     if (found) {
 
-        // Add list of styles to the style combo
+        // Use precompiled list if font-family on system.
         gtk_tree_model_get (model, &iter, 1, &list, -1);
-        for (GList *l=list; l; l = l->next)
-        {
-            gtk_list_store_append (store, &iter);
-            gtk_list_store_set (store, &iter, 0, (char*)l->data, -1);
-        }
 
     } else {
 
-        // Create generic list if selected font-family not available on system
-        gtk_list_store_append (store, &iter);
-        gtk_list_store_set (store, &iter, 0, "Normal", -1);
-        gtk_list_store_append (store, &iter);
-        gtk_list_store_set (store, &iter, 0, "Italic", -1);
-        gtk_list_store_append (store, &iter);
-        gtk_list_store_set (store, &iter, 0, "Bold", -1);
-        gtk_list_store_append (store, &iter);
-        gtk_list_store_set (store, &iter, 0, "Bold Italic", -1);
+        // Use generic list if font-family not on system.
+        static GList *glist = NULL;
+        if( glist == NULL ) {
+            glist = g_list_append (glist, (void*)"Normal");
+            glist = g_list_append (glist, (void*)"Italic");
+            glist = g_list_append (glist, (void*)"Bold");
+            glist = g_list_append (glist, (void*)"Bold Italic");
+        }
+        list = glist;
+    }
 
-        /// \todo \c list should be initialized here with "Normal", "Italic", etc too
+    for (GList *l=list; l; l = l->next)
+    {
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter, 0, (char*)l->data, -1);
     }
 
     // Select the style in the combo that best matches font
