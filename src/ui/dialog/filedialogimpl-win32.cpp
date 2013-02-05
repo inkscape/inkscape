@@ -26,6 +26,9 @@
 #include <gdk/gdkwin32.h>
 #include <glib/gstdio.h>
 #include <glibmm/i18n.h>
+#if GLIB_CHECK_VERSION(2,32,0)
+#include <glibmm/thread.h>
+#endif
 #include <gtkmm/window.h>
 
 //Inkscape includes
@@ -133,7 +136,11 @@ FileDialogBaseWin32::FileDialogBaseWin32(Gtk::Window &parent,
 
     Glib::RefPtr<const Gdk::Window> parentWindow = parent.get_window();
     g_assert(parentWindow->gobj() != NULL);
+#if WITH_GTKMM_3_0
+    _ownerHwnd = (HWND)gdk_win32_window_get_handle((GdkWindow*)parentWindow->gobj());
+#else
     _ownerHwnd = (HWND)gdk_win32_drawable_get_handle((GdkDrawable*)parentWindow->gobj());
+#endif
 }
 
 FileDialogBaseWin32::~FileDialogBaseWin32()
@@ -1576,16 +1583,23 @@ FileOpenDialogImplWin32::show()
     // We can only run one worker thread at a time
     if(_mutex != NULL) return false;
 
+#if !GLIB_CHECK_VERSION(2,32,0)
     if(!Glib::thread_supported())
         Glib::thread_init();
+#endif
 
     _result = false;
     _finished = false;
     _file_selected = false;
-    _mutex = new Glib::Mutex();
     _main_loop = g_main_loop_new(g_main_context_default(), FALSE);
 
+#if GLIB_CHECK_VERSION(2,32,0)
+    _mutex = new Glib::Threads::Mutex();
+    if(Glib::Threads::Thread::create(sigc::mem_fun(*this, &FileOpenDialogImplWin32::GetOpenFileName_thread)))
+#else
+    _mutex = new Glib::Mutex();
     if(Glib::Thread::create(sigc::mem_fun(*this, &FileOpenDialogImplWin32::GetOpenFileName_thread), true))
+#endif
     {
         while(1)
         {
@@ -1870,15 +1884,21 @@ void FileSaveDialogImplWin32::GetSaveFileName_thread()
 bool
 FileSaveDialogImplWin32::show()
 {
+#if !GLIB_CHECK_VERSION(2,32,0)
     if(!Glib::thread_supported())
         Glib::thread_init();
+#endif
 
     _result = false;
     _main_loop = g_main_loop_new(g_main_context_default(), FALSE);
 
     if(_main_loop != NULL)
     {
+#if GLIB_CHECK_VERSION(2,32,0)
+        if(Glib::Threads::Thread::create(sigc::mem_fun(*this, &FileSaveDialogImplWin32::GetSaveFileName_thread)))
+#else
         if(Glib::Thread::create(sigc::mem_fun(*this, &FileSaveDialogImplWin32::GetSaveFileName_thread), true))
+#endif
             g_main_loop_run(_main_loop);
 
         if(_result && _extension)
