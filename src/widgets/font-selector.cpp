@@ -466,7 +466,9 @@ unsigned int sp_font_selector_get_best_style (font_instance *font, GList *list)
         tempFont = NULL;
     }
 
-    pango_font_description_unset_fields(bestMatchForFont, PANGO_FONT_MASK_SIZE);
+    if( bestMatchForFont != NULL ) {
+        pango_font_description_unset_fields(bestMatchForFont, PANGO_FONT_MASK_SIZE);
+    }
 
     list = list->next;
 
