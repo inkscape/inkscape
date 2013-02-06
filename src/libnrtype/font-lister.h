@@ -54,10 +54,15 @@ namespace Inkscape
                                  */
                                 Gtk::TreeModelColumn<GList*> styles;
 
+                                /** Column containing flag if font is on system
+                                */
+                                Gtk::TreeModelColumn<gboolean> onSystem;
+
                                 FontListClass ()
                                 {
                                     add (font);
                                     add (styles);
+                                    add (onSystem);
                                 }
                         };
 

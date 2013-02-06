@@ -52,7 +52,7 @@ namespace Inkscape
                 }
                 
                 (*treeModelIter)[FontList.styles] = styles;
-                
+                (*treeModelIter)[FontList.onSystem] = true;
                 font_list_store_iter_map.insert(std::make_pair(familyName, Gtk::TreePath(treeModelIter)));
             }
         }

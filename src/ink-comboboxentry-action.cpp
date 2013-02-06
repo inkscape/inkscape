@@ -37,7 +37,7 @@ static GtkWidget* create_tool_item( GtkAction* action );
 static GtkWidget* create_menu_item( GtkAction* action );
 
 // Internal
-static gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gchar* target_text );
+static gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gchar* target_text, gboolean exclude = false );
 static Glib::ustring check_comma_separated_text( Ink_ComboBoxEntry_Action* action );
 
 // Callbacks
@@ -611,8 +611,11 @@ void     ink_comboboxentry_action_set_altx_name( Ink_ComboBoxEntry_Action* actio
 
 // Internal ---------------------------------------------------
 
-// Return row of active text or -1 if not found.
-gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gchar* target_text ) {
+// Return row of active text or -1 if not found. If exclude is true,
+// use 3d colunm if available to exclude row from checking (useful to
+// skip rows added for font-families included in doc and not on
+// system)
+gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gchar* target_text, gboolean exclude ) {
 
   // Check if text in list
   gint row = 0;
@@ -621,15 +624,24 @@ gint get_active_row_from_text( Ink_ComboBoxEntry_Action* action, const gchar* ta
   gboolean valid = gtk_tree_model_get_iter_first( action->model, &iter );
   while ( valid ) {
 
-    // Get text from list entry
-    gchar* text = 0;
-    gtk_tree_model_get( action->model, &iter, 0, &text, -1 ); // Column 0
-
-    // Check for match
-    if( strcmp( target_text, text ) == 0 ){
-      found = true;
-      break;
+    // See if we should exclude a row
+    gboolean check = true;  // If true, font-family is on system.
+    if( exclude && gtk_tree_model_get_n_columns( action->model ) > 2 ) {
+      gtk_tree_model_get( action->model, &iter, 2, &check, -1 );
     }
+
+    if( check ) {
+      // Get text from list entry
+      gchar* text = 0;
+      gtk_tree_model_get( action->model, &iter, 0, &text, -1 ); // Column 0
+
+      // Check for match
+      if( strcmp( target_text, text ) == 0 ){
+	found = true;
+	break;
+      }
+    }
+
     ++row;
     valid = gtk_tree_model_iter_next( action->model, &iter );
   }
@@ -665,7 +677,7 @@ static Glib::ustring check_comma_separated_text( Ink_ComboBoxEntry_Action* actio
     // Remove any surrounding white space.
     g_strstrip( tokens[i] );
 
-    if( get_active_row_from_text( action, tokens[i] ) == -1 ) {
+    if( get_active_row_from_text( action, tokens[i], true ) == -1 ) {
       missing += tokens[i];
       missing += ", ";
     }

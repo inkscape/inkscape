@@ -18,7 +18,7 @@
  *
  * Copyright (C) 2004 David Turner
  * Copyright (C) 2003 MenTaLguY
- * Copyright (C) 1999-2011 authors
+ * Copyright (C) 1999-2013 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -39,6 +39,7 @@
 #include "../desktop-handles.h"
 #include "../desktop-style.h"
 #include "document-undo.h"
+#include "../sp-root.h"
 #include "../verbs.h"
 #include "../inkscape.h"
 #include "../connection-pool.h"
@@ -105,6 +106,10 @@ static void       sp_print_font( SPStyle *query ) {
               << "    FontSpec: "
               << (query->text->font_specification.value ? query->text->font_specification.value : "No value")
               << std::endl;
+    std::cout << "    LineHeight: "    << query->line_height.computed
+              << "    WordSpacing: "   << query->word_spacing.computed
+              << "    LetterSpacing: " << query->letter_spacing.computed
+              << std::endl;
 }
 
 static void       sp_print_fontweight( SPStyle *query ) {
@@ -128,40 +133,88 @@ static void       sp_print_fontstyle( SPStyle *query ) {
 }
 #endif
 
+void sp_text_toolbox_get_font_list_in_doc (SPObject *r, std::list<Glib::ustring> *l);
+void sp_text_toolbox_update_font_list( GtkListStore* model );
+
 // Format family drop-down menu.
 static void cell_data_func(GtkCellLayout * /*cell_layout*/,
                            GtkCellRenderer   *cell,
-                           GtkTreeModel      *tree_model,
+                           GtkTreeModel      *model,
                            GtkTreeIter       *iter,
                            gpointer           /*data*/)
 {
     gchar *family;
-    gtk_tree_model_get(tree_model, iter, 0, &family, -1);
-    gchar *const family_escaped = g_markup_escape_text(family, -1);
+    gboolean onSystem = false;
+    gtk_tree_model_get(model, iter, 0, &family, 2, &onSystem, -1);
+    Glib::ustring family_escaped =  g_markup_escape_text(family, -1);
+    g_free(family);
+    Glib::ustring markup;
+
+    if( !onSystem ) {
+        markup = "<span foreground='darkblue'>";
+
+        /* See if font-family on system */
+        std::vector<Glib::ustring> tokens = Glib::Regex::split_simple("\\s*,\\s*", family_escaped );
+        for( size_t i=0; i < tokens.size(); ++i ) {
+
+            Glib::ustring token = tokens[i];
+
+            GtkTreeIter iter;
+            gboolean valid;
+            gchar *family = 0;
+            gboolean onSystem = true;
+            gboolean found = false;
+            for( valid = gtk_tree_model_get_iter_first( GTK_TREE_MODEL(model), &iter );
+                 valid;
+                 valid = gtk_tree_model_iter_next( GTK_TREE_MODEL(model), &iter ) ) {
+
+                gtk_tree_model_get(model, &iter, 0, &family, 2, &onSystem, -1);
+                if( onSystem && token.compare( family ) == 0 ) {
+                    found = true;
+                    break;
+                }
+            }
+            if( found ) {
+                markup += g_markup_escape_text(token.c_str(), -1);
+                markup += ", ";
+            } else {
+                markup += "<span strikethrough=\"true\" strikethrough_color=\"red\">";
+                markup += g_markup_escape_text(token.c_str(), -1);
+                markup += "</span>";
+                markup += ", ";
+            }
+        }
+        // Remove extra comma and space from end.
+        if( markup.size() >= 2 ) {
+            markup.resize( markup.size()-2 );
+        }
+        markup += "</span>";
+        // std::cout << markup << std::endl;
+    } else {
+        markup =  family_escaped;
+    }
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int show_sample = prefs->getInt("/tools/text/show_sample_in_list", 1);
     if (show_sample) {
 
         Glib::ustring sample = prefs->getString("/tools/text/font_sample");
-        gchar *const sample_escaped = g_markup_escape_text(sample.data(), -1);
+        Glib::ustring sample_escaped = g_markup_escape_text(sample.data(), -1);
 
-        std::stringstream markup;
-        markup << family_escaped << "  <span foreground='gray' font_family='"
-               << family_escaped << "'>" << sample_escaped << "</span>";
-        g_object_set (G_OBJECT (cell), "markup", markup.str().c_str(), NULL);
-
-        g_free(sample_escaped);
-    } else {
-        g_object_set (G_OBJECT (cell), "markup", family_escaped, NULL);
+        markup += "  <span foreground='gray' font_family='";
+        markup += family_escaped;
+        markup += "'>";
+        markup += sample_escaped;
+        markup += "</span>";
     }
+
+    g_object_set (G_OBJECT (cell), "markup", markup.c_str(), NULL);
+
     // This doesn't work for two reasons... it set both selected and not selected backgrounds
     // to white.. which means that white foreground text is invisible. It also only effects
     // the text region, leaving the padding untouched.
     // g_object_set (G_OBJECT (cell), "cell-background", "white", "cell-background-set", true, NULL);
 
-    g_free(family);
-    g_free(family_escaped);
 }
 
 /*
@@ -256,7 +309,6 @@ static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
     } else if (current_style) {
         ink_comboboxentry_action_set_active_text( fontStyleAction, current_style );
     }
-
 }
 
 // Font family
@@ -1184,6 +1236,14 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
+    // Update font list, but only if widget already created.
+    Ink_ComboBoxEntry_Action* fontFamilyAction =
+        INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontFamilyAction" ) );
+    if( fontFamilyAction->combobox != NULL ) {
+        sp_text_toolbox_update_font_list( GTK_LIST_STORE(ink_comboboxentry_action_get_model(fontFamilyAction)) );
+    }
+
+
     // Only flowed text can be justified, only normal text can be kerned...
     // Find out if we have flowed text now so we can use it several places
     gboolean isFlow = false;
@@ -1238,8 +1298,6 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
 
         // To ensure the value of the combobox is properly set on start-up, only mark
         // the prefs set if the combobox has already been constructed.
-        Ink_ComboBoxEntry_Action* fontFamilyAction =
-            INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontFamilyAction" ) );
         if( fontFamilyAction->combobox != NULL ) {
             g_object_set_data(tbl, "text_style_from_prefs", GINT_TO_POINTER(TRUE));
         }
@@ -1482,6 +1540,124 @@ sp_text_toolbox_subselection_changed (gpointer /*tc*/, GObject *tbl)
     sp_text_toolbox_selection_changed (NULL, tbl);
 }
 
+
+/* Recursively extract all "font-family" attributes from a document. */
+void
+sp_text_toolbox_get_font_list_in_doc_recursive (SPObject *r, std::list<Glib::ustring> *l)
+{ 
+    if (!r) {
+        return;
+    }
+
+    const gchar *style = r->getRepr()->attribute("style");
+    if( style != NULL ) {
+        //std::cout << style << std::endl;
+        std::vector<Glib::ustring> tokens = Glib::Regex::split_simple(";", style );
+        for( size_t i=0; i < tokens.size(); ++i ) {
+            Glib::ustring token = tokens[i];
+            size_t found = token.find("font-family:");
+            if( found != Glib::ustring::npos ) {
+                // Remove "font-family:"
+                token.erase(found,12);
+                // Remove any leading single or double quote
+                if( token[0] == '\'' || token[0] == '"' ) {
+                    token.erase(0,1);
+                }
+                // Remove any trailing single or double quote
+                if( token[token.length()-1] == '\'' || token[token.length()-1] == '"' ) {
+                    token.erase(token.length()-1);
+                }
+                l->push_back( token );
+            }
+        }
+    }
+
+    for (SPObject *child = r->firstChild(); child; child = child->getNext()) {
+        sp_text_toolbox_get_font_list_in_doc_recursive( child, l );
+    }
+}
+
+/* Extract all unique "font-family" attributes (including font-family fallbacks)
+ * from a document in a reverse sorted list.
+ */
+void
+sp_text_toolbox_get_font_list_in_doc (SPObject *r, std::list<Glib::ustring> *l) {
+
+    sp_text_toolbox_get_font_list_in_doc_recursive (r, l);
+
+    l->sort();
+    l->unique();
+    l->reverse();
+
+    // for(std::list<Glib::ustring>::iterator i = l->begin(); i != l->end(); ++i) {
+    //     std::cout << " font_family in doc: " << *i << std::endl;
+    // }
+}
+
+/* Update font-family list with "font-family" attributes used in a document. */
+void
+sp_text_toolbox_update_font_list( GtkListStore* model ) {
+
+    /* Create default styles for use when font-family is unknown on system. */
+    static GList *default_styles = NULL;
+    if( default_styles == NULL ) {
+        default_styles = g_list_append( default_styles, g_strdup("Normal") );
+        default_styles = g_list_append( default_styles, g_strdup("Italic") );
+        default_styles = g_list_append( default_styles, g_strdup("Bold") );
+        default_styles = g_list_append( default_styles, g_strdup("Bold Italic") );
+    }
+
+    /* Get "font-family" attributes used in document */
+    std::list<Glib::ustring> fontfamilies;
+    sp_text_toolbox_get_font_list_in_doc( (sp_desktop_document(SP_ACTIVE_DESKTOP))->getRoot(), &fontfamilies );
+
+    /* Delete all old doc font-family entries */
+    GtkTreeIter iter;
+    gboolean valid;
+    for( valid = gtk_tree_model_get_iter_first( GTK_TREE_MODEL(model), &iter ); valid; ) {
+        gchar *family = 0;
+        gboolean onSystem = true;
+        gtk_tree_model_get( GTK_TREE_MODEL(model), &iter, 0, &family, 2, &onSystem, -1 ); 
+        //std::cout << "List: " << family << ":  " << (onSystem ? "Yes" : "No") << std::endl;
+        if( !onSystem ) {
+            valid = gtk_list_store_remove( model, &iter );
+        } else {
+            valid = gtk_tree_model_iter_next( GTK_TREE_MODEL(model), &iter );
+        }
+    }
+
+    /* Insert doc font-family entries, list is already reverse sorted with duplicates removed. */
+    std::list<Glib::ustring>::iterator i;
+    for(i=fontfamilies.begin(); i != fontfamilies.end(); ++i) {
+
+        GList *styles = default_styles;
+        gtk_list_store_insert( model, &iter, 0 ); // iter points to new row
+
+        /* See if font-family (or first in fallback list) is on system. If so, get styles. */
+        std::vector<Glib::ustring> tokens = Glib::Regex::split_simple(",", *i );
+        if( !tokens[0].empty() ) {
+
+            GtkTreeIter iter2;
+            gboolean valid2;
+            for( valid2 = gtk_tree_model_get_iter_first( GTK_TREE_MODEL(model), &iter2 );
+                 valid2;
+                 valid2 = gtk_tree_model_iter_next( GTK_TREE_MODEL(model), &iter2 ) ) {
+
+                gchar* family = 0;
+                gboolean onSystem = true;
+                gtk_tree_model_get( GTK_TREE_MODEL(model), &iter2, 0, &family, 2, &onSystem, -1 ); 
+                if( onSystem && tokens[0].compare( family ) == 0 ) {
+                    gtk_tree_model_get( GTK_TREE_MODEL(model), &iter2, 1, &styles, -1 );
+                    break;
+                }
+            }
+            
+        }
+
+        gtk_list_store_set( model, &iter, 0, (*i).c_str(), 1, styles, 2, false, -1 );
+    }
+}
+
 // Define all the "widgets" in the toolbar.
 void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
@@ -1498,6 +1674,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         // Font list
         Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
         GtkListStore* model = store->gobj();
+        sp_text_toolbox_update_font_list( model );
 
         Ink_ComboBoxEntry_Action* act = ink_comboboxentry_action_new( "TextFontFamilyAction",
                                                                       _("Font Family"),
