@@ -1718,7 +1718,13 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             "{\n"
             "    GtkComboBox::appears-as-list = 1\n"
             "}\n"
-            "widget \"*.TextFontFamilyAction_combobox\" style \"dropdown-as-list-style\"");
+            "widget \"*.TextFontFamilyAction_combobox\" style \"dropdown-as-list-style\""
+            "style \"fontfamily-separator-style\"\n"
+            "{\n"
+            "    GtkWidget::wide-separators = 1\n"
+            "    GtkWidget::separator-height = 6\n"
+            "}\n"
+            "class \"GtkTreeView\" style \"fontfamily-separator-style\"");
     }
 
     /* Font size */
