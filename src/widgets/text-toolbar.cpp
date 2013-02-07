@@ -217,6 +217,16 @@ static void cell_data_func(GtkCellLayout * /*cell_layout*/,
 
 }
 
+// Separator function (if true, a separator will be drawn)
+static gboolean separator_func(GtkTreeModel *model,
+                               GtkTreeIter *iter,
+                               gpointer           /*data*/)
+{
+    gchar* text = 0;
+    gtk_tree_model_get(model, iter, 0, &text, -1 ); // Column 0
+    return (text && strcmp(text,"separatoR") == 0);
+}
+
 /*
  * Fill the font style combobox with the available font styles for the selected font family
  * Set the selected style to that in font
@@ -1626,6 +1636,13 @@ sp_text_toolbox_update_font_list( GtkListStore* model ) {
         }
     }
 
+    /* Insert separator */
+    if( !fontfamilies.empty() ) {
+        gtk_list_store_insert( model, &iter, 0 ); // iter points to new row
+        gtk_list_store_set( model, &iter, 0, "separatoR", -1 );
+    }
+
+
     /* Insert doc font-family entries, list is already reverse sorted with duplicates removed. */
     std::list<Glib::ustring>::iterator i;
     for(i=fontfamilies.begin(); i != fontfamilies.end(); ++i) {
@@ -1676,15 +1693,17 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         GtkListStore* model = store->gobj();
         sp_text_toolbox_update_font_list( model );
 
-        Ink_ComboBoxEntry_Action* act = ink_comboboxentry_action_new( "TextFontFamilyAction",
-                                                                      _("Font Family"),
-                                                                      _("Select Font Family (Alt-X to access)"),
-                                                                      NULL,
-                                                                      GTK_TREE_MODEL(model),
-                                                                      -1,                // Entry width
-                                                                      50,                // Extra list width
-                                                                      (gpointer)cell_data_func,// Cell layout
-                                                                      GTK_WIDGET(desktop->canvas)); // Focus widget
+        Ink_ComboBoxEntry_Action* act =
+            ink_comboboxentry_action_new( "TextFontFamilyAction",
+                                          _("Font Family"),
+                                          _("Select Font Family (Alt-X to access)"),
+                                          NULL,
+                                          GTK_TREE_MODEL(model),
+                                          -1,                // Entry width
+                                          50,                // Extra list width
+                                          (gpointer)cell_data_func, // Cell layout
+                                          (gpointer)separator_func,
+                                          GTK_WIDGET(desktop->canvas)); // Focus widget
         ink_comboboxentry_action_popup_enable( act ); // Enable entry completion
         gchar *const warning = _("Font not found on system");
         ink_comboboxentry_action_set_warning( act, warning ); // Show icon with tooltip if missing font
@@ -1721,6 +1740,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                                                       4,  // Width in characters
                                                                       0,      // Extra list width
                                                                       NULL,   // Cell layout
+                                                                      NULL,   // Separator
                                                                       GTK_WIDGET(desktop->canvas)); // Focus widget
 
         g_signal_connect( G_OBJECT(act), "changed", G_CALLBACK(sp_text_fontsize_value_changed), holder );
@@ -1740,6 +1760,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                                                       12, // Width in characters
                                                                        0,      // Extra list width
                                                                        NULL,   // Cell layout
+                                                                       NULL,   // Separator
                                                                        GTK_WIDGET(desktop->canvas)); // Focus widget
 
         g_signal_connect( G_OBJECT(act), "changed", G_CALLBACK(sp_text_fontstyle_value_changed), holder );

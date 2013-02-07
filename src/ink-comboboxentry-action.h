@@ -51,6 +51,7 @@ struct _Ink_ComboBoxEntry_Action {
   GtkWidget          *indicator;
 
   gpointer            cell_data_func; // drop-down menu format
+  gpointer            separator_func;
 
   gint                active;     // Index of active menu item (-1 if not in list).
   gchar              *text;       // Text of active menu item or entry box.
@@ -76,6 +77,7 @@ Ink_ComboBoxEntry_Action *ink_comboboxentry_action_new ( const gchar  *name,
 							 gint          entry_width = -1,
 							 gint          extra_width = -1,
 							 gpointer cell_data_func = NULL,
+							 gpointer separator_func = NULL,
 							 GtkWidget* focusWidget = NULL);
 
 GtkTreeModel     *ink_comboboxentry_action_get_model( Ink_ComboBoxEntry_Action* action );
