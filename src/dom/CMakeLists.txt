@@ -26,12 +26,6 @@ set(dom_SRC
 	io/stringstream.cpp
 	io/uristream.cpp
 
-	odf/odfdocument.cpp
-
-	util/digest.cpp
-	util/thread.cpp
-	util/ziptool.cpp
-
 
 	# -------
 	# Headers
@@ -64,18 +58,12 @@ set(dom_SRC
 	xpathparser.h
 	xpathtoken.h
 
-	odf/odfdocument.h
-
 	io/base64stream.h
 	io/bufferstream.h
 	io/domstream.h
 	io/gzipstream.h
 	io/stringstream.h
 	io/uristream.h
-
-	util/digest.h
-	util/thread.h
-	util/ziptool.h
 )
 
 add_inkscape_lib(dom_LIB "${dom_SRC}")
