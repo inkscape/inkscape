@@ -980,7 +980,14 @@ public:
     /**
      *
      */
-    SVGSVGElementImpl() : SVGElementImpl()
+    SVGSVGElementImpl() : SVGElementImpl(),
+            pixelUnitToMillimeterX(0),
+            pixelUnitToMillimeterY(0),
+            screenPixelToMillimeterX(0),
+            screenPixelToMillimeterY(0),
+            useCurrentView(false),
+            currentScale(0),
+            currentTime(0)
         {}
 
 

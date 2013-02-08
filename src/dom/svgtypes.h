@@ -645,20 +645,20 @@ public:
     /**
      *
      */
-    SVGTransform()
+    SVGTransform() :
+            type (SVG_TRANSFORM_UNKNOWN),
+            angle (0.0)
         {
-        type = SVG_TRANSFORM_UNKNOWN;
-        angle = 0.0;
         }
 
     /**
      *
      */
-    SVGTransform(const SVGTransform &other)
+    SVGTransform(const SVGTransform &other) :
+            type   (other.type),
+            angle  (other.angle),
+            matrix (other.matrix)
         {
-        type   = other.type;
-        angle  = other.angle;
-        matrix = other.matrix;
         }
 
     /**
@@ -834,9 +834,9 @@ public:
     /**
      *
      */
-    SVGTransformList(const SVGTransformList &other)
+    SVGTransformList(const SVGTransformList &other) :
+            items (other.items)
         {
-        items = other.items;
         }
 
     /**
@@ -893,10 +893,10 @@ public:
     /**
      *
      */
-    SVGAnimatedTransformList(const SVGAnimatedTransformList &other)
+    SVGAnimatedTransformList(const SVGAnimatedTransformList &other) :
+            baseVal (other.baseVal),
+            animVal (other.animVal)
         {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
         }
 
     /**
@@ -1181,9 +1181,9 @@ public:
     /**
      *
      */
-   SVGStringList(const SVGStringList &other)
+   SVGStringList(const SVGStringList &other) :
+           items (other.items)
        {
-       items = other.items;
        }
 
     /**
@@ -1657,9 +1657,9 @@ public:
     /**
      *
      */
-    SVGNumberList(const SVGNumberList &other)
+    SVGNumberList(const SVGNumberList &other) :
+            items (other.items)
         {
-        items = other.items;
         }
 
     /**
@@ -1719,10 +1719,10 @@ public:
     /**
      *
      */
-    SVGAnimatedNumberList(const SVGAnimatedNumberList &other)
+    SVGAnimatedNumberList(const SVGAnimatedNumberList &other) :
+            baseVal (other.baseVal),
+            animVal (other.animVal)
         {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
         }
 
     /**
@@ -1934,10 +1934,10 @@ public:
     /**
      *
      */
-    SVGAnimatedLength(const SVGAnimatedLength &other)
+    SVGAnimatedLength(const SVGAnimatedLength &other) :
+            baseVal (other.baseVal),
+            animVal (other.animVal)
         {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
         }
 
     /**
@@ -2085,9 +2085,9 @@ public:
     /**
      *
      */
-    SVGLengthList(const SVGLengthList &other)
+    SVGLengthList(const SVGLengthList &other) :
+             items (other.items)
         {
-        items = other.items;
         }
 
     /**
@@ -2147,10 +2147,10 @@ public:
     /**
      *
      */
-   SVGAnimatedLengthList(const SVGAnimatedLengthList &other)
+   SVGAnimatedLengthList(const SVGAnimatedLengthList &other) :
+            baseVal (other.baseVal),
+            animVal (other.animVal)
         {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
         }
 
     /**
@@ -2357,16 +2357,17 @@ public:
     /**
      *
      */
-    SVGAnimatedAngle(const SVGAngle &angle)
-        { baseVal = angle; }
+    SVGAnimatedAngle(const SVGAngle &angle) :
+            baseVal (angle)
+        {}
 
     /**
      *
      */
-    SVGAnimatedAngle(const SVGAnimatedAngle &other)
+    SVGAnimatedAngle(const SVGAnimatedAngle &other) :
+            baseVal (other.baseVal),
+            animVal (other.animVal)
         {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
         }
 
     /**
@@ -2434,10 +2435,10 @@ public:
     /**
      *
      */
-    SVGICCColor(const SVGICCColor &other)
+    SVGICCColor(const SVGICCColor &other) :
+            colorProfile (other.colorProfile),
+            colors (other.colors)
         {
-        colorProfile = other.colorProfile;
-        colors       = other.colors;
         }
 
     /**
@@ -2448,7 +2449,6 @@ public:
 protected:
 
     DOMString colorProfile;
-
     SVGNumberList colors;
 
 };
@@ -2732,10 +2732,10 @@ public:
     /**
      *
      */
-    SVGAnimatedRect(const SVGAnimatedRect &other)
+    SVGAnimatedRect(const SVGAnimatedRect &other) :
+            baseVal (other.baseVal),
+            animVal (other.animVal)
         {
-        baseVal = other.baseVal;
-        animVal = other.animVal;
         }
 
     /**
@@ -2956,9 +2956,9 @@ public:
     /**
      *
      */
-    SVGPointList(const SVGPointList &other)
+    SVGPointList(const SVGPointList &other) :
+            items (other.items)
         {
-        items = other.items;
         }
 
 
@@ -3071,10 +3071,10 @@ public:
     /**
      *
      */
-    SVGStylable(const SVGStylable &other)
+    SVGStylable(const SVGStylable &other) :
+            className (other.className),
+            style (other.style)
         {
-        className = other.className;
-        style     = other.style;
         }
 
     /**
@@ -3168,7 +3168,10 @@ public:
     /**
      *
      */
-    SVGLocatable(const SVGLocatable &/*other*/)
+    SVGLocatable(const SVGLocatable &/*other*/) :
+            bbox(),
+            ctm(),
+            screenCtm()
         {
         }
 
@@ -3224,9 +3227,9 @@ public:
     /**
      *
      */
-    SVGTransformable(const SVGTransformable &other) : SVGLocatable(other)
+    SVGTransformable(const SVGTransformable &other) : SVGLocatable(other),
+            transforms (other.transforms)
         {
-        transforms = other.transforms;
         }
 
     /**
@@ -3303,11 +3306,11 @@ public:
     /**
      *
      */
-    SVGTests(const SVGTests &other)
+    SVGTests(const SVGTests &other) :
+            requiredFeatures (other.requiredFeatures),
+            requiredExtensions (other.requiredExtensions),
+            systemLanguage (other.systemLanguage)
         {
-        requiredFeatures   = other.requiredFeatures;
-        requiredExtensions = other.requiredExtensions;
-        systemLanguage     = other.systemLanguage;
         }
 
     /**
@@ -3445,9 +3448,9 @@ public:
     /**
      *
      */
-    SVGExternalResourcesRequired(const SVGExternalResourcesRequired &other)
+    SVGExternalResourcesRequired(const SVGExternalResourcesRequired &other) :
+            required (other.required)
         {
-        required = other.required;
         }
 
     /**
@@ -3611,10 +3614,10 @@ public:
     /**
      *
      */
-    SVGAnimatedPreserveAspectRatio(const SVGAnimatedPreserveAspectRatio &other)
+    SVGAnimatedPreserveAspectRatio(const SVGAnimatedPreserveAspectRatio &other) :
+            baseVal (other.baseVal),
+            animVal (other.animVal)
         {
-        baseVal = other.baseVal;
-        baseVal = other.animVal;
         }
 
     /**
@@ -3671,10 +3674,10 @@ public:
      *
      */
 
-    SVGFitToViewBox(const SVGFitToViewBox &other)
+    SVGFitToViewBox(const SVGFitToViewBox &other) :
+            viewBox (other.viewBox),
+            preserveAspectRatio (other.preserveAspectRatio)
         {
-        viewBox = other.viewBox;
-        preserveAspectRatio = other.preserveAspectRatio;
         }
 
     /**
@@ -3685,7 +3688,6 @@ public:
 protected:
 
     SVGAnimatedRect viewBox;
-
     SVGAnimatedPreserveAspectRatio preserveAspectRatio;
 
 };
@@ -3828,18 +3830,19 @@ public:
     /**
      *
      */
-    SVGViewSpec()
+    SVGViewSpec() :
+            viewTarget (NULL),
+            transform ()
         {
-        viewTarget = NULL;
         }
 
     /**
      *
      */
-    SVGViewSpec(const SVGViewSpec &other) : SVGZoomAndPan(other), SVGFitToViewBox(other)
+    SVGViewSpec(const SVGViewSpec &other) : SVGZoomAndPan(other), SVGFitToViewBox(other),
+            viewTarget (other.viewTarget),
+            transform (other.transform)
         {
-        viewTarget = other.viewTarget;
-        transform  = other.transform;
         }
 
     /**
@@ -3884,14 +3887,16 @@ public:
     /**
      *
      */
-    SVGURIReference() {}
+    SVGURIReference() :
+            href ()
+        {}
 
     /**
      *
      */
-    SVGURIReference(const SVGURIReference &other)
+    SVGURIReference(const SVGURIReference &other) :
+            href (other.href)
         {
-        href = other.href;
         }
 
     /**
@@ -6135,9 +6140,9 @@ public:
     /**
      *
      */
-    SVGPathSegList(const SVGPathSegList &other)
+    SVGPathSegList(const SVGPathSegList &other) :
+            items (other.items)
         {
-        items = other.items;
         }
 
 
@@ -6272,10 +6277,10 @@ public:
     /**
      *
      */
-    SVGAnimatedPoints(const SVGAnimatedPoints &other)
+    SVGAnimatedPoints(const SVGAnimatedPoints &other) :
+            points (other.points),
+            animatedPoints (other.animatedPoints)
         {
-        points         = other.points;
-        animatedPoints = other.animatedPoints;
         }
 
     /**
@@ -6366,19 +6371,19 @@ public:
     /**
      *
      */
-    SVGPaint()
+    SVGPaint() :
+            paintType (SVG_PAINTTYPE_UNKNOWN),
+            uri ("")
         {
-        uri       = "";
-        paintType = SVG_PAINTTYPE_UNKNOWN;
         }
 
     /**
      *
      */
-    SVGPaint(const SVGPaint &other) : css::CSSValue(other), SVGColor(other)
+    SVGPaint(const SVGPaint &other) : css::CSSValue(other), SVGColor(other),
+            paintType (SVG_PAINTTYPE_UNKNOWN),
+            uri ("")
         {
-        uri       = "";
-        paintType = SVG_PAINTTYPE_UNKNOWN;
         }
 
     /**
@@ -6452,17 +6457,19 @@ public:
     /**
      *
      */
-    SVGColorProfileRule() {}
+    SVGColorProfileRule() :
+            renderingIntent(0)
+    {}
 
     /**
      *
      */
     SVGColorProfileRule(const SVGColorProfileRule &other)
-               : SVGCSSRule(other), SVGRenderingIntent(other)
+               : SVGCSSRule(other), SVGRenderingIntent(other),
+                 renderingIntent (other.renderingIntent),
+                 src (other.src),
+                 name (other.name)
         {
-        renderingIntent = other.renderingIntent;
-        src             = other.src;
-        name            = other.name;
         }
 
     /**
@@ -6540,13 +6547,13 @@ public:
      *
      */
     SVGFilterPrimitiveStandardAttributes(const SVGFilterPrimitiveStandardAttributes &other)
-                                 : SVGStylable(other)
+            : SVGStylable(other),
+              x (other.x),
+              y (other.y),
+              width (other.width),
+              height (other.height),
+              result (other.result)
         {
-        x      = other.x;
-        y      = other.y;
-        width  = other.width;
-        height = other.height;
-        result = other.result;
         }
 
     /**
@@ -6563,13 +6570,6 @@ protected:
     SVGAnimatedString result;
 
 };
-
-
-
-
-
-
-
 
 
 
@@ -6660,20 +6660,26 @@ public:
     /**
      *
      */
-    SVGZoomEvent()
+    SVGZoomEvent():
+            zoomRectScreen(),
+            previousScale(0),
+            previousTranslate(),
+            newScale(0),
+            newTranslate()
         {}
 
     /**
      *
      */
-    SVGZoomEvent(const SVGZoomEvent &other) : events::Event(other),
-                                              events::UIEvent(other)
+    SVGZoomEvent(const SVGZoomEvent &other) :
+            events::Event(other),
+            events::UIEvent(other),
+            zoomRectScreen(other.zoomRectScreen),
+            previousScale(other.previousScale),
+            previousTranslate(other.previousTranslate),
+            newScale(other.newScale),
+            newTranslate(other.newTranslate)
         {
-        zoomRectScreen    = other.zoomRectScreen;
-        previousScale     = other.previousScale;
-        previousTranslate = other.previousTranslate;
-        newScale          = other.newScale;
-        newTranslate      = other.newTranslate;
         }
 
     /**
@@ -6776,13 +6782,18 @@ public:
     /**
      *
      */
-    SVGElementInstance() {}
+    SVGElementInstance() :
+        correspondingElement(NULL),
+        correspondingUseElement(NULL)
+    {}
 
     /**
      *
      */
     SVGElementInstance(const SVGElementInstance &other)
-                        : events::EventTarget(other)
+                        : events::EventTarget(other),
+                          correspondingElement(NULL),
+                          correspondingUseElement(NULL)
         {
         }
 
@@ -6858,9 +6869,9 @@ public:
     /**
      *
      */
-    SVGElementInstanceList(const SVGElementInstanceList &other)
+    SVGElementInstanceList(const SVGElementInstanceList &other) :
+            items (other.items)
         {
-        items = other.items;
         }
 
     /**
@@ -6874,16 +6885,6 @@ protected:
 
 
 };
-
-
-
-
-
-
-
-
-
-
 
 
 
