@@ -1724,7 +1724,7 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             "    GtkWidget::wide-separators = 1\n"
             "    GtkWidget::separator-height = 6\n"
             "}\n"
-            "class \"GtkTreeView\" style \"fontfamily-separator-style\"");
+            "widget \"*gtk-combobox-popup-window.GtkScrolledWindow.GtkTreeView\" style \"fontfamily-separator-style\"");
     }
 
     /* Font size */
