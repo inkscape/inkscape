@@ -133,9 +133,6 @@ static void       sp_print_fontstyle( SPStyle *query ) {
 }
 #endif
 
-void sp_text_toolbox_get_font_list_in_doc (SPObject *r, std::list<Glib::ustring> *l);
-void sp_text_toolbox_update_font_list( GtkListStore* model );
-
 // Format family drop-down menu.
 static void cell_data_func(GtkCellLayout * /*cell_layout*/,
                            GtkCellRenderer   *cell,
@@ -224,7 +221,7 @@ static gboolean separator_func(GtkTreeModel *model,
 {
     gchar* text = 0;
     gtk_tree_model_get(model, iter, 0, &text, -1 ); // Column 0
-    return (text && strcmp(text,"separatoR") == 0);
+    return (text && strcmp(text,"#") == 0);
 }
 
 /*
@@ -1250,7 +1247,8 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     Ink_ComboBoxEntry_Action* fontFamilyAction =
         INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontFamilyAction" ) );
     if( fontFamilyAction->combobox != NULL ) {
-        sp_text_toolbox_update_font_list( GTK_LIST_STORE(ink_comboboxentry_action_get_model(fontFamilyAction)) );
+        Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
+        fontlister->update_font_list( sp_desktop_document( SP_ACTIVE_DESKTOP ));
     }
 
 
@@ -1587,93 +1585,6 @@ sp_text_toolbox_get_font_list_in_doc_recursive (SPObject *r, std::list<Glib::ust
     }
 }
 
-/* Extract all unique "font-family" attributes (including font-family fallbacks)
- * from a document in a reverse sorted list.
- */
-void
-sp_text_toolbox_get_font_list_in_doc (SPObject *r, std::list<Glib::ustring> *l) {
-
-    sp_text_toolbox_get_font_list_in_doc_recursive (r, l);
-
-    l->sort();
-    l->unique();
-    l->reverse();
-
-    // for(std::list<Glib::ustring>::iterator i = l->begin(); i != l->end(); ++i) {
-    //     std::cout << " font_family in doc: " << *i << std::endl;
-    // }
-}
-
-/* Update font-family list with "font-family" attributes used in a document. */
-void
-sp_text_toolbox_update_font_list( GtkListStore* model ) {
-
-    /* Create default styles for use when font-family is unknown on system. */
-    static GList *default_styles = NULL;
-    if( default_styles == NULL ) {
-        default_styles = g_list_append( default_styles, g_strdup("Normal") );
-        default_styles = g_list_append( default_styles, g_strdup("Italic") );
-        default_styles = g_list_append( default_styles, g_strdup("Bold") );
-        default_styles = g_list_append( default_styles, g_strdup("Bold Italic") );
-    }
-
-    /* Get "font-family" attributes used in document */
-    std::list<Glib::ustring> fontfamilies;
-    sp_text_toolbox_get_font_list_in_doc( (sp_desktop_document(SP_ACTIVE_DESKTOP))->getRoot(), &fontfamilies );
-
-    /* Delete all old doc font-family entries */
-    GtkTreeIter iter;
-    gboolean valid;
-    for( valid = gtk_tree_model_get_iter_first( GTK_TREE_MODEL(model), &iter ); valid; ) {
-        gchar *family = 0;
-        gboolean onSystem = true;
-        gtk_tree_model_get( GTK_TREE_MODEL(model), &iter, 0, &family, 2, &onSystem, -1 ); 
-        //std::cout << "List: " << family << ":  " << (onSystem ? "Yes" : "No") << std::endl;
-        if( !onSystem ) {
-            valid = gtk_list_store_remove( model, &iter );
-        } else {
-            valid = gtk_tree_model_iter_next( GTK_TREE_MODEL(model), &iter );
-        }
-    }
-
-    /* Insert separator */
-    if( !fontfamilies.empty() ) {
-        gtk_list_store_insert( model, &iter, 0 ); // iter points to new row
-        gtk_list_store_set( model, &iter, 0, "separatoR", -1 );
-    }
-
-
-    /* Insert doc font-family entries, list is already reverse sorted with duplicates removed. */
-    std::list<Glib::ustring>::iterator i;
-    for(i=fontfamilies.begin(); i != fontfamilies.end(); ++i) {
-
-        GList *styles = default_styles;
-        gtk_list_store_insert( model, &iter, 0 ); // iter points to new row
-
-        /* See if font-family (or first in fallback list) is on system. If so, get styles. */
-        std::vector<Glib::ustring> tokens = Glib::Regex::split_simple(",", *i );
-        if( !tokens[0].empty() ) {
-
-            GtkTreeIter iter2;
-            gboolean valid2;
-            for( valid2 = gtk_tree_model_get_iter_first( GTK_TREE_MODEL(model), &iter2 );
-                 valid2;
-                 valid2 = gtk_tree_model_iter_next( GTK_TREE_MODEL(model), &iter2 ) ) {
-
-                gchar* family = 0;
-                gboolean onSystem = true;
-                gtk_tree_model_get( GTK_TREE_MODEL(model), &iter2, 0, &family, 2, &onSystem, -1 ); 
-                if( onSystem && tokens[0].compare( family ) == 0 ) {
-                    gtk_tree_model_get( GTK_TREE_MODEL(model), &iter2, 1, &styles, -1 );
-                    break;
-                }
-            }
-            
-        }
-
-        gtk_list_store_set( model, &iter, 0, (*i).c_str(), 1, styles, 2, false, -1 );
-    }
-}
 
 // Define all the "widgets" in the toolbar.
 void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
@@ -1689,9 +1600,10 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
     /* Font family */
     {
         // Font list
-        Glib::RefPtr<Gtk::ListStore> store = Inkscape::FontLister::get_instance()->get_font_list();
+        Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
+        fontlister->update_font_list( sp_desktop_document( SP_ACTIVE_DESKTOP ));
+        Glib::RefPtr<Gtk::ListStore> store = fontlister->get_font_list();
         GtkListStore* model = store->gobj();
-        sp_text_toolbox_update_font_list( model );
 
         Ink_ComboBoxEntry_Action* act =
             ink_comboboxentry_action_new( "TextFontFamilyAction",

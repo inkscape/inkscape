@@ -116,7 +116,7 @@ namespace Inkscape
       /* Insert separator */
       if( !fontfamilies.empty() ) {
 	Gtk::TreeModel::iterator treeModelIter = font_list_store->prepend();
-	(*treeModelIter)[FontList.font] = "separatoR";
+	(*treeModelIter)[FontList.font] = "#";
 	(*treeModelIter)[FontList.onSystem] = false;
       }
 
