@@ -63,4 +63,9 @@ dom_libdom_a_SOURCES =       \
 	dom/io/stringstream.cpp  \
 	dom/io/stringstream.h    \
 	dom/io/uristream.cpp     \
-	dom/io/uristream.h
+	dom/io/uristream.h       \
+	dom/util/digest.h        \
+	dom/util/digest.cpp      \
+	dom/util/ziptool.h       \
+	dom/util/ziptool.cpp
+

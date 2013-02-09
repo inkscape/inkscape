@@ -26,6 +26,9 @@ set(dom_SRC
 	io/stringstream.cpp
 	io/uristream.cpp
 
+	util/digest.cpp
+	util/ziptool.cpp
+
 
 	# -------
 	# Headers
@@ -64,6 +67,9 @@ set(dom_SRC
 	io/gzipstream.h
 	io/stringstream.h
 	io/uristream.h
+
+	util/digest.h
+	util/ziptool.h
 )
 
 add_inkscape_lib(dom_LIB "${dom_SRC}")
