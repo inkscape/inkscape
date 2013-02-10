@@ -24,7 +24,8 @@ namespace Inkscape
     FontLister::FontLister ()
     {
         font_list_store = Gtk::ListStore::create (FontList);
-        
+        font_list_store->freeze_notify();
+
         FamilyToStylesMap familyStyleMap;
         font_factory::Default()->GetUIFamiliesAndStyles(&familyStyleMap);
        
@@ -60,6 +61,7 @@ namespace Inkscape
                 (*treeModelIter)[FontList.onSystem] = true;
             }
         }
+	font_list_store->thaw_notify();
     }
 
     // Example of how to use "foreach_iter"
@@ -81,6 +83,8 @@ namespace Inkscape
       if( !r ) {
 	return;
       }
+
+      font_list_store->freeze_notify();
 
       /* Clear all old document font-family entries */
       Gtk::TreeModel::iterator iter = font_list_store->get_iter( "0" );
@@ -146,6 +150,8 @@ namespace Inkscape
 	(*treeModelIter)[FontList.styles] = styles;
 	(*treeModelIter)[FontList.onSystem] = false;
       }
+
+      font_list_store->thaw_notify();
     }
 
     void
