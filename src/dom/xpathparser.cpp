@@ -131,7 +131,7 @@ void XPathParser::lexicalTokenDump()
     printf("####### LEXICAL TOKENS #######\n");
     for (unsigned int i=0 ; i<lexicalTokens.size() ; i++)
         {
-        printf("%d : ", i);
+        printf("%u : ", i);
         lexicalTokens[i].print();
         }
     printf("##### END LEXICAL TOKENS #####\n\n");

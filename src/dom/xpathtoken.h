@@ -457,7 +457,7 @@ public:
      */
     StackItem pop()
         {
-        if (stackItems.size() < 1)
+        if (stackItems.empty())
             {
             //TODO: error here
             StackItem item;
@@ -619,10 +619,6 @@ public:
      */
     virtual void assign(const TokenExecutor &other);
 
-    /**
-     * Reset the stack to its original settings
-     */
-    virtual void reset();
 
     /**
      * Execute a list upon a given node.  For each Axis encountered,

@@ -167,9 +167,6 @@ Bump::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream lightOptions;
     std::ostringstream lightEnd;
     
-    std::ostringstream lightRed;
-    std::ostringstream lightGreen;
-    std::ostringstream lightBlue;
     std::ostringstream floodRed;
     std::ostringstream floodGreen;
     std::ostringstream floodBlue;

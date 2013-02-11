@@ -937,19 +937,21 @@ Token Token::create(int type, long ival,
 /**
  *
  */
-TokenExecutor::TokenExecutor()
+TokenExecutor::TokenExecutor() :
+    tokenList (),
+    nodeList ()
 {
-    reset();
 }
 
 
 /**
  *
  */
-TokenExecutor::TokenExecutor(const TokenExecutor &other)
+TokenExecutor::TokenExecutor(const TokenExecutor &other) :
+    tokenList (other.tokenList),
+    nodeList ()
 {
-    reset();
-    assign(other);
+    // assign(other);
 }
 
 
@@ -967,14 +969,6 @@ TokenExecutor::~TokenExecutor()
 void TokenExecutor::assign(const TokenExecutor &other)
 {
     tokenList   = other.tokenList;
-}
-
-
-/**
- *
- */
-void TokenExecutor::reset()
-{
 }
 
 

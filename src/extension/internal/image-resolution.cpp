@@ -286,13 +286,10 @@ void ImageResolution::readjfif(char const *fn) {
     struct jpeg_decompress_struct cinfo;
     jmp_buf jbuf;
     struct jpeg_error_mgr jerr;
-    bool constr = false;
 
     if (setjmp(jbuf)) {
         fclose(ifd);
-        if (constr) {
-            jpeg_destroy_decompress(&cinfo);
-        }
+        jpeg_destroy_decompress(&cinfo);
         return;
     }
     
@@ -304,8 +301,6 @@ void ImageResolution::readjfif(char const *fn) {
     jerr.format_message = &irjfif_format_message;
     jerr.reset_error_mgr = &irjfif_reset;
     cinfo.client_data = (void*)&jbuf;
-
-    constr = true;
 
     jpeg_stdio_src(&cinfo, ifd);
     jpeg_read_header(&cinfo, TRUE);
@@ -321,7 +316,6 @@ void ImageResolution::readjfif(char const *fn) {
             ok_ = true;
         }
     }
-    constr = false;
     jpeg_destroy_decompress(&cinfo);
     fclose(ifd);
 }
