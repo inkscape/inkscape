@@ -497,8 +497,8 @@ gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* ink
 
     // Show or hide warning  -- this might be better moved to text-toolbox.cpp
     bool clear = true;
-    if( ink_comboboxentry_action->active == -1 && 
-	ink_comboboxentry_action->warning != NULL ) {
+
+    if( ink_comboboxentry_action->warning != NULL ) {
       Glib::ustring missing = check_comma_separated_text( ink_comboboxentry_action );
       if( !missing.empty() ) {
 

@@ -18,6 +18,7 @@
 #include "sp-root.h"
 #include "document.h"
 #include "xml/repr.h"
+#include "preferences.h"
 
 namespace Inkscape
 {
@@ -106,7 +107,6 @@ namespace Inkscape
         default_styles = g_list_append( default_styles, g_strdup("Italic") );
         default_styles = g_list_append( default_styles, g_strdup("Bold") );
         default_styles = g_list_append( default_styles, g_strdup("Bold Italic") );
-        default_styles = g_list_append( default_styles, g_strdup("Loopy") );
       }
 
       /* Get "font-family"s used in document. */
@@ -222,6 +222,77 @@ namespace Inkscape
     }
 }
 
+// Helper functions
+void font_lister_cell_data_func(GtkCellLayout     */*cell_layout*/,
+				GtkCellRenderer   *cell,
+				GtkTreeModel      *model,
+				GtkTreeIter       *iter,
+				gpointer          /*data*/)
+{
+    gchar *family;
+    gboolean onSystem = false;
+    gtk_tree_model_get(model, iter, 0, &family, 2, &onSystem, -1);
+    Glib::ustring family_escaped =  g_markup_escape_text(family, -1);
+    //g_free(family);
+    Glib::ustring markup;
 
+    if( !onSystem ) {
+        markup = "<span foreground='darkblue'>";
 
+        /* See if font-family on system */
+        std::vector<Glib::ustring> tokens = Glib::Regex::split_simple("\\s*,\\s*", family_escaped );
+        for( size_t i=0; i < tokens.size(); ++i ) {
 
+            Glib::ustring token = tokens[i];
+
+            GtkTreeIter iter;
+            gboolean valid;
+            gchar *family = 0;
+            gboolean onSystem = true;
+            gboolean found = false;
+            for( valid = gtk_tree_model_get_iter_first( GTK_TREE_MODEL(model), &iter );
+                 valid;
+                 valid = gtk_tree_model_iter_next( GTK_TREE_MODEL(model), &iter ) ) {
+
+                gtk_tree_model_get(model, &iter, 0, &family, 2, &onSystem, -1);
+                if( onSystem && token.compare( family ) == 0 ) {
+                    found = true;
+                    break;
+                }
+            }
+            if( found ) {
+                markup += g_markup_escape_text(token.c_str(), -1);
+                markup += ", ";
+            } else {
+                markup += "<span strikethrough=\"true\" strikethrough_color=\"red\">";
+                markup += g_markup_escape_text(token.c_str(), -1);
+                markup += "</span>";
+                markup += ", ";
+            }
+        }
+        // Remove extra comma and space from end.
+        if( markup.size() >= 2 ) {
+            markup.resize( markup.size()-2 );
+        }
+        markup += "</span>";
+        // std::cout << markup << std::endl;
+    } else {
+        markup =  family_escaped;
+    }
+
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    int show_sample = prefs->getInt("/tools/text/show_sample_in_list", 1);
+    if (show_sample) {
+
+        Glib::ustring sample = prefs->getString("/tools/text/font_sample");
+        Glib::ustring sample_escaped = g_markup_escape_text(sample.data(), -1);
+
+        markup += "  <span foreground='gray' font_family='";
+        markup += family_escaped;
+        markup += "'>";
+        markup += sample_escaped;
+        markup += "</span>";
+    }
+
+    g_object_set (G_OBJECT (cell), "markup", markup.c_str(), NULL);
+}

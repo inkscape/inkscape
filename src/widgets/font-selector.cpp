@@ -162,8 +162,21 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
         gtk_tree_view_column_pack_start (column, cell, FALSE);
         gtk_tree_view_column_set_attributes (column, cell, "text", 0, NULL);
+        gtk_tree_view_column_set_cell_data_func (column, cell,
+                                                 GtkTreeCellDataFunc (font_lister_cell_data_func),
+                                                 NULL, NULL );
         gtk_tree_view_append_column (GTK_TREE_VIEW(fsel->family_treeview), column);
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(fsel->family_treeview), FALSE);
+        gtk_tree_view_set_row_separator_func( GTK_TREE_VIEW(fsel->family_treeview),
+                                              GtkTreeViewRowSeparatorFunc ((gpointer)font_lister_separator_func),
+                                              NULL, NULL );
+
+        /* Muck with style, see text-toolbar.cpp */
+        gtk_widget_set_name( GTK_WIDGET(fsel->family_treeview), "font_selector_family" );
+        gtk_rc_parse_string (
+            "widget \"*font_selector_family\" style \"fontfamily-separator-style\"");
+        
+
         Glib::RefPtr<Gtk::ListStore> store = fontlister->get_font_list();
         gtk_tree_view_set_model (GTK_TREE_VIEW(fsel->family_treeview), GTK_TREE_MODEL (Glib::unwrap (store)));
         gtk_container_add(GTK_CONTAINER(sw), fsel->family_treeview);
