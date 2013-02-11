@@ -29,6 +29,7 @@
 #include "document.h"
 #include "xml/repr.h"
 #include "xml/attribute-record.h"
+#include "xml/sp-css-attr.h"
 
 #include "sp-textpath.h"
 #include "sp-flowtext.h"

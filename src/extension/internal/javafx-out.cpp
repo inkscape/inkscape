@@ -20,6 +20,8 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+
+#include <glibmm/miscutils.h>
 #include "javafx-out.h"
 #include <inkscape.h>
 #include <inkscape-version.h>

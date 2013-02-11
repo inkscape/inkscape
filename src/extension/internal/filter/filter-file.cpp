@@ -20,6 +20,7 @@
 
 /* System includes */
 #include <glibmm/i18n.h>
+#include <glibmm/fileutils.h>
 
 namespace Inkscape {
 namespace Extension {

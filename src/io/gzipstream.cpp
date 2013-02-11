@@ -28,6 +28,7 @@
 
 #include "gzipstream.h"
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <string>
 

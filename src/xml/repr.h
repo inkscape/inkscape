@@ -14,16 +14,11 @@
 #ifndef SEEN_SP_REPR_H
 #define SEEN_SP_REPR_H
 
-#include <stdio.h>
 #include <glib.h>
-#include "gc-anchored.h"
+#include <glibmm/quark.h>
 
 #include "xml/node.h"
 #include "xml/document.h"
-#include "xml/sp-css-attr.h"
-#include "io/inkscapestream.h"
-
-#include <2geom/forward.h>
 
 #define SP_SODIPODI_NS_URI "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
 #define SP_BROKEN_SODIPODI_NS_URI "http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -34,6 +29,18 @@
 #define SP_CC_NS_URI "http://creativecommons.org/ns#"
 #define SP_OLD_CC_NS_URI "http://web.resource.org/cc/"
 #define SP_DC_NS_URI "http://purl.org/dc/elements/1.1/"
+
+class SPCSSAttr;
+
+namespace Inkscape {
+namespace IO {
+class Writer;
+} // namespace IO
+} // namespace Inkscape
+
+namespace Geom {
+class Point;
+}
 
 /* SPXMLNs */
 char const *sp_xml_ns_uri_prefix(gchar const *uri, gchar const *suggested);

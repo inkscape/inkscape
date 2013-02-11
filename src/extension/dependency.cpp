@@ -13,6 +13,8 @@
 #endif
 
 #include <glibmm/i18n.h>
+#include <glibmm/fileutils.h>
+#include <glibmm/miscutils.h>
 #include "config.h"
 #include "path-prefix.h"
 #include "dependency.h"

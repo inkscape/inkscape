@@ -62,6 +62,7 @@
 #include "ui/view/view-widget.h"
 #include "uri.h"
 #include "xml/rebase-hrefs.h"
+#include "xml/sp-css-attr.h"
 #include "verbs.h"
 #include "event-log.h"
 #include "ui/dialog/font-substitution.h"

@@ -10,7 +10,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-
+#include <glibmm/main.h>
 
 #include "extension.h"
 #include "timer.h"

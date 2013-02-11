@@ -6,6 +6,8 @@
 #ifndef __SP_FONTFACE_H__
 #define __SP_FONTFACE_H__
 
+#include <vector>
+
 /*
  * SVG <font-face> element implementation
  *

@@ -22,6 +22,7 @@
 using std::map;
 using std::pair;
 
+#include <glibmm/stringutils.h>
 #include "attributes.h"
 #include "document.h"
 #include "sp-filter.h"

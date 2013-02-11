@@ -34,6 +34,7 @@
 #include "display/sp-ctrlcurve.h"
 #include "display/sp-canvas-util.h"
 #include "xml/repr.h"
+#include "xml/sp-css-attr.h"
 #include "svg/css-ostringstream.h"
 #include "svg/svg.h"
 #include "preferences.h"

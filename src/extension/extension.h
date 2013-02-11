@@ -19,6 +19,7 @@
 #include <vector>
 #include <glibmm/ustring.h>
 #include "xml/repr.h"
+#include <sigc++/signal.h>
 
 namespace Gtk {
 	class Table;

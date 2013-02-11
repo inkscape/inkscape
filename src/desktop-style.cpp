@@ -39,6 +39,7 @@
 #include "sp-tref.h"
 #include "sp-tspan.h"
 #include "xml/repr.h"
+#include "xml/sp-css-attr.h"
 #include "libnrtype/font-style-to-pos.h"
 #include "sp-path.h"
 #include "event-context.h"

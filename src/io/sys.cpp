@@ -15,6 +15,7 @@
 # include "config.h"
 #endif
 
+#include <fstream>
 #include <glib.h>
 #include <glib/gstdio.h>
 #include <glibmm/fileutils.h>

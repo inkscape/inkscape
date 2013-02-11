@@ -9,9 +9,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-
 #include <cstdio>
-#include <glibmm.h>
+#include <glibmm/ustring.h>
 
 namespace Inkscape
 {

@@ -28,6 +28,7 @@
 #include "sp-radial-gradient-fns.h"
 #include "sp-pattern.h"
 #include "xml/repr.h"
+#include "xml/sp-css-attr.h"
 #include "widgets/widget-sizes.h"
 #include "helper/units.h"
 #include "helper/action.h"

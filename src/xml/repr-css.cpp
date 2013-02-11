@@ -27,6 +27,7 @@
 #include "xml/repr.h"
 #include "xml/simple-document.h"
 #include "xml/simple-node.h"
+#include "xml/sp-css-attr.h"
 #include "style.h"
 #include "libcroco/cr-sel-eng.h"
 
