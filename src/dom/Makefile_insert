@@ -50,16 +50,10 @@ dom_libdom_a_SOURCES =       \
 	dom/xpathparser.h        \
 	dom/xpathtoken.h         \
 	dom/xpathtoken.cpp       \
-	dom/io/base64stream.cpp  \
-	dom/io/base64stream.h    \
 	dom/io/bufferstream.cpp  \
 	dom/io/bufferstream.h    \
 	dom/io/domstream.cpp     \
 	dom/io/domstream.h       \
-	dom/io/gzipstream.cpp    \
-	dom/io/gzipstream.h      \
-	dom/io/gzipstream.cpp    \
-	dom/io/gzipstream.h      \
 	dom/io/stringstream.cpp  \
 	dom/io/stringstream.h    \
 	dom/io/uristream.cpp     \

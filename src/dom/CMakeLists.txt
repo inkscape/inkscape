@@ -19,10 +19,8 @@ set(dom_SRC
 	xpathparser.cpp
 	xpathtoken.cpp
 
-	io/base64stream.cpp
 	io/bufferstream.cpp
 	io/domstream.cpp
-	io/gzipstream.cpp
 	io/stringstream.cpp
 	io/uristream.cpp
 
@@ -61,10 +59,8 @@ set(dom_SRC
 	xpathparser.h
 	xpathtoken.h
 
-	io/base64stream.h
 	io/bufferstream.h
 	io/domstream.h
-	io/gzipstream.h
 	io/stringstream.h
 	io/uristream.h
 
