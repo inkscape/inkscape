@@ -21,6 +21,7 @@
 #endif
 
 #include <interface.h>
+#include <unistd.h>
 
 #include "system.h"
 #include "preferences.h"
