@@ -218,7 +218,7 @@ public:
     /**
      * Send one byte to the destination stream.
      */
-    virtual int put(XMLCh ch) = 0;
+    virtual int put(gunichar ch) = 0;
 
 
 }; // class OutputStream
@@ -241,7 +241,7 @@ public:
 
     virtual void flush();
 
-    virtual int put(XMLCh ch);
+    virtual int put(gunichar ch);
 
 protected:
 
@@ -267,7 +267,7 @@ public:
     void flush()
         { }
 
-    int put(XMLCh ch)
+    int put(gunichar ch)
         {  putchar(ch); return 1; }
 
 };
@@ -492,7 +492,7 @@ public:
 
     virtual void flush() = 0;
 
-    virtual int put(XMLCh ch) = 0;
+    virtual int put(gunichar ch) = 0;
 
     /* Formatted output */
     virtual Writer& printf(const DOMString &fmt, ...) = 0;
@@ -542,7 +542,7 @@ public:
 
     virtual void flush();
 
-    virtual int put(XMLCh ch);
+    virtual int put(gunichar ch);
 
 
 
@@ -635,7 +635,7 @@ public:
 
     virtual void flush();
 
-    virtual int put(XMLCh ch);
+    virtual int put(gunichar ch);
 
 
 private:
@@ -663,7 +663,7 @@ public:
     virtual void flush();
 
 
-    virtual int put(XMLCh ch);
+    virtual int put(gunichar ch);
 
 
 private:

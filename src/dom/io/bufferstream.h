@@ -102,7 +102,7 @@ public:
 
     virtual void flush();
 
-    virtual int put(XMLCh ch);
+    virtual int put(gunichar ch);
 
     virtual std::vector<unsigned char> &getBuffer()
         { return buffer; }

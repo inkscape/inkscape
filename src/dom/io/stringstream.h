@@ -100,7 +100,7 @@ public:
 
     virtual void flush();
 
-    virtual int put(XMLCh ch);
+    virtual int put(gunichar ch);
 
     virtual DOMString &getString()
         { return buffer; }

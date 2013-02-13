@@ -125,7 +125,7 @@ void BasicOutputStream::flush()
 /**
  * Writes the specified byte to this output stream.
  */ 
-void BasicOutputStream::put(int ch)
+void BasicOutputStream::put(gunichar ch)
 {
     if (closed)
         return;
@@ -775,9 +775,7 @@ void OutputStreamWriter::flush()
  */
 void OutputStreamWriter::put(gunichar ch)
 {
-    //Do we need conversions here?
-    int intCh = (int) ch;
-    outputStream.put(intCh);
+    outputStream.put(ch);
 }
 
 //#########################################################################
@@ -827,9 +825,7 @@ void StdWriter::flush()
  */
 void StdWriter::put(gunichar ch)
 {
-    //Do we need conversions here?
-    int intCh = (int) ch;
-    outputStream->put(intCh);
+    outputStream->put(ch);
 }
 
 

@@ -143,7 +143,7 @@ public:
 
     virtual void flush() throw(StreamException);
 
-    virtual int put(XMLCh ch) throw(StreamException);
+    virtual int put(gunichar ch) throw(StreamException);
 
 private:
 
@@ -181,7 +181,7 @@ public:
 
     virtual void flush() throw(StreamException);
 
-    virtual int put(XMLCh ch) throw(StreamException);
+    virtual int put(gunichar ch) throw(StreamException);
 
 private:
 

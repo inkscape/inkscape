@@ -146,7 +146,7 @@ void BufferOutputStream::flush()
 /**
  * Writes the specified byte to this output stream.
  */
-int BufferOutputStream::put(XMLCh ch)
+int BufferOutputStream::put(gunichar ch)
 {
     if (closed)
         return -1;

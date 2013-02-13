@@ -402,16 +402,14 @@ void UriOutputStream::flush() throw(StreamException)
 /**
  * Writes the specified byte to this output stream.
  */
-void UriOutputStream::put(int ch) throw(StreamException)
+void UriOutputStream::put(gunichar ch) throw(StreamException)
 {
     if (closed)
         return;
 
     unsigned char uch;
-    gunichar gch;
 
     switch (scheme) {
-
         case SCHEME_FILE:
             if (!outf)
                 return;
@@ -420,13 +418,11 @@ void UriOutputStream::put(int ch) throw(StreamException)
                 Glib::ustring err = "ERROR writing to file ";
                 throw StreamException(err);
             }
-            //fwrite(uch, 1, 1, outf);
-        break;
+            break;
 
         case SCHEME_DATA:
-            gch = (gunichar) ch;
-            data.push_back(gch);
-        break;
+            data.push_back(ch);
+            break;
 
     }//switch
 
@@ -474,8 +470,7 @@ void UriWriter::flush() throw(StreamException)
  */
 void UriWriter::put(gunichar ch) throw(StreamException)
 {
-    int ich = (int)ch;
-    outputStream->put(ich);
+    outputStream->put(ch);
 }
 
 

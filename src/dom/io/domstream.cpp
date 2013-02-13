@@ -510,7 +510,7 @@ void BasicOutputStream::flush()
 /**
  * Writes the specified byte to this output stream.
  */
-int BasicOutputStream::put(XMLCh ch)
+int BasicOutputStream::put(gunichar ch)
 {
     if (closed)
         return -1;
@@ -886,7 +886,7 @@ void BasicWriter::flush()
 /**
  * Writes the specified byte to this output writer.
  */
-int BasicWriter::put(XMLCh ch)
+int BasicWriter::put(gunichar ch)
 {
     if (destination && destination->put(ch)>=0)
         return 1;
@@ -1079,7 +1079,7 @@ void OutputStreamWriter::flush()
  *  Overloaded to redirect the output chars from the next Writer
  *  in the chain to an OutputStream instead.
  */
-int OutputStreamWriter::put(XMLCh ch)
+int OutputStreamWriter::put(gunichar ch)
 {
     //Do we need conversions here?
     int intCh = (int) ch;
@@ -1133,11 +1133,10 @@ void StdWriter::flush()
  *  Overloaded to redirect the output chars from the next Writer
  *  in the chain to an OutputStream instead.
  */
-int StdWriter::put(XMLCh ch)
+int StdWriter::put(gunichar ch)
 {
     //Do we need conversions here?
-    int intCh = (int) ch;
-    if (outputStream->put(intCh) < 0)
+    if (outputStream->put(ch) < 0)
         return -1;
     return 1;
 }

@@ -372,7 +372,7 @@ void UriOutputStream::flush() throw(StreamException)
 /**
  * Writes the specified byte to this output stream.
  */
-int UriOutputStream::put(XMLCh ch) throw(StreamException)
+int UriOutputStream::put(gunichar ch) throw(StreamException)
 {
     if (closed)
         return -1;
@@ -440,10 +440,9 @@ void UriWriter::flush() throw(StreamException)
 /**
  *
  */
-int UriWriter::put(XMLCh ch) throw(StreamException)
+int UriWriter::put(gunichar ch) throw(StreamException)
 {
-    int ich = (int)ch;
-    if (outputStream->put(ich) < 0)
+    if (outputStream->put(ch) < 0)
         return -1;
     return 1;
 }
