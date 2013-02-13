@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-01-13 10:55+0100\n"
-"PO-Revision-Date: 2013-01-14 09:34+0300\n"
+"POT-Creation-Date: 2013-01-30 12:08+0100\n"
+"PO-Revision-Date: 2013-02-13 01:07+0300\n"
 "Last-Translator: Jānis Eisaks <jancs@dv.lv>\n"
 "Language-Team: Latvian\n"
 "Language: lv\n"
@@ -319,7 +319,7 @@ msgid "Inset"
 msgstr ""
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/extension/internal/filter/shadows.h:79
+#: ../src/extension/internal/filter/shadows.h:81
 msgid "Shadows and Glows"
 msgstr "Ēnas un spīdums"
 
@@ -945,32 +945,32 @@ msgstr "Melna gaisma"
 #: ../src/extension/internal/filter/bumps.h:101
 #: ../src/extension/internal/filter/bumps.h:324
 #: ../src/extension/internal/filter/bumps.h:331
-#: ../src/extension/internal/filter/color.h:81
-#: ../src/extension/internal/filter/color.h:163
-#: ../src/extension/internal/filter/color.h:170
-#: ../src/extension/internal/filter/color.h:261
-#: ../src/extension/internal/filter/color.h:339
-#: ../src/extension/internal/filter/color.h:346
-#: ../src/extension/internal/filter/color.h:436
-#: ../src/extension/internal/filter/color.h:531
-#: ../src/extension/internal/filter/color.h:653
-#: ../src/extension/internal/filter/color.h:750
-#: ../src/extension/internal/filter/color.h:829
-#: ../src/extension/internal/filter/color.h:920
-#: ../src/extension/internal/filter/color.h:1048
-#: ../src/extension/internal/filter/color.h:1118
-#: ../src/extension/internal/filter/color.h:1217
-#: ../src/extension/internal/filter/color.h:1231
-#: ../src/extension/internal/filter/color.h:1346
-#: ../src/extension/internal/filter/color.h:1422
-#: ../src/extension/internal/filter/color.h:1526
-#: ../src/extension/internal/filter/color.h:1533
+#: ../src/extension/internal/filter/color.h:82
+#: ../src/extension/internal/filter/color.h:164
+#: ../src/extension/internal/filter/color.h:171
+#: ../src/extension/internal/filter/color.h:262
+#: ../src/extension/internal/filter/color.h:340
+#: ../src/extension/internal/filter/color.h:347
+#: ../src/extension/internal/filter/color.h:437
+#: ../src/extension/internal/filter/color.h:532
+#: ../src/extension/internal/filter/color.h:654
+#: ../src/extension/internal/filter/color.h:751
+#: ../src/extension/internal/filter/color.h:830
+#: ../src/extension/internal/filter/color.h:921
+#: ../src/extension/internal/filter/color.h:1049
+#: ../src/extension/internal/filter/color.h:1119
+#: ../src/extension/internal/filter/color.h:1212
+#: ../src/extension/internal/filter/color.h:1324
+#: ../src/extension/internal/filter/color.h:1429
+#: ../src/extension/internal/filter/color.h:1505
+#: ../src/extension/internal/filter/color.h:1609
+#: ../src/extension/internal/filter/color.h:1616
 #: ../src/extension/internal/filter/morphology.h:194
 #: ../src/extension/internal/filter/overlays.h:73
 #: ../src/extension/internal/filter/paint.h:99
 #: ../src/extension/internal/filter/paint.h:714
 #: ../src/extension/internal/filter/paint.h:718
-#: ../src/extension/internal/filter/shadows.h:71
+#: ../src/extension/internal/filter/shadows.h:73
 #: ../src/extension/internal/filter/transparency.h:345
 #: ../src/ui/dialog/document-properties.cpp:148
 #: ../share/extensions/color_blackandwhite.inx.h:2
@@ -3198,13 +3198,13 @@ msgstr "Virziens"
 msgid "Defines the direction and magnitude of the extrusion"
 msgstr "Nosaka izspiešanas virzienu un lielumu"
 
-#: ../src/sp-flowtext.cpp:365
-#: ../src/sp-text.cpp:426
-#: ../src/text-context.cpp:1631
+#: ../src/sp-flowtext.cpp:339
+#: ../src/sp-text.cpp:400
+#: ../src/text-context.cpp:1608
 msgid " [truncated]"
 msgstr " [nogriezts]"
 
-#: ../src/sp-flowtext.cpp:368
+#: ../src/sp-flowtext.cpp:342
 #, c-format
 msgid "<b>Flowed text</b> (%d character%s)"
 msgid_plural "<b>Flowed text</b> (%d characters%s)"
@@ -3212,7 +3212,7 @@ msgstr[0] "<b>Teksta aizpildījums</b> (%d rakstzīme %s)"
 msgstr[1] "<b>Teksta aizpildījums</b> (%d rakstzīmes %s)"
 msgstr[2] "<b>Teksta aizpildījums</b> (%d rakstzīmes %s)"
 
-#: ../src/sp-flowtext.cpp:370
+#: ../src/sp-flowtext.cpp:344
 #, c-format
 msgid "<b>Linked flowed text</b> (%d character%s)"
 msgid_plural "<b>Linked flowed text</b> (%d characters%s)"
@@ -3220,85 +3220,85 @@ msgstr[0] "<b>Saistītais teksta aizpildījums</b> (%d rakstzīme %s)"
 msgstr[1] "<b>Saistītais teksta aizpildījums</b> (%d rakstzīmes %s)"
 msgstr[2] "<b>Saistītais teksta aizpildījums</b> (%d rakstzīmes %s)"
 
-#: ../src/arc-context.cpp:331
+#: ../src/arc-context.cpp:307
 msgid "<b>Ctrl</b>: make circle or integer-ratio ellipse, snap arc/segment angle"
 msgstr "<b>Ctrl</b>: izveidot riņķi vai veselu skaitļu attiecību elipsi, piesaistīt loka/sektora leņķi"
 
-#: ../src/arc-context.cpp:332
-#: ../src/rect-context.cpp:377
+#: ../src/arc-context.cpp:308
+#: ../src/rect-context.cpp:353
 msgid "<b>Shift</b>: draw around the starting point"
 msgstr "<b>Shift</b>: zīmēt apkārt sākumpunktam"
 
-#: ../src/arc-context.cpp:488
+#: ../src/arc-context.cpp:464
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Elipse</b>: %s &#215; %s (ierobežota ar attiecībām %d:%d); ar <b>Shift</b> - zīmēt apkārt sākumpunktam"
 
-#: ../src/arc-context.cpp:490
+#: ../src/arc-context.cpp:466
 #, c-format
 msgid "<b>Ellipse</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio ellipse; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Elipse</b>: %s &#215; %s; ar <b>Ctrl</b>  -  izveidot elipsi ar kvadrātiskām vai veselu skaitļu proporcijām; ar <b>Shift</b> - zīmēt apkārt sākumpunktam"
 
-#: ../src/arc-context.cpp:516
+#: ../src/arc-context.cpp:492
 msgid "Create ellipse"
 msgstr "Izveidot elipsi"
 
-#: ../src/box3d-context.cpp:444
-#: ../src/box3d-context.cpp:451
-#: ../src/box3d-context.cpp:458
-#: ../src/box3d-context.cpp:465
-#: ../src/box3d-context.cpp:472
-#: ../src/box3d-context.cpp:479
+#: ../src/box3d-context.cpp:421
+#: ../src/box3d-context.cpp:428
+#: ../src/box3d-context.cpp:435
+#: ../src/box3d-context.cpp:442
+#: ../src/box3d-context.cpp:449
+#: ../src/box3d-context.cpp:456
 msgid "Change perspective (angle of PLs)"
 msgstr "Mainīt perspektīvu (leņķi starp PL )"
 
 #. status text
-#: ../src/box3d-context.cpp:663
+#: ../src/box3d-context.cpp:640
 msgid "<b>3D Box</b>; with <b>Shift</b> to extrude along the Z axis"
 msgstr "<b>3D paralēlskaldnis</b>; ar <b>Shift</b> izstiept gar Z asi"
 
-#: ../src/box3d-context.cpp:691
+#: ../src/box3d-context.cpp:668
 msgid "Create 3D box"
 msgstr "Izveidojiet 3D paralēlskaldni"
 
-#: ../src/box3d.cpp:321
+#: ../src/box3d.cpp:292
 msgid "<b>3D Box</b>"
 msgstr "<b>3D paralēlskaldnis</b>"
 
-#: ../src/connector-context.cpp:610
+#: ../src/connector-context.cpp:585
 msgid "Creating new connector"
 msgstr "Izveido jaunu savienotāju"
 
-#: ../src/connector-context.cpp:865
+#: ../src/connector-context.cpp:840
 msgid "Connector endpoint drag cancelled."
 msgstr "Savienotāja beigu punkta vilkšana atcelta."
 
-#: ../src/connector-context.cpp:912
+#: ../src/connector-context.cpp:887
 msgid "Reroute connector"
 msgstr "Mainīt savienotāja ceļu"
 
-#: ../src/connector-context.cpp:1077
+#: ../src/connector-context.cpp:1052
 msgid "Create connector"
 msgstr "Izveidot savienotāju"
 
-#: ../src/connector-context.cpp:1100
+#: ../src/connector-context.cpp:1075
 msgid "Finishing connector"
 msgstr "Pabeidz savienotāju"
 
-#: ../src/connector-context.cpp:1336
+#: ../src/connector-context.cpp:1311
 msgid "<b>Connector endpoint</b>: drag to reroute or connect to new shapes"
 msgstr "<b>Savienotāja beigu punkts</b>: velciet, lai manītu maršrutu vai savienotu ar jaunām figūrām"
 
-#: ../src/connector-context.cpp:1476
+#: ../src/connector-context.cpp:1451
 msgid "Select <b>at least one non-connector object</b>."
 msgstr "Izvēlieties <b>vismaz vienu objektu, kas nav savienotājs</b>."
 
-#: ../src/connector-context.cpp:1481
+#: ../src/connector-context.cpp:1456
 #: ../src/widgets/connector-toolbar.cpp:330
 msgid "Make connectors avoid selected objects"
 msgstr "Likt savienotājiem izvairīties no atlasītajiem objektiem"
 
-#: ../src/connector-context.cpp:1482
+#: ../src/connector-context.cpp:1457
 #: ../src/widgets/connector-toolbar.cpp:340
 msgid "Make connectors ignore selected objects"
 msgstr "Likt savienotājiem neņemt vērā atlasītos objektus"
@@ -3313,30 +3313,30 @@ msgstr "<b>Pašreizējais slānis ir slēpts</b>. Padariet to redzamu, lai būtu
 msgid "<b>Current layer is locked</b>. Unlock it to be able to draw on it."
 msgstr "<b>Pašreizējais slānis ir slēgts</b>. Atslēdziet to, lai būtu iespējams tajā zīmēt."
 
-#: ../src/desktop-events.cpp:229
+#: ../src/desktop-events.cpp:228
 msgid "Create guide"
 msgstr "Pievienot palīglīniju"
 
-#: ../src/desktop-events.cpp:475
+#: ../src/desktop-events.cpp:473
 msgid "Move guide"
 msgstr "Pārvietot palīglīniju"
 
-#: ../src/desktop-events.cpp:482
-#: ../src/desktop-events.cpp:541
+#: ../src/desktop-events.cpp:480
+#: ../src/desktop-events.cpp:538
 #: ../src/ui/dialog/guides.cpp:138
 msgid "Delete guide"
 msgstr "Dzēst palīglīniju"
 
-#: ../src/desktop-events.cpp:521
+#: ../src/desktop-events.cpp:518
 #, c-format
 msgid "<b>Guideline</b>: %s"
 msgstr "<b>Palīglīnija</b>: %s"
 
-#: ../src/desktop.cpp:894
+#: ../src/desktop.cpp:908
 msgid "No previous zoom."
 msgstr "Nav iepriekšējās tālummaiņas."
 
-#: ../src/desktop.cpp:915
+#: ../src/desktop.cpp:929
 msgid "No next zoom."
 msgstr "Nav nākošās tālummaiņas."
 
@@ -4132,9 +4132,9 @@ msgid "_Height:"
 msgstr "_Augstums:"
 
 #: ../src/ui/dialog/export.cpp:260
-#: ../src/ui/dialog/inkscape-preferences.cpp:1385
-#: ../src/ui/dialog/inkscape-preferences.cpp:1388
-#: ../src/ui/dialog/inkscape-preferences.cpp:1397
+#: ../src/ui/dialog/inkscape-preferences.cpp:1384
+#: ../src/ui/dialog/inkscape-preferences.cpp:1387
+#: ../src/ui/dialog/inkscape-preferences.cpp:1396
 msgid "dpi"
 msgstr "dpi"
 
@@ -4246,7 +4246,6 @@ msgid "_Selection"
 msgstr "Atla_sītais"
 
 #: ../src/ui/dialog/export.h:50
-#, fuzzy
 msgid "_Custom"
 msgstr "Izvēles"
 
@@ -4345,7 +4344,7 @@ msgstr "Meklēt ceļus, līnijas, saliktās līnijas"
 
 #: ../src/dialogs/find.cpp:635
 #: ../src/ui/dialog/find.cpp:98
-#: ../src/widgets/toolbox.cpp:1781
+#: ../src/widgets/toolbox.cpp:1732
 msgid "Paths"
 msgstr "Ceļi"
 
@@ -4538,7 +4537,7 @@ msgid "Spacing between lines (percent of font size)"
 msgstr "Atstarpe starp rindām (procentos no fonta izmēra)"
 
 #: ../src/ui/dialog/text-edit.cpp:561
-#: ../src/text-context.cpp:1519
+#: ../src/text-context.cpp:1496
 msgid "Set text style"
 msgstr "Iestatīt teksta stilu"
 
@@ -5040,92 +5039,92 @@ msgid "Unnamed document %d"
 msgstr "Nenosaukts dokuments %d"
 
 #. We hit green anchor, closing Green-Blue-Red
-#: ../src/draw-context.cpp:561
+#: ../src/draw-context.cpp:537
 msgid "Path is closed."
 msgstr "Ceļš ir slēgts."
 
 #. We hit bot start and end of single curve, closing paths
-#: ../src/draw-context.cpp:576
+#: ../src/draw-context.cpp:552
 msgid "Closing path."
 msgstr "Slēdz ceļu."
 
-#: ../src/draw-context.cpp:677
+#: ../src/draw-context.cpp:653
 msgid "Draw path"
 msgstr "Zīmēt ceļu"
 
-#: ../src/draw-context.cpp:834
+#: ../src/draw-context.cpp:810
 msgid "Creating single dot"
 msgstr "Izveido atsevišķu punktu"
 
-#: ../src/draw-context.cpp:835
+#: ../src/draw-context.cpp:811
 msgid "Create single dot"
 msgstr "Izveidot atsevišķu punktu"
 
 #. alpha of color under cursor, to show in the statusbar
 #. locale-sensitive printf is OK, since this goes to the UI, not into SVG
-#: ../src/dropper-context.cpp:310
+#: ../src/dropper-context.cpp:326
 #, c-format
 msgid " alpha %.3g"
 msgstr " alfa %.3g"
 
 #. where the color is picked, to show in the statusbar
-#: ../src/dropper-context.cpp:312
+#: ../src/dropper-context.cpp:328
 #, c-format
 msgid ", averaged with radius %d"
 msgstr ", noapaļots ar rādiusu %d"
 
-#: ../src/dropper-context.cpp:312
+#: ../src/dropper-context.cpp:328
 #, c-format
 msgid " under cursor"
 msgstr " zem kursora"
 
 #. message, to show in the statusbar
-#: ../src/dropper-context.cpp:314
+#: ../src/dropper-context.cpp:330
 msgid "<b>Release mouse</b> to set color."
 msgstr "<b>Atlaidiet peli</b>, lai iestatītu krāsu."
 
-#: ../src/dropper-context.cpp:314
+#: ../src/dropper-context.cpp:330
 #: ../src/tools-switch.cpp:232
 msgid "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard"
 msgstr "<b>Uzklikšķiniet</b>, lai iestatītu aizpildījumu, <b>Shift+klikšķis</b> - lai iestatītu vilkumu; <b>velciet</b>, lai izlīdzinātu laukuma krāsu; ar <b>Alt</b> izvēlieties pretējo krāsu; ar <b>Ctrl+C</b> nokopējiet krāsu zem peles kursora uz starpliktuvi"
 
-#: ../src/dropper-context.cpp:362
+#: ../src/dropper-context.cpp:378
 msgid "Set picked color"
 msgstr "Pielietot izvēlēto krāsu"
 
-#: ../src/dyna-draw-context.cpp:617
+#: ../src/dyna-draw-context.cpp:591
 msgid "<b>Guide path selected</b>; start drawing along the guide with <b>Ctrl</b>"
 msgstr "<b>Atlasīts palīglīnijas ceļš</b>; sāciet zīmēt gar palīglīniju nospiežot <b>Ctrl</b>"
 
-#: ../src/dyna-draw-context.cpp:619
+#: ../src/dyna-draw-context.cpp:593
 msgid "<b>Select a guide path</b> to track with <b>Ctrl</b>"
 msgstr ""
 
-#: ../src/dyna-draw-context.cpp:754
+#: ../src/dyna-draw-context.cpp:728
 msgid "Tracking: <b>connection to guide path lost!</b>"
 msgstr "Vektorizēšana: <b>saite ar palīgceļu ir zudusi!</b>"
 
-#: ../src/dyna-draw-context.cpp:754
+#: ../src/dyna-draw-context.cpp:728
 msgid "<b>Tracking</b> a guide path"
 msgstr ""
 
-#: ../src/dyna-draw-context.cpp:757
+#: ../src/dyna-draw-context.cpp:731
 msgid "<b>Drawing</b> a calligraphic stroke"
 msgstr "<b>Zīmē</b> kaligrāfisku vilkumu"
 
-#: ../src/dyna-draw-context.cpp:1046
+#: ../src/dyna-draw-context.cpp:1020
 msgid "Draw calligraphic stroke"
 msgstr "Zīmēt kaligrāfisku vilkumu"
 
-#: ../src/eraser-context.cpp:533
+#: ../src/eraser-context.cpp:504
 msgid "<b>Drawing</b> an eraser stroke"
 msgstr ""
 
-#: ../src/eraser-context.cpp:839
+#: ../src/eraser-context.cpp:810
 msgid "Draw eraser stroke"
 msgstr "Zīmēt dzēšgumijas vilkumu"
 
-#: ../src/event-context.cpp:692
+#: ../src/event-context.cpp:671
 msgid "<b>Space+mouse move</b> to pan canvas"
 msgstr ""
 
@@ -5310,7 +5309,7 @@ msgstr "Augstums:"
 
 #. Label
 #: ../src/extension/internal/bitmap/adaptiveThreshold.cpp:43
-#: ../src/extension/internal/filter/color.h:1043
+#: ../src/extension/internal/filter/color.h:1044
 #: ../src/extension/internal/filter/paint.h:357
 #: ../src/widgets/gradient-toolbar.cpp:1172
 #: ../src/widgets/gradient-vector.cpp:927
@@ -5366,9 +5365,9 @@ msgstr "Pievienot troksni"
 
 #. _settings->add_checkbutton(false, SP_ATTR_STITCHTILES, _("Stitch Tiles"), "stitch", "noStitch");
 #: ../src/extension/internal/bitmap/addNoise.cpp:47
-#: ../src/extension/internal/filter/color.h:425
-#: ../src/extension/internal/filter/color.h:1414
-#: ../src/extension/internal/filter/color.h:1502
+#: ../src/extension/internal/filter/color.h:426
+#: ../src/extension/internal/filter/color.h:1497
+#: ../src/extension/internal/filter/color.h:1585
 #: ../src/extension/internal/filter/distort.h:69
 #: ../src/extension/internal/filter/morphology.h:60
 #: ../src/rdf.cpp:241
@@ -5506,7 +5505,7 @@ msgid "Apply charcoal stylization to selected bitmap(s)"
 msgstr "Alfa -> iezīmētai"
 
 #: ../src/extension/internal/bitmap/colorize.cpp:50
-#: ../src/extension/internal/filter/color.h:316
+#: ../src/extension/internal/filter/color.h:317
 msgid "Colorize"
 msgstr "Tonēšana"
 
@@ -5656,7 +5655,7 @@ msgid "Level (with Channel)"
 msgstr "Līmenis (ar kanālu)"
 
 #: ../src/extension/internal/bitmap/levelChannel.cpp:54
-#: ../src/extension/internal/filter/color.h:635
+#: ../src/extension/internal/filter/color.h:636
 msgid "Channel:"
 msgstr "Kanāls:"
 
@@ -5681,8 +5680,8 @@ msgid "Hue:"
 msgstr "Tonis:"
 
 #: ../src/extension/internal/bitmap/modulate.cpp:43
-#: ../src/extension/internal/filter/color.h:155
-#: ../src/extension/internal/filter/color.h:256
+#: ../src/extension/internal/filter/color.h:156
+#: ../src/extension/internal/filter/color.h:257
 #: ../src/extension/internal/filter/paint.h:87
 msgid "Saturation:"
 msgstr "Piesātinājums:"
@@ -5691,7 +5690,7 @@ msgstr "Piesātinājums:"
 #: ../src/extension/internal/filter/bevels.h:136
 #: ../src/extension/internal/filter/bevels.h:220
 #: ../src/extension/internal/filter/blurs.h:187
-#: ../src/extension/internal/filter/color.h:73
+#: ../src/extension/internal/filter/color.h:74
 msgid "Brightness:"
 msgstr "Spilgtums:"
 
@@ -5798,8 +5797,8 @@ msgid "Sharpen selected bitmap(s)"
 msgstr "Palielināt atlasītās(-o) bitkartes(-šu) asumu"
 
 #: ../src/extension/internal/bitmap/solarize.cpp:39
-#: ../src/extension/internal/filter/color.h:1411
-#: ../src/extension/internal/filter/color.h:1415
+#: ../src/extension/internal/filter/color.h:1494
+#: ../src/extension/internal/filter/color.h:1498
 msgid "Solarize"
 msgstr "Solarizācija"
 
@@ -6080,22 +6079,23 @@ msgstr "Gaismas grāsa"
 #: ../src/extension/internal/filter/blurs.h:350
 #: ../src/extension/internal/filter/bumps.h:141
 #: ../src/extension/internal/filter/bumps.h:364
-#: ../src/extension/internal/filter/color.h:80
-#: ../src/extension/internal/filter/color.h:169
-#: ../src/extension/internal/filter/color.h:260
-#: ../src/extension/internal/filter/color.h:345
-#: ../src/extension/internal/filter/color.h:435
-#: ../src/extension/internal/filter/color.h:530
-#: ../src/extension/internal/filter/color.h:652
-#: ../src/extension/internal/filter/color.h:749
-#: ../src/extension/internal/filter/color.h:828
-#: ../src/extension/internal/filter/color.h:919
-#: ../src/extension/internal/filter/color.h:1047
-#: ../src/extension/internal/filter/color.h:1117
-#: ../src/extension/internal/filter/color.h:1230
-#: ../src/extension/internal/filter/color.h:1345
-#: ../src/extension/internal/filter/color.h:1421
-#: ../src/extension/internal/filter/color.h:1532
+#: ../src/extension/internal/filter/color.h:81
+#: ../src/extension/internal/filter/color.h:170
+#: ../src/extension/internal/filter/color.h:261
+#: ../src/extension/internal/filter/color.h:346
+#: ../src/extension/internal/filter/color.h:436
+#: ../src/extension/internal/filter/color.h:531
+#: ../src/extension/internal/filter/color.h:653
+#: ../src/extension/internal/filter/color.h:750
+#: ../src/extension/internal/filter/color.h:829
+#: ../src/extension/internal/filter/color.h:920
+#: ../src/extension/internal/filter/color.h:1048
+#: ../src/extension/internal/filter/color.h:1118
+#: ../src/extension/internal/filter/color.h:1211
+#: ../src/extension/internal/filter/color.h:1323
+#: ../src/extension/internal/filter/color.h:1428
+#: ../src/extension/internal/filter/color.h:1504
+#: ../src/extension/internal/filter/color.h:1615
 #: ../src/extension/internal/filter/distort.h:95
 #: ../src/extension/internal/filter/distort.h:204
 #: ../src/extension/internal/filter/filter-file.cpp:150
@@ -6113,7 +6113,7 @@ msgstr "Gaismas grāsa"
 #: ../src/extension/internal/filter/paint.h:877
 #: ../src/extension/internal/filter/paint.h:981
 #: ../src/extension/internal/filter/protrusions.h:54
-#: ../src/extension/internal/filter/shadows.h:78
+#: ../src/extension/internal/filter/shadows.h:80
 #: ../src/extension/internal/filter/textures.h:90
 #: ../src/extension/internal/filter/transparency.h:69
 #: ../src/extension/internal/filter/transparency.h:140
@@ -6196,11 +6196,11 @@ msgstr "Sapludināt:"
 #: ../src/extension/internal/filter/bumps.h:131
 #: ../src/extension/internal/filter/bumps.h:340
 #: ../src/extension/internal/filter/bumps.h:347
-#: ../src/extension/internal/filter/color.h:328
-#: ../src/extension/internal/filter/color.h:335
-#: ../src/extension/internal/filter/color.h:1340
-#: ../src/extension/internal/filter/color.h:1513
-#: ../src/extension/internal/filter/color.h:1519
+#: ../src/extension/internal/filter/color.h:329
+#: ../src/extension/internal/filter/color.h:336
+#: ../src/extension/internal/filter/color.h:1423
+#: ../src/extension/internal/filter/color.h:1596
+#: ../src/extension/internal/filter/color.h:1602
 #: ../src/extension/internal/filter/paint.h:706
 #: ../src/extension/internal/filter/transparency.h:63
 #: ../src/filter-enums.cpp:54
@@ -6212,13 +6212,12 @@ msgstr "Padarīt tumšāku"
 #: ../src/extension/internal/filter/bumps.h:132
 #: ../src/extension/internal/filter/bumps.h:338
 #: ../src/extension/internal/filter/bumps.h:345
-#: ../src/extension/internal/filter/color.h:326
-#: ../src/extension/internal/filter/color.h:331
-#: ../src/extension/internal/filter/color.h:646
-#: ../src/extension/internal/filter/color.h:1212
-#: ../src/extension/internal/filter/color.h:1332
-#: ../src/extension/internal/filter/color.h:1337
-#: ../src/extension/internal/filter/color.h:1511
+#: ../src/extension/internal/filter/color.h:327
+#: ../src/extension/internal/filter/color.h:332
+#: ../src/extension/internal/filter/color.h:647
+#: ../src/extension/internal/filter/color.h:1415
+#: ../src/extension/internal/filter/color.h:1420
+#: ../src/extension/internal/filter/color.h:1594
 #: ../src/extension/internal/filter/paint.h:704
 #: ../src/extension/internal/filter/transparency.h:62
 #: ../src/filter-enums.cpp:53
@@ -6231,14 +6230,13 @@ msgstr "Ekrāns"
 #: ../src/extension/internal/filter/bumps.h:133
 #: ../src/extension/internal/filter/bumps.h:341
 #: ../src/extension/internal/filter/bumps.h:348
-#: ../src/extension/internal/filter/color.h:324
-#: ../src/extension/internal/filter/color.h:332
-#: ../src/extension/internal/filter/color.h:644
-#: ../src/extension/internal/filter/color.h:1213
-#: ../src/extension/internal/filter/color.h:1331
-#: ../src/extension/internal/filter/color.h:1338
-#: ../src/extension/internal/filter/color.h:1512
-#: ../src/extension/internal/filter/color.h:1518
+#: ../src/extension/internal/filter/color.h:325
+#: ../src/extension/internal/filter/color.h:333
+#: ../src/extension/internal/filter/color.h:645
+#: ../src/extension/internal/filter/color.h:1414
+#: ../src/extension/internal/filter/color.h:1421
+#: ../src/extension/internal/filter/color.h:1595
+#: ../src/extension/internal/filter/color.h:1601
 #: ../src/extension/internal/filter/paint.h:702
 #: ../src/extension/internal/filter/transparency.h:60
 #: ../src/filter-enums.cpp:52
@@ -6250,10 +6248,10 @@ msgstr "Pavairot"
 #: ../src/extension/internal/filter/bumps.h:134
 #: ../src/extension/internal/filter/bumps.h:342
 #: ../src/extension/internal/filter/bumps.h:349
-#: ../src/extension/internal/filter/color.h:327
-#: ../src/extension/internal/filter/color.h:334
-#: ../src/extension/internal/filter/color.h:1339
-#: ../src/extension/internal/filter/color.h:1510
+#: ../src/extension/internal/filter/color.h:328
+#: ../src/extension/internal/filter/color.h:335
+#: ../src/extension/internal/filter/color.h:1422
+#: ../src/extension/internal/filter/color.h:1593
 #: ../src/extension/internal/filter/paint.h:705
 #: ../src/extension/internal/filter/transparency.h:64
 #: ../src/filter-enums.cpp:55
@@ -6300,14 +6298,14 @@ msgid "Erosion:"
 msgstr "Erozija:"
 
 #: ../src/extension/internal/filter/blurs.h:336
-#: ../src/extension/internal/filter/color.h:1210
+#: ../src/extension/internal/filter/color.h:1205
+#: ../src/extension/internal/filter/color.h:1317
 #: ../src/ui/dialog/document-properties.cpp:106
 msgid "Background color"
 msgstr "Fona krāsa"
 
 #: ../src/extension/internal/filter/blurs.h:337
 #: ../src/extension/internal/filter/bumps.h:129
-#: ../src/extension/internal/filter/color.h:1211
 msgid "Blend type:"
 msgstr "Sajaukšanas tips:"
 
@@ -6315,14 +6313,13 @@ msgstr "Sajaukšanas tips:"
 #: ../src/extension/internal/filter/bumps.h:130
 #: ../src/extension/internal/filter/bumps.h:339
 #: ../src/extension/internal/filter/bumps.h:346
-#: ../src/extension/internal/filter/color.h:325
-#: ../src/extension/internal/filter/color.h:333
-#: ../src/extension/internal/filter/color.h:645
-#: ../src/extension/internal/filter/color.h:1214
-#: ../src/extension/internal/filter/color.h:1330
-#: ../src/extension/internal/filter/color.h:1336
-#: ../src/extension/internal/filter/color.h:1503
-#: ../src/extension/internal/filter/color.h:1517
+#: ../src/extension/internal/filter/color.h:326
+#: ../src/extension/internal/filter/color.h:334
+#: ../src/extension/internal/filter/color.h:646
+#: ../src/extension/internal/filter/color.h:1413
+#: ../src/extension/internal/filter/color.h:1419
+#: ../src/extension/internal/filter/color.h:1586
+#: ../src/extension/internal/filter/color.h:1600
 #: ../src/extension/internal/filter/distort.h:78
 #: ../src/extension/internal/filter/paint.h:703
 #: ../src/extension/internal/filter/textures.h:77
@@ -6366,24 +6363,24 @@ msgstr "Reljefa avots"
 
 #: ../src/extension/internal/filter/bumps.h:88
 #: ../src/extension/internal/filter/bumps.h:320
-#: ../src/extension/internal/filter/color.h:156
-#: ../src/extension/internal/filter/color.h:820
+#: ../src/extension/internal/filter/color.h:157
+#: ../src/extension/internal/filter/color.h:821
 #: ../src/extension/internal/filter/transparency.h:132
 msgid "Red:"
 msgstr "Sarkans:"
 
 #: ../src/extension/internal/filter/bumps.h:89
 #: ../src/extension/internal/filter/bumps.h:321
-#: ../src/extension/internal/filter/color.h:157
-#: ../src/extension/internal/filter/color.h:821
+#: ../src/extension/internal/filter/color.h:158
+#: ../src/extension/internal/filter/color.h:822
 #: ../src/extension/internal/filter/transparency.h:133
 msgid "Green:"
 msgstr "Zaļš:"
 
 #: ../src/extension/internal/filter/bumps.h:90
 #: ../src/extension/internal/filter/bumps.h:322
-#: ../src/extension/internal/filter/color.h:158
-#: ../src/extension/internal/filter/color.h:822
+#: ../src/extension/internal/filter/color.h:159
+#: ../src/extension/internal/filter/color.h:823
 #: ../src/extension/internal/filter/transparency.h:134
 msgid "Blue:"
 msgstr "Zils:"
@@ -6406,9 +6403,9 @@ msgstr "Izkliedēt"
 
 #: ../src/extension/internal/filter/bumps.h:99
 #: ../src/extension/internal/filter/bumps.h:333
-#: ../src/extension/internal/filter/color.h:75
-#: ../src/extension/internal/filter/color.h:823
-#: ../src/extension/internal/filter/color.h:1112
+#: ../src/extension/internal/filter/color.h:76
+#: ../src/extension/internal/filter/color.h:824
+#: ../src/extension/internal/filter/color.h:1113
 #: ../src/extension/internal/filter/paint.h:86
 #: ../src/extension/internal/filter/paint.h:593
 #: ../src/extension/internal/filter/paint.h:708
@@ -6511,7 +6508,6 @@ msgid "Background:"
 msgstr "Fons:"
 
 #: ../src/extension/internal/filter/bumps.h:325
-#: ../src/extension/internal/filter/color.h:1218
 #: ../src/extension/internal/filter/transparency.h:57
 #: ../src/filter-enums.cpp:29
 #: ../src/selection-describer.cpp:55
@@ -6527,7 +6523,7 @@ msgid "Background opacity:"
 msgstr "Fona necaurspīdība:"
 
 #: ../src/extension/internal/filter/bumps.h:330
-#: ../src/extension/internal/filter/color.h:1039
+#: ../src/extension/internal/filter/color.h:1040
 msgid "Lighting"
 msgstr "Apgaismojums"
 
@@ -6558,7 +6554,6 @@ msgid "Atop"
 msgstr ""
 
 #: ../src/extension/internal/filter/bumps.h:357
-#: ../src/extension/internal/filter/color.h:1223
 #: ../src/extension/internal/filter/distort.h:70
 #: ../src/extension/internal/filter/morphology.h:174
 #: ../src/filter-enums.cpp:72
@@ -6569,17 +6564,17 @@ msgstr "Pēc"
 msgid "Turns an image to jelly"
 msgstr "Pārvērš attēlu želejā"
 
-#: ../src/extension/internal/filter/color.h:71
+#: ../src/extension/internal/filter/color.h:72
 msgid "Brilliance"
 msgstr "Mirdzums"
 
-#: ../src/extension/internal/filter/color.h:74
-#: ../src/extension/internal/filter/color.h:1334
+#: ../src/extension/internal/filter/color.h:75
+#: ../src/extension/internal/filter/color.h:1417
 msgid "Over-saturation:"
 msgstr "Pārsātināšana:"
 
-#: ../src/extension/internal/filter/color.h:76
-#: ../src/extension/internal/filter/color.h:160
+#: ../src/extension/internal/filter/color.h:77
+#: ../src/extension/internal/filter/color.h:161
 #: ../src/extension/internal/filter/overlays.h:70
 #: ../src/extension/internal/filter/paint.h:85
 #: ../src/extension/internal/filter/paint.h:503
@@ -6588,170 +6583,170 @@ msgstr "Pārsātināšana:"
 msgid "Inverted"
 msgstr "Apgriezts"
 
-#: ../src/extension/internal/filter/color.h:84
+#: ../src/extension/internal/filter/color.h:85
 msgid "Brightness filter"
 msgstr "Spilgtuma filtrs"
 
-#: ../src/extension/internal/filter/color.h:151
+#: ../src/extension/internal/filter/color.h:152
 msgid "Channel Painting"
 msgstr "Kanālu krāsosana"
 
-#: ../src/extension/internal/filter/color.h:159
+#: ../src/extension/internal/filter/color.h:160
 #: ../src/extension/internal/filter/transparency.h:135
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: ../src/extension/internal/filter/color.h:173
+#: ../src/extension/internal/filter/color.h:174
 msgid "Replace RGB by any color"
 msgstr "Aizvietot RGB ar jebkuru krāsu"
 
-#: ../src/extension/internal/filter/color.h:253
+#: ../src/extension/internal/filter/color.h:254
 msgid "Color Shift"
 msgstr "Krāsu pārbīde"
 
-#: ../src/extension/internal/filter/color.h:255
+#: ../src/extension/internal/filter/color.h:256
 msgid "Shift (°):"
 msgstr "Pārbīde (°):"
 
-#: ../src/extension/internal/filter/color.h:264
+#: ../src/extension/internal/filter/color.h:265
 msgid "Rotate and desaturate hue"
 msgstr "Pagriezt un atsātināt nokrāsu"
 
-#: ../src/extension/internal/filter/color.h:320
+#: ../src/extension/internal/filter/color.h:321
 msgid "Harsh light:"
 msgstr "Asa gaisma:"
 
-#: ../src/extension/internal/filter/color.h:321
+#: ../src/extension/internal/filter/color.h:322
 msgid "Normal light:"
 msgstr "Parasta gaisma:"
 
-#: ../src/extension/internal/filter/color.h:322
+#: ../src/extension/internal/filter/color.h:323
 msgid "Duotone"
 msgstr "Divtoņu"
 
-#: ../src/extension/internal/filter/color.h:323
-#: ../src/extension/internal/filter/color.h:1329
+#: ../src/extension/internal/filter/color.h:324
+#: ../src/extension/internal/filter/color.h:1412
 msgid "Blend 1:"
 msgstr "Sapludinājums 1:"
 
-#: ../src/extension/internal/filter/color.h:330
-#: ../src/extension/internal/filter/color.h:1335
+#: ../src/extension/internal/filter/color.h:331
+#: ../src/extension/internal/filter/color.h:1418
 msgid "Blend 2:"
 msgstr "Sapludinājums 2:"
 
-#: ../src/extension/internal/filter/color.h:349
+#: ../src/extension/internal/filter/color.h:350
 msgid "Blend image or object with a flood color"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:423
+#: ../src/extension/internal/filter/color.h:424
 #: ../src/filter-enums.cpp:22
 msgid "Component Transfer"
 msgstr "Sastāvdaļu pārnese"
 
-#: ../src/extension/internal/filter/color.h:426
+#: ../src/extension/internal/filter/color.h:427
 #: ../src/filter-enums.cpp:82
 msgid "Identity"
 msgstr "Identitāte"
 
-#: ../src/extension/internal/filter/color.h:427
+#: ../src/extension/internal/filter/color.h:428
 #: ../src/extension/internal/filter/paint.h:499
 #: ../src/filter-enums.cpp:83
 msgid "Table"
 msgstr "Tabula"
 
-#: ../src/extension/internal/filter/color.h:428
+#: ../src/extension/internal/filter/color.h:429
 #: ../src/extension/internal/filter/paint.h:500
 #: ../src/filter-enums.cpp:84
 msgid "Discrete"
 msgstr "Atsevišķs"
 
-#: ../src/extension/internal/filter/color.h:429
+#: ../src/extension/internal/filter/color.h:430
 #: ../src/filter-enums.cpp:85
 #: ../src/live_effects/lpe-powerstroke.cpp:188
 msgid "Linear"
 msgstr "Lineārs"
 
-#: ../src/extension/internal/filter/color.h:430
+#: ../src/extension/internal/filter/color.h:431
 #: ../src/filter-enums.cpp:86
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../src/extension/internal/filter/color.h:439
+#: ../src/extension/internal/filter/color.h:440
 msgid "Basic component transfer structure"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:508
+#: ../src/extension/internal/filter/color.h:509
 msgid "Duochrome"
 msgstr "Divkrāsu"
 
-#: ../src/extension/internal/filter/color.h:512
+#: ../src/extension/internal/filter/color.h:513
 msgid "Fluorescence level:"
 msgstr "Fluorescences līmenis:"
 
-#: ../src/extension/internal/filter/color.h:513
+#: ../src/extension/internal/filter/color.h:514
 msgid "Swap:"
 msgstr "Apmainīt:"
 
-#: ../src/extension/internal/filter/color.h:514
+#: ../src/extension/internal/filter/color.h:515
 msgid "No swap"
 msgstr "Nav pieejama maiņvieta (swap)"
 
-#: ../src/extension/internal/filter/color.h:515
+#: ../src/extension/internal/filter/color.h:516
 msgid "Color and alpha"
 msgstr "Krāsu un alfa"
 
-#: ../src/extension/internal/filter/color.h:516
+#: ../src/extension/internal/filter/color.h:517
 msgid "Color only"
 msgstr "Tikai krāsu"
 
-#: ../src/extension/internal/filter/color.h:517
+#: ../src/extension/internal/filter/color.h:518
 msgid "Alpha only"
 msgstr "Tikai alfa"
 
-#: ../src/extension/internal/filter/color.h:521
+#: ../src/extension/internal/filter/color.h:522
 msgid "Color 1"
 msgstr "1. krāsa"
 
-#: ../src/extension/internal/filter/color.h:524
+#: ../src/extension/internal/filter/color.h:525
 msgid "Color 2"
 msgstr "2. krāsa"
 
-#: ../src/extension/internal/filter/color.h:534
+#: ../src/extension/internal/filter/color.h:535
 msgid "Convert luminance values to a duochrome palette"
 msgstr "Pārvērst spilgtuma vērtības par divkrāsu paleti"
 
-#: ../src/extension/internal/filter/color.h:633
+#: ../src/extension/internal/filter/color.h:634
 msgid "Extract Channel"
 msgstr "Ekstraģēt kanālu"
 
-#: ../src/extension/internal/filter/color.h:636
+#: ../src/extension/internal/filter/color.h:637
 #: ../src/filter-enums.cpp:100
-#: ../src/flood-context.cpp:252
+#: ../src/flood-context.cpp:228
 #: ../src/widgets/sp-color-icc-selector.cpp:227
 #: ../src/widgets/sp-color-scales.cpp:429
 #: ../src/widgets/sp-color-scales.cpp:430
 msgid "Red"
 msgstr "Sarkans"
 
-#: ../src/extension/internal/filter/color.h:637
+#: ../src/extension/internal/filter/color.h:638
 #: ../src/filter-enums.cpp:101
-#: ../src/flood-context.cpp:253
+#: ../src/flood-context.cpp:229
 #: ../src/widgets/sp-color-icc-selector.cpp:227
 #: ../src/widgets/sp-color-scales.cpp:432
 #: ../src/widgets/sp-color-scales.cpp:433
 msgid "Green"
 msgstr "Zaļš"
 
-#: ../src/extension/internal/filter/color.h:638
+#: ../src/extension/internal/filter/color.h:639
 #: ../src/filter-enums.cpp:102
-#: ../src/flood-context.cpp:254
+#: ../src/flood-context.cpp:230
 #: ../src/widgets/sp-color-icc-selector.cpp:227
 #: ../src/widgets/sp-color-scales.cpp:435
 #: ../src/widgets/sp-color-scales.cpp:436
 msgid "Blue"
 msgstr "Zils"
 
-#: ../src/extension/internal/filter/color.h:639
+#: ../src/extension/internal/filter/color.h:640
 #: ../src/widgets/sp-color-icc-selector.cpp:231
 #: ../src/widgets/sp-color-icc-selector.cpp:232
 #: ../src/widgets/sp-color-scales.cpp:483
@@ -6759,7 +6754,7 @@ msgstr "Zils"
 msgid "Cyan"
 msgstr "Ciāns"
 
-#: ../src/extension/internal/filter/color.h:640
+#: ../src/extension/internal/filter/color.h:641
 #: ../src/widgets/sp-color-icc-selector.cpp:231
 #: ../src/widgets/sp-color-icc-selector.cpp:232
 #: ../src/widgets/sp-color-scales.cpp:486
@@ -6767,7 +6762,7 @@ msgstr "Ciāns"
 msgid "Magenta"
 msgstr "Fuksīns (Magenta)"
 
-#: ../src/extension/internal/filter/color.h:641
+#: ../src/extension/internal/filter/color.h:642
 #: ../src/widgets/sp-color-icc-selector.cpp:231
 #: ../src/widgets/sp-color-icc-selector.cpp:232
 #: ../src/widgets/sp-color-scales.cpp:489
@@ -6775,34 +6770,34 @@ msgstr "Fuksīns (Magenta)"
 msgid "Yellow"
 msgstr "Dzeltens"
 
-#: ../src/extension/internal/filter/color.h:643
+#: ../src/extension/internal/filter/color.h:644
 msgid "Background blend mode:"
 msgstr "Fona sajaukšanas veids:"
 
-#: ../src/extension/internal/filter/color.h:648
+#: ../src/extension/internal/filter/color.h:649
 msgid "Channel to alpha"
 msgstr "Kanālu uz alfa"
 
-#: ../src/extension/internal/filter/color.h:656
+#: ../src/extension/internal/filter/color.h:657
 msgid "Extract color channel as a transparent image"
 msgstr "Ekstraģēt krāsa kanālu kā caurspīdīgu attēlu"
 
-#: ../src/extension/internal/filter/color.h:739
+#: ../src/extension/internal/filter/color.h:740
 msgid "Fade to Black or White"
 msgstr "Izgaisināt melnā vai baltā"
 
-#: ../src/extension/internal/filter/color.h:741
+#: ../src/extension/internal/filter/color.h:742
 #: ../src/extension/internal/filter/image.h:56
 #: ../src/extension/internal/filter/morphology.h:66
 #: ../src/extension/internal/filter/paint.h:346
 msgid "Level:"
 msgstr "Līmenis:"
 
-#: ../src/extension/internal/filter/color.h:742
+#: ../src/extension/internal/filter/color.h:743
 msgid "Fade to:"
 msgstr "Izgaisināt:"
 
-#: ../src/extension/internal/filter/color.h:743
+#: ../src/extension/internal/filter/color.h:744
 #: ../src/ui/widget/selected-style.cpp:246
 #: ../src/widgets/sp-color-icc-selector.cpp:231
 #: ../src/widgets/sp-color-scales.cpp:492
@@ -6810,230 +6805,236 @@ msgstr "Izgaisināt:"
 msgid "Black"
 msgstr "Melns"
 
-#: ../src/extension/internal/filter/color.h:744
+#: ../src/extension/internal/filter/color.h:745
 #: ../src/ui/widget/selected-style.cpp:242
 msgid "White"
 msgstr "Balts"
 
-#: ../src/extension/internal/filter/color.h:753
+#: ../src/extension/internal/filter/color.h:754
 msgid "Fade to black or white"
 msgstr "Izgaisināt melnā vai baltā"
 
-#: ../src/extension/internal/filter/color.h:818
+#: ../src/extension/internal/filter/color.h:819
 msgid "Greyscale"
 msgstr "Pelēktoņu"
 
-#: ../src/extension/internal/filter/color.h:824
+#: ../src/extension/internal/filter/color.h:825
 #: ../src/extension/internal/filter/paint.h:83
 #: ../src/extension/internal/filter/paint.h:240
 msgid "Transparent"
 msgstr "Caurspīdīgs"
 
-#: ../src/extension/internal/filter/color.h:832
+#: ../src/extension/internal/filter/color.h:833
 msgid "Customize greyscale components"
 msgstr "Pieskaņojiet pelēktoņu sastāvdaļas"
 
-#: ../src/extension/internal/filter/color.h:904
+#: ../src/extension/internal/filter/color.h:905
 #: ../src/ui/widget/selected-style.cpp:238
 msgid "Invert"
 msgstr "Invertēt"
 
-#: ../src/extension/internal/filter/color.h:906
+#: ../src/extension/internal/filter/color.h:907
 msgid "Invert channels:"
 msgstr "Invertēt kanālus:"
 
-#: ../src/extension/internal/filter/color.h:907
+#: ../src/extension/internal/filter/color.h:908
 msgid "No inversion"
 msgstr "Nav inversijas"
 
-#: ../src/extension/internal/filter/color.h:908
+#: ../src/extension/internal/filter/color.h:909
 msgid "Red and blue"
 msgstr "Sarkans un zils"
 
-#: ../src/extension/internal/filter/color.h:909
+#: ../src/extension/internal/filter/color.h:910
 msgid "Red and green"
 msgstr "Sarkans un zaļs"
 
-#: ../src/extension/internal/filter/color.h:910
+#: ../src/extension/internal/filter/color.h:911
 msgid "Green and blue"
 msgstr "Zaļš un zils"
 
-#: ../src/extension/internal/filter/color.h:912
+#: ../src/extension/internal/filter/color.h:913
 msgid "Light transparency:"
 msgstr "Gaismas caurspīdīgums:"
 
-#: ../src/extension/internal/filter/color.h:913
+#: ../src/extension/internal/filter/color.h:914
 msgid "Invert hue"
 msgstr "Invertēt nokrāsu"
 
-#: ../src/extension/internal/filter/color.h:914
+#: ../src/extension/internal/filter/color.h:915
 msgid "Invert lightness"
 msgstr "Invertēt gaišumu"
 
-#: ../src/extension/internal/filter/color.h:915
+#: ../src/extension/internal/filter/color.h:916
 msgid "Invert transparency"
 msgstr "Invertēt caurspīdīgumu"
 
-#: ../src/extension/internal/filter/color.h:923
+#: ../src/extension/internal/filter/color.h:924
 msgid "Manage hue, lightness and transparency inversions"
 msgstr "Vadiet nokrāsas, gaišuma un caurspīdīguma inversijas"
 
-#: ../src/extension/internal/filter/color.h:1041
+#: ../src/extension/internal/filter/color.h:1042
 msgid "Lights:"
 msgstr "Gaismas:"
 
-#: ../src/extension/internal/filter/color.h:1042
+#: ../src/extension/internal/filter/color.h:1043
 msgid "Shadows:"
 msgstr "Ēnas:"
 
-#: ../src/extension/internal/filter/color.h:1051
+#: ../src/extension/internal/filter/color.h:1052
 msgid "Modify lights and shadows separately"
 msgstr "Mainīt gaismas un ēnas atsevišķi"
 
-#: ../src/extension/internal/filter/color.h:1110
+#: ../src/extension/internal/filter/color.h:1111
 msgid "Lightness-Contrast"
 msgstr "Spilgtums-kontrasts"
 
-#: ../src/extension/internal/filter/color.h:1113
+#: ../src/extension/internal/filter/color.h:1114
 msgid "Contrast:"
 msgstr "Kontrasts:"
 
-#: ../src/extension/internal/filter/color.h:1121
+#: ../src/extension/internal/filter/color.h:1122
 msgid "Modify lightness and contrast separately"
 msgstr "Mainīt gaišumu un kontrastu atsevišķi"
 
-#: ../src/extension/internal/filter/color.h:1195
+#: ../src/extension/internal/filter/color.h:1190
 msgid "Nudge RGB"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:1199
+#: ../src/extension/internal/filter/color.h:1194
 msgid "Red offset"
 msgstr "Sarkanā nobīde"
 
-#: ../src/extension/internal/filter/color.h:1200
-#: ../src/extension/internal/filter/color.h:1203
-#: ../src/extension/internal/filter/color.h:1206
+#: ../src/extension/internal/filter/color.h:1195
+#: ../src/extension/internal/filter/color.h:1198
+#: ../src/extension/internal/filter/color.h:1201
+#: ../src/extension/internal/filter/color.h:1307
+#: ../src/extension/internal/filter/color.h:1310
+#: ../src/extension/internal/filter/color.h:1313
 #: ../src/ui/dialog/object-attributes.cpp:65
 #: ../src/ui/dialog/object-attributes.cpp:73
 #: ../src/ui/dialog/tile.cpp:615
-#: ../src/widgets/desktop-widget.cpp:648
+#: ../src/widgets/desktop-widget.cpp:667
 #: ../src/widgets/node-toolbar.cpp:591
 msgid "X:"
 msgstr "X:"
 
-#: ../src/extension/internal/filter/color.h:1201
-#: ../src/extension/internal/filter/color.h:1204
-#: ../src/extension/internal/filter/color.h:1207
+#: ../src/extension/internal/filter/color.h:1196
+#: ../src/extension/internal/filter/color.h:1199
+#: ../src/extension/internal/filter/color.h:1202
+#: ../src/extension/internal/filter/color.h:1308
+#: ../src/extension/internal/filter/color.h:1311
+#: ../src/extension/internal/filter/color.h:1314
 #: ../src/ui/dialog/object-attributes.cpp:66
 #: ../src/ui/dialog/object-attributes.cpp:74
 #: ../src/ui/dialog/tile.cpp:616
-#: ../src/widgets/desktop-widget.cpp:658
+#: ../src/widgets/desktop-widget.cpp:677
 #: ../src/widgets/node-toolbar.cpp:609
 msgid "Y:"
 msgstr "Y:"
 
-#: ../src/extension/internal/filter/color.h:1202
+#: ../src/extension/internal/filter/color.h:1197
 msgid "Green offset"
 msgstr "Zaļa nobīde"
 
-#: ../src/extension/internal/filter/color.h:1205
+#: ../src/extension/internal/filter/color.h:1200
 msgid "Blue offset"
 msgstr "Zilā nobīde"
 
-#: ../src/extension/internal/filter/color.h:1216
-msgid "Blend source:"
-msgstr "Sapludināšanas avots"
-
-#: ../src/extension/internal/filter/color.h:1219
-#: ../src/extension/internal/filter/transparency.h:56
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1600
-msgid "Background"
-msgstr "Fons"
-
-#: ../src/extension/internal/filter/color.h:1221
-msgid "Composite:"
-msgstr "Salikts:"
-
-#: ../src/extension/internal/filter/color.h:1222
-#: ../src/extension/internal/filter/morphology.h:173
-#: ../src/filter-enums.cpp:71
-msgid "Over"
-msgstr "Pāri"
-
-#: ../src/extension/internal/filter/color.h:1234
+#: ../src/extension/internal/filter/color.h:1215
 msgid "Nudge RGB channels separately and blend them to different types of backgrounds"
 msgstr ""
 
-#: ../src/extension/internal/filter/color.h:1325
+#: ../src/extension/internal/filter/color.h:1302
+msgid "Nudge CMY"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:1306
+msgid "Cyan offset"
+msgstr "Ciāna nobīde"
+
+#: ../src/extension/internal/filter/color.h:1309
+msgid "Magenta offset"
+msgstr "Fuksīna nobīde:"
+
+#: ../src/extension/internal/filter/color.h:1312
+msgid "Yellow offset"
+msgstr "Dzeltenā nobīde"
+
+#: ../src/extension/internal/filter/color.h:1327
+msgid "Nudge CMY channels separately and blend them to different types of backgrounds"
+msgstr ""
+
+#: ../src/extension/internal/filter/color.h:1408
 msgid "Quadritone fantasy"
 msgstr "Četrtoņu fantāzija"
 
-#: ../src/extension/internal/filter/color.h:1327
-#: ../src/extension/internal/filter/color.h:1525
+#: ../src/extension/internal/filter/color.h:1410
+#: ../src/extension/internal/filter/color.h:1608
 msgid "Hue distribution (°):"
 msgstr "Nokrāsas sadale (°):"
 
-#: ../src/extension/internal/filter/color.h:1328
+#: ../src/extension/internal/filter/color.h:1411
 msgid "Colors:"
 msgstr "Krāsas:"
 
-#: ../src/extension/internal/filter/color.h:1349
+#: ../src/extension/internal/filter/color.h:1432
 msgid "Replace hue by two colors"
 msgstr "Aizvietot nokrāsu ar divām krāsām"
 
-#: ../src/extension/internal/filter/color.h:1413
+#: ../src/extension/internal/filter/color.h:1496
 msgid "Hue rotation (°):"
 msgstr "Nokrāsas griešana (°):"
 
-#: ../src/extension/internal/filter/color.h:1416
+#: ../src/extension/internal/filter/color.h:1499
 msgid "Moonarize"
 msgstr "Mēnessgaisma"
 
-#: ../src/extension/internal/filter/color.h:1425
+#: ../src/extension/internal/filter/color.h:1508
 msgid "Classic photographic solarization effect"
 msgstr "Klasiskais foto solarizācijas efekts"
 
-#: ../src/extension/internal/filter/color.h:1498
+#: ../src/extension/internal/filter/color.h:1581
 msgid "Tritone"
 msgstr "Trīstoņu"
 
-#: ../src/extension/internal/filter/color.h:1504
+#: ../src/extension/internal/filter/color.h:1587
 msgid "Enhance hue"
 msgstr "Pastiprināt nokrāsu"
 
-#: ../src/extension/internal/filter/color.h:1505
+#: ../src/extension/internal/filter/color.h:1588
 msgid "Phosphorescence"
 msgstr "Fosforescence"
 
-#: ../src/extension/internal/filter/color.h:1506
+#: ../src/extension/internal/filter/color.h:1589
 msgid "Colored nights"
 msgstr "Krāsainās naktis"
 
-#: ../src/extension/internal/filter/color.h:1507
+#: ../src/extension/internal/filter/color.h:1590
 msgid "Hue to background"
 msgstr "Nokrāsu par fonu"
 
-#: ../src/extension/internal/filter/color.h:1509
+#: ../src/extension/internal/filter/color.h:1592
 msgid "Global blend:"
 msgstr "Vispārējā sapludināšana"
 
-#: ../src/extension/internal/filter/color.h:1515
+#: ../src/extension/internal/filter/color.h:1598
 msgid "Glow:"
 msgstr "Spīdums:"
 
-#: ../src/extension/internal/filter/color.h:1516
+#: ../src/extension/internal/filter/color.h:1599
 msgid "Glow blend:"
 msgstr "Kvēlojošā sapludināšana:"
 
-#: ../src/extension/internal/filter/color.h:1521
+#: ../src/extension/internal/filter/color.h:1604
 msgid "Local light:"
 msgstr "Vietējā gaisma:"
 
-#: ../src/extension/internal/filter/color.h:1522
+#: ../src/extension/internal/filter/color.h:1605
 msgid "Global light:"
 msgstr "Vispārējā gaisma:"
 
-#: ../src/extension/internal/filter/color.h:1536
+#: ../src/extension/internal/filter/color.h:1619
 msgid "Create a custom tritone palette with additional glow, blend modes and hue moving"
 msgstr "Izveido pielāgotu triju toņu paleti ar papildu spīdumu, sajaukšanas režīmiem un nokrāsas pārvietošanos"
 
@@ -7191,12 +7192,12 @@ msgid "Cross-smooth"
 msgstr "Šķērsnogludināšana"
 
 #: ../src/extension/internal/filter/morphology.h:61
-#: ../src/extension/internal/filter/shadows.h:65
+#: ../src/extension/internal/filter/shadows.h:66
 msgid "Inner"
 msgstr "Iekšējs"
 
 #: ../src/extension/internal/filter/morphology.h:62
-#: ../src/extension/internal/filter/shadows.h:64
+#: ../src/extension/internal/filter/shadows.h:65
 msgid "Outer"
 msgstr "Ārējs"
 
@@ -7232,6 +7233,11 @@ msgstr "Slēpt attēlu"
 #: ../src/extension/internal/filter/morphology.h:172
 msgid "Composite type:"
 msgstr ""
+
+#: ../src/extension/internal/filter/morphology.h:173
+#: ../src/filter-enums.cpp:71
+msgid "Over"
+msgstr "Pāri"
 
 #: ../src/extension/internal/filter/morphology.h:177
 #: ../src/filter-enums.cpp:75
@@ -7301,7 +7307,7 @@ msgstr "Aizpildīt ar troksni"
 
 #: ../src/extension/internal/filter/overlays.h:59
 #: ../src/extension/internal/filter/paint.h:691
-#: ../src/extension/internal/filter/shadows.h:59
+#: ../src/extension/internal/filter/shadows.h:60
 #: ../src/ui/dialog/find.cpp:83
 #: ../src/ui/dialog/tracedialog.cpp:746
 #: ../share/extensions/color_custom.inx.h:2
@@ -7405,7 +7411,7 @@ msgstr "Pārvērst attēlu par gravīru, kas sastāv no vertikālām un horizont
 
 #: ../src/extension/internal/filter/paint.h:332
 #: ../src/ui/dialog/align-and-distribute.cpp:1048
-#: ../src/widgets/desktop-widget.cpp:1897
+#: ../src/widgets/desktop-widget.cpp:1916
 msgid "Drawing"
 msgstr "Zīmējums"
 
@@ -7593,43 +7599,47 @@ msgstr ""
 msgid "Snow has fallen on object"
 msgstr "Uz objekta ir uzsnidzis sniegs"
 
-#: ../src/extension/internal/filter/shadows.h:56
+#: ../src/extension/internal/filter/shadows.h:57
 msgid "Drop Shadow"
 msgstr "Krītošā ēna"
 
-#: ../src/extension/internal/filter/shadows.h:60
+#: ../src/extension/internal/filter/shadows.h:61
 msgid "Blur radius (px):"
 msgstr "Izpludināšanas rādiuss (px):"
 
-#: ../src/extension/internal/filter/shadows.h:61
+#: ../src/extension/internal/filter/shadows.h:62
 msgid "Horizontal offset (px):"
 msgstr "Horizontālā nobīde (px):"
 
-#: ../src/extension/internal/filter/shadows.h:62
+#: ../src/extension/internal/filter/shadows.h:63
 msgid "Vertical offset (px):"
 msgstr "Vertikālā nobīde (px):"
 
-#: ../src/extension/internal/filter/shadows.h:63
-msgid "Blur type:"
-msgstr "Izpludināšanas veids:"
+#: ../src/extension/internal/filter/shadows.h:64
+msgid "Shadow type:"
+msgstr "Ēnas tips:"
 
-#: ../src/extension/internal/filter/shadows.h:66
+#: ../src/extension/internal/filter/shadows.h:67
 msgid "Outer cutout"
 msgstr "Ārējais izgriezums"
 
-#: ../src/extension/internal/filter/shadows.h:67
+#: ../src/extension/internal/filter/shadows.h:68
 msgid "Inner cutout"
 msgstr "Iekšējais izgriezums"
 
-#: ../src/extension/internal/filter/shadows.h:70
+#: ../src/extension/internal/filter/shadows.h:69
+msgid "Shadow only"
+msgstr "Tikai ēna"
+
+#: ../src/extension/internal/filter/shadows.h:72
 msgid "Blur color"
 msgstr "Izpludināšanas krāsa"
 
-#: ../src/extension/internal/filter/shadows.h:72
+#: ../src/extension/internal/filter/shadows.h:74
 msgid "Use object's color"
 msgstr "Izmantot objekta krāsu"
 
-#: ../src/extension/internal/filter/shadows.h:82
+#: ../src/extension/internal/filter/shadows.h:84
 msgid "Colorizable Drop shadow"
 msgstr "Krāsojams ēnojums"
 
@@ -7696,8 +7706,14 @@ msgstr "Sapludināt"
 msgid "Source:"
 msgstr "Avots:"
 
+#: ../src/extension/internal/filter/transparency.h:56
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1600
+msgid "Background"
+msgstr "Fons"
+
 #: ../src/extension/internal/filter/transparency.h:59
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2520
+#: ../src/ui/dialog/input.cpp:1002
 #: ../src/widgets/erasor-toolbar.cpp:129
 #: ../src/widgets/pencil-toolbar.cpp:162
 #: ../src/widgets/spray-toolbar.cpp:203
@@ -7845,7 +7861,7 @@ msgstr "Renderēt"
 #: ../src/extension/internal/grid.cpp:212
 #: ../src/ui/dialog/document-properties.cpp:146
 #: ../src/ui/dialog/inkscape-preferences.cpp:749
-#: ../src/widgets/toolbox.cpp:1871
+#: ../src/widgets/toolbox.cpp:1822
 msgid "Grids"
 msgstr "Režģi"
 
@@ -8357,9 +8373,9 @@ msgstr "Aplauzt"
 #: ../src/ui/dialog/filter-effects-dialog.cpp:490
 #: ../src/ui/dialog/inkscape-preferences.cpp:332
 #: ../src/ui/dialog/inkscape-preferences.cpp:623
-#: ../src/ui/dialog/inkscape-preferences.cpp:1215
-#: ../src/ui/dialog/inkscape-preferences.cpp:1372
-#: ../src/ui/dialog/inkscape-preferences.cpp:1753
+#: ../src/ui/dialog/inkscape-preferences.cpp:1214
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
+#: ../src/ui/dialog/inkscape-preferences.cpp:1752
 #: ../src/ui/dialog/input.cpp:693
 #: ../src/ui/dialog/input.cpp:694
 #: ../src/ui/dialog/input.cpp:1485
@@ -8380,7 +8396,7 @@ msgid "None"
 msgstr "Neviens"
 
 #: ../src/filter-enums.cpp:103
-#: ../src/flood-context.cpp:258
+#: ../src/flood-context.cpp:234
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -8408,11 +8424,11 @@ msgstr "Punkta gaisma"
 msgid "Spot Light"
 msgstr "Starmetis"
 
-#: ../src/flood-context.cpp:251
+#: ../src/flood-context.cpp:227
 msgid "Visible Colors"
 msgstr "Redzamās krāsas"
 
-#: ../src/flood-context.cpp:255
+#: ../src/flood-context.cpp:231
 #: ../src/widgets/sp-color-icc-selector.cpp:229
 #: ../src/widgets/sp-color-icc-selector.cpp:230
 #: ../src/widgets/sp-color-scales.cpp:455
@@ -8422,7 +8438,7 @@ msgstr "Redzamās krāsas"
 msgid "Hue"
 msgstr "Tonis"
 
-#: ../src/flood-context.cpp:256
+#: ../src/flood-context.cpp:232
 #: ../src/ui/dialog/inkscape-preferences.cpp:903
 #: ../src/widgets/sp-color-icc-selector.cpp:229
 #: ../src/widgets/sp-color-icc-selector.cpp:230
@@ -8433,7 +8449,7 @@ msgstr "Tonis"
 msgid "Saturation"
 msgstr "Piesātinājums"
 
-#: ../src/flood-context.cpp:257
+#: ../src/flood-context.cpp:233
 #: ../src/widgets/sp-color-icc-selector.cpp:230
 #: ../src/widgets/sp-color-scales.cpp:461
 #: ../src/widgets/sp-color-scales.cpp:462
@@ -8442,38 +8458,38 @@ msgstr "Piesātinājums"
 msgid "Lightness"
 msgstr "Gaišums"
 
-#: ../src/flood-context.cpp:269
+#: ../src/flood-context.cpp:245
 msgctxt "Flood autogap"
 msgid "None"
 msgstr "Nekas"
 
-#: ../src/flood-context.cpp:270
+#: ../src/flood-context.cpp:246
 msgctxt "Flood autogap"
 msgid "Small"
 msgstr "Mazs"
 
-#: ../src/flood-context.cpp:271
+#: ../src/flood-context.cpp:247
 msgctxt "Flood autogap"
 msgid "Medium"
 msgstr "Vidējs"
 
-#: ../src/flood-context.cpp:272
+#: ../src/flood-context.cpp:248
 msgctxt "Flood autogap"
 msgid "Large"
 msgstr "Liels"
 
-#: ../src/flood-context.cpp:494
+#: ../src/flood-context.cpp:470
 msgid "<b>Too much inset</b>, the result is empty."
 msgstr ""
 
-#: ../src/flood-context.cpp:535
+#: ../src/flood-context.cpp:511
 #, c-format
 msgid "Area filled, path with <b>%d</b> node created and unioned with selection."
 msgid_plural "Area filled, path with <b>%d</b> nodes created and unioned with selection."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/flood-context.cpp:541
+#: ../src/flood-context.cpp:517
 #, c-format
 msgid "Area filled, path with <b>%d</b> node created."
 msgid_plural "Area filled, path with <b>%d</b> nodes created."
@@ -8481,78 +8497,78 @@ msgstr[0] "Laukums aizpildīts,  izveidots ceļš ar <b>%d</b> mezglu."
 msgstr[1] "Laukums aizpildīts,  izveidots ceļš ar <b>%d</b> mezgliem."
 msgstr[2] "Laukums aizpildīts,  izveidots ceļš ar <b>%d</b> mezgliem."
 
-#: ../src/flood-context.cpp:809
-#: ../src/flood-context.cpp:1119
+#: ../src/flood-context.cpp:785
+#: ../src/flood-context.cpp:1095
 msgid "<b>Area is not bounded</b>, cannot fill."
 msgstr "<b>Laukums nav norobežots</b>, nav iespējams aizpildīt."
 
-#: ../src/flood-context.cpp:1124
+#: ../src/flood-context.cpp:1100
 msgid "<b>Only the visible part of the bounded area was filled.</b> If you want to fill all of the area, undo, zoom out, and fill again."
 msgstr "<b>Aizpildīta tikai redzamā norobežotā laukuma daļa.</b> Ja vēlaties aizpildīt visu laukumu, atsauciet darbību, tāliniet un aizpildiet vēlreiz."
 
-#: ../src/flood-context.cpp:1142
-#: ../src/flood-context.cpp:1301
+#: ../src/flood-context.cpp:1118
+#: ../src/flood-context.cpp:1277
 msgid "Fill bounded area"
 msgstr "Aizpildīt norobežoto laukumu"
 
-#: ../src/flood-context.cpp:1161
+#: ../src/flood-context.cpp:1137
 msgid "Set style on object"
 msgstr "Iestatiet objekta stilu"
 
-#: ../src/flood-context.cpp:1220
+#: ../src/flood-context.cpp:1196
 msgid "<b>Draw over</b> areas to add to fill, hold <b>Alt</b> for touch fill"
 msgstr ""
 
-#: ../src/gradient-context.cpp:134
+#: ../src/gradient-context.cpp:110
 #: ../src/gradient-drag.cpp:95
 msgid "Linear gradient <b>start</b>"
 msgstr "Lineārās krāsu pārejas <b>sākums</b>"
 
 #. POINT_LG_BEGIN
-#: ../src/gradient-context.cpp:135
+#: ../src/gradient-context.cpp:111
 #: ../src/gradient-drag.cpp:96
 msgid "Linear gradient <b>end</b>"
 msgstr "Lineārās krāsu pārejas <b>beigas</b>"
 
-#: ../src/gradient-context.cpp:136
+#: ../src/gradient-context.cpp:112
 #: ../src/gradient-drag.cpp:97
 msgid "Linear gradient <b>mid stop</b>"
 msgstr "Lineārās krāsu pārejas <b>viduspunkts</b>"
 
-#: ../src/gradient-context.cpp:137
+#: ../src/gradient-context.cpp:113
 #: ../src/gradient-drag.cpp:98
 msgid "Radial gradient <b>center</b>"
 msgstr "Radiālās krāsu pārejas <b>centrs</b>"
 
-#: ../src/gradient-context.cpp:138
-#: ../src/gradient-context.cpp:139
+#: ../src/gradient-context.cpp:114
+#: ../src/gradient-context.cpp:115
 #: ../src/gradient-drag.cpp:99
 #: ../src/gradient-drag.cpp:100
 msgid "Radial gradient <b>radius</b>"
 msgstr "Radiālās krāsu pārejas <b>rādiuss</b>"
 
-#: ../src/gradient-context.cpp:140
+#: ../src/gradient-context.cpp:116
 #: ../src/gradient-drag.cpp:101
 msgid "Radial gradient <b>focus</b>"
 msgstr "Radiālās krāsu pārejas <b>fokuss</b>"
 
 #. POINT_RG_FOCUS
-#: ../src/gradient-context.cpp:141
-#: ../src/gradient-context.cpp:142
+#: ../src/gradient-context.cpp:117
+#: ../src/gradient-context.cpp:118
 #: ../src/gradient-drag.cpp:102
 #: ../src/gradient-drag.cpp:103
 msgid "Radial gradient <b>mid stop</b>"
 msgstr "Radiālās krāsu pārejas <b>viduspunkts</b>"
 
 #. TRANSLATORS: %s will be substituted with the point name (see previous messages); This is part of a compound message
-#: ../src/gradient-context.cpp:167
+#: ../src/gradient-context.cpp:143
 #, c-format
 msgid "%s selected"
 msgstr "%s atlasīti"
 
 #. TRANSLATORS: Mind the space in front. This is part of a compound message
-#: ../src/gradient-context.cpp:169
-#: ../src/gradient-context.cpp:178
+#: ../src/gradient-context.cpp:145
+#: ../src/gradient-context.cpp:154
 #, c-format
 msgid " out of %d gradient handle"
 msgid_plural " out of %d gradient handles"
@@ -8561,9 +8577,9 @@ msgstr[1] " no %d krāsu pārejas turiem"
 msgstr[2] " no %d krāsu pārejas turiem"
 
 #. TRANSLATORS: Mind the space in front. (Refers to gradient handles selected). This is part of a compound message
-#: ../src/gradient-context.cpp:170
-#: ../src/gradient-context.cpp:179
-#: ../src/gradient-context.cpp:186
+#: ../src/gradient-context.cpp:146
+#: ../src/gradient-context.cpp:155
+#: ../src/gradient-context.cpp:162
 #, c-format
 msgid " on %d selected object"
 msgid_plural " on %d selected objects"
@@ -8572,7 +8588,7 @@ msgstr[1] " %d atlasītajiem objektiem"
 msgstr[2] " %d atlasītajiem objektiem"
 
 #. TRANSLATORS: This is a part of a compound message (out of two more indicating: grandint handle count & object count)
-#: ../src/gradient-context.cpp:176
+#: ../src/gradient-context.cpp:152
 #, c-format
 msgid "One handle merging %d stop (drag with <b>Shift</b> to separate) selected"
 msgid_plural "One handle merging %d stops (drag with <b>Shift</b> to separate) selected"
@@ -8580,7 +8596,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. TRANSLATORS: The plural refers to number of selected gradient handles. This is part of a compound message (part two indicates selected object count)
-#: ../src/gradient-context.cpp:184
+#: ../src/gradient-context.cpp:160
 #, c-format
 msgid "<b>%d</b> gradient handle selected out of %d"
 msgid_plural "<b>%d</b> gradient handles selected out of %d"
@@ -8589,7 +8605,7 @@ msgstr[1] "atlasīti <b>%d</b> krāsu pārejas turi no %d"
 msgstr[2] "atlasīti <b>%d</b> krāsu pārejas turi no %d"
 
 #. TRANSLATORS: The plural refers to number of selected objects
-#: ../src/gradient-context.cpp:191
+#: ../src/gradient-context.cpp:167
 #, c-format
 msgid "<b>No</b> gradient handles selected out of %d on %d selected object"
 msgid_plural "<b>No</b> gradient handles selected out of %d on %d selected objects"
@@ -8597,34 +8613,34 @@ msgstr[0] "Nav atlasīts <b>neviens</b> krāsu pārejas turis no  %d  %d atlasī
 msgstr[1] "Nav atlasīts <b>neviens</b> krāsu pārejas turis no  %d  %d atlasītajos objektos"
 msgstr[2] "Nav atlasīts <b>neviens</b> krāsu pārejas turis no  %d  %d atlasītajos objektos"
 
-#: ../src/gradient-context.cpp:405
-#: ../src/gradient-context.cpp:503
+#: ../src/gradient-context.cpp:381
+#: ../src/gradient-context.cpp:479
 #: ../src/ui/dialog/swatches.cpp:202
 #: ../src/widgets/gradient-vector.cpp:815
 msgid "Add gradient stop"
 msgstr "Pievienot krāsu pārejas beigas"
 
-#: ../src/gradient-context.cpp:478
+#: ../src/gradient-context.cpp:454
 msgid "Simplify gradient"
 msgstr "Vienkāršot krāsu pāreju"
 
-#: ../src/gradient-context.cpp:557
+#: ../src/gradient-context.cpp:533
 msgid "Create default gradient"
 msgstr "Izveidot noklusēto krāsu pāreju"
 
-#: ../src/gradient-context.cpp:614
+#: ../src/gradient-context.cpp:590
 msgid "<b>Draw around</b> handles to select them"
 msgstr "<b>Velciet apkārt</b> turiem, lai tos atlasītu"
 
-#: ../src/gradient-context.cpp:730
+#: ../src/gradient-context.cpp:706
 msgid "<b>Ctrl</b>: snap gradient angle"
 msgstr "<b>Ctrl</b>: piesaistīt krāsu pārejas leņķi"
 
-#: ../src/gradient-context.cpp:731
+#: ../src/gradient-context.cpp:707
 msgid "<b>Shift</b>: draw gradient around the starting point"
 msgstr "<b>Shift</b>: zīmēt krāsu pāreju apkārt sākumpunktam"
 
-#: ../src/gradient-context.cpp:954
+#: ../src/gradient-context.cpp:930
 #, c-format
 msgid "<b>Gradient</b> for %d object; with <b>Ctrl</b> to snap angle"
 msgid_plural "<b>Gradient</b> for %d objects; with <b>Ctrl</b> to snap angle"
@@ -8632,7 +8648,7 @@ msgstr[0] "<b>Krāsu pāreja</b> %d objektam; ar <b>Ctrl</b> piesaistīt leņķi
 msgstr[1] "<b>Krāsu pāreja</b> %d objektiem; ar <b>Ctrl</b> piesaistīt leņķi"
 msgstr[2] "<b>Krāsu pāreja</b> %d objektiem; ar <b>Ctrl</b> piesaistīt leņķi"
 
-#: ../src/gradient-context.cpp:958
+#: ../src/gradient-context.cpp:934
 msgid "Select <b>objects</b> on which to create gradient."
 msgstr "Atlasiet <b>objektus</b>, kuriem izveidot krāsu pāreju."
 
@@ -8777,7 +8793,7 @@ msgid "Percent"
 msgstr "Procenti"
 
 #: ../src/helper/units.cpp:42
-#: ../src/ui/dialog/inkscape-preferences.cpp:1225
+#: ../src/ui/dialog/inkscape-preferences.cpp:1224
 msgid "%"
 msgstr "%"
 
@@ -8998,9 +9014,8 @@ msgid "Drop SVG"
 msgstr ""
 
 #: ../src/interface.cpp:1439
-#, fuzzy
 msgid "Drop Symbol"
-msgstr "Grupēt simbola virzienā"
+msgstr "Nomest simbolu"
 
 #: ../src/interface.cpp:1470
 msgid "Drop bitmap image"
@@ -9198,7 +9213,7 @@ msgstr "Pārvietot turi"
 #. TRANSLATORS: This refers to the pattern that's inside the object
 #: ../src/knotholder.cpp:257
 msgid "<b>Move</b> the pattern fill inside the object"
-msgstr "<b>Pārvietot</b> tekstūras aizpildījumu objekta iekšpusē"
+msgstr "<b>Pārvietot</b> faktūras aizpildījumu objekta iekšpusē"
 
 #: ../src/knotholder.cpp:261
 msgid "<b>Scale</b> the pattern fill; uniformly if with <b>Ctrl</b>"
@@ -9367,7 +9382,7 @@ msgstr "Jaunā doka vadīkla %p ir automātiska. Tikai ar roku dokojami objekti 
 #: ../src/ui/dialog/align-and-distribute.cpp:1047
 #: ../src/ui/dialog/document-properties.cpp:144
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1546
-#: ../src/widgets/desktop-widget.cpp:1893
+#: ../src/widgets/desktop-widget.cpp:1912
 #: ../share/extensions/voronoi2svg.inx.h:9
 msgid "Page"
 msgstr "Lapa"
@@ -9377,7 +9392,7 @@ msgid "The index of the current page"
 msgstr "Pašreizējās lapas indekss"
 
 #: ../src/libgdl/gdl-dock-object.c:125
-#: ../src/ui/dialog/inkscape-preferences.cpp:1432
+#: ../src/ui/dialog/inkscape-preferences.cpp:1431
 #: ../src/ui/widget/page-sizer.cpp:260
 #: ../src/widgets/gradient-selector.cpp:156
 #: ../src/widgets/sp-xmlview-attr-list.cpp:54
@@ -9581,7 +9596,7 @@ msgstr "Peldošā doka Y koordināte"
 msgid "Dock #%d"
 msgstr "Doks #%d"
 
-#: ../src/libnrtype/FontFactory.cpp:903
+#: ../src/libnrtype/FontFactory.cpp:909
 msgid "Ignoring font without family that will crash Pango"
 msgstr "Neņemts vārā fonts bez fontu grupas, jo tas varētu izsaukt Pango avārijas apstāšanos"
 
@@ -9997,11 +10012,11 @@ msgstr ""
 
 #: ../src/live_effects/lpe-knot.cpp:352
 msgid "Crossing Signs"
-msgstr ""
+msgstr "Krustošanās zīmes"
 
 #: ../src/live_effects/lpe-knot.cpp:352
 msgid "Crossings signs"
-msgstr ""
+msgstr "Krustojumu zīmes"
 
 #: ../src/live_effects/lpe-knot.cpp:617
 msgid "Drag to select a crossing, click to flip it"
@@ -10814,7 +10829,7 @@ msgstr "Eksportējamā objekta ID"
 
 #: ../src/main.cpp:335
 #: ../src/main.cpp:433
-#: ../src/ui/dialog/inkscape-preferences.cpp:1435
+#: ../src/ui/dialog/inkscape-preferences.cpp:1434
 msgid "ID"
 msgstr "ID"
 
@@ -11191,93 +11206,93 @@ msgstr ""
 msgid "<b>No paths</b> to reverse in the selection."
 msgstr ""
 
-#: ../src/pen-context.cpp:250
-#: ../src/pencil-context.cpp:561
+#: ../src/pen-context.cpp:222
+#: ../src/pencil-context.cpp:534
 msgid "Drawing cancelled"
 msgstr "Zīmēšana atcelta"
 
-#: ../src/pen-context.cpp:488
-#: ../src/pencil-context.cpp:286
+#: ../src/pen-context.cpp:460
+#: ../src/pencil-context.cpp:259
 msgid "Continuing selected path"
 msgstr "Turpina atlasīto ceļu"
 
-#: ../src/pen-context.cpp:498
-#: ../src/pencil-context.cpp:294
+#: ../src/pen-context.cpp:470
+#: ../src/pencil-context.cpp:267
 msgid "Creating new path"
 msgstr "Veido jaunu ceļu"
 
-#: ../src/pen-context.cpp:500
-#: ../src/pencil-context.cpp:297
+#: ../src/pen-context.cpp:472
+#: ../src/pencil-context.cpp:270
 msgid "Appending to selected path"
 msgstr "Pievieno atlasītajam ceļam"
 
-#: ../src/pen-context.cpp:660
+#: ../src/pen-context.cpp:632
 msgid "<b>Click</b> or <b>click and drag</b> to close and finish the path."
 msgstr "<b>Uzklikšķiniet</b> vai <b>uzklikšķiniet un velciet</b>, lai noslēgtu un pabeigtu ceļu."
 
-#: ../src/pen-context.cpp:670
+#: ../src/pen-context.cpp:642
 msgid "<b>Click</b> or <b>click and drag</b> to continue the path from this point."
 msgstr "<b>Uzklikšķiniet</b> vai <b>uzklikšķiniet un velciet</b>, lai turpinātu ceļu no šī punkta."
 
-#: ../src/pen-context.cpp:1265
+#: ../src/pen-context.cpp:1237
 #, c-format
 msgid "<b>Curve segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
 msgstr "<b>Līknes posms</b>: leņķis %3.2f&#176;, attālums %s; ar <b>Ctrl</b>-piesaistīt leņķim, <b>Enter</b> - pabeigt ceļu"
 
-#: ../src/pen-context.cpp:1266
+#: ../src/pen-context.cpp:1238
 #, c-format
 msgid "<b>Line segment</b>: angle %3.2f&#176;, distance %s; with <b>Ctrl</b> to snap angle, <b>Enter</b> to finish the path"
 msgstr "<b>Līnijas posms</b>: leņķis %3.2f&#176;, attālums %s; ar <b>Ctrl</b> - piesaistīt leņķim, <b>Enter</b> - pabeigt ceļu"
 
-#: ../src/pen-context.cpp:1283
+#: ../src/pen-context.cpp:1255
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Līknes turis</b>: leņķis %3.2f&#176;, garums %s; ar <b>Ctrl</b> - piesaistīt leņķim"
 
-#: ../src/pen-context.cpp:1305
+#: ../src/pen-context.cpp:1277
 #, c-format
 msgid "<b>Curve handle, symmetric</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
 msgstr "<b>Līknes turis, simetrisks</b>: leņķis %3.2f&#176;, garums %s; ar <b>Ctrl</b> - piesaistīt leņķim, ar <b>Shift</b> - pārvietot tikai šo turi"
 
-#: ../src/pen-context.cpp:1306
+#: ../src/pen-context.cpp:1278
 #, c-format
 msgid "<b>Curve handle</b>: angle %3.2f&#176;, length %s; with <b>Ctrl</b> to snap angle, with <b>Shift</b> to move this handle only"
 msgstr "<b>Līknes turis</b>: leņķis %3.2f&#176;, garums %s; ar <b>Ctrl</b> - piesaistīt leņķim, ar <b>Shift</b> - pārvietot tikai šo turi"
 
-#: ../src/pen-context.cpp:1352
+#: ../src/pen-context.cpp:1324
 msgid "Drawing finished"
 msgstr "Zīmēšana pabeigta."
 
-#: ../src/pencil-context.cpp:402
+#: ../src/pencil-context.cpp:375
 msgid "<b>Release</b> here to close and finish the path."
 msgstr "<b>Atlaidiet</b> šeit, lai slēgtu un pabeigtu ceļu."
 
-#: ../src/pencil-context.cpp:408
+#: ../src/pencil-context.cpp:381
 msgid "Drawing a freehand path"
 msgstr "Zīmēt brīvas rokas ceļu."
 
-#: ../src/pencil-context.cpp:413
+#: ../src/pencil-context.cpp:386
 msgid "<b>Drag</b> to continue the path from this point."
 msgstr "<b>Velciet</b>, lai turpinātu ceļu no šī punkta."
 
 #. Write curves to object
-#: ../src/pencil-context.cpp:505
+#: ../src/pencil-context.cpp:478
 msgid "Finishing freehand"
 msgstr ""
 
-#: ../src/pencil-context.cpp:611
+#: ../src/pencil-context.cpp:584
 msgid "<b>Sketch mode</b>: holding <b>Alt</b> interpolates between sketched paths. Release <b>Alt</b> to finalize."
 msgstr ""
 
-#: ../src/pencil-context.cpp:639
+#: ../src/pencil-context.cpp:612
 msgid "Finishing freehand sketch"
 msgstr "Beidz brīvrokas uzmetumu"
 
-#: ../src/persp3d.cpp:346
+#: ../src/persp3d.cpp:318
 msgid "Toggle vanishing point"
 msgstr "Pārslēgt saplūšanas punktu"
 
-#: ../src/persp3d.cpp:357
+#: ../src/persp3d.cpp:329
 msgid "Toggle multiple vanishing points"
 msgstr "Pārslēgt vairākus saplūšanas punktus"
 
@@ -11465,7 +11480,7 @@ msgid "Unique URI to a related document"
 msgstr ""
 
 #: ../src/rdf.cpp:264
-#: ../src/ui/dialog/inkscape-preferences.cpp:1773
+#: ../src/ui/dialog/inkscape-preferences.cpp:1772
 msgid "Language:"
 msgstr "Valoda:"
 
@@ -11527,71 +11542,71 @@ msgstr "Fragments:"
 msgid "XML fragment for the RDF 'License' section"
 msgstr "XML fragments RDF 'License' sadaļai"
 
-#: ../src/rect-context.cpp:376
+#: ../src/rect-context.cpp:352
 msgid "<b>Ctrl</b>: make square or integer-ratio rect, lock a rounded corner circular"
 msgstr ""
 
-#: ../src/rect-context.cpp:529
+#: ../src/rect-context.cpp:505
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to ratio %d:%d); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Taisnstūris</b>: %s &#215; %s (ierobežots ar proporcijām %d:%d); ar <b>Shift</b> - zīmēt apkārt sākumpunktam"
 
-#: ../src/rect-context.cpp:532
+#: ../src/rect-context.cpp:508
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1.618 : 1); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Taisnstūris</b>: %s &#215; %s (ierobežots zelta šķēluma proporcijās 1.618 : 1); ar <b>Shift</b> - zīmēt apkārt sākumpunktam"
 
-#: ../src/rect-context.cpp:534
+#: ../src/rect-context.cpp:510
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s (constrained to golden ratio 1 : 1.618); with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Taisnstūris</b>: %s &#215; %s (ierobežots zelta šķēluma proporcijās 1.618 : 1); ar <b>Shift</b> - zīmēt apkārt sākumpunktam"
 
-#: ../src/rect-context.cpp:538
+#: ../src/rect-context.cpp:514
 #, c-format
 msgid "<b>Rectangle</b>: %s &#215; %s; with <b>Ctrl</b> to make square or integer-ratio rectangle; with <b>Shift</b> to draw around the starting point"
 msgstr "<b>Taisnstūris</b>: %s &#215; %s; ar <b>Ctrl</b> - izveidot kvadrātu vai taisnstūri ar veselu skaitļu malu proporcijām; ar <b>Shift</b> - zīmēt apkārt sākumpunktam"
 
-#: ../src/rect-context.cpp:563
+#: ../src/rect-context.cpp:539
 msgid "Create rectangle"
 msgstr "Izveidot taisnstūri"
 
-#: ../src/select-context.cpp:200
+#: ../src/select-context.cpp:175
 msgid "Click selection to toggle scale/rotation handles"
 msgstr "Uzklikšķiniet atlasītajam, lai pārslēgtu turu mērogošanu/griešanu"
 
-#: ../src/select-context.cpp:201
+#: ../src/select-context.cpp:176
 msgid "No objects selected. Click, Shift+click, Alt+scroll mouse on top of objects, or drag around objects to select."
 msgstr "Nav atlasīts neviens objekts. Atlasīšanai izmantojiet klikšķi, Shift+klikšķi, Alt+ritināšanu ar peli virs objektiem, vai apvelciet apkārt objektiem."
 
-#: ../src/select-context.cpp:260
+#: ../src/select-context.cpp:235
 msgid "Move canceled."
 msgstr "Pārvietošana atcelta."
 
-#: ../src/select-context.cpp:268
+#: ../src/select-context.cpp:243
 msgid "Selection canceled."
 msgstr "Atlasīšana atcelta."
 
-#: ../src/select-context.cpp:640
+#: ../src/select-context.cpp:615
 msgid "<b>Draw over</b> objects to select them; release <b>Alt</b> to switch to rubberband selection"
 msgstr ""
 
-#: ../src/select-context.cpp:642
+#: ../src/select-context.cpp:617
 msgid "<b>Drag around</b> objects to select them; press <b>Alt</b> to switch to touch selection"
 msgstr ""
 
-#: ../src/select-context.cpp:898
+#: ../src/select-context.cpp:873
 msgid "<b>Ctrl</b>: click to select in groups; drag to move hor/vert"
 msgstr "<b>Ctrl</b>: klikšķiniet, lai atlasītu grupās; velciet, lai pārvietotu horizontāli/vertikāli"
 
-#: ../src/select-context.cpp:899
+#: ../src/select-context.cpp:874
 msgid "<b>Shift</b>: click to toggle select; drag for rubberband selection"
 msgstr ""
 
-#: ../src/select-context.cpp:900
+#: ../src/select-context.cpp:875
 msgid "<b>Alt</b>: click to select under; scroll mouse-wheel to cycle-select; drag to move selected or select by touch"
 msgstr ""
 
-#: ../src/select-context.cpp:1071
+#: ../src/select-context.cpp:1046
 msgid "Selected object is not a group. Cannot enter."
 msgstr "Izvēlētais objekts nav grupa. Nav iespējams ieiet."
 
@@ -11604,7 +11619,7 @@ msgid "<b>Nothing</b> was deleted."
 msgstr "<b>Nekas</b> nav izdzēst."
 
 #: ../src/selection-chemistry.cpp:374
-#: ../src/text-context.cpp:1031
+#: ../src/text-context.cpp:1008
 #: ../src/ui/dialog/calligraphic-profile-rename.cpp:55
 #: ../src/ui/dialog/swatches.cpp:277
 #: ../src/widgets/erasor-toolbar.cpp:116
@@ -11641,7 +11656,7 @@ msgid "<b>No groups</b> to ungroup in the selection."
 msgstr "Atlasē <b>nav</b> atgrupējamu grupu."
 
 #: ../src/selection-chemistry.cpp:783
-#: ../src/sp-item-group.cpp:501
+#: ../src/sp-item-group.cpp:475
 msgid "Ungroup"
 msgstr "Atgrupēt"
 
@@ -11822,7 +11837,7 @@ msgstr "Pārvietot horizontāli pa pikseļiem"
 
 #: ../src/selection-chemistry.cpp:2300
 msgid "The selection has no applied path effect."
-msgstr ""
+msgstr "Atlasītajam nav pielietots neviens ceļa efekts."
 
 #: ../src/selection-chemistry.cpp:2503
 msgctxt "Action"
@@ -11907,7 +11922,7 @@ msgstr "Atlasiet oriģinālu (<b>Shift+D</b>), kuru vēlaties pārvērst par sim
 
 #: ../src/selection-chemistry.cpp:2929
 msgid "Group selection first to convert to symbol."
-msgstr ""
+msgstr "Atlasiet objektu grupu pirms pārvēršanas par simbolu."
 
 #: ../src/selection-chemistry.cpp:2968
 msgid "Group to symbol"
@@ -12150,8 +12165,8 @@ msgstr "Izmantojiet <b>Shift+D</b>, lai sameklētu rāmi"
 
 #. this is only used with 2 or more objects
 #: ../src/selection-describer.cpp:226
-#: ../src/spray-context.cpp:227
-#: ../src/tweak-context.cpp:204
+#: ../src/spray-context.cpp:203
+#: ../src/tweak-context.cpp:180
 #, c-format
 msgid "<b>%i</b> object selected"
 msgid_plural "<b>%i</b> objects selected"
@@ -12240,64 +12255,64 @@ msgstr "Griešanas un šķiebšanas <b>centrs</b>: velciet, lai manītu novietoj
 msgid "Reset center"
 msgstr "Atiestatīt centru"
 
-#: ../src/seltrans.cpp:996
-#: ../src/seltrans.cpp:1093
+#: ../src/seltrans.cpp:994
+#: ../src/seltrans.cpp:1091
 #, c-format
 msgid "<b>Scale</b>: %0.2f%% x %0.2f%%; with <b>Ctrl</b> to lock ratio"
 msgstr "<b>Mērogot</b>: %0.2f%% x %0.2f%%; ar <b>Ctrl</b> - slēgt attiecību"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1207
+#: ../src/seltrans.cpp:1205
 #, c-format
 msgid "<b>Skew</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Šķiebt</b>: %0.2f&#176;; ar <b>Ctrl</b> - piesaistīt leņķim"
 
 #. TRANSLATORS: don't modify the first ";"
 #. (it will NOT be displayed as ";" - only the second one will be)
-#: ../src/seltrans.cpp:1282
+#: ../src/seltrans.cpp:1280
 #, c-format
 msgid "<b>Rotate</b>: %0.2f&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Griezt</b>: %0.2f&#176;; ar <b>Ctrl</b> - piesaistīt leņķim"
 
-#: ../src/seltrans.cpp:1317
+#: ../src/seltrans.cpp:1315
 #, c-format
 msgid "Move <b>center</b> to %s, %s"
 msgstr "Pārvietot <b>centru</b> uz %s, %s"
 
-#: ../src/seltrans.cpp:1493
+#: ../src/seltrans.cpp:1491
 #, c-format
 msgid "<b>Move</b> by %s, %s; with <b>Ctrl</b> to restrict to horizontal/vertical; with <b>Shift</b> to disable snapping"
 msgstr "<b>Pārvietot</b> par %s, %s; ar <b>Ctrl</b> - lai ierobežotu horizontāli/vertikāli; ar <b>Shift</b> - atslēgt piesaisti"
 
-#: ../src/sp-anchor.cpp:179
+#: ../src/sp-anchor.cpp:151
 #, c-format
 msgid "<b>Link</b> to %s"
 msgstr "<b>Saite</b> uz %s"
 
-#: ../src/sp-anchor.cpp:183
+#: ../src/sp-anchor.cpp:155
 msgid "<b>Link</b> without URI"
 msgstr "<b>Saite</b> bez URI"
 
-#: ../src/sp-ellipse.cpp:506
-#: ../src/sp-ellipse.cpp:883
+#: ../src/sp-ellipse.cpp:452
+#: ../src/sp-ellipse.cpp:775
 msgid "<b>Ellipse</b>"
 msgstr "<b>Elipse</b>"
 
-#: ../src/sp-ellipse.cpp:647
+#: ../src/sp-ellipse.cpp:566
 msgid "<b>Circle</b>"
 msgstr "<b>Aplis</b>"
 
-#: ../src/sp-ellipse.cpp:878
+#: ../src/sp-ellipse.cpp:770
 msgid "<b>Segment</b>"
 msgstr "<b>Segments</b>"
 
-#: ../src/sp-ellipse.cpp:880
+#: ../src/sp-ellipse.cpp:772
 msgid "<b>Arc</b>"
 msgstr "<b>Loks</b>"
 
 #. TRANSLATORS: "Flow region" is an area where text is allowed to flow
-#: ../src/sp-flowregion.cpp:264
+#: ../src/sp-flowregion.cpp:234
 #, c-format
 msgid "Flow region"
 msgstr "Ar tekstu aizpildāmais apgabals"
@@ -12306,60 +12321,60 @@ msgstr "Ar tekstu aizpildāmais apgabals"
 #. * flow excluded region.  flowRegionExclude in SVG 1.2: see
 #. * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegion-elem and
 #. * http://www.w3.org/TR/2004/WD-SVG12-20041027/flow.html#flowRegionExclude-elem.
-#: ../src/sp-flowregion.cpp:475
+#: ../src/sp-flowregion.cpp:423
 #, c-format
 msgid "Flow excluded region"
 msgstr "No teksta aizpildes izslēgtais apgabals"
 
-#: ../src/sp-guide.cpp:315
+#: ../src/sp-guide.cpp:290
 msgid "Create Guides Around the Page"
 msgstr "Izveidot palīglīnijas apkārt lapai"
 
-#: ../src/sp-guide.cpp:327
+#: ../src/sp-guide.cpp:302
 #: ../src/verbs.cpp:2422
 msgid "Delete All Guides"
 msgstr "Dzēst visas palīglīnijas"
 
 #. Guide has probably been deleted and no longer has an attached namedview.
-#: ../src/sp-guide.cpp:487
+#: ../src/sp-guide.cpp:462
 #, c-format
 msgid "Deleted"
 msgstr "Dzēsts"
 
-#: ../src/sp-guide.cpp:496
+#: ../src/sp-guide.cpp:471
 msgid "<b>Shift+drag</b> to rotate, <b>Ctrl+drag</b> to move origin, <b>Del</b> to delete"
 msgstr "<b>Shift+vilkt</b>, lai pagrieztu, <b>Ctrl+vilkt</b> - lai pārvietotu sākumpunktu, <b>Del</b> - lai dzēstu"
 
-#: ../src/sp-guide.cpp:500
+#: ../src/sp-guide.cpp:475
 #, c-format
 msgid "vertical, at %s"
 msgstr ""
 
-#: ../src/sp-guide.cpp:503
+#: ../src/sp-guide.cpp:478
 #, c-format
 msgid "horizontal, at %s"
 msgstr ""
 
-#: ../src/sp-guide.cpp:508
+#: ../src/sp-guide.cpp:483
 #, c-format
 msgid "at %d degrees, through (%s,%s)"
 msgstr "%d grādos, caur (%s,%s)"
 
-#: ../src/sp-image.cpp:1091
+#: ../src/sp-image.cpp:1063
 msgid "embedded"
 msgstr "iegults"
 
-#: ../src/sp-image.cpp:1099
+#: ../src/sp-image.cpp:1071
 #, c-format
 msgid "<b>Image with bad reference</b>: %s"
 msgstr "<b>Attēls ar nederīgu atsauci</b>: %s"
 
-#: ../src/sp-image.cpp:1100
+#: ../src/sp-image.cpp:1072
 #, c-format
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr "<b>Attēls</b> %d &#215; %d: %s"
 
-#: ../src/sp-item-group.cpp:743
+#: ../src/sp-item-group.cpp:717
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
@@ -12367,62 +12382,62 @@ msgstr[0] "<b>Grupa</b> no <b>%d</b> objekta"
 msgstr[1] "<b>Grupa</b> no <b>%d</b> objektiem"
 msgstr[2] "<b>Grupa</b> no <b>%d</b> objektiem"
 
-#: ../src/sp-item.cpp:971
+#: ../src/sp-item.cpp:977
 #: ../src/verbs.cpp:212
 msgid "Object"
 msgstr "Objekts"
 
-#: ../src/sp-item.cpp:984
+#: ../src/sp-item.cpp:990
 #, c-format
 msgid "%s; <i>clipped</i>"
 msgstr ""
 
-#: ../src/sp-item.cpp:989
+#: ../src/sp-item.cpp:995
 #, c-format
 msgid "%s; <i>masked</i>"
 msgstr "%s; <i>maskēts</i>"
 
-#: ../src/sp-item.cpp:997
+#: ../src/sp-item.cpp:1003
 #, c-format
 msgid "%s; <i>filtered (%s)</i>"
 msgstr "%s; <i>filtrēts (%s)</i>"
 
-#: ../src/sp-item.cpp:999
+#: ../src/sp-item.cpp:1005
 #, c-format
 msgid "%s; <i>filtered</i>"
 msgstr "%s; <i>filtrēts</i>"
 
-#: ../src/sp-line.cpp:174
+#: ../src/sp-line.cpp:166
 msgid "<b>Line</b>"
 msgstr "<b>Līnija</b>"
 
-#: ../src/sp-lpe-item.cpp:341
+#: ../src/sp-lpe-item.cpp:316
 msgid "An exception occurred during execution of the Path Effect."
 msgstr "Izpildot ceļa efektu radās izņēmuma stāvoklis."
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-#: ../src/sp-offset.cpp:428
+#: ../src/sp-offset.cpp:393
 #, c-format
 msgid "<b>Linked offset</b>, %s by %f pt"
 msgstr "<b>Saistītā pārbīde</b>, %s par %f pt"
 
-#: ../src/sp-offset.cpp:429
-#: ../src/sp-offset.cpp:433
+#: ../src/sp-offset.cpp:394
+#: ../src/sp-offset.cpp:398
 msgid "outset"
 msgstr ""
 
-#: ../src/sp-offset.cpp:429
-#: ../src/sp-offset.cpp:433
+#: ../src/sp-offset.cpp:394
+#: ../src/sp-offset.cpp:398
 msgid "inset"
 msgstr ""
 
 #. TRANSLATORS COMMENT: %s is either "outset" or "inset" depending on sign
-#: ../src/sp-offset.cpp:432
+#: ../src/sp-offset.cpp:397
 #, c-format
 msgid "<b>Dynamic offset</b>, %s by %f pt"
 msgstr "<b>Dinamiskā nobīde</b>, %s reiz %f pt"
 
-#: ../src/sp-path.cpp:152
+#: ../src/sp-path.cpp:124
 #, c-format
 msgid "<b>Path</b> (%i node, path effect: %s)"
 msgid_plural "<b>Path</b> (%i nodes, path effect: %s)"
@@ -12430,7 +12445,7 @@ msgstr[0] "<b>Ceļš</b> (%i mezgls, ceļa efekts: %s)"
 msgstr[1] "<b>Ceļš</b> (%i mezgli, ceļa efekts: %s)"
 msgstr[2] "<b>Ceļš</b> (%i mezgli, ceļa efekts: %s)"
 
-#: ../src/sp-path.cpp:155
+#: ../src/sp-path.cpp:127
 #, c-format
 msgid "<b>Path</b> (%i node)"
 msgid_plural "<b>Path</b> (%i nodes)"
@@ -12438,26 +12453,26 @@ msgstr[0] "<b>Ceļš</b> (%i mezgls)"
 msgstr[1] "<b>Ceļš</b> (%i mezgli)"
 msgstr[2] "<b>Ceļš</b> (%i mezgli)"
 
-#: ../src/sp-polygon.cpp:225
+#: ../src/sp-polygon.cpp:197
 msgid "<b>Polygon</b>"
 msgstr "<b>Daudzstūris</b>"
 
-#: ../src/sp-polyline.cpp:156
+#: ../src/sp-polyline.cpp:141
 msgid "<b>Polyline</b>"
 msgstr "<b>Lauzta līnija</b>"
 
-#: ../src/sp-rect.cpp:223
+#: ../src/sp-rect.cpp:195
 msgid "<b>Rectangle</b>"
 msgstr "<b>Taisnstūris</b>"
 
 #. TRANSLATORS: since turn count isn't an integer, please adjust the
 #. string as needed to deal with an localized plural forms.
-#: ../src/sp-spiral.cpp:310
+#: ../src/sp-spiral.cpp:279
 #, c-format
 msgid "<b>Spiral</b> with %3f turns"
 msgstr "<b>Spirāle</b> ar %3f vijumiem"
 
-#: ../src/sp-star.cpp:301
+#: ../src/sp-star.cpp:275
 #, c-format
 msgid "<b>Star</b> with %d vertex"
 msgid_plural "<b>Star</b> with %d vertices"
@@ -12465,7 +12480,7 @@ msgstr[0] "<b>Zvaigzne</b> ar %d virsotni"
 msgstr[1] "<b>Zvaigzne</b> ar %d virsotnēm"
 msgstr[2] "<b>Zvaigzne</b> ar %d virsotnēm"
 
-#: ../src/sp-star.cpp:305
+#: ../src/sp-star.cpp:279
 #, c-format
 msgid "<b>Polygon</b> with %d vertex"
 msgid_plural "<b>Polygon</b> with %d vertices"
@@ -12474,72 +12489,72 @@ msgstr[1] "<b>Daudzstūris</b> ar %d virsotnēm"
 msgstr[2] "<b>Daudzstūris</b> ar %d virsotnēm"
 
 #. TRANSLATORS: For description of font with no name.
-#: ../src/sp-text.cpp:418
+#: ../src/sp-text.cpp:392
 msgid "&lt;no name found&gt;"
 msgstr "&lt;nosaukums nav atrasts&gt;"
 
-#: ../src/sp-text.cpp:430
+#: ../src/sp-text.cpp:404
 #, c-format
 msgid "<b>Text on path</b>%s (%s, %s)"
 msgstr "<b>Teksts gar ceļu</b>%s (%s, %s)"
 
-#: ../src/sp-text.cpp:431
+#: ../src/sp-text.cpp:405
 #, c-format
 msgid "<b>Text</b>%s (%s, %s)"
 msgstr "<b>Teksts</b>%s (%s, %s)"
 
-#: ../src/sp-tref.cpp:366
+#: ../src/sp-tref.cpp:341
 #, c-format
 msgid "<b>Cloned character data</b>%s%s"
 msgstr ""
 
-#: ../src/sp-tref.cpp:367
+#: ../src/sp-tref.cpp:342
 msgid " from "
 msgstr " no "
 
-#: ../src/sp-tref.cpp:373
+#: ../src/sp-tref.cpp:348
 msgid "<b>Orphaned cloned character data</b>"
 msgstr ""
 
-#: ../src/sp-tspan.cpp:287
+#: ../src/sp-tspan.cpp:252
 msgid "<b>Text span</b>"
 msgstr ""
 
 #. char *symbol_desc = SP_ITEM(use->child)->description();
 #. g_free(symbol_desc);
-#: ../src/sp-use.cpp:328
+#: ../src/sp-use.cpp:302
 msgid "<b>Clone of Symbol</b>"
-msgstr ""
+msgstr "<b>Simbola klons</b>"
 
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
-#: ../src/sp-use.cpp:336
+#: ../src/sp-use.cpp:310
 msgid "..."
 msgstr "..."
 
-#: ../src/sp-use.cpp:344
+#: ../src/sp-use.cpp:318
 #, c-format
 msgid "<b>Clone</b> of: %s"
 msgstr "<b>Klons</b> objektam: %s"
 
-#: ../src/sp-use.cpp:348
+#: ../src/sp-use.cpp:322
 msgid "<b>Orphaned clone</b>"
 msgstr "<b>Pamests klons</b>"
 
-#: ../src/spiral-context.cpp:328
+#: ../src/spiral-context.cpp:304
 msgid "<b>Ctrl</b>: snap angle"
 msgstr "<b>Ctrl</b>: piesaistes leņķis"
 
-#: ../src/spiral-context.cpp:330
+#: ../src/spiral-context.cpp:306
 msgid "<b>Alt</b>: lock spiral radius"
 msgstr "<b>Alt</b>: slēgt spirāles rādiusu"
 
-#: ../src/spiral-context.cpp:466
+#: ../src/spiral-context.cpp:442
 #, c-format
 msgid "<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Spirāle</b>: rādiuss %s, leņķis %5g&#176;; ar <b>Ctrl</b> - piesaistīt leņķim"
 
-#: ../src/spiral-context.cpp:492
+#: ../src/spiral-context.cpp:468
 msgid "Create spiral"
 msgstr "Izveidot spirāli"
 
@@ -12659,60 +12674,60 @@ msgstr "Atlasiet vienkāršojamo(s) <b>ceļu(s)</b>."
 msgid "<b>No paths</b> to simplify in the selection."
 msgstr "Atlasītajā <b>nav vienkāršojamu ceļu</b>."
 
-#: ../src/spray-context.cpp:229
-#: ../src/tweak-context.cpp:206
+#: ../src/spray-context.cpp:205
+#: ../src/tweak-context.cpp:182
 #, c-format
 msgid "<b>Nothing</b> selected"
 msgstr "<b>Nekas</b> nav atlasīts"
 
-#: ../src/spray-context.cpp:235
+#: ../src/spray-context.cpp:211
 #, c-format
 msgid "%s. Drag, click or click and scroll to spray <b>copies</b> of the initial selection."
-msgstr ""
+msgstr "%s. Velciet, uzklikšķiniet vai uzklikšķiniet un ritiniet, lai izsmidzinātu sākotnēji atlasītā <b>kopijas</b>."
 
-#: ../src/spray-context.cpp:238
+#: ../src/spray-context.cpp:214
 #, c-format
 msgid "%s. Drag, click or click and scroll to spray <b>clones</b> of the initial selection."
-msgstr ""
+msgstr "%s. Velciet, uzklikšķiniet vai uzklikšķiniet un ritiniet, lai izsmidzinātu sākotnēji atlasītā <b>klonus</b>."
 
-#: ../src/spray-context.cpp:241
+#: ../src/spray-context.cpp:217
 #, c-format
 msgid "%s. Drag, click or click and scroll to spray in a <b>single path</b> of the initial selection."
 msgstr ""
 
-#: ../src/spray-context.cpp:707
+#: ../src/spray-context.cpp:683
 msgid "<b>Nothing selected!</b> Select objects to spray."
 msgstr "<b>Nekas nav atlasīts!</b> Atlasiet izsmidzināmos objektus."
 
-#: ../src/spray-context.cpp:782
+#: ../src/spray-context.cpp:758
 #: ../src/widgets/spray-toolbar.cpp:183
 msgid "Spray with copies"
 msgstr "Smidzināt kopijas"
 
-#: ../src/spray-context.cpp:786
+#: ../src/spray-context.cpp:762
 #: ../src/widgets/spray-toolbar.cpp:190
 msgid "Spray with clones"
 msgstr "Smidzināt klonus"
 
-#: ../src/spray-context.cpp:790
+#: ../src/spray-context.cpp:766
 msgid "Spray in single path"
 msgstr "Izsmidzināt vienā ceļā"
 
-#: ../src/star-context.cpp:344
+#: ../src/star-context.cpp:320
 msgid "<b>Ctrl</b>: snap angle; keep rays radial"
 msgstr "<b>Ctrl</b>: piesaistīt leņķim; saglabāt starus radiālus"
 
-#: ../src/star-context.cpp:480
+#: ../src/star-context.cpp:456
 #, c-format
 msgid "<b>Polygon</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Daudzstūris</b>: rādiuss %s, leņķis %5g&#176;; ar <b>Ctrl</b> - piesaistīt leņķim"
 
-#: ../src/star-context.cpp:481
+#: ../src/star-context.cpp:457
 #, c-format
 msgid "<b>Star</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"
 msgstr "<b>Zvaigzne</b>: rādiuss %s, leņķis %5g&#176;; ar <b>Ctrl</b> - piesaistīt leņkim"
 
-#: ../src/star-context.cpp:514
+#: ../src/star-context.cpp:490
 msgid "Create star"
 msgstr "Izveidot zvaigzni"
 
@@ -12792,141 +12807,141 @@ msgstr "Pārvērst teksta aizpildījumu par tekstu"
 msgid "<b>No flowed text(s)</b> to convert in the selection."
 msgstr "Atlasītajā <b>nav</b> pārvēršama(-u) <b>aizpildošā(-o) teksta(-u)</b>."
 
-#: ../src/text-context.cpp:443
+#: ../src/text-context.cpp:420
 msgid "<b>Click</b> to edit the text, <b>drag</b> to select part of the text."
 msgstr "<b>Uzklikšķiniet</b>, lai labotu tekstu, <b>velciet</b> - lai atlasītu teksta daļu."
 
-#: ../src/text-context.cpp:445
+#: ../src/text-context.cpp:422
 msgid "<b>Click</b> to edit the flowed text, <b>drag</b> to select part of the text."
 msgstr ""
 
-#: ../src/text-context.cpp:499
+#: ../src/text-context.cpp:476
 msgid "Create text"
 msgstr "Izveidot tekstu"
 
-#: ../src/text-context.cpp:524
+#: ../src/text-context.cpp:501
 msgid "Non-printable character"
 msgstr "Nedrukājama rakstzīme"
 
-#: ../src/text-context.cpp:539
+#: ../src/text-context.cpp:516
 msgid "Insert Unicode character"
 msgstr "Ievietot Unikoda rakstzīmi"
 
-#: ../src/text-context.cpp:574
+#: ../src/text-context.cpp:551
 #, c-format
 msgid "Unicode (<b>Enter</b> to finish): %s: %s"
 msgstr "Unikods (<b>Enter</b>, lai pabeigtu): %s: %s"
 
-#: ../src/text-context.cpp:576
-#: ../src/text-context.cpp:885
+#: ../src/text-context.cpp:553
+#: ../src/text-context.cpp:862
 msgid "Unicode (<b>Enter</b> to finish): "
 msgstr "Unikods (<b>Enter</b>, lai pabeigtu): "
 
-#: ../src/text-context.cpp:662
+#: ../src/text-context.cpp:639
 #, c-format
 msgid "<b>Flowed text frame</b>: %s &#215; %s"
 msgstr "<b>Rāmis ar aizpildošo tekstu</b>: %s &#215; %s"
 
-#: ../src/text-context.cpp:719
+#: ../src/text-context.cpp:696
 msgid "Type text; <b>Enter</b> to start new line."
 msgstr "Ievadiet tekstu; nospiediet <b>Enter</b> jaunas rindas sākšanai."
 
-#: ../src/text-context.cpp:730
+#: ../src/text-context.cpp:707
 msgid "Flowed text is created."
 msgstr "Izveidots aizpildījums ar tekstu."
 
-#: ../src/text-context.cpp:732
+#: ../src/text-context.cpp:709
 msgid "Create flowed text"
 msgstr "Izveidot aizpildījumu ar tekstu"
 
-#: ../src/text-context.cpp:734
+#: ../src/text-context.cpp:711
 msgid "The frame is <b>too small</b> for the current font size. Flowed text not created."
 msgstr "Rāmis ir <b>pārāk mazs</b> izvēlētajam fonta izmēram. Teksta aizpildījums nav izveidots."
 
-#: ../src/text-context.cpp:870
+#: ../src/text-context.cpp:847
 msgid "No-break space"
 msgstr "Neatdalošā atstarpe"
 
-#: ../src/text-context.cpp:872
+#: ../src/text-context.cpp:849
 msgid "Insert no-break space"
 msgstr "Ievietot neatdalošo atstarpi"
 
-#: ../src/text-context.cpp:909
+#: ../src/text-context.cpp:886
 msgid "Make bold"
 msgstr "Treknināt"
 
-#: ../src/text-context.cpp:927
+#: ../src/text-context.cpp:904
 msgid "Make italic"
 msgstr "Pārveidot kursīvā"
 
-#: ../src/text-context.cpp:966
+#: ../src/text-context.cpp:943
 msgid "New line"
 msgstr "Jauna rinda"
 
-#: ../src/text-context.cpp:1000
+#: ../src/text-context.cpp:977
 msgid "Backspace"
 msgstr "Dzēst"
 
-#: ../src/text-context.cpp:1048
+#: ../src/text-context.cpp:1025
 msgid "Kern to the left"
 msgstr "Rakstsavirze pa kreisi"
 
-#: ../src/text-context.cpp:1073
+#: ../src/text-context.cpp:1050
 msgid "Kern to the right"
 msgstr "Rakstsavirze pa labi"
 
-#: ../src/text-context.cpp:1098
+#: ../src/text-context.cpp:1075
 msgid "Kern up"
 msgstr "Rakstsavirze augšup"
 
-#: ../src/text-context.cpp:1123
+#: ../src/text-context.cpp:1100
 msgid "Kern down"
 msgstr "Rakstsavirze lejup"
 
-#: ../src/text-context.cpp:1199
+#: ../src/text-context.cpp:1176
 msgid "Rotate counterclockwise"
 msgstr "Griezt pretēji pulksteņrādītājam"
 
-#: ../src/text-context.cpp:1220
+#: ../src/text-context.cpp:1197
 msgid "Rotate clockwise"
 msgstr "Griezt pulksteņrādītāja virzienā"
 
-#: ../src/text-context.cpp:1237
+#: ../src/text-context.cpp:1214
 msgid "Contract line spacing"
 msgstr "Samazināt rindu atstatumus"
 
-#: ../src/text-context.cpp:1244
+#: ../src/text-context.cpp:1221
 msgid "Contract letter spacing"
 msgstr "Samazināt burtu atstatumus"
 
-#: ../src/text-context.cpp:1262
+#: ../src/text-context.cpp:1239
 msgid "Expand line spacing"
 msgstr "Paplašināt rindu atstatumus"
 
-#: ../src/text-context.cpp:1269
+#: ../src/text-context.cpp:1246
 msgid "Expand letter spacing"
 msgstr "Paplašināt burtu atstatumus"
 
-#: ../src/text-context.cpp:1397
+#: ../src/text-context.cpp:1374
 msgid "Paste text"
 msgstr "Ielīmet tekstu"
 
-#: ../src/text-context.cpp:1648
+#: ../src/text-context.cpp:1625
 #, c-format
 msgid "Type or edit flowed text (%d characters%s); <b>Enter</b> to start new paragraph."
 msgstr ""
 
-#: ../src/text-context.cpp:1650
+#: ../src/text-context.cpp:1627
 #, c-format
 msgid "Type or edit text (%d characters%s); <b>Enter</b> to start new line."
 msgstr "Ievadiet vai labojiet tekstu (%d rakstzīmes%s); nospiediet <b>Enter</b> jaunas rindas sākšanai."
 
-#: ../src/text-context.cpp:1658
+#: ../src/text-context.cpp:1635
 #: ../src/tools-switch.cpp:201
 msgid "<b>Click</b> to select or create text, <b>drag</b> to create flowed text; then type."
 msgstr ""
 
-#: ../src/text-context.cpp:1760
+#: ../src/text-context.cpp:1737
 msgid "Type text"
 msgstr "Ievadiet tekstu"
 
@@ -13056,124 +13071,124 @@ msgstr "Vektorizēt bitkarti"
 msgid "Trace: Done. %ld nodes created"
 msgstr "Vektorizēšana: pabeigta. Izveidoti %ld mezgli"
 
-#: ../src/tweak-context.cpp:211
+#: ../src/tweak-context.cpp:187
 #, c-format
 msgid "%s. Drag to <b>move</b>."
 msgstr "%s. Velciet, lai <b>pārvietou</b>."
 
-#: ../src/tweak-context.cpp:215
+#: ../src/tweak-context.cpp:191
 #, c-format
 msgid "%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:219
+#: ../src/tweak-context.cpp:195
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:223
+#: ../src/tweak-context.cpp:199
 #, c-format
 msgid "%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."
 msgstr "%s. Velciet vai uzklikšķiniet, lai <b>samazinātu</b>; ar Shift - <b> lai palielinātu</b>."
 
-#: ../src/tweak-context.cpp:227
+#: ../src/tweak-context.cpp:203
 #, c-format
 msgid "%s. Drag or click to <b>rotate clockwise</b>; with Shift, <b>counterclockwise</b>."
 msgstr "%s. Velciet vai uzklikšķiniet, lai <b>pagrieztu pa pulksteņrādītājam</b>; ar Shift - <b>pretēji pulksteņrādītājam</b>."
 
-#: ../src/tweak-context.cpp:231
+#: ../src/tweak-context.cpp:207
 #, c-format
 msgid "%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."
 msgstr "%s. Velciet vai uzklikšķiniet, lai <b>dublētu</b>; ar Shift - <b>dzēstu</b>."
 
-#: ../src/tweak-context.cpp:235
+#: ../src/tweak-context.cpp:211
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:239
+#: ../src/tweak-context.cpp:215
 #, c-format
 msgid "%s. Drag or click to <b>inset paths</b>; with Shift to <b>outset</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:247
+#: ../src/tweak-context.cpp:223
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:255
+#: ../src/tweak-context.cpp:231
 #, c-format
 msgid "%s. Drag or click to <b>roughen paths</b>."
 msgstr ""
 
-#: ../src/tweak-context.cpp:259
+#: ../src/tweak-context.cpp:235
 #, c-format
 msgid "%s. Drag or click to <b>paint objects</b> with color."
 msgstr "%s. Velciet vai uzklikšķiniet, lai <b>izkrāsotu objektus</b> ar krāsu."
 
-#: ../src/tweak-context.cpp:263
+#: ../src/tweak-context.cpp:239
 #, c-format
 msgid "%s. Drag or click to <b>randomize colors</b>."
 msgstr "%s. Velciet vai uzklikšķiniet, lai <b>dažādotu krāsas</b>."
 
-#: ../src/tweak-context.cpp:267
+#: ../src/tweak-context.cpp:243
 #, c-format
 msgid "%s. Drag or click to <b>increase blur</b>; with Shift to <b>decrease</b>."
 msgstr "%s. Velciet vai uzklikšķiniet, lai<b>palielinātu izpludinājumu</b>; ar Shift t - <b>lai samazinātu</b>."
 
-#: ../src/tweak-context.cpp:1233
+#: ../src/tweak-context.cpp:1209
 msgid "<b>Nothing selected!</b> Select objects to tweak."
 msgstr ""
 
-#: ../src/tweak-context.cpp:1267
+#: ../src/tweak-context.cpp:1243
 msgid "Move tweak"
 msgstr "Pārvietošanas pieskņošana"
 
-#: ../src/tweak-context.cpp:1271
+#: ../src/tweak-context.cpp:1247
 msgid "Move in/out tweak"
 msgstr "Pārvietot iekšā/ārā pieskaņošana"
 
-#: ../src/tweak-context.cpp:1275
+#: ../src/tweak-context.cpp:1251
 msgid "Move jitter tweak"
 msgstr "Pārvietošanas drebēšanas pieskaņošana"
 
-#: ../src/tweak-context.cpp:1279
+#: ../src/tweak-context.cpp:1255
 msgid "Scale tweak"
 msgstr "Mērogošanas pieskaņošana"
 
-#: ../src/tweak-context.cpp:1283
+#: ../src/tweak-context.cpp:1259
 msgid "Rotate tweak"
 msgstr "Griešanas pieskaņošana"
 
-#: ../src/tweak-context.cpp:1287
+#: ../src/tweak-context.cpp:1263
 msgid "Duplicate/delete tweak"
 msgstr "Dublēt/dzēst pieskaņošana"
 
-#: ../src/tweak-context.cpp:1291
+#: ../src/tweak-context.cpp:1267
 msgid "Push path tweak"
 msgstr "Ceļa pagrūšanas pieskaņošana"
 
-#: ../src/tweak-context.cpp:1295
+#: ../src/tweak-context.cpp:1271
 msgid "Shrink/grow path tweak"
 msgstr "Ceļa samazinājuma/palielinājuma pieskaņosana"
 
-#: ../src/tweak-context.cpp:1299
+#: ../src/tweak-context.cpp:1275
 msgid "Attract/repel path tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1303
+#: ../src/tweak-context.cpp:1279
 msgid "Roughen path tweak"
 msgstr "Ceļa nelīdzena padarīšanas pieskaņošana"
 
-#: ../src/tweak-context.cpp:1307
+#: ../src/tweak-context.cpp:1283
 msgid "Color paint tweak"
 msgstr ""
 
-#: ../src/tweak-context.cpp:1311
+#: ../src/tweak-context.cpp:1287
 msgid "Color jitter tweak"
 msgstr "Krāsu drebēšanas pieskaņošana"
 
-#: ../src/tweak-context.cpp:1315
+#: ../src/tweak-context.cpp:1291
 msgid "Blur tweak"
 msgstr "Pieskaņot izpludinājumu"
 
@@ -13329,7 +13344,7 @@ msgid "Rearrange"
 msgstr "Pārkārtot"
 
 #: ../src/ui/dialog/align-and-distribute.cpp:900
-#: ../src/widgets/toolbox.cpp:1773
+#: ../src/widgets/toolbox.cpp:1724
 msgid "Nodes"
 msgstr "Mezgli"
 
@@ -13515,7 +13530,7 @@ msgstr "Mazākais objekts"
 #: ../src/ui/dialog/align-and-distribute.cpp:1049
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1550
 #: ../src/verbs.cpp:174
-#: ../src/widgets/desktop-widget.cpp:1901
+#: ../src/widgets/desktop-widget.cpp:1920
 #: ../share/extensions/printing_marks.inx.h:18
 msgid "Selection"
 msgstr "Atlasītais"
@@ -13546,27 +13561,27 @@ msgstr "Krāsa: <b>%s</b>; <b>Uzklikšķiniet</b>, lai iestatītu aizpildījumu,
 msgid "Change color definition"
 msgstr "Mainiet krāsas definīciju"
 
-#: ../src/ui/dialog/color-item.cpp:723
+#: ../src/ui/dialog/color-item.cpp:678
 msgid "Remove stroke color"
 msgstr "Aizvākt vilkuma krāsu"
 
-#: ../src/ui/dialog/color-item.cpp:723
+#: ../src/ui/dialog/color-item.cpp:678
 msgid "Remove fill color"
 msgstr "Aizvākt aizpildījuma krāsu"
 
-#: ../src/ui/dialog/color-item.cpp:728
+#: ../src/ui/dialog/color-item.cpp:683
 msgid "Set stroke color to none"
 msgstr "Iestatīt vilkuma krāsu par nekādu"
 
-#: ../src/ui/dialog/color-item.cpp:728
+#: ../src/ui/dialog/color-item.cpp:683
 msgid "Set fill color to none"
 msgstr "Iestatīt aizpildījuma krāsu par nekādu"
 
-#: ../src/ui/dialog/color-item.cpp:744
+#: ../src/ui/dialog/color-item.cpp:699
 msgid "Set stroke color from swatch"
 msgstr "Iestatiet vilkuma krāsu no paletes"
 
-#: ../src/ui/dialog/color-item.cpp:744
+#: ../src/ui/dialog/color-item.cpp:699
 msgid "Set fill color from swatch"
 msgstr "Iestatiet aizpildījuma krāsu no paletes"
 
@@ -13813,7 +13828,7 @@ msgid "Remove selected grid."
 msgstr "Aizvākt izvēlēto režģi."
 
 #: ../src/ui/dialog/document-properties.cpp:145
-#: ../src/widgets/toolbox.cpp:1880
+#: ../src/widgets/toolbox.cpp:1831
 msgid "Guides"
 msgstr "Palīglīnijas"
 
@@ -15703,13 +15718,12 @@ msgid "Move and/or rotate the guide relative to current settings"
 msgstr ""
 
 #: ../src/ui/dialog/guides.cpp:48
+msgctxt "Guides"
 msgid "_X:"
 msgstr "_X:"
 
 #: ../src/ui/dialog/guides.cpp:49
-#: ../src/widgets/sp-color-icc-selector.cpp:217
-#: ../src/widgets/sp-color-icc-selector.cpp:218
-#: ../src/widgets/sp-color-scales.cpp:488
+msgctxt "Guides"
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -16056,7 +16070,7 @@ msgstr ""
 
 #. Zoom
 #: ../src/ui/dialog/inkscape-preferences.cpp:376
-#: ../src/widgets/desktop-widget.cpp:613
+#: ../src/widgets/desktop-widget.cpp:632
 msgid "Zoom"
 msgstr "Tālummaiņa"
 
@@ -16718,7 +16732,7 @@ msgstr "Mainot loga izmēru tālummainīt zīmējumu, saglabājot nemainīgu red
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:684
 msgid "Save documents viewport (zoom and panning position). Useful to turn off when sharing version controlled files."
-msgstr ""
+msgstr "Saglabāt dokumenta skatu (tālummaiņu un panorāmēšanas pozīciju). Lietderīgi atslēgt, ja koplietojat versiju kontrolei pakļautus failus."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:686
 msgid "Whether dialog windows have a close button (requires restart)"
@@ -16839,12 +16853,8 @@ msgid "_Grab sensitivity:"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:815
-#: ../src/ui/dialog/inkscape-preferences.cpp:818
-#: ../src/ui/dialog/inkscape-preferences.cpp:1150
-#: ../src/ui/dialog/inkscape-preferences.cpp:1154
-#: ../src/ui/dialog/inkscape-preferences.cpp:1164
-msgid "pixels"
-msgstr "pikseļi"
+msgid "pixels (requires restart)"
+msgstr "pikseļi (nepieciešams restarts)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:816
 msgid "How close on the screen you need to be to an object to be able to grab it with mouse (in screen pixels)"
@@ -16852,11 +16862,18 @@ msgstr "Cik tuvu objektam uz ekrāna ir jāatrodas, lai to būtu iespējams satv
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:818
 msgid "_Click/drag threshold:"
-msgstr ""
+msgstr "Klikšķa/pārvietojuma slieksnis:"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:818
+#: ../src/ui/dialog/inkscape-preferences.cpp:1149
+#: ../src/ui/dialog/inkscape-preferences.cpp:1153
+#: ../src/ui/dialog/inkscape-preferences.cpp:1163
+msgid "pixels"
+msgstr "pikseļi"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:819
 msgid "Maximum mouse drag (in screen pixels) which is considered a click, not a drag"
-msgstr ""
+msgstr "Maksimālais peles pārvietojums (ekrāna pikseļos), ko jāuzskata par klikšķi, nevis pārvietojumu "
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:822
 msgid "_Handle size:"
@@ -17012,7 +17029,7 @@ msgstr "Dzēst liekās stila īpašības"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:888
 msgid "Check Attributes and Style Properties on"
-msgstr ""
+msgstr "Pārbaudīt atribūtus un stila īpašības"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:890
 msgid "Reading"
@@ -17020,7 +17037,7 @@ msgstr "Lasa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:891
 msgid "Check attributes and style properties on reading in SVG files (including those internal to Inkscape which will slow down startup)"
-msgstr ""
+msgstr "Pārbaudīt atribūtus un stila īpašības atverot SVG failus (ieskaitot Inkscape iekšējos, palielinot darba sākšanai nepieciešamo laiku)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:892
 msgid "Editing"
@@ -17028,7 +17045,7 @@ msgstr "Labo"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:893
 msgid "Check attributes and style properties while editing SVG files (may slow down Inkscape, mostly useful for debugging)"
-msgstr ""
+msgstr "Pārbaudīt atribūtus un stila īpašības SVG failu rediģēšanas laikā (var palēnināt Inkscape darbību, pamatā noderīgs atkļūdošanai)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:894
 msgid "Writing"
@@ -17036,7 +17053,7 @@ msgstr "Raksta"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:895
 msgid "Check attributes and style properties on writing out SVG files"
-msgstr ""
+msgstr "Pārbaudīt atribūtus un stila īpašības saglabājot SVG failus"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:897
 msgid "SVG output"
@@ -17269,7 +17286,7 @@ msgid "Color custom markers the same color as object"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1090
-#: ../src/ui/dialog/inkscape-preferences.cpp:1301
+#: ../src/ui/dialog/inkscape-preferences.cpp:1300
 msgid "Update marker color when object color changes"
 msgstr "Atsvaidzināt marķiera krāsu mainoties objekta krāsai"
 
@@ -17298,159 +17315,159 @@ msgstr "Neņemt vērā slēgtus objektus un slāņus"
 msgid "Deselect upon layer change"
 msgstr "Atcelt atlasi mainoties slānim"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1100
-msgid "Ctrl+A, Tab, Shift+Tab"
-msgstr "Ctrl+A, Tab, Shift+Tab"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1102
-msgid "Make keyboard selection commands work on objects in all layers"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1104
-msgid "Make keyboard selection commands work on objects in current layer only"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1106
-msgid "Make keyboard selection commands work on objects in current layer and all its sublayers"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1108
-msgid "Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden layer)"
-msgstr "Atiestatiet šo, lai būtu iespējams atlasīt slēptos objektus (slēptus kā tādus vai arī atrodošos slēptos slāņos)"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1110
-msgid "Uncheck this to be able to select objects that are locked (either by themselves or by being in a locked layer)"
-msgstr "Atiestatiet šo, lai būtu iespējams atlasīt slēgtos objektus (slēgtus kā tādus vai arī atrodošos slēgtos slāņos)"
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1113
+#: ../src/ui/dialog/inkscape-preferences.cpp:1101
 msgid "Uncheck this to be able to keep the current objects selected when the current layer changes"
 msgstr "Atiestatiet šo, lai būtu iespējams saglabāt objektu atlasi mainoties aktīvajam slānim"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1116
+#: ../src/ui/dialog/inkscape-preferences.cpp:1103
+msgid "Ctrl+A, Tab, Shift+Tab"
+msgstr "Ctrl+A, Tab, Shift+Tab"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1105
+msgid "Make keyboard selection commands work on objects in all layers"
+msgstr "Klaviatūras atlasīšanas komandas darbosies ar objektiem visos slāņos"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1107
+msgid "Make keyboard selection commands work on objects in current layer only"
+msgstr "Klaviatūras atlasīšanas komandas darbosies ar objektiem tikai pašreizējā slānī"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1109
+msgid "Make keyboard selection commands work on objects in current layer and all its sublayers"
+msgstr "Klaviatūras atlasīšanas komandas darbosies ar objektiem tikai pašreizējā slānī un visos tā apakšslāņos"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1111
+msgid "Uncheck this to be able to select objects that are hidden (either by themselves or by being in a hidden layer)"
+msgstr "Atiestatiet šo, lai būtu iespējams atlasīt slēptos objektus (slēptus kā tādus vai arī atrodošos slēptos slāņos)"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1113
+msgid "Uncheck this to be able to select objects that are locked (either by themselves or by being in a locked layer)"
+msgstr "Atiestatiet šo, lai būtu iespējams atlasīt slēgtos objektus (slēgtus kā tādus vai arī atrodošos slēgtos slāņos)"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1115
 msgid "Wrap when cycling objects in z-order"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1118
+#: ../src/ui/dialog/inkscape-preferences.cpp:1117
 msgid "Alt+Scroll Wheel"
 msgstr "Alt+peles ritentiņš"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1120
+#: ../src/ui/dialog/inkscape-preferences.cpp:1119
 msgid "Wrap around at start and end when cycling objects in z-order"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1122
+#: ../src/ui/dialog/inkscape-preferences.cpp:1121
 msgid "Selecting"
 msgstr "Izvēlas"
 
 #. Transforms options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1125
+#: ../src/ui/dialog/inkscape-preferences.cpp:1124
 #: ../src/widgets/select-toolbar.cpp:572
 msgid "Scale stroke width"
 msgstr "Mainīt vilkuma platumu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1126
+#: ../src/ui/dialog/inkscape-preferences.cpp:1125
 msgid "Scale rounded corners in rectangles"
 msgstr "Mērogot noapaļotos taisnstūra stūrus"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1127
+#: ../src/ui/dialog/inkscape-preferences.cpp:1126
 msgid "Transform gradients"
 msgstr "Pārveidot krāsu pārejas"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1128
+#: ../src/ui/dialog/inkscape-preferences.cpp:1127
 msgid "Transform patterns"
 msgstr "Pārveidot faktūras"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1129
+#: ../src/ui/dialog/inkscape-preferences.cpp:1128
 msgid "Optimized"
 msgstr "Optimizēts"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1130
+#: ../src/ui/dialog/inkscape-preferences.cpp:1129
 msgid "Preserved"
 msgstr "Saglabāts"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1133
+#: ../src/ui/dialog/inkscape-preferences.cpp:1132
 #: ../src/widgets/select-toolbar.cpp:573
 msgid "When scaling objects, scale the stroke width by the same proportion"
 msgstr "Mērogojot objektus, proporcionāli mērogot arī vilkuma platumu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1135
+#: ../src/ui/dialog/inkscape-preferences.cpp:1134
 #: ../src/widgets/select-toolbar.cpp:584
 msgid "When scaling rectangles, scale the radii of rounded corners"
 msgstr "Mērogojot taisnstūrus, mērogot arī noapaļoto stūru rādiusus"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1137
+#: ../src/ui/dialog/inkscape-preferences.cpp:1136
 #: ../src/widgets/select-toolbar.cpp:595
 msgid "Move gradients (in fill or stroke) along with the objects"
 msgstr "Pārvietot krāsu pārejas (aizpildījumā vai vilkumā) kopā ar objektiem"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1139
+#: ../src/ui/dialog/inkscape-preferences.cpp:1138
 #: ../src/widgets/select-toolbar.cpp:606
 msgid "Move patterns (in fill or stroke) along with the objects"
 msgstr "Pārvietot šablonus (aizpildījumā vai vilkumā) kopā ar objektiem"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1140
+#: ../src/ui/dialog/inkscape-preferences.cpp:1139
 msgid "Store transformation"
 msgstr "Saglabāt pārveidojumu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1142
+#: ../src/ui/dialog/inkscape-preferences.cpp:1141
 msgid "If possible, apply transformation to objects without adding a transform= attribute"
-msgstr ""
+msgstr "Ja iespējams, pielietojot pārveidojumus objektiem nepievienot transform= atribūtu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1144
+#: ../src/ui/dialog/inkscape-preferences.cpp:1143
 msgid "Always store transformation as a transform= attribute on objects"
-msgstr ""
+msgstr "Vienmēr saglabāt pārveidojumu objektā kā transform= atribūtu "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1146
+#: ../src/ui/dialog/inkscape-preferences.cpp:1145
 msgid "Transforms"
 msgstr "Pārveidojumi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1150
+#: ../src/ui/dialog/inkscape-preferences.cpp:1149
 msgid "Mouse _wheel scrolls by:"
 msgstr "Peles _rullītis ritina par:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1151
+#: ../src/ui/dialog/inkscape-preferences.cpp:1150
 msgid "One mouse wheel notch scrolls by this distance in screen pixels (horizontally with Shift)"
 msgstr "Viens peles ritenīša robiņš ritina par norādīto, ekrāna pikseļos izteikto, attālumu (horizontālai ritināšanai - ar Shift)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1152
+#: ../src/ui/dialog/inkscape-preferences.cpp:1151
 msgid "Ctrl+arrows"
 msgstr "Ctrl+bultiņas"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1154
+#: ../src/ui/dialog/inkscape-preferences.cpp:1153
 msgid "Sc_roll by:"
 msgstr "_Ritināt par:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1155
+#: ../src/ui/dialog/inkscape-preferences.cpp:1154
 msgid "Pressing Ctrl+arrow key scrolls by this distance (in screen pixels)"
 msgstr "Ctrl+bultiņa nospiešana ritina par norādīto, ekrāna pikseļos izteikto, attālumu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1157
+#: ../src/ui/dialog/inkscape-preferences.cpp:1156
 msgid "_Acceleration:"
 msgstr "_Paātrinājums:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1158
+#: ../src/ui/dialog/inkscape-preferences.cpp:1157
 msgid "Pressing and holding Ctrl+arrow will gradually speed up scrolling (0 for no acceleration)"
 msgstr "Nospiežot un turot nospiestu Ctrl+bultiņa ritināšana pakāpeniski paātrināsies (0 - lai ritinātu bez paātrinājuma)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1159
+#: ../src/ui/dialog/inkscape-preferences.cpp:1158
 msgid "Autoscrolling"
 msgstr "Autoritināšana"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1161
+#: ../src/ui/dialog/inkscape-preferences.cpp:1160
 msgid "_Speed:"
 msgstr "Ātrum_s:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1162
+#: ../src/ui/dialog/inkscape-preferences.cpp:1161
 msgid "How fast the canvas autoscrolls when you drag beyond canvas edge (0 to turn autoscroll off)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1164
+#: ../src/ui/dialog/inkscape-preferences.cpp:1163
 #: ../src/ui/dialog/tracedialog.cpp:521
 #: ../src/ui/dialog/tracedialog.cpp:720
 msgid "_Threshold:"
 msgstr "S_lieksnis:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1165
+#: ../src/ui/dialog/inkscape-preferences.cpp:1164
 msgid "How far (in screen pixels) you need to be from the canvas edge to trigger autoscroll; positive is outside the canvas, negative is within the canvas"
 msgstr ""
 
@@ -17459,630 +17476,635 @@ msgstr ""
 #. _page_scrolling.add_line( false, "", _scroll_space, "",
 #. _("When on, pressing and holding Space and dragging with left mouse button pans canvas (as in Adobe Illustrator); when off, Space temporarily switches to Selector tool (default)"));
 #.
-#: ../src/ui/dialog/inkscape-preferences.cpp:1171
+#: ../src/ui/dialog/inkscape-preferences.cpp:1170
 msgid "Mouse wheel zooms by default"
 msgstr "Peles ritenītis pēc noklusēšanas veic tālummaiņu "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1173
+#: ../src/ui/dialog/inkscape-preferences.cpp:1172
 msgid "When on, mouse wheel zooms without Ctrl and scrolls canvas with Ctrl; when off, it zooms with Ctrl and scrolls without Ctrl"
 msgstr "Ja iespējots, peles ritenītis bez Ctrl izpilda tālummaiņu, ar Ctrl - ritina audeklu; ja atslēgts - tālummaina ar Ctrl un ritina - bez Ctrl."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1174
+#: ../src/ui/dialog/inkscape-preferences.cpp:1173
 msgid "Scrolling"
 msgstr "Ritināšana"
 
 #. Snapping options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1177
+#: ../src/ui/dialog/inkscape-preferences.cpp:1176
 msgid "Enable snap indicator"
 msgstr "Ieslēgt piesaistes rādītāju"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1179
+#: ../src/ui/dialog/inkscape-preferences.cpp:1178
 msgid "After snapping, a symbol is drawn at the point that has snapped"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1182
+#: ../src/ui/dialog/inkscape-preferences.cpp:1181
 msgid "_Delay (in ms):"
 msgstr "Aiz_ture (milisekundēs):"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1183
+#: ../src/ui/dialog/inkscape-preferences.cpp:1182
 msgid "Postpone snapping as long as the mouse is moving, and then wait an additional fraction of a second. This additional delay is specified here. When set to zero or to a very small number, snapping will be immediate."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1185
+#: ../src/ui/dialog/inkscape-preferences.cpp:1184
 msgid "Only snap the node closest to the pointer"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1187
+#: ../src/ui/dialog/inkscape-preferences.cpp:1186
 msgid "Only try to snap the node that is initially closest to the mouse pointer"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1190
+#: ../src/ui/dialog/inkscape-preferences.cpp:1189
 msgid "_Weight factor:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1191
+#: ../src/ui/dialog/inkscape-preferences.cpp:1190
 msgid "When multiple snap solutions are found, then Inkscape can either prefer the closest transformation (when set to 0), or prefer the node that was initially the closest to the pointer (when set to 1)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1193
+#: ../src/ui/dialog/inkscape-preferences.cpp:1192
 msgid "Snap the mouse pointer when dragging a constrained knot"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1195
+#: ../src/ui/dialog/inkscape-preferences.cpp:1194
 msgid "When dragging a knot along a constraint line, then snap the position of the mouse pointer instead of snapping the projection of the knot onto the constraint line"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1197
+#: ../src/ui/dialog/inkscape-preferences.cpp:1196
 msgid "Snapping"
 msgstr "Piesaiste"
 
 #. nudgedistance is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:1202
+#: ../src/ui/dialog/inkscape-preferences.cpp:1201
 msgid "_Arrow keys move by:"
 msgstr "Bultiņ_as pārvieto par:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1203
+#: ../src/ui/dialog/inkscape-preferences.cpp:1202
 msgid "Pressing an arrow key moves selected object(s) or node(s) by this distance"
 msgstr "Nospiežot bultiņu, atlasītais (-ie) objekts (-i) vai mezgls (-i) tiks pārvietoti par norādīto attālumu"
 
 #. defaultscale is limited to 1000 in select-context.cpp: use the same limit here
-#: ../src/ui/dialog/inkscape-preferences.cpp:1206
+#: ../src/ui/dialog/inkscape-preferences.cpp:1205
 msgid "> and < _scale by:"
 msgstr "> un  < _mērogo par:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1207
+#: ../src/ui/dialog/inkscape-preferences.cpp:1206
 msgid "Pressing > or < scales selection up or down by this increment"
-msgstr ""
+msgstr "Nospiežot > vai < palielina vai samazina atlasītā mērogu par šeit norādīto soli"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1209
+#: ../src/ui/dialog/inkscape-preferences.cpp:1208
 msgid "_Inset/Outset by:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1210
+#: ../src/ui/dialog/inkscape-preferences.cpp:1209
 msgid "Inset and Outset commands displace the path by this distance"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1211
+#: ../src/ui/dialog/inkscape-preferences.cpp:1210
 msgid "Compass-like display of angles"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1213
+#: ../src/ui/dialog/inkscape-preferences.cpp:1212
 msgid "When on, angles are displayed with 0 at north, 0 to 360 range, positive clockwise; otherwise with 0 at east, -180 to 180 range, positive counterclockwise"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1219
+#: ../src/ui/dialog/inkscape-preferences.cpp:1218
 msgid "_Rotation snaps every:"
 msgstr "Griešana piesaistās ik pēc:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1219
+#: ../src/ui/dialog/inkscape-preferences.cpp:1218
 msgid "degrees"
 msgstr "grādi"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1220
+#: ../src/ui/dialog/inkscape-preferences.cpp:1219
 msgid "Rotating with Ctrl pressed snaps every that much degrees; also, pressing [ or ] rotates by this amount"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1221
+#: ../src/ui/dialog/inkscape-preferences.cpp:1220
 msgid "Relative snapping of guideline angles"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1223
+#: ../src/ui/dialog/inkscape-preferences.cpp:1222
 msgid "When on, the snap angles when rotating a guideline will be relative to the original angle"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1225
+#: ../src/ui/dialog/inkscape-preferences.cpp:1224
 msgid "_Zoom in/out by:"
 msgstr "_Tuvināt/tālināt par:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1226
+#: ../src/ui/dialog/inkscape-preferences.cpp:1225
 msgid "Zoom tool click, +/- keys, and middle click zoom in and out by this multiplier"
 msgstr "Tālummaiņas rīkā klikšķis, +/- pogas un vidējā peles pogas klikšķis tuvina vai tālina par norādīto reižu skaitu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1227
+#: ../src/ui/dialog/inkscape-preferences.cpp:1226
 msgid "Steps"
 msgstr "Soļi"
 
 #. Clones options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1230
+#: ../src/ui/dialog/inkscape-preferences.cpp:1229
 msgid "Move in parallel"
 msgstr "Pārvietot paralēli"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1232
+#: ../src/ui/dialog/inkscape-preferences.cpp:1231
 msgid "Stay unmoved"
 msgstr "Saglabāt nekustīgu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1234
+#: ../src/ui/dialog/inkscape-preferences.cpp:1233
 msgid "Move according to transform"
 msgstr "Pārvietoties atbilstoši pārveidojumam"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1236
+#: ../src/ui/dialog/inkscape-preferences.cpp:1235
 msgid "Are unlinked"
 msgstr "Ir atsaistīti"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1238
+#: ../src/ui/dialog/inkscape-preferences.cpp:1237
 msgid "Are deleted"
 msgstr "Ir izdzēsti"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1241
+#: ../src/ui/dialog/inkscape-preferences.cpp:1240
 msgid "Moving original: clones and linked offsets"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1243
+#: ../src/ui/dialog/inkscape-preferences.cpp:1242
 msgid "Clones are translated by the same vector as their original"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1245
+#: ../src/ui/dialog/inkscape-preferences.cpp:1244
 msgid "Clones preserve their positions when their original is moved"
 msgstr "Kloni saglabā savas atrašanās vietas, ja tiek pārvietots oriģināls"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1247
+#: ../src/ui/dialog/inkscape-preferences.cpp:1246
 msgid "Each clone moves according to the value of its transform= attribute; for example, a rotated clone will move in a different direction than its original"
-msgstr ""
+msgstr "Katrs klons pārvietojas atbilstoši transform= atribūta vērtībai, piemēram - pagriezts klons pārvietosies no tā oriģināla atšķirīgā virzienā"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1248
+#: ../src/ui/dialog/inkscape-preferences.cpp:1247
 msgid "Deleting original: clones"
 msgstr "Dzēš oriģinālu: kloni"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1250
+#: ../src/ui/dialog/inkscape-preferences.cpp:1249
 msgid "Orphaned clones are converted to regular objects"
 msgstr "Kloni-bāreņi tiek pārvērsti par patstāvīgiem objektiem"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1252
+#: ../src/ui/dialog/inkscape-preferences.cpp:1251
 msgid "Orphaned clones are deleted along with their original"
 msgstr "Kloni-bāreņi tiek nodzēsti kopā ar to oriģinālu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1254
+#: ../src/ui/dialog/inkscape-preferences.cpp:1253
 msgid "Duplicating original+clones/linked offset"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1256
+#: ../src/ui/dialog/inkscape-preferences.cpp:1255
 msgid "Relink duplicated clones"
 msgstr "Atjaunot dublēto0 klonu sasaisti"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1258
+#: ../src/ui/dialog/inkscape-preferences.cpp:1257
 msgid "When duplicating a selection containing both a clone and its original (possibly in groups), relink the duplicated clone to the duplicated original instead of the old original"
 msgstr ""
 
 #. TRANSLATORS: Heading for the Inkscape Preferences "Clones" Page
-#: ../src/ui/dialog/inkscape-preferences.cpp:1261
+#: ../src/ui/dialog/inkscape-preferences.cpp:1260
 msgid "Clones"
 msgstr "Kloni"
 
 #. Clip paths and masks options
-#: ../src/ui/dialog/inkscape-preferences.cpp:1264
+#: ../src/ui/dialog/inkscape-preferences.cpp:1263
 msgid "When applying, use the topmost selected object as clippath/mask"
-msgstr ""
+msgstr "Pielietojot par griešanas ceļu/masku izmantot augšējo atlasīto objektu"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1265
+msgid "Uncheck this to use the bottom selected object as the clipping path or mask"
+msgstr "Atķeksējiet šo, lai par griešanas ceļu vai masku izmantotu apakšējo atlasīto objektu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1266
-msgid "Uncheck this to use the bottom selected object as the clipping path or mask"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1267
 msgid "Remove clippath/mask object after applying"
-msgstr ""
+msgstr "Aizvākt griešanas ceļa/maskas objektu pēc pielietošanas"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1269
+#: ../src/ui/dialog/inkscape-preferences.cpp:1268
 msgid "After applying, remove the object used as the clipping path or mask from the drawing"
-msgstr ""
+msgstr "Pēc pielietošanas aizvākt no attēla objektu, kas kalpoja par griešanas ceļu vai masku"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1271
+#: ../src/ui/dialog/inkscape-preferences.cpp:1270
 msgid "Before applying"
 msgstr "Pirms pielietošanas"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1273
+#: ../src/ui/dialog/inkscape-preferences.cpp:1272
 msgid "Do not group clipped/masked objects"
-msgstr ""
+msgstr "Negrupēt izgrieztos/maskētos objektus"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1273
+msgid "Enclose every clipped/masked object in its own group"
+msgstr "Iekļaut ikvienu izgriezto/maskēto objektu atsevišķā grupā"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1274
-msgid "Enclose every clipped/masked object in its own group"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1275
 msgid "Put all clipped/masked objects into one group"
-msgstr ""
+msgstr "Ievietot visus izgrieztos/maskētos objektus vienā grupā"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1278
+#: ../src/ui/dialog/inkscape-preferences.cpp:1277
 msgid "Apply clippath/mask to every object"
-msgstr ""
+msgstr "Pielietot griešanas ceļu/masku katram objektam"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1281
+#: ../src/ui/dialog/inkscape-preferences.cpp:1280
 msgid "Apply clippath/mask to groups containing single object"
-msgstr ""
+msgstr "Pielietot griešanas ceļu/masku grupām, kas satur tikai vienu objektu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1284
+#: ../src/ui/dialog/inkscape-preferences.cpp:1283
 msgid "Apply clippath/mask to group containing all objects"
-msgstr ""
+msgstr "Pielietot griešanas ceļu/masku grupai, kas satur visus objektus"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1286
+#: ../src/ui/dialog/inkscape-preferences.cpp:1285
 msgid "After releasing"
 msgstr "Pēc atbrīvošanas"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1288
+#: ../src/ui/dialog/inkscape-preferences.cpp:1287
 msgid "Ungroup automatically created groups"
 msgstr "Atgrupēt automātiski izveidotas grupas"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1290
+#: ../src/ui/dialog/inkscape-preferences.cpp:1289
 msgid "Ungroup groups created when setting clip/mask"
-msgstr ""
+msgstr "Atgrupēt grupas, kas izveidojušas iestatot griešanas ceļu/masku"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1292
+#: ../src/ui/dialog/inkscape-preferences.cpp:1291
 msgid "Clippaths and masks"
-msgstr ""
+msgstr "Griešanas ceļi un maskas"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1295
+#: ../src/ui/dialog/inkscape-preferences.cpp:1294
 msgid "Stroke Style Markers"
 msgstr "Vilkuma stilu marķieri"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1297
-#: ../src/ui/dialog/inkscape-preferences.cpp:1299
+#: ../src/ui/dialog/inkscape-preferences.cpp:1296
+#: ../src/ui/dialog/inkscape-preferences.cpp:1298
 msgid "Stroke color same as object, fill color either object fill color or marker fill color"
-msgstr ""
+msgstr "Vilkuma krāsa tāda pati, kā objekta, aizpildījuma krāsa - vai nu objekta aizpildījuma krāsa vai marķiera aizpildījuma krāsa"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1303
+#: ../src/ui/dialog/inkscape-preferences.cpp:1302
 msgid "Markers"
 msgstr "Marķieri"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1311
+#: ../src/ui/dialog/inkscape-preferences.cpp:1310
 msgid "Number of _Threads:"
 msgstr "Pavedienu skai_ts:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1311
-#: ../src/ui/dialog/inkscape-preferences.cpp:1812
+#: ../src/ui/dialog/inkscape-preferences.cpp:1310
+#: ../src/ui/dialog/inkscape-preferences.cpp:1811
 msgid "(requires restart)"
 msgstr "(nepieciešams restarts)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1312
+#: ../src/ui/dialog/inkscape-preferences.cpp:1311
 msgid "Configure number of processors/threads to use when rendering filters"
 msgstr "Iestatiet filtru renderēšanai izmantojamo procesoru/pavedienu skaitu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1316
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid "Rendering _cache size:"
 msgstr "Renderēšanas bufera izmērs:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1316
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgctxt "mebibyte (2^20 bytes) abbreviation"
 msgid "MiB"
 msgstr "MiB"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1316
+#: ../src/ui/dialog/inkscape-preferences.cpp:1315
 msgid "Set the amount of memory per document which can be used to store rendered parts of the drawing for later reuse; set to zero to disable caching"
 msgstr "Nosakiet katram dokumentam pieejamās atmiņas apjomu, kurā glabāt attēla renderētās daļas vēlākai izmantošanai; lai atslēgtu kešatmiņu, ievadiet 0"
 
 #. blur quality
 #. filter quality
-#: ../src/ui/dialog/inkscape-preferences.cpp:1319
-#: ../src/ui/dialog/inkscape-preferences.cpp:1343
+#: ../src/ui/dialog/inkscape-preferences.cpp:1318
+#: ../src/ui/dialog/inkscape-preferences.cpp:1342
 msgid "Best quality (slowest)"
 msgstr "Vislabākā kvalitāte (vislēnāk)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1321
-#: ../src/ui/dialog/inkscape-preferences.cpp:1345
+#: ../src/ui/dialog/inkscape-preferences.cpp:1320
+#: ../src/ui/dialog/inkscape-preferences.cpp:1344
 msgid "Better quality (slower)"
 msgstr "Labāka kvalitāte (lēnāk)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1323
-#: ../src/ui/dialog/inkscape-preferences.cpp:1347
+#: ../src/ui/dialog/inkscape-preferences.cpp:1322
+#: ../src/ui/dialog/inkscape-preferences.cpp:1346
 msgid "Average quality"
 msgstr "Vidēja kvalitāte"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1325
-#: ../src/ui/dialog/inkscape-preferences.cpp:1349
+#: ../src/ui/dialog/inkscape-preferences.cpp:1324
+#: ../src/ui/dialog/inkscape-preferences.cpp:1348
 msgid "Lower quality (faster)"
 msgstr "Zemāka kvalitāte (ātrāk)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1327
-#: ../src/ui/dialog/inkscape-preferences.cpp:1351
+#: ../src/ui/dialog/inkscape-preferences.cpp:1326
+#: ../src/ui/dialog/inkscape-preferences.cpp:1350
 msgid "Lowest quality (fastest)"
 msgstr "Viszemākā kvalitāte (visātrāk)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1330
+#: ../src/ui/dialog/inkscape-preferences.cpp:1329
 msgid "Gaussian blur quality for display"
 msgstr "Gausa izpludināšanas kvalitāte ekrānam"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1332
-#: ../src/ui/dialog/inkscape-preferences.cpp:1356
+#: ../src/ui/dialog/inkscape-preferences.cpp:1331
+#: ../src/ui/dialog/inkscape-preferences.cpp:1355
 msgid "Best quality, but display may be very slow at high zooms (bitmap export always uses best quality)"
 msgstr "Visaugstākā kvalitāte, taču attēlošanas ātrums var būt ļoti zems lielos palielinājumos (tuvinājumos); (bitkartes eksports vienmēr izmanto augstāko kvalitāti)"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1334
-#: ../src/ui/dialog/inkscape-preferences.cpp:1358
+#: ../src/ui/dialog/inkscape-preferences.cpp:1333
+#: ../src/ui/dialog/inkscape-preferences.cpp:1357
 msgid "Better quality, but slower display"
 msgstr "Labāka kvalitāte, taču lēnāka attēlošana"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1336
-#: ../src/ui/dialog/inkscape-preferences.cpp:1360
+#: ../src/ui/dialog/inkscape-preferences.cpp:1335
+#: ../src/ui/dialog/inkscape-preferences.cpp:1359
 msgid "Average quality, acceptable display speed"
 msgstr "Vidēja kvalitāte, pieņemams attēlošanas ātrums"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1338
-#: ../src/ui/dialog/inkscape-preferences.cpp:1362
+#: ../src/ui/dialog/inkscape-preferences.cpp:1337
+#: ../src/ui/dialog/inkscape-preferences.cpp:1361
 msgid "Lower quality (some artifacts), but display is faster"
 msgstr "Zemāka kvalitāte (daži traucējumi), taču lielāks attēlošanas ātrums"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1340
-#: ../src/ui/dialog/inkscape-preferences.cpp:1364
+#: ../src/ui/dialog/inkscape-preferences.cpp:1339
+#: ../src/ui/dialog/inkscape-preferences.cpp:1363
 msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr "Viszemākā kvalitāte (ievērojami traucējumi), taču vislielākaiss attēlošanas ātrums"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1354
+#: ../src/ui/dialog/inkscape-preferences.cpp:1353
 msgid "Filter effects quality for display"
 msgstr "Filtru efektu kvalitāte attēlošanai uz ekrāna"
 
 #. build custom preferences tab
-#: ../src/ui/dialog/inkscape-preferences.cpp:1366
+#: ../src/ui/dialog/inkscape-preferences.cpp:1365
 #: ../src/ui/dialog/print.cpp:224
 msgid "Rendering"
 msgstr "Renderē"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1372
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
 msgid "2x2"
 msgstr "2x2"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1372
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
 msgid "4x4"
 msgstr "4x4"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1372
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
 msgid "8x8"
 msgstr "8x8"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1372
+#: ../src/ui/dialog/inkscape-preferences.cpp:1371
 msgid "16x16"
 msgstr "16x16"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1376
+#: ../src/ui/dialog/inkscape-preferences.cpp:1375
 msgid "Oversample bitmaps:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1379
+#: ../src/ui/dialog/inkscape-preferences.cpp:1378
 msgid "Automatically reload bitmaps"
 msgstr "Automātiski atsvaidzināt bitkartes attēlus"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1381
+#: ../src/ui/dialog/inkscape-preferences.cpp:1380
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr "Automātiski pārlādēt saistītos attēlus, ja fails uz diska ir mainījies"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1383
+#: ../src/ui/dialog/inkscape-preferences.cpp:1382
 msgid "_Bitmap editor:"
 msgstr "_Bitkartes redaktors:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1385
+#: ../src/ui/dialog/inkscape-preferences.cpp:1384
 msgid "Default export _resolution:"
 msgstr "Noklusētā eksporta izšķi_rtspēja"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1386
+#: ../src/ui/dialog/inkscape-preferences.cpp:1385
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr "Noklusētā bitkartes izšķirtspēja (punktos uz collu) eksporta dialoglodzinņā"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1388
+#: ../src/ui/dialog/inkscape-preferences.cpp:1387
 msgid "Resolution for Create Bitmap _Copy:"
 msgstr "Izšķirtspēja komandai 'Izveidot bitkartes kopiju':"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1389
+#: ../src/ui/dialog/inkscape-preferences.cpp:1388
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr "Izšķirtspēja komandai 'Izveidot bitkartes kopiju'"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1391
+#: ../src/ui/dialog/inkscape-preferences.cpp:1390
 msgid "Always embed"
 msgstr "Vienmēr iegult"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1391
+#: ../src/ui/dialog/inkscape-preferences.cpp:1390
 msgid "Always link"
 msgstr "Vienmēr piesaistīt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1391
+#: ../src/ui/dialog/inkscape-preferences.cpp:1390
 msgid "Ask"
 msgstr "Jautāt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1394
+#: ../src/ui/dialog/inkscape-preferences.cpp:1393
 msgid "Bitmap import:"
 msgstr "Bitkartes imports:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1397
+#: ../src/ui/dialog/inkscape-preferences.cpp:1396
 msgid "Default _import resolution:"
 msgstr "Noklusētā importa izšķirtspēja:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1398
+#: ../src/ui/dialog/inkscape-preferences.cpp:1397
 msgid "Default bitmap resolution (in dots per inch) for bitmap import"
 msgstr "Noklusētā bitkartes izšķirtspēja (punktos uz collu) bitkartes importam"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1399
+#: ../src/ui/dialog/inkscape-preferences.cpp:1398
 msgid "Override file resolution"
 msgstr "Neņemt vērā faila izšķirtspēju"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1401
+#: ../src/ui/dialog/inkscape-preferences.cpp:1400
 msgid "Use default bitmap resolution in favor of information from file"
 msgstr "Dot priekšroku noklusētajai bitkartes izšķirtspējai attiecībā pret failā esošo informāciju"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1403
+#: ../src/ui/dialog/inkscape-preferences.cpp:1402
 msgid "Bitmaps"
 msgstr "Bitkartes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1415
+#: ../src/ui/dialog/inkscape-preferences.cpp:1414
 msgid "Select a file of predefined shortcuts to use. Any customized shortcuts you create will be added seperately to "
-msgstr ""
+msgstr "Izvēlieties failu ar iepriekš definētām saīsnēm. Visas Jūsu izveidotās pielāgotās saīsnes tiks pievienotas pie"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1418
+#: ../src/ui/dialog/inkscape-preferences.cpp:1417
 msgid "Shortcut file:"
-msgstr ""
+msgstr "Saīsņu fails:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1421
+#: ../src/ui/dialog/inkscape-preferences.cpp:1420
 msgid "Search:"
 msgstr "Meklēt:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1433
+#: ../src/ui/dialog/inkscape-preferences.cpp:1432
 msgid "Shortcut"
-msgstr ""
+msgstr "Saīsne"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1434
+#: ../src/ui/dialog/inkscape-preferences.cpp:1433
 #: ../src/ui/widget/page-sizer.cpp:262
 msgid "Description"
 msgstr "Apraksts"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1475
+#: ../src/ui/dialog/inkscape-preferences.cpp:1474
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:693
 #: ../src/ui/dialog/tracedialog.cpp:812
 #: ../src/ui/widget/preferences-widget.cpp:662
 msgid "Reset"
 msgstr "Atiestatīt"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1475
+#: ../src/ui/dialog/inkscape-preferences.cpp:1474
 msgid "Remove all your customized keyboard shortcuts, and revert to the shortcuts in the shortcut file listed above"
-msgstr ""
+msgstr "Aizvākt visas Jūsu pielāgotās klaviatūras saīsnes un aizvietot ar saīsnēm ne zemāk norādītā faila"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1479
+#: ../src/ui/dialog/inkscape-preferences.cpp:1478
 msgid "Import ..."
 msgstr "Importēt ..."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1479
+#: ../src/ui/dialog/inkscape-preferences.cpp:1478
 msgid "Import custom keyboard shortcuts from a file"
-msgstr ""
+msgstr "Importēt pielāgotās klaviatūras saīsnes no faila"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1482
+#: ../src/ui/dialog/inkscape-preferences.cpp:1481
 msgid "Export ..."
 msgstr "Eksportēt ..."
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1482
+#: ../src/ui/dialog/inkscape-preferences.cpp:1481
 msgid "Export custom keyboard shortcuts to a file"
 msgstr "Eksportēt pielāgotos klaviatūras īsinājumtaustiņus failā"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1492
+#: ../src/ui/dialog/inkscape-preferences.cpp:1491
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Klaviatūras saīsnes"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1774
+#. Find this group in the tree
+#: ../src/ui/dialog/inkscape-preferences.cpp:1654
+msgid "Misc"
+msgstr "Dažādi"
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1773
 msgid "Set the main spell check language"
 msgstr "Iestatiet galveno pareizrakstības pārbaudes valodu"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1777
+#: ../src/ui/dialog/inkscape-preferences.cpp:1776
 msgid "Second language:"
 msgstr "Otrā valoda:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1778
+#: ../src/ui/dialog/inkscape-preferences.cpp:1777
 msgid "Set the second spell check language; checking will only stop on words unknown in ALL chosen languages"
 msgstr "Iestatiet otro pareizrakstības pārbaudes valodu, pārbaude apstāsies tikai pie vārdiem, kuri nav atrodami NEVIENĀ no izvēlētajām valodām"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1781
+#: ../src/ui/dialog/inkscape-preferences.cpp:1780
 msgid "Third language:"
 msgstr "Trešā valoda:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1782
+#: ../src/ui/dialog/inkscape-preferences.cpp:1781
 msgid "Set the third spell check language; checking will only stop on words unknown in ALL chosen languages"
 msgstr "Iestatiet trešo pareizrakstības pārbaudes valodu, pārbaude apstāsies tikai pie vārdiem, kuri nav atrodami NEVIENĀ no izvēlētajām valodām"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1784
+#: ../src/ui/dialog/inkscape-preferences.cpp:1783
 msgid "Ignore words with digits"
 msgstr "Neņemt vērā vārdus ar skaitļiem "
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1786
+#: ../src/ui/dialog/inkscape-preferences.cpp:1785
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr "Neņemt vērā vārdus, kas satur arī ciparus, kā piem. \"R2D2\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1788
+#: ../src/ui/dialog/inkscape-preferences.cpp:1787
 msgid "Ignore words in ALL CAPITALS"
 msgstr "Neņem vērā vārdus ar LIELAJIEM BURTIEM"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1790
+#: ../src/ui/dialog/inkscape-preferences.cpp:1789
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr "Neņem vērā vārdus, kas uzrakstīti tikai ar lielajiem burtiem, piem. \"IUPAC\""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1792
+#: ../src/ui/dialog/inkscape-preferences.cpp:1791
 msgid "Spellcheck"
 msgstr "Pareizrakstība"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1812
+#: ../src/ui/dialog/inkscape-preferences.cpp:1811
 msgid "Latency _skew:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1813
+#: ../src/ui/dialog/inkscape-preferences.cpp:1812
 msgid "Factor by which the event clock is skewed from the actual time (0.9766 on some systems)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1815
+#: ../src/ui/dialog/inkscape-preferences.cpp:1814
 msgid "Pre-render named icons"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1817
+#: ../src/ui/dialog/inkscape-preferences.cpp:1816
 msgid "When on, named icons will be rendered before displaying the ui. This is for working around bugs in GTK+ named icon notification"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1825
+#: ../src/ui/dialog/inkscape-preferences.cpp:1824
 msgid "System info"
 msgstr "Sistēmas informācija"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1829
+#: ../src/ui/dialog/inkscape-preferences.cpp:1828
 msgid "User config: "
 msgstr "Lietotāja konfigurācija:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1829
+#: ../src/ui/dialog/inkscape-preferences.cpp:1828
 msgid "Location of users configuration"
 msgstr "Lietotāja konfigurācijas atrašanās vieta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1833
+#: ../src/ui/dialog/inkscape-preferences.cpp:1832
 msgid "User preferences: "
 msgstr "Lietotāja iestatījumi:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1833
+#: ../src/ui/dialog/inkscape-preferences.cpp:1832
 msgid "Location of the users preferences file"
 msgstr "Lietotāja iestatījumu faila atrašanās vieta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1837
+#: ../src/ui/dialog/inkscape-preferences.cpp:1836
 msgid "User extensions: "
 msgstr "Lietotāja paplašinājumi:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1837
+#: ../src/ui/dialog/inkscape-preferences.cpp:1836
 msgid "Location of the users extensions"
 msgstr "Lietotāja paplašinājumu atrašanās vieta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1841
+#: ../src/ui/dialog/inkscape-preferences.cpp:1840
 msgid "User cache: "
 msgstr "Lietotāja kešatmiņa:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1841
+#: ../src/ui/dialog/inkscape-preferences.cpp:1840
 msgid "Location of users cache"
 msgstr "Lietotāja kešatmiņas atrašanās vieta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1849
+#: ../src/ui/dialog/inkscape-preferences.cpp:1848
 msgid "Temporary files: "
 msgstr "Pagaidu faili:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1849
+#: ../src/ui/dialog/inkscape-preferences.cpp:1848
 msgid "Location of the temporary files used for autosave"
 msgstr "Automātiskās saglabāšanas pagaidu failu atrašanās vieta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1853
+#: ../src/ui/dialog/inkscape-preferences.cpp:1852
 msgid "Inkscape data: "
 msgstr "Inkscape dati:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1853
+#: ../src/ui/dialog/inkscape-preferences.cpp:1852
 msgid "Location of Inkscape data"
 msgstr "Inkscape datu atrašanās vieta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1857
+#: ../src/ui/dialog/inkscape-preferences.cpp:1856
 msgid "Inkscape extensions: "
 msgstr "Inkscape paplašinājumi:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1857
+#: ../src/ui/dialog/inkscape-preferences.cpp:1856
 msgid "Location of the Inkscape extensions"
 msgstr "Inkscape paplašinājumu atrašanās vieta"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1866
+#: ../src/ui/dialog/inkscape-preferences.cpp:1865
 msgid "System data: "
 msgstr "Sistēmas dati:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1866
+#: ../src/ui/dialog/inkscape-preferences.cpp:1865
 msgid "Locations of system data"
 msgstr "Sistēmas datu atrašanās vietas"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1890
+#: ../src/ui/dialog/inkscape-preferences.cpp:1889
 msgid "Icon theme: "
 msgstr "Ikonu tēma:"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1890
+#: ../src/ui/dialog/inkscape-preferences.cpp:1889
 msgid "Locations of icon themes"
 msgstr "Ikonu tēmu atrašanās vietas"
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1892
+#: ../src/ui/dialog/inkscape-preferences.cpp:1891
 msgid "System"
 msgstr "Sistēma"
 
@@ -18159,13 +18181,7 @@ msgstr "Asis"
 
 #: ../src/ui/dialog/input.cpp:1001
 msgid "Keys"
-msgstr ""
-
-#: ../src/ui/dialog/input.cpp:1002
-#: ../src/widgets/spray-toolbar.cpp:202
-#: ../src/widgets/tweak-toolbar.cpp:272
-msgid "Mode"
-msgstr "Režīms"
+msgstr "Atslēgas"
 
 #: ../src/ui/dialog/input.cpp:1084
 msgid "A device can be 'Disabled', its co-ordinates mapped to the whole 'Screen', or to a single (usually focused) 'Window'"
@@ -18189,11 +18205,11 @@ msgstr "Spiediens"
 
 #: ../src/ui/dialog/input.cpp:1530
 msgid "X tilt"
-msgstr ""
+msgstr "X slīpums"
 
 #: ../src/ui/dialog/input.cpp:1530
 msgid "Y tilt"
-msgstr ""
+msgstr "Y slīpums"
 
 #: ../src/ui/dialog/input.cpp:1530
 #: ../src/widgets/sp-color-wheel-selector.cpp:59
@@ -18480,9 +18496,9 @@ msgid "URL:"
 msgstr "URL:"
 
 #: ../src/ui/dialog/object-properties.cpp:54
-#: ../src/ui/dialog/object-properties.cpp:265
-#: ../src/ui/dialog/object-properties.cpp:322
-#: ../src/ui/dialog/object-properties.cpp:329
+#: ../src/ui/dialog/object-properties.cpp:275
+#: ../src/ui/dialog/object-properties.cpp:332
+#: ../src/ui/dialog/object-properties.cpp:339
 msgid "_ID:"
 msgstr "_ID:"
 
@@ -18510,71 +18526,71 @@ msgstr "Ie_statīt"
 
 #: ../src/ui/dialog/object-properties.cpp:64
 msgid "_Interactivity"
-msgstr ""
+msgstr "_Interaktivitāte"
 
 #. Create the entry box for the object id
-#: ../src/ui/dialog/object-properties.cpp:114
+#: ../src/ui/dialog/object-properties.cpp:124
 msgid "The id= attribute (only letters, digits, and the characters .-_: allowed)"
 msgstr "id= atribūts (atļauti tikai burti, cipari un simboli .-_: )"
 
 #. Create the entry box for the object label
-#: ../src/ui/dialog/object-properties.cpp:134
+#: ../src/ui/dialog/object-properties.cpp:144
 msgid "A freeform label for the object"
 msgstr "Objekta iezīme brīvā formā"
 
 #. Hide
-#: ../src/ui/dialog/object-properties.cpp:183
+#: ../src/ui/dialog/object-properties.cpp:193
 msgid "Check to make the object invisible"
 msgstr "Atzīmējiet, lai paslēptu objektu"
 
 #. Lock
 #. TRANSLATORS: "Lock" is a verb here
-#: ../src/ui/dialog/object-properties.cpp:191
+#: ../src/ui/dialog/object-properties.cpp:201
 msgid "Check to make the object insensitive (not selectable by mouse)"
 msgstr "Atzīmējiet, lai padarītu objektu nejūtīgu (neatlasāmu ar peli)"
 
-#: ../src/ui/dialog/object-properties.cpp:252
-#: ../src/ui/dialog/object-properties.cpp:257
+#: ../src/ui/dialog/object-properties.cpp:262
+#: ../src/ui/dialog/object-properties.cpp:267
 msgid "Ref"
 msgstr "Ref"
 
-#: ../src/ui/dialog/object-properties.cpp:324
+#: ../src/ui/dialog/object-properties.cpp:334
 msgid "Id invalid! "
 msgstr "Nederīgs id!"
 
-#: ../src/ui/dialog/object-properties.cpp:326
+#: ../src/ui/dialog/object-properties.cpp:336
 msgid "Id exists! "
 msgstr "Id jau pastāv!"
 
-#: ../src/ui/dialog/object-properties.cpp:332
+#: ../src/ui/dialog/object-properties.cpp:342
 msgid "Set object ID"
 msgstr "Iestatīt objekta ID"
 
-#: ../src/ui/dialog/object-properties.cpp:346
+#: ../src/ui/dialog/object-properties.cpp:356
 msgid "Set object label"
 msgstr "Iestatīt objekta iezīmi"
 
-#: ../src/ui/dialog/object-properties.cpp:352
+#: ../src/ui/dialog/object-properties.cpp:362
 msgid "Set object title"
 msgstr "Iestatīt objekta nosaukumu"
 
-#: ../src/ui/dialog/object-properties.cpp:360
+#: ../src/ui/dialog/object-properties.cpp:370
 msgid "Set object description"
 msgstr "Iestatīt objekta aprakstu"
 
-#: ../src/ui/dialog/object-properties.cpp:378
+#: ../src/ui/dialog/object-properties.cpp:388
 msgid "Lock object"
 msgstr "Slēgt objektu"
 
-#: ../src/ui/dialog/object-properties.cpp:378
+#: ../src/ui/dialog/object-properties.cpp:388
 msgid "Unlock object"
 msgstr "Atslēgt objektu"
 
-#: ../src/ui/dialog/object-properties.cpp:395
+#: ../src/ui/dialog/object-properties.cpp:405
 msgid "Hide object"
 msgstr "Paslēpt objektu"
 
-#: ../src/ui/dialog/object-properties.cpp:395
+#: ../src/ui/dialog/object-properties.cpp:405
 msgid "Unhide object"
 msgstr "Rādīt objektu"
 
@@ -19476,17 +19492,17 @@ msgstr "Apmest mezglus horizontāli"
 msgid "Flip nodes vertically"
 msgstr "Apmest mezglus vertikāli"
 
-#: ../src/ui/tool/node-tool.cpp:574
+#: ../src/ui/tool/node-tool.cpp:555
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection, click to toggle object selection"
 msgstr "<b>Shift</b>: velciet, lai atlasītajam pievienotu mezglus, klikšķiniet, lai pārslēgtu objektu atlasi"
 
-#: ../src/ui/tool/node-tool.cpp:578
+#: ../src/ui/tool/node-tool.cpp:559
 msgctxt "Node tool tip"
 msgid "<b>Shift</b>: drag to add nodes to the selection"
 msgstr "<b>Shift</b>: velciet, lai pievienotu mezglus atlasītajam"
 
-#: ../src/ui/tool/node-tool.cpp:587
+#: ../src/ui/tool/node-tool.cpp:568
 #, c-format
 msgid "<b>%u of %u</b> node selected."
 msgid_plural "<b>%u of %u</b> nodes selected."
@@ -19494,34 +19510,34 @@ msgstr[0] "Izvēlēts <b>%u no %u</b>mezgliem."
 msgstr[1] "Izvēlēti <b>%u no %u</b>mezgliem."
 msgstr[2] "Izvēlēti <b>%u no %u</b>mezgliem."
 
-#: ../src/ui/tool/node-tool.cpp:592
+#: ../src/ui/tool/node-tool.cpp:573
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click to edit only this object (more: Shift)"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:598
+#: ../src/ui/tool/node-tool.cpp:579
 #, c-format
 msgctxt "Node tool tip"
 msgid "%s Drag to select nodes, click clear the selection"
 msgstr "%s Velciet, lai atlasītu mezglus; lai atceltu atlasi, uzklikšķiniet"
 
-#: ../src/ui/tool/node-tool.cpp:607
+#: ../src/ui/tool/node-tool.cpp:588
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to edit only this object"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:610
+#: ../src/ui/tool/node-tool.cpp:591
 msgctxt "Node tool tip"
 msgid "Drag to select nodes, click to clear the selection"
 msgstr "Velciet, lai atlasītu mezglus; lai atceltu atlasi, uzklikšķiniet"
 
-#: ../src/ui/tool/node-tool.cpp:615
+#: ../src/ui/tool/node-tool.cpp:596
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit, click to edit this object (more: Shift)"
 msgstr ""
 
-#: ../src/ui/tool/node-tool.cpp:618
+#: ../src/ui/tool/node-tool.cpp:599
 msgctxt "Node tool tip"
 msgid "Drag to select objects to edit"
 msgstr "Velciet, lai atlasītu labojamos objektus"
@@ -20017,7 +20033,7 @@ msgstr "Izvēlieties bitkartes redaktoru"
 
 #: ../src/ui/widget/random.cpp:84
 msgid "Reseed the random number generator; this creates a different sequence of random numbers."
-msgstr ""
+msgstr "Pārstartēt gadījuma skaitļu ģeneratoru; tiks izveidota atšķirīga gadījuma skaitļu secība."
 
 #: ../src/ui/widget/rendering-options.cpp:31
 msgid "Backend"
@@ -20041,11 +20057,11 @@ msgstr "Noklusētā izšķirtspēja renderēšanai, punktos uz collu"
 
 #: ../src/ui/widget/rendering-options.cpp:44
 msgid "Render using Cairo vector operations.  The resulting image is usually smaller in file size and can be arbitrarily scaled, but some filter effects will not be correctly rendered."
-msgstr ""
+msgstr "Renderēt izmantojot Cairo vektoru operācija. Iegūtais attēls parasti ir mazāka izmēra un ir patvaļīgi mērogojams, taču daži filtru efekti netiks izpildīti korekti."
 
 #: ../src/ui/widget/rendering-options.cpp:49
 msgid "Render everything as bitmap.  The resulting image is usually larger in file size and cannot be arbitrarily scaled without quality loss, but all objects will be rendered exactly as displayed."
-msgstr ""
+msgstr "Renderēt visu par bitkarti. Iegūtais attēls parasti ir lielāka izmēra un nav patvaļīgi mērogojams bez kvalitātes zuduma, taču visi objekti tiks renderēti tieši tā, kā ir redzami."
 
 #: ../src/ui/widget/selected-style.cpp:124
 #: ../src/ui/widget/style-swatch.cpp:119
@@ -20250,19 +20266,19 @@ msgstr "Aizvākt vilkumu"
 
 #: ../src/ui/widget/selected-style.cpp:575
 msgid "Apply last set color to fill"
-msgstr ""
+msgstr "Pielietot aizpildījumam pēdējo iestatīto krāsu"
 
 #: ../src/ui/widget/selected-style.cpp:587
 msgid "Apply last set color to stroke"
-msgstr ""
+msgstr "Pielietot vilkumam pēdējo iestatīto krāsu"
 
 #: ../src/ui/widget/selected-style.cpp:598
 msgid "Apply last selected color to fill"
-msgstr ""
+msgstr "Pielietot aizpildījumam pēdējo izvēlēto krāsu"
 
 #: ../src/ui/widget/selected-style.cpp:609
 msgid "Apply last selected color to stroke"
-msgstr ""
+msgstr "Pielietot vilkumam pēdējo izvēlēto krāsu"
 
 #: ../src/ui/widget/selected-style.cpp:635
 msgid "Invert fill"
@@ -20399,7 +20415,7 @@ msgstr "Vilkuma platums: %.5g%s"
 #: ../src/ui/widget/style-swatch.cpp:343
 #, c-format
 msgid "O: %2.0f"
-msgstr ""
+msgstr "O: %2.0f"
 
 #: ../src/ui/widget/style-swatch.cpp:348
 #, c-format
@@ -20970,7 +20986,7 @@ msgstr "Pārvērst atlasīto par ar raksta elementiem aizpildītu taisnstūri"
 
 #: ../src/verbs.cpp:2388
 msgid "Pattern to _Objects"
-msgstr "Faktūra par _objektiem"
+msgstr "Faktūru par _objektiem"
 
 #: ../src/verbs.cpp:2389
 msgid "Extract objects from a tiled pattern fill"
@@ -23127,7 +23143,7 @@ msgstr ""
 
 #: ../src/widgets/connector-toolbar.cpp:388
 msgid "Graph"
-msgstr ""
+msgstr "Grafs"
 
 #: ../src/widgets/connector-toolbar.cpp:398
 msgid "Connector Length"
@@ -23157,88 +23173,88 @@ msgstr ""
 msgid "Pattern offset"
 msgstr "Šablona nobīde"
 
-#: ../src/widgets/desktop-widget.cpp:446
+#: ../src/widgets/desktop-widget.cpp:462
 msgid "Zoom drawing if window size changes"
 msgstr "Tālummainīt attēlu, ja mainās loga izmēri"
 
-#: ../src/widgets/desktop-widget.cpp:647
+#: ../src/widgets/desktop-widget.cpp:666
 msgid "Cursor coordinates"
 msgstr "Kursora koordinātes"
 
-#: ../src/widgets/desktop-widget.cpp:673
+#: ../src/widgets/desktop-widget.cpp:692
 msgid "Z:"
 msgstr "Z:"
 
 #. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:716
+#: ../src/widgets/desktop-widget.cpp:735
 msgid "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; use selector (arrow) to move or transform them."
 msgstr "<b>Laipni lūdzam Inkscape!</b> Izmantojiet figūru zīmēšanas vai brīvrokas līdzekļus, lai izveidotu objektus; izmantojiet kursora bultiņu, lai tos pārvietotu vai pārveidotu."
 
-#: ../src/widgets/desktop-widget.cpp:797
+#: ../src/widgets/desktop-widget.cpp:823
 msgid "grayscale"
 msgstr "pelēktoņu"
 
-#: ../src/widgets/desktop-widget.cpp:798
+#: ../src/widgets/desktop-widget.cpp:824
 msgid ", grayscale"
 msgstr ", pelēktoņu"
 
-#: ../src/widgets/desktop-widget.cpp:799
+#: ../src/widgets/desktop-widget.cpp:825
 msgid "print colors preview"
 msgstr "krāsu drukas priekšskatījums"
 
-#: ../src/widgets/desktop-widget.cpp:800
+#: ../src/widgets/desktop-widget.cpp:826
 msgid ", print colors preview"
 msgstr ", krāsu drukas priekšskatījums"
 
-#: ../src/widgets/desktop-widget.cpp:801
+#: ../src/widgets/desktop-widget.cpp:827
 msgid "outline"
 msgstr "aprises"
 
-#: ../src/widgets/desktop-widget.cpp:802
+#: ../src/widgets/desktop-widget.cpp:828
 msgid "no filters"
 msgstr "bez filtriem"
 
-#: ../src/widgets/desktop-widget.cpp:829
+#: ../src/widgets/desktop-widget.cpp:855
 #, c-format
 msgid "%s%s: %d (%s%s) - Inkscape"
 msgstr "%s%s: %d (%s%s) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:831
-#: ../src/widgets/desktop-widget.cpp:835
+#: ../src/widgets/desktop-widget.cpp:857
+#: ../src/widgets/desktop-widget.cpp:861
 #, c-format
 msgid "%s%s: %d (%s) - Inkscape"
 msgstr "%s%s: %d (%s) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:837
+#: ../src/widgets/desktop-widget.cpp:863
 #, c-format
 msgid "%s%s: %d - Inkscape"
 msgstr "%s%s: %d - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:843
+#: ../src/widgets/desktop-widget.cpp:869
 #, c-format
 msgid "%s%s (%s%s) - Inkscape"
 msgstr "%s%s (%s%s) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:845
-#: ../src/widgets/desktop-widget.cpp:849
+#: ../src/widgets/desktop-widget.cpp:871
+#: ../src/widgets/desktop-widget.cpp:875
 #, c-format
 msgid "%s%s (%s) - Inkscape"
 msgstr "%s%s (%s) - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:851
+#: ../src/widgets/desktop-widget.cpp:877
 #, c-format
 msgid "%s%s - Inkscape"
 msgstr "%s%s - Inkscape"
 
-#: ../src/widgets/desktop-widget.cpp:1019
+#: ../src/widgets/desktop-widget.cpp:1045
 msgid "Color-managed display is <b>enabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1021
+#: ../src/widgets/desktop-widget.cpp:1047
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1076
+#: ../src/widgets/desktop-widget.cpp:1102
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before closing?</span>\n"
@@ -23249,12 +23265,12 @@ msgstr ""
 "\n"
 "Ja aizvērsiet nesaglabājot, visas izdarītās izmaiņas tiks zaudētas."
 
-#: ../src/widgets/desktop-widget.cpp:1086
-#: ../src/widgets/desktop-widget.cpp:1145
+#: ../src/widgets/desktop-widget.cpp:1112
+#: ../src/widgets/desktop-widget.cpp:1171
 msgid "Close _without saving"
 msgstr "Aizvērt _nesaglabājot"
 
-#: ../src/widgets/desktop-widget.cpp:1135
+#: ../src/widgets/desktop-widget.cpp:1161
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a format that may cause data loss!</span>\n"
@@ -23265,11 +23281,11 @@ msgstr ""
 "\n"
 "Vai vēlaties saglabāt šo failu kā  Inkscape SVG?"
 
-#: ../src/widgets/desktop-widget.cpp:1147
+#: ../src/widgets/desktop-widget.cpp:1173
 msgid "_Save as Inkscape SVG"
 msgstr "_Saglabāt kā Inkscape SVG"
 
-#: ../src/widgets/desktop-widget.cpp:1357
+#: ../src/widgets/desktop-widget.cpp:1383
 msgid "Note:"
 msgstr "Piezīme:"
 
@@ -23467,7 +23483,7 @@ msgstr "Izveidot krāsu pāreju vilkumā"
 
 #: ../src/widgets/gradient-toolbar.cpp:1087
 msgid "on:"
-msgstr ""
+msgstr "uz:"
 
 #: ../src/widgets/gradient-toolbar.cpp:1112
 msgid "Select"
@@ -23966,7 +23982,7 @@ msgstr "<b>Radiāla krāsu pāreja</b>"
 
 #: ../src/widgets/paint-selector.cpp:1052
 msgid "Use the <b>Node tool</b> to adjust position, scale, and rotation of the pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to create a new pattern from selection."
-msgstr ""
+msgstr "Izmantojiet <b>Mezglu rīks</b>, lai pielāgotu raksta elementu novietojumu, mērogu un pagriezienu uz audekla. Izmantojiet <b>Objekts &gt; Faktūra &gt; Objektus par faktūru</b>, lai no atlasītā izveidotu jaunu faktūru."
 
 #: ../src/widgets/paint-selector.cpp:1065
 msgid "<b>Pattern fill</b>"
@@ -24140,11 +24156,11 @@ msgstr ""
 
 #: ../src/widgets/select-toolbar.cpp:380
 msgid "Now <b>patterns</b> are <b>transformed</b> along with their objects when those are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Tagad pārveidojot objektu (pārvietojot, mērogojot, griežot vai šķiebjot) <b>faktūra</b> tiek <b>pārveidota</b>."
 
 #: ../src/widgets/select-toolbar.cpp:382
 msgid "Now <b>patterns</b> remain <b>fixed</b> when objects are transformed (moved, scaled, rotated, or skewed)."
-msgstr ""
+msgstr "Tagad pārveidojot objektu (pārvietojot, mērogojot, griežot vai šķiebjot) <b>faktūra</b> paliek <b>nemainīga</b>."
 
 #. four spinbuttons
 #: ../src/widgets/select-toolbar.cpp:500
@@ -24380,6 +24396,11 @@ msgstr "Izsmidzināt vienā ceļā"
 msgid "Spray objects in a single path"
 msgstr "Izsmidzināt objektus vienā ceļā"
 
+#: ../src/widgets/spray-toolbar.cpp:202
+#: ../src/widgets/tweak-toolbar.cpp:272
+msgid "Mode"
+msgstr "Režīms"
+
 #. Population
 #: ../src/widgets/spray-toolbar.cpp:222
 msgid "(low population)"
@@ -24491,6 +24512,12 @@ msgid "_M:"
 msgstr "_M"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:217
+#: ../src/widgets/sp-color-icc-selector.cpp:218
+#: ../src/widgets/sp-color-scales.cpp:488
+msgid "_Y:"
+msgstr "_Y:"
+
+#: ../src/widgets/sp-color-icc-selector.cpp:217
 #: ../src/widgets/sp-color-scales.cpp:491
 msgid "_K:"
 msgstr "_K"
@@ -24505,7 +24532,7 @@ msgstr "Izlabot"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:300
 msgid "Fix RGB fallback to match icc-color() value."
-msgstr ""
+msgstr "Labot RGB alternatīvo vērtību, lai atbilstu icc-color() vērtībai."
 
 #. Label
 #: ../src/widgets/sp-color-icc-selector.cpp:438
@@ -24837,12 +24864,12 @@ msgstr "Beigu marķieri tiek pievienoti ceļa vai figūras pēdējam mezglam"
 msgid "Set markers"
 msgstr "Iestatīt marķierus"
 
-#: ../src/widgets/stroke-style.cpp:1067
-#: ../src/widgets/stroke-style.cpp:1160
+#: ../src/widgets/stroke-style.cpp:1068
+#: ../src/widgets/stroke-style.cpp:1161
 msgid "Set stroke style"
 msgstr "Iestatīt vilkuma stilu"
 
-#: ../src/widgets/stroke-style.cpp:1248
+#: ../src/widgets/stroke-style.cpp:1249
 msgid "Set marker color"
 msgstr "Iestatīt marķiera krāsu"
 
@@ -25137,131 +25164,131 @@ msgstr "TBD"
 msgid "Style of Paint Bucket fill objects"
 msgstr "Krāsas spaiņa objektu aizpildījuma stils"
 
-#: ../src/widgets/toolbox.cpp:1727
+#: ../src/widgets/toolbox.cpp:1678
 msgid "Bounding box"
 msgstr "Robežrāmis"
 
-#: ../src/widgets/toolbox.cpp:1727
+#: ../src/widgets/toolbox.cpp:1678
 msgid "Snap bounding boxes"
 msgstr "Piesaistīt robežrāmjus"
 
-#: ../src/widgets/toolbox.cpp:1736
+#: ../src/widgets/toolbox.cpp:1687
 msgid "Bounding box edges"
 msgstr "Robežrāmju malas"
 
-#: ../src/widgets/toolbox.cpp:1736
+#: ../src/widgets/toolbox.cpp:1687
 msgid "Snap to edges of a bounding box"
 msgstr "Piesaistīt robežrāmju malām"
 
-#: ../src/widgets/toolbox.cpp:1745
+#: ../src/widgets/toolbox.cpp:1696
 msgid "Bounding box corners"
 msgstr "Robežrāmju stūri"
 
-#: ../src/widgets/toolbox.cpp:1745
+#: ../src/widgets/toolbox.cpp:1696
 msgid "Snap bounding box corners"
 msgstr "Piesaistīt robežrāmju stūriem"
 
-#: ../src/widgets/toolbox.cpp:1754
+#: ../src/widgets/toolbox.cpp:1705
 msgid "BBox Edge Midpoints"
 msgstr "Robežrāmju malu viduspunktiem"
 
-#: ../src/widgets/toolbox.cpp:1754
+#: ../src/widgets/toolbox.cpp:1705
 msgid "Snap midpoints of bounding box edges"
 msgstr "Piesaistīt robežrāmju malu viduspunktiem"
 
-#: ../src/widgets/toolbox.cpp:1764
+#: ../src/widgets/toolbox.cpp:1715
 msgid "BBox Centers"
 msgstr "Robežrāmju centriem"
 
-#: ../src/widgets/toolbox.cpp:1764
+#: ../src/widgets/toolbox.cpp:1715
 msgid "Snapping centers of bounding boxes"
 msgstr "Piesaistīt robežrāmju centriem"
 
-#: ../src/widgets/toolbox.cpp:1773
+#: ../src/widgets/toolbox.cpp:1724
 msgid "Snap nodes, paths, and handles"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1781
+#: ../src/widgets/toolbox.cpp:1732
 msgid "Snap to paths"
 msgstr "Piesaistīt ceļiem"
 
-#: ../src/widgets/toolbox.cpp:1790
+#: ../src/widgets/toolbox.cpp:1741
 msgid "Path intersections"
 msgstr "Ceļu krustpunkti"
 
-#: ../src/widgets/toolbox.cpp:1790
+#: ../src/widgets/toolbox.cpp:1741
 msgid "Snap to path intersections"
 msgstr "Piesaistīt ceļu krustpunktiem"
 
-#: ../src/widgets/toolbox.cpp:1799
+#: ../src/widgets/toolbox.cpp:1750
 msgid "To nodes"
 msgstr "Pie mezgliem"
 
-#: ../src/widgets/toolbox.cpp:1799
+#: ../src/widgets/toolbox.cpp:1750
 msgid "Snap cusp nodes, incl. rectangle corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1808
+#: ../src/widgets/toolbox.cpp:1759
 msgid "Smooth nodes"
 msgstr "Gludi mezgli"
 
-#: ../src/widgets/toolbox.cpp:1808
+#: ../src/widgets/toolbox.cpp:1759
 msgid "Snap smooth nodes, incl. quadrant points of ellipses"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1817
+#: ../src/widgets/toolbox.cpp:1768
 msgid "Line Midpoints"
 msgstr "Līnijas viduspunkti"
 
-#: ../src/widgets/toolbox.cpp:1817
+#: ../src/widgets/toolbox.cpp:1768
 msgid "Snap midpoints of line segments"
 msgstr "Piesaistīt līnijas posmu viduspunktus"
 
-#: ../src/widgets/toolbox.cpp:1826
+#: ../src/widgets/toolbox.cpp:1777
 msgid "Others"
 msgstr "Citi"
 
-#: ../src/widgets/toolbox.cpp:1826
+#: ../src/widgets/toolbox.cpp:1777
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1834
+#: ../src/widgets/toolbox.cpp:1785
 msgid "Object Centers"
 msgstr "Objekta centri"
 
-#: ../src/widgets/toolbox.cpp:1834
+#: ../src/widgets/toolbox.cpp:1785
 msgid "Snap centers of objects"
 msgstr "Piesaistīt objektu centrus"
 
-#: ../src/widgets/toolbox.cpp:1843
+#: ../src/widgets/toolbox.cpp:1794
 msgid "Rotation Centers"
 msgstr "Griešanās centrs"
 
-#: ../src/widgets/toolbox.cpp:1843
+#: ../src/widgets/toolbox.cpp:1794
 msgid "Snap an item's rotation center"
 msgstr "Piesaistīt objekta griešanās centram"
 
-#: ../src/widgets/toolbox.cpp:1852
+#: ../src/widgets/toolbox.cpp:1803
 msgid "Text baseline"
 msgstr "Teksta bāzes līnija"
 
-#: ../src/widgets/toolbox.cpp:1852
+#: ../src/widgets/toolbox.cpp:1803
 msgid "Snap text anchors and baselines"
 msgstr "Piesaistīt teksta enkurus un bāzes līnijas"
 
-#: ../src/widgets/toolbox.cpp:1862
+#: ../src/widgets/toolbox.cpp:1813
 msgid "Page border"
 msgstr "Lapas robeža"
 
-#: ../src/widgets/toolbox.cpp:1862
+#: ../src/widgets/toolbox.cpp:1813
 msgid "Snap to the page border"
 msgstr "Piesaistīt lapas robežām"
 
-#: ../src/widgets/toolbox.cpp:1871
+#: ../src/widgets/toolbox.cpp:1822
 msgid "Snap to grids"
 msgstr "Piesaistīt režģim"
 
-#: ../src/widgets/toolbox.cpp:1880
+#: ../src/widgets/toolbox.cpp:1831
 msgid "Snap guides"
 msgstr "Piesaistes palīglīnijas"
 
@@ -25393,7 +25420,7 @@ msgstr "Drebošu krāsu režīms"
 
 #: ../src/widgets/tweak-toolbar.cpp:260
 msgid "Jitter the colors of selected objects"
-msgstr ""
+msgstr "Satricināt atlasītā objekta krāsas"
 
 #: ../src/widgets/tweak-toolbar.cpp:266
 msgid "Blur mode"
@@ -25409,7 +25436,7 @@ msgstr "Kanāli:"
 
 #: ../src/widgets/tweak-toolbar.cpp:306
 msgid "In color mode, act on objects' hue"
-msgstr ""
+msgstr "Krāsu režīmā iedarboties uz objekta nokrāsu"
 
 #. TRANSLATORS:  "H" here stands for hue
 #: ../src/widgets/tweak-toolbar.cpp:310
@@ -25418,7 +25445,7 @@ msgstr "H"
 
 #: ../src/widgets/tweak-toolbar.cpp:322
 msgid "In color mode, act on objects' saturation"
-msgstr ""
+msgstr "Krāsu režīmā iedarboties uz objekta piesātinājumu"
 
 #. TRANSLATORS: "S" here stands for Saturation
 #: ../src/widgets/tweak-toolbar.cpp:326
@@ -25427,7 +25454,7 @@ msgstr "S"
 
 #: ../src/widgets/tweak-toolbar.cpp:338
 msgid "In color mode, act on objects' lightness"
-msgstr ""
+msgstr "Krāsu režīmā iedarboties uz objekta gaišumu"
 
 #. TRANSLATORS: "L" here stands for Lightness
 #: ../src/widgets/tweak-toolbar.cpp:342
@@ -25436,7 +25463,7 @@ msgstr "L"
 
 #: ../src/widgets/tweak-toolbar.cpp:354
 msgid "In color mode, act on objects' opacity"
-msgstr ""
+msgstr "Krāsu režīmā iedarboties uz objekta necauspīdīgumu"
 
 #. TRANSLATORS: "O" here stands for Opacity
 #: ../src/widgets/tweak-toolbar.cpp:358
@@ -25588,17 +25615,17 @@ msgstr ""
 #: ../share/extensions/gcodetools.py:4040
 #, python-format
 msgid "Orientation points for '%s' layer have not been found! Please add orientation points using Orientation tab!"
-msgstr ""
+msgstr "Orientācijas punkti slānim '%s' nav atrasti! Lūdzu, pievienojiet orientācijas punktus izmantojot šķirkli Orientācija!"
 
 #: ../share/extensions/gcodetools.py:4047
 #, python-format
 msgid "There are more than one orientation point groups in '%s' layer"
-msgstr ""
+msgstr "Slānī '%s' ir atrodama vairāk kā viena orientācijas punktu grupa"
 
 #: ../share/extensions/gcodetools.py:4078
 #: ../share/extensions/gcodetools.py:4080
 msgid "Orientation points are wrong! (if there are two orientation points they should not be the same. If there are three orientation points they should not be in a straight line.)"
-msgstr ""
+msgstr "Orientācijas punkti nav derīgi! (ja ir divi orientācijas punkti, tie nedrīkst būt vienādi. Ja ir trīs orientācijas punkti - tie nedrīkst atrasties uz vienas taisnes.)"
 
 #: ../share/extensions/gcodetools.py:4250
 #, python-format
@@ -25625,17 +25652,17 @@ msgstr "Dokumentā nav slāņu! Pievienojiet vismaz vienu slāni, izmantojot sl�
 
 #: ../share/extensions/gcodetools.py:4294
 msgid "Warning! There are some paths in the root of the document, but not in any layer! Using bottom-most layer for them."
-msgstr ""
+msgstr "Uzmanību! Dokumentā ir atrodami daži ceļi, kas neatrodas slāņos! Minētie ceļi ievietoti zemākā līmeņa slānī."
 
 #: ../share/extensions/gcodetools.py:4371
 #, python-format
 msgid "Warning! Tool's and default tool's parameter's (%s) types are not the same ( type('%s') != type('%s') )."
-msgstr ""
+msgstr "Uzmanību! Rīka un noklusētā rīka parametru tipi (%s) nav vienādi ( type('%s') != type('%s') )."
 
 #: ../share/extensions/gcodetools.py:4374
 #, python-format
 msgid "Warning! Tool has parameter that default tool has not ( '%s': '%s' )."
-msgstr ""
+msgstr "Uzmanību! Rīkam ir parametrs, kāds nav noklusētajam rīkam ( '%s': '%s' )."
 
 #: ../share/extensions/gcodetools.py:4388
 #, python-format
@@ -25645,12 +25672,12 @@ msgstr "Slānis '%s' satur vairāk kā vienu rīku!"
 #: ../share/extensions/gcodetools.py:4391
 #, python-format
 msgid "Can not find tool for '%s' layer! Please add one with Tools library tab!"
-msgstr ""
+msgstr "Slānim '%s' nav atrodams rīks! Lūdzu pievienojiet vienu no Rīku bibliotēkas šķirkļa!"
 
 #: ../share/extensions/gcodetools.py:4553
 #: ../share/extensions/gcodetools.py:4708
 msgid "Warning: One or more paths do not have 'd' parameter, try to Ungroup (Ctrl+Shift+G) and Object to Path (Ctrl+Shift+C)!"
-msgstr ""
+msgstr "Uzmanību: vienam vai vairākiem ceļiem nav 'd' parametra, mēģiniet Atgrupēt (Ctrl+Shift+G) un pārveidot Objektu par ceļu (Ctrl+Shift+C)!"
 
 #: ../share/extensions/gcodetools.py:4667
 msgid "Noting is selected. Please select something to convert to drill point (dxfpoint) or clear point sign."
@@ -25671,11 +25698,11 @@ msgstr "Rīka diametram jābūt >0, taču rīka diametrs slānī '%s' tads nav!"
 #: ../share/extensions/gcodetools.py:4956
 #: ../share/extensions/gcodetools.py:5011
 msgid "Warning: omitting non-path"
-msgstr ""
+msgstr "Uzmanību: izlaiž ne-ceļu "
 
 #: ../share/extensions/gcodetools.py:5511
 msgid "Please select at least one path to engrave and run again."
-msgstr ""
+msgstr "Lūdzu, izvēlieties vismaz vienu gravējamu ceļu un palaidiet vēlreiz."
 
 #: ../share/extensions/gcodetools.py:5519
 msgid "Unknown unit selected. mm assumed"
@@ -25693,7 +25720,7 @@ msgstr "csp_normalised_normal kļūda. Skatīties žurnālā."
 
 #: ../share/extensions/gcodetools.py:5804
 msgid "No need to engrave sharp angles."
-msgstr ""
+msgstr "Asus leņķus gravēt nav nepieciešams."
 
 #: ../share/extensions/gcodetools.py:5848
 msgid "Active layer already has orientation points! Remove them or select another layer!"
@@ -25744,7 +25771,7 @@ msgstr ""
 
 #: ../share/extensions/gcodetools.py:6672
 msgid "Cutting tool has not been defined! A default tool has been automatically added."
-msgstr ""
+msgstr "Griešanas rīks nav noteikts! Automātiski pievienots noklusētais rīks."
 
 #: ../share/extensions/gimp_xcf.py:39
 msgid "Gimp must be installed and set in your path variable."
@@ -25794,6 +25821,8 @@ msgid ""
 "The JessyInk script is not installed in this SVG file or has a different version than the JessyInk extensions. Please select \"install/update...\" from the \"JessyInk\" sub-menu of the \"Extensions\" menu to install or update the JessyInk script.\n"
 "\n"
 msgstr ""
+"JessyInk skripts nav uzstādīts šajā SVG failā vai arī tā versija atšķiras no JessyInk paplašinājuma versijas. Lūdzu izvēlieties \"uzstādīt/atsvaidzināt...\" no \"JessyInk\" apakšizvēlnes izvēlnē \"Paplašinājumi\", lai uzstādītu vai atsvaidzinātu JessyInk skriptu.\n"
+"\n"
 
 #: ../share/extensions/jessyInk_autoTexts.py:48
 msgid ""
@@ -25979,6 +26008,8 @@ msgid ""
 "The 'stretch' option requires that the pattern must have non-zero width :\n"
 "Please edit the pattern width."
 msgstr ""
+"Iespējai 'izstiept' ie nepieciešams, lai raksta elementa platums nebūt vienāds ar 0 :\n"
+"lūdzu, izlabojiet raksta elementa platumu."
 
 #: ../share/extensions/pathmodifier.py:237
 #, python-format
@@ -25987,7 +26018,7 @@ msgstr "Lūdzu, vispirms pārvērtiet objektus par ceļiem!  (Iegūts [%s].)"
 
 #: ../share/extensions/perspective.py:45
 msgid "Failed to import the numpy or numpy.linalg modules. These modules are required by this extension. Please install them and try again.  On a Debian-like system this can be done with the command, sudo apt-get install python-numpy."
-msgstr ""
+msgstr "Neizdevās importēt numpy vai numpy.linalg moduļus. Šie moduļi ir nepieciešami šim paplašinājumam. Uzstādiet tos un mēģiniet vēlreiz. Debian-veidīgā sistēmā tas ir paveicams ar komandu sudo apt-get install python-numpy."
 
 #: ../share/extensions/perspective.py:60
 #: ../share/extensions/summersnight.py:51
@@ -26037,11 +26068,11 @@ msgstr "Neizdevās importēt numpy moduli, kas ir nepieciešams šim paplašinā
 
 #: ../share/extensions/polyhedron_3d.py:336
 msgid "No face data found in specified file."
-msgstr ""
+msgstr "Norādītajā failā nav atrodami šķautņu dati."
 
 #: ../share/extensions/polyhedron_3d.py:337
 msgid "Try selecting \"Edge Specified\" in the Model File tab.\n"
-msgstr ""
+msgstr "Mēģiniet izvēlēties \"Norādīta mala\" Modeļa fails šķirklī.\n"
 
 #: ../share/extensions/polyhedron_3d.py:343
 msgid "No edge data found in specified file."
@@ -26049,12 +26080,12 @@ msgstr "Norādītajā failā nav atrasti malu dati."
 
 #: ../share/extensions/polyhedron_3d.py:344
 msgid "Try selecting \"Face Specified\" in the Model File tab.\n"
-msgstr ""
+msgstr "Mēģiniet izvēlēties \"Norādīta šķautne\" Modeļa fails šķirklī.\n"
 
 #. we cannot generate a list of faces from the edges without a lot of computation
 #: ../share/extensions/polyhedron_3d.py:519
 msgid "Face Data Not Found. Ensure file contains face data, and check the file is imported as \"Face-Specified\" under the \"Model File\" tab.\n"
-msgstr ""
+msgstr "Šķautņu dati nav atrasti. Pārliecinieties, ka fails satur šķautņu datus un pārliecinieties, ka fails ir importēts kā \"Norādīta šķautne\" šķirklī Modeļa fails.\n"
 
 #: ../share/extensions/polyhedron_3d.py:521
 msgid "Internal Error. No view type selected\n"
@@ -26128,7 +26159,7 @@ msgstr ""
 msgid "Could not locate file: %s"
 msgstr "Nav iespējams atrast failu: %s"
 
-#: ../share/extensions/uniconv-ext.py:55
+#: ../share/extensions/uniconv-ext.py:56
 #: ../share/extensions/uniconv_output.py:122
 msgid "You need to install the UniConvertor software.\n"
 msgstr "Jums nepieciešams uzstādīt UniConvertor programmatūru.\n"
@@ -26144,16 +26175,16 @@ msgstr "Ir jāizvēlas vismaz divi elementi."
 
 #: ../share/extensions/webslicer_create_group.py:57
 msgid "You must create and select some \"Slicer rectangles\" before trying to group."
-msgstr ""
+msgstr "Jums ir jāizveido un jāatlasa daži \"Griezēja taisnstūri\" pirms pielietošanas grupai."
 
 #: ../share/extensions/webslicer_create_group.py:72
 msgid "You must to select some \"Slicer rectangles\" or other \"Layout groups\"."
-msgstr ""
+msgstr "Jums ir jāatlasa daži \"Griezēja taisnstūri\" vai citas \"Izkārtojuma grupas\"."
 
 #: ../share/extensions/webslicer_create_group.py:76
 #, python-format
 msgid "Oops... The element \"%s\" is not in the Web Slicer layer"
-msgstr ""
+msgstr "Ak vai... Elements \"%s\" neatrodas tīmekļa griezēja slānī"
 
 #: ../share/extensions/webslicer_export.py:57
 msgid "You must give a directory to export the slices."
@@ -26801,11 +26832,11 @@ msgstr "Desktop Cutting Plotter"
 
 #: ../share/extensions/dxf_outlines.inx.h:3
 msgid "use ROBO-Master type of spline output"
-msgstr ""
+msgstr "izmantot ROBO-Master līkņu izvades tipu"
 
 #: ../share/extensions/dxf_outlines.inx.h:4
 msgid "use LWPOLYLINE type of line output"
-msgstr ""
+msgstr "izmantot LWPOLYLINE tipu līniju izvadei"
 
 #: ../share/extensions/dxf_outlines.inx.h:5
 msgid "Base unit"
@@ -26847,6 +26878,15 @@ msgid ""
 "- LWPOLYLINE output is a multiply-connected polyline, disable it to use a legacy version of the LINE output.\n"
 "- You can choose to export all layers or only visible ones"
 msgstr ""
+"- AutoCAD Release 14 DXF formāts.\n"
+"- Pamata vienības parametrs norāda vienības, kurās tiek izvadītas koordinātes (90 px = 1 colla).\n"
+"- Atbalstītie elementu tipi\n"
+"    - ceļi (līnijas un līknes)\n"
+"    - taisnstūri\n"
+"    - kloni (šķērsatsauces uz oriģinālu tiek zaudētas)\n"
+"- ROBO-Master līkņu izvade ir specifiskas līknes, ko var izmantot tikai ar ROBO-Master un AutoDesk skatītājiem, nevis Inkscape.\n"
+"- LWPOLYLINE izvade ir daudzkārtīgi savienota līnija; atslēdziet to, lai izmantotu vēsturisko LINE izvades versiju.\n"
+"- Varat izvēlēties, vai izvadīt visus slāņus vai tikai redzamos."
 
 #: ../share/extensions/dxf_outlines.inx.h:30
 msgid "Desktop Cutting Plotter (AutoCAD DXF R14) (*.dxf)"
@@ -27052,7 +27092,7 @@ msgstr "Izmantot polārās koordinātes"
 #: ../share/extensions/funcplot.inx.h:11
 #: ../share/extensions/param_curves.inx.h:12
 msgid "When set, Isotropic scaling uses smallest of width/xrange or height/yrange"
-msgstr ""
+msgstr "Ja iestatīts, izotropiskā mērogošana izmanto mazāko  no platums/x-diapazons vai augstums/y-diapazons"
 
 #: ../share/extensions/funcplot.inx.h:12
 #: ../share/extensions/param_curves.inx.h:13
@@ -27112,9 +27152,8 @@ msgid "First derivative:"
 msgstr "Pirmās kārtas atvasinājums:"
 
 #: ../share/extensions/funcplot.inx.h:34
-#, fuzzy
 msgid "Clip with rectangle"
-msgstr "Taisnstūra platums"
+msgstr "Izgriezt ar taisnstūri"
 
 #: ../share/extensions/funcplot.inx.h:35
 #: ../share/extensions/param_curves.inx.h:28
@@ -27274,7 +27313,7 @@ msgstr ""
 #: ../share/extensions/gcodetools_lathe.inx.h:14
 #: ../share/extensions/gcodetools_path_to_gcode.inx.h:3
 msgid "Maximum splitting depth:"
-msgstr ""
+msgstr "Maksimālais šķelšanas dziļums:"
 
 #: ../share/extensions/gcodetools_area.inx.h:22
 #: ../share/extensions/gcodetools_lathe.inx.h:15
@@ -27502,7 +27541,6 @@ msgid "Check for Gcodetools latest stable version and try to get the updates."
 msgstr "Pārbaudiet, vai Gcodetools ir jaunākā stabilā versija un mēģiniet saņemt atjauninājumus."
 
 #: ../share/extensions/gcodetools_dxf_points.inx.h:1
-#, fuzzy
 msgid "DXF Points"
 msgstr "DXF punkti"
 
@@ -27528,7 +27566,7 @@ msgstr "iestatīt kā dxfpoint un zīmēt bultu"
 
 #: ../share/extensions/gcodetools_dxf_points.inx.h:7
 msgid "clear dxfpoint sign"
-msgstr ""
+msgstr "attīrīt dxfpoint zīmi"
 
 #: ../share/extensions/gcodetools_engraving.inx.h:1
 msgid "Engraving"
@@ -27540,7 +27578,7 @@ msgstr ""
 
 #: ../share/extensions/gcodetools_engraving.inx.h:3
 msgid "Maximum distance for engraving (mm/inch):"
-msgstr ""
+msgstr "Maksimālais gravēšanas attālums (mm/collas):"
 
 #: ../share/extensions/gcodetools_engraving.inx.h:4
 msgid "Accuracy factor (2 low to 10 high):"
@@ -27548,7 +27586,7 @@ msgstr "Precizitāte (2-zema, 10- augsta):"
 
 #: ../share/extensions/gcodetools_engraving.inx.h:5
 msgid "Draw additional graphics to see engraving path"
-msgstr ""
+msgstr "Zīmēt papildu grafiku, lai redzētu gravēšanas ceļu"
 
 #: ../share/extensions/gcodetools_engraving.inx.h:6
 msgid "This function creates path to engrave letters or any shape with sharp angles. Cutter's depth as a function of radius is defined by the tool. Depth may be any Python expression. For instance: cone....(45 degrees)......................: w cone....(height/diameter=10/3)..: 10*w/3 sphere..(radius r)...........................: math.sqrt(max(0,r**2-w**2)) ellipse.(minor axis r, major 4r).....: math.sqrt(max(0,r**2-w**2))*4"
@@ -27604,12 +27642,12 @@ msgstr "Z dziļums:"
 #: ../share/extensions/gcodetools_graffiti.inx.h:14
 #: ../share/extensions/gcodetools_orientation_points.inx.h:7
 msgid "2-points mode (move and rotate, maintained aspect ratio X/Y)"
-msgstr ""
+msgstr "2 punktu režīms (pārvietot un pagriezt, saglabājot attiecību X/Y)"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:15
 #: ../share/extensions/gcodetools_orientation_points.inx.h:8
 msgid "3-points mode (move, rotate and mirror, different X/Y scale)"
-msgstr ""
+msgstr "3 punktu režīms (pārvietot, pagriezt un spoguļattēlot, atšķirīgs X/Y mērogs)"
 
 #: ../share/extensions/gcodetools_graffiti.inx.h:16
 #: ../share/extensions/gcodetools_orientation_points.inx.h:9
@@ -27664,12 +27702,11 @@ msgstr ""
 
 #: ../share/extensions/gcodetools_lathe.inx.h:11
 msgid "This function modifies path so it will be able to be cut with the rectangular cutter."
-msgstr ""
+msgstr "Šī funkcija modificē ceļu, padarot iespējamu griešanu ar taisnstūrveida griezni."
 
 #: ../share/extensions/gcodetools_orientation_points.inx.h:1
-#, fuzzy
 msgid "Orientation points"
-msgstr "Novietojums"
+msgstr "Orientācijas punkti"
 
 #: ../share/extensions/gcodetools_prepare_path_for_plasma.inx.h:1
 msgid "Prepare path for plasma"
@@ -28308,7 +28345,7 @@ msgstr "Nav vienības"
 
 #: ../share/extensions/interp_att_g.inx.h:28
 msgid "This effect applies a value for any interpolatable attribute for all elements inside the selected group or for all elements in a multiple selection."
-msgstr ""
+msgstr "Šis efekts pielieto vērtību ikvienam interpolējamas atribūtam visiem elementiem atlasītajā grupā vai arī visiem atlasīto objektu elementiem."
 
 #: ../share/extensions/interp.inx.h:1
 msgid "Interpolate"
@@ -28838,7 +28875,7 @@ msgstr ""
 
 #: ../share/extensions/layout_nup.inx.h:18
 msgid "Place holder"
-msgstr ""
+msgstr "Vietturis"
 
 #: ../share/extensions/layout_nup.inx.h:19
 msgid "Cutting marks"
@@ -28873,6 +28910,16 @@ msgid ""
 "    * Layout padding: inner padding for each part of the layout.\n"
 "      "
 msgstr ""
+"\n"
+"Parametri:\n"
+"    * Lapas izmērs: platums un augstums.\n"
+"    * Lapas malas: papildu laukums apkārt katrai lapai.\n"
+"    * Izkārtojuma rindas un slejas.\n"
+"    * Izkārtojuma izmērs: platums un augstums, automātiski aprēķināts, ja viens ir 0.\n"
+"    * Automātiski aprēķināt izkārtojuma izmēru: neizmantot izkārtojuma izmēru vērtības.\n"
+"    * Izkārtojuma malas: tukšs laukums apkārt katrai izkārtojuma daļai.\n"
+"    * Izkārtojuma papildinājums: iekšējais papildinājums katrai izkārtojuma daļai.\n"
+"      "
 
 #: ../share/extensions/layout_nup.inx.h:36
 #: ../share/extensions/perfectboundcover.inx.h:20
@@ -28895,7 +28942,7 @@ msgstr "Aksioma:"
 
 #: ../share/extensions/lindenmayer.inx.h:4
 msgid "Rules:"
-msgstr ""
+msgstr "Nosacījumi:"
 
 #: ../share/extensions/lindenmayer.inx.h:6
 msgid "Step length (px):"
@@ -29750,7 +29797,7 @@ msgstr "Rādīt visu fontu sarakstu"
 
 #: ../share/extensions/replace_font.inx.h:7
 msgid "Choose this tab if you would like to see a list of the fonts used/found."
-msgstr ""
+msgstr "Izvēlieties šo šķirkli, ja vēlaties aplūkot izmantoto/atrasto fontu sarakstu."
 
 #: ../share/extensions/replace_font.inx.h:8
 msgid "Work on:"
@@ -29867,7 +29914,7 @@ msgstr "Pārvērst CSS atribūtus par XML atribūtiem"
 
 #: ../share/extensions/scour.inx.h:5
 msgid "Group collapsing"
-msgstr ""
+msgstr "Grupas savēršana"
 
 #: ../share/extensions/scour.inx.h:6
 msgid "Create groups for similar attributes"
@@ -29895,7 +29942,7 @@ msgstr "Apiet renderētāja kļūdas"
 
 #: ../share/extensions/scour.inx.h:12
 msgid "Enable viewboxing"
-msgstr ""
+msgstr "Ieslēgt skatrāmi"
 
 #: ../share/extensions/scour.inx.h:13
 msgid "Remove the xml declaration"
@@ -29962,6 +30009,19 @@ msgid ""
 "    * Number of significant digits for coords: all coordinates are output with that number of significant digits. For example, if 3 is specified, the coordinate 3.5153 is output as 3.51 and the coordinate 471.55 is output as 472.\n"
 "    * XML indentation (pretty-printing): either None for no indentation, Space to use one space per nesting level, or Tab to use one tab per nesting level."
 msgstr ""
+"Šis paplašinājums optimizē SVG failu atbilstoši sekojošām iespējām:\n"
+"    * Saīsināt krāsu nosaukumus: pārvērš visas krāsas #RRGGBB vai #RGB formātā.\n"
+"    * Pārvērst CSS atribūtus par XML atribūtiem: pārvērst stilus no &lt;style&gt; tagiem un inline style=\"\" deklarācijām par XML atribūtiem.\n"
+"    * Grupu savēršana: aizvāc nevajadzīgus &lt;g&gt; elementus, paaugstinot to saturu par vienu līmeni. Nepieciešams iestatīts \"Aizvākt neizmantotos ID nosaukumus no elementiem\".\n"
+"    * Izveidot līdzīgu atribūtu grupas: izveidot &lt;g&gt; elementus elementu kopām ar vismaz vienu kopēju atribūtu (piem. aizpildījuma krasa, vilkuma necauspīdīgums, ...).\n"
+"    * Iegult rastrus: iegult rastra attēlus kā base64-kodētu datu URL.\n"
+"    * Saglabāt redaktora datus: neaizvākt Inkscape, Sodipodi vai Adobe Illustrator elementus un atribūtus.\n"
+"    * Aizvākt metadatus: aizvākt &lt;metadata&gt; tagus kopā ar visu tajos esošo informāciju, kas var saturēt licences metadatus, alternatīvās versijas pārlūkiem  bez SVG atbalsta, utt.\n"
+"    * Aizvākt komentārus: aizvākt &lt;!-- --&gt; tagus.\n"
+"    * Apstrādāt renderēšanas kļūdas: izveido nedaudz lielāku SVG failu, taču apiet kļūdu librsvg renderētājā, ko izmanto Eye of GNOME un dažas citas lietotnes.\n"
+"    * Izmantot skatrāmi: mērogot attēlu 100%/100% un izmantot skatrāmi.\n"
+"    * Zīmīgo ciparu skaits koordinātēm: visas koordinātes tiks izvadītas ar norādīto zīmīgo ciparu skaitu. Piemēram, ja ir norādīts 3, koordināte 3.5153 tiks izvadīta kā 3.51 un koordināte 471.55 - kā 472.\n"
+"    * XML atkāpes (smukā druka): vai nu Nav, lai formatētu bez atkāpēm, Tukšums - lai izmantotu vienu tukšumu katram apakšlīmenim vai Tab, lai izmantotu vienu tabulatoru katram apakšlīmenim."
 
 #: ../share/extensions/scour.inx.h:40
 msgid "Help (Ids)"
@@ -29976,6 +30036,12 @@ msgid ""
 "    * Preserve these ID names, comma-separated: you can use this in conjunction with the other preserve options if you wish to preserve some more specific ID names.\n"
 "    * Preserve ID names starting with: usually, optimised SVG output removes all unused ID names, but if all of your preserved ID names start with the same prefix (e.g. #flag-mx, #flag-pt), you may use this option."
 msgstr ""
+"ID īpašie iestatījumi:\n"
+"    * Aizvākt no elementiem neizmantotos ID nosaukumus: aizvākt visus neizmantotos ID atribūtus.\n"
+"    * Saīsināt ID: saīsināt visu ID atribūtu nosaukumu garumus, piešķirot īsākos visbiežāk izmantotajiem elementiem. Piemēram, #linearGradient5621, ko izmanto 100 reizes, var kļūt par #a.\n"
+"    * Saglabāt lietotāja izveidotos ID nosaukumus, kas nebeidzas ar skaitli: parasti optimizētā SVG izvade tos aizvāc, taču ja tie ir nepieciešami atsaucēm (piem. #middledot), varat izmantot šo iestatījumu.\n"
+"    * Saglabāt šos, ar komatu atdalītos ID nosaukumus: varat izmantot šo kopā ar citiem saglabāšanas iestatījumiem, ja vēlaties saglabāt kādus specifiskus ID nosaukumus.\n"
+"    * Saglabāt ID nosaukumus, kas sākas ar: parasti optimizētā SVG izvade aizvāc visu neizmantoto ID nosaukumus, taču, ja visu Jūsu saglabājamo ID nosaukumi sākas ar vienu un to pašu virkni (piem. #flag-mx, #flag-pt), varat izmantot šo iestatījumu."
 
 #: ../share/extensions/scour.inx.h:47
 msgid "Optimized SVG (*.svg)"
@@ -29987,19 +30053,19 @@ msgstr "Mērogojamo vektoru grafika"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:1
 msgid "1 - Setup Typography Canvas"
-msgstr ""
+msgstr "1 - Izveidot tipogrāfijas audeklu"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:2
 msgid "Em-size:"
-msgstr ""
+msgstr "Em izmērs:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:3
 msgid "Ascender:"
-msgstr ""
+msgstr "Augšgarums:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:4
 msgid "Caps Height:"
-msgstr ""
+msgstr "Lielo burtu augstums:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:5
 msgid "X-Height:"
@@ -30007,7 +30073,7 @@ msgstr "X-augstums:"
 
 #: ../share/extensions/setup_typography_canvas.inx.h:6
 msgid "Descender:"
-msgstr ""
+msgstr "Apakšgarums:"
 
 #: ../share/extensions/sk1_input.inx.h:1
 msgid "sK1 vector graphics files input"
@@ -30353,7 +30419,7 @@ msgstr "Vertikālais punkts:"
 
 #: ../share/extensions/text_flipcase.inx.h:1
 msgid "fLIP cASE"
-msgstr ""
+msgstr "aPGRIEZT kAPITALIZĀCIJU"
 
 #: ../share/extensions/text_flipcase.inx.h:3
 #: ../share/extensions/text_lowercase.inx.h:3
@@ -30374,11 +30440,11 @@ msgstr "dAžāDa LielUMa"
 
 #: ../share/extensions/text_sentencecase.inx.h:1
 msgid "Sentence case"
-msgstr ""
+msgstr "Kā teikumā "
 
 #: ../share/extensions/text_titlecase.inx.h:1
 msgid "Title Case"
-msgstr ""
+msgstr "Virsraksta Kapitalizācija"
 
 #: ../share/extensions/text_uppercase.inx.h:1
 msgid "UPPERCASE"
@@ -30521,7 +30587,7 @@ msgstr ""
 
 #: ../share/extensions/webslicer_create_group.inx.h:12
 msgid "Layout Group is only about to help a better code generation (if you need it). To use this, you must to select some \"Slicer rectangles\" first."
-msgstr ""
+msgstr "Izkārtojuma grupas mērķis ir tikai veicināt labāka koda veidošanai (ja tas nepieciešams). Lai to izmantotu, Jums vispirms ir jāizvēlas daži \"Griezēja taisnstūri\"."
 
 #: ../share/extensions/webslicer_create_group.inx.h:13
 #: ../share/extensions/webslicer_create_rect.inx.h:41
@@ -30533,11 +30599,11 @@ msgstr "Tīmeklis"
 
 #: ../share/extensions/webslicer_create_group.inx.h:14
 msgid "Slicer"
-msgstr ""
+msgstr "Griezējs"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:1
 msgid "Create a slicer rectangle"
-msgstr ""
+msgstr "Izveidot griezēja taisnstūri"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:4
 msgid "DPI:"
@@ -30586,7 +30652,7 @@ msgstr "Iestatījumi HTML eksportam"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:21
 msgid "Layout disposition:"
-msgstr ""
+msgstr "Izkārtojuma izvietojums"
 
 #: ../share/extensions/webslicer_create_rect.inx.h:22
 msgid "Positioned html block element with the image as Background"
@@ -30666,7 +30732,7 @@ msgstr "Apakšā un pa labi"
 
 #: ../share/extensions/webslicer_export.inx.h:1
 msgid "Export layout pieces and HTML+CSS code"
-msgstr ""
+msgstr "Eksportēt izkārtojuma elementus un HTML+CSS kodu"
 
 #: ../share/extensions/webslicer_export.inx.h:3
 msgid "Directory path to export:"
@@ -30682,7 +30748,7 @@ msgstr "Ar HTML un CSS"
 
 #: ../share/extensions/webslicer_export.inx.h:7
 msgid "All sliced images, and optionally - code, will be generated as you had configured and saved to one directory."
-msgstr ""
+msgstr "Visi sagrieztie attēli un, ja pieprasīts - arī kods, tiks izveidots atbilstoši Jūsu norādītajiem iestatījumiem un saglabāts vienā mapē."
 
 #: ../share/extensions/web-set-att.inx.h:1
 msgid "Set Attributes"
@@ -30707,7 +30773,7 @@ msgstr ""
 
 #: ../share/extensions/web-set-att.inx.h:7
 msgid "Source and destination of setting:"
-msgstr ""
+msgstr "Iestatījuma avots un mērķis:"
 
 #: ../share/extensions/web-set-att.inx.h:8
 #: ../share/extensions/web-transmit-att.inx.h:7
@@ -30801,35 +30867,35 @@ msgstr "Ja vēlaties iestatīt vairāk nekā vienu atribūtu, tie ir jāatdala t
 
 #: ../share/extensions/web-transmit-att.inx.h:1
 msgid "Transmit Attributes"
-msgstr ""
+msgstr "Nodot atribūtus"
 
 #: ../share/extensions/web-transmit-att.inx.h:3
 msgid "Attribute to transmit:"
-msgstr ""
+msgstr "Nododamais atribūts:"
 
 #: ../share/extensions/web-transmit-att.inx.h:4
 msgid "When to transmit:"
-msgstr ""
+msgstr "Kad nodot:"
 
 #: ../share/extensions/web-transmit-att.inx.h:6
 msgid "Source and destination of transmitting:"
-msgstr ""
+msgstr "Nodošanas avots un mērķis:"
 
 #: ../share/extensions/web-transmit-att.inx.h:21
 msgid "All selected ones transmit to the last one"
-msgstr ""
+msgstr "Visi atlasītie nodot pēdējam"
 
 #: ../share/extensions/web-transmit-att.inx.h:22
 msgid "The first selected transmits to all others"
-msgstr ""
+msgstr "Pirmais atlasītais nodod visiem pārējiem"
 
 #: ../share/extensions/web-transmit-att.inx.h:25
 msgid "This effect transmits one or more attributes from the first selected element to the second when an event occurs."
-msgstr ""
+msgstr "Šis efekts notikuma gadījumā nodod vienu vai vairākus atribūtus no pirmā atlasītā elementa otrajam."
 
 #: ../share/extensions/web-transmit-att.inx.h:26
 msgid "If you want to transmit more than one attribute, you should separate this with a space, and only with a space."
-msgstr ""
+msgstr "Ja vēlaties nodot vairāk kā vienu atribūtu, tas ir jātdala tikai un vienīgi ar tukšumu."
 
 #: ../share/extensions/whirl.inx.h:1
 msgid "Whirl"
@@ -30881,6 +30947,15 @@ msgstr "Populārs izgriezumkopu grafiskais formāts"
 #: ../share/extensions/xaml2svg.inx.h:1
 msgid "XAML Input"
 msgstr "XAML ievade"
+
+#~ msgid "Blur type:"
+#~ msgstr "Izpludināšanas veids:"
+
+#~ msgid "Blend source:"
+#~ msgstr "Sapludināšanas avots"
+
+#~ msgid "Composite:"
+#~ msgstr "Salikts:"
 
 #~ msgid "Add a new connection point"
 #~ msgstr "Pievienot jaunu savienojuma punktu"
@@ -31563,10 +31638,6 @@ msgstr "XAML ievade"
 #, fuzzy
 #~ msgid "General system information"
 #~ msgstr "Vispārēja ICQ informācija"
-
-#, fuzzy
-#~ msgid "Misc"
-#~ msgstr "Dažādi"
 
 #, fuzzy
 #~ msgid "layers|Top"
