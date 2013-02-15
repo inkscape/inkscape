@@ -956,7 +956,14 @@ int Script::execute (const std::list<std::string> &in_command,
     // assemble the rest of argv
     std::copy(in_params.begin(), in_params.end(), std::back_inserter(argv));
     if (!filein.empty()) {
-        argv.push_back(filein);
+        if(Glib::path_is_absolute(filein))
+            argv.push_back(filein);
+        else {
+            std::vector<std::string> buildargs;
+            buildargs.push_back(Glib::get_current_dir());
+            buildargs.push_back(filein);
+            argv.push_back(Glib::build_filename(buildargs));
+        }
     }
 
     int stdout_pipe, stderr_pipe;
