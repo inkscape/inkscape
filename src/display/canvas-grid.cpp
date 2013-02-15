@@ -779,7 +779,7 @@ _wr.setUpdating (true);
     _rsu_ox->setProgrammatically = false;
     _rsu_oy->setProgrammatically = false;
     _rsu_sx->setProgrammatically = false;
-    _rsu_sx->setProgrammatically = false;
+    _rsu_sy->setProgrammatically = false;
 
     return table;
 }
