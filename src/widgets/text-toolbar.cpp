@@ -1494,6 +1494,44 @@ sp_text_toolbox_get_font_list_in_doc_recursive (SPObject *r, std::list<Glib::ust
     }
 }
 
+// Select all occurances of the font-family displayed in the Entry box. 
+// TODO: possibly share with font-selector by moving most code to font-lister (passing family name)
+static void sp_text_toolbox_select_cb( GtkEntry* entry, GtkEntryIconPosition /*position*/, GdkEvent /*event*/, gpointer /*data*/ ) {
+
+    Glib::ustring family = gtk_entry_get_text ( entry );
+
+    // Get all items with matching font-family set (not inherited!).
+    GSList *selectList = NULL;
+
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    SPDocument *document = sp_desktop_document( desktop );
+    GSList *allList = get_all_items(NULL, document->getRoot(), desktop, false, false, true, NULL);
+    for (GSList *i = allList; i != NULL; i = i->next) {
+
+        SPItem *item = SP_ITEM(i->data);
+        SPStyle *style = item->style;
+
+        if (style && style->text) {
+
+            Glib::ustring family_style;
+            if (style->text->font_family.set) {
+                family_style = style->text->font_family.value;
+            }
+            else if (style->text->font_specification.set) {
+                family_style = style->text->font_specification.value;
+            }
+
+            if (family_style.compare( family ) == 0 ) {
+                selectList = g_slist_prepend (selectList, item);
+            }
+        }
+    }
+
+    // Update selection
+    Inkscape::Selection *selection = sp_desktop_selection (desktop );
+    selection->clear();
+    selection->setList(selectList);
+}
 
 // Define all the "widgets" in the toolbar.
 void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
@@ -1526,8 +1564,15 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                           (gpointer)font_lister_separator_func,
                                           GTK_WIDGET(desktop->canvas)); // Focus widget
         ink_comboboxentry_action_popup_enable( act ); // Enable entry completion
+
+        gchar *const info = _("Select all text with this font-family");
+        ink_comboboxentry_action_set_info( act, info ); // Show selection icon
+        ink_comboboxentry_action_set_info_cb( act, (gpointer)sp_text_toolbox_select_cb );
+
         gchar *const warning = _("Font not found on system");
-        ink_comboboxentry_action_set_warning( act, warning ); // Show icon with tooltip if missing font
+        ink_comboboxentry_action_set_warning( act, warning ); // Show icon if missing font
+        ink_comboboxentry_action_set_warning_cb( act, (gpointer)sp_text_toolbox_select_cb );
+
         ink_comboboxentry_action_set_altx_name( act, "altx-text" ); // Set Alt-X keyboard shortcut
         g_signal_connect( G_OBJECT(act), "changed", G_CALLBACK(sp_text_fontfamily_value_changed), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );

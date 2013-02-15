@@ -58,7 +58,14 @@ struct _Ink_ComboBoxEntry_Action {
   gint                entry_width;// Width of GtkEntry in characters.
   gint                extra_width;// Extra Width of GtkComboBox.. to widen drop-down list in list mode.
   gboolean            popup;      // Do we pop-up an entry-completion dialog?
-  gchar              *warning;    // Text for warning that entry isn't in list.
+  gchar              *info;       // Text for tooltip info about entry.
+  gpointer            info_cb;    // Callback for clicking info icon.
+  gint                info_cb_id;
+  gboolean            info_cb_blocked;
+  gchar              *warning;    // Text for tooltip warning that entry isn't in list.
+  gpointer            warning_cb; // Callback for clicking warning icon.
+  gint                warning_cb_id;
+  gboolean            warning_cb_blocked;
   gchar              *altx_name;  // Target for Alt-X keyboard shortcut.
   GtkWidget          *focusWidget;
 };
@@ -92,8 +99,11 @@ void     ink_comboboxentry_action_set_extra_width( Ink_ComboBoxEntry_Action* act
 void     ink_comboboxentry_action_popup_enable(  Ink_ComboBoxEntry_Action* action );
 void     ink_comboboxentry_action_popup_disable( Ink_ComboBoxEntry_Action* action );
 
-void     ink_comboboxentry_action_set_warning( Ink_ComboBoxEntry_Action* action, const gchar* warning );
-void     ink_comboboxentry_action_set_tooltip( Ink_ComboBoxEntry_Action* action, const gchar* tooltip );
+void     ink_comboboxentry_action_set_info(      Ink_ComboBoxEntry_Action* action, const gchar* info );
+void     ink_comboboxentry_action_set_info_cb(   Ink_ComboBoxEntry_Action* action, gpointer info_cb );
+void     ink_comboboxentry_action_set_warning(   Ink_ComboBoxEntry_Action* action, const gchar* warning_cb );
+void     ink_comboboxentry_action_set_warning_cb(Ink_ComboBoxEntry_Action* action, gpointer warning );
+void     ink_comboboxentry_action_set_tooltip(   Ink_ComboBoxEntry_Action* action, const gchar* tooltip );
 
 void     ink_comboboxentry_action_set_altx_name( Ink_ComboBoxEntry_Action* action, const gchar* altx_name );
 

@@ -307,7 +307,14 @@ static void ink_comboboxentry_action_init (Ink_ComboBoxEntry_Action *action)
   action->entry_completion = NULL;
   action->indicator = NULL;
   action->popup = false;
+  action->info = NULL;
+  action->info_cb = NULL;
+  action->info_cb_id = 0;
+  action->info_cb_blocked = false;
   action->warning = NULL;
+  action->warning_cb = NULL;
+  action->warning_cb_id = 0;
+  action->warning_cb_blocked = false;
   action->altx_name = NULL;
   action->focusWidget = NULL;
 }
@@ -432,7 +439,6 @@ GtkWidget* create_tool_item( GtkAction* action )
       // Add signal for GtkEntry to check if finished typing.
       g_signal_connect( G_OBJECT(child), "activate", G_CALLBACK(entry_activate_cb), action );
       g_signal_connect( G_OBJECT(child), "key-press-event", G_CALLBACK(keypress_cb), action );
-
     }
 
     gtk_activatable_set_related_action( GTK_ACTIVATABLE (item), GTK_ACTION( action ) );
@@ -496,35 +502,95 @@ gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* ink
     gtk_entry_set_text( ink_comboboxentry_action->entry, text );
 
     // Show or hide warning  -- this might be better moved to text-toolbox.cpp
-    bool clear = true;
+    if( ink_comboboxentry_action->info_cb_id != 0 &&
+	!ink_comboboxentry_action->info_cb_blocked ) {
+      g_signal_handler_block (G_OBJECT(ink_comboboxentry_action->entry),
+			      ink_comboboxentry_action->info_cb_id );
+      ink_comboboxentry_action->info_cb_blocked = true;
+    }
+    if( ink_comboboxentry_action->warning_cb_id != 0 &&
+	!ink_comboboxentry_action->warning_cb_blocked ) {
+      g_signal_handler_block (G_OBJECT(ink_comboboxentry_action->entry),
+			      ink_comboboxentry_action->warning_cb_id );
+      ink_comboboxentry_action->warning_cb_blocked = true;
+    }
 
+    bool set = false;
     if( ink_comboboxentry_action->warning != NULL ) {
       Glib::ustring missing = check_comma_separated_text( ink_comboboxentry_action );
       if( !missing.empty() ) {
 
-	  GtkStockItem item;
-	  gboolean isStock = gtk_stock_lookup( GTK_STOCK_DIALOG_WARNING, &item );
-	  if (isStock) {	
-	      gtk_entry_set_icon_from_stock( ink_comboboxentry_action->entry,
+	GtkStockItem item;
+	gboolean isStock = gtk_stock_lookup( GTK_STOCK_DIALOG_WARNING, &item );
+	if (isStock) {	
+	  gtk_entry_set_icon_from_stock( ink_comboboxentry_action->entry,
+					 GTK_ENTRY_ICON_SECONDARY,
+					 GTK_STOCK_DIALOG_WARNING );
+	} else {
+	  gtk_entry_set_icon_from_icon_name( ink_comboboxentry_action->entry,
 					     GTK_ENTRY_ICON_SECONDARY,
 					     GTK_STOCK_DIALOG_WARNING );
-	  } else {
-	      gtk_entry_set_icon_from_icon_name( ink_comboboxentry_action->entry,
-						 GTK_ENTRY_ICON_SECONDARY,
-						 GTK_STOCK_DIALOG_WARNING );
+	}
+	// Can't add tooltip until icon set
+	Glib::ustring warning = ink_comboboxentry_action->warning;
+	warning += ": ";
+	warning += missing;
+	gtk_entry_set_icon_tooltip_text( ink_comboboxentry_action->entry,
+					 GTK_ENTRY_ICON_SECONDARY,
+					 warning.c_str() );
+
+	if( ink_comboboxentry_action->warning_cb ) {
+
+	  // Add callback if we haven't already
+	  if( ink_comboboxentry_action->warning_cb_id == 0 ) {
+	    ink_comboboxentry_action->warning_cb_id =
+	      g_signal_connect( G_OBJECT(ink_comboboxentry_action->entry),
+				"icon-press",
+				G_CALLBACK(ink_comboboxentry_action->warning_cb),
+				ink_comboboxentry_action);
 	  }
-	  // Can't add tooltip until icon set
-	  Glib::ustring warning = ink_comboboxentry_action->warning;
-	  warning += ": ";
-	  warning += missing;
-	  gtk_entry_set_icon_tooltip_text( ink_comboboxentry_action->entry,
-					   GTK_ENTRY_ICON_SECONDARY,
-					   warning.c_str() );
-	  clear = false;
+	  // Unblock signal
+	  if( ink_comboboxentry_action->warning_cb_blocked ) {
+	    g_signal_handler_unblock (G_OBJECT(ink_comboboxentry_action->entry),
+				      ink_comboboxentry_action->warning_cb_id );
+	    ink_comboboxentry_action->warning_cb_blocked = false;
+	  }
+	}
+	set = true;
       }
     }
  
-   if( clear ) {
+    if( !set && ink_comboboxentry_action->info != NULL ) {
+      gtk_entry_set_icon_from_icon_name( GTK_ENTRY(ink_comboboxentry_action->entry),
+					 GTK_ENTRY_ICON_SECONDARY,
+					 GTK_STOCK_SELECT_ALL );
+      gtk_entry_set_icon_from_stock( GTK_ENTRY(ink_comboboxentry_action->entry),
+				     GTK_ENTRY_ICON_SECONDARY,
+				     GTK_STOCK_SELECT_ALL );
+      gtk_entry_set_icon_tooltip_text( ink_comboboxentry_action->entry,
+				       GTK_ENTRY_ICON_SECONDARY,
+				       ink_comboboxentry_action->info );
+
+      if( ink_comboboxentry_action->info_cb ) {
+	// Add callback if we haven't already
+	if( ink_comboboxentry_action->info_cb_id == 0 ) {
+	  ink_comboboxentry_action->info_cb_id =
+	    g_signal_connect( G_OBJECT(ink_comboboxentry_action->entry),
+			      "icon-press",
+			      G_CALLBACK(ink_comboboxentry_action->info_cb),
+			      ink_comboboxentry_action);
+	}
+	// Unblock signal
+	if( ink_comboboxentry_action->info_cb_blocked ) {
+	  g_signal_handler_unblock (G_OBJECT(ink_comboboxentry_action->entry),
+				    ink_comboboxentry_action->info_cb_id );
+	  ink_comboboxentry_action->info_cb_blocked = false;
+	}
+      }
+      set = true;
+    }
+
+    if( !set ) {
       gtk_entry_set_icon_from_icon_name( GTK_ENTRY(ink_comboboxentry_action->entry),
 					 GTK_ENTRY_ICON_SECONDARY,
 					 NULL );
@@ -611,6 +677,24 @@ void     ink_comboboxentry_action_set_tooltip( Ink_ComboBoxEntry_Action* action,
 
 }
 
+void     ink_comboboxentry_action_set_info( Ink_ComboBoxEntry_Action* action, const gchar* info ) {
+
+  g_free( action->info );
+  action->info = g_strdup( info );
+
+  // Widget may not have been created....
+  if( action->entry ) {
+    gtk_entry_set_icon_tooltip_text( GTK_ENTRY(action->entry),
+                                     GTK_ENTRY_ICON_SECONDARY,
+                                     action->info );
+  }
+}
+
+void     ink_comboboxentry_action_set_info_cb( Ink_ComboBoxEntry_Action* action, gpointer info_cb ) {
+
+  action->info_cb = info_cb;
+}
+
 void     ink_comboboxentry_action_set_warning( Ink_ComboBoxEntry_Action* action, const gchar* warning ) {
 
   g_free( action->warning );
@@ -622,6 +706,11 @@ void     ink_comboboxentry_action_set_warning( Ink_ComboBoxEntry_Action* action,
                                      GTK_ENTRY_ICON_SECONDARY,
                                      action->warning );
   }
+}
+
+void     ink_comboboxentry_action_set_warning_cb( Ink_ComboBoxEntry_Action* action, gpointer warning_cb ) {
+
+  action->warning_cb = warning_cb;
 }
 
 void     ink_comboboxentry_action_set_altx_name( Ink_ComboBoxEntry_Action* action, const gchar* altx_name ) {
