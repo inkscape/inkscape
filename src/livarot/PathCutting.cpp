@@ -1126,6 +1126,8 @@ void Path::ConvertPositionsToForced(int nbPos, cut_position *poss)
       }
     }
   }
+  if (descr_cmd[0]->getType() == descr_moveto)
+    descr_flags |= descr_doing_subpath;         // see LP Bug 166302
 
   qsort(poss, nbPos, sizeof(cut_position), CmpPosition);
 
