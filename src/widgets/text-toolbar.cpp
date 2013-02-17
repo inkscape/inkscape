@@ -133,115 +133,7 @@ static void       sp_print_fontstyle( SPStyle *query ) {
 }
 #endif
 
-/*
- * Fill the font style combobox with the available font styles for the selected font family
- * Set the selected style to that in font
- */
-static void sp_text_fontstyle_populate(GObject *tbl, font_instance *font=NULL)
-{
-
-    Ink_ComboBoxEntry_Action* act = INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontFamilyAction" ) );
-    GtkTreeModel *model = ink_comboboxentry_action_get_model( act );
-    gchar *current_font = ink_comboboxentry_action_get_active_text( act );
-    if (!current_font) {
-        return;
-    }
-
-    // If font list, take only first font in list
-    gchar** tokens = g_strsplit( current_font, ",", 0 );
-    g_strstrip( tokens[0] );
-    current_font = tokens[0];
-
-    // Get an iter to the selected font from the model data
-    // We cant get it from the combo, cause it might not have been created yet
-    gboolean found = false;
-    GtkTreeIter iter;
-    gboolean valid = gtk_tree_model_get_iter_first( model, &iter );
-    while ( valid ) {
-
-      // Get text from list entry
-      gchar* text = NULL;
-      gtk_tree_model_get( model, &iter, 0, &text, -1 ); // Column 0
-
-      // Check for match
-      if ( text && (strcmp( current_font, text ) == 0) ) {
-        found = true;
-        break;
-      }
-      valid = gtk_tree_model_iter_next( model, &iter );
-    }
-
-    g_strfreev( tokens );
-
-    Ink_ComboBoxEntry_Action* fontStyleAction = INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontStyleAction" ) );
-
-    gchar *current_style = ink_comboboxentry_action_get_active_text( fontStyleAction );
-
-    GtkListStore *store = GTK_LIST_STORE( ink_comboboxentry_action_get_model( fontStyleAction ) );
-    gtk_list_store_clear ( store );
-
-    // Get the list of styles from the selected font.
-    GList *list = NULL;
-
-    if (found) {
-
-        // Use precompiled list if font-family on system.
-        gtk_tree_model_get (model, &iter, 1, &list, -1);
-
-    } else {
-
-        // Use generic list if font-family not on system.
-        static GList *glist = NULL;
-        if( glist == NULL ) {
-            glist = g_list_append (glist, (void*)"Normal");
-            glist = g_list_append (glist, (void*)"Italic");
-            glist = g_list_append (glist, (void*)"Bold");
-            glist = g_list_append (glist, (void*)"Bold Italic");
-        }
-        list = glist;
-    }
-
-    for (GList *l=list; l; l = l->next)
-    {
-        gtk_list_store_append (store, &iter);
-        gtk_list_store_set (store, &iter, 0, (char*)l->data, -1);
-    }
-
-    // Select the style in the combo that best matches font
-    if (font && list) {
-
-        unsigned int index = sp_font_selector_get_best_style(font, list);
-
-        Ink_ComboBoxEntry_Action* fontStyleAction =
-            INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontStyleAction" ) );
-        model = ink_comboboxentry_action_get_model( fontStyleAction );
-        GtkTreePath *path_c = gtk_tree_path_new ();
-        gtk_tree_path_append_index (path_c, index);
-        gtk_tree_model_get_iter(model, &iter, path_c);
-        gchar *name;
-        gtk_tree_model_get (model, &iter, 0, &name, -1);
-        ink_comboboxentry_action_set_active_text( fontStyleAction, name );
-
-    } else if (current_style) {
-        ink_comboboxentry_action_set_active_text( fontStyleAction, current_style );
-    }
-}
-
 // Font family
-//
-// In most cases we should just be able to set the new family name
-// but there may be cases where a font family doesn't follow the
-// standard naming pattern. To handle those cases, we do a song and
-// dance to use Pango to find the best match. To do that we start
-// with the old "fontSpec" (which is the returned string from
-// pango_font_description_to_string() with the size unset). This
-// has the form "[family-list] [style-options]" where the
-// family-list is a comma separated list of font-family names
-// (optionally terminated by a comma). An example would be
-// "DejaVu Sans, Sans Bold". Only a "fontSpec" containing a
-// single font-family will work with Pango's best match routine.
-// If we can't obtain a good "fontSpec", we then resort to blindly
-// changing the font-family.
 static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GObject *tbl )
 {
 #ifdef DEBUG_TEXT
@@ -256,151 +148,35 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-    gchar *family = ink_comboboxentry_action_get_active_text( act );
+    Glib::ustring new_family = ink_comboboxentry_action_get_active_text( act );
 #ifdef DEBUG_TEXT
-    std::cout << "  New family: " << family << std::endl;
+    std::cout << "  Old family: " << fontlister->get_font_family() << std::endl;
+    std::cout << "  New family: " << new_family << std::endl;
 #endif
 
-    // First try to get the old font spec from the stored value
-    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
-    int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
+    // TODO: Think about how to handle handle multiple selections. While
+    // the font-family may be the same for all, the styles might be different.
+    Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
+    if( new_family.compare( fontlister->get_font_family() ) != 0 ) {
 
-    Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
-#ifdef DEBUG_TEXT
-    std::cout << "  fontSpec from query :" << fontSpec << ":" << std::endl;
-#endif
+        //std::cout << "sp_text_fontfamily_value_changed: from: " << fontlister->get_font_family()
+        //          << "  to: " << new_family << std::endl;
+        std::pair<Glib::ustring,Glib::ustring> ui = fontlister->set_font_family( new_family );
+        // active text set in sp_text_toolbox_selection_changed()
 
-    // If that didn't work, try to get font spec from style
-    if (fontSpec.empty()) {
+        SPCSSAttr *css = sp_repr_css_attr_new ();
+        fontlister->set_css( css );
 
-        // Must query all to fill font-family, font-style, font-weight, font-specification
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+        SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
+        sp_desktop_set_style (desktop, css, true, true);
+        sp_repr_css_attr_unref (css);
 
-        // Construct a new font specification if it does not yet exist
-        font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
-        if( fontFromStyle ) {
-            fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
-            fontFromStyle->Unref();
-        }
-
-#ifdef DEBUG_TEXT
-        std::cout << "  fontSpec empty, try from style" << std::endl;
-        std::cout << "           from style :" << fontSpec << ":" << std::endl;
-        sp_print_font( query );
-#endif
-
-    }
-
-    // And if that didn't work use default. DO WE REALLY WANT TO DO THIS?
-    if ( fontSpec.empty() ) {
-
-        sp_style_read_from_prefs(query, "/tools/text");
-
-        // Construct a new font specification if it does not yet exist
-        font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
-        if ( fontFromStyle ) {
-            fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
-            fontFromStyle->Unref();
-        }
-
-#ifdef DEBUG_TEXT
-        std::cout << "  fontSpec empty, trying from prefs" << std::endl;
-        std::cout << "           from prefs :" << fontSpec << ":" << std::endl;
-        sp_print_font( query );
-#endif
-    }
-
-    // Now we have a font specification, replace family.
-    Glib::ustring  newFontSpec = "";
-    SPCSSAttr *css = sp_repr_css_attr_new ();
-
-    if (!fontSpec.empty()) newFontSpec = font_factory::Default()->ReplaceFontSpecificationFamily(fontSpec, family);
-
-#ifdef DEBUG_TEXT
-    std::cout << "  New FontSpec from ReplaceFontSpecificationFamily :" << newFontSpec << ":" << std::endl;
-#endif
-
-    if (!fontSpec.empty() && !newFontSpec.empty() ) {
-
-        if (fontSpec != newFontSpec) {
-
-            font_instance *font = font_factory::Default()->FaceFromFontSpecification(newFontSpec.c_str());
-
-            if (font) {
-                sp_repr_css_set_property (css, "-inkscape-font-specification", newFontSpec.c_str());
-
-                // Set all the these just in case they were altered when finding the best
-                // match for the new family and old style...  Unnecessary?
-
-                gchar c[256];
-
-                font->Family(c, 256);
-
-                sp_repr_css_set_property (css, "font-family", c);
-
-                font->Attribute( "weight", c, 256);
-                sp_repr_css_set_property (css, "font-weight", c);
-
-                font->Attribute("style", c, 256);
-                sp_repr_css_set_property (css, "font-style", c);
-
-                font->Attribute("stretch", c, 256);
-                sp_repr_css_set_property (css, "font-stretch", c);
-
-                font->Attribute("variant", c, 256);
-                sp_repr_css_set_property (css, "font-variant", c);
-
-                font->Unref();
-
-                // Set the list of font styles
-                sp_text_fontstyle_populate(tbl);
-
-            } else {
-                g_warning(_("Failed to find font matching: %s\n"), newFontSpec.c_str());
-            }
-        }
-    } else {
-
-        // Either old font does not exist on system or ReplaceFontSpecificationFamily() failed.
-        // Blindly fall back to setting the family to text in the font-family chooser.
-
-#ifdef DEBUG_TEXT
-        std::cout << "  Failed to find new font, blindly setting family: " << family << std::endl;
-#endif
-        sp_repr_css_set_property (css, "-inkscape-font-specification", family);
-        sp_repr_css_set_property (css, "font-family", family);
-    }
-
-    // If querying returned nothing, update default style.
-    if (result_fontspec == QUERY_STYLE_NOTHING)
-    {
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->mergeStyle("/tools/text/style", css);
-        //sp_text_edit_dialog_default_set_insensitive (); //FIXME: Replace through a verb
-    }
-    else
-    {
-        sp_desktop_set_style (SP_ACTIVE_DESKTOP, css, true, true);
-    }
-
-    sp_style_unref(query);
-
-    g_free (family);
-
-    // Save for undo
-    if (result_fontspec != QUERY_STYLE_NOTHING) {
-        DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
                        _("Text: Change font family"));
     }
-    sp_repr_css_attr_unref (css);
 
     // unfreeze
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
-
-    // focus to canvas (not useful if you want to choose font for your text)
-    //gtk_widget_grab_focus (GTK_WIDGET((SP_ACTIVE_DESKTOP)->canvas));
 
 #ifdef DEBUG_TEXT
     std::cout << "sp_text_toolbox_fontfamily_changes: exit"  << std::endl;
@@ -473,7 +249,6 @@ static void sp_text_fontsize_value_changed( Ink_ComboBoxEntry_Action *act, GObje
 /*
  *  Font style
  */
-//static void sp_text_fontstyle_value_changed( EgeSelectOneAction *act, GObject *tbl )
 static void sp_text_fontstyle_value_changed( Ink_ComboBoxEntry_Action *act, GObject *tbl )
 {
     // quit if run by the _changed callbacks
@@ -482,94 +257,25 @@ static void sp_text_fontstyle_value_changed( Ink_ComboBoxEntry_Action *act, GObj
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-    // First query font-specification, this is the most complete font face description.
-    SPStyle *query = sp_style_new (SP_ACTIVE_DOCUMENT);
-    int result_fontspec = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONT_SPECIFICATION);
+    Glib::ustring new_style = ink_comboboxentry_action_get_active_text( act );
 
-    // font_specification will not be set unless defined explicitily on a tspan.
-    // This should be fixed!
-    Glib::ustring fontSpec = query->text->font_specification.set ?  query->text->font_specification.value : "";
+    Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
 
-    if (fontSpec.empty()) {
-        // Construct a new font specification if it does not yet exist
-        // Must query font-family, font-style, font-weight, to find correct font face.
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
-        sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTNUMBERS);
+    if( new_style.compare( fontlister->get_font_style() ) != 0 ) {
 
-        font_instance * fontFromStyle = font_factory::Default()->FaceFromStyle(query);
-        if ( fontFromStyle ) {
-            fontSpec = font_factory::Default()->ConstructFontSpecification(fontFromStyle);
-            fontFromStyle->Unref();
-        }
+        fontlister->set_font_style( new_style );
+        // active text set in sp_text_toolbox_seletion_changed()
+
+        SPCSSAttr *css = sp_repr_css_attr_new ();
+        fontlister->set_css( css );
+
+        SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
+        sp_desktop_set_style (desktop, css, true, true);
+        sp_repr_css_attr_unref (css);
+
+        DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
+                           _("Text: Change font style"));
     }
-
-    SPCSSAttr   *css        = sp_repr_css_attr_new ();
-
-    Glib::ustring current_style = ink_comboboxentry_action_get_active_text( act );
-    Glib::ustring fontFamily = "";
-
-    if (query->text->font_family.set) {
-        fontFamily = query->text->font_family.value;
-    } else {
-        // if the font_family is not set, get it from the font family combo instead
-        Ink_ComboBoxEntry_Action* act = INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontFamilyAction" ) );
-        fontFamily = ink_comboboxentry_action_get_active_text( act );
-    }
-
-    font_instance *font = (font_factory::Default())->FaceFromUIStrings (fontFamily.c_str(), current_style.c_str());
-
-    if (font) {
-
-        gchar c[256];
-
-        font->Attribute( "weight", c, 256);
-        sp_repr_css_set_property (css, "font-weight", c);
-
-        font->Attribute("style", c, 256);
-        sp_repr_css_set_property (css, "font-style", c);
-
-        font->Attribute("stretch", c, 256);
-        sp_repr_css_set_property (css, "font-stretch", c);
-
-        font->Attribute("variant", c, 256);
-        sp_repr_css_set_property (css, "font-variant", c);
-
-        font->Unref();
-        font = NULL;
-
-    } else {
-
-        // Font not found on system, blindly update style
-        // Options match choices in sp_text_fontstyle_populate
-        sp_repr_css_set_property (css, "font-weight", "normal");
-        sp_repr_css_set_property (css, "font-style",  "normal" );
-        if( current_style.find("Bold") != Glib::ustring::npos ) {
-            sp_repr_css_set_property (css, "font-weight", "bold");
-        }
-        if( current_style.find("Italic") != Glib::ustring::npos ) {
-            sp_repr_css_set_property (css, "font-style", "italic");
-        }
-    }
-
-    // If querying returned nothing, update default style.
-    if (result_fontspec == QUERY_STYLE_NOTHING)
-    {
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        prefs->mergeStyle("/tools/text/style", css);
-    }
-
-    sp_style_unref(query);
-
-    // Do we need to update other CSS values?
-    SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
-    sp_desktop_set_style (desktop, css, true, true);
-    if (result_fontspec != QUERY_STYLE_NOTHING) {
-        DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
-                       _("Text: Change font style"));
-    }
-
-    sp_repr_css_attr_unref (css);
 
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 }
@@ -1145,6 +851,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
 #ifdef DEBUG_TEXT
         std::cout << "    Frozen, returning" << std::endl;
+        std::cout << "sp_text_toolbox_selection_changed: exit " << count << std::endl;
         std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << std::endl;
         std::cout << std::endl;
 #endif
@@ -1152,14 +859,20 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
-    // Update font list, but only if widget already created.
     Ink_ComboBoxEntry_Action* fontFamilyAction =
         INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontFamilyAction" ) );
-    if( fontFamilyAction->combobox != NULL ) {
-        Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
-        fontlister->update_font_list( sp_desktop_document( SP_ACTIVE_DESKTOP ));
-    }
+    Ink_ComboBoxEntry_Action* fontStyleAction =
+        INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontStyleAction"  ) );
 
+    Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
+    fontlister->update_font_list( sp_desktop_document( SP_ACTIVE_DESKTOP ));
+    fontlister->selection_update();
+
+    // Update font list, but only if widget already created.
+    if( fontFamilyAction->combobox != NULL ) {
+        ink_comboboxentry_action_set_active_text( fontFamilyAction, fontlister->get_font_family().c_str() );
+        ink_comboboxentry_action_set_active_text( fontStyleAction,  fontlister->get_font_style().c_str()  );
+    }
 
     // Only flowed text can be justified, only normal text can be kerned...
     // Find out if we have flowed text now so we can use it several places
@@ -1207,6 +920,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
             g_object_set_data( tbl, "freeze", GINT_TO_POINTER(FALSE) );
 #ifdef DEBUG_TEXT
             std::cout << "    text_style_from_prefs: toolbar already set" << std:: endl;
+            std::cout << "sp_text_toolbox_selection_changed: exit " << count << std::endl;
             std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << std::endl;
             std::cout << std::endl;
 #endif
@@ -1225,15 +939,6 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     // If we have valid query data for text (font-family, font-specification) set toolbar accordingly.
     if (query->text)
     {
-        // Font family
-        if( query->text->font_family.value ) {
-            gchar *fontFamily = query->text->font_family.value;
-
-            Ink_ComboBoxEntry_Action* fontFamilyAction =
-                INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontFamilyAction" ) );
-            ink_comboboxentry_action_set_active_text( fontFamilyAction, fontFamily );
-        }
-
         // Size (average of text selected)
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
@@ -1252,10 +957,6 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
 
         Glib::ustring tooltip = Glib::ustring::format(_("Font size"), " (", sp_style_get_css_unit_string(unit), ")");
         ink_comboboxentry_action_set_tooltip ( fontSizeAction, tooltip.c_str());
-
-        // Font styles
-        font_instance *font = font_factory::Default()->FaceFromStyle(query);
-        sp_text_fontstyle_populate(tbl, font);
 
         // Superscript
         gboolean superscriptSet =
@@ -1438,6 +1139,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
     }
 
 #ifdef DEBUG_TEXT
+    std::cout << "sp_text_toolbox_selection_changed: exit " << count << std::endl;
     std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" << std::endl;
     std::cout << std::endl;
 #endif
@@ -1457,81 +1159,49 @@ sp_text_toolbox_subselection_changed (gpointer /*tc*/, GObject *tbl)
     sp_text_toolbox_selection_changed (NULL, tbl);
 }
 
-
-/* Recursively extract all "font-family" attributes from a document. */
-void
-sp_text_toolbox_get_font_list_in_doc_recursive (SPObject *r, std::list<Glib::ustring> *l)
-{ 
-    if (!r) {
-        return;
-    }
-
-    const gchar *style = r->getRepr()->attribute("style");
-    if( style != NULL ) {
-        //std::cout << style << std::endl;
-        std::vector<Glib::ustring> tokens = Glib::Regex::split_simple(";", style );
-        for( size_t i=0; i < tokens.size(); ++i ) {
-            Glib::ustring token = tokens[i];
-            size_t found = token.find("font-family:");
-            if( found != Glib::ustring::npos ) {
-                // Remove "font-family:"
-                token.erase(found,12);
-                // Remove any leading single or double quote
-                if( token[0] == '\'' || token[0] == '"' ) {
-                    token.erase(0,1);
-                }
-                // Remove any trailing single or double quote
-                if( token[token.length()-1] == '\'' || token[token.length()-1] == '"' ) {
-                    token.erase(token.length()-1);
-                }
-                l->push_back( token );
-            }
-        }
-    }
-
-    for (SPObject *child = r->firstChild(); child; child = child->getNext()) {
-        sp_text_toolbox_get_font_list_in_doc_recursive( child, l );
-    }
-}
-
-// Select all occurances of the font-family displayed in the Entry box. 
 // TODO: possibly share with font-selector by moving most code to font-lister (passing family name)
 static void sp_text_toolbox_select_cb( GtkEntry* entry, GtkEntryIconPosition /*position*/, GdkEvent /*event*/, gpointer /*data*/ ) {
 
-    Glib::ustring family = gtk_entry_get_text ( entry );
+  Glib::ustring family = gtk_entry_get_text ( entry );
+  //std::cout << "text_toolbox_missing_font_cb: selecting: " << family << std::endl;
 
-    // Get all items with matching font-family set (not inherited!).
-    GSList *selectList = NULL;
+  // Get all items with matching font-family set (not inherited!).
+  GSList *selectList = NULL;
 
-    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
-    SPDocument *document = sp_desktop_document( desktop );
-    GSList *allList = get_all_items(NULL, document->getRoot(), desktop, false, false, true, NULL);
-    for (GSList *i = allList; i != NULL; i = i->next) {
+  SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+  SPDocument *document = sp_desktop_document( desktop );
+  GSList *allList = get_all_items(NULL, document->getRoot(), desktop, false, false, true, NULL);
+  for (GSList *i = allList; i != NULL; i = i->next) {
 
-        SPItem *item = SP_ITEM(i->data);
-        SPStyle *style = item->style;
+    SPItem *item = SP_ITEM(i->data);
+    SPStyle *style = item->style;
 
-        if (style && style->text) {
+    if (style && style->text) {
 
-            Glib::ustring family_style;
-            if (style->text->font_family.set) {
-                family_style = style->text->font_family.value;
-            }
-            else if (style->text->font_specification.set) {
-                family_style = style->text->font_specification.value;
-            }
+      Glib::ustring family_style;
+      if (style->text->font_family.set) {
+	family_style = style->text->font_family.value;
+	//std::cout << " family style from font_family: " << family_style << std::endl;
+      }
+      else if (style->text->font_specification.set) {
+	family_style = style->text->font_specification.value;
+	//std::cout << " family style from font_spec: " << family_style << std::endl;
+      }
 
-            if (family_style.compare( family ) == 0 ) {
-                selectList = g_slist_prepend (selectList, item);
-            }
-        }
+      if (family_style.compare( family ) == 0 ) {
+        //std::cout << "   found: " << item->getId() << std::endl;
+	selectList = g_slist_prepend (selectList, item);
+      }
     }
+  }
 
-    // Update selection
-    Inkscape::Selection *selection = sp_desktop_selection (desktop );
-    selection->clear();
-    selection->setList(selectList);
+  // Update selection
+  Inkscape::Selection *selection = sp_desktop_selection (desktop );
+  selection->clear();
+  //std::cout << "   list length: " << g_slist_length ( selectList ) << std::endl;
+  selection->setList(selectList);
 }
+
 
 // Define all the "widgets" in the toolbar.
 void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
@@ -1570,9 +1240,10 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         ink_comboboxentry_action_set_info_cb( act, (gpointer)sp_text_toolbox_select_cb );
 
         gchar *const warning = _("Font not found on system");
-        ink_comboboxentry_action_set_warning( act, warning ); // Show icon if missing font
+        ink_comboboxentry_action_set_warning( act, warning ); // Show icon w/ tooltip if font missing
         ink_comboboxentry_action_set_warning_cb( act, (gpointer)sp_text_toolbox_select_cb );
 
+        //ink_comboboxentry_action_set_warning_callback( act, sp_text_fontfamily_select_all );
         ink_comboboxentry_action_set_altx_name( act, "altx-text" ); // Set Alt-X keyboard shortcut
         g_signal_connect( G_OBJECT(act), "changed", G_CALLBACK(sp_text_fontfamily_value_changed), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
@@ -1622,18 +1293,21 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
 
     /* Font styles */
     {
-        GtkListStore* model_style = gtk_list_store_new( 1, G_TYPE_STRING );
+        Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
+        fontlister->update_font_list( sp_desktop_document( SP_ACTIVE_DESKTOP ));
+        Glib::RefPtr<Gtk::ListStore> store = fontlister->get_style_list();
+        GtkListStore* model_style = store->gobj();
 
-       Ink_ComboBoxEntry_Action* act = ink_comboboxentry_action_new( "TextFontStyleAction",
+        Ink_ComboBoxEntry_Action* act = ink_comboboxentry_action_new( "TextFontStyleAction",
                                                                       _("Font Style"),
                                                                       _("Font style"),
                                                                       NULL,
                                                                       GTK_TREE_MODEL(model_style),
                                                                       12, // Width in characters
-                                                                       0,      // Extra list width
-                                                                       NULL,   // Cell layout
-                                                                       NULL,   // Separator
-                                                                       GTK_WIDGET(desktop->canvas)); // Focus widget
+                                                                      0,      // Extra list width
+                                                                      NULL,   // Cell layout
+                                                                      NULL,   // Separator
+                                                                      GTK_WIDGET(desktop->canvas)); // Focus widget
 
         g_signal_connect( G_OBJECT(act), "changed", G_CALLBACK(sp_text_fontstyle_value_changed), holder );
         gtk_action_group_add_action( mainActions, GTK_ACTION(act) );
