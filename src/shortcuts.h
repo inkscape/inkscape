@@ -28,13 +28,14 @@ namespace Inkscape {
 #define SP_SHORTCUT_ALT_MASK (1 << 26)
 #define SP_SHORTCUT_MODIFIER_MASK (SP_SHORTCUT_SHIFT_MASK|SP_SHORTCUT_CONTROL_MASK|SP_SHORTCUT_ALT_MASK)
 
+
 /* Returns true if action was performed */
 bool sp_shortcut_invoke (unsigned int shortcut, Inkscape::UI::View::View *view);
 
 void sp_shortcut_init();
 Inkscape::Verb * sp_shortcut_get_verb (unsigned int shortcut);
 unsigned int sp_shortcut_get_primary (Inkscape::Verb * verb); // Returns GDK_VoidSymbol if no shortcut is found.
-char* sp_shortcut_get_label (unsigned int shortcut); // Returns the human readable form of the shortcut (or NULL), for example Shift+Ctrl+F. Free the returned string with g_free.
+gchar* sp_shortcut_get_label (unsigned int shortcut); // Returns the human readable form of the shortcut (or NULL), for example Shift+Ctrl+F. Free the returned string with g_free.
 void sp_shortcut_set(unsigned int const shortcut, Inkscape::Verb *const verb, bool const is_primary, bool const is_user_set=false);
 void sp_shortcut_unset(unsigned int const shortcut);
 void sp_shortcut_add_to_file(char const *action, unsigned int const shortcut);
@@ -48,6 +49,8 @@ void sp_shortcut_file_export();
 bool sp_shortcut_file_import();
 void sp_shortcut_file_import_do(char const *importname);
 void sp_shortcut_file_export_do(char const *exportname);
+GtkAccelGroup *sp_shortcut_get_accel_group();
+void sp_shortcut_add_accelerator(GtkWidget *item, unsigned int const shortcut);
 
 #endif
 

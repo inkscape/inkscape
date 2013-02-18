@@ -52,9 +52,11 @@ using Inkscape::IO::Resource::SYSTEM;
 using Inkscape::IO::Resource::USER;
 using Inkscape::IO::Resource::KEYS;
 
-
 static void try_shortcuts_file(char const *filename);
 static void read_shortcuts_file(char const *filename, bool const is_user_set=false);
+
+unsigned int sp_shortcut_get_key(unsigned int const shortcut);
+GdkModifierType sp_shortcut_get_modifiers(unsigned int const shortcut);
 
 /* Returns true if action was performed */
 
@@ -430,7 +432,7 @@ void sp_shortcut_delete_from_file(char const * /*action*/, unsigned int const sh
         return;
     }
 
-    gchar *key = gdk_keyval_name (shortcut & (~SP_SHORTCUT_MODIFIER_MASK));
+    gchar *key = gdk_keyval_name (sp_shortcut_get_key(shortcut));
     std::string modifiers = sp_shortcut_to_label(shortcut & (SP_SHORTCUT_MODIFIER_MASK));
 
     if (!key) {
@@ -502,7 +504,7 @@ void sp_shortcut_add_to_file(char const *action, unsigned int const shortcut) {
         }
     }
 
-    gchar *key = gdk_keyval_name (shortcut & (~SP_SHORTCUT_MODIFIER_MASK));
+    gchar *key = gdk_keyval_name (sp_shortcut_get_key(shortcut));
     std::string modifiers = sp_shortcut_to_label(shortcut & (SP_SHORTCUT_MODIFIER_MASK));
 
     if (!key) {
@@ -639,6 +641,58 @@ sp_shortcut_unset(unsigned int const shortcut)
 
     }
 }
+
+GtkAccelGroup *
+sp_shortcut_get_accel_group()
+{
+    static GtkAccelGroup *accel_group = NULL;
+
+    if (!accel_group) {
+        accel_group = gtk_accel_group_new ();
+    }
+
+    return accel_group;
+}
+
+/**
+ * Adds a gtk accelerator to a widget
+ * Used to display the keyboard shortcuts in the main menu items
+ */
+void
+sp_shortcut_add_accelerator(GtkWidget *item, unsigned int const shortcut)
+{
+    if (shortcut == GDK_KEY_VoidSymbol) {
+        return;
+    }
+
+    unsigned int accel_key = sp_shortcut_get_key(shortcut);
+    if (accel_key > 0) {
+        gtk_widget_add_accelerator (item,
+                "activate",
+                sp_shortcut_get_accel_group(),
+                accel_key,
+                sp_shortcut_get_modifiers(shortcut),
+                GTK_ACCEL_VISIBLE);
+    }
+}
+
+
+unsigned int
+sp_shortcut_get_key(unsigned int const shortcut)
+{
+    return (shortcut & (~SP_SHORTCUT_MODIFIER_MASK));
+}
+
+GdkModifierType
+sp_shortcut_get_modifiers(unsigned int const shortcut)
+{
+    return static_cast<GdkModifierType>(
+            ((shortcut & SP_SHORTCUT_SHIFT_MASK) ? GDK_SHIFT_MASK : 0) |
+            ((shortcut & SP_SHORTCUT_CONTROL_MASK) ? GDK_CONTROL_MASK : 0) |
+            ((shortcut & SP_SHORTCUT_ALT_MASK) ? GDK_MOD1_MASK : 0)
+            );
+}
+
 /**
  * Adds a keyboard shortcut for the given verb.
  * (Removes any existing binding for the given shortcut, including appropriately
@@ -706,7 +760,6 @@ bool sp_shortcut_is_user_set(Inkscape::Verb *verb)
     return result;
 }
 
-
 gchar *sp_shortcut_get_label(unsigned int shortcut)
 {
     // The comment below was copied from the function sp_ui_shortcut_string in interface.cpp (which was subsequently removed)
@@ -721,11 +774,8 @@ gchar *sp_shortcut_get_label(unsigned int shortcut)
     gchar *result = 0;
     if (shortcut != GDK_KEY_VoidSymbol) {
         result = gtk_accelerator_get_label(
-            shortcut & (~SP_SHORTCUT_MODIFIER_MASK), static_cast<GdkModifierType>(
-                ((shortcut & SP_SHORTCUT_SHIFT_MASK) ? GDK_SHIFT_MASK : 0) |
-                ((shortcut & SP_SHORTCUT_CONTROL_MASK) ? GDK_CONTROL_MASK : 0) |
-                ((shortcut & SP_SHORTCUT_ALT_MASK) ? GDK_MOD1_MASK : 0)
-                ));
+                sp_shortcut_get_key(shortcut),
+                sp_shortcut_get_modifiers(shortcut));
     }
     return result;
 }

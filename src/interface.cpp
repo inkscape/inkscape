@@ -458,46 +458,20 @@ static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb
         item = gtk_separator_menu_item_new();
 
     } else {
-        unsigned int shortcut;
 
         action = verb->get_action(view);
         if (!action) return NULL;
 
-        shortcut = sp_shortcut_get_primary(verb);
-        if (shortcut!=GDK_KEY_VoidSymbol) {
-            gchar* c = sp_shortcut_get_label(shortcut);
-#if GTK_CHECK_VERSION(3,0,0)
-            GtkWidget *const hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 16);
-            gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-#else
-            GtkWidget *const hb = gtk_hbox_new(FALSE, 16);
-#endif
-            GtkWidget *const name_lbl = gtk_label_new("");
-            gtk_label_set_markup_with_mnemonic(GTK_LABEL(name_lbl), action->name);
-            gtk_misc_set_alignment(reinterpret_cast<GtkMisc *>(name_lbl), 0.0, 0.5);
-            gtk_box_pack_start(reinterpret_cast<GtkBox *>(hb), name_lbl, TRUE, TRUE, 0);
-            GtkWidget *const accel_lbl = gtk_label_new(c);
-            gtk_misc_set_alignment(reinterpret_cast<GtkMisc *>(accel_lbl), 1.0, 0.5);
-            gtk_box_pack_end(reinterpret_cast<GtkBox *>(hb), accel_lbl, FALSE, FALSE, 0);
-            gtk_widget_show_all(hb);
-            if (radio) {
-                item = gtk_radio_menu_item_new (group);
-            } else {
-                item = gtk_image_menu_item_new();
-            }
-            gtk_container_add(reinterpret_cast<GtkContainer *>(item), hb);
-            g_free(c);
+        if (radio) {
+            item = gtk_radio_menu_item_new_with_mnemonic(group, action->name);
         } else {
-            if (radio) {
-                item = gtk_radio_menu_item_new (group);
-            } else {
-                item = gtk_image_menu_item_new ();
-            }
-            GtkWidget *const name_lbl = gtk_label_new("");
-            gtk_label_set_markup_with_mnemonic(GTK_LABEL(name_lbl), action->name);
-            gtk_misc_set_alignment(reinterpret_cast<GtkMisc *>(name_lbl), 0.0, 0.5);
-            gtk_container_add(reinterpret_cast<GtkContainer *>(item), name_lbl);
+            item = gtk_image_menu_item_new_with_mnemonic(action->name);
         }
+
+        GtkAccelGroup *accel_group =  sp_shortcut_get_accel_group();
+        gtk_menu_set_accel_group(menu, accel_group);
+
+        sp_shortcut_add_accelerator(item, sp_shortcut_get_primary(verb));
 
         action->signal_set_sensitive.connect(
             sigc::bind<0>(
@@ -698,45 +672,16 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
 {
     unsigned int shortcut = (verb) ? sp_shortcut_get_primary(verb) : 0;
     SPAction *action = (verb) ? verb->get_action(view) : 0;
-    GtkWidget *item = gtk_check_menu_item_new();
+    GtkWidget *item = gtk_check_menu_item_new_with_mnemonic(action ? action->name : label);
 
-
-    if (verb && shortcut!=GDK_KEY_VoidSymbol) {
-        gchar* c = sp_shortcut_get_label(shortcut);
-
-#if GTK_CHECK_VERSION(3,0,0)
-        GtkWidget *hb = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 16);
-        gtk_box_set_homogeneous(GTK_BOX(hb), FALSE);
-#else
-        GtkWidget *hb = gtk_hbox_new(FALSE, 16);
-#endif
-
-        {
-            GtkWidget *l = gtk_label_new_with_mnemonic(action ? action->name : label);
-            gtk_misc_set_alignment((GtkMisc *) l, 0.0, 0.5);
-            gtk_box_pack_start((GtkBox *) hb, l, TRUE, TRUE, 0);
-        }
-
-        {
-            GtkWidget *l = gtk_label_new(c);
-            gtk_misc_set_alignment((GtkMisc *) l, 1.0, 0.5);
-            gtk_box_pack_end((GtkBox *) hb, l, FALSE, FALSE, 0);
-        }
-
-        gtk_widget_show_all(hb);
-
-        gtk_container_add((GtkContainer *) item, hb);
-        g_free(c);
-    } else {
-        GtkWidget *l = gtk_label_new_with_mnemonic(action ? action->name : label);
-        gtk_misc_set_alignment((GtkMisc *) l, 0.0, 0.5);
-        gtk_container_add((GtkContainer *) item, l);
-    }
 #if 0
     if (!action->sensitive) {
         gtk_widget_set_sensitive(item, FALSE);
     }
 #endif
+
+    sp_shortcut_add_accelerator(item, shortcut);
+
     gtk_widget_show(item);
 
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
@@ -1726,40 +1671,13 @@ void ContextMenu::AppendItemFromVerb(Inkscape::Verb *verb)//, SPDesktop *view)//
         append(*item);
     } else {
         action = verb->get_action(view);
-        if (!action)
-        {
+        if (!action) {
             return;
         }
         
-        Gtk::ImageMenuItem *item = NULL;
-        unsigned int shortcut = sp_shortcut_get_primary(verb);
-        if (shortcut!=GDK_KEY_VoidSymbol) {
-            gchar* c = sp_shortcut_get_label(shortcut);
-            Gtk::HBox *const hb = manage(new Gtk::HBox (FALSE, 16));
-            Gtk::Label *const name_lbl = manage(new Gtk::Label(action->name, true));
-            name_lbl->set_alignment(0.0, 0.5);
-            hb->pack_start(*name_lbl, TRUE, TRUE, 0);
-            Gtk::Label *const accel_lbl = manage(new Gtk::Label(c));
-            accel_lbl->set_alignment(1.0, 0.5);
-            hb->pack_end(*accel_lbl, FALSE, FALSE, 0);
-            hb->show_all();
-            // if (radio) {
-                // item = gtk_radio_menu_item_new (group);
-            // } else {
-                item = new Gtk::ImageMenuItem();
-            // }
-            item->add(*hb);
-            g_free(c);
-        } else {
-            // if (radio) {
-                // item = gtk_radio_menu_item_new (group);
-            // } else {
-                item = manage(new Gtk::ImageMenuItem());
-            // }
-            Gtk::Label *const name_lbl = manage(new Gtk::Label(action->name, true));
-            name_lbl->set_alignment(0.0, 0.5);
-            item->add(*name_lbl);
-        }
+        Gtk::ImageMenuItem *item = manage(new Gtk::ImageMenuItem(action->name, true));
+
+        sp_shortcut_add_accelerator(GTK_WIDGET(item->gobj()), sp_shortcut_get_primary(verb));
 
         action->signal_set_sensitive.connect(sigc::mem_fun(*this, &ContextMenu::set_sensitive));
         action->signal_set_name.connect(sigc::mem_fun(*item, &ContextMenu::set_name));
