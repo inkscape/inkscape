@@ -46,7 +46,7 @@ if(WITH_GNOME_VFS)
 endif()
 
 if(ENABLE_LCMS)
-	find_package(GnomeVFS2)
+	find_package(LCMS)
 	if(LCMS_FOUND)
 		list(APPEND INKSCAPE_INCS_SYS ${LCMS_INCLUDE_DIRS})
 		list(APPEND INKSCAPE_LIBS ${LCMS_LIBRARIES})
