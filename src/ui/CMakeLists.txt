@@ -84,6 +84,7 @@ set(ui_SRC
 	widget/entry.cpp
 	widget/filter-effect-chooser.cpp
 	widget/frame.cpp
+	widget/gimpcolorwheel.c
 	widget/gimpspinscale.c
 	widget/imageicon.cpp
 	widget/imagetoggler.cpp
@@ -212,6 +213,7 @@ set(ui_SRC
 	widget/filter-effect-chooser.h
 	widget/frame.h
 	widget/gimpspinscale.h
+	widget/gimpcolorwheel.h
 	widget/imageicon.h
 	widget/imagetoggler.h
 	widget/labelled.h

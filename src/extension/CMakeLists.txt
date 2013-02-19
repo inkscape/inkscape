@@ -36,6 +36,7 @@ set(extension_SRC
 	internal/cairo-render-context.cpp
 	internal/cairo-renderer.cpp
 	internal/cairo-renderer-pdf-out.cpp
+	internal/cdr-input.cpp
 	internal/emf-win32-inout.cpp
 	internal/emf-win32-print.cpp
 	internal/gdkpixbuf-input.cpp
@@ -100,6 +101,7 @@ set(extension_SRC
 	internal/cairo-render-context.h
 	internal/cairo-renderer-pdf-out.h
 	internal/cairo-renderer.h
+	internal/cdr-input.h
 	internal/clear-n_.h
 	internal/emf-win32-inout.h
 	internal/emf-win32-print.h

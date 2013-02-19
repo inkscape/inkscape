@@ -188,7 +188,6 @@ set(inkscape_SRC
 	composite-undo-stack-observer.cpp
 	conditions.cpp
 	conn-avoid-ref.cpp
-	connection-points.cpp
 	connector-context.cpp
 	console-output-undo-observer.cpp
 	context-fns.cpp
@@ -332,7 +331,6 @@ set(inkscape_SRC
 	composite-undo-stack-observer.h
 	conditions.h
 	conn-avoid-ref.h
-	connection-points.h
 	connection-pool.h
 	connector-context.h
 	console-output-undo-observer.h
