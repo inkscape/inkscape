@@ -503,10 +503,10 @@ namespace Inkscape
 
       //std::cout << "FontLister:set_css: " << std::endl;
 
-      PangoFontDescription *desc = pango_font_description_from_string( current_fontspec.c_str() );
       sp_repr_css_set_property (css, "-inkscape-font-specification", current_fontspec.c_str() );
-      sp_repr_css_set_property (css, "font-family",  pango_font_description_get_family( desc ) );
+      sp_repr_css_set_property (css, "font-family", current_family.c_str() ); //Canonized w/ spaces
 
+      PangoFontDescription *desc = pango_font_description_from_string( current_fontspec.c_str() );
       PangoWeight weight = pango_font_description_get_weight( desc );
       switch ( weight ) {
       case PANGO_WEIGHT_THIN:
