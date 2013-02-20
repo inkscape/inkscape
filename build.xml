@@ -153,7 +153,7 @@
         #define HAVE_OPENMP                   1
         #define HAVE_TR1_UNORDERED_SET        1
 
-        #define HAVE_LIBLCMS1                 1
+        #define HAVE_LIBLCMS2                 1
 
         #define WITH_GTKMM_2_24               1
 
@@ -487,7 +487,7 @@
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
-           ${pcl.lcms}
+           ${pcl.lcms2}
            ${pcl.gsl}
            -lpng -ljpeg -ltiff -lexif -lpopt -lz
            -lgc
@@ -559,7 +559,7 @@
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
-           ${pcl.lcms}
+           ${pcl.lcms2}
            ${pcl.gsl}
            -lpng -ljpeg -ltiff -lexif -lpopt -lz
            -lgc
@@ -609,7 +609,7 @@
            -liconv
            ${pcl.Magick++}
            ${pcl.fontconfig} ${pcl.freetype2}
-           ${pcl.lcms}
+           ${pcl.lcms2}
            ${pcl.gsl}
            -lpng -ljpeg -ltiff -lexif -lpopt -lz
            -lgc
@@ -690,7 +690,6 @@
     <copy todir="${dist}" file="${devlibs}/bin/bzip2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/iconv.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpopt-0.dll"/>
-    <copy todir="${dist}" file="${devlibs}/bin/liblcms-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/liblcms2-2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libMagick++-3.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libMagickCore-3.dll"/>
