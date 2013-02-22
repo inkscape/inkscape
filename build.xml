@@ -690,6 +690,7 @@
     <copy todir="${dist}" file="${devlibs}/bin/bzip2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/iconv.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libpopt-0.dll"/>
+    <copy todir="${dist}" file="${devlibs}/bin/liblcms-1.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/liblcms2-2.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libMagick++-3.dll"/>
     <copy todir="${dist}" file="${devlibs}/bin/libMagickCore-3.dll"/>
