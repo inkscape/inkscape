@@ -51,8 +51,6 @@ struct SPFontSelector
 
     NRNameList families;
     NRStyleList styles;
-    int familyidx;
-    int styleidx;
     gfloat fontsize;
     bool fontsize_dirty;
     font_instance *font;
@@ -246,9 +244,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
 
         gtk_widget_show_all (fsel->size);
 
-        fsel->familyidx = 0;
-        fsel->styleidx = 0;
-        fsel->fontsize = 10.0;
+        fsel->fontsize = 18.0;
         fsel->fontsize_dirty = false;
         fsel->font = NULL;
 }
@@ -290,8 +286,6 @@ static void sp_font_selector_family_select_row(GtkTreeSelection *selection,
 
     path = gtk_tree_model_get_path (model, &iter);
     gtk_tree_model_get (model, &iter, 1, &list, -1);
-    fsel->familyidx = gtk_tree_path_get_indices (path)[0];
-    fsel->styleidx = 0;
 
     store = gtk_list_store_new (1, G_TYPE_STRING);
 
@@ -318,7 +312,6 @@ static void sp_font_selector_style_select_row (GtkTreeSelection *selection,
     if (!gtk_tree_selection_get_selected (selection, &model, &iter)) return;
 
     path = gtk_tree_model_get_path (model, &iter);
-    fsel->styleidx = gtk_tree_path_get_indices (path)[0];
 
     if (!fsel->block_emit)
     {
