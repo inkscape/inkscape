@@ -775,6 +775,10 @@ static void sp_desktop_widget_dispose(GObject *object)
 {
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET (object);
 
+    if (dtw == NULL) {
+        return;
+    }
+    
     UXManager::getInstance()->delTrack(dtw);
 
     if (dtw->desktop) {
