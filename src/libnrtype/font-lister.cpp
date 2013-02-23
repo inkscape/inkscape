@@ -68,6 +68,7 @@ namespace Inkscape
                 (*treeModelIter)[FontList.onSystem] = true;
             }
         }
+	current_family_row = 0;
 	current_family = "sans-serif";
 	current_style = "Normal";
 	current_fontspec = "sans-serif";  // Empty style -> Normal
@@ -106,6 +107,18 @@ namespace Inkscape
       }
 
       font_list_store->freeze_notify();
+
+      /* Find if current row is in document or system part of list */
+      gboolean row_is_system = false;
+      if( current_family_row > -1 ) {
+	Gtk::TreePath path;
+	path.push_back( current_family_row );
+	Gtk::TreeModel::iterator iter = font_list_store->get_iter( path );
+	if( iter ) {
+	  row_is_system = (*iter)[FontList.onSystem];
+	  // std::cout << "  In:  row: " << current_family_row << "  " << (*iter)[FontList.family] << std::endl;
+	}
+      }
 
       /* Clear all old document font-family entries */
       Gtk::TreeModel::iterator iter = font_list_store->get_iter( "0" );
@@ -161,6 +174,32 @@ namespace Inkscape
 	(*treeModelIter)[FontList.styles] = styles;
 	(*treeModelIter)[FontList.onSystem] = false;
       }
+
+      /* Now we do a song and dance to find the correct row as the row corresponding
+       * to the current_family may have changed. We can't simply search for the
+       * family name in the list since it can occur twice, once in the document
+       * font family part and once in the system font family part. Above we determined
+       * which part it is in.
+       */
+      if( current_family_row > -1 ) {
+	int start = 0;
+	if( row_is_system ) start = fontfamilies.size();
+	int length = font_list_store->children().size();
+	for( int i = 0; i < length; ++i ) {
+	  int row = i + start;
+	  if( row >= length ) row -= length;
+	  Gtk::TreePath path;
+	  path.push_back( row );
+	  Gtk::TreeModel::iterator iter = font_list_store->get_iter( path );
+	  if( iter ) {
+	    if( current_family.compare( (*iter)[FontList.family] ) == 0 ) {
+	      current_family_row = row;
+	      break;
+	    }
+	  }
+	}
+      }
+      // std::cout << "  Out: row: " << current_family_row << "  " << current_family << std::endl;
 
       font_list_store->thaw_notify();
     }
@@ -456,6 +495,34 @@ namespace Inkscape
       return ui;
     }
  
+
+    std::pair<Glib::ustring, Glib::ustring>
+    FontLister::set_font_family (int row, gboolean check_style) {
+
+#ifdef DEBUG_FONT
+      std::cout << "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+      std::cout << "FontLister::set_font_family( row ): " << row << std::endl;
+#endif
+
+      current_family_row = row;
+      Gtk::TreePath path;
+      path.push_back( row );
+      Glib::ustring new_family = current_family;
+      Gtk::TreeModel::iterator iter = font_list_store->get_iter( path );
+      if( iter ) {
+	current_family = (*iter)[FontList.family];
+      }
+
+      std::pair<Glib::ustring, Glib::ustring> ui = set_font_family( new_family, check_style );
+
+#ifdef DEBUG_FONT
+      std::cout << "FontLister::set_font_family( row ): end" << std::endl;
+      std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" << std::endl;
+#endif
+      return ui;
+    }
+
+
     // void
     // FontLister::new_font_style (Glib::ustring new_style) {
     //   // Is this needed? What do we do?

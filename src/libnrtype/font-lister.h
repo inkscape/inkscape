@@ -187,15 +187,32 @@ namespace Inkscape
                          *  to find closest style to old current_style.
                          *  New font-family and style returned.
                          *  Updates current_family and current_style.
+                         *  Calls new_font_family().
                          *  (For use in text-toolbar where update is immediate.)
                          */
                         std::pair<Glib::ustring, Glib::ustring>
                         set_font_family (Glib::ustring family, gboolean check_style = true);
 
+                        /** Sets font-family from row in list store.
+                         *  The row can be used to determine if we are in the
+                         *  document or system part of the font-family list.
+                         *  This is needed to handle scrolling through the
+                         *  font-family list correctly.
+                         *  Calls set_font_family().
+                         */
+                        std::pair<Glib::ustring, Glib::ustring>
+                        set_font_family (int row, gboolean check_style = true);
+
                         Glib::ustring
                         get_font_family ()
                         {
                             return current_family;
+                        }
+
+                        int
+                        get_font_family_row ()
+                        {
+                            return current_family_row;
                         }
 
                         /* Not Used */
@@ -280,6 +297,7 @@ namespace Inkscape
                         /** Info for currently selected font (what is shown in the UI).
                          *  May include font-family lists and fonts not on system.
                          */
+                        int current_family_row;
                         Glib::ustring current_family;
                         Glib::ustring current_style;
                         Glib::ustring current_fontspec;
