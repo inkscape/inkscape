@@ -482,126 +482,126 @@ gchar* ink_comboboxentry_action_get_active_text( Ink_ComboBoxEntry_Action* actio
   return text;
 }
 
-gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* ink_comboboxentry_action, const gchar* text ) {
+gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* action, const gchar* text ) {
 
-  g_free( ink_comboboxentry_action->text );
-  ink_comboboxentry_action->text = g_strdup( text );
+  g_free( action->text );
+  action->text = g_strdup( text );
 
   // Get active row or -1 if none
-  ink_comboboxentry_action->active = get_active_row_from_text( ink_comboboxentry_action, ink_comboboxentry_action->text );
+  action->active = get_active_row_from_text( action, action->text );
 
   // Set active row, check that combobox has been created.
-  if( ink_comboboxentry_action->combobox ) {
-    gtk_combo_box_set_active( GTK_COMBO_BOX( ink_comboboxentry_action->combobox ), ink_comboboxentry_action->active );
+  if( action->combobox ) {
+    gtk_combo_box_set_active( GTK_COMBO_BOX( action->combobox ), action->active );
   }
 
   // Fiddle with entry
-  if( ink_comboboxentry_action->entry ) {
+  if( action->entry ) {
 
     // Explicitly set text in GtkEntry box (won't be set if text not in list).
-    gtk_entry_set_text( ink_comboboxentry_action->entry, text );
+    gtk_entry_set_text( action->entry, text );
 
     // Show or hide warning  -- this might be better moved to text-toolbox.cpp
-    if( ink_comboboxentry_action->info_cb_id != 0 &&
-	!ink_comboboxentry_action->info_cb_blocked ) {
-      g_signal_handler_block (G_OBJECT(ink_comboboxentry_action->entry),
-			      ink_comboboxentry_action->info_cb_id );
-      ink_comboboxentry_action->info_cb_blocked = true;
+    if( action->info_cb_id != 0 &&
+	!action->info_cb_blocked ) {
+      g_signal_handler_block (G_OBJECT(action->entry),
+			      action->info_cb_id );
+      action->info_cb_blocked = true;
     }
-    if( ink_comboboxentry_action->warning_cb_id != 0 &&
-	!ink_comboboxentry_action->warning_cb_blocked ) {
-      g_signal_handler_block (G_OBJECT(ink_comboboxentry_action->entry),
-			      ink_comboboxentry_action->warning_cb_id );
-      ink_comboboxentry_action->warning_cb_blocked = true;
+    if( action->warning_cb_id != 0 &&
+	!action->warning_cb_blocked ) {
+      g_signal_handler_block (G_OBJECT(action->entry),
+			      action->warning_cb_id );
+      action->warning_cb_blocked = true;
     }
 
     bool set = false;
-    if( ink_comboboxentry_action->warning != NULL ) {
-      Glib::ustring missing = check_comma_separated_text( ink_comboboxentry_action );
+    if( action->warning != NULL ) {
+      Glib::ustring missing = check_comma_separated_text( action );
       if( !missing.empty() ) {
 
 	GtkStockItem item;
 	gboolean isStock = gtk_stock_lookup( GTK_STOCK_DIALOG_WARNING, &item );
 	if (isStock) {	
-	  gtk_entry_set_icon_from_stock( ink_comboboxentry_action->entry,
+	  gtk_entry_set_icon_from_stock( action->entry,
 					 GTK_ENTRY_ICON_SECONDARY,
 					 GTK_STOCK_DIALOG_WARNING );
 	} else {
-	  gtk_entry_set_icon_from_icon_name( ink_comboboxentry_action->entry,
+	  gtk_entry_set_icon_from_icon_name( action->entry,
 					     GTK_ENTRY_ICON_SECONDARY,
 					     GTK_STOCK_DIALOG_WARNING );
 	}
 	// Can't add tooltip until icon set
-	Glib::ustring warning = ink_comboboxentry_action->warning;
+	Glib::ustring warning = action->warning;
 	warning += ": ";
 	warning += missing;
-	gtk_entry_set_icon_tooltip_text( ink_comboboxentry_action->entry,
+	gtk_entry_set_icon_tooltip_text( action->entry,
 					 GTK_ENTRY_ICON_SECONDARY,
 					 warning.c_str() );
 
-	if( ink_comboboxentry_action->warning_cb ) {
+	if( action->warning_cb ) {
 
 	  // Add callback if we haven't already
-	  if( ink_comboboxentry_action->warning_cb_id == 0 ) {
-	    ink_comboboxentry_action->warning_cb_id =
-	      g_signal_connect( G_OBJECT(ink_comboboxentry_action->entry),
+	  if( action->warning_cb_id == 0 ) {
+	    action->warning_cb_id =
+	      g_signal_connect( G_OBJECT(action->entry),
 				"icon-press",
-				G_CALLBACK(ink_comboboxentry_action->warning_cb),
-				ink_comboboxentry_action);
+				G_CALLBACK(action->warning_cb),
+				action);
 	  }
 	  // Unblock signal
-	  if( ink_comboboxentry_action->warning_cb_blocked ) {
-	    g_signal_handler_unblock (G_OBJECT(ink_comboboxentry_action->entry),
-				      ink_comboboxentry_action->warning_cb_id );
-	    ink_comboboxentry_action->warning_cb_blocked = false;
+	  if( action->warning_cb_blocked ) {
+	    g_signal_handler_unblock (G_OBJECT(action->entry),
+				      action->warning_cb_id );
+	    action->warning_cb_blocked = false;
 	  }
 	}
 	set = true;
       }
     }
  
-    if( !set && ink_comboboxentry_action->info != NULL ) {
-      gtk_entry_set_icon_from_icon_name( GTK_ENTRY(ink_comboboxentry_action->entry),
+    if( !set && action->info != NULL ) {
+      gtk_entry_set_icon_from_icon_name( GTK_ENTRY(action->entry),
 					 GTK_ENTRY_ICON_SECONDARY,
 					 GTK_STOCK_SELECT_ALL );
-      gtk_entry_set_icon_from_stock( GTK_ENTRY(ink_comboboxentry_action->entry),
+      gtk_entry_set_icon_from_stock( GTK_ENTRY(action->entry),
 				     GTK_ENTRY_ICON_SECONDARY,
 				     GTK_STOCK_SELECT_ALL );
-      gtk_entry_set_icon_tooltip_text( ink_comboboxentry_action->entry,
+      gtk_entry_set_icon_tooltip_text( action->entry,
 				       GTK_ENTRY_ICON_SECONDARY,
-				       ink_comboboxentry_action->info );
+				       action->info );
 
-      if( ink_comboboxentry_action->info_cb ) {
+      if( action->info_cb ) {
 	// Add callback if we haven't already
-	if( ink_comboboxentry_action->info_cb_id == 0 ) {
-	  ink_comboboxentry_action->info_cb_id =
-	    g_signal_connect( G_OBJECT(ink_comboboxentry_action->entry),
+	if( action->info_cb_id == 0 ) {
+	  action->info_cb_id =
+	    g_signal_connect( G_OBJECT(action->entry),
 			      "icon-press",
-			      G_CALLBACK(ink_comboboxentry_action->info_cb),
-			      ink_comboboxentry_action);
+			      G_CALLBACK(action->info_cb),
+			      action);
 	}
 	// Unblock signal
-	if( ink_comboboxentry_action->info_cb_blocked ) {
-	  g_signal_handler_unblock (G_OBJECT(ink_comboboxentry_action->entry),
-				    ink_comboboxentry_action->info_cb_id );
-	  ink_comboboxentry_action->info_cb_blocked = false;
+	if( action->info_cb_blocked ) {
+	  g_signal_handler_unblock (G_OBJECT(action->entry),
+				    action->info_cb_id );
+	  action->info_cb_blocked = false;
 	}
       }
       set = true;
     }
 
     if( !set ) {
-      gtk_entry_set_icon_from_icon_name( GTK_ENTRY(ink_comboboxentry_action->entry),
+      gtk_entry_set_icon_from_icon_name( GTK_ENTRY(action->entry),
 					 GTK_ENTRY_ICON_SECONDARY,
 					 NULL );
-      gtk_entry_set_icon_from_stock( GTK_ENTRY(ink_comboboxentry_action->entry),
+      gtk_entry_set_icon_from_stock( GTK_ENTRY(action->entry),
 				     GTK_ENTRY_ICON_SECONDARY,
 				     NULL );
     }
   }
 
   // Return if active text in list
-  gboolean found = ( ink_comboboxentry_action->active != -1 );
+  gboolean found = ( action->active != -1 );
   return found;
 }
 
@@ -817,20 +817,20 @@ static void combo_box_changed_cb( GtkComboBox* widget, gpointer data ) {
   // We only react here if an item is selected.
 
   // Get action
-  Ink_ComboBoxEntry_Action *act = INK_COMBOBOXENTRY_ACTION( data );
+  Ink_ComboBoxEntry_Action *action = INK_COMBOBOXENTRY_ACTION( data );
 
   // Check if item selected:
   gint newActive = gtk_combo_box_get_active(widget);
   if( newActive >= 0 ) {
 
-    if( newActive != act->active ) {
-      act->active = newActive;
-      g_free( act->text );
+    if( newActive != action->active ) {
+      action->active = newActive;
+      g_free( action->text );
       GtkWidget *entry = gtk_bin_get_child (GTK_BIN (widget));
-      act->text = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
+      action->text = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
 
       // Now let the world know
-      g_signal_emit( G_OBJECT(act), signals[CHANGED], 0 );
+      g_signal_emit( G_OBJECT(action), signals[CHANGED], 0 );
 
     }
   }
@@ -841,29 +841,29 @@ static void entry_activate_cb( GtkEntry* widget, gpointer data ) {
   // Get text from entry box.. check if it matches a menu entry.
 
   // Get action
-  Ink_ComboBoxEntry_Action *ink_comboboxentry_action = INK_COMBOBOXENTRY_ACTION( data );
+  Ink_ComboBoxEntry_Action *action = INK_COMBOBOXENTRY_ACTION( data );
 
   // Get text
-  g_free( ink_comboboxentry_action->text );
-  ink_comboboxentry_action->text = g_strdup( gtk_entry_get_text( widget ) );
+  g_free( action->text );
+  action->text = g_strdup( gtk_entry_get_text( widget ) );
 
   // Get row
-  ink_comboboxentry_action->active =
-    get_active_row_from_text( ink_comboboxentry_action, ink_comboboxentry_action->text );
+  action->active =
+    get_active_row_from_text( action, action->text );
 
   // Set active row
-  gtk_combo_box_set_active( GTK_COMBO_BOX( ink_comboboxentry_action->combobox), ink_comboboxentry_action->active );
+  gtk_combo_box_set_active( GTK_COMBO_BOX( action->combobox), action->active );
 
   // Now let the world know
-  g_signal_emit( G_OBJECT(ink_comboboxentry_action), signals[CHANGED], 0 );
+  g_signal_emit( G_OBJECT(action), signals[CHANGED], 0 );
 
 }
 
 static gboolean match_selected_cb( GtkEntryCompletion* /*widget*/, GtkTreeModel* model, GtkTreeIter* iter, gpointer data )
 {
   // Get action
-  Ink_ComboBoxEntry_Action *ink_comboboxentry_action = INK_COMBOBOXENTRY_ACTION( data );
-  GtkEntry *entry = ink_comboboxentry_action->entry;
+  Ink_ComboBoxEntry_Action *action = INK_COMBOBOXENTRY_ACTION( data );
+  GtkEntry *entry = action->entry;
 
   if( entry) {
     gchar *family = 0;
@@ -873,18 +873,18 @@ static gboolean match_selected_cb( GtkEntryCompletion* /*widget*/, GtkTreeModel*
     gtk_entry_set_text (GTK_ENTRY (entry), family );
 
     // Set text in GtkAction
-    g_free( ink_comboboxentry_action->text );
-    ink_comboboxentry_action->text = family;
+    g_free( action->text );
+    action->text = family;
 
     // Get row
-    ink_comboboxentry_action->active =
-      get_active_row_from_text( ink_comboboxentry_action, ink_comboboxentry_action->text );
+    action->active =
+      get_active_row_from_text( action, action->text );
 
     // Set active row
-    gtk_combo_box_set_active( GTK_COMBO_BOX( ink_comboboxentry_action->combobox), ink_comboboxentry_action->active );
+    gtk_combo_box_set_active( GTK_COMBO_BOX( action->combobox), action->active );
 
     // Now let the world know
-    g_signal_emit( G_OBJECT(ink_comboboxentry_action), signals[CHANGED], 0 );
+    g_signal_emit( G_OBJECT(action), signals[CHANGED], 0 );
 
     return true;
   }
