@@ -37,6 +37,8 @@
 #include "libnrtype/FontFactory.h"
 #include "libnrtype/font-instance.h"
 
+#include <glibmm/regex.h>
+
 namespace Inkscape {
 namespace UI {
 namespace Dialog {

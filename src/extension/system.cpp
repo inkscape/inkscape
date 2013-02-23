@@ -22,6 +22,7 @@
 
 #include <interface.h>
 #include <unistd.h>
+#include <glibmm/miscutils.h>
 
 #include "system.h"
 #include "preferences.h"

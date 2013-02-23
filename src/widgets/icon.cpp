@@ -24,6 +24,7 @@
 #include <gtkmm/image.h>
 #include <gdkmm/pixbuf.h>
 #include <glibmm/fileutils.h>
+#include <glibmm/miscutils.h>
 #include <2geom/transforms.h>
 
 #include "path-prefix.h"

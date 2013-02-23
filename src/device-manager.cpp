@@ -14,6 +14,7 @@
 #include "device-manager.h"
 #include "preferences.h"
 #include <gtk/gtk.h>
+#include <glibmm/regex.h>
 
 #define noDEBUG_VERBOSE 1
 

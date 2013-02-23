@@ -20,6 +20,7 @@
 #include <gtkmm/separatormenuitem.h>
 
 #include <glibmm/i18n.h>
+#include <glibmm/main.h>
 
 #include "desktop.h"
 #include "desktop-style.h"

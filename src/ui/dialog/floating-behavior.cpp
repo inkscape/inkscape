@@ -12,6 +12,7 @@
 
 #include <gtkmm/dialog.h>
 #include <gtkmm/stock.h>
+#include <glibmm/main.h>
 #include <gtk/gtk.h>
 
 #include "floating-behavior.h"

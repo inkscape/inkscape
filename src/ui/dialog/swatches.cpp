@@ -23,6 +23,7 @@
 
 #include <glibmm/i18n.h>
 #include <glibmm/main.h>
+#include <glibmm/timer.h>
 #include <gdkmm/pixbuf.h>
 
 #include "color-item.h"

@@ -18,6 +18,7 @@
 
 #include <gtkmm/icontheme.h>
 #include <gtkmm/stockitem.h>
+#include <glibmm/exceptionhandler.h>
 
 namespace Inkscape {
 namespace UI {

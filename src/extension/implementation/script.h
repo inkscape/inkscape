@@ -15,6 +15,9 @@
 
 #include "implementation.h"
 #include <gtkmm/enums.h>
+#include <glibmm/main.h>
+#include <glibmm/spawn.h>
+#include <glibmm/fileutils.h>
 
 namespace Inkscape {
 namespace XML {

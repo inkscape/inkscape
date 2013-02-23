@@ -23,6 +23,8 @@
 #include <gtkmm/main.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/textview.h>
+#include <glibmm/miscutils.h>
+#include <glibmm/convert.h>
 #include <unistd.h>
 
 #include <errno.h>
