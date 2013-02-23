@@ -925,7 +925,7 @@ if test "x$enable_strict_build" != "xno"; then
 	glibmm_uses_deprecated_glib_symbols=no
 
 	PKG_CHECK_MODULES(GLIBMM_USES_DEPRECATED_GLIB_SYMBOLS,
-			  glib >= 2.35 glibmm < 2.35.8,
+			  glib-2.0 >= 2.35 glibmm-2.4 < 2.35.8,
 			  glibmm_uses_deprecated_glib_symbols=yes,
 			  glibmm_uses_deprecated_glib_symbols=no)
 
@@ -933,7 +933,7 @@ if test "x$enable_strict_build" != "xno"; then
 	# external library header that we use
 	if test "x$pango_uses_deprecated_glib_symbols" = "xyes"; then
 		AC_MSG_WARN([The available version of Pango uses deprecated Glib symbols.  Deprecated Glib symbol usage will be allowed])
-	elif test "x$gtkmm_uses_deprecated_glib_symbols" = "xyes"; then
+	elif test "x$glibmm_uses_deprecated_glib_symbols" = "xyes"; then
 		AC_MSG_WARN([The available version of Glibmm uses deprecated Glib symbols.  Deprecated Glib symbol usage will be allowed])
 	else
 		CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
