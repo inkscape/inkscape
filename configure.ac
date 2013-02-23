@@ -37,6 +37,24 @@ INK_BZR_SNAPSHOT_BUILD
 dnl If automake 1.11 shave the output to look nice
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
+dnl *********************************************************
+dnl Configure a strict set of build rules to prevent usage of 
+dnl deprecated features in external libraries and code that
+dnl triggers compiler warnings.
+dnl *********************************************************
+AC_ARG_ENABLE(strict-build,
+	      [AC_HELP_STRING([--enable-strict-build], [Enable strict build configuration [default=yes].  Usage of most deprecated symbols is forbidden by default.  Set the argument to "high" to introduce very strict checking that will cause the build to fail on many systems.])],
+	      [enable_strict_build=$enableval],
+	      [enable_strict_build=yes])
+
+if test "x$enable_strict_build" = "xno"; then
+	AC_MSG_WARN([Strict build options disabled])
+elif test "x$enable_strict_build" = "xhigh"; then
+	AC_MSG_WARN([Strictest build options enabled.  This will cause build failure on most systems])
+else
+	AC_MSG_RESULT([Strict build options enabled])
+fi
+
 dnl These next few lines are needed only while libcroco is in our source tree.
 AC_PROG_CC
 AM_PROG_CC_C_O
@@ -57,12 +75,12 @@ if test "$GCC" = "yes"; then
 
   # Permit only top-level Glib headers to be used.
   # 
-  # TODO: This is already the case for Glib >= 2.32 so this flag can be dropped
-  #       when all targeted distros use higher Glib versions.
+  # TODO: This is already used in Glib >= 2.32 so this flag can be 
+  #       dropped when all targeted distros use higher Glib versions.
   CPPFLAGS="-DG_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
 
-  # Ensure that private GTK+ fields are not accessible. This is the case for
-  # GTK+ 3, so it is important to avoid using them in GTK+ 2.
+  # Ensure that private GTK+ fields are not accessible. This strictly
+  # enforced in Gtk+ 3, so it is important to check this in Gtk+ 2 builds
   CPPFLAGS="-DGSEAL_ENABLE $CPPFLAGS"
 
   # Test for -Werror=... (introduced some time post-4.0)
@@ -506,6 +524,7 @@ AM_CONDITIONAL(WITH_PYTHON, test "x$with_python" = "xyes")
 AC_SUBST(PYTHON_CFLAGS)
 AC_SUBST(PYTHON_LIBS)
 
+
 dnl ******************************
 dnl LittleCms checking
 dnl ******************************
@@ -821,6 +840,24 @@ if test "x$enable_gtk3" = "xyes"; then
 	else
 		AC_MSG_ERROR([Some dependencies were not fulfilled for the experimental GTK+ 3 build. One possible cause for this is a new dependency on the gdl-3.0 development package.])
 	fi
+
+	# Enable strict build options that should work on most systems unless
+	# the build has been configured not to do so
+	if test "x$enable_strict_build" != "xno"; then
+		# Add build flags here as soon as Inkscape trunk can build
+		# against Gtk+ 3 with the option enabled
+		echo ""
+	fi
+
+	# Enable strict build options that are known to cause failure in
+	# Gtk+ 3 builds
+	if test "x$enable_strict_build" = "xhigh"; then
+		# Disable deprecated Gtk+ symbols that have been removed since
+		# Gtk+ 3.
+		CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
+		CPPFLAGS="-DGTK_DISABLE_DEPRECATED $CPPFLAGS"
+		CPPFLAGS="-DGDKMM_DISABLE_DEPRECATED $CPPFLAGS"
+	fi
 else
 
 	ink_spell_pkg=
@@ -831,47 +868,77 @@ else
 
 	PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.28  gtk+-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.24 pango >= 1.24 pangoft2 >= 1.24)
 	
-	# Disable deprecated symbols to make GTK+ 3 migration easier.
-	# This should also be applied to GTK+ 3 builds too,
-	# once the migration is complete.
-	CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
-	CPPFLAGS="-DGTK_DISABLE_DEPRECATED $CPPFLAGS"
-	CPPFLAGS="-DGDKMM_DISABLE_DEPRECATED $CPPFLAGS"
-  
-	# Allow only top-level GTK+ headers to be used.  This is mandatory
-	# for GTK+ >= 3.0 so there is no need to apply the flag in GTK+ 3
-	# builds.
-	CPPFLAGS="-DGTK_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
+	# Enable build strict options that should work on most systems unless
+	# the build has been configured explicitly not to do so
+	if test "x$enable_strict_build" != "xno"; then
+		# Prevent usage of deprecated Gtk+ symbols.  These have all
+		# been removed in Gtk+ 3 so these checks are important.
+		CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
+		CPPFLAGS="-DGTK_DISABLE_DEPRECATED $CPPFLAGS"
+		CPPFLAGS="-DGDKMM_DISABLE_DEPRECATED $CPPFLAGS"
+		
+		# Allow only top-level GTK+ headers to be used.  This is mandatory
+		# for GTK+ >= 3.0 so there is no need to apply the flag in GTK+ 3
+		# builds.
+		CPPFLAGS="-DGTK_DISABLE_SINGLE_INCLUDES $CPPFLAGS"
+	fi
 
-	# FIXME: This is disabled because our internal
-	# copy of GDL still uses deprecated GTK+ 2 symbols.
-	# 
-	# This shouldn't be a big problem for GTK+ 3 builds because 
-	# we can build against external GDL >= 3.3.4 rather than using
-	# the deprecated internal code
-#	CPPFLAGS="-DGDK_DISABLE_DEPRECATED $CPPFLAGS"
+	# Optionally enable strict build options that are known to cause build
+	# failure in many/most systems
+	if test "x$enable_strict_build" == "xhigh"; then
+		# FIXME: This causes build failure because our internal
+		# copy of GDL uses deprecated GDK symbols.
+		# 
+		# This specific issue isn't a problem for GTK+ 3 builds because 
+		# we build against external GDL >= 3.3.4 rather than using
+		# the deprecated internal code
+		CPPFLAGS="-DGDK_DISABLE_DEPRECATED $CPPFLAGS"
+	fi
 fi
 
 AM_CONDITIONAL(WITH_EXT_GDL, test "x$with_gtkmm_3_0" = "xyes")
 
-dnl Pango 1.32.4 uses a deprecated Glib symbol:
-dnl   https://bugzilla.gnome.org/show_bug.cgi?id=689843
-dnl 
-dnl TODO: Get rid of this check once we are sure that all targeted
-dnl       platforms have got rid of this Pango version.  Apply the
-dnl       G_DISABLE_DEPRECATED flag to all builds.
-with_pango_1_32_4="no"
-PKG_CHECK_MODULES(PANGO_1_32_4, pango = 1.32.4, with_pango_1_32_4=yes, with_pango_1_32_4=no)
-
-if test "x$with_pango_1_32_4" = "xyes"; then
-	AC_MSG_WARN([Pango 1.32.4 detected.  Deprecated Glib symbol usage will be allowed])
-else
+# Prevent usage of deprecated Glib and Glibmm symbols unless strict build
+# checking has been disabled
+if test "x$enable_strict_build" != "xno"; then
 	# Ensure that no deprecated glibmm symbols are introduced.
 	# lp:inkscape builds cleanly with this option at r10957
 	CPPFLAGS="-DGLIBMM_DISABLE_DEPRECATED $CPPFLAGS"
-	CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
-fi
+	
+	
+	dnl Pango 1.32.4 uses a deprecated Glib symbol:
+	dnl   https://bugzilla.gnome.org/show_bug.cgi?id=689843
+	dnl 
+	dnl TODO: Get rid of this check once we are sure that all targeted
+	dnl       platforms have got rid of this Pango version.  Apply the
+	dnl       G_DISABLE_DEPRECATED flag to all builds.
+	pango_uses_deprecated_glib_symbols=no
 
+	PKG_CHECK_MODULES(PANGO_USES_DEPRECATED_GLIB_SYMBOLS,
+			  pango = 1.32.4,
+			  pango_uses_deprecated_glib_symbols=yes,
+			  pango_uses_deprecated_glib_symbols=no)
+
+	dnl Glib 2.35 deprecated the GThread API.  Glibmm didn't catch up with
+	dnl this change until v2.35.8 was released so we cannot disable
+	dnl deprecated Glib symbols in this case.
+	glibmm_uses_deprecated_glib_symbols=no
+
+	PKG_CHECK_MODULES(GLIBMM_USES_DEPRECATED_GLIB_SYMBOLS,
+			  glib >= 2.35 glibmm < 2.35.8,
+			  glibmm_uses_deprecated_glib_symbols=yes,
+			  glibmm_uses_deprecated_glib_symbols=no)
+
+	# Don't disable deprecated Glib symbols if it will break stuff in an
+	# external library header that we use
+	if test "x$pango_uses_deprecated_glib_symbols" = "xyes"; then
+		AC_MSG_WARN([The available version of Pango uses deprecated Glib symbols.  Deprecated Glib symbol usage will be allowed])
+	elif test "x$gtkmm_uses_deprecated_glib_symbols" = "xyes"; then
+		AC_MSG_WARN([The available version of Glibmm uses deprecated Glib symbols.  Deprecated Glib symbol usage will be allowed])
+	else
+		CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
+	fi
+fi
 
 # Check for GTK+ backend target
 AC_MSG_CHECKING([for GTK+ backend target])
