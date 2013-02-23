@@ -303,7 +303,7 @@ ink_comboboxentry_action_class_init (Ink_ComboBoxEntry_ActionClass *klass)
 static void ink_comboboxentry_action_init (Ink_ComboBoxEntry_Action *action)
 {
   action->active = -1;
-  action->text = NULL;
+  action->text = strdup("");
   action->entry_completion = NULL;
   action->indicator = NULL;
   action->popup = false;
@@ -821,18 +821,23 @@ static void combo_box_changed_cb( GtkComboBox* widget, gpointer data ) {
 
   // Check if item selected:
   gint newActive = gtk_combo_box_get_active(widget);
-  if( newActive >= 0 ) {
+  if( newActive >= 0 && newActive != action->active ) {
 
-    if( newActive != action->active ) {
-      action->active = newActive;
+    action->active = newActive;
+
+    GtkTreeIter iter;
+    if( gtk_combo_box_get_active_iter( GTK_COMBO_BOX( action->combobox ), &iter ) ) {
+
+      gchar* text = 0;
+      gtk_tree_model_get( action->model, &iter, 0, &text, -1 );
+      gtk_entry_set_text( action->entry, text );
+
       g_free( action->text );
-      GtkWidget *entry = gtk_bin_get_child (GTK_BIN (widget));
-      action->text = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
-
-      // Now let the world know
-      g_signal_emit( G_OBJECT(action), signals[CHANGED], 0 );
-
+      action->text = text;
     }
+
+    // Now let the world know
+    g_signal_emit( G_OBJECT(action), signals[CHANGED], 0 );
   }
 }
 
