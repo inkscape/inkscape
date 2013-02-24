@@ -10,7 +10,6 @@
 #include <glibmm.h>
 #include <gtkmm/treemodel.h>
 #include <gtkmm/liststore.h>
-
 #include "font-lister.h"
 #include "FontFactory.h"
 
@@ -364,10 +363,11 @@ namespace Inkscape
       set_font_family( ui.first );
 
 #ifdef DEBUG_FONT
-      std::cout << "   canonized:             :" << current_fontspec << ":" << std::endl;
-      std::cout << "   system:                :" << current_fontspec_system << ":" << std::endl;
-      std::cout << "   family:                :" << current_family << ":" << std::endl;
-      std::cout << "   style:                 :" << current_style << ":" << std::endl;
+      std::cout << "   family_row:           :" << current_family_row << ":" << std::endl;
+      std::cout << "   canonized:            :" << current_fontspec << ":" << std::endl;
+      std::cout << "   system:               :" << current_fontspec_system << ":" << std::endl;
+      std::cout << "   family:               :" << current_family << ":" << std::endl;
+      std::cout << "   style:                :" << current_style << ":" << std::endl;
       std::cout << "FontLister::selection_update: exit" << std::endl;
       std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" << std::endl;
 #endif
@@ -485,6 +485,7 @@ namespace Inkscape
       current_fontspec_system = system_fontspec( current_fontspec );
 
 #ifdef DEBUG_FONT
+      std::cout << "   family_row:           :" << current_family_row << ":" << std::endl;
       std::cout << "   canonized:            :" << current_fontspec << ":" << std::endl;
       std::cout << "   system:               :" << current_fontspec_system << ":" << std::endl;
       std::cout << "   family:               :" << current_family << ":" << std::endl;
@@ -510,7 +511,7 @@ namespace Inkscape
       Glib::ustring new_family = current_family;
       Gtk::TreeModel::iterator iter = font_list_store->get_iter( path );
       if( iter ) {
-	current_family = (*iter)[FontList.family];
+	new_family = (*iter)[FontList.family];
       }
 
       std::pair<Glib::ustring, Glib::ustring> ui = set_font_family( new_family, check_style );

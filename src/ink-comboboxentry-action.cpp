@@ -377,7 +377,8 @@ GtkWidget* create_tool_item( GtkAction* action )
 
     ink_comboboxentry_action->combobox = GTK_COMBO_BOX (comboBoxEntry);
 
-    gtk_combo_box_set_active( GTK_COMBO_BOX( comboBoxEntry ), ink_comboboxentry_action->active );
+    //gtk_combo_box_set_active( GTK_COMBO_BOX( comboBoxEntry ), ink_comboboxentry_action->active );
+    gtk_combo_box_set_active( GTK_COMBO_BOX( comboBoxEntry ), 0 );
 
     g_signal_connect( G_OBJECT(comboBoxEntry), "changed", G_CALLBACK(combo_box_changed_cb), action );
 
@@ -482,13 +483,28 @@ gchar* ink_comboboxentry_action_get_active_text( Ink_ComboBoxEntry_Action* actio
   return text;
 }
 
-gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* action, const gchar* text ) {
+/*
+ * For the font-family list we need to handle two cases:
+ *   Text is in list store:
+ *     In this case we use row number as the font-family list can have duplicate
+ *     entries, one in the document font part and one in the system font part. In
+ *     order that scrolling through the list works properly we must distinguish
+ *     between the two.
+ *   Text is not in the list store (i.e. default font-family is not on system):
+ *     In this case we have a row number of -1, and the text must be set by hand.
+ */
+gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* action, const gchar* text, int row ) {
 
-  g_free( action->text );
-  action->text = g_strdup( text );
+  if( strcmp( action->text, text ) != 0 ) { 
+    g_free( action->text );
+    action->text = g_strdup( text );
+  }
 
   // Get active row or -1 if none
-  action->active = get_active_row_from_text( action, action->text );
+  if( row < 0 ) {
+    row = get_active_row_from_text( action, action->text );
+  }
+  action->active = row;
 
   // Set active row, check that combobox has been created.
   if( action->combobox ) {

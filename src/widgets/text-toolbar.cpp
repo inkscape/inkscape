@@ -144,31 +144,36 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
 
      // quit if run by the _changed callbacks
     if (g_object_get_data(G_OBJECT(tbl), "freeze")) {
+#ifdef DEBUG_TEXT
+        std::cout << "sp_text_fontfamily_value_changed: frozen... return" << std::endl;
+        std::cout << "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\n" << std::endl;
+#endif
         return;
     }
     g_object_set_data( tbl, "freeze", GINT_TO_POINTER(TRUE) );
 
     Glib::ustring new_family = ink_comboboxentry_action_get_active_text( act );
-#ifdef DEBUG_TEXT
-    std::cout << "  Old family: " << fontlister->get_font_family() << std::endl;
-    std::cout << "  New family: " << new_family << std::endl;
-#endif
 
     // TODO: Think about how to handle handle multiple selections. While
     // the font-family may be the same for all, the styles might be different.
+    // See: TextEdit::onApply() for example of looping over selected items.
     Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
+#ifdef DEBUG_TEXT
+    std::cout << "  Old family: " << fontlister->get_font_family() << std::endl;
+    std::cout << "  New family: " << new_family << std::endl;
+    std::cout << "  Old active: " << fontlister->get_font_family_row() << std::endl;
+    std::cout << "  New active: " << act->active << std::endl;
+#endif
     if( new_family.compare( fontlister->get_font_family() ) != 0 ) {
 
-        //std::cout << "sp_text_fontfamily_value_changed: from: " << fontlister->get_font_family()
-        //          << "  to: " << new_family << std::endl;
-        std::pair<Glib::ustring,Glib::ustring> ui = fontlister->set_font_family( new_family );
+        std::pair<Glib::ustring,Glib::ustring> ui = fontlister->set_font_family( act->active );
         // active text set in sp_text_toolbox_selection_changed()
 
         SPCSSAttr *css = sp_repr_css_attr_new ();
         fontlister->set_css( css );
 
         SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
-        sp_desktop_set_style (desktop, css, true, true);
+        sp_desktop_set_style (desktop, css, true, true); // Results in selection change called twice.
         sp_repr_css_attr_unref (css);
 
         DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_CONTEXT_TEXT,
@@ -870,7 +875,7 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
 
     // Update font list, but only if widget already created.
     if( fontFamilyAction->combobox != NULL ) {
-        ink_comboboxentry_action_set_active_text( fontFamilyAction, fontlister->get_font_family().c_str() );
+        ink_comboboxentry_action_set_active_text( fontFamilyAction, fontlister->get_font_family().c_str(), fontlister->get_font_family_row() );
         ink_comboboxentry_action_set_active_text( fontStyleAction,  fontlister->get_font_style().c_str()  );
     }
 
@@ -952,7 +957,12 @@ static void sp_text_toolbox_selection_changed(Inkscape::Selection */*selection*/
 
         Ink_ComboBoxEntry_Action* fontSizeAction =
             INK_COMBOBOXENTRY_ACTION( g_object_get_data( tbl, "TextFontSizeAction" ) );
+
+        // Freeze to ignore callbacks.
+        //g_object_freeze_notify( G_OBJECT( fontSizeAction->combobox ) );
         sp_text_set_sizes(GTK_LIST_STORE(ink_comboboxentry_action_get_model(fontSizeAction)), unit);
+        //g_object_thaw_notify( G_OBJECT( fontSizeAction->combobox ) );
+
         ink_comboboxentry_action_set_active_text( fontSizeAction, os.str().c_str() );
 
         Glib::ustring tooltip = Glib::ustring::format(_("Font size"), " (", sp_style_get_css_unit_string(unit), ")");
@@ -1294,7 +1304,6 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
     /* Font styles */
     {
         Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
-        fontlister->update_font_list( sp_desktop_document( SP_ACTIVE_DESKTOP ));
         Glib::RefPtr<Gtk::ListStore> store = fontlister->get_style_list();
         GtkListStore* model_style = store->gobj();
 

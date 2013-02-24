@@ -91,7 +91,7 @@ GtkTreeModel     *ink_comboboxentry_action_get_model( Ink_ComboBoxEntry_Action* 
 GtkComboBox      *ink_comboboxentry_action_get_comboboxentry( Ink_ComboBoxEntry_Action* action );
 
 gchar*   ink_comboboxentry_action_get_active_text( Ink_ComboBoxEntry_Action* action );
-gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* action, const gchar* text );
+gboolean ink_comboboxentry_action_set_active_text( Ink_ComboBoxEntry_Action* action, const gchar* text, int row=-1 );
 
 void     ink_comboboxentry_action_set_entry_width( Ink_ComboBoxEntry_Action* action, gint entry_width );
 void     ink_comboboxentry_action_set_extra_width( Ink_ComboBoxEntry_Action* action, gint extra_width );
