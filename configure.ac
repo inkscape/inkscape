@@ -88,7 +88,7 @@ if test "$GCC" = "yes"; then
   AC_MSG_CHECKING([compiler support for -Werror=format-security])
   ink_svd_CPPFLAGS="$CPPFLAGS"
   CPPFLAGS="-Werror=format-security $CPPFLAGS"
-  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [ink_opt_ok=yes], [ink_opt_ok=no])
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])], [ink_opt_ok=yes], [ink_opt_ok=no])
   AC_MSG_RESULT([$ink_opt_ok])
   if test "x$ink_opt_ok" != "xyes"; then
     CPPFLAGS="$ink_svd_CPPFLAGS"
@@ -102,7 +102,7 @@ if test "$GCC" = "yes"; then
   AC_MSG_CHECKING([compiler support for -Wno-pointer-sign])
   ink_svd_CFLAGS="$CFLAGS"
   CFLAGS="-Wno-pointer-sign $CFLAGS"
-  AC_COMPILE_IFELSE(AC_LANG_PROGRAM([]), [ink_opt_ok=yes], [ink_opt_ok=no])
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])], [ink_opt_ok=yes], [ink_opt_ok=no])
   AC_MSG_RESULT([$ink_opt_ok])
   if test "x$ink_opt_ok" != "xyes"; then
     CFLAGS="$ink_svd_CFLAGS"
@@ -115,7 +115,7 @@ if test "$GCC" = "yes"; then
   AC_MSG_CHECKING([linker tolerates -z relro])
   ink_svd_LDFLAGS="$LDFLAGS"
   LDFLAGS="-Wl,-z,relro $LDFLAGS"
-  AC_LINK_IFELSE(AC_LANG_PROGRAM([]), [ink_opt_ok=yes], [ink_opt_ok=no])
+  AC_LINK_IFELSE([AC_LANG_PROGRAM([])], [ink_opt_ok=yes], [ink_opt_ok=no])
   AC_MSG_RESULT([$ink_opt_ok])
   if test "x$ink_opt_ok" != "xyes"; then
     LDFLAGS="$ink_svd_LDFLAGS"
@@ -156,14 +156,12 @@ fi
 
 # Detect a working version of unordered containers.
 AC_MSG_CHECKING([TR1 unordered_set usability])
-AC_COMPILE_IFELSE([
-#include <tr1/unordered_set>
-int main() {
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <tr1/unordered_set>]],
+[[
   std::tr1::unordered_set<int> i, j;
   i = j;
-  return 0;
-}
-], [unordered_set_works=yes], [unordered_set_works=no])
+]])],
+[unordered_set_works=yes], [unordered_set_works=no])
 if test "x$unordered_set_works" = "xyes"; then
 	AC_MSG_RESULT([ok])
 	AC_DEFINE(HAVE_TR1_UNORDERED_SET, 1, [Has working standard TR1 unordered_set])
@@ -180,13 +178,13 @@ AC_MSG_CHECKING([for overzealous strict aliasing warnings])
 ignore_strict_aliasing=no
 CXXFLAGS_SAVE=$CXXFLAGS
 CXXFLAGS="$CXXFLAGS -Werror=strict-aliasing"
-AC_COMPILE_IFELSE([
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([
 #include <boost/optional.hpp>
 boost::optional<int> x;
 int func() {
   return *x;
 }
-], [ignore_strict_aliasing=no], [ignore_strict_aliasing=yes])
+])], [ignore_strict_aliasing=no], [ignore_strict_aliasing=yes])
 AC_MSG_RESULT($ignore_strict_aliasing)
 CXXFLAGS=$CXXFLAGS_SAVE
 if test "x$ignore_strict_aliasing" = "xyes"; then
@@ -629,16 +627,13 @@ LIBS="$LIBS $POPPLER_LIBS"
 
 AC_MSG_CHECKING(for new color space API in Poppler)
 popplercolor="no"
-AC_COMPILE_IFELSE([
-#include <GfxState.h>
-
-int main() {
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <GfxState.h>]],
+[[
   typedef GfxColorSpace *(*parse_p)(Object *, Gfx *);
-  parse_p p;
-  p = &GfxColorSpace::parse;
-  return 0;
-}
-], [popplercolor=yes])
+  parse_p p = &GfxColorSpace::parse;
+]])],
+[popplercolor=yes])
+
 if test "x$popplercolor" = "xyes"; then
 	AC_DEFINE(POPPLER_NEW_COLOR_SPACE_API, 1, [Use color space API from Poppler >= 0.12.2])
 	AC_MSG_RESULT(yes)
@@ -647,17 +642,15 @@ else
 fi
 
 # Poppler's b604a008 commit changes this
-AC_MSG_CHECKING([whether Poppler's GfxPatch no longer uses GfxColor])
+AC_MSG_CHECKING([whether GfxPatch in Poppler no longer uses GfxColor])
 popplergfxcolor="no"
-AC_COMPILE_IFELSE([
-#include <GfxState.h>
-
-int main() {
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+		  [[#include <GfxState.h>]],
+[[
   GfxPatch::ColorValue color = {c: {0}};
   GfxPatch patch;
-  patch.color[[0]][[0]] = color;
-  return 0;
-}
+  patch.color[0][0] = color;
+]])
 ], [popplergfxcolor=yes])
 if test "x$popplergfxcolor" = "xyes"; then
 	AC_DEFINE(POPPLER_NEW_GFXPATCH, 1, [GfxPatch no longer uses GfxColor in >= 0.15.1])
@@ -953,9 +946,9 @@ fi
 # Check for Apple Mac OS X Carbon framework
 carbon_ok=no
 AC_MSG_CHECKING([for Mac OS X Carbon support])
-AC_COMPILE_IFELSE([
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <Carbon/Carbon.h>
-#include <CoreServices/CoreServices.h>
+#include <CoreServices/CoreServices.h>]], [])
 ], [carbon_ok=yes])
 AC_MSG_RESULT($carbon_ok)
 if test "x$carbon_ok" = "xyes"; then
@@ -1123,7 +1116,7 @@ if test "$GXX" = "yes"; then
   ink_svd_CXXFLAGS="$CXXFLAGS"
   CXXFLAGS="-Wno-unused-parameter $CXXFLAGS"
   # -Wno-unused-parameter isn't accepted by gcc 2.95.
-  AC_COMPILE_IFELSE([int dummy;
+  AC_COMPILE_IFELSE([AC_LANG_SOURCE([int dummy;])
 ], , CXXFLAGS="-Wno-unused $ink_svd_CXXFLAGS",)
   # Note: At least one bug has been caught from unused parameter warnings,
   # so it might be worth trying not to disable it.
