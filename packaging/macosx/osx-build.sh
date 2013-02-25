@@ -252,7 +252,7 @@ then
 			make distclean
 		fi
 	fi
-	./autogen.sh
+	export NOCONFIGURE=true && ./autogen.sh
 	status=$?
 	if [[ $status -ne 0 ]]; then
 		echo -e "\nautogen failed"
