@@ -24,7 +24,7 @@
         <param name="duplicate" type="boolean" _gui-text="Duplicate the pattern before deformation">true</param>
         </page>
         <page name="Help" _gui-text="Help">
-            <_param name="title" type="description">This effect bends a pattern object along arbitrary "skeleton" paths. The pattern is the topmost object in the selection (groups of paths/shapes/clones... allowed).</_param>
+            <_param name="title" type="description">This effect scatters or bends a pattern along arbitrary "skeleton" paths. The pattern is the topmost object in the selection. Groups of paths, shapes or clones are allowed.</_param>
         </page>
     </param>
     <effect>
