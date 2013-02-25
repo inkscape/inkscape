@@ -227,14 +227,6 @@ if test "x$openmp_ok" = "xyes"; then
 fi
 
 dnl ******************************
-dnl Check for libpng 
-dnl ******************************
-AC_CHECK_LIB(png, png_read_info, [AC_CHECK_HEADER(png.h, png_ok=yes, png_ok=no)], png_ok=no, -lz -lm)
-if test "x$png_ok" != "xyes"; then
-	AC_MSG_ERROR([libpng >= 1.2 is needed to compile inkscape])
-fi
-
-dnl ******************************
 dnl Check for libexif
 dnl ******************************
 AC_CHECK_LIB(exif, exif_data_new_from_file, [AC_CHECK_HEADER(libexif/exif-data.h, exif_ok=yes, exif_ok=no)], exif_ok=no, -lm)
@@ -970,8 +962,8 @@ if test "x$cairo_pdf" = "xyes"; then
   AC_DEFINE(HAVE_CAIRO_PDF, 1, [Whether the Cairo PDF backend is available])
 fi
 
-dnl Shouldn't we test for libpng and libz?
-INKSCAPE_LIBS="$INKSCAPE_LIBS -lpng -lz -lxml2 -ldl"
+dnl Shouldn't we test for libz?
+INKSCAPE_LIBS="$INKSCAPE_LIBS -lz -lxml2 -ldl"
 if test "x$openmp_ok" = "xyes"; then
 	INKSCAPE_LIBS="$INKSCAPE_LIBS -lgomp"
 fi
