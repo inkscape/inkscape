@@ -1,16 +1,24 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.53)
+AC_PREREQ([2.64])
 
 # Always use 0.xx+devel instead of 0.xxdevel for the version, e.g. 0.46+devel.
 # Rationale: (i) placate simple version comparison software such as
 # `dpkg --compare-versions'.  (ii) We don't always know what the next
 # version is going to be called until about the time we release it
 # (whereas we always know what the previous version was called).
-AC_INIT(inkscape, 0.48+devel)
+AC_INIT([inkscape],
+        [0.48+devel],
+        [http://bugs.launchpad.net/inkscape/+filebug],
+        [inkscape],
+        [http://inkscape.org/])
 
-AC_CANONICAL_HOST
+AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/main.cpp])
+AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CANONICAL_HOST
+
 AM_INIT_AUTOMAKE([dist-zip dist-bzip2 tar-pax])
 
 AC_ARG_ENABLE([lsb], AS_HELP_STRING([--enable-lsb], [LSB-compatible build configuration]), [
@@ -21,16 +29,14 @@ AC_ARG_ENABLE([lsb], AS_HELP_STRING([--enable-lsb], [LSB-compatible build config
   export CC CXX
 ])
 
-AM_CONFIG_HEADER(config.h)
-
 AC_LANG(C++)
-AC_ISC_POSIX
 AC_PROG_CXX
-AM_PROG_CC_STDC
+AC_PROG_CC
 AM_PROG_AS
 AC_PROG_RANLIB
-AC_PROG_INTLTOOL(0.22)
-AC_PROG_LIBTOOL
+# Initialize libtool
+LT_PREREQ([2.2])
+LT_INIT
 AC_HEADER_STDC
 INK_BZR_SNAPSHOT_BUILD
 
@@ -43,7 +49,7 @@ dnl deprecated features in external libraries and code that
 dnl triggers compiler warnings.
 dnl *********************************************************
 AC_ARG_ENABLE(strict-build,
-	      [AC_HELP_STRING([--enable-strict-build], [Enable strict build configuration [default=yes].  Usage of most deprecated symbols is forbidden by default.  Set the argument to "high" to introduce very strict checking that will cause the build to fail on many systems.])],
+	      [AS_HELP_STRING([--enable-strict-build], [Enable strict build configuration [[default=yes]].  Usage of most deprecated symbols is forbidden by default.  Set the argument to "high" to introduce very strict checking that will cause the build to fail on many systems.])],
 	      [enable_strict_build=$enableval],
 	      [enable_strict_build=yes])
 
@@ -56,7 +62,6 @@ else
 fi
 
 dnl These next few lines are needed only while libcroco is in our source tree.
-AC_PROG_CC
 AM_PROG_CC_C_O
 if test "$GCC" = "yes"; then
   # Enable some warnings from gcc.
@@ -126,9 +131,6 @@ if test "$GCC" = "yes"; then
   # C++-specific flags are defined further below.  Look for CXXFLAGS...
 fi
 
-dnl Honor aclocal flags
-ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
-
 dnl Verify our GCC version
 if test "x$GXX" = "xyes"; then
 	AC_MSG_CHECKING([GNU compiler version])
@@ -194,12 +196,14 @@ fi
 dnl ******************************
 dnl Gettext stuff
 dnl ******************************
+IT_PROG_INTLTOOL([0.40.0])
+
+AM_GNU_GETTEXT_VERSION([0.17])
+AM_GNU_GETTEXT([external])
+
 GETTEXT_PACKAGE="AC_PACKAGE_NAME"
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",[Translation domain used])
-dnl Add the languages which your application supports here.
-ALL_LINGUAS="am ar az be bg bn bn_BD br ca ca@valencia cs da de dz el en_AU en_CA en_GB en_US@piglatin eo es_MX es et eu fa fi fr ga gl he hr hu hy id it ja km ko lt lv mk mn nb ne nl nn pa pl pt_BR pt ro ru rw sk sl sq sr@latin sr sv te_IN th tr uk vi zh_CN zh_TW"
-AM_GLIB_GNU_GETTEXT
 
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
 if test "x$PKG_CONFIG" = "xno"; then
@@ -390,7 +394,7 @@ dnl gnome vfs checking
 dnl ******************************
 
 AC_ARG_WITH(gnome-vfs,
-	AC_HELP_STRING([--with-gnome-vfs], [use gnome vfs for loading files]),
+	AS_HELP_STRING([--with-gnome-vfs],[use gnome vfs for loading files]),
 	[with_gnome_vfs=$withval], [with_gnome_vfs=auto])
 
 if test "x$with_gnome_vfs" = "xno"; then
@@ -424,7 +428,7 @@ dnl libinkjar checking
 dnl ******************************
 
 AC_ARG_WITH(inkjar,
-	AC_HELP_STRING([--without-inkjar], [disable openoffice files (SVG jars)]),[with_ij=$withval], [with_ij=yes])
+	AS_HELP_STRING([--without-inkjar],[disable openoffice files (SVG jars)]),[with_ij=$withval], [with_ij=yes])
 
 if test "x$with_ij" = "xyes"; then
 	AC_DEFINE(WITH_INKJAR, 1, [enable openoffice files (SVG jars)])
@@ -442,7 +446,7 @@ dnl ******************************
 
 AC_MSG_CHECKING(for Perl development environment)
 AC_ARG_WITH(perl,
-            AC_HELP_STRING([--with-perl], [use Perl for embedded scripting (EXPERIMENTAL)]),
+            AS_HELP_STRING([--with-perl],[use Perl for embedded scripting (EXPERIMENTAL)]),
             [with_perl=$withval], [with_perl=skipped])
 
 if test "x$with_perl" = "xyes"; then
@@ -485,7 +489,7 @@ dnl ******************************
 
 AC_MSG_CHECKING(for Python development environment)
 AC_ARG_WITH(python,
-            AC_HELP_STRING([--with-python], [use Python for embedded scripting (EXPERIMENTAL)]),
+            AS_HELP_STRING([--with-python],[use Python for embedded scripting (EXPERIMENTAL)]),
             [with_python=$withval], [with_python=skipped])
 
 if test "x$with_python" = "xyes"; then
@@ -528,7 +532,7 @@ dnl LittleCms checking
 dnl ******************************
 
 AC_ARG_ENABLE(lcms,
-	AC_HELP_STRING([--enable-lcms], [enable LittleCms for color management]),
+	AS_HELP_STRING([--enable-lcms],[enable LittleCms for color management]),
 	[enable_lcms=$enableval], [enable_lcms=yes])
 
 if test "x$enable_lcms" = "xno"; then
@@ -566,7 +570,7 @@ dnl Libpoppler checking
 dnl ******************************
 
 AC_ARG_ENABLE(poppler-cairo,
-	AC_HELP_STRING([--enable-poppler-cairo], [Enable libpoppler-cairo for rendering PDF preview]),
+	AS_HELP_STRING([--enable-poppler-cairo],[Enable libpoppler-cairo for rendering PDF preview]),
 	[enable_poppler_cairo=$enableval], [enable_poppler_cairo=yes])
 
 POPPLER_CFLAGS=""
@@ -810,7 +814,7 @@ dnl *********************************
 dnl   Allow experimental GTK+3 build
 dnl *********************************
 AC_ARG_ENABLE(gtk3-experimental,
-	AC_HELP_STRING([--enable-gtk3-experimental], [enable compilation with GTK+3 (EXPERIMENTAL!)]),
+	AS_HELP_STRING([--enable-gtk3-experimental], [enable compilation with GTK+3 (EXPERIMENTAL!)]),
 	[enable_gtk3=$enableval], [enable_gtk3=no])
 
 with_gtkmm_3_0="no"
@@ -1093,7 +1097,6 @@ AC_HEADER_STAT
 AC_HEADER_TIME
 AC_STRUCT_TM
 AC_TYPE_MODE_T
-AC_TYPE_SIGNAL
 
 dnl Work around broken gcc 3.3 (seen on OSX) where "ENABLE_NLS" isn't
 dnl set correctly because the gettext function isn't noticed.
@@ -1136,7 +1139,7 @@ dnl ******************************
 dnl   libinkscape
 dnl ******************************
 dnl
-dnl AC_ARG_ENABLE(libinkscape, AC_HELP_STRING([--enable-libinkscape], [Compile dynamic library (experimental)]), [splib=$enableval], [splib=no])
+dnl AC_ARG_ENABLE(libinkscape, AS_HELP_STRING([--enable-libinkscape],[Compile dynamic library (experimental)]), [splib=$enableval], [splib=no])
 dnl
 dnl AM_CONDITIONAL(ENABLE_LIBINKSCAPE, test "x$splib" != "xno")
 dnl

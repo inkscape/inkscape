@@ -2,6 +2,8 @@
 
 AUTOMAKE_OPTIONS = foreign
 
+ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
+
 SUBDIRS = src doc share po
 
 Graphicsdir = $(datadir)/applications
