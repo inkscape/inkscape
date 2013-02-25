@@ -244,76 +244,6 @@ if test "x$jpeg_ok" = "xyes"; then
    AC_DEFINE(HAVE_JPEG, 1, [Use libjpeg])
 fi
 
-dnl Handle possible dlopen requirement for libgc
-dnl Isn't this internal to something in autoconf?  Couldn't find it...
-AC_CHECK_LIB([dld], [shl_load], [lt_cv_dlopen="shl_load" lt_cv_dlopen_libs="-dld"], [AC_CHECK_FUNC([dlopen],
-          [lt_cv_dlopen="dlopen"],
-      [AC_CHECK_LIB([dl], [dlopen],
-            [lt_cv_dlopen="dlopen" lt_cv_dlopen_libs="-ldl"],
-        [AC_CHECK_LIB([svld], [dlopen],
-              [lt_cv_dlopen="dlopen" lt_cv_dlopen_libs="-lsvld"],
-          [AC_CHECK_LIB([dld], [dld_link],
-                [lt_cv_dlopen="dld_link" lt_cv_dlopen_libs="-dld"])
-          ])
-        ])
-      ])
-    ])
-
-AC_CHECK_HEADERS([gc.h gc/gc.h],
-                 [
-		    # To test for the different required libs, I have to
-		    # overcome autoconf's caching system, so I change the
-		    # desired function name.  They're all in libgc.
-		    # The "break" will exit from the top level
-                    # AC_CHECK_HEADERS.
-		    gc_libs=""
-		    AC_CHECK_LIB(gc, GC_init,
-                                 [gc_ok=yes;
-				  LIBS="-lgc $gc_libs $LIBS";
-				  break], [gc_ok=no], [$gc_libs])
-		    gc_libs="-lpthread"
-		    AC_CHECK_LIB(gc, GC_malloc,
-                                 [gc_ok=yes;
-				  LIBS="-lgc $gc_libs $LIBS";
-                                  break], [gc_ok=no], [$gc_libs])
-		    gc_libs="$lt_cv_dlopen_libs"
-		    AC_CHECK_LIB(gc, GC_realloc,
-                                 [gc_ok=yes;
-				  LIBS="-lgc $gc_libs $LIBS";
-                                  break], [gc_ok=no], [$gc_libs])
-		    gc_libs="-lpthread $lt_cv_dlopen_libs"
-		    AC_CHECK_LIB(gc, GC_free,
-                                 [gc_ok=yes;
-				  LIBS="-lgc $gc_libs $LIBS";
-				  break], [gc_ok=no], [$gc_libs])
-		    break],
-                 [gc_ok=no])
-if test "x$gc_ok" = "xyes" && test "x$cross_compiling" = "xno" ; then 
-	AC_MSG_CHECKING([libgc version 6.4+])
-	AC_RUN_IFELSE(
-		[AC_LANG_SOURCE([[
-			#ifdef HAVE_GC_GC_H
-			# include <gc/gc.h>
-			#else
-			# include <gc.h>
-			#endif
-			#include <stdio.h>
-			extern unsigned GC_version;
-			int main(void){
-				unsigned min = ((6 << 16) | (4 << 8) | 0);
-				printf("%d.%d.%d ",GC_version >> 16, (GC_version >> 8) & 0xFF, GC_version & 0xFF);
-				if (GC_version>=min) return 0;
-				return 1;
-			}]])],
-		[gc_ok=yes],
-		[gc_ok=no]
-	)
-	AC_MSG_RESULT([$gc_ok])
-fi
-if test "x$gc_ok" != "xyes"; then
-	AC_MSG_ERROR([libgc (the Boehm Conservative Collector) 6.4+, is needed to compile inkscape -- http://www.hpl.hp.com/personal/Hans_Boehm/gc])
-fi
-
 dnl This check is to get a FIONREAD definition on Solaris 8
 AC_CHECK_HEADERS([sys/filio.h])
 
@@ -818,7 +748,7 @@ if test "x$enable_gtk3" = "xyes"; then
 		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
 	fi
 
-	PKG_CHECK_MODULES(INKSCAPE, gtkmm-3.0 >= 3.2  gdkmm-3.0 >= 3.2 gtk+-3.0 >= 3.2 gdk-3.0 >= 3.2 gdl-3.0 > 3.3.4 glib-2.0 >= 2.28  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4 pango >= 1.24 pangoft2 >= 1.24, with_gtkmm_3_0=yes, with_gtkmm_3_0=no)
+	PKG_CHECK_MODULES(INKSCAPE, bdw-gc >= 7.1  gtkmm-3.0 >= 3.2  gdkmm-3.0 >= 3.2 gtk+-3.0 >= 3.2 gdk-3.0 >= 3.2 gdl-3.0 > 3.3.4 glib-2.0 >= 2.28  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4 pango >= 1.24 pangoft2 >= 1.24, with_gtkmm_3_0=yes, with_gtkmm_3_0=no)
 
 	if test "x$with_gtkmm_3_0" = "xyes"; then
 		AC_MSG_RESULT([Using EXPERIMENTAL Gtkmm 3 build])
@@ -855,7 +785,7 @@ else
 		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
 	fi
 
-	PKG_CHECK_MODULES(INKSCAPE, glib-2.0 >= 2.28  gtk+-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.24 pango >= 1.24 pangoft2 >= 1.24)
+	PKG_CHECK_MODULES(INKSCAPE, bdw-gc >= 7.1  glib-2.0 >= 2.28  gtk+-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= $min_sigc_version  $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.24 pango >= 1.24 pangoft2 >= 1.24)
 	
 	# Enable build strict options that should work on most systems unless
 	# the build has been configured explicitly not to do so
