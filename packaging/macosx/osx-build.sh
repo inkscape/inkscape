@@ -21,7 +21,7 @@
 # User modifiable parameters
 #----------------------------------------------------------
 # Configure flags
-CONFFLAGS="--enable-osxapp"
+CONFFLAGS="--disable-openmp --enable-osxapp"
 # Libraries prefix (Warning: NO trailing slash)
 LIBPREFIX="/opt/local"
 # User name on Modevia
