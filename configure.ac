@@ -216,13 +216,12 @@ AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
 
 dnl ******************************
 dnl Check for OpenMP 
-dnl Replace this with AC_OPENMP once Autoconf 2.62 is widespread
 dnl ******************************
-AX_OPENMP([openmp_ok=yes],[openmp_ok=no])
-if test "x$openmp_ok" = "xyes"; then
+AC_OPENMP
+if test "x$ac_cv_prog_cxx_openmp" != "xunsupported"; then
 	dnl We have it, now set up the flags
+	AC_MSG_RESULT([Using OpenMP support])
 	CXXFLAGS="$CXXFLAGS $OPENMP_CXXFLAGS"
-	AC_CHECK_HEADER(omp.h)
 	AC_DEFINE(HAVE_OPENMP, 1, [Use OpenMP])
 fi
 
