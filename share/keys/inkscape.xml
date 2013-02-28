@@ -291,7 +291,7 @@ override) the bindings in the main default.xml.
   <bind action="ViewColorModeGrayscale" />
 
 <!-- Edit -->
-
+  
   <bind key="z" modifiers="Ctrl" action="EditUndo" display="true" />
   <bind key="Z" modifiers="Ctrl" action="EditUndo" />
   <bind key="y" modifiers="Ctrl,Shift" action="EditUndo" />
@@ -307,12 +307,15 @@ override) the bindings in the main default.xml.
 
   <bind key="x" modifiers="Ctrl" action="EditCut" display="true" />
   <bind key="X" modifiers="Ctrl" action="EditCut" />
-
+  <bind key="Delete" modifiers="Shift" action="EditCut"/>
+  
   <bind key="c" modifiers="Ctrl" action="EditCopy" display="true" />
   <bind key="C" modifiers="Ctrl" action="EditCopy" />
+  <bind key="Insert" modifiers="Ctrl" action="EditCopy"/>
 
   <bind key="v" modifiers="Ctrl" action="EditPaste" display="true" />
   <bind key="V" modifiers="Ctrl" action="EditPaste" />
+  <bind key="Insert" modifiers="Shift" action="EditPaste"/>
 
   <bind key="v" modifiers="Ctrl,Shift" action="EditPasteStyle" display="true" />
   <bind key="V" modifiers="Ctrl,Shift" action="EditPasteStyle" />
