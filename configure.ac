@@ -219,8 +219,8 @@ dnl Check for OpenMP
 dnl ******************************
 AC_OPENMP
 if test "x$ac_cv_prog_cxx_openmp" != "xunsupported"; then
+	openmp_ok=yes
 	dnl We have it, now set up the flags
-	AC_MSG_RESULT([Using OpenMP support])
 	CXXFLAGS="$CXXFLAGS $OPENMP_CXXFLAGS"
 	AC_DEFINE(HAVE_OPENMP, 1, [Use OpenMP])
 fi

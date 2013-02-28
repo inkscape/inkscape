@@ -1,6 +1,5 @@
 EXTRA_DIST = \
 	ac_define_dir.m4 \
-	ax_openmp.m4 \
 	codeset.m4 \
 	gettext.m4 \
 	glibc21.m4 \
