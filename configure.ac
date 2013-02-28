@@ -228,11 +228,12 @@ fi
 dnl ******************************
 dnl Check for libexif
 dnl ******************************
-AC_CHECK_LIB(exif, exif_data_new_from_file, [AC_CHECK_HEADER(libexif/exif-data.h, exif_ok=yes, exif_ok=no)], exif_ok=no, -lm)
+PKG_CHECK_MODULES(EXIF, libexif, exif_ok=yes, exif_ok=no)
 if test "x$exif_ok" = "xyes"; then
-   LIBS="-lexif $LIBS"
    AC_DEFINE(HAVE_EXIF, 1, [Use libexif])
 fi
+AC_SUBST(EXIF_LIBS)
+AC_SUBST(EXIF_CFLAGS)
 
 dnl ******************************
 dnl Check for libjpeg

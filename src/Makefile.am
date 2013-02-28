@@ -37,6 +37,7 @@ noinst_LIBRARIES =	\
 all_libs =			\
 	$(noinst_LIBRARIES)	\
 	$(INKSCAPE_LIBS)	\
+	$(EXIF_LIBS)            \
 	$(GNOME_VFS_LIBS)	\
 	$(XFT_LIBS)		\
 	$(FREETYPE_LIBS)	\
@@ -66,6 +67,7 @@ EXTRA_DIST =
 
 INCLUDES =	\
 	$(PERL_CFLAGS) $(PYTHON_CFLAGS)	\
+	$(EXIF_CFLAGS) \
 	$(FREETYPE_CFLAGS)	\
 	$(GNOME_PRINT_CFLAGS)	\
 	$(GNOME_VFS_CFLAGS)	\
