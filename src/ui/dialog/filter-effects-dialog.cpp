@@ -20,6 +20,11 @@
 
 #include "dialog-manager.h"
 #include <gtkmm/imagemenuitem.h>
+
+#if GTK_CHECK_VERSION(3,0,0)
+# include <gdkmm/devicemanager.h>
+#endif
+
 #include "ui/widget/spinbutton.h"
 #include <glibmm/i18n.h>
 
@@ -1784,7 +1789,15 @@ bool FilterEffectsDialog::PrimitiveList::on_draw_signal(const Cairo::RefPtr<Cair
         // Check mouse state
         int mx, my;
         Gdk::ModifierType mask;
+
+#if GTK_CHECK_VERSION(3,0,0)
+        Glib::RefPtr<Gdk::Display> display = get_bin_window()->get_display();
+        Glib::RefPtr<Gdk::DeviceManager> dm = display->get_device_manager();
+        Glib::RefPtr<const Gdk::Device> device = dm->get_client_pointer();
+        get_bin_window()->get_device_position(device, mx, my, mask);
+#else
         get_bin_window()->get_pointer(mx, my, mask);
+#endif
 
         // Outline the bottom of the connection area
         const int outline_x = x + fheight * (row_count - row_index);

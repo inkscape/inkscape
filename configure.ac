@@ -775,7 +775,7 @@ if test "x$enable_gtk3" = "xyes"; then
 		# Gtk+ 3.
 		CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
 		CPPFLAGS="-DGTK_DISABLE_DEPRECATED $CPPFLAGS"
-		CPPFLAGS="-DGDKMM_DISABLE_DEPRECATED $CPPFLAGS"
+		CPPFLAGS="-DGDK_DISABLE_DEPRECATED $CPPFLAGS"
 	fi
 else
 
@@ -794,7 +794,6 @@ else
 		# been removed in Gtk+ 3 so these checks are important.
 		CPPFLAGS="-DGTKMM_DISABLE_DEPRECATED $CPPFLAGS"
 		CPPFLAGS="-DGTK_DISABLE_DEPRECATED $CPPFLAGS"
-		CPPFLAGS="-DGDKMM_DISABLE_DEPRECATED $CPPFLAGS"
 		
 		# Allow only top-level GTK+ headers to be used.  This is mandatory
 		# for GTK+ >= 3.0 so there is no need to apply the flag in GTK+ 3
@@ -817,9 +816,11 @@ fi
 
 AM_CONDITIONAL(WITH_EXT_GDL, test "x$with_gtkmm_3_0" = "xyes")
 
-# Prevent usage of deprecated Glib and Glibmm symbols unless strict build
+# Prevent usage of deprecated library symbols unless strict build
 # checking has been disabled
 if test "x$enable_strict_build" != "xno"; then
+	CPPFLAGS="-DGDKMM_DISABLE_DEPRECATED $CPPFLAGS"
+	
 	# Ensure that no deprecated glibmm symbols are introduced.
 	# lp:inkscape builds cleanly with this option at r10957
 	CPPFLAGS="-DGLIBMM_DISABLE_DEPRECATED $CPPFLAGS"
