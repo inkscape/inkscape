@@ -30,5 +30,14 @@ fi
 autopoint --force
 AUTOPOINT='intltoolize --automake --copy' autoreconf --force --install --verbose
 
+# Patch the generated po/Makefile.in.in file so that locale files are installed
+# in the correct location on OS X and Free-BSD systems.  This is a workaround
+# for a bug in intltool.  See https://launchpad.net/bugs/398571
+#
+# TODO: Drop this hack, and bump our intltool version requiement once the issue
+#       is fixed in intltool
+sed 's/itlocaledir = $(prefix)\/$(DATADIRNAME)\/locale/itlocaledir = $(datarootdir)\/locale/' < po/Makefile.in.in > po/Makefile.in.in.tmp
+mv po/Makefile.in.in.tmp po/Makefile.in.in
+
 cd $olddir
 test -n "$NOCONFIGURE" || "$srcdir/configure" "$@"
