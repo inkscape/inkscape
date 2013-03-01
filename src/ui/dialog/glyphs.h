@@ -54,7 +54,7 @@ private:
 
     static GlyphColumns *getColumns();
 
-    static void fontChangeCB(SPFontSelector *fontsel, font_instance *font, GlyphsPanel *self);
+    static void fontChangeCB(SPFontSelector *fontsel, Glib::ustring fontspec, GlyphsPanel *self);
 
     void rebuild();
 

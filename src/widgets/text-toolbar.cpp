@@ -18,8 +18,8 @@
  *
  * Copyright (C) 2004 David Turner
  * Copyright (C) 2003 MenTaLguY
- * Copyright (C) 1999-2013 authors
  * Copyright (C) 2001-2002 Ximian, Inc.
+ * Copyright (C) 1999-2013 authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -170,7 +170,7 @@ static void sp_text_fontfamily_value_changed( Ink_ComboBoxEntry_Action *act, GOb
         // active text set in sp_text_toolbox_selection_changed()
 
         SPCSSAttr *css = sp_repr_css_attr_new ();
-        fontlister->set_css( css );
+        fontlister->fill_css( css );
 
         SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
         sp_desktop_set_style (desktop, css, true, true); // Results in selection change called twice.
@@ -272,7 +272,7 @@ static void sp_text_fontstyle_value_changed( Ink_ComboBoxEntry_Action *act, GObj
         // active text set in sp_text_toolbox_seletion_changed()
 
         SPCSSAttr *css = sp_repr_css_attr_new ();
-        fontlister->set_css( css );
+        fontlister->fill_css( css );
 
         SPDesktop   *desktop    = SP_ACTIVE_DESKTOP;
         sp_desktop_set_style (desktop, css, true, true);

@@ -8,8 +8,9 @@
  *   Johan Engelen <goejendaagh@zonnet.nl>
  *   Abhishek Sharma
  *   John Smith
+ *   Tavmjong Bah
  *
- * Copyright (C) 1999-2012 Authors
+ * Copyright (C) 1999-2013 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -32,6 +33,7 @@ extern "C" {
 #include <gtkmm/stock.h>
 #include <libnrtype/font-instance.h>
 #include <libnrtype/font-style-to-pos.h>
+#include <libnrtype/font-lister.h>
 #include <xml/repr.h>
 
 #include "macros.h"
@@ -305,18 +307,20 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
 
         // FIXME: process result_family/style == QUERY_STYLE_MULTIPLE_DIFFERENT by showing "Many" in the lists
 
-        // Get a font_instance using the font-specification attribute stored in SPStyle if available
-        font_instance *font = font_factory::Default()->FaceFromStyle(query);
+        Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
 
-        if (font) {
+        // This is done for us by text-toolbar. No need to do it twice.
+        // fontlister->update_font_list( sp_desktop_document( SP_ACTIVE_DESKTOP ));
+        // fontlister->selection_update();
 
-            Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-            int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
-            sp_font_selector_set_font (fsel, font, sp_style_css_size_px_to_units(query->font_size.computed, unit) );
-            setPreviewText(font, phrase);
-            font->Unref();
-            font=NULL;
-        }
+        Glib::ustring fontspec = fontlister->get_fontspec();
+
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
+        double size = sp_style_css_size_px_to_units(query->font_size.computed, unit); 
+        sp_font_selector_set_fontspec(fsel, fontspec, size );
+
+        setPreviewText (fontspec, phrase);
 
         if (query->text_anchor.computed == SP_CSS_TEXT_ANCHOR_START) {
             if (query->text_align.computed == SP_CSS_TEXT_ALIGN_JUSTIFY) {
@@ -351,29 +355,30 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
     blocked = false;
 }
 
-void TextEdit::setPreviewText (font_instance *font, Glib::ustring phrase)
+
+void TextEdit::setPreviewText (Glib::ustring font_spec, Glib::ustring phrase)
 {
-    if (!font) {
+    if (font_spec.empty()) {
         return;
     }
 
-    char *desc = pango_font_description_to_string(font->descr);
+    Glib::ustring phrase_escaped = Glib::Markup::escape_text( phrase );
+
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
     double pt_size = sp_style_css_size_units_to_px(sp_font_selector_get_size(fsel), unit) * PT_PER_PX;
 
-    gchar *const phrase_escaped = g_markup_escape_text(phrase.c_str(), -1);
-
     // Pango font size is in 1024ths of a point
-    gchar *markup = g_strdup_printf("<span font=\"%s\" size=\"%d\">%s</span>",
-        desc, (int) (pt_size * PANGO_SCALE ),  phrase_escaped);
+    // C++11: Glib::ustring size = std::to_string( pt_size * PANGO_SCALE );
+    std::ostringstream size_st;
+    size_st << pt_size * PANGO_SCALE;
 
-    preview_label.set_markup(markup);
+    Glib::ustring markup = "<span font=\"" + font_spec +
+        "\" size=\"" + size_st.str() + "\">" + phrase_escaped + "</span>";
 
-    g_free(desc);
-    g_free(phrase_escaped);
-    g_free(markup);
+    preview_label.set_markup(markup.c_str());
 }
+
 
 SPItem *TextEdit::getSelectedTextItem (void)
 {
@@ -430,34 +435,18 @@ void TextEdit::updateObjectText ( SPItem *text )
         }
 }
 
-SPCSSAttr *TextEdit::getTextStyle ()
+SPCSSAttr *TextEdit::fillTextStyle ()
 {
         SPCSSAttr *css = sp_repr_css_attr_new ();
 
-        // font
-        font_instance *font = sp_font_selector_get_font (fsel);
+        Glib::ustring fontspec = sp_font_selector_get_fontspec (fsel);
 
-        if ( font ) {
-            Glib::ustring fontName = font_factory::Default()->ConstructFontSpecification(font);
-            sp_repr_css_set_property (css, "-inkscape-font-specification", fontName.c_str());
+        if( !fontspec.empty() ) {
 
-            gchar c[256];
+            Inkscape::FontLister *fontlister = Inkscape::FontLister::get_instance();
+            fontlister->fill_css( css, fontspec );
 
-            font->Family(c, 256);
-            sp_repr_css_set_property (css, "font-family", c);
-
-            font->Attribute( "weight", c, 256);
-            sp_repr_css_set_property (css, "font-weight", c);
-
-            font->Attribute("style", c, 256);
-            sp_repr_css_set_property (css, "font-style", c);
-
-            font->Attribute("stretch", c, 256);
-            sp_repr_css_set_property (css, "font-stretch", c);
-
-            font->Attribute("variant", c, 256);
-            sp_repr_css_set_property (css, "font-variant", c);
-
+            // TODO, possibly move this to FontLister::set_css to be shared.
             Inkscape::CSSOStringStream os;
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
             int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
@@ -467,9 +456,6 @@ SPCSSAttr *TextEdit::getTextStyle ()
                 os << sp_font_selector_get_size (fsel) << sp_style_get_css_unit_string(unit);
             }
             sp_repr_css_set_property (css, "font-size", os.str().c_str());
-
-            font->Unref();
-            font=NULL;
         }
 
         // Layout
@@ -505,7 +491,7 @@ SPCSSAttr *TextEdit::getTextStyle ()
 
 void TextEdit::onSetDefault()
 {
-    SPCSSAttr *css = getTextStyle ();
+    SPCSSAttr *css = fillTextStyle ();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     blocked = true;
@@ -525,7 +511,7 @@ void TextEdit::onApply()
 
     unsigned items = 0;
     const GSList *item_list = sp_desktop_selection(desktop)->itemList();
-    SPCSSAttr *css = getTextStyle ();
+    SPCSSAttr *css = fillTextStyle ();
     sp_desktop_set_style(desktop, css, true);
 
     for (; item_list != NULL; item_list = item_list->next) {
@@ -556,6 +542,13 @@ void TextEdit::onApply()
         }
     }
 
+    // Update FontLister
+    Glib::ustring fontspec = sp_font_selector_get_fontspec (fsel);
+    if( !fontspec.empty() ) {
+        Inkscape::FontLister *fontlister = Inkscape::FontLister::get_instance();
+        fontlister->set_fontspec( fontspec, false );
+    }
+
     // complete the transaction
     DocumentUndo::done(sp_desktop_document(SP_ACTIVE_DESKTOP), SP_VERB_CONTEXT_TEXT,
                        _("Set text style"));
@@ -577,11 +570,11 @@ void TextEdit::onTextChange (GtkTextBuffer *text_buffer, TextEdit *self)
     GtkTextIter end;
     gtk_text_buffer_get_bounds (text_buffer, &start, &end);
     gchar *str = gtk_text_buffer_get_text(text_buffer, &start, &end, TRUE);
-    font_instance *font = sp_font_selector_get_font(self->fsel);
+    Glib::ustring fontspec = sp_font_selector_get_fontspec(self->fsel);
 
-    if (font) {
+    if( !fontspec.empty() ) {
         const gchar *phrase = str && *str ? str : self->samplephrase.c_str();
-        self->setPreviewText(font, phrase);
+        self->setPreviewText(fontspec, phrase);
     } else {
         self->preview_label.set_markup("");
     }
@@ -594,7 +587,7 @@ void TextEdit::onTextChange (GtkTextBuffer *text_buffer, TextEdit *self)
     self->setasdefault_button.set_sensitive ( true);
 }
 
-void TextEdit::onFontChange(SPFontSelector * /*fontsel*/, font_instance * font, TextEdit *self)
+void TextEdit::onFontChange(SPFontSelector * /*fontsel*/, gchar* fontspec, TextEdit *self)
 {
     GtkTextIter start, end;
     gchar *str;
@@ -607,9 +600,9 @@ void TextEdit::onFontChange(SPFontSelector * /*fontsel*/, font_instance * font, 
     gtk_text_buffer_get_bounds (self->text_buffer, &start, &end);
     str = gtk_text_buffer_get_text (self->text_buffer, &start, &end, TRUE);
 
-    if (font) {
+    if (fontspec) {
         const gchar *phrase = str && *str ? str : self->samplephrase.c_str();
-        self->setPreviewText(font, phrase);
+        self->setPreviewText(fontspec, phrase);
     } else {
         self->preview_label.set_markup("");
     }

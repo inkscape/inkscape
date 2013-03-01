@@ -8,10 +8,11 @@
  *   Lauris Kaplinski <lauris@kaplinski.com>
  *   bulia byak <buliabyak@users.sf.net>
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
+ *   Tavmjong Bah <tavmjong@free.fr>
  *
  * Copyright (C) 1999-2001 Ximian, Inc.
  * Copyright (C) 2002 Lauris Kaplinski
- * Copyright (C) -2007 Authors
+ * Copyright (C) -2013 Authors
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
@@ -53,7 +54,7 @@ struct SPFontSelector
     NRStyleList styles;
     gfloat fontsize;
     bool fontsize_dirty;
-    font_instance *font;
+    Glib::ustring *fontspec;
 };
 
 
@@ -61,7 +62,7 @@ struct SPFontSelectorClass
 {
     GtkHBoxClass parent_class;
 
-    void (* font_set) (SPFontSelector *fsel, font_instance *font);
+    void (* font_set) (SPFontSelector *fsel, gchar *fontspec);
 };
 
 enum {
@@ -136,6 +137,9 @@ static void sp_font_selector_set_size_tooltip(SPFontSelector *fsel)
 }
 
 
+/*
+ * Create a widget with children for selecting font-family, font-style, and font-size.
+ */
 static void sp_font_selector_init(SPFontSelector *fsel)
 {
         gtk_box_set_homogeneous(GTK_BOX(fsel), TRUE);
@@ -152,8 +156,6 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(sw), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
         gtk_container_add(GTK_CONTAINER(f), sw);
-
-        Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
 
         fsel->family_treeview = gtk_tree_view_new ();
         GtkTreeViewColumn *column = gtk_tree_view_column_new ();
@@ -175,6 +177,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
             "widget \"*font_selector_family\" style \"fontfamily-separator-style\"");
         
 
+        Inkscape::FontLister* fontlister = Inkscape::FontLister::get_instance();
         Glib::RefPtr<Gtk::ListStore> store = fontlister->get_font_list();
         gtk_tree_view_set_model (GTK_TREE_VIEW(fsel->family_treeview), GTK_TREE_MODEL (Glib::unwrap (store)));
         gtk_container_add(GTK_CONTAINER(sw), fsel->family_treeview);
@@ -229,6 +232,7 @@ static void sp_font_selector_init(SPFontSelector *fsel)
         gtk_widget_show(hb);
         gtk_box_pack_start(GTK_BOX(vb), hb, FALSE, FALSE, 0);
 
+        // Font-size
         fsel->size = gtk_combo_box_text_new_with_entry ();
 
         sp_font_selector_set_size_tooltip(fsel);
@@ -244,18 +248,20 @@ static void sp_font_selector_init(SPFontSelector *fsel)
 
         gtk_widget_show_all (fsel->size);
 
+        // Set default size... next two lines must match
+        gtk_entry_set_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(fsel->size))), "18.0");
         fsel->fontsize = 18.0;
         fsel->fontsize_dirty = false;
-        fsel->font = NULL;
+
+        fsel->fontspec = new Glib::ustring;
 }
 
 static void sp_font_selector_dispose(GObject *object)
 {
     SPFontSelector *fsel = SP_FONT_SELECTOR (object);
 
-    if (fsel->font) {
-        fsel->font->Unref();
-        fsel->font = NULL;
+    if (fsel->fontspec) {
+        delete fsel->fontspec;
     }
 
     if (fsel->families.length > 0) {
@@ -273,46 +279,62 @@ static void sp_font_selector_dispose(GObject *object)
     }
 }
 
+// Callback when family changed, updates style list for new family.
 static void sp_font_selector_family_select_row(GtkTreeSelection *selection,
                                                SPFontSelector *fsel)
 {
-    GtkTreeIter   iter;
-    GtkTreeModel *model;
-    GtkListStore *store;
-    GtkTreePath  *path;
-    GList        *list=0;
 
+    // We need our own copy of the style list store since the font-family
+    // may not be the same in the font-selector as stored in the font-lister
+    // TODO: use font-lister class for this by modifying new_font_family to accept an optional style list
+    // TODO: add store to SPFontSelector struct and reuse.
+
+    // Start by getting iterator to selected font
+    GtkTreeModel *model;
+    GtkTreeIter   iter;
     if (!gtk_tree_selection_get_selected (selection, &model, &iter)) return;
 
-    path = gtk_tree_model_get_path (model, &iter);
-    gtk_tree_model_get (model, &iter, 1, &list, -1);
+    // Next get family name with its style list
+    gchar        *family;
+    GList        *list=0;
+    gtk_tree_model_get (model, &iter, 0, &family, 1, &list, -1);
 
-    store = gtk_list_store_new (1, G_TYPE_STRING);
+    // Find best style match for selected family with current style (e.g. of selected text).
+    Inkscape::FontLister *fontlister = Inkscape::FontLister::get_instance();
+    Glib::ustring style = fontlister->get_font_style();
+    Glib::ustring best  = fontlister->get_best_style_match (family, style);    
 
+    // Create our own store of styles for selected font-family and find index of best style match
+    int path_index = 0;
+    int index = 0;
+    GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING); // Where is this deleted?
     for ( ; list ; list = list->next )
     {
         gtk_list_store_append (store, &iter);
-        gtk_list_store_set (store, &iter, 0, static_cast<char*>(list->data), -1);
+        gtk_list_store_set (store, &iter, 0, (char*)list->data, -1);
+
+        if( best.compare( (char*)list->data ) == 0 ) {
+            path_index = index;
+        }
+        ++index;
     }
 
+    // Attach store to tree view. Can trigger style changed signal (but not FONT_SET):
     gtk_tree_view_set_model (GTK_TREE_VIEW (fsel->style_treeview), GTK_TREE_MODEL (store));
-    path = gtk_tree_path_new ();
-    gtk_tree_path_append_index (path, 0);
+
+    // Get path to best style
+    GtkTreePath *path = gtk_tree_path_new ();
+    gtk_tree_path_append_index (path, path_index);
+
+    // Highlight best style. Triggers style changed signal:
     gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->style_treeview)), path);
     gtk_tree_path_free (path);
 }
 
+// Callback when row changed
 static void sp_font_selector_style_select_row (GtkTreeSelection *selection,
                                                SPFontSelector   *fsel)
 {
-    GtkTreeModel *model;
-    GtkTreePath  *path;
-    GtkTreeIter   iter;
-
-    if (!gtk_tree_selection_get_selected (selection, &model, &iter)) return;
-
-    path = gtk_tree_model_get_path (model, &iter);
-
     if (!fsel->block_emit)
     {
         sp_font_selector_emit_set (fsel);
@@ -322,6 +344,7 @@ static void sp_font_selector_style_select_row (GtkTreeSelection *selection,
 
 /*
  * Set the default list of font sizes, scaled to the users preferred unit
+ * TODO: This routine occurs both here and in text-toolbar. Move to font-lister?
  */
 static void sp_font_selector_set_sizes( SPFontSelector *fsel )
 {
@@ -348,6 +371,7 @@ static void sp_font_selector_set_sizes( SPFontSelector *fsel )
 
 }
 
+// Callback when size changed
 static void sp_font_selector_size_changed( GtkComboBox */*cbox*/, SPFontSelector *fsel )
 {
     char *text = NULL;
@@ -381,9 +405,13 @@ static void sp_font_selector_size_changed( GtkComboBox */*cbox*/, SPFontSelector
     sp_font_selector_emit_set (fsel);
 }
 
+
+// Called from sp_font_selector_style_select_row
+// Called from sp_font_selector_size_changed
+// Called indirectly for sp_font_selector_family_select_row (since style changes).
+// Emits FONT_SET signal (handled by TextEdit::onFontChange, GlyphsPanel::fontChangeCB). 
 static void sp_font_selector_emit_set (SPFontSelector *fsel)
 {
-    font_instance *font;
 
     GtkTreeSelection *selection_family;
     GtkTreeSelection *selection_style;
@@ -398,41 +426,27 @@ static void sp_font_selector_emit_set (SPFontSelector *fsel)
 
     model_family = gtk_tree_view_get_model (GTK_TREE_VIEW (fsel->family_treeview));
     if (!model_family) return;
-    model_style = gtk_tree_view_get_model (GTK_TREE_VIEW (fsel->style_treeview));
-    if (!model_style) return;
+    model_style  = gtk_tree_view_get_model (GTK_TREE_VIEW (fsel->style_treeview));
+    if (!model_style ) return;
 
     selection_family = gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->family_treeview));
-    selection_style = gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->style_treeview));
+    selection_style  = gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->style_treeview ));
 
     if (!gtk_tree_selection_get_selected (selection_family, NULL, &iter_family)) return;
-    if (!gtk_tree_selection_get_selected (selection_style, NULL, &iter_style)) return;
+    if (!gtk_tree_selection_get_selected (selection_style,  NULL, &iter_style )) return;
 
     gtk_tree_model_get (model_family, &iter_family, 0, &family, -1);
-    gtk_tree_model_get (model_style, &iter_style, 0, &style, -1);
+    gtk_tree_model_get (model_style,  &iter_style,  0, &style,  -1);
 
     if ((!family) || (!style)) return;
 
-    font = (font_factory::Default())->FaceFromUIStrings (family, style);
+    Glib::ustring fontspec = family;
+    fontspec += ", ";
+    fontspec += style;
 
-    // FIXME: when a text object uses non-available font, font==NULL and we can't set size
-    // (and the size shown in the widget is invalid). To fix, here we must always get some
-    // default font, exactly the same as sptext uses for on-canvas display, so that
-    // font!=NULL ever.
-    if (font != fsel->font || ( font && fsel->fontsize_dirty ) ) {
-        if ( font ) {
-            font->Ref();
-        }
-        if ( fsel->font ) {
-            fsel->font->Unref();
-        }
-        fsel->font = font;
-        g_signal_emit(fsel, fs_signals[FONT_SET], 0, fsel->font);
-    }
-    fsel->fontsize_dirty = false;
-    if (font) {
-        font->Unref();
-    }
-    font = NULL;
+    *(fsel->fontspec) = fontspec;
+
+    g_signal_emit(fsel, fs_signals[FONT_SET], 0, fontspec.c_str());
 }
 
 GtkWidget *sp_font_selector_new()
@@ -442,116 +456,53 @@ GtkWidget *sp_font_selector_new()
     return GTK_WIDGET(fsel);
 }
 
+
 /*
- * Returns the index of the fonts closest style match from the provided list of styles
- * Used in both the Text dialog and the Text toolbar to set the style combo on selection change
+ * Sets the values displayed in the font-selector from a fontspec.
+ * It is only called from TextEdit with a new selection and from GlyphsPanel
  */
-unsigned int sp_font_selector_get_best_style (font_instance *font, GList *list)
+void sp_font_selector_set_fontspec (SPFontSelector *fsel, Glib::ustring fontspec, double size)
 {
-    if ( !font || !list) {
-        return 0;
-    }
+    if (!fontspec.empty())
+    {
 
-    font_instance *tempFont = NULL;
-    unsigned int currentStyleNumber = 0;
-    unsigned int bestStyleNumber = 0;
+        Inkscape::FontLister *font_lister = Inkscape::FontLister::get_instance();
+        std::pair<Glib::ustring, Glib::ustring> ui = font_lister->ui_from_fontspec( fontspec );
+        Glib::ustring family = ui.first;
+        Glib::ustring style = ui.second;
 
-    Glib::ustring family = font_factory::Default()->GetUIFamilyString(font->descr);
-
-    PangoFontDescription *incomingFont = pango_font_description_copy(font->descr);
-    pango_font_description_unset_fields(incomingFont, PANGO_FONT_MASK_SIZE);
-
-    char *incomingFontString = pango_font_description_to_string(incomingFont);
-
-    tempFont = (font_factory::Default())->FaceFromUIStrings(family.c_str(), static_cast<char*>(list->data));
-
-    PangoFontDescription *bestMatchForFont = NULL;
-    if (tempFont) {
-        bestMatchForFont = pango_font_description_copy(tempFont->descr);
-        tempFont->Unref();
-        tempFont = NULL;
-    }
-
-    if( bestMatchForFont != NULL ) {
-        pango_font_description_unset_fields(bestMatchForFont, PANGO_FONT_MASK_SIZE);
-    }
-
-    list = list->next;
-
-    while (list) {
-        currentStyleNumber++;
-
-        tempFont = font_factory::Default()->FaceFromUIStrings(family.c_str(), static_cast<char*>(list->data));
-
-        PangoFontDescription *currentMatchForFont = NULL;
-        if (tempFont) {
-            currentMatchForFont = pango_font_description_copy(tempFont->descr);
-            tempFont->Unref();
-            tempFont = NULL;
-        }
-
-        if (currentMatchForFont) {
-            pango_font_description_unset_fields(currentMatchForFont, PANGO_FONT_MASK_SIZE);
-
-            char *currentMatchString = pango_font_description_to_string(currentMatchForFont);
-
-            if (!strcmp(incomingFontString, currentMatchString)
-                    || pango_font_description_better_match(incomingFont, bestMatchForFont, currentMatchForFont)) {
-                // Found a better match for the font we are looking for
-                pango_font_description_free(bestMatchForFont);
-                bestMatchForFont = pango_font_description_copy(currentMatchForFont);
-                bestStyleNumber = currentStyleNumber;
-            }
-
-            g_free(currentMatchString);
-
-            pango_font_description_free(currentMatchForFont);
-        }
-
-        list = list->next;
-    }
-
-    if (bestMatchForFont)
-        pango_font_description_free(bestMatchForFont);
-    if (incomingFont)
-        pango_font_description_free(incomingFont);
-    g_free(incomingFontString);
-
-    return bestStyleNumber;
-}
-
-void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, double size)
-{
-    if (font)
-    {  
         Gtk::TreePath path;
-        
-        Glib::ustring family = font_factory::Default()->GetUIFamilyString(font->descr);
-
         try {
-            path = Inkscape::FontLister::get_instance()->get_row_for_font (family);
+            path = font_lister->get_row_for_font (family);
         } catch (...) {
+            g_warning( "Couldn't find row for font-family: %s", family.c_str() );
             return;
         }
 
+        // High light selected family and scroll so it is in view.
         fsel->block_emit = TRUE;
         gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->family_treeview)), path.gobj());
         gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (fsel->family_treeview), path.gobj(), NULL, TRUE, 0.5, 0.5);
-        fsel->block_emit = FALSE;
+        fsel->block_emit = FALSE;   // TODO: Should this be moved to the end?
 
-        GList *list = 0;
-        GtkTreeIter iter;
-        GtkTreeModel *model = gtk_tree_view_get_model (GTK_TREE_VIEW(fsel->family_treeview));
-        gtk_tree_model_get_iter (model, &iter, path.gobj());
-        gtk_tree_model_get (model, &iter, 1, &list, -1);
 
-        unsigned int bestStyleNumber = sp_font_selector_get_best_style(font, list);
+        // We don't need to get best style since this is only called on a new
+        // selection where we already know the "best" style.
+        // Glib::ustring bestStyle = font_lister->get_best_style_match (family, style);
+        // std::cout << "Best: " << bestStyle << std::endl;
 
-        GtkTreePath *path_c = gtk_tree_path_new ();
-        gtk_tree_path_append_index (path_c, bestStyleNumber);
-        gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->style_treeview)), path_c);
-        gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (fsel->style_treeview), path_c, NULL, TRUE, 0.5, 0.5);
-    
+        // The "trial" style list and the regular list are the same in this case.
+            Gtk::TreePath path_c;
+        try {
+            path_c = font_lister->get_row_for_style( style );
+        } catch (...) {
+            g_warning( "Couldn't find row for style: %s (%s)", style.c_str(), family.c_str() );
+            return;
+        }
+
+        gtk_tree_selection_select_path (gtk_tree_view_get_selection (GTK_TREE_VIEW (fsel->style_treeview)), path_c.gobj());
+        gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (fsel->style_treeview), path_c.gobj(), NULL, TRUE, 0.5, 0.5);
+
         if (size != fsel->fontsize)
         {
             gchar s[8];
@@ -565,13 +516,9 @@ void sp_font_selector_set_font (SPFontSelector *fsel, font_instance *font, doubl
     
 }
 
-font_instance* sp_font_selector_get_font(SPFontSelector *fsel)
+Glib::ustring sp_font_selector_get_fontspec(SPFontSelector *fsel)
 {
-    if (fsel->font) {
-        fsel->font->Ref();
-    }
-
-    return fsel->font;
+    return *(fsel->fontspec);
 }
 
 /*

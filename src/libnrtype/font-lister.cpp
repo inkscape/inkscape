@@ -82,7 +82,6 @@ namespace Inkscape
 	font_list_store->thaw_notify();
 
         style_list_store       = Gtk::ListStore::create (FontStyleList);
-        style_list_store_trial = Gtk::ListStore::create (FontStyleList);
     }
 
     // Example of how to use "foreach_iter"
@@ -375,6 +374,24 @@ namespace Inkscape
     }
  
 
+    // Set fontspec. If check is false, best style match will not be done.
+    void
+    FontLister::set_fontspec (Glib::ustring new_fontspec, gboolean check) {
+
+      std::pair<Glib::ustring,Glib::ustring> ui = ui_from_fontspec( new_fontspec );
+      Glib::ustring new_family = ui.first;
+      Glib::ustring new_style = ui.second;
+
+#ifdef DEBUG_FONT
+      std::cout << "FontLister::set_fontspec: family: " << new_family
+		<< "   style:" << new_style << std::endl;
+#endif
+
+      set_font_family( new_family, false );
+      set_font_style( new_style );
+    }
+
+
     // TODO: use to determine font-selector best style
     std::pair<Glib::ustring, Glib::ustring>
     FontLister::new_font_family (Glib::ustring new_family, gboolean check_style ) {
@@ -419,7 +436,6 @@ namespace Inkscape
       }
       
       // Update style list.
-      // TODO: create a second "temporary" style_list_store for font_selector.
       style_list_store->freeze_notify();
       style_list_store->clear();
 
@@ -524,11 +540,6 @@ namespace Inkscape
     }
 
 
-    // void
-    // FontLister::new_font_style (Glib::ustring new_style) {
-    //   // Is this needed? What do we do?
-    // }
-
     void
     FontLister::set_font_style (Glib::ustring new_style) {
 
@@ -554,27 +565,22 @@ namespace Inkscape
 #endif
     }
 
-    // For use by font-selector where we already know that the style is valid
-    void
-    FontLister::set_font (Glib::ustring new_family, Glib::ustring new_style) {
-
-#ifdef DEBUG_FONT
-      std::cout << "FonLister::set_font: " << new_family << " " << new_style << std::endl;
-#endif
-      set_font_family( new_family, false );
-      set_font_style( new_style );
-    }
 
     // We do this ourselves as we can't rely on FontFactory.
     void
-    FontLister::set_css( SPCSSAttr *css ) {
+    FontLister::fill_css( SPCSSAttr *css, Glib::ustring fontspec ) {
 
-      //std::cout << "FontLister:set_css: " << std::endl;
+      if( fontspec.empty() ) {
+	fontspec = current_fontspec;
+      }
+      std::pair<Glib::ustring,Glib::ustring> ui = ui_from_fontspec( fontspec );
 
-      sp_repr_css_set_property (css, "-inkscape-font-specification", current_fontspec.c_str() );
-      sp_repr_css_set_property (css, "font-family", current_family.c_str() ); //Canonized w/ spaces
+      Glib::ustring family = ui.first;
 
-      PangoFontDescription *desc = pango_font_description_from_string( current_fontspec.c_str() );
+      sp_repr_css_set_property (css, "-inkscape-font-specification", fontspec.c_str() );
+      sp_repr_css_set_property (css, "font-family", family.c_str() ); //Canonized w/ spaces
+
+      PangoFontDescription *desc = pango_font_description_from_string( fontspec.c_str() );
       PangoWeight weight = pango_font_description_get_weight( desc );
       switch ( weight ) {
       case PANGO_WEIGHT_THIN:
@@ -837,6 +843,26 @@ namespace Inkscape
       return font_list_store->get_path( get_row_for_font ( family ) );
     }
 
+    Gtk::TreeModel::Row
+    FontLister::get_row_for_style (Glib::ustring style)
+    {
+      Gtk::TreePath path;
+
+      Gtk::TreeModel::iterator iter = style_list_store->get_iter( "0" );
+      while( iter != style_list_store->children().end() ) {
+
+	Gtk::TreeModel::Row row = *iter;
+
+	if( style.compare( row[FontStyleList.styles] ) == 0 ) {
+	  return row;
+	}
+
+	++iter;
+      }
+
+      throw STYLE_NOT_FOUND;
+    }
+
     /* Returns style string */
     // TODO: Remove or turn into function to be used by new_font_family.
     Glib::ustring
@@ -904,12 +930,6 @@ namespace Inkscape
     FontLister::get_style_list () const
     {
         return style_list_store;
-    }
-
-    const Glib::RefPtr<Gtk::ListStore>
-    FontLister::get_style_list_trial () const
-    {
-        return style_list_store_trial;
     }
 }
 

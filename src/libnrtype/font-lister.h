@@ -111,7 +111,6 @@ namespace Inkscape
                         };
 
                         FontStyleListClass FontStyleList;
-                        FontStyleListClass FontStyleListTrial;
 
                         /** Returns the ListStore with the family names
                          *
@@ -127,12 +126,6 @@ namespace Inkscape
                          */
                         const Glib::RefPtr<Gtk::ListStore>
                         get_style_list () const;
-
-                        /** Returns the ListStore with the styles - trial
-                         *
-                         */
-                        const Glib::RefPtr<Gtk::ListStore>
-                        get_style_list_trial () const;
 
                         /** Updates font list to include fonts in document
                          *
@@ -172,6 +165,19 @@ namespace Inkscape
                          */
                         std::pair<Glib::ustring, Glib::ustring>
                         selection_update ();
+
+                        /** Sets current_fontspec, etc. If check is false, won't
+                         *  try to find best style match (assumes style in fontspec
+                         *  valid for given font-family).
+                         */
+                        void
+                        set_fontspec (Glib::ustring fontspec, gboolean check=true);
+
+                        Glib::ustring
+                        get_fontspec ()
+                        {
+                            return current_fontspec;
+                        }
 
                         /** Changes font-family, updating style list and attempting to find
                          *  closest style to current_style style (if check_style is true).
@@ -215,10 +221,6 @@ namespace Inkscape
                             return current_family_row;
                         }
 
-                        /* Not Used */
-                        void
-                        new_font_style (Glib::ustring style);
-
                         /** Sets style. Does not validate style for family.
                          */
                         void
@@ -230,32 +232,13 @@ namespace Inkscape
                             return current_style;
                         }
 
-                        /** Sets both family and style. Does not attempt to find
-                         *  best match for style (assume that style is already valid
-                         *  for family).
-                         */
-                        void
-                        set_font (Glib::ustring family, Glib::ustring style);
-
-                        /** Sets both family and style. Does not attempt to find
-                         *  best match for style (assume that style is already valid
-                         *  for family).
-                         */
-                        void
-                        new_font (Glib::ustring family, Glib::ustring style);
-
-                        std::pair<Glib::ustring, Glib::ustring>
-                        get_try_font () {
-                            return ( std::make_pair( try_family, try_style ) );
-                        }
-
                         Glib::ustring
                         fontspec_from_style (SPStyle* style); 
 
                         /** Fill css using current_fontspec.
                          */
                         void
-                        set_css( SPCSSAttr *css );
+                        fill_css( SPCSSAttr *css, Glib::ustring fontspec = "" );
 
                         Gtk::TreeModel::Row
                         get_row_for_font (Glib::ustring family);
@@ -292,7 +275,6 @@ namespace Inkscape
 
                         Glib::RefPtr<Gtk::ListStore> font_list_store;
                         Glib::RefPtr<Gtk::ListStore> style_list_store;
-                        Glib::RefPtr<Gtk::ListStore> style_list_store_trial;
 
                         /** Info for currently selected font (what is shown in the UI).
                          *  May include font-family lists and fonts not on system.
@@ -306,12 +288,6 @@ namespace Inkscape
                          *  (What the system will use to display current_fontspec.)
                          */
                         Glib::ustring current_fontspec_system;
-
-                        /** Info for proposed font (what is shown in the font-selection UI).
-                         *  May include font-family lists and fonts not on system.
-                         */
-                        Glib::ustring try_family;
-                        Glib::ustring try_style;
 
                         /** If a font-family is not on system, this list of styles is used.
                          */
