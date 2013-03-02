@@ -65,7 +65,7 @@ BUILT_SOURCES =
 # Extra files to distribute
 EXTRA_DIST =
 
-INCLUDES =	\
+AM_CPPFLAGS =	\
 	$(PERL_CFLAGS) $(PYTHON_CFLAGS)	\
 	$(EXIF_CFLAGS) \
 	$(FREETYPE_CFLAGS)	\
@@ -88,8 +88,7 @@ INCLUDES =	\
 	$(WIN32_CFLAGS) \
 	-I$(srcdir)/bind/javainc \
 	-I$(srcdir)/bind/javainc/linux \
-	-I$(builddir)/extension/dbus \
-	$(AM_CPPFLAGS)
+	-I$(builddir)/extension/dbus 
 
 CXXTEST_TEMPLATE = $(srcdir)/cxxtest-template.tpl
 CXXTESTGENFLAGS = --root --have-eh --template=$(CXXTEST_TEMPLATE)

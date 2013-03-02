@@ -19,7 +19,7 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CANONICAL_HOST
 
-AM_INIT_AUTOMAKE([dist-zip dist-bzip2 tar-pax])
+AM_INIT_AUTOMAKE([-Wall dist-zip dist-bzip2 tar-pax])
 
 AC_ARG_ENABLE([lsb], AS_HELP_STRING([--enable-lsb], [LSB-compatible build configuration]), [
   prefix=/opt/inkscape
@@ -33,7 +33,6 @@ AC_LANG(C++)
 AC_PROG_CXX
 AC_PROG_CC
 AM_PROG_AS
-AC_PROG_RANLIB
 # Initialize libtool
 LT_PREREQ([2.2])
 LT_INIT
