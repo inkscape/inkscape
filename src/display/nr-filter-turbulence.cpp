@@ -283,7 +283,12 @@ private:
     // other constants
     static int const BSize = 0x100;
     static int const BMask = 0xff;
+
+#if __cplusplus < 201103L
     static double const PerlinOffset = 4096.0;
+#else
+    static double constexpr PerlinOffset = 4096.0;
+#endif
 
     Geom::Rect _tile;
     Geom::Point _baseFreq;

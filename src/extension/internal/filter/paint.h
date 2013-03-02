@@ -88,7 +88,7 @@ public:
                   "<param name=\"noise\" gui-text=\"" N_("Noise reduction:") "\" type=\"int\" appearance=\"full\" min=\"1\" max=\"1000\">10</param>\n"
                   "<param name=\"smooth\" gui-text=\"" N_("Smoothness:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0.01\" max=\"10.00\">1</param>\n"
                 "</page>\n"
-                "<page name=\"graintab\" _gui-text=\""N_("Grain") "\">\n"
+                "<page name=\"graintab\" _gui-text=\"" N_("Grain") "\">\n"
                   "<param name=\"grain\" gui-text=\"" N_("Grain mode") "\" type=\"boolean\" >true</param>\n"
                   "<param name=\"grainxf\" gui-text=\"" N_("Horizontal frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0\" max=\"1000\">1000</param>\n"
                   "<param name=\"grainyf\" gui-text=\"" N_("Vertical frequency:") "\" type=\"float\" appearance=\"full\" precision=\"2\" min=\"0\" max=\"1000\">1000</param>\n"

@@ -12,6 +12,9 @@
 	
 #elif defined(__APPLE__) && __GNUC__ == 3
 #define isinf(x) __isinf(x)
+#elif __cplusplus >= 201103L
+# include <cmath>
+# define isinf std::isinf
 #endif
 
 #endif /* __ISINF_H__ */
