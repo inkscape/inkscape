@@ -26,6 +26,7 @@
 #include "color.h"
 #include "style.h"
 #include "helper/geom-curves.h"
+#include "display/cairo-templates.h"
 
 namespace {
 
@@ -633,6 +634,22 @@ static guint32 linear_to_srgb( const guint32 c, const guint32 a ) {
     return premul_alpha( c2, a );
 }
 
+struct SurfaceSrgbToLinear {
+
+    guint32 operator()(guint32 in) {
+        EXTRACT_ARGB32(in, a,r,g,b)    ; // Unneeded semi-colon for indenting
+        if( a != 0 ) {
+            r = srgb_to_linear( r, a );
+            g = srgb_to_linear( g, a );
+            b = srgb_to_linear( b, a );
+        }
+        ASSEMBLE_ARGB32(out, a,r,g,b);
+        return out;
+    }
+private:
+    /* None */
+};
+
 int ink_cairo_surface_srgb_to_linear(cairo_surface_t *surface)
 {
     cairo_surface_flush(surface);
@@ -641,22 +658,40 @@ int ink_cairo_surface_srgb_to_linear(cairo_surface_t *surface)
     int stride = cairo_image_surface_get_stride(surface);
     unsigned char *data = cairo_image_surface_get_data(surface);
 
+    ink_cairo_surface_filter( surface, surface, SurfaceSrgbToLinear() );
+
     /* TODO convert this to OpenMP somehow */
-    for (int y = 0; y < height; ++y, data += stride) {
-        for (int x = 0; x < width; ++x) {
-            guint32 px = *reinterpret_cast<guint32*>(data + 4*x);
-            EXTRACT_ARGB32(px, a,r,g,b)    ; // Unneeded semi-colon for indenting
-            if( a != 0 ) {
-                r = srgb_to_linear( r, a );
-                g = srgb_to_linear( g, a );
-                b = srgb_to_linear( b, a );
-            }
-            ASSEMBLE_ARGB32(px2, a,r,g,b);
-            *reinterpret_cast<guint32*>(data + 4*x) = px2;
-        }
-    }
+    // for (int y = 0; y < height; ++y, data += stride) {
+    //     for (int x = 0; x < width; ++x) {
+    //         guint32 px = *reinterpret_cast<guint32*>(data + 4*x);
+    //         EXTRACT_ARGB32(px, a,r,g,b)    ; // Unneeded semi-colon for indenting
+    //         if( a != 0 ) {
+    //             r = srgb_to_linear( r, a );
+    //             g = srgb_to_linear( g, a );
+    //             b = srgb_to_linear( b, a );
+    //         }
+    //         ASSEMBLE_ARGB32(px2, a,r,g,b);
+    //         *reinterpret_cast<guint32*>(data + 4*x) = px2;
+    //     }
+    // }
     return width * height;
 }
+
+struct SurfaceLinearToSrgb {
+
+    guint32 operator()(guint32 in) {
+        EXTRACT_ARGB32(in, a,r,g,b)    ; // Unneeded semi-colon for indenting
+        if( a != 0 ) {
+            r = linear_to_srgb( r, a );
+            g = linear_to_srgb( g, a );
+            b = linear_to_srgb( b, a );
+        }
+        ASSEMBLE_ARGB32(out, a,r,g,b);
+        return out;
+    }
+private:
+    /* None */
+};
 
 int ink_cairo_surface_linear_to_srgb(cairo_surface_t *surface)
 {
@@ -666,20 +701,22 @@ int ink_cairo_surface_linear_to_srgb(cairo_surface_t *surface)
     int stride = cairo_image_surface_get_stride(surface);
     unsigned char *data = cairo_image_surface_get_data(surface);
 
-    /* TODO convert this to OpenMP somehow */
-    for (int y = 0; y < height; ++y, data += stride) {
-        for (int x = 0; x < width; ++x) {
-            guint32 px = *reinterpret_cast<guint32*>(data + 4*x);
-            EXTRACT_ARGB32(px, a,r,g,b)    ; // Unneeded semi-colon for indenting
-            if( a != 0 ) {
-                r = linear_to_srgb( r, a );
-                g = linear_to_srgb( g, a );
-                b = linear_to_srgb( b, a );
-            }
-            ASSEMBLE_ARGB32(px2, a,r,g,b);
-            *reinterpret_cast<guint32*>(data + 4*x) = px2;
-        }
-    }
+    ink_cairo_surface_filter( surface, surface, SurfaceLinearToSrgb() );
+
+    // /* TODO convert this to OpenMP somehow */
+    // for (int y = 0; y < height; ++y, data += stride) {
+    //     for (int x = 0; x < width; ++x) {
+    //         guint32 px = *reinterpret_cast<guint32*>(data + 4*x);
+    //         EXTRACT_ARGB32(px, a,r,g,b)    ; // Unneeded semi-colon for indenting
+    //         if( a != 0 ) {
+    //             r = linear_to_srgb( r, a );
+    //             g = linear_to_srgb( g, a );
+    //             b = linear_to_srgb( b, a );
+    //         }
+    //         ASSEMBLE_ARGB32(px2, a,r,g,b);
+    //         *reinterpret_cast<guint32*>(data + 4*x) = px2;
+    //     }
+    // }
     return width * height;
 }
 
