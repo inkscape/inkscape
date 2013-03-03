@@ -83,8 +83,8 @@
 #include "dom/io/stringstream.h"
 
 
+#include "inkscape-version.h"
 #include "document.h"
-
 #include "extension/extension.h"
 
 
@@ -1240,7 +1240,8 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     outs.printf("xmlns:anim=\"urn:oasis:names:tc:opendocument:xmlns:animation:1.0\"\n");
     outs.printf("office:version=\"1.0\">\n");
     outs.printf("<office:meta>\n");
-    outs.printf("    <meta:generator>Inkscape.org - 0.45</meta:generator>\n");
+    Glib::ustring tmp = Glib::ustring("    <meta:generator>Inkscape.org - ") + Inkscape::version_string + "</meta:generator>\n";
+    outs.writeString(tmp);
     outs.printf("    <meta:initial-creator>%#s</meta:initial-creator>\n",
                                   creator.c_str());
     outs.printf("    <meta:creation-date>%#s</meta:creation-date>\n", date.c_str());
@@ -1465,7 +1466,7 @@ bool OdfOutput::writeStyle(ZipFile &zf)
     outs.printf("<!--\n");
     outs.printf("*************************************************************************\n");
     outs.printf("  E N D    O F    F I L E\n");
-    outs.printf("  Have a nice day  - ishmal\n");
+    outs.printf("  Have a nice day\n");
     outs.printf("*************************************************************************\n");
     outs.printf("-->\n");
     outs.printf("\n");
@@ -2170,7 +2171,7 @@ bool OdfOutput::writeStyleFooter(Writer &outs)
     outs.printf("<!--\n");
     outs.printf("*************************************************************************\n");
     outs.printf("  E N D    O F    F I L E\n");
-    outs.printf("  Have a nice day  - ishmal\n");
+    outs.printf("  Have a nice day\n");
     outs.printf("*************************************************************************\n");
     outs.printf("-->\n");
     outs.printf("\n");
@@ -2281,7 +2282,7 @@ bool OdfOutput::writeContentFooter(Writer &outs)
     outs.printf("<!--\n");
     outs.printf("*************************************************************************\n");
     outs.printf("  E N D    O F    F I L E\n");
-    outs.printf("  Have a nice day  - ishmal\n");
+    outs.printf("  Have a nice day\n");
     outs.printf("*************************************************************************\n");
     outs.printf("-->\n");
     outs.printf("\n");
@@ -2438,27 +2439,6 @@ OdfOutput::check (Inkscape::Extension::Extension */*module*/)
 
     return TRUE;
 }
-
-
-
-//########################################################################
-//# I N P U T
-//########################################################################
-
-
-
-//#######################
-//# L A T E R  !!!  :-)
-//#######################
-
-
-
-
-
-
-
-
-
 
 
 
