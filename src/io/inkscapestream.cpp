@@ -125,11 +125,12 @@ void BasicOutputStream::flush()
 /**
  * Writes the specified byte to this output stream.
  */ 
-void BasicOutputStream::put(gunichar ch)
+int BasicOutputStream::put(gunichar ch)
 {
     if (closed)
-        return;
+        return -1;
     destination.put(ch);
+	return 1;
 }
 
 
@@ -137,8 +138,6 @@ void BasicOutputStream::put(gunichar ch)
 //#########################################################################
 //# B A S I C    R E A D E R
 //#########################################################################
-
-
 /**
  *
  */ 
@@ -182,10 +181,6 @@ gunichar BasicReader::get()
         return (gunichar)-1;
 }
    
-
-
-
-
 
 /**
  * Reads a line of data from the reader.
@@ -255,13 +250,6 @@ static bool getDouble(Glib::ustring &str, double *val)
 
 
 
-
-
-
-
-/**
- *
- */
 const Reader &BasicReader::readBool (bool& val )
 {
     Glib::ustring buf = readWord();
@@ -272,9 +260,6 @@ const Reader &BasicReader::readBool (bool& val )
     return *this;
 }
 
-/**
- *
- */
 const Reader &BasicReader::readShort (short& val )
 {
     Glib::ustring buf = readWord();
@@ -284,9 +269,6 @@ const Reader &BasicReader::readShort (short& val )
     return *this;
 }
 
-/**
- *
- */
 const Reader &BasicReader::readUnsignedShort (unsigned short& val )
 {
     Glib::ustring buf = readWord();
@@ -296,9 +278,6 @@ const Reader &BasicReader::readUnsignedShort (unsigned short& val )
     return *this;
 }
 
-/**
- *
- */
 const Reader &BasicReader::readInt (int& val )
 {
     Glib::ustring buf = readWord();
@@ -308,9 +287,6 @@ const Reader &BasicReader::readInt (int& val )
     return *this;
 }
 
-/**
- *
- */
 const Reader &BasicReader::readUnsignedInt (unsigned int& val )
 {
     Glib::ustring buf = readWord();
@@ -320,9 +296,6 @@ const Reader &BasicReader::readUnsignedInt (unsigned int& val )
     return *this;
 }
 
-/**
- *
- */
 const Reader &BasicReader::readLong (long& val )
 {
     Glib::ustring buf = readWord();
@@ -332,9 +305,6 @@ const Reader &BasicReader::readLong (long& val )
     return *this;
 }
 
-/**
- *
- */
 const Reader &BasicReader::readUnsignedLong (unsigned long& val )
 {
     Glib::ustring buf = readWord();
@@ -344,9 +314,6 @@ const Reader &BasicReader::readUnsignedLong (unsigned long& val )
     return *this;
 }
 
-/**
- *
- */
 const Reader &BasicReader::readFloat (float& val )
 {
     Glib::ustring buf = readWord();
@@ -356,9 +323,6 @@ const Reader &BasicReader::readFloat (float& val )
     return *this;
 }
 
-/**
- *
- */
 const Reader &BasicReader::readDouble (double& val )
 {
     Glib::ustring buf = readWord();

@@ -115,7 +115,7 @@ public:
 
     virtual void flush() throw(StreamException);
 
-    virtual void put(gunichar ch) throw(StreamException);
+    virtual int put(gunichar ch) throw(StreamException);
 
 private:
 

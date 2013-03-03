@@ -290,12 +290,12 @@ void Base64OutputStream::putCh(int ch)
 /**
  * Writes the specified byte to this output stream.
  */ 
-void Base64OutputStream::put(gunichar ch)
+int Base64OutputStream::put(gunichar ch)
 {
     if (closed)
         {
         //probably throw an exception here
-        return;
+        return -1;
         }
 
     outBuf   <<=  8;
@@ -322,6 +322,7 @@ void Base64OutputStream::put(gunichar ch)
         bitCount = 0;
         outBuf   = 0L;
         }
+    return 1;
 }
 
 

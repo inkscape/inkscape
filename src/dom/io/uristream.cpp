@@ -235,10 +235,10 @@ void UriReader::close() throw(StreamException)
 /**
  *
  */
-int UriReader::get() throw(StreamException)
+gunichar UriReader::get() throw(StreamException)
 {
-    int ch = (int)inputStream->get();
-    return ch;
+    //int ch = (int)inputStream->get();
+    return inputStream->get();//ch;
 }
 
 

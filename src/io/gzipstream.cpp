@@ -433,19 +433,19 @@ void GzipOutputStream::flush()
 /**
  * Writes the specified byte to this output stream.
  */ 
-void GzipOutputStream::put(gunichar ch)
+int GzipOutputStream::put(gunichar ch)
 {
     if (closed)
         {
         //probably throw an exception here
-        return;
+        return -1;
         }
 
 
     //Add char to buffer
     inputBuf.push_back(ch);
     totalIn++;
-
+    return 1;
 }
 
 

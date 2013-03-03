@@ -230,9 +230,10 @@ void XsltOutputStream::flush() throw (StreamException)
 /**
  * Writes the specified byte to this output stream.
  */ 
-void XsltOutputStream::put(gunichar ch) throw (StreamException)
+int XsltOutputStream::put(gunichar ch) throw (StreamException)
 {
     outbuf.push_back(ch);
+	return 1;
 }
 
 

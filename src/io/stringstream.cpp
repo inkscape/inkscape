@@ -112,9 +112,10 @@ void StringOutputStream::flush()
 /**
  * Writes the specified byte to this output stream.
  */ 
-void StringOutputStream::put(gunichar ch)
+int StringOutputStream::put(gunichar ch)
 {
     buffer.push_back(ch);
+	return 1;
 }
 
 

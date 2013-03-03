@@ -111,7 +111,7 @@ public:
 
     virtual void close() throw(StreamException);
 
-    virtual int get() throw(StreamException);
+    virtual gunichar get() throw(StreamException);
 
 private:
 

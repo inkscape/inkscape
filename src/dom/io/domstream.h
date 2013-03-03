@@ -44,23 +44,21 @@ namespace dom
 namespace io
 {
 
-
-
-class StreamException
+class StreamException : public std::exception
 {
 public:
 
-    StreamException(const DOMString &theReason) throw()
-        : reason(theReason)
-        {}
+    StreamException(const char *theReason) throw()
+        { reason = theReason; }
+    StreamException(Glib::ustring &theReason) throw()
+        { reason = theReason; }
     virtual ~StreamException() throw()
         {  }
-    char const *what()
+    char const *what() const throw()
         { return reason.c_str(); }
-
+        
 private:
-
-    DOMString reason;
+    Glib::ustring reason;
 
 };
 
@@ -95,14 +93,14 @@ public:
      * to be read
      */
     virtual int available() = 0;
-
+    
     /**
      * Do whatever it takes to 'close' this input stream
      * The most likely implementation of this method will be
      * for endpoints that use a resource for their data.
      */
     virtual void close() = 0;
-
+    
     /**
      * Read one byte from this input stream.  This is a blocking
      * call.  If no data is currently available, this call will
@@ -113,7 +111,7 @@ public:
      * This call returns -1 on end-of-file.
      */
     virtual int get() = 0;
-
+    
 }; // class InputStream
 
 
@@ -129,22 +127,22 @@ class BasicInputStream : public InputStream
 
 public:
 
-    BasicInputStream(const InputStream &sourceStream);
-
+    BasicInputStream(InputStream &sourceStream);
+    
     virtual ~BasicInputStream() {}
-
+    
     virtual int available();
-
+    
     virtual void close();
-
+    
     virtual int get();
-
+    
 protected:
 
     bool closed;
 
     InputStream &source;
-
+    
 private:
 
 
@@ -161,15 +159,14 @@ public:
 
     int available()
         { return 0; }
-
+    
     void close()
         { /* do nothing */ }
-
+    
     int get()
         {  return getchar(); }
 
 };
-
 
 
 
@@ -207,14 +204,14 @@ public:
      *  3.  close the destination stream
      */
     virtual void close() = 0;
-
+    
     /**
      * This call should push any pending data it might have to
      * the destination stream.  It should NOT call flush() on
      * the destination stream.
      */
     virtual void flush() = 0;
-
+    
     /**
      * Send one byte to the destination stream.
      */
@@ -233,14 +230,14 @@ class BasicOutputStream : public OutputStream
 
 public:
 
-    BasicOutputStream(const OutputStream &destinationStream);
-
+    BasicOutputStream(OutputStream &destinationStream);
+    
     virtual ~BasicOutputStream() {}
 
     virtual void close();
-
+    
     virtual void flush();
-
+    
     virtual int put(gunichar ch);
 
 protected:
@@ -263,12 +260,12 @@ public:
 
     void close()
         { }
-
+    
     void flush()
         { }
-
+    
     int put(gunichar ch)
-        {  putchar(ch); return 1; }
+        {  return putchar(ch); }
 
 };
 
@@ -278,7 +275,6 @@ public:
 //#########################################################################
 //# R E A D E R
 //#########################################################################
-
 
 /**
  * This interface and its descendants are for unicode character-oriented input
@@ -301,33 +297,42 @@ public:
 
 
     virtual int available() = 0;
-
+    
     virtual void close() = 0;
-
-    virtual int get() = 0;
-
-    virtual DOMString readLine() = 0;
-
-    virtual DOMString readWord() = 0;
-
+    
+    virtual gunichar get() = 0;
+    
+    virtual Glib::ustring readLine() = 0;
+    
+    virtual Glib::ustring readWord() = 0;
+    
     /* Input formatting */
-    virtual Reader& readBool (bool& val ) = 0;
-
-    virtual Reader& readShort (short &val) = 0;
-
-    virtual Reader& readUnsignedShort (unsigned short &val)  = 0;
-
-    virtual Reader& readInt (int &val)  = 0;
-
-    virtual Reader& readUnsignedInt (unsigned int &val)  = 0;
-
-    virtual Reader& readLong (long &val) = 0;
-
-    virtual Reader& readUnsignedLong (unsigned long &val) = 0;
-
-    virtual Reader& readFloat (float &val) = 0;
-
-    virtual Reader& readDouble (double &val) = 0;
+    virtual const Reader& readBool (bool& val ) = 0;
+    virtual const Reader& operator>> (bool& val ) = 0;
+        
+    virtual const Reader& readShort (short &val) = 0;
+    virtual const Reader& operator>> (short &val) = 0;
+        
+    virtual const Reader& readUnsignedShort (unsigned short &val) = 0;
+    virtual const Reader& operator>> (unsigned short &val) = 0;
+        
+    virtual const Reader& readInt (int &val) = 0;
+    virtual const Reader& operator>> (int &val) = 0;
+        
+    virtual const Reader& readUnsignedInt (unsigned int &val) = 0;
+    virtual const Reader& operator>> (unsigned int &val) = 0;
+        
+    virtual const Reader& readLong (long &val) = 0;
+    virtual const Reader& operator>> (long &val) = 0;
+        
+    virtual const Reader& readUnsignedLong (unsigned long &val) = 0;
+    virtual const Reader& operator>> (unsigned long &val) = 0;
+        
+    virtual const Reader& readFloat (float &val) = 0;
+    virtual const Reader& operator>> (float &val) = 0;
+        
+    virtual const Reader& readDouble (double &val) = 0;
+    virtual const Reader& operator>> (double &val) = 0;
 
 }; // interface Reader
 
@@ -343,37 +348,56 @@ class BasicReader : public Reader
 public:
 
     BasicReader(Reader &sourceStream);
-
+    
     virtual ~BasicReader() {}
 
     virtual int available();
-
+    
     virtual void close();
-
-    virtual int get();
-
-    virtual DOMString readLine();
-
-    virtual DOMString readWord();
-
+    
+    virtual gunichar get();
+    
+    virtual Glib::ustring readLine();
+    
+    virtual Glib::ustring readWord();
+    
     /* Input formatting */
-    virtual Reader& readBool (bool& val );
-
-    virtual Reader& readShort (short &val) ;
-
-    virtual Reader& readUnsignedShort (unsigned short &val) ;
-
-    virtual Reader& readInt (int &val) ;
-
-    virtual Reader& readUnsignedInt (unsigned int &val) ;
-
-    virtual Reader& readLong (long &val) ;
-
-    virtual Reader& readUnsignedLong (unsigned long &val) ;
-
-    virtual Reader& readFloat (float &val) ;
-
-    virtual Reader& readDouble (double &val) ;
+    virtual const Reader& readBool (bool& val );
+    virtual const Reader& operator>> (bool& val )
+        { return readBool(val); }
+        
+    virtual const Reader& readShort (short &val);
+    virtual const Reader& operator>> (short &val)
+        { return readShort(val); }
+        
+    virtual const Reader& readUnsignedShort (unsigned short &val);
+    virtual const Reader& operator>> (unsigned short &val)
+        { return readUnsignedShort(val); }
+        
+    virtual const Reader& readInt (int &val);
+    virtual const Reader& operator>> (int &val)
+        { return readInt(val); }
+        
+    virtual const Reader& readUnsignedInt (unsigned int &val);
+    virtual const Reader& operator>> (unsigned int &val)
+        { return readUnsignedInt(val); }
+        
+    virtual const Reader& readLong (long &val);
+    virtual const Reader& operator>> (long &val)
+        { return readLong(val); }
+        
+    virtual const Reader& readUnsignedLong (unsigned long &val);
+    virtual const Reader& operator>> (unsigned long &val)
+        { return readUnsignedLong(val); }
+        
+    virtual const Reader& readFloat (float &val);
+    virtual const Reader& operator>> (float &val)
+        { return readFloat(val); }
+        
+    virtual const Reader& readDouble (double &val);
+    virtual const Reader& operator>> (double &val)
+        { return readDouble(val); }
+ 
 
 protected:
 
@@ -388,27 +412,6 @@ private:
 
 
 
-Reader& operator>> (Reader &reader, bool& val );
-
-Reader& operator>> (Reader &reader, short &val);
-
-Reader& operator>> (Reader &reader, unsigned short &val);
-
-Reader& operator>> (Reader &reader, int &val);
-
-Reader& operator>> (Reader &reader, unsigned int &val);
-
-Reader& operator>> (Reader &reader, long &val);
-
-Reader& operator>> (Reader &reader, unsigned long &val);
-
-Reader& operator>> (Reader &reader, float &val);
-
-Reader& operator>> (Reader &reader, double &val);
-
-
-
-
 /**
  * Class for placing a Reader on an open InputStream
  *
@@ -417,14 +420,14 @@ class InputStreamReader : public BasicReader
 {
 public:
 
-    InputStreamReader(const InputStream &inputStreamSource);
-
+    InputStreamReader(InputStream &inputStreamSource);
+    
     /*Overload these 3 for your implementation*/
     virtual int available();
-
+    
     virtual void close();
-
-    virtual int get();
+    
+    virtual gunichar get();
 
 
 private:
@@ -445,13 +448,13 @@ public:
     StdReader();
 
     virtual ~StdReader();
-
+    
     /*Overload these 3 for your implementation*/
     virtual int available();
-
+    
     virtual void close();
-
-    virtual int get();
+    
+    virtual gunichar get();
 
 
 private:
@@ -460,8 +463,6 @@ private:
 
 
 };
-
-
 
 
 

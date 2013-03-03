@@ -189,7 +189,7 @@ public:
     /**
      * Send one byte to the destination stream.
      */
-    virtual void put(gunichar ch) = 0;
+    virtual int put(gunichar ch) = 0;
 
 
 }; // class OutputStream
@@ -212,7 +212,7 @@ public:
     
     virtual void flush();
     
-    virtual void put(gunichar ch);
+    virtual int put(gunichar ch);
 
 protected:
 
@@ -238,8 +238,8 @@ public:
     void flush()
         { }
     
-    void put(gunichar ch)
-        {  putchar(ch); }
+    int put(gunichar ch)
+        {return  putchar(ch); }
 
 };
 

@@ -67,7 +67,7 @@ public:
     
     virtual void flush();
     
-    virtual void put(gunichar ch);
+    virtual int put(gunichar ch);
 
     virtual Glib::ustring &getString()
         { return buffer; }

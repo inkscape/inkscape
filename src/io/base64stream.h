@@ -88,7 +88,7 @@ public:
     
     virtual void flush();
     
-    virtual void put(gunichar ch);
+    virtual int put(gunichar ch);
 
     /**
      * Sets the maximum line length for base64 output.  If
