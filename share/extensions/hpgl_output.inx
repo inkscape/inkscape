@@ -9,14 +9,14 @@
   <param name="horizontal_guide" type="description">—————————————————————————————</param>
 	<param name="resolution" type="int" min="90" max="2048" _gui-text="Resolution (dpi)" _gui-description="The amount of steps the cutter moves if it moves for 1 inch, either get this value from your plotter manual or learn it by trial and error (Standard: '1016')">1016</param>
 	<param name="pen" type="int" min="1" max="10" _gui-text="Pen number" _gui-description="The number of the pen (tool) to use, on most plotters 1 (Standard: '1')">1</param>
-  <param name="angle" type="optiongroup" appearance="minimal" _gui-text="Orientation" _gui-description="Orientation of the plot, change this if your plotter is plotting horizontal instead of vertical (Standard: '-90°')">
+  <param name="angle" type="optiongroup" appearance="minimal" _gui-text="Orientation" _gui-description="Orientation of the plot, change this if your plotter is plotting horizontal instead of vertical (Standard: '90°')">
+    <option value="90">90°</option>
     <option value="-90">-90°</option>
     <option value="0">0°</option>
-    <option value="90">90°</option>
     <option value="180">180°</option>
   </param>
 	<param name="mirror" type="boolean" _gui-text="Mirror Y-axis" _gui-description="Whether to mirror the Y axis. Some plotters need this, some not. Look in your plotter manual or learn it by trial and error (Standard: 'False')">false</param>
-	<param name="flat" type="float" min="0.05" max="10.0" precision="2" _gui-text="Curve flatness (mm)" _gui-description="Curves get divided into lines, this is the approximate length of one line in mm (Standard: '0.50')">0.50</param>
+	<param name="flat" type="float" min="0.1" max="10.0" precision="1" _gui-text="Curve flatness" _gui-description="Curves are divided into lines, this number controls how fine the curves will be reproduced, the smaller the finer (Standard: '1.2')">1.2</param>
   <param name="horizontal_guide" type="description">—————————————————————————————</param>
 	<param name="useOvercut" type="boolean" _gui-text="Use Overcut" _gui-description="Whether the overcut will be used, if not the 'Overcut' parameter is unused (Standard: 'True')">true</param>
 	<param name="overcut" type="float" min="0.0" max="100.0" precision="2" _gui-text="Overcut (mm)" _gui-description="The distance in mm that will be cut over the starting point of the path to prevent open paths (Standard: '1.00')">1.00</param>

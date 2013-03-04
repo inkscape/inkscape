@@ -18,14 +18,14 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 '''
-import inkex, simpletransform, cubicsuperpath, simplestyle, cspsubdiv, sys, math
+import inkex, simpletransform, cubicsuperpath, simplestyle, sys, math, bezmisc, string, cspsubdiv
 
 class MyEffect(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
         self.OptionParser.add_option("-f", "--flatness",
                         action="store", type="float", 
-                        dest="flat", default=0.5,
+                        dest="flat", default=1.2,
                         help="Minimum flatness of the subdivided curves")
         self.OptionParser.add_option("-m", "--mirror",
                         action="store", type="inkbool", 
@@ -73,7 +73,7 @@ class MyEffect(inkex.Effect):
                         help="Return Factor")
         self.OptionParser.add_option("-a", "--angle",
                         action="store", type="string", 
-                        dest="rotation", default="-90",
+                        dest="rotation", default="90",
                         help="Orientation")
         self.OptionParser.add_option("-s", "--sendToPlotter",
                         action="store", type="inkbool", 
@@ -90,26 +90,38 @@ class MyEffect(inkex.Effect):
  
     def effect(self):
         # initiate vars
-        self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
         self.xDivergence = 999999999999.0
         self.yDivergence = 999999999999.0
         scale = float(self.options.resolution) / 90 # dots/inch to dots/pixels
         x0 = self.options.xOffset * 3.5433070866 * scale # mm to dots
         y0 = self.options.yOffset * 3.5433070866 * scale # mm to dots
-        self.options.flat *= 3.5433070866 # mm to pixels
         self.options.overcut = self.options.overcut * 3.5433070866 * scale # mm to dots
         self.options.toolOffset = self.options.toolOffset * 3.5433070866 * scale # mm to dots
+        self.options.flat = float(self.options.resolution) * self.options.flat / 1000
         doc = self.document.getroot()
         mirror = 1.0
         if self.options.mirror:
             mirror = -1.0
+        # get viewBox parameter to correct scaling
+        viewBox = doc.get('viewBox')
+        viewBoxTransformX = 1
+        viewBoxTransformY = 1
+        if viewBox:
+            viewBox = string.split(viewBox, ' ')
+            if viewBox[2] and viewBox[3]:
+                viewBoxTransformX = float(inkex.unittouu(doc.get('width'))) / float(viewBox[2])
+                viewBoxTransformY = float(inkex.unittouu(doc.get('height'))) / float(viewBox[3])
         # dryRun to find edges
         self.dryRun = True
-        self.groupmat = [[[scale, 0.0, 0.0], [0.0, mirror*scale, 0.0]]]
+        self.groupmat = [[[scale*viewBoxTransformX, 0.0, 0.0], [0.0, mirror*scale*viewBoxTransformY, 0.0]]]
+        self.groupmat[0] = simpletransform.composeTransform(self.groupmat[0], simpletransform.parseTransform('rotate(' + self.options.rotation + ')'))
+        self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
         self.process_group(doc)
         # life run
         self.dryRun = False
-        self.groupmat = [[[scale, 0.0, -self.xDivergence + x0], [0.0, mirror*scale, -self.yDivergence + y0]]]
+        self.groupmat = [[[scale*viewBoxTransformX, 0.0, -self.xDivergence + x0], [0.0, mirror*scale*viewBoxTransformY, -self.yDivergence + y0]]]
+        self.groupmat[0] = simpletransform.composeTransform(self.groupmat[0], simpletransform.parseTransform('rotate(' + self.options.rotation + ')'))
+        self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
         self.hpgl = 'IN;SP%d;' % self.options.pen
         if self.options.sendToPlotter:
             try:
@@ -134,7 +146,7 @@ class MyEffect(inkex.Effect):
         if style:
             style = simplestyle.parseStyle(style)
             if style.has_key('display'):
-                if style['display']=='none':
+                if style['display'] == 'none':
                     if not self.options.plotInvisibleLayers:
                         return
         trans = group.get('transform')
@@ -157,7 +169,6 @@ class MyEffect(inkex.Effect):
             trans = node.get('transform')
             if trans:
                 mat = simpletransform.composeTransform(mat, simpletransform.parseTransform(trans))
-            mat = simpletransform.composeTransform(mat, simpletransform.parseTransform('rotate(' + self.options.rotation + ')'))
             simpletransform.applyTransformToPath(mat, p)
             cspsubdiv.cspsubdiv(p, self.options.flat)
             # break path into HPGL commands
@@ -191,6 +202,14 @@ class MyEffect(inkex.Effect):
         if abs: return math.fabs(math.sqrt((x2 - x1) ** 2.0 + (y2 - y1) ** 2.0))
         else: return math.sqrt((x2 - x1) ** 2.0 + (y2 - y1) ** 2.0)
 
+    def getAlpha(self, x1, y1, x2, y2, x3, y3):
+        temp1 = (x1-x2)**2 + (y1-y2)**2 + (x3-x2)**2 + (y3-y2)**2 - (x1-x3)**2 - (y1-y3)**2
+        temp2 = 2 * math.sqrt((x1-x2)**2 + (y1-y2)**2) * math.sqrt((x3-x2)**2 + (y3-y2)**2)
+        temp3 = temp1 / temp2
+        if temp3 < -1:
+            temp3 = -1
+        return math.acos(temp3)
+
     def calcOffset(self, cmd, xPos, yPos):
         # calculate offset correction (or dont))
         if not self.options.correctToolOffset:
@@ -200,16 +219,22 @@ class MyEffect(inkex.Effect):
             self.vData.insert(3, [cmd, xPos, yPos])
             if self.vData[2][1] != -1.0:
                 if self.vData[1][1] != -1.0:
+                    if self.vData[2][0] == 'PD' and self.vData[3][0] == 'PD':
+                        if self.getAlpha(self.vData[1][1], self.vData[1][2], self.vData[2][1], self.vData[2][2], self.vData[3][1], self.vData[3][2]) > 2.748893:
+                            self.storeData(self.vData[2][0], self.vData[2][1], self.vData[2][2])
+                            return
                     if self.vData[2][0] == 'PD':
                         self.storeData('PD', 
                             self.changeLengthX(self.vData[1][1], self.vData[1][2], self.vData[2][1], self.vData[2][2], self.options.toolOffset), 
                             self.changeLengthY(self.vData[1][1], self.vData[1][2], self.vData[2][1], self.vData[2][2], self.options.toolOffset))
                     elif self.vData[0][1] != -1.0:
-                        xTemp = self.vData[1][1] - self.changeLengthX(self.vData[0][1], self.vData[0][2], self.vData[1][1], self.vData[1][2], self.options.toolOffset)
-                        yTemp = self.vData[1][2] - self.changeLengthY(self.vData[0][1], self.vData[0][2], self.vData[1][1], self.vData[1][2], self.options.toolOffset)
-                        self.storeData('PU', self.vData[2][1] - xTemp, self.vData[2][2] - yTemp)
+                        self.storeData('PU', 
+                            self.vData[2][1] - (self.vData[1][1] - self.changeLengthX(self.vData[0][1], self.vData[0][2], self.vData[1][1], self.vData[1][2], self.options.toolOffset)), 
+                            self.vData[2][2] - (self.vData[1][2] - self.changeLengthY(self.vData[0][1], self.vData[0][2], self.vData[1][1], self.vData[1][2], self.options.toolOffset)))
                     else:
-                        self.storeData('PU', self.vData[2][1], self.vData[2][2])
+                        self.storeData('PU', 
+                            self.vData[2][1], 
+                            self.vData[2][2])
                     if self.vData[3][0] == 'PD':
                         self.storeData('PD', 
                             self.changeLengthX(self.vData[3][1], self.vData[3][2], self.vData[2][1], self.vData[2][2], -(self.options.toolOffset * self.options.toolOffsetReturn)), 
