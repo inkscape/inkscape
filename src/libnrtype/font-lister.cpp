@@ -449,35 +449,7 @@ namespace Inkscape
       // Find best match to the style from the old font-family to the
       // styles available with the new font.
       // TODO: Maybe check if an exact match exists before using Pango.
-      Glib::ustring best_style = current_style;
-      if( check_style ) {
-	//std::cout << "  Trying to match: " << current_fontspec << std::endl;
-	PangoFontDescription *desc_old
-	  = pango_font_description_from_string( current_fontspec.c_str() );
-	PangoFontDescription* desc_best = NULL;
-
-	for (GList *l=styles; l; l = l->next) {
-	  Glib::ustring candidate = new_family + ", " + (char*)l->data;
-	  PangoFontDescription* desc_candidate
-	    = pango_font_description_from_string( candidate.c_str() );
-	  //std::cout << "  Testing: " << pango_font_description_to_string( desc_candidate ) << std::endl;
-	  if( pango_font_description_better_match( desc_old, desc_best, desc_candidate ) ) {
-	    pango_font_description_free( desc_best );
-	    desc_best = desc_candidate;
-	    //std::cout << "  ... better: " << std::endl;
-	  } else {
-	    pango_font_description_free( desc_candidate );
-	    //std::cout << "  ... not better: " << std::endl;
-	  }
-	}
-	if( desc_best ) {
-	  pango_font_description_unset_fields( desc_best, PANGO_FONT_MASK_FAMILY );
-	  best_style = pango_font_description_to_string( desc_best );
-	}
-
-	if( desc_old  ) pango_font_description_free( desc_old  );
-	if( desc_best ) pango_font_description_free( desc_best );
-      }
+      Glib::ustring best_style = get_best_style_match( new_family, current_style );
 
 #ifdef DEBUG_FONT
       std::cout << "FontLister::new_font_family: exit: " << new_family << " " << best_style << std::endl;
@@ -863,6 +835,64 @@ namespace Inkscape
       throw STYLE_NOT_FOUND;
     }
 
+    static gint
+    compute_distance (const PangoFontDescription *a,
+		      const PangoFontDescription *b ) {
+
+      // Weight: multiples of 100
+      gint distance = abs(  pango_font_description_get_weight( a ) -
+			    pango_font_description_get_weight( b ) );
+
+      distance += 10000  * abs( pango_font_description_get_stretch( a ) -
+				pango_font_description_get_stretch( b ) );
+
+      PangoStyle style_a = pango_font_description_get_style( a );
+      PangoStyle style_b = pango_font_description_get_style( b );
+      if( style_a != style_b ) {
+	  if( (style_a == PANGO_STYLE_OBLIQUE && style_b == PANGO_STYLE_ITALIC) ||
+	      (style_b == PANGO_STYLE_OBLIQUE && style_a == PANGO_STYLE_ITALIC) ) {
+	    distance += 1000; // Oblique and italic are almost the same
+	  } else {
+	    distance += 100000; // Normal vs oblique/italic, not so similar
+	  }
+      }
+
+      // Normal vs small-caps
+      distance += 1000000 * abs( pango_font_description_get_variant( a ) -
+				 pango_font_description_get_variant( b ) );
+      return distance;
+    }
+
+    // This is inspired by pango_font_description_better_match, but that routine
+    // always returns false if variant or stretch are different. This means, for
+    // example, that PT Sans Narrow with style Bold Condensed is never matched
+    // to another font-family with Bold style.
+    gboolean
+    font_description_better_match( PangoFontDescription* target,
+				   PangoFontDescription* old_desc,
+				   PangoFontDescription* new_desc ) {
+
+      if( old_desc == NULL ) return true;
+      if( new_desc == NULL ) return false;
+
+      int old_distance = compute_distance( target, old_desc );
+      int new_distance = compute_distance( target, new_desc );
+      //std::cout << "font_description_better_match: old: " << old_distance << std::endl;
+      //std::cout << "                               new: " << new_distance << std::endl;
+
+      return (new_distance < old_distance );
+    }
+
+    // void
+    // font_description_dump( PangoFontDescription* target ) {
+    //   std::cout << "  Font:      " << pango_font_description_to_string( target ) << std::endl;
+    //   std::cout << "    style:   " << pango_font_description_get_style(   target ) << std::endl;
+    //   std::cout << "    weight:  " << pango_font_description_get_weight(  target ) << std::endl;
+    //   std::cout << "    variant: " << pango_font_description_get_variant( target ) << std::endl;
+    //   std::cout << "    stretch: " << pango_font_description_get_stretch( target ) << std::endl;
+    //   std::cout << "    gravity: " << pango_font_description_get_gravity( target ) << std::endl;
+    // }
+
     /* Returns style string */
     // TODO: Remove or turn into function to be used by new_font_family.
     Glib::ustring
@@ -873,7 +903,7 @@ namespace Inkscape
       std::cout << "FontLister::get_best_style_match: " << family << " : " << target_style << std::endl;
 #endif
 
-      Glib::ustring font_string = family + " " + target_style;
+      Glib::ustring fontspec = family + ", " + target_style;
 
       Gtk::TreeModel::Row row;
       try {
@@ -883,30 +913,36 @@ namespace Inkscape
 	return (target_style);
       }
 
-      PangoFontDescription* target = pango_font_description_from_string( font_string.c_str() );
+      PangoFontDescription* target = pango_font_description_from_string( fontspec.c_str() );
       PangoFontDescription* best = NULL;
 
-      //std::cout << "  Target: " << pango_font_description_to_string( target ) << std::endl;
+      //font_description_dump( target );
 
       GList* styles = row[FontList.styles];
       for (GList *l=styles; l; l = l->next) {
-	Glib::ustring font_string_test = family + " " + (char*)l->data;
-	PangoFontDescription* candidate = pango_font_description_from_string( font_string_test.c_str() );
-	// std::cout << "  Testing: " << pango_font_description_to_string( candidate ) << std::endl;
-	if( pango_font_description_better_match( target, best, candidate ) ) {
-	    best = candidate;
+	Glib::ustring fontspec = family + ", " + (char*)l->data;
+	PangoFontDescription* candidate = pango_font_description_from_string( fontspec.c_str() );
+	//font_description_dump( candidate );
+	//std::cout << "           " << font_description_better_match( target, best, candidate ) << std::endl;
+	if( font_description_better_match( target, best, candidate ) ) {
+	  pango_font_description_free( best );
+	  best = candidate;
+	  //std::cout << "  ... better: " << std::endl;
+	} else {
+	  pango_font_description_free( candidate );
+	  //std::cout << "  ... not better: " << std::endl;
 	}
       }
 
-      Glib::ustring best_style;
+      Glib::ustring best_style = target_style;
       if( best ) {
-	//std::cout << "  Best:   " << pango_font_description_to_string( best ) << std::endl;
 	pango_font_description_unset_fields( best, PANGO_FONT_MASK_FAMILY );
 	best_style = pango_font_description_to_string( best );
-      } else {
-	//std::cout << "  Failed: " << family << std::endl;
-	best_style =  target_style;
       }
+
+      if( target ) pango_font_description_free( target );
+      if( best   ) pango_font_description_free( best   );
+
 
 #ifdef DEBUG_FONT
       std::cout << "  Returning: " << best_style << std::endl;
