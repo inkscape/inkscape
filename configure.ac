@@ -362,93 +362,6 @@ fi
 AM_CONDITIONAL(INKJAR, test "$with_ij" = "yes")
 
 dnl ******************************
-dnl PERL checking
-dnl ******************************
-
-AC_MSG_CHECKING(for Perl development environment)
-AC_ARG_WITH(perl,
-            AS_HELP_STRING([--with-perl],[use Perl for embedded scripting (EXPERIMENTAL)]),
-            [with_perl=$withval], [with_perl=skipped])
-
-if test "x$with_perl" = "xyes"; then
-    checkPERL_CFLAGS=`perl -MExtUtils::Embed -e perl_inc 2>/dev/null`
-    if test "$?" -gt "0"; then
-        with_perl="no"
-    else
-        checkPERL_LIBS=`perl -MExtUtils::Embed -e ldopts 2>/dev/null`
-        if test "$?" -gt "0"; then
-            with_perl="no"
-        else
-            with_perl="yes"
-        fi
-    fi
-fi
-AC_MSG_RESULT([$with_perl])
-if test "x$with_perl" = "xyes"; then
-    # Test that we actually have the perl libraries installed
-    oldCFLAGS="$CFLAGS"
-    oldLIBS="$LIBS"
-    CFLAGS="$CFLAGS $checkPERL_CFLAGS"
-    LIBS="$LIBS $checkPERL_LIBS"
-    AC_CHECK_FUNC([perl_parse],[
-	PERL_CFLAGS="$checkPERL_CFLAGS"
-	PERL_LIBS="$checkPERL_LIBS"
-        AC_DEFINE(WITH_PERL, 1, [use Perl for embedded scripting])
-        ],[
-	with_perl="no"
-	])
-    CFLAGS="$oldCFLAGS"
-    LIBS="$oldLIBS"
-fi
-AM_CONDITIONAL(WITH_PERL, test "x$with_perl" = "xyes")
-AC_SUBST(PERL_CFLAGS)
-AC_SUBST(PERL_LIBS)
-
-dnl ******************************
-dnl Python checking
-dnl ******************************
-
-AC_MSG_CHECKING(for Python development environment)
-AC_ARG_WITH(python,
-            AS_HELP_STRING([--with-python],[use Python for embedded scripting (EXPERIMENTAL)]),
-            [with_python=$withval], [with_python=skipped])
-
-if test "x$with_python" = "xyes"; then
-    checkPYTHON_CFLAGS=`python -c "import distutils.sysconfig ; print '-I%s' % distutils.sysconfig.get_config_var('INCLUDEPY')" 2>/dev/null`
-    if test "$?" -gt "0"; then
-        with_python="no"
-    else
-        checkPYTHON_LIBS=`python -c "import distutils.sysconfig ; print '%s/%s %s' % (distutils.sysconfig.get_config_var('LIBPL'),distutils.sysconfig.get_config_var('LDLIBRARY'),distutils.sysconfig.get_config_var('LIBS'))" 2>/dev/null`
-        if test "$?" -gt "0"; then
-            with_python="no"
-        else
-            with_python="yes"
-        fi
-    fi
-fi
-AC_MSG_RESULT([$with_python])
-if test "x$with_python" = "xyes"; then
-    # Test that we actually have the python libraries installed
-    oldCFLAGS="$CFLAGS"
-    oldLIBS="$LIBS"
-    CFLAGS="$CFLAGS $checkPYTHON_CFLAGS"
-    LIBS="$LIBS $checkPYTHON_LIBS"
-    AC_CHECK_FUNC([Py_Initialize],[
-	PYTHON_CFLAGS="$checkPYTHON_CFLAGS"
-	PYTHON_LIBS="$checkPYTHON_LIBS"
-        AC_DEFINE(WITH_PYTHON, 1, [use Python for embedded scripting])
-        ],[
-	with_python="no"
-	])
-    CFLAGS="$oldCFLAGS"
-    LIBS="$oldLIBS"
-fi
-AM_CONDITIONAL(WITH_PYTHON, test "x$with_python" = "xyes")
-AC_SUBST(PYTHON_CFLAGS)
-AC_SUBST(PYTHON_LIBS)
-
-
-dnl ******************************
 dnl LittleCms checking
 dnl ******************************
 
@@ -1168,8 +1081,6 @@ Configuration:
         Use gnome-vfs:            ${gnome_vfs}
         Use openoffice files:     ${ij}
         Use relocation support:   ${enable_binreloc}
-        Internal Python:          ${with_python}
-        Internal Perl:            ${with_perl}
         Enable LittleCms:         ${enable_lcms}
         Enable DBUS:              ${with_dbus} 
         Enable Poppler-Cairo:     ${enable_poppler_cairo}

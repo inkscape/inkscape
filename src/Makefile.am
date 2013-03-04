@@ -44,8 +44,6 @@ all_libs =			\
 	$(kdeldadd)		\
 	$(win32ldflags)		\
 	$(CARBON_LDFLAGS)	\
-	$(PERL_LIBS)		\
-	$(PYTHON_LIBS)		\
 	$(INKBOARD_LIBS)	\
 	$(LIBWPG_LIBS)		\
 	$(LIBVISIO_LIBS)		\
@@ -66,7 +64,6 @@ BUILT_SOURCES =
 EXTRA_DIST =
 
 AM_CPPFLAGS =	\
-	$(PERL_CFLAGS) $(PYTHON_CFLAGS)	\
 	$(EXIF_CFLAGS) \
 	$(FREETYPE_CFLAGS)	\
 	$(GNOME_PRINT_CFLAGS)	\
