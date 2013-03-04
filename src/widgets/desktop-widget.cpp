@@ -82,11 +82,6 @@ using Inkscape::UI::UXManager;
 using Inkscape::UI::ToolboxFactory;
 using ege::AppearTimeTracker;
 
-#ifdef WITH_INKBOARD
-#endif
-
-
-
 enum {
     ACTIVATE,
     DEACTIVATE,

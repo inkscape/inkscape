@@ -214,16 +214,6 @@ public:
         return _layer_changed_signal.connect(slot);
     }
 
-    // Whiteboard changes
-
-#ifdef WITH_INKBOARD
-    Inkscape::Whiteboard::SessionManager* whiteboard_session_manager() {
-        return _whiteboard_session_manager;
-    }
-
-    Inkscape::Whiteboard::SessionManager* _whiteboard_session_manager;
-#endif
-
     /**
      * Return new desktop object.
      * \pre namedview != NULL.

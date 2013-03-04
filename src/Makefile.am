@@ -44,7 +44,6 @@ all_libs =			\
 	$(kdeldadd)		\
 	$(win32ldflags)		\
 	$(CARBON_LDFLAGS)	\
-	$(INKBOARD_LIBS)	\
 	$(LIBWPG_LIBS)		\
 	$(LIBVISIO_LIBS)		\
 	$(LIBCDR_LIBS)		\
@@ -69,7 +68,6 @@ AM_CPPFLAGS =	\
 	$(GNOME_PRINT_CFLAGS)	\
 	$(GNOME_VFS_CFLAGS)	\
 	$(IMAGEMAGICK_CFLAGS) \
-	$(INKBOARD_CFLAGS) \
 	$(LIBWPG_CFLAGS) \
 	$(LIBVISIO_CFLAGS) \
 	$(LIBCDR_CFLAGS) \

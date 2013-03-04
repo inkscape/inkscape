@@ -282,11 +282,6 @@ static char const menus_skeleton[] =
 "       <separator/>\n"
 "       <effects-list/>\n"
 "   </submenu>\n"
-#ifdef WITH_INKBOARD
-"	<submenu name=\"" N_("Whiteboa_rd") "\">\n"
-"		<verb verb-id=\"DialogXmppClient\" />\n"
-"	</submenu>\n"
-#endif
 "   <submenu name=\"" N_("_Help") "\">\n"
 "       <verb verb-id=\"org.inkscape.help.manual\" />\n"
 "       <verb verb-id=\"org.inkscape.help.keys\" />\n"

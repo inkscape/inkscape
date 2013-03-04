@@ -89,10 +89,6 @@
 using Inkscape::DocumentUndo;
 using Inkscape::UI::Dialog::ActionAlign;
 
-//#ifdef WITH_INKBOARD
-//#include "jabber_whiteboard/session-manager.h"
-//#endif
-
 /**
  * Return the name without underscores and ellipsis, for use in dialog
  * titles, etc. Allocated memory must be freed by caller.
@@ -1972,13 +1968,6 @@ void DialogVerb::perform(SPAction *action, void *data)
             //sp_item_dialog();
             dt->_dlg_mgr->showDialog("ObjectProperties");
             break;
-/*#ifdef WITH_INKBOARD
-        case SP_VERB_XMPP_CLIENT:
-        {
-            Inkscape::Whiteboard::SessionManager::showClient();
-            break;
-        }
-#endif*/
         case SP_VERB_DIALOG_INPUT:
             dt->_dlg_mgr->showDialog("InputDevices");
             break;
@@ -2796,10 +2785,6 @@ Verb *Verb::_base_verbs[] = {
                    N_("Edit the object attributes..."), INKSCAPE_ICON("dialog-object-attributes")),
     new DialogVerb(SP_VERB_DIALOG_ITEM, "DialogObjectProperties", N_("_Object Properties..."),
                    N_("Edit the ID, locked and visible status, and other object properties"), INKSCAPE_ICON("dialog-object-properties")),
-/*#ifdef WITH_INKBOARD
-    new DialogVerb(SP_VERB_XMPP_CLIENT, "DialogXmppClient",
-                   N_("_Instant Messaging..."), N_("Jabber Instant Messaging Client"), NULL),
-#endif*/
     new DialogVerb(SP_VERB_DIALOG_INPUT, "DialogInput", N_("_Input Devices..."),
                    N_("Configure extended input devices, such as a graphics tablet"), INKSCAPE_ICON("dialog-input-devices")),
     new DialogVerb(SP_VERB_DIALOG_EXTENSIONEDITOR, "org.inkscape.dialogs.extensioneditor", N_("_Extensions..."),

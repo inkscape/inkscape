@@ -81,10 +81,6 @@ using Inkscape::DocumentUndo;
 #include "extension/dbus/dbus-init.h"
 #endif
 
-//#ifdef WITH_INKBOARD
-//#include "jabber_whiteboard/session-manager.h"
-//#endif
-
 #ifdef WIN32
 #include <windows.h>
 #endif
