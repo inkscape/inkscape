@@ -261,10 +261,13 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
 
             theShapeB->ConvertToShape(theShape, origWind[curOrig]);
 
-            // les elements arrivent en ordre inverse dans la liste
-            theShape->Booleen(theShapeB, theShapeA, bop);
-
-            {
+            if (theShapeA->numberOfEdges() == 0) {
+                Shape *swap = theShapeB;
+                theShapeB = theShapeA;
+                theShapeA = swap;
+            } else if (theShapeB->numberOfEdges() > 0) {
+                // les elements arrivent en ordre inverse dans la liste
+                theShape->Booleen(theShapeB, theShapeA, bop);
                 Shape *swap = theShape;
                 theShape = theShapeA;
                 theShapeA = swap;
