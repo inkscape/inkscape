@@ -1477,7 +1477,15 @@ void InkscapePreferences::initKeyboardShortcuts(Gtk::TreeModel::iterator iter_ui
     scroller->add(_kb_tree);
 
     int row = 3;
+
+#if WITH_GTKMM_3_0
+    scroller->set_hexpand();
+    scroller->set_vexpand();
+    _page_keyshortcuts.attach(*scroller, 0, row, 2, 1);
+#else
     _page_keyshortcuts.attach(*scroller, 0, 2, row, row+1, Gtk::EXPAND | Gtk::FILL, Gtk::EXPAND | Gtk::FILL);
+#endif
+
     row++;
 
 #if WITH_GTKMM_3_0
@@ -1488,7 +1496,13 @@ void InkscapePreferences::initKeyboardShortcuts(Gtk::TreeModel::iterator iter_ui
 
     box_buttons->set_layout(Gtk::BUTTONBOX_END);
     box_buttons->set_spacing(4);
+
+#if WITH_GTKMM_3_0
+    box_buttons->set_hexpand();
+    _page_keyshortcuts.attach(*box_buttons, 0, row, 3, 1);
+#else
     _page_keyshortcuts.attach(*box_buttons, 0, 3, row, row+1, Gtk::EXPAND | Gtk::FILL, Gtk::SHRINK);
+#endif
 
     UI::Widget::Button *kb_reset = manage(new UI::Widget::Button(_("Reset"), _("Remove all your customized keyboard shortcuts, and revert to the shortcuts in the shortcut file listed above")));
     box_buttons->pack_start(*kb_reset, true, true, 6);

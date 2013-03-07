@@ -37,6 +37,14 @@
 
 #include "../implementation/implementation.h"
 
+namespace Gtk {
+#if WITH_GTKMM_3_0
+    class Scale;
+#else
+    class HScale;
+#endif
+}
+
 namespace Inkscape {
 
 namespace UI {
@@ -85,10 +93,11 @@ private:
     class Inkscape::UI::Widget::Frame * _pageSettingsFrame;
     class Gtk::Label * _labelPrecision;
     class Gtk::Label * _labelPrecisionWarning;
-    class Gtk::HScale * _fallbackPrecisionSlider;
 #if WITH_GTKMM_3_0
+    class Gtk::Scale * _fallbackPrecisionSlider;
     Glib::RefPtr<Gtk::Adjustment> _fallbackPrecisionSlider_adj;
 #else
+    class Gtk::HScale * _fallbackPrecisionSlider;
     class Gtk::Adjustment *_fallbackPrecisionSlider_adj;
 #endif
     class Gtk::Label * _labelPrecisionComment;

@@ -108,7 +108,7 @@ PdfImportCairoDialog::PdfImportCairoDialog(PopplerDocument *doc)
 
 #if WITH_GTKMM_3_0
     _fallbackPrecisionSlider_adj = Gtk::Adjustment::create(2, 1, 256, 1, 10, 10);
-    _fallbackPrecisionSlider = Gtk::manage(new Gtk::HScale(_fallbackPrecisionSlider_adj));
+    _fallbackPrecisionSlider = Gtk::manage(new Gtk::Scale(_fallbackPrecisionSlider_adj));
 #else
     _fallbackPrecisionSlider_adj = Gtk::manage(new class Gtk::Adjustment(2, 1, 256, 1, 10, 10));
     _fallbackPrecisionSlider = Gtk::manage(new class Gtk::HScale(*_fallbackPrecisionSlider_adj));
