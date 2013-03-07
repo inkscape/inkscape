@@ -741,6 +741,11 @@ void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
                     continue;
                 }
 
+                // Disable synthesized (faux) font faces
+                if (pango_font_face_is_synthesized(faces[currentFace]) ) {
+                    continue;
+                } 
+
                 PangoFontDescription *faceDescr = pango_font_face_describe(faces[currentFace]);
                 if (faceDescr) {
                     Glib::ustring familyUIName = GetUIFamilyString(faceDescr);
