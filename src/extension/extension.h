@@ -22,7 +22,12 @@
 #include <sigc++/signal.h>
 
 namespace Gtk {
+#if WITH_GTKMM_3_0
+	class Grid;
+#else
 	class Table;
+#endif
+
 	class VBox;
 	class Widget;
 }
@@ -285,8 +290,11 @@ public:
     Gtk::VBox *    get_help_widget(void);
     Gtk::VBox *    get_params_widget(void);
 protected:
+#if WITH_GTKMM_3_0
+    inline static void add_val(Glib::ustring labelstr, Glib::ustring valuestr, Gtk::Grid * table, int * row);
+#else
     inline static void add_val(Glib::ustring labelstr, Glib::ustring valuestr, Gtk::Table * table, int * row);
-
+#endif
 };
 
 

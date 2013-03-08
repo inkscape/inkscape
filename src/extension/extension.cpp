@@ -19,12 +19,16 @@
 # include "config.h"
 #endif
 
-
 #include <glibmm/i18n.h>
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
 #include <gtkmm/frame.h>
-#include <gtkmm/table.h>
+
+#if WITH_GTKMM_3_0
+# include <gtkmm/grid.h>
+#else
+# include <gtkmm/table.h>
+#endif
 
 #include "inkscape.h"
 #include "extension/implementation/implementation.h"
@@ -720,7 +724,12 @@ Extension::get_info_widget(void)
     Gtk::Frame * info = Gtk::manage(new Gtk::Frame("General Extension Information"));
     retval->pack_start(*info, true, true, 5);
 
+#if WITH_GTKMM_3_0
+    Gtk::Grid * table = Gtk::manage(new Gtk::Grid());
+#else
     Gtk::Table * table = Gtk::manage(new Gtk::Table());
+#endif
+
     info->add(*table);
 
     int row = 0;
@@ -733,8 +742,11 @@ Extension::get_info_widget(void)
     return retval;
 }
 
-void
-Extension::add_val(Glib::ustring labelstr, Glib::ustring valuestr, Gtk::Table * table, int * row)
+#if WITH_GTKMM_3_0
+void Extension::add_val(Glib::ustring labelstr, Glib::ustring valuestr, Gtk::Grid * table, int * row)
+#else
+void Extension::add_val(Glib::ustring labelstr, Glib::ustring valuestr, Gtk::Table * table, int * row)
+#endif
 {
     Gtk::Label * label;
     Gtk::Label * value;
@@ -742,8 +754,14 @@ Extension::add_val(Glib::ustring labelstr, Glib::ustring valuestr, Gtk::Table * 
     (*row)++; 
     label = Gtk::manage(new Gtk::Label(labelstr));
     value = Gtk::manage(new Gtk::Label(valuestr));
+
+#if WITH_GTKMM_3_0
+    table->attach(*label, 0, (*row) - 1, 1, 1);
+    table->attach(*value, 1, (*row) - 1, 1, 1);
+#else
     table->attach(*label, 0, 1, (*row) - 1, *row);
     table->attach(*value, 1, 2, (*row) - 1, *row);
+#endif
 
     label->show();
     value->show();
