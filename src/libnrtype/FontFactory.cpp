@@ -741,15 +741,22 @@ void font_factory::GetUIFamiliesAndStyles(FamilyToStylesMap *map)
                     continue;
                 }
 
-                // Disable synthesized (faux) font faces
-                if (pango_font_face_is_synthesized(faces[currentFace]) ) {
-                    continue;
-                } 
-
                 PangoFontDescription *faceDescr = pango_font_face_describe(faces[currentFace]);
                 if (faceDescr) {
                     Glib::ustring familyUIName = GetUIFamilyString(faceDescr);
                     Glib::ustring styleUIName = GetUIStyleString(faceDescr);
+
+                    // Disable synthesized (faux) font faces except for CSS generic faces
+                    if (pango_font_face_is_synthesized(faces[currentFace]) ) {
+                        if( familyUIName.compare( "sans-serif" ) != 0 &&
+                            familyUIName.compare( "serif"      ) != 0 &&
+                            familyUIName.compare( "monospace"  ) != 0 &&
+                            familyUIName.compare( "fantasy"    ) != 0 &&
+                            familyUIName.compare( "cursive"    ) != 0 ) {
+                            //std::cout << "faux: " << familyUIName << "  |  " << styleUIName << std::endl;
+                            continue;
+                        }
+                    } 
 
                     if (!familyUIName.empty() && !styleUIName.empty()) {
 
