@@ -40,12 +40,12 @@ namespace Dialogs {
 LayerPropertiesDialog::LayerPropertiesDialog()
 : _strategy(NULL), _desktop(NULL), _layer(NULL), _position_visible(false)
 {
-    Gtk::Box *mainVBox = get_vbox();
-
 #if WITH_GTKMM_3_0
+    Gtk::Box *mainVBox = get_content_area();
     _layout_table.set_row_spacing(4);
     _layout_table.set_column_spacing(4);
 #else
+    Gtk::Box *mainVBox = get_vbox();
     _layout_table.set_spacings(4);
     _layout_table.resize (1, 2);
 #endif

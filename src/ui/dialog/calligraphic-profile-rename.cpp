@@ -32,7 +32,12 @@ CalligraphicProfileRename::CalligraphicProfileRename() :
 {
     set_title(_("Edit profile"));
 
+#if WITH_GTKMM_3_0
+    Gtk::Box *mainVBox = get_content_area();
+#else
     Gtk::Box *mainVBox = get_vbox();
+#endif
+
     _layout_table.set_spacings(4);
     _layout_table.resize (1, 2);
 

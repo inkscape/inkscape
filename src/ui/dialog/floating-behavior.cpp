@@ -135,7 +135,13 @@ FloatingBehavior::create(Dialog &dialog)
 
 inline FloatingBehavior::operator Gtk::Widget &()                          { return *_d; }
 inline GtkWidget *FloatingBehavior::gobj()                                { return GTK_WIDGET(_d->gobj()); }
-inline Gtk::Box* FloatingBehavior::get_vbox()                            { return _d->get_vbox(); }
+inline Gtk::Box* FloatingBehavior::get_vbox()                            { 
+#if WITH_GTKMM_3_0
+    return _d->get_content_area();
+#else
+    return _d->get_vbox();
+#endif
+}
 inline void FloatingBehavior::present()                                   { _d->present(); }
 inline void FloatingBehavior::hide()                                      { _d->hide(); }
 inline void FloatingBehavior::show()                                      { _d->show(); }

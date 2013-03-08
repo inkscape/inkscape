@@ -56,8 +56,14 @@ void ColorPicker::setupDialog(const Glib::ustring &title)
     _colorSelectorDialog.set_title (title);
     _colorSelectorDialog.set_border_width (4);
     _colorSelector = SP_COLOR_SELECTOR(sp_color_selector_new(SP_TYPE_COLOR_NOTEBOOK));
+
+#if WITH_GTKMM_3_0
+    _colorSelectorDialog.get_content_area()->pack_start (
+              *Glib::wrap(&_colorSelector->vbox), true, true, 0);
+#else
     _colorSelectorDialog.get_vbox()->pack_start (
               *Glib::wrap(&_colorSelector->vbox), true, true, 0);
+#endif
 
     g_signal_connect(G_OBJECT(_colorSelector), "dragged",
                          G_CALLBACK(sp_color_picker_color_mod), (void *)this);

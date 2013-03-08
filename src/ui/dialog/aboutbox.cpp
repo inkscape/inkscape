@@ -97,7 +97,12 @@ AboutBox::AboutBox() : Gtk::Dialog(_("About Inkscape")) {
     tabs->append_page(*manage(
         make_scrolled_text(license_text)), _("_License"), true);
 
+#if WITH_GTKMM_3_0
+    get_content_area()->pack_end(*manage(tabs), true, true);
+#else
     get_vbox()->pack_end(*manage(tabs), true, true);
+#endif
+
     tabs->show_all();
 
     add_button(Gtk::Stock::CLOSE, Gtk::RESPONSE_CLOSE);
@@ -114,7 +119,11 @@ AboutBox::AboutBox() : Gtk::Dialog(_("About Inkscape")) {
     label->set_selectable(true);
     label->show();
 
+#if WITH_GTKMM_3_0
+    get_content_area()->pack_start(*manage(label), false, false);
+#else
     get_vbox()->pack_start(*manage(label), false, false);
+#endif
 
     Gtk::Requisition requisition;
 #if GTK_CHECK_VERSION(3,0,0)

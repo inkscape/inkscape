@@ -67,7 +67,12 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
 
     hbox->pack_start(*controls, true, true, 6);
     hbox->show();
+
+#if WITH_GTKMM_3_0
+    this->get_content_area()->pack_start(*hbox, true, true, 6);
+#else
     this->get_vbox()->pack_start(*hbox, true, true, 6);
+#endif
 
     /*
     Gtk::Button * help_button = add_button(Gtk::Stock::HELP, Gtk::RESPONSE_HELP);
@@ -95,14 +100,24 @@ PrefDialog::PrefDialog (Glib::ustring name, gchar const * help, Gtk::Widget * co
 #endif
 
         sep->show();
+
+#if WITH_GTKMM_3_0
+        this->get_content_area()->pack_start(*sep, true, true, 4);
+#else
         this->get_vbox()->pack_start(*sep, true, true, 4);
+#endif
 
         hbox = Gtk::manage(new Gtk::HBox());
         _button_preview = _param_preview->get_widget(NULL, NULL, &_signal_preview);
         _button_preview->show();
         hbox->pack_start(*_button_preview, true, true,6);
         hbox->show();
+
+#if WITH_GTKMM_3_0
+        this->get_content_area()->pack_start(*hbox, true, true, 6);
+#else
         this->get_vbox()->pack_start(*hbox, true, true, 6);
+#endif
 
         Gtk::Box * hbox = dynamic_cast<Gtk::Box *>(_button_preview);
         if (hbox != NULL) {
