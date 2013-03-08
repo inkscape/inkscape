@@ -116,11 +116,20 @@ Gtk::Adjustment& SpinSlider::get_adjustment()
     return _adjustment;
 }
 
+#if WITH_GTKMM_3_0
+const Gtk::Scale& SpinSlider::get_scale() const
+#else
 const Gtk::HScale& SpinSlider::get_scale() const
+#endif
 {
     return _scale;
 }
+
+#if WITH_GTKMM_3_0
+Gtk::Scale& SpinSlider::get_scale()
+#else
 Gtk::HScale& SpinSlider::get_scale()
+#endif
 {
     return _scale;
 }

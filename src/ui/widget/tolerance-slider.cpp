@@ -73,8 +73,15 @@ void ToleranceSlider::init (const Glib::ustring& label1, const Glib::ustring& la
     theLabel1->set_use_underline();
     theLabel1->set_alignment(0, 0.5);
     // align the label with the checkbox text above by indenting 22 px.
-    _hbox->pack_start(*theLabel1, Gtk::PACK_EXPAND_WIDGET, 22); 
+    _hbox->pack_start(*theLabel1, Gtk::PACK_EXPAND_WIDGET, 22);
+
+#if WITH_GTKMM_3_0
+    _hscale = manage(new Gtk::Scale(Gtk::ORIENTATION_HORIZONTAL));
+    _hscale->set_range(1.0, 51.0);
+#else 
     _hscale = manage (new Gtk::HScale (1.0, 51, 1.0));
+#endif
+
     theLabel1->set_mnemonic_widget (*_hscale);
     _hscale->set_draw_value (true);
     _hscale->set_value_pos (Gtk::POS_RIGHT);

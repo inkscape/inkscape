@@ -142,7 +142,7 @@ void Scalar::update()
 void Scalar::addSlider()
 {
 #if WITH_GTKMM_3_0
-    Gtk::HScale *scale = new Gtk::HScale(static_cast<SpinButton*>(_widget)->get_adjustment());
+    Gtk::Scale *scale = new Gtk::Scale(static_cast<SpinButton*>(_widget)->get_adjustment());
 #else
     Gtk::HScale *scale = new Gtk::HScale( * static_cast<SpinButton*>(_widget)->get_adjustment() );
 #endif

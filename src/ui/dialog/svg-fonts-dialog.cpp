@@ -22,6 +22,7 @@
 #include "document-undo.h"
 #include <gtkmm/notebook.h>
 #include <gtkmm/imagemenuitem.h>
+#include <gtkmm/scale.h>
 #include <gtkmm/stock.h>
 #include <glibmm/i18n.h>
 #include <message-stack.h>
@@ -191,7 +192,7 @@ void SvgFontsDialog::on_kerning_value_changed(){
     //slider values increase from right to left so that they match the kerning pair preview
 
     //XML Tree being directly used here while it shouldn't be.
-    this->kerning_pair->getRepr()->setAttribute("k", Glib::Ascii::dtostr(get_selected_spfont()->horiz_adv_x - kerning_slider.get_value()).c_str());
+    this->kerning_pair->getRepr()->setAttribute("k", Glib::Ascii::dtostr(get_selected_spfont()->horiz_adv_x - kerning_slider->get_value()).c_str());
     DocumentUndo::maybeDone(document, undokey.c_str(), SP_VERB_DIALOG_SVG_FONTS, _("Adjust kerning value"));
 
     //populate_kerning_pairs_box();
@@ -299,7 +300,7 @@ void SvgFontsDialog::on_kerning_pair_selection_changed(){
     this->kerning_pair = kern;
 
     //slider values increase from right to left so that they match the kerning pair preview
-    kerning_slider.set_value(get_selected_spfont()->horiz_adv_x - kern->k);
+    kerning_slider->set_value(get_selected_spfont()->horiz_adv_x - kern->k);
 }
 
 void SvgFontsDialog::update_global_settings_tab(){
@@ -328,9 +329,9 @@ void SvgFontsDialog::on_font_selection_changed(){
     double set_width = spfont->horiz_adv_x;
     setwidth_spin.set_value(set_width);
 
-    kerning_slider.set_range(0, set_width);
-    kerning_slider.set_draw_value(false);
-    kerning_slider.set_value(0);
+    kerning_slider->set_range(0, set_width);
+    kerning_slider->set_draw_value(false);
+    kerning_slider->set_value(0);
 
     update_global_settings_tab();
     populate_glyphs_box();
@@ -779,7 +780,7 @@ Gtk::VBox* SvgFontsDialog::kerning_tab(){
     add_kernpair_button.set_label(_("Add pair"));
     add_kernpair_button.signal_clicked().connect(sigc::mem_fun(*this, &SvgFontsDialog::add_kerning_pair));
     _KerningPairsList.get_selection()->signal_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_kerning_pair_selection_changed));
-    kerning_slider.signal_value_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_kerning_value_changed));
+    kerning_slider->signal_value_changed().connect(sigc::mem_fun(*this, &SvgFontsDialog::on_kerning_value_changed));
 
     kerning_vbox.pack_start(*kerning_selector, false,false);
 
@@ -797,7 +798,7 @@ Gtk::VBox* SvgFontsDialog::kerning_tab(){
     Gtk::HBox* kerning_amount_hbox = Gtk::manage(new Gtk::HBox());
     kerning_vbox.pack_start(*kerning_amount_hbox, false,false);
     kerning_amount_hbox->add(*Gtk::manage(new Gtk::Label(_("Kerning value:"))));
-    kerning_amount_hbox->add(kerning_slider);
+    kerning_amount_hbox->add(*kerning_slider);
 
     kerning_preview.set_size(300 + 20, 150 + 20);
     _font_da.set_size(150 + 20, 50 + 20);
@@ -884,6 +885,12 @@ void SvgFontsDialog::add_font(){
 SvgFontsDialog::SvgFontsDialog()
  : UI::Widget::Panel("", "/dialogs/svgfonts", SP_VERB_DIALOG_SVG_FONTS), _add(Gtk::Stock::NEW)
 {
+#if WITH_GTKMM_3_0
+    kerning_slider = Gtk::manage(new Gtk::Scale(Gtk::ORIENTATION_HORIZONTAL));
+#else
+    kerning_slider = Gtk::manage(new Gtk::HScale);
+#endif
+
     _add.signal_clicked().connect(sigc::mem_fun(*this, &SvgFontsDialog::add_font));
 
     Gtk::HBox* hbox = Gtk::manage(new Gtk::HBox());
