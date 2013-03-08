@@ -556,13 +556,13 @@ namespace Inkscape
       PangoWeight weight = pango_font_description_get_weight( desc );
       switch ( weight ) {
       case PANGO_WEIGHT_THIN:
-	sp_repr_css_set_property (css, "font-weight", "100" );
+	sp_repr_css_set_property (css, "font-weight", "thin" );
 	break;
       case PANGO_WEIGHT_ULTRALIGHT:
-	sp_repr_css_set_property (css, "font-weight", "200" );
+	sp_repr_css_set_property (css, "font-weight", "extra light" );
 	break;
       case PANGO_WEIGHT_LIGHT:
-	sp_repr_css_set_property (css, "font-weight", "300" );
+	sp_repr_css_set_property (css, "font-weight", "light" );
 	break;
       case PANGO_WEIGHT_BOOK:
 	sp_repr_css_set_property (css, "font-weight", "380" );
@@ -571,19 +571,19 @@ namespace Inkscape
 	sp_repr_css_set_property (css, "font-weight", "normal" );
 	break;
       case PANGO_WEIGHT_MEDIUM:
-	sp_repr_css_set_property (css, "font-weight", "500" );
+	sp_repr_css_set_property (css, "font-weight", "medium" );
 	break;
       case PANGO_WEIGHT_SEMIBOLD:
-	sp_repr_css_set_property (css, "font-weight", "600" );
+	sp_repr_css_set_property (css, "font-weight", "semi bold" );
 	break;
       case PANGO_WEIGHT_BOLD:
 	sp_repr_css_set_property (css, "font-weight", "bold" );
 	break;
       case PANGO_WEIGHT_ULTRABOLD:
-	sp_repr_css_set_property (css, "font-weight", "800" );
+	sp_repr_css_set_property (css, "font-weight", "extra bold" );
 	break;
       case PANGO_WEIGHT_HEAVY:
-	sp_repr_css_set_property (css, "font-weight", "900" );
+	sp_repr_css_set_property (css, "font-weight", "black" );
 	break;
       case PANGO_WEIGHT_ULTRAHEAVY:
 	sp_repr_css_set_property (css, "font-weight", "1000" );
