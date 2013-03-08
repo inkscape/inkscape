@@ -130,7 +130,7 @@ int BasicOutputStream::put(gunichar ch)
     if (closed)
         return -1;
     destination.put(ch);
-	return 1;
+    return 1;
 }
 
 

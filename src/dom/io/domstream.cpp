@@ -66,7 +66,7 @@ void pipeStream(InputStream &source, OutputStream &dest)
         }
     dest.flush();
 }
-
+/*
 
 
 //#########################################################################
@@ -74,11 +74,11 @@ void pipeStream(InputStream &source, OutputStream &dest)
 //#########################################################################
 
 static char const *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
-
-static int dprintInt(Writer &outs,
-                     long arg, int base,
-                     int flag, int width, int /*precision*/)
-{
+*/
+// static int dprintInt(Writer &outs,
+                     // long arg, int base,
+                     // int flag, int width, int /*precision*/)
+/*{
 
     DOMString buf;
 
@@ -209,7 +209,7 @@ static int dprintDouble(Writer &outs, double val,
         }
     return 1;
 }
-
+*/
 
 /**
  * Output a string.  We veer from the standard a tiny bit.
@@ -217,9 +217,9 @@ static int dprintDouble(Writer &outs, double val,
  * it as an indicator that the user wants to XML-escape any
  * XML entities.
  */
-static int dprintString(Writer &outs, const DOMString &str,
-                        int flags, int /*width*/, int /*precision*/)
-{
+// static int dprintString(Writer &outs, const DOMString &str,
+                        // int flags, int /*width*/, int /*precision*/)
+/*{
     int len = str.size();
     if (flags == '#')
         {
@@ -418,7 +418,7 @@ static int dprintf(Writer &outs, const DOMString &fmt, va_list ap)
 
     return 1;
 }
-
+*/
 
 //#########################################################################
 //# B A S I C    I N P U T    S T R E A M
@@ -514,7 +514,7 @@ int BasicOutputStream::put(gunichar ch)
     if (closed)
         return -1;
     destination.put(ch);
-	return 1;
+    return 1;
 }
 
 
@@ -811,38 +811,37 @@ gunichar StdReader::get()
 //#########################################################################
 //# B A S I C    W R I T E R
 //#########################################################################
-
 /**
  *
- */
+ */ 
 BasicWriter::BasicWriter(const Writer &destinationWriter)
 {
-    destination = (Writer *)&destinationWriter;
+    destination = (Writer*) &destinationWriter;
 }
 
 /**
  * Closes this writer and releases any system resources
  * associated with this writer.
- */
+ */ 
 void BasicWriter::close()
 {
     if (destination)
         destination->close();
 }
-
+    
 /**
  *  Flushes this output stream and forces any buffered output
  *  bytes to be written out.
- */
+ */ 
 void BasicWriter::flush()
 {
     if (destination)
         destination->flush();
 }
-
+    
 /**
  * Writes the specified byte to this output writer.
- */
+ */ 
 int BasicWriter::put(gunichar ch)
 {
     if (destination && destination->put(ch)>=0)
@@ -852,49 +851,65 @@ int BasicWriter::put(gunichar ch)
 
 /**
  * Provide printf()-like formatting
- */
-/*
+ */ 
 Writer &BasicWriter::printf(char const *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
-    //replace this wish vsnprintf()
-    vsnprintf(formatBuf, 2047, fmt, args);
+    gchar *buf = g_strdup_vprintf(fmt, args);
     va_end(args);
-    writeString(formatBuf);
-
+    if (buf) {
+        writeString(buf);
+        g_free(buf);
+    }
     return *this;
 }
-*/
-Writer &BasicWriter::printf(const DOMString &fmt, ...)
-{
-    va_list args;
-    va_start(args, fmt);
-    dprintf(*this, fmt, args);
-    return *this;
-}
-
-
 /**
  * Writes the specified character to this output writer.
- */
+ */ 
 Writer &BasicWriter::writeChar(char ch)
 {
-    XMLCh uch = ch;
+    gunichar uch = ch;
     put(uch);
     return *this;
 }
 
 
 /**
- * Writes the specified standard string to this output writer.
- */
-Writer &BasicWriter::writeString(const DOMString &str)
+ * Writes the specified unicode string to this output writer.
+ */ 
+Writer &BasicWriter::writeUString(Glib::ustring &str)
 {
     for (int i=0; i< (int)str.size(); i++)
         put(str[i]);
     return *this;
 }
+
+/**
+ * Writes the specified standard string to this output writer.
+ */ 
+Writer &BasicWriter::writeStdString(std::string &str)
+{
+    Glib::ustring tmp(str);
+    writeUString(tmp);
+    return *this;
+}
+
+/**
+ * Writes the specified character string to this output writer.
+ */ 
+Writer &BasicWriter::writeString(const char *str)
+{
+    Glib::ustring tmp;
+    if (str)
+        tmp = str;
+    else
+        tmp = "null";
+    writeUString(tmp);
+    return *this;
+}
+
+
 
 
 /**
@@ -915,10 +930,12 @@ Writer &BasicWriter::writeBool (bool val )
  */
 Writer &BasicWriter::writeShort (short val )
 {
-    char buf[32];
-    snprintf(buf, 31, "%d", val);
-    writeString(buf);
-    return *this;
+    gchar *buf = g_strdup_printf("%d", val);
+    if (buf) {
+        writeString(buf);
+        g_free(buf);
+    }
+  return *this;
 }
 
 
@@ -928,9 +945,11 @@ Writer &BasicWriter::writeShort (short val )
  */
 Writer &BasicWriter::writeUnsignedShort (unsigned short val )
 {
-    char buf[32];
-    snprintf(buf, 31, "%u", val);
-    writeString(buf);
+    gchar *buf = g_strdup_printf("%u", val);
+    if (buf) {
+        writeString(buf);
+        g_free(buf);
+    }
     return *this;
 }
 
@@ -939,9 +958,11 @@ Writer &BasicWriter::writeUnsignedShort (unsigned short val )
  */
 Writer &BasicWriter::writeInt (int val)
 {
-    char buf[32];
-    snprintf(buf, 31, "%d", val);
-    writeString(buf);
+    gchar *buf = g_strdup_printf("%d", val);
+    if (buf) {
+        writeString(buf);
+        g_free(buf);
+    }
     return *this;
 }
 
@@ -950,9 +971,11 @@ Writer &BasicWriter::writeInt (int val)
  */
 Writer &BasicWriter::writeUnsignedInt (unsigned int val)
 {
-    char buf[32];
-    snprintf(buf, 31, "%u", val);
-    writeString(buf);
+    gchar *buf = g_strdup_printf("%u", val);
+    if (buf) {
+        writeString(buf);
+        g_free(buf);
+    }
     return *this;
 }
 
@@ -961,9 +984,11 @@ Writer &BasicWriter::writeUnsignedInt (unsigned int val)
  */
 Writer &BasicWriter::writeLong (long val)
 {
-    char buf[32];
-    snprintf(buf, 31, "%ld", val);
-    writeString(buf);
+    gchar *buf = g_strdup_printf("%ld", val);
+    if (buf) {
+        writeString(buf);
+        g_free(buf);
+    }
     return *this;
 }
 
@@ -972,9 +997,11 @@ Writer &BasicWriter::writeLong (long val)
  */
 Writer &BasicWriter::writeUnsignedLong(unsigned long val)
 {
-    char buf[32];
-    snprintf(buf, 31, "%lu", val);
-    writeString(buf);
+    gchar *buf = g_strdup_printf("%lu", val);
+    if (buf) {
+        writeString(buf);
+        g_free(buf);
+    }
     return *this;
 }
 
@@ -983,9 +1010,16 @@ Writer &BasicWriter::writeUnsignedLong(unsigned long val)
  */
 Writer &BasicWriter::writeFloat(float val)
 {
-    char buf[32];
-    snprintf(buf, 31, "%8.3f", val);
-    writeString(buf);
+#if 1
+    gchar *buf = g_strdup_printf("%8.3f", val);
+    if (buf) {
+        writeString(buf);
+        g_free(buf);
+    }
+#else
+    std::string tmp = ftos(val, 'g', 8, 3, 0);
+    writeStdString(tmp);
+#endif
     return *this;
 }
 
@@ -994,9 +1028,16 @@ Writer &BasicWriter::writeFloat(float val)
  */
 Writer &BasicWriter::writeDouble(double val)
 {
-    char buf[32];
-    snprintf(buf, 31, "%8.3f", val);
-    writeString(buf);
+#if 1
+    gchar *buf = g_strdup_printf("%8.3f", val);
+    if (buf) {
+        writeString(buf);
+        g_free(buf);
+    }
+#else
+    std::string tmp = ftos(val, 'g', 8, 3, 0);
+    writeStdString(tmp);
+#endif
     return *this;
 }
 
@@ -1013,7 +1054,7 @@ OutputStreamWriter::OutputStreamWriter(OutputStream &outputStreamDest)
 {
 }
 
-
+    
 
 /**
  *  Close the underlying OutputStream
@@ -1023,7 +1064,7 @@ void OutputStreamWriter::close()
     flush();
     outputStream.close();
 }
-
+    
 /**
  *  Flush the underlying OutputStream
  */
@@ -1031,18 +1072,16 @@ void OutputStreamWriter::flush()
 {
       outputStream.flush();
 }
-
+    
 /**
  *  Overloaded to redirect the output chars from the next Writer
  *  in the chain to an OutputStream instead.
  */
 int OutputStreamWriter::put(gunichar ch)
 {
-    //Do we need conversions here?
-    int intCh = (int) ch;
-    if (outputStream.put(intCh) < 0)
-        return -1;
-    return 1;
+    if (outputStream.put(ch)>=0)
+        return 1;
+    return -1;
 }
 
 //#########################################################################
@@ -1051,23 +1090,20 @@ int OutputStreamWriter::put(gunichar ch)
 
 
 /**
- *
+ *  
  */
 StdWriter::StdWriter()
 {
     outputStream = new StdOutputStream();
 }
-
-
+    
 /**
- *
+ *  
  */
 StdWriter::~StdWriter()
 {
     delete outputStream;
 }
-
-
 
 /**
  *  Close the underlying OutputStream
@@ -1077,7 +1113,7 @@ void StdWriter::close()
     flush();
     outputStream->close();
 }
-
+    
 /**
  *  Flush the underlying OutputStream
  */
@@ -1085,20 +1121,17 @@ void StdWriter::flush()
 {
       outputStream->flush();
 }
-
+    
 /**
  *  Overloaded to redirect the output chars from the next Writer
  *  in the chain to an OutputStream instead.
  */
 int StdWriter::put(gunichar ch)
 {
-    //Do we need conversions here?
-    if (outputStream->put(ch) < 0)
-        return -1;
-    return 1;
+    if (outputStream && (outputStream->put(ch)>=0))
+        return 1;
+    return -1;
 }
-
-
 
 
 
@@ -1144,11 +1177,16 @@ const Reader& operator>> (Reader &reader, double &val)
 
 
 
-
 Writer& operator<< (Writer &writer, char val)
     { return writer.writeChar(val); }
 
-Writer& operator<< (Writer &writer, const DOMString &val)
+Writer& operator<< (Writer &writer, Glib::ustring &val)
+    { return writer.writeUString(val); }
+
+Writer& operator<< (Writer &writer, std::string &val)
+    { return writer.writeStdString(val); }
+
+Writer& operator<< (Writer &writer, char const *val)
     { return writer.writeString(val); }
 
 Writer& operator<< (Writer &writer, bool val)
@@ -1177,8 +1215,6 @@ Writer& operator<< (Writer &writer, float val)
 
 Writer& operator<< (Writer &writer, double val)
     { return writer.writeDouble(val); }
-
-
 
 }  //namespace io
 }  //namespace dom

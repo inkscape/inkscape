@@ -15,8 +15,10 @@
  * Authors:
  *   Bob Jamison
  *   Abhishek Sharma
+ *   Kris De Gussem
  *
  * Copyright (C) 2006, 2007 Bob Jamison
+ * Copyright (C) 2013 Kris De Gussem
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -1180,7 +1182,7 @@ bool OdfOutput::writeManifest(ZipFile &zf)
         else if (ext == ".jpg")
             outs.printf("image/jpeg");
         outs.printf("\" manifest:full-path=\"");
-        outs.printf(newName.c_str());
+        outs.writeString(newName.c_str());
         outs.printf("\"/>\n");
         }
     outs.printf("</manifest:manifest>\n");
@@ -1241,7 +1243,7 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     outs.printf("office:version=\"1.0\">\n");
     outs.printf("<office:meta>\n");
     Glib::ustring tmp = Glib::ustring("    <meta:generator>Inkscape.org - ") + Inkscape::version_string + "</meta:generator>\n";
-    outs.writeString(tmp);
+    outs.writeUString(tmp);
     outs.printf("    <meta:initial-creator>%#s</meta:initial-creator>\n",
                                   creator.c_str());
     outs.printf("    <meta:creation-date>%#s</meta:creation-date>\n", date.c_str());
@@ -1889,35 +1891,47 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
 
 
     if (nodeName == "svg" || nodeName == "svg:svg")
-        {
+    {
         //# Iterate through the children
         for (Inkscape::XML::Node *child = node->firstChild() ;
                child ; child = child->next())
-            {
+        {
             if (!writeTree(couts, souts, child))
+            {
                 return false;
             }
-        return true;
         }
+        return true;
+    }
     else if (nodeName == "g" || nodeName == "svg:g")
+    {
+        if (!id.empty())
         {
-        if (id.size() > 0)
             couts.printf("<draw:g id=\"%s\">\n", id.c_str());
+        }
         else
+        {
             couts.printf("<draw:g>\n");
+        }
         //# Iterate through the children
         for (Inkscape::XML::Node *child = node->firstChild() ;
                child ; child = child->next())
-            {
+        {
             if (!writeTree(couts, souts, child))
+            {
                 return false;
             }
-        if (id.size() > 0)
-            couts.printf("</draw:g> <!-- id=\"%s\" -->\n", id.c_str());
-        else
-            couts.printf("</draw:g>\n");
-        return true;
         }
+        if (!id.empty())
+        {
+            couts.printf("</draw:g> <!-- id=\"%s\" -->\n", id.c_str());
+        }
+        else
+        {
+            couts.printf("</draw:g>\n");
+        }
+        return true;
+    }
 
     //######################################
     //# S T Y L E
@@ -1930,19 +1944,17 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
     processGradient(souts, item, id, tf);
 
 
-
-
     //######################################
     //# I T E M    D A T A
     //######################################
     //g_message("##### %s #####", nodeName.c_str());
     if (nodeName == "image" || nodeName == "svg:image")
-        {
+    {
         if (!SP_IS_IMAGE(item))
-            {
+        {
             g_warning("<image> is not an SPImage.  Why?  ;-)");
             return false;
-            }
+        }
 
         SPImage *img   = SP_IMAGE(item);
         double ix      = img->x.value;
@@ -1954,8 +1966,6 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
         ibbox = ibbox * tf;
         ix      = ibbox.min()[Geom::X];
         iy      = ibbox.min()[Geom::Y];
-        //iwidth  = ibbox.max()[Geom::X] - ibbox.min()[Geom::X];
-        //iheight = ibbox.max()[Geom::Y] - ibbox.min()[Geom::Y];
         iwidth  = xscale * iwidth;
         iheight = yscale * iheight;
 
@@ -1966,29 +1976,30 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
         Glib::ustring href = getAttribute(node, "xlink:href");
         std::map<Glib::ustring, Glib::ustring>::iterator iter = imageTable.find(href);
         if (iter == imageTable.end())
-            {
+        {
             g_warning("image '%s' not in table", href.c_str());
             return false;
-            }
+        }
         Glib::ustring newName = iter->second;
 
         couts.printf("<draw:frame ");
-        if (id.size() > 0)
+        if (!id.empty())
+        {
             couts.printf("id=\"%s\" ", id.c_str());
+        }
         couts.printf("draw:style-name=\"gr1\" draw:text-style-name=\"P1\" draw:layer=\"layout\" ");
         //no x or y.  make them the translate transform, last one
         couts.printf("svg:width=\"%.3fcm\" svg:height=\"%.3fcm\" ",
                                   iwidth, iheight);
-        if (itemTransformString.size() > 0)
-            {
+        if (!itemTransformString.empty())
+        {
             couts.printf("draw:transform=\"%s translate(%.3fcm, %.3fcm)\" ",
                            itemTransformString.c_str(), ix, iy);
-            }
+        }
         else
-            {
-            couts.printf("draw:transform=\"translate(%.3fcm, %.3fcm)\" ",
-                                ix, iy);
-            }
+        {
+            couts.printf("draw:transform=\"translate(%.3fcm, %.3fcm)\" ", ix, iy);
+        }
 
         couts.printf(">\n");
         couts.printf("    <draw:image xlink:href=\"%s\" xlink:type=\"simple\"\n",
@@ -1998,41 +2009,41 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
         couts.printf("    </draw:image>\n");
         couts.printf("</draw:frame>\n");
         return true;
-        }
+    }
     else if (SP_IS_SHAPE(item))
-        {
-        //g_message("### %s is a shape", nodeName.c_str());
+    {
         curve = SP_SHAPE(item)->getCurve();
-        }
+    }
     else if (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item))
-        {
+    {
         curve = te_get_layout(item)->convertToCurves();
-        }
+    }
 
     if (curve)
-        {
+    {
         //### Default <path> output
-
         couts.printf("<draw:path ");
-        if (id.size()>0)
+        if (!id.empty())
+        {
             couts.printf("id=\"%s\" ", id.c_str());
+        }
 
         std::map<Glib::ustring, Glib::ustring>::iterator siter;
         siter = styleLookupTable.find(id);
         if (siter != styleLookupTable.end())
-            {
+        {
             Glib::ustring styleName = siter->second;
             couts.printf("draw:style-name=\"%s\" ", styleName.c_str());
-            }
+        }
 
         std::map<Glib::ustring, Glib::ustring>::iterator giter;
         giter = gradientLookupTable.find(id);
         if (giter != gradientLookupTable.end())
-            {
+        {
             Glib::ustring gradientName = giter->second;
             couts.printf("draw:fill-gradient-name=\"%s\" ",
                  gradientName.c_str());
-            }
+        }
 
         couts.printf("draw:layer=\"layout\" svg:x=\"%.3fcm\" svg:y=\"%.3fcm\" ",
                        bbox_x, bbox_y);
@@ -2052,7 +2063,7 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
 
 
         curve->unref();
-        }
+    }
 
     return true;
 }
@@ -2304,29 +2315,40 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
     OutputStreamWriter couts(cbouts);
 
     if (!writeContentHeader(couts))
+    {
         return false;
+    }
 
     //Style.xml stream
     BufferOutputStream sbouts;
     OutputStreamWriter souts(sbouts);
 
     if (!writeStyleHeader(souts))
+    {
         return false;
-
+    }
 
     //# Descend into the tree, doing all of our conversions
-    //# to both files as the same time
+    //# to both files at the same time
+    char *oldlocale = g_strdup (setlocale (LC_NUMERIC, NULL));
+    setlocale (LC_NUMERIC, "C");
     if (!writeTree(couts, souts, node))
-        {
+    {
         g_warning("Failed to convert SVG tree");
+        setlocale (LC_NUMERIC, oldlocale);
+        g_free (oldlocale);
         return false;
-        }
+    }
+    setlocale (LC_NUMERIC, oldlocale);
+    g_free (oldlocale);
 
 
 
     //# Finish content file
     if (!writeContentFooter(couts))
+    {
         return false;
+    }
 
     ZipEntry *ze = zf.newEntry("content.xml", "ODF master content file");
     ze->setUncompressedData(cbouts.getBuffer());
@@ -2336,7 +2358,9 @@ bool OdfOutput::writeContent(ZipFile &zf, Inkscape::XML::Node *node)
 
     //# Finish style file
     if (!writeStyleFooter(souts))
+    {
         return false;
+    }
 
     ze = zf.newEntry("styles.xml", "ODF style file");
     ze->setUncompressedData(sbouts.getBuffer());

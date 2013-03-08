@@ -490,17 +490,21 @@ public:
     virtual ~Writer() {}
 
     virtual void close() = 0;
-
+    
     virtual void flush() = 0;
-
+    
     virtual int put(gunichar ch) = 0;
-
+    
     /* Formatted output */
-    virtual Writer& printf(const DOMString &fmt, ...) = 0;
+    virtual Writer& printf(char const *fmt, ...) G_GNUC_PRINTF(2,3) = 0;
 
     virtual Writer& writeChar(char val) = 0;
 
-    virtual Writer& writeString(const DOMString &val) = 0;
+    virtual Writer& writeUString(Glib::ustring &val) = 0;
+
+    virtual Writer& writeStdString(std::string &val) = 0;
+
+    virtual Writer& writeString(const char *str) = 0;
 
     virtual Writer& writeBool (bool val ) = 0;
 
@@ -520,7 +524,7 @@ public:
 
     virtual Writer& writeDouble (double val ) = 0;
 
-
+ 
 
 }; // interface Writer
 
@@ -540,19 +544,23 @@ public:
 
     /*Overload these 3 for your implementation*/
     virtual void close();
-
+    
     virtual void flush();
-
+    
     virtual int put(gunichar ch);
-
-
-
+    
+    
+    
     /* Formatted output */
-    virtual Writer &printf(const DOMString &fmt, ...);
+    virtual Writer &printf(char const *fmt, ...) G_GNUC_PRINTF(2,3);
 
     virtual Writer& writeChar(char val);
 
-    virtual Writer& writeString(const DOMString &val);
+    virtual Writer& writeUString(Glib::ustring &val);
+
+    virtual Writer& writeStdString(std::string &val);
+
+    virtual Writer& writeString(const char *str);
 
     virtual Writer& writeBool (bool val );
 
@@ -572,33 +580,26 @@ public:
 
     virtual Writer& writeDouble (double val );
 
-
+ 
 protected:
 
     Writer *destination;
 
     BasicWriter()
-        {
-            destination = NULL;
-            for(int k=0;k<2048;++k)
-            {
-                formatBuf[k]=0;
-            }
-        }
-
-    //Used for printf() or other things that might
-    //require formatting before sending down the stream
-    char formatBuf[2048];
-
+        { destination = NULL; }
+    
 private:
 
 }; // class BasicWriter
 
 
-
 Writer& operator<< (Writer &writer, char val);
 
-Writer& operator<< (Writer &writer, const DOMString &val);
+Writer& operator<< (Writer &writer, Glib::ustring &val);
+
+Writer& operator<< (Writer &writer, std::string &val);
+
+Writer& operator<< (Writer &writer, char const *val);
 
 Writer& operator<< (Writer &writer, bool val);
 
@@ -619,8 +620,6 @@ Writer& operator<< (Writer &writer, float val);
 Writer& operator<< (Writer &writer, double val);
 
 
-
-
 /**
  * Class for placing a Writer on an open OutputStream
  *
@@ -630,12 +629,10 @@ class OutputStreamWriter : public BasicWriter
 public:
 
     OutputStreamWriter(OutputStream &outputStreamDest);
-
+    
     /*Overload these 3 for your implementation*/
     virtual void close();
-
     virtual void flush();
-
     virtual int put(gunichar ch);
 
 
@@ -656,14 +653,8 @@ public:
     StdWriter();
 
     virtual ~StdWriter();
-
-
     virtual void close();
-
-
     virtual void flush();
-
-
     virtual int put(gunichar ch);
 
 
@@ -678,7 +669,6 @@ private:
 //#########################################################################
 
 void pipeStream(InputStream &source, OutputStream &dest);
-
 
 
 }  //namespace io
