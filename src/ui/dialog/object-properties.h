@@ -29,6 +29,10 @@
 #ifndef SEEN_DIALOGS_ITEM_PROPERTIES_H
 #define SEEN_DIALOGS_ITEM_PROPERTIES_H
 
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include "ui/widget/panel.h"
 #include "ui/widget/frame.h"
 #include <gtkmm/entry.h>
@@ -37,8 +41,8 @@
 #include <gtkmm/textview.h>
 
 #include "ui/dialog/desktop-tracker.h"
-#include "widgets/sp-attribute-widget.h"
 
+class SPAttributeTable;
 class SPDesktop;
 class SPItem;
 
@@ -70,7 +74,12 @@ private:
     std::vector<Glib::ustring> int_attrs;
     std::vector<Glib::ustring> int_labels;
     
-    Gtk::Table TopTable; //the table with the object properties
+#if WITH_GTKMM_3_0
+    Gtk::Grid  *TopTable; //the table with the object properties
+#else
+    Gtk::Table *TopTable; //the table with the object properties
+#endif
+
     Gtk::Label LabelID; //the label for the object ID
     Gtk::Entry EntryID; //the entry for the object ID
     Gtk::Label LabelLabel; //the label for the object label
@@ -84,14 +93,20 @@ private:
     Gtk::TextView TextViewDescription; //the text view object showing the object description
     
     Gtk::HBox HBoxCheck; // the HBox for the check boxes
-    Gtk::Table CheckTable; //the table for the check boxes
+
+#if WITH_GTKMM_3_0
+    Gtk::Grid  *CheckTable; //the table for the check boxes
+#else
+    Gtk::Table *CheckTable; //the table for the check boxes
+#endif
+
     Gtk::CheckButton CBHide; //the check button hide
     Gtk::CheckButton CBLock; //the check button lock
     Gtk::Button BSet; //the button set
     
     Gtk::Label LabelInteractivity; //the label for interactivity
     Gtk::Expander EInteractivity; //the label for interactivity
-    SPAttributeTable attrTable; //the widget for showing the on... names at the bottom
+    SPAttributeTable *attrTable; //the widget for showing the on... names at the bottom
     
     SPDesktop *desktop;
     DesktopTracker deskTrack;

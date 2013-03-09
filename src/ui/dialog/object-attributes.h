@@ -28,7 +28,8 @@
 #include "desktop.h"
 #include "ui/dialog/desktop-tracker.h"
 #include "ui/widget/panel.h"
-#include "widgets/sp-attribute-widget.h"
+
+class SPAttributeTable;
 
 namespace Inkscape {
 namespace UI {
@@ -72,7 +73,7 @@ private:
      * in the SPAttrDesc arrays at the top of the cpp-file. This widgets also
      * ensures object attribute modifications by the user are set.
      */
-    SPAttributeTable attrTable;
+    SPAttributeTable *attrTable;
     
     /**
      * Stores the current desktop.

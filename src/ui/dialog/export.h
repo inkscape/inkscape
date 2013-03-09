@@ -24,7 +24,6 @@
 #include "ui/widget/panel.h"
 #include "ui/widget/button.h"
 #include "ui/widget/entry.h"
-#include "widgets/sp-attribute-widget.h"
 
 namespace Inkscape {
 namespace UI {

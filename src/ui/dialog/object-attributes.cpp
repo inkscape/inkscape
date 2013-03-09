@@ -30,6 +30,7 @@
 #include "xml/repr.h"
 #include "ui/dialog/dialog-manager.h"
 #include "ui/dialog/object-attributes.h"
+#include "widgets/sp-attribute-widget.h"
 #include "inkscape.h"
 #include "selection.h"
 
@@ -81,14 +82,14 @@ ObjectAttributes::ObjectAttributes (void) :
     UI::Widget::Panel ("", "/dialogs/objectattr/", SP_VERB_DIALOG_ATTR),
     blocked (false),
     CurrentItem(NULL),
-    attrTable(),
+    attrTable(Gtk::manage(new SPAttributeTable())),
     desktop(NULL),
     deskTrack(),
     selectChangedConn(),
     subselChangedConn(),
     selectModifiedConn()
 {
-    attrTable.show();
+    attrTable->show();
     widget_setup();
     
     desktopChangeConn = deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &ObjectAttributes::setTargetDesktop) );
@@ -163,12 +164,12 @@ void ObjectAttributes::widget_setup (void)
             attrs.push_back (desc[len].attribute);
             len += 1;
         }
-        attrTable.set_object(obj, labels, attrs, (GtkWidget*)gobj());
+        attrTable->set_object(obj, labels, attrs, (GtkWidget*)gobj());
         CurrentItem = item;
     }
     else
     {
-        attrTable.change_object(obj);
+        attrTable->change_object(obj);
     }
     
     set_sensitive (true);
@@ -201,7 +202,7 @@ void ObjectAttributes::selectionModifiedCB( guint flags )
     if (flags & ( SP_OBJECT_MODIFIED_FLAG |
                    SP_OBJECT_PARENT_MODIFIED_FLAG |
                    SP_OBJECT_STYLE_MODIFIED_FLAG) ) {
-        attrTable.reread_properties();
+        attrTable->reread_properties();
     }
 }
 
