@@ -70,9 +70,15 @@ void GuidelinePropertiesDialog::showDialog(SPGuide *guide, SPDesktop *desktop) {
 
 void GuidelinePropertiesDialog::_colorChanged()
 {
+#if WITH_GTKMM_3_0
+    const Gdk::RGBA c = _color.get_rgba();
+    unsigned r = c.get_red_u()/257, g = c.get_green_u()/257, b = c.get_blue_u()/257;
+#else
     const Gdk::Color c = _color.get_color();
     unsigned r = c.get_red()/257, g = c.get_green()/257, b = c.get_blue()/257;
+#endif
     //TODO: why 257? verify this!
+
     sp_guide_set_color(*_guide, r, g, b, true);
 }
 
@@ -328,9 +334,16 @@ void GuidelinePropertiesDialog::_setup() {
 
     // init name entry
     _label_entry.getEntry()->set_text(_guide->label ? _guide->label : "");
+
+#if WITH_GTKMM_3_0
+    Gdk::RGBA c;
+    c.set_rgba(((_guide->color>>24)&0xff) / 255.0, ((_guide->color>>16)&0xff) / 255.0, ((_guide->color>>8)&0xff) / 255.0);
+    _color.set_rgba(c);
+#else
     Gdk::Color c;
     c.set_rgb_p(((_guide->color>>24)&0xff) / 255.0, ((_guide->color>>16)&0xff) / 255.0, ((_guide->color>>8)&0xff) / 255.0);
     _color.set_color(c);
+#endif
 
     _modeChanged(); // sets values of spinboxes.
 

@@ -799,10 +799,17 @@ static void proofComboChanged( Gtk::ComboBoxText* combo )
 }
 
 static void gamutColorChanged( Gtk::ColorButton* btn ) {
+#if WITH_GTKMM_3_0
+    Gdk::RGBA rgba = btn->get_rgba();
+    gushort r = rgba.get_red_u();
+    gushort g = rgba.get_green_u();
+    gushort b = rgba.get_blue_u();
+#else
     Gdk::Color color = btn->get_color();
     gushort r = color.get_red();
     gushort g = color.get_green();
     gushort b = color.get_blue();
+#endif
 
     gchar* tmp = g_strdup_printf("#%02x%02x%02x", (r >> 8), (g >> 8), (b >> 8) );
 
@@ -967,8 +974,15 @@ void InkscapePreferences::initPageIO()
                         _("Highlights colors that are out of gamut for the target device"), false);
 
     Glib::ustring colorStr = prefs->getString("/options/softproof/gamutcolor");
+
+#if WITH_GTKMM_3_0
+    Gdk::RGBA tmpColor( colorStr.empty() ? "#00ff00" : colorStr);
+    _cms_gamutcolor.set_rgba( tmpColor );
+#else
     Gdk::Color tmpColor( colorStr.empty() ? "#00ff00" : colorStr);
     _cms_gamutcolor.set_color( tmpColor );
+#endif
+
     _page_cms.add_line( true, _("Out of gamut warning color:"), _cms_gamutcolor, "",
                         _("Selects the color used for out of gamut warning"), false);
 

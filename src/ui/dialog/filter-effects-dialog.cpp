@@ -313,9 +313,15 @@ public:
             set_tooltip_text(tip_text);
         }
 
+#if WITH_GTKMM_3_0
+        Gdk::RGBA col;
+        col.set_rgba_u(65535, 65535, 65535);
+        set_rgba(col);
+#else
         Gdk::Color col;
         col.set_rgb(65535, 65535, 65535);
         set_color(col);
+#endif
     }
 
     // Returns the color in 'rgb(r,g,b)' form.
@@ -323,8 +329,14 @@ public:
     {
         // no doubles here, so we can use the standard string stream.
         std::ostringstream os;
+
+#if WITH_GTKMM_3_0
+        const Gdk::RGBA c = get_rgba();
+        const int r = c.get_red_u() / 257, g = c.get_green_u() / 257, b = c.get_blue_u() / 257;//TO-DO: verify this. This sounds a lot strange! shouldn't it be 256?
+#else
         const Gdk::Color c = get_color();
         const int r = c.get_red() / 257, g = c.get_green() / 257, b = c.get_blue() / 257;//TO-DO: verify this. This sounds a lot strange! shouldn't it be 256?
+#endif
         os << "rgb(" << r << "," << g << "," << b << ")";
         return os.str();
     }
@@ -340,9 +352,16 @@ public:
             i = (guint32) get_default()->as_uint();
         }
         const int r = SP_RGBA32_R_U(i), g = SP_RGBA32_G_U(i), b = SP_RGBA32_B_U(i);
+
+#if WITH_GTKMM_3_0
+        Gdk::RGBA col;
+        col.set_rgba_u(r * 256, g * 256, b * 256);
+        set_rgba(col);
+#else
         Gdk::Color col;
         col.set_rgb(r * 256, g * 256, b * 256);
         set_color(col);
+#endif
     }
 };
 
