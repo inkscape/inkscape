@@ -119,8 +119,11 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
       current_stroke_width(0),
 
       _desktop (NULL),
-
+#if WITH_GTKMM_3_0
+      _table(),
+#else
       _table(2, 6),
+#endif
       _fill_label (_("Fill:")),
       _stroke_label (_("Stroke:")),
       _opacity_label (_("O:")),
@@ -158,8 +161,13 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
     _opacity_label.set_alignment(0.0, 0.5);
     _opacity_label.set_padding(0, 0);
 
+#if WITH_GTKMM_3_0
+    _table.set_column_spacing(2);
+    _table.set_row_spacing(0);
+#else
     _table.set_col_spacings (2);
     _table.set_row_spacings (0);
+#endif
 
     for (int i = SS_FILL; i <= SS_STROKE; i++) {
 
@@ -361,6 +369,16 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
     _opacity_sb.set_size_request (SELECTED_STYLE_SB_WIDTH, -1);
     _opacity_sb.set_sensitive (false);
 
+#if WITH_GTKMM_3_0
+    _table.attach(_fill_label, 0, 0, 1, 1);
+    _table.attach(_stroke_label, 0, 1, 1, 1);
+
+    _table.attach(_fill_flag_place, 1, 0, 1, 1);
+    _table.attach(_stroke_flag_place, 1, 1, 1, 1);
+
+    _table.attach(_fill_place, 2, 0, 1, 1);
+    _table.attach(_stroke, 2, 1, 1, 1);
+#else
     _table.attach(_fill_label, 0,1, 0,1, Gtk::FILL, Gtk::SHRINK);
     _table.attach(_stroke_label, 0,1, 1,2, Gtk::FILL, Gtk::SHRINK);
 
@@ -369,10 +387,17 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
 
     _table.attach(_fill_place, 2,3, 0,1);
     _table.attach(_stroke, 2,3, 1,2);
+#endif
 
     _opacity_place.add(_opacity_label);
+
+#if WITH_GTKMM_3_0
+    _table.attach(_opacity_place, 4, 0, 1, 2);
+    _table.attach(_opacity_sb, 5, 0, 1, 2);
+#else
     _table.attach(_opacity_place, 4,5, 0,2, Gtk::SHRINK, Gtk::SHRINK);
     _table.attach(_opacity_sb, 5,6, 0,2, Gtk::SHRINK, Gtk::SHRINK);
+#endif
 
     pack_start(_table, true, true, 2);
 

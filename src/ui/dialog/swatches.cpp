@@ -1179,9 +1179,6 @@ void SwatchesPanel::_rebuild()
     _holder->thawUpdates();
 }
 
-
-
-
 } //namespace Dialogs
 } //namespace UI
 } //namespace Inkscape

@@ -12,10 +12,21 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#if HAVE_CONFIG_H
+# include "config.h"
+#endif
 
 #include <gtkmm/box.h>
 #include <gtkmm/bin.h>
-#include <gtkmm/table.h>
+
+namespace Gtk {
+#if WITH_GTKMM_3_0
+class Grid;
+#else
+class Table;
+#endif
+}
+
 #include "previewfillable.h"
 #include "../widgets/eek-preview.h"
 #include "enums.h"
@@ -56,7 +67,13 @@ private:
 
     std::vector<Previewable*> items;
     Gtk::Bin *_scroller;
+
+#if WITH_GTKMM_3_0
+    Gtk::Grid *_insides;
+#else
     Gtk::Table *_insides;
+#endif
+
     int _prefCols;
     bool _updatesFrozen;
     SPAnchorType _anchor;

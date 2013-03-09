@@ -19,6 +19,12 @@
 #include <gtkmm/scrollbar.h>
 #include <gtkmm/adjustment.h>
 
+#if WITH_GTKMM_3_0
+# include <gtkmm/grid.h>
+#else
+# include <gtkmm/table.h>
+#endif
+
 #define COLUMNS_FOR_SMALL 16
 #define COLUMNS_FOR_LARGE 8
 //#define COLUMNS_FOR_SMALL 48
@@ -44,13 +50,31 @@ PreviewHolder::PreviewHolder() :
     _border(BORDER_NONE)
 {
     _scroller = manage(new Gtk::ScrolledWindow());
+
+#if WITH_GTKMM_3_0
+    _insides = manage(new Gtk::Grid());
+    _insides->set_column_spacing(8);
+    
+    // Add a container with the scroller and a spacer
+    Gtk::Grid* spaceHolder = manage(new Gtk::Grid());
+
+    _scroller->set_hexpand();
+    _scroller->set_vexpand();
+#else
     _insides = manage(new Gtk::Table( 1, 2 ));
     _insides->set_col_spacings( 8 );
-
+    
     // Add a container with the scroller and a spacer
     Gtk::Table* spaceHolder = manage( new Gtk::Table(1, 2) );
+#endif
+
     _scroller->add( *_insides );
+    
+#if WITH_GTKMM_3_0
+    spaceHolder->attach( *_scroller, 0, 0, 1, 1);
+#else
     spaceHolder->attach( *_scroller, 0, 1, 0, 1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+#endif
 
     pack_start(*spaceHolder, Gtk::PACK_EXPAND_WIDGET);
 }
@@ -93,6 +117,11 @@ void PreviewHolder::clear()
     rebuildUI();
 }
 
+/**
+ * Add a Previewable item to the PreviewHolder
+ *
+ * \param[in] preview The Previewable item to add
+ */
 void PreviewHolder::addPreview( Previewable* preview )
 {
     items.push_back(preview);
@@ -100,41 +129,78 @@ void PreviewHolder::addPreview( Previewable* preview )
     {
         int i = items.size() - 1;
 
-        if ( _view == VIEW_TYPE_LIST ) {
-            Gtk::Widget* label = manage(preview->getPreview(PREVIEW_STYLE_BLURB, VIEW_TYPE_LIST, _baseSize, _ratio, _border));
-            Gtk::Widget* thing = manage(preview->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_LIST, _baseSize, _ratio, _border));
+        switch(_view) {
+            case VIEW_TYPE_LIST:
+                {
+                    Gtk::Widget* label = manage(preview->getPreview(PREVIEW_STYLE_BLURB, VIEW_TYPE_LIST, _baseSize, _ratio, _border));
+                    Gtk::Widget* thing = manage(preview->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_LIST, _baseSize, _ratio, _border));
 
-            _insides->attach( *thing, 0, 1, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
-            _insides->attach( *label, 1, 2, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK );
-        } else {
-            Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_GRID, _baseSize, _ratio, _border));
+#if WITH_GTKMM_3_0
+                    thing->set_hexpand();
+                    thing->set_vexpand();
+                    _insides->attach(*thing, 0, i, 1, 1);
 
-            int width = 1;
-            int height = 1;
-            calcGridSize( thing, items.size(), width, height );
-            int col = i % width;
-            int row = i / width;
-
-            if ( _insides && width > (int)_insides->property_n_columns() ) {
-                std::vector<Gtk::Widget*>kids = _insides->get_children();
-                int oldWidth = (int)_insides->property_n_columns();
-                int childCount = (int)kids.size();
-//             g_message("  %3d  resize from %d to %d  (r:%d, c:%d)  with %d children", i, oldWidth, width, row, col, childCount );
-                _insides->resize( height, width );
-
-                for ( int j = oldWidth; j < childCount; j++ ) {
-                    Gtk::Widget* target = kids[childCount - (j + 1)];
-                    int col2 = j % width;
-                    int row2 = j / width;
-                    Glib::RefPtr<Gtk::Widget> handle(target);
-                    _insides->remove( *target );
-                    _insides->attach( *target, col2, col2+1, row2, row2+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+                    label->set_hexpand();
+                    label->set_valign(Gtk::ALIGN_CENTER);
+                    _insides->attach(*label, 1, i, 1, 1);
+#else
+                    _insides->attach( *thing, 0, 1, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+                    _insides->attach( *label, 1, 2, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK );
+#endif
                 }
-            } else if ( col == 0 ) {
-                // we just started a new row
-                _insides->resize( row + 1, width );
-            }
-            _insides->attach( *thing, col, col+1, row, row+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+
+                break;
+            case VIEW_TYPE_GRID:
+                {
+                    Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, VIEW_TYPE_GRID, _baseSize, _ratio, _border));
+
+                    int width = 1;
+                    int height = 1;
+                    calcGridSize( thing, items.size(), width, height );
+
+                    // Column and row for the new widget
+                    int col = i % width;
+                    int row = i / width;
+
+#if !WITH_GTKMM_3_0
+                    // If the existing grid isn't wide enough, we need to resize
+                    // it and re-pack the existing widgets
+                    if ( _insides && width > (int)_insides->property_n_columns() ) {
+                        _insides->resize( height, width );
+#endif
+                        std::vector<Gtk::Widget*>kids = _insides->get_children();
+                        int childCount = (int)kids.size();
+                        //             g_message("  %3d  resize from %d to %d  (r:%d, c:%d)  with %d children", i, oldWidth, width, row, col, childCount );
+
+                        // Loop through the existing widgets and move them to new location
+                        for ( int j = 1; j < childCount; j++ ) {
+                            Gtk::Widget* target = kids[childCount - (j + 1)];
+                            int col2 = j % width;
+                            int row2 = j / width;
+                            Glib::RefPtr<Gtk::Widget> handle(target);
+                            _insides->remove( *target );
+
+#if WITH_GTKMM_3_0
+                            target->set_hexpand();
+                            target->set_vexpand();
+                            _insides->attach( *target, col2, row2, 1, 1);
+#else
+                            _insides->attach( *target, col2, col2+1, row2, row2+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+#endif
+                        }
+#if WITH_GTKMM_3_0
+                        thing->set_hexpand();
+                        thing->set_vexpand();
+                        _insides->attach(*thing, col, row, 1, 1);
+#else
+                    } else if ( col == 0 ) {
+                        // we just started a new row
+                        _insides->resize( row + 1, width );
+                    }
+                    
+                    _insides->attach( *thing, col, col+1, row, row+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+#endif
+                }
         }
 
         _scroller->show_all_children();
@@ -258,8 +324,17 @@ void PreviewHolder::on_size_allocate( Gtk::Allocation& allocation )
 //     g_message("             items:%d", (int)items.size());
 //}
 
+/**
+ * Calculate the grid side of a preview holder
+ *
+ * \param[in]  thing
+ * \param[in]  itemCount  The number of items to pack into the grid
+ * \param[out] width      The width of the grid
+ * \param[out] height     The height of the grid
+ */
 void PreviewHolder::calcGridSize( const Gtk::Widget* thing, int itemCount, int& width, int& height )
 {
+    // Initially set all items in a horizontal row
     width = itemCount;
     height = 1;
 
@@ -326,55 +401,104 @@ void PreviewHolder::rebuildUI()
     _scroller->remove();
     _insides = 0; // remove() call should have deleted the Gtk::Table.
 
-    if ( _view == VIEW_TYPE_LIST ) {
-        _insides = manage(new Gtk::Table( 1, 2 ));
-        _insides->set_col_spacings( 8 );
-        if (_border == BORDER_WIDE) {
-            _insides->set_row_spacings( 1 );
-        }
+    switch(_view) {
+        case VIEW_TYPE_LIST:
+            {
 
-        for ( unsigned int i = 0; i < items.size(); i++ ) {
-            Gtk::Widget* label = manage(items[i]->getPreview(PREVIEW_STYLE_BLURB, _view, _baseSize, _ratio, _border));
-            //label->set_alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER);
+#if WITH_GTKMM_3_0
+                _insides = manage(new Gtk::Grid());
+                _insides->set_column_spacing(8);
+#else
+                _insides = manage(new Gtk::Table( 1, 2 ));
+                _insides->set_col_spacings( 8 );
+#endif
 
-            Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize, _ratio, _border));
-
-            _insides->attach( *thing, 0, 1, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
-            _insides->attach( *label, 1, 2, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK );
-        }
-        _scroller->add( *_insides );
-    } else {
-        int col = 0;
-        int row = 0;
-        int width = 2;
-        int height = 1;
-
-        for ( unsigned int i = 0; i < items.size(); i++ ) {
-
-            // If this is the last row, flag so the previews can draw a bottom
-            ::BorderStyle border = ((row == height -1) && (_border == BORDER_SOLID)) ? BORDER_SOLID_LAST_ROW : _border;
-            Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize, _ratio, border));
-
-            if ( !_insides ) {
-                calcGridSize( thing, items.size(), width, height );
-                _insides = manage(new Gtk::Table( height, width ));
                 if (_border == BORDER_WIDE) {
-                    _insides->set_col_spacings( 1 );
+#if WITH_GTKMM_3_0
+                    _insides->set_row_spacing(1);
+#else
                     _insides->set_row_spacings( 1 );
+#endif
                 }
-            }
 
-            _insides->attach( *thing, col, col+1, row, row+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
-            if ( ++col >= width ) {
-                col = 0;
-                row++;
-            }
-        }
-        if ( !_insides ) {
-            _insides = manage(new Gtk::Table( 1, 2 ));
-        }
+                for ( unsigned int i = 0; i < items.size(); i++ ) {
+                    Gtk::Widget* label = manage(items[i]->getPreview(PREVIEW_STYLE_BLURB, _view, _baseSize, _ratio, _border));
+                    //label->set_alignment(Gtk::ALIGN_LEFT, Gtk::ALIGN_CENTER);
 
-        _scroller->add( *_insides );
+                    Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize, _ratio, _border));
+
+#if WITH_GTKMM_3_0
+                    thing->set_hexpand();
+                    thing->set_vexpand();
+                    _insides->attach(*thing, 0, i, 1, 1);
+
+                    label->set_hexpand();
+                    label->set_valign(Gtk::ALIGN_CENTER);
+                    _insides->attach(*label, 1, i, 1, 1);
+#else
+                    _insides->attach( *thing, 0, 1, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+                    _insides->attach( *label, 1, 2, i, i+1, Gtk::FILL|Gtk::EXPAND, Gtk::SHRINK );
+#endif
+                }
+
+                _scroller->add( *_insides );
+            }
+            break;
+
+        case VIEW_TYPE_GRID:
+            {
+                int col = 0;
+                int row = 0;
+                int width = 2;
+                int height = 1;
+
+                for ( unsigned int i = 0; i < items.size(); i++ ) {
+
+                    // If this is the last row, flag so the previews can draw a bottom
+                    ::BorderStyle border = ((row == height -1) && (_border == BORDER_SOLID)) ? BORDER_SOLID_LAST_ROW : _border;
+                    Gtk::Widget* thing = manage(items[i]->getPreview(PREVIEW_STYLE_PREVIEW, _view, _baseSize, _ratio, border));
+
+                    if ( !_insides ) {
+                        calcGridSize( thing, items.size(), width, height );
+
+#if WITH_GTKMM_3_0
+                        _insides = manage(new Gtk::Grid());
+                        if (_border == BORDER_WIDE) {
+                            _insides->set_column_spacing(1);
+                            _insides->set_row_spacing(1);
+                        }
+#else
+                        _insides = manage(new Gtk::Table( height, width ));
+                        if (_border == BORDER_WIDE) {
+                            _insides->set_col_spacings( 1 );
+                            _insides->set_row_spacings( 1 );
+                        }
+#endif
+                    }
+
+#if WITH_GTKMM_3_0
+                    thing->set_hexpand();
+                    thing->set_vexpand();
+                    _insides->attach( *thing, col, row, 1, 1);
+#else
+                    _insides->attach( *thing, col, col+1, row, row+1, Gtk::FILL|Gtk::EXPAND, Gtk::FILL|Gtk::EXPAND );
+#endif
+
+                    if ( ++col >= width ) {
+                        col = 0;
+                        row++;
+                    }
+                }
+                if ( !_insides ) {
+#if WITH_GTKMM_3_0
+                    _insides = manage(new Gtk::Grid());
+#else
+                    _insides = manage(new Gtk::Table( 1, 2 ));
+#endif
+                }
+
+                _scroller->add( *_insides );
+            }
     }
 
     _scroller->show_all_children();
