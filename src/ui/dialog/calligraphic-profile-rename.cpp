@@ -13,13 +13,15 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include "calligraphic-profile-rename.h"
 #include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
+
+#if WITH_GTKMM_3_0
+# include <gtkmm/grid.h>
+#else
+# include <gtkmm/table.h>
+#endif
 
 #include "desktop.h"
 
@@ -28,29 +30,42 @@ namespace UI {
 namespace Dialog {
 
 CalligraphicProfileRename::CalligraphicProfileRename() :
+#if WITH_GTKMM_3_0
+    _layout_table(Gtk::manage(new Gtk::Grid())),
+#else
+    _layout_table(Gtk::manage(new Gtk::Table(1, 2))),
+#endif
     _applied(false)
 {
     set_title(_("Edit profile"));
 
 #if WITH_GTKMM_3_0
     Gtk::Box *mainVBox = get_content_area();
+    _layout_table->set_column_spacing(4);
+    _layout_table->set_row_spacing(4);
 #else
     Gtk::Box *mainVBox = get_vbox();
+    _layout_table->set_spacings(4);
 #endif
-
-    _layout_table.set_spacings(4);
-    _layout_table.resize (1, 2);
 
     _profile_name_entry.set_activates_default(true);
 
     _profile_name_label.set_label(_("Profile name:"));
     _profile_name_label.set_alignment(1.0, 0.5);
 
-    _layout_table.attach(_profile_name_label,
+#if WITH_GTKMM_3_0
+    _layout_table->attach(_profile_name_label, 0, 0, 1, 1);
+
+    _profile_name_entry.set_hexpand();
+    _layout_table->attach(_profile_name_entry, 1, 0, 1, 1);
+#else
+    _layout_table->attach(_profile_name_label,
 	           0, 1, 0, 1, Gtk::FILL, Gtk::FILL);
-    _layout_table.attach(_profile_name_entry,
+    _layout_table->attach(_profile_name_entry,
 	           1, 2, 0, 1, Gtk::FILL | Gtk::EXPAND, Gtk::FILL);
-    mainVBox->pack_start(_layout_table, false, false, 4);
+#endif
+
+    mainVBox->pack_start(*_layout_table, false, false, 4);
     // Buttons
     _close_button.set_use_stock(true);
     _close_button.set_label(Gtk::Stock::CANCEL.id);
