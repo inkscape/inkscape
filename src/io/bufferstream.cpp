@@ -33,22 +33,14 @@
 
 #include "bufferstream.h"
 
-namespace org
+namespace Inkscape
 {
-namespace w3c
+namespace IO
 {
-namespace dom
-{
-namespace io
-{
-
-
 
 //#########################################################################
 //# B U F F E R    I N P U T    S T R E A M
 //#########################################################################
-
-
 /**
  *
  */
@@ -157,10 +149,8 @@ int BufferOutputStream::put(gunichar ch)
 
 
 
-}  //namespace io
-}  //namespace dom
-}  //namespace w3c
-}  //namespace org
+}  //namespace IO
+}  //namespace Inkscape
 
 //#########################################################################
 //# E N D    O F    F I L E

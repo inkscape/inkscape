@@ -80,16 +80,15 @@
 //# DOM-specific includes
 #include "dom/dom.h"
 #include "dom/util/ziptool.h"
-#include "dom/io/domstream.h"
-#include "dom/io/bufferstream.h"
-#include "dom/io/stringstream.h"
+//#include "dom/io/domstream.h"
 
 
 #include "inkscape-version.h"
 #include "document.h"
 #include "extension/extension.h"
 
-
+#include "io/inkscapestream.h"
+#include "io/bufferstream.h"
 
 namespace Inkscape
 {
@@ -97,15 +96,12 @@ namespace Extension
 {
 namespace Internal
 {
-
-
-
 //# Shorthand notation
 typedef org::w3c::dom::DOMString DOMString;
-typedef org::w3c::dom::XMLCh XMLCh;
-typedef org::w3c::dom::io::OutputStreamWriter OutputStreamWriter;
-typedef org::w3c::dom::io::BufferOutputStream BufferOutputStream;
-typedef org::w3c::dom::io::StringOutputStream StringOutputStream;
+typedef Inkscape::IO::BufferOutputStream BufferOutputStream;
+typedef Inkscape::IO::OutputStreamWriter OutputStreamWriter;
+typedef Inkscape::IO::StringOutputStream StringOutputStream;
+
 
 //########################################################################
 //# C L A S S    SingularValueDecomposition

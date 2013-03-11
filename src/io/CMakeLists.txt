@@ -1,6 +1,7 @@
 
 set(io_SRC
 	base64stream.cpp
+	bufferstream.cpp
 	ftos.cpp
 	gzipstream.cpp
 	inkjar.cpp
@@ -12,10 +13,10 @@ set(io_SRC
 	uristream.cpp
 	xsltstream.cpp
 
-
 	# -------
 	# Headers
 	base64stream.h
+	bufferstream.h
 	ftos.h
 	gzipstream.h
 	inkjar.h

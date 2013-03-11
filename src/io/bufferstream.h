@@ -31,19 +31,14 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include <vector.h>
+#include "inkscapestream.h"
 
-#include "domstream.h"
 
-
-namespace org
+namespace Inkscape
 {
-namespace w3c
+namespace IO
 {
-namespace dom
-{
-namespace io
-{
-
 
 //#########################################################################
 //# S T R I N G    I N P U T    S T R E A M
@@ -59,21 +54,14 @@ class BufferInputStream : public InputStream
 public:
 
     BufferInputStream(const std::vector<unsigned char> &sourceBuffer);
-
     virtual ~BufferInputStream();
-
     virtual int available();
-
     virtual void close();
-
     virtual int get();
 
 private:
-
     const std::vector<unsigned char> &buffer;
-
     long position;
-
     bool closed;
 
 }; // class BufferInputStream
@@ -95,15 +83,10 @@ class BufferOutputStream : public OutputStream
 public:
 
     BufferOutputStream();
-
     virtual ~BufferOutputStream();
-
     virtual void close();
-
     virtual void flush();
-
     virtual int put(gunichar ch);
-
     virtual std::vector<unsigned char> &getBuffer()
         { return buffer; }
 
@@ -111,24 +94,15 @@ public:
         { buffer.clear(); }
 
 private:
-
     std::vector<unsigned char> buffer;
-
     bool closed;
-
 
 }; // class BufferOutputStream
 
 
 
-
-
-
-
-}  //namespace io
-}  //namespace dom
-}  //namespace w3c
-}  //namespace org
+}  //namespace IO
+}  //namespace Inkscape
 
 
 
