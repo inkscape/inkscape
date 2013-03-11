@@ -4,7 +4,7 @@
  * This is an an entry in the extensions mechanism to begin to enable
  * the inputting and outputting of OpenDocument Format (ODF) files from
  * within Inkscape.  Although the initial implementations will be very lossy
- * do to the differences in the models of SVG and ODF, they will hopefully
+ * due to the differences in the models of SVG and ODF, they will hopefully
  * improve greatly with time.  People should consider this to be a framework
  * that can be continously upgraded for ever improving fidelity.  Potential
  * developers should especially look in preprocess() and writeTree() to see how
@@ -295,11 +295,13 @@ public:
    @return     Structure to access U, S and V.
    */
 
-    SingularValueDecomposition (const SVDMatrix &mat)
+    SingularValueDecomposition (const SVDMatrix &mat) :
+        A (mat),
+        U (),
+        s (NULL),
+        s_size (0),
+        V ()
         {
-        A      = mat;
-        s      = NULL;
-        s_size = 0;
         calculate();
         }
 
@@ -1080,14 +1082,16 @@ OdfOutput::preprocess(ZipFile &zf, Inkscape::XML::Node *node)
     //Now consider items.
     SPObject *reprobj = SP_ACTIVE_DOCUMENT->getObjectByRepr(node);
     if (!reprobj)
+    {
         return;
+    }
     if (!SP_IS_ITEM(reprobj))
-        {
+    {
         return;
-        }
-    SPItem *item  = SP_ITEM(reprobj);
+    }
+    //SPItem *item  = SP_ITEM(reprobj);
     //### Get SVG-to-ODF transform
-    Geom::Affine tf = getODFTransform(item);
+    //Geom::Affine tf = getODFTransform(item);
 
     if (nodeName == "image" || nodeName == "svg:image")
         {
@@ -1210,14 +1214,19 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     time(&tim);
 
     std::map<Glib::ustring, Glib::ustring>::iterator iter;
-    Glib::ustring creator = "unknown";
+    Glib::ustring InkscapeVersion = Glib::ustring("Inkscape.org - ") + Inkscape::version_string;
+    Glib::ustring creator = InkscapeVersion;
     iter = metadata.find("dc:creator");
     if (iter != metadata.end())
+    {
         creator = iter->second;
+    }
     Glib::ustring date = "";
     iter = metadata.find("dc:date");
     if (iter != metadata.end())
+    {
         date = iter->second;
+    }
 
     outs.printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     outs.printf("\n");
@@ -1242,21 +1251,20 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     outs.printf("xmlns:anim=\"urn:oasis:names:tc:opendocument:xmlns:animation:1.0\"\n");
     outs.printf("office:version=\"1.0\">\n");
     outs.printf("<office:meta>\n");
-    Glib::ustring tmp = Glib::ustring("    <meta:generator>Inkscape.org - ") + Inkscape::version_string + "</meta:generator>\n";
+    Glib::ustring tmp = Glib::ustring("    <meta:generator>") + InkscapeVersion + "</meta:generator>\n";
     outs.writeUString(tmp);
-    outs.printf("    <meta:initial-creator>%#s</meta:initial-creator>\n",
-                                  creator.c_str());
-    outs.printf("    <meta:creation-date>%#s</meta:creation-date>\n", date.c_str());
+    outs.printf("    <meta:initial-creator>%s</meta:initial-creator>\n", creator.c_str());
+    outs.printf("    <meta:creation-date>%s</meta:creation-date>\n", date.c_str());
     for (iter = metadata.begin() ; iter != metadata.end() ; ++iter)
-        {
+    {
         Glib::ustring name  = iter->first;
         Glib::ustring value = iter->second;
-        if (name.size() > 0 && value.size()>0)
-            {
-            outs.printf("    <%#s>%#s</%#s>\n",
-                      name.c_str(), value.c_str(), name.c_str());
-            }
+        if (!name.empty() && !value.empty())
+        {
+            tmp = Glib::ustring::compose("    <%1>%2</%3>\n", name, value, name);
+            outs.writeUString(tmp);
         }
+    }
     outs.printf("    <meta:editing-cycles>2</meta:editing-cycles>\n");
     outs.printf("    <meta:editing-duration>PT56S</meta:editing-duration>\n");
     outs.printf("    <meta:user-defined meta:name=\"Info 1\"/>\n");
@@ -1333,7 +1341,7 @@ bool OdfOutput::writeStyle(ZipFile &zf)
         }
 
     //##  Dump our gradient table
-    int gradientCount = 0;
+    unsigned int gradientCount = 0;
     outs.printf("\n");
     outs.printf("<!-- ####### Gradients from Inkscape document ####### -->\n");
     std::vector<GradientInfo>::iterator giter;
@@ -1359,8 +1367,8 @@ bool OdfOutput::writeStyle(ZipFile &zf)
                 continue;
                 }
             outs.printf("<svg:linearGradient ");
-            outs.printf("id=\"%#s_g\" ", gi.name.c_str());
-            outs.printf("draw:name=\"%#s_g\"\n", gi.name.c_str());
+            outs.printf("id=\"%s\" ", gi.name.c_str());
+            outs.printf("draw:name=\"%s\"\n", gi.name.c_str());
             outs.printf("    draw:display-name=\"imported linear %u\"\n",
                         gradientCount);
             outs.printf("    svg:x1=\"%05.3fcm\" svg:y1=\"%05.3fcm\"\n",
@@ -1402,9 +1410,9 @@ bool OdfOutput::writeStyle(ZipFile &zf)
                 continue;
                 }
             outs.printf("<svg:radialGradient ");
-            outs.printf("id=\"%#s_g\" ", gi.name.c_str());
-            outs.printf("draw:name=\"%#s_g\"\n", gi.name.c_str());
-            outs.printf("    draw:display-name=\"imported radial %d\"\n",
+            outs.printf("id=\"%s\" ", gi.name.c_str());
+            outs.printf("draw:name=\"%s\"\n", gi.name.c_str());
+            outs.printf("    draw:display-name=\"imported radial %u\"\n",
                         gradientCount);
             outs.printf("    svg:cx=\"%05.3f\" svg:cy=\"%05.3f\"\n",
                         gi.cx, gi.cy);
@@ -1431,11 +1439,11 @@ bool OdfOutput::writeStyle(ZipFile &zf)
             {
             g_warning("unsupported gradient style '%s'", gi.style.c_str());
             }
-        outs.printf("<style:style style:name=\"%#s\" style:family=\"graphic\" ",
+        outs.printf("<style:style style:name=\"%s\" style:family=\"graphic\" ",
                   gi.name.c_str());
         outs.printf("style:parent-style-name=\"standard\">\n");
         outs.printf("    <style:graphic-properties draw:fill=\"gradient\" ");
-        outs.printf("draw:fill-gradient-name=\"%#s_g\"\n",
+        outs.printf("draw:fill-gradient-name=\"%s\"\n",
                   gi.name.c_str());
         outs.printf("        draw:textarea-horizontal-align=\"center\" ");
         outs.printf("draw:textarea-vertical-align=\"middle\"/>\n");
@@ -1752,8 +1760,8 @@ bool OdfOutput::processGradient(Writer &outs, SPItem *item,
             return false;;
             }
         outs.printf("<svg:linearGradient ");
-        outs.printf("id=\"%#s_g\" ", gi.name.c_str());
-        outs.printf("draw:name=\"%#s_g\"\n", gi.name.c_str());
+        outs.printf("id=\"%s\" ", gi.name.c_str());
+        outs.printf("draw:name=\"%s\"\n", gi.name.c_str());
         outs.printf("    draw:display-name=\"imported linear %d\"\n",
                     gradientCount);
         outs.printf("    svg:gradientUnits=\"objectBoundingBox\"\n");
@@ -1795,8 +1803,8 @@ bool OdfOutput::processGradient(Writer &outs, SPItem *item,
             return false;
             }
         outs.printf("<svg:radialGradient ");
-        outs.printf("id=\"%#s_g\" ", gi.name.c_str());
-        outs.printf("draw:name=\"%#s_g\"\n", gi.name.c_str());
+        outs.printf("id=\"%s\" ", gi.name.c_str());
+        outs.printf("draw:name=\"%s\"\n", gi.name.c_str());
         outs.printf("    draw:display-name=\"imported radial %d\"\n",
                     gradientCount);
         outs.printf("    svg:gradientUnits=\"objectBoundingBox\"\n");
@@ -1825,11 +1833,11 @@ bool OdfOutput::processGradient(Writer &outs, SPItem *item,
         g_warning("unsupported gradient style '%s'", gi.style.c_str());
         return false;
         }
-    outs.printf("<style:style style:name=\"%#s\" style:family=\"graphic\" ",
+    outs.printf("<style:style style:name=\"%s\" style:family=\"graphic\" ",
               gi.name.c_str());
     outs.printf("style:parent-style-name=\"standard\">\n");
     outs.printf("    <style:graphic-properties draw:fill=\"gradient\" ");
-    outs.printf("draw:fill-gradient-name=\"%#s_g\"\n",
+    outs.printf("draw:fill-gradient-name=\"%s\"\n",
               gi.name.c_str());
     outs.printf("        draw:textarea-horizontal-align=\"center\" ");
     outs.printf("draw:textarea-vertical-align=\"middle\"/>\n");
