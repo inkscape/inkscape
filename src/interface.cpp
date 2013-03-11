@@ -468,6 +468,8 @@ static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb
             item = gtk_image_menu_item_new_with_mnemonic(action->name);
         }
 
+        gtk_label_set_markup_with_mnemonic( GTK_LABEL(gtk_bin_get_child(GTK_BIN (item))), action->name);
+
         GtkAccelGroup *accel_group =  sp_shortcut_get_accel_group();
         gtk_menu_set_accel_group(menu, accel_group);
 
