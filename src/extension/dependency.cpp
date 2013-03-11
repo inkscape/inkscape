@@ -122,8 +122,7 @@ Dependency::~Dependency (void)
     found then a TRUE is returned.  If we get all the way through the
     path then a FALSE is returned, the command could not be found.
 */
-bool
-Dependency::check (void) const
+bool Dependency::check (void) const
 {
     // std::cout << "Checking: " << *this << std::endl;
 
@@ -216,7 +215,6 @@ Dependency::check (void) const
 
                     g_free(orig_path);
                     return FALSE; /* Reverse logic in this one */
-                    break;
                 }
             } /* switch _location */
             break;

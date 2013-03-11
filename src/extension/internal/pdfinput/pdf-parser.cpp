@@ -1220,7 +1220,6 @@ void PdfParser::opSetStrokeColor(Object args[], int numArgs) {
 
 void PdfParser::opSetFillColorN(Object args[], int numArgs) {
   GfxColor color;
-  GfxPattern *pattern;
   int i;
 
   if (state->getFillColorSpace()->getMode() == csPattern) {
@@ -1243,6 +1242,7 @@ void PdfParser::opSetFillColorN(Object args[], int numArgs) {
       state->setFillColor(&color);
       builder->updateStyle(state);
     }
+    GfxPattern *pattern;
 #if defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
     if (args[numArgs-1].isName() &&
 	(pattern = res->lookupPattern(args[numArgs-1].getName(), NULL))) {
@@ -1279,7 +1279,6 @@ void PdfParser::opSetFillColorN(Object args[], int numArgs) {
 
 void PdfParser::opSetStrokeColorN(Object args[], int numArgs) {
   GfxColor color;
-  GfxPattern *pattern;
   int i;
 
   if (state->getStrokeColorSpace()->getMode() == csPattern) {
@@ -1303,6 +1302,7 @@ void PdfParser::opSetStrokeColorN(Object args[], int numArgs) {
       state->setStrokeColor(&color);
       builder->updateStyle(state);
     }
+    GfxPattern *pattern;
 #if defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
     if (args[numArgs-1].isName() &&
 	(pattern = res->lookupPattern(args[numArgs-1].getName(), NULL))) {
@@ -2702,333 +2702,338 @@ void PdfParser::opXObject(Object args[], int /*numArgs*/)
 
 void PdfParser::doImage(Object * /*ref*/, Stream *str, GBool inlineImg)
 {
-  Dict *dict, *maskDict;
-  int width, height;
-  int bits;
-  StreamColorSpaceMode csMode;
-  GBool mask;
-  GBool invert;
-  GfxColorSpace *colorSpace, *maskColorSpace;
-  GfxImageColorMap *colorMap, *maskColorMap;
-  Object maskObj, smaskObj;
-  GBool haveColorKeyMask, haveExplicitMask, haveSoftMask;
-  int maskColors[2*gfxColorMaxComps];
-  int maskWidth, maskHeight;
-  GBool maskInvert;
-  Stream *maskStr;
-  Object obj1, obj2;
-  int i;
-
-  // get info from the stream
-  bits = 0;
-  csMode = streamCSNone;
-  str->getImageParams(&bits, &csMode);
-
-  // get stream dict
-  dict = str->getDict();
-
-  // get size
-  dict->lookup(const_cast<char*>("Width"), &obj1);
-  if (obj1.isNull()) {
-    obj1.free();
-    dict->lookup(const_cast<char*>("W"), &obj1);
-  }
-  if (obj1.isInt())
-    width = obj1.getInt();
-  else if (obj1.isReal())
-    width = (int)obj1.getReal();
-  else
-    goto err2;
-  obj1.free();
-  dict->lookup(const_cast<char*>("Height"), &obj1);
-  if (obj1.isNull()) {
-    obj1.free();
-    dict->lookup(const_cast<char*>("H"), &obj1);
-  }
-  if (obj1.isInt())
-    height = obj1.getInt();
-  else if (obj1.isReal())
-    height = (int)obj1.getReal();
-  else
-    goto err2;
-  obj1.free();
-
-  // image or mask?
-  dict->lookup(const_cast<char*>("ImageMask"), &obj1);
-  if (obj1.isNull()) {
-    obj1.free();
-    dict->lookup(const_cast<char*>("IM"), &obj1);
-  }
-  mask = gFalse;
-  if (obj1.isBool())
-    mask = obj1.getBool();
-  else if (!obj1.isNull())
-    goto err2;
-  obj1.free();
-
-  // bit depth
-  if (bits == 0) {
-    dict->lookup(const_cast<char*>("BitsPerComponent"), &obj1);
+    Dict *dict;
+    int width, height;
+    int bits;
+    StreamColorSpaceMode csMode;
+    GBool mask;
+    GBool invert;
+    Object maskObj, smaskObj;
+    GBool haveColorKeyMask, haveExplicitMask, haveSoftMask;
+    GBool maskInvert;
+    Object obj1, obj2;
+    
+    // get info from the stream
+    bits = 0;
+    csMode = streamCSNone;
+    str->getImageParams(&bits, &csMode);
+    
+    // get stream dict
+    dict = str->getDict();
+    
+    // get size
+    dict->lookup(const_cast<char*>("Width"), &obj1);
     if (obj1.isNull()) {
-      obj1.free();
-      dict->lookup(const_cast<char*>("BPC"), &obj1);
+        obj1.free();
+        dict->lookup(const_cast<char*>("W"), &obj1);
+    }
+    if (obj1.isInt()){
+        width = obj1.getInt();
+    }
+    else if (obj1.isReal()) {
+        width = (int)obj1.getReal();
+    }
+    else {
+        goto err2;
+    }
+    obj1.free();
+    dict->lookup(const_cast<char*>("Height"), &obj1);
+    if (obj1.isNull()) {
+        obj1.free();
+        dict->lookup(const_cast<char*>("H"), &obj1);
     }
     if (obj1.isInt()) {
-      bits = obj1.getInt();
-    } else if (mask) {
-      bits = 1;
+        height = obj1.getInt();
+    }
+    else if (obj1.isReal()){
+        height = static_cast<int>(obj1.getReal());
+    }
+    else {
+        goto err2;
+    }
+    obj1.free();
+    
+    // image or mask?
+    dict->lookup(const_cast<char*>("ImageMask"), &obj1);
+    if (obj1.isNull()) {
+        obj1.free();
+        dict->lookup(const_cast<char*>("IM"), &obj1);
+    }
+    mask = gFalse;
+    if (obj1.isBool()) {
+        mask = obj1.getBool();
+    }
+    else if (!obj1.isNull()) {
+        goto err2;
+    }
+    obj1.free();
+    
+    // bit depth
+    if (bits == 0) {
+        dict->lookup(const_cast<char*>("BitsPerComponent"), &obj1);
+        if (obj1.isNull()) {
+            obj1.free();
+            dict->lookup(const_cast<char*>("BPC"), &obj1);
+        }
+        if (obj1.isInt()) {
+            bits = obj1.getInt();
+        } else if (mask) {
+            bits = 1;
+        } else {
+            goto err2;
+        }
+        obj1.free();
+    }
+    
+    // display a mask
+    if (mask) {
+        // check for inverted mask
+        if (bits != 1) {
+            goto err1;
+        }
+        invert = gFalse;
+        dict->lookup(const_cast<char*>("Decode"), &obj1);
+        if (obj1.isNull()) {
+            obj1.free();
+            dict->lookup(const_cast<char*>("D"), &obj1);
+        }
+        if (obj1.isArray()) {
+            obj1.arrayGet(0, &obj2);
+            if (obj2.isInt() && obj2.getInt() == 1) {
+                invert = gTrue;
+            }
+            obj2.free();
+        } else if (!obj1.isNull()) {
+            goto err2;
+        }
+        obj1.free();
+        
+        // draw it
+        builder->addImageMask(state, str, width, height, invert);
+        
     } else {
-      goto err2;
-    }
-    obj1.free();
-  }
-
-  // display a mask
-  if (mask) {
-
-    // check for inverted mask
-    if (bits != 1)
-      goto err1;
-    invert = gFalse;
-    dict->lookup(const_cast<char*>("Decode"), &obj1);
-    if (obj1.isNull()) {
-      obj1.free();
-      dict->lookup(const_cast<char*>("D"), &obj1);
-    }
-    if (obj1.isArray()) {
-      obj1.arrayGet(0, &obj2);
-      if (obj2.isInt() && obj2.getInt() == 1)
-	invert = gTrue;
-      obj2.free();
-    } else if (!obj1.isNull()) {
-      goto err2;
-    }
-    obj1.free();
-
-    // draw it
-    builder->addImageMask(state, str, width, height, invert);
-
-  } else {
-
-    // get color space and color map
-    dict->lookup(const_cast<char*>("ColorSpace"), &obj1);
-    if (obj1.isNull()) {
-      obj1.free();
-      dict->lookup(const_cast<char*>("CS"), &obj1);
-    }
-    if (obj1.isName()) {
-      res->lookupColorSpace(obj1.getName(), &obj2);
-      if (!obj2.isNull()) {
-	obj1.free();
-	obj1 = obj2;
-      } else {
-	obj2.free();
-      }
-    }
-    if (!obj1.isNull()) {
-#if defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
-      colorSpace = GfxColorSpace::parse(&obj1, NULL);
-#else
-      colorSpace = GfxColorSpace::parse(&obj1);
-#endif
-    } else if (csMode == streamCSDeviceGray) {
-      colorSpace = new GfxDeviceGrayColorSpace();
-    } else if (csMode == streamCSDeviceRGB) {
-      colorSpace = new GfxDeviceRGBColorSpace();
-    } else if (csMode == streamCSDeviceCMYK) {
-      colorSpace = new GfxDeviceCMYKColorSpace();
-    } else {
-      colorSpace = NULL;
-    }
-    obj1.free();
-    if (!colorSpace) {
-      goto err1;
-    }
-    dict->lookup(const_cast<char*>("Decode"), &obj1);
-    if (obj1.isNull()) {
-      obj1.free();
-      dict->lookup(const_cast<char*>("D"), &obj1);
-    }
-    colorMap = new GfxImageColorMap(bits, &obj1, colorSpace);
-    obj1.free();
-    if (!colorMap->isOk()) {
-      delete colorMap;
-      goto err1;
-    }
-
-    // get the mask
-    haveColorKeyMask = haveExplicitMask = haveSoftMask = gFalse;
-    maskStr = NULL; // make gcc happy
-    maskWidth = maskHeight = 0; // make gcc happy
-    maskInvert = gFalse; // make gcc happy
-    maskColorMap = NULL; // make gcc happy
-    dict->lookup(const_cast<char*>("Mask"), &maskObj);
-    dict->lookup(const_cast<char*>("SMask"), &smaskObj);
-    if (smaskObj.isStream()) {
-        // soft mask
-        if (inlineImg) {
-	        goto err1;
-        }
-        maskStr = smaskObj.getStream();
-        maskDict = smaskObj.streamGetDict();
-        maskDict->lookup(const_cast<char*>("Width"), &obj1);
+        // get color space and color map
+        GfxColorSpace *colorSpace;
+        dict->lookup(const_cast<char*>("ColorSpace"), &obj1);
         if (obj1.isNull()) {
-    	    obj1.free();
-	        maskDict->lookup(const_cast<char*>("W"), &obj1);
-        }
-        if (!obj1.isInt()) {
-	        goto err2;
-        }
-        maskWidth = obj1.getInt();
-        obj1.free();
-        maskDict->lookup(const_cast<char*>("Height"), &obj1);
-        if (obj1.isNull()) {
-	        obj1.free();
-	        maskDict->lookup(const_cast<char*>("H"), &obj1);
-        }
-        if (!obj1.isInt()) {
-	        goto err2;
-        }
-        maskHeight = obj1.getInt();
-        obj1.free();
-        maskDict->lookup(const_cast<char*>("BitsPerComponent"), &obj1);
-        if (obj1.isNull()) {
-    	    obj1.free();
-	        maskDict->lookup(const_cast<char*>("BPC"), &obj1);
-        }
-        if (!obj1.isInt()) {
-	        goto err2;
-        }
-        int maskBits = obj1.getInt();
-        obj1.free();
-        maskDict->lookup(const_cast<char*>("ColorSpace"), &obj1);
-        if (obj1.isNull()) {
-	        obj1.free();
-	        maskDict->lookup(const_cast<char*>("CS"), &obj1);
+            obj1.free();
+            dict->lookup(const_cast<char*>("CS"), &obj1);
         }
         if (obj1.isName()) {
-	        res->lookupColorSpace(obj1.getName(), &obj2);
-	        if (!obj2.isNull()) {
+            res->lookupColorSpace(obj1.getName(), &obj2);
+            if (!obj2.isNull()) {
 	            obj1.free();
 	            obj1 = obj2;
-	        } else {
+            } else {
 	            obj2.free();
-	        }
+            }
         }
+        if (!obj1.isNull()) {
 #if defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
-        maskColorSpace = GfxColorSpace::parse(&obj1, NULL);
+            colorSpace = GfxColorSpace::parse(&obj1, NULL);
 #else
-        maskColorSpace = GfxColorSpace::parse(&obj1);
+            colorSpace = GfxColorSpace::parse(&obj1);
 #endif
+        } else if (csMode == streamCSDeviceGray) {
+            colorSpace = new GfxDeviceGrayColorSpace();
+        } else if (csMode == streamCSDeviceRGB) {
+            colorSpace = new GfxDeviceRGBColorSpace();
+        } else if (csMode == streamCSDeviceCMYK) {
+            colorSpace = new GfxDeviceCMYKColorSpace();
+        } else {
+            colorSpace = NULL;
+        }
         obj1.free();
-        if (!maskColorSpace || maskColorSpace->getMode() != csDeviceGray) {
+        if (!colorSpace) {
             goto err1;
         }
-        maskDict->lookup(const_cast<char*>("Decode"), &obj1);
+        dict->lookup(const_cast<char*>("Decode"), &obj1);
         if (obj1.isNull()) {
-	        obj1.free();
-	        maskDict->lookup(const_cast<char*>("D"), &obj1);
+            obj1.free();
+            dict->lookup(const_cast<char*>("D"), &obj1);
         }
-        maskColorMap = new GfxImageColorMap(maskBits, &obj1, maskColorSpace);
+        GfxImageColorMap *colorMap = new GfxImageColorMap(bits, &obj1, colorSpace);
         obj1.free();
-        if (!maskColorMap->isOk()) {
-            delete maskColorMap;
+        if (!colorMap->isOk()) {
+            delete colorMap;
             goto err1;
         }
-        //~ handle the Matte entry
-        haveSoftMask = gTrue;
-    } else if (maskObj.isArray()) {
-      // color key mask
-      for (i = 0;
-	   i < maskObj.arrayGetLength() && i < 2*gfxColorMaxComps;
-	   ++i) {
-	maskObj.arrayGet(i, &obj1);
-	maskColors[i] = obj1.getInt();
-	obj1.free();
-      }
-      haveColorKeyMask = gTrue;
-    } else if (maskObj.isStream()) {
-      // explicit mask
-      if (inlineImg) {
-	goto err1;
-      }
-      maskStr = maskObj.getStream();
-      maskDict = maskObj.streamGetDict();
-      maskDict->lookup(const_cast<char*>("Width"), &obj1);
-      if (obj1.isNull()) {
-	obj1.free();
-	maskDict->lookup(const_cast<char*>("W"), &obj1);
-      }
-      if (!obj1.isInt()) {
-	goto err2;
-      }
-      maskWidth = obj1.getInt();
-      obj1.free();
-      maskDict->lookup(const_cast<char*>("Height"), &obj1);
-      if (obj1.isNull()) {
-	obj1.free();
-	maskDict->lookup(const_cast<char*>("H"), &obj1);
-      }
-      if (!obj1.isInt()) {
-	goto err2;
-      }
-      maskHeight = obj1.getInt();
-      obj1.free();
-      maskDict->lookup(const_cast<char*>("ImageMask"), &obj1);
-      if (obj1.isNull()) {
-	obj1.free();
-	maskDict->lookup(const_cast<char*>("IM"), &obj1);
-      }
-      if (!obj1.isBool() || !obj1.getBool()) {
-	goto err2;
-      }
-      obj1.free();
-      maskInvert = gFalse;
-      maskDict->lookup(const_cast<char*>("Decode"), &obj1);
-      if (obj1.isNull()) {
-	obj1.free();
-	maskDict->lookup(const_cast<char*>("D"), &obj1);
-      }
-      if (obj1.isArray()) {
-	obj1.arrayGet(0, &obj2);
-	if (obj2.isInt() && obj2.getInt() == 1) {
-	  maskInvert = gTrue;
-	}
-	obj2.free();
-      } else if (!obj1.isNull()) {
-	goto err2;
-      }
-      obj1.free();
-      haveExplicitMask = gTrue;
-    }
-
-    // draw it
-    if (haveSoftMask) {
-        builder->addSoftMaskedImage(state, str, width, height, colorMap,
+        
+        // get the mask
+        int maskColors[2*gfxColorMaxComps];
+        haveColorKeyMask = haveExplicitMask = haveSoftMask = gFalse;
+        Stream *maskStr = NULL;
+        int maskWidth = 0;
+        int maskHeight = 0;
+        maskInvert = gFalse;
+        GfxImageColorMap *maskColorMap = NULL;
+        dict->lookup(const_cast<char*>("Mask"), &maskObj);
+        dict->lookup(const_cast<char*>("SMask"), &smaskObj);
+        Dict* maskDict;
+        if (smaskObj.isStream()) {
+            // soft mask
+            if (inlineImg) {
+	            goto err1;
+            }
+            maskStr = smaskObj.getStream();
+            maskDict = smaskObj.streamGetDict();
+            maskDict->lookup(const_cast<char*>("Width"), &obj1);
+            if (obj1.isNull()) {
+        	    obj1.free();
+	            maskDict->lookup(const_cast<char*>("W"), &obj1);
+            }
+            if (!obj1.isInt()) {
+	            goto err2;
+            }
+            maskWidth = obj1.getInt();
+            obj1.free();
+            maskDict->lookup(const_cast<char*>("Height"), &obj1);
+            if (obj1.isNull()) {
+	            obj1.free();
+	            maskDict->lookup(const_cast<char*>("H"), &obj1);
+            }
+            if (!obj1.isInt()) {
+	            goto err2;
+            }
+            maskHeight = obj1.getInt();
+            obj1.free();
+            maskDict->lookup(const_cast<char*>("BitsPerComponent"), &obj1);
+            if (obj1.isNull()) {
+        	    obj1.free();
+	            maskDict->lookup(const_cast<char*>("BPC"), &obj1);
+            }
+            if (!obj1.isInt()) {
+	            goto err2;
+            }
+            int maskBits = obj1.getInt();
+            obj1.free();
+            maskDict->lookup(const_cast<char*>("ColorSpace"), &obj1);
+            if (obj1.isNull()) {
+	            obj1.free();
+	            maskDict->lookup(const_cast<char*>("CS"), &obj1);
+            }
+            if (obj1.isName()) {
+	            res->lookupColorSpace(obj1.getName(), &obj2);
+	            if (!obj2.isNull()) {
+	                obj1.free();
+    	            obj1 = obj2;
+	            } else {
+	                obj2.free();
+	            }
+            }
+#if defined(POPPLER_NEW_COLOR_SPACE_API) || defined(POPPLER_NEW_ERRORAPI)
+            GfxColorSpace *maskColorSpace = GfxColorSpace::parse(&obj1, NULL);
+#else
+            GfxColorSpace *maskColorSpace = GfxColorSpace::parse(&obj1);
+#endif
+            obj1.free();
+            if (!maskColorSpace || maskColorSpace->getMode() != csDeviceGray) {
+                goto err1;
+            }
+            maskDict->lookup(const_cast<char*>("Decode"), &obj1);
+            if (obj1.isNull()) {
+	            obj1.free();
+    	        maskDict->lookup(const_cast<char*>("D"), &obj1);
+            }
+            maskColorMap = new GfxImageColorMap(maskBits, &obj1, maskColorSpace);
+            obj1.free();
+            if (!maskColorMap->isOk()) {
+                delete maskColorMap;
+                goto err1;
+            }
+            //~ handle the Matte entry
+            haveSoftMask = gTrue;
+        } else if (maskObj.isArray()) {
+            // color key mask
+            int i;
+            for (i = 0; i < maskObj.arrayGetLength() && i < 2*gfxColorMaxComps; ++i) {
+                maskObj.arrayGet(i, &obj1);
+                maskColors[i] = obj1.getInt();
+                obj1.free();
+            }
+              haveColorKeyMask = gTrue;
+        } else if (maskObj.isStream()) {
+            // explicit mask
+            if (inlineImg) {
+                goto err1;
+            }
+            maskStr = maskObj.getStream();
+            maskDict = maskObj.streamGetDict();
+            maskDict->lookup(const_cast<char*>("Width"), &obj1);
+            if (obj1.isNull()) {
+                obj1.free();
+                maskDict->lookup(const_cast<char*>("W"), &obj1);
+            }
+            if (!obj1.isInt()) {
+                goto err2;
+            }
+            maskWidth = obj1.getInt();
+            obj1.free();
+            maskDict->lookup(const_cast<char*>("Height"), &obj1);
+            if (obj1.isNull()) {
+                obj1.free();
+                maskDict->lookup(const_cast<char*>("H"), &obj1);
+            }
+            if (!obj1.isInt()) {
+                goto err2;
+            }
+            maskHeight = obj1.getInt();
+            obj1.free();
+            maskDict->lookup(const_cast<char*>("ImageMask"), &obj1);
+            if (obj1.isNull()) {
+                obj1.free();
+                maskDict->lookup(const_cast<char*>("IM"), &obj1);
+            }
+            if (!obj1.isBool() || !obj1.getBool()) {
+                goto err2;
+            }
+            obj1.free();
+            maskInvert = gFalse;
+            maskDict->lookup(const_cast<char*>("Decode"), &obj1);
+            if (obj1.isNull()) {
+                obj1.free();
+                maskDict->lookup(const_cast<char*>("D"), &obj1);
+            }
+            if (obj1.isArray()) {
+                obj1.arrayGet(0, &obj2);
+                if (obj2.isInt() && obj2.getInt() == 1) {
+                    maskInvert = gTrue;
+                }
+                obj2.free();
+            } else if (!obj1.isNull()) {
+                goto err2;
+            }
+            obj1.free();
+            haveExplicitMask = gTrue;
+        }
+        
+        // draw it
+        if (haveSoftMask) {
+            builder->addSoftMaskedImage(state, str, width, height, colorMap,
                                     maskStr, maskWidth, maskHeight, maskColorMap);
-      delete maskColorMap;
-    } else if (haveExplicitMask) {
-        builder->addMaskedImage(state, str, width, height, colorMap,
+            delete maskColorMap;
+        } else if (haveExplicitMask) {
+            builder->addMaskedImage(state, str, width, height, colorMap,
                                 maskStr, maskWidth, maskHeight, maskInvert);
-    } else {
-      builder->addImage(state, str, width, height, colorMap,
-		        haveColorKeyMask ? maskColors : (int *)NULL);
+        } else {
+            builder->addImage(state, str, width, height, colorMap,
+		        haveColorKeyMask ? maskColors : static_cast<int *>(NULL));
+        }
+        delete colorMap;
+        
+        maskObj.free();
+        smaskObj.free();
     }
-    delete colorMap;
 
-    maskObj.free();
-    smaskObj.free();
-  }
-
-  return;
+    return;
 
  err2:
-  obj1.free();
+    obj1.free();
  err1:
 #ifdef POPPLER_NEW_ERRORAPI
-  error(errSyntaxError, getPos(), "Bad image parameters");
+    error(errSyntaxError, getPos(), "Bad image parameters");
 #else
-  error(getPos(), const_cast<char*>("Bad image parameters"));
+    error(getPos(), const_cast<char*>("Bad image parameters"));
 #endif
 }
 

@@ -446,9 +446,9 @@ stroke_average_width (GSList const *objects)
 
 static bool vectorsClose( std::vector<double> const &lhs, std::vector<double> const &rhs )
 {
-    static double epsilon = 1e-6;
     bool isClose = false;
     if ( lhs.size() == rhs.size() ) {
+        static double epsilon = 1e-6;
         isClose = true;
         for ( size_t i = 0; (i < lhs.size()) && isClose; ++i ) {
             isClose = fabs(lhs[i] - rhs[i]) < epsilon;

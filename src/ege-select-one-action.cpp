@@ -567,7 +567,6 @@ GtkWidget* create_menu_item( GtkAction* action )
     if ( IS_EGE_SELECT_ONE_ACTION(action) ) {
         EgeSelectOneAction* act = EGE_SELECT_ONE_ACTION( action );
         gchar*  sss = 0;
-        gboolean valid = FALSE;
         gint index = 0;
         GtkTreeIter iter;
         GSList* group = 0;
@@ -577,7 +576,7 @@ GtkWidget* create_menu_item( GtkAction* action )
 
         item = gtk_menu_item_new_with_label( sss );
 
-        valid = gtk_tree_model_get_iter_first( act->private_data->model, &iter );
+        gboolean valid = gtk_tree_model_get_iter_first( act->private_data->model, &iter );
         while ( valid ) {
             gchar* str = 0;
             gtk_tree_model_get( act->private_data->model, &iter,
@@ -746,8 +745,6 @@ GtkWidget* create_tool_item( GtkAction* action )
 
             gtk_container_add( GTK_CONTAINER(item), holder );
         } else {
-            GtkCellRenderer * renderer = 0;
-
 #if GTK_CHECK_VERSION(3,0,0)
             GtkWidget* holder = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4);
             gtk_box_set_homogeneous(GTK_BOX(holder), FALSE);
@@ -759,8 +756,8 @@ GtkWidget* create_tool_item( GtkAction* action )
             GtkWidget *normal;
 
             if (act->private_data->selectionMode == SELECTION_OPEN) {
-		normal = gtk_combo_box_new_with_model_and_entry (act->private_data->model);
-		gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (normal), act->private_data->labelColumn);
+	            normal = gtk_combo_box_new_with_model_and_entry (act->private_data->model);
+	            gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (normal), act->private_data->labelColumn);
 
                 GtkWidget *child = gtk_bin_get_child( GTK_BIN(normal) );
                 if (GTK_IS_ENTRY(child)) {
@@ -783,6 +780,7 @@ GtkWidget* create_tool_item( GtkAction* action )
                 }
             } 
 	    else {
+                GtkCellRenderer * renderer = NULL;
                 normal = gtk_combo_box_new_with_model( act->private_data->model );
                 if ( act->private_data->iconColumn >= 0 ) {
                     renderer = gtk_cell_renderer_pixbuf_new();

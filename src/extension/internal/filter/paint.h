@@ -133,7 +133,6 @@ Chromolitho::get_filter_text (Inkscape::Extension::Extension * ext)
     std::ostringstream noise;
     std::ostringstream dblend;
     std::ostringstream smooth;
-    std::ostringstream grain;
     std::ostringstream grainxf;
     std::ostringstream grainyf;
     std::ostringstream grainc;

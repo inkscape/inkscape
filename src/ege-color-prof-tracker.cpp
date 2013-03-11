@@ -566,9 +566,8 @@ GdkFilterReturn x11_win_filter(GdkXEvent *xevent,
         const gchar* name = gdk_x11_get_xatom_name(note->atom);
         if ( strncmp("_ICC_PROFILE", name, 12 ) == 0 ) {
             XEvent* native = (XEvent*)xevent;
-            Status stat = Success;
             XWindowAttributes tmp;
-            stat = XGetWindowAttributes( native->xproperty.display, native->xproperty.window, &tmp );
+            Status stat = XGetWindowAttributes( native->xproperty.display, native->xproperty.window, &tmp );
             if ( stat ) {
                 GdkDisplay* display = gdk_x11_lookup_xdisplay(native->xproperty.display);
                 if ( display ) {
