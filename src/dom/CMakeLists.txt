@@ -17,7 +17,9 @@ set(dom_SRC
 	xpathimpl.cpp
 	xpathparser.cpp
 	xpathtoken.cpp
-
+	
+	io/domstream.cpp
+	
 	util/digest.cpp
 	util/ziptool.cpp
 
@@ -52,6 +54,8 @@ set(dom_SRC
 	xpathimpl.h
 	xpathparser.h
 	xpathtoken.h
+
+	io/domstream.h
 
 	util/digest.h
 	util/ziptool.h
