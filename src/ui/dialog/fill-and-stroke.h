@@ -16,7 +16,6 @@
 #define INKSCAPE_UI_DIALOG_FILL_AND_STROKE_H
 
 #include "ui/widget/panel.h"
-#include "ui/widget/notebook-page.h"
 #include "ui/widget/object-composite-settings.h"
 #include "ui/dialog/desktop-tracker.h"
 
@@ -25,6 +24,11 @@
 
 namespace Inkscape {
 namespace UI {
+
+namespace Widget {
+class NotebookPage;
+}
+
 namespace Dialog {
 
 class FillAndStroke : public UI::Widget::Panel {
@@ -47,9 +51,9 @@ public:
 protected:
     Gtk::Notebook   _notebook;
 
-    UI::Widget::NotebookPage    _page_fill;
-    UI::Widget::NotebookPage    _page_stroke_paint;
-    UI::Widget::NotebookPage    _page_stroke_style;
+    UI::Widget::NotebookPage    *_page_fill;
+    UI::Widget::NotebookPage    *_page_stroke_paint;
+    UI::Widget::NotebookPage    *_page_stroke_style;
 
     UI::Widget::StyleSubject::Selection _subject;
     UI::Widget::ObjectCompositeSettings _composite_settings;

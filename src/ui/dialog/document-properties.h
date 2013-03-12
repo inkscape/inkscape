@@ -15,8 +15,7 @@
 #define INKSCAPE_UI_DIALOG_DOCUMENT_PREFERENCES_H
 
 #include <stddef.h>
-#include <sigc++/sigc++.h>//
-#include "ui/widget/notebook-page.h"
+#include <sigc++/sigc++.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/notebook.h>
@@ -39,6 +38,7 @@ namespace Inkscape {
     namespace UI {
         namespace Widget {
             class EntityEntry;
+            class NotebookPage;
         }
         namespace Dialog {
 
@@ -100,18 +100,18 @@ protected:
     Inkscape::XML::SignalObserver _emb_profiles_observer, _scripts_observer;
     Gtk::Notebook  _notebook;
 
-    UI::Widget::NotebookPage   _page_page;
-    UI::Widget::NotebookPage   _page_guides;
-    UI::Widget::NotebookPage   _page_snap;
-    UI::Widget::NotebookPage   _page_cms;
-    UI::Widget::NotebookPage   _page_scripting;
+    UI::Widget::NotebookPage   *_page_page;
+    UI::Widget::NotebookPage   *_page_guides;
+    UI::Widget::NotebookPage   *_page_snap;
+    UI::Widget::NotebookPage   *_page_cms;
+    UI::Widget::NotebookPage   *_page_scripting;
 
     Gtk::Notebook _scripting_notebook;
-    UI::Widget::NotebookPage _page_external_scripts;
-    UI::Widget::NotebookPage _page_embedded_scripts;
+    UI::Widget::NotebookPage *_page_external_scripts;
+    UI::Widget::NotebookPage *_page_embedded_scripts;
 
-    UI::Widget::NotebookPage   _page_metadata1;
-    UI::Widget::NotebookPage   _page_metadata2;
+    UI::Widget::NotebookPage  *_page_metadata1;
+    UI::Widget::NotebookPage  *_page_metadata2;
 
     Gtk::VBox      _grids_vbox;
 

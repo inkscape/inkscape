@@ -22,6 +22,7 @@
 #include <gtk/gtk.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
+#include <gtkmm/table.h>
 #include <2geom/transforms.h>
 
 #include "verbs.h"
@@ -614,7 +615,7 @@ TileDialog::TileDialog()
     : UI::Widget::Panel("", "/dialogs/gridtiler", SP_VERB_SELECTION_GRIDTILE),
       XPadding(_("X:"), _("Horizontal spacing between columns."), UNIT_TYPE_LINEAR, "", "object-columns", &PaddingUnitMenu),
       YPadding(_("Y:"), _("Vertical spacing between rows."), UNIT_TYPE_LINEAR, "", "object-rows", &PaddingUnitMenu),
-      PaddingTable(2, 2, false)
+      PaddingTable(Gtk::manage(new Gtk::Table(2, 2, false)))
 {
      // bool used by spin button callbacks to stop loops where they change each other.
     updating = false;
@@ -834,13 +835,13 @@ TileDialog::TileDialog()
         XPadding.signal_value_changed().connect(sigc::mem_fun(*this, &TileDialog::on_xpad_spinbutton_changed));
     }
 
-    PaddingTable.set_border_width(MARGIN);
-    PaddingTable.set_row_spacings(MARGIN);
-    PaddingTable.set_col_spacings(MARGIN);
-    PaddingTable.attach(XPadding, 0, 1, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
-    PaddingTable.attach(PaddingUnitMenu, 1, 2, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
-    PaddingTable.attach(YPadding, 0, 1, 1, 2, Gtk::SHRINK, Gtk::SHRINK);
-    TileBox.pack_start(PaddingTable, false, false, MARGIN);
+    PaddingTable->set_border_width(MARGIN);
+    PaddingTable->set_row_spacings(MARGIN);
+    PaddingTable->set_col_spacings(MARGIN);
+    PaddingTable->attach(XPadding, 0, 1, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
+    PaddingTable->attach(PaddingUnitMenu, 1, 2, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
+    PaddingTable->attach(YPadding, 0, 1, 1, 2, Gtk::SHRINK, Gtk::SHRINK);
+    TileBox.pack_start(*PaddingTable, false, false, MARGIN);
 
     contents->pack_start(TileBox);
 

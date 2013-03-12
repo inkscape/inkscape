@@ -15,6 +15,7 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
+#include "ui/widget/notebook-page.h"
 #include "desktop-handles.h"
 #include "desktop-style.h"
 #include "document.h"
@@ -41,9 +42,9 @@ namespace Dialog {
 
 FillAndStroke::FillAndStroke()
     : UI::Widget::Panel ("", "/dialogs/fillstroke", SP_VERB_DIALOG_FILL_STROKE),
-      _page_fill(1, 1, true, true),
-      _page_stroke_paint(1, 1, true, true),
-      _page_stroke_style(1, 1, true, true),
+      _page_fill(Gtk::manage(new UI::Widget::NotebookPage(1, 1, true, true))),
+      _page_stroke_paint(Gtk::manage(new UI::Widget::NotebookPage(1, 1, true, true))),
+      _page_stroke_style(Gtk::manage(new UI::Widget::NotebookPage(1, 1, true, true))),
       _composite_settings(SP_VERB_DIALOG_FILL_STROKE, "fillstroke", UI::Widget::SimpleFilterModifier::BLUR),
       deskTrack(),
       targetDesktop(0),
@@ -56,9 +57,9 @@ FillAndStroke::FillAndStroke()
 
     contents->pack_start(_notebook, true, true);
 
-    _notebook.append_page(_page_fill, _createPageTabLabel(_("_Fill"), INKSCAPE_ICON("object-fill")));
-    _notebook.append_page(_page_stroke_paint, _createPageTabLabel(_("Stroke _paint"), INKSCAPE_ICON("object-stroke")));
-    _notebook.append_page(_page_stroke_style, _createPageTabLabel(_("Stroke st_yle"), INKSCAPE_ICON("object-stroke-style")));
+    _notebook.append_page(*_page_fill, _createPageTabLabel(_("_Fill"), INKSCAPE_ICON("object-fill")));
+    _notebook.append_page(*_page_stroke_paint, _createPageTabLabel(_("Stroke _paint"), INKSCAPE_ICON("object-stroke")));
+    _notebook.append_page(*_page_stroke_style, _createPageTabLabel(_("Stroke st_yle"), INKSCAPE_ICON("object-stroke-style")));
 
     _notebook.signal_switch_page().connect(sigc::mem_fun(this, &FillAndStroke::_onSwitchPage));
 
@@ -129,14 +130,14 @@ void
 FillAndStroke::_layoutPageFill()
 {
     fillWdgt = manage(sp_fill_style_widget_new());
-    _page_fill.table().attach(*fillWdgt, 0, 1, 0, 1);
+    _page_fill->table().attach(*fillWdgt, 0, 1, 0, 1);
 }
 
 void
 FillAndStroke::_layoutPageStrokePaint()
 {
     strokeWdgt = manage(sp_stroke_style_paint_widget_new());
-    _page_stroke_paint.table().attach(*strokeWdgt, 0, 1, 0, 1);
+    _page_stroke_paint->table().attach(*strokeWdgt, 0, 1, 0, 1);
 }
 
 void
@@ -145,7 +146,7 @@ FillAndStroke::_layoutPageStrokeStyle()
     //Gtk::Widget *strokeStyleWdgt = manage(Glib::wrap(sp_stroke_style_line_widget_new()));
     //Gtk::Widget *strokeStyleWdgt = static_cast<Gtk::Widget *>(sp_stroke_style_line_widget_new());
     strokeStyleWdgt = sp_stroke_style_line_widget_new();
-    _page_stroke_style.table().attach(*strokeStyleWdgt, 0, 1, 0, 1);
+    _page_stroke_style->table().attach(*strokeStyleWdgt, 0, 1, 0, 1);
 }
 
 void

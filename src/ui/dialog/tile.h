@@ -19,7 +19,6 @@
 #include <gtkmm/notebook.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/radiobutton.h>
-#include <gtkmm/table.h>
 
 #include "ui/widget/panel.h"
 #include "ui/widget/spinbutton.h"
@@ -27,6 +26,7 @@
 
 namespace Gtk {
 class Button;
+class Table;
 }
 
 namespace Inkscape {
@@ -133,7 +133,7 @@ private:
     Inkscape::UI::Widget::UnitMenu      PaddingUnitMenu;
     Inkscape::UI::Widget::ScalarUnit    XPadding;
     Inkscape::UI::Widget::ScalarUnit    YPadding;
-    Gtk::Table                          PaddingTable;
+    Gtk::Table                         *PaddingTable;
 
     // BBox or manual spacing
     Gtk::VBox             SpacingVBox;

@@ -13,8 +13,11 @@
 #ifndef INKSCAPE_UI_CURRENT_STYLE_H
 #define INKSCAPE_UI_CURRENT_STYLE_H
 
+#if HAVE_CONFIG_H
+# include "config.h"
+#endif
+
 #include <gtkmm/box.h>
-#include <gtkmm/table.h>
 #include <gtkmm/label.h>
 #include <gtkmm/eventbox.h>
 #include <gtkmm/enums.h>
@@ -26,6 +29,14 @@
 class SPUnit;
 class SPStyle;
 class SPCSSAttr;
+
+namespace Gtk {
+#if WITH_GTKMM_3_0
+class Grid;
+#else
+class Table;
+#endif
+}
 
 namespace Inkscape {
 namespace UI {
@@ -60,7 +71,13 @@ private:
     Glib::ustring _tool_path;
 
     Gtk::EventBox _swatch;
-    Gtk::Table _table;
+
+#if WITH_GTKMM_3_0
+    Gtk::Grid *_table;
+#else
+    Gtk::Table *_table;
+#endif
+
     Gtk::Label _label[2];
     Gtk::EventBox _place[2];
     Gtk::EventBox _opacity_place;
