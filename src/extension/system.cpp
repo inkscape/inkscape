@@ -280,10 +280,9 @@ save(Extension *key, SPDocument *doc, gchar const *filename, bool setextension, 
 
     // remember attributes in case this is an unofficial save and/or overwrite fails
     gchar *saved_uri = g_strdup(doc->getURI());
-    bool saved_modified = false;
     gchar *saved_output_extension = NULL;
     gchar *saved_dataloss = NULL;
-    saved_modified = doc->isModifiedSinceSave();
+    bool saved_modified = doc->isModifiedSinceSave();
     saved_output_extension = g_strdup(get_file_save_extension(save_method).c_str());
     saved_dataloss = g_strdup(repr->attribute("inkscape:dataloss"));
     if (official) {
