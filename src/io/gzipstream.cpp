@@ -71,11 +71,11 @@ GzipInputStream::~GzipInputStream()
 {
     close();
     if ( srcBuf ) {
-      free(srcBuf);
+      delete[] srcBuf;
       srcBuf = NULL;
     }
     if ( outputBuf ) {
-        free(outputBuf);
+        delete[] outputBuf;
         outputBuf = NULL;
     }
 }
@@ -108,11 +108,11 @@ void GzipInputStream::close()
     }
 
     if ( srcBuf ) {
-      free(srcBuf);
+      delete[] srcBuf;
       srcBuf = NULL;
     }
     if ( outputBuf ) {
-        free(outputBuf);
+        delete[] outputBuf;
         outputBuf = NULL;
     }
     closed = true;
@@ -171,15 +171,15 @@ bool GzipInputStream::load()
         }
 
     srcLen = inputBuf.size();
-    srcBuf = static_cast<Bytef *>(malloc(srcLen * sizeof(Byte)));
+    srcBuf = new Byte [srcLen];
     if (!srcBuf) {
         return false;
     }
 
-    outputBuf = static_cast<unsigned char *>(malloc(OUT_SIZE));
+    outputBuf = new unsigned char [OUT_SIZE];
     if ( !outputBuf ) {
-        free(srcBuf);
-        srcBuf = 0;
+        delete[] srcBuf;
+        srcBuf = NULL;
         return false;
     }
     outputBufLen = 0; // Not filled in yet
@@ -204,7 +204,7 @@ bool GzipInputStream::load()
     ////printf("val:%x\n", val);
 
     //flags
-    int flags = (int)srcBuf[3];
+    int flags = static_cast<int>(srcBuf[3]);
 
     ////time
     //val = (int)srcBuf[4];
@@ -386,17 +386,17 @@ void GzipOutputStream::flush()
     }
 	
     uLong srclen = inputBuf.size();
-    Bytef *srcbuf = static_cast<Bytef *>(malloc(srclen * sizeof(Byte)));
+    Bytef *srcbuf = new Bytef [srclen];
     if (!srcbuf)
         {
         return;
         }
         
     uLong destlen = srclen;
-    Bytef *destbuf = static_cast<Bytef *>(malloc((destlen + (srclen/100) + 13) * sizeof(Byte)));
+    Bytef *destbuf = new Bytef [(destlen + (srclen/100) + 13)];
     if (!destbuf)
         {
-        free(srcbuf);
+        delete[] srcbuf;
         return;
         }
         
@@ -423,8 +423,8 @@ void GzipOutputStream::flush()
     destination.flush();
 
     inputBuf.clear();
-    free(srcbuf);
-    free(destbuf);
+    delete[] srcbuf;
+    delete[] destbuf;
 }
 
 
