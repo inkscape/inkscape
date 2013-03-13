@@ -36,6 +36,8 @@
 
 #include "ui/view/view-widget.h"
 
+#include <gtkmm/table.h>
+
 namespace Inkscape {
 namespace UI {
 namespace Dialog {

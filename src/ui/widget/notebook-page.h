@@ -10,8 +10,19 @@
 #ifndef INKSCAPE_UI_WIDGET_NOTEBOOK_PAGE_H
 #define INKSCAPE_UI_WIDGET_NOTEBOOK_PAGE_H
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <gtkmm/box.h>
-#include <gtkmm/table.h>
+
+namespace Gtk {
+#if WITH_GTKMM_3_0
+class Grid;
+#else
+class Table;
+#endif
+}
 
 namespace Inkscape {
 namespace UI {
@@ -31,10 +42,19 @@ public:
      */
     NotebookPage(int n_rows, int n_columns, bool expand=false, bool fill=false, guint padding=0);
 
-    Gtk::Table& table() { return _table; }
+#if WITH_GTKMM_3_0
+    Gtk::Grid& table() { return *_table; }
+#else
+    Gtk::Table& table() { return *_table; }
+#endif
 
 protected:
-    Gtk::Table _table;
+
+#if WITH_GTKMM_3_0
+    Gtk::Grid *_table;
+#else
+    Gtk::Table *_table;
+#endif
 };
 
 } // namespace Widget

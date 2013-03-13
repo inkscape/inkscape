@@ -193,9 +193,15 @@ Export::Export (void) :
             selectiontype_buttons[i]->signal_clicked().connect(sigc::mem_fun(*this, &Export::onAreaToggled));
         }
 
+#if WITH_GTKMM_3_0
+        Gtk::Grid* t = new Gtk::Grid();
+        t->set_row_spacing(4);
+        t->set_column_spacing(4);
+#else
         Gtk::Table* t = new Gtk::Table(3, 4, false);
         t->set_row_spacings (4);
         t->set_col_spacings (4);
+#endif
 
         x0_adj = createSpinbutton ( "x0", 0.0, -1000000.0, 1000000.0, 0.1, 1.0, unit_selector->gobj(),
                                    t, 0, 0, _("_x0:"), "", EXPORT_COORD_PRECISION, 1,
@@ -236,9 +242,17 @@ Export::Export (void) :
         bm_label = new Gtk::Label(_("<b>Image size</b>"), Gtk::ALIGN_START);
         bm_label->set_use_markup(true);
         size_box.pack_start(*bm_label, false, false, 0);
+
+#if WITH_GTKMM_3_0
+        Gtk::Grid *t = new Gtk::Grid();
+        t->set_row_spacing(4);
+        t->set_column_spacing(4);
+#else
         Gtk::Table *t = new Gtk::Table(2, 5, false);
         t->set_row_spacings (4);
         t->set_col_spacings (4);
+#endif
+
         size_box.pack_start(*t);
 
         bmwidth_adj = createSpinbutton ( "bmwidth", 16.0, 1.0, 1000000.0, 1.0, 10.0,
@@ -442,7 +456,7 @@ void Export::set_default_filename () {
 #if WITH_GTKMM_3_0
 Glib::RefPtr<Gtk::Adjustment> Export::createSpinbutton( gchar const * /*key*/, float val, float min, float max,
                                       float step, float page, GtkWidget *us,
-                                      Gtk::Table *t, int x, int y,
+                                      Gtk::Grid *t, int x, int y,
                                       const Glib::ustring ll, const Glib::ustring lr,
                                       int digits, unsigned int sensitive,
                                       void (Export::*cb)() )
@@ -470,17 +484,29 @@ Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, fl
     if (!ll.empty()) {
         l = new Gtk::Label(ll,true);
         l->set_alignment (1.0, 0.5);
+
+#if WITH_GTKMM_3_0
+        l->set_hexpand();
+        l->set_vexpand();
+        t->attach(*l, x + pos, y, 1, 1);
+#else
         t->attach (*l, x + pos, x + pos + 1, y, y + 1, Gtk::EXPAND, Gtk::EXPAND, 0, 0 );
+#endif
+
         l->set_sensitive(sensitive);
         pos++;
     }
 
 #if WITH_GTKMM_3_0
     Gtk::SpinButton *sb = new Gtk::SpinButton(adj, 1.0, digits);
+    sb->set_hexpand();
+    sb->set_vexpand();
+    t->attach(*sb, x + pos, y, 1, 1);
 #else
     Gtk::SpinButton *sb = new Gtk::SpinButton(*adj, 1.0, digits);
-#endif
     t->attach (*sb, x + pos, x + pos + 1, y, y + 1, Gtk::EXPAND, Gtk::EXPAND, 0, 0 );
+#endif
+
     sb->set_width_chars(7);
     sb->set_sensitive (sensitive);
     pos++;
@@ -490,7 +516,15 @@ Gtk::Adjustment * Export::createSpinbutton( gchar const * /*key*/, float val, fl
     if (!lr.empty()) {
         l = new Gtk::Label(lr,true);
         l->set_alignment (0.0, 0.5);
+
+#if WITH_GTKMM_3_0
+        l->set_hexpand();
+        l->set_vexpand();
+        t->attach(*l, x + pos, y, 1, 1);
+#else
         t->attach (*l, x + pos, x + pos + 1, y, y + 1, Gtk::EXPAND, Gtk::EXPAND, 0, 0 );
+#endif
+
         l->set_sensitive (sensitive);
         pos++;
         l->set_mnemonic_widget (*sb);

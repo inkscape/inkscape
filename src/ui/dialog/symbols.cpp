@@ -22,7 +22,13 @@
 
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/label.h>
-#include <gtkmm/table.h>
+
+#if WITH_GTKMM_3_0
+# include <gtkmm/grid.h>
+#else
+# include <gtkmm/table.h>
+#endif
+
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/iconview.h>
@@ -100,20 +106,35 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
 {
 
   /********************    Table    *************************/
-  // Replace by Grid for GTK 3.0
+#if WITH_GTKMM_3_0
+  Gtk::Grid *table = new Gtk::Grid();
+#else
   Gtk::Table *table = new Gtk::Table(2, 4, false);
+#endif
+
   // panel is a cloked Gtk::VBox
   _getContents()->pack_start(*Gtk::manage(table), Gtk::PACK_EXPAND_WIDGET);
   guint row = 0;
 
   /******************** Symbol Sets *************************/
   Gtk::Label* labelSet = new Gtk::Label(_("Symbol set: "));
+
+#if WITH_GTKMM_3_0
+  table->attach(*Gtk::manage(labelSet),0,row,1,1);
+#else
   table->attach(*Gtk::manage(labelSet),0,1,row,row+1,Gtk::SHRINK,Gtk::SHRINK);
+#endif
 
   symbolSet = new Gtk::ComboBoxText();  // Fill in later
   symbolSet->append(_("Current Document"));
   symbolSet->set_active_text(_("Current Document"));
+
+#if WITH_GTKMM_3_0
+  symbolSet->set_hexpand();
+  table->attach(*Gtk::manage(symbolSet),1,row,1,1);
+#else
   table->attach(*Gtk::manage(symbolSet),1,2,row,row+1,Gtk::FILL|Gtk::EXPAND,Gtk::SHRINK);
+#endif
 
   sigc::connection connSet =
     symbolSet->signal_changed().connect(sigc::mem_fun(*this, &SymbolsDialog::rebuild));
@@ -143,13 +164,25 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   Gtk::ScrolledWindow *scroller = new Gtk::ScrolledWindow();
   scroller->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_ALWAYS);
   scroller->add(*Gtk::manage(iconView));
+
+#if WITH_GTKMM_3_0
+  scroller->set_hexpand();
+  scroller->set_vexpand();
+  table->attach(*Gtk::manage(scroller),0,row,2,1);
+#else
   table->attach(*Gtk::manage(scroller),0,2,row,row+1,Gtk::EXPAND|Gtk::FILL,Gtk::EXPAND|Gtk::FILL);
+#endif
 
   ++row;
 
   /******************** Preview Scale ***********************/
   Gtk::Label* labelScale = new Gtk::Label(_("Preview scale: "));
+
+#if WITH_GTKMM_3_0
+  table->attach(*Gtk::manage(labelScale),0,row,1,1);
+#else
   table->attach(*Gtk::manage(labelScale),0,1,row,row+1,Gtk::SHRINK,Gtk::SHRINK);
+#endif
 
   previewScale = new Gtk::ComboBoxText();
   const gchar *scales[] =
@@ -158,7 +191,13 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
     previewScale->append(scales[i]);
   }
   previewScale->set_active_text(scales[0]);
+
+#if WITH_GTKMM_3_0
+  previewScale->set_hexpand();
+  table->attach(*Gtk::manage(previewScale),1,row,1,1);
+#else
   table->attach(*Gtk::manage(previewScale),1,2,row,row+1,Gtk::FILL|Gtk::EXPAND,Gtk::SHRINK);
+#endif
 
   sigc::connection connScale =
     previewScale->signal_changed().connect(sigc::mem_fun(*this, &SymbolsDialog::rebuild));
@@ -168,7 +207,12 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
 
   /******************** Preview Size ************************/
   Gtk::Label* labelSize = new Gtk::Label(_("Preview size: "));
+
+#if WITH_GTKMM_3_0
+  table->attach(*Gtk::manage(labelSize),0,row,1,1);
+#else
   table->attach(*Gtk::manage(labelSize),0,1,row,row+1,Gtk::SHRINK,Gtk::SHRINK);
+#endif
 
   previewSize = new Gtk::ComboBoxText();
   const gchar *sizes[] = {"16", "24", "32", "48", "64", NULL};
@@ -176,7 +220,13 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
     previewSize->append(sizes[i]);
   }
   previewSize->set_active_text(sizes[2]);
+
+#if WITH_GTKMM_3_0
+  previewSize->set_hexpand();
+  table->attach(*Gtk::manage(previewSize),1,row,1,1);
+#else
   table->attach(*Gtk::manage(previewSize),1,2,row,row+1,Gtk::FILL|Gtk::EXPAND,Gtk::SHRINK);
+#endif
 
   sigc::connection connSize =
     previewSize->signal_changed().connect(sigc::mem_fun(*this, &SymbolsDialog::rebuild));

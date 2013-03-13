@@ -14,15 +14,17 @@
  */
 //#define DEBUG_GRID_ARRANGE 1
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include "tile.h"
 #include <gtk/gtk.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
 #include <gtkmm/stock.h>
-#include <gtkmm/table.h>
+
+#if WITH_GTKMM_3_0
+# include <gtkmm/grid.h>
+#else
+# include <gtkmm/table.h>
+#endif
+
 #include <2geom/transforms.h>
 
 #include "verbs.h"
@@ -615,7 +617,11 @@ TileDialog::TileDialog()
     : UI::Widget::Panel("", "/dialogs/gridtiler", SP_VERB_SELECTION_GRIDTILE),
       XPadding(_("X:"), _("Horizontal spacing between columns."), UNIT_TYPE_LINEAR, "", "object-columns", &PaddingUnitMenu),
       YPadding(_("Y:"), _("Vertical spacing between rows."), UNIT_TYPE_LINEAR, "", "object-rows", &PaddingUnitMenu),
+#if WITH_GTKMM_3_0
+      PaddingTable(Gtk::manage(new Gtk::Grid()))
+#else
       PaddingTable(Gtk::manage(new Gtk::Table(2, 2, false)))
+#endif
 {
      // bool used by spin button callbacks to stop loops where they change each other.
     updating = false;
@@ -836,11 +842,21 @@ TileDialog::TileDialog()
     }
 
     PaddingTable->set_border_width(MARGIN);
+
+#if WITH_GTKMM_3_0
+    PaddingTable->set_row_spacing(MARGIN);
+    PaddingTable->set_column_spacing(MARGIN);
+    PaddingTable->attach(XPadding,        0, 0, 1, 1);
+    PaddingTable->attach(PaddingUnitMenu, 1, 0, 1, 1);
+    PaddingTable->attach(YPadding,        0, 1, 1, 1);
+#else
     PaddingTable->set_row_spacings(MARGIN);
     PaddingTable->set_col_spacings(MARGIN);
     PaddingTable->attach(XPadding, 0, 1, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
     PaddingTable->attach(PaddingUnitMenu, 1, 2, 0, 1, Gtk::SHRINK, Gtk::SHRINK);
     PaddingTable->attach(YPadding, 0, 1, 1, 2, Gtk::SHRINK, Gtk::SHRINK);
+#endif
+
     TileBox.pack_start(*PaddingTable, false, false, MARGIN);
 
     contents->pack_start(TileBox);

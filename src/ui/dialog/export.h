@@ -126,7 +126,7 @@ private:
 #if WITH_GTKMM_3_0
     Glib::RefPtr<Gtk::Adjustment> createSpinbutton( gchar const *key, float val, float min, float max,
                                           float step, float page, GtkWidget *us,
-                                          Gtk::Table *t, int x, int y,
+                                          Gtk::Grid *t, int x, int y,
                                           const Glib::ustring ll, const Glib::ustring lr,
                                           int digits, unsigned int sensitive,
                                           void (Export::*cb)() );

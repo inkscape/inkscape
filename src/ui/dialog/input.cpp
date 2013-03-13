@@ -31,7 +31,13 @@
 #include <gtkmm/paned.h>
 #include <gtkmm/progressbar.h>
 #include <gtkmm/scrolledwindow.h>
-#include <gtkmm/table.h>
+
+#if WITH_GTKMM_3_0
+# include <gtkmm/grid.h>
+#else
+# include <gtkmm/table.h>
+#endif
+
 #include <gtkmm/treemodel.h>
 #include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/treestore.h>
@@ -504,7 +510,12 @@ private:
     Gtk::Label devAxesCount;
     Gtk::ComboBoxText axesCombo;
     Gtk::ProgressBar axesValues[6];
+
+#if WITH_GTKMM_3_0
+    Gtk::Grid axisTable;
+#else
     Gtk::Table axisTable;
+#endif
 
     Gtk::ComboBoxText buttonCombo;
     Gtk::ComboBoxText linkCombo;
@@ -515,7 +526,13 @@ private:
     Gtk::Image testThumb;
     Gtk::Image testButtons[24];
     Gtk::Image testAxes[8];
+
+#if WITH_GTKMM_3_0
+    Gtk::Grid imageTable;
+#else
     Gtk::Table imageTable;
+#endif
+
     Gtk::EventBox testDetector;
 
     ConfPanel cfgPanel;
@@ -603,13 +620,18 @@ InputDialogImpl::InputDialogImpl() :
     splitter(),
 #if WITH_GTKMM_3_0
     split2(Gtk::ORIENTATION_VERTICAL),
+    axisTable(),
 #else
     split2(),
-#endif
     axisTable(11, 2),
+#endif
     linkCombo(),
     topHolder(),
+#if WITH_GTKMM_3_0
+    imageTable(),
+#else
     imageTable(8, 7),
+#endif
     testDetector(),
     cfgPanel()
 {
@@ -631,13 +653,27 @@ InputDialogImpl::InputDialogImpl() :
     testFrame.add(testDetector);
     testThumb.set(getPix(PIX_TABLET));
     testThumb.set_padding(24, 24);
+
+#if WITH_GTKMM_3_0
+    testThumb.set_hexpand();
+    testThumb.set_vexpand();
+    imageTable.attach(testThumb, 0, 0, 8, 1);
+#else
     imageTable.attach(testThumb, 0, 8, 0, 1, ::Gtk::EXPAND, ::Gtk::EXPAND);
+#endif
+
     {
         guint col = 0;
         guint row = 1;
         for ( guint num = 0; num < G_N_ELEMENTS(testButtons); num++ ) {
             testButtons[num].set(getPix(PIX_BUTTONS_NONE));
+
+#if WITH_GTKMM_3_0
+            imageTable.attach(testButtons[num], col, row, 1, 1);
+#else
             imageTable.attach(testButtons[num], col, col + 1, row, row + 1, ::Gtk::FILL, ::Gtk::FILL);
+#endif
+
             col++;
             if (col > 7) {
                 col = 0;
@@ -648,7 +684,13 @@ InputDialogImpl::InputDialogImpl() :
         col = 0;
         for ( guint num = 0; num < G_N_ELEMENTS(testAxes); num++ ) {
             testAxes[num].set(getPix(PIX_AXIS_NONE));
+
+#if WITH_GTKMM_3_0
+            imageTable.attach(testAxes[num], col * 2, row, 2, 1);
+#else
             imageTable.attach(testAxes[num], col * 2, (col + 1) * 2, row, row + 1, ::Gtk::FILL, ::Gtk::FILL);
+#endif
+
             col++;
             if (col > 3) {
                 col = 0;
@@ -686,28 +728,44 @@ InputDialogImpl::InputDialogImpl() :
     axisFrame.add(axisTable);
 
     Gtk::Label *lbl = Gtk::manage(new Gtk::Label(_("Link:")));
+
+#if WITH_GTKMM_3_0
+    axisTable.attach(*lbl, 0, rowNum, 1, 1);
+#else
     axisTable.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
+#endif
 
     linkCombo.append(_("None"));
     linkCombo.set_active_text(_("None"));
     linkCombo.set_sensitive(false);
     linkConnection = linkCombo.signal_changed().connect(sigc::mem_fun(*this, &InputDialogImpl::linkComboChanged));
 
+#if WITH_GTKMM_3_0
+    axisTable.attach(linkCombo, 1, rowNum, 1, 1);
+#else
     axisTable.attach(linkCombo, 1, 2, rowNum, rowNum + 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
+#endif
+
     rowNum++;
 
 
     lbl = Gtk::manage(new Gtk::Label(_("Axes count:")));
+
+#if WITH_GTKMM_3_0
+    axisTable.attach(*lbl, 0, rowNum, 1, 1);
+    axisTable.attach(devAxesCount, 1, rowNum, 1, 1);
+#else
     axisTable.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
     axisTable.attach(devAxesCount, 1, 2, rowNum, rowNum + 1,
                       ::Gtk::SHRINK,
                       ::Gtk::SHRINK);
+#endif
 
     rowNum++;
 
@@ -726,12 +784,22 @@ InputDialogImpl::InputDialogImpl() :
 
     for ( guint barNum = 0; barNum < static_cast<guint>(G_N_ELEMENTS(axesValues)); barNum++ ) {
         lbl = Gtk::manage(new Gtk::Label(_("axis:")));
+
+#if WITH_GTKMM_3_0
+        lbl->set_hexpand();
+        axisTable.attach(*lbl, 0, rowNum, 1, 1);
+        
+        axesValues[barNum].set_hexpand();
+        axisTable.attach(axesValues[barNum], 1, rowNum, 1, 1);
+#else
         axisTable.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                           ::Gtk::EXPAND,
                           ::Gtk::SHRINK);
         axisTable.attach(axesValues[barNum], 1, 2, rowNum, rowNum + 1,
                           ::Gtk::EXPAND,
                           ::Gtk::SHRINK);
+#endif
+
         axesValues[barNum].set_sensitive(false);
 
         rowNum++;
@@ -740,12 +808,18 @@ InputDialogImpl::InputDialogImpl() :
     }
 
     lbl = Gtk::manage(new Gtk::Label(_("Button count:")));
+
+#if WITH_GTKMM_3_0
+    axisTable.attach(*lbl, 0, rowNum, 1, 1);
+    axisTable.attach(devKeyCount, 1, rowNum, 1, 1);
+#else
     axisTable.attach(*lbl, 0, 1, rowNum, rowNum+ 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
     axisTable.attach(devKeyCount, 1, 2, rowNum, rowNum + 1,
                       ::Gtk::SHRINK,
                       ::Gtk::SHRINK);
+#endif
 
     rowNum++;
 
@@ -761,9 +835,14 @@ InputDialogImpl::InputDialogImpl() :
     rowNum++;
 */
 
+#if WITH_GTKMM_3_0
+    axisTable.attach(keyVal, 0, rowNum, 2, 1);
+#else
     axisTable.attach(keyVal, 0, 2, rowNum, rowNum + 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
+#endif
+
     rowNum++;
 
 
@@ -781,9 +860,14 @@ InputDialogImpl::InputDialogImpl() :
 #endif
     testDetector.add_events(Gdk::POINTER_MOTION_MASK|Gdk::KEY_PRESS_MASK|Gdk::KEY_RELEASE_MASK |Gdk::PROXIMITY_IN_MASK|Gdk::PROXIMITY_OUT_MASK|Gdk::SCROLL_MASK);
 
+#if WITH_GTKMM_3_0
+    axisTable.attach(keyEntry, 0, rowNum, 2, 1);
+#else
     axisTable.attach(keyEntry, 0, 2, rowNum, rowNum + 1,
                       ::Gtk::FILL,
                       ::Gtk::SHRINK);
+#endif
+
     rowNum++;
 
 
