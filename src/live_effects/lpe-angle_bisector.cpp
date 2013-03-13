@@ -61,8 +61,6 @@ LPEAngleBisector::doEffect_path (std::vector<Geom::Path> const & path_in)
 {
     using namespace Geom;
 
-    std::vector<Geom::Path> path_out;
-
     // we assume that the path has >= 3 nodes
     ptA = path_in[0].pointAt(1);
     Point B = path_in[0].initialPoint();

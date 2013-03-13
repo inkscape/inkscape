@@ -152,7 +152,7 @@ LPEDynastroke::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & p
      double angle_rad = angle*M_PI/180.;//TODO: revert orientation?...
      Piecewise<SBasis> w;
      
-     std::vector<double> corners = find_corners(m);
+     // std::vector<double> corners = find_corners(m);
     
      DynastrokeMethod stroke_method = method.get_value();
      if (roundness==1.) {

@@ -124,9 +124,9 @@ LPEExtrude::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2
         }
 
         std::vector<double> connector_pts;
-        if (rts.size() < 1) {
+        if (rts.empty()) {
             connector_pts = cusps;
-        } else if (cusps.size() < 1) {
+        } else if (cusps.empty()) {
             connector_pts = rts;
         } else {
             connector_pts = rts;

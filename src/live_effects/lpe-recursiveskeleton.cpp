@@ -49,8 +49,6 @@ LPERecursiveSkeleton::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > co
     using namespace Geom;
 
     Piecewise<D2<SBasis> > output;
-    std::vector<Piecewise<D2<SBasis> > > pre_output;
-
     double prop_scale = 1.0;
 
     D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(pwd2_in);
@@ -90,8 +88,7 @@ LPERecursiveSkeleton::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > co
             Piecewise<D2<SBasis> > n = rot90(derivative(uskeleton));
             n = force_continuity(remove_short_cuts(n,.1));
 
-            double scaling = 1;
-            scaling = (uskeleton.domain().extent() - toffset)/pattBndsX->extent();
+            double scaling = (uskeleton.domain().extent() - toffset)/pattBndsX->extent();
 
             // TODO investigate why pattWidth is not being used:
             double pattWidth = pattBndsX->extent() * scaling;

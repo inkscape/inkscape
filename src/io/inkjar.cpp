@@ -311,7 +311,7 @@ guint8 *JarFile::get_uncompressed_file(guint32 compressed_size, guint32 crc,
 	in_a -= nbytes;
 	    
 #ifdef DEBUG    
-	std::printf("%d bytes written\n", out_a);
+	std::printf("%u bytes written\n", out_a);
 #endif
     }
     lseek(fd, eflen, SEEK_CUR);

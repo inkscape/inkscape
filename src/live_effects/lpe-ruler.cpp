@@ -80,11 +80,10 @@ LPERuler::ruler_mark(Geom::Point const &A, Geom::Point const &n, MarkType const 
 {
     using namespace Geom;
 
-    gboolean success;
     double real_mark_length = mark_length;
-    success = sp_convert_distance(&real_mark_length, unit, &sp_unit_get_by_id(SP_UNIT_PX));
+    sp_convert_distance(&real_mark_length, unit, &sp_unit_get_by_id(SP_UNIT_PX));
     double real_minor_mark_length = minor_mark_length;
-    success = sp_convert_distance(&real_minor_mark_length, unit, &sp_unit_get_by_id(SP_UNIT_PX));
+    sp_convert_distance(&real_minor_mark_length, unit, &sp_unit_get_by_id(SP_UNIT_PX));
 
     n_major = real_mark_length * n;
     n_minor = real_minor_mark_length * n;
@@ -134,10 +133,10 @@ LPERuler::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd2_i
     std::vector<double> s_cuts;
 
     double real_mark_distance = mark_distance;
-    gboolean success = sp_convert_distance(&real_mark_distance, unit, &sp_unit_get_by_id(SP_UNIT_PX));
+    sp_convert_distance(&real_mark_distance, unit, &sp_unit_get_by_id(SP_UNIT_PX));
 
     double real_offset = offset;
-    success = sp_convert_distance(&real_offset, unit, &sp_unit_get_by_id(SP_UNIT_PX));
+    sp_convert_distance(&real_offset, unit, &sp_unit_get_by_id(SP_UNIT_PX));
     for (double s = real_offset; s<totlength; s+=real_mark_distance){
         s_cuts.push_back(s);
     }
