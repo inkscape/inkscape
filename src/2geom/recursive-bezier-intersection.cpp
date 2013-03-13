@@ -81,7 +81,11 @@ const double INV_EPS = (1L<<14);
  */
 void OldBezier::split(double t, OldBezier &left, OldBezier &right) const {
     const unsigned sz = p.size();
-    Geom::Point Vtemp[sz][sz];
+ 
+    Geom::Point **Vtemp = new Geom::Point* [sz];
+
+    for (unsigned int i = 0; i < sz; ++i)
+        Vtemp[i] = new Geom::Point[sz];
 
     /* Copy control points	*/
     std::copy(p.begin(), p.end(), Vtemp[0]);
@@ -99,6 +103,11 @@ void OldBezier::split(double t, OldBezier &left, OldBezier &right) const {
         left.p[j]  = Vtemp[j][0];
     for (unsigned j = 0; j < sz; j++)
         right.p[j] = Vtemp[sz-1-j][j];
+
+    for (unsigned int i = 0; i < sz; ++i)
+        delete[] Vtemp[i];
+
+    delete[] Vtemp;
 }
 
 #if 0

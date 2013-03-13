@@ -103,6 +103,8 @@ extern guint update_in_progress;
 
 static SPObjectClass *cprof_parent_class;
 
+namespace Inkscape {
+
 class ColorProfileImpl {
 public:
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -128,10 +130,6 @@ public:
     cmsHTRANSFORM _gamutTransf;
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 };
-
-
-
-namespace Inkscape {
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 cmsColorSpaceSignature asICColorSpaceSig(ColorSpaceSig const & sig)

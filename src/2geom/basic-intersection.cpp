@@ -64,7 +64,12 @@ void find_intersections(std::vector< std::pair<double, double> > & xs,
 void split(vector<Point> const &p, double t, 
            vector<Point> &left, vector<Point> &right) {
     const unsigned sz = p.size();
-    Geom::Point Vtemp[sz][sz];
+    
+    Geom::Point **Vtemp = new Geom::Point* [sz];
+
+    for (unsigned int i = 0; i < sz; ++i) {
+        Vtemp[i] = new Geom::Point[sz];
+    }
 
     /* Copy control points	*/
     std::copy(p.begin(), p.end(), Vtemp[0]);
@@ -82,6 +87,11 @@ void split(vector<Point> const &p, double t,
         left[j]  = Vtemp[j][0];
     for (unsigned j = 0; j < sz; j++)
         right[j] = Vtemp[sz-1-j][j];
+
+    for (unsigned int i = 0; i < sz; ++i)
+        delete[] Vtemp[i];
+
+    delete[] Vtemp;
 }
 
 
