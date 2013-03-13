@@ -132,14 +132,14 @@ void
 FillAndStroke::_layoutPageFill()
 {
     fillWdgt = manage(sp_fill_style_widget_new());
-    _page_fill->table().attach(*fillWdgt, 0, 1, 0, 1);
+    _page_fill->table().attach(*fillWdgt, 0, 0, 1, 1);
 }
 
 void
 FillAndStroke::_layoutPageStrokePaint()
 {
     strokeWdgt = manage(sp_stroke_style_paint_widget_new());
-    _page_stroke_paint->table().attach(*strokeWdgt, 0, 1, 0, 1);
+    _page_stroke_paint->table().attach(*strokeWdgt, 0, 0, 1, 1);
 }
 
 void
@@ -148,7 +148,7 @@ FillAndStroke::_layoutPageStrokeStyle()
     //Gtk::Widget *strokeStyleWdgt = manage(Glib::wrap(sp_stroke_style_line_widget_new()));
     //Gtk::Widget *strokeStyleWdgt = static_cast<Gtk::Widget *>(sp_stroke_style_line_widget_new());
     strokeStyleWdgt = sp_stroke_style_line_widget_new();
-    _page_stroke_style->table().attach(*strokeStyleWdgt, 0, 1, 0, 1);
+    _page_stroke_style->table().attach(*strokeStyleWdgt, 0, 0, 1, 1);
 }
 
 void
