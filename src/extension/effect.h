@@ -20,7 +20,7 @@ namespace Gtk {
 	class VBox;
 }
 
-struct SPDocument;
+class SPDocument;
 
 namespace Inkscape {
 

@@ -19,7 +19,7 @@
 namespace Inkscape {
 
 namespace XML {
-	class Document;
+	struct Document;
 }
 
 namespace Extension {

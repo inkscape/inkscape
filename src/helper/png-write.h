@@ -16,7 +16,7 @@
 
 #include <glib.h>
 #include <2geom/forward.h>
-struct SPDocument;
+class SPDocument;
 
 enum ExportResult {
     EXPORT_ERROR = 0,

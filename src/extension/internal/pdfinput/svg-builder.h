@@ -19,7 +19,7 @@
 class SPDocument;
 namespace Inkscape {
     namespace XML {
-        class Document;
+        struct Document;
         class Node;
     }
 }

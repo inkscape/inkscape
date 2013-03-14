@@ -19,6 +19,7 @@
 #include "text-tag-attributes.h"
 
 class  SPCSSAttr;
+class  SPDesktop;
 class  SPItem;
 class  SPObject;
 struct SPStyle;

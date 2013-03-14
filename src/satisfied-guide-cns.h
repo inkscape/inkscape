@@ -5,6 +5,7 @@
 #include <vector>
 #include <sp-item.h>
 
+class SPDesktop;
 class SPGuideConstraint;
 
 void satisfied_guide_cns(SPDesktop const &desktop,

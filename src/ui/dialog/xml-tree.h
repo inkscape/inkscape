@@ -28,7 +28,7 @@
 #include "ui/dialog/desktop-tracker.h"
 #include "message.h"
 
-struct SPDesktop;
+class SPDesktop;
 struct SPObject;
 struct SPXMLViewAttrList;
 struct SPXMLViewContent;

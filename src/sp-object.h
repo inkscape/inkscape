@@ -58,15 +58,13 @@ class SPObjectClass;
 #include "version.h"
 #include "util/forward-pointer-iterator.h"
 
-
-class  SPDesktop;
-struct SPCSSAttr;
+class SPCSSAttr;
 struct SPStyle;
 
 namespace Inkscape {
 namespace XML {
 class Node;
-class Document;
+struct Document;
 }
 }
 
@@ -90,8 +88,6 @@ typedef enum {
     SP_INVALID_ACCESS_ERR
 } SPExceptionType;
 
-class SPException;
-
 /// An attempt to implement exceptions, unused?
 struct SPException {
     SPExceptionType code;
@@ -99,8 +95,6 @@ struct SPException {
 
 #define SP_EXCEPTION_INIT(ex) {(ex)->code = SP_NO_EXCEPTION;}
 #define SP_EXCEPTION_IS_OK(ex) (!(ex) || ((ex)->code == SP_NO_EXCEPTION))
-
-class SPCtx;
 
 /// Unused
 struct SPCtx {
@@ -113,8 +107,6 @@ enum {
 };
 
 class SPDocument;
-class SPIXmlSpace;
-class SPObject;
 
 /// Internal class consisting of two bits.
 struct SPIXmlSpace {

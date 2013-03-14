@@ -31,7 +31,7 @@ enum SPGuideDragType { // used both here and in desktop-events.cpp
 };
 
 class SPGuide;
-class SPNamedView;
+struct SPNamedView;
 
 /**
  * Class to coordinate snapping operations.

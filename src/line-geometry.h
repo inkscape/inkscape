@@ -19,6 +19,8 @@
 #include "document.h"
 #include "ui/view/view.h"
 
+class SPDesktop;
+
 namespace Box3D {
 
 class Line {

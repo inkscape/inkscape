@@ -15,7 +15,7 @@
 namespace Inkscape {
     namespace XML {
         class Node;
-        class Document;
+        struct Document;
     }
     namespace LivePathEffect {
         class Effect;

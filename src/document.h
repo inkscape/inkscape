@@ -31,7 +31,6 @@ namespace Avoid {
 class Router;
 }
 
-struct SPDesktop;
 class  SPItem;
 class  SPObject;
 struct SPGroup;
@@ -45,14 +44,14 @@ namespace Inkscape {
     class EventLog;
     class ProfileManager;
     namespace XML {
-        class Document;
+        struct Document;
         class Node;
     }
 }
 
 class SPDefs;
 class SP3DBox;
-class Persp3D;
+struct Persp3D;
 class Persp3DImpl;
 class SPItemCtx;
 

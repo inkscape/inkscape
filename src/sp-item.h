@@ -30,7 +30,7 @@
 class SPGuideConstraint;
 struct SPClipPathReference;
 struct SPMaskReference;
-struct SPAvoidRef;
+class SPAvoidRef;
 struct SPPrintContext;
 
 namespace Inkscape {

@@ -7,7 +7,7 @@ class SPDesktop;
 
 namespace Inkscape {
 
-class Application;
+struct Application;
 
 class DocumentUndo
 {

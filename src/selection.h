@@ -27,9 +27,10 @@
 #include "sp-item.h"
 #include "snapped-point.h"
 
+class SPDesktop;
 class SPItem;
 class SPBox3D;
-class Persp3D;
+struct Persp3D;
 
 namespace Inkscape {
 namespace XML {

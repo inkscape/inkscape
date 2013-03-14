@@ -15,15 +15,15 @@
 #include <list>
 #include <glib.h>
 
-struct SPDesktop;
-struct SPDocument;
+class SPDesktop;
+class SPDocument;
 struct SPEventContext;
 
 namespace Inkscape {
     struct Application;
     namespace XML {
         class Node;
-        class Document;
+        struct Document;
         }
 }
 

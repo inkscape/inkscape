@@ -23,7 +23,7 @@ class View;
 } // namespace Inkscape
 
 class SPViewWidget;
-class SPNamedView;
+struct SPNamedView;
 
 #define SP_TYPE_VIEW_WIDGET (sp_view_widget_get_type ())
 #define SP_VIEW_WIDGET(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_VIEW_WIDGET, SPViewWidget))

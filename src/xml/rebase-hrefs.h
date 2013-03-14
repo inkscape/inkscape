@@ -4,7 +4,7 @@
 #include <glib.h>
 #include "util/list.h"
 #include "xml/attribute-record.h"
-struct SPDocument;
+class SPDocument;
 
 namespace Inkscape {
 namespace XML {

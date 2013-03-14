@@ -21,6 +21,7 @@
 
 struct SPCanvas;
 struct SPCanvasGroup;
+class SPDesktop;
 
 G_BEGIN_DECLS
 

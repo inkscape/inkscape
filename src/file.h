@@ -18,8 +18,8 @@
 #include <glibmm/ustring.h>
 #include "ui/dialog/ocaldialogs.h"
 
-struct SPDesktop;
-struct SPDocument;
+class SPDesktop;
+class SPDocument;
 class SPObject;
 
 namespace Inkscape {

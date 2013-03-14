@@ -14,7 +14,7 @@
 
 #include <glib.h>
 
-struct SPDocument;
+class SPDocument;
 
 bool sp_export_jpg_file (SPDocument *doc, gchar const *filename, double x0, double y0, double x1, double y1,
              unsigned int width, unsigned int height, double xdpi, double ydpi, unsigned long bgcolor, double quality, GSList *items_only = NULL);

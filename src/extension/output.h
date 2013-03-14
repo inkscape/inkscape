@@ -15,7 +15,7 @@
 
 #include <gtk/gtk.h>
 #include "extension.h"
-struct SPDocument;
+class SPDocument;
 
 namespace Inkscape {
 namespace Extension {

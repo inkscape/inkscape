@@ -29,6 +29,7 @@ namespace LivePathEffect {
 }
 
 class SPCSSAttr;
+class SPDesktop;
 
 namespace Inkscape {
     class SelectionHelper {

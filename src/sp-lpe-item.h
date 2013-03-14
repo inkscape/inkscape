@@ -25,7 +25,8 @@
 #define SP_IS_LPE_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_LPE_ITEM))
 
 struct LivePathEffectObject;
-struct SPCurve;
+class SPCurve;
+class SPDesktop;
 
 namespace Inkscape{ 
 namespace Display {

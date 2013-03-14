@@ -26,8 +26,7 @@
 #define SP_IS_BOX3D(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_BOX3D))
 #define SP_IS_BOX3D_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_BOX3D))
 
-class Box3DSide;
-class Persp3D;
+struct Persp3D;
 class Persp3DReference;
 
 class SPBox3D : public SPGroup {

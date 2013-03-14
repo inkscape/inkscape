@@ -71,7 +71,7 @@ namespace Gtk {
 #define INKSCAPE_EXTENSION_NS_NC "extension"
 #define INKSCAPE_EXTENSION_NS    "extension:"
 
-struct SPDocument;
+class SPDocument;
 
 namespace Inkscape {
 namespace Extension {

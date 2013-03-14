@@ -28,7 +28,7 @@
  */
 
 #include <gtk/gtk.h>
-struct SPDesktop;
+class SPDesktop;
 
 void       sp_tweak_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder);
 

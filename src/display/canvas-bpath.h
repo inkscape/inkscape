@@ -22,7 +22,7 @@
 struct SPCanvasBPath;
 struct SPCanvasBPathClass;
 struct SPCanvasGroup;
-struct SPCurve;
+class SPCurve;
 
 #define SP_TYPE_CANVAS_BPATH (sp_canvas_bpath_get_type ())
 #define SP_CANVAS_BPATH(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CANVAS_BPATH, SPCanvasBPath))

@@ -17,7 +17,7 @@
 class SPDesktop;
 class SPDocument;
 class SPEventContext;
-class SPNamedView;
+struct SPNamedView;
 struct SPCanvas;
 struct SPCanvasGroup;
 struct SPCanvasItem;

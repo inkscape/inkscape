@@ -13,7 +13,7 @@
  */
 
 #include <gtk/gtk.h>
-struct SPDesktop;
+class SPDesktop;
 
 void sp_gradient_toolbox_prep(SPDesktop * /*desktop*/, GtkActionGroup* mainActions, GObject* holder);
 

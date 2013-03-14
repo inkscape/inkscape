@@ -15,7 +15,7 @@
  */
 
 #include <gtk/gtk.h>
-struct SPDesktop;
+class SPDesktop;
 
 void sp_mesh_toolbox_prep(    SPDesktop * /*desktop*/, GtkActionGroup* mainActions, GObject* holder);
 

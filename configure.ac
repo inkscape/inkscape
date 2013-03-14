@@ -130,31 +130,6 @@ if test "$GCC" = "yes"; then
   # C++-specific flags are defined further below.  Look for CXXFLAGS...
 fi
 
-dnl Verify our GCC version
-if test "x$GXX" = "xyes"; then
-	AC_MSG_CHECKING([GNU compiler version])
-
-	# Don't pass CXXFLAGS to the following CXX command as some 
-	# of them can't be specified along with '-v'.
-	cc_version=["`$CXX -v 2>&1 </dev/null |grep 'gcc version' |\
-		sed 's/.*gcc version \([-a-z0-9\.]*\).*/\1/'`"]
-
-	AC_MSG_RESULT([$cc_version])
-
-	# Some version numbers
-	cc_vers_major=`echo $cc_version | cut -f1 -d.`
-	cc_vers_minor=`echo $cc_version | cut -f2 -d.`
-	cc_vers_patch=`echo $cc_version | cut -f3 -d.`
-	test -n "$cc_vers_major" || cc_vers_major=0
-	test -n "$cc_vers_minor" || cc_vers_minor=0
-	test -n "$cc_vers_patch" || cc_vers_patch=0
-	cc_vers_all=`expr $cc_vers_major '*' 1000000 + $cc_vers_minor '*' 1000 + $cc_vers_patch`
-
-	if test $cc_vers_major -lt 3; then
-		AC_MSG_ERROR([gcc >= 3.0 is needed to compile inkscape])
-	fi
-fi
-
 # Detect a working version of unordered containers.
 AC_MSG_CHECKING([TR1 unordered_set usability])
 AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <tr1/unordered_set>]],

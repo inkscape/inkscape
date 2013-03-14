@@ -21,7 +21,7 @@
 
 
 class SPConnEnd;
-struct SPCurve;
+class SPCurve;
 class SPPath;
 class SPItem;
 class SPObject;

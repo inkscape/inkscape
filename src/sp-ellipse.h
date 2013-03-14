@@ -27,9 +27,6 @@ G_BEGIN_DECLS
 #define SP_IS_GENERICELLIPSE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_GENERICELLIPSE))
 #define SP_IS_GENERICELLIPSE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_GENERICELLIPSE))
 
-class SPGenericEllipse;
-class SPGenericEllipseClass;
-
 struct SPGenericEllipse : public SPShape {
 	SVGLength cx;
 	SVGLength cy;

@@ -9,7 +9,7 @@
 #include <2geom/point.h>
 
 struct SPDrawContext;
-struct SPCurve;
+class SPCurve;
 struct SPCanvasItem;
 
 /// The drawing anchor.

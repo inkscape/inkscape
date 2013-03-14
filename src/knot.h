@@ -24,8 +24,6 @@
 #include "sp-item.h"
 
 class SPDesktop;
-class SPKnot;
-class SPKnotClass;
 struct SPCanvasItem;
 
 #define SP_TYPE_KNOT            (sp_knot_get_type())
