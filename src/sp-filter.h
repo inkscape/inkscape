@@ -35,7 +35,7 @@ namespace Filters {
 class Filter;
 } }
 
-struct SPFilterReference;
+class SPFilterReference;
 class SPFilterPrimitive;
 
 struct ltstr {

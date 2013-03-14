@@ -27,9 +27,6 @@
 #define SP_IS_BOX3D_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_BOX3D_CONTEXT))
 #define SP_IS_BOX3D_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_BOX3D_CONTEXT))
 
-class Box3DContext;
-class Box3DContextClass;
-
 struct Box3DContext : public SPEventContext {
     SPItem *item;
     Geom::Point center;

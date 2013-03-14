@@ -27,7 +27,7 @@
 
 namespace Inkscape {
 
-class Application;
+struct Application;
 class Selection;
 class SPWidgetImpl;
 

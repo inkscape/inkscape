@@ -20,7 +20,7 @@
 class SPDesktop;
 class SPObject;
 class SPCSSAttr;
-class SPStyle;
+struct SPStyle;
 
 namespace Inkscape {
 class Selection;

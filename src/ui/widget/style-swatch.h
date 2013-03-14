@@ -27,7 +27,7 @@
 #include "preferences.h"
 
 class SPUnit;
-class SPStyle;
+struct SPStyle;
 class SPCSSAttr;
 
 namespace Gtk {

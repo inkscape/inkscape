@@ -19,7 +19,7 @@ class SPObject;
 
 namespace Inkscape {
 namespace XML {
-struct Node;
+class Node;
 }
 }
 

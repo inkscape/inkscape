@@ -48,8 +48,6 @@
 #include "livepatheffect-add.h"
 
 namespace Inkscape {
-class Application;
-
 namespace UI {
 namespace Dialog {
 

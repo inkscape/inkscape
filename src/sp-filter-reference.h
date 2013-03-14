@@ -5,7 +5,7 @@
 
 class SPObject;
 class SPDocument;
-class SPFilter;
+struct SPFilter;
 
 class SPFilterReference : public Inkscape::URIReference {
 public:

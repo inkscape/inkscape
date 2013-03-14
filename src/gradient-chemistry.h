@@ -20,6 +20,7 @@
 
 #include "sp-gradient.h"
 
+class SPCSSAttr;
 class SPItem;
 
 /**
@@ -95,8 +96,6 @@ Geom::Point getGradientCoords(SPItem *item, GrPointType point_type, guint point_
 
 SPGradient *sp_item_gradient_get_vector(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
 SPGradientSpread sp_item_gradient_get_spread(SPItem *item, Inkscape::PaintTarget fill_or_stroke);
-
-struct SPCSSAttr;
 
 void sp_item_gradient_stop_set_style(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke, SPCSSAttr *stop);
 guint32 sp_item_gradient_stop_query_style(SPItem *item, GrPointType point_type, guint point_i, Inkscape::PaintTarget fill_or_stroke);

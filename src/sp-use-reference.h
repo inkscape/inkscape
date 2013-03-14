@@ -18,7 +18,7 @@ class Path;
 
 namespace Inkscape {
 namespace XML {
-    struct Node;
+class Node;
 }
 }
 

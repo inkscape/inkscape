@@ -34,7 +34,7 @@ struct SPKnot;
 class SPDesktop;
 class SPCSSAttr;
 class SPLinearGradient;
-class SPMeshGradient;
+struct SPMeshGradient;
 class SPItem;
 class SPObject;
 class SPRadialGradient;

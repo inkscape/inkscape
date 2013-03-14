@@ -34,7 +34,7 @@ namespace Inkscape {
 using Inkscape::Extension::Internal::CairoRenderContext;
 #endif
 
-class SPStyle;
+struct SPStyle;
 class Shape;
 class SPPrintContext;
 class SVGLength;

@@ -59,7 +59,7 @@ namespace Proj {
     class TransfMat3x4;
 }
 
-class SPDocumentPrivate;
+struct SPDocumentPrivate;
 
 /// Typed SVG document implementation.
 class SPDocument : public Inkscape::GC::Managed<>,

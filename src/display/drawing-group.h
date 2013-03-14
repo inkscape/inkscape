@@ -14,7 +14,7 @@
 
 #include "display/drawing-item.h"
 
-class SPStyle;
+struct SPStyle;
 
 namespace Inkscape {
 

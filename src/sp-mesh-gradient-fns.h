@@ -14,7 +14,7 @@ class Node;
 }
 }
 
-class SPMeshGradient;
+struct SPMeshGradient;
 
 #define SP_TYPE_MESHGRADIENT (sp_meshgradient_get_type())
 #define SP_MESHGRADIENT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_MESHGRADIENT, SPMeshGradient))

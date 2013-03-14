@@ -18,7 +18,8 @@
 
 class SPColor;
 class SPPaintServer;
-class SPStyle;
+struct SPStyle;
+
 namespace Inkscape {
 class DrawingContext;
 }

@@ -16,7 +16,7 @@
 #include "display/nr-filter-types.h"
 #include "svg/svg-length.h"
 
-class SPStyle;
+struct SPStyle;
 
 namespace Inkscape {
 namespace Filters {

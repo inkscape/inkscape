@@ -113,7 +113,7 @@ private:
     Proj::Axis _axis;
 };
 
-class VPDrag;
+struct VPDrag;
 
 struct less_ptr : public std::binary_function<VanishingPoint *, VanishingPoint *, bool> {
     bool operator()(VanishingPoint *vp1, VanishingPoint *vp2) {

@@ -30,7 +30,7 @@ class Entry;
 class SPDesktop;
 
 namespace Inkscape {
-class Application;
+struct Application;
 } // namespace Inkscape
  
 typedef struct { 

@@ -12,7 +12,7 @@
 #include "sp-gradient-units.h"
 
 class SPGradient;
-class SPMeshGradient;
+struct SPMeshGradient;
 
 SPGradientSpread sp_gradient_get_spread (SPGradient *gradient);
 

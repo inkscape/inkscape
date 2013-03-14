@@ -15,11 +15,11 @@
 
 namespace Inkscape {
 namespace XML {
-struct Node;
+class Node;
 }
 }
 
-struct LivePathEffectObject;
+class LivePathEffectObject;
 
 namespace Inkscape {
 

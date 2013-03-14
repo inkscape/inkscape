@@ -21,7 +21,7 @@ class SPDesktop;
 
 namespace Inkscape {
 class Selection;
-class Application;
+struct Application;
 }
 
 namespace Inkscape {

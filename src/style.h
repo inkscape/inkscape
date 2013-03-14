@@ -34,17 +34,6 @@ class Node;
 
 class SPCSSAttr;
 
-class SPIFloat;
-class SPIScale24;
-class SPIInt;
-class SPIShort;
-class SPIEnum;
-class SPIString;
-class SPILength;
-class SPIPaint;
-class SPIFontSize;
-class SPIBaselineShift;
-
 /// Float type internal to SPStyle.
 struct SPIFloat {
     unsigned set : 1;

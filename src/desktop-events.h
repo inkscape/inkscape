@@ -17,7 +17,7 @@
 #include <gtk/gtk.h>
 
 class  SPDesktop;
-class  SPDesktopWidget;
+struct SPDesktopWidget;
 struct SPCanvasItem;
 
 /* Item handlers */

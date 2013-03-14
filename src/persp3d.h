@@ -27,7 +27,7 @@
 #include "inkscape.h"
 
 class SPBox3D;
-class Box3DContext;
+struct Box3DContext;
 
 class Persp3DImpl {
 public:

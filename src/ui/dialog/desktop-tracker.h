@@ -16,7 +16,7 @@ class SPDesktop;
 
 namespace Inkscape {
 
-class Application;
+struct Application;
 
 namespace UI {
 namespace Dialog {

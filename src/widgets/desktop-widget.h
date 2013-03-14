@@ -25,7 +25,7 @@
 typedef struct _EgeColorProfTracker EgeColorProfTracker;
 struct SPCanvas;
 class SPDesktop;
-class SPDesktopWidget;
+struct SPDesktopWidget;
 class SPObject;
 
 

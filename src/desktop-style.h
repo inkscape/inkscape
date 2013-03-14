@@ -16,13 +16,13 @@
 #include <glib.h>
 
 class ColorRGBA;
-struct SPCSSAttr;
+class  SPCSSAttr;
 class  SPDesktop;
 class  SPObject;
 struct SPStyle;
 namespace Inkscape {
 namespace XML {
-struct Node;
+class Node;
 }
 }
 namespace Glib { class ustring; }
