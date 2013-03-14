@@ -24,8 +24,7 @@
 
 GType sp_pattern_get_type (void);
 
-class SPPattern;
-class SPPatternClass;
+struct SPPattern;
 
 #include "svg/svg-length.h"
 #include "sp-paint-server.h"

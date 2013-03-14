@@ -23,7 +23,7 @@ namespace Inkscape {
 
 namespace XML {
 
-class NodeEventVector;
+struct NodeEventVector;
 
 /**
  * @brief An observer that relays notifications to multiple other observers

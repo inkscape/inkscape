@@ -26,7 +26,7 @@
 #include "button.h"
 #include "preferences.h"
 
-class SPUnit;
+struct SPUnit;
 struct SPStyle;
 class SPCSSAttr;
 

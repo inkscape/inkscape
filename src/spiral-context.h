@@ -27,9 +27,6 @@
 #define SP_IS_SPIRAL_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_SPIRAL_CONTEXT))
 #define SP_IS_SPIRAL_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_SPIRAL_CONTEXT))
 
-class SPSpiralContext;
-class SPSpiralContextClass;
-
 struct SPSpiralContext : public SPEventContext {
 	SPItem * item;
 	Geom::Point center;

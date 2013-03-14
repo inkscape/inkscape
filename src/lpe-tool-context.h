@@ -24,9 +24,6 @@
 #define SP_IS_LPETOOL_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_LPETOOL_CONTEXT))
 #define SP_IS_LPETOOL_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_LPETOOL_CONTEXT))
 
-class SPLPEToolContext;
-class SPLPEToolContextClass;
-
 /* This is the list of subtools from which the toolbar of the LPETool is built automatically */
 extern const int num_subtools;
 

@@ -25,9 +25,6 @@
 #define SP_IS_GRADIENT_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_GRADIENT_CONTEXT))
 #define SP_IS_GRADIENT_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_GRADIENT_CONTEXT))
 
-class SPGradientContext;
-class SPGradientContextClass;
-
 struct SPGradientContext : public SPEventContext {
 
     Geom::Point origin;

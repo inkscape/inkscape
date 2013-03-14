@@ -29,9 +29,6 @@
 #define FLOOD_COLOR_CHANNEL_B 4
 #define FLOOD_COLOR_CHANNEL_A 8
 
-class SPFloodContext;
-class SPFloodContextClass;
-
 struct SPFloodContext : public SPEventContext {
 	SPItem *item;
 

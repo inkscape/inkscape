@@ -80,9 +80,9 @@ protected:
         void perform(LayerPropertiesDialog &dialog);
     };
 
-    friend class Rename;
-    friend class Create;
-    friend class Move;
+    friend struct Rename;
+    friend struct Create;
+    friend struct Move;
 
     Strategy *_strategy;
     SPDesktop *_desktop;

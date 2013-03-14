@@ -21,7 +21,7 @@
 #define SP_IS_FEDIFFUSELIGHTING(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEDIFFUSELIGHTING))
 #define SP_IS_FEDIFFUSELIGHTING_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEDIFFUSELIGHTING))
 
-class SVGICCColor;
+struct SVGICCColor;
 
 namespace Inkscape {
 namespace Filters {

@@ -15,8 +15,6 @@
 #include "ui/view/view-widget.h"
 
 class SPDocument;
-class SPSVGSPViewWidget;
-class SPSVGSPViewWidgetClass;
 
 #define SP_TYPE_SVG_VIEW_WIDGET (sp_svg_view_widget_get_type ())
 #define SP_SVG_VIEW_WIDGET(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_SVG_VIEW_WIDGET, SPSVGSPViewWidget))

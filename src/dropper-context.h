@@ -20,9 +20,6 @@ G_BEGIN_DECLS
 #define SP_DROPPER_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_DROPPER_CONTEXT, SPDropperContext))
 #define SP_IS_DROPPER_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_DROPPER_CONTEXT))
 
-class SPDropperContext;
-class SPDropperContextClass;
-
 enum {
       SP_DROPPER_PICK_VISIBLE,
       SP_DROPPER_PICK_ACTUAL  

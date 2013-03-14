@@ -29,11 +29,7 @@
 #define SP_IS_COMMON_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_COMMON_CONTEXT))
 #define SP_IS_COMMON_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_COMMON_CONTEXT))
 
-class SPCommonContext;
-class SPCommonContextClass;
-
 #define SAMPLING_SIZE 8        /* fixme: ?? */
-
 
 struct SPCommonContext : public SPEventContext {
     /** accumulated shape which ultimately goes in svg:path */

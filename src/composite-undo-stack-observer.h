@@ -18,7 +18,7 @@
 
 namespace Inkscape {
 
-class Event;
+struct Event;
 
 /**
  * Aggregates UndoStackObservers for management and triggering in an SPDocument's undo/redo

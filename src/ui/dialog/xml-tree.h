@@ -29,7 +29,7 @@
 #include "message.h"
 
 class SPDesktop;
-struct SPObject;
+class SPObject;
 struct SPXMLViewAttrList;
 struct SPXMLViewContent;
 struct SPXMLViewTree;

@@ -16,7 +16,6 @@
 #include <2geom/rect.h>
 #include "color.h"
 
-class SPColor;
 class SPPaintServer;
 struct SPStyle;
 

@@ -23,8 +23,6 @@
 #define SP_IS_FILTER_PRIMITIVE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_FILTER_PRIMITIVE))
 #define SP_IS_FILTER_PRIMITIVE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_FILTER_PRIMITIVE))
 
-class SPFilterPrimitive;
-class SPFilterPrimitiveClass;
 namespace Inkscape {
 namespace Filters {
 class Filter;

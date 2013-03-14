@@ -24,7 +24,7 @@ class SPObject;
 
 namespace Inkscape {
     namespace Extension {
-        struct Extension;
+        class Extension;
     }
 }
 

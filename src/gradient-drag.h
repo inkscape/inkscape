@@ -33,12 +33,12 @@ struct SPKnot;
 
 class SPDesktop;
 class SPCSSAttr;
-class SPLinearGradient;
+struct SPLinearGradient;
 struct SPMeshGradient;
 class SPItem;
 class SPObject;
-class SPRadialGradient;
-class SPStop;
+struct SPRadialGradient;
+struct SPStop;
 
 namespace Inkscape {
 class Selection;

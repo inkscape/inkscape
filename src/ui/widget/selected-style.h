@@ -40,7 +40,7 @@
 #include "helper/units.h"
 
 class SPDesktop;
-class SPUnit;
+struct SPUnit;
 
 namespace Inkscape {
 namespace UI {

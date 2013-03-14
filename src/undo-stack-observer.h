@@ -14,7 +14,7 @@
 
 namespace Inkscape {
 
-class Event;
+struct Event;
 
 /**
  * Observes changes made to the undo and redo stacks.

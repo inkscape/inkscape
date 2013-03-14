@@ -25,9 +25,6 @@
 #define INK_IS_NODE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), INK_TYPE_NODE_TOOL))
 #define INK_IS_NODE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), INK_TYPE_NODE_TOOL))
 
-class InkNodeTool;
-class InkNodeToolClass;
-
 namespace Inkscape {
 
 namespace Display {

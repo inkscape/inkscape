@@ -17,7 +17,7 @@
 
 #include "display/sp-ctrlline.h"
 
-struct SPItem;
+class SPItem;
 
 #define SP_TYPE_CTRLCURVE (SPCtrlCurve::getType())
 #define SP_CTRLCURVE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_CTRLCURVE, SPCtrlCurve))

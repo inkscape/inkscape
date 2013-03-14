@@ -21,9 +21,6 @@
 #define SP_SYMBOL(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), SP_TYPE_SYMBOL, SPSymbol))
 #define SP_IS_SYMBOL(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), SP_TYPE_SYMBOL))
 
-class SPSymbol;
-class SPSymbolClass;
-
 #include <2geom/affine.h>
 #include "svg/svg-length.h"
 #include "enums.h"

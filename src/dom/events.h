@@ -66,7 +66,6 @@ typedef dom::NodePtr  NodePtr ;
 
 
 //forward declarations
-class Event;
 class EventTarget;
 class EventListener;
 class DocumentEvent;

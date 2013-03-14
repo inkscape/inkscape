@@ -20,9 +20,6 @@
 #define SP_IS_IMAGE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_IMAGE))
 #define SP_IS_IMAGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_IMAGE))
 
-class SPImage;
-class SPImageClass;
-
 /* SPImage */
 
 #include <gdk-pixbuf/gdk-pixbuf.h>

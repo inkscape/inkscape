@@ -30,8 +30,6 @@
 #define SP_IS_TEXT_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_TEXT_CONTEXT))
 
 struct SPCtrlLine;
-class SPTextContext;
-class SPTextContextClass;
 
 struct SPTextContext : public SPEventContext {
 

@@ -14,7 +14,7 @@
 
 #include "display/nr-filter-primitive.h"
 
-class SVGICCColor;
+struct SVGICCColor;
 
 namespace Inkscape {
 namespace Filters {

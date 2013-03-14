@@ -3,7 +3,7 @@
 
 #include <glib.h>
 
-class SVGICCColor;
+struct SVGICCColor;
 
 guint32 sp_svg_read_color(gchar const *str, unsigned int dfl);
 guint32 sp_svg_read_color(gchar const *str, gchar const **end_ptr, guint32 def);

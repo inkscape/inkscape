@@ -14,7 +14,6 @@
 #include "color.h"
 
 class SPObjectClass;
-class SPColor;
 
 struct SPStop;
 struct SPStopClass;

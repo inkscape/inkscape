@@ -33,7 +33,7 @@
 class SPDocument;
 class SPObject;
 class SPGradient;
-class SPStop;
+struct SPStop;
 
 struct SPGradientVectorSelector {
     GtkVBox vbox;

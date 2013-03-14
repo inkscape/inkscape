@@ -22,8 +22,6 @@
 #define SP_IS_FEBLEND(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEBLEND))
 #define SP_IS_FEBLEND_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEBLEND))
 
-class SPFeBlendClass;
-
 struct SPFeBlend : public SPFilterPrimitive {
     Inkscape::Filters::FilterBlendMode blend_mode;
     int in2;

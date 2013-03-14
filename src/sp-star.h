@@ -16,16 +16,11 @@
 
 #include "sp-polygon.h"
 
-
-
 #define SP_TYPE_STAR            (sp_star_get_type ())
 #define SP_STAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_STAR, SPStar))
 #define SP_STAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SP_TYPE_STAR, SPStarClass))
 #define SP_IS_STAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_STAR))
 #define SP_IS_STAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_STAR))
-
-class SPStar;
-class SPStarClass;
 
 typedef enum {
 	SP_STAR_POINT_KNOT1,

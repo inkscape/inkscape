@@ -28,8 +28,8 @@
 #include "snap-candidate.h"
 
 class SPGuideConstraint;
-struct SPClipPathReference;
-struct SPMaskReference;
+class SPClipPathReference;
+class SPMaskReference;
 class SPAvoidRef;
 struct SPPrintContext;
 

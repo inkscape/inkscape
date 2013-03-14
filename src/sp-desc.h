@@ -17,9 +17,6 @@
 #define SP_TYPE_DESC            (sp_desc_get_type ())
 #define SP_IS_DESC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_DESC))
 
-class SPDesc;
-class SPDescClass;
-
 struct SPDesc : public SPObject {
 };
 

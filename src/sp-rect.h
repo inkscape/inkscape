@@ -26,9 +26,6 @@ G_BEGIN_DECLS
 #define SP_IS_RECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_RECT))
 #define SP_IS_RECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_RECT))
 
-class SPRect;
-class SPRectClass;
-
 struct SPRect : public SPShape {
 	SVGLength x;
 	SVGLength y;

@@ -13,7 +13,7 @@ class Node;
 }
 }
 
-class SPRadialGradient;
+struct SPRadialGradient;
 
 #define SP_TYPE_RADIALGRADIENT (sp_radialgradient_get_type())
 #define SP_RADIALGRADIENT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_RADIALGRADIENT, SPRadialGradient))

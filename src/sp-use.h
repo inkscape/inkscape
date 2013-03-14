@@ -25,8 +25,6 @@
 #define SP_IS_USE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_USE))
 #define SP_IS_USE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_USE))
 
-class SPUse;
-class SPUseClass;
 class SPUseReference;
 
 struct SPUse : public SPItem {

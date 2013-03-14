@@ -32,7 +32,7 @@
 
 #include <gtkmm/checkbutton.h>
 
-class SPUnit;
+struct SPUnit;
 class SPDocument;
 
 namespace Gtk {

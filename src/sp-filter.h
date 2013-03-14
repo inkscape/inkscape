@@ -36,7 +36,7 @@ class Filter;
 } }
 
 class SPFilterReference;
-class SPFilterPrimitive;
+struct SPFilterPrimitive;
 
 struct ltstr {
     bool operator()(const char* s1, const char* s2) const;

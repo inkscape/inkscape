@@ -32,8 +32,6 @@ enum FeCompositeOperator {
     COMPOSITE_ENDOPERATOR
 };
 
-class SPFeCompositeClass;
-
 struct SPFeComposite : public SPFilterPrimitive {
     FeCompositeOperator composite_operator;
     double k1, k2, k3, k4;

@@ -29,9 +29,6 @@
 #define SP_IS_SPIRAL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SP_TYPE_SPIRAL))
 #define SP_IS_SPIRAL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SP_TYPE_SPIRAL))
 
-class SPSpiral;
-class SPSpiralClass;
-
 /**
  * A spiral Shape.
  *
