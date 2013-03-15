@@ -1124,9 +1124,6 @@ file_import(SPDocument *in_doc, const Glib::ustring &uri,
 
         prevent_id_clashes(doc, in_doc);
 
-        SPObject *in_defs = in_doc->getDefs();
-        Inkscape::XML::Node *last_def = in_defs->getRepr()->lastChild();
-
         SPCSSAttr *style = sp_css_attr_from_object(doc->getRoot());
 
         // Count the number of top-level items in the imported document.

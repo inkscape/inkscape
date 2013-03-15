@@ -39,7 +39,6 @@
 #include "document.h"
 #include "document-undo.h"
 
-#include "pixmaps/cursor-dropper.xpm"
 #include "pixmaps/cursor-dropper-f.xpm"
 #include "pixmaps/cursor-dropper-s.xpm"
 
