@@ -20,7 +20,7 @@ class Label;
 class ListStore;
 }
 
-class SPFontSelector;
+struct SPFontSelector;
 class font_instance;
 
 

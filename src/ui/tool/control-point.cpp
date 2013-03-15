@@ -7,8 +7,8 @@
  */
 
 #include <iostream>
+#include <gdk/gdkkeysyms.h>
 #include <gdkmm.h>
-#include <gtkmm.h>
 #include <2geom/point.h>
 #include "desktop.h"
 #include "desktop-handles.h"

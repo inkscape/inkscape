@@ -2,7 +2,6 @@
 # include <config.h>
 #endif
 
-#include <gtkmm.h>
 #include <libnrtype/font-instance.h>
 #include <libnrtype/TextWrapper.h>
 #include <libnrtype/one-glyph.h>

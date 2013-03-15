@@ -22,7 +22,7 @@ class Path;
 class FloatLigne;
 
 class SweepTree;
-struct SweepTreeList;
+class SweepTreeList;
 class SweepEventQueue;
 
 enum {

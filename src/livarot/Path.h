@@ -14,11 +14,11 @@
 #include <2geom/point.h>
 
 struct PathDescr;
-class PathDescrLineTo;
-class PathDescrArcTo;
-class PathDescrCubicTo;
-class PathDescrBezierTo;
-class PathDescrIntermBezierTo;
+struct PathDescrLineTo;
+struct PathDescrArcTo;
+struct PathDescrCubicTo;
+struct PathDescrBezierTo;
+struct PathDescrIntermBezierTo;
 
 struct SPStyle;
 
