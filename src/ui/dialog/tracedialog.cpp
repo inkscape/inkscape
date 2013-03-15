@@ -20,6 +20,7 @@
 #include <gtkmm/frame.h>
 #include "ui/widget/spinbutton.h"
 #include "ui/widget/frame.h"
+#include <gtkmm/radiobutton.h>
 #include <gtkmm/stock.h>
 
 #include <gtk/gtk.h> //for GTK_RESPONSE* types

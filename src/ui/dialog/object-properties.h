@@ -35,6 +35,8 @@
 
 #include "ui/widget/panel.h"
 #include "ui/widget/frame.h"
+
+#include <gtkmm/checkbutton.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/expander.h>
 #include <gtkmm/frame.h>

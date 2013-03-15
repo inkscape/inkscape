@@ -57,6 +57,7 @@ extern "C" {
 #include "widgets/icon.h"
 #include "widgets/font-selector.h"
 #include <glibmm/i18n.h>
+#include <glibmm/markup.h>
 #include "unit-constants.h"
 
 

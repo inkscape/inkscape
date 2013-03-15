@@ -32,6 +32,7 @@
 #endif
 
 #include <gtkmm/alignment.h>
+#include <gtkmm/checkbutton.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/frame.h>

@@ -59,6 +59,7 @@
 #include "xml/attribute-record.h"
 
 #include <glibmm/i18n.h>
+#include <glibmm/regex.h>
 
 namespace Inkscape {
 namespace UI {
