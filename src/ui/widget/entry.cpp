@@ -13,6 +13,8 @@
 
 #include "entry.h"
 
+#include <gtkmm/entry.h>
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {

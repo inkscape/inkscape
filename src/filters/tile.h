@@ -21,8 +21,6 @@
 #define SP_IS_FETILE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FETILE))
 
 /* FeTile base class */
-class SPFeTileClass;
-
 struct SPFeTile : public SPFilterPrimitive {
     
 };

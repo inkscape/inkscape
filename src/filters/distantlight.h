@@ -25,10 +25,6 @@
 
 /* Distant light class */
 
-
-class SPFeDistantLight;
-class SPFeDistantLightClass;
-
 struct SPFeDistantLight : public SPObject {
 
     /** azimuth attribute */

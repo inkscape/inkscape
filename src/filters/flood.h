@@ -23,8 +23,6 @@ G_BEGIN_DECLS
 #define SP_IS_FEFLOOD(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEFLOOD))
 #define SP_IS_FEFLOOD_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEFLOOD))
 
-class SPFeFloodClass;
-
 struct SPFeFlood : public SPFilterPrimitive {
     guint32 color;
     SVGICCColor *icc;

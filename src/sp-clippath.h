@@ -21,7 +21,7 @@
 #define SP_IS_CLIPPATH(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_CLIPPATH))
 #define SP_IS_CLIPPATH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_CLIPPATH))
 
-class SPClipPathView;
+struct SPClipPathView;
 
 #include "sp-object-group.h"
 #include "uri-references.h"

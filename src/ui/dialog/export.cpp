@@ -22,14 +22,21 @@
 
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
-#include <gtkmm/label.h>
-#include <gtkmm/widget.h>
-#include <gtkmm/togglebutton.h>
+#include <gtkmm/dialog.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/image.h>
-#include <gtkmm/stockid.h>
+#include <gtkmm/label.h>
+#include <gtkmm/spinbutton.h>
 #include <gtkmm/stock.h>
-#include <gtkmm/table.h>
+#include <gtkmm/stockid.h>
+#if WITH_GTKMM_3_0
+# include <gtkmm/grid.h>
+#else
+# include <gtkmm/table.h>
+#endif
+#include <gtkmm/togglebutton.h>
+#include <gtkmm/widget.h>
+
 #ifdef WITH_GNOME_VFS
 # include <libgnomevfs/gnome-vfs-init.h>  // gnome_vfs_initialized
 #endif

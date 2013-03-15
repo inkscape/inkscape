@@ -11,10 +11,10 @@
 #define INKSCAPE_UI_WIDGET_ENTRY__H
 
 #include "labelled.h"
-#include <gtkmm.h>
 
-#include <gtkmm/entry.h>
-#include <gtkmm/comboboxtext.h>
+namespace Gtk {
+class Entry;
+}
 
 namespace Inkscape {
 namespace UI {

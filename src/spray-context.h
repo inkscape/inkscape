@@ -27,9 +27,6 @@
 #define SP_IS_SPRAY_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_SPRAY_CONTEXT))
 #define SP_IS_SPRAY_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_SPRAY_CONTEXT))
 
-class SPSprayContext;
-class SPSprayContextClass;
-
 namespace Inkscape {
   namespace UI {
       namespace Dialog {

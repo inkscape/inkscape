@@ -24,7 +24,6 @@
 #define SP_IS_FETURBULENCE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FETURBULENCE))
 
 /* FeTurbulence base class */
-class SPFeTurbulenceClass;
 
 struct SPFeTurbulence : public SPFilterPrimitive {
     /** TURBULENCE ATTRIBUTES HERE */

@@ -35,7 +35,7 @@ public:
     CSwitch(SPGroup *group);
     virtual ~CSwitch();
 
-    friend class SPSwitch;
+    friend struct SPSwitch;
     
     virtual void onChildAdded(Inkscape::XML::Node *child);
     virtual void onChildRemoved(Inkscape::XML::Node *child);

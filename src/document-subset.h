@@ -51,7 +51,7 @@ private:
 
     void _remove(SPObject *obj, bool subtree);
 
-    class Relations;
+    struct Relations;
 
     Relations *_relations;
 };

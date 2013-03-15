@@ -31,8 +31,6 @@ class FilterSpecularLighting;
 }
 }
 
-class SPFeSpecularLightingClass;
-
 struct SPFeSpecularLighting : public SPFilterPrimitive {
     gfloat surfaceScale;
     guint surfaceScale_set : 1;

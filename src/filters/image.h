@@ -24,8 +24,6 @@
 #define SP_IS_FEIMAGE(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEIMAGE))
 #define SP_IS_FEIMAGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEIMAGE))
 
-class SPFeImageClass;
-
 struct SPFeImage : public SPFilterPrimitive {
     gchar *href;
 

@@ -18,9 +18,6 @@
 #define SP_MEASURE_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), SP_TYPE_MEASURE_CONTEXT, SPMeasureContext))
 #define SP_IS_MEASURE_CONTEXT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_MEASURE_CONTEXT))
 
-class SPMeasureContext;
-class SPMeasureContextClass;
-
 struct SPMeasureContext {
 	SPEventContext event_context;
 	SPCanvasItem *grabbed;

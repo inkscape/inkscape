@@ -24,8 +24,6 @@
 #define SP_IS_FECONVOLVEMATRIX(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FECONVOLVEMATRIX))
 #define SP_IS_FECONVOLVEMATRIX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FECONVOLVEMATRIX))
 
-class SPFeConvolveMatrixClass;
-
 struct SPFeConvolveMatrix : public SPFilterPrimitive {
     NumberOptNumber order;
     std::vector<gdouble> kernelMatrix;

@@ -63,7 +63,7 @@ using std::vector;
 
 #define SP_CSS_FONT_SIZE_DEFAULT 12.0;
 
-class SPStyleEnum;
+struct SPStyleEnum;
 
 /*#########################
 ## FORWARD DECLARATIONS

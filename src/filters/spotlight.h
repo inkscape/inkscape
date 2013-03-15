@@ -23,12 +23,6 @@
 #define SP_IS_FESPOTLIGHT(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FESPOTLIGHT))
 #define SP_IS_FESPOTLIGHT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FESPOTLIGHT))
 
-/* Distant light class */
-
-
-class SPFeSpotLight;
-class SPFeSpotLightClass;
-
 struct SPFeSpotLight : public SPObject {
 
     /** x coordinate of the light source */

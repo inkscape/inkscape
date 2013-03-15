@@ -21,9 +21,6 @@
 #define SP_IS_TWEAK_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_TWEAK_CONTEXT))
 #define SP_IS_TWEAK_CONTEXT_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), SP_TYPE_TWEAK_CONTEXT))
 
-class SPTweakContext;
-class SPTweakContextClass;
-
 #define SAMPLING_SIZE 8        /* fixme: ?? */
 
 #define TC_MIN_PRESSURE      0.0

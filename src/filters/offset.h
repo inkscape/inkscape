@@ -20,8 +20,6 @@
 #define SP_IS_FEOFFSET(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FEOFFSET))
 #define SP_IS_FEOFFSET_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FEOFFSET))
 
-class SPFeOffsetClass;
-
 struct SPFeOffset : public SPFilterPrimitive {
     double dx, dy;
 };

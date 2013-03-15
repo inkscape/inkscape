@@ -27,9 +27,6 @@
 #define SP_IS_MESH_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_MESH_CONTEXT))
 #define SP_IS_MESH_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_MESH_CONTEXT))
 
-class SPMeshContext;
-class SPMeshContextClass;
-
 struct SPMeshContext : public SPEventContext {
 
     Geom::Point origin;

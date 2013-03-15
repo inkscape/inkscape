@@ -24,8 +24,6 @@ namespace Filters {
 class FilterComponentTransfer;
 } }
 
-class SPFeComponentTransferClass;
-
 struct SPFeComponentTransfer : public SPFilterPrimitive {
     Inkscape::Filters::FilterComponentTransfer *renderer;
 };

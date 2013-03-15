@@ -21,9 +21,6 @@
 #define SP_FEMERGENODE(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_FEMERGENODE, SPFeMergeNode))
 #define SP_IS_FEMERGENODE(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_FEMERGENODE))
 
-class SPFeMergeNode;
-class SPFeMergeNodeClass;
-
 struct SPFeMergeNode : public SPObject {
     int input;
 };

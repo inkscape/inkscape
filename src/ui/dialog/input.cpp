@@ -17,7 +17,9 @@
 
 #include <glib/gprintf.h>
 #include <glibmm/i18n.h>
+
 #include <gtkmm/alignment.h>
+#include <gtkmm/buttonbox.h>
 #include <gtkmm/cellrenderercombo.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/comboboxtext.h>

@@ -21,7 +21,7 @@
 #define SP_GUIDELINE(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_GUIDELINE, SPGuideLine))
 #define SP_IS_GUIDELINE(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_GUIDELINE))
 
-class SPCtrlPoint;
+struct SPCtrlPoint;
 
 struct SPGuideLine {
     SPCanvasItem item;

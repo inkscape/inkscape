@@ -22,7 +22,7 @@
 
 struct SPCanvasItem;
 class SPCurve;
-struct SPPath;
+class SPPath;
 
 namespace Inkscape {
 namespace XML { class Node; }

@@ -16,7 +16,7 @@
 #include <2geom/rect.h>
 #include "color.h"
 
-class SPPaintServer;
+struct SPPaintServer;
 struct SPStyle;
 
 namespace Inkscape {

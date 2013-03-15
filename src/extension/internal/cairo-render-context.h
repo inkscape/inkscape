@@ -29,7 +29,7 @@
 #include <cairo.h>
 
 class SPClipPath;
-class SPMask;
+struct SPMask;
 
 namespace Inkscape {
 namespace Extension {
@@ -37,8 +37,8 @@ namespace Internal {
 
 class CairoRenderer;
 class CairoRenderContext;
-class CairoRenderState;
-class CairoGlyphInfo;
+struct CairoRenderState;
+struct CairoGlyphInfo;
 
 // Holds info for rendering a glyph
 struct CairoGlyphInfo {

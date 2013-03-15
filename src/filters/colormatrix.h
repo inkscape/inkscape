@@ -21,8 +21,6 @@
 #define SP_IS_FECOLORMATRIX(obj) (G_TYPE_CHECK_INSTANCE_TYPE((obj), SP_TYPE_FECOLORMATRIX))
 #define SP_IS_FECOLORMATRIX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), SP_TYPE_FECOLORMATRIX))
 
-class SPFeColorMatrixClass;
-
 struct SPFeColorMatrix : public SPFilterPrimitive {
     Inkscape::Filters::FilterColorMatrixType type;
     gdouble value;

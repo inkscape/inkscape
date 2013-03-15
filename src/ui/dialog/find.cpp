@@ -15,7 +15,10 @@
 #endif
 
 #include "find.h"
+
+#include <gtkmm/entry.h>
 #include <gtkmm/widget.h>
+
 #include "verbs.h"
 
 #include "message-stack.h"

@@ -28,8 +28,6 @@ namespace Filters {
 class FilterDiffuseLighting;
 } }
 
-class SPFeDiffuseLightingClass;
-
 struct SPFeDiffuseLighting : public SPFilterPrimitive {
     gfloat surfaceScale;
     guint surfaceScale_set : 1;
