@@ -53,10 +53,7 @@
 #include "ui/dialog/export.h"
 #include "ui/dialog/xml-tree.h"
 #include "ui/dialog/clonetiler.h"
-
-#ifdef ENABLE_SVG_FONTS
 #include "ui/dialog/svg-fonts-dialog.h"
-#endif // ENABLE_SVG_FONTS
 
 namespace Inkscape {
 namespace UI {
@@ -118,9 +115,7 @@ DialogManager::DialogManager() {
         registerFactory("ObjectProperties",    &create<ObjectProperties,     FloatingBehavior>);
 //        registerFactory("PrintColorsPreviewDialog",      &create<PrintColorsPreviewDialog,       FloatingBehavior>);
         registerFactory("Script",              &create<ScriptDialog,         FloatingBehavior>);
-#ifdef ENABLE_SVG_FONTS
         registerFactory("SvgFontsDialog",      &create<SvgFontsDialog,       FloatingBehavior>);
-#endif
         registerFactory("Swatches",            &create<SwatchesPanel,        FloatingBehavior>);
         registerFactory("Symbols",             &create<SymbolsDialog,        FloatingBehavior>);
         registerFactory("TileDialog",          &create<TileDialog,           FloatingBehavior>);
@@ -154,9 +149,7 @@ DialogManager::DialogManager() {
         registerFactory("ObjectProperties",    &create<ObjectProperties,     DockBehavior>);
 //        registerFactory("PrintColorsPreviewDialog",      &create<PrintColorsPreviewDialog,       DockBehavior>);
         registerFactory("Script",              &create<ScriptDialog,         DockBehavior>);
-#ifdef ENABLE_SVG_FONTS
         registerFactory("SvgFontsDialog",      &create<SvgFontsDialog,       DockBehavior>);
-#endif
         registerFactory("Swatches",            &create<SwatchesPanel,        DockBehavior>);
         registerFactory("Symbols",             &create<SymbolsDialog,        DockBehavior>);
         registerFactory("TileDialog",          &create<TileDialog,           DockBehavior>);

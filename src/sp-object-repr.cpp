@@ -48,13 +48,11 @@
 #include "sp-script.h"
 #include "config.h"
 
-#ifdef ENABLE_SVG_FONTS
-    #include "sp-font.h"
-    #include "sp-font-face.h"
-    #include "sp-glyph.h"
-    #include "sp-missing-glyph.h"
-    #include "sp-glyph-kerning.h"
-#endif
+#include "sp-font.h"
+#include "sp-font-face.h"
+#include "sp-glyph.h"
+#include "sp-missing-glyph.h"
+#include "sp-glyph-kerning.h"
 
 #include "sp-style-elem.h"
 #include "sp-switch.h"
@@ -151,14 +149,12 @@ populate_dtables()
         { "svg:flowRegionExclude", SP_TYPE_FLOWREGIONEXCLUDE },
         { "svg:flowRoot", SP_TYPE_FLOWTEXT },
         { "svg:flowSpan", SP_TYPE_FLOWTSPAN },
-#ifdef ENABLE_SVG_FONTS
         { "svg:font", SP_TYPE_FONT },
         { "svg:font-face", SP_TYPE_FONTFACE },
         { "svg:glyph", SP_TYPE_GLYPH },
         { "svg:missing-glyph", SP_TYPE_MISSING_GLYPH },
         { "svg:hkern", SP_TYPE_HKERN },
         { "svg:vkern", SP_TYPE_VKERN },
-#endif
         { "svg:g", SP_TYPE_GROUP },
         { "svg:feBlend", SP_TYPE_FEBLEND },
         { "svg:feColorMatrix", SP_TYPE_FECOLORMATRIX },

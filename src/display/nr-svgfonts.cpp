@@ -1,5 +1,4 @@
 #include "config.h"
-#ifdef ENABLE_SVG_FONTS
 /*
  * SVGFonts rendering implementation
  *
@@ -355,8 +354,6 @@ void SvgFont::refresh(){
     delete this->userfont;
     this->userfont = NULL;
 }
-
-#endif //#ifdef ENABLE_SVG_FONTS
 
 /*
   Local Variables:

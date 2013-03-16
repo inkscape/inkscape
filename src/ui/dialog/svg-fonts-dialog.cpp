@@ -15,8 +15,6 @@
 # include <config.h>
 #endif
 
-#ifdef ENABLE_SVG_FONTS
-
 #include "svg-fonts-dialog.h"
 #include "document-private.h"
 #include "document-undo.h"
@@ -944,8 +942,6 @@ SvgFontsDialog::~SvgFontsDialog(){}
 } // namespace Dialog
 } // namespace UI
 } // namespace Inkscape
-
-#endif //#ifdef ENABLE_SVG_FONTS
 
 /*
   Local Variables:
