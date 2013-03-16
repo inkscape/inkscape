@@ -133,6 +133,15 @@ namespace Inkscape {
 namespace UI {
 namespace Dialog {
 
+/** A list of strings that is used both in the preferences, and in the
+    data fields to describe the various values of \c selection_type. */
+static const char * selection_names[SELECTION_NUMBER_OF] = {
+    "page", "drawing", "selection", "custom"};
+
+/** The names on the buttons for the various selection types. */
+static const char * selection_labels[SELECTION_NUMBER_OF] = {
+    N_("_Page"), N_("_Drawing"), N_("_Selection"), N_("_Custom")};
+
 Export::Export (void) :
     UI::Widget::Panel ("", "/dialogs/export/", SP_VERB_DIALOG_EXPORT),
     current_key(SELECTION_PAGE),

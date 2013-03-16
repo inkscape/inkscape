@@ -655,8 +655,8 @@ int ink_cairo_surface_srgb_to_linear(cairo_surface_t *surface)
     cairo_surface_flush(surface);
     int width = cairo_image_surface_get_width(surface);
     int height = cairo_image_surface_get_height(surface);
-    int stride = cairo_image_surface_get_stride(surface);
-    unsigned char *data = cairo_image_surface_get_data(surface);
+    // int stride = cairo_image_surface_get_stride(surface);
+    // unsigned char *data = cairo_image_surface_get_data(surface);
 
     ink_cairo_surface_filter( surface, surface, SurfaceSrgbToLinear() );
 
@@ -698,8 +698,8 @@ int ink_cairo_surface_linear_to_srgb(cairo_surface_t *surface)
     cairo_surface_flush(surface);
     int width = cairo_image_surface_get_width(surface);
     int height = cairo_image_surface_get_height(surface);
-    int stride = cairo_image_surface_get_stride(surface);
-    unsigned char *data = cairo_image_surface_get_data(surface);
+    // int stride = cairo_image_surface_get_stride(surface);
+    // unsigned char *data = cairo_image_surface_get_data(surface);
 
     ink_cairo_surface_filter( surface, surface, SurfaceLinearToSrgb() );
 
@@ -888,4 +888,4 @@ guint32 argb32_from_rgba(guint32 in)
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

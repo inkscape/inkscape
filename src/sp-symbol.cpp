@@ -307,19 +307,19 @@ static void sp_symbol_update(SPObject *object, SPCtx *ctx, guint flags)
     }
 }
 
-static void sp_symbol_modified(SPObject *object, guint flags)
+static void
+sp_symbol_modified(SPObject *object,
+		   guint     flags)
 {
-    SP_SYMBOL(object);
-
-    if (((SPObjectClass *) (sp_symbol_parent_class))->modified) {
-        (* ((SPObjectClass *) (sp_symbol_parent_class))->modified) (object, flags);
-    }
+    SP_OBJECT_CLASS(sp_symbol_parent_class)->modified (object, flags);
 }
 
-static Inkscape::XML::Node *sp_symbol_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::Node *repr, guint flags)
+static Inkscape::XML::Node *
+sp_symbol_write(SPObject                *object,
+		Inkscape::XML::Document *xml_doc,
+		Inkscape::XML::Node     *repr,
+		guint                    flags)
 {
-    SP_SYMBOL(object);
-
     if ((flags & SP_OBJECT_WRITE_BUILD) && !repr) {
         repr = xml_doc->createElement("svg:symbol");
     }
@@ -330,9 +330,7 @@ static Inkscape::XML::Node *sp_symbol_write(SPObject *object, Inkscape::XML::Doc
     //XML Tree being used directly here while it shouldn't be.
     repr->setAttribute("preserveAspectRatio", object->getRepr()->attribute("preserveAspectRatio"));
 
-    if (((SPObjectClass *) (sp_symbol_parent_class))->write) {
-        ((SPObjectClass *) (sp_symbol_parent_class))->write (object, xml_doc, repr, flags);
-    }
+    SP_OBJECT_CLASS(sp_symbol_parent_class)->write (object, xml_doc, repr, flags);
 
     return repr;
 }
@@ -404,3 +402,14 @@ static void sp_symbol_print(SPItem *item, SPPrintContext *ctx)
         sp_print_release (ctx);
     }
 }
+
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

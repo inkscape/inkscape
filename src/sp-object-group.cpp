@@ -93,8 +93,6 @@ sp_objectgroup_write(SPObject                *object,
                      Inkscape::XML::Node     *repr,
                      guint                    flags)
 {
-    SP_OBJECTGROUP(object); // Ensure we have the right type of SPObject
-
     if (flags & SP_OBJECT_WRITE_BUILD) {
         if (!repr) {
             repr = xml_doc->createElement("svg:g");
@@ -118,7 +116,7 @@ sp_objectgroup_write(SPObject                *object,
     }
 
     if ((SP_OBJECT_CLASS(sp_objectgroup_parent_class))->write) {
-        (SP_OBJECT_CLASS(sp_objectgroup_parent_class))->write(object, xml_doc, repr, flags);
+        SP_OBJECT_CLASS(sp_objectgroup_parent_class)->write(object, xml_doc, repr, flags);
     }
 
     return repr;
