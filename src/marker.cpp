@@ -324,13 +324,13 @@ static void sp_marker_update(SPObject *object, SPCtx *ctx, guint flags)
     // Now set up viewbox transformation
 
     // Determine actual viewbox in viewport coordinates
-    double x = 0;
-    double y = 0;
+    // double x = 0;
+    // double y = 0;
     double width = 0;
     double height = 0;
     if (marker->aspect_align == SP_ASPECT_NONE) {
-        x = 0.0;
-        y = 0.0;
+        // x = 0.0;
+        // y = 0.0;
         width = rctx.viewport.width();
         height = rctx.viewport.height();
     } else {
@@ -343,7 +343,7 @@ static void sp_marker_update(SPObject *object, SPCtx *ctx, guint flags)
         height = (vb.height()) * scale;
 
         // Now place viewbox to requested position
-        switch (marker->aspect_align) {
+        /*switch (marker->aspect_align) {
             case SP_ASPECT_XMIN_YMIN:
                 x = 0.0;
                 y = 0.0;
@@ -384,7 +384,7 @@ static void sp_marker_update(SPObject *object, SPCtx *ctx, guint flags)
                 x = 0.0;
                 y = 0.0;
                 break;
-        }
+        }*/
     }
     // TODO fixme: all that work is done to figure out x and y, which are just ignored. Check why.
 
