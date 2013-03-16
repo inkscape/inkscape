@@ -480,7 +480,7 @@ dnl Check for libwpg for extension
 dnl ******************************
 
 AC_ARG_ENABLE(wpg,
-       [  --disable-wpg           compile without support for WordPerfect Graphics],
+       AS_HELP_STRING([--disable-wpg], [compile without support for WordPerfect Graphics]),
        enable_wpg=$enableval,enable_wpg=yes)
 
 with_libwpg=no
@@ -514,8 +514,8 @@ dnl ********************************
 dnl Check for libvisio for extension
 dnl ********************************
 
-AC_ARG_ENABLE(wpg,
-       [  --disable-visio         compile without support for Microsoft Visio Diagrams],
+AC_ARG_ENABLE(visio,
+       AS_HELP_STRING([--disable-visio], [compile without support for Microsoft Visio Diagrams]),
        enable_visio=$enableval,enable_visio=yes)
 
 with_libvisio=no
@@ -535,8 +535,8 @@ dnl ********************************
 dnl Check for libcdr for extension
 dnl ********************************
 
-AC_ARG_ENABLE(wpg,
-       [  --disable-cdr           compile without support for Microsoft Visio Diagrams],
+AC_ARG_ENABLE(cdr,
+       AS_HELP_STRING([--disable-cdr], [compile without support for Microsoft Visio Diagrams]),
        enable_cdr=$enableval,enable_cdr=yes)
 
 with_libcdr=no
@@ -565,7 +565,7 @@ dnl Check for dbus functionality
 dnl ******************************
 
 AC_ARG_ENABLE(dbusapi,
-       [  --enable-dbusapi       compile with support for DBus interface],
+       AS_HELP_STRING([--enable-dbusapi], [compile with support for DBus interface]),
        enable_dbusapi=$enableval,enable_dbusapi=no)
 
 with_dbus="no"
@@ -798,7 +798,7 @@ dnl Check for binary relocation support
 dnl Hongli Lai <h.lai@chello.nl>
 
 AC_ARG_ENABLE(binreloc,
-       [  --enable-binreloc       compile with binary relocation support],
+       AS_HELP_STRING([--enable-binreloc], [compile with binary relocation support]),
        enable_binreloc=$enableval,enable_binreloc=no)
 
 AC_MSG_CHECKING(whether binary relocation support should be enabled)
@@ -849,7 +849,7 @@ if test "$enable_binreloc" = "yes"; then
 fi
 
 AC_ARG_ENABLE(osxapp,
-       [  --enable-osxapp         compile with OSX .app data dir paths],
+       AS_HELP_STRING([--enable-osxapp], [compile with OSX .app data dir paths]),
        enable_osxapp=$enableval,enable_osxapp=no)
 if test "$enable_osxapp" = "yes"; then
    AC_DEFINE(ENABLE_OSX_APP_LOCATIONS,,[Build with OSX .app data dir paths?])
