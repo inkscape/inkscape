@@ -418,7 +418,6 @@ Geom::OptRect Selection::documentBounds(SPItem::BBoxType type) const
 // will be returned; this is also the case in SelTrans::centerRequest()
 boost::optional<Geom::Point> Selection::center() const {
     GSList *items = (GSList *) const_cast<Selection *>(this)->itemList();
-    Geom::Point center;
     if (items) {
         SPItem *first = reinterpret_cast<SPItem*>(g_slist_last(items)->data); // from the first item in selection
         if (first->isCenterSet()) { // only if set explicitly

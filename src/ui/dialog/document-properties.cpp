@@ -792,8 +792,6 @@ void DocumentProperties::build_scripting()
     _page_external_scripts->table().attach(_external_remove_btn, 2, 3, row, row + 1, (Gtk::AttachOptions)0, (Gtk::AttachOptions)0, 0, 0);
 #endif
 
-    row++;
-
     //# Set up the External Scripts box
     _ExternalScriptsListStore = Gtk::ListStore::create(_ExternalScriptsListColumns);
     _ExternalScriptsList.set_model(_ExternalScriptsListStore);

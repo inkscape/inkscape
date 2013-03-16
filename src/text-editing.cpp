@@ -69,7 +69,7 @@ void te_update_layout_now_recursive(SPItem *item)
     if (SP_IS_GROUP(item)) {
         GSList *item_list = sp_item_group_item_list(SP_GROUP(item));
         for(GSList* elem = item_list; elem; elem = elem->next) {
-            SPItem* list_item = (SPItem*) elem->data;
+            SPItem* list_item = static_cast<SPItem*>(elem->data);
             te_update_layout_now_recursive(list_item);
         }
         g_slist_free(item_list);

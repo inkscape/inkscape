@@ -591,7 +591,7 @@ bool SioxImage::writePPM(const std::string &fileName)
     if (!f)
         return false;
 
-    fprintf(f, "P6 %d %d 255\n", width, height);
+    fprintf(f, "P6 %u %u 255\n", width, height);
 
     for (unsigned int y=0 ; y<height; y++)
         {
@@ -933,7 +933,7 @@ SioxImage Siox::extractForeground(const SioxImage &originalImage,
 
     //trace("### bgSignature:%d", bgSignature.size());
 
-    if (bgSignature.size() < 1)
+    if (bgSignature.empty())
         {
         // segmentation impossible
         error("Signature size is < 1.  Segmentation is impossible");
