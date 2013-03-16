@@ -112,6 +112,8 @@ if test "$GCC" = "yes"; then
     CFLAGS="$ink_svd_CFLAGS"
   fi
 
+  AM_CONDITIONAL(CC_W_NO_SUPPORTED, test "$ink_opt_ok" = "yes")
+  
   ####
   # Linker flags...
 
