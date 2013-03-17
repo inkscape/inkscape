@@ -1068,7 +1068,7 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk( Gtk::Window &parentWindow,
     std::vector<Gtk::Entry *> entries;
     findEntryWidgets(cont, entries);
     //g_message("Found %d entry widgets\n", entries.size());
-    if (entries.size() >=1 )
+    if (!entries.empty())
         {
         //Catch when user hits [return] on the text field
         fileNameEntry = entries[0];
@@ -1080,7 +1080,7 @@ FileSaveDialogImplGtk::FileSaveDialogImplGtk( Gtk::Window &parentWindow,
     std::vector<Gtk::Expander *> expanders;
     findExpanderWidgets(cont, expanders);
     //g_message("Found %d expander widgets\n", expanders.size());
-    if (expanders.size() >=1 )
+    if (!expanders.empty())
         {
         //Always show the file list
         Gtk::Expander *expander = expanders[0];
@@ -1639,7 +1639,7 @@ FileExportDialogImpl::FileExportDialogImpl( Gtk::Window& parentWindow,
     std::vector<Gtk::Entry *> entries;
     findEntryWidgets(cont, entries);
     //g_message("Found %d entry widgets\n", entries.size());
-    if (entries.size() >=1 )
+    if (!entries.empty())
         {
         //Catch when user hits [return] on the text field
         fileNameEntry = entries[0];
@@ -1651,7 +1651,7 @@ FileExportDialogImpl::FileExportDialogImpl( Gtk::Window& parentWindow,
     std::vector<Gtk::Expander *> expanders;
     findExpanderWidgets(cont, expanders);
     //g_message("Found %d expander widgets\n", expanders.size());
-    if (expanders.size() >=1 )
+    if (!expanders.empty())
         {
         //Always show the file list
         Gtk::Expander *expander = expanders[0];

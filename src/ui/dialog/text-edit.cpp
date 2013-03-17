@@ -424,12 +424,11 @@ void TextEdit::onSelectionChange()
 void TextEdit::updateObjectText ( SPItem *text )
 {
         GtkTextIter start, end;
-        gchar *str;
 
         // write text
         if (gtk_text_buffer_get_modified (text_buffer)) {
             gtk_text_buffer_get_bounds (text_buffer, &start, &end);
-            str = gtk_text_buffer_get_text (text_buffer, &start, &end, TRUE);
+            gchar *str = gtk_text_buffer_get_text (text_buffer, &start, &end, TRUE);
             sp_te_set_repr_text_multiline (text, str);
             g_free (str);
             gtk_text_buffer_set_modified (text_buffer, FALSE);

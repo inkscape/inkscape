@@ -428,7 +428,6 @@ void Export::set_default_filename () {
 
     if ( SP_ACTIVE_DOCUMENT && SP_ACTIVE_DOCUMENT->getURI() )
     {
-        gchar *name;
         SPDocument * doc = SP_ACTIVE_DOCUMENT;
         const gchar *uri = doc->getURI();
         const gchar *text_extension = get_file_save_extension (Inkscape::Extension::FILE_SAVE_METHOD_SAVE_AS).c_str();
@@ -457,7 +456,7 @@ void Export::set_default_filename () {
                 g_free(uri_copy);
             }
         } else {
-            name = g_strconcat(uri, ".png", NULL);
+            gchar *name = g_strconcat(uri, ".png", NULL);
             filename_entry.set_text(name);
             filename_entry.set_position(strlen(name));
 
@@ -1326,7 +1325,7 @@ void Export::onBrowse ()
     WCHAR _filename[_MAX_PATH + 1];
     memset(_filename, 0, sizeof(_filename));
     gunichar2* utf16_path_string = g_utf8_to_utf16(filename.c_str(), -1, NULL, NULL, NULL);
-    wcsncpy(_filename, (wchar_t*)utf16_path_string, _MAX_PATH);
+    wcsncpy(_filename, reinterpret_cast<wchar_t*>(utf16_path_string), _MAX_PATH);
     g_free(utf16_path_string);
 
     opf.hwndOwner = (HWND)(GDK_WINDOW_HWND(gtk_widget_get_window(GTK_WIDGET(this))));

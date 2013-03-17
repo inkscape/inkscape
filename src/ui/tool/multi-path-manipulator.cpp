@@ -65,7 +65,6 @@ typedef std::pair<double, IterPair> DistanceMapItem;
 void find_join_iterators(ControlPointSelection &sel, IterPairList &pairs)
 {
     IterSet join_iters;
-    DistanceMap dists;
 
     // find all endnodes in selection
     for (ControlPointSelection::iterator i = sel.begin(); i != sel.end(); ++i) {

@@ -79,7 +79,8 @@ void LicenseItem::on_toggled()
 //---------------------------------------------------
 
 Licensor::Licensor()
-: Gtk::VBox(false,4)
+: Gtk::VBox(false,4),
+  _eentry (NULL)
 {
 }
 

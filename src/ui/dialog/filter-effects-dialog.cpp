@@ -945,13 +945,11 @@ private:
        and all widgets within the setting group are aligned automatically. */
     void add_widget(Gtk::Widget* w, const Glib::ustring& label)
     {
-        Gtk::Label *lbl = 0;
         Gtk::HBox *hb = Gtk::manage(new Gtk::HBox);
         hb->set_spacing(12);
 
         if(label != "") {
-            //lbl = Gtk::manage(new Gtk::Label(label + (label == "" ? "" : ":"), Gtk::ALIGN_LEFT)); colon now in label (LP #358921)
-            lbl = Gtk::manage(new Gtk::Label(label, Gtk::ALIGN_START));
+            Gtk::Label *lbl = Gtk::manage(new Gtk::Label(label, Gtk::ALIGN_START));
             hb->pack_start(*lbl, false, false);
             _size_group->add_widget(*lbl);
             lbl->show();
