@@ -31,6 +31,10 @@ class MyEffect(inkex.Effect):
                         action="store", type="inkbool", 
                         dest="mirror", default="FALSE",
                         help="Mirror Y-Axis")
+        self.OptionParser.add_option("-v", "--center",
+                        action="store", type="inkbool", 
+                        dest="center", default="FALSE",
+                        help="Center Zero Point")
         self.OptionParser.add_option("-x", "--xOffset",
                         action="store", type="float", 
                         dest="xOffset", default=0.0,
@@ -90,8 +94,10 @@ class MyEffect(inkex.Effect):
  
     def effect(self):
         # initiate vars
-        self.xDivergence = 999999999999.0
-        self.yDivergence = 999999999999.0
+        self.xDivergence = 9999999999999.0
+        self.yDivergence = 9999999999999.0
+        self.xSize = -9999999999999.0
+        self.ySize = -9999999999999.0
         scale = float(self.options.resolution) / 90 # dots/inch to dots/pixels
         x0 = self.options.xOffset * 3.5433070866 * scale # mm to dots
         y0 = self.options.yOffset * 3.5433070866 * scale # mm to dots
@@ -117,6 +123,9 @@ class MyEffect(inkex.Effect):
         self.groupmat[0] = simpletransform.composeTransform(self.groupmat[0], simpletransform.parseTransform('rotate(' + self.options.rotation + ')'))
         self.vData = [['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0], ['', -1.0, -1.0]]
         self.process_group(doc)
+        if self.options.center:
+            self.xDivergence += (self.xSize - self.xDivergence) / 2
+            self.yDivergence += (self.ySize - self.yDivergence) / 2
         # life run
         self.dryRun = False
         self.groupmat = [[[scale*viewBoxTransformX, 0.0, -self.xDivergence + x0], [0.0, mirror*scale*viewBoxTransformY, -self.yDivergence + y0]]]
@@ -246,9 +255,12 @@ class MyEffect(inkex.Effect):
         if self.dryRun:
             if x < self.xDivergence: self.xDivergence = x 
             if y < self.yDivergence: self.yDivergence = y
+            if x > self.xSize: self.xSize = x
+            if y > self.ySize: self.ySize = y
         else:
-            if x < 0: x = 0 # only positive values are allowed
-            if y < 0: y = 0
+            if not self.options.center:
+                if x < 0: x = 0 # only positive values are allowed
+                if y < 0: y = 0
             self.hpgl += '%s%d,%d;' % (command, x, y)
             if self.options.sendToPlotter:
                 self.S.write('%s%d,%d;' % (command, x, y))
