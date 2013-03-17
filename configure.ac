@@ -112,8 +112,18 @@ if test "$GCC" = "yes"; then
     CFLAGS="$ink_svd_CFLAGS"
   fi
 
-  AM_CONDITIONAL(CC_W_NO_SUPPORTED, test "$ink_opt_ok" = "yes")
   
+  # This Automake variable is only used to suppress warnings in our internal
+  # fork of GDL.  Once we get rid of our GDL fork, we can delete this test
+  AC_MSG_CHECKING([compiler support for -Wno-unused-but-set-variable])
+  ink_svd_CFLAGS="$CFLAGS"
+  CFLAGS="-Wno-unused-but-set-variable $CFLAGS"
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])], [ink_opt_ok=yes], [ink_opt_ok=no])
+  AC_MSG_RESULT([$ink_opt_ok])
+  CFLAGS="$ink_svd_CFLAGS"
+  AM_CONDITIONAL(CC_WNO_UNUSED_BUT_SET_VARIABLE_SUPPORTED, test "$ink_opt_ok" = "yes")
+  
+
   ####
   # Linker flags...
 

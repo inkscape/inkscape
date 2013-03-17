@@ -44,12 +44,14 @@ libgdl/all: libgdl/libgdl.a
 libgdl/clean:
 	rm -f libgdl/libgdl.a $(libgdl_gdl_a_OBJECTS)
 
-if CC_W_NO_SUPPORTED
 # Suppress some non-critical warnings for libgdl.  We will drop our forked copy
 # of GDL once we upgrade to Gtk+ 3 so it's more important to minimise the number
 # of changes we make to GDL than to fix these minor issues in trunk.
 
+if CC_WNO_UNUSED_BUT_SET_VARIABLE_SUPPORTED
 libgdl_libgdl_a_CFLAGS = -Wno-unused-parameter -Wno-sign-compare -Wno-unused-variable -Wno-unused-but-set-variable $(AM_CFLAGS)
+else
+libgdl_libgdl_a_CFLAGS = -Wno-unused-parameter -Wno-sign-compare -Wno-unused-variable $(AM_CFLAGS)
 endif
 
 libgdl_libgdl_a_SOURCES =	\
