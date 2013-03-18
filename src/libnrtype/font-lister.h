@@ -296,13 +296,9 @@ namespace Inkscape
 }
 
 // Helper functions
-// Separator function (if true, a separator will be drawn)
-static gboolean font_lister_separator_func(GtkTreeModel *model, GtkTreeIter *iter, gpointer /*data*/)
-{
-  gchar* text = 0;
-  gtk_tree_model_get(model, iter, 0, &text, -1 ); // Column 0: FontList.family
-  return (text && strcmp(text,"#") == 0);
-}
+gboolean font_lister_separator_func(GtkTreeModel *model,
+                                    GtkTreeIter  *iter,
+                                    gpointer    /*data*/);
 
 void font_lister_cell_data_func(GtkCellLayout     */*cell_layout*/,
                                 GtkCellRenderer   *cell,

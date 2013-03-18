@@ -969,6 +969,17 @@ namespace Inkscape
 }
 
 // Helper functions
+
+// Separator function (if true, a separator will be drawn)
+gboolean font_lister_separator_func(GtkTreeModel *model,
+		                    GtkTreeIter  *iter, 
+				    gpointer     /*data*/)
+{
+    gchar* text = 0;
+    gtk_tree_model_get(model, iter, 0, &text, -1 ); // Column 0: FontList.family
+    return (text && strcmp(text,"#") == 0);
+}
+
 void font_lister_cell_data_func(GtkCellLayout     */*cell_layout*/,
 				GtkCellRenderer   *cell,
 				GtkTreeModel      *model,
@@ -1042,3 +1053,13 @@ void font_lister_cell_data_func(GtkCellLayout     */*cell_layout*/,
 
     g_object_set (G_OBJECT (cell), "markup", markup.c_str(), NULL);
 }
+/*
+  Local Variables:
+  mode:c++
+  c-file-style:"stroustrup"
+  c-file-offsets:((innamespace . 0)(inline-open . 0)(case-label . +))
+  indent-tabs-mode:nil
+  fill-column:99
+  End:
+*/
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :

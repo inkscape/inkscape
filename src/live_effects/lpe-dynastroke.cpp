@@ -26,30 +26,6 @@
 
 namespace Inkscape {
 namespace LivePathEffect {
-
-//----------------------------------------------------------
-//--- TODO: Test this and move to 2Geom --------------------
-//----------------------------------------------------------
-
-static
-std::vector<double> 
-find_corners (Geom::Piecewise<Geom::D2<Geom::SBasis> > const &m){
-    using namespace Geom;
-    std::vector<double> output = std::vector<double>();
-    Piecewise<D2<SBasis> > v = derivative(m);
-    for (unsigned i=0; i<m.size()-1; i++){
-        if ( m.segs[i].at1() == m.segs[i+1].at0() && 
-             v.segs[i].at1() != v.segs[i+1].at0()){
-            output.push_back(m.cuts[i+1]);
-        }
-    }
-    return output;
-}
-
-//----------------------------------------------------------
-//----------------------------------------------------------
-//----------------------------------------------------------
-
 //TODO: growfor/fadefor can be expressed in unit of width.
 //TODO: make round/sharp end choices independant for start and end.
 //TODO: define more styles like in calligtool.

@@ -138,71 +138,6 @@ String getExceptionString(JNIEnv *env)
 	return buf;
 }
 
-static jint getObjInt(JNIEnv *env, jobject obj, const char *name)
-{
-    jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "I");
-    return env->GetIntField(obj, fid);
-}
-
-static void setObjInt(JNIEnv *env, jobject obj, const char *name, jint val)
-{
-    jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "I");
-    env->SetIntField(obj, fid, val);
-}
-
-static jlong getObjLong(JNIEnv *env, jobject obj, const char *name)
-{
-    jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "J");
-    return env->GetLongField(obj, fid);
-}
-
-static void setObjLong(JNIEnv *env, jobject obj, const char *name, jlong val)
-{
-    jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "J");
-    env->SetLongField(obj, fid, val);
-}
-
-static jfloat getObjFloat(JNIEnv *env, jobject obj, const char *name)
-{
-    jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "F");
-    return env->GetFloatField(obj, fid);
-}
-
-static void setObjFloat(JNIEnv *env, jobject obj, const char *name, jfloat val)
-{
-    jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "F");
-    env->SetFloatField(obj, fid, val);
-}
-
-static jdouble getObjDouble(JNIEnv *env, jobject obj, const char *name)
-{
-    jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "D");
-    return env->GetDoubleField(obj, fid);
-}
-
-static void setObjDouble(JNIEnv *env, jobject obj, const char *name, jdouble val)
-{
-    jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "D");
-    env->SetDoubleField(obj, fid, val);
-}
-
-static String getObjString(JNIEnv *env, jobject obj, const char *name)
-{
-    jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "Ljava/lang/String;");
-    jstring jstr = (jstring)env->GetObjectField(obj, fid);
-    return getString(env, jstr);
-}
-
-static void setObjString(JNIEnv *env, jobject obj, const char *name, const String &val)
-{
-    jstring jstr = env->NewStringUTF(val.c_str());
-    jfieldID fid = env->GetFieldID(env->GetObjectClass(obj), name, "Ljava/lang/String;");
-    env->SetObjectField(obj, fid, jstr);
-}
-
-
-
-
 //########################################################################
 //# CONSTRUCTOR/DESTRUCTOR
 //########################################################################
@@ -241,40 +176,22 @@ JavaBinderyImpl::~JavaBinderyImpl()
 
 void err(const char *fmt, ...)
 {
-#if 0
-    va_list args;
-    fprintf(stderr, "JavaBinderyImpl err:");
-    va_start(args, fmt);
-    vfprintf(stderr, fmt, args);
-    va_end(args);
-    fprintf(stderr, "\n");
-#else
     va_list args;
     g_warning("JavaBinderyImpl err:");
     va_start(args, fmt);
     g_logv(G_LOG_DOMAIN, G_LOG_LEVEL_WARNING, fmt, args);
     va_end(args);
     g_warning("\n");
-#endif
 }
 
 void msg(const char *fmt, ...)
 {
-#if 0
-    va_list args;
-    fprintf(stdout, "JavaBinderyImpl:");
-    va_start(args, fmt);
-    vfprintf(stdout, fmt, args);
-    va_end(args);
-    fprintf(stdout, "\n");
-#else
     va_list args;
     g_message("JavaBinderyImpl:");
     va_start(args, fmt);
     g_logv(G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, args);
     va_end(args);
     g_message("\n");
-#endif
 }
 
 

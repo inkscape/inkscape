@@ -610,19 +610,6 @@ static void sp_spray_switch_mode(SPSprayContext *tc, gint mode, bool with_shift)
     sp_spray_update_cursor(tc, with_shift);
 }
 
-static void sp_spray_switch_mode_temporarily(SPSprayContext *tc, gint mode, bool with_shift)
-{
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    // Juggling about so that prefs have the old value but tc->mode and the button show new mode:
-    gint now_mode = prefs->getInt("/tools/spray/mode", 0);
-    SP_EVENT_CONTEXT(tc)->desktop->setToolboxSelectOneValue("spray_tool_mode", mode);
-    // button has changed prefs, restore
-    prefs->setInt("/tools/spray/mode", now_mode);
-    // changing prefs changed tc->mode, restore back :)
-    tc->mode = mode;
-    sp_spray_update_cursor(tc, with_shift);
-}
-
 gint sp_spray_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
     SPSprayContext *tc = SP_SPRAY_CONTEXT(event_context);

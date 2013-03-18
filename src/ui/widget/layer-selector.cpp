@@ -163,17 +163,6 @@ LayerSelector::~LayerSelector() {
     _selection_changed_connection.disconnect();
 }
 
-namespace {
-
-/** Helper function - detaches desktop from selector
- */
-bool detach(LayerSelector *selector) {
-    selector->setDesktop(NULL);
-    return FALSE;
-}
-
-}
-
 /** Sets the desktop for the widget.  First disconnects signals
  *  for the current desktop, then stores the pointer to the
  *  given \a desktop, and attaches its signals to this one.

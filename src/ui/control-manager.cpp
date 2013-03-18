@@ -37,21 +37,9 @@ ControlFlags operator |(ControlFlags lhs, ControlFlags rhs)
     return static_cast<ControlFlags>(static_cast<int>(lhs) | static_cast<int>(rhs));
 }
 
-ControlFlags& operator |=(ControlFlags &lhs, ControlFlags rhs)
-{
-    lhs = lhs | rhs;
-    return lhs;
-}
-
 ControlFlags operator &(ControlFlags lhs, ControlFlags rhs)
 {
     return static_cast<ControlFlags>(static_cast<int>(lhs) & static_cast<int>(rhs));
-}
-
-ControlFlags& operator &=(ControlFlags &lhs, ControlFlags rhs)
-{
-    lhs = lhs & rhs;
-    return lhs;
 }
 
 ControlFlags operator ^(ControlFlags lhs, ControlFlags rhs)
