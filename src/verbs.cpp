@@ -39,7 +39,6 @@
 #include "bind/javabind.h"
 #include "desktop.h"
 #include "desktop-handles.h"
-#include "dialogs/find.h"
 #include "display/curve.h"
 #include "document.h"
 #include "draw-context.h"

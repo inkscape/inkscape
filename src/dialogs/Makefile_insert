@@ -2,6 +2,4 @@
 
 ink_common_sources +=	\
 	dialogs/dialog-events.cpp	\
-	dialogs/dialog-events.h		\
-	dialogs/find.cpp		\
-	dialogs/find.h
+	dialogs/dialog-events.h	
