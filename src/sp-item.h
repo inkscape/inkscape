@@ -87,9 +87,8 @@ public:
 #define SP_ITEM_REFERENCE_FLAGS (1 << 1)
 
 /// Contains transformations to document/viewport and the viewport size.
-class SPItemCtx {
+class SPItemCtx : public SPCtx {
 public:
-    SPCtx ctx;
     /** Item to document transformation */
     Geom::Affine i2doc;
     /** Viewport size */

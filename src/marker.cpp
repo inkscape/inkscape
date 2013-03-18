@@ -301,7 +301,7 @@ static void sp_marker_update(SPObject *object, SPCtx *ctx, guint flags)
     // fixme: We have to set up clip here too
 
     // Copy parent context
-    rctx.ctx = *ctx;
+    rctx.flags = ctx->flags;
 
     // Initialize tranformations
     rctx.i2doc = Geom::identity();

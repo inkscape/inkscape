@@ -953,7 +953,7 @@ void SPDocument::requestModified()
 
 void SPDocument::setupViewport(SPItemCtx *ctx)
 {
-    ctx->ctx.flags = 0;
+    ctx->flags = 0;
     ctx->i2doc = Geom::identity();
     // Set up viewport in case svg has it defined as percentages
     if (root->viewBox_set) { // if set, take from viewBox
