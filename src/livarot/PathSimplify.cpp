@@ -67,6 +67,7 @@ void Path::Simplify(double treshhold)
 }
 
 
+#if 0
 // dichomtomic method to get distance to curve approximation
 // a real polynomial solver would get the minimum more efficiently, but since the polynom
 // would likely be of degree >= 5, that would imply using some generic solver, liek using the sturm metod
@@ -114,7 +115,7 @@ static double RecDistanceToCubic(Geom::Point const &iS, Geom::Point const &isD,
     
     return current;
 }
-
+#endif
 
 static double DistanceToCubic(Geom::Point const &start, PathDescrCubicTo res, Geom::Point &pt)
 {

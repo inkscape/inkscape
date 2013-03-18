@@ -31,11 +31,12 @@ namespace {
 std::map<Inkscape::ControlType, std::vector<int> > sizeTable;
 
 // Note: The following operator overloads are local to this file at the moment to discourage flag manipulation elsewhere.
-
+/*
 ControlFlags operator |(ControlFlags lhs, ControlFlags rhs)
 {
     return static_cast<ControlFlags>(static_cast<int>(lhs) | static_cast<int>(rhs));
 }
+*/
 
 ControlFlags operator &(ControlFlags lhs, ControlFlags rhs)
 {

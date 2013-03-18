@@ -192,6 +192,7 @@ static void octreeDelete(pool<Ocnode> *pool, Ocnode *node)
 /**
  *  pretty-print an octree, debugging purposes
  */
+#if 0
 static void ocnodePrint(Ocnode *node, int indent)
 {
     if (!node) return;
@@ -213,7 +214,6 @@ static void ocnodePrint(Ocnode *node, int indent)
         }
 }
 
-#if 0
 void octreePrint(Ocnode *node)
 {
     printf("<<octree>>\n");
