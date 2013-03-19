@@ -1582,6 +1582,13 @@ SPDesktop::setDocument (SPDocument *doc)
     _layer_hierarchy->connectChanged(sigc::bind(sigc::ptr_fun(_layer_hierarchy_changed), this));
     _layer_hierarchy->setTop(doc->getRoot());
 
+	// remove old EventLog if it exists (see also: bug #1071082)
+	if (event_log) {
+		doc->removeUndoObserver(*event_log);
+		delete event_log;
+		event_log = 0;
+	}
+
     /* setup EventLog */
     event_log = new Inkscape::EventLog(doc);
     doc->addUndoObserver(*event_log);

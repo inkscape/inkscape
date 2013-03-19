@@ -38,7 +38,18 @@ EventLog::EventLog(SPDocument* document) :
     curr_row[_columns.type] = SP_VERB_FILE_NEW;
 }
 
-EventLog::~EventLog() { }
+EventLog::~EventLog() {
+	// avoid crash by clearing entries here (see bug #1071082)
+    if (_connected) {
+        (*_callback_connections)[CALLB_SELECTION_CHANGE].block();
+        (*_callback_connections)[CALLB_EXPAND].block();
+
+		_event_list_store->clear();
+
+        (*_callback_connections)[CALLB_EXPAND].block(false);
+        (*_callback_connections)[CALLB_SELECTION_CHANGE].block(false);
+    }
+}
 
 void
 EventLog::notifyUndoEvent(Event* log) 
