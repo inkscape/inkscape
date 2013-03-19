@@ -664,21 +664,24 @@ override) the bindings in the main default.xml.
 
 <!-- Effects -->
 
-  <bind action="EffectLast" /> 
-  <bind action="EffectLastPref" /> 
+  <bind key="q" modifiers="Alt" action="EffectLast" display="true" /> 
+  <bind key="Q" modifiers="Alt" action="EffectLast" /> 
+  <bind key="q" modifiers="Shift,Alt" action="EffectLastPref" display="true" />
+  <bind key="Q" modifiers="Shift,Alt" action="EffectLastPref" />
+  
   <!-- You can also assign keys to individual effects. The action should be set to he
   effect id from the .inx file, for example "org.ekips.filter.addnodes" for the Add
   Nodes effect. -->
 
- <bind key="g" modifiers="Ctrl,Alt" action="org.inkscape.typography.newglyphlayer" display="true"/>
- <bind key="G" modifiers="Ctrl,Alt" action="org.inkscape.typography.newglyphlayer"/>
+  <bind key="g" modifiers="Ctrl,Alt" action="org.inkscape.typography.newglyphlayer" display="true"/>
+  <bind key="G" modifiers="Ctrl,Alt" action="org.inkscape.typography.newglyphlayer"/>
 
 <!-- 
- <bind key="h" modifiers="Ctrl,Alt" action="org.inkscape.typography.previousglyphlayer" display="true"/>
- <bind key="H" modifiers="Ctrl,Alt" action="org.inkscape.typography.previousglyphlayer"/>
+  <bind key="h" modifiers="Ctrl,Alt" action="org.inkscape.typography.previousglyphlayer" display="true"/>
+  <bind key="H" modifiers="Ctrl,Alt" action="org.inkscape.typography.previousglyphlayer"/>
  -->
  
- <bind key="j" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer" display="true"/>
- <bind key="J" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer"/>
+  <bind key="j" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer" display="true"/>
+  <bind key="J" modifiers="Ctrl,Alt" action="org.inkscape.typography.nextglyphlayer"/>
 
 </keys>
