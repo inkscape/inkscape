@@ -160,8 +160,10 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
             if (_new_surface) cairo_surface_destroy(_new_surface);
             _rescaledSize = newSize;
 
-            // This essentially considers an image to be composed of rectangular pixels and computes the least-squares approximation of the original.
+            // This essentially considers an image to be composed of rectangular pixels (box kernel) and computes the least-squares approximation of the original.
             // When the scale factor is really large or small this essentially results in using a box filter, while for scale factors approaching 1 it is more like a "tent" kernel.
+            // Although the quality of the result is not great, it is typically better than an ordinary box filter, and it is guaranteed to preserve the overall brightness of the image.
+            // The best improvement would probably be to do the same kind of thing based on a tent kernel, but that's quite a bit more complicated, and probably not worth the trouble for a hack like this.
             int newwidth = static_cast<int>(floor(orgwidth*scaleExpansionSmall[Geom::X])+1);
             int newheight = static_cast<int>(floor(orgheight*scaleExpansionSmall[Geom::Y])+1);
             std::vector<int> xBegin(newwidth, -1), yBegin(newheight, -1);
