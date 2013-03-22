@@ -236,7 +236,8 @@ private:
         SPFilterPrimitive* _drag_prim;
         sigc::signal<void> _signal_primitive_changed;
         sigc::connection _scroll_connection;
-        int _autoscroll;
+        int _autoscroll_y;
+        int _autoscroll_x;
         std::auto_ptr<Inkscape::XML::SignalObserver> _observer;
         int _input_type_width;
         int _input_type_height;

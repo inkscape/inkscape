@@ -1149,7 +1149,9 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
     ((Gtk::CellRendererText*)_list.get_column(1)->get_first_cell())->
         signal_edited().connect(sigc::mem_fun(*this, &FilterEffectsDialog::FilterModifier::on_name_edited));
 
-    sw->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+    sw->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+    _list.get_column(1)->set_resizable(true);
+    
     sw->set_shadow_type(Gtk::SHADOW_IN);
     show_all_children();
     _add.signal_clicked().connect(sigc::mem_fun(*this, &FilterModifier::add_filter));
@@ -1554,6 +1556,7 @@ FilterEffectsDialog::PrimitiveList::PrimitiveList(FilterEffectsDialog& d)
 
     set_model(_model);
     append_column(_("_Effect"), _columns.type);
+    get_column(0)->set_resizable(true);
     set_headers_visible();
 
     _observer->signal_changed().connect(signal_primitive_changed().make_slot());
@@ -1724,7 +1727,6 @@ bool FilterEffectsDialog::PrimitiveList::on_expose_signal(GdkEventExpose * /*evt
 bool FilterEffectsDialog::PrimitiveList::on_draw_signal(const Cairo::RefPtr<Cairo::Context> & cr)
 {
     cr->set_line_width(1.0);
-
 #if GTK_CHECK_VERSION(3,0,0)
     // In GTK+ 3, the draw function receives the widget window, not the
     // bin_window (i.e., just the area under the column headers).  We 
@@ -1836,6 +1838,7 @@ bool FilterEffectsDialog::PrimitiveList::on_draw_signal(const Cairo::RefPtr<Cair
 
         std::vector<Gdk::Point> con_poly;
         int con_drag_y = 0;
+        int con_drag_x = 0;
         bool inside;
         const SPFilterPrimitive* row_prim = (*row)[_columns.primitive];
         const int inputs = input_count(row_prim);
@@ -1863,16 +1866,22 @@ bool FilterEffectsDialog::PrimitiveList::on_draw_signal(const Cairo::RefPtr<Cair
 		cr->restore();
 
                 if(_in_drag == (i + 1))
+		    {
                     con_drag_y = con_poly[2].get_y();
+                    con_drag_x = con_poly[2].get_x(); 
+		    }
 
                 if(_in_drag != (i + 1) || row_prim != prim)
+		    {
                     draw_connection(cr, row, i, text_start_x, outline_x, con_poly[2].get_y(), row_count);
+		    }
             }
         }
         else {
             // Draw "in" shape
             inside = do_connection_node(row, 0, con_poly, mx, my);
             con_drag_y = con_poly[2].get_y();
+            con_drag_x = con_poly[2].get_x(); 
             
 	    cr->save();
 		
@@ -1894,13 +1903,18 @@ bool FilterEffectsDialog::PrimitiveList::on_draw_signal(const Cairo::RefPtr<Cair
 
             // Draw "in" connection
             if(_in_drag != 1 || row_prim != prim)
+		{
                 draw_connection(cr, row, SP_ATTR_IN, text_start_x, outline_x, con_poly[2].get_y(), row_count);
+		}
 
             if(inputs == 2) {
                 // Draw "in2" shape
                 inside = do_connection_node(row, 1, con_poly, mx, my);
                 if(_in_drag == 2)
+		    {
                     con_drag_y = con_poly[2].get_y();
+                    con_drag_x = con_poly[2].get_x(); 
+		    }
 		
 		cr->save();
 
@@ -1922,7 +1936,9 @@ bool FilterEffectsDialog::PrimitiveList::on_draw_signal(const Cairo::RefPtr<Cair
 
                 // Draw "in2" connection
                 if(_in_drag != 2 || row_prim != prim)
+		    {
                     draw_connection(cr, row, SP_ATTR_IN2, text_start_x, outline_x, con_poly[2].get_y(), row_count);
+		    }
             }
         }
 
@@ -1930,8 +1946,8 @@ bool FilterEffectsDialog::PrimitiveList::on_draw_signal(const Cairo::RefPtr<Cair
         if(row_prim == prim && _in_drag) {
 		cr->save();
                 cr->set_source_rgb(0.0, 0.0, 0.0);
-		cr->move_to(outline_x, con_drag_y);
-		cr->line_to(mx, con_drag_y);
+		cr->move_to(con_drag_x, con_drag_y);
+		cr->line_to(mx, con_drag_y);  
 		cr->line_to(mx, my);
 		cr->stroke();
 		cr->restore();
@@ -2153,7 +2169,8 @@ bool FilterEffectsDialog::PrimitiveList::on_button_press_event(GdkEventButton* e
 
     if(_in_drag) {
         _scroll_connection = Glib::signal_timeout().connect(sigc::mem_fun(*this, &PrimitiveList::on_scroll_timeout), 150);
-        _autoscroll = 0;
+        _autoscroll_x = 0;  
+        _autoscroll_y = 0; 
         get_selection()->select(path);
         return true;
     }
@@ -2169,22 +2186,43 @@ bool FilterEffectsDialog::PrimitiveList::on_motion_notify_event(GdkEventMotion* 
     Gdk::Rectangle vis;
     get_visible_rect(vis);
     int vis_x, vis_y;
+    
+    int vis_x2, vis_y2;  // NOTE:  insaner added -- necessary to get the scrolling while dragging to work
+    convert_widget_to_tree_coords(vis.get_x(), vis.get_y(), vis_x2, vis_y2);
+    
     convert_tree_to_widget_coords(vis.get_x(), vis.get_y(), vis_x, vis_y);
     const int top = vis_y + vis.get_height();
+    const int right_edge = vis_x + vis.get_width();
 
     // When autoscrolling during a connection drag, set the speed based on
     // where the mouse is in relation to the edges.
     if(e->y < vis_y)
-        _autoscroll = -(int)(speed + (vis_y - e->y) / 5);
+        _autoscroll_y = -(int)(speed + (vis_y - e->y) / 5);
     else if(e->y < vis_y + limit)
-        _autoscroll = -speed;
+        _autoscroll_y = -speed;
     else if(e->y > top)
-        _autoscroll = (int)(speed + (e->y - top) / 5);
+        _autoscroll_y = (int)(speed + (e->y - top) / 5);
     else if(e->y > top - limit)
-        _autoscroll = speed;
+        _autoscroll_y = speed;
     else
-        _autoscroll = 0;
+        _autoscroll_y = 0;
 
+	    // NOTE:  insaner added -- necessary to get the scrolling while dragging to work
+    double e2 = ( e->x - vis_x2/2);
+    // horizontal scrolling 
+    if(e2 < vis_x)
+        _autoscroll_x = -(int)(speed + (vis_x - e2) / 5);
+    else if(e2 < vis_x + limit)
+        _autoscroll_x = -speed;
+    else if(e2 > right_edge)
+        _autoscroll_x = (int)(speed + (e2 - right_edge) / 5);
+    else if(e2 > right_edge - limit)
+        _autoscroll_x = speed;
+    else
+        _autoscroll_x = 0;
+    
+	  
+ 
     queue_draw();
 
     return Gtk::TreeView::on_motion_notify_event(e);
@@ -2379,10 +2417,10 @@ void FilterEffectsDialog::PrimitiveList::on_drag_end(const Glib::RefPtr<Gdk::Dra
 // If a connection is dragged towards the top or bottom of the list, the list should scroll to follow.
 bool FilterEffectsDialog::PrimitiveList::on_scroll_timeout()
 {
-    if(_autoscroll) {
+    if(_autoscroll_y) {
 #if WITH_GTKMM_3_0
         Glib::RefPtr<Gtk::Adjustment> a = dynamic_cast<Gtk::ScrolledWindow*>(get_parent())->get_vadjustment();
-        double v = a->get_value() + _autoscroll;
+        double v = a->get_value() + _autoscroll_y;
         
 	if(v < 0)
             v = 0;
@@ -2392,7 +2430,7 @@ bool FilterEffectsDialog::PrimitiveList::on_scroll_timeout()
         a->set_value(v);
 #else
         Gtk::Adjustment& a = *dynamic_cast<Gtk::ScrolledWindow*>(get_parent())->get_vadjustment();
-        double v = a.get_value() + _autoscroll;
+        double v = a.get_value() + _autoscroll_y;
         
 	if(v < 0)
             v = 0;
@@ -2405,6 +2443,34 @@ bool FilterEffectsDialog::PrimitiveList::on_scroll_timeout()
         queue_draw();
     }
 
+	   
+    if(_autoscroll_x) {
+#if WITH_GTKMM_3_0
+        Glib::RefPtr<Gtk::Adjustment> a_h = dynamic_cast<Gtk::ScrolledWindow*>(get_parent())->get_hadjustment();
+        double h = a_h->get_value() + _autoscroll_x;
+        
+	if(h < 0)
+            h = 0;
+        if(h > a_h->get_upper() - a_h->get_page_size())
+            h = a_h->get_upper() - a_h->get_page_size();
+
+        a_h->set_value(h);
+#else
+        Gtk::Adjustment& a_h = *dynamic_cast<Gtk::ScrolledWindow*>(get_parent())->get_hadjustment();
+        double h = a_h.get_value() + _autoscroll_x;
+        
+	if(h < 0)
+            h = 0;
+        if(h > a_h.get_upper() - a_h.get_page_size())
+            h = a_h.get_upper() - a_h.get_page_size();
+
+        a_h.set_value(h);
+	
+#endif
+
+        queue_draw();
+    }
+	   
     return true;
 }
 
@@ -2452,6 +2518,7 @@ FilterEffectsDialog::FilterEffectsDialog()
 #endif
 
     Gtk::ScrolledWindow* sw_prims = Gtk::manage(new Gtk::ScrolledWindow);
+    Gtk::ScrolledWindow* sw_infobox = Gtk::manage(new Gtk::ScrolledWindow);
     Gtk::HBox* infobox = Gtk::manage(new Gtk::HBox(/*homogeneous:*/false, /*spacing:*/4));
     Gtk::HBox* hb_prims = Gtk::manage(new Gtk::HBox);
 
@@ -2460,12 +2527,14 @@ FilterEffectsDialog::FilterEffectsDialog()
     hpaned->pack2(_primitive_box);
     _primitive_box.pack_start(*sw_prims);
     _primitive_box.pack_start(*hb_prims, false, false);
-    _primitive_box.pack_start(*infobox,false, false);
+    _primitive_box.pack_start(*sw_infobox, false, false);
     sw_prims->add(_primitive_list);
+    sw_infobox->add(*infobox);
     infobox->pack_start(_infobox_icon, false, false);
     infobox->pack_start(_infobox_desc, false, false);
     _infobox_desc.set_line_wrap(true);
     _infobox_desc.set_size_request(200, -1);
+
 
     hb_prims->pack_start(_add_primitive, false, false);
     hb_prims->pack_start(_add_primitive_type, false, false);
@@ -2481,8 +2550,10 @@ FilterEffectsDialog::FilterEffectsDialog()
     _add_primitive_type.signal_changed().connect(
         sigc::mem_fun(*this, &FilterEffectsDialog::update_primitive_infobox));
 
-    sw_prims->set_policy(Gtk::POLICY_NEVER, Gtk::POLICY_AUTOMATIC);
+    sw_prims->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);  /* NOTE: insaner -- SCROLL the connections panel thing!!! */
     sw_prims->set_shadow_type(Gtk::SHADOW_IN);
+    sw_infobox->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_NEVER);
+    
 //    al_settings->set_padding(0, 0, 12, 0);
 //    fr_settings->set_shadow_type(Gtk::SHADOW_NONE);
 //    ((Gtk::Label*)fr_settings->get_label_widget())->set_use_markup();
