@@ -26,12 +26,12 @@
         <item value="cm">cm</item>
         <item value="mm">mm</item>
       </param>
-      <param name="crop_offset"     type="float"  min="0.0"  max="9999.0"  _gui-text="Offset:">5</param>
+      <param name="crop_offset"     type="float"  min="0.0"  max="9999.0" precision="3" _gui-text="Offset:">5</param>
       <_param name="bleed_settings" type="description" appearance="header">Bleed Margin</_param>
-      <param name="bleed_top"       type="float"  indent="1" min="0.0"  max="9999.0"  _gui-text="Top:">5</param>
-      <param name="bleed_bottom"    type="float"  indent="1" min="0.0"  max="9999.0"  _gui-text="Bottom:">5</param>
-      <param name="bleed_left"      type="float"  indent="1" min="0.0"  max="9999.0"  _gui-text="Left:">5</param>
-      <param name="bleed_right"     type="float"  indent="1" min="0.0"  max="9999.0"  _gui-text="Right:">5</param>
+      <param name="bleed_top"       type="float"  indent="1" min="0.0"  max="9999.0"  precision="3" _gui-text="Top:">5</param>
+      <param name="bleed_bottom"    type="float"  indent="1" min="0.0"  max="9999.0"  precision="3" _gui-text="Bottom:">5</param>
+      <param name="bleed_left"      type="float"  indent="1" min="0.0"  max="9999.0"  precision="3" _gui-text="Left:">5</param>
+      <param name="bleed_right"     type="float"  indent="1" min="0.0"  max="9999.0"  precision="3" _gui-text="Right:">5</param>
     </page>
   </param>
 

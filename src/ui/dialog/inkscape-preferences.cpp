@@ -598,7 +598,7 @@ void InkscapePreferences::initPageUI()
                        _("When on, will allow dynamic layout of components that are not completely finished being refactored"), true);
 
     /* show infobox */
-    _show_filters_info_box.init( _("Show filter primitives infobox"), "/options/showfiltersinfobox/value", true);
+    _show_filters_info_box.init( _("Show filter primitives infobox (requires restart)"), "/options/showfiltersinfobox/value", true);
     _page_ui.add_line(false, "", _show_filters_info_box, "",
                         _("Show icons and descriptions for the filter primitives available at the filter effects dialog"));
 
