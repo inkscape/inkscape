@@ -144,11 +144,11 @@ void Filter::effect(Inkscape::Extension::Effect *module, Inkscape::UI::View::Vie
 		if (filter == NULL) {
 
 			Inkscape::XML::Node * newfilterroot = xmldoc->createElement("svg:filter");
+			merge_filters(newfilterroot, filterdoc->root(), xmldoc);
 			defsrepr->appendChild(newfilterroot);
 
 			Glib::ustring url = "url(#"; url += newfilterroot->attribute("id"); url += ")";
 
-			merge_filters(newfilterroot, filterdoc->root(), xmldoc);
 
       Inkscape::GC::release(newfilterroot);
 
