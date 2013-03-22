@@ -2793,7 +2793,7 @@ Verb *Verb::_base_verbs[] = {
     new DialogVerb(SP_VERB_DIALOG_LIVE_PATH_EFFECT, "DialogLivePathEffect", N_("Path E_ffects ..."),
                    N_("Manage, edit, and apply path effects"), NULL),
     new DialogVerb(SP_VERB_DIALOG_FILTER_EFFECTS, "DialogFilterEffects", N_("Filter _Editor..."),
-                   N_("Manage, edit, and apply SVG filters"), NULL),
+                   N_("Manage, edit, and apply SVG filters"), INKSCAPE_ICON("dialog-filters")),
     new DialogVerb(SP_VERB_DIALOG_SVG_FONTS, "DialogSVGFonts", N_("SVG Font Editor..."),
                    N_("Edit SVG fonts"), NULL),
     new DialogVerb(SP_VERB_DIALOG_PRINT_COLORS_PREVIEW, "DialogPrintColorsPreview", N_("Print Colors..."),
