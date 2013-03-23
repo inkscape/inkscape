@@ -159,10 +159,10 @@ static double exifDouble(ExifEntry *entry, ExifByteOrder byte_order) {
             return double(r.numerator) / double(r.denominator);
         }
         case EXIF_FORMAT_FLOAT: {
-            return double(((float *)entry->data)[0]);
+            return double((reinterpret_cast<float *>(entry->data))[0]);
         }
         case EXIF_FORMAT_DOUBLE: {
-            return ((double *)entry->data)[0];
+            return (reinterpret_cast<double *>(entry->data))[0];
         }
         default: {
             return nan(0);

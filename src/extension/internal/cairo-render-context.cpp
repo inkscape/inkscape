@@ -708,7 +708,7 @@ CairoRenderContext::popLayer(void)
             for (int row = 0 ; row < height; row++) {
                 unsigned char *row_data = pixels + (row * stride);
                 for (int i = 0 ; i < width; i++) {
-                    guint32 *pixel = (guint32 *)row_data + i;
+                    guint32 *pixel = reinterpret_cast<guint32 *>(row_data) + i;
                     float lum_alpha = (((*pixel & 0x00ff0000) >> 16) * coeff_r +
                                        ((*pixel & 0x0000ff00) >>  8) * coeff_g +
                                        ((*pixel & 0x000000ff)      ) * coeff_b );
