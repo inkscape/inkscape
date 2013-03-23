@@ -22,8 +22,8 @@ DrawingImage::DrawingImage(Drawing &drawing)
     : DrawingItem(drawing)
     , _pixbuf(NULL)
     , _surface(NULL)
-    , _new_surface(NULL)
     , _style(NULL)
+    , _new_surface(NULL)
 {}
 
 DrawingImage::~DrawingImage()

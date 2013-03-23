@@ -66,9 +66,9 @@ void ink_cairo_surface_blend(cairo_surface_t *in1, cairo_surface_t *in2, cairo_s
 
     int limit = w * h;
 
-    guint32 *const in1_data = (guint32*) cairo_image_surface_get_data(in1);
-    guint32 *const in2_data = (guint32*) cairo_image_surface_get_data(in2);
-    guint32 *const out_data = (guint32*) cairo_image_surface_get_data(out);
+    guint32 *const in1_data = reinterpret_cast<guint32*>(cairo_image_surface_get_data(in1));
+    guint32 *const in2_data = reinterpret_cast<guint32*>(cairo_image_surface_get_data(in2));
+    guint32 *const out_data = reinterpret_cast<guint32*>(cairo_image_surface_get_data(out));
 
     // NOTE
     // OpenMP probably doesn't help much here.
@@ -199,8 +199,8 @@ void ink_cairo_surface_filter(cairo_surface_t *in, cairo_surface_t *out, Filter 
     fast_path &= (stridein == w * bppin);
     fast_path &= (strideout == w * bppout);
 
-    guint32 *const in_data = (guint32*) cairo_image_surface_get_data(in);
-    guint32 *const out_data = (guint32*) cairo_image_surface_get_data(out);
+    guint32 *const in_data  = reinterpret_cast<guint32*>(cairo_image_surface_get_data(in));
+    guint32 *const out_data = reinterpret_cast<guint32*>(cairo_image_surface_get_data(out));
 
     #if HAVE_OPENMP
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
@@ -695,4 +695,4 @@ pxclamp(gint32 v, gint32 low, gint32 high) {
   fill-column:99
   End:
 */
-// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=99 :
+// vim: filetype=cpp:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:fileencoding=utf-8:textwidth=99 :
