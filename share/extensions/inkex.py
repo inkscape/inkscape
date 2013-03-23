@@ -157,6 +157,7 @@ class Effect:
 
     def __init__(self, *args, **kwargs):
         self.document=None
+        self.original_document=None
         self.ctx=None
         self.selected={}
         self.doc_ids={}
@@ -184,6 +185,7 @@ class Effect:
         except:
             stream = sys.stdin
         self.document = etree.parse(stream)
+        self.original_document = copy.deepcopy(self.document)
         stream.close()
 
     def getposinlayer(self):
@@ -249,7 +251,10 @@ class Effect:
 
     def output(self):
         """Serialize document into XML on stdout"""
-        self.document.write(sys.stdout)
+        original = etree.tostring(self.original_document)        
+        result = etree.tostring(self.document)        
+        if original != result:
+            self.document.write(sys.stdout)
 
     def affect(self, args=sys.argv[1:], output=True):
         """Affect an SVG document with a callback effect"""
