@@ -87,6 +87,33 @@ SPObject* getMarkerObj(gchar const *n, SPDocument *doc)
 
 namespace Inkscape {
 
+
+/**
+ * Construct a stroke-style radio button with a given icon
+ *
+ * \param[in] grp          The Gtk::RadioButtonGroup to which to add the new button
+ * \param[in] icon         The icon to use for the button
+ * \param[in] button_type  The type of stroke-style radio button (join/cap)
+ * \param[in] stroke_style The style attribute to associate with the button
+ */
+StrokeStyle::StrokeStyleButton::StrokeStyleButton(Gtk::RadioButtonGroup &grp,
+                                                  char const            *icon,
+                                                  StrokeStyleButtonType  button_type,
+                                                  gchar const           *stroke_style)
+    : 
+        Gtk::RadioButton(grp),
+        button_type(button_type),
+        stroke_style(stroke_style)
+{
+    show();
+    set_mode(false);
+        
+    Gtk::Widget *px = manage(Glib::wrap(sp_icon_new(Inkscape::ICON_SIZE_LARGE_TOOLBAR, icon)));
+    g_assert(px != NULL);
+    px->show();
+    add(*px);
+}
+
 /**
  * Create the fill or stroke style widget, and hook up all the signals.
  */
@@ -194,24 +221,27 @@ StrokeStyle::StrokeStyle() :
 
     hb = spw_hbox(table, 3, 1, i);
 
-    //tb = NULL;
+    Gtk::RadioButtonGroup joinGrp;
 
-    joinMiter = makeRadioButton(NULL, INKSCAPE_ICON("stroke-join-miter"),
-                                hb, "join", "miter");
+    joinMiter = makeRadioButton(joinGrp, INKSCAPE_ICON("stroke-join-miter"),
+                                hb, STROKE_STYLE_BUTTON_JOIN, "miter");
+
     // TRANSLATORS: Miter join: joining lines with a sharp (pointed) corner.
     //  For an example, draw a triangle with a large stroke width and modify the
     //  "Join" option (in the Fill and Stroke dialog).
     joinMiter->set_tooltip_text(_("Miter join"));
 
-    joinRound = makeRadioButton(joinMiter, INKSCAPE_ICON("stroke-join-round"),
-                                hb, "join", "round");
+    joinRound = makeRadioButton(joinGrp, INKSCAPE_ICON("stroke-join-round"),
+                                hb, STROKE_STYLE_BUTTON_JOIN, "round");
+
     // TRANSLATORS: Round join: joining lines with a rounded corner.
     //  For an example, draw a triangle with a large stroke width and modify the
     //  "Join" option (in the Fill and Stroke dialog).
     joinRound->set_tooltip_text(_("Round join"));
 
-    joinBevel = makeRadioButton(joinMiter, INKSCAPE_ICON("stroke-join-bevel"),
-                                hb, "join", "bevel");
+    joinBevel = makeRadioButton(joinGrp, INKSCAPE_ICON("stroke-join-bevel"),
+                                hb, STROKE_STYLE_BUTTON_JOIN, "bevel");
+
     // TRANSLATORS: Bevel join: joining lines with a blunted (flattened) corner.
     //  For an example, draw a triangle with a large stroke width and modify the
     //  "Join" option (in the Fill and Stroke dialog).
@@ -260,20 +290,25 @@ StrokeStyle::StrokeStyle() :
 
     hb = spw_hbox(table, 3, 1, i);
 
-    capButt = makeRadioButton(capButt, INKSCAPE_ICON("stroke-cap-butt"),
-                                hb, "cap", "butt");
+    Gtk::RadioButtonGroup capGrp;
+
+    capButt = makeRadioButton(capGrp, INKSCAPE_ICON("stroke-cap-butt"),
+                                hb, STROKE_STYLE_BUTTON_CAP, "butt");
+
     // TRANSLATORS: Butt cap: the line shape does not extend beyond the end point
     //  of the line; the ends of the line are square
     capButt->set_tooltip_text(_("Butt cap"));
 
-    capRound = makeRadioButton(capButt, INKSCAPE_ICON("stroke-cap-round"),
-                                hb, "cap", "round");
+    capRound = makeRadioButton(capGrp, INKSCAPE_ICON("stroke-cap-round"),
+                                hb, STROKE_STYLE_BUTTON_CAP, "round");
+
     // TRANSLATORS: Round cap: the line shape extends beyond the end point of the
     //  line; the ends of the line are rounded
     capRound->set_tooltip_text(_("Round cap"));
 
-    capSquare = makeRadioButton(capButt, INKSCAPE_ICON("stroke-cap-square"),
-                                hb, "cap", "square");
+    capSquare = makeRadioButton(capGrp, INKSCAPE_ICON("stroke-cap-square"),
+                                hb, STROKE_STYLE_BUTTON_CAP, "square");
+
     // TRANSLATORS: Square cap: the line shape extends beyond the end point of the
     //  line; the ends of the line are square
     capSquare->set_tooltip_text(_("Square cap"));
@@ -394,39 +429,36 @@ void StrokeStyle::setDesktop(SPDesktop *desktop)
 
 
 /**
- * Helper function for creating radio buttons.  This should probably be re-thought out
- * when reimplementing this with Gtkmm.
+ * Helper function for creating stroke-style radio buttons.
+ *
+ * \param[in] grp           The Gtk::RadioButtonGroup in which to add the button
+ * \param[in] icon          The icon for the button
+ * \param[in] hb            The Gtk::Box container in which to add the button
+ * \param[in] button_type   The type (join/cap) for the button
+ * \param[in] stroke_style  The style attribute to associate with the button
+ *
+ * \details After instantiating the button, it is added to a container box and
+ *          a handler for the toggle event is connected.
  */
-Gtk::RadioButton *
-StrokeStyle::makeRadioButton(Gtk::RadioButton *tb, char const *icon,
-                       Gtk::HBox *hb, gchar const *key, gchar const *data)
+StrokeStyle::StrokeStyleButton *
+StrokeStyle::makeRadioButton(Gtk::RadioButtonGroup &grp,
+                             char const            *icon,
+                             Gtk::HBox             *hb,
+                             StrokeStyleButtonType  button_type,
+                             gchar const           *stroke_style)
 {
     g_assert(icon != NULL);
     g_assert(hb  != NULL);
 
-    if (tb == NULL) {
-        tb = new Gtk::RadioButton();
-    } else {
-        Gtk::RadioButtonGroup grp = tb->get_group();
-        tb = new Gtk::RadioButton(grp);
-    }
+    StrokeStyleButton *tb = new StrokeStyleButton(grp, icon, button_type, stroke_style);
 
-    tb->show();
-    tb->set_mode(false);
     hb->pack_start(*tb, false, false, 0);
     set_data(icon, tb);
-    tb->set_data(key, (gpointer*)data);
 
-    tb->signal_toggled().connect(sigc::bind<Gtk::RadioButton *, StrokeStyle *>(
+    tb->signal_toggled().connect(sigc::bind<StrokeStyleButton *, StrokeStyle *>(
                                      sigc::ptr_fun(&StrokeStyle::buttonToggledCB), tb, this));
 
-    Gtk::Widget *px = manage(Glib::wrap(sp_icon_new(Inkscape::ICON_SIZE_LARGE_TOOLBAR, icon)));
-    g_assert(px != NULL);
-    px->show();
-    tb->add(*px);
-
     return tb;
-
 }
 
 /**
@@ -1120,38 +1152,30 @@ StrokeStyle::lineDashChangedCB()
  * calls the respective routines to update css properties, etc.
  *
  */
-void StrokeStyle::buttonToggledCB(Gtk::ToggleButton *tb, StrokeStyle *spw)
+void StrokeStyle::buttonToggledCB(StrokeStyleButton *tb, StrokeStyle *spw)
 {
     if (spw->update) {
         return;
     }
 
     if (tb->get_active()) {
-
-        gchar const *join
-            = static_cast<gchar const *>(tb->get_data("join"));
-        gchar const *cap
-            = static_cast<gchar const *>(tb->get_data("cap"));
-
-        if (join) {
-            spw->miterLimitSpin->set_sensitive(!strcmp(join, "miter"));
+        if (tb->get_button_type() == STROKE_STYLE_BUTTON_JOIN) {
+            spw->miterLimitSpin->set_sensitive(!strcmp(tb->get_stroke_style(), "miter"));
         }
 
         /* TODO: Create some standardized method */
         SPCSSAttr *css = sp_repr_css_attr_new();
 
-        if (join) {
-            sp_repr_css_set_property(css, "stroke-linejoin", join);
-
-            sp_desktop_set_style (spw->desktop, css);
-
-            spw->setJoinButtons(tb);
-        } else if (cap) {
-            sp_repr_css_set_property(css, "stroke-linecap", cap);
-
-            sp_desktop_set_style (spw->desktop, css);
-
-            spw->setCapButtons(tb);
+        switch (tb->get_button_type()) {
+            case STROKE_STYLE_BUTTON_JOIN: 
+                sp_repr_css_set_property(css, "stroke-linejoin", tb->get_stroke_style());
+                sp_desktop_set_style (spw->desktop, css);
+                spw->setJoinButtons(tb);
+                break;
+            case STROKE_STYLE_BUTTON_CAP:
+                sp_repr_css_set_property(css, "stroke-linecap", tb->get_stroke_style());
+                sp_desktop_set_style (spw->desktop, css);
+                spw->setCapButtons(tb);
         }
 
         sp_repr_css_attr_unref(css);

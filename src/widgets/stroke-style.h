@@ -104,6 +104,7 @@ void sp_stroke_style_widget_set_desktop(Gtk::Widget *widget, SPDesktop *desktop)
 SPObject *getMarkerObj(gchar const *n, SPDocument *doc);
 
 namespace Inkscape {
+class StrokeStyleButton;
 
 class StrokeStyle : public Gtk::VBox
 {
@@ -113,7 +114,33 @@ public:
     void setDesktop(SPDesktop *desktop);
 
 private:
+    /** List of valid types for the stroke-style radio-button widget */
+    enum StrokeStyleButtonType {
+        STROKE_STYLE_BUTTON_JOIN, ///< A button to set the line-join style
+        STROKE_STYLE_BUTTON_CAP   ///< A button to set the line-cap style
+    };
+    
+    /**
+     * A custom radio-button for setting the stroke style.  It can be configured
+     * to set either the join or cap style by setting the button_type field.
+     */
+    class StrokeStyleButton : public Gtk::RadioButton {
+        public:
+            StrokeStyleButton(Gtk::RadioButtonGroup &grp,
+                              char const            *icon,
+                              StrokeStyleButtonType  button_type,
+                              gchar const           *stroke_style);
 
+            /** Get the type (line/cap) of the stroke-style button */
+            inline StrokeStyleButtonType get_button_type() {return button_type;}
+
+            /** Get the stroke style attribute associated with the button */
+            inline gchar const * get_stroke_style() {return stroke_style;}
+
+        private:
+            StrokeStyleButtonType button_type; ///< The type (line/cap) of the button
+            gchar const *stroke_style;         ///< The stroke style associated with the button
+    };
 
     void updateLine();
     void updateAllMarkers(GSList const *objects);
@@ -129,8 +156,12 @@ private:
     SPObject *forkMarker(SPObject *marker, int loc, SPItem *item);
     const char *getItemColorForMarker(SPItem *item, Inkscape::PaintTarget fill_or_stroke, int loc);
 
-    Gtk::RadioButton * makeRadioButton(Gtk::RadioButton *tb, char const *icon,
-                           Gtk::HBox *hb, gchar const *key, gchar const *data);
+    StrokeStyleButton * makeRadioButton(Gtk::RadioButtonGroup &grp,
+                                        char const            *icon,
+                                        Gtk::HBox             *hb,
+                                        StrokeStyleButtonType  button_type,
+                                        gchar const           *stroke_style);
+
     static gboolean setStrokeWidthUnit(SPUnitSelector *,
                                           SPUnit const *old,
                                           SPUnit const *new_units,
@@ -143,7 +174,7 @@ private:
     void miterLimitChangedCB();
     void lineDashChangedCB();
     static void markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw, SPMarkerLoc const which);
-    static void buttonToggledCB(Gtk::ToggleButton *tb, StrokeStyle *spw);
+    static void buttonToggledCB(StrokeStyleButton *tb, StrokeStyle *spw);
 
 
     MarkerComboBox *startMarkerCombo;
@@ -161,12 +192,12 @@ private:
     Inkscape::UI::Widget::SpinButton *miterLimitSpin;
     Inkscape::UI::Widget::SpinButton *widthSpin;
     GtkWidget *unitSelector;
-    Gtk::RadioButton *joinMiter;
-    Gtk::RadioButton *joinRound;
-    Gtk::RadioButton *joinBevel;
-    Gtk::RadioButton *capButt;
-    Gtk::RadioButton *capRound;
-    Gtk::RadioButton *capSquare;
+    StrokeStyleButton *joinMiter;
+    StrokeStyleButton *joinRound;
+    StrokeStyleButton *joinBevel;
+    StrokeStyleButton *capButt;
+    StrokeStyleButton *capRound;
+    StrokeStyleButton *capSquare;
     SPDashSelector *dashSelector;
 
     gboolean update;
