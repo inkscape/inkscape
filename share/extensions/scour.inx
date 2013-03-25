@@ -35,13 +35,13 @@
         <page name="OptionHelp" _gui-text="Help (Options)">
             <_param name="OptionsInstructions" type="description" xml:space="preserve">This extension optimizes the SVG file according to the following options:
     * Shorten color names: convert all colors to #RRGGBB or #RGB format.
-    * Convert CSS attributes to XML attributes: convert styles from &lt;style&gt; tags and inline style="" declarations into XML attributes.
-    * Group collapsing: removes useless &lt;g&gt; elements, promoting their contents up one level. Requires "Remove unused ID names for elements" to be set.
-    * Create groups for similar attributes: create &lt;g&gt; elements for runs of elements having at least one attribute in common (e.g. fill color, stroke opacity, ...).
+    * Convert CSS attributes to XML attributes: convert styles from style tags and inline style="" declarations into XML attributes.
+    * Group collapsing: removes useless g elements, promoting their contents up one level. Requires "Remove unused ID names for elements" to be set.
+    * Create groups for similar attributes: create g elements for runs of elements having at least one attribute in common (e.g. fill color, stroke opacity, ...).
     * Embed rasters: embed raster images as base64-encoded data URLs.
     * Keep editor data: don't remove Inkscape, Sodipodi or Adobe Illustrator elements and attributes.
-    * Remove metadata: remove &lt;metadata&gt; tags along with all the information in them, which may include license metadata, alternate versions for non-SVG-enabled browsers, etc.
-    * Remove comments: remove &lt;!-- --&gt; tags.
+    * Remove metadata: remove metadata tags along with all the information in them, which may include license metadata, alternate versions for non-SVG-enabled browsers, etc.
+    * Remove comments: remove comment tags.
     * Work around renderer bugs: emits slightly larger SVG data, but works around a bug in librsvg's renderer, which is used in Eye of GNOME and other various applications.
     * Enable viewboxing: size image to 100%/100% and introduce a viewBox.
     * Number of significant digits for coords: all coordinates are output with that number of significant digits. For example, if 3 is specified, the coordinate 3.5153 is output as 3.51 and the coordinate 471.55 is output as 472.
