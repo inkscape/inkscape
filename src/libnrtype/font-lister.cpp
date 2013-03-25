@@ -2,13 +2,14 @@
 # include <config.h>
 #endif
 
+#include <gtkmm/treemodel.h>
+#include <gtkmm/liststore.h>
+
 #include <libnrtype/font-instance.h>
 #include <libnrtype/TextWrapper.h>
 #include <libnrtype/one-glyph.h>
 
 #include <glibmm.h>
-#include <gtkmm/treemodel.h>
-#include <gtkmm/liststore.h>
 #include "font-lister.h"
 #include "FontFactory.h"
 

@@ -17,6 +17,7 @@
 # include "config.h"
 #endif
 
+#include "widgets/icon.h"
 #include <cstring>
 #include <string>
 #include <cstdlib>
@@ -37,7 +38,6 @@
 #include "../profile-manager.h"
 #include "color-profile.h"
 #include "cms-system.h"
-#include "widgets/icon.h"
 #include "tools-switch.h"
 #include "event-context.h"
 

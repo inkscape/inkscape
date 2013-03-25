@@ -1,8 +1,6 @@
 #ifndef __SP_SHORTCUTS_H__
 #define __SP_SHORTCUTS_H__
 
-#include <gtkmm/cellrendereraccel.h>
-
 /*
  * Keyboard shortcut processing
  *
@@ -11,6 +9,14 @@
  *
  * This code is in public domain
  */
+
+#include <gdkmm/types.h>
+
+typedef struct _GtkAccelGroup GtkAccelGroup;
+typedef struct _GtkWidget     GtkWidget;
+
+struct _GtkAccelGroup;
+struct _GtkWidget;
 
 namespace Inkscape {
     class Verb;

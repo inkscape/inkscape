@@ -8,9 +8,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "ui/widget/registered-widget.h"
 #include <glibmm/i18n.h>
 
-#include "ui/widget/registered-widget.h"
 #include "live_effects/parameter/text.h"
 #include "live_effects/effect.h"
 #include "svg/svg.h"

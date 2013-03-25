@@ -17,10 +17,9 @@
 # include <config.h>
 #endif
 
+#include "inkscape-preferences.h"
 #include <glibmm/i18n.h>
 #include <glibmm/miscutils.h>
-
-#include "inkscape-preferences.h"
 #include <gtkmm/main.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/scrolledwindow.h>

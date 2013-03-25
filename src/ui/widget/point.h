@@ -13,8 +13,8 @@
 #ifndef INKSCAPE_UI_WIDGET_POINT_H
 #define INKSCAPE_UI_WIDGET_POINT_H
 
-#include <2geom/point.h>
 #include "ui/widget/labelled.h"
+#include <2geom/point.h>
 #include "ui/widget/scalar.h"
 
 namespace Gtk {

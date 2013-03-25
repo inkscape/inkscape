@@ -22,10 +22,9 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
-#ifdef HAVE_STRING_H
-#endif
-#include "ui/widget/color-preview.h"
+
 #include "gradient-vector.h"
+#include "ui/widget/color-preview.h"
 #include "verbs.h"
 #include <gtk/gtk.h>
 #include "macros.h"

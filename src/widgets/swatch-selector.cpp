@@ -1,8 +1,5 @@
-
-
-#include <glibmm/i18n.h>
-
 #include "swatch-selector.h"
+#include <glibmm/i18n.h>
 
 #include "document.h"
 #include "document-undo.h"

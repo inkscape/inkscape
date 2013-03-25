@@ -17,11 +17,11 @@
 #endif
 #include <map>
 #include <string>
+#include "ui/dialog/guides.h"
 #include <2geom/line.h>
 #include <2geom/angle.h>
 #include <glibmm/i18n.h>
 
-#include "ui/dialog/guides.h"
 #include "desktop.h"
 #include "desktop-events.h"
 #include "desktop-handles.h"

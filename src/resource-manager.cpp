@@ -9,12 +9,12 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <gtkmm/recentmanager.h>
 #include <glibmm/i18n.h>
 #include <glibmm/convert.h>
 #include <glibmm/fileutils.h>
 #include <glibmm/miscutils.h>
 #include <glibmm/uriutils.h>
-#include <gtkmm/recentmanager.h>
 
 #include "resource-manager.h"
 

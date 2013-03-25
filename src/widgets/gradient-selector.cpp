@@ -16,6 +16,7 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
+#include "gradient-vector.h"
 #include <gtk/gtk.h>
 
 #include "document.h"
@@ -30,7 +31,6 @@
 #include <glibmm/i18n.h>
 #include <xml/repr.h>
 
-#include "gradient-vector.h"
 #include "gradient-selector.h"
 #include "paint-selector.h"
 #include "style.h"

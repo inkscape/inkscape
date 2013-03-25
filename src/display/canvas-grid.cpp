@@ -17,7 +17,6 @@
 # include "config.h"
 #endif
 
-#include <glibmm/i18n.h>
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
 
@@ -26,6 +25,8 @@
 #else
 # include <gtkmm/table.h>
 #endif
+
+#include <glibmm/i18n.h>
 
 #include "ui/widget/registered-widget.h"
 #include "desktop.h"

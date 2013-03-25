@@ -18,6 +18,7 @@
 # include "config.h"
 #endif
 
+#include "shortcuts.h"
 #include "file.h"
 #include "event-context.h"
 
@@ -31,7 +32,6 @@
 #include "display/sp-canvas.h"
 #include "xml/node-event-vector.h"
 #include "sp-cursor.h"
-#include "shortcuts.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "desktop-events.h"

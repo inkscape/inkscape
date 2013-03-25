@@ -10,9 +10,9 @@
 #define SEEN_INKSCAPE_DEVICE_MANAGER_H
 
 
+#include <gdkmm/device.h>
 #include <list>
 #include <glibmm/ustring.h>
-#include <gdkmm/device.h>
 
 namespace Inkscape {
 

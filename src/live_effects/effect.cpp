@@ -7,14 +7,13 @@
 
 //#define LPE_ENABLE_TEST_EFFECTS
 
-#include "live_effects/effect.h"
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
 
 // include effects:
 #include "live_effects/lpe-patternalongpath.h"
+#include "live_effects/effect.h"
 #include "live_effects/lpe-bendpath.h"
 #include "live_effects/lpe-sketch.h"
 #include "live_effects/lpe-vonkoch.h"

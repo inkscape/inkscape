@@ -5,6 +5,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "ui/widget/point.h"
 #include <glibmm/i18n.h>
 
 #include "live_effects/parameter/path.h"
@@ -15,7 +16,6 @@
 #include <2geom/pathvector.h>
 #include <2geom/d2.h>
 
-#include "ui/widget/point.h"
 #include "widgets/icon.h"
 #include <gtk/gtk.h>
 #include "selection-chemistry.h"

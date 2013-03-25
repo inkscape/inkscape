@@ -21,6 +21,7 @@
  * See the file COPYING for details.
  */
 
+#include <gtkmm/clipboard.h>
 #include "ui/clipboard.h"
 
 // TODO: reduce header bloat if possible
@@ -28,7 +29,6 @@
 #include "file.h" // for file_import, used in _pasteImage
 #include <list>
 #include <algorithm>
-#include <gtkmm/clipboard.h>
 #include <glibmm/ustring.h>
 #include <glibmm/i18n.h>
 #include <glib/gstdio.h> // for g_file_set_contents etc., used in _onGet and paste

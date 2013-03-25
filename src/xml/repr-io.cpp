@@ -37,6 +37,8 @@
 
 #include "preferences.h"
 
+#include <glibmm/miscutils.h>
+
 using Inkscape::IO::Writer;
 using Inkscape::Util::List;
 using Inkscape::Util::cons;

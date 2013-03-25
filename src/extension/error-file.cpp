@@ -12,12 +12,11 @@
 #include "config.h"
 #endif
 
+#include "ui/dialog/extensions.h"
+
 #include <glibmm/i18n.h>
-
-
 #include "inkscape.h"
 #include "preferences.h"
-#include "ui/dialog/extensions.h"
 #include "extension/extension.h"
 
 #include "error-file.h"

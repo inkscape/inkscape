@@ -1,6 +1,8 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
+
+#include "gradient-vector.h"
 #include <math.h>
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
@@ -11,7 +13,6 @@
 #include "document.h"
 #include "inkscape.h"
 #include "profile-manager.h"
-#include "gradient-vector.h"
 
 #define noDEBUG_LCMS
 

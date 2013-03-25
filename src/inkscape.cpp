@@ -19,6 +19,7 @@
 #include <errno.h>
 
 #include <map>
+#include <gtkmm/messagedialog.h>
 #include "debug/simple-event.h"
 #include "debug/event-tracker.h"
 
@@ -35,11 +36,9 @@
 
 #include <cstring>
 #include <glib/gstdio.h>
-#include <glib.h>
 #include <glibmm/i18n.h>
 #include <glibmm/miscutils.h>
 #include <glibmm/convert.h>
-#include <gtkmm/messagedialog.h>
 #include <gtk/gtk.h>
 #include <signal.h>
 #include <string>

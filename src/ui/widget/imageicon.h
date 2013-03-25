@@ -12,9 +12,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glibmm/ustring.h>
 #include <gtkmm/box.h>
-
+#include <glibmm/ustring.h>
 
 class SPDocument;
 

@@ -28,10 +28,8 @@
 # include "config.h"
 #endif
 
-
-#include <glibmm/i18n.h>
-
 #include "ui/widget/spinbutton.h"
+#include <glibmm/i18n.h>
 #include "toolbox.h"
 #include "erasor-toolbar.h"
 #include "calligraphy-toolbar.h"

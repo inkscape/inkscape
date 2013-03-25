@@ -16,7 +16,7 @@
  */
 
 #include <glibmm/ustring.h>
-#include "ui/dialog/ocaldialogs.h"
+#include "extension/system.h"
 
 class SPDesktop;
 class SPDocument;
@@ -26,6 +26,10 @@ namespace Inkscape {
     namespace Extension {
         class Extension;
     }
+}
+
+namespace Gtk {
+class Window;
 }
 
 // Get the name of the default template uri

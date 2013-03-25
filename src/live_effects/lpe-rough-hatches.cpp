@@ -12,9 +12,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glibmm/i18n.h>
-
 #include "ui/widget/scalar.h"
+#include <glibmm/i18n.h>
 #include "live_effects/lpe-rough-hatches.h"
 
 #include "sp-item.h"

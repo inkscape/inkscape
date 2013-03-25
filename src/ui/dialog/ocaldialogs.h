@@ -13,14 +13,14 @@
 #ifndef __OCAL_DIALOG_H__
 #define __OCAL_DIALOG_H__
 
-#include <cairomm/refptr.h>
-
 //Gtk includes
 #include <gtkmm/box.h>
 #include <gtkmm/eventbox.h>
 #include <gtkmm/listviewtext.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/window.h>
+
+#include <cairomm/refptr.h>
 
 #if GTK_CHECK_VERSION(3,6,0)
 # include <gtkmm/searchentry.h>

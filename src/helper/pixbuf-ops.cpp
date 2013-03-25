@@ -15,7 +15,6 @@
 # include "config.h"
 #endif
 
-#include <glib.h>
 #include <png.h>
 #include <2geom/transforms.h>
 

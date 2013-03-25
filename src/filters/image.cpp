@@ -17,6 +17,7 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
+#include "display/nr-filter-image.h"
 #include "uri.h"
 #include "uri-references.h"
 #include "enums.h"
@@ -27,7 +28,6 @@
 #include <string.h>
 
 #include "display/nr-filter.h"
-#include "display/nr-filter-image.h"
 
 /* FeImage base class */
 static void sp_feImage_build(SPObject *object, SPDocument *document, Inkscape::XML::Node *repr);

@@ -28,10 +28,8 @@
 # include "config.h"
 #endif
 
-
+#include "ui/dialog/calligraphic-profile-rename.h"
 #include <glibmm/i18n.h>
-
-#include "../ui/dialog/calligraphic-profile-rename.h"
 
 #include "toolbox.h"
 #include "calligraphy-toolbar.h"

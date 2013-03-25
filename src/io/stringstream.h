@@ -1,7 +1,7 @@
 #ifndef __INKSCAPE_IO_STRINGSTREAM_H__
 #define __INKSCAPE_IO_STRINGSTREAM_H__
 
-#include <glibmm.h>
+#include <glibmm/ustring.h>
 
 #include "inkscapestream.h"
 

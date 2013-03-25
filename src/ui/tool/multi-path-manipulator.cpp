@@ -11,9 +11,8 @@
  */
 
 #include <boost/shared_ptr.hpp>
-#include <glib.h>
-#include <glibmm/i18n.h>
 #include "node.h"
+#include <glibmm/i18n.h>
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "document.h"

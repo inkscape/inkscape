@@ -28,9 +28,8 @@
 # include "config.h"
 #endif
 
-#include <glibmm/i18n.h>
-
 #include "ui/widget/spinbutton.h"
+#include <glibmm/i18n.h>
 #include "toolbox.h"
 #include "spiral-toolbar.h"
 
@@ -39,8 +38,6 @@
 #include "document-undo.h"
 #include "../verbs.h"
 #include "../inkscape.h"
-//#include "../interface.h"
-//#include "../connection-pool.h"
 #include "../selection-chemistry.h"
 #include "../selection.h"
 #include "../ege-adjustment-action.h"

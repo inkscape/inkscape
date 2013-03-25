@@ -38,6 +38,7 @@
 #include <sys/stat.h>
 #include <locale.h>
 
+#include <gtkmm/main.h>
 #include <glib.h>
 
 // #include <stropts.h>
@@ -45,8 +46,6 @@
 #include <libxml/tree.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
-
-#include <gtkmm/main.h>
 
 #include "gc-core.h"
 #include "preferences.h"

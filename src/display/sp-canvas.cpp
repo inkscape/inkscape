@@ -19,6 +19,7 @@
 # include <config.h>
 #endif
 
+#include <gdkmm/rectangle.h>
 #include <cairomm/region.h>
 
 #include "helper/sp-marshal.h"
@@ -35,7 +36,6 @@
 #include "debug/gdk-event-latency-tracker.h"
 #include "desktop.h"
 #include "sp-namedview.h"
-#include <gdkmm/rectangle.h>
 
 using Inkscape::Debug::GdkEventLatencyTracker;
 

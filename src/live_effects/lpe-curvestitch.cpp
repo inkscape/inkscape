@@ -12,6 +12,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "ui/widget/scalar.h"
 #include <glibmm/i18n.h>
 
 #include "live_effects/lpe-curvestitch.h"
@@ -29,8 +30,6 @@
 #include <2geom/sbasis-to-bezier.h>
 #include <2geom/d2.h>
 #include <2geom/affine.h>
-
-#include "ui/widget/scalar.h"
 
 namespace Inkscape {
 namespace LivePathEffect {

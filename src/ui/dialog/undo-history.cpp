@@ -14,11 +14,11 @@
 # include <config.h>
 #endif
 
+#include "undo-history.h"
 #include <glibmm/i18n.h>
 #include <stddef.h>
 #include <sigc++/sigc++.h>
 
-#include "undo-history.h"
 #include "document.h"
 #include "document-undo.h"
 #include "inkscape.h"

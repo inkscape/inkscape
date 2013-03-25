@@ -11,8 +11,6 @@
  * Released under GNU GPL, see the file 'COPYING' for more information
  */
 
-#include <glibmm.h>
-
 #include "console-output-undo-observer.h"
 
 namespace Inkscape {

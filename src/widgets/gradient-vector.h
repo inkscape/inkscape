@@ -15,7 +15,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
 #include <gtkmm/liststore.h>
 
 #include <stddef.h>

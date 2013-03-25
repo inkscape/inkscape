@@ -1,6 +1,6 @@
+#include <glibmm/ustring.h>
 #include <glib-object.h>
-#include<vector>
-#include <glibmm.h>
+#include <vector>
 
 struct Urange{
 	gchar* start;

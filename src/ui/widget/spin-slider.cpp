@@ -8,11 +8,10 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
-#include <glib.h>
+#include "spin-slider.h"
+
 #include <glibmm/i18n.h>
 #include <glibmm/stringutils.h>
-
-#include "spin-slider.h"
 
 namespace Inkscape {
 namespace UI {

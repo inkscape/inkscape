@@ -19,7 +19,6 @@
 # include "config.h"
 #endif
 
-#include <glibmm/i18n.h>
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
 #include <gtkmm/frame.h>
@@ -30,6 +29,7 @@
 # include <gtkmm/table.h>
 #endif
 
+#include <glibmm/i18n.h>
 #include "inkscape.h"
 #include "extension/implementation/implementation.h"
 #include "extension.h"

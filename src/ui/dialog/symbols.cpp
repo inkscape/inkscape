@@ -18,8 +18,6 @@
 #include <functional>
 #include <sstream>
 
-#include <glibmm/i18n.h>
-
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/label.h>
 
@@ -36,6 +34,7 @@
 #include <gtkmm/treemodelcolumn.h>
 #include <gtkmm/clipboard.h>
 
+#include <glibmm/i18n.h>
 #include "path-prefix.h"
 #include "io/sys.h"
 

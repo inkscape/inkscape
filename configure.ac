@@ -707,7 +707,6 @@ if test "x$enable_strict_build" != "xno"; then
 	# lp:inkscape builds cleanly with this option at r10957
 	CPPFLAGS="-DGLIBMM_DISABLE_DEPRECATED $CPPFLAGS"
 	
-	
 	dnl Pango 1.32.4 uses a deprecated Glib symbol:
 	dnl   https://bugzilla.gnome.org/show_bug.cgi?id=689843
 	dnl 
@@ -721,22 +720,10 @@ if test "x$enable_strict_build" != "xno"; then
 			  pango_uses_deprecated_glib_symbols=yes,
 			  pango_uses_deprecated_glib_symbols=no)
 
-	dnl Glib 2.35 deprecated the GThread API.  Glibmm didn't catch up with
-	dnl this change until v2.35.8 was released so we cannot disable
-	dnl deprecated Glib symbols in this case.
-	glibmm_uses_deprecated_glib_symbols=no
-
-	PKG_CHECK_MODULES(GLIBMM_USES_DEPRECATED_GLIB_SYMBOLS,
-			  glib-2.0 >= 2.35 glibmm-2.4 < 2.35.8,
-			  glibmm_uses_deprecated_glib_symbols=yes,
-			  glibmm_uses_deprecated_glib_symbols=no)
-
 	# Don't disable deprecated Glib symbols if it will break stuff in an
 	# external library header that we use
 	if test "x$pango_uses_deprecated_glib_symbols" = "xyes"; then
 		AC_MSG_WARN([The available version of Pango uses deprecated Glib symbols.  Deprecated Glib symbol usage will be allowed])
-	elif test "x$glibmm_uses_deprecated_glib_symbols" = "xyes"; then
-		AC_MSG_WARN([The available version of Glibmm uses deprecated Glib symbols.  Deprecated Glib symbol usage will be allowed])
 	else
 		CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
 	fi

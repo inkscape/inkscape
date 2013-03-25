@@ -7,9 +7,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "event-log.h"
 #include <glibmm/i18n.h>
 
-#include "event-log.h"
 #include "desktop.h"
 #include "inkscape.h"
 #include "util/ucompose.hpp"

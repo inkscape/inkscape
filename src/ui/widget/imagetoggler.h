@@ -14,9 +14,9 @@
 #include "config.h"
 #endif
 
-#include <glibmm/property.h>
 #include <gtkmm/cellrendererpixbuf.h>
 #include <gtkmm/widget.h>
+#include <glibmm/property.h>
 
 namespace Inkscape {
 namespace UI {

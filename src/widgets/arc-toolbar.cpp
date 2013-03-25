@@ -28,9 +28,9 @@
 # include "config.h"
 #endif
 
+#include "ui/widget/spinbutton.h"
 #include <glibmm/i18n.h>
 
-#include "ui/widget/spinbutton.h"
 #include "toolbox.h"
 #include "arc-toolbar.h"
 

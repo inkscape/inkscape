@@ -18,6 +18,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "widgets/gradient-vector.h"
+
 #include <2geom/transforms.h>
 #include <2geom/bezier-curve.h>
 #include <2geom/crossing.h>
@@ -41,7 +43,6 @@
 #include "sp-radial-gradient.h"
 #include "sp-mesh-gradient.h"
 #include "sp-stop.h"
-#include "widgets/gradient-vector.h"
 #include "gradient-drag.h"
 #include "gradient-chemistry.h"
 

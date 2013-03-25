@@ -23,14 +23,13 @@
 # include "config.h"
 #endif
 
+#include <gtkmm/clipboard.h>
+
 #include "file.h"
 #include "selection-chemistry.h"
 
 // TOOD fixme: This should be moved into preference repr
 SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
-
-
-#include <gtkmm/clipboard.h>
 
 #include "svg/svg.h"
 #include "desktop.h"

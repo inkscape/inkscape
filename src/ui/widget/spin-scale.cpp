@@ -6,10 +6,9 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
-#include <glib.h>
+#include <gtkmm/adjustment.h>
 #include <glibmm/i18n.h>
 #include <glibmm/stringutils.h>
-#include <gtkmm/adjustment.h>
 
 #include "spin-scale.h"
 #include "ui/widget/gimpspinscale.h"

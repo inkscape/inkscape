@@ -25,6 +25,7 @@
 #include <string>
 #include <map>
 
+#include "shortcuts.h"
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
@@ -33,7 +34,6 @@
 #include "helper/action.h"
 #include "io/sys.h"
 #include "io/resource.h"
-#include "shortcuts.h"
 #include "verbs.h"
 #include "xml/node-iterators.h"
 #include "xml/repr.h"

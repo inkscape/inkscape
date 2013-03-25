@@ -12,10 +12,9 @@
 # include <config.h>
 #endif
 
-#include <glibmm/i18n.h>
-
-#include "unit-constants.h"
 #include "rendering-options.h"
+#include "unit-constants.h"
+#include <glibmm/i18n.h>
 
 namespace Inkscape {
 namespace UI {

@@ -7,11 +7,10 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
+#include "device-manager.h"
 #include <map>
 #include <set>
 
-#include "device-manager.h"
 #include "preferences.h"
 #include <gtk/gtk.h>
 #include <glibmm/regex.h>
