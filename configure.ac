@@ -729,16 +729,6 @@ if test "x$enable_strict_build" != "xno"; then
 	fi
 fi
 
-# Check for GTK+ backend target
-AC_MSG_CHECKING([for GTK+ backend target])
-gtk_backend_target=`pkg-config --variable=target gtk+-2.0`
-AC_MSG_RESULT($gtk_backend_target)
-
-# Add X11 library if needed
-if test "x$gtk_backend_target" = "xx11"; then
-  INKSCAPE_LIBS="$INKSCAPE_LIBS -lX11"
-fi
-
 # Check for Apple Mac OS X Carbon framework
 carbon_ok=no
 AC_MSG_CHECKING([for Mac OS X Carbon support])
@@ -1046,5 +1036,4 @@ Configuration:
         Libvisio:                 ${with_libvisio}
         Libcdr:                   ${with_libcdr}
         Doing Local Install:      ${with_localinstall}
-        GTK+ backend target:      ${gtk_backend_target}
 "
