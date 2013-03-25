@@ -202,7 +202,7 @@ std::vector<Coord> EllipticalArc::roots(Coord v, Dim2 d) const
             {
                 return sol;
             }
-            double ray_prj;
+            double ray_prj = 0.0;
             switch(d)
             {
                 case X:

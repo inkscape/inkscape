@@ -373,89 +373,87 @@ namespace Inkscape
     }
  
 
-    // Set fontspec. If check is false, best style match will not be done.
-    void
-    FontLister::set_fontspec (Glib::ustring new_fontspec, gboolean check) {
-
-      std::pair<Glib::ustring,Glib::ustring> ui = ui_from_fontspec( new_fontspec );
-      Glib::ustring new_family = ui.first;
-      Glib::ustring new_style = ui.second;
-
-#ifdef DEBUG_FONT
-      std::cout << "FontLister::set_fontspec: family: " << new_family
-		<< "   style:" << new_style << std::endl;
-#endif
-
-      set_font_family( new_family, false );
-      set_font_style( new_style );
-    }
-
-
-    // TODO: use to determine font-selector best style
-    std::pair<Glib::ustring, Glib::ustring>
-    FontLister::new_font_family (Glib::ustring new_family, gboolean check_style ) {
+// Set fontspec. If check is false, best style match will not be done.
+void FontLister::set_fontspec(Glib::ustring new_fontspec, gboolean /*check*/)
+{
+    std::pair<Glib::ustring,Glib::ustring> ui = ui_from_fontspec( new_fontspec );
+    Glib::ustring new_family = ui.first;
+    Glib::ustring new_style = ui.second;
 
 #ifdef DEBUG_FONT
-      std::cout << "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-      std::cout << "FontLister::new_font_family: " << new_family << std::endl;
+    std::cout << "FontLister::set_fontspec: family: " << new_family
+              << "   style:" << new_style << std::endl;
 #endif
 
-      // No need to do anything if new family is same as old family.
-      if( new_family.compare( current_family ) == 0 ) {
+    set_font_family( new_family, false );
+    set_font_style( new_style );
+}
+
+
+// TODO: use to determine font-selector best style
+std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustring new_family, gboolean /*check_style*/ )
+{
+#ifdef DEBUG_FONT
+    std::cout << "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+    std::cout << "FontLister::new_font_family: " << new_family << std::endl;
+#endif
+
+    // No need to do anything if new family is same as old family.
+    if ( new_family.compare( current_family ) == 0 ) {
 #ifdef DEBUG_FONT
 	std::cout << "FontLister::new_font_family: exit: no change in family." << std::endl;
 	std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" << std::endl;
 #endif
 	return std::make_pair( current_family, current_style );
-      }
+    }
 
-      // We need to do two things:
-      // 1. Update style list for new family.
-      // 2. Select best valid style match to old style.
+    // We need to do two things:
+    // 1. Update style list for new family.
+    // 2. Select best valid style match to old style.
 
-      // For finding style list, use list of first family in font-family list.
-      GList* styles = NULL;
-      Gtk::TreeModel::iterator iter = font_list_store->get_iter( "0" );
-      while( iter != font_list_store->children().end() ) {
+    // For finding style list, use list of first family in font-family list.
+    GList* styles = NULL;
+    Gtk::TreeModel::iterator iter = font_list_store->get_iter( "0" );
+    while( iter != font_list_store->children().end() ) {
 
 	Gtk::TreeModel::Row row = *iter;
 
 	if( new_family.compare( row[FontList.family] ) == 0 ) {
-	  styles = row[FontList.styles];
-	  break;
+            styles = row[FontList.styles];
+            break;
 	}
 	++iter;
-      }
+    }
 
-      // Newly typed in font-family may not yet be in list... use default list.
-      // TODO: if font-family is list, check if first family in list is on system
-      // and set style accordingly.
-      if( styles == NULL ) {
+    // Newly typed in font-family may not yet be in list... use default list.
+    // TODO: if font-family is list, check if first family in list is on system
+    // and set style accordingly.
+    if( styles == NULL ) {
 	styles = default_styles;
-      }
+    }
       
-      // Update style list.
-      style_list_store->freeze_notify();
-      style_list_store->clear();
+    // Update style list.
+    style_list_store->freeze_notify();
+    style_list_store->clear();
 
-      for (GList *l=styles; l; l = l->next) {
+    for (GList *l=styles; l; l = l->next) {
 	Gtk::TreeModel::iterator treeModelIter = style_list_store->append();
 	(*treeModelIter)[FontStyleList.styles] = (char*)l->data;
-      }
+    }
 
-      style_list_store->thaw_notify();
+    style_list_store->thaw_notify();
 	
-      // Find best match to the style from the old font-family to the
-      // styles available with the new font.
-      // TODO: Maybe check if an exact match exists before using Pango.
-      Glib::ustring best_style = get_best_style_match( new_family, current_style );
+    // Find best match to the style from the old font-family to the
+    // styles available with the new font.
+    // TODO: Maybe check if an exact match exists before using Pango.
+    Glib::ustring best_style = get_best_style_match( new_family, current_style );
 
 #ifdef DEBUG_FONT
-      std::cout << "FontLister::new_font_family: exit: " << new_family << " " << best_style << std::endl;
-      std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" << std::endl;
+    std::cout << "FontLister::new_font_family: exit: " << new_family << " " << best_style << std::endl;
+    std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" << std::endl;
 #endif
-      return std::make_pair( new_family, best_style );
-    }
+    return std::make_pair( new_family, best_style );
+}
  
     std::pair<Glib::ustring, Glib::ustring>
     FontLister::set_font_family (Glib::ustring new_family, gboolean check_style) {
