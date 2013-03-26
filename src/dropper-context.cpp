@@ -15,7 +15,6 @@
 # include <config.h>
 #endif
 
-#include <glibmm.h>
 #include <glibmm/i18n.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>

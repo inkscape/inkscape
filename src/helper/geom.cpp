@@ -9,6 +9,7 @@
  * Released under GNU GPL
  */
 
+#include <algorithm>
 #include "helper/geom.h"
 #include "helper/geom-curves.h"
 #include <typeinfo>
@@ -20,7 +21,6 @@
 #include <2geom/rect.h>
 #include <2geom/coord.h>
 #include <2geom/sbasis-to-bezier.h>
-#include <glibmm.h>
 
 using Geom::X;
 using Geom::Y;
@@ -275,18 +275,18 @@ geom_cubic_bbox_wind_distance (Geom::Coord x000, Geom::Coord y000,
 
     if (bbox) cubic_bbox (x000, y000, x001, y001, x011, y011, x111, y111, *bbox);
 
-    x0 = MIN (x000, x001);
-    x0 = MIN (x0, x011);
-    x0 = MIN (x0, x111);
-    y0 = MIN (y000, y001);
-    y0 = MIN (y0, y011);
-    y0 = MIN (y0, y111);
-    x1 = MAX (x000, x001);
-    x1 = MAX (x1, x011);
-    x1 = MAX (x1, x111);
-    y1 = MAX (y000, y001);
-    y1 = MAX (y1, y011);
-    y1 = MAX (y1, y111);
+    x0 = std::min (x000, x001);
+    x0 = std::min (x0, x011);
+    x0 = std::min (x0, x111);
+    y0 = std::min (y000, y001);
+    y0 = std::min (y0, y011);
+    y0 = std::min (y0, y111);
+    x1 = std::min (x000, x001);
+    x1 = std::min (x1, x011);
+    x1 = std::min (x1, x111);
+    y1 = std::min (y000, y001);
+    y1 = std::min (y1, y011);
+    y1 = std::min (y1, y111);
 
     if (best) {
         /* Quickly adjust to endpoints */

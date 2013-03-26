@@ -14,9 +14,7 @@
 # include "config.h"
 #endif
 
-#include <glibmm.h>
-#include <glib.h>
-#include <glibmm/i18n.h> // _()
+#include <glibmm/i18n.h>
 #include <pango/pangoft2.h>
 #include "libnrtype/FontFactory.h"
 #include "libnrtype/font-instance.h"
