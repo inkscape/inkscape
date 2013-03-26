@@ -680,7 +680,7 @@ else
 
 	# Check whether we are using the X11 backend for Gtk+ 2.
 	AC_MSG_CHECKING([if Gtk+ 2.0 is using the X11 backend target])
-	if test `$PKG_CONFIG --variable=target gtk+-2.0`; then
+	if test "x`$PKG_CONFIG --variable=target gtk+-2.0`" = "xx11"; then
 		have_x11=yes
 	else
 		have_x11=no
