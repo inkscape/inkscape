@@ -642,8 +642,14 @@ if test "x$enable_gtk3" = "xyes"; then
 		AC_MSG_ERROR([Some dependencies were not fulfilled for the experimental GTK+ 3 build. One possible cause for this is a new dependency on the gdl-3.0 development package.])
 	fi
 
+	dnl The following test is only defined if Gtk+ 3 development libraries
+	dnl are installed on the system.  Therefore, it is guarded by an 
+	dnl m4_ifdef statement.  The ifdef can be probably be removed once we 
+	dnl switch to Gtk+ 3 as a hard dependency
+
 	# Check whether we are using the X11 backend target for Gtk+ 3.
-	GTK_CHECK_BACKEND([x11], , [have_x11=yes], [have_x11=no])
+	m4_ifdef([GTK_CHECK_BACKEND],
+		 [GTK_CHECK_BACKEND([x11], , [have_x11=yes], [have_x11=no])])
 
 	# Enable strict build options that should work on most systems unless
 	# the build has been configured not to do so
