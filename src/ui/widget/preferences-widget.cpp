@@ -41,6 +41,8 @@
 #include "selection-chemistry.h"
 #include "ui/dialog/filedialog.h"
 #include "xml/repr.h"
+
+#include <glibmm/convert.h>
 #include <glibmm/i18n.h>
 
 using namespace Inkscape::UI::Widget;

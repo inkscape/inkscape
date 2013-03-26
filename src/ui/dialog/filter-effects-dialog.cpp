@@ -26,7 +26,11 @@
 #endif
 
 #include "ui/widget/spinbutton.h"
+
+#include <glibmm/convert.h>
 #include <glibmm/i18n.h>
+#include <glibmm/main.h>
+#include <glibmm/stringutils.h>
 
 #include "desktop.h"
 #include "desktop-handles.h"

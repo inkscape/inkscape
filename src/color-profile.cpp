@@ -47,6 +47,8 @@
 #include <icm.h>
 #endif // WIN32
 
+#include <glibmm/convert.h>
+
 using Inkscape::ColorProfile;
 using Inkscape::ColorProfileClass;
 using Inkscape::ColorProfileImpl;

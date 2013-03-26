@@ -9,7 +9,6 @@
 #include <libnrtype/TextWrapper.h>
 #include <libnrtype/one-glyph.h>
 
-#include <glibmm.h>
 #include "font-lister.h"
 #include "FontFactory.h"
 
@@ -21,6 +20,8 @@
 #include "sp-object.h"
 #include "sp-root.h"
 #include "xml/repr.h"
+
+#include <glibmm/regex.h>
 
 //#define DEBUG_FONT
 

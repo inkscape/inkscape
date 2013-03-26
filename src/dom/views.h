@@ -45,11 +45,8 @@
  * Be prepared in the future to adjust to this, if SVG ever switches .
  */
 
-
-
+#include <cstdlib>
 #include "dom.h"
-
-
 
 namespace org
 {

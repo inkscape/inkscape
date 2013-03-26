@@ -12,7 +12,9 @@
 
 #include "config.h"
 
-#include <glibmm.h>
+namespace Glib {
+class ustring;
+}
 
 namespace Inkscape
 {

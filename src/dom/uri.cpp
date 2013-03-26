@@ -27,16 +27,13 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-
-
-
 #include "uri.h"
 #include "ucd.h"
 
-#include <stdio.h>
-#include <stdarg.h>
+#include <cstdarg>
+#include <cstdio>
+#include <cstdlib>
 #include <vector>
-
 
 namespace org
 {

@@ -49,7 +49,8 @@ all_libs =			\
 	$(LIBCDR_LIBS)		\
 	$(DBUS_LIBS)		\
 	$(GDL_LIBS)             \
-	$(IMAGEMAGICK_LIBS)
+	$(IMAGEMAGICK_LIBS)     \
+	$(X11_LIBS)
 
 # Add sources common for Inkscape and Inkview to this variable.
 ink_common_sources =
@@ -83,7 +84,8 @@ AM_CPPFLAGS =	\
 	$(WIN32_CFLAGS) \
 	-I$(srcdir)/bind/javainc \
 	-I$(srcdir)/bind/javainc/linux \
-	-I$(builddir)/extension/dbus 
+	-I$(builddir)/extension/dbus   \
+	$(X11_CFLAGS)
 
 CXXTEST_TEMPLATE = $(srcdir)/cxxtest-template.tpl
 CXXTESTGENFLAGS = --root --have-eh --template=$(CXXTEST_TEMPLATE)

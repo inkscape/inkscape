@@ -27,8 +27,8 @@
 #ifndef SEEN_JAVABIND_H
 #define SEEN_JAVABIND_H
 
-#include <glibmm.h>
 #include <vector>
+#include <glibmm/ustring.h>
 
 
 namespace Inkscape

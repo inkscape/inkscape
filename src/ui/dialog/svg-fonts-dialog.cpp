@@ -22,7 +22,6 @@
 #include <gtkmm/imagemenuitem.h>
 #include <gtkmm/scale.h>
 #include <gtkmm/stock.h>
-#include <glibmm/i18n.h>
 #include <message-stack.h>
 #include "selection.h"
 #include <string.h>
@@ -37,6 +36,9 @@
 #include "sp-missing-glyph.h"
 #include "sp-font.h"
 #include "sp-glyph-kerning.h"
+
+#include <glibmm/i18n.h>
+#include <glibmm/stringutils.h>
 
 SvgFontDrawingArea::SvgFontDrawingArea():
     _x(0),

@@ -68,8 +68,10 @@
 #include "ui/dialog/font-substitution.h"
 
 #include <gtk/gtk.h>
-#include <glib.h>
+
+#include <glibmm/convert.h>
 #include <glibmm/i18n.h>
+#include <glibmm/miscutils.h>
 
 using Inkscape::DocumentUndo;
 

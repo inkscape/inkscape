@@ -10,6 +10,7 @@
  * This code is in public domain
  */
 
+#include <vector>
 #include <gdkmm/types.h>
 
 typedef struct _GtkAccelGroup GtkAccelGroup;

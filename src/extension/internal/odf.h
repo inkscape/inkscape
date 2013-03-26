@@ -27,9 +27,7 @@
 #include <io/stringstream.h>
 #include <dom/uri.h>
 
-#include <glibmm.h>
 #include "extension/implementation/implementation.h"
-
 
 #include <xml/repr.h>
 
@@ -37,8 +35,9 @@
 #include <map>
 
 #include <dom/util/ziptool.h>
-//#include <io/domstream.h>
 #include "sp-item.h"
+
+#include <glibmm/ustring.h>
 
 namespace Inkscape
 {

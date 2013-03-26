@@ -19,7 +19,6 @@
 #include <2geom/bezier-curve.h>
 #include <2geom/bezier-utils.h>
 #include <2geom/svg-path.h>
-#include <glibmm.h>
 #include <glibmm/i18n.h>
 #include "ui/tool/path-manipulator.h"
 #include "desktop.h"

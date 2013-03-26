@@ -26,8 +26,10 @@
 #include "path-prefix.h"
 
 #include "inkscape.h"
-#include <glibmm/ustring.h>
+
+#include <glibmm/fileutils.h>
 #include <glibmm/i18n.h>
+#include <glibmm/ustring.h>
 
 #include "system.h"
 #include "db.h"

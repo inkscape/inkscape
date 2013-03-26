@@ -642,6 +642,9 @@ if test "x$enable_gtk3" = "xyes"; then
 		AC_MSG_ERROR([Some dependencies were not fulfilled for the experimental GTK+ 3 build. One possible cause for this is a new dependency on the gdl-3.0 development package.])
 	fi
 
+	# Check whether we are using the X11 backend target for Gtk+ 3.
+	GTK_CHECK_BACKEND([x11], , [have_x11=yes], [have_x11=no])
+
 	# Enable strict build options that should work on most systems unless
 	# the build has been configured not to do so
 	if test "x$enable_strict_build" != "xno"; then
@@ -668,6 +671,15 @@ else
 	fi
 
 	PKG_CHECK_MODULES(INKSCAPE, bdw-gc >= 7.1  glib-2.0 >= 2.28  gtk+-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= 2.0.12 $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.24 pango >= 1.24 pangoft2 >= 1.24)
+
+	# Check whether we are using the X11 backend for Gtk+ 2.
+	AC_MSG_CHECKING([if Gtk+ 2.0 is using the X11 backend target])
+	if test `$PKG_CONFIG --variable=target gtk+-2.0`; then
+		have_x11=yes
+	else
+		have_x11=no
+	fi
+	AC_MSG_RESULT($have_x11)
 	
 	# Enable build strict options that should work on most systems unless
 	# the build has been configured explicitly not to do so
@@ -695,6 +707,15 @@ else
 		CPPFLAGS="-DGDK_DISABLE_DEPRECATED $CPPFLAGS"
 	fi
 fi
+
+dnl Configure x11 library if Gtk+ uses it as a backend.
+dnl Note that this is only here because we directly use X11 functionality.  We
+dnl wouldn't need this check if we were only using X as the Gtk+ backend.
+if test "x$have_x11" = "xyes"; then
+	PKG_CHECK_MODULES(X11, x11)
+fi
+AC_SUBST(X11_CFLAGS)
+AC_SUBST(X11_LIBS)
 
 AM_CONDITIONAL(WITH_EXT_GDL, test "x$with_gtkmm_3_0" = "xyes")
 

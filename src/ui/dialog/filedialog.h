@@ -16,11 +16,12 @@
 #ifndef __FILE_DIALOG_H__
 #define __FILE_DIALOG_H__
 
-#include <glibmm.h>
 #include <vector>
 #include <set>
 
 #include "extension/system.h"
+
+#include <glibmm/ustring.h>
 
 class SPDocument;
 

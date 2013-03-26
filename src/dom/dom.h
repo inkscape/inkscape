@@ -60,9 +60,9 @@
  */ 
 
 #ifdef DOM_STANDALONE
-#include <string>
+# include <string>
 #else
-#include <glibmm.h>
+# include <glibmm/ustring.h>
 #endif
 
 //# Unfortunate hack for a name collision

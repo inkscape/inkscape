@@ -42,6 +42,8 @@
 #endif
 
 #include <glibmm/i18n.h>
+#include <glibmm/miscutils.h>
+
 #include "helper/unit-menu.h"
 #include "helper/units.h"
 #include "unit-constants.h"

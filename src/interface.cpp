@@ -79,7 +79,8 @@
 #include "ui/dialog/layer-properties.h"
 
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtk.h>
+
+#include <glibmm/miscutils.h>
 
 using Inkscape::DocumentUndo;
 

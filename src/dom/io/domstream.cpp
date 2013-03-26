@@ -34,9 +34,10 @@
  *
  */
 
+#include <cmath>
+#include <cstdarg>
 #include <cstdio>
-#include <math.h>
-#include <stdarg.h>
+#include <cstdlib>
 
 #include "domstream.h"
 #include "dom/ucd.h"

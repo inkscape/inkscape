@@ -33,9 +33,15 @@
 #include <gtkmm/notebook.h>
 #include <gtkmm/spinner.h>
 #include <gtkmm/stock.h>
-#include <glibmm/i18n.h>
 #include <gdkmm/general.h>
 #include <libxml/tree.h>
+
+#include <glibmm/convert.h>
+#include <glibmm/fileutils.h>
+#include <glibmm/i18n.h>
+#include <glibmm/main.h>
+#include <glibmm/markup.h>
+#include <glibmm/miscutils.h>
 
 namespace Inkscape
 {

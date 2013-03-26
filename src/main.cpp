@@ -47,7 +47,6 @@
 #endif /* Not def: POPT_TABLEEND */
 
 #include <libxml/tree.h>
-#include <glib.h>
 #include <glib/gprintf.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
@@ -103,6 +102,9 @@
 #include "extension/init.h"
 
 #include <glibmm/i18n.h>
+#include <glibmm/main.h>
+#include <glibmm/miscutils.h>
+
 #include <gtkmm/main.h>
 
 #ifndef HAVE_BIND_TEXTDOMAIN_CODESET

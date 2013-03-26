@@ -24,6 +24,8 @@
 #include "extension/output.h"
 #include "preferences.h"
 
+#include <glibmm/convert.h>
+
 namespace Inkscape
 {
 namespace UI
