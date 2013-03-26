@@ -213,7 +213,6 @@ tools_switch(SPDesktop *dt, int num)
             dt->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, _("<b>Drag</b> or <b>double click</b> to create a mesh on selected objects, <b>drag handles</b> to adjust meshes."));
             break;
         case TOOLS_ZOOM:
-            std::cout << "tools-switch.cpp: TOOLS_ZOOM" << std::endl;
             dt->set_event_context(SP_TYPE_ZOOM_CONTEXT, tool_names[num]);
             dt->activate_guides(false);
             inkscape_eventcontext_set(sp_desktop_event_context(dt));

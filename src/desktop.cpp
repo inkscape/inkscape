@@ -811,7 +811,7 @@ SPDesktop::push_current_zoom (std::list<Geom::Rect> &history)
 {
     Geom::Rect area = get_display_area();
 
-    if (history.empty() || history.front() == area) {
+    if (history.empty() || history.front() != area) {
         history.push_front(area);
     }
 }
