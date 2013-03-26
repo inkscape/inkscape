@@ -286,6 +286,14 @@ namespace Inkscape
       const gchar* family = pango_font_description_get_family(descr);
       Glib::ustring Family = family;
 
+      // PANGO BUG...
+      //   A font spec of Delicious, 500 Italic should result in a family of 'Delicious'
+      //   and a style of 'Medium Italic'. It results instead with: a family of
+      //   'Delicious, 500' with a style of 'Medium Italic'. We chop of any weight numbers
+      //   at the end of the family:  match ",[1-9]00^".
+      Glib::RefPtr<Glib::Regex> weight = Glib::Regex::create(",[1-9]00$");
+      Family = weight->replace( Family, 0, "", Glib::REGEX_MATCH_PARTIAL );
+
       // Pango canonized strings remove space after comma between family names. Put it back.
       size_t i = 0;
       while( (i = Family.find(",", i)) != std::string::npos) {
@@ -325,7 +333,7 @@ namespace Inkscape
 
       // From style
       if( fontspec.empty() ) {
-	//std::cout << "  Attempting desktop style" << std::endl;
+        //std::cout << "  Attempting desktop style" << std::endl;
 	int rfamily = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTFAMILY);
 	int rstyle  = sp_desktop_query_style (SP_ACTIVE_DESKTOP, query, QUERY_STYLE_PROPERTY_FONTSTYLE);
 
@@ -338,7 +346,7 @@ namespace Inkscape
 
       // From preferences
       if( fontspec.empty() ) {
-	//std::cout << "  Attempting preferences" << std::endl;
+        //std::cout << "  Attempting preferences" << std::endl;
         sp_style_read_from_prefs(query, "/tools/text");
 	fontspec = fontspec_from_style( query );
 	//std::cout << "   fontspec from prefs   :" << fontspec << ":" << std::endl;
@@ -347,7 +355,7 @@ namespace Inkscape
 
       // From thin air
       if( fontspec.empty() ) {
-	//std::cout << "  Attempting thin air" << std::endl;
+        //std::cout << "  Attempting thin air" << std::endl;
 	fontspec = current_family + ", " + current_style;
 	//std::cout << "   fontspec from thin air   :" << fontspec << ":" << std::endl;
       }
@@ -554,13 +562,13 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
       PangoWeight weight = pango_font_description_get_weight( desc );
       switch ( weight ) {
       case PANGO_WEIGHT_THIN:
-	sp_repr_css_set_property (css, "font-weight", "thin" );
+	sp_repr_css_set_property (css, "font-weight", "100" );
 	break;
       case PANGO_WEIGHT_ULTRALIGHT:
-	sp_repr_css_set_property (css, "font-weight", "extra light" );
+	sp_repr_css_set_property (css, "font-weight", "200" );
 	break;
       case PANGO_WEIGHT_LIGHT:
-	sp_repr_css_set_property (css, "font-weight", "light" );
+	sp_repr_css_set_property (css, "font-weight", "300" );
 	break;
       case PANGO_WEIGHT_BOOK:
 	sp_repr_css_set_property (css, "font-weight", "380" );
@@ -569,19 +577,19 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
 	sp_repr_css_set_property (css, "font-weight", "normal" );
 	break;
       case PANGO_WEIGHT_MEDIUM:
-	sp_repr_css_set_property (css, "font-weight", "medium" );
+	sp_repr_css_set_property (css, "font-weight", "500" );
 	break;
       case PANGO_WEIGHT_SEMIBOLD:
-	sp_repr_css_set_property (css, "font-weight", "semi bold" );
+	sp_repr_css_set_property (css, "font-weight", "600" );
 	break;
       case PANGO_WEIGHT_BOLD:
 	sp_repr_css_set_property (css, "font-weight", "bold" );
 	break;
       case PANGO_WEIGHT_ULTRABOLD:
-	sp_repr_css_set_property (css, "font-weight", "extra bold" );
+	sp_repr_css_set_property (css, "font-weight", "800" );
 	break;
       case PANGO_WEIGHT_HEAVY:
-	sp_repr_css_set_property (css, "font-weight", "black" );
+	sp_repr_css_set_property (css, "font-weight", "900" );
 	break;
       case PANGO_WEIGHT_ULTRAHEAVY:
 	sp_repr_css_set_property (css, "font-weight", "1000" );
@@ -729,11 +737,11 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
 	  switch (style->font_stretch.computed) {
 
 	  case SP_CSS_FONT_STRETCH_ULTRA_CONDENSED:
-	    fontspec += " extra_condensed";
+	    fontspec += " extra-condensed";
 	    break;
 
 	  case SP_CSS_FONT_STRETCH_EXTRA_CONDENSED:
-	    fontspec += " extra_condensed";
+	    fontspec += " extra-condensed";
 	    break;
 
 	  case SP_CSS_FONT_STRETCH_CONDENSED:
@@ -742,7 +750,7 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
 	    break;
 
 	  case SP_CSS_FONT_STRETCH_SEMI_CONDENSED:
-	    fontspec += " semi_condensed";
+	    fontspec += " semi-condensed";
 	    break;
 
 	  case SP_CSS_FONT_STRETCH_NORMAL:
@@ -750,7 +758,7 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
 	    break;
 
 	  case SP_CSS_FONT_STRETCH_SEMI_EXPANDED:
-	    fontspec += " semi_expanded";
+	    fontspec += " semi-expanded";
 	    break;
 
 	  case SP_CSS_FONT_STRETCH_EXPANDED:
@@ -759,11 +767,11 @@ std::pair<Glib::ustring, Glib::ustring> FontLister::new_font_family (Glib::ustri
 	    break;
 
 	  case SP_CSS_FONT_STRETCH_EXTRA_EXPANDED:
-	    fontspec += " extra_expanded";
+	    fontspec += " extra-expanded";
 	    break;
 
 	  case SP_CSS_FONT_STRETCH_ULTRA_EXPANDED:
-	    fontspec += " ultra_expanded";
+	    fontspec += " ultra-expanded";
 	    break;
 
 	  default:
