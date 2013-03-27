@@ -19,6 +19,7 @@ src/sp-flowtext.cpp
 src/arc-context.cpp
 src/box3d-context.cpp
 src/box3d.cpp
+src/color-profile.cpp
 src/connector-context.cpp
 src/context-fns.cpp
 src/desktop-events.cpp
@@ -127,6 +128,7 @@ src/extension/system.cpp
 src/file.cpp
 src/filter-enums.cpp
 src/flood-context.cpp
+src/gradient-chemistry.cpp
 src/gradient-context.cpp
 src/gradient-drag.cpp
 src/helper/units-test.h
@@ -158,6 +160,7 @@ src/live_effects/lpe-envelope.cpp
 src/live_effects/lpe-gears.cpp
 src/live_effects/lpe-interpolate.cpp
 src/live_effects/lpe-knot.cpp
+src/live_effects/lpe-offset.cpp
 src/live_effects/lpe-patternalongpath.cpp
 src/live_effects/lpe-powerstroke.cpp
 src/live_effects/lpe-rough-hatches.cpp
@@ -178,6 +181,7 @@ src/live_effects/parameter/vector.cpp
 src/main-cmdlineact.cpp
 src/main.cpp
 src/menus-skeleton.h
+src/mesh-context.cpp
 src/object-edit.cpp
 src/path-chemistry.cpp
 src/pen-context.cpp
@@ -187,10 +191,12 @@ src/preferences-skeleton.h
 src/preferences.cpp
 src/rdf.cpp
 src/rect-context.cpp
+src/resource-manager.cpp
 src/select-context.cpp
 src/selection-chemistry.cpp
 src/selection-describer.cpp
 src/seltrans.cpp
+src/shortcuts.cpp
 src/shape-editor.cpp
 src/sp-anchor.cpp
 src/sp-ellipse.cpp
@@ -238,6 +244,7 @@ src/ui/dialog/filedialogimpl-win32.cpp
 src/ui/dialog/fill-and-stroke.cpp
 src/ui/dialog/filter-effects-dialog.cpp
 src/ui/dialog/find.cpp
+src/ui/dialog/font-substitution.cpp
 src/ui/dialog/glyphs.cpp
 src/ui/dialog/guides.cpp
 src/ui/dialog/icon-preview.cpp
@@ -300,6 +307,7 @@ src/widgets/gradient-toolbar.cpp
 src/widgets/gradient-vector.cpp
 src/widgets/lpe-toolbar.cpp
 src/widgets/measure-toolbar.cpp
+src/widgets/mesh-toolbar.cpp
 src/widgets/node-toolbar.cpp
 src/widgets/paintbucket-toolbar.cpp
 src/widgets/paint-selector.cpp
@@ -330,8 +338,10 @@ share/extensions/dxf_outlines.py
 share/extensions/embedimage.py
 share/extensions/export_gimp_palette.py
 share/extensions/extractimage.py
+share/extensions/extrude.py
 share/extensions/funcplot.py
 share/extensions/gcodetools.py
+share/extensions/generate_voronoi.py
 share/extensions/gimp_xcf.py
 share/extensions/guides_creator.py
 share/extensions/guillotine.py
@@ -354,11 +364,14 @@ share/extensions/pathmodifier.py
 share/extensions/pathscatter.py
 share/extensions/perspective.py
 share/extensions/polyhedron_3d.py
+share/extensions/print_win32_vector.py
 share/extensions/render_alphabetsoup.py
 share/extensions/render_barcode_datamatrix.py
+share/extensions/render_barcode_qrcode.py
 share/extensions/replace_font.py
 share/extensions/summersnight.py
 share/extensions/svg_and_media_zip_output.py
+share/extensions/svgcalendar.py
 share/extensions/uniconv-ext.py
 share/extensions/uniconv_output.py
 share/extensions/voronoi2svg.py
