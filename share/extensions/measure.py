@@ -83,7 +83,10 @@ def csparea(csp):
             bezarea += ( 3.0*sp[i-1][1][1] - 1.0*sp[i-1][2][1] - 2.0*sp[i][0][1] + 0.0*sp[i][1][1])*sp[i][1][0]
             area += 0.15*bezarea
     return abs(area)
-
+def appendSuperScript(node, text):
+    super = inkex.etree.SubElement(node, inkex.addNS('tspan', 'svg'), {'style': 'font-size:65%;baseline-shift:super'})
+    super.text = text
+    
 class Length(inkex.Effect):
     def __init__(self):
         inkex.Effect.__init__(self)
@@ -180,7 +183,11 @@ class Length(inkex.Effect):
                 new.set('startOffset', startOffset)
                 new.set('dy', str(dy)) # dubious merit
                 #new.append(tp)
-                new.text = str(text)
+                if text[-2:] == "^2":
+                    appendSuperScript(new, "2")
+                    new.text = str(text)[:-2]
+                else:
+                    new.text = str(text)
                 #node.set('transform','rotate(180,'+str(-x)+','+str(-y)+')')
                 node.set('x', str(x))
                 node.set('y', str(y))
@@ -193,7 +200,11 @@ class Length(inkex.Effect):
                     'font-weight': 'normal', 'font-style': 'normal', 'fill': '#000000'}
                 new.set('style', simplestyle.formatStyle(s))
                 new.set('dy', str(dy))
-                new.text = str(text)
+                if text[-2:] == "^2":
+                    appendSuperScript(new, "2")
+                    new.text = str(text)[:-2]
+                else:
+                    new.text = str(text)
                 node.set('x', str(x))
                 node.set('y', str(y))
                 node.set('transform', 'rotate(%s, %s, %s)' % (angle, x, y))
