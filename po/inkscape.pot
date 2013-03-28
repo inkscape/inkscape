@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-03-27 16:52+0100\n"
+"POT-Creation-Date: 2013-03-28 20:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15134,6 +15134,10 @@ msgstr ""
 
 #: ../src/ui/dialog/font-substitution.cpp:102
 msgid "Don't show this warning again"
+msgstr ""
+
+#: ../src/ui/dialog/font-substitution.cpp:239
+msgid "Font '%1' substituted with '%2'"
 msgstr ""
 
 #: ../src/ui/dialog/glyphs.cpp:60 ../src/ui/dialog/glyphs.cpp:152

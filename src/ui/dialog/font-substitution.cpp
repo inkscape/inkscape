@@ -236,7 +236,7 @@ GSList * FontSubstitution::getFontReplacedItems(SPDocument* doc, Glib::ustring *
         if (fontFound == false) {
             Glib::ustring subName = getSubstituteFontName(fonts);
             Glib::ustring err = Glib::ustring::compose(
-                    "Font '%1' substituted with '%2'", fonts.c_str(), subName.c_str());
+                    _("Font '%1' substituted with '%2'"), fonts.c_str(), subName.c_str());
             setErrors.insert(err);
             outList = g_slist_prepend (outList, item);
         }
