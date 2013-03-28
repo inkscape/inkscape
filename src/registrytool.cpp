@@ -21,12 +21,12 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "registrytool.h"
+
 #include <windows.h>
 #include <string>
 #include <cstdio>
-
-#include "registrytool.h"
-
+#include <glibmm/ustring.h>
 
 typedef struct
 {
