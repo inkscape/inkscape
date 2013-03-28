@@ -228,7 +228,11 @@ GSList * FontSubstitution::getFontReplacedItems(SPDocument* doc, Glib::ustring *
             std::set<Glib::ustring>::const_iterator iter = setFontSpans.find(font);
             if (iter != setFontSpans.end() ||
                     font == Glib::ustring("sans-serif") ||
-                    font == Glib::ustring("Sans")) {
+                    font == Glib::ustring("Sans") ||
+                    font == Glib::ustring("serif") ||
+                    font == Glib::ustring("Serif") ||
+                    font == Glib::ustring("monospace") ||
+                    font == Glib::ustring("Monospace")) {
                 fontFound = true;
                 break;
             }
