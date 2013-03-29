@@ -12,19 +12,9 @@
 #ifndef INKSCAPE_UI_FONT_SUBSTITUTION_H
 #define INKSCAPE_UI_FONT_SUBSTITUTION_H
 
-#include <gtkmm/box.h>
-#include <gtkmm/widget.h>
-#include <gtkmm/messagedialog.h>
-#include <gtkmm/textview.h>
-#include <gtkmm/scrolledwindow.h>
-#if WITH_GTKMM_3_0
-#include <gtkmm/checkbutton.h>
-#endif
-#include <glibmm/i18n.h>
-#include <glib.h>
-#include <gtk/gtk.h>
-#include "sp-root.h"
+#include <glibmm/ustring.h>
 
+class SPDocument;
 
 namespace Inkscape {
 namespace UI {
@@ -46,7 +36,6 @@ protected:
 private:
     FontSubstitution(FontSubstitution const &d);
     FontSubstitution& operator=(FontSubstitution const &d);
-
 };
 
 } // namespace Dialog

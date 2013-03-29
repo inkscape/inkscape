@@ -11,7 +11,6 @@
 #define __SP_CLONE_TILER_H__
 
 #include "ui/widget/panel.h"
-#include <glib.h>
 #include <gtk/gtk.h>
 
 #include "ui/dialog/desktop-tracker.h"

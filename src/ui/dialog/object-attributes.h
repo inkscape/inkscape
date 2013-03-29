@@ -23,9 +23,6 @@
 #ifndef SEEN_DIALOGS_OBJECT_ATTRIBUTES_H
 #define SEEN_DIALOGS_OBJECT_ATTRIBUTES_H
 
-#include <glib.h>
-
-#include "desktop.h"
 #include "ui/dialog/desktop-tracker.h"
 #include "ui/widget/panel.h"
 

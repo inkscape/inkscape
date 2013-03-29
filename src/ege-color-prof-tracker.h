@@ -45,15 +45,11 @@
 
 /* Note: this file should be kept compilable as both .cpp and .c */
 
-#include <glib.h>
 #include <glib-object.h>
 
+typedef struct _GtkWidget GtkWidget;
 
 G_BEGIN_DECLS
-
-#ifdef __cplusplus
-typedef struct _GtkWidget      GtkWidget;
-#endif /* __cplusplus */
 
 #define EGE_COLOR_PROF_TRACKER_TYPE                ( ege_color_prof_tracker_get_type() )
 #define EGE_COLOR_PROF_TRACKER( obj )              ( G_TYPE_CHECK_INSTANCE_CAST( (obj), EGE_COLOR_PROF_TRACKER_TYPE, EgeColorProfTracker) )

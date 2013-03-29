@@ -21,7 +21,6 @@
 
 #include <climits>
 
-#include <glib.h>
 #include <glibmm/i18n.h>
 #include <2geom/transforms.h>
 #include <gtkmm/adjustment.h>

@@ -10,6 +10,10 @@
 # include <config.h>
 #endif
 
+#include <gtkmm/messagedialog.h>
+#include <gtkmm/scrolledwindow.h>
+#include <gtkmm/textview.h>
+
 #include <set>
 #include "font-substitution.h"
 
@@ -24,7 +28,9 @@
 #include "preferences.h"
 
 #include "xml/repr.h"
+
 #include "sp-defs.h"
+#include "sp-root.h"
 #include "sp-text.h"
 #include "sp-textpath.h"
 #include "sp-flowtext.h"
@@ -37,6 +43,7 @@
 #include "libnrtype/FontFactory.h"
 #include "libnrtype/font-instance.h"
 
+#include <glibmm/i18n.h>
 #include <glibmm/regex.h>
 
 namespace Inkscape {

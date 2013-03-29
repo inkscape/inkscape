@@ -7,9 +7,8 @@
 #ifndef SEEN_DIALOG_DESKTOP_TRACKER
 #define SEEN_DIALOG_DESKTOP_TRACKER
 
-#include <stddef.h>
+#include <cstddef>
 #include <sigc++/connection.h>
-#include <glib.h>
 
 typedef struct _GtkWidget GtkWidget;
 class SPDesktop;

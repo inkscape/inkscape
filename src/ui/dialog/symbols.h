@@ -12,15 +12,11 @@
 #ifndef INKSCAPE_UI_DIALOG_SYMBOLS_H
 #define INKSCAPE_UI_DIALOG_SYMBOLS_H
 
-#include "ui/widget/panel.h"
-#include "ui/widget/button.h"
+#include "display/drawing.h"
 
 #include "ui/dialog/desktop-tracker.h"
 
-#include "display/drawing.h"
-
-#include <glib.h>
-#include <gtkmm/treemodel.h>
+#include "ui/widget/panel.h"
 
 #include <vector>
 
@@ -42,9 +38,6 @@ public:
     virtual ~SymbolsDialog();
 
     static SymbolsDialog& getInstance();
-
-protected:
-
 
 private:
     SymbolsDialog(SymbolsDialog const &); // no copy

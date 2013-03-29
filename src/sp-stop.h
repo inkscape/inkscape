@@ -8,15 +8,13 @@
  * Authors?
  */
 
-#include <glib.h>
-#include <glibmm/ustring.h>
 #include "sp-object.h"
 #include "color.h"
+#include <glib.h>
 
-class SPObjectClass;
-
-struct SPStop;
-struct SPStopClass;
+namespace Glib {
+class ustring;
+}
 
 #define SP_TYPE_STOP (sp_stop_get_type())
 #define SP_STOP(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_STOP, SPStop))

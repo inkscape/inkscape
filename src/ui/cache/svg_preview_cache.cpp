@@ -19,7 +19,6 @@
 # include "config.h"
 #endif
 
-#include <glib.h>
 #include <gtk/gtk.h>
 #include <2geom/transforms.h>
 #include "sp-namedview.h"

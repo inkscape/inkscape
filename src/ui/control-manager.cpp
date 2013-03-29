@@ -14,7 +14,6 @@
 #include <algorithm>
 #include <set>
 
-#include <glib.h>
 #include <glib-object.h>
 
 #include "display/sodipodi-ctrl.h" // for SP_TYPE_CTRL

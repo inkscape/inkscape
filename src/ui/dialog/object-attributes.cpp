@@ -21,6 +21,7 @@
  */
 
 #include "ui/dialog/dialog-manager.h"
+#include "desktop.h"
 #include "desktop-handles.h"
 #include "macros.h"
 #include "sp-anchor.h"

@@ -20,14 +20,12 @@
 #include "ui/widget/button.h"
 #include "ui/widget/entry.h" 
 #include "ui/widget/frame.h"
-#include <glib.h>
 
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/expander.h>
 #include <gtkmm/label.h>
 
-#include "desktop.h"
 #include "ui/dialog/desktop-tracker.h"
 
 class SPItem;

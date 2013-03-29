@@ -14,12 +14,9 @@
 #include <memory>
 #include <boost/ptr_container/ptr_map.hpp>
 #include <glib.h>
-#include <stddef.h>
-#include <sigc++/sigc++.h>
 #include "event-context.h"
-#include "ui/tool/node-types.h"
 
-#define INK_TYPE_NODE_TOOL               (ink_node_tool_get_type ())
+#define INK_TYPE_NODE_TOOL            (ink_node_tool_get_type ())
 #define INK_NODE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), INK_TYPE_NODE_TOOL, InkNodeTool))
 #define INK_NODE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), INK_TYPE_NODE_TOOL, InkNodeToolClass))
 #define INK_IS_NODE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), INK_TYPE_NODE_TOOL))
@@ -74,7 +71,7 @@ struct InkNodeTool : public SPEventContext
 };
 
 struct InkNodeToolClass {
-	SPEventContextClass parent_class;
+    SPEventContextClass parent_class;
 };
 
 GType ink_node_tool_get_type (void);

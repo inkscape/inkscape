@@ -11,19 +11,12 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <glib.h>
 #include <vector>
+#include <glib.h>
 
-extern "C"
-{
-    typedef struct _GObject GObject;
-    typedef struct _GtkWidget GtkWidget;
-}
-
+extern "C" typedef struct _GtkWidget GtkWidget;
 class SPDesktop;
-
 struct SPDesktopWidget;
-
 
 namespace Inkscape {
 namespace UI {
