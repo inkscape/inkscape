@@ -86,6 +86,7 @@ src/extension/internal/bitmap/wave.cpp
 src/extension/internal/bluredge.cpp
 src/extension/internal/cairo-ps-out.cpp
 src/extension/internal/cairo-renderer-pdf-out.cpp
+src/extension/internal/cdr-input.cpp
 src/extension/internal/clear-n_.h
 src/extension/internal/emf-win32-inout.cpp
 src/extension/internal/filter/bevels.h
@@ -110,10 +111,12 @@ src/extension/internal/javafx-out.cpp
 src/extension/internal/latex-pstricks-out.cpp
 src/extension/internal/latex-pstricks.cpp
 src/extension/internal/odf.cpp
+src/extension/internal/pdf-input-cairo.cpp
 src/extension/internal/pdfinput/pdf-input.cpp
 src/extension/internal/pov-out.cpp
 src/extension/internal/svg.cpp
 src/extension/internal/svgz.cpp
+src/extension/internal/vsd-input.cpp
 src/extension/internal/wpg-input.cpp
 src/extension/param/bool.cpp
 src/extension/param/description.cpp
@@ -286,6 +289,7 @@ src/ui/widget/preferences-widget.cpp
 src/ui/widget/random.cpp
 src/ui/widget/rendering-options.cpp
 src/ui/widget/selected-style.cpp
+src/ui/widget/spin-scale.cpp
 src/ui/widget/spin-slider.cpp
 src/ui/widget/style-swatch.cpp
 src/util/enums.h
@@ -419,6 +423,7 @@ share/extensions/wireframe_sphere.py
 [type: gettext/xml] share/extensions/dxf_output.inx
 [type: gettext/xml] share/extensions/edge3d.inx
 [type: gettext/xml] share/extensions/embedimage.inx
+[type: gettext/xml] share/extensions/embedselectedimages.inx
 [type: gettext/xml] share/extensions/eps_input.inx
 [type: gettext/xml] share/extensions/eqtexsvg.inx
 [type: gettext/xml] share/extensions/export_gimp_palette.inx
@@ -450,6 +455,8 @@ share/extensions/wireframe_sphere.py
 [type: gettext/xml] share/extensions/guillotine.inx
 [type: gettext/xml] share/extensions/handles.inx
 [type: gettext/xml] share/extensions/hpgl_output.inx
+[type: gettext/xml] share/extensions/ink2canvas.inx
+[type: gettext/xml] share/extensions/inkscape_follow_link.inx
 [type: gettext/xml] share/extensions/inkscape_help_askaquestion.inx
 [type: gettext/xml] share/extensions/inkscape_help_commandline.inx
 [type: gettext/xml] share/extensions/inkscape_help_faq.inx
@@ -492,6 +499,7 @@ share/extensions/wireframe_sphere.py
 [type: gettext/xml] share/extensions/plt_output.inx
 [type: gettext/xml] share/extensions/polyhedron_3d.inx
 [type: gettext/xml] share/extensions/previous_glyph_layer.inx
+[type: gettext/xml] share/extensions/print_win32_vector.inx
 [type: gettext/xml] share/extensions/printing_marks.inx
 [type: gettext/xml] share/extensions/ps_input.inx
 [type: gettext/xml] share/extensions/radiusrand.inx
@@ -517,6 +525,7 @@ share/extensions/wireframe_sphere.py
 [type: gettext/xml] share/extensions/svg_and_media_zip_output.inx
 [type: gettext/xml] share/extensions/svgcalendar.inx
 [type: gettext/xml] share/extensions/svgfont2layers.inx
+[type: gettext/xml] share/extensions/synfig_output.inx
 [type: gettext/xml] share/extensions/text_braille.inx
 [type: gettext/xml] share/extensions/text_extract.inx
 [type: gettext/xml] share/extensions/text_flipcase.inx
