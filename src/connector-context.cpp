@@ -5,7 +5,7 @@
  *   Michael Wybrow <mjwybrow@users.sourceforge.net>
  *   Abhishek Sharma
  *   Jon A. Cruz <jon@joncruz.org>
- *   Martin Owens <doctormo@ubuntu.com>
+ *   Martin Owens <doctormo@gmail.com>
  *
  * Copyright (C) 2005-2008  Michael Wybrow
  * Copyright (C) 2009  Monash University

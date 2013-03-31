@@ -1,5 +1,5 @@
 #
-# Authored by Martin Owens <doctormo@ubuntu.com>
+# Authored by Martin Owens <doctormo@gmail.com>
 # Debugged by Ralf Heinecke & Martin Siepmann 2007-09-07
 #             Horst Schottky 2010-02-27
 #
