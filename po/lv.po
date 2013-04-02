@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: Inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-03-28 20:28+0100\n"
-"PO-Revision-Date: 2013-03-30 10:58+0300\n"
+"PO-Revision-Date: 2013-03-30 22:52+0300\n"
 "Last-Translator: Jānis Eisaks <jancs@dv.lv>\n"
 "Language-Team: Latvian\n"
 "Language: lv\n"
@@ -3773,7 +3773,7 @@ msgstr "Raksta elementa klonu sākotnējā krāsa"
 
 #: ../src/ui/dialog/clonetiler.cpp:667
 msgid "Initial color for clones (works only if the original has unset fill or stroke)"
-msgstr "Klonu sākotnējā krāsa (darbojas tikai tad, ja oriģinālam nav iestatīts aizpildījums vai vilkums)"
+msgstr "Klonu sākotnējā krāsa (darbojas tikai tad, ja oriģinālam nav iestatīts aizpildījums vai apmale)"
 
 #: ../src/ui/dialog/clonetiler.cpp:682
 msgid "<b>H:</b>"
@@ -3965,7 +3965,7 @@ msgstr "Katra klona izmērs ir noteikts atbilstoši izvēlētajai vērtībai ša
 
 #: ../src/ui/dialog/clonetiler.cpp:986
 msgid "Each clone is painted by the picked color (the original must have unset fill or stroke)"
-msgstr "Katrs klons ir izkrāsots izvēlētajā krāsā (darbojas tikai tad, ja oriģinālam nav iestatīts aizpildījums vai vilkums)"
+msgstr "Katrs klons ir izkrāsots izvēlētajā krāsā (darbojas tikai tad, ja oriģinālam nav iestatīts aizpildījums vai apmale)"
 
 #: ../src/ui/dialog/clonetiler.cpp:996
 msgid "Each clone's opacity is determined by the picked value in that point"
@@ -5008,7 +5008,7 @@ msgstr "<b>Atlaidiet peli</b>, lai iestatītu krāsu."
 #: ../src/dropper-context.cpp:328
 #: ../src/tools-switch.cpp:231
 msgid "<b>Click</b> to set fill, <b>Shift+click</b> to set stroke; <b>drag</b> to average color in area; with <b>Alt</b> to pick inverse color; <b>Ctrl+C</b> to copy the color under mouse to clipboard"
-msgstr "<b>Uzklikšķiniet</b>, lai iestatītu aizpildījumu, <b>Shift+klikšķis</b> - lai iestatītu vilkumu; <b>velciet</b>, lai izlīdzinātu laukuma krāsu; ar <b>Alt</b> izvēlieties pretējo krāsu; ar <b>Ctrl+C</b> nokopējiet krāsu zem peles kursora uz starpliktuvi"
+msgstr "<b>Uzklikšķiniet</b>, lai iestatītu aizpildījumu, <b>Shift+klikšķis</b> - lai iestatītu apmali; <b>velciet</b>, lai izlīdzinātu laukuma krāsu; ar <b>Alt</b> izvēlieties pretējo krāsu; ar <b>Ctrl+C</b> nokopējiet krāsu zem peles kursora uz starpliktuvi"
 
 #: ../src/dropper-context.cpp:376
 msgid "Set picked color"
@@ -5032,19 +5032,19 @@ msgstr "<b>Vektorizē</b> vadlīnijas ceļu"
 
 #: ../src/dyna-draw-context.cpp:731
 msgid "<b>Drawing</b> a calligraphic stroke"
-msgstr "<b>Zīmē</b> kaligrāfisku vilkumu"
+msgstr "<b>Zīmē</b> kaligrāfisku apmali"
 
 #: ../src/dyna-draw-context.cpp:1020
 msgid "Draw calligraphic stroke"
-msgstr "Zīmēt kaligrāfisku vilkumu"
+msgstr "Zīmēt kaligrāfisku apmali"
 
 #: ../src/eraser-context.cpp:504
 msgid "<b>Drawing</b> an eraser stroke"
-msgstr "<b>Zīme</b> dzēšgumijas vilkumu"
+msgstr "<b>Zīmē</b> dzēšgumijas līniju"
 
 #: ../src/eraser-context.cpp:810
 msgid "Draw eraser stroke"
-msgstr "Zīmēt dzēšgumijas vilkumu"
+msgstr "Zīmēt dzēšgumijas līniju"
 
 #: ../src/event-context.cpp:671
 msgid "<b>Space+mouse move</b> to pan canvas"
@@ -6975,7 +6975,7 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:128
 #: ../src/ui/widget/style-swatch.cpp:127
 msgid "Stroke:"
-msgstr "Vilkums:"
+msgstr "Apmale:"
 
 #: ../src/extension/internal/filter/distort.h:79
 #: ../src/extension/internal/filter/textures.h:76
@@ -7217,7 +7217,7 @@ msgstr "Aizpildījuma necaurspīdība:"
 
 #: ../src/extension/internal/filter/morphology.h:196
 msgid "Stroke opacity:"
-msgstr "Vilkuma necaurspīdība:"
+msgstr "Apmales necaurspīdība:"
 
 #: ../src/extension/internal/filter/morphology.h:206
 msgid "Adds a colorizable outline"
@@ -7367,7 +7367,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:354
 msgid "Stroke color"
-msgstr "Vilkuma krāsa:"
+msgstr "Apmales krāsa:"
 
 #: ../src/extension/internal/filter/paint.h:355
 msgid "Image on stroke"
@@ -7600,7 +7600,7 @@ msgstr "Izvēles"
 
 #: ../src/extension/internal/filter/textures.h:83
 msgid "Custom stroke options"
-msgstr "Pielāgotas vilkuma iespejas"
+msgstr "Pielāgotas apmales iespējas"
 
 #: ../src/extension/internal/filter/textures.h:84
 msgid "k1:"
@@ -8252,7 +8252,7 @@ msgstr "Aizpildījuma krāsa"
 
 #: ../src/filter-enums.cpp:45
 msgid "Stroke Paint"
-msgstr "Vilkuma krāsa"
+msgstr "Apmales krāsa"
 
 #: ../src/filter-enums.cpp:61
 msgid "Matrix"
@@ -8610,7 +8610,7 @@ msgstr "%s %d objektam: %s%s; velciet ar <b>Ctrl</b>, lai piesaistītu novirzei;
 #: ../src/gradient-drag.cpp:1427
 #: ../src/gradient-drag.cpp:1434
 msgid " (stroke)"
-msgstr "(vilkums)"
+msgstr "(apmale)"
 
 #: ../src/gradient-drag.cpp:1431
 #, c-format
@@ -8985,7 +8985,7 @@ msgstr "Atlasīt vienādos"
 #. Select same fill and stroke
 #: ../src/interface.cpp:1767
 msgid "Fill and Stroke"
-msgstr "Aizpildījums un vilkums"
+msgstr "Aizpildījums un apmale"
 
 #. Select same fill color
 #: ../src/interface.cpp:1774
@@ -8995,12 +8995,12 @@ msgstr "Aizpildījuma krāsa"
 #. Select same stroke color
 #: ../src/interface.cpp:1781
 msgid "Stroke Color"
-msgstr "Vilkuma krāsa"
+msgstr "Apmales krāsa"
 
 #. Select same stroke style
 #: ../src/interface.cpp:1788
 msgid "Stroke Style"
-msgstr "Vilkuma stils"
+msgstr "Apmales stils"
 
 #. Select same stroke style
 #: ../src/interface.cpp:1795
@@ -9105,7 +9105,7 @@ msgstr "Ekstraģēt attēlu..."
 #: ../src/interface.cpp:2255
 #: ../src/verbs.cpp:2748
 msgid "_Fill and Stroke..."
-msgstr "_Aizpildījums un vilkums..."
+msgstr "_Aizpildījums un apmale..."
 
 #. Edit Text dialog
 #: ../src/interface.cpp:2261
@@ -9545,7 +9545,7 @@ msgstr "Riņķis pēc trim punktiem"
 
 #: ../src/live_effects/effect.cpp:92
 msgid "Dynamic stroke"
-msgstr "Dinamiskais vilkums"
+msgstr "Dinamiskā apmale"
 
 #: ../src/live_effects/effect.cpp:93
 #: ../share/extensions/extrude.inx.h:1
@@ -9906,23 +9906,23 @@ msgstr "V_ilkuma platuma vienībās"
 
 #: ../src/live_effects/lpe-knot.cpp:348
 msgid "Consider 'Interruption width' as a ratio of stroke width"
-msgstr "Noteikt 'Pārtraukuma lielumu' kā vilkuma platuma attiecību"
+msgstr "Noteikt 'Pārtraukuma lielumu' kā apmales platuma attiecību"
 
 #: ../src/live_effects/lpe-knot.cpp:349
 msgid "St_roke width"
-msgstr "Vilkuma platums"
+msgstr "Apmales platums"
 
 #: ../src/live_effects/lpe-knot.cpp:349
 msgid "Add the stroke width to the interruption size"
-msgstr "Pievienot vilkuma platumu pārtraukuma lielumam"
+msgstr "Pievienot apmales platumu pārtraukuma lielumam"
 
 #: ../src/live_effects/lpe-knot.cpp:350
 msgid "_Crossing path stroke width"
-msgstr "Krustojošos _ceļu vilkuma platums"
+msgstr "Krustojošos _ceļu apmales platums"
 
 #: ../src/live_effects/lpe-knot.cpp:350
 msgid "Add crossed stroke width to the interruption size"
-msgstr "Pievienot krustotā vilkuma platumu pārtraukuma lielumam"
+msgstr "Pievienot krustotās apmales platumu pārtraukuma lielumam"
 
 #: ../src/live_effects/lpe-knot.cpp:351
 msgid "S_witcher size:"
@@ -10119,7 +10119,7 @@ msgstr "Interpolēšanas tips:"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:235
 msgid "Determines which kind of interpolator will be used to interpolate between stroke width along the path"
-msgstr "Nosaka interpolatora veidu, kas tiks izmantots vilkuma platuma interpolācijai gar ceļu"
+msgstr "Nosaka interpolatora veidu, kas tiks izmantots apmales platuma interpolācijai gar ceļu"
 
 #: ../src/live_effects/lpe-powerstroke.cpp:236
 msgid "Sets the smoothness for the CubicBezierJohan interpolator; 0 = linear interpolation, 1 = smooth"
@@ -10181,7 +10181,7 @@ msgstr "Attāluma pieaugums starp svītrojumiem."
 #. FIXME: top/bottom names are inverted in the UI/svg and in the code!!
 #: ../src/live_effects/lpe-rough-hatches.cpp:228
 msgid "Half-turns smoothness: 1st side, in:"
-msgstr ""
+msgstr "Pupagriezienu gludums: 1 mala:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:228
 msgid "Set smoothness/sharpness of path when reaching a 'bottom' half-turn. 0=sharp, 1=default"
@@ -10260,7 +10260,7 @@ msgstr "Izveido treknu/tievu ceļu"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:239
 msgid "Simulate a stroke of varying width"
-msgstr "Atdarina mainīga biezuma vilkumu"
+msgstr "Atdarina mainīga biezuma apmali"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:240
 msgid "Bend hatches"
@@ -10272,11 +10272,11 @@ msgstr "Pievienot globālu svītrojumu liekšanu (lēnāks)"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 msgid "Thickness: at 1st side:"
-msgstr ""
+msgstr "Biezums: pie pirmās malas:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:241
 msgid "Width at 'bottom' half-turns"
-msgstr ""
+msgstr "'Apakšējo' puspagriezienu platums"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "at 2nd side:"
@@ -10284,7 +10284,7 @@ msgstr "pie otrās malas:"
 
 #: ../src/live_effects/lpe-rough-hatches.cpp:242
 msgid "Width at 'top' half-turns"
-msgstr ""
+msgstr "'Augšējo' puspagriezienu platums"
 
 #.
 #: ../src/live_effects/lpe-rough-hatches.cpp:244
@@ -10423,27 +10423,27 @@ msgstr "Izvēlieties, vai rādīt aizzīmes ceļa sākuma un beigās"
 #. testpointA(_("Test Point A"), _("Test A"), "ptA", &wr, this, Geom::Point(100,100)),
 #: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Strokes:"
-msgstr "Vilkumi:"
+msgstr "Apmales:"
 
 #: ../src/live_effects/lpe-sketch.cpp:38
 msgid "Draw that many approximating strokes"
-msgstr "Zīmēt norādīto skaitu tuvinošos vilkumu"
+msgstr "Zīmēt norādīto skaitu tuvinošos apmaļu"
 
 #: ../src/live_effects/lpe-sketch.cpp:39
 msgid "Max stroke length:"
-msgstr "Maks. vilkuma garums:"
+msgstr "Maks. apmales garums:"
 
 #: ../src/live_effects/lpe-sketch.cpp:40
 msgid "Maximum length of approximating strokes"
-msgstr "Tuvinošos vilkumu maksimālais garums"
+msgstr "Tuvinošos apmaļu maksimālais garums"
 
 #: ../src/live_effects/lpe-sketch.cpp:41
 msgid "Stroke length variation:"
-msgstr "Vilkuma garuma variācija:"
+msgstr "Apmales garuma variācija:"
 
 #: ../src/live_effects/lpe-sketch.cpp:42
 msgid "Random variation of stroke length (relative to maximum length)"
-msgstr "Vilkuma garuma dažādošana (attiecībā pret maksimālo garumu)"
+msgstr "Apmales garuma dažādošana (attiecībā pret maksimālo garumu)"
 
 #: ../src/live_effects/lpe-sketch.cpp:43
 msgid "Max. overlap:"
@@ -10451,7 +10451,7 @@ msgstr "Maks. pārklāšanās:"
 
 #: ../src/live_effects/lpe-sketch.cpp:44
 msgid "How much successive strokes should overlap (relative to maximum length)"
-msgstr "Cik daudziem secīgiem vilkumiem jāpārklājas (attiecībā pret maksimālo garumu)"
+msgstr "Cik daudziem secīgām apmalēm jāpārklājas (attiecībā pret maksimālo garumu)"
 
 #: ../src/live_effects/lpe-sketch.cpp:45
 msgid "Overlap variation:"
@@ -10475,7 +10475,7 @@ msgstr "Vidējā nobīde:"
 
 #: ../src/live_effects/lpe-sketch.cpp:50
 msgid "Average distance each stroke is away from the original path"
-msgstr "Aptuvenais katra vilkuma attālums no sākotnējā ceļa"
+msgstr "Aptuvenais katras apmales attālums no sākotnējā ceļa"
 
 #: ../src/live_effects/lpe-sketch.cpp:51
 msgid "Max. tremble:"
@@ -10491,7 +10491,7 @@ msgstr "Plīvošanas biežums:"
 
 #: ../src/live_effects/lpe-sketch.cpp:54
 msgid "Average number of tremble periods in a stroke"
-msgstr "Vidējais trīcēšanas periodu skaits vilkumā"
+msgstr "Vidējais trīcēšanas periodu skaits apmalē"
 
 #: ../src/live_effects/lpe-sketch.cpp:56
 msgid "Construction lines:"
@@ -12608,7 +12608,7 @@ msgstr "Atlasiet <b>tieši 2 ceļus</b>, lai veiktu atņemsanu, dalīšanu vai c
 #: ../src/splivarot.cpp:149
 #: ../src/splivarot.cpp:164
 msgid "Unable to determine the <b>z-order</b> of the objects selected for difference, XOR, division, or path cut."
-msgstr ""
+msgstr "Nav iespējams noteikt kārtību uz <b>z-ass</b> objektiem, kas atlasīti atņemšanai, XOR, dalīšanai vai ceļa griešanai."
 
 #: ../src/splivarot.cpp:194
 msgid "One of the objects is <b>not a path</b>, cannot perform boolean operation."
@@ -12616,11 +12616,11 @@ msgstr "Viens no objektiem <b>nav ceļš</b>, nav iespējams izpildīt Bula darb
 
 #: ../src/splivarot.cpp:913
 msgid "Select <b>stroked path(s)</b> to convert stroke to path."
-msgstr "Atlasiet <b>vilkuma ceļu(s)</b>, lai pārveidotu vilkumu par ceļu."
+msgstr "Atlasiet <b>apmales ceļu(s)</b>, lai pārveidotu apmali par ceļu."
 
 #: ../src/splivarot.cpp:1266
 msgid "Convert stroke to path"
-msgstr "Pārvērst vilkumu par ceļu"
+msgstr "Pārvērst apmali par ceļu"
 
 #. TRANSLATORS: "to outline" means "to convert stroke to path"
 #: ../src/splivarot.cpp:1269
@@ -12996,7 +12996,7 @@ msgstr "<b>Uzklikšķiniet</b> vai <b>uzklikšķiniet un velciet</b>, lai sāktu
 
 #: ../src/tools-switch.cpp:195
 msgid "<b>Drag</b> to draw a calligraphic stroke; with <b>Ctrl</b> to track a guide path. <b>Arrow keys</b> adjust width (left/right) and angle (up/down)."
-msgstr "<b>Velciet</b>, lai izveidotu kaligrāfisku vilkumu; ar <b>Ctrl</b> - sekot palīglīnijas ceļam. <b>Ar bultiņām</b> pieskaņojiet platumu  (kreisā/labā) un leņķi (augšup/lejup)."
+msgstr "<b>Velciet</b>, lai izveidotu kaligrāfisku apmali; ar <b>Ctrl</b> - sekot palīglīnijas ceļam. <b>Ar bultiņām</b> pieskaņojiet platumu  (kreisā/labā) un leņķi (augšup/lejup)."
 
 #: ../src/tools-switch.cpp:207
 msgid "<b>Drag</b> or <b>double click</b> to create a gradient on selected objects, <b>drag handles</b> to adjust gradients."
@@ -13093,7 +13093,7 @@ msgstr ""
 #: ../src/tweak-context.cpp:195
 #, c-format
 msgid "%s. Drag or click to <b>move randomly</b>."
-msgstr ""
+msgstr "%s. Velciet vai uzklikšķiniet, lai <b>move randomly</b>."
 
 #: ../src/tweak-context.cpp:199
 #, c-format
@@ -13113,7 +13113,7 @@ msgstr "%s. Velciet vai uzklikšķiniet, lai <b>dublētu</b>; ar Shift - <b>dzē
 #: ../src/tweak-context.cpp:211
 #, c-format
 msgid "%s. Drag to <b>push paths</b>."
-msgstr ""
+msgstr "%s. Velciet lai <b>stumtu ceļus</b>."
 
 #: ../src/tweak-context.cpp:215
 #, c-format
@@ -13123,7 +13123,7 @@ msgstr "%s.Velciet vai uzklikšķiniet, lai <b>saīsinātu ceļus</b>; ar shift 
 #: ../src/tweak-context.cpp:223
 #, c-format
 msgid "%s. Drag or click to <b>attract paths</b>; with Shift to <b>repel</b>."
-msgstr ""
+msgstr "%s. Velciet vai uzklikšķiniet lai <b>pievilktu ceļus</b>; ar Shift - lai <b>atgrūstu</b>."
 
 #: ../src/tweak-context.cpp:231
 #, c-format
@@ -13564,7 +13564,7 @@ msgstr "Pievienot profilu"
 #: ../src/ui/dialog/color-item.cpp:122
 #, c-format
 msgid "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
-msgstr "Krāsa: <b>%s</b>; <b>Uzklikšķiniet</b>, lai iestatītu aizpildījumu, <b>Shift+klikšķis</b> - lai iestatītu vilkumu"
+msgstr "Krāsa: <b>%s</b>; <b>Uzklikšķiniet</b>, lai iestatītu aizpildījumu, <b>Shift+klikšķis</b> - lai iestatītu apmali"
 
 #: ../src/ui/dialog/color-item.cpp:504
 msgid "Change color definition"
@@ -13572,7 +13572,7 @@ msgstr "Mainiet krāsas definīciju"
 
 #: ../src/ui/dialog/color-item.cpp:678
 msgid "Remove stroke color"
-msgstr "Aizvākt vilkuma krāsu"
+msgstr "Aizvākt apmales krāsu"
 
 #: ../src/ui/dialog/color-item.cpp:678
 msgid "Remove fill color"
@@ -13580,7 +13580,7 @@ msgstr "Aizvākt aizpildījuma krāsu"
 
 #: ../src/ui/dialog/color-item.cpp:683
 msgid "Set stroke color to none"
-msgstr "Iestatīt vilkuma krāsu par nekādu"
+msgstr "Iestatīt apmales krāsu par nekādu"
 
 #: ../src/ui/dialog/color-item.cpp:683
 msgid "Set fill color to none"
@@ -13588,7 +13588,7 @@ msgstr "Iestatīt aizpildījuma krāsu par nekādu"
 
 #: ../src/ui/dialog/color-item.cpp:699
 msgid "Set stroke color from swatch"
-msgstr "Iestatiet vilkuma krāsu no paletes"
+msgstr "Iestatiet apmales krāsu no paletes"
 
 #: ../src/ui/dialog/color-item.cpp:699
 msgid "Set fill color from swatch"
@@ -14226,11 +14226,11 @@ msgstr "_Aizpildīt"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:63
 msgid "Stroke _paint"
-msgstr "Vilkuma krāsa"
+msgstr "Apmales krāsa"
 
 #: ../src/ui/dialog/fill-and-stroke.cpp:64
 msgid "Stroke st_yle"
-msgstr "Vilkuma st_ils"
+msgstr "Apmales st_ils"
 
 #. TRANSLATORS: this dialog is accessible via menu Filters - Filter editor
 #: ../src/ui/dialog/filter-effects-dialog.cpp:515
@@ -14672,9 +14672,8 @@ msgstr "Pievienot filtra primitīvu"
 # http://www.w3.org/TR/SVG/intro.html#TermFilterPrimitiveElement
 # A filter primitive element is one that can be used as a child of a ‘filter’ element to specify a node in the filter graph.
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2723
-#, fuzzy
 msgid "The <b>feBlend</b> filter primitive provides 4 image blending modes: screen, multiply, darken and lighten."
-msgstr "<b>feBlend</b> filtra primitīvs nodrošina 4 attēlu sajaukšanas veidus: screen, pavairot, padarīt tumšāku un padarīt gaišāku."
+msgstr "<b>feBlend</b> filtra primitīvs nodrošina 4 attēlu sajaukšanas veidus: uz ekrāna, pavairot, padarīt tumšāku un padarīt gaišāku."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2727
 msgid "The <b>feColorMatrix</b> filter primitive applies a matrix transformation to color of each rendered pixel. This allows for effects like turning object to grayscale, modifying color saturation and changing color hue."
@@ -14712,7 +14711,7 @@ msgstr "<b>feGaussianBlur</b> filtrs vienādā mērā izpludina sākotnējo obje
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2759
 msgid "The <b>feImage</b> filter primitive fills the region with an external image or another part of the document."
-msgstr ""
+msgstr "<b>feImage</b> filtra primitīvs aizpilda apgabalu ar ārējā attēla vai citu dokumenta daļu kopijām."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2763
 msgid "The <b>feMerge</b> filter primitive composites several temporary images inside the filter primitive to a single image. It uses normal alpha compositing for this. This is equivalent to using several feBlend primitives in 'normal' mode or several feComposite primitives in 'over' mode."
@@ -14732,7 +14731,7 @@ msgstr ""
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2779
 msgid "The <b>feTile</b> filter primitive tiles a region with its input graphic"
-msgstr ""
+msgstr "<b>feTile</b> filtra primitīvs aizpilda apgabalu ar ievadītās grafikas kopijām."
 
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2783
 msgid "The <b>feTurbulence</b> filter primitive renders Perlin noise. This kind of noise is useful in simulating several nature phenomena like clouds, fire and smoke and in generating complex textures like marble or granite."
@@ -15077,9 +15076,8 @@ msgid "Don't show this warning again"
 msgstr "Nerādīt atkārtoti šo brīdinājumu"
 
 #: ../src/ui/dialog/font-substitution.cpp:239
-#, fuzzy
 msgid "Font '%1' substituted with '%2'"
-msgstr "Fontu aizvietojums"
+msgstr "Fonts '%1' aizvietots ar '%2'"
 
 #: ../src/ui/dialog/glyphs.cpp:60
 #: ../src/ui/dialog/glyphs.cpp:152
@@ -15692,7 +15690,7 @@ msgstr "Bopomofo paplašinātais"
 
 #: ../src/ui/dialog/glyphs.cpp:258
 msgid "CJK Strokes"
-msgstr "CJK izvilkumi"
+msgstr "CJK apmales"
 
 #: ../src/ui/dialog/glyphs.cpp:259
 msgid "Katakana Phonetic Extensions"
@@ -15959,11 +15957,11 @@ msgstr "Ctrl-klikšķis, lai iestatītu punkta izmēru:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:202
 msgid "times current stroke width"
-msgstr "reiz pašreizējā vilkuma platums"
+msgstr "reiz pašreizējās apmales platums"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:203
 msgid "Size of dots created with Ctrl+click (relative to current stroke width)"
-msgstr "Ar Ctrl+klikšķis izveidoto punktu lielums (attiecībā pret pašreizējo vilkuma platumu)"
+msgstr "Ar Ctrl+klikšķis izveidoto punktu lielums (attiecībā pret pašreizējo apmales platumu)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:218
 msgid "<b>No objects selected</b> to take the style from."
@@ -16020,7 +16018,7 @@ msgstr "Redzams robežrāmis"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:300
 msgid "This bounding box includes stroke width, markers, filter margins, etc."
-msgstr "Robežrāmis ietver vilkuma platumu, marķierus, filtru malas utt."
+msgstr "Robežrāmis ietver apmales platumu, marķierus, filtru malas utt."
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:301
 msgid "Geometric bounding box"
@@ -16351,7 +16349,7 @@ msgstr "Lieto vēsturisko krāsu pāreju redaktoru"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:485
 msgid "When on, the Gradient Edit button in the Fill & Stroke dialog will show the legacy Gradient Editor dialog, when off the Gradient Tool will be used"
-msgstr "Ja ieslēgts, poga Labot krāsu pāreju dialoglodziņā Aizpildījums & Vilkums atvērs Krāsu pārejas redaktora dialoglodziņu, ja izslēgts - tiks izmantots Krāsu pāreju rīks"
+msgstr "Ja ieslēgts, poga Labot krāsu pāreju dialoglodziņā Aizpildījums & Apmale atvērs Krāsu pārejas redaktora dialoglodziņu, ja izslēgts - tiks izmantots Krāsu pāreju rīks"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:488
 msgid "Linear gradient _angle:"
@@ -16769,7 +16767,7 @@ msgstr "Pārslēdzēja stils (nepieciešams restarts)"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:619
 msgid "Selects whether the dockbar switcher will show text labels, icons, or both"
-msgstr ""
+msgstr "Nosaka, vai dokjoslas pārslēdzējs rādīt teksta iezīmes, ikonas vai abus."
 
 #. Windows
 #: ../src/ui/dialog/inkscape-preferences.cpp:623
@@ -17543,7 +17541,7 @@ msgstr "Izvēlas"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1156
 #: ../src/widgets/select-toolbar.cpp:572
 msgid "Scale stroke width"
-msgstr "Mainīt vilkuma platumu"
+msgstr "Mainīt apmales platumu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1157
 msgid "Scale rounded corners in rectangles"
@@ -17568,7 +17566,7 @@ msgstr "Saglabāts"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1164
 #: ../src/widgets/select-toolbar.cpp:573
 msgid "When scaling objects, scale the stroke width by the same proportion"
-msgstr "Mērogojot objektus, proporcionāli mērogot arī vilkuma platumu"
+msgstr "Mērogojot objektus, proporcionāli mērogot arī apmales platumu"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1166
 #: ../src/widgets/select-toolbar.cpp:584
@@ -17578,12 +17576,12 @@ msgstr "Mērogojot taisnstūrus, mērogot arī noapaļoto stūru rādiusus"
 #: ../src/ui/dialog/inkscape-preferences.cpp:1168
 #: ../src/widgets/select-toolbar.cpp:595
 msgid "Move gradients (in fill or stroke) along with the objects"
-msgstr "Pārvietot krāsu pārejas (aizpildījumā vai vilkumā) kopā ar objektiem"
+msgstr "Pārvietot krāsu pārejas (aizpildījumā vai apmalē) kopā ar objektiem"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1170
 #: ../src/widgets/select-toolbar.cpp:606
 msgid "Move patterns (in fill or stroke) along with the objects"
-msgstr "Pārvietot faktūras (aizpildījumā vai vilkumā) kopā ar objektiem"
+msgstr "Pārvietot faktūras (aizpildījumā vai apmalē) kopā ar objektiem"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1171
 msgid "Store transformation"
@@ -17908,12 +17906,12 @@ msgstr "Izgriešanas ceļi un maskas"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1326
 msgid "Stroke Style Markers"
-msgstr "Vilkuma stilu marķieri"
+msgstr "Apmaļu stilu marķieri"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1328
 #: ../src/ui/dialog/inkscape-preferences.cpp:1330
 msgid "Stroke color same as object, fill color either object fill color or marker fill color"
-msgstr "Vilkuma krāsa tāda pati, kā objekta, aizpildījuma krāsa - vai nu objekta aizpildījuma krāsa vai marķiera aizpildījuma krāsa"
+msgstr "Apmales krāsa tāda pati, kā objektam, aizpildījuma krāsa - vai nu objekta aizpildījuma krāsa vai marķiera aizpildījuma krāsa"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1334
 msgid "Markers"
@@ -19078,7 +19076,7 @@ msgstr "Iestatīt aizpildījumu"
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:266
 msgid "Set stroke"
-msgstr "Iestatīt vilkumu"
+msgstr "Iestatīt apmali"
 
 #: ../src/ui/dialog/swatches.cpp:287
 msgid "Edit..."
@@ -20279,7 +20277,7 @@ msgstr "Bez aizpildījuma"
 #: ../src/ui/widget/style-swatch.cpp:321
 msgctxt "Fill and stroke"
 msgid "No stroke"
-msgstr "Nav vilkuma"
+msgstr "Nav apmales"
 
 #: ../src/ui/widget/selected-style.cpp:184
 #: ../src/ui/widget/style-swatch.cpp:300
@@ -20295,7 +20293,7 @@ msgstr "Aizpildījums ar faktūru"
 #: ../src/ui/widget/selected-style.cpp:187
 #: ../src/ui/widget/style-swatch.cpp:302
 msgid "Pattern stroke"
-msgstr "Faktūras vilkums"
+msgstr "Faktūras apmale"
 
 #: ../src/ui/widget/selected-style.cpp:189
 msgid "<b>L</b>"
@@ -20309,7 +20307,7 @@ msgstr "Lineārs krāsu pārejas aizpildījums"
 #: ../src/ui/widget/selected-style.cpp:192
 #: ../src/ui/widget/style-swatch.cpp:294
 msgid "Linear gradient stroke"
-msgstr "Lineārs krāsu pārejas vilkums"
+msgstr "Lineāra krāsu pārejas apmale"
 
 #: ../src/ui/widget/selected-style.cpp:199
 msgid "<b>R</b>"
@@ -20323,7 +20321,7 @@ msgstr "Radiāls krāsu pārejas aizpildījums"
 #: ../src/ui/widget/selected-style.cpp:202
 #: ../src/ui/widget/style-swatch.cpp:298
 msgid "Radial gradient stroke"
-msgstr "Radiāls krāsu pārejas vilkums"
+msgstr "Radiāla krāsu pārejas apmale"
 
 #: ../src/ui/widget/selected-style.cpp:209
 msgid "Different"
@@ -20335,7 +20333,7 @@ msgstr "Atšķirīgi aizpildījumi"
 
 #: ../src/ui/widget/selected-style.cpp:212
 msgid "Different strokes"
-msgstr "Atšķirīgi vilkumi"
+msgstr "Atšķirīgas apmales"
 
 #: ../src/ui/widget/selected-style.cpp:214
 #: ../src/ui/widget/style-swatch.cpp:324
@@ -20357,7 +20355,7 @@ msgstr "Atiestatīt aizpildījumu"
 #: ../src/ui/widget/style-swatch.cpp:326
 #: ../src/widgets/fill-style.cpp:708
 msgid "Unset stroke"
-msgstr "Atiestatīt vilkumu"
+msgstr "Atiestatīt apmali"
 
 #: ../src/ui/widget/selected-style.cpp:220
 msgid "Flat color fill"
@@ -20365,7 +20363,7 @@ msgstr "Aizpildījums ar vienlaidu krāsu"
 
 #: ../src/ui/widget/selected-style.cpp:220
 msgid "Flat color stroke"
-msgstr "Vilkums ar vienlaidu krāsu"
+msgstr "Apmale ar vienlaidu krāsu"
 
 #. TRANSLATOR COMMENT: A means "Averaged"
 #: ../src/ui/widget/selected-style.cpp:223
@@ -20378,7 +20376,7 @@ msgstr "Aizpildījums ir izlīdzināts starp atlasītajiem objektiem"
 
 #: ../src/ui/widget/selected-style.cpp:226
 msgid "Stroke is averaged over selected objects"
-msgstr "Vilkums ir izlīdzināts starp atlasītajiem objektiem"
+msgstr "Apmale ir izlīdzināta starp atlasītajiem objektiem"
 
 #. TRANSLATOR COMMENT: M means "Multiple"
 #: ../src/ui/widget/selected-style.cpp:229
@@ -20391,7 +20389,7 @@ msgstr "Vairākiem atlasītajiem objektiem ir vienāds aizpildījums"
 
 #: ../src/ui/widget/selected-style.cpp:232
 msgid "Multiple selected objects have the same stroke"
-msgstr "Vairākiem atlasītajiem objektiem ir vienāds vilkums"
+msgstr "Vairākiem atlasītajiem objektiem ir viena un tā pati apmale"
 
 #: ../src/ui/widget/selected-style.cpp:234
 msgid "Edit fill..."
@@ -20399,7 +20397,7 @@ msgstr "Labot aizpildījumu..."
 
 #: ../src/ui/widget/selected-style.cpp:234
 msgid "Edit stroke..."
-msgstr "Labot vilkumu..."
+msgstr "Labot apmali..."
 
 #: ../src/ui/widget/selected-style.cpp:238
 msgid "Last set color"
@@ -20420,7 +20418,7 @@ msgstr "Ielīmēt krāsu"
 #: ../src/ui/widget/selected-style.cpp:266
 #: ../src/ui/widget/selected-style.cpp:847
 msgid "Swap fill and stroke"
-msgstr "Apmainīt aizpildījumu un vilkumu"
+msgstr "Apmainīt aizpildījumu un apmali"
 
 #: ../src/ui/widget/selected-style.cpp:270
 #: ../src/ui/widget/selected-style.cpp:579
@@ -20430,7 +20428,7 @@ msgstr "Padarīt aizpildījumu necaurspīdīgu"
 
 #: ../src/ui/widget/selected-style.cpp:270
 msgid "Make stroke opaque"
-msgstr "Padarīt vilkumu necaurspīdīgu"
+msgstr "Padarīt apmali necaurspīdīgu"
 
 #: ../src/ui/widget/selected-style.cpp:279
 #: ../src/ui/widget/selected-style.cpp:536
@@ -20442,7 +20440,7 @@ msgstr "Aizvākt aizpildījumu"
 #: ../src/ui/widget/selected-style.cpp:545
 #: ../src/widgets/fill-style.cpp:506
 msgid "Remove stroke"
-msgstr "Aizvākt vilkumu"
+msgstr "Aizvākt apmali"
 
 #: ../src/ui/widget/selected-style.cpp:600
 msgid "Apply last set color to fill"
@@ -20450,7 +20448,7 @@ msgstr "Pielietot aizpildījumam pēdējo iestatīto krāsu"
 
 #: ../src/ui/widget/selected-style.cpp:612
 msgid "Apply last set color to stroke"
-msgstr "Pielietot vilkumam pēdējo iestatīto krāsu"
+msgstr "Pielietot apmalei pēdējo iestatīto krāsu"
 
 #: ../src/ui/widget/selected-style.cpp:623
 msgid "Apply last selected color to fill"
@@ -20458,7 +20456,7 @@ msgstr "Pielietot aizpildījumam pēdējo izvēlēto krāsu"
 
 #: ../src/ui/widget/selected-style.cpp:634
 msgid "Apply last selected color to stroke"
-msgstr "Pielietot vilkumam pēdējo izvēlēto krāsu"
+msgstr "Pielietot apmalei pēdējo izvēlēto krāsu"
 
 #: ../src/ui/widget/selected-style.cpp:660
 msgid "Invert fill"
@@ -20466,7 +20464,7 @@ msgstr "Invertēt aizpildījumu"
 
 #: ../src/ui/widget/selected-style.cpp:684
 msgid "Invert stroke"
-msgstr "Invertēt vilkumu"
+msgstr "Invertēt apmali"
 
 #: ../src/ui/widget/selected-style.cpp:696
 msgid "White fill"
@@ -20474,7 +20472,7 @@ msgstr "Aizpildīt ar baltu"
 
 #: ../src/ui/widget/selected-style.cpp:708
 msgid "White stroke"
-msgstr "Baltais vilkums"
+msgstr "Baltā apmale"
 
 #: ../src/ui/widget/selected-style.cpp:720
 msgid "Black fill"
@@ -20482,7 +20480,7 @@ msgstr "Melnais aizpildījums"
 
 #: ../src/ui/widget/selected-style.cpp:732
 msgid "Black stroke"
-msgstr "Melnais vilkums"
+msgstr "Melnā apmale"
 
 #: ../src/ui/widget/selected-style.cpp:775
 msgid "Paste fill"
@@ -20490,11 +20488,11 @@ msgstr "Ielīmēt aizpildījumu"
 
 #: ../src/ui/widget/selected-style.cpp:793
 msgid "Paste stroke"
-msgstr "Ielīmēt vilkumu"
+msgstr "Ielīmēt apmali"
 
 #: ../src/ui/widget/selected-style.cpp:949
 msgid "Change stroke width"
-msgstr "Mainīt vilkuma platumu"
+msgstr "Mainīt apmales platumu"
 
 #: ../src/ui/widget/selected-style.cpp:1044
 msgid ", drag to adjust"
@@ -20503,7 +20501,7 @@ msgstr ", vilkt, lai pieskaņotu"
 #: ../src/ui/widget/selected-style.cpp:1129
 #, c-format
 msgid "Stroke width: %.5g%s%s"
-msgstr "Vilkuma platums: %.5g%s%s"
+msgstr "Apmales platums: %.5g%s%s"
 
 #: ../src/ui/widget/selected-style.cpp:1133
 msgid " (averaged)"
@@ -20556,12 +20554,12 @@ msgstr "Pieskaņo <b>toni</b>: bija %.3g, tagad <b>%.3g</b> (starpība %.3g); ar
 #: ../src/ui/widget/selected-style.cpp:1492
 #: ../src/ui/widget/selected-style.cpp:1506
 msgid "Adjust stroke width"
-msgstr "Pielāgot vilkuma platumu"
+msgstr "Pielāgot apmales platumu"
 
 #: ../src/ui/widget/selected-style.cpp:1493
 #, c-format
 msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
-msgstr "Pieskaņo <b>vilkuma platumu</b>: bija %.3g, tagad <b>%.3g</b> (starpība %.3g)"
+msgstr "Pieskaņo <b>apmales platumu</b>: bija %.3g, tagad <b>%.3g</b> (starpība %.3g)"
 
 #. TRANSLATORS: "Link" means to _link_ two sliders together
 #: ../src/ui/widget/spin-slider.cpp:156
@@ -20585,12 +20583,12 @@ msgstr "Aizpildījums: %06x/%.3g"
 #: ../src/ui/widget/style-swatch.cpp:314
 #, c-format
 msgid "Stroke: %06x/%.3g"
-msgstr "Vilkums: %06x/%.3g"
+msgstr "Apmale: %06x/%.3g"
 
 #: ../src/ui/widget/style-swatch.cpp:346
 #, c-format
 msgid "Stroke width: %.5g%s"
-msgstr "Vilkuma platums: %.5g%s"
+msgstr "Apmales platums: %.5g%s"
 
 #: ../src/ui/widget/style-swatch.cpp:362
 #, c-format
@@ -21214,11 +21212,11 @@ msgstr "Izvēlēties visus objektus visos redzamajos un atvērtajos slāņos"
 
 #: ../src/verbs.cpp:2388
 msgid "Fill _and Stroke"
-msgstr "Aizpildījums un vilkums"
+msgstr "Aizpildījums un apmale"
 
 #: ../src/verbs.cpp:2389
 msgid "Select all objects with the same fill and stroke as the selected objects"
-msgstr "Atlasīt visus objektus ar līdzīgu aizpildījumu un vilkuma platumu, kā jau atlasītajiem"
+msgstr "Atlasīt visus objektus ar līdzīgu aizpildījumu un apmales platumu, kā jau atlasītajiem"
 
 #: ../src/verbs.cpp:2390
 msgid "_Fill Color"
@@ -21230,19 +21228,19 @@ msgstr "Atlasīt visus objektus ar līdzīgu aizpildījumu, kā jau atlasītajie
 
 #: ../src/verbs.cpp:2392
 msgid "_Stroke Color"
-msgstr "_Vilkuma krāsa"
+msgstr "_Apmales krāsa"
 
 #: ../src/verbs.cpp:2393
 msgid "Select all objects with the same stroke as the selected objects"
-msgstr "Atlasīt visus objektus ar līdzīgu vilkuma platumu, kā jau atlasītajiem"
+msgstr "Atlasīt visus objektus ar līdzīgu apmales platumu, kā jau atlasītajiem"
 
 #: ../src/verbs.cpp:2394
 msgid "Stroke St_yle"
-msgstr "Vilkuma sti_ls"
+msgstr "Apmales sti_ls"
 
 #: ../src/verbs.cpp:2395
 msgid "Select all objects with the same stroke style (width, dash, markers) as the selected objects"
-msgstr "Atlasīt visus objektus ar līdzīgu vilkuma stilu (platums, dalījumu, marķieri), kā jau atlasītajiem"
+msgstr "Atlasīt visus objektus ar līdzīgu apmales stilu (platums, dalījumu, marķieri), kā jau atlasītajiem"
 
 #: ../src/verbs.cpp:2396
 msgid "_Object Type"
@@ -21416,7 +21414,7 @@ msgstr "Pārgriezt _ceļu"
 
 #: ../src/verbs.cpp:2451
 msgid "Cut the bottom path's stroke into pieces, removing fill"
-msgstr "Pārgriezt apakšējā ceļa vilkumu, aizvācot aizpildījumu"
+msgstr "Sagriezt apakšējā ceļa apmali posmos, aizvācot aizpildījumu"
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
@@ -21494,7 +21492,7 @@ msgstr "Vilku_mu par ceļu"
 
 #: ../src/verbs.cpp:2481
 msgid "Convert selected object's stroke to paths"
-msgstr "Pārvērst atlasītā objekta vilkumu ceļos"
+msgstr "Pārvērst atlasītā objekta apmali ceļos"
 
 #: ../src/verbs.cpp:2482
 msgid "Si_mplify"
@@ -21928,7 +21926,7 @@ msgstr "Kaligrāfija"
 
 #: ../src/verbs.cpp:2605
 msgid "Draw calligraphic or brush strokes"
-msgstr "Zīmējiet kaligrāfiskos vai otas vilkumus"
+msgstr "Zīmējiet kaligrāfiskās vai otas līnijas"
 
 #: ../src/verbs.cpp:2607
 msgid "Create and edit text objects"
@@ -22491,7 +22489,7 @@ msgstr "Labot šī dokumenta matadatus (tiks saglabāti kopā ar dokumentu)"
 
 #: ../src/verbs.cpp:2749
 msgid "Edit objects' colors, gradients, arrowheads, and other fill and stroke properties..."
-msgstr "Labojiet objekta krāsas, krāsu pārejas, bultu galus un citas aizpildījuma un vilkuma īpašības..."
+msgstr "Labojiet objekta krāsas, krāsu pārejas, bultu galus un citas aizpildījuma un apmales īpašības..."
 
 #: ../src/verbs.cpp:2750
 msgid "Gl_yphs..."
@@ -23021,7 +23019,7 @@ msgstr "(noklusētais)"
 #: ../src/widgets/calligraphy-toolbar.cpp:448
 #: ../src/widgets/erasor-toolbar.cpp:146
 msgid "(broad stroke)"
-msgstr "(plats vilkums)"
+msgstr "(plata apmale)"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:451
 #: ../src/widgets/erasor-toolbar.cpp:149
@@ -23035,7 +23033,7 @@ msgstr "Kaligrāfijas spalvas platums (attiecībā pret redzamo auduma laukumu)"
 #. Thinning
 #: ../src/widgets/calligraphy-toolbar.cpp:465
 msgid "(speed blows up stroke)"
-msgstr "(ātrums paplašina vilkumu)"
+msgstr "(ātrums paplašina apmali)"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:465
 msgid "(slight widening)"
@@ -23051,11 +23049,11 @@ msgstr "(viegla sašaurināšanās, noklusētais)"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:465
 msgid "(speed deflates stroke)"
-msgstr "(ātrums sašaurina vilkumu)"
+msgstr "(ātrums sašaurina apmali)"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:468
 msgid "Stroke Thinning"
-msgstr "Vilkuma sašaurināšanās"
+msgstr "Apmales sašaurināšanās"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:468
 msgid "Thinning:"
@@ -23063,7 +23061,7 @@ msgstr "Sašaurināšanās:"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:469
 msgid "How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 makes them broader, 0 makes width independent of velocity)"
-msgstr "Cik lielā mērā ātrums ietekmē vilkuma platumu (>0 padara ātrus vilkumus šaurākus, <0 - platākus, 0 - padara vilkuma platumu nejūtīgu pret ātrumu)"
+msgstr "Cik lielā mērā ātrums ietekmē apmales platumu (>0 padara ātri vilktas apmales šaurākas, <0 - platākas, 0 - padara apmales platumu nejūtīgu pret ātrumu)"
 
 #. Angle
 #: ../src/widgets/calligraphy-toolbar.cpp:481
@@ -23095,7 +23093,7 @@ msgstr "Spalvas gala leņķis (grādos; 0 - horizontāls; neatstāj ietekmi, ja 
 #. Fixation
 #: ../src/widgets/calligraphy-toolbar.cpp:499
 msgid "(perpendicular to stroke, \"brush\")"
-msgstr "(perpendikulārs vilkumam, \"brush\")"
+msgstr "(perpendikulārs apmalei, \"brush\")"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:499
 msgid "(almost fixed, default)"
@@ -23115,7 +23113,7 @@ msgstr "Fiksācija:"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:503
 msgid "Angle behavior (0 = nib always perpendicular to stroke direction, 100 = fixed angle)"
-msgstr "Leņķa uzvedība (0 = spalvas gals vienmēr perpendikulārs vilkuma virzienam , 100 = nemainīgs leņķis)"
+msgstr "Leņķa uzvedība (0 = spalvas gals vienmēr perpendikulārs apmales virzienam , 100 = nemainīgs leņķis)"
 
 #. Cap Rounding
 #: ../src/widgets/calligraphy-toolbar.cpp:515
@@ -23144,7 +23142,7 @@ msgstr "Gali:"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:520
 msgid "Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = round caps)"
-msgstr "Palieliniet, lai vilkumos beigās to gali vairāk izvirzītos uz āru (0 - nav, 1 - apaļi gali)"
+msgstr "Palieliniet, lai apmales beigās tās gali vairāk izvirzītos uz āru (0 - nav, 1 - apaļi gali)"
 
 #. Tremor
 #: ../src/widgets/calligraphy-toolbar.cpp:532
@@ -23165,7 +23163,7 @@ msgstr "(maksimāla trīcēšana)"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:535
 msgid "Stroke Tremor"
-msgstr "Vilkuma trīcēšana"
+msgstr "Apmales trīcēšana"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:535
 msgid "Tremor:"
@@ -23173,7 +23171,7 @@ msgstr "Trīcēšana:"
 
 #: ../src/widgets/calligraphy-toolbar.cpp:536
 msgid "Increase to make strokes rugged and trembling"
-msgstr "Palieliniet, lai padarītu vilkumus raupjus un trīcošus"
+msgstr "Palieliniet, lai padarītu apmales raupjas un trīcošas"
 
 #. Wiggle
 #: ../src/widgets/calligraphy-toolbar.cpp:550
@@ -23483,7 +23481,7 @@ msgstr "Norādīt necaurspīdību"
 
 #: ../src/widgets/dropper-toolbar.cpp:132
 msgid "If alpha was picked, assign it to selection as fill or stroke transparency"
-msgstr "Ja ir izvēlēta alfa, piešķiriet to atlasītajam kā aizpildījuma vai vilkuma caurspīdīgumu"
+msgstr "Ja ir izvēlēta alfa, piešķiriet to atlasītajam kā aizpildījuma vai apmales caurspīdīgumu"
 
 #: ../src/widgets/dropper-toolbar.cpp:135
 msgid "Assign"
@@ -23526,7 +23524,7 @@ msgstr "Iestatīt aizpildījuma krāsu"
 #: ../src/widgets/fill-style.cpp:443
 #: ../src/widgets/fill-style.cpp:522
 msgid "Set stroke color"
-msgstr "Iestatīt vilkuma krāsu"
+msgstr "Iestatīt apmales krāsu"
 
 #: ../src/widgets/fill-style.cpp:621
 msgid "Set gradient on fill"
@@ -23534,7 +23532,7 @@ msgstr "Iestatīt aizpildījuma krāsu pāreju"
 
 #: ../src/widgets/fill-style.cpp:621
 msgid "Set gradient on stroke"
-msgstr "Iestatīt vilkuma krāsu pāreju"
+msgstr "Iestatīt apmales krāsu pāreju"
 
 #: ../src/widgets/fill-style.cpp:681
 msgid "Set pattern on fill"
@@ -23542,7 +23540,7 @@ msgstr "Iestatīt aizpildījuma faktūru"
 
 #: ../src/widgets/fill-style.cpp:682
 msgid "Set pattern on stroke"
-msgstr "Iestatīt vilkuma faktūru"
+msgstr "Iestatīt apmales faktūru"
 
 #: ../src/widgets/font-selector.cpp:135
 #: ../src/widgets/text-toolbar.cpp:966
@@ -23651,12 +23649,12 @@ msgstr "Izveidot krāsu pāreju aizpildījumā"
 #: ../src/widgets/gradient-toolbar.cpp:1084
 #: ../src/widgets/mesh-toolbar.cpp:238
 msgid "stroke"
-msgstr "vilkums"
+msgstr "apmale"
 
 #: ../src/widgets/gradient-toolbar.cpp:1084
 #: ../src/widgets/mesh-toolbar.cpp:238
 msgid "Create gradient in the stroke"
-msgstr "Izveidot krāsu pāreju vilkumā"
+msgstr "Izveidot krāsu pāreju uz apmales"
 
 #: ../src/widgets/gradient-toolbar.cpp:1087
 #: ../src/widgets/mesh-toolbar.cpp:241
@@ -23906,14 +23904,12 @@ msgid "Edit fill mesh"
 msgstr "Labot aizpildījuma režģtīklu"
 
 #: ../src/widgets/mesh-toolbar.cpp:305
-#, fuzzy
 msgid "Edit Stroke"
-msgstr "Labot vilkumu..."
+msgstr "Labot apmali"
 
 #: ../src/widgets/mesh-toolbar.cpp:306
-#, fuzzy
 msgid "Edit stroke mesh"
-msgstr "Labot vilkumu..."
+msgstr "Labot apmales režgtīklu"
 
 #: ../src/widgets/mesh-toolbar.cpp:317
 #: ../src/widgets/node-toolbar.cpp:530
@@ -24374,11 +24370,11 @@ msgstr "Pārveidošana ar rīkjoslas palīdzību"
 
 #: ../src/widgets/select-toolbar.cpp:341
 msgid "Now <b>stroke width</b> is <b>scaled</b> when objects are scaled."
-msgstr "Tagad mērogojot objektus <b>vilkuma platums <u>tiek</u></b> mērogots."
+msgstr "Tagad mērogojot objektus <b>apmales platums <u>tiek</u></b> mērogots."
 
 #: ../src/widgets/select-toolbar.cpp:343
 msgid "Now <b>stroke width</b> is <b>not scaled</b> when objects are scaled."
-msgstr "Tagad mērogojot objektus <b>vilkuma platums <u>netiek</u></b> mērogots."
+msgstr "Tagad mērogojot objektus <b>apmales platums <u>netiek</u></b> mērogots."
 
 #: ../src/widgets/select-toolbar.cpp:354
 msgid "Now <b>rounded rectangle corners</b> are <b>scaled</b> when rectangles are scaled."
@@ -25016,7 +25012,7 @@ msgstr "Brīvi izkliedēt stūrus un leņķus"
 
 #: ../src/widgets/stroke-style.cpp:185
 msgid "Stroke width"
-msgstr "Vilkuma platums"
+msgstr "Apmales platums"
 
 #: ../src/widgets/stroke-style.cpp:187
 msgctxt "Stroke width"
@@ -25109,7 +25105,7 @@ msgstr "Iestatīt marķierus"
 #: ../src/widgets/stroke-style.cpp:1100
 #: ../src/widgets/stroke-style.cpp:1185
 msgid "Set stroke style"
-msgstr "Iestatīt vilkuma stilu"
+msgstr "Iestatīt apmales stilu"
 
 #: ../src/widgets/stroke-style.cpp:1273
 msgid "Set marker color"
@@ -25391,7 +25387,7 @@ msgstr "Jauno, ar spalvas rīku veidoto ceļu stils"
 
 #: ../src/widgets/toolbox.cpp:199
 msgid "Style of new calligraphic strokes"
-msgstr "Jauno kaligrāfisko vilkumu stils"
+msgstr "Jauno kaligrāfisko apmaļu stils"
 
 #: ../src/widgets/toolbox.cpp:201
 #: ../src/widgets/toolbox.cpp:203
@@ -27218,7 +27214,7 @@ msgstr "Tikai melns un balts:"
 
 #: ../share/extensions/edge3d.inx.h:5
 msgid "Stroke width:"
-msgstr "Vilkuma platums:"
+msgstr "Apmales platums:"
 
 #: ../share/extensions/edge3d.inx.h:6
 msgid "Blur stdDeviation:"
@@ -27326,7 +27322,7 @@ msgstr "Papīra biezums:"
 
 #: ../share/extensions/foldablebox.inx.h:6
 msgid "Tab Proportion:"
-msgstr ""
+msgstr "Tabulācijas proporcijas:"
 
 #: ../share/extensions/foldablebox.inx.h:8
 msgid "Add Guide Lines"
@@ -28130,7 +28126,7 @@ msgid ""
 "\n"
 "If border is zero, the pattern will be discontinuous at the edges. Use a positive border, preferably greater than the cell size, to produce a smooth join of the pattern at the edges. Use a negative border to reduce the size of the pattern and get an empty border."
 msgstr ""
-"Izveidot nejaušu Voronoja šūnu faktūru. Faktūra būs pieejama Aizpildījuma un vilkuma dialoglodziņā. Jums ir jāizvēlas kāds objekts vai grupa.\n"
+"Izveidot nejaušu Voronoja šūnu faktūru. Faktūra būs pieejama Aizpildījuma un apmales dialoglodziņā. Jums ir jāizvēlas kāds objekts vai grupa.\n"
 "\n"
 "Ja apmale ir 0, faktūra tiks pārtraukta pie malām Izmantojiet pozitīvu apmales lielumu, vēlams, lielāku par šūnas izmēru, lai panāktu gludu faktūras elementu savienojumu pie malām. Izmantojiet negatīvu apmales lielumu, lai samazinātu faktūras elementu lielumu un iegūtu tukšu apmali."
 
@@ -29286,7 +29282,7 @@ msgstr "Izciršanas zīmes"
 
 #: ../share/extensions/layout_nup.inx.h:20
 msgid "Padding guide"
-msgstr ""
+msgstr "Papildinājuma vadlīnija"
 
 #: ../share/extensions/layout_nup.inx.h:21
 msgid "Margin guide"
@@ -29294,7 +29290,7 @@ msgstr "Malu palīglīnijas"
 
 #: ../share/extensions/layout_nup.inx.h:22
 msgid "Padding box"
-msgstr ""
+msgstr "Papildinājuma rāmis"
 
 #: ../share/extensions/layout_nup.inx.h:23
 msgid "Margin box"
@@ -29426,7 +29422,7 @@ msgstr "Marķiera tips:"
 
 #: ../share/extensions/markers_strokepaint.inx.h:4
 msgid "Invert fill and stroke colors"
-msgstr "Invertēt aizpildījuma un vilkuma krasas"
+msgstr "Invertēt aizpildījuma un apmales krāsas"
 
 #: ../share/extensions/markers_strokepaint.inx.h:5
 msgid "Assign alpha"
@@ -29447,11 +29443,11 @@ msgstr "Piešķirt aizpildījuma krāsu"
 #. K.Kalvišķis (karlo@lanet.lv): Ja nepatīk vārds „līnija”, tad varētu lietot vārdu „apmale”, jo  Inkscape jebkuru līniju uztver kā nenoslēgtu daudzstūri, kuram var piešķirt gan aizpildījuma krāsu un veidu, gan apmales (līnijas) krāsu un veidu.
 #: ../share/extensions/markers_strokepaint.inx.h:11
 msgid "Stroke"
-msgstr "Vilkums"
+msgstr "Apmale"
 
 #: ../share/extensions/markers_strokepaint.inx.h:12
 msgid "Assign stroke color"
-msgstr "Piešķirt vilkuma krāsu"
+msgstr "Piešķirt apmales krāsu"
 
 #: ../share/extensions/measure.inx.h:1
 msgid "Measure Path"
@@ -29959,11 +29955,11 @@ msgstr "Aizpildījuma necaurspīdība (%):"
 #: ../share/extensions/polyhedron_3d.inx.h:41
 #, no-c-format
 msgid "Stroke opacity (%):"
-msgstr "Vilkuma necaurspīdība (%):"
+msgstr "Apmales  necaurspīdība (%):"
 
 #: ../share/extensions/polyhedron_3d.inx.h:42
 msgid "Stroke width (px):"
-msgstr "Vilkuma platums (px):"
+msgstr "Apmales platums (px):"
 
 #: ../share/extensions/polyhedron_3d.inx.h:43
 msgid "Shading"
@@ -30424,7 +30420,7 @@ msgstr ""
 "    * Saīsināt krāsu nosaukumus: pārvērš visas krāsas #RRGGBB vai #RGB formātā.\n"
 "    * Pārvērst CSS atribūtus par XML atribūtiem: pārvērst stilus no stilu tagiem un inline style=\"\" deklarācijām par XML atribūtiem.\n"
 "    * Grupu savēršana: aizvāc nevajadzīgus g elementus, paaugstinot to saturu par vienu līmeni. Nepieciešams iestatīts \"Aizvākt neizmantotos ID nosaukumus no elementiem\".\n"
-"    * Izveidot līdzīgu atribūtu grupas: izveidot g elementus elementu kopām ar vismaz vienu kopēju atribūtu (piem. aizpildījuma krāsa, vilkuma necauspīdīgums, ...).\n"
+"    * Izveidot līdzīgu atribūtu grupas: izveidot g elementus elementu kopām ar vismaz vienu kopēju atribūtu (piem. aizpildījuma krāsa, apmale,  necauspīdīgums, ...).\n"
 "    * Iegult rastrus: iegult rastra attēlus kā base64-kodētu datu URL.\n"
 "    * Saglabāt redaktora datus: neaizvākt Inkscape, Sodipodi vai Adobe Illustrator elementus un atribūtus.\n"
 "    * Aizvākt metadatus: aizvākt metadatu tagus kopā ar visu tajos esošo informāciju, kas var saturēt licences metadatus, alternatīvās versijas pārlūkiem  bez SVG atbalsta, utt.\n"
