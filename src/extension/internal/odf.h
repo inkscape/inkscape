@@ -313,10 +313,10 @@ private:
 
     bool writeStyle(ZipFile &zf);
 
-    bool processStyle(Writer &outs, SPItem *item, const Glib::ustring &id);
+    bool processStyle(Writer &outs, SPItem *item, const Glib::ustring &id, const Glib::ustring &gradientNameFill);//, Glib::ustring &styleString);
 
     bool processGradient(Writer &outs, SPItem *item,
-                    const Glib::ustring &id, Geom::Affine &tf);
+                    const Glib::ustring &id, Geom::Affine &tf, Glib::ustring& gradientName, Glib::ustring& output, bool checkFillGradient = 1);
 
     bool writeStyleHeader(Writer &outs);
 
@@ -331,8 +331,6 @@ private:
     bool writeContent(ZipFile &zf, Inkscape::XML::Node *node);
 
 };
-
-
 
 
 }  //namespace Internal
