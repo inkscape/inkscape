@@ -417,8 +417,12 @@ GdkPixbuf* pixbuf_new_from_file( const char *filename, time_t &modTime, gchar*& 
         pixPath = NULL;
     }
     
+    //test correctness of filename
+    if (!g_file_test (filename, G_FILE_TEST_EXISTS)){ 
+        return NULL;
+    }
     struct stat stdir;
-    g_stat(filename, &stdir);
+    int val = g_stat(filename, &stdir);
     if (stdir.st_mode & S_IFDIR){
         //filename is not correct: it is a directory name and hence further code can not return valid results
         return NULL;
@@ -429,11 +433,11 @@ GdkPixbuf* pixbuf_new_from_file( const char *filename, time_t &modTime, gchar*& 
     if ( fp )
     {
         {
-            struct stat st;
-            memset(&st, 0, sizeof(st));
-            int val = g_stat(filename, &st);
+            // struct stat st;
+            // memset(&st, 0, sizeof(st));
+            // int val = g_stat(filename, &st);
             if ( !val ) {
-                modTime = st.st_mtime;
+                modTime = stdir.st_mtime;//st.st_mtime;
                 pixPath = g_strdup(filename);
             }
         }
@@ -1495,7 +1499,10 @@ void sp_image_refresh_if_outdated( SPImage* image )
 
         struct stat st;
         memset(&st, 0, sizeof(st));
-        int val = g_stat(image->pixPath, &st);
+        int val = 0;
+        if (g_file_test (image->pixPath, G_FILE_TEST_EXISTS)){ 
+            val = g_stat(image->pixPath, &st);
+        }
         if ( !val ) {
             // stat call worked. Check time now
             if ( st.st_mtime != image->lastMod ) {

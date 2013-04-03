@@ -364,15 +364,17 @@ static gint inkscape_autosave(gpointer)
             while( (filename = g_dir_read_name(autosave_dir_ptr)) != NULL ){
                 if ( strncmp(filename, baseName, strlen(baseName)) == 0 ){
                     gchar* full_path = g_build_filename( autosave_dir.c_str(), filename, NULL );
-                    if ( g_stat(full_path, &sb) != -1 ) {
-                        if ( difftime(sb.st_ctime, min_time) < 0 || min_time == 0 ){
-                            min_time = sb.st_ctime;
-                            if ( oldest_autosave ) {
-                                g_free(oldest_autosave);
+                    if (g_file_test (full_path, G_FILE_TEST_EXISTS)){ 
+                        if ( g_stat(full_path, &sb) != -1 ) {
+                            if ( difftime(sb.st_ctime, min_time) < 0 || min_time == 0 ){
+                                min_time = sb.st_ctime;
+                                if ( oldest_autosave ) {
+                                    g_free(oldest_autosave);
+                                }
+                                oldest_autosave = g_strdup(full_path);
                             }
-                            oldest_autosave = g_strdup(full_path);
+                            count ++;
                         }
-                        count ++;
                     }
                     g_free(full_path);
                 }

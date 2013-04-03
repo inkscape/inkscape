@@ -227,8 +227,10 @@ bool Inkscape::IO::file_is_writable( char const *utf8name)
         }
         if ( filename ) {
             struct stat st;
-            if(g_lstat (filename, &st) == 0) {
-                success = ((st.st_mode & S_IWRITE) != 0);
+            if (g_file_test (filename, G_FILE_TEST_EXISTS)){ 
+                if (g_lstat (filename, &st) == 0) {
+                    success = ((st.st_mode & S_IWRITE) != 0);
+                }
             }
             g_free(filename);
             filename = NULL;

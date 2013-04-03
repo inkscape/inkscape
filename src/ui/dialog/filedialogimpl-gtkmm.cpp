@@ -529,7 +529,7 @@ bool SVGPreview::set(Glib::ustring &fileName, int dialogType)
         Glib::ustring fileNameUtf8 = Glib::filename_to_utf8(fileName);
         gchar *fName = const_cast<gchar *>(fileNameUtf8.c_str());
         struct stat info;
-        if (g_stat(fName, &info))
+        if (g_file_test (fName, G_FILE_TEST_EXISTS) && g_stat(fName, &info))
             {
             g_warning("SVGPreview::set() : %s : %s",
                            fName, strerror(errno));

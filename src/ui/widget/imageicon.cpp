@@ -382,7 +382,7 @@ bool ImageIcon::show(const Glib::ustring &fileName)
     if (Glib::file_test(fileName, Glib::FILE_TEST_IS_REGULAR))
         {
         struct stat info;
-        if (stat(fName, &info))
+        if (g_file_test (fName, G_FILE_TEST_EXISTS) && stat(fName, &info))
             {
             Glib::ustring err = "cannot get file info";
             showBrokenImage(err);
