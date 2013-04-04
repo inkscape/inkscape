@@ -281,12 +281,12 @@ geom_cubic_bbox_wind_distance (Geom::Coord x000, Geom::Coord y000,
     y0 = std::min (y000, y001);
     y0 = std::min (y0, y011);
     y0 = std::min (y0, y111);
-    x1 = std::min (x000, x001);
-    x1 = std::min (x1, x011);
-    x1 = std::min (x1, x111);
-    y1 = std::min (y000, y001);
-    y1 = std::min (y1, y011);
-    y1 = std::min (y1, y111);
+    x1 = std::max (x000, x001);
+    x1 = std::max (x1, x011);
+    x1 = std::max (x1, x111);
+    y1 = std::max (y000, y001);
+    y1 = std::max (y1, y011);
+    y1 = std::max (y1, y111);
 
     if (best) {
         /* Quickly adjust to endpoints */
