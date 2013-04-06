@@ -135,6 +135,7 @@ enum {
     SP_ARG_EXPORT_AREA,
     SP_ARG_EXPORT_AREA_DRAWING,
     SP_ARG_EXPORT_AREA_PAGE,
+    SP_ARG_EXPORT_MARGIN,
     SP_ARG_EXPORT_AREA_SNAP,
     SP_ARG_EXPORT_WIDTH,
     SP_ARG_EXPORT_HEIGHT,
@@ -186,6 +187,7 @@ static gchar *sp_export_dpi = NULL;
 static gchar *sp_export_area = NULL;
 static gboolean sp_export_area_drawing = FALSE;
 static gboolean sp_export_area_page = FALSE;
+static gchar *sp_export_margin = NULL;
 static gboolean sp_export_latex = FALSE;
 static gchar *sp_export_width = NULL;
 static gchar *sp_export_height = NULL;
@@ -229,6 +231,7 @@ static void resetCommandlineGlobals() {
         sp_export_area = NULL;
         sp_export_area_drawing = FALSE;
         sp_export_area_page = FALSE;
+        sp_export_margin = NULL;
         sp_export_latex = FALSE;
         sp_export_width = NULL;
         sp_export_height = NULL;
@@ -315,6 +318,11 @@ struct poptOption options[] = {
      POPT_ARG_NONE, &sp_export_area_page, SP_ARG_EXPORT_AREA_PAGE,
      N_("Exported area is the entire page"),
      NULL},
+
+    {"export-margin", 0,
+     POPT_ARG_STRING, &sp_export_margin, SP_ARG_EXPORT_MARGIN,
+     N_("Only for PS/EPS/PDF, sets margin in mm around exported area (default 0)"),
+     N_("VALUE")},
 
     {"export-area-snap", 0,
      POPT_ARG_NONE, &sp_export_area_snap, SP_ARG_EXPORT_AREA_SNAP,
@@ -1622,6 +1630,13 @@ static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
 
         (*i)->set_param_int("resolution", (int) dpi);
     }
+
+    // if no bleed/margin is given, set to 0  (otherwise it takes the value last used from the UI)
+    float margin = 0.;
+    if (sp_export_margin) {
+        margin = g_ascii_strtod(sp_export_margin, NULL);
+    }
+    (*i)->set_param_float("bleed", margin);
 
     //check if specified directory exists
     if (!Inkscape::IO::file_directory_exists(uri)) {
