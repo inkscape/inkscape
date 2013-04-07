@@ -613,6 +613,22 @@ AC_SUBST(IMAGEMAGICK_CFLAGS)
 dnl ******************************
 dnl   Unconditional dependencies
 dnl ******************************
+PKG_CHECK_MODULES(INKSCAPE,
+		  bdw-gc      >= 7.1
+		  cairo       >= 1.10
+		  cairomm-1.0 >= 1.9.8
+		  glib-2.0    >= 2.28
+		  glibmm-2.4  >= 2.28
+		  giomm-2.4
+		  gsl
+		  gthread-2.0 >= 2.0
+		  libpng      >= 1.2
+		  libxml-2.0  >= 2.6.11
+		  libxslt     >= 1.0.15
+		  pango       >= 1.24
+		  pangoft2    >= 1.24
+		  sigc++-2.0  >= 2.0.12
+		  )
 
 dnl *********************************
 dnl   Allow experimental GTK+3 build
@@ -630,7 +646,15 @@ if test "x$enable_gtk3" = "xyes"; then
 		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
 	fi
 
-	PKG_CHECK_MODULES(INKSCAPE, bdw-gc >= 7.1  gtkmm-3.0 >= 3.2  gdkmm-3.0 >= 3.2 gtk+-3.0 >= 3.2 gdk-3.0 >= 3.2 gdl-3.0 > 3.3.4 glib-2.0 >= 2.28  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= 2.0.12 $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4 pango >= 1.24 pangoft2 >= 1.24, with_gtkmm_3_0=yes, with_gtkmm_3_0=no)
+	PKG_CHECK_MODULES(GTK,
+			  gtkmm-3.0 >= 3.2
+			  gdkmm-3.0 >= 3.2
+			  gtk+-3.0  >= 3.2
+			  gdk-3.0   >= 3.2
+			  gdl-3.0   > 3.3.4
+			  $ink_spell_pkg,
+			  with_gtkmm_3_0=yes,
+			  with_gtkmm_3_0=no)
 
 	if test "x$with_gtkmm_3_0" = "xyes"; then
 		AC_MSG_RESULT([Using EXPERIMENTAL Gtkmm 3 build])
@@ -676,7 +700,11 @@ else
 		AC_DEFINE(WITH_GTKSPELL, 1, [enable gtk spelling widget])
 	fi
 
-	PKG_CHECK_MODULES(INKSCAPE, bdw-gc >= 7.1  glib-2.0 >= 2.28  gtk+-2.0 >= 2.24  libxml-2.0 >= 2.6.11  libxslt >= 1.0.15  cairo >= 1.10 cairomm-1.0 >= 1.9.8 sigc++-2.0 >= 2.0.12 $ink_spell_pkg  gthread-2.0 >= 2.0 libpng >= 1.2 gsl  glibmm-2.4 >= 2.28 giomm-2.4  gdkmm-2.4  gtkmm-2.4 >= 2.24 pango >= 1.24 pangoft2 >= 1.24)
+	PKG_CHECK_MODULES(GTK,
+			  gtk+-2.0  >= 2.24
+			  $ink_spell_pkg
+			  gdkmm-2.4 >= 2.24
+			  gtkmm-2.4 >= 2.24)
 
 	# Check whether we are using the X11 backend for Gtk+ 2.
 	AC_MSG_CHECKING([if Gtk+ 2.0 is using the X11 backend target])
@@ -713,6 +741,9 @@ else
 		CPPFLAGS="-DGDK_DISABLE_DEPRECATED $CPPFLAGS"
 	fi
 fi
+
+INKSCAPE_CFLAGS="$GTK_CFLAGS $INKSCAPE_CFLAGS"
+INKSCAPE_LIBS="$GTK_LIBS $INKSCAPE_LIBS"
 
 dnl Configure x11 library if Gtk+ uses it as a backend.
 dnl Note that this is only here because we directly use X11 functionality.  We
