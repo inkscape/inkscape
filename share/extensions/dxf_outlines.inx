@@ -25,7 +25,12 @@
 				<_item value="cp1252">CP 1252</_item>
 				<_item value="utf_8">UTF 8</_item>
 			</param>
-			<param name="visibleLayers" type="boolean" _gui-text="keep only visible layers">true</param>
+			<param name="layer_option" type="enum" _gui-text="Layer export selection">
+				<_item value="all">All (default)</_item>
+				<_item value="visible">Visible only</_item>
+				<_item value="name">By name match</_item>
+			</param>
+			<param name="layer_name" type="string" _gui-text="Layer match name"></param>
 		</page>
 		<page name="help" _gui-text="Help">
 			<_param name="inputhelp" type="description" xml:space="preserve">- AutoCAD Release 14 DXF format.
@@ -36,7 +41,7 @@
     - clones (the crossreference to the original is lost)
 - ROBO-Master spline output is a specialized spline readable only by ROBO-Master and AutoDesk viewers, not Inkscape.
 - LWPOLYLINE output is a multiply-connected polyline, disable it to use a legacy version of the LINE output.
-- You can choose to export all layers or only visible ones</_param>
+- You can choose to export all layers, only visible ones or by name match (case insensitive and use comma ',' as separator)</_param>
 		</page>
 	</param>
 	<output>

@@ -84,12 +84,17 @@ class MyEffect(inkex.Effect):
                                      type="string", dest="tab")
         self.OptionParser.add_option("--inputhelp", action="store",
                                      type="string", dest="inputhelp")
-        self.OptionParser.add_option("--visibleLayers", action="store",
-                                     type="string", dest="visibleLayers")
+        self.OptionParser.add_option("--layer_option", action="store",
+                                     type="string", dest="layer_option",
+                                     default="all")
+        self.OptionParser.add_option("--layer_name", action="store",
+                                     type="string", dest="layer_name")
+                                     
         self.dxf = []
         self.handle = 255                       # handle for DXF ENTITY
         self.layers = ['0']
         self.layer = '0'                        # mandatory layer
+        self.layernames = []
         self.csp_old = [[0.0,0.0]]*4            # previous spline
         self.d = array([0], float)              # knot vector
         self.poly = [[0.0,0.0]]                 # LWPOLYLINE data
@@ -267,9 +272,12 @@ class MyEffect(inkex.Effect):
             if style:
                 style = simplestyle.parseStyle(style)
                 if style.has_key('display'):
-                    if style['display'] == 'none' and self.options.visibleLayers == 'true':
+                    if style['display'] == 'none' and self.options.layer_option and self.options.layer_option=='visible':
                         return
             layer = group.get(inkex.addNS('label', 'inkscape'))
+            if self.options.layer_name and self.options.layer_option and self.options.layer_option=='name' and not layer.lower() in self.options.layer_name:
+                return
+              
             layer = layer.replace(' ', '_')
             if layer in self.layers:
                 self.layer = layer
@@ -287,6 +295,14 @@ class MyEffect(inkex.Effect):
             self.groupmat.pop()
 
     def effect(self):
+        #Warn user if name match field is empty
+        if self.options.layer_option and self.options.layer_option=='name' and not self.options.layer_name:
+            inkex.errormsg(_("Error: Field 'Layer match name' must be filled when using 'By name match' option"))
+            inkex.sys.exit()
+        #Split user layer data into a list: "layerA,layerb,LAYERC" becomes ["layera", "layerb", "layerc"]
+        if self.options.layer_name:
+            self.options.layer_name = self.options.layer_name.lower().split(',')
+			
         #References:   Minimum Requirements for Creating a DXF File of a 3D Model By Paul Bourke
         #              NURB Curves: A Guide for the Uninitiated By Philip J. Schneider
         #              The NURBS Book By Les Piegl and Wayne Tiller (Springer, 1995)
@@ -295,6 +311,9 @@ class MyEffect(inkex.Effect):
         for node in self.document.getroot().xpath('//svg:g', namespaces=inkex.NSS):
             if node.get(inkex.addNS('groupmode', 'inkscape')) == 'layer':
                 layer = node.get(inkex.addNS('label', 'inkscape'))
+                self.layernames.append(layer.lower())
+                if self.options.layer_name and self.options.layer_option and self.options.layer_option=='name' and not layer.lower() in self.options.layer_name:
+                    continue
                 layer = layer.replace(' ', '_')
                 if layer and not layer in self.layers:
                     self.layers.append(layer)
@@ -315,6 +334,11 @@ class MyEffect(inkex.Effect):
         if self.options.POLY == 'true':
             self.LWPOLY_output()
         self.dxf_add(dxf_templates.r14_footer)
+		#Warn user if layer data seems wrong
+        if self.options.layer_name and self.options.layer_option and self.options.layer_option=='name':
+            for layer in self.options.layer_name:
+                if not layer in self.layernames:
+                    inkex.errormsg(_("Warning: Layer '%s' not found!") % (layer))
 
 if __name__ == '__main__':
     e = MyEffect()
