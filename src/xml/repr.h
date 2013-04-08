@@ -98,9 +98,11 @@ void sp_repr_css_print(SPCSSAttr *css);
 /* Utility finctions */
 /// Remove \a repr from children of its parent node.
 inline void sp_repr_unparent(Inkscape::XML::Node *repr) {
-    Inkscape::XML::Node *parent=repr->parent();
-    if (parent) {
-        parent->removeChild(repr);
+    if (repr) {
+        Inkscape::XML::Node *parent=repr->parent();
+        if (parent) {
+            parent->removeChild(repr);
+        }
     }
 }
 
