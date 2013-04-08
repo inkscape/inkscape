@@ -988,7 +988,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     } else if (MOD__CTRL) {
                         sp_selection_rotate(selection, 90);
                     } else if (snaps) {
-                        sp_selection_rotate(selection, 180/snaps);
+                        sp_selection_rotate(selection, 180.0/snaps);
                     }
                     ret = TRUE;
                     break;
@@ -1000,7 +1000,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     } else if (MOD__CTRL) {
                         sp_selection_rotate(selection, -90);
                     } else if (snaps) {
-                        sp_selection_rotate(selection, -180/snaps);
+                        sp_selection_rotate(selection, -180.0/snaps);
                     }
                     ret = TRUE;
                     break;
