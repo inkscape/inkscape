@@ -107,6 +107,14 @@ protected:
     static void onFontChange (SPFontSelector *fontsel, gchar* fontspec, TextEdit *self);
 
     /**
+     * Callback invoked when the user modifies the startOffset of text on a path.
+     *
+     * @param text_buffer pointer to the GtkTextBuffer with the text of the selected text object.
+     * @param self pointer to the current instance of the dialog.
+     */
+    static void onStartOffsetChange(GtkTextBuffer *text_buffer, TextEdit *self);
+
+    /**
      * Get the selected text off the main canvas.
      *
      * @return SPItem pointer to the selected text object
@@ -190,6 +198,8 @@ private:
 #endif
 
     GtkWidget *spacing_combo;
+
+    GtkWidget *startOffset;
 
     Gtk::Label preview_label;
 

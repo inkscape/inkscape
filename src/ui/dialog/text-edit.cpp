@@ -59,7 +59,7 @@ extern "C" {
 #include <glibmm/i18n.h>
 #include <glibmm/markup.h>
 #include "unit-constants.h"
-
+#include "sp-textpath.h"
 
 namespace Inkscape {
 namespace UI {
@@ -133,6 +133,30 @@ TextEdit::TextEdit()
     layout_frame.set_padding(4,4,4,4);
     layout_frame.add(layout_hbox);
 
+    // Text start Offset
+    {
+        startOffset = gtk_combo_box_text_new_with_entry ();
+        gtk_widget_set_size_request(startOffset, 90, -1);
+
+        const gchar *spacings[] = {"0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%", NULL};
+        for (int i = 0; spacings[i]; i++) {
+            gtk_combo_box_text_append_text(reinterpret_cast<GtkComboBoxText *>(startOffset), spacings[i]);
+        }
+        gtk_entry_set_text(reinterpret_cast<GtkEntry *>(gtk_bin_get_child(reinterpret_cast<GtkBin *>(startOffset))), "0%");
+
+        gtk_widget_set_tooltip_text(startOffset, _("Text path offset"));
+
+#if WITH_GTKMM_3_0
+        Gtk::Separator *sep = Gtk::manage(new Gtk::Separator());
+        sep->set_orientation(Gtk::ORIENTATION_VERTICAL);
+#else
+        Gtk::VSeparator *sep = Gtk::manage(new Gtk::VSeparator);
+#endif
+        layout_hbox.pack_start(*sep, false, false, 10);
+
+        layout_hbox.pack_start(*Gtk::manage(Glib::wrap(startOffset)), false, false);
+    }
+
     /* Font preview */
     preview_label.set_ellipsize(Pango::ELLIPSIZE_END);
     preview_label.set_justify(Gtk::JUSTIFY_CENTER);
@@ -189,6 +213,7 @@ TextEdit::TextEdit()
     g_signal_connect ( G_OBJECT (fontsel), "font_set", G_CALLBACK (onFontChange), this );
     g_signal_connect ( G_OBJECT (spacing_combo), "changed", G_CALLBACK (onLineSpacingChange), this );
     g_signal_connect ( G_OBJECT (text_buffer), "changed", G_CALLBACK (onTextChange), this );
+    g_signal_connect(startOffset, "changed", G_CALLBACK(onStartOffsetChange), this);
     setasdefault_button.signal_clicked().connect(sigc::mem_fun(*this, &TextEdit::onSetDefault));
     apply_button.signal_clicked().connect(sigc::mem_fun(*this, &TextEdit::onApply));
     close_button.signal_clicked().connect(sigc::bind(_signal_response.make_slot(), GTK_RESPONSE_CLOSE));
@@ -263,8 +288,16 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
         guint items = getSelectedTextCount ();
         if (items == 1) {
             gtk_widget_set_sensitive (text_view, TRUE);
+            gtk_widget_set_sensitive( startOffset, SP_IS_TEXT_TEXTPATH(text) );
+            if (SP_IS_TEXT_TEXTPATH(text)) {
+                SPTextPath *tp = SP_TEXTPATH(text->firstChild());
+                if (tp->getAttribute("startOffset")) {
+                    gtk_entry_set_text(reinterpret_cast<GtkEntry *>(gtk_bin_get_child(reinterpret_cast<GtkBin *>(startOffset))), tp->getAttribute("startOffset"));
+                }
+            }
         } else {
             gtk_widget_set_sensitive (text_view, FALSE);
+            gtk_widget_set_sensitive( startOffset, FALSE );
         }
         apply_button.set_sensitive ( false );
         setasdefault_button.set_sensitive ( true );
@@ -286,6 +319,7 @@ void TextEdit::onReadSelection ( gboolean dostyle, gboolean /*docontent*/ )
         text->getRepr(); // was being called but result ignored. Check this.
     } else {
         gtk_widget_set_sensitive (text_view, FALSE);
+        gtk_widget_set_sensitive( startOffset, FALSE );
         apply_button.set_sensitive ( false );
         setasdefault_button.set_sensitive ( false );
     }
@@ -616,6 +650,19 @@ void TextEdit::onFontChange(SPFontSelector * /*fontsel*/, gchar* fontspec, TextE
 
 }
 
+void TextEdit::onStartOffsetChange(GtkTextBuffer *text_buffer, TextEdit *self)
+{
+    SPItem *text = self->getSelectedTextItem();
+    if (text && SP_IS_TEXT_TEXTPATH(text))
+    {
+        SPTextPath *tp = SP_TEXTPATH(text->firstChild());
+        const gchar *sstr = gtk_combo_box_text_get_active_text(reinterpret_cast<GtkComboBoxText *>(self->startOffset));
+        tp->setAttribute("startOffset", sstr);
+
+        DocumentUndo::maybeDone(sp_desktop_document(SP_ACTIVE_DESKTOP), "startOffset", SP_VERB_CONTEXT_TEXT, _("Set text style"));
+    }
+}
+
 void TextEdit::onToggle()
 {
     if (blocked)
@@ -628,7 +675,6 @@ void TextEdit::onToggle()
         //onApply();
     }
     setasdefault_button.set_sensitive ( true );
-
 }
 
 
