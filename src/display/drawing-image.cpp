@@ -121,6 +121,13 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
     if (!outline) {
         if (!_pixbuf) return RENDER_OK;
         
+        // if (_style) {
+            // _style->image_rendering.computed
+            // See: http://www.w3.org/TR/SVG/painting.html#ImageRenderingProperty
+            //      http://www.w3.org/TR/css4-images/#the-image-rendering
+            //      style.h/style.cpp
+        // }
+
         Inkscape::DrawingContext::Save save(ct);
         ct.transform(_ctm);
         ct.newPath();

@@ -378,6 +378,13 @@ struct SPStyle {
         filter when the style is used for querying */
     SPILength filter_gaussianBlur_deviation;
 
+    /** hints on how to render: e.g. speed vs. accuracy.
+     * As of April, 2013, only image_rendering used. */
+    SPIEnum color_rendering;
+    SPIEnum image_rendering;
+    SPIEnum shape_rendering;
+    SPIEnum text_rendering;
+
     /** enable-background, used for defining where filter effects get
      * their background image */
     SPIEnum enable_background;
@@ -577,6 +584,35 @@ enum SPColorInterpolation {
     SP_CSS_COLOR_INTERPOLATION_AUTO,
     SP_CSS_COLOR_INTERPOLATION_SRGB,
     SP_CSS_COLOR_INTERPOLATION_LINEARRGB
+};
+
+enum SPColorRendering {
+    SP_CSS_COLOR_RENDERING_AUTO,
+    SP_CSS_COLOR_RENDERING_OPTIMIZESPEED,
+    SP_CSS_COLOR_RENDERING_OPTIMIZEQUALITY
+};
+
+/* Last two are CSS4 Image values... for the momement prefaced with -inkscape. */
+enum SPImageRendering {
+    SP_CSS_IMAGE_RENDERING_AUTO,
+    SP_CSS_IMAGE_RENDERING_OPTIMIZESPEED,
+    SP_CSS_IMAGE_RENDERING_OPTIMIZEQUALITY,
+    SP_CSS_IMAGE_RENDERING_CRISPEDGES,
+    SP_CSS_IMAGE_RENDERING_PIXELATED
+};
+
+enum SPShapeRendering {
+    SP_CSS_SHAPE_RENDERING_AUTO,
+    SP_CSS_SHAPE_RENDERING_OPTIMIZESPEED,
+    SP_CSS_SHAPE_RENDERING_CRISPEDGES,
+    SP_CSS_SHAPE_RENDERING_GEOMETRICPRECISION
+};
+
+enum SPTextRendering {
+    SP_CSS_TEXT_RENDERING_AUTO,
+    SP_CSS_TEXT_RENDERING_OPTIMIZESPEED,
+    SP_CSS_TEXT_RENDERING_OPTIMIZELEGIBILITY,
+    SP_CSS_TEXT_RENDERING_GEOMETRICPRECISION
 };
 
 /// An SPTextStyle has a refcount, a font family, and a font name.

@@ -313,27 +313,34 @@ static SPStyleEnum const enum_display[] = {
 };
 
 static SPStyleEnum const enum_shape_rendering[] = {
-    {"auto", 0},
-    {"optimizeSpeed", 0},
-    {"crispEdges", 0},
-    {"geometricPrecision", 0},
+    {"auto",                SP_CSS_SHAPE_RENDERING_AUTO},
+    {"optimizeSpeed",       SP_CSS_SHAPE_RENDERING_OPTIMIZESPEED},
+    {"crispEdges",          SP_CSS_SHAPE_RENDERING_CRISPEDGES},
+    {"geometricPrecision",  SP_CSS_SHAPE_RENDERING_GEOMETRICPRECISION},
     {NULL, -1}
 };
 
 static SPStyleEnum const enum_color_rendering[] = {
-    {"auto", 0},
-    {"optimizeSpeed", 0},
-    {"optimizeQuality", 0},
+    {"auto",            SP_CSS_COLOR_RENDERING_AUTO},
+    {"optimizeSpeed",   SP_CSS_COLOR_RENDERING_OPTIMIZESPEED},
+    {"optimizeQuality", SP_CSS_COLOR_RENDERING_OPTIMIZEQUALITY},
     {NULL, -1}
 };
 
-static SPStyleEnum const *const enum_image_rendering = enum_color_rendering;
+static SPStyleEnum const enum_image_rendering[] = {
+    {"auto",                  SP_CSS_IMAGE_RENDERING_AUTO},
+    {"optimizeSpeed",         SP_CSS_IMAGE_RENDERING_OPTIMIZESPEED},
+    {"optimizeQuality",       SP_CSS_IMAGE_RENDERING_OPTIMIZEQUALITY},
+    {"-inkscape-crisp-edges", SP_CSS_IMAGE_RENDERING_CRISPEDGES},
+    {"-inkscape-pixelated",   SP_CSS_IMAGE_RENDERING_PIXELATED},
+    {NULL, -1}
+};
 
 static SPStyleEnum const enum_text_rendering[] = {
-    {"auto", 0},
-    {"optimizeSpeed", 0},
-    {"optimizeLegibility", 0},
-    {"geometricPrecision", 0},
+    {"auto",               SP_CSS_TEXT_RENDERING_AUTO},
+    {"optimizeSpeed",      SP_CSS_TEXT_RENDERING_OPTIMIZESPEED},
+    {"optimizeLegibility", SP_CSS_TEXT_RENDERING_OPTIMIZELEGIBILITY},
+    {"geometricPrecision", SP_CSS_TEXT_RENDERING_GEOMETRICPRECISION},
     {NULL, -1}
 };
 
@@ -795,6 +802,12 @@ sp_style_read(SPStyle *style, SPObject *object, Inkscape::XML::Node *repr)
     /* clip-rule */
     SPS_READ_PENUM_IF_UNSET(&style->clip_rule, repr, "clip-rule", enum_clip_rule, true);
 
+    /* color_rendering, image_rendering, shape_rendering, text_rendering */
+    SPS_READ_PENUM_IF_UNSET(&style->color_rendering, repr, "color_rendering", enum_color_rendering, true);
+    SPS_READ_PENUM_IF_UNSET(&style->image_rendering, repr, "image_rendering", enum_image_rendering, true);
+    SPS_READ_PENUM_IF_UNSET(&style->shape_rendering, repr, "shape_rendering", enum_shape_rendering, true);
+    SPS_READ_PENUM_IF_UNSET(&style->text_rendering,  repr, "text_rendering",  enum_text_rendering,  true);
+
     /* 3. Merge from parent */
     if (object) {
         if (object->parent) {
@@ -1115,11 +1128,8 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
         case SP_PROP_BASELINE_SHIFT:
             SPS_READ_IBASELINE_SHIFT_IF_UNSET(&style->baseline_shift, val);
             break;
-            /* Text (unimplemented) */
         case SP_PROP_TEXT_RENDERING: {
-            /* Ignore the hint. */
-            SPIEnum dummy;
-            SPS_READ_IENUM_IF_UNSET(&dummy, val, enum_text_rendering, true);
+            SPS_READ_IENUM_IF_UNSET(&style->text_rendering, val, enum_text_rendering, true);
             break;
         }
         case SP_PROP_ALIGNMENT_BASELINE:
@@ -1240,9 +1250,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             g_warning("Unimplemented style property SP_PROP_COLOR_PROFILE: value: %s", val);
             break;
         case SP_PROP_COLOR_RENDERING: {
-            /* Ignore the hint. */
-            SPIEnum dummy;
-            SPS_READ_IENUM_IF_UNSET(&dummy, val, enum_color_rendering, true);
+            SPS_READ_IENUM_IF_UNSET(&style->color_rendering, val, enum_color_rendering, true);
             break;
         }
         case SP_PROP_FILL:
@@ -1261,9 +1269,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             }
             break;
         case SP_PROP_IMAGE_RENDERING: {
-            /* Ignore the hint. */
-            SPIEnum dummy;
-            SPS_READ_IENUM_IF_UNSET(&dummy, val, enum_image_rendering, true);
+            SPS_READ_IENUM_IF_UNSET(&style->image_rendering, val, enum_image_rendering, true);
             break;
         }
         case SP_PROP_MARKER:
@@ -1306,9 +1312,7 @@ sp_style_merge_property(SPStyle *style, gint id, gchar const *val)
             break;
 
         case SP_PROP_SHAPE_RENDERING: {
-            /* Ignore the hint. */
-            SPIEnum dummy;
-            SPS_READ_IENUM_IF_UNSET(&dummy, val, enum_shape_rendering, true);
+            SPS_READ_IENUM_IF_UNSET(&style->shape_rendering, val, enum_shape_rendering, true);
             break;
         }
 
@@ -1834,6 +1838,12 @@ sp_style_merge_from_parent(SPStyle *const style, SPStyle const *const parent)
     if (!style->clip_rule.set || style->clip_rule.inherit) {
         style->clip_rule.computed = parent->clip_rule.computed;
     }
+
+    /* Rendering */
+    if (!style->color_rendering.set || style->color_rendering.inherit) {
+        style->color_rendering.computed = parent->color_rendering.computed;
+    }
+
 }
 
 template <typename T>
@@ -2126,18 +2136,18 @@ sp_style_merge_from_dying_parent(SPStyle *const style, SPStyle const *const pare
             &SPStyle::clip_rule,
             &SPStyle::color_interpolation,
             &SPStyle::color_interpolation_filters,
-            //nyi: SPStyle::color_rendering,
+            &SPStyle::color_rendering,
             &SPStyle::direction,
             &SPStyle::fill_rule,
             &SPStyle::font_style,
             &SPStyle::font_variant,
-            //nyi: SPStyle::image_rendering,
+            &SPStyle::image_rendering,
             //nyi: SPStyle::pointer_events,
-            //nyi: SPStyle::shape_rendering,
+            &SPStyle::shape_rendering,
             &SPStyle::stroke_linecap,
             &SPStyle::stroke_linejoin,
             &SPStyle::text_anchor,
-            //nyi: &SPStyle::text_rendering,
+            &SPStyle::text_rendering,
             &SPStyle::visibility,
             &SPStyle::writing_mode
         };
@@ -2742,6 +2752,12 @@ sp_style_write_string(SPStyle const *const style, guint const flags)
     /* clipping */
     p += sp_style_write_ienum(p, c + BMAX - p, "clip-rule", enum_clip_rule, &style->clip_rule, NULL, flags);
 
+    /* rendering */
+    p += sp_style_write_ienum(p, c + BMAX - p, "color-rendering", enum_color_rendering, &style->color_rendering, NULL, flags);
+    p += sp_style_write_ienum(p, c + BMAX - p, "image-rendering", enum_image_rendering, &style->image_rendering, NULL, flags);
+    p += sp_style_write_ienum(p, c + BMAX - p, "shape-rendering", enum_shape_rendering, &style->shape_rendering, NULL, flags);
+    p += sp_style_write_ienum(p, c + BMAX - p, "text-rendering",  enum_text_rendering,  &style->text_rendering,  NULL, flags);
+
     /* fixme: */
     p += sp_text_style_write(p, c + BMAX - p, style->text, flags);
 
@@ -2891,6 +2907,12 @@ sp_style_write_difference(SPStyle const *const from, SPStyle const *const to)
     p += sp_text_style_write(p, c + BMAX - p, from->text, SP_STYLE_FLAG_IFDIFF);
 
     p += sp_style_write_ienum(p, c + BMAX - p, "clip-rule", enum_clip_rule, &from->clip_rule, &to->clip_rule, SP_STYLE_FLAG_IFDIFF);
+
+    /* rendering */
+    p += sp_style_write_ienum(p, c + BMAX - p, "color-rendering", enum_color_rendering, &from->color_rendering, &to->color_rendering, SP_STYLE_FLAG_IFDIFF);
+    p += sp_style_write_ienum(p, c + BMAX - p, "image-rendering", enum_image_rendering, &from->image_rendering, &to->image_rendering, SP_STYLE_FLAG_IFDIFF);
+    p += sp_style_write_ienum(p, c + BMAX - p, "shape-rendering", enum_shape_rendering, &from->shape_rendering, &to->shape_rendering, SP_STYLE_FLAG_IFDIFF);
+    p += sp_style_write_ienum(p, c + BMAX - p, "text-rendering",  enum_text_rendering,  &from->text_rendering,  &to->text_rendering,  SP_STYLE_FLAG_IFDIFF);
 
     /** \todo
      * The reason we use IFSET rather than IFDIFF is the belief that the IFDIFF
@@ -3087,6 +3109,12 @@ sp_style_clear(SPStyle *style)
     style->enable_background.inherit = false;
 
     style->clip_rule.value = style->clip_rule.computed = SP_WIND_RULE_NONZERO;
+
+    style->color_rendering.value = style->color_rendering.computed = SP_CSS_COLOR_RENDERING_AUTO;
+    style->image_rendering.value = style->image_rendering.computed = SP_CSS_IMAGE_RENDERING_AUTO;
+    style->shape_rendering.value = style->shape_rendering.computed = SP_CSS_SHAPE_RENDERING_AUTO;
+    style->text_rendering.value  = style->text_rendering.computed  = SP_CSS_TEXT_RENDERING_AUTO;
+
 }
 
 
@@ -4491,6 +4519,18 @@ sp_style_unset_property_attrs(SPObject *o)
     }
     if (style->clip_rule.set) {
         repr->setAttribute("clip-rule", NULL);
+    }
+    if (style->color_rendering.set) {
+        repr->setAttribute("color-rendering", NULL);
+    }
+    if (style->image_rendering.set) {
+        repr->setAttribute("image-rendering", NULL);
+    }
+    if (style->shape_rendering.set) {
+        repr->setAttribute("shape-rendering", NULL);
+    }
+    if (style->text_rendering.set) {
+        repr->setAttribute("text-rendering", NULL);
     }
 }
 
