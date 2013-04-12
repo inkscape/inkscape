@@ -313,9 +313,9 @@ private:
 
     bool writeStyle(ZipFile &zf);
 
-    bool processStyle(Writer &outs, SPItem *item, const Glib::ustring &id, const Glib::ustring &gradientNameFill);//, Glib::ustring &styleString);
+    bool processStyle(Writer &outs, SPItem *item, const Glib::ustring &id, const Glib::ustring &gradientNameFill, const Glib::ustring &gradientNameStroke);
 
-    bool processGradient(Writer &outs, SPItem *item,
+    bool processGradient(SPItem *item,
                     const Glib::ustring &id, Geom::Affine &tf, Glib::ustring& gradientName, Glib::ustring& output, bool checkFillGradient = 1);
 
     bool writeStyleHeader(Writer &outs);
