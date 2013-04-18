@@ -2741,8 +2741,9 @@ Shape::CheckAdjacencies (int lastPointNo, int lastChgtPt, Shape * /*shapeHead*/,
 	    {
 	      if (TesteAdjacency (lS, lB, getPoint(n).x, n, false) ==
 		  false)
-		break;
-	      lS->swsData[lB].leftRnd = n;
+                break;
+              if (getPoint(lS->swsData[lB].leftRnd).x[0] > getPoint(n).x[0] + HalfRound (1))  // LP Bug 614577
+                  lS->swsData[lB].leftRnd = n;
 	    }
 	  for (int n = rgtN + 1; n < lastPointNo; n++)
 	    {
@@ -2768,7 +2769,8 @@ Shape::CheckAdjacencies (int lastPointNo, int lastChgtPt, Shape * /*shapeHead*/,
 	      if (TesteAdjacency (rS, rB, getPoint(n).x, n, false) ==
 		  false)
 		break;
-	      rS->swsData[rB].leftRnd = n;
+              if (getPoint(rS->swsData[rB].leftRnd).x[0] > getPoint(n).x[0] + HalfRound (1))  // LP Bug 614577
+                  rS->swsData[rB].leftRnd = n;
 	    }
 	  for (int n = rgtN + 1; n < lastPointNo; n++)
 	    {
