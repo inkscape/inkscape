@@ -2753,7 +2753,7 @@ Verb *Verb::_base_verbs[] = {
     new DialogVerb(SP_VERB_DIALOG_SWATCHES, "DialogSwatches", N_("S_watches..."),
                    N_("Select colors from a swatches palette"), GTK_STOCK_SELECT_COLOR),
     new DialogVerb(SP_VERB_DIALOG_SYMBOLS, "DialogSymbols", N_("S_ymbols..."),
-                   N_("Select symbol from a symbols palette"), GTK_STOCK_SELECT_COLOR),
+                   N_("Select symbol from a symbols palette"), INKSCAPE_ICON("symbols")),
     new DialogVerb(SP_VERB_DIALOG_TRANSFORM, "DialogTransform", N_("Transfor_m..."),
                    N_("Precisely control objects' transformations"), INKSCAPE_ICON("dialog-transform")),
     new DialogVerb(SP_VERB_DIALOG_ALIGN_DISTRIBUTE, "DialogAlignDistribute", N_("_Align and Distribute..."),

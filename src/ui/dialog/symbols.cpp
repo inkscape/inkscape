@@ -148,6 +148,9 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   //iconView->set_text_column(  columns->symbol_id  );
   iconView->set_tooltip_column( 1 );
   iconView->set_pixbuf_column(  columns->symbol_image );
+  // Giving the iconview a small minimum size will help users understand
+  // What the dialog does.
+  iconView->set_size_request( 100, 32 );
 
   std::vector< Gtk::TargetEntry > targets;
   targets.push_back(Gtk::TargetEntry( "application/x-inkscape-paste"));
