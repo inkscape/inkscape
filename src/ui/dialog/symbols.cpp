@@ -150,7 +150,7 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   iconView->set_pixbuf_column(  columns->symbol_image );
   // Giving the iconview a small minimum size will help users understand
   // What the dialog does.
-  iconView->set_size_request( 100, 32 );
+  iconView->set_size_request( 100, 200 );
 
   std::vector< Gtk::TargetEntry > targets;
   targets.push_back(Gtk::TargetEntry( "application/x-inkscape-paste"));
@@ -469,8 +469,9 @@ void SymbolsDialog::get_symbols() {
 
 	      symbol_doc = SPDocument::createNewDoc( fullname, FALSE );
 	      if( symbol_doc ) {
-		symbolSets[Glib::ustring(filename)]= symbol_doc;
-		symbolSet->append(filename);
+              gchar *title = symbol_doc->getRoot()->title();
+		      symbolSets[Glib::ustring(title)] = symbol_doc;
+		      symbolSet->append(title);
 	      }
 	    }
 
