@@ -30,6 +30,7 @@
 #include "uri.h"
 #include "print.h"
 #include "xml/repr.h"
+#include "svg/svg.h"
 #include "preferences.h"
 #include "style.h"
 #include "sp-symbol.h"
@@ -238,8 +239,9 @@ sp_use_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::
 
     sp_repr_set_svg_double(repr, "x", use->x.computed);
     sp_repr_set_svg_double(repr, "y", use->y.computed);
-    sp_repr_set_svg_double(repr, "width", use->width.computed);
-    sp_repr_set_svg_double(repr, "height", use->height.computed);
+
+    repr->setAttribute("width", sp_svg_length_write_with_units(use->width).c_str());
+    repr->setAttribute("height", sp_svg_length_write_with_units(use->height).c_str());
 
     if (use->ref->getURI()) {
         gchar *uri_string = use->ref->getURI()->toString();
