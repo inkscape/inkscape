@@ -1,5 +1,7 @@
 
 symbolsdir = $(datadir)/inkscape/symbols
 
-EXTRA_DIST = $(wildcard *.svg)
+symbols_DATA = $(wildcard *.svg)
+
+EXTRA_DIST = $(symbols_DATA)
 
