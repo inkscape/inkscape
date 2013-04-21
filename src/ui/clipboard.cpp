@@ -332,6 +332,10 @@ void ClipboardManagerImpl::copySymbol(Inkscape::XML::Node* symbol, gchar const* 
     use->setAttribute("style", style );
     _root->appendChild(use);
 
+    // This min and max sets offsets, we don't have any so set to zero.
+    sp_repr_set_point(_clipnode, "min", Geom::Point(0,0));
+    sp_repr_set_point(_clipnode, "max", Geom::Point(0,0));
+
     fit_canvas_to_drawing(_clipboardSPDoc);
     _setClipboardTargets();
 }
@@ -766,14 +770,6 @@ void ClipboardManagerImpl::_copyUsedDefs(SPItem *item)
             _copyNode(filter->getRepr(), _doc, _defs);
         }
     }
-
-    // Copy symbols: We may want to be more clever...
-    // if (SP_IS_USE(item)) {
-    //     SPObject *symbol = SP_USE(item)->child;
-    //     if( symbol && SP_IS_SYMBOL(symbol) ) {
-    //         _copyNode(symbol->getRepr(), _doc, _defs);
-    //     }
-    // }
 
     // recurse
     for (SPObject *o = item->children ; o != NULL ; o = o->next) {
