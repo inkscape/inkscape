@@ -986,6 +986,7 @@ void XmlTree::cmd_delete_node()
     g_assert(selected_repr != NULL);
     sp_repr_unparent(selected_repr);
 
+    reinterpret_cast<SPObject *>(current_desktop->currentLayer())->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     DocumentUndo::done(current_document, SP_VERB_DIALOG_XML_EDITOR,
                        Q_("nodeAsInXMLinHistoryDialog|Delete node"));
 }

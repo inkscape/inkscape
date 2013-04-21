@@ -47,7 +47,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <vector>
-
+#include <math.h>
 
 //# Inkscape includes
 #include "clear-n_.h"
@@ -1315,8 +1315,9 @@ writePath(Writer &outs, Geom::PathVector const &pathv,
     return nrPoints;
 }
 
-bool OdfOutput::processStyle(Writer &outs, SPItem *item, const Glib::ustring &id, const Glib::ustring &gradientNameFill, const Glib::ustring &gradientNameStroke)
+bool OdfOutput::processStyle(SPItem *item, const Glib::ustring &id, const Glib::ustring &gradientNameFill, const Glib::ustring &gradientNameStroke, Glib::ustring& output)
 {
+    output.clear();
     if (!item)
     {
         return false;
@@ -1408,37 +1409,34 @@ bool OdfOutput::processStyle(Writer &outs, SPItem *item, const Glib::ustring &id
     styleTable.push_back(si);
     styleLookupTable[id] = styleName;
 
-    Glib::ustring tmpstring = Glib::ustring::compose ("<style:style style:name=\"%1\" style:family=\"graphic\" style:parent-style-name=\"standard\">\n", si.name);
-    tmpstring += "<style:graphic-properties";
+    output = Glib::ustring::compose ("<style:style style:name=\"%1\" style:family=\"graphic\" style:parent-style-name=\"standard\">\n", si.name);
+    output += "<style:graphic-properties";
     if (si.fill == "gradient")
     {
-        tmpstring += Glib::ustring::compose (" draw:fill=\"gradient\" draw:fill-gradient-name=\"%1\"", gradientNameFill);
+        output += Glib::ustring::compose (" draw:fill=\"gradient\" draw:fill-gradient-name=\"%1\"", gradientNameFill);
     }
     else
     {
-        tmpstring += Glib::ustring(" draw:fill=\"") + si.fill + "\"";
+        output += Glib::ustring(" draw:fill=\"") + si.fill + "\"";
         if(si.fill != "none")
         {
-            // tmpstring += Glib::ustring::compose(" draw:fill-color=\"%1\" draw:fill-opacity=\"%2\"", si.fillColor, si.fillOpacity);
-            tmpstring += Glib::ustring::compose(" draw:fill-color=\"%1\"", si.fillColor);
+            output += Glib::ustring::compose(" draw:fill-color=\"%1\"", si.fillColor);
         }
     }
     if (si.stroke == "gradient")
     {
         //does not seem to be supported by Open Office.org
-        tmpstring += Glib::ustring::compose (" draw:stroke=\"gradient\" draw:stroke-gradient-name=\"%1\"", gradientNameStroke);
+        output += Glib::ustring::compose (" draw:stroke=\"gradient\" draw:stroke-gradient-name=\"%1\"", gradientNameStroke);
     }
     else
     {
-        tmpstring += Glib::ustring(" draw:stroke=\"") + si.stroke + "\"";
+        output += Glib::ustring(" draw:stroke=\"") + si.stroke + "\"";
         if (si.stroke != "none")
         {
-            tmpstring += Glib::ustring::compose (" svg:stroke-width=\"%1\" svg:stroke-color=\"%2\" ", si.strokeWidth, si.strokeColor);
-            // tmpstring += Glib::ustring::compose (" svg:stroke-width=\"%1\" svg:stroke-color=\"%2\" draw:stroke-opacity=\"%3\" ", si.strokeWidth, si.strokeColor, si.strokeOpacity);
+            output += Glib::ustring::compose (" svg:stroke-width=\"%1\" svg:stroke-color=\"%2\" ", si.strokeWidth, si.strokeColor);
         }
     }
-    tmpstring += "/>\n</style:style>\n";
-    outs.writeUString (tmpstring);
+    output += "/>\n</style:style>\n";
 
     return true;
 }
@@ -1483,6 +1481,7 @@ bool OdfOutput::processGradient(SPItem *item,
         gi.stops.push_back(gs);
     }
 
+    Glib::ustring gradientName2;
     if (SP_IS_LINEARGRADIENT(gradient))
     {
         gi.style = "linear";
@@ -1491,16 +1490,16 @@ bool OdfOutput::processGradient(SPItem *item,
         gi.y1 = linGrad->y1.value;
         gi.x2 = linGrad->x2.value;
         gi.y2 = linGrad->y2.value;
+        gradientName2 = Glib::ustring::compose("ImportedLinearGradient%1", gradientTable.size());
     }
     else if (SP_IS_RADIALGRADIENT(gradient))
     {
         gi.style = "radial";
         SPRadialGradient *radGrad = SP_RADIALGRADIENT(gradient);
-        SPRadialGradient tmpGrad = *radGrad;
-        tmpGrad.cx.unit= SVGLength::PERCENT;
-        tmpGrad.cy.unit= SVGLength::PERCENT;
-        gi.cx = tmpGrad.cx.computed;// * 100.0;//ODG cx is percentages
-        gi.cy = tmpGrad.cy.computed;// * 100.0;
+        Geom::OptRect bbox = item->documentVisualBounds();
+        gi.cx = (radGrad->cx.value-bbox->left())/bbox->width();
+        gi.cy = (radGrad->cy.value-bbox->top())/bbox->height();
+        gradientName2 = Glib::ustring::compose("ImportedRadialGradient%1", gradientTable.size());
     }
     else
     {
@@ -1529,7 +1528,7 @@ bool OdfOutput::processGradient(SPItem *item,
     }
 
     // No match, let us write a new entry
-    gradientName = Glib::ustring::compose("gradient%1", gradientTable.size());
+    gradientName = gradientName2;
     gi.name = gradientName;
     gradientTable.push_back(gi);
     gradientLookupTable[id] = gradientName;
@@ -1555,12 +1554,17 @@ bool OdfOutput::processGradient(SPItem *item,
             return false;
         }
         output += Glib::ustring::compose("<draw:gradient draw:name=\"%1\"", gi.name);
-        output += Glib::ustring::compose(" draw:display-name=\"imported linear %1\"", gradientCount);
+        output += Glib::ustring::compose(" draw:display-name=\"%1\"", gi.name);
         output += " draw:style=\"linear\"";
         snprintf(buf, 127, " draw:start-color=\"#%06lx\" draw:end-color=\"#%06lx\"", gi.stops[0].rgb, gi.stops[1].rgb);
         output += buf;
-        output += Glib::ustring::compose(" draw:start-intensity=\"%1\" draw:end-intensity=\"%2\" draw:angle=\"0\"/>\n",
-            gi.stops[0].opacity * 100.0, gi.stops[1].opacity * 100.0);// draw:border=\"0%%\"
+        //TODO: apply maths, to define begin of gradient, taking gradient begin and end, as well as object boundary into account
+        double angle = (gi.y2-gi.y1);
+        angle = (angle != 0.) ? (atan((gi.x2-gi.x1)/(gi.y2-gi.y1))* 180. / pi) : 90;
+        angle = (angle < 0)?(180+angle):angle;
+        angle = angle * 10; //why do we need this: precision?????????????
+        output += Glib::ustring::compose(" draw:start-intensity=\"%1\" draw:end-intensity=\"%2\" draw:angle=\"%3\"/>\n",
+            gi.stops[0].opacity * 100.0, gi.stops[1].opacity * 100.0, angle);// draw:border=\"0%%\"
     }
     else if (gi.style == "radial")
     {
@@ -1581,8 +1585,8 @@ bool OdfOutput::processGradient(SPItem *item,
             g_warning("Need at least 2 stops for a radial gradient");
             return false;
         }
-        output += Glib::ustring::compose("<draw:gradient draw:name=\"%1\" draw:display-name=\"imported radial %2\" ", gi.name, gradientCount);
-        snprintf(buf, 127, "draw:cx=\"%05.3f\" draw:cy=\"%05.3f\" ", gi.cx, gi.cy);
+        output += Glib::ustring::compose("<draw:gradient draw:name=\"%1\" draw:display-name=\"%1\" ", gi.name);
+        snprintf(buf, 127, "draw:cx=\"%05.3f\" draw:cy=\"%05.3f\" ", gi.cx*100, gi.cy*100);
         output += Glib::ustring("draw:style=\"radial\" ") + buf;
         snprintf(buf, 127, "draw:start-color=\"#%06lx\" draw:end-color=\"#%06lx\" ", gi.stops[0].rgb, gi.stops[1].rgb);
         output += buf;
@@ -1689,6 +1693,7 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
     Glib::ustring gradientNameStroke;
     Glib::ustring outputFill;
     Glib::ustring outputStroke;
+    Glib::ustring outputStyle;
     
     processGradient(item, id, tf, gradientNameFill, outputFill, 1);
     processGradient(item, id, tf, gradientNameStroke, outputStroke, 0);
@@ -1696,8 +1701,8 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
     souts.writeUString(outputStroke);
     
     //# STYLE
-    processStyle(souts, item, id, gradientNameFill, gradientNameStroke);
-
+    processStyle(item, id, gradientNameFill, gradientNameStroke, outputStyle);
+    souts.writeUString(outputStyle);
 
     //# ITEM DATA
     if (nodeName == "image" || nodeName == "svg:image")
@@ -1787,16 +1792,6 @@ bool OdfOutput::writeTree(Writer &couts, Writer &souts,
             Glib::ustring styleName = siter->second;
             couts.printf("draw:style-name=\"%s\" ", styleName.c_str());
         }
-        // couts.writeUString(styleString);
-
-        // std::map<Glib::ustring, Glib::ustring>::iterator giter;
-        // giter = gradientLookupTable.find(id);
-        // if (giter != gradientLookupTable.end())
-        // {
-            // Glib::ustring gradientName = giter->second;
-            // couts.printf("draw:fill-gradient-name=\"%s\" ",
-                 // gradientName.c_str());
-        // }
 
         couts.printf("draw:layer=\"layout\" svg:x=\"%.3fcm\" svg:y=\"%.3fcm\" ",
                        bbox_x, bbox_y);

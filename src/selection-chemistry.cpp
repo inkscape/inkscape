@@ -360,6 +360,7 @@ void sp_selection_delete(SPDesktop *desktop)
     selection->clear();
     sp_selection_delete_impl(selected);
     g_slist_free(const_cast<GSList *>(selected));
+    reinterpret_cast<SPObject *>(desktop->currentLayer())->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
 
     /* a tool may have set up private information in it's selection context
      * that depends on desktop items.  I think the only sane way to deal with
