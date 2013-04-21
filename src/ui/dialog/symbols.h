@@ -51,6 +51,7 @@ private:
 
     void get_symbols();
     void draw_symbols( SPDocument* symbol_document );
+    void draw_symbol( SPObject* symbol_document );
     SPDocument* symbols_preview_doc();
 
     GSList* symbols_in_doc_recursive(SPObject *r, GSList *l);
@@ -60,9 +61,7 @@ private:
     gchar const* style_from_use( gchar const* id, SPDocument* document);
 
     Glib::RefPtr<Gdk::Pixbuf>
-    create_symbol_image(gchar const *symbol_name,
-                        SPDocument *source,  Inkscape::Drawing* drawing,
-                        unsigned /*visionkey*/);
+    create_symbol_image(gchar const *symbol_name, SPObject *symbol);
 
     /* Keep track of all symbol template documents */
     std::map<Glib::ustring, SPDocument*> symbolSets;

@@ -299,10 +299,9 @@ sp_use_description(SPItem *item)
     if (use->child) {
 
         if( SP_IS_SYMBOL( use->child ) ) {
-            //char *symbol_desc = SP_ITEM(use->child)->description();
-            //g_free(symbol_desc);
-            return g_strdup(_("<b>Clone of Symbol</b>"));
-            //return g_strdup_printf(_("<b>Clone of Symbol</b>: %s"), symbol_desc );
+            char *symbol_desc = SP_ITEM(use->child)->title();
+            return g_strdup_printf(_("<b>'%s' Symbol</b>"), symbol_desc );
+            g_free(symbol_desc);
         }
 
         static unsigned recursion_depth = 0;

@@ -557,32 +557,32 @@ gchar const* SymbolsDialog::style_from_use( gchar const* id, SPDocument* documen
 
 void SymbolsDialog::draw_symbols( SPDocument* symbolDocument ) {
 
+  GSList* l = symbols_in_doc( symbolDocument );
+  for( ; l != NULL; l = l->next ) {
+    SPObject* symbol = SP_OBJECT(l->data);
+    if (SP_IS_SYMBOL(symbol)) {
+      draw_symbol( symbol );
+    }
+  }
+}
+
+void SymbolsDialog::draw_symbol( SPObject* symbol ) {
 
   SymbolColumns* columns = getColumns();
 
-  GSList* l = symbols_in_doc( symbolDocument );
-  for( ; l != NULL; l = l->next ) {
+  gchar const *id    = symbol->getRepr()->attribute("id");
+  gchar const *title = symbol->title(); // From title element
+  if( !title ) {
+    title = id;
+  }
 
-    SPObject* symbol = SP_OBJECT(l->data);
-    if (!SP_IS_SYMBOL(symbol)) {
-	//std::cout << "  Error: not symbol" << std::endl;
-	continue;
-    }
+  Glib::RefPtr<Gdk::Pixbuf> pixbuf = create_symbol_image(id, symbol );
 
-    gchar const *id    = symbol->getRepr()->attribute("id");
-    gchar const *title = symbol->title(); // From title element
-    if( !title ) {
-	title = id;
-    }
-
-    Glib::RefPtr<Gdk::Pixbuf> pixbuf = create_symbol_image(id, symbolDocument, &renderDrawing, key );
-    if( pixbuf ) {
-
-	Gtk::ListStore::iterator row = store->append();
-	(*row)[columns->symbol_id]    = Glib::ustring( id );
-	(*row)[columns->symbol_title] = Glib::ustring( title );
-	(*row)[columns->symbol_image] = pixbuf;
-    }
+  if( pixbuf ) {
+    Gtk::ListStore::iterator row = store->append();
+    (*row)[columns->symbol_id]    = Glib::ustring( id );
+    (*row)[columns->symbol_title] = Glib::ustring( title );
+    (*row)[columns->symbol_image] = pixbuf;
   }
 
   delete columns;
@@ -598,18 +598,8 @@ void SymbolsDialog::draw_symbols( SPDocument* symbolDocument ) {
  * the temporary document is rendered.
  */
 Glib::RefPtr<Gdk::Pixbuf>
-SymbolsDialog::create_symbol_image(gchar const *symbol_id,
-				     SPDocument *source, 
-				     Inkscape::Drawing* drawing,
-				     unsigned /*visionkey*/)
+SymbolsDialog::create_symbol_image(gchar const *symbol_id, SPObject *symbol)
 {
-  // Retrieve the symbol named 'symbol_id' from the source SVG document
-  SPObject const* symbol = source->getObjectById(symbol_id);
-  if (symbol == NULL) {
-    //std::cout << "  Failed to find symbol: " << symbol_id << std::endl;
-    //return 0;
-  }
-
   // Create a copy repr of the symbol with id="the_symbol"
   Inkscape::XML::Document *xml_doc = previewDocument->getReprDoc();
   Inkscape::XML::Node *repr = symbol->getRepr()->duplicate(xml_doc);
@@ -626,10 +616,10 @@ SymbolsDialog::create_symbol_image(gchar const *symbol_id,
   gchar const* style = repr->attribute("inkscape:symbol-style");
   if( !style ) {
     // If no default style in <symbol>, look in documents.
-    if( source == currentDocument ) {
-	style = style_from_use( symbol_id, source );
+    if( symbol->document == currentDocument ) {
+      style = style_from_use( symbol_id, symbol->document );
     } else {
-	style = source->getReprRoot()->attribute("style");
+      style = symbol->document->getReprRoot()->attribute("style");
     }
   }
   // Last ditch effort to provide some default styling
@@ -719,7 +709,7 @@ SymbolsDialog::create_symbol_image(gchar const *symbol_id,
 	scale = atof( previewScaleString.c_str() );
     }
 
-    pixbuf = Glib::wrap(render_pixbuf(*drawing, scale, *dbox, psize));
+    pixbuf = Glib::wrap(render_pixbuf(renderDrawing, scale, *dbox, psize));
     svg_preview_cache.set_preview_in_cache(key, pixbuf->gobj());
   }
 
