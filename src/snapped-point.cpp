@@ -14,92 +14,111 @@
 #include "preferences.h"
 
 // overloaded constructor
-Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &constrained_snap, bool const &fully_constrained, Geom::OptRect target_bbox)
-    : _point(p), _source(source), _source_num(source_num), _target(target), _distance(d), _tolerance(std::max(t,1.0)), _always_snap(a), _target_bbox(target_bbox)
+Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &constrained_snap, bool const &fully_constrained, Geom::OptRect target_bbox) :
+    _point(p),
+    _tangent(Geom::Point(0,0)),
+    _source(source),
+    _source_num(source_num),
+    _target(target),
+    _at_intersection (false),
+    _constrained_snap (constrained_snap),
+    _fully_constrained (fully_constrained),
+    _distance(d),
+    _tolerance(std::max(t,1.0)),// tolerance should never be smaller than 1 px, as it is used for normalization in isOtherSnapBetter. We don't want a division by zero.
+    _always_snap(a),
+    _second_distance (Geom::infinity()),
+    _second_tolerance (1),
+    _second_always_snap (false),
+    _transformation (Geom::Point(1,1)),
+    _target_bbox(target_bbox),
+    _pointer_distance (Geom::infinity())
 {
-    // tolerance should never be smaller than 1 px, as it is used for normalization in isOtherSnapBetter. We don't want a division by zero.
-    _at_intersection = false;
-    _constrained_snap = constrained_snap;
-    _fully_constrained = fully_constrained;
-    _second_distance = Geom::infinity();
-    _second_tolerance = 1;
-    _second_always_snap = false;
-    _transformation = Geom::Point(1,1);
-    _tangent = Geom::Point(0,0);
-    _pointer_distance = Geom::infinity();
 }
 
-Inkscape::SnappedPoint::SnappedPoint(Inkscape::SnapCandidatePoint const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &constrained_snap, bool const &fully_constrained)
-    : _target(target), _distance(d), _tolerance(std::max(t,1.0)), _always_snap(a)
+Inkscape::SnappedPoint::SnappedPoint(Inkscape::SnapCandidatePoint const &p, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &constrained_snap, bool const &fully_constrained) :
+    _point (p.getPoint()),
+    _tangent (Geom::Point(0,0)),
+    _source (p.getSourceType()),
+    _source_num (p.getSourceNum()),
+    _target(target),
+    _at_intersection (false),
+    _constrained_snap (constrained_snap),
+    _fully_constrained (fully_constrained),
+    _distance(d),
+    _tolerance(std::max(t,1.0)),
+    _always_snap(a),
+    _second_distance (Geom::infinity()),
+    _second_tolerance (1),
+    _second_always_snap (false),
+    _transformation (Geom::Point(1,1)),
+    _target_bbox (p.getTargetBBox()),
+    _pointer_distance (Geom::infinity())
 {
-    _point = p.getPoint();
-    _source = p.getSourceType();
-    _source_num = p.getSourceNum();
-    _at_intersection = false;
-    _constrained_snap = constrained_snap;
-    _fully_constrained = fully_constrained;
-    _second_distance = Geom::infinity();
-    _second_tolerance = 1;
-    _second_always_snap = false;
-    _transformation = Geom::Point(1,1);
-    _tangent = Geom::Point(0,0);
-    _pointer_distance = Geom::infinity();
-    _target_bbox = p.getTargetBBox();
-
 }
 
-Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &constrained_snap, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2)
-    : _point(p), _source(source), _source_num(source_num), _target(target), _at_intersection(at_intersection), _constrained_snap(constrained_snap), _fully_constrained(fully_constrained), _distance(d), _tolerance(std::max(t,1.0)), _always_snap(a),
-    _second_distance(d2), _second_tolerance(std::max(t2,1.0)), _second_always_snap(a2)
-{
+Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p, SnapSourceType const &source, long source_num, SnapTargetType const &target, Geom::Coord const &d, Geom::Coord const &t, bool const &a, bool const &at_intersection, bool const &constrained_snap, bool const &fully_constrained, Geom::Coord const &d2, Geom::Coord const &t2, bool const &a2) :
+    _point(p),
+    _tangent (Geom::Point(0,0)),
+    _source(source),
+    _source_num(source_num),
+    _target(target),
+    _at_intersection(at_intersection),
+    _constrained_snap(constrained_snap),
+    _fully_constrained(fully_constrained),
+    _distance(d),
+    _tolerance(std::max(t,1.0)),
+    _always_snap(a),
+    _second_distance(d2),
+    _second_tolerance(std::max(t2,1.0)),
+    _second_always_snap(a2),
     // tolerance should never be smaller than 1 px, as it is used for normalization in
     // isOtherSnapBetter. We don't want a division by zero.
-    _transformation = Geom::Point(1,1);
-    _tangent = Geom::Point(0,0);
-    _pointer_distance = Geom::infinity();
-    _target_bbox = Geom::OptRect();
+    _transformation (Geom::Point(1,1)),
+    _pointer_distance (Geom::infinity()),
+    _target_bbox (Geom::OptRect())
+{
 }
 
-Inkscape::SnappedPoint::SnappedPoint()
+Inkscape::SnappedPoint::SnappedPoint():
+    _point (Geom::Point(0,0)),
+    _tangent (Geom::Point(0,0)),
+    _source (SNAPSOURCE_UNDEFINED),
+    _source_num (-1),
+    _target (SNAPTARGET_UNDEFINED),
+    _at_intersection (false),
+    _constrained_snap (false),
+    _fully_constrained (false),
+    _distance (Geom::infinity()),
+    _tolerance (1),
+    _always_snap (false),
+    _second_distance (Geom::infinity()),
+    _second_tolerance (1),
+    _second_always_snap (false),
+    _transformation (Geom::Point(1,1)),
+    _pointer_distance (Geom::infinity()),
+    _target_bbox (Geom::OptRect())
 {
-    _point = Geom::Point(0,0);
-    _source = SNAPSOURCE_UNDEFINED,
-    _source_num = -1,
-    _target = SNAPTARGET_UNDEFINED,
-    _at_intersection = false;
-    _constrained_snap = false;
-    _fully_constrained = false;
-    _distance = Geom::infinity();
-    _tolerance = 1;
-    _always_snap = false;
-    _second_distance = Geom::infinity();
-    _second_tolerance = 1;
-    _second_always_snap = false;
-    _transformation = Geom::Point(1,1);
-    _tangent = Geom::Point(0,0);
-    _pointer_distance = Geom::infinity();
-    _target_bbox = Geom::OptRect();
 }
 
-Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p)
+Inkscape::SnappedPoint::SnappedPoint(Geom::Point const &p):
+    _point (p),
+    _tangent (Geom::Point(0,0)),
+    _source (SNAPSOURCE_UNDEFINED),
+    _source_num (-1),
+    _target (SNAPTARGET_UNDEFINED),
+    _at_intersection (false),
+    _constrained_snap (false),
+    _fully_constrained (false),
+    _distance (Geom::infinity()),
+    _tolerance (1),
+    _always_snap (false),
+    _second_distance (Geom::infinity()),
+    _second_tolerance (1),
+    _second_always_snap (false),
+    _transformation (Geom::Point(1,1)),
+    _pointer_distance (Geom::infinity()),
+    _target_bbox (Geom::OptRect())
 {
-    _point = p;
-    _source = SNAPSOURCE_UNDEFINED,
-    _source_num = -1,
-    _target = SNAPTARGET_UNDEFINED,
-    _at_intersection = false;
-    _constrained_snap = false;
-    _fully_constrained = false;
-    _distance = Geom::infinity();
-    _tolerance = 1;
-    _always_snap = false;
-    _second_distance = Geom::infinity();
-    _second_tolerance = 1;
-    _second_always_snap = false;
-    _transformation = Geom::Point(1,1);
-    _tangent = Geom::Point(0,0);
-    _pointer_distance = Geom::infinity();
-    _target_bbox = Geom::OptRect();
 }
 
 Inkscape::SnappedPoint::~SnappedPoint()

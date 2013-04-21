@@ -619,8 +619,6 @@ cmsHTRANSFORM ColorProfile::getTransfGamutCheck()
 
 bool ColorProfile::GamutCheck(SPColor color)
 {
-    bool result = false;
-
     guint32 val = color.toRGBA32(0);
 
 #if HAVE_LIBLCMS1
@@ -651,9 +649,7 @@ bool ColorProfile::GamutCheck(SPColor color)
     cmsSetAlarmCodes(oldAlarmCodes);
 #endif // HAVE_LIBLCMS1
 
-    result = (outofgamut != 0);
-
-    return result;
+    return (outofgamut != 0);
 }
 
 class ProfileInfo

@@ -1895,24 +1895,30 @@ bool GzipFile::readFile(const std::string &fileName)
 /**
  * Constructor
  */
-ZipEntry::ZipEntry()
+ZipEntry::ZipEntry() :
+    crc (0L),
+    fileName (),
+    comment (),
+    compressionMethod (8),
+    compressedData (),
+    uncompressedData (),
+    position (0)
 {
-    crc               = 0L;
-    compressionMethod = 8;
-    position          = 0;
 }
 
 /**
  *
  */
 ZipEntry::ZipEntry(const std::string &fileNameArg,
-                   const std::string &commentArg)
+                   const std::string &commentArg) :
+    crc (0L),
+    fileName (fileNameArg),
+    comment (commentArg),
+    compressionMethod (8),
+    compressedData (),
+    uncompressedData (),
+    position (0)
 {
-    crc               = 0L;
-    compressionMethod = 8;
-    fileName          = fileNameArg;
-    comment           = commentArg;
-    position          = 0;
 }
 
 /**
