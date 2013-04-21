@@ -524,6 +524,8 @@ unsigned int sp_repr_get_point(Inkscape::XML::Node *repr, gchar const *key, Geom
 
     gchar const *v = repr->attribute(key);
 
+    g_return_val_if_fail(v != NULL, FALSE);
+
     gchar ** strarray = g_strsplit(v, ",", 2);
 
     if (strarray && strarray[0] && strarray[1]) {
