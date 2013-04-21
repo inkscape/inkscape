@@ -50,6 +50,8 @@ PreviewHolder::PreviewHolder() :
     _border(BORDER_NONE)
 {
     _scroller = manage(new Gtk::ScrolledWindow());
+    ((Gtk::ScrolledWindow *)_scroller)->set_policy(Gtk::POLICY_AUTOMATIC,
+                                                   Gtk::POLICY_AUTOMATIC);
 
 #if WITH_GTKMM_3_0
     _insides = manage(new Gtk::Grid());
