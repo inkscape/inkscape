@@ -46,6 +46,7 @@ private:
     static SymbolColumns *getColumns();
 
     void rebuild();
+    void defsModified(SPObject *object, guint flags);
     void iconChanged();
     void iconDragDataGet(const Glib::RefPtr<Gdk::DragContext>& context, Gtk::SelectionData& selection_data, guint info, guint time);
 
@@ -84,8 +85,6 @@ private:
     Inkscape::Drawing renderDrawing;
 
     std::vector<sigc::connection> instanceConns;
-    sigc::connection desktopChangeConn;
-
 };
 
 } //namespace Dialogs

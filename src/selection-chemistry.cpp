@@ -2973,7 +2973,6 @@ void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
  */
 void sp_selection_unsymbol(SPDesktop *desktop)
 {
-
     if (desktop == NULL) {
         return;
     }
@@ -2992,13 +2991,8 @@ void sp_selection_unsymbol(SPDesktop *desktop)
     SPObject* use = selection->single();
  
     // Make sure we have only one object in selection.
-   if( use == NULL ) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select only one <b>symbol</b> to convert to group."));
-        return;
-    }
-
     // Require that we really have a <use> that references a <symbol>.
-    if( !SP_IS_USE( use ) && !SP_IS_SYMBOL( use->firstChild() ) ) {
+    if( use == NULL || ( !SP_IS_USE( use ) && !SP_IS_SYMBOL( use->firstChild() )))  {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select only one <b>symbol</b> to convert to group."));
         return;
     }

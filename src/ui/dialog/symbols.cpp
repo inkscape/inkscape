@@ -49,6 +49,7 @@
 #include "inkscape.h"
 #include "sp-root.h"
 #include "sp-use.h"
+#include "sp-defs.h"
 #include "sp-symbol.h"
 
 #ifdef WITH_LIBVISIO
@@ -246,12 +247,19 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   key = SPItem::display_key_new(1);
   renderDrawing.setRoot(previewDocument->getRoot()->invoke_show(renderDrawing, key, SP_ITEM_SHOW_DISPLAY ));
 
+  // This might need to be a global variable so setTargetDesktop can modify it
+  SPDefs *defs = currentDocument->getDefs();
+  sigc::connection defsModifiedConn = (SP_OBJECT(defs))->connectModified(
+          sigc::mem_fun(*this, &SymbolsDialog::defsModified));
+  instanceConns.push_back(defsModifiedConn);
+
   get_symbols();
   draw_symbols( currentDocument ); /* Defaults to current document */
 
-  desktopChangeConn =
+  sigc::connection desktopChangeConn =
     deskTrack.connectDesktopChanged( sigc::mem_fun(*this, &SymbolsDialog::setTargetDesktop) );
   instanceConns.push_back( desktopChangeConn );
+
   deskTrack.connect(GTK_WIDGET(gobj()));
 }
 
@@ -302,6 +310,13 @@ void SymbolsDialog::iconDragDataGet(const Glib::RefPtr<Gdk::DragContext>& /*cont
     gtk_selection_data_set( data.gobj(), dataAtom, 9, (guchar*)symbol_id.c_str(), symbol_id.length() );
   }
 
+}
+
+void SymbolsDialog::defsModified(SPObject *object, guint flags)
+{
+  if ( !symbolSets[symbolSet->get_active_text()] ) {
+    rebuild();
+  }
 }
 
 void SymbolsDialog::iconChanged() {
