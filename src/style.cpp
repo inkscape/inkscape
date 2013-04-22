@@ -4358,7 +4358,7 @@ sp_style_write_ifilter(gchar *p, gint const len, gchar const *key,
 }
 
 SPIPaint::SPIPaint() :
-    set(0),
+    set(false),
     inherit(0),
     currentcolor(0),
     colorSet(0),

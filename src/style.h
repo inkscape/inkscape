@@ -136,11 +136,11 @@ struct SPILength {
 
 /// Paint type internal to SPStyle.
 struct SPIPaint {
-    unsigned set : 1;
-    unsigned inherit : 1;
-    unsigned currentcolor : 1;
-    unsigned int colorSet : 1;
-    unsigned int noneSet : 1;
+    bool set; //todo check if other properties are also booleans
+    unsigned inherit;
+    unsigned currentcolor;
+    unsigned int colorSet;
+    unsigned int noneSet;
     struct {
          SPPaintServerReference *href;
          SPColor color;
