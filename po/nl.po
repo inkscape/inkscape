@@ -57,8 +57,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-03-27 16:52+0100\n"
-"PO-Revision-Date: 2013-03-27 20:57+0100\n"
+"POT-Creation-Date: 2013-03-30 18:29+0100\n"
+"PO-Revision-Date: 2013-04-03 23:01+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
@@ -991,8 +991,8 @@ msgid "Black Light"
 msgstr "Zwart licht"
 
 #: ../share/filters/filters.svg.h:1
-#: ../src/ui/dialog/clonetiler.cpp:832
-#: ../src/ui/dialog/clonetiler.cpp:983
+#: ../src/ui/dialog/clonetiler.cpp:831
+#: ../src/ui/dialog/clonetiler.cpp:982
 #: ../src/extension/internal/bitmap/colorize.cpp:52
 #: ../src/extension/internal/filter/bumps.h:101
 #: ../src/extension/internal/filter/bumps.h:321
@@ -3429,445 +3429,445 @@ msgstr "Er is geen vorige zoom."
 msgid "No next zoom."
 msgstr "Er is geen volgende zoom."
 
-#: ../src/ui/dialog/clonetiler.cpp:112
+#: ../src/ui/dialog/clonetiler.cpp:111
 msgid "_Symmetry"
 msgstr "_Symmetrie"
 
 #. TRANSLATORS: "translation" means "shift" / "displacement" here.
-#: ../src/ui/dialog/clonetiler.cpp:124
+#: ../src/ui/dialog/clonetiler.cpp:123
 msgid "<b>P1</b>: simple translation"
 msgstr "<b>P1</b>: eenvoudige verplaatsing"
 
-#: ../src/ui/dialog/clonetiler.cpp:125
+#: ../src/ui/dialog/clonetiler.cpp:124
 msgid "<b>P2</b>: 180&#176; rotation"
 msgstr "<b>P2</b>: 180&#176; draaien"
 
-#: ../src/ui/dialog/clonetiler.cpp:126
+#: ../src/ui/dialog/clonetiler.cpp:125
 msgid "<b>PM</b>: reflection"
 msgstr "<b>PM</b>: spiegeling"
 
 #. TRANSLATORS: "glide reflection" is a reflection and a translation combined.
 #. For more info, see http://mathforum.org/sum95/suzanne/symsusan.html
-#: ../src/ui/dialog/clonetiler.cpp:129
+#: ../src/ui/dialog/clonetiler.cpp:128
 msgid "<b>PG</b>: glide reflection"
 msgstr "<b>PG</b>: schuifspiegeling"
 
-#: ../src/ui/dialog/clonetiler.cpp:130
+#: ../src/ui/dialog/clonetiler.cpp:129
 msgid "<b>CM</b>: reflection + glide reflection"
 msgstr "<b>CM</b>: spiegeling + schuifspiegeling"
 
-#: ../src/ui/dialog/clonetiler.cpp:131
+#: ../src/ui/dialog/clonetiler.cpp:130
 msgid "<b>PMM</b>: reflection + reflection"
 msgstr "<b>PMM</b>: spiegeling + spiegeling"
 
-#: ../src/ui/dialog/clonetiler.cpp:132
+#: ../src/ui/dialog/clonetiler.cpp:131
 msgid "<b>PMG</b>: reflection + 180&#176; rotation"
 msgstr "<b>PMG</b>: spiegeling + 180&#176; draaien"
 
-#: ../src/ui/dialog/clonetiler.cpp:133
+#: ../src/ui/dialog/clonetiler.cpp:132
 msgid "<b>PGG</b>: glide reflection + 180&#176; rotation"
 msgstr "<b>PGG</b>: schuifspiegeling + 180&#176; draaien"
 
-#: ../src/ui/dialog/clonetiler.cpp:134
+#: ../src/ui/dialog/clonetiler.cpp:133
 msgid "<b>CMM</b>: reflection + reflection + 180&#176; rotation"
 msgstr "<b>CMM</b>: spiegeling + spiegeling + 180&#176; draaien"
 
-#: ../src/ui/dialog/clonetiler.cpp:135
+#: ../src/ui/dialog/clonetiler.cpp:134
 msgid "<b>P4</b>: 90&#176; rotation"
 msgstr "<b>P4</b>: 90&#176; draaien"
 
-#: ../src/ui/dialog/clonetiler.cpp:136
+#: ../src/ui/dialog/clonetiler.cpp:135
 msgid "<b>P4M</b>: 90&#176; rotation + 45&#176; reflection"
 msgstr "<b>P4M</b>: 90&#176; draaien + 45&#176; spiegeling"
 
-#: ../src/ui/dialog/clonetiler.cpp:137
+#: ../src/ui/dialog/clonetiler.cpp:136
 msgid "<b>P4G</b>: 90&#176; rotation + 90&#176; reflection"
 msgstr "<b>P4G</b>: 90&#176; draaien + 90&#176; spiegeling"
 
-#: ../src/ui/dialog/clonetiler.cpp:138
+#: ../src/ui/dialog/clonetiler.cpp:137
 msgid "<b>P3</b>: 120&#176; rotation"
 msgstr "<b>P3</b>: 120&#176; draaien"
 
-#: ../src/ui/dialog/clonetiler.cpp:139
+#: ../src/ui/dialog/clonetiler.cpp:138
 msgid "<b>P31M</b>: reflection + 120&#176; rotation, dense"
 msgstr "<b>P31M</b>: spiegeling + 120&#176; draaien, dicht"
 
-#: ../src/ui/dialog/clonetiler.cpp:140
+#: ../src/ui/dialog/clonetiler.cpp:139
 msgid "<b>P3M1</b>: reflection + 120&#176; rotation, sparse"
 msgstr "<b>P3M1</b>: spiegeling + 120&#176; draaien, dun"
 
-#: ../src/ui/dialog/clonetiler.cpp:141
+#: ../src/ui/dialog/clonetiler.cpp:140
 msgid "<b>P6</b>: 60&#176; rotation"
 msgstr "<b>P6</b>: 60&#176; draaien"
 
-#: ../src/ui/dialog/clonetiler.cpp:142
+#: ../src/ui/dialog/clonetiler.cpp:141
 msgid "<b>P6M</b>: reflection + 60&#176; rotation"
 msgstr "<b>P6M</b>: spiegeling + 60&#176; draaien"
 
-#: ../src/ui/dialog/clonetiler.cpp:162
+#: ../src/ui/dialog/clonetiler.cpp:161
 msgid "Select one of the 17 symmetry groups for the tiling"
 msgstr "Selecteer één van de 17 symmetriegroepen voor het tegelen"
 
-#: ../src/ui/dialog/clonetiler.cpp:180
+#: ../src/ui/dialog/clonetiler.cpp:179
 msgid "S_hift"
 msgstr "Ver_plaatsing"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) horizontally by this amount
-#: ../src/ui/dialog/clonetiler.cpp:190
+#: ../src/ui/dialog/clonetiler.cpp:189
 #, no-c-format
 msgid "<b>Shift X:</b>"
 msgstr "<b>X-verplaatsing:</b>"
 
-#: ../src/ui/dialog/clonetiler.cpp:198
+#: ../src/ui/dialog/clonetiler.cpp:197
 #, no-c-format
 msgid "Horizontal shift per row (in % of tile width)"
 msgstr "Horizontale verplaatsing voor elke volgende rij (in % van de tegelbreedte)"
 
-#: ../src/ui/dialog/clonetiler.cpp:206
+#: ../src/ui/dialog/clonetiler.cpp:205
 #, no-c-format
 msgid "Horizontal shift per column (in % of tile width)"
 msgstr "Horizontale verplaatsing voor elke volgende kolom (in % van de tegelbreedte)"
 
-#: ../src/ui/dialog/clonetiler.cpp:212
+#: ../src/ui/dialog/clonetiler.cpp:211
 msgid "Randomize the horizontal shift by this percentage"
 msgstr "De horizontale positie binnen dit percentage willekeurig aanpassen"
 
 #. TRANSLATORS: "shift" means: the tiles will be shifted (offset) vertically by this amount
-#: ../src/ui/dialog/clonetiler.cpp:222
+#: ../src/ui/dialog/clonetiler.cpp:221
 #, no-c-format
 msgid "<b>Shift Y:</b>"
 msgstr "<b>Y-verplaatsing:</b>"
 
-#: ../src/ui/dialog/clonetiler.cpp:230
+#: ../src/ui/dialog/clonetiler.cpp:229
 #, no-c-format
 msgid "Vertical shift per row (in % of tile height)"
 msgstr "Verticale verplaatsing voor elke volgende rij (in % van de tegelhoogte)"
 
-#: ../src/ui/dialog/clonetiler.cpp:238
+#: ../src/ui/dialog/clonetiler.cpp:237
 #, no-c-format
 msgid "Vertical shift per column (in % of tile height)"
 msgstr "Verticale verplaatsing voor elke volgende kolom (in % van de tegelhoogte)"
 
-#: ../src/ui/dialog/clonetiler.cpp:245
+#: ../src/ui/dialog/clonetiler.cpp:244
 msgid "Randomize the vertical shift by this percentage"
 msgstr "De verticale positie binnen dit percentage willekeurig aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:253
-#: ../src/ui/dialog/clonetiler.cpp:399
+#: ../src/ui/dialog/clonetiler.cpp:252
+#: ../src/ui/dialog/clonetiler.cpp:398
 msgid "<b>Exponent:</b>"
 msgstr "<b>Exponent:</b>"
 
-#: ../src/ui/dialog/clonetiler.cpp:260
+#: ../src/ui/dialog/clonetiler.cpp:259
 msgid "Whether rows are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "Of de rij-afstand gelijk blijft (1), afneemt (<1) of toeneemt (>1)"
 
-#: ../src/ui/dialog/clonetiler.cpp:267
+#: ../src/ui/dialog/clonetiler.cpp:266
 msgid "Whether columns are spaced evenly (1), converge (<1) or diverge (>1)"
 msgstr "Of de kolom-afstand gelijk blijft (1), afneemt (<1) of toeneemt (>1)"
 
 #. TRANSLATORS: "Alternate" is a verb here
-#: ../src/ui/dialog/clonetiler.cpp:275
-#: ../src/ui/dialog/clonetiler.cpp:439
-#: ../src/ui/dialog/clonetiler.cpp:515
-#: ../src/ui/dialog/clonetiler.cpp:588
-#: ../src/ui/dialog/clonetiler.cpp:634
-#: ../src/ui/dialog/clonetiler.cpp:761
+#: ../src/ui/dialog/clonetiler.cpp:274
+#: ../src/ui/dialog/clonetiler.cpp:438
+#: ../src/ui/dialog/clonetiler.cpp:514
+#: ../src/ui/dialog/clonetiler.cpp:587
+#: ../src/ui/dialog/clonetiler.cpp:633
+#: ../src/ui/dialog/clonetiler.cpp:760
 msgid "<small>Alternate:</small>"
 msgstr "<small>Afwisselen:</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:281
+#: ../src/ui/dialog/clonetiler.cpp:280
 msgid "Alternate the sign of shifts for each row"
 msgstr "De verplaatsingen voor elke rij om-en-om afwisselen"
 
-#: ../src/ui/dialog/clonetiler.cpp:286
+#: ../src/ui/dialog/clonetiler.cpp:285
 msgid "Alternate the sign of shifts for each column"
 msgstr "De verplaatsingen voor elke kolom om-en-om afwisselen"
 
 #. TRANSLATORS: "Cumulate" is a verb here
-#: ../src/ui/dialog/clonetiler.cpp:293
-#: ../src/ui/dialog/clonetiler.cpp:457
-#: ../src/ui/dialog/clonetiler.cpp:533
+#: ../src/ui/dialog/clonetiler.cpp:292
+#: ../src/ui/dialog/clonetiler.cpp:456
+#: ../src/ui/dialog/clonetiler.cpp:532
 msgid "<small>Cumulate:</small>"
 msgstr "<small>Optellen:</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:299
+#: ../src/ui/dialog/clonetiler.cpp:298
 msgid "Cumulate the shifts for each row"
 msgstr "De verplaatsingen voor elke rij optellen"
 
-#: ../src/ui/dialog/clonetiler.cpp:304
+#: ../src/ui/dialog/clonetiler.cpp:303
 msgid "Cumulate the shifts for each column"
 msgstr "De verplaatsingen voor elke kolom optellen"
 
 #. TRANSLATORS: "Cumulate" is a verb here
-#: ../src/ui/dialog/clonetiler.cpp:311
+#: ../src/ui/dialog/clonetiler.cpp:310
 msgid "<small>Exclude tile:</small>"
 msgstr "<small>Tegel uitsluiten:</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:317
+#: ../src/ui/dialog/clonetiler.cpp:316
 msgid "Exclude tile height in shift"
 msgstr "Tegelhoogte niet bij verplaatsing optellen"
 
-#: ../src/ui/dialog/clonetiler.cpp:322
+#: ../src/ui/dialog/clonetiler.cpp:321
 msgid "Exclude tile width in shift"
 msgstr "Tegelbreedte niet bij verplaatsing optellen"
 
-#: ../src/ui/dialog/clonetiler.cpp:331
+#: ../src/ui/dialog/clonetiler.cpp:330
 msgid "Sc_ale"
 msgstr "_Schalen"
 
-#: ../src/ui/dialog/clonetiler.cpp:339
+#: ../src/ui/dialog/clonetiler.cpp:338
 msgid "<b>Scale X:</b>"
 msgstr "<b>X-vergroting:</b>"
 
-#: ../src/ui/dialog/clonetiler.cpp:347
+#: ../src/ui/dialog/clonetiler.cpp:346
 #, no-c-format
 msgid "Horizontal scale per row (in % of tile width)"
 msgstr "Horizontale vergroting voor elke volgende rij (in % van de tegelbreedte)"
 
-#: ../src/ui/dialog/clonetiler.cpp:355
+#: ../src/ui/dialog/clonetiler.cpp:354
 #, no-c-format
 msgid "Horizontal scale per column (in % of tile width)"
 msgstr "Horizontale vergroting voor elke volgende kolom (in % van de tegelbreedte)"
 
-#: ../src/ui/dialog/clonetiler.cpp:361
+#: ../src/ui/dialog/clonetiler.cpp:360
 msgid "Randomize the horizontal scale by this percentage"
 msgstr "De horizontale afmeting binnen dit percentage willekeurig aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:369
+#: ../src/ui/dialog/clonetiler.cpp:368
 msgid "<b>Scale Y:</b>"
 msgstr "<b>Y-vergroting:</b>"
 
-#: ../src/ui/dialog/clonetiler.cpp:377
+#: ../src/ui/dialog/clonetiler.cpp:376
 #, no-c-format
 msgid "Vertical scale per row (in % of tile height)"
 msgstr "Verticale vergroting voor elke volgende rij (in % van de tegelhoogte)"
 
-#: ../src/ui/dialog/clonetiler.cpp:385
+#: ../src/ui/dialog/clonetiler.cpp:384
 #, no-c-format
 msgid "Vertical scale per column (in % of tile height)"
 msgstr "Verticale vergroting voor elke volgende kolom (in % van de tegelhoogte)"
 
-#: ../src/ui/dialog/clonetiler.cpp:391
+#: ../src/ui/dialog/clonetiler.cpp:390
 msgid "Randomize the vertical scale by this percentage"
 msgstr "De verticale afmeting binnen dit percentage willekeurig aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:405
+#: ../src/ui/dialog/clonetiler.cpp:404
 msgid "Whether row scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr "Soort rijvergroting: uniform (1), convergent (<1) of divergent (>1)"
 
-#: ../src/ui/dialog/clonetiler.cpp:411
+#: ../src/ui/dialog/clonetiler.cpp:410
 msgid "Whether column scaling is uniform (1), converge (<1) or diverge (>1)"
 msgstr "Soort kolomvergroting: uniform (1), convergent (<1) of divergent (>1)"
 
-#: ../src/ui/dialog/clonetiler.cpp:419
+#: ../src/ui/dialog/clonetiler.cpp:418
 msgid "<b>Base:</b>"
 msgstr "<b>Grondtal:</b>"
 
-#: ../src/ui/dialog/clonetiler.cpp:425
-#: ../src/ui/dialog/clonetiler.cpp:431
+#: ../src/ui/dialog/clonetiler.cpp:424
+#: ../src/ui/dialog/clonetiler.cpp:430
 msgid "Base for a logarithmic spiral: not used (0), converge (<1), or diverge (>1)"
 msgstr "Grondtal voor logaritmische spiraal: ongebruikt (0), convergent (<1) of divergent (>1)"
 
-#: ../src/ui/dialog/clonetiler.cpp:445
+#: ../src/ui/dialog/clonetiler.cpp:444
 msgid "Alternate the sign of scales for each row"
 msgstr "De vergroting voor elke rij om-en-om afwisselen"
 
-#: ../src/ui/dialog/clonetiler.cpp:450
+#: ../src/ui/dialog/clonetiler.cpp:449
 msgid "Alternate the sign of scales for each column"
 msgstr "De vergroting voor elke kolom om-en-om afwisselen"
 
-#: ../src/ui/dialog/clonetiler.cpp:463
+#: ../src/ui/dialog/clonetiler.cpp:462
 msgid "Cumulate the scales for each row"
 msgstr "De vergrotingen voor elke rij optellen"
 
-#: ../src/ui/dialog/clonetiler.cpp:468
+#: ../src/ui/dialog/clonetiler.cpp:467
 msgid "Cumulate the scales for each column"
 msgstr "De vergrotingen voor elke kolom optellen"
 
-#: ../src/ui/dialog/clonetiler.cpp:477
+#: ../src/ui/dialog/clonetiler.cpp:476
 msgid "_Rotation"
 msgstr "_Rotatie"
 
-#: ../src/ui/dialog/clonetiler.cpp:485
+#: ../src/ui/dialog/clonetiler.cpp:484
 msgid "<b>Angle:</b>"
 msgstr "<b>Hoek:</b>"
 
-#: ../src/ui/dialog/clonetiler.cpp:493
+#: ../src/ui/dialog/clonetiler.cpp:492
 #, no-c-format
 msgid "Rotate tiles by this angle for each row"
 msgstr "Voor elke volgende rij de tegels over deze hoek draaien"
 
-#: ../src/ui/dialog/clonetiler.cpp:501
+#: ../src/ui/dialog/clonetiler.cpp:500
 #, no-c-format
 msgid "Rotate tiles by this angle for each column"
 msgstr "Voor elke volgende kolom de tegels over deze hoek draaien"
 
-#: ../src/ui/dialog/clonetiler.cpp:507
+#: ../src/ui/dialog/clonetiler.cpp:506
 msgid "Randomize the rotation angle by this percentage"
 msgstr "De draaihoek binnen dit percentage willekeurig aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:521
+#: ../src/ui/dialog/clonetiler.cpp:520
 msgid "Alternate the rotation direction for each row"
 msgstr "De draairichting voor elke rij om-en-om afwisselen"
 
-#: ../src/ui/dialog/clonetiler.cpp:526
+#: ../src/ui/dialog/clonetiler.cpp:525
 msgid "Alternate the rotation direction for each column"
 msgstr "De draairichting voor elke kolom om-en-om afwisselen"
 
-#: ../src/ui/dialog/clonetiler.cpp:539
+#: ../src/ui/dialog/clonetiler.cpp:538
 msgid "Cumulate the rotation for each row"
 msgstr "De rotaties voor elke rij optellen"
 
-#: ../src/ui/dialog/clonetiler.cpp:544
+#: ../src/ui/dialog/clonetiler.cpp:543
 msgid "Cumulate the rotation for each column"
 msgstr "De rotaties voor elke kolom optellen"
 
-#: ../src/ui/dialog/clonetiler.cpp:553
+#: ../src/ui/dialog/clonetiler.cpp:552
 msgid "_Blur & opacity"
 msgstr "_Vervaging & ondoorzichtigheid"
 
-#: ../src/ui/dialog/clonetiler.cpp:562
+#: ../src/ui/dialog/clonetiler.cpp:561
 msgid "<b>Blur:</b>"
 msgstr "<b>Vervaging:</b>"
 
-#: ../src/ui/dialog/clonetiler.cpp:568
+#: ../src/ui/dialog/clonetiler.cpp:567
 msgid "Blur tiles by this percentage for each row"
 msgstr "De tegels elke volgende rij met dit percentage vervagen"
 
-#: ../src/ui/dialog/clonetiler.cpp:574
+#: ../src/ui/dialog/clonetiler.cpp:573
 msgid "Blur tiles by this percentage for each column"
 msgstr "De tegels elke volgende kolom met dit percentage vervagen"
 
-#: ../src/ui/dialog/clonetiler.cpp:580
+#: ../src/ui/dialog/clonetiler.cpp:579
 msgid "Randomize the tile blur by this percentage"
 msgstr "Tegels binnen dit percentage willekeurig vervagen"
 
-#: ../src/ui/dialog/clonetiler.cpp:594
+#: ../src/ui/dialog/clonetiler.cpp:593
 msgid "Alternate the sign of blur change for each row"
 msgstr "De vervaging voor elke rij om-en-om afwisselen"
 
-#: ../src/ui/dialog/clonetiler.cpp:599
+#: ../src/ui/dialog/clonetiler.cpp:598
 msgid "Alternate the sign of blur change for each column"
 msgstr "De vervaging voor elke kolom om-en-om afwisselen"
 
-#: ../src/ui/dialog/clonetiler.cpp:608
+#: ../src/ui/dialog/clonetiler.cpp:607
 msgid "<b>Opacity:</b>"
 msgstr "<b>Ondoorzichtigheid</b>:"
 
-#: ../src/ui/dialog/clonetiler.cpp:614
+#: ../src/ui/dialog/clonetiler.cpp:613
 msgid "Decrease tile opacity by this percentage for each row"
 msgstr "De ondoorzichtigheid elke volgende rij met dit percentage verminderen"
 
-#: ../src/ui/dialog/clonetiler.cpp:620
+#: ../src/ui/dialog/clonetiler.cpp:619
 msgid "Decrease tile opacity by this percentage for each column"
 msgstr "De ondoorzichtigheid elke volgende kolom met dit percentage verminderen"
 
-#: ../src/ui/dialog/clonetiler.cpp:626
+#: ../src/ui/dialog/clonetiler.cpp:625
 msgid "Randomize the tile opacity by this percentage"
 msgstr "De ondoorzichtigheid binnen dit percentage willekeurig aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:640
+#: ../src/ui/dialog/clonetiler.cpp:639
 msgid "Alternate the sign of opacity change for each row"
 msgstr "De doorzichtigheid voor elke rij om-en-om afwisselen"
 
-#: ../src/ui/dialog/clonetiler.cpp:645
+#: ../src/ui/dialog/clonetiler.cpp:644
 msgid "Alternate the sign of opacity change for each column"
 msgstr "De doorzichtigheid voor elke kolom om-en-om afwisselen"
 
-#: ../src/ui/dialog/clonetiler.cpp:653
+#: ../src/ui/dialog/clonetiler.cpp:652
 msgid "Co_lor"
 msgstr "_Kleur"
 
-#: ../src/ui/dialog/clonetiler.cpp:663
+#: ../src/ui/dialog/clonetiler.cpp:662
 msgid "Initial color: "
 msgstr "Beginkleur: "
 
-#: ../src/ui/dialog/clonetiler.cpp:667
+#: ../src/ui/dialog/clonetiler.cpp:666
 msgid "Initial color of tiled clones"
 msgstr "Beginkleur van getegelde klonen"
 
-#: ../src/ui/dialog/clonetiler.cpp:667
+#: ../src/ui/dialog/clonetiler.cpp:666
 msgid "Initial color for clones (works only if the original has unset fill or stroke)"
 msgstr "Beginkleur van klonen (werkt alleen als het origineel geen vulling of lijn heeft)"
 
-#: ../src/ui/dialog/clonetiler.cpp:682
+#: ../src/ui/dialog/clonetiler.cpp:681
 msgid "<b>H:</b>"
 msgstr "<b>Tint:</b>"
 
-#: ../src/ui/dialog/clonetiler.cpp:688
+#: ../src/ui/dialog/clonetiler.cpp:687
 msgid "Change the tile hue by this percentage for each row"
 msgstr "De tint elke volgende rij met dit percentage aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:694
+#: ../src/ui/dialog/clonetiler.cpp:693
 msgid "Change the tile hue by this percentage for each column"
 msgstr "De tint elke volgende kolom met dit percentage aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:700
+#: ../src/ui/dialog/clonetiler.cpp:699
 msgid "Randomize the tile hue by this percentage"
 msgstr "De tint binnen dit percentage willekeurig aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:709
+#: ../src/ui/dialog/clonetiler.cpp:708
 msgid "<b>S:</b>"
 msgstr "<b>Verzadiging:</b>"
 
-#: ../src/ui/dialog/clonetiler.cpp:715
+#: ../src/ui/dialog/clonetiler.cpp:714
 msgid "Change the color saturation by this percentage for each row"
 msgstr "De verzadiging elke volgende rij met dit percentage aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:721
+#: ../src/ui/dialog/clonetiler.cpp:720
 msgid "Change the color saturation by this percentage for each column"
 msgstr "De verzadiging elke volgende kolom met dit percentage aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:727
+#: ../src/ui/dialog/clonetiler.cpp:726
 msgid "Randomize the color saturation by this percentage"
 msgstr "De verzadiging binnen dit percentage willekeurig aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:735
+#: ../src/ui/dialog/clonetiler.cpp:734
 msgid "<b>L:</b>"
 msgstr "<b>Helderheid:</b>"
 
-#: ../src/ui/dialog/clonetiler.cpp:741
+#: ../src/ui/dialog/clonetiler.cpp:740
 msgid "Change the color lightness by this percentage for each row"
 msgstr "De helderheid elke volgende rij met dit percentage aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:747
+#: ../src/ui/dialog/clonetiler.cpp:746
 msgid "Change the color lightness by this percentage for each column"
 msgstr "De helderheid elke volgende kolom met dit percentage aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:753
+#: ../src/ui/dialog/clonetiler.cpp:752
 msgid "Randomize the color lightness by this percentage"
 msgstr "De helderheid binnen dit percentage willekeurig aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:767
+#: ../src/ui/dialog/clonetiler.cpp:766
 msgid "Alternate the sign of color changes for each row"
 msgstr "De kleurwijzigingen voor elke rij om-en-om afwisselen"
 
-#: ../src/ui/dialog/clonetiler.cpp:772
+#: ../src/ui/dialog/clonetiler.cpp:771
 msgid "Alternate the sign of color changes for each column"
 msgstr "De kleurwijzigingen voor elke kolom om-en-om afwisselen"
 
-#: ../src/ui/dialog/clonetiler.cpp:780
+#: ../src/ui/dialog/clonetiler.cpp:779
 msgid "_Trace"
 msgstr "_Overtrekken"
 
-#: ../src/ui/dialog/clonetiler.cpp:792
+#: ../src/ui/dialog/clonetiler.cpp:791
 msgid "Trace the drawing under the tiles"
 msgstr "De tekening onder de tegels gebruiken"
 
-#: ../src/ui/dialog/clonetiler.cpp:796
+#: ../src/ui/dialog/clonetiler.cpp:795
 msgid "For each clone, pick a value from the drawing in that clone's location and apply it to the clone"
 msgstr "Voor elke kloon een eigenschap van de tekening op dat punt gebruiken om die kloon te beïnvloeden."
 
-#: ../src/ui/dialog/clonetiler.cpp:815
+#: ../src/ui/dialog/clonetiler.cpp:814
 msgid "1. Pick from the drawing:"
 msgstr "1. Kies een eigenschap uit de tekening:"
 
-#: ../src/ui/dialog/clonetiler.cpp:833
+#: ../src/ui/dialog/clonetiler.cpp:832
 msgid "Pick the visible color and opacity"
 msgstr "Selecteer de zichtbare kleur en de ondoorzichtigheid"
 
-#: ../src/ui/dialog/clonetiler.cpp:840
-#: ../src/ui/dialog/clonetiler.cpp:993
+#: ../src/ui/dialog/clonetiler.cpp:839
+#: ../src/ui/dialog/clonetiler.cpp:992
 #: ../src/extension/internal/bitmap/opacity.cpp:38
 #: ../src/extension/internal/filter/transparency.h:279
 #: ../src/widgets/tweak-toolbar.cpp:352
@@ -3875,162 +3875,162 @@ msgstr "Selecteer de zichtbare kleur en de ondoorzichtigheid"
 msgid "Opacity"
 msgstr "Ondoorzichtigheid"
 
-#: ../src/ui/dialog/clonetiler.cpp:841
+#: ../src/ui/dialog/clonetiler.cpp:840
 msgid "Pick the total accumulated opacity"
 msgstr "Selecteer de gesommeerde ondoorzichtigheid"
 
-#: ../src/ui/dialog/clonetiler.cpp:848
+#: ../src/ui/dialog/clonetiler.cpp:847
 msgid "R"
 msgstr "R"
 
-#: ../src/ui/dialog/clonetiler.cpp:849
+#: ../src/ui/dialog/clonetiler.cpp:848
 msgid "Pick the Red component of the color"
 msgstr "Selecteer de roodcomponent van de kleur"
 
-#: ../src/ui/dialog/clonetiler.cpp:856
+#: ../src/ui/dialog/clonetiler.cpp:855
 msgid "G"
 msgstr "G"
 
-#: ../src/ui/dialog/clonetiler.cpp:857
+#: ../src/ui/dialog/clonetiler.cpp:856
 msgid "Pick the Green component of the color"
 msgstr "Selecteer de groencomponent van de kleur"
 
-#: ../src/ui/dialog/clonetiler.cpp:864
+#: ../src/ui/dialog/clonetiler.cpp:863
 msgid "B"
 msgstr "B"
 
-#: ../src/ui/dialog/clonetiler.cpp:865
+#: ../src/ui/dialog/clonetiler.cpp:864
 msgid "Pick the Blue component of the color"
 msgstr "Selecteer de blauwcomponent van de kleur"
 
-#: ../src/ui/dialog/clonetiler.cpp:872
+#: ../src/ui/dialog/clonetiler.cpp:871
 msgctxt "Clonetiler color hue"
 msgid "H"
 msgstr "T"
 
-#: ../src/ui/dialog/clonetiler.cpp:873
+#: ../src/ui/dialog/clonetiler.cpp:872
 msgid "Pick the hue of the color"
 msgstr "De tint van de kleur kiezen"
 
-#: ../src/ui/dialog/clonetiler.cpp:880
+#: ../src/ui/dialog/clonetiler.cpp:879
 msgctxt "Clonetiler color saturation"
 msgid "S"
 msgstr "V"
 
-#: ../src/ui/dialog/clonetiler.cpp:881
+#: ../src/ui/dialog/clonetiler.cpp:880
 msgid "Pick the saturation of the color"
 msgstr "De verzadiging van de kleur kiezen"
 
-#: ../src/ui/dialog/clonetiler.cpp:888
+#: ../src/ui/dialog/clonetiler.cpp:887
 msgctxt "Clonetiler color lightness"
 msgid "L"
 msgstr "L"
 
-#: ../src/ui/dialog/clonetiler.cpp:889
+#: ../src/ui/dialog/clonetiler.cpp:888
 msgid "Pick the lightness of the color"
 msgstr "De helderheid van de kleur kiezen"
 
-#: ../src/ui/dialog/clonetiler.cpp:899
+#: ../src/ui/dialog/clonetiler.cpp:898
 msgid "2. Tweak the picked value:"
 msgstr "2. De geselecteerde eigenschap fijnafstemmen:"
 
-#: ../src/ui/dialog/clonetiler.cpp:916
+#: ../src/ui/dialog/clonetiler.cpp:915
 msgid "Gamma-correct:"
 msgstr "Gammacorrectie:"
 
-#: ../src/ui/dialog/clonetiler.cpp:920
+#: ../src/ui/dialog/clonetiler.cpp:919
 msgid "Shift the mid-range of the picked value upwards (>0) or downwards (<0)"
 msgstr "Het middengebied van de gekozen eigenschap verhogen (>0) of verlagen (<0)"
 
-#: ../src/ui/dialog/clonetiler.cpp:927
+#: ../src/ui/dialog/clonetiler.cpp:926
 msgid "Randomize:"
 msgstr "Willekeur:"
 
-#: ../src/ui/dialog/clonetiler.cpp:931
+#: ../src/ui/dialog/clonetiler.cpp:930
 msgid "Randomize the picked value by this percentage"
 msgstr "De geselecteerde eigenschap binnen dit percentage willekeurig aanpassen"
 
-#: ../src/ui/dialog/clonetiler.cpp:938
+#: ../src/ui/dialog/clonetiler.cpp:937
 msgid "Invert:"
 msgstr "Omdraaien:"
 
-#: ../src/ui/dialog/clonetiler.cpp:942
+#: ../src/ui/dialog/clonetiler.cpp:941
 msgid "Invert the picked value"
 msgstr "Draai de geselecteerde eigenschap om"
 
-#: ../src/ui/dialog/clonetiler.cpp:948
+#: ../src/ui/dialog/clonetiler.cpp:947
 msgid "3. Apply the value to the clones':"
 msgstr "3. De relatie tussen de eigenschap en de klonen:"
 
-#: ../src/ui/dialog/clonetiler.cpp:963
+#: ../src/ui/dialog/clonetiler.cpp:962
 msgid "Presence"
 msgstr "Aanwezigheid"
 
-#: ../src/ui/dialog/clonetiler.cpp:966
+#: ../src/ui/dialog/clonetiler.cpp:965
 msgid "Each clone is created with the probability determined by the picked value in that point"
 msgstr "De kans dat een kloon op een plek wordt gemaakt is afhankelijk van de waarde van de geselecteerde eigenschap op dat punt."
 
-#: ../src/ui/dialog/clonetiler.cpp:973
+#: ../src/ui/dialog/clonetiler.cpp:972
 msgid "Size"
 msgstr "Afmeting"
 
-#: ../src/ui/dialog/clonetiler.cpp:976
+#: ../src/ui/dialog/clonetiler.cpp:975
 msgid "Each clone's size is determined by the picked value in that point"
 msgstr "De grootte van een kloon is afhankelijk van de waarde van de geselecteerde eigenschap op dat punt"
 
-#: ../src/ui/dialog/clonetiler.cpp:986
+#: ../src/ui/dialog/clonetiler.cpp:985
 msgid "Each clone is painted by the picked color (the original must have unset fill or stroke)"
 msgstr "Klonen worden getekend in de geselecteerde kleur (werkt alleen als de kleur van de lijnen of de vulling van het origineel verwijderd is)"
 
-#: ../src/ui/dialog/clonetiler.cpp:996
+#: ../src/ui/dialog/clonetiler.cpp:995
 msgid "Each clone's opacity is determined by the picked value in that point"
 msgstr "De ondoorzichtigheid van een kloon is afhankelijk van de waarde van de geselecteerde eigenschap op dat punt"
 
-#: ../src/ui/dialog/clonetiler.cpp:1044
+#: ../src/ui/dialog/clonetiler.cpp:1043
 msgid "How many rows in the tiling"
 msgstr "Hoeveel rijen er betegeld moeten worden"
 
-#: ../src/ui/dialog/clonetiler.cpp:1074
+#: ../src/ui/dialog/clonetiler.cpp:1073
 msgid "How many columns in the tiling"
 msgstr "Hoeveel kolommen er betegeld moeten worden"
 
-#: ../src/ui/dialog/clonetiler.cpp:1118
+#: ../src/ui/dialog/clonetiler.cpp:1117
 msgid "Width of the rectangle to be filled"
 msgstr "Breedte van de rechthoek die gevuld moet worden"
 
-#: ../src/ui/dialog/clonetiler.cpp:1152
+#: ../src/ui/dialog/clonetiler.cpp:1151
 msgid "Height of the rectangle to be filled"
 msgstr "Hoogte van de rechthoek die gevuld moet worden"
 
-#: ../src/ui/dialog/clonetiler.cpp:1169
+#: ../src/ui/dialog/clonetiler.cpp:1168
 msgid "Rows, columns: "
 msgstr "Rijen, kolommen: "
 
-#: ../src/ui/dialog/clonetiler.cpp:1170
+#: ../src/ui/dialog/clonetiler.cpp:1169
 msgid "Create the specified number of rows and columns"
 msgstr "Het opgegeven aantal rijen en kolommen aanmaken"
 
-#: ../src/ui/dialog/clonetiler.cpp:1179
+#: ../src/ui/dialog/clonetiler.cpp:1178
 msgid "Width, height: "
 msgstr "Breedte, hoogte: "
 
-#: ../src/ui/dialog/clonetiler.cpp:1180
+#: ../src/ui/dialog/clonetiler.cpp:1179
 msgid "Fill the specified width and height with the tiling"
 msgstr "Vul een gebied met opgegeven breedte en hoogte met de betegeling"
 
-#: ../src/ui/dialog/clonetiler.cpp:1201
+#: ../src/ui/dialog/clonetiler.cpp:1200
 msgid "Use saved size and position of the tile"
 msgstr "De opgeslagen grootte en positie van de tegel gebruiken"
 
-#: ../src/ui/dialog/clonetiler.cpp:1204
+#: ../src/ui/dialog/clonetiler.cpp:1203
 msgid "Pretend that the size and position of the tile are the same as the last time you tiled it (if any), instead of using the current size"
 msgstr "Doen alsof de grootte en positie van de tegel hetzelfde zijn als de laatste keer dat u er mee tegelde, in plaats van de huidige grootte en positie te gebruiken."
 
-#: ../src/ui/dialog/clonetiler.cpp:1238
+#: ../src/ui/dialog/clonetiler.cpp:1237
 msgid " <b>_Create</b> "
 msgstr " <b>_Aanmaken</b> "
 
-#: ../src/ui/dialog/clonetiler.cpp:1240
+#: ../src/ui/dialog/clonetiler.cpp:1239
 msgid "Create and tile the clones of the selection"
 msgstr "Maak klonen van de selectie en gebruik ze als betegeling"
 
@@ -4039,90 +4039,90 @@ msgstr "Maak klonen van de selectie en gebruik ze als betegeling"
 #. diagrams on the left in the following screenshot:
 #. http://www.inkscape.org/screenshots/gallery/inkscape-0.42-CVS-tiles-unclump.png
 #. So unclumping is the process of spreading a number of objects out more evenly.
-#: ../src/ui/dialog/clonetiler.cpp:1260
+#: ../src/ui/dialog/clonetiler.cpp:1259
 msgid " _Unclump "
 msgstr " _Ontklonteren "
 
-#: ../src/ui/dialog/clonetiler.cpp:1261
+#: ../src/ui/dialog/clonetiler.cpp:1260
 msgid "Spread out clones to reduce clumping; can be applied repeatedly"
 msgstr "De klonen verspreiden om ze te ontklonteren; kan herhaaldelijk worden toegepast"
 
-#: ../src/ui/dialog/clonetiler.cpp:1267
+#: ../src/ui/dialog/clonetiler.cpp:1266
 msgid " Re_move "
 msgstr " Ver_wijderen "
 
-#: ../src/ui/dialog/clonetiler.cpp:1268
+#: ../src/ui/dialog/clonetiler.cpp:1267
 msgid "Remove existing tiled clones of the selected object (siblings only)"
 msgstr "Verwijder bestaande getegelde klonen van het geselecteerde object"
 
-#: ../src/ui/dialog/clonetiler.cpp:1284
+#: ../src/ui/dialog/clonetiler.cpp:1283
 msgid " R_eset "
 msgstr " _Beginwaarden "
 
 #. TRANSLATORS: "change" is a noun here
-#: ../src/ui/dialog/clonetiler.cpp:1286
+#: ../src/ui/dialog/clonetiler.cpp:1285
 msgid "Reset all shifts, scales, rotates, opacity and color changes in the dialog to zero"
 msgstr "Alle verplaatsingen, vergrotingen, rotaties en kleurveranderingen in het venster terugzetten op nul"
 
-#: ../src/ui/dialog/clonetiler.cpp:1359
+#: ../src/ui/dialog/clonetiler.cpp:1358
 msgid "<small>Nothing selected.</small>"
 msgstr "<small>Niets geselecteerd.</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:1365
+#: ../src/ui/dialog/clonetiler.cpp:1364
 msgid "<small>More than one object selected.</small>"
 msgstr "<small>Meer dan één object geselecteerd.</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:1372
+#: ../src/ui/dialog/clonetiler.cpp:1371
 #, c-format
 msgid "<small>Object has <b>%d</b> tiled clones.</small>"
 msgstr "<small>Het object heeft <b>%d</b> getegelde klonen.</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:1377
+#: ../src/ui/dialog/clonetiler.cpp:1376
 msgid "<small>Object has no tiled clones.</small>"
 msgstr "<small>Het object heeft geen getegelde klonen.</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:2097
+#: ../src/ui/dialog/clonetiler.cpp:2096
 msgid "Select <b>one object</b> whose tiled clones to unclump."
 msgstr "Selecteer <b>één object</b> wiens klonen ontklonterd moeten worden."
 
-#: ../src/ui/dialog/clonetiler.cpp:2119
+#: ../src/ui/dialog/clonetiler.cpp:2118
 msgid "Unclump tiled clones"
 msgstr "Getegelde klonen ontklonteren"
 
-#: ../src/ui/dialog/clonetiler.cpp:2148
+#: ../src/ui/dialog/clonetiler.cpp:2147
 msgid "Select <b>one object</b> whose tiled clones to remove."
 msgstr "Selecteer <b>één object</b> waarvan de getegelde klonen verwijderd moeten worden."
 
-#: ../src/ui/dialog/clonetiler.cpp:2171
+#: ../src/ui/dialog/clonetiler.cpp:2170
 msgid "Delete tiled clones"
 msgstr "Verwijder getegelde klonen"
 
-#: ../src/ui/dialog/clonetiler.cpp:2218
+#: ../src/ui/dialog/clonetiler.cpp:2217
 #: ../src/selection-chemistry.cpp:2468
 msgid "Select an <b>object</b> to clone."
 msgstr "Selecteer een <b>object</b> om te klonen."
 
-#: ../src/ui/dialog/clonetiler.cpp:2224
+#: ../src/ui/dialog/clonetiler.cpp:2223
 msgid "If you want to clone several objects, <b>group</b> them and <b>clone the group</b>."
 msgstr "Als u meerdere objecten wilt klonen, <b>groepeer</b> ze dan en <b>kloon de groep</b>."
 
-#: ../src/ui/dialog/clonetiler.cpp:2233
+#: ../src/ui/dialog/clonetiler.cpp:2232
 msgid "<small>Creating tiled clones...</small>"
 msgstr "<small>Getegelde klonen maken...</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:2638
+#: ../src/ui/dialog/clonetiler.cpp:2637
 msgid "Create tiled clones"
 msgstr "Tegelen met klonen"
 
-#: ../src/ui/dialog/clonetiler.cpp:2871
+#: ../src/ui/dialog/clonetiler.cpp:2870
 msgid "<small>Per row:</small>"
 msgstr "<small>Per rij:</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:2889
+#: ../src/ui/dialog/clonetiler.cpp:2888
 msgid "<small>Per column:</small>"
 msgstr "<small>Per kolom:</small>"
 
-#: ../src/ui/dialog/clonetiler.cpp:2897
+#: ../src/ui/dialog/clonetiler.cpp:2896
 msgid "<small>Randomize:</small>"
 msgstr "<small>Willekeurig:</small>"
 
@@ -5222,8 +5222,8 @@ msgstr "Aanpassende drempelwaarde"
 #: ../src/extension/internal/bitmap/sample.cpp:41
 #: ../src/extension/internal/bluredge.cpp:137
 #: ../src/extension/internal/filter/morphology.h:65
-#: ../src/ui/dialog/object-attributes.cpp:67
-#: ../src/ui/dialog/object-attributes.cpp:75
+#: ../src/ui/dialog/object-attributes.cpp:68
+#: ../src/ui/dialog/object-attributes.cpp:76
 #: ../src/widgets/calligraphy-toolbar.cpp:451
 #: ../src/widgets/erasor-toolbar.cpp:149
 #: ../src/widgets/spray-toolbar.cpp:132
@@ -5237,8 +5237,8 @@ msgstr "Breedte:"
 #: ../src/extension/internal/bitmap/sample.cpp:42
 #: ../src/extension/internal/filter/bumps.h:98
 #: ../src/extension/internal/filter/bumps.h:329
-#: ../src/ui/dialog/object-attributes.cpp:68
-#: ../src/ui/dialog/object-attributes.cpp:76
+#: ../src/ui/dialog/object-attributes.cpp:69
+#: ../src/ui/dialog/object-attributes.cpp:77
 #: ../share/extensions/foldablebox.inx.h:3
 msgid "Height:"
 msgstr "Hoogte:"
@@ -5309,7 +5309,7 @@ msgstr "Ruis toevoegen"
 #: ../src/rdf.cpp:241
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2612
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2691
-#: ../src/ui/dialog/object-attributes.cpp:48
+#: ../src/ui/dialog/object-attributes.cpp:49
 #: ../share/extensions/jessyInk_effects.inx.h:5
 #: ../share/extensions/jessyInk_export.inx.h:3
 #: ../share/extensions/jessyInk_transitions.inx.h:5
@@ -5945,6 +5945,77 @@ msgstr "PDF+LaTeX: tekst in PDF negeren en LaTeX-bestand maken"
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:258
 msgid "Bleed/margin (mm)"
 msgstr "Overschot/marge (mm)"
+
+# Zonder dubbele punt is duidelijker.
+#: ../src/extension/internal/cdr-input.cpp:100
+#: ../src/extension/internal/pdf-input-cairo.cpp:70
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:86
+#: ../src/extension/internal/vsd-input.cpp:100
+msgid "Select page:"
+msgstr "Pagina importeren:"
+
+# Met haakjes is duidelijker.
+#. Display total number of pages
+#: ../src/extension/internal/cdr-input.cpp:112
+#: ../src/extension/internal/pdf-input-cairo.cpp:88
+#: ../src/extension/internal/pdfinput/pdf-input.cpp:105
+#: ../src/extension/internal/vsd-input.cpp:112
+#, c-format
+msgid "out of %i"
+msgstr "(van %i)"
+
+#: ../src/extension/internal/cdr-input.cpp:143
+#: ../src/extension/internal/vsd-input.cpp:143
+msgid "Page Selector"
+msgstr "Paginaselectie"
+
+#: ../src/extension/internal/cdr-input.cpp:267
+msgid "Corel DRAW Input"
+msgstr "Corel DRAW invoer"
+
+#: ../src/extension/internal/cdr-input.cpp:272
+msgid "Corel DRAW 7-X4 files (*.cdr)"
+msgstr "Corel DRAW 7-X4 bestanden (*.cdr)"
+
+#: ../src/extension/internal/cdr-input.cpp:273
+msgid "Open files saved in Corel DRAW 7-X4"
+msgstr "Open bestanden van Corel DRAW 7-X4"
+
+#: ../src/extension/internal/cdr-input.cpp:280
+msgid "Corel DRAW templates input"
+msgstr "Corel DRAW templates invoer"
+
+#: ../src/extension/internal/cdr-input.cpp:285
+msgid "Corel DRAW 7-13 template files (*.cdt)"
+msgstr "Corel DRAW 7-13 template bestanden (*.cdt)"
+
+#: ../src/extension/internal/cdr-input.cpp:286
+msgid "Open files saved in Corel DRAW 7-13"
+msgstr "Open bestanden van Corel DRAW 7-13"
+
+#: ../src/extension/internal/cdr-input.cpp:293
+msgid "Corel DRAW Compressed Exchange files input"
+msgstr "Corel DRAW gecomprimeerde uitwisselingsbestanden invoer"
+
+#: ../src/extension/internal/cdr-input.cpp:298
+msgid "Corel DRAW Compressed Exchange files (*.ccx)"
+msgstr "Corel DRAW gecomprimeerde uitwisselingsbestanden (*.ccx)"
+
+#: ../src/extension/internal/cdr-input.cpp:299
+msgid "Open compressed exchange files saved in Corel DRAW"
+msgstr "Open Corel DRAW gecomprimeerde uitwisselingsbestanden"
+
+#: ../src/extension/internal/cdr-input.cpp:306
+msgid "Corel DRAW Presentation Exchange files input"
+msgstr "Corel DRAW Presentation uitwisselingsbestanden invoer"
+
+#: ../src/extension/internal/cdr-input.cpp:311
+msgid "Corel DRAW Presentation Exchange files (*.cmx)"
+msgstr "Corel DRAW Presentation uitwisselingsbestanden (*.cmx)"
+
+#: ../src/extension/internal/cdr-input.cpp:312
+msgid "Open presentation exchange files saved in Corel DRAW"
+msgstr "Open Presentation uitwisselingsbestanden opgeslagen met Corel DRAW"
 
 #: ../src/extension/internal/emf-win32-inout.cpp:2523
 msgid "EMF Input"
@@ -6857,8 +6928,8 @@ msgstr "Verplaatsing rood"
 #: ../src/extension/internal/filter/color.h:1307
 #: ../src/extension/internal/filter/color.h:1310
 #: ../src/extension/internal/filter/color.h:1313
-#: ../src/ui/dialog/object-attributes.cpp:65
-#: ../src/ui/dialog/object-attributes.cpp:73
+#: ../src/ui/dialog/object-attributes.cpp:66
+#: ../src/ui/dialog/object-attributes.cpp:74
 #: ../src/ui/dialog/tile.cpp:618
 #: ../src/widgets/desktop-widget.cpp:667
 #: ../src/widgets/node-toolbar.cpp:590
@@ -6871,8 +6942,8 @@ msgstr "X:"
 #: ../src/extension/internal/filter/color.h:1308
 #: ../src/extension/internal/filter/color.h:1311
 #: ../src/extension/internal/filter/color.h:1314
-#: ../src/ui/dialog/object-attributes.cpp:66
-#: ../src/ui/dialog/object-attributes.cpp:74
+#: ../src/ui/dialog/object-attributes.cpp:67
+#: ../src/ui/dialog/object-attributes.cpp:75
 #: ../src/ui/dialog/tile.cpp:619
 #: ../src/widgets/desktop-widget.cpp:677
 #: ../src/widgets/node-toolbar.cpp:608
@@ -7857,108 +7928,126 @@ msgstr "OpenDocument-tekeningbestand"
 
 #. TRANSLATORS: The following are document crop settings for PDF import
 #. more info: http://www.acrobatusers.com/tech_corners/javascript_corner/tips/2006/page_bounds/
+#: ../src/extension/internal/pdf-input-cairo.cpp:52
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:70
 msgid "media box"
 msgstr "mediavak"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:53
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:71
 msgid "crop box"
 msgstr "afsnijvak"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:54
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:72
 msgid "trim box"
 msgstr "trimvak"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:55
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:73
 msgid "bleed box"
 msgstr "overschotvak"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:56
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:74
 msgid "art box"
 msgstr "kunstvak"
 
-# Zonder dubbele punt is duidelijker.
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:86
-msgid "Select page:"
-msgstr "Pagina importeren:"
-
-# Met haakjes is duidelijker.
-#. Display total number of pages
-#: ../src/extension/internal/pdfinput/pdf-input.cpp:105
-#, c-format
-msgid "out of %i"
-msgstr "(van de %i)"
-
 #. Crop settings
+#: ../src/extension/internal/pdf-input-cairo.cpp:94
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:111
 msgid "Clip to:"
 msgstr "Afsnijden op:"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:105
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:122
 msgid "Page settings"
 msgstr "Pagina-instellingen"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:106
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:123
 msgid "Precision of approximating gradient meshes:"
 msgstr "Benaderingsprecisie van kleurverlopen:"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:107
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:124
 msgid "<b>Note</b>: setting the precision too high may result in a large SVG file and slow performance."
 msgstr "<b>NB</b>: de precisie te hoog instellen kan resulteren in een groot SVG-bestand en trage verwerking."
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:117
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:134
 msgid "rough"
 msgstr "globaal"
 
 #. Text options
+#: ../src/extension/internal/pdf-input-cairo.cpp:121
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:138
 msgid "Text handling:"
 msgstr "Tekstafhandeling:"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:123
+#: ../src/extension/internal/pdf-input-cairo.cpp:124
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:140
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:141
 msgid "Import text as text"
 msgstr "Tekst als tekst importeren"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:125
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:142
 msgid "Replace PDF fonts by closest-named installed fonts"
 msgstr "PDF-lettertypen vervangen door het geïnstalleerde lettertype met de meest gelijkaardige naam"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:128
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:145
 msgid "Embed images"
 msgstr "Afbeeldingen invoegen"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:130
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:147
 msgid "Import settings"
 msgstr "Importinstellingen"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:238
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:255
 msgid "PDF Import Settings"
 msgstr "PDF-importinstellingen"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:370
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:400
 msgctxt "PDF input precision"
 msgid "rough"
 msgstr "ruw"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:371
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:401
 msgctxt "PDF input precision"
 msgid "medium"
 msgstr "Middel"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:372
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:402
 msgctxt "PDF input precision"
 msgid "fine"
 msgstr "nauwkeurig"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:373
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:403
 msgctxt "PDF input precision"
 msgid "very fine"
 msgstr "precies"
 
+#: ../src/extension/internal/pdf-input-cairo.cpp:646
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:762
 msgid "PDF Input"
 msgstr "PDF-invoer"
+
+#: ../src/extension/internal/pdf-input-cairo.cpp:651
+msgid "Adobe PDF via poppler-cairo (*.pdf)"
+msgstr "Adobe PDF via poppler-cairo (*.pdf)"
+
+#: ../src/extension/internal/pdf-input-cairo.cpp:652
+msgid "PDF Document"
+msgstr "PDF Document"
 
 #: ../src/extension/internal/pdfinput/pdf-input.cpp:767
 msgid "Adobe PDF (*.pdf)"
@@ -8057,6 +8146,51 @@ msgstr "Gecomprimeerde gewone SVG (*.svgz)"
 #: ../src/extension/internal/svgz.cpp:81
 msgid "Scalable Vector Graphics format compressed with GZip"
 msgstr "Scalable Vector Graphics-formaat gecomprimeerd met GZip"
+
+#: ../src/extension/internal/vsd-input.cpp:267
+msgid "VSD Input"
+msgstr "VSD-invoer"
+
+#: ../src/extension/internal/vsd-input.cpp:272
+msgid "Microsoft Visio Diagram (*.vsd)"
+msgstr "Microsoft Visio Diagram (*.vsd)"
+
+#: ../src/extension/internal/vsd-input.cpp:273
+msgid "File format used by Microsoft Visio 6 and later"
+msgstr "Bestandsformaat gebruikt door Microsoft Visio 6 en later"
+
+#: ../src/extension/internal/vsd-input.cpp:280
+msgid "VDX Input"
+msgstr "VDX-invoer"
+
+#: ../src/extension/internal/vsd-input.cpp:285
+msgid "Microsoft Visio XML Diagram (*.vdx)"
+msgstr "Microsoft Visio XML Diagram (*.vdx)"
+
+#: ../src/extension/internal/vsd-input.cpp:286
+msgid "File format used by Microsoft Visio 2010 and later"
+msgstr "Bestandsformaat gebruikt door Microsoft Visio 2010 en later"
+
+#: ../src/extension/internal/vsd-input.cpp:293
+msgid "VSDM Input"
+msgstr "VSDM-invoer"
+
+#: ../src/extension/internal/vsd-input.cpp:298
+msgid "Microsoft Visio 2013 drawing (*.vsdm)"
+msgstr "Microsoft Visio 2013 tekening (*.vsdm)"
+
+#: ../src/extension/internal/vsd-input.cpp:299
+#: ../src/extension/internal/vsd-input.cpp:312
+msgid "File format used by Microsoft Visio 2013 and later"
+msgstr "Bestandsformaat gebruikt door Microsoft Visio 2013 en later"
+
+#: ../src/extension/internal/vsd-input.cpp:306
+msgid "VSDX Input"
+msgstr "VSDX-invoer"
+
+#: ../src/extension/internal/vsd-input.cpp:311
+msgid "Microsoft Visio 2013 drawing (*.vsdx)"
+msgstr "Microsoft Visio 2013 tekening (*.vsdx)"
 
 #: ../src/extension/internal/wpg-input.cpp:121
 msgid "WPG Input"
@@ -11419,7 +11553,7 @@ msgstr "Open Font-licentie"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkTitleAttribute
 #: ../src/rdf.cpp:232
-#: ../src/ui/dialog/object-attributes.cpp:56
+#: ../src/ui/dialog/object-attributes.cpp:57
 msgid "Title:"
 msgstr "Titel:"
 
@@ -14498,7 +14632,7 @@ msgstr "Hoogte van de convolutiematrix"
 #. default x:
 #. default y:
 #: ../src/ui/dialog/filter-effects-dialog.cpp:2636
-#: ../src/ui/dialog/object-attributes.cpp:47
+#: ../src/ui/dialog/object-attributes.cpp:48
 msgid "Target:"
 msgstr "Doel:"
 
@@ -15070,7 +15204,7 @@ msgstr "Selecteer een objecttype"
 msgid "Select a property"
 msgstr "Selecteer een eigenschap"
 
-#: ../src/ui/dialog/font-substitution.cpp:75
+#: ../src/ui/dialog/font-substitution.cpp:82
 msgid ""
 "\n"
 "Some fonts are not available and have been substituted."
@@ -15078,17 +15212,21 @@ msgstr ""
 "\n"
 "Sommige lettertypen zijn niet beschikbaar en werden vervangen."
 
-#: ../src/ui/dialog/font-substitution.cpp:78
+#: ../src/ui/dialog/font-substitution.cpp:85
 msgid "Font substitution"
 msgstr "Lettertypevervanging"
 
-#: ../src/ui/dialog/font-substitution.cpp:97
+#: ../src/ui/dialog/font-substitution.cpp:104
 msgid "Select all the affected items"
 msgstr "Selecteer alle geaffecteerde objecten"
 
-#: ../src/ui/dialog/font-substitution.cpp:102
+#: ../src/ui/dialog/font-substitution.cpp:109
 msgid "Don't show this warning again"
 msgstr "Toon deze waarschuwing niet meer"
+
+#: ../src/ui/dialog/font-substitution.cpp:250
+msgid "Font '%1' substituted with '%2'"
+msgstr "Lettertype '%1' vervangen door "%2'"
 
 #: ../src/ui/dialog/glyphs.cpp:60
 #: ../src/ui/dialog/glyphs.cpp:152
@@ -15917,25 +16055,25 @@ msgstr "Hulplijn ID: %s"
 msgid "Current: %s"
 msgstr "Huidig: %s"
 
-#: ../src/ui/dialog/icon-preview.cpp:156
+#: ../src/ui/dialog/icon-preview.cpp:155
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
-#: ../src/ui/dialog/icon-preview.cpp:168
+#: ../src/ui/dialog/icon-preview.cpp:167
 msgid "Magnified:"
 msgstr "Uitvergroot:"
 
-#: ../src/ui/dialog/icon-preview.cpp:237
+#: ../src/ui/dialog/icon-preview.cpp:236
 msgid "Actual Size:"
 msgstr "Huidige grootte:"
 
-#: ../src/ui/dialog/icon-preview.cpp:242
+#: ../src/ui/dialog/icon-preview.cpp:241
 msgctxt "Icon preview window"
 msgid "Sele_ction"
 msgstr "Sele_ctie"
 
-#: ../src/ui/dialog/icon-preview.cpp:244
+#: ../src/ui/dialog/icon-preview.cpp:243
 msgid "Selection only or whole document"
 msgstr "Alleen selectie of volledig document"
 
@@ -16764,7 +16902,7 @@ msgstr "Alleen tekst"
 #: ../src/ui/dialog/inkscape-preferences.cpp:605
 #: ../src/ui/dialog/inkscape-preferences.cpp:613
 msgid "Icons and text"
-msgstr "Iconen  en tekst"
+msgstr "Iconen en tekst"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:610
 msgid "Dockbar style (requires restart):"
@@ -16772,16 +16910,15 @@ msgstr "Dockbarstijl (vereist herstart):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:611
 msgid "Selects whether the vertical bars on the dockbar will show text labels, icons, or both"
-msgstr "Bepaalt of de verticale balken op de dockbar tekstlabels, iconen of beide tonen"
+msgstr "Bepaalt of geminimaliseerde dialogen op de verticale balken op de dockbar tekstlabels, iconen of beide tonen"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:618
-#, fuzzy
 msgid "Switcher style (requires restart):"
-msgstr " (vereist herstart):"
+msgstr "Stijl dialoogwisselaar (vereist herstart):"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:619
 msgid "Selects whether the dockbar switcher will show text labels, icons, or both"
-msgstr ""
+msgstr "Bepaalt of de dialoogwisselaar op de dockbar tekstlabels, iconen of beide toont"
 
 #. Windows
 #: ../src/ui/dialog/inkscape-preferences.cpp:623
@@ -18660,33 +18797,33 @@ msgstr "Loggen begonnen."
 msgid "Log capture stopped."
 msgstr "Log aanleggen gestopt."
 
-#: ../src/ui/dialog/object-attributes.cpp:46
+#: ../src/ui/dialog/object-attributes.cpp:47
 msgid "Href:"
 msgstr "Href:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkRoleAttribute
 #. Identifies the type of the related resource with an absolute URI
-#: ../src/ui/dialog/object-attributes.cpp:51
+#: ../src/ui/dialog/object-attributes.cpp:52
 msgid "Role:"
 msgstr "Role:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkArcRoleAttribute
 #. For situations where the nature/role alone isn't enough, this offers an additional URI defining the purpose of the link.
-#: ../src/ui/dialog/object-attributes.cpp:54
+#: ../src/ui/dialog/object-attributes.cpp:55
 msgid "Arcrole:"
 msgstr "Arcrole:"
 
-#: ../src/ui/dialog/object-attributes.cpp:57
+#: ../src/ui/dialog/object-attributes.cpp:58
 #: ../share/extensions/polyhedron_3d.inx.h:47
 msgid "Show:"
 msgstr "Tonen:"
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/linking.html#AElementXLinkActuateAttribute
-#: ../src/ui/dialog/object-attributes.cpp:59
+#: ../src/ui/dialog/object-attributes.cpp:60
 msgid "Actuate:"
 msgstr "Activatie:"
 
-#: ../src/ui/dialog/object-attributes.cpp:64
+#: ../src/ui/dialog/object-attributes.cpp:65
 msgid "URL:"
 msgstr "URL:"
 
@@ -19066,7 +19203,7 @@ msgstr "Huidig document"
 #. ******************* Preview Scale **********************
 #: ../src/ui/dialog/symbols.cpp:178
 msgid "Preview scale: "
-msgstr "Schaal voortonen:"
+msgstr "Schaal voorvertoning: "
 
 #: ../src/ui/dialog/symbols.cpp:188
 msgid "Fit"
@@ -20581,6 +20718,7 @@ msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
 msgstr "<b>Lijndikte aangepast</b>: was %.3g, nu <b>%.3g</b> (verschil %.3g)"
 
 #. TRANSLATORS: "Link" means to _link_ two sliders together
+#: ../src/ui/widget/spin-scale.cpp:137
 #: ../src/ui/widget/spin-slider.cpp:156
 msgctxt "Sliders"
 msgid "Link"
@@ -26388,7 +26526,6 @@ msgstr "Voeg aub. een invoerstring in"
 
 #. abort if converting blank text
 #: ../share/extensions/render_barcode_qrcode.py:1053
-#, fuzzy
 msgid "Please enter an input text"
 msgstr "Geef aub. een invoertekst op"
 
@@ -27261,8 +27398,13 @@ msgid "Embed Images"
 msgstr "Afbeeldingen invoegen"
 
 #: ../share/extensions/embedimage.inx.h:2
+#: ../share/extensions/embedselectedimages.inx.h:2
 msgid "Embed only selected images"
 msgstr "Alleen geselecteerde afbeeldingen invoegen"
+
+#: ../share/extensions/embedselectedimages.inx.h:1
+msgid "Embed Selected Images"
+msgstr "Geselecteerde afbeeldingen invoegen"
 
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
@@ -27476,9 +27618,8 @@ msgid "First derivative:"
 msgstr "Eerste afgeleide:"
 
 #: ../share/extensions/funcplot.inx.h:34
-#, fuzzy
 msgid "Clip with rectangle"
-msgstr "Breedte van de rechthoek"
+msgstr "Afsnijden op rechthoek"
 
 #: ../share/extensions/funcplot.inx.h:35
 #: ../share/extensions/param_curves.inx.h:28
@@ -28491,6 +28632,7 @@ msgid "Ignore these settings and use export hints?"
 msgstr "Deze instellingen negeren en export hints gebruiken?"
 
 #: ../share/extensions/guillotine.inx.h:5
+#: ../share/extensions/print_win32_vector.inx.h:2
 msgid "Export"
 msgstr "Exporteren"
 
@@ -28551,9 +28693,8 @@ msgid "Curves are divided into lines, this number controls how fine the curves w
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:15
-#, fuzzy
 msgid "Use Overcut"
-msgstr "_Standaard gebruiken"
+msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:16
 msgid "Whether the overcut will be used, if not the 'Overcut' parameter is unused (Standard: 'True')"
@@ -28577,18 +28718,16 @@ msgid "Whether the tool offset should be corrected, if not the 'Tool offset' and
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:21
-#, fuzzy
 msgid "Tool offset (mm)"
-msgstr "Horizontale verplaatsing (px):"
+msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:22
 msgid "The offset from the tool tip to the tool axis in mm (Standard: '0.25')"
 msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:23
-#, fuzzy
 msgid "Return Factor"
-msgstr "Factor:"
+msgstr ""
 
 #: ../share/extensions/hpgl_output.inx.h:24
 msgid "The return factor multiplied by the tool offset is the length that is used to guide the tool back to the original path after an overcut is performed, you can only determine this value by experimentation (Standard: '2.50')"
@@ -28612,12 +28751,9 @@ msgstr "Y-afstand (mm)"
 msgid "Plot invisible layers"
 msgstr "Onzichtbare lagen tonen"
 
-# De volgende zes strings beschrijven wat enkele toetsen doen.
-# Een kleine letter maakt duidelijker dat ze een voortzetting zijn.
 #: ../share/extensions/hpgl_output.inx.h:29
-#, fuzzy
 msgid "Plot invisible layers (Standard: 'False')"
-msgstr "Onzichtbare lagen tonen"
+msgstr "Onzichtbare lagen tonen (standaard: uit)"
 
 #: ../share/extensions/hpgl_output.inx.h:30
 msgid "Send to Plotter also"
@@ -28650,6 +28786,22 @@ msgstr "HP Graphics Language-bestand (*.hpgl)"
 #: ../share/extensions/hpgl_output.inx.h:37
 msgid "Export to an HP Graphics Language file"
 msgstr "Naar een HP Graphics Language bestand exporteren"
+
+#: ../share/extensions/ink2canvas.inx.h:1
+msgid "Convert to html5 canvas"
+msgstr "Omzetten naar html5 canvas"
+
+#: ../share/extensions/ink2canvas.inx.h:2
+msgid "HTML 5 canvas (*.html)"
+msgstr "HTML 5 canvas (*.html)"
+
+#: ../share/extensions/ink2canvas.inx.h:3
+msgid "HTML 5 canvas code"
+msgstr "HTML 5 canvas code"
+
+#: ../share/extensions/inkscape_follow_link.inx.h:1
+msgid "Follow Link"
+msgstr "Koppeling volgen"
 
 #: ../share/extensions/inkscape_help_askaquestion.inx.h:1
 msgid "Ask Us a Question"
@@ -29715,9 +29867,8 @@ msgid "Ribbon"
 msgstr "Lint"
 
 #: ../share/extensions/pathalongpath.inx.h:17
-#, fuzzy
 msgid "This effect scatters or bends a pattern along arbitrary \"skeleton\" paths. The pattern is the topmost object in the selection. Groups of paths, shapes or clones are allowed."
-msgstr "Dit effect verspreidt een patroon langs willekeurige \"skeletpaden\". Het patroon is het bovenste object in de selectie. Een mix van paden/vormen/klonen/... is toegestaan."
+msgstr "Dit effect verspreidt een patroon langs willekeurige \"skeletpaden\". Het patroon is het bovenste object in de selectie. Groepen van paden, vormen of klonen zijn toegestaan."
 
 #: ../share/extensions/pathscatter.inx.h:3
 msgid "Follow path orientation"
@@ -30072,6 +30223,10 @@ msgstr "Gemiddelde"
 #: ../share/extensions/previous_glyph_layer.inx.h:1
 msgid "View Previous Glyph"
 msgstr "Vorig karakter bekijken"
+
+#: ../share/extensions/print_win32_vector.inx.h:1
+msgid "Win32 Vector Print"
+msgstr ""
 
 #: ../share/extensions/printing_marks.inx.h:1
 msgid "Printing Marks"
@@ -30460,7 +30615,7 @@ msgid "Help (Options)"
 msgstr "Help (Opties)"
 
 #: ../share/extensions/scour.inx.h:27
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "This extension optimizes the SVG file according to the following options:\n"
 "    * Shorten color names: convert all colors to #RRGGBB or #RGB format.\n"
@@ -30476,15 +30631,15 @@ msgid ""
 "    * Number of significant digits for coords: all coordinates are output with that number of significant digits. For example, if 3 is specified, the coordinate 3.5153 is output as 3.51 and the coordinate 471.55 is output as 472.\n"
 "    * XML indentation (pretty-printing): either None for no indentation, Space to use one space per nesting level, or Tab to use one tab per nesting level."
 msgstr ""
-"Deze uitbreiding optimaliseert het SVG-bestand volgens deze opties:\n"
+"Deze uitbreiding optimaliseert het SVG-bestand volgens de opties:\n"
 "    * Kleurwaarden afkorten: alle kleuren van omzetten in #RRGGBB of #RGB formaat.\n"
-"    * CSS-attributen omzetten in XML-attributen: stijlen van &lt;style&gt; tags en inline style=\"\" declaraties omzetten in XML-attributen.\n"
-"    * Groepen samenvouwen: verwijdert ongebruikte &lt;g&gt; elementen om de inhoud één niveau hoger te plaatsen. Hiervoor moet \"Ongebruikte ID-namen voor elementen verwijderd\" ingeschakeld zijn.\n"
-"    * Groepen maken voor gelijkaardige attributen: &lt;g&gt; elementen maken voor een serie elementen met ten minste een gemeenschappelijk attribuut (bv. vulkleur, lijntransparantie, ...).\n"
+"    * CSS-attributen omzetten in XML-attributen: stijlen van style tags en inline style=\"\" declaraties omzetten in XML-attributen.\n"
+"    * Groepen samenvouwen: verwijdert ongebruikte g elementen om de inhoud één niveau hoger te plaatsen. Hiervoor moet \"Ongebruikte ID-namen voor elementen verwijderd\" ingeschakeld zijn.\n"
+"    * Groepen maken voor gelijkaardige attributen: g elementen maken voor een serie elementen met ten minste een gemeenschappelijk attribuut (bv. vulkleur, lijntransparantie, ...).\n"
 "    * Rasterafbeeldingen invoegen: rasterafbeeldingen invoegen als base64-geëncodeerde data URL's.\n"
 "    * Programmadata behouden: geen Inkscape, Sodipodi of Adobe Illustrator elementen en attributen verwijderen.\n"
-"    * Metadata verwijderen: &lt;metadata&gt; tags verwijderen, die licentiemetadata, alternatieve versies voor niet-SVG-compatibele browsers, etc. bevatten.\n"
-"    * Opmerkingen verwijderen: &lt;!-- --&gt; tags verwijderen.\n"
+"    * Metadata verwijderen: metadata tags verwijderen, die licentiemetadata, alternatieve versies voor niet-SVG-compatibele browsers, etc. bevatten.\n"
+"    * Opmerkingen verwijderen: commentaartags verwijderen.\n"
 "    * Omzeilen van renderbugs: maakt iets grotere SVG-data aan, maar omzeilt een in bug de librsvg renderer, die door Eye of GNOME en andere applicaties gebruikt wordt.\n"
 "    * Viewbox activeren: afbeelding op 100%/100% instellen en een viewBox introduceren.\n"
 "    * Aantal beduidende cijfers voor coördinaten: alle coördinaten worden weggeschreven met dit aantal beduidende cijfers. Bijvoorbeeld, indien 3 is opgegeven wordt de coördinaat 3.5153 weggeschreven als 3.51 en de coördinaat 471.55 als 472.\n"
@@ -30847,6 +31002,18 @@ msgstr "SVG-lettertype in karakterlagen omzetten"
 #: ../share/extensions/svgfont2layers.inx.h:2
 msgid "Load only the first 30 glyphs (Recommended)"
 msgstr "Slechts eerste 30 karakters laden (aanbevolen)"
+
+#: ../share/extensions/synfig_output.inx.h:1
+msgid "Synfig Output"
+msgstr "Synfig-uitvoer"
+
+#: ../share/extensions/synfig_output.inx.h:2
+msgid "Synfig Animation (*.sif)"
+msgstr "Synfiganimatie (*.sif)"
+
+#: ../share/extensions/synfig_output.inx.h:3
+msgid "Synfig Animation written using the sif-file exporter extension"
+msgstr ""
 
 #: ../share/extensions/text_braille.inx.h:1
 msgid "Convert to Braille"
