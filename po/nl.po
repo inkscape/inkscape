@@ -58,7 +58,7 @@ msgstr ""
 "Project-Id-Version: inkscape 0.49\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-03-30 18:29+0100\n"
-"PO-Revision-Date: 2013-04-03 23:01+0100\n"
+"PO-Revision-Date: 2013-04-23 23:11+0100\n"
 "Last-Translator: Kris De Gussem <Kris.DeGussem@gmail.com>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
@@ -15226,7 +15226,7 @@ msgstr "Toon deze waarschuwing niet meer"
 
 #: ../src/ui/dialog/font-substitution.cpp:250
 msgid "Font '%1' substituted with '%2'"
-msgstr "Lettertype '%1' vervangen door "%2'"
+msgstr "Lettertype '%1' vervangen door '%2'"
 
 #: ../src/ui/dialog/glyphs.cpp:60
 #: ../src/ui/dialog/glyphs.cpp:152
@@ -28757,7 +28757,7 @@ msgstr "Onzichtbare lagen tonen (standaard: uit)"
 
 #: ../share/extensions/hpgl_output.inx.h:30
 msgid "Send to Plotter also"
-msgstr "Ook naar plotter zendern"
+msgstr "Ook naar plotter zenden"
 
 #: ../share/extensions/hpgl_output.inx.h:31
 msgid "Sends the generated HPGL data also via serial connection to your plotter (Standard: 'False')"
