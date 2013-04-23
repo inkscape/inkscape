@@ -955,7 +955,7 @@ void EditVerb::perform(SPAction *action, void *data)
             sp_selection_untile(dt);
             break;
         case SP_VERB_EDIT_SYMBOL:
-            sp_selection_symbol(dt);
+            sp_selection_symbols(dt);
             break;
         case SP_VERB_EDIT_UNSYMBOL:
             sp_selection_unsymbol(dt);

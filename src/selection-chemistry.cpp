@@ -2892,45 +2892,52 @@ void sp_selection_to_guides(SPDesktop *desktop)
 /*
  * Convert <g> to <symbol>, leaving all <use> elements referencing group unchanged.
  */
-void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
+void sp_selection_symbols(SPDesktop *desktop, bool /*apply*/ )
 {
-
     if (desktop == NULL) {
         return;
     }
 
     SPDocument *doc = sp_desktop_document(desktop);
-    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
+    doc->ensureUpToDate();
 
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
 
     // Check if something is selected.
     if (selection->isEmpty()) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select one <b>group</b> to convert to symbol."));
-        return;
+      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select <b>groups</b> to convert to symbols."));
+      return;
     }
 
-    SPObject* group = selection->single();
+    GSList *items = g_slist_copy(const_cast<GSList *>(selection->list()));
+    bool hasWorked = false;
 
-    // Make sure we have only one object in selection.
-    if( group == NULL ) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select only one <b>group</b> to convert to symbol."));
-        return;
+    for ( GSList const *iter=items; iter != NULL ; iter = iter->next ) {
+      SPObject *object = reinterpret_cast<SPObject *>( iter->data );
+
+      // Require that we really have a group.
+      if( SP_IS_GROUP( object ) ) {
+        sp_selection_symbol( doc, object );
+        hasWorked = true;
+      }
     }
 
-    // Make sure we convert the original.
-    if( SP_IS_USE( group ) ) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select original (<b>Shift+D</b>) to convert to symbol."));
-        return;
+    g_slist_free(items);
+
+    if( !hasWorked ) {
+      desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("No <b>groups</b> converted to symbols."));
+      return;
     }
 
-    // Require that we really have a group.
-    if( !SP_IS_GROUP( group ) ) {
-        desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Group selection first to convert to symbol."));
-        return;
-    }
+    selection->clear();
+    // Group just disappears, nothing to select.
 
-    doc->ensureUpToDate();
+    DocumentUndo::done(doc, SP_VERB_EDIT_SYMBOL, _("Group to symbol"));
+}
+
+void sp_selection_symbol(SPDocument *doc, SPObject *group)
+{
+    Inkscape::XML::Document *xml_doc = doc->getReprDoc();
 
     Inkscape::XML::Node *symbol = xml_doc->createElement("svg:symbol");
     symbol->setAttribute("style",     group->getAttribute("style"));
@@ -2952,20 +2959,25 @@ void sp_selection_symbol(SPDesktop *desktop, bool /*apply*/ )
     // Need to delete <g>; all <use> elements that referenced <g> should
     // auto-magically reference <symbol>.
     doc->getDefs()->getRepr()->appendChild(symbol);
-    symbol->setAttribute("id",id.c_str()); // After we delete group with same id.
-    // Mysterious, must set symbol ID before deleting group or all <use>
-    // refering to symbol get turned into groups. (Linked to unlinking clones?)
+    // Mysterious, must set symbol ID before deleting group or all <use> items
+    // get turned into groups. (Linked to unlinking clones?)
+    symbol->setAttribute("id",id.c_str());
+
+    // Create a clone of the symbol to replace the deleted group.
+    Inkscape::XML::Node *clone = xml_doc->createElement("svg:use");
+    clone->setAttribute("x", "0", false);
+    clone->setAttribute("y", "0", false);
+    clone->setAttribute("xlink:href", g_strdup_printf("#%s", id.c_str()), false);
+
+    clone->setAttribute("inkscape:transform-center-x", group->getAttribute("inkscape:transform-center-x"), false);
+    clone->setAttribute("inkscape:transform-center-y", group->getAttribute("inkscape:transform-center-y"), false);
+    group->parent->getRepr()->appendChild(clone);
+
     group->deleteObject(true);
-
-    Inkscape::GC::release(symbol);
-    selection->clear();
-    // Group just disappears, nothing to select.
-
-    // Need to signal Symbol dialog to update
 
     g_slist_free(children);
 
-    DocumentUndo::done(doc, SP_VERB_EDIT_SYMBOL, _("Group to symbol"));
+    Inkscape::GC::release(symbol);
 }
 
 /*
