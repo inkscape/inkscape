@@ -70,7 +70,7 @@ static void set_filter_area(Inkscape::XML::Node *repr, gdouble radius,
     double rx = radius * (expansionY != 0 ? (expansion / expansionY) : 1);
     double ry = radius * (expansionX != 0 ? (expansion / expansionX) : 1);
 
-    if (width != 0 && height != 0 && (2.4 * rx > width * 0.1 || 2.4 * ry > height * 0.1)) {
+    if (width != 0 && height != 0) {
         // If not within the default 10% margin (see
         // http://www.w3.org/TR/SVG11/filters.html#FilterEffectsRegion), specify margins
         // The 2.4 is an empirical coefficient: at that distance the cutoff is practically invisible 
