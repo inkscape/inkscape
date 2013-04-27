@@ -1260,6 +1260,7 @@ void FilterEffectsDialog::FilterModifier::update_selection(Selection *sel)
         }
 
         if (style->filter.set && style->getFilter()) {
+            SP_ITEM(obj)->bbox_valid = FALSE;
             used.insert(style->getFilter());
         } else {
             used.insert(0);
