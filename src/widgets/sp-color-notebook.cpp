@@ -165,9 +165,7 @@ gint ColorNotebook::menuHandler( GdkEvent* event )
 
 static void sp_color_notebook_menuitem_response (GtkMenuItem *menuitem, gpointer user_data)
 {
-    gboolean active = FALSE;
-
-    active = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (menuitem));
+    gboolean active = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (menuitem));
     SPColorNotebookTracker *entry = reinterpret_cast< SPColorNotebookTracker* > (user_data);
     if ( entry )
     {

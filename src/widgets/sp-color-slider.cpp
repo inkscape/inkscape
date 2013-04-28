@@ -729,7 +729,7 @@ sp_color_slider_render_map (gint x0, gint y0, gint width, gint height,
 {
 	static guchar *buf = NULL;
 	static gint bs = 0;
-	guchar *dp, *sp;
+	guchar *dp;
 	gint x, y;
 
 	if (buf && (bs < width * height)) {
@@ -744,13 +744,12 @@ sp_color_slider_render_map (gint x0, gint y0, gint width, gint height,
 	dp = buf;
 	for (x = x0; x < x0 + width; x++) {
 		gint cr, cg, cb, ca;
-		guchar *d;
-		sp = map + 4 * (start >> 16);
+		guchar *d = dp;
+		guchar *sp = map + 4 * (start >> 16);
 		cr = *sp++;
 		cg = *sp++;
 		cb = *sp++;
 		ca = *sp++;
-		d = dp;
 		for (y = y0; y < y0 + height; y++) {
 			guint bg, fc;
 			/* Background value */

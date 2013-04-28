@@ -501,7 +501,8 @@ objects_query_fillstroke (GSList *objects, SPStyle *style_res, bool const isfill
             || SP_IS_FLOWTSPAN(parent) || SP_IS_FLOWLINE(parent));
 
         // 1. Bail out with QUERY_STYLE_MULTIPLE_DIFFERENT if necessary
-
+        
+        // cppcheck-suppress comparisonOfBoolWithInt
         if ((!paintImpossible) && (!paint->isSameType(*paint_res) || (paint_res->set != paint_effectively_set))) {
             return QUERY_STYLE_MULTIPLE_DIFFERENT;  // different types of paint
         }

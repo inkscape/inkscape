@@ -1001,8 +1001,6 @@ static GtkWidget * sp_gradient_vector_widget_new(SPGradient *gradient, SPStop *s
 
 GtkWidget * sp_gradient_vector_editor_new(SPGradient *gradient, SPStop *stop)
 {
-    GtkWidget *wid;
-
     if (dlg == NULL) {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
@@ -1044,7 +1042,7 @@ GtkWidget * sp_gradient_vector_editor_new(SPGradient *gradient, SPStop *stop)
 
         gtk_container_set_border_width(GTK_CONTAINER(dlg), PAD);
 
-        wid = static_cast<GtkWidget*>(sp_gradient_vector_widget_new(gradient, stop));
+        GtkWidget *wid = static_cast<GtkWidget*>(sp_gradient_vector_widget_new(gradient, stop));
         g_object_set_data(G_OBJECT(dlg), "gradient-vector-widget", wid);
         /* Connect signals */
         gtk_widget_show(wid);

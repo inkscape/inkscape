@@ -333,7 +333,6 @@ gpointer sp_search_by_data_recursive(GtkWidget *w, gpointer key)
 GtkWidget *sp_search_by_value_recursive(GtkWidget *w, gchar *key, gchar *value)
 {
 	gchar *r = NULL;
-	GtkWidget *child;
 
 	if (w && G_IS_OBJECT(w)) {
 		r = (gchar *) g_object_get_data(G_OBJECT(w), key);
@@ -343,7 +342,7 @@ GtkWidget *sp_search_by_value_recursive(GtkWidget *w, gchar *key, gchar *value)
 	if (GTK_IS_CONTAINER(w)) {
 		GList *ch = gtk_container_get_children (GTK_CONTAINER(w));
 		for (GList *i = ch; i != NULL; i = i->next) {
-			child = sp_search_by_value_recursive(GTK_WIDGET(i->data), key, value);
+			GtkWidget *child = sp_search_by_value_recursive(GTK_WIDGET(i->data), key, value);
 			if (child) return child;
 		}
 	}

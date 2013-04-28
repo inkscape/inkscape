@@ -101,14 +101,12 @@ SPAttributeTable::~SPAttributeTable ()
 
 void SPAttributeTable::clear(void)
 {
-    Gtk::Widget *w;
-    
     if (table)
     {
         std::vector<Gtk::Widget*> ch = table->get_children();
         for (int i = (ch.size())-1; i >=0 ; i--)
         {
-            w = ch[i];
+            Gtk::Widget *w = ch[i];
             ch.pop_back();
             if (w != NULL)
             {

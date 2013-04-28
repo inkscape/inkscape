@@ -919,7 +919,7 @@ void ImportDialog::on_image_downloaded(Glib::ustring path, bool success)
         m_signal_response.emit(path);
         widget_status->set_info(_("Clipart downloaded successfully"));
     } catch(Glib::Error) {
-        success = false;
+        // success = false; //has no effect, value not returned
     }
     
     cancelled_image = false;
@@ -943,7 +943,7 @@ void ImportDialog::on_thumbnail_downloaded(Glib::ustring path, bool success)
         widget_status->clear();
         preview_files->set_image(path);
     } catch(Glib::Error) {
-        success = false;
+        // success = false; //has no effect, value not returned
     }
     
     cancelled_thumbnail = false;
