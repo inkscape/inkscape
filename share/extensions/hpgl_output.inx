@@ -7,9 +7,9 @@
     <dependency type="executable" location="extensions">inkex.py</dependency>
     <_param name="introduction" type="description">Please make sure that all objects you want to plot are converted to paths. The plot will automatically be aligned to the zero point.</_param>
     <param name="horizontal_guide" type="description">—————————————————————————————</param>
-    <param name="resolution" type="int" min="90" max="2048" _gui-text="Resolution (dpi)" _gui-description="The amount of steps the cutter moves if it moves for 1 inch, either get this value from your plotter manual or learn it by trial and error (Standard: '1016')">1016</param>
-    <param name="pen" type="int" min="1" max="10" _gui-text="Pen number" _gui-description="The number of the pen (tool) to use, on most plotters 1 (Standard: '1')">1</param>
-    <param name="angle" type="optiongroup" appearance="minimal" _gui-text="Orientation" _gui-description="Orientation of the plot, change this if your plotter is plotting horizontal instead of vertical (Standard: '90°')">
+    <param name="resolution" type="int" min="90" max="2048" _gui-text="Resolution (dpi):" _gui-description="The amount of steps the cutter moves if it moves for 1 inch, either get this value from your plotter manual or learn it by trial and error (Standard: '1016')">1016</param>
+    <param name="pen" type="int" min="1" max="10" _gui-text="Pen number:" _gui-description="The number of the pen (tool) to use, on most plotters 1 (Standard: '1')">1</param>
+    <param name="angle" type="optiongroup" appearance="minimal" _gui-text="Orientation:" _gui-description="Orientation of the plot, change this if your plotter is plotting horizontal instead of vertical (Standard: '90°')">
         <option value="90">90°</option>
         <option value="-90">-90°</option>
         <option value="0">0°</option>
@@ -17,22 +17,22 @@
     </param>
     <param name="mirror" type="boolean" _gui-text="Mirror Y-axis" _gui-description="Whether to mirror the Y axis. Some plotters need this, some not. Look in your plotter manual or learn it by trial and error (Standard: 'False')">false</param>
     <param name="center" type="boolean" _gui-text="Center Zero Point" _gui-description="Whether the plotter needs the zero point to be in the center of the drawing. Some plotters need this, some not. Look in your plotter manual or learn it by trial and error (Standard: 'False')">false</param>
-    <param name="flat" type="float" min="0.1" max="10.0" precision="1" _gui-text="Curve flatness" _gui-description="Curves are divided into lines, this number controls how fine the curves will be reproduced, the smaller the finer (Standard: '1.2')">1.2</param>
+    <param name="flat" type="float" min="0.1" max="10.0" precision="1" _gui-text="Curve flatness:" _gui-description="Curves are divided into lines, this number controls how fine the curves will be reproduced, the smaller the finer (Standard: '1.2')">1.2</param>
     <param name="horizontal_guide" type="description">—————————————————————————————</param>
     <param name="useOvercut" type="boolean" _gui-text="Use Overcut" _gui-description="Whether the overcut will be used, if not the 'Overcut' parameter is unused (Standard: 'True')">true</param>
-    <param name="overcut" type="float" min="0.0" max="100.0" precision="2" _gui-text="Overcut (mm)" _gui-description="The distance in mm that will be cut over the starting point of the path to prevent open paths (Standard: '1.00')">1.00</param>
+    <param name="overcut" type="float" min="0.0" max="100.0" precision="2" _gui-text="Overcut (mm):" _gui-description="The distance in mm that will be cut over the starting point of the path to prevent open paths (Standard: '1.00')">1.00</param>
     <param name="horizontal_guide" type="description">—————————————————————————————</param>
     <param name="correctToolOffset" type="boolean" _gui-text="Correct tool offset" _gui-description="Whether the tool offset should be corrected, if not the 'Tool offset' and 'Return Factor' parameters are unused (Standard: 'True')">true</param>
-    <param name="toolOffset" type="float" min="0.0" max="100.0" precision="2" _gui-text="Tool offset (mm)" _gui-description="The offset from the tool tip to the tool axis in mm (Standard: '0.25')">0.25</param>
-    <param name="toolOffsetReturn" type="float" min="1.0" max="10.0" precision="2" _gui-text="Return Factor" _gui-description="The return factor multiplied by the tool offset is the length that is used to guide the tool back to the original path after an overcut is performed, you can only determine this value by experimentation (Standard: '2.50')">2.50</param>
+    <param name="toolOffset" type="float" min="0.0" max="100.0" precision="2" _gui-text="Tool offset (mm):" _gui-description="The offset from the tool tip to the tool axis in mm (Standard: '0.25')">0.25</param>
+    <param name="toolOffsetReturn" type="float" min="1.0" max="10.0" precision="2" _gui-text="Return Factor:" _gui-description="The return factor multiplied by the tool offset is the length that is used to guide the tool back to the original path after an overcut is performed, you can only determine this value by experimentation (Standard: '2.50')">2.50</param>
     <param name="horizontal_guide" type="description">—————————————————————————————</param>
-    <param name="xOffset" type="float" min="0.0" max="10000.0" precision="2" _gui-text="X offset (mm)" _gui-description="The offset to move your plot away from the zero point in mm (Standard: '0.00')">0.00</param>
-    <param name="yOffset" type="float" min="0.0" max="10000.0" precision="2" _gui-text="Y offset (mm)" _gui-description="The offset to move your plot away from the zero point in mm (Standard: '0.00')">0.00</param>
+    <param name="xOffset" type="float" min="0.0" max="10000.0" precision="2" _gui-text="X offset (mm):" _gui-description="The offset to move your plot away from the zero point in mm (Standard: '0.00')">0.00</param>
+    <param name="yOffset" type="float" min="0.0" max="10000.0" precision="2" _gui-text="Y offset (mm):" _gui-description="The offset to move your plot away from the zero point in mm (Standard: '0.00')">0.00</param>
     <param name="plotInvisibleLayers" type="boolean" _gui-text="Plot invisible layers" _gui-description="Plot invisible layers (Standard: 'False')">false</param>
     <param name="horizontal_guide" type="description">—————————————————————————————</param>
     <param name="sendToPlotter" type="boolean" _gui-text="Send to Plotter also" _gui-description="Sends the generated HPGL data also via serial connection to your plotter (Standard: 'False')">false</param>
-    <param name="port" type="string" _gui-text="Serial Port" _gui-description="The port of your serial connection, on Windows something like 'COM1', on Linux something like: '/dev/ttyUSB0' (Standard: 'COM1')">COM1</param>
-    <param name="baudRate" type="optiongroup" appearance="minimal" _gui-text="Baud Rate" _gui-description="The Baud rate of your serial connection (Standard: '9600')">
+    <param name="port" type="string" _gui-text="Serial Port:" _gui-description="The port of your serial connection, on Windows something like 'COM1', on Linux something like: '/dev/ttyUSB0' (Standard: 'COM1')">COM1</param>
+    <param name="baudRate" type="optiongroup" appearance="minimal" _gui-text="Baud Rate:" _gui-description="The Baud rate of your serial connection (Standard: '9600')">
         <option value="110">110</option>
         <option value="300">300</option>
         <option value="600">600</option>
