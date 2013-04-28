@@ -747,7 +747,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_KEY_A:
         case GDK_KEY_a:
-            if (MOD__CTRL_ONLY && drag->isNonEmpty()) {
+            if (MOD__CTRL_ONLY(event) && drag->isNonEmpty()) {
                 drag->selectAll();
                 ret = TRUE;
             }
@@ -766,15 +766,15 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_Left: // move handle left
         case GDK_KEY_KP_Left:
         case GDK_KEY_KP_4:
-            if (!MOD__CTRL) { // not ctrl
+            if (!MOD__CTRL(event)) { // not ctrl
                 gint mul = 1 + gobble_key_events(
                     get_group0_keyval(&event->key), 0); // with any mask
-                if (MOD__ALT) { // alt
-                    if (MOD__SHIFT) drag->selected_move_screen(mul*-10, 0); // shift
+                if (MOD__ALT(event)) { // alt
+                    if (MOD__SHIFT(event)) drag->selected_move_screen(mul*-10, 0); // shift
                     else drag->selected_move_screen(mul*-1, 0); // no shift
                 }
                 else { // no alt
-                    if (MOD__SHIFT) drag->selected_move(mul*-10*nudge, 0); // shift
+                    if (MOD__SHIFT(event)) drag->selected_move(mul*-10*nudge, 0); // shift
                     else drag->selected_move(mul*-nudge, 0); // no shift
                 }
                 ret = TRUE;
@@ -783,15 +783,15 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_Up: // move handle up
         case GDK_KEY_KP_Up:
         case GDK_KEY_KP_8:
-            if (!MOD__CTRL) { // not ctrl
+            if (!MOD__CTRL(event)) { // not ctrl
                 gint mul = 1 + gobble_key_events(
                     get_group0_keyval(&event->key), 0); // with any mask
-                if (MOD__ALT) { // alt
-                    if (MOD__SHIFT) drag->selected_move_screen(0, mul*10); // shift
+                if (MOD__ALT(event)) { // alt
+                    if (MOD__SHIFT(event)) drag->selected_move_screen(0, mul*10); // shift
                     else drag->selected_move_screen(0, mul*1); // no shift
                 }
                 else { // no alt
-                    if (MOD__SHIFT) drag->selected_move(0, mul*10*nudge); // shift
+                    if (MOD__SHIFT(event)) drag->selected_move(0, mul*10*nudge); // shift
                     else drag->selected_move(0, mul*nudge); // no shift
                 }
                 ret = TRUE;
@@ -801,15 +801,15 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_Right: // move handle right
         case GDK_KEY_KP_Right:
         case GDK_KEY_KP_6:
-            if (!MOD__CTRL) { // not ctrl
+            if (!MOD__CTRL(event)) { // not ctrl
                 gint mul = 1 + gobble_key_events(
                     get_group0_keyval(&event->key), 0); // with any mask
-                if (MOD__ALT) { // alt
-                    if (MOD__SHIFT) drag->selected_move_screen(mul*10, 0); // shift
+                if (MOD__ALT(event)) { // alt
+                    if (MOD__SHIFT(event)) drag->selected_move_screen(mul*10, 0); // shift
                     else drag->selected_move_screen(mul*1, 0); // no shift
                 }
                 else { // no alt
-                    if (MOD__SHIFT) drag->selected_move(mul*10*nudge, 0); // shift
+                    if (MOD__SHIFT(event)) drag->selected_move(mul*10*nudge, 0); // shift
                     else drag->selected_move(mul*nudge, 0); // no shift
                 }
                 ret = TRUE;
@@ -819,15 +819,15 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
         case GDK_KEY_Down: // move handle down
         case GDK_KEY_KP_Down:
         case GDK_KEY_KP_2:
-            if (!MOD__CTRL) { // not ctrl
+            if (!MOD__CTRL(event)) { // not ctrl
                 gint mul = 1 + gobble_key_events(
                     get_group0_keyval(&event->key), 0); // with any mask
-                if (MOD__ALT) { // alt
-                    if (MOD__SHIFT) drag->selected_move_screen(0, mul*-10); // shift
+                if (MOD__ALT(event)) { // alt
+                    if (MOD__SHIFT(event)) drag->selected_move_screen(0, mul*-10); // shift
                     else drag->selected_move_screen(0, mul*-1); // no shift
                 }
                 else { // no alt
-                    if (MOD__SHIFT) drag->selected_move(0, mul*-10*nudge); // shift
+                    if (MOD__SHIFT(event)) drag->selected_move(0, mul*-10*nudge); // shift
                     else drag->selected_move(0, mul*-nudge); // no shift
                 }
                 ret = TRUE;
@@ -855,7 +855,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_KEY_b:  // Toggle mesh side between lineto and curveto.
         case GDK_KEY_B: 
-            if (MOD__ALT && drag->isNonEmpty() && drag->hasSelection()) {
+            if (MOD__ALT(event) && drag->isNonEmpty() && drag->hasSelection()) {
                 sp_mesh_context_corner_operation ( rc, MG_CORNER_SIDE_TOGGLE );
                 ret = TRUE;
             }
@@ -863,7 +863,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_KEY_c:  // Convert mesh side from generic Bezier to Bezier approximating arc,
         case GDK_KEY_C:  // preserving handle direction.
-            if (MOD__ALT && drag->isNonEmpty() && drag->hasSelection()) {
+            if (MOD__ALT(event) && drag->isNonEmpty() && drag->hasSelection()) {
                 sp_mesh_context_corner_operation ( rc, MG_CORNER_SIDE_ARC );
                 ret = TRUE;
             }
@@ -871,7 +871,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_KEY_g:  // Toggle mesh tensor points on/off
         case GDK_KEY_G: 
-            if (MOD__ALT && drag->isNonEmpty() && drag->hasSelection()) {
+            if (MOD__ALT(event) && drag->isNonEmpty() && drag->hasSelection()) {
                 sp_mesh_context_corner_operation ( rc, MG_CORNER_TENSOR_TOGGLE );
                 ret = TRUE;
             }
@@ -879,7 +879,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_KEY_j:  // Smooth corner color
         case GDK_KEY_J:
-            if (MOD__ALT && drag->isNonEmpty() && drag->hasSelection()) {
+            if (MOD__ALT(event) && drag->isNonEmpty() && drag->hasSelection()) {
                 sp_mesh_context_corner_operation ( rc, MG_CORNER_COLOR_SMOOTH );
                 ret = TRUE;
             }
@@ -887,7 +887,7 @@ sp_mesh_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_KEY_k:  // Pick corner color
         case GDK_KEY_K:
-            if (MOD__ALT && drag->isNonEmpty() && drag->hasSelection()) {
+            if (MOD__ALT(event) && drag->isNonEmpty() && drag->hasSelection()) {
                 sp_mesh_context_corner_operation ( rc, MG_CORNER_COLOR_PICK );
                 ret = TRUE;
             }

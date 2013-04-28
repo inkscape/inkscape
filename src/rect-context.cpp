@@ -359,13 +359,13 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         case GDK_KEY_KP_Up:
         case GDK_KEY_KP_Down:
             // prevent the zoom field from activation
-            if (!MOD__CTRL_ONLY)
+            if (!MOD__CTRL_ONLY(event))
                 ret = TRUE;
             break;
 
         case GDK_KEY_x:
         case GDK_KEY_X:
-            if (MOD__ALT_ONLY) {
+            if (MOD__ALT_ONLY(event)) {
                 desktop->setToolboxFocusTo ("altx-rect");
                 ret = TRUE;
             }
@@ -373,7 +373,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
 
         case GDK_KEY_g:
         case GDK_KEY_G:
-            if (MOD__SHIFT_ONLY) {
+            if (MOD__SHIFT_ONLY(event)) {
                 sp_selection_to_guides(desktop);
                 ret = true;
             }
@@ -406,7 +406,7 @@ static gint sp_rect_context_root_handler(SPEventContext *event_context, GdkEvent
         case GDK_KEY_Delete:
         case GDK_KEY_KP_Delete:
         case GDK_KEY_BackSpace:
-            ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY);
+            ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY(event));
             break;
 
         default:

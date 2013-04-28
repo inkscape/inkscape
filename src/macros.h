@@ -35,12 +35,12 @@
 #endif
 
 // keyboard modifiers in an event
-#define MOD__SHIFT (event->key.state & GDK_SHIFT_MASK)
-#define MOD__CTRL (event->key.state & GDK_CONTROL_MASK)
-#define MOD__ALT (event->key.state & GDK_MOD1_MASK)
-#define MOD__SHIFT_ONLY ((event->key.state & GDK_SHIFT_MASK) && !(event->key.state & GDK_CONTROL_MASK) && !(event->key.state & GDK_MOD1_MASK))
-#define MOD__CTRL_ONLY (!(event->key.state & GDK_SHIFT_MASK) && (event->key.state & GDK_CONTROL_MASK) && !(event->key.state & GDK_MOD1_MASK))
-#define MOD__ALT_ONLY (!(event->key.state & GDK_SHIFT_MASK) && !(event->key.state & GDK_CONTROL_MASK) && (event->key.state & GDK_MOD1_MASK))
+#define MOD__SHIFT(event) ((event)->key.state & GDK_SHIFT_MASK)
+#define MOD__CTRL(event) ((event)->key.state & GDK_CONTROL_MASK)
+#define MOD__ALT(event) ((event)->key.state & GDK_MOD1_MASK)
+#define MOD__SHIFT_ONLY(event) (((event)->key.state & GDK_SHIFT_MASK) && !((event)->key.state & GDK_CONTROL_MASK) && !((event)->key.state & GDK_MOD1_MASK))
+#define MOD__CTRL_ONLY(event) (!((event)->key.state & GDK_SHIFT_MASK) && ((event)->key.state & GDK_CONTROL_MASK) && !((event)->key.state & GDK_MOD1_MASK))
+#define MOD__ALT_ONLY(event) (!((event)->key.state & GDK_SHIFT_MASK) && !((event)->key.state & GDK_CONTROL_MASK) && ((event)->key.state & GDK_MOD1_MASK))
 
 /*
   Local Variables:

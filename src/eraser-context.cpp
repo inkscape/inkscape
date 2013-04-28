@@ -567,7 +567,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
         switch (get_group0_keyval (&event->key)) {
         case GDK_KEY_Up:
         case GDK_KEY_KP_Up:
-            if (!MOD__CTRL_ONLY) {
+            if (!MOD__CTRL_ONLY(event)) {
                 dc->angle += 5.0;
                 if (dc->angle > 90.0)
                     dc->angle = 90.0;
@@ -577,7 +577,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
             break;
         case GDK_KEY_Down:
         case GDK_KEY_KP_Down:
-            if (!MOD__CTRL_ONLY) {
+            if (!MOD__CTRL_ONLY(event)) {
                 dc->angle -= 5.0;
                 if (dc->angle < -90.0)
                     dc->angle = -90.0;
@@ -587,7 +587,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
             break;
         case GDK_KEY_Right:
         case GDK_KEY_KP_Right:
-            if (!MOD__CTRL_ONLY) {
+            if (!MOD__CTRL_ONLY(event)) {
                 dc->width += 0.01;
                 if (dc->width > 1.0)
                     dc->width = 1.0;
@@ -597,7 +597,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
             break;
         case GDK_KEY_Left:
         case GDK_KEY_KP_Left:
-            if (!MOD__CTRL_ONLY) {
+            if (!MOD__CTRL_ONLY(event)) {
                 dc->width -= 0.01;
                 if (dc->width < 0.01)
                     dc->width = 0.01;
@@ -619,7 +619,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
             break;
         case GDK_KEY_x:
         case GDK_KEY_X:
-            if (MOD__ALT_ONLY) {
+            if (MOD__ALT_ONLY(event)) {
                 desktop->setToolboxFocusTo ("altx-eraser");
                 ret = TRUE;
             }
@@ -634,7 +634,7 @@ sp_eraser_context_root_handler(SPEventContext *event_context,
             break;
         case GDK_KEY_z:
         case GDK_KEY_Z:
-            if (MOD__CTRL_ONLY && dc->is_drawing) {
+            if (MOD__CTRL_ONLY(event) && dc->is_drawing) {
                 // if drawing, cancel, otherwise pass it up for undo
                 eraser_cancel (dc);
                 ret = TRUE;

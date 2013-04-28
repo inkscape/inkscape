@@ -728,12 +728,12 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                 // there is an active text object in this context, or a new object was just created
 
                 if (tc->unimode || !tc->imc
-                    || (MOD__CTRL && MOD__SHIFT)    // input methods tend to steal this for unimode,
+                    || (MOD__CTRL(event) && MOD__SHIFT(event))    // input methods tend to steal this for unimode,
                                                     // but we have our own so make sure they don't swallow it
                     || !gtk_im_context_filter_keypress(tc->imc, (GdkEventKey*) event)) {
                     //IM did not consume the key, or we're in unimode
 
-                        if (!MOD__CTRL_ONLY && tc->unimode) {
+                    if (!MOD__CTRL_ONLY(event) && tc->unimode) {
                             /* TODO: ISO 14755 (section 3 Definitions) says that we should also
                                accept the first 6 characters of alphabets other than the latin
                                alphabet "if the Latin alphabet is not used".  The below is also
@@ -829,13 +829,13 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                         switch (group0_keyval) {
                             case GDK_KEY_x:
                             case GDK_KEY_X:
-                                if (MOD__ALT_ONLY) {
+                                if (MOD__ALT_ONLY(event)) {
                                     desktop->setToolboxFocusTo ("altx-text");
                                     return TRUE;
                                 }
                                 break;
                             case GDK_KEY_space:
-                                if (MOD__CTRL_ONLY) {
+                                if (MOD__CTRL_ONLY(event)) {
                                     /* No-break space */
                                     if (!tc->text) { // printable key; create text if none (i.e. if nascent_object)
                                         sp_text_context_setup_text(tc);
@@ -852,7 +852,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                 break;
                             case GDK_KEY_U:
                             case GDK_KEY_u:
-                                if (MOD__CTRL_ONLY || (MOD__CTRL && MOD__SHIFT)) {
+                                if (MOD__CTRL_ONLY(event) || (MOD__CTRL(event) && MOD__SHIFT(event))) {
                                     if (tc->unimode) {
                                         tc->unimode = false;
                                         event_context->defaultMessageContext()->clear();
@@ -869,7 +869,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                 break;
                             case GDK_KEY_B:
                             case GDK_KEY_b:
-                                if (MOD__CTRL_ONLY && tc->text) {
+                                if (MOD__CTRL_ONLY(event) && tc->text) {
                                     SPStyle const *style = sp_te_style_at_position(tc->text, std::min(tc->text_sel_start, tc->text_sel_end));
                                     SPCSSAttr *css = sp_repr_css_attr_new();
                                     if (style->font_weight.computed == SP_CSS_FONT_WEIGHT_NORMAL
@@ -891,7 +891,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                 break;
                             case GDK_KEY_I:
                             case GDK_KEY_i:
-                                if (MOD__CTRL_ONLY && tc->text) {
+                                if (MOD__CTRL_ONLY(event) && tc->text) {
                                     SPStyle const *style = sp_te_style_at_position(tc->text, std::min(tc->text_sel_start, tc->text_sel_end));
                                     SPCSSAttr *css = sp_repr_css_attr_new();
                                     if (style->font_style.computed != SP_CSS_FONT_STYLE_NORMAL)
@@ -910,7 +910,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
 
                             case GDK_KEY_A:
                             case GDK_KEY_a:
-                                if (MOD__CTRL_ONLY && tc->text) {
+                                if (MOD__CTRL_ONLY(event) && tc->text) {
                                     Inkscape::Text::Layout const *layout = te_get_layout(tc->text);
                                     if (layout) {
                                         tc->text_sel_start = layout->begin();
@@ -1012,10 +1012,10 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_KP_Left:
                             case GDK_KEY_KP_4:
                                 if (tc->text) {
-                                    if (MOD__ALT) {
+                                    if (MOD__ALT(event)) {
                                         gint mul = 1 + gobble_key_events(
                                             get_group0_keyval(&event->key), 0); // with any mask
-                                        if (MOD__SHIFT)
+                                        if (MOD__SHIFT(event))
                                             sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(mul*-10, 0));
                                         else
                                             sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(mul*-1, 0));
@@ -1024,7 +1024,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                         DocumentUndo::maybeDone(sp_desktop_document(desktop), "kern:left", SP_VERB_CONTEXT_TEXT,
 								_("Kern to the left"));
                                     } else {
-                                        if (MOD__CTRL)
+                                        if (MOD__CTRL(event))
                                             tc->text_sel_end.cursorLeftWithControl();
                                         else
                                             tc->text_sel_end.cursorLeft();
@@ -1037,10 +1037,10 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_KP_Right:
                             case GDK_KEY_KP_6:
                                 if (tc->text) {
-                                    if (MOD__ALT) {
+                                    if (MOD__ALT(event)) {
                                         gint mul = 1 + gobble_key_events(
                                             get_group0_keyval(&event->key), 0); // with any mask
-                                        if (MOD__SHIFT)
+                                        if (MOD__SHIFT(event))
                                             sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(mul*10, 0));
                                         else
                                             sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(mul*1, 0));
@@ -1049,7 +1049,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                         DocumentUndo::maybeDone(sp_desktop_document(desktop), "kern:right", SP_VERB_CONTEXT_TEXT,
 								_("Kern to the right"));
                                     } else {
-                                        if (MOD__CTRL)
+                                        if (MOD__CTRL(event))
                                             tc->text_sel_end.cursorRightWithControl();
                                         else
                                             tc->text_sel_end.cursorRight();
@@ -1062,10 +1062,10 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_KP_Up:
                             case GDK_KEY_KP_8:
                                 if (tc->text) {
-                                    if (MOD__ALT) {
+                                    if (MOD__ALT(event)) {
                                         gint mul = 1 + gobble_key_events(
                                             get_group0_keyval(&event->key), 0); // with any mask
-                                        if (MOD__SHIFT)
+                                        if (MOD__SHIFT(event))
                                             sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(0, mul*-10));
                                         else
                                             sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(0, mul*-1));
@@ -1074,7 +1074,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                         DocumentUndo::maybeDone(sp_desktop_document(desktop), "kern:up", SP_VERB_CONTEXT_TEXT,
 								_("Kern up"));
                                     } else {
-                                        if (MOD__CTRL)
+                                        if (MOD__CTRL(event))
                                             tc->text_sel_end.cursorUpWithControl();
                                         else
                                             tc->text_sel_end.cursorUp();
@@ -1087,10 +1087,10 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_KP_Down:
                             case GDK_KEY_KP_2:
                                 if (tc->text) {
-                                    if (MOD__ALT) {
+                                    if (MOD__ALT(event)) {
                                         gint mul = 1 + gobble_key_events(
                                             get_group0_keyval(&event->key), 0); // with any mask
-                                        if (MOD__SHIFT)
+                                        if (MOD__SHIFT(event))
                                             sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(0, mul*10));
                                         else
                                             sp_te_adjust_kerning_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, Geom::Point(0, mul*1));
@@ -1099,7 +1099,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                         DocumentUndo::maybeDone(sp_desktop_document(desktop), "kern:down", SP_VERB_CONTEXT_TEXT,
 								_("Kern down"));
                                     } else {
-                                        if (MOD__CTRL)
+                                        if (MOD__CTRL(event))
                                             tc->text_sel_end.cursorDownWithControl();
                                         else
                                             tc->text_sel_end.cursorDown();
@@ -1111,7 +1111,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_Home:
                             case GDK_KEY_KP_Home:
                                 if (tc->text) {
-                                    if (MOD__CTRL)
+                                    if (MOD__CTRL(event))
                                         tc->text_sel_end.thisStartOfShape();
                                     else
                                         tc->text_sel_end.thisStartOfLine();
@@ -1122,7 +1122,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_End:
                             case GDK_KEY_KP_End:
                                 if (tc->text) {
-                                    if (MOD__CTRL)
+                                    if (MOD__CTRL(event))
                                         tc->text_sel_end.nextStartOfShape();
                                     else
                                         tc->text_sel_end.thisEndOfLine();
@@ -1161,9 +1161,9 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                 return TRUE;
                             case GDK_KEY_bracketleft:
                                 if (tc->text) {
-                                    if (MOD__ALT || MOD__CTRL) {
-                                        if (MOD__ALT) {
-                                            if (MOD__SHIFT) {
+                                    if (MOD__ALT(event) || MOD__CTRL(event)) {
+                                        if (MOD__ALT(event)) {
+                                            if (MOD__SHIFT(event)) {
                                                 // FIXME: alt+shift+[] does not work, don't know why
                                                 sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -10);
                                             } else {
@@ -1182,9 +1182,9 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                 break;
                             case GDK_KEY_bracketright:
                                 if (tc->text) {
-                                    if (MOD__ALT || MOD__CTRL) {
-                                        if (MOD__ALT) {
-                                            if (MOD__SHIFT) {
+                                    if (MOD__ALT(event) || MOD__CTRL(event)) {
+                                        if (MOD__ALT(event)) {
+                                            if (MOD__SHIFT(event)) {
                                                 // FIXME: alt+shift+[] does not work, don't know why
                                                 sp_te_adjust_rotation_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 10);
                                             } else {
@@ -1204,16 +1204,16 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_less:
                             case GDK_KEY_comma:
                                 if (tc->text) {
-                                    if (MOD__ALT) {
-                                        if (MOD__CTRL) {
-                                            if (MOD__SHIFT)
+                                    if (MOD__ALT(event)) {
+                                        if (MOD__CTRL(event)) {
+                                            if (MOD__SHIFT(event))
                                                 sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -10);
                                             else
                                                 sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -1);
                                             DocumentUndo::maybeDone(sp_desktop_document(desktop), "linespacing:dec", SP_VERB_CONTEXT_TEXT,
 								    _("Contract line spacing"));
                                         } else {
-                                            if (MOD__SHIFT)
+                                            if (MOD__SHIFT(event))
                                                 sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -10);
                                             else
                                                 sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, -1);
@@ -1229,16 +1229,16 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                             case GDK_KEY_greater:
                             case GDK_KEY_period:
                                 if (tc->text) {
-                                    if (MOD__ALT) {
-                                        if (MOD__CTRL) {
-                                            if (MOD__SHIFT)
+                                    if (MOD__ALT(event)) {
+                                        if (MOD__CTRL(event)) {
+                                            if (MOD__SHIFT(event))
                                                 sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 10);
                                             else
                                                 sp_te_adjust_linespacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 1);
                                             DocumentUndo::maybeDone(sp_desktop_document(desktop), "linespacing:inc", SP_VERB_CONTEXT_TEXT,
 								    _("Expand line spacing"));
                                         } else {
-                                            if (MOD__SHIFT)
+                                            if (MOD__SHIFT(event))
                                                 sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 10);
                                             else
                                                 sp_te_adjust_tspan_letterspacing_screen(tc->text, tc->text_sel_start, tc->text_sel_end, desktop, 1);
@@ -1256,7 +1256,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                         }
 
                         if (cursor_moved) {
-                            if (!MOD__SHIFT)
+                            if (!MOD__SHIFT(event))
                                 tc->text_sel_start = tc->text_sel_end;
                             if (old_start != tc->text_sel_start || old_end != tc->text_sel_end) {
                                 sp_text_context_update_cursor(tc);
@@ -1272,7 +1272,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                      group0_keyval == GDK_KEY_Down  ||
                      group0_keyval == GDK_KEY_KP_Up ||
                      group0_keyval == GDK_KEY_KP_Down )
-                    && !MOD__CTRL_ONLY) {
+                    && !MOD__CTRL_ONLY(event)) {
                     return TRUE;
                 } else if (group0_keyval == GDK_KEY_Escape) { // cancel rubberband
                     if (tc->creating) {
@@ -1283,7 +1283,7 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                         }
                         Inkscape::Rubberband::get(desktop)->stop();
                     }
-                } else if ((group0_keyval == GDK_KEY_x || group0_keyval == GDK_KEY_X) && MOD__ALT_ONLY) {
+                } else if ((group0_keyval == GDK_KEY_x || group0_keyval == GDK_KEY_X) && MOD__ALT_ONLY(event)) {
                     desktop->setToolboxFocusTo ("altx-text");
                     return TRUE;
                 }

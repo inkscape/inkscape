@@ -310,12 +310,12 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KEY_KP_Up:
                 case GDK_KEY_KP_Down:
                     // prevent the zoom field from activation
-                    if (!MOD__CTRL_ONLY)
+                    if (!MOD__CTRL_ONLY(event))
                         ret = TRUE;
                     break;
                 case GDK_KEY_x:
                 case GDK_KEY_X:
-                    if (MOD__ALT_ONLY) {
+                    if (MOD__ALT_ONLY(event)) {
                         desktop->setToolboxFocusTo ("altx-spiral");
                         ret = TRUE;
                     }
@@ -346,7 +346,7 @@ sp_spiral_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 case GDK_KEY_Delete:
                 case GDK_KEY_KP_Delete:
                 case GDK_KEY_BackSpace:
-                    ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY);
+                    ret = event_context->deleteSelectedDrag(MOD__CTRL_ONLY(event));
                     break;
 
                 default:

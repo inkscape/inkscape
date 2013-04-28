@@ -588,7 +588,7 @@ static gint sp_event_context_private_root_handler(
 
         case GDK_KEY_D:
         case GDK_KEY_d:
-            if (!MOD__SHIFT && !MOD__CTRL && !MOD__ALT) {
+            if (!MOD__SHIFT(event) && !MOD__CTRL(event) && !MOD__ALT(event)) {
                 sp_toggle_dropper(desktop);
                 ret = TRUE;
             }
@@ -598,7 +598,7 @@ static gint sp_event_context_private_root_handler(
             if (desktop->quick_zoomed()) {
                 ret = TRUE;
             }
-            if (!MOD__SHIFT && !MOD__CTRL && !MOD__ALT) {
+            if (!MOD__SHIFT(event) && !MOD__CTRL(event) && !MOD__ALT(event)) {
                 desktop->zoom_quick(true);
                 ret = TRUE;
             }
@@ -607,7 +607,7 @@ static gint sp_event_context_private_root_handler(
         case GDK_KEY_w:
         case GDK_KEY_F4:
             /* Close view */
-            if (MOD__CTRL_ONLY) {
+            if (MOD__CTRL_ONLY(event)) {
                 sp_ui_close_view(NULL);
                 ret = TRUE;
             }
@@ -615,7 +615,7 @@ static gint sp_event_context_private_root_handler(
         case GDK_KEY_Left: // Ctrl Left
         case GDK_KEY_KP_Left:
         case GDK_KEY_KP_4:
-            if (MOD__CTRL_ONLY) {
+            if (MOD__CTRL_ONLY(event)) {
                 int i = (int) floor(key_scroll * accelerate_scroll(event,
                         acceleration, sp_desktop_canvas(desktop)));
                 gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
@@ -626,7 +626,7 @@ static gint sp_event_context_private_root_handler(
         case GDK_KEY_Up: // Ctrl Up
         case GDK_KEY_KP_Up:
         case GDK_KEY_KP_8:
-            if (MOD__CTRL_ONLY) {
+            if (MOD__CTRL_ONLY(event)) {
                 int i = (int) floor(key_scroll * accelerate_scroll(event,
                         acceleration, sp_desktop_canvas(desktop)));
                 gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
@@ -637,7 +637,7 @@ static gint sp_event_context_private_root_handler(
         case GDK_KEY_Right: // Ctrl Right
         case GDK_KEY_KP_Right:
         case GDK_KEY_KP_6:
-            if (MOD__CTRL_ONLY) {
+            if (MOD__CTRL_ONLY(event)) {
                 int i = (int) floor(key_scroll * accelerate_scroll(event,
                         acceleration, sp_desktop_canvas(desktop)));
                 gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
@@ -648,7 +648,7 @@ static gint sp_event_context_private_root_handler(
         case GDK_KEY_Down: // Ctrl Down
         case GDK_KEY_KP_Down:
         case GDK_KEY_KP_2:
-            if (MOD__CTRL_ONLY) {
+            if (MOD__CTRL_ONLY(event)) {
                 int i = (int) floor(key_scroll * accelerate_scroll(event,
                         acceleration, sp_desktop_canvas(desktop)));
                 gobble_key_events(get_group0_keyval(&event->key), GDK_CONTROL_MASK);
@@ -657,7 +657,7 @@ static gint sp_event_context_private_root_handler(
             }
             break;
         case GDK_KEY_F10:
-            if (MOD__SHIFT_ONLY) {
+            if (MOD__SHIFT_ONLY(event)) {
                 sp_event_root_menu_popup(desktop, NULL, event);
                 ret = TRUE;
             }
@@ -673,7 +673,7 @@ static gint sp_event_context_private_root_handler(
             break;
         case GDK_KEY_z:
         case GDK_KEY_Z:
-            if (MOD__ALT_ONLY) {
+            if (MOD__ALT_ONLY(event)) {
                 desktop->zoom_grab_focus();
                 ret = TRUE;
             }
@@ -1135,11 +1135,11 @@ void sp_event_show_modifier_tip(Inkscape::MessageContext *message_context,
         gchar const *alt_tip) {
     guint keyval = get_group0_keyval(&event->key);
 
-    bool ctrl = ctrl_tip && (MOD__CTRL || (keyval == GDK_KEY_Control_L) || (keyval
+    bool ctrl = ctrl_tip && (MOD__CTRL(event) || (keyval == GDK_KEY_Control_L) || (keyval
             == GDK_KEY_Control_R));
-    bool shift = shift_tip && (MOD__SHIFT || (keyval == GDK_KEY_Shift_L) || (keyval
+    bool shift = shift_tip && (MOD__SHIFT(event) || (keyval == GDK_KEY_Shift_L) || (keyval
             == GDK_KEY_Shift_R));
-    bool alt = alt_tip && (MOD__ALT || (keyval == GDK_KEY_Alt_L) || (keyval
+    bool alt = alt_tip && (MOD__ALT(event) || (keyval == GDK_KEY_Alt_L) || (keyval
             == GDK_KEY_Alt_R) || (keyval == GDK_KEY_Meta_L) || (keyval == GDK_KEY_Meta_R));
 
     gchar *tip = g_strdup_printf("%s%s%s%s%s", (ctrl ? ctrl_tip : ""), (ctrl
