@@ -315,13 +315,12 @@ sp_desktop_widget_class_init (SPDesktopWidgetClass *klass)
  * This adjusts the range of the rulers when the dock container is adjusted
  * (fixes lp:950552)
  */
-static void
-canvas_tbl_size_allocate(GtkWidget    *widget,
-                         GdkRectangle *allocation,
-                         gpointer      data)
+static void canvas_tbl_size_allocate(GtkWidget    * /*widget*/,
+                                     GdkRectangle * /*allocation*/,
+                                     gpointer      data)
 {
     SPDesktopWidget *dtw = SP_DESKTOP_WIDGET(data); 
-    sp_desktop_widget_update_rulers (dtw);
+    sp_desktop_widget_update_rulers(dtw);
 }
 
 /**

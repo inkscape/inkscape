@@ -650,7 +650,7 @@ void TextEdit::onFontChange(SPFontSelector * /*fontsel*/, gchar* fontspec, TextE
 
 }
 
-void TextEdit::onStartOffsetChange(GtkTextBuffer *text_buffer, TextEdit *self)
+void TextEdit::onStartOffsetChange(GtkTextBuffer * /*text_buffer*/, TextEdit *self)
 {
     SPItem *text = self->getSelectedTextItem();
     if (text && SP_IS_TEXT_TEXTPATH(text))

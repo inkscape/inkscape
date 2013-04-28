@@ -332,7 +332,7 @@ static void sp_font_selector_family_select_row(GtkTreeSelection *selection,
 }
 
 // Callback when row changed
-static void sp_font_selector_style_select_row (GtkTreeSelection *selection,
+static void sp_font_selector_style_select_row (GtkTreeSelection * /*selection*/,
                                                SPFontSelector   *fsel)
 {
     if (!fsel->block_emit)

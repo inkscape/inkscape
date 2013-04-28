@@ -312,7 +312,7 @@ void SymbolsDialog::iconDragDataGet(const Glib::RefPtr<Gdk::DragContext>& /*cont
 
 }
 
-void SymbolsDialog::defsModified(SPObject *object, guint flags)
+void SymbolsDialog::defsModified(SPObject * /*object*/, guint /*flags*/)
 {
   if ( !symbolSets[symbolSet->get_active_text()] ) {
     rebuild();
