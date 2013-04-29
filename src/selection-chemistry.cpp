@@ -3765,7 +3765,7 @@ void sp_selection_unset_mask(SPDesktop *desktop, bool apply_clip_path) {
             }
 
             // collect distinct mask object (and associate with item to apply transform)
-            if (NULL != uri_ref && NULL != uri_ref->getObject()) {
+            if ((NULL != uri_ref) && (NULL != uri_ref->getObject())) {
                 referenced_objects[uri_ref->getObject()] = item;
             }
         }

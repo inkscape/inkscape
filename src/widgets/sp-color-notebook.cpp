@@ -129,7 +129,7 @@ void ColorNotebook::switchPage(GtkNotebook*,
         csel->base->getColorAlpha(_color, _alpha);
     }
     widget = gtk_notebook_get_nth_page (GTK_NOTEBOOK (_book), page_num);
-    if ( widget && SP_IS_COLOR_SELECTOR (widget) )
+    if ( widget && SP_IS_COLOR_SELECTOR(widget) )
     {
         csel = SP_COLOR_SELECTOR (widget);
         csel->base->setColorAlpha( _color, _alpha );
@@ -232,7 +232,7 @@ void ColorNotebook::init()
         {
             guint howmany = 1;
             gpointer klass = g_type_class_ref (selector_types[i]);
-            if ( klass && SP_IS_COLOR_SELECTOR_CLASS (klass) )
+            if ( klass && SP_IS_COLOR_SELECTOR_CLASS(klass) )
             {
                 SPColorSelectorClass *ck = SP_COLOR_SELECTOR_CLASS (klass);
                 howmany = MAX (1, ck->submode_count);

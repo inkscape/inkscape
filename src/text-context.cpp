@@ -219,7 +219,7 @@ static void sp_text_context_setup(SPEventContext *ec)
     ec->shape_editor = new ShapeEditor(ec->desktop);
 
     SPItem *item = sp_desktop_selection(ec->desktop)->singleItem();
-    if (item && SP_IS_FLOWTEXT (item) && SP_FLOWTEXT(item)->has_internal_frame()) {
+    if (item && SP_IS_FLOWTEXT(item) && SP_FLOWTEXT(item)->has_internal_frame()) {
         ec->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 
@@ -1453,7 +1453,7 @@ sp_text_context_selection_changed(Inkscape::Selection *selection, SPTextContext 
 
     ec->shape_editor->unset_item(SH_KNOTHOLDER);
     SPItem *item = selection->singleItem();
-    if (item && SP_IS_FLOWTEXT (item) && SP_FLOWTEXT(item)->has_internal_frame()) {
+    if (item && SP_IS_FLOWTEXT(item) && SP_FLOWTEXT(item)->has_internal_frame()) {
         ec->shape_editor->set_item(item, SH_KNOTHOLDER);
     }
 

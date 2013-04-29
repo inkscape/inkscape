@@ -259,7 +259,7 @@ static void sp_attribute_table_object_modified ( SPObject */*object*/,
                                      guint flags,
                                      SPAttributeTable *spat )
 {
-    if (flags && SP_OBJECT_MODIFIED_FLAG)
+    if (flags & SP_OBJECT_MODIFIED_FLAG)
     {
         std::vector<Glib::ustring> attributes = spat->get_attributes();
         std::vector<Gtk::Entry *> entries = spat->get_entries();
@@ -270,7 +270,7 @@ static void sp_attribute_table_object_modified ( SPObject */*object*/,
             text = e->get_text ();
             if (val || !text.empty()) {
                 if (text != val) {
-                    /* We are different */
+                    // We are different
                     spat->blocked = true;
                     e->set_text (val ? val : (const gchar *) "");
                     spat->blocked = false;

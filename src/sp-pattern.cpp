@@ -591,7 +591,7 @@ sp_pattern_create_pattern(SPPaintServer *ps,
     SPPattern *shown = NULL;
     for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
         // find the first one with item children
-        if (pat_i && SP_IS_OBJECT (pat_i) && pattern_hasItemChildren(pat_i)) {
+        if (pat_i && SP_IS_OBJECT(pat_i) && pattern_hasItemChildren(pat_i)) {
             shown = pat_i;
             break; // do not go further up the chain if children are found
         }

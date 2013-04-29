@@ -1080,11 +1080,11 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     // show items and render them
     for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-        if (pat_i && SP_IS_OBJECT (pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
+        if (pat_i && SP_IS_OBJECT(pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
             for ( SPObject *child = pat_i->firstChild() ; child; child = child->getNext() ) {
-                if (SP_IS_ITEM (child)) {
-                    SP_ITEM (child)->invoke_show (drawing, dkey, SP_ITEM_REFERENCE_FLAGS);
-                    _renderer->renderItem(pattern_ctx, SP_ITEM (child));
+                if (SP_IS_ITEM(child)) {
+                    SP_ITEM(child)->invoke_show(drawing, dkey, SP_ITEM_REFERENCE_FLAGS);
+                    _renderer->renderItem(pattern_ctx, SP_ITEM(child));
                 }
             }
             break; // do not go further up the chain if children are found
@@ -1109,10 +1109,10 @@ CairoRenderContext::_createPatternPainter(SPPaintServer const *const paintserver
 
     // hide all items
     for (SPPattern *pat_i = pat; pat_i != NULL; pat_i = pat_i->ref ? pat_i->ref->getObject() : NULL) {
-        if (pat_i && SP_IS_OBJECT (pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
+        if (pat_i && SP_IS_OBJECT(pat_i) && pattern_hasItemChildren(pat_i)) { // find the first one with item children
             for ( SPObject *child = pat_i->firstChild() ; child; child = child->getNext() ) {
-                if (SP_IS_ITEM (child)) {
-                    SP_ITEM (child)->invoke_hide (dkey);
+                if (SP_IS_ITEM(child)) {
+                    SP_ITEM(child)->invoke_hide(dkey);
                 }
             }
             break; // do not go further up the chain if children are found
@@ -1181,7 +1181,7 @@ CairoRenderContext::_createPatternForPaintServer(SPPaintServer const *const pain
         return NULL;
     }
 
-    if (pattern && SP_IS_GRADIENT (paintserver)) {
+    if (pattern && SP_IS_GRADIENT(paintserver)) {
         SPGradient *g = SP_GRADIENT(paintserver);
 
         // set extend type

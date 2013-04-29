@@ -1095,8 +1095,8 @@ double SPCanvasGroup::point(SPCanvasItem *item, Geom::Point p, SPCanvasItem **ac
             SPCanvasItem *point_item = NULL; // cater for incomplete item implementations
 
             int has_point;
-            if (child->visible && SP_CANVAS_ITEM_GET_CLASS (child)->point) {
-                dist = sp_canvas_item_invoke_point (child, p, &point_item);
+            if (child->visible && SP_CANVAS_ITEM_GET_CLASS(child)->point) {
+                dist = sp_canvas_item_invoke_point(child, p, &point_item);
                 has_point = TRUE;
             } else {
                 has_point = FALSE;
