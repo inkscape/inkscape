@@ -207,6 +207,11 @@ sp_selected_path_boolop(SPDesktop *desktop, bool_op bop, const unsigned int verb
         curOrig = 0;
         for (GSList *l = il; l != NULL; l = l->next)
         {
+            // apply live path effects prior to performing boolean operation
+            if (SP_IS_LPE_ITEM(l->data)) {
+                sp_lpe_item_remove_all_path_effects(SP_LPE_ITEM(l->data), true);
+            }
+
             SPCSSAttr *css = sp_repr_css_attr(reinterpret_cast<SPObject *>(il->data)->getRepr(), "style");
             gchar const *val = sp_repr_css_property(css, "fill-rule", NULL);
             if (val && strcmp(val, "nonzero") == 0) {
