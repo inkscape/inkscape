@@ -7,7 +7,7 @@
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *   Bruno Dilly <bruno.dilly@gmail.com>
  *
- * Copyright (C) 2004-2007 Authors
+ * Copyright (C) 2004-2013 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -241,6 +241,7 @@ protected:
     UI::Widget::PrefRadioButton _win_gtk;
     UI::Widget::PrefRadioButton _win_save_dialog_pos_on;
     UI::Widget::PrefRadioButton _win_save_dialog_pos_off;
+    UI::Widget::PrefCombo       _win_default_size;
     UI::Widget::PrefRadioButton _win_ontop_none;
     UI::Widget::PrefRadioButton _win_ontop_normal;
     UI::Widget::PrefRadioButton _win_ontop_agressive;

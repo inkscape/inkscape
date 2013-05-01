@@ -8,7 +8,7 @@
  *   Abhishek Sharma
  *
  * Copyright (C) 2006      Johan Engelen <johan@shouraizou.nl>
- * Copyright (C) 1999-2008 Authors
+ * Copyright (C) 1999-2013 Authors
  * Copyright (C) 2000-2001 Ximian, Inc.
  *
  * Released under GNU GPL, read the file 'COPYING' for more information
@@ -764,11 +764,13 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
     SPNamedView *nv = desktop->namedview;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool geometry_from_file = (1 == prefs->getInt("/options/savewindowgeometry/value", 0));
+    gint default_geometry = prefs->getInt("/options/defaultwindowsize/value", 1);
+    bool new_document = !(nv->window_width > 0) || !(nv->window_height > 0);
     bool show_dialogs = TRUE;
 
     // restore window size and position stored with the document
     if (geometry_from_file) {
-        if (nv->window_maximized) {
+        if (nv->window_maximized || (new_document && (default_geometry == 2))) {
             Gtk::Window *win = desktop->getToplevel();
             if (win){
                 win->maximize();
@@ -783,7 +785,6 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
             x = MAX(MIN_ONSCREEN_DISTANCE - nv->window_width, x);
             y = MAX(MIN_ONSCREEN_DISTANCE - nv->window_height, y);
             if (w>0 && h>0) {
-
                 #ifndef WIN32
                 gint dx, dy, dw, dh;
                 desktop->getWindowGeometry(dx, dy, dw, dh);
@@ -796,10 +797,16 @@ void sp_namedview_window_from_document(SPDesktop *desktop)
 
                 desktop->setWindowSize(w, h);
                 desktop->setWindowPosition(Geom::Point(x, y));
-
+            } else {
+                if (default_geometry == 1) {
+                    w = gdk_screen_width() * 0.75;
+                    h = gdk_screen_height() * 0.75;
+                    desktop->setWindowSize(w, h);
+                    desktop->setWindowPosition(Geom::Point(x, y));
+                }
             }
-        }
 
+        }
     }
 
     // restore zoom and view

@@ -8,7 +8,7 @@
  *   Johan Engelen <j.b.c.engelen@ewi.utwente.nl>
  *   Bruno Dilly <bruno.dilly@gmail.com>
  *
- * Copyright (C) 2004-2011 Authors
+ * Copyright (C) 2004-2013 Authors
  *
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
@@ -641,6 +641,15 @@ void InkscapePreferences::initPageUI()
     _win_ontop_none.init ( _("None"), "/options/transientpolicy/value", 0, false, 0);
     _win_ontop_normal.init ( _("Normal"), "/options/transientpolicy/value", 1, true, &_win_ontop_none);
     _win_ontop_agressive.init ( _("Aggressive"), "/options/transientpolicy/value", 2, false, &_win_ontop_none);
+
+    {
+        Glib::ustring defaultSizeLabels[] = {_("Small"), _("Large"), _("Maximized")};
+        int defaultSizeValues[] = {0, 1, 2};
+
+        _win_default_size.init( "/options/defaultwindowsize/value", defaultSizeLabels, defaultSizeValues, G_N_ELEMENTS(defaultSizeLabels), 1 );
+        _page_windows.add_line( false, _("Default window size:"),  _win_default_size, "",
+                           _("Set the default window size"), false);
+    }
 
     _page_windows.add_group_header( _("Saving window geometry (size and position)"));
     _page_windows.add_line( true, "", _win_save_geom_off, "",
