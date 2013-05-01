@@ -382,6 +382,14 @@ sp_item_list_to_curves(const GSList *items, GSList **selected, GSList **to_selec
         }
 
         if (SP_IS_PATH(item) && !SP_SHAPE(item)->_curve_before_lpe) {
+            // remove connector attributes
+            if (item->getAttribute("inkscape:connector-type") != NULL) {
+                item->removeAttribute("inkscape:connection-start");
+                item->removeAttribute("inkscape:connection-end");
+                item->removeAttribute("inkscape:connector-type");
+                item->removeAttribute("inkscape:connector-curvature");
+                did = true;
+            }
             continue; // already a path, and no path effect
         }
 
