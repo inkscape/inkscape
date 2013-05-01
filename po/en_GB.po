@@ -32337,7 +32337,7 @@ msgstr "Char Encoding:"
 
 #: ../share/extensions/svgcalendar.inx.h:4
 msgid "Colors"
-msgstr "Colours:"
+msgstr "Colours"
 
 #: ../share/extensions/svgcalendar.inx.h:6
 msgid "Day color:"
