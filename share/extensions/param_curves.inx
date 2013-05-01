@@ -8,11 +8,11 @@
         <page name="sampling"  _gui-text="Range and Sampling">
             <param name="t_start"  type="float" min="-1000.0" max="1000.0" _gui-text="Start t-value:">0.0</param>
             <param name="t_end"    type="float" min="-1000.0" max="1000.0" _gui-text="End t-value:">1.0</param>
-            <param name="times2pi" type="boolean"                          _gui-text="Multiply t-range by 2*pi:">true</param>
-            <param name="xleft"    type="float" min="-1000.0" max="1000.0" _gui-text="x-value of rectangle's left:">-1.0</param>
-            <param name="xright"   type="float" min="-1000.0" max="1000.0" _gui-text="x-value of rectangle's right:">1.0</param>
-            <param name="ybottom"  type="float" min="-1000.0" max="1000.0" _gui-text="y-value of rectangle's bottom:">-1.0</param>
-            <param name="ytop"     type="float" min="-1000.0" max="1000.0" _gui-text="y-value of rectangle's top:">1.0</param>
+            <param name="times2pi" type="boolean"                          _gui-text="Multiply t-range by 2*pi">true</param>
+            <param name="xleft"    type="float" min="-1000.0" max="1000.0" _gui-text="X-value of rectangle's left:">-1.0</param>
+            <param name="xright"   type="float" min="-1000.0" max="1000.0" _gui-text="X-value of rectangle's right:">1.0</param>
+            <param name="ybottom"  type="float" min="-1000.0" max="1000.0" _gui-text="Y-value of rectangle's bottom:">-1.0</param>
+            <param name="ytop"     type="float" min="-1000.0" max="1000.0" _gui-text="Y-value of rectangle's top:">1.0</param>
             <param name="samples"  type="int"   min="2"       max="1000"   _gui-text="Samples:">30</param>
             <param name="isoscale" type="boolean" _gui-text="Isotropic scaling">false</param>
             <_param name="isoscaledesc" type="description">When set, Isotropic scaling uses smallest of width/xrange or height/yrange</_param>
@@ -33,8 +33,8 @@ cosh(x); sinh(x); tanh(x).
 The constants pi and e are also available.</_param>
         </page>
     </param>
-    <param name="fofx"     type="string"  _gui-text="x-Function:">cos(3*t)</param>
-    <param name="fofy"     type="string"  _gui-text="y-Function:">sin(5*t)</param>
+    <param name="fofx"     type="string"  _gui-text="X-Function:">cos(3*t)</param>
+    <param name="fofy"     type="string"  _gui-text="Y-Function:">sin(5*t)</param>
     <param name="remove"   type="boolean" _gui-text="Remove rectangle">true</param>
     <param name="drawaxis" type="boolean" _gui-text="Draw Axes">false</param>
     <effect>

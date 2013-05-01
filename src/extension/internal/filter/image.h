@@ -53,7 +53,7 @@ public:
                 "<_item value=\"vertical\">" N_("Vertical lines") "</_item>\n"
                 "<_item value=\"horizontal\">" N_("Horizontal lines") "</_item>\n"
               "</param>\n"
-              "<param name=\"level\" gui-text=\"" N_("Level:") "\" type=\"float\" appearance=\"full\" min=\"0.1\" max=\"100.0\">1.0</param>\n"
+              "<param name=\"level\" gui-text=\"" N_("Level") "\" type=\"float\" appearance=\"full\" min=\"0.1\" max=\"100.0\">1.0</param>\n"
               "<param name=\"inverted\" gui-text=\"" N_("Invert colors") "\" type=\"boolean\" >false</param>\n"
               "<effect>\n"
                 "<object-type>all</object-type>\n"

@@ -7,11 +7,11 @@
   <dependency type="executable" location="extensions">simplestyle.py</dependency>
   <param name="tab" type="notebook">
     <page name="Options" _gui-text="Options">
-      <param name="hue"        type="int" appearance="full" min="-360" max="360" indent="0" _gui-text="Hue (°):">0</param>
+      <param name="hue"        type="int" appearance="full" min="-360" max="360" indent="0" _gui-text="Hue (°)">0</param>
       <param name="random_h"   type="boolean" _gui-text="Random hue">false</param>
-      <param name="saturation" type="int" appearance="full" min="-100" max="100" indent="0" _gui-text="Saturation (%):">0</param>
+      <param name="saturation" type="int" appearance="full" min="-100" max="100" indent="0" _gui-text="Saturation (%)">0</param>
       <param name="random_s"   type="boolean" _gui-text="Random saturation">false</param>
-      <param name="lightness"  type="int" appearance="full" min="-100" max="100" indent="0" _gui-text="Lightness (%):">0</param>
+      <param name="lightness"  type="int" appearance="full" min="-100" max="100" indent="0" _gui-text="Lightness (%)">0</param>
       <param name="random_l"   type="boolean" _gui-text="Random lightness">false</param>
     </page>
     <page name="Help" _gui-text="Help">

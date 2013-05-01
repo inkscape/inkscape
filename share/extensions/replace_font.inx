@@ -9,8 +9,8 @@
 
      <param name="action" type="notebook">
         <page name="find_replace" _gui-text="Find and Replace font">
-            <param name="fr_find" type="string" _gui-text="Find this font: "></param>
-            <param name="fr_replace" type="string" _gui-text="And replace with: "></param>
+            <param name="fr_find" type="string" _gui-text="Find font: "></param>
+            <param name="fr_replace" type="string" _gui-text="Replace with: "></param>
         </page>
         <page name="replace_all" _gui-text="Replace font">
             <param name="r_replace" type="string" _gui-text="Replace all fonts with: "></param>

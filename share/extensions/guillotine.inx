@@ -8,9 +8,9 @@
 	<dependency type="executable" location="extensions">guillotine.py</dependency>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	
-	<param name="directory" type="string" _gui-text="Directory to save images to">~/</param>
-	<param name="image" type="string" _gui-text="Image name (without extension)">guillotined</param>
-	<param name="ignore" type="boolean" _gui-text="Ignore these settings and use export hints?">false</param>
+	<param name="directory" type="string" _gui-text="Directory to save images to:">~/</param>
+	<param name="image" type="string" _gui-text="Image name (without extension):">guillotined</param>
+	<param name="ignore" type="boolean" _gui-text="Ignore these settings and use export hints">false</param>
 	
     <effect needs-live-preview="false">
                 <object-type>all</object-type>
