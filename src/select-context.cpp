@@ -26,6 +26,7 @@
 #include "document-undo.h"
 #include "selection.h"
 #include "sp-cursor.h"
+#include "style.h"
 #include "pixmaps/cursor-select-m.xpm"
 #include "pixmaps/cursor-select-d.xpm"
 #include "pixmaps/handles.xpm"
@@ -57,6 +58,7 @@ static void sp_select_context_setup(SPEventContext *ec);
 static void sp_select_context_set(SPEventContext *ec, Inkscape::Preferences::Entry *val);
 static gint sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event);
 static gint sp_select_context_item_handler(SPEventContext *event_context, SPItem *item, GdkEvent *event);
+static void sp_select_context_reset_opacities(SPEventContext *event_context);
 
 static GdkCursor *CursorSelectMouseover = NULL;
 static GdkCursor *CursorSelectDragging = NULL;
@@ -68,6 +70,10 @@ static gint drag_escaped = 0; // if non-zero, drag was canceled by esc
 static gint xp = 0, yp = 0; // where drag started
 static gint tolerance = 0;
 static bool within_tolerance = false;
+static bool is_cycling = false;
+static bool moved_while_cycling = false;
+SPEventContext *prev_event_context = NULL;
+
 
 G_DEFINE_TYPE(SPSelectContext, sp_select_context, SP_TYPE_EVENT_CONTEXT);
 
@@ -534,6 +540,11 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
         case GDK_MOTION_NOTIFY:
         {
+		if (is_cycling)
+			{
+			moved_while_cycling = true;
+			prev_event_context = event_context;
+			}
             tolerance = prefs->getIntLimited("/options/dragtolerance/value", 0, 0, 100);
             if ((event->motion.state & GDK_BUTTON1_MASK) && !event_context->space_panning) {
                 Geom::Point const motion_pt(event->motion.x, event->motion.y);
@@ -765,6 +776,15 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             GdkEventScroll *scroll_event = (GdkEventScroll*) event;
 
             if (scroll_event->state & GDK_MOD1_MASK) { // alt modified pressed
+		if (moved_while_cycling) 
+			{
+			moved_while_cycling = false;
+			sp_select_context_reset_opacities(prev_event_context);
+			prev_event_context = NULL;
+			}
+
+		is_cycling = true;
+		
                 bool shift_pressed = scroll_event->state & GDK_SHIFT_MASK;
 
                 /* Rebuild list of items underneath the mouse pointer */
@@ -840,6 +860,13 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                 sp_select_context_cycle_through_items(sc, selection, scroll_event, shift_pressed);
 
                 ret = TRUE;
+
+		GtkWindow *w =GTK_WINDOW(gtk_widget_get_toplevel( GTK_WIDGET(desktop->canvas) ));
+		if (w)
+			{
+			gtk_window_present(w);
+			gtk_widget_grab_focus (GTK_WIDGET(desktop->canvas)); 
+			}
             }
             break;
         }
@@ -1096,19 +1123,11 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
             } else {
                 if (alt) { // TODO: Should we have a variable like is_cycling or is it harmless to run this piece of code each time?
                     // quit cycle-selection and reset opacities
-                    SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
-                    Inkscape::DrawingItem *arenaitem;
-                    for (GList *l = sc->cycling_items; l != NULL; l = g_list_next(l)) {
-                        arenaitem = SP_ITEM(l->data)->get_arenaitem(desktop->dkey);
-                        arenaitem->setOpacity(1.0);
-                    }
-                    g_list_free(sc->cycling_items);
-                    g_list_free(sc->cycling_items_selected_before);
-                    g_list_free(sc->cycling_items_cmp);
-                    sc->cycling_items = NULL;
-                    sc->cycling_items_selected_before = NULL;
-                    sc->cycling_cur_item = NULL;
-                    sc->cycling_items_cmp = NULL;
+			if (is_cycling)
+				{
+				sp_select_context_reset_opacities(event_context);
+				is_cycling = false;	
+				}
                 }
             }
 
@@ -1130,6 +1149,25 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
     }
 
     return ret;
+}
+
+static void
+sp_select_context_reset_opacities(SPEventContext *event_context)
+{
+    // SPDesktop *desktop = event_context->desktop;
+	SPSelectContext *sc = SP_SELECT_CONTEXT(event_context);
+	Inkscape::DrawingItem *arenaitem;
+	for (GList *l = sc->cycling_items; l != NULL; l = g_list_next(l)) {
+		arenaitem = SP_ITEM(l->data)->get_arenaitem(event_context->desktop->dkey);
+		arenaitem->setOpacity(SP_SCALE24_TO_FLOAT(SP_ITEM(l->data)->style->opacity.value));
+		}
+	g_list_free(sc->cycling_items);
+	g_list_free(sc->cycling_items_selected_before);
+	g_list_free(sc->cycling_items_cmp);
+	sc->cycling_items = NULL;
+	sc->cycling_items_selected_before = NULL;
+	sc->cycling_cur_item = NULL;
+	sc->cycling_items_cmp = NULL;
 }
 
 
