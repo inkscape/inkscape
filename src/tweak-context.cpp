@@ -32,6 +32,15 @@
 #include "desktop-style.h"
 #include "message-context.h"
 #include "pixmaps/cursor-tweak-move.xpm"
+#include "pixmaps/cursor-tweak-move-in.xpm"
+#include "pixmaps/cursor-tweak-move-out.xpm"
+#include "pixmaps/cursor-tweak-move-jitter.xpm"
+#include "pixmaps/cursor-tweak-scale-up.xpm"
+#include "pixmaps/cursor-tweak-scale-down.xpm"
+#include "pixmaps/cursor-tweak-rotate-clockwise.xpm"
+#include "pixmaps/cursor-tweak-rotate-counterclockwise.xpm"
+#include "pixmaps/cursor-tweak-more.xpm"
+#include "pixmaps/cursor-tweak-less.xpm"
 #include "pixmaps/cursor-thin.xpm"
 #include "pixmaps/cursor-thicken.xpm"
 #include "pixmaps/cursor-attract.xpm"
@@ -189,23 +198,39 @@ sp_tweak_update_cursor (SPTweakContext *tc, bool with_shift)
            break;
        case TWEAK_MODE_MOVE_IN_OUT:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>move in</b>; with Shift to <b>move out</b>."), sel_message);
-           event_context->cursor_shape = cursor_tweak_move_xpm;
+           if (with_shift) {
+               event_context->cursor_shape = cursor_tweak_move_out_xpm;
+           } else {
+               event_context->cursor_shape = cursor_tweak_move_in_xpm;
+           }
            break;
        case TWEAK_MODE_MOVE_JITTER:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>move randomly</b>."), sel_message);
-           event_context->cursor_shape = cursor_tweak_move_xpm;
+           event_context->cursor_shape = cursor_tweak_move_jitter_xpm;
            break;
        case TWEAK_MODE_SCALE:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>scale down</b>; with Shift to <b>scale up</b>."), sel_message);
-           event_context->cursor_shape = cursor_tweak_move_xpm;
+           if (with_shift) {
+               event_context->cursor_shape = cursor_tweak_scale_up_xpm;
+           } else {
+               event_context->cursor_shape = cursor_tweak_scale_down_xpm;
+           }
            break;
        case TWEAK_MODE_ROTATE:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>rotate clockwise</b>; with Shift, <b>counterclockwise</b>."), sel_message);
-           event_context->cursor_shape = cursor_tweak_move_xpm;
+           if (with_shift) {
+               event_context->cursor_shape = cursor_tweak_rotate_counterclockwise_xpm;
+           } else {
+               event_context->cursor_shape = cursor_tweak_rotate_clockwise_xpm;
+           }
            break;
        case TWEAK_MODE_MORELESS:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag or click to <b>duplicate</b>; with Shift, <b>delete</b>."), sel_message);
-           event_context->cursor_shape = cursor_tweak_move_xpm;
+           if (with_shift) {
+               event_context->cursor_shape = cursor_tweak_less_xpm;
+           } else {
+               event_context->cursor_shape = cursor_tweak_more_xpm;
+           }
            break;
        case TWEAK_MODE_PUSH:
            tc->_message_context->setF(Inkscape::NORMAL_MESSAGE, _("%s. Drag to <b>push paths</b>."), sel_message);
