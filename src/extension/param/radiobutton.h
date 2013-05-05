@@ -51,6 +51,8 @@ public:
 
     virtual void string(std::string &string) const;
 
+    Glib::ustring value_from_label(const Glib::ustring label);
+
     const gchar *get(const SPDocument * /*doc*/, const Inkscape::XML::Node * /*node*/) const { return _value; }
 
     const gchar *set(const gchar *in, SPDocument *doc, Inkscape::XML::Node *node);
