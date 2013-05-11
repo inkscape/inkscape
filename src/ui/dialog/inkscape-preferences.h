@@ -367,6 +367,7 @@ protected:
     UI::Widget::PrefCheckButton _misc_bitmap_autoreload;
     UI::Widget::PrefSpinButton  _bitmap_copy_res;
     UI::Widget::PrefCombo       _bitmap_import;
+    UI::Widget::PrefSpinButton  _bitmap_import_quality;
 
     UI::Widget::PrefEntry       _kb_search;
     UI::Widget::PrefCombo       _kb_filelist;

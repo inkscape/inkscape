@@ -42,6 +42,7 @@
 #include "xml/quote.h"
 #include "xml/repr.h"
 #include "snap-candidate.h"
+#include "preferences.h"
 
 #include "io/sys.h"
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -63,7 +64,7 @@
     g_message( __VA_ARGS__ );\
 }
 
-#include "preferences.h"
+
 #include <gtk/gtk.h>
 #endif // DEBUG_LCMS
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -1469,9 +1470,12 @@ void sp_embed_image( Inkscape::XML::Node *image_node, GdkPixbuf *pb, Glib::ustri
         format = "png";
     }
 
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    Glib::ustring quality = Glib::ustring::format(prefs->getInt("/dialogs/import/quality", 100));
+
     gchar *data = 0;
     gsize length = 0;
-    gdk_pixbuf_save_to_buffer(pb, &data, &length, format.data(), NULL, NULL);
+    gdk_pixbuf_save_to_buffer(pb, &data, &length, format.data(), NULL, "quality", quality.c_str(), NULL);
 
     // Save base64 encoded data in image node
     // this formula taken from Glib docs

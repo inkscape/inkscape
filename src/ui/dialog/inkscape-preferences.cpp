@@ -1432,6 +1432,9 @@ void InkscapePreferences::initPageBitmaps()
         Glib::ustring values[] = {"embed", "link", "ask"};
         _bitmap_import.init("/dialogs/import/link", labels, values, G_N_ELEMENTS(values), "ask");
         _page_bitmaps.add_line( false, _("Bitmap import:"), _bitmap_import, "", "", false);
+
+        _bitmap_import_quality.init("/dialogs/import/quality", 1, 100, 1, 1, 100, true, false);
+        _page_bitmaps.add_line( false, _("Bitmap import quality:"), _bitmap_import_quality, "%", "Bitmap import quality (jpeg only). 100 is best quality", false);
     }
     _importexport_import_res.init("/dialogs/import/defaultxdpi/value", 0.0, 6000.0, 1.0, 1.0, PX_PER_IN, true, false);
     _page_bitmaps.add_line( false, _("Default _import resolution:"), _importexport_import_res, _("dpi"),
