@@ -307,6 +307,7 @@ static gint sp_text_context_item_handler(SPEventContext *event_context, SPItem *
     gint ret = FALSE;
 
     sp_text_context_validate_cursor_iterators(tc);
+    Inkscape::Text::Layout::iterator old_start = tc->text_sel_start;
 
     switch (event->type) {
         case GDK_BUTTON_PRESS:
@@ -319,7 +320,12 @@ static gint sp_text_context_item_handler(SPEventContext *event_context, SPItem *
                         // find out click point in document coordinates
                         Geom::Point p = desktop->w2d(Geom::Point(event->button.x, event->button.y));
                         // set the cursor closest to that point
-                        tc->text_sel_start = tc->text_sel_end = sp_te_get_position_by_coords(tc->text, p);
+                        if (event->button.state & GDK_SHIFT_MASK) {
+                            tc->text_sel_start = old_start;
+                            tc->text_sel_end = sp_te_get_position_by_coords(tc->text, p);
+                        } else {
+                            tc->text_sel_start = tc->text_sel_end = sp_te_get_position_by_coords(tc->text, p);
+                        }
                         // update display
                         sp_text_context_update_cursor(tc);
                         sp_text_context_update_text_selection(tc);
