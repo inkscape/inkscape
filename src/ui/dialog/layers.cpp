@@ -41,6 +41,7 @@
 #include "xml/repr.h"
 #include "sp-root.h"
 #include "event-context.h"
+#include "selection-chemistry.h"
 
 //#define DUMP_LAYERS 1
 
@@ -536,6 +537,7 @@ void LayersPanel::_toggled( Glib::ustring const& str, int targetCol )
             break;
         }
     }
+    Inkscape::SelectionHelper::fixSelection(_desktop);
 }
 
 bool LayersPanel::_handleKeyEvent(GdkEventKey *event)

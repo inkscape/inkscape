@@ -250,6 +250,36 @@ void SelectionHelper::selectPrev(SPDesktop *dt)
     }
 }
 
+/*
+ * Fixes the current selection, removing locked objects from it
+ */
+void SelectionHelper::fixSelection(SPDesktop *dt) 
+{
+    if(!dt)
+        return;
+
+    Inkscape::Selection *selection = sp_desktop_selection(dt);
+    
+    GSList *items = NULL;
+
+    GSList const *selList = selection->itemList();
+
+    for( GSList const *i = selList; i; i = i->next ) {
+        if( SP_IS_ITEM(i->data) &&
+            !dt->isLayer(SP_ITEM(i->data)) &&
+            (!SP_ITEM(i->data)->isLocked()))
+        {
+            items = g_slist_prepend(items, SP_ITEM(i->data));
+        }
+    }
+
+    selection->setList(items);
+
+    if(items) {
+        g_slist_free(items);
+    }
+}
+
 } // namespace Inkscape
 
 

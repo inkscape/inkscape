@@ -47,6 +47,7 @@ namespace Inkscape {
         static void reverse(SPDesktop *dt);
         static void selectNext(SPDesktop *desktop);
         static void selectPrev(SPDesktop *desktop);
+        static void fixSelection(SPDesktop *desktop);
     };
 } // namespace Inkscape
 
