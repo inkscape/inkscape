@@ -37,10 +37,25 @@ public:
     };
 
 private:
+    class BoundingBoxPrefsObserver: public Preferences::Observer
+    {
+    public:
+        BoundingBoxPrefsObserver(SelCue &sel_cue);
+
+        void notify(Preferences::Entry const &val);
+
+    private:
+        SelCue &_sel_cue;
+    };
+
+    friend class Inkscape::SelCue::BoundingBoxPrefsObserver;
 
     void _updateItemBboxes();
+    void _updateItemBboxes(Inkscape::Preferences *prefs);
+    void _updateItemBboxes(gint mode, int prefs_bbox);
     void _newItemBboxes();
     void _newTextBaselines();
+    void _boundingBoxPrefsChanged(int prefs_bbox);
 
     SPDesktop *_desktop;
     Selection *_selection;
@@ -48,6 +63,8 @@ private:
     sigc::connection _sel_modified_connection;
     std::vector<SPCanvasItem*> _item_bboxes;
     std::vector<SPCanvasItem*> _text_baselines;
+
+    BoundingBoxPrefsObserver _bounding_box_prefs_observer;
 };
 
 }

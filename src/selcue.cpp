@@ -25,8 +25,20 @@
 #include "preferences.h"
 #include "selcue.h"
 
+Inkscape::SelCue::BoundingBoxPrefsObserver::BoundingBoxPrefsObserver(SelCue &sel_cue) :
+    Observer("/tools/bounding_box"),
+    _sel_cue(sel_cue)
+{
+}
+
+void Inkscape::SelCue::BoundingBoxPrefsObserver::notify(Preferences::Entry const &val)
+{
+    _sel_cue._boundingBoxPrefsChanged(static_cast<int>(val.getBool()));
+}
+
 Inkscape::SelCue::SelCue(SPDesktop *desktop)
-    : _desktop(desktop)
+    : _desktop(desktop),
+      _bounding_box_prefs_observer(*this)
 {
     _selection = sp_desktop_selection(_desktop);
 
@@ -34,11 +46,16 @@ Inkscape::SelCue::SelCue(SPDesktop *desktop)
         sigc::hide(sigc::mem_fun(*this, &Inkscape::SelCue::_newItemBboxes))
         );
 
-    _sel_modified_connection = _selection->connectModified(
-        sigc::hide(sigc::hide(sigc::mem_fun(*this, &Inkscape::SelCue::_updateItemBboxes)))
+    {
+        void(SelCue::*modifiedSignal)() = &SelCue::_updateItemBboxes;
+        _sel_modified_connection = _selection->connectModified(
+            sigc::hide(sigc::hide(sigc::mem_fun(*this, modifiedSignal)))
         );
+    }
 
-    _updateItemBboxes();
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    _updateItemBboxes(prefs);
+    prefs->addObserver(_bounding_box_prefs_observer);
 }
 
 Inkscape::SelCue::~SelCue()
@@ -59,7 +76,11 @@ Inkscape::SelCue::~SelCue()
 
 void Inkscape::SelCue::_updateItemBboxes()
 {
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    _updateItemBboxes(Inkscape::Preferences::get());
+}
+
+void Inkscape::SelCue::_updateItemBboxes(Inkscape::Preferences *prefs)
+{
     gint mode = prefs->getInt("/options/selcue/value", MARK);
     if (mode == NONE) {
         return;
@@ -69,6 +90,11 @@ void Inkscape::SelCue::_updateItemBboxes()
 
     int prefs_bbox = prefs->getBool("/tools/bounding_box");
 
+    _updateItemBboxes(mode, prefs_bbox);
+}
+
+void Inkscape::SelCue::_updateItemBboxes(gint mode, int prefs_bbox)
+{
     GSList const *items = _selection->itemList();
     if (_item_bboxes.size() != g_slist_length((GSList *) items)) {
         _newItemBboxes();
@@ -201,6 +227,18 @@ void Inkscape::SelCue::_newTextBaselines()
     }
 }
 
+void Inkscape::SelCue::_boundingBoxPrefsChanged(int prefs_bbox)
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gint mode = prefs->getInt("/options/selcue/value", MARK);
+    if (mode == NONE) {
+        return;
+    }
+
+    g_return_if_fail(_selection != NULL);
+
+    _updateItemBboxes(mode, prefs_bbox);
+}
 
 /*
   Local Variables:

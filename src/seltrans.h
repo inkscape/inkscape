@@ -97,10 +97,24 @@ public:
     void getNextClosestPoint(bool reverse);
 
 private:
+    class BoundingBoxPrefsObserver: public Preferences::Observer
+    {
+    public:
+        BoundingBoxPrefsObserver(SelTrans &sel_trans);
+
+        void notify(Preferences::Entry const &val);
+
+    private:
+        SelTrans &_sel_trans;
+    };
+
+    friend class Inkscape::SelTrans::BoundingBoxPrefsObserver;
+
     void _updateHandles();
     void _updateVolatileState();
     void _selChanged(Inkscape::Selection *selection);
     void _selModified(Inkscape::Selection *selection, guint flags);
+    void _boundingBoxPrefsChanged(int prefs_bbox);
     void _showHandles(SPKnot *knot[], SPSelTransHandle const handle[], gint num,
                       gchar const *even_tip, gchar const *odd_tip);
     Geom::Point _getGeomHandlePos(Geom::Point const &visual_handle_pos);
@@ -179,6 +193,7 @@ private:
     Inkscape::MessageContext _message_context;
     sigc::connection _sel_changed_connection;
     sigc::connection _sel_modified_connection;
+    BoundingBoxPrefsObserver _bounding_box_prefs_observer;
 };
 
 }

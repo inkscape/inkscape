@@ -86,6 +86,17 @@ static gboolean sp_seltrans_handle_event(SPKnot *knot, GdkEvent *event, gpointer
     return FALSE;
 }
 
+Inkscape::SelTrans::BoundingBoxPrefsObserver::BoundingBoxPrefsObserver(SelTrans &sel_trans) :
+    Observer("/tools/bounding_box"),
+    _sel_trans(sel_trans)
+{
+}
+
+void Inkscape::SelTrans::BoundingBoxPrefsObserver::notify(Preferences::Entry const &val)
+{
+    _sel_trans._boundingBoxPrefsChanged(static_cast<int>(val.getBool()));
+}
+
 Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _desktop(desktop),
     _selcue(desktop),
@@ -103,7 +114,8 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _origin_for_bboxpoints(Geom::Point(0,0)),
     _chandle(NULL),
     _stamp_cache(NULL),
-    _message_context(desktop->messageStack())
+    _message_context(desktop->messageStack()),
+    _bounding_box_prefs_observer(*this)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int prefs_bbox = prefs->getBool("/tools/bounding_box");
@@ -169,6 +181,8 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
         );
 
     _all_snap_sources_iter = _all_snap_sources_sorted.end();
+
+    prefs->addObserver(_bounding_box_prefs_observer);
 }
 
 Inkscape::SelTrans::~SelTrans()
@@ -871,6 +885,15 @@ void Inkscape::SelTrans::_selModified(Inkscape::Selection */*selection*/, guint 
 
         _updateHandles();
     }
+}
+
+void Inkscape::SelTrans::_boundingBoxPrefsChanged(int prefs_bbox)
+{
+    _snap_bbox_type = !prefs_bbox ?
+        SPItem::VISUAL_BBOX : SPItem::GEOMETRIC_BBOX;
+
+    _updateVolatileState();
+    _updateHandles();
 }
 
 /*
