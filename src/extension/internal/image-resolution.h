@@ -18,19 +18,20 @@ namespace Internal {
 
 class ImageResolution {
 public:
-  ImageResolution(char const *fn);
-  bool ok() const;
-  double x() const;
-  double y() const;
+    ImageResolution(char const *fn);
+    bool ok() const;
+    double x() const;
+    double y() const;
 private:
-  bool ok_;
-  double x_;
-  double y_;
+    bool ok_;
+    double x_;
+    double y_;
 private:
-  void readpng(char const *fn);
-  void readexif(char const *fn);
-  void readexiv(char const *fn);
-  void readjfif(char const *fn);
+    void readpng(char const *fn);
+    void readexif(char const *fn);
+    void readexiv(char const *fn);
+    void readjfif(char const *fn);
+    void readmagick(char const *fn);
 };
 
 }

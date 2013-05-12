@@ -21,6 +21,9 @@
 #ifdef HAVE_JPEG
 #define IR_TRY_JFIF 1
 #endif
+#ifdef WITH_IMAGE_MAGICK
+#include <Magick++.h>
+#endif
 
 namespace Inkscape {
 namespace Extension {
@@ -38,6 +41,9 @@ ImageResolution::ImageResolution(char const *fn) {
     }
     if (!ok_) {
         readexif(fn);
+    }
+    if (!ok_) {
+        readmagick(fn);
     }
 }
 
@@ -327,6 +333,33 @@ void ImageResolution::readjfif(char const *) {
 }
 
 #endif
+
+#ifdef WITH_IMAGE_MAGICK
+void ImageResolution::readmagick(char const *fn) {
+    Magick::Image image;
+    try {
+        image.read(fn);
+    } catch (...) {}
+    Magick::Geometry geo = image.density();
+    std::string type = image.magick();
+    
+    if (type == "PNG") { // PNG only supports pixelspercentimeter 
+        x_ = (double)geo.width() * 2.54;
+        y_ = (double)geo.height() * 2.54;
+    } else {
+        x_ = (double)geo.width();
+        y_ = (double)geo.height();
+    }
+    ok_ = true;
+}
+
+#else
+
+// Dummy implementation
+void ImageResolution::readmagick(char const *) {
+}
+
+#endif /* WITH_IMAGE_MAGICK */
 
 }
 }
