@@ -948,13 +948,21 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
 
                                     bool noSelection = false;
 
-                                	if (tc->text_sel_start == tc->text_sel_end) {
-                                        tc->text_sel_start.prevCursorPosition();
+                                    if (MOD__CTRL(event)) {
+                                        tc->text_sel_start = tc->text_sel_end;
+                                    }
+
+                                    if (tc->text_sel_start == tc->text_sel_end) {
+                                        if (MOD__CTRL(event)) {
+                                            tc->text_sel_start.prevStartOfWord();
+                                        } else {
+                                            tc->text_sel_start.prevCursorPosition();
+                                        }
                                         noSelection = true;
                                     }
 
-                                	iterator_pair bspace_pair;
-                                	bool success = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, bspace_pair);
+                                    iterator_pair bspace_pair;
+                                    bool success = sp_te_delete(tc->text, tc->text_sel_start, tc->text_sel_end, bspace_pair);
 
                                     if (noSelection) {
                                         if (success) {
@@ -982,8 +990,16 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                                 if (tc->text) {
                                     bool noSelection = false;
 
+                                    if (MOD__CTRL(event)) {
+                                        tc->text_sel_start = tc->text_sel_end;
+                                    }
+
                                     if (tc->text_sel_start == tc->text_sel_end) {
-                                        tc->text_sel_end.nextCursorPosition();
+                                        if (MOD__CTRL(event)) {
+                                            tc->text_sel_end.nextEndOfWord();
+                                        } else {
+                                            tc->text_sel_end.nextCursorPosition();
+                                        }
                                         noSelection = true;
                                     }
 
