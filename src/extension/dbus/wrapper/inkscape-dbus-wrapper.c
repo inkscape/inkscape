@@ -96,7 +96,9 @@ inkscape_desktop_init_dbus ()
     GError *error;
     DBusGProxy *proxy;
   
+#if !GLIB_CHECK_VERSION(2,36,0)
     g_type_init ();
+#endif
 
     error = NULL;
     connection = dbus_g_bus_get (DBUS_BUS_SESSION,
