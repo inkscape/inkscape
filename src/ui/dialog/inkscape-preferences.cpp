@@ -1341,6 +1341,13 @@ void InkscapePreferences::initPageBehavior()
                            _("Update marker color when object color changes"));
 
     this->AddPage(_page_markers, _("Markers"), iter_behavior, PREFS_PAGE_BEHAVIOR_MARKERS);
+    
+    
+    _page_cleanup.add_group_header( _("Document cleanup"));
+    _cleanup_swatches.init ( _("Remove unused swatches when doing a document cleanup"), "/options/cleanupswatches/value", false); // text label
+    _page_cleanup.add_line( true, "", _cleanup_swatches, "",
+                           _("Remove unused swatches when doing a document cleanup")); // tooltip
+    this->AddPage(_page_cleanup, _("Cleanup"), iter_behavior, PREFS_PAGE_BEHAVIOR_CLEANUP);
 }
 
 void InkscapePreferences::initPageRendering()

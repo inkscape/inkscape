@@ -455,13 +455,15 @@ void SPObject::setLabel(gchar const *label)
 
 void SPObject::requestOrphanCollection() {
     g_return_if_fail(document != NULL);
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 
     // do not remove style or script elements (Bug #276244)
     if (SP_IS_STYLE_ELEM(this)) {
         // leave it
     } else if (SP_IS_SCRIPT(this)) {
         // leave it
-    } else if (SP_IS_PAINT_SERVER(this) && static_cast<SPPaintServer*>(this)->isSwatch() ) {
+  
+    } else if ((! prefs->getBool("/options/cleanupswatches/value", false)) && SP_IS_PAINT_SERVER(this) && static_cast<SPPaintServer*>(this)->isSwatch() ) {
         // leave it
     } else if (IS_COLORPROFILE(this)) {
         // leave it
