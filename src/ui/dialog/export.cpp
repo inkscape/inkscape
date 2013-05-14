@@ -87,6 +87,7 @@
 #include <windows.h>
 #include <commdlg.h>
 #include <gdk/gdkwin32.h>
+#include <glibmm/fileutils.h>
 #endif
 
 #include <gtk/gtk.h>
