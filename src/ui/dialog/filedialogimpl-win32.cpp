@@ -26,9 +26,7 @@
 #include <gdk/gdkwin32.h>
 #include <glib/gstdio.h>
 #include <glibmm/i18n.h>
-#if GLIB_CHECK_VERSION(2,32,0)
-#include <glibmm/thread.h>
-#endif
+#include <glibmm/fileutils.h>
 #include <gtkmm/window.h>
 
 //Inkscape includes

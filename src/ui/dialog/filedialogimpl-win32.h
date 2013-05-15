@@ -14,6 +14,9 @@
 
 #include "gc-core.h"
 #include <windows.h>
+#if GLIB_CHECK_VERSION(2,32,0)
+#include <glibmm/threads.h>
+#endif
 
 namespace Inkscape
 {
