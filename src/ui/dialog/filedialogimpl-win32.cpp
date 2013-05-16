@@ -16,7 +16,7 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
-
+#include "filedialogimpl-win32.h"
 //General includes
 #include <list>
 #include <unistd.h>
@@ -42,7 +42,7 @@
 #include "display/canvas-arena.h"
 
 #include "filedialog.h"
-#include "filedialogimpl-win32.h"
+
 #include "sp-root.h"
 
 #include <zlib.h>

@@ -15,9 +15,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include "filedialogimpl-win32.h"
 #include "filedialogimpl-gtkmm.h"
 #include "filedialog.h"
-#include "filedialogimpl-win32.h"
 
 #include "gc-core.h"
 #include <dialogs/dialog-events.h>
