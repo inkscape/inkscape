@@ -26,6 +26,7 @@
 
 #include <map>
 
+#include "colorspace.h"
 #include "strneq.h"
 #include "preferences.h"
 #include "svg-color.h"
@@ -453,30 +454,24 @@ sp_svg_create_color_hash()
 }
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-//helper function borrowed from src/widgets/sp-color-icc-selector.cpp:
-void getThings( Inkscape::ColorProfile *prof, gchar const**& namers, gchar const**& tippies, guint const*& scalies );
 
-void icc_color_to_sRGB(SVGICCColor* icc, guchar* r, guchar* g, guchar* b){
+void icc_color_to_sRGB(SVGICCColor* icc, guchar* r, guchar* g, guchar* b)
+{
     guchar color_out[4];
     guchar color_in[4];
-    if (icc){
+    if (icc) {
 g_message("profile name: %s", icc->colorProfile.c_str());
         Inkscape::ColorProfile* prof = SP_ACTIVE_DOCUMENT->profileManager->find(icc->colorProfile.c_str());
         if ( prof ) {
             cmsHTRANSFORM trans = prof->getTransfToSRGB8();
             if ( trans ) {
-                gchar const** names = 0;
-                gchar const** tips = 0;
-                guint const* scales = 0;
-                getThings( prof, names, tips, scales );
+                std::vector<colorspace::Component> comps = colorspace::getColorSpaceInfo( prof );
 
-                gint count = CMSSystem::getChannelCount( prof );
-                if (count > 4) {
-                    count = 4; //do we need it? Should we allow an arbitrary number of color values? Or should we limit to a maximum? (max==4?)
-                }
-                for (gint i = 0; i < count; i++){
-                    color_in[i] = static_cast<guchar>((((gdouble)icc->colors[i])*256.0) * (gdouble)scales[i]);
-g_message("input[%d]: %d",i, color_in[i]);
+                size_t count = CMSSystem::getChannelCount( prof );
+                size_t cap = std::min(count, comps.size());
+                for (size_t i = 0; i < cap; i++) {
+                    color_in[i] = static_cast<guchar>((((gdouble)icc->colors[i]) * 256.0) * (gdouble)comps[i].scale);
+                    g_message("input[%d]: %d", (int)i, (int)color_in[i]);
                 }
 
                 CMSSystem::doTransform( trans, color_in, color_out, 1 );

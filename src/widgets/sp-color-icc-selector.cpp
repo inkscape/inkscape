@@ -6,11 +6,15 @@
 #include <math.h>
 #include <gtk/gtk.h>
 #include <glibmm/i18n.h>
+#include <map>
+#include <vector>
+
 #include "../dialogs/dialog-events.h"
 #include "sp-color-icc-selector.h"
 #include "sp-color-scales.h"
 #include "sp-color-slider.h"
 #include "svg/svg-icc-color.h"
+#include "colorspace.h"
 #include "document.h"
 #include "inkscape.h"
 #include "profile-manager.h"
@@ -106,7 +110,7 @@ public:
     GtkWidget* _profileSel;
 
     guint _fooCount;
-    guint const* _fooScales;
+    std::vector<guint> _fooScales;
     GtkAdjustment** _fooAdj;
     GtkWidget** _fooSlider;
     GtkWidget** _fooBtn;
@@ -219,84 +223,73 @@ static cmsUInt16Number* getScratch() {
     return scritch;
 }
 
-struct MapMap {
-    cmsUInt32Number space;
-    cmsUInt32Number inForm;
-};
+colorspace::Component::Component(std::string const &name, std::string const &tip, guint scale) :
+    name(name),
+    tip(tip),
+    scale(scale)
+{
+}
 
-void getThings( cmsUInt32Number space, gchar const**& namers, gchar const**& tippies, guint const*& scalies ) {
-    MapMap possible[] = {
-        {cmsSigXYZData,   TYPE_XYZ_16},
-        {cmsSigLabData,   TYPE_Lab_16},
+std::vector<colorspace::Component> colorspace::getColorSpaceInfo( uint32_t space )
+{
+    static std::map<cmsUInt32Number, std::vector<Component> > sets;
+    if (sets.empty())
+    {
+        sets[cmsSigXYZData].push_back(Component("_X", "X", 2)); //  TYPE_XYZ_16
+        sets[cmsSigXYZData].push_back(Component("_Y", "Y", 1));
+        sets[cmsSigXYZData].push_back(Component("_Z", "Z", 2));
+
+        sets[cmsSigLabData].push_back(Component("_L", "L", 100)); // TYPE_Lab_16
+        sets[cmsSigLabData].push_back(Component("_a", "a", 256));
+        sets[cmsSigLabData].push_back(Component("_b", "b", 256));
+
         //cmsSigLuvData
-        {cmsSigYCbCrData, TYPE_YCbCr_16},
-        {cmsSigYxyData,   TYPE_Yxy_16},
-        {cmsSigRgbData,   TYPE_RGB_16},
-        {cmsSigGrayData,  TYPE_GRAY_16},
-        {cmsSigHsvData,   TYPE_HSV_16},
-        {cmsSigHlsData,   TYPE_HLS_16},
-        {cmsSigCmykData,  TYPE_CMYK_16},
-        {cmsSigCmyData,   TYPE_CMY_16},
-    };
 
-    static gchar const *names[][6] = {
-        {"_X", "_Y", "_Z", "", "", ""},
-        {"_L", "_a", "_b", "", "", ""},
-        //
-        {"_Y", "C_b", "C_r", "", "", ""},
-        {"_Y", "_x", "y", "", "", ""},
-        {_("_R:"), _("_G:"), _("_B:"), "", "", ""},
-        {_("_G:"), "", "", "", "", ""},
-        {_("_H:"), _("_S:"), "_V:", "", "", ""},
-        {_("_H:"), _("_L:"), _("_S:"), "", "", ""},
-        {_("_C:"), _("_M:"), _("_Y:"), _("_K:"), "", ""},
-        {_("_C:"), _("_M:"), _("_Y:"), "", "", ""},
-    };
+        sets[cmsSigYCbCrData].push_back(Component("_Y", "Y", 1)); // TYPE_YCbCr_16
+        sets[cmsSigYCbCrData].push_back(Component("C_b", "Cb", 1));
+        sets[cmsSigYCbCrData].push_back(Component("C_r", "Cr", 1));
 
-    static gchar const *tips[][6] = {
-        {"X", "Y", "Z", "", "", ""},
-        {"L", "a", "b", "", "", ""},
-        //
-        {"Y", "Cb", "Cr", "", "", ""},
-        {"Y", "x", "y", "", "", ""},
-        {_("Red"), _("Green"), _("Blue"), "", "", ""},
-        {_("Gray"), "", "", "", "", ""},
-        {_("Hue"), _("Saturation"), "Value", "", "", ""},
-        {_("Hue"), _("Lightness"), _("Saturation"), "", "", ""},
-        {_("Cyan"), _("Magenta"), _("Yellow"), _("Black"), "", ""},
-        {_("Cyan"), _("Magenta"), _("Yellow"), "", "", ""},
-    };
+        sets[cmsSigYxyData].push_back(Component("_Y", "Y", 1)); // TYPE_Yxy_16
+        sets[cmsSigYxyData].push_back(Component("_x", "x", 1));
+        sets[cmsSigYxyData].push_back(Component("y", "y", 1));
 
-    static guint scales[][6] = {
-        {2, 1, 2, 1, 1, 1},
-        {100, 256, 256, 1, 1, 1},
-        //
-        {1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1},
-        {360, 1, 1, 1, 1, 1},
-        {360, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1},
-    };
+        sets[cmsSigRgbData].push_back(Component(_("_R:"), _("Red"), 1)); // TYPE_RGB_16
+        sets[cmsSigRgbData].push_back(Component(_("_G:"), _("Green"), 1));
+        sets[cmsSigRgbData].push_back(Component(_("_B:"), _("Blue"), 1));
 
-    int index = 0;
-    for ( guint i = 0; i < G_N_ELEMENTS(possible); i++ ) {
-        if ( possible[i].space == space ) {
-            index = i;
-            break;
-        }
+        sets[cmsSigGrayData].push_back(Component(_("G:"), _("Gray"), 1)); // TYPE_GRAY_16
+
+        sets[cmsSigHsvData].push_back(Component(_("_H:"), _("Hue"), 360)); // TYPE_HSV_16
+        sets[cmsSigHsvData].push_back(Component(_("_S:"), _("Saturation"), 1));
+        sets[cmsSigHsvData].push_back(Component("_V:", "Value", 1));
+
+        sets[cmsSigHlsData].push_back(Component(_("_H:"), _("Hue"), 360)); // TYPE_HLS_16
+        sets[cmsSigHlsData].push_back(Component(_("_L:"), _("Lightness"), 1));
+        sets[cmsSigHlsData].push_back(Component(_("_S:"), _("Saturation"), 1));
+
+        sets[cmsSigCmykData].push_back(Component(_("_C:"), _("Cyan"), 1)); // TYPE_CMYK_16
+        sets[cmsSigCmykData].push_back(Component(_("_M:"), _("Magenta"), 1));
+        sets[cmsSigCmykData].push_back(Component(_("_Y:"), _("Yellow"), 1));
+        sets[cmsSigCmykData].push_back(Component(_("_K:"), _("Black"), 1));
+
+        sets[cmsSigCmyData].push_back(Component(_("_C:"), _("Cyan"), 1)); // TYPE_CMY_16
+        sets[cmsSigCmyData].push_back(Component(_("_M:"), _("Magenta"), 1));
+        sets[cmsSigCmyData].push_back(Component(_("_Y:"), _("Yellow"), 1));
     }
 
-    namers = names[index];
-    tippies = tips[index];
-    scalies = scales[index];
+    std::vector<Component> target;
+
+    if (sets.find(space) != sets.end())
+    {
+        target = sets[space];
+    }
+    return target;
 }
 
 
-void getThings( Inkscape::ColorProfile *prof, gchar const**& namers, gchar const**& tippies, guint const*& scalies ) {
-    getThings( asICColorSpaceSig(prof->getColorSpace()), namers, tippies, scalies );
+std::vector<colorspace::Component> colorspace::getColorSpaceInfo( Inkscape::ColorProfile *prof )
+{
+    return getColorSpaceInfo( asICColorSpaceSig(prof->getColorSpace()) );
 }
 
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -354,9 +347,11 @@ void ColorICCSelector::init()
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     //guint partCount = _cmsChannelsOf( icSigRgbData );
-    gchar const** names = 0;
-    gchar const** tips = 0;
-    getThings( cmsSigRgbData, names, tips, _impl->_fooScales );
+    std::vector<colorspace::Component> things = colorspace::getColorSpaceInfo( cmsSigRgbData );
+    _impl->_fooScales.clear();
+    for (std::vector<colorspace::Component>::iterator it = things.begin(); it != things.end(); ++it) {
+        _impl->_fooScales.push_back(it->scale);
+    }
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
     // Create components
@@ -417,7 +412,7 @@ void ColorICCSelector::init()
     for ( guint i = 0; i < _impl->_fooCount; i++ ) {
         // Label
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-        _impl->_fooLabel[i] = gtk_label_new_with_mnemonic( names[i] );
+        _impl->_fooLabel[i] = gtk_label_new_with_mnemonic( (i < things.size()) ? things[i].name.c_str() : "" );
 #else
         _impl->_fooLabel[i] = gtk_label_new_with_mnemonic( "." );
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -435,15 +430,16 @@ void ColorICCSelector::init()
 #endif
 
         // Adjustment
-        gdouble step = static_cast<gdouble>(_impl->_fooScales[i]) / 100.0;
-        gdouble page = static_cast<gdouble>(_impl->_fooScales[i]) / 10.0;
+        guint scaleValue = (i < _impl->_fooScales.size()) ? _impl->_fooScales[i] : 1;
+        gdouble step = static_cast<gdouble>(scaleValue) / 100.0;
+        gdouble page = static_cast<gdouble>(scaleValue) / 10.0;
         gint digits = (step > 0.9) ? 0 : 2;
-        _impl->_fooAdj[i] = GTK_ADJUSTMENT( gtk_adjustment_new( 0.0, 0.0, _impl->_fooScales[i],  step, page, page ) );
+        _impl->_fooAdj[i] = GTK_ADJUSTMENT( gtk_adjustment_new( 0.0, 0.0, scaleValue,  step, page, page ) );
 
         // Slider
         _impl->_fooSlider[i] = sp_color_slider_new( _impl->_fooAdj[i] );
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-        gtk_widget_set_tooltip_text( _impl->_fooSlider[i], tips[i] );
+        gtk_widget_set_tooltip_text( _impl->_fooSlider[i], (i < things.size()) ? things[i].tip.c_str() : "" );
 #else
         gtk_widget_set_tooltip_text( _impl->_fooSlider[i], "." );
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -462,7 +458,7 @@ void ColorICCSelector::init()
 
         _impl->_fooBtn[i] = gtk_spin_button_new( _impl->_fooAdj[i], step, digits );
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-        gtk_widget_set_tooltip_text( _impl->_fooBtn[i], tips[i] );
+        gtk_widget_set_tooltip_text( _impl->_fooBtn[i], (i < things.size()) ? things[i].tip.c_str() : "" );
 #else
         gtk_widget_set_tooltip_text( _impl->_fooBtn[i], "." );
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -665,15 +661,12 @@ void ColorICCSelectorImpl::_switchToProfile( gchar const* name )
                     guint count = cmsChannelsOf( asICColorSpaceSig(newProf->getColorSpace()) );
 #endif
 
-                    gchar const** names = 0;
-                    gchar const** tips = 0;
-                    guint const* scales = 0;
-                    getThings( asICColorSpaceSig(newProf->getColorSpace()), names, tips, scales );
+                    std::vector<colorspace::Component> things = colorspace::getColorSpaceInfo(asICColorSpaceSig(newProf->getColorSpace()));
 
                     for ( guint i = 0; i < count; i++ ) {
-                        gdouble val = (((gdouble)post[i])/65535.0) * (gdouble)scales[i];
+                        gdouble val = (((gdouble)post[i])/65535.0) * (gdouble)((i < things.size()) ? things[i].scale : 1);
 #ifdef DEBUG_LCMS
-                        g_message("     scaled %d by %d to be %f", i, scales[i], val);
+                        g_message("     scaled %d by %d to be %f", i, ((i < things.size()) ? things[i].scale : 1), val);
 #endif // DEBUG_LCMS
                         tmp.icc->colors.push_back(val);
                     }
@@ -862,16 +855,17 @@ void ColorICCSelectorImpl::_setProfile( SVGICCColor* profile )
             _profChannelCount = cmsChannelsOf( asICColorSpaceSig(_prof->getColorSpace()) );
 #endif
 
-            gchar const** names = 0;
-            gchar const** tips = 0;
-            getThings( asICColorSpaceSig(_prof->getColorSpace()), names, tips, _fooScales );
-
+            std::vector<colorspace::Component> things = colorspace::getColorSpaceInfo(asICColorSpaceSig(_prof->getColorSpace()));
+            _fooScales.clear();
+            for (std::vector<colorspace::Component>::iterator it = things.begin(); it != things.end(); ++it) {
+                _fooScales.push_back(it->scale);
+            }
             if ( profChanged ) {
                 for ( guint i = 0; i < _profChannelCount; i++ ) {
-                    gtk_label_set_text_with_mnemonic( GTK_LABEL(_fooLabel[i]), names[i]);
+                    gtk_label_set_text_with_mnemonic( GTK_LABEL(_fooLabel[i]), (i < things.size()) ? things[i].name.c_str() : "");
 
-                    gtk_widget_set_tooltip_text( _fooSlider[i], tips[i] );
-                    gtk_widget_set_tooltip_text( _fooBtn[i], tips[i] );
+                    gtk_widget_set_tooltip_text( _fooSlider[i], (i < things.size()) ?  things[i].tip.c_str() : "" );
+                    gtk_widget_set_tooltip_text( _fooBtn[i], (i < things.size()) ?  things[i].tip.c_str() : "" );
 
                     sp_color_slider_set_colors( SP_COLOR_SLIDER(_fooSlider[i]),
                                                 SPColor(0.0, 0.0, 0.0).toRGBA32(0xff),
@@ -1040,7 +1034,7 @@ void ColorICCSelectorImpl::_adjustmentChanged( GtkAdjustment *adjustment, SPColo
              newColor.icc->colors.clear();
              for ( guint i = 0; i < iccSelector->_impl->_profChannelCount; i++ ) {
                  gdouble val = ColorScales::getScaled( iccSelector->_impl->_fooAdj[i] );
-                 if ( iccSelector->_impl->_fooScales ) {
+                 if ( i < iccSelector->_impl->_fooScales.size() ) {
                      val *= iccSelector->_impl->_fooScales[i];
                      if ( iccSelector->_impl->_fooScales[i] == 256 ) {
                          val -= 128;
