@@ -84,6 +84,7 @@ static gint sp_document_rerouting_handler(gpointer data);
 gboolean sp_document_resource_list_free(gpointer key, gpointer value, gpointer data);
 
 static gint doc_count = 0;
+static gint doc_mem_count = 0;
 
 static unsigned long next_serial = 0;
 
@@ -480,15 +481,16 @@ SPDocument *SPDocument::createNewDoc(gchar const *uri, unsigned int keepalive, b
             base = NULL;
             name = g_strdup(uri);
         }
+        if (make_new) {
+            name = g_strdup_printf(_("New document %d"), ++doc_count);
+        }
         g_free(s);
     } else {
-        rdoc = sp_repr_document_new("svg:svg");
-    }
+        if (make_new) {
+            name = g_strdup_printf(_("Memory document %d"), ++doc_mem_count);
+        }
 
-    if (make_new) {
-        base = NULL;
-        uri = NULL;
-        name = g_strdup_printf(_("New document %d"), ++doc_count);
+        rdoc = sp_repr_document_new("svg:svg");
     }
 
     //# These should be set by now
@@ -514,7 +516,7 @@ SPDocument *SPDocument::createNewDocFromMem(gchar const *buffer, gint length, un
             // If xml file is not svg, return NULL without warning
             // TODO fixme: destroy document
         } else {
-            Glib::ustring name = Glib::ustring::compose( _("Memory document %1"), ++doc_count );
+            Glib::ustring name = Glib::ustring::compose( _("Memory document %1"), ++doc_mem_count );
             doc = createDoc(rdoc, NULL, NULL, name.c_str(), keepalive);
         }
     }
