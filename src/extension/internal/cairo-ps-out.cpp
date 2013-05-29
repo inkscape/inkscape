@@ -66,7 +66,7 @@ bool CairoEpsOutput::check (Inkscape::Extension::Extension * /*module*/)
 
 static bool
 ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int level, bool texttopath, bool omittext,
-                          bool filtertobitmap, int resolution, const gchar * const exportId, bool exportDrawing, bool exportCanvas, bool eps = false)
+                          bool filtertobitmap, int resolution, const gchar * const exportId, bool exportDrawing, bool exportCanvas, float bleedmargin_px, bool eps = false)
 {
     doc->ensureUpToDate();
 
@@ -104,7 +104,7 @@ ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int l
     bool ret = ctx->setPsTarget(filename);
     if(ret) {
         /* Render document */
-        ret = renderer->setupDocument(ctx, doc, pageBoundingBox, 0., base);
+        ret = renderer->setupDocument(ctx, doc, pageBoundingBox, bleedmargin_px, base);
         if (ret) {
             renderer->renderItem(ctx, base);
             ret = ctx->finish();
@@ -174,6 +174,11 @@ CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar con
 
     bool new_areaDrawing  = !new_areaPage;
 
+    float bleedmargin_px = 0.;
+    try {
+        bleedmargin_px = ext->get_param_float("bleed");
+    } catch(...) {}
+
     const gchar *new_exportId = NULL;
     try {
         new_exportId = mod->get_param_string("exportId");
@@ -183,7 +188,11 @@ CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar con
     {
         gchar * final_name;
         final_name = g_strdup_printf("> %s", filename);
-        ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_textToLaTeX, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaPage);
+        ret = ps_print_document_to_file(doc, final_name, level, new_textToPath,
+                                        new_textToLaTeX, new_blurToBitmap,
+                                        new_bitmapResolution, new_exportId,
+                                        new_areaDrawing, new_areaPage,
+                                        bleedmargin_px);
         g_free(final_name);
 
         if (!ret)
@@ -254,6 +263,11 @@ CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar co
 
     bool new_areaDrawing  = !new_areaPage;
 
+    float bleedmargin_px = 0.;
+    try {
+        bleedmargin_px = ext->get_param_float("bleed");
+    } catch(...) {}
+
     const gchar *new_exportId = NULL;
     try {
         new_exportId = mod->get_param_string("exportId");
@@ -263,7 +277,11 @@ CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar co
     {
         gchar * final_name;
         final_name = g_strdup_printf("> %s", filename);
-        ret = ps_print_document_to_file(doc, final_name, level, new_textToPath, new_textToLaTeX, new_blurToBitmap, new_bitmapResolution, new_exportId, new_areaDrawing, new_areaPage, true);
+        ret = ps_print_document_to_file(doc, final_name, level, new_textToPath,
+                                        new_textToLaTeX, new_blurToBitmap,
+                                        new_bitmapResolution, new_exportId,
+                                        new_areaDrawing, new_areaPage,
+                                        bleedmargin_px, true);
         g_free(final_name);
 
         if (!ret)
@@ -322,6 +340,7 @@ CairoPsOutput::init (void)
                 "<_option value=\"page\">" N_("Use document's page size") "</_option>"
                 "<_option value=\"drawing\">" N_("Use exported object's size") "</_option>"
             "</param>"
+            "<param name=\"bleed\" gui-text=\"" N_("Bleed/margin (mm)") "\" type=\"float\" min=\"-10000\" max=\"10000\">0</param>\n"
             "<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID:") "\" type=\"string\"></param>\n"
             "<output>\n"
             "<extension>.ps</extension>\n"
@@ -362,6 +381,7 @@ CairoEpsOutput::init (void)
                 "<_option value=\"page\">" N_("Use document's page size") "</_option>"
                 "<_option value=\"drawing\">" N_("Use exported object's size") "</_option>"
             "</param>"
+            "<param name=\"bleed\" gui-text=\"" N_("Bleed/margin (mm)") "\" type=\"float\" min=\"-10000\" max=\"10000\">0</param>\n"
             "<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID:") "\" type=\"string\"></param>\n"
             "<output>\n"
                 "<extension>.eps</extension>\n"
