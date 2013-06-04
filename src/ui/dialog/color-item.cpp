@@ -12,6 +12,9 @@
  */
 
 #include <errno.h>
+
+#include <glibmm/threads.h>
+
 #include <gtkmm/label.h>
 #include <glibmm/i18n.h>
 #include <cairo.h>

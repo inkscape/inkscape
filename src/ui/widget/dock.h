@@ -12,6 +12,8 @@
 #ifndef INKSCAPE_UI_WIDGET_DOCK_H
 #define INKSCAPE_UI_WIDGET_DOCK_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include <list>
 #include "ui/widget/dock-item.h"

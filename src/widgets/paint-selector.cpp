@@ -24,6 +24,7 @@
 #include <cstring>
 #include <string>
 
+#include <glibmm/threads.h>
 
 #include "widgets/swatch-selector.h"
 #include "../sp-pattern.h"

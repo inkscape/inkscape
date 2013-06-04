@@ -18,6 +18,8 @@
 #ifndef INKSCAPE_UI_DIALOG_TEXT_EDIT_H
 #define INKSCAPE_UI_DIALOG_TEXT_EDIT_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include <gtkmm/notebook.h>
 #include <gtkmm/button.h>

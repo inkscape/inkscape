@@ -14,6 +14,9 @@
 #define __COLOR_PICKER_H__
 
 #include <stddef.h>
+
+#include <glibmm/threads.h>
+
 #include <gtkmm/dialog.h>
 #include <gtkmm/button.h>
 #include <sigc++/sigc++.h>

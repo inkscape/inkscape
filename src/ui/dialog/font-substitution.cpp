@@ -10,6 +10,8 @@
 # include <config.h>
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/scrolledwindow.h>

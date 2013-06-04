@@ -13,6 +13,8 @@
 #include "config.h"
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/button.h>
 #include <gtk/gtk.h>
 

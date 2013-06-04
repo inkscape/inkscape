@@ -11,6 +11,7 @@
 #ifndef INKSCAPE_UI_WIDGET_LABELLED_H
 #define INKSCAPE_UI_WIDGET_LABELLED_H
 
+#include <glibmm/threads.h>
 #include <gtkmm/box.h>
 
 namespace Gtk {

@@ -17,6 +17,9 @@
 
 #include <iostream>
 #include <vector>
+
+#include <glibmm/threads.h>
+
 #include <gtkmm/filechooserbutton.h>
 #include "ui/widget/spinbutton.h"
 #include <stddef.h>

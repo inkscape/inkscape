@@ -16,6 +16,8 @@
 # include <config.h>
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/dialog.h>
 #include <gtkmm/button.h>
 #include <gtkmm/buttonbox.h>

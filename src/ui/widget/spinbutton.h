@@ -10,6 +10,8 @@
 #ifndef INKSCAPE_UI_WIDGET_SPINBUTTON_H
 #define INKSCAPE_UI_WIDGET_SPINBUTTON_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/spinbutton.h>
 
 namespace Inkscape {

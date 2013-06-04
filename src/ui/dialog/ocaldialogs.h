@@ -13,6 +13,8 @@
 #ifndef __OCAL_DIALOG_H__
 #define __OCAL_DIALOG_H__
 
+#include <glibmm/threads.h>
+
 //Gtk includes
 #include <gtkmm/box.h>
 #include <gtkmm/eventbox.h>

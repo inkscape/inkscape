@@ -18,6 +18,8 @@
 #include <functional>
 #include <sstream>
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/label.h>
 

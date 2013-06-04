@@ -10,6 +10,8 @@
 #ifndef INKSCAPE_EXTENSION_DIALOG_H__
 #define INKSCAPE_EXTENSION_DIALOG_H__
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/dialog.h>
 #include <glibmm/value.h>
 #include <glibmm/ustring.h>

@@ -12,6 +12,9 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+
+#include <glibmm/threads.h>
+
 #include <gtkmm/window.h>
 
 #include "inkscape.h"

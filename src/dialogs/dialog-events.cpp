@@ -15,6 +15,8 @@
 # include "config.h"
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/entry.h>
 #include <gtkmm/window.h>
 #include <gdk/gdkkeysyms.h>

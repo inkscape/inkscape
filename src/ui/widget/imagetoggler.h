@@ -14,6 +14,8 @@
 #include "config.h"
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/cellrendererpixbuf.h>
 #include <gtkmm/widget.h>
 #include <glibmm/property.h>

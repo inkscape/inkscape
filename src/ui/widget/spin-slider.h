@@ -10,6 +10,8 @@
 #ifndef INKSCAPE_UI_WIDGET_SPIN_SLIDER_H
 #define INKSCAPE_UI_WIDGET_SPIN_SLIDER_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/adjustment.h>
 #include <gtkmm/box.h>
 #include <gtkmm/scale.h>

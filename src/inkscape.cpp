@@ -19,6 +19,9 @@
 #include <errno.h>
 
 #include <map>
+
+#include <glibmm/threads.h>
+
 #include <gtkmm/messagedialog.h>
 #include "debug/simple-event.h"
 #include "debug/event-tracker.h"

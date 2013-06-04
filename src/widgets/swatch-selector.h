@@ -1,6 +1,8 @@
 #ifndef SEEN_SP_SWATCH_SELECTOR_H
 #define SEEN_SP_SWATCH_SELECTOR_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 
 class SPDocument;

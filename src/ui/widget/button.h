@@ -10,6 +10,8 @@
 #ifndef INKSCAPE_UI_WIDGET_BUTTON_H
 #define INKSCAPE_UI_WIDGET_BUTTON_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/radiobutton.h>
 

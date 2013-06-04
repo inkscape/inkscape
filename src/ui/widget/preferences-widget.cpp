@@ -18,6 +18,8 @@
 #include <windows.h>
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/alignment.h>

@@ -15,6 +15,8 @@
 #ifndef INKSCAPE_UI_DIALOG_ABOUTBOX_H
 #define INKSCAPE_UI_DIALOG_ABOUTBOX_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/dialog.h>
 
 namespace Inkscape {

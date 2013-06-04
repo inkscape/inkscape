@@ -7,6 +7,8 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include <gtkmm/eventbox.h>
 #include <glibmm/i18n.h>

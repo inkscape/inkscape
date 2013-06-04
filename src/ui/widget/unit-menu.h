@@ -10,6 +10,8 @@
 #ifndef INKSCAPE_UI_WIDGET_UNIT_H
 #define INKSCAPE_UI_WIDGET_UNIT_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/comboboxtext.h>
 #include "util/units.h"
 

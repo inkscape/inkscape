@@ -10,6 +10,8 @@
 #ifndef INKSCAPE_UI_WIDGET_LICENSOR_H
 #define INKSCAPE_UI_WIDGET_LICENSOR_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 
 class SPDocument;

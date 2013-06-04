@@ -18,6 +18,8 @@
 # include "config.h"
 #endif
 
+#include <glibmm/threads.h>
+
 #include "shortcuts.h"
 #include "file.h"
 #include "event-context.h"

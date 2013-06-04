@@ -10,6 +10,8 @@
 
 #include <config.h>
 
+#include <glibmm/threads.h>
+
 #include "gtkmm/messagedialog.h"
 
 #include "execution-env.h"

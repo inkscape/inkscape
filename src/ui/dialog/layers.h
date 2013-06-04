@@ -12,6 +12,8 @@
 #ifndef SEEN_LAYERS_PANEL_H
 #define SEEN_LAYERS_PANEL_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include <gtkmm/treeview.h>
 #include <gtkmm/treestore.h>

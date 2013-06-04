@@ -15,6 +15,8 @@
 # include <config.h>
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/dialog.h> // for Gtk::RESPONSE_*
 #include <gtkmm/menu.h>
 #include <gtkmm/stock.h>

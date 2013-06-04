@@ -16,6 +16,8 @@
 # include "config.h"
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/icontheme.h>
 #include <cstring>
 #include <glib.h>

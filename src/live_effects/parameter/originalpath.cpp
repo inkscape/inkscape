@@ -4,6 +4,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include "live_effects/parameter/originalpath.h"
 

@@ -15,6 +15,8 @@
 # include "config.h"
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 
 #if WITH_GTKMM_3_0

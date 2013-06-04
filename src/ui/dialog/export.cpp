@@ -20,6 +20,8 @@
 // This has to be included prior to anything that includes setjmp.h, it croaks otherwise
 #include <png.h>
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/dialog.h>

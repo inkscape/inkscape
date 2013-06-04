@@ -11,6 +11,8 @@
 #ifndef INKSCAPE_DIALOG_LIVEPATHEFFECT_ADD_H
 #define INKSCAPE_DIALOG_LIVEPATHEFFECT_ADD_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/dialog.h>
 #include <gtkmm/liststore.h>
 #include <gtkmm/treeview.h>

@@ -17,6 +17,8 @@
 #include <cstring>
 #include <string>
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include <gtkmm/label.h>
 

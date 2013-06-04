@@ -16,6 +16,8 @@
 
 #ifdef HAVE_POPPLER
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/dialog.h>
 
 #include "../../implementation/implementation.h"

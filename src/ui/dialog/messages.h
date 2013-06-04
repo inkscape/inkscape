@@ -16,6 +16,8 @@
 #ifndef INKSCAPE_UI_DIALOG_MESSAGES_H
 #define INKSCAPE_UI_DIALOG_MESSAGES_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include <gtkmm/textview.h>
 #include <gtkmm/button.h>

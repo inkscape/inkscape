@@ -11,6 +11,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/spinbutton.h>

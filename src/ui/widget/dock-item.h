@@ -11,6 +11,7 @@
 #ifndef INKSCAPE_UI_WIGET_DOCK_ITEM_H
 #define INKSCAPE_UI_WIGET_DOCK_ITEM_H
 
+#include <glibmm/threads.h>
 #include <gtkmm/box.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/window.h>

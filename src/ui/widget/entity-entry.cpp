@@ -17,6 +17,8 @@
 # include <config.h>
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/entry.h>
 

@@ -22,6 +22,8 @@
 # include "config.h"
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include <glibmm/i18n.h>
 

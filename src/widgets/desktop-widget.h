@@ -12,6 +12,7 @@
  *      ? -2004
  */
 
+#include <glibmm/threads.h>
 #include <gtkmm/window.h>
 #include "message.h"
 #include "ui/view/view-widget.h"

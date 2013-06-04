@@ -10,6 +10,8 @@
 #ifndef INKSCAPE_UI_WIDGET_FRAME_H
 #define INKSCAPE_UI_WIDGET_FRAME_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/alignment.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/label.h>

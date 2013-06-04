@@ -17,6 +17,8 @@
 # include <config.h>
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/buttonbox.h>
 #include <boost/scoped_ptr.hpp>
 

@@ -17,6 +17,10 @@
 #ifndef __FILE_DIALOGIMPL_H__
 #define __FILE_DIALOGIMPL_H__
 
+#include <glibmm/threads.h>
+
+#include <glibmm/threads.h>
+
 //Gtk includes
 #include <gtkmm/filechooserdialog.h>
 #include <glib/gstdio.h>

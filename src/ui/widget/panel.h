@@ -17,6 +17,8 @@
 # include <config.h>
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include <gtkmm/arrow.h>
 #include <gtkmm/button.h>

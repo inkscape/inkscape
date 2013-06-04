@@ -6,11 +6,12 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
+#include "spin-scale.h"
+
 #include <gtkmm/adjustment.h>
 #include <glibmm/i18n.h>
 #include <glibmm/stringutils.h>
 
-#include "spin-scale.h"
 #include "ui/widget/gimpspinscale.h"
 
 namespace Inkscape {

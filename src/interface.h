@@ -17,6 +17,8 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/menu.h>
 
 class SPItem;

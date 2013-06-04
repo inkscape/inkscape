@@ -12,6 +12,8 @@
 #ifndef SEEN_SPELLCHECK_H
 #define SEEN_SPELLCHECK_H
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/box.h>
 #include <gtkmm/button.h>
 #include <gtkmm/buttonbox.h>

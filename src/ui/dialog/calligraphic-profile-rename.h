@@ -15,6 +15,8 @@
 # include "config.h"
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/dialog.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/label.h>

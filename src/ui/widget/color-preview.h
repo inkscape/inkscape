@@ -15,6 +15,8 @@
 # include <config.h>
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/widget.h>
 
 namespace Inkscape {

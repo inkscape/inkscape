@@ -19,6 +19,8 @@
 # include "config.h"
 #endif
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/widget.h>
 #include <stddef.h>
 #include <sigc++/connection.h>

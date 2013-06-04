@@ -32,6 +32,8 @@
 #include <cstring>
 #include <string>
 
+#include <glibmm/threads.h>
+
 #include <gtkmm/filechooserdialog.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/stock.h>
