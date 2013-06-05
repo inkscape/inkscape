@@ -32,6 +32,7 @@ options:
     -P, --export-ps=FILENAME
     -E, --export-eps=FILENAME
     -A, --export-pdf=FILENAME
+        --export-pdf-version=VERSION-STRING
         --export-latex
 
     -T, --export-text-to-path
@@ -267,6 +268,13 @@ transparency in the original SVG. Used fonts are subset and embedded.
 The default export area is page; you can set it to drawing by --export-area-drawing. You can 
 specify --export-id to export a single object (all other are hidden); in that case 
 export area is that object's bounding box, but can be set to page by --export-area-page.
+
+=item B<--export-pdf-version>=I<PDF-VERSION>
+
+Select the PDF version of the exported PDF file. This option basically
+exposes the PDF version selector found in the PDF-export dialog of the
+GUI. You must provide one of the versions from that combo-box,
+e.g. "1.4". The default pdf export version is "1.4".
 
 =item B<--export-latex>
 

@@ -183,6 +183,15 @@ gchar const *Parameter::get_enum(SPDocument const *doc, Inkscape::XML::Node cons
     return param->get(doc, node);
 }
 
+bool Parameter::get_enum_contains(gchar const * value, SPDocument const *doc, Inkscape::XML::Node const *node) const
+{
+    ParamComboBox const *param = dynamic_cast<ParamComboBox const *>(this);
+    if (!param) {
+        throw Extension::param_not_enum_param();
+    }
+    return param->contains(value, doc, node);
+}
+
 gchar const *Parameter::get_optiongroup(SPDocument const *doc, Inkscape::XML::Node const * node) const
 {
     ParamRadioButton const *param = dynamic_cast<ParamRadioButton const *>(this);
@@ -243,6 +252,15 @@ gchar const * Parameter::set_optiongroup( gchar const * in, SPDocument * doc, In
     ParamRadioButton *param = dynamic_cast<ParamRadioButton *>(this);
     if (!param) {
         throw Extension::param_not_optiongroup_param();
+    }
+    return param->set(in, doc, node);
+}
+
+gchar const *Parameter::set_enum( gchar const * in, SPDocument * doc, Inkscape::XML::Node * node )
+{
+    ParamComboBox *param = dynamic_cast<ParamComboBox *>(this);
+    if (!param) {
+        throw Extension::param_not_enum_param();
     }
     return param->set(in, doc, node);
 }

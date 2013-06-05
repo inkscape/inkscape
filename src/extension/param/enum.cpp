@@ -175,6 +175,24 @@ const gchar *ParamComboBox::set(const gchar * in, SPDocument * /*doc*/, Inkscape
     return _value;
 }
 
+/**
+ * function to test if \c guitext is selectable
+ */
+bool ParamComboBox::contains(const gchar * guitext, SPDocument const * /*doc*/, Inkscape::XML::Node const * /*node*/) const
+{
+    if (guitext == NULL) {
+        return false; /* Can't have NULL string */
+    }
+
+    for (GSList * list = choices; list != NULL; list = g_slist_next(list)) {
+        enumentry * entr = reinterpret_cast<enumentry *>(list->data);
+        if ( !entr->guitext.compare(guitext) )
+            return true;
+    }
+    // if we did not find the guitext in this ParamComboBox:
+    return false;
+}
+
 void
 ParamComboBox::changed (void) {
 

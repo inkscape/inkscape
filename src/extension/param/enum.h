@@ -51,6 +51,11 @@ public:
 
     const gchar * set (const gchar * in, SPDocument * doc, Inkscape::XML::Node * node);
 
+    /**
+     * @returns true if guitext is part of this enum
+     */
+    bool contains(const gchar * guitext, SPDocument const * /*doc*/, Inkscape::XML::Node const * /*node*/) const;
+
     void changed (void);
 }; /* class ParamComboBox */
 
