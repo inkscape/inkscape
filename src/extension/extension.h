@@ -234,20 +234,20 @@ public:
 
     guint32          get_param_color  (const gchar * name,
                                        const SPDocument *   doc = NULL,
-                                       const Inkscape::XML::Node * node = NULL);
+                                       const Inkscape::XML::Node * node = NULL) const;
 
     const gchar *    get_param_enum   (const gchar * name,
                                        const SPDocument *   doc = NULL,
-                                       const Inkscape::XML::Node * node = NULL);
+                                       const Inkscape::XML::Node * node = NULL) const;
 
     gchar const *get_param_optiongroup( gchar const * name,
                                         SPDocument const *   doc = 0,
-                                        Inkscape::XML::Node const * node = 0);
+                                        Inkscape::XML::Node const * node = 0) const;
 
     bool             get_param_enum_contains(gchar const * name,
                                              gchar const * value,
                                              SPDocument  * doc = 0x0,
-                                             Inkscape::XML::Node * node = 0x0);
+                                             Inkscape::XML::Node * node = 0x0) const;
 
     bool             set_param_bool   (const gchar * name,
                                        bool          value,

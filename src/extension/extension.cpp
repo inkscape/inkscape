@@ -423,9 +423,9 @@ gchar const *Extension::get_param_string(gchar const *name, SPDocument const *do
 }
 
 const gchar *
-Extension::get_param_enum (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
+Extension::get_param_enum (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node) const
 {
-    Parameter* param = get_param(name);
+    Parameter const *param = get_param(name);
     return param->get_enum(doc, node);
 }
 
@@ -438,16 +438,16 @@ Extension::get_param_enum (const gchar * name, const SPDocument * doc, const Ink
  * @return true if value exists, false if not
  */
 bool
-Extension::get_param_enum_contains(gchar const * name, gchar const * value, SPDocument * doc, Inkscape::XML::Node * node)
+Extension::get_param_enum_contains(gchar const * name, gchar const * value, SPDocument * doc, Inkscape::XML::Node * node) const
 {
-    Parameter * param = get_param(name);
+    Parameter const *param = get_param(name);
     return param->get_enum_contains(value, doc, node);
 }
 
 gchar const *
-Extension::get_param_optiongroup( gchar const * name, SPDocument const * doc, Inkscape::XML::Node const * node)
+Extension::get_param_optiongroup( gchar const * name, SPDocument const * doc, Inkscape::XML::Node const * node) const
 {
-    Parameter* param = get_param(name);
+    Parameter const*param = get_param(name);
     return param->get_optiongroup(doc, node);
 }
 
@@ -521,9 +521,9 @@ Extension::get_param_float (const gchar * name, const SPDocument * doc, const In
     found parameter.
 */
 guint32
-Extension::get_param_color (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node)
+Extension::get_param_color (const gchar * name, const SPDocument * doc, const Inkscape::XML::Node * node) const
 {
-    Parameter* param = get_param(name);
+    Parameter const *param = get_param(name);
     return param->get_color(doc, node);
 }
 
