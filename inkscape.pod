@@ -35,6 +35,8 @@ options:
         --export-pdf-version=VERSION-STRING
         --export-latex
 
+    --export-ps-level {2,3}
+
     -T, --export-text-to-path
         --export-ignore-filters
 

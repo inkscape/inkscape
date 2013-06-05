@@ -147,6 +147,7 @@ enum {
     SP_ARG_EXPORT_SVG,
     SP_ARG_EXPORT_PS,
     SP_ARG_EXPORT_EPS,
+    SP_ARG_EXPORT_PS_LEVEL,
     SP_ARG_EXPORT_PDF,
     SP_ARG_EXPORT_PDF_VERSION,
     SP_ARG_EXPORT_LATEX,
@@ -201,6 +202,7 @@ static gboolean sp_export_id_only = FALSE;
 static gchar *sp_export_svg = NULL;
 static gchar *sp_export_ps = NULL;
 static gchar *sp_export_eps = NULL;
+static gint sp_export_ps_level = 2;
 static gchar *sp_export_pdf = NULL;
 static gchar *sp_export_pdf_version = NULL;
 #ifdef WIN32
@@ -246,6 +248,7 @@ static void resetCommandlineGlobals() {
         sp_export_svg = NULL;
         sp_export_ps = NULL;
         sp_export_eps = NULL;
+        sp_export_ps_level = 2;
         sp_export_pdf = NULL;
         sp_export_pdf_version = NULL;
 #ifdef WIN32
@@ -383,6 +386,12 @@ struct poptOption options[] = {
      POPT_ARG_STRING, &sp_export_eps, SP_ARG_EXPORT_EPS,
      N_("Export document to an EPS file"),
      N_("FILENAME")},
+
+    {"export-ps-level", 0,
+     POPT_ARG_INT, &sp_export_ps_level, SP_ARG_EXPORT_PS_LEVEL,
+     N_("Choose the PostScript Level used to export. Possible choices are"
+        " 2 (the default) and 3"),
+     N_("PS Level")},
 
     {"export-pdf", 'A',
      POPT_ARG_STRING, &sp_export_pdf, SP_ARG_EXPORT_PDF,
@@ -1669,8 +1678,9 @@ static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
             g_warning("Parameter or Enum \"%s\" might not exist",pdfver_param_name);
         }
     }
+
     // set default pdf export version to 1.4, also if something went wrong
-    if(set_export_pdf_version_fail) {
+    if(sp_export_pdf_version && set_export_pdf_version_fail) {
         (*i)->set_param_enum(pdfver_param_name, "PDF 1.4");
     }
 
@@ -1678,6 +1688,18 @@ static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
     if (!Inkscape::IO::file_directory_exists(uri)) {
         g_warning("File path \"%s\" includes directory that doesn't exist.\n", uri);
         return 1;
+    }
+
+    if ( g_strcmp0(mime, "image/x-postscript") == 0
+         || g_strcmp0(mime, "image/x-e-postscript") == 0 ) {
+        if ( sp_export_ps_level < 2 || sp_export_ps_level > 3 ) {
+            g_warning("Only supported PostScript levels are 2 and 3."
+                      " Defaulting to 2.");
+            sp_export_ps_level = 2;
+        }
+
+        (*i)->set_param_enum("PSlevel", (sp_export_ps_level == 3)
+                             ? "PostScript level 3" : "PostScript level 2");
     }
 
     (*i)->save(doc, uri);
