@@ -1680,7 +1680,7 @@ static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
     }
 
     // set default pdf export version to 1.4, also if something went wrong
-    if(sp_export_pdf_version && set_export_pdf_version_fail) {
+    if(sp_export_pdf && set_export_pdf_version_fail) {
         (*i)->set_param_enum(pdfver_param_name, "PDF 1.4");
     }
 
