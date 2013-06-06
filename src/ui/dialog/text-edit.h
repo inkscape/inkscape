@@ -18,7 +18,9 @@
 #ifndef INKSCAPE_UI_DIALOG_TEXT_EDIT_H
 #define INKSCAPE_UI_DIALOG_TEXT_EDIT_H
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
 
 #include <gtkmm/box.h>
 #include <gtkmm/notebook.h>

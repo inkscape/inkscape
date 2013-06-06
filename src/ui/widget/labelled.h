@@ -11,7 +11,10 @@
 #ifndef INKSCAPE_UI_WIDGET_LABELLED_H
 #define INKSCAPE_UI_WIDGET_LABELLED_H
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
+
 #include <gtkmm/box.h>
 
 namespace Gtk {

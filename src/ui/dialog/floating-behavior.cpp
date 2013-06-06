@@ -10,7 +10,9 @@
  * Released under GNU GPL.  Read the file 'COPYING' for more information.
  */
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
 
 #include <gtkmm/dialog.h>
 #include <gtkmm/stock.h>

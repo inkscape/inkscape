@@ -11,7 +11,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
 
 #include <gtkmm/box.h>
 #include <gtkmm/alignment.h>

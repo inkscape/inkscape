@@ -15,7 +15,9 @@
 #ifndef INKSCAPE_UI_DIALOG_ABOUTBOX_H
 #define INKSCAPE_UI_DIALOG_ABOUTBOX_H
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
 
 #include <gtkmm/dialog.h>
 

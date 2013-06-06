@@ -11,7 +11,9 @@
 #ifndef INKSCAPE_DIALOG_LIVEPATHEFFECT_ADD_H
 #define INKSCAPE_DIALOG_LIVEPATHEFFECT_ADD_H
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
 
 #include <gtkmm/dialog.h>
 #include <gtkmm/liststore.h>

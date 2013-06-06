@@ -10,7 +10,9 @@
 #ifndef INKSCAPE_EXTENSION_DIALOG_H__
 #define INKSCAPE_EXTENSION_DIALOG_H__
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
 
 #include <gtkmm/dialog.h>
 #include <glibmm/value.h>

@@ -18,7 +18,9 @@
 #include <iostream>
 #include <vector>
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
 
 #include <gtkmm/filechooserbutton.h>
 #include "ui/widget/spinbutton.h"

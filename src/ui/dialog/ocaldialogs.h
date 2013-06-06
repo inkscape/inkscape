@@ -13,7 +13,9 @@
 #ifndef __OCAL_DIALOG_H__
 #define __OCAL_DIALOG_H__
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
 
 //Gtk includes
 #include <gtkmm/box.h>

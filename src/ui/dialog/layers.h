@@ -12,7 +12,9 @@
 #ifndef SEEN_LAYERS_PANEL_H
 #define SEEN_LAYERS_PANEL_H
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
 
 #include <gtkmm/box.h>
 #include <gtkmm/treeview.h>

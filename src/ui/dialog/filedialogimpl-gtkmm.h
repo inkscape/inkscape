@@ -17,7 +17,9 @@
 #ifndef __FILE_DIALOGIMPL_H__
 #define __FILE_DIALOGIMPL_H__
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
 
 #include <glibmm/threads.h>
 

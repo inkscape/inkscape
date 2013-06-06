@@ -1,7 +1,9 @@
 #ifndef SEEN_SP_SWATCH_SELECTOR_H
 #define SEEN_SP_SWATCH_SELECTOR_H
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
 
 #include <gtkmm/box.h>
 

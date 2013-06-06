@@ -995,6 +995,14 @@ dnl
 AC_SUBST(INKSCAPE_CFLAGS)
 AC_SUBST(INKSCAPE_LIBS)
 
+
+dnl Check to see if we have a newer (2.32.0+) glibmm
+TMP_CPPFLAGS="$CPPFLAGS"
+CPPFLAGS="$GTK_CFLAGS $CPPFLAGS"
+AC_CHECK_HEADERS([glibmm/threads.h])
+CPPFLAGS="$TMP_CPPFLAGS"
+
+
 dnl Define our data paths for config.h
 AC_DEFINE_DIR([INKSCAPE_DATADIR], [datadir], [Base data directory])
 AC_DEFINE_DIR([PACKAGE_LOCALE_DIR], [localedir], [Locatization directory])

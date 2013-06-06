@@ -24,7 +24,9 @@
 #include <cstring>
 #include <string>
 
+#if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
+#endif
 
 #include "widgets/swatch-selector.h"
 #include "../sp-pattern.h"
