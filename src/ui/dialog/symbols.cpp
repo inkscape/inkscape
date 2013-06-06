@@ -487,6 +487,9 @@ void SymbolsDialog::get_symbols() {
 	      symbol_doc = SPDocument::createNewDoc( fullname, FALSE );
 	      if( symbol_doc ) {
               gchar *title = symbol_doc->getRoot()->title();
+              if( title == NULL ) {
+                  title = _("Unnamed Symbols");
+              }
 		      symbolSets[Glib::ustring(title)] = symbol_doc;
 		      symbolSet->append(title);
 	      }
