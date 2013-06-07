@@ -15,6 +15,10 @@
 #ifndef INKSCAPE_UI_WIDGET_INKSCAPE_PREFERENCES_H
 #define INKSCAPE_UI_WIDGET_INKSCAPE_PREFERENCES_H
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include <iostream>
 #include <vector>
 

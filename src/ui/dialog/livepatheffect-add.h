@@ -11,6 +11,10 @@
 #ifndef INKSCAPE_DIALOG_LIVEPATHEFFECT_ADD_H
 #define INKSCAPE_DIALOG_LIVEPATHEFFECT_ADD_H
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
 #endif

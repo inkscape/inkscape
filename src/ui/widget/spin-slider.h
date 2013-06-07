@@ -10,6 +10,10 @@
 #ifndef INKSCAPE_UI_WIDGET_SPIN_SLIDER_H
 #define INKSCAPE_UI_WIDGET_SPIN_SLIDER_H
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #if GLIBMM_DISABLE_DEPRECATED && HAVE_GLIBMM_THREADS_H
 #include <glibmm/threads.h>
 #endif
