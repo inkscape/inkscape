@@ -651,8 +651,11 @@ void ColorNotebook::_updateRgbaEntry( const SPColor& color, gfloat alpha )
 
 void ColorNotebook::_setCurrentPage(int i)
 {
-    gtk_notebook_set_current_page (GTK_NOTEBOOK (_book), i);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(_buttons[i]), TRUE);
+    gtk_notebook_set_current_page(GTK_NOTEBOOK(_book), i);
+
+    if (_buttons && _trackerList && (static_cast<size_t>(i) < _trackerList->len) ) {
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_buttons[i]), TRUE);
+    }
 }
 
 void ColorNotebook::_buttonClicked(GtkWidget *widget,  SPColorNotebook *colorbook)
