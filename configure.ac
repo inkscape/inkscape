@@ -951,7 +951,7 @@ dnl set correctly because the gettext function isn't noticed.
 if test "$ac_cv_header_libintl_h" = "yes" &&
    test "$ac_cv_func_bind_textdomain_codeset" = "yes"  &&
    test "$gt_cv_func_have_gettext" != "yes"; then
-    AC_DEFINE(ENABLE_NLS)
+    AC_DEFINE([ENABLE_NLS], [], [Description])
 fi
 
 dnl ******************************
