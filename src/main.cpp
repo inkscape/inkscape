@@ -1657,31 +1657,33 @@ static int do_export_ps_pdf(SPDocument* doc, gchar const* uri, char const* mime)
     (*i)->set_param_float("bleed", margin);
 
     // handle --export-pdf-version
-    bool set_export_pdf_version_fail=true;
-    const gchar *pdfver_param_name="PDFversion";
-    if(sp_export_pdf_version) {
-        // combine "PDF " and the given command line
-        std::string version_gui_string=std::string("PDF ")+sp_export_pdf_version;
-        try{
-            // first, check if the given pdf version is selectable in the ComboBox
-            if((*i)->get_param_enum_contains("PDFversion", version_gui_string.c_str())) {
-                (*i)->set_param_enum(pdfver_param_name, version_gui_string.c_str());
-                set_export_pdf_version_fail=false;
-            } else {
-                g_warning("Desired PDF export version \"%s\" not supported! Hint: input one of the versions found in the pdf export dialog e.g. \"1.4\".",
-                          sp_export_pdf_version);
+    if (g_strcmp0(mime, "application/pdf") == 0) {
+        bool set_export_pdf_version_fail=true;
+        const gchar *pdfver_param_name="PDFversion";
+        if(sp_export_pdf_version) {
+            // combine "PDF " and the given command line
+            std::string version_gui_string=std::string("PDF ")+sp_export_pdf_version;
+            try{
+                // first, check if the given pdf version is selectable in the ComboBox
+                if((*i)->get_param_enum_contains("PDFversion", version_gui_string.c_str())) {
+                    (*i)->set_param_enum(pdfver_param_name, version_gui_string.c_str());
+                    set_export_pdf_version_fail=false;
+                } else {
+                    g_warning("Desired PDF export version \"%s\" not supported! Hint: input one of the versions found in the pdf export dialog e.g. \"1.4\".",
+                              sp_export_pdf_version);
+                }
+            } catch (...) {
+                // can be thrown along the way:
+                // throw Extension::param_not_exist();
+                // throw Extension::param_not_enum_param();
+                g_warning("Parameter or Enum \"%s\" might not exist",pdfver_param_name);
             }
-        } catch (...) {
-            // can be thrown along the way:
-            // throw Extension::param_not_exist();
-            // throw Extension::param_not_enum_param();
-            g_warning("Parameter or Enum \"%s\" might not exist",pdfver_param_name);
         }
-    }
 
-    // set default pdf export version to 1.4, also if something went wrong
-    if(sp_export_pdf && set_export_pdf_version_fail) {
-        (*i)->set_param_enum(pdfver_param_name, "PDF 1.4");
+        // set default pdf export version to 1.4, also if something went wrong
+        if(set_export_pdf_version_fail) {
+            (*i)->set_param_enum(pdfver_param_name, "PDF 1.4");
+        }
     }
 
     //check if specified directory exists
