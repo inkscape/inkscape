@@ -83,6 +83,7 @@ class ComponentUI
 {
 public:
     ComponentUI() :
+        _component(),
         _adj(0),
         _slider(0),
         _btn(0),
@@ -91,6 +92,17 @@ public:
     {
     }
 
+    ComponentUI(colorspace::Component const &component) :
+        _component(component),
+        _adj(0),
+        _slider(0),
+        _btn(0),
+        _label(0),
+        _map(0)
+    {
+    }
+
+    colorspace::Component _component;
     GtkAdjustment *_adj; // Component adjustment
     GtkWidget *_slider;
     GtkWidget *_btn;     // spinbutton
@@ -133,8 +145,6 @@ public:
     guint32 _fixupNeeded;
     GtkWidget* _fixupBtn;
     GtkWidget* _profileSel;
-
-    std::vector<guint> _fooScales;
 
     std::vector<ComponentUI> _compUI;
 
@@ -304,6 +314,13 @@ static cmsUInt16Number* getScratch() {
     return scritch;
 }
 
+colorspace::Component::Component() :
+    name(),
+    tip(),
+    scale(1)
+{
+}
+
 colorspace::Component::Component(std::string const &name, std::string const &tip, guint scale) :
     name(name),
     tip(tip),
@@ -388,7 +405,6 @@ ColorICCSelectorImpl::ColorICCSelectorImpl(ColorICCSelector *owner) :
     _fixupNeeded(0),
     _fixupBtn(0),
     _profileSel(0),
-    _fooScales(),
     _compUI(),
     _adj(0),
     _slider(0),
@@ -428,14 +444,6 @@ void ColorICCSelector::init()
     gtk_widget_show (t);
     gtk_box_pack_start (GTK_BOX (_csel), t, TRUE, TRUE, 4);
 
-#if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-    //guint partCount = _cmsChannelsOf( icSigRgbData );
-    std::vector<colorspace::Component> things = colorspace::getColorSpaceInfo( cmsSigRgbData );
-    _impl->_fooScales.clear();
-    for (std::vector<colorspace::Component>::iterator it = things.begin(); it != things.end(); ++it) {
-        _impl->_fooScales.push_back(it->scale);
-    }
-#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     _impl->_compUI.clear();
 
     // Create components
@@ -479,18 +487,24 @@ void ColorICCSelector::init()
 
     // populate the data for colorspaces and channels:
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
-    colorspace::getColorSpaceInfo(cmsSigCmykData);
-#endif
+    std::vector<colorspace::Component> things = colorspace::getColorSpaceInfo( cmsSigRgbData );
+#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
     for ( size_t i = 0; i < maxColorspaceComponentCount; i++ ) {
-        _impl->_compUI.push_back(ComponentUI());
-
-        // Label
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+        if (i < things.size()) {
+            _impl->_compUI.push_back(ComponentUI(things[i]));
+        } else {
+            _impl->_compUI.push_back(ComponentUI());
+        }
+
         std::string labelStr = (i < things.size()) ? things[i].name.c_str() : "";
 #else
+        _impl->_compUI.push_back(ComponentUI());
+
         std::string labelStr = ".";
-#endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+#endif
+
         _impl->_compUI[i]._label = gtk_label_new_with_mnemonic( labelStr.c_str() );
         gtk_misc_set_alignment( GTK_MISC (_impl->_compUI[i]._label), 1.0, 0.5 );
         gtk_widget_show( _impl->_compUI[i]._label );
@@ -498,7 +512,7 @@ void ColorICCSelector::init()
         attachToGridOrTable(t, _impl->_compUI[i]._label, 0, row, 1, 1);
 
         // Adjustment
-        guint scaleValue = (i < _impl->_fooScales.size()) ? _impl->_fooScales[i] : 1;
+        guint scaleValue = _impl->_compUI[i]._component.scale;
         gdouble step = static_cast<gdouble>(scaleValue) / 100.0;
         gdouble page = static_cast<gdouble>(scaleValue) / 10.0;
         gint digits = (step > 0.9) ? 0 : 2;
@@ -808,10 +822,10 @@ void ColorICCSelector::_colorChanged()
             for ( guint i = 0; i < _impl->_profChannelCount; i++ ) {
                 gdouble val = 0.0;
                 if ( _color.icc->colors.size() > i ) {
-                    if ( _impl->_fooScales[i] == 256 ) {
-                        val = (_color.icc->colors[i] + 128.0) / static_cast<gdouble>(_impl->_fooScales[i]);
+                    if ( _impl->_compUI[i]._component.scale == 256 ) {
+                        val = (_color.icc->colors[i] + 128.0) / static_cast<gdouble>(_impl->_compUI[i]._component.scale);
                     } else {
-                        val = _color.icc->colors[i] / static_cast<gdouble>(_impl->_fooScales[i]);
+                        val = _color.icc->colors[i] / static_cast<gdouble>(_impl->_compUI[i]._component.scale);
                     }
                 }
                 tmp[i] = val * 0x0ffff;
@@ -877,12 +891,13 @@ void ColorICCSelectorImpl::_setProfile( SVGICCColor* profile )
             _profChannelCount = cmsChannelsOf( asICColorSpaceSig(_prof->getColorSpace()) );
 #endif
 
-            std::vector<colorspace::Component> things = colorspace::getColorSpaceInfo(asICColorSpaceSig(_prof->getColorSpace()));
-            _fooScales.clear();
-            for (std::vector<colorspace::Component>::iterator it = things.begin(); it != things.end(); ++it) {
-                _fooScales.push_back(it->scale);
-            }
             if ( profChanged ) {
+                std::vector<colorspace::Component> things = colorspace::getColorSpaceInfo(asICColorSpaceSig(_prof->getColorSpace()));
+                for (size_t i = 0; (i < things.size()) && (i < _profChannelCount); ++i)
+                {
+                    _compUI[i]._component = things[i];
+                }
+
                 for ( guint i = 0; i < _profChannelCount; i++ ) {
                     gtk_label_set_text_with_mnemonic( GTK_LABEL(_compUI[i]._label), (i < things.size()) ? things[i].name.c_str() : "");
 
@@ -933,10 +948,10 @@ void ColorICCSelectorImpl::_updateSliders( gint ignore )
         for ( guint i = 0; i < _profChannelCount; i++ ) {
             gdouble val = 0.0;
             if ( _owner->_color.icc->colors.size() > i ) {
-                if ( _fooScales[i] == 256 ) {
-                    val = (_owner->_color.icc->colors[i] + 128.0) / static_cast<gdouble>(_fooScales[i]);
+                if ( _compUI[i]._component.scale == 256 ) {
+                    val = (_owner->_color.icc->colors[i] + 128.0) / static_cast<gdouble>(_compUI[i]._component.scale);
                 } else {
-                    val = _owner->_color.icc->colors[i] / static_cast<gdouble>(_fooScales[i]);
+                    val = _owner->_color.icc->colors[i] / static_cast<gdouble>(_compUI[i]._component.scale);
                 }
             }
             gtk_adjustment_set_value( _compUI[i]._adj, val );
@@ -1056,11 +1071,9 @@ void ColorICCSelectorImpl::_adjustmentChanged( GtkAdjustment *adjustment, SPColo
              newColor.icc->colors.clear();
              for ( guint i = 0; i < iccSelector->_impl->_profChannelCount; i++ ) {
                  gdouble val = ColorScales::getScaled( iccSelector->_impl->_compUI[i]._adj );
-                 if ( i < iccSelector->_impl->_fooScales.size() ) {
-                     val *= iccSelector->_impl->_fooScales[i];
-                     if ( iccSelector->_impl->_fooScales[i] == 256 ) {
-                         val -= 128;
-                     }
+                 val *= iccSelector->_impl->_compUI[i]._component.scale;
+                 if ( iccSelector->_impl->_compUI[i]._component.scale == 256 ) {
+                     val -= 128;
                  }
                  newColor.icc->colors.push_back( val );
              }

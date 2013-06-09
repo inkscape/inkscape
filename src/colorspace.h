@@ -35,6 +35,7 @@ namespace colorspace
 class Component
 {
 public:
+    Component();
     Component(std::string const &name, std::string const &tip, guint scale);
 
     std::string name;
