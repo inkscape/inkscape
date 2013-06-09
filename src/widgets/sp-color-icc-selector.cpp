@@ -171,6 +171,50 @@ std::set<cmsUInt32Number> knownColorspaces;
 
 #endif
 
+
+/**
+ * Simple helper to allow bitwise or on GtkAttachOptions.
+ */
+GtkAttachOptions operator|(GtkAttachOptions lhs, GtkAttachOptions rhs)
+{
+    return static_cast<GtkAttachOptions>(static_cast<int>(lhs) | static_cast<int>(rhs));
+}
+
+/**
+ * Helper function to handle GTK2/GTK3 attachment #ifdef code.
+ */
+void attachToGridOrTable(GtkWidget *parent,
+                         GtkWidget *child,
+                         guint left,
+                         guint top,
+                         guint width,
+                         guint height,
+                         bool hexpand = false,
+                         bool centered = false,
+                         guint xpadding = XPAD,
+                         guint ypadding = YPAD)
+{
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_widget_set_margin_left( child, xpadding );
+    gtk_widget_set_margin_right( child, xpadding );
+    gtk_widget_set_margin_top( child, ypadding );
+    gtk_widget_set_margin_bottom( child, ypadding );
+    if (hexpand) {
+        gtk_widget_set_hexpand(child, TRUE);
+    }
+    if (centered) {
+        gtk_widget_set_halign( child, GTK_ALIGN_CENTER );
+        gtk_widget_set_valign( child, GTK_ALIGN_CENTER );
+    }
+    gtk_grid_attach( GTK_GRID(parent), child, left, top, width, height );
+#else
+    GtkAttachOptions xoptions = centered ? static_cast<GtkAttachOptions>(0) : hexpand ? (GTK_EXPAND | GTK_FILL) : GTK_FILL;
+    GtkAttachOptions yoptions = centered ? static_cast<GtkAttachOptions>(0) : GTK_FILL;
+
+    gtk_table_attach( GTK_TABLE(parent), child, left, left + width, top, top + height, xoptions, yoptions, xpadding, ypadding );
+#endif
+}
+
 } // namespace
 
 GType sp_color_icc_selector_get_type(void)
@@ -405,15 +449,7 @@ void ColorICCSelector::init()
     //gtk_misc_set_alignment( GTK_MISC (_impl->_fixupBtn), 1.0, 0.5 );
     gtk_widget_show( _impl->_fixupBtn );
 
-#if GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_set_margin_left(_impl->_fixupBtn, XPAD);
-    gtk_widget_set_margin_right(_impl->_fixupBtn, XPAD);
-    gtk_widget_set_margin_top(_impl->_fixupBtn, YPAD);
-    gtk_widget_set_margin_bottom(_impl->_fixupBtn, YPAD);
-    gtk_grid_attach(GTK_GRID(t), _impl->_fixupBtn, 0, row, 1, 1);
-#else
-    gtk_table_attach( GTK_TABLE (t), _impl->_fixupBtn, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD );
-#endif
+    attachToGridOrTable(t, _impl->_fixupBtn, 0, row, 1, 1);
 
     // Combobox and store with 2 columns : label (0) and full name (1)
     GtkListStore *store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
@@ -430,15 +466,7 @@ void ColorICCSelector::init()
     gtk_widget_show( _impl->_profileSel );
     gtk_combo_box_set_active( GTK_COMBO_BOX(_impl->_profileSel), 0 );
 
-#if GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_set_margin_left(_impl->_profileSel, XPAD);
-    gtk_widget_set_margin_right(_impl->_profileSel, XPAD);
-    gtk_widget_set_margin_top(_impl->_profileSel, YPAD);
-    gtk_widget_set_margin_bottom(_impl->_profileSel, YPAD);
-    gtk_grid_attach(GTK_GRID(t), _impl->_profileSel, 1, row, 1, 1);
-#else
-    gtk_table_attach( GTK_TABLE(t), _impl->_profileSel, 1, 2, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD );
-#endif
+    attachToGridOrTable(t, _impl->_profileSel, 1, row, 1, 1);
 
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
     _impl->_profChangedID = g_signal_connect( G_OBJECT(_impl->_profileSel), "changed", G_CALLBACK(ColorICCSelectorImpl::_profileSelected), (gpointer)_impl );
@@ -467,15 +495,7 @@ void ColorICCSelector::init()
         gtk_misc_set_alignment( GTK_MISC (_impl->_compUI[i]._label), 1.0, 0.5 );
         gtk_widget_show( _impl->_compUI[i]._label );
 
-#if GTK_CHECK_VERSION(3,0,0)
-        gtk_widget_set_margin_left(_impl->_compUI[i]._label, XPAD);
-        gtk_widget_set_margin_right(_impl->_compUI[i]._label, XPAD);
-        gtk_widget_set_margin_top(_impl->_compUI[i]._label, YPAD);
-        gtk_widget_set_margin_bottom(_impl->_compUI[i]._label, YPAD);
-        gtk_grid_attach(GTK_GRID(t), _impl->_compUI[i]._label, 0, row, 1, 1);
-#else
-        gtk_table_attach( GTK_TABLE (t), _impl->_compUI[i]._label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD );
-#endif
+        attachToGridOrTable(t, _impl->_compUI[i]._label, 0, row, 1, 1);
 
         // Adjustment
         guint scaleValue = (i < _impl->_fooScales.size()) ? _impl->_fooScales[i] : 1;
@@ -493,16 +513,7 @@ void ColorICCSelector::init()
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
         gtk_widget_show( _impl->_compUI[i]._slider );
 
-#if GTK_CHECK_VERSION(3,0,0)
-        gtk_widget_set_margin_left(_impl->_compUI[i]._slider, XPAD);
-        gtk_widget_set_margin_right(_impl->_compUI[i]._slider, XPAD);
-        gtk_widget_set_margin_top(_impl->_compUI[i]._slider, YPAD);
-        gtk_widget_set_margin_bottom(_impl->_compUI[i]._slider, YPAD);
-        gtk_widget_set_hexpand(_impl->_compUI[i]._slider, TRUE);
-        gtk_grid_attach(GTK_GRID(t), _impl->_compUI[i]._slider, 1, row, 1, 1);
-#else
-        gtk_table_attach( GTK_TABLE (t), _impl->_compUI[i]._slider, 1, 2, row, row + 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), GTK_FILL, XPAD, YPAD );
-#endif
+        attachToGridOrTable(t, _impl->_compUI[i]._slider, 1, row, 1, 1, true);
 
         _impl->_compUI[i]._btn = gtk_spin_button_new( _impl->_compUI[i]._adj, step, digits );
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
@@ -514,17 +525,7 @@ void ColorICCSelector::init()
         gtk_label_set_mnemonic_widget( GTK_LABEL(_impl->_compUI[i]._label), _impl->_compUI[i]._btn );
         gtk_widget_show( _impl->_compUI[i]._btn );
 
-#if GTK_CHECK_VERSION(3,0,0)
-        gtk_widget_set_margin_left(_impl->_compUI[i]._btn, XPAD);
-        gtk_widget_set_margin_right(_impl->_compUI[i]._btn, XPAD);
-        gtk_widget_set_margin_top(_impl->_compUI[i]._btn, YPAD);
-        gtk_widget_set_margin_bottom(_impl->_compUI[i]._btn, YPAD);
-        gtk_widget_set_halign(_impl->_compUI[i]._btn, GTK_ALIGN_CENTER);
-        gtk_widget_set_valign(_impl->_compUI[i]._btn, GTK_ALIGN_CENTER);
-        gtk_grid_attach(GTK_GRID(t), _impl->_compUI[i]._btn, 2, row, 1, 1);
-#else
-        gtk_table_attach( GTK_TABLE (t), _impl->_compUI[i]._btn, 2, 3, row, row + 1, (GtkAttachOptions)0, (GtkAttachOptions)0, XPAD, YPAD );
-#endif
+        attachToGridOrTable(t, _impl->_compUI[i]._btn, 2, row, 1, 1, false, true);
 
         _impl->_compUI[i]._map = g_new( guchar, 4 * 1024 );
         memset( _impl->_compUI[i]._map, 0x0ff, 1024 * 4 );
@@ -545,15 +546,7 @@ void ColorICCSelector::init()
     gtk_misc_set_alignment(GTK_MISC(_impl->_label), 1.0, 0.5);
     gtk_widget_show(_impl->_label);
 
-#if GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_set_margin_left(_impl->_label, XPAD);
-    gtk_widget_set_margin_right(_impl->_label, XPAD);
-    gtk_widget_set_margin_top(_impl->_label, YPAD);
-    gtk_widget_set_margin_bottom(_impl->_label, YPAD);
-    gtk_grid_attach(GTK_GRID(t), _impl->_label, 0, row, 1, 1);
-#else
-    gtk_table_attach(GTK_TABLE (t), _impl->_label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, XPAD, YPAD);
-#endif
+    attachToGridOrTable(t, _impl->_label, 0, row, 1, 1);
 
     // Adjustment
     _impl->_adj = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, 0.0, 255.0, 1.0, 10.0, 10.0));
@@ -563,16 +556,7 @@ void ColorICCSelector::init()
     gtk_widget_set_tooltip_text(_impl->_slider, _("Alpha (opacity)"));
     gtk_widget_show(_impl->_slider);
 
-#if GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_set_margin_left(_impl->_slider, XPAD);
-    gtk_widget_set_margin_right(_impl->_slider, XPAD);
-    gtk_widget_set_margin_top(_impl->_slider, YPAD);
-    gtk_widget_set_margin_bottom(_impl->_slider, YPAD);
-    gtk_widget_set_hexpand(_impl->_slider, TRUE);
-    gtk_grid_attach(GTK_GRID(t), _impl->_slider, 1, row, 1, 1);
-#else
-    gtk_table_attach (GTK_TABLE (t), _impl->_slider, 1, 2, row, row + 1, (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), GTK_FILL, XPAD, YPAD);
-#endif
+    attachToGridOrTable(t, _impl->_slider, 1, row, 1, 1, true);
 
     sp_color_slider_set_colors( SP_COLOR_SLIDER( _impl->_slider ),
                                 SP_RGBA32_F_COMPOSE( 1.0, 1.0, 1.0, 0.0 ),
@@ -587,17 +571,7 @@ void ColorICCSelector::init()
     gtk_label_set_mnemonic_widget(GTK_LABEL(_impl->_label), _impl->_sbtn);
     gtk_widget_show(_impl->_sbtn);
 
-#if GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_set_margin_left(_impl->_sbtn, XPAD);
-    gtk_widget_set_margin_right(_impl->_sbtn, XPAD);
-    gtk_widget_set_margin_top(_impl->_sbtn, YPAD);
-    gtk_widget_set_margin_bottom(_impl->_sbtn, YPAD);
-    gtk_widget_set_halign(_impl->_sbtn, GTK_ALIGN_CENTER);
-    gtk_widget_set_valign(_impl->_sbtn, GTK_ALIGN_CENTER);
-    gtk_grid_attach(GTK_GRID(t), _impl->_sbtn, 2, row, 1, 1);
-#else
-    gtk_table_attach(GTK_TABLE (t), _impl->_sbtn, 2, 3, row, row + 1, (GtkAttachOptions)0, (GtkAttachOptions)0, XPAD, YPAD);
-#endif
+    attachToGridOrTable(t, _impl->_sbtn, 2, row, 1, 1, false, true);
 
     // Signals
     g_signal_connect(G_OBJECT(_impl->_adj), "value_changed", G_CALLBACK(ColorICCSelectorImpl::_adjustmentChanged), _csel);
