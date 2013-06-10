@@ -646,7 +646,7 @@ sp_item_update(SPObject *object, SPCtx *ctx, guint flags)
 
     /* Update bounding box data used by filters */
     if (item->style->filter.set && item->display) {
-        Geom::OptRect item_bbox = item->geometricBounds();
+        Geom::OptRect item_bbox = item->visualBounds();
 
         SPItemView *itemview = item->display;
         do {
@@ -1088,6 +1088,9 @@ Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned 
             // Update bbox, in case the mask uses bbox units
             sp_mask_set_bbox(SP_MASK(mask), mask_key, item_bbox);
             mask->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
+        }
+        if (style->filter.set && display) {
+            item_bbox = visualBounds();
         }
         ai->setData(this);
         ai->setItemBounds(item_bbox);
