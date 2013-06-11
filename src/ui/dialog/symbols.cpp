@@ -44,6 +44,7 @@
 
 #include "ui/cache/svg_preview_cache.h"
 #include "ui/clipboard.h"
+#include "ui/icon-names.h"
 
 #include "symbols.h"
 
@@ -55,6 +56,7 @@
 #include "sp-use.h"
 #include "sp-defs.h"
 #include "sp-symbol.h"
+#include "widgets/icon.h"
 
 #ifdef WITH_LIBVISIO
 #include <libvisio/libvisio.h>
@@ -179,6 +181,64 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
 #else
   table->attach(*Gtk::manage(scroller),0,2,row,row+1,Gtk::EXPAND|Gtk::FILL,Gtk::EXPAND|Gtk::FILL);
 #endif
+
+  ++row;
+
+  /******************** Tools *******************************/
+  Gtk::Button* button;
+  Gtk::HBox* tools = new Gtk::HBox();
+
+  //tools->set_layout( Gtk::BUTTONBOX_END );
+#if WITH_GTKMM_3_0
+  scroller->set_hexpand();
+  table->attach(*Gtk::manage(tools),0,row,2,1);
+#else
+  table->attach(*Gtk::manage(tools),0,2,row,row+1,Gtk::EXPAND|Gtk::FILL,Gtk::FILL);
+#endif
+
+  button = Gtk::manage(new Gtk::Button());
+  button->add(*Gtk::manage(Glib::wrap(
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("symbol-add")))) );
+  button->set_tooltip_text(_("Add Symbol from the current document."));
+  button->set_relief( Gtk::RELIEF_NONE );
+  tools->pack_start(* Gtk::manage(button), Gtk::PACK_SHRINK);
+
+  button = Gtk::manage(new Gtk::Button());
+  button->add(*Gtk::manage(Glib::wrap(
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("symbol-remove")))) );
+  button->set_tooltip_text(_("Remove Symbol from the current document."));
+  button->set_relief( Gtk::RELIEF_NONE );
+  tools->pack_start(* Gtk::manage(button), Gtk::PACK_SHRINK);
+
+  Gtk::Label* spacer = Gtk::manage(new Gtk::Label(""));
+  tools->pack_start(* Gtk::manage(spacer)); //, Gtk::EXPAND|Gtk::FILL);
+
+  button = Gtk::manage(new Gtk::Button());
+  button->add(*Gtk::manage(Glib::wrap(
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("zoom-in")))) );
+  button->set_tooltip_text(_("Make Icons bigger by zooming in."));
+  button->set_relief( Gtk::RELIEF_NONE );
+  tools->pack_start(* Gtk::manage(button), Gtk::PACK_SHRINK);
+
+  Gtk::ToggleButton* toggle = Gtk::manage(new Gtk::ToggleButton());
+  toggle->add(*Gtk::manage(Glib::wrap(
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("zoom-fit-page")))) );
+  toggle->set_tooltip_text(_("Toggle 'fit' symbols in icon space."));
+  toggle->set_relief( Gtk::RELIEF_NONE );
+  tools->pack_start(* Gtk::manage(toggle), Gtk::PACK_SHRINK);
+
+  button = Gtk::manage(new Gtk::Button());
+  button->add(*Gtk::manage(Glib::wrap(
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("zoom-out")))) );
+  button->set_tooltip_text(_("Make Icons smaller by zooming out."));
+  button->set_relief( Gtk::RELIEF_NONE );
+  tools->pack_start(* Gtk::manage(button), Gtk::PACK_SHRINK);
+
+
+
+
+
+
 
   ++row;
 

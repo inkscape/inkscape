@@ -342,62 +342,37 @@ StrokeStyle::StrokeStyle() :
     // TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
     // (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
 
+    spw_label(table, _("Markers:"), 0, i, NULL);
+
+    hb = spw_hbox(table, 1, 1, i);
+    i++;
+
     startMarkerCombo = manage(new MarkerComboBox("marker-start", SP_MARKER_LOC_START));
-    spw_label(table, _("_Start Markers:"), 0, i, startMarkerCombo);
     startMarkerCombo->set_tooltip_text(_("Start Markers are drawn on the first node of a path or shape"));
     startMarkerConn = startMarkerCombo->signal_changed().connect(
             sigc::bind<MarkerComboBox *, StrokeStyle *, SPMarkerLoc>(
                 sigc::ptr_fun(&StrokeStyle::markerSelectCB), startMarkerCombo, this, SP_MARKER_LOC_START));
     startMarkerCombo->show();
 
-#if WITH_GTKMM_3_0
-    startMarkerCombo->set_hexpand();
-    startMarkerCombo->set_halign(Gtk::ALIGN_FILL);
-    startMarkerCombo->set_valign(Gtk::ALIGN_CENTER);
-    table->attach(*startMarkerCombo, 1, i, 3, 1);
-#else
-    table->attach(*startMarkerCombo, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
-#endif
-
-    i++;
+    hb->pack_start(*startMarkerCombo, true, true, 0);
 
     midMarkerCombo =  manage(new MarkerComboBox("marker-mid", SP_MARKER_LOC_MID));
-    spw_label(table, _("_Mid Markers:"), 0, i, midMarkerCombo);
     midMarkerCombo->set_tooltip_text(_("Mid Markers are drawn on every node of a path or shape except the first and last nodes"));
     midMarkerConn = midMarkerCombo->signal_changed().connect(
         sigc::bind<MarkerComboBox *, StrokeStyle *, SPMarkerLoc>(
             sigc::ptr_fun(&StrokeStyle::markerSelectCB), midMarkerCombo, this, SP_MARKER_LOC_MID));
     midMarkerCombo->show();
 
-#if WITH_GTKMM_3_0
-    midMarkerCombo->set_hexpand();
-    midMarkerCombo->set_halign(Gtk::ALIGN_FILL);
-    midMarkerCombo->set_valign(Gtk::ALIGN_CENTER);
-    table->attach(*midMarkerCombo, 1, i, 3, 1);
-#else
-    table->attach(*midMarkerCombo, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
-#endif
-
-    i++;
+    hb->pack_start(*midMarkerCombo, true, true, 0);
 
     endMarkerCombo = manage(new MarkerComboBox("marker-end", SP_MARKER_LOC_END));
-    spw_label(table, _("_End Markers:"), 0, i, endMarkerCombo);
     endMarkerCombo->set_tooltip_text(_("End Markers are drawn on the last node of a path or shape"));
     endMarkerConn = endMarkerCombo->signal_changed().connect(
         sigc::bind<MarkerComboBox *, StrokeStyle *, SPMarkerLoc>(
             sigc::ptr_fun(&StrokeStyle::markerSelectCB), endMarkerCombo, this, SP_MARKER_LOC_END));
     endMarkerCombo->show();
 
-#if WITH_GTKMM_3_0
-    endMarkerCombo->set_hexpand();
-    endMarkerCombo->set_halign(Gtk::ALIGN_FILL);
-    endMarkerCombo->set_valign(Gtk::ALIGN_CENTER);
-    table->attach(*endMarkerCombo, 1, i, 3, 1);
-#else
-    table->attach(*endMarkerCombo, 1, 4, i, i+1, (Gtk::EXPAND | Gtk::FILL), static_cast<Gtk::AttachOptions>(0), 0, 0);
-#endif
-
-    i++;
+    hb->pack_start(*endMarkerCombo, true, true, 0);
 
     setDesktop(desktop);
     updateLine();
