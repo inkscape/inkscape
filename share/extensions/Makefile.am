@@ -74,6 +74,7 @@ extensions = \
 	guides_creator.py \
 	guillotine.py \
 	handles.py \
+	hpgl_input.py \
 	hpgl_output.py \
 	ill2svg.pl \
 	ink2canvas.py \
@@ -262,6 +263,7 @@ modules = \
 	guides_creator.inx \
 	guillotine.inx \
 	handles.inx \
+	hpgl_input.inx \
 	hpgl_output.inx \
 	ink2canvas.inx \
 	inkscape_follow_link.inx \
