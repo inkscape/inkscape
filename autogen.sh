@@ -39,5 +39,5 @@ AUTOPOINT='intltoolize --automake --copy' autoreconf --force --install --verbose
 sed 's/itlocaledir = $(prefix)\/$(DATADIRNAME)\/locale/itlocaledir = $(datarootdir)\/locale/' < po/Makefile.in.in > po/Makefile.in.in.tmp
 mv po/Makefile.in.in.tmp po/Makefile.in.in
 
-cd $olddir
-test -n "$NOCONFIGURE" || "$srcdir/configure" "$@"
+echo ""
+echo "Done!  Please run './configure' now."
