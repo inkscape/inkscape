@@ -60,7 +60,12 @@ MarkerComboBox::MarkerComboBox(gchar const *id, int l) :
     set_cell_data_func(image_renderer, sigc::mem_fun(*this, &MarkerComboBox::prepareImageRenderer));
     gtk_combo_box_set_row_separator_func(GTK_COMBO_BOX(gobj()), MarkerComboBox::separator_cb, NULL, NULL);
 
-    empty_image = new Gtk::Image();
+    Glib::RefPtr<Gtk::IconTheme> iconTheme = Gtk::IconTheme::get_default();
+    if(iconTheme->has_icon("gtk-remove")) {
+        empty_image = new Gtk::Image( iconTheme->load_icon("gtk-remove", 22) );
+    } else {
+        empty_image = new Gtk::Image();
+    }
 
     sandbox = ink_markers_preview_doc ();
     desktop = inkscape_active_desktop();
@@ -152,8 +157,7 @@ MarkerComboBox::init_combo()
         Gtk::TreeModel::Row row = *(marker_store->append());
         row[marker_columns.label] = _("No document selected");
         row[marker_columns.marker] = g_strdup("None");
-        Glib::RefPtr<Gtk::IconTheme> iconTheme = Gtk::IconTheme::get_default();
-        row[marker_columns.image] = new Gtk::Image( iconTheme->load_icon("gtk-remove", 22) );
+        row[marker_columns.image] = NULL;
         row[marker_columns.stock] = false;
         row[marker_columns.history] = false;
         row[marker_columns.separator] = false;
@@ -388,8 +392,7 @@ void MarkerComboBox::add_markers (GSList *marker_list, SPDocument *source, gbool
         row[marker_columns.label] = _("None");
         row[marker_columns.stock] = false;
         row[marker_columns.marker] = g_strdup("None");
-        Glib::RefPtr<Gtk::IconTheme> iconTheme = Gtk::IconTheme::get_default();
-        row[marker_columns.image] = new Gtk::Image( iconTheme->load_icon("gtk-remove", 22) );
+        row[marker_columns.image] = NULL;
         row[marker_columns.history] = true;
         row[marker_columns.separator] = false;
     }
