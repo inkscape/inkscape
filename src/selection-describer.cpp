@@ -38,8 +38,9 @@
 #include "sp-spiral.h"
 
 static const gchar *
-type2term(GType type)
+type2term(SPItem *item)
 {
+    GType type = G_OBJECT_TYPE( item ); 
     if (type == SP_TYPE_ANCHOR)
         //TRANSLATORS: "Link" means internet link (anchor)
         { return C_("Web", "Link"); }
@@ -68,6 +69,8 @@ type2term(GType type)
     if (type == SP_TYPE_TEXT)
         { return C_("Object", "Text"); }
     if (type == SP_TYPE_USE)
+        if (SP_IS_SYMBOL(item->firstChild()))
+            { return C_("Object", "Symbol"); }
         // TRANSLATORS: "Clone" is a noun, type of object
         { return C_("Object", "Clone"); }
     if (type == SP_TYPE_ARC)
@@ -85,7 +88,7 @@ static GSList *collect_terms (GSList *items)
 {
     GSList *r = NULL;
     for (GSList *i = items; i != NULL; i = i->next) {
-        const gchar *term = type2term (G_OBJECT_TYPE(i->data));
+        const gchar *term = type2term ( SP_ITEM(i->data) );
         if (term != NULL && g_slist_find (r, term) == NULL)
             r = g_slist_prepend (r, (void *) term);
     }
