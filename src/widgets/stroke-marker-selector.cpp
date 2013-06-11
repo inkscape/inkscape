@@ -38,6 +38,7 @@
 #include "helper/stock-items.h"
 #include "gradient-vector.h"
 
+#include <gtkmm/icontheme.h>
 #include <gtkmm/adjustment.h>
 #include "ui/widget/spinbutton.h"
 #include "stroke-style.h"
@@ -151,7 +152,8 @@ MarkerComboBox::init_combo()
         Gtk::TreeModel::Row row = *(marker_store->append());
         row[marker_columns.label] = _("No document selected");
         row[marker_columns.marker] = g_strdup("None");
-        row[marker_columns.image] = NULL;
+        Glib::RefPtr<Gtk::IconTheme> iconTheme = Gtk::IconTheme::get_default();
+        row[marker_columns.image] = new Gtk::Image( iconTheme->load_icon("gtk-remove", 22) );
         row[marker_columns.stock] = false;
         row[marker_columns.history] = false;
         row[marker_columns.separator] = false;
@@ -386,7 +388,8 @@ void MarkerComboBox::add_markers (GSList *marker_list, SPDocument *source, gbool
         row[marker_columns.label] = _("None");
         row[marker_columns.stock] = false;
         row[marker_columns.marker] = g_strdup("None");
-        row[marker_columns.image] = NULL;
+        Glib::RefPtr<Gtk::IconTheme> iconTheme = Gtk::IconTheme::get_default();
+        row[marker_columns.image] = new Gtk::Image( iconTheme->load_icon("gtk-remove", 22) );
         row[marker_columns.history] = true;
         row[marker_columns.separator] = false;
     }
