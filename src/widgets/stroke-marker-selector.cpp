@@ -61,8 +61,8 @@ MarkerComboBox::MarkerComboBox(gchar const *id, int l) :
     gtk_combo_box_set_row_separator_func(GTK_COMBO_BOX(gobj()), MarkerComboBox::separator_cb, NULL, NULL);
 
     Glib::RefPtr<Gtk::IconTheme> iconTheme = Gtk::IconTheme::get_default();
-    if(iconTheme->has_icon("gtk-remove")) {
-        empty_image = new Gtk::Image( iconTheme->load_icon("gtk-remove", 22) );
+    if(iconTheme->has_icon("remove")) {
+        empty_image = new Gtk::Image( iconTheme->load_icon("remove", 22) );
     } else {
         empty_image = new Gtk::Image();
     }
