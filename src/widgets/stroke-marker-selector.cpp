@@ -60,12 +60,8 @@ MarkerComboBox::MarkerComboBox(gchar const *id, int l) :
     set_cell_data_func(image_renderer, sigc::mem_fun(*this, &MarkerComboBox::prepareImageRenderer));
     gtk_combo_box_set_row_separator_func(GTK_COMBO_BOX(gobj()), MarkerComboBox::separator_cb, NULL, NULL);
 
-    Glib::RefPtr<Gtk::IconTheme> iconTheme = Gtk::IconTheme::get_default();
-    if(iconTheme->has_icon("remove")) {
-        empty_image = new Gtk::Image( iconTheme->load_icon("remove", 22) );
-    } else {
-        empty_image = new Gtk::Image();
-    }
+    empty_image = new Gtk::Image( Glib::wrap(
+        sp_pixbuf_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("no-marker") ) ) );
 
     sandbox = ink_markers_preview_doc ();
     desktop = inkscape_active_desktop();

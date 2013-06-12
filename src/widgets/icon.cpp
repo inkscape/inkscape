@@ -867,6 +867,13 @@ GtkWidget *sp_icon_new( Inkscape::IconSize lsize, gchar const *name )
     return IconImpl::newFull( lsize, name );
 }
 
+// PUBLIC CALL for when you REALLY need a pixbuf
+GdkPixbuf *sp_pixbuf_new( Inkscape::IconSize lsize, gchar const *name )
+{
+    int psize = IconImpl::getPhysSize(lsize);
+    return IconImpl::renderup(name, lsize, psize);
+}
+
 // PUBLIC CALL:
 Gtk::Widget *sp_icon_get_icon( Glib::ustring const &oid, Inkscape::IconSize size )
 {
