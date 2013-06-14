@@ -784,8 +784,10 @@ void sp_selection_ungroup(SPDesktop *desktop)
             continue;
         }
 
-        /* We do not allow ungrouping <svg> etc. (lauris) */
-        if (strcmp(group->getRepr()->name(), "svg:g") && strcmp(group->getRepr()->name(), "svg:switch")) {
+        // This check reflects the g_return_if_fail in sp_item_group_ungroup and
+        // may be a redundent. It also allows ungrouping of 'a' tags and we dont
+        if (strcmp(group->getRepr()->name(), "svg:g") && strcmp(group->getRepr()->name(), "svg:switch") &&
+                strcmp(group->getRepr()->name(), "svg:svg")) {
             // keep the non-group item in the new selection
             new_select = g_slist_append(new_select, group);
             continue;
