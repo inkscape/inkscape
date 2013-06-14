@@ -868,6 +868,13 @@ int SPShape::hasMarkers() const
        all three settings.  This should be fixed later such that if 'marker' is
        specified, then all three should appear. */
 
+    // Ignore markers for objects which are inside markers themselves.
+    for (SPObject *parent = this->parent; parent != NULL; parent = parent->parent) {
+      if(SP_IS_MARKER(parent)) {
+        return 0;
+      }
+    }
+
     return (
         this->_curve &&
         (this->_marker[SP_MARKER_LOC] ||
