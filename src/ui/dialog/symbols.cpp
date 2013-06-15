@@ -221,7 +221,7 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   in_sizes = 2; // Default 32px
   button = Gtk::manage(new Gtk::Button());
   button->add(*Gtk::manage(Glib::wrap(
-      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("zoom-in")))) );
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("symbol-bigger")))) );
   button->set_tooltip_text(_("Make Icons bigger by zooming in."));
   button->set_relief( Gtk::RELIEF_NONE );
   button->set_focus_on_click( false );
@@ -230,7 +230,7 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
 
   button = Gtk::manage(new Gtk::Button());
   button->add(*Gtk::manage(Glib::wrap(
-      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("zoom-out")))) );
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("symbol-smaller")))) );
   button->set_tooltip_text(_("Make Icons smaller by zooming out."));
   button->set_relief( Gtk::RELIEF_NONE );
   button->set_focus_on_click( false );
@@ -239,7 +239,7 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
 
   fitSymbol = Gtk::manage(new Gtk::ToggleButton());
   fitSymbol->add(*Gtk::manage(Glib::wrap(
-      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("zoom-fit-page")))) );
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("symbol-fit")))) );
   fitSymbol->set_tooltip_text(_("Toggle 'fit' symbols in icon space."));
   fitSymbol->set_relief( Gtk::RELIEF_NONE );
   fitSymbol->set_focus_on_click( false );
