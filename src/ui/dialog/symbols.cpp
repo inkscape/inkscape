@@ -48,6 +48,7 @@
 
 #include "symbols.h"
 
+#include "selection.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "document.h"
@@ -64,6 +65,7 @@
 #endif
 
 #include "verbs.h"
+#include "helper/action.h"
 #include "xml/repr.h"
 
 namespace Inkscape {
@@ -102,8 +104,6 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   UI::Widget::Panel("", prefsPath, SP_VERB_DIALOG_SYMBOLS),
   store(Gtk::ListStore::create(*getColumns())),
   iconView(0),
-  previewScale(0),
-  previewSize(0),
   currentDesktop(0),
   deskTrack(),
   currentDocument(0),
@@ -142,8 +142,8 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   table->attach(*Gtk::manage(symbolSet),1,2,row,row+1,Gtk::FILL|Gtk::EXPAND,Gtk::SHRINK);
 #endif
 
-  sigc::connection connSet =
-    symbolSet->signal_changed().connect(sigc::mem_fun(*this, &SymbolsDialog::rebuild));
+  sigc::connection connSet = symbolSet->signal_changed().connect(
+          sigc::mem_fun(*this, &SymbolsDialog::rebuild));
   instanceConns.push_back(connSet);
   
   ++row;
@@ -154,7 +154,7 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   iconView = new Gtk::IconView(static_cast<Glib::RefPtr<Gtk::TreeModel> >(store));
   //iconView->set_text_column(  columns->symbol_id  );
   iconView->set_tooltip_column( 1 );
-  iconView->set_pixbuf_column(  columns->symbol_image );
+  iconView->set_pixbuf_column( columns->symbol_image );
   // Giving the iconview a small minimum size will help users understand
   // What the dialog does.
   iconView->set_size_request( 100, 200 );
@@ -163,11 +163,12 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   targets.push_back(Gtk::TargetEntry( "application/x-inkscape-paste"));
 
   iconView->enable_model_drag_source (targets, Gdk::BUTTON1_MASK, Gdk::ACTION_COPY);
-  iconView->signal_drag_data_get().connect(sigc::mem_fun(*this, &SymbolsDialog::iconDragDataGet));
+  iconView->signal_drag_data_get().connect(
+          sigc::mem_fun(*this, &SymbolsDialog::iconDragDataGet));
 
   sigc::connection connIconChanged;
-  connIconChanged =
-    iconView->signal_selection_changed().connect(sigc::mem_fun(*this, &SymbolsDialog::iconChanged));
+  connIconChanged = iconView->signal_selection_changed().connect(
+          sigc::mem_fun(*this, &SymbolsDialog::iconChanged));
   instanceConns.push_back(connIconChanged);
 
   Gtk::ScrolledWindow *scroller = new Gtk::ScrolledWindow();
@@ -196,109 +197,56 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   table->attach(*Gtk::manage(tools),0,2,row,row+1,Gtk::EXPAND|Gtk::FILL,Gtk::FILL);
 #endif
 
-  button = Gtk::manage(new Gtk::Button());
-  button->add(*Gtk::manage(Glib::wrap(
+  addSymbol = Gtk::manage(new Gtk::Button());
+  addSymbol->add(*Gtk::manage(Glib::wrap(
       sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("symbol-add")))) );
-  button->set_tooltip_text(_("Add Symbol from the current document."));
-  button->set_relief( Gtk::RELIEF_NONE );
-  tools->pack_start(* Gtk::manage(button), Gtk::PACK_SHRINK);
+  addSymbol->set_tooltip_text(_("Add Symbol from the current document."));
+  addSymbol->set_relief( Gtk::RELIEF_NONE );
+  addSymbol->set_focus_on_click( false );
+  addSymbol->signal_clicked().connect(sigc::mem_fun(*this, &SymbolsDialog::insertSymbol));
+  tools->pack_start(* addSymbol, Gtk::PACK_SHRINK);
 
-  button = Gtk::manage(new Gtk::Button());
-  button->add(*Gtk::manage(Glib::wrap(
+  removeSymbol = Gtk::manage(new Gtk::Button());
+  removeSymbol->add(*Gtk::manage(Glib::wrap(
       sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("symbol-remove")))) );
-  button->set_tooltip_text(_("Remove Symbol from the current document."));
-  button->set_relief( Gtk::RELIEF_NONE );
-  tools->pack_start(* Gtk::manage(button), Gtk::PACK_SHRINK);
+  removeSymbol->set_tooltip_text(_("Remove Symbol from the current document."));
+  removeSymbol->set_relief( Gtk::RELIEF_NONE );
+  removeSymbol->set_focus_on_click( false );
+  removeSymbol->signal_clicked().connect(sigc::mem_fun(*this, &SymbolsDialog::revertSymbol));
+  tools->pack_start(* removeSymbol, Gtk::PACK_SHRINK);
 
   Gtk::Label* spacer = Gtk::manage(new Gtk::Label(""));
-  tools->pack_start(* Gtk::manage(spacer)); //, Gtk::EXPAND|Gtk::FILL);
+  tools->pack_start(* Gtk::manage(spacer));
 
+  in_sizes = 2; // Default 32px
   button = Gtk::manage(new Gtk::Button());
   button->add(*Gtk::manage(Glib::wrap(
       sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("zoom-in")))) );
   button->set_tooltip_text(_("Make Icons bigger by zooming in."));
   button->set_relief( Gtk::RELIEF_NONE );
-  tools->pack_start(* Gtk::manage(button), Gtk::PACK_SHRINK);
-
-  Gtk::ToggleButton* toggle = Gtk::manage(new Gtk::ToggleButton());
-  toggle->add(*Gtk::manage(Glib::wrap(
-      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("zoom-fit-page")))) );
-  toggle->set_tooltip_text(_("Toggle 'fit' symbols in icon space."));
-  toggle->set_relief( Gtk::RELIEF_NONE );
-  tools->pack_start(* Gtk::manage(toggle), Gtk::PACK_SHRINK);
+  button->set_focus_on_click( false );
+  button->signal_clicked().connect(sigc::mem_fun(*this, &SymbolsDialog::zoomin));
+  tools->pack_start(* button, Gtk::PACK_SHRINK);
 
   button = Gtk::manage(new Gtk::Button());
   button->add(*Gtk::manage(Glib::wrap(
       sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("zoom-out")))) );
   button->set_tooltip_text(_("Make Icons smaller by zooming out."));
   button->set_relief( Gtk::RELIEF_NONE );
-  tools->pack_start(* Gtk::manage(button), Gtk::PACK_SHRINK);
+  button->set_focus_on_click( false );
+  button->signal_clicked().connect(sigc::mem_fun(*this, &SymbolsDialog::zoomout));
+  tools->pack_start(* button, Gtk::PACK_SHRINK);
 
+  fitSymbol = Gtk::manage(new Gtk::ToggleButton());
+  fitSymbol->add(*Gtk::manage(Glib::wrap(
+      sp_icon_new (Inkscape::ICON_SIZE_SMALL_TOOLBAR, INKSCAPE_ICON("zoom-fit-page")))) );
+  fitSymbol->set_tooltip_text(_("Toggle 'fit' symbols in icon space."));
+  fitSymbol->set_relief( Gtk::RELIEF_NONE );
+  fitSymbol->set_focus_on_click( false );
+  fitSymbol->set_active( true );
+  fitSymbol->signal_clicked().connect(sigc::mem_fun(*this, &SymbolsDialog::rebuild));
+  tools->pack_start(* fitSymbol, Gtk::PACK_SHRINK);
 
-
-
-
-
-
-  ++row;
-
-  /******************** Preview Scale ***********************/
-  Gtk::Label* labelScale = new Gtk::Label(_("Preview scale: "));
-
-#if WITH_GTKMM_3_0
-  table->attach(*Gtk::manage(labelScale),0,row,1,1);
-#else
-  table->attach(*Gtk::manage(labelScale),0,1,row,row+1,Gtk::SHRINK,Gtk::SHRINK);
-#endif
-
-  previewScale = new Gtk::ComboBoxText();
-  const gchar *scales[] =
-    {_("Fit"), _("Fit to width"), _("Fit to height"), "0.1", "0.2", "0.5", "1.0", "2.0", "5.0", NULL};
-  for( int i = 0; scales[i]; ++i ) {
-    previewScale->append(scales[i]);
-  }
-  previewScale->set_active_text(scales[0]);
-
-#if WITH_GTKMM_3_0
-  previewScale->set_hexpand();
-  table->attach(*Gtk::manage(previewScale),1,row,1,1);
-#else
-  table->attach(*Gtk::manage(previewScale),1,2,row,row+1,Gtk::FILL|Gtk::EXPAND,Gtk::SHRINK);
-#endif
-
-  sigc::connection connScale =
-    previewScale->signal_changed().connect(sigc::mem_fun(*this, &SymbolsDialog::rebuild));
-  instanceConns.push_back(connScale);
-  
-  ++row;
-
-  /******************** Preview Size ************************/
-  Gtk::Label* labelSize = new Gtk::Label(_("Preview size: "));
-
-#if WITH_GTKMM_3_0
-  table->attach(*Gtk::manage(labelSize),0,row,1,1);
-#else
-  table->attach(*Gtk::manage(labelSize),0,1,row,row+1,Gtk::SHRINK,Gtk::SHRINK);
-#endif
-
-  previewSize = new Gtk::ComboBoxText();
-  const gchar *sizes[] = {"16", "24", "32", "48", "64", NULL};
-  for( int i = 0; sizes[i]; ++i ) {
-    previewSize->append(sizes[i]);
-  }
-  previewSize->set_active_text(sizes[2]);
-
-#if WITH_GTKMM_3_0
-  previewSize->set_hexpand();
-  table->attach(*Gtk::manage(previewSize),1,row,1,1);
-#else
-  table->attach(*Gtk::manage(previewSize),1,2,row,row+1,Gtk::FILL|Gtk::EXPAND,Gtk::SHRINK);
-#endif
-
-  sigc::connection connSize =
-    previewSize->signal_changed().connect(sigc::mem_fun(*this, &SymbolsDialog::rebuild));
-  instanceConns.push_back(connSize);
-  
   ++row;
 
   /**********************************************************/
@@ -316,6 +264,10 @@ SymbolsDialog::SymbolsDialog( gchar const* prefsPath ) :
   sigc::connection defsModifiedConn = (SP_OBJECT(defs))->connectModified(
           sigc::mem_fun(*this, &SymbolsDialog::defsModified));
   instanceConns.push_back(defsModifiedConn);
+
+  sigc::connection selectionChangedConn = currentDesktop->selection->connectChanged(
+          sigc::mem_fun(*this, &SymbolsDialog::selectionChanged));
+  instanceConns.push_back(selectionChangedConn);
 
   get_symbols();
   draw_symbols( currentDocument ); /* Defaults to current document */
@@ -341,6 +293,20 @@ SymbolsDialog& SymbolsDialog::getInstance()
   return *new SymbolsDialog();
 }
 
+void SymbolsDialog::zoomin() {
+  if(in_sizes < 4) {
+      in_sizes++;
+      rebuild();
+  }
+}
+
+void SymbolsDialog::zoomout() {
+  if(in_sizes > 0) {
+      in_sizes--;
+      rebuild();
+  }
+}
+
 void SymbolsDialog::rebuild() {
 
   store->clear();
@@ -351,8 +317,25 @@ void SymbolsDialog::rebuild() {
     // Symbol must be from Current Document (this method of
     // checking should be language independent).
     symbolDocument = currentDocument;
+    addSymbol->set_sensitive( true );
+    removeSymbol->set_sensitive( true );
+  } else {
+    addSymbol->set_sensitive( false );                                              
+    removeSymbol->set_sensitive( false );
   }
   draw_symbols( symbolDocument );
+}
+
+void SymbolsDialog::insertSymbol() {
+    Inkscape::Verb *verb = Inkscape::Verb::get( SP_VERB_EDIT_SYMBOL );
+    SPAction *action = verb->get_action((Inkscape::UI::View::View *) this->currentDesktop);
+    sp_action_perform (action, NULL);
+}
+
+void SymbolsDialog::revertSymbol() {
+    Inkscape::Verb *verb = Inkscape::Verb::get( SP_VERB_EDIT_UNSYMBOL );
+    SPAction *action = verb->get_action((Inkscape::UI::View::View *) this->currentDesktop);
+    sp_action_perform (action, NULL);
 }
 
 void SymbolsDialog::iconDragDataGet(const Glib::RefPtr<Gdk::DragContext>& /*context*/, Gtk::SelectionData& data, guint /*info*/, guint /*time*/)
@@ -383,48 +366,66 @@ void SymbolsDialog::defsModified(SPObject * /*object*/, guint /*flags*/)
   }
 }
 
-void SymbolsDialog::iconChanged() {
-#if WITH_GTKMM_3_0
-  std::vector<Gtk::TreePath> iconArray = iconView->get_selected_items();
-#else
-  Gtk::IconView::ArrayHandle_TreePaths iconArray = iconView->get_selected_items();
-#endif
+void SymbolsDialog::selectionChanged(Inkscape::Selection *selection) {
+  Glib::ustring symbol_id = selectedSymbolId();
+  SPDocument* symbolDocument = selectedSymbols();
+  SPObject* symbol = symbolDocument->getObjectById(symbol_id);
 
-  if( iconArray.empty() ) {
-    //std::cout << "  iconArray empty: huh? " << std::endl;
-  } else {
+  if(symbol && !selection->includes(symbol)) {
+      iconView->unselect_all();
+  }
+}
+
+SPDocument* SymbolsDialog::selectedSymbols() {
+  /* OK, we know symbol name... now we need to copy it to clipboard, bon chance! */
+  Glib::ustring symbolSetString = symbolSet->get_active_text();
+
+  SPDocument* symbolDocument = symbolSets[symbolSetString];
+  if( !symbolDocument ) {
+    // Symbol must be from Current Document (this method of checking should be language independent).
+    return currentDocument;
+  }
+  return symbolDocument;
+}
+
+Glib::ustring SymbolsDialog::selectedSymbolId() {
+  #if WITH_GTKMM_3_0
+    std::vector<Gtk::TreePath> iconArray = iconView->get_selected_items();
+  #else
+    Gtk::IconView::ArrayHandle_TreePaths iconArray = iconView->get_selected_items();
+  #endif
+  if( !iconArray.empty() ) {
     Gtk::TreeModel::Path const & path = *iconArray.begin();
     Gtk::ListStore::iterator row = store->get_iter(path);
-    Glib::ustring symbol_id = (*row)[getColumns()->symbol_id];
+    return (*row)[getColumns()->symbol_id];
+  }
+  return Glib::ustring("");
+}
 
-    /* OK, we know symbol name... now we need to copy it to clipboard, bon chance! */
-    Glib::ustring symbolSetString = symbolSet->get_active_text();
+void SymbolsDialog::iconChanged() {
 
-    SPDocument* symbolDocument = symbolSets[symbolSetString];
-    if( !symbolDocument ) {
-      // Symbol must be from Current Document (this method of
-      // checking should be language independent).
-      symbolDocument = currentDocument;
+  Glib::ustring symbol_id = selectedSymbolId();
+  SPDocument* symbolDocument = selectedSymbols();
+  SPObject* symbol = symbolDocument->getObjectById(symbol_id);
+
+  if( symbol ) {
+    // Select the symbol on the canvas so it can be manipulated
+    currentDesktop->selection->set( symbol, false );
+
+    // Find style for use in <use>
+    // First look for default style stored in <symbol>
+    gchar const* style = symbol->getAttribute("inkscape:symbol-style");
+    if( !style ) {
+	  // If no default style in <symbol>, look in documents.
+	  if( symbolDocument == currentDocument ) {
+	    style = style_from_use( symbol_id.c_str(), currentDocument );
+	  } else {
+	    style = symbolDocument->getReprRoot()->attribute("style");
+	  }
     }
 
-    SPObject* symbol = symbolDocument->getObjectById(symbol_id);
-    if( symbol ) {
-
-      // Find style for use in <use>
-      // First look for default style stored in <symbol>
-      gchar const* style = symbol->getAttribute("inkscape:symbol-style");
-      if( !style ) {
-	// If no default style in <symbol>, look in documents.
-	if( symbolDocument == currentDocument ) {
-	  style = style_from_use( symbol_id.c_str(), currentDocument );
-	} else {
-	  style = symbolDocument->getReprRoot()->attribute("style");
-	}
-      }
-
-      ClipboardManager *cm = ClipboardManager::get();
-      cm->copySymbol(symbol->getRepr(), style);
-    }
+    ClipboardManager *cm = ClipboardManager::get();
+    cm->copySymbol(symbol->getRepr(), style);
   }
 }
 
@@ -739,11 +740,7 @@ SymbolsDialog::create_symbol_image(gchar const *symbol_id, SPObject *symbol)
 
   SPItem *item = SP_ITEM(object_temp);
 
-  Glib::ustring previewSizeString = previewSize->get_active_text();
-  unsigned psize = atol( previewSizeString.c_str() );
-
-  Glib::ustring previewScaleString = previewScale->get_active_text();
-  int previewScaleRow = previewScale->get_active_row_number();
+  unsigned psize = SYMBOL_ICON_SIZES[in_sizes];
 
   /* Update to renderable state */
   Glib::ustring key = svg_preview_cache.cache_key(previewDocument->getURI(), symbol_id, psize);
@@ -774,21 +771,9 @@ SymbolsDialog::create_symbol_image(gchar const *symbol_id, SPObject *symbol)
       height = 1.0;
     }
 
-    switch (previewScaleRow) {
-    case 0:
-	/* Fit */
-	scale = psize/std::max(width,height);
-	break;
-    case 1:
-	/* Fit width */
-	scale = psize/width;
-	break;
-    case 2:
-	/* Fit height */
-	scale = psize/height;
-	break;
-    default:
-	scale = atof( previewScaleString.c_str() );
+    if( fitSymbol->get_active() ) {
+	  /* Fit */
+	  scale = psize/std::max(width,height);
     }
 
     pixbuf = Glib::wrap(render_pixbuf(renderDrawing, scale, *dbox, psize));

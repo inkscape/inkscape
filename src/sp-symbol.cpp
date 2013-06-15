@@ -371,6 +371,8 @@ static Geom::OptRect sp_symbol_bbox(SPItem const *item, Geom::Affine const &tran
     SPSymbol const *symbol = SP_SYMBOL(item);
     Geom::OptRect bbox;
 
+    // We don't need a bounding box for Symbols dialog when selecting
+    // symbols. They have no canvas location. But cloned symbols are.
     if (symbol->cloned) {
         // Cloned <symbol> is actually renderable
 
@@ -378,11 +380,6 @@ static Geom::OptRect sp_symbol_bbox(SPItem const *item, Geom::Affine const &tran
             Geom::Affine const a( symbol->c2p * transform );
             bbox = ((SPItemClass *) (sp_symbol_parent_class))->bbox(item, a, type);
         }
-    } else {
-        // Need bounding box for Symbols dialog
-
-        Geom::Affine const a;
-        bbox = ((SPItemClass *) (sp_symbol_parent_class))->bbox(item, a, type);
     }
     return bbox;
 }

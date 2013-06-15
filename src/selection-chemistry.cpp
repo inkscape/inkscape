@@ -3032,18 +3032,16 @@ void sp_selection_unsymbol(SPDesktop *desktop)
         return;
     }
 
-    SPObject* use = selection->single();
+    SPObject* symbol = selection->single();
  
     // Make sure we have only one object in selection.
     // Require that we really have a <use> that references a <symbol>.
-    if( use == NULL || ( !SP_IS_USE( use ) && !SP_IS_SYMBOL( use->firstChild() )))  {
+    if( symbol == NULL || !SP_IS_SYMBOL( symbol ))  {
         desktop->messageStack()->flash(Inkscape::WARNING_MESSAGE, _("Select only one <b>symbol</b> to convert to group."));
         return;
     }
 
     doc->ensureUpToDate();
-
-    SPObject* symbol = use->firstChild();
 
     Inkscape::XML::Node *group = xml_doc->createElement("svg:g");
     group->setAttribute("style",     symbol->getAttribute("style"));
@@ -3062,14 +3060,14 @@ void sp_selection_unsymbol(SPDesktop *desktop)
         child->deleteObject(true);
     }
 
-    SPObject* parent = use->parent; // So we insert <g> next to <use> (easier to find)
+    // So we insert <g> inside the current layer
+    SPObject *parent = desktop->currentLayer();
 
     // Need to delete <symbol>; all other <use> elements that referenced <symbol> should
     // auto-magically reference <g>.
     symbol->deleteObject(true);
     group->setAttribute("id",id.c_str()); // After we delete symbol with same id.
     parent->getRepr()->appendChild(group);
-    //use->deleteObject(true);
 
     SPItem *group_item = static_cast<SPItem *>(sp_desktop_document(desktop)->getObjectByRepr(group));
     Inkscape::GC::release(group);

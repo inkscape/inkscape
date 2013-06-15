@@ -48,6 +48,9 @@ class SymbolColumns; // For Gtk::ListStore
  * new symbols documents to be constructed and if saved in the prefs folder will
  * make those symbols available for all future documents.
  */
+
+const int SYMBOL_ICON_SIZES[] = {16, 24, 32, 48, 64};
+
 class SymbolsDialog : public UI::Widget::Panel {
 
 public:
@@ -62,8 +65,15 @@ private:
 
     static SymbolColumns *getColumns();
 
+    void zoomin();
+    void zoomout();
     void rebuild();
+    void insertSymbol();
+    void revertSymbol();
     void defsModified(SPObject *object, guint flags);
+    void selectionChanged(Inkscape::Selection *selection);
+    SPDocument* selectedSymbols();
+    Glib::ustring selectedSymbolId();
     void iconChanged();
     void iconDragDataGet(const Glib::RefPtr<Gdk::DragContext>& context, Gtk::SelectionData& selection_data, guint info, guint time);
 
@@ -84,12 +94,15 @@ private:
     /* Keep track of all symbol template documents */
     std::map<Glib::ustring, SPDocument*> symbolSets;
 
+    // Index into sizes which is selected
+    int in_sizes;
 
     Glib::RefPtr<Gtk::ListStore> store;
     Gtk::ComboBoxText* symbolSet;
     Gtk::IconView* iconView;
-    Gtk::ComboBoxText* previewScale;
-    Gtk::ComboBoxText* previewSize;
+    Gtk::Button* addSymbol;
+    Gtk::Button* removeSymbol;
+    Gtk::ToggleButton* fitSymbol;
 
     void setTargetDesktop(SPDesktop *desktop);
     SPDesktop*  currentDesktop;
