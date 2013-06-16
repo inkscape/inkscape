@@ -1885,6 +1885,67 @@ sp_dtw_zoom_value_changed (GtkSpinButton *spin, gpointer data)
     spinbutton_defocus (GTK_WIDGET(spin));
 }
 
+
+static void
+sp_dtw_zoom_10 (GtkMenuItem */*item*/, gpointer data)
+{
+    sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 0.1);
+}
+
+static void
+sp_dtw_zoom_25 (GtkMenuItem */*item*/, gpointer data)
+{
+    sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 0.25);
+}
+
+static void
+sp_dtw_zoom_50 (GtkMenuItem */*item*/, gpointer data)
+{
+    sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 0.5);
+}
+
+static void
+sp_dtw_zoom_100 (GtkMenuItem */*item*/, gpointer data)
+{
+    sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 1.0);
+}
+
+static void
+sp_dtw_zoom_200 (GtkMenuItem */*item*/, gpointer data)
+{
+    sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 2.0);
+}
+
+static void
+sp_dtw_zoom_500 (GtkMenuItem */*item*/, gpointer data)
+{
+    sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 5.0);
+}
+
+static void
+sp_dtw_zoom_1000 (GtkMenuItem */*item*/, gpointer data)
+{
+    sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 10.0);
+}
+
+static void
+sp_dtw_zoom_page (GtkMenuItem */*item*/, gpointer data)
+{
+    static_cast<SPDesktop*>(data)->zoom_page();
+}
+
+static void
+sp_dtw_zoom_drawing (GtkMenuItem */*item*/, gpointer data)
+{
+    static_cast<SPDesktop*>(data)->zoom_drawing();
+}
+
+static void
+sp_dtw_zoom_selection (GtkMenuItem */*item*/, gpointer data)
+{
+    static_cast<SPDesktop*>(data)->zoom_selection();
+}
+
 static void
 sp_dtw_zoom_populate_popup (GtkEntry */*entry*/, GtkMenu *menu, gpointer data)
 {
@@ -1898,6 +1959,14 @@ sp_dtw_zoom_populate_popup (GtkEntry */*entry*/, GtkMenu *menu, gpointer data)
     }
     g_list_free (children);
 
+    item = gtk_menu_item_new_with_label ("1000%");
+    g_signal_connect (G_OBJECT (item), "activate", G_CALLBACK (sp_dtw_zoom_1000), dt);
+    gtk_widget_show (item);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+    item = gtk_menu_item_new_with_label ("500%");
+    g_signal_connect (G_OBJECT (item), "activate", G_CALLBACK (sp_dtw_zoom_500), dt);
+    gtk_widget_show (item);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
     item = gtk_menu_item_new_with_label ("200%");
     g_signal_connect (G_OBJECT (item), "activate", G_CALLBACK (sp_dtw_zoom_200), dt);
     gtk_widget_show (item);
@@ -1909,6 +1978,15 @@ sp_dtw_zoom_populate_popup (GtkEntry */*entry*/, GtkMenu *menu, gpointer data)
     item = gtk_menu_item_new_with_label ("50%");
     g_signal_connect (G_OBJECT (item), "activate", G_CALLBACK (sp_dtw_zoom_50), dt);
     gtk_widget_show (item);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+    item = gtk_menu_item_new_with_label ("25%");
+    g_signal_connect (G_OBJECT (item), "activate", G_CALLBACK (sp_dtw_zoom_25), dt);
+    gtk_widget_show (item);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+    item = gtk_menu_item_new_with_label ("10%");
+    g_signal_connect (G_OBJECT (item), "activate", G_CALLBACK (sp_dtw_zoom_10), dt);
+    gtk_widget_show (item);
+
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
     item = gtk_separator_menu_item_new ();
@@ -1936,41 +2014,6 @@ sp_dtw_zoom_menu_handler (SPDesktop *dt, gdouble factor)
     dt->zoom_absolute(d.midpoint()[Geom::X], d.midpoint()[Geom::Y], factor);
 }
 
-static void
-sp_dtw_zoom_50 (GtkMenuItem */*item*/, gpointer data)
-{
-    sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 0.5);
-}
-
-static void
-sp_dtw_zoom_100 (GtkMenuItem */*item*/, gpointer data)
-{
-    sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 1.0);
-}
-
-static void
-sp_dtw_zoom_200 (GtkMenuItem */*item*/, gpointer data)
-{
-    sp_dtw_zoom_menu_handler (static_cast<SPDesktop*>(data), 2.0);
-}
-
-static void
-sp_dtw_zoom_page (GtkMenuItem */*item*/, gpointer data)
-{
-    static_cast<SPDesktop*>(data)->zoom_page();
-}
-
-static void
-sp_dtw_zoom_drawing (GtkMenuItem */*item*/, gpointer data)
-{
-    static_cast<SPDesktop*>(data)->zoom_drawing();
-}
-
-static void
-sp_dtw_zoom_selection (GtkMenuItem */*item*/, gpointer data)
-{
-    static_cast<SPDesktop*>(data)->zoom_selection();
-}
 
 static void
 sp_dtw_sticky_zoom_toggled (GtkMenuItem *, gpointer data)
