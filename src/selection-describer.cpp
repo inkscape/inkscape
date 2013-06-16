@@ -151,6 +151,8 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         gchar *layer_name;
         if (layer == root) {
             layer_name = g_strdup(_("root"));
+        } else if(!layer) {
+            layer_name = g_strdup(_("none"));
         } else {
             char const *layer_label;
             bool is_label = false;
@@ -183,6 +185,8 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             if (num_parents == 1) {
                 if (layer == parent)
                     in_phrase = g_strdup_printf(_(" in %s"), layer_name);
+                else if (!layer)
+                    in_phrase = g_strdup_printf(_(" hidden in definitions"));
                 else 
                     in_phrase = g_strdup_printf(_(" in group %s (%s)"), parent_name, layer_name);
             } else {
@@ -200,6 +204,10 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
                               item_desc, in_phrase,
                               _("Convert symbol to group to edit"), _when_selected);
+            } else if (SP_IS_SYMBOL(item)) {
+                _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s.",
+                              item_desc, in_phrase,
+                              _("Select clone to edit symbol"));
             } else if (SP_IS_USE(item) || (SP_IS_OFFSET(item) && SP_OFFSET(item)->sourceHref)) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
                               item_desc, in_phrase,

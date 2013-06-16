@@ -70,6 +70,7 @@
 #include "sp-item-group.h"
 #include "sp-namedview.h"
 #include "sp-root.h"
+#include "sp-defs.h"
 #include "widgets/desktop-widget.h"
 #include "xml/repr.h"
 #include "helper/action.h" //sp_action_perform
@@ -595,6 +596,9 @@ SPObject *SPDesktop::layerForObject(SPObject *object) {
     SPObject *root=currentRoot();
     object = object->parent;
     while ( object && object != root && !isLayer(object) ) {
+        // Objects in defs have no layer and are NOT in the root layer
+        if(SP_IS_DEFS(object))
+            return NULL;
         object = object->parent;
     }
     return object;
