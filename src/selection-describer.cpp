@@ -207,7 +207,7 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
             } else if (SP_IS_SYMBOL(item)) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s.",
                               item_desc, in_phrase,
-                              _("Select clone to edit symbol"));
+                              _("Remove from symbols tray to edit symbol"));
             } else if (SP_IS_USE(item) || (SP_IS_OFFSET(item) && SP_OFFSET(item)->sourceHref)) {
                 _context.setF(Inkscape::NORMAL_MESSAGE, "%s%s. %s. %s.",
                               item_desc, in_phrase,

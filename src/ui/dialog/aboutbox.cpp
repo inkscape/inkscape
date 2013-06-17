@@ -359,7 +359,7 @@ void AboutBox::initStrings() {
 "Nick\n"
 "Andreas Nilsson\n"
 "Mitsuru Oka\n"
-"Marten Owens\n"
+"Martin Owens\n"
 "Alvin Penner\n"
 "Jon Phillips\n"
 "Zdenko Podobny\n"
