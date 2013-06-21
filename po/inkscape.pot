@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-05-12 14:52+0200\n"
+"POT-Creation-Date: 2013-06-21 15:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3310,11 +3310,11 @@ msgstr ""
 #: ../src/ui/dialog/inkscape-preferences.cpp:332
 #: ../src/ui/dialog/inkscape-preferences.cpp:641
 #: ../src/ui/dialog/inkscape-preferences.cpp:1255
-#: ../src/ui/dialog/inkscape-preferences.cpp:1412
-#: ../src/ui/dialog/inkscape-preferences.cpp:1810
+#: ../src/ui/dialog/inkscape-preferences.cpp:1419
+#: ../src/ui/dialog/inkscape-preferences.cpp:1817
 #: ../src/ui/dialog/input.cpp:742 ../src/ui/dialog/input.cpp:743
 #: ../src/ui/dialog/input.cpp:1571 ../src/ui/dialog/input.cpp:1625
-#: ../src/verbs.cpp:2288 ../src/widgets/gradient-toolbar.cpp:1128
+#: ../src/verbs.cpp:2292 ../src/widgets/gradient-toolbar.cpp:1128
 #: ../src/widgets/pencil-toolbar.cpp:189
 #: ../share/extensions/gcodetools_area.inx.h:48
 #: ../share/extensions/gcodetools_dxf_points.inx.h:20
@@ -3390,11 +3390,11 @@ msgstr ""
 msgid "<b>Guideline</b>: %s"
 msgstr ""
 
-#: ../src/desktop.cpp:907
+#: ../src/desktop.cpp:911
 msgid "No previous zoom."
 msgstr ""
 
-#: ../src/desktop.cpp:928
+#: ../src/desktop.cpp:932
 msgid "No next zoom."
 msgstr ""
 
@@ -4073,7 +4073,7 @@ msgstr ""
 msgid "Delete tiled clones"
 msgstr ""
 
-#: ../src/ui/dialog/clonetiler.cpp:2217 ../src/selection-chemistry.cpp:2499
+#: ../src/ui/dialog/clonetiler.cpp:2217 ../src/selection-chemistry.cpp:2501
 msgid "Select an <b>object</b> to clone."
 msgstr ""
 
@@ -4103,202 +4103,202 @@ msgstr ""
 msgid "<small>Randomize:</small>"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:145 ../src/verbs.cpp:2732
+#: ../src/ui/dialog/export.cpp:150 ../src/verbs.cpp:2736
 msgid "_Page"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:145 ../src/verbs.cpp:2736
+#: ../src/ui/dialog/export.cpp:150 ../src/verbs.cpp:2740
 msgid "_Drawing"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:145 ../src/verbs.cpp:2738
+#: ../src/ui/dialog/export.cpp:150 ../src/verbs.cpp:2742
 msgid "_Selection"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:145
+#: ../src/ui/dialog/export.cpp:150
 msgid "_Custom"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:161 ../src/widgets/measure-toolbar.cpp:115
+#: ../src/ui/dialog/export.cpp:166 ../src/widgets/measure-toolbar.cpp:115
 #: ../src/widgets/measure-toolbar.cpp:123 ../share/extensions/gears.inx.h:6
 msgid "Units:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:163
+#: ../src/ui/dialog/export.cpp:168
 msgid "_Export As..."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:166
+#: ../src/ui/dialog/export.cpp:171
 msgid "B_atch export all selected objects"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:166
+#: ../src/ui/dialog/export.cpp:171
 msgid ""
 "Export each selected object into its own PNG file, using export hints if any "
 "(caution, overwrites without asking!)"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:168
+#: ../src/ui/dialog/export.cpp:173
 msgid "Hide a_ll except selected"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:168
+#: ../src/ui/dialog/export.cpp:173
 msgid "In the exported image, hide all objects except those that are selected"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:169
+#: ../src/ui/dialog/export.cpp:174
 msgid "Close when complete"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:169
+#: ../src/ui/dialog/export.cpp:174
 msgid "Once the export completes, close this dialog"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:171
+#: ../src/ui/dialog/export.cpp:176
 msgid "_Export"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:189
+#: ../src/ui/dialog/export.cpp:194
 msgid "<b>Export area</b>"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:225
+#: ../src/ui/dialog/export.cpp:230
 msgid "_x0:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:229
+#: ../src/ui/dialog/export.cpp:234
 msgid "x_1:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:233
+#: ../src/ui/dialog/export.cpp:238
 msgid "Wid_th:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:237
+#: ../src/ui/dialog/export.cpp:242
 msgid "_y0:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:241
+#: ../src/ui/dialog/export.cpp:246
 msgid "y_1:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:245
+#: ../src/ui/dialog/export.cpp:250
 msgid "Hei_ght:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:260
+#: ../src/ui/dialog/export.cpp:265
 msgid "<b>Image size</b>"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:278 ../src/live_effects/lpe-bendpath.cpp:54
+#: ../src/ui/dialog/export.cpp:283 ../src/live_effects/lpe-bendpath.cpp:54
 #: ../src/live_effects/lpe-patternalongpath.cpp:62
-#: ../src/ui/dialog/transformation.cpp:75 ../src/ui/widget/page-sizer.cpp:238
+#: ../src/ui/dialog/transformation.cpp:79 ../src/ui/widget/page-sizer.cpp:238
 msgid "_Width:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:278 ../src/ui/dialog/export.cpp:289
+#: ../src/ui/dialog/export.cpp:283 ../src/ui/dialog/export.cpp:294
 msgid "pixels at"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:284
+#: ../src/ui/dialog/export.cpp:289
 msgid "dp_i"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:289 ../src/ui/dialog/transformation.cpp:77
+#: ../src/ui/dialog/export.cpp:294 ../src/ui/dialog/transformation.cpp:81
 #: ../src/ui/widget/page-sizer.cpp:239
 msgid "_Height:"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:297
-#: ../src/ui/dialog/inkscape-preferences.cpp:1425
-#: ../src/ui/dialog/inkscape-preferences.cpp:1428
-#: ../src/ui/dialog/inkscape-preferences.cpp:1440
+#: ../src/ui/dialog/export.cpp:302
+#: ../src/ui/dialog/inkscape-preferences.cpp:1432
+#: ../src/ui/dialog/inkscape-preferences.cpp:1435
+#: ../src/ui/dialog/inkscape-preferences.cpp:1447
 msgid "dpi"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:305
+#: ../src/ui/dialog/export.cpp:310
 msgid "<b>_Filename</b>"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:347
+#: ../src/ui/dialog/export.cpp:352
 msgid "Export the bitmap file with these settings"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:601
+#: ../src/ui/dialog/export.cpp:606
 #, c-format
 msgid "B_atch export %d selected object"
 msgid_plural "B_atch export %d selected objects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/ui/dialog/export.cpp:917
+#: ../src/ui/dialog/export.cpp:922
 msgid "Export in progress"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1001
+#: ../src/ui/dialog/export.cpp:1006
 msgid "No items selected."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1005 ../src/ui/dialog/export.cpp:1007
+#: ../src/ui/dialog/export.cpp:1010 ../src/ui/dialog/export.cpp:1012
 msgid "Exporting %1 files"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1047 ../src/ui/dialog/export.cpp:1049
+#: ../src/ui/dialog/export.cpp:1052 ../src/ui/dialog/export.cpp:1054
 #, c-format
 msgid "Exporting file <b>%s</b>..."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1058 ../src/ui/dialog/export.cpp:1149
+#: ../src/ui/dialog/export.cpp:1063 ../src/ui/dialog/export.cpp:1154
 #, c-format
 msgid "Could not export to filename %s.\n"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1061
+#: ../src/ui/dialog/export.cpp:1066
 #, c-format
 msgid "Could not export to filename <b>%s</b>."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1076
+#: ../src/ui/dialog/export.cpp:1081
 #, c-format
 msgid "Successfully exported <b>%d</b> files from <b>%d</b> selected items."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1087
+#: ../src/ui/dialog/export.cpp:1092
 msgid "You have to enter a filename."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1088
+#: ../src/ui/dialog/export.cpp:1093
 msgid "You have to enter a filename"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1102
+#: ../src/ui/dialog/export.cpp:1107
 msgid "The chosen area to be exported is invalid."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1103
+#: ../src/ui/dialog/export.cpp:1108
 msgid "The chosen area to be exported is invalid"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1118
+#: ../src/ui/dialog/export.cpp:1123
 #, c-format
 msgid "Directory %s does not exist or is not a directory.\n"
 msgstr ""
 
 #. TRANSLATORS: %1 will be the filename, %2 the width, and %3 the height of the image
-#: ../src/ui/dialog/export.cpp:1132 ../src/ui/dialog/export.cpp:1134
+#: ../src/ui/dialog/export.cpp:1137 ../src/ui/dialog/export.cpp:1139
 msgid "Exporting %1 (%2 x %3)"
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1160
+#: ../src/ui/dialog/export.cpp:1165
 #, c-format
 msgid "Drawing exported to <b>%s</b>."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1164
+#: ../src/ui/dialog/export.cpp:1169
 msgid "Export aborted."
 msgstr ""
 
-#: ../src/ui/dialog/export.cpp:1282 ../src/ui/dialog/export.cpp:1316
+#: ../src/ui/dialog/export.cpp:1287 ../src/ui/dialog/export.cpp:1321
 #: ../src/shortcuts.cpp:336
 msgid "Select a filename for exporting"
 msgstr ""
@@ -4382,7 +4382,7 @@ msgstr ""
 msgid "_Font"
 msgstr ""
 
-#: ../src/ui/dialog/text-edit.cpp:72 ../src/menus-skeleton.h:253
+#: ../src/ui/dialog/text-edit.cpp:72 ../src/menus-skeleton.h:249
 #: ../src/ui/dialog/find.cpp:77
 msgid "_Text"
 msgstr ""
@@ -4542,156 +4542,156 @@ msgstr ""
 msgid "Change attribute"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:365 ../src/display/canvas-grid.cpp:742
+#: ../src/display/canvas-axonomgrid.cpp:369 ../src/display/canvas-grid.cpp:746
 msgid "Grid _units:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:367 ../src/display/canvas-grid.cpp:744
+#: ../src/display/canvas-axonomgrid.cpp:371 ../src/display/canvas-grid.cpp:748
 msgid "_Origin X:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:367 ../src/display/canvas-grid.cpp:744
+#: ../src/display/canvas-axonomgrid.cpp:371 ../src/display/canvas-grid.cpp:748
 #: ../src/ui/dialog/inkscape-preferences.cpp:735
 #: ../src/ui/dialog/inkscape-preferences.cpp:760
 msgid "X coordinate of grid origin"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:369 ../src/display/canvas-grid.cpp:746
+#: ../src/display/canvas-axonomgrid.cpp:373 ../src/display/canvas-grid.cpp:750
 msgid "O_rigin Y:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:369 ../src/display/canvas-grid.cpp:746
+#: ../src/display/canvas-axonomgrid.cpp:373 ../src/display/canvas-grid.cpp:750
 #: ../src/ui/dialog/inkscape-preferences.cpp:736
 #: ../src/ui/dialog/inkscape-preferences.cpp:761
 msgid "Y coordinate of grid origin"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:371 ../src/display/canvas-grid.cpp:750
+#: ../src/display/canvas-axonomgrid.cpp:375 ../src/display/canvas-grid.cpp:754
 msgid "Spacing _Y:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:371
+#: ../src/display/canvas-axonomgrid.cpp:375
 #: ../src/ui/dialog/inkscape-preferences.cpp:764
 msgid "Base length of z-axis"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:373
+#: ../src/display/canvas-axonomgrid.cpp:377
 #: ../src/ui/dialog/inkscape-preferences.cpp:767
 #: ../src/widgets/box3d-toolbar.cpp:320
 msgid "Angle X:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:373
+#: ../src/display/canvas-axonomgrid.cpp:377
 #: ../src/ui/dialog/inkscape-preferences.cpp:767
 msgid "Angle of x-axis"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:375
+#: ../src/display/canvas-axonomgrid.cpp:379
 #: ../src/ui/dialog/inkscape-preferences.cpp:768
 #: ../src/widgets/box3d-toolbar.cpp:399
 msgid "Angle Z:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:375
+#: ../src/display/canvas-axonomgrid.cpp:379
 #: ../src/ui/dialog/inkscape-preferences.cpp:768
 msgid "Angle of z-axis"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:379 ../src/display/canvas-grid.cpp:754
+#: ../src/display/canvas-axonomgrid.cpp:383 ../src/display/canvas-grid.cpp:758
 msgid "Minor grid line _color:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:379 ../src/display/canvas-grid.cpp:754
+#: ../src/display/canvas-axonomgrid.cpp:383 ../src/display/canvas-grid.cpp:758
 #: ../src/ui/dialog/inkscape-preferences.cpp:719
 msgid "Minor grid line color"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:379 ../src/display/canvas-grid.cpp:754
+#: ../src/display/canvas-axonomgrid.cpp:383 ../src/display/canvas-grid.cpp:758
 msgid "Color of the minor grid lines"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:384 ../src/display/canvas-grid.cpp:759
+#: ../src/display/canvas-axonomgrid.cpp:388 ../src/display/canvas-grid.cpp:763
 msgid "Ma_jor grid line color:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:384 ../src/display/canvas-grid.cpp:759
+#: ../src/display/canvas-axonomgrid.cpp:388 ../src/display/canvas-grid.cpp:763
 #: ../src/ui/dialog/inkscape-preferences.cpp:721
 msgid "Major grid line color"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:385 ../src/display/canvas-grid.cpp:760
+#: ../src/display/canvas-axonomgrid.cpp:389 ../src/display/canvas-grid.cpp:764
 msgid "Color of the major (highlighted) grid lines"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:389 ../src/display/canvas-grid.cpp:764
+#: ../src/display/canvas-axonomgrid.cpp:393 ../src/display/canvas-grid.cpp:768
 msgid "_Major grid line every:"
 msgstr ""
 
-#: ../src/display/canvas-axonomgrid.cpp:389 ../src/display/canvas-grid.cpp:764
+#: ../src/display/canvas-axonomgrid.cpp:393 ../src/display/canvas-grid.cpp:768
 msgid "lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:58
+#: ../src/display/canvas-grid.cpp:62
 msgid "Rectangular grid"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:59
+#: ../src/display/canvas-grid.cpp:63
 msgid "Axonometric grid"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:270
+#: ../src/display/canvas-grid.cpp:274
 msgid "Create new grid"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:336
+#: ../src/display/canvas-grid.cpp:340
 msgid "_Enabled"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:337
+#: ../src/display/canvas-grid.cpp:341
 msgid ""
 "Determines whether to snap to this grid or not. Can be 'on' for invisible "
 "grids."
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:341
+#: ../src/display/canvas-grid.cpp:345
 msgid "Snap to visible _grid lines only"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:342
+#: ../src/display/canvas-grid.cpp:346
 msgid ""
 "When zoomed out, not all grid lines will be displayed. Only the visible ones "
 "will be snapped to"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:346
+#: ../src/display/canvas-grid.cpp:350
 msgid "_Visible"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:347
+#: ../src/display/canvas-grid.cpp:351
 msgid ""
 "Determines whether the grid is displayed or not. Objects are still snapped "
 "to invisible grids."
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:748
+#: ../src/display/canvas-grid.cpp:752
 msgid "Spacing _X:"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:748
+#: ../src/display/canvas-grid.cpp:752
 #: ../src/ui/dialog/inkscape-preferences.cpp:741
 msgid "Distance between vertical grid lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:750
+#: ../src/display/canvas-grid.cpp:754
 #: ../src/ui/dialog/inkscape-preferences.cpp:742
 msgid "Distance between horizontal grid lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:781
+#: ../src/display/canvas-grid.cpp:785
 msgid "_Show dots instead of lines"
 msgstr ""
 
-#: ../src/display/canvas-grid.cpp:782
+#: ../src/display/canvas-grid.cpp:786
 msgid "If set, displays dots at gridpoints instead of gridlines"
 msgstr ""
 
@@ -5004,7 +5004,7 @@ msgstr ""
 msgid "Draw eraser stroke"
 msgstr ""
 
-#: ../src/event-context.cpp:671
+#: ../src/event-context.cpp:675
 msgid "<b>Space+mouse move</b> to pan canvas"
 msgstr ""
 
@@ -5013,11 +5013,11 @@ msgid "[Unchanged]"
 msgstr ""
 
 #. Edit
-#: ../src/event-log.cpp:275 ../src/event-log.cpp:278 ../src/verbs.cpp:2324
+#: ../src/event-log.cpp:275 ../src/event-log.cpp:278 ../src/verbs.cpp:2328
 msgid "_Undo"
 msgstr ""
 
-#: ../src/event-log.cpp:285 ../src/event-log.cpp:289 ../src/verbs.cpp:2326
+#: ../src/event-log.cpp:285 ../src/event-log.cpp:289 ../src/verbs.cpp:2330
 msgid "_Redo"
 msgstr ""
 
@@ -5045,7 +5045,7 @@ msgstr ""
 msgid " (No preferences)"
 msgstr ""
 
-#: ../src/extension/effect.h:70 ../src/verbs.cpp:2097
+#: ../src/extension/effect.h:70 ../src/verbs.cpp:2101
 msgid "Extensions"
 msgstr ""
 
@@ -5064,86 +5064,86 @@ msgstr ""
 msgid "Show dialog on startup"
 msgstr ""
 
-#: ../src/extension/execution-env.cpp:136
+#: ../src/extension/execution-env.cpp:144
 #, c-format
 msgid "'%s' working, please wait..."
 msgstr ""
 
 #. static int i = 0;
 #. std::cout << "Checking module[" << i++ << "]: " << name << std::endl;
-#: ../src/extension/extension.cpp:259
+#: ../src/extension/extension.cpp:263
 msgid ""
 "  This is caused by an improper .inx file for this extension.  An improper ."
 "inx file could have been caused by a faulty installation of Inkscape."
 msgstr ""
 
-#: ../src/extension/extension.cpp:262
+#: ../src/extension/extension.cpp:266
 msgid "an ID was not defined for it."
 msgstr ""
 
-#: ../src/extension/extension.cpp:266
+#: ../src/extension/extension.cpp:270
 msgid "there was no name defined for it."
 msgstr ""
 
-#: ../src/extension/extension.cpp:270
+#: ../src/extension/extension.cpp:274
 msgid "the XML description of it got lost."
 msgstr ""
 
-#: ../src/extension/extension.cpp:274
+#: ../src/extension/extension.cpp:278
 msgid "no implementation was defined for the extension."
 msgstr ""
 
 #. std::cout << "Failed: " << *(_deps[i]) << std::endl;
-#: ../src/extension/extension.cpp:281
+#: ../src/extension/extension.cpp:285
 msgid "a dependency was not met."
 msgstr ""
 
-#: ../src/extension/extension.cpp:301
+#: ../src/extension/extension.cpp:305
 msgid "Extension \""
 msgstr ""
 
-#: ../src/extension/extension.cpp:301
+#: ../src/extension/extension.cpp:305
 msgid "\" failed to load because "
 msgstr ""
 
-#: ../src/extension/extension.cpp:628
+#: ../src/extension/extension.cpp:654
 #, c-format
 msgid "Could not create extension error log file '%s'"
 msgstr ""
 
-#: ../src/extension/extension.cpp:736
+#: ../src/extension/extension.cpp:762
 #: ../share/extensions/webslicer_create_rect.inx.h:2
 msgid "Name:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:737
+#: ../src/extension/extension.cpp:763
 msgid "ID:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:738
+#: ../src/extension/extension.cpp:764
 msgid "State:"
 msgstr ""
 
-#: ../src/extension/extension.cpp:738
+#: ../src/extension/extension.cpp:764
 msgid "Loaded"
 msgstr ""
 
-#: ../src/extension/extension.cpp:738
+#: ../src/extension/extension.cpp:764
 msgid "Unloaded"
 msgstr ""
 
-#: ../src/extension/extension.cpp:738
+#: ../src/extension/extension.cpp:764
 msgid "Deactivated"
 msgstr ""
 
-#: ../src/extension/extension.cpp:778
+#: ../src/extension/extension.cpp:804
 msgid ""
 "Currently there is no help available for this Extension.  Please look on the "
 "Inkscape website or ask on the mailing lists if you have questions regarding "
 "this extension."
 msgstr ""
 
-#: ../src/extension/implementation/script.cpp:1033
+#: ../src/extension/implementation/script.cpp:1037
 msgid ""
 "Inkscape has received additional data from the script executed.  The script "
 "did not return an error, but this may indicate the results will not be as "
@@ -5775,96 +5775,101 @@ msgstr ""
 msgid "Generate from Path"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:309
+#: ../src/extension/internal/cairo-ps-out.cpp:327
 #: ../share/extensions/ps_input.inx.h:3
 msgid "PostScript"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:311
-#: ../src/extension/internal/cairo-ps-out.cpp:351
+#: ../src/extension/internal/cairo-ps-out.cpp:329
+#: ../src/extension/internal/cairo-ps-out.cpp:370
 msgid "Restrict to PS level:"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:312
-#: ../src/extension/internal/cairo-ps-out.cpp:352
+#: ../src/extension/internal/cairo-ps-out.cpp:330
+#: ../src/extension/internal/cairo-ps-out.cpp:371
 msgid "PostScript level 3"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:314
-#: ../src/extension/internal/cairo-ps-out.cpp:354
+#: ../src/extension/internal/cairo-ps-out.cpp:332
+#: ../src/extension/internal/cairo-ps-out.cpp:373
 msgid "PostScript level 2"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:317
-#: ../src/extension/internal/cairo-ps-out.cpp:357
+#: ../src/extension/internal/cairo-ps-out.cpp:335
+#: ../src/extension/internal/cairo-ps-out.cpp:376
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:250
 #: ../src/extension/internal/emf-win32-inout.cpp:2553
 msgid "Convert texts to paths"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:318
+#: ../src/extension/internal/cairo-ps-out.cpp:336
 msgid "PS+LaTeX: Omit text in PS, and create LaTeX file"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:319
-#: ../src/extension/internal/cairo-ps-out.cpp:359
+#: ../src/extension/internal/cairo-ps-out.cpp:337
+#: ../src/extension/internal/cairo-ps-out.cpp:378
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:252
 msgid "Rasterize filter effects"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:320
-#: ../src/extension/internal/cairo-ps-out.cpp:360
+#: ../src/extension/internal/cairo-ps-out.cpp:338
+#: ../src/extension/internal/cairo-ps-out.cpp:379
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:253
 msgid "Resolution for rasterization (dpi):"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:321
-#: ../src/extension/internal/cairo-ps-out.cpp:361
+#: ../src/extension/internal/cairo-ps-out.cpp:339
+#: ../src/extension/internal/cairo-ps-out.cpp:380
 msgid "Output page size"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:322
-#: ../src/extension/internal/cairo-ps-out.cpp:362
+#: ../src/extension/internal/cairo-ps-out.cpp:340
+#: ../src/extension/internal/cairo-ps-out.cpp:381
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:255
 msgid "Use document's page size"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:323
-#: ../src/extension/internal/cairo-ps-out.cpp:363
+#: ../src/extension/internal/cairo-ps-out.cpp:341
+#: ../src/extension/internal/cairo-ps-out.cpp:382
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:256
 msgid "Use exported object's size"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:325
-#: ../src/extension/internal/cairo-ps-out.cpp:365
+#: ../src/extension/internal/cairo-ps-out.cpp:343
+#: ../src/extension/internal/cairo-ps-out.cpp:384
+msgid "Bleed/margin (mm)"
+msgstr ""
+
+#: ../src/extension/internal/cairo-ps-out.cpp:344
+#: ../src/extension/internal/cairo-ps-out.cpp:385
 #: ../src/extension/internal/cairo-renderer-pdf-out.cpp:259
 msgid "Limit export to the object with ID:"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:329
+#: ../src/extension/internal/cairo-ps-out.cpp:348
 #: ../share/extensions/ps_input.inx.h:2
 msgid "PostScript (*.ps)"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:330
+#: ../src/extension/internal/cairo-ps-out.cpp:349
 msgid "PostScript File"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:349
+#: ../src/extension/internal/cairo-ps-out.cpp:368
 #: ../share/extensions/eps_input.inx.h:3
 msgid "Encapsulated PostScript"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:358
+#: ../src/extension/internal/cairo-ps-out.cpp:377
 msgid "EPS+LaTeX: Omit text in EPS, and create LaTeX file"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:369
+#: ../src/extension/internal/cairo-ps-out.cpp:389
 #: ../share/extensions/eps_input.inx.h:2
 msgid "Encapsulated PostScript (*.eps)"
 msgstr ""
 
-#: ../src/extension/internal/cairo-ps-out.cpp:370
+#: ../src/extension/internal/cairo-ps-out.cpp:390
 msgid "Encapsulated PostScript File"
 msgstr ""
 
@@ -6325,7 +6330,7 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:821
 #: ../src/extension/internal/filter/transparency.h:132
 #: ../src/filter-enums.cpp:100 ../src/flood-context.cpp:228
-#: ../src/widgets/sp-color-icc-selector.cpp:228
+#: ../src/widgets/sp-color-icc-selector.cpp:354
 #: ../src/widgets/sp-color-scales.cpp:429
 #: ../src/widgets/sp-color-scales.cpp:430
 msgid "Red"
@@ -6338,7 +6343,7 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:822
 #: ../src/extension/internal/filter/transparency.h:133
 #: ../src/filter-enums.cpp:101 ../src/flood-context.cpp:229
-#: ../src/widgets/sp-color-icc-selector.cpp:228
+#: ../src/widgets/sp-color-icc-selector.cpp:355
 #: ../src/widgets/sp-color-scales.cpp:432
 #: ../src/widgets/sp-color-scales.cpp:433
 msgid "Green"
@@ -6351,7 +6356,7 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:823
 #: ../src/extension/internal/filter/transparency.h:134
 #: ../src/filter-enums.cpp:102 ../src/flood-context.cpp:230
-#: ../src/widgets/sp-color-icc-selector.cpp:228
+#: ../src/widgets/sp-color-icc-selector.cpp:356
 #: ../src/widgets/sp-color-scales.cpp:435
 #: ../src/widgets/sp-color-scales.cpp:436
 msgid "Blue"
@@ -6389,7 +6394,7 @@ msgstr ""
 #: ../src/extension/internal/filter/paint.h:86
 #: ../src/extension/internal/filter/paint.h:592
 #: ../src/extension/internal/filter/paint.h:707 ../src/flood-context.cpp:233
-#: ../src/widgets/sp-color-icc-selector.cpp:231
+#: ../src/widgets/sp-color-icc-selector.cpp:365
 #: ../src/widgets/sp-color-scales.cpp:461
 #: ../src/widgets/sp-color-scales.cpp:462 ../src/widgets/tweak-toolbar.cpp:336
 #: ../share/extensions/color_randomize.inx.h:5
@@ -6503,7 +6508,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/bumps.h:322
 #: ../src/extension/internal/filter/transparency.h:57
-#: ../src/filter-enums.cpp:29 ../src/selection-describer.cpp:55
+#: ../src/filter-enums.cpp:29 ../src/selection-describer.cpp:56
 msgid "Image"
 msgstr ""
 
@@ -6588,8 +6593,8 @@ msgstr ""
 #: ../src/extension/internal/filter/color.h:257
 #: ../src/extension/internal/filter/paint.h:87 ../src/flood-context.cpp:232
 #: ../src/ui/dialog/inkscape-preferences.cpp:937
-#: ../src/widgets/sp-color-icc-selector.cpp:230
-#: ../src/widgets/sp-color-icc-selector.cpp:231
+#: ../src/widgets/sp-color-icc-selector.cpp:361
+#: ../src/widgets/sp-color-icc-selector.cpp:366
 #: ../src/widgets/sp-color-scales.cpp:458
 #: ../src/widgets/sp-color-scales.cpp:459 ../src/widgets/tweak-toolbar.cpp:320
 #: ../share/extensions/color_randomize.inx.h:4
@@ -6720,24 +6725,24 @@ msgid "Extract Channel"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:640
-#: ../src/widgets/sp-color-icc-selector.cpp:232
-#: ../src/widgets/sp-color-icc-selector.cpp:233
+#: ../src/widgets/sp-color-icc-selector.cpp:368
+#: ../src/widgets/sp-color-icc-selector.cpp:373
 #: ../src/widgets/sp-color-scales.cpp:483
 #: ../src/widgets/sp-color-scales.cpp:484
 msgid "Cyan"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:641
-#: ../src/widgets/sp-color-icc-selector.cpp:232
-#: ../src/widgets/sp-color-icc-selector.cpp:233
+#: ../src/widgets/sp-color-icc-selector.cpp:369
+#: ../src/widgets/sp-color-icc-selector.cpp:374
 #: ../src/widgets/sp-color-scales.cpp:486
 #: ../src/widgets/sp-color-scales.cpp:487
 msgid "Magenta"
 msgstr ""
 
 #: ../src/extension/internal/filter/color.h:642
-#: ../src/widgets/sp-color-icc-selector.cpp:232
-#: ../src/widgets/sp-color-icc-selector.cpp:233
+#: ../src/widgets/sp-color-icc-selector.cpp:370
+#: ../src/widgets/sp-color-icc-selector.cpp:375
 #: ../src/widgets/sp-color-scales.cpp:489
 #: ../src/widgets/sp-color-scales.cpp:490
 msgid "Yellow"
@@ -6765,7 +6770,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/color.h:744
 #: ../src/ui/widget/selected-style.cpp:254
-#: ../src/widgets/sp-color-icc-selector.cpp:232
+#: ../src/widgets/sp-color-icc-selector.cpp:371
 #: ../src/widgets/sp-color-scales.cpp:492
 #: ../src/widgets/sp-color-scales.cpp:493
 msgid "Black"
@@ -7405,7 +7410,7 @@ msgstr ""
 
 #: ../src/extension/internal/filter/paint.h:331
 #: ../src/ui/dialog/align-and-distribute.cpp:1048
-#: ../src/widgets/desktop-widget.cpp:1930
+#: ../src/widgets/desktop-widget.cpp:2000
 msgid "Drawing"
 msgstr ""
 
@@ -7784,31 +7789,31 @@ msgstr ""
 msgid "Gradients used in GIMP"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:201 ../src/ui/widget/panel.cpp:113
+#: ../src/extension/internal/grid.cpp:209 ../src/ui/widget/panel.cpp:117
 msgid "Grid"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:203
+#: ../src/extension/internal/grid.cpp:211
 msgid "Line Width:"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:204
+#: ../src/extension/internal/grid.cpp:212
 msgid "Horizontal Spacing:"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:205
+#: ../src/extension/internal/grid.cpp:213
 msgid "Vertical Spacing:"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:206
+#: ../src/extension/internal/grid.cpp:214
 msgid "Horizontal Offset:"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:207
+#: ../src/extension/internal/grid.cpp:215
 msgid "Vertical Offset:"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:211
+#: ../src/extension/internal/grid.cpp:219
 #: ../share/extensions/draw_from_triangle.inx.h:58
 #: ../share/extensions/eqtexsvg.inx.h:4
 #: ../share/extensions/foldablebox.inx.h:9
@@ -7834,14 +7839,14 @@ msgstr ""
 msgid "Render"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:212
+#: ../src/extension/internal/grid.cpp:220
 #: ../src/ui/dialog/document-properties.cpp:148
 #: ../src/ui/dialog/inkscape-preferences.cpp:776
-#: ../src/widgets/toolbox.cpp:1822
+#: ../src/widgets/toolbox.cpp:1826
 msgid "Grids"
 msgstr ""
 
-#: ../src/extension/internal/grid.cpp:215
+#: ../src/extension/internal/grid.cpp:223
 msgid "Draw a path which is a grid"
 msgstr ""
 
@@ -8376,7 +8381,7 @@ msgid "Luminance to Alpha"
 msgstr ""
 
 #. File
-#: ../src/filter-enums.cpp:70 ../src/verbs.cpp:2291
+#: ../src/filter-enums.cpp:70 ../src/verbs.cpp:2295
 #: ../share/extensions/jessyInk_mouseHandler.inx.h:3
 #: ../share/extensions/jessyInk_transitions.inx.h:7
 msgid "Default"
@@ -8422,8 +8427,8 @@ msgstr ""
 msgid "Visible Colors"
 msgstr ""
 
-#: ../src/flood-context.cpp:231 ../src/widgets/sp-color-icc-selector.cpp:230
-#: ../src/widgets/sp-color-icc-selector.cpp:231
+#: ../src/flood-context.cpp:231 ../src/widgets/sp-color-icc-selector.cpp:360
+#: ../src/widgets/sp-color-icc-selector.cpp:364
 #: ../src/widgets/sp-color-scales.cpp:455
 #: ../src/widgets/sp-color-scales.cpp:456 ../src/widgets/tweak-toolbar.cpp:304
 #: ../share/extensions/color_randomize.inx.h:3
@@ -8873,47 +8878,47 @@ msgstr ""
 msgid "Ex squares"
 msgstr ""
 
-#: ../src/inkscape.cpp:317
+#: ../src/inkscape.cpp:322
 msgid "Autosave failed! Cannot create directory %1."
 msgstr ""
 
-#: ../src/inkscape.cpp:326
+#: ../src/inkscape.cpp:331
 msgid "Autosave failed! Cannot open directory %1."
 msgstr ""
 
-#: ../src/inkscape.cpp:342
+#: ../src/inkscape.cpp:347
 msgid "Autosaving documents..."
 msgstr ""
 
-#: ../src/inkscape.cpp:415
+#: ../src/inkscape.cpp:420
 msgid "Autosave failed! Could not find inkscape extension to save document."
 msgstr ""
 
-#: ../src/inkscape.cpp:418 ../src/inkscape.cpp:425
+#: ../src/inkscape.cpp:423 ../src/inkscape.cpp:430
 #, c-format
 msgid "Autosave failed! File %s could not be saved."
 msgstr ""
 
-#: ../src/inkscape.cpp:440
+#: ../src/inkscape.cpp:445
 msgid "Autosave complete."
 msgstr ""
 
-#: ../src/inkscape.cpp:686
+#: ../src/inkscape.cpp:691
 msgid "Untitled document"
 msgstr ""
 
 #. Show nice dialog box
-#: ../src/inkscape.cpp:718
+#: ../src/inkscape.cpp:723
 msgid "Inkscape encountered an internal error and will close now.\n"
 msgstr ""
 
-#: ../src/inkscape.cpp:719
+#: ../src/inkscape.cpp:724
 msgid ""
 "Automatic backups of unsaved documents were done to the following "
 "locations:\n"
 msgstr ""
 
-#: ../src/inkscape.cpp:720
+#: ../src/inkscape.cpp:725
 msgid "Automatic backup of the following documents failed:\n"
 msgstr ""
 
@@ -9002,7 +9007,7 @@ msgid "Enter group #%1"
 msgstr ""
 
 #. Item dialog
-#: ../src/interface.cpp:1737 ../src/verbs.cpp:2785
+#: ../src/interface.cpp:1737 ../src/verbs.cpp:2789
 msgid "_Object Properties..."
 msgstr ""
 
@@ -9070,7 +9075,7 @@ msgid "Release C_lip"
 msgstr ""
 
 #. Group
-#: ../src/interface.cpp:1879 ../src/verbs.cpp:2424
+#: ../src/interface.cpp:1879 ../src/verbs.cpp:2428
 msgid "_Group"
 msgstr ""
 
@@ -9079,7 +9084,7 @@ msgid "Create link"
 msgstr ""
 
 #. Ungroup
-#: ../src/interface.cpp:1981 ../src/verbs.cpp:2426
+#: ../src/interface.cpp:1981 ../src/verbs.cpp:2430
 msgid "_Ungroup"
 msgstr ""
 
@@ -9114,7 +9119,7 @@ msgstr ""
 
 #. Trace Bitmap
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/interface.cpp:2075 ../src/verbs.cpp:2487
+#: ../src/interface.cpp:2075 ../src/verbs.cpp:2491
 msgid "_Trace Bitmap..."
 msgstr ""
 
@@ -9130,17 +9135,17 @@ msgstr ""
 
 #. Item dialog
 #. Fill and Stroke dialog
-#: ../src/interface.cpp:2235 ../src/interface.cpp:2255 ../src/verbs.cpp:2748
+#: ../src/interface.cpp:2235 ../src/interface.cpp:2255 ../src/verbs.cpp:2752
 msgid "_Fill and Stroke..."
 msgstr ""
 
 #. Edit Text dialog
-#: ../src/interface.cpp:2261 ../src/verbs.cpp:2765
+#: ../src/interface.cpp:2261 ../src/verbs.cpp:2769
 msgid "_Text and Font..."
 msgstr ""
 
 #. Spellcheck dialog
-#: ../src/interface.cpp:2267 ../src/verbs.cpp:2773
+#: ../src/interface.cpp:2267 ../src/verbs.cpp:2777
 msgid "Check Spellin_g..."
 msgstr ""
 
@@ -9335,7 +9340,7 @@ msgstr ""
 #: ../src/ui/dialog/align-and-distribute.cpp:1047
 #: ../src/ui/dialog/document-properties.cpp:146
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1551
-#: ../src/widgets/desktop-widget.cpp:1926
+#: ../src/widgets/desktop-widget.cpp:1996
 #: ../share/extensions/voronoi2svg.inx.h:9
 msgid "Page"
 msgstr ""
@@ -9345,7 +9350,7 @@ msgid "The index of the current page"
 msgstr ""
 
 #: ../src/libgdl/gdl-dock-object.c:125
-#: ../src/ui/dialog/inkscape-preferences.cpp:1475
+#: ../src/ui/dialog/inkscape-preferences.cpp:1482
 #: ../src/ui/widget/page-sizer.cpp:260
 #: ../src/widgets/gradient-selector.cpp:156
 #: ../src/widgets/sp-xmlview-attr-list.cpp:54
@@ -9680,7 +9685,7 @@ msgstr ""
 msgid "Power stroke"
 msgstr ""
 
-#: ../src/live_effects/effect.cpp:124 ../src/selection-chemistry.cpp:2790
+#: ../src/live_effects/effect.cpp:124 ../src/selection-chemistry.cpp:2792
 msgid "Clone original path"
 msgstr ""
 
@@ -10677,12 +10682,12 @@ msgstr ""
 msgid "Change enumeration parameter"
 msgstr ""
 
-#: ../src/live_effects/parameter/originalpath.cpp:62
+#: ../src/live_effects/parameter/originalpath.cpp:70
 #: ../src/live_effects/parameter/path.cpp:194
 msgid "Link to path"
 msgstr ""
 
-#: ../src/live_effects/parameter/originalpath.cpp:74
+#: ../src/live_effects/parameter/originalpath.cpp:82
 msgid "Select original"
 msgstr ""
 
@@ -10747,233 +10752,254 @@ msgstr ""
 msgid "Unable to find node ID: '%s'\n"
 msgstr ""
 
-#: ../src/main.cpp:274
+#: ../src/main.cpp:280
 msgid "Print the Inkscape version number"
 msgstr ""
 
-#: ../src/main.cpp:279
+#: ../src/main.cpp:285
 msgid "Do not use X server (only process files from console)"
 msgstr ""
 
-#: ../src/main.cpp:284
+#: ../src/main.cpp:290
 msgid "Try to use X server (even if $DISPLAY is not set)"
 msgstr ""
 
-#: ../src/main.cpp:289
+#: ../src/main.cpp:295
 msgid "Open specified document(s) (option string may be excluded)"
 msgstr ""
 
-#: ../src/main.cpp:290 ../src/main.cpp:295 ../src/main.cpp:300
-#: ../src/main.cpp:372 ../src/main.cpp:377 ../src/main.cpp:382
-#: ../src/main.cpp:387 ../src/main.cpp:398
+#: ../src/main.cpp:296 ../src/main.cpp:301 ../src/main.cpp:306
+#: ../src/main.cpp:378 ../src/main.cpp:383 ../src/main.cpp:388
+#: ../src/main.cpp:399 ../src/main.cpp:416
 msgid "FILENAME"
 msgstr ""
 
-#: ../src/main.cpp:294
+#: ../src/main.cpp:300
 msgid "Print document(s) to specified output file (use '| program' for pipe)"
 msgstr ""
 
-#: ../src/main.cpp:299
+#: ../src/main.cpp:305
 msgid "Export document to a PNG file"
 msgstr ""
 
-#: ../src/main.cpp:304
+#: ../src/main.cpp:310
 msgid ""
 "Resolution for exporting to bitmap and for rasterization of filters in PS/"
 "EPS/PDF (default 90)"
 msgstr ""
 
-#: ../src/main.cpp:305 ../src/ui/widget/rendering-options.cpp:34
+#: ../src/main.cpp:311 ../src/ui/widget/rendering-options.cpp:34
 msgid "DPI"
 msgstr ""
 
-#: ../src/main.cpp:309
+#: ../src/main.cpp:315
 msgid ""
 "Exported area in SVG user units (default is the page; 0,0 is lower-left "
 "corner)"
 msgstr ""
 
-#: ../src/main.cpp:310
+#: ../src/main.cpp:316
 msgid "x0:y0:x1:y1"
 msgstr ""
 
-#: ../src/main.cpp:314
+#: ../src/main.cpp:320
 msgid "Exported area is the entire drawing (not page)"
 msgstr ""
 
-#: ../src/main.cpp:319
+#: ../src/main.cpp:325
 msgid "Exported area is the entire page"
 msgstr ""
 
-#: ../src/main.cpp:324
+#: ../src/main.cpp:330
 msgid "Only for PS/EPS/PDF, sets margin in mm around exported area (default 0)"
 msgstr ""
 
-#: ../src/main.cpp:325 ../src/main.cpp:367
+#: ../src/main.cpp:331 ../src/main.cpp:373
 msgid "VALUE"
 msgstr ""
 
-#: ../src/main.cpp:329
+#: ../src/main.cpp:335
 msgid ""
 "Snap the bitmap export area outwards to the nearest integer values (in SVG "
 "user units)"
 msgstr ""
 
-#: ../src/main.cpp:334
+#: ../src/main.cpp:340
 msgid "The width of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
 
-#: ../src/main.cpp:335
+#: ../src/main.cpp:341
 msgid "WIDTH"
 msgstr ""
 
-#: ../src/main.cpp:339
+#: ../src/main.cpp:345
 msgid "The height of exported bitmap in pixels (overrides export-dpi)"
 msgstr ""
 
-#: ../src/main.cpp:340
+#: ../src/main.cpp:346
 msgid "HEIGHT"
 msgstr ""
 
-#: ../src/main.cpp:344
+#: ../src/main.cpp:350
 msgid "The ID of the object to export"
 msgstr ""
 
-#: ../src/main.cpp:345 ../src/main.cpp:443
-#: ../src/ui/dialog/inkscape-preferences.cpp:1478
+#: ../src/main.cpp:351 ../src/main.cpp:461
+#: ../src/ui/dialog/inkscape-preferences.cpp:1485
 msgid "ID"
 msgstr ""
 
 #. TRANSLATORS: this means: "Only export the object whose id is given in --export-id".
 #. See "man inkscape" for details.
-#: ../src/main.cpp:351
+#: ../src/main.cpp:357
 msgid ""
 "Export just the object with export-id, hide all others (only with export-id)"
 msgstr ""
 
-#: ../src/main.cpp:356
+#: ../src/main.cpp:362
 msgid "Use stored filename and DPI hints when exporting (only with export-id)"
 msgstr ""
 
-#: ../src/main.cpp:361
+#: ../src/main.cpp:367
 msgid "Background color of exported bitmap (any SVG-supported color string)"
 msgstr ""
 
-#: ../src/main.cpp:362
+#: ../src/main.cpp:368
 msgid "COLOR"
 msgstr ""
 
-#: ../src/main.cpp:366
+#: ../src/main.cpp:372
 msgid "Background opacity of exported bitmap (either 0.0 to 1.0, or 1 to 255)"
 msgstr ""
 
-#: ../src/main.cpp:371
+#: ../src/main.cpp:377
 msgid "Export document to plain SVG file (no sodipodi or inkscape namespaces)"
 msgstr ""
 
-#: ../src/main.cpp:376
+#: ../src/main.cpp:382
 msgid "Export document to a PS file"
 msgstr ""
 
-#: ../src/main.cpp:381
+#: ../src/main.cpp:387
 msgid "Export document to an EPS file"
 msgstr ""
 
-#: ../src/main.cpp:386
+#: ../src/main.cpp:392
+msgid ""
+"Choose the PostScript Level used to export. Possible choices are 2 (the "
+"default) and 3"
+msgstr ""
+
+#: ../src/main.cpp:394
+msgid "PS Level"
+msgstr ""
+
+#: ../src/main.cpp:398
 msgid "Export document to a PDF file"
 msgstr ""
 
-#: ../src/main.cpp:391
+#. TRANSLATORS: "--export-pdf-version" is an Inkscape command line option; see "inkscape --help"
+#: ../src/main.cpp:404
+msgid ""
+"Export PDF to given version. (hint: make sure to input the exact string "
+"found in the PDF export dialog, e.g. \"PDF 1.4\" which is PDF-a conformant)"
+msgstr ""
+
+#: ../src/main.cpp:405
+msgid "PDF_VERSION"
+msgstr ""
+
+#: ../src/main.cpp:409
 msgid ""
 "Export PDF/PS/EPS without text. Besides the PDF/PS/EPS, a LaTeX file is "
 "exported, putting the text on top of the PDF/PS/EPS file. Include the result "
 "in LaTeX like: \\input{latexfile.tex}"
 msgstr ""
 
-#: ../src/main.cpp:397
+#: ../src/main.cpp:415
 msgid "Export document to an Enhanced Metafile (EMF) File"
 msgstr ""
 
-#: ../src/main.cpp:403
+#: ../src/main.cpp:421
 msgid "Convert text object to paths on export (PS, EPS, PDF, SVG)"
 msgstr ""
 
-#: ../src/main.cpp:408
+#: ../src/main.cpp:426
 msgid ""
 "Render filtered objects without filters, instead of rasterizing (PS, EPS, "
 "PDF)"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:414
+#: ../src/main.cpp:432
 msgid ""
 "Query the X coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:420
+#: ../src/main.cpp:438
 msgid ""
 "Query the Y coordinate of the drawing or, if specified, of the object with --"
 "query-id"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:426
+#: ../src/main.cpp:444
 msgid ""
 "Query the width of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr ""
 
 #. TRANSLATORS: "--query-id" is an Inkscape command line option; see "inkscape --help"
-#: ../src/main.cpp:432
+#: ../src/main.cpp:450
 msgid ""
 "Query the height of the drawing or, if specified, of the object with --query-"
 "id"
 msgstr ""
 
-#: ../src/main.cpp:437
+#: ../src/main.cpp:455
 msgid "List id,x,y,w,h for all objects"
 msgstr ""
 
-#: ../src/main.cpp:442
+#: ../src/main.cpp:460
 msgid "The ID of the object whose dimensions are queried"
 msgstr ""
 
 #. TRANSLATORS: this option makes Inkscape print the name (path) of the extension directory
-#: ../src/main.cpp:448
+#: ../src/main.cpp:466
 msgid "Print out the extension directory and exit"
 msgstr ""
 
-#: ../src/main.cpp:453
+#: ../src/main.cpp:471
 msgid "Remove unused definitions from the defs section(s) of the document"
 msgstr ""
 
-#: ../src/main.cpp:458
+#: ../src/main.cpp:476
 msgid "List the IDs of all the verbs in Inkscape"
 msgstr ""
 
-#: ../src/main.cpp:463
+#: ../src/main.cpp:481
 msgid "Verb to call when Inkscape opens."
 msgstr ""
 
-#: ../src/main.cpp:464
+#: ../src/main.cpp:482
 msgid "VERB-ID"
 msgstr ""
 
-#: ../src/main.cpp:468
+#: ../src/main.cpp:486
 msgid "Object ID to select when Inkscape opens."
 msgstr ""
 
-#: ../src/main.cpp:469
+#: ../src/main.cpp:487
 msgid "OBJECT-ID"
 msgstr ""
 
-#: ../src/main.cpp:473
+#: ../src/main.cpp:491
 msgid "Start Inkscape in interactive shell mode."
 msgstr ""
 
-#: ../src/main.cpp:817 ../src/main.cpp:1174
+#: ../src/main.cpp:835 ../src/main.cpp:1192
 msgid ""
 "[OPTIONS...] [FILE...]\n"
 "\n"
@@ -10981,7 +11007,7 @@ msgid ""
 msgstr ""
 
 #. ## Add a menu for clear()
-#: ../src/menus-skeleton.h:16 ../src/ui/dialog/debug.cpp:79
+#: ../src/menus-skeleton.h:16 ../src/ui/dialog/debug.cpp:83
 msgid "_File"
 msgstr ""
 
@@ -10991,11 +11017,11 @@ msgstr ""
 
 #. "       <verb verb-id=\"FileExportToOCAL\" />\n"
 #. "       <verb verb-id=\"DialogMetadata\" />\n"
-#: ../src/menus-skeleton.h:43 ../src/verbs.cpp:2570 ../src/verbs.cpp:2576
+#: ../src/menus-skeleton.h:43 ../src/verbs.cpp:2574 ../src/verbs.cpp:2580
 msgid "_Edit"
 msgstr ""
 
-#: ../src/menus-skeleton.h:53 ../src/verbs.cpp:2336
+#: ../src/menus-skeleton.h:53 ../src/verbs.cpp:2340
 msgid "Paste Si_ze"
 msgstr ""
 
@@ -11056,27 +11082,23 @@ msgstr ""
 msgid "Patter_n"
 msgstr ""
 
-#: ../src/menus-skeleton.h:202
-msgid "Symbo_l"
-msgstr ""
-
-#: ../src/menus-skeleton.h:226
+#: ../src/menus-skeleton.h:222
 msgid "_Path"
 msgstr ""
 
-#: ../src/menus-skeleton.h:271
+#: ../src/menus-skeleton.h:267
 msgid "Filter_s"
 msgstr ""
 
-#: ../src/menus-skeleton.h:277
+#: ../src/menus-skeleton.h:273
 msgid "Exte_nsions"
 msgstr ""
 
-#: ../src/menus-skeleton.h:283
+#: ../src/menus-skeleton.h:279
 msgid "_Help"
 msgstr ""
 
-#: ../src/menus-skeleton.h:287
+#: ../src/menus-skeleton.h:283
 msgid "Tutorials"
 msgstr ""
 
@@ -11577,7 +11599,7 @@ msgstr ""
 msgid "Unique URI to a related document"
 msgstr ""
 
-#: ../src/rdf.cpp:264 ../src/ui/dialog/inkscape-preferences.cpp:1830
+#: ../src/rdf.cpp:264 ../src/ui/dialog/inkscape-preferences.cpp:1837
 msgid "Language:"
 msgstr ""
 
@@ -11765,7 +11787,7 @@ msgstr ""
 msgid "Select <b>some objects</b> to group."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:752 ../src/selection-describer.cpp:53
+#: ../src/selection-chemistry.cpp:752 ../src/selection-describer.cpp:54
 msgid "Group"
 msgstr ""
 
@@ -11773,281 +11795,281 @@ msgstr ""
 msgid "Select a <b>group</b> to ungroup."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:807
+#: ../src/selection-chemistry.cpp:809
 msgid "<b>No groups</b> to ungroup in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:813 ../src/sp-item-group.cpp:476
+#: ../src/selection-chemistry.cpp:815 ../src/sp-item-group.cpp:479
 msgid "Ungroup"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:899
+#: ../src/selection-chemistry.cpp:901
 msgid "Select <b>object(s)</b> to raise."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:905 ../src/selection-chemistry.cpp:965
-#: ../src/selection-chemistry.cpp:998 ../src/selection-chemistry.cpp:1062
+#: ../src/selection-chemistry.cpp:907 ../src/selection-chemistry.cpp:967
+#: ../src/selection-chemistry.cpp:1000 ../src/selection-chemistry.cpp:1064
 msgid ""
 "You cannot raise/lower objects from <b>different groups</b> or <b>layers</b>."
 msgstr ""
 
 #. TRANSLATORS: "Raise" means "to raise an object" in the undo history
-#: ../src/selection-chemistry.cpp:945
+#: ../src/selection-chemistry.cpp:947
 msgctxt "Undo action"
 msgid "Raise"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:957
+#: ../src/selection-chemistry.cpp:959
 msgid "Select <b>object(s)</b> to raise to top."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:980
+#: ../src/selection-chemistry.cpp:982
 msgid "Raise to top"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:992
+#: ../src/selection-chemistry.cpp:994
 msgid "Select <b>object(s)</b> to lower."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1042
+#: ../src/selection-chemistry.cpp:1044
 msgid "Lower"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1054
+#: ../src/selection-chemistry.cpp:1056
 msgid "Select <b>object(s)</b> to lower to bottom."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1089
+#: ../src/selection-chemistry.cpp:1091
 msgid "Lower to bottom"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1096
+#: ../src/selection-chemistry.cpp:1098
 msgid "Nothing to undo."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1104
+#: ../src/selection-chemistry.cpp:1106
 msgid "Nothing to redo."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1165
+#: ../src/selection-chemistry.cpp:1167
 msgid "Paste"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1173
+#: ../src/selection-chemistry.cpp:1175
 msgid "Paste style"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1183
+#: ../src/selection-chemistry.cpp:1185
 msgid "Paste live path effect"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1204
+#: ../src/selection-chemistry.cpp:1206
 msgid "Select <b>object(s)</b> to remove live path effects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1216
+#: ../src/selection-chemistry.cpp:1218
 msgid "Remove live path effect"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1227
+#: ../src/selection-chemistry.cpp:1229
 msgid "Select <b>object(s)</b> to remove filters from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1237
+#: ../src/selection-chemistry.cpp:1239
 #: ../src/ui/dialog/filter-effects-dialog.cpp:1448
 msgid "Remove filter"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1246
+#: ../src/selection-chemistry.cpp:1248
 msgid "Paste size"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1255
+#: ../src/selection-chemistry.cpp:1257
 msgid "Paste size separately"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1265
+#: ../src/selection-chemistry.cpp:1267
 msgid "Select <b>object(s)</b> to move to the layer above."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1291
+#: ../src/selection-chemistry.cpp:1293
 msgid "Raise to next layer"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1298
+#: ../src/selection-chemistry.cpp:1300
 msgid "No more layers above."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1310
+#: ../src/selection-chemistry.cpp:1312
 msgid "Select <b>object(s)</b> to move to the layer below."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1336
+#: ../src/selection-chemistry.cpp:1338
 msgid "Lower to previous layer"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1343
+#: ../src/selection-chemistry.cpp:1345
 msgid "No more layers below."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1355
+#: ../src/selection-chemistry.cpp:1357
 msgid "Select <b>object(s)</b> to move."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1372 ../src/verbs.cpp:2513
+#: ../src/selection-chemistry.cpp:1374 ../src/verbs.cpp:2517
 msgid "Move selection to layer"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1596
+#: ../src/selection-chemistry.cpp:1598
 msgid "Remove transform"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1699
+#: ../src/selection-chemistry.cpp:1701
 msgid "Rotate 90&#176; CCW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1699
+#: ../src/selection-chemistry.cpp:1701
 msgid "Rotate 90&#176; CW"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:1720 ../src/seltrans.cpp:485
-#: ../src/ui/dialog/transformation.cpp:888
+#: ../src/selection-chemistry.cpp:1722 ../src/seltrans.cpp:485
+#: ../src/ui/dialog/transformation.cpp:892
 msgid "Rotate"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2099
+#: ../src/selection-chemistry.cpp:2101
 msgid "Rotate by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2129 ../src/seltrans.cpp:482
-#: ../src/ui/dialog/transformation.cpp:863
+#: ../src/selection-chemistry.cpp:2131 ../src/seltrans.cpp:482
+#: ../src/ui/dialog/transformation.cpp:867
 #: ../share/extensions/interp_att_g.inx.h:12
 msgid "Scale"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2154
+#: ../src/selection-chemistry.cpp:2156
 msgid "Scale by whole factor"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2169
+#: ../src/selection-chemistry.cpp:2171
 msgid "Move vertically"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2172
+#: ../src/selection-chemistry.cpp:2174
 msgid "Move horizontally"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2175 ../src/selection-chemistry.cpp:2201
-#: ../src/seltrans.cpp:479 ../src/ui/dialog/transformation.cpp:802
+#: ../src/selection-chemistry.cpp:2177 ../src/selection-chemistry.cpp:2203
+#: ../src/seltrans.cpp:479 ../src/ui/dialog/transformation.cpp:806
 msgid "Move"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2195
+#: ../src/selection-chemistry.cpp:2197
 msgid "Move vertically by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2198
+#: ../src/selection-chemistry.cpp:2200
 msgid "Move horizontally by pixels"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2330
+#: ../src/selection-chemistry.cpp:2332
 msgid "The selection has no applied path effect."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2533
+#: ../src/selection-chemistry.cpp:2535
 msgctxt "Action"
 msgid "Clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2549
+#: ../src/selection-chemistry.cpp:2551
 msgid "Select <b>clones</b> to relink."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2556
+#: ../src/selection-chemistry.cpp:2558
 msgid "Copy an <b>object</b> to clipboard to relink clones to."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2580
+#: ../src/selection-chemistry.cpp:2582
 msgid "<b>No clones to relink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2583
+#: ../src/selection-chemistry.cpp:2585
 msgid "Relink clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2597
+#: ../src/selection-chemistry.cpp:2599
 msgid "Select <b>clones</b> to unlink."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2651
+#: ../src/selection-chemistry.cpp:2653
 msgid "<b>No clones to unlink</b> in the selection."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2655
+#: ../src/selection-chemistry.cpp:2657
 msgid "Unlink clone"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2668
+#: ../src/selection-chemistry.cpp:2670
 msgid ""
 "Select a <b>clone</b> to go to its original. Select a <b>linked offset</b> "
 "to go to its source. Select a <b>text on path</b> to go to the path. Select "
 "a <b>flowed text</b> to go to its frame."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2701
+#: ../src/selection-chemistry.cpp:2703
 msgid ""
 "<b>Cannot find</b> the object to select (orphaned clone, offset, textpath, "
 "flowed text?)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2707
+#: ../src/selection-chemistry.cpp:2709
 msgid ""
 "The object you're trying to select is <b>not visible</b> (it is in &lt;"
 "defs&gt;)"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2752
+#: ../src/selection-chemistry.cpp:2754
 msgid "Select <b>one</b> path to clone."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2756
+#: ../src/selection-chemistry.cpp:2758
 msgid "Select one <b>path</b> to clone."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2811
+#: ../src/selection-chemistry.cpp:2813
 msgid "Select <b>object(s)</b> to convert to marker."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2879
+#: ../src/selection-chemistry.cpp:2881
 msgid "Objects to marker"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2907
+#: ../src/selection-chemistry.cpp:2909
 msgid "Select <b>object(s)</b> to convert to guides."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2919
+#: ../src/selection-chemistry.cpp:2921
 msgid "Objects to guides"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2938
+#: ../src/selection-chemistry.cpp:2940
 msgid "Select <b>groups</b> to convert to symbols."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:2958
+#: ../src/selection-chemistry.cpp:2960
 msgid "No <b>groups</b> converted to symbols."
 msgstr ""
 
 #. Group just disappears, nothing to select.
-#: ../src/selection-chemistry.cpp:2965
+#: ../src/selection-chemistry.cpp:2967
 msgid "Group to symbol"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3029
+#: ../src/selection-chemistry.cpp:3031
 msgid "Select a <b>symbol</b> to extract objects from."
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3038
+#: ../src/selection-chemistry.cpp:3040
 msgid "Select only one <b>symbol</b> to convert to group."
 msgstr ""
 
@@ -12120,158 +12142,177 @@ msgid "Select <b>object(s)</b> to fit canvas to."
 msgstr ""
 
 #. Fit Page
-#: ../src/selection-chemistry.cpp:3915 ../src/verbs.cpp:2839
+#: ../src/selection-chemistry.cpp:3915 ../src/verbs.cpp:2843
 msgid "Fit Page to Selection"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3944 ../src/verbs.cpp:2841
+#: ../src/selection-chemistry.cpp:3944 ../src/verbs.cpp:2845
 msgid "Fit Page to Drawing"
 msgstr ""
 
-#: ../src/selection-chemistry.cpp:3965 ../src/verbs.cpp:2843
+#: ../src/selection-chemistry.cpp:3965 ../src/verbs.cpp:2847
 msgid "Fit Page to Selection or Drawing"
 msgstr ""
 
 #. TRANSLATORS: "Link" means internet link (anchor)
-#: ../src/selection-describer.cpp:45
+#: ../src/selection-describer.cpp:46
 msgctxt "Web"
 msgid "Link"
 msgstr ""
 
-#: ../src/selection-describer.cpp:47
+#: ../src/selection-describer.cpp:48
 msgid "Circle"
 msgstr ""
 
 #. Ellipse
-#: ../src/selection-describer.cpp:49 ../src/selection-describer.cpp:74
+#: ../src/selection-describer.cpp:50 ../src/selection-describer.cpp:77
 #: ../src/ui/dialog/inkscape-preferences.cpp:403
 #: ../src/widgets/pencil-toolbar.cpp:192
 msgid "Ellipse"
 msgstr ""
 
-#: ../src/selection-describer.cpp:51
+#: ../src/selection-describer.cpp:52
 msgid "Flowed text"
 msgstr ""
 
-#: ../src/selection-describer.cpp:57
+#: ../src/selection-describer.cpp:58
 msgid "Line"
 msgstr ""
 
-#: ../src/selection-describer.cpp:59
+#: ../src/selection-describer.cpp:60
 msgid "Path"
 msgstr ""
 
-#: ../src/selection-describer.cpp:61 ../src/widgets/star-toolbar.cpp:474
+#: ../src/selection-describer.cpp:62 ../src/widgets/star-toolbar.cpp:474
 msgid "Polygon"
 msgstr ""
 
-#: ../src/selection-describer.cpp:63
+#: ../src/selection-describer.cpp:64
 msgid "Polyline"
 msgstr ""
 
 #. Rectangle
-#: ../src/selection-describer.cpp:65
+#: ../src/selection-describer.cpp:66
 #: ../src/ui/dialog/inkscape-preferences.cpp:393
 msgid "Rectangle"
 msgstr ""
 
 #. 3D box
-#: ../src/selection-describer.cpp:67
+#: ../src/selection-describer.cpp:68
 #: ../src/ui/dialog/inkscape-preferences.cpp:398
 msgid "3D Box"
 msgstr ""
 
-#: ../src/selection-describer.cpp:69
+#: ../src/selection-describer.cpp:70
 msgctxt "Object"
 msgid "Text"
 msgstr ""
 
+#: ../src/selection-describer.cpp:73
+msgctxt "Object"
+msgid "Symbol"
+msgstr ""
+
 #. TRANSLATORS: "Clone" is a noun, type of object
-#: ../src/selection-describer.cpp:72
+#: ../src/selection-describer.cpp:75
 msgctxt "Object"
 msgid "Clone"
 msgstr ""
 
-#: ../src/selection-describer.cpp:76
+#: ../src/selection-describer.cpp:79
 #: ../share/extensions/gcodetools_lathe.inx.h:9
 msgid "Offset path"
 msgstr ""
 
 #. Spiral
-#: ../src/selection-describer.cpp:78
+#: ../src/selection-describer.cpp:81
 #: ../src/ui/dialog/inkscape-preferences.cpp:411
 #: ../share/extensions/gcodetools_area.inx.h:11
 msgid "Spiral"
 msgstr ""
 
 #. Star
-#: ../src/selection-describer.cpp:80
+#: ../src/selection-describer.cpp:83
 #: ../src/ui/dialog/inkscape-preferences.cpp:407
 #: ../src/widgets/star-toolbar.cpp:481
 msgid "Star"
 msgstr ""
 
-#: ../src/selection-describer.cpp:150
+#: ../src/selection-describer.cpp:153
 msgid "root"
 msgstr ""
 
-#: ../src/selection-describer.cpp:162
+#: ../src/selection-describer.cpp:155 ../src/widgets/ege-paint-def.cpp:67
+#: ../src/widgets/ege-paint-def.cpp:91
+msgid "none"
+msgstr ""
+
+#: ../src/selection-describer.cpp:167
 #, c-format
 msgid "layer <b>%s</b>"
 msgstr ""
 
-#: ../src/selection-describer.cpp:164
+#: ../src/selection-describer.cpp:169
 #, c-format
 msgid "layer <b><i>%s</i></b>"
 msgstr ""
 
-#: ../src/selection-describer.cpp:173
+#: ../src/selection-describer.cpp:178
 #, c-format
 msgid "<i>%s</i>"
 msgstr ""
 
-#: ../src/selection-describer.cpp:182
+#: ../src/selection-describer.cpp:187
 #, c-format
 msgid " in %s"
 msgstr ""
 
-#: ../src/selection-describer.cpp:184
+#: ../src/selection-describer.cpp:189
+#, c-format
+msgid " hidden in definitions"
+msgstr ""
+
+#: ../src/selection-describer.cpp:191
 #, c-format
 msgid " in group %s (%s)"
 msgstr ""
 
-#: ../src/selection-describer.cpp:186
+#: ../src/selection-describer.cpp:193
 #, c-format
 msgid " in <b>%i</b> parents (%s)"
 msgid_plural " in <b>%i</b> parents (%s)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/selection-describer.cpp:189
+#: ../src/selection-describer.cpp:196
 #, c-format
 msgid " in <b>%i</b> layers"
 msgid_plural " in <b>%i</b> layers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/selection-describer.cpp:199
+#: ../src/selection-describer.cpp:206
 msgid "Convert symbol to group to edit"
 msgstr ""
 
-#: ../src/selection-describer.cpp:203
+#: ../src/selection-describer.cpp:210
+msgid "Remove from symbols tray to edit symbol"
+msgstr ""
+
+#: ../src/selection-describer.cpp:214
 msgid "Use <b>Shift+D</b> to look up original"
 msgstr ""
 
-#: ../src/selection-describer.cpp:207
+#: ../src/selection-describer.cpp:218
 msgid "Use <b>Shift+D</b> to look up path"
 msgstr ""
 
-#: ../src/selection-describer.cpp:211
+#: ../src/selection-describer.cpp:222
 msgid "Use <b>Shift+D</b> to look up frame"
 msgstr ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:226 ../src/spray-context.cpp:203
+#: ../src/selection-describer.cpp:237 ../src/spray-context.cpp:203
 #: ../src/tweak-context.cpp:189
 #, c-format
 msgid "<b>%i</b> object selected"
@@ -12280,7 +12321,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:231
+#: ../src/selection-describer.cpp:242
 #, c-format
 msgid "<b>%i</b> object of type <b>%s</b>"
 msgid_plural "<b>%i</b> objects of type <b>%s</b>"
@@ -12288,7 +12329,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:236
+#: ../src/selection-describer.cpp:247
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>"
@@ -12296,7 +12337,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:241
+#: ../src/selection-describer.cpp:252
 #, c-format
 msgid "<b>%i</b> object of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
 msgid_plural "<b>%i</b> objects of types <b>%s</b>, <b>%s</b>, <b>%s</b>"
@@ -12304,21 +12345,21 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. this is only used with 2 or more objects
-#: ../src/selection-describer.cpp:246
+#: ../src/selection-describer.cpp:257
 #, c-format
 msgid "<b>%i</b> object of <b>%i</b> types"
 msgid_plural "<b>%i</b> objects of <b>%i</b> types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/selection-describer.cpp:256
+#: ../src/selection-describer.cpp:267
 #, c-format
 msgid "; <i>%d filtered object</i> "
 msgid_plural "; <i>%d filtered objects</i> "
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/seltrans.cpp:488 ../src/ui/dialog/transformation.cpp:946
+#: ../src/seltrans.cpp:488 ../src/ui/dialog/transformation.cpp:950
 msgid "Skew"
 msgstr ""
 
@@ -12448,7 +12489,7 @@ msgstr ""
 msgid "Create Guides Around the Page"
 msgstr ""
 
-#: ../src/sp-guide.cpp:302 ../src/verbs.cpp:2410
+#: ../src/sp-guide.cpp:302 ../src/verbs.cpp:2414
 msgid "Delete All Guides"
 msgstr ""
 
@@ -12493,14 +12534,14 @@ msgstr ""
 msgid "<b>Image</b> %d &#215; %d: %s"
 msgstr ""
 
-#: ../src/sp-item-group.cpp:718
+#: ../src/sp-item-group.cpp:721
 #, c-format
 msgid "<b>Group</b> of <b>%d</b> object"
 msgid_plural "<b>Group</b> of <b>%d</b> objects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/sp-item.cpp:977 ../src/verbs.cpp:207
+#: ../src/sp-item.cpp:977 ../src/verbs.cpp:211
 msgid "Object"
 msgstr ""
 
@@ -12866,7 +12907,7 @@ msgstr ""
 msgid "The flowed text(s) must be <b>visible</b> in order to be put on a path."
 msgstr ""
 
-#: ../src/text-chemistry.cpp:183 ../src/verbs.cpp:2430
+#: ../src/text-chemistry.cpp:183 ../src/verbs.cpp:2434
 msgid "Put text on path"
 msgstr ""
 
@@ -12878,7 +12919,7 @@ msgstr ""
 msgid "<b>No texts-on-paths</b> in the selection."
 msgstr ""
 
-#: ../src/text-chemistry.cpp:219 ../src/verbs.cpp:2432
+#: ../src/text-chemistry.cpp:219 ../src/verbs.cpp:2436
 msgid "Remove text from path"
 msgstr ""
 
@@ -13492,7 +13533,7 @@ msgid "Rearrange"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:900
-#: ../src/widgets/toolbox.cpp:1724
+#: ../src/widgets/toolbox.cpp:1728
 msgid "Nodes"
 msgstr ""
 
@@ -13505,53 +13546,53 @@ msgid "_Treat selection as group: "
 msgstr ""
 
 #. Align
-#: ../src/ui/dialog/align-and-distribute.cpp:921 ../src/verbs.cpp:2861
-#: ../src/verbs.cpp:2862
+#: ../src/ui/dialog/align-and-distribute.cpp:921 ../src/verbs.cpp:2865
+#: ../src/verbs.cpp:2866
 msgid "Align right edges of objects to the left edge of the anchor"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:924 ../src/verbs.cpp:2863
-#: ../src/verbs.cpp:2864
+#: ../src/ui/dialog/align-and-distribute.cpp:924 ../src/verbs.cpp:2867
+#: ../src/verbs.cpp:2868
 msgid "Align left edges"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:927 ../src/verbs.cpp:2865
-#: ../src/verbs.cpp:2866
+#: ../src/ui/dialog/align-and-distribute.cpp:927 ../src/verbs.cpp:2869
+#: ../src/verbs.cpp:2870
 msgid "Center on vertical axis"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:930 ../src/verbs.cpp:2867
-#: ../src/verbs.cpp:2868
+#: ../src/ui/dialog/align-and-distribute.cpp:930 ../src/verbs.cpp:2871
+#: ../src/verbs.cpp:2872
 msgid "Align right sides"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:933 ../src/verbs.cpp:2869
-#: ../src/verbs.cpp:2870
+#: ../src/ui/dialog/align-and-distribute.cpp:933 ../src/verbs.cpp:2873
+#: ../src/verbs.cpp:2874
 msgid "Align left edges of objects to the right edge of the anchor"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:936 ../src/verbs.cpp:2871
-#: ../src/verbs.cpp:2872
+#: ../src/ui/dialog/align-and-distribute.cpp:936 ../src/verbs.cpp:2875
+#: ../src/verbs.cpp:2876
 msgid "Align bottom edges of objects to the top edge of the anchor"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:939 ../src/verbs.cpp:2873
-#: ../src/verbs.cpp:2874
+#: ../src/ui/dialog/align-and-distribute.cpp:939 ../src/verbs.cpp:2877
+#: ../src/verbs.cpp:2878
 msgid "Align top edges"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:942 ../src/verbs.cpp:2875
-#: ../src/verbs.cpp:2876
+#: ../src/ui/dialog/align-and-distribute.cpp:942 ../src/verbs.cpp:2879
+#: ../src/verbs.cpp:2880
 msgid "Center on horizontal axis"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:945 ../src/verbs.cpp:2877
-#: ../src/verbs.cpp:2878
+#: ../src/ui/dialog/align-and-distribute.cpp:945 ../src/verbs.cpp:2881
+#: ../src/verbs.cpp:2882
 msgid "Align bottom edges"
 msgstr ""
 
-#: ../src/ui/dialog/align-and-distribute.cpp:948 ../src/verbs.cpp:2879
-#: ../src/verbs.cpp:2880
+#: ../src/ui/dialog/align-and-distribute.cpp:948 ../src/verbs.cpp:2883
+#: ../src/verbs.cpp:2884
 msgid "Align top edges of objects to the bottom edge of the anchor"
 msgstr ""
 
@@ -13668,8 +13709,8 @@ msgid "Smallest object"
 msgstr ""
 
 #: ../src/ui/dialog/align-and-distribute.cpp:1049
-#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1555 ../src/verbs.cpp:169
-#: ../src/widgets/desktop-widget.cpp:1934
+#: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:1555 ../src/verbs.cpp:173
+#: ../src/widgets/desktop-widget.cpp:2004
 #: ../share/extensions/printing_marks.inx.h:18
 msgid "Selection"
 msgstr ""
@@ -13691,54 +13732,54 @@ msgstr ""
 msgid "Add profile"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:122
+#: ../src/ui/dialog/color-item.cpp:131
 #, c-format
 msgid ""
 "Color: <b>%s</b>; <b>Click</b> to set fill, <b>Shift+click</b> to set stroke"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:504
+#: ../src/ui/dialog/color-item.cpp:513
 msgid "Change color definition"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:678
+#: ../src/ui/dialog/color-item.cpp:687
 msgid "Remove stroke color"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:678
+#: ../src/ui/dialog/color-item.cpp:687
 msgid "Remove fill color"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:683
+#: ../src/ui/dialog/color-item.cpp:692
 msgid "Set stroke color to none"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:683
+#: ../src/ui/dialog/color-item.cpp:692
 msgid "Set fill color to none"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:699
+#: ../src/ui/dialog/color-item.cpp:708
 msgid "Set stroke color from swatch"
 msgstr ""
 
-#: ../src/ui/dialog/color-item.cpp:699
+#: ../src/ui/dialog/color-item.cpp:708
 msgid "Set fill color from swatch"
 msgstr ""
 
-#: ../src/ui/dialog/debug.cpp:69
+#: ../src/ui/dialog/debug.cpp:73
 msgid "Messages"
 msgstr ""
 
-#: ../src/ui/dialog/debug.cpp:83 ../src/ui/dialog/messages.cpp:47
+#: ../src/ui/dialog/debug.cpp:87 ../src/ui/dialog/messages.cpp:47
 #: ../src/ui/dialog/scriptdialog.cpp:182
 msgid "_Clear"
 msgstr ""
 
-#: ../src/ui/dialog/debug.cpp:87 ../src/ui/dialog/messages.cpp:48
+#: ../src/ui/dialog/debug.cpp:91 ../src/ui/dialog/messages.cpp:48
 msgid "Capture log messages"
 msgstr ""
 
-#: ../src/ui/dialog/debug.cpp:91
+#: ../src/ui/dialog/debug.cpp:95
 msgid "Release log messages"
 msgstr ""
 
@@ -13975,11 +14016,11 @@ msgid "Remove selected grid."
 msgstr ""
 
 #: ../src/ui/dialog/document-properties.cpp:147
-#: ../src/widgets/toolbox.cpp:1831
+#: ../src/widgets/toolbox.cpp:1835
 msgid "Guides"
 msgstr ""
 
-#: ../src/ui/dialog/document-properties.cpp:149 ../src/verbs.cpp:2680
+#: ../src/ui/dialog/document-properties.cpp:149 ../src/verbs.cpp:2684
 msgid "Snap"
 msgstr ""
 
@@ -14027,7 +14068,7 @@ msgstr ""
 #. Inkscape::GC::release(defsRepr);
 #. inform the document, so we can undo
 #. Color Management
-#: ../src/ui/dialog/document-properties.cpp:487 ../src/verbs.cpp:2855
+#: ../src/ui/dialog/document-properties.cpp:487 ../src/verbs.cpp:2859
 msgid "Link Color Profile"
 msgstr ""
 
@@ -14159,8 +14200,8 @@ msgstr ""
 msgid "Information"
 msgstr ""
 
-#: ../src/ui/dialog/extension-editor.cpp:82 ../src/verbs.cpp:284
-#: ../src/verbs.cpp:303 ../share/extensions/color_custom.inx.h:7
+#: ../src/ui/dialog/extension-editor.cpp:82 ../src/verbs.cpp:288
+#: ../src/verbs.cpp:307 ../share/extensions/color_custom.inx.h:7
 #: ../share/extensions/color_HSL_adjust.inx.h:11
 #: ../share/extensions/color_randomize.inx.h:6
 #: ../share/extensions/dots.inx.h:7
@@ -14231,36 +14272,36 @@ msgstr ""
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:779
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:795
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:810
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:291
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:422
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:289
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:420
 msgid "All Files"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:776
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:792
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:807
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:292
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:290
 msgid "All Inkscape Files"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:783
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:799
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:813
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:293
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:291
 msgid "All Images"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:786
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:802
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:816
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:294
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:292
 msgid "All Vectors"
 msgstr ""
 
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:789
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:805
 #: ../src/ui/dialog/filedialogimpl-gtkmm.cpp:819
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:295
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:293
 msgid "All Bitmaps"
 msgstr ""
 
@@ -14341,15 +14382,15 @@ msgstr ""
 msgid "Destination"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:423
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:421
 msgid "All Executable Files"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:615
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:613
 msgid "Show Preview"
 msgstr ""
 
-#: ../src/ui/dialog/filedialogimpl-win32.cpp:753
+#: ../src/ui/dialog/filedialogimpl-win32.cpp:751
 msgid "No file selected"
 msgstr ""
 
@@ -15134,7 +15175,7 @@ msgstr ""
 msgid "Search spirals"
 msgstr ""
 
-#: ../src/ui/dialog/find.cpp:102 ../src/widgets/toolbox.cpp:1732
+#: ../src/ui/dialog/find.cpp:102 ../src/widgets/toolbox.cpp:1736
 msgid "Paths"
 msgstr ""
 
@@ -15259,25 +15300,25 @@ msgstr ""
 msgid "Select a property"
 msgstr ""
 
-#: ../src/ui/dialog/font-substitution.cpp:83
+#: ../src/ui/dialog/font-substitution.cpp:87
 msgid ""
 "\n"
 "Some fonts are not available and have been substituted."
 msgstr ""
 
-#: ../src/ui/dialog/font-substitution.cpp:86
+#: ../src/ui/dialog/font-substitution.cpp:90
 msgid "Font substitution"
 msgstr ""
 
-#: ../src/ui/dialog/font-substitution.cpp:105
+#: ../src/ui/dialog/font-substitution.cpp:109
 msgid "Select all the affected items"
 msgstr ""
 
-#: ../src/ui/dialog/font-substitution.cpp:110
+#: ../src/ui/dialog/font-substitution.cpp:114
 msgid "Don't show this warning again"
 msgstr ""
 
-#: ../src/ui/dialog/font-substitution.cpp:251
+#: ../src/ui/dialog/font-substitution.cpp:255
 msgid "Font '%1' substituted with '%2'"
 msgstr ""
 
@@ -16053,25 +16094,25 @@ msgstr ""
 msgid "Current: %s"
 msgstr ""
 
-#: ../src/ui/dialog/icon-preview.cpp:155
+#: ../src/ui/dialog/icon-preview.cpp:159
 #, c-format
 msgid "%d x %d"
 msgstr ""
 
-#: ../src/ui/dialog/icon-preview.cpp:167
+#: ../src/ui/dialog/icon-preview.cpp:171
 msgid "Magnified:"
 msgstr ""
 
-#: ../src/ui/dialog/icon-preview.cpp:236
+#: ../src/ui/dialog/icon-preview.cpp:240
 msgid "Actual Size:"
 msgstr ""
 
-#: ../src/ui/dialog/icon-preview.cpp:241
+#: ../src/ui/dialog/icon-preview.cpp:245
 msgctxt "Icon preview window"
 msgid "Sele_ction"
 msgstr ""
 
-#: ../src/ui/dialog/icon-preview.cpp:243
+#: ../src/ui/dialog/icon-preview.cpp:247
 msgid "Selection only or whole document"
 msgstr ""
 
@@ -16386,14 +16427,13 @@ msgid "Object paint style"
 msgstr ""
 
 #. Zoom
-#. dtw->zoom_status = gtk_spin_button_new_with_range (log(SP_DESKTOP_ZOOM_MIN)/log(2), log(SP_DESKTOP_ZOOM_MAX)/log(2), 0.1);
 #: ../src/ui/dialog/inkscape-preferences.cpp:376
-#: ../src/widgets/desktop-widget.cpp:636 ../src/widgets/desktop-widget.cpp:639
+#: ../src/widgets/desktop-widget.cpp:631
 msgid "Zoom"
 msgstr ""
 
 #. Measure
-#: ../src/ui/dialog/inkscape-preferences.cpp:381 ../src/verbs.cpp:2614
+#: ../src/ui/dialog/inkscape-preferences.cpp:381 ../src/verbs.cpp:2618
 msgctxt "ContextVerb"
 msgid "Measure"
 msgstr ""
@@ -16448,7 +16488,7 @@ msgid ""
 msgstr ""
 
 #. Text
-#: ../src/ui/dialog/inkscape-preferences.cpp:439 ../src/verbs.cpp:2606
+#: ../src/ui/dialog/inkscape-preferences.cpp:439 ../src/verbs.cpp:2610
 msgctxt "ContextVerb"
 msgid "Text"
 msgstr ""
@@ -17618,8 +17658,8 @@ msgid "Preserve K channel in CMYK -> CMYK transforms"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1031
-#: ../src/widgets/sp-color-icc-selector.cpp:325
-#: ../src/widgets/sp-color-icc-selector.cpp:678
+#: ../src/widgets/sp-color-icc-selector.cpp:472
+#: ../src/widgets/sp-color-icc-selector.cpp:764
 msgid "<none>"
 msgstr ""
 
@@ -18238,29 +18278,43 @@ msgstr ""
 msgid "Markers"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1351
+#: ../src/ui/dialog/inkscape-preferences.cpp:1346
+msgid "Document cleanup"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1347
+#: ../src/ui/dialog/inkscape-preferences.cpp:1349
+msgid "Remove unused swatches when doing a document cleanup"
+msgstr ""
+
+#. tooltip
+#: ../src/ui/dialog/inkscape-preferences.cpp:1350
+msgid "Cleanup"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1358
 msgid "Number of _Threads:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1351
-#: ../src/ui/dialog/inkscape-preferences.cpp:1869
+#: ../src/ui/dialog/inkscape-preferences.cpp:1358
+#: ../src/ui/dialog/inkscape-preferences.cpp:1876
 msgid "(requires restart)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1352
+#: ../src/ui/dialog/inkscape-preferences.cpp:1359
 msgid "Configure number of processors/threads to use when rendering filters"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1356
+#: ../src/ui/dialog/inkscape-preferences.cpp:1363
 msgid "Rendering _cache size:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1356
+#: ../src/ui/dialog/inkscape-preferences.cpp:1363
 msgctxt "mebibyte (2^20 bytes) abbreviation"
 msgid "MiB"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1356
+#: ../src/ui/dialog/inkscape-preferences.cpp:1363
 msgid ""
 "Set the amount of memory per document which can be used to store rendered "
 "parts of the drawing for later reuse; set to zero to disable caching"
@@ -18268,362 +18322,362 @@ msgstr ""
 
 #. blur quality
 #. filter quality
-#: ../src/ui/dialog/inkscape-preferences.cpp:1359
-#: ../src/ui/dialog/inkscape-preferences.cpp:1383
+#: ../src/ui/dialog/inkscape-preferences.cpp:1366
+#: ../src/ui/dialog/inkscape-preferences.cpp:1390
 msgid "Best quality (slowest)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1361
-#: ../src/ui/dialog/inkscape-preferences.cpp:1385
+#: ../src/ui/dialog/inkscape-preferences.cpp:1368
+#: ../src/ui/dialog/inkscape-preferences.cpp:1392
 msgid "Better quality (slower)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1363
-#: ../src/ui/dialog/inkscape-preferences.cpp:1387
-msgid "Average quality"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1365
-#: ../src/ui/dialog/inkscape-preferences.cpp:1389
-msgid "Lower quality (faster)"
-msgstr ""
-
-#: ../src/ui/dialog/inkscape-preferences.cpp:1367
-#: ../src/ui/dialog/inkscape-preferences.cpp:1391
-msgid "Lowest quality (fastest)"
-msgstr ""
-
 #: ../src/ui/dialog/inkscape-preferences.cpp:1370
-msgid "Gaussian blur quality for display"
+#: ../src/ui/dialog/inkscape-preferences.cpp:1394
+msgid "Average quality"
 msgstr ""
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1372
 #: ../src/ui/dialog/inkscape-preferences.cpp:1396
+msgid "Lower quality (faster)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1374
+#: ../src/ui/dialog/inkscape-preferences.cpp:1398
+msgid "Lowest quality (fastest)"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1377
+msgid "Gaussian blur quality for display"
+msgstr ""
+
+#: ../src/ui/dialog/inkscape-preferences.cpp:1379
+#: ../src/ui/dialog/inkscape-preferences.cpp:1403
 msgid ""
 "Best quality, but display may be very slow at high zooms (bitmap export "
 "always uses best quality)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1374
-#: ../src/ui/dialog/inkscape-preferences.cpp:1398
+#: ../src/ui/dialog/inkscape-preferences.cpp:1381
+#: ../src/ui/dialog/inkscape-preferences.cpp:1405
 msgid "Better quality, but slower display"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1376
-#: ../src/ui/dialog/inkscape-preferences.cpp:1400
+#: ../src/ui/dialog/inkscape-preferences.cpp:1383
+#: ../src/ui/dialog/inkscape-preferences.cpp:1407
 msgid "Average quality, acceptable display speed"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1378
-#: ../src/ui/dialog/inkscape-preferences.cpp:1402
+#: ../src/ui/dialog/inkscape-preferences.cpp:1385
+#: ../src/ui/dialog/inkscape-preferences.cpp:1409
 msgid "Lower quality (some artifacts), but display is faster"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1380
-#: ../src/ui/dialog/inkscape-preferences.cpp:1404
+#: ../src/ui/dialog/inkscape-preferences.cpp:1387
+#: ../src/ui/dialog/inkscape-preferences.cpp:1411
 msgid "Lowest quality (considerable artifacts), but display is fastest"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1394
+#: ../src/ui/dialog/inkscape-preferences.cpp:1401
 msgid "Filter effects quality for display"
 msgstr ""
 
 #. build custom preferences tab
-#: ../src/ui/dialog/inkscape-preferences.cpp:1406
+#: ../src/ui/dialog/inkscape-preferences.cpp:1413
 #: ../src/ui/dialog/print.cpp:224
 msgid "Rendering"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1412
+#: ../src/ui/dialog/inkscape-preferences.cpp:1419
 msgid "2x2"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1412
+#: ../src/ui/dialog/inkscape-preferences.cpp:1419
 msgid "4x4"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1412
+#: ../src/ui/dialog/inkscape-preferences.cpp:1419
 msgid "8x8"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1412
+#: ../src/ui/dialog/inkscape-preferences.cpp:1419
 msgid "16x16"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1416
+#: ../src/ui/dialog/inkscape-preferences.cpp:1423
 msgid "Oversample bitmaps:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1419
+#: ../src/ui/dialog/inkscape-preferences.cpp:1426
 msgid "Automatically reload bitmaps"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1421
+#: ../src/ui/dialog/inkscape-preferences.cpp:1428
 msgid "Automatically reload linked images when file is changed on disk"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1423
+#: ../src/ui/dialog/inkscape-preferences.cpp:1430
 msgid "_Bitmap editor:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1425
+#: ../src/ui/dialog/inkscape-preferences.cpp:1432
 msgid "Default export _resolution:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1426
+#: ../src/ui/dialog/inkscape-preferences.cpp:1433
 msgid "Default bitmap resolution (in dots per inch) in the Export dialog"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1428
+#: ../src/ui/dialog/inkscape-preferences.cpp:1435
 msgid "Resolution for Create Bitmap _Copy:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1429
+#: ../src/ui/dialog/inkscape-preferences.cpp:1436
 msgid "Resolution used by the Create Bitmap Copy command"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1431
+#: ../src/ui/dialog/inkscape-preferences.cpp:1438
 msgid "Always embed"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1431
+#: ../src/ui/dialog/inkscape-preferences.cpp:1438
 msgid "Always link"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1431
+#: ../src/ui/dialog/inkscape-preferences.cpp:1438
 msgid "Ask"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1434
+#: ../src/ui/dialog/inkscape-preferences.cpp:1441
 msgid "Bitmap import:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1437
+#: ../src/ui/dialog/inkscape-preferences.cpp:1444
 msgid "Bitmap import quality:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1440
+#: ../src/ui/dialog/inkscape-preferences.cpp:1447
 msgid "Default _import resolution:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1441
+#: ../src/ui/dialog/inkscape-preferences.cpp:1448
 msgid "Default bitmap resolution (in dots per inch) for bitmap import"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1442
+#: ../src/ui/dialog/inkscape-preferences.cpp:1449
 msgid "Override file resolution"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1444
+#: ../src/ui/dialog/inkscape-preferences.cpp:1451
 msgid "Use default bitmap resolution in favor of information from file"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1446
+#: ../src/ui/dialog/inkscape-preferences.cpp:1453
 msgid "Bitmaps"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1458
+#: ../src/ui/dialog/inkscape-preferences.cpp:1465
 msgid ""
 "Select a file of predefined shortcuts to use. Any customized shortcuts you "
 "create will be added seperately to "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1461
+#: ../src/ui/dialog/inkscape-preferences.cpp:1468
 msgid "Shortcut file:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1464
+#: ../src/ui/dialog/inkscape-preferences.cpp:1471
 msgid "Search:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1476
+#: ../src/ui/dialog/inkscape-preferences.cpp:1483
 msgid "Shortcut"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1477
+#: ../src/ui/dialog/inkscape-preferences.cpp:1484
 #: ../src/ui/widget/page-sizer.cpp:262
 msgid "Description"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1532
+#: ../src/ui/dialog/inkscape-preferences.cpp:1539
 #: ../src/ui/dialog/svg-fonts-dialog.cpp:694
 #: ../src/ui/dialog/tracedialog.cpp:813
-#: ../src/ui/widget/preferences-widget.cpp:745
+#: ../src/ui/widget/preferences-widget.cpp:749
 msgid "Reset"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1532
+#: ../src/ui/dialog/inkscape-preferences.cpp:1539
 msgid ""
 "Remove all your customized keyboard shortcuts, and revert to the shortcuts "
 "in the shortcut file listed above"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1536
+#: ../src/ui/dialog/inkscape-preferences.cpp:1543
 msgid "Import ..."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1536
+#: ../src/ui/dialog/inkscape-preferences.cpp:1543
 msgid "Import custom keyboard shortcuts from a file"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1539
+#: ../src/ui/dialog/inkscape-preferences.cpp:1546
 msgid "Export ..."
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1539
+#: ../src/ui/dialog/inkscape-preferences.cpp:1546
 msgid "Export custom keyboard shortcuts to a file"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1549
+#: ../src/ui/dialog/inkscape-preferences.cpp:1556
 msgid "Keyboard Shortcuts"
 msgstr ""
 
 #. Find this group in the tree
-#: ../src/ui/dialog/inkscape-preferences.cpp:1712
+#: ../src/ui/dialog/inkscape-preferences.cpp:1719
 msgid "Misc"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1831
+#: ../src/ui/dialog/inkscape-preferences.cpp:1838
 msgid "Set the main spell check language"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1834
+#: ../src/ui/dialog/inkscape-preferences.cpp:1841
 msgid "Second language:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1835
+#: ../src/ui/dialog/inkscape-preferences.cpp:1842
 msgid ""
 "Set the second spell check language; checking will only stop on words "
 "unknown in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1838
+#: ../src/ui/dialog/inkscape-preferences.cpp:1845
 msgid "Third language:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1839
+#: ../src/ui/dialog/inkscape-preferences.cpp:1846
 msgid ""
 "Set the third spell check language; checking will only stop on words unknown "
 "in ALL chosen languages"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1841
+#: ../src/ui/dialog/inkscape-preferences.cpp:1848
 msgid "Ignore words with digits"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1843
+#: ../src/ui/dialog/inkscape-preferences.cpp:1850
 msgid "Ignore words containing digits, such as \"R2D2\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1845
+#: ../src/ui/dialog/inkscape-preferences.cpp:1852
 msgid "Ignore words in ALL CAPITALS"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1847
+#: ../src/ui/dialog/inkscape-preferences.cpp:1854
 msgid "Ignore words in all capitals, such as \"IUPAC\""
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1849
+#: ../src/ui/dialog/inkscape-preferences.cpp:1856
 msgid "Spellcheck"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1869
+#: ../src/ui/dialog/inkscape-preferences.cpp:1876
 msgid "Latency _skew:"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1870
+#: ../src/ui/dialog/inkscape-preferences.cpp:1877
 msgid ""
 "Factor by which the event clock is skewed from the actual time (0.9766 on "
 "some systems)"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1872
+#: ../src/ui/dialog/inkscape-preferences.cpp:1879
 msgid "Pre-render named icons"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1874
+#: ../src/ui/dialog/inkscape-preferences.cpp:1881
 msgid ""
 "When on, named icons will be rendered before displaying the ui. This is for "
 "working around bugs in GTK+ named icon notification"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1882
+#: ../src/ui/dialog/inkscape-preferences.cpp:1889
 msgid "System info"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1886
+#: ../src/ui/dialog/inkscape-preferences.cpp:1893
 msgid "User config: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1886
+#: ../src/ui/dialog/inkscape-preferences.cpp:1893
 msgid "Location of users configuration"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1890
+#: ../src/ui/dialog/inkscape-preferences.cpp:1897
 msgid "User preferences: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1890
+#: ../src/ui/dialog/inkscape-preferences.cpp:1897
 msgid "Location of the users preferences file"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1894
+#: ../src/ui/dialog/inkscape-preferences.cpp:1901
 msgid "User extensions: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1894
+#: ../src/ui/dialog/inkscape-preferences.cpp:1901
 msgid "Location of the users extensions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1898
+#: ../src/ui/dialog/inkscape-preferences.cpp:1905
 msgid "User cache: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1898
+#: ../src/ui/dialog/inkscape-preferences.cpp:1905
 msgid "Location of users cache"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1906
+#: ../src/ui/dialog/inkscape-preferences.cpp:1913
 msgid "Temporary files: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1906
+#: ../src/ui/dialog/inkscape-preferences.cpp:1913
 msgid "Location of the temporary files used for autosave"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1910
+#: ../src/ui/dialog/inkscape-preferences.cpp:1917
 msgid "Inkscape data: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1910
+#: ../src/ui/dialog/inkscape-preferences.cpp:1917
 msgid "Location of Inkscape data"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1914
+#: ../src/ui/dialog/inkscape-preferences.cpp:1921
 msgid "Inkscape extensions: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1914
+#: ../src/ui/dialog/inkscape-preferences.cpp:1921
 msgid "Location of the Inkscape extensions"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1923
+#: ../src/ui/dialog/inkscape-preferences.cpp:1930
 msgid "System data: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1923
+#: ../src/ui/dialog/inkscape-preferences.cpp:1930
 msgid "Locations of system data"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1947
+#: ../src/ui/dialog/inkscape-preferences.cpp:1954
 msgid "Icon theme: "
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1947
+#: ../src/ui/dialog/inkscape-preferences.cpp:1954
 msgid "Locations of icon themes"
 msgstr ""
 
-#: ../src/ui/dialog/inkscape-preferences.cpp:1949
+#: ../src/ui/dialog/inkscape-preferences.cpp:1956
 msgid "System"
 msgstr ""
 
@@ -18685,7 +18739,7 @@ msgstr ""
 msgid "_Use pressure-sensitive tablet (requires restart)"
 msgstr ""
 
-#: ../src/ui/dialog/input.cpp:1082 ../src/verbs.cpp:2297
+#: ../src/ui/dialog/input.cpp:1082 ../src/verbs.cpp:2301
 msgid "_Save"
 msgstr ""
 
@@ -18747,8 +18801,8 @@ msgstr ""
 
 #. TODO: find an unused layer number, forming name from _("Layer ") + "%d"
 #: ../src/ui/dialog/layer-properties.cpp:354
-#: ../src/ui/dialog/layer-properties.cpp:410 ../src/verbs.cpp:188
-#: ../src/verbs.cpp:2228
+#: ../src/ui/dialog/layer-properties.cpp:410 ../src/verbs.cpp:192
+#: ../src/verbs.cpp:2232
 msgid "Layer"
 msgstr ""
 
@@ -18782,7 +18836,7 @@ msgid "Move to Layer"
 msgstr ""
 
 #: ../src/ui/dialog/layer-properties.cpp:411
-#: ../src/ui/dialog/transformation.cpp:109
+#: ../src/ui/dialog/transformation.cpp:113
 msgid "_Move"
 msgstr ""
 
@@ -18802,11 +18856,11 @@ msgstr ""
 msgid "Unlock layer"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:623 ../src/verbs.cpp:1343
+#: ../src/ui/dialog/layers.cpp:623 ../src/verbs.cpp:1347
 msgid "Toggle layer solo"
 msgstr ""
 
-#: ../src/ui/dialog/layers.cpp:626 ../src/verbs.cpp:1367
+#: ../src/ui/dialog/layers.cpp:626 ../src/verbs.cpp:1371
 msgid "Lock other layers"
 msgstr ""
 
@@ -18992,13 +19046,13 @@ msgstr ""
 
 #: ../src/ui/dialog/object-attributes.cpp:66
 #: ../src/ui/dialog/object-attributes.cpp:74 ../src/ui/dialog/tile.cpp:618
-#: ../src/widgets/desktop-widget.cpp:674 ../src/widgets/node-toolbar.cpp:590
+#: ../src/widgets/desktop-widget.cpp:666 ../src/widgets/node-toolbar.cpp:590
 msgid "X:"
 msgstr ""
 
 #: ../src/ui/dialog/object-attributes.cpp:67
 #: ../src/ui/dialog/object-attributes.cpp:75 ../src/ui/dialog/tile.cpp:619
-#: ../src/widgets/desktop-widget.cpp:684 ../src/widgets/node-toolbar.cpp:608
+#: ../src/widgets/desktop-widget.cpp:676 ../src/widgets/node-toolbar.cpp:608
 msgid "Y:"
 msgstr ""
 
@@ -19025,8 +19079,8 @@ msgstr ""
 msgid "L_ock"
 msgstr ""
 
-#: ../src/ui/dialog/object-properties.cpp:74 ../src/verbs.cpp:2568
-#: ../src/verbs.cpp:2574
+#: ../src/ui/dialog/object-properties.cpp:74 ../src/verbs.cpp:2572
+#: ../src/verbs.cpp:2578
 msgid "_Set"
 msgstr ""
 
@@ -19177,7 +19231,7 @@ msgid "Print"
 msgstr ""
 
 #. ## Add a menu for clear()
-#: ../src/ui/dialog/scriptdialog.cpp:178 ../src/verbs.cpp:131
+#: ../src/ui/dialog/scriptdialog.cpp:178 ../src/verbs.cpp:135
 msgid "File"
 msgstr ""
 
@@ -19365,35 +19419,37 @@ msgid "Preview Text:"
 msgstr ""
 
 #. ******************* Symbol Sets ************************
-#: ../src/ui/dialog/symbols.cpp:120
+#: ../src/ui/dialog/symbols.cpp:126
 msgid "Symbol set: "
 msgstr ""
 
 #. Fill in later
-#: ../src/ui/dialog/symbols.cpp:129 ../src/ui/dialog/symbols.cpp:130
+#: ../src/ui/dialog/symbols.cpp:135 ../src/ui/dialog/symbols.cpp:136
 msgid "Current Document"
 msgstr ""
 
-#. ******************* Preview Scale **********************
-#: ../src/ui/dialog/symbols.cpp:182
-msgid "Preview scale: "
+#: ../src/ui/dialog/symbols.cpp:203
+msgid "Add Symbol from the current document."
 msgstr ""
 
-#: ../src/ui/dialog/symbols.cpp:192
-msgid "Fit"
-msgstr ""
-
-#: ../src/ui/dialog/symbols.cpp:192
-msgid "Fit to width"
-msgstr ""
-
-#: ../src/ui/dialog/symbols.cpp:192
-msgid "Fit to height"
-msgstr ""
-
-#. ******************* Preview Size ***********************
 #: ../src/ui/dialog/symbols.cpp:212
-msgid "Preview size: "
+msgid "Remove Symbol from the current document."
+msgstr ""
+
+#: ../src/ui/dialog/symbols.cpp:225
+msgid "Make Icons bigger by zooming in."
+msgstr ""
+
+#: ../src/ui/dialog/symbols.cpp:234
+msgid "Make Icons smaller by zooming out."
+msgstr ""
+
+#: ../src/ui/dialog/symbols.cpp:243
+msgid "Toggle 'fit' symbols in icon space."
+msgstr ""
+
+#: ../src/ui/dialog/symbols.cpp:556
+msgid "Unnamed Symbols"
 msgstr ""
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
@@ -19738,152 +19794,152 @@ msgstr ""
 msgid "Execute the trace"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:71
-#: ../src/ui/dialog/transformation.cpp:81
+#: ../src/ui/dialog/transformation.cpp:75
+#: ../src/ui/dialog/transformation.cpp:85
 msgid "_Horizontal:"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:71
+#: ../src/ui/dialog/transformation.cpp:75
 msgid "Horizontal displacement (relative) or position (absolute)"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:73
-#: ../src/ui/dialog/transformation.cpp:83
+#: ../src/ui/dialog/transformation.cpp:77
+#: ../src/ui/dialog/transformation.cpp:87
 msgid "_Vertical:"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:73
+#: ../src/ui/dialog/transformation.cpp:77
 msgid "Vertical displacement (relative) or position (absolute)"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:75
+#: ../src/ui/dialog/transformation.cpp:79
 msgid "Horizontal size (absolute or percentage of current)"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:77
+#: ../src/ui/dialog/transformation.cpp:81
 msgid "Vertical size (absolute or percentage of current)"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:79
+#: ../src/ui/dialog/transformation.cpp:83
 msgid "A_ngle:"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:79
-#: ../src/ui/dialog/transformation.cpp:1064
+#: ../src/ui/dialog/transformation.cpp:83
+#: ../src/ui/dialog/transformation.cpp:1068
 msgid "Rotation angle (positive = counterclockwise)"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:81
+#: ../src/ui/dialog/transformation.cpp:85
 msgid ""
 "Horizontal skew angle (positive = counterclockwise), or absolute "
 "displacement, or percentage displacement"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:83
+#: ../src/ui/dialog/transformation.cpp:87
 msgid ""
 "Vertical skew angle (positive = counterclockwise), or absolute displacement, "
 "or percentage displacement"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:86
+#: ../src/ui/dialog/transformation.cpp:90
 msgid "Transformation matrix element A"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:87
+#: ../src/ui/dialog/transformation.cpp:91
 msgid "Transformation matrix element B"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:88
+#: ../src/ui/dialog/transformation.cpp:92
 msgid "Transformation matrix element C"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:89
+#: ../src/ui/dialog/transformation.cpp:93
 msgid "Transformation matrix element D"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:90
+#: ../src/ui/dialog/transformation.cpp:94
 msgid "Transformation matrix element E"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:91
+#: ../src/ui/dialog/transformation.cpp:95
 msgid "Transformation matrix element F"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:96
+#: ../src/ui/dialog/transformation.cpp:100
 msgid "Rela_tive move"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:96
+#: ../src/ui/dialog/transformation.cpp:100
 msgid ""
 "Add the specified relative displacement to the current position; otherwise, "
 "edit the current absolute position directly"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:97
+#: ../src/ui/dialog/transformation.cpp:101
 msgid "_Scale proportionally"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:97
+#: ../src/ui/dialog/transformation.cpp:101
 msgid "Preserve the width/height ratio of the scaled objects"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:98
+#: ../src/ui/dialog/transformation.cpp:102
 msgid "Apply to each _object separately"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:98
+#: ../src/ui/dialog/transformation.cpp:102
 msgid ""
 "Apply the scale/rotate/skew to each selected object separately; otherwise, "
 "transform the selection as a whole"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:99
+#: ../src/ui/dialog/transformation.cpp:103
 msgid "Edit c_urrent matrix"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:99
+#: ../src/ui/dialog/transformation.cpp:103
 msgid ""
 "Edit the current transform= matrix; otherwise, post-multiply transform= by "
 "this matrix"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:112
+#: ../src/ui/dialog/transformation.cpp:116
 msgid "_Scale"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:115
+#: ../src/ui/dialog/transformation.cpp:119
 msgid "_Rotate"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:118
+#: ../src/ui/dialog/transformation.cpp:122
 msgid "Ske_w"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:121
+#: ../src/ui/dialog/transformation.cpp:125
 msgid "Matri_x"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:145
+#: ../src/ui/dialog/transformation.cpp:149
 msgid "Reset the values on the current tab to defaults"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:152
+#: ../src/ui/dialog/transformation.cpp:156
 msgid "Apply transformation to selection"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:327
+#: ../src/ui/dialog/transformation.cpp:331
 msgid "Rotate in a counterclockwise direction"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:333
+#: ../src/ui/dialog/transformation.cpp:337
 msgid "Rotate in a clockwise direction"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:972
+#: ../src/ui/dialog/transformation.cpp:976
 msgid "Edit transformation matrix"
 msgstr ""
 
-#: ../src/ui/dialog/transformation.cpp:1071
+#: ../src/ui/dialog/transformation.cpp:1075
 msgid "Rotation angle (positive = clockwise)"
 msgstr ""
 
@@ -20472,101 +20528,101 @@ msgstr ""
 msgid "Set page size"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:112
+#: ../src/ui/widget/panel.cpp:116
 msgid "List"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:135
+#: ../src/ui/widget/panel.cpp:139
 msgctxt "Swatches"
 msgid "Size"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:139
+#: ../src/ui/widget/panel.cpp:143
 msgctxt "Swatches height"
 msgid "Tiny"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:140
+#: ../src/ui/widget/panel.cpp:144
 msgctxt "Swatches height"
 msgid "Small"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:141
+#: ../src/ui/widget/panel.cpp:145
 msgctxt "Swatches height"
 msgid "Medium"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:142
+#: ../src/ui/widget/panel.cpp:146
 msgctxt "Swatches height"
 msgid "Large"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:143
+#: ../src/ui/widget/panel.cpp:147
 msgctxt "Swatches height"
 msgid "Huge"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:165
+#: ../src/ui/widget/panel.cpp:169
 msgctxt "Swatches"
 msgid "Width"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:169
+#: ../src/ui/widget/panel.cpp:173
 msgctxt "Swatches width"
 msgid "Narrower"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:170
+#: ../src/ui/widget/panel.cpp:174
 msgctxt "Swatches width"
 msgid "Narrow"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:171
+#: ../src/ui/widget/panel.cpp:175
 msgctxt "Swatches width"
 msgid "Medium"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:172
+#: ../src/ui/widget/panel.cpp:176
 msgctxt "Swatches width"
 msgid "Wide"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:173
+#: ../src/ui/widget/panel.cpp:177
 msgctxt "Swatches width"
 msgid "Wider"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:203
+#: ../src/ui/widget/panel.cpp:207
 msgctxt "Swatches"
 msgid "Border"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:207
+#: ../src/ui/widget/panel.cpp:211
 msgctxt "Swatches border"
 msgid "None"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:208
+#: ../src/ui/widget/panel.cpp:212
 msgctxt "Swatches border"
 msgid "Solid"
 msgstr ""
 
-#: ../src/ui/widget/panel.cpp:209
+#: ../src/ui/widget/panel.cpp:213
 msgctxt "Swatches border"
 msgid "Wide"
 msgstr ""
 
 #. TRANSLATORS: "Wrap" indicates how colour swatches are displayed
-#: ../src/ui/widget/panel.cpp:240
+#: ../src/ui/widget/panel.cpp:244
 msgctxt "Swatches"
 msgid "Wrap"
 msgstr ""
 
-#: ../src/ui/widget/preferences-widget.cpp:798
+#: ../src/ui/widget/preferences-widget.cpp:802
 msgid "_Browse..."
 msgstr ""
 
-#: ../src/ui/widget/preferences-widget.cpp:884
+#: ../src/ui/widget/preferences-widget.cpp:888
 msgid "Select a bitmap editor"
 msgstr ""
 
@@ -20649,7 +20705,7 @@ msgid "No stroke"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:184
-#: ../src/ui/widget/style-swatch.cpp:300 ../src/widgets/paint-selector.cpp:239
+#: ../src/ui/widget/style-swatch.cpp:300 ../src/widgets/paint-selector.cpp:242
 msgid "Pattern"
 msgstr ""
 
@@ -20712,14 +20768,14 @@ msgstr ""
 #: ../src/ui/widget/selected-style.cpp:217
 #: ../src/ui/widget/selected-style.cpp:275
 #: ../src/ui/widget/selected-style.cpp:554
-#: ../src/ui/widget/style-swatch.cpp:326 ../src/widgets/fill-style.cpp:708
+#: ../src/ui/widget/style-swatch.cpp:326 ../src/widgets/fill-style.cpp:712
 msgid "Unset fill"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:217
 #: ../src/ui/widget/selected-style.cpp:275
 #: ../src/ui/widget/selected-style.cpp:570
-#: ../src/ui/widget/style-swatch.cpp:326 ../src/widgets/fill-style.cpp:708
+#: ../src/ui/widget/style-swatch.cpp:326 ../src/widgets/fill-style.cpp:712
 msgid "Unset stroke"
 msgstr ""
 
@@ -20797,12 +20853,12 @@ msgid "Make stroke opaque"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:279
-#: ../src/ui/widget/selected-style.cpp:536 ../src/widgets/fill-style.cpp:506
+#: ../src/ui/widget/selected-style.cpp:536 ../src/widgets/fill-style.cpp:510
 msgid "Remove fill"
 msgstr ""
 
 #: ../src/ui/widget/selected-style.cpp:279
-#: ../src/ui/widget/selected-style.cpp:545 ../src/widgets/fill-style.cpp:506
+#: ../src/ui/widget/selected-style.cpp:545 ../src/widgets/fill-style.cpp:510
 msgid "Remove stroke"
 msgstr ""
 
@@ -20938,7 +20994,7 @@ msgid "Adjusting <b>stroke width</b>: was %.3g, now <b>%.3g</b> (diff %.3g)"
 msgstr ""
 
 #. TRANSLATORS: "Link" means to _link_ two sliders together
-#: ../src/ui/widget/spin-scale.cpp:137 ../src/ui/widget/spin-slider.cpp:156
+#: ../src/ui/widget/spin-scale.cpp:138 ../src/ui/widget/spin-slider.cpp:156
 msgctxt "Sliders"
 msgid "Link"
 msgstr ""
@@ -21018,25 +21074,25 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/verbs.cpp:150 ../src/widgets/calligraphy-toolbar.cpp:647
+#: ../src/verbs.cpp:154 ../src/widgets/calligraphy-toolbar.cpp:647
 msgid "Edit"
 msgstr ""
 
-#: ../src/verbs.cpp:226
+#: ../src/verbs.cpp:230
 msgid "Context"
 msgstr ""
 
-#: ../src/verbs.cpp:245 ../src/verbs.cpp:2162
+#: ../src/verbs.cpp:249 ../src/verbs.cpp:2166
 #: ../share/extensions/jessyInk_view.inx.h:1
 #: ../share/extensions/polyhedron_3d.inx.h:26
 msgid "View"
 msgstr ""
 
-#: ../src/verbs.cpp:265
+#: ../src/verbs.cpp:269
 msgid "Dialog"
 msgstr ""
 
-#: ../src/verbs.cpp:322 ../share/extensions/lorem_ipsum.inx.h:8
+#: ../src/verbs.cpp:326 ../share/extensions/lorem_ipsum.inx.h:8
 #: ../share/extensions/replace_font.inx.h:11
 #: ../share/extensions/split.inx.h:10 ../share/extensions/text_braille.inx.h:2
 #: ../share/extensions/text_extract.inx.h:14
@@ -21049,2190 +21105,2190 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: ../src/verbs.cpp:1169
+#: ../src/verbs.cpp:1173
 msgid "Switch to next layer"
 msgstr ""
 
-#: ../src/verbs.cpp:1170
+#: ../src/verbs.cpp:1174
 msgid "Switched to next layer."
 msgstr ""
 
-#: ../src/verbs.cpp:1172
+#: ../src/verbs.cpp:1176
 msgid "Cannot go past last layer."
 msgstr ""
 
-#: ../src/verbs.cpp:1181
+#: ../src/verbs.cpp:1185
 msgid "Switch to previous layer"
 msgstr ""
 
-#: ../src/verbs.cpp:1182
+#: ../src/verbs.cpp:1186
 msgid "Switched to previous layer."
 msgstr ""
 
-#: ../src/verbs.cpp:1184
+#: ../src/verbs.cpp:1188
 msgid "Cannot go before first layer."
 msgstr ""
 
-#: ../src/verbs.cpp:1205 ../src/verbs.cpp:1302 ../src/verbs.cpp:1334
-#: ../src/verbs.cpp:1340 ../src/verbs.cpp:1364 ../src/verbs.cpp:1379
+#: ../src/verbs.cpp:1209 ../src/verbs.cpp:1306 ../src/verbs.cpp:1338
+#: ../src/verbs.cpp:1344 ../src/verbs.cpp:1368 ../src/verbs.cpp:1383
 msgid "No current layer."
 msgstr ""
 
-#: ../src/verbs.cpp:1234 ../src/verbs.cpp:1238
+#: ../src/verbs.cpp:1238 ../src/verbs.cpp:1242
 #, c-format
 msgid "Raised layer <b>%s</b>."
 msgstr ""
 
-#: ../src/verbs.cpp:1235
+#: ../src/verbs.cpp:1239
 msgid "Layer to top"
 msgstr ""
 
-#: ../src/verbs.cpp:1239
+#: ../src/verbs.cpp:1243
 msgid "Raise layer"
 msgstr ""
 
-#: ../src/verbs.cpp:1242 ../src/verbs.cpp:1246
+#: ../src/verbs.cpp:1246 ../src/verbs.cpp:1250
 #, c-format
 msgid "Lowered layer <b>%s</b>."
 msgstr ""
 
-#: ../src/verbs.cpp:1243
+#: ../src/verbs.cpp:1247
 msgid "Layer to bottom"
 msgstr ""
 
-#: ../src/verbs.cpp:1247
+#: ../src/verbs.cpp:1251
 msgid "Lower layer"
 msgstr ""
 
-#: ../src/verbs.cpp:1256
+#: ../src/verbs.cpp:1260
 msgid "Cannot move layer any further."
 msgstr ""
 
-#: ../src/verbs.cpp:1270 ../src/verbs.cpp:1289
+#: ../src/verbs.cpp:1274 ../src/verbs.cpp:1293
 #, c-format
 msgid "%s copy"
 msgstr ""
 
-#: ../src/verbs.cpp:1297
+#: ../src/verbs.cpp:1301
 msgid "Duplicate layer"
 msgstr ""
 
 #. TRANSLATORS: this means "The layer has been duplicated."
-#: ../src/verbs.cpp:1300
+#: ../src/verbs.cpp:1304
 msgid "Duplicated layer."
 msgstr ""
 
-#: ../src/verbs.cpp:1329
+#: ../src/verbs.cpp:1333
 msgid "Delete layer"
 msgstr ""
 
 #. TRANSLATORS: this means "The layer has been deleted."
-#: ../src/verbs.cpp:1332
+#: ../src/verbs.cpp:1336
 msgid "Deleted layer."
 msgstr ""
 
-#: ../src/verbs.cpp:1349
+#: ../src/verbs.cpp:1353
 msgid "Show all layers"
 msgstr ""
 
-#: ../src/verbs.cpp:1354
+#: ../src/verbs.cpp:1358
 msgid "Hide all layers"
 msgstr ""
 
-#: ../src/verbs.cpp:1359
+#: ../src/verbs.cpp:1363
 msgid "Lock all layers"
 msgstr ""
 
-#: ../src/verbs.cpp:1373
+#: ../src/verbs.cpp:1377
 msgid "Unlock all layers"
 msgstr ""
 
-#: ../src/verbs.cpp:1447
+#: ../src/verbs.cpp:1451
 msgid "Flip horizontally"
 msgstr ""
 
-#: ../src/verbs.cpp:1452
+#: ../src/verbs.cpp:1456
 msgid "Flip vertically"
 msgstr ""
 
 #. TRANSLATORS: If you have translated the tutorial-basic.en.svgz file to your language,
 #. then translate this string as "tutorial-basic.LANG.svgz" (where LANG is your language
 #. code); otherwise leave as "tutorial-basic.svg".
-#: ../src/verbs.cpp:2045
+#: ../src/verbs.cpp:2049
 msgid "tutorial-basic.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:2049
+#: ../src/verbs.cpp:2053
 msgid "tutorial-shapes.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:2053
+#: ../src/verbs.cpp:2057
 msgid "tutorial-advanced.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:2057
+#: ../src/verbs.cpp:2061
 msgid "tutorial-tracing.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:2061
+#: ../src/verbs.cpp:2065
 msgid "tutorial-calligraphy.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:2065
+#: ../src/verbs.cpp:2069
 msgid "tutorial-interpolate.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:2069
+#: ../src/verbs.cpp:2073
 msgid "tutorial-elements.svg"
 msgstr ""
 
 #. TRANSLATORS: See "tutorial-basic.svg" comment.
-#: ../src/verbs.cpp:2073
+#: ../src/verbs.cpp:2077
 msgid "tutorial-tips.svg"
 msgstr ""
 
-#: ../src/verbs.cpp:2261 ../src/verbs.cpp:2847
+#: ../src/verbs.cpp:2265 ../src/verbs.cpp:2851
 msgid "Unlock all objects in the current layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2265 ../src/verbs.cpp:2849
+#: ../src/verbs.cpp:2269 ../src/verbs.cpp:2853
 msgid "Unlock all objects in all layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2269 ../src/verbs.cpp:2851
+#: ../src/verbs.cpp:2273 ../src/verbs.cpp:2855
 msgid "Unhide all objects in the current layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2273 ../src/verbs.cpp:2853
+#: ../src/verbs.cpp:2277 ../src/verbs.cpp:2857
 msgid "Unhide all objects in all layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2288
+#: ../src/verbs.cpp:2292
 msgid "Does nothing"
 msgstr ""
 
-#: ../src/verbs.cpp:2291
+#: ../src/verbs.cpp:2295
 msgid "Create new document from the default template"
 msgstr ""
 
-#: ../src/verbs.cpp:2293
+#: ../src/verbs.cpp:2297
 msgid "_Open..."
 msgstr ""
 
-#: ../src/verbs.cpp:2294
+#: ../src/verbs.cpp:2298
 msgid "Open an existing document"
 msgstr ""
 
-#: ../src/verbs.cpp:2295
+#: ../src/verbs.cpp:2299
 msgid "Re_vert"
 msgstr ""
 
-#: ../src/verbs.cpp:2296
+#: ../src/verbs.cpp:2300
 msgid "Revert to the last saved version of document (changes will be lost)"
 msgstr ""
 
-#: ../src/verbs.cpp:2297
+#: ../src/verbs.cpp:2301
 msgid "Save document"
 msgstr ""
 
-#: ../src/verbs.cpp:2299
+#: ../src/verbs.cpp:2303
 msgid "Save _As..."
 msgstr ""
 
-#: ../src/verbs.cpp:2300
+#: ../src/verbs.cpp:2304
 msgid "Save document under a new name"
 msgstr ""
 
-#: ../src/verbs.cpp:2301
+#: ../src/verbs.cpp:2305
 msgid "Save a Cop_y..."
 msgstr ""
 
-#: ../src/verbs.cpp:2302
+#: ../src/verbs.cpp:2306
 msgid "Save a copy of the document under a new name"
 msgstr ""
 
-#: ../src/verbs.cpp:2303
+#: ../src/verbs.cpp:2307
 msgid "_Print..."
 msgstr ""
 
-#: ../src/verbs.cpp:2303
+#: ../src/verbs.cpp:2307
 msgid "Print document"
 msgstr ""
 
 #. TRANSLATORS: "Vacuum Defs" means "Clean up defs" (so as to remove unused definitions)
-#: ../src/verbs.cpp:2306
+#: ../src/verbs.cpp:2310
 msgid "Clean _up document"
 msgstr ""
 
-#: ../src/verbs.cpp:2306
+#: ../src/verbs.cpp:2310
 msgid ""
 "Remove unused definitions (such as gradients or clipping paths) from the &lt;"
 "defs&gt; of the document"
 msgstr ""
 
-#: ../src/verbs.cpp:2308
+#: ../src/verbs.cpp:2312
 msgid "_Import..."
 msgstr ""
 
-#: ../src/verbs.cpp:2309
+#: ../src/verbs.cpp:2313
 msgid "Import a bitmap or SVG image into this document"
 msgstr ""
 
-#: ../src/verbs.cpp:2310
+#: ../src/verbs.cpp:2314
 msgid "_Export Bitmap..."
 msgstr ""
 
-#: ../src/verbs.cpp:2311
+#: ../src/verbs.cpp:2315
 msgid "Export this document or a selection as a bitmap image"
 msgstr ""
 
-#: ../src/verbs.cpp:2312
+#: ../src/verbs.cpp:2316
 msgid "Import Clip Art..."
 msgstr ""
 
-#: ../src/verbs.cpp:2313
+#: ../src/verbs.cpp:2317
 msgid "Import clipart from Open Clip Art Library"
 msgstr ""
 
 #. new FileVerb(SP_VERB_FILE_EXPORT_TO_OCAL, "FileExportToOCAL", N_("Export To Open Clip Art Library"), N_("Export this document to Open Clip Art Library"), INKSCAPE_ICON_DOCUMENT_EXPORT_OCAL),
-#: ../src/verbs.cpp:2315
+#: ../src/verbs.cpp:2319
 msgid "N_ext Window"
 msgstr ""
 
-#: ../src/verbs.cpp:2316
+#: ../src/verbs.cpp:2320
 msgid "Switch to the next document window"
 msgstr ""
 
-#: ../src/verbs.cpp:2317
+#: ../src/verbs.cpp:2321
 msgid "P_revious Window"
 msgstr ""
 
-#: ../src/verbs.cpp:2318
+#: ../src/verbs.cpp:2322
 msgid "Switch to the previous document window"
 msgstr ""
 
-#: ../src/verbs.cpp:2319
+#: ../src/verbs.cpp:2323
 msgid "_Close"
 msgstr ""
 
-#: ../src/verbs.cpp:2320
+#: ../src/verbs.cpp:2324
 msgid "Close this document window"
 msgstr ""
 
-#: ../src/verbs.cpp:2321
+#: ../src/verbs.cpp:2325
 msgid "_Quit"
 msgstr ""
 
-#: ../src/verbs.cpp:2321
+#: ../src/verbs.cpp:2325
 msgid "Quit Inkscape"
 msgstr ""
 
-#: ../src/verbs.cpp:2324
+#: ../src/verbs.cpp:2328
 msgid "Undo last action"
 msgstr ""
 
-#: ../src/verbs.cpp:2327
+#: ../src/verbs.cpp:2331
 msgid "Do again the last undone action"
 msgstr ""
 
-#: ../src/verbs.cpp:2328
+#: ../src/verbs.cpp:2332
 msgid "Cu_t"
 msgstr ""
 
-#: ../src/verbs.cpp:2329
+#: ../src/verbs.cpp:2333
 msgid "Cut selection to clipboard"
 msgstr ""
 
-#: ../src/verbs.cpp:2330
+#: ../src/verbs.cpp:2334
 msgid "_Copy"
 msgstr ""
 
-#: ../src/verbs.cpp:2331
+#: ../src/verbs.cpp:2335
 msgid "Copy selection to clipboard"
 msgstr ""
 
-#: ../src/verbs.cpp:2332
+#: ../src/verbs.cpp:2336
 msgid "_Paste"
 msgstr ""
 
-#: ../src/verbs.cpp:2333
+#: ../src/verbs.cpp:2337
 msgid "Paste objects from clipboard to mouse point, or paste text"
 msgstr ""
 
-#: ../src/verbs.cpp:2334
+#: ../src/verbs.cpp:2338
 msgid "Paste _Style"
 msgstr ""
 
-#: ../src/verbs.cpp:2335
+#: ../src/verbs.cpp:2339
 msgid "Apply the style of the copied object to selection"
 msgstr ""
 
-#: ../src/verbs.cpp:2337
+#: ../src/verbs.cpp:2341
 msgid "Scale selection to match the size of the copied object"
 msgstr ""
 
-#: ../src/verbs.cpp:2338
+#: ../src/verbs.cpp:2342
 msgid "Paste _Width"
 msgstr ""
 
-#: ../src/verbs.cpp:2339
+#: ../src/verbs.cpp:2343
 msgid "Scale selection horizontally to match the width of the copied object"
 msgstr ""
 
-#: ../src/verbs.cpp:2340
+#: ../src/verbs.cpp:2344
 msgid "Paste _Height"
 msgstr ""
 
-#: ../src/verbs.cpp:2341
+#: ../src/verbs.cpp:2345
 msgid "Scale selection vertically to match the height of the copied object"
 msgstr ""
 
-#: ../src/verbs.cpp:2342
+#: ../src/verbs.cpp:2346
 msgid "Paste Size Separately"
 msgstr ""
 
-#: ../src/verbs.cpp:2343
+#: ../src/verbs.cpp:2347
 msgid "Scale each selected object to match the size of the copied object"
 msgstr ""
 
-#: ../src/verbs.cpp:2344
+#: ../src/verbs.cpp:2348
 msgid "Paste Width Separately"
 msgstr ""
 
-#: ../src/verbs.cpp:2345
+#: ../src/verbs.cpp:2349
 msgid ""
 "Scale each selected object horizontally to match the width of the copied "
 "object"
 msgstr ""
 
-#: ../src/verbs.cpp:2346
+#: ../src/verbs.cpp:2350
 msgid "Paste Height Separately"
 msgstr ""
 
-#: ../src/verbs.cpp:2347
+#: ../src/verbs.cpp:2351
 msgid ""
 "Scale each selected object vertically to match the height of the copied "
 "object"
 msgstr ""
 
-#: ../src/verbs.cpp:2348
+#: ../src/verbs.cpp:2352
 msgid "Paste _In Place"
 msgstr ""
 
-#: ../src/verbs.cpp:2349
+#: ../src/verbs.cpp:2353
 msgid "Paste objects from clipboard to the original location"
 msgstr ""
 
-#: ../src/verbs.cpp:2350
+#: ../src/verbs.cpp:2354
 msgid "Paste Path _Effect"
 msgstr ""
 
-#: ../src/verbs.cpp:2351
+#: ../src/verbs.cpp:2355
 msgid "Apply the path effect of the copied object to selection"
 msgstr ""
 
-#: ../src/verbs.cpp:2352
+#: ../src/verbs.cpp:2356
 msgid "Remove Path _Effect"
 msgstr ""
 
-#: ../src/verbs.cpp:2353
+#: ../src/verbs.cpp:2357
 msgid "Remove any path effects from selected objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2354
+#: ../src/verbs.cpp:2358
 msgid "_Remove Filters"
 msgstr ""
 
-#: ../src/verbs.cpp:2355
+#: ../src/verbs.cpp:2359
 msgid "Remove any filters from selected objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2356
+#: ../src/verbs.cpp:2360
 msgid "_Delete"
 msgstr ""
 
-#: ../src/verbs.cpp:2357
+#: ../src/verbs.cpp:2361
 msgid "Delete selection"
 msgstr ""
 
-#: ../src/verbs.cpp:2358
+#: ../src/verbs.cpp:2362
 msgid "Duplic_ate"
 msgstr ""
 
-#: ../src/verbs.cpp:2359
+#: ../src/verbs.cpp:2363
 msgid "Duplicate selected objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2360
+#: ../src/verbs.cpp:2364
 msgid "Create Clo_ne"
 msgstr ""
 
-#: ../src/verbs.cpp:2361
+#: ../src/verbs.cpp:2365
 msgid "Create a clone (a copy linked to the original) of selected object"
 msgstr ""
 
-#: ../src/verbs.cpp:2362
+#: ../src/verbs.cpp:2366
 msgid "Unlin_k Clone"
 msgstr ""
 
-#: ../src/verbs.cpp:2363
+#: ../src/verbs.cpp:2367
 msgid ""
 "Cut the selected clones' links to the originals, turning them into "
 "standalone objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2364
+#: ../src/verbs.cpp:2368
 msgid "Relink to Copied"
 msgstr ""
 
-#: ../src/verbs.cpp:2365
+#: ../src/verbs.cpp:2369
 msgid "Relink the selected clones to the object currently on the clipboard"
 msgstr ""
 
-#: ../src/verbs.cpp:2366
+#: ../src/verbs.cpp:2370
 msgid "Select _Original"
 msgstr ""
 
-#: ../src/verbs.cpp:2367
+#: ../src/verbs.cpp:2371
 msgid "Select the object to which the selected clone is linked"
 msgstr ""
 
-#: ../src/verbs.cpp:2368
+#: ../src/verbs.cpp:2372
 msgid "Clone original path (LPE)"
 msgstr ""
 
-#: ../src/verbs.cpp:2369
+#: ../src/verbs.cpp:2373
 msgid ""
 "Creates a new path, applies the Clone original LPE, and refers it to the "
 "selected path"
 msgstr ""
 
-#: ../src/verbs.cpp:2370
+#: ../src/verbs.cpp:2374
 msgid "Objects to _Marker"
 msgstr ""
 
-#: ../src/verbs.cpp:2371
+#: ../src/verbs.cpp:2375
 msgid "Convert selection to a line marker"
 msgstr ""
 
-#: ../src/verbs.cpp:2372
+#: ../src/verbs.cpp:2376
 msgid "Objects to Gu_ides"
 msgstr ""
 
-#: ../src/verbs.cpp:2373
+#: ../src/verbs.cpp:2377
 msgid ""
 "Convert selected objects to a collection of guidelines aligned with their "
 "edges"
 msgstr ""
 
-#: ../src/verbs.cpp:2374
+#: ../src/verbs.cpp:2378
 msgid "Objects to Patter_n"
 msgstr ""
 
-#: ../src/verbs.cpp:2375
+#: ../src/verbs.cpp:2379
 msgid "Convert selection to a rectangle with tiled pattern fill"
 msgstr ""
 
-#: ../src/verbs.cpp:2376
+#: ../src/verbs.cpp:2380
 msgid "Pattern to _Objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2377
+#: ../src/verbs.cpp:2381
 msgid "Extract objects from a tiled pattern fill"
 msgstr ""
 
-#: ../src/verbs.cpp:2378
+#: ../src/verbs.cpp:2382
 msgid "Group to Symbol"
 msgstr ""
 
-#: ../src/verbs.cpp:2379
+#: ../src/verbs.cpp:2383
 msgid "Convert group to a symbol"
 msgstr ""
 
-#: ../src/verbs.cpp:2380
+#: ../src/verbs.cpp:2384
 msgid "Symbol to Group"
 msgstr ""
 
-#: ../src/verbs.cpp:2381
+#: ../src/verbs.cpp:2385
 msgid "Extract group from a symbol"
 msgstr ""
 
-#: ../src/verbs.cpp:2382
+#: ../src/verbs.cpp:2386
 msgid "Clea_r All"
 msgstr ""
 
-#: ../src/verbs.cpp:2383
+#: ../src/verbs.cpp:2387
 msgid "Delete all objects from document"
 msgstr ""
 
-#: ../src/verbs.cpp:2384
+#: ../src/verbs.cpp:2388
 msgid "Select Al_l"
 msgstr ""
 
-#: ../src/verbs.cpp:2385
+#: ../src/verbs.cpp:2389
 msgid "Select all objects or all nodes"
 msgstr ""
 
-#: ../src/verbs.cpp:2386
+#: ../src/verbs.cpp:2390
 msgid "Select All in All La_yers"
 msgstr ""
 
-#: ../src/verbs.cpp:2387
+#: ../src/verbs.cpp:2391
 msgid "Select all objects in all visible and unlocked layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2388
+#: ../src/verbs.cpp:2392
 msgid "Fill _and Stroke"
 msgstr ""
 
-#: ../src/verbs.cpp:2389
+#: ../src/verbs.cpp:2393
 msgid ""
 "Select all objects with the same fill and stroke as the selected objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2390
+#: ../src/verbs.cpp:2394
 msgid "_Fill Color"
 msgstr ""
 
-#: ../src/verbs.cpp:2391
+#: ../src/verbs.cpp:2395
 msgid "Select all objects with the same fill as the selected objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2392
+#: ../src/verbs.cpp:2396
 msgid "_Stroke Color"
 msgstr ""
 
-#: ../src/verbs.cpp:2393
+#: ../src/verbs.cpp:2397
 msgid "Select all objects with the same stroke as the selected objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2394
+#: ../src/verbs.cpp:2398
 msgid "Stroke St_yle"
 msgstr ""
 
-#: ../src/verbs.cpp:2395
+#: ../src/verbs.cpp:2399
 msgid ""
 "Select all objects with the same stroke style (width, dash, markers) as the "
 "selected objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2396
+#: ../src/verbs.cpp:2400
 msgid "_Object Type"
 msgstr ""
 
-#: ../src/verbs.cpp:2397
+#: ../src/verbs.cpp:2401
 msgid ""
 "Select all objects with the same object type (rect, arc, text, path, bitmap "
 "etc) as the selected objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2398
+#: ../src/verbs.cpp:2402
 msgid "In_vert Selection"
 msgstr ""
 
-#: ../src/verbs.cpp:2399
+#: ../src/verbs.cpp:2403
 msgid "Invert selection (unselect what is selected and select everything else)"
 msgstr ""
 
-#: ../src/verbs.cpp:2400
+#: ../src/verbs.cpp:2404
 msgid "Invert in All Layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2401
+#: ../src/verbs.cpp:2405
 msgid "Invert selection in all visible and unlocked layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2402
+#: ../src/verbs.cpp:2406
 msgid "Select Next"
 msgstr ""
 
-#: ../src/verbs.cpp:2403
+#: ../src/verbs.cpp:2407
 msgid "Select next object or node"
 msgstr ""
 
-#: ../src/verbs.cpp:2404
+#: ../src/verbs.cpp:2408
 msgid "Select Previous"
 msgstr ""
 
-#: ../src/verbs.cpp:2405
+#: ../src/verbs.cpp:2409
 msgid "Select previous object or node"
 msgstr ""
 
-#: ../src/verbs.cpp:2406
+#: ../src/verbs.cpp:2410
 msgid "D_eselect"
 msgstr ""
 
-#: ../src/verbs.cpp:2407
+#: ../src/verbs.cpp:2411
 msgid "Deselect any selected objects or nodes"
 msgstr ""
 
-#: ../src/verbs.cpp:2408
+#: ../src/verbs.cpp:2412
 msgid "Create _Guides Around the Page"
 msgstr ""
 
-#: ../src/verbs.cpp:2409 ../src/verbs.cpp:2411
+#: ../src/verbs.cpp:2413 ../src/verbs.cpp:2415
 msgid "Create four guides aligned with the page borders"
 msgstr ""
 
-#: ../src/verbs.cpp:2412
+#: ../src/verbs.cpp:2416
 msgid "Next path effect parameter"
 msgstr ""
 
-#: ../src/verbs.cpp:2413
+#: ../src/verbs.cpp:2417
 msgid "Show next editable path effect parameter"
 msgstr ""
 
 #. Selection
-#: ../src/verbs.cpp:2416
+#: ../src/verbs.cpp:2420
 msgid "Raise to _Top"
 msgstr ""
 
-#: ../src/verbs.cpp:2417
+#: ../src/verbs.cpp:2421
 msgid "Raise selection to top"
 msgstr ""
 
-#: ../src/verbs.cpp:2418
+#: ../src/verbs.cpp:2422
 msgid "Lower to _Bottom"
 msgstr ""
 
-#: ../src/verbs.cpp:2419
+#: ../src/verbs.cpp:2423
 msgid "Lower selection to bottom"
 msgstr ""
 
-#: ../src/verbs.cpp:2420
+#: ../src/verbs.cpp:2424
 msgid "_Raise"
 msgstr ""
 
-#: ../src/verbs.cpp:2421
+#: ../src/verbs.cpp:2425
 msgid "Raise selection one step"
 msgstr ""
 
-#: ../src/verbs.cpp:2422
+#: ../src/verbs.cpp:2426
 msgid "_Lower"
 msgstr ""
 
-#: ../src/verbs.cpp:2423
+#: ../src/verbs.cpp:2427
 msgid "Lower selection one step"
 msgstr ""
 
-#: ../src/verbs.cpp:2425
+#: ../src/verbs.cpp:2429
 msgid "Group selected objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2427
+#: ../src/verbs.cpp:2431
 msgid "Ungroup selected groups"
 msgstr ""
 
-#: ../src/verbs.cpp:2429
+#: ../src/verbs.cpp:2433
 msgid "_Put on Path"
 msgstr ""
 
-#: ../src/verbs.cpp:2431
+#: ../src/verbs.cpp:2435
 msgid "_Remove from Path"
 msgstr ""
 
-#: ../src/verbs.cpp:2433
+#: ../src/verbs.cpp:2437
 msgid "Remove Manual _Kerns"
 msgstr ""
 
 #. TRANSLATORS: "glyph": An image used in the visual representation of characters;
 #. roughly speaking, how a character looks. A font is a set of glyphs.
-#: ../src/verbs.cpp:2436
+#: ../src/verbs.cpp:2440
 msgid "Remove all manual kerns and glyph rotations from a text object"
 msgstr ""
 
-#: ../src/verbs.cpp:2438
+#: ../src/verbs.cpp:2442
 msgid "_Union"
 msgstr ""
 
-#: ../src/verbs.cpp:2439
+#: ../src/verbs.cpp:2443
 msgid "Create union of selected paths"
 msgstr ""
 
-#: ../src/verbs.cpp:2440
+#: ../src/verbs.cpp:2444
 msgid "_Intersection"
 msgstr ""
 
-#: ../src/verbs.cpp:2441
+#: ../src/verbs.cpp:2445
 msgid "Create intersection of selected paths"
 msgstr ""
 
-#: ../src/verbs.cpp:2442
+#: ../src/verbs.cpp:2446
 msgid "_Difference"
 msgstr ""
 
-#: ../src/verbs.cpp:2443
+#: ../src/verbs.cpp:2447
 msgid "Create difference of selected paths (bottom minus top)"
 msgstr ""
 
-#: ../src/verbs.cpp:2444
+#: ../src/verbs.cpp:2448
 msgid "E_xclusion"
 msgstr ""
 
-#: ../src/verbs.cpp:2445
+#: ../src/verbs.cpp:2449
 msgid ""
 "Create exclusive OR of selected paths (those parts that belong to only one "
 "path)"
 msgstr ""
 
-#: ../src/verbs.cpp:2446
+#: ../src/verbs.cpp:2450
 msgid "Di_vision"
 msgstr ""
 
-#: ../src/verbs.cpp:2447
+#: ../src/verbs.cpp:2451
 msgid "Cut the bottom path into pieces"
 msgstr ""
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2450
+#: ../src/verbs.cpp:2454
 msgid "Cut _Path"
 msgstr ""
 
-#: ../src/verbs.cpp:2451
+#: ../src/verbs.cpp:2455
 msgid "Cut the bottom path's stroke into pieces, removing fill"
 msgstr ""
 
 #. TRANSLATORS: "outset": expand a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2455
+#: ../src/verbs.cpp:2459
 msgid "Outs_et"
 msgstr ""
 
-#: ../src/verbs.cpp:2456
+#: ../src/verbs.cpp:2460
 msgid "Outset selected paths"
 msgstr ""
 
-#: ../src/verbs.cpp:2458
+#: ../src/verbs.cpp:2462
 msgid "O_utset Path by 1 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2459
+#: ../src/verbs.cpp:2463
 msgid "Outset selected paths by 1 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2461
+#: ../src/verbs.cpp:2465
 msgid "O_utset Path by 10 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2462
+#: ../src/verbs.cpp:2466
 msgid "Outset selected paths by 10 px"
 msgstr ""
 
 #. TRANSLATORS: "inset": contract a shape by offsetting the object's path,
 #. i.e. by displacing it perpendicular to the path in each point.
 #. See also the Advanced Tutorial for explanation.
-#: ../src/verbs.cpp:2466
+#: ../src/verbs.cpp:2470
 msgid "I_nset"
 msgstr ""
 
-#: ../src/verbs.cpp:2467
+#: ../src/verbs.cpp:2471
 msgid "Inset selected paths"
 msgstr ""
 
-#: ../src/verbs.cpp:2469
+#: ../src/verbs.cpp:2473
 msgid "I_nset Path by 1 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2470
+#: ../src/verbs.cpp:2474
 msgid "Inset selected paths by 1 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2472
+#: ../src/verbs.cpp:2476
 msgid "I_nset Path by 10 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2473
+#: ../src/verbs.cpp:2477
 msgid "Inset selected paths by 10 px"
 msgstr ""
 
-#: ../src/verbs.cpp:2475
+#: ../src/verbs.cpp:2479
 msgid "D_ynamic Offset"
 msgstr ""
 
-#: ../src/verbs.cpp:2475
+#: ../src/verbs.cpp:2479
 msgid "Create a dynamic offset object"
 msgstr ""
 
-#: ../src/verbs.cpp:2477
+#: ../src/verbs.cpp:2481
 msgid "_Linked Offset"
 msgstr ""
 
-#: ../src/verbs.cpp:2478
+#: ../src/verbs.cpp:2482
 msgid "Create a dynamic offset object linked to the original path"
 msgstr ""
 
-#: ../src/verbs.cpp:2480
+#: ../src/verbs.cpp:2484
 msgid "_Stroke to Path"
 msgstr ""
 
-#: ../src/verbs.cpp:2481
+#: ../src/verbs.cpp:2485
 msgid "Convert selected object's stroke to paths"
 msgstr ""
 
-#: ../src/verbs.cpp:2482
+#: ../src/verbs.cpp:2486
 msgid "Si_mplify"
 msgstr ""
 
-#: ../src/verbs.cpp:2483
+#: ../src/verbs.cpp:2487
 msgid "Simplify selected paths (remove extra nodes)"
 msgstr ""
 
-#: ../src/verbs.cpp:2484
+#: ../src/verbs.cpp:2488
 msgid "_Reverse"
 msgstr ""
 
-#: ../src/verbs.cpp:2485
+#: ../src/verbs.cpp:2489
 msgid "Reverse the direction of selected paths (useful for flipping markers)"
 msgstr ""
 
-#: ../src/verbs.cpp:2488
+#: ../src/verbs.cpp:2492
 msgid "Create one or more paths from a bitmap by tracing it"
 msgstr ""
 
-#: ../src/verbs.cpp:2489
+#: ../src/verbs.cpp:2493
 msgid "Make a _Bitmap Copy"
 msgstr ""
 
-#: ../src/verbs.cpp:2490
+#: ../src/verbs.cpp:2494
 msgid "Export selection to a bitmap and insert it into document"
 msgstr ""
 
-#: ../src/verbs.cpp:2491
+#: ../src/verbs.cpp:2495
 msgid "_Combine"
 msgstr ""
 
-#: ../src/verbs.cpp:2492
+#: ../src/verbs.cpp:2496
 msgid "Combine several paths into one"
 msgstr ""
 
 #. TRANSLATORS: "to cut a path" is not the same as "to break a path apart" - see the
 #. Advanced tutorial for more info
-#: ../src/verbs.cpp:2495
+#: ../src/verbs.cpp:2499
 msgid "Break _Apart"
 msgstr ""
 
-#: ../src/verbs.cpp:2496
+#: ../src/verbs.cpp:2500
 msgid "Break selected paths into subpaths"
 msgstr ""
 
-#: ../src/verbs.cpp:2497
+#: ../src/verbs.cpp:2501
 msgid "Ro_ws and Columns..."
 msgstr ""
 
-#: ../src/verbs.cpp:2498
+#: ../src/verbs.cpp:2502
 msgid "Arrange selected objects in a table"
 msgstr ""
 
 #. Layer
-#: ../src/verbs.cpp:2500
+#: ../src/verbs.cpp:2504
 msgid "_Add Layer..."
 msgstr ""
 
-#: ../src/verbs.cpp:2501
+#: ../src/verbs.cpp:2505
 msgid "Create a new layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2502
+#: ../src/verbs.cpp:2506
 msgid "Re_name Layer..."
 msgstr ""
 
-#: ../src/verbs.cpp:2503
+#: ../src/verbs.cpp:2507
 msgid "Rename the current layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2504
+#: ../src/verbs.cpp:2508
 msgid "Switch to Layer Abov_e"
 msgstr ""
 
-#: ../src/verbs.cpp:2505
+#: ../src/verbs.cpp:2509
 msgid "Switch to the layer above the current"
 msgstr ""
 
-#: ../src/verbs.cpp:2506
+#: ../src/verbs.cpp:2510
 msgid "Switch to Layer Belo_w"
 msgstr ""
 
-#: ../src/verbs.cpp:2507
+#: ../src/verbs.cpp:2511
 msgid "Switch to the layer below the current"
 msgstr ""
 
-#: ../src/verbs.cpp:2508
+#: ../src/verbs.cpp:2512
 msgid "Move Selection to Layer Abo_ve"
 msgstr ""
 
-#: ../src/verbs.cpp:2509
+#: ../src/verbs.cpp:2513
 msgid "Move selection to the layer above the current"
 msgstr ""
 
-#: ../src/verbs.cpp:2510
+#: ../src/verbs.cpp:2514
 msgid "Move Selection to Layer Bel_ow"
 msgstr ""
 
-#: ../src/verbs.cpp:2511
+#: ../src/verbs.cpp:2515
 msgid "Move selection to the layer below the current"
 msgstr ""
 
-#: ../src/verbs.cpp:2512
+#: ../src/verbs.cpp:2516
 msgid "Move Selection to Layer..."
 msgstr ""
 
-#: ../src/verbs.cpp:2514
+#: ../src/verbs.cpp:2518
 msgid "Layer to _Top"
 msgstr ""
 
-#: ../src/verbs.cpp:2515
+#: ../src/verbs.cpp:2519
 msgid "Raise the current layer to the top"
 msgstr ""
 
-#: ../src/verbs.cpp:2516
+#: ../src/verbs.cpp:2520
 msgid "Layer to _Bottom"
 msgstr ""
 
-#: ../src/verbs.cpp:2517
+#: ../src/verbs.cpp:2521
 msgid "Lower the current layer to the bottom"
 msgstr ""
 
-#: ../src/verbs.cpp:2518
+#: ../src/verbs.cpp:2522
 msgid "_Raise Layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2519
+#: ../src/verbs.cpp:2523
 msgid "Raise the current layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2520
+#: ../src/verbs.cpp:2524
 msgid "_Lower Layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2521
+#: ../src/verbs.cpp:2525
 msgid "Lower the current layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2522
+#: ../src/verbs.cpp:2526
 msgid "D_uplicate Current Layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2523
+#: ../src/verbs.cpp:2527
 msgid "Duplicate an existing layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2524
+#: ../src/verbs.cpp:2528
 msgid "_Delete Current Layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2525
+#: ../src/verbs.cpp:2529
 msgid "Delete the current layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2526
+#: ../src/verbs.cpp:2530
 msgid "_Show/hide other layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2527
+#: ../src/verbs.cpp:2531
 msgid "Solo the current layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2528
+#: ../src/verbs.cpp:2532
 msgid "_Show all layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2529
+#: ../src/verbs.cpp:2533
 msgid "Show all the layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2530
+#: ../src/verbs.cpp:2534
 msgid "_Hide all layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2531
+#: ../src/verbs.cpp:2535
 msgid "Hide all the layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2532
+#: ../src/verbs.cpp:2536
 msgid "_Lock all layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2533
+#: ../src/verbs.cpp:2537
 msgid "Lock all the layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2534
+#: ../src/verbs.cpp:2538
 msgid "Lock/Unlock _other layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2535
+#: ../src/verbs.cpp:2539
 msgid "Lock all the other layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2536
+#: ../src/verbs.cpp:2540
 msgid "_Unlock all layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2537
+#: ../src/verbs.cpp:2541
 msgid "Unlock all the layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2538
+#: ../src/verbs.cpp:2542
 msgid "_Lock/Unlock Current Layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2539
+#: ../src/verbs.cpp:2543
 msgid "Toggle lock on current layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2540
+#: ../src/verbs.cpp:2544
 msgid "_Show/hide Current Layer"
 msgstr ""
 
-#: ../src/verbs.cpp:2541
+#: ../src/verbs.cpp:2545
 msgid "Toggle visibility of current layer"
 msgstr ""
 
 #. Object
-#: ../src/verbs.cpp:2544
+#: ../src/verbs.cpp:2548
 msgid "Rotate _90&#176; CW"
 msgstr ""
 
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
-#: ../src/verbs.cpp:2547
+#: ../src/verbs.cpp:2551
 msgid "Rotate selection 90° clockwise"
 msgstr ""
 
-#: ../src/verbs.cpp:2548
+#: ../src/verbs.cpp:2552
 msgid "Rotate 9_0&#176; CCW"
 msgstr ""
 
 #. This is shared between tooltips and statusbar, so they
 #. must use UTF-8, not HTML entities for special characters.
-#: ../src/verbs.cpp:2551
+#: ../src/verbs.cpp:2555
 msgid "Rotate selection 90° counter-clockwise"
 msgstr ""
 
-#: ../src/verbs.cpp:2552
+#: ../src/verbs.cpp:2556
 msgid "Remove _Transformations"
 msgstr ""
 
-#: ../src/verbs.cpp:2553
+#: ../src/verbs.cpp:2557
 msgid "Remove transformations from object"
 msgstr ""
 
-#: ../src/verbs.cpp:2554
+#: ../src/verbs.cpp:2558
 msgid "_Object to Path"
 msgstr ""
 
-#: ../src/verbs.cpp:2555
+#: ../src/verbs.cpp:2559
 msgid "Convert selected object to path"
 msgstr ""
 
-#: ../src/verbs.cpp:2556
+#: ../src/verbs.cpp:2560
 msgid "_Flow into Frame"
 msgstr ""
 
-#: ../src/verbs.cpp:2557
+#: ../src/verbs.cpp:2561
 msgid ""
 "Put text into a frame (path or shape), creating a flowed text linked to the "
 "frame object"
 msgstr ""
 
-#: ../src/verbs.cpp:2558
+#: ../src/verbs.cpp:2562
 msgid "_Unflow"
 msgstr ""
 
-#: ../src/verbs.cpp:2559
+#: ../src/verbs.cpp:2563
 msgid "Remove text from frame (creates a single-line text object)"
 msgstr ""
 
-#: ../src/verbs.cpp:2560
+#: ../src/verbs.cpp:2564
 msgid "_Convert to Text"
 msgstr ""
 
-#: ../src/verbs.cpp:2561
+#: ../src/verbs.cpp:2565
 msgid "Convert flowed text to regular text object (preserves appearance)"
 msgstr ""
 
-#: ../src/verbs.cpp:2563
+#: ../src/verbs.cpp:2567
 msgid "Flip _Horizontal"
 msgstr ""
 
-#: ../src/verbs.cpp:2563
+#: ../src/verbs.cpp:2567
 msgid "Flip selected objects horizontally"
 msgstr ""
 
-#: ../src/verbs.cpp:2566
+#: ../src/verbs.cpp:2570
 msgid "Flip _Vertical"
 msgstr ""
 
-#: ../src/verbs.cpp:2566
+#: ../src/verbs.cpp:2570
 msgid "Flip selected objects vertically"
 msgstr ""
 
-#: ../src/verbs.cpp:2569
+#: ../src/verbs.cpp:2573
 msgid "Apply mask to selection (using the topmost object as mask)"
 msgstr ""
 
-#: ../src/verbs.cpp:2571
+#: ../src/verbs.cpp:2575
 msgid "Edit mask"
 msgstr ""
 
-#: ../src/verbs.cpp:2572 ../src/verbs.cpp:2578
+#: ../src/verbs.cpp:2576 ../src/verbs.cpp:2582
 msgid "_Release"
 msgstr ""
 
-#: ../src/verbs.cpp:2573
+#: ../src/verbs.cpp:2577
 msgid "Remove mask from selection"
 msgstr ""
 
-#: ../src/verbs.cpp:2575
+#: ../src/verbs.cpp:2579
 msgid ""
 "Apply clipping path to selection (using the topmost object as clipping path)"
 msgstr ""
 
-#: ../src/verbs.cpp:2577
+#: ../src/verbs.cpp:2581
 msgid "Edit clipping path"
 msgstr ""
 
-#: ../src/verbs.cpp:2579
+#: ../src/verbs.cpp:2583
 msgid "Remove clipping path from selection"
 msgstr ""
 
 #. Tools
-#: ../src/verbs.cpp:2582
+#: ../src/verbs.cpp:2586
 msgctxt "ContextVerb"
 msgid "Select"
 msgstr ""
 
-#: ../src/verbs.cpp:2583
-msgid "Select and transform objects"
-msgstr ""
-
-#: ../src/verbs.cpp:2584
-msgctxt "ContextVerb"
-msgid "Node Edit"
-msgstr ""
-
-#: ../src/verbs.cpp:2585
-msgid "Edit paths by nodes"
-msgstr ""
-
-#: ../src/verbs.cpp:2586
-msgctxt "ContextVerb"
-msgid "Tweak"
-msgstr ""
-
 #: ../src/verbs.cpp:2587
-msgid "Tweak objects by sculpting or painting"
+msgid "Select and transform objects"
 msgstr ""
 
 #: ../src/verbs.cpp:2588
 msgctxt "ContextVerb"
-msgid "Spray"
+msgid "Node Edit"
 msgstr ""
 
 #: ../src/verbs.cpp:2589
-msgid "Spray objects by sculpting or painting"
+msgid "Edit paths by nodes"
 msgstr ""
 
 #: ../src/verbs.cpp:2590
 msgctxt "ContextVerb"
-msgid "Rectangle"
+msgid "Tweak"
 msgstr ""
 
 #: ../src/verbs.cpp:2591
-msgid "Create rectangles and squares"
+msgid "Tweak objects by sculpting or painting"
 msgstr ""
 
 #: ../src/verbs.cpp:2592
 msgctxt "ContextVerb"
-msgid "3D Box"
+msgid "Spray"
 msgstr ""
 
 #: ../src/verbs.cpp:2593
-msgid "Create 3D boxes"
+msgid "Spray objects by sculpting or painting"
 msgstr ""
 
 #: ../src/verbs.cpp:2594
 msgctxt "ContextVerb"
-msgid "Ellipse"
+msgid "Rectangle"
 msgstr ""
 
 #: ../src/verbs.cpp:2595
-msgid "Create circles, ellipses, and arcs"
+msgid "Create rectangles and squares"
 msgstr ""
 
 #: ../src/verbs.cpp:2596
 msgctxt "ContextVerb"
-msgid "Star"
+msgid "3D Box"
 msgstr ""
 
 #: ../src/verbs.cpp:2597
-msgid "Create stars and polygons"
+msgid "Create 3D boxes"
 msgstr ""
 
 #: ../src/verbs.cpp:2598
 msgctxt "ContextVerb"
-msgid "Spiral"
+msgid "Ellipse"
 msgstr ""
 
 #: ../src/verbs.cpp:2599
-msgid "Create spirals"
+msgid "Create circles, ellipses, and arcs"
 msgstr ""
 
 #: ../src/verbs.cpp:2600
 msgctxt "ContextVerb"
-msgid "Pencil"
+msgid "Star"
 msgstr ""
 
 #: ../src/verbs.cpp:2601
-msgid "Draw freehand lines"
+msgid "Create stars and polygons"
 msgstr ""
 
 #: ../src/verbs.cpp:2602
 msgctxt "ContextVerb"
-msgid "Pen"
+msgid "Spiral"
 msgstr ""
 
 #: ../src/verbs.cpp:2603
-msgid "Draw Bezier curves and straight lines"
+msgid "Create spirals"
 msgstr ""
 
 #: ../src/verbs.cpp:2604
 msgctxt "ContextVerb"
-msgid "Calligraphy"
+msgid "Pencil"
 msgstr ""
 
 #: ../src/verbs.cpp:2605
-msgid "Draw calligraphic or brush strokes"
+msgid "Draw freehand lines"
+msgstr ""
+
+#: ../src/verbs.cpp:2606
+msgctxt "ContextVerb"
+msgid "Pen"
 msgstr ""
 
 #: ../src/verbs.cpp:2607
-msgid "Create and edit text objects"
+msgid "Draw Bezier curves and straight lines"
 msgstr ""
 
 #: ../src/verbs.cpp:2608
 msgctxt "ContextVerb"
-msgid "Gradient"
+msgid "Calligraphy"
 msgstr ""
 
 #: ../src/verbs.cpp:2609
-msgid "Create and edit gradients"
-msgstr ""
-
-#: ../src/verbs.cpp:2610
-msgctxt "ContextVerb"
-msgid "Mesh"
+msgid "Draw calligraphic or brush strokes"
 msgstr ""
 
 #: ../src/verbs.cpp:2611
-msgid "Create and edit meshes"
+msgid "Create and edit text objects"
 msgstr ""
 
 #: ../src/verbs.cpp:2612
 msgctxt "ContextVerb"
-msgid "Zoom"
+msgid "Gradient"
 msgstr ""
 
 #: ../src/verbs.cpp:2613
-msgid "Zoom in or out"
+msgid "Create and edit gradients"
+msgstr ""
+
+#: ../src/verbs.cpp:2614
+msgctxt "ContextVerb"
+msgid "Mesh"
 msgstr ""
 
 #: ../src/verbs.cpp:2615
-msgid "Measurement tool"
+msgid "Create and edit meshes"
 msgstr ""
 
 #: ../src/verbs.cpp:2616
 msgctxt "ContextVerb"
-msgid "Dropper"
+msgid "Zoom"
 msgstr ""
 
-#: ../src/verbs.cpp:2617 ../src/widgets/sp-color-notebook.cpp:411
-msgid "Pick colors from image"
-msgstr ""
-
-#: ../src/verbs.cpp:2618
-msgctxt "ContextVerb"
-msgid "Connector"
+#: ../src/verbs.cpp:2617
+msgid "Zoom in or out"
 msgstr ""
 
 #: ../src/verbs.cpp:2619
-msgid "Create diagram connectors"
+msgid "Measurement tool"
 msgstr ""
 
 #: ../src/verbs.cpp:2620
 msgctxt "ContextVerb"
-msgid "Paint Bucket"
+msgid "Dropper"
 msgstr ""
 
-#: ../src/verbs.cpp:2621
-msgid "Fill bounded areas"
+#: ../src/verbs.cpp:2621 ../src/widgets/sp-color-notebook.cpp:411
+msgid "Pick colors from image"
 msgstr ""
 
 #: ../src/verbs.cpp:2622
 msgctxt "ContextVerb"
-msgid "LPE Edit"
+msgid "Connector"
 msgstr ""
 
 #: ../src/verbs.cpp:2623
-msgid "Edit Path Effect parameters"
+msgid "Create diagram connectors"
 msgstr ""
 
 #: ../src/verbs.cpp:2624
 msgctxt "ContextVerb"
-msgid "Eraser"
+msgid "Paint Bucket"
 msgstr ""
 
 #: ../src/verbs.cpp:2625
-msgid "Erase existing paths"
+msgid "Fill bounded areas"
 msgstr ""
 
 #: ../src/verbs.cpp:2626
 msgctxt "ContextVerb"
-msgid "LPE Tool"
+msgid "LPE Edit"
 msgstr ""
 
 #: ../src/verbs.cpp:2627
+msgid "Edit Path Effect parameters"
+msgstr ""
+
+#: ../src/verbs.cpp:2628
+msgctxt "ContextVerb"
+msgid "Eraser"
+msgstr ""
+
+#: ../src/verbs.cpp:2629
+msgid "Erase existing paths"
+msgstr ""
+
+#: ../src/verbs.cpp:2630
+msgctxt "ContextVerb"
+msgid "LPE Tool"
+msgstr ""
+
+#: ../src/verbs.cpp:2631
 msgid "Do geometric constructions"
 msgstr ""
 
 #. Tool prefs
-#: ../src/verbs.cpp:2629
+#: ../src/verbs.cpp:2633
 msgid "Selector Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2630
+#: ../src/verbs.cpp:2634
 msgid "Open Preferences for the Selector tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2631
+#: ../src/verbs.cpp:2635
 msgid "Node Tool Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2632
+#: ../src/verbs.cpp:2636
 msgid "Open Preferences for the Node tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2633
+#: ../src/verbs.cpp:2637
 msgid "Tweak Tool Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2634
+#: ../src/verbs.cpp:2638
 msgid "Open Preferences for the Tweak tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2635
+#: ../src/verbs.cpp:2639
 msgid "Spray Tool Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2636
+#: ../src/verbs.cpp:2640
 msgid "Open Preferences for the Spray tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2637
+#: ../src/verbs.cpp:2641
 msgid "Rectangle Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2638
+#: ../src/verbs.cpp:2642
 msgid "Open Preferences for the Rectangle tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2639
+#: ../src/verbs.cpp:2643
 msgid "3D Box Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2640
+#: ../src/verbs.cpp:2644
 msgid "Open Preferences for the 3D Box tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2641
+#: ../src/verbs.cpp:2645
 msgid "Ellipse Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2642
+#: ../src/verbs.cpp:2646
 msgid "Open Preferences for the Ellipse tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2643
+#: ../src/verbs.cpp:2647
 msgid "Star Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2644
+#: ../src/verbs.cpp:2648
 msgid "Open Preferences for the Star tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2645
+#: ../src/verbs.cpp:2649
 msgid "Spiral Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2646
+#: ../src/verbs.cpp:2650
 msgid "Open Preferences for the Spiral tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2647
+#: ../src/verbs.cpp:2651
 msgid "Pencil Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2648
+#: ../src/verbs.cpp:2652
 msgid "Open Preferences for the Pencil tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2649
+#: ../src/verbs.cpp:2653
 msgid "Pen Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2650
+#: ../src/verbs.cpp:2654
 msgid "Open Preferences for the Pen tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2651
+#: ../src/verbs.cpp:2655
 msgid "Calligraphic Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2652
+#: ../src/verbs.cpp:2656
 msgid "Open Preferences for the Calligraphy tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2653
+#: ../src/verbs.cpp:2657
 msgid "Text Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2654
+#: ../src/verbs.cpp:2658
 msgid "Open Preferences for the Text tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2655
+#: ../src/verbs.cpp:2659
 msgid "Gradient Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2656
+#: ../src/verbs.cpp:2660
 msgid "Open Preferences for the Gradient tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2657
+#: ../src/verbs.cpp:2661
 msgid "Mesh Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2658
+#: ../src/verbs.cpp:2662
 msgid "Open Preferences for the Mesh tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2659
+#: ../src/verbs.cpp:2663
 msgid "Zoom Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2660
+#: ../src/verbs.cpp:2664
 msgid "Open Preferences for the Zoom tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2661
+#: ../src/verbs.cpp:2665
 msgid "Measure Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2662
+#: ../src/verbs.cpp:2666
 msgid "Open Preferences for the Measure tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2663
+#: ../src/verbs.cpp:2667
 msgid "Dropper Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2664
+#: ../src/verbs.cpp:2668
 msgid "Open Preferences for the Dropper tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2665
+#: ../src/verbs.cpp:2669
 msgid "Connector Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2666
+#: ../src/verbs.cpp:2670
 msgid "Open Preferences for the Connector tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2667
+#: ../src/verbs.cpp:2671
 msgid "Paint Bucket Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2668
+#: ../src/verbs.cpp:2672
 msgid "Open Preferences for the Paint Bucket tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2669
+#: ../src/verbs.cpp:2673
 msgid "Eraser Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2670
+#: ../src/verbs.cpp:2674
 msgid "Open Preferences for the Eraser tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2671
+#: ../src/verbs.cpp:2675
 msgid "LPE Tool Preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2672
+#: ../src/verbs.cpp:2676
 msgid "Open Preferences for the LPETool tool"
 msgstr ""
 
 #. Zoom/View
-#: ../src/verbs.cpp:2674
+#: ../src/verbs.cpp:2678
 msgid "Zoom In"
 msgstr ""
 
-#: ../src/verbs.cpp:2674
+#: ../src/verbs.cpp:2678
 msgid "Zoom in"
 msgstr ""
 
-#: ../src/verbs.cpp:2675
+#: ../src/verbs.cpp:2679
 msgid "Zoom Out"
 msgstr ""
 
-#: ../src/verbs.cpp:2675
+#: ../src/verbs.cpp:2679
 msgid "Zoom out"
 msgstr ""
 
-#: ../src/verbs.cpp:2676
+#: ../src/verbs.cpp:2680
 msgid "_Rulers"
 msgstr ""
 
-#: ../src/verbs.cpp:2676
+#: ../src/verbs.cpp:2680
 msgid "Show or hide the canvas rulers"
 msgstr ""
 
-#: ../src/verbs.cpp:2677
+#: ../src/verbs.cpp:2681
 msgid "Scroll_bars"
 msgstr ""
 
-#: ../src/verbs.cpp:2677
+#: ../src/verbs.cpp:2681
 msgid "Show or hide the canvas scrollbars"
 msgstr ""
 
-#: ../src/verbs.cpp:2678
+#: ../src/verbs.cpp:2682
 msgid "_Grid"
 msgstr ""
 
-#: ../src/verbs.cpp:2678
+#: ../src/verbs.cpp:2682
 msgid "Show or hide the grid"
 msgstr ""
 
-#: ../src/verbs.cpp:2679
+#: ../src/verbs.cpp:2683
 msgid "G_uides"
 msgstr ""
 
-#: ../src/verbs.cpp:2679
+#: ../src/verbs.cpp:2683
 msgid "Show or hide guides (drag from a ruler to create a guide)"
 msgstr ""
 
-#: ../src/verbs.cpp:2680
+#: ../src/verbs.cpp:2684
 msgid "Enable snapping"
 msgstr ""
 
-#: ../src/verbs.cpp:2681
+#: ../src/verbs.cpp:2685
 msgid "_Commands Bar"
 msgstr ""
 
-#: ../src/verbs.cpp:2681
+#: ../src/verbs.cpp:2685
 msgid "Show or hide the Commands bar (under the menu)"
 msgstr ""
 
-#: ../src/verbs.cpp:2682
+#: ../src/verbs.cpp:2686
 msgid "Sn_ap Controls Bar"
 msgstr ""
 
-#: ../src/verbs.cpp:2682
+#: ../src/verbs.cpp:2686
 msgid "Show or hide the snapping controls"
 msgstr ""
 
-#: ../src/verbs.cpp:2683
+#: ../src/verbs.cpp:2687
 msgid "T_ool Controls Bar"
 msgstr ""
 
-#: ../src/verbs.cpp:2683
+#: ../src/verbs.cpp:2687
 msgid "Show or hide the Tool Controls bar"
 msgstr ""
 
-#: ../src/verbs.cpp:2684
+#: ../src/verbs.cpp:2688
 msgid "_Toolbox"
 msgstr ""
 
-#: ../src/verbs.cpp:2684
+#: ../src/verbs.cpp:2688
 msgid "Show or hide the main toolbox (on the left)"
 msgstr ""
 
-#: ../src/verbs.cpp:2685
+#: ../src/verbs.cpp:2689
 msgid "_Palette"
 msgstr ""
 
-#: ../src/verbs.cpp:2685
+#: ../src/verbs.cpp:2689
 msgid "Show or hide the color palette"
 msgstr ""
 
-#: ../src/verbs.cpp:2686
+#: ../src/verbs.cpp:2690
 msgid "_Statusbar"
 msgstr ""
 
-#: ../src/verbs.cpp:2686
+#: ../src/verbs.cpp:2690
 msgid "Show or hide the statusbar (at the bottom of the window)"
 msgstr ""
 
-#: ../src/verbs.cpp:2687
+#: ../src/verbs.cpp:2691
 msgid "Nex_t Zoom"
 msgstr ""
 
-#: ../src/verbs.cpp:2687
+#: ../src/verbs.cpp:2691
 msgid "Next zoom (from the history of zooms)"
 msgstr ""
 
-#: ../src/verbs.cpp:2689
+#: ../src/verbs.cpp:2693
 msgid "Pre_vious Zoom"
 msgstr ""
 
-#: ../src/verbs.cpp:2689
+#: ../src/verbs.cpp:2693
 msgid "Previous zoom (from the history of zooms)"
 msgstr ""
 
-#: ../src/verbs.cpp:2691
+#: ../src/verbs.cpp:2695
 msgid "Zoom 1:_1"
 msgstr ""
 
-#: ../src/verbs.cpp:2691
+#: ../src/verbs.cpp:2695
 msgid "Zoom to 1:1"
 msgstr ""
 
-#: ../src/verbs.cpp:2693
+#: ../src/verbs.cpp:2697
 msgid "Zoom 1:_2"
 msgstr ""
 
-#: ../src/verbs.cpp:2693
+#: ../src/verbs.cpp:2697
 msgid "Zoom to 1:2"
 msgstr ""
 
-#: ../src/verbs.cpp:2695
+#: ../src/verbs.cpp:2699
 msgid "_Zoom 2:1"
 msgstr ""
 
-#: ../src/verbs.cpp:2695
+#: ../src/verbs.cpp:2699
 msgid "Zoom to 2:1"
 msgstr ""
 
-#: ../src/verbs.cpp:2698
+#: ../src/verbs.cpp:2702
 msgid "_Fullscreen"
 msgstr ""
 
-#: ../src/verbs.cpp:2698 ../src/verbs.cpp:2700
+#: ../src/verbs.cpp:2702 ../src/verbs.cpp:2704
 msgid "Stretch this document window to full screen"
 msgstr ""
 
-#: ../src/verbs.cpp:2700
+#: ../src/verbs.cpp:2704
 msgid "Fullscreen & Focus Mode"
 msgstr ""
 
-#: ../src/verbs.cpp:2703
+#: ../src/verbs.cpp:2707
 msgid "Toggle _Focus Mode"
 msgstr ""
 
-#: ../src/verbs.cpp:2703
+#: ../src/verbs.cpp:2707
 msgid "Remove excess toolbars to focus on drawing"
 msgstr ""
 
-#: ../src/verbs.cpp:2705
+#: ../src/verbs.cpp:2709
 msgid "Duplic_ate Window"
 msgstr ""
 
-#: ../src/verbs.cpp:2705
+#: ../src/verbs.cpp:2709
 msgid "Open a new window with the same document"
 msgstr ""
 
-#: ../src/verbs.cpp:2707
+#: ../src/verbs.cpp:2711
 msgid "_New View Preview"
 msgstr ""
 
-#: ../src/verbs.cpp:2708
+#: ../src/verbs.cpp:2712
 msgid "New View Preview"
 msgstr ""
 
 #. "view_new_preview"
-#: ../src/verbs.cpp:2710 ../src/verbs.cpp:2718
+#: ../src/verbs.cpp:2714 ../src/verbs.cpp:2722
 msgid "_Normal"
 msgstr ""
 
-#: ../src/verbs.cpp:2711
+#: ../src/verbs.cpp:2715
 msgid "Switch to normal display mode"
 msgstr ""
 
-#: ../src/verbs.cpp:2712
+#: ../src/verbs.cpp:2716
 msgid "No _Filters"
 msgstr ""
 
-#: ../src/verbs.cpp:2713
+#: ../src/verbs.cpp:2717
 msgid "Switch to normal display without filters"
 msgstr ""
 
-#: ../src/verbs.cpp:2714
+#: ../src/verbs.cpp:2718
 msgid "_Outline"
 msgstr ""
 
-#: ../src/verbs.cpp:2715
+#: ../src/verbs.cpp:2719
 msgid "Switch to outline (wireframe) display mode"
 msgstr ""
 
 #. new ZoomVerb(SP_VERB_VIEW_COLOR_MODE_PRINT_COLORS_PREVIEW, "ViewColorModePrintColorsPreview", N_("_Print Colors Preview"),
 #. N_("Switch to print colors preview mode"), NULL),
-#: ../src/verbs.cpp:2716 ../src/verbs.cpp:2724
+#: ../src/verbs.cpp:2720 ../src/verbs.cpp:2728
 msgid "_Toggle"
 msgstr ""
 
-#: ../src/verbs.cpp:2717
+#: ../src/verbs.cpp:2721
 msgid "Toggle between normal and outline display modes"
 msgstr ""
 
-#: ../src/verbs.cpp:2719
+#: ../src/verbs.cpp:2723
 msgid "Switch to normal color display mode"
 msgstr ""
 
-#: ../src/verbs.cpp:2720
+#: ../src/verbs.cpp:2724
 msgid "_Grayscale"
 msgstr ""
 
-#: ../src/verbs.cpp:2721
+#: ../src/verbs.cpp:2725
 msgid "Switch to grayscale display mode"
 msgstr ""
 
-#: ../src/verbs.cpp:2725
+#: ../src/verbs.cpp:2729
 msgid "Toggle between normal and grayscale color display modes"
 msgstr ""
 
-#: ../src/verbs.cpp:2727
+#: ../src/verbs.cpp:2731
 msgid "Color-managed view"
 msgstr ""
 
-#: ../src/verbs.cpp:2728
+#: ../src/verbs.cpp:2732
 msgid "Toggle color-managed display for this document window"
 msgstr ""
 
-#: ../src/verbs.cpp:2730
+#: ../src/verbs.cpp:2734
 msgid "Ico_n Preview..."
 msgstr ""
 
-#: ../src/verbs.cpp:2731
+#: ../src/verbs.cpp:2735
 msgid "Open a window to preview objects at different icon resolutions"
 msgstr ""
 
-#: ../src/verbs.cpp:2733
+#: ../src/verbs.cpp:2737
 msgid "Zoom to fit page in window"
 msgstr ""
 
-#: ../src/verbs.cpp:2734
+#: ../src/verbs.cpp:2738
 msgid "Page _Width"
 msgstr ""
 
-#: ../src/verbs.cpp:2735
+#: ../src/verbs.cpp:2739
 msgid "Zoom to fit page width in window"
 msgstr ""
 
-#: ../src/verbs.cpp:2737
+#: ../src/verbs.cpp:2741
 msgid "Zoom to fit drawing in window"
 msgstr ""
 
-#: ../src/verbs.cpp:2739
+#: ../src/verbs.cpp:2743
 msgid "Zoom to fit selection in window"
 msgstr ""
 
 #. Dialogs
-#: ../src/verbs.cpp:2742
+#: ../src/verbs.cpp:2746
 msgid "P_references..."
 msgstr ""
 
-#: ../src/verbs.cpp:2743
+#: ../src/verbs.cpp:2747
 msgid "Edit global Inkscape preferences"
 msgstr ""
 
-#: ../src/verbs.cpp:2744
+#: ../src/verbs.cpp:2748
 msgid "_Document Properties..."
 msgstr ""
 
-#: ../src/verbs.cpp:2745
+#: ../src/verbs.cpp:2749
 msgid "Edit properties of this document (to be saved with the document)"
 msgstr ""
 
-#: ../src/verbs.cpp:2746
+#: ../src/verbs.cpp:2750
 msgid "Document _Metadata..."
 msgstr ""
 
-#: ../src/verbs.cpp:2747
+#: ../src/verbs.cpp:2751
 msgid "Edit document metadata (to be saved with the document)"
 msgstr ""
 
-#: ../src/verbs.cpp:2749
+#: ../src/verbs.cpp:2753
 msgid ""
 "Edit objects' colors, gradients, arrowheads, and other fill and stroke "
 "properties..."
 msgstr ""
 
-#: ../src/verbs.cpp:2750
+#: ../src/verbs.cpp:2754
 msgid "Gl_yphs..."
 msgstr ""
 
-#: ../src/verbs.cpp:2751
+#: ../src/verbs.cpp:2755
 msgid "Select characters from a glyphs palette"
 msgstr ""
 
 #. TRANSLATORS: "Swatches" means: color samples
-#: ../src/verbs.cpp:2753
+#: ../src/verbs.cpp:2757
 msgid "S_watches..."
 msgstr ""
 
-#: ../src/verbs.cpp:2754
+#: ../src/verbs.cpp:2758
 msgid "Select colors from a swatches palette"
 msgstr ""
 
-#: ../src/verbs.cpp:2755
+#: ../src/verbs.cpp:2759
 msgid "S_ymbols..."
 msgstr ""
 
-#: ../src/verbs.cpp:2756
+#: ../src/verbs.cpp:2760
 msgid "Select symbol from a symbols palette"
 msgstr ""
 
-#: ../src/verbs.cpp:2757
+#: ../src/verbs.cpp:2761
 msgid "Transfor_m..."
 msgstr ""
 
-#: ../src/verbs.cpp:2758
+#: ../src/verbs.cpp:2762
 msgid "Precisely control objects' transformations"
 msgstr ""
 
-#: ../src/verbs.cpp:2759
+#: ../src/verbs.cpp:2763
 msgid "_Align and Distribute..."
 msgstr ""
 
-#: ../src/verbs.cpp:2760
+#: ../src/verbs.cpp:2764
 msgid "Align and distribute objects"
 msgstr ""
 
-#: ../src/verbs.cpp:2761
+#: ../src/verbs.cpp:2765
 msgid "_Spray options..."
 msgstr ""
 
-#: ../src/verbs.cpp:2762
+#: ../src/verbs.cpp:2766
 msgid "Some options for the spray"
 msgstr ""
 
-#: ../src/verbs.cpp:2763
+#: ../src/verbs.cpp:2767
 msgid "Undo _History..."
 msgstr ""
 
-#: ../src/verbs.cpp:2764
+#: ../src/verbs.cpp:2768
 msgid "Undo History"
 msgstr ""
 
-#: ../src/verbs.cpp:2766
+#: ../src/verbs.cpp:2770
 msgid "View and select font family, font size and other text properties"
 msgstr ""
 
-#: ../src/verbs.cpp:2767
+#: ../src/verbs.cpp:2771
 msgid "_XML Editor..."
 msgstr ""
 
-#: ../src/verbs.cpp:2768
+#: ../src/verbs.cpp:2772
 msgid "View and edit the XML tree of the document"
 msgstr ""
 
-#: ../src/verbs.cpp:2769
+#: ../src/verbs.cpp:2773
 msgid "_Find/Replace..."
 msgstr ""
 
-#: ../src/verbs.cpp:2770
+#: ../src/verbs.cpp:2774
 msgid "Find objects in document"
 msgstr ""
 
-#: ../src/verbs.cpp:2771
+#: ../src/verbs.cpp:2775
 msgid "Find and _Replace Text..."
 msgstr ""
 
-#: ../src/verbs.cpp:2772
+#: ../src/verbs.cpp:2776
 msgid "Find and replace text in document"
 msgstr ""
 
-#: ../src/verbs.cpp:2774
+#: ../src/verbs.cpp:2778
 msgid "Check spelling of text in document"
 msgstr ""
 
-#: ../src/verbs.cpp:2775
+#: ../src/verbs.cpp:2779
 msgid "_Messages..."
 msgstr ""
 
-#: ../src/verbs.cpp:2776
+#: ../src/verbs.cpp:2780
 msgid "View debug messages"
 msgstr ""
 
-#: ../src/verbs.cpp:2777
+#: ../src/verbs.cpp:2781
 msgid "S_cripts..."
 msgstr ""
 
-#: ../src/verbs.cpp:2778
+#: ../src/verbs.cpp:2782
 msgid "Run scripts"
 msgstr ""
 
-#: ../src/verbs.cpp:2779
+#: ../src/verbs.cpp:2783
 msgid "Show/Hide D_ialogs"
 msgstr ""
 
-#: ../src/verbs.cpp:2780
+#: ../src/verbs.cpp:2784
 msgid "Show or hide all open dialogs"
 msgstr ""
 
-#: ../src/verbs.cpp:2781
+#: ../src/verbs.cpp:2785
 msgid "Create Tiled Clones..."
 msgstr ""
 
-#: ../src/verbs.cpp:2782
+#: ../src/verbs.cpp:2786
 msgid ""
 "Create multiple clones of selected object, arranging them into a pattern or "
 "scattering"
 msgstr ""
 
-#: ../src/verbs.cpp:2783
+#: ../src/verbs.cpp:2787
 msgid "_Object attributes..."
 msgstr ""
 
-#: ../src/verbs.cpp:2784
+#: ../src/verbs.cpp:2788
 msgid "Edit the object attributes..."
 msgstr ""
 
-#: ../src/verbs.cpp:2786
+#: ../src/verbs.cpp:2790
 msgid "Edit the ID, locked and visible status, and other object properties"
 msgstr ""
 
-#: ../src/verbs.cpp:2787
+#: ../src/verbs.cpp:2791
 msgid "_Input Devices..."
 msgstr ""
 
-#: ../src/verbs.cpp:2788
+#: ../src/verbs.cpp:2792
 msgid "Configure extended input devices, such as a graphics tablet"
 msgstr ""
 
-#: ../src/verbs.cpp:2789
+#: ../src/verbs.cpp:2793
 msgid "_Extensions..."
 msgstr ""
 
-#: ../src/verbs.cpp:2790
+#: ../src/verbs.cpp:2794
 msgid "Query information about extensions"
 msgstr ""
 
-#: ../src/verbs.cpp:2791
+#: ../src/verbs.cpp:2795
 msgid "Layer_s..."
 msgstr ""
 
-#: ../src/verbs.cpp:2792
+#: ../src/verbs.cpp:2796
 msgid "View Layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2793
+#: ../src/verbs.cpp:2797
 msgid "Path E_ffects ..."
 msgstr ""
 
-#: ../src/verbs.cpp:2794
+#: ../src/verbs.cpp:2798
 msgid "Manage, edit, and apply path effects"
 msgstr ""
 
-#: ../src/verbs.cpp:2795
+#: ../src/verbs.cpp:2799
 msgid "Filter _Editor..."
 msgstr ""
 
-#: ../src/verbs.cpp:2796
+#: ../src/verbs.cpp:2800
 msgid "Manage, edit, and apply SVG filters"
 msgstr ""
 
-#: ../src/verbs.cpp:2797
+#: ../src/verbs.cpp:2801
 msgid "SVG Font Editor..."
 msgstr ""
 
-#: ../src/verbs.cpp:2798
+#: ../src/verbs.cpp:2802
 msgid "Edit SVG fonts"
 msgstr ""
 
-#: ../src/verbs.cpp:2799
+#: ../src/verbs.cpp:2803
 msgid "Print Colors..."
 msgstr ""
 
-#: ../src/verbs.cpp:2800
+#: ../src/verbs.cpp:2804
 msgid ""
 "Select which color separations to render in Print Colors Preview rendermode"
 msgstr ""
 
-#: ../src/verbs.cpp:2801
+#: ../src/verbs.cpp:2805
 msgid "_Export PNG Image..."
 msgstr ""
 
-#: ../src/verbs.cpp:2802
+#: ../src/verbs.cpp:2806
 msgid "Export this document or a selection as a PNG image"
 msgstr ""
 
 #. Help
-#: ../src/verbs.cpp:2804
+#: ../src/verbs.cpp:2808
 msgid "About E_xtensions"
 msgstr ""
 
-#: ../src/verbs.cpp:2805
+#: ../src/verbs.cpp:2809
 msgid "Information on Inkscape extensions"
 msgstr ""
 
-#: ../src/verbs.cpp:2806
+#: ../src/verbs.cpp:2810
 msgid "About _Memory"
 msgstr ""
 
-#: ../src/verbs.cpp:2807
+#: ../src/verbs.cpp:2811
 msgid "Memory usage information"
 msgstr ""
 
-#: ../src/verbs.cpp:2808
+#: ../src/verbs.cpp:2812
 msgid "_About Inkscape"
 msgstr ""
 
-#: ../src/verbs.cpp:2809
+#: ../src/verbs.cpp:2813
 msgid "Inkscape version, authors, license"
 msgstr ""
 
 #. new HelpVerb(SP_VERB_SHOW_LICENSE, "ShowLicense", N_("_License"),
 #. N_("Distribution terms"), /*"show_license"*/"inkscape_options"),
 #. Tutorials
-#: ../src/verbs.cpp:2814
+#: ../src/verbs.cpp:2818
 msgid "Inkscape: _Basic"
 msgstr ""
 
-#: ../src/verbs.cpp:2815
+#: ../src/verbs.cpp:2819
 msgid "Getting started with Inkscape"
 msgstr ""
 
 #. "tutorial_basic"
-#: ../src/verbs.cpp:2816
+#: ../src/verbs.cpp:2820
 msgid "Inkscape: _Shapes"
 msgstr ""
 
-#: ../src/verbs.cpp:2817
+#: ../src/verbs.cpp:2821
 msgid "Using shape tools to create and edit shapes"
 msgstr ""
 
-#: ../src/verbs.cpp:2818
+#: ../src/verbs.cpp:2822
 msgid "Inkscape: _Advanced"
 msgstr ""
 
-#: ../src/verbs.cpp:2819
+#: ../src/verbs.cpp:2823
 msgid "Advanced Inkscape topics"
 msgstr ""
 
 #. "tutorial_advanced"
 #. TRANSLATORS: "to trace" means "to convert a bitmap to vector graphics" (to vectorize)
-#: ../src/verbs.cpp:2821
+#: ../src/verbs.cpp:2825
 msgid "Inkscape: T_racing"
 msgstr ""
 
-#: ../src/verbs.cpp:2822
+#: ../src/verbs.cpp:2826
 msgid "Using bitmap tracing"
 msgstr ""
 
 #. "tutorial_tracing"
-#: ../src/verbs.cpp:2823
+#: ../src/verbs.cpp:2827
 msgid "Inkscape: _Calligraphy"
 msgstr ""
 
-#: ../src/verbs.cpp:2824
+#: ../src/verbs.cpp:2828
 msgid "Using the Calligraphy pen tool"
 msgstr ""
 
-#: ../src/verbs.cpp:2825
+#: ../src/verbs.cpp:2829
 msgid "Inkscape: _Interpolate"
 msgstr ""
 
-#: ../src/verbs.cpp:2826
+#: ../src/verbs.cpp:2830
 msgid "Using the interpolate extension"
 msgstr ""
 
 #. "tutorial_interpolate"
-#: ../src/verbs.cpp:2827
+#: ../src/verbs.cpp:2831
 msgid "_Elements of Design"
 msgstr ""
 
-#: ../src/verbs.cpp:2828
+#: ../src/verbs.cpp:2832
 msgid "Principles of design in the tutorial form"
 msgstr ""
 
 #. "tutorial_design"
-#: ../src/verbs.cpp:2829
+#: ../src/verbs.cpp:2833
 msgid "_Tips and Tricks"
 msgstr ""
 
-#: ../src/verbs.cpp:2830
+#: ../src/verbs.cpp:2834
 msgid "Miscellaneous tips and tricks"
 msgstr ""
 
 #. "tutorial_tips"
 #. Effect -- renamed Extension
-#: ../src/verbs.cpp:2833
+#: ../src/verbs.cpp:2837
 msgid "Previous Exte_nsion"
 msgstr ""
 
-#: ../src/verbs.cpp:2834
+#: ../src/verbs.cpp:2838
 msgid "Repeat the last extension with the same settings"
 msgstr ""
 
-#: ../src/verbs.cpp:2835
+#: ../src/verbs.cpp:2839
 msgid "_Previous Extension Settings..."
 msgstr ""
 
-#: ../src/verbs.cpp:2836
+#: ../src/verbs.cpp:2840
 msgid "Repeat the last extension with new settings"
 msgstr ""
 
-#: ../src/verbs.cpp:2840
+#: ../src/verbs.cpp:2844
 msgid "Fit the page to the current selection"
 msgstr ""
 
-#: ../src/verbs.cpp:2842
+#: ../src/verbs.cpp:2846
 msgid "Fit the page to the drawing"
 msgstr ""
 
-#: ../src/verbs.cpp:2844
+#: ../src/verbs.cpp:2848
 msgid ""
 "Fit the page to the current selection or the drawing if there is no selection"
 msgstr ""
 
 #. LockAndHide
-#: ../src/verbs.cpp:2846
+#: ../src/verbs.cpp:2850
 msgid "Unlock All"
 msgstr ""
 
-#: ../src/verbs.cpp:2848
+#: ../src/verbs.cpp:2852
 msgid "Unlock All in All Layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2850
+#: ../src/verbs.cpp:2854
 msgid "Unhide All"
 msgstr ""
 
-#: ../src/verbs.cpp:2852
+#: ../src/verbs.cpp:2856
 msgid "Unhide All in All Layers"
 msgstr ""
 
-#: ../src/verbs.cpp:2856
+#: ../src/verbs.cpp:2860
 msgid "Link an ICC color profile"
 msgstr ""
 
-#: ../src/verbs.cpp:2857
+#: ../src/verbs.cpp:2861
 msgid "Remove Color Profile"
 msgstr ""
 
-#: ../src/verbs.cpp:2858
+#: ../src/verbs.cpp:2862
 msgid "Remove a linked ICC color profile"
 msgstr ""
 
-#: ../src/verbs.cpp:2881 ../src/verbs.cpp:2882
+#: ../src/verbs.cpp:2885 ../src/verbs.cpp:2886
 msgid "Center on horizontal and vertical axis"
 msgstr ""
 
@@ -23734,84 +23790,88 @@ msgstr ""
 msgid "Pattern offset"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:462
+#: ../src/widgets/desktop-widget.cpp:461
 msgid "Zoom drawing if window size changes"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:673
+#: ../src/widgets/desktop-widget.cpp:665
 msgid "Cursor coordinates"
 msgstr ""
 
+#: ../src/widgets/desktop-widget.cpp:691
+msgid "Z:"
+msgstr ""
+
 #. display the initial welcome message in the statusbar
-#: ../src/widgets/desktop-widget.cpp:742
+#: ../src/widgets/desktop-widget.cpp:734
 msgid ""
 "<b>Welcome to Inkscape!</b> Use shape or freehand tools to create objects; "
 "use selector (arrow) to move or transform them."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:836
+#: ../src/widgets/desktop-widget.cpp:828
 msgid "grayscale"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:837
+#: ../src/widgets/desktop-widget.cpp:829
 msgid ", grayscale"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:838
+#: ../src/widgets/desktop-widget.cpp:830
 msgid "print colors preview"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:839
+#: ../src/widgets/desktop-widget.cpp:831
 msgid ", print colors preview"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:840
+#: ../src/widgets/desktop-widget.cpp:832
 msgid "outline"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:841
+#: ../src/widgets/desktop-widget.cpp:833
 msgid "no filters"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:868
+#: ../src/widgets/desktop-widget.cpp:860
 #, c-format
 msgid "%s%s: %d (%s%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:870 ../src/widgets/desktop-widget.cpp:874
+#: ../src/widgets/desktop-widget.cpp:862 ../src/widgets/desktop-widget.cpp:866
 #, c-format
 msgid "%s%s: %d (%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:876
+#: ../src/widgets/desktop-widget.cpp:868
 #, c-format
 msgid "%s%s: %d - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:882
+#: ../src/widgets/desktop-widget.cpp:874
 #, c-format
 msgid "%s%s (%s%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:884 ../src/widgets/desktop-widget.cpp:888
+#: ../src/widgets/desktop-widget.cpp:876 ../src/widgets/desktop-widget.cpp:880
 #, c-format
 msgid "%s%s (%s) - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:890
+#: ../src/widgets/desktop-widget.cpp:882
 #, c-format
 msgid "%s%s - Inkscape"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1059
+#: ../src/widgets/desktop-widget.cpp:1051
 msgid "Color-managed display is <b>enabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1061
+#: ../src/widgets/desktop-widget.cpp:1053
 msgid "Color-managed display is <b>disabled</b> in this window"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1116
+#: ../src/widgets/desktop-widget.cpp:1108
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Save changes to document \"%s\" before "
@@ -23820,12 +23880,12 @@ msgid ""
 "If you close without saving, your changes will be discarded."
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1126
-#: ../src/widgets/desktop-widget.cpp:1185
+#: ../src/widgets/desktop-widget.cpp:1118
+#: ../src/widgets/desktop-widget.cpp:1177
 msgid "Close _without saving"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1175
+#: ../src/widgets/desktop-widget.cpp:1167
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The file \"%s\" was saved with a "
@@ -23834,11 +23894,11 @@ msgid ""
 "Do you want to save this file as Inkscape SVG?"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1187
+#: ../src/widgets/desktop-widget.cpp:1179
 msgid "_Save as Inkscape SVG"
 msgstr ""
 
-#: ../src/widgets/desktop-widget.cpp:1397
+#: ../src/widgets/desktop-widget.cpp:1389
 msgid "Note:"
 msgstr ""
 
@@ -23869,10 +23929,6 @@ msgstr ""
 msgid "Assign"
 msgstr ""
 
-#: ../src/widgets/ege-paint-def.cpp:67 ../src/widgets/ege-paint-def.cpp:91
-msgid "none"
-msgstr ""
-
 #: ../src/widgets/ege-paint-def.cpp:88
 msgid "remove"
 msgstr ""
@@ -23893,31 +23949,31 @@ msgstr ""
 msgid "The width of the eraser pen (relative to the visible canvas area)"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:358
+#: ../src/widgets/fill-style.cpp:362
 msgid "Change fill rule"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:443 ../src/widgets/fill-style.cpp:522
+#: ../src/widgets/fill-style.cpp:447 ../src/widgets/fill-style.cpp:526
 msgid "Set fill color"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:443 ../src/widgets/fill-style.cpp:522
+#: ../src/widgets/fill-style.cpp:447 ../src/widgets/fill-style.cpp:526
 msgid "Set stroke color"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:621
+#: ../src/widgets/fill-style.cpp:625
 msgid "Set gradient on fill"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:621
+#: ../src/widgets/fill-style.cpp:625
 msgid "Set gradient on stroke"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:681
+#: ../src/widgets/fill-style.cpp:685
 msgid "Set pattern on fill"
 msgstr ""
 
-#: ../src/widgets/fill-style.cpp:682
+#: ../src/widgets/fill-style.cpp:686
 msgid "Set pattern on stroke"
 msgstr ""
 
@@ -23950,7 +24006,7 @@ msgid "Edit gradient"
 msgstr ""
 
 #: ../src/widgets/gradient-selector.cpp:288
-#: ../src/widgets/paint-selector.cpp:241
+#: ../src/widgets/paint-selector.cpp:244
 msgid "Swatch"
 msgstr ""
 
@@ -24119,7 +24175,7 @@ msgid "Link gradients to change all related gradients"
 msgstr ""
 
 #: ../src/widgets/gradient-vector.cpp:332
-#: ../src/widgets/paint-selector.cpp:919
+#: ../src/widgets/paint-selector.cpp:922
 msgid "No document selected"
 msgstr ""
 
@@ -24543,80 +24599,80 @@ msgid ""
 "to change defaults)"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:231
+#: ../src/widgets/paint-selector.cpp:234
 msgid "No paint"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:233
+#: ../src/widgets/paint-selector.cpp:236
 msgid "Flat color"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:235
+#: ../src/widgets/paint-selector.cpp:238
 msgid "Linear gradient"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:237
+#: ../src/widgets/paint-selector.cpp:240
 msgid "Radial gradient"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:243
+#: ../src/widgets/paint-selector.cpp:246
 msgid "Unset paint (make it undefined so it can be inherited)"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:260
+#: ../src/widgets/paint-selector.cpp:263
 msgid ""
 "Any path self-intersections or subpaths create holes in the fill (fill-rule: "
 "evenodd)"
 msgstr ""
 
 #. TRANSLATORS: for info, see http://www.w3.org/TR/2000/CR-SVG-20000802/painting.html#FillRuleProperty
-#: ../src/widgets/paint-selector.cpp:271
+#: ../src/widgets/paint-selector.cpp:274
 msgid ""
 "Fill is solid unless a subpath is counterdirectional (fill-rule: nonzero)"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:587
+#: ../src/widgets/paint-selector.cpp:590
 msgid "<b>No objects</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:598
+#: ../src/widgets/paint-selector.cpp:601
 msgid "<b>Multiple styles</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:609
+#: ../src/widgets/paint-selector.cpp:612
 msgid "<b>Paint is undefined</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:620
+#: ../src/widgets/paint-selector.cpp:623
 msgid "<b>No paint</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:691
+#: ../src/widgets/paint-selector.cpp:694
 msgid "<b>Flat color</b>"
 msgstr ""
 
 #. sp_gradient_selector_set_mode(SP_GRADIENT_SELECTOR(gsel), SP_GRADIENT_SELECTOR_MODE_LINEAR);
-#: ../src/widgets/paint-selector.cpp:755
+#: ../src/widgets/paint-selector.cpp:758
 msgid "<b>Linear gradient</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:758
+#: ../src/widgets/paint-selector.cpp:761
 msgid "<b>Radial gradient</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:1052
+#: ../src/widgets/paint-selector.cpp:1055
 msgid ""
 "Use the <b>Node tool</b> to adjust position, scale, and rotation of the "
 "pattern on canvas. Use <b>Object &gt; Pattern &gt; Objects to Pattern</b> to "
 "create a new pattern from selection."
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:1065
+#: ../src/widgets/paint-selector.cpp:1068
 msgid "<b>Pattern fill</b>"
 msgstr ""
 
-#: ../src/widgets/paint-selector.cpp:1161
+#: ../src/widgets/paint-selector.cpp:1164
 msgid "<b>Swatch fill</b>"
 msgstr ""
 
@@ -25107,80 +25163,89 @@ msgstr ""
 msgid "Set attribute"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:107
+#: ../src/widgets/sp-color-icc-selector.cpp:257
 msgid "CMS"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:214
+#: ../src/widgets/sp-color-icc-selector.cpp:354
 #: ../src/widgets/sp-color-scales.cpp:428
 msgid "_R:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:214
-#: ../src/widgets/sp-color-icc-selector.cpp:215
+#. TYPE_RGB_16
+#: ../src/widgets/sp-color-icc-selector.cpp:355
 #: ../src/widgets/sp-color-scales.cpp:431
 msgid "_G:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:214
+#: ../src/widgets/sp-color-icc-selector.cpp:356
 #: ../src/widgets/sp-color-scales.cpp:434
 msgid "_B:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:216
-#: ../src/widgets/sp-color-icc-selector.cpp:217
+#: ../src/widgets/sp-color-icc-selector.cpp:358
+msgid "G:"
+msgstr ""
+
+#: ../src/widgets/sp-color-icc-selector.cpp:358
+msgid "Gray"
+msgstr ""
+
+#. TYPE_GRAY_16
+#: ../src/widgets/sp-color-icc-selector.cpp:360
+#: ../src/widgets/sp-color-icc-selector.cpp:364
 #: ../src/widgets/sp-color-scales.cpp:454
 msgid "_H:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:216
-#: ../src/widgets/sp-color-icc-selector.cpp:217
+#. TYPE_HSV_16
+#: ../src/widgets/sp-color-icc-selector.cpp:361
+#: ../src/widgets/sp-color-icc-selector.cpp:366
 #: ../src/widgets/sp-color-scales.cpp:457
 msgid "_S:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:217
+#. TYPE_HLS_16
+#: ../src/widgets/sp-color-icc-selector.cpp:365
 #: ../src/widgets/sp-color-scales.cpp:460
 msgid "_L:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:218
-#: ../src/widgets/sp-color-icc-selector.cpp:219
+#: ../src/widgets/sp-color-icc-selector.cpp:368
+#: ../src/widgets/sp-color-icc-selector.cpp:373
 #: ../src/widgets/sp-color-scales.cpp:482
 msgid "_C:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:218
-#: ../src/widgets/sp-color-icc-selector.cpp:219
+#. TYPE_CMYK_16
+#. TYPE_CMY_16
+#: ../src/widgets/sp-color-icc-selector.cpp:369
+#: ../src/widgets/sp-color-icc-selector.cpp:374
 #: ../src/widgets/sp-color-scales.cpp:485
 msgid "_M:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:218
-#: ../src/widgets/sp-color-icc-selector.cpp:219
+#: ../src/widgets/sp-color-icc-selector.cpp:370
+#: ../src/widgets/sp-color-icc-selector.cpp:375
 #: ../src/widgets/sp-color-scales.cpp:488
 msgid "_Y:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:218
+#: ../src/widgets/sp-color-icc-selector.cpp:371
 #: ../src/widgets/sp-color-scales.cpp:491
 msgid "_K:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:229
-msgid "Gray"
-msgstr ""
-
-#: ../src/widgets/sp-color-icc-selector.cpp:298
+#: ../src/widgets/sp-color-icc-selector.cpp:453
 msgid "Fix"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:301
+#: ../src/widgets/sp-color-icc-selector.cpp:456
 msgid "Fix RGB fallback to match icc-color() value."
 msgstr ""
 
 #. Label
-#: ../src/widgets/sp-color-icc-selector.cpp:439
+#: ../src/widgets/sp-color-icc-selector.cpp:559
 #: ../src/widgets/sp-color-scales.cpp:437
 #: ../src/widgets/sp-color-scales.cpp:463
 #: ../src/widgets/sp-color-scales.cpp:494
@@ -25188,8 +25253,8 @@ msgstr ""
 msgid "_A:"
 msgstr ""
 
-#: ../src/widgets/sp-color-icc-selector.cpp:458
-#: ../src/widgets/sp-color-icc-selector.cpp:480
+#: ../src/widgets/sp-color-icc-selector.cpp:570
+#: ../src/widgets/sp-color-icc-selector.cpp:583
 #: ../src/widgets/sp-color-scales.cpp:438
 #: ../src/widgets/sp-color-scales.cpp:439
 #: ../src/widgets/sp-color-scales.cpp:464
@@ -25480,41 +25545,36 @@ msgstr ""
 msgid "Dashes:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:346
-msgid "_Start Markers:"
+#. Drop down marker selectors
+#. TRANSLATORS: Path markers are an SVG feature that allows you to attach arbitrary shapes
+#. (arrowheads, bullets, faces, whatever) to the start, end, or middle nodes of a path.
+#: ../src/widgets/stroke-style.cpp:345
+msgid "Markers:"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:347
+#: ../src/widgets/stroke-style.cpp:351
 msgid "Start Markers are drawn on the first node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:365
-msgid "_Mid Markers:"
-msgstr ""
-
-#: ../src/widgets/stroke-style.cpp:366
+#: ../src/widgets/stroke-style.cpp:360
 msgid ""
 "Mid Markers are drawn on every node of a path or shape except the first and "
 "last nodes"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:384
-msgid "_End Markers:"
-msgstr ""
-
-#: ../src/widgets/stroke-style.cpp:385
+#: ../src/widgets/stroke-style.cpp:369
 msgid "End Markers are drawn on the last node of a path or shape"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:512
+#: ../src/widgets/stroke-style.cpp:487
 msgid "Set markers"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1100 ../src/widgets/stroke-style.cpp:1185
+#: ../src/widgets/stroke-style.cpp:1075 ../src/widgets/stroke-style.cpp:1160
 msgid "Set stroke style"
 msgstr ""
 
-#: ../src/widgets/stroke-style.cpp:1273
+#: ../src/widgets/stroke-style.cpp:1248
 msgid "Set marker color"
 msgstr ""
 
@@ -25757,175 +25817,175 @@ msgstr ""
 msgid "Character rotation (degrees)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:177
+#: ../src/widgets/toolbox.cpp:181
 msgid "Color/opacity used for color tweaking"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:185
+#: ../src/widgets/toolbox.cpp:189
 msgid "Style of new stars"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:187
+#: ../src/widgets/toolbox.cpp:191
 msgid "Style of new rectangles"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:189
+#: ../src/widgets/toolbox.cpp:193
 msgid "Style of new 3D boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:191
+#: ../src/widgets/toolbox.cpp:195
 msgid "Style of new ellipses"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:193
+#: ../src/widgets/toolbox.cpp:197
 msgid "Style of new spirals"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:195
+#: ../src/widgets/toolbox.cpp:199
 msgid "Style of new paths created by Pencil"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:197
+#: ../src/widgets/toolbox.cpp:201
 msgid "Style of new paths created by Pen"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:199
+#: ../src/widgets/toolbox.cpp:203
 msgid "Style of new calligraphic strokes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:201 ../src/widgets/toolbox.cpp:203
+#: ../src/widgets/toolbox.cpp:205 ../src/widgets/toolbox.cpp:207
 msgid "TBD"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:215
+#: ../src/widgets/toolbox.cpp:219
 msgid "Style of Paint Bucket fill objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1678
+#: ../src/widgets/toolbox.cpp:1682
 msgid "Bounding box"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1678
+#: ../src/widgets/toolbox.cpp:1682
 msgid "Snap bounding boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1687
+#: ../src/widgets/toolbox.cpp:1691
 msgid "Bounding box edges"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1687
+#: ../src/widgets/toolbox.cpp:1691
 msgid "Snap to edges of a bounding box"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1696
+#: ../src/widgets/toolbox.cpp:1700
 msgid "Bounding box corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1696
+#: ../src/widgets/toolbox.cpp:1700
 msgid "Snap bounding box corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1705
+#: ../src/widgets/toolbox.cpp:1709
 msgid "BBox Edge Midpoints"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1705
+#: ../src/widgets/toolbox.cpp:1709
 msgid "Snap midpoints of bounding box edges"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1715
+#: ../src/widgets/toolbox.cpp:1719
 msgid "BBox Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1715
+#: ../src/widgets/toolbox.cpp:1719
 msgid "Snapping centers of bounding boxes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1724
+#: ../src/widgets/toolbox.cpp:1728
 msgid "Snap nodes, paths, and handles"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1732
+#: ../src/widgets/toolbox.cpp:1736
 msgid "Snap to paths"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1741
+#: ../src/widgets/toolbox.cpp:1745
 msgid "Path intersections"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1741
+#: ../src/widgets/toolbox.cpp:1745
 msgid "Snap to path intersections"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1750
+#: ../src/widgets/toolbox.cpp:1754
 msgid "To nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1750
+#: ../src/widgets/toolbox.cpp:1754
 msgid "Snap cusp nodes, incl. rectangle corners"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1759
+#: ../src/widgets/toolbox.cpp:1763
 msgid "Smooth nodes"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1759
+#: ../src/widgets/toolbox.cpp:1763
 msgid "Snap smooth nodes, incl. quadrant points of ellipses"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1768
+#: ../src/widgets/toolbox.cpp:1772
 msgid "Line Midpoints"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1768
+#: ../src/widgets/toolbox.cpp:1772
 msgid "Snap midpoints of line segments"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1777
+#: ../src/widgets/toolbox.cpp:1781
 msgid "Others"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1777
+#: ../src/widgets/toolbox.cpp:1781
 msgid "Snap other points (centers, guide origins, gradient handles, etc.)"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1785
+#: ../src/widgets/toolbox.cpp:1789
 msgid "Object Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1785
+#: ../src/widgets/toolbox.cpp:1789
 msgid "Snap centers of objects"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1794
+#: ../src/widgets/toolbox.cpp:1798
 msgid "Rotation Centers"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1794
+#: ../src/widgets/toolbox.cpp:1798
 msgid "Snap an item's rotation center"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1803
+#: ../src/widgets/toolbox.cpp:1807
 msgid "Text baseline"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1803
+#: ../src/widgets/toolbox.cpp:1807
 msgid "Snap text anchors and baselines"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1813
+#: ../src/widgets/toolbox.cpp:1817
 msgid "Page border"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1813
+#: ../src/widgets/toolbox.cpp:1817
 msgid "Snap to the page border"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1822
+#: ../src/widgets/toolbox.cpp:1826
 msgid "Snap to grids"
 msgstr ""
 
-#: ../src/widgets/toolbox.cpp:1831
+#: ../src/widgets/toolbox.cpp:1835
 msgid "Snap guides"
 msgstr ""
 
