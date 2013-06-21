@@ -37,8 +37,10 @@ int
 UnicodeRange::add_range(gchar* val){
 		Urange r;
 		int i=0, count=0;
-		while(val[i]!='\0' && val[i]!='-' && val[i]!=' ' && val[i]!=',') i++;
-		r.start = (gchar*) malloc((i+1)*sizeof(gchar*));
+		while(val[i]!='\0' && val[i]!='-' && val[i]!=' ' && val[i]!=','){
+            i++;
+		}
+        r.start = (gchar*) malloc((i+1)*sizeof(gchar*));
 		strncpy(r.start, val, i);
 		r.start[i] = '\0';
 		val+=i;
@@ -50,7 +52,7 @@ UnicodeRange::add_range(gchar* val){
 			r.end = (gchar*) malloc((i+1)*sizeof(gchar*));
 			strncpy(r.end, val, i);
 			r.end[i] = '\0';
-			val+=i;
+			// val+=i;
 			count+=i;
 		} else {
 			r.end=NULL;

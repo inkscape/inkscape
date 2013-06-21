@@ -762,7 +762,7 @@ void Transformation::applyPageMove(Inkscape::Selection *selection)
                 double move = x;
                 for ( std::vector<BBoxSort> ::iterator it (sorted.begin());
                       it < sorted.end();
-                      it ++ )
+                      ++it )
                 {
                     sp_item_move_rel(it->item, Geom::Translate(move, 0));
                     // move each next object by x relative to previous
@@ -786,7 +786,7 @@ void Transformation::applyPageMove(Inkscape::Selection *selection)
                 double move = y;
                 for ( std::vector<BBoxSort> ::iterator it (sorted.begin());
                       it < sorted.end();
-                      it ++ )
+                      ++it )
                 {
                     sp_item_move_rel(it->item, Geom::Translate(0, move));
                     // move each next object by x relative to previous

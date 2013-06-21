@@ -272,7 +272,8 @@ static void sp_color_icc_selector_class_init(SPColorICCSelectorClass *klass)
 
 
 ColorICCSelector::ColorICCSelector( SPColorSelector* csel )
-    : ColorSelector( csel )
+    : ColorSelector( csel ),
+      _impl(NULL)
 {
 }
 
@@ -429,7 +430,8 @@ ColorICCSelectorImpl::~ColorICCSelectorImpl()
 
 void ColorICCSelector::init()
 {
-    _impl = new ColorICCSelectorImpl(this);
+    if (_impl) delete(_impl);
+	_impl = new ColorICCSelectorImpl(this);
     gint row = 0;
 
     _impl->_updating = FALSE;

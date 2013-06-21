@@ -195,7 +195,7 @@ void ActionAlign::do_action(SPDesktop *desktop, int index) {
     //Move each item in the selected list separately
     for (std::list<SPItem *>::iterator it(selected.begin());
          it != selected.end();
-         it++)
+         ++it)
     {
         sp_desktop_document (desktop)->ensureUpToDate();
         if (!sel_as_group)
@@ -347,7 +347,7 @@ private :
             float pos = sorted.front().bbox.min()[_orientation];
             for ( std::vector<BBoxSort> ::iterator it (sorted.begin());
                   it < sorted.end();
-                  it ++ )
+                  ++it )
             {
                 if (!Geom::are_near(pos, it->bbox.min()[_orientation], 1e-6)) {
                     Geom::Point t(0.0, 0.0);

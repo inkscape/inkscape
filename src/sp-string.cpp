@@ -132,10 +132,10 @@ sp_string_update(SPObject *object, SPCtx *ctx, unsigned flags)
     if (((SPObjectClass *) sp_string_parent_class)->update)
         ((SPObjectClass *) sp_string_parent_class)->update(object, ctx, flags);
 
-    if (flags & (SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_MODIFIED_FLAG)) {
-        /* Parent style or we ourselves changed, so recalculate */
-        flags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B; // won't be "just a transformation" anymore, we're going to recompute "x" and "y" attributes
-    }
+    // if (flags & (SP_OBJECT_STYLE_MODIFIED_FLAG | SP_OBJECT_MODIFIED_FLAG)) {
+    //     /* Parent style or we ourselves changed, so recalculate */
+    //     flags &= ~SP_OBJECT_USER_MODIFIED_FLAG_B; // won't be "just a transformation" anymore, we're going to recompute "x" and "y" attributes
+    // }
 }
 
 
