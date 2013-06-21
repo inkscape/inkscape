@@ -1191,15 +1191,28 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     {
         creator = iter->second;
     }
-    Glib::ustring date = "";
+    
+    Glib::ustring date;
+    Glib::ustring moddate;
+    char buf [80];
+    time_t rawtime;
+    struct tm * timeinfo;
+    time (&rawtime);
+    timeinfo = localtime (&rawtime);
+    strftime (buf,80,"%Y-%m-%d %H:%M:%S",timeinfo);
+    moddate = Glib::ustring(buf);
+    
     iter = metadata.find("dc:date");
     if (iter != metadata.end())
     {
         date = iter->second;
     }
+    else
+    {
+        date = moddate;
+    }
 
     outs.writeString("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-    outs.writeString("\n");
     outs.writeString("\n");
     outs.writeString("<!--\n");
     outs.writeString("*************************************************************************\n");
@@ -1208,7 +1221,6 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     outs.writeString("  http://www.inkscape.org\n");
     outs.writeString("*************************************************************************\n");
     outs.writeString("-->\n");
-    outs.writeString("\n");
     outs.writeString("\n");
     outs.writeString("<office:document-meta\n");
     outs.writeString("xmlns:office=\"urn:oasis:names:tc:opendocument:xmlns:office:1.0\"\n");
@@ -1221,10 +1233,11 @@ bool OdfOutput::writeMeta(ZipFile &zf)
     outs.writeString("xmlns:anim=\"urn:oasis:names:tc:opendocument:xmlns:animation:1.0\"\n");
     outs.writeString("office:version=\"1.0\">\n");
     outs.writeString("<office:meta>\n");
-    Glib::ustring tmp = Glib::ustring("    <meta:generator>") + InkscapeVersion + "</meta:generator>\n";
+    Glib::ustring tmp = Glib::ustring::compose("    <meta:generator>%1</meta:generator>\n", InkscapeVersion);
+    tmp += Glib::ustring::compose("    <meta:initial-creator>%1</meta:initial-creator>\n", creator);
+    tmp += Glib::ustring::compose("    <meta:creation-date>%1</meta:creation-date>\n", date);
+    tmp += Glib::ustring::compose("    <dc:date>%1</dc:date>\n", moddate);
     outs.writeUString(tmp);
-    outs.printf("    <meta:initial-creator>%s</meta:initial-creator>\n", creator.c_str());
-    outs.printf("    <meta:creation-date>%s</meta:creation-date>\n", date.c_str());
     for (iter = metadata.begin() ; iter != metadata.end() ; ++iter)
     {
         Glib::ustring name  = iter->first;
@@ -1235,18 +1248,15 @@ bool OdfOutput::writeMeta(ZipFile &zf)
             outs.writeUString(tmp);
         }
     }
-    outs.writeString("    <meta:editing-cycles>2</meta:editing-cycles>\n");
-    outs.writeString("    <meta:editing-duration>PT56S</meta:editing-duration>\n");
-    outs.writeString("    <meta:user-defined meta:name=\"Info 1\"/>\n");
-    outs.writeString("    <meta:user-defined meta:name=\"Info 2\"/>\n");
-    outs.writeString("    <meta:user-defined meta:name=\"Info 3\"/>\n");
-    outs.writeString("    <meta:user-defined meta:name=\"Info 4\"/>\n");
-    outs.writeString("    <meta:document-statistic meta:object-count=\"2\"/>\n");
+    // outs.writeString("    <meta:editing-cycles>2</meta:editing-cycles>\n");
+    // outs.writeString("    <meta:editing-duration>PT56S</meta:editing-duration>\n");
+    // outs.writeString("    <meta:user-defined meta:name=\"Info 1\"/>\n");
+    // outs.writeString("    <meta:user-defined meta:name=\"Info 2\"/>\n");
+    // outs.writeString("    <meta:user-defined meta:name=\"Info 3\"/>\n");
+    // outs.writeString("    <meta:user-defined meta:name=\"Info 4\"/>\n");
+    // outs.writeString("    <meta:document-statistic meta:object-count=\"2\"/>\n");
     outs.writeString("</office:meta>\n");
     outs.writeString("</office:document-meta>\n");
-    outs.writeString("\n");
-    outs.writeString("\n");
-
     outs.close();
 
     //Make our entry
@@ -1533,7 +1543,7 @@ bool OdfOutput::processGradient(SPItem *item,
     gradientTable.push_back(gi);
     gradientLookupTable[id] = gradientName;
 
-    int gradientCount = gradientTable.size();
+    // int gradientCount = gradientTable.size();
     char buf[128];
     if (gi.style == "linear")
     {
