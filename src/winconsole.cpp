@@ -5,13 +5,13 @@
  * Windows has two types of executables: GUI and console.
  * The GUI executables detach immediately when run from the command
  * prompt (cmd.exe), and whatever you write to standard output
- * disappears into a black hole. Console executables handle
+ * disappears into a black hole. Console executables
  * do display standard output and take standard input from the console,
  * but when you run them from the GUI, an extra console window appears.
- * It's possible to hide it, but it still flashes from a fraction
+ * It's possible to hide it, but it still flashes for a fraction
  * of a second.
  *
- * To provide an Unix-like experienve, where the application will behave
+ * To provide an Unix-like experience, where the application will behave
  * correctly in command line mode and at the same time won't create
  * the ugly console window when run from the GUI, we have to have two
  * executables. The first one, inkscape.exe, is the GUI application.
@@ -31,7 +31,7 @@
  *//*
  * Authors:
  *   Jos Hirth <jh@kaioa.com>
- *   Krzysztof Kosiñski <tweenk.pl@gmail.com>
+ *   Krzysztof Kosinski <tweenk.pl@gmail.com>
  *
  * Copyright (C) 2008-2010 Authors
  *
