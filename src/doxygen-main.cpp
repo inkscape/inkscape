@@ -303,7 +303,7 @@ namespace XML {}
  * SPGuide [\ref sp-guide.cpp, \ref sp-guide.h, \ref satisfied-guide-cns.cpp, \ref sp-guide-attachment.h, \ref sp-guide-constraint.h]
  *
  * [\ref help.cpp] [\ref inkscape.cpp] [\ref inkscape-stock.cpp]
- * [\ref interface.cpp, \ref memeq.h] [\ref main.cpp, \ref winmain.cpp]
+ * [\ref interface.cpp] [\ref main.cpp, \ref winmain.cpp]
  * [\ref menus-skeleton.h, \ref preferences-skeleton.h]
  * [\ref select-toolbar.cpp] [\ref shortcuts.cpp]
  * [\ref sp-cursor.cpp] [\ref text-edit.cpp] [\ref toolbox.cpp]

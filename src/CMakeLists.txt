@@ -407,7 +407,6 @@ set(inkscape_SRC
 	marker.h
 	measure-context.h
 	media.h
-	memeq.h
 	menus-skeleton.h
 	mesh-context.h
 	message-context.h

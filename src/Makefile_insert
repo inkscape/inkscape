@@ -99,7 +99,6 @@ ink_common_sources +=	\
 	main-cmdlineact.cpp main-cmdlineact.h				\
 	marker.cpp marker.h						\
 	media.cpp media.h						\
-	memeq.h								\
 	menus-skeleton.h						\
 	mesh-context.cpp mesh-context.h					\
 	message-context.cpp message-context.h				\
