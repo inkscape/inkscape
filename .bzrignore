@@ -205,6 +205,6 @@ src/util/test-util.cpp
 src/xml/test-xml.cpp
 gc.log
 share/palettes/palettes.h
-ltmain.sh@
+ltmain.sh
 backup.bzr
 mkinstalldirs
