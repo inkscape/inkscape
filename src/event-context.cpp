@@ -590,13 +590,6 @@ static gint sp_event_context_private_root_handler(
             ret = sp_shortcut_invoke(shortcut, desktop);
             break;
 
-        case GDK_KEY_D:
-        case GDK_KEY_d:
-            if (!MOD__SHIFT(event) && !MOD__CTRL(event) && !MOD__ALT(event)) {
-                sp_toggle_dropper(desktop);
-                ret = TRUE;
-            }
-            break;
         case GDK_KEY_Q:
         case GDK_KEY_q:
             if (desktop->quick_zoomed()) {

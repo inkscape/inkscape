@@ -47,6 +47,7 @@
 #include "document.h"
 #include "draw-context.h"
 #include "extension/effect.h"
+#include "event-context.h"
 #include "file.h"
 #include "gradient-drag.h"
 #include "helper/action.h"
@@ -1560,7 +1561,7 @@ void ContextVerb::perform(SPAction *action, void *data)
             tools_switch(dt, TOOLS_MEASURE);
             break;
         case SP_VERB_CONTEXT_DROPPER:
-            tools_switch(dt, TOOLS_DROPPER);
+            sp_toggle_dropper(dt); // Functionality defined in event-context.cpp
             break;
         case SP_VERB_CONTEXT_CONNECTOR:
             tools_switch(dt,  TOOLS_CONNECTOR);
