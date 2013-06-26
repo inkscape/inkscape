@@ -26,6 +26,7 @@
 #include <gtkmm/label.h>
 
 #if WITH_GTKMM_3_0
+# include <gtkmm/togglebutton.h>
 # include <gtkmm/grid.h>
 #else
 # include <gtkmm/table.h>
