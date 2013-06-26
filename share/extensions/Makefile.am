@@ -64,7 +64,8 @@ extensions = \
 	foldablebox.py \
 	fractalize.py \
 	funcplot.py \
-	gears.py\
+	render_gears.py \
+	render_gear_rack.py \
 	gcodetools.py\
 	generate_voronoi.py \
 	gimp_xcf.py \
@@ -243,7 +244,8 @@ modules = \
 	foldablebox.inx \
 	fractalize.inx \
 	funcplot.inx \
-	gears.inx\
+	render_gears.inx \
+	render_gear_rack.inx \
 	gcodetools_about.inx\
 	gcodetools_area.inx\
 	gcodetools_check_for_updates.inx\
