@@ -202,8 +202,8 @@ struct rdf_license_t rdf_licenses [] = {
       rdf_license_cc_a_nc_nd,
     },
 
-    { N_("Public Domain"),
-      "http://creativecommons.org/licenses/publicdomain/",
+    { N_("CC0 Public Domain Dedication"),
+      "http://creativecommons.org/publicdomain/zero/1.0/",
       rdf_license_pd,
     },
 
