@@ -434,7 +434,6 @@ share/extensions/wireframe_sphere.py
 [type: gettext/xml] share/extensions/foldablebox.inx
 [type: gettext/xml] share/extensions/fractalize.inx
 [type: gettext/xml] share/extensions/funcplot.inx
-[type: gettext/xml] share/extensions/gears.inx
 [type: gettext/xml] share/extensions/gcodetools_about.inx
 [type: gettext/xml] share/extensions/gcodetools_area.inx
 [type: gettext/xml] share/extensions/gcodetools_check_for_updates.inx
@@ -507,6 +506,8 @@ share/extensions/wireframe_sphere.py
 [type: gettext/xml] share/extensions/render_barcode.inx
 [type: gettext/xml] share/extensions/render_barcode_datamatrix.inx
 [type: gettext/xml] share/extensions/render_barcode_qrcode.inx
+[type: gettext/xml] share/extensions/render_gears.inx
+[type: gettext/xml] share/extensions/render_gear_rack.inx
 [type: gettext/xml] share/extensions/replace_font.inx
 [type: gettext/xml] share/extensions/restack.inx
 [type: gettext/xml] share/extensions/rtree.inx
