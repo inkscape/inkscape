@@ -1155,7 +1155,13 @@ FilterEffectsDialog::FilterModifier::FilterModifier(FilterEffectsDialog& d)
 
     sw->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
     _list.get_column(1)->set_resizable(true);
-    
+    _list.set_reorderable(true);
+
+    // We can track the drag/drop reordering from the row_delete (occurs after
+    // row_inserted and may occur many times when adding a new item)
+    _model->signal_row_deleted().connect(
+            sigc::mem_fun(*this, &FilterModifier::on_filter_reorder));
+
     sw->set_shadow_type(Gtk::SHADOW_IN);
     show_all_children();
     _add.signal_clicked().connect(sigc::mem_fun(*this, &FilterModifier::add_filter));
@@ -1299,6 +1305,13 @@ void FilterEffectsDialog::FilterModifier::on_name_edited(const Glib::ustring& pa
         if(iter)
             (*iter)[_columns.label] = text;
     }
+}
+
+void FilterEffectsDialog::FilterModifier::on_filter_reorder(const Gtk::TreeModel::Path& path) {
+  for(Gtk::TreeModel::iterator i = _model->children().begin(); i != _model->children().end(); ++i) {
+      SPObject* object = (*i)[_columns.filter];
+      object->getRepr()->setPosition(0);
+  }
 }
 
 void FilterEffectsDialog::FilterModifier::on_selection_toggled(const Glib::ustring& path)

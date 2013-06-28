@@ -86,6 +86,7 @@ private:
         void on_filter_selection_changed();
 
         void on_name_edited(const Glib::ustring&, const Glib::ustring&);
+        void on_filter_reorder(const Gtk::TreeModel::Path& path);
         void on_selection_toggled(const Glib::ustring&);
 
         void update_filters();
