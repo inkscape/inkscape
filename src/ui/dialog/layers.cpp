@@ -404,13 +404,13 @@ void LayersPanel::_addLayer( SPDocument* doc, SPObject* layer, Gtk::TreeModel::R
             SPObject *child = _desktop->layer_manager->nthChildOf(layer, i);
             if ( child ) {
 #if DUMP_LAYERS
-                g_message(" %3d    layer:%p  {%s}   [%s]", level, child, child->id, child->label() );
+                g_message(" %3d    layer:%p  {%s}   [%s]", level, child, child->getId(), child->label() );
 #endif // DUMP_LAYERS
 
                 Gtk::TreeModel::iterator iter = parentRow ? _store->prepend(parentRow->children()) : _store->prepend();
                 Gtk::TreeModel::Row row = *iter;
                 row[_model->_colObject] = child;
-                row[_model->_colLabel] = child->label() ? child->label() : child->getId();
+                row[_model->_colLabel] = child->defaultLabel();
                 row[_model->_colVisible] = SP_IS_ITEM(child) ? !SP_ITEM(child)->isHidden() : false;
                 row[_model->_colLocked] = SP_IS_ITEM(child) ? SP_ITEM(child)->isLocked() : false;
 
