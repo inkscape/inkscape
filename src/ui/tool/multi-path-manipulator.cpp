@@ -224,10 +224,12 @@ void MultiPathManipulator::shiftSelection(int dir)
     SubpathList::iterator last_j;
     NodeList::iterator last_k;
     bool anything_found = false;
+    bool anynode_found = false;
 
     for (MapType::iterator i = _mmap.begin(); i != _mmap.end(); ++i) {
         SubpathList &sp = i->second->subpathList();
         for (SubpathList::iterator j = sp.begin(); j != sp.end(); ++j) {
+            anynode_found = true;
             for (NodeList::iterator k = (*j)->begin(); k != (*j)->end(); ++k) {
                 if (k->selected()) {
                     last_i = i;
@@ -249,10 +251,12 @@ void MultiPathManipulator::shiftSelection(int dir)
     if (!anything_found) {
         // select first / last node
         // this should never fail because there must be at least 1 non-empty manipulator
-        if (dir == 1) {
+        if (anynode_found) {
+          if (dir == 1) {
             _selection.insert((*_mmap.begin()->second->subpathList().begin())->begin().ptr());
-        } else {
+          } else {
             _selection.insert((--(*--(--_mmap.end())->second->subpathList().end())->end()).ptr());
+          }
         }
         return;
     }
