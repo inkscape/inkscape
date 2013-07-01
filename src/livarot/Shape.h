@@ -266,10 +266,10 @@ public:
     // be careful when using this function
 
     // the coordinate rounding function
-    inline static double Round(double x)
-    {
-        return ldexp(rint(ldexp(x, 5)), -5);
-    }
+//    inline static double Round(double x)
+//    {
+//        return ldexp(rint(ldexp(x, 5)), -5);
+//    }
     
     // 2 miscannellous variations on it, to scale to and back the rounding grid
     inline static double HalfRound(double x)

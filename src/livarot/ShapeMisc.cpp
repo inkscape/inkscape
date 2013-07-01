@@ -49,8 +49,8 @@ Shape::ConvertToForme (Path * dest)
   
   for (int i = 0; i < numberOfPoints(); i++)
   {
-    pData[i].rx[0] = Round (getPoint(i).x[0]);
-    pData[i].rx[1] = Round (getPoint(i).x[1]);
+    pData[i].rx[0] = /*Round*/ (getPoint(i).x[0]);
+    pData[i].rx[1] = /*Round*/ (getPoint(i).x[1]);
   }
   for (int i = 0; i < numberOfEdges(); i++)
   {
@@ -199,8 +199,8 @@ Shape::ConvertToForme (Path * dest, int nbP, Path * *orig, bool splitWhenForced)
   
   for (int i = 0; i < numberOfPoints(); i++)
   {
-    pData[i].rx[0] = Round (getPoint(i).x[0]);
-    pData[i].rx[1] = Round (getPoint(i).x[1]);
+    pData[i].rx[0] = /*Round*/ (getPoint(i).x[0]);
+    pData[i].rx[1] = /*Round*/ (getPoint(i).x[1]);
   }
   for (int i = 0; i < numberOfEdges(); i++)
   {
@@ -352,8 +352,8 @@ Shape::ConvertToFormeNested (Path * dest, int nbP, Path * *orig, int wildPath,in
   
   for (int i = 0; i < numberOfPoints(); i++)
   {
-    pData[i].rx[0] = Round (getPoint(i).x[0]);
-    pData[i].rx[1] = Round (getPoint(i).x[1]);
+    pData[i].rx[0] = /*Round*/ (getPoint(i).x[0]);
+    pData[i].rx[1] = /*Round*/ (getPoint(i).x[1]);
   }
   for (int i = 0; i < numberOfEdges(); i++)
   {
