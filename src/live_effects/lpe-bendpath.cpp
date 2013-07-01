@@ -94,6 +94,10 @@ LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
         bend_path.changed = false;
     }
 
+    if (uskeleton.empty()) {
+        return pwd2_in;  /// \todo or throw an exception instead? might be better to throw an exception so that the UI can display an error message or smth
+    }
+
     D2<Piecewise<SBasis> > patternd2 = make_cuts_independent(pwd2_in);
     Piecewise<SBasis> x = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[1]) : Piecewise<SBasis>(patternd2[0]);
     Piecewise<SBasis> y = vertical_pattern.get_value() ? Piecewise<SBasis>(patternd2[0]) : Piecewise<SBasis>(patternd2[1]);
@@ -105,9 +109,9 @@ LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
     x-= bboxHorizontal.min();
     y-= bboxVertical.middle();
 
-  double scaling = uskeleton.cuts.back()/bboxHorizontal.extent();
+    double scaling = uskeleton.cuts.back()/bboxHorizontal.extent();
 
-  if (scaling != 1.0) {
+    if (scaling != 1.0) {
         x*=scaling;
     }
 
@@ -116,7 +120,6 @@ LPEBendPath::doEffect_pwd2 (Geom::Piecewise<Geom::D2<Geom::SBasis> > const & pwd
     } else {
         if (prop_scale != 1.0) y *= prop_scale;
     }
-
 
     Piecewise<D2<SBasis> > output = compose(uskeleton,x) + y*compose(n,x);
     return output;
