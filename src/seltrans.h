@@ -25,6 +25,7 @@
 #include "message-context.h"
 #include <vector>
 #include "sp-item.h"
+#include "seltrans-handles.h"
 
 struct SPKnot;
 class  SPDesktop;
@@ -64,6 +65,7 @@ public:
     void scale(Geom::Point &pt, guint state);
     void skew(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
     void rotate(Geom::Point &pt, guint state);
+    gboolean request(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
     gboolean scaleRequest(Geom::Point &pt, guint state);
     gboolean stretchRequest(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
     gboolean skewRequest(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
@@ -91,7 +93,7 @@ public:
         return _grabbed;
     }
     bool centerIsVisible() {
-        return ( _chandle && SP_KNOT_IS_VISIBLE (_chandle) );
+        return ( _center_handle && SP_KNOT_IS_VISIBLE (knots[_center_handle]) );
     }
 
     void getNextClosestPoint(bool reverse);
@@ -115,8 +117,8 @@ private:
     void _selChanged(Inkscape::Selection *selection);
     void _selModified(Inkscape::Selection *selection, guint flags);
     void _boundingBoxPrefsChanged(int prefs_bbox);
-    void _showHandles(SPKnot *knot[], SPSelTransHandle const handle[], gint num,
-                      gchar const *even_tip, gchar const *odd_tip);
+    void _makeHandles();
+    void _showHandles(SPSelTransType type);
     Geom::Point _getGeomHandlePos(Geom::Point const &visual_handle_pos);
     Geom::Point _calcAbsAffineDefault(Geom::Scale const default_scale);
     Geom::Point _calcAbsAffineGeom(Geom::Scale const geom_scale);
@@ -176,10 +178,9 @@ private:
 
     boost::optional<Geom::Point> _center;
     bool _center_is_set; ///< we've already set _center, no need to reread it from items
+    int  _center_handle;
 
-    SPKnot *_shandle[8];
-    SPKnot *_rhandle[8];
-    SPKnot *_chandle;
+    SPKnot *knots[27]; // Only some as shown at any time
     SPCanvasItem *_norm;
     SPCanvasItem *_grip;
     SPCtrlLine *_l[4];

@@ -21,40 +21,32 @@ namespace Inkscape
   class SelTrans;
 }
 
+enum SPSelTransType {
+    HANDLE_STRETCH,
+    HANDLE_SCALE,
+    HANDLE_SKEW,
+    HANDLE_ROTATE,
+    HANDLE_CENTER
+};
+
+struct SPSelTransTypeInfo {
+        gchar const *tip;
+};
+// One per handle type in order
+extern SPSelTransTypeInfo const handtypes[5];
+
 struct SPSelTransHandle;
 
-// request handlers
-gboolean sp_sel_trans_scale_request(Inkscape::SelTrans *seltrans,
-				    SPSelTransHandle const &handle, Geom::Point &p, guint state);
-gboolean sp_sel_trans_stretch_request(Inkscape::SelTrans *seltrans,
-				      SPSelTransHandle const &handle, Geom::Point &p, guint state);
-gboolean sp_sel_trans_skew_request(Inkscape::SelTrans *seltrans,
-				   SPSelTransHandle const &handle, Geom::Point &p, guint state);
-gboolean sp_sel_trans_rotate_request(Inkscape::SelTrans *seltrans,
-				     SPSelTransHandle const &handle, Geom::Point &p, guint state);
-gboolean sp_sel_trans_center_request(Inkscape::SelTrans *seltrans,
-				     SPSelTransHandle const &handle, Geom::Point &p, guint state);
-
-// action handlers
-void sp_sel_trans_scale(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
-void sp_sel_trans_stretch(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
-void sp_sel_trans_skew(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
-void sp_sel_trans_rotate(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
-void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
-
 struct SPSelTransHandle {
+        SPSelTransType type;
 	SPAnchorType anchor;
 	GdkCursorType cursor;
 	guint control;
-	void (* action) (Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
-	gboolean (* request) (Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &p, guint state);
 	gdouble x, y;
 };
-
-// TODO these must be purged:
-extern SPSelTransHandle const handles_scale[8];
-extern SPSelTransHandle const handles_rotate[8];
-extern SPSelTransHandle const handle_center;
+// These are 4 * each handle type + 1 for center
+int const NUMHANDS = 17;
+extern SPSelTransHandle const hands[17];
 
 #endif // SEEN_SP_SELTRANS_HANDLES_H
 

@@ -48,11 +48,10 @@
 #include <2geom/angle.h>
 #include "display/snap-indicator.h"
 #include "ui/control-manager.h"
+#include "seltrans-handles.h"
 
 using Inkscape::ControlManager;
 using Inkscape::DocumentUndo;
-
-static void sp_remove_handles(SPKnot *knot[], gint num);
 
 static void sp_sel_trans_handle_grab(SPKnot *knot, guint state, gpointer data);
 static void sp_sel_trans_handle_ungrab(SPKnot *knot, guint state, gpointer data);
@@ -62,7 +61,7 @@ static gboolean sp_sel_trans_handle_request(SPKnot *knot, Geom::Point *p, guint 
 
 extern GdkPixbuf *handles[];
 
-static gboolean sp_seltrans_handle_event(SPKnot *knot, GdkEvent *event, gpointer)
+static gboolean sp_sel_trans_handle_event(SPKnot *knot, GdkEvent *event, gpointer)
 {
     switch (event->type) {
         case GDK_MOTION_NOTIFY:
@@ -112,7 +111,6 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
     _opposite_for_bboxpoints(Geom::Point(0,0)),
     _origin_for_specpoints(Geom::Point(0,0)),
     _origin_for_bboxpoints(Geom::Point(0,0)),
-    _chandle(NULL),
     _stamp_cache(NULL),
     _message_context(desktop->messageStack()),
     _bounding_box_prefs_observer(*this)
@@ -124,16 +122,12 @@ Inkscape::SelTrans::SelTrans(SPDesktop *desktop) :
 
     g_return_if_fail(desktop != NULL);
 
-    for (int i = 0; i < 8; i++) {
-        _shandle[i] = NULL;
-        _rhandle[i] = NULL;
-    }
-
     _updateVolatileState();
     _current_relative_affine.setIdentity();
 
     _center_is_set = false; // reread _center from items, or set to bbox midpoint
 
+    _makeHandles();
     _updateHandles();
 
     _selection = sp_desktop_selection(desktop);
@@ -190,19 +184,9 @@ Inkscape::SelTrans::~SelTrans()
     _sel_changed_connection.disconnect();
     _sel_modified_connection.disconnect();
 
-    for (unsigned int i = 0; i < 8; i++) {
-        if (_shandle[i]) {
-            g_object_unref(G_OBJECT(_shandle[i]));
-            _shandle[i] = NULL;
-        }
-        if (_rhandle[i]) {
-            g_object_unref(G_OBJECT(_rhandle[i]));
-            _rhandle[i] = NULL;
-        }
-    }
-    if (_chandle) {
-        g_object_unref(G_OBJECT(_chandle));
-        _chandle = NULL;
+    for (int i = 0; i < NUMHANDS; i++) {
+        g_object_unref(G_OBJECT(knots[i]));
+        knots[i] = NULL;
     }
 
     if (_norm) {
@@ -584,13 +568,11 @@ void Inkscape::SelTrans::stamp()
 
 void Inkscape::SelTrans::_updateHandles()
 {
+    for (int i = 0; i < NUMHANDS; i++)
+        sp_knot_hide(knots[i]);
+
     if ( !_show_handles || _empty )
-    {
-        sp_remove_handles(_shandle, 8);
-        sp_remove_handles(_rhandle, 8);
-        sp_remove_handles(&_chandle, 1);
         return;
-    }
 
     if (!_center_is_set) {
         _center = _desktop->selection->center();
@@ -598,57 +580,12 @@ void Inkscape::SelTrans::_updateHandles()
     }
 
     if ( _state == STATE_SCALE ) {
-        sp_remove_handles(_rhandle, 8);
-        sp_remove_handles(&_chandle, 1);
-        _showHandles(_shandle, handles_scale, 8,
-                    _("<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"),
-                    _("<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center"));
+        _showHandles(HANDLE_STRETCH);
+        _showHandles(HANDLE_SCALE);
     } else {
-        sp_remove_handles(_shandle, 8);
-        _showHandles(_rhandle, handles_rotate, 8,
-                    _("<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side"),
-                    _("<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner"));
-        // center handle
-        /* Assuming that the center handle is in its default position, ie. in the center:
-         * Multiple handles will be shown, for rotating, skewing and the center handle. For straight lines, the bounding box of the center handle will be
-         * fully overlapped by bounding boxes of two of the skew handles. Due to the internals of sp_canvas_group_point, the center handle must be the
-         * last handle in the SPCanvasGroup if it is to be selectable in such a case. So we have made sure here that the center handle is added to the
-         * group after the rotation handles (determined by the chronological order of sp_knot_new() calls)
-         * Now when the center handle is in still in the center, the skew handles can be selected because because the bounding box of the
-         * center handle does not fully overlap the bounding box of either of the skew handles. However, if the center handle has been moved such that it
-         * covers one of the other eight handles, then either the opposite handle has to be used (in case of rotating), or the center handle has to be moved.
-         * Although this is annoying, this is still better than not being able to select the center handle at all
-         */
-        if ( _chandle == NULL ) {
-            _chandle = sp_knot_new(_desktop, _("<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center"));
-
-            _chandle->setShape (SP_CTRL_SHAPE_BITMAP);
-            _chandle->setSize (13);
-            _chandle->setAnchor (handle_center.anchor);
-            _chandle->setMode (SP_CTRL_MODE_XOR);
-            _chandle->setFill(0x00000000, 0x00000000, 0x00000000);
-            _chandle->setStroke(0x000000ff, 0xff0000b0, 0xff0000b0);
-            _chandle->setPixbuf(handles[handle_center.control]);
-            sp_knot_update_ctrl(_chandle);
-
-            g_signal_connect(G_OBJECT(_chandle), "request",
-                             G_CALLBACK(sp_sel_trans_handle_request), (gpointer) &handle_center);
-            g_signal_connect(G_OBJECT(_chandle), "moved",
-                             G_CALLBACK(sp_sel_trans_handle_new_event), (gpointer) &handle_center);
-            g_signal_connect(G_OBJECT(_chandle), "grabbed",
-                             G_CALLBACK(sp_sel_trans_handle_grab), (gpointer) &handle_center);
-            g_signal_connect(G_OBJECT(_chandle), "ungrabbed",
-                             G_CALLBACK(sp_sel_trans_handle_ungrab), (gpointer) &handle_center);
-            g_signal_connect(G_OBJECT(_chandle), "clicked",
-                             G_CALLBACK(sp_sel_trans_handle_click), (gpointer) &handle_center);
-        }
-
-        if ( _center ) {
-            sp_knot_show(_chandle);
-            sp_knot_moveto(_chandle, *_center);
-        } else {
-            sp_remove_handles(&_chandle, 1);
-        }
+        _showHandles(HANDLE_SKEW);
+        _showHandles(HANDLE_ROTATE);
+        _showHandles(HANDLE_CENTER);
     }
 }
 
@@ -673,53 +610,60 @@ void Inkscape::SelTrans::_updateVolatileState()
     _strokewidth = stroke_average_width (selection->itemList());
 }
 
-static void sp_remove_handles(SPKnot *knot[], gint num)
+void Inkscape::SelTrans::_showHandles(SPSelTransType type)
 {
-    for (int i = 0; i < num; i++) {
-        if (knot[i] != NULL) {
-            sp_knot_hide(knot[i]);
-        }
+    // shouldn't have nullary bbox, but knots
+    g_assert(_bbox);
+
+    for (int i = 0; i < NUMHANDS; i++) {
+        if (hands[i].type != type)
+            continue;
+
+        // Position knots to scale the selection bbox
+        Geom::Point const bpos(hands[i].x, hands[i].y);
+        Geom::Point p(_bbox->min() + (_bbox->dimensions() * Geom::Scale(bpos)));
+        sp_knot_moveto(knots[i], p);
+        sp_knot_show(knots[i]);
+
+        // This controls the center handle's position, because the default can
+        // be moved and needs to be remembered.
+        if( type == HANDLE_CENTER && _center )
+            sp_knot_moveto(knots[i], *_center);
     }
 }
 
-void Inkscape::SelTrans::_showHandles(SPKnot *knot[], SPSelTransHandle const handle[], gint num,
-                             gchar const *even_tip, gchar const *odd_tip)
+void Inkscape::SelTrans::_makeHandles()
 {
-    g_return_if_fail( !_empty );
+    for (int i = 0; i < NUMHANDS; i++) {
+        knots[i] = sp_knot_new(_desktop, handtypes[hands[i].type].tip);
 
-    for (int i = 0; i < num; i++) {
-        if (knot[i] == NULL) {
-            knot[i] = sp_knot_new(_desktop, i % 2 ? even_tip : odd_tip);
+        knots[i]->setShape(SP_CTRL_SHAPE_BITMAP);
+        knots[i]->setSize(13);
+        knots[i]->setAnchor(hands[i].anchor);
+        knots[i]->setMode(SP_CTRL_MODE_XOR);
+        knots[i]->setFill(0x000000ff, 0x00ff6600, 0x00ff6600); // invert+2*green
+        knots[i]->setStroke(0x000000ff, 0x000000ff, 0x000000ff); // 3*invert
+        knots[i]->setPixbuf(handles[hands[i].control]);
+        sp_knot_update_ctrl(knots[i]);
 
-            knot[i]->setShape (SP_CTRL_SHAPE_BITMAP);
-            knot[i]->setSize (13);
-            knot[i]->setAnchor (handle[i].anchor);
-            knot[i]->setMode (SP_CTRL_MODE_XOR);
-            knot[i]->setFill(0x000000ff, 0x00ff6600, 0x00ff6600); // inversion, green, green
-            knot[i]->setStroke(0x000000ff, 0x000000ff, 0x000000ff); // inversion
-            knot[i]->setPixbuf(handles[handle[i].control]);
-            sp_knot_update_ctrl(knot[i]);
-
-            g_signal_connect(G_OBJECT(knot[i]), "request",
-                             G_CALLBACK(sp_sel_trans_handle_request), (gpointer) &handle[i]);
-            g_signal_connect(G_OBJECT(knot[i]), "moved",
-                             G_CALLBACK(sp_sel_trans_handle_new_event), (gpointer) &handle[i]);
-            g_signal_connect(G_OBJECT(knot[i]), "grabbed",
-                             G_CALLBACK(sp_sel_trans_handle_grab), (gpointer) &handle[i]);
-            g_signal_connect(G_OBJECT(knot[i]), "ungrabbed",
-                             G_CALLBACK(sp_sel_trans_handle_ungrab), (gpointer) &handle[i]);
-            g_signal_connect(G_OBJECT(knot[i]), "event", G_CALLBACK(sp_seltrans_handle_event), (gpointer) &handle[i]);
+        if( hands[i].type == HANDLE_CENTER ) {
+            _center_handle = i;
+            knots[i]->setFill(0x00000000, 0x00000000, 0x00000000);               
+            knots[i]->setStroke(0x000000ff, 0xff0000b0, 0xff0000b0);             
         }
-        sp_knot_show(knot[i]);
 
-        Geom::Point const handle_pt(handle[i].x, handle[i].y);
-        // shouldn't have nullary bbox, but knots
-        g_assert(_bbox);
-        Geom::Point p( _bbox->min()
-                     + ( _bbox->dimensions()
-                         * Geom::Scale(handle_pt) ) );
-
-        sp_knot_moveto(knot[i], p);
+        g_signal_connect(G_OBJECT(knots[i]), "request",
+                G_CALLBACK(sp_sel_trans_handle_request), (gpointer) &hands[i]);
+        g_signal_connect(G_OBJECT(knots[i]), "moved",
+                G_CALLBACK(sp_sel_trans_handle_new_event), (gpointer) &hands[i]);
+        g_signal_connect(G_OBJECT(knots[i]), "grabbed",
+                G_CALLBACK(sp_sel_trans_handle_grab), (gpointer) &hands[i]);
+        g_signal_connect(G_OBJECT(knots[i]), "ungrabbed",
+                G_CALLBACK(sp_sel_trans_handle_ungrab), (gpointer) &hands[i]);
+        g_signal_connect(G_OBJECT(knots[i]), "clicked",
+                G_CALLBACK(sp_sel_trans_handle_click), (gpointer) &hands[i]);
+        g_signal_connect(G_OBJECT(knots[i]), "event",
+                G_CALLBACK(sp_sel_trans_handle_event), (gpointer) &hands[i]);
     }
 }
 
@@ -758,8 +702,8 @@ static void sp_sel_trans_handle_click(SPKnot *knot, guint state, gpointer data)
 
 void Inkscape::SelTrans::handleClick(SPKnot */*knot*/, guint state, SPSelTransHandle const &handle)
 {
-    switch (handle.anchor) {
-        case SP_ANCHOR_CENTER:
+    switch (handle.type) {
+        case HANDLE_CENTER:
             if (state & GDK_SHIFT_MASK) {
                 // Unset the  center position for all selected items
                 for (GSList const *l = _desktop->selection->itemList(); l; l = l->next) {
@@ -780,8 +724,8 @@ void Inkscape::SelTrans::handleClick(SPKnot */*knot*/, guint state, SPSelTransHa
 
 void Inkscape::SelTrans::handleGrab(SPKnot *knot, guint /*state*/, SPSelTransHandle const &handle)
 {
-    switch (handle.anchor) {
-        case SP_ANCHOR_CENTER:
+    switch (handle.type) {
+        case HANDLE_CENTER:
             g_object_set(G_OBJECT(_grip),
                          "shape", SP_CTRL_SHAPE_BITMAP,
                          "size", 13.0,
@@ -795,7 +739,6 @@ void Inkscape::SelTrans::handleGrab(SPKnot *knot, guint /*state*/, SPSelTransHan
                          NULL);
             sp_canvas_item_show(_norm);
             sp_canvas_item_show(_grip);
-
             break;
     }
 
@@ -816,21 +759,35 @@ void Inkscape::SelTrans::handleNewEvent(SPKnot *knot, Geom::Point *position, gui
             return;
         }
     }
-
-    handle.action(this, handle, *position, state);
+    switch (handle.type) {
+        case HANDLE_SCALE:
+            scale(*position, state);
+            break;
+        case HANDLE_STRETCH:
+            stretch(handle, *position, state);
+            break;
+        case HANDLE_SKEW:
+            skew(handle, *position, state);
+            break;
+        case HANDLE_ROTATE:
+            rotate(*position, state);
+            break;
+        case HANDLE_CENTER:
+            setCenter(*position);
+            break;
+    }
 }
 
 
 gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, Geom::Point *position, guint state, SPSelTransHandle const &handle)
 {
-    if (!SP_KNOT_IS_GRABBED(knot)) {
+    if (!SP_KNOT_IS_GRABBED(knot))
         return TRUE;
-    }
 
     // When holding shift while rotating or skewing, the transformation will be
     // relative to the point opposite of the handle; otherwise it will be relative
     // to the center as set for the selection
-    if ((!(state & GDK_SHIFT_MASK) == !(_state == STATE_ROTATE)) && (&handle != &handle_center)) {
+    if ((!(state & GDK_SHIFT_MASK) == !(_state == STATE_ROTATE)) && (handle.type != HANDLE_CENTER)) {
         _origin = _opposite;
         _origin_for_bboxpoints = _opposite_for_bboxpoints;
         _origin_for_specpoints = _opposite_for_specpoints;
@@ -842,10 +799,10 @@ gboolean Inkscape::SelTrans::handleRequest(SPKnot *knot, Geom::Point *position, 
         // FIXME
         return TRUE;
     }
-    if (handle.request(this, handle, *position, state)) {
+    if (request(handle, *position, state)) {
         sp_knot_set_position(knot, *position, state);
         SP_CTRL(_grip)->moveto(*position);
-        if (&handle == &handle_center) {
+        if (handle.type == HANDLE_CENTER) {
             SP_CTRL(_norm)->moveto(*position);
         } else {
             SP_CTRL(_norm)->moveto(_origin);
@@ -906,36 +863,6 @@ static double sign(double const x)
     return ( x < 0
              ? -1
              : 1 );
-}
-
-gboolean sp_sel_trans_scale_request(Inkscape::SelTrans *seltrans,
-                                    SPSelTransHandle const &, Geom::Point &pt, guint state)
-{
-    return seltrans->scaleRequest(pt, state);
-}
-
-gboolean sp_sel_trans_stretch_request(Inkscape::SelTrans *seltrans,
-                                      SPSelTransHandle const &handle, Geom::Point &pt, guint state)
-{
-    return seltrans->stretchRequest(handle, pt, state);
-}
-
-gboolean sp_sel_trans_skew_request(Inkscape::SelTrans *seltrans,
-                                   SPSelTransHandle const &handle, Geom::Point &pt, guint state)
-{
-    return seltrans->skewRequest(handle, pt, state);
-}
-
-gboolean sp_sel_trans_rotate_request(Inkscape::SelTrans *seltrans,
-                                     SPSelTransHandle const &, Geom::Point &pt, guint state)
-{
-    return seltrans->rotateRequest(pt, state);
-}
-
-gboolean sp_sel_trans_center_request(Inkscape::SelTrans *seltrans,
-                                     SPSelTransHandle const &, Geom::Point &pt, guint state)
-{
-    return seltrans->centerRequest(pt, state);
 }
 
 gboolean Inkscape::SelTrans::scaleRequest(Geom::Point &pt, guint state)
@@ -1115,6 +1042,24 @@ gboolean Inkscape::SelTrans::stretchRequest(SPSelTransHandle const &handle, Geom
                           100 * _absolute_affine[0], 100 * _absolute_affine[3]);
 
     return TRUE;
+}
+
+gboolean Inkscape::SelTrans::request(SPSelTransHandle const &handle, Geom::Point &pt, guint state)
+{
+    // These _should_ be in the handstype somewhere instead
+    switch (handle.type) {
+        case HANDLE_SCALE:
+            return scaleRequest(pt, state);
+        case HANDLE_STRETCH:
+            return stretchRequest(handle, pt, state);
+        case HANDLE_SKEW:
+            return skewRequest(handle, pt, state);
+        case HANDLE_ROTATE:
+            return rotateRequest(pt, state);
+        case HANDLE_CENTER:
+            return centerRequest(pt, state);
+    }
+    return FALSE;
 }
 
 gboolean Inkscape::SelTrans::skewRequest(SPSelTransHandle const &handle, Geom::Point &pt, guint state)
@@ -1347,25 +1292,7 @@ gboolean Inkscape::SelTrans::centerRequest(Geom::Point &pt, guint state)
  *
  */
 
-void sp_sel_trans_stretch(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &pt, guint state)
-{
-    seltrans->stretch(handle, pt, state);
-}
 
-void sp_sel_trans_scale(Inkscape::SelTrans *seltrans, SPSelTransHandle const &, Geom::Point &pt, guint state)
-{
-    seltrans->scale(pt, state);
-}
-
-void sp_sel_trans_skew(Inkscape::SelTrans *seltrans, SPSelTransHandle const &handle, Geom::Point &pt, guint state)
-{
-    seltrans->skew(handle, pt, state);
-}
-
-void sp_sel_trans_rotate(Inkscape::SelTrans *seltrans, SPSelTransHandle const &, Geom::Point &pt, guint state)
-{
-    seltrans->rotate(pt, state);
-}
 
 void Inkscape::SelTrans::stretch(SPSelTransHandle const &/*handle*/, Geom::Point &/*pt*/, guint /*state*/)
 {
@@ -1386,12 +1313,6 @@ void Inkscape::SelTrans::rotate(Geom::Point &/*pt*/, guint /*state*/)
 {
     transform(_relative_affine, _origin);
 }
-
-void sp_sel_trans_center(Inkscape::SelTrans *seltrans, SPSelTransHandle const &, Geom::Point &pt, guint /*state*/)
-{
-    seltrans->setCenter(pt);
-}
-
 
 void Inkscape::SelTrans::moveTo(Geom::Point const &xy, guint state)
 {
