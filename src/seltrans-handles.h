@@ -21,6 +21,9 @@ namespace Inkscape
   class SelTrans;
 }
 
+guint32 const DEF_COLOR[] = { 0xff, 0xff6600, 0xff6600, 0xff, 0xff, 0xff };
+guint32 const CEN_COLOR[] = { 0x0, 0x0, 0x0, 0xff, 0xff0000b0, 0xff0000b0 };
+
 enum SPSelTransType {
     HANDLE_STRETCH,
     HANDLE_SCALE,
@@ -30,6 +33,7 @@ enum SPSelTransType {
 };
 
 struct SPSelTransTypeInfo {
+        uint  const *color;
         gchar const *tip;
 };
 // One per handle type in order

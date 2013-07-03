@@ -635,22 +635,17 @@ void Inkscape::SelTrans::_showHandles(SPSelTransType type)
 void Inkscape::SelTrans::_makeHandles()
 {
     for (int i = 0; i < NUMHANDS; i++) {
-        knots[i] = sp_knot_new(_desktop, handtypes[hands[i].type].tip);
+        SPSelTransTypeInfo info = handtypes[hands[i].type];
+        knots[i] = sp_knot_new(_desktop, info.tip);
 
         knots[i]->setShape(SP_CTRL_SHAPE_BITMAP);
         knots[i]->setSize(13);
         knots[i]->setAnchor(hands[i].anchor);
         knots[i]->setMode(SP_CTRL_MODE_XOR);
-        knots[i]->setFill(0x000000ff, 0x00ff6600, 0x00ff6600); // invert+2*green
-        knots[i]->setStroke(0x000000ff, 0x000000ff, 0x000000ff); // 3*invert
+        knots[i]->setFill(info.color[0], info.color[1], info.color[2]);
+        knots[i]->setStroke(info.color[3], info.color[4], info.color[5]);
         knots[i]->setPixbuf(handles[hands[i].control]);
         sp_knot_update_ctrl(knots[i]);
-
-        if( hands[i].type == HANDLE_CENTER ) {
-            _center_handle = i;
-            knots[i]->setFill(0x00000000, 0x00000000, 0x00000000);               
-            knots[i]->setStroke(0x000000ff, 0xff0000b0, 0xff0000b0);             
-        }
 
         g_signal_connect(G_OBJECT(knots[i]), "request",
                 G_CALLBACK(sp_sel_trans_handle_request), (gpointer) &hands[i]);

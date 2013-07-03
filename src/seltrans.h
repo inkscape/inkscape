@@ -93,7 +93,7 @@ public:
         return _grabbed;
     }
     bool centerIsVisible() {
-        return ( _center_handle && SP_KNOT_IS_VISIBLE (knots[_center_handle]) );
+        return ( SP_KNOT_IS_VISIBLE (knots[0]) );
     }
 
     void getNextClosestPoint(bool reverse);

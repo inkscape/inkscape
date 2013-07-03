@@ -6,14 +6,16 @@
 #endif
 
 SPSelTransTypeInfo const handtypes[] = {
-    {N_("<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center") },
-    {N_("<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center") },
-    {N_("<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side") },
-    {N_("<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner") },
-    {N_("<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center") }
+    { DEF_COLOR, N_("<b>Squeeze or stretch</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center") },
+    { DEF_COLOR, N_("<b>Scale</b> selection; with <b>Ctrl</b> to scale uniformly; with <b>Shift</b> to scale around rotation center") },
+    { DEF_COLOR, N_("<b>Skew</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to skew around the opposite side") },
+    { DEF_COLOR, N_("<b>Rotate</b> selection; with <b>Ctrl</b> to snap angle; with <b>Shift</b> to rotate around the opposite corner") },
+    { CEN_COLOR, N_("<b>Center</b> of rotation and skewing: drag to reposition; scaling with Shift also uses this center") }
 };
 
 SPSelTransHandle const hands[] = {
+//center handle will be 0 so we can reference it quickly.
+ {HANDLE_CENTER,  SP_ANCHOR_CENTER, GDK_CROSSHAIR,           12,      0.5, 0.5},
 //handle-type     anchor            cursor                   control  x    y
  {HANDLE_STRETCH, SP_ANCHOR_S,      GDK_TOP_SIDE,            3,       0.5, 1},
  {HANDLE_STRETCH, SP_ANCHOR_W,      GDK_RIGHT_SIDE,          2,       1,   0.5},
@@ -31,7 +33,6 @@ SPSelTransHandle const hands[] = {
  {HANDLE_ROTATE,  SP_ANCHOR_SW,     GDK_EXCHANGE,            6,       1,   1},
  {HANDLE_ROTATE,  SP_ANCHOR_NW,     GDK_EXCHANGE,            8,       1,   0},
  {HANDLE_ROTATE,  SP_ANCHOR_NE,     GDK_EXCHANGE,            10,      0,   0},
- {HANDLE_CENTER,  SP_ANCHOR_CENTER, GDK_CROSSHAIR,           12,      0.5, 0.5}
 };
 
 /*
