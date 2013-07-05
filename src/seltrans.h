@@ -180,7 +180,7 @@ private:
     bool _center_is_set; ///< we've already set _center, no need to reread it from items
     int  _center_handle;
 
-    SPKnot *knots[27]; // Only some as shown at any time
+    SPKnot *knots[17];
     SPCanvasItem *_norm;
     SPCanvasItem *_grip;
     SPCtrlLine *_l[4];

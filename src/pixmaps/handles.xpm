@@ -1,5 +1,5 @@
-/* XPM */
-static char const *handle_scale_nw_xpm[] = {
+/* XPM North-West */
+static char const *handle_scale_xpm[] = {
 "13 13 3 1",
 " 	c None",
 ".	c #000000",
@@ -18,28 +18,8 @@ static char const *handle_scale_nw_xpm[] = {
 "     ....... ",
 "             "};
 
-/* XPM */
-static char const *handle_scale_ne_xpm[] = {
-"13 13 3 1",
-" 	c None",
-".	c #000000",
-"+	c #FFFFFF",
-"             ",
-"     ....... ",
-"      ..+++. ",
-"      .++++. ",
-"     .+++++. ",
-" .  .+++++.. ",
-" ...+++++... ",
-" ..+++++.  . ",
-" .+++++.     ",
-" .++++.      ",
-" .+++..      ",
-" .......     ",
-"             "};
-
-/* XPM */
-static char const *handle_scale_h_xpm[] = {
+/* XPM Vertical */
+static char const *handle_stretch_xpm[] = {
 "13 13 3 1",
 " 	c None",
 ".	c #000000",
@@ -58,28 +38,8 @@ static char const *handle_scale_h_xpm[] = {
 "             ",
 "             "};
 
-/* XPM */
-static char const *handle_scale_v_xpm[] = {
-"13 13 3 1",
-" 	c None",
-".	c #000000",
-"+	c #FFFFFF",
-"      .      ",
-"     ...     ",
-"    ..+..    ",
-"   ..+++..   ",
-"  ..+++++..  ",
-"    .+++.    ",
-"    .+++.    ",
-"    .+++.    ",
-"  ..+++++..  ",
-"   ..+++..   ",
-"    ..+..    ",
-"     ...     ",
-"      .      "};
-
-/* XPM */
-static char const *handle_rotate_nw_xpm[] = {
+/* XPM North-West */
+static char const *handle_rotate_xpm[] = {
 "13 13 3 1",
 " 	c None",
 ".	c #000000",
@@ -98,8 +58,8 @@ static char const *handle_rotate_nw_xpm[] = {
 "   ...       ",
 "    .        "};
 
-/* XPM */
-static char const *handle_rotate_n_xpm[] = {
+/* XPM North */
+static char const *handle_skew_xpm[] = {
 "13 13 3 1",
 " 	c None",
 ".	c #000000",
@@ -117,127 +77,6 @@ static char const *handle_rotate_n_xpm[] = {
 "             ",
 "             ",
 "             "};
-
-/* XPM */
-static char const *handle_rotate_ne_xpm[] = {
-"13 13 3 1",
-" 	c None",
-".	c #000000",
-"+	c #FFFFFF",
-"    .        ",
-"   ..        ",
-"  ....       ",
-" ..++...     ",
-"..++++++.    ",
-" .+++++++.   ",
-"  .+..++++.  ",
-"   .  .+++.  ",
-"      .+++...",
-"     .++++.. ",
-"      .++..  ",
-"       ...   ",
-"        .    "};
-
-/* XPM */
-static char const *handle_rotate_e_xpm[] = {
-"13 13 3 1",
-" 	c None",
-".	c #000000",
-"+	c #FFFFFF",
-"        .    ",
-"       ...   ",
-"      ..+..  ",
-"     ..+++.. ",
-"    ...+++...",
-"      .+++.  ",
-"      .+++.  ",
-"      .+++.  ",
-"    ...+++...",
-"     ..+++.. ",
-"      ..+..  ",
-"       ...   ",
-"        .    "};
-
-/* XPM */
-static char const *handle_rotate_se_xpm[] = {
-"13 13 3 1",
-" 	c None",
-".	c #000000",
-"+	c #FFFFFF",
-"        .    ",
-"       ...   ",
-"      .++..  ",
-"     .++++.. ",
-"      .+++...",
-"   .  .+++.  ",
-"  .+..++++.  ",
-" .+++++++.   ",
-"..++++++.    ",
-" ..++...     ",
-"  ....       ",
-"   ..        ",
-"    .        "};
-
-
-/* XPM */
-static char const *handle_rotate_s_xpm[] = {
-"13 13 3 1",
-" 	c None",
-".	c #000000",
-"+	c #FFFFFF",
-"             ",
-"             ",
-"             ",
-"             ",
-"    .   .    ",
-"   ..   ..   ",
-"  .........  ",
-" ..+++++++.. ",
-"..+++++++++..",
-" ..+++++++.. ",
-"  .........  ",
-"   ..   ..   ",
-"    .   .    "};
-
-/* XPM */
-static char const *handle_rotate_sw_xpm[] = {
-"13 13 3 1",
-" 	c None",
-".	c #000000",
-"+	c #FFFFFF",
-"    .        ",
-"   ...       ",
-"  ..++.      ",
-" ..++++.     ",
-"...+++.      ",
-"  .+++.  .   ",
-"  .++++..+.  ",
-"   .+++++++. ",
-"    .++++++..",
-"     ...++.. ",
-"       ....  ",
-"        ..   ",
-"        .    "};
-
-/* XPM */
-static char const *handle_rotate_w_xpm[] = {
-"13 13 3 1",
-" 	c None",
-".	c #000000",
-"+	c #FFFFFF",
-"    .        ",
-"   ...       ",
-"  ..+..      ",
-" ..+++..     ",
-"...+++...    ",
-"  .+++.      ",
-"  .+++.      ",
-"  .+++.      ",
-"...+++. .    ",
-" ..+++..     ",
-"  ..+..      ",
-"   ...       ",
-"    .        "};
 
 /* XPM */
 static char const *handle_center_xpm[] = {
@@ -258,3 +97,4 @@ static char const *handle_center_xpm[] = {
 "      .      ",
 "      .      ",
 "             "};
+

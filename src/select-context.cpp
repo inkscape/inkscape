@@ -91,6 +91,16 @@ sp_select_context_class_init(SPSelectContextClass *klass)
     event_context_class->item_handler = sp_select_context_item_handler;
 }
 
+//Creates rotated variations for handles
+static void
+sp_load_handles(int start, int count, char const **xpm) {
+    handles[start] = gdk_pixbuf_new_from_xpm_data((gchar const **)xpm);
+    for(int i = start + 1; i < start + count; i++) {
+        // We use either the original at *start or previous loop item to rotate
+        handles[i] = gdk_pixbuf_rotate_simple(handles[i-1], GDK_PIXBUF_ROTATE_CLOCKWISE);
+    }
+}
+
 static void
 sp_select_context_init(SPSelectContext *sc)
 {
@@ -111,19 +121,11 @@ sp_select_context_init(SPSelectContext *sc)
     CursorSelectMouseover = sp_cursor_new_from_xpm(cursor_select_m_xpm , 1, 1);
     CursorSelectDragging = sp_cursor_new_from_xpm(cursor_select_d_xpm , 1, 1);
     // selection handles
-    handles[0]  = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_scale_nw_xpm);
-    handles[1]  = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_scale_ne_xpm);
-    handles[2]  = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_scale_h_xpm);
-    handles[3]  = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_scale_v_xpm);
-    handles[4]  = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_rotate_nw_xpm);
-    handles[5]  = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_rotate_n_xpm);
-    handles[6]  = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_rotate_ne_xpm);
-    handles[7]  = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_rotate_e_xpm);
-    handles[8]  = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_rotate_se_xpm);
-    handles[9]  = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_rotate_s_xpm);
-    handles[10] = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_rotate_sw_xpm);
-    handles[11] = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_rotate_w_xpm);
-    handles[12] = gdk_pixbuf_new_from_xpm_data((gchar const **)handle_center_xpm);
+    sp_load_handles(0, 2, handle_scale_xpm);
+    sp_load_handles(2, 2, handle_stretch_xpm);
+    sp_load_handles(4, 4, handle_rotate_xpm);
+    sp_load_handles(8, 4, handle_skew_xpm);
+    sp_load_handles(12, 1, handle_center_xpm);
 }
 
 static void

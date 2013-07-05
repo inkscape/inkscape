@@ -458,9 +458,9 @@ private:
     static Glib::RefPtr<Gdk::Pixbuf> _corner_to_pixbuf(unsigned c) {
         sp_select_context_get_type();
         switch (c % 4) {
-        case 0: return Glib::wrap(handles[10], true);
-        case 1: return Glib::wrap(handles[8], true);
-        case 2: return Glib::wrap(handles[6], true);
+        case 0: return Glib::wrap(handles[7], true);
+        case 1: return Glib::wrap(handles[6], true);
+        case 2: return Glib::wrap(handles[5], true);
         default: return Glib::wrap(handles[4], true);
         }
     }
@@ -605,9 +605,9 @@ private:
     static Glib::RefPtr<Gdk::Pixbuf> _side_to_pixbuf(unsigned s) {
         sp_select_context_get_type();
         switch (s % 4) {
-        case 0: return Glib::wrap(handles[9], true);
-        case 1: return Glib::wrap(handles[7], true);
-        case 2: return Glib::wrap(handles[5], true);
+        case 0: return Glib::wrap(handles[10], true);
+        case 1: return Glib::wrap(handles[9], true);
+        case 2: return Glib::wrap(handles[8], true);
         default: return Glib::wrap(handles[11], true);
         }
     }
