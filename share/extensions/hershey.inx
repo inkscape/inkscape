@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Hershey Text</_name>
+  <id>org.evilmad.render.hershe</id>
+  <dependency type="executable" location="extensions">hershey.py</dependency>
+  <dependency type="executable" location="extensions">hersheydata.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+
+  <param name="tab" type="notebook">
+    <page name="splash" _gui-text="Render Text">
+      <param name="text" type="string" _gui-text="Text:">Hershey Text for Inkscape</param>
+
+      <param name="action" type="optiongroup" appearance="minimal"
+        _gui-text="                Action">
+        <_option value="render">Typeset that text</_option>
+        <_option value="table" >Write glyph table</_option> 
+      </param>
+
+      <param name="fontface" type="optiongroup" appearance="minimal"
+        _gui-text="            Font face ">
+        <_option value="futural">Sans 1-stroke</_option>
+        <_option value="futuram">Sans bold</_option> 
+
+        <_option value="timesr">Serif medium</_option>
+        <_option value="timesi">Serif medium italic</_option>
+        <_option value="timesib">Serif bold italic</_option>
+        <_option value="timesrb">Serif bold</_option>
+
+        <_option value="scripts">Script 1-stroke</_option>
+        <_option value="cursive">Script 1-stroke (alt)</_option>
+        <_option value="scriptc">Script medium</_option>
+
+        <_option value="gothiceng">Gothic English</_option>
+        <_option value="gothicger">Gothic German</_option>
+        <_option value="gothicita">Gothic Italian</_option>	   
+
+        <_option value="greek">Greek 1-stroke</_option>
+        <_option value="timesg">Greek medium</_option>
+        <_option value="cyrillic">Cyrillic</_option>		
+        <_option value="japanese">Japanese</_option> 
+
+        <_option value="astrology">Astrology</_option>
+        <_option value="mathlow">Math (lower)</_option>
+        <_option value="mathupp">Math (upper)</_option>
+        <_option value="markers">Markers</_option> 
+        <_option value="meteorology">Meteorology</_option>
+        <_option value="music">Music</_option>
+        <_option value="symbolic">Symbolic</_option>
+
+      </param>
+      <_param name="emptyspace" type="description" xml:space="preserve"> 
+
+
+
+</_param>
+
+    </page>
+    <page name="info" _gui-text="About...">
+      <_param name="aboutpage" type="description" xml:space="preserve">
+This extension renders a line of text using
+"Hershey" fonts for plotters, derived from 
+NBS SP-424 1976-04, "A contribution to 
+computer typesetting techniques: Tables of
+Coordinates for Hershey's Repertory of
+Occidental Type Fonts and Graphic Symbols."
+
+These are not traditional "outline" fonts, 
+but are instead "single-stroke" fonts, or
+"engraving" fonts where the character is
+formed by the stroke (and not the fill).
+
+For additional information, please visit:
+  www.evilmadscientist.com/go/hershey</_param>
+    </page>
+  </param>
+
+  <effect needs-live-preview="true" needs-document="true">
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu _name="Render"/>
+    </effects-menu>
+  </effect>
+    <script>
+      <command reldir="extensions" interpreter="python">hershey.py</command>
+    </script>
+</inkscape-extension>

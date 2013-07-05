@@ -76,6 +76,8 @@ extensions = \
 	guillotine.py \
 	handles.py \
 	hpgl_input.py \
+	hershey.py \
+	hersheydata.py \
 	hpgl_output.py \
 	ill2svg.pl \
 	ink2canvas.py \
@@ -266,6 +268,7 @@ modules = \
 	guillotine.inx \
 	handles.inx \
 	hpgl_input.inx \
+	hershey.inx \
 	hpgl_output.inx \
 	ink2canvas.inx \
 	inkscape_follow_link.inx \
