@@ -10,8 +10,7 @@
 #ifndef INKSCAPE_EXTENSION_DBUS_INIT_H__
 #define INKSCAPE_EXTENSION_DBUS_INIT_H__
 
-#include "desktop.h"
-
+class SPDesktop;
 
 namespace Inkscape {
 namespace Extension {
@@ -22,6 +21,8 @@ namespace Dbus {
 void init (void);
 
 gchar * init_document (void);
+
+gchar * init_active_document ();
 
 gchar * init_desktop (void);
 

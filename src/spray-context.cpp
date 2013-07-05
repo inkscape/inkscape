@@ -505,7 +505,7 @@ static bool sp_spray_recursive(SPDesktop *desktop,
                 selection->clear();
                 selection->add(item_copied);
                 selection->add(unionResult);
-                sp_selected_path_union_skip_undo(selection->desktop());
+                sp_selected_path_union_skip_undo(selection, selection->desktop());
                 selection->add(father);
                 Inkscape::GC::release(copy2);
                 did = true;

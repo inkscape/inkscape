@@ -67,6 +67,7 @@
 
 #include "verbs.h"
 #include "helper/action.h"
+#include "helper/action-context.h"
 #include "xml/repr.h"
 
 namespace Inkscape {
@@ -329,13 +330,13 @@ void SymbolsDialog::rebuild() {
 
 void SymbolsDialog::insertSymbol() {
     Inkscape::Verb *verb = Inkscape::Verb::get( SP_VERB_EDIT_SYMBOL );
-    SPAction *action = verb->get_action((Inkscape::UI::View::View *) this->currentDesktop);
+    SPAction *action = verb->get_action(Inkscape::ActionContext( (Inkscape::UI::View::View *) this->currentDesktop) );
     sp_action_perform (action, NULL);
 }
 
 void SymbolsDialog::revertSymbol() {
     Inkscape::Verb *verb = Inkscape::Verb::get( SP_VERB_EDIT_UNSYMBOL );
-    SPAction *action = verb->get_action((Inkscape::UI::View::View *) this->currentDesktop);
+    SPAction *action = verb->get_action(Inkscape::ActionContext( (Inkscape::UI::View::View *) this->currentDesktop ) );
     sp_action_perform (action, NULL);
 }
 

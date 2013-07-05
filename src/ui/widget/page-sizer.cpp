@@ -36,6 +36,7 @@
 #include "document.h"
 #include "desktop.h"
 #include "helper/action.h"
+#include "helper/action-context.h"
 #include "helper/units.h"
 #include "inkscape.h"
 #include "sp-namedview.h"
@@ -619,7 +620,7 @@ PageSizer::fire_fit_canvas_to_selection_or_drawing()
 
     Verb *verb = Verb::get( SP_VERB_FIT_CANVAS_TO_SELECTION_OR_DRAWING );
     if (verb) {
-        SPAction *action = verb->get_action(dt);
+        SPAction *action = verb->get_action(Inkscape::ActionContext(dt));
         if (action) {
             sp_action_perform(action, NULL);
         }

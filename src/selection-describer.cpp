@@ -17,6 +17,7 @@
 
 #include <glibmm/i18n.h>
 #include "xml/quote.h"
+#include "layer-model.h"
 #include "selection.h"
 #include "selection-describer.h"
 #include "desktop.h"
@@ -144,8 +145,8 @@ void SelectionDescriber::_updateMessageFromSelection(Inkscape::Selection *select
         _context.set(Inkscape::NORMAL_MESSAGE, _when_nothing);
     } else {
         SPItem *item = SP_ITEM(items->data);
-        SPObject *layer = selection->desktop()->layerForObject(item);
-        SPObject *root = selection->desktop()->currentRoot();
+        SPObject *layer = selection->layers()->layerForObject(item);
+        SPObject *root = selection->layers()->currentRoot();
 
         // Layer name
         gchar *layer_name;

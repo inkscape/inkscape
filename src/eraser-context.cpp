@@ -751,7 +751,7 @@ set_to_accumulated(SPEraserContext *dc)
 
                                 selection->set(item);
                                 selection->add(dup);
-                                sp_selected_path_diff_skip_undo(desktop);
+                                sp_selected_path_diff_skip_undo(selection, desktop);
                                 workDone = true; // TODO set this only if something was cut.
                                 if ( !selection->isEmpty() ) {
                                     // If the item was not completely erased, track the new remainder.

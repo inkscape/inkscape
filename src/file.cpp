@@ -68,6 +68,7 @@
 #include "ui/dialog/font-substitution.h"
 
 #include <gtk/gtk.h>
+#include <gtkmm/main.h>
 
 #include <glibmm/convert.h>
 #include <glibmm/i18n.h>
@@ -209,8 +210,13 @@ SPDesktop* sp_file_new_default()
 void
 sp_file_exit()
 {
-    sp_ui_close_all();
-    // no need to call inkscape_exit here; last document being closed will take care of that
+    if (SP_ACTIVE_DESKTOP == NULL) {
+        // We must be in console mode
+        Gtk::Main::quit();
+    } else {
+        sp_ui_close_all();
+        // no need to call inkscape_exit here; last document being closed will take care of that
+    }
 }
 
 
@@ -582,24 +588,25 @@ sp_file_open_dialog(Gtk::Window &parentWindow, gpointer /*object*/, gpointer /*d
 /**
  * Remove unreferenced defs from the defs section of the document.
  */
-void sp_file_vacuum()
+void sp_file_vacuum(SPDocument *doc)
 {
-    SPDocument *doc = SP_ACTIVE_DOCUMENT;
-
     unsigned int diff = doc->vacuumDocument();
 
     DocumentUndo::done(doc, SP_VERB_FILE_VACUUM,
                        _("Clean up document"));
 
     SPDesktop *dt = SP_ACTIVE_DESKTOP;
-    if (diff > 0) {
-        dt->messageStack()->flashF(Inkscape::NORMAL_MESSAGE,
-                ngettext("Removed <b>%i</b> unused definition in &lt;defs&gt;.",
-                         "Removed <b>%i</b> unused definitions in &lt;defs&gt;.",
-                         diff),
-                diff);
-    } else {
-        dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE,  _("No unused definitions in &lt;defs&gt;."));
+    if (dt != NULL) {
+        // Show status messages when in GUI mode
+        if (diff > 0) {
+            dt->messageStack()->flashF(Inkscape::NORMAL_MESSAGE,
+                    ngettext("Removed <b>%i</b> unused definition in &lt;defs&gt;.",
+                            "Removed <b>%i</b> unused definitions in &lt;defs&gt;.",
+                            diff),
+                    diff);
+        } else {
+            dt->messageStack()->flash(Inkscape::NORMAL_MESSAGE,  _("No unused definitions in &lt;defs&gt;."));
+        }
     }
 }
 

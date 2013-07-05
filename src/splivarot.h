@@ -11,19 +11,28 @@
 #include <2geom/forward.h>
 #include <2geom/path.h>
 class SPCurve;
+class SPDesktop;
 class SPItem;
+
+namespace Inkscape {
+    class Selection;
+}
 
 // boolean operations
 // work on the current selection
 // selection has 2 contain exactly 2 items
-void sp_selected_path_union (SPDesktop *desktop);
-void sp_selected_path_union_skip_undo (SPDesktop *desktop);
-void sp_selected_path_intersect (SPDesktop *desktop);
-void sp_selected_path_diff (SPDesktop *desktop);
-void sp_selected_path_diff_skip_undo (SPDesktop *desktop);
-void sp_selected_path_symdiff (SPDesktop *desktop);
-void sp_selected_path_cut (SPDesktop *desktop);
-void sp_selected_path_slice (SPDesktop *desktop);
+
+// UPDATE: these signatures have been modified so they may work in
+// command-line mode, i.e. without a desktop. If a desktop is not
+// provided (desktop == NULL), error messages will be shown on stderr.
+void sp_selected_path_union (Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selected_path_union_skip_undo (Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selected_path_intersect (Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selected_path_diff (Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selected_path_diff_skip_undo (Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selected_path_symdiff (Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selected_path_cut (Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selected_path_slice (Inkscape::Selection *selection, SPDesktop *desktop);
 
 // offset/inset of a curve
 // takes the fill-rule in consideration

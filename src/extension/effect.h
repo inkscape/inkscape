@@ -58,7 +58,7 @@ class Effect : public Extension {
             /** \brief  Name with elipses if that makes sense */
             gchar * _elip_name;
         protected:
-            virtual SPAction * make_action (Inkscape::UI::View::View * view);
+            virtual SPAction * make_action (Inkscape::ActionContext const & context);
         public:
             /** \brief Use the Verb initializer with the same parameters. */
             EffectVerb(gchar const * id,

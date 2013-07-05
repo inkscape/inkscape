@@ -55,6 +55,8 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
+#include "../helper/action.h"
+#include "../helper/action-context.h"
 #include "../helper/unit-menu.h"
 #include "../helper/units.h"
 #include "../helper/unit-tracker.h"
@@ -286,7 +288,7 @@ static void lpetool_open_lpe_dialog(GtkToggleAction *act, gpointer data)
     SPDesktop *desktop = static_cast<SPDesktop *>(data);
 
     if (tools_isactive(desktop, TOOLS_LPETOOL)) {
-        sp_action_perform(Inkscape::Verb::get(SP_VERB_DIALOG_LIVE_PATH_EFFECT)->get_action(desktop), NULL);
+        sp_action_perform(Inkscape::Verb::get(SP_VERB_DIALOG_LIVE_PATH_EFFECT)->get_action(Inkscape::ActionContext(desktop)), NULL);
     }
     gtk_toggle_action_set_active(act, false);
 }

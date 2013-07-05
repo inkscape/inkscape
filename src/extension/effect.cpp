@@ -359,22 +359,22 @@ Effect::set_pref_dialog (PrefDialog * prefdialog)
 }
 
 SPAction *
-Effect::EffectVerb::make_action (Inkscape::UI::View::View * view)
+Effect::EffectVerb::make_action (Inkscape::ActionContext const & context)
 {
-    return make_action_helper(view, &perform, static_cast<void *>(this));
+    return make_action_helper(context, &perform, static_cast<void *>(this));
 }
 
 /** \brief  Decode the verb code and take appropriate action */
 void
 Effect::EffectVerb::perform( SPAction *action, void * data )
 {
+    g_return_if_fail(ensure_desktop_valid(action));
     Inkscape::UI::View::View * current_view = sp_action_get_view(action);
-//  SPDocument * current_document = current_view->doc;
+
     Effect::EffectVerb * ev = reinterpret_cast<Effect::EffectVerb *>(data);
     Effect * effect = ev->_effect;
 
     if (effect == NULL) return;
-    if (current_view == NULL) return;
 
     if (ev->_showPrefs) {
         effect->prefs(current_view);

@@ -28,6 +28,7 @@
 #include "widgets/widget-sizes.h"
 #include "helper/units.h"
 #include "helper/action.h"
+#include "helper/action-context.h"
 #include "preferences.h"
 #include "inkscape.h"
 #include "verbs.h"
@@ -200,7 +201,7 @@ StyleSwatch::on_click(GdkEventButton */*event*/)
 {
     if (this->_desktop && this->_verb_t != SP_VERB_NONE) {
         Inkscape::Verb *verb = Inkscape::Verb::get(this->_verb_t);
-        SPAction *action = verb->get_action((Inkscape::UI::View::View *) this->_desktop);
+        SPAction *action = verb->get_action(Inkscape::ActionContext((Inkscape::UI::View::View *) this->_desktop));
         sp_action_perform (action, NULL);
         return true;
     }

@@ -20,6 +20,7 @@
 #include "icon.h"
 #include "shortcuts.h"
 #include "interface.h"
+#include "helper/action-context.h"
 
 #include <gdk/gdkkeysyms.h>
 
@@ -309,7 +310,7 @@ sp_button_new_from_data( Inkscape::IconSize size,
 			 const gchar *tip )
 {
 	GtkWidget *button;
-	SPAction *action=sp_action_new(view, name, name, tip, name, 0);
+	SPAction *action=sp_action_new(Inkscape::ActionContext(view), name, name, tip, name, 0);
 	button = sp_button_new (size, type, action, NULL);
 	g_object_unref(action);
 	return button;

@@ -200,7 +200,7 @@ void sp_file_print (Gtk::Window& parentWindow);
 /**
  * clean unused defs out of file
  */
-void sp_file_vacuum ();
+void sp_file_vacuum (SPDocument *doc);
 
 
 #endif // SEEN_SP_FILE_H

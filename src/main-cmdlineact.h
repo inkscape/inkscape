@@ -19,6 +19,8 @@
 
 namespace Inkscape {
 
+class ActionContext;
+
 class CmdLineAction {
     bool _isVerb;
     gchar * _arg;
@@ -29,8 +31,9 @@ public:
     CmdLineAction (bool isVerb, gchar const * arg);
     virtual ~CmdLineAction ();
 
-    void doIt (Inkscape::UI::View::View * view);
-    static void doList (Inkscape::UI::View::View * view);
+    void doIt (ActionContext const & context);
+    /** Return true if any actions were performed */
+    static bool doList (ActionContext const & context);
     static bool idle (void);
 };
 

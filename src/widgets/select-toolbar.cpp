@@ -37,6 +37,8 @@
 #include "sp-namedview.h"
 #include "toolbox.h"
 #include <glibmm/i18n.h>
+#include "helper/action.h"
+#include "helper/action-context.h"
 #include "helper/unit-menu.h"
 #include "helper/units.h"
 #include "inkscape.h"
@@ -413,7 +415,7 @@ static GtkAction* create_action_for_verb( Inkscape::Verb* verb, Inkscape::UI::Vi
 {
     GtkAction* act = 0;
 
-    SPAction* targetAction = verb->get_action(view);
+    SPAction* targetAction = verb->get_action(Inkscape::ActionContext(view));
     InkAction* inky = ink_action_new( verb->get_id(), verb->get_name(), verb->get_tip(), verb->get_image(), size  );
     act = GTK_ACTION(inky);
 

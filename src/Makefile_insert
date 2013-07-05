@@ -92,6 +92,7 @@ ink_common_sources +=	\
 	knot-holder-entity.h knot-holder-entity.cpp			\
 	layer-fns.cpp layer-fns.h					\
 	layer-manager.cpp layer-manager.h				\
+  layer-model.cpp layer-model.h         \
 	line-geometry.cpp line-geometry.h				\
 	line-snapper.cpp line-snapper.h					\
 	lpe-tool-context.cpp lpe-tool-context.h				\

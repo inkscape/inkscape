@@ -26,6 +26,7 @@
 #include "inkscape.h"
 #include "verbs.h"
 #include "helper/action.h"
+#include "helper/action-context.h"
 #include "preferences.h"
 
 #include <glibmm/i18n.h>
@@ -535,7 +536,7 @@ sp_gradient_selector_edit_vector_clicked (GtkWidget */*w*/, SPGradientSelector *
         // Invoke the gradient tool
         Inkscape::Verb *verb = Inkscape::Verb::get( SP_VERB_CONTEXT_GRADIENT );
         if ( verb ) {
-            SPAction *action = verb->get_action( ( Inkscape::UI::View::View * ) SP_ACTIVE_DESKTOP);
+            SPAction *action = verb->get_action( Inkscape::ActionContext( ( Inkscape::UI::View::View * ) SP_ACTIVE_DESKTOP ) );
             if ( action ) {
                 sp_action_perform( action, NULL );
             }

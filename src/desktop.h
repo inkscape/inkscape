@@ -62,9 +62,9 @@ typedef struct _GdkEventWindowState GdkEventWindowState;
 
 namespace Inkscape {
   struct Application;
+  class LayerModel;
   class MessageContext;
   class Selection;
-  class ObjectHierarchy;
   class LayerManager;
   class EventLog;
   namespace UI {
@@ -125,6 +125,7 @@ public:
     Inkscape::UI::Dialog::DialogManager *_dlg_mgr;
     SPNamedView               *namedview;
     SPCanvas                  *canvas;
+    Inkscape::LayerModel      *layers;
     /// current selection; will never generally be NULL
     Inkscape::Selection       *selection;
     SPEventContext            *event_context;
@@ -170,8 +171,6 @@ public:
     guint  gr_point_i;
     Inkscape::PaintTarget gr_fill_or_stroke;
 
-
-    Inkscape::ObjectHierarchy *_layer_hierarchy;
     Glib::ustring _reconstruction_old_layer_id;
 
     sigc::signal<void, sp_verb_t>      _tool_changed;
@@ -264,17 +263,16 @@ public:
 
     void set_active (bool new_active);
 
-    // TODO look into making these return a more specific subclass:
+    // Could make all callers use this->layers instead of passing calls through?
     SPObject *currentRoot() const;
     SPObject *currentLayer() const;
-
     void setCurrentLayer(SPObject *object);
     void toggleLayerSolo(SPObject *object);
     void toggleHideAllLayers(bool hide);
     void toggleLockAllLayers(bool lock);
     void toggleLockOtherLayers(SPObject *object);
-    SPObject *layerForObject(SPObject *object);
     bool isLayer(SPObject *object) const;
+
     bool isWithinViewport(SPItem *item) const;
     bool itemIsHidden(SPItem const *item) const;
 

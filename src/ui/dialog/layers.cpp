@@ -27,6 +27,7 @@
 #include "document.h"
 #include "document-undo.h"
 #include "helper/action.h"
+#include "helper/action-context.h"
 #include "inkscape.h"
 #include "layer-fns.h"
 #include "layer-manager.h"
@@ -99,7 +100,7 @@ void LayersPanel::_styleButton( Gtk::Button& btn, SPDesktop *desktop, unsigned i
     if ( desktop ) {
         Verb *verb = Verb::get( code );
         if ( verb ) {
-            SPAction *action = verb->get_action(desktop);
+            SPAction *action = verb->get_action(Inkscape::ActionContext(desktop));
             if ( !set && action && action->image ) {
                 GtkWidget *child = sp_icon_new( Inkscape::ICON_SIZE_SMALL_TOOLBAR, action->image );
                 gtk_widget_show( child );
@@ -131,7 +132,7 @@ Gtk::MenuItem& LayersPanel::_addPopupItem( SPDesktop *desktop, unsigned int code
     if ( desktop ) {
         Verb *verb = Verb::get( code );
         if ( verb ) {
-            SPAction *action = verb->get_action(desktop);
+            SPAction *action = verb->get_action(Inkscape::ActionContext(desktop));
             if ( !iconWidget && action && action->image ) {
                 iconWidget = sp_icon_new( Inkscape::ICON_SIZE_MENU, action->image );
             }
@@ -172,7 +173,7 @@ void LayersPanel::_fireAction( unsigned int code )
     if ( _desktop ) {
         Verb *verb = Verb::get( code );
         if ( verb ) {
-            SPAction *action = verb->get_action(_desktop);
+            SPAction *action = verb->get_action(Inkscape::ActionContext(_desktop));
             if ( action ) {
                 sp_action_perform( action, NULL );
 //             } else {

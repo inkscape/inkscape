@@ -41,6 +41,8 @@
 #include "ege-select-one-action.h"
 #include <extension/db.h>
 #include "file.h"
+#include "helper/action.h"
+#include "helper/action-context.h"
 #include "helper/units.h"
 #include "helper/unit-tracker.h"
 #include "inkscape-private.h"
@@ -485,7 +487,7 @@ void SPDesktopWidget::init( SPDesktopWidget *dtw )
     gchar const* tip = "";
     Inkscape::Verb* verb = Inkscape::Verb::get( SP_VERB_VIEW_CMS_TOGGLE );
     if ( verb ) {
-        SPAction *act = verb->get_action( dtw->viewwidget.view );
+        SPAction *act = verb->get_action( Inkscape::ActionContext( dtw->viewwidget.view ) );
         if ( act && act->tip ) {
             tip = act->tip;
         }
@@ -1060,7 +1062,7 @@ void cms_adjust_set_sensitive( SPDesktopWidget *dtw, bool enabled )
 {
     Inkscape::Verb* verb = Inkscape::Verb::get( SP_VERB_VIEW_CMS_TOGGLE );
     if ( verb ) {
-        SPAction *act = verb->get_action( dtw->viewwidget.view );
+        SPAction *act = verb->get_action( Inkscape::ActionContext( dtw->viewwidget.view ) );
         if ( act ) {
             sp_action_set_sensitive( act, enabled );
         }

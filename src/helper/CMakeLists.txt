@@ -10,6 +10,7 @@ set(sp_marshal_SRC
 
 set(helper_SRC
 	action.cpp
+  action-context.cpp
 	geom.cpp
 	geom-nodetype.cpp
 	gnome-utils.cpp
@@ -29,6 +30,7 @@ set(helper_SRC
 	# -------
 	# Headers
 	action.h
+  action-context.h
 	geom-curves.h
 	geom-nodetype.h
 	geom.h

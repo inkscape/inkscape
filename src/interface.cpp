@@ -53,6 +53,7 @@
 #include "sp-namedview.h"
 #include "ui/view/view.h"
 #include "helper/action.h"
+#include "helper/action-context.h"
 #include "helper/gnome-utils.h"
 #include "helper/window.h"
 #include "io/sys.h"
@@ -370,13 +371,13 @@ sp_ui_menu_activate(void */*object*/, SPAction *action)
 static void
 sp_ui_menu_select_action(void */*object*/, SPAction *action)
 {
-    action->view->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, action->tip);
+    sp_action_get_view(action)->tipsMessageContext()->set(Inkscape::NORMAL_MESSAGE, action->tip);
 }
 
 static void
 sp_ui_menu_deselect_action(void */*object*/, SPAction *action)
 {
-    action->view->tipsMessageContext()->clear();
+    sp_action_get_view(action)->tipsMessageContext()->clear();
 }
 
 static void
@@ -419,7 +420,7 @@ sp_ui_dialog_title_string(Inkscape::Verb *verb, gchar *c)
     gchar        *s;
     gchar        *atitle;
 
-    action = verb->get_action(NULL);
+    action = verb->get_action(Inkscape::ActionContext());
     if (!action)
         return;
 
@@ -456,7 +457,7 @@ static GtkWidget *sp_ui_menu_append_item_from_verb(GtkMenu *menu, Inkscape::Verb
 
     } else {
 
-        action = verb->get_action(view);
+        action = verb->get_action(Inkscape::ActionContext(view));
         if (!action) return NULL;
 
         if (radio) {
@@ -670,7 +671,7 @@ sp_ui_menu_append_check_item_from_verb(GtkMenu *menu, Inkscape::UI::View::View *
                                        Inkscape::Verb *verb)
 {
     unsigned int shortcut = (verb) ? sp_shortcut_get_primary(verb) : 0;
-    SPAction *action = (verb) ? verb->get_action(view) : 0;
+    SPAction *action = (verb) ? verb->get_action(Inkscape::ActionContext(view)) : 0;
     GtkWidget *item = gtk_check_menu_item_new_with_mnemonic(action ? action->name : label);
 
 #if 0
@@ -955,7 +956,7 @@ static void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, I
                         gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
                     }
                     if (verb->get_code() != SP_VERB_NONE) {
-                        SPAction *action = verb->get_action(view);
+                        SPAction *action = verb->get_action(Inkscape::ActionContext(view));
 #if GTK_CHECK_VERSION(3,0,0)
                         g_signal_connect( G_OBJECT(item), "draw", (GCallback) update_view_menu, (void *) action);
 #else
@@ -965,7 +966,7 @@ static void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, I
                 } else if (menu_pntr->attribute("check") != NULL) {
                     SPAction *action = NULL;
                     if (verb->get_code() != SP_VERB_NONE) {
-                        action = verb->get_action(view);
+                        action = verb->get_action(Inkscape::ActionContext(view));
                     }
                     sp_ui_menu_append_check_item_from_verb(GTK_MENU(menu), view, action->name, action->tip, NULL,
                             checkitem_toggled, checkitem_update, verb);
@@ -1671,7 +1672,7 @@ void ContextMenu::AppendItemFromVerb(Inkscape::Verb *verb)//, SPDesktop *view)//
         item->show();
         append(*item);
     } else {
-        action = verb->get_action(view);
+        action = verb->get_action(Inkscape::ActionContext(view));
         if (!action) {
             return;
         }
@@ -1986,7 +1987,7 @@ void ContextMenu::MakeGroupMenu(void)
 
 void ContextMenu::ActivateGroup(void)
 {
-    sp_selection_group(_desktop);
+    sp_selection_group(_desktop->selection, _desktop);
 }
 
 void ContextMenu::ActivateUngroup(void)
@@ -2035,7 +2036,7 @@ void ContextMenu::AnchorLinkFollow(void)
     // Opening the selected links with a python extension
     Inkscape::Verb *verb = Inkscape::Verb::getbyid( "org.inkscape.followlink" );
     if (verb) {
-        SPAction *action = verb->get_action(_desktop);
+        SPAction *action = verb->get_action(Inkscape::ActionContext(_desktop));
         if (action) {
             sp_action_perform(action, NULL);
         }
@@ -2205,7 +2206,7 @@ void ContextMenu::ImageEmbed(void)
 
     Inkscape::Verb *verb = Inkscape::Verb::getbyid( "org.ekips.filter.embedselectedimages" );
     if (verb) {
-        SPAction *action = verb->get_action(_desktop);
+        SPAction *action = verb->get_action(Inkscape::ActionContext(_desktop));
         if (action) {
             sp_action_perform(action, NULL);
         }
@@ -2220,7 +2221,7 @@ void ContextMenu::ImageExtract(void)
 
     Inkscape::Verb *verb = Inkscape::Verb::getbyid( "org.ekips.filter.extractimage" );
     if (verb) {
-        SPAction *action = verb->get_action(_desktop);
+        SPAction *action = verb->get_action(Inkscape::ActionContext(_desktop));
         if (action) {
             sp_action_perform(action, NULL);
         }

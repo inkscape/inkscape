@@ -12,6 +12,7 @@
 #ifndef SEEN_INKSCAPE_SP_ACTION_H
 #define SEEN_INKSCAPE_SP_ACTION_H
 
+#include "helper/action-context.h"
 #include <sigc++/sigc++.h>
 #include <glibmm/ustring.h>
 #include <glib-object.h>
@@ -24,8 +25,13 @@ struct SPActionClass;
 #define SP_ACTION_CLASS(o) (G_TYPE_CHECK_CLASS_CAST((o), SP_TYPE_ACTION, SPActionClass))
 #define SP_IS_ACTION(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), SP_TYPE_ACTION))
 
+class SPDesktop;
+class SPDocument;
 namespace Inkscape {
+
+class Selection;
 class Verb;
+
 namespace UI {
 namespace View {
 class View;
@@ -39,7 +45,7 @@ class View;
 struct SPAction : public GObject {
     unsigned sensitive : 1;  /**< Value to track whether the action is sensitive */
     unsigned active : 1;     /**< Value to track whether the action is active */
-    Inkscape::UI::View::View *view;            /**< The View to which this action is attached */
+    Inkscape::ActionContext context;  /**< The context (doc/view) to which this action is attached */
     gchar *id;               /**< The identifier for the action */
     gchar *name;             /**< Full text name of the action */
     gchar *tip;              /**< A tooltip to describe the action */
@@ -59,7 +65,7 @@ struct SPActionClass {
 
 GType sp_action_get_type();
 
-SPAction *sp_action_new(Inkscape::UI::View::View *view,
+SPAction *sp_action_new(Inkscape::ActionContext const &context,
 			gchar const *id,
 			gchar const *name,
 			gchar const *tip,
@@ -70,7 +76,10 @@ void sp_action_perform(SPAction *action, void *data);
 void sp_action_set_active(SPAction *action, unsigned active);
 void sp_action_set_sensitive(SPAction *action, unsigned sensitive);
 void sp_action_set_name(SPAction *action, Glib::ustring const &name);
+SPDocument *sp_action_get_document(SPAction *action);
+Inkscape::Selection *sp_action_get_selection(SPAction *action);
 Inkscape::UI::View::View *sp_action_get_view(SPAction *action);
+SPDesktop *sp_action_get_desktop(SPAction *action);
 
 #endif
 

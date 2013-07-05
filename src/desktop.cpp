@@ -53,15 +53,16 @@
 #include "display/sp-canvas-util.h"
 #include "document.h"
 #include "event-log.h"
+#include "helper/action-context.h"
 #include "helper/units.h"
 #include "interface.h"
 #include "inkscape-private.h"
 #include "layer-fns.h"
 #include "layer-manager.h"
+#include "layer-model.h"
 #include "macros.h"
 #include "message-context.h"
 #include "message-stack.h"
-#include "object-hierarchy.h"
 #include "preferences.h"
 #include "resource-manager.h"
 #include "select-context.h"
@@ -95,6 +96,7 @@ SPDesktop::SPDesktop() :
     _dlg_mgr( 0 ),
     namedview( 0 ),
     canvas( 0 ),
+    layers( 0 ),
     selection( 0 ),
     event_context( 0 ),
     layer_manager( 0 ),
@@ -125,7 +127,6 @@ SPDesktop::SPDesktop() :
     gr_point_type( POINT_LG_BEGIN ),
     gr_point_i( 0 ),
     gr_fill_or_stroke( Inkscape::FOR_FILL ),
-    _layer_hierarchy( 0 ),
     _reconstruction_old_layer_id(), // an id attribute is not allowed to be the empty string
     _display_mode(Inkscape::RENDERMODE_NORMAL),
     _display_color_mode(Inkscape::COLORMODE_NORMAL),
@@ -140,8 +141,12 @@ SPDesktop::SPDesktop() :
 {
     _d2w.setIdentity();
     _w2d.setIdentity();
-
-    selection = Inkscape::GC::release( new Inkscape::Selection(this) );
+    
+    layers = new Inkscape::LayerModel();
+    layers->_layer_activated_signal.connect(sigc::bind(sigc::ptr_fun(_layer_activated), this));
+    layers->_layer_deactivated_signal.connect(sigc::bind(sigc::ptr_fun(_layer_deactivated), this));
+    layers->_layer_changed_signal.connect(sigc::bind(sigc::ptr_fun(_layer_hierarchy_changed), this));
+    selection = Inkscape::GC::release( new Inkscape::Selection(layers, this) );
 }
 
 void
@@ -169,6 +174,9 @@ SPDesktop::init (SPNamedView *nv, SPCanvas *aCanvas, Inkscape::UI::View::EditWid
     _dlg_mgr = &Inkscape::UI::Dialog::DialogManager::getInstance();
 
     dkey = SPItem::display_key_new(1);
+
+    /* Connect display key to layer model */
+    layers->setDisplayKey(dkey);
 
     /* Connect document */
     setDocument (document);
@@ -359,10 +367,7 @@ void SPDesktop::destroy()
         g_object_unref (G_OBJECT (ec));
     }
 
-    if (_layer_hierarchy) {
-        delete _layer_hierarchy;
-//        _layer_hierarchy = NULL; //this should be here, but commented to find other bug somewhere else.
-    }
+    delete layers;
 
     if (layer_manager) {
         delete layer_manager;
@@ -483,134 +488,45 @@ void SPDesktop::displayColorModeToggle() {
     }
 }
 
-/**
- * Returns current root (=bottom) layer.
- */
+// Pass-through LayerModel functions
 SPObject *SPDesktop::currentRoot() const
 {
-    return _layer_hierarchy ? _layer_hierarchy->top() : NULL;
+    return layers->currentRoot();
 }
 
-/**
- * Returns current top layer.
- */
 SPObject *SPDesktop::currentLayer() const
 {
-    return _layer_hierarchy ? _layer_hierarchy->bottom() : NULL;
+    return layers->currentLayer();
 }
 
-/**
- * Sets the current layer of the desktop.
- *
- * Make \a object the top layer.
- */
-void SPDesktop::setCurrentLayer(SPObject *object) {
-    g_return_if_fail(SP_IS_GROUP(object));
-    g_return_if_fail( currentRoot() == object || (currentRoot() && currentRoot()->isAncestorOf(object)) );
-    // printf("Set Layer to ID: %s\n", object->getId());
-    _layer_hierarchy->setBottom(object);
+void SPDesktop::setCurrentLayer(SPObject *object)
+{
+    layers->setCurrentLayer(object);
 }
 
-void SPDesktop::toggleHideAllLayers(bool hide) {
-
-    for ( SPObject* obj = Inkscape::previous_layer(currentRoot(), currentRoot()); obj; obj = Inkscape::previous_layer(currentRoot(), obj) ) {
-        SP_ITEM(obj)->setHidden(hide);
-    }
+void SPDesktop::toggleLayerSolo(SPObject *object)
+{
+    layers->toggleLayerSolo(object);
 }
 
-void SPDesktop::toggleLockAllLayers(bool lock) {
-
-    for ( SPObject* obj = Inkscape::previous_layer(currentRoot(), currentRoot()); obj; obj = Inkscape::previous_layer(currentRoot(), obj) ) {
-        SP_ITEM(obj)->setLocked(lock);
-    }
+void SPDesktop::toggleHideAllLayers(bool hide)
+{
+    layers->toggleHideAllLayers(hide);
 }
 
-void SPDesktop::toggleLockOtherLayers(SPObject *object) {
-    g_return_if_fail(SP_IS_GROUP(object));
-    g_return_if_fail( currentRoot() == object || (currentRoot() && currentRoot()->isAncestorOf(object)) );
-
-    bool othersLocked = false;
-    std::vector<SPObject*> layers;
-    for ( SPObject* obj = Inkscape::next_layer(currentRoot(), object); obj; obj = Inkscape::next_layer(currentRoot(), obj) ) {
-        // Dont lock any ancestors, since that would in turn lock the layer as well
-        if (!obj->isAncestorOf(object)) {
-            layers.push_back(obj);
-            othersLocked |= !SP_ITEM(obj)->isLocked();
-        }
-    }
-    for ( SPObject* obj = Inkscape::previous_layer(currentRoot(), object); obj; obj = Inkscape::previous_layer(currentRoot(), obj) ) {
-        if (!obj->isAncestorOf(object)) {
-            layers.push_back(obj);
-            othersLocked |= !SP_ITEM(obj)->isLocked();
-        }
-    }
-
-    SPItem *item = SP_ITEM(object);
-    if ( item->isLocked() ) {
-        item->setLocked(false);
-    }
-
-    for ( std::vector<SPObject*>::iterator it = layers.begin(); it != layers.end(); ++it ) {
-        SP_ITEM(*it)->setLocked(othersLocked);
-    }
+void SPDesktop::toggleLockAllLayers(bool lock)
+{
+    layers->toggleLockAllLayers(lock);
 }
 
-
-void SPDesktop::toggleLayerSolo(SPObject *object) {
-    g_return_if_fail(SP_IS_GROUP(object));
-    g_return_if_fail( currentRoot() == object || (currentRoot() && currentRoot()->isAncestorOf(object)) );
-
-    bool othersShowing = false;
-    std::vector<SPObject*> layers;
-    for ( SPObject* obj = Inkscape::next_layer(currentRoot(), object); obj; obj = Inkscape::next_layer(currentRoot(), obj) ) {
-        // Don't hide ancestors, since that would in turn hide the layer as well
-        if (!obj->isAncestorOf(object)) {
-            layers.push_back(obj);
-            othersShowing |= !SP_ITEM(obj)->isHidden();
-        }
-    }
-    for ( SPObject* obj = Inkscape::previous_layer(currentRoot(), object); obj; obj = Inkscape::previous_layer(currentRoot(), obj) ) {
-        if (!obj->isAncestorOf(object)) {
-            layers.push_back(obj);
-            othersShowing |= !SP_ITEM(obj)->isHidden();
-        }
-    }
-
-
-    SPItem *item = SP_ITEM(object);
-    if ( item->isHidden() ) {
-        item->setHidden(false);
-    }
-
-    for ( std::vector<SPObject*>::iterator it = layers.begin(); it != layers.end(); ++it ) {
-        SP_ITEM(*it)->setHidden(othersShowing);
-    }
+void SPDesktop::toggleLockOtherLayers(SPObject *object)
+{
+    layers->toggleLockOtherLayers(object);
 }
 
-/**
- * Return layer that contains \a object.
- */
-SPObject *SPDesktop::layerForObject(SPObject *object) {
-    g_return_val_if_fail(object != NULL, NULL);
-
-    SPObject *root=currentRoot();
-    object = object->parent;
-    while ( object && object != root && !isLayer(object) ) {
-        // Objects in defs have no layer and are NOT in the root layer
-        if(SP_IS_DEFS(object))
-            return NULL;
-        object = object->parent;
-    }
-    return object;
-}
-
-/**
- * True if object is a layer.
- */
-bool SPDesktop::isLayer(SPObject *object) const {
-    return ( SP_IS_GROUP(object)
-             && ( SP_GROUP(object)->effectiveLayerMode(this->dkey)
-                  == SPGroup::LAYER ) );
+bool SPDesktop::isLayer(SPObject *object) const
+{
+    return layers->isLayer(object);
 }
 
 /**
@@ -1575,15 +1491,7 @@ SPDesktop::setDocument (SPDocument *doc)
         this->doc()->getRoot()->invoke_hide(dkey);
     }
 
-    if (_layer_hierarchy) {
-        _layer_hierarchy->clear();
-        delete _layer_hierarchy;
-    }
-    _layer_hierarchy = new Inkscape::ObjectHierarchy(NULL);
-    _layer_hierarchy->connectAdded(sigc::bind(sigc::ptr_fun(_layer_activated), this));
-    _layer_hierarchy->connectRemoved(sigc::bind(sigc::ptr_fun(_layer_deactivated), this));
-    _layer_hierarchy->connectChanged(sigc::bind(sigc::ptr_fun(_layer_hierarchy_changed), this));
-    _layer_hierarchy->setTop(doc->getRoot());
+    layers->setDocument(doc);
 
 	// remove old EventLog if it exists (see also: bug #1071082)
 	if (event_log) {
@@ -1691,9 +1599,9 @@ _onSelectionChanged
      */
     SPItem *item=selection->singleItem();
     if (item) {
-        SPObject *layer=desktop->layerForObject(item);
+        SPObject *layer=desktop->layers->layerForObject(item);
         if ( layer && layer != desktop->currentLayer() ) {
-            desktop->setCurrentLayer(layer);
+            desktop->layers->setCurrentLayer(layer);
         }
     }
 }
@@ -1738,9 +1646,9 @@ _layer_hierarchy_changed(SPObject */*top*/, SPObject *bottom,
 /// Called when document is starting to be rebuilt.
 static void _reconstruction_start(SPDesktop * desktop)
 {
-    // printf("Desktop, starting reconstruction\n");
+    g_debug("Desktop, starting reconstruction\n");
     desktop->_reconstruction_old_layer_id = desktop->currentLayer()->getId() ? desktop->currentLayer()->getId() : "";
-    desktop->_layer_hierarchy->setBottom(desktop->currentRoot());
+    desktop->layers->reset();
 
     /*
     GSList const * selection_objs = desktop->selection->list();
@@ -1750,22 +1658,22 @@ static void _reconstruction_start(SPDesktop * desktop)
     */
     desktop->selection->clear();
 
-    // printf("Desktop, starting reconstruction end\n");
+    g_debug("Desktop, starting reconstruction end\n");
 }
 
 /// Called when document rebuild is finished.
 static void _reconstruction_finish(SPDesktop * desktop)
 {
-    // printf("Desktop, finishing reconstruction\n");
+    g_debug("Desktop, finishing reconstruction\n");
     if ( !desktop->_reconstruction_old_layer_id.empty() ) {
         SPObject * newLayer = desktop->namedview->document->getObjectById(desktop->_reconstruction_old_layer_id);
         if (newLayer != NULL) {
-            desktop->setCurrentLayer(newLayer);
+            desktop->layers->setCurrentLayer(newLayer);
         }
 
         desktop->_reconstruction_old_layer_id.clear();
-        // printf("Desktop, finishing reconstruction end\n");
     }
+    g_debug("Desktop, finishing reconstruction end\n");
 }
 
 /**
@@ -1931,7 +1839,7 @@ SPDesktop::show_dialogs()
         if (visible) {
             Inkscape::Verb *verb = Inkscape::Verb::get(verbId);
             if (verb) {
-                SPAction *action = verb->get_action(this);
+                SPAction *action = verb->get_action(Inkscape::ActionContext(this));
                 if (action) {
                     sp_action_perform(action, NULL);
                 }

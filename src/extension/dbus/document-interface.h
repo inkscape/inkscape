@@ -30,8 +30,12 @@
 #undef DBUS_MESSAGE_TYPE_ERROR
 #undef DBUS_MESSAGE_TYPE_SIGNAL
 
-#include "desktop.h"
+#include "helper/action-context.h"
 
+class SPDesktop;
+class SPItem;
+
+// TODO: this define doesn't seem to be used... although the path itself is also hardcoded in dbus-init.cpp
 #define DBUS_DOCUMENT_INTERFACE_PATH  "/org/inkscape/document"
         
 #define TYPE_DOCUMENT_INTERFACE            (document_interface_get_type ())
@@ -47,8 +51,8 @@ typedef struct _DocumentInterface DocumentInterface;
 typedef struct _DocumentInterfaceClass DocumentInterfaceClass;
 
 struct _DocumentInterface {
-        GObject parent;
-	SPDesktop *desk;
+    GObject parent;
+    Inkscape::ActionContext target; ///< stores information about which document, selection, desktop etc this interface is linked to
     gboolean updates;
 };
 
@@ -67,10 +71,10 @@ struct DBUSPoint {
 ****************************************************************************/
 
 gboolean 
-document_interface_delete_all (DocumentInterface *object, GError **error);
+document_interface_delete_all (DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_call_verb (DocumentInterface *object, 
+document_interface_call_verb (DocumentInterface *doc_interface, 
                               gchar *verbid, GError **error);
 
 /****************************************************************************
@@ -78,48 +82,48 @@ document_interface_call_verb (DocumentInterface *object,
 ****************************************************************************/
 
 gchar* 
-document_interface_rectangle (DocumentInterface *object, int x, int y, 
+document_interface_rectangle (DocumentInterface *doc_interface, int x, int y, 
                               int width, int height, GError **error);
 
 gchar* 
-document_interface_ellipse (DocumentInterface *object, int x, int y, 
+document_interface_ellipse (DocumentInterface *doc_interface, int x, int y, 
                               int width, int height, GError **error);
 
 gchar* 
-document_interface_polygon (DocumentInterface *object, int cx, int cy, 
+document_interface_polygon (DocumentInterface *doc_interface, int cx, int cy, 
                             int radius, int rotation, int sides, 
                             GError **error);
 
 gchar* 
-document_interface_star (DocumentInterface *object, int cx, int cy, 
+document_interface_star (DocumentInterface *doc_interface, int cx, int cy, 
                          int r1, int r2, int sides, gdouble rounded,
                          gdouble arg1, gdouble arg2, GError **error);
 
 gchar* 
-document_interface_spiral (DocumentInterface *object, int cx, int cy, 
+document_interface_spiral (DocumentInterface *doc_interface, int cx, int cy, 
                                    int r, int revolutions, GError **error);
 
 gchar* 
-document_interface_line (DocumentInterface *object, int x, int y, 
+document_interface_line (DocumentInterface *doc_interface, int x, int y, 
                               int x2, int y2, GError **error);
 
 gchar* 
-document_interface_text (DocumentInterface *object, int x, int y, 
+document_interface_text (DocumentInterface *doc_interface, int x, int y, 
                          gchar *text, GError **error);
 gboolean
-document_interface_set_text (DocumentInterface *object, gchar *name,
+document_interface_set_text (DocumentInterface *doc_interface, gchar *name,
                              gchar *text, GError **error);
 gboolean
-document_interface_text_apply_style (DocumentInterface *object, gchar *name,
+document_interface_text_apply_style (DocumentInterface *doc_interface, gchar *name,
                                      int start_pos, int end_pos,  gchar *style, gchar *styleval,
                                      GError **error);
 
 gchar *
-document_interface_image (DocumentInterface *object, int x, int y, 
+document_interface_image (DocumentInterface *doc_interface, int x, int y, 
                           gchar *filename, GError **error);
 
 gchar* 
-document_interface_node (DocumentInterface *object, gchar *svgtype, 
+document_interface_node (DocumentInterface *doc_interface, gchar *svgtype, 
                              GError **error);
 
 
@@ -127,27 +131,27 @@ document_interface_node (DocumentInterface *object, gchar *svgtype,
      ENVIORNMENT FUNCTIONS
 ****************************************************************************/
 gdouble
-document_interface_document_get_width (DocumentInterface *object);
+document_interface_document_get_width (DocumentInterface *doc_interface);
 
 gdouble
-document_interface_document_get_height (DocumentInterface *object);
+document_interface_document_get_height (DocumentInterface *doc_interface);
 
 gchar *
-document_interface_document_get_css (DocumentInterface *object, GError **error);
+document_interface_document_get_css (DocumentInterface *doc_interface, GError **error);
 
 gboolean 
-document_interface_document_merge_css (DocumentInterface *object,
+document_interface_document_merge_css (DocumentInterface *doc_interface,
                                        gchar *stylestring, GError **error);
 
 gboolean 
-document_interface_document_set_css (DocumentInterface *object,
+document_interface_document_set_css (DocumentInterface *doc_interface,
                                      gchar *stylestring, GError **error);
 
 gboolean 
-document_interface_document_resize_to_fit_selection (DocumentInterface *object,
+document_interface_document_resize_to_fit_selection (DocumentInterface *doc_interface,
                                                      GError **error);
 gboolean
-document_interface_document_set_display_area (DocumentInterface *object,
+document_interface_document_set_display_area (DocumentInterface *doc_interface,
                                               double x0,
                                               double y0,
                                               double x1,
@@ -155,95 +159,95 @@ document_interface_document_set_display_area (DocumentInterface *object,
                                               double border,
                                               GError **error);
 GArray *
-document_interface_document_get_display_area (DocumentInterface *object);
+document_interface_document_get_display_area (DocumentInterface *doc_interface);
 
 /****************************************************************************
      OBJECT FUNCTIONS
 ****************************************************************************/
 
 gboolean
-document_interface_set_attribute (DocumentInterface *object, 
+document_interface_set_attribute (DocumentInterface *doc_interface, 
                                   char *shape, char *attribute, 
                                   char *newval, GError **error);
 
 gboolean
-document_interface_set_int_attribute (DocumentInterface *object, 
+document_interface_set_int_attribute (DocumentInterface *doc_interface, 
                                       char *shape, char *attribute, 
                                       int newval, GError **error);
 
 gboolean
-document_interface_set_double_attribute (DocumentInterface *object, 
+document_interface_set_double_attribute (DocumentInterface *doc_interface, 
                                          char *shape, char *attribute, 
                                          double newval, GError **error);
 
 gchar * 
-document_interface_get_attribute (DocumentInterface *object, 
+document_interface_get_attribute (DocumentInterface *doc_interface, 
                                   char *shape, char *attribute, GError **error);
 
 gboolean 
-document_interface_move (DocumentInterface *object, gchar *name, 
+document_interface_move (DocumentInterface *doc_interface, gchar *name, 
                          gdouble x, gdouble y, GError **error);
 
 gboolean 
-document_interface_move_to (DocumentInterface *object, gchar *name, 
+document_interface_move_to (DocumentInterface *doc_interface, gchar *name, 
                             gdouble x, gdouble y, GError **error);
 
 gboolean
-document_interface_object_to_path (DocumentInterface *object, 
+document_interface_object_to_path (DocumentInterface *doc_interface, 
                                    char *shape, GError **error);
 
 gchar *
-document_interface_get_path (DocumentInterface *object, 
+document_interface_get_path (DocumentInterface *doc_interface, 
                              char *pathname, GError **error);
 
 gboolean 
-document_interface_transform (DocumentInterface *object, gchar *shape,
+document_interface_transform (DocumentInterface *doc_interface, gchar *shape,
                               gchar *transformstr, GError **error);
 
 gchar *
-document_interface_get_css (DocumentInterface *object, gchar *shape,
+document_interface_get_css (DocumentInterface *doc_interface, gchar *shape,
                             GError **error);
 
 gboolean 
-document_interface_modify_css (DocumentInterface *object, gchar *shape,
+document_interface_modify_css (DocumentInterface *doc_interface, gchar *shape,
                                gchar *cssattrb, gchar *newval, GError **error);
 
 gboolean 
-document_interface_merge_css (DocumentInterface *object, gchar *shape,
+document_interface_merge_css (DocumentInterface *doc_interface, gchar *shape,
                                gchar *stylestring, GError **error);
 
 gboolean 
-document_interface_set_color (DocumentInterface *object, gchar *shape,
+document_interface_set_color (DocumentInterface *doc_interface, gchar *shape,
                               int r, int g, int b, gboolean fill, GError **error);
 
 gboolean 
-document_interface_move_to_layer (DocumentInterface *object, gchar *shape, 
+document_interface_move_to_layer (DocumentInterface *doc_interface, gchar *shape, 
                               gchar *layerstr, GError **error);
 
 
 GArray *
-document_interface_get_node_coordinates (DocumentInterface *object, gchar *shape);
+document_interface_get_node_coordinates (DocumentInterface *doc_interface, gchar *shape);
 
 /****************************************************************************
      FILE I/O FUNCTIONS
 ****************************************************************************/
 
 gboolean 
-document_interface_save (DocumentInterface *object, GError **error);
+document_interface_save (DocumentInterface *doc_interface, GError **error);
 
 gboolean 
-document_interface_load (DocumentInterface *object, 
+document_interface_load (DocumentInterface *doc_interface, 
                         gchar *filename, GError **error);
 
 gboolean 
-document_interface_save_as (DocumentInterface *object, 
+document_interface_save_as (DocumentInterface *doc_interface, 
                            const gchar *filename, GError **error);
 
 gboolean 
-document_interface_mark_as_unmodified (DocumentInterface *object, GError **error);
+document_interface_mark_as_unmodified (DocumentInterface *doc_interface, GError **error);
 /*
 gboolean 
-document_interface_print_to_file (DocumentInterface *object, GError **error);
+document_interface_print_to_file (DocumentInterface *doc_interface, GError **error);
 */
 
 /****************************************************************************
@@ -251,125 +255,120 @@ document_interface_print_to_file (DocumentInterface *object, GError **error);
 ****************************************************************************/
 
 gboolean
-document_interface_close (DocumentInterface *object, GError **error);
+document_interface_close (DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_exit (DocumentInterface *object, GError **error);
+document_interface_exit (DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_undo (DocumentInterface *object, GError **error);
+document_interface_undo (DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_redo (DocumentInterface *object, GError **error);
+document_interface_redo (DocumentInterface *doc_interface, GError **error);
 
 
 /****************************************************************************
      UPDATE FUNCTIONS
 ****************************************************************************/
 void
-document_interface_pause_updates (DocumentInterface *object, GError **error);
+document_interface_pause_updates (DocumentInterface *doc_interface, GError **error);
 
 void
-document_interface_resume_updates (DocumentInterface *object, GError **error);
+document_interface_resume_updates (DocumentInterface *doc_interface, GError **error);
 
 void
-document_interface_update (DocumentInterface *object, GError **error);
+document_interface_update (DocumentInterface *doc_interface, GError **error);
 
 /****************************************************************************
      SELECTION FUNCTIONS
 ****************************************************************************/
 gboolean
-document_interface_selection_get (DocumentInterface *object, char ***out, GError **error);
+document_interface_selection_get (DocumentInterface *doc_interface, char ***out, GError **error);
 
 gboolean
-document_interface_selection_add (DocumentInterface *object, 
+document_interface_selection_add (DocumentInterface *doc_interface, 
                                   char *name, GError **error);
 
 gboolean
-document_interface_selection_add_list (DocumentInterface *object, 
+document_interface_selection_add_list (DocumentInterface *doc_interface, 
                                        char **names, GError **error);
 
 gboolean
-document_interface_selection_set (DocumentInterface *object, 
+document_interface_selection_set (DocumentInterface *doc_interface, 
                                   char *name, GError **error);
 
 gboolean
-document_interface_selection_set_list (DocumentInterface *object, 
+document_interface_selection_set_list (DocumentInterface *doc_interface, 
                                        gchar **names, GError **error);
 
 gboolean
-document_interface_selection_rotate (DocumentInterface *object, 
+document_interface_selection_rotate (DocumentInterface *doc_interface, 
                                      int angle, GError **error);
 
 gboolean
-document_interface_selection_delete(DocumentInterface *object, GError **error);
+document_interface_selection_delete(DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_selection_clear(DocumentInterface *object, GError **error);
+document_interface_selection_clear(DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_select_all(DocumentInterface *object, GError **error);
+document_interface_select_all(DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_select_all_in_all_layers(DocumentInterface *object, 
+document_interface_select_all_in_all_layers(DocumentInterface *doc_interface, 
                                             GError **error);
 
 gboolean
-document_interface_selection_box (DocumentInterface *object, int x, int y,
+document_interface_selection_box (DocumentInterface *doc_interface, int x, int y,
                                   int x2, int y2, gboolean replace, 
                                   GError **error);
 
 gboolean
-document_interface_selection_invert (DocumentInterface *object, GError **error);
+document_interface_selection_invert (DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_selection_group(DocumentInterface *object, GError **error);
+document_interface_selection_group(DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_selection_ungroup(DocumentInterface *object, GError **error);
+document_interface_selection_ungroup(DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_selection_cut(DocumentInterface *object, GError **error);
+document_interface_selection_cut(DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_selection_copy(DocumentInterface *object, GError **error);
+document_interface_selection_copy(DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_selection_paste(DocumentInterface *object, GError **error);
+document_interface_selection_paste(DocumentInterface *doc_interface, GError **error);
 
 gboolean
-document_interface_selection_scale (DocumentInterface *object, 
+document_interface_selection_scale (DocumentInterface *doc_interface, 
                                     gdouble grow, GError **error);
 
 gboolean
-document_interface_selection_move (DocumentInterface *object, gdouble x, 
+document_interface_selection_move (DocumentInterface *doc_interface, gdouble x, 
                                    gdouble y, GError **error);
 
 gboolean
-document_interface_selection_move_to (DocumentInterface *object, gdouble x, 
+document_interface_selection_move_to (DocumentInterface *doc_interface, gdouble x, 
                                       gdouble y, GError **error);
 
 gboolean 
-document_interface_selection_move_to_layer (DocumentInterface *object,
+document_interface_selection_move_to_layer (DocumentInterface *doc_interface,
                                             gchar *layerstr, GError **error);
 
 GArray * 
-document_interface_selection_get_center (DocumentInterface *object);
+document_interface_selection_get_center (DocumentInterface *doc_interface);
 
 gboolean 
-document_interface_selection_to_path (DocumentInterface *object, GError **error);
+document_interface_selection_to_path (DocumentInterface *doc_interface, GError **error);
 
-gchar *
-document_interface_selection_combine (DocumentInterface *object, gchar *cmd,
+gboolean
+document_interface_selection_combine (DocumentInterface *doc_interface, gchar *cmd, char ***newpaths,
                                       GError **error);
 
 gboolean
-document_interface_selection_divide (DocumentInterface *object, 
-                                     char ***out, GError **error);
-
-
-gboolean
-document_interface_selection_change_level (DocumentInterface *object, gchar *cmd,
+document_interface_selection_change_level (DocumentInterface *doc_interface, gchar *cmd,
                                       GError **error);
 
 /****************************************************************************
@@ -377,24 +376,24 @@ document_interface_selection_change_level (DocumentInterface *object, gchar *cmd
 ****************************************************************************/
 
 gchar *
-document_interface_layer_new (DocumentInterface *object, GError **error);
+document_interface_layer_new (DocumentInterface *doc_interface, GError **error);
 
 gboolean 
-document_interface_layer_set (DocumentInterface *object,
+document_interface_layer_set (DocumentInterface *doc_interface,
                               gchar *layerstr, GError **error);
 
 gchar **
-document_interface_layer_get_all (DocumentInterface *object);
+document_interface_layer_get_all (DocumentInterface *doc_interface);
 
 gboolean 
-document_interface_layer_change_level (DocumentInterface *object,
+document_interface_layer_change_level (DocumentInterface *doc_interface,
                                        gchar *cmd, GError **error);
 
 gboolean 
-document_interface_layer_next (DocumentInterface *object, GError **error);
+document_interface_layer_next (DocumentInterface *doc_interface, GError **error);
 
 gboolean 
-document_interface_layer_previous (DocumentInterface *object, GError **error);
+document_interface_layer_previous (DocumentInterface *doc_interface, GError **error);
 
 
 
@@ -410,13 +409,13 @@ extern DocumentInterface *fugly;
 gboolean dbus_send_ping (SPDesktop* desk,     SPItem *item);
 
 gboolean
-document_interface_get_children (DocumentInterface *object,  char *name, char ***out, GError **error);
+document_interface_get_children (DocumentInterface *doc_interface,  char *name, char ***out, GError **error);
 
 gchar* 
-document_interface_get_parent (DocumentInterface *object,  char *name, GError **error);
+document_interface_get_parent (DocumentInterface *doc_interface,  char *name, GError **error);
 
 gchar*
-document_interface_import (DocumentInterface *object, 
+document_interface_import (DocumentInterface *doc_interface, 
                            gchar *filename, GError **error);
 
 G_END_DECLS

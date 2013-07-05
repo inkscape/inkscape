@@ -33,6 +33,7 @@ class SPBox3D;
 struct Persp3D;
 
 namespace Inkscape {
+class LayerModel;
 namespace XML {
 class Node;
 }
@@ -41,10 +42,10 @@ class Node;
 namespace Inkscape {
 
 /**
- * The set of selected SPObjects for a given desktop.
+ * The set of selected SPObjects for a given document and layer model.
  *
  * This class represents the set of selected SPItems for a given
- * SPDesktop.
+ * document (referenced in LayerModel).
  *
  * An SPObject and its parent cannot be simultaneously selected;
  * selecting an SPObjects has the side-effect of unselecting any of
@@ -64,17 +65,26 @@ class Selection : public Inkscape::GC::Managed<>,
 public:
     /**
      * Constructs an selection object, bound to a particular
-     * SPDesktop
+     * layer model
      *
-     * @param desktop the desktop in question
+     * @param layers the layer model (for the SPDesktop, if GUI)
+     * @param desktop the desktop associated with the layer model, or NULL if in console mode
      */
-    Selection(SPDesktop *desktop);
+    Selection(LayerModel *layers, SPDesktop *desktop);
     ~Selection();
+
+    /**
+     * Returns the layer model the selection is bound to (works in console or GUI mode)
+     *
+     * @return the layer model the selection is bound to, which is the same as the desktop
+     * layer model for GUI mode
+     */
+    LayerModel *layers() { return _layers; }
 
     /**
      * Returns the desktop the selection is bound to
      *
-     * @return the desktop the selection is bound to
+     * @return the desktop the selection is bound to, or NULL if in console mode
      */
     SPDesktop *desktop() { return _desktop; }
 
@@ -342,6 +352,7 @@ private:
 
     std::list<SPBox3D *> _3dboxes;
 
+    LayerModel *_layers;
     GC::soft_ptr<SPDesktop> _desktop;
     SPObject* _selection_context;
     guint _flags;

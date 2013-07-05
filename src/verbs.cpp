@@ -51,6 +51,7 @@
 #include "file.h"
 #include "gradient-drag.h"
 #include "helper/action.h"
+#include "helper/action-context.h"
 #include "help.h"
 #include "inkscape-private.h"
 #include "interface.h"
@@ -125,7 +126,7 @@ class FileVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     FileVerb(unsigned int const code,
@@ -144,7 +145,7 @@ class EditVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     EditVerb(unsigned int const code,
@@ -163,7 +164,7 @@ class SelectionVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     SelectionVerb(unsigned int const code,
@@ -182,7 +183,7 @@ class LayerVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     LayerVerb(unsigned int const code,
@@ -201,7 +202,7 @@ class ObjectVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     ObjectVerb(unsigned int const code,
@@ -220,7 +221,7 @@ class ContextVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     ContextVerb(unsigned int const code,
@@ -239,7 +240,7 @@ class ZoomVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     ZoomVerb(unsigned int const code,
@@ -259,7 +260,7 @@ class DialogVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     DialogVerb(unsigned int const code,
@@ -278,7 +279,7 @@ class HelpVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     HelpVerb(unsigned int const code,
@@ -297,7 +298,7 @@ class TutorialVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     TutorialVerb(unsigned int const code,
@@ -316,7 +317,7 @@ class TextVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     TextVerb(unsigned int const code,
@@ -383,10 +384,10 @@ Verb::~Verb(void)
  * for a function that every subclass should write.  Most
  * can be written using \c make_action_helper.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return NULL to represent error (this function shouldn't ever be called)
  */
-SPAction *Verb::make_action(Inkscape::UI::View::View */*view*/)
+SPAction *Verb::make_action(Inkscape::ActionContext const & /*context*/)
 {
     //std::cout << "make_action" << std::endl;
     return NULL;
@@ -396,13 +397,13 @@ SPAction *Verb::make_action(Inkscape::UI::View::View */*view*/)
  * Create an action for a \c FileVerb.
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *FileVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *FileVerb::make_action(Inkscape::ActionContext const & context)
 {
     //std::cout << "fileverb: make_action: " << &perform << std::endl;
-    return make_action_helper(view, &perform);
+    return make_action_helper(context, &perform);
 }
 
 /**
@@ -410,13 +411,13 @@ SPAction *FileVerb::make_action(Inkscape::UI::View::View *view)
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *EditVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *EditVerb::make_action(Inkscape::ActionContext const & context)
 {
     //std::cout << "editverb: make_action: " << &perform << std::endl;
-    return make_action_helper(view, &perform);
+    return make_action_helper(context, &perform);
 }
 
 /**
@@ -424,12 +425,12 @@ SPAction *EditVerb::make_action(Inkscape::UI::View::View *view)
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *SelectionVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *SelectionVerb::make_action(Inkscape::ActionContext const & context)
 {
-    return make_action_helper(view, &perform);
+    return make_action_helper(context, &perform);
 }
 
 /**
@@ -437,12 +438,12 @@ SPAction *SelectionVerb::make_action(Inkscape::UI::View::View *view)
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *LayerVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *LayerVerb::make_action(Inkscape::ActionContext const & context)
 {
-    return make_action_helper(view, &perform);
+    return make_action_helper(context, &perform);
 }
 
 /**
@@ -450,12 +451,12 @@ SPAction *LayerVerb::make_action(Inkscape::UI::View::View *view)
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *ObjectVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *ObjectVerb::make_action(Inkscape::ActionContext const & context)
 {
-    return make_action_helper(view, &perform);
+    return make_action_helper(context, &perform);
 }
 
 /**
@@ -463,12 +464,12 @@ SPAction *ObjectVerb::make_action(Inkscape::UI::View::View *view)
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *ContextVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *ContextVerb::make_action(Inkscape::ActionContext const & context)
 {
-    return make_action_helper(view, &perform);
+    return make_action_helper(context, &perform);
 }
 
 /**
@@ -476,12 +477,12 @@ SPAction *ContextVerb::make_action(Inkscape::UI::View::View *view)
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *ZoomVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *ZoomVerb::make_action(Inkscape::ActionContext const & context)
 {
-    return make_action_helper(view, &perform);
+    return make_action_helper(context, &perform);
 }
 
 /**
@@ -489,12 +490,12 @@ SPAction *ZoomVerb::make_action(Inkscape::UI::View::View *view)
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *DialogVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *DialogVerb::make_action(Inkscape::ActionContext const & context)
 {
-    return make_action_helper(view, &perform);
+    return make_action_helper(context, &perform);
 }
 
 /**
@@ -502,12 +503,12 @@ SPAction *DialogVerb::make_action(Inkscape::UI::View::View *view)
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *HelpVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *HelpVerb::make_action(Inkscape::ActionContext const & context)
 {
-    return make_action_helper(view, &perform);
+    return make_action_helper(context, &perform);
 }
 
 /**
@@ -515,12 +516,12 @@ SPAction *HelpVerb::make_action(Inkscape::UI::View::View *view)
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *TutorialVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *TutorialVerb::make_action(Inkscape::ActionContext const & context)
 {
-    return make_action_helper(view, &perform);
+    return make_action_helper(context, &perform);
 }
 
 /**
@@ -528,12 +529,12 @@ SPAction *TutorialVerb::make_action(Inkscape::UI::View::View *view)
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *TextVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *TextVerb::make_action(Inkscape::ActionContext const & context)
 {
-    return make_action_helper(view, &perform);
+    return make_action_helper(context, &perform);
 }
 
 /**
@@ -547,16 +548,16 @@ SPAction *TextVerb::make_action(Inkscape::UI::View::View *view)
  * if the action gets crated, a listener is added to the action with
  * the vector that is passed in.
  *
- * @param  view    Which view the action should be created for.
+ * @param  context Which context the action should be created for.
  * @param  vector  The function vector for the verb.
  * @return The created action.
  */
-SPAction *Verb::make_action_helper(Inkscape::UI::View::View *view, void (*perform_fun)(SPAction *, void *), void *in_pntr)
+SPAction *Verb::make_action_helper(Inkscape::ActionContext const & context, void (*perform_fun)(SPAction *, void *), void *in_pntr)
 {
     SPAction *action;
 
     //std::cout << "Adding action: " << _code << std::endl;
-    action = sp_action_new(view, _id, _(_name),
+    action = sp_action_new(context, _id, _(_name),
                            _(_tip), _image, this);
 
     if (action == NULL) return NULL;
@@ -588,22 +589,22 @@ SPAction *Verb::make_action_helper(Inkscape::UI::View::View *view, void (*perfor
  * looked for, and the sensitivity is matched.  Unfortunately, this is
  * currently a linear search.
  *
- * @param  view  The view which this action would relate to.
+ * @param  context  The action context which this action relates to.
  * @return The action, or NULL if there is an error.
  */
-SPAction *Verb::get_action(Inkscape::UI::View::View *view)
+SPAction *Verb::get_action(Inkscape::ActionContext const & context)
 {
     SPAction *action = NULL;
 
     if ( _actions == NULL ) {
         _actions = new ActionTable;
     }
-    ActionTable::iterator action_found = _actions->find(view);
+    ActionTable::iterator action_found = _actions->find(context.getView());
 
     if (action_found != _actions->end()) {
         action = action_found->second;
     } else {
-        action = this->make_action(view);
+        action = this->make_action(context);
 
         // if (action == NULL) printf("Hmm, NULL in %s\n", _name);
         if (action == NULL) printf("Hmm, NULL in %s\n", _name);
@@ -611,19 +612,29 @@ SPAction *Verb::get_action(Inkscape::UI::View::View *view)
             sp_action_set_sensitive(action, 0);
         } else {
             for (ActionTable::iterator cur_action = _actions->begin();
-                 cur_action != _actions->end() && view != NULL;
+                 cur_action != _actions->end() && context.getView() != NULL;
                  ++cur_action) {
-                if (cur_action->first != NULL && cur_action->first->doc() == view->doc()) {
+                if (cur_action->first != NULL && cur_action->first->doc() == context.getDocument()) {
                     sp_action_set_sensitive(action, cur_action->second->sensitive);
                     break;
                 }
             }
         }
 
-        _actions->insert(ActionTable::value_type(view, action));
+        _actions->insert(ActionTable::value_type(context.getView(), action));
     }
 
     return action;
+}
+
+/* static */
+bool Verb::ensure_desktop_valid(SPAction *action)
+{
+    if (sp_action_get_desktop(action) != NULL) {
+        return true;
+    }
+    g_printerr("WARNING: ignoring verb %s - GUI required for this verb.\n", action->id);
+    return false;
 }
 
 void Verb::sensitive(SPDocument *in_doc, bool in_sensitive)
@@ -800,15 +811,30 @@ Verb *Verb::getbyid(gchar const *id)
  */
 void FileVerb::perform(SPAction *action, void *data)
 {
-#if 0
-    // These aren't used, but are here to remind people not to use
-    // the CURRENT_DOCUMENT macros unless they really have to.
-    Inkscape::UI::View::View *current_view = sp_action_get_view(action);
-    SPDocument *current_document = current_view->doc();
-#endif
+    // Convert verb impls to use this where possible, to reduce static cling
+    // to macros like SP_ACTIVE_DOCUMENT, which end up enforcing GUI-mode operation
+    SPDocument *doc = sp_action_get_document(action);
+    
+    // We can vacuum defs, or exit, without needing a desktop!
+    bool handled = true;
+    switch (reinterpret_cast<std::size_t>(data)) {
+        case SP_VERB_FILE_VACUUM:
+            sp_file_vacuum(doc);
+            break;
+        case SP_VERB_FILE_QUIT:
+            sp_file_exit();
+            break;
+        default:
+            handled = false;
+            break;
+    }
+    if (handled) {
+        return;
+    }
+    
+    g_return_if_fail(ensure_desktop_valid(action));
+    SPDesktop *desktop = sp_action_get_desktop(action);
 
-    SPDesktop *desktop = dynamic_cast<SPDesktop*>(sp_action_get_view(action));
-    g_assert(desktop != NULL);
     Gtk::Window *parent = desktop->getToplevel();
     g_assert(parent != NULL);
 
@@ -834,9 +860,6 @@ void FileVerb::perform(SPAction *action, void *data)
         case SP_VERB_FILE_PRINT:
             sp_file_print(*parent);
             break;
-        case SP_VERB_FILE_VACUUM:
-            sp_file_vacuum();
-            break;
         case SP_VERB_FILE_IMPORT:
             sp_file_import(*parent);
             break;
@@ -858,9 +881,6 @@ void FileVerb::perform(SPAction *action, void *data)
         case SP_VERB_FILE_CLOSE_VIEW:
             sp_ui_close_view(NULL);
             break;
-        case SP_VERB_FILE_QUIT:
-            sp_file_exit();
-            break;
         default:
             break;
     }
@@ -873,9 +893,22 @@ void FileVerb::perform(SPAction *action, void *data)
  */
 void EditVerb::perform(SPAction *action, void *data)
 {
-    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
-    if (!dt)
+    // We can clear all without a desktop
+    bool handled = true;
+    switch (reinterpret_cast<std::size_t>(data)) {
+        case SP_VERB_EDIT_CLEAR_ALL:
+            sp_edit_clear_all(sp_action_get_selection(action));
+            break;
+        default:
+            handled = false;
+            break;
+    }
+    if (handled) {
         return;
+    }
+    
+    g_return_if_fail(ensure_desktop_valid(action));
+    SPDesktop *dt = sp_action_get_desktop(action);
 
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_EDIT_UNDO:
@@ -965,9 +998,6 @@ void EditVerb::perform(SPAction *action, void *data)
         case SP_VERB_EDIT_UNSYMBOL:
             sp_selection_unsymbol(dt);
             break;
-        case SP_VERB_EDIT_CLEAR_ALL:
-            sp_edit_clear_all(dt);
-            break;
         case SP_VERB_EDIT_SELECT_ALL:
             SelectionHelper::selectAll(dt);
             break;
@@ -1029,33 +1059,68 @@ void EditVerb::perform(SPAction *action, void *data)
  */
 void SelectionVerb::perform(SPAction *action, void *data)
 {
-    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
+    Inkscape::Selection *selection = sp_action_get_selection(action);
+    SPDesktop *dt = sp_action_get_desktop(action);
 
-    if (!dt)
+    // Some of these operations have been modified so they work in command-line mode!
+    // In this case, all we need is a selection
+    if (!selection) {
         return;
+    }
+
+    bool handled = true;
+    switch (reinterpret_cast<std::size_t>(data)) {
+        case SP_VERB_SELECTION_UNION:
+            sp_selected_path_union(selection, dt);
+            break;
+        case SP_VERB_SELECTION_INTERSECT:
+            sp_selected_path_intersect(selection, dt);
+            break;
+        case SP_VERB_SELECTION_DIFF:
+            sp_selected_path_diff(selection, dt);
+            break;
+        case SP_VERB_SELECTION_SYMDIFF:
+            sp_selected_path_symdiff(selection, dt);
+            break;
+        case SP_VERB_SELECTION_CUT:
+            sp_selected_path_cut(selection, dt);
+            break;
+        case SP_VERB_SELECTION_SLICE:
+            sp_selected_path_slice(selection, dt);
+            break;
+        case SP_VERB_SELECTION_TO_FRONT:
+            sp_selection_raise_to_top(selection, dt);
+            break;
+        case SP_VERB_SELECTION_TO_BACK:
+            sp_selection_lower_to_bottom(selection, dt);
+            break;
+        case SP_VERB_SELECTION_RAISE:
+            sp_selection_raise(selection, dt);
+            break;
+        case SP_VERB_SELECTION_LOWER:
+            sp_selection_lower(selection, dt);
+            break;
+        case SP_VERB_SELECTION_GROUP:
+            sp_selection_group(selection, dt);
+            break;
+        case SP_VERB_SELECTION_UNGROUP:
+            sp_selection_ungroup(selection, dt);
+            break;
+        default:
+            handled = false;
+            break;
+    }
+
+    if (handled) {
+        return;
+    }
+
+    // The remaining operations require a desktop
+    g_return_if_fail(ensure_desktop_valid(action));
 
     g_assert(dt->_dlg_mgr != NULL);
 
     switch (reinterpret_cast<std::size_t>(data)) {
-        case SP_VERB_SELECTION_TO_FRONT:
-            sp_selection_raise_to_top(dt);
-            break;
-        case SP_VERB_SELECTION_TO_BACK:
-            sp_selection_lower_to_bottom(dt);
-            break;
-        case SP_VERB_SELECTION_RAISE:
-            sp_selection_raise(dt);
-            break;
-        case SP_VERB_SELECTION_LOWER:
-            sp_selection_lower(dt);
-            break;
-        case SP_VERB_SELECTION_GROUP:
-            sp_selection_group(dt);
-            break;
-        case SP_VERB_SELECTION_UNGROUP:
-            sp_selection_ungroup(dt);
-            break;
-
         case SP_VERB_SELECTION_TEXTTOPATH:
             text_put_on_path();
             break;
@@ -1064,26 +1129,6 @@ void SelectionVerb::perform(SPAction *action, void *data)
             break;
         case SP_VERB_SELECTION_REMOVE_KERNS:
             text_remove_all_kerns();
-            break;
-
-        case SP_VERB_SELECTION_UNION:
-            sp_selected_path_union(dt);
-            break;
-        case SP_VERB_SELECTION_INTERSECT:
-            sp_selected_path_intersect(dt);
-            break;
-        case SP_VERB_SELECTION_DIFF:
-            sp_selected_path_diff(dt);
-            break;
-        case SP_VERB_SELECTION_SYMDIFF:
-            sp_selected_path_symdiff(dt);
-            break;
-
-        case SP_VERB_SELECTION_CUT:
-            sp_selected_path_cut(dt);
-            break;
-        case SP_VERB_SELECTION_SLICE:
-            sp_selected_path_slice(dt);
             break;
 
         case SP_VERB_SELECTION_OFFSET:
@@ -1150,10 +1195,11 @@ void SelectionVerb::perform(SPAction *action, void *data)
  */
 void LayerVerb::perform(SPAction *action, void *data)
 {
-    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
+    g_return_if_fail(ensure_desktop_valid(action));
+    SPDesktop *dt = sp_action_get_desktop(action);
     size_t verb = reinterpret_cast<std::size_t>(data);
-
-    if ( !dt || !dt->currentLayer() ) {
+    
+    if ( !dt->currentLayer() ) {
         return;
     }
 
@@ -1401,9 +1447,8 @@ void LayerVerb::perform(SPAction *action, void *data)
  */
 void ObjectVerb::perform( SPAction *action, void *data)
 {
-    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
-    if (!dt)
-        return;
+    g_return_if_fail(ensure_desktop_valid(action));
+    SPDesktop *dt = sp_action_get_desktop(action);
 
     SPEventContext *ec = dt->event_context;
 
@@ -1488,11 +1533,9 @@ void ContextVerb::perform(SPAction *action, void *data)
     SPDesktop *dt;
     sp_verb_t verb;
     int vidx;
-
-    dt = static_cast<SPDesktop*>(sp_action_get_view(action));
-
-    if (!dt)
-        return;
+    
+    g_return_if_fail(ensure_desktop_valid(action));
+    dt = sp_action_get_desktop(action);
 
     verb = (sp_verb_t)GPOINTER_TO_INT((gpointer)data);
 
@@ -1501,7 +1544,7 @@ void ContextVerb::perform(SPAction *action, void *data)
      */
     for (vidx = SP_VERB_CONTEXT_SELECT; vidx <= SP_VERB_CONTEXT_PAINTBUCKET_PREFS; vidx++)
     {
-        SPAction *tool_action= get((sp_verb_t)vidx)->get_action(dt);
+        SPAction *tool_action= get((sp_verb_t)vidx)->get_action(action->context);
         if (tool_action) {
             sp_action_set_active(tool_action, vidx == (int)verb);
         }
@@ -1690,9 +1733,8 @@ void ContextVerb::perform(SPAction *action, void *data)
  */
 void TextVerb::perform(SPAction *action, void */*data*/)
 {
-    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
-    if (!dt)
-        return;
+    g_return_if_fail(ensure_desktop_valid(action));
+    SPDesktop *dt = sp_action_get_desktop(action);
 
     SPDocument *doc = sp_desktop_document(dt);
     (void)doc;
@@ -1705,9 +1747,8 @@ void TextVerb::perform(SPAction *action, void */*data*/)
  */
 void ZoomVerb::perform(SPAction *action, void *data)
 {
-    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
-    if (!dt)
-        return;
+    g_return_if_fail(ensure_desktop_valid(action));
+    SPDesktop *dt = sp_action_get_desktop(action);
     SPEventContext *ec = dt->event_context;
 
     SPDocument *doc = sp_desktop_document(dt);
@@ -1894,8 +1935,9 @@ void DialogVerb::perform(SPAction *action, void *data)
         // unhide all when opening a new dialog
         inkscape_dialogs_unhide();
     }
-
-    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
+    
+    g_return_if_fail(ensure_desktop_valid(action));
+    SPDesktop *dt = sp_action_get_desktop(action);
     g_assert(dt->_dlg_mgr != NULL);
 
     switch (reinterpret_cast<std::size_t>(data)) {
@@ -2007,7 +2049,8 @@ void DialogVerb::perform(SPAction *action, void *data)
  */
 void HelpVerb::perform(SPAction *action, void *data)
 {
-    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
+    g_return_if_fail(ensure_desktop_valid(action));
+    SPDesktop *dt = sp_action_get_desktop(action);
     g_assert(dt->_dlg_mgr != NULL);
 
     switch (reinterpret_cast<std::size_t>(data)) {
@@ -2040,8 +2083,9 @@ void HelpVerb::perform(SPAction *action, void *data)
 /**
  * Decode the verb code and take appropriate action.
  */
-void TutorialVerb::perform(SPAction */*action*/, void *data)
+void TutorialVerb::perform(SPAction *action, void *data)
 {
+    g_return_if_fail(ensure_desktop_valid(action));
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_TUTORIAL_BASIC:
             // TRANSLATORS: If you have translated the tutorial-basic.en.svgz file to your language,
@@ -2091,7 +2135,7 @@ class EffectLastVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     EffectLastVerb(unsigned int const code,
@@ -2110,12 +2154,12 @@ public:
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *EffectLastVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *EffectLastVerb::make_action(Inkscape::ActionContext const & context)
 {
-    return make_action_helper(view, &perform);
+    return make_action_helper(context, &perform);
 }
 
 /**
@@ -2123,14 +2167,12 @@ SPAction *EffectLastVerb::make_action(Inkscape::UI::View::View *view)
  */
 void EffectLastVerb::perform(SPAction *action, void *data)
 {
-    // These aren't used, but are here to remind people not to use
-    // the CURRENT_DOCUMENT macros unless they really have to. 
+    g_return_if_fail(ensure_desktop_valid(action));
     Inkscape::UI::View::View *current_view = sp_action_get_view(action);
-    // SPDocument *current_document = SP_VIEW_DOCUMENT(current_view);
+
     Inkscape::Extension::Effect *effect = Inkscape::Extension::Effect::get_last_effect();
 
     if (effect == NULL) return;
-    if (current_view == NULL) return;
 
     switch (reinterpret_cast<std::size_t>(data)) {
         case SP_VERB_EFFECT_LAST_PREF:
@@ -2156,7 +2198,7 @@ class FitCanvasVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     FitCanvasVerb(unsigned int const code,
@@ -2175,12 +2217,12 @@ public:
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *FitCanvasVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *FitCanvasVerb::make_action(Inkscape::ActionContext const & context)
 {
-    SPAction *action = make_action_helper(view, &perform);
+    SPAction *action = make_action_helper(context, &perform);
     return action;
 }
 
@@ -2189,8 +2231,8 @@ SPAction *FitCanvasVerb::make_action(Inkscape::UI::View::View *view)
  */
 void FitCanvasVerb::perform(SPAction *action, void *data)
 {
-    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
-    if (!dt) return;
+    g_return_if_fail(ensure_desktop_valid(action));
+    SPDesktop *dt = sp_action_get_desktop(action);
     SPDocument *doc = sp_desktop_document(dt);
     if (!doc) return;
 
@@ -2222,7 +2264,7 @@ class LockAndHideVerb : public Verb {
 private:
     static void perform(SPAction *action, void *mydata);
 protected:
-    virtual SPAction *make_action(Inkscape::UI::View::View *view);
+    virtual SPAction *make_action(Inkscape::ActionContext const & context);
 public:
     /** Use the Verb initializer with the same parameters. */
     LockAndHideVerb(unsigned int const code,
@@ -2241,12 +2283,12 @@ public:
  *
  * Calls \c make_action_helper with the \c vector.
  *
- * @param  view  Which view the action should be created for.
+ * @param  context  Which context the action should be created for.
  * @return The built action.
  */
-SPAction *LockAndHideVerb::make_action(Inkscape::UI::View::View *view)
+SPAction *LockAndHideVerb::make_action(Inkscape::ActionContext const & context)
 {
-    SPAction *action = make_action_helper(view, &perform);
+    SPAction *action = make_action_helper(context, &perform);
     return action;
 }
 
@@ -2255,8 +2297,8 @@ SPAction *LockAndHideVerb::make_action(Inkscape::UI::View::View *view)
  */
 void LockAndHideVerb::perform(SPAction *action, void *data)
 {
-    SPDesktop *dt = static_cast<SPDesktop*>(sp_action_get_view(action));
-    if (!dt) return;
+    g_return_if_fail(ensure_desktop_valid(action));
+    SPDesktop *dt = sp_action_get_desktop(action);
     SPDocument *doc = sp_desktop_document(dt);
     if (!doc) return;
 

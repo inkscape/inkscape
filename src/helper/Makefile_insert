@@ -5,6 +5,8 @@ helper/unit-menu.$(OBJEXT): helper/sp-marshal.h
 ink_common_sources +=	\
 	helper/action.cpp	\
 	helper/action.h	\
+	helper/action-context.cpp	\
+	helper/action-context.h	\
 	helper/geom.cpp	\
 	helper/geom.h	\
 	helper/geom-curves.h	\

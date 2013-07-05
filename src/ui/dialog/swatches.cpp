@@ -57,6 +57,7 @@
 #include "verbs.h"
 #include "gradient-chemistry.h"
 #include "helper/action.h"
+#include "helper/action-context.h"
 
 namespace Inkscape {
 namespace UI {
@@ -154,7 +155,7 @@ static void editGradientImpl( SPDesktop* desktop, SPGradient* gr )
                 // Invoke the gradient tool
                 Inkscape::Verb *verb = Inkscape::Verb::get( SP_VERB_CONTEXT_GRADIENT );
                 if ( verb ) {
-                    SPAction *action = verb->get_action( ( Inkscape::UI::View::View * ) SP_ACTIVE_DESKTOP);
+                    SPAction *action = verb->get_action( Inkscape::ActionContext( ( Inkscape::UI::View::View * ) SP_ACTIVE_DESKTOP ) );
                     if ( action ) {
                         sp_action_perform( action, NULL );
                     }

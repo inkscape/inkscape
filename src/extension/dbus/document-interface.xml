@@ -21,7 +21,7 @@
 <node name="/org/inkscape/document"
   xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd"
 >
-
+c
   <interface name="org.inkscape.document">
 
     <!-- MISC FUNCTIONS -->
@@ -1348,36 +1348,20 @@
           <doc:summary>Type of combination.</doc:summary>
         </doc:doc>
       </arg>
-      <arg type="s" name="newpath" direction="out" >
-        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="error"/>
+      <arg type="as" name="newpaths" direction="out" >
         <doc:doc>
-          <doc:summary>The new path created, if there is one.  NULL otherwise.</doc:summary>
+          <doc:summary>List of the ids of resulting paths after applying the operation.</doc:summary>
         </doc:doc>
       </arg>
       <doc:doc>
         <doc:description>
           <doc:para>Will erase all objects in the selection and replace with a single aggregate path.</doc:para>
           <doc:para>There are 5 types that can be passed in:</doc:para>
-          <doc:para>Union: The new shape is all of the other shapes put together, even if they don't overlap (paths can have multiple non-contiguous areas.)</doc:para>
-          <doc:para>Intersection:  The new shape is composed of the area where ALL the objects in the selection overlap.  If there is no area where all shapes overlap the new shape will be empty.</doc:para>
-          <doc:para>Difference: The area of the second shape is subtracted from the first, only works with two objects.</doc:para>
-          <doc:para>Exclusion: The new shape is the area(s) where none of the objects in the selection overlaped.  Only works with two objects.</doc:para>
-          <doc:para>Division: the first object is split into multiple segments by the second object.  Only works with two objects and if multiple paths result they are grouped and the group id is returned.</doc:para>
-        </doc:description>
-      </doc:doc>
-    </method>
-
-    <method name="selection_divide">
-      <arg type="as" name="pieces" direction="out" >
-       <!-- <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value=""/> -->
-        <doc:doc>
-          <doc:summary>List of the ids of resulting paths.</doc:summary>
-        </doc:doc>
-      </arg>
-      <doc:doc>
-        <doc:description>
-          <doc:para>Returns the result of cutting the bottom object by all other intersecting paths.</doc:para>
-          <doc:para>This may make many seperate layers.</doc:para>
+          <doc:para>'union': The new shape is all of the other shapes put together, even if they don't overlap (paths can have multiple non-contiguous areas.)</doc:para>
+          <doc:para>'intersection':  The new shape is composed of the area where ALL the objects in the selection overlap.  If there is no area where all shapes overlap the new shape will be empty.</doc:para>
+          <doc:para>'difference': The area of the second shape is subtracted from the first, only works with two objects.</doc:para>
+          <doc:para>'exclusion': The new shape is the area(s) where none of the objects in the selection overlaped.  Only works with two objects.</doc:para>
+          <doc:para>'division': the first object is split into multiple segments by the second object.  Only works with two objects.</doc:para>
         </doc:description>
       </doc:doc>
     </method>

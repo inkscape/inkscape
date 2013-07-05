@@ -35,6 +35,7 @@
 #include <glibmm/miscutils.h>
 
 #include "helper/action.h"
+#include "helper/action-context.h"
 #include "io/sys.h"
 #include "io/resource.h"
 #include "verbs.h"
@@ -68,7 +69,7 @@ sp_shortcut_invoke(unsigned int shortcut, Inkscape::UI::View::View *view)
 {
     Inkscape::Verb *verb = sp_shortcut_get_verb(shortcut);
     if (verb) {
-        SPAction *action = verb->get_action(view);
+        SPAction *action = verb->get_action(Inkscape::ActionContext(view));
         if (action) {
             sp_action_perform(action, NULL);
             return true;

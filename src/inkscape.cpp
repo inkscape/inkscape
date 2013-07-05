@@ -58,12 +58,14 @@
 #include "extension/system.h"
 #include "inkscape-private.h"
 #include "io/sys.h"
+#include "layer-model.h"
 #include "message-stack.h"
 #include "preferences.h"
 #include "resource-manager.h"
 #include "selection.h"
 #include "ui/dialog/debug.h"
 #include "xml/repr.h"
+#include "helper/action-context.h"
 #include "helper/sp-marshal.h"
 
 static Inkscape::Application *inkscape = NULL;
@@ -87,7 +89,7 @@ enum {
     LAST_SIGNAL
 };
 
-#define DESKTOP_IS_ACTIVE(d) ((d) == inkscape->desktops->data)
+#define DESKTOP_IS_ACTIVE(d) (inkscape->desktops && ((d) == inkscape->desktops->data))
 
 
 /*################################
@@ -105,10 +107,27 @@ static void inkscape_dispose (GObject *object);
 static void inkscape_activate_desktop_private (Inkscape::Application *inkscape, SPDesktop *desktop);
 static void inkscape_deactivate_desktop_private (Inkscape::Application *inkscape, SPDesktop *desktop);
 
+class AppSelectionModel {
+    Inkscape::LayerModel _layer_model;
+    Inkscape::Selection *_selection;
+
+public:
+    AppSelectionModel(SPDocument *doc) {
+        _layer_model.setDocument(doc);
+        // TODO: is this really how we should manage the lifetime of the selection?
+        // I just copied this from the initialization of the Selection in SPDesktop.
+        // When and how is it actually released?
+        _selection = Inkscape::GC::release(new Inkscape::Selection(&_layer_model, NULL));
+    }
+
+    Inkscape::Selection *getSelection() const { return _selection; }
+};
+
 struct Inkscape::Application {
     GObject object;
     Inkscape::XML::Document *menus;
     std::map<SPDocument *, int> document_set;
+    std::map<SPDocument *, AppSelectionModel *> selection_models;
     GSList *desktops;
     gchar *argv0;
     gboolean dialogs_toggle;
@@ -481,6 +500,7 @@ inkscape_init (SPObject * object)
     }
 
     new (&inkscape->document_set) std::map<SPDocument *, int>();
+    new (&inkscape->selection_models) std::map<SPDocument *, AppSelectionModel *>();
 
     inkscape->menus = sp_repr_read_mem (_(menus_skeleton), MENUS_SKELETON_SIZE, NULL);
     inkscape->desktops = NULL;
@@ -504,6 +524,7 @@ inkscape_dispose (GObject *object)
         inkscape->menus = NULL;
     }
 
+    inkscape->selection_models.~map();
     inkscape->document_set.~map();
 
     G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -1234,6 +1255,14 @@ inkscape_add_document (SPDocument *document)
                 iter->second ++;
             }
        }
+    } else {
+        // insert succeeded, this document is new. Do we need to create a
+        // selection model for it, i.e. are we running without a desktop?
+        if (!inkscape->use_gui) {
+            // Create layer model and selection model so we can run some verbs without a GUI
+            g_assert(inkscape->selection_models.find(document) == inkscape->selection_models.end());
+            inkscape->selection_models[document] = new AppSelectionModel(document);
+        }
     }
 }
 
@@ -1253,6 +1282,13 @@ inkscape_remove_document (SPDocument *document)
             if (iter->second < 1) {
                 // this was the last one, remove the pair from list
                 inkscape->document_set.erase (iter);
+
+                // also remove the selection model
+                std::map<SPDocument *, AppSelectionModel *>::iterator sel_iter = inkscape->selection_models.find(document);
+                if (sel_iter != inkscape->selection_models.end()) {
+                    inkscape->selection_models.erase(sel_iter);
+                }
+
                 return true;
             } else {
                 return false;
@@ -1312,6 +1348,39 @@ inkscape_active_event_context (void)
     return NULL;
 }
 
+Inkscape::ActionContext
+inkscape_active_action_context()
+{
+    if (SP_ACTIVE_DESKTOP) {
+        return Inkscape::ActionContext(SP_ACTIVE_DESKTOP);
+    }
+
+    SPDocument *doc = inkscape_active_document();
+    if (!doc) {
+        return Inkscape::ActionContext();
+    }
+
+    return inkscape_action_context_for_document(doc);
+}
+
+Inkscape::ActionContext
+inkscape_action_context_for_document(SPDocument *doc)
+{
+    // If there are desktops, check them first to see if the document is bound to one of them
+    for (GSList *iter = inkscape->desktops ; iter ; iter = iter->next) {
+        SPDesktop *desktop=static_cast<SPDesktop *>(iter->data);
+        if (desktop->doc() == doc) {
+            return Inkscape::ActionContext(desktop);
+        }
+    }
+
+    // Document is not associated with any desktops - maybe we're in command-line mode
+    std::map<SPDocument *, AppSelectionModel *>::iterator sel_iter = inkscape->selection_models.find(doc);
+    if (sel_iter == inkscape->selection_models.end()) {
+        return Inkscape::ActionContext();
+    }
+    return Inkscape::ActionContext(sel_iter->second->getSelection());
+}
 
 
 /*#####################

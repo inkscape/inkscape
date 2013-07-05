@@ -11,6 +11,7 @@
 #include <desktop.h>
 #include <desktop-handles.h>
 #include <helper/action.h>
+#include <helper/action-context.h>
 #include <selection.h>
 #include <verbs.h>
 #include <inkscape.h>
@@ -41,7 +42,7 @@ CmdLineAction::~CmdLineAction () {
 }
 
 void
-CmdLineAction::doIt (Inkscape::UI::View::View * view) {
+CmdLineAction::doIt (ActionContext const & context) {
 	//printf("Doing: %s\n", _arg);
 	if (_isVerb) {
 		Inkscape::Verb * verb = Inkscape::Verb::getbyid(_arg);
@@ -49,32 +50,33 @@ CmdLineAction::doIt (Inkscape::UI::View::View * view) {
 			printf(_("Unable to find verb ID '%s' specified on the command line.\n"), _arg);
 			return;
 		}
-		SPAction * action = verb->get_action(view);
+		SPAction * action = verb->get_action(context);
 		sp_action_perform(action, NULL);
 	} else {
-		SPDesktop * desktop = dynamic_cast<SPDesktop *>(view);
-		if (desktop == NULL) { return; }
+		if (context.getDocument() == NULL || context.getSelection() == NULL) { return; }
 
-		SPDocument * doc = view->doc();
+		SPDocument * doc = context.getDocument();
 		SPObject * obj = doc->getObjectById(_arg);
 		if (obj == NULL) {
 			printf(_("Unable to find node ID: '%s'\n"), _arg);
 			return;
 		}
 
-		Inkscape::Selection * selection = sp_desktop_selection(desktop);
+		Inkscape::Selection * selection = context.getSelection();
 		selection->add(obj, false);
 	}
 	return;
 }
 
-void
-CmdLineAction::doList (Inkscape::UI::View::View * view) {
+bool
+CmdLineAction::doList (ActionContext const & context) {
+  bool hasActions = !_list.empty();
 	for (std::list<CmdLineAction *>::iterator i = _list.begin();
 			i != _list.end(); ++i) {
 		CmdLineAction * entry = *i;
-		entry->doIt(view);
+		entry->doIt(context);
 	}
+  return hasActions;
 }
 
 bool
@@ -87,8 +89,8 @@ CmdLineAction::idle (void) {
 	for (std::list<SPDesktop *>::iterator i = desktops.begin();
 			i != desktops.end(); ++i) {
 		SPDesktop * desktop = *i;
-		//Inkscape::UI::View::View * view = dynamic_cast<Inkscape::UI::View::View *>(desktop);
-		doList(desktop);
+		//Inkscape::UI::View::View * view = dynamic_cast<Inkscape::UI::View::View *>(desktop);    
+		doList(ActionContext(desktop));
 	}
 	return false;
 }

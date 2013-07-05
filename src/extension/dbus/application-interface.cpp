@@ -18,6 +18,8 @@
 #include "application-interface.h"
 #include <string.h>
 #include "dbus-init.h"
+#include "file.h"
+#include "inkscape.h"
 
 G_DEFINE_TYPE(ApplicationInterface, application_interface, G_TYPE_OBJECT)
 
@@ -37,13 +39,32 @@ application_interface_class_init (ApplicationInterfaceClass *klass)
 }
 
 static void
-application_interface_init (ApplicationInterface *object)
+application_interface_init (ApplicationInterface *app_interface)
 {
     dbus_g_error_domain_register (INKSCAPE_ERROR,
                 NULL,
                 INKSCAPE_TYPE_ERROR);
 }
 
+static bool
+ensure_desktop_valid(GError **error)
+{
+    if (!inkscape_use_gui()) {
+        g_set_error(error, INKSCAPE_ERROR, INKSCAPE_ERROR_OTHER, "Application interface action requires a GUI");
+        return false;
+    }
+    return true;
+}
+
+static bool
+ensure_desktop_not_present(GError **error)
+{
+    if (inkscape_use_gui()) {
+        g_set_error(error, INKSCAPE_ERROR, INKSCAPE_ERROR_OTHER, "Application interface action requires non-GUI (command line) mode");
+        return false;
+    }
+    return true;
+}
 
 ApplicationInterface *
 application_interface_new (void)
@@ -94,27 +115,28 @@ GType inkscape_error_get_type(void)
 ****************************************************************************/
 
 gchar* 
-application_interface_desktop_new (ApplicationInterface *object, 
+application_interface_desktop_new (ApplicationInterface *app_interface, 
                                    GError **error) 
 {
-  return (gchar*)Inkscape::Extension::Dbus::init_desktop();
+    g_return_val_if_fail(ensure_desktop_valid(error), NULL);
+    return (gchar*)Inkscape::Extension::Dbus::init_desktop();
 }
 
 gchar** 
-application_interface_get_desktop_list (ApplicationInterface *object)
+application_interface_get_desktop_list (ApplicationInterface *app_interface)
 {
   return NULL;
 }
 
 gchar* 
-application_interface_get_active_desktop (ApplicationInterface *object,
+application_interface_get_active_desktop (ApplicationInterface *app_interface,
                                           GError **error)
 {
   return NULL;
 }
 
 gboolean
-application_interface_set_active_desktop (ApplicationInterface *object, 
+application_interface_set_active_desktop (ApplicationInterface *app_interface, 
                                           gchar* document_name,
                                           GError **error)
 {
@@ -122,15 +144,16 @@ application_interface_set_active_desktop (ApplicationInterface *object,
 }
 
 gboolean
-application_interface_desktop_close_all (ApplicationInterface *object,
+application_interface_desktop_close_all (ApplicationInterface *app_interface,
                                           GError **error) 
 {
   return TRUE;
 }
 
 gboolean
-application_interface_exit (ApplicationInterface *object, GError **error)
+application_interface_exit (ApplicationInterface *app_interface, GError **error)
 {
+    sp_file_exit();
     return TRUE;
 }
 
@@ -138,20 +161,32 @@ application_interface_exit (ApplicationInterface *object, GError **error)
      DOCUMENT FUNCTIONS
 ****************************************************************************/
 
-gchar* application_interface_document_new (ApplicationInterface *object,
+gchar* application_interface_document_new (ApplicationInterface *app_interface,
                                            GError **error)
 {
-  return (gchar*)Inkscape::Extension::Dbus::init_document();
+    g_return_val_if_fail(ensure_desktop_not_present(error), NULL);
+    return (gchar*)Inkscape::Extension::Dbus::init_document();
+}
+
+gchar*
+application_interface_get_active_document(ApplicationInterface *app_interface,
+                                          GError **error)
+{
+  gchar *result = (gchar*)Inkscape::Extension::Dbus::init_active_document();
+  if (!result) {
+      g_set_error(error, INKSCAPE_ERROR, INKSCAPE_ERROR_OTHER, "No active document");
+  }
+  return result;
 }
 
 gchar** 
-application_interface_get_document_list (ApplicationInterface *object)
+application_interface_get_document_list (ApplicationInterface *app_interface)
 {
   return NULL;
 }
 
 gboolean
-application_interface_document_close_all (ApplicationInterface *object,
+application_interface_document_close_all (ApplicationInterface *app_interface,
                                           GError **error) 
 {
   return TRUE;

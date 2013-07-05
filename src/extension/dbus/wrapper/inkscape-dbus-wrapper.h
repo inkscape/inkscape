@@ -304,12 +304,8 @@ gboolean
 inkscape_selection_to_path (DocumentInterface *doc, GError **error);
 
 //static
-char *
-inkscape_selection_combine (DocumentInterface *doc, const char * IN_type, GError **error);
-
-//static
 char **
-inkscape_selection_divide (DocumentInterface *doc, GError **error);
+inkscape_selection_combine (DocumentInterface *doc, const char * IN_type, GError **error);
 
 //static
 gboolean

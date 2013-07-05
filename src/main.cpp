@@ -60,6 +60,8 @@
 #include "macros.h"
 #include "file.h"
 #include "document.h"
+#include "layer-model.h"
+#include "selection.h"
 #include "sp-object.h"
 #include "interface.h"
 #include "print.h"
@@ -85,6 +87,7 @@
 #include "debug/logger.h"
 #include "debug/log-display-config.h"
 
+#include "helper/action-context.h"
 #include "helper/png-write.h"
 #include "helper/geom.h"
 
@@ -166,6 +169,9 @@ enum {
     SP_ARG_SHELL,
     SP_ARG_VERSION,
     SP_ARG_VACUUM_DEFS,
+#ifdef WITH_DBUS
+    SP_ARG_DBUS_LISTEN,
+#endif // WITH_DBUS
     SP_ARG_VERB_LIST,
     SP_ARG_VERB,
     SP_ARG_SELECT,
@@ -219,7 +225,9 @@ static gboolean sp_query_all = FALSE;
 static gchar *sp_query_id = NULL;
 static gboolean sp_shell = FALSE;
 static gboolean sp_vacuum_defs = FALSE;
-
+#ifdef WITH_DBUS
+static gboolean sp_dbus_listen = FALSE;
+#endif // WITH_DBUS
 static gchar *sp_export_png_utf8 = NULL;
 static gchar *sp_export_svg_utf8 = NULL;
 static gchar *sp_global_printer_utf8 = NULL;
@@ -264,6 +272,9 @@ static void resetCommandlineGlobals() {
         sp_query_all = FALSE;
         sp_query_id = NULL;
         sp_vacuum_defs = FALSE;
+#ifdef WITH_DBUS
+        sp_dbus_listen = FALSE;
+#endif // WITH_DBUS
 
         sp_export_png_utf8 = NULL;
         sp_export_svg_utf8 = NULL;
@@ -470,6 +481,13 @@ struct poptOption options[] = {
      POPT_ARG_NONE, &sp_vacuum_defs, SP_ARG_VACUUM_DEFS,
      N_("Remove unused definitions from the defs section(s) of the document"),
      NULL},
+     
+#ifdef WITH_DBUS
+    {"dbus-listen", 0,
+     POPT_ARG_NONE, &sp_dbus_listen, SP_ARG_DBUS_LISTEN,
+     N_("Enter a listening loop for D-Bus messages in console mode"),
+     NULL},
+#endif // WITH_DBUS
 
     {"verb-list", 0,
      POPT_ARG_NONE, NULL, SP_ARG_VERB_LIST,
@@ -728,6 +746,9 @@ main(int argc, char **argv)
             || !strcmp(argv[i], "-Y")
             || !strncmp(argv[i], "--query-y", 9)
             || !strcmp(argv[i], "--vacuum-defs")
+#ifdef WITH_DBUS
+            || !strcmp(argv[i], "--dbus-listen")
+#endif // WITH_DBUS
             || !strcmp(argv[i], "--shell")
            )
         {
@@ -1035,6 +1056,17 @@ sp_main_gui(int argc, char const **argv)
 static int sp_process_file_list(GSList *fl)
 {
     int retVal = 0;
+#ifdef WITH_DBUS
+    if (!fl) {
+        // If we've been asked to listen for D-Bus messages, enter a main loop here
+        // The main loop may be exited by calling "exit" on the D-Bus application interface.
+        if (sp_dbus_listen) {
+            Gtk::Main main_dbus_loop(0, NULL);
+            main_dbus_loop.run();
+        }
+    }
+#endif // WITH_DBUS
+
     while (fl) {
         const gchar *filename = (gchar *)fl->data;
 
@@ -1066,7 +1098,20 @@ static int sp_process_file_list(GSList *fl)
             if (sp_vacuum_defs) {
                 doc->vacuumDocument();
             }
-            if (sp_vacuum_defs && !sp_export_svg) {
+            
+            // Execute command-line actions (selections and verbs) using our local models
+            bool has_performed_actions = Inkscape::CmdLineAction::doList(inkscape_active_action_context());
+
+#ifdef WITH_DBUS
+            // If we've been asked to listen for D-Bus messages, enter a main loop here
+            // The main loop may be exited by calling "exit" on the D-Bus application interface.
+            if (sp_dbus_listen) {
+                Gtk::Main main_dbus_loop(0, NULL);
+                main_dbus_loop.run();
+            }
+#endif // WITH_DBUS
+
+            if (!sp_export_svg && (sp_vacuum_defs || has_performed_actions)) {
                 // save under the name given in the command line
                 sp_repr_save_file(doc->rdoc, filename, SP_SVG_NS_URI);
             }
@@ -1232,7 +1277,11 @@ int sp_main_console(int argc, char const **argv)
     int retVal = sp_common_main( argc, argv, &fl );
     g_return_val_if_fail(retVal == 0, 1);
 
-    if (fl == NULL && !sp_shell) {
+    if (fl == NULL && !sp_shell
+#ifdef WITH_DBUS
+        && !sp_dbus_listen
+#endif // WITH_DBUS
+        ) {
         g_print("Nothing to do!\n");
         exit(0);
     }

@@ -999,10 +999,10 @@ set_to_accumulated(SPDynaDrawContext *dc, bool unionize, bool subtract)
 
         if (unionize) {
             sp_desktop_selection(desktop)->add(dc->repr);
-            sp_selected_path_union_skip_undo(desktop);
+            sp_selected_path_union_skip_undo(sp_desktop_selection(desktop), desktop);
         } else if (subtract) {
             sp_desktop_selection(desktop)->add(dc->repr);
-            sp_selected_path_diff_skip_undo(desktop);
+            sp_selected_path_diff_skip_undo(sp_desktop_selection(desktop), desktop);
         } else {
             if (dc->keep_selected) {
                 sp_desktop_selection(desktop)->set(dc->repr);

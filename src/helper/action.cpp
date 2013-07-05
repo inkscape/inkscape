@@ -16,6 +16,7 @@
 #include "debug/simple-event.h"
 #include "debug/event-tracker.h"
 #include "ui/view/view.h"
+#include "desktop.h"
 #include "document.h"
 #include "helper/action.h"
 
@@ -41,7 +42,7 @@ sp_action_init (SPAction *action)
 {
 	action->sensitive = 0;
 	action->active = 0;
-	action->view = NULL;
+	action->context = Inkscape::ActionContext();
 	action->id = action->name = action->tip = NULL;
 	action->image = NULL;
 	
@@ -76,7 +77,7 @@ sp_action_finalize (GObject *object)
  * Create new SPAction object and set its properties.
  */
 SPAction *
-sp_action_new(Inkscape::UI::View::View *view,
+sp_action_new(Inkscape::ActionContext const &context,
               const gchar *id,
               const gchar *name,
               const gchar *tip,
@@ -85,7 +86,7 @@ sp_action_new(Inkscape::UI::View::View *view,
 {
 	SPAction *action = (SPAction *)g_object_new(SP_TYPE_ACTION, NULL);
 
-	action->view = view;
+	action->context = context;
 	action->sensitive = TRUE;
 	action->id = g_strdup (id);
 	action->name = g_strdup (name);
@@ -111,11 +112,9 @@ public:
     : ActionEventBase(share_static_string("action"))
     {
         _addProperty(share_static_string("timestamp"), timestamp());
-        if (action->view) {
-            SPDocument *document = action->view->doc();
-            if (document) {
-                _addProperty(share_static_string("document"), document->serial());
-            }
+        SPDocument *document = action->context.getDocument();
+        if (document) {
+            _addProperty(share_static_string("document"), document->serial());
         }
         _addProperty(share_static_string("verb"), action->id);
     }
@@ -170,13 +169,47 @@ sp_action_set_name (SPAction *action, Glib::ustring const &name)
 }
 
 /**
- * Return View associated with the action.
+ * Return Document associated with the action.
+ */
+SPDocument *
+sp_action_get_document (SPAction *action)
+{
+	g_return_val_if_fail (SP_IS_ACTION (action), NULL);
+	return action->context.getDocument();
+}
+
+/**
+ * Return Selection associated with the action
+ */
+Inkscape::Selection *
+sp_action_get_selection (SPAction *action)
+{
+    g_return_val_if_fail (SP_IS_ACTION (action), NULL);
+    return action->context.getSelection();
+}
+
+/**
+ * Return View associated with the action, if any.
  */
 Inkscape::UI::View::View *
 sp_action_get_view (SPAction *action)
 {
 	g_return_val_if_fail (SP_IS_ACTION (action), NULL);
-	return action->view;
+	return action->context.getView();
+}
+
+/**
+ * Return Desktop associated with the action, if any.
+ */
+SPDesktop *
+sp_action_get_desktop (SPAction *action)
+{
+    // TODO: this slightly horrible storage of a UI::View::View*, and 
+    // casting to an SPDesktop*, is only done because that's what was
+    // already the norm in the Inkscape codebase. This seems wrong. Surely
+    // we should store an SPDesktop* in the first place? Is there a case
+    // of actions being carried out on a View that is not an SPDesktop?
+	  return static_cast<SPDesktop *>(sp_action_get_view(action));
 }
 
 /*

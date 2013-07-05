@@ -921,12 +921,12 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT(event)) { // alt
-                            if (MOD__SHIFT(event)) sp_selection_move_screen(desktop, mul*-10, 0); // shift
-                            else sp_selection_move_screen(desktop, mul*-1, 0); // no shift
+                            if (MOD__SHIFT(event)) sp_selection_move_screen(sp_desktop_selection(desktop), mul*-10, 0); // shift
+                            else sp_selection_move_screen(sp_desktop_selection(desktop), mul*-1, 0); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT(event)) sp_selection_move(desktop, mul*-10*nudge, 0); // shift
-                            else sp_selection_move(desktop, mul*-nudge, 0); // no shift
+                            if (MOD__SHIFT(event)) sp_selection_move(sp_desktop_selection(desktop), mul*-10*nudge, 0); // shift
+                            else sp_selection_move(sp_desktop_selection(desktop), mul*-nudge, 0); // no shift
                         }
                         ret = TRUE;
                     }
@@ -937,12 +937,12 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT(event)) { // alt
-                            if (MOD__SHIFT(event)) sp_selection_move_screen(desktop, 0, mul*10); // shift
-                            else sp_selection_move_screen(desktop, 0, mul*1); // no shift
+                            if (MOD__SHIFT(event)) sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*10); // shift
+                            else sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*1); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT(event)) sp_selection_move(desktop, 0, mul*10*nudge); // shift
-                            else sp_selection_move(desktop, 0, mul*nudge); // no shift
+                            if (MOD__SHIFT(event)) sp_selection_move(sp_desktop_selection(desktop), 0, mul*10*nudge); // shift
+                            else sp_selection_move(sp_desktop_selection(desktop), 0, mul*nudge); // no shift
                         }
                         ret = TRUE;
                     }
@@ -953,12 +953,12 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT(event)) { // alt
-                            if (MOD__SHIFT(event)) sp_selection_move_screen(desktop, mul*10, 0); // shift
-                            else sp_selection_move_screen(desktop, mul*1, 0); // no shift
+                            if (MOD__SHIFT(event)) sp_selection_move_screen(sp_desktop_selection(desktop), mul*10, 0); // shift
+                            else sp_selection_move_screen(sp_desktop_selection(desktop), mul*1, 0); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT(event)) sp_selection_move(desktop, mul*10*nudge, 0); // shift
-                            else sp_selection_move(desktop, mul*nudge, 0); // no shift
+                            if (MOD__SHIFT(event)) sp_selection_move(sp_desktop_selection(desktop), mul*10*nudge, 0); // shift
+                            else sp_selection_move(sp_desktop_selection(desktop), mul*nudge, 0); // no shift
                         }
                         ret = TRUE;
                     }
@@ -969,12 +969,12 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                         gint mul = 1 + gobble_key_events(
                             get_group0_keyval(&event->key), 0); // with any mask
                         if (MOD__ALT(event)) { // alt
-                            if (MOD__SHIFT(event)) sp_selection_move_screen(desktop, 0, mul*-10); // shift
-                            else sp_selection_move_screen(desktop, 0, mul*-1); // no shift
+                            if (MOD__SHIFT(event)) sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*-10); // shift
+                            else sp_selection_move_screen(sp_desktop_selection(desktop), 0, mul*-1); // no shift
                         }
                         else { // no alt
-                            if (MOD__SHIFT(event)) sp_selection_move(desktop, 0, mul*-10*nudge); // shift
-                            else sp_selection_move(desktop, 0, mul*-nudge); // no shift
+                            if (MOD__SHIFT(event)) sp_selection_move(sp_desktop_selection(desktop), 0, mul*-10*nudge); // shift
+                            else sp_selection_move(sp_desktop_selection(desktop), 0, mul*-nudge); // no shift
                         }
                         ret = TRUE;
                     }

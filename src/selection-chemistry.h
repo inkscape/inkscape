@@ -53,7 +53,7 @@ namespace Inkscape {
 
 void sp_selection_delete(SPDesktop *desktop);
 void sp_selection_duplicate(SPDesktop *desktop, bool suppressDone = false);
-void sp_edit_clear_all(SPDesktop *desktop);
+void sp_edit_clear_all(Inkscape::Selection *selection);
 
 void sp_edit_select_all(SPDesktop *desktop);
 void sp_edit_select_all_in_all_layers (SPDesktop *desktop);
@@ -77,13 +77,13 @@ void sp_selection_tile(SPDesktop *desktop, bool apply = true);
 void sp_selection_untile(SPDesktop *desktop);
 
 //void sp_selection_group_impl(GSList const *reprs_to_group, Inkscape::XML::Node *group, Inkscape::XML::Document *xml_doc, SPDocument *doc);
-void sp_selection_group(SPDesktop *desktop);
-void sp_selection_ungroup(SPDesktop *desktop);
+void sp_selection_group(Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selection_ungroup(Inkscape::Selection *selection, SPDesktop *desktop);
 
-void sp_selection_raise(SPDesktop *desktop);
-void sp_selection_raise_to_top(SPDesktop *desktop);
-void sp_selection_lower(SPDesktop *desktop);
-void sp_selection_lower_to_bottom(SPDesktop *desktop);
+void sp_selection_raise(Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selection_raise_to_top(Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selection_lower(Inkscape::Selection *selection, SPDesktop *desktop);
+void sp_selection_lower_to_bottom(Inkscape::Selection *selection, SPDesktop *desktop);
 
 SPCSSAttr *take_style_from_item (SPItem *item);
 
@@ -122,8 +122,8 @@ void sp_selection_scale (Inkscape::Selection *selection, gdouble grow);
 void sp_selection_scale_screen (Inkscape::Selection *selection, gdouble grow_pixels);
 void sp_selection_scale_times (Inkscape::Selection *selection, gdouble times);
 
-void sp_selection_move (SPDesktop *desktop, gdouble dx, gdouble dy);
-void sp_selection_move_screen (SPDesktop *desktop, gdouble dx, gdouble dy);
+void sp_selection_move (Inkscape::Selection *selection, gdouble dx, gdouble dy);
+void sp_selection_move_screen (Inkscape::Selection *selection, gdouble dx, gdouble dy);
 
 void sp_selection_item_next (SPDesktop *desktop);
 void sp_selection_item_prev (SPDesktop *desktop);
