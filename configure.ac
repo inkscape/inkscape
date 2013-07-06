@@ -674,6 +674,16 @@ if test "x$enable_gtk3" = "xyes"; then
 		AC_MSG_ERROR([Some dependencies were not fulfilled for the experimental GTK+ 3 build. One possible cause for this is a new dependency on the gdl-3.0 development package.])
 	fi
 
+	# Check whether we are using Gdl >= 3.6.  This version introduced an API/ABI change.
+	# TODO: We should drop support for older versions of Gdl once all supported distros
+	#       provide Gdl 3.6 or higher
+	PKG_CHECK_MODULES(GDL_3_6, gdl-3.0 >= 3.6, with_gdl_3_6=yes, with_gdl_3_6=no)
+
+	if test "x$with_gdl_3_6" = "xyes"; then
+		AC_MSG_RESULT([Using Gdl 3.6 or higher])
+		AC_DEFINE(WITH_GDL_3_6,1,[Build with Gdl 3.6 or higher])
+	fi
+
 	dnl The following test is only defined if Gtk+ 3 development libraries
 	dnl are installed on the system.  Therefore, it is guarded by an 
 	dnl m4_ifdef statement.  The ifdef can be probably be removed once we 

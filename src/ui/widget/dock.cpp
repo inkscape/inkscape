@@ -48,11 +48,21 @@ const int Dock::_default_dock_bar_width = 36;
 
 
 Dock::Dock(Gtk::Orientation orientation)
-    : _gdl_dock (GDL_DOCK (gdl_dock_new())),
-      _gdl_dock_bar (GDL_DOCK_BAR (gdl_dock_bar_new(GDL_DOCK(_gdl_dock)))),
+    : _gdl_dock(gdl_dock_new()),
+#if WITH_GDL_3_6
+      _gdl_dock_bar(GDL_DOCK_BAR(gdl_dock_bar_new(G_OBJECT(_gdl_dock)))),
+#else
+      _gdl_dock_bar(GDL_DOCK_BAR(gdl_dock_bar_new(GDL_DOCK(_gdl_dock)))),
+#endif
       _scrolled_window (Gtk::manage(new Gtk::ScrolledWindow))
 {
-    gdl_dock_bar_set_orientation(_gdl_dock_bar, static_cast<GtkOrientation>(orientation));
+#if WITH_GDL_3_6
+    gtk_orientable_set_orientation(GTK_ORIENTABLE(_gdl_dock_bar),
+                                   static_cast<GtkOrientation>(orientation));
+#else
+    gdl_dock_bar_set_orientation(_gdl_dock_bar,
+                                 static_cast<GtkOrientation>(orientation));
+#endif
 
 #if WITH_GTKMM_3_0
     switch(orientation) {
@@ -127,7 +137,9 @@ Dock::~Dock()
 void Dock::addItem(DockItem& item, DockItem::Placement placement)
 {
     _dock_items.push_back(&item);
-    gdl_dock_add_item(_gdl_dock, GDL_DOCK_ITEM(item.gobj()), (GdlDockPlacement)placement);
+    gdl_dock_add_item(GDL_DOCK(_gdl_dock),
+                      GDL_DOCK_ITEM(item.gobj()),
+                      (GdlDockPlacement)placement);
 
     // FIXME: This is a hack to prevent the dock from expanding the main window, this can't be done
     // initially as the paned doesn't exist.
