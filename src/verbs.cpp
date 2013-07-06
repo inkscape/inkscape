@@ -2903,7 +2903,17 @@ Verb *Verb::_base_verbs[] = {
                  N_("Link an ICC color profile"), NULL),
     new EditVerb(SP_VERB_EDIT_REMOVE_COLOR_PROFILE, "RemoveColorProfile", N_("Remove Color Profile"),
                  N_("Remove a linked ICC color profile"), NULL),
-
+    // Scripting
+    new ContextVerb(SP_VERB_EDIT_ADD_EXTERNAL_SCRIPT,    "AddExternalScript",
+            N_("Add External Script"),  N_("Add an external script"), NULL), 
+    new ContextVerb(SP_VERB_EDIT_ADD_EMBEDDED_SCRIPT,    "AddEmbeddedScript",
+            N_("Add Embedded Script"),  N_("Add an embedded script"), NULL),
+    new ContextVerb(SP_VERB_EDIT_EMBEDDED_SCRIPT,        "EditEmbeddedScript",
+            N_("Edit Embedded Script"), N_("Edit an embedded script"), NULL),
+    new ContextVerb(SP_VERB_EDIT_REMOVE_EXTERNAL_SCRIPT, "RemoveExternalScript",
+            N_("Remove External Script"),  N_("Remove an external script"), NULL),
+    new ContextVerb(SP_VERB_EDIT_REMOVE_EMBEDDED_SCRIPT, "RemoveEmbeddedScript",
+            N_("Remove Embedded Script"),  N_("Remove an embedded script"), NULL),
      // Align
      new ContextVerb(SP_VERB_ALIGN_HORIZONTAL_RIGHT_TO_ANCHOR, "AlignHorizontalRightToAnchor", N_("Align right edges of objects to the left edge of the anchor"),
              N_("Align right edges of objects to the left edge of the anchor"), INKSCAPE_ICON("align-horizontal-right-to-anchor")),
