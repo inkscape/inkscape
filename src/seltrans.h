@@ -71,6 +71,7 @@ public:
     gboolean skewRequest(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
     gboolean rotateRequest(Geom::Point &pt, guint state);
     gboolean centerRequest(Geom::Point &pt, guint state);
+    void alignClick(SPSelTransHandle const &handle);
 
     gboolean handleRequest(SPKnot *knot, Geom::Point *position, guint state, SPSelTransHandle const &handle);
     void handleGrab(SPKnot *knot, guint state, SPSelTransHandle const &handle);
@@ -130,6 +131,7 @@ private:
     };
 
     SPDesktop *_desktop;
+    SPCanvasItem *aguide;
 
     std::vector<SPItem *> _items;
     std::vector<SPItem const *> _items_const;
@@ -180,7 +182,7 @@ private:
     bool _center_is_set; ///< we've already set _center, no need to reread it from items
     int  _center_handle;
 
-    SPKnot *knots[17];
+    SPKnot *knots[NUMHANDS];
     SPCanvasItem *_norm;
     SPCanvasItem *_grip;
     SPCtrlLine *_l[4];
