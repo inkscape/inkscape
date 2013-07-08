@@ -71,7 +71,6 @@ public:
     gboolean skewRequest(SPSelTransHandle const &handle, Geom::Point &pt, guint state);
     gboolean rotateRequest(Geom::Point &pt, guint state);
     gboolean centerRequest(Geom::Point &pt, guint state);
-    void alignClick(SPSelTransHandle const &handle);
 
     gboolean handleRequest(SPKnot *knot, Geom::Point *position, guint state, SPSelTransHandle const &handle);
     void handleGrab(SPKnot *knot, guint state, SPSelTransHandle const &handle);
@@ -131,7 +130,6 @@ private:
     };
 
     SPDesktop *_desktop;
-    SPCanvasItem *aguide;
 
     std::vector<SPItem *> _items;
     std::vector<SPItem const *> _items_const;

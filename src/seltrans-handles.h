@@ -33,7 +33,7 @@ enum SPSelTransType {
 };
 
 struct SPSelTransTypeInfo {
-        uint  const *color;
+        guint32 const *color;
         gchar const *tip;
 };
 // One per handle type in order
