@@ -21,6 +21,7 @@ ink_common_sources +=	\
 	color-profile.cpp color-profile.h				\
 	color-profile-cms-fns.h						\
 	color-rgba.h							\
+	colorspace.h							\
 	common-context.cpp common-context.h				\
 	composite-undo-stack-observer.cpp				\
 	composite-undo-stack-observer.h					\
