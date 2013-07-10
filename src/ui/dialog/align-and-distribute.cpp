@@ -88,23 +88,23 @@ Action::Action(const Glib::ustring &id,
 }
 
 
-void ActionAlign::do_action(SPDesktop *desktop, int index) {
-
+void ActionAlign::do_action(SPDesktop *desktop, int index)
+{
     Inkscape::Selection *selection = sp_desktop_selection(desktop);
     if (!selection) return;
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     bool sel_as_group = prefs->getBool("/dialogs/align/sel-as-groups");
-    int prefs_bbox = prefs->getBool("/tools/bounding_box");
 
     using Inkscape::Util::GSListConstIterator;
     std::list<SPItem *> selected;
     selected.insert<GSListConstIterator<SPItem *> >(selected.end(), selection->itemList(), NULL);
     if (selected.empty()) return;
 
-    Geom::Point mp; //Anchor point
+    const Coeffs &a = _allCoeffs[index];
+    Geom::OptRect b = Geom::OptRect();
     AlignAndDistribute::AlignTarget target = AlignAndDistribute::getAlignTarget();
-    const Coeffs &a= _allCoeffs[index];
+
     switch (target)
     {
     case AlignAndDistribute::LAST:
@@ -132,51 +132,27 @@ void ActionAlign::do_action(SPDesktop *desktop, int index) {
         /*if (!sel_as_group) { */
             selected.erase(master);
         /*}*/
-        //Compute the anchor point
-        Geom::OptRect b = !prefs_bbox ? thing->desktopVisualBounds() : thing->desktopGeometricBounds();
-        if (b) {
-            mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
-                           a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
-        } else {
-            return;
-        }
+        b = thing->desktopPreferredBounds();
         break;
     }
-
     case AlignAndDistribute::PAGE:
-        mp = Geom::Point(a.mx1 * sp_desktop_document(desktop)->getWidth(),
-                       a.my1 * sp_desktop_document(desktop)->getHeight());
+        b = sp_desktop_document(desktop)->preferredBounds();
         break;
-
     case AlignAndDistribute::DRAWING:
-    {
-        Geom::OptRect b = !prefs_bbox ? sp_desktop_document(desktop)->getRoot()->desktopVisualBounds()
-                                      : sp_desktop_document(desktop)->getRoot()->desktopGeometricBounds();
-        if (b) {
-            mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
-                           a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
-        } else {
-            return;
-        }
+        b = sp_desktop_document(desktop)->getRoot()->desktopPreferredBounds();
         break;
-    }
-
     case AlignAndDistribute::SELECTION:
-    {
-        Geom::OptRect b = !prefs_bbox ? selection->visualBounds() : selection->geometricBounds();
-        if (b) {
-            mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
-                           a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
-        } else {
-            return;
-        }
+        b = selection->preferredBounds();
         break;
-    }
-
     default:
         g_assert_not_reached ();
         break;
-    };  // end of switch
+    };
+
+    g_return_if_fail(b);
+
+    Geom::Point mp = Geom::Point(a.mx0 * b->min()[Geom::X] + a.mx1 * b->max()[Geom::X],
+                                 a.my0 * b->min()[Geom::Y] + a.my1 * b->max()[Geom::Y]);
 
     // Top hack: temporarily set clone compensation to unmoved, so that we can align/distribute
     // clones with their original (and the move of the original does not disturb the
@@ -188,9 +164,8 @@ void ActionAlign::do_action(SPDesktop *desktop, int index) {
     prefs->setInt("/options/clonecompensation/value", SP_CLONE_COMPENSATION_UNMOVED);
 
     bool changed = false;
-    Geom::OptRect b;
     if (sel_as_group)
-        b = !prefs_bbox ? selection->visualBounds() : selection->geometricBounds();
+        b = selection->preferredBounds();
 
     //Move each item in the selected list separately
     for (std::list<SPItem *>::iterator it(selected.begin());
@@ -199,7 +174,7 @@ void ActionAlign::do_action(SPDesktop *desktop, int index) {
     {
         sp_desktop_document (desktop)->ensureUpToDate();
         if (!sel_as_group)
-            b = !prefs_bbox ? (*it)->desktopVisualBounds() : (*it)->desktopGeometricBounds();
+            b = (*it)->desktopPreferredBounds();
         if (b) {
             Geom::Point const sp(a.sx0 * b->min()[Geom::X] + a.sx1 * b->max()[Geom::X],
                                  a.sy0 * b->min()[Geom::Y] + a.sy1 * b->max()[Geom::Y]);

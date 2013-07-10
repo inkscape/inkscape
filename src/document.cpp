@@ -611,6 +611,11 @@ Geom::Point SPDocument::getDimensions() const
     return Geom::Point(getWidth(), getHeight());
 }
 
+Geom::OptRect SPDocument::preferredBounds() const
+{
+    return Geom::OptRect( Geom::Point(0, 0), getDimensions() );
+}
+
 /**
  * Given a Geom::Rect that may, for example, correspond to the bbox of an object,
  * this function fits the canvas to that rect by resizing the canvas

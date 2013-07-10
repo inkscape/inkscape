@@ -228,6 +228,7 @@ public:
     gdouble getWidth() const;
     gdouble getHeight() const;
     Geom::Point getDimensions() const;
+    Geom::OptRect preferredBounds() const;
     void setWidth(gdouble width, const SPUnit *unit);
     void setHeight(gdouble height, const SPUnit *unit);
     void requestModified();
