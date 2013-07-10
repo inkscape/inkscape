@@ -103,6 +103,11 @@
 #endif // WIN32
 
 #include "extension/init.h"
+// Not ideal, but there doesn't appear to be a nicer system in place for
+// passing command-line parameters to extensions before initialization...
+#ifdef WITH_DBUS
+#include "extension/dbus/dbus-init.h"
+#endif // WITH_DBUS
 
 #include <glibmm/i18n.h>
 #include <glibmm/main.h>
@@ -171,6 +176,7 @@ enum {
     SP_ARG_VACUUM_DEFS,
 #ifdef WITH_DBUS
     SP_ARG_DBUS_LISTEN,
+    SP_ARG_DBUS_NAME,
 #endif // WITH_DBUS
     SP_ARG_VERB_LIST,
     SP_ARG_VERB,
@@ -227,6 +233,7 @@ static gboolean sp_shell = FALSE;
 static gboolean sp_vacuum_defs = FALSE;
 #ifdef WITH_DBUS
 static gboolean sp_dbus_listen = FALSE;
+static gchar *sp_dbus_name = NULL;
 #endif // WITH_DBUS
 static gchar *sp_export_png_utf8 = NULL;
 static gchar *sp_export_svg_utf8 = NULL;
@@ -274,6 +281,7 @@ static void resetCommandlineGlobals() {
         sp_vacuum_defs = FALSE;
 #ifdef WITH_DBUS
         sp_dbus_listen = FALSE;
+        sp_dbus_name = NULL;
 #endif // WITH_DBUS
 
         sp_export_png_utf8 = NULL;
@@ -487,6 +495,11 @@ struct poptOption options[] = {
      POPT_ARG_NONE, &sp_dbus_listen, SP_ARG_DBUS_LISTEN,
      N_("Enter a listening loop for D-Bus messages in console mode"),
      NULL},
+
+    {"dbus-name", 0,
+     POPT_ARG_STRING, &sp_dbus_name, SP_ARG_DBUS_NAME,
+     N_("Specify the D-Bus bus name to listen for messages on (default is org.inkscape)"),
+     N_("BUS-NAME")},
 #endif // WITH_DBUS
 
     {"verb-list", 0,
@@ -885,6 +898,13 @@ static int sp_common_main( int argc, char const **argv, GSList **flDest )
         if ( sp_global_printer )
             sp_global_printer_utf8 = g_strdup( sp_global_printer );
     }
+    
+#ifdef WITH_DBUS
+    // Before initializing extensions, we must set the DBus bus name if required
+    if (sp_dbus_name != NULL) {
+        Inkscape::Extension::Dbus::dbus_set_bus_name(sp_dbus_name);
+    }
+#endif
 
     // Return the list if wanted, else free it up.
     if ( flDest ) {

@@ -8,8 +8,6 @@
 
 //#include <dbus/dbus-glib-bindings.h>
 //#include <dbus/dbus-glib-lowlevel.h>
-
-#define DBUS_DOCUMENT_INTERFACE_PATH  "/org/inkscape/document"
         
 #define TYPE_DOCUMENT_INTERFACE            (document_interface_get_type ())
 #define DOCUMENT_INTERFACE(object)         (G_TYPE_CHECK_INSTANCE_CAST ((object), TYPE_DOCUMENT_INTERFACE, DocumentInterface))

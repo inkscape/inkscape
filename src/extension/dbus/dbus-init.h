@@ -28,6 +28,16 @@ gchar * init_desktop (void);
 
 gchar * dbus_init_desktop_interface (SPDesktop * dt);
 
+/** Set the bus name to use. Default is "org.inkscape".
+  This function should only be called once, before init(), if a non-default
+  bus name is required. */
+void dbus_set_bus_name(gchar * bus_name);
+
+/** Get the bus name for this instance. Default is "org.inkscape".
+  This function should only be called after init().
+  The returned gchar * is owned by this module and should not be freed. */
+gchar * dbus_get_bus_name();
+
 } } }  /* namespace Dbus, Extension, Inkscape */
 
 #endif /* INKSCAPE_EXTENSION_DBUS_INIT_H__ */

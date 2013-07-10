@@ -36,7 +36,14 @@
 #include <sstream>
 
 
-
+namespace
+{
+    // This stores the bus name to use for this app instance. By default, it
+    // will be set to org.inkscape. However, users may provide other names by
+    // setting command-line parameters when starting Inkscape, so that more
+    // than one instance of Inkscape may be used by external scripts.
+    gchar *instance_bus_name = NULL;
+}
 
 namespace Inkscape {
 namespace Extension {
@@ -120,6 +127,11 @@ dbus_register_document(Inkscape::ActionContext const & target)
 void 
 init (void)
 {
+        if (instance_bus_name == NULL) {
+            // Set the bus name to the default
+            instance_bus_name = strdup("org.inkscape");
+        }
+
         guint   result;
         GError *error = NULL;
         DBusGConnection *connection;
@@ -127,7 +139,7 @@ init (void)
         connection = dbus_get_connection();
         proxy = dbus_get_proxy(connection);
         org_freedesktop_DBus_request_name (proxy,
-                "org.inkscape",
+                instance_bus_name,
                 DBUS_NAME_FLAG_DO_NOT_QUEUE, &result, &error);
         //create interface for application
         dbus_register_object (connection, 
@@ -198,6 +210,19 @@ init_desktop (void) {
     return strdup(name.c_str());
 }
 
+void
+dbus_set_bus_name(gchar * bus_name)
+{
+    g_assert(bus_name != NULL);
+    g_assert(instance_bus_name == NULL);
+    instance_bus_name = strdup(bus_name);
+}
 
+gchar *
+dbus_get_bus_name()
+{
+    g_assert(instance_bus_name != NULL);
+    return instance_bus_name;
+}
 
 } } } /* namespace Inkscape::Extension::Dbus */

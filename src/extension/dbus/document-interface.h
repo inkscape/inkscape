@@ -34,9 +34,6 @@
 
 class SPDesktop;
 class SPItem;
-
-// TODO: this define doesn't seem to be used... although the path itself is also hardcoded in dbus-init.cpp
-#define DBUS_DOCUMENT_INTERFACE_PATH  "/org/inkscape/document"
         
 #define TYPE_DOCUMENT_INTERFACE            (document_interface_get_type ())
 #define DOCUMENT_INTERFACE(object)         (G_TYPE_CHECK_INSTANCE_CAST ((object), TYPE_DOCUMENT_INTERFACE, DocumentInterface))
