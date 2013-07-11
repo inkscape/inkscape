@@ -366,9 +366,9 @@ SPItem *Selection::largestItem(Selection::CompareSize compare) {
     return _sizeistItem(false, compare);
 }
 
-SPItem *Selection::_sizeistItem(bool small, Selection::CompareSize compare) {
+SPItem *Selection::_sizeistItem(bool sml, Selection::CompareSize compare) {
     GSList const *items = const_cast<Selection *>(this)->itemList();
-    gdouble max = small ? 1e18 : 0;
+    gdouble max = sml ? 1e18 : 0;
     SPItem *ist = NULL;
 
     for ( GSList const *i = items; i != NULL ; i = i->next ) {
@@ -378,7 +378,7 @@ SPItem *Selection::_sizeistItem(bool small, Selection::CompareSize compare) {
         gdouble size = compare == 2 ?
             (*bbox)[Geom::X].extent() * (*bbox)[Geom::Y].extent() :
             (*bbox)[compare == 1 ? Geom::X : Geom::Y].extent();
-        size = small ? size : size * -1;
+        size = sml ? size : size * -1;
         if (size < max) {
             max = size;
             ist = SP_ITEM(i->data);

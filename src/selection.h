@@ -361,7 +361,7 @@ private:
     void add_3D_boxes_recursively(SPObject *obj);
     void remove_box_perspective(SPBox3D *box);
     void remove_3D_boxes_recursively(SPObject *obj);
-    SPItem *_sizeistItem(bool small, CompareSize compare);
+    SPItem *_sizeistItem(bool sml, CompareSize compare);
 
     std::list<SPBox3D *> _3dboxes;
 
