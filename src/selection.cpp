@@ -42,7 +42,6 @@
 namespace Inkscape {
 
 Selection::Selection(LayerModel *layers, SPDesktop *desktop) :
-    align_point(NULL),
     _objs(NULL),
     _reprs(NULL),
     _items(NULL),

@@ -320,11 +320,6 @@ public:
         return _modified_signal.connect(slot);
     }
 
-    /**
-     * Selection wants to be aligned to this point, not bbox
-     */
-    Geom::Point *align_point;
-
 private:
     /** no copy. */
     Selection(Selection const &);
