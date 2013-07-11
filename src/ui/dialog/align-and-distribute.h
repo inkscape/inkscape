@@ -47,12 +47,6 @@ public:
 
     static AlignAndDistribute &getInstance() { return *new AlignAndDistribute(); }
 
-    enum AlignTarget { LAST=0, FIRST, BIGGEST, SMALLEST, PAGE, DRAWING, SELECTION };
-
-
-
-    static AlignTarget getAlignTarget();
-
 #if WITH_GTKMM_3_0
     Gtk::Grid &align_table(){return _alignTable;}
     Gtk::Grid &distribute_table(){return _distributeTable;}
@@ -67,7 +61,6 @@ public:
     Gtk::Table &nodes_table(){return _nodesTable;}
 #endif
 
-    static std::list<SPItem *>::iterator find_master(std::list <SPItem *> &list, bool horizontal);
     void setMode(bool nodeEdit);
 
     Geom::OptRect randomize_bbox;
@@ -189,6 +182,7 @@ public :
        double sx0, sx1, sy0, sy1;
        int verb_id;
     };
+    enum AlignTarget { LAST=0, FIRST, BIGGEST, SMALLEST, PAGE, DRAWING, SELECTION };
     ActionAlign(const Glib::ustring &id,
                 const Glib::ustring &tiptext,
                 guint row, guint column,
@@ -204,6 +198,7 @@ public :
      * Static function called to align from a keyboard shortcut
      */
     static void do_verb_action(SPDesktop *desktop, int verb);
+    static int verb_to_coeff(int verb);
 
 private :
 
@@ -217,7 +212,6 @@ private :
     }
 
     static void do_action(SPDesktop *desktop, int index);
-    static int verb_to_coeff(int verb);
 
     guint _index;
     AlignAndDistribute &_dialog;

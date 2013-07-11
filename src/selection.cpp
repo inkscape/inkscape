@@ -42,6 +42,7 @@
 namespace Inkscape {
 
 Selection::Selection(LayerModel *layers, SPDesktop *desktop) :
+    align_point(NULL),
     _objs(NULL),
     _reprs(NULL),
     _items(NULL),
@@ -356,6 +357,35 @@ SPItem *Selection::singleItem() {
     } else {
         return NULL;
     }
+}
+
+SPItem *Selection::smallestItem(Selection::CompareSize compare) {
+    return _sizeistItem(true, compare);
+}
+
+SPItem *Selection::largestItem(Selection::CompareSize compare) {
+    return _sizeistItem(false, compare);
+}
+
+SPItem *Selection::_sizeistItem(bool small, Selection::CompareSize compare) {
+    GSList const *items = const_cast<Selection *>(this)->itemList();
+    gdouble max = small ? 1e18 : 0;
+    SPItem *ist = NULL;
+
+    for ( GSList const *i = items; i != NULL ; i = i->next ) {
+        Geom::OptRect bbox = SP_ITEM(i->data)->desktopPreferredBounds();
+        if (!bbox) continue;
+
+        gdouble size = compare == 2 ?
+            (*bbox)[Geom::X].extent() * (*bbox)[Geom::Y].extent() :
+            (*bbox)[compare == 1 ? Geom::X : Geom::Y].extent();
+        size = small ? size : size * -1;
+        if (size < max) {
+            max = size;
+            ist = SP_ITEM(i->data);
+        }
+    }
+    return ist;
 }
 
 Inkscape::XML::Node *Selection::singleRepr() {

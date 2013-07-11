@@ -27,6 +27,7 @@
 #include "sp-item.h"
 #include "snapped-point.h"
 
+
 class SPDesktop;
 class SPItem;
 class SPBox3D;
@@ -63,6 +64,7 @@ class Selection : public Inkscape::GC::Managed<>,
                   public Inkscape::GC::Anchored
 {
 public:
+    enum CompareSize { HORIZONTAL, VERTICAL, AREA };
     /**
      * Constructs an selection object, bound to a particular
      * layer model
@@ -220,6 +222,16 @@ public:
     SPItem *singleItem();
 
     /**
+     * Returns the smallest item from this selection.
+     */
+    SPItem *smallestItem(CompareSize compare);
+
+    /**
+     * Returns the largest item from this selection.
+     */
+    SPItem *largestItem(CompareSize compare);
+
+    /**
      * Returns a single selected object's xml node.
      *
      * @return NULL unless exactly one object is selected
@@ -308,6 +320,11 @@ public:
         return _modified_signal.connect(slot);
     }
 
+    /**
+     * Selection wants to be aligned to this point, not bbox
+     */
+    Geom::Point *align_point;
+
 private:
     /** no copy. */
     Selection(Selection const &);
@@ -349,6 +366,7 @@ private:
     void add_3D_boxes_recursively(SPObject *obj);
     void remove_box_perspective(SPBox3D *box);
     void remove_3D_boxes_recursively(SPObject *obj);
+    SPItem *_sizeistItem(bool small, CompareSize compare);
 
     std::list<SPBox3D *> _3dboxes;
 
