@@ -372,12 +372,12 @@ SPItem *Selection::_sizeistItem(bool sml, Selection::CompareSize compare) {
     SPItem *ist = NULL;
 
     for ( GSList const *i = items; i != NULL ; i = i->next ) {
-        Geom::OptRect bbox = SP_ITEM(i->data)->desktopPreferredBounds();
-        if (!bbox) continue;
+        Geom::OptRect obox = SP_ITEM(i->data)->desktopPreferredBounds();
+        if (!obox || obox.isEmpty()) continue;
+        Geom::Rect bbox = *obox;
 
-        gdouble size = compare == 2 ?
-            (*bbox)[Geom::X].extent() * (*bbox)[Geom::Y].extent() :
-            (*bbox)[compare == 1 ? Geom::X : Geom::Y].extent();
+        gdouble size = compare == 2 ? bbox.area() :
+            (compare == 1 ? bbox.width() : bbox.height());
         size = sml ? size : size * -1;
         if (size < max) {
             max = size;
