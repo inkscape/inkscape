@@ -102,6 +102,7 @@ void ActionAlign::do_action(SPDesktop *desktop, int index)
     if (selected.empty()) return;
 
     const Coeffs &a = _allCoeffs[index];
+    SPItem *focus = NULL;
     Geom::OptRect b = Geom::OptRect();
     Selection::CompareSize horiz = (a.mx0 != 0.0) || (a.mx1 != 0.0)
         ? Selection::HORIZONTAL : Selection::VERTICAL;
@@ -109,16 +110,16 @@ void ActionAlign::do_action(SPDesktop *desktop, int index)
     switch (AlignTarget(prefs->getInt("/dialogs/align/align-to", 6)))
     {
     case LAST:
-        b = SP_ITEM(*selected.begin())->desktopPreferredBounds();
+        focus = SP_ITEM(*selected.begin());
         break;
     case FIRST:
-        b = SP_ITEM(*--(selected.end()))->desktopPreferredBounds();
+        focus = SP_ITEM(*--(selected.end()));
         break;
     case BIGGEST:
-        b = selection->largestItem(horiz)->desktopPreferredBounds();
+        focus = selection->largestItem(horiz);
         break;
     case SMALLEST:
-        b = selection->smallestItem(horiz)->desktopPreferredBounds();
+        focus = selection->smallestItem(horiz);
         break;
     case PAGE:
         b = sp_desktop_document(desktop)->preferredBounds();
@@ -134,6 +135,8 @@ void ActionAlign::do_action(SPDesktop *desktop, int index)
         break;
     };
 
+    if(focus)
+        b = focus->desktopPreferredBounds();
     g_return_if_fail(b);
 
     // Generate the move point from the selected bounding box
@@ -146,13 +149,12 @@ void ActionAlign::do_action(SPDesktop *desktop, int index)
 
     //Move each item in the selected list separately
     for (std::list<SPItem *>::iterator it(selected.begin());
-         it != selected.end();
-         ++it)
+         it != selected.end(); ++it)
     {
         sp_desktop_document (desktop)->ensureUpToDate();
         if (!sel_as_group)
             b = (*it)->desktopPreferredBounds();
-        if (b) {
+        if (b && (!focus || (*it) != focus)) {
             Geom::Point const sp(a.sx0 * b->min()[Geom::X] + a.sx1 * b->max()[Geom::X],
                                  a.sy0 * b->min()[Geom::Y] + a.sy1 * b->max()[Geom::Y]);
             Geom::Point const mp_rel( mp - sp );
