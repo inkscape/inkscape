@@ -60,10 +60,10 @@ int Unit::defaultDigits() const {
  *
  * The primary unit's conversion factor is required to be 1.00
  */
-UnitTable::UnitTable() 
+UnitTable::UnitTable()
 {
     // if we swich to the xml file, don't forget to force locale to 'C'
-    //    load("share/ui/units.xml");  // <-- Buggy 
+    //    load("share/ui/units.xml");  // <-- Buggy
     gchar *filename = g_build_filename(INKSCAPE_UIDIR, "units.txt", NULL);
     loadText(filename);
     g_free(filename);
@@ -72,8 +72,8 @@ UnitTable::UnitTable()
 UnitTable::~UnitTable() {
     UnitMap::iterator iter = _unit_map.begin();
     while (iter != _unit_map.end()) {
-	delete (*iter).second;
-	++iter;
+        delete (*iter).second;
+        ++iter;
     }
 }
 
@@ -81,7 +81,7 @@ UnitTable::~UnitTable() {
 void UnitTable::addUnit(Unit const &u, bool primary) {
     _unit_map[u.abbr] = new Unit(u);
     if (primary) {
-	_primary_unit[u.type] = u.abbr;
+        _primary_unit[u.type] = u.abbr;
     }
 }
 
@@ -89,26 +89,26 @@ void UnitTable::addUnit(Unit const &u, bool primary) {
 Unit UnitTable::getUnit(Glib::ustring const &unit_abbr) const {
     UnitMap::const_iterator iter = _unit_map.find(unit_abbr);
     if (iter != _unit_map.end()) {
-	return *((*iter).second);
+        return *((*iter).second);
     } else {
-	return Unit();
+        return Unit();
     }
 }
 
 /** Remove a unit definition from the given unit type table */
 bool UnitTable::deleteUnit(Unit const &u) {
     if (u.abbr == _primary_unit[u.type]) {
-	// Cannot delete the primary unit type since it's
-	// used for conversions
-	return false;
+        // Cannot delete the primary unit type since it's
+        // used for conversions
+        return false;
     }
     UnitMap::iterator iter = _unit_map.find(u.abbr);
     if (iter != _unit_map.end()) {
-	delete (*iter).second;
-	_unit_map.erase(iter);
-	return true;
+        delete (*iter).second;
+        _unit_map.erase(iter);
+        return true;
     } else {
-	return false;
+        return false;
     }
 }
 
@@ -125,9 +125,9 @@ UnitTable::UnitMap UnitTable::units(UnitType type) const
     UnitMap submap;
     for (UnitMap::const_iterator iter = _unit_map.begin();
          iter != _unit_map.end(); ++iter) {
-	if (((*iter).second)->type == type) {
-	    submap.insert(UnitMap::value_type((*iter).first, new Unit(*((*iter).second))));
-	}
+        if (((*iter).second)->type == type) {
+            submap.insert(UnitMap::value_type((*iter).first, new Unit(*((*iter).second))));
+        }
     }
 
     return submap;
@@ -140,10 +140,10 @@ Glib::ustring UnitTable::primary(UnitType type) const
 }
 
 /** Loads units from a text file.
-    
+
     loadText loads and merges the contents of the given file into the UnitTable,
     possibly overwriting existing unit definitions.
-    
+
     @param filename: file to be loaded*/
 bool UnitTable::loadText(Glib::ustring const &filename)
 {
@@ -152,11 +152,11 @@ bool UnitTable::loadText(Glib::ustring const &filename)
     // Open file for reading
     FILE * f = fopen(filename.c_str(), "r");
     if (f == NULL) {
-	    g_warning("Could not open units file '%s': %s\n", 
-		filename.c_str(), strerror(errno));
+        g_warning("Could not open units file '%s': %s\n",
+                  filename.c_str(), strerror(errno));
         g_warning("* INKSCAPE_DATADIR is:  '%s'\n", INKSCAPE_DATADIR);
         g_warning("* INKSCAPE_UIDIR is:  '%s'\n", INKSCAPE_UIDIR);
-	    return false;
+        return false;
     }
 
     // bypass current locale in order to make
@@ -167,51 +167,51 @@ bool UnitTable::loadText(Glib::ustring const &filename)
     setlocale (LC_NUMERIC, "C");
 
     while (fgets(buf, BUFSIZE, f) != NULL) {
-	char name[BUFSIZE];
-	char plural[BUFSIZE];
-	char abbr[BUFSIZE];
-	char type[BUFSIZE];
-	double factor;
-	char primary[BUFSIZE];
+        char name[BUFSIZE];
+        char plural[BUFSIZE];
+        char abbr[BUFSIZE];
+        char type[BUFSIZE];
+        double factor;
+        char primary[BUFSIZE];
 
-	int nchars = 0;
-    // locale is set to C, scanning %lf should work _everywhere_
-	if (sscanf(buf, "%15s %15s %15s %15s %8lf %1s %15n", 
-		   name, plural, abbr, type, &factor, primary, &nchars) != 6)
-    {
-	    // Skip the line - doesn't appear to be valid
-	    continue;
-	}
+        int nchars = 0;
+        // locale is set to C, scanning %lf should work _everywhere_
+        if (sscanf(buf, "%15s %15s %15s %15s %8lf %1s %15n",
+                   name, plural, abbr, type, &factor, primary, &nchars) != 6)
+        {
+            // Skip the line - doesn't appear to be valid
+            continue;
+        }
 
-	g_assert(nchars < BUFSIZE);
+        g_assert(nchars < BUFSIZE);
 
-	char *desc = buf;
-	desc += nchars;  // buf is now only the description
+        char *desc = buf;
+        desc += nchars;  // buf is now only the description
 
-	// insert into _unit_map
-	Unit u;
-	u.name = name;
-	u.name_plural = plural;
-	u.abbr = abbr;
-	u.description = desc;
-	u.factor = factor;
+        // insert into _unit_map
+        Unit u;
+        u.name = name;
+        u.name_plural = plural;
+        u.abbr = abbr;
+        u.description = desc;
+        u.factor = factor;
 
-	if (streq(type, "DIMENSIONLESS")) {
-	    u.type = UNIT_TYPE_DIMENSIONLESS;
-	} else if (streq(type, "LINEAR")) {
-	    u.type = UNIT_TYPE_LINEAR;
-	} else if (streq(type, "RADIAL")) {
-	    u.type = UNIT_TYPE_RADIAL;
-	} else if (streq(type, "FONT_HEIGHT")) {
-	    u.type = UNIT_TYPE_FONT_HEIGHT;
-	} else {
-	    g_warning("Skipping unknown unit type '%s' for %s.\n", 
-		    type, name);
-	    continue;
-	}
+        if (streq(type, "DIMENSIONLESS")) {
+            u.type = UNIT_TYPE_DIMENSIONLESS;
+        } else if (streq(type, "LINEAR")) {
+            u.type = UNIT_TYPE_LINEAR;
+        } else if (streq(type, "RADIAL")) {
+            u.type = UNIT_TYPE_RADIAL;
+        } else if (streq(type, "FONT_HEIGHT")) {
+            u.type = UNIT_TYPE_FONT_HEIGHT;
+        } else {
+            g_warning("Skipping unknown unit type '%s' for %s.\n",
+                      type, name);
+            continue;
+        }
 
-	// if primary is 'Y', list this unit as a primary
-	addUnit(u, (primary[0]=='Y' || primary[0]=='y'));
+        // if primary is 'Y', list this unit as a primary
+        addUnit(u, (primary[0]=='Y' || primary[0]=='y'));
 
     }
 
@@ -221,9 +221,9 @@ bool UnitTable::loadText(Glib::ustring const &filename)
 
     // close file
     if (fclose(f) != 0) {
-	g_warning("Error closing units file '%s':  %s\n",
-		filename.c_str(), strerror(errno));
-	return false;
+        g_warning("Error closing units file '%s':  %s\n",
+                  filename.c_str(), strerror(errno));
+        return false;
     }
 
     return true;
@@ -235,9 +235,9 @@ bool UnitTable::load(Glib::ustring const &filename) {
     int result = handler.parseFile( filename.c_str() );
     if ( result != 0 ) {
         // perhaps
-	g_warning("Problem loading units file '%s':  %d\n", 
-		  filename.c_str(), result);
-	return false;
+        g_warning("Problem loading units file '%s':  %d\n",
+                  filename.c_str(), result);
+        return false;
     }
 
     return true;
@@ -249,9 +249,9 @@ bool UnitTable::save(Glib::ustring const &filename) {
     // open file for writing
     FILE *f = fopen(filename.c_str(), "w");
     if (f == NULL) {
-	g_warning("Could not open units file '%s': %s\n", 
-		  filename.c_str(), strerror(errno));
-	return false;
+        g_warning("Could not open units file '%s': %s\n",
+                  filename.c_str(), strerror(errno));
+        return false;
     }
 
     // write out header
@@ -268,9 +268,9 @@ bool UnitTable::save(Glib::ustring const &filename) {
 
     // close file
     if (fclose(f) != 0) {
-	g_warning("Error closing units file '%s':  %s\n",
-		  filename.c_str(), strerror(errno));
-	return false;
+        g_warning("Error closing units file '%s':  %s\n",
+                  filename.c_str(), strerror(errno));
+        return false;
     }
 
     return true;
