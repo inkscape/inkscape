@@ -334,8 +334,8 @@ Shape::AddPoint (const Geom::Point x)
       pData[n].nextLinkedPoint = -1;
       pData[n].askForWindingS = NULL;
       pData[n].askForWindingB = -1;
-      pData[n].rx[0] = /*Round*/ (p.x[0]);
-      pData[n].rx[1] = /*Round*/ (p.x[1]);
+      pData[n].rx[0] = Round(p.x[0]);
+      pData[n].rx[1] = Round(p.x[1]);
     }
   if (_has_voronoi_data)
     {
@@ -2116,8 +2116,8 @@ void Shape::initialisePointData()
         pData[i].pending = 0;
         pData[i].edgeOnLeft = -1;
         pData[i].nextLinkedPoint = -1;
-        pData[i].rx[0] = /*Round*/ (getPoint(i).x[0]);
-        pData[i].rx[1] = /*Round*/ (getPoint(i).x[1]);
+        pData[i].rx[0] = Round(getPoint(i).x[0]);
+        pData[i].rx[1] = Round(getPoint(i).x[1]);
     }
 
     _point_data_initialised = true;

@@ -266,20 +266,20 @@ public:
     // be careful when using this function
 
     // the coordinate rounding function
-//    inline static double Round(double x)
-//    {
-//        return ldexp(rint(ldexp(x, 5)), -5);
-//    }
+    inline static double Round(double x)
+    {
+        return ldexp(rint(ldexp(x, 9)), -9);
+    }
     
     // 2 miscannellous variations on it, to scale to and back the rounding grid
     inline static double HalfRound(double x)
     {
-        return ldexp(x, -5);
+        return ldexp(x, -9);
     }
     
     inline static double IHalfRound(double x)
     {
-        return ldexp(x, 5);
+        return ldexp(x, 9);
     }
 
     // boolean operations on polygons (requests intersection-free poylygons)
