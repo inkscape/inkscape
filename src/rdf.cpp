@@ -230,56 +230,56 @@ struct rdf_license_t rdf_licenses [] = {
 // the localization functions when you use them!
 struct rdf_work_entity_t rdf_work_entities [] = {
     { "title", N_("Title:"), "dc:title", RDF_CONTENT,
-      N_("Name by which this document is formally known"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
+      N_("A name given to the resource"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
     },
     { "date", N_("Date:"), "dc:date", RDF_CONTENT,
-      N_("Date associated with the creation of this document (YYYY-MM-DD)"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
+      N_("A point or period of time associated with an event in the lifecycle of the resource"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
     },
     { "format", N_("Format:"), "dc:format", RDF_CONTENT,
-      N_("The physical or digital manifestation of this document (MIME type)"), RDF_FORMAT_LINE, RDF_EDIT_HARDCODED,
+      N_("The file format, physical medium, or dimensions of the resource"), RDF_FORMAT_LINE, RDF_EDIT_HARDCODED,
     },
     { "type", N_("Type:"), "dc:type", RDF_RESOURCE,
-      N_("Type of document (DCMI Type)"), RDF_FORMAT_LINE, RDF_EDIT_HARDCODED,
+      N_("The nature or genre of the resource"), RDF_FORMAT_LINE, RDF_EDIT_HARDCODED,
     },
 
     { "creator", N_("Creator:"), "dc:creator", RDF_AGENT,
-      N_("Name of entity primarily responsible for making the content of this document"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
+      N_("An entity primarily responsible for making the resource"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
     },
     { "rights", N_("Rights:"), "dc:rights", RDF_AGENT,
-      N_("Name of entity with rights to the Intellectual Property of this document"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
+      N_("Information about rights held in and over the resource"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
     },
     { "publisher", N_("Publisher:"), "dc:publisher", RDF_AGENT,
-      N_("Name of entity responsible for making this document available"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
+      N_("An entity responsible for making the resource available"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
     },
 
     { "identifier", N_("Identifier:"), "dc:identifier", RDF_CONTENT,
-      N_("Unique URI to reference this document"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
+      N_("An unambiguous reference to the resource within a given context"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
     },
     { "source", N_("Source:"), "dc:source", RDF_CONTENT,
-      N_("Unique URI to reference the source of this document"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
+      N_("A related resource from which the described resource is derived"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
     },
     { "relation", N_("Relation:"), "dc:relation", RDF_CONTENT,
-      N_("Unique URI to a related document"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
+      N_("A related resource"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
     },
     { "language", N_("Language:"), "dc:language", RDF_CONTENT,
-      N_("Two-letter language tag with optional subtags for the language of this document (e.g. 'en-GB')"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
+      N_("A language of the resource"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
     },
     { "subject", N_("Keywords:"), "dc:subject", RDF_BAG,
-      N_("The topic of this document as comma-separated key words, phrases, or classifications"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
+      N_("The topic of the resource"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
     },
     // TRANSLATORS: "Coverage": the spatial or temporal characteristics of the content.
     // For info, see Appendix D of http://www.w3.org/TR/1998/WD-rdf-schema-19980409/
     { "coverage", N_("Coverage:"), "dc:coverage", RDF_CONTENT,
-      N_("Extent or scope of this document"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
+      N_("The spatial or temporal topic of the resource, the spatial applicability of the resource, or the jurisdiction under which the resource is relevant"), RDF_FORMAT_LINE, RDF_EDIT_GENERIC,
     },
 
     { "description", N_("Description:"), "dc:description", RDF_CONTENT,
-      N_("A short account of the content of this document"), RDF_FORMAT_MULTILINE, RDF_EDIT_GENERIC,
+      N_("An account of the resource"), RDF_FORMAT_MULTILINE, RDF_EDIT_GENERIC,
     },
 
     // FIXME: need to handle 1 agent per line of input
     { "contributor", N_("Contributors:"), "dc:contributor", RDF_AGENT,
-      N_("Names of entities responsible for making contributions to the content of this document"), RDF_FORMAT_MULTILINE, RDF_EDIT_GENERIC,
+      N_("An entity responsible for making contributions to the resource"), RDF_FORMAT_MULTILINE, RDF_EDIT_GENERIC,
     },
 
     // TRANSLATORS: URL to a page that defines the license for the document
@@ -292,7 +292,7 @@ struct rdf_work_entity_t rdf_work_entities [] = {
     { "license_fragment", N_("Fragment:"), "License", RDF_XML,
       N_("XML fragment for the RDF 'License' section"), RDF_FORMAT_MULTILINE, RDF_EDIT_SPECIAL,
     },
-    
+
     { NULL, NULL, NULL, RDF_CONTENT,
       NULL, RDF_FORMAT_LINE, RDF_EDIT_HARDCODED,
     }
