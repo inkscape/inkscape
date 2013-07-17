@@ -796,25 +796,10 @@ if test "x$enable_strict_build" != "xno"; then
 			  pango_uses_deprecated_glib_symbols=yes,
 			  pango_uses_deprecated_glib_symbols=no)
 
-	dnl Gtkmm 2.24.3 uses a deprecated Glib symbol:
-	dnl   https://bugzilla.gnome.org/show_bug.cgi?id=697835
-	dnl 
-	dnl TODO: Get rid of this check once we are sure that all targeted
-	dnl       platforms have got rid of this Gtkmm version.  Apply the
-	dnl       G_DISABLE_DEPRECATED flag to all builds.
-	gtkmm_uses_deprecated_glib_symbols=no
-
-	PKG_CHECK_MODULES(GTKMM_USES_DEPRECATED_GLIB_SYMBOLS,
-			  gtkmm-2.4 = 2.24.3,
-			  gtkmm_uses_deprecated_glib_symbols=yes,
-			  gtkmm_uses_deprecated_glib_symbols=no)
-
 	# Don't disable deprecated Glib symbols if it will break stuff in an
 	# external library header that we use
 	if test "x$pango_uses_deprecated_glib_symbols" = "xyes"; then
 		AC_MSG_WARN([The available version of Pango uses deprecated Glib symbols.  Deprecated Glib symbol usage will be allowed])
-	elif test "x$gtkmm_uses_deprecated_glib_symbols" = "xyes" && test "x$with_gtkmm_3_0" = "xno"; then
-		AC_MSG_WARN([The available version of Gtkmm uses deprecated Glib symbols.  Deprecated Glib symbol usage will be allowed])
 	else
 		CPPFLAGS="-DG_DISABLE_DEPRECATED $CPPFLAGS"
 	fi
