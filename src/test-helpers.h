@@ -23,7 +23,10 @@ T* createSuiteAndDocument( void (*fun)(T*&) )
 {
     T* suite = 0;
 
+#if !GLIB_CHECK_VERSION(2,36,0)
     g_type_init();
+#endif
+
     Inkscape::GC::init();
     if ( !inkscape_get_instance() )
     {

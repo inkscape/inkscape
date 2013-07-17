@@ -1283,12 +1283,15 @@ int sp_main_console(int argc, char const **argv)
 {
     /* We are started in text mode */
 
+#if !GLIB_CHECK_VERSION(2,36,0)
     /* Do this g_type_init(), so that we can use Xft/Freetype2 (Pango)
      * in a non-Gtk environment.  Used in libnrtype's
      * FontInstance.cpp and FontFactory.cpp.
      * http://mail.gnome.org/archives/gtk-list/2003-December/msg00063.html
      */
     g_type_init();
+#endif
+
     char **argv2 = const_cast<char **>(argv);
     gtk_init_check( &argc, &argv2 );
     //setlocale(LC_ALL, "");
