@@ -43,7 +43,6 @@ pixmaps = \
 
 icons_DATA = \
 	$(pixmaps) \
-	inkscape.svg \
 	\
 	icons.svg \
 	tango_icons.svg \

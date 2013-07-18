@@ -1056,7 +1056,7 @@ doc/Makefile
 po/Makefile.in
 share/Makefile
 share/attributes/Makefile
-share/clipart/Makefile
+share/branding/Makefile
 share/examples/Makefile
 share/extensions/Makefile
 share/extensions/alphabet_soup/Makefile

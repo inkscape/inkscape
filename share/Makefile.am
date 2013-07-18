@@ -1,5 +1,5 @@
 SUBDIRS = attributes \
-          clipart \
+          branding \
           examples \
           extensions \
           filters \
