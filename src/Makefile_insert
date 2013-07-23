@@ -3,7 +3,7 @@
 ink_common_sources +=	\
 	util/find-last-if.h					\
 	util/longest-common-suffix.h				\
-	approx-equal.h remove-last.h					\
+	remove-last.h					\
 	arc-context.cpp arc-context.h					\
 	attributes.cpp attributes.h					\
 	attribute-rel-svg.cpp attribute-rel-svg.h			\

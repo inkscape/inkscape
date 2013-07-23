@@ -1,8 +1,8 @@
+#include <2geom/coord.h>
 #include "desktop-handles.h"
 #include "sp-guide.h"
 #include "sp-guide-constraint.h"
 #include "sp-namedview.h"
-#include "approx-equal.h"
 #include "satisfied-guide-cns.h"
 
 void satisfied_guide_cns(SPDesktop const &desktop,
@@ -13,7 +13,7 @@ void satisfied_guide_cns(SPDesktop const &desktop,
     for (GSList const *l = nv.guides; l != NULL; l = l->next) {
         SPGuide &g = *SP_GUIDE(l->data);
         for (unsigned int i = 0; i < snappoints.size(); ++i) {
-            if (approx_equal( g.getDistanceFrom(snappoints[i].getPoint()), 0) ) {
+            if (Geom::are_near(g.getDistanceFrom(snappoints[i].getPoint()), 0, 1e-2)) {
                 cns.push_back(SPGuideConstraint(&g, i));
             }
         }

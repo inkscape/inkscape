@@ -312,7 +312,6 @@ set(inkscape_SRC
 	MultiPrinter.h
 	PylogFormatter.h
 	TRPIFormatter.h
-	approx-equal.h
 	arc-context.h
 	attributes-test.h
 	attributes.h

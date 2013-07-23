@@ -1,7 +1,7 @@
 
 #include <algorithm>
+#include <2geom/coord.h>
 
-#include "approx-equal.h"
 #include "remove-last.h"
 #include "sp-guide.h"
 #include "sp-guide-constraint.h"
@@ -22,7 +22,8 @@ void sp_item_rm_unsatisfied_cns(SPItem &item)
         SPGuideConstraint const &cn = item.constraints[i];
         int const snappoint_ix = cn.snappoint_ix;
         g_assert( snappoint_ix < int(snappoints.size()) );
-        if (!approx_equal( cn.g->getDistanceFrom(snappoints[snappoint_ix].getPoint()), 0) ) {
+
+        if (!Geom::are_near(cn.g->getDistanceFrom(snappoints[snappoint_ix].getPoint()), 0, 1e-2)) {
             remove_last(cn.g->attached_items, SPGuideAttachment(&item, cn.snappoint_ix));
             g_assert( i < item.constraints.size() );
             vector<SPGuideConstraint>::iterator const ei(&item.constraints[i]);
