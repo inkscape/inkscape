@@ -52,8 +52,6 @@ dom_libdom_a_SOURCES =       \
 	dom/xpathtoken.cpp       \
 	dom/io/domstream.cpp     \
 	dom/io/domstream.h       \
-	dom/util/digest.h        \
-	dom/util/digest.cpp      \
 	dom/util/ziptool.h       \
 	dom/util/ziptool.cpp
 

@@ -20,7 +20,6 @@ set(dom_SRC
 	
 	io/domstream.cpp
 	
-	util/digest.cpp
 	util/ziptool.cpp
 
 
@@ -57,7 +56,6 @@ set(dom_SRC
 
 	io/domstream.h
 
-	util/digest.h
 	util/ziptool.h
 )
 

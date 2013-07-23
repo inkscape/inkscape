@@ -4,6 +4,7 @@
 
 #define noDEBUG_LCMS
 
+#include <glibmm/checksum.h>
 #include <gdkmm/color.h>
 #include <glib/gstdio.h>
 #include <fcntl.h>
@@ -41,7 +42,6 @@
 #include "preferences.h"
 
 #include "dom/uri.h"
-#include "dom/util/digest.h"
 
 #ifdef WIN32
 #include <icm.h>
@@ -1285,8 +1285,6 @@ Glib::ustring Inkscape::CMSSystem::getDisplayId( int screen, int monitor )
 
 Glib::ustring Inkscape::CMSSystem::setDisplayPer( gpointer buf, guint bufLen, int screen, int monitor )
 {
-    Glib::ustring id;
-
     while ( static_cast<int>(perMonitorProfiles.size()) <= screen ) {
         std::vector<MemProfile> tmp;
         perMonitorProfiles.push_back(tmp);
@@ -1302,11 +1300,13 @@ Glib::ustring Inkscape::CMSSystem::setDisplayPer( gpointer buf, guint bufLen, in
         cmsCloseProfile( item.hprof );
         item.hprof = 0;
     }
-    id.clear();
+
+    Glib::ustring id;
 
     if ( buf && bufLen ) {
-        id = Digest::hashHex(Digest::HASH_MD5,
-                   reinterpret_cast<unsigned char*>(buf), bufLen);
+        gsize len = bufLen; // len is an inout parameter
+        id = Glib::Checksum::compute_checksum(Glib::Checksum::CHECKSUM_MD5,
+            reinterpret_cast<guchar*>(buf), len);
 
         // Note: if this is not a valid profile, item.hprof will be set to null.
         item.hprof = cmsOpenProfileFromMem(buf, bufLen);
