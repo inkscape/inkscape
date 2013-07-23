@@ -31,7 +31,7 @@
 #include "ui/widget/spinbutton.h"
 #include <glibmm/i18n.h>
 #include "toolbox.h"
-#include "erasor-toolbar.h"
+#include "eraser-toolbar.h"
 #include "calligraphy-toolbar.h"
 
 #include "../desktop.h"

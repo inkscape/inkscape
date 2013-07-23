@@ -79,7 +79,7 @@
 #include "calligraphy-toolbar.h"
 #include "connector-toolbar.h"
 #include "dropper-toolbar.h"
-#include "erasor-toolbar.h"
+#include "eraser-toolbar.h"
 #include "gradient-toolbar.h"
 #include "lpe-toolbar.h"
 #include "mesh-toolbar.h"

@@ -21,8 +21,8 @@ ink_common_sources +=	\
 	widgets/eek-preview.h		\
 	widgets/ege-paint-def.cpp	\
 	widgets/ege-paint-def.h		\
-	widgets/erasor-toolbar.cpp		\
-	widgets/erasor-toolbar.h		\
+	widgets/eraser-toolbar.cpp		\
+	widgets/eraser-toolbar.h		\
 	widgets/fill-style.cpp		\
 	widgets/fill-style.h		\
 	widgets/fill-n-stroke-factory.h	\

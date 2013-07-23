@@ -6,7 +6,7 @@ set(widgets_SRC
 	  calligraphy-toolbar.cpp
 	  connector-toolbar.cpp
 	  dropper-toolbar.cpp
-	  erasor-toolbar.cpp
+	  eraser-toolbar.cpp
 	  lpe-toolbar.cpp
 	  measure-toolbar.cpp
 	  mesh-toolbar.cpp
@@ -62,7 +62,7 @@ set(widgets_SRC
 	  calligraphy-toolbar.h
 	  connector-toolbar.h
 	  dropper-toolbar.h
-	  erasor-toolbar.h
+	  eraser-toolbar.h
 	  lpe-toolbar.h
 	  measure-toolbar.h
 	  mesh-toolbar.h
