@@ -59,7 +59,6 @@ ink_common_sources +=	\
 	fill-or-stroke.h						\
 	filter-chemistry.cpp filter-chemistry.h				\
 	filter-enums.cpp filter-enums.h					\
-	fixes.cpp							\
 	flood-context.cpp flood-context.h				\
 	gc-alloc.h							\
 	gc-anchored.h gc-anchored.cpp					\

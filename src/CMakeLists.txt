@@ -216,7 +216,6 @@ set(inkscape_SRC
 	file.cpp
 	filter-chemistry.cpp
 	filter-enums.cpp
-	fixes.cpp
 	flood-context.cpp
 	gc-anchored.cpp
 	gc-finalized.cpp
