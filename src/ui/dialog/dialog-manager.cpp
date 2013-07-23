@@ -32,7 +32,6 @@
 #include "ui/dialog/livepatheffect-editor.h"
 #include "ui/dialog/memory.h"
 #include "ui/dialog/messages.h"
-#include "ui/dialog/scriptdialog.h"
 #include "ui/dialog/symbols.h"
 #include "ui/dialog/tile.h"
 #include "ui/dialog/tracedialog.h"
@@ -114,7 +113,6 @@ DialogManager::DialogManager() {
         registerFactory("ObjectAttributes",    &create<ObjectAttributes,     FloatingBehavior>);
         registerFactory("ObjectProperties",    &create<ObjectProperties,     FloatingBehavior>);
 //        registerFactory("PrintColorsPreviewDialog",      &create<PrintColorsPreviewDialog,       FloatingBehavior>);
-        registerFactory("Script",              &create<ScriptDialog,         FloatingBehavior>);
         registerFactory("SvgFontsDialog",      &create<SvgFontsDialog,       FloatingBehavior>);
         registerFactory("Swatches",            &create<SwatchesPanel,        FloatingBehavior>);
         registerFactory("Symbols",             &create<SymbolsDialog,        FloatingBehavior>);
@@ -148,7 +146,6 @@ DialogManager::DialogManager() {
         registerFactory("ObjectAttributes",    &create<ObjectAttributes,     DockBehavior>);
         registerFactory("ObjectProperties",    &create<ObjectProperties,     DockBehavior>);
 //        registerFactory("PrintColorsPreviewDialog",      &create<PrintColorsPreviewDialog,       DockBehavior>);
-        registerFactory("Script",              &create<ScriptDialog,         DockBehavior>);
         registerFactory("SvgFontsDialog",      &create<SvgFontsDialog,       DockBehavior>);
         registerFactory("Swatches",            &create<SwatchesPanel,        DockBehavior>);
         registerFactory("Symbols",             &create<SymbolsDialog,        DockBehavior>);

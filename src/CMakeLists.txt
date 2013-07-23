@@ -538,7 +538,6 @@ list(APPEND inkscape_SRC
 
 # All folders for internal inkscape
 # these call add_inkscape_source
-add_subdirectory(bind)
 add_subdirectory(debug)
 add_subdirectory(dialogs)
 add_subdirectory(display)

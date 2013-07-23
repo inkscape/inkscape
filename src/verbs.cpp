@@ -40,7 +40,6 @@
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/stock.h>
 
-#include "bind/javabind.h"
 #include "desktop.h"
 #include "desktop-handles.h"
 #include "display/curve.h"
@@ -1992,10 +1991,6 @@ void DialogVerb::perform(SPAction *action, void *data)
         case SP_VERB_DIALOG_DEBUG:
             dt->_dlg_mgr->showDialog("Messages");
             break;
-        case SP_VERB_DIALOG_SCRIPT:
-            //dt->_dlg_mgr->showDialog("Script");
-            Inkscape::Bind::JavaBindery::getInstance()->showConsole();
-            break;
         case SP_VERB_DIALOG_UNDO_HISTORY:
             dt->_dlg_mgr->showDialog("UndoHistory");
             break;
@@ -2821,8 +2816,6 @@ Verb *Verb::_base_verbs[] = {
                    N_("Check spelling of text in document"), GTK_STOCK_SPELL_CHECK ),
     new DialogVerb(SP_VERB_DIALOG_DEBUG, "DialogDebug", N_("_Messages..."),
                    N_("View debug messages"), INKSCAPE_ICON("dialog-messages")),
-    new DialogVerb(SP_VERB_DIALOG_SCRIPT, "DialogScript", N_("S_cripts..."),
-                   N_("Run scripts"), INKSCAPE_ICON("dialog-scripts")),
     new DialogVerb(SP_VERB_DIALOG_TOGGLE, "DialogsToggle", N_("Show/Hide D_ialogs"),
                    N_("Show or hide all open dialogs"), INKSCAPE_ICON("show-dialogs")),
     new DialogVerb(SP_VERB_DIALOG_CLONETILER, "DialogClonetiler", N_("Create Tiled Clones..."),

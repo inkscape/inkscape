@@ -92,9 +92,6 @@
 
 
     <mkdir dir="${build}"/>
-    <mkdir dir="${build}/java"/>
-    <mkdir dir="${build}/java/classes"/>
-    <mkdir dir="${build}/java/lib"/>
     <mkdir dir="${dist}"/>
     
     <copy file="${src}/helper/sp-marshal.h.mingw"
@@ -318,8 +315,6 @@
             <exclude name="extension/dbus/.*"/>
             <exclude name="extension/dxf2svg/.*"/>
             <exclude name="extension/implementation/plugin.cpp"/>
-            <exclude name="extension/script/bindtest.cpp"/>
-            <exclude name="extension/script/cpptest.cpp"/>
             <exclude name="extension/plugin/.*"/>
             <exclude name="extract-uri-test.cpp"/>
             <exclude name="helper/units-test.cpp"/>
@@ -392,8 +387,6 @@
             <!-- -Wno-comment -I${devlibs}/perl/lib/CORE -->
             <!-- PYTHON -->
             -I${devlibs}/python/include
-            <!-- JAVA -->
-            -I${src}/bind/javainc -I${src}/bind/javainc/win32
         </includes>
     </cc>
   </target>
@@ -840,54 +833,6 @@
     <cxxtestrun command="${build}/cxxtests" workingdir="${dist}" />
   </target>
 
-
-  <!--
-  ########################################################################
-  ## T A R G E T    :    JAVAC
-  ########################################################################
-  -->
-  <target name="javac" depends="init"
-      description="compile java binding classes">
-    <javac srcdir="${src}/bind/java" destdir="${build}/java/classes"/>
-  </target>
-
-
-  <!--
-  ########################################################################
-  ## T A R G E T    :    JAR
-  ########################################################################
-  -->
-  <target name="jar" depends="javac"
-      description="pack java classes and resources into a jar file">
-    <copy todir="${build}/java/classes"> <fileset dir="${devlibs}/bind/data"/> </copy>
-    <jar basedir="${build}/java/classes" destfile="${build}/java/lib/inkscape.jar"/>
-  </target>
-
-  <!--
-  ########################################################################
-  ## T A R G E T    :    BINDDIST
-  ########################################################################
-  -->
-  <target name="binddist" depends="jar"
-      description="pack java classes and resources into a jar file">
-    <copy todir="${dist}/share/bind"> <fileset dir="${devlibs}/bind/java"/> </copy>
-    <copy todir="${dist}/share/bind/java"> <fileset dir="${build}/java/lib"/> </copy>
-
-  </target>
-
-  <!--
-  ########################################################################
-  ## T A R G E T    :    BINDCLEAN
-  ########################################################################
-  -->
-  <target name="bindclean" depends=""
-      description="clean up java binding classes">
-        <delete dir="${build}/java"/>
-  </target>
-
-
-
-
   <!--
   ########################################################################
   ## T A R G E T    :    D I S T - A L L
@@ -918,7 +863,7 @@
   ## T A R G E T    :    C L E A N
   ########################################################################
   -->
-  <target name="clean" depends="bindclean"
+  <target name="clean"
         description="clean up.  deleting build and distro dirs" >
 
     <delete dir="${build}"/>

@@ -82,8 +82,6 @@ AM_CPPFLAGS =	\
 	$(INKSCAPE_CFLAGS) \
 	-I$(top_srcdir)/cxxtest \
 	$(WIN32_CFLAGS) \
-	-I$(srcdir)/bind/javainc \
-	-I$(srcdir)/bind/javainc/linux \
 	-I$(builddir)/extension/dbus   \
 	$(X11_CFLAGS)
 
@@ -107,7 +105,6 @@ endif
 
 # Include all partial makefiles from subdirectories
 include Makefile_insert
-include bind/Makefile_insert
 include dialogs/Makefile_insert
 include display/Makefile_insert
 include dom/Makefile_insert
@@ -115,7 +112,6 @@ include extension/Makefile_insert
 include extension/dbus/Makefile_insert
 include extension/implementation/Makefile_insert
 include extension/internal/Makefile_insert
-include extension/script/Makefile_insert
 include filters/Makefile_insert
 include helper/Makefile_insert
 include io/Makefile_insert
@@ -147,7 +143,6 @@ EXTRA_DIST +=	\
 	$(top_srcdir)/Doxyfile	\
 	sp-skeleton.cpp sp-skeleton.h	\
 	util/makefile.in	\
-	bind/makefile.in	\
 	debug/makefile.in	\
 	dialogs/makefile.in	\
 	display/makefile.in	\
@@ -155,7 +150,6 @@ EXTRA_DIST +=	\
 	extension/implementation/makefile.in	\
 	extension/internal/makefile.in	\
 	extension/makefile.in	\
-	extension/script/makefile.in	\
 	filters/makefile.in \
 	helper/makefile.in	\
 	io/makefile.in	\

@@ -26,7 +26,6 @@ if [ $# = 0 ]; then
 		-o -name ecma -prune	\
 		-o -name render -prune	\
 		-o -name xpath -prune	\
-		-o -path '*/extension/script/js' -prune	\
 		-o -name '*.h' \
 		   \! -name gnome.h \! -name nr-type-gnome.h \! -name Livarot.h \! -name radial.h \
 		   \! -name '*-test.h'	\

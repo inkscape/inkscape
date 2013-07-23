@@ -141,7 +141,6 @@ static char const menus_skeleton[] =
 "       <separator/>\n"
 "       <verb verb-id=\"DialogSwatches\" />\n"
 "       <verb verb-id=\"DialogDebug\" />\n"
-//"       <verb verb-id=\"DialogScript\" />\n"
 "       <separator/>\n"
 "       <verb verb-id=\"PrevWindow\" />\n"
 "       <verb verb-id=\"NextWindow\" />\n"
