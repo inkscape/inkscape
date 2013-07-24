@@ -62,8 +62,6 @@ protected:
     virtual void on_end_element(Ctx &ctx, Glib::ustring const &name);
     virtual void on_text(Ctx &ctx, Glib::ustring const &text);
 
-    Glib::ustring _current_element;
-
 public:
     UnitTable *tbl;
     bool primary;
@@ -212,7 +210,6 @@ bool UnitTable::save(std::string const &filename) {
 
 void UnitParser::on_start_element(Ctx &ctx, Glib::ustring const &name, AttrMap const &attrs)
 {
-    _current_element = name;
     if (name == "unit") {
         // reset for next use
         unit.clear();
@@ -237,16 +234,17 @@ void UnitParser::on_start_element(Ctx &ctx, Glib::ustring const &name, AttrMap c
 
 void UnitParser::on_text(Ctx &ctx, Glib::ustring const &text)
 {
-    if (_current_element == "name") {
+    Glib::ustring element = ctx.get_element();
+    if (element == "name") {
         unit.name = text;
-    } else if (_current_element == "plural") {
+    } else if (element == "plural") {
         unit.name_plural = text;
-    } else if (_current_element == "abbr") {
+    } else if (element == "abbr") {
         unit.abbr = text;
-    } else if (_current_element == "factor") {
+    } else if (element == "factor") {
         // TODO make sure we use the right conversion
         unit.factor = g_ascii_strtod(text.c_str(), NULL);
-    } else if (_current_element == "description") {
+    } else if (element == "description") {
         unit.description = text;
     }
 }
