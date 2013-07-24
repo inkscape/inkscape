@@ -15,8 +15,6 @@ ink_common_sources += \
 	io/inkscapestream.h \
 	io/resource.cpp \
 	io/resource.h \
-	io/simple-sax.cpp \
-	io/simple-sax.h \
 	io/stringstream.cpp \
 	io/stringstream.h \
 	io/sys.h \

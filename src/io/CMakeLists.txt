@@ -7,7 +7,6 @@ set(io_SRC
 	inkjar.cpp
 	inkscapestream.cpp
 	resource.cpp
-	simple-sax.cpp
 	stringstream.cpp
 	sys.cpp
 	uristream.cpp
@@ -22,7 +21,6 @@ set(io_SRC
 	inkjar.h
 	inkscapestream.h
 	resource.h
-	simple-sax.h
 	stringstream.h
 	sys.h
 	uristream.h

@@ -96,19 +96,17 @@ class UnitTable {
 
     void    setScale();
 
-    bool    load(Glib::ustring const &filename);
-
-    /** Loads units from a text file.
+    /** Load units from an XML file.
      *
-     * loadText loads and merges the contents of the given file into the UnitTable,
+     * Loads and merges the contents of the given file into the UnitTable,
      * possibly overwriting existing unit definitions.
      *
      * @param filename file to be loaded
      */
-    bool    loadText(Glib::ustring const &filename);
+    bool    load(std::string const &filename);
 
     /** Saves the current UnitTable to the given file. */
-    bool    save(Glib::ustring const &filename);
+    bool    save(std::string const &filename);
 
  protected:
     UnitTable::UnitMap  _unit_map;

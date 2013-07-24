@@ -5,8 +5,9 @@
 #include <cmath>
 #include <cerrno>
 #include <glib.h>
+#include <glibmm/fileutils.h>
+#include <glibmm/markup.h>
 
-#include "io/simple-sax.h"
 #include "util/units.h"
 #include "path-prefix.h"
 #include "streq.h"
@@ -47,27 +48,33 @@ std::map<Glib::ustring, Inkscape::Util::UnitType> &getTypeMappings()
 namespace Inkscape {
 namespace Util {
 
-class UnitsSAXHandler : public Inkscape::IO::FlatSaxHandler
+class UnitParser : public Glib::Markup::Parser
 {
 public:
-    UnitsSAXHandler(UnitTable *table);
-    virtual ~UnitsSAXHandler() {}
+    typedef Glib::Markup::Parser::AttributeMap AttrMap;
+    typedef Glib::Markup::ParseContext Ctx;
 
-    virtual void _startElement(xmlChar const *name, xmlChar const **attrs);
-    virtual void _endElement(xmlChar const *name);
+    UnitParser(UnitTable *table);
+    virtual ~UnitParser() {}
 
+protected:
+    virtual void on_start_element(Ctx &ctx, Glib::ustring const &name, AttrMap const &attrs);
+    virtual void on_end_element(Ctx &ctx, Glib::ustring const &name);
+    virtual void on_text(Ctx &ctx, Glib::ustring const &text);
+
+    Glib::ustring _current_element;
+
+public:
     UnitTable *tbl;
     bool primary;
     bool skip;
     Unit unit;
 };
 
-UnitsSAXHandler::UnitsSAXHandler(UnitTable *table) :
-    FlatSaxHandler(),
+UnitParser::UnitParser(UnitTable *table) :
     tbl(table),
-    primary(0),
-    skip(0),
-    unit()
+    primary(false),
+    skip(false)
 {
 }
 
@@ -115,10 +122,8 @@ int Unit::defaultDigits() const {
 
 UnitTable::UnitTable()
 {
-    // if we swich to the xml file, don't forget to force locale to 'C'
-    //    load("share/ui/units.xml");  // <-- Buggy
-    gchar *filename = g_build_filename(INKSCAPE_UIDIR, "units.txt", NULL);
-    loadText(filename);
+    gchar *filename = g_build_filename(INKSCAPE_UIDIR, "units.xml", NULL);
+    load(filename);
     g_free(filename);
 }
 
@@ -183,165 +188,73 @@ Glib::ustring UnitTable::primary(UnitType type) const
     return _primary_unit[type];
 }
 
-bool UnitTable::loadText(Glib::ustring const &filename)
+bool UnitTable::load(std::string const &filename) {
+    UnitParser uparser(this);
+    Glib::Markup::ParseContext ctx(uparser);
+
+    try {
+        Glib::ustring unitfile = Glib::file_get_contents(filename);
+        ctx.parse(unitfile);
+        ctx.end_parse();
+    } catch (Glib::MarkupError const &e) {
+        g_warning("Problem loading units file '%s': %s\n", filename.c_str(), e.what().c_str());
+        return false;
+    }
+    return true;
+}
+
+bool UnitTable::save(std::string const &filename) {
+
+    g_warning("UnitTable::save(): not implemented");
+
+    return true;
+}
+
+void UnitParser::on_start_element(Ctx &ctx, Glib::ustring const &name, AttrMap const &attrs)
 {
-    char buf[BUFSIZE] = {0};
-
-    // Open file for reading
-    FILE * f = fopen(filename.c_str(), "r");
-    if (f == NULL) {
-        g_warning("Could not open units file '%s': %s\n",
-                  filename.c_str(), strerror(errno));
-        g_warning("* INKSCAPE_DATADIR is:  '%s'\n", INKSCAPE_DATADIR);
-        g_warning("* INKSCAPE_UIDIR is:  '%s'\n", INKSCAPE_UIDIR);
-        return false;
-    }
-
-    /** @todo fix this to use C++ means and explicit locale to avoid need to change. */
-    // bypass current locale in order to make
-    // sscanf read floats with '.' as a separator
-    // set locale to 'C' and keep old locale
-    char *old_locale = g_strdup(setlocale(LC_NUMERIC, NULL));
-    setlocale (LC_NUMERIC, "C");
-
-    while (fgets(buf, BUFSIZE, f) != NULL) {
-        char name[BUFSIZE] = {0};
-        char plural[BUFSIZE] = {0};
-        char abbr[BUFSIZE] = {0};
-        char type[BUFSIZE] = {0};
-        double factor = 0.0;
-        char primary[BUFSIZE] = {0};
-
-        int nchars = 0;
-        // locale is set to C, scanning %lf should work _everywhere_
-        /** @todo address %15n, which causes a warning: */
-        if (sscanf(buf, "%15s %15s %15s %15s %8lf %1s %15n",
-                   name, plural, abbr, type, &factor, primary, &nchars) != 6)
-        {
-            // Skip the line - doesn't appear to be valid
-            continue;
-        }
-
-        g_assert(nchars < BUFSIZE);
-
-        char *desc = buf;
-        desc += nchars;  // buf is now only the description
-
-        // insert into _unit_map
-        if (getTypeMappings().find(type) == getTypeMappings().end())
-        {
-            g_warning("Skipping unknown unit type '%s' for %s.\n", type, name);
-            continue;
-        }
-        UnitType utype = getTypeMappings()[type];
-
-        Unit u(utype, factor, name, plural, abbr, desc);
-
-        // if primary is 'Y', list this unit as a primary
-        addUnit(u, (primary[0]=='Y' || primary[0]=='y'));
-    }
-
-    // set back the saved locale
-    setlocale (LC_NUMERIC, old_locale);
-    g_free (old_locale);
-
-    // close file
-    if (fclose(f) != 0) {
-        g_warning("Error closing units file '%s':  %s\n", filename.c_str(), strerror(errno));
-        return false;
-    }
-
-    return true;
-}
-
-bool UnitTable::load(Glib::ustring const &filename) {
-    UnitsSAXHandler handler(this);
-
-    int result = handler.parseFile( filename.c_str() );
-    if ( result != 0 ) {
-        // perhaps
-        g_warning("Problem loading units file '%s':  %d\n", filename.c_str(), result);
-        return false;
-    }
-
-    return true;
-}
-
-bool UnitTable::save(Glib::ustring const &filename) {
-
-    // open file for writing
-    FILE *f = fopen(filename.c_str(), "w");
-    if (f == NULL) {
-        g_warning("Could not open units file '%s': %s\n", filename.c_str(), strerror(errno));
-        return false;
-    }
-
-    // write out header
-    // foreach item in _unit_map, sorted alphabetically by type and then unit name
-    //    sprintf a line
-    //      name
-    //      name_plural
-    //      abbr
-    //      type
-    //      factor
-    //      PRI - if listed in primary unit table, 'Y', else 'N'
-    //      description
-    //    write line to the file
-
-    // close file
-    if (fclose(f) != 0) {
-        g_warning("Error closing units file '%s':  %s\n", filename.c_str(), strerror(errno));
-        return false;
-    }
-
-    return true;
-}
-
-
-void UnitsSAXHandler::_startElement(xmlChar const *name, xmlChar const **attrs)
-{
-    if (streq("unit", (char const *)name)) {
+    _current_element = name;
+    if (name == "unit") {
         // reset for next use
         unit.clear();
         primary = false;
         skip = false;
 
-        for ( int i = 0; attrs[i]; i += 2 ) {
-            char const *const key = (char const *)attrs[i];
-            if (streq("type", key)) {
-                char const *type = (char const*)attrs[i+1];
-                if (getTypeMappings().find(type) != getTypeMappings().end())
-                {
-                    unit.type = getTypeMappings()[type];
-                } else {
-                    g_warning("Skipping unknown unit type '%s' for %s.\n", type, name);
-                    skip = true;
-                }
-            } else if (streq("pri", key)) {
-                primary = attrs[i+1][0] == 'y' || attrs[i+1][0] == 'Y';
+        AttrMap::const_iterator f;
+        if ((f = attrs.find("type")) != attrs.end()) {
+            Glib::ustring type = f->second;
+            if (getTypeMappings().find(type) != getTypeMappings().end()) {
+                unit.type = getTypeMappings()[type];
+            } else {
+                g_warning("Skipping unknown unit type '%s'.\n", type.c_str());
+                skip = true;
             }
+        }
+        if ((f = attrs.find("pri")) != attrs.end()) {
+            primary = (f->second[0] == 'y' || f->second[0] == 'Y');
         }
     }
 }
 
-void UnitsSAXHandler::_endElement(xmlChar const *xname)
+void UnitParser::on_text(Ctx &ctx, Glib::ustring const &text)
 {
-    char const *const name = (char const *) xname;
-    if (streq("name", name)) {
-        unit.name = data;
-    } else if (streq("plural", name)) {
-        unit.name_plural = data;
-    } else if (streq("abbr", name)) {
-        unit.abbr = data;
-    } else if (streq("factor", name)) {
+    if (_current_element == "name") {
+        unit.name = text;
+    } else if (_current_element == "plural") {
+        unit.name_plural = text;
+    } else if (_current_element == "abbr") {
+        unit.abbr = text;
+    } else if (_current_element == "factor") {
         // TODO make sure we use the right conversion
-        unit.factor = atol(data.c_str());
-    } else if (streq("description", name)) {
-        unit.description = data;
-    } else if (streq("unit", name)) {
-        if (!skip) {
-            tbl->addUnit(unit, primary);
-        }
+        unit.factor = g_ascii_strtod(text.c_str(), NULL);
+    } else if (_current_element == "description") {
+        unit.description = text;
+    }
+}
+
+void UnitParser::on_end_element(Ctx &ctx, Glib::ustring const &name)
+{
+    if (name == "unit" && !skip) {
+        tbl->addUnit(unit, primary);
     }
 }
 
