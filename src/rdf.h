@@ -121,7 +121,7 @@ unsigned int  rdf_set_work_entity(SPDocument * doc,
  *  \return  A pointer to the static RDF license structure
  *  
  */
-struct rdf_license_t * rdf_get_license(SPDocument const * doc);
+struct rdf_license_t * rdf_get_license(SPDocument *doc);
 
 /**
  *  \brief   Stores an RDF/License XML in the document XML

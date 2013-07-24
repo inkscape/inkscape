@@ -225,6 +225,9 @@ struct rdf_license_t rdf_licenses [] = {
 #define XML_TAG_NAME_RDF      "rdf:RDF"
 #define XML_TAG_NAME_WORK     "cc:Work"
 #define XML_TAG_NAME_LICENSE  "cc:License"
+// Note the lowercase L!
+#define XML_TAG_NAME_LICENSE_PROP  "cc:license"
+
 
 // Remember when using the "title" and "tip" elements to pass them through
 // the localization functions when you use them!
@@ -338,7 +341,7 @@ public:
                                      struct rdf_work_entity_t const & entity,
                                      gchar const * text );
 
-    static struct rdf_license_t *getLicense(SPDocument const * document);
+    static struct rdf_license_t *getLicense(SPDocument *document);
 
     static void setLicense(SPDocument * doc, struct rdf_license_t const * license);
 };
@@ -1028,26 +1031,95 @@ rdf_match_license(Inkscape::XML::Node const *repr, struct rdf_license_t const *l
 }
 
 // Public API:
-struct rdf_license_t *rdf_get_license(SPDocument const * document)
+struct rdf_license_t *rdf_get_license(SPDocument *document)
 {
     return RDFImpl::getLicense(document);
 }
 
-struct rdf_license_t *RDFImpl::getLicense(SPDocument const *document)
+struct rdf_license_t *RDFImpl::getLicense(SPDocument *document)
 {
+    // Base license lookup on the URI of cc:license rather than the license
+    // properties, per instructions from the ccREL gurus.
+    // (Fixes https://bugs.launchpad.net/inkscape/+bug/372427)
+
+    struct rdf_work_entity_t *entity = rdf_find_entity("license_uri");
+    if (entity == NULL) {
+        g_critical("Can't find internal entity structure for 'license_uri'");
+        return NULL;
+    }
+
+    const gchar *uri = getWorkEntity(document, *entity);
+    struct rdf_license_t * license_by_uri = NULL;
+
+    if (uri != NULL) {
+        for (struct rdf_license_t * license = rdf_licenses; license->name; license++) {
+            if (g_strcmp0(uri, license->uri) == 0) {
+                license_by_uri = license;
+                break;
+            }
+        }
+    }
+
+    // To improve backward compatibility, the old license matching code is
+    // kept as fallback and to warn about and fix discrepancies.
+
+    // TODO: would it be better to do this code on document load?  Is
+    // sp_metadata_build() then the right place to put the call to sort out
+    // any RDF mess?
+    
+    struct rdf_license_t * license_by_properties = NULL;
+    
     Inkscape::XML::Node const *repr = getXmlRepr( document, XML_TAG_NAME_LICENSE );
     if (repr) {
         for ( struct rdf_license_t * license = rdf_licenses; license->name; license++ ) {
             if ( rdf_match_license( repr, license ) ) {
-                return license;
+                license_by_properties = license;
+                break;
             }
         }
     }
-#ifdef DEBUG_MATCH
-    else {
-        printf("no license XML\n");
+
+    if (license_by_uri != NULL && license_by_properties != NULL) {
+        // Both property and structure, use property
+        if (license_by_uri != license_by_properties) {
+            // TODO: this should be a user-visible warning, but how?
+            g_warning("Mismatch between %s and %s metadata:\n"
+                      "%s value URI:   %s (using this one!)\n"
+                      "%s derived URI: %s",
+                      XML_TAG_NAME_LICENSE_PROP,
+                      XML_TAG_NAME_LICENSE,
+                      XML_TAG_NAME_LICENSE_PROP,
+                      license_by_uri->uri,
+                      XML_TAG_NAME_LICENSE,
+                      license_by_properties->uri);
+        }
+
+        // Reset license structure to match so the document is consistent
+        // (and this will also silence the warning above on repeated calls).
+        setLicense(document, license_by_uri);
+
+        return license_by_uri;
     }
-#endif
+    else if (license_by_uri != NULL) {
+        // Only cc:license property, set structure for backward compatiblity
+        setLicense(document, license_by_uri);
+
+        return license_by_uri;
+    }
+    else if (license_by_properties != NULL) {
+        // Only cc:License structure
+        // TODO: this could be a user-visible warning too
+        g_warning("No %s metadata found, derived license URI from %s: %s",
+                  XML_TAG_NAME_LICENSE_PROP, XML_TAG_NAME_LICENSE,
+                  license_by_properties->uri);
+        
+        // Set license property to match
+        setWorkEntity(document, *entity, license_by_properties->uri);
+
+        return license_by_properties;
+    }
+
+    // No license info at all
     return NULL;
 }
 
@@ -1059,6 +1131,11 @@ void rdf_set_license(SPDocument * doc, struct rdf_license_t const * license)
 
 void RDFImpl::setLicense(SPDocument * doc, struct rdf_license_t const * license)
 {
+    // When basing license check on only the license URI (see fix for
+    // https://bugs.launchpad.net/inkscape/+bug/372427 above) we should
+    // really drop this license section, but keep writing it for a while for
+    // compatibility with older versions.
+
     // drop old license section
     Inkscape::XML::Node * repr = getXmlRepr( doc, XML_TAG_NAME_LICENSE );
     if (repr) {
