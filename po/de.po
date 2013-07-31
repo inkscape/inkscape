@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: inkscape\n"
 "Report-Msgid-Bugs-To: inkscape-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-06-27 21:15+0200\n"
-"PO-Revision-Date: 2013-07-21 11:09+0100\n"
+"PO-Revision-Date: 2013-07-31 22:10+0100\n"
 "Last-Translator: Uwe Schoeler <mail@uwe-schoeler.de>\n"
 "Language-Team:  <de@li.org>\n"
 "Language: de\n"
@@ -7627,9 +7627,8 @@ msgstr "Effekt-Typ:"
 #: ../src/extension/internal/filter/paint.h:501
 #: ../src/extension/internal/filter/paint.h:860
 #: ../src/extension/internal/filter/paint.h:975
-#, fuzzy
 msgid "Levels"
-msgstr "Ebenen:"
+msgstr "Ebenen"
 
 #: ../src/extension/internal/filter/paint.h:510
 msgid "Electro solarization effects"
@@ -7653,9 +7652,8 @@ msgid "Contrasted"
 msgstr "Abgestochen"
 
 #: ../src/extension/internal/filter/paint.h:591
-#, fuzzy
 msgid "Line width"
-msgstr "Linienstärke:"
+msgstr "Linienstärke"
 
 #: ../src/extension/internal/filter/paint.h:593
 #: ../src/extension/internal/filter/paint.h:861
@@ -7759,19 +7757,16 @@ msgid "Drop Shadow"
 msgstr "Abgesetzter Schatten"
 
 #: ../src/extension/internal/filter/shadows.h:61
-#, fuzzy
 msgid "Blur radius (px)"
-msgstr "Unschärfen Radius"
+msgstr "Unschärfen Radius (px)"
 
 #: ../src/extension/internal/filter/shadows.h:62
-#, fuzzy
 msgid "Horizontal offset (px)"
-msgstr "Horizontaler Versatz (px):"
+msgstr "Horizontaler Versatz (px)"
 
 #: ../src/extension/internal/filter/shadows.h:63
-#, fuzzy
 msgid "Vertical offset (px)"
-msgstr "Vertikaler Versatz (px):"
+msgstr "Vertikaler Versatz (px)"
 
 #: ../src/extension/internal/filter/shadows.h:64
 msgid "Shadow type:"
@@ -11247,9 +11242,8 @@ msgid ""
 msgstr ""
 
 #: ../src/main.cpp:394
-#, fuzzy
 msgid "PS Level"
-msgstr "Ebene"
+msgstr "PS Level"
 
 #: ../src/main.cpp:398
 msgid "Export document to a PDF file"
@@ -11500,11 +11494,11 @@ msgstr[1] ""
 
 #: ../src/mesh-context.cpp:336
 msgid "Split mesh row/column"
-msgstr ""
+msgstr "Teile Gitter Reihe/Spalte"
 
 #: ../src/mesh-context.cpp:422
 msgid "Toggled mesh path type."
-msgstr ""
+msgstr "Gitter-Pfadtyp umschalten"
 
 #: ../src/mesh-context.cpp:426
 msgid "Approximated arc for mesh side."
@@ -12963,12 +12957,11 @@ msgstr ""
 
 # !!! palettes, not swatches?
 #: ../src/shortcuts.cpp:225
-#, fuzzy, c-format
+#, c-format
 msgid "Keyboard directory (%s) is unavailable."
-msgstr "Palettenverzeichnis (%s) nicht auffindbar."
+msgstr "Tastatur-verzeichnis (%s) nicht verfügbar."
 
 #: ../src/shortcuts.cpp:369
-#, fuzzy
 msgid "Select a file to import"
 msgstr "Wählen Sie die zu importierende Datei"
 
@@ -13212,9 +13205,9 @@ msgid "<b>Text span</b>"
 msgstr "<b>Textweite</b>"
 
 #: ../src/sp-use.cpp:303
-#, fuzzy, c-format
+#, c-format
 msgid "<b>'%s' Symbol</b>"
-msgstr "<b>Klonen des Symbols</b>"
+msgstr "<b>'%s' Symbol</b>"
 
 #. TRANSLATORS: Used for statusbar description for long <use> chains:
 #. * "Clone of: Clone of: ... in Layer 1".
@@ -17944,14 +17937,12 @@ msgid "Maximized"
 msgstr "Maximiert"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:650
-#, fuzzy
 msgid "Default window size:"
-msgstr "Vorgabe Gittereinstellungen"
+msgstr "Standard Fenstergröße:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:651
-#, fuzzy
 msgid "Set the default window size"
-msgstr "Standard-Farbverlauf erzeugen"
+msgstr "Standard Fenstergröße setzen:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:654
 msgid "Saving window geometry (size and position)"
@@ -19483,9 +19474,8 @@ msgid "Bitmap import:"
 msgstr "Bitmap-Import:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1444
-#, fuzzy
 msgid "Bitmap import quality:"
-msgstr "Bitmap-Import:"
+msgstr "Bitmap-Import-Qualität:"
 
 #: ../src/ui/dialog/inkscape-preferences.cpp:1447
 msgid "Default _import resolution:"
@@ -20482,14 +20472,12 @@ msgid "Current Document"
 msgstr "Aktuelles Dokument"
 
 #: ../src/ui/dialog/symbols.cpp:204
-#, fuzzy
 msgid "Add Symbol from the current document."
-msgstr "Aktuelle Ebene vereinzeln"
+msgstr "Symbol vom aktuellen Dokument hinzufügen."
 
 #: ../src/ui/dialog/symbols.cpp:213
-#, fuzzy
 msgid "Remove Symbol from the current document."
-msgstr "Stopp für derzeitigen Farbverlauf auswählen"
+msgstr "Symbol vom aktuellen Dokument entfernen."
 
 #: ../src/ui/dialog/symbols.cpp:226
 msgid "Make Icons bigger by zooming in."
@@ -20504,9 +20492,8 @@ msgid "Toggle 'fit' symbols in icon space."
 msgstr ""
 
 #: ../src/ui/dialog/symbols.cpp:557
-#, fuzzy
 msgid "Unnamed Symbols"
-msgstr "Khmer (km) Symbole"
+msgstr "Unbenannte Symbole"
 
 #. TRANSLATORS: An item in context menu on a colour in the swatches
 #: ../src/ui/dialog/swatches.cpp:258
@@ -26505,9 +26492,8 @@ msgid "_B:"
 msgstr "_B:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:359
-#, fuzzy
 msgid "G:"
-msgstr "_G:"
+msgstr "G:"
 
 #: ../src/widgets/sp-color-icc-selector.cpp:359
 msgid "Gray"
@@ -27598,9 +27584,9 @@ msgid ""
 msgstr ""
 
 #: ../share/extensions/dxf_outlines.py:341
-#, fuzzy, python-format
+#, python-format
 msgid "Warning: Layer '%s' not found!"
-msgstr "Ebene nicht gefunden.\n"
+msgstr "Warnung: Ebene '%s' nicht gefunden!"
 
 #: ../share/extensions/embedimage.py:84
 msgid ""
@@ -28667,27 +28653,26 @@ msgid "HSL Adjust"
 msgstr "HSL anpassen"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:3
-#, fuzzy
 msgid "Hue (°)"
-msgstr "Farbton (°):"
+msgstr "Farbton (°)"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:4
 msgid "Random hue"
 msgstr "Zufallsfarbton"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Saturation (%)"
-msgstr "Sättigung (%):"
+msgstr "Sättigung (%)"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:7
 msgid "Random saturation"
 msgstr "Zufallssättigung"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:9
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Lightness (%)"
-msgstr "Helligkeit (%):"
+msgstr "Helligkeit (%)"
 
 #: ../share/extensions/color_HSL_adjust.inx.h:10
 msgid "Random lightness"
@@ -29172,9 +29157,8 @@ msgid "Character Encoding"
 msgstr "Zeichen-Kodierung"
 
 #: ../share/extensions/dxf_outlines.inx.h:7
-#, fuzzy
 msgid "Layer export selection"
-msgstr "Auswahl löschen"
+msgstr "Ebenen-Export-Auswahl"
 
 #: ../share/extensions/dxf_outlines.inx.h:8
 #, fuzzy
@@ -29198,9 +29182,8 @@ msgid "UTF 8"
 msgstr "UTF 8"
 
 #: ../share/extensions/dxf_outlines.inx.h:21
-#, fuzzy
 msgid "All (default)"
-msgstr "(Vorgabe)"
+msgstr "Alle (Vorgabe)"
 
 #: ../share/extensions/dxf_outlines.inx.h:22
 #, fuzzy
@@ -29304,9 +29287,8 @@ msgid "Embed only selected images"
 msgstr "Nur ausgewählte Bilder einbetten"
 
 #: ../share/extensions/embedselectedimages.inx.h:1
-#, fuzzy
 msgid "Embed Selected Images"
-msgstr "Nur ausgewählte Bilder einbetten"
+msgstr "Ausgewählte Bilder einbetten"
 
 #: ../share/extensions/eps_input.inx.h:1
 msgid "EPS Input"
@@ -30643,19 +30625,16 @@ msgid "Guillotine"
 msgstr "Guillotine"
 
 #: ../share/extensions/guillotine.inx.h:2
-#, fuzzy
 msgid "Directory to save images to:"
 msgstr "Pfad zum Speicherort des Bildes:"
 
 #: ../share/extensions/guillotine.inx.h:3
-#, fuzzy
 msgid "Image name (without extension):"
-msgstr "Bildname (ohne Erweiterung)"
+msgstr "Bildname (ohne Erweiterung):"
 
 #: ../share/extensions/guillotine.inx.h:4
-#, fuzzy
 msgid "Ignore these settings and use export hints"
-msgstr "Einstellungen ignorieren und Export-Hinweise nutzen?"
+msgstr "Einstellungen ignorieren und Export-Hinweise nutzen"
 
 #: ../share/extensions/guillotine.inx.h:5
 #: ../share/extensions/print_win32_vector.inx.h:2
@@ -30679,9 +30658,8 @@ msgstr ""
 "konvertiert wurden. Der Plot wird automatisch auf den Nullpunkt ausgerichtet."
 
 #: ../share/extensions/hpgl_output.inx.h:3
-#, fuzzy
 msgid "Resolution (dpi):"
-msgstr "Auflösung (Punkte pro Zoll)"
+msgstr "Auflösung (dpi):"
 
 #: ../share/extensions/hpgl_output.inx.h:4
 msgid ""
@@ -30694,9 +30672,8 @@ msgstr ""
 "durch Versuch und Fehler (Standard: '1016')"
 
 #: ../share/extensions/hpgl_output.inx.h:5
-#, fuzzy
 msgid "Pen number:"
-msgstr "Stiftnummer"
+msgstr "Stiftnummer:"
 
 #: ../share/extensions/hpgl_output.inx.h:6
 msgid "The number of the pen (tool) to use, on most plotters 1 (Standard: '1')"
@@ -30741,9 +30718,8 @@ msgstr ""
 "'Aus')"
 
 #: ../share/extensions/hpgl_output.inx.h:13
-#, fuzzy
 msgid "Curve flatness:"
-msgstr "Kurven-Ebenheit"
+msgstr "Kurven-Ebenheit:"
 
 #: ../share/extensions/hpgl_output.inx.h:14
 msgid ""
@@ -30766,9 +30742,8 @@ msgstr ""
 "'Überschnitt'-Parameter nicht verwendet (Standard: 'Ein')"
 
 #: ../share/extensions/hpgl_output.inx.h:17
-#, fuzzy
 msgid "Overcut (mm):"
-msgstr "Überschnitt (mm)"
+msgstr "Überschnitt (mm):"
 
 #: ../share/extensions/hpgl_output.inx.h:18
 msgid ""
@@ -30791,9 +30766,8 @@ msgstr ""
 "'Werkzeugversatz' und 'Return-Faktor' -Parameter unbenutzt (Standard: 'Ein')"
 
 #: ../share/extensions/hpgl_output.inx.h:21
-#, fuzzy
 msgid "Tool offset (mm):"
-msgstr "Werkzeugversatz (mm)"
+msgstr "Werkzeugversatz (mm):"
 
 #: ../share/extensions/hpgl_output.inx.h:22
 msgid "The offset from the tool tip to the tool axis in mm (Standard: '0.25')"
@@ -30801,9 +30775,8 @@ msgstr ""
 "Der Versatz zwischen Werkzeugspitze und -achse in mm (Standard: '0.25')"
 
 #: ../share/extensions/hpgl_output.inx.h:23
-#, fuzzy
 msgid "Return Factor:"
-msgstr "Return-Faktor"
+msgstr "Return-Faktor:"
 
 #: ../share/extensions/hpgl_output.inx.h:24
 msgid ""
@@ -30817,9 +30790,8 @@ msgstr ""
 "nur durch Experimentieren bestimmen (Standard: '2,50')"
 
 #: ../share/extensions/hpgl_output.inx.h:25
-#, fuzzy
 msgid "X offset (mm):"
-msgstr "X Versatz (mm)"
+msgstr "X Versatz (mm:"
 
 #: ../share/extensions/hpgl_output.inx.h:26
 msgid ""
@@ -30830,9 +30802,8 @@ msgstr ""
 "(Standard: '0.00')"
 
 #: ../share/extensions/hpgl_output.inx.h:27
-#, fuzzy
 msgid "Y offset (mm):"
-msgstr "Y Versatz (mm)"
+msgstr "Y Versatz (mm):"
 
 #: ../share/extensions/hpgl_output.inx.h:28
 msgid "Plot invisible layers"
@@ -30855,9 +30826,8 @@ msgstr ""
 "Plotter (Standard: 'Aus')"
 
 #: ../share/extensions/hpgl_output.inx.h:32
-#, fuzzy
 msgid "Serial Port:"
-msgstr "Serieller Port"
+msgstr "Serieller Port:"
 
 #: ../share/extensions/hpgl_output.inx.h:33
 msgid ""
@@ -30868,9 +30838,8 @@ msgstr ""
 "'COM1', unter Linux  so etwas wie: '/dev/ttyUSB0' (Standard: 'COM1')"
 
 #: ../share/extensions/hpgl_output.inx.h:34
-#, fuzzy
 msgid "Baud Rate:"
-msgstr "Baudrate"
+msgstr "Baudrate:"
 
 #: ../share/extensions/hpgl_output.inx.h:35
 msgid "The Baud rate of your serial connection (Standard: '9600')"
@@ -30898,9 +30867,8 @@ msgid "HTML 5 canvas code"
 msgstr "HTML 5 Arbeitsflächen-code"
 
 #: ../share/extensions/inkscape_follow_link.inx.h:1
-#, fuzzy
 msgid "Follow Link"
-msgstr "Verknüpfung _folgen"
+msgstr "Verknüpfung folgen"
 
 #: ../share/extensions/inkscape_help_askaquestion.inx.h:1
 msgid "Ask Us a Question"
@@ -31993,24 +31961,20 @@ msgid "Multiply t-range by 2*pi"
 msgstr "T-Bereich mit 2*pi multiplizieren"
 
 #: ../share/extensions/param_curves.inx.h:6
-#, fuzzy
 msgid "X-value of rectangle's left:"
-msgstr "x-Wert der linken Seite des Rechtecks"
+msgstr "X-Wert der linken Seite des Rechtecks:"
 
 #: ../share/extensions/param_curves.inx.h:7
-#, fuzzy
 msgid "X-value of rectangle's right:"
-msgstr "x-Wert der rechten Seite des Rechtecks"
+msgstr "X-Wert der rechten Seite des Rechtecks:"
 
 #: ../share/extensions/param_curves.inx.h:8
-#, fuzzy
 msgid "Y-value of rectangle's bottom:"
-msgstr "y-Wert der unteren Kante des Rechtecks"
+msgstr "Y-Wert der unteren Kante des Rechtecks:"
 
 #: ../share/extensions/param_curves.inx.h:9
-#, fuzzy
 msgid "Y-value of rectangle's top:"
-msgstr "y-Wert der oberen Kante des Rechtecks"
+msgstr "Y-Wert der oberen Kante des Rechtecks:"
 
 #: ../share/extensions/param_curves.inx.h:10
 msgid "Samples:"
@@ -32028,14 +31992,12 @@ msgstr ""
 "Erste Ableitungen werden immer nummerisch bestimmt."
 
 #: ../share/extensions/param_curves.inx.h:26
-#, fuzzy
 msgid "X-Function:"
-msgstr "x-Funktion"
+msgstr "X-Funktion:"
 
 #: ../share/extensions/param_curves.inx.h:27
-#, fuzzy
 msgid "Y-Function:"
-msgstr "x-Funktion"
+msgstr "Y-Funktion:"
 
 #: ../share/extensions/pathalongpath.inx.h:1
 msgid "Pattern along Path"
@@ -32461,9 +32423,8 @@ msgid "View Previous Glyph"
 msgstr "Vorherigen Glyph zeigen"
 
 #: ../share/extensions/print_win32_vector.inx.h:1
-#, fuzzy
 msgid "Win32 Vector Print"
-msgstr "Windows 32-bit-Druck"
+msgstr "Windows32-Vektor-Druck"
 
 #: ../share/extensions/printing_marks.inx.h:1
 msgid "Printing Marks"
@@ -32666,24 +32627,20 @@ msgid "Unit of measurement for both circular pitch and center diameter."
 msgstr "Einheit der Messung für Kreisteilung und Mittendurchmesser."
 
 #: ../share/extensions/render_gear_rack.inx.h:1
-#, fuzzy
 msgid "Rack Gear"
-msgstr "Zahnrad"
+msgstr "Zahnstange"
 
 #: ../share/extensions/render_gear_rack.inx.h:2
-#, fuzzy
 msgid "Rack Length:"
-msgstr "Länge:"
+msgstr "Zahnstangenänge:"
 
 #: ../share/extensions/render_gear_rack.inx.h:3
-#, fuzzy
 msgid "Tooth Spacing:"
-msgstr "Horizontale Abstände"
+msgstr "Zanh-Abstände"
 
 #: ../share/extensions/render_gear_rack.inx.h:4
-#, fuzzy
 msgid "Contact Angle:"
-msgstr "Gergonne-Dreieck"
+msgstr "Kontaktwinkel:"
 
 #: ../share/extensions/replace_font.inx.h:1
 msgid "Replace font"
@@ -32694,12 +32651,10 @@ msgid "Find and Replace font"
 msgstr "Schrift Suchen und Ersetzen"
 
 #: ../share/extensions/replace_font.inx.h:3
-#, fuzzy
 msgid "Find font: "
-msgstr "Finde diese Schrift:"
+msgstr "Finde Schrift:"
 
 #: ../share/extensions/replace_font.inx.h:4
-#, fuzzy
 msgid "Replace with: "
 msgstr "Und ersetze mit:"
 
