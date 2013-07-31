@@ -4,8 +4,8 @@
 
 #define noDEBUG_LCMS
 
-#include <glibmm/checksum.h>
 #include <gdkmm/color.h>
+#include <glibmm/checksum.h>
 #include <glib/gstdio.h>
 #include <fcntl.h>
 #include <glib/gi18n.h>
