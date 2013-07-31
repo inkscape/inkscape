@@ -9,6 +9,7 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
+#include <2geom/bezier-curve.h>
 #include "display/cairo-utils.h"
 #include "display/drawing.h"
 #include "display/drawing-context.h"
@@ -287,21 +288,9 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
 static double
 distance_to_segment (Geom::Point const &p, Geom::Point const &a1, Geom::Point const &a2)
 {
-    // calculate sides of the triangle and their squares
-    double d1 = Geom::L2(p - a1);
-    double d1_2 = d1 * d1;
-    double d2 = Geom::L2(p - a2);
-    double d2_2 = d2 * d2;
-    double a = Geom::L2(a1 - a2);
-    double a_2 = a * a;
-
-    // if one of the angles at the base is > 90, return the corresponding side
-    if (d1_2 + a_2 <= d2_2) return d1;
-    if (d2_2 + a_2 <= d1_2) return d2;
-
-    // otherwise calculate the height to the base
-    double peri = (a + d1 + d2)/2;
-    return (2*sqrt(peri * (peri - a) * (peri - d1) * (peri - d2))/a);
+    Geom::LineSegment l(a1, a2);
+    Geom::Point np = l.pointAt(l.nearestPoint(p));
+    return Geom::distance(np, p);
 }
 
 DrawingItem *
@@ -313,22 +302,17 @@ DrawingImage::_pickItem(Geom::Point const &p, double delta, unsigned /*sticky*/)
 
     if (outline) {
         Geom::Rect r = bounds();
+        Geom::Point pick = p * _ctm.inverse();
 
-        Geom::Point c00 = r.corner(0);
-        Geom::Point c01 = r.corner(3);
-        Geom::Point c11 = r.corner(2);
-        Geom::Point c10 = r.corner(1);
-
-        // frame
-        if (distance_to_segment (p, c00, c10) < delta) return this;
-        if (distance_to_segment (p, c10, c11) < delta) return this;
-        if (distance_to_segment (p, c11, c01) < delta) return this;
-        if (distance_to_segment (p, c01, c00) < delta) return this;
-
-        // diagonals
-        if (distance_to_segment (p, c00, c11) < delta) return this;
-        if (distance_to_segment (p, c10, c01) < delta) return this;
-
+        // find whether any side or diagonal is within delta
+        // to do so, iterate over all pairs of corners
+        for (unsigned i = 0; i < 3; ++i) { // for i=3, there is nothing to do
+            for (unsigned j = i+1; j < 4; ++j) {
+                if (distance_to_segment(pick, r.corner(i), r.corner(j)) < delta) {
+                    return this;
+                }
+            }
+        }
         return NULL;
 
     } else {
