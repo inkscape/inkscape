@@ -370,62 +370,65 @@ layout_buttons (GdlSwitcher *switcher)
     if (last_buttons_height > switcher->priv->buttons_height_request)
     {
         gtk_widget_queue_resize (GTK_WIDGET (switcher));
-        return -1;
+        y = -1; // set return value
     }
-    
-    /* Layout the buttons. */
-    for (i = row_last; i >= 0; i --) {
-        int len, extra_width;
-        
-        y -= max_btn_height;
-
-        /* Check for possible size over flow (taking into account client
-         * requisition
-         */
-        if (y < (allocation.y + client_requisition.height)) {
-            /* We have an overflow: Insufficient allocation */
-            if (last_buttons_height < switcher->priv->buttons_height_request) {
-                /* Request for a new resize */
-                gtk_widget_queue_resize (GTK_WIDGET (switcher));
-                return -1;
-            }
-        }
-        x = H_PADDING + allocation.x;
-        len = g_slist_length (rows[i]);
-        if (switcher_style == GDL_SWITCHER_STYLE_TEXT ||
-            switcher_style == GDL_SWITCHER_STYLE_BOTH)
-            extra_width = (allocation.width - (len * max_btn_width )
-                           - (len * H_PADDING)) / len;
-        else
-            extra_width = 0;
-        for (p = rows [i]; p != NULL; p = p->next) {
-            GtkAllocation child_allocation;
+    else
+    {
+        /* Layout the buttons. */
+        for (i = row_last; i >= 0; i --) {
+            int len, extra_width;
             
-            child_allocation.x = x;
-            child_allocation.y = y;
-            if (rows_count == 1 && row_number == 0)
-            {
-                GtkRequisition child_requisition;
-                gtk_widget_size_request (GTK_WIDGET (p->data),
-                                         &child_requisition);
-                child_allocation.width = child_requisition.width;
+            y -= max_btn_height;
+
+            /* Check for possible size over flow (taking into account client
+             * requisition
+             */
+            if (y < (allocation.y + client_requisition.height)) {
+                /* We have an overflow: Insufficient allocation */
+                if (last_buttons_height < switcher->priv->buttons_height_request) {
+                    /* Request for a new resize */
+                    gtk_widget_queue_resize (GTK_WIDGET (switcher));
+                    return -1;
+                }
             }
+            x = H_PADDING + allocation.x;
+            len = g_slist_length (rows[i]);
+            if (switcher_style == GDL_SWITCHER_STYLE_TEXT ||
+                switcher_style == GDL_SWITCHER_STYLE_BOTH)
+                extra_width = (allocation.width - (len * max_btn_width )
+                               - (len * H_PADDING)) / len;
             else
-            {
-                child_allocation.width = max_btn_width + extra_width;
+                extra_width = 0;
+            for (p = rows [i]; p != NULL; p = p->next) {
+                GtkAllocation child_allocation;
+                
+                child_allocation.x = x;
+                child_allocation.y = y;
+                if (rows_count == 1 && row_number == 0)
+                {
+                    GtkRequisition child_requisition;
+                    gtk_widget_size_request (GTK_WIDGET (p->data),
+                                             &child_requisition);
+                    child_allocation.width = child_requisition.width;
+                }
+                else
+                {
+                    child_allocation.width = max_btn_width + extra_width;
+                }
+                child_allocation.height = max_btn_height;
+
+                gtk_widget_size_allocate (GTK_WIDGET (p->data), &child_allocation);
+
+                x += child_allocation.width + H_PADDING;
             }
-            child_allocation.height = max_btn_height;
 
-            gtk_widget_size_allocate (GTK_WIDGET (p->data), &child_allocation);
-
-            x += child_allocation.width + H_PADDING;
+            y -= V_PADDING;
         }
-
-        y -= V_PADDING;
     }
-    
-    for (i = 0; i <= row_last; i ++)
+
+    for (i = 0; i <= row_last; i ++) {
         g_slist_free (rows [i]);
+    }
     g_free (rows);
 
     return y;
