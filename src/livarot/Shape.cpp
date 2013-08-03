@@ -20,7 +20,12 @@
  */
 
 Shape::Shape()
-  : qrsData(NULL),
+  : nbQRas(0),
+    firstQRas(-1),
+    lastQRas(-1),
+    qrsData(NULL),
+    nbInc(0),
+    maxInc(0),
     iData(NULL),
     sTree(NULL),
     sEvts(NULL),
