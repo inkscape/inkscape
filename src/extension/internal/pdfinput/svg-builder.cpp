@@ -676,7 +676,25 @@ gchar *SvgBuilder::_createTilingPattern(GfxTilingPattern *tiling_pattern,
     Inkscape::XML::Node *pattern_node = _xml_doc->createElement("svg:pattern");
     // Set pattern transform matrix
     double *p2u = tiling_pattern->getMatrix();
-    Geom::Affine pat_matrix(p2u[0], p2u[1], p2u[2], p2u[3], p2u[4], p2u[5]);
+    double m[6] = {1, 0, 0, 1, 0, 0};
+    double det;
+    det = ttm[0] * ttm[3] - ttm[1] * ttm[2];    // see LP Bug 1168908
+    if (det) {
+        double ittm[6];	// invert ttm
+        ittm[0] =  ttm[3] / det;
+        ittm[1] = -ttm[1] / det;
+        ittm[2] = -ttm[2] / det;
+        ittm[3] =  ttm[0] / det;
+        ittm[4] = (ttm[2] * ttm[5] - ttm[3] * ttm[4]) / det;
+        ittm[5] = (ttm[1] * ttm[4] - ttm[0] * ttm[5]) / det;
+        m[0] = p2u[0] * ittm[0] + p2u[1] * ittm[2];
+        m[1] = p2u[0] * ittm[1] + p2u[1] * ittm[3];
+        m[2] = p2u[2] * ittm[0] + p2u[3] * ittm[2];
+        m[3] = p2u[2] * ittm[1] + p2u[3] * ittm[3];
+        m[4] = p2u[4] * ittm[0] + p2u[5] * ittm[2] + ittm[4];
+        m[5] = p2u[4] * ittm[1] + p2u[5] * ittm[3] + ittm[5];
+    }
+    Geom::Affine pat_matrix(m[0], m[1], m[2], m[3], m[4], m[5]);
     gchar *transform_text = sp_svg_transform_write(pat_matrix);
     pattern_node->setAttribute("patternTransform", transform_text);
     g_free(transform_text);
