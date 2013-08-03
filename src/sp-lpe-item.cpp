@@ -185,7 +185,7 @@ static void sp_lpe_item_set(SPObject *object, unsigned int key, gchar const *val
                         Inkscape::LivePathEffect::LPEObjectReference *path_effect_ref = new Inkscape::LivePathEffect::LPEObjectReference(object);
                         try {
                             path_effect_ref->link(href.c_str());
-                        } catch (Inkscape::BadURIException e) {
+                        } catch (Inkscape::BadURIException &e) {
                             g_warning("BadURIException when trying to find LPE: %s", e.what());
                             path_effect_ref->unlink();
                             delete path_effect_ref;
