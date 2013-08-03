@@ -289,7 +289,7 @@ template <int S, int T> SolutionKind gaussjord_solve (double A[S][T], double x[T
      * afterwards copy the result back to x
      */
     double w[S];
-    SysEq::multiply<S,T>(B,x,w);
+    SysEq::multiply<S,T>(B,x,w); // initializes w
     for (int j = 0; j < S; ++j) {
         x[cols[j]] = w[j];
     }
