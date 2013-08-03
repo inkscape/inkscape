@@ -4402,8 +4402,5 @@ cr_parser_destroy (CRParser * a_this)
                 PRIVATE (a_this) = NULL;
         }
 
-        if (a_this) {
-                g_free (a_this);
-                a_this = NULL;  /*useless. Just for the sake of coherence */
-        }
+        g_free (a_this);
 }

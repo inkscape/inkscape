@@ -771,7 +771,7 @@ cr_term_unref (CRTerm * a_this)
  *of #CRTerm.
  */
 void
-cr_term_destroy (CRTerm * a_this)
+cr_term_destroy (CRTerm * const a_this)
 {
         g_return_if_fail (a_this);
 
@@ -782,8 +782,5 @@ cr_term_destroy (CRTerm * a_this)
                 a_this->next = NULL;
         }
 
-        if (a_this) {
-                g_free (a_this);
-        }
-
+        g_free (a_this);
 }

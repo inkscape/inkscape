@@ -275,12 +275,12 @@ cr_simple_sel_compute_specificity (CRSimpleSel * a_this)
 
 /**
  *The destructor of the current instance of
- *#CRSimpleSel.
+ *#CRSimpleSel. Recursively calls the destructor of #CRSimpleSel->next
  *@param a_this the this pointer of the current instance of #CRSimpleSel.
  *
  */
 void
-cr_simple_sel_destroy (CRSimpleSel * a_this)
+cr_simple_sel_destroy (CRSimpleSel * const a_this)
 {
         g_return_if_fail (a_this);
 
@@ -296,9 +296,8 @@ cr_simple_sel_destroy (CRSimpleSel * a_this)
 
         if (a_this->next) {
                 cr_simple_sel_destroy (a_this->next);
+                a_this->next = NULL;
         }
 
-        if (a_this) {
-                g_free (a_this);
-        }
+        g_free (a_this);
 }
