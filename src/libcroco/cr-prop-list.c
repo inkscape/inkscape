@@ -48,7 +48,7 @@ cr_prop_list_allocate (void)
         }
         memset (result, 0, sizeof (CRPropList));
         PRIVATE (result) = (CRPropListPriv *)g_try_malloc (sizeof (CRPropListPriv));
-        if (!result) {
+        if (!PRIVATE (result)) {
                 cr_utils_trace_info ("could not allocate CRPropListPriv");
                 g_free (result);
                 return NULL;
