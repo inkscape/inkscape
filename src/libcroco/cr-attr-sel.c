@@ -208,8 +208,5 @@ cr_attr_sel_destroy (CRAttrSel * a_this)
                 a_this->next = NULL;
         }
 
-        if (a_this) {
-                g_free (a_this);
-                a_this = NULL;
-        }
+        g_free (a_this);
 }
