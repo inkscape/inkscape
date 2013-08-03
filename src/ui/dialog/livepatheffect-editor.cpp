@@ -448,9 +448,9 @@ LivePathEffectEditor::onAdd()
 
                     // run sp_selection_clone_original_path_lpe 
                     sp_selection_clone_original_path_lpe(current_desktop);
-                    item = sel->singleItem();
-                    item->getRepr()->setAttribute("id", id);
-                    item->getRepr()->setAttribute("transform", transform);
+                    SPItem *new_item = sel->singleItem();
+                    new_item->getRepr()->setAttribute("id", id);
+                    new_item->getRepr()->setAttribute("transform", transform);
                     g_free(id);
                     g_free(transform);
 
