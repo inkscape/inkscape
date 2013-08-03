@@ -128,6 +128,7 @@ private:
         repr = NULL;
         doc = NULL;
         write_undo = false;
+        event_type = -1;
     }
 };
 
