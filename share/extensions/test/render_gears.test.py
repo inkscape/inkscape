@@ -10,7 +10,7 @@ import sys
 sys.path.append('..') # this line allows to import the extension code
 
 import unittest
-from gears import *
+from render_gears import *
 
 class GearsBasicTest(unittest.TestCase):
 
