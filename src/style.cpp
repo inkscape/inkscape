@@ -2945,14 +2945,19 @@ sp_style_clear(SPStyle *style)
     style->stroke.clear();
     sp_style_filter_clear(style);
 
+    style->release_connection.disconnect();
+
+    style->fill_ps_modified_connection.disconnect();
     if (style->fill.value.href) {
         delete style->fill.value.href;
         style->fill.value.href = NULL;
     }
+    style->stroke_ps_modified_connection.disconnect();
     if (style->stroke.value.href) {
         delete style->stroke.value.href;
         style->stroke.value.href = NULL;
     }
+    style->filter_modified_connection.disconnect();
     if (style->filter.href) {
         delete style->filter.href;
         style->filter.href = NULL;
@@ -2972,8 +2977,9 @@ sp_style_clear(SPStyle *style)
     SPTextStyle *text = style->text;
     unsigned const text_private = style->text_private;
 
-    memset(style, 0, sizeof(SPStyle));
-
+    // this looks really bad! you can't just 0 *all* data in the whole struct!
+    // memset(style, 0, sizeof(SPStyle));
+    
     style->refcount = refcount;
     style->object = object;
     style->document = document;
