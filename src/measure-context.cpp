@@ -494,7 +494,6 @@ static gint sp_measure_context_root_handler(SPEventContext *event_context, GdkEv
                                 }
 
                                 curve->transform(item->i2doc_affine());
-                                Geom::PathVector pathv = curve->get_pathvector();
 
                                 calculate_intersections(desktop, item, lineseg, curve, intersections);
 

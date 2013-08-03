@@ -640,7 +640,6 @@ GtkWidget* create_tool_item( GtkAction* action )
 #endif
 
             GtkRadioAction* ract = 0;
-            GtkWidget* sub = 0;
             GSList* group = 0;
             GtkTreeIter iter;
             gboolean valid = FALSE;
@@ -727,7 +726,7 @@ GtkWidget* create_tool_item( GtkAction* action )
                 }
                 g_signal_connect( G_OBJECT(ract), "changed", G_CALLBACK( proxy_action_chagned_cb ), act );
 
-                sub = gtk_action_create_tool_item( GTK_ACTION(ract) );
+                GtkWidget* sub = gtk_action_create_tool_item( GTK_ACTION(ract) );
                 gtk_activatable_set_related_action( GTK_ACTIVATABLE (sub), GTK_ACTION(ract) );
                 gtk_tool_item_set_tooltip_text( GTK_TOOL_ITEM(sub), tip );
 

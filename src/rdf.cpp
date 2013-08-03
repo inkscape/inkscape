@@ -563,7 +563,6 @@ unsigned int RDFImpl::setReprText( Inkscape::XML::Node * repr,
     int i;
 
     Inkscape::XML::Node * temp=NULL;
-    Inkscape::XML::Node * child=NULL;
     Inkscape::XML::Node * parent=repr;
 
     Inkscape::XML::Document * xmldoc = parent->document();
@@ -669,7 +668,7 @@ unsigned int RDFImpl::setReprText( Inkscape::XML::Node * repr,
                 parent->appendChild(temp);
                 Inkscape::GC::release(temp);
 
-                child = xmldoc->createTextNode( g_strstrip(str) );
+                Inkscape::XML::Node * child = xmldoc->createTextNode( g_strstrip(str) );
                 g_return_val_if_fail (child != NULL, 0);
 
                 temp->appendChild(child);

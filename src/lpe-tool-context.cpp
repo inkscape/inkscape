@@ -482,21 +482,19 @@ void
 lpetool_update_measuring_items(SPLPEToolContext *lc)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    SPPath *path;
-    SPCurve *curve;
-    double lengthval;
-    gchar *arc_length;
-    std::map<SPPath *, SPCanvasItem*>::iterator i;
-    for (i = lc->measuring_items->begin(); i != lc->measuring_items->end(); ++i) {
-        path = i->first;
-        curve = SP_SHAPE(path)->getCurve();
+    for ( std::map<SPPath *, SPCanvasItem*>::iterator i = lc->measuring_items->begin();
+          i != lc->measuring_items->end();
+          ++i )
+    {
+        SPPath *path = i->first;
+        SPCurve *curve = SP_SHAPE(path)->getCurve();
         Geom::Piecewise<Geom::D2<Geom::SBasis> > pwd2 = Geom::paths_to_pw(curve->get_pathvector());
         SPUnitId unitid = static_cast<SPUnitId>(prefs->getInt("/tools/lpetool/unitid", SP_UNIT_PX));
         SPUnit unit = sp_unit_get_by_id(unitid);
-        lengthval = Geom::length(pwd2);
+        double lengthval = Geom::length(pwd2);
         gboolean success;
         success = sp_convert_distance(&lengthval, &sp_unit_get_by_id(SP_UNIT_PX), &unit);
-        arc_length = g_strdup_printf("%.2f %s", lengthval, success ? sp_unit_get_abbreviation(&unit) : "px");
+        gchar *arc_length = g_strdup_printf("%.2f %s", lengthval, success ? sp_unit_get_abbreviation(&unit) : "px");
         sp_canvastext_set_text (SP_CANVASTEXT(i->second), arc_length);
         set_pos_and_anchor(SP_CANVASTEXT(i->second), pwd2, 0.5, 10);
         // TODO: must we free arc_length?

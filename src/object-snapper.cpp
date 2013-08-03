@@ -106,12 +106,11 @@ void Inkscape::ObjectSnapper::_findCandidates(SPObject* parent,
             if (it == NULL || i == it->end()) {
                 SPItem *item = SP_ITEM(o);
                 if (item) {
-                    SPObject *obj = NULL;
                     if (!clip_or_mask) { // cannot clip or mask more than once
                         // The current item is not a clipping path or a mask, but might
                         // still be the subject of clipping or masking itself ; if so, then
                         // we should also consider that path or mask for snapping to
-                        obj = SP_OBJECT(item->clip_ref ? item->clip_ref->getObject() : NULL);
+                        SPObject *obj = SP_OBJECT(item->clip_ref ? item->clip_ref->getObject() : NULL);
                         if (obj && _snapmanager->snapprefs.isTargetSnappable(SNAPTARGET_PATH_CLIP)) {
                             _findCandidates(obj, it, false, bbox_to_snap, true, item->i2doc_affine());
                         }
