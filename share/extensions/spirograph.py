@@ -35,7 +35,7 @@ class Spirograph(inkex.Effect):
                         help="The distance of the pen from the inner gear")
         self.OptionParser.add_option("-p", "--gearplacement",
                         action="store", type="string",
-                        dest="gearplacement", default=50.0,
+                        dest="gearplacement", default="inside",
                         help="Selects whether the gear is inside or outside the ring")
         self.OptionParser.add_option("-a", "--rotation",
                         action="store", type="float",

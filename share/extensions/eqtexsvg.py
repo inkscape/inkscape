@@ -118,6 +118,10 @@ class EQTEXSVG(inkex.Effect):
                 os.remove(err_file)
             os.rmdir(base_dir)
 
+        if self.options.formula == "":
+            print >>sys.stderr, "empty LaTeX input.  Nothing to be done"
+            return
+
         add_header = parse_pkgs(self.options.packages)
         create_equation_tex(latex_file, self.options.formula, add_header)
         os.system('latex "-output-directory=%s" -halt-on-error "%s" > "%s"' \

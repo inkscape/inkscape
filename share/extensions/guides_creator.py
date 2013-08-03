@@ -305,7 +305,7 @@ class Guides_Creator(inkex.Effect):
                 v_orientation = str(round(height,4)) + ',0'
 
                 # getting parent tag of the guides
-                nv = self.document.xpath('/svg:svg/sodipodi:namedview',namespaces=inkex.NSS)[0]
+                nv = self.document.find(inkex.addNS('namedview', 'sodipodi'))
 
                 if (tab == "\"regular_guides\""):
                         
@@ -487,9 +487,10 @@ class Guides_Creator(inkex.Effect):
 
                                 # creating vertical guides
                                 drawVerticalGuides(v_subdiv,rectangle_width,rectangle_height,0,nv,begin_from)
-                         
-# Create effect instance and apply it.
-effect = Guides_Creator()
-effect.affect()
+
+if __name__ == '__main__':
+	# Create effect instance and apply it.
+	effect = Guides_Creator()
+	effect.affect()
 
 ## end of file guide_creator.py ##
