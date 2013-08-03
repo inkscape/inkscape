@@ -129,7 +129,6 @@ struct SPDesktopWidget {
 
     struct WidgetStub : public Inkscape::UI::View::EditWidgetInterface {
         SPDesktopWidget *_dtw;
-        SPDesktop       *_dt;
         WidgetStub (SPDesktopWidget* dtw) : _dtw(dtw) {}
 
         virtual void setTitle (gchar const *uri)
