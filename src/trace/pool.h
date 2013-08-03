@@ -59,17 +59,21 @@ class pool {
  public:
 
   pool()
-    {
+  {
       cblock = 0;
       size = sizeof(T) > sizeof(void *) ? sizeof(T) : sizeof(void *);
       next = NULL;
-    }
+      for (int k = 0; k < 64; k++) {
+          block[k] = NULL;
+      }
+  }
 
   ~pool()
-    {
-      for (int k = 0; k < cblock; k++)
-	free(block[k]);
-    }
+  {
+      for (int k = 0; k < cblock; k++) {
+        free(block[k]);
+      }
+  }
 
   T *draw()
   {
@@ -89,7 +93,7 @@ class pool {
 
   int size;
   int cblock;
-  void *block[64]; //enough to store unlimited number of objects
+  void *block[64]; //enough to store unlimited number of objects, if 64 is changed: see constructor too
   void *next;
 
   void addblock()
