@@ -100,9 +100,8 @@ static GSList *collect_terms (GSList *items)
 static int count_filtered (GSList *items)
 {
     int count=0;
-    SPItem *item=NULL;
     for (GSList *i = items; i != NULL; i = i->next) {
-        item = SP_ITEM(i->data);
+        SPItem *item = SP_ITEM(i->data);
         count += item->ifilt();
     }
     return count;

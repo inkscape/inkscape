@@ -46,15 +46,13 @@ ShapeEditor::~ShapeEditor() {
 }
 
 void ShapeEditor::unset_item(SubType type, bool keep_knotholder) {
-    Inkscape::XML::Node *old_repr = NULL;
-
     switch (type) {
         case SH_NODEPATH:
             // defunct
             break;
         case SH_KNOTHOLDER:
             if (this->knotholder) {
-                old_repr = this->knotholder->repr;
+                Inkscape::XML::Node *old_repr = this->knotholder->repr;
                 if (old_repr && old_repr == knotholder_listener_attached_for) {
                     sp_repr_remove_listener_by_data(old_repr, this);
                     Inkscape::GC::release(old_repr);

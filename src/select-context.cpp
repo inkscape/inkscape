@@ -464,8 +464,6 @@ sp_select_context_cycle_through_items(SPSelectContext *sc, Inkscape::Selection *
 static gint
 sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 {
-    SPItem *item = NULL;
-    SPItem *item_at_point = NULL, *group_at_point = NULL, *item_in_group = NULL;
     gint ret = FALSE;
 
     SPDesktop *desktop = event_context->desktop;
@@ -578,14 +576,14 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
                     // and also when we started within tolerance, but trespassed tolerance outside of item
                     Inkscape::Rubberband::get(desktop)->stop();
                     SP_EVENT_CONTEXT(sc)->defaultMessageContext()->clear();
-                    item_at_point = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), FALSE);
+                    SPItem *item_at_point = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), FALSE);
                     if (!item_at_point) // if no item at this point, try at the click point (bug 1012200)
                         item_at_point = desktop->getItemAtPoint(Geom::Point(xp, yp), FALSE);
                     if (item_at_point || sc->moved || sc->button_press_alt) {
                         // drag only if starting from an item, or if something is already grabbed, or if alt-dragging
                         if (!sc->moved) {
-                            item_in_group = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), TRUE);
-                            group_at_point = desktop->getGroupAtPoint(Geom::Point(event->button.x, event->button.y));
+                            SPItem *item_in_group = desktop->getItemAtPoint(Geom::Point(event->button.x, event->button.y), TRUE);
+                            SPItem *group_at_point = desktop->getGroupAtPoint(Geom::Point(event->button.x, event->button.y));
                             if (SP_IS_LAYER(selection->single()))
                                 group_at_point = SP_GROUP(selection->single());
 
@@ -712,6 +710,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                             sc->button_press_shift = false;
 
+                            SPItem *item = NULL;
                             if (sc->button_press_ctrl) {
                                 // go into groups, honoring Alt
                                 item = sp_event_context_find_item (desktop,
@@ -730,7 +729,7 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                         } else if ((sc->button_press_ctrl || sc->button_press_alt) && !rb_escaped && !drag_escaped) { // ctrl+click, alt+click
 
-                            item = sp_event_context_find_item (desktop,
+                            SPItem *item = sp_event_context_find_item (desktop,
                                          Geom::Point(event->button.x, event->button.y), sc->button_press_alt, sc->button_press_ctrl);
 
                             sc->button_press_ctrl = FALSE;
@@ -841,9 +840,8 @@ sp_select_context_root_handler(SPEventContext *event_context, GdkEvent *event)
 
                     // ... and rebuild them with the new items.
                     sc->cycling_items_cmp = g_list_copy(sc->cycling_items);
-                    SPItem *item;
                     for(GList *l = sc->cycling_items; l != NULL; l = l->next) {
-                        item = SP_ITEM(l->data);
+                        SPItem *item = SP_ITEM(l->data);
                         arenaitem = item->get_arenaitem(desktop->dkey);
                         arenaitem->setOpacity(0.3);
                         if (selection->includes(item)) {

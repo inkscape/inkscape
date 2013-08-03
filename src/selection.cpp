@@ -329,11 +329,11 @@ std::list<Persp3D *> const Selection::perspList() {
 std::list<SPBox3D *> const Selection::box3DList(Persp3D *persp) {
     std::list<SPBox3D *> boxes;
     if (persp) {
-        SPBox3D *box;
         for (std::list<SPBox3D *>::iterator i = _3dboxes.begin(); i != _3dboxes.end(); ++i) {
-            box = *i;
-            if (persp == box3d_get_perspective(box))
+            SPBox3D *box = *i;
+            if (persp == box3d_get_perspective(box)) {
                 boxes.push_back(box);
+            }
         }
     } else {
         boxes = _3dboxes;
