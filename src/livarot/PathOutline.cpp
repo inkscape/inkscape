@@ -709,9 +709,8 @@ void Path::SubContractOutline(int off, int num_pd,
 			} else if (nbInterm > 1) {
 				Geom::Point  bx=curX;
 				Geom::Point cx=curX;
-				Geom::Point dx=curX;
+				Geom::Point dx=nData->p;
 
-				dx = nData->p;
 				TangentOnBezAt (0.0, curX, *nData, *nBData, false, stPos, stTgt, stTle, stRad);
 				stNor=stTgt.cw();
 

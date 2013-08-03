@@ -1131,8 +1131,7 @@ void Shape::Scan(float &pos, int &curP, float to, AlphaLigne *line, bool exact, 
 
     int curPt = curP;
     while ( curPt < numberOfPoints() && getPoint(curPt).x[1] <= to ) {
-        int nPt = -1;
-        nPt = curPt++;
+        int nPt = curPt++;
 
         int nbUp;
         int nbDn;
@@ -1435,8 +1434,7 @@ void Shape::QuickScan(float &pos, int &curP, float to, FillRule directed, BitLig
 
     int curPt = curP;
     while ( curPt < numberOfPoints() && getPoint(curPt).x[1] <= to ) {
-        int nPt = -1;
-        nPt = curPt++;
+        int nPt = curPt++;
         
         int nbUp;
         int nbDn;

@@ -119,14 +119,11 @@ void Path::ConvertWithBackData(double treshhold)
 
                 if ( nbInterm >= 1 ) {
                     Geom::Point bx = curX;
-                    Geom::Point cx = curX;
-                    Geom::Point dx = curX;
+                    Geom::Point dx = nData->p;
+                    Geom::Point cx = 2 * bx - dx;
 
-                    dx = nData->p;
                     ip++;
                     nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[ip]);
-
-                    cx = 2 * bx - dx;
 
                     for (int k = 0; k < nbInterm - 1; k++) {
                         bx = cx;
@@ -323,14 +320,11 @@ void Path::Convert(double treshhold)
                     RecBezierTo(midX, curX, nextX, treshhold, 8);
                 } else if ( nbInterm > 1 ) {
                     Geom::Point bx = curX;
-                    Geom::Point cx = curX;
-                    Geom::Point dx = curX;
+                    Geom::Point dx = nData->p;
+                    Geom::Point cx = 2 * bx - dx;
 
-                    dx = nData->p;
                     ip++;
                     nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[ip]);
-
-                    cx = 2 * bx - dx;
 
                     for (int k = 0; k < nbInterm - 1; k++) {
                         bx = cx;
@@ -565,14 +559,11 @@ void Path::ConvertEvenLines(double treshhold)
                     RecBezierTo(midX, curX, nextX, treshhold, 8, 4 * treshhold);
                 } else if ( nbInterm > 1 ) {
                     Geom::Point bx = curX;
-                    Geom::Point cx = curX;
-                    Geom::Point dx = curX;
+                    Geom::Point dx = nData->p;
+                    Geom::Point cx = 2 * bx - dx;
 
-                    dx = nData->p;
                     ip++;
                     nData = dynamic_cast<PathDescrIntermBezierTo *>(descr_cmd[ip]);
-
-                    cx = 2 * bx - dx;
 
                     for (int k = 0; k < nbInterm - 1; k++) {
                         bx = cx;

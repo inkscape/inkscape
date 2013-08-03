@@ -252,8 +252,7 @@ Shape::ConvertToShape (Shape * a, FillRule directed, bool invert)
       Geom::Point rPtX;
       rPtX[0]= Round (ptX[0]);
       rPtX[1]= Round (ptX[1]);
-      int lastPointNo = -1;
-      lastPointNo = AddPoint (rPtX);
+      int lastPointNo = AddPoint (rPtX);
       pData[lastPointNo].rx = rPtX;
 
       if (rPtX[1] > lastChange)
@@ -1053,8 +1052,7 @@ Shape::Booleen (Shape * a, Shape * b, BooleanOp mod,int cutPathID)
       Geom::Point rPtX;
       rPtX[0]= Round (ptX[0]);
       rPtX[1]= Round (ptX[1]);
-      int lastPointNo = -1;
-      lastPointNo = AddPoint (rPtX);
+      int lastPointNo = AddPoint (rPtX);
       pData[lastPointNo].rx = rPtX;
 
       if (rPtX[1] > lastChange)

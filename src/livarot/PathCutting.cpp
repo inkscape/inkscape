@@ -482,7 +482,7 @@ double Path::Length()
     Geom::Point lastP = pts[0].p;
 
     double len = 0;
-    for (std::vector<path_lineto>::const_iterator i = pts.begin(); i != pts.end(); i++) {
+    for (std::vector<path_lineto>::const_iterator i = pts.begin(); i != pts.end(); ++i) {
 
         if ( i->isMoveTo != polyline_moveto ) {
             len += Geom::L2(i->p - lastP);
@@ -505,7 +505,7 @@ double Path::Surface()
     Geom::Point lastP = lastM;
 
     double surf = 0;
-    for (std::vector<path_lineto>::const_iterator i = pts.begin(); i != pts.end(); i++) {
+    for (std::vector<path_lineto>::const_iterator i = pts.begin(); i != pts.end(); ++i) {
 
         if ( i->isMoveTo == polyline_moveto ) {
             surf += Geom::cross(lastM - lastP, lastM);
@@ -900,7 +900,7 @@ Path::cut_position* Path::CurvilignToPosition(int nbCv, double *cvAbs, int &nbCu
     Geom::Point lastM = pts[0].p;
     Geom::Point lastP = lastM;
 
-    for (std::vector<path_lineto>::const_iterator i = pts.begin(); i != pts.end(); i++) {
+    for (std::vector<path_lineto>::const_iterator i = pts.begin(); i != pts.end(); ++i) {
 
         if ( i->isMoveTo == polyline_moveto ) {
 
