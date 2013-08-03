@@ -248,7 +248,18 @@ check_PROGRAMS = cxxtests
 
 # List of all tests to be run.
 TESTS = $(check_PROGRAMS) ../share/extensions/test/run-all-extension-tests
-XFAIL_TESTS = $(check_PROGRAMS) ../share/extensions/test/run-all-extension-tests
+
+# FIXME: Currently, a number of cxxtest tests fail.  These should be fixed and
+#        the XFAIL_TESTS build target should be removed.
+#        See the following Launchpad bugs:
+#
+#          LP #1202271 <cxxtest: preferences-test.h fails>
+#          LP #1208013 <cxxtest: curve-test.h fails>
+#          LP #1208002 <cxxtest: svg-length-test.h fails>
+#          LP #1208005 <cxxtest: svg-path-geom-test.h fails>
+#          LP #1207502 <cxxtest: svg-affine-test.h fails>
+
+XFAIL_TESTS = $(check_PROGRAMS)
 
 # including the the testsuites here ensures that they get distributed
 cxxtests_SOURCES = cxxtests.cpp $(CXXTEST_TESTSUITES)

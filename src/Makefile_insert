@@ -284,8 +284,8 @@ CXXTEST_TESTSUITES +=			\
 	$(srcdir)/extract-uri-test.h	\
 	$(srcdir)/marker-test.h		\
 	$(srcdir)/mod360-test.h		\
+	$(srcdir)/preferences-test.h    \
 	$(srcdir)/round-test.h		\
-	$(srcdir)/preferences-test.h	\
 	$(srcdir)/sp-gradient-test.h	\
 	$(srcdir)/sp-style-elem-test.h	\
 	$(srcdir)/style-test.h		\
