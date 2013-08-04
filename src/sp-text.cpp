@@ -381,9 +381,9 @@ static char * sp_text_description(SPItem *item)
 
     font_instance *tf = font_factory::Default()->FaceFromStyle(style);
 
-    char name_buf[256];
     char *n;
     if (tf) {
+        char name_buf[256];
         tf->Family(name_buf, sizeof(name_buf));
         n = xml_quote_strdup(name_buf);
         tf->Unref();

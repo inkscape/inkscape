@@ -252,8 +252,7 @@ sp_use_write(SPObject *object, Inkscape::XML::Document *xml_doc, Inkscape::XML::
     return repr;
 }
 
-static Geom::OptRect
-sp_use_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type)
+static Geom::OptRect sp_use_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType type)
 {
     SPUse const *use = SP_USE(item);
     Geom::OptRect bbox;
@@ -269,8 +268,7 @@ sp_use_bbox(SPItem const *item, Geom::Affine const &transform, SPItem::BBoxType 
     return bbox;
 }
 
-static void
-sp_use_print(SPItem *item, SPPrintContext *ctx)
+static void sp_use_print(SPItem *item, SPPrintContext *ctx)
 {
     bool translated = false;
     SPUse *use = SP_USE(item);
@@ -290,12 +288,10 @@ sp_use_print(SPItem *item, SPPrintContext *ctx)
     }
 }
 
-static gchar *
-sp_use_description(SPItem *item)
+static gchar *sp_use_description(SPItem *item)
 {
     SPUse *use = SP_USE(item);
 
-    char *ret;
     if (use->child) {
 
         if( SP_IS_SYMBOL( use->child ) ) {
@@ -316,7 +312,7 @@ sp_use_description(SPItem *item)
         char *child_desc = SP_ITEM(use->child)->description();
         --recursion_depth;
 
-        ret = g_strdup_printf(_("<b>Clone</b> of: %s"), child_desc);
+        char *ret = g_strdup_printf(_("<b>Clone</b> of: %s"), child_desc);
         g_free(child_desc);
         return ret;
     } else {

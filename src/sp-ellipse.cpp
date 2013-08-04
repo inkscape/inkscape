@@ -167,16 +167,20 @@ static void sp_genericellipse_set_shape(SPShape *shape)
         return;
     }
 
-    double rx, ry, s, e;
-    double x0, y0, x1, y1, x2, y2, x3, y3;
+    double rx;
+    double ry;
+    double s;
     double len;
     gint slice = FALSE;
- //   gint i;
 
     SPGenericEllipse *ellipse = (SPGenericEllipse *) shape;
 
-    if ((ellipse->rx.computed < 1e-18) || (ellipse->ry.computed < 1e-18)) return;
-    if (fabs(ellipse->end - ellipse->start) < 1e-9) return;
+    if ((ellipse->rx.computed < 1e-18) || (ellipse->ry.computed < 1e-18)) {
+        return;
+    }
+    if (fabs(ellipse->end - ellipse->start) < 1e-9){
+        return;
+    }
 
     sp_genericellipse_normalize(ellipse);
 
@@ -197,18 +201,19 @@ static void sp_genericellipse_set_shape(SPShape *shape)
     curve->moveto(cos(ellipse->start), sin(ellipse->start));
 
     for (s = ellipse->start; s < ellipse->end; s += M_PI_2) {
-        e = s + M_PI_2;
-        if (e > ellipse->end)
+        double e = s + M_PI_2;
+        if (e > ellipse->end){
             e = ellipse->end;
+        }
         len = 4*tan((e - s)/4)/3;
-        x0 = cos(s);
-        y0 = sin(s);
-        x1 = x0 + len * cos(s + M_PI_2);
-        y1 = y0 + len * sin(s + M_PI_2);
-        x3 = cos(e);
-        y3 = sin(e);
-        x2 = x3 + len * cos(e - M_PI_2);
-        y2 = y3 + len * sin(e - M_PI_2);
+        double x0 = cos(s);
+        double y0 = sin(s);
+        double x1 = x0 + len * cos(s + M_PI_2);
+        double y1 = y0 + len * sin(s + M_PI_2);
+        double x3 = cos(e);
+        double y3 = sin(e);
+        double x2 = x3 + len * cos(e - M_PI_2);
+        double y2 = y3 + len * sin(e - M_PI_2);
 #ifdef ELLIPSE_VERBOSE
         g_print("step %d s %f e %f coords %f %f %f %f %f %f\n",
                 i, s, e, x1, y1, x2, y2, x3, y3);

@@ -181,10 +181,9 @@ static std::vector<int> gauss_jordan (double A[S][T], int avoid_col = -1) {
     if (avoid_col != -1) {
         cols_used.push_back (avoid_col);
     }
-    int col;
     for (int i = 0; i < S; ++i) {
         /* for each row find a pivot element of maximal absolute value, skipping the columns that were used before */
-        col = find_pivot<S,T>(A, i, cols_used);
+        int col = find_pivot<S,T>(A, i, cols_used);
         cols_used.push_back(col);
         if (col == -1) {
             // no non-zero elements in the row
