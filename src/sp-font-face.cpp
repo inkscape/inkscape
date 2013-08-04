@@ -272,7 +272,7 @@ G_DEFINE_TYPE(SPFontFace, sp_fontface, SP_TYPE_OBJECT);
 
 static void sp_fontface_class_init(SPFontFaceClass *fc)
 {
-    SPObjectClass *sp_object_class = (SPObjectClass *) fc;
+    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(fc);
 
     sp_object_class->build = sp_fontface_build;
     sp_object_class->release = sp_fontface_release;

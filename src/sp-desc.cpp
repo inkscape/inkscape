@@ -22,7 +22,7 @@ G_DEFINE_TYPE(SPDesc, sp_desc, SP_TYPE_OBJECT);
 
 static void sp_desc_class_init(SPDescClass *klass)
 {
-    SPObjectClass *sp_object_class = (SPObjectClass *)(klass);
+    SPObjectClass *sp_object_class = reinterpret_cast<SPObjectClass *>(klass);
 
     sp_object_class->write = sp_desc_write;
 }

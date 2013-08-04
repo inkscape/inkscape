@@ -53,7 +53,7 @@ cairo_pattern_t *sp_paint_server_create_pattern(SPPaintServer *ps,
     g_return_val_if_fail(SP_IS_PAINT_SERVER(ps), NULL);
 
     cairo_pattern_t *cp = NULL;
-    SPPaintServerClass *psc = (SPPaintServerClass *) G_OBJECT_GET_CLASS(ps);
+    SPPaintServerClass *psc = reinterpret_cast<SPPaintServerClass *>(G_OBJECT_GET_CLASS(ps));
     if ( psc->pattern_new ) {
         cp = (*psc->pattern_new)(ps, ct, bbox, opacity);
     }
