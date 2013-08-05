@@ -388,7 +388,8 @@ layout_buttons (GdlSwitcher *switcher)
                 if (last_buttons_height < switcher->priv->buttons_height_request) {
                     /* Request for a new resize */
                     gtk_widget_queue_resize (GTK_WIDGET (switcher));
-                    return -1;
+                    y = -1; // set return value
+                    goto exit;
                 }
             }
             x = H_PADDING + allocation.x;
@@ -426,6 +427,7 @@ layout_buttons (GdlSwitcher *switcher)
         }
     }
 
+  exit:
     for (i = 0; i <= row_last; i ++) {
         g_slist_free (rows [i]);
     }
