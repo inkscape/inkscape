@@ -136,12 +136,12 @@ CairoPsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar con
     if (ext == NULL)
         return;
 
-    const gchar *new_level = NULL;
     int level = CAIRO_PS_LEVEL_2;
     try {
-        new_level = mod->get_param_enum("PSlevel");
-        if((new_level != NULL) && (g_ascii_strcasecmp("PS3", new_level) == 0))
+        const gchar *new_level = mod->get_param_enum("PSlevel");
+        if((new_level != NULL) && (g_ascii_strcasecmp("PS3", new_level) == 0)) {
             level = CAIRO_PS_LEVEL_3;
+        }
     } catch(...) {}
 
     bool new_textToPath  = FALSE;
@@ -225,12 +225,12 @@ CairoEpsOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar co
     if (ext == NULL)
         return;
 
-    const gchar *new_level = NULL;
     int level = CAIRO_PS_LEVEL_2;
     try {
-        new_level = mod->get_param_enum("PSlevel");
-        if((new_level != NULL) && (g_ascii_strcasecmp("PS3", new_level) == 0))
+        const gchar *new_level = mod->get_param_enum("PSlevel");
+        if((new_level != NULL) && (g_ascii_strcasecmp("PS3", new_level) == 0)) {
             level = CAIRO_PS_LEVEL_3;
+        }
     } catch(...) {}
 
     bool new_textToPath  = FALSE;

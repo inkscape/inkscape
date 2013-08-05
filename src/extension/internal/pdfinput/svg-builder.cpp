@@ -266,14 +266,12 @@ static void svgSetTransform(Inkscape::XML::Node *node, double c0, double c1,
  * \brief Generates a SVG path string from poppler's data structure
  */
 static gchar *svgInterpretPath(GfxPath *path) {
-    GfxSubpath *subpath;
     Inkscape::SVG::PathString pathString;
-    int i, j;
-    for ( i = 0 ; i < path->getNumSubpaths() ; ++i ) {
-        subpath = path->getSubpath(i);
+    for (int i = 0 ; i < path->getNumSubpaths() ; ++i ) {
+        GfxSubpath *subpath = path->getSubpath(i);
         if (subpath->getNumPoints() > 0) {
             pathString.moveTo(subpath->getX(0), subpath->getY(0));
-            j = 1;
+            int j = 1;
             while (j < subpath->getNumPoints()) {
                 if (subpath->getCurve(j)) {
                     pathString.curveTo(subpath->getX(j), subpath->getY(j),

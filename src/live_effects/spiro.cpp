@@ -677,163 +677,165 @@ add_mat_line(bandmat *m, double *v,
 }
 
 static double
-spiro_iter(spiro_seg *s, bandmat *m, int *perm, double *v, int n)
+spiro_iter(spiro_seg *s, bandmat *m, int *perm, double *v, const int n)
 {
     int cyclic = s[0].ty != '{' && s[0].ty != 'v';
-    int i, j, jj;
     int nmat = count_vec(s, n);
-    double norm;
     int n_invert;
 
-    for (i = 0; i < nmat; i++) {
-	v[i] = 0.;
-	for (j = 0; j < 11; j++)
-	    m[i].a[j] = 0.;
-	for (j = 0; j < 5; j++)
-	    m[i].al[j] = 0.;
+    for (int i = 0; i < nmat; i++) {
+        v[i] = 0.;
+        for (int j = 0; j < 11; j++) {
+            m[i].a[j] = 0.;
+        }
+        for (int j = 0; j < 5; j++) {
+            m[i].al[j] = 0.;
+        }
     }
 
-    j = 0;
-    if (s[0].ty == 'o')
-	jj = nmat - 2;
-    else if (s[0].ty == 'c')
-	jj = nmat - 1;
-    else
-	jj = 0;
-    for (i = 0; i < n; i++) {
-	char ty0 = s[i].ty;
-	char ty1 = s[i + 1].ty;
-	int jinc = compute_jinc(ty0, ty1);
-	double th = s[i].bend_th;
-	double ends[2][4];
-	double derivs[4][2][4];
-	int jthl = -1, jk0l = -1, jk1l = -1, jk2l = -1;
-	int jthr = -1, jk0r = -1, jk1r = -1, jk2r = -1;
+    int j = 0;
+    int jj;
+    if (s[0].ty == 'o') {
+        jj = nmat - 2;
+    } else if (s[0].ty == 'c') {
+        jj = nmat - 1;
+    } else {
+        jj = 0;
+    }
+    for (int i = 0; i < n; i++) {
+        char ty0 = s[i].ty;
+        char ty1 = s[i + 1].ty;
+        int jinc = compute_jinc(ty0, ty1);
+        double th = s[i].bend_th;
+        double ends[2][4];
+        double derivs[4][2][4];
+        int jthl = -1, jk0l = -1, jk1l = -1, jk2l = -1;
+        int jthr = -1, jk0r = -1, jk1r = -1, jk2r = -1;
 
-	compute_pderivs(&s[i], ends, derivs, jinc);
+        compute_pderivs(&s[i], ends, derivs, jinc);
 
-	/* constraints crossing left */
-	if (ty0 == 'o' || ty0 == 'c' || ty0 == '[' || ty0 == ']') {
-	    jthl = jj++;
-	    jj %= nmat;
-	    jk0l = jj++;
-	}
-	if (ty0 == 'o') {
-	    jj %= nmat;
-	    jk1l = jj++;
-	    jk2l = jj++;
-	}
+        /* constraints crossing left */
+        if (ty0 == 'o' || ty0 == 'c' || ty0 == '[' || ty0 == ']') {
+            jthl = jj++;
+            jj %= nmat;
+            jk0l = jj++;
+        }
+        if (ty0 == 'o') {
+            jj %= nmat;
+            jk1l = jj++;
+            jk2l = jj++;
+        }
 
-	/* constraints on left */
-	if ((ty0 == '[' || ty0 == 'v' || ty0 == '{' || ty0 == 'c') &&
-	    jinc == 4) {
-	    if (ty0 != 'c')
-		jk1l = jj++;
-	    jk2l = jj++;
-	}
+        /* constraints on left */
+        if ((ty0 == '[' || ty0 == 'v' || ty0 == '{' || ty0 == 'c') &&
+            jinc == 4) {
+            if (ty0 != 'c')
+            jk1l = jj++;
+            jk2l = jj++;
+        }
 
-	/* constraints on right */
-	if ((ty1 == ']' || ty1 == 'v' || ty1 == '}' || ty1 == 'c') &&
-	    jinc == 4) {
-	    if (ty1 != 'c')
-		jk1r = jj++;
-	    jk2r = jj++;
-	}
+        /* constraints on right */
+        if ((ty1 == ']' || ty1 == 'v' || ty1 == '}' || ty1 == 'c') &&
+            jinc == 4) {
+            if (ty1 != 'c')
+            jk1r = jj++;
+            jk2r = jj++;
+        }
 
-	/* constraints crossing right */
-	if (ty1 == 'o' || ty1 == 'c' || ty1 == '[' || ty1 == ']') {
-	    jthr = jj;
-	    jk0r = (jj + 1) % nmat;
-	}
-	if (ty1 == 'o') {
-	    jk1r = (jj + 2) % nmat;
-	    jk2r = (jj + 3) % nmat;
-	}
+        /* constraints crossing right */
+        if (ty1 == 'o' || ty1 == 'c' || ty1 == '[' || ty1 == ']') {
+            jthr = jj;
+            jk0r = (jj + 1) % nmat;
+        }
+        if (ty1 == 'o') {
+            jk1r = (jj + 2) % nmat;
+            jk2r = (jj + 3) % nmat;
+        }
 
-	add_mat_line(m, v, derivs[0][0], th - ends[0][0], 1, j, jthl, jinc, nmat);
-	add_mat_line(m, v, derivs[1][0], ends[0][1], -1, j, jk0l, jinc, nmat);
-	add_mat_line(m, v, derivs[2][0], ends[0][2], -1, j, jk1l, jinc, nmat);
-	add_mat_line(m, v, derivs[3][0], ends[0][3], -1, j, jk2l, jinc, nmat);
-	add_mat_line(m, v, derivs[0][1], -ends[1][0], 1, j, jthr, jinc, nmat);
-	add_mat_line(m, v, derivs[1][1], -ends[1][1], 1, j, jk0r, jinc, nmat);
-	add_mat_line(m, v, derivs[2][1], -ends[1][2], 1, j, jk1r, jinc, nmat);
-	add_mat_line(m, v, derivs[3][1], -ends[1][3], 1, j, jk2r, jinc, nmat);
-	if (jthl >= 0)
-		v[jthl] = mod_2pi(v[jthl]);
-	if (jthr >= 0)
-		v[jthr] = mod_2pi(v[jthr]);
-	j += jinc;
+        add_mat_line(m, v, derivs[0][0], th - ends[0][0], 1, j, jthl, jinc, nmat);
+        add_mat_line(m, v, derivs[1][0], ends[0][1], -1, j, jk0l, jinc, nmat);
+        add_mat_line(m, v, derivs[2][0], ends[0][2], -1, j, jk1l, jinc, nmat);
+        add_mat_line(m, v, derivs[3][0], ends[0][3], -1, j, jk2l, jinc, nmat);
+        add_mat_line(m, v, derivs[0][1], -ends[1][0], 1, j, jthr, jinc, nmat);
+        add_mat_line(m, v, derivs[1][1], -ends[1][1], 1, j, jk0r, jinc, nmat);
+        add_mat_line(m, v, derivs[2][1], -ends[1][2], 1, j, jk1r, jinc, nmat);
+        add_mat_line(m, v, derivs[3][1], -ends[1][3], 1, j, jk2r, jinc, nmat);
+        if (jthl >= 0)
+            v[jthl] = mod_2pi(v[jthl]);
+        if (jthr >= 0)
+            v[jthr] = mod_2pi(v[jthr]);
+        j += jinc;
     }
     if (cyclic) {
-	memcpy(m + nmat, m, sizeof(bandmat) * nmat);
-	memcpy(m + 2 * nmat, m, sizeof(bandmat) * nmat);
-	memcpy(v + nmat, v, sizeof(double) * nmat);
-	memcpy(v + 2 * nmat, v, sizeof(double) * nmat);
-	n_invert = 3 * nmat;
-	j = nmat;
+        memcpy(m + nmat, m, sizeof(bandmat) * nmat);
+        memcpy(m + 2 * nmat, m, sizeof(bandmat) * nmat);
+        memcpy(v + nmat, v, sizeof(double) * nmat);
+        memcpy(v + 2 * nmat, v, sizeof(double) * nmat);
+        n_invert = 3 * nmat;
+        j = nmat;
     } else {
-	n_invert = nmat;
-	j = 0;
+        n_invert = nmat;
+        j = 0;
     }
 #ifdef VERBOSE
-    for (i = 0; i < n; i++) {
-	int k;
-	for (k = 0; k < 11; k++)
-	    printf(" %2.4f", m[i].a[k]);
-	printf(": %2.4f\n", v[i]);
+    for (int i = 0; i < n; i++) {
+        for (int k = 0; k < 11; k++) {
+            printf(" %2.4f", m[i].a[k]);
+        }
+        printf(": %2.4f\n", v[i]);
     }
     printf("---\n");
 #endif
     bandec11(m, perm, n_invert);
     banbks11(m, perm, v, n_invert);
-    norm = 0.;
-    for (i = 0; i < n; i++) {
-	char ty0 = s[i].ty;
-	char ty1 = s[i + 1].ty;
-	int jinc = compute_jinc(ty0, ty1);
-	int k;
+    
+    double norm = 0.;
+    for (int i = 0; i < n; i++) {
+        char ty0 = s[i].ty;
+        char ty1 = s[i + 1].ty;
+        int jinc = compute_jinc(ty0, ty1);
+        int k;
 
-	for (k = 0; k < jinc; k++) {
-	    double dk = v[j++];
+        for (k = 0; k < jinc; k++) {
+            double dk = v[j++];
 
 #ifdef VERBOSE
-	    printf("s[%d].ks[%d] += %f\n", i, k, dk);
+            printf("s[%d].ks[%d] += %f\n", i, k, dk);
 #endif
-	    s[i].ks[k] += dk;
-	    norm += dk * dk;
-	}
+            s[i].ks[k] += dk;
+            norm += dk * dk;
+        }
         s[i].ks[0] = 2.0*mod_2pi(s[i].ks[0]/2.0);
     }
     return norm;
 }
 
 static int
-solve_spiro(spiro_seg *s, int nseg)
+solve_spiro(spiro_seg *s, const int nseg)
 {
-    bandmat *m;
-    double *v;
-    int *perm;
     int nmat = count_vec(s, nseg);
     int n_alloc = nmat;
-    double norm;
-    int i;
 
-    if (nmat == 0)
-	return 0;
-    if (s[0].ty != '{' && s[0].ty != 'v')
-	n_alloc *= 3;
-    if (n_alloc < 5)
-	n_alloc = 5;
-    m = (bandmat *)malloc(sizeof(bandmat) * n_alloc);
-    v = (double *)malloc(sizeof(double) * n_alloc);
-    perm = (int *)malloc(sizeof(int) * n_alloc);
+    if (nmat == 0) {
+        return 0;
+    }
+    if (s[0].ty != '{' && s[0].ty != 'v') {
+        n_alloc *= 3;
+    }
+    if (n_alloc < 5) {
+        n_alloc = 5;
+    }
 
-    for (i = 0; i < 10; i++) {
-	norm = spiro_iter(s, m, perm, v, nseg);
+    bandmat *m = (bandmat *)malloc(sizeof(bandmat) * n_alloc);
+    double *v = (double *)malloc(sizeof(double) * n_alloc);
+    int *perm = (int *)malloc(sizeof(int) * n_alloc);
+
+    for (unsigned i = 0; i < 10; i++) {
+        double norm = spiro_iter(s, m, perm, v, nseg);
 #ifdef VERBOSE
-	printf("%% norm = %g\n", norm);
+        printf("%% norm = %g\n", norm);
 #endif
-	if (norm < 1e-12) break;
+        if (norm < 1e-12) break;
     }
 
     free(m);

@@ -71,9 +71,8 @@ bool UnicodeRange::contains(gchar unicode){
     unival = g_utf8_get_char (&unicode);
     char uni[9] = "00000000";
     uni[8]= '\0';
-    unsigned char val;
     for (unsigned int i=7; unival>0; i--){
-        val = unival & 0xf;
+        unsigned char val = unival & 0xf;
         unival = unival >> 4;
         if (val < 10) uni[i] = '0' + val;
         else uni[i] = 'A'+ val - 10;

@@ -999,9 +999,8 @@ PosterizeBasic::get_filter_text (Inkscape::Extension::Extension * ext)
 
     transf << "0";
     int levels = ext->get_param_int("levels") + 1;
-    float val = 0.0;
     for ( int step = 1 ; step <= levels ; step++ ) {
-        val = (float) step / levels;
+        const float val = (float) step / levels;
         transf << " " << val;
     }
     transf << " 1";

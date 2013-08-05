@@ -242,13 +242,12 @@ unsigned int PrintEmfWin32::comment (Inkscape::Extension::Print * /*module*/,
 
 int PrintEmfWin32::create_brush(SPStyle const *style)
 {
-    float rgb[3];
-
     if (style) {
         float opacity = SP_SCALE24_TO_FLOAT(style->fill_opacity.value);
         if (opacity <= 0.0)
             return 1;
 
+        float rgb[3];
         sp_color_get_rgb_floatv( &style->fill.value.color, rgb );
         hbrush = CreateSolidBrush( RGB(255*rgb[0], 255*rgb[1], 255*rgb[2]) );
         hbrushOld = (HBRUSH) SelectObject( hdc, hbrush );

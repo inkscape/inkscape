@@ -393,7 +393,6 @@ int CssReader::getStyleSheet(int p0)
 {
     int p = p0;
     int p2 = p;
-    XMLCh ch;
 
     //# CHARSET   0 or 1
     if (match(p, "@charset"))
@@ -408,7 +407,7 @@ int CssReader::getStyleSheet(int p0)
             return -1;
             }
         p = skipwhite(p2);
-        ch = get(p);
+        XMLCh ch = get(p);
         if (ch !=';')
             {
             error("';' required after @charset declaration");
@@ -665,7 +664,7 @@ int CssReader::getPage(int p0)
     while (true)
         {
         p = skipwhite(p2);
-        ch = get(p);
+        XMLCh ch = get(p);
         if (ch != ';')
             break;
         p++;
@@ -1249,7 +1248,7 @@ int CssReader::getTerm(int p0)
 {
     int p = p0;
     p = skipwhite(p);
-    int unitType = CSSPrimitiveValue::CSS_UNKNOWN;
+    int unitType = CSSPrimitiveValue::CSS_UNKNOWN; /// \fixme Why is this variable never used? 
     //# Unary operator
     XMLCh ch = get(p);
     bool hasUnary = false;

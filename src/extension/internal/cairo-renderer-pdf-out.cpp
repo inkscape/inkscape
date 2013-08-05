@@ -136,12 +136,12 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
     if (ext == NULL)
         return;
 
-    const gchar *new_level = NULL;
     int level = 0;
     try {
-        new_level = mod->get_param_enum("PDFversion");
-        if((new_level != NULL) && (g_ascii_strcasecmp("PDF-1.5", new_level) == 0))
+        const gchar *new_level = mod->get_param_enum("PDFversion");
+        if((new_level != NULL) && (g_ascii_strcasecmp("PDF-1.5", new_level) == 0)) {
             level = 1;
+        }
     }
     catch(...) {
         g_warning("Parameter <PDFversion> might not exist");

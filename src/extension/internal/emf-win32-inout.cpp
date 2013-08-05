@@ -120,6 +120,10 @@ emf_print_document_to_file(SPDocument *doc, gchar const *filename)
     }
     mod->base->invoke_print(&context);
     ret = mod->finish();
+    if (ret) {
+        g_free(oldoutput);
+        throw Inkscape::Extension::Output::save_failed();
+    }
     /* Release arena */
     mod->base->invoke_hide(mod->dkey);
     mod->base = NULL;

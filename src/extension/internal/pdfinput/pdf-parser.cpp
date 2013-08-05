@@ -579,14 +579,13 @@ void PdfParser::execOp(Object *cmd, Object args[], int numArgs) {
   (this->*op->func)(argPtr, numArgs);
 }
 
-PdfOperator *PdfParser::findOp(char *name) {
-  int a, b, m, cmp;
-
-  a = -1;
-  b = numOps;
+PdfOperator* PdfParser::findOp(char *name) {
+  int a = -1;
+  int b = numOps;
+  int cmp = -1;
   // invariant: opTab[a] < name < opTab[b]
   while (b - a > 1) {
-    m = (a + b) / 2;
+    const int m = (a + b) / 2;
     cmp = strcmp(opTab[m].name, name);
     if (cmp < 0)
       a = m;

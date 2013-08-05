@@ -83,17 +83,15 @@ gnome_uri_list_extract_uris (const gchar* uri_list)
 GList*
 gnome_uri_list_extract_filenames (const gchar* uri_list)
 {
-	GList *tmp_list, *node, *result;
-
 	g_return_val_if_fail (uri_list != NULL, NULL);
 
-	result = gnome_uri_list_extract_uris (uri_list);
+	GList *result = gnome_uri_list_extract_uris (uri_list);
 
-	tmp_list = result;
+	GList *tmp_list = result;
 	while (tmp_list) {
 		gchar *s = (gchar*)tmp_list->data;
 
-		node = tmp_list;
+		GList *node = tmp_list;
 		tmp_list = tmp_list->next;
 
 		if (!strncmp (s, "file:", 5)) {

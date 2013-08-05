@@ -1492,7 +1492,7 @@ CairoRenderContext::renderGlyphtext(PangoFont *font, Geom::Affine const &font_ma
                                     std::vector<CairoGlyphInfo> const &glyphtext, SPStyle const *style)
 {
     // create a cairo_font_face from PangoFont
-    double size = style->font_size.computed;
+    double size = style->font_size.computed; /// \fixme why is this variable never used?
     gpointer fonthash = (gpointer)font;
     cairo_font_face_t *font_face = (cairo_font_face_t *)g_hash_table_lookup(font_table, fonthash);
 
