@@ -134,8 +134,6 @@ src/flood-context.cpp
 src/gradient-chemistry.cpp
 src/gradient-context.cpp
 src/gradient-drag.cpp
-src/helper/units-test.h
-src/helper/units.cpp
 src/inkscape.cpp
 src/interface.cpp
 src/io/sys.cpp
