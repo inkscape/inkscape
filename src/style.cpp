@@ -2977,9 +2977,7 @@ sp_style_clear(SPStyle *style)
     SPTextStyle *text = style->text;
     unsigned const text_private = style->text_private;
 
-    // this looks really bad! you can't just 0 *all* data in the whole struct!
-    // memset(style, 0, sizeof(SPStyle));
-    
+
     style->refcount = refcount;
     style->object = object;
     style->document = document;
@@ -3003,49 +3001,63 @@ sp_style_clear(SPStyle *style)
     style->text->font_family.set = FALSE;
 
     style->font_size.set = FALSE;
+    style->font_size.inherit = FALSE;
     style->font_size.type = SP_FONT_SIZE_LITERAL;
+    style->font_size.unit = 0;
     style->font_size.literal = SP_CSS_FONT_SIZE_MEDIUM;
+    style->font_size.value = 12.0;
     style->font_size.computed = 12.0;
     style->font_style.set = FALSE;
+    style->font_style.inherit = FALSE;
     style->font_style.value = style->font_style.computed = SP_CSS_FONT_STYLE_NORMAL;
     style->font_variant.set = FALSE;
+    style->font_variant.inherit = FALSE;
     style->font_variant.value = style->font_variant.computed = SP_CSS_FONT_VARIANT_NORMAL;
     style->font_weight.set = FALSE;
+    style->font_weight.inherit = FALSE;
     style->font_weight.value = SP_CSS_FONT_WEIGHT_NORMAL;
     style->font_weight.computed = SP_CSS_FONT_WEIGHT_400;
     style->font_stretch.set = FALSE;
+    style->font_stretch.inherit = FALSE;
     style->font_stretch.value = style->font_stretch.computed = SP_CSS_FONT_STRETCH_NORMAL;
 
     /* text */
     style->text_indent.set = FALSE;
+    style->text_indent.inherit = FALSE;
     style->text_indent.unit = SP_CSS_UNIT_NONE;
     style->text_indent.computed = 0.0;
 
     style->text_align.set = FALSE;
+    style->text_align.inherit = FALSE;
     style->text_align.value = style->text_align.computed = SP_CSS_TEXT_ALIGN_START;
 
     style->text_decoration.set = FALSE;
+    style->text_decoration.inherit = FALSE;
     style->text_decoration.underline = FALSE;
     style->text_decoration.overline = FALSE;
     style->text_decoration.line_through = FALSE;
     style->text_decoration.blink = FALSE;
 
     style->line_height.set = FALSE;
+    style->line_height.inherit = FALSE;
     style->line_height.unit = SP_CSS_UNIT_PERCENT;
     style->line_height.normal = TRUE;
     style->line_height.value = style->line_height.computed = 1.0;
 
     style->letter_spacing.set = FALSE;
+    style->letter_spacing.inherit = FALSE;
     style->letter_spacing.unit = SP_CSS_UNIT_NONE;
     style->letter_spacing.normal = TRUE;
     style->letter_spacing.value = style->letter_spacing.computed = 0.0;
 
     style->word_spacing.set = FALSE;
+    style->word_spacing.inherit = FALSE;
     style->word_spacing.unit = SP_CSS_UNIT_NONE;
     style->word_spacing.normal = TRUE;
     style->word_spacing.value = style->word_spacing.computed = 0.0;
 
     style->baseline_shift.set = FALSE;
+    style->baseline_shift.inherit = FALSE;
     style->baseline_shift.type = SP_BASELINE_SHIFT_LITERAL;
     style->baseline_shift.unit = SP_CSS_UNIT_NONE;
     style->baseline_shift.literal = SP_CSS_BASELINE_SHIFT_BASELINE; 
@@ -3053,74 +3065,128 @@ sp_style_clear(SPStyle *style)
     style->baseline_shift.computed = 0.0;
 
     style->text_transform.set = FALSE;
+    style->text_transform.inherit = FALSE;
     style->text_transform.value = style->text_transform.computed = SP_CSS_TEXT_TRANSFORM_NONE;
 
     style->direction.set = FALSE;
+    style->direction.inherit = FALSE;
     style->direction.value = style->direction.computed = SP_CSS_DIRECTION_LTR;
 
     style->block_progression.set = FALSE;
+    style->block_progression.inherit = FALSE;
     style->block_progression.value = style->block_progression.computed = SP_CSS_BLOCK_PROGRESSION_TB;
 
     style->writing_mode.set = FALSE;
+    style->writing_mode.inherit = FALSE;
     style->writing_mode.value = style->writing_mode.computed = SP_CSS_WRITING_MODE_LR_TB;
 
     style->text_anchor.set = FALSE;
+    style->text_anchor.inherit = FALSE;
     style->text_anchor.value = style->text_anchor.computed = SP_CSS_TEXT_ANCHOR_START;
 
+    style->clip_set = FALSE;
+    style->color_set = FALSE;
+    style->cursor_set = FALSE;
+    style->overflow_set  = FALSE;
+    style->clip_path_set = FALSE;
+    style->mask_set = FALSE;
 
+    style->clip_rule.set = FALSE;
+    style->clip_rule.inherit = FALSE;
+    style->clip_rule.value = style->clip_rule.computed = SP_WIND_RULE_NONZERO;
+
+    style->opacity.set = FALSE;
+    style->opacity.inherit = FALSE;
     style->opacity.value = SP_SCALE24_MAX;
     style->visibility.set = FALSE;
+    style->visibility.inherit = FALSE;
     style->visibility.value = style->visibility.computed = SP_CSS_VISIBILITY_VISIBLE;
     style->display.set = FALSE;
+    style->display.inherit = FALSE;
     style->display.value = style->display.computed = SP_CSS_DISPLAY_INLINE;
     style->overflow.set = FALSE;
+    style->overflow.inherit = FALSE;
     style->overflow.value = style->overflow.computed = SP_CSS_OVERFLOW_VISIBLE;
 
     style->color.clear();
     style->color.setColor(0.0, 0.0, 0.0);
+    style->color_interpolation.set = FALSE;
+    style->color_interpolation.inherit = FALSE;
     style->color_interpolation.value = style->color_interpolation.computed = SP_CSS_COLOR_INTERPOLATION_SRGB;
+    style->color_interpolation_filters.set = FALSE;
+    style->color_interpolation_filters.inherit = FALSE;
     style->color_interpolation_filters.value = style->color_interpolation_filters.computed = SP_CSS_COLOR_INTERPOLATION_LINEARRGB;
 
     style->fill.clear();
     style->fill.setColor(0.0, 0.0, 0.0);
+    style->fill_opacity.set = FALSE;
+    style->fill_opacity.inherit = FALSE;
     style->fill_opacity.value = SP_SCALE24_MAX;
+    style->fill_rule.set = FALSE;
+    style->fill_rule.inherit = FALSE;
     style->fill_rule.value = style->fill_rule.computed = SP_WIND_RULE_NONZERO;
 
     style->stroke.clear();
+    style->stroke_opacity.set = FALSE;
+    style->stroke_opacity.inherit = FALSE;
     style->stroke_opacity.value = SP_SCALE24_MAX;
 
     style->stroke_width.set = FALSE;
+    style->stroke_width.inherit = FALSE;
     style->stroke_width.unit = SP_CSS_UNIT_NONE;
-    style->stroke_width.computed = 1.0;
+    style->stroke_width.value = style->stroke_width.computed = 1.0;
 
     style->stroke_linecap.set = FALSE;
+    style->stroke_linecap.inherit = FALSE;
     style->stroke_linecap.value = style->stroke_linecap.computed = SP_STROKE_LINECAP_BUTT;
     style->stroke_linejoin.set = FALSE;
+    style->stroke_linejoin.inherit = FALSE;
     style->stroke_linejoin.value = style->stroke_linejoin.computed = SP_STROKE_LINEJOIN_MITER;
 
     style->stroke_miterlimit.set = FALSE;
+    style->stroke_miterlimit.inherit = FALSE;
     style->stroke_miterlimit.value = 4.0;
 
     style->stroke_dash.n_dash = 0;
     style->stroke_dash.dash = NULL;
     style->stroke_dash.offset = 0.0;
 
+    style->stroke_dasharray_set = FALSE;
+    style->stroke_dasharray_inherit = FALSE;
+    style->stroke_dashoffset_set = FALSE;
+    style->stroke_dashoffset_inherit = FALSE;
+
     for (unsigned i = SP_MARKER_LOC; i < SP_MARKER_LOC_QTY; i++) {
         g_free(style->marker[i].value);
         style->marker[i].set = FALSE;
+        style->marker[i].inherit = FALSE;
+        style->marker[i].data = 0;
+        style->marker[i].value = NULL;
     }
+
+    style->filter.set = FALSE;
+    style->filter.inherit = FALSE;
+    style->filter.href = NULL;
 
     style->enable_background.value = SP_CSS_BACKGROUND_ACCUMULATE;
     style->enable_background.set = false;
     style->enable_background.inherit = false;
 
-    style->clip_rule.value = style->clip_rule.computed = SP_WIND_RULE_NONZERO;
+    style->filter_blend_mode.set   = style->filter_blend_mode.inherit = false;
+    style->filter_blend_mode.value = style->filter_blend_mode.computed = 0;
+    style->filter_gaussianBlur_deviation.set   = style->filter_gaussianBlur_deviation.inherit = false;
+    style->filter_gaussianBlur_deviation.value = style->filter_gaussianBlur_deviation.computed = 0;
 
+    style->color_rendering.set   = style->color_rendering.inherit = false;
     style->color_rendering.value = style->color_rendering.computed = SP_CSS_COLOR_RENDERING_AUTO;
+    style->image_rendering.set   = style->image_rendering.inherit = false;
     style->image_rendering.value = style->image_rendering.computed = SP_CSS_IMAGE_RENDERING_AUTO;
+    style->shape_rendering.set   = style->shape_rendering.inherit = false;
     style->shape_rendering.value = style->shape_rendering.computed = SP_CSS_SHAPE_RENDERING_AUTO;
+    style->text_rendering.set    = style->text_rendering.inherit = false;
     style->text_rendering.value  = style->text_rendering.computed  = SP_CSS_TEXT_RENDERING_AUTO;
 
+    style->cloned = false;
 }
 
 
