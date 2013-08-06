@@ -35,7 +35,6 @@ class  SPItem;
 class  SPObject;
 struct SPGroup;
 struct SPRoot;
-struct SPUnit;
 
 namespace Inkscape {
     struct Application;
@@ -46,6 +45,9 @@ namespace Inkscape {
     namespace XML {
         struct Document;
         class Node;
+    }
+    namespace Util {
+        class Quantity;
     }
 }
 
@@ -229,8 +231,8 @@ public:
     gdouble getHeight() const;
     Geom::Point getDimensions() const;
     Geom::OptRect preferredBounds() const;
-    void setWidth(gdouble width, const SPUnit *unit);
-    void setHeight(gdouble height, const SPUnit *unit);
+    void setWidth(const Inkscape::Util::Quantity &width);
+    void setHeight(const Inkscape::Util::Quantity &height);
     void requestModified();
     gint ensureUpToDate();
     bool addResource(const gchar *key, SPObject *object);
@@ -253,8 +255,6 @@ private:
     void do_change_uri(gchar const *const filename, bool const rebase);
     void setupViewport(SPItemCtx *ctx);
 };
-
-struct SPUnit;
 
 /*
  * Ideas: How to overcome style invalidation nightmare

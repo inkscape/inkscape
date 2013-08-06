@@ -41,12 +41,15 @@
 #include <sigc++/sigc++.h>
 
 #include "rotateable.h"
-#include "helper/units.h"
 
 class SPDesktop;
-struct SPUnit;
 
 namespace Inkscape {
+
+namespace Util {
+    class Unit;
+}
+
 namespace UI {
 namespace Widget {
 
@@ -273,11 +276,11 @@ protected:
     Gtk::Menu _popup_sw; 
     Gtk::RadioButtonGroup _sw_group;
     GSList *_unit_mis;
-    void on_popup_units(SPUnitId id);
+    void on_popup_units(Inkscape::Util::Unit &u);
     void on_popup_preset(int i);
     Gtk::MenuItem _popup_sw_remove;
 
-    SPUnit *_sw_unit;
+    Inkscape::Util::Unit *_sw_unit;
 
     void *_drop[2];
     bool _dropEnabled[2];

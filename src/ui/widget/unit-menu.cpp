@@ -15,6 +15,8 @@
 
 #include "unit-menu.h"
 
+using Inkscape::Util::unit_table;
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {
@@ -30,7 +32,7 @@ UnitMenu::~UnitMenu() {
 bool UnitMenu::setUnitType(UnitType unit_type) 
 {
     // Expand the unit widget with unit entries from the unit table
-    UnitTable::UnitMap m = _unit_table.units(unit_type);
+    UnitTable::UnitMap m = unit_table.units(unit_type);
     UnitTable::UnitMap::iterator iter = m.begin();
     while(iter != m.end()) {
         Glib::ustring text = (*iter).first;
@@ -38,7 +40,7 @@ bool UnitMenu::setUnitType(UnitType unit_type)
         ++iter;
     }
     _type = unit_type;
-    set_active_text(_unit_table.primary(unit_type));
+    set_active_text(unit_table.primary(unit_type));
 
     return true;
 }
@@ -52,7 +54,7 @@ bool UnitMenu::resetUnitType(UnitType unit_type)
 
 void UnitMenu::addUnit(Unit const& u)
 {
-    _unit_table.addUnit(u, false);
+    unit_table.addUnit(u, false);
     append(u.abbr);
 }
 
@@ -60,9 +62,9 @@ Unit UnitMenu::getUnit() const
 {
     if (get_active_text() == "") {
         g_assert(_type != UNIT_TYPE_NONE);
-        return _unit_table.getUnit(_unit_table.primary(_type));
+        return unit_table.getUnit(unit_table.primary(_type));
     }
-    return _unit_table.getUnit(get_active_text());
+    return unit_table.getUnit(get_active_text());
 }
 
 bool UnitMenu::setUnit(Glib::ustring const & unit)
@@ -112,8 +114,8 @@ double UnitMenu::getConversion(Glib::ustring const &new_unit_abbr, Glib::ustring
 {
     double old_factor = getUnit().factor;
     if (old_unit_abbr != "no_unit")
-        old_factor = _unit_table.getUnit(old_unit_abbr).factor;
-    Unit new_unit = _unit_table.getUnit(new_unit_abbr);
+        old_factor = unit_table.getUnit(old_unit_abbr).factor;
+    Unit new_unit = unit_table.getUnit(new_unit_abbr);
 
     // Catch the case of zero or negative unit factors (error!)
     if (old_factor < 0.0000001 ||

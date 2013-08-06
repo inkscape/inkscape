@@ -230,7 +230,7 @@ void GuidelinePropertiesDialog::_setup() {
     _unit_menu.setUnitType(UNIT_TYPE_LINEAR);
     _unit_menu.setUnit("px");
     if (_desktop->namedview->doc_units) {
-        _unit_menu.setUnit( sp_unit_get_abbreviation(_desktop->namedview->doc_units) );
+        _unit_menu.setUnit( _desktop->namedview->doc_units->abbr );
     }
     _spin_angle.setUnit(_angle_unit_status);
 

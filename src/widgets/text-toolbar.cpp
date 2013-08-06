@@ -56,9 +56,6 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
 #include "../pen-context.h"
 #include "../sp-namedview.h"
 #include "../svg/css-ostringstream.h"
@@ -72,7 +69,6 @@
 #include "widgets/font-selector.h"
 
 
-using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
@@ -1217,11 +1213,6 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
 
-    // Is this used?
-    UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
-    tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
-    g_object_set_data( holder, "tracker", tracker );
-
     /* Font family */
     {
         // Font list
@@ -1462,7 +1453,6 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             "/tools/text/lineheight",             /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
-            NULL,                                 /* unit selector */
             holder,                               /* dataKludge */
             FALSE,                                /* set alt-x keyboard shortcut? */
             NULL,                                 /* altx_mark */
@@ -1493,7 +1483,6 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             "/tools/text/wordspacing",            /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
-            NULL,                                 /* unit selector */
             holder,                               /* dataKludge */
             FALSE,                                /* set alt-x keyboard shortcut? */
             NULL,                                 /* altx_mark */
@@ -1524,7 +1513,6 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             "/tools/text/letterspacing",          /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
-            NULL,                                 /* unit selector */
             holder,                               /* dataKludge */
             FALSE,                                /* set alt-x keyboard shortcut? */
             NULL,                                 /* altx_mark */
@@ -1555,7 +1543,6 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             "/tools/text/dx",                     /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
-            NULL,                                 /* unit selector */
             holder,                               /* dataKludge */
             FALSE,                                /* set alt-x keyboard shortcut? */
             NULL,                                 /* altx_mark */
@@ -1586,7 +1573,6 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             "/tools/text/dy",                     /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
-            NULL,                                 /* unit selector */
             holder,                               /* dataKludge */
             FALSE,                                /* set alt-x keyboard shortcut? */
             NULL,                                 /* altx_mark */
@@ -1617,7 +1603,6 @@ void sp_text_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
             "/tools/text/rotation",               /* preferences path */
             0.0,                                  /* default */
             GTK_WIDGET(desktop->canvas),          /* focusTarget */
-            NULL,                                 /* unit selector */
             holder,                               /* dataKludge */
             FALSE,                                /* set alt-x keyboard shortcut? */
             NULL,                                 /* altx_mark */

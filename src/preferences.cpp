@@ -28,6 +28,8 @@
 
 #define PREFERENCES_FILE_NAME "preferences.xml"
 
+using Inkscape::Util::unit_table;
+
 namespace Inkscape {
 
 static Inkscape::XML::Document *loadImpl( std::string const& prefsFilename, Glib::ustring & errMsg );
@@ -777,8 +779,6 @@ double Preferences::_extractDouble(Entry const &v)
 
 double Preferences::_extractDouble(Entry const &v, Glib::ustring const &requested_unit)
 {
-    static Inkscape::Util::UnitTable unit_table; // load the unit_table once by making it static
-
     double val = _extractDouble(v);
     Glib::ustring unit = _extractUnit(v);
 

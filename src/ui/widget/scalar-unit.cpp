@@ -16,6 +16,8 @@
 #include "scalar-unit.h"
 #include "spinbutton.h"
 
+using Inkscape::Util::unit_table;
+
 namespace Inkscape {
 namespace UI {
 namespace Widget {
@@ -226,9 +228,8 @@ void ScalarUnit::on_unit_changed()
     Glib::ustring abbr = _unit_menu->getUnitAbbr();
     _suffix->set_label(abbr);
 
-    Inkscape::Util::UnitTable &table = _unit_menu->getUnitTable();
-    Inkscape::Util::Unit new_unit = (table.getUnit(abbr));
-    Inkscape::Util::Unit old_unit = (table.getUnit(lastUnits));
+    Inkscape::Util::Unit new_unit = (unit_table.getUnit(abbr));
+    Inkscape::Util::Unit old_unit = (unit_table.getUnit(lastUnits));
 
     double convertedVal = 0;
     if (old_unit.type == UNIT_TYPE_DIMENSIONLESS && new_unit.type == UNIT_TYPE_LINEAR) {

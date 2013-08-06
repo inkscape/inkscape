@@ -79,7 +79,7 @@
 #include "text-editing.h"
 #include "tools-switch.h"
 #include "path-chemistry.h"
-#include "unit-constants.h"
+#include "util/units.h"
 #include "helper/png-write.h"
 #include "svg/svg-color.h"
 #include "sp-namedview.h"
@@ -1078,14 +1078,14 @@ void ClipboardManagerImpl::_onGet(Gtk::SelectionData &sel, guint /*info*/)
     try {
         if (out == outlist.end() && target == "image/png")
         {
-            gdouble dpi = PX_PER_IN;
+            gdouble dpi = Inkscape::Util::Quantity::convert(1, "in", "px");
             guint32 bgcolor = 0x00000000;
 
             Geom::Point origin (_clipboardSPDoc->getRoot()->x.computed, _clipboardSPDoc->getRoot()->y.computed);
             Geom::Rect area = Geom::Rect(origin, origin + _clipboardSPDoc->getDimensions());
 
-            unsigned long int width = (unsigned long int) (area.width() * dpi / PX_PER_IN + 0.5);
-            unsigned long int height = (unsigned long int) (area.height() * dpi / PX_PER_IN + 0.5);
+            unsigned long int width = (unsigned long int) (area.width() * dpi / Inkscape::Util::Quantity::convert(1, "in", "px") + 0.5);
+            unsigned long int height = (unsigned long int) (area.height() * dpi / Inkscape::Util::Quantity::convert(1, "in", "px") + 0.5);
 
             // read from namedview
             Inkscape::XML::Node *nv = sp_repr_lookup_name (_clipboardSPDoc->rroot, "sodipodi:namedview");

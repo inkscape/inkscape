@@ -79,5 +79,7 @@ ink_common_sources +=	\
 	ui/widget/tolerance-slider.cpp  \
 	ui/widget/tolerance-slider.h    \
 	ui/widget/unit-menu.cpp		\
-	ui/widget/unit-menu.h
+	ui/widget/unit-menu.h \
+	ui/widget/unit-tracker.h \
+	ui/widget/unit-tracker.cpp
 

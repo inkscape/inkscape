@@ -21,7 +21,7 @@
 #include <2geom/hvlinesegment.h>
 #include <errno.h>
 #include <signal.h>
-#include <unit-constants.h>
+#include "util/units.h"
 #include "helper/geom-curves.h"
 
 #include "extension/print.h"
@@ -117,8 +117,8 @@ unsigned int PrintLatex::begin (Inkscape::Extension::Print *mod, SPDocument *doc
     }
 
     // width and height in pt
-    _width = doc->getWidth() * PT_PER_PX;
-    _height = doc->getHeight() * PT_PER_PX;
+    _width = doc->getWidth() * Inkscape::Util::Quantity::convert(1, "px", "pt");
+    _height = doc->getHeight() * Inkscape::Util::Quantity::convert(1, "px", "pt");
 
     if (res >= 0) {
 

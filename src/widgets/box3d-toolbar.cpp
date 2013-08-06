@@ -58,16 +58,11 @@
 
 #include "../ui/icon-names.h"
 
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
-
 #include "../pen-context.h"
 
 #include "../box3d-context.h"
 #include "../box3d.h"
 
-using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
@@ -321,7 +316,7 @@ void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject
                                          // Translators: PL is short for 'perspective line'
                                          _("Angle of PLs in X direction"),
                                          "/tools/shapes/3dbox/box3d_angle_x", 30,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-box3d",
+                                         GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-box3d",
                                          -360.0, 360.0, 1.0, 10.0,
                                          labels, values, G_N_ELEMENTS(labels),
                                          box3d_angle_x_value_changed );
@@ -361,7 +356,7 @@ void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject
                                          // Translators: PL is short for 'perspective line'
                                          _("Angle of PLs in Y direction"),
                                          "/tools/shapes/3dbox/box3d_angle_y", 30,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          -360.0, 360.0, 1.0, 10.0,
                                          labels, values, G_N_ELEMENTS(labels),
                                          box3d_angle_y_value_changed );
@@ -400,7 +395,7 @@ void box3d_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject
                                          // Translators: PL is short for 'perspective line'
                                          _("Angle of PLs in Z direction"),
                                          "/tools/shapes/3dbox/box3d_angle_z", 30,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          -360.0, 360.0, 1.0, 10.0,
                                          labels, values, G_N_ELEMENTS(labels),
                                          box3d_angle_z_value_changed );

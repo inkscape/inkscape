@@ -1,4 +1,15 @@
 /*
+ * Inkscape Units
+ *
+ * Authors:
+ *   Matthew Petroff <matthew@mpetroff.net>
+ *
+ * Copyright (C) 2013 Matthew Petroff
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
+
+/*
 This is a rough draft of a global 'units' thingee, to allow dialogs and
 the ruler to share info about unit systems...  Dunno if this is the
 right kind of object though, so we may have to redo this or shift things
@@ -54,12 +65,53 @@ class Unit {
      */
     int            defaultDigits() const;
 
+    /** Checks if a unit is compatible with the specified unit. */
+    bool           compatibleWith(const Unit &u) const;
+    bool           compatibleWith(const Glib::ustring) const;
+
     UnitType       type;
     double         factor;
     Glib::ustring  name;
     Glib::ustring  name_plural;
     Glib::ustring  abbr;
     Glib::ustring  description;
+    
+    /** Check if units are equal. */
+    friend bool operator== (const Unit &u1, const Unit &u2);
+    /** Check if units are not equal. */ 
+    friend bool operator!= (const Unit &u1, const Unit &u2);
+    
+    /** Get SVG unit. */
+    int svgUnit() const;
+};
+
+class Quantity {
+public:
+    const Unit *unit;
+    double quantity;
+    
+    /** Initialize a quantity. */
+    Quantity(double q, const Unit &u);          // constructor
+    Quantity(double q, const Glib::ustring u);  // constructor
+    
+    /** Checks if a quantity is compatible with the specified unit. */
+    bool compatibleWith(const Unit &u) const;
+    bool compatibleWith(const Glib::ustring u) const;
+    
+    /** Return the quantity's value in the specified unit. */
+    double value(const Unit &u) const;
+    double value(const Glib::ustring u) const;
+    
+    /** Return a printable string of the value in the specified unit. */
+    Glib::ustring string(const Unit &u) const;
+    Glib::ustring string(const Glib::ustring u) const;
+    Glib::ustring string() const;
+    
+    /** Convert distances. */
+    static double convert(const double from_dist, const Unit &from, const Unit &to);
+    static double convert(const double from_dist, const Glib::ustring from, const Unit &to);
+    static double convert(const double from_dist, const Unit &from, const Glib::ustring to);
+    static double convert(const double from_dist, const Glib::ustring from, const Glib::ustring to);
 };
 
 class UnitTable {
@@ -75,13 +127,16 @@ class UnitTable {
     typedef std::map<Glib::ustring, Unit*> UnitMap;
 
     /** Add a new unit to the table */
-    void    addUnit(Unit const& u, bool primary);
+    void    addUnit(Unit const &u, bool primary);
 
     /** Retrieve a given unit based on its string identifier */
-    Unit    getUnit(Glib::ustring const& name) const;
+    Unit    getUnit(Glib::ustring const &name) const;
+    
+    /** Retrieve a quantity based on its string identifier */
+    Quantity getQuantity(Glib::ustring const &q) const;
 
     /** Remove a unit definition from the given unit type table */
-    bool    deleteUnit(Unit const& u);
+    bool    deleteUnit(Unit const &u);
 
     /** Returns true if the given string 'name' is a valid unit in the table */
     bool    hasUnit(Glib::ustring const &name) const;
@@ -115,10 +170,12 @@ class UnitTable {
     double              _linear_scale;
 
  private:
-    UnitTable(UnitTable const& t);
-    UnitTable operator=(UnitTable const& t);
+    UnitTable(UnitTable const &t);
+    UnitTable operator=(UnitTable const &t);
 
 };
+
+extern UnitTable unit_table;
 
 } // namespace Util
 } // namespace Inkscape

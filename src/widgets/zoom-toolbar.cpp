@@ -51,14 +51,10 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
 #include "../pen-context.h"
 #include "../tweak-context.h"
 
 
-using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;

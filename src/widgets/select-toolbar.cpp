@@ -39,8 +39,7 @@
 #include <glibmm/i18n.h>
 #include "helper/action.h"
 #include "helper/action-context.h"
-#include "helper/unit-menu.h"
-#include "helper/units.h"
+#include "util/units.h"
 #include "inkscape.h"
 #include "verbs.h"
 #include "selection.h"
@@ -48,7 +47,7 @@
 #include "sp-item-transform.h"
 #include "message-stack.h"
 #include "display/sp-canvas.h"
-#include "helper/unit-tracker.h"
+#include "ui/widget/unit-tracker.h"
 #include "ege-adjustment-action.h"
 #include "ege-output-action.h"
 #include "ink-action.h"
@@ -56,8 +55,11 @@
 #include "ui/icon-names.h"
 #include "select-toolbar.h"
 
-using Inkscape::UnitTracker;
+using Inkscape::UI::Widget::UnitTracker;
+using Inkscape::Util::Unit;
+using Inkscape::Util::Quantity;
 using Inkscape::DocumentUndo;
+using Inkscape::Util::unit_table;
 
 static void
 sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
@@ -78,7 +80,7 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
         Geom::OptRect const bbox(sel->bounds(bbox_type));
         if ( bbox ) {
             UnitTracker *tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(G_OBJECT(spw), "tracker"));
-            SPUnit const &unit = *tracker->getActiveUnit();
+            Unit const unit = tracker->getActiveUnit();
 
             struct { char const *key; double val; } const keyval[] = {
                 { "X", bbox->min()[X] },
@@ -87,8 +89,8 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
                 { "height", bbox->dimensions()[Y] }
             };
 
-            if (unit.base == SP_UNIT_DIMENSIONLESS) {
-                double const val = 1. / unit.unittobase;
+            if (unit.type == Inkscape::Util::UNIT_TYPE_DIMENSIONLESS) {
+                double const val = unit.factor * 100;
                 for (unsigned i = 0; i < G_N_ELEMENTS(keyval); ++i) {
                     GtkAdjustment *a = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(spw), keyval[i].key));
                     gtk_adjustment_set_value(a, val);
@@ -97,7 +99,7 @@ sp_selection_layout_widget_update(SPWidget *spw, Inkscape::Selection *sel)
             } else {
                 for (unsigned i = 0; i < G_N_ELEMENTS(keyval); ++i) {
                     GtkAdjustment *a = GTK_ADJUSTMENT(g_object_get_data(G_OBJECT(spw), keyval[i].key));
-                    gtk_adjustment_set_value(a, sp_pixels_get_units(keyval[i].val, unit));
+                    gtk_adjustment_set_value(a, Quantity::convert(keyval[i].val, "px", unit));
                 }
             }
         }
@@ -183,28 +185,28 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     gdouble y1 = 0;
     gdouble xrel = 0;
     gdouble yrel = 0;
-    SPUnit const &unit = *tracker->getActiveUnit();
+    Unit const unit = tracker->getActiveUnit();
 
     GtkAdjustment* a_x = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "X" ) );
     GtkAdjustment* a_y = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "Y" ) );
     GtkAdjustment* a_w = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "width" ) );
     GtkAdjustment* a_h = GTK_ADJUSTMENT( g_object_get_data( G_OBJECT(spw), "height" ) );
 
-    if (unit.base == SP_UNIT_ABSOLUTE || unit.base == SP_UNIT_DEVICE) {
-        x0 = sp_units_get_pixels (gtk_adjustment_get_value (a_x), unit);
-        y0 = sp_units_get_pixels (gtk_adjustment_get_value (a_y), unit);
-        x1 = x0 + sp_units_get_pixels (gtk_adjustment_get_value (a_w), unit);
-        xrel = sp_units_get_pixels (gtk_adjustment_get_value (a_w), unit) / bbox_user->dimensions()[Geom::X];
-        y1 = y0 + sp_units_get_pixels (gtk_adjustment_get_value (a_h), unit);
-        yrel = sp_units_get_pixels (gtk_adjustment_get_value (a_h), unit) / bbox_user->dimensions()[Geom::Y];
+    if (unit.type == Inkscape::Util::UNIT_TYPE_LINEAR) {
+        x0 = Quantity::convert(gtk_adjustment_get_value(a_x), unit, "px");
+        y0 = Quantity::convert(gtk_adjustment_get_value(a_y), unit, "px");
+        x1 = x0 + Quantity::convert(gtk_adjustment_get_value(a_w), unit, "px");
+        xrel = Quantity::convert(gtk_adjustment_get_value(a_w), unit, "px") / bbox_user->dimensions()[Geom::X];
+        y1 = y0 + Quantity::convert(gtk_adjustment_get_value(a_h), unit, "px");;
+        yrel = Quantity::convert(gtk_adjustment_get_value(a_h), unit, "px") / bbox_user->dimensions()[Geom::Y];
     } else {
-        double const x0_propn = gtk_adjustment_get_value (a_x) * unit.unittobase;
+        double const x0_propn = gtk_adjustment_get_value (a_x) / 100 / unit.factor;
         x0 = bbox_user->min()[Geom::X] * x0_propn;
-        double const y0_propn = gtk_adjustment_get_value (a_y) * unit.unittobase;
+        double const y0_propn = gtk_adjustment_get_value (a_y) / 100 / unit.factor;
         y0 = y0_propn * bbox_user->min()[Geom::Y];
-        xrel = gtk_adjustment_get_value (a_w) * unit.unittobase;
+        xrel = gtk_adjustment_get_value (a_w) / (100 / unit.factor);
         x1 = x0 + xrel * bbox_user->dimensions()[Geom::X];
-        yrel = gtk_adjustment_get_value (a_h) * unit.unittobase;
+        yrel = gtk_adjustment_get_value (a_h) / (100 / unit.factor);
         y1 = y0 + yrel * bbox_user->dimensions()[Geom::Y];
     }
 
@@ -225,11 +227,11 @@ sp_object_layout_any_value_changed(GtkAdjustment *adj, SPWidget *spw)
     double sv = fabs(y1 - bbox_user->max()[Geom::Y]);
 
     // unless the unit is %, convert the scales and moves to the unit
-    if (unit.base == SP_UNIT_ABSOLUTE || unit.base == SP_UNIT_DEVICE) {
-        mh = sp_pixels_get_units (mh, unit);
-        sh = sp_pixels_get_units (sh, unit);
-        mv = sp_pixels_get_units (mv, unit);
-        sv = sp_pixels_get_units (sv, unit);
+    if (unit.type == Inkscape::Util::UNIT_TYPE_LINEAR) {
+        mh = Quantity::convert(mh, "px", unit);
+        sh = Quantity::convert(sh, "px", unit);
+        mv = Quantity::convert(mv, "px", unit);
+        sv = Quantity::convert(sv, "px", unit);
     }
 
     // do the action only if one of the scales/moves is greater than half the last significant
@@ -488,8 +490,8 @@ void sp_select_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
     gtk_container_add(GTK_CONTAINER(spw), vb);
 
     // Create the units menu.
-    UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
-    tracker->addUnit( SP_UNIT_PERCENT, 0 );
+    UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
+    tracker->addUnit(unit_table.getUnit("%"));
     tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
 
     g_object_set_data( G_OBJECT(spw), "tracker", tracker );

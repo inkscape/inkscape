@@ -22,7 +22,7 @@
 
 #include "display/canvas-grid.h"
 #include "display/guideline.h"
-#include "helper/units.h"
+#include "util/units.h"
 #include "svg/svg-color.h"
 #include "xml/repr.h"
 #include "attributes.h"
@@ -40,6 +40,7 @@
 #include <gtkmm/window.h>
 
 using Inkscape::DocumentUndo;
+using Inkscape::Util::unit_table;
 
 #define DEFAULTGRIDCOLOR 0x3f3fff25
 #define DEFAULTGRIDEMPCOLOR 0x3f3fff60
@@ -549,18 +550,19 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
              * in that they aren't in general absolute units as currently required by
              * doc_units.
              */
-            SPUnit const *new_unit = &sp_unit_get_by_id(SP_UNIT_PX);
+            static Inkscape::Util::Unit px = unit_table.getUnit("px");
+            Inkscape::Util::Unit const *new_unit = new Inkscape::Util::Unit(px);
 
             if (value) {
-                SPUnit const *const req_unit = sp_unit_get_by_abbreviation(value);
-                if ( req_unit == NULL ) {
+                Inkscape::Util::Unit u = unit_table.getUnit(value);
+                Inkscape::Util::Unit const *const req_unit = new Inkscape::Util::Unit(u);
+                if ( !unit_table.hasUnit(value) ) {
                     g_warning("Unrecognized unit `%s'", value);
                     /* fixme: Document errors should be reported in the status bar or
                      * the like (e.g. as per
                      * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing); g_log
                      * should be only for programmer errors. */
-                } else if ( req_unit->base == SP_UNIT_ABSOLUTE ||
-                            req_unit->base == SP_UNIT_DEVICE     ) {
+                } else if ( req_unit->isAbsolute() ) {
                     new_unit = req_unit;
                 } else {
                     g_warning("Document units must be absolute like `mm', `pt' or `px', but found `%s'",
@@ -573,18 +575,18 @@ static void sp_namedview_set(SPObject *object, unsigned int key, const gchar *va
             break;
     }
     case SP_ATTR_UNITS: {
-            SPUnit const *new_unit = NULL;
+            Inkscape::Util::Unit const *new_unit = NULL;
 
             if (value) {
-                SPUnit const *const req_unit = sp_unit_get_by_abbreviation(value);
-                if ( req_unit == NULL ) {
+                Inkscape::Util::Unit u = unit_table.getUnit(value);
+                Inkscape::Util::Unit const *const req_unit = new Inkscape::Util::Unit(u);
+                if ( !unit_table.hasUnit(value) ) {
                     g_warning("Unrecognized unit `%s'", value);
                     /* fixme: Document errors should be reported in the status bar or
                      * the like (e.g. as per
                      * http://www.w3.org/TR/SVG11/implnote.html#ErrorProcessing); g_log
                      * should be only for programmer errors. */
-                } else if ( req_unit->base == SP_UNIT_ABSOLUTE ||
-                            req_unit->base == SP_UNIT_DEVICE     ) {
+                } else if ( req_unit->isAbsolute() ) {
                     new_unit = req_unit;
                 } else {
                     g_warning("Document units must be absolute like `mm', `pt' or `px', but found `%s'",
@@ -1101,35 +1103,35 @@ bool SPNamedView::getGuides()
  * \return the margin size in px, else 0.0 if anything is invalid.
  */
 double SPNamedView::getMarginLength(gchar const * const key,
-                             SPUnit const * const margin_units,
-                             SPUnit const * const return_units,
+                             Inkscape::Util::Unit const * const margin_units,
+                             Inkscape::Util::Unit const * const return_units,
                              double const width,
                              double const height,
                              bool const use_width)
 {
     double value;
+    Inkscape::Util::Unit percent = unit_table.getUnit("%");
     if(!this->storeAsDouble(key,&value)) {
         return 0.0;
     }
-    if (margin_units == &sp_unit_get_by_id (SP_UNIT_PERCENT)) {
+    if (*margin_units == percent) {
         return (use_width)? width * value : height * value; 
     }
-    if (!sp_convert_distance (&value, margin_units, return_units)) {
+    if (!margin_units->compatibleWith(*return_units)) {
         return 0.0;
     }
     return value;
 }
 
-
 /**
- * Returns namedview's default metric.
+ * Returns namedview's default unit.
  */
-SPMetric SPNamedView::getDefaultMetric() const
+Inkscape::Util::Unit const SPNamedView::getDefaultUnit() const
 {
     if (doc_units) {
-        return sp_unit_get_metric(doc_units);
+        return *doc_units;
     } else {
-        return SP_PT;
+        return *(new Inkscape::Util::Unit(unit_table.getUnit("pt")));
     }
 }
 

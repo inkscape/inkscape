@@ -36,14 +36,13 @@
 #include "helper/geom.h"
 #include "helper/geom-curves.h"
 #include "sp-item.h"
+#include "util/units.h"
 
 #include "style.h"
 #include "inkscape-version.h"
 #include "sp-root.h"
 
 #include "emf-win32-print.h"
-
-#include "unit-constants.h"
 
 #include "extension/system.h"
 #include "extension/print.h"
@@ -129,7 +128,7 @@ unsigned int PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *
         if (bbox) d = *bbox;
     }
 
-    d *= Geom::Scale(IN_PER_PX);
+    d *= Geom::Scale(Inkscape::Util::Quantity::convert(1, "px", "in"));
 
     float dwInchesX = d.width();
     float dwInchesY = d.height();
@@ -196,7 +195,7 @@ unsigned int PrintEmfWin32::begin (Inkscape::Extension::Print *mod, SPDocument *
         snprintf(buff, sizeof(buff)-1, "Screen=%dx%dpx, %dx%dmm", PixelsX, PixelsY, MMX, MMY);
         GdiComment(hdc, strlen(buff), (BYTE*) buff);
 
-        snprintf(buff, sizeof(buff)-1, "Drawing=%.1lfx%.1lfpx, %.1lfx%.1lfmm", _width, _height, dwInchesX * MM_PER_IN, dwInchesY * MM_PER_IN);
+        snprintf(buff, sizeof(buff)-1, "Drawing=%.1lfx%.1lfpx, %.1lfx%.1lfmm", _width, _height, dwInchesX * Inkscape::Util::Quantity::convert(1, "in", "mm"), dwInchesY * Inkscape::Util::Quantity::convert(1, "in", "mm"));
         GdiComment(hdc, strlen(buff), (BYTE*) buff);
     }
 
@@ -304,7 +303,7 @@ void PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Affine &transfo
 
         double scale = sqrt( (p[X]*p[X]) + (p[Y]*p[Y]) ) / sqrt(2);
 
-        DWORD linewidth = MAX( 1, (DWORD) (scale * style->stroke_width.computed * IN_PER_PX * dwDPI) );
+        DWORD linewidth = MAX( 1, (DWORD) (scale * style->stroke_width.computed * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI) );
 
         if (style->stroke_linecap.computed == 0) {
             linecap = PS_ENDCAP_FLAT;
@@ -341,7 +340,7 @@ void PrintEmfWin32::create_pen(SPStyle const *style, const Geom::Affine &transfo
                 n_dash = style->stroke_dash.n_dash;
                 dash = new DWORD[n_dash];
                 for (i = 0; i < style->stroke_dash.n_dash; i++) {
-                    dash[i] = (DWORD) (style->stroke_dash.dash[i] * IN_PER_PX * dwDPI);
+                    dash[i] = (DWORD) (style->stroke_dash.dash[i] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
                 }
             }
         }
@@ -544,8 +543,8 @@ bool PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom
 
         Geom::Point p0 = pit->initialPoint();
 
-        p0[X] = (p0[X] * IN_PER_PX * dwDPI);
-        p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
+        p0[X] = (p0[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+        p0[Y] = (p0[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
         
         LONG const x0 = (LONG) round(p0[X]);
         LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
@@ -564,10 +563,10 @@ bool PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom
                 //Geom::Point p0 = cit->initialPoint();
                 Geom::Point p1 = cit->finalPoint();
 
-                //p0[X] = (p0[X] * IN_PER_PX * dwDPI);
-                p1[X] = (p1[X] * IN_PER_PX * dwDPI);
-                //p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
-                p1[Y] = (p1[Y] * IN_PER_PX * dwDPI);
+                //p0[X] = (p0[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p1[X] = (p1[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                //p0[Y] = (p0[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p1[Y] = (p1[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
                 
                 //LONG const x0 = (LONG) round(p0[X]);
                 //LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
@@ -586,14 +585,14 @@ bool PrintEmfWin32::print_simple_shape(Geom::PathVector const &pathv, const Geom
                 Geom::Point p2 = points[2];
                 Geom::Point p3 = points[3];
 
-                //p0[X] = (p0[X] * IN_PER_PX * dwDPI);
-                p1[X] = (p1[X] * IN_PER_PX * dwDPI);
-                p2[X] = (p2[X] * IN_PER_PX * dwDPI);
-                p3[X] = (p3[X] * IN_PER_PX * dwDPI);
-                //p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
-                p1[Y] = (p1[Y] * IN_PER_PX * dwDPI);
-                p2[Y] = (p2[Y] * IN_PER_PX * dwDPI);
-                p3[Y] = (p3[Y] * IN_PER_PX * dwDPI);
+                //p0[X] = (p0[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p1[X] = (p1[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p2[X] = (p2[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p3[X] = (p3[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                //p0[Y] = (p0[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p1[Y] = (p1[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p2[Y] = (p2[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p3[Y] = (p3[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
                 
                 //LONG const x0 = (LONG) round(p0[X]);
                 //LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
@@ -716,8 +715,8 @@ unsigned int PrintEmfWin32::print_pathv(Geom::PathVector const &pathv, const Geo
 
         Geom::Point p0 = pit->initialPoint();
 
-        p0[X] = (p0[X] * IN_PER_PX * dwDPI);
-        p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
+        p0[X] = (p0[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+        p0[Y] = (p0[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
         
         LONG const x0 = (LONG) round(p0[X]);
         LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
@@ -734,10 +733,10 @@ unsigned int PrintEmfWin32::print_pathv(Geom::PathVector const &pathv, const Geo
                 //Geom::Point p0 = cit->initialPoint();
                 Geom::Point p1 = cit->finalPoint();
 
-                //p0[X] = (p0[X] * IN_PER_PX * dwDPI);
-                p1[X] = (p1[X] * IN_PER_PX * dwDPI);
-                //p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
-                p1[Y] = (p1[Y] * IN_PER_PX * dwDPI);
+                //p0[X] = (p0[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p1[X] = (p1[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                //p0[Y] = (p0[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p1[Y] = (p1[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
                 
                 //LONG const x0 = (LONG) round(p0[X]);
                 //LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
@@ -754,14 +753,14 @@ unsigned int PrintEmfWin32::print_pathv(Geom::PathVector const &pathv, const Geo
                 Geom::Point p2 = points[2];
                 Geom::Point p3 = points[3];
 
-                //p0[X] = (p0[X] * IN_PER_PX * dwDPI);
-                p1[X] = (p1[X] * IN_PER_PX * dwDPI);
-                p2[X] = (p2[X] * IN_PER_PX * dwDPI);
-                p3[X] = (p3[X] * IN_PER_PX * dwDPI);
-                //p0[Y] = (p0[Y] * IN_PER_PX * dwDPI);
-                p1[Y] = (p1[Y] * IN_PER_PX * dwDPI);
-                p2[Y] = (p2[Y] * IN_PER_PX * dwDPI);
-                p3[Y] = (p3[Y] * IN_PER_PX * dwDPI);
+                //p0[X] = (p0[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p1[X] = (p1[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p2[X] = (p2[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p3[X] = (p3[X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                //p0[Y] = (p0[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p1[Y] = (p1[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p2[Y] = (p2[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+                p3[Y] = (p3[Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
                 
                 //LONG const x0 = (LONG) round(p0[X]);
                 //LONG const y0 = (LONG) round(rc.bottom-p0[Y]);
@@ -829,7 +828,7 @@ unsigned int PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char cons
         LOGFONTW *lf = (LOGFONTW*)g_malloc(sizeof(LOGFONTW));
         g_assert(lf != NULL);
         
-        lf->lfHeight = -style->font_size.computed * IN_PER_PX * dwDPI;
+        lf->lfHeight = -style->font_size.computed * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI;
         lf->lfWidth = 0;
         lf->lfEscapement = rot;
         lf->lfOrientation = rot;
@@ -878,8 +877,8 @@ unsigned int PrintEmfWin32::text(Inkscape::Extension::Print * /*mod*/, char cons
     SetBkMode(hdc, TRANSPARENT);
 
     Geom::Point p2 = p * tf;
-    p2[Geom::X] = (p2[Geom::X] * IN_PER_PX * dwDPI);
-    p2[Geom::Y] = (p2[Geom::Y] * IN_PER_PX * dwDPI);
+    p2[Geom::X] = (p2[Geom::X] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
+    p2[Geom::Y] = (p2[Geom::Y] * Inkscape::Util::Quantity::convert(1, "px", "in") * dwDPI);
 
     LONG const xpos = (LONG) round(p2[Geom::X]);
     LONG const ypos = (LONG) round(rc.bottom - p2[Geom::Y]);

@@ -58,7 +58,7 @@ extern "C" {
 #include "widgets/font-selector.h"
 #include <glibmm/i18n.h>
 #include <glibmm/markup.h>
-#include "unit-constants.h"
+#include "util/units.h"
 #include "sp-textpath.h"
 
 namespace Inkscape {
@@ -401,7 +401,7 @@ void TextEdit::setPreviewText (Glib::ustring font_spec, Glib::ustring phrase)
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     int unit = prefs->getInt("/options/font/unitType", SP_CSS_UNIT_PT);
-    double pt_size = sp_style_css_size_units_to_px(sp_font_selector_get_size(fsel), unit) * PT_PER_PX;
+    double pt_size = sp_style_css_size_units_to_px(sp_font_selector_get_size(fsel), unit) * Inkscape::Util::Quantity::convert(1, "px", "pt");
 
     // Pango font size is in 1024ths of a point
     // C++11: Glib::ustring size = std::to_string( pt_size * PANGO_SCALE );

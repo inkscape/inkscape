@@ -32,7 +32,6 @@
 
 #include "selection.h"
 
-#include "helper/unit-menu.h"
 #include "spw-utilities.h"
 
 #include <gtk/gtk.h>
@@ -229,51 +228,6 @@ spw_dropdown(GtkWidget * dialog, GtkWidget * table,
 
   g_object_set_data (G_OBJECT (dialog), key, selector);
   return selector;
-}
-
-/**
- * Creates a unit selector widget, used for selecting whether one wishes
- * to measure screen elements in millimeters, points, etc.  This is a
- * compound unit that includes a label as well as the dropdown selector.
- */
-GtkWidget *
-spw_unit_selector(GtkWidget * dialog, GtkWidget * table,
-		  const gchar * label_text, gchar * key, int row,
-		GtkWidget * us, GCallback cb, bool can_be_negative)
-{
-  g_assert(dialog != NULL);
-  g_assert(table  != NULL);
-  g_assert(us     != NULL);
-
-  spw_label_old(table, label_text, 0, row);
-
-#if GTK_CHECK_VERSION(3,0,0)
-  GtkAdjustment * a = gtk_adjustment_new(0.0, can_be_negative?-1e6:0, 1e6, 1.0, 10.0, 10.0);
-#else
-  GtkObject * a = gtk_adjustment_new(0.0, can_be_negative?-1e6:0, 1e6, 1.0, 10.0, 10.0);
-#endif
-
-  g_assert(a != NULL);
-  g_object_set_data (G_OBJECT (a), "key", key);
-  g_object_set_data (G_OBJECT (a), "unit_selector", us);
-  g_object_set_data (G_OBJECT (dialog), key, a);
-  sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (us), GTK_ADJUSTMENT (a));
-  GtkWidget * sb = gtk_spin_button_new (GTK_ADJUSTMENT (a), 1.0, 4);
-  g_assert(sb != NULL);
-  gtk_widget_show (sb);
-
-#if GTK_CHECK_VERSION(3,0,0)
-  gtk_widget_set_halign(sb, GTK_ALIGN_FILL);
-  gtk_widget_set_hexpand(sb, TRUE);
-  gtk_widget_set_valign(sb, GTK_ALIGN_CENTER);
-  gtk_grid_attach(GTK_GRID(table), sb, 1, row, 1, 1);
-#else
-  gtk_table_attach (GTK_TABLE (table), sb, 1, 2, row, row+1,
-		    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL), (GtkAttachOptions)0, 0, 0);
-#endif
-
-  g_signal_connect (G_OBJECT (a), "value_changed", cb, dialog);
-  return sb;
 }
 
 static void

@@ -32,7 +32,6 @@
 #include "desktop-handles.h"
 #include "snap.h"
 #include "pixmaps/cursor-ellipse.xpm"
-#include "sp-metrics.h"
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
 #include "preferences.h"
@@ -450,8 +449,10 @@ static void sp_arc_drag(SPArcContext *ac, Geom::Point pt, guint state)
 
     double rdimx = r.dimensions()[Geom::X];
     double rdimy = r.dimensions()[Geom::Y];
-    GString *xs = SP_PX_TO_METRIC_STRING(rdimx, desktop->namedview->getDefaultMetric());
-    GString *ys = SP_PX_TO_METRIC_STRING(rdimy, desktop->namedview->getDefaultMetric());
+    Inkscape::Util::Quantity rdimx_q = Inkscape::Util::Quantity(rdimx, "px");
+    Inkscape::Util::Quantity rdimy_q = Inkscape::Util::Quantity(rdimy, "px");
+    GString *xs = g_string_new(rdimx_q.string(*desktop->namedview->doc_units).c_str());
+    GString *ys = g_string_new(rdimy_q.string(*desktop->namedview->doc_units).c_str());
     if (state & GDK_CONTROL_MASK) {
         int ratio_x, ratio_y;
         if (fabs (rdimx) > fabs (rdimy)) {

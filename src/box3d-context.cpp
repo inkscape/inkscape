@@ -35,7 +35,6 @@
 #include "pixmaps/cursor-3dbox.xpm"
 #include "box3d.h"
 #include "box3d-context.h"
-#include "sp-metrics.h"
 #include <glibmm/i18n.h>
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"

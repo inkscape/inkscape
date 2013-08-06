@@ -33,9 +33,9 @@
 
 #include "widget-sizes.h"
 #include "ruler.h"
-#include "unit-constants.h"
 #include "round.h"
 #include <glibmm/i18n.h>
+#include "util/units.h"
 
 #define ROUND(x) ((int) ((x) + 0.5))
 
@@ -44,6 +44,7 @@
 #define DEFAULT_RULER_FONT_SCALE  PANGO_SCALE_X_SMALL
 #define MINIMUM_INCR              5
 
+using Inkscape::Util::unit_table;
 
 enum {
   PROP_0,
@@ -62,7 +63,7 @@ enum {
 typedef struct
 {
   GtkOrientation   orientation;
-  SPMetric         unit;
+  Inkscape::Util::Unit *unit;
   gdouble          lower;
   gdouble          upper;
   gdouble          position;
@@ -196,11 +197,10 @@ sp_ruler_class_init (SPRulerClass *klass)
   /* FIXME: Should probably use g_param_spec_enum */
   g_object_class_install_property (object_class,
                                    PROP_UNIT,
-                                   g_param_spec_uint ("unit",
+                                   g_param_spec_string ("unit",
 						      _("Unit"),
 						      _("Unit of the ruler"),
-						      0, 8,
-						      SP_PX,
+						      "px",
 						      static_cast<GParamFlags>(GTK_PARAM_READWRITE)));
   
   g_object_class_install_property (object_class,
@@ -260,7 +260,7 @@ sp_ruler_init (SPRuler *ruler)
   gtk_widget_set_has_window (GTK_WIDGET (ruler), FALSE);
 
   priv->orientation   = GTK_ORIENTATION_HORIZONTAL;
-  priv->unit          = SP_PX;
+  priv->unit          = new Inkscape::Util::Unit(unit_table.getUnit("px"));
   priv->lower         = 0;
   priv->upper         = 0;
   priv->position      = 0;
@@ -387,7 +387,7 @@ sp_ruler_set_property (GObject      *object,
       break;
     
     case PROP_UNIT:
-      sp_ruler_set_unit (ruler, static_cast<SPMetric>(g_value_get_int (value)));
+      sp_ruler_set_unit (ruler, unit_table.getUnit(g_value_get_string (value)));
       break;
 
     case PROP_LOWER:
@@ -436,7 +436,7 @@ sp_ruler_get_property (GObject      *object,
       break;
     
     case PROP_UNIT:
-      g_value_set_int (value, priv->unit);
+      g_value_set_string (value, priv->unit->abbr.c_str());
       break;
     case PROP_LOWER:
       g_value_set_double (value, priv->lower);
@@ -1071,15 +1071,15 @@ sp_ruler_remove_track_widget (SPRuler   *ruler,
  */
 void
 sp_ruler_set_unit (SPRuler  *ruler,
-                   SPMetric  unit)
+                   const Inkscape::Util::Unit &unit)
 {
   SPRulerPrivate *priv = SP_RULER_GET_PRIVATE (ruler);
   
   g_return_if_fail (SP_IS_RULER (ruler));
 
-  if (priv->unit != unit)
+  if (*priv->unit != unit)
     {
-      priv->unit = unit;
+      priv->unit = new Inkscape::Util::Unit(unit);
       g_object_notify(G_OBJECT(ruler), "unit");
 
       gtk_widget_queue_draw (GTK_WIDGET (ruler));
@@ -1092,11 +1092,9 @@ sp_ruler_set_unit (SPRuler  *ruler,
  *
  * Return value: the unit currently used in the @ruler widget.
  **/
-SPMetric
+Inkscape::Util::Unit*
 sp_ruler_get_unit (SPRuler *ruler)
 {
-  g_return_val_if_fail(SP_IS_RULER(ruler), static_cast<SPMetric>(0));
-
   return SP_RULER_GET_PRIVATE (ruler)->unit;
 }
 
@@ -1184,7 +1182,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
     gint             text_size;
     gint             pos;
     gdouble          max_size;
-    SPMetric         unit;
+    Inkscape::Util::Unit *unit;
     SPRulerMetric    ruler_metric = ruler_metric_general; /* The metric to use for this unit system */
     PangoLayout     *layout;
     PangoRectangle   logical_rect, ink_rect;
@@ -1300,7 +1298,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
 
     /* Inkscape change to ruler: Use a 1,2,4,8... scale for inches
      * or a 1,2,5,10... scale for everything else */
-    if (sp_ruler_get_unit (ruler) == SP_IN)
+    if (*sp_ruler_get_unit (ruler) == unit_table.getUnit("in"))
       ruler_metric = ruler_metric_inches;
 
     for (scale = 0; scale < G_N_ELEMENTS (ruler_metric.ruler_scale); scale++)
@@ -1319,7 +1317,7 @@ sp_ruler_draw_ticks (SPRuler *ruler)
         gdouble subd_incr;
        
         /* hack to get proper subdivisions at full pixels */
-        if (unit == SP_PX && scale == 1 && i == 1)
+        if (*unit == unit_table.getUnit("px") && scale == 1 && i == 1)
           subd_incr = 1.0;
         else
           subd_incr = ((gdouble) ruler_metric.ruler_scale[scale] / 

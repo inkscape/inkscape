@@ -49,7 +49,6 @@
 #include "display/drawing-item.h"
 #include "document-private.h"
 #include "document-undo.h"
-#include "helper/units.h"
 #include "id-clash.h"
 #include "inkscape-private.h"
 #include "inkscape-version.h"
@@ -63,12 +62,13 @@
 #include "sp-object-repr.h"
 #include "sp-symbol.h"
 #include "transf_mat_3x4.h"
-#include "unit-constants.h"
+#include "util/units.h"
 #include "xml/repr.h"
 #include "xml/rebase-hrefs.h"
 #include "libcroco/cr-cascade.h"
 
 using Inkscape::DocumentUndo;
+using Inkscape::Util::unit_table;
 
 // Higher number means lower priority.
 #define SP_DOCUMENT_UPDATE_PRIORITY (G_PRIORITY_HIGH_IDLE - 2)
@@ -546,21 +546,21 @@ gdouble SPDocument::getWidth() const
     return result;
 }
 
-void SPDocument::setWidth(gdouble width, const SPUnit *unit)
+void SPDocument::setWidth(const Inkscape::Util::Quantity &width)
 {
     if (root->width.unit == SVGLength::PERCENT && root->viewBox_set) { // set to viewBox=
-        root->viewBox.setMax(Geom::Point(root->viewBox.left() + sp_units_get_pixels (width, *unit), root->viewBox.bottom()));
+        root->viewBox.setMax(Geom::Point(root->viewBox.left() + width.value("px"), root->viewBox.bottom()));
     } else { // set to width=
         gdouble old_computed = root->width.computed;
-        root->width.computed = sp_units_get_pixels (width, *unit);
+        root->width.computed = width.value("px");
         /* SVG does not support meters as a unit, so we must translate meters to
          * cm when writing */
-        if (!strcmp(unit->abbr, "m")) {
-            root->width.value = 100*width;
+        if (*width.unit == unit_table.getUnit("m")) {
+            root->width.value = width.value("cm");
             root->width.unit = SVGLength::CM;
         } else {
-            root->width.value = width;
-            root->width.unit = (SVGLength::Unit) sp_unit_get_svg_unit(unit);
+            root->width.value = width.quantity;
+            root->width.unit = (SVGLength::Unit) width.unit->svgUnit();
         }
 
         if (root->viewBox_set)
@@ -582,21 +582,21 @@ gdouble SPDocument::getHeight() const
     return result;
 }
 
-void SPDocument::setHeight(gdouble height, const SPUnit *unit)
+void SPDocument::setHeight(const Inkscape::Util::Quantity &height)
 {
     if (root->height.unit == SVGLength::PERCENT && root->viewBox_set) { // set to viewBox=
-        root->viewBox.setMax(Geom::Point(root->viewBox.right(), root->viewBox.top() + sp_units_get_pixels (height, *unit)));
+        root->viewBox.setMax(Geom::Point(root->viewBox.right(), root->viewBox.top() + height.value("px")));
     } else { // set to height=
         gdouble old_computed = root->height.computed;
-        root->height.computed = sp_units_get_pixels (height, *unit);
+        root->height.computed = height.value("px");
         /* SVG does not support meters as a unit, so we must translate meters to
          * cm when writing */
-        if (!strcmp(unit->abbr, "m")) {
-            root->height.value = 100*height;
+        if (*height.unit == unit_table.getUnit("m")) {
+            root->height.value = height.value("cm");
             root->height.unit = SVGLength::CM;
         } else {
-            root->height.value = height;
-            root->height.unit = (SVGLength::Unit) sp_unit_get_svg_unit(unit);
+            root->height.value = height.quantity;
+            root->height.unit = (SVGLength::Unit) height.unit->svgUnit();
         }
 
         if (root->viewBox_set)
@@ -631,7 +631,7 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
     double const h = rect.height();
 
     double const old_height = getHeight();
-    SPUnit const &px(sp_unit_get_by_id(SP_UNIT_PX));
+    Inkscape::Util::Unit const px = unit_table.getUnit("px");
     
     /* in px */
     double margin_top = 0.0;
@@ -644,9 +644,10 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
     if (with_margins && nv) {
         if (nv != NULL) {
             gchar const * const units_abbr = nv->getAttribute("units");
-            SPUnit const *margin_units = NULL;
+            Inkscape::Util::Unit const *margin_units = NULL;
             if (units_abbr != NULL) {
-                margin_units = sp_unit_get_by_abbreviation(units_abbr);
+                Inkscape::Util::Unit mu = unit_table.getUnit(units_abbr);
+                margin_units = &mu;
             }
             if (margin_units == NULL) {
                 margin_units = &px;
@@ -663,8 +664,8 @@ void SPDocument::fitToRect(Geom::Rect const &rect, bool with_margins)
             rect.max() + Geom::Point(margin_right, margin_top));
     
     
-    setWidth(rect_with_margins.width(), &px);
-    setHeight(rect_with_margins.height(), &px);
+    setWidth(Inkscape::Util::Quantity(rect_with_margins.width(), "px"));
+    setHeight(Inkscape::Util::Quantity(rect_with_margins.height(), "px"));
 
     Geom::Translate const tr(
             Geom::Point(0, old_height - rect_with_margins.height())
@@ -964,7 +965,7 @@ void SPDocument::setupViewport(SPItemCtx *ctx)
     if (root->viewBox_set) { // if set, take from viewBox
         ctx->viewport = root->viewBox;
     } else { // as a last resort, set size to A4
-        ctx->viewport = Geom::Rect::from_xywh(0, 0, 210 * PX_PER_MM, 297 * PX_PER_MM);
+        ctx->viewport = Geom::Rect::from_xywh(0, 0, 210 * Inkscape::Util::Quantity::convert(1, "mm", "px"), 297 * Inkscape::Util::Quantity::convert(1, "mm", "px"));
     }
     ctx->i2vp = Geom::identity();
 }

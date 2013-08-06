@@ -15,8 +15,6 @@
 #include <sigc++/sigc++.h>
 #include <gtk/gtk.h>
 #include "event-context.h"
-#include "helper/unit-menu.h"
-#include "helper/units.h"
 
 #define SP_TYPE_FLOOD_CONTEXT            (sp_flood_context_get_type ())
 #define SP_FLOOD_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SP_TYPE_FLOOD_CONTEXT, SPFloodContext))

@@ -40,8 +40,6 @@
 #include "document-undo.h"
 #include "gradient-chemistry.h"
 #include "helper/stock-items.h"
-#include "helper/unit-menu.h"
-#include "helper/units.h"
 #include "inkscape.h"
 #include "io/sys.h"
 #include "marker.h"
@@ -75,6 +73,17 @@
 namespace Gtk {
 class Widget;
 class Container;
+}
+
+namespace Inkscape {
+    namespace Util {
+        class Unit;
+    }
+    namespace UI {
+        namespace Widget {
+            class UnitMenu;
+        }
+    }
 }
 
 struct { gchar const *key; gint value; } const SPMarkerNames[] = {
@@ -162,17 +171,13 @@ private:
                                         StrokeStyleButtonType  button_type,
                                         gchar const           *stroke_style);
 
-    static gboolean setStrokeWidthUnit(SPUnitSelector *,
-                                          SPUnit const *old,
-                                          SPUnit const *new_units,
-                                          StrokeStyle *spw);
-
     // Callback functions
     void selectionModifiedCB(guint flags);
     void selectionChangedCB();
     void widthChangedCB();
     void miterLimitChangedCB();
     void lineDashChangedCB();
+    void unitChangedCB();
     static void markerSelectCB(MarkerComboBox *marker_combo, StrokeStyle *spw, SPMarkerLoc const which);
     static void buttonToggledCB(StrokeStyleButton *tb, StrokeStyle *spw);
 
@@ -191,7 +196,7 @@ private:
 #endif
     Inkscape::UI::Widget::SpinButton *miterLimitSpin;
     Inkscape::UI::Widget::SpinButton *widthSpin;
-    GtkWidget *unitSelector;
+    Inkscape::UI::Widget::UnitMenu *unitSelector;
     StrokeStyleButton *joinMiter;
     StrokeStyleButton *joinRound;
     StrokeStyleButton *joinBevel;
@@ -207,6 +212,9 @@ private:
     sigc::connection startMarkerConn;
     sigc::connection midMarkerConn;
     sigc::connection endMarkerConn;
+    sigc::connection unitChangedConn;
+    
+    Inkscape::Util::Unit *_old_unit;
 };
 
 } // namespace Inkscape

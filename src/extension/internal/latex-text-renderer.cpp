@@ -39,7 +39,7 @@
 #include "sp-rect.h"
 #include "text-editing.h"
 
-#include <unit-constants.h>
+#include "util/units.h"
 
 #include "extension/system.h"
 
@@ -611,7 +611,7 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, float bl
     // scaling of the image when including it in LaTeX
 
     os << "  \\ifx\\svgwidth\\undefined%\n";
-    os << "    \\setlength{\\unitlength}{" << d.width() * PT_PER_PX << "bp}%\n"; // note: 'bp' is the Postscript pt unit in LaTeX, see LP bug #792384
+    os << "    \\setlength{\\unitlength}{" << d.width() * Inkscape::Util::Quantity::convert(1, "px", "pt") << "bp}%\n"; // note: 'bp' is the Postscript pt unit in LaTeX, see LP bug #792384
     os << "    \\ifx\\svgscale\\undefined%\n";
     os << "      \\relax%\n";
     os << "    \\else%\n";

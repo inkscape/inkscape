@@ -118,7 +118,6 @@ void delete_connection(GObject * /*obj*/, sigc::connection *connection);
                                                        gchar const *label, gchar const *shortLabel, gchar const *tooltip,
                                                        Glib::ustring const &path, gdouble def,
                                                        GtkWidget *focusTarget,
-                                                       GtkWidget *us,
                                                        GObject *dataKludge,
                                                        gboolean altx, gchar const *altx_mark,
                                                        gdouble lower, gdouble upper, gdouble step, gdouble page,

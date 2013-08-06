@@ -50,6 +50,9 @@
 #include "pixmaps/cursor-adj-a.xpm"
 #include "sp-cursor.h"
 #include "gradient-chemistry.h"
+#include "util/units.h"
+
+using Inkscape::Util::unit_table;
 
 static gdouble const _sw_presets[]     = { 32 ,  16 ,  10 ,  8 ,  6 ,  4 ,  3 ,  2 ,  1.5 ,  1 ,  0.75 ,  0.5 ,  0.25 ,  0.1 };
 static gchar const *const _sw_presets_str[] = {"32", "16", "10", "8", "6", "4", "3", "2", "1.5", "1", "0.75", "0.5", "0.25", "0.1"};
@@ -306,15 +309,17 @@ SelectedStyle::SelectedStyle(bool /*layout*/)
     {
         int row = 0;
 
-        // List of units should match with Fill/Stroke dialog stroke style width list
-        for (GSList *l = sp_unit_get_list(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE); l != NULL; l = l->next) {
-            SPUnit const *u = static_cast<SPUnit*>(l->data);
+        Inkscape::Util::UnitTable::UnitMap m = unit_table.units(Inkscape::Util::UNIT_TYPE_LINEAR);
+        Inkscape::Util::UnitTable::UnitMap::iterator iter = m.begin();
+        while(iter != m.end()) {
             Gtk::RadioMenuItem *mi = Gtk::manage(new Gtk::RadioMenuItem(_sw_group));
-            mi->add(*(new Gtk::Label(u->abbr, 0.0, 0.5)));
+            mi->add(*(new Gtk::Label((*iter).first, 0.0, 0.5)));
             _unit_mis = g_slist_append(_unit_mis, mi);
-            mi->signal_activate().connect(sigc::bind<SPUnitId>(sigc::mem_fun(*this, &SelectedStyle::on_popup_units), u->unit_id));
+            Inkscape::Util::Unit const *u = new Inkscape::Util::Unit(unit_table.getUnit(iter->first));
+            mi->signal_activate().connect(sigc::bind<Inkscape::Util::Unit>(sigc::mem_fun(*this, &SelectedStyle::on_popup_units), *u));
             _popup_sw.attach(*mi, 0,1, row, row+1);
             row++;
+            ++iter;
         }
 
         _popup_sw.attach(*(new Gtk::SeparatorMenuItem()), 0,1, row, row+1);
@@ -476,13 +481,13 @@ SelectedStyle::setDesktop(SPDesktop *desktop)
             this )
     ));
 
-    _sw_unit = const_cast<SPUnit*>(sp_desktop_namedview(desktop)->doc_units);
+    _sw_unit = const_cast<Inkscape::Util::Unit*>(sp_desktop_namedview(desktop)->doc_units);
 
     // Set the doc default unit active in the units list
     gint length = g_slist_length(_unit_mis);
     for (int i = 0; i < length; i++) {
         Gtk::RadioMenuItem *mi = (Gtk::RadioMenuItem *) g_slist_nth_data(_unit_mis, i);
-        if (mi && mi->get_label() == Glib::ustring(_sw_unit->abbr)) {
+        if (mi && mi->get_label() == _sw_unit->abbr) {
             mi->set_active();
             break;
         }
@@ -926,8 +931,8 @@ SelectedStyle::on_opacity_click(GdkEventButton *event)
     return false;
 }
 
-void SelectedStyle::on_popup_units(SPUnitId id) {
-    _sw_unit = (SPUnit *) &(sp_unit_get_by_id(id));
+void SelectedStyle::on_popup_units(Inkscape::Util::Unit &unit) {
+    _sw_unit = new Inkscape::Util::Unit(unit);
     update();
 }
 
@@ -935,7 +940,7 @@ void SelectedStyle::on_popup_preset(int i) {
     SPCSSAttr *css = sp_repr_css_attr_new ();
     gdouble w;
     if (_sw_unit) {
-        w = sp_units_get_pixels (_sw_presets[i], *_sw_unit);
+        w = Inkscape::Util::Quantity::convert(_sw_presets[i], *_sw_unit, "px");
     } else {
         w = _sw_presets[i];
     }
@@ -1114,7 +1119,7 @@ SelectedStyle::update()
     {
         double w;
         if (_sw_unit) {
-            w = sp_pixels_get_units(query->stroke_width.computed, *_sw_unit);
+            w = Inkscape::Util::Quantity::convert(query->stroke_width.computed, "px", *_sw_unit);
         } else {
             w = query->stroke_width.computed;
         }
@@ -1128,7 +1133,7 @@ SelectedStyle::update()
         {
             gchar *str = g_strdup_printf(_("Stroke width: %.5g%s%s"),
                                          w,
-                                         _sw_unit? sp_unit_get_abbreviation(_sw_unit) : "px",
+                                         _sw_unit? _sw_unit->abbr.c_str() : "px",
                                          (result_sw == QUERY_STYLE_MULTIPLE_AVERAGED)?
                                          _(" (averaged)") : "");
             _stroke_width_place.set_tooltip_text(str);

@@ -28,6 +28,10 @@ namespace XML {
 class Node;
 }
 
+namespace Util {
+class Unit;
+}
+
 enum GridType {
     GRID_RECTANGULAR = 0,
     GRID_AXONOMETRIC = 1
@@ -88,7 +92,7 @@ public:
     guint32 empcolor;     /**< Color for emphasis lines */
     gint empspacing;      /**< Spacing between emphasis lines */
 
-    SPUnit const* gridunit;
+    Inkscape::Util::Unit const* gridunit;
 
     Inkscape::XML::Node * repr;
     SPDocument *doc;

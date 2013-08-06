@@ -86,11 +86,10 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include <map>
 #include <cstring>
 #include <string>
-#include "helper/units.h"
 #include "sp-item.h"
 #include "box3d.h"
 #include "persp3d.h"
-#include "unit-constants.h"
+#include "util/units.h"
 #include "xml/simple-document.h"
 #include "sp-filter-reference.h"
 #include "gradient-drag.h"
@@ -3398,7 +3397,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
         res = prefs_res;
     } else if (0 < prefs_min) {
         // If minsize is given, look up minimum bitmap size (default 250 pixels) and calculate resolution from it
-        res = PX_PER_IN * prefs_min / MIN(bbox->width(), bbox->height());
+        res = Inkscape::Util::Quantity::convert(1, "in", "px") * prefs_min / MIN(bbox->width(), bbox->height());
     } else {
         float hint_xdpi = 0, hint_ydpi = 0;
         Glib::ustring hint_filename;
@@ -3413,14 +3412,14 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
                 res = hint_xdpi;
             } else {
                 // if all else fails, take the default 90 dpi
-                res = PX_PER_IN;
+                res = Inkscape::Util::Quantity::convert(1, "in", "px");
             }
         }
     }
 
     // The width and height of the bitmap in pixels
-    unsigned width = (unsigned) floor(bbox->width() * res / PX_PER_IN);
-    unsigned height =(unsigned) floor(bbox->height() * res / PX_PER_IN);
+    unsigned width = (unsigned) floor(bbox->width() * res / Inkscape::Util::Quantity::convert(1, "in", "px"));
+    unsigned height =(unsigned) floor(bbox->height() * res / Inkscape::Util::Quantity::convert(1, "in", "px"));
 
     // Find out if we have to run an external filter
     gchar const *run = NULL;
@@ -3452,7 +3451,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
 
     double shift_x = bbox->min()[Geom::X];
     double shift_y = bbox->max()[Geom::Y];
-    if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
+    if (res == Inkscape::Util::Quantity::convert(1, "in", "px")) { // for default 90 dpi, snap it to pixel grid
         shift_x = round(shift_x);
         shift_y = -round(-shift_y); // this gets correct rounding despite coordinate inversion, remove the negations when the inversion is gone
     }
@@ -3485,7 +3484,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
         // Create the repr for the image
         Inkscape::XML::Node * repr = xml_doc->createElement("svg:image");
         sp_embed_image(repr, pb, "image/png");
-        if (res == PX_PER_IN) { // for default 90 dpi, snap it to pixel grid
+        if (res == Inkscape::Util::Quantity::convert(1, "in", "px")) { // for default 90 dpi, snap it to pixel grid
             sp_repr_set_svg_double(repr, "width", width);
             sp_repr_set_svg_double(repr, "height", height);
         } else {

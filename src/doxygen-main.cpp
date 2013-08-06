@@ -334,8 +334,6 @@ namespace XML {}
  *
  * Inkscape::GC
  *
- * [\ref sp-metrics.cpp, \ref sp-metrics.h]
- *
  * [\ref prefs-utils.cpp] [\ref print.cpp]
  *
  * - Inkscape::GZipBuffer [\ref streams-gzip.h]
@@ -350,7 +348,7 @@ namespace XML {}
  * Inkscape::Whiteboard::UndoStackObserver [\ref undo-stack-observer.cpp, \ref composite-undo-stack-observer.cpp]
  * [\ref document-undo.cpp]
  *
- * {\ref dialogs/} [\ref decimal-round.h] [\ref enums.h] [\ref unit-constants.h]
+ * {\ref dialogs/} [\ref decimal-round.h] [\ref enums.h]
  */
 
 

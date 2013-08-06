@@ -33,7 +33,7 @@
 #include "svg/css-ostringstream.h"
 #include "svg/svg-color.h"
 #include "color.h"
-#include "unit-constants.h"
+#include "util/units.h"
 #include "io/stringstream.h"
 #include "io/base64stream.h"
 #include "display/nr-filter-utils.h"
@@ -793,7 +793,7 @@ gchar *SvgBuilder::_createGradient(GfxShading *shading, double *matrix, bool for
         Geom::Affine pat_matrix(matrix[0], matrix[1], matrix[2], matrix[3],
                               matrix[4], matrix[5]);
         if ( !for_shading && _is_top_level ) {
-            Geom::Affine flip(1.0, 0.0, 0.0, -1.0, 0.0, _height * PT_PER_PX);
+            Geom::Affine flip(1.0, 0.0, 0.0, -1.0, 0.0, _height * Inkscape::Util::Quantity::convert(1, "px", "pt"));
             pat_matrix *= flip;
         }
         gchar *transform_text = sp_svg_transform_write(pat_matrix);

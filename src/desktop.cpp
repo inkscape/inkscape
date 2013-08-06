@@ -54,7 +54,6 @@
 #include "document.h"
 #include "event-log.h"
 #include "helper/action-context.h"
-#include "helper/units.h"
 #include "interface.h"
 #include "inkscape-private.h"
 #include "layer-fns.h"

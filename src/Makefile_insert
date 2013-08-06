@@ -198,8 +198,6 @@ ink_common_sources +=	\
 	sp-mesh-patch.cpp sp-mesh-patch.h				\
 	sp-mesh-row-fns.h						\
 	sp-mesh-row.cpp sp-mesh-row.h					\
-	sp-metric.h							\
-	sp-metrics.cpp sp-metrics.h					\
         sp-missing-glyph.cpp sp-missing-glyph.h \
 	sp-namedview.cpp sp-namedview.h		\
 	sp-object.cpp sp-object.h		\
@@ -252,7 +250,6 @@ ink_common_sources +=	\
 	unclump.cpp unclump.h			\
 	undo-stack-observer.h			\
 	unicoderange.cpp unicoderange.h		\
-	unit-constants.h			\
 	uri.cpp uri.h				\
 	uri-references.cpp uri-references.h	\
 	vanishing-point.cpp vanishing-point.h	\

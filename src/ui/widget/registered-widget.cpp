@@ -27,7 +27,6 @@
 #include "ui/widget/random.h"
 #include "widgets/spinbutton-events.h"
 
-#include "helper/units.h"
 #include "xml/repr.h"
 #include "svg/svg-color.h"
 #include "svg/stringstream.h"
@@ -118,9 +117,9 @@ RegisteredUnitMenu::RegisteredUnitMenu (const Glib::ustring& label, const Glib::
 }
 
 void
-RegisteredUnitMenu::setUnit (const SPUnit* unit)
+RegisteredUnitMenu::setUnit (Glib::ustring unit)
 {
-    getUnitMenu()->setUnit (sp_unit_get_abbreviation (unit));
+    getUnitMenu()->setUnit(unit);
 }
 
 void

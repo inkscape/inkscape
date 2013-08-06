@@ -12,7 +12,7 @@
 #include "selection-chemistry.h"
 #include "sp-image.h"
 #include "document-undo.h"
-#include "unit-constants.h"
+#include "util/units.h"
 #include "image-resolution.h"
 #include <set>
 
@@ -79,7 +79,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
 
         double width = gdk_pixbuf_get_width(pb);
         double height = gdk_pixbuf_get_height(pb);
-        double defaultxdpi = prefs->getDouble("/dialogs/import/defaultxdpi/value", PX_PER_IN);
+        double defaultxdpi = prefs->getDouble("/dialogs/import/defaultxdpi/value", Inkscape::Util::Quantity::convert(1, "in", "px"));
         bool forcexdpi = prefs->getBool("/dialogs/import/forcexdpi");
         ImageResolution *ir = 0;
         double xscale = 1;

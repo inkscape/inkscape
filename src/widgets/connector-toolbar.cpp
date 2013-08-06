@@ -55,9 +55,6 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
 #include "../pen-context.h"
 #include "../sp-namedview.h"
 #include "../conn-avoid-ref.h"
@@ -66,7 +63,6 @@
 #include "../sp-path.h"
 
 
-using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
@@ -365,7 +361,7 @@ void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions,
                                     _("Connector Curvature"), _("Curvature:"),
                                     _("The amount of connectors curvature"),
                                     "/tools/connector/curvature", defaultConnCurvature,
-                                    GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "inkscape:connector-curvature",
+                                    GTK_WIDGET(desktop->canvas), holder, TRUE, "inkscape:connector-curvature",
                                     0, 100, 1.0, 10.0,
                                     0, 0, 0,
                                     connector_curvature_changed, 1, 0 );
@@ -376,7 +372,7 @@ void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions,
                                     _("Connector Spacing"), _("Spacing:"),
                                     _("The amount of space left around objects by auto-routing connectors"),
                                     "/tools/connector/spacing", defaultConnSpacing,
-                                    GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "inkscape:connector-spacing",
+                                    GTK_WIDGET(desktop->canvas), holder, TRUE, "inkscape:connector-spacing",
                                     0, 100, 1.0, 10.0,
                                     0, 0, 0,
                                     connector_spacing_changed, 1, 0 );
@@ -398,7 +394,7 @@ void sp_connector_toolbox_prep( SPDesktop *desktop, GtkActionGroup* mainActions,
                                      _("Connector Length"), _("Length:"),
                                      _("Ideal length for connectors when layout is applied"),
                                      "/tools/connector/length", 100,
-                                     GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "inkscape:connector-length",
+                                     GTK_WIDGET(desktop->canvas), holder, TRUE, "inkscape:connector-length",
                                      10, 1000, 10.0, 100.0,
                                      0, 0, 0,
                                      connector_length_changed, 1, 0 );

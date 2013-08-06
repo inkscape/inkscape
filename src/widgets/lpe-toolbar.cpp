@@ -57,9 +57,8 @@
 #include "../ui/icon-names.h"
 #include "../helper/action.h"
 #include "../helper/action-context.h"
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
+#include "util/units.h"
+#include "ui/widget/unit-tracker.h"
 #include "../pen-context.h"
 #include "../sp-namedview.h"
 #include "../tools-switch.h"
@@ -67,7 +66,9 @@
 #include "../live_effects/lpe-angle_bisector.h"
 #include "../lpe-tool-context.h"
 
-using Inkscape::UnitTracker;
+using Inkscape::UI::Widget::UnitTracker;
+using Inkscape::Util::Unit;
+using Inkscape::Util::Quantity;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
@@ -197,9 +198,9 @@ static void lpetool_toggle_show_measuring_info(GtkToggleAction *act, GObject *tb
 static void lpetool_unit_changed(GtkAction* /*act*/, GObject* tbl)
 {
     UnitTracker* tracker = reinterpret_cast<UnitTracker*>(g_object_get_data(tbl, "tracker"));
-    SPUnit const *unit = tracker->getActiveUnit();
+    Unit const unit = tracker->getActiveUnit();
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setInt("/tools/lpetool/unitid", unit->unit_id);
+    prefs->setString("/tools/lpetool/unit", unit.abbr);
 
     SPDesktop *desktop = static_cast<SPDesktop *>(g_object_get_data( tbl, "desktop" ));
     if (SP_IS_LPETOOL_CONTEXT(desktop->event_context)) {
@@ -295,13 +296,13 @@ static void lpetool_open_lpe_dialog(GtkToggleAction *act, gpointer data)
 
 void sp_lpetool_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-    UnitTracker* tracker = new UnitTracker(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
+    UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
     tracker->setActiveUnit(sp_desktop_namedview(desktop)->doc_units);
     g_object_set_data(holder, "tracker", tracker);
-    SPUnit const *unit = tracker->getActiveUnit();
+    Unit const unit = tracker->getActiveUnit();
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    prefs->setInt("/tools/lpetool/unitid", unit->unit_id);
+    prefs->setString("/tools/lpetool/unit", unit.abbr);
 
     /** Automatically create a list of LPEs that get added to the toolbar **/
     {

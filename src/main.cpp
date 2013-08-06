@@ -68,7 +68,6 @@
 #include "color.h"
 #include "sp-item.h"
 #include "sp-root.h"
-#include "unit-constants.h"
 
 #include "svg/svg.h"
 #include "svg/svg-color.h"
@@ -1524,7 +1523,7 @@ static int sp_do_export_png(SPDocument *doc)
 
     // default dpi
     if (dpi == 0.0) {
-        dpi = PX_PER_IN;
+        dpi = Inkscape::Util::Quantity::convert(1, "in", "px");
     }
 
     unsigned long int width = 0;
@@ -1537,7 +1536,7 @@ static int sp_do_export_png(SPDocument *doc)
             g_warning("Export width %lu out of range (1 - %lu). Nothing exported.", width, (unsigned long int)PNG_UINT_31_MAX);
             return 1;
         }
-        dpi = (gdouble) width * PX_PER_IN / area.width();
+        dpi = (gdouble) width * Inkscape::Util::Quantity::convert(1, "in", "px") / area.width();
     }
 
     if (sp_export_height) {
@@ -1547,15 +1546,15 @@ static int sp_do_export_png(SPDocument *doc)
             g_warning("Export height %lu out of range (1 - %lu). Nothing exported.", height, (unsigned long int)PNG_UINT_31_MAX);
             return 1;
         }
-        dpi = (gdouble) height * PX_PER_IN / area.height();
+        dpi = (gdouble) height * Inkscape::Util::Quantity::convert(1, "in", "px") / area.height();
     }
 
     if (!sp_export_width) {
-        width = (unsigned long int) (area.width() * dpi / PX_PER_IN + 0.5);
+        width = (unsigned long int) (area.width() * dpi / Inkscape::Util::Quantity::convert(1, "in", "px") + 0.5);
     }
 
     if (!sp_export_height) {
-        height = (unsigned long int) (area.height() * dpi / PX_PER_IN + 0.5);
+        height = (unsigned long int) (area.height() * dpi / Inkscape::Util::Quantity::convert(1, "in", "px") + 0.5);
     }
 
     guint32 bgcolor = 0x00000000;

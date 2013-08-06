@@ -67,15 +67,10 @@
 //#include "../ui/tool/multi-path-manipulator.h"
 #include "../ui/icon-names.h"
 
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
-
 #include "../pen-context.h"
 //#include "../sp-namedview.h"
 #include "../tools-switch.h"
 
-using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
@@ -307,7 +302,7 @@ void sp_pencil_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
                  _("How much smoothing (simplifying) is applied to the line"),
                                          "/tools/freehand/pencil/tolerance",
                                          3.0,
-                                         GTK_WIDGET(desktop->canvas), NULL,
+                                         GTK_WIDGET(desktop->canvas),
                                          holder, TRUE, "altx-pencil",
                                          1, 100.0, 0.5, 1.0,
                                          labels, values, G_N_ELEMENTS(labels),

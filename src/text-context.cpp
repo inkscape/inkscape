@@ -42,7 +42,6 @@
 #include "selection.h"
 #include "shape-editor.h"
 #include "sp-flowtext.h"
-#include "sp-metrics.h"
 #include "sp-namedview.h"
 #include "sp-text.h"
 #include "style.h"
@@ -640,8 +639,10 @@ static gint sp_text_context_root_handler(SPEventContext *const event_context, Gd
                 gobble_motion_events(GDK_BUTTON1_MASK);
 
                 // status text
-                GString *xs = SP_PX_TO_METRIC_STRING(fabs((p - tc->p0)[Geom::X]), desktop->namedview->getDefaultMetric());
-                GString *ys = SP_PX_TO_METRIC_STRING(fabs((p - tc->p0)[Geom::Y]), desktop->namedview->getDefaultMetric());
+                Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(fabs((p - tc->p0)[Geom::X]), "px");
+                Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(fabs((p - tc->p0)[Geom::Y]), "px");
+                GString *xs = g_string_new(x_q.string(*desktop->namedview->doc_units).c_str());
+                GString *ys = g_string_new(y_q.string(*desktop->namedview->doc_units).c_str());
                 event_context->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE, _("<b>Flowed text frame</b>: %s &#215; %s"), xs->str, ys->str);
                 g_string_free(xs, FALSE);
                 g_string_free(ys, FALSE);

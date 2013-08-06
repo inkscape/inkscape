@@ -42,7 +42,7 @@
 #include "display/canvas-grid.h"
 #include "display/sp-canvas-group.h"
 #include "document.h"
-#include "helper/units.h"
+#include "util/units.h"
 #include "inkscape.h"
 #include "preferences.h"
 #include "sp-namedview.h"
@@ -55,6 +55,7 @@
 #include "display/sp-canvas.h"
 
 using Inkscape::DocumentUndo;
+using Inkscape::Util::unit_table;
 
 namespace Inkscape {
 
@@ -398,11 +399,11 @@ void CanvasGrid::setOrigin(Geom::Point const &origin_px)
     gdouble val;
 
     val = origin_px[Geom::X];
-    val = sp_pixels_get_units (val, *gridunit);
-    os_x << val << sp_unit_get_abbreviation(gridunit);
+    val = Inkscape::Util::Quantity::convert(val, "px", *gridunit);
+    os_x << val << gridunit->abbr;
     val = origin_px[Geom::Y];
-    val = sp_pixels_get_units (val, *gridunit);
-    os_y << val << sp_unit_get_abbreviation(gridunit);
+    val = Inkscape::Util::Quantity::convert(val, "px", *gridunit);
+    os_y << val << gridunit->abbr;
     repr->setAttribute("originx", os_x.str().c_str());
     repr->setAttribute("originy", os_y.str().c_str());
 }
@@ -488,17 +489,17 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
     : CanvasGrid(nv, in_repr, in_doc, GRID_RECTANGULAR)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gridunit = sp_unit_get_by_abbreviation( prefs->getString("/options/grids/xy/units").data() );
+    gridunit = new Inkscape::Util::Unit(unit_table.getUnit(prefs->getString("/options/grids/xy/units")));
     if (!gridunit) {
-        gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
+        gridunit = new Inkscape::Util::Unit(unit_table.getUnit("px"));
     }
-    origin[Geom::X] = sp_units_get_pixels(prefs->getDouble("/options/grids/xy/origin_x", 0.0), *gridunit);
-    origin[Geom::Y] = sp_units_get_pixels(prefs->getDouble("/options/grids/xy/origin_y", 0.0), *gridunit);
+    origin[Geom::X] = Inkscape::Util::Quantity::convert(prefs->getDouble("/options/grids/xy/origin_x", 0.0), *gridunit, "px");
+    origin[Geom::Y] = Inkscape::Util::Quantity::convert(prefs->getDouble("/options/grids/xy/origin_y", 0.0), *gridunit, "px");
     color = prefs->getInt("/options/grids/xy/color", 0x0000ff20);
     empcolor = prefs->getInt("/options/grids/xy/empcolor", 0x0000ff40);
     empspacing = prefs->getInt("/options/grids/xy/empspacing", 5);
-    spacing[Geom::X] = sp_units_get_pixels(prefs->getDouble("/options/grids/xy/spacing_x", 0.0), *gridunit);
-    spacing[Geom::Y] = sp_units_get_pixels(prefs->getDouble("/options/grids/xy/spacing_y", 0.0), *gridunit);
+    spacing[Geom::X] = Inkscape::Util::Quantity::convert(prefs->getDouble("/options/grids/xy/spacing_x", 0.0), *gridunit, "px");
+    spacing[Geom::Y] = Inkscape::Util::Quantity::convert(prefs->getDouble("/options/grids/xy/spacing_y", 0.0), *gridunit, "px");
     render_dotted = prefs->getBool("/options/grids/xy/dotted", false);
 
     snapper = new CanvasXYGridSnapper(this, &namedview->snap_manager, 0);
@@ -509,64 +510,6 @@ CanvasXYGrid::CanvasXYGrid (SPNamedView * nv, Inkscape::XML::Node * in_repr, SPD
 CanvasXYGrid::~CanvasXYGrid ()
 {
    if (snapper) delete snapper;
-}
-
-
-/* fixme: Collect all these length parsing methods and think common sane API */
-
-static gboolean
-sp_nv_read_length(gchar const *str, guint base, gdouble *val, SPUnit const **unit)
-{
-    if (!str) {
-        return FALSE;
-    }
-
-    gchar *u;
-    gdouble v = g_ascii_strtod(str, &u);
-    if (!u) {
-        return FALSE;
-    }
-    while (isspace(*u)) {
-        u += 1;
-    }
-
-    if (!*u) {
-        /* No unit specified - keep default */
-        *val = v;
-        return TRUE;
-    }
-
-    if (base & SP_UNIT_DEVICE) {
-        if (u[0] && u[1] && !isalnum(u[2]) && !strncmp(u, "px", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_PX);
-            *val = v;
-            return TRUE;
-        }
-    }
-
-    if (base & SP_UNIT_ABSOLUTE) {
-        if (!strncmp(u, "pt", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_PT);
-        } else if (!strncmp(u, "mm", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_MM);
-        } else if (!strncmp(u, "cm", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_CM);
-        } else if (!strncmp(u, "m", 1)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_M);
-        } else if (!strncmp(u, "in", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_IN);
-        } else if (!strncmp(u, "ft", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_FT);
-        } else if (!strncmp(u, "pc", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_PC);
-        } else {
-            return FALSE;
-        }
-        *val = v;
-        return TRUE;
-    }
-
-    return FALSE;
 }
 
 static gboolean sp_nv_read_opacity(gchar const *str, guint32 *color)
@@ -645,28 +588,32 @@ CanvasXYGrid::readRepr()
 {
     gchar const *value;
     if ( (value = repr->attribute("originx")) ) {
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[Geom::X], &gridunit);
-        origin[Geom::X] = sp_units_get_pixels(origin[Geom::X], *(gridunit));
+        Inkscape::Util::Quantity q = unit_table.getQuantity(value);
+        gridunit = q.unit;
+        origin[Geom::X] = unit_table.getQuantity(value).value("px");
     }
 
     if ( (value = repr->attribute("originy")) ) {
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[Geom::Y], &gridunit);
-        origin[Geom::Y] = sp_units_get_pixels(origin[Geom::Y], *(gridunit));
+        Inkscape::Util::Quantity q = unit_table.getQuantity(value);
+        gridunit = q.unit;
+        origin[Geom::Y] = unit_table.getQuantity(value).value("px");
     }
 
     if ( (value = repr->attribute("spacingx")) ) {
         double oldVal = spacing[Geom::X];
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &spacing[Geom::X], &gridunit);
-        validateScalar( oldVal, &spacing[Geom::X]);
-        spacing[Geom::X] = sp_units_get_pixels(spacing[Geom::X], *(gridunit));
-
+        Inkscape::Util::Quantity q = unit_table.getQuantity(value);
+        gridunit = q.unit;
+        spacing[Geom::X] = q.quantity;
+        validateScalar(oldVal, &spacing[Geom::X]);
+        spacing[Geom::X] = Inkscape::Util::Quantity::convert(spacing[Geom::X], *gridunit, "px");
     }
     if ( (value = repr->attribute("spacingy")) ) {
         double oldVal = spacing[Geom::Y];
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &spacing[Geom::Y], &gridunit);
-        validateScalar( oldVal, &spacing[Geom::Y]);
-        spacing[Geom::Y] = sp_units_get_pixels(spacing[Geom::Y], *(gridunit));
-
+        Inkscape::Util::Quantity q = unit_table.getQuantity(value);
+        gridunit = q.unit;
+        spacing[Geom::Y] = q.quantity;
+        validateScalar(oldVal, &spacing[Geom::Y]);
+        spacing[Geom::Y] = Inkscape::Util::Quantity::convert(spacing[Geom::Y], *gridunit, "px");
     }
 
     if ( (value = repr->attribute("color")) ) {
@@ -802,20 +749,20 @@ CanvasXYGrid::newSpecificWidget()
     attach_all (*table, widget_array, sizeof(widget_array));
 
     // set widget values
-    _rumg->setUnit (gridunit);
+    _rumg->setUnit (gridunit->abbr);
 
     gdouble val;
     val = origin[Geom::X];
-    val = sp_pixels_get_units (val, *(gridunit));
+    val = Inkscape::Util::Quantity::convert(val, "px", *gridunit);
     _rsu_ox->setValue (val);
     val = origin[Geom::Y];
-    val = sp_pixels_get_units (val, *(gridunit));
+    val = Inkscape::Util::Quantity::convert(val, "px", *gridunit);
     _rsu_oy->setValue (val);
     val = spacing[Geom::X];
-    double gridx = sp_pixels_get_units (val, *(gridunit));
+    double gridx = Inkscape::Util::Quantity::convert(val, "px", *gridunit);
     _rsu_sx->setValue (gridx);
     val = spacing[Geom::Y];
-    double gridy = sp_pixels_get_units (val, *(gridunit));
+    double gridy = Inkscape::Util::Quantity::convert(val, "px", *gridunit);
     _rsu_sy->setValue (gridy);
 
     _rcp_gcol->setRgba32 (color);
@@ -851,20 +798,20 @@ CanvasXYGrid::updateWidgets()
         _rcb_enabled.setActive(snapper->getEnabled());
     }
 
-    _rumg.setUnit (gridunit);
+    _rumg.setUnit (gridunit->abbr);
 
     gdouble val;
     val = origin[Geom::X];
-    val = sp_pixels_get_units (val, *(gridunit));
+    val = Inkscape::Quantity::convert(val, "px", *gridunit);
     _rsu_ox.setValue (val);
     val = origin[Geom::Y];
-    val = sp_pixels_get_units (val, *(gridunit));
+    val = Inkscape::Quantity::convert(val, "px", *gridunit);
     _rsu_oy.setValue (val);
     val = spacing[Geom::X];
-    double gridx = sp_pixels_get_units (val, *(gridunit));
+    double gridx = Inkscape::Quantity::convert(val, "px", *gridunit);
     _rsu_sx.setValue (gridx);
     val = spacing[Geom::Y];
-    double gridy = sp_pixels_get_units (val, *(gridunit));
+    double gridy = Inkscape::Quantity::convert(val, "px", *gridunit);
     _rsu_sy.setValue (gridy);
 
     _rcp_gcol.setRgba32 (color);

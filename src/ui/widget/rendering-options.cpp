@@ -13,7 +13,7 @@
 #endif
 
 #include "rendering-options.h"
-#include "unit-constants.h"
+#include "util/units.h"
 #include <glibmm/i18n.h>
 
 namespace Inkscape {
@@ -59,8 +59,8 @@ RenderingOptions::RenderingOptions () :
     _radio_bitmap.signal_toggled().connect(sigc::mem_fun(*this, &RenderingOptions::_toggled));
 
     // configure default DPI
-    _dpi.setRange(PT_PER_IN,2400.0);
-    _dpi.setValue(PT_PER_IN);
+    _dpi.setRange(Inkscape::Util::Quantity::convert(1, "in", "pt"),2400.0);
+    _dpi.setValue(Inkscape::Util::Quantity::convert(1, "in", "pt"));
     _dpi.setIncrements(1.0,10.0);
     _dpi.setDigits(0);
     _dpi.update();

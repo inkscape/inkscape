@@ -37,7 +37,7 @@
 #include "desktop.h"
 #include "helper/action.h"
 #include "helper/action-context.h"
-#include "helper/units.h"
+#include "util/units.h"
 #include "inkscape.h"
 #include "sp-namedview.h"
 #include "sp-root.h"
@@ -48,6 +48,7 @@
 #include "xml/repr.h"
 
 using std::pair;
+using Inkscape::Util::unit_table;
 
 namespace Inkscape {
 namespace UI {
@@ -96,7 +97,7 @@ struct PaperSizeRec {
     char const * const name;  //name
     double const smaller;     //lesser dimension
     double const larger;      //greater dimension
-    SPUnitId const unit;      //units
+    Glib::ustring const unit;      //units
 };
 
 // list of page formats that should be in landscape automatically
@@ -114,31 +115,31 @@ fill_landscape_papers() {
 }
 
 static PaperSizeRec const inkscape_papers[] = {
-    { "A4",                210,  297, SP_UNIT_MM },
-    { "US Letter",         8.5,   11, SP_UNIT_IN },
-    { "US Legal",          8.5,   14, SP_UNIT_IN },
-    { "US Executive",     7.25, 10.5, SP_UNIT_IN },
-    { "A0",                841, 1189, SP_UNIT_MM },
-    { "A1",                594,  841, SP_UNIT_MM },
-    { "A2",                420,  594, SP_UNIT_MM },
-    { "A3",                297,  420, SP_UNIT_MM },
-    { "A5",                148,  210, SP_UNIT_MM },
-    { "A6",                105,  148, SP_UNIT_MM },
-    { "A7",                 74,  105, SP_UNIT_MM },
-    { "A8",                 52,   74, SP_UNIT_MM },
-    { "A9",                 37,   52, SP_UNIT_MM },
-    { "A10",                26,   37, SP_UNIT_MM },
-    { "B0",               1000, 1414, SP_UNIT_MM },
-    { "B1",                707, 1000, SP_UNIT_MM },
-    { "B2",                500,  707, SP_UNIT_MM },
-    { "B3",                353,  500, SP_UNIT_MM },
-    { "B4",                250,  353, SP_UNIT_MM },
-    { "B5",                176,  250, SP_UNIT_MM },
-    { "B6",                125,  176, SP_UNIT_MM },
-    { "B7",                 88,  125, SP_UNIT_MM },
-    { "B8",                 62,   88, SP_UNIT_MM },
-    { "B9",                 44,   62, SP_UNIT_MM },
-    { "B10",                31,   44, SP_UNIT_MM },
+    { "A4",                210,  297, "mm" },
+    { "US Letter",         8.5,   11, "in" },
+    { "US Legal",          8.5,   14, "in" },
+    { "US Executive",     7.25, 10.5, "in" },
+    { "A0",                841, 1189, "mm" },
+    { "A1",                594,  841, "mm" },
+    { "A2",                420,  594, "mm" },
+    { "A3",                297,  420, "mm" },
+    { "A5",                148,  210, "mm" },
+    { "A6",                105,  148, "mm" },
+    { "A7",                 74,  105, "mm" },
+    { "A8",                 52,   74, "mm" },
+    { "A9",                 37,   52, "mm" },
+    { "A10",                26,   37, "mm" },
+    { "B0",               1000, 1414, "mm" },
+    { "B1",                707, 1000, "mm" },
+    { "B2",                500,  707, "mm" },
+    { "B3",                353,  500, "mm" },
+    { "B4",                250,  353, "mm" },
+    { "B5",                176,  250, "mm" },
+    { "B6",                125,  176, "mm" },
+    { "B7",                 88,  125, "mm" },
+    { "B8",                 62,   88, "mm" },
+    { "B9",                 44,   62, "mm" },
+    { "B10",                31,   44, "mm" },
 
 
 
@@ -150,63 +151,63 @@ static PaperSizeRec const inkscape_papers[] = {
          don't know what D and E series are used for.
          */
 
-    { "C0",                917, 1297, SP_UNIT_MM },
-    { "C1",                648,  917, SP_UNIT_MM },
-    { "C2",                458,  648, SP_UNIT_MM },
-    { "C3",                324,  458, SP_UNIT_MM },
-    { "C4",                229,  324, SP_UNIT_MM },
-    { "C5",                162,  229, SP_UNIT_MM },
-    { "C6",                114,  162, SP_UNIT_MM },
-    { "C7",                 81,  114, SP_UNIT_MM },
-    { "C8",                 57,   81, SP_UNIT_MM },
-    { "C9",                 40,   57, SP_UNIT_MM },
-    { "C10",                28,   40, SP_UNIT_MM },
-    { "D1",                545,  771, SP_UNIT_MM },
-    { "D2",                385,  545, SP_UNIT_MM },
-    { "D3",                272,  385, SP_UNIT_MM },
-    { "D4",                192,  272, SP_UNIT_MM },
-    { "D5",                136,  192, SP_UNIT_MM },
-    { "D6",                 96,  136, SP_UNIT_MM },
-    { "D7",                 68,   96, SP_UNIT_MM },
-    { "E3",                400,  560, SP_UNIT_MM },
-    { "E4",                280,  400, SP_UNIT_MM },
-    { "E5",                200,  280, SP_UNIT_MM },
-    { "E6",                140,  200, SP_UNIT_MM },
+    { "C0",                917, 1297, "mm" },
+    { "C1",                648,  917, "mm" },
+    { "C2",                458,  648, "mm" },
+    { "C3",                324,  458, "mm" },
+    { "C4",                229,  324, "mm" },
+    { "C5",                162,  229, "mm" },
+    { "C6",                114,  162, "mm" },
+    { "C7",                 81,  114, "mm" },
+    { "C8",                 57,   81, "mm" },
+    { "C9",                 40,   57, "mm" },
+    { "C10",                28,   40, "mm" },
+    { "D1",                545,  771, "mm" },
+    { "D2",                385,  545, "mm" },
+    { "D3",                272,  385, "mm" },
+    { "D4",                192,  272, "mm" },
+    { "D5",                136,  192, "mm" },
+    { "D6",                 96,  136, "mm" },
+    { "D7",                 68,   96, "mm" },
+    { "E3",                400,  560, "mm" },
+    { "E4",                280,  400, "mm" },
+    { "E5",                200,  280, "mm" },
+    { "E6",                140,  200, "mm" },
 //#endif
 
 
 
-    { "CSE",               462,  649, SP_UNIT_PT },
-    { "US #10 Envelope", 4.125,  9.5, SP_UNIT_IN },
+    { "CSE",               462,  649, "pt" },
+    { "US #10 Envelope", 4.125,  9.5, "in" },
     /* See http://www.hbp.com/content/PCR_envelopes.cfm for a much larger list of US envelope
        sizes. */
-    { "DL Envelope",       110,  220, SP_UNIT_MM },
-    { "Ledger/Tabloid",     11,   17, SP_UNIT_IN },
+    { "DL Envelope",       110,  220, "mm" },
+    { "Ledger/Tabloid",     11,   17, "in" },
     /* Note that `Folio' (used in QPrinter/KPrinter) is deliberately absent from this list, as it
        means different sizes to different people: different people may expect the width to be
        either 8, 8.25 or 8.5 inches, and the height to be either 13 or 13.5 inches, even
        restricting our interpretation to foolscap folio.  If you wish to introduce a folio-like
        page size to the list, then please consider using a name more specific than just `Folio' or
        `Foolscap Folio'. */
-    { "Banner 468x60",      60,  468, SP_UNIT_PX },
-    { "Icon 16x16",         16,   16, SP_UNIT_PX },
-    { "Icon 32x32",         32,   32, SP_UNIT_PX },
-    { "Icon 48x48",         48,   48, SP_UNIT_PX },
+    { "Banner 468x60",      60,  468, "px" },
+    { "Icon 16x16",         16,   16, "px" },
+    { "Icon 32x32",         32,   32, "px" },
+    { "Icon 48x48",         48,   48, "px" },
     /* business cards */
-    { "Business Card (ISO 7810)", 53.98, 85.60, SP_UNIT_MM },
-    { "Business Card (US)",             2,     3.5,  SP_UNIT_IN },
-    { "Business Card (Europe)",        55,    85,    SP_UNIT_MM },
-    { "Business Card (Aus/NZ)",        55,    90,    SP_UNIT_MM },
+    { "Business Card (ISO 7810)", 53.98, 85.60, "mm" },
+    { "Business Card (US)",             2,     3.5,  "in" },
+    { "Business Card (Europe)",        55,    85,    "mm" },
+    { "Business Card (Aus/NZ)",        55,    90,    "mm" },
 
     // Start Arch Series List
 
 
-    { "Arch A",         9,    12,    SP_UNIT_IN },  // 229 x 305 mm
-    { "Arch B",        12,    18,    SP_UNIT_IN },  // 305 x 457 mm
-    { "Arch C",        18,    24,    SP_UNIT_IN },  // 457 x 610 mm
-    { "Arch D",        24,    36,    SP_UNIT_IN },  // 610 x 914 mm
-    { "Arch E",        36,    48,    SP_UNIT_IN },  // 914 x 1219 mm
-    { "Arch E1",       30,    42,    SP_UNIT_IN },  // 762 x 1067 mm
+    { "Arch A",         9,    12,    "in" },  // 229 x 305 mm
+    { "Arch B",        12,    18,    "in" },  // 305 x 457 mm
+    { "Arch C",        18,    24,    "in" },  // 457 x 610 mm
+    { "Arch D",        24,    36,    "in" },  // 610 x 914 mm
+    { "Arch E",        36,    48,    "in" },  // 914 x 1219 mm
+    { "Arch E1",       30,    42,    "in" },  // 762 x 1067 mm
 
     /*
      * The above list of Arch sizes were taken from the following site:
@@ -217,7 +218,7 @@ static PaperSizeRec const inkscape_papers[] = {
      * September 2009 - DAK
      */
 
-    { NULL,                     0,    0, SP_UNIT_PX },
+    { NULL,                     0,    0, "px" },
 };
 
 
@@ -225,10 +226,6 @@ static PaperSizeRec const inkscape_papers[] = {
 //########################################################################
 //# P A G E    S I Z E R
 //########################################################################
-
-//The default unit for this widget and its calculations
-static const SPUnit _px_unit = sp_unit_get_by_id (SP_UNIT_PX);
-
 
 /**
  * Constructor
@@ -280,13 +277,8 @@ PageSizer::PageSizer(Registry & _wr)
         char formatBuf[80];
         snprintf(formatBuf, 79, "%0.1f x %0.1f", p->smaller, p->larger);
         Glib::ustring desc = formatBuf;
-        if (p->unit == SP_UNIT_IN)
-            desc.append(" in");
-        else if (p->unit == SP_UNIT_MM)
-             desc.append(" mm");
-        else if (p->unit == SP_UNIT_PX)
-            desc.append(" px");
-        PaperSize paper(name, p->smaller, p->larger, p->unit);
+        desc.append(" " + p->unit);
+        PaperSize paper(name, p->smaller, p->larger, unit_table.getUnit(p->unit));
         _paperSizeTable[name] = paper;
         Gtk::TreeModel::Row row = *(_paperSizeListStore->append());
         row[_paperSizeListColumns.nameColumn] = name;
@@ -320,9 +312,9 @@ PageSizer::PageSizer(Registry & _wr)
     SPNamedView *nv = sp_desktop_namedview(dt);
     _wr.setUpdating (true);
     if (nv->units) {
-        _dimensionUnits.setUnit(nv->units);
+        _dimensionUnits.setUnit(nv->units->abbr);
     } else if (nv->doc_units) {
-        _dimensionUnits.setUnit(nv->doc_units);
+        _dimensionUnits.setUnit(nv->doc_units->abbr);
     }
     _wr.setUpdating (false);
     
@@ -484,8 +476,8 @@ PageSizer::setDim (double w, double h, bool changeList)
     if (SP_ACTIVE_DESKTOP && !_widgetRegistry->isUpdating()) {
         SPDocument *doc = sp_desktop_document(SP_ACTIVE_DESKTOP);
         double const old_height = doc->getHeight();
-        doc->setWidth (w, &_px_unit);
-        doc->setHeight (h, &_px_unit);
+        doc->setWidth (Inkscape::Util::Quantity(w, "px"));
+        doc->setHeight (Inkscape::Util::Quantity(h, "px"));
         // The origin for the user is in the lower left corner; this point should remain stationary when
         // changing the page size. The SVG's origin however is in the upper left corner, so we must compensate for this
         Geom::Translate const vert_offset(Geom::Point(0, (old_height - h)));
@@ -569,9 +561,9 @@ PageSizer::find_paper_size (double w, double h) const
     for (iter = _paperSizeTable.begin() ;
          iter != _paperSizeTable.end() ; ++iter) {
         PaperSize paper = iter->second;
-        SPUnit const &i_unit = sp_unit_get_by_id(paper.unit);
-        double smallX = sp_units_get_pixels(paper.smaller, i_unit);
-        double largeX = sp_units_get_pixels(paper.larger,  i_unit);
+        Inkscape::Util::Unit const &i_unit = paper.unit;
+        double smallX = Inkscape::Util::Quantity::convert(paper.smaller, i_unit, "px");
+        double largeX = Inkscape::Util::Quantity::convert(paper.larger, i_unit, "px");
 
         g_return_val_if_fail(smallX <= largeX, _paperSizeListStore->children().end());
 
@@ -662,9 +654,8 @@ PageSizer::on_paper_size_list_changed()
         _landscape = _landscapeButton.get_active();
     }
 
-    SPUnit const &src_unit = sp_unit_get_by_id (paper.unit);
-    sp_convert_distance (&w, &src_unit, &_px_unit);
-    sp_convert_distance (&h, &src_unit, &_px_unit);
+    w = Inkscape::Util::Quantity::convert(w, paper.unit, "px");
+    h = Inkscape::Util::Quantity::convert(h, paper.unit, "px");
 
     if (_landscape)
         setDim (h, w, false);

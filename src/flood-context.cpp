@@ -54,7 +54,6 @@
 #include "sp-defs.h"
 #include "sp-item.h"
 #include "splivarot.h"
-#include "sp-metrics.h"
 #include "sp-namedview.h"
 #include "sp-object.h"
 #include "sp-path.h"

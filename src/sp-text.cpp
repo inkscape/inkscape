@@ -43,7 +43,6 @@
 #include "sp-namedview.h"
 #include "style.h"
 #include "inkscape.h"
-#include "sp-metrics.h"
 #include "xml/quote.h"
 #include "xml/repr.h"
 #include "mod360.h"
@@ -56,7 +55,6 @@
 #include "sp-tspan.h"
 
 #include "text-editing.h"
-#include "unit-constants.h"
 
 /*#####################################################
 #  SPTEXT
@@ -392,7 +390,8 @@ static char * sp_text_description(SPItem *item)
         n = g_strdup(_("&lt;no name found&gt;"));
     }
 
-    GString *xs = SP_PX_TO_METRIC_STRING(style->font_size.computed, sp_desktop_namedview(SP_ACTIVE_DESKTOP)->getDefaultMetric());
+    Inkscape::Util::Quantity q = Inkscape::Util::Quantity(style->font_size.computed, "px");
+    GString *xs = g_string_new(q.string(*sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units).c_str());
 
     char const *trunc = "";
     Inkscape::Text::Layout const *layout = te_get_layout((SPItem *) item);

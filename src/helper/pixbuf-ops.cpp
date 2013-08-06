@@ -29,7 +29,7 @@
 #include "sp-root.h"
 #include "sp-use.h"
 #include "sp-defs.h"
-#include "unit-constants.h"
+#include "util/units.h"
 
 #include "helper/pixbuf-ops.h"
 
@@ -121,7 +121,7 @@ GdkPixbuf *sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*
     origin[Geom::X] = origin[Geom::X] + (screen[Geom::X].extent() * ((1 - padding) / 2));
     origin[Geom::Y] = origin[Geom::Y] + (screen[Geom::Y].extent() * ((1 - padding) / 2));
 
-    Geom::Scale scale( (xdpi / PX_PER_IN),   (ydpi / PX_PER_IN));
+    Geom::Scale scale( (xdpi / Inkscape::Util::Quantity::convert(1, "in", "px")),   (ydpi / Inkscape::Util::Quantity::convert(1, "in", "px")));
     Geom::Affine affine = scale * Geom::Translate(-origin * scale);
 
     /* Create ArenaItems and set transform */

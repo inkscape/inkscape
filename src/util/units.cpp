@@ -1,10 +1,23 @@
+/*
+ * Inkscape Units
+ *
+ * Authors:
+ *   Matthew Petroff <matthew@mpetroff.net>
+ *
+ * Copyright (C) 2013 Matthew Petroff
+ *
+ * Released under GNU GPL, read the file 'COPYING' for more information
+ */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
 
 #include <cmath>
 #include <cerrno>
+#include <iomanip>
 #include <glib.h>
+#include <glibmm/regex.h>
 #include <glibmm/fileutils.h>
 #include <glibmm/markup.h>
 
@@ -108,7 +121,8 @@ void Unit::clear()
     *this = Unit();
 }
 
-int Unit::defaultDigits() const {
+int Unit::defaultDigits() const
+{
     int factor_digits = int(log10(factor));
     if (factor_digits < 0) {
         g_warning("factor = %f, factor_digits = %d", factor, factor_digits);
@@ -118,6 +132,62 @@ int Unit::defaultDigits() const {
     return factor_digits;
 }
 
+bool Unit::compatibleWith(const Unit &u) const
+{
+    // Percentages
+    if (type == UNIT_TYPE_DIMENSIONLESS || u.type == UNIT_TYPE_DIMENSIONLESS) {
+        return true;
+    }
+    
+    // Other units with same type
+    if (type == u.type) {
+        return true;
+    }
+    
+    // Different, incompatible types
+    return false;
+}
+bool Unit::compatibleWith(const Glib::ustring u) const
+{
+    static UnitTable unit_table;
+    return compatibleWith(unit_table.getUnit(u));
+}
+
+bool operator== (const Unit &u1, const Unit &u2)
+{
+    return (u1.type == u2.type && u1.name.compare(u2.name) == 0);
+}
+
+bool operator!= (const Unit &u1, const Unit &u2)
+{
+    return !(u1 == u2);
+}
+
+int Unit::svgUnit() const
+{
+    if (!abbr.compare("px"))
+        return 1;
+    if (!abbr.compare("pt"))
+        return 2;
+    if (!abbr.compare("pc"))
+        return 3;
+    if (!abbr.compare("mm"))
+        return 4;
+    if (!abbr.compare("cm"))
+        return 5;
+    if (!abbr.compare("in"))
+        return 6;
+    if (!abbr.compare("ft"))
+        return 7;
+    if (!abbr.compare("em"))
+        return 8;
+    if (!abbr.compare("ex"))
+        return 9;
+    if (!abbr.compare("%"))
+        return 10;
+    return 0;
+}
+
 UnitTable::UnitTable()
 {
     gchar *filename = g_build_filename(INKSCAPE_UIDIR, "units.xml", NULL);
@@ -125,21 +195,24 @@ UnitTable::UnitTable()
     g_free(filename);
 }
 
-UnitTable::~UnitTable() {
+UnitTable::~UnitTable()
+{
     for (UnitMap::iterator iter = _unit_map.begin(); iter != _unit_map.end(); ++iter)
     {
         delete (*iter).second;
     }
 }
 
-void UnitTable::addUnit(Unit const &u, bool primary) {
+void UnitTable::addUnit(Unit const &u, bool primary)
+{
     _unit_map[u.abbr] = new Unit(u);
     if (primary) {
         _primary_unit[u.type] = u.abbr;
     }
 }
 
-Unit UnitTable::getUnit(Glib::ustring const &unit_abbr) const {
+Unit UnitTable::getUnit(Glib::ustring const &unit_abbr) const
+{
     UnitMap::const_iterator iter = _unit_map.find(unit_abbr);
     if (iter != _unit_map.end()) {
         return *((*iter).second);
@@ -148,7 +221,29 @@ Unit UnitTable::getUnit(Glib::ustring const &unit_abbr) const {
     }
 }
 
-bool UnitTable::deleteUnit(Unit const &u) {
+Quantity UnitTable::getQuantity(Glib::ustring const& q) const
+{
+    Glib::MatchInfo match_info;
+    
+    // Extract value
+    double value = 0;
+    Glib::RefPtr<Glib::Regex> value_regex = Glib::Regex::create("[-+]*[\\d+]*\\.*[\\d+]*[eE]*[-+]*\\d+");
+    if (value_regex->match(q, match_info)) {
+        value = atof(match_info.fetch(0).c_str());
+    }
+    
+    // Extract unit abbreviation
+    Glib::ustring abbr;
+    Glib::RefPtr<Glib::Regex> unit_regex = Glib::Regex::create("[A-z%]+");
+    if (unit_regex->match(q, match_info)) {
+        abbr = match_info.fetch(0);
+    }
+    
+    return Quantity(value, abbr);
+}
+
+bool UnitTable::deleteUnit(Unit const &u)
+{
     bool deleted = false;
     // Cannot delete the primary unit type since it's
     // used for conversions
@@ -208,6 +303,8 @@ bool UnitTable::save(std::string const &filename) {
     return true;
 }
 
+Inkscape::Util::UnitTable unit_table;
+
 void UnitParser::on_start_element(Ctx &ctx, Glib::ustring const &name, AttrMap const &attrs)
 {
     if (name == "unit") {
@@ -256,9 +353,75 @@ void UnitParser::on_end_element(Ctx &ctx, Glib::ustring const &name)
     }
 }
 
+Quantity::Quantity(double q, const Unit &u)
+{
+    unit = new Unit(u);
+    quantity = q;
+}
+Quantity::Quantity(double q, const Glib::ustring u)
+{
+    unit = new Unit(unit_table.getUnit(u));
+    quantity = q;
+}
+
+bool Quantity::compatibleWith(const Unit &u) const
+{
+    return unit->compatibleWith(u);
+}
+bool Quantity::compatibleWith(const Glib::ustring u) const
+{
+    return compatibleWith(unit_table.getUnit(u));
+}
+
+double Quantity::value(const Unit &u) const
+{
+    return convert(quantity, *unit, u);
+}
+double Quantity::value(const Glib::ustring u) const
+{
+    return value(unit_table.getUnit(u));
+}
+
+Glib::ustring Quantity::string(const Unit &u) const {
+    return Glib::ustring::format(std::fixed, std::setprecision(2), value(u)) + " " + unit->abbr;
+}
+Glib::ustring Quantity::string(const Glib::ustring u) const {
+    return string(unit_table.getUnit(u));
+}
+Glib::ustring Quantity::string() const {
+    return string(*unit);
+}
+
+double Quantity::convert(const double from_dist, const Unit &from, const Unit &to)
+{
+    // Percentage
+    if (to.type == UNIT_TYPE_DIMENSIONLESS) {
+        return from_dist * to.factor;
+    }
+    
+    // Incompatible units
+    if (from.type != to.type) {
+        return -1;
+    }
+    
+    // Compatible units
+    return from_dist * from.factor / to.factor;
+}
+double Quantity::convert(const double from_dist, const Glib::ustring from, const Unit &to)
+{
+    return convert(from_dist, unit_table.getUnit(from), to);
+}
+double Quantity::convert(const double from_dist, const Unit &from, const Glib::ustring to)
+{
+    return convert(from_dist, from, unit_table.getUnit(to));
+}
+double Quantity::convert(const double from_dist, const Glib::ustring from, const Glib::ustring to)
+{
+    return convert(from_dist, unit_table.getUnit(from), unit_table.getUnit(to));
+}
+
 } // namespace Util
 } // namespace Inkscape
-
 
 /*
   Local Variables:

@@ -29,6 +29,8 @@
 
 #include <string.h>
 
+using Inkscape::Util::unit_table;
+
 namespace Inkscape {
 namespace Util {
 
@@ -77,8 +79,6 @@ typedef struct
  */
 static bool unitresolverproc  (const gchar* identifier, GimpEevlQuantity *result, Unit* unit)
 {
-    static UnitTable unit_table;
-
     if (!unit) {
         result->value = 1;
         result->dimension = 1;

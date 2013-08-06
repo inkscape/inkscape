@@ -18,7 +18,7 @@
 #include "ui/widget/registered-widget.h"
 #include <sigc++/sigc++.h>
 
-#include "helper/units.h"
+#include "util/units.h"
 
 #include <gtkmm/alignment.h>
 #include <gtkmm/expander.h>
@@ -64,7 +64,7 @@ public:
     PaperSize(const Glib::ustring &nameArg,
 	          double smallerArg,
 	          double largerArg,
-			  SPUnitId unitArg)
+			  Inkscape::Util::Unit unitArg)
 	    {
 	    name    = nameArg;
 	    smaller = smallerArg;
@@ -108,7 +108,7 @@ public:
     /**
      * The units (px, pt, mm, etc) of this specification
      */	     
-    SPUnitId unit;
+    Inkscape::Util::Unit unit;
 
 private:
 
@@ -117,7 +117,7 @@ private:
 	    name    = "";
 	    smaller = 0.0;
 	    larger  = 0.0;
-	    unit    = SP_UNIT_PX;
+	    unit    = unit_table.getUnit("px");
 	    }
 
 	void assign(const PaperSize &other)

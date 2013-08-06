@@ -22,8 +22,11 @@
 #include "sp-gradient.h"
 #include "sp-stop.h"
 #include "svg/svg-color.h"
+#include "util/units.h"
+#include "ui/widget/unit-menu.h"
 
 using Inkscape::DocumentUndo;
+using Inkscape::Util::unit_table;
 
 /**
  * Creates a new widget for the line stroke paint.
@@ -189,21 +192,21 @@ StrokeStyle::StrokeStyle() :
     sp_dialog_defocus_on_enter_cpp(widthSpin);
 
     hb->pack_start(*widthSpin, false, false, 0);
-    unitSelector = sp_unit_selector_new(SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
-    Gtk::Widget *us = manage(Glib::wrap(unitSelector));
+    unitSelector = new Inkscape::UI::Widget::UnitMenu();
+    unitSelector->setUnitType(Inkscape::Util::UNIT_TYPE_LINEAR);
+    Gtk::Widget *us = manage(unitSelector);
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
 
-    if (desktop)
-        sp_unit_selector_set_unit (SP_UNIT_SELECTOR(unitSelector), sp_desktop_namedview(desktop)->doc_units);
-    sp_unit_selector_add_unit(SP_UNIT_SELECTOR(unitSelector), &sp_unit_get_by_id(SP_UNIT_PERCENT), 0);
-    g_signal_connect ( G_OBJECT (unitSelector), "set_unit", G_CALLBACK (StrokeStyle::setStrokeWidthUnit), this );
+    unitSelector->addUnit(unit_table.getUnit("%"));
+    if (desktop) {
+        unitSelector->setUnit(sp_desktop_namedview(desktop)->doc_units->abbr);
+        _old_unit = new Inkscape::Util::Unit(*sp_desktop_namedview(desktop)->doc_units);
+    }
+    _old_unit = new Inkscape::Util::Unit(unitSelector->getUnit());
+    widthSpin->setUnitMenu(unitSelector);
+    unitChangedConn = unitSelector->signal_changed().connect(sigc::mem_fun(*this, &StrokeStyle::unitChangedCB));
+    
     us->show();
-
-#if WITH_GTKMM_3_0
-    sp_unit_selector_add_adjustment( SP_UNIT_SELECTOR(unitSelector), GTK_ADJUSTMENT((*widthAdj)->gobj()) );
-#else
-    sp_unit_selector_add_adjustment( SP_UNIT_SELECTOR(unitSelector), GTK_ADJUSTMENT(widthAdj->gobj()) );
-#endif
 
     hb->pack_start(*us, FALSE, FALSE, 0);
 
@@ -519,75 +522,17 @@ void StrokeStyle::updateMarkerHist(SPMarkerLoc const which)
 }
 
 /**
- * Sets the stroke width units for all selected items.
- * Also handles absolute and dimensionless units.
+ * Callback for when UnitMenu widget is modified.
+ * Triggers update action.
  */
-gboolean StrokeStyle::setStrokeWidthUnit(SPUnitSelector *,
-                                      SPUnit const *old,
-                                      SPUnit const *new_units,
-                                      StrokeStyle *spw)
+void StrokeStyle::unitChangedCB()
 {
-    if (spw->update) {
-        return FALSE;
+    Inkscape::Util::Unit new_unit = unitSelector->getUnit();
+    if (new_unit.type == Inkscape::Util::UNIT_TYPE_DIMENSIONLESS) {
+        widthSpin->set_value(100);
     }
-
-    if (!spw->desktop) {
-        return FALSE;
-    }
-
-    Inkscape::Selection *selection = sp_desktop_selection (spw->desktop);
-
-    if (selection->isEmpty())
-        return FALSE;
-
-    GSList const *objects = selection->itemList();
-
-    if ((old->base == SP_UNIT_ABSOLUTE || old->base == SP_UNIT_DEVICE) &&
-       (new_units->base == SP_UNIT_DIMENSIONLESS)) {
-
-        /* Absolute to percentage */
-        spw->update = true;
-
-#if WITH_GTKMM_3_0
-        float w = sp_units_get_pixels( (*spw->widthAdj)->get_value(), *old);
-#else
-        float w = sp_units_get_pixels(spw->widthAdj->get_value(), *old);
-#endif
-
-        gdouble average = stroke_average_width (objects);
-
-        if ((average == Geom::infinity()) || (average < 1e-8)){ //less than 1e-8: to campare against zero, while taking numeric accuracy into account
-            return FALSE;
-        }
-
-#if WITH_GTKMM_3_0
-        (*spw->widthAdj)->set_value(100.0 * w / average);
-#else
-        spw->widthAdj->set_value(100.0 * w / average);
-#endif
-
-        spw->update = false;
-        return TRUE;
-
-    } else if ((old->base == SP_UNIT_DIMENSIONLESS) &&
-              (new_units->base == SP_UNIT_ABSOLUTE || new_units->base == SP_UNIT_DEVICE)) {
-
-        /* Percentage to absolute */
-        spw->update = true;
-
-        gdouble average = stroke_average_width (objects);
-
-#if WITH_GTKMM_3_0
-        (*spw->widthAdj)->set_value (sp_pixels_get_units (0.01 * (*spw->widthAdj)->get_value() * average, *new_units));
-#else
-        spw->widthAdj->set_value (sp_pixels_get_units (0.01 * spw->widthAdj->get_value() * average, *new_units));
-#endif
-
-        spw->update = false;
-        return TRUE;
-    }
-
-    return FALSE;
+    widthSpin->set_value(Inkscape::Util::Quantity::convert(widthSpin->get_value(), *_old_unit, new_unit));
+    _old_unit = new Inkscape::Util::Unit(new_unit);
 }
 
 /**
@@ -877,21 +822,21 @@ StrokeStyle::updateLine()
     } else {
         table->set_sensitive(true);
 
-        SPUnit const *unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(unitSelector));
+        Inkscape::Util::Unit const *unit = new Inkscape::Util::Unit(unitSelector->getUnit());
 
         if (result_sw == QUERY_STYLE_MULTIPLE_AVERAGED) {
-            sp_unit_selector_set_unit(SP_UNIT_SELECTOR(unitSelector), &sp_unit_get_by_id(SP_UNIT_PERCENT));
+            unitSelector->setUnit("%");
         } else {
             // same width, or only one object; no sense to keep percent, switch to absolute
-            if (unit->base != SP_UNIT_ABSOLUTE && unit->base != SP_UNIT_DEVICE) {
-                sp_unit_selector_set_unit(SP_UNIT_SELECTOR(unitSelector), sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units);
+            if (unit->type != Inkscape::Util::UNIT_TYPE_LINEAR) {
+                unitSelector->setUnit(sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units->abbr);
             }
         }
 
-        unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(unitSelector));
+        unit = new Inkscape::Util::Unit(unitSelector->getUnit());
 
-        if (unit->base == SP_UNIT_ABSOLUTE || unit->base == SP_UNIT_DEVICE) {
-            double avgwidth = sp_pixels_get_units (query->stroke_width.computed, *unit);
+        if (unit->type == Inkscape::Util::UNIT_TYPE_LINEAR) {
+            double avgwidth = Inkscape::Util::Quantity::convert(query->stroke_width.computed, "px", *unit);
 #if WITH_GTKMM_3_0
             (*widthAdj)->set_value(avgwidth);
 #else
@@ -1017,7 +962,7 @@ StrokeStyle::scaleLine()
         double const miterlimit = miterLimitAdj->get_value();
 #endif
 
-        SPUnit const *const unit = sp_unit_selector_get_unit(SP_UNIT_SELECTOR(unitSelector));
+        Inkscape::Util::Unit const *const unit = new Inkscape::Util::Unit(unitSelector->getUnit());
 
         double *dash, offset;
         int ndash;
@@ -1026,8 +971,8 @@ StrokeStyle::scaleLine()
         for (GSList const *i = items; i != NULL; i = i->next) {
             /* Set stroke width */
             double width;
-            if (unit->base == SP_UNIT_ABSOLUTE || unit->base == SP_UNIT_DEVICE) {
-                width = sp_units_get_pixels (width_typed, *unit);
+            if (unit->type == Inkscape::Util::UNIT_TYPE_LINEAR) {
+                width = Inkscape::Util::Quantity::convert(width_typed, *unit, "px");
             } else { // percentage
                 gdouble old_w = SP_OBJECT(i->data)->style->stroke_width.computed;
                 width = old_w * width_typed / 100;
@@ -1053,7 +998,7 @@ StrokeStyle::scaleLine()
 
         g_free(dash);
 
-        if (unit->base != SP_UNIT_ABSOLUTE && unit->base != SP_UNIT_DEVICE) {
+        if (unit->type != Inkscape::Util::UNIT_TYPE_LINEAR) {
             // reset to 100 percent
 #if WITH_GTKMM_3_0
             (*widthAdj)->set_value(100.0);

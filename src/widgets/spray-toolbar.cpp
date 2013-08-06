@@ -52,13 +52,9 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
 #include "../pen-context.h"
 #include "../spray-context.h"
 
-using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
@@ -131,7 +127,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayWidthAction",
                                                               _("Width"), _("Width:"), _("The width of the spray area (relative to the visible canvas area)"),
                                                               "/tools/spray/width", 15,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-spray",
+                                                              GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-spray",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_spray_width_value_changed,  1, 0 );
@@ -147,7 +143,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayMeanAction",
                                                               _("Focus"), _("Focus:"), _("0 to spray a spot; increase to enlarge the ring radius"),
                                                               "/tools/spray/mean", 0,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-mean",
+                                                              GTK_WIDGET(desktop->canvas), holder, TRUE, "spray-mean",
                                                               0, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_spray_mean_value_changed,  1, 0 );
@@ -163,7 +159,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
         EgeAdjustmentAction *eact = create_adjustment_action( "SprayStandard_deviationAction",
                                                               C_("Spray tool", "Scatter"), C_("Spray tool", "Scatter:"), _("Increase to scatter sprayed objects"),
                                                               "/tools/spray/standard_deviation", 70,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-standard_deviation",
+                                                              GTK_WIDGET(desktop->canvas), holder, TRUE, "spray-standard_deviation",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_spray_standard_deviation_value_changed,  1, 0 );
@@ -224,7 +220,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               _("Amount"), _("Amount:"),
                                                               _("Adjusts the number of items sprayed per click"),
                                                               "/tools/spray/population", 70,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-population",
+                                                              GTK_WIDGET(desktop->canvas), holder, TRUE, "spray-population",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_spray_population_value_changed,  1, 0 );
@@ -255,7 +251,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               // xgettext:no-c-format
                                                               _("Variation of the rotation of the sprayed objects; 0% for the same rotation than the original object"),
                                                               "/tools/spray/rotation_variation", 0,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-rotation",
+                                                              GTK_WIDGET(desktop->canvas), holder, TRUE, "spray-rotation",
                                                               0, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_spray_rotation_value_changed,  1, 0 );
@@ -273,7 +269,7 @@ void sp_spray_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObj
                                                               // xgettext:no-c-format
                                                               _("Variation in the scale of the sprayed objects; 0% for the same scale than the original object"),
                                                               "/tools/spray/scale_variation", 0,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "spray-scale",
+                                                              GTK_WIDGET(desktop->canvas), holder, TRUE, "spray-scale",
                                                               0, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_spray_scale_value_changed,  1, 0 );

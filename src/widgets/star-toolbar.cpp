@@ -53,14 +53,10 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
 #include "../pen-context.h"
 #include "../sp-star.h"
 
 
-using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
@@ -505,7 +501,7 @@ void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         eact = create_adjustment_action( "MagnitudeAction",
                                          _("Corners"), _("Corners:"), _("Number of corners of a polygon or star"),
                                          "/tools/shapes/star/magnitude", 3,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          3, 1024, 1, 5,
                                          labels, values, G_N_ELEMENTS(labels),
                                          sp_stb_magnitude_value_changed,
@@ -524,7 +520,7 @@ void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
                                          // Base radius is the same for the closest handle.
                                          _("Base radius to tip radius ratio"),
                                          "/tools/shapes/star/proportion", 0.5,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          0.01, 1.0, 0.01, 0.1,
                                          labels, values, G_N_ELEMENTS(labels),
                                          sp_stb_proportion_value_changed );
@@ -545,7 +541,7 @@ void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         eact = create_adjustment_action( "RoundednessAction",
                                          _("Rounded"), _("Rounded:"), _("How much rounded are the corners (0 for sharp)"),
                                          "/tools/shapes/star/rounded", 0.0,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          -10.0, 10.0, 0.01, 0.1,
                                          labels, values, G_N_ELEMENTS(labels),
                                          sp_stb_rounded_value_changed );
@@ -560,7 +556,7 @@ void sp_star_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         eact = create_adjustment_action( "RandomizationAction",
                                          _("Randomized"), _("Randomized:"), _("Scatter randomly the corners and angles"),
                                          "/tools/shapes/star/randomized", 0.0,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          -10.0, 10.0, 0.001, 0.01,
                                          labels, values, G_N_ELEMENTS(labels),
                                          sp_stb_randomized_value_changed, 0.1, 3 );

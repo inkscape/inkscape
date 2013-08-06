@@ -28,7 +28,6 @@
 #include "document.h"
 #include "desktop-handles.h"
 #include "desktop.h"
-#include "helper/units.h"
 #include "inkscape.h"
 #include "io/sys.h"
 #include "preferences.h"
@@ -1432,7 +1431,7 @@ void DocumentProperties::update()
     _rcb_shad.setActive (nv->showpageshadow);
 
     if (nv->doc_units)
-        _rum_deflt.setUnit (nv->doc_units);
+        _rum_deflt.setUnit (nv->doc_units->abbr);
 
     double const doc_w_px = sp_desktop_document(dt)->getWidth();
     double const doc_h_px = sp_desktop_document(dt)->getHeight();

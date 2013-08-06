@@ -56,13 +56,9 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
 
 #include "../pen-context.h"
 
-using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
@@ -451,7 +447,7 @@ void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                                               _("Pen Width"), _("Width:"),
                                                               _("The width of the calligraphic pen (relative to the visible canvas area)"),
                                                               "/tools/calligraphic/width", 15,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-calligraphy",
+                                                              GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-calligraphy",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_width_value_changed,  1, 0 );
@@ -468,7 +464,7 @@ void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                                               _("Stroke Thinning"), _("Thinning:"),
                                                               _("How much velocity thins the stroke (> 0 makes fast strokes thinner, < 0 makes them broader, 0 makes width independent of velocity)"),
                                                               "/tools/calligraphic/thinning", 10,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                                              GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                                               -100, 100, 1, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_velthin_value_changed, 1, 0);
@@ -484,7 +480,7 @@ void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                                               _("Pen Angle"), _("Angle:"),
                                                               _("The angle of the pen's nib (in degrees; 0 = horizontal; has no effect if fixation = 0)"),
                                                               "/tools/calligraphic/angle", 30,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "calligraphy-angle",
+                                                              GTK_WIDGET(desktop->canvas), holder, TRUE, "calligraphy-angle",
                                                               -90.0, 90.0, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_angle_value_changed, 1, 0 );
@@ -502,7 +498,7 @@ void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                                               _("Fixation"), _("Fixation:"),
                                                               _("Angle behavior (0 = nib always perpendicular to stroke direction, 100 = fixed angle)"),
                                                               "/tools/calligraphic/flatness", 90,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                                              GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                                               0.0, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_flatness_value_changed, 1, 0);
@@ -519,7 +515,7 @@ void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                                               _("Cap rounding"), _("Caps:"),
                                                               _("Increase to make caps at the ends of strokes protrude more (0 = no caps, 1 = round caps)"),
                                                               "/tools/calligraphic/cap_rounding", 0.0,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                                              GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                                               0.0, 5.0, 0.01, 0.1,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_cap_rounding_value_changed, 0.01, 2 );
@@ -535,7 +531,7 @@ void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                                               _("Stroke Tremor"), _("Tremor:"),
                                                               _("Increase to make strokes rugged and trembling"),
                                                               "/tools/calligraphic/tremor", 0.0,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                                              GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                                               0.0, 100, 1, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_tremor_value_changed, 1, 0);
@@ -553,7 +549,7 @@ void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                                               _("Pen Wiggle"), _("Wiggle:"),
                                                               _("Increase to make the pen waver and wiggle"),
                                                               "/tools/calligraphic/wiggle", 0.0,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                                              GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                                               0.0, 100, 1, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_wiggle_value_changed, 1, 0);
@@ -570,7 +566,7 @@ void sp_calligraphy_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions
                                                               _("Pen Mass"), _("Mass:"),
                                                               _("Increase to make the pen drag behind, as if slowed by inertia"),
                                                               "/tools/calligraphic/mass", 2.0,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                                              GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                                               0.0, 100, 1, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_ddc_mass_value_changed, 1, 0);

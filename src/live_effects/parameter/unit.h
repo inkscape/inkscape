@@ -10,9 +10,12 @@
  */
 
 #include "live_effects/parameter/parameter.h"
-#include <helper/units.h>
 
 namespace Inkscape {
+
+namespace Util {
+    class Unit;
+}
 
 namespace LivePathEffect {
 
@@ -23,22 +26,22 @@ public:
 		  const Glib::ustring& key, 
 		  Inkscape::UI::Widget::Registry* wr,
 		  Effect* effect,
-		  SPUnitId default_value = SP_UNIT_PX);
+		  Glib::ustring default_unit = "px");
     virtual ~UnitParam();
 
     virtual bool param_readSVGValue(const gchar * strvalue);
     virtual gchar * param_getSVGValue() const;
     virtual void param_set_default();
-    void param_set_value(SPUnit const *val);
+    void param_set_value(Inkscape::Util::Unit const &val);
     const gchar *get_abbreviation() const;
 
     virtual Gtk::Widget * param_newWidget();
 
-    operator SPUnit const *() const { return unit; }
+    operator Inkscape::Util::Unit const *() const { return unit; }
 
 private:
-    SPUnit const *unit;
-    SPUnit const *defunit;
+    Inkscape::Util::Unit const *unit;
+    Inkscape::Util::Unit const *defunit;
 
     UnitParam(const UnitParam&);
     UnitParam& operator=(const UnitParam&);

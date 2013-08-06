@@ -10,7 +10,6 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "helper/units.h"
 #include "snap-enums.h"
 
 namespace Inkscape

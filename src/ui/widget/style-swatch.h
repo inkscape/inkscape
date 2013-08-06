@@ -30,7 +30,6 @@
 #include "button.h"
 #include "preferences.h"
 
-struct SPUnit;
 struct SPStyle;
 class SPCSSAttr;
 
@@ -43,6 +42,11 @@ class Table;
 }
 
 namespace Inkscape {
+
+namespace Util {
+    class Unit;
+}
+
 namespace UI {
 namespace Widget {
 
@@ -93,7 +97,7 @@ private:
     Gtk::EventBox _stroke_width_place;
     Gtk::Label _stroke_width;
 
-    SPUnit *_sw_unit;
+    Inkscape::Util::Unit *_sw_unit;
 
 friend class ToolObserver;
 };

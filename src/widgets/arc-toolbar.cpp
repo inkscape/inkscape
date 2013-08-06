@@ -56,14 +56,10 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
 #include "../pen-context.h"
 #include "../sp-ellipse.h"
 #include "../mod360.h"
 
-using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
@@ -341,7 +337,7 @@ void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObjec
                                          _("Start"), _("Start:"),
                                          _("The angle (in degrees) from the horizontal to the arc's start point"),
                                          "/tools/shapes/arc/start", 0.0,
-                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, TRUE, "altx-arc",
+                                         GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-arc",
                                          -360.0, 360.0, 1.0, 10.0,
                                          0, 0, 0,
                                          sp_arctb_start_value_changed);
@@ -354,7 +350,7 @@ void sp_arc_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObjec
                                          _("End"), _("End:"),
                                          _("The angle (in degrees) from the horizontal to the arc's end point"),
                                          "/tools/shapes/arc/end", 0.0,
-                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          -360.0, 360.0, 1.0, 10.0,
                                          0, 0, 0,
                                          sp_arctb_end_value_changed);

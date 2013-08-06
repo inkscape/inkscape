@@ -16,7 +16,6 @@
  */
 
 #include "pen-context.h"
-#include "helper/units.h"
 
 #define SP_TYPE_LPETOOL_CONTEXT (sp_lpetool_context_get_type())
 #define SP_LPETOOL_CONTEXT(o) (G_TYPE_CHECK_INSTANCE_CAST((o), SP_TYPE_LPETOOL_CONTEXT, SPLPEToolContext))

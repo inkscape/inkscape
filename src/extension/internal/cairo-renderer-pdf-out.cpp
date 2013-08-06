@@ -39,7 +39,7 @@
 #include <2geom/affine.h>
 #include "document.h"
 
-#include "unit-constants.h"
+#include "util/units.h"
 
 namespace Inkscape {
 namespace Extension {
@@ -197,7 +197,7 @@ CairoRendererPdfOutput::save(Inkscape::Extension::Output *mod, SPDocument *doc, 
 
     float new_bleedmargin_px = 0.;
     try {
-        new_bleedmargin_px = mod->get_param_float("bleed") * PX_PER_MM;
+        new_bleedmargin_px = mod->get_param_float("bleed") * Inkscape::Util::Quantity::convert(1, "mm", "px");
     }
     catch(...) {
         g_warning("Parameter <bleed> might not exist");

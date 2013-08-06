@@ -44,11 +44,10 @@
 #include "sp-pattern.h"
 #include "sp-mask.h"
 #include "sp-clippath.h"
+#include "util/units.h"
 #ifdef WIN32
 #include "libnrtype/FontFactory.h" // USE_PANGO_WIN32
 #endif
-
-#include <unit-constants.h>
 
 #include "cairo-render-context.h"
 #include "cairo-renderer.h"
@@ -855,7 +854,7 @@ CairoRenderContext::_finishSurfaceSetup(cairo_surface_t *surface, cairo_matrix_t
     _surface = surface;
 
     if (_vector_based_target) {
-        cairo_scale(_cr, PT_PER_PX, PT_PER_PX);
+        cairo_scale(_cr, Inkscape::Util::Quantity::convert(1, "px", "pt"), Inkscape::Util::Quantity::convert(1, "px", "pt"));
     } else if (cairo_surface_get_content(_surface) != CAIRO_CONTENT_ALPHA) {
         // set background color on non-alpha surfaces
         // TODO: bgcolor should be derived from SPDocument

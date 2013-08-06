@@ -19,6 +19,11 @@
 
 namespace Inkscape {
 namespace UI {
+
+namespace Widget {
+    class UnitMenu;
+}
+
 namespace Dialog {
 
 class CloneTiler : public Widget::Panel {
@@ -45,8 +50,9 @@ protected:
     static void clonetiler_do_pick_toggled(GtkToggleButton *tb, GtkWidget *dlg);
     static void clonetiler_pick_to(GtkToggleButton *tb, gpointer data);
     static void clonetiler_xy_changed(GtkAdjustment *adj, gpointer data);
-    static void clonetiler_fill_width_changed(GtkAdjustment *adj, GtkWidget *u);
-    static void clonetiler_fill_height_changed(GtkAdjustment *adj, GtkWidget *u);
+    static void clonetiler_fill_width_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u);
+    static void clonetiler_fill_height_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u);
+    void clonetiler_unit_changed();
     static void clonetiler_switch_to_create(GtkToggleButton */*tb*/, GtkWidget *dlg);
     static void clonetiler_switch_to_fill(GtkToggleButton */*tb*/, GtkWidget *dlg);
     static void clonetiler_keep_bbox_toggled(GtkToggleButton *tb, gpointer /*data*/);
@@ -112,12 +118,22 @@ private:
     DesktopTracker deskTrack;
     Inkscape::UI::Widget::ColorPicker *color_picker;
     GtkSizeGroup* table_row_labels;
+    Inkscape::UI::Widget::UnitMenu *unit_menu;
+
+#if WITH_GTKMM_3_0
+    Glib::RefPtr<Gtk::Adjustment> fill_width;
+    Glib::RefPtr<Gtk::Adjustment> fill_height;
+#else
+    Gtk::Adjustment *fill_width;
+    Gtk::Adjustment *fill_height;
+#endif
 
     sigc::connection desktopChangeConn;
     sigc::connection selectChangedConn;
     sigc::connection subselChangedConn;
     sigc::connection selectModifiedConn;
     sigc::connection color_changed_connection;
+    sigc::connection unitChangedConn;
 
     /**
      * Can be invoked for setting the desktop. Currently not used.

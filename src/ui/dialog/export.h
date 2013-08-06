@@ -172,6 +172,11 @@ private:
 #endif
 
     /**
+     * Unit changed callback
+     */
+    void onUnitChanged();
+
+    /**
      * Hide except selected callback
      */
     void onHideExceptSelected ();
@@ -330,7 +335,7 @@ private:
 
     /* Unit selector widgets */
     Gtk::HBox unitbox;
-    Gtk::Widget* unit_selector;
+    Inkscape::UI::Widget::UnitMenu *unit_selector;
     Gtk::Label units_label;
 
     /* Filename widgets  */
@@ -365,6 +370,7 @@ private:
     sigc::connection selectChangedConn;
     sigc::connection subselChangedConn;
     sigc::connection selectModifiedConn;
+    sigc::connection unitChangedConn;
 
 };
 

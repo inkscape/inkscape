@@ -34,8 +34,8 @@
 #include "document.h"
 #include "document-undo.h"
 #include "filter-chemistry.h"
-#include "helper/unit-menu.h"
-#include "helper/units.h"
+#include "ui/widget/unit-menu.h"
+#include "util/units.h"
 #include "helper/window.h"
 #include "inkscape.h"
 #include "interface.h"
@@ -58,6 +58,7 @@
 #include "sp-root.h"
 
 using Inkscape::DocumentUndo;
+using Inkscape::Util::unit_table;
 
 namespace Inkscape {
 namespace UI {
@@ -1092,35 +1093,36 @@ CloneTiler::CloneTiler (void) :
                 g_object_set_data (G_OBJECT(dlg), "widthheight", (gpointer) hb);
 
                 // unitmenu
-                GtkWidget *u = sp_unit_selector_new (SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE);
-                sp_unit_selector_set_unit (SP_UNIT_SELECTOR(u), sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units);
+                unit_menu = new Inkscape::UI::Widget::UnitMenu();
+                unit_menu->setUnitType(Inkscape::Util::UNIT_TYPE_LINEAR);
+                unit_menu->setUnit(sp_desktop_namedview(SP_ACTIVE_DESKTOP)->doc_units->abbr);
+                unitChangedConn = unit_menu->signal_changed().connect(sigc::mem_fun(*this, &CloneTiler::clonetiler_unit_changed));
 
                 {
                     // Width spinbutton
 #if WITH_GTKMM_3_0
-                    Glib::RefPtr<Gtk::Adjustment> a = Gtk::Adjustment::create(0.0, -1e6, 1e6, 1.0, 10.0, 0);
+                    fill_width = Gtk::Adjustment::create(0.0, -1e6, 1e6, 1.0, 10.0, 0);
 #else
-                    Gtk::Adjustment *a = new Gtk::Adjustment (0.0, -1e6, 1e6, 1.0, 10.0, 0);
+                    fill_width = new Gtk::Adjustment (0.0, -1e6, 1e6, 1.0, 10.0, 0);
 #endif
-                    sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a->gobj()));
 
                     double value = prefs->getDouble(prefs_path + "fillwidth", 50.0);
-                    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
-                    gdouble const units = sp_pixels_get_units (value, unit);
-                    a->set_value (units);
+                    Inkscape::Util::Unit const unit = unit_menu->getUnit();
+                    gdouble const units = Inkscape::Util::Quantity::convert(value, "px", unit);
+                    fill_width->set_value (units);
 
 #if WITH_GTKMM_3_0
-                    Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton(a, 1.0, 2);
+                    Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton(fill_width, 1.0, 2);
 #else
-                    Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton (*a, 1.0, 2);
+                    Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton (*fill_width, 1.0, 2);
 #endif
                     e->set_tooltip_text (_("Width of the rectangle to be filled"));
                     e->set_width_chars (7);
                     e->set_digits (4);
                     gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(e->gobj()), TRUE, TRUE, 0);
                     // TODO: C++ification
-            g_signal_connect(G_OBJECT(a->gobj()), "value_changed",
-                                       G_CALLBACK(clonetiler_fill_width_changed), u);
+            g_signal_connect(G_OBJECT(fill_width->gobj()), "value_changed",
+                                       G_CALLBACK(clonetiler_fill_width_changed), unit_menu);
                 }
                 {
                     GtkWidget *l = gtk_label_new ("");
@@ -1132,32 +1134,31 @@ CloneTiler::CloneTiler (void) :
                 {
                     // Height spinbutton
 #if WITH_GTKMM_3_0
-                    Glib::RefPtr<Gtk::Adjustment> a = Gtk::Adjustment::create(0.0, -1e6, 1e6, 1.0, 10.0, 0);
+                    fill_height = Gtk::Adjustment::create(0.0, -1e6, 1e6, 1.0, 10.0, 0);
 #else
-                    Gtk::Adjustment *a = new Gtk::Adjustment (0.0, -1e6, 1e6, 1.0, 10.0, 0);
+                    fill_height = new Gtk::Adjustment (0.0, -1e6, 1e6, 1.0, 10.0, 0);
 #endif
-                    sp_unit_selector_add_adjustment (SP_UNIT_SELECTOR (u), GTK_ADJUSTMENT (a->gobj()));
 
                     double value = prefs->getDouble(prefs_path + "fillheight", 50.0);
-                    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
-                    gdouble const units = sp_pixels_get_units (value, unit);
-                    a->set_value (units);
+                    Inkscape::Util::Unit const unit = unit_menu->getUnit();
+                    gdouble const units = Inkscape::Util::Quantity::convert(value, "px", unit);
+                    fill_height->set_value (units);
 
 #if WITH_GTKMM_3_0
-                    Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton(a, 1.0, 2);
+                    Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton(fill_height, 1.0, 2);
 #else
-                    Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton (*a, 1.0, 2);
+                    Inkscape::UI::Widget::SpinButton *e = new Inkscape::UI::Widget::SpinButton (*fill_height, 1.0, 2);
 #endif
                     e->set_tooltip_text (_("Height of the rectangle to be filled"));
                     e->set_width_chars (7);
                     e->set_digits (4);
                     gtk_box_pack_start (GTK_BOX (hb), GTK_WIDGET(e->gobj()), TRUE, TRUE, 0);
                     // TODO: C++ification
-            g_signal_connect(G_OBJECT(a->gobj()), "value_changed",
-                                       G_CALLBACK(clonetiler_fill_height_changed), u);
+            g_signal_connect(G_OBJECT(fill_height->gobj()), "value_changed",
+                                       G_CALLBACK(clonetiler_fill_height_changed), unit_menu);
                 }
 
-                gtk_box_pack_start (GTK_BOX (hb), u, TRUE, TRUE, 0);
+                gtk_box_pack_start (GTK_BOX (hb), (GtkWidget*) unit_menu->gobj(), TRUE, TRUE, 0);
                 clonetiler_table_attach (table, hb, 0.0, 2, 2);
 
             }
@@ -2944,26 +2945,39 @@ void CloneTiler::clonetiler_switch_to_fill(GtkToggleButton * /*tb*/, GtkWidget *
 
 
 
-void CloneTiler::clonetiler_fill_width_changed(GtkAdjustment *adj, GtkWidget *u)
+void CloneTiler::clonetiler_fill_width_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u)
 {
     gdouble const raw_dist = gtk_adjustment_get_value (adj);
-    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
-    gdouble const pixels = sp_units_get_pixels (raw_dist, unit);
+    Inkscape::Util::Unit const unit = u->getUnit();
+    gdouble const pixels = Inkscape::Util::Quantity::convert(raw_dist, unit, "px");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble(prefs_path + "fillwidth", pixels);
 }
 
-void CloneTiler::clonetiler_fill_height_changed(GtkAdjustment *adj, GtkWidget *u)
+void CloneTiler::clonetiler_fill_height_changed(GtkAdjustment *adj, Inkscape::UI::Widget::UnitMenu *u)
 {
     gdouble const raw_dist = gtk_adjustment_get_value (adj);
-    SPUnit const &unit = *sp_unit_selector_get_unit(SP_UNIT_SELECTOR(u));
-    gdouble const pixels = sp_units_get_pixels (raw_dist, unit);
+    Inkscape::Util::Unit const unit = u->getUnit();
+    gdouble const pixels = Inkscape::Util::Quantity::convert(raw_dist, unit, "px");
 
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     prefs->setDouble(prefs_path + "fillheight", pixels);
 }
 
+void CloneTiler::clonetiler_unit_changed()
+{
+    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    gdouble width_pixels = prefs->getDouble(prefs_path + "fillwidth");
+    gdouble height_pixels = prefs->getDouble(prefs_path + "fillheight");
+    
+    Inkscape::Util::Unit unit = unit_menu->getUnit();
+    
+    gdouble width_value = Inkscape::Util::Quantity::convert(width_pixels, "px", unit);
+    gdouble height_value = Inkscape::Util::Quantity::convert(height_pixels, "px", unit);
+    gtk_adjustment_set_value(fill_width->gobj(), width_value);
+    gtk_adjustment_set_value(fill_height->gobj(), height_value);
+}
 
 void CloneTiler::clonetiler_do_pick_toggled(GtkToggleButton *tb, GtkWidget *dlg)
 {
@@ -2976,7 +2990,6 @@ void CloneTiler::clonetiler_do_pick_toggled(GtkToggleButton *tb, GtkWidget *dlg)
         gtk_widget_set_sensitive (vvb, gtk_toggle_button_get_active (tb));
     }
 }
-
 
 }
 }

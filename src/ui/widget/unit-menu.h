@@ -127,10 +127,7 @@ public:
      */
     bool          isRadial() const;
 
-    UnitTable     &getUnitTable() {return _unit_table;}
-
 protected:
-    UnitTable     _unit_table;
     UnitType          _type;
 };
 

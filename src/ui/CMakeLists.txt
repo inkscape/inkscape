@@ -112,6 +112,7 @@ set(ui_SRC
 	widget/text.cpp
 	widget/tolerance-slider.cpp
 	widget/unit-menu.cpp
+	widget/unit-tracker.cpp
 
 	view/view.cpp
 	view/view-widget.cpp
@@ -240,6 +241,7 @@ set(ui_SRC
 	widget/text.h
 	widget/tolerance-slider.h
 	widget/unit-menu.h
+	widget/unit-tracker.h
 
 	view/edit-widget-interface.h
 	view/view-widget.h

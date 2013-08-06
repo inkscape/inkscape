@@ -10,6 +10,9 @@
 #include "live_effects/parameter/unit.h"
 #include "live_effects/effect.h"
 #include "verbs.h"
+#include "util/units.h"
+
+using Inkscape::Util::unit_table;
 
 namespace Inkscape {
 
@@ -18,10 +21,10 @@ namespace LivePathEffect {
 
 UnitParam::UnitParam( const Glib::ustring& label, const Glib::ustring& tip,
                               const Glib::ustring& key, Inkscape::UI::Widget::Registry* wr,
-                              Effect* effect, SPUnitId default_value)
+                              Effect* effect, Glib::ustring default_unit)
     : Parameter(label, tip, key, wr, effect)
 {
-    defunit = &sp_unit_get_by_id(default_value);;
+    defunit = new Inkscape::Util::Unit(unit_table.getUnit(default_unit));
     unit = defunit;
 }
 
@@ -32,9 +35,8 @@ UnitParam::~UnitParam()
 bool
 UnitParam::param_readSVGValue(const gchar * strvalue)
 {
-    SPUnit const *newval = sp_unit_get_by_abbreviation(strvalue);
-    if (newval) {
-        param_set_value(newval);
+    if (strvalue) {
+        param_set_value(unit_table.getUnit(strvalue));
         return true;
     }
     return false;
@@ -43,25 +45,25 @@ UnitParam::param_readSVGValue(const gchar * strvalue)
 gchar *
 UnitParam::param_getSVGValue() const
 {
-    return g_strdup(sp_unit_get_abbreviation(unit));
+    return g_strdup(unit->abbr.c_str());
 }
 
 void
 UnitParam::param_set_default()
 {
-    param_set_value(defunit);
+    param_set_value(*defunit);
 }
 
 void
-UnitParam::param_set_value(SPUnit const *val)
+UnitParam::param_set_value(Inkscape::Util::Unit const &val)
 {
-    unit = val;
+    unit = new Inkscape::Util::Unit(val);
 }
 
 const gchar *
 UnitParam::get_abbreviation() const
 {
-    return sp_unit_get_abbreviation(unit);
+    return unit->abbr.c_str();
 }
 
 Gtk::Widget *
@@ -74,7 +76,7 @@ UnitParam::param_newWidget()
                                                      param_effect->getRepr(),
                                                      param_effect->getSPDoc()));
 
-    unit_menu->setUnit(unit);
+    unit_menu->setUnit(unit->abbr);
     unit_menu->set_undo_parameters(SP_VERB_DIALOG_LIVE_PATH_EFFECT, _("Change unit parameter"));
 
     return dynamic_cast<Gtk::Widget *> (unit_menu);

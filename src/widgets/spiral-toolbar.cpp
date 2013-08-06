@@ -53,13 +53,9 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
 #include "../pen-context.h"
 #include "../sp-spiral.h"
 
-using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
@@ -263,7 +259,7 @@ void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
         eact = create_adjustment_action( "SpiralRevolutionAction",
                                          _("Number of turns"), _("Turns:"), _("Number of revolutions"),
                                          "/tools/shapes/spiral/revolution", 3.0,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-spiral",
+                                         GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-spiral",
                                          0.01, 1024.0, 0.1, 1.0,
                                          labels, values, G_N_ELEMENTS(labels),
                                          sp_spl_tb_revolution_value_changed, 1, 2);
@@ -277,7 +273,7 @@ void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
         eact = create_adjustment_action( "SpiralExpansionAction",
                                          _("Divergence"), _("Divergence:"), _("How much denser/sparser are outer revolutions; 1 = uniform"),
                                          "/tools/shapes/spiral/expansion", 1.0,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          0.0, 1000.0, 0.01, 1.0,
                                          labels, values, G_N_ELEMENTS(labels),
                                          sp_spl_tb_expansion_value_changed);
@@ -291,7 +287,7 @@ void sp_spiral_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
         eact = create_adjustment_action( "SpiralT0Action",
                                          _("Inner radius"), _("Inner radius:"), _("Radius of the innermost revolution (relative to the spiral size)"),
                                          "/tools/shapes/spiral/t0", 0.0,
-                                         GTK_WIDGET(desktop->canvas), NULL, holder, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          0.0, 0.999, 0.01, 1.0,
                                          labels, values, G_N_ELEMENTS(labels),
                                          sp_spl_tb_t0_value_changed);

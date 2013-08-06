@@ -51,8 +51,9 @@
 #include "2geom/angle.h"
 #include "util/mathfns.h"
 #include "round.h"
-#include "helper/units.h"
+#include "util/units.h"
 
+using Inkscape::Util::unit_table;
 
 enum Dim3 { X=0, Y, Z };
 
@@ -160,15 +161,15 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
     : CanvasGrid(nv, in_repr, in_doc, GRID_AXONOMETRIC)
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    gridunit = sp_unit_get_by_abbreviation( prefs->getString("/options/grids/axonom/units").data() );
+    gridunit = new Inkscape::Util::Unit(unit_table.getUnit(prefs->getString("/options/grids/axonom/units")));
     if (!gridunit)
-        gridunit = &sp_unit_get_by_id(SP_UNIT_PX);
-    origin[Geom::X] = sp_units_get_pixels( prefs->getDouble("/options/grids/axonom/origin_x", 0.0), *gridunit );
-    origin[Geom::Y] = sp_units_get_pixels( prefs->getDouble("/options/grids/axonom/origin_y", 0.0), *gridunit );
+        gridunit = new Inkscape::Util::Unit(unit_table.getUnit("px"));
+    origin[Geom::X] = Inkscape::Util::Quantity::convert(prefs->getDouble("/options/grids/axonom/origin_x", 0.0), *gridunit, "px");
+    origin[Geom::Y] = Inkscape::Util::Quantity::convert(prefs->getDouble("/options/grids/axonom/origin_y", 0.0), *gridunit, "px");
     color = prefs->getInt("/options/grids/axonom/color", 0x0000ff20);
     empcolor = prefs->getInt("/options/grids/axonom/empcolor", 0x0000ff40);
     empspacing = prefs->getInt("/options/grids/axonom/empspacing", 5);
-    lengthy = sp_units_get_pixels( prefs->getDouble("/options/grids/axonom/spacing_y", 1.0), *gridunit );
+    lengthy = Inkscape::Util::Quantity::convert(prefs->getDouble("/options/grids/axonom/spacing_y", 1.0), *gridunit, "px");
     angle_deg[X] = prefs->getDouble("/options/grids/axonom/angle_x", 30.0);
     angle_deg[Z] = prefs->getDouble("/options/grids/axonom/angle_z", 30.0);
     angle_deg[Y] = 0;
@@ -186,63 +187,6 @@ CanvasAxonomGrid::CanvasAxonomGrid (SPNamedView * nv, Inkscape::XML::Node * in_r
 CanvasAxonomGrid::~CanvasAxonomGrid ()
 {
     if (snapper) delete snapper;
-}
-
-
-/* fixme: Collect all these length parsing methods and think common sane API */
-
-static gboolean sp_nv_read_length(gchar const *str, guint base, gdouble *val, SPUnit const **unit)
-{
-    if (!str) {
-        return FALSE;
-    }
-
-    gchar *u;
-    gdouble v = g_ascii_strtod(str, &u);
-    if (!u) {
-        return FALSE;
-    }
-    while (isspace(*u)) {
-        u += 1;
-    }
-
-    if (!*u) {
-        /* No unit specified - keep default */
-        *val = v;
-        return TRUE;
-    }
-
-    if (base & SP_UNIT_DEVICE) {
-        if (u[0] && u[1] && !isalnum(u[2]) && !strncmp(u, "px", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_PX);
-            *val = v;
-            return TRUE;
-        }
-    }
-
-    if (base & SP_UNIT_ABSOLUTE) {
-        if (!strncmp(u, "pt", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_PT);
-        } else if (!strncmp(u, "mm", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_MM);
-        } else if (!strncmp(u, "cm", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_CM);
-        } else if (!strncmp(u, "m", 1)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_M);
-        } else if (!strncmp(u, "in", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_IN);
-        } else if (!strncmp(u, "ft", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_FT);
-        } else if (!strncmp(u, "pc", 2)) {
-            *unit = &sp_unit_get_by_id(SP_UNIT_PC);
-        } else {
-            return FALSE;
-        }
-        *val = v;
-        return TRUE;
-    }
-
-    return FALSE;
 }
 
 static gboolean sp_nv_read_opacity(gchar const *str, guint32 *color)
@@ -270,17 +214,20 @@ CanvasAxonomGrid::readRepr()
 {
     gchar const *value;
     if ( (value = repr->attribute("originx")) ) {
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[Geom::X], &gridunit);
-        origin[Geom::X] = sp_units_get_pixels(origin[Geom::X], *(gridunit));
+        Inkscape::Util::Quantity q = unit_table.getQuantity(value);
+        gridunit = q.unit;
+        origin[Geom::X] = unit_table.getQuantity(value).value("px");
     }
     if ( (value = repr->attribute("originy")) ) {
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &origin[Geom::Y], &gridunit);
-        origin[Geom::Y] = sp_units_get_pixels(origin[Geom::Y], *(gridunit));
+        Inkscape::Util::Quantity q = unit_table.getQuantity(value);
+        gridunit = q.unit;
+        origin[Geom::Y] = unit_table.getQuantity(value).value("px");
     }
 
     if ( (value = repr->attribute("spacingy")) ) {
-        sp_nv_read_length(value, SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE, &lengthy, &gridunit);
-        lengthy = sp_units_get_pixels(lengthy, *(gridunit));
+        Inkscape::Util::Quantity q = unit_table.getQuantity(value);
+        gridunit = q.unit;
+        lengthy = q.value("px");
         if (lengthy < 0.0500) lengthy = 0.0500;
     }
 
@@ -419,17 +366,17 @@ _wr.setUpdating (false);
     attach_all (*table, widget_array, sizeof(widget_array));
 
     // set widget values
-    _rumg->setUnit (gridunit);
+    _rumg->setUnit (gridunit->abbr);
 
     gdouble val;
     val = origin[Geom::X];
-    val = sp_pixels_get_units (val, *(gridunit));
+    val = Inkscape::Util::Quantity::convert(val, "px", *gridunit);
     _rsu_ox->setValue (val);
     val = origin[Geom::Y];
-    val = sp_pixels_get_units (val, *(gridunit));
+    val = Inkscape::Util::Quantity::convert(val, "px", *gridunit);
     _rsu_oy->setValue (val);
     val = lengthy;
-    double gridy = sp_pixels_get_units (val, *(gridunit));
+    double gridy = Inkscape::Util::Quantity::convert(val, "px", *gridunit);
     _rsu_sy->setValue (gridy);
 
     _rsu_ax->setValue(angle_deg[X]);
@@ -458,17 +405,17 @@ CanvasAxonomGrid::updateWidgets()
         _rcb_enabled.setActive(snapper->getEnabled());
     }
 
-    _rumg.setUnit (gridunit);
+    _rumg.setUnit (gridunit->abbr);
 
     gdouble val;
     val = origin[Geom::X];
-    val = sp_pixels_get_units (val, *(gridunit));
+    val = Inkscape::Util::Quantity::convert(val, &px, gridunit);
     _rsu_ox.setValue (val);
     val = origin[Geom::Y];
-    val = sp_pixels_get_units (val, *(gridunit));
+    val = Inkscape::Util::Quantity::convert(val, &px, gridunit);
     _rsu_oy.setValue (val);
     val = lengthy;
-    double gridy = sp_pixels_get_units (val, *(gridunit));
+    double gridy = Inkscape::Util::Quantity::convert(val, &px, gridunit);
     _rsu_sy.setValue (gridy);
 
     _rsu_ax.setValue(angle_deg[X]);

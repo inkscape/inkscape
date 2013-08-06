@@ -55,13 +55,9 @@
 #include "../xml/repr.h"
 #include "ui/uxmanager.h"
 #include "../ui/icon-names.h"
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
 #include "../pen-context.h"
 
 
-using Inkscape::UnitTracker;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
@@ -149,7 +145,7 @@ void sp_eraser_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GOb
                                                               _("Pen Width"), _("Width:"),
                                                               _("The width of the eraser pen (relative to the visible canvas area)"),
                                                               "/tools/eraser/width", 15,
-                                                              GTK_WIDGET(desktop->canvas), NULL, holder, TRUE, "altx-eraser",
+                                                              GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-eraser",
                                                               1, 100, 1.0, 10.0,
                                                               labels, values, G_N_ELEMENTS(labels),
                                                               sp_erc_width_value_changed, 1, 0);

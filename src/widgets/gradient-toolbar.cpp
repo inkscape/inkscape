@@ -1171,7 +1171,7 @@ void sp_gradient_toolbox_prep(SPDesktop * desktop, GtkActionGroup* mainActions, 
         eact = create_adjustment_action( "GradientEditOffsetAction",
                                          _("Offset"), _("Offset:"), _("Offset of selected stop"),
                                          "/tools/gradient/stopoffset", 0,
-                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          0.0, 1.0, 0.01, 0.1,
                                          0, 0, 0,
                                          gr_stop_offset_adjustment_changed

@@ -22,7 +22,6 @@
 #include "preferences.h"
 #include "snap.h"
 #include "snap-preferences.h"
-#include "sp-metrics.h"
 #include "sp-namedview.h"
 #include "ui/control-manager.h"
 #include "ui/tool/control-point-selection.h"
@@ -490,9 +489,13 @@ Glib::ustring Handle::_getDragTip(GdkEventMotion */*event*/) const
     double angle = Geom::angle_between(Geom::Point(-1,0), position() - _parent->position());
     angle += M_PI; // angle is (-M_PI...M_PI] - offset by +pi and scale to 0...360
     angle *= 360.0 / (2 * M_PI);
-    GString *x = SP_PX_TO_METRIC_STRING(dist[Geom::X], _desktop->namedview->getDefaultMetric());
-    GString *y = SP_PX_TO_METRIC_STRING(dist[Geom::Y], _desktop->namedview->getDefaultMetric());
-    GString *len = SP_PX_TO_METRIC_STRING(length(), _desktop->namedview->getDefaultMetric());
+    
+    Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(dist[Geom::X], "px");
+    Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(dist[Geom::Y], "px");
+    Inkscape::Util::Quantity len_q = Inkscape::Util::Quantity(length(), "px");
+    GString *x = g_string_new(x_q.string(*_desktop->namedview->doc_units).c_str());
+    GString *y = g_string_new(y_q.string(*_desktop->namedview->doc_units).c_str());
+    GString *len = g_string_new(len_q.string(*_desktop->namedview->doc_units).c_str());
     Glib::ustring ret = format_tip(C_("Path handle tip",
         "Move handle by %s, %s; angle %.2f°, length %s"), x->str, y->str, angle, len->str);
     g_string_free(x, TRUE);
@@ -1294,8 +1297,11 @@ Glib::ustring Node::_getTip(unsigned state) const
 Glib::ustring Node::_getDragTip(GdkEventMotion */*event*/) const
 {
     Geom::Point dist = position() - _last_drag_origin();
-    GString *x = SP_PX_TO_METRIC_STRING(dist[Geom::X], _desktop->namedview->getDefaultMetric());
-    GString *y = SP_PX_TO_METRIC_STRING(dist[Geom::Y], _desktop->namedview->getDefaultMetric());
+    
+    Inkscape::Util::Quantity x_q = Inkscape::Util::Quantity(dist[Geom::X], "px");
+    Inkscape::Util::Quantity y_q = Inkscape::Util::Quantity(dist[Geom::Y], "px");
+    GString *x = g_string_new(x_q.string(*_desktop->namedview->doc_units).c_str());
+    GString *y = g_string_new(y_q.string(*_desktop->namedview->doc_units).c_str());
     Glib::ustring ret = format_tip(C_("Path node tip", "Move node by %s, %s"),
         x->str, y->str);
     g_string_free(x, TRUE);

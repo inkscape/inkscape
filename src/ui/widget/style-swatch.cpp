@@ -26,7 +26,7 @@
 #include "xml/repr.h"
 #include "xml/sp-css-attr.h"
 #include "widgets/widget-sizes.h"
-#include "helper/units.h"
+#include "util/units.h"
 #include "helper/action.h"
 #include "helper/action-context.h"
 #include "preferences.h"
@@ -333,7 +333,7 @@ void StyleSwatch::setStyle(SPStyle *query)
     if (has_stroke) {
         double w;
         if (_sw_unit) {
-            w = sp_pixels_get_units(query->stroke_width.computed, *_sw_unit);
+            w = Inkscape::Util::Quantity::convert(query->stroke_width.computed, "px", *_sw_unit);
         } else {
             w = query->stroke_width.computed;
         }
@@ -346,7 +346,7 @@ void StyleSwatch::setStyle(SPStyle *query)
         {
             gchar *str = g_strdup_printf(_("Stroke width: %.5g%s"),
                                          w,
-                                         _sw_unit? sp_unit_get_abbreviation(_sw_unit) : "px");
+                                         _sw_unit? _sw_unit->abbr.c_str() : "px");
             _stroke_width_place.set_tooltip_text(str);
             g_free (str);
         }

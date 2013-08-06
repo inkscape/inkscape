@@ -34,7 +34,6 @@
 #include "message-context.h"
 #include "pixmaps/cursor-spiral.xpm"
 #include "spiral-context.h"
-#include "sp-metrics.h"
 #include <glibmm/i18n.h>
 #include "xml/repr.h"
 #include "xml/node-event-vector.h"
@@ -437,7 +436,8 @@ static void sp_spiral_drag(SPSpiralContext *sc, Geom::Point const &p, guint stat
                            /*t0*/ sc->t0);
 
     /* status text */
-    GString *rads = SP_PX_TO_METRIC_STRING(rad, desktop->namedview->getDefaultMetric());
+    Inkscape::Util::Quantity q = Inkscape::Util::Quantity(rad, "px");
+    GString *rads = g_string_new(q.string(*desktop->namedview->doc_units).c_str());
     sc->_message_context->setF(Inkscape::IMMEDIATE_MESSAGE,
                                _("<b>Spiral</b>: radius %s, angle %5g&#176;; with <b>Ctrl</b> to snap angle"),
                                rads->str, sp_round((arg + 2.0*M_PI*spiral->revo)*180/M_PI, 0.0001));

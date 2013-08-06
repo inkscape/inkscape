@@ -34,7 +34,7 @@ extern "C" {
 #include "svg-builder.h"
 #include "Gfx.h"
 #include "pdf-parser.h"
-#include "unit-constants.h"
+#include "util/units.h"
 
 #include "goo/gmem.h"
 #include "goo/GooTimer.h"
@@ -279,14 +279,14 @@ PdfParser::PdfParser(XRef *xrefA, Inkscape::Extension::Internal::SvgBuilder *bui
   ignoreUndef = 0;
   operatorHistory = NULL;
   builder = builderA;
-  builder->setDocumentSize(state->getPageWidth()*PX_PER_PT,
-                           state->getPageHeight()*PX_PER_PT);
+  builder->setDocumentSize(state->getPageWidth()*Inkscape::Util::Quantity::convert(1, "pt", "px"),
+                           state->getPageHeight()*Inkscape::Util::Quantity::convert(1, "pt", "px"));
 
   double *ctm = state->getCTM();
   double scaledCTM[6];
   for (int i = 0; i < 6; ++i) {
     baseMatrix[i] = ctm[i];
-    scaledCTM[i] = PX_PER_PT * ctm[i];
+    scaledCTM[i] = Inkscape::Util::Quantity::convert(1, "pt", "px") * ctm[i];
   }
   saveState();
   builder->setTransform((double*)&scaledCTM);

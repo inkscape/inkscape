@@ -46,7 +46,6 @@ set(sp_SRC
 	sp-mesh-patch.cpp
 	sp-mesh-row.cpp
 	sp-metadata.cpp
-	sp-metrics.cpp
 	sp-missing-glyph.cpp
 	sp-namedview.cpp
 	sp-object-group.cpp
@@ -136,8 +135,6 @@ set(sp_SRC
 	sp-mesh-row-fns.h
 	sp-mesh-row.h
 	sp-metadata.h
-	sp-metric.h
-	sp-metrics.h
 	sp-missing-glyph.h
 	sp-namedview.h
 	sp-object-group.h
@@ -484,7 +481,6 @@ set(inkscape_SRC
 	unclump.h
 	undo-stack-observer.h
 	unicoderange.h
-	unit-constants.h
 	uri-references.h
 	uri.h
 	vanishing-point.h

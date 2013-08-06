@@ -33,7 +33,6 @@
 #include "desktop.h"
 #include "widgets/font-selector.h"
 #include "preferences.h"
-#include "unit-constants.h"
 
 /* SPFontSelector */
 

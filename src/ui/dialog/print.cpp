@@ -26,7 +26,7 @@
 #include "ui/widget/rendering-options.h"
 #include "document.h"
 
-#include "unit-constants.h"
+#include "util/units.h"
 #include "helper/png-write.h"
 #include "svg/svg-color.h"
 #include "io/sys.h"
@@ -72,8 +72,8 @@ static void draw_page(
 
             sp_export_png_file(junk->_doc, tmp_png.c_str(), 0.0, 0.0,
                 width, height,
-                (unsigned long)(width * dpi / PX_PER_IN),
-                (unsigned long)(height * dpi / PX_PER_IN),
+                (unsigned long)(width * dpi / Inkscape::Util::Quantity::convert(1, "in", "px")),
+                (unsigned long)(height * dpi / Inkscape::Util::Quantity::convert(1, "in", "px")),
                 dpi, dpi, bgcolor, NULL, NULL, true, NULL);
 
             // This doesn't seem to work:
@@ -90,7 +90,7 @@ static void draw_page(
                 cairo_t *cr = gtk_print_context_get_cairo_context (context);
                 cairo_matrix_t m;
                 cairo_get_matrix(cr, &m);
-                cairo_scale(cr, PT_PER_IN / dpi, PT_PER_IN / dpi);
+                cairo_scale(cr, Inkscape::Util::Quantity::convert(1, "in", "pt") / dpi, Inkscape::Util::Quantity::convert(1, "in", "pt") / dpi);
                 // FIXME: why is the origin offset??
                 cairo_set_source_surface(cr, png->cobj(), -16.0, -16.0);
                 cairo_paint(cr);
@@ -195,8 +195,8 @@ Print::Print(SPDocument *doc, SPItem *base) :
     // set up paper size to match the document size
     gtk_print_operation_set_unit (_printop, GTK_UNIT_POINTS);
     GtkPageSetup *page_setup = gtk_page_setup_new();
-    gdouble doc_width = _doc->getWidth() * PT_PER_PX;
-    gdouble doc_height = _doc->getHeight() * PT_PER_PX;
+    gdouble doc_width = _doc->getWidth() * Inkscape::Util::Quantity::convert(1, "px", "pt");
+    gdouble doc_height = _doc->getHeight() * Inkscape::Util::Quantity::convert(1, "px", "pt");
     GtkPaperSize *paper_size;
     if (doc_width > doc_height) {
         gtk_page_setup_set_orientation (page_setup, GTK_PAGE_ORIENTATION_LANDSCAPE);

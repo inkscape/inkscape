@@ -58,17 +58,19 @@
 #include "../ui/tool/node-tool.h"
 #include "../ui/tool/multi-path-manipulator.h"
 #include "../ui/icon-names.h"
-#include "../helper/unit-menu.h"
-#include "../helper/units.h"
-#include "../helper/unit-tracker.h"
+#include "util/units.h"
+#include "ui/widget/unit-tracker.h"
 #include "../lpe-tool-context.h"
 #include "../sp-namedview.h"
 
-using Inkscape::UnitTracker;
+using Inkscape::UI::Widget::UnitTracker;
+using Inkscape::Util::Unit;
+using Inkscape::Util::Quantity;
 using Inkscape::UI::UXManager;
 using Inkscape::DocumentUndo;
 using Inkscape::UI::ToolboxFactory;
 using Inkscape::UI::PrefPusher;
+using Inkscape::Util::unit_table;
 
 //####################################
 //# node editing callbacks
@@ -238,7 +240,7 @@ static void sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tb
     if (!tracker) {
         return;
     }
-    SPUnit const *unit = tracker->getActiveUnit();
+    Unit const unit = tracker->getActiveUnit();
 
     InkNodeTool *nt = get_node_tool();
     if (!nt || nt->_selected_nodes->empty()) {
@@ -248,15 +250,15 @@ static void sp_node_toolbox_coord_changed(gpointer /*shape_editor*/, GObject *tb
     } else {
         gtk_action_set_sensitive(xact, TRUE);
         gtk_action_set_sensitive(yact, TRUE);
-        Geom::Coord oldx = sp_units_get_pixels(gtk_adjustment_get_value(xadj), *unit);
-        Geom::Coord oldy = sp_units_get_pixels(gtk_adjustment_get_value(xadj), *unit);
+        Geom::Coord oldx = Quantity::convert(gtk_adjustment_get_value(xadj), unit, "px");
+        Geom::Coord oldy = Quantity::convert(gtk_adjustment_get_value(yadj), unit, "px");
         Geom::Point mid = nt->_selected_nodes->pointwiseBounds()->midpoint();
 
         if (oldx != mid[Geom::X]) {
-            gtk_adjustment_set_value(xadj, sp_pixels_get_units(mid[Geom::X], *unit));
+            gtk_adjustment_set_value(xadj, Quantity::convert(mid[Geom::X], "px", unit));
         }
         if (oldy != mid[Geom::Y]) {
-            gtk_adjustment_set_value(yadj, sp_pixels_get_units(mid[Geom::Y], *unit));
+            gtk_adjustment_set_value(yadj, Quantity::convert(mid[Geom::Y], "px", unit));
         }
     }
 
@@ -272,11 +274,11 @@ static void sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, Geom::D
     if (!tracker) {
         return;
     }
-    SPUnit const *unit = tracker->getActiveUnit();
+    Unit const unit = tracker->getActiveUnit();
 
     if (DocumentUndo::getUndoSensitive(sp_desktop_document(desktop))) {
         prefs->setDouble(Glib::ustring("/tools/nodes/") + (d == Geom::X ? "x" : "y"),
-            sp_units_get_pixels(gtk_adjustment_get_value(adj), *unit));
+            Quantity::convert(gtk_adjustment_get_value(adj), unit, "px"));
     }
 
     // quit if run by the attr_changed listener
@@ -289,7 +291,7 @@ static void sp_node_path_value_changed(GtkAdjustment *adj, GObject *tbl, Geom::D
 
     InkNodeTool *nt = get_node_tool();
     if (nt && !nt->_selected_nodes->empty()) {
-        double val = sp_units_get_pixels(gtk_adjustment_get_value(adj), *unit);
+        double val = Quantity::convert(gtk_adjustment_get_value(adj), unit, "px");
         double oldval = nt->_selected_nodes->pointwiseBounds()->midpoint()[d];
         Geom::Point delta(0,0);
         delta[d] = val - oldval;
@@ -339,8 +341,9 @@ static void sp_node_toolbox_sel_modified(Inkscape::Selection *selection, guint /
 
 void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObject* holder)
 {
-    UnitTracker* tracker = new UnitTracker( SP_UNIT_ABSOLUTE | SP_UNIT_DEVICE );
-    tracker->setActiveUnit( sp_desktop_namedview(desktop)->doc_units );
+    UnitTracker* tracker = new UnitTracker(Inkscape::Util::UNIT_TYPE_LINEAR);
+    Unit doc_units = *sp_desktop_namedview(desktop)->doc_units;
+    tracker->setActiveUnit(&doc_units);
     g_object_set_data( holder, "tracker", tracker );
 
     Inkscape::IconSize secondarySize = ToolboxFactory::prefToSize("/toolbox/secondary", 1);
@@ -589,7 +592,7 @@ void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         eact = create_adjustment_action( "NodeXAction",
                                          _("X coordinate:"), _("X:"), _("X coordinate of selected node(s)"),
                                          "/tools/nodes/Xcoord", 0,
-                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, TRUE, "altx-nodes",
+                                         GTK_WIDGET(desktop->canvas), holder, TRUE, "altx-nodes",
                                          -1e6, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
                                          labels, values, G_N_ELEMENTS(labels),
                                          sp_node_path_x_value_changed );
@@ -607,7 +610,7 @@ void sp_node_toolbox_prep(SPDesktop *desktop, GtkActionGroup* mainActions, GObje
         eact = create_adjustment_action( "NodeYAction",
                                          _("Y coordinate:"), _("Y:"), _("Y coordinate of selected node(s)"),
                                          "/tools/nodes/Ycoord", 0,
-                                         GTK_WIDGET(desktop->canvas), NULL/*us*/, holder, FALSE, NULL,
+                                         GTK_WIDGET(desktop->canvas), holder, FALSE, NULL,
                                          -1e6, 1e6, SPIN_STEP, SPIN_PAGE_STEP,
                                          labels, values, G_N_ELEMENTS(labels),
                                          sp_node_path_y_value_changed );
