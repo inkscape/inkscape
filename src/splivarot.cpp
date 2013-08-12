@@ -277,11 +277,38 @@ sp_selected_path_boolop(Inkscape::Selection *selection, SPDesktop *desktop, bool
 
             theShapeB->ConvertToShape(theShape, origWind[curOrig]);
 
-            if (theShapeA->numberOfEdges() == 0) {
-                Shape *swap = theShapeB;
-                theShapeB = theShapeA;
-                theShapeA = swap;
-            } else if (theShapeB->numberOfEdges() > 0) {
+            /* Due to quantization of the input shape coordinates, we may end up with A or B being empty.
+             * If this is a union or symdiff operation, we just use the non-empty shape as the result:
+             *   A=0  =>  (0 or B) == B
+             *   B=0  =>  (A or 0) == A
+             *   A=0  =>  (0 xor B) == B
+             *   B=0  =>  (A xor 0) == A
+             * If this is an intersection operation, we just use the empty shape as the result:
+             *   A=0  =>  (0 and B) == 0 == A
+             *   B=0  =>  (A and 0) == 0 == B
+             * If this a difference operation, and the upper shape (A) is empty, we keep B.
+             * If the lower shape (B) is empty, we still keep B, as it's empty:
+             *   A=0  =>  (B - 0) == B
+             *   B=0  =>  (0 - A) == 0 == B
+             *
+             * In any case, the output from this operation is stored in shape A, so we may apply
+             * the above rules simply by judicious use of swapping A and B where necessary.
+             */
+            bool zeroA = theShapeA->numberOfEdges() == 0;
+            bool zeroB = theShapeB->numberOfEdges() == 0;
+            if (zeroA || zeroB) {
+            	// We might need to do a swap. Apply the above rules depending on operation type.
+            	bool resultIsB =   ((bop == bool_op_union || bop == bool_op_symdiff) && zeroA)
+            		        || ((bop == bool_op_inters) && zeroB)
+            			||  (bop == bool_op_diff);
+                if (resultIsB) {
+                	// Swap A and B to use B as the result
+                    Shape *swap = theShapeB;
+                    theShapeB = theShapeA;
+                    theShapeA = swap;
+                }
+            } else {
+            	// Just do the Boolean operation as usual
                 // les elements arrivent en ordre inverse dans la liste
                 theShape->Booleen(theShapeB, theShapeA, bop);
                 Shape *swap = theShape;
@@ -1574,12 +1601,12 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
         float o_width = 0;
         float o_miter = 0;
         JoinType o_join = join_straight;
-        ButtType o_butt = butt_straight;
+        //ButtType o_butt = butt_straight;
 
         {
             SPStyle *i_style = item->style;
             int jointype = i_style->stroke_linejoin.value;
-            int captype = i_style->stroke_linecap.value;
+            //int captype = i_style->stroke_linecap.value;
 
             o_width = i_style->stroke_width.computed;
 
@@ -1595,7 +1622,7 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
                     break;
             }
 
-            switch (captype) {
+            /*switch (captype) {
                 case SP_STROKE_LINECAP_SQUARE:
                     o_butt = butt_square;
                     break;
@@ -1605,7 +1632,7 @@ sp_selected_path_do_offset(SPDesktop *desktop, bool expand, double prefOffset)
                 default:
                     o_butt = butt_straight;
                     break;
-            }
+            }*/
 
             o_width = prefOffset;
 
