@@ -1446,12 +1446,26 @@ void LayerVerb::perform(SPAction *action, void *data)
  */
 void ObjectVerb::perform( SPAction *action, void *data)
 {
-    g_return_if_fail(ensure_desktop_valid(action));
     SPDesktop *dt = sp_action_get_desktop(action);
+    Inkscape::Selection *sel = sp_action_get_selection(action);
+
+    // We can perform some actions without a desktop
+    bool handled = true;
+    switch (reinterpret_cast<std::size_t>(data)) {
+        case SP_VERB_OBJECT_TO_CURVE:
+            sp_selected_path_to_curves(sel, dt);
+            break;
+        default:
+            handled = false;
+            break;
+    }
+    if (handled) {
+        return;
+    }
+
+    g_return_if_fail(ensure_desktop_valid(action));
 
     SPEventContext *ec = dt->event_context;
-
-    Inkscape::Selection *sel = sp_desktop_selection(dt);
 
     if (sel->isEmpty())
         return;
@@ -1477,9 +1491,6 @@ void ObjectVerb::perform( SPAction *action, void *data)
             break;
         case SP_VERB_OBJECT_FLATTEN:
             sp_selection_remove_transform(dt);
-            break;
-        case SP_VERB_OBJECT_TO_CURVE:
-            sp_selected_path_to_curves(dt);
             break;
         case SP_VERB_OBJECT_FLOW_TEXT:
             text_flow_into_shape();

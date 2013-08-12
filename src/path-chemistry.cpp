@@ -294,18 +294,16 @@ sp_selected_path_break_apart(SPDesktop *desktop)
 
 /* This function is an entry point from GUI */
 void
-sp_selected_path_to_curves(SPDesktop *desktop, bool interactive)
+sp_selected_path_to_curves(Inkscape::Selection *selection, SPDesktop *desktop, bool interactive)
 {
-    Inkscape::Selection *selection = sp_desktop_selection(desktop);
-
     if (selection->isEmpty()) {
-        if (interactive)
+        if (interactive && desktop)
             sp_desktop_message_stack(desktop)->flash(Inkscape::WARNING_MESSAGE, _("Select <b>object(s)</b> to convert to path."));
         return;
     }
 
     bool did = false;
-    if (interactive) {
+    if (interactive && desktop) {
         desktop->messageStack()->flash(Inkscape::IMMEDIATE_MESSAGE, _("Converting objects to paths..."));
         // set "busy" cursor
         desktop->setWaitingCursor();
@@ -324,7 +322,7 @@ sp_selected_path_to_curves(SPDesktop *desktop, bool interactive)
     g_slist_free (to_select);
     g_slist_free (selected);
 
-    if (interactive) {
+    if (interactive && desktop) {
         desktop->clearWaitingCursor();
         if (did) {
             DocumentUndo::done(sp_desktop_document(desktop), SP_VERB_OBJECT_TO_CURVE, 

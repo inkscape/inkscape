@@ -19,6 +19,7 @@ class SPDesktop;
 class SPItem;
 
 namespace Inkscape {
+class Selection;
 namespace XML {
 class Node;
 } // namespace XML
@@ -26,7 +27,8 @@ class Node;
 
 void sp_selected_path_combine (SPDesktop *desktop);
 void sp_selected_path_break_apart (SPDesktop *desktop);
-void sp_selected_path_to_curves (SPDesktop *desktop, bool interactive = true);
+// interactive=true only has an effect if desktop != NULL, i.e. if a GUI is available
+void sp_selected_path_to_curves (Inkscape::Selection *selection, SPDesktop *desktop, bool interactive = true);
 void sp_selected_to_lpeitems(SPDesktop *desktop);
 Inkscape::XML::Node *sp_selected_item_to_curved_repr(SPItem *item, guint32 text_grouping_policy);
 void sp_selected_path_reverse (SPDesktop *desktop);
