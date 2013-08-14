@@ -30,8 +30,6 @@ TemplateWidget::TemplateWidget()
     , _short_description_label(_(" "))
     , _template_author_label(_(" "))
     , _template_name_label(_("no template selected"))
-    , _preview_image()
-    , _preview_render()
 {
     pack_start(_template_name_label, Gtk::PACK_SHRINK, 10);
     pack_start(_template_author_label, Gtk::PACK_SHRINK, 0);

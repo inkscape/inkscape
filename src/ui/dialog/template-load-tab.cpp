@@ -14,6 +14,9 @@
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/scrolledwindow.h>
 #include <glibmm/i18n.h>
+#include <glibmm/fileutils.h>
+#include <glibmm/miscutils.h>
+#include <glibmm/stringutils.h>
 
 #include "interface.h"
 #include "file.h"
@@ -235,7 +238,7 @@ TemplateLoadTab::TemplateData TemplateLoadTab::_processTemplateFile(const Glib::
         if ((dataNode = sp_repr_lookup_name(myRoot, "inkscape:_keywords")) != NULL){
             Glib::ustring data = dataNode->firstChild()->content();
             while (!data.empty()){
-                int pos = data.find_first_of(" ");
+                std::size_t pos = data.find_first_of(" ");
                 if (pos == Glib::ustring::npos)
                     pos = data.size();
                 
