@@ -164,7 +164,7 @@ SPDesktop *sp_file_new(const Glib::ustring &templ)
     sp_namedview_update_layers_from_document(desktop);    
 
 #ifdef WITH_DBUS
-    Inkscape::Extension::Dbus::dbus_init_desktop_interface(dt);
+    Inkscape::Extension::Dbus::dbus_init_desktop_interface(desktop);
 #endif
 
     return desktop;
