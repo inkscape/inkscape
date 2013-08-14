@@ -80,6 +80,7 @@
 #include "ui/dialog/inkscape-preferences.h"
 #include "ui/dialog/layer-properties.h"
 #include "ui/dialog/layers.h"
+#include "ui/dialog/new-from-template.h"
 #include "ui/dialog/object-properties.h"
 #include "ui/dialog/swatches.h"
 #include "ui/dialog/symbols.h"
@@ -879,6 +880,9 @@ void FileVerb::perform(SPAction *action, void *data)
             break;
         case SP_VERB_FILE_CLOSE_VIEW:
             sp_ui_close_view(NULL);
+            break;
+        case SP_VERB_FILE_TEMPLATES:
+            Inkscape::UI::NewFromTemplate::load_new_from_template();
             break;
         default:
             break;
@@ -2372,6 +2376,8 @@ Verb *Verb::_base_verbs[] = {
     new FileVerb(SP_VERB_FILE_CLOSE_VIEW, "FileClose", N_("_Close"),
                  N_("Close this document window"), GTK_STOCK_CLOSE),
     new FileVerb(SP_VERB_FILE_QUIT, "FileQuit", N_("_Quit"), N_("Quit Inkscape"), GTK_STOCK_QUIT),
+    new FileVerb(SP_VERB_FILE_TEMPLATES, "FileTemplates", N_("_Templates..."),
+                N_("Create new project from template"), INKSCAPE_ICON("dialog-templates")),
 
     // Edit
     new EditVerb(SP_VERB_EDIT_UNDO, "EditUndo", N_("_Undo"), N_("Undo last action"),

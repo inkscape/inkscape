@@ -128,21 +128,46 @@ SPDesktop *sp_file_new(const Glib::ustring &templ)
 {
     SPDocument *doc = SPDocument::createNewDoc( !templ.empty() ? templ.c_str() : 0 , TRUE, true );
     g_return_val_if_fail(doc != NULL, NULL);
+    
+    // Remove all the template info from xml tree
+    Inkscape::XML::Node *myRoot = doc->getReprRoot();
+    Inkscape::XML::Node *nodeToRemove = sp_repr_lookup_name(myRoot, "inkscape:_templateinfo");
+    if (nodeToRemove != NULL){
+        sp_repr_unparent(nodeToRemove);
+        delete nodeToRemove;
+        DocumentUndo::clearUndo(doc);
+    }
+    
+    SPDesktop *desktop = SP_ACTIVE_DESKTOP;
+    if (desktop) {
+        desktop->setWaitingCursor();
+    }
+    
+    SPDocument *existing = desktop ? sp_desktop_document(desktop) : NULL;
+      
+    if (existing && existing->virgin) {
+            // If the current desktop is empty, open the document there
+        doc->ensureUpToDate(); // TODO this will trigger broken link warnings, etc.
+        desktop->change_document(doc);
+        doc->emitResizedSignal(doc->getWidth(), doc->getHeight());
+    } else {
+            // create a whole new desktop and window
+        SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL)); // TODO this will trigger broken link warnings, etc.
+        g_return_val_if_fail(dtw != NULL, NULL);
+        sp_create_window(dtw, TRUE);
+        desktop = static_cast<SPDesktop *>(dtw->view);
+    } 
 
-    SPViewWidget *dtw = sp_desktop_widget_new(sp_document_namedview(doc, NULL));
-    g_return_val_if_fail(dtw != NULL, NULL);
     doc->doUnref();
 
-    sp_create_window(dtw, TRUE);
-    SPDesktop *dt = static_cast<SPDesktop *>(dtw->view);
-    sp_namedview_window_from_document(dt);
-    sp_namedview_update_layers_from_document(dt);
+    sp_namedview_window_from_document(desktop);
+    sp_namedview_update_layers_from_document(desktop);    
 
 #ifdef WITH_DBUS
     Inkscape::Extension::Dbus::dbus_init_desktop_interface(dt);
 #endif
 
-    return dt;
+    return desktop;
 }
 
 Glib::ustring sp_file_default_template_uri()
@@ -200,6 +225,7 @@ SPDesktop* sp_file_new_default()
     return desk;
 }
 
+
 /*######################
 ## D E L E T E
 ######################*/
@@ -232,7 +258,8 @@ sp_file_exit()
  */
 bool sp_file_open(const Glib::ustring &uri,
                   Inkscape::Extension::Extension *key,
-                  bool add_to_recent, bool replace_empty)
+                  bool add_to_recent,
+                  bool replace_empty)
 {
     SPDesktop *desktop = SP_ACTIVE_DESKTOP;
     if (desktop) {
@@ -257,6 +284,7 @@ bool sp_file_open(const Glib::ustring &uri,
     }
 
     if (doc) {
+
         SPDocument *existing = desktop ? sp_desktop_document(desktop) : NULL;
 
         if (existing && existing->virgin && replace_empty) {
@@ -273,7 +301,7 @@ bool sp_file_open(const Glib::ustring &uri,
 
         doc->virgin = FALSE;
 
-        // everyone who cares now has a reference, get rid of ours
+        // everyone who cares now has a reference, get rid of our`s
         doc->doUnref();
 
         // resize the window to match the document properties

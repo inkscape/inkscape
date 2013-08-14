@@ -717,13 +717,6 @@ sp_recent_open(GtkRecentChooser *recent_menu, gpointer /*user_data*/)
     g_free(uri);
 }
 
-static void
-sp_file_new_from_template(GtkWidget */*widget*/, gchar const *uri)
-{
-    sp_file_new(uri);
-}
-
-
 static bool
 compare_file_basenames(gchar const *a, gchar const *b) {
     bool rc;
@@ -749,91 +742,6 @@ compare_file_basenames(gchar const *a, gchar const *b) {
     g_free(fb);
 
     return rc;
-}
-
-static void
-sp_menu_get_svg_filenames_from_dir(gchar const *dirname, std::list<gchar const*> *files)
-{
-    if ( Inkscape::IO::file_test( dirname, (GFileTest)(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR) ) ) {
-        GError *err = 0;
-        GDir *dir = g_dir_open(dirname, 0, &err);
-
-        if (dir) {
-            for (gchar const *file = g_dir_read_name(dir); file != NULL; file = g_dir_read_name(dir)) {
-                if (!g_str_has_suffix(file, ".svg") && !g_str_has_suffix(file, ".svgz")) {
-                    continue; // skip non-svg files
-                }
-
-                {
-                    gchar *basename = g_path_get_basename(file);
-                    if (g_str_has_suffix(basename, ".svg") && g_str_has_prefix(basename, "default.")) {
-                        g_free(basename);
-                        basename = 0;
-                        continue; // skip default.*.svg (i.e. default.svg and translations) - it's in the menu already
-                    }
-                    g_free(basename);
-                    basename = 0;
-                }
-
-                gchar const *filepath = g_build_filename(dirname, file, NULL);
-                files->push_front(filepath);
-            }
-            g_dir_close(dir);
-        }
-    }
-
-    files->sort(compare_file_basenames);
-}
-
-static void
-sp_menu_add_filenames_to_menu(GtkWidget *menu, Inkscape::UI::View::View *view, std::list<gchar const*> *files)
-{
-    if (!files->empty()) {
-        GtkWidget *sep = gtk_separator_menu_item_new();
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu), sep);
-    }
-
-    for(std::list<gchar const*>::iterator it=files->begin(); it != files->end(); ++it) {
-        gchar const *filepath = *it;
-        gchar const *file = g_path_get_basename(filepath);
-        gchar *dupfile = g_strndup(file, strlen(file) - 4);
-        gchar *filename =  g_filename_to_utf8(dupfile,  -1, NULL, NULL, NULL);
-        g_free(dupfile);
-
-        GtkWidget *item = gtk_menu_item_new_with_label(filename);
-        g_free(filename);
-
-        gtk_widget_show(item);
-        // how does "filepath" ever get freed?
-        g_signal_connect(G_OBJECT(item),
-                         "activate",
-                         G_CALLBACK(sp_file_new_from_template),
-                         (gpointer) filepath);
-
-        if (view) {
-            // set null tip for now; later use a description from the template file
-            g_object_set_data(G_OBJECT(item), "view", (gpointer) view);
-            g_signal_connect( G_OBJECT(item), "select", G_CALLBACK(sp_ui_menu_select), (gpointer) NULL );
-            g_signal_connect( G_OBJECT(item), "deselect", G_CALLBACK(sp_ui_menu_deselect), NULL);
-        }
-
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-    }
-
-}
-static void
-sp_menu_append_new_templates(GtkWidget *menu, Inkscape::UI::View::View *view)
-{
-    // user's local dir
-    std::list<gchar const*> userfiles;
-    sp_menu_get_svg_filenames_from_dir(profile_path("templates"), &userfiles);
-    sp_menu_add_filenames_to_menu(menu, view, &userfiles);
-
-    // system templates dir
-    std::list<gchar const*> templatefiles;
-    sp_menu_get_svg_filenames_from_dir(INKSCAPE_TEMPLATESDIR, &templatefiles);
-    sp_menu_add_filenames_to_menu(menu, view, &templatefiles);
-
 }
 
 static void
@@ -996,10 +904,7 @@ static void sp_ui_build_dyn_menus(Inkscape::XML::Node *menus, GtkWidget *menu, I
             gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
             continue;
         }
-        if (!strcmp(menu_pntr->name(), "template-list")) {
-            sp_menu_append_new_templates(menu, view);
-            continue;
-        }
+        
         if (!strcmp(menu_pntr->name(), "recent-file-list")) {
             Inkscape::Preferences *prefs = Inkscape::Preferences::get();
 

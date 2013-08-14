@@ -62,6 +62,7 @@ void sp_file_exit (void);
 /**
  * Opens a new file and window from the given URI
  */
+
 bool sp_file_open(
     const Glib::ustring &uri,
     Inkscape::Extension::Extension *key,

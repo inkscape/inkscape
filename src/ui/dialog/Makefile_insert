@@ -70,6 +70,8 @@ ink_common_sources +=		\
 	ui/dialog/memory.h			\
 	ui/dialog/messages.cpp			\
 	ui/dialog/messages.h			\
+	ui/dialog/new-from-template.cpp		\
+	ui/dialog/new-from-template.h		\
 	ui/dialog/ocaldialogs.cpp		\
 	ui/dialog/ocaldialogs.h			\
 	ui/dialog/object-attributes.cpp \
@@ -89,6 +91,10 @@ ink_common_sources +=		\
 	ui/dialog/swatches.h			\
 	ui/dialog/symbols.cpp			\
 	ui/dialog/symbols.h			\
+	ui/dialog/template-load-tab.cpp		\
+	ui/dialog/template-load-tab.h		\
+	ui/dialog/template-widget.cpp		\
+	ui/dialog/template-widget.h		\
 	ui/dialog/text-edit.cpp			\
 	ui/dialog/text-edit.h			\
 	ui/dialog/tile.cpp			\

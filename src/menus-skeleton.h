@@ -16,7 +16,7 @@ static char const menus_skeleton[] =
 "   <submenu name=\"" N_("_File") "\">\n"
 "       <submenu name=\"" N_("_New") "\">\n"
 "           <verb verb-id=\"FileNew\" />\n"
-"           <template-list/>\n"
+"           <verb verb-id=\"FileTemplates\" />\n"
 "       </submenu>\n"
 "       <verb verb-id=\"FileOpen\" />\n"
 "       <recent-file-list/>\n"
