@@ -2,6 +2,7 @@
  * Inkscape::SVG::PathString - builder for SVG path strings
  *
  * Copyright 2008 Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
+ * Copyright 2013 Tavmjong Bah <tavmjong@free.fr>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,44 +26,65 @@ static int const maxprec = 16;
 
 int Inkscape::SVG::PathString::numericprecision;
 int Inkscape::SVG::PathString::minimumexponent;
+Inkscape::SVG::PATHSTRING_FORMAT Inkscape::SVG::PathString::format;
 
 Inkscape::SVG::PathString::PathString() :
-    allow_relative_coordinates(Inkscape::Preferences::get()->getBool("/options/svgoutput/allowrelativecoordinates", true)),
     force_repeat_commands(Inkscape::Preferences::get()->getBool("/options/svgoutput/forcerepeatcommands"))
 {
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+    format = (PATHSTRING_FORMAT)prefs->getIntLimited("/options/svgoutput/pathstring_format", 1, 0, PATHSTRING_FORMAT_SIZE - 1 );
     numericprecision = std::max<int>(minprec,std::min<int>(maxprec, prefs->getInt("/options/svgoutput/numericprecision", 8)));
     minimumexponent = prefs->getInt("/options/svgoutput/minimumexponent", -8);
 }
 
+// For absolute and relative paths... the entire path is kept in the "tail".
+// For optimized path, at a switch between absolute and relative, add tail to commonbase.
 void Inkscape::SVG::PathString::_appendOp(char abs_op, char rel_op) {
     bool abs_op_repeated = _abs_state.prevop == abs_op && !force_repeat_commands;
     bool rel_op_repeated = _rel_state.prevop == rel_op && !force_repeat_commands;
-    unsigned int const abs_added_size = abs_op_repeated ? 0 : 2;
-    unsigned int const rel_added_size = rel_op_repeated ? 0 : 2;
-    if ( _rel_state.str.size()+2 < _abs_state.str.size()+abs_added_size && allow_relative_coordinates ) {
-        // Store common prefix
-        commonbase += _rel_state.str;
-        _rel_state.str.clear();
-        // Copy rel to abs
-        _abs_state = _rel_state;
-        _abs_state.switches++;
-        abs_op_repeated = false;
-        // We do not have to copy abs to rel:
-        //   _rel_state.str.size()+2 < _abs_state.str.size()+abs_added_size
-        //   _rel_state.str.size()+rel_added_size < _abs_state.str.size()+2
-        //   _abs_state.str.size()+2 > _rel_state.str.size()+rel_added_size
-    } else if ( _abs_state.str.size()+2 < _rel_state.str.size()+rel_added_size ) {
-        // Store common prefix
-        commonbase += _abs_state.str;
-        _abs_state.str.clear();
-        // Copy abs to rel
-        _rel_state = _abs_state;
-        _abs_state.switches++;
-        rel_op_repeated = false;
+
+    // For absolute and relative paths... do nothing.
+    switch (format) {
+        case PATHSTRING_ABSOLUTE:
+            if ( !abs_op_repeated ) _abs_state.appendOp(abs_op);
+            break;
+        case PATHSTRING_RELATIVE:
+            if ( !rel_op_repeated ) _rel_state.appendOp(rel_op);
+            break;
+        case PATHSTRING_OPTIMIZE:
+            {
+            unsigned int const abs_added_size = abs_op_repeated ? 0 : 2;
+            unsigned int const rel_added_size = rel_op_repeated ? 0 : 2;
+            if ( _rel_state.str.size()+2 < _abs_state.str.size()+abs_added_size ) {
+
+                // Store common prefix
+                commonbase += _rel_state.str;
+                _rel_state.str.clear();
+                // Copy rel to abs
+                _abs_state = _rel_state;
+                _abs_state.switches++;
+                abs_op_repeated = false;
+                // We do not have to copy abs to rel:
+                //   _rel_state.str.size()+2 < _abs_state.str.size()+abs_added_size
+                //   _rel_state.str.size()+rel_added_size < _abs_state.str.size()+2
+                //   _abs_state.str.size()+2 > _rel_state.str.size()+rel_added_size
+            } else if ( _abs_state.str.size()+2 < _rel_state.str.size()+rel_added_size ) {
+
+                // Store common prefix
+                commonbase += _abs_state.str;
+                _abs_state.str.clear();
+                // Copy abs to rel
+                _rel_state = _abs_state;
+                _abs_state.switches++;
+                rel_op_repeated = false;
+            }
+            if ( !abs_op_repeated ) _abs_state.appendOp(abs_op);
+            if ( !rel_op_repeated ) _rel_state.appendOp(rel_op);
+            }
+            break;
+        default:
+            std::cout << "Better not be here!" << std::endl;
     }
-    if ( !abs_op_repeated ) _abs_state.appendOp(abs_op);
-    if ( !rel_op_repeated ) _rel_state.appendOp(rel_op);
 }
 
 void Inkscape::SVG::PathString::State::append(Geom::Coord v) {

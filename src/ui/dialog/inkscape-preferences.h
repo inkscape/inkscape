@@ -426,7 +426,7 @@ protected:
     UI::Widget::PrefSpinButton    _svgoutput_minimumexponent;
     UI::Widget::PrefCheckButton   _svgoutput_inlineattrs;
     UI::Widget::PrefSpinButton    _svgoutput_indent;
-    UI::Widget::PrefCheckButton   _svgoutput_allowrelativecoordinates;
+    UI::Widget::PrefCombo         _svgoutput_pathformat;
     UI::Widget::PrefCheckButton   _svgoutput_forcerepeatcommands;
 
     // Attribute Checking controls for SVG Output page:

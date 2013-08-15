@@ -1,6 +1,7 @@
 /*
  * Copyright 2007 MenTaLguY <mental@rydia.net>
  * Copyright 2008 Jasper van de Gronde <th.v.d.gronde@hccnet.nl>
+ * Copyright 2013 Tavmjong Bah <tavmjong@free.fr>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,6 +24,14 @@ namespace Inkscape {
 
 namespace SVG {
 
+// Relative vs. absolute coordinates
+enum PATHSTRING_FORMAT {
+    PATHSTRING_ABSOLUTE,  // Use only absolute coordinates
+    PATHSTRING_RELATIVE,  // Use only relative coordinates
+    PATHSTRING_OPTIMIZE,  // Optimize for path string length
+    PATHSTRING_FORMAT_SIZE
+};
+
 /**
  * Builder for SVG path strings.
  */
@@ -38,6 +47,7 @@ public:
         final.reserve(commonbase.size()+t.size());
         final = commonbase;
         final += tail();
+        // std::cout << " final: " << final << std::endl;
         return final;
     }
 
@@ -130,12 +140,10 @@ public:
     }
 
     PathString &closePath() {
-        commonbase += _abs_state.str;
-        _abs_state.str.clear();
-        _rel_state = _abs_state;
+
         _abs_state.appendOp('Z');
         _rel_state.appendOp('z');
-        _rel_state.switches++;
+
         _current_point = _initial_point;
         return *this;
     }
@@ -229,9 +237,13 @@ private:
     // to cause a quadratic time complexity (in the number of characters/operators)
     std::string commonbase;
     std::string final;
-    std::string const &tail() const { return ((_abs_state <= _rel_state || !allow_relative_coordinates) ? _abs_state.str : _rel_state.str); }
+    std::string const &tail() const {
+        return ( (format == PATHSTRING_ABSOLUTE) ||
+                 (format == PATHSTRING_OPTIMIZE && _abs_state <= _rel_state ) ?
+                 _abs_state.str : _rel_state.str );
+    }
 
-    bool const allow_relative_coordinates;
+    static PATHSTRING_FORMAT format;
     bool const force_repeat_commands;
     static int numericprecision;
     static int minimumexponent;
