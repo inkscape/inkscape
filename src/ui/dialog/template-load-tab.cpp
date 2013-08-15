@@ -8,8 +8,9 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include "template-load-tab.h"
 #include "template-widget.h"
+
+#include "template-load-tab.h"
 
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/scrolledwindow.h>

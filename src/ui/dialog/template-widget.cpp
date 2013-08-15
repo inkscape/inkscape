@@ -1,5 +1,3 @@
-
-    
 /** @file
  * @brief New From Template - templates widget - implementation
  */
@@ -11,15 +9,17 @@
  */
 
 #include "template-widget.h"
-#include "template-load-tab.h"
-#include "file.h"
 
 #include <gtkmm/alignment.h>
 #include <gtkmm/button.h>
 #include <gtkmm/label.h>
 #include <gtkmm/messagedialog.h>
-#include <glibmm/i18n.h>
 
+#include <glibmm/i18n.h>
+#include <glibmm/miscutils.h>
+
+#include "template-load-tab.h"
+#include "file.h"
 
 namespace Inkscape {
 namespace UI {

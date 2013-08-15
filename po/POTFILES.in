@@ -258,6 +258,9 @@ src/ui/dialog/livepatheffect-editor.cpp
 src/ui/dialog/livepatheffect-add.cpp
 src/ui/dialog/memory.cpp
 src/ui/dialog/messages.cpp
+src/ui/dialog/new-from-template.cpp
+src/ui/dialog/template-load-tab.cpp
+src/ui/dialog/template-widget.cpp
 src/ui/dialog/object-attributes.cpp
 src/ui/dialog/object-properties.cpp
 src/ui/dialog/ocaldialogs.cpp

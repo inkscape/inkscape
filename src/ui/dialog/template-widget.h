@@ -11,10 +11,11 @@
 #ifndef INKSCAPE_SEEN_UI_DIALOG_TEMPLATE_WIDGET_H
 #define INKSCAPE_SEEN_UI_DIALOG_TEMPLATE_WIDGET_H
 
-#include "template-load-tab.h"
 #include "filedialogimpl-gtkmm.h"
+
 #include <gtkmm/box.h>
 
+#include "template-load-tab.h"
 
 namespace Inkscape {
 namespace UI {
