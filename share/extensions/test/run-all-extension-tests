@@ -1,12 +1,39 @@
 #!/bin/bash
 
+# TODO: check for GNU mktemp and sed (from coreutils), else exit
+# ---------------------------------------------------------------------
+# solution below is based on
+# <http://www.ooblick.com/weblog/2011/05/12/a-couple-of-shell-quickies/>
+
+# Wrapper function for GNU mktemp
+gnu_mktemp() {
+	mktemp "$@"
+}
+
+# Wrapper function for BSD mktemp
+bsd_mktemp() {
+	mktemp -t tmpfile.XXXXXX "$@"
+}
+
+# Try to figure out which wrapper to use
+if mktemp -V | grep version >/dev/null 2>&1; then
+	MKTEMP=gnu_mktemp
+else
+	MKTEMP=bsd_mktemp
+fi
+
+#mytmpfile=`$MKTEMP`
+echo "MKTEMP to be used: $MKTEMP"
+
+# ---------------------------------------------------------------------
+
 echo -e "\n##### Extension Tests #####"
 
 cd "$(dirname "$0")"
 
 has_py_coverage=false
-py_cover_files=$( mktemp )
-failed_tests=$( mktemp )
+py_cover_files=$( $MKTEMP )
+failed_tests=$( $MKTEMP )
 
 if coverage.py -e >/dev/null 2>/dev/null; then
   has_py_coverage=true
@@ -39,8 +66,23 @@ function run_py_test() {
 
 tot_FAILED=0
 
+# TODO: check for GNU mktemp and sed (from coreutils), else exit
+# ---------------------------------------------------------------------
+# solution below is based on
+# <http://notmuchmail.org/pipermail/notmuch/2011/004579.html>
+
+if [ `sed --version >/dev/null 2>/dev/null && echo 1` ]; then
+    SED_EXTENDED='sed -r' # GNU sed (e.g. on Linux)
+else
+    SED_EXTENDED='sed -E' # BSD sed (e.g. on Mac OS X)
+fi
+
+echo "sed regex command: $SED_EXTENDED"
+
+# ---------------------------------------------------------------------
+
 for testFile in *.test.py; do
-  if ! run_py_test $( echo $testFile | sed -r 's/^([^.]+)..*$/\1/' ); then
+  if ! run_py_test $( echo $testFile | $SED_EXTENDED 's/^([^.]+)..*$/\1/' ); then
     let tot_FAILED++
   fi
 done
