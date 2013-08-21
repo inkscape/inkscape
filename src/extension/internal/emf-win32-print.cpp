@@ -910,18 +910,6 @@ void PrintEmfWin32::init (void)
     return;
 }
 
-unsigned int PrintEmfWin32::image(Inkscape::Extension::Print * /* module */, /** not used */
-    unsigned char *px, /** array of pixel values, Gdk::Pixbuf bitmap format */
-    unsigned int /*w*/, /** width of bitmap */
-    unsigned int /*h*/, /** height of bitmap */
-    unsigned int /*rs*/, /** row stride (normally w*4) */
-    Geom::Affine const & /*tf_ignore*/, /** WRONG affine transform, use the one from m_tr_stack */
-    SPStyle const * /*style*/) /** provides indirect link to image object */
-{
-    free(px);
-    return 0;
-}
-
 }  /* namespace Internal */
 }  /* namespace Extension */
 }  /* namespace Inkscape */
