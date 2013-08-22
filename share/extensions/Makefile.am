@@ -166,6 +166,7 @@ extensions = \
 	text_flipcase.py \
 	text_randomcase.py \
 	text_braille.py \
+	text_merge.py \
 	triangle.py \
 	txt2svg.pl \
 	uniconv-ext.py \
@@ -348,6 +349,7 @@ modules = \
 	text_flipcase.inx \
 	text_randomcase.inx \
 	text_braille.inx \
+	text_merge.inx \
 	triangle.inx \
 	txt2svg.inx \
 	voronoi2svg.inx \

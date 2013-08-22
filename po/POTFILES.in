@@ -537,6 +537,7 @@ share/extensions/wireframe_sphere.py
 [type: gettext/xml] share/extensions/text_extract.inx
 [type: gettext/xml] share/extensions/text_flipcase.inx
 [type: gettext/xml] share/extensions/text_lowercase.inx
+[type: gettext/xml] share/extensions/text_merge.inx
 [type: gettext/xml] share/extensions/text_randomcase.inx
 [type: gettext/xml] share/extensions/text_sentencecase.inx
 [type: gettext/xml] share/extensions/text_titlecase.inx
