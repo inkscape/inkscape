@@ -124,6 +124,7 @@ include live_effects/Makefile_insert
 include live_effects/parameter/Makefile_insert
 include libvpsc/Makefile_insert
 include libcola/Makefile_insert
+include libunicode-convert/Makefile_insert
 include svg/Makefile_insert
 include widgets/Makefile_insert
 include debug/Makefile_insert
@@ -173,10 +174,10 @@ EXTRA_DIST +=	\
 	widgets/makefile.in	\
 	xml/makefile.in		\
 	2geom/makefile.in	\
-	extension/internal/emf-win32-inout.cpp	\
-	extension/internal/emf-win32-inout.h	\
-	extension/internal/emf-win32-print.cpp	\
-	extension/internal/emf-win32-print.h	\
+	extension/internal/emf-inout.cpp  \
+	extension/internal/emf-inout.h    \
+	extension/internal/emf-print.cpp  \
+	extension/internal/emf-print.h    \
 	helper/sp-marshal.list	\
 	show-preview.bmp \
 	winconsole.cpp \

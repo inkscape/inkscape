@@ -34,10 +34,10 @@
 #include "system.h"
 #include "db.h"
 #include "internal/svgz.h"
-#ifdef WIN32
-# include "internal/emf-win32-inout.h"
-# include "internal/emf-win32-print.h"
-#endif
+# include "internal/emf-inout.h"
+# include "internal/emf-print.h"
+# include "internal/wmf-inout.h"
+# include "internal/wmf-print.h"
 #ifdef HAVE_CAIRO_PDF
 # include "internal/cairo-renderer-pdf-out.h"
 # include "internal/cairo-png-out.h"
@@ -181,10 +181,10 @@ init()
     Internal::PdfInputCairo::init();
     }
 #endif
-#ifdef WIN32
-    Internal::PrintEmfWin32::init();
-    Internal::EmfWin32::init();
-#endif
+    Internal::PrintEmf::init();
+    Internal::Emf::init();
+    Internal::PrintWmf::init();
+    Internal::Wmf::init();
     Internal::PovOutput::init();
     Internal::JavaFXOutput::init();
     Internal::OdfOutput::init();
@@ -324,7 +324,7 @@ build_module_from_dir(gchar const *dirname)
             continue;
         }
 
-        gchar *pathname = g_build_filename(dirname, filename, NULL);
+        gchar *pathname = g_build_filename(dirname, filename, (char *) NULL);
         build_from_file(pathname);
         g_free(pathname);
     }

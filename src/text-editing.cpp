@@ -43,7 +43,7 @@
 
 static const gchar *tref_edit_message = _("You cannot edit <b>cloned character data</b>.");
 
-static bool tidy_xml_tree_recursively(SPObject *root);
+static bool tidy_xml_tree_recursively(SPObject *root, bool has_text_decoration);
 
 Inkscape::Text::Layout const * te_get_layout (SPItem const *item)
 {
@@ -774,6 +774,10 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
 
     SPObject *common_ancestor = get_common_ancestor(item, start_item, end_item);
 
+    bool has_text_decoration = false;
+    gchar const *root_style = (item)->getRepr()->attribute("style");
+    if(strstr(root_style,"text-decoration"))has_text_decoration = true;
+
     if (start_item == end_item) {
         // the quick case where we're deleting stuff all from the same string
         if (SP_IS_STRING(start_item)) {     // always true (if it_start != it_end anyway)
@@ -835,7 +839,7 @@ sp_te_delete (SPItem *item, Inkscape::Text::Layout::iterator const &start,
         }
     }
 
-    while (tidy_xml_tree_recursively(common_ancestor)){};
+    while (tidy_xml_tree_recursively(common_ancestor, has_text_decoration)){};
     te_update_layout_now(item);
     item->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG);
     layout->validateIterator(&iter_pair.first);
@@ -1554,7 +1558,7 @@ static SPObject* ascend_while_first(SPObject *item, Glib::ustring::iterator text
 
 /**     empty spans: abc<span></span>def
                       -> abcdef                  */
-static bool tidy_operator_empty_spans(SPObject **item)
+static bool tidy_operator_empty_spans(SPObject **item, bool has_text_decoration)
 {
     bool result = false;
     if ( !(*item)->hasChildren()
@@ -1572,7 +1576,7 @@ static bool tidy_operator_empty_spans(SPObject **item)
 /**    inexplicable spans: abc<span style="">def</span>ghi
                             -> "abc""def""ghi"
 the repeated strings will be merged by another operator. */
-static bool tidy_operator_inexplicable_spans(SPObject **item)
+static bool tidy_operator_inexplicable_spans(SPObject **item, bool has_text_decoration)
 {
     //XML Tree being directly used here while it shouldn't be.
     if (*item && sp_repr_is_meta_element((*item)->getRepr())) {
@@ -1607,7 +1611,7 @@ static bool tidy_operator_inexplicable_spans(SPObject **item)
 
 /**    repeated spans: <font a>abc</font><font a>def</font>
                         -> <font a>abcdef</font>            */
-static bool tidy_operator_repeated_spans(SPObject **item)
+static bool tidy_operator_repeated_spans(SPObject **item, bool has_text_decoration)
 {
     SPObject *first = *item;
     SPObject *second = first->getNext();
@@ -1653,7 +1657,7 @@ static bool tidy_operator_repeated_spans(SPObject **item)
                            -> <font b>abc</font>
        excessive nesting: <font a><size 1>abc</size></font>
                            -> <font a,size 1>abc</font>      */
-static bool tidy_operator_excessive_nesting(SPObject **item)
+static bool tidy_operator_excessive_nesting(SPObject **item, bool has_text_decoration)
 {
     if (!(*item)->hasChildren()) {
         return false;
@@ -1731,7 +1735,7 @@ example. You may note that this only does its work when the doubly-nested
 child is the first or last. The other cases are called 'style inversion'
 below, and I'm not yet convinced that the result of that operation will be
 tidier in all cases. */
-static bool tidy_operator_redundant_double_nesting(SPObject **item)
+static bool tidy_operator_redundant_double_nesting(SPObject **item, bool has_text_decoration)
 {
     if (!(*item)->hasChildren()) return false;
     if ((*item)->firstChild() == (*item)->lastChild()) return false;     // this is excessive nesting, done above
@@ -1792,7 +1796,7 @@ static bool redundant_semi_nesting_processor(SPObject **item, SPObject *child, b
                                 -> <font b>abc</font><font>def</font>
 test this by applying a colour to a region, then a different colour to
 a partially-overlapping region. */
-static bool tidy_operator_redundant_semi_nesting(SPObject **item)
+static bool tidy_operator_redundant_semi_nesting(SPObject **item, bool has_text_decoration)
 {
     if (!(*item)->hasChildren()) return false;
     if ((*item)->firstChild() == (*item)->lastChild()) return false;     // this is redundant nesting, done above
@@ -1819,13 +1823,21 @@ static SPString* find_last_string_child_not_equal_to(SPObject *root, SPObject *n
     return NULL;
 }
 
-/** whitespace-only spans: abc<font> </font>def
-                            -> abc<font></font> def
-                           abc<b><i>def</i> </b>ghi
-                            -> abc<b><i>def</i></b> ghi   */
-static bool tidy_operator_styled_whitespace(SPObject **item)
+/** whitespace-only spans:
+  abc<font> </font>def
+   -> abc<font></font> def
+  abc<b><i>def</i> </b>ghi
+   -> abc<b><i>def</i></b> ghi
+   
+  visible text-decoration changes on white spaces should not be subject
+  to this sort of processing.  So
+    abc<text-decoration-color>  </text-decoration-color>def
+  is unchanged.
+*/
+static bool tidy_operator_styled_whitespace(SPObject **item, bool has_text_decoration)
 {
-    if (!SP_IS_STRING(*item)) {
+    // any type of visible text decoration is OK as pure spaces, so do nothing here in that case.
+    if (!SP_IS_STRING(*item) ||  has_text_decoration ) {
         return false;
     }
     Glib::ustring const &str = SP_STRING(*item)->string;
@@ -1834,6 +1846,7 @@ static bool tidy_operator_styled_whitespace(SPObject **item)
             return false;
         }
     }
+
 
     SPObject *test_item = *item;
     SPString *next_string;
@@ -1862,7 +1875,7 @@ static bool tidy_operator_styled_whitespace(SPObject **item)
             if (next_string == NULL) {
                 return false;   // an empty paragraph
             }
-            next_string->string += str;
+            next_string->string = str + next_string->string;
             break;
         }
     }
@@ -1896,9 +1909,11 @@ It may be that some of the later tidy operators that I wrote are actually
 general cases of the earlier operators, and hence the special-case-only
 versions can be removed. I haven't analysed my work in detail to figure
 out if this is so. */
-static bool tidy_xml_tree_recursively(SPObject *root)
+static bool tidy_xml_tree_recursively(SPObject *root, bool has_text_decoration)
 {
-    static bool (* const tidy_operators[])(SPObject**) = {
+    gchar const *root_style = (root)->getRepr()->attribute("style");
+    if(root_style && strstr(root_style,"text-decoration"))has_text_decoration = true;
+    static bool (* const tidy_operators[])(SPObject**, bool) = {
         tidy_operator_empty_spans,
         tidy_operator_inexplicable_spans,
         tidy_operator_repeated_spans,
@@ -1915,12 +1930,12 @@ static bool tidy_xml_tree_recursively(SPObject *root)
             continue;
         }
         if (child->hasChildren()) {
-            changes |= tidy_xml_tree_recursively(child);
+            changes |= tidy_xml_tree_recursively(child, has_text_decoration);
         }
 
         unsigned i;
         for (i = 0 ; i < sizeof(tidy_operators) / sizeof(tidy_operators[0]) ; i++) {
-            if (tidy_operators[i](&child)) {
+            if (tidy_operators[i](&child, has_text_decoration)) {
                 changes = true;
                 break;
             }
@@ -2018,7 +2033,10 @@ void sp_te_apply_style(SPItem *text, Inkscape::Text::Layout::iterator const &sta
     and neither option can be made to work, a fallback could be to reduce
     everything to a single level of nesting and drop all pretence of
     roundtrippability. */
-    while (tidy_xml_tree_recursively(common_ancestor)){};
+    bool has_text_decoration = false;
+    gchar const *root_style = (text)->getRepr()->attribute("style");
+    if(strstr(root_style,"text-decoration"))has_text_decoration = true;
+    while (tidy_xml_tree_recursively(common_ancestor, has_text_decoration)){};
 
     // if we only modified subobjects this won't have been automatically sent
     text->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_OBJECT_STYLE_MODIFIED_FLAG);

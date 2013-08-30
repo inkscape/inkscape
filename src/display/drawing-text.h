@@ -35,8 +35,13 @@ protected:
     virtual DrawingItem *_pickItem(Geom::Point const &p, double delta, unsigned flags);
 
     font_instance *_font;
-    int _glyph;
-    Geom::IntRect _pick_bbox;
+    int            _glyph;
+    bool           _drawable;
+    float          _width;          // These three are used to set up bounding box
+    float          _asc;            //
+    float          _dsc;            //
+    float          _pl;             // phase length
+    Geom::IntRect  _pick_bbox;
 
     friend class DrawingText;
 };
@@ -49,8 +54,10 @@ public:
     ~DrawingText();
 
     void clear();
-    void addComponent(font_instance *font, int glyph, Geom::Affine const &trans);
+    bool addComponent(font_instance *font, int glyph, Geom::Affine const &trans, 
+        float width, float ascent, float descent, float phase_length);
     void setStyle(SPStyle *style);
+
 
 protected:
     virtual unsigned _updateItem(Geom::IntRect const &area, UpdateContext const &ctx,
@@ -61,6 +68,8 @@ protected:
     virtual DrawingItem *_pickItem(Geom::Point const &p, double delta, unsigned flags);
     virtual bool _canClip();
 
+    double decorateItem(DrawingContext &ct, Geom::Affine aff, double phase_length);
+    void decorateStyle(DrawingContext &ct, double vextent, double xphase, Geom::Point p1, Geom::Point p2);
     NRStyle _nrstyle;
 
     friend class DrawingGlyphs;

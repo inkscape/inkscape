@@ -414,7 +414,10 @@ enum SPAttributeEnum {
     /* Text */
     SP_PROP_TEXT_INDENT,
     SP_PROP_TEXT_ALIGN,
-    SP_PROP_TEXT_DECORATION,
+    SP_PROP_TEXT_DECORATION,       /* SVG 1 underline etc.( no color or style) OR SVG2 with _LINE, _STYLE, _COLOR values */
+    SP_PROP_TEXT_DECORATION_LINE,  /* SVG 2 underline etc. */
+    SP_PROP_TEXT_DECORATION_STYLE, /* SVG 2 proposed solid [SVG 1], dotted, etc.)*/
+    SP_PROP_TEXT_DECORATION_COLOR, /* SVG 2 proposed same as text [SVG 1], specified*/
     SP_PROP_LINE_HEIGHT,
     SP_PROP_LETTER_SPACING,
     SP_PROP_WORD_SPACING,

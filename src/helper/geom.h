@@ -26,6 +26,11 @@ void pathv_matrix_point_bbox_wind_distance ( Geom::PathVector const & pathv, Geo
                                              Geom::Coord tolerance, Geom::Rect const *viewbox);
 
 Geom::PathVector pathv_to_linear_and_cubic_beziers( Geom::PathVector const &pathv );
+Geom::PathVector pathv_to_linear( Geom::PathVector const &pathv, double maxdisp );
+void recursive_bezier4(const double x1, const double y1, const double x2, const double y2, 
+                       const double x3, const double y3, const double x4, const double y4,
+                       std::vector<Geom::Point> &pointlist,
+                       int level);
 
 void round_rectangle_outwards(Geom::Rect & rect);
 

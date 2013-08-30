@@ -67,6 +67,43 @@ struct NRStyle {
 
     cairo_pattern_t *fill_pattern;
     cairo_pattern_t *stroke_pattern;
+
+#define TEXT_DECORATION_LINE_CLEAR        0x00
+#define TEXT_DECORATION_LINE_SET          0x01
+#define TEXT_DECORATION_LINE_INHERIT      0x02
+#define TEXT_DECORATION_LINE_UNDERLINE    0x04
+#define TEXT_DECORATION_LINE_OVERLINE     0x08
+#define TEXT_DECORATION_LINE_LINETHROUGH  0x10
+#define TEXT_DECORATION_LINE_BLINK        0x20
+
+#define TEXT_DECORATION_STYLE_CLEAR       0x00
+#define TEXT_DECORATION_STYLE_SET         0x01
+#define TEXT_DECORATION_STYLE_INHERIT     0x02
+#define TEXT_DECORATION_STYLE_SOLID       0x04
+#define TEXT_DECORATION_STYLE_ISDOUBLE    0x08
+#define TEXT_DECORATION_STYLE_DOTTED      0x10
+#define TEXT_DECORATION_STYLE_DASHED      0x20
+#define TEXT_DECORATION_STYLE_WAVY        0x40
+
+    int   text_decoration_line;
+    int   text_decoration_style;
+    Paint text_decoration_color;
+    bool  text_decoration_useColor;      // if false, use whatever the glyph color was
+    // These are the same as in style.h
+    float phase_length;
+    bool  tspan_line_start;
+    bool  tspan_line_end;
+    float tspan_width;
+    float ascender;
+    float descender;
+    float line_gap;
+    float underline_thickness;
+    float underline_position; 
+    float line_through_thickness;
+    float line_through_position;
+    float font_size;
+
+    int   text_direction;
 };
 
 #endif

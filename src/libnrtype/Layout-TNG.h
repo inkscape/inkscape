@@ -568,6 +568,9 @@ public:
         inline void setZero() {ascent = descent = leading = 0.0;}
         inline LineHeight& operator*=(double x) {ascent *= x; descent *= x; leading *= x; return *this;}
         void max(LineHeight const &other);   /// makes this object contain the largest of all three members between this object and other
+        inline double getAscent() const {return ascent; }
+        inline double getDescent() const {return descent; }
+        inline double getLeading() const {return leading; }
     };
 
     /// see _enum_converter()
@@ -717,6 +720,7 @@ private:
         float font_size;
         float x_start;   /// relative to the start of the chunk
         float x_end;     /// relative to the start of the chunk
+        inline float width() const {return std::abs(x_start - x_end);}
         LineHeight line_height;
         double baseline_shift;  /// relative to the line's baseline
         Direction direction;     /// See CSS3 section 3.2. Either rtl or ltr

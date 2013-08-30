@@ -59,6 +59,8 @@ public:
     double               Advance(int glyph_id, bool vertical);
     // nominal advance of the font.
     bool                 FontMetrics(double &ascent, double &descent, double &leading);
+    bool                 FontDecoration(double &underline_position,     double &underline_thickness,
+                         double &linethrough_position,   double &linethrough_thickness);
     bool                 FontSlope(double &run, double &rise);
                                 // for generating slanted cursors for oblique fonts
     Geom::OptRect             BBox(int glyph_id);

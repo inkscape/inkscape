@@ -120,8 +120,8 @@ class Layout::Calculator
     BrokenSpan. */
     struct UnbrokenSpan {
         PangoGlyphString *glyph_string;
-        int pango_item_index;    /// index into _para.pango_items, or -1 if this is style only
-        unsigned input_index;         /// index into Layout::_input_stream
+        int pango_item_index;           /// index into _para.pango_items, or -1 if this is style only
+        unsigned input_index;           /// index into Layout::_input_stream
         Glib::ustring::const_iterator input_stream_first_character;
         double font_size;
         LineHeight line_height;         /// This is not the CSS line-height attribute!
@@ -213,6 +213,43 @@ class Layout::Calculator
 /* *********************************************************************************************************/
 //                             Per-line functions
 
+/**
+ * For debugging, not called in distributed code
+ *
+ * Input: para->first_input_index, para->pango_items
+ */
+static void dumpPangoItemsOut(ParagraphInfo *para){
+    std::cout << "Pango items: " << para->pango_items.size() << std::endl;
+    for(unsigned pidx = 0 ; pidx < para->pango_items.size(); pidx++){
+        std::cout 
+        << "idx: " << pidx 
+        << " offset: " 
+        << para->pango_items[pidx].item->offset
+        << " length: "
+        << para->pango_items[pidx].item->length
+        << std::endl;
+    }
+}
+
+/**
+ * For debugging, not called in distributed code
+ *
+ * Input: para->first_input_index, para->pango_items
+ */
+static void dumpUnbrokenSpans(ParagraphInfo *para){
+    std::cout << "Unbroken Spans: " << para->unbroken_spans.size() << std::endl;
+    for(unsigned uidx = 0 ; uidx < para->unbroken_spans.size(); uidx++){
+        std::cout 
+        << "idx: "                 << uidx 
+        << " pango_item_index: "   << para->unbroken_spans[uidx].pango_item_index
+        << " input_index: "        << para->unbroken_spans[uidx].input_index
+        << " char_index_in_para: " << para->unbroken_spans[uidx].char_index_in_para
+        << " text_bytes: "         << para->unbroken_spans[uidx].text_bytes
+        << std::endl;
+    }
+}
+
+
 
     bool _goToNextWrapShape();
 
@@ -246,8 +283,10 @@ class Layout::Calculator
     {
         span->setZero();
 
-        if (span->start.iter_span->dx._set && span->start.char_byte == 0)
-            span->width += span->start.iter_span->dx.computed;
+        if (span->start.iter_span->dx._set && span->start.char_byte == 0){
+            if(para.direction == RIGHT_TO_LEFT){ span->width -= span->start.iter_span->dx.computed; }
+            else {                               span->width += span->start.iter_span->dx.computed; }
+        }
 
         if (span->start.iter_span->pango_item_index == -1) {
             // if this is a style-only span there's no text in it
@@ -510,15 +549,19 @@ class Layout::Calculator
                 x = 0.0;
             } else {
                 direction_sign = -1.0;
-                if (para.alignment == FULL && !_flow._input_wrap_shapes.empty())
+                if (para.alignment == FULL && !_flow._input_wrap_shapes.empty()){
                     x = it_chunk->scanrun_width;
-                else
+                }
+                else {
                     x = it_chunk->text_width;
+                }
             }
 
             for (std::vector<BrokenSpan>::const_iterator it_span = it_chunk->broken_spans.begin() ; it_span != it_chunk->broken_spans.end() ; it_span++) {
                 // begin adding spans to the list
                 UnbrokenSpan const &unbroken_span = *it_span->start.iter_span;
+                double x_in_span_last = 0.0;  // set at the END when a new cluster starts
+                double x_in_span      = 0.0;  // set from the preceding at the START when a new cluster starts.
 
                 if (it_span->start.char_byte == 0) {
                     // Start of an unbroken span, we might have dx, dy or rotate still to process
@@ -535,7 +578,6 @@ class Layout::Calculator
                 }
 
                 Layout::Span new_span;
-                double x_in_span = 0.0;
 
                 new_span.in_chunk = _flow._chunks.size() - 1;
                 new_span.line_height = unbroken_span.line_height;
@@ -581,14 +623,19 @@ class Layout::Calculator
                     InputStreamTextSource const *text_source = static_cast<InputStreamTextSource const *>(_flow._input_stream[unbroken_span.input_index]);
                     Glib::ustring::const_iterator iter_source_text = Glib::ustring::const_iterator(unbroken_span.input_stream_first_character.base() + it_span->start.char_byte) ;
                     unsigned char_index_in_unbroken_span = it_span->start.char_index;
-                    unsigned cluster_start_char_index = _flow._characters.size();
-                    double font_size_multiplier = new_span.font_size / (PANGO_SCALE * _font_factory_size_multiplier);
+                    double   font_size_multiplier        = new_span.font_size / (PANGO_SCALE * _font_factory_size_multiplier);
+                    int      log_cluster_size_glyphs     = 0;   // Number of glyphs in this log_cluster
+                    int      log_cluster_size_chars      = 0;   // Number of characters in this log_cluster 
+                    unsigned end_byte                    = 0;
 
                     for (unsigned glyph_index = it_span->start_glyph_index ; glyph_index < it_span->end_glyph_index ; glyph_index++) {
-                        unsigned char_byte = iter_source_text.base() - unbroken_span.input_stream_first_character.base();
-                        if (unbroken_span.glyph_string->glyphs[glyph_index].attr.is_cluster_start)
-                            cluster_start_char_index = _flow._characters.size();
-
+                        unsigned char_byte              = iter_source_text.base() - unbroken_span.input_stream_first_character.base();
+                        int      newcluster             = 0;
+                        if (unbroken_span.glyph_string->glyphs[glyph_index].attr.is_cluster_start){
+                            newcluster = 1;
+                            x_in_span = x_in_span_last;
+                        }
+ 
                         if (unbroken_span.glyph_string->log_clusters[glyph_index] < (int)unbroken_span.text_bytes
                             && *iter_source_text == UNICODE_SOFT_HYPHEN
                             && glyph_index + 1 != it_span->end_glyph_index) {
@@ -611,7 +658,7 @@ class Layout::Calculator
                         // create the Layout::Glyph
                         Layout::Glyph new_glyph;
                         new_glyph.glyph = unbroken_span.glyph_string->glyphs[glyph_index].glyph;
-                        new_glyph.in_character = cluster_start_char_index;
+                        new_glyph.in_character = _flow._characters.size();
                         new_glyph.rotation = glyph_rotate;
 
                         /* put something like this back in when we do glyph-rotation-horizontal/vertical
@@ -652,28 +699,42 @@ class Layout::Calculator
                             }
                             new_glyph.x -= cluster_width;
                         }
-                        _flow._glyphs.push_back(new_glyph);
+                       _flow._glyphs.push_back(new_glyph);
 
                         // create the Layout::Character(s)
                         double advance_width = new_glyph.width;
-                        unsigned end_byte;
-                        if (glyph_index == (unsigned)unbroken_span.glyph_string->num_glyphs - 1)
-                            end_byte = it_span->start.iter_span->text_bytes;
-                        else {
-                            // output chars for the whole cluster that is commenced by this glyph
-                            if (unbroken_span.glyph_string->glyphs[glyph_index].attr.is_cluster_start) {
-                                int next_cluster_glyph_index = glyph_index + 1;
-                                while (next_cluster_glyph_index < unbroken_span.glyph_string->num_glyphs
-                                       && !unbroken_span.glyph_string->glyphs[next_cluster_glyph_index].attr.is_cluster_start)
-                                    next_cluster_glyph_index++;
-                                if (next_cluster_glyph_index < unbroken_span.glyph_string->num_glyphs)
-                                    end_byte = unbroken_span.glyph_string->log_clusters[next_cluster_glyph_index];
-                                else
-                                    end_byte = it_span->start.iter_span->text_bytes;
-                            } else
-                                end_byte = char_byte;    // don't output any chars if we're not at the start of a cluster
+                        if (newcluster){
+                            // find where the text ends for this log_cluster
+                            end_byte = it_span->start.iter_span->text_bytes;  // Upper limit
+                            for(unsigned next_glyph_index = glyph_index+1; next_glyph_index < it_span->end_glyph_index; next_glyph_index++){
+                                if(unbroken_span.glyph_string->glyphs[next_glyph_index].attr.is_cluster_start){
+                                    end_byte = unbroken_span.glyph_string->log_clusters[next_glyph_index];
+                                    break;
+                                }
+                            }
+                            // Figure out how many glyphs and characters are in the log_cluster.
+                            log_cluster_size_glyphs = 0;
+                            log_cluster_size_chars  = 0;
+                            for(; log_cluster_size_glyphs + glyph_index < it_span->end_glyph_index; log_cluster_size_glyphs++){
+                               if(unbroken_span.glyph_string->log_clusters[glyph_index                          ] != 
+                                  unbroken_span.glyph_string->log_clusters[glyph_index + log_cluster_size_glyphs])break;
+                            }
+                            Glib::ustring::const_iterator lclist = iter_source_text;
+                            unsigned lcb = char_byte;
+                            while(lcb < end_byte){
+                                log_cluster_size_chars++;
+                                lclist++;
+                                lcb = lclist.base() - unbroken_span.input_stream_first_character.base();
+                            }
                         }
                         while (char_byte < end_byte) {
+                            /* Hack to survive ligatures:  in log_cluster keep the number of available chars >= number of glyphs remaining.
+                               When there are no ligatures these two sizes are always the same.
+                            */
+                            if(log_cluster_size_chars < log_cluster_size_glyphs){
+                               log_cluster_size_glyphs--;
+                               break;
+                            }
                             Layout::Character new_character;
                             new_character.in_span = _flow._spans.size();
                             new_character.x = x_in_span;
@@ -687,23 +748,27 @@ class Layout::Calculator
                             iter_source_text++;
                             char_index_in_unbroken_span++;
                             char_byte = iter_source_text.base() - unbroken_span.input_stream_first_character.base();
+                            log_cluster_size_chars--;
                         }
 
-                        advance_width *= direction_sign;
-                        if (new_span.direction != para.direction) {
-                            counter_directional_width_remaining -= advance_width;
-                            x -= advance_width;
-                            x_in_span -= advance_width;
-                        } else {
-                            x += advance_width;
-                            x_in_span += advance_width;
+                        if (newcluster){
+                            advance_width *= direction_sign;
+                            if (new_span.direction != para.direction) {
+                                counter_directional_width_remaining -= advance_width;
+                                x -= advance_width;
+                                x_in_span_last -= advance_width;
+                            } else {
+                                x += advance_width;
+                                x_in_span_last += advance_width;
+                            }
                         }
+                        newcluster = 0;
                     }
                 } else if (_flow._input_stream[unbroken_span.input_index]->Type() == CONTROL_CODE) {
                     x += static_cast<InputStreamControlCode const *>(_flow._input_stream[unbroken_span.input_index])->width;
                 }
 
-                new_span.x_end = new_span.x_start + x_in_span;
+                new_span.x_end = new_span.x_start + x_in_span_last;
                 _flow._spans.push_back(new_span);
                 previous_direction = new_span.direction;
             }
@@ -879,8 +944,9 @@ void Layout::Calculator::ParagraphInfo::free()
  *
  * Input: para.first_input_index.
  * Output: para.direction, para.pango_items, para.char_attributes.
+ * Returns: the number of spans created by pango_itemize
  */
-void Layout::Calculator::_buildPangoItemizationForPara(ParagraphInfo *para) const
+void  Layout::Calculator::_buildPangoItemizationForPara(ParagraphInfo *para) const
 {
     Glib::ustring para_text;
     PangoAttrList *attributes_list;
@@ -974,8 +1040,9 @@ void Layout::Calculator::_computeFontLineHeight(font_instance *font, double font
         line_height->setZero();
         *line_height_multiplier = 1.0;
     }
-    else
+    else {
 	font->FontMetrics(line_height->ascent, line_height->descent, line_height->leading);
+    }
     *line_height *= font_size;
 
     // yet another borked SPStyle member that we're going to have to fix ourselves
@@ -1008,6 +1075,11 @@ void Layout::Calculator::_computeFontLineHeight(font_instance *font, double font
     *line_height_multiplier = LINE_HEIGHT_NORMAL * font_size / line_height->total();
 }
 
+bool compareGlyphWidth(const PangoGlyphInfo &a, const PangoGlyphInfo &b)
+{
+    return (a.geometry.width > b.geometry.width);
+}
+
 
 /**
  * Split the paragraph into spans. Also call pango_shape() on them.
@@ -1034,13 +1106,13 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                 break;                                    // stop at the end of the paragraph
             else if (control_code->code == ARBITRARY_GAP) {
                 UnbrokenSpan new_span;
-                new_span.pango_item_index = -1;
-                new_span.input_index = input_index;
-                new_span.line_height.ascent = control_code->ascent;
+                new_span.pango_item_index    = -1;
+                new_span.input_index         = input_index;
+                new_span.line_height.ascent  = control_code->ascent;
                 new_span.line_height.descent = control_code->descent;
                 new_span.line_height.leading = 0.0;
-                new_span.text_bytes = 0;
-                new_span.char_index_in_para = char_index_in_para;
+                new_span.text_bytes          = 0;
+                new_span.char_index_in_para  = char_index_in_para;
                 para->unbroken_spans.push_back(new_span);
                 TRACE(("add gap span %d\n", para->unbroken_spans.size() - 1));
             }
@@ -1123,6 +1195,13 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                     g_assert( span_start_byte_in_source + new_span.text_bytes <= text_source->text->bytes() );
                     g_assert( memchr(text_source->text->data() + span_start_byte_in_source, '\0', static_cast<size_t>(new_span.text_bytes))
                               == NULL );
+                    /* Notes as of 4/29/13.  Pango_shape is not generating English language ligatures, but it is generating
+                    them for Hebrew (and probably other similar languages).  In the case observed 3 unicode characters (a base
+                    and 2 Mark, nonspacings) are merged into two glyphs (the base + first Mn, the 2nd Mn).  All of these map
+                    from glyph to first character of the log_cluster range.  This destroys the 1:1 correspondence between
+                    characters and glyphs.  A big chunk of the conditional code which immediately follows this call
+                    is there to clean up the resulting mess.
+                    */
                     pango_shape(text_source->text->data() + span_start_byte_in_source,
                                 new_span.text_bytes,
                                 &para->pango_items[pango_item_index].item->analysis,
@@ -1134,24 +1213,55 @@ unsigned Layout::Calculator::_buildSpansForPara(ParagraphInfo *para) const
                         // let's reverse the glyphstring on a cluster-by-cluster basis
                         const unsigned nglyphs = new_span.glyph_string->num_glyphs;
                         std::vector<PangoGlyphInfo> infos(nglyphs);
-                        std::vector<gint> clusters(nglyphs);
-                        unsigned i, cluster_start = 0;
-
-                        for (i = 0 ; i < nglyphs ; ++i) {
-                            if (new_span.glyph_string->glyphs[i].attr.is_cluster_start) {
-                                if (i != cluster_start) {
-                                    std::copy(&new_span.glyph_string->glyphs[cluster_start], &new_span.glyph_string->glyphs[i], infos.end() - i);
-                                    std::copy(&new_span.glyph_string->log_clusters[cluster_start], &new_span.glyph_string->log_clusters[i], clusters.end() - i);
-                                }
-                                cluster_start = i;
+                        std::vector<gint>           clusters(nglyphs);
+                        unsigned i, j;
+                        for (i = 0 ; i < nglyphs ; i++)new_span.glyph_string->glyphs[i].attr.is_cluster_start = 0;
+                        for (i = 0 ; i < nglyphs ; i++) {
+                            j=i;
+                            while(  (j < nglyphs-1) &&  
+                                    (new_span.glyph_string->log_clusters[j+1] == new_span.glyph_string->log_clusters[i])
+                            )j++;
+                            /*      
+                            CAREFUL, within a log_cluster the order of glyphs may not map 1:1, or
+                            even in the same order, to the original unicode characters!!!  Among
+                            other things, diacritical mark glyphs can end up in front of the base
+                            character.  That makes determining kerning, even approximately, difficult
+                            later on.  To resolve this somewhat sort the glyphs with the same
+                            log_cluster into descending order by width.  In theory there should be 1
+                            that is nonzero, and N that are zero.  The order of the zero width ones
+                            does not matter. Sort the glyphs before copying.  If ligatures other than with
+                            Mark, nonspacing are ever implemented in Pango this will screw up, for instance
+                            changing "fi" to "if".
+                            */
+                            if(j - i){
+                                std::sort(&(new_span.glyph_string->glyphs[i]), &(new_span.glyph_string->glyphs[j+1]), compareGlyphWidth);
                             }
-                        }
-                        if (i != cluster_start) {
-                            std::copy(&new_span.glyph_string->glyphs[cluster_start], &new_span.glyph_string->glyphs[i], infos.end() - i);
-                            std::copy(&new_span.glyph_string->log_clusters[cluster_start], &new_span.glyph_string->log_clusters[i], clusters.end() - i);
+
+                            new_span.glyph_string->glyphs[i].attr.is_cluster_start = 1;
+                            std::copy(&new_span.glyph_string->glyphs[      i], &new_span.glyph_string->glyphs[      j+1], infos.end()    - j -1);
+                            std::copy(&new_span.glyph_string->log_clusters[i], &new_span.glyph_string->log_clusters[j+1], clusters.end() - j -1);
+                            i = j;
                         }
                         std::copy(infos.begin(), infos.end(), new_span.glyph_string->glyphs);
                         std::copy(clusters.begin(), clusters.end(), new_span.glyph_string->log_clusters);
+                        /* glyphs[].x_offset values are probably out of order within any log_clusters, apparently harmless */
+                    }
+                    else {  //  ltr sections are in order but glyphs in a log_cluster following a ligature may not be.  Sort, but no block swapping.
+                        const unsigned nglyphs = new_span.glyph_string->num_glyphs;
+                        unsigned i, j;
+                        for (i = 0 ; i < nglyphs ; i++)new_span.glyph_string->glyphs[i].attr.is_cluster_start = 0;
+                        for (i = 0 ; i < nglyphs ; i++) {
+                            j=i;
+                            while(  (j < nglyphs-1) &&  
+                                    (new_span.glyph_string->log_clusters[j+1] == new_span.glyph_string->log_clusters[i])
+                            )j++;
+                            if(j - i){
+                                std::sort(&(new_span.glyph_string->glyphs[i]), &(new_span.glyph_string->glyphs[j+1]), compareGlyphWidth);
+                            }
+                            new_span.glyph_string->glyphs[i].attr.is_cluster_start = 1;
+                            i = j;
+                        }
+                        /* glyphs[].x_offset values may be out of order within any log_clusters, apparently harmless */
                     }
                     new_span.pango_item_index = pango_item_index;
                     _computeFontLineHeight(para->pango_items[pango_item_index].font, new_span.font_size, text_source->style, &new_span.line_height, &new_span.line_height_multiplier);
@@ -1469,7 +1579,7 @@ bool Layout::Calculator::calculate()
         if (_scanline_maker == NULL)
             break;       // we're trying to flow past the last wrap shape
 
-        _buildPangoItemizationForPara(&para);
+       _buildPangoItemizationForPara(&para);
         unsigned para_end_input_index = _buildSpansForPara(&para);
 
         if (_flow._input_stream[para.first_input_index]->Type() == TEXT_SOURCE)

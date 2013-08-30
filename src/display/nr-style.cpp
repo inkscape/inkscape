@@ -54,6 +54,20 @@ NRStyle::NRStyle()
     , line_join(CAIRO_LINE_JOIN_MITER)
     , fill_pattern(NULL)
     , stroke_pattern(NULL)
+    , text_decoration_line(TEXT_DECORATION_LINE_CLEAR)
+    , text_decoration_style(TEXT_DECORATION_STYLE_CLEAR)
+    , phase_length(0.0)
+    , tspan_line_start(false)
+    , tspan_line_end(false)
+    , tspan_width(0)
+    , ascender(0)
+    , descender(0)
+    , line_gap(0)
+    , underline_thickness(0)
+    , underline_position(0)
+    , line_through_thickness(0)
+    , line_through_position(0)
+    , font_size(0)
 {}
 
 NRStyle::~NRStyle()
@@ -143,6 +157,50 @@ void NRStyle::set(SPStyle *style)
         dash_offset = 0.0;
         dash = NULL;
     }
+
+    text_decoration_line = TEXT_DECORATION_LINE_CLEAR;
+    if(style->text_decoration_line.inherit     ){ text_decoration_line |= TEXT_DECORATION_LINE_INHERIT;                                }
+    if(style->text_decoration_line.underline   ){ text_decoration_line |= TEXT_DECORATION_LINE_UNDERLINE   + TEXT_DECORATION_LINE_SET; }
+    if(style->text_decoration_line.overline    ){ text_decoration_line |= TEXT_DECORATION_LINE_OVERLINE    + TEXT_DECORATION_LINE_SET; }
+    if(style->text_decoration_line.line_through){ text_decoration_line |= TEXT_DECORATION_LINE_LINETHROUGH + TEXT_DECORATION_LINE_SET; }
+    if(style->text_decoration_line.blink       ){ text_decoration_line |= TEXT_DECORATION_LINE_BLINK       + TEXT_DECORATION_LINE_SET; }
+
+    text_decoration_style = TEXT_DECORATION_STYLE_CLEAR;
+    if(style->text_decoration_style.inherit      ){ text_decoration_style |= TEXT_DECORATION_STYLE_INHERIT;                              }
+    if(style->text_decoration_style.solid        ){ text_decoration_style |= TEXT_DECORATION_STYLE_SOLID    + TEXT_DECORATION_STYLE_SET; }
+    if(style->text_decoration_style.isdouble     ){ text_decoration_style |= TEXT_DECORATION_STYLE_ISDOUBLE + TEXT_DECORATION_STYLE_SET; }
+    if(style->text_decoration_style.dotted       ){ text_decoration_style |= TEXT_DECORATION_STYLE_DOTTED   + TEXT_DECORATION_STYLE_SET; }
+    if(style->text_decoration_style.dashed       ){ text_decoration_style |= TEXT_DECORATION_STYLE_DASHED   + TEXT_DECORATION_STYLE_SET; }
+    if(style->text_decoration_style.wavy         ){ text_decoration_style |= TEXT_DECORATION_STYLE_WAVY     + TEXT_DECORATION_STYLE_SET; }
+ 
+    if( style->text_decoration_color.set          ||
+        style->text_decoration_color.inherit      || 
+        style->text_decoration_color.currentcolor ||
+        style->text_decoration_color.colorSet){
+        text_decoration_color.set(style->text_decoration_color.value.color);
+        text_decoration_useColor = true;
+    }
+    else {
+        text_decoration_color.clear();
+        text_decoration_useColor = false;
+    }
+
+    if(text_decoration_line != TEXT_DECORATION_LINE_CLEAR){
+        phase_length           = style->text_decoration_data.phase_length;
+        tspan_line_start       = style->text_decoration_data.tspan_line_start;
+        tspan_line_end         = style->text_decoration_data.tspan_line_end;
+        tspan_width            = style->text_decoration_data.tspan_width;
+        ascender               = style->text_decoration_data.ascender;
+        descender              = style->text_decoration_data.descender;
+        line_gap               = style->text_decoration_data.line_gap;
+        underline_thickness    = style->text_decoration_data.underline_thickness;
+        underline_position     = style->text_decoration_data.underline_position; 
+        line_through_thickness = style->text_decoration_data.line_through_thickness;
+        line_through_position  = style->text_decoration_data.line_through_position;
+        font_size              = style->font_size.computed; 
+    }
+    
+    text_direction = style->direction.computed;                                   
 
     update();
 }

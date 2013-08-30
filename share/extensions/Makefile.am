@@ -185,6 +185,7 @@ extensions = \
 	yocto_css.py
 
 otherstuff = \
+	fontfix.conf \
 	inkweb.js \
 	jessyInk.js \
 	jessyInk_core_mouseHandler_noclick.js \

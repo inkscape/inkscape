@@ -1,0 +1,5 @@
+## Makefile.am fragment sourced by src/Makefile.am.
+
+ink_common_sources +=   \
+	libunicode-convert/unicode-convert.c	\
+	libunicode-convert/unicode-convert.h

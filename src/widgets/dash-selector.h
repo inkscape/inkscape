@@ -54,6 +54,11 @@ private:
     GdkPixbuf* sp_dash_to_pixbuf(double *pattern);
 
     /**
+     * Fill a pixbuf with text standard cairo drawing
+     */
+    GdkPixbuf* sp_text_to_pixbuf(char *text);
+
+    /**
      * Callback for combobox image renderer
      */
     void prepareImageRenderer( Gtk::TreeModel::const_iterator const &row );

@@ -39,6 +39,7 @@ static double dash_4_1[] = {4.0, 1.0, -1.0};
 static double dash_1_2[] = {1.0, 2.0, -1.0};
 static double dash_1_4[] = {1.0, 4.0, -1.0};
 
+#define bd_len 7  // must correspond to the number of entries in the next line
 static double *builtin_dashes[] = {dash_0, dash_1_1, dash_2_1, dash_4_1, dash_1_2, dash_1_4, NULL};
 
 static double **dashes = NULL;
@@ -79,12 +80,18 @@ SPDashSelector::SPDashSelector()
     this->pack_start(*sb, false, false, 0);
 
 
-    for (int i = 0; dashes[i]; i++) {
+    int np=0;
+    while (dashes[np]){ np++;}
+    for (int i = 0; i<np-1; i++) {  // all but the custom one go this way
         // Add the dashes to the combobox
         Gtk::TreeModel::Row row = *(dash_store->append());
         row[dash_columns.dash] = dashes[i];
         row[dash_columns.pixbuf] = Glib::wrap(sp_dash_to_pixbuf(dashes[i]));
     }
+    // add the custom one
+    Gtk::TreeModel::Row row = *(dash_store->append());
+    row[dash_columns.dash] = dashes[np-1];
+    row[dash_columns.pixbuf] = Glib::wrap(sp_text_to_pixbuf((char *)"Custom"));
 
     this->set_data("pattern", dashes[0]);
 }
@@ -109,10 +116,10 @@ void SPDashSelector::init_dashes() {
         Inkscape::Preferences *prefs = Inkscape::Preferences::get();
         std::vector<Glib::ustring> dash_prefs = prefs->getAllDirs(_prefs_path);
         
+        int pos = 0;
         if (!dash_prefs.empty()) {
-            int pos = 0;
             SPStyle *style = sp_style_new (NULL);
-            dashes = g_new (double *, dash_prefs.size() + 1);
+            dashes = g_new (double *, dash_prefs.size() + 2); // +1 for custom slot, +1 for terminator slot
             
             for (std::vector<Glib::ustring>::iterator i = dash_prefs.begin(); i != dash_prefs.end(); ++i) {
                 sp_style_read_from_prefs(style, *i);
@@ -130,23 +137,36 @@ void SPDashSelector::init_dashes() {
                 }
                 pos += 1;
             }
-            dashes[pos] = NULL;
-        } else {
-            dashes = builtin_dashes;
+        } else {  //  This code may never execute - a new preferences.xml is created for a new user.  Maybe if the user deletes dashes from preferences.xml?
+            dashes = g_new (double *, bd_len + 2); // +1 for custom slot, +1 for terminator slot
+            int i;
+            for(i=0;i<bd_len;i++) {
+               dashes[i] = builtin_dashes[i];
+            }
+            pos = bd_len;
         }
+        // make a place to hold the custom dashes, up to 15 positions long (+ terminator)
+        dashes[pos] = g_new (double, 16);
+        double *d = dashes[pos];
+        int i=0;
+        for(i=0;i<15;i++){ d[i]=i; } // have to put something in there, this is a pattern hopefully nobody would choose
+        d[15]=-1.0;
+        // final terminator
+        dashes[++pos]   = NULL;
     }
 }
 
 void SPDashSelector::set_dash (int ndash, double *dash, double o)
 {
-    int pos = 0;
+    int pos = -1;    // Allows custom patterns to remain unscathed by this.
+    int count = 0;   // will hold the NULL terminator at the end of the dashes list 
     if (ndash > 0) {
         double delta = 0.0;
         for (int i = 0; i < ndash; i++)
             delta += dash[i];
         delta /= 1000.0;
 
-        for (int i = 0; dashes[i]; i++) {
+        for (int i = 0; dashes[i]; i++,count++) {
             double *pattern = dashes[i];
             int np = 0;
             while (pattern[np] >= 0.0)
@@ -154,6 +174,7 @@ void SPDashSelector::set_dash (int ndash, double *dash, double o)
             if (np == ndash) {
                 int j;
                 for (j = 0; j < ndash; j++) {
+
                     if (!Geom::are_near(dash[j], pattern[j], delta))
                         break;
                 }
@@ -164,10 +185,27 @@ void SPDashSelector::set_dash (int ndash, double *dash, double o)
             }
         }
     }
+    else  if(ndash==0) {
+       pos = 0;
+    }
 
-    this->set_data("pattern", dashes[pos]);
-    this->dash_combo.set_active(pos);
-    this->offset->set_value(o);
+    if(pos>=0){
+       this->set_data("pattern", dashes[pos]);
+       this->dash_combo.set_active(pos);
+       this->offset->set_value(o);
+    }
+    else { // Hit a custom pattern in the SVG, write it into the combobox.
+       count--;  // the one slot for custom patterns
+       double *d = dashes[count];
+       int i=0;
+       for(i=0;i< (ndash > 15 ? 15 : ndash) ;i++) {
+          d[i]=dash[i];
+       } // store the custom pattern
+       d[ndash]=-1.0;  //terminate it
+       this->set_data("pattern", dashes[count]);
+       this->dash_combo.set_active(count);
+       this->offset->set_value(o);  // what does this do????
+    }
 }
 
 void SPDashSelector::get_dash(int *ndash, double **dash, double *off)
@@ -227,6 +265,32 @@ GdkPixbuf* SPDashSelector::sp_dash_to_pixbuf(double *pattern) {
         return pixbuf;
 }
 
+/**
+ * Fill a pixbuf with a text label using standard cairo drawing
+ */
+GdkPixbuf* SPDashSelector::sp_text_to_pixbuf(char *text) {
+
+        cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, preview_width, preview_height);
+        cairo_t *ct = cairo_create(s);
+
+        cairo_select_font_face (ct, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+        cairo_set_font_size (ct, 12.0);
+        cairo_set_source_rgb (ct, 0.0, 0.0, 0.0);
+        cairo_move_to (ct, 16.0, 13.0);
+        cairo_show_text (ct, text);
+
+        cairo_stroke (ct);
+
+        cairo_destroy(ct);
+        cairo_surface_flush(s);
+
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( cairo_image_surface_get_data(s),
+                                                   GDK_COLORSPACE_RGB, TRUE, 8,
+                                                   preview_width, preview_height, cairo_image_surface_get_stride(s),
+                                                   ink_cairo_pixbuf_cleanup, s);
+        convert_pixbuf_argb32_to_normal(pixbuf);
+        return pixbuf;
+}
 
 void SPDashSelector::on_selection ()
 {

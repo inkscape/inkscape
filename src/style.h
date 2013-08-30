@@ -165,12 +165,17 @@ struct SPIPaint {
 
     void read( gchar const *str, SPStyle &tyle, SPDocument *document = 0);
 
-    // Win32 is a temp work-around until the emf extension is fixed:
-#ifndef WIN32
+/* EMF_DRIVER is a temp work-around
+The problem is that SPIPaint is private, but is included in the SPStyle struct, and that is needed in emf-inout.cpp, but the compiler
+won't accept it there.  If the two conditional lines are moved out of the "private" they end up generating undefined reference
+errors.
+*/
+
 private:
+#ifndef EMF_DRIVER
     SPIPaint(SPIPaint const&);
     SPIPaint &operator=(SPIPaint const &);
-#endif // WIN32
+#endif // EMF_DRIVER
 };
 
 /// Filter type internal to SPStyle
@@ -224,14 +229,27 @@ struct SPIBaselineShift {
     float computed;
 };
 
+// CSS 2.  Changes in CSS 3, where description is for TextDecorationLine, NOT TextDecoration
 /// Text decoration type internal to SPStyle.
-struct SPITextDecoration {
+struct SPITextDecorationLine {
     unsigned set : 1;
     unsigned inherit : 1;
     unsigned underline : 1;
     unsigned overline : 1;
     unsigned line_through : 1;
     unsigned blink : 1;    // "Conforming user agents are not required to support this value." yay!
+};
+
+// CSS3 2.2
+/// Text decoration style type internal to SPStyle.
+struct SPITextDecorationStyle {
+    unsigned set : 1;
+    unsigned inherit : 1;
+    unsigned solid : 1;
+    unsigned isdouble : 1;  // cannot use "double" as it is a reserved keyword
+    unsigned dotted : 1;
+    unsigned dashed : 1;
+    unsigned wavy : 1;
 };
 
 /// Extended length type internal to SPStyle.
@@ -242,6 +260,21 @@ struct SPILengthOrNormal {
     unsigned unit : 4;
     float value;
     float computed;
+};
+
+// These are used to implement text_decoration. The values are not saved to or read from SVG file
+struct SPITextDecorationData {
+    float   phase_length;          // length along text line,used for phase for dot/dash/wavy
+    bool    tspan_line_start;      // is first  span on a line
+    bool    tspan_line_end;        // is last span on a line
+    float   tspan_width;           // from libnrtype, when it calculates spans
+    float   ascender;              // the rest from tspan's font
+    float   descender;
+    float   line_gap;
+    float   underline_thickness;
+    float   underline_position; 
+    float   line_through_thickness;
+    float   line_through_position;
 };
 
 struct SPTextStyle;
@@ -284,8 +317,18 @@ struct SPStyle {
     SPILength text_indent;
     /** text alignment (css2 16.2) (not to be confused with text-anchor) */
     SPIEnum text_align;
-    /** text decoration (css2 16.3.1) */
-    SPITextDecoration text_decoration;
+    /** text decoration (css2 16.3.1) is now handled as a subset of css3 2.4 */
+    //    SPITextDecoration      text_decoration; 
+    
+    /** CSS 3 2.1, 2.2, 2.3 */
+    /** Not done yet, test_decoration3        = css3 2.4*/
+    SPITextDecorationLine  text_decoration_line;
+    SPIPaint               text_decoration_color;
+    SPITextDecorationStyle text_decoration_style;
+
+    // used to implement text_decoration, not saved to or read from SVG file
+    SPITextDecorationData  text_decoration_data;
+
     // 16.3.2 is text-shadow. That's complicated.
     /** Line spacing (css2 10.8.1) */
     SPILengthOrNormal line_height;

@@ -156,10 +156,26 @@ ink_common_sources +=	\
 	extension/internal/filter/filter-file.cpp \
 	extension/internal/filter/filter.cpp \
 	extension/internal/filter/filter.h \
-	extension/internal/emf-win32-print.h \
-	extension/internal/emf-win32-print.cpp \
-	extension/internal/emf-win32-inout.h \
-	extension/internal/emf-win32-inout.cpp \
+	extension/internal/text_reassemble.c \
+	extension/internal/text_reassemble.h \
+	extension/internal/uemf.c \
+	extension/internal/uemf.h \
+	extension/internal/uemf_utf.c \
+	extension/internal/uemf_utf.h \
+	extension/internal/uemf_endian.c \
+	extension/internal/uemf_endian.h \
+	extension/internal/uwmf.c \
+	extension/internal/uwmf.h \
+	extension/internal/uwmf_endian.c \
+	extension/internal/uwmf_endian.h \
+	extension/internal/emf-print.h \
+	extension/internal/emf-print.cpp \
+	extension/internal/emf-inout.h \
+	extension/internal/emf-inout.cpp \
+	extension/internal/wmf-print.h \
+	extension/internal/wmf-print.cpp \
+	extension/internal/wmf-inout.h \
+	extension/internal/wmf-inout.cpp \
 	extension/internal/image-resolution.h \
 	extension/internal/image-resolution.cpp
 	

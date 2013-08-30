@@ -675,6 +675,41 @@ bool font_instance::FontMetrics(double &ascent,double &descent,double &leading)
     return true;
 }
 
+bool font_instance::FontDecoration(
+    double &underline_position,     double &underline_thickness,
+    double &linethrough_position,   double &linethrough_thickness
+){
+    if ( pFont == NULL ) {
+        return false;
+    }
+    InitTheFace();
+    if ( theFace == NULL ) {
+        return false;
+    }
+#ifdef USE_PANGO_WIN32
+    OUTLINETEXTMETRIC otm;
+    if ( !GetOutlineTextMetrics(daddy->hScreenDC,sizeof(otm),&otm) ) {
+        return false;
+    }
+    double scale=1.0/daddy->fontSize;
+    underline_position    = fabs(otm.otmUnderscorePosition *scale);
+    underline_thickness   = fabs(otm.otmUnderscoreSize     *scale);
+    linethrough_position  = fabs(otm.otmStrikeoutPosition  *scale);
+    linethrough_thickness = fabs(otm.otmStrikeoutSize      *scale);
+#else
+    if ( theFace->units_per_EM == 0 ) {
+        return false; // bitmap font
+    }
+    underline_position    = fabs(((double)theFace->underline_position )/((double)theFace->units_per_EM));
+    underline_thickness   = fabs(((double)theFace->underline_thickness)/((double)theFace->units_per_EM));
+    // there is no specific linethrough information, mock it up from other font fields
+    linethrough_position  = fabs(((double)theFace->ascender / 3.0     )/((double)theFace->units_per_EM));
+    linethrough_thickness = fabs(((double)theFace->underline_thickness)/((double)theFace->units_per_EM));
+#endif
+    return true;
+}
+
+
 bool font_instance::FontSlope(double &run, double &rise)
 {
     run = 0.0;
