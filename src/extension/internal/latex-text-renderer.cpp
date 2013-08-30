@@ -98,7 +98,9 @@ latex_render_document_text_to_file( SPDocument *doc, gchar const *filename,
 LaTeXTextRenderer::LaTeXTextRenderer(bool pdflatex)
   : _stream(NULL),
     _filename(NULL),
-    _pdflatex(pdflatex)
+    _pdflatex(pdflatex),
+    _omittext_state(EMPTY),
+    _omittext_page(1)
 {
     push_transform(Geom::identity());
 }
@@ -262,6 +264,11 @@ LaTeXTextRenderer::sp_use_render(SPItem *item)
 void
 LaTeXTextRenderer::sp_text_render(SPItem *item)
 {
+    // Only PDFLaTeX supports importing a single page of a graphics file,
+    // so only PDF backend gets interleaved text/graphics
+    if (_pdflatex && _omittext_state ==  GRAPHIC_ON_TOP)
+        _omittext_state = NEW_PAGE_ON_GRAPHIC;
+
     SPText *textobj = SP_TEXT (item);
     SPStyle *style = item->style;
 
@@ -394,6 +401,11 @@ LaTeXTextRenderer::sp_flowtext_render(SPItem * item)
 Flowtext is possible by using a minipage! :)
 Flowing in rectangle is possible, not in arb shape.
 */
+
+    // Only PDFLaTeX supports importing a single page of a graphics file,
+    // so only PDF backend gets interleaved text/graphics
+    if (_pdflatex && _omittext_state ==  GRAPHIC_ON_TOP)
+        _omittext_state = NEW_PAGE_ON_GRAPHIC;
 
     SPFlowtext *flowtext = SP_FLOWTEXT(item);
     SPStyle *style = item->style;
@@ -556,8 +568,13 @@ LaTeXTextRenderer::sp_item_invoke_render(SPItem *item)
         return sp_text_render(item);
     } else if (SP_IS_FLOWTEXT(item)) {
         return sp_flowtext_render(item);
+    } else {
+        // Only PDFLaTeX supports importing a single page of a graphics file,
+        // so only PDF backend gets interleaved text/graphics
+        if (_pdflatex && (_omittext_state == EMPTY || _omittext_state == NEW_PAGE_ON_GRAPHIC))
+            writeGraphicPage();
+        _omittext_state = GRAPHIC_ON_TOP;
     }
-    // We are not interested in writing the other SPItem types to LaTeX
 }
 
 void
@@ -566,6 +583,20 @@ LaTeXTextRenderer::renderItem(SPItem *item)
     push_transform(item->transform);
     sp_item_invoke_render(item);
     pop_transform();
+}
+
+void
+LaTeXTextRenderer::writeGraphicPage(void) {
+    Inkscape::SVGOStringStream os;
+    os.setf(std::ios::fixed); // no scientific notation
+
+    // strip pathname, as it is probably desired. Having a specific path in the TeX file is not convenient.
+    if (_pdflatex)
+        os << "    \\put(0,0){\\includegraphics[width=\\unitlength,page=" << _omittext_page++ << "]{" << _filename << "}}%\n";
+    else
+        os << "    \\put(0,0){\\includegraphics[width=\\unitlength]{" << _filename << "}}%\n";
+
+    fprintf(_stream, "%s", os.str().c_str());
 }
 
 bool
@@ -625,10 +656,11 @@ LaTeXTextRenderer::setupDocument(SPDocument *doc, bool pageBoundingBox, float bl
     os << "  \\makeatother%\n";
 
     os << "  \\begin{picture}(" << _width << "," << _height << ")%\n";
-    // strip pathname, as it is probably desired. Having a specific path in the TeX file is not convenient.
-    os << "    \\put(0,0){\\includegraphics[width=\\unitlength]{" << _filename << "}}%\n";
 
     fprintf(_stream, "%s", os.str().c_str());
+
+    if (!_pdflatex)
+        writeGraphicPage();
 
     return true;
 }

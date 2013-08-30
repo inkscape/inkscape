@@ -94,7 +94,7 @@ pdf_render_document_to_file(SPDocument *doc, gchar const *filename, unsigned int
     CairoRenderContext *ctx = renderer->createContext();
     ctx->setPDFLevel(level);
     ctx->setTextToPath(texttopath);
-    renderer->_omitText = omittext;
+    ctx->setOmitText(omittext);
     ctx->setFilterToBitmap(filtertobitmap);
     ctx->setBitmapResolution(resolution);
 

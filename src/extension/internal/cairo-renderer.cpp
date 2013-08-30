@@ -101,7 +101,6 @@ namespace Extension {
 namespace Internal {
 
 CairoRenderer::CairoRenderer(void)
-  : _omitText(false)
 {}
 
 CairoRenderer::~CairoRenderer(void)
@@ -578,11 +577,6 @@ CairoRenderer::setStateForItem(CairoRenderContext *ctx, SPItem const *item)
 // TODO change this to accept a const SPItem:
 void CairoRenderer::renderItem(CairoRenderContext *ctx, SPItem *item)
 {
-    if ( _omitText && (SP_IS_TEXT(item) || SP_IS_FLOWTEXT(item)) ) {
-        // skip text if _omitText is true
-        return;
-    }
-
     ctx->pushState();
     setStateForItem(ctx, item);
 

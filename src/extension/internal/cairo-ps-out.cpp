@@ -97,7 +97,7 @@ ps_print_document_to_file(SPDocument *doc, gchar const *filename, unsigned int l
     ctx->setPSLevel(level);
     ctx->setEPS(eps);
     ctx->setTextToPath(texttopath);
-    renderer->_omitText = omittext;
+    ctx->setOmitText(omittext);
     ctx->setFilterToBitmap(filtertobitmap);
     ctx->setBitmapResolution(resolution);
 

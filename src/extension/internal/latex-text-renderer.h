@@ -47,10 +47,19 @@ public:
     void renderItem(SPItem *item);
 
 protected:
+    enum LaTeXOmitTextPageState {
+        EMPTY,
+        GRAPHIC_ON_TOP,
+        NEW_PAGE_ON_GRAPHIC
+    };
+
     FILE * _stream;
     gchar * _filename;
 
     bool _pdflatex; /** true if ouputting for pdfLaTeX*/
+
+    LaTeXOmitTextPageState _omittext_state;
+    gulong _omittext_page;
 
     void push_transform(Geom::Affine const &transform);
     Geom::Affine const & transform();
@@ -59,6 +68,8 @@ protected:
 
     void writePreamble();
     void writePostamble();
+
+    void writeGraphicPage();
 
     void sp_item_invoke_render(SPItem *item);
     void sp_root_render(SPRoot *item);

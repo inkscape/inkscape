@@ -94,6 +94,8 @@ public:
     void setPDFLevel(unsigned int level);
     void setTextToPath(bool texttopath);
     bool getTextToPath(void);
+    void setOmitText(bool omittext);
+    bool getOmitText(void);
     void setFilterToBitmap(bool filtertobitmap);
     bool getFilterToBitmap(void);
     void setBitmapResolution(int resolution);
@@ -108,6 +110,9 @@ public:
 
     /** Saves the contents of the context to a PNG file. */
     bool saveAsPng(const char *file_name);
+
+    /** On targets supporting multiple pages, sends subsequent rendering to a new page*/
+    void newPage(void);
 
     /* Render/clip mode setting/query */
     void setRenderMode(CairoRenderMode mode);
@@ -150,6 +155,12 @@ protected:
     CairoRenderContext(CairoRenderer *renderer);
     virtual ~CairoRenderContext(void);
 
+    enum CairoOmitTextPageState {
+        EMPTY,
+        GRAPHIC_ON_TOP,
+        NEW_PAGE_ON_GRAPHIC
+    };
+
     float _width;
     float _height;
     unsigned short _dpi;
@@ -157,6 +168,7 @@ protected:
     unsigned int _ps_level;
     bool _eps;
     bool _is_texttopath;
+    bool _is_omittext;
     bool _is_filtertobitmap;
     int _bitmapresolution;
 
@@ -182,6 +194,8 @@ protected:
     CairoRenderMode _render_mode;
     CairoClipMode _clip_mode;
 
+    CairoOmitTextPageState _omittext_state;
+
     cairo_pattern_t *_createPatternForPaintServer(SPPaintServer const *const paintserver,
                                                   Geom::OptRect const &pbox, float alpha);
     cairo_pattern_t *_createPatternPainter(SPPaintServer const *const paintserver, Geom::OptRect const &pbox);
@@ -195,6 +209,9 @@ protected:
     void _initCairoMatrix(cairo_matrix_t *matrix, Geom::Affine const &transform);
     void _concatTransform(cairo_t *cr, double xx, double yx, double xy, double yy, double x0, double y0);
     void _concatTransform(cairo_t *cr, Geom::Affine const &transform);
+
+    void _prepareRenderGraphic(void);
+    void _prepareRenderText(void);
 
     GHashTable *font_table;
     static void font_data_free(gpointer data);
