@@ -1,0 +1,5 @@
+Theis directory contains the libUEMF library,
+a cross-platform library for Windows Metafile and Enhanced Metafile
+handling, created by David Mathog.
+
+http://sourceforge.net/projects/libuemf/

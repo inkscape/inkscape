@@ -1,0 +1,23 @@
+
+set(libuemf_SRC
+	symbol_convert.c
+	uemf.c
+	uemf_endian.c
+	uemf_print.c
+	uemf_utf.c
+	uwmf.c
+	uwmf_endian.c
+	uwmf_print.c
+
+	# -------
+	# Headers
+	uemf.h
+	uemf_endian.h
+	uemf_print.h
+	uemf_utf.h
+	uwmf.h
+	uwmf_endian.h
+	uwmf_print.h
+)
+
+add_inkscape_lib(uemf_LIB "${libuemf_SRC}")

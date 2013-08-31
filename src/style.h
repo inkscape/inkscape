@@ -164,18 +164,6 @@ struct SPIPaint {
     void setColor( SPColor const& color ) {value.color = color; colorSet = true;}
 
     void read( gchar const *str, SPStyle &tyle, SPDocument *document = 0);
-
-/* EMF_DRIVER is a temp work-around
-The problem is that SPIPaint is private, but is included in the SPStyle struct, and that is needed in emf-inout.cpp, but the compiler
-won't accept it there.  If the two conditional lines are moved out of the "private" they end up generating undefined reference
-errors.
-*/
-
-private:
-#ifndef EMF_DRIVER
-    SPIPaint(SPIPaint const&);
-    SPIPaint &operator=(SPIPaint const &);
-#endif // EMF_DRIVER
 };
 
 /// Filter type internal to SPStyle

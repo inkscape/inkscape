@@ -30,7 +30,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#define  EMF_DRIVER //work around SPStyle issue, MUST be EMF, not WMF
+#include <libuemf/symbol_convert.h>
+
 #include "sp-root.h"
 #include "sp-path.h"
 #include "style.h"
@@ -45,7 +46,6 @@
 #include "util/units.h"
 #include "clear-n_.h"
 #include "document.h"
-#include "libunicode-convert/unicode-convert.h"
 
 
 #include "wmf-inout.h"

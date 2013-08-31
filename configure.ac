@@ -1036,7 +1036,7 @@ src/libcroco/makefile
 src/libgdl/makefile
 src/libnrtype/makefile
 src/libavoid/makefile
-src/libunicode-convert/makefile
+src/libuemf/makefile
 src/livarot/makefile
 src/live_effects/makefile
 src/live_effects/parameter/makefile

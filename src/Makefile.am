@@ -28,6 +28,7 @@ noinst_LIBRARIES =	\
 	libcroco/libcroco.a	\
 	libavoid/libavoid.a	\
 	$(internal_GDL)		\
+	libuemf/libuemf.a   \
 	libcola/libcola.a	\
 	libvpsc/libvpsc.a	\
 	livarot/libvarot.a	\
@@ -124,7 +125,7 @@ include live_effects/Makefile_insert
 include live_effects/parameter/Makefile_insert
 include libvpsc/Makefile_insert
 include libcola/Makefile_insert
-include libunicode-convert/Makefile_insert
+include libuemf/Makefile_insert
 include svg/Makefile_insert
 include widgets/Makefile_insert
 include debug/Makefile_insert
@@ -141,9 +142,7 @@ include 2geom/Makefile_insert
 
 # Extra files not mentioned as sources to include in the source tarball
 EXTRA_DIST +=	\
-	$(top_srcdir)/Doxyfile	\
-	sp-skeleton.cpp sp-skeleton.h	\
-	util/makefile.in	\
+	2geom/makefile.in	\
 	debug/makefile.in	\
 	dialogs/makefile.in	\
 	display/makefile.in	\
@@ -154,32 +153,36 @@ EXTRA_DIST +=	\
 	filters/makefile.in \
 	helper/makefile.in	\
 	io/makefile.in	\
-	io/crystalegg.xml	\
-	io/doc2html.xsl 	\
-	libgdl/makefile.in	\
-	libcroco/makefile.in	\
-	libnrtype/makefile.in	\
 	libavoid/makefile.in	\
+	libcroco/makefile.in	\
+	libgdl/makefile.in	\
+	libnrtype/makefile.in	\
+	libuemf/makefile.in \
 	livarot/makefile.in	\
 	live_effects/makefile.in	\
 	live_effects/parameter/makefile.in	\
 	svg/makefile.in		\
 	trace/makefile.in	\
-	ui/makefile.in		\
 	ui/cache/makefile.in	\
 	ui/dialog/makefile.in	\
+	ui/makefile.in		\
 	ui/view/makefile.in	\
 	ui/widget/makefile.in	\
 	util/makefile.in	\
+	util/makefile.in	\
 	widgets/makefile.in	\
 	xml/makefile.in		\
-	2geom/makefile.in	\
+	\
+	$(top_srcdir)/Doxyfile \
 	extension/internal/emf-inout.cpp  \
 	extension/internal/emf-inout.h    \
 	extension/internal/emf-print.cpp  \
 	extension/internal/emf-print.h    \
 	helper/sp-marshal.list	\
+	io/crystalegg.xml	\
+	io/doc2html.xsl 	\
 	show-preview.bmp \
+	sp-skeleton.cpp sp-skeleton.h	\
 	winconsole.cpp \
 	$(CXXTEST_TEMPLATE)
 

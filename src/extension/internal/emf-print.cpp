@@ -62,11 +62,8 @@
 
 #include "emf-print.h"
 
-
 #include <string.h>
-extern "C" {
-#include "libunicode-convert/unicode-convert.h"
-}
+#include <libuemf/symbol_convert.h>
 
 
 namespace Inkscape {
@@ -2064,7 +2061,7 @@ unsigned int PrintEmf::text(Inkscape::Extension::Print * /*mod*/, char const *te
             U_DEFAULT_QUALITY,
             U_DEFAULT_PITCH | U_FF_DONTCARE,
             wfacename);
-	free(wfacename);
+    free(wfacename);
        
         rec  = extcreatefontindirectw_set(&hfont, eht,  (char *) &lf, NULL);
         if(!rec || emf_append((PU_ENHMETARECORD)rec, et, U_REC_FREE)){

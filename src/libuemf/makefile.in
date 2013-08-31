@@ -6,10 +6,10 @@ OBJEXT = @OBJEXT@
 
 # Explicit so that it's the default rule.
 all:
-	cd .. && $(MAKE) libunicode-convert/all
+	cd .. && $(MAKE) libuemf/all
 
 clean %.a %.$(OBJEXT):
-	cd .. && $(MAKE) libunicode-convert/$@
+	cd .. && $(MAKE) libuemf/$@
 
 .PHONY: all clean
 

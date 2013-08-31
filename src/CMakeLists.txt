@@ -555,6 +555,7 @@ add_subdirectory(libavoid)
 add_subdirectory(libcola)
 add_subdirectory(libcroco)
 add_subdirectory(libgdl)
+add_subdirectory(libuemf)
 add_subdirectory(libvpsc)
 add_subdirectory(livarot)
 add_subdirectory(libnrtype)
@@ -594,6 +595,7 @@ target_link_libraries(inkscape
 	cola_LIB
 	vpsc_LIB
 	livarot_LIB
+	uemf_LIB
 	2geom_LIB
 
 	${INKSCAPE_LIBS}

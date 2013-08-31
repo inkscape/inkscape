@@ -13,9 +13,9 @@
 
 #define PNG_SKIP_SETJMP_CHECK // else any further png.h include blows up in the compiler
 #include <png.h>
+#include <libuemf/uemf.h>
 #include "extension/implementation/implementation.h"
 #include "style.h"
-#include "uemf.h"
 #include "text_reassemble.h"
 
 namespace Inkscape {

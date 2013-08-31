@@ -16,7 +16,7 @@
 # include "config.h"
 #endif
 
-#include "uemf.h"
+#include <libuemf/uemf.h>
 
 #include "extension/implementation/implementation.h"
 //#include "extension/extension.h"

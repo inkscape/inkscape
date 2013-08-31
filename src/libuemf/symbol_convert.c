@@ -32,7 +32,7 @@ extern "C" {
 #endif
 
 #include <string.h>
-#include "unicode-convert.h"
+#include "symbol_convert.h"
 
 
 static bool hold_symb=0;  // if any of these change, (re)generate the map table
