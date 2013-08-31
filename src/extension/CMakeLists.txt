@@ -52,6 +52,7 @@ set(extension_SRC
 	internal/javafx-out.cpp
 	internal/svg.cpp
 	internal/svgz.cpp
+	internal/text_reassemble.c
 	internal/vsd-input.cpp
 	internal/wmf-inout.cpp
 	internal/wmf-print.cpp
@@ -135,6 +136,7 @@ set(extension_SRC
 	internal/pov-out.h
 	internal/svg.h
 	internal/svgz.h
+	internal/text_reassemble.h
 	internal/vsd-input.h
 	internal/wmf-inout.h
 	internal/wmf-print.h

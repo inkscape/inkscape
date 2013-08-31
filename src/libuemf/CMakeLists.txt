@@ -11,6 +11,7 @@ set(libuemf_SRC
 
 	# -------
 	# Headers
+	symbol_convert.h
 	uemf.h
 	uemf_endian.h
 	uemf_print.h

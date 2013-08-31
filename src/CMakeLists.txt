@@ -235,7 +235,7 @@ set(inkscape_SRC
 	knotholder.cpp
 	layer-fns.cpp
 	layer-manager.cpp
-  layer-model.cpp
+	layer-model.cpp
 	line-geometry.cpp
 	line-snapper.cpp
 	lpe-tool-context.cpp
@@ -323,6 +323,7 @@ set(inkscape_SRC
 	color-profile.h
 	color-rgba.h
 	color.h
+	colorspace.h
 	common-context.h
 	composite-undo-stack-observer.h
 	conditions.h

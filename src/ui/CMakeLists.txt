@@ -54,6 +54,7 @@ set(ui_SRC
 	dialog/livepatheffect-editor.cpp
 	dialog/memory.cpp
 	dialog/messages.cpp
+	dialog/new-from-template.cpp
 	dialog/object-attributes.cpp
 	dialog/object-properties.cpp
 	dialog/ocaldialogs.cpp
@@ -65,6 +66,8 @@ set(ui_SRC
 	dialog/spellcheck.cpp
 	dialog/svg-fonts-dialog.cpp
 	dialog/swatches.cpp
+	dialog/template-load-tab.cpp
+	dialog/template-widget.cpp
 	dialog/text-edit.cpp
 	dialog/tile.cpp
 	dialog/tracedialog.cpp
@@ -166,16 +169,20 @@ set(ui_SRC
 	dialog/livepatheffect-editor.h
 	dialog/memory.h
 	dialog/messages.h
+	dialog/new-from-template.h
 	dialog/object-attributes.h
 	dialog/object-properties.h
 	dialog/ocaldialogs.h
 	dialog/panel-dialog.h
 	dialog/print-colors-preview-dialog.h
 	dialog/print.h
+	
 	dialog/spellcheck.h
 	dialog/svg-fonts-dialog.h
 	dialog/swatches.h
 	dialog/symbols.h
+	dialog/template-load-tab.h
+    dialog/template-widget.h
 	dialog/text-edit.h
 	dialog/tile.h
 	dialog/tracedialog.h

@@ -17,10 +17,7 @@ set(helper_SRC
 	pixbuf-ops.cpp
 	png-write.cpp
 	stock-items.cpp
-	unit-menu.cpp
-	units.cpp
 	#units-test.cpp
-	unit-tracker.cpp
 	window.cpp
 
 	# we generate this file and it's .h counter-part
@@ -38,10 +35,6 @@ set(helper_SRC
 	pixbuf-ops.h
 	png-write.h
 	stock-items.h
-	unit-menu.h
-	unit-tracker.h
-	units-test.h
-	units.h
 	window.h
 )
 
