@@ -2,7 +2,7 @@
 # See http://astyle.sourceforge.net/
 
 # Opening braces broken from functions only
---style=stroustrup
+--brackets=stroustrup
 
 # Four-space indent; convert stray tabs
 --indent=spaces=4
