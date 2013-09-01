@@ -176,7 +176,7 @@ def parseStyle(s):
     if s is None:
       return {}
     else:
-      return dict([[x.strip() for x in i.split(":")] for i in s.split(";") if len(i)])
+      return dict([[x.strip() for x in i.split(":")] for i in s.split(";") if len(i.strip())])
 
 def formatStyle(a):
     """Format an inline style attribute from a dictionary"""
