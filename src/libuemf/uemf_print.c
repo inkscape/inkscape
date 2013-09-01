@@ -395,7 +395,7 @@ void blend_print(
 void extlogpen_print(
       PU_EXTLOGPEN elp
    ){
-   int i;
+   unsigned i;
    U_STYLEENTRY *elpStyleEntry;
    printf("elpPenStyle:0x%8.8X "   ,elp->elpPenStyle  );
    printf("elpWidth:%u "           ,elp->elpWidth     );
@@ -478,7 +478,7 @@ void rgndataheader_print(
 void rgndata_print(
       PU_RGNDATA rd
    ){
-   int i;
+   unsigned i;
    PU_RECTL rects;
    printf("rdh:");     rgndataheader_print(rd->rdh );
    if(rd->rdh.nCount){
@@ -556,7 +556,7 @@ void emrtext_print(
       const char *record,
       int         type
    ){
-   int i,off;
+   unsigned i, off;
    char *string;
    PU_EMRTEXT pemt = (PU_EMRTEXT) emt;
    // constant part
@@ -609,7 +609,8 @@ by end user code and to further that end prototypes are NOT provided and they ar
 
 // Functions with the same form starting with U_EMRPOLYBEZIER_print
 void core1_print(const char *name, const char *contents){
-   int i;
+   unsigned i;
+   (void) name;
    PU_EMRPOLYLINETO pEmr = (PU_EMRPOLYLINETO) (contents);
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   cptl:           %d\n",pEmr->cptl        );
@@ -622,7 +623,8 @@ void core1_print(const char *name, const char *contents){
 
 // Functions with the same form starting with U_EMRPOLYPOLYLINE_print
 void core2_print(const char *name, const char *contents){
-   int i;
+   unsigned i;
+   (void) name;
    PU_EMRPOLYPOLYGON pEmr = (PU_EMRPOLYPOLYGON) (contents);
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   nPolys:         %d\n",pEmr->nPolys        );
@@ -644,6 +646,7 @@ void core2_print(const char *name, const char *contents){
 // Functions with the same form starting with U_EMRSETMAPMODE_print
 void core3_print(const char *name, const char *label, const char *contents){
    PU_EMRSETMAPMODE pEmr   = (PU_EMRSETMAPMODE)(contents);
+   (void) name;
    if(!strcmp(label,"crColor:")){
       printf("   %-15s ",label); colorref_print(*(U_COLORREF *)&(pEmr->iMode)); printf("\n");
    }
@@ -658,12 +661,14 @@ void core3_print(const char *name, const char *label, const char *contents){
 // Functions taking a single U_RECT or U_RECTL, starting with U_EMRELLIPSE_print, also U_EMRFILLPATH_print, 
 void core4_print(const char *name, const char *contents){
    PU_EMRELLIPSE pEmr      = (PU_EMRELLIPSE)(   contents);
+   (void) name;
    printf("   rclBox:         ");  rectl_print(pEmr->rclBox);  printf("\n");
 } 
 
 // Functions with the same form starting with U_EMRPOLYBEZIER16_print
 void core6_print(const char *name, const char *contents){
-   int i;
+   unsigned i;
+   (void) name;
    PU_EMRPOLYBEZIER16 pEmr = (PU_EMRPOLYBEZIER16) (contents);
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   cpts:           %d\n",pEmr->cpts        );
@@ -682,6 +687,7 @@ void core6_print(const char *name, const char *contents){
 //   empty the values are printed as a pair {x,y}, otherwise each is printed with its own label on a separate line.
 void core7_print(const char *name, const char *field1, const char *field2, const char *contents){
    PU_EMRGENERICPAIR pEmr = (PU_EMRGENERICPAIR) (contents);
+   (void) name;
    if(*field2){
       printf("   %-15s %d\n",field1,pEmr->pair.x);
       printf("   %-15s %d\n",field2,pEmr->pair.y);
@@ -694,6 +700,7 @@ void core7_print(const char *name, const char *field1, const char *field2, const
 // For U_EMREXTTEXTOUTA and U_EMREXTTEXTOUTW, type=0 for the first one
 void core8_print(const char *name, const char *contents, int type){
    PU_EMREXTTEXTOUTA pEmr = (PU_EMREXTTEXTOUTA) (contents);
+   (void) name;
    printf("   iGraphicsMode:  %u\n",pEmr->iGraphicsMode );
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);                              printf("\n");
    printf("   exScale:        %f\n",pEmr->exScale        );
@@ -706,6 +713,7 @@ void core8_print(const char *name, const char *contents, int type){
 // Functions that take a rect and a pair of points, starting with U_EMRARC_print
 void core9_print(const char *name, const char *contents){
    PU_EMRARC pEmr = (PU_EMRARC) (contents);
+   (void) name;
    printf("   rclBox:         ");    rectl_print(pEmr->rclBox);    printf("\n");
    printf("   ptlStart:       ");  pointl_print(pEmr->ptlStart);   printf("\n");
    printf("   ptlEnd:         ");    pointl_print(pEmr->ptlEnd);   printf("\n");
@@ -713,8 +721,9 @@ void core9_print(const char *name, const char *contents){
 
 // Functions with the same form starting with U_EMRPOLYPOLYLINE16_print
 void core10_print(const char *name, const char *contents){
-   int i;
+   unsigned i;
    PU_EMRPOLYPOLYLINE16 pEmr = (PU_EMRPOLYPOLYLINE16) (contents);
+   (void) name;
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   nPolys:         %d\n",pEmr->nPolys        );
    printf("   cpts:           %d\n",pEmr->cpts          );
@@ -734,8 +743,9 @@ void core10_print(const char *name, const char *contents){
 
 // Functions with the same form starting with  U_EMRINVERTRGN_print and U_EMRPAINTRGN_print,
 void core11_print(const char *name, const char *contents){
-   int i,roff;
+   unsigned i,roff;
    PU_EMRINVERTRGN pEmr = (PU_EMRINVERTRGN) (contents);
+   (void) name;
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   cbRgnData:      %d\n",pEmr->cbRgnData);
    // This one is a pain since each RGNDATA may be a different size, so it isn't possible to index through them.
@@ -754,6 +764,7 @@ void core11_print(const char *name, const char *contents){
 // common code for U_EMRCREATEMONOBRUSH_print and U_EMRCREATEDIBPATTERNBRUSHPT_print,
 void core12_print(const char *name, const char *contents){
    PU_EMRCREATEMONOBRUSH pEmr = (PU_EMRCREATEMONOBRUSH) (contents);
+   (void) name;
    printf("   ihBrush:      %u\n",pEmr->ihBrush );
    printf("   iUsage :      %u\n",pEmr->iUsage  );
    printf("   offBmi :      %u\n",pEmr->offBmi  );
@@ -770,6 +781,7 @@ void core12_print(const char *name, const char *contents){
 // common code for U_EMRALPHABLEND_print and U_EMRTRANSPARENTBLT_print,
 void core13_print(const char *name, const char *contents){
    PU_EMRALPHABLEND pEmr = (PU_EMRALPHABLEND) (contents);
+   (void) name;
    printf("   rclBounds:      ");    rectl_print( pEmr->rclBounds);       printf("\n");
    printf("   Dest:           ");    pointl_print(pEmr->Dest);            printf("\n");
    printf("   cDest:          ");    pointl_print(pEmr->cDest);           printf("\n");
@@ -802,6 +814,8 @@ They are listed in order by the corresponding U_EMR_* index number.
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRNOTIMPLEMENTED_print(const char *name, const char *contents){
+   (void) name;
+   (void) contents;
    printf("   Not Implemented!\n");
 }
 
@@ -1114,6 +1128,7 @@ void U_EMRMOVETOEX_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRSETMETARGN_print(const char *contents){
+   (void) contents;
 }
 
 // U_EMREXCLUDECLIPRECT      29
@@ -1159,6 +1174,7 @@ void U_EMRSCALEWINDOWEXTEX_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRSAVEDC_print(const char *contents){
+   (void) contents;
 }
 
 // U_EMRRESTOREDC            34
@@ -1337,7 +1353,7 @@ void U_EMRCREATEPALETTE_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRSETPALETTEENTRIES_print(const char *contents){
-   int i;
+   unsigned i;
    PU_EMRSETPALETTEENTRIES pEmr = (PU_EMRSETPALETTEENTRIES)(contents);
    printf("   ihPal:          %u\n",pEmr->ihPal);
    printf("   iStart:         %u\n",pEmr->iStart);
@@ -1367,6 +1383,7 @@ void U_EMRRESIZEPALETTE_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRREALIZEPALETTE_print(const char *contents){
+   (void) contents;
 }
 
 // U_EMREXTFLOODFILL         53
@@ -1405,7 +1422,7 @@ void U_EMRARCTO_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRPOLYDRAW_print(const char *contents){
-   int i;
+   unsigned i;
    PU_EMRPOLYDRAW pEmr = (PU_EMRPOLYDRAW)(contents);
    printf("   rclBounds:      ");          rectl_print( pEmr->rclBounds);   printf("\n");
    printf("   cptl:           %d\n",pEmr->cptl        );
@@ -1447,6 +1464,7 @@ void U_EMRSETMITERLIMIT_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRBEGINPATH_print(const char *contents){
+   (void) contents;
 }
 
 // U_EMRENDPATH              60
@@ -1455,6 +1473,7 @@ void U_EMRBEGINPATH_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRENDPATH_print(const char *contents){
+   (void) contents;
 }
 
 // U_EMRCLOSEFIGURE          61
@@ -1463,6 +1482,7 @@ void U_EMRENDPATH_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRCLOSEFIGURE_print(const char *contents){
+   (void) contents;
 }
 
 // U_EMRFILLPATH             62
@@ -1498,6 +1518,7 @@ void U_EMRSTROKEPATH_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRFLATTENPATH_print(const char *contents){
+   (void) contents;
 }
 
 // U_EMRWIDENPATH            66
@@ -1506,6 +1527,7 @@ void U_EMRFLATTENPATH_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRWIDENPATH_print(const char *contents){
+   (void) contents;
 }
 
 // U_EMRSELECTCLIPPATH       67
@@ -1523,6 +1545,7 @@ void U_EMRSELECTCLIPPATH_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRABORTPATH_print(const char *contents){
+   (void) contents;
 }
 
 // U_EMRUNDEF69                       69
@@ -1543,9 +1566,9 @@ void U_EMRCOMMENT_print(const char *contents){
 
    cbData = pEmr->cbData;
    printf("   cbData:         %d\n",cbData        );
-   src = (char *)&(pEmr->Data);  // default
+   src = (char *)(&pEmr->Data);  // default
    if(cbData >= 4){
-      cIdent = *(uint32_t *)&(pEmr->Data);
+      cIdent = *(uint32_t *)(src);
       if(     cIdent == U_EMR_COMMENT_PUBLIC       ){
          printf("   cIdent:  Public\n");
          PU_EMRCOMMENT_PUBLIC pEmrp = (PU_EMRCOMMENT_PUBLIC) pEmr;
@@ -1586,7 +1609,7 @@ void U_EMRCOMMENT_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRFILLRGN_print(const char *contents){
-   int i,roff;
+   unsigned i,roff;
    PU_EMRFILLRGN pEmr = (PU_EMRFILLRGN)(contents);
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   cbRgnData:      %u\n",pEmr->cbRgnData);
@@ -1607,7 +1630,7 @@ void U_EMRFILLRGN_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRFRAMERGN_print(const char *contents){
-   int i,roff;
+   unsigned i,roff;
    PU_EMRFRAMERGN pEmr = (PU_EMRFRAMERGN)(contents);
    printf("   rclBounds:      ");    rectl_print(pEmr->rclBounds);    printf("\n");
    printf("   cbRgnData:      %u\n",pEmr->cbRgnData);
@@ -1647,7 +1670,7 @@ void U_EMRPAINTRGN_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMREXTSELECTCLIPRGN_print(const char *contents){
-   int i,roff;
+   unsigned i,roff;
    PU_EMREXTSELECTCLIPRGN pEmr = (PU_EMREXTSELECTCLIPRGN) (contents);
    printf("   cbRgnData:      %u\n",pEmr->cbRgnData);
    printf("   iMode:          %u\n",pEmr->iMode);
@@ -1944,7 +1967,7 @@ void U_EMRPOLYPOLYGON16_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRPOLYDRAW16_print(const char *contents){
-   int i;
+   unsigned i;
    PU_EMRPOLYDRAW16 pEmr = (PU_EMRPOLYDRAW16)(contents);
    printf("   rclBounds:      ");          rectl_print( pEmr->rclBounds);   printf("\n");
    printf("   cpts:           %d\n",pEmr->cpts        );
@@ -2141,7 +2164,7 @@ void U_EMRTRANSPARENTBLT_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRGRADIENTFILL_print(const char *contents){
-   int i;
+   unsigned i;
    PU_EMRGRADIENTFILL pEmr = (PU_EMRGRADIENTFILL)(contents);
    printf("   rclBounds:      ");      rectl_print( pEmr->rclBounds);   printf("\n");
    printf("   nTriVert:       %u\n",   pEmr->nTriVert   );
@@ -2186,7 +2209,7 @@ void U_EMRGRADIENTFILL_print(const char *contents){
     \param contents   pointer to a buffer holding all EMR records
 */
 void U_EMRCREATECOLORSPACEW_print(const char *contents){
-   int i;
+   unsigned i;
    PU_EMRCREATECOLORSPACEW pEmr = (PU_EMRCREATECOLORSPACEW)(contents);
    printf("   ihCS:           %u\n", pEmr->ihCS     );
    printf("   ColorSpace:     "); logcolorspacew_print(pEmr->lcs);  printf("\n");
@@ -2211,7 +2234,7 @@ void U_EMRCREATECOLORSPACEW_print(const char *contents){
 */
 int U_emf_onerec_print(const char *contents, const char *blimit, int recnum, size_t off){
     PU_ENHMETARECORD  lpEMFR  = (PU_ENHMETARECORD)(contents + off);
-    int size;
+    unsigned size;
 
     printf("%-30srecord:%5d type:%3d offset:%8d size:%8d\n",U_emr_names(lpEMFR->iType),recnum,lpEMFR->iType,(int) off,lpEMFR->nSize);
     size      = lpEMFR->nSize;

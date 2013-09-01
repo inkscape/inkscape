@@ -1063,7 +1063,7 @@ extern "C" {
   @{
 */
 #define U_NONE                        0               //!< Generic for nothing selected for all flag fields
-#define U_PI                          3.14159265358979323846	//!< pi
+#define U_PI                          3.14159265358979323846    //!< pi
 #define U_READ                        1
 #define U_WRITE                       0
 #define U_ENHMETA_VERSION             0x00010000      //!< U_EMRHEADER nVersion field
@@ -1114,8 +1114,11 @@ extern "C" {
 //  These are used in EMF structures and the byte order must be the same in memory or on disk.
 //  These MAY be used in PNG and other libraries if these enforce byte order in memory,otherwise
 //  U_swap4 may need to also be employed.
-#define U_RGB(r,g,b)         (U_COLORREF){r,g,b,0}              //!<  Set any RGB  color with an {r,g,b} triplet
-#define U_RGBA(r,g,b,a)      (U_COLORREF){r,g,b,a}              //!<  Set any RGBA color with an {r,g,b,a} quad
+
+/// Set any RGB  color with an {r,g,b} triplet
+#define U_RGB(r,g,b)         (U_COLORREF){(uint8_t)(r), (uint8_t)(g), (uint8_t)(b), 0}
+/// Set any RGBA color with an {r,g,b,a} quad
+#define U_RGBA(r,g,b,a)      (U_COLORREF){(uint8_t)(r), (uint8_t)(g), (uint8_t)(b), (uint8_t)(a)}
 #define U_RGBAGetR(rgb)     ((U_COLORREF)rgb).Red               //!<  Color RGB Get Red Macro.
 #define U_RGBAGetG(rgb)     ((U_COLORREF)rgb).Green             //!<  Color RGB Get Green Macro.
 #define U_RGBAGetB(rgb)     ((U_COLORREF)rgb).Blue              //!<  Color RGB Get Blue Macro.

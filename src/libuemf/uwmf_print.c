@@ -43,6 +43,7 @@ extern "C" {
 void brush_print(
       U_BRUSH b  
    ){
+    uint16_t hatch;
     U_COLORREF Color;
     switch(b.Style){
        case U_BS_SOLID:
@@ -59,7 +60,8 @@ void brush_print(
           printf("DIBPattern:(not shown)");
           break;
        case U_BS_HATCHED:
-          printf("Hatch:0x%4.4X ", *(uint16_t *)(b.Data));
+          memcpy(&hatch, b.Data, 2);
+          printf("Hatch:0x%4.4X ", hatch);
           break;
     }
 }
@@ -406,10 +408,12 @@ They are listed in order by the corresponding U_WMR_* index number.
     \param contents   pointer to a buffer holding a WMR record
 */
 void U_WMRNOTIMPLEMENTED_print(const char *contents){
+   (void) contents;
    printf("   Not Implemented!\n");
 }
 
 void U_WMREOF_print(const char *contents){
+   (void) contents;
 }
 
 void U_WMRSETBKCOLOR_print(const char *contents){
@@ -445,6 +449,7 @@ void U_WMRSETROP2_print(const char *contents){
 }
 
 void U_WMRSETRELABS_print(const char *contents){
+   (void) contents;
    /* This record type has only the common 6 bytes, so nothing (else) to print */
 }
 
@@ -680,6 +685,7 @@ void U_WMRPATBLT_print(const char *contents){
 }
 
 void U_WMRSAVEDC_print(const char *contents){
+   (void) contents;
    /* This record type has only the common 6 bytes, so nothing (else) to print */
 }
 
@@ -784,6 +790,7 @@ void U_WMRESCAPE_print(const char *contents){
 }
 
 void U_WMRRESTOREDC_print(const char *contents){
+   (void) contents;
    /* This record type has only the common 6 bytes, so nothing (else) to print */
 }
 
@@ -926,6 +933,7 @@ void U_WMRSELECTPALETTE_print(const char *contents){
 }
 
 void U_WMRREALIZEPALETTE_print(const char *contents){
+   (void) contents;
    /* This record type has only the common 6 bytes, so nothing (else) to print */
 }
 
