@@ -20,6 +20,8 @@ rm -f po/POTFILES.in.new
  echo "[encoding: UTF-8]"
  echo "inkscape.desktop.in"
  echo "share/filters/filters.svg.h"
+ echo "share/palettes/palettes.h"
+ echo "share/patterns/patterns.svg.h"
 
  find src \( -name '*.cpp' -o -name '*.[ch]' \) -type f -print0 | xargs -0 egrep -l '(\<[QNC]?_|gettext) *\(' | sort
  find share/extensions -name '*.py' -type f -print0 | xargs -0 egrep -l '(\<[QNC]?_|gettext) *\(' | sort
