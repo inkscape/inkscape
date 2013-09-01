@@ -227,9 +227,10 @@ Quantity UnitTable::getQuantity(Glib::ustring const& q) const
     
     // Extract value
     double value = 0;
-    Glib::RefPtr<Glib::Regex> value_regex = Glib::Regex::create("[-+]*[\\d+]*\\.*[\\d+]*[eE]*[-+]*\\d+");
+    Glib::RefPtr<Glib::Regex> value_regex = Glib::Regex::create("[-+]*[\\d+]*[\\.,]*[\\d+]*[eE]*[-+]*\\d+");
     if (value_regex->match(q, match_info)) {
-        value = atof(match_info.fetch(0).c_str());
+        std::istringstream tmp_v(match_info.fetch(0));
+        tmp_v >> value;
     }
     
     // Extract unit abbreviation
