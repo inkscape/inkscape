@@ -45,6 +45,7 @@ set(extension_SRC
 	internal/image-resolution.cpp
 	internal/latex-pstricks.cpp
 	internal/latex-pstricks-out.cpp
+	internal/metafile-print.cpp
 	internal/odf.cpp
 	internal/latex-text-renderer.cpp
 	internal/pdf-input-cairo.cpp
@@ -128,6 +129,7 @@ set(extension_SRC
 	internal/latex-pstricks-out.h
 	internal/latex-pstricks.h
 	internal/latex-text-renderer.h
+	internal/metafile-print.h
 	internal/odf.h
 	internal/pdf-input-cairo.h
 	internal/pdfinput/pdf-input.h

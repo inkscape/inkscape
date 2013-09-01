@@ -316,9 +316,6 @@ Wmf::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filena
 }
 
 
-enum drawmode {DRAW_PAINT, DRAW_PATTERN, DRAW_IMAGE};  // apply to either fill or stroke
-
-
 /* WMF has no worldTranform, so this always returns 1.0.  Retain it to keep WMF and WMF in sync as much as possible.*/
 double Wmf::current_scale(PWMF_CALLBACK_DATA d){
     return 1.0;

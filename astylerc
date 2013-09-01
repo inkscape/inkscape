@@ -15,7 +15,7 @@
 
 # Attach pointers and references to variable names
 --align-pointer=name
---align-reference=name
+# --align-reference=name
 
 # Add brackets to single-statement blocks
 --add-brackets
@@ -23,3 +23,4 @@
 # Misc. options
 --indent-preprocessor
 --indent-col1-comments
+--suffix=none

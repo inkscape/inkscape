@@ -317,10 +317,6 @@ Emf::save(Inkscape::Extension::Output *mod, SPDocument *doc, gchar const *filena
 }
 
 
-enum drawmode {DRAW_PAINT, DRAW_PATTERN, DRAW_IMAGE};  // apply to either fill or stroke
-
-
-
 /*  given the transformation matrix from worldTranform return the scale in the matrix part.  Assumes that the
     matrix is not used to skew, invert, or make another distorting transformation.  */
 double Emf::current_scale(PEMF_CALLBACK_DATA d){
