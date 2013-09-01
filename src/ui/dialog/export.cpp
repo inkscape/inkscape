@@ -201,11 +201,11 @@ Export::Export (void) :
            earlier than that */
         unit_selector = new Inkscape::UI::Widget::UnitMenu();
         unit_selector->setUnitType(Inkscape::Util::UNIT_TYPE_LINEAR);
-        unitChangedConn = unit_selector->signal_changed().connect(sigc::mem_fun(*this, &Export::onUnitChanged));
         
         SPDesktop *desktop = SP_ACTIVE_DESKTOP;
         if (desktop)
             unit_selector->setUnit(sp_desktop_namedview(desktop)->doc_units->abbr);
+        unitChangedConn = unit_selector->signal_changed().connect(sigc::mem_fun(*this, &Export::onUnitChanged));
         unitbox.pack_end(*unit_selector, false, false, 0);
         unitbox.pack_end(units_label, false, false, 3);
 
