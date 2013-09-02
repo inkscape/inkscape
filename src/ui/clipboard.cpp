@@ -94,12 +94,6 @@
 
 #ifdef WIN32
 #include <windows.h>
-// Clipboard Formats: http://msdn.microsoft.com/en-us/library/ms649013(VS.85).aspx
-// On Windows, most graphical applications can handle CF_DIB/CF_BITMAP and/or CF_ENHMETAFILE
-// GTK automatically presents an "image/bmp" target as CF_DIB/CF_BITMAP
-// Presenting "image/x-emf" as CF_ENHMETAFILE must be done by Inkscape ?
-#define CLIPBOARD_WIN32_EMF_TARGET "CF_ENHMETAFILE"
-#define CLIPBOARD_WIN32_EMF_MIME   "image/x-emf"
 #endif
 
 namespace Inkscape {
@@ -179,13 +173,18 @@ ClipboardManagerImpl::ClipboardManagerImpl()
       _text_style(NULL),
       _clipboard( Gtk::Clipboard::get() )
 {
+    // Clipboard Formats: http://msdn.microsoft.com/en-us/library/ms649013(VS.85).aspx
+    // On Windows, most graphical applications can handle CF_DIB/CF_BITMAP and/or CF_ENHMETAFILE
+    // GTK automatically presents an "image/bmp" target as CF_DIB/CF_BITMAP
+    // Presenting "image/x-emf" as CF_ENHMETAFILE must be done by Inkscape ?
+
     // push supported clipboard targets, in order of preference
     _preferred_targets.push_back("image/x-inkscape-svg");
     _preferred_targets.push_back("image/svg+xml");
     _preferred_targets.push_back("image/svg+xml-compressed");
-#ifdef WIN32
-    _preferred_targets.push_back(CLIPBOARD_WIN32_EMF_MIME);
-#endif
+    _preferred_targets.push_back("image/x-emf");
+    _preferred_targets.push_back("CF_ENHMETAFILE");
+    _preferred_targets.push_back("WCF_ENHMETAFILE"); // seen on Wine
     _preferred_targets.push_back("application/pdf");
     _preferred_targets.push_back("image/x-adobe-illustrator");
 }
@@ -981,7 +980,7 @@ SPDocument *ClipboardManagerImpl::_retrieveClipboard(Glib::ustring required_targ
     Glib::ustring target = best_target;
 
 #ifdef WIN32
-    if (best_target == CLIPBOARD_WIN32_EMF_TARGET)
+    if (best_target == "CF_ENHMETAFILE" || best_target == "WCF_ENHMETAFILE")
     {   // Try to save clipboard data as en emf file (using win32 api)
         if (OpenClipboard(NULL)) {
             HGLOBAL hglb = GetClipboardData(CF_ENHMETAFILE);
@@ -989,7 +988,7 @@ SPDocument *ClipboardManagerImpl::_retrieveClipboard(Glib::ustring required_targ
                 HENHMETAFILE hemf = CopyEnhMetaFile((HENHMETAFILE) hglb, filename);
                 if (hemf) {
                     file_saved = true;
-                    target = CLIPBOARD_WIN32_EMF_MIME;
+                    target = "image/x-emf";
                     DeleteEnhMetaFile(hemf);
                 }
             }
@@ -1019,6 +1018,10 @@ SPDocument *ClipboardManagerImpl::_retrieveClipboard(Glib::ustring required_targ
     // we use the image/svg+xml mimetype to look up the input extension
     if (target == "image/x-inkscape-svg") {
         target = "image/svg+xml";
+    }
+    // Use the EMF extension to import metafiles
+    if (target == "CF_ENHMETAFILE" || target == "WCF_ENHMETAFILE") {
+        target = "image/x-emf";
     }
 
     Inkscape::Extension::DB::InputList inlist;
@@ -1213,10 +1216,10 @@ Glib::ustring ClipboardManagerImpl::_getBestTarget()
 
     // clipboard target debugging snippet
     /*
-    g_debug("Begin clipboard targets");
+    g_message("Begin clipboard targets");
     for ( std::list<Glib::ustring>::iterator x = targets.begin() ; x != targets.end(); ++x )
-        g_debug("Clipboard target: %s", (*x).data());
-    g_debug("End clipboard targets\n");
+        g_message("Clipboard target: %s", (*x).data());
+    g_message("End clipboard targets\n");
     //*/
 
     for (std::list<Glib::ustring>::iterator i = _preferred_targets.begin() ;
