@@ -20,7 +20,6 @@ EXTRA_DIST = \
 		foldablebox.test.py \
 		fractalize.test.py \
 		funcplot.test.py \
-		gears.test.py \
 		gimp_xcf.test.py \
 		grid_cartesian.test.py \
 		grid_polar.test.py \
@@ -45,6 +44,7 @@ EXTRA_DIST = \
 		radiusrand.test.py \
 		render_alphabetsoup.test.py \
 		render_barcode.test.py \
+		render_gears.test.py \
 		restack.test.py \
 		rtree.test.py \
 		run-all-extension-tests \
