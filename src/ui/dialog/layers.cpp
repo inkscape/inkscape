@@ -838,7 +838,8 @@ LayersPanel::LayersPanel() :
     _name_column->add_attribute(_text_renderer->property_text(), _model->_colLabel);
 
     _tree.set_expander_column( *_tree.get_column(nameColNum) );
-
+    _tree.set_search_column(nameColNum + 1);
+	
     _compositeSettings.setSubject(&_subject);
 
     _selectedConnection = _tree.get_selection()->signal_changed().connect( sigc::mem_fun(*this, &LayersPanel::_pushTreeSelectionToCurrent) );
