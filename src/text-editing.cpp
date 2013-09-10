@@ -1282,23 +1282,23 @@ sp_te_adjust_linespacing_screen (SPItem *text, Inkscape::Text::Layout::iterator 
             style->line_height.value = style->line_height.computed;
             break;
         case SP_CSS_UNIT_PT:
-            style->line_height.computed += zby * Inkscape::Util::Quantity::convert(1, "px", "pt");
+            style->line_height.computed += Inkscape::Util::Quantity::convert(zby, "px", "pt");
             style->line_height.value = style->line_height.computed;
             break;
         case SP_CSS_UNIT_PC:
-            style->line_height.computed += zby * (Inkscape::Util::Quantity::convert(1, "px", "pt") / 12);
+            style->line_height.computed += (Inkscape::Util::Quantity::convert(zby, "px", "pt") / 12);
             style->line_height.value = style->line_height.computed;
             break;
         case SP_CSS_UNIT_MM:
-            style->line_height.computed += zby * Inkscape::Util::Quantity::convert(1, "px", "mm");
+            style->line_height.computed += Inkscape::Util::Quantity::convert(zby, "px", "mm");
             style->line_height.value = style->line_height.computed;
             break;
         case SP_CSS_UNIT_CM:
-            style->line_height.computed += zby * Inkscape::Util::Quantity::convert(1, "px", "cm");
+            style->line_height.computed += Inkscape::Util::Quantity::convert(zby, "px", "cm");
             style->line_height.value = style->line_height.computed;
             break;
         case SP_CSS_UNIT_IN:
-            style->line_height.computed += zby * Inkscape::Util::Quantity::convert(1, "px", "in");
+            style->line_height.computed += Inkscape::Util::Quantity::convert(zby, "px", "in");
             style->line_height.value = style->line_height.computed;
             break;
     }
