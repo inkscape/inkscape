@@ -1242,7 +1242,7 @@ Glib::ustring ClipboardManagerImpl::_getBestTarget()
         CloseClipboard();
 
         if (format == CF_ENHMETAFILE) {
-            return CLIPBOARD_WIN32_EMF_TARGET;
+            return "CF_ENHMETAFILE";
         }
         if (format == CF_DIB || format == CF_BITMAP) {
             return CLIPBOARD_GDK_PIXBUF_TARGET;
@@ -1250,7 +1250,7 @@ Glib::ustring ClipboardManagerImpl::_getBestTarget()
     }
 
     if (IsClipboardFormatAvailable(CF_ENHMETAFILE)) {
-        return CLIPBOARD_WIN32_EMF_TARGET;
+        return "CF_ENHMETAFILE";
     }
 #endif
     if (_clipboard->wait_is_image_available()) {
@@ -1314,7 +1314,7 @@ void ClipboardManagerImpl::_setClipboardTargets()
 
     if (OpenClipboard(NULL)) {
         if ( _clipboardSPDoc != NULL ) {
-            const Glib::ustring target = CLIPBOARD_WIN32_EMF_MIME;
+            const Glib::ustring target = "image/x-emf";
 
             Inkscape::Extension::DB::OutputList outlist;
             Inkscape::Extension::db.get_output_list(outlist);
