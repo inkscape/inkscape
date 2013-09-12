@@ -334,6 +334,8 @@ So after the number, the string does not necessarily have a \0 or a unit, it mig
                 *next = (char *) e + 1;
             }
             return 1;
+        }  else if (g_ascii_isspace(e[0]) && g_ascii_isalpha(e[1])) {
+            return 0; // spaces between value and unit are not allowed
         } else {
             /* Unitless */
             if (unit) {
