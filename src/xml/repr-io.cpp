@@ -226,7 +226,7 @@ int XmlSource::readCb( void * context, char * buffer, int len )
                 }
                 g_match_info_next (info, NULL);
             }
-            g_match_info_unref(info);
+            g_match_info_free(info);
             g_regex_unref(regex);
         }
     }
