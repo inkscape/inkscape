@@ -30,7 +30,6 @@ FilterImage::FilterImage()
     : SVGElem(0)
     , document(0)
     , feImageHref(0)
-    , image_surface(0)
     , broken_ref(false)
 { }
 
@@ -172,17 +171,9 @@ void FilterImage::render_cairo(FilterSlot &slot)
         if (!has_alpha) {
             image = image->add_alpha(false, 0, 0, 0);
         }
-
-        // Native size of image
-        // width = image->get_width();
-        // height = image->get_height();
-        // rowstride = image->get_rowstride();
-
-        convert_pixbuf_normal_to_argb32(image->gobj());
-
-        image_surface = cairo_image_surface_create_for_data(image->get_pixels(),
-            CAIRO_FORMAT_ARGB32, image->get_width(), image->get_height(), image->get_rowstride());
     }
+
+    cairo_surface_t *image_surface = ink_cairo_surface_get_for_pixbuf(image->gobj());
 
     Geom::Rect sa = slot.get_slot_area();
     cairo_surface_t *out = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
@@ -310,9 +301,6 @@ void FilterImage::set_href(const gchar *href){
     if (feImageHref) g_free (feImageHref);
     feImageHref = (href) ? g_strdup (href) : NULL;
 
-    if (image_surface) {
-        cairo_surface_destroy(image_surface);
-    }
     image.reset();
     broken_ref = false;
 }

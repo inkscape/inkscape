@@ -22,7 +22,7 @@ namespace Inkscape {
 DrawingImage::DrawingImage(Drawing &drawing)
     : DrawingItem(drawing)
     , _pixbuf(NULL)
-    , _surface(NULL)
+    , _surface(NULL) // this is owned by _pixbuf!
     , _style(NULL)
     , _new_surface(NULL)
 {}
@@ -33,7 +33,6 @@ DrawingImage::~DrawingImage()
         sp_style_unref(_style);
     if (_pixbuf) {
         if (_new_surface) cairo_surface_destroy(_new_surface);
-        cairo_surface_destroy(_surface);
         g_object_unref(_pixbuf);
     }
 }
@@ -50,7 +49,7 @@ DrawingImage::setARGB32Pixbuf(GdkPixbuf *pb)
         cairo_surface_destroy(_surface);
     }
     _pixbuf = pb;
-    _surface = pb ? ink_cairo_surface_create_for_argb32_pixbuf(pb) : NULL;
+    _surface = pb ? ink_cairo_surface_get_for_pixbuf(pb) : NULL;
 
     _markForUpdate(STATE_ALL, false);
 }

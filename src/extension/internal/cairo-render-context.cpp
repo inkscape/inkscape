@@ -1306,7 +1306,7 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, Geom::OptRect const &p
     {
         cairo_set_dash(_cr, style->stroke_dash.dash, style->stroke_dash.n_dash, style->stroke_dash.offset);
     } else {
-    	cairo_set_dash(_cr, NULL, 0, 0.0);	// disable dashing
+        cairo_set_dash(_cr, NULL, 0, 0.0);  // disable dashing
     }
 
     cairo_set_line_width(_cr, style->stroke_width.computed);
@@ -1314,30 +1314,30 @@ CairoRenderContext::_setStrokeStyle(SPStyle const *style, Geom::OptRect const &p
     // set line join type
     cairo_line_join_t join = CAIRO_LINE_JOIN_MITER;
     switch (style->stroke_linejoin.computed) {
-    	case SP_STROKE_LINEJOIN_MITER:
-    	    join = CAIRO_LINE_JOIN_MITER;
-    	    break;
-    	case SP_STROKE_LINEJOIN_ROUND:
-    	    join = CAIRO_LINE_JOIN_ROUND;
-    	    break;
-    	case SP_STROKE_LINEJOIN_BEVEL:
-    	    join = CAIRO_LINE_JOIN_BEVEL;
-    	    break;
+        case SP_STROKE_LINEJOIN_MITER:
+            join = CAIRO_LINE_JOIN_MITER;
+            break;
+        case SP_STROKE_LINEJOIN_ROUND:
+            join = CAIRO_LINE_JOIN_ROUND;
+            break;
+        case SP_STROKE_LINEJOIN_BEVEL:
+            join = CAIRO_LINE_JOIN_BEVEL;
+            break;
     }
     cairo_set_line_join(_cr, join);
 
     // set line cap type
     cairo_line_cap_t cap = CAIRO_LINE_CAP_BUTT;
     switch (style->stroke_linecap.computed) {
-    	case SP_STROKE_LINECAP_BUTT:
-    	    cap = CAIRO_LINE_CAP_BUTT;
-    	    break;
-    	case SP_STROKE_LINECAP_ROUND:
-    	    cap = CAIRO_LINE_CAP_ROUND;
-    	    break;
-    	case SP_STROKE_LINECAP_SQUARE:
-    	    cap = CAIRO_LINE_CAP_SQUARE;
-    	    break;
+        case SP_STROKE_LINECAP_BUTT:
+            cap = CAIRO_LINE_CAP_BUTT;
+            break;
+        case SP_STROKE_LINECAP_ROUND:
+            cap = CAIRO_LINE_CAP_ROUND;
+            break;
+        case SP_STROKE_LINECAP_SQUARE:
+            cap = CAIRO_LINE_CAP_SQUARE;
+            break;
     }
     cairo_set_line_cap(_cr, cap);
     cairo_set_miter_limit(_cr, MAX(1, style->stroke_miterlimit.value));
@@ -1453,10 +1453,10 @@ bool CairoRenderContext::renderImage(GdkPixbuf *pb,
     // TODO: reenable merge_opacity if useful
     float opacity = _state->opacity;
 
-    cairo_surface_t *image_surface = ink_cairo_surface_create_for_argb32_pixbuf(pb);
+    cairo_surface_t *image_surface = ink_cairo_surface_get_for_pixbuf(pb);
     if (cairo_surface_status(image_surface)) {
         TRACE(("Image surface creation failed:\n%s\n", cairo_status_to_string(cairo_surface_status(image_surface))));
-    	return false;
+        return false;
     }
 
     cairo_save(_cr);
@@ -1475,7 +1475,6 @@ bool CairoRenderContext::renderImage(GdkPixbuf *pb,
     cairo_paint_with_alpha(_cr, opacity);
 
     cairo_restore(_cr);
-    cairo_surface_destroy(image_surface);
     return true;
 }
 
@@ -1676,9 +1675,9 @@ _write_callback(void *closure, const unsigned char *data, unsigned int length)
     written = fwrite (data, 1, length, file);
 
     if (written == length)
-	return CAIRO_STATUS_SUCCESS;
+    return CAIRO_STATUS_SUCCESS;
     else
-	return CAIRO_STATUS_WRITE_ERROR;
+    return CAIRO_STATUS_WRITE_ERROR;
 }
 
 #include "clear-n_.h"

@@ -82,6 +82,17 @@ public:
 
 } // namespace Inkscape
 
+enum InkPixelFormat {
+    INK_PIXEL_FORMAT_NONE,
+    INK_PIXEL_FORMAT_CAIRO,
+    INK_PIXEL_FORMAT_PIXBUF,
+    INK_PIXEL_FORMAT_LAST
+};
+
+// TODO: these declarations may not be needed in the header
+extern cairo_user_data_key_t ink_color_interpolation_key;
+extern cairo_user_data_key_t ink_pixbuf_key;
+
 SPColorInterpolation get_cairo_surface_ci(cairo_surface_t *surface);
 void set_cairo_surface_ci(cairo_surface_t *surface, SPColorInterpolation cif);
 void copy_cairo_surface_ci(cairo_surface_t *in, cairo_surface_t *out);
@@ -91,7 +102,7 @@ void ink_cairo_set_source_color(cairo_t *ct, SPColor const &color, double opacit
 void ink_cairo_set_source_rgba32(cairo_t *ct, guint32 rgba);
 void ink_cairo_transform(cairo_t *ct, Geom::Affine const &m);
 void ink_cairo_pattern_set_matrix(cairo_pattern_t *cp, Geom::Affine const &m);
-void ink_cairo_set_source_argb32_pixbuf(cairo_t *ct, GdkPixbuf *pb, double x, double y);
+void ink_cairo_set_source_pixbuf(cairo_t *ct, GdkPixbuf *pb, double x, double y);
 
 void ink_matrix_to_2geom(Geom::Affine &, cairo_matrix_t const &);
 void ink_matrix_to_cairo(cairo_matrix_t &, Geom::Affine const &);
@@ -116,9 +127,10 @@ cairo_pattern_t *ink_cairo_pattern_create_checkerboard();
 
 void convert_pixels_pixbuf_to_argb32(guchar *data, int w, int h, int rs);
 void convert_pixels_argb32_to_pixbuf(guchar *data, int w, int h, int rs);
-void convert_pixbuf_normal_to_argb32(GdkPixbuf *);
-void convert_pixbuf_argb32_to_normal(GdkPixbuf *);
-cairo_surface_t *ink_cairo_surface_create_for_argb32_pixbuf(GdkPixbuf *pb);
+void ink_pixbuf_ensure_argb32(GdkPixbuf *);
+void ink_pixbuf_ensure_normal(GdkPixbuf *);
+cairo_surface_t *ink_cairo_surface_get_for_pixbuf(GdkPixbuf *pb);
+GdkPixbuf *ink_pixbuf_create_from_cairo_surface(cairo_surface_t *s);
 void ink_cairo_pixbuf_cleanup(guchar *pixels, void *surface);
 
 G_GNUC_CONST guint32 argb32_from_pixbuf(guint32 in);

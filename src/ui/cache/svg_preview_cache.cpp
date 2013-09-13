@@ -33,7 +33,7 @@
 
 #include "ui/cache/svg_preview_cache.h"
 
-GdkPixbuf* render_pixbuf(Inkscape::Drawing &drawing, double scale_factor, const Geom::Rect& dbox, unsigned psize)
+GdkPixbuf* render_pixbuf(Inkscape::Drawing &drawing, double scale_factor, Geom::Rect const &dbox, unsigned psize)
 {
     Geom::Affine t(Geom::Scale(scale_factor, scale_factor));
     drawing.root()->setTransform(Geom::Scale(scale_factor));
@@ -61,13 +61,7 @@ GdkPixbuf* render_pixbuf(Inkscape::Drawing &drawing, double scale_factor, const 
     drawing.render(ct, area, Inkscape::DrawingItem::RENDER_BYPASS_CACHE);
     cairo_surface_flush(s);
 
-    GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(cairo_image_surface_get_data(s),
-                                      GDK_COLORSPACE_RGB,
-                                      TRUE,
-                                      8, psize, psize, cairo_image_surface_get_stride(s),
-                                      ink_cairo_pixbuf_cleanup, s);
-    convert_pixbuf_argb32_to_normal(pixbuf);
-
+    GdkPixbuf* pixbuf = ink_pixbuf_create_from_cairo_surface(s);
     return pixbuf;
 }
 
@@ -81,6 +75,12 @@ SvgPreview::SvgPreview()
 
 SvgPreview::~SvgPreview()
 {
+    for (std::map<Glib::ustring, GdkPixbuf *>::iterator i = _pixmap_cache.begin();
+         i != _pixmap_cache.end(); ++i)
+    {
+        g_object_unref(i->second);
+        i->second = NULL;
+    }
 }
 
 Glib::ustring SvgPreview::cache_key(gchar const *uri, gchar const *name, unsigned psize) const {
@@ -102,6 +102,7 @@ GdkPixbuf* SvgPreview::get_preview_from_cache(const Glib::ustring& key) {
 }
 
 void SvgPreview::set_preview_in_cache(const Glib::ustring& key, GdkPixbuf* px) {
+    g_object_ref(px);
     _pixmap_cache[key] = px;
 }
 
@@ -123,6 +124,8 @@ GdkPixbuf* SvgPreview::get_preview(const gchar* uri, const gchar* id, Inkscape::
 void SvgPreview::remove_preview_from_cache(const Glib::ustring& key) {
     std::map<Glib::ustring, GdkPixbuf *>::iterator found = _pixmap_cache.find(key);
     if ( found != _pixmap_cache.end() ) {
+        g_object_unref(found->second);
+        found->second = NULL;
         _pixmap_cache.erase(key);
     }
 }

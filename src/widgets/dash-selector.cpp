@@ -238,58 +238,50 @@ void SPDashSelector::get_dash(int *ndash, double **dash, double *off)
 /**
  * Fill a pixbuf with the dash pattern using standard cairo drawing
  */
-GdkPixbuf* SPDashSelector::sp_dash_to_pixbuf(double *pattern) {
+GdkPixbuf* SPDashSelector::sp_dash_to_pixbuf(double *pattern)
+{
+    int n_dashes;
+    for (n_dashes = 0; pattern[n_dashes] >= 0.0; n_dashes ++) ;
 
-        int n_dashes;
-        for (n_dashes = 0; pattern[n_dashes] >= 0.0; n_dashes ++) ;
+    cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, preview_width, preview_height);
+    cairo_t *ct = cairo_create(s);
 
-        cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, preview_width, preview_height);
-        cairo_t *ct = cairo_create(s);
+    cairo_set_line_width (ct, preview_lineheight);
+    cairo_scale (ct, preview_lineheight, 1);
+    //cairo_set_source_rgb (ct, 0, 0, 0);
+    cairo_move_to (ct, 0, preview_height/2);
+    cairo_line_to (ct, preview_width, preview_height/2);
+    cairo_set_dash(ct, pattern, n_dashes, 0);
+    cairo_stroke (ct);
 
-        cairo_set_line_width (ct, preview_lineheight);
-        cairo_scale (ct, preview_lineheight, 1);
-        //cairo_set_source_rgb (ct, 0, 0, 0);
-        cairo_move_to (ct, 0, preview_height/2);
-        cairo_line_to (ct, preview_width, preview_height/2);
-        cairo_set_dash(ct, pattern, n_dashes, 0);
-        cairo_stroke (ct);
+    cairo_destroy(ct);
+    cairo_surface_flush(s);
 
-        cairo_destroy(ct);
-        cairo_surface_flush(s);
-
-        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( cairo_image_surface_get_data(s),
-                                                   GDK_COLORSPACE_RGB, TRUE, 8,
-                                                   preview_width, preview_height, cairo_image_surface_get_stride(s),
-                                                   ink_cairo_pixbuf_cleanup, s);
-        convert_pixbuf_argb32_to_normal(pixbuf);
-        return pixbuf;
+    GdkPixbuf* pixbuf = ink_pixbuf_create_from_cairo_surface(s);
+    return pixbuf;
 }
 
 /**
  * Fill a pixbuf with a text label using standard cairo drawing
  */
-GdkPixbuf* SPDashSelector::sp_text_to_pixbuf(char *text) {
+GdkPixbuf* SPDashSelector::sp_text_to_pixbuf(char *text)
+{
+    cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, preview_width, preview_height);
+    cairo_t *ct = cairo_create(s);
 
-        cairo_surface_t *s = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, preview_width, preview_height);
-        cairo_t *ct = cairo_create(s);
+    cairo_select_font_face (ct, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+    cairo_set_font_size (ct, 12.0);
+    cairo_set_source_rgb (ct, 0.0, 0.0, 0.0);
+    cairo_move_to (ct, 16.0, 13.0);
+    cairo_show_text (ct, text);
 
-        cairo_select_font_face (ct, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
-        cairo_set_font_size (ct, 12.0);
-        cairo_set_source_rgb (ct, 0.0, 0.0, 0.0);
-        cairo_move_to (ct, 16.0, 13.0);
-        cairo_show_text (ct, text);
+    cairo_stroke (ct);
 
-        cairo_stroke (ct);
+    cairo_destroy(ct);
+    cairo_surface_flush(s);
 
-        cairo_destroy(ct);
-        cairo_surface_flush(s);
-
-        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( cairo_image_surface_get_data(s),
-                                                   GDK_COLORSPACE_RGB, TRUE, 8,
-                                                   preview_width, preview_height, cairo_image_surface_get_stride(s),
-                                                   ink_cairo_pixbuf_cleanup, s);
-        convert_pixbuf_argb32_to_normal(pixbuf);
-        return pixbuf;
+    GdkPixbuf* pixbuf = ink_pixbuf_create_from_cairo_surface(s);
+    return pixbuf;
 }
 
 void SPDashSelector::on_selection ()

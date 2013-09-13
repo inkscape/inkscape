@@ -146,12 +146,7 @@ GdkPixbuf *sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*
         // render items
         drawing.render(ct, final_bbox, Inkscape::DrawingItem::RENDER_BYPASS_CACHE);
 
-        pixbuf = gdk_pixbuf_new_from_data(cairo_image_surface_get_data(surface),
-                                          GDK_COLORSPACE_RGB, TRUE,
-                                          8, width, height, cairo_image_surface_get_stride(surface),
-                                          ink_cairo_pixbuf_cleanup,
-                                          surface);
-        convert_pixbuf_argb32_to_normal(pixbuf);
+        pixbuf = ink_pixbuf_create_from_cairo_surface(surface);
     }
     else
     {

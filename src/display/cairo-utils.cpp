@@ -28,16 +28,13 @@
 #include "helper/geom-curves.h"
 #include "display/cairo-templates.h"
 
-namespace {
-
 /**
  * Key for cairo_surface_t to keep track of current color interpolation value
  * Only the address of the structure is used, it is never initialized. See:
  * http://www.cairographics.org/manual/cairo-Types.html#cairo-user-data-key-t
  */
-cairo_user_data_key_t ci_key;
-
-} // namespace
+cairo_user_data_key_t ink_color_interpolation_key;
+cairo_user_data_key_t ink_pixbuf_key;
 
 namespace Inkscape {
 
@@ -291,7 +288,7 @@ feed_pathvector_to_cairo (cairo_t *ct, Geom::PathVector const &pathv)
 
 SPColorInterpolation
 get_cairo_surface_ci(cairo_surface_t *surface) {
-    void* data = cairo_surface_get_user_data( surface, &ci_key );
+    void* data = cairo_surface_get_user_data( surface, &ink_color_interpolation_key );
     if( data != NULL ) {
         return (SPColorInterpolation)GPOINTER_TO_INT( data );
     } else {
@@ -317,13 +314,13 @@ set_cairo_surface_ci(cairo_surface_t *surface, SPColorInterpolation ci) {
             ink_cairo_surface_linear_to_srgb( surface );
         }
 
-        cairo_surface_set_user_data(surface, &ci_key, GINT_TO_POINTER (ci), NULL);
+        cairo_surface_set_user_data(surface, &ink_color_interpolation_key, GINT_TO_POINTER (ci), NULL);
     }
 }
 
 void
 copy_cairo_surface_ci(cairo_surface_t *in, cairo_surface_t *out) {
-    cairo_surface_set_user_data(out, &ci_key, cairo_surface_get_user_data(in, &ci_key), NULL);
+    cairo_surface_set_user_data(out, &ink_color_interpolation_key, cairo_surface_get_user_data(in, &ink_color_interpolation_key), NULL);
 }
 
 void
@@ -375,24 +372,110 @@ ink_cairo_pattern_set_matrix(cairo_pattern_t *cp, Geom::Affine const &m)
 }
 
 void
-ink_cairo_set_source_argb32_pixbuf(cairo_t *ct, GdkPixbuf *pb, double x, double y)
+ink_cairo_set_source_pixbuf(cairo_t *ct, GdkPixbuf *pb, double x, double y)
 {
-    cairo_surface_t *pbs = ink_cairo_surface_create_for_argb32_pixbuf(pb);
+    cairo_surface_t *pbs = ink_cairo_surface_get_for_pixbuf(pb);
     cairo_set_source_surface(ct, pbs, x, y);
-    cairo_surface_destroy(pbs);
 }
 
-cairo_surface_t *
-ink_cairo_surface_create_for_argb32_pixbuf(GdkPixbuf *pb)
-{
-    guchar *data = gdk_pixbuf_get_pixels(pb);
-    int w = gdk_pixbuf_get_width(pb);
-    int h = gdk_pixbuf_get_height(pb);
-    int stride = gdk_pixbuf_get_rowstride(pb);
+/* The functions below implement the following hack:
+ * 
+ * The pixels formats of Cairo and GdkPixbuf are different.
+ * GdkPixbuf accesses pixels as bytes, alpha is not premultiplied,
+ * and successive bytes of a single pixel contain R, G, B and A components.
+ * Cairo accesses pixels as 32-bit ints, alpha is premultiplied,
+ * and each int contains as 0xAARRGGBB, accessed with bitwise operations.
+ *
+ * In other words, on a little endian system, a GdkPixbuf will contain:
+ *   char *data = "rgbargbargba...."
+ *   int *data = { 0xAABBGGRR, 0xAABBGGRR, 0xAABBGGRR, ... }
+ * while a Cairo image surface will contain:
+ *   char *data = "bgrabgrabgra...."
+ *   int *data = { 0xAARRGGBB, 0xAARRGGBB, 0xAARRGGBB, ... }
+ *
+ * It is possible to convert between these two formats (almost) losslessly.
+ * Some color information from partially transparent regions of the image
+ * is lost, but the result when displaying this image will remain the same.
+ *
+ * The functions below allow interoperation between GdkPixbuf
+ * and Cairo surfaces, allowing pixbufs to be used as Cairo sources,
+ * and saving Cairo surfaces using GdkPixbuf APIs.
+ * This is implemented by creating a GdkPixbuf and a Cairo image surface
+ * which share their data. Depending on what is needed at a given time,
+ * the pixels are converted in place to the Cairo or the GdkPixbuf format.
+ * In this way, only one copy of the image data is needed.
+ *
+ * Given either a GdkPixbuf or a Cairo surface, these functions create
+ * the other object and convert to its format. The returned object should be
+ * freed using cairo_surface_destroy or g_object_unref when it's no longer
+ * needed.
+ *
+ * Memory ownership semantics:
+ * Regardless of whether the pixels are stored in memory originally belonging
+ * to Cairo surface or to GdkPixbuf, the GdkPixbuf is the master object.
+ * To free the memory, unref the GdkPixbuf ONLY.
+ */
 
-    cairo_surface_t *pbs = cairo_image_surface_create_for_data(
-        data, CAIRO_FORMAT_ARGB32, w, h, stride);
+/**
+ * Converts the pixbuf to Cairo pixel format and returns an image surface
+ * which can be used as a source.
+ *
+ * The returned surface should be unreferenced
+ * with cairo_surface_destroy() once it's no longer needed.
+ * Calling this function causes the pixbuf to be unsuitable for use
+ * with GTK drawing functions.
+ */
+cairo_surface_t *
+ink_cairo_surface_get_for_pixbuf(GdkPixbuf *pb)
+{
+    cairo_surface_t *pbs =
+        reinterpret_cast<cairo_surface_t*>(g_object_get_data(G_OBJECT(pb), "cairo_surface"));
+
+    ink_pixbuf_ensure_argb32(pb);
+
+    if (pbs == NULL) {
+        guchar *data = gdk_pixbuf_get_pixels(pb);
+        int w = gdk_pixbuf_get_width(pb);
+        int h = gdk_pixbuf_get_height(pb);
+        int stride = gdk_pixbuf_get_rowstride(pb);
+
+        // create a surface that stores the data
+        cairo_surface_t *pbs = cairo_image_surface_create_for_data(
+            data, CAIRO_FORMAT_ARGB32, w, h, stride);
+
+        g_object_set_data_full(G_OBJECT(pb), "cairo_surface", pbs, (GDestroyNotify) cairo_surface_destroy);
+        cairo_surface_set_user_data(pbs, &ink_pixbuf_key, pb, NULL);
+    }
+
     return pbs;
+}
+
+/**
+ * Converts the Cairo surface to GdkPixbuf pixel format.
+ * GdkPixbuf takes ownership of the passed surface reference,
+ * so it should NOT be freed after calling this function.
+ */
+GdkPixbuf *ink_pixbuf_create_from_cairo_surface(cairo_surface_t *s)
+{
+    GdkPixbuf *pb = reinterpret_cast<GdkPixbuf*>(cairo_surface_get_user_data(s, &ink_pixbuf_key));
+    if (pb == NULL) {
+        pb = gdk_pixbuf_new_from_data(
+            cairo_image_surface_get_data(s), GDK_COLORSPACE_RGB, TRUE, 8,
+            cairo_image_surface_get_width(s), cairo_image_surface_get_height(s),
+            cairo_image_surface_get_stride(s), NULL, NULL);
+
+        g_object_set_data_full(G_OBJECT(pb), "pixel_format", g_strdup("argb32"), g_free);
+        g_object_set_data_full(G_OBJECT(pb), "cairo_surface", s, (GDestroyNotify) cairo_surface_destroy);
+
+        cairo_surface_set_user_data(s, &ink_pixbuf_key, pb, NULL);
+    } else {
+        g_warning("Received surface which is already owned by GdkPixbuf");
+        g_object_ref(pb);
+    }
+
+    ink_pixbuf_ensure_normal(pb);
+
+    return pb;
 }
 
 /**
@@ -445,7 +528,7 @@ cairo_surface_t *
 ink_cairo_surface_create_identical(cairo_surface_t *s)
 {
     cairo_surface_t *ns = ink_cairo_surface_create_same_size(s, cairo_surface_get_content(s));
-    cairo_surface_set_user_data(ns, &ci_key, cairo_surface_get_user_data(s, &ci_key), NULL);
+    cairo_surface_set_user_data(ns, &ink_color_interpolation_key, cairo_surface_get_user_data(s, &ink_color_interpolation_key), NULL);
     return ns;
 }
 
@@ -845,13 +928,20 @@ convert_pixels_argb32_to_pixbuf(guchar *data, int w, int h, int stride)
  * using it with GTK will result in corrupted drawings.
  */
 void
-convert_pixbuf_normal_to_argb32(GdkPixbuf *pb)
+ink_pixbuf_ensure_argb32(GdkPixbuf *pb)
 {
+    gchar *pixel_format = reinterpret_cast<gchar*>(g_object_get_data(G_OBJECT(pb), "pixel_format"));
+    if (pixel_format != NULL && strcmp(pixel_format, "argb32") == 0) {
+        // nothing to do
+        return;
+    }
+
     convert_pixels_pixbuf_to_argb32(
         gdk_pixbuf_get_pixels(pb),
         gdk_pixbuf_get_width(pb),
         gdk_pixbuf_get_height(pb),
         gdk_pixbuf_get_rowstride(pb));
+    g_object_set_data_full(G_OBJECT(pb), "pixel_format", g_strdup("argb32"), g_free);
 }
 
 /**
@@ -859,13 +949,20 @@ convert_pixbuf_normal_to_argb32(GdkPixbuf *pb)
  * Once this is done, the pixbuf can be used with GTK again.
  */
 void
-convert_pixbuf_argb32_to_normal(GdkPixbuf *pb)
+ink_pixbuf_ensure_normal(GdkPixbuf *pb)
 {
+    gchar *pixel_format = reinterpret_cast<gchar*>(g_object_get_data(G_OBJECT(pb), "pixel_format"));
+    if (pixel_format == NULL || strcmp(pixel_format, "pixbuf") == 0) {
+        // nothing to do
+        return;
+    }
+
     convert_pixels_argb32_to_pixbuf(
         gdk_pixbuf_get_pixels(pb),
         gdk_pixbuf_get_width(pb),
         gdk_pixbuf_get_height(pb),
         gdk_pixbuf_get_rowstride(pb));
+    g_object_set_data_full(G_OBJECT(pb), "pixel_format", g_strdup("pixbuf"), g_free);
 }
 
 guint32 argb32_from_rgba(guint32 in)

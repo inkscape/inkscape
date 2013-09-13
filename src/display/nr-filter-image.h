@@ -44,7 +44,6 @@ private:
     SPDocument *document;
     gchar *feImageHref;
     Glib::RefPtr<Gdk::Pixbuf> image;
-    cairo_surface_t *image_surface;
     float feImageX, feImageY, feImageWidth, feImageHeight;
     unsigned int aspect_align, aspect_clip;
     bool broken_ref;

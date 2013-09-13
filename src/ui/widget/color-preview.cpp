@@ -73,9 +73,9 @@ ColorPreview::on_expose_event (GdkEventExpose *event)
     if (get_is_drawable())
     {
         Cairo::RefPtr<Cairo::Context> cr = get_window()->create_cairo_context();
-	cr->rectangle(event->area.x, event->area.y,
+    cr->rectangle(event->area.x, event->area.y,
                       event->area.width, event->area.height);
-	cr->clip();
+    cr->clip();
         result = on_draw(cr);
     }
 
@@ -176,12 +176,7 @@ ColorPreview::toPixbuf (int width, int height)
     cairo_destroy(ct);
     cairo_surface_flush(s);
 
-    GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data( cairo_image_surface_get_data(s),
-                                               GDK_COLORSPACE_RGB, TRUE, 8,
-                                               width, height, cairo_image_surface_get_stride(s),
-                                               ink_cairo_pixbuf_cleanup, s);
-    convert_pixbuf_argb32_to_normal(pixbuf);
-
+    GdkPixbuf* pixbuf = ink_pixbuf_create_from_cairo_surface(s);
     return pixbuf;
 }
 

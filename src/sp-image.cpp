@@ -57,15 +57,13 @@
 
 //#define DEBUG_LCMS
 #ifdef DEBUG_LCMS
-
-
 #define DEBUG_MESSAGE(key, ...)\
 {\
     g_message( __VA_ARGS__ );\
 }
-
-
 #include <gtk/gtk.h>
+#else
+#define DEBUG_MESSAGE(key, ...)
 #endif // DEBUG_LCMS
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 /*
@@ -133,6 +131,8 @@ extern guint update_in_progress;
         gtk_widget_show_all( dialog );\
     }\
 }
+#else // DEBUG_LCMS
+#define DEBUG_MESSAGE_SCISLAC(key, ...)
 #endif // DEBUG_LCMS
 
 namespace Inkscape {
@@ -715,23 +715,25 @@ static void sp_image_set( SPObject *object, unsigned int key, const gchar *value
                 image->aspect_clip = clip;
             }
             break;
+
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
         case SP_PROP_COLOR_PROFILE:
             if ( image->color_profile ) {
                 g_free (image->color_profile);
             }
             image->color_profile = (value) ? g_strdup (value) : NULL;
-#ifdef DEBUG_LCMS
+
             if ( value ) {
                 DEBUG_MESSAGE( lcmsFour, "<image> color-profile set to '%s'", value );
             } else {
                 DEBUG_MESSAGE( lcmsFour, "<image> color-profile cleared" );
             }
-#endif // DEBUG_LCMS
+
             // TODO check on this HREF_MODIFIED flag
             object->requestDisplayUpdate(SP_OBJECT_MODIFIED_FLAG | SP_IMAGE_HREF_MODIFIED_FLAG);
             break;
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+
         default:
             if (((SPObjectClass *) (sp_image_parent_class))->set)
                 ((SPObjectClass *) (sp_image_parent_class))->set (object, key, value);
@@ -784,9 +786,8 @@ static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
                     guchar* px = gdk_pixbuf_get_pixels( pixbuf );
 
                     if ( px ) {
-#ifdef DEBUG_LCMS
                         DEBUG_MESSAGE( lcmsFive, "in <image>'s sp_image_update. About to call colorprofile_get_handle()" );
-#endif // DEBUG_LCMS
+
                         guint profIntent = Inkscape::RENDERING_INTENT_UNKNOWN;
                         cmsHPROFILE prof = Inkscape::CMSSystem::getHandle( object->document,
                                                                            &profIntent,
@@ -826,34 +827,24 @@ static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
                                     }
 
                                     cmsDeleteTransform( transf );
-                                }
-#ifdef DEBUG_LCMS
-                                else
-                                {
+                                } else {
                                     DEBUG_MESSAGE( lcmsSix, "in <image>'s sp_image_update. Unable to create LCMS transform." );
                                 }
-#endif // DEBUG_LCMS
+
                                 cmsCloseProfile( destProf );
-                            }
-#ifdef DEBUG_LCMS
-                            else
-                            {
+                            } else {
                                 DEBUG_MESSAGE( lcmsSeven, "in <image>'s sp_image_update. Profile type is named color. Can't transform." );
                             }
-#endif // DEBUG_LCMS
-                        }
-#ifdef DEBUG_LCMS
-                        else
-                        {
+                        } else {
                             DEBUG_MESSAGE( lcmsEight, "in <image>'s sp_image_update. No profile found." );
                         }
-#endif // DEBUG_LCMS
                     }
                 }
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
+
                 image->pixbuf = pixbuf;
-                // convert to premultiplied native-endian ARGB for display with Cairo
-                convert_pixbuf_normal_to_argb32(image->pixbuf);
+                // used here for the side-effect of converting to ARGB32
+                ink_cairo_surface_get_for_pixbuf(image->pixbuf);
             }
         }
     }
@@ -1018,7 +1009,9 @@ static void sp_image_print( SPItem *item, SPPrintContext *ctx )
 
     if (image->pixbuf && (image->width.computed > 0.0) && (image->height.computed > 0.0) ) {
         GdkPixbuf *pb = gdk_pixbuf_copy(image->pixbuf);
-        convert_pixbuf_argb32_to_normal(pb);
+        // GObject data is not copied, so we have to set the pixel format explicitly
+        g_object_set_data_full(G_OBJECT(pb), "pixel_format", g_strdup("argb32"), g_free);
+        ink_pixbuf_ensure_normal(pb);
 
         guchar *px = gdk_pixbuf_get_pixels(pb);
         int w = gdk_pixbuf_get_width(pb);
@@ -1056,7 +1049,7 @@ static void sp_image_print( SPItem *item, SPPrintContext *ctx )
             t = ti * t;
             sp_print_image_R8G8B8A8_N(ctx, px + trimx*pixskip + trimy*rs, trimwidth, trimheight, rs, t, item->style);
         }
-        free(px);  // else big memory leak on each image print!
+        g_object_unref(pb);
     }
 }
 
