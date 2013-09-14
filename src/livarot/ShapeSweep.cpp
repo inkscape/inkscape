@@ -2672,7 +2672,8 @@ Shape::TesteAdjacency (Shape * a, int no, const Geom::Point atx, int nPt,
   double e = IHalfRound ((cross (diff,adir)) * a->eData[no].isqlength);
   if (-3 < e && e < 3)
     {
-      double rad = HalfRound (0.501); // when using single precision, 0.505 is better (0.5 would be the correct value, 
+      double rad = HalfRound (1);
+//      double rad = HalfRound (0.501); // when using single precision, 0.505 is better (0.5 would be the correct value, 
                                       // but it produces lots of bugs)
       diff1[0] = diff[0] - rad;
       diff1[1] = diff[1] - rad;
