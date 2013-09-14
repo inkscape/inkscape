@@ -420,10 +420,9 @@ ink_cairo_set_source_pixbuf(cairo_t *ct, GdkPixbuf *pb, double x, double y)
  * Converts the pixbuf to Cairo pixel format and returns an image surface
  * which can be used as a source.
  *
- * The returned surface should be unreferenced
- * with cairo_surface_destroy() once it's no longer needed.
+ * The returned surface is owned by the GdkPixbuf and should not be freed.
  * Calling this function causes the pixbuf to be unsuitable for use
- * with GTK drawing functions.
+ * with GTK drawing functions until ink_pixbuf_ensure_normal() is called.
  */
 cairo_surface_t *
 ink_cairo_surface_get_for_pixbuf(GdkPixbuf *pb)
@@ -440,7 +439,7 @@ ink_cairo_surface_get_for_pixbuf(GdkPixbuf *pb)
         int stride = gdk_pixbuf_get_rowstride(pb);
 
         // create a surface that stores the data
-        cairo_surface_t *pbs = cairo_image_surface_create_for_data(
+        pbs = cairo_image_surface_create_for_data(
             data, CAIRO_FORMAT_ARGB32, w, h, stride);
 
         g_object_set_data_full(G_OBJECT(pb), "cairo_surface", pbs, (GDestroyNotify) cairo_surface_destroy);
