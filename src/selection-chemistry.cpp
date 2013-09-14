@@ -3457,6 +3457,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     }
     t = Geom::Scale(1, -1) * Geom::Translate(shift_x, shift_y) * eek.inverse();  /// @fixme hardcoded doc2dt transform?
 
+    // TODO: avoid roundtrip via file
     // Do the export
     sp_export_png_file(document, filepath,
                        bbox->min()[Geom::X], bbox->min()[Geom::Y],
@@ -3483,7 +3484,7 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     if (pb) {
         // Create the repr for the image
         Inkscape::XML::Node * repr = xml_doc->createElement("svg:image");
-        sp_embed_image(repr, pb, "image/png");
+        sp_embed_image(repr, pb);
         if (res == Inkscape::Util::Quantity::convert(1, "in", "px")) { // for default 90 dpi, snap it to pixel grid
             sp_repr_set_svg_double(repr, "width", width);
             sp_repr_set_svg_double(repr, "height", height);

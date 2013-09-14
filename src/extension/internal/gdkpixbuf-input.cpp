@@ -19,23 +19,18 @@
 namespace Inkscape {
 
 namespace IO {
-GdkPixbuf* pixbuf_new_from_file( char const *utf8name, GError **error );
+// this is defined in sp-image.cpp
+GdkPixbuf* pixbuf_new_from_file(char const *filename, time_t &modTime, gchar*& pixPath);
 }
 
 namespace Extension {
 namespace Internal {
 
-static std::set<Glib::ustring> create_lossy_set()
-{
-    std::set<Glib::ustring> lossy;
-    lossy.insert(".jpg");
-    lossy.insert(".jpeg");
-    return lossy;
-}
-
 SPDocument *
 GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
 {
+    // determine whether the image should be embedded
+    // TODO: this logic seems very wrong
     bool embed = false;
     Inkscape::Preferences *prefs = Inkscape::Preferences::get();
     Glib::ustring attr = prefs->getString("/dialogs/import/link");
@@ -52,27 +47,14 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
     }
 
     SPDocument *doc = NULL;
-    GdkPixbuf *pb = Inkscape::IO::pixbuf_new_from_file( uri, NULL );
-    static std::set<Glib::ustring> lossy = create_lossy_set();
+    gchar *pixpath = NULL;
+    time_t dummy;
+    GdkPixbuf *pb = Inkscape::IO::pixbuf_new_from_file(uri, dummy, pixpath);
 
-    if (pb) {         /* We are readable */
-        // TODO revisit: bool is_lossy;
-        Glib::ustring mime_type, ext;
-        Glib::ustring u = uri;
-        std::size_t dotpos = u.rfind('.');
-        if (dotpos != Glib::ustring::npos) {
-            ext = u.substr(dotpos, Glib::ustring::npos);
-        }
+    // TODO: the pixbuf is created again from the base64-encoded attribute in SPImage.
+    // Find a way to create the pixbuf only once.
 
-        // HACK: replace with something better based on GIO
-        if (!ext.empty() && lossy.find(ext) != lossy.end()) {
-            // TODO revisit: is_lossy = true;
-            mime_type = "image/jpeg";
-        } else {
-            // TODO revisit: is_lossy = false;
-            mime_type = "image/png";
-        }
-
+    if (pb) {
         doc = SPDocument::createNewDoc(NULL, TRUE, TRUE);
         bool saved = DocumentUndo::getUndoSensitive(doc);
         DocumentUndo::setUndoSensitive(doc, false); // no need to undo in this temporary document
@@ -85,40 +67,22 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         double xscale = 1;
         double yscale = 1;
 
-        gchar const *str = gdk_pixbuf_get_option( pb, "Inkscape::DpiX" );
-        if ( str ) {
-            gint dpi = atoi(str);
-            if ( dpi > 0 && dpi != 72 ) {
-                xscale = 72.0 / (double)dpi;
-            }
-        } else {
-            if (!ir && !forcexdpi)
-                ir = new ImageResolution(uri);
-            if (ir && ir->ok())
-                xscale = 900.0 / floor(10.*ir->x() + .5);  // round-off to 0.1 dpi
-            else
-                xscale = 90.0 / defaultxdpi;
-        }
-        width *= xscale;
 
-        str = gdk_pixbuf_get_option( pb, "Inkscape::DpiY" );
-        if ( str ) {
-            gint dpi = atoi(str);
-            if ( dpi > 0 && dpi != 72 ) {
-                yscale = 72.0 / (double)dpi;
-            }
-        } else {
-            if (!ir && !forcexdpi)
-                ir = new ImageResolution(uri);
-            if (ir && ir->ok())
-                yscale = 900.0 / floor(10.*ir->y() + .5);  // round-off to 0.1 dpi
-            else
-                yscale = 90.0 / defaultxdpi;
+        if (!ir && !forcexdpi) {
+            ir = new ImageResolution(uri);
         }
+        if (ir && ir->ok()) {
+            xscale = 900.0 / floor(10.*ir->x() + .5);  // round-off to 0.1 dpi
+            yscale = 900.0 / floor(10.*ir->y() + .5);
+        } else {
+            xscale = 90.0 / defaultxdpi;
+            yscale = 90.0 / defaultxdpi;
+        }
+
+        width *= xscale;
         height *= yscale;
 
-        if (ir)
-            delete ir;
+        delete ir; // deleting NULL is safe
 
         // Create image node
         Inkscape::XML::Document *xml_doc = doc->getReprDoc();
@@ -127,7 +91,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         sp_repr_set_svg_double(image_node, "height", height);
 
         if (embed) {
-            sp_embed_image(image_node, pb, mime_type);
+            sp_embed_image(image_node, pb);
         } else {
             // convert filename to uri
             gchar* _uri = g_filename_to_uri(uri, NULL, NULL);
@@ -139,6 +103,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
             }
         }
 
+        g_object_set_data(G_OBJECT(pb), "cairo_surface", NULL);
         g_object_unref(pb);
 
         // Add it to the current layer

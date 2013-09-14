@@ -14,13 +14,21 @@
 #include "image-resolution.h"
 
 #define IR_TRY_PNG 1
+#include <png.h>
+
 #ifdef HAVE_EXIF
-#define IR_TRY_EXIF 1
+#include <math.h>
+#include <libexif/exif-data.h>
 #endif
+
 #define IR_TRY_EXIV 0
+
 #ifdef HAVE_JPEG
 #define IR_TRY_JFIF 1
+#include <jpeglib.h>
+#include <setjmp.h>
 #endif
+
 #ifdef WITH_IMAGE_MAGICK
 #include <Magick++.h>
 #endif
@@ -62,8 +70,6 @@ double ImageResolution::y() const {
   
   
 #if IR_TRY_PNG
-
-#include <png.h>
   
 static bool haspngheader(FILE *fp) {
     unsigned char header[8];
@@ -132,9 +138,6 @@ void ImageResolution::readpng(char const *) {
 #endif
 
 #if IR_TRY_EXIF
-
-#include <math.h>
-#include <libexif/exif-data.h>
 
 static double exifDouble(ExifEntry *entry, ExifByteOrder byte_order) {
     switch (entry->format) {
@@ -263,9 +266,6 @@ void ImageResolution::readexiv(char const *) {
 #endif
 
 #if IR_TRY_JFIF
-
-#include <jpeglib.h>
-#include <setjmp.h>
 
 static void irjfif_error_exit(j_common_ptr cinfo) {
     longjmp(*(jmp_buf*)cinfo->client_data, 1);

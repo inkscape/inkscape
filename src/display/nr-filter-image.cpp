@@ -41,6 +41,7 @@ FilterImage::~FilterImage()
 {
     if (feImageHref)
         g_free(feImageHref);
+    g_object_set_data(G_OBJECT(image->gobj()), "cairo_surface", NULL);
 }
 
 void FilterImage::render_cairo(FilterSlot &slot)
@@ -301,6 +302,7 @@ void FilterImage::set_href(const gchar *href){
     if (feImageHref) g_free (feImageHref);
     feImageHref = (href) ? g_strdup (href) : NULL;
 
+    g_object_set_data(G_OBJECT(image->gobj()), "cairo_surface", NULL);
     image.reset();
     broken_ref = false;
 }

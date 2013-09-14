@@ -46,7 +46,7 @@ DrawingImage::setARGB32Pixbuf(GdkPixbuf *pb)
     }
     if (_pixbuf != NULL) {
         g_object_unref(_pixbuf);
-        cairo_surface_destroy(_surface);
+        // unrefing the pixbuf also destroys surface
     }
     _pixbuf = pb;
     _surface = pb ? ink_cairo_surface_get_for_pixbuf(pb) : NULL;
@@ -206,7 +206,7 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
             int orgstride = cairo_image_surface_get_stride(_surface);
             int newstride = cairo_image_surface_get_stride(_new_surface);
             
-            cairo_surface_flush(_surface);
+            //cairo_surface_flush(_surface);
             cairo_surface_flush(_new_surface);
 
             for(int y=0; y<newheight; y++) {

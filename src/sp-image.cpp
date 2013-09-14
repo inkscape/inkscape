@@ -96,12 +96,7 @@ static void sp_image_update_arenaitem (SPImage *img, Inkscape::DrawingImage *ai)
 static void sp_image_update_canvas_image (SPImage *image);
 static GdkPixbuf * sp_image_repr_read_dataURI (const gchar * uri_data);
 static GdkPixbuf * sp_image_repr_read_b64 (const gchar * uri_data);
-
-extern "C"
-{
-    void user_read_data( png_structp png_ptr, png_bytep data, png_size_t length );
-}
-
+static void pixbuf_set_mime_data(GdkPixbuf *pb, guchar *data, gsize len, GdkPixbufFormat *fmt);
 
 #ifdef DEBUG_LCMS
 extern guint update_in_progress;
@@ -138,286 +133,15 @@ extern guint update_in_progress;
 namespace Inkscape {
 namespace IO {
 
-class PushPull
-{
-public:
-    gboolean    first;
-    FILE*       fp;
-    guchar*     scratch;
-    gsize       size;
-    gsize       used;
-    gsize       offset;
-    GdkPixbufLoader *loader;
-
-    PushPull() : first(TRUE),
-                 fp(0),
-                 scratch(0),
-                 size(0),
-                 used(0),
-                 offset(0),
-                 loader(0) {};
-
-    gboolean readMore()
-    {
-        gboolean good = FALSE;
-        if ( offset )
-        {
-            g_memmove( scratch, scratch + offset, used - offset );
-            used -= offset;
-            offset = 0;
-        }
-        if ( used < size )
-        {
-            gsize space = size - used;
-            gsize got = fread( scratch + used, 1, space, fp );
-            if ( got )
-            {
-                if ( loader )
-                {
-                    GError *err = NULL;
-                    //g_message( " __read %d bytes", (int)got );
-                    if ( !gdk_pixbuf_loader_write( loader, scratch + used, got, &err ) )
-                    {
-                        //g_message("_error writing pixbuf data");
-                    }
-                }
-
-                used += got;
-                good = TRUE;
-            }
-            else
-            {
-                good = FALSE;
-            }
-        }
-        return good;
-    }
-
-    gsize available() const
-    {
-        return (used - offset);
-    }
-
-    gsize readOut( gpointer data, gsize length )
-    {
-        gsize giving = available();
-        if ( length < giving )
-        {
-            giving = length;
-        }
-        g_memmove( data, scratch + offset, giving );
-        offset += giving;
-        if ( offset >= used )
-        {
-            offset = 0;
-            used = 0;
-        }
-        return giving;
-    }
-
-    void clear()
-    {
-        offset = 0;
-        used = 0;
-    }
-
-private:
-    PushPull& operator = (const PushPull& other);
-    PushPull(const PushPull& other);
-};
-
-static void user_read_data( png_structp png_ptr, png_bytep data, png_size_t length )
-{
-//    g_message( "user_read_data(%d)", length );
-
-    PushPull* youme = (PushPull*)png_get_io_ptr(png_ptr);
-
-    gsize filled = 0;
-    gboolean canRead = TRUE;
-
-    while ( filled < length && canRead )
-    {
-        gsize some = youme->readOut( data + filled, length - filled );
-        filled += some;
-        if ( filled < length )
-        {
-            canRead &= youme->readMore();
-        }
-    }
-//    g_message("things out");
-}
-
-
-static bool readPngAndHeaders( PushPull &youme, gint & dpiX, gint & dpiY )
-{
-    bool good = true;
-
-    gboolean isPng = !png_sig_cmp( youme.scratch + youme.offset, 0, youme.available() );
-    //g_message( "  png? %s", (isPng ? "Yes":"No") );
-    if ( isPng ) {
-        png_structp pngPtr = png_create_read_struct( PNG_LIBPNG_VER_STRING,
-                                                     0, //(png_voidp)user_error_ptr,
-                                                     0, //user_error_fn,
-                                                     0 //user_warning_fn
-            );
-        png_infop infoPtr = pngPtr ? png_create_info_struct( pngPtr ) : 0;
-
-        if ( pngPtr && infoPtr ) {
-            if ( setjmp(png_jmpbuf(pngPtr)) ) {
-                // libpng calls longjmp to return here if an error occurs.
-                good = false;
-            }
-
-            if (good) {
-                png_set_read_fn( pngPtr, &youme, user_read_data );
-                //g_message( "In" );
-
-                //png_read_info( pngPtr, infoPtr );
-                png_read_png( pngPtr, infoPtr, PNG_TRANSFORM_IDENTITY, 0 );
-
-                //g_message("out");
-
-                /*
-                  if ( png_get_valid( pngPtr, infoPtr, PNG_INFO_pHYs ) )
-                  {
-                  g_message("pHYs chunk now valid" );
-                  }
-                  if ( png_get_valid( pngPtr, infoPtr, PNG_INFO_sCAL ) )
-                  {
-                  g_message("sCAL chunk now valid" );
-                  }
-                */
-
-                png_uint_32 res_x = 0;
-                png_uint_32 res_y = 0;
-                int unit_type = 0;
-                if ( png_get_pHYs( pngPtr, infoPtr, &res_x, &res_y, &unit_type) ) {
-//                                     g_message( "pHYs yes (%d, %d) %d (%s)", (int)res_x, (int)res_y, unit_type,
-//                                                (unit_type == 1? "per meter" : "unknown")
-//                                         );
-
-//                                     g_message( "    dpi: (%d, %d)",
-//                                                (int)(0.5 + ((double)res_x)/39.37),
-//                                                (int)(0.5 + ((double)res_y)/39.37) );
-                    if ( unit_type == PNG_RESOLUTION_METER )
-                    {
-                        // TODO come up with a more accurate DPI setting
-                        dpiX = (int)(0.5 + ((double)res_x)/39.37);
-                        dpiY = (int)(0.5 + ((double)res_y)/39.37);
-                    }
-                } else {
-//                                     g_message( "pHYs no" );
-                }
-
-/*
-  double width = 0;
-  double height = 0;
-  int unit = 0;
-  if ( png_get_sCAL(pngPtr, infoPtr, &unit, &width, &height) )
-  {
-  gchar* vals[] = {
-  "unknown", // PNG_SCALE_UNKNOWN
-  "meter", // PNG_SCALE_METER
-  "radian", // PNG_SCALE_RADIAN
-  "last", //
-  NULL
-  };
-
-  g_message( "sCAL: (%f, %f) %d (%s)",
-  width, height, unit,
-  ((unit >= 0 && unit < 3) ? vals[unit]:"???")
-  );
-  }
-*/
-
-#if defined(PNG_sRGB_SUPPORTED)
-                {
-                    int intent = 0;
-                    if ( png_get_sRGB(pngPtr, infoPtr, &intent) ) {
-//                                         g_message("Found an sRGB png chunk");
-                    }
-                }
-#endif // defined(PNG_sRGB_SUPPORTED)
-
-#if defined(PNG_cHRM_SUPPORTED)
-                {
-                    double white_x = 0;
-                    double white_y = 0;
-                    double red_x = 0;
-                    double red_y = 0;
-                    double green_x = 0;
-                    double green_y = 0;
-                    double blue_x = 0;
-                    double blue_y = 0;
-
-                    if ( png_get_cHRM(pngPtr, infoPtr,
-                                      &white_x, &white_y,
-                                      &red_x, &red_y,
-                                      &green_x, &green_y,
-                                      &blue_x, &blue_y) ) {
-//                                         g_message("Found a cHRM png chunk");
-                    }
-                }
-#endif // defined(PNG_cHRM_SUPPORTED)
-
-#if defined(PNG_gAMA_SUPPORTED)
-                {
-                    double file_gamma = 0;
-                    if ( png_get_gAMA(pngPtr, infoPtr, &file_gamma) ) {
-//                                         g_message("Found a gAMA png chunk");
-                    }
-                }
-#endif // defined(PNG_gAMA_SUPPORTED)
-
-#if defined(PNG_iCCP_SUPPORTED)
-                {
-                    png_charp name = 0;
-                    int compression_type = 0;
-#if (PNG_LIBPNG_VER < 10500)
-                    png_charp profile = 0;
-#else
-                    png_bytep profile = 0;
-#endif
-                    png_uint_32 proflen = 0;
-                    if ( png_get_iCCP(pngPtr, infoPtr, &name, &compression_type, &profile, &proflen) ) {
-//                                         g_message("Found an iCCP chunk named [%s] with %d bytes and comp %d", name, proflen, compression_type);
-                    }
-                }
-#endif // defined(PNG_iCCP_SUPPORTED)
-
-            }
-        } else {
-            g_message("Error when creating PNG read struct");
-        }
-
-        // now clean it up.
-        if (pngPtr && infoPtr) {
-            png_destroy_read_struct( &pngPtr, &infoPtr, 0 );
-            pngPtr = 0;
-            infoPtr = 0;
-        } else if (pngPtr) {
-            png_destroy_read_struct( &pngPtr, 0, 0 );
-            pngPtr = 0;
-        }
-    } else {
-        good = false; // Was not a png file
-    }
-
-    return good;
-}
-
-GdkPixbuf* pixbuf_new_from_file( const char *filename, time_t &modTime, gchar*& pixPath, GError **/*error*/ )
+GdkPixbuf* pixbuf_new_from_file(const char *filename, time_t &modTime, gchar*& pixPath)
 {
     GdkPixbuf* buf = NULL;
-    PushPull youme;
-    gint dpiX = 0;
-    gint dpiY = 0;
     modTime = 0;
     if ( pixPath ) {
         g_free(pixPath);
         pixPath = NULL;
     }
-    
+
     //test correctness of filename
     if (!g_file_test (filename, G_FILE_TEST_EXISTS)){ 
         return NULL;
@@ -425,94 +149,42 @@ GdkPixbuf* pixbuf_new_from_file( const char *filename, time_t &modTime, gchar*& 
     struct stat stdir;
     int val = g_stat(filename, &stdir);
     if (stdir.st_mode & S_IFDIR){
-        //filename is not correct: it is a directory name and hence further code can not return valid results
+        g_warning("Linked image file %s is a directory", filename);
         return NULL;
     }
 
-    dump_fopen_call( filename, "pixbuf_new_from_file" );
-    FILE* fp = fopen_utf8name( filename, "r" );
-    if ( fp )
-    {
-        {
-            // struct stat st;
-            // memset(&st, 0, sizeof(st));
-            // int val = g_stat(filename, &st);
-            if ( !val ) {
-                modTime = stdir.st_mtime;//st.st_mtime;
-                pixPath = g_strdup(filename);
-            }
+    // we need to load the entire pixbuf into memory
+    gchar *data = NULL;
+    gsize len = 0;
+
+    if (g_file_get_contents(filename, &data, &len, NULL)) {
+        if (!val) {
+            modTime = stdir.st_mtime;
+            pixPath = g_strdup(filename);
         }
 
         GdkPixbufLoader *loader = gdk_pixbuf_loader_new();
-        if ( loader )
-        {
-            GError *err = NULL;
+        gdk_pixbuf_loader_write(loader, (guchar *) data, len, NULL);
+        gdk_pixbuf_loader_close(loader, NULL);
 
-            // short buffer
-            guchar scratch[1024];
-            gboolean latter = FALSE;
-
-            youme.fp = fp;
-            youme.scratch = scratch;
-            youme.size = sizeof(scratch);
-            youme.used = 0;
-            youme.offset = 0;
-            youme.loader = loader;
-
-            while ( !feof(fp) )
-            {
-                if ( youme.readMore() ) {
-                    if ( youme.first ) {
-                        //g_message( "First data chunk" );
-                        youme.first = FALSE;
-                        if (readPngAndHeaders(youme, dpiX, dpiY))
-                        {
-                            // TODO set the dpi to be read elsewhere
-                        }
-                    } else if ( !latter ) {
-                        latter = TRUE;
-                    }
-                    // Now clear out the buffer so we can read more.
-                    // (dumping out unused)
-                    youme.clear();
-                }
-            }
-
-            gboolean ok = gdk_pixbuf_loader_close(loader, &err);
-            if ( ok ) {
-                buf = gdk_pixbuf_loader_get_pixbuf( loader );
-                if ( buf ) {
-                    g_object_ref(buf);
-                }
-            } else {
-                // do something
-                g_message("error loading pixbuf at close");
-            }
-
-            g_object_unref(loader);
+        buf = gdk_pixbuf_loader_get_pixbuf(loader);
+        if (buf) {
+            g_object_ref(buf);
+            buf = sp_image_pixbuf_force_rgba(buf);
+            pixbuf_set_mime_data(buf, (guchar *) data, len, gdk_pixbuf_loader_get_format(loader));
         } else {
-            g_message("error when creating pixbuf loader");
+            g_free(data);
+            g_warning("Error loading pixbuf");
         }
-        fclose( fp );
-        fp = 0;
+
+        // TODO: we could also read DPI, ICC profile, gamma correction, and other information
+        // from the file. This can be done by using format-specific libraries e.g. libpng.
     } else {
-        g_warning ("Unable to open linked file: %s", filename);
+        g_warning("Unable to open linked file: %s", filename);
     }
 
     return buf;
 }
-
-GdkPixbuf* pixbuf_new_from_file( const char *filename, GError **error )
-{
-    time_t modTime = 0;
-    gchar* pixPath = 0;
-    GdkPixbuf* result = pixbuf_new_from_file( filename, modTime, pixPath, error );
-    if (pixPath) {
-        g_free(pixPath);
-    }
-    return result;
-}
-
 
 }
 }
@@ -594,6 +266,7 @@ static void sp_image_release( SPObject *object )
     }
 
     if (image->pixbuf) {
+        g_object_set_data(G_OBJECT(image->pixbuf), "cairo_surface", NULL);
         g_object_unref (image->pixbuf);
         image->pixbuf = NULL;
     }
@@ -775,7 +448,6 @@ static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
                 object->getRepr()->attribute("sodipodi:absref"),
                 doc->getBase());
             if (pixbuf) {
-                pixbuf = sp_image_pixbuf_force_rgba (pixbuf);
 // BLIP
 #if defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
                 if ( image->color_profile )
@@ -843,8 +515,6 @@ static void sp_image_update( SPObject *object, SPCtx *ctx, unsigned int flags )
 #endif // defined(HAVE_LIBLCMS1) || defined(HAVE_LIBLCMS2)
 
                 image->pixbuf = pixbuf;
-                // used here for the side-effect of converting to ARGB32
-                ink_cairo_surface_get_for_pixbuf(image->pixbuf);
             }
         }
     }
@@ -1103,13 +773,14 @@ GdkPixbuf *sp_image_repr_read_image( time_t& modTime, char*& pixPath, const gcha
         pixPath = 0;
     }
 
-    const gchar *filename = href;
+    gchar const *filename = href;
+    
     if (filename != NULL) {
         if (strncmp (filename,"file:",5) == 0) {
             gchar *fullname = g_filename_from_uri(filename, NULL, NULL);
             if (fullname) {
-                // TODO check this. Was doing a UTF-8 to filename conversion here.
-                pixbuf = Inkscape::IO::pixbuf_new_from_file (fullname, modTime, pixPath, NULL);
+                pixbuf = Inkscape::IO::pixbuf_new_from_file(fullname, modTime, pixPath);
+                g_free(fullname);
                 if (pixbuf != NULL) {
                     return pixbuf;
                 }
@@ -1135,7 +806,7 @@ GdkPixbuf *sp_image_repr_read_image( time_t& modTime, char*& pixPath, const gcha
                 // different dir) or unset (when doc is not saved yet), so we check for base+href existence first,
                 // and if it fails, we also try to use bare href regardless of its g_path_is_absolute
                 if (g_file_test (fullname, G_FILE_TEST_EXISTS) && !g_file_test (fullname, G_FILE_TEST_IS_DIR)) {
-                    pixbuf = Inkscape::IO::pixbuf_new_from_file( fullname, modTime, pixPath, NULL );
+                    pixbuf = Inkscape::IO::pixbuf_new_from_file(fullname, modTime, pixPath);
                     g_free (fullname);
                     if (pixbuf != NULL) {
                         return pixbuf;
@@ -1145,7 +816,7 @@ GdkPixbuf *sp_image_repr_read_image( time_t& modTime, char*& pixPath, const gcha
 
             /* try filename as absolute */
             if (g_file_test (filename, G_FILE_TEST_EXISTS) && !g_file_test (filename, G_FILE_TEST_IS_DIR)) {
-                pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, modTime, pixPath, NULL );
+                pixbuf = Inkscape::IO::pixbuf_new_from_file(filename, modTime, pixPath);
                 if (pixbuf != NULL) {
                     return pixbuf;
                 }
@@ -1163,13 +834,13 @@ GdkPixbuf *sp_image_repr_read_image( time_t& modTime, char*& pixPath, const gcha
             g_warning ("xlink:href did not resolve to a valid image file, now trying sodipodi:absref=\"%s\"", absref);
         }
 
-        pixbuf = Inkscape::IO::pixbuf_new_from_file( filename, modTime, pixPath, NULL );
+        pixbuf = Inkscape::IO::pixbuf_new_from_file(filename, modTime, pixPath);
         if (pixbuf != NULL) {
             return pixbuf;
         }
     }
     /* Nope: We do not find any valid pixmap file :-( */
-    pixbuf = gdk_pixbuf_new_from_xpm_data ((const gchar **) brokenimage_xpm);
+    pixbuf = gdk_pixbuf_new_from_xpm_data((const gchar **) brokenimage_xpm);
 
     /* It should be included xpm, so if it still does not does load, */
     /* our libraries are broken */
@@ -1342,80 +1013,55 @@ static GdkPixbuf *sp_image_repr_read_dataURI( const gchar * uri_data )
     return pixbuf;
 }
 
-static GdkPixbuf *sp_image_repr_read_b64( const gchar * uri_data )
+static GdkPixbuf *sp_image_repr_read_b64(gchar const *uri_data)
 {
-    GdkPixbuf * pixbuf = NULL;
-
-    static const gchar B64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
+    GdkPixbuf *pixbuf = NULL;
     GdkPixbufLoader *loader = gdk_pixbuf_loader_new();
-    if (loader) {
-        bool eos = false;
-        bool failed = false;
-        const gchar* btr = uri_data;
-        gchar ud[4];
-        guchar bd[57];
 
-        while (!eos) {
-            gint ell = 0;
-            for (gint j = 0; j < 19; j++) {
-                gint len = 0;
-                for (gint k = 0; k < 4; k++) {
-                    while (isspace ((int) (*btr))) {
-                        if ((*btr) == '\0') break;
-                        btr++;
-                    }
-                    if (eos) {
-                        ud[k] = 0;
-                        continue;
-                    }
-                    if (((*btr) == '\0') || ((*btr) == '=')) {
-                        eos = true;
-                        ud[k] = 0;
-                        continue;
-                    }
-                    ud[k] = 64;
-                    for (gint b = 0; b < 64; b++) { /* There must a faster way to do this... ?? */
-                        if (B64[b] == (*btr)) {
-                            ud[k] = (gchar) b;
-                            break;
-                        }
-                    }
-                    if (ud[k] == 64) { /* data corruption ?? */
-                        eos = true;
-                        ud[k] = 0;
-                        continue;
-                    }
-                    btr++;
-                    len++;
-                }
-                guint32 bits = (guint32) ud[0];
-                bits = (bits << 6) | (guint32) ud[1];
-                bits = (bits << 6) | (guint32) ud[2];
-                bits = (bits << 6) | (guint32) ud[3];
-                bd[ell++] = (guchar) ((bits & 0xff0000) >> 16);
-                if (len > 2) {
-                    bd[ell++] = (guchar) ((bits & 0xff00) >>  8);
-                }
-                if (len > 3) {
-                    bd[ell++] = (guchar)  (bits & 0xff);
-                }
-            }
+    if (!loader) return NULL;
 
-            if (!gdk_pixbuf_loader_write (loader, (const guchar *) bd, (size_t) ell, NULL)) {
-                failed = true;
-                break;
-            }
-        }
+    gsize decoded_len = 0;
+    guchar *decoded = g_base64_decode(uri_data, &decoded_len);
 
-        gdk_pixbuf_loader_close (loader, NULL);
-
-        if (!failed) {
-            pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
-        }
+    if (gdk_pixbuf_loader_write(loader, decoded, decoded_len, NULL)) {
+        gdk_pixbuf_loader_close(loader, NULL);
+        pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
+        g_object_ref(pixbuf);
+        pixbuf = sp_image_pixbuf_force_rgba(pixbuf);
+        pixbuf_set_mime_data(pixbuf, decoded, decoded_len, gdk_pixbuf_loader_get_format(loader));
+    } else {
+        g_free(decoded);
     }
+    g_object_unref(loader);
 
     return pixbuf;
+}
+
+// takes ownership of passed data
+static void pixbuf_set_mime_data(GdkPixbuf *pb, guchar *data, gsize len, GdkPixbufFormat *fmt)
+{
+    cairo_surface_t *s = ink_cairo_surface_get_for_pixbuf(pb);
+
+    gchar const *mimetype = NULL;
+    gchar *fmt_name = gdk_pixbuf_format_get_name(fmt);
+    Glib::ustring name = fmt_name;
+    g_free(fmt_name);
+
+    if (name == "jpeg") {
+        mimetype = CAIRO_MIME_TYPE_JPEG;
+    } else if (name == "jpeg2000") {
+        mimetype = CAIRO_MIME_TYPE_JP2;
+    } else if (name == "png") {
+        mimetype = CAIRO_MIME_TYPE_PNG;
+    }
+
+    if (mimetype != NULL) {
+        cairo_surface_set_mime_data(s, mimetype, data, len, g_free, data);
+        //g_message("Setting Cairo MIME data: %s", mimetype);
+    } else {
+        g_free(data);
+        //g_message("Not setting Cairo MIME data: unknown format %s", name.c_str());
+    }
 }
 
 static void sp_image_set_curve( SPImage *image )
@@ -1453,41 +1099,65 @@ SPCurve *sp_image_get_curve( SPImage *image )
     return result;
 }
 
-void sp_embed_image( Inkscape::XML::Node *image_node, GdkPixbuf *pb, Glib::ustring const &mime_in )
+void sp_embed_image(Inkscape::XML::Node *image_node, GdkPixbuf *pb)
 {
-    Glib::ustring format, mime;
-    if (mime_in == "image/jpeg") {
-        mime = mime_in;
-        format = "jpeg";
-    } else {
-        mime = "image/png";
-        format = "png";
+    static gchar const *mimetypes[] = {
+        CAIRO_MIME_TYPE_JPEG, CAIRO_MIME_TYPE_JP2, CAIRO_MIME_TYPE_PNG, NULL };
+    static guint mimetypes_len = g_strv_length(const_cast<gchar**>(mimetypes));
+
+    bool free_data = false;
+
+    // check whether the pixbuf has MIME data
+    guchar *data = NULL;
+    gsize len = 0;
+    gchar const *data_mimetype = NULL;
+
+    cairo_surface_t *s = reinterpret_cast<cairo_surface_t*>(g_object_get_data(G_OBJECT(pb), "cairo_surface"));
+    if (s) {
+        for (guint i = 0; i < mimetypes_len; ++i) {
+            cairo_surface_get_mime_data(s, mimetypes[i], const_cast<unsigned char const **>(&data), &len);
+            if (data != NULL) {
+                data_mimetype = mimetypes[i];
+                break;
+            }
+        }
     }
 
-    Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-    Glib::ustring quality = Glib::ustring::format(prefs->getInt("/dialogs/import/quality", 100));
+    if (data == NULL) {
+        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
+        Glib::ustring quality = Glib::ustring::format(prefs->getInt("/dialogs/import/quality", 100));
 
-    gchar *data = 0;
-    gsize length = 0;
-    gdk_pixbuf_save_to_buffer(pb, &data, &length, format.data(), NULL, "quality", quality.c_str(), NULL);
+        // if there is no supported MIME data, embed as PNG
+        data_mimetype = "image/png";
+        ink_pixbuf_ensure_normal(pb);
+        gdk_pixbuf_save_to_buffer(pb, reinterpret_cast<gchar**>(&data), &len, "png", NULL,
+            "quality", quality.c_str(), NULL);
+        free_data = true;
+    }
 
     // Save base64 encoded data in image node
     // this formula taken from Glib docs
-    guint needed_size = length * 4 / 3 + length * 4 / (3 * 72) + 7;
-    needed_size += 5 + 8 + mime.size(); // 5 bytes for data:, 8 for ;base64,
+    guint needed_size = len * 4 / 3 + len * 4 / (3 * 72) + 7;
+    needed_size += 5 + 8 + strlen(data_mimetype); // 5 bytes for data: + 8 for ;base64,
 
-    gchar *buffer = (gchar *) g_malloc(needed_size), *buf_work = buffer;
-    buf_work += g_sprintf(buffer, "data:%s;base64,", mime.data());
+    gchar *buffer = (gchar *) g_malloc(needed_size);
+    gchar *buf_work = buffer;
+    buf_work += g_sprintf(buffer, "data:%s;base64,", data_mimetype);
 
     gint state = 0;
     gint save = 0;
     gsize written = 0;
-    written += g_base64_encode_step((guchar*) data, length, TRUE, buf_work, &state, &save);
+    written += g_base64_encode_step(data, len, TRUE, buf_work, &state, &save);
     written += g_base64_encode_close(TRUE, buf_work + written, &state, &save);
     buf_work[written] = 0; // null terminate
 
+    // TODO: this is very wasteful memory-wise.
+    // It would be better to only keep the binary data around,
+    // and base64 encode on the fly when saving the XML.
     image_node->setAttribute("xlink:href", buffer);
+
     g_free(buffer);
+    if (free_data) g_free(data);
 }
 
 void sp_image_refresh_if_outdated( SPImage* image )

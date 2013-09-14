@@ -423,6 +423,11 @@ ink_cairo_set_source_pixbuf(cairo_t *ct, GdkPixbuf *pb, double x, double y)
  * The returned surface is owned by the GdkPixbuf and should not be freed.
  * Calling this function causes the pixbuf to be unsuitable for use
  * with GTK drawing functions until ink_pixbuf_ensure_normal() is called.
+ *
+ * @bug You have to call g_object_set_data(G_OBJECT(pb), "cairo_surface", NULL)
+ * when unrefing the last reference to the pixbuf. Otherwise there will be
+ * crashes, because cairo_surface_destroy is called after the pixbuf data
+ * is already freed.
  */
 cairo_surface_t *
 ink_cairo_surface_get_for_pixbuf(GdkPixbuf *pb)

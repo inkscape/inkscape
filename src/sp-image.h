@@ -66,7 +66,7 @@ GType sp_image_get_type (void);
 
 /* Return duplicate of curve or NULL */
 SPCurve *sp_image_get_curve (SPImage *image);
-void sp_embed_image(Inkscape::XML::Node *imgnode, GdkPixbuf *pb, Glib::ustring const &mime);
+void sp_embed_image(Inkscape::XML::Node *imgnode, GdkPixbuf *pb);
 void sp_image_refresh_if_outdated( SPImage* image );
 
 #endif
