@@ -208,7 +208,7 @@ int XmlSource::setFile(char const *filename, bool load_entities=false)
                 this->cachedData.erase(start, end - start);
             g_match_info_next (info, NULL);
         }
-        g_match_info_unref(info);
+        g_match_info_free(info);
         g_regex_unref(regex);
     }
     // Do this after loading cache, so reads don't return cache to fill cache.

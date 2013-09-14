@@ -1115,7 +1115,9 @@ void sp_embed_image(Inkscape::XML::Node *image_node, GdkPixbuf *pb)
     cairo_surface_t *s = reinterpret_cast<cairo_surface_t*>(g_object_get_data(G_OBJECT(pb), "cairo_surface"));
     if (s) {
         for (guint i = 0; i < mimetypes_len; ++i) {
-            cairo_surface_get_mime_data(s, mimetypes[i], const_cast<unsigned char const **>(&data), &len);
+            unsigned long len_long = 0;
+            cairo_surface_get_mime_data(s, mimetypes[i], const_cast<unsigned char const **>(&data), &len_long);
+            len = len_long; // this assumes that the added range of long is not needed. the code below assumes gsize range of values is sufficient.
             if (data != NULL) {
                 data_mimetype = mimetypes[i];
                 break;
@@ -1137,7 +1139,7 @@ void sp_embed_image(Inkscape::XML::Node *image_node, GdkPixbuf *pb)
 
     // Save base64 encoded data in image node
     // this formula taken from Glib docs
-    guint needed_size = len * 4 / 3 + len * 4 / (3 * 72) + 7;
+    gsize needed_size = len * 4 / 3 + len * 4 / (3 * 72) + 7;
     needed_size += 5 + 8 + strlen(data_mimetype); // 5 bytes for data: + 8 for ;base64,
 
     gchar *buffer = (gchar *) g_malloc(needed_size);
