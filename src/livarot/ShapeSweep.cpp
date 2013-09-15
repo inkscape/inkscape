@@ -2672,8 +2672,7 @@ Shape::TesteAdjacency (Shape * a, int no, const Geom::Point atx, int nPt,
   double e = IHalfRound ((cross (diff,adir)) * a->eData[no].isqlength);
   if (-3 < e && e < 3)
     {
-      double rad = HalfRound (1);
-//      double rad = HalfRound (0.501); // when using single precision, 0.505 is better (0.5 would be the correct value, 
+      double rad = HalfRound (0.501); // when using single precision, 0.505 is better (0.5 would be the correct value, 
                                       // but it produces lots of bugs)
       diff1[0] = diff[0] - rad;
       diff1[1] = diff[1] - rad;
@@ -2741,8 +2740,7 @@ Shape::CheckAdjacencies (int lastPointNo, int lastChgtPt, Shape * /*shapeHead*/,
 	      if (TesteAdjacency (lS, lB, getPoint(n).x, n, false) ==
 		  false)
                 break;
-              if (getPoint(lS->swsData[lB].leftRnd).x[0] > getPoint(n).x[0] + HalfRound (1))  // LP Bug 614577
-                  lS->swsData[lB].leftRnd = n;
+              lS->swsData[lB].leftRnd = n;
 	    }
 	  for (int n = rgtN + 1; n < lastPointNo; n++)
 	    {
@@ -2768,8 +2766,7 @@ Shape::CheckAdjacencies (int lastPointNo, int lastChgtPt, Shape * /*shapeHead*/,
 	      if (TesteAdjacency (rS, rB, getPoint(n).x, n, false) ==
 		  false)
 		break;
-              if (getPoint(rS->swsData[rB].leftRnd).x[0] > getPoint(n).x[0] + HalfRound (1))  // LP Bug 614577
-                  rS->swsData[rB].leftRnd = n;
+              rS->swsData[rB].leftRnd = n;
 	    }
 	  for (int n = rgtN + 1; n < lastPointNo; n++)
 	    {
