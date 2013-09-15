@@ -616,13 +616,13 @@ sp_pattern_create_pattern(SPPaintServer *ps,
 
     // viewBox to pattern server
     Geom::Affine vb2ps = Geom::identity();
-    if (pat->viewBox_set) {
-        Geom::Rect vb = *pattern_viewBox(pat);
-        gdouble tmp_x = pattern_width (pat) / vb.width();
-        gdouble tmp_y = pattern_height (pat) / vb.height();
+    if (shown->viewBox_set) {
+        Geom::Rect vb = *pattern_viewBox(shown);
+        gdouble tmp_x = pattern_width (shown) / vb.width();
+        gdouble tmp_y = pattern_height (shown) / vb.height();
 
         // FIXME: preserveAspectRatio must be taken into account here too!
-        vb2ps = Geom::Affine(tmp_x, 0.0, 0.0, tmp_y, pattern_x(pat) - vb.left() * tmp_x, pattern_y(pat) - vb.top() * tmp_y);
+        vb2ps = Geom::Affine(tmp_x, 0.0, 0.0, tmp_y, pattern_x(shown) - vb.left() * tmp_x, pattern_y(shown) - vb.top() * tmp_y);
     }
 
     // We must determine the size and scaling of the pattern at the time it is displayed and render

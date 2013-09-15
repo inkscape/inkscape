@@ -340,7 +340,7 @@ CairoPsOutput::init (void)
                 "<_option value=\"page\">" N_("Use document's page size") "</_option>"
                 "<_option value=\"drawing\">" N_("Use exported object's size") "</_option>"
             "</param>"
-            "<param name=\"bleed\" gui-text=\"" N_("Bleed/margin (mm)") "\" type=\"float\" min=\"-10000\" max=\"10000\">0</param>\n"
+            "<param name=\"bleed\" gui-text=\"" N_("Bleed/margin (mm):") "\" type=\"float\" min=\"-10000\" max=\"10000\">0</param>\n"
             "<param name=\"exportId\" gui-text=\"" N_("Limit export to the object with ID:") "\" type=\"string\"></param>\n"
             "<output>\n"
             "<extension>.ps</extension>\n"
