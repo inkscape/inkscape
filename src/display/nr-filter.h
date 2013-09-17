@@ -151,12 +151,6 @@ public:
      */
     void area_enlarge(Geom::IntRect &area, Inkscape::DrawingItem const *item) const;
     /**
-     * Given an item bounding box (in user coords), this function enlarges it
-     * to contain the filter effects region and transforms it to screen
-     * coordinates
-     */
-    Geom::OptIntRect compute_drawbox(Inkscape::DrawingItem const *item, Geom::OptRect const &item_bbox);
-    /**
      * Returns the filter effects area in user coordinate system.
      * The given bounding box should be a bounding box as specified in
      * SVG standard and in user coordinate system.

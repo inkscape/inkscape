@@ -353,7 +353,9 @@ DrawingItem::update(Geom::IntRect const &area, UpdateContext const &ctx, unsigne
     if (to_update & STATE_BBOX) {
         // compute drawbox
         if (_filter && render_filters) {
-            _drawbox = _filter->compute_drawbox(this, _item_bbox);
+            Geom::IntRect newbox(*_bbox);
+            _filter->area_enlarge(newbox, this);
+            _drawbox = Geom::OptIntRect(newbox);
         } else {
             _drawbox = _bbox;
         }
