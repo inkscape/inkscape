@@ -184,7 +184,8 @@ class Effect:
                 stream = open(self.svg_file,'r')
         except:
             stream = sys.stdin
-        self.document = etree.parse(stream)
+        p = etree.XMLParser(huge_tree=True)
+        self.document = etree.parse(stream, parser=p)
         self.original_document = copy.deepcopy(self.document)
         stream.close()
 
