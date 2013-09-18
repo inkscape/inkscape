@@ -706,7 +706,7 @@ static void dumpUnbrokenSpans(ParagraphInfo *para){
                         if (newcluster){
                             // find where the text ends for this log_cluster
                             end_byte = it_span->start.iter_span->text_bytes;  // Upper limit
-                            for(unsigned next_glyph_index = glyph_index+1; next_glyph_index < it_span->end_glyph_index; next_glyph_index++){
+                            for(int next_glyph_index = glyph_index+1; next_glyph_index < unbroken_span.glyph_string->num_glyphs; next_glyph_index++){
                                 if(unbroken_span.glyph_string->glyphs[next_glyph_index].attr.is_cluster_start){
                                     end_byte = unbroken_span.glyph_string->log_clusters[next_glyph_index];
                                     break;
