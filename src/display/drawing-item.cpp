@@ -281,12 +281,6 @@ DrawingItem::setZOrder(unsigned z)
     _markForRendering();
 }
 
-void
-DrawingItem::setItemBounds(Geom::OptRect const &bounds)
-{
-    _item_bbox = bounds;
-}
-
 /**
  * Update derived data before operations.
  * The purpose of this call is to recompute internal data which depends
