@@ -123,7 +123,7 @@ if(UNIX)
 	install(
 		DIRECTORY
 			${CMAKE_SOURCE_DIR}/share/attributes
-			${CMAKE_SOURCE_DIR}/share/clipart
+			${CMAKE_SOURCE_DIR}/share/branding
 			${CMAKE_SOURCE_DIR}/share/examples
 			${CMAKE_SOURCE_DIR}/share/extensions
 			${CMAKE_SOURCE_DIR}/share/filters
