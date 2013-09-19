@@ -22,34 +22,23 @@ namespace Inkscape {
 DrawingImage::DrawingImage(Drawing &drawing)
     : DrawingItem(drawing)
     , _pixbuf(NULL)
-    , _surface(NULL) // this is owned by _pixbuf!
     , _style(NULL)
     , _new_surface(NULL)
 {}
 
 DrawingImage::~DrawingImage()
 {
-    if (_style)
+    if (_style) {
         sp_style_unref(_style);
-    if (_pixbuf) {
-        if (_new_surface) cairo_surface_destroy(_new_surface);
-        g_object_unref(_pixbuf);
     }
+
+    // _pixbuf is owned by SPImage - do not delete it
 }
 
 void
-DrawingImage::setARGB32Pixbuf(GdkPixbuf *pb)
+DrawingImage::setPixbuf(Inkscape::Pixbuf *pb)
 {
-    // when done in this order, it won't break if pb == image->pixbuf and the refcount is 1
-    if (pb != NULL) {
-        g_object_ref (pb);
-    }
-    if (_pixbuf != NULL) {
-        g_object_unref(_pixbuf);
-        // unrefing the pixbuf also destroys surface
-    }
     _pixbuf = pb;
-    _surface = pb ? ink_cairo_surface_get_for_pixbuf(pb) : NULL;
 
     _markForUpdate(STATE_ALL, false);
 }
@@ -86,8 +75,8 @@ DrawingImage::bounds() const
 {
     if (!_pixbuf) return _clipbox;
 
-    double pw = gdk_pixbuf_get_width(_pixbuf);
-    double ph = gdk_pixbuf_get_height(_pixbuf);
+    double pw = _pixbuf->width();
+    double ph = _pixbuf->height();
     double vw = pw * _scale[Geom::X];
     double vh = ph * _scale[Geom::Y];
     Geom::Point wh(vw, vh);
@@ -143,14 +132,16 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
         // See https://bugs.launchpad.net/inkscape/+bug/804162
         
         Geom::Scale expansion(_ctm.expansion());
-        int orgwidth = cairo_image_surface_get_width(_surface);
-        int orgheight = cairo_image_surface_get_height(_surface);
+        int orgwidth = _pixbuf->width();
+        int orgheight = _pixbuf->height();
 
         if (_scale[Geom::X]*expansion[Geom::X]*orgwidth*255.0<1.0 || _scale[Geom::Y]*expansion[Geom::Y]*orgheight*255.0<1.0) {
             // Resized image too small to actually see anything
             return RENDER_OK;
         }
-        
+
+        _pixbuf->ensurePixelFormat(Inkscape::Pixbuf::PF_CAIRO);
+
         // Split scale*expansion in a part that is <= 1.0 and a part that is >= 1.0. We only take care of the part <= 1.0.
         Geom::Scale scaleExpansionSmall(std::min<Geom::Coord>(fabs(_scale[Geom::X]*expansion[Geom::X]),1),std::min<Geom::Coord>(fabs(_scale[Geom::Y]*expansion[Geom::Y]),1));
         Geom::Scale scaleExpansionLarge(_scale[Geom::X]*expansion[Geom::X]/scaleExpansionSmall[Geom::X],_scale[Geom::Y]*expansion[Geom::Y]/scaleExpansionSmall[Geom::Y]);
@@ -161,7 +152,7 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
             ct.scale(expansion.inverse()); // This should not include scale (see derivation above)
             ct.translate(_origin*expansion);
             ct.scale(scaleExpansionLarge);
-            ct.setSource(_surface, 0, 0);
+            ct.setSource(_pixbuf->getSurfaceRaw(), 0, 0);
         } else if (!_new_surface || (newSize-_rescaledSize).length()>0.1) {
             // Rescaled image is sufficiently different from cached image to recompute
             if (_new_surface) cairo_surface_destroy(_new_surface);
@@ -200,13 +191,13 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
                 }
             }
 
+            cairo_surface_t *surface = _pixbuf->getSurfaceRaw();
             _new_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, newwidth,newheight);
-            unsigned char * orgdata = cairo_image_surface_get_data(_surface);
+            unsigned char * orgdata = cairo_image_surface_get_data(surface);
             unsigned char * newdata = cairo_image_surface_get_data(_new_surface);
-            int orgstride = cairo_image_surface_get_stride(_surface);
+            int orgstride = cairo_image_surface_get_stride(surface);
             int newstride = cairo_image_surface_get_stride(_new_surface);
-            
-            //cairo_surface_flush(_surface);
+
             cairo_surface_flush(_new_surface);
 
             for(int y=0; y<newheight; y++) {
@@ -245,7 +236,7 @@ unsigned DrawingImage::_renderItem(DrawingContext &ct, Geom::IntRect const &/*ar
         // TODO: If Cairo's problems are gone, uncomment the following:
         //ct.translate(_origin);
         //ct.scale(_scale);
-        //ct.setSource(_surface, 0, 0);
+        //ct.setSource(_pixbuf->getSurfaceRaw(), 0, 0);
 
         //ct.paint(_opacity);
         ct.paint();
@@ -315,10 +306,10 @@ DrawingImage::_pickItem(Geom::Point const &p, double delta, unsigned /*sticky*/)
         return NULL;
 
     } else {
-        unsigned char *const pixels = gdk_pixbuf_get_pixels(_pixbuf);
-        int width = gdk_pixbuf_get_width(_pixbuf);
-        int height = gdk_pixbuf_get_height(_pixbuf);
-        int rowstride = gdk_pixbuf_get_rowstride(_pixbuf);
+        unsigned char *const pixels = _pixbuf->pixels();
+        int width = _pixbuf->width();
+        int height = _pixbuf->height();
+        int rowstride = _pixbuf->rowstride();
 
         Geom::Point tp = p * _ctm.inverse();
         Geom::Rect r = bounds();
@@ -336,8 +327,17 @@ DrawingImage::_pickItem(Geom::Point const &p, double delta, unsigned /*sticky*/)
 
         unsigned char *pix_ptr = pixels + iy * rowstride + ix * 4;
         // pick if the image is less than 99% transparent
-        float alpha = (pix_ptr[3] / 255.0f) * _opacity;
-        return alpha > 0.01 ? this : NULL;
+        guint32 alpha = 0;
+        if (_pixbuf->pixelFormat() == Inkscape::Pixbuf::PF_CAIRO) {
+            guint32 px = *reinterpret_cast<guint32 const *>(pix_ptr);
+            alpha = (px & 0xff000000) >> 24;
+        } else if (_pixbuf->pixelFormat() == Inkscape::Pixbuf::PF_GDK) {
+            alpha = pix_ptr[3];
+        } else {
+            throw std::runtime_error("Unrecognized pixel format");
+        }
+        float alpha_f = (alpha / 255.0f) * _opacity;
+        return alpha_f > 0.01 ? this : NULL;
     }
 }
 

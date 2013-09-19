@@ -31,6 +31,7 @@
 #include <2geom/transforms.h>
 #include "verbs.h"
 
+#include "display/cairo-utils.h"
 #include "display/drawing.h"
 #include "display/drawing-shape.h"
 
@@ -336,8 +337,17 @@ Glib::RefPtr<Gdk::Pixbuf> Tracer::getSelectedImage()
     if (!img->pixbuf)
         return Glib::RefPtr<Gdk::Pixbuf>(NULL);
 
-    Glib::RefPtr<Gdk::Pixbuf> pixbuf =
-          Glib::wrap(img->pixbuf, true);
+    GdkPixbuf *raw_pb = img->pixbuf->getPixbufRaw(false);
+    GdkPixbuf *trace_pb = gdk_pixbuf_copy(raw_pb);
+    if (img->pixbuf->pixelFormat() == Inkscape::Pixbuf::PF_CAIRO) {
+        convert_pixels_argb32_to_pixbuf(
+            gdk_pixbuf_get_pixels(trace_pb),
+            gdk_pixbuf_get_width(trace_pb),
+            gdk_pixbuf_get_height(trace_pb),
+            gdk_pixbuf_get_rowstride(trace_pb));
+    }
+
+    Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::wrap(trace_pb, false);
 
     if (sioxEnabled)
         {
@@ -410,7 +420,16 @@ void Tracer::traceThread()
         return;
         }
 
-    Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::wrap(img->pixbuf, true);
+    GdkPixbuf *trace_pb = gdk_pixbuf_copy(img->pixbuf->getPixbufRaw(false));
+    if (img->pixbuf->pixelFormat() == Inkscape::Pixbuf::PF_CAIRO) {
+        convert_pixels_argb32_to_pixbuf(
+            gdk_pixbuf_get_pixels(trace_pb),
+            gdk_pixbuf_get_width(trace_pb),
+            gdk_pixbuf_get_height(trace_pb),
+            gdk_pixbuf_get_rowstride(trace_pb));
+    }
+
+    Glib::RefPtr<Gdk::Pixbuf> pixbuf = Glib::wrap(trace_pb, false);
 
     pixbuf = sioxProcessImage(img, pixbuf);
 

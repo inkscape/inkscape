@@ -53,6 +53,7 @@
 #include "sp-gradient.h"
 #include "sp-radial-gradient.h"
 #include "sp-linear-gradient.h"
+#include "display/cairo-utils.h"
 
 #include "splivarot.h"             // pieces for union on shapes
 #include "2geom/svg-path-parser.h" // to get from SVG text to Geom::Path
@@ -333,7 +334,7 @@ int PrintEmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
     U_LOGBRUSH    lb;
     uint32_t      brush, fmode;
     MFDrawMode    fill_mode;
-    GdkPixbuf    *pixbuf;
+    Inkscape::Pixbuf *pixbuf;
     uint32_t      brushStyle;
     int           hatchType;
     U_COLORREF    hatchColor;
@@ -462,7 +463,7 @@ int PrintEmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
         int                  numCt;
         U_BITMAPINFOHEADER   Bmih;
         PU_BITMAPINFO        Bmi;
-        rgba_px = (char *) gdk_pixbuf_get_pixels(pixbuf); // Do NOT free this!!!
+        rgba_px = (char *) pixbuf->pixels(); // Do NOT free this!!!
         colortype = U_BCBM_COLOR32;
         (void) RGBA_to_DIB(&px, &cbPx, &ct, &numCt,  rgba_px,  width, height, width * 4, colortype, 0, 1);
         // Not sure why the next swap is needed because the preceding does it, and the code is identical
@@ -528,7 +529,7 @@ int PrintEmf::create_pen(SPStyle const *style, const Geom::Affine &transform)
     int                  linejoin  = 0;
     uint32_t             pen;
     uint32_t             brushStyle;
-    GdkPixbuf           *pixbuf;
+    Inkscape::Pixbuf    *pixbuf;
     int                  hatchType;
     U_COLORREF           hatchColor;
     U_COLORREF           bkColor;
@@ -565,7 +566,7 @@ int PrintEmf::create_pen(SPStyle const *style, const Geom::Affine &transform)
             brush_classify(pat, 0, &pixbuf, &hatchType, &hatchColor, &bkColor);
             if (pixbuf) {
                 brushStyle    = U_BS_DIBPATTERN;
-                rgba_px = (char *) gdk_pixbuf_get_pixels(pixbuf); // Do NOT free this!!!
+                rgba_px = (char *) pixbuf->pixels(); // Do NOT free this!!!
                 colortype = U_BCBM_COLOR32;
                 (void) RGBA_to_DIB(&px, &cbPx, &ct, &numCt,  rgba_px,  width, height, width * 4, colortype, 0, 1);
                 // Not sure why the next swap is needed because the preceding does it, and the code is identical

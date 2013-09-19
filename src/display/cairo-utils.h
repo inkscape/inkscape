@@ -12,14 +12,15 @@
 #ifndef SEEN_INKSCAPE_DISPLAY_CAIRO_UTILS_H
 #define SEEN_INKSCAPE_DISPLAY_CAIRO_UTILS_H
 
+#include <boost/noncopyable.hpp>
+//#include <glibmm/threads.h> // workaround
 #include <glib.h>
 #include <cairomm/cairomm.h>
+//#include <gdkmm/pixbuf.h>
 #include <2geom/forward.h>
 #include "style.h"
 
 struct SPColor;
-struct _GdkPixbuf;
-typedef struct _GdkPixbuf GdkPixbuf;
 
 namespace Inkscape {
 
@@ -80,14 +81,60 @@ public:
     static Cairo::RefPtr<CairoContext> create(Cairo::RefPtr<Cairo::Surface> const &target);
 };
 
-} // namespace Inkscape
+/** Class to hold image data for raster images.
+ * Allows easy interoperation with GdkPixbuf and Cairo. */
+class Pixbuf {
+public:
+    enum PixelFormat {
+        PF_CAIRO = 1,
+        PF_GDK = 2,
+        PF_LAST
+    };
 
-enum InkPixelFormat {
-    INK_PIXEL_FORMAT_NONE,
-    INK_PIXEL_FORMAT_CAIRO,
-    INK_PIXEL_FORMAT_PIXBUF,
-    INK_PIXEL_FORMAT_LAST
+    explicit Pixbuf(cairo_surface_t *s);
+    explicit Pixbuf(GdkPixbuf *pb);
+    Pixbuf(Inkscape::Pixbuf const &other);
+    ~Pixbuf();
+
+    GdkPixbuf *getPixbufRaw(bool convert_format = true);
+    //Glib::RefPtr<Gdk::Pixbuf> getPixbuf(bool convert_format = true);
+
+    cairo_surface_t *getSurfaceRaw(bool convert_format = true);
+    Cairo::RefPtr<Cairo::Surface> getSurface(bool convert_format = true);
+
+    int width() const;
+    int height() const;
+    int rowstride() const;
+    guchar const *pixels() const;
+    guchar *pixels();
+    void markDirty();
+
+    bool hasMimeData() const;
+    guchar const *getMimeData(gsize &len, std::string &mimetype) const;
+    std::string const &originalPath() const { return _path; }
+    time_t modificationTime() const { return _mod_time; }
+
+    PixelFormat pixelFormat() const { return _pixel_format; }
+    void ensurePixelFormat(PixelFormat fmt);
+
+    static Pixbuf *create_from_data_uri(gchar const *uri);
+    static Pixbuf *create_from_file(std::string const &fn);
+
+private:
+    void _ensurePixelsARGB32();
+    void _ensurePixelsPixbuf();
+    void _forceAlpha();
+    void _setMimeData(guchar *data, gsize len, Glib::ustring const &format);
+
+    GdkPixbuf *_pixbuf;
+    cairo_surface_t *_surface;
+    time_t _mod_time;
+    std::string _path;
+    PixelFormat _pixel_format;
+    bool _cairo_store;
 };
+
+} // namespace Inkscape
 
 // TODO: these declarations may not be needed in the header
 extern cairo_user_data_key_t ink_color_interpolation_key;
@@ -102,7 +149,6 @@ void ink_cairo_set_source_color(cairo_t *ct, SPColor const &color, double opacit
 void ink_cairo_set_source_rgba32(cairo_t *ct, guint32 rgba);
 void ink_cairo_transform(cairo_t *ct, Geom::Affine const &m);
 void ink_cairo_pattern_set_matrix(cairo_pattern_t *cp, Geom::Affine const &m);
-void ink_cairo_set_source_pixbuf(cairo_t *ct, GdkPixbuf *pb, double x, double y);
 
 void ink_matrix_to_2geom(Geom::Affine &, cairo_matrix_t const &);
 void ink_matrix_to_cairo(cairo_matrix_t &, Geom::Affine const &);
@@ -125,13 +171,9 @@ int ink_cairo_surface_linear_to_srgb(cairo_surface_t *surface);
 
 cairo_pattern_t *ink_cairo_pattern_create_checkerboard();
 
+GdkPixbuf *ink_pixbuf_create_from_cairo_surface(cairo_surface_t *s);
 void convert_pixels_pixbuf_to_argb32(guchar *data, int w, int h, int rs);
 void convert_pixels_argb32_to_pixbuf(guchar *data, int w, int h, int rs);
-void ink_pixbuf_ensure_argb32(GdkPixbuf *);
-void ink_pixbuf_ensure_normal(GdkPixbuf *);
-cairo_surface_t *ink_cairo_surface_get_for_pixbuf(GdkPixbuf *pb);
-GdkPixbuf *ink_pixbuf_create_from_cairo_surface(cairo_surface_t *s);
-void ink_cairo_pixbuf_cleanup(guchar *pixels, void *surface);
 
 G_GNUC_CONST guint32 argb32_from_pixbuf(guint32 in);
 G_GNUC_CONST guint32 pixbuf_from_argb32(guint32 in);

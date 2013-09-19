@@ -27,6 +27,7 @@
 
 #include <signal.h>
 #include <errno.h>
+#include <boost/scoped_ptr.hpp>
 
 #include "libnrtype/Layout-TNG.h"
 #include <2geom/transforms.h>
@@ -347,8 +348,8 @@ static void sp_image_render(SPItem *item, CairoRenderContext *ctx)
     if (!image->pixbuf) return;
     if ((image->width.computed <= 0.0) || (image->height.computed <= 0.0)) return;
 
-    w = gdk_pixbuf_get_width (image->pixbuf);
-    h = gdk_pixbuf_get_height (image->pixbuf);
+    w = image->pixbuf->width();
+    h = image->pixbuf->height();
 
     double x = image->x.computed;
     double y = image->y.computed;
@@ -497,22 +498,15 @@ static void sp_asbitmap_render(SPItem *item, CairoRenderContext *ctx)
     GSList *items = NULL;
     items = g_slist_append(items, item);
 
-    GdkPixbuf *pb = sp_generate_internal_bitmap(document, NULL,
-        bbox->min()[Geom::X], bbox->min()[Geom::Y], bbox->max()[Geom::X], bbox->max()[Geom::Y], 
-        width, height, res, res, (guint32) 0xffffff00, items );
+    boost::scoped_ptr<Inkscape::Pixbuf> pb(
+        sp_generate_internal_bitmap(document, NULL,
+            bbox->min()[Geom::X], bbox->min()[Geom::Y], bbox->max()[Geom::X], bbox->max()[Geom::Y], 
+            width, height, res, res, (guint32) 0xffffff00, items ));
 
     if (pb) {
-        TEST(gdk_pixbuf_save( pb, "bitmap.png", "png", NULL, NULL ));
+        //TEST(gdk_pixbuf_save( pb, "bitmap.png", "png", NULL, NULL ));
 
-        /* TODO: find a way to avoid a duplicate conversion between
-         * Cairo and GdkPixbuf pixel formats here.
-         * Internally, generate_internal_bitmap creates a Cairo surface,
-         * but then converts it to pixbuf format. In turn, renderImage()
-         * below converts back to Cairo format.
-         */
-        ctx->renderImage(pb, t, item->style);
-        g_object_unref(pb);
-        pb = 0;
+        ctx->renderImage(pb.get(), t, item->style);
     }
     g_slist_free (items);
 }

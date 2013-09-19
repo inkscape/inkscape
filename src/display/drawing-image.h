@@ -19,6 +19,7 @@
 #include "display/drawing-item.h"
 
 namespace Inkscape {
+class Pixbuf;
 
 class DrawingImage
     : public DrawingItem
@@ -27,7 +28,7 @@ public:
     DrawingImage(Drawing &drawing);
     ~DrawingImage();
 
-    void setARGB32Pixbuf(GdkPixbuf *pb);
+    void setPixbuf(Inkscape::Pixbuf *pb);
     void setStyle(SPStyle *style);
     void setScale(double sx, double sy);
     void setOrigin(Geom::Point const &o);
@@ -41,8 +42,7 @@ protected:
                                  DrawingItem *stop_at);
     virtual DrawingItem *_pickItem(Geom::Point const &p, double delta, unsigned flags);
 
-    GdkPixbuf *_pixbuf;
-    cairo_surface_t *_surface;
+    Inkscape::Pixbuf *_pixbuf;
     SPStyle *_style;
 
     cairo_surface_t *_new_surface; // Part of hack around Cairo bug

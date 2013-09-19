@@ -96,6 +96,7 @@ SPCycleType SP_CYCLING = SP_CYCLE_FOCUS;
 #include "uri-references.h"
 #include "display/curve.h"
 #include "display/canvas-bpath.h"
+#include "display/cairo-utils.h"
 #include "inkscape-private.h"
 #include "path-chemistry.h"
 #include "ui/tool/control-point-selection.h"
@@ -3480,9 +3481,10 @@ void sp_selection_create_bitmap_copy(SPDesktop *desktop)
     }
 
     // Import the image back
-    GdkPixbuf *pb = gdk_pixbuf_new_from_file(filepath, NULL);
+    Inkscape::Pixbuf *pb = Inkscape::Pixbuf::create_from_file(filepath);
     if (pb) {
         // Create the repr for the image
+        // TODO: avoid unnecessary roundtrip between data URI and decoded pixbuf
         Inkscape::XML::Node * repr = xml_doc->createElement("svg:image");
         sp_embed_image(repr, pb);
         if (res == Inkscape::Util::Quantity::convert(1, "in", "px")) { // for default 90 dpi, snap it to pixel grid

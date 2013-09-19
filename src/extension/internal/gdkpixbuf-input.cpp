@@ -1,6 +1,7 @@
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
+#include <boost/scoped_ptr.hpp>
 #include <glib/gprintf.h>
 #include <glibmm/i18n.h>
 #include "document-private.h"
@@ -14,14 +15,10 @@
 #include "document-undo.h"
 #include "util/units.h"
 #include "image-resolution.h"
+#include "display/cairo-utils.h"
 #include <set>
 
 namespace Inkscape {
-
-namespace IO {
-// this is defined in sp-image.cpp
-GdkPixbuf* pixbuf_new_from_file(char const *filename, time_t &modTime, gchar*& pixPath);
-}
 
 namespace Extension {
 namespace Internal {
@@ -47,9 +44,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
     }
 
     SPDocument *doc = NULL;
-    gchar *pixpath = NULL;
-    time_t dummy;
-    GdkPixbuf *pb = Inkscape::IO::pixbuf_new_from_file(uri, dummy, pixpath);
+    boost::scoped_ptr<Inkscape::Pixbuf> pb(Inkscape::Pixbuf::create_from_file(uri));
 
     // TODO: the pixbuf is created again from the base64-encoded attribute in SPImage.
     // Find a way to create the pixbuf only once.
@@ -59,8 +54,8 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         bool saved = DocumentUndo::getUndoSensitive(doc);
         DocumentUndo::setUndoSensitive(doc, false); // no need to undo in this temporary document
 
-        double width = gdk_pixbuf_get_width(pb);
-        double height = gdk_pixbuf_get_height(pb);
+        double width = pb->width();
+        double height = pb->height();
         double defaultxdpi = prefs->getDouble("/dialogs/import/defaultxdpi/value", Inkscape::Util::Quantity::convert(1, "in", "px"));
         bool forcexdpi = prefs->getBool("/dialogs/import/forcexdpi");
         ImageResolution *ir = 0;
@@ -91,7 +86,7 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
         sp_repr_set_svg_double(image_node, "height", height);
 
         if (embed) {
-            sp_embed_image(image_node, pb);
+            sp_embed_image(image_node, pb.get());
         } else {
             // convert filename to uri
             gchar* _uri = g_filename_to_uri(uri, NULL, NULL);
@@ -102,9 +97,6 @@ GdkpixbufInput::open(Inkscape::Extension::Input *mod, char const *uri)
                 image_node->setAttribute("xlink:href", uri);
             }
         }
-
-        g_object_set_data(G_OBJECT(pb), "cairo_surface", NULL);
-        g_object_unref(pb);
 
         // Add it to the current layer
         doc->getRoot()->appendChildRepr(image_node);

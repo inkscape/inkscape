@@ -17,6 +17,8 @@
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
+
+#include <sigc++/bind.h>
 #include "display/nr-filter-image.h"
 #include "uri.h"
 #include "uri-references.h"

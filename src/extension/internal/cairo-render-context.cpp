@@ -1436,7 +1436,7 @@ CairoRenderContext::renderPathVector(Geom::PathVector const & pathv, SPStyle con
     return true;
 }
 
-bool CairoRenderContext::renderImage(GdkPixbuf *pb,
+bool CairoRenderContext::renderImage(Inkscape::Pixbuf *pb,
                                      Geom::Affine const &image_transform, SPStyle const * /*style*/)
 {
     g_assert( _is_valid );
@@ -1447,13 +1447,13 @@ bool CairoRenderContext::renderImage(GdkPixbuf *pb,
 
     _prepareRenderGraphic();
 
-    int w = gdk_pixbuf_get_width (pb);
-    int h = gdk_pixbuf_get_height (pb);
+    int w = pb->width();
+    int h = pb->height();
 
     // TODO: reenable merge_opacity if useful
     float opacity = _state->opacity;
 
-    cairo_surface_t *image_surface = ink_cairo_surface_get_for_pixbuf(pb);
+    cairo_surface_t *image_surface = pb->getSurfaceRaw();
     if (cairo_surface_status(image_surface)) {
         TRACE(("Image surface creation failed:\n%s\n", cairo_status_to_string(cairo_surface_status(image_surface))));
         return false;

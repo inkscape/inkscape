@@ -266,7 +266,7 @@ void PrintMetafile::hatch_classify(char *name, int *hatchType, U_COLORREF *hatch
 //    otherwise hatchType is set to -1 and hatchColor is not defined.
 //
 
-void PrintMetafile::brush_classify(SPObject *parent, int depth, GdkPixbuf **epixbuf, int *hatchType, U_COLORREF *hatchColor, U_COLORREF *bkColor)
+void PrintMetafile::brush_classify(SPObject *parent, int depth, Inkscape::Pixbuf **epixbuf, int *hatchType, U_COLORREF *hatchColor, U_COLORREF *bkColor)
 {
     if (depth == 0) {
         *epixbuf    = NULL;

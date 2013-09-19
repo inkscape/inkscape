@@ -56,6 +56,7 @@
 #include "sp-gradient.h"
 #include "sp-radial-gradient.h"
 #include "sp-linear-gradient.h"
+#include "display/cairo-utils.h"
 
 #include "splivarot.h"             // pieces for union on shapes
 #include "2geom/svg-path-parser.h" // to get from SVG text to Geom::Path
@@ -336,7 +337,7 @@ int PrintWmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
     U_WLOGBRUSH   lb;
     uint32_t      brush, fmode;
     MFDrawMode    fill_mode;
-    GdkPixbuf    *pixbuf;
+    Inkscape::Pixbuf *pixbuf;
     uint32_t      brushStyle;
     int           hatchType;
     U_COLORREF    hatchColor;
@@ -464,7 +465,7 @@ int PrintWmf::create_brush(SPStyle const *style, PU_COLORREF fcolor)
         int                  numCt;
         U_BITMAPINFOHEADER   Bmih;
         PU_BITMAPINFO        Bmi;
-        rgba_px = (char *) gdk_pixbuf_get_pixels(pixbuf); // Do NOT free this!!!
+        rgba_px = (char *) pixbuf->pixels(); // Do NOT free this!!!
         colortype = U_BCBM_COLOR32;
         (void) RGBA_to_DIB(&px, &cbPx, &ct, &numCt,  rgba_px,  width, height, width * 4, colortype, 0, 1);
         // Not sure why the next swap is needed because the preceding does it, and the code is identical
@@ -1112,10 +1113,10 @@ unsigned int PrintWmf::image(
         g_error("Fatal programming error in PrintWmf::image at EMRHEADER");
     }
 
-    x1 = atof(style->object->getAttribute("x"));
-    y1 = atof(style->object->getAttribute("y"));
-    dw = atof(style->object->getAttribute("width"));
-    dh = atof(style->object->getAttribute("height"));
+    x1 = g_ascii_strtod(style->object->getAttribute("x"), NULL);
+    y1 = g_ascii_strtod(style->object->getAttribute("y"), NULL);
+    dw = g_ascii_strtod(style->object->getAttribute("width"), NULL);
+    dh = g_ascii_strtod(style->object->getAttribute("height"), NULL);
     Geom::Point pLL(x1, y1);
     Geom::Point pLL2 = pLL * tf;  //location of LL corner in Inkscape coordinates
 

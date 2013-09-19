@@ -12,14 +12,14 @@
  * Released under GNU GPL, read the file 'COPYING' for more information
  */
 
-#include <gdkmm/pixbuf.h>
 #include "display/nr-filter-primitive.h"
-#include <glibmm/refptr.h>
 
 class SPDocument;
 class SPItem;
 
 namespace Inkscape {
+class Pixbuf;
+
 namespace Filters {
 class FilterSlot;
 
@@ -43,7 +43,7 @@ public:
 private:
     SPDocument *document;
     gchar *feImageHref;
-    Glib::RefPtr<Gdk::Pixbuf> image;
+    Inkscape::Pixbuf *image;
     float feImageX, feImageY, feImageWidth, feImageHeight;
     unsigned int aspect_align, aspect_clip;
     bool broken_ref;

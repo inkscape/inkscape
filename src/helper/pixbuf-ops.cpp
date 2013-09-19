@@ -16,6 +16,7 @@
 #endif
 
 #include <png.h>
+#include <boost/scoped_ptr.hpp>
 #include <2geom/transforms.h>
 
 #include "interface.h"
@@ -67,16 +68,14 @@ bool sp_export_jpg_file(SPDocument *doc, gchar const *filename,
                         unsigned width, unsigned height, double xdpi, double ydpi,
                         unsigned long bgcolor, double quality,GSList *items)
 {
-    GdkPixbuf* pixbuf = 0;
-    pixbuf = sp_generate_internal_bitmap(doc, filename, x0, y0, x1, y1,
-                                         width, height, xdpi, ydpi,
-                                         bgcolor, items );
+    boost::scoped_ptr<Inkscape::Pixbuf> pixbuf(
+        sp_generate_internal_bitmap(doc, filename, x0, y0, x1, y1,
+            width, height, xdpi, ydpi, bgcolor, items));
 
     gchar c[32];
     g_snprintf(c, 32, "%f", quality);
-    gboolean saved = gdk_pixbuf_save (pixbuf, filename, "jpeg", NULL, "quality", c, NULL);
+    gboolean saved = gdk_pixbuf_save(pixbuf->getPixbufRaw(), filename, "jpeg", NULL, "quality", c, NULL);
     g_free(c);
-    g_object_unref (pixbuf);
 
     return saved;
 }
@@ -94,7 +93,7 @@ bool sp_export_jpg_file(SPDocument *doc, gchar const *filename,
     @param ydpi
     @return the created GdkPixbuf structure or NULL if no memory is allocable
 */
-GdkPixbuf *sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
+Inkscape::Pixbuf *sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*/,
                                        double x0, double y0, double x1, double y1,
                                        unsigned width, unsigned height, double xdpi, double ydpi,
                                        unsigned long /*bgcolor*/,
@@ -103,7 +102,7 @@ GdkPixbuf *sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*
 {
     if (width == 0 || height == 0) return NULL;
 
-    GdkPixbuf* pixbuf = NULL;
+    Inkscape::Pixbuf *inkpb = NULL;
     /* Create new drawing for offscreen rendering*/
     Inkscape::Drawing drawing;
     drawing.setExact(true);
@@ -146,7 +145,7 @@ GdkPixbuf *sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*
         // render items
         drawing.render(ct, final_bbox, Inkscape::DrawingItem::RENDER_BYPASS_CACHE);
 
-        pixbuf = ink_pixbuf_create_from_cairo_surface(surface);
+        inkpb = new Inkscape::Pixbuf(surface);
     }
     else
     {
@@ -158,7 +157,7 @@ GdkPixbuf *sp_generate_internal_bitmap(SPDocument *doc, gchar const */*filename*
 
 //    gdk_pixbuf_save (pixbuf, "C:\\temp\\internal.jpg", "jpeg", NULL, "quality","100", NULL);
 
-    return pixbuf;
+    return inkpb;
 }
 
 /*
