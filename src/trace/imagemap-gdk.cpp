@@ -152,9 +152,9 @@ RgbMap *gdkPixbufToRgbMap(GdkPixbuf *buf)
             {
             int alpha = (int)p[3];
             int white = 255 - alpha;
-            int r     = (int)p[2];  r = r * alpha / 256 + white;
+            int r     = (int)p[0];  r = r * alpha / 256 + white;
             int g     = (int)p[1];  g = g * alpha / 256 + white;
-            int b     = (int)p[0];  b = b * alpha / 256 + white;
+            int b     = (int)p[2];  b = b * alpha / 256 + white;
 
             rgbMap->setPixel(rgbMap, x, y, r, g, b);
             p += n_channels;
