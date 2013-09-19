@@ -863,13 +863,9 @@ void sp_embed_image(Inkscape::XML::Node *image_node, Inkscape::Pixbuf *pb)
     data = const_cast<guchar *>(pb->getMimeData(len, data_mimetype));
 
     if (data == NULL) {
-        Inkscape::Preferences *prefs = Inkscape::Preferences::get();
-        Glib::ustring quality = Glib::ustring::format(prefs->getInt("/dialogs/import/quality", 100));
-
         // if there is no supported MIME data, embed as PNG
         data_mimetype = "image/png";
-        gdk_pixbuf_save_to_buffer(pb->getPixbufRaw(), reinterpret_cast<gchar**>(&data), &len, "png", NULL,
-            "quality", quality.c_str(), NULL);
+        gdk_pixbuf_save_to_buffer(pb->getPixbufRaw(), reinterpret_cast<gchar**>(&data), &len, "png", NULL, NULL);
         free_data = true;
     }
 
