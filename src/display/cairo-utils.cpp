@@ -399,9 +399,9 @@ guchar const *Pixbuf::getMimeData(gsize &len, std::string &mimetype) const
 
     for (guint i = 0; i < mimetypes_len; ++i) {
         unsigned long len_long = 0;
-        cairo_surface_get_mime_data(const_cast<cairo_surface_t*>(_surface), mimetypes[i], &data, &len);
-        len = len_long; // this assumes that the added range of long is not needed. the code below assumes gsize range of values is sufficient.
+        cairo_surface_get_mime_data(const_cast<cairo_surface_t*>(_surface), mimetypes[i], &data, &len_long);
         if (data != NULL) {
+			len = len_long;
             mimetype = mimetypes[i];
             break;
         }
