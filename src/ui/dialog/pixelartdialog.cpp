@@ -19,6 +19,7 @@
 #include "pixelartdialog.h"
 #include <gtkmm/radiobutton.h>
 #include <gtkmm/stock.h>
+#include <gtkmm/messagedialog.h>
 
 #include <gtk/gtk.h> //for GTK_RESPONSE* types
 #include <glibmm/i18n.h>
@@ -362,6 +363,17 @@ void PixelArtDialogImpl::processLibdepixelize(SPImage *img)
 
     Glib::RefPtr<Gdk::Pixbuf> pixbuf
         = Glib::wrap(img->pixbuf->getPixbufRaw(), true);
+
+    if ( pixbuf->get_width() > 256 || pixbuf->get_height() > 256 ) {
+        char *msg = _("Image looks too big. Process may take a while and is"
+                      " wise to save your document before continue."
+                      "\n\nContinue the procedure (without saving)?");
+        Gtk::MessageDialog dialog(msg, false, Gtk::MESSAGE_WARNING,
+                                  Gtk::BUTTONS_OK_CANCEL, true);
+
+        if ( dialog.run() != Gtk::RESPONSE_OK )
+            return;
+    }
 
     if ( voronoiRadioButton.get_active() ) {
         out = Tracer::Kopf2011::to_voronoi(pixbuf, options());
