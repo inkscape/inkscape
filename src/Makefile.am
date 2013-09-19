@@ -183,7 +183,6 @@ EXTRA_DIST +=	\
 	io/crystalegg.xml	\
 	io/doc2html.xsl 	\
 	show-preview.bmp \
-	sp-skeleton.cpp sp-skeleton.h	\
 	winconsole.cpp \
 	libdepixelize/makefile.in	\
 	$(CXXTEST_TEMPLATE)

@@ -245,7 +245,6 @@ namespace XML {}
  *       - SPLinearGradient
  *       - SPRadialGradient
  *     - SPPattern [\ref sp-pattern.cpp, \ref sp-pattern.h]
- *   - SPSkeleton [\ref sp-skeleton.cpp, \ref sp-skeleton.h]
  *   - SPStop [\ref sp-stop.h]
  *   - SPString [\ref sp-string.cpp, \ref sp-string.h]
  *   - SPStyleElem [\ref sp-style-elem.cpp, \ref sp-style-elem.h]

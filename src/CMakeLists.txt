@@ -61,7 +61,6 @@ set(sp_SRC
 	sp-root.cpp
 	sp-script.cpp
 	sp-shape.cpp
-	# sp-skeleton.cpp
 	sp-spiral.cpp
 	sp-star.cpp
 	sp-stop.cpp
@@ -153,7 +152,6 @@ set(sp_SRC
 	sp-root.h
 	sp-script.h
 	sp-shape.h
-	# sp-skeleton.h
 	sp-spiral.h
 	sp-star.h
 	sp-stop.h
