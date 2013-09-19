@@ -37,6 +37,7 @@
 #include "preferences.h"
 
 #include "sp-image.h"
+#include "display/cairo-utils.h"
 #include "libdepixelize/kopftracer2011.h"
 #include <algorithm>
 #include "document.h"
@@ -363,12 +364,13 @@ void PixelArtDialogImpl::processLibdepixelize(SPImage *img)
 {
     Tracer::Splines out;
 
+    Glib::RefPtr<Gdk::Pixbuf> pixbuf
+        = Glib::wrap(img->pixbuf->getPixbufRaw(), true);
+
     if ( voronoiRadioButton.get_active() ) {
-        out = Tracer::Kopf2011::to_voronoi(Glib::wrap(img->pixbuf, true),
-                                           options());
+        out = Tracer::Kopf2011::to_voronoi(pixbuf, options());
     } else {
-        out = Tracer::Kopf2011::to_splines(Glib::wrap(img->pixbuf, true),
-                                           options());
+        out = Tracer::Kopf2011::to_splines(pixbuf, options());
     }
 
     Inkscape::XML::Document *xml_doc = desktop->doc()->getReprDoc();
