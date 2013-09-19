@@ -31,13 +31,13 @@ public:
 
     static void createSuiteSubclass( ColorProfileTest*& dst )
     {
-        Inkscape::ColorProfile *prof = static_cast<Inkscape::ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
+        Inkscape::ColorProfile *prof = new Inkscape::ColorProfile();
         if ( prof ) {
             if ( prof->rendering_intent == (guint)Inkscape::RENDERING_INTENT_UNKNOWN ) {
                 TS_ASSERT_EQUALS( prof->rendering_intent, (guint)Inkscape::RENDERING_INTENT_UNKNOWN );
                 dst = new ColorProfileTest();
             }
-            g_object_unref(prof);
+            delete prof;
         }
     }
 
@@ -74,7 +74,7 @@ public:
             {"auto2", (guint)Inkscape::RENDERING_INTENT_UNKNOWN},
         };
 
-        Inkscape::ColorProfile *prof = static_cast<Inkscape::ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
+        Inkscape::ColorProfile *prof = new Inkscape::ColorProfile();
         TS_ASSERT( prof );
         SP_OBJECT(prof)->document = _doc;
 
@@ -84,7 +84,7 @@ public:
             TSM_ASSERT_EQUALS( descr, prof->rendering_intent, (guint)cases[i].intVal );
         }
 
-        g_object_unref(prof);
+        delete prof;
     }
 
     void testSetLocal()
@@ -94,7 +94,7 @@ public:
             "something",
         };
 
-        Inkscape::ColorProfile *prof = static_cast<Inkscape::ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
+        Inkscape::ColorProfile *prof = new Inkscape::ColorProfile();
         TS_ASSERT( prof );
         SP_OBJECT(prof)->document = _doc;
 
@@ -108,7 +108,7 @@ public:
         SP_OBJECT(prof)->setKeyValue( SP_ATTR_LOCAL, NULL);
         TS_ASSERT_EQUALS( prof->local, (gchar*)0 );
 
-        g_object_unref(prof);
+        delete prof;
     }
 
     void testSetName()
@@ -118,7 +118,7 @@ public:
             "something",
         };
 
-        Inkscape::ColorProfile *prof = static_cast<Inkscape::ColorProfile *>(g_object_new(COLORPROFILE_TYPE, NULL));
+        Inkscape::ColorProfile *prof = new Inkscape::ColorProfile();
         TS_ASSERT( prof );
         SP_OBJECT(prof)->document = _doc;
 
@@ -132,7 +132,7 @@ public:
         SP_OBJECT(prof)->setKeyValue( SP_ATTR_NAME, NULL);
         TS_ASSERT_EQUALS( prof->name, (gchar*)0 );
 
-        g_object_unref(prof);
+        delete prof;
     }
 };
 

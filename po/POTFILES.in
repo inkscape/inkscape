@@ -269,6 +269,7 @@ src/ui/dialog/new-from-template.cpp
 src/ui/dialog/object-attributes.cpp
 src/ui/dialog/object-properties.cpp
 src/ui/dialog/ocaldialogs.cpp
+src/ui/dialog/pixelartdialog.cpp
 src/ui/dialog/print-colors-preview-dialog.cpp
 src/ui/dialog/print.cpp
 src/ui/dialog/spellcheck.cpp

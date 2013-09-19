@@ -28,12 +28,13 @@ public:
 
     static void createSuiteSubclass( SPStyleElemTest *& dst )
     {
-        SPStyleElem *style_elem = static_cast<SPStyleElem *>(g_object_new(SP_TYPE_STYLE_ELEM, NULL));
+        SPStyleElem *style_elem = new SPStyleElem();
+
         if ( style_elem ) {
             TS_ASSERT(!style_elem->is_css);
             TS_ASSERT(style_elem->media.print);
             TS_ASSERT(style_elem->media.screen);
-            g_object_unref(style_elem);
+            delete style_elem;
 
             dst = new SPStyleElemTest();
         }
@@ -52,7 +53,7 @@ public:
 
     void testSetType()
     {
-        SPStyleElem *style_elem = static_cast<SPStyleElem *>(g_object_new(SP_TYPE_STYLE_ELEM, NULL));
+        SPStyleElem *style_elem = new SPStyleElem();
         SP_OBJECT(style_elem)->document = _doc;
 
         SP_OBJECT(style_elem)->setKeyValue( SP_ATTR_TYPE, "something unrecognized");
@@ -67,7 +68,7 @@ public:
         SP_OBJECT(style_elem)->setKeyValue( SP_ATTR_TYPE, "text/cssx");
         TS_ASSERT( !style_elem->is_css );
 
-        g_object_unref(style_elem);
+        delete style_elem;
     }
 
     void testWrite()
@@ -78,7 +79,7 @@ public:
             return; // evil early return
         }
 
-        SPStyleElem *style_elem = SP_STYLE_ELEM(g_object_new(SP_TYPE_STYLE_ELEM, NULL));
+        SPStyleElem *style_elem = new SPStyleElem();
         SP_OBJECT(style_elem)->document = _doc;
 
         SP_OBJECT(style_elem)->setKeyValue( SP_ATTR_TYPE, "text/css");
@@ -93,7 +94,7 @@ public:
             }
         }
 
-        g_object_unref(style_elem);
+        delete style_elem;
     }
 
     void testBuild()
@@ -104,13 +105,13 @@ public:
             return; // evil early return
         }
 
-        SPStyleElem &style_elem = *SP_STYLE_ELEM(g_object_new(SP_TYPE_STYLE_ELEM, NULL));
+        SPStyleElem *style_elem = new SPStyleElem();
         Inkscape::XML::Node *const repr = _doc->getReprDoc()->createElement("svg:style");
         repr->setAttribute("type", "text/css");
-        (&style_elem)->invoke_build( _doc, repr, false);
-        TS_ASSERT( style_elem.is_css );
-        TS_ASSERT( style_elem.media.print );
-        TS_ASSERT( style_elem.media.screen );
+        style_elem->invoke_build( _doc, repr, false);
+        TS_ASSERT( style_elem->is_css );
+        TS_ASSERT( style_elem->media.print );
+        TS_ASSERT( style_elem->media.screen );
 
         /* Some checks relevant to the read_content test below. */
         {
@@ -120,7 +121,7 @@ public:
             g_assert(stylesheet->statements == NULL);
         }
 
-        g_object_unref(&style_elem);
+        delete style_elem;
         Inkscape::GC::release(repr);
     }
 
@@ -132,19 +133,19 @@ public:
             return; // evil early return
         }
 
-        SPStyleElem &style_elem = *SP_STYLE_ELEM(g_object_new(SP_TYPE_STYLE_ELEM, NULL));
+        SPStyleElem *style_elem = new SPStyleElem();
         Inkscape::XML::Node *const repr = _doc->getReprDoc()->createElement("svg:style");
         repr->setAttribute("type", "text/css");
         Inkscape::XML::Node *const content_repr = _doc->getReprDoc()->createTextNode(".myclass { }");
         repr->addChild(content_repr, NULL);
-        (&style_elem)->invoke_build(_doc, repr, false);
-        TS_ASSERT( style_elem.is_css );
+        style_elem->invoke_build(_doc, repr, false);
+        TS_ASSERT( style_elem->is_css );
         TS_ASSERT( _doc->style_cascade );
         CRStyleSheet const *const stylesheet = cr_cascade_get_sheet(_doc->style_cascade, ORIGIN_AUTHOR);
         TS_ASSERT(stylesheet != NULL);
         TS_ASSERT(stylesheet->statements != NULL);
 
-        g_object_unref(&style_elem);
+        delete style_elem;
         Inkscape::GC::release(repr);
     }
 
