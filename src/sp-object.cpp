@@ -588,9 +588,12 @@ void SPObject::child_added(Inkscape::XML::Node *child, Inkscape::XML::Node *ref)
 
         ochild->invoke_build(object->document, child, object->cloned);
     } catch (const FactoryExceptions::TypeNotRegistered& e) {
-        if (std::string(e.what()) != "rdf:RDF") { // temporary special case
-            g_warning("TypeNotRegistered exception: %s", e.what());
-        }
+        std::string node = e.what();
+        // special cases
+        if (node == "rdf:RDF") return; // no SP node yet
+        if (node == "inkscape:clipboard") return; // SP node not necessary
+
+        g_warning("TypeNotRegistered exception: %s", e.what());
     }
 }
 
