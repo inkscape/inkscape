@@ -601,6 +601,15 @@ void SPItem::update(SPCtx *ctx, guint flags) {
             }
         }
     }
+    /* Update bounding box data used by filters */
+    if (item->style->filter.set && item->display) {
+        Geom::OptRect item_bbox = item->visualBounds();
+        SPItemView *itemview = item->display;
+        do {
+            if (itemview->arenaitem)
+                itemview->arenaitem->setItemBounds(item_bbox);
+        } while ( (itemview = itemview->next) );
+    }
 
     // Update libavoid with item geometry (for connector routing).
     if (item->avoidRef)
@@ -1050,6 +1059,7 @@ Inkscape::DrawingItem *SPItem::invoke_show(Inkscape::Drawing &drawing, unsigned 
             item_bbox = visualBounds();
         }
         ai->setData(this);
+        ai->setItemBounds(item_bbox);
     }
 
     return ai;

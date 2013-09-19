@@ -115,12 +115,15 @@ int Filter::render(Inkscape::DrawingItem const *item, DrawingContext &graphic, D
     Geom::Affine trans = item->ctm();
 
     // Get filter are, the filter_effect_area is already done in visualBounds
-    Geom::OptRect filter_area = item->geometricBounds();
-    if (!filter_area) return 1;
+    Geom::OptRect filter_area = item->filterBounds();
+    // Use the geometricBounds as a backup solution
+    if (!filter_area || (filter_area->hasZeroArea() &&
+      filter_area->min()[Geom::X] == 0 && filter_area->min()[Geom::Y] == 0))
+        filter_area = item->geometricBounds();
 
     FilterUnits units(_filter_units, _primitive_units);
     units.set_ctm(trans);
-    units.set_item_bbox(item->geometricBounds());
+    units.set_item_bbox(filter_area);
     units.set_filter_area(*filter_area);
 
     std::pair<double,double> resolution

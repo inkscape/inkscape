@@ -281,6 +281,12 @@ DrawingItem::setZOrder(unsigned z)
     _markForRendering();
 }
 
+void
+DrawingItem::setItemBounds(Geom::OptRect const &bounds)
+{
+    if (bounds) _filter_bbox = bounds;
+}
+
 /**
  * Update derived data before operations.
  * The purpose of this call is to recompute internal data which depends
@@ -346,7 +352,7 @@ DrawingItem::update(Geom::IntRect const &area, UpdateContext const &ctx, unsigne
 
     if (to_update & STATE_BBOX) {
         // compute drawbox
-        if (_filter && render_filters) {
+        if (_filter && render_filters && _bbox) {
             Geom::IntRect newbox(*_bbox);
             _filter->area_enlarge(newbox, this);
             _drawbox = Geom::OptIntRect(newbox);
